@@ -1,8 +1,8 @@
 #ifndef LAMathSwaptionVolLMM_h
 #define LAMathSwaptionVolLMM_h
 
-//#include "LAFunctionBase.h"
-#include <LACoreTemplateType.h>
+//#include "AQLFunctionBase.h"
+#include <AQLCoreTemplateType.h>
 
 #include <map>
 

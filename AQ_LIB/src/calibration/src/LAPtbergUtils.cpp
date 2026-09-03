@@ -50,8 +50,8 @@ MAPtbergUtils::~MAPtbergUtils(void)
 bool
 MAPtbergUtils::is3FCalib()
 {
-	LAString is3FStr = LACoreDataService::getStaticDataManager().getStaticData().getStaticData(KEY_PTBERG_IS3F);
-	LADataBool is3FCalib;
+	AQLString is3FStr = LACoreDataService::getStaticDataManager().getStaticData().getStaticData(KEY_PTBERG_IS3F);
+	AQLDataBool is3FCalib;
 	if (is3FStr == AQ_NO_DATA)
 	{
 		is3FCalib.set(false);
@@ -62,7 +62,7 @@ MAPtbergUtils::is3FCalib()
 	}
 	if (is3FCalib.get())
 	{
-		LAString is3FCalibStr = LACoreDataService::getStaticDataManager().getCalibStaticData().getStaticData(KEY_CALIB_PTBERG_IS3F);
+		AQLString is3FCalibStr = LACoreDataService::getStaticDataManager().getCalibStaticData().getStaticData(KEY_CALIB_PTBERG_IS3F);
 		if (is3FCalibStr != AQ_NO_DATA)
 		{
 			is3FCalib.convertFromString(is3FCalibStr);

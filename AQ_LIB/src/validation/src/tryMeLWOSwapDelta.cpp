@@ -20,9 +20,9 @@ namespace
 {
 	// Helper function to calculate a unique set of currencies from a vector of currencies
 	// Use the property of the std::set where each key appears just once
-	std::set<LAString> calcUniqueCCYs(const LAStringVector& deltaCCYs)
+	std::set<AQLString> calcUniqueCCYs(const AQLStringVector& deltaCCYs)
 	{
-		std::set<LAString> uniqueCCYs;
+		std::set<AQLString> uniqueCCYs;
 		for (auto it=deltaCCYs.begin(); it != deltaCCYs.end(); ++it)
 		{
 			uniqueCCYs.insert( *it );
@@ -48,15 +48,15 @@ namespace validation
 	*  @param [in]		riskCutOffTenor	    		The maximum tenor in years (e.g. 10Y) beyond which the curves are no longer bumped
     *  @param [in]		xccyFXSpotRates			        A vector of doubles representing Xccy FX Spot Rates
     */
-	void tryMeLWOSwapDeltaLadder( LAStringVector& headers,
-								  LAStringVector& pillarNames,
+	void tryMeLWOSwapDeltaLadder( AQLStringVector& headers,
+								  AQLStringVector& pillarNames,
 								  DoubleMatrix& deltas,
-								  const LAStringVector& swapNames,
-								  const LAStringMatrix& curveCollectionNames,
-								  const LAStringMatrix& fixingTableNames,
+								  const AQLStringVector& swapNames,
+								  const AQLStringMatrix& curveCollectionNames,
+								  const AQLStringMatrix& fixingTableNames,
 								  const bool bumpSpreadInstruments,
 								  const double bumpSize,
-								  const LAString& bumpMode,
+								  const AQLString& bumpMode,
 								  const bool aggregateRisks,
 								  const bool reportInLegCCY,
 								  const std::string& riskCutOffTenor,
@@ -67,9 +67,9 @@ namespace validation
 		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor, xccyFXSpotRates );
 
         // Trim Inputs then Check if they are empty
-        LAStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
-        LAStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
-        LAStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
+        AQLStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
+        AQLStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
+        AQLStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
         
         // Appears to be already trimmed in the XLLPlusTips.cpp
         // How would we trim double vectors?, blank excel input mostly treated as zero, perhaps in XLOper layer
@@ -102,7 +102,7 @@ namespace validation
 		// Verify that the riskCutOffTenor can be parsed, if provided.
 		const unsigned int riskCutOffTenorYears = etrading::parseTenorYears( riskCutOffTenor, true /* throw on failure */ );
 
-		LAString uppercaseBumpMode( bumpMode );
+		AQLString uppercaseBumpMode( bumpMode );
 		uppercaseBumpMode.toUpper();
 		MultiCurveDeltaGenerator riskGen( trimmedSwapNames, trimmedCurveCollectionsNames, fixingTableNames, trimmedXccyFXSpotRates, bumpSpreadInstruments, bumpSize, uppercaseBumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor );
 
@@ -115,8 +115,8 @@ namespace validation
 		 * we invoke the underlying delta ladder calculation with temporary variables prior
 		 * to reformatting into the output variables.
 		 */
-		LAStringVector deltaCCYs;
-		LAStringVector tmpHeaders;
+		AQLStringVector deltaCCYs;
+		AQLStringVector tmpHeaders;
 		DoubleMatrix tmpDeltas;
         riskGen.deltaLadder( pillarNames, tmpHeaders, deltaCCYs, tmpDeltas );
 
@@ -128,11 +128,11 @@ namespace validation
 		 */
 		headers.push_back( "Pillars" );
 
-		std::set<LAString> uniqueCCYs = calcUniqueCCYs( deltaCCYs );
+		std::set<AQLString> uniqueCCYs = calcUniqueCCYs( deltaCCYs );
 		// Add a header for each Total by CCY
 		for ( auto ccy = uniqueCCYs.begin(); ccy != uniqueCCYs.end(); ++ccy )
 		{
-			LAString columnHeading = *ccy + " : Total"; 
+			AQLString columnHeading = *ccy + " : Total"; 
 			headers.push_back( columnHeading );
 		}
 
@@ -141,7 +141,7 @@ namespace validation
 		const size_t nDeltaColumns = deltaCCYs.size();
 		for ( size_t i = 0; i < nDeltaColumns; ++i )
 		{
-			LAString columnHeading = deltaCCYs[i] + " : " + tmpHeaders[i];
+			AQLString columnHeading = deltaCCYs[i] + " : " + tmpHeaders[i];
 			headers.push_back( columnHeading );
 		}
 
@@ -155,10 +155,10 @@ namespace validation
 			const std::vector<double>& allDeltasUnderSinglePillarName = tmpDeltas[i];
 
 			// For a particular pillar, we construct a map to hold the total delta per currrency
-			std::map<LAString, double> totalDeltaPerCCY;
+			std::map<AQLString, double> totalDeltaPerCCY;
 			for (size_t j = 0; j < nDeltaColumns; j++)
 			{
-				const LAString& ccy = deltaCCYs[j];
+				const AQLString& ccy = deltaCCYs[j];
 				double& total = totalDeltaPerCCY[ccy];   
 				total += allDeltasUnderSinglePillarName[j];
 			}
@@ -198,7 +198,7 @@ namespace validation
     *                   This version presents the delta buckets for each curve in separate columns. Each consecutive pairs of columns
 	*                   (pillarName, delta) are aligned horizontally.
 	*  @param [out]		headers						Headers of the delta report
-    *  @param [out]		pillarNames					A vector of LAStringVector, with each LAStringVector representing a column of pillarNames for a curve
+    *  @param [out]		pillarNames					A vector of AQLStringVector, with each AQLStringVector representing a column of pillarNames for a curve
     *  @param [out]		deltas						A vector of DoubleVector, with each DoubleVector representing a column of delta sensitivities for a curve
     *  @param [in]		swapNames					A vector of strings representing the LWO Swap names
 	*  @param [in]		curveCollectionNames		A vector of strings representing the CurveCollection names for each leg of swap
@@ -211,15 +211,15 @@ namespace validation
 	*  @param [in]		riskCutOffTenor	    		The maximum tenor in years (e.g. 10Y) beyond which the curves are no longer bumped
     *  @param [in]		xccyFXSpotRates			        A vector of doubles representing Xccy FX Spot Rates
     */
-	void tryMeLWOSwapDeltaLadderHorizontally( LAStringVector& headers,
-											  std::vector<LAStringVector>& pillarNames,
+	void tryMeLWOSwapDeltaLadderHorizontally( AQLStringVector& headers,
+											  std::vector<AQLStringVector>& pillarNames,
 											  std::vector<DoubleVector>& deltas,
-											  const LAStringVector& swapNames,
-											  const LAStringMatrix& curveCollectionNames,
-											  const LAStringMatrix& fixingTableNames,
+											  const AQLStringVector& swapNames,
+											  const AQLStringMatrix& curveCollectionNames,
+											  const AQLStringMatrix& fixingTableNames,
 											  const bool bumpSpreadInstruments,
 											  const double bumpSize,
-											  const LAString& bumpMode,
+											  const AQLString& bumpMode,
 											  const bool aggregateRisks,
 											  const bool reportInLegCCY,
 											  const std::string& riskCutOffTenor,
@@ -230,9 +230,9 @@ namespace validation
 		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor, xccyFXSpotRates );
 
         // Trim Inputs then Check if they are empty
-        LAStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
-        LAStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
-        LAStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
+        AQLStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
+        AQLStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
+        AQLStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
         
         // Appears to be already trimmed in the XLLPlusTips.cpp
         // How would we trim double vectors?, blank excel input mostly treated as zero, perhaps in XLOper layer
@@ -270,7 +270,7 @@ namespace validation
 		const unsigned int riskCutOffTenorYears = etrading::parseTenorYears( riskCutOffTenor, true /* throw on failure */ );
 
 		// Initialise the MultiCurveDeltaGenerator with the portfolio of swapNames
-		LAString uppercaseBumpMode( bumpMode );
+		AQLString uppercaseBumpMode( bumpMode );
 		uppercaseBumpMode.toUpper();
 		MultiCurveDeltaGenerator riskGen( trimmedSwapNames, trimmedCurveCollectionsNames, trimmedFixingTableNames, xccyFXSpotRates, bumpSpreadInstruments, bumpSize, uppercaseBumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor );
 
@@ -279,9 +279,9 @@ namespace validation
 		 * we invoke the underlying delta ladder calculation with temporary variables prior
 		 * to reformatting into the output variables.
 		 */
-		LAStringVector tmpHeaders;
-		LAStringVector deltaCCYs;
-		LAStringVector tmpPillarNames;
+		AQLStringVector tmpHeaders;
+		AQLStringVector deltaCCYs;
+		AQLStringVector tmpPillarNames;
 		DoubleMatrix tmpDeltas;
 		riskGen.deltaLadder( tmpPillarNames, tmpHeaders, deltaCCYs, tmpDeltas );
 
@@ -295,7 +295,7 @@ namespace validation
 		 * At the end, the following vector will contain the same number of elements as there are pillarNames.
 		 */
 
-		std::vector<std::map<LAString, double> >totalDeltaPerPillarPerCCY;
+		std::vector<std::map<AQLString, double> >totalDeltaPerPillarPerCCY;
 		const size_t nPillars = tmpPillarNames.size();
 
 		// There is a delta column per swap leg in the portfolio
@@ -307,10 +307,10 @@ namespace validation
 			const std::vector<double>& allDeltasUnderSinglePillarName = tmpDeltas[i];
 
 			// For a particular pillar, we construct a map to hold the total delta per currrency
-			std::map<LAString, double> totalDeltaPerCCY;
+			std::map<AQLString, double> totalDeltaPerCCY;
 			for (size_t j=0; j<nDeltaColumns; j++)
 			{
-				const LAString& ccy = deltaCCYs[j];
+				const AQLString& ccy = deltaCCYs[j];
 				double& total = totalDeltaPerCCY[ccy];   
 				total += allDeltasUnderSinglePillarName[j];
 			}
@@ -326,24 +326,24 @@ namespace validation
 		 * Group the results by:  CURVECOLLECTION_CURVENAME
 		 * i.e.  for each currency, construct a map: CURVECOLLECTION_CURVENAME ->  vector ( PILLARNAME, TOTALDELTA )
 		 */
-		std::set<LAString> uniqueCCYs = calcUniqueCCYs( deltaCCYs );
+		std::set<AQLString> uniqueCCYs = calcUniqueCCYs( deltaCCYs );
 		for (auto it=uniqueCCYs.begin(); it != uniqueCCYs.end(); ++it)
 		{
-			const LAString& ccy = *it;
-			std::map<LAString, std::vector<std::pair<LAString, double> > > groupedResults;
+			const AQLString& ccy = *it;
+			std::map<AQLString, std::vector<std::pair<AQLString, double> > > groupedResults;
 			
 			for (size_t i = 0; i < tmpPillarNames.size(); i++)
 			{
 				// Construct a key from CURVECOLLECTION and CURVENAME
-				const LAString& pillarName = tmpPillarNames[i];
-				LAStringVector tokens = pillarName.toToken( etrading::PILLAR_DELIMITER );
+				const AQLString& pillarName = tmpPillarNames[i];
+				AQLStringVector tokens = pillarName.toToken( etrading::PILLAR_DELIMITER );
 				assert ( tokens.size() >= 3 );
-				LAString key = tokens[0] + etrading::PILLAR_DELIMITER + tokens[1];
+				AQLString key = tokens[0] + etrading::PILLAR_DELIMITER + tokens[1];
 
 				// Append this current PillarName and delta bucket in the vector of results for the curvename specified by "key"
-				std::vector<std::pair<LAString, double> >& bucketData = groupedResults[ key ];
+				std::vector<std::pair<AQLString, double> >& bucketData = groupedResults[ key ];
 
-				std::map<LAString, double> totalDeltaPerCCY = totalDeltaPerPillarPerCCY[i];
+				std::map<AQLString, double> totalDeltaPerCCY = totalDeltaPerPillarPerCCY[i];
 				double totalDelta = totalDeltaPerCCY[ccy];
 
 				bucketData.push_back( std::make_pair( pillarName, totalDelta ) );
@@ -353,7 +353,7 @@ namespace validation
 			// Each item in groupedResults corresponds to a vector of pillars for a given curve
 			for (auto it=groupedResults.begin(); it != groupedResults.end(); ++it)
 			{
-				std::vector<std::pair<LAString, double> >& bucketData = it->second;
+				std::vector<std::pair<AQLString, double> >& bucketData = it->second;
 
 				// Decide whether to include this column of deltas in the output:
 				// If the portfolio of swaps is sensitive to any point in this curve, include it
@@ -373,11 +373,11 @@ namespace validation
 					headers.push_back( ccy + " : Pillars" );
 					headers.push_back( ccy + " : Total" );
 
-					LAStringVector pillarColumn;
+					AQLStringVector pillarColumn;
 					DoubleVector deltaColumn;
 					for (size_t j=0; j < bucketData.size(); j++)
 					{
-						LAString& pillarName = bucketData[j].first;
+						AQLString& pillarName = bucketData[j].first;
 						pillarColumn.push_back( pillarName );
 
 						double totalDelta = bucketData[j].second;
@@ -421,15 +421,15 @@ namespace validation
 	*  @param [in]		reportInLegCCY				Whether to report the risk in LegCCY (if true) or valuationCCY (if false)
     *  @param [in]		xccyFXSpotRates			        A vector of doubles representing Xccy FX Spot Rates
     */
-	void tryMeLWOSwapDelta( LAStringVector& positionIDs,
+	void tryMeLWOSwapDelta( AQLStringVector& positionIDs,
 							DoubleVector& deltas,
-							const LAStringVector& swapNames,
-							const LAStringMatrix& curveCollectionNames,
-							const LAStringMatrix& fixingTableNames,
+							const AQLStringVector& swapNames,
+							const AQLStringMatrix& curveCollectionNames,
+							const AQLStringMatrix& fixingTableNames,
 							const bool bumpSpreadInstruments,
 							const double bumpSize,
-							const LAString& bumpMode,
-							const LAString& groupRiskBy,
+							const AQLString& bumpMode,
+							const AQLString& groupRiskBy,
 							const bool aggregateRisks,
 							const bool reportInLegCCY,
                             const DoubleVector& xccyFXSpotRates)
@@ -439,9 +439,9 @@ namespace validation
 		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates );
 
 		// Trim Inputs then Check if they are empty
-        LAStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
-        LAStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
-        LAStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
+        AQLStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
+        AQLStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
+        AQLStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
         
         // Appears to be already trimmed in the XLLPlusTips.cpp
         // How would we trim double vectors?, blank excel input mostly treated as zero, perhaps in XLOper layer
@@ -471,10 +471,10 @@ namespace validation
         //----------------------------------------------------------------------------------
         // Risk
 
-		LAString uppercaseBumpMode( bumpMode );
+		AQLString uppercaseBumpMode( bumpMode );
 		uppercaseBumpMode.toUpper();
 
-		LAString uppercaseGroupRiskBy( groupRiskBy );
+		AQLString uppercaseGroupRiskBy( groupRiskBy );
 		uppercaseGroupRiskBy.toUpper();
 
 		// The flat-shift delta risk calculation is relatively fast, compared to the delta-ladder calculation

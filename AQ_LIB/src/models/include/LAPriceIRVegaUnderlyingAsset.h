@@ -6,15 +6,15 @@
 #ifndef LAPriceIRVegaUnderlyingAsset_h
 #define LAPriceIRVegaUnderlyingAsset_h
 
-#include "LADate.h"
-#include "LAString.h"
+#include "AQLDate.h"
+#include "AQLString.h"
 #include <utility>
 
-class LAObject;
-class LADataInstance;
-class LAPriceDataDayCount;
-class LAPriceDataCalendar;
-class LAPriceDataSlidingRule;
+class AQLObject;
+class AQLDataInstance;
+class AQLPriceDataDayCount;
+class AQLPriceDataCalendar;
+class AQLPriceDataSlidingRule;
 
 // An abstract class an object of which represents interate rates of one currency.
 class LAPriceIRVegaUnderlyingAsset
@@ -30,7 +30,7 @@ public:
 	//
 	// @return
 	//     A pair of the curve name and the "capletness"
-	virtual std::pair<LAString, bool> getCurveName(const LAString& underlying) const = 0;
+	virtual std::pair<AQLString, bool> getCurveName(const AQLString& underlying) const = 0;
 
 	// Calculates a forward rate.
 	//
@@ -44,21 +44,21 @@ public:
 	// @return
 	//     The forward rate (0.01 means 1%)
 	virtual double getForward(
-		const LAString& opt, const LAString& underlying, const std::pair<LAString, bool>& curveName) const = 0;
+		const AQLString& opt, const AQLString& underlying, const std::pair<AQLString, bool>& curveName) const = 0;
 };
 
 // An implementation of LAPriceIRVegaUnderlyingAsset
 // for already set-up calib-info entities.
 class LAPriceOriginalIRSABRUnderlyingAsset : public LAPriceIRVegaUnderlyingAsset
 {
-	LADataInstance* mDataInstance;
-	LADate mBaseDate;
-	LAString mConvIDs[2];
-	const LAPriceDataSlidingRule* mSlidingRules[2];
-	const LAPriceDataCalendar* mFixingCalendars[2];
-	const LAObject* mCurveEntity;
-	LAString mCurveID;
-	LAString mDFName;
+	AQLDataInstance* mDataInstance;
+	AQLDate mBaseDate;
+	AQLString mConvIDs[2];
+	const AQLPriceDataSlidingRule* mSlidingRules[2];
+	const AQLPriceDataCalendar* mFixingCalendars[2];
+	const AQLObject* mCurveEntity;
+	AQLString mCurveID;
+	AQLString mDFName;
 
 public:
 	// Creates an object from calib-info entities.
@@ -72,9 +72,9 @@ public:
 	// @param dataInstance
 	//     The dataInstance, that shall not be 0
 	LAPriceOriginalIRSABRUnderlyingAsset(
-		const LADate& baseDate, const LAString& currency, const LAString& underlyingName, LADataInstance* dataInstance);
+		const AQLDate& baseDate, const AQLString& currency, const AQLString& underlyingName, AQLDataInstance* dataInstance);
 
-	std::pair<LAString, bool> getCurveName(const LAString& underlying) const;
+	std::pair<AQLString, bool> getCurveName(const AQLString& underlying) const;
 
 	// Calculates the option term and the caplet/swap length in years.
 	//
@@ -87,15 +87,15 @@ public:
 	//
 	// @return
 	//     A pair of the option term and the caplet/swap length in years
-	std::pair<double, double> getTerms(const LAString& opt, const LAString& underlying, bool isCap) const;
+	std::pair<double, double> getTerms(const AQLString& opt, const AQLString& underlying, bool isCap) const;
 
-	double getForward(const LAString& opt, const LAString& underlying, const std::pair<LAString, bool>& curveName) const;
+	double getForward(const AQLString& opt, const AQLString& underlying, const std::pair<AQLString, bool>& curveName) const;
 
 	// Retrieves the curve ID (the name of the "DATA" object for the yield concerned)
 	//
 	// @return
 	//     The curve ID
-	const LAString& getCurveID() const;
+	const AQLString& getCurveID() const;
 };
 
 // Data names of risk entities referenced by LAPriceAnotherUnderlyingAsset STARTS HERE
@@ -158,18 +158,18 @@ public:
 // for arbitrary underlying assets after risk entities.
 class LAPriceAnotherUnderlyingAsset : public LAPriceIRVegaUnderlyingAsset
 {
-	LADataInstance* mDataInstance;
-	LAString mCurveID;
-	LADate mBaseDate;
-	const LAStringVector* mCurveTypeKeys;
-	const LAStringVector* mCurveTypes;
-	LAString mSpotLags[2];
-	const LAPriceDataDayCount* mDayCounts[2];
-	const LAPriceDataSlidingRule* mSlidingRules[2];
-	const LAPriceDataCalendar* mFixingCalendars[2];
-	const LAPriceDataCalendar* mPaymentCalendars[2];
-	LAString mSwaptionFrequency;
-	LAString mDFName;
+	AQLDataInstance* mDataInstance;
+	AQLString mCurveID;
+	AQLDate mBaseDate;
+	const AQLStringVector* mCurveTypeKeys;
+	const AQLStringVector* mCurveTypes;
+	AQLString mSpotLags[2];
+	const AQLPriceDataDayCount* mDayCounts[2];
+	const AQLPriceDataSlidingRule* mSlidingRules[2];
+	const AQLPriceDataCalendar* mFixingCalendars[2];
+	const AQLPriceDataCalendar* mPaymentCalendars[2];
+	AQLString mSwaptionFrequency;
+	AQLString mDFName;
 
 public:
 	// Creates an object from a risk object.
@@ -180,14 +180,14 @@ public:
 	//     The curve ID (the name of the "DATA" object for the yield concerned)
 	// @param info
 	//     The risk object
-	LAPriceAnotherUnderlyingAsset(const LADate& baseDate, const LAString& curveID, LAObject& info);
+	LAPriceAnotherUnderlyingAsset(const AQLDate& baseDate, const AQLString& curveID, AQLObject& info);
 
-	std::pair<LAString, bool> getCurveName(const LAString& underlying) const;
+	std::pair<AQLString, bool> getCurveName(const AQLString& underlying) const;
 
-	double getForward(const LAString& opt, const LAString& underlying, const std::pair<LAString, bool>& curveName) const;
+	double getForward(const AQLString& opt, const AQLString& underlying, const std::pair<AQLString, bool>& curveName) const;
 
 private:
-	const LAString& getDFName() const;
+	const AQLString& getDFName() const;
 };
 
 #endif

@@ -8,16 +8,16 @@
 #endif
 
 
-#include "LACoreAppError.h"
-#include "LACoreSystemError.h"
-#include "LACoreTemplateType.h"
-#include "LAGaussLegendre.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreSystemError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLGaussLegendre.h"
 
 
 
 
-class LAFunctionBase;
-class LA1DDataSet;
+class AQLFunctionBase;
+class AQL1DDataSet;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief Declaration of covariance class
@@ -49,7 +49,7 @@ public:
 									@param[in] vol volatility
 									@note this class is not pointer owner of input function
 								*/
-    void						setVolaility(const std::vector<const LAFunctionBase*>& vol) 
+    void						setVolaility(const std::vector<const AQLFunctionBase*>& vol) 
 								{mVolatility = vol;}
 								//======================================
 								// set correlation
@@ -57,19 +57,19 @@ public:
 									@param[in] cor correlation
 									@note	this class is not pointer owner of input function
 								*/
-	void						setCorrelation(const std::vector<std::vector<const LAFunctionBase*> >& cor)
+	void						setCorrelation(const std::vector<std::vector<const AQLFunctionBase*> >& cor)
 								{mCorrelation = cor;}
 								// calculate and store integral of covariance
 	void						calcIntegratedCov(const DoubleArray& timegrid, const DoubleArray* pReset_timegrid);
 private:
-								// calculte integral of product of LA1DDataSet functions
-	double						integral(double t1, double t2, std::vector<const LA1DDataSet*>& funcs) const;
+								// calculte integral of product of AQL1DDataSet functions
+	double						integral(double t1, double t2, std::vector<const AQL1DDataSet*>& funcs) const;
 protected:
-	std::vector<const LAFunctionBase*>	mVolatility;	// volatility
-	std::vector<std::vector<const LAFunctionBase*> >	mCorrelation;	// correlation
+	std::vector<const AQLFunctionBase*>	mVolatility;	// volatility
+	std::vector<std::vector<const AQLFunctionBase*> >	mCorrelation;	// correlation
 	DoubleArray									mTimeGrid;		// time grid
 	std::vector<DoubleMatrix>					mIntegratedCovData;// calculated integral of covariance data
-	LAGaussLegendre								mGL;// integral method
+	AQLGaussLegendre								mGL;// integral method
 	mutable DoubleArray							mXX;// tempolary variable
 	mutable DoubleArray							mWW;// tempolary variable	
 };

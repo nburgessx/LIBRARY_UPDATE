@@ -7,16 +7,16 @@
 
 #include "LACalibrate.h"
 #include "LACoreDataService.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 #include <sstream>
 #ifdef __HAS_MIC__
 
 #endif
 using namespace std;
 
-map<LAString, LAString> LACalibrate::mSerializeMap;
-map<LAString, map<LAString, LAString> > LACalibrate::mDeserializedEMap;
-map<LAString, bool> LACalibrate::mIsDeserializedMap;
+map<AQLString, AQLString> LACalibrate::mSerializeMap;
+map<AQLString, map<AQLString, AQLString> > LACalibrate::mDeserializedEMap;
+map<AQLString, bool> LACalibrate::mIsDeserializedMap;
 #ifdef __HAS_MIC__
 common_lib::StaticMutex LACalibrate::mMutex;
 #endif
@@ -46,13 +46,13 @@ LACalibrate::~LACalibrate()
 
 */
 void
-LACalibrate::clear(const LAString &fileNum)
+LACalibrate::clear(const AQLString &fileNum)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear serialized map
-	map<LAString, LAString>::iterator it = mSerializeMap.begin();
+	map<AQLString, AQLString>::iterator it = mSerializeMap.begin();
 	while (it != mSerializeMap.end())
 	{
 		if (it->first.findString(fileNum) >= 0)
@@ -65,7 +65,7 @@ LACalibrate::clear(const LAString &fileNum)
 		}
 	}
 	// clear deserialized object map
-	map<LAString, std::map<LAString, LAString> >::iterator it_ = mDeserializedEMap.begin();
+	map<AQLString, std::map<AQLString, AQLString> >::iterator it_ = mDeserializedEMap.begin();
 	while (it_ != mDeserializedEMap.end())
 	{
 		if (it_->first.findString(fileNum) >= 0)
@@ -79,7 +79,7 @@ LACalibrate::clear(const LAString &fileNum)
 		}
 	}
 	// clear deserialized flag
-	map<LAString, bool>::iterator it__ = mIsDeserializedMap.begin();
+	map<AQLString, bool>::iterator it__ = mIsDeserializedMap.begin();
 	while (it__ != mIsDeserializedMap.end())
 	{
 		if (it__->first.findString(fileNum) >= 0)
@@ -107,7 +107,7 @@ LACalibrate::clear()
 	// clear serialized map
 	mSerializeMap.clear();
 	// clear deserialized object map
-	map<LAString, std::map<LAString, LAString> >::iterator it = mDeserializedEMap.begin();
+	map<AQLString, std::map<AQLString, AQLString> >::iterator it = mDeserializedEMap.begin();
 	while (it != mDeserializedEMap.end())
 	{
 		it->second.clear();
@@ -128,7 +128,7 @@ LACalibrate::clear()
 
 */
 void
-LACalibrate::deserializeStream(const LAString &key)
+LACalibrate::deserializeStream(const AQLString &key)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
@@ -137,19 +137,19 @@ LACalibrate::deserializeStream(const LAString &key)
 	istringstream *dataStream = LACoreDataService::getIStringStream(key);
 	if (!dataStream)
 	{
-		LAString msg = "Serialize stream is not set in LACoreDataService. Key = " + key;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Serialize stream is not set in LACoreDataService. Key = " + key;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
-	map<LAString, LAString> &dataMap = mDeserializedEMap[key];
+	map<AQLString, AQLString> &dataMap = mDeserializedEMap[key];
 	dataMap.clear();
 
 	// read data
 	string str;
 	while (getline(*dataStream, str))
 	{
-		LAString line = LAString(str.c_str());
-		LAString tempKey = line.toToken(',')[0];
+		AQLString line = AQLString(str.c_str());
+		AQLString tempKey = line.toToken(',')[0];
 		line.exchange(tempKey + ",", "");
 		dataMap[tempKey] = line;
 	}
@@ -159,7 +159,7 @@ LACalibrate::deserializeStream(const LAString &key)
 	@param[in] fileNum
 */
 void 
-LACalibrate::setmSerializeMap(const LAString &fileNum)
+LACalibrate::setmSerializeMap(const AQLString &fileNum)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);

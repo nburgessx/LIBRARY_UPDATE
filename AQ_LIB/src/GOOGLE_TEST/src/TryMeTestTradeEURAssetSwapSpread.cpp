@@ -6,7 +6,7 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
-#include "LACoreError.h"
+#include "AQLCoreError.h"
 #include "tryMeProductAssetSwapSpread.h"
 
 #include <gTest/gTest.h>
@@ -80,7 +80,7 @@ namespace google_test
                 // Load the input file
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getAssetSwapSpreadInputs, i ) );
                 double bondPrice = inputFile["bondPrice"];
-                LAStringMatrix assetSwapLVB = inputFile["assetSwapLVB"];
+                AQLStringMatrix assetSwapLVB = inputFile["assetSwapLVB"];
                 bool validateKeys = inputFile["validateKeys"];
 
                 double assetSwapSpread = validation::tryMeProductAssetSwapSpread( bondPrice, assetSwapLVB, validateKeys );
@@ -92,7 +92,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

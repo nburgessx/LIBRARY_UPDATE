@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "LAQuantLibCostFunction.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 using namespace std;
 

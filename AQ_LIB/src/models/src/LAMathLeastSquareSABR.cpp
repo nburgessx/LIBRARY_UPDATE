@@ -5,10 +5,10 @@
 #endif
 
 
-#include <LACoreTemplateType.h>
-#include <LAString.h>
-#include "LABasic.h"
-#include "LADist.h"
+#include <AQLCoreTemplateType.h>
+#include <AQLString.h>
+#include "AQLBasic.h"
+#include "AQLDist.h"
 
 #include "LAMathIRVanillaFuncUtility.h"
 #include "LAMathLeastSquareSABR.h"
@@ -31,7 +31,7 @@ LAMathLeastSquareSABRCostFunc::LAMathLeastSquareSABRCostFunc( LAMathSABR& sabr_,
 														  const vector<double>& param0_,
 														  const vector<bool>& flg_,
 														  const vector<double>& target2fit_,
-														  const LAString& target_)
+														  const AQLString& target_)
 {
 	mCostFunction = std::make_shared<LAMathLeastSquareSABRCostFuncQlib>(sabr_, expiry_, forward_, numeraire_, atmVol_, strike_, weight_, sgn_, param0_, flg_, target2fit_, target_);
 }
@@ -111,8 +111,8 @@ LAMathLeastSquareSABRCapFloorCostFunc::LAMathLeastSquareSABRCapFloorCostFunc(
 	DoubleMatrix numat_,
 	DoubleMatrix rhomat_,
 	const std::vector<int>& param_pos_,
-	const LAString& approxmethod_,
-	const LAString& tenorpoint_,
+	const AQLString& approxmethod_,
+	const AQLString& tenorpoint_,
 	const vector<double>& expiry_capfloor_,
 	const vector<double>& expiry_capfloorlet_,
 	const vector<double>& tenor_,
@@ -124,7 +124,7 @@ LAMathLeastSquareSABRCapFloorCostFunc::LAMathLeastSquareSABRCapFloorCostFunc(
 	const vector<double>& param0_,
 	const vector<bool>& flg_,
 	const vector<double>& target2fit_,
-	const LAString& target_,
+	const AQLString& target_,
 	const size_t& num_capfloorlet_,
 	const size_t& num_diffterm_)
 {

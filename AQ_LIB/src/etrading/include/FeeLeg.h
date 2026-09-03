@@ -19,7 +19,7 @@ namespace etrading
 
         double annuityWithNotional(DataProvider& dataProvider);
 		double pv( DataProvider& dataProvider, bool nativeCurrencyPV=false, bool updateCurveData=true);
-		//double dv01(const LAString& curveCollection);
+		//double dv01(const AQLString& curveCollection);
 
         ScheduleTypeEnum getType() const;
 

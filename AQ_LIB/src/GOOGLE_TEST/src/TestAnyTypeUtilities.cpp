@@ -24,8 +24,8 @@ namespace google_test
         std::string expected2   = "2";
         EXPECT_EQ( expected2, actual2 );
 
-        // LAString
-        std::string actual3     = etrading::fromAnyTypeToString( LAString("Three") );
+        // AQLString
+        std::string actual3     = etrading::fromAnyTypeToString( AQLString("Three") );
         std::string expected3   = "Three";
         EXPECT_EQ( expected3, actual3 );
 

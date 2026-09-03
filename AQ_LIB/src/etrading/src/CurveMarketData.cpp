@@ -209,7 +209,7 @@ namespace etrading
     * @param [in]       bumpSize                        Enter the bump or shift size to apply
     * @param [in]       marketDataType                  The marketData key or type to be updated
 	*/
-    void CurveMarketData::bumpMarketDataFromLAStringMatrix( LAStringMatrix & marketDataStringMatrix, const double bumpSize, const CurveMarketDataEnum & marketDataType )
+    void CurveMarketData::bumpMarketDataFromLAStringMatrix( AQLStringMatrix & marketDataStringMatrix, const double bumpSize, const CurveMarketDataEnum & marketDataType )
     {
         // Note: Use Base Zero Here for Native C++ Vector / Matrix Lookups
         // ================================================================
@@ -275,7 +275,7 @@ namespace etrading
 	* @param [in]       bumpSize                        Enter the bump or shift size to apply
     * @param [in]       marketDataType                  The marketData key or type to be updated
 	*/
-	void CurveMarketData::perturbMarketDataFromLAStringMatrix( LAStringMatrix & marketDataStringMatrix, size_t nthInstrumentToBump, const double bumpSize, const CurveMarketDataEnum & marketDataType )
+	void CurveMarketData::perturbMarketDataFromLAStringMatrix( AQLStringMatrix & marketDataStringMatrix, size_t nthInstrumentToBump, const double bumpSize, const CurveMarketDataEnum & marketDataType )
 	{
 		// Note: Use Base Zero Here for Native C++ Vector / Matrix Lookups
         // ================================================================
@@ -334,7 +334,7 @@ namespace etrading
     * @param [in/out]   marketDataStringMatrix          The market data to be bumped - input the original market data to get bumped market data as output
     * @param [in]       marketDataType                  The marketData key or type to be updated
 	*/
-	StandardStringVector CurveMarketData::getMarketDataTenorsFromLAStringMatrix( const LAStringMatrix & marketDataStringMatrix, const CurveMarketDataEnum & marketDataType )
+	StandardStringVector CurveMarketData::getMarketDataTenorsFromLAStringMatrix( const AQLStringMatrix & marketDataStringMatrix, const CurveMarketDataEnum & marketDataType )
 	{
 		// Note: Use Base Zero Here for Native C++ Vector / Matrix Lookups
         // ================================================================
@@ -636,14 +636,14 @@ namespace etrading
 		return variantMatrix;
 	}
 
-	/* @brief Returns a LAStringMatrix containing the marketData information for the specified marketDataKey
+	/* @brief Returns a AQLStringMatrix containing the marketData information for the specified marketDataKey
 	* @param [in]   marketDataKey   The property to be displayed
-	* @param [in]   trimBlankRows   Whether to remove blank rows from the end of the LAStringMatrix
-	* @param [out]  A LAStringMatrix containing the LabelValue block
+	* @param [in]   trimBlankRows   Whether to remove blank rows from the end of the AQLStringMatrix
+	* @param [out]  A AQLStringMatrix containing the LabelValue block
 	*/
-	LAStringMatrix CurveMarketData::toLAStringMatrix( const std::string& marketDataKey, const bool trimBlankRows ) const
+	AQLStringMatrix CurveMarketData::toLAStringMatrix( const std::string& marketDataKey, const bool trimBlankRows ) const
 	{		
-		LAStringMatrix stringMatrix;
+		AQLStringMatrix stringMatrix;
 		auto iter = stringMarketDataLocalCache_.find(marketDataKey);
 		
 		if (iter == stringMarketDataLocalCache_.end())
@@ -661,26 +661,26 @@ namespace etrading
 
     /* @brief Returns a StandardStringMatrix containing the marketData information for the specified marketDataKey
 	 * @param [in]   marketDataKey   The property to be displayed
-	 * @param [in]   trimBlankRows   Whether to remove blank rows from the end of the LAStringMatrix
+	 * @param [in]   trimBlankRows   Whether to remove blank rows from the end of the AQLStringMatrix
 	 * @param [out]  A StandardStringMatrix containing the LabelValue block
 	 */
 	StandardStringMatrix CurveMarketData::toStandardStringMatrix( const std::string& marketDataKey, const bool trimBlankRows ) const
     {
         // Reuse the above toLAStringMtrix() method
-        const LAStringMatrix laStringMatrix = toLAStringMatrix( marketDataKey, trimBlankRows );
+        const AQLStringMatrix laStringMatrix = toLAStringMatrix( marketDataKey, trimBlankRows );
         const StandardStringMatrix standardStringMatrix( convertToStandardStringMatrix( laStringMatrix ) );
 		return standardStringMatrix;
     }
 
     /* @brief Returns a LabelValueBlock containing the marketData information for the specified marketDataKey
 	 * @param [in]   marketDataKey   The property to be displayed
-	 * @param [in]   trimBlankRows   Whether to remove blank rows from the end of the LAStringMatrix
-	 * @param [out]  A LAStringMatrix containing the LabelValue block
+	 * @param [in]   trimBlankRows   Whether to remove blank rows from the end of the AQLStringMatrix
+	 * @param [out]  A AQLStringMatrix containing the LabelValue block
 	 */
 	LabelValueBlock CurveMarketData::toLabelValueBlock( const std::string& marketDataKey, const bool trimBlankRows ) const
     {
         // Reuse the above toLAStringMtrix() method
-        const LAStringMatrix laStringMatrix = toLAStringMatrix( marketDataKey, trimBlankRows );
+        const AQLStringMatrix laStringMatrix = toLAStringMatrix( marketDataKey, trimBlankRows );
         const LabelValueBlock LVB( laStringMatrix );
 		return LVB;
     }
@@ -694,7 +694,7 @@ namespace etrading
     {
         bool keyFound = true;
 
-        // 1. FirstCheck for the propertyKey in the LAStringMatrix Cache
+        // 1. FirstCheck for the propertyKey in the AQLStringMatrix Cache
         auto iter = stringMarketDataLocalCache_.find( marketDataKey );
 		if (iter == stringMarketDataLocalCache_.end())  // Not Found
         {
@@ -722,12 +722,12 @@ namespace etrading
 	*/
 	std::vector<std::string> CurveMarketData::getKeysInTable( const std::string& marketDataKey )
 	{
-		LAStringMatrix s = toLAStringMatrix( marketDataKey );
+		AQLStringMatrix s = toLAStringMatrix( marketDataKey );
 
 		std::vector<std::string> keys;
 		for(size_t i = 0; i < s.size(); ++i)
 		{
-			LAStringVector v = s[i];
+			AQLStringVector v = s[i];
 			if (v.size() != 0)
 			{
 				keys.push_back(v[0].getCString());
@@ -741,7 +741,7 @@ namespace etrading
 	* @param [in]   marketDataKey   Key that identifies the block of data being set
 	* @param [in]   data			 A string matrix type of market data being set to the object
 	*/
-	void CurveMarketData::setMarketDataLocalCache( const std::string& marketDataType, const LAStringMatrix& marketData )
+	void CurveMarketData::setMarketDataLocalCache( const std::string& marketDataType, const AQLStringMatrix& marketData )
 	{
 		stringMarketDataLocalCache_[marketDataType] = marketData;
 

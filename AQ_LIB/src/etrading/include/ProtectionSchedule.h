@@ -22,14 +22,14 @@ namespace etrading
 		* @param[in]	recoveryRate			The estimated amount of capital recovered after default
 		* @param[in]	includeAccruedInterest	Not used for the Protection Schedule / Cashflows
 		*/
-		void setSurvivalProbabilitiesUsingHazardRate( const LADate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest );
+		void setSurvivalProbabilitiesUsingHazardRate( const AQLDate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest );
 
 		/* @brief Updates the cashflow survival / default probabilities using the provided credit model.
 		*
 		* @param[in]	asOfDate				The valuation date of the leg
 		* @param[in]	creditModel				The calibrated credit model
 		*/
-		void setSurvivalProbabilitiesUsingCreditModel( const LADate& asOfDate, const CreditModel& creditModel );
+		void setSurvivalProbabilitiesUsingCreditModel( const AQLDate& asOfDate, const CreditModel& creditModel );
 
         const DataSchema generateCashflowSchema(const std::string& schemaName="") const;
         std::map<std::string, std::vector<std::string>> getCashflowDataMap() const;

@@ -21,18 +21,18 @@ namespace etrading
 		size_t expectedSize = fixingDates.size();
         AQ_REQUIRE( expectedSize >= 1, "The input fixing dates cannot be empty" );
 
-		const LAString curveId (curveCollection.c_str()); 
-		const LAString curveIndx (curveIndex.c_str()); 
+		const AQLString curveId (curveCollection.c_str()); 
+		const AQLString curveIndx (curveIndex.c_str()); 
 
 		const auto curveTenor = validateCurveAndGetCurveFrequency(curveId, curveIndx);
 
-		const LADate curveAsOfDate = getCurveAsOfDate( curveId );
+		const AQLDate curveAsOfDate = getCurveAsOfDate( curveId );
 		const DayCountEnum fwdCurveDayCount = toDayCountEnum(validateCurveAndGetFloatDaycount( curveId, curveIndx).getCString());
 
 		//Should get the SlidingRule from Future Instrument of the curveIndex
-		const LAString businessDayAdj = "MOD_FOLLOWING"; 
+		const AQLString businessDayAdj = "MOD_FOLLOWING"; 
 
-		const LAString calendar = getDefaultCalendarForEmptyString( "", curveId );
+		const AQLString calendar = getDefaultCalendarForEmptyString( "", curveId );
 
 		const DateVector TDates = getDateFromTenor(fixingDates, curveTenor, businessDayAdj, calendar, "");
 
@@ -94,11 +94,11 @@ namespace etrading
 	*  @param [in]		P_t_Ts				Discount factors P(t,T)s
 	*  @return			True to indicate it's future curve (i.e. valuationDate > asOfDate), false to indicate it's today's curve (i.e. valuationDate == asOfDate)
 	*/
-	bool isFutureValuation(const LADate& curveAsOfDate, const LADate& valuationDate)
+	bool isFutureValuation(const AQLDate& curveAsOfDate, const AQLDate& valuationDate)
 	{
 		bool futureValuation = false;
 		
-		if (valuationDate == LADate() || valuationDate == curveAsOfDate)
+		if (valuationDate == AQLDate() || valuationDate == curveAsOfDate)
 		{
 			futureValuation = false;
 		}
@@ -108,7 +108,7 @@ namespace etrading
 		}
 		else
 		{
-			throw LACoreInvalidData("#Error: Valuation Date cannot be earlier than curve's asOfDate.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: Valuation Date cannot be earlier than curve's asOfDate.",__FILE__,__LINE__);
 		}
 		return futureValuation;
 	}
@@ -120,7 +120,7 @@ namespace etrading
     *  @param [in]		futureValuation		False to indicate it's valuated at asOfDate, True to indicate it's valuated at a later date
 	*  @return			default short rate at asOfDate if its not provided
 	*/
-	double getDefaultShortRate(const LADate& curveAsOfDate, const std::string& curveCollection, const std::string& curveIndex, const double& rt, const bool& futureValuation)
+	double getDefaultShortRate(const AQLDate& curveAsOfDate, const std::string& curveCollection, const std::string& curveIndex, const double& rt, const bool& futureValuation)
 	{
 		double shortRate = rt;
 
@@ -128,7 +128,7 @@ namespace etrading
 		{
 			if (futureValuation)
 			{
-				throw LACoreInvalidData("#Error: For future curve, rt must be provided.",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("#Error: For future curve, rt must be provided.",__FILE__,__LINE__);
 			}
 			else
 			{

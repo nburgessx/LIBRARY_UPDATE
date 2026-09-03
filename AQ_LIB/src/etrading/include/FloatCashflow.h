@@ -9,7 +9,7 @@ namespace etrading
     public:
         FloatCashflow();
         FloatCashflow(const PayReceiveEnum& payReceive, double spread, 
-				const LADate& fixingDate, const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, double accrualYearFraction, const LADate& paymentDate, 
+				const AQLDate& fixingDate, const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, double accrualYearFraction, const AQLDate& paymentDate, 
                 double notional, double leverage, double couponMultiplier, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType, const CashFlowBespokeInfo& bespokeInfo);
 		virtual ~FloatCashflow() {}
 

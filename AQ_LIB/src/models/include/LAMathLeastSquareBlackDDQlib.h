@@ -14,7 +14,7 @@
 #include <ql/math/optimization/costfunction.hpp>
 #include <ql/math/optimization/constraint.hpp>
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LAMathAnalyticalFormula.h"
 #include "LAModelDynamicsCurve.h"
 
@@ -205,8 +205,8 @@ private:
         
         bool test(const QuantLib::Array& params) const
         {
-            if( params.size() != mSize) throw LACoreInvalidData("params.size() != mSize : LAMathBoundaryConstraintMktSkewVolQLib::Impl::test", __FILE__, __LINE__);            
-            if( mSize % 2 != 0 ) throw LACoreInvalidData(" mSize % 2 != 0 : LAMathBoundaryConstraintMktSkewVolQLib::Impl::test", __FILE__, __LINE__);
+            if( params.size() != mSize) throw AQLCoreInvalidData("params.size() != mSize : LAMathBoundaryConstraintMktSkewVolQLib::Impl::test", __FILE__, __LINE__);            
+            if( mSize % 2 != 0 ) throw AQLCoreInvalidData(" mSize % 2 != 0 : LAMathBoundaryConstraintMktSkewVolQLib::Impl::test", __FILE__, __LINE__);
 
             for(size_t i = 0; i < static_cast<size_t>(mSize / 2); ++i)
             {

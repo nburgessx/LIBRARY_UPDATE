@@ -5,8 +5,8 @@
 #endif
 
 #include "LAMathDriftFuncBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LARatesSDEBase.h"
 
 
@@ -30,7 +30,7 @@ public:
 	// Default constructor
 	LAPriceDriftFX(const double s = 0.0, SDE_TYPE type = DIVIDEdXbyX);
 	// constructor
-	LAPriceDriftFX(const LAString& sdeAttrNameD, const LAString& sdeAttrNameF, const double s = 0.0, SDE_TYPE type = DIVIDEdXbyX);
+	LAPriceDriftFX(const AQLString& sdeAttrNameD, const AQLString& sdeAttrNameF, const double s = 0.0, SDE_TYPE type = DIVIDEdXbyX);
 	//	Copy constructor
 //	LAPriceDriftFX(const LAPriceDriftFX& v);
 	// Destructor
@@ -42,7 +42,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -56,7 +56,7 @@ public:
 								//==========================================
 
 								// return string representaion
-    virtual LAString			convertToString(void) const;
+    virtual AQLString			convertToString(void) const;
 	                            //==========================================
 	                            // Return integral result
 	virtual double				integral(const std::vector<std::pair<double,double> >& x) const;
@@ -64,7 +64,7 @@ public:
 //	OPERATION
 								//==========================================
 								// transform from string representaion
-     virtual void				convertFromString(const LAString& str);
+     virtual void				convertFromString(const AQLString& str);
 
 								//======================================
 								// set up this class
@@ -89,8 +89,8 @@ private:
 protected:
 	const LARatesNumeraireBase*	mpNumeraireD;	// numerarire of domestic currency
  	const LARatesNumeraireBase*	mpNumeraireF;	// numerarire of foreign currency
-	LAString					mSDEAttrNameD;	// data name of ir sde of domestic currency
-	LAString					mSDEAttrNameF;	// data name of ir sde of foreign currency
+	AQLString					mSDEAttrNameD;	// data name of ir sde of domestic currency
+	AQLString					mSDEAttrNameF;	// data name of ir sde of foreign currency
 	double						mS;				// parameter of displaced diffusion
 	SDE_TYPE					mType;			// sde type
 

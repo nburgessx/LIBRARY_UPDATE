@@ -19,10 +19,10 @@
 
 
 #include "LACalibrateModelFXStrangleSolver.h"
-#include "LAFunctionBase.h"
-#include "LAFunctionManager.h"
+#include "AQLFunctionBase.h"
+#include "AQLFunctionManager.h"
 #include "LAMathVolFuncBase.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "LAPriceDriftLMMSpot.h"
 #include "LAPriceDriftFX.h"
 #include "LARatesSpotSDE.h"
@@ -38,7 +38,7 @@
 #include "LACalibrateVolatilityFXStrangleSolver.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
-#include "LAConstant.h"
+#include "AQLConstant.h"
 #include "LAPriceFXVolatility.h"
 #include "LAPriceFXDDIntegral.h"
 #include "LAPriceFXDDIntegralMelstein.h"
@@ -46,7 +46,7 @@
 #include "LAMathVolFuncFXStrangleSolver.h"
 #include "LACalibrateFXStrangleSolver.h"
 #include "LACalibrationFunc.h"
-#include "LADataMatrix.h"
+#include "AQLDataMatrix.h"
 
 using namespace std;
 
@@ -76,7 +76,7 @@ LACalibrateModelFXStrangleSolver::~LACalibrateModelFXStrangleSolver(void)
 	@param[in] dataInstance
 */
 LARatesSDEBase *
-LACalibrateModelFXStrangleSolver::createSDEInstance(const LAString &fx, LADataInstance &dataInstance) const
+LACalibrateModelFXStrangleSolver::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	return 0;
 }
@@ -89,7 +89,7 @@ LACalibrateModelFXStrangleSolver::createSDEInstance(const LAString &fx, LADataIn
 
 */
 SDE_TYPE
-LACalibrateModelFXStrangleSolver::getSDEType(const LAString &fx) const
+LACalibrateModelFXStrangleSolver::getSDEType(const AQLString &fx) const
 {
 	SDE_TYPE a;
 	return a;
@@ -102,7 +102,7 @@ LACalibrateModelFXStrangleSolver::getSDEType(const LAString &fx) const
 
 */
 bool 
-LACalibrateModelFXStrangleSolver::isLJ(const LAString &fx) const
+LACalibrateModelFXStrangleSolver::isLJ(const AQLString &fx) const
 {
 	return false;
 }
@@ -114,7 +114,7 @@ LACalibrateModelFXStrangleSolver::isLJ(const LAString &fx) const
 	@param[out] sde
 */
 void
-LACalibrateModelFXStrangleSolver::setVolatility(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXStrangleSolver::setVolatility(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -130,7 +130,7 @@ LACalibrateModelFXStrangleSolver::setVolatility(const LAString &fx, LARatesSDEBa
 
 */
 void
-LACalibrateModelFXStrangleSolver::setDrift(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXStrangleSolver::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -146,7 +146,7 @@ LACalibrateModelFXStrangleSolver::setDrift(const LAString &fx, LARatesSDEBase &s
 
 */
 void
-LACalibrateModelFXStrangleSolver::setIntegralFunction(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXStrangleSolver::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -160,7 +160,7 @@ LACalibrateModelFXStrangleSolver::setIntegralFunction(const LAString &fx, LARate
 	@param[out] sde
 */
 void
-LACalibrateModelFXStrangleSolver::setOutputTemplate(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXStrangleSolver::setOutputTemplate(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -174,7 +174,7 @@ LACalibrateModelFXStrangleSolver::setOutputTemplate(const LAString &fx, LARatesS
 	@param[out] sde
 */
 void
-LACalibrateModelFXStrangleSolver::setInterpolationMethod(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXStrangleSolver::setInterpolationMethod(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -187,10 +187,10 @@ LACalibrateModelFXStrangleSolver::setInterpolationMethod(const LAString &fx, LAR
 
 	@param[in] fx
 */
-LAString 
-LACalibrateModelFXStrangleSolver::getFunctionMasterResistName(const LAString &fx) const
+AQLString 
+LACalibrateModelFXStrangleSolver::getFunctionMasterResistName(const AQLString &fx) const
 {
-	LAString tmpFX = fx;
+	AQLString tmpFX = fx;
 	return fx;
 	
 }
@@ -201,8 +201,8 @@ LACalibrateModelFXStrangleSolver::getFunctionMasterResistName(const LAString &fx
 
 	@param[in]  fx 
 */
-LAString
-LACalibrateModelFXStrangleSolver::getVolType(const LAString &fx) const
+AQLString
+LACalibrateModelFXStrangleSolver::getVolType(const AQLString &fx) const
 {
 	return INPUT_FUNC;
 }
@@ -216,28 +216,28 @@ LACalibrateModelFXStrangleSolver::getVolType(const LAString &fx) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelFXStrangleSolver::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelFXStrangleSolver::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	setUpVolEntity(fx,vol);
-	LAStringVector ccys;
+	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
 
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAStringVector fileVec(1);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector fileVec(1);
 	
 	MAScenarioParam param;
 	param.calcType = KEY_PV;
 	// set fx
 	param.ccy = fx;
 	
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	
 	param.isCalib = isCalibTarget(fx);
 	if (param.isCalib)
 	{
 		// create calib info
 		LACalibrationParametersFXStrangleSolver cInfo;
-		LAString cInfoName = cInfo.createCalibrationInfo(dataInstance.getObjectPool(), fx);
+		AQLString cInfoName = cInfo.createCalibrationInfo(dataInstance.getObjectPool(), fx);
 		// first element set calib info
 		param.refName.push_back(cInfoName);
 
@@ -257,21 +257,21 @@ LACalibrateModelFXStrangleSolver::setUpVolFunc(const LAString &fx, LAMathVolatil
 	}
 	else
 	{
-		throw LACoreInvalidData("Only Calibration supports",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Only Calibration supports",__FILE__,__LINE__);
 	}
 	
 	// create function
 	LACalibrateVolatilityFXStrangleSolver volCreator;
-	LAFunctionBase *method = volCreator.createVolatility(fileVec, &param, &objPool);
+	AQLFunctionBase *method = volCreator.createVolatility(fileVec, &param, &objPool);
 	vol.setVolatility(method);
 	
 	//// add strangle solver data to dataValues
 	LAMathVolFuncFXStrangleSolver* func_fx = dynamic_cast<LAMathVolFuncFXStrangleSolver*>(method);
-	vol.LAObject::add(IR_CALIBRATION_DATA_INTERPOLATIONMETHOD, new LADataInt(func_fx->getInterpolationMethod()));
-	vol.LAObject::add(IR_CALIBRATION_DATA_INTERPOLATIONTARGET, new LADataInt(func_fx->getInterpolationTarget()));
-	vol.LAObject::add(IR_CALIBRATION_DATA_INTERPOLATIONVARIABLE, new LADataInt(func_fx->getInterpolationVariable()));
-	vol.LAObject::add(IR_CALIBRATION_DATA_ATMINTERPOLATIONMETHOD, new LADataInt(func_fx->getATMInterpolationMethod()));
-	vol.LAObject::add(IR_CALIBRATION_DATA_ISWINGFLAG, new LADataBool(func_fx->getIsWing()));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONMETHOD, new AQLDataInt(func_fx->getInterpolationMethod()));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONTARGET, new AQLDataInt(func_fx->getInterpolationTarget()));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONVARIABLE, new AQLDataInt(func_fx->getInterpolationVariable()));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_ATMINTERPOLATIONMETHOD, new AQLDataInt(func_fx->getATMInterpolationMethod()));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_ISWINGFLAG, new AQLDataBool(func_fx->getIsWing()));
 	// smile data
 	DoubleMatrix deltaPutMat, logStrikeMat, strikeMat, volMat;
 	vector<SmileData > smileData = func_fx->getSmileData();
@@ -282,10 +282,10 @@ LACalibrateModelFXStrangleSolver::setUpVolFunc(const LAString &fx, LAMathVolatil
 		strikeMat.push_back(smileData[i].strikes);
 		volMat.push_back(smileData[i].vols);
 	}
-	vol.LAObject::add(IR_CALIBRATION_DATA_SMILEDATA_DELTAPUT, new LADataDoubleMatrix(deltaPutMat));
-	vol.LAObject::add(IR_CALIBRATION_DATA_SMILEDATA_LOGSTRIKE, new LADataDoubleMatrix(logStrikeMat));
-	vol.LAObject::add(IR_CALIBRATION_DATA_SMILEDATA_STRIKE, new LADataDoubleMatrix(strikeMat));
-	vol.LAObject::add(IR_CALIBRATION_DATA_SMILEDATA_VOL, new LADataDoubleMatrix(volMat));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_SMILEDATA_DELTAPUT, new AQLDataDoubleMatrix(deltaPutMat));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_SMILEDATA_LOGSTRIKE, new AQLDataDoubleMatrix(logStrikeMat));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_SMILEDATA_STRIKE, new AQLDataDoubleMatrix(strikeMat));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_SMILEDATA_VOL, new AQLDataDoubleMatrix(volMat));
 	// fx option data
 	DoubleVector T_fxOptData, Pd_fxOptData, Pf_fxOptData, F_fxOptData, spotFX_fxOptData, Days_fxOptData;
 	IntVector deltaType_fxOptData, atmType_fxOptData;
@@ -301,14 +301,14 @@ LACalibrateModelFXStrangleSolver::setUpVolFunc(const LAString &fx, LAMathVolatil
 		deltaType_fxOptData.push_back(fxOptData[i].deltaType);
 		atmType_fxOptData.push_back(fxOptData[i].atmType);
 	}
-	vol.LAObject::add(IR_CALIBRATION_DATA_FXOPTDATA_T, new LADataDoubles(T_fxOptData));
-	vol.LAObject::add(IR_CALIBRATION_DATA_FXOPTDATA_PD, new LADataDoubles(Pd_fxOptData));
-	vol.LAObject::add(IR_CALIBRATION_DATA_FXOPTDATA_PF, new LADataDoubles(Pf_fxOptData));
-	vol.LAObject::add(IR_CALIBRATION_DATA_FXOPTDATA_F, new LADataDoubles(F_fxOptData));
-	vol.LAObject::add(IR_CALIBRATION_DATA_FXOPTDATA_SPOTFX, new LADataDoubles(spotFX_fxOptData));
-	vol.LAObject::add(IR_CALIBRATION_DATA_FXOPTDATA_DAYS, new LADataDoubles(Days_fxOptData));
-	vol.LAObject::add(IR_CALIBRATION_DATA_FXOPTDATA_DELTATYPE, new LADataInts(deltaType_fxOptData));
-	vol.LAObject::add(IR_CALIBRATION_DATA_FXOPTDATA_ATMTYPE, new LADataInts(atmType_fxOptData));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_FXOPTDATA_T, new AQLDataDoubles(T_fxOptData));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_FXOPTDATA_PD, new AQLDataDoubles(Pd_fxOptData));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_FXOPTDATA_PF, new AQLDataDoubles(Pf_fxOptData));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_FXOPTDATA_F, new AQLDataDoubles(F_fxOptData));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_FXOPTDATA_SPOTFX, new AQLDataDoubles(spotFX_fxOptData));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_FXOPTDATA_DAYS, new AQLDataDoubles(Days_fxOptData));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_FXOPTDATA_DELTATYPE, new AQLDataInts(deltaType_fxOptData));
+	vol.AQLObject::add(IR_CALIBRATION_DATA_FXOPTDATA_ATMTYPE, new AQLDataInts(atmType_fxOptData));
 }
 
 
@@ -321,7 +321,7 @@ LACalibrateModelFXStrangleSolver::setUpVolFunc(const LAString &fx, LAMathVolatil
 	@param[out] dataInstance
 */
 void
-LACalibrateModelFXStrangleSolver::setUpVolData(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelFXStrangleSolver::setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	fx;
 	vol;
@@ -337,12 +337,12 @@ LACalibrateModelFXStrangleSolver::setUpVolData(const LAString &fx, LAMathVolatil
 
 */
 void
-LACalibrateModelFXStrangleSolver::setUpVolEntity(const LAString &fx, LAMathVolatility &vol) const
+LACalibrateModelFXStrangleSolver::setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const
 {
 	// set interpolation
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString interp = "fn_linearinterpolation";
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString interp = "fn_linearinterpolation";
 	vol.getInterpolation().convertFromString(interp);
 }
 

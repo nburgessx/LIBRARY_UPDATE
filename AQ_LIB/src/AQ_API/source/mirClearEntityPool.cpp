@@ -11,7 +11,7 @@ std::string mirClearEntityPool()
 	{
 		ret = validation::tryMirClearEntityPool().getCString();
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

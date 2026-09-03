@@ -19,7 +19,7 @@
 
 
 #include "LADataInstanceConfiguration.h"
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 // constructor
 /*!
 
@@ -44,7 +44,7 @@ LADataInstanceConfiguration::~LADataInstanceConfiguration(void)
 	@param[out] dataInstance
 */
 void
-LADataInstanceConfiguration::setUpDataInstance(LADataInstance &dataInstance) const
+LADataInstanceConfiguration::setUpDataInstance(AQLDataInstance &dataInstance) const
 {
 	// setup master data
 	setUpMasters(dataInstance);

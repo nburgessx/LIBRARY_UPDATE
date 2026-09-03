@@ -52,7 +52,7 @@ namespace etrading
 
 	const BlackScholesGreeks OptionCashflow::greeks(const GreekTypeEnum& greekType, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump) const
 	{
-		throw LACoreInvalidData("#Error: greeks() is not supported", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("#Error: greeks() is not supported", __FILE__, __LINE__);
 	}
 
 }

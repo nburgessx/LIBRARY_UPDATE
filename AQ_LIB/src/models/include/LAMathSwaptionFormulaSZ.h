@@ -1,12 +1,12 @@
 ﻿#ifndef _LAMATHSWAPTIONFORMULA_H_
 #define _LAMATHSWAPTIONFORMULA_H_
 
-#include "LAFunction.h"
+#include "AQLFunction.h"
 
 #include <math.h>
 #include <algorithm>
 #include <LAMathAnalyticalFormula.h>
-#include "LADist.h"
+#include "AQLDist.h"
 
 #include <vector>
 #include "LAMathIntegralMulti.h"
@@ -15,7 +15,7 @@
 using namespace std;
 
 //
-class DDSZ_util : public LAFunction
+class DDSZ_util : public AQLFunction
 {
 public:
 
@@ -84,7 +84,7 @@ public:
 			exp_kappa_t[i].resize(size);
 			for (unsigned int j = 0; j < size; ++j)
 			{
-				exp_kappa_t[i][j] = LAMath::exp(kappa_[i] * T_param_[j]);
+				exp_kappa_t[i][j] = AQLMath::exp(kappa_[i] * T_param_[j]);
 			}
 		}
 	}
@@ -137,7 +137,7 @@ protected:
 	vector<double> theta_over_kappa;
 	DoubleMatrix exp_kappa_t;
 
-    LAMathFunction<DDSZ_util> Int_kappa;
+    AQLMathFunction<DDSZ_util> Int_kappa;
     ////double kappa_(double t);
 	inline double kappa_(double t) const;
 
@@ -969,7 +969,7 @@ public:
         //tmp2 += Sigma * Sigma_SQ * (-2. * sqrt(2.) * (cathe_q1(t) + cathe_q2(t)) * K_ + sqrt(2.) * (cathe_q6(t) + cathe_q9(t)) * Sigma + 2. * sqrt(2.) * Sigma_SQ);
 		//furuya
 		//return S0 * P_f * (  n * tmp2 / tmp1 + K_ * ( 1. - stdNorm.cdf(-K_ / sqrt(Sigma)) ));
-		return S0 * P_f * (  n * tmp2 / tmp1 + K_ * ( 1. - LADist::normsdist(-K_ / sqrt(Sigma)) ));
+		return S0 * P_f * (  n * tmp2 / tmp1 + K_ * ( 1. - AQLDist::normsdist(-K_ / sqrt(Sigma)) ));
 	}
 
 	double Get_imp_vol(double t, double K, bool cache, int sgn = 1)
@@ -1061,7 +1061,7 @@ private:
 
     LAMathIntegralMulti* int_multi;
 
-	class imp_vol_ddsz : public LAFunction
+	class imp_vol_ddsz : public AQLFunction
 	{
 	public:
 		imp_vol_ddsz( double prem_, double mean_LN_, double margin_, int sgn_ )

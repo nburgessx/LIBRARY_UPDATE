@@ -38,7 +38,7 @@ namespace validation
 																	const std::string& oisCurveGeneratorName,
 																	const std::string& lwoSwapMarketObj,
 																	const std::string& lwoOISMarketObj,
-																	const LAStringMatrix& commonParams)
+																	const AQLStringMatrix& commonParams)
     {
 		VALID_EXCEPTION_START
 	
@@ -51,22 +51,22 @@ namespace validation
 		// Perform initial basic sanity checks
 		if ( swapCurveGeneratorName.size() == 0 )
 		{
-			throw LACoreInvalidData(( "#Error: Missing swapCurveGeneratorName input" ), __FILE__, __LINE__ );
+			throw AQLCoreInvalidData(( "#Error: Missing swapCurveGeneratorName input" ), __FILE__, __LINE__ );
 		}
 
 		if ( oisCurveGeneratorName.size() == 0 )
 		{
-			throw LACoreInvalidData(( "#Error: Missing oisCurveGeneratorName input" ), __FILE__, __LINE__ );
+			throw AQLCoreInvalidData(( "#Error: Missing oisCurveGeneratorName input" ), __FILE__, __LINE__ );
 		}
 
 		if ( lwoSwapMarketObj.size() == 0 )
 		{
-			throw LACoreInvalidData(( "#Error: Missing lwoSwapMarketObj input" ), __FILE__, __LINE__ );
+			throw AQLCoreInvalidData(( "#Error: Missing lwoSwapMarketObj input" ), __FILE__, __LINE__ );
 		}
 
 		if ( lwoOISMarketObj.size() == 0 )
 		{
-			throw LACoreInvalidData(( "#Error: Missing lwoOISMarketObj input" ), __FILE__, __LINE__ );
+			throw AQLCoreInvalidData(( "#Error: Missing lwoOISMarketObj input" ), __FILE__, __LINE__ );
 		}
 		
 		// Create the Curve object and store in the cache

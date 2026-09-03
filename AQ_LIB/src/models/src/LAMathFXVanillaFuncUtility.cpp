@@ -4,32 +4,32 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathFXVanillaFuncUtility.h"
 #include "LAMathIRVanillaFuncUtility.h"
 #include "LAMathDateUtilities.h"
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAPriceCFGenUtility.h"
 #include "LAMathDateCalculations.h"
-#include "LADataReference.h"
+#include "AQLDataReference.h"
 #include "LAAnalyticFormula.h"
 #include "LABlackScholesCalc.h"
-#include "LADataProcedure.h"
-#include "LACoreComponentManager.h"
-#include "LAPriceDataConvention.h"
-#include "LADataMatrix.h"
-#include "LAPriceDataInterpolation.h"
-#include "LADataMultiReference.h"
-#include "LAMatrix.h"
+#include "AQLDataProcedure.h"
+#include "AQLCoreComponentManager.h"
+#include "AQLPriceDataConvention.h"
+#include "AQLDataMatrix.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLDataMultiReference.h"
+#include "AQLMatrix.h"
 #include <cmath>
 #include <map>
 
@@ -37,18 +37,18 @@ using namespace std;
 
 
 double 
-LAMathFXVanillaFuncUtility::gkOption(LAString& optiontype, LAString& buysell, LAString& callput,
+LAMathFXVanillaFuncUtility::gkOption(AQLString& optiontype, AQLString& buysell, AQLString& callput,
 				 double spot, double strike, double vol, 
-				 double localrate, double foreignrate, const LADate& basedate, 
-				 const LADate& spotdate, const LADate& expirydate, const LADate& deliverydate)
+				 double localrate, double foreignrate, const AQLDate& basedate, 
+				 const AQLDate& spotdate, const AQLDate& expirydate, const AQLDate& deliverydate)
 {
 	//change nospace & upper
 	upper(optiontype);
 	upper(callput);
 	upper(buysell);
-	LAString daycount(AC_365I);
+	AQLString daycount(AC_365I);
 	//hishida vannavolga
-	LAString blackdaycount(AC_365I);
+	AQLString blackdaycount(AC_365I);
 
 	///////////setup///////////////////////////
 	AnalyticGKParam param;
@@ -64,11 +64,11 @@ LAMathFXVanillaFuncUtility::gkOption(LAString& optiontype, LAString& buysell, LA
 	param.ErrorCheck();
 	////////////////////////////////////////////
 	//main sorce
-	LAString bscomponent = GK + optiontype  + callput ;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+	AQLString bscomponent = GK + optiontype  + callput ;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p = it->second;
 	double ret=0.0;
 	if(BUY==buysell)
@@ -76,32 +76,32 @@ LAMathFXVanillaFuncUtility::gkOption(LAString& optiontype, LAString& buysell, LA
 	else if(SELL==buysell)
 		ret = -1* p->calc(param);
 	else 
-		throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__);
+		throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__);
 
 	LAMathBaseFuncUtility::adjustunit(ret,optiontype);
 	return ret;
 }
 double 
-LAMathFXVanillaFuncUtility::gkOptionIV(LAString& buysell,
-									 LAString& callput,
+LAMathFXVanillaFuncUtility::gkOptionIV(AQLString& buysell,
+									 AQLString& callput,
 							            double spot,
 										double strike,
 										double prem,
                                         double localrate, 
 										double foreignrate,
-										const LADate& basedate,
-										const LADate& spotdate, 
-										const LADate& expirydate, 
-										const LADate& deliverydate,
+										const AQLDate& basedate,
+										const AQLDate& spotdate, 
+										const AQLDate& expirydate, 
+										const AQLDate& deliverydate,
 										double high,
                                     	double low)
 {
 	//Change nospace & upper
 	upper(callput);
 	upper(buysell);
-	LAString daycount(AC_365I);
+	AQLString daycount(AC_365I);
 	//hishida vannavolga
-	LAString blackdaycount(AC_365I);
+	AQLString blackdaycount(AC_365I);
 
 	//Setup
 	AnalyticGKParam param;
@@ -115,17 +115,17 @@ LAMathFXVanillaFuncUtility::gkOptionIV(LAString& buysell,
 	param.Td  = LAMathDateUtilities::getTerm(spotdate,deliverydate, daycount, true);
 	param.ErrorCheck();	
 	
-	if (callput != CALL && callput != PUT) throw LACoreInvalidData("Choose Call or Put!", __FILE__,__LINE__);
-	if (buysell != BUY && buysell != SELL) throw LACoreInvalidData("Choose Buy or Sell!", __FILE__,__LINE__);
+	if (callput != CALL && callput != PUT) throw AQLCoreInvalidData("Choose Call or Put!", __FILE__,__LINE__);
+	if (buysell != BUY && buysell != SELL) throw AQLCoreInvalidData("Choose Buy or Sell!", __FILE__,__LINE__);
 
 	//TypeSelect
-	LAString bscomponent = LAString(GK) + LAString(PREM)  + LAString(callput) ;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+	AQLString bscomponent = AQLString(GK) + AQLString(PREM)  + AQLString(callput) ;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	LABlackScholesBase* p1 = it->second;
 
-	bscomponent = LAString(GK) + LAString(VEGA)  + LAString(callput) ;
-	var = LACoreComponentManager::getBlackComponentMap();
+	bscomponent = AQLString(GK) + AQLString(VEGA)  + AQLString(callput) ;
+	var = AQLCoreComponentManager::getBlackComponentMap();
 	it = var.find(bscomponent);
 	LABlackScholesBase* p2 = it->second;
 
@@ -135,18 +135,18 @@ LAMathFXVanillaFuncUtility::gkOptionIV(LAString& buysell,
 //================================================================================================
 
 double 
-LAMathFXVanillaFuncUtility::digitalOption(LAString& optiontype, LAString& buysell, LAString& callput,
+LAMathFXVanillaFuncUtility::digitalOption(AQLString& optiontype, AQLString& buysell, AQLString& callput,
 				 double spot, double strike, double vol, 
-				 double localrate, double foreignrate, const LADate& basedate, 
-				 const LADate& spotdate, const LADate& expirydate, const LADate& deliverydate)
+				 double localrate, double foreignrate, const AQLDate& basedate, 
+				 const AQLDate& spotdate, const AQLDate& expirydate, const AQLDate& deliverydate)
 {
 	//change nospace & upper
 	upper(optiontype);
 	upper(callput);
 	upper(buysell);
-	LAString daycount(AC_365I);
+	AQLString daycount(AC_365I);
 	//hishida vannavolga
-	LAString blackdaycount(AC_365I);
+	AQLString blackdaycount(AC_365I);
 
 	/////////////setup////////////////////////////
 	AnalyticDGParam param;
@@ -164,11 +164,11 @@ LAMathFXVanillaFuncUtility::digitalOption(LAString& optiontype, LAString& buysel
 	param.ErrorCheck();
 	////////////////////////////////////////////////
 	//main sorce
-	LAString bscomponent = DG + optiontype  + callput;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+	AQLString bscomponent = DG + optiontype  + callput;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p = it->second;
 	double ret=0.0;
 	if(BUY==buysell)
@@ -176,17 +176,17 @@ LAMathFXVanillaFuncUtility::digitalOption(LAString& optiontype, LAString& buysel
 	else if(SELL==buysell)
 		ret = -1* p->calc(param);
 	else 
-		throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
+		throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
 
 	LAMathBaseFuncUtility::adjustunit(ret,optiontype);
 	return ret;
 }
 double 
-LAMathFXVanillaFuncUtility::singleBarrierOption(LAString& optiontype, LAString& buysell, LAString& callput,
-										LAString& downup, LAString& inout, double rebate, double limit,
+LAMathFXVanillaFuncUtility::singleBarrierOption(AQLString& optiontype, AQLString& buysell, AQLString& callput,
+										AQLString& downup, AQLString& inout, double rebate, double limit,
 										double spot, double strike, double vol, 
-										double localrate, double foreignrate, const LADate& basedate, 
-										const LADate& spotdate, const LADate& expirydate, const LADate& deliverydate)
+										double localrate, double foreignrate, const AQLDate& basedate, 
+										const AQLDate& spotdate, const AQLDate& expirydate, const AQLDate& deliverydate)
 {
 	//change nospace & upper
 	upper(optiontype);
@@ -194,9 +194,9 @@ LAMathFXVanillaFuncUtility::singleBarrierOption(LAString& optiontype, LAString& 
 	upper(buysell);
 	upper(downup);
 	upper(callput);
-	LAString daycount(AC_365I);
+	AQLString daycount(AC_365I);
 	//hishida vannavolga
-	LAString blackdaycount(AC_365I);
+	AQLString blackdaycount(AC_365I);
 
 	/////////////setup////////////////////////////
 	AnalyticSBParam param;
@@ -218,11 +218,11 @@ LAMathFXVanillaFuncUtility::singleBarrierOption(LAString& optiontype, LAString& 
 	param.ErrorCheck();
 	////////////////////////////////////////////////
 	//main source
-	LAString bscomponent = SB + optiontype  + callput + downup + inout;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+	AQLString bscomponent = SB + optiontype  + callput + downup + inout;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p = it->second;
 	double ret=0.0;
 	if(BUY==buysell)
@@ -230,15 +230,15 @@ LAMathFXVanillaFuncUtility::singleBarrierOption(LAString& optiontype, LAString& 
 	else if(SELL==buysell)
 		ret = -1* p->calc(param);
 	else 
-		throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
+		throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
 	
 	LAMathBaseFuncUtility::adjustunit(ret,optiontype);
 	return ret;
 }
 
 double 
-LAMathFXVanillaFuncUtility::singleBarrierOptionEasily(LAString& optiontype, LAString& buysell, LAString& callput,
-												LAString& downup, LAString& inout, double rebate, double limit,
+LAMathFXVanillaFuncUtility::singleBarrierOptionEasily(AQLString& optiontype, AQLString& buysell, AQLString& callput,
+												AQLString& downup, AQLString& inout, double rebate, double limit,
 												double spot, double strike, double vol, 
 												double localrate, double foreignrate,
 												double expiryterms, double deliveryterms, int rebatetime)
@@ -268,11 +268,11 @@ LAMathFXVanillaFuncUtility::singleBarrierOptionEasily(LAString& optiontype, LASt
 	param.ErrorCheck();
 	////////////////////////////////////////////////
 	//main source
-	LAString bscomponent = SB + optiontype  + callput + downup + inout;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+	AQLString bscomponent = SB + optiontype  + callput + downup + inout;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p = it->second;	
 	double ret=0.0;
 	if(BUY==buysell)
@@ -280,7 +280,7 @@ LAMathFXVanillaFuncUtility::singleBarrierOptionEasily(LAString& optiontype, LASt
 	else if(SELL==buysell)
 		ret = -1* p->calc(param);
 	else 
-		throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
+		throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
 	
 	LAMathBaseFuncUtility::adjustunit(ret,optiontype);
 	return ret;
@@ -288,11 +288,11 @@ LAMathFXVanillaFuncUtility::singleBarrierOptionEasily(LAString& optiontype, LASt
 
 
 double 
-LAMathFXVanillaFuncUtility::doubleBarrierOption(LAString& optiontype, LAString& buysell, LAString& callput, LAString& inout,
-										double limitlow, double limithigh, double rebate, LAString& rebatetype,  
+LAMathFXVanillaFuncUtility::doubleBarrierOption(AQLString& optiontype, AQLString& buysell, AQLString& callput, AQLString& inout,
+										double limitlow, double limithigh, double rebate, AQLString& rebatetype,  
 										double spot, double strike, double vol, 
-										double localrate, double foreignrate, const LADate& basedate, 
-										const LADate& spotdate, const LADate& expirydate, const LADate& deliverydate, 
+										double localrate, double foreignrate, const AQLDate& basedate, 
+										const AQLDate& spotdate, const AQLDate& expirydate, const AQLDate& deliverydate, 
 										int num)
 {
 	//change no space and upper
@@ -301,9 +301,9 @@ LAMathFXVanillaFuncUtility::doubleBarrierOption(LAString& optiontype, LAString& 
 	upper(inout);
 	upper(buysell);
 	upper(rebatetype);
-	LAString daycount(AC_365I);
+	AQLString daycount(AC_365I);
 	//hishida vannavolga
-	LAString blackdaycount(AC_365I);
+	AQLString blackdaycount(AC_365I);
 
 	/////////////setup////////////////////////////
 	AnalyticDBParam param;
@@ -330,33 +330,33 @@ LAMathFXVanillaFuncUtility::doubleBarrierOption(LAString& optiontype, LAString& 
 	if(optiontype!=REBATE)
 	{	
 		//This means we can only calculate version of inin or outout
-		LAString bscomponent = DB + optiontype  + callput + inout + inout;
-		std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-		std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+		AQLString bscomponent = DB + optiontype  + callput + inout + inout;
+		std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+		std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 		if(it==var.end())
-			throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 		LABlackScholesBase* p = it->second;
 		if(BUY==buysell)
 			ret = p->calc(param);
 		else if(SELL==buysell)
 			ret = -1* p->calc(param);
 		else 
-			throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
+			throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
 	}
 	else if(optiontype==REBATE)
 	{
-		LAString bscomponent = DB + optiontype  + rebatetype;
-		std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-		std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+		AQLString bscomponent = DB + optiontype  + rebatetype;
+		std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+		std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 		if(it==var.end())
-			throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 		LABlackScholesBase* p = it->second;
 		if(BUY==buysell)
 			ret = p->calc(param);
 		else if(SELL==buysell)
 			ret = -1* p->calc(param);
 		else 
-			throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
+			throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
 	}
 
 	LAMathBaseFuncUtility::adjustunit(ret,optiontype);
@@ -365,9 +365,9 @@ LAMathFXVanillaFuncUtility::doubleBarrierOption(LAString& optiontype, LAString& 
 
 
 double 
-LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, LAString& spotfwd, LAString& callput, double spotfx,
+LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, AQLString& spotfwd, AQLString& callput, double spotfx,
 									double fwdfx, double atmvol, double reversal, double strangle, double foreignrate,
-								  LADate& basedate, LADate& spotdate, LADate& expirydate, LADate& deliverydate)
+								  AQLDate& basedate, AQLDate& spotdate, AQLDate& expirydate, AQLDate& deliverydate)
 {
 	upper(spotfwd);
 	upper(callput);
@@ -395,20 +395,20 @@ LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, LAString& spotfwd
 }
 
 double 
-LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, LAString& spotfwd, LAString& callput, double spotfx,
+LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, AQLString& spotfwd, AQLString& callput, double spotfx,
 									double fwdfx, double atmvol, double reversal, double strangle, double foreignrate,
-								  LADate& basedate, LADate& spotdate, LADate& expirydate, LADate& deliverydate,
+								  AQLDate& basedate, AQLDate& spotdate, AQLDate& expirydate, AQLDate& deliverydate,
 								  double lower, double upper)                                    
 {
 	upper(spotfwd);
 	upper(callput);
 
-	LAString daycount(AC_365I);	
+	AQLString daycount(AC_365I);	
 	double deliveryterm = LAMathDateUtilities::getTerm(spotdate,deliverydate,daycount, true);
 	double expiryterm = LAMathDateUtilities::getTerm(basedate,expirydate,daycount, true);
 	double foreigndf;
 	FORMULAE_BEGIN
-	foreigndf = LAMath::exp(-1.0 * foreignrate * deliveryterm);
+	foreigndf = AQLMath::exp(-1.0 * foreignrate * deliveryterm);
 	FORMULAE_END
 	double ret = calcstrikefromdelta(target, spotfwd, callput, spotfx,
 									fwdfx, atmvol, reversal, strangle, foreigndf, expiryterm,
@@ -418,7 +418,7 @@ LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, LAString& spotfwd
 }
 
 double
-LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, LAString& spotfwd, LAString& callput, double spotfx, 
+LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, AQLString& spotfwd, AQLString& callput, double spotfx, 
 											  double fwdfx, double atmvol, double reversal, double strangle,
 											  double foreigndf, double expiryterm)
 {
@@ -446,32 +446,32 @@ LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, LAString& spotfwd
 }
 
 double
-LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, LAString& spotfwd, LAString& callput, double spotfx, 
+LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, AQLString& spotfwd, AQLString& callput, double spotfx, 
 											  double fwdfx, double atmvol, double reversal, double strangle,
 											  double foreigndf, double expiryterm, double lower, double upper)
 {
 	upper(spotfwd);
 	upper(callput);
 	if(spotfwd != SPOT && spotfwd != FORWARD)
-		throw LACoreInvalidData("Input SPOT or FWD",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Input SPOT or FWD",__FILE__,__LINE__);
 	if(callput != CALL && callput != PUT && callput != HIGH && callput != LOW)
-		throw LACoreInvalidData("Input HIGH or LOW",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Input HIGH or LOW",__FILE__,__LINE__);
 
 	if(HIGH==callput)
-		callput = LAString(CALL);
+		callput = AQLString(CALL);
 	else if(LOW==callput)
-		callput = LAString(PUT);
+		callput = AQLString(PUT);
 
-	LAString bscomponent1 = LAString(FD) + LAString(DELTA) + callput + spotfwd;
-	LAString bscomponent2 = LAString(FD) + LAString(FIRSTDIFF) + callput + spotfwd;
+	AQLString bscomponent1 = AQLString(FD) + AQLString(DELTA) + callput + spotfwd;
+	AQLString bscomponent2 = AQLString(FD) + AQLString(FIRSTDIFF) + callput + spotfwd;
 	LABlackScholesBase* p1;
 	LABlackScholesBase* p2;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it1;
-	std::map<LAString, LABlackScholesBase*> ::iterator it2;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it1;
+	std::map<AQLString, LABlackScholesBase*> ::iterator it2;
 
 	if(target<0)
-		throw LACoreInvalidData("Input positive number as target",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Input positive number as target",__FILE__,__LINE__);
 
 	AnalyticGKParam param;
 	param.S = spotfx;
@@ -489,14 +489,14 @@ LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, LAString& spotfwd
 		param.DFd = param.S*param.DFf/param.F;
 
 	else if(param.F==0.0)
-		throw LACoreInvalidData("Input ForwardFX as positive",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Input ForwardFX as positive",__FILE__,__LINE__);
 	
 	param.ErrorCheck();
 
 	it1 = var.find(bscomponent1);
 	it2 = var.find(bscomponent2);	
 	if(it1==var.end()||it2==var.end())
-		throw LACoreInvalidData("Choose Call or Put",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Choose Call or Put",__FILE__,__LINE__);
 	
 	p1 = it1->second;
 	p2 = it2->second;
@@ -505,24 +505,24 @@ LAMathFXVanillaFuncUtility::calcstrikefromdelta(double target, LAString& spotfwd
 }
 
 double
-LAMathFXVanillaFuncUtility::calcmaxstrike(LAString& spotfwd, const double spotfx, 
+LAMathFXVanillaFuncUtility::calcmaxstrike(AQLString& spotfwd, const double spotfx, 
 											  const double fwdfx, const double atmvol, const double reversal, const double strangle,
 											  const double foreigndf, const double expiryterm, double lower, double upper)
 {
 	upper(spotfwd);
 	if(spotfwd != SPOT && spotfwd != FORWARD)
-		throw LACoreInvalidData("Input SPOT or FWD",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Input SPOT or FWD",__FILE__,__LINE__);
 
     if(upper == -10.0)
         upper = spotfx * 2.0;
 
-	LAString bscomponent1 = LAString(FD) + LAString(FIRSTDIFF) + LAString(CALL) + LAString(spotfwd);
-	LAString bscomponent2 = LAString(FD) + LAString(SECONDDIFF) + LAString(CALL) + LAString(spotfwd);
+	AQLString bscomponent1 = AQLString(FD) + AQLString(FIRSTDIFF) + AQLString(CALL) + AQLString(spotfwd);
+	AQLString bscomponent2 = AQLString(FD) + AQLString(SECONDDIFF) + AQLString(CALL) + AQLString(spotfwd);
 	LABlackScholesBase* p1;
 	LABlackScholesBase* p2;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it1;
-	std::map<LAString, LABlackScholesBase*> ::iterator it2;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it1;
+	std::map<AQLString, LABlackScholesBase*> ::iterator it2;
 
 	AnalyticGKParam param;
 	param.S = spotfx;
@@ -535,14 +535,14 @@ LAMathFXVanillaFuncUtility::calcmaxstrike(LAString& spotfwd, const double spotfx
 		param.DFd = param.S*param.DFf/param.F;
 
 	else if(param.F==0.0)
-		throw LACoreInvalidData("Input ForwardFX as positive",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Input ForwardFX as positive",__FILE__,__LINE__);
 	
 	param.ErrorCheck();
 
 	it1 = var.find(bscomponent1);
 	it2 = var.find(bscomponent2);	
 	if(it1==var.end()||it2==var.end())
-		throw LACoreInvalidData("Choose SPOT or FWD",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Choose SPOT or FWD",__FILE__,__LINE__);
 	
 	p1 = it1->second;
 	p2 = it2->second;
@@ -554,7 +554,7 @@ LAMathFXVanillaFuncUtility::calcmaxstrike(LAString& spotfwd, const double spotfx
 
 
 double
-LAMathFXVanillaFuncUtility::calcmaxfxdelta(LAString& spotfwd, const double spotfx, 
+LAMathFXVanillaFuncUtility::calcmaxfxdelta(AQLString& spotfwd, const double spotfx, 
 											  const double fwdfx, const double atmvol, const double reversal, const double strangle,
 											  const double foreigndf, const double expiryterm, double lower, double upper)
 {
@@ -577,28 +577,28 @@ LAMathFXVanillaFuncUtility::calcmaxfxdelta(LAString& spotfwd, const double spotf
 		param.DFd = param.S*param.DFf/param.F;
 
 	else if(param.F==0.0)
-		throw LACoreInvalidData("Input ForwardFX as positive",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Input ForwardFX as positive",__FILE__,__LINE__);
 	
 	param.ErrorCheck();
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	LAString bscomponent = LAString(FD) + LAString(DELTA) + LAString(CALL) + spotfwd;
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);	
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	AQLString bscomponent = AQLString(FD) + AQLString(DELTA) + AQLString(CALL) + spotfwd;
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);	
 	LABlackScholesBase* p = it->second;
 	double ret= p->calc(param);
     return ret;
 }
 
 void
-LAMathFXVanillaFuncUtility::setupfxvolobject(LADataInstance* dataInstance, LAString& interpid, LAStringMatrix& baseinfomat, const DoubleArray& termvec, 
+LAMathFXVanillaFuncUtility::setupfxvolobject(AQLDataInstance* dataInstance, AQLString& interpid, AQLStringMatrix& baseinfomat, const DoubleArray& termvec, 
 										   const DoubleMatrix& strikemat, const DoubleMatrix& volmat, double spotfx)
 {
 	upper(baseinfomat);
 	upper(interpid);
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAObject* e = NULL;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObject* e = NULL;
 	if(!objPool.getObject(interpid).isDefined())
 	{
-		e = new LAObject();
+		e = new AQLObject();
 		objPool.set(interpid,e);
 	}
 	else 
@@ -607,48 +607,48 @@ LAMathFXVanillaFuncUtility::setupfxvolobject(LADataInstance* dataInstance, LAStr
 		e = &objPool.getObject(interpid).get();
 	}
 
-	e->add(INTERPINPUT_TERMVECTOR, new LADataDoubles(termvec));
-	e->add(INTERPINPUT_STRIKEMATRIX, new LADataDoubleMatrix(strikemat));
-	e->add(INTERPINPUT_VOLMATRIX, new LADataDoubleMatrix(volmat));
+	e->add(INTERPINPUT_TERMVECTOR, new AQLDataDoubles(termvec));
+	e->add(INTERPINPUT_STRIKEMATRIX, new AQLDataDoubleMatrix(strikemat));
+	e->add(INTERPINPUT_VOLMATRIX, new AQLDataDoubleMatrix(volmat));
 
 	//intertplation mapping
-	LAString interpstr = chgrow(baseinfomat, INTERPINPUT_INTERPOLATION, 1);
+	AQLString interpstr = chgrow(baseinfomat, INTERPINPUT_INTERPOLATION, 1);
 	upper(interpstr);
-	std::map<LAString, LAString>& ivar = LACoreComponentManager::getInterpolationMap();
-	std::map<LAString, LAString>::iterator it= ivar.find(interpstr);
+	std::map<AQLString, AQLString>& ivar = AQLCoreComponentManager::getInterpolationMap();
+	std::map<AQLString, AQLString>::iterator it= ivar.find(interpstr);
 	if(it == ivar.end())
 	{
-		LAString msg = interpstr + "is not registered in interpolation methods";
-		throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+		AQLString msg = interpstr + "is not registered in interpolation methods";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__,__LINE__);
 	}
 
-	e->add(INTERPINPUT_INTERPOLATION, new LAPriceDataInterpolation()).convertFromString(it->second);
+	e->add(INTERPINPUT_INTERPOLATION, new AQLPriceDataInterpolation()).convertFromString(it->second);
 
-	e->add(INTERPINPUT_SPOTFX, new LADataDouble(spotfx)	);
+	e->add(INTERPINPUT_SPOTFX, new AQLDataDouble(spotfx)	);
 }
 
 double
-LAMathFXVanillaFuncUtility::getvaluefromfxvolobject(LADataInstance* dataInstance, LAStringMatrix& baseinfomat, const double term,
+LAMathFXVanillaFuncUtility::getvaluefromfxvolobject(AQLDataInstance* dataInstance, AQLStringMatrix& baseinfomat, const double term,
 												  const double strike)
 {
 	upper(baseinfomat);
-	LAString interpid = chgrow(baseinfomat, INTERPINPUT_INTERPID, 1);
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAObject& e = objPool.getObject(interpid, ENCHKTYPE_ISDEFINED).get();
+	AQLString interpid = chgrow(baseinfomat, INTERPINPUT_INTERPID, 1);
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObject& e = objPool.getObject(interpid, ENCHKTYPE_ISDEFINED).get();
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	dh = &(e.getData(INTERPINPUT_TERMVECTOR, ISNOTNULL));
-	const DoubleVector& termvec = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const DoubleVector& termvec = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	
 	dh = &(e.getData(INTERPINPUT_STRIKEMATRIX, ISNOTNULL));
-	const DoubleMatrix& strikemat = dynamic_cast<const LADataDoubleMatrix &>(dh->get()).get();
+	const DoubleMatrix& strikemat = dynamic_cast<const AQLDataDoubleMatrix &>(dh->get()).get();
 
 	dh = &(e.getData(INTERPINPUT_VOLMATRIX, ISNOTNULL));
-	const DoubleMatrix& volmat = dynamic_cast<const LADataDoubleMatrix &>(dh->get()).get();
+	const DoubleMatrix& volmat = dynamic_cast<const AQLDataDoubleMatrix &>(dh->get()).get();
 
 	dh = &(e.getData(INTERPINPUT_INTERPOLATION, ISNOTNULL));
-	LAPriceDataInterpolation& attr = dynamic_cast<LAPriceDataInterpolation &>(dh->get());
+	AQLPriceDataInterpolation& attr = dynamic_cast<AQLPriceDataInterpolation &>(dh->get());
 
 	unsigned int N = termvec.size();
 	DoubleVector mainvec(N,0.0);
@@ -663,17 +663,17 @@ LAMathFXVanillaFuncUtility::getvaluefromfxvolobject(LADataInstance* dataInstance
 }
 
 double
-LAMathFXVanillaFuncUtility::getspotfxfromfxvolobject(LADataInstance* dataInstance, LAStringMatrix& baseinfomat )
+LAMathFXVanillaFuncUtility::getspotfxfromfxvolobject(AQLDataInstance* dataInstance, AQLStringMatrix& baseinfomat )
 {
 	upper(baseinfomat);
-	LAString interpid = chgrow(baseinfomat, INTERPINPUT_INTERPID, 1);
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAObject& e = objPool.getObject(interpid, ENCHKTYPE_ISDEFINED).get();
+	AQLString interpid = chgrow(baseinfomat, INTERPINPUT_INTERPID, 1);
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObject& e = objPool.getObject(interpid, ENCHKTYPE_ISDEFINED).get();
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	dh = &(e.getData(INTERPINPUT_SPOTFX, ISNOTNULL));
-	double spotfx = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	double spotfx = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	
 	return spotfx;
 }

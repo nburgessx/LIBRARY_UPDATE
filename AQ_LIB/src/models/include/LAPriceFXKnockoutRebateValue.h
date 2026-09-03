@@ -6,23 +6,23 @@
 #endif
 
 #include "LAPriceFXOptionValue.h"
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LABasic.h"
-#include "LADist.h"
-#include "LADataValuation.h"
-#include "LAFindRootBrent.h"
-#include "LAGaussLegendre.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
+#include "AQLDataValuation.h"
+#include "AQLFindRootBrent.h"
+#include "AQLGaussLegendre.h"
 
 #include "LAAnalyticFormula.h"
 #include "LABlackScholesCalc.h"
 #include "LAMathVolFuncFXStrangleSolver.h"
 
 
-class LAObject;
+class AQLObject;
 class LARatesPathElementCurve;
-class LAPriceDataManager;
+class AQLPriceDataManager;
 class LABlackScholesBase;
 class LAMathYieldCurve;
 class LAMathPlainVanillaEntity;
@@ -44,29 +44,29 @@ public:
 								//hishida vannavolga
 								//======================================
 								// Return option funcname
-	virtual LAString			getOptionPayoffName() const;
+	virtual AQLString			getOptionPayoffName() const;
 								// Make copy(clone) of this class
 								//======================================
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
 
 	// calc option
-	virtual double				calcOption(const LADataValuation& att, LADataProvider* dp, LAObject& e) const;
+	virtual double				calcOption(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& e) const;
 
 	//crealte analytic param
-	virtual std::vector< std::vector<AnalyticParam*> > createAnalyticParam(LAObject& object, LADataProvider* dp) const;
+	virtual std::vector< std::vector<AnalyticParam*> > createAnalyticParam(AQLObject& object, AQLDataProvider* dp) const;
 	
 	//set up analytic param
-	virtual void setUpAnalyticParam(LAObject& object, LADataProvider* dp) const;
+	virtual void setUpAnalyticParam(AQLObject& object, AQLDataProvider* dp) const;
 
 	//// set up dataProvider
-	virtual LADataProvider*					setUpDataProvider(const LADate& basedate, LAObject& object, const LADataValuation& att) const;
+	virtual AQLDataProvider*					setUpDataProvider(const AQLDate& basedate, AQLObject& object, const AQLDataValuation& att) const;
 
 private:
 	// create new cache class
-	virtual	LADataProvider*			createNewDataProvider() const;
+	virtual	AQLDataProvider*			createNewDataProvider() const;
 };
 #endif
 

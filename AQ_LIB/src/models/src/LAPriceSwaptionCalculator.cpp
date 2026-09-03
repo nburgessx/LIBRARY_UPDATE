@@ -36,7 +36,7 @@ LAPriceSwaptionCalculator* GetSwaptionCalculator(string type, double fwd, const 
     else if (type == "Right Benaim SABR")
         calculator = new MVBenaimSABRSwaptionCalculator(fwd, sabrParameters, extraParameters, false);
     else
-        throw LACoreInvalidData(("Unknown swaption calculator type: " + type).c_str(),__FILE__,__LINE__);
+        throw AQLCoreInvalidData(("Unknown swaption calculator type: " + type).c_str(),__FILE__,__LINE__);
 
     return calculator;
 }

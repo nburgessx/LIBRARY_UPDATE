@@ -43,21 +43,21 @@ namespace validation
     *  @param [in]		xccyFXSpotRates	        Xccy FX Spot Rates
     */
     void tryMeProductSwapDelta(
-        LAStringVector& pillarNames,
-        LAStringVector& headers,
+        AQLStringVector& pillarNames,
+        AQLStringVector& headers,
         DoubleMatrix& deltas,
-        LADataInstance* dataInstance,
+        AQLDataInstance* dataInstance,
         const std::vector<LabelValueBlock>& dealInfo,
-        const LAStringVector& forecastCurveSet,
-        const LAString& curveCollection,
+        const AQLStringVector& forecastCurveSet,
+        const AQLString& curveCollection,
         double bumpSize,
-        const LAString& bumpMode,
-        const LAString& deltaType,
+        const AQLString& bumpMode,
+        const AQLString& deltaType,
         bool aggregateRisks )
     {
         VALID_EXCEPTION_START
 
-		LAString uppercaseBumpMode( bumpMode );
+		AQLString uppercaseBumpMode( bumpMode );
 		uppercaseBumpMode.toUpper();
 
         // Recording of inputs for playback
@@ -68,7 +68,7 @@ namespace validation
 
             for ( size_t i = 0; i < dealInfo.size(); ++i )
             {
-                LAString name = "dealInfo_" + LAString( etrading::NumberToString<size_t>( i ).c_str() );
+                AQLString name = "dealInfo_" + AQLString( etrading::NumberToString<size_t>( i ).c_str() );
                 file.write( name.getCString(), dealInfo[i] );
             }
 
@@ -97,8 +97,8 @@ namespace validation
 		 * we invoke the underlying delta ladder calculation with temporary variables prior
 		 * to reformatting into the output variables.
 		 */
-		LAStringVector deltaCCYs;
-		LAStringVector tmpHeaders;
+		AQLStringVector deltaCCYs;
+		AQLStringVector tmpHeaders;
 		DoubleMatrix tmpDeltas;
         riskGen.deltaLadder( pillarNames, tmpHeaders, deltaCCYs, tmpDeltas );
 

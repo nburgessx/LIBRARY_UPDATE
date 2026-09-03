@@ -4,11 +4,11 @@
 #pragma interface
 #endif
 
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAFunctionBase.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLFunctionBase.h"
 #include "LAMathIndexEntity.h"
 #include "LAPricePayOff.h"
 #include "LAPricePayOffTool.h"
@@ -28,7 +28,7 @@
 #define INDEX_TOOLLIBORCOMPOUND 3006
 
 
-class LAObject;
+class AQLObject;
 
 ///////////////////////////////////////////////////////////////////////
 /*! 
@@ -55,16 +55,16 @@ public:
 
 	virtual double					calcIndex(void) const = 0;
 	// set up this class
-	virtual	void					setUp(const LADate& basedate,
-										const LADate& paydate,
-										const LAObject& trade,
-										const LAObject& indexinfo,
+	virtual	void					setUp(const AQLDate& basedate,
+										const AQLDate& paydate,
+										const AQLObject& trade,
+										const AQLObject& indexinfo,
 										const LAPricePayOff& payoff);
 	// set up this class
-	virtual	void					setUp(const LADate& basedate,	
-										const LAObject& trade,
-										const LAObject& indexinfo,
-										const LADate& fixingdate,
+	virtual	void					setUp(const AQLDate& basedate,	
+										const AQLObject& trade,
+										const AQLObject& indexinfo,
+										const AQLDate& fixingdate,
 										const LAPricePayOff& payoff);
 	/*!
 		@brief round(or round_up or round_down) index
@@ -104,7 +104,7 @@ protected:
 											index = index < floor ? floor : index;
 										}
 									}
-	bool isSavePastFixing(const LAObject& trade);
+	bool isSavePastFixing(const AQLObject& trade);
 	void							discountadjust(double& index) const
 									{
 										index *= mDiscountRatio;
@@ -112,8 +112,8 @@ protected:
 									}
 
 
-//	const LAFunctionBase*	mpCap;// cap
-//	const LAFunctionBase*	mpFloor;// floor	
+//	const AQLFunctionBase*	mpCap;// cap
+//	const AQLFunctionBase*	mpFloor;// floor	
 	//cap floor
 	bool mIsCap;// cap flag
 	bool mIsFloor;// < floor flag
@@ -178,17 +178,17 @@ public:
 										return index;
 									}
 	// set up this class
-	virtual	void					setUp(const LADate& basedate,
-										const LADate& paydate,
-										const LAObject& trade,
-										const LAObject& indexinfo,
+	virtual	void					setUp(const AQLDate& basedate,
+										const AQLDate& paydate,
+										const AQLObject& trade,
+										const AQLObject& indexinfo,
 										const LAPricePayOff& payoff);
 
 	// set up this class
-	virtual	void					setUp(const LADate& basedate,	
-										const LAObject& trade,
-										const LAObject& indexinfo,
-										const LADate& fixingdate,
+	virtual	void					setUp(const AQLDate& basedate,	
+										const AQLObject& trade,
+										const AQLObject& indexinfo,
+										const AQLDate& fixingdate,
 										const LAPricePayOff& payoff);
 
 	/*!
@@ -217,7 +217,7 @@ protected:
 	double mFloor;// floor value
 	const LAMathIndexEntity* mpIndex;// index object
 	UintArray mIndexPos;// < index positions
-	const LAFunctionBase* mpObservationOperator;// observation operator
+	const AQLFunctionBase* mpObservationOperator;// observation operator
 	DoubleArray	mFixedRates;// fixed rates
 
 
@@ -268,23 +268,23 @@ public:
 		@brief get fixedrate
 		@return fixedrate
 	*/	
-	virtual LADate*					getFixingDate(void) const 
+	virtual AQLDate*					getFixingDate(void) const 
 									{
 										return mpFixingDate;
 									}
 
 
 	// set up this class
-	virtual	void					setUp(const LADate& basedate,
-										const LADate& paydate,
-										const LAObject& trade,
-										const LAObject& indexinfo,
+	virtual	void					setUp(const AQLDate& basedate,
+										const AQLDate& paydate,
+										const AQLObject& trade,
+										const AQLObject& indexinfo,
 										const LAPricePayOff& payoff);
 	// set up this class
-	virtual	void					setUp(const LADate& basedate,	
-										const LAObject& trade,
-										const LAObject& indexinfo,
-										const LADate& fixingdate,
+	virtual	void					setUp(const AQLDate& basedate,	
+										const AQLObject& trade,
+										const AQLObject& indexinfo,
+										const AQLDate& fixingdate,
 										const LAPricePayOff& payoff);
 
 protected:
@@ -302,10 +302,10 @@ private:
 	*/
 	virtual double					floorValue(void) const {return -std::numeric_limits<double>::infinity();}
 	//double mRate;// fixed rate
-	const LADataDouble* mRate;
-	const LADataDoubles* mRates;
+	const AQLDataDouble* mRate;
+	const AQLDataDoubles* mRates;
 	int mPos;
-	LADate* mpFixingDate;// fixing date
+	AQLDate* mpFixingDate;// fixing date
 };
 
 
@@ -379,35 +379,35 @@ public:
 									}
 
 	// set up this class
-	virtual	void					setUp(const LADate& basedate,
-										const LADate& paydate,
-										const LAObject& trade,
-										const LAObject& indexinfo,
+	virtual	void					setUp(const AQLDate& basedate,
+										const AQLDate& paydate,
+										const AQLObject& trade,
+										const AQLObject& indexinfo,
 										const LAPricePayOff& payoff);
 
 	// set up this class
-	virtual	void					setUp(const LADate& basedate,	
-										const LAObject& trade,
-										const LAObject& indexinfo,
-										const LADate& fixingdate,
+	virtual	void					setUp(const AQLDate& basedate,	
+										const AQLObject& trade,
+										const AQLObject& indexinfo,
+										const AQLDate& fixingdate,
 										const LAPricePayOff& payoff);
 
 protected:
 	// set up past rate
-	virtual void					setUpPastRate(const LAObject& trade,
+	virtual void					setUpPastRate(const AQLObject& trade,
 													unsigned int legNo,
-													const LADate& fixingdate);
+													const AQLDate& fixingdate);
 	// set up past rate
-	virtual void					setUpPastRate(const LADate& basedate,	
-													const LAObject& trade,
+	virtual void					setUpPastRate(const AQLDate& basedate,	
+													const AQLObject& trade,
 													unsigned int legNo,
-													const LADate& observationstartdate,
-													const LADate& observationenddate);
+													const AQLDate& observationstartdate,
+													const AQLDate& observationenddate);
 
 	// set up cap and floor condition
-	virtual	void					setUpCapandFloor(const LAObject& trade,
+	virtual	void					setUpCapandFloor(const AQLObject& trade,
 													unsigned int legNo,
-													const LADate& fixingdate,
+													const AQLDate& fixingdate,
 													const LAPricePayOff& payoff);
 
 	const LAPricePayOff* mPayOff;// payoff 
@@ -416,12 +416,12 @@ protected:
 	bool mIsActualCF;// index calculated using mPayoff[mLegNo] or mPayOfff[mLegNo].mCoupons[mCpnInfo] 
 
 	UintArray mPayOffPos;// past payoff positions that are used to calulate index
-    const LAFunctionBase* mpObservationOperator;// observation operator
+    const AQLFunctionBase* mpObservationOperator;// observation operator
 	DoubleArray	mFixedRates;// fixed rates
 	mutable	DoubleArray mX;// variable for index calculation
 
-	LAFunctionBase*	mpCap;// cap
-	LAFunctionBase*	mpFloor;// floor	
+	AQLFunctionBase*	mpCap;// cap
+	AQLFunctionBase*	mpFloor;// floor	
 	int mLatestPos;// latest payoff position( most recently payoff position before fixingdate(include fixingdate)  
 	DoubleArray mFixedRatesforCapFloor;// all fixed rates(used for calcuate cap and floor) 
 	mutable double mCurrentIndex;// current index value before cap or floor
@@ -518,35 +518,35 @@ public:
 									}
 
 	// set up this class
-	virtual	void					setUp(const LADate& basedate,
-										const LADate& paydate,
-										const LAObject& trade,
-										const LAObject& indexinfo,
+	virtual	void					setUp(const AQLDate& basedate,
+										const AQLDate& paydate,
+										const AQLObject& trade,
+										const AQLObject& indexinfo,
 										const LAPricePayOff& payoff);
 
 	// set up this class
-	virtual	void					setUp(const LADate& basedate,	
-										const LAObject& trade,
-										const LAObject& indexinfo,
-										const LADate& fixingdate,
+	virtual	void					setUp(const AQLDate& basedate,	
+										const AQLObject& trade,
+										const AQLObject& indexinfo,
+										const AQLDate& fixingdate,
 										const LAPricePayOff& payoff);
 
 protected:
 	// set up past rate
-	virtual void					setUpPastRate(const LAObject& trade,
+	virtual void					setUpPastRate(const AQLObject& trade,
 													unsigned int legNo,
-													const LADate& fixingdate);
+													const AQLDate& fixingdate);
 	// set up past rate
-	virtual void					setUpPastRate(const LADate& basedate,	
-													const LAObject& trade,
+	virtual void					setUpPastRate(const AQLDate& basedate,	
+													const AQLObject& trade,
 													unsigned int legNo,
-													const LADate& observationstartdate,
-													const LADate& observationenddate);
+													const AQLDate& observationstartdate,
+													const AQLDate& observationenddate);
 
 	// set up cap and floor condition
-	virtual	void					setUpCapandFloor(const LAObject& trade,
+	virtual	void					setUpCapandFloor(const AQLObject& trade,
 													unsigned int legNo,
-													const LADate& fixingdate,
+													const AQLDate& fixingdate,
 													const LAPricePayOff& payoff);
 
 	/*!
@@ -611,15 +611,15 @@ public:
 
 
 
-	virtual	void setUp(const LADate& basedate,
-                       const LADate& paydate,
-                       const LAObject& trade,
-                       const LAObject& indexinfo,
+	virtual	void setUp(const AQLDate& basedate,
+                       const AQLDate& paydate,
+                       const AQLObject& trade,
+                       const AQLObject& indexinfo,
                        const LAPricePayOff& payoff);
-	virtual	void setUp(const LADate& basedate,	
-                       const LAObject& trade,
-                       const LAObject& indexinfo,
-                       const LADate& fixingdate,
+	virtual	void setUp(const AQLDate& basedate,	
+                       const AQLObject& trade,
+                       const AQLObject& indexinfo,
+                       const AQLDate& fixingdate,
                        const LAPricePayOff& payoff);
 
 
@@ -627,20 +627,20 @@ public:
 
 
 	virtual void calcIndices(DoubleVector& indices, const size_t start_pos, const size_t end_pos) const;
-    virtual void setFixingInfo(LADate& fixing_date, LAString& fixing_flag) const;
-    virtual void setFixingInfo(DateVector& fixing_date, LAStringVector& fixing_flag) const;
+    virtual void setFixingInfo(AQLDate& fixing_date, AQLString& fixing_flag) const;
+    virtual void setFixingInfo(DateVector& fixing_date, AQLStringVector& fixing_flag) const;
 
 protected:
-	virtual void setUpIndexPosAndFixedRate(const LADate& basedate,
-                                           const LAObject& indexInfo,
-                                           const LAObject& trade);
-    virtual void setUpFixingDates(const LAObject& indexInfo);
-    virtual void setUpStartAndEndDates(const LAObject& indexInfo);
+	virtual void setUpIndexPosAndFixedRate(const AQLDate& basedate,
+                                           const AQLObject& indexInfo,
+                                           const AQLObject& trade);
+    virtual void setUpFixingDates(const AQLObject& indexInfo);
+    virtual void setUpStartAndEndDates(const AQLObject& indexInfo);
 
 
 	bool flagForCompoundAllDays;
     mutable DoubleArray	mCompoundTerms;
     mutable DoubleArray	mMargins;
-    LAPriceDataDayCount mCompoundDC;
+    AQLPriceDataDayCount mCompoundDC;
     DateVector cfCalcStartDates, cfCalcEndDates, fixingDates;
 };

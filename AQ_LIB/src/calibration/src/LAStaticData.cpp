@@ -7,15 +7,15 @@
 
 
 // constructor
-LAStaticData::LAStaticData(const LAString &file, std::ios_base::openmode mode)
+LAStaticData::LAStaticData(const AQLString &file, std::ios_base::openmode mode)
 : mpFile(new MAFileAccessor(file, mode))
 {
-	LAStringMatrix mat;
+	AQLStringMatrix mat;
 	mpFile->readAllData(STATIC_DATA_DELIMITER, mat);
-	LAStringMatrix::iterator it = mat.begin();
+	AQLStringMatrix::iterator it = mat.begin();
 	while (it != mat.end())
 	{
-		LAString key(it->at(0));
+		AQLString key(it->at(0));
 
 		int coPos = key.findString(STATIC_DATA_COMMENT_OUT_CHAR);
 		int keySize = key.size();
@@ -28,11 +28,11 @@ LAStaticData::LAStaticData(const LAString &file, std::ios_base::openmode mode)
 
 		if (it->size() != 2)
 		{
-			LAString msg = "Invalid Property File Data: Data must consist of a key and value";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "Invalid Property File Data: Data must consist of a key and value";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
-		LAString value(it->at(1));
+		AQLString value(it->at(1));
 
 		mProp.insert(std::make_pair(key, value));
 		++it;
@@ -49,7 +49,7 @@ LAStaticData::~LAStaticData(void)
 }
 
 
-LAString LAStaticData::getStaticData(const LAString &key) const
+AQLString LAStaticData::getStaticData(const AQLString &key) const
 {
 
 #ifdef __HAS_MIC__
@@ -69,7 +69,7 @@ LAString LAStaticData::getStaticData(const LAString &key) const
 }
 
 
-LAString LAStaticData::getStaticData(const LAString &key, const LAString &alias) const
+AQLString LAStaticData::getStaticData(const AQLString &key, const AQLString &alias) const
 {
 
 #ifdef __HAS_MIC__
@@ -104,7 +104,7 @@ LAString LAStaticData::getStaticData(const LAString &key, const LAString &alias)
 }
 
 
-void LAStaticData::setStaticData(const LAString &key, const LAString &value)
+void LAStaticData::setStaticData(const AQLString &key, const AQLString &value)
 {
 
 #ifdef __HAS_MIC__
@@ -121,7 +121,7 @@ void LAStaticData::setStaticData(const LAString &key, const LAString &value)
 }
 
 
-void LAStaticData::removeStaticData(const LAString &key)
+void LAStaticData::removeStaticData(const AQLString &key)
 {
 
 #ifdef __HAS_MIC__

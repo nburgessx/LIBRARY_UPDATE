@@ -2,7 +2,7 @@
 #include "StructuredExceptionHandler.h"
 #include "CurveUtilities.h"
 #include "CreateDataFile.h"
-#include "LADate.h"
+#include "AQLDate.h"
 #include "RecordMacros.h"					// Record Macros
 #include "CoreEnumerations.h"				// isHybridInterpolation method
 #include "CurveInterpolation.h"				// CurveInterpolation Class
@@ -16,17 +16,17 @@ namespace validation
 {
     
 	//validation interface for tryMeCurveForwardRate method
-	double tryMeMathForwardRate( const LADate & fixingDate,
-							     const LADate & asOfDate,
+	double tryMeMathForwardRate( const AQLDate & fixingDate,
+							     const AQLDate & asOfDate,
 							     const etrading::InterpolationEnum interpolationEnum,
 							     const etrading::StateVariableEnum stateVariableEnum,
-							     const std::vector<LADate> & xValues,
+							     const std::vector<AQLDate> & xValues,
 							     const std::vector<double> & yValues,
 								 const etrading::DayCountEnum accrualDaycount,
 								 const std::string & curveFrequencyTenor,
 								 const etrading::BusinessDayAdjustmentEnum fixingBusinessDayAdjustment,
 								 const std::string & fixingCalendar,
-							     const LADate & joinDate,
+							     const AQLDate & joinDate,
 							     const size_t polynomialOrder,
 							     const StandardStringMatrix & forwardAdjustmentTable,
 								 const etrading::CompoundingFrequencyEnum & compoundFreqEnum )
@@ -38,7 +38,7 @@ namespace validation
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( joinDate == AQLDate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const double forwardRate = curveModule.forwardRate( fixingDate );
@@ -49,17 +49,17 @@ namespace validation
 	}
 
 	// validation interface for tryMeCurveForwardRates method
-	std::vector<double> tryMeMathForwardRates( const std::vector<LADate> & fixingDates,
-											   const LADate & asOfDate,
+	std::vector<double> tryMeMathForwardRates( const std::vector<AQLDate> & fixingDates,
+											   const AQLDate & asOfDate,
 											   const etrading::InterpolationEnum interpolationEnum,
 											   const etrading::StateVariableEnum stateVariableEnum,
-											   const std::vector<LADate> & xValues,
+											   const std::vector<AQLDate> & xValues,
 											   const std::vector<double> & yValues,
 											   const etrading::DayCountEnum accrualDaycount,
 											   const std::string & curveFrequencyTenor,
 											   const etrading::BusinessDayAdjustmentEnum fixingBusinessDayAdjustment,
 											   const std::string & fixingCalendar,
-											   const LADate & joinDate,
+											   const AQLDate & joinDate,
 											   const size_t polynomialOrder,
 											   const StandardStringMatrix & forwardAdjustmentTable,
 											   const etrading::CompoundingFrequencyEnum & compoundFreqEnum )
@@ -71,7 +71,7 @@ namespace validation
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( joinDate == AQLDate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const std::vector<double> forwardRates = curveModule.forwardRates( fixingDates );
@@ -82,17 +82,17 @@ namespace validation
 	}
 
 	// validation interface for tryMeCurveDiscountFactor method
-	double tryMeMathDiscountFactor( const LADate & paymentDate,
-									const LADate & asOfDate,
+	double tryMeMathDiscountFactor( const AQLDate & paymentDate,
+									const AQLDate & asOfDate,
 									const etrading::InterpolationEnum interpolationEnum,
 									const etrading::StateVariableEnum stateVariableEnum,
-									const std::vector<LADate> & xValues,
+									const std::vector<AQLDate> & xValues,
 									const std::vector<double> & yValues,
 									const etrading::DayCountEnum accrualDaycount,
 									const std::string & curveFrequencyTenor,
 								    const etrading::BusinessDayAdjustmentEnum fixingBusinessDayAdjustment,
 								    const std::string & fixingCalendar,
-									const LADate & joinDate,
+									const AQLDate & joinDate,
 									const size_t polynomialOrder,
 									const StandardStringMatrix & forwardAdjustmentTable,
 								    const etrading::CompoundingFrequencyEnum & compoundFreqEnum )
@@ -103,7 +103,7 @@ namespace validation
 		RECORD_INPUTS( paymentDate, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( joinDate == AQLDate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const double discountFactor = curveModule.discountFactor( paymentDate );
@@ -119,17 +119,17 @@ namespace validation
 	*  @param [in]		yValues
 	*  @param [in]		forwardAdjustments
 	*/
-	std::vector<double> tryMeMathDiscountFactors( const std::vector<LADate> & paymentDates,
-											      const LADate & asOfDate,
+	std::vector<double> tryMeMathDiscountFactors( const std::vector<AQLDate> & paymentDates,
+											      const AQLDate & asOfDate,
 											      const etrading::InterpolationEnum interpolationEnum,
 											      const etrading::StateVariableEnum stateVariableEnum,
-											      const std::vector<LADate> & xValues,
+											      const std::vector<AQLDate> & xValues,
 											      const std::vector<double> & yValues,
 												  const etrading::DayCountEnum accrualDaycount,
 												  const std::string & curveFrequencyTenor,
 											      const etrading::BusinessDayAdjustmentEnum fixingBusinessDayAdjustment,
 											      const std::string & fixingCalendar,
-											      const LADate & joinDate,
+											      const AQLDate & joinDate,
 											      const size_t polynomialOrder,
 											      const StandardStringMatrix & forwardAdjustmentTable,
 												  const etrading::CompoundingFrequencyEnum & compoundFreqEnum )
@@ -141,7 +141,7 @@ namespace validation
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( joinDate == AQLDate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const std::vector<double> discountFactors = curveModule.discountFactors( paymentDates );
@@ -152,20 +152,20 @@ namespace validation
 	}
 
 	// *** LEGACY METHOD *** validation interface for tryMeCurveForwardRate method
-	double tryMeMathForwardRate( const LADate & fixingDate,
-								 const LADate & asOfDate,
+	double tryMeMathForwardRate( const AQLDate & fixingDate,
+								 const AQLDate & asOfDate,
 								 const std::string & curveCollection,
 								 const std::string & curveIndex,
 								 const bool useForwardInterpolation,
 								 const etrading::InterpolationEnum interpolationEnum,
 								 const etrading::StateVariableEnum stateVariableEnum,
-								 const std::vector<LADate> & xValues,
+								 const std::vector<AQLDate> & xValues,
 								 const std::vector<double> & yValues,
 								 const etrading::DayCountEnum accrualDaycount,
 								 const std::string & curveFrequencyTenor,
 								 const etrading::BusinessDayAdjustmentEnum fixingBusinessDayAdjustment,
 								 const std::string & fixingCalendar,
-								 const LADate & joinDate,
+								 const AQLDate & joinDate,
 								 const StandardStringMatrix & forwardAdjustmentTable,
 								 const etrading::CompoundingFrequencyEnum & compoundFreqEnum )
 	{
@@ -176,14 +176,14 @@ namespace validation
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( joinDate == AQLDate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		// Convert Dates to Terms
 		double joinDateAsDouble = etrading::convertCurveDateToTerm( asOfDate, joinDate );
 		std::vector<double> xValuesAsDouble = etrading::convertCurveDatesToTerms( asOfDate, xValues );
 
 		// Build Legacy Interpolator Object
-		std::shared_ptr<LAInterpolationBase> laInterpolationObject
+		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
 			= LAMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
@@ -210,20 +210,20 @@ namespace validation
 	}
 
 	// *** LEGACY METHOD *** validation interface for tryMeCurveForwardRates method
-	std::vector<double> tryMeMathForwardRates( const std::vector<LADate> & fixingDates,
-											   const LADate & asOfDate,
+	std::vector<double> tryMeMathForwardRates( const std::vector<AQLDate> & fixingDates,
+											   const AQLDate & asOfDate,
 											   const std::string & curveCollection,
 											   const std::string & curveIndex,
 											   const bool useForwardInterpolation,
 											   const etrading::InterpolationEnum interpolationEnum,
 											   const etrading::StateVariableEnum stateVariableEnum,
-											   const std::vector<LADate> & xValues,
+											   const std::vector<AQLDate> & xValues,
 											   const std::vector<double> & yValues,
 											   const etrading::DayCountEnum accrualDaycount,
 											   const std::string & curveFrequencyTenor,
 											   const etrading::BusinessDayAdjustmentEnum fixingBusinessDayAdjustment,
 											   const std::string & fixingCalendar,
-											   const LADate & joinDate,
+											   const AQLDate & joinDate,
 											   const StandardStringMatrix & forwardAdjustmentTable,
 											   const etrading::CompoundingFrequencyEnum & compoundFreqEnum )
 	{
@@ -234,14 +234,14 @@ namespace validation
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( joinDate == AQLDate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		// Convert Dates to Terms
 		double joinDateAsDouble = etrading::convertCurveDateToTerm( asOfDate, joinDate );
 		std::vector<double> xValuesAsDouble = etrading::convertCurveDatesToTerms( asOfDate, xValues );
 
 		// Build Legacy Interpolator Object
-		std::shared_ptr<LAInterpolationBase> laInterpolationObject
+		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
 			= LAMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
@@ -268,20 +268,20 @@ namespace validation
 	}
 
 	// *** LEGACY METHOD *** validation interface for tryMeCurveDiscountFactor method
-	double tryMeMathDiscountFactor( const LADate & paymentDate,
-									const LADate & asOfDate,
+	double tryMeMathDiscountFactor( const AQLDate & paymentDate,
+									const AQLDate & asOfDate,
 									const std::string & curveCollection,
 									const std::string & curveIndex,
 									const bool useForwardInterpolation,
 									const etrading::InterpolationEnum interpolationEnum,
 									const etrading::StateVariableEnum stateVariableEnum,
-									const std::vector<LADate> & xValues,
+									const std::vector<AQLDate> & xValues,
 									const std::vector<double> & yValues,
 									const etrading::DayCountEnum accrualDaycount,
 									const std::string & curveFrequencyTenor,
 									const etrading::BusinessDayAdjustmentEnum fixingBusinessDayAdjustment,
 									const std::string & fixingCalendar,
-									const LADate & joinDate,
+									const AQLDate & joinDate,
 									const StandardStringMatrix & forwardAdjustmentTable,
 									const etrading::CompoundingFrequencyEnum & compoundFreqEnum )
 	{
@@ -292,14 +292,14 @@ namespace validation
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( joinDate == AQLDate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		// Convert Dates to Terms
 		double joinDateAsDouble = etrading::convertCurveDateToTerm( asOfDate, joinDate );
 		std::vector<double> xValuesAsDouble = etrading::convertCurveDatesToTerms( asOfDate, xValues );
 
 		// Build Legacy Interpolator Object
-		std::shared_ptr<LAInterpolationBase> laInterpolationObject
+		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
 			= LAMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
@@ -326,20 +326,20 @@ namespace validation
 	}
 
 	// *** LEGACY METHOD *** validation interface for tryMeCurveDiscountFactors method
-	std::vector<double> tryMeMathDiscountFactors( const std::vector<LADate> & paymentDates,
-												  const LADate & asOfDate,
+	std::vector<double> tryMeMathDiscountFactors( const std::vector<AQLDate> & paymentDates,
+												  const AQLDate & asOfDate,
 												  const std::string & curveCollection,
 												  const std::string & curveIndex,
 												  const bool useForwardInterpolation,
 												  const etrading::InterpolationEnum interpolationEnum,
 												  const etrading::StateVariableEnum stateVariableEnum,
-												  const std::vector<LADate> & xValues,
+												  const std::vector<AQLDate> & xValues,
 												  const std::vector<double> & yValues,
 												  const etrading::DayCountEnum accrualDaycount,
 												  const std::string & curveFrequencyTenor,
 												  const etrading::BusinessDayAdjustmentEnum fixingBusinessDayAdjustment,
 												  const std::string & fixingCalendar,
-												  const LADate & joinDate,
+												  const AQLDate & joinDate,
 												  const StandardStringMatrix & forwardAdjustmentTable,
 												  const etrading::CompoundingFrequencyEnum & compoundFreqEnum )
 	{
@@ -350,14 +350,14 @@ namespace validation
 		
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( joinDate == AQLDate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		// Convert Dates to Terms
 		double joinDateAsDouble = etrading::convertCurveDateToTerm( asOfDate, joinDate );
 		std::vector<double> xValuesAsDouble = etrading::convertCurveDatesToTerms( asOfDate, xValues );
 
 		// Build Legacy Interpolator Object
-		std::shared_ptr<LAInterpolationBase> laInterpolationObject
+		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
 			= LAMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,

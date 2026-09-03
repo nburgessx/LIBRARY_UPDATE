@@ -18,14 +18,14 @@
 #define CONTINUOUS	"CONTINUOUS"
 
 #include "LAMathArbFreeCurve.h"
-#include "LAMathDefine.h"
-#include "LABasic.h"
-#include "LADataReference.h"
-#include "LADataInstance.h"
-#include <LADataBasics.h>
-#include <LADataVector.h>
-#include <LAPriceDataManager.h>
-#include "LASplineInterpolation.h"
+#include "AQLMathDefine.h"
+#include "AQLBasic.h"
+#include "AQLDataReference.h"
+#include "AQLDataInstance.h"
+#include <AQLDataBasics.h>
+#include <AQLDataVector.h>
+#include <AQLPriceDataManager.h>
+#include "AQLSplineInterpolation.h"
 
 #include <cmath>
 
@@ -34,32 +34,32 @@
 /*!
     @brief constructor
 
-	@param[in] dataInstance pointer of LADataInstance
+	@param[in] dataInstance pointer of AQLDataInstance
 
 */
-LAMathArbitrageFreeCurve::LAMathArbitrageFreeCurve(LADataInstance* dataInstance, const LAString& curveID)
+LAMathArbitrageFreeCurve::LAMathArbitrageFreeCurve(AQLDataInstance* dataInstance, const AQLString& curveID)
 {
     mName = curveID;
 
-    const LAObject& baseCurve = dataInstance->getObjectPool().getObject(curveID,ENCHKTYPE_ISDEFINED).get();
-    mAsOfDate = dynamic_cast<const LADataDate&> ((baseCurve.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+    const AQLObject& baseCurve = dataInstance->getObjectPool().getObject(curveID,ENCHKTYPE_ISDEFINED).get();
+    mAsOfDate = dynamic_cast<const AQLDataDate&> ((baseCurve.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
-    const DoubleArray& dfTerms = dynamic_cast<const LADataDoubles& >(baseCurve.getData("Terms",ISDEFINED).get()).get();
-    const DoubleArray& dfs = dynamic_cast<const LADataDoubles& >(baseCurve.getData("DiscountFactors",ISDEFINED).get()).get();
+    const DoubleArray& dfTerms = dynamic_cast<const AQLDataDoubles& >(baseCurve.getData("Terms",ISDEFINED).get()).get();
+    const DoubleArray& dfs = dynamic_cast<const AQLDataDoubles& >(baseCurve.getData("DiscountFactors",ISDEFINED).get()).get();
     mDFData.set(dfTerms,dfs);
 	
-    LAString threeMCurveName = curveID + "_ThreeMLibor";
-    const LAObject& threeMCurve = dataInstance->getObjectPool().getObject(threeMCurveName,ENCHKTYPE_ISDEFINED).get();
-    const DoubleArray& threeLTerms = dynamic_cast<const LADataDoubles& >(threeMCurve.getData("Terms_Rate",ISDEFINED).get()).get();
-    const DoubleArray& threeLRates = dynamic_cast<const LADataDoubles& >(threeMCurve.getData("ForecastRates",ISDEFINED).get()).get();
-    LASplineInterpolation theeLData; theeLData.set(threeLTerms,threeLRates);
+    AQLString threeMCurveName = curveID + "_ThreeMLibor";
+    const AQLObject& threeMCurve = dataInstance->getObjectPool().getObject(threeMCurveName,ENCHKTYPE_ISDEFINED).get();
+    const DoubleArray& threeLTerms = dynamic_cast<const AQLDataDoubles& >(threeMCurve.getData("Terms_Rate",ISDEFINED).get()).get();
+    const DoubleArray& threeLRates = dynamic_cast<const AQLDataDoubles& >(threeMCurve.getData("ForecastRates",ISDEFINED).get()).get();
+    AQLSplineInterpolation theeLData; theeLData.set(threeLTerms,threeLRates);
     mForecastDataMap.insert( make_pair( "ThreeMLibor", theeLData ) );
 
-    LAString sixMCurveName = curveID + "_SixMLibor";
-    const LAObject& sixMCurve = dataInstance->getObjectPool().getObject(sixMCurveName,ENCHKTYPE_ISDEFINED).get();
-    const DoubleArray& sixLTerms = dynamic_cast<const LADataDoubles& >(sixMCurve.getData("Terms_Rate",ISDEFINED).get()).get();
-    const DoubleArray& sixLRates = dynamic_cast<const LADataDoubles& >(sixMCurve.getData("ForecastRates",ISDEFINED).get()).get();
-    LASplineInterpolation sixLData; sixLData.set(sixLTerms,sixLRates);
+    AQLString sixMCurveName = curveID + "_SixMLibor";
+    const AQLObject& sixMCurve = dataInstance->getObjectPool().getObject(sixMCurveName,ENCHKTYPE_ISDEFINED).get();
+    const DoubleArray& sixLTerms = dynamic_cast<const AQLDataDoubles& >(sixMCurve.getData("Terms_Rate",ISDEFINED).get()).get();
+    const DoubleArray& sixLRates = dynamic_cast<const AQLDataDoubles& >(sixMCurve.getData("ForecastRates",ISDEFINED).get()).get();
+    AQLSplineInterpolation sixLData; sixLData.set(sixLTerms,sixLRates);
     mForecastDataMap.insert( make_pair( "SixMLibor", sixLData ) );	
 }
 
@@ -71,16 +71,16 @@ LAMathArbitrageFreeCurve::~LAMathArbitrageFreeCurve()
 }
 
 void 
-LAMathArbitrageFreeCurve::setForecastCurve(LADataInstance* dataInstance, const LAString& curveName)
+LAMathArbitrageFreeCurve::setForecastCurve(AQLDataInstance* dataInstance, const AQLString& curveName)
 {
-    LAString forecastCurName = mName + "_" + curveName;
-    const LAObject& forecastCurve =  dataInstance->getObjectPool().getObject(forecastCurName,ENCHKTYPE_ISDEFINED).get();
-    LAString arbFreeCurName_for = dynamic_cast<const LADataString&> ((forecastCurve.getData("ArbFreeCurve", ISNOTNULL)).get()).get();
-    if( arbFreeCurName_for != mName ) throw LACoreInvalidData("arv free curves are inconsistent !", __FILE__, __LINE__);
+    AQLString forecastCurName = mName + "_" + curveName;
+    const AQLObject& forecastCurve =  dataInstance->getObjectPool().getObject(forecastCurName,ENCHKTYPE_ISDEFINED).get();
+    AQLString arbFreeCurName_for = dynamic_cast<const AQLDataString&> ((forecastCurve.getData("ArbFreeCurve", ISNOTNULL)).get()).get();
+    if( arbFreeCurName_for != mName ) throw AQLCoreInvalidData("arv free curves are inconsistent !", __FILE__, __LINE__);
 
-    const DoubleArray& terms = dynamic_cast<const LADataDoubles& >(forecastCurve.getData("Terms_Rate",ISDEFINED).get()).get();
-    const DoubleArray& rates = dynamic_cast<const LADataDoubles& >(forecastCurve.getData("ForecastRates",ISDEFINED).get()).get();
-    LASplineInterpolation data; data.set(terms,rates);
+    const DoubleArray& terms = dynamic_cast<const AQLDataDoubles& >(forecastCurve.getData("Terms_Rate",ISDEFINED).get()).get();
+    const DoubleArray& rates = dynamic_cast<const AQLDataDoubles& >(forecastCurve.getData("ForecastRates",ISDEFINED).get()).get();
+    AQLSplineInterpolation data; data.set(terms,rates);
 
     mForecastDataMap.insert( make_pair( curveName, data ) );
 }
@@ -90,7 +90,7 @@ double LAMathArbitrageFreeCurve::getDF(double term)
     return mDFData.value(term);
 }
 
-double LAMathArbitrageFreeCurve::getRate(double term, const LAString curveName)
+double LAMathArbitrageFreeCurve::getRate(double term, const AQLString curveName)
 {
     return mForecastDataMap[curveName].value(term);
 }
@@ -98,10 +98,10 @@ double LAMathArbitrageFreeCurve::getRate(double term, const LAString curveName)
 double 
 LAMathArbitrageFreeCurve::getBasisLegValue
 (double valueTerm, const DoubleArray& fixTerms, const DoubleArray& payTerms, const DoubleArray& accruTerms,
- const LAString& forecastID, double basis, bool isPrincipal, double amount, double firstFixingRate)
+ const AQLString& forecastID, double basis, bool isPrincipal, double amount, double firstFixingRate)
 {
     size_t legSize = payTerms.size();
-    if( legSize != fixTerms.size() || legSize != accruTerms.size() ) throw LACoreInvalidData("fixing,payment and accrual times are not same!",__FILE__,__LINE__);
+    if( legSize != fixTerms.size() || legSize != accruTerms.size() ) throw AQLCoreInvalidData("fixing,payment and accrual times are not same!",__FILE__,__LINE__);
     //set DF data
     double valueDateDF = getDF(valueTerm);
     DoubleArray dfs;

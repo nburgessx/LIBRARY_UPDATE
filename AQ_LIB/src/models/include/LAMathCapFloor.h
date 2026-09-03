@@ -1,8 +1,8 @@
 #ifndef LAMathCapFloor_h
 #define LAMathCapFloor_h
 
-//#include "LAFunctionBase.h>
-#include <LACoreTemplateType.h>
+//#include "AQLFunctionBase.h>
+#include <AQLCoreTemplateType.h>
 
 #include <vector>
 

@@ -75,8 +75,8 @@ namespace google_test
     TEST_F( TestCurveOisEUR_Compounding_1, SNAPSHOT_CheckCurveOutputs )
     {
 		const ReadDataFile::Load inputFile( DIR_EURYC_OIS_1 );
-		LAString curveID = inputFile["curveID"];
-		LAString market = inputFile["marketName"];
+		AQLString curveID = inputFile["curveID"];
+		AQLString market = inputFile["marketName"];
 
         const DoubleArray results
             = validation::tryMirOutputCurve(
@@ -91,8 +91,8 @@ namespace google_test
 	TEST_F( TestCurveOisEUR_Compounding_2, SNAPSHOT_CheckCurveOutputs )
     {
 		const ReadDataFile::Load inputFile( DIR_EURYC_OIS_2 );
-		LAString curveID = inputFile["curveID"];
-		LAString market = inputFile["marketName"];
+		AQLString curveID = inputFile["curveID"];
+		AQLString market = inputFile["marketName"];
 
         const DoubleArray results
             = validation::tryMirOutputCurve(
@@ -107,8 +107,8 @@ namespace google_test
 	TEST_F( TestCurveOisEUR_Compounding_3, SNAPSHOT_CheckCurveOutputs )
     {
 		const ReadDataFile::Load inputFile( DIR_EURYC_OIS_3 );
-		LAString curveID = inputFile["curveID"];
-		LAString market = inputFile["marketName"];
+		AQLString curveID = inputFile["curveID"];
+		AQLString market = inputFile["marketName"];
 
         const DoubleArray results
             = validation::tryMirOutputCurve(
@@ -123,8 +123,8 @@ namespace google_test
 	TEST_F( TestCurveOisEUR_Compounding_4, SNAPSHOT_CheckCurveOutputs )
     {
 		const ReadDataFile::Load inputFile( DIR_EURYC_OIS_4 );
-		LAString curveID = inputFile["curveID"];
-		LAString market = inputFile["marketName"];
+		AQLString curveID = inputFile["curveID"];
+		AQLString market = inputFile["marketName"];
 
         const DoubleArray results
             = validation::tryMirOutputCurve(
@@ -139,8 +139,8 @@ namespace google_test
 	TEST_F( TestCurveOisEUR_Compounding_5, SNAPSHOT_CheckCurveOutputs )
     {
 		const ReadDataFile::Load inputFile( DIR_EURYC_OIS_5 );
-		LAString curveID = inputFile["curveID"];
-		LAString market = inputFile["marketName"];
+		AQLString curveID = inputFile["curveID"];
+		AQLString market = inputFile["marketName"];
 
         const DoubleArray results
             = validation::tryMirOutputCurve(
@@ -155,8 +155,8 @@ namespace google_test
 	TEST_F( TestCurveOisEUR_Compounding_6, SNAPSHOT_CheckCurveOutputs )
     {
 		const ReadDataFile::Load inputFile( DIR_EURYC_OIS_6 );
-		LAString curveID = inputFile["curveID"];
-		LAString market = inputFile["marketName"];
+		AQLString curveID = inputFile["curveID"];
+		AQLString market = inputFile["marketName"];
 
         const DoubleArray results
             = validation::tryMirOutputCurve(
@@ -171,8 +171,8 @@ namespace google_test
 	TEST_F( TestCurveOisEUR_Compounding_7, SNAPSHOT_CheckCurveOutputs )
     {
 		const ReadDataFile::Load inputFile( DIR_EURYC_OIS_7 );
-		LAString curveID = inputFile["curveID"];
-		LAString market = inputFile["marketName"];
+		AQLString curveID = inputFile["curveID"];
+		AQLString market = inputFile["marketName"];
 
         const DoubleArray results
             = validation::tryMirOutputCurve(

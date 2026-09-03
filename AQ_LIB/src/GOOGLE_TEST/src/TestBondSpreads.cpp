@@ -140,8 +140,8 @@ namespace google_test
 		std::string swapName = inputFile["swapObjectName"];
 		std::string bondName = inputFile["bondObjectName"];
 		double bondPrice = inputFile["bondPrice"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
-		LAStringMatrix fixingTableNames = inputFile["fixingTableNames"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
 		auto actualSpread = validation::tryMeLWOAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
@@ -191,8 +191,8 @@ namespace google_test
 		std::string swapName = inputFile["swapObjectName"];
 		std::string bondName = inputFile["bondObjectName"];
 		double bondPrice = inputFile["bondPrice"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
-		LAStringMatrix fixingTableNames = inputFile["fixingTableNames"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
 		auto actualSpread = validation::tryMeLWOAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
@@ -243,8 +243,8 @@ namespace google_test
 		std::string swapName = inputFile["swapObjectName"];
 		std::string bondName = inputFile["bondObjectName"];
 		double bondPrice = inputFile["bondPrice"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
-		LAStringMatrix fixingTableNames = inputFile["fixingTableNames"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
 		auto actualSpread = validation::tryMeLWOAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
@@ -295,8 +295,8 @@ namespace google_test
 		std::string swapName = inputFile["swapObjectName"];
 		std::string bondName = inputFile["bondObjectName"];
 		double bondPrice = inputFile["bondPrice"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
-		LAStringMatrix fixingTableNames = inputFile["fixingTableNames"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
 		auto actualSpread = validation::tryMeLWOAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
@@ -347,8 +347,8 @@ namespace google_test
 		std::string swapName = inputFile["swapObjectName"];
 		std::string bondName = inputFile["bondObjectName"];
 		double bondPrice = inputFile["bondPrice"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
-		LAStringMatrix fixingTableNames = inputFile["fixingTableNames"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
 		auto actualSpread = validation::tryMeLWOAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
@@ -399,8 +399,8 @@ namespace google_test
 		std::string swapName = inputFile["swapObjectName"];
 		std::string bondName = inputFile["bondObjectName"];
 		double bondPrice = inputFile["bondPrice"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
-		LAStringMatrix fixingTableNames = inputFile["fixingTableNames"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
 		auto actualSpread = validation::tryMeLWOAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
@@ -450,8 +450,8 @@ namespace google_test
 		std::string swapName = inputFile["swapObjectName"];
 		std::string bondName = inputFile["bondObjectName"];
 		double bondPrice = inputFile["bondPrice"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
-		LAStringMatrix fixingTableNames = inputFile["fixingTableNames"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
 		auto actualSpread = validation::tryMeLWOAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);

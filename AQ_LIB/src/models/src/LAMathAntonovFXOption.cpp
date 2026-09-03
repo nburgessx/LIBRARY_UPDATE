@@ -6,40 +6,40 @@
 #endif
 
 #include "LAMathAntonovFXOption.h"
-#include "LAObject.h"
-#include "LADataProcedure.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LADataReference.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLObject.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "LAMathDateCalculations.h"
 #include "LAPriceCFGenUtility.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LADataMatrix.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLDataMatrix.h"
 #include "LAModelDynamicsHW1FCurve.h"
 
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAMathFXVanillaFuncUtility.h"
 #include "LAMathIRVanillaFuncUtility.h"
 
 using namespace std;
 
 LAMathAntonovFXOption::LAMathAntonovFXOption()
-: LACoreValuation()
+: AQLCoreValuation()
 {}
 
 LAMathAntonovFXOption::~LAMathAntonovFXOption()
@@ -47,7 +47,7 @@ LAMathAntonovFXOption::~LAMathAntonovFXOption()
 }
 
 LAMathAntonovFXOption::LAMathAntonovFXOption(const LAMathAntonovFXOption& v)
-: LACoreValuation(v)
+: AQLCoreValuation(v)
 {
 }
 
@@ -69,7 +69,7 @@ LAMathAntonovFXOption::getType() const
 	@param[in, out] dm data master 
 */
 void
-LAMathAntonovFXOption::registerData(LAPriceDataManager& dm) const
+LAMathAntonovFXOption::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(PRICING_DATA_ENDPOSITION,					DATA_INT);
 	dm.setData(PRICING_DATA_STRIKES,						DATA_DOUBLES);
@@ -107,7 +107,7 @@ LAMathAntonovFXOption::registerData(LAPriceDataManager& dm) const
 
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAMathAntonovFXOption::clone() const
 {
     try 
@@ -116,7 +116,7 @@ LAMathAntonovFXOption::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -125,17 +125,17 @@ LAMathAntonovFXOption::clone() const
 	@brief value trade
 
 	@param[in] basedate evaluate day
-	@param[in,out] object trade object object(reference to LAMathObjectValue class) 
+	@param[in,out] object trade object object(reference to AQLMathObjectValue class) 
 	@param[in] att Data to hold evaluation procedure class
 
 	@return swaption prem
 	
 */
 double
-LAMathAntonovFXOption::value(const LADate& basedate, LAObject& object,
-					const LADataValuation& att) const
+LAMathAntonovFXOption::value(const AQLDate& basedate, AQLObject& object,
+					const AQLDataValuation& att) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
 		dataProvider = dynamic_cast<LAMathAntonovFXOptionDataProvider*>(setUpDataProvider(basedate, object, att));
@@ -144,10 +144,10 @@ LAMathAntonovFXOption::value(const LADate& basedate, LAObject& object,
 
 	//set variables
 	dh = &(object.getData(PRICING_DATA_MODELPARAM,ISNOTNULL));
-	LAObject& models= dynamic_cast<LADataReference&>(dh->get()).get().get();
+	AQLObject& models= dynamic_cast<AQLDataReference&>(dh->get()).get().get();
 	dh = &(models.getData(PRICING_DATA_CALIBVARIABLES,ISNOTNULL));
-	double varV = dynamic_cast<LADataDoubles&>(dh->get()).get()[0];
-	double varB = dynamic_cast<LADataDoubles&>(dh->get()).get()[1];
+	double varV = dynamic_cast<AQLDataDoubles&>(dh->get()).get()[0];
+	double varB = dynamic_cast<AQLDataDoubles&>(dh->get()).get()[1];
 	double T = dataProvider->mTm;
 
 	dataProvider->mUpdateIntegral1flag = true;
@@ -175,7 +175,7 @@ LAMathAntonovFXOption::value(const LADate& basedate, LAObject& object,
 
 	ret+= (dataProvider->mIsfitATM) ? 20.0*(prem - dataProvider->mPremVec[0])*(prem - dataProvider->mPremVec[0]) : 0.0;
 
-	return LAMath::sqrt(ret);
+	return AQLMath::sqrt(ret);
 	
 }
 
@@ -184,87 +184,87 @@ LAMathAntonovFXOption::value(const LADate& basedate, LAObject& object,
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*					
-LAMathAntonovFXOption::setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const
+AQLDataProvider*					
+LAMathAntonovFXOption::setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const
 {
 	//temporary
-	LADate asof = basedate;
+	AQLDate asof = basedate;
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAMathAntonovFXOptionDataProvider* dataProvider = dynamic_cast<LAMathAntonovFXOptionDataProvider*>(createNewDataProvider());
 	att.setDataProvider(dataProvider);
 
 	dh = &(object.getData(PRICING_DATA_MODELPARAM,ISNOTNULL));
-	LAObject& models = dynamic_cast<LADataReference &>(dh->get()).get().get();
+	AQLObject& models = dynamic_cast<AQLDataReference &>(dh->get()).get().get();
 	dh = &(models.getData(PRICING_DATA_FXTIMEGRIDS,ISNOTNULL));
-	DoubleVector timegrids = dynamic_cast<LADataDoubles &>(dh->get()).get();
+	DoubleVector timegrids = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 
 	//get maturity point 
 	dh = &(object.getData(IR_CALIBRATION_DATA_OPTIONMATURITY,ISNOTNULL));
-	LAString optionmatu = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString optionmatu = dynamic_cast<AQLDataString &>(dh->get()).get();
 	
 	dh = &(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISNOTNULL));
-	const LAPriceDataSlidingRule& sr = dynamic_cast<const LAPriceDataSlidingRule &>(dh->get());
+	const AQLPriceDataSlidingRule& sr = dynamic_cast<const AQLPriceDataSlidingRule &>(dh->get());
 
 	dh = &(object.getData(IR_CALIBRATION_DATA_SPOTLAG,ISNOTNULL));
-	const int spotlag = dynamic_cast<const LADataInt &>(dh->get());
+	const int spotlag = dynamic_cast<const AQLDataInt &>(dh->get());
 
 	dh = &(object.getData(IR_CALIBRATION_DATA_CURRENCY,ISNOTNULL));
-	const LAString keyFX = dynamic_cast<const LADataString &>(dh->get());
+	const AQLString keyFX = dynamic_cast<const AQLDataString &>(dh->get());
 
 	dh = &(object.getData(PRICING_DATA_FIXINGCALENDAR,ISNOTNULL));
-	const LAString fixcalstr = dynamic_cast<const LAPriceDataCalendar &>(dh->get()).convertToString();
+	const AQLString fixcalstr = dynamic_cast<const AQLPriceDataCalendar &>(dh->get()).convertToString();
 
 	dh = &(object.getData(PRICING_DATA_TERMCALENDAR,ISNOTNULL));
-	const LAPriceDataCalendar& termcal = dynamic_cast<const LAPriceDataCalendar &>(dh->get());
+	const AQLPriceDataCalendar& termcal = dynamic_cast<const AQLPriceDataCalendar &>(dh->get());
 
-	LADate spotdate = LAMathDateCalculations::getFXSpotDate(keyFX, asof, fixcalstr, spotlag, true);
-	LADate settledate = LAMathDateCalculations::getDate(spotdate, optionmatu, sr, &termcal, true);
-	LADate expdate =  LAMathDateCalculations::getFXSpotDate(keyFX, settledate, fixcalstr, -spotlag, true);
-	LAPriceDataDayCount dc(ACT_365_ISDA);
+	AQLDate spotdate = LAMathDateCalculations::getFXSpotDate(keyFX, asof, fixcalstr, spotlag, true);
+	AQLDate settledate = LAMathDateCalculations::getDate(spotdate, optionmatu, sr, &termcal, true);
+	AQLDate expdate =  LAMathDateCalculations::getFXSpotDate(keyFX, settledate, fixcalstr, -spotlag, true);
+	AQLPriceDataDayCount dc(ACT_365_ISDA);
 	double matT = dc.getTerm(asof,expdate,false);
 	//mSpos;
 	dh = &(object.getData(PRICING_DATA_STARTPOSITION,ISNOTNULL));
-	dataProvider->mSpos= dynamic_cast<LADataInt &>(dh->get()).get();
+	dataProvider->mSpos= dynamic_cast<AQLDataInt &>(dh->get()).get();
 	//mEndpos
 	unsigned int epos =0;
-	LAAlgorithm::locate(timegrids,matT,timegrids.size(),epos);
+	AQLAlgorithm::locate(timegrids,matT,timegrids.size(),epos);
 	if(epos == timegrids.size())
 	{
 		--epos;
 	}
 	else
 	{
-		double diff = LAMath::abs(timegrids[epos] - matT); 
-		if (diff > LAMath::abs(matT - timegrids[epos - 1]))
+		double diff = AQLMath::abs(timegrids[epos] - matT); 
+		if (diff > AQLMath::abs(matT - timegrids[epos - 1]))
 		{
 			--epos;
 		}
 	}
 	//check for simulation grid is arbitry
 	if (epos == 1)
-		throw LACoreInvalidData("FxTimeGrid must be partitioned between 0 and First Option Maturity",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("FxTimeGrid must be partitioned between 0 and First Option Maturity",__FILE__,__LINE__);
 	//check whether FxVolterm is longer than FxOption maturity;
 	if(matT > timegrids.back())
-		throw LACoreInvalidData("FxTimeGrids must be longer than FxOption maturity",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("FxTimeGrids must be longer than FxOption maturity",__FILE__,__LINE__);
 	dataProvider->mEpos= epos;
 	//set MaturityTime
 	dataProvider->mTm = timegrids[epos];
 	//set MaturityDiscount
 	dh = &(models.getData(PRICING_DATA_DOMESTICDFS,ISNOTNULL));
-	const DoubleVector& dfs = dynamic_cast<LADataDoubles &>(dh->get()).get();
+	const DoubleVector& dfs = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 	dataProvider->mPTm = dfs[epos];
 
 	dh = &(models.getData(PRICING_DATA_FXFORWARDGRIDS,ISNOTNULL));
-	DoubleVector fxgrids = dynamic_cast<LADataDoubles &>(dh->get()).get();
+	DoubleVector fxgrids = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 	if(fxgrids.size()<epos+1)
-		throw LACoreInvalidData("Size of FXForwardGrids is small",__FILE__,__LINE__); 
+		throw AQLCoreInvalidData("Size of FXForwardGrids is small",__FILE__,__LINE__); 
 	dataProvider->mFxTm = fxgrids[epos];
 	//set FxFowardGrids
 	fxgrids.resize(epos+1);
@@ -272,29 +272,29 @@ LAMathAntonovFXOption::setUpDataProvider(const LADate& basedate, LAObject& objec
 	
 	//set BetaGrids
 	dh = &(models.getData(PRICING_DATA_FXBETAGRIDS,ISNOTNULL));
-	DoubleVector betagrids = dynamic_cast<LADataDoubles &>(dh->get()).get();
+	DoubleVector betagrids = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 	if(betagrids.size()<epos+1)
-		throw LACoreInvalidData("Size of FXBetaGrids is small",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Size of FXBetaGrids is small",__FILE__,__LINE__);
 	//betagrids.resize(epos+1);
 	dataProvider->mBetaGrids = betagrids;
 	//set VolGrids
 	dh = &(models.getData(PRICING_DATA_FXVOLGRIDS,ISNOTNULL));
-	DoubleVector volgrids = dynamic_cast<LADataDoubles &>(dh->get()).get();
+	DoubleVector volgrids = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 	if(volgrids.size()<epos+1)
-		throw LACoreInvalidData("Size of FXVolGrids is small",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Size of FXVolGrids is small",__FILE__,__LINE__);
 	dataProvider->mVolGrids = volgrids;
 	//set Pvolatility d, Pfvolatility bmat, amat
 	dh = &(models.getData(PRICING_DATA_IRDOMESTICBONDVOLATILITY,ISNOTNULL));
-	DoubleMatrix Pdvolmat = dynamic_cast<LADataDoubleMatrix &>(dh->get()).get();
+	DoubleMatrix Pdvolmat = dynamic_cast<AQLDataDoubleMatrix &>(dh->get()).get();
 
 	dh = &(models.getData(PRICING_DATA_IRFOREIGNBONDVOLATILITY,ISNOTNULL));
-	DoubleMatrix Pfvolmat = dynamic_cast<LADataDoubleMatrix &>(dh->get()).get();
+	DoubleMatrix Pfvolmat = dynamic_cast<AQLDataDoubleMatrix &>(dh->get()).get();
 
 	dh = &(models.getData(PRICING_DATA_BMATRIX,ISNOTNULL));
-	DoubleMatrix bmat = dynamic_cast<LADataDoubleMatrix &>(dh->get()).get();
+	DoubleMatrix bmat = dynamic_cast<AQLDataDoubleMatrix &>(dh->get()).get();
 
 	dh = &(models.getData(PRICING_DATA_AMATRIX,ISNOTNULL));
-	DoubleMatrix amat = dynamic_cast<LADataDoubleMatrix &>(dh->get()).get();
+	DoubleMatrix amat = dynamic_cast<AQLDataDoubleMatrix &>(dh->get()).get();
 	for(unsigned int i=0;i<Pdvolmat.size();i++)
 	{
 		Pdvolmat[i].resize(epos+1);
@@ -318,23 +318,23 @@ LAMathAntonovFXOption::setUpDataProvider(const LADate& basedate, LAObject& objec
 
 	//set correlations
 	dh = &(models.getData(PRICING_DATA_SDECORRELATIONS,ISNOTNULL));
-	DoubleVector cor = dynamic_cast<LADataDoubles &>(dh->get()).get();
+	DoubleVector cor = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 	dataProvider->mCovdf = cor[0]; 
 	dataProvider->mCovdfx = cor[1];
 	dataProvider->mCovffx = cor[2];
 
 	//set calibration target vectors
 	dh = &(object.getData(PRICING_DATA_STRIKESTRINGS,ISNOTNULL));
-	LAStringVector strikestrs = dynamic_cast<LADataStrings &>(dh->get()).get();
+	AQLStringVector strikestrs = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 
 	//IsCallVec;
 	dh = &(object.getData(PRICING_DATA_ISCALLS,ISNOTNULL));
-	BoolVector iscallvec = dynamic_cast<LADataBools &>(dh->get()).get();
+	BoolVector iscallvec = dynamic_cast<AQLDataBools &>(dh->get()).get();
 
 	//is make calibdata from volatility
 	unsigned int smilenum = strikestrs.size();
 	dh = &(object.getData(PRICING_DATA_ISMAKECALIBDATAFROMVOLATILITY,ISNOTNULL));
-	bool isdatafromvol = dynamic_cast<LADataBool &>(dh->get()).get();
+	bool isdatafromvol = dynamic_cast<AQLDataBool &>(dh->get()).get();
 	DoubleVector strikevec(smilenum),premvec(smilenum);
 	if(isdatafromvol)
 	{
@@ -344,18 +344,18 @@ LAMathAntonovFXOption::setUpDataProvider(const LADate& basedate, LAObject& objec
 		double term = dataProvider->mTm;
 		
 		dh = &(models.getData(PRICING_DATA_FOREIGNDFS,ISNOTNULL));
-		const DoubleVector& dff = dynamic_cast<LADataDoubles &>(dh->get()).get();
+		const DoubleVector& dff = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 		double pf = dff[dataProvider->mEpos];
 
 		dh = &(object.getData(PRICING_DATA_VOLATILITYS,ISNOTNULL));
-		const DoubleVector& vols = dynamic_cast<LADataDoubles &>(dh->get()).get();
+		const DoubleVector& vols = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 
 		dh = &(object.getData(PRICING_DATA_SPOTORFWD,ISNOTNULL));
-		LAString spotfwd = dynamic_cast<LADataString &>(dh->get()).get();
+		AQLString spotfwd = dynamic_cast<AQLDataString &>(dh->get()).get();
 		spotfwd.toUpper();
 		
 		dh = &(object.getData(PRICING_DATA_ISDELTANEUTRAL,ISNOTNULL));
-		bool isnueutral = dynamic_cast<LADataBool &>(dh->get()).get();
+		bool isnueutral = dynamic_cast<AQLDataBool &>(dh->get()).get();
 		for(unsigned int j=0;j<smilenum;j++)
 		{
 			double vol = vols[j];
@@ -364,70 +364,70 @@ LAMathAntonovFXOption::setUpDataProvider(const LADate& basedate, LAObject& objec
 			if(j==0)
 			{
 				if(isnueutral)
-					strike = fwd * LAMath::exp(-0.5*vol*vol*term);
+					strike = fwd * AQLMath::exp(-0.5*vol*vol*term);
 				else
 					strike = fwd;
 			}
 			else
 			{
-				LAString key = strikestrs[j];
+				AQLString key = strikestrs[j];
 				key.remove(key.size()-1,1);
-				LAStringVector keys = key.toToken('D');
+				AQLStringVector keys = key.toToken('D');
 				double delta = keys[0].getDoubleValue()* 0.01;
-				LAString highlow = keys[1];
+				AQLString highlow = keys[1];
 				highlow.toUpper();
 				try
 				{
 					strike = LAMathFXVanillaFuncUtility::calcstrikefromdelta(delta,spotfwd,highlow,spot,fwd,vol,0.0,0.0,pf,term);
 				}
-				catch(LACoreError &err)
+				catch(AQLCoreError &err)
 				{
-					LAString msg = err.getMsg();
+					AQLString msg = err.getMsg();
 					if (msg.findString("Not Convergence from rtsafe") == -1)
-						throw LACoreNumericalError("Fx Option convergence does not work", __FILE__, __LINE__);
+						throw AQLCoreNumericalError("Fx Option convergence does not work", __FILE__, __LINE__);
 					
 					strike = LAMathFXVanillaFuncUtility::calcmaxstrike(spotfwd, spot, fwd, vol, 0.0, 0.0, pf, term);
 				}
 				
 			}
-			LAString callput = (iscallvec[j]) ? "CALL" :"PUT";
+			AQLString callput = (iscallvec[j]) ? "CALL" :"PUT";
 			callput.toUpper();
-			LAString premstr("PREM");
-			LAString buy("BUY");
+			AQLString premstr("PREM");
+			AQLString buy("BUY");
 			prem = LAMathIRVanillaFuncUtility::bkOption(premstr,buy,callput,fwd,strike,vol,pd,asof,expdate);
 
 			strikevec[j] = strike;
 			premvec[j] = prem;
 		}
 		object.remove(PRICING_DATA_STRIKES);
-		object.add(PRICING_DATA_STRIKES,new LADataDoubles(strikevec));
+		object.add(PRICING_DATA_STRIKES,new AQLDataDoubles(strikevec));
 		object.remove(PRICING_DATA_OPTIONPREMIUMS);
-		object.add(PRICING_DATA_OPTIONPREMIUMS,new LADataDoubles(premvec));
+		object.add(PRICING_DATA_OPTIONPREMIUMS,new AQLDataDoubles(premvec));
 	}
 	else
 	{
 		//StrikeVec;
 		dh = &(object.getData(PRICING_DATA_STRIKES,ISNOTNULL));
-		strikevec = dynamic_cast<LADataDoubles &>(dh->get()).get();
+		strikevec = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 
 		//PremVec
 		dh = &(object.getData(PRICING_DATA_OPTIONPREMIUMS,ISNOTNULL));
-		premvec = dynamic_cast<LADataDoubles &>(dh->get()).get();
+		premvec = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 	}
 
 	//WeightVec
 	dh = &(object.getData(PRICING_DATA_WEIGHTS,ISNOTNULL));
-	DoubleVector weightvec = dynamic_cast<LADataDoubles &>(dh->get()).get();
+	DoubleVector weightvec = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 
 	//isfitATM
 	dh = &(object.getData(PRICING_DATA_ISFITATM,ISNOTNULL));
-	bool isfitatm = dynamic_cast<LADataBool &>(dh->get()).get();
+	bool isfitatm = dynamic_cast<AQLDataBool &>(dh->get()).get();
 
 	if(isfitatm && 0.0 == weightvec[0])
-		throw LACoreInvalidData("ATM weight must be non-zero when isFitATM true",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("ATM weight must be non-zero when isFitATM true",__FILE__,__LINE__);
 
 	if(smilenum != strikevec.size() || smilenum != weightvec.size() || smilenum != iscallvec.size())
-		throw LACoreInvalidData("FX calibration fitting size is wrong",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("FX calibration fitting size is wrong",__FILE__,__LINE__);
 
 	DoubleVector::iterator itw = weightvec.begin();
 	DoubleVector::iterator itk = strikevec.begin();
@@ -455,16 +455,16 @@ LAMathAntonovFXOption::setUpDataProvider(const LADate& basedate, LAObject& objec
 
 	//set initial val
 	dh = &(object.getData(PRICING_DATA_VOLATILITYS,ISNOTNULL));
-	double tmpvol = dynamic_cast<const LADataDoubles &>(dh->get()).get()[0];
+	double tmpvol = dynamic_cast<const AQLDataDoubles &>(dh->get()).get()[0];
 	dh = &(object.getData(PRICING_DATA_TERMBETA,ISNOTNULL));
-	double tmpbeta = dynamic_cast<LADataDouble &>(dh->get()).get();
+	double tmpbeta = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	
 	//virtual method set param mVGrids, mSGrids, mBetaGrids
 	setCalibParamFirst(dataProvider,tmpvol,tmpbeta);
 
-	//set LA1DDataSet
+	//set AQL1DDataSet
 	unsigned int size = timegrids.size();
-	LAStepInterpolation inter;
+	AQLStepInterpolation inter;
 	DoubleArray SigmaSt(size),SigmaFX(size), SigmaSt2(size),SigmaStSigmaFX(size);
 	for(unsigned int i=0;i<size;i++)
 	{
@@ -474,7 +474,7 @@ LAMathAntonovFXOption::setUpDataProvider(const LADate& basedate, LAObject& objec
 		double b = dataProvider->getB(i);
 		double c = dataProvider->getC(i);
 		SigmaSt2[i] =  a*a+b+c; 
-		SigmaSt[i] = (SigmaSt2[i]>=0.0) ? LAMath::sqrt(SigmaSt2[i]) : 0.0;*/
+		SigmaSt[i] = (SigmaSt2[i]>=0.0) ? AQLMath::sqrt(SigmaSt2[i]) : 0.0;*/
 		//modify antonov2
 		double fxt = fxgrids[i];
 		double fx0 = fxgrids[0];
@@ -497,26 +497,26 @@ LAMathAntonovFXOption::setUpDataProvider(const LADate& basedate, LAObject& objec
 
 	//mbSigmaFXGrids and mSmallFactorGrids
 	DoubleVector tmpvec(size,0.0), tmpvec2(size,0.0);
-	LA1DDataSet tmpInt,tmpInt2;
+	AQL1DDataSet tmpInt,tmpInt2;
 	tmpInt.set(timegrids,tmpvec); tmpInt2.set(timegrids,tmpvec);
 	tmpInt.setInterpolation(inter); tmpInt2.setInterpolation(inter);
 	DoubleArray bSigmaFX(size,0.0),smallfactor(size,0.0);
 	
 	//modify antonov
 	DoubleVector R(size,0.0), tmpvec3(size,0.0);
-	LA1DDataSet tmpInt3;
+	AQL1DDataSet tmpInt3;
 	tmpInt3.set(timegrids,tmpvec3);
 	tmpInt3.setInterpolation(inter);
 	DoubleVector rFF(size,0.0), tmpvec4(size,0.0);
-	LA1DDataSet tmpInt4;
+	AQL1DDataSet tmpInt4;
 	tmpInt4.set(timegrids,tmpvec4);
 	tmpInt4.setInterpolation(inter);
 	DoubleVector rZZ(size,0.0), tmpvec5(size,0.0);
-	LA1DDataSet tmpInt5;
+	AQL1DDataSet tmpInt5;
 	tmpInt5.set(timegrids,tmpvec5);
 	tmpInt5.setInterpolation(inter);
 	DoubleVector rr(size,0.0), tmpvec6(size,0.0);
-	LA1DDataSet tmpInt6;
+	AQL1DDataSet tmpInt6;
 	tmpInt6.set(timegrids,tmpvec6);
 	tmpInt6.setInterpolation(inter);
 	//modify antonov
@@ -598,7 +598,7 @@ LAMathAntonovFXOption::setUpDataProvider(const LADate& basedate, LAObject& objec
 		double b = dataProvider->getB(i);
 		double c = dataProvider->getC(i);
 		SigmaSt2[i] =  a*a+b+c; 
-		SigmaSt[i] = (SigmaSt2[i]>=0.0) ? LAMath::sqrt(SigmaSt2[i]) : 0.0;
+		SigmaSt[i] = (SigmaSt2[i]>=0.0) ? AQLMath::sqrt(SigmaSt2[i]) : 0.0;
 	}
 	dataProvider->mSigmaGrids = SigmaSt;
 	dataProvider->mSigmaSt2Grids = SigmaSt2;
@@ -618,11 +618,11 @@ LAMathAntonovFXOption::setUpDataProvider(const LADate& basedate, LAObject& objec
 }
 
 double						
-LAMathAntonovFXOption::getVTM(double T, const LADataValuation& att) const
+LAMathAntonovFXOption::getVTM(double T, const AQLDataValuation& att) const
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathAntonovFXOptionDataProvider&>(att.getDataProvider());
 
@@ -633,15 +633,15 @@ LAMathAntonovFXOption::getVTM(double T, const LADataValuation& att) const
 
 	unsigned int pos =0;
 	const DoubleVector& timegrids = dataProvider->mTimeGrids;
-	LAAlgorithm::locate(timegrids,T,timegrids.size(),pos);
+	AQLAlgorithm::locate(timegrids,T,timegrids.size(),pos);
 	if(pos == timegrids.size())
 	{
 		--pos;
 	}
 	else
 	{
-		double diff = LAMath::abs(timegrids[pos] - T); 
-		if (diff > LAMath::abs(T - timegrids[pos - 1]))
+		double diff = AQLMath::abs(timegrids[pos] - T); 
+		if (diff > AQLMath::abs(T - timegrids[pos - 1]))
 		{
 			--pos;
 		}
@@ -651,11 +651,11 @@ LAMathAntonovFXOption::getVTM(double T, const LADataValuation& att) const
 }
 
 double
-LAMathAntonovFXOption::getBetaTM(double T, const LADataValuation& att) const
+LAMathAntonovFXOption::getBetaTM(double T, const AQLDataValuation& att) const
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathAntonovFXOptionDataProvider&>(att.getDataProvider());
 	
@@ -664,15 +664,15 @@ LAMathAntonovFXOption::getBetaTM(double T, const LADataValuation& att) const
 
 	unsigned int pos =0;
 	const DoubleVector& timegrids = dataProvider->mTimeGrids;
-	LAAlgorithm::locate(timegrids,T,timegrids.size(),pos);
+	AQLAlgorithm::locate(timegrids,T,timegrids.size(),pos);
 	if(pos == timegrids.size())
 	{
 		--pos;
 	}
 	else
 	{
-		double diff = LAMath::abs(timegrids[pos] - T); 
-		if (diff > LAMath::abs(T - timegrids[pos - 1]))
+		double diff = AQLMath::abs(timegrids[pos] - T); 
+		if (diff > AQLMath::abs(T - timegrids[pos - 1]))
 		{
 			--pos;
 		}
@@ -687,11 +687,11 @@ LAMathAntonovFXOption::getBetaTM(double T, const LADataValuation& att) const
 }
 
 double						
-LAMathAntonovFXOption::getTM(const LADataValuation& att) const
+LAMathAntonovFXOption::getTM(const AQLDataValuation& att) const
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathAntonovFXOptionDataProvider&>(att.getDataProvider());
 
@@ -699,11 +699,11 @@ LAMathAntonovFXOption::getTM(const LADataValuation& att) const
 }
 
 double						
-LAMathAntonovFXOption::getFxTM(const LADataValuation& att) const
+LAMathAntonovFXOption::getFxTM(const AQLDataValuation& att) const
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathAntonovFXOptionDataProvider&>(att.getDataProvider());
 
@@ -711,11 +711,11 @@ LAMathAntonovFXOption::getFxTM(const LADataValuation& att) const
 }
 
 double						
-LAMathAntonovFXOption::getPTM(const LADataValuation& att) const
+LAMathAntonovFXOption::getPTM(const AQLDataValuation& att) const
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathAntonovFXOptionDataProvider&>(att.getDataProvider());
 
@@ -723,11 +723,11 @@ LAMathAntonovFXOption::getPTM(const LADataValuation& att) const
 }
 
 double
-LAMathAntonovFXOption::getVTM(const LADataValuation& att) const
+LAMathAntonovFXOption::getVTM(const AQLDataValuation& att) const
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathAntonovFXOptionDataProvider&>(att.getDataProvider());
 
@@ -735,11 +735,11 @@ LAMathAntonovFXOption::getVTM(const LADataValuation& att) const
 }
 
 double
-LAMathAntonovFXOption::getBetaTM(const LADataValuation& att) const
+LAMathAntonovFXOption::getBetaTM(const AQLDataValuation& att) const
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathAntonovFXOptionDataProvider&>(att.getDataProvider());
 
@@ -747,11 +747,11 @@ LAMathAntonovFXOption::getBetaTM(const LADataValuation& att) const
 }
 
 DoubleVector	
-LAMathAntonovFXOption::getBetaResult(const LADataValuation& att) const 
+LAMathAntonovFXOption::getBetaResult(const AQLDataValuation& att) const 
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathAntonovFXOptionDataProvider&>(att.getDataProvider());
 
@@ -759,11 +759,11 @@ LAMathAntonovFXOption::getBetaResult(const LADataValuation& att) const
 }
 
 DoubleVector	
-LAMathAntonovFXOption::getVolatilityResult(const LADataValuation& att) const 
+LAMathAntonovFXOption::getVolatilityResult(const AQLDataValuation& att) const 
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathAntonovFXOptionDataProvider&>(att.getDataProvider());
 
@@ -771,11 +771,11 @@ LAMathAntonovFXOption::getVolatilityResult(const LADataValuation& att) const
 }
 
 unsigned int				
-LAMathAntonovFXOption::getNextPos(const LADataValuation& att) const
+LAMathAntonovFXOption::getNextPos(const AQLDataValuation& att) const
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("AntonovFXOptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathAntonovFXOptionDataProvider&>(att.getDataProvider());
 
@@ -794,10 +794,10 @@ LAMathAntonovFXOption::setCalibParamFirst(LAMathAntonovFXOptionDataProvider* dat
 	for(unsigned int i=0;i<size;i++)
 	{
 		if(0.0==dataProvider->mBetaGrids[i])
-			throw LACoreInvalidData("Beta 0.0 is not allowed",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Beta 0.0 is not allowed",__FILE__,__LINE__);
 		
 		if(0.0==dataProvider->mFxGrids[i])
-			throw LACoreInvalidData("Fx 0.0 is not allowed",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Fx 0.0 is not allowed",__FILE__,__LINE__);
 		
 		v[i] = dataProvider->mBetaGrids[i] * dataProvider->mVolGrids[i];
 		s[i] = (1.0 - dataProvider->mBetaGrids[i]) / dataProvider->mBetaGrids[i] * dataProvider->mFxGrids[i];
@@ -827,7 +827,7 @@ LAMathAntonovFXOption::setCalibParam(LAMathAntonovFXOptionDataProvider* dataProv
 	@brief create new cache class
 	@return cache class
 */
-LADataProvider*
+AQLDataProvider*
 LAMathAntonovFXOption::createNewDataProvider() const
 {
 	LAMathAntonovFXOptionDataProvider* dataProvider = NULL;
@@ -837,7 +837,7 @@ LAMathAntonovFXOption::createNewDataProvider() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 	return dataProvider;
 }
@@ -910,9 +910,9 @@ LAMathAntonovFXOption::LAMathAntonovFXOptionDataProvider::calcABC(void) const
 		//modify antonov
 		//mAGrids[i] = valA;
 		//kikuchi
-		mAGrids[i] = valA * LAMath::exp(-mR[i]) * (1.0 + 0.5 * mrZZ[i] - 0.5 * mr[i] * mr[i] * mrFF[i]);
+		mAGrids[i] = valA * AQLMath::exp(-mR[i]) * (1.0 + 0.5 * mrZZ[i] - 0.5 * mr[i] * mr[i] * mrFF[i]);
 		//mAGrids[i] = valA * (1.0 + 0.5 * mrZZ[i] - 0.5 * mr[i] * mr[i] * mrFF[i]);
-		//mAGrids[i] = valA * LAMath::exp(-mR[i]);
+		//mAGrids[i] = valA * AQLMath::exp(-mR[i]);
 		//mAGrids[i] = valA;
 		//mAGrids[i] = valA * (1.0 + 0.5 * mrZZ[i] - 0.5 * mr[i] * mr[i] * mrFF[i]);
 		//modify antonov
@@ -934,10 +934,10 @@ LAMathAntonovFXOption::LAMathAntonovFXOptionDataProvider::calcIntegral1(void) co
 	mIntSigmaStSigmaFXGrids.resize(N);
 	mBetaSt.resize(N);
 
-	LA1DDataSet integral1,integral2;
+	AQL1DDataSet integral1,integral2;
 	integral1.set(mTimeGrids,mSigmaSt2Grids);
 	integral2.set(mTimeGrids,mSigmaStSigmaFXGrids);
-	LAStepInterpolation inter;
+	AQLStepInterpolation inter;
 	integral1.setInterpolation(inter);
 	integral2.setInterpolation(inter);
 	
@@ -965,7 +965,7 @@ LAMathAntonovFXOption::LAMathAntonovFXOptionDataProvider::calcIntegral1(void) co
 	mIntSimgaSt2BetaStIntSigmaSt2.resize(N,0.0);
 	mIntSimgaSt2IntSigmaSt2.resize(N,0.0);
 
-	LA1DDataSet integral3,integral4;
+	AQL1DDataSet integral3,integral4;
 	integral3.set(mTimeGrids,SigmaSt2BetaStIntSigmaSt2);
 	integral4.set(mTimeGrids,SigmaSt2IntSigmaSt2);
 	integral3.setInterpolation(inter);
@@ -991,7 +991,7 @@ LAMathAntonovFXOption::LAMathAntonovFXOptionDataProvider::reset(double varV, dou
 		double b = getB(i);
 		double c = getC(i);
 		mSigmaSt2Grids[i] =  a*a+b+c; 
-		mSigmaGrids[i] = (mSigmaSt2Grids[i]>=0.0) ? LAMath::sqrt(mSigmaSt2Grids[i]) : 0.0;*/
+		mSigmaGrids[i] = (mSigmaSt2Grids[i]>=0.0) ? AQLMath::sqrt(mSigmaSt2Grids[i]) : 0.0;*/
 		//modify antonov2
 		double fxt = mFxGrids[i];
 		double fx0 = mFxGrids[0];
@@ -1005,9 +1005,9 @@ LAMathAntonovFXOption::LAMathAntonovFXOptionDataProvider::reset(double varV, dou
 	//mSigmaSt2Data.set(mTimeGrids,mSigmaSt2Grids);
 	mSigmaStSigmaFXData.set(mTimeGrids,mSigmaStSigmaFXGrids);
 	//mbSigmaFXGrids and mSmallFactorGrids
-	LAStepInterpolation inter;
+	AQLStepInterpolation inter;
 	DoubleVector tmpvec(size,0.0), tmpvec2(size,0.0);
-	LA1DDataSet tmpInt,tmpInt2;
+	AQL1DDataSet tmpInt,tmpInt2;
 	tmpInt.set(mTimeGrids,tmpvec); tmpInt2.set(mTimeGrids,tmpvec);
 	tmpInt.setInterpolation(inter); tmpInt2.setInterpolation(inter);
 	DoubleArray bSigmaFX(size,0.0),smallfactor(size,0.0);
@@ -1015,19 +1015,19 @@ LAMathAntonovFXOption::LAMathAntonovFXOptionDataProvider::reset(double varV, dou
 
 	//modify antonov
 	DoubleVector tmpvec3(size,0.0);
-	LA1DDataSet tmpInt3;
+	AQL1DDataSet tmpInt3;
 	tmpInt3.set(mTimeGrids,tmpvec3);
 	tmpInt3.setInterpolation(inter);
 	DoubleVector tmpvec4(size,0.0);
-	LA1DDataSet tmpInt4;
+	AQL1DDataSet tmpInt4;
 	tmpInt4.set(mTimeGrids,tmpvec4);
 	tmpInt4.setInterpolation(inter);
 	DoubleVector tmpvec5(size,0.0);
-	LA1DDataSet tmpInt5;
+	AQL1DDataSet tmpInt5;
 	tmpInt5.set(mTimeGrids,tmpvec5);
 	tmpInt5.setInterpolation(inter);
 	DoubleVector tmpvec6(size,0.0);
-	LA1DDataSet tmpInt6;
+	AQL1DDataSet tmpInt6;
 	tmpInt6.set(mTimeGrids,tmpvec6);
 	tmpInt6.setInterpolation(inter);
 	//modify antonov
@@ -1110,7 +1110,7 @@ LAMathAntonovFXOption::LAMathAntonovFXOptionDataProvider::reset(double varV, dou
 		double b = getB(i);
 		double c = getC(i);
 		mSigmaSt2Grids[i] =  a*a+b+c; 
-		mSigmaGrids[i] = (mSigmaSt2Grids[i]>=0.0) ? LAMath::sqrt(mSigmaSt2Grids[i]) : 0.0;
+		mSigmaGrids[i] = (mSigmaSt2Grids[i]>=0.0) ? AQLMath::sqrt(mSigmaSt2Grids[i]) : 0.0;
 	}
 	//intergral set
 	mSigmaSt2Data.set(mTimeGrids,mSigmaSt2Grids);

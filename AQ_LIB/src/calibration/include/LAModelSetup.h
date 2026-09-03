@@ -18,13 +18,13 @@ class LAModelSetup : public LACurveSetup
 {
 public:
 	//==============================================================================
-	static void setUpCalibMktSkewVol(LADataInstance& dataInstance,
-								const LADate& asofDate,
-								const LAString& fx,
+	static void setUpCalibMktSkewVol(AQLDataInstance& dataInstance,
+								const AQLDate& asofDate,
+								const AQLString& fx,
 								const double spotFX,
-								const LAString& curveType_d,
-								const LAString& curveType_f,
-								const LAStringVector& terms,
+								const AQLString& curveType_d,
+								const AQLString& curveType_f,
+								const AQLStringVector& terms,
 								const DoubleMatrix& weightMtx,
 								const DoubleMatrix& volMtx,
 								const DoubleArray& initialValues,
@@ -37,24 +37,24 @@ public:
 								const double rootEpsilon,
 								const double functionEpsilon,
 								const double gradientNormEpsilon,
-								const LAString& type,
+								const AQLString& type,
 								const double maxTerm,
-								const LAStringVector& spotOrFwd,
-								const LAStringVector& isFitATM,
-								const LAStringVector& termBeta,
-								const LAStringVector& isDeltaNeutral);
+								const AQLStringVector& spotOrFwd,
+								const AQLStringVector& isFitATM,
+								const AQLStringVector& termBeta,
+								const AQLStringVector& isDeltaNeutral);
 	//==============================================================================
-	static void setUpCalibHybridHWDDProcess(LADataInstance& dataInstance,
-								const LADate& asofDate,
-								const LAString& fx,
+	static void setUpCalibHybridHWDDProcess(AQLDataInstance& dataInstance,
+								const AQLDate& asofDate,
+								const AQLString& fx,
 								const double spotFX,
-								const LAString& curveType_d,
-								const LAString& curveType_f,
+								const AQLString& curveType_d,
+								const AQLString& curveType_f,
 								const DoubleMatrix& hwParams_d,
 								const DoubleMatrix& hwParams_f,
 								const DoubleMatrix& ddParams,
 								const DoubleVector& corVec,
-								const LAStringVector& terms,
+								const AQLStringVector& terms,
 								unsigned int numSteps,
 								const double boundaryMaxSigma,
 								const double boundaryMinSigma,
@@ -66,9 +66,9 @@ public:
 								const double functionEpsilon,
 								const double gradientNormEpsilon,
 								const bool isCalib,
-								const LAString& type);
+								const AQLString& type);
 	//==============================================================================
 protected:
-	static void setUpCalibPreparation(LADataInstance &dataInstance, const LAString& fx);
+	static void setUpCalibPreparation(AQLDataInstance &dataInstance, const AQLString& fx);
 };
 #endif

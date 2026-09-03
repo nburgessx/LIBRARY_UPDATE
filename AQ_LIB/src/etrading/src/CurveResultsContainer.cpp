@@ -323,7 +323,7 @@ namespace etrading
 		}
 
 		// 2. Delete Curve Results Built via Curve Object Pool
-		const LAStringVector curveIndexAliasList = etrading::curveIndexAliasList(curveCollection.c_str(), curveIndex.c_str(), false ); // don't throw on error, but return empty list
+		const AQLStringVector curveIndexAliasList = etrading::curveIndexAliasList(curveCollection.c_str(), curveIndex.c_str(), false ); // don't throw on error, but return empty list
 		for (auto thisCurveIndex : curveIndexAliasList)
 		{
 			std::pair<std::string, std::string> searchKey(curveCollection, thisCurveIndex.c_str());

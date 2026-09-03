@@ -27,14 +27,14 @@
 //  // @param [in]		rollConvention		    Swap roll convention
 //  // @output			TRUE for having irregular schedule
 //  //
-//  bool isRegularSwapSchedule( const LADate& swapStart,
-//	                            const LADate& givenSwapEnd,
+//  bool isRegularSwapSchedule( const AQLDate& swapStart,
+//	                            const AQLDate& givenSwapEnd,
 //	                            bool isMaturityDateAdjusted,
-//	                            const LAString& freq,
-//	                            const LAString& busDayAdj,
-//	                            const LAString& calendar,
+//	                            const AQLString& freq,
+//	                            const AQLString& busDayAdj,
+//	                            const AQLString& calendar,
 //	                            int rollDay,
-//	                            const LAString& rollConvention )
+//	                            const AQLString& rollConvention )
 
 using namespace etrading;
 
@@ -44,17 +44,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_ANNUAL )
     {
-        const LADate        regularStartDate            = LADate("20180301");
-        const LADate        regularEndDate              = LADate("20190301");
+        const AQLDate        regularStartDate            = AQLDate("20180301");
+        const AQLDate        regularEndDate              = AQLDate("20190301");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("ANNUAL");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("ANNUAL");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20190315");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20190315");
 
         // Test(s) for Success
         // ---------------------------
@@ -79,17 +79,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_SEMI_ANNUAL )
     {
-        const LADate        regularStartDate            = LADate("20180301");
-        const LADate        regularEndDate              = LADate("20180903"); // Start + 6M = Monday 3rd-Sep-18
+        const AQLDate        regularStartDate            = AQLDate("20180301");
+        const AQLDate        regularEndDate              = AQLDate("20180903"); // Start + 6M = Monday 3rd-Sep-18
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("SEMI-ANNUAL");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("SEMI-ANNUAL");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180915");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180915");
 
         // Test(s) for Success
         // ---------------------------
@@ -114,17 +114,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180301");
-        const LADate        regularEndDate              = LADate("20180601");
+        const AQLDate        regularStartDate            = AQLDate("20180301");
+        const AQLDate        regularEndDate              = AQLDate("20180601");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -149,17 +149,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_QUARTERLY_WITH_LARGE_FAILURE_TESTS )
     {
-        const LADate        regularStartDate            = LADate("20180301");
-        const LADate        regularEndDate              = LADate("20180601");
+        const AQLDate        regularStartDate            = AQLDate("20180301");
+        const AQLDate        regularEndDate              = AQLDate("20180601");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -184,36 +184,36 @@ namespace google_test
         // ---------------------------------------------
 
         // 1st is a good day
-        const bool irregularStart2  = etrading::isRegularSwapSchedule( LADate("20180302"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart3  = etrading::isRegularSwapSchedule( LADate("20180303"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart4  = etrading::isRegularSwapSchedule( LADate("20180304"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart5  = etrading::isRegularSwapSchedule( LADate("20180305"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart6  = etrading::isRegularSwapSchedule( LADate("20180306"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart7  = etrading::isRegularSwapSchedule( LADate("20180307"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart8  = etrading::isRegularSwapSchedule( LADate("20180308"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart9  = etrading::isRegularSwapSchedule( LADate("20180309"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart10 = etrading::isRegularSwapSchedule( LADate("20180310"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart11 = etrading::isRegularSwapSchedule( LADate("20180311"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart12 = etrading::isRegularSwapSchedule( LADate("20180312"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart13 = etrading::isRegularSwapSchedule( LADate("20180313"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart14 = etrading::isRegularSwapSchedule( LADate("20180314"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart15 = etrading::isRegularSwapSchedule( LADate("20180315"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart16 = etrading::isRegularSwapSchedule( LADate("20180316"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart17 = etrading::isRegularSwapSchedule( LADate("20180317"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart18 = etrading::isRegularSwapSchedule( LADate("20180318"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart19 = etrading::isRegularSwapSchedule( LADate("20180319"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart20 = etrading::isRegularSwapSchedule( LADate("20180320"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart21 = etrading::isRegularSwapSchedule( LADate("20180321"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart22 = etrading::isRegularSwapSchedule( LADate("20180322"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart23 = etrading::isRegularSwapSchedule( LADate("20180323"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart24 = etrading::isRegularSwapSchedule( LADate("20180324"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart25 = etrading::isRegularSwapSchedule( LADate("20180325"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart26 = etrading::isRegularSwapSchedule( LADate("20180326"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart27 = etrading::isRegularSwapSchedule( LADate("20180327"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart28 = etrading::isRegularSwapSchedule( LADate("20180328"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart29 = etrading::isRegularSwapSchedule( LADate("20180329"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart30 = etrading::isRegularSwapSchedule( LADate("20180330"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart31 = etrading::isRegularSwapSchedule( LADate("20180331"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart2  = etrading::isRegularSwapSchedule( AQLDate("20180302"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart3  = etrading::isRegularSwapSchedule( AQLDate("20180303"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart4  = etrading::isRegularSwapSchedule( AQLDate("20180304"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart5  = etrading::isRegularSwapSchedule( AQLDate("20180305"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart6  = etrading::isRegularSwapSchedule( AQLDate("20180306"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart7  = etrading::isRegularSwapSchedule( AQLDate("20180307"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart8  = etrading::isRegularSwapSchedule( AQLDate("20180308"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart9  = etrading::isRegularSwapSchedule( AQLDate("20180309"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart10 = etrading::isRegularSwapSchedule( AQLDate("20180310"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart11 = etrading::isRegularSwapSchedule( AQLDate("20180311"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart12 = etrading::isRegularSwapSchedule( AQLDate("20180312"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart13 = etrading::isRegularSwapSchedule( AQLDate("20180313"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart14 = etrading::isRegularSwapSchedule( AQLDate("20180314"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart15 = etrading::isRegularSwapSchedule( AQLDate("20180315"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart16 = etrading::isRegularSwapSchedule( AQLDate("20180316"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart17 = etrading::isRegularSwapSchedule( AQLDate("20180317"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart18 = etrading::isRegularSwapSchedule( AQLDate("20180318"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart19 = etrading::isRegularSwapSchedule( AQLDate("20180319"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart20 = etrading::isRegularSwapSchedule( AQLDate("20180320"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart21 = etrading::isRegularSwapSchedule( AQLDate("20180321"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart22 = etrading::isRegularSwapSchedule( AQLDate("20180322"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart23 = etrading::isRegularSwapSchedule( AQLDate("20180323"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart24 = etrading::isRegularSwapSchedule( AQLDate("20180324"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart25 = etrading::isRegularSwapSchedule( AQLDate("20180325"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart26 = etrading::isRegularSwapSchedule( AQLDate("20180326"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart27 = etrading::isRegularSwapSchedule( AQLDate("20180327"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart28 = etrading::isRegularSwapSchedule( AQLDate("20180328"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart29 = etrading::isRegularSwapSchedule( AQLDate("20180329"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart30 = etrading::isRegularSwapSchedule( AQLDate("20180330"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart31 = etrading::isRegularSwapSchedule( AQLDate("20180331"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
         
         // 1st is a good day
         EXPECT_EQ( false, irregularStart2  );
@@ -251,35 +251,35 @@ namespace google_test
         // ---------------------------------------------
 
         // 1st is a good end day
-        const bool irregularEnd2  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180602"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd3  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180603"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd4  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180604"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd5  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180605"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd6  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180606"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd7  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180607"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd8  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180608"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd9  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180609"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd10 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180610"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd11 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180611"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd12 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180612"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd13 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180613"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd14 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180614"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd15 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180615"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd16 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180616"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd17 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180617"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd18 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180618"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd19 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180619"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd20 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180620"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd21 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180621"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd22 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180622"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd23 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180623"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd24 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180624"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd25 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180625"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd26 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180626"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd27 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180627"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd28 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180628"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd29 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180629"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd30 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180630"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd2  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180602"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd3  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180603"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd4  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180604"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd5  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180605"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd6  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180606"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd7  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180607"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd8  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180608"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd9  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180609"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd10 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180610"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd11 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180611"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd12 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180612"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd13 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180613"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd14 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180614"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd15 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180615"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd16 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180616"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd17 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180617"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd18 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180618"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd19 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180619"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd20 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180620"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd21 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180621"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd22 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180622"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd23 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180623"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd24 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180624"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd25 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180625"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd26 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180626"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd27 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180627"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd28 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180628"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd29 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180629"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd30 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180630"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
         
         // 1st is a good end day
         EXPECT_EQ( false, irregularEnd2  );
@@ -317,17 +317,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_MONTHLY )
     {
-        const LADate        regularStartDate            = LADate("20180301");
-        const LADate        regularEndDate              = LADate("20180401");
+        const AQLDate        regularStartDate            = AQLDate("20180301");
+        const AQLDate        regularEndDate              = AQLDate("20180401");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("MONTHLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("MONTHLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180415");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180415");
 
         // Test(s) for Success
         // ---------------------------
@@ -352,17 +352,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_IMM_ROLL_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180321");
-        const LADate        regularEndDate              = LADate("20180620");
+        const AQLDate        regularStartDate            = AQLDate("20180321");
+        const AQLDate        regularEndDate              = AQLDate("20180620");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("IMM");
+	    const AQLString      rollConvention              = AQLString("IMM");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -387,17 +387,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_IMM_ROLL_QUARTERLY_WITH_LARGE_FAILURE_TESTS )
     {
-        const LADate        regularStartDate            = LADate("20180321");
-        const LADate        regularEndDate              = LADate("20180620");
+        const AQLDate        regularStartDate            = AQLDate("20180321");
+        const AQLDate        regularEndDate              = AQLDate("20180620");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("IMM");
+	    const AQLString      rollConvention              = AQLString("IMM");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -422,37 +422,37 @@ namespace google_test
         // ---------------------------------------------
 
         // 21 is a good start day
-        const bool irregularStart1  = etrading::isRegularSwapSchedule( LADate("20180301"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart2  = etrading::isRegularSwapSchedule( LADate("20180302"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart3  = etrading::isRegularSwapSchedule( LADate("20180303"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart4  = etrading::isRegularSwapSchedule( LADate("20180304"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart5  = etrading::isRegularSwapSchedule( LADate("20180305"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart6  = etrading::isRegularSwapSchedule( LADate("20180306"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart7  = etrading::isRegularSwapSchedule( LADate("20180307"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart8  = etrading::isRegularSwapSchedule( LADate("20180308"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart9  = etrading::isRegularSwapSchedule( LADate("20180309"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart10 = etrading::isRegularSwapSchedule( LADate("20180310"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart11 = etrading::isRegularSwapSchedule( LADate("20180311"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart12 = etrading::isRegularSwapSchedule( LADate("20180312"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart13 = etrading::isRegularSwapSchedule( LADate("20180313"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart14 = etrading::isRegularSwapSchedule( LADate("20180314"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart15 = etrading::isRegularSwapSchedule( LADate("20180315"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart16 = etrading::isRegularSwapSchedule( LADate("20180316"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart17 = etrading::isRegularSwapSchedule( LADate("20180317"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart18 = etrading::isRegularSwapSchedule( LADate("20180318"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart19 = etrading::isRegularSwapSchedule( LADate("20180319"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart20 = etrading::isRegularSwapSchedule( LADate("20180320"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart1  = etrading::isRegularSwapSchedule( AQLDate("20180301"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart2  = etrading::isRegularSwapSchedule( AQLDate("20180302"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart3  = etrading::isRegularSwapSchedule( AQLDate("20180303"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart4  = etrading::isRegularSwapSchedule( AQLDate("20180304"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart5  = etrading::isRegularSwapSchedule( AQLDate("20180305"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart6  = etrading::isRegularSwapSchedule( AQLDate("20180306"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart7  = etrading::isRegularSwapSchedule( AQLDate("20180307"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart8  = etrading::isRegularSwapSchedule( AQLDate("20180308"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart9  = etrading::isRegularSwapSchedule( AQLDate("20180309"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart10 = etrading::isRegularSwapSchedule( AQLDate("20180310"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart11 = etrading::isRegularSwapSchedule( AQLDate("20180311"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart12 = etrading::isRegularSwapSchedule( AQLDate("20180312"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart13 = etrading::isRegularSwapSchedule( AQLDate("20180313"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart14 = etrading::isRegularSwapSchedule( AQLDate("20180314"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart15 = etrading::isRegularSwapSchedule( AQLDate("20180315"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart16 = etrading::isRegularSwapSchedule( AQLDate("20180316"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart17 = etrading::isRegularSwapSchedule( AQLDate("20180317"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart18 = etrading::isRegularSwapSchedule( AQLDate("20180318"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart19 = etrading::isRegularSwapSchedule( AQLDate("20180319"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart20 = etrading::isRegularSwapSchedule( AQLDate("20180320"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
         // 21st is a good start day
-        const bool irregularStart22 = etrading::isRegularSwapSchedule( LADate("20180322"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart23 = etrading::isRegularSwapSchedule( LADate("20180323"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart24 = etrading::isRegularSwapSchedule( LADate("20180324"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart25 = etrading::isRegularSwapSchedule( LADate("20180325"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart26 = etrading::isRegularSwapSchedule( LADate("20180326"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart27 = etrading::isRegularSwapSchedule( LADate("20180327"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart28 = etrading::isRegularSwapSchedule( LADate("20180328"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart29 = etrading::isRegularSwapSchedule( LADate("20180329"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart30 = etrading::isRegularSwapSchedule( LADate("20180330"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart31 = etrading::isRegularSwapSchedule( LADate("20180331"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart22 = etrading::isRegularSwapSchedule( AQLDate("20180322"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart23 = etrading::isRegularSwapSchedule( AQLDate("20180323"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart24 = etrading::isRegularSwapSchedule( AQLDate("20180324"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart25 = etrading::isRegularSwapSchedule( AQLDate("20180325"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart26 = etrading::isRegularSwapSchedule( AQLDate("20180326"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart27 = etrading::isRegularSwapSchedule( AQLDate("20180327"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart28 = etrading::isRegularSwapSchedule( AQLDate("20180328"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart29 = etrading::isRegularSwapSchedule( AQLDate("20180329"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart30 = etrading::isRegularSwapSchedule( AQLDate("20180330"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart31 = etrading::isRegularSwapSchedule( AQLDate("20180331"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
         
         // 21 is a good start day
         EXPECT_EQ( false, irregularStart1  );
@@ -491,36 +491,36 @@ namespace google_test
         // ---------------------------------------------
 
         // 20 is a good end day
-        const bool irregularEnd1  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180601"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd2  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180602"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd3  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180603"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd4  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180604"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd5  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180605"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd6  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180606"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd7  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180607"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd8  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180608"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd9  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180609"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd10 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180610"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd11 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180611"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd12 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180612"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd13 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180613"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd14 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180614"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd15 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180615"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd16 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180616"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd17 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180617"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd18 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180618"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd19 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180619"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd1  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180601"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd2  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180602"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd3  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180603"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd4  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180604"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd5  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180605"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd6  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180606"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd7  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180607"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd8  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180608"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd9  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180609"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd10 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180610"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd11 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180611"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd12 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180612"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd13 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180613"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd14 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180614"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd15 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180615"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd16 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180616"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd17 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180617"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd18 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180618"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd19 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180619"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
         // 20th is a good end day
-        const bool irregularEnd21 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180621"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd22 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180622"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd23 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180623"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd24 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180624"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd25 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180625"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd26 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180626"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd27 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180627"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd28 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180628"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd29 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180629"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd30 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180630"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd21 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180621"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd22 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180622"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd23 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180623"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd24 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180624"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd25 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180625"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd26 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180626"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd27 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180627"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd28 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180628"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd29 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180629"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd30 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180630"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
         
         // 20 is a good end day
         EXPECT_EQ( false, irregularEnd1  );
@@ -559,17 +559,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_EOM_ROLL_ANNUAL )
     {
-        const LADate        regularStartDate            = LADate("20180329"); // EOM is 29th Due to Good Froday Holiday on 30th
-        const LADate        regularEndDate              = LADate("20190329");
+        const AQLDate        regularStartDate            = AQLDate("20180329"); // EOM is 29th Due to Good Froday Holiday on 30th
+        const AQLDate        regularEndDate              = AQLDate("20190329");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("ANNUAL");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("ANNUAL");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("EOM");
+	    const AQLString      rollConvention              = AQLString("EOM");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20190315");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20190315");
 
         // Test(s) for Success
         // ---------------------------
@@ -594,17 +594,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_EOM_ROLL_SEMI_ANNUAL )
     {
-        const LADate        regularStartDate            = LADate("20180329"); // EOM is 29th Due to Good Froday Holiday on 30th
-        const LADate        regularEndDate              = LADate("20180928");
+        const AQLDate        regularStartDate            = AQLDate("20180329"); // EOM is 29th Due to Good Froday Holiday on 30th
+        const AQLDate        regularEndDate              = AQLDate("20180928");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("SEMI-ANNUAL");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("SEMI-ANNUAL");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("EOM");
+	    const AQLString      rollConvention              = AQLString("EOM");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180915");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180915");
 
         // Test(s) for Success
         // ---------------------------
@@ -629,17 +629,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_EOM_ROLL_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180329"); // EOM is 29th Due to Good Froday Holiday on 30th
-        const LADate        regularEndDate              = LADate("20180629");
+        const AQLDate        regularStartDate            = AQLDate("20180329"); // EOM is 29th Due to Good Froday Holiday on 30th
+        const AQLDate        regularEndDate              = AQLDate("20180629");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("EOM");
+	    const AQLString      rollConvention              = AQLString("EOM");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -664,17 +664,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_EOM_ROLL_QUARTERLY_WITH_LARGE_FAILURE_TESTS )
     {
-        const LADate        regularStartDate            = LADate("20180329"); // EOM is 29th Due to Good Froday Holiday on 30th
-        const LADate        regularEndDate              = LADate("20180629");
+        const AQLDate        regularStartDate            = AQLDate("20180329"); // EOM is 29th Due to Good Froday Holiday on 30th
+        const AQLDate        regularEndDate              = AQLDate("20180629");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("EOM");
+	    const AQLString      rollConvention              = AQLString("EOM");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -699,37 +699,37 @@ namespace google_test
         // ---------------------------------------------
 
         // 29 is a good start day (30th is a holiday)
-        const bool irregularStart1  = etrading::isRegularSwapSchedule( LADate("20180301"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart2  = etrading::isRegularSwapSchedule( LADate("20180302"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart3  = etrading::isRegularSwapSchedule( LADate("20180303"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart4  = etrading::isRegularSwapSchedule( LADate("20180304"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart5  = etrading::isRegularSwapSchedule( LADate("20180305"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart6  = etrading::isRegularSwapSchedule( LADate("20180306"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart7  = etrading::isRegularSwapSchedule( LADate("20180307"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart8  = etrading::isRegularSwapSchedule( LADate("20180308"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart9  = etrading::isRegularSwapSchedule( LADate("20180309"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart10 = etrading::isRegularSwapSchedule( LADate("20180310"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart11 = etrading::isRegularSwapSchedule( LADate("20180311"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart12 = etrading::isRegularSwapSchedule( LADate("20180312"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart13 = etrading::isRegularSwapSchedule( LADate("20180313"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart14 = etrading::isRegularSwapSchedule( LADate("20180314"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart15 = etrading::isRegularSwapSchedule( LADate("20180315"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart16 = etrading::isRegularSwapSchedule( LADate("20180316"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart17 = etrading::isRegularSwapSchedule( LADate("20180317"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart18 = etrading::isRegularSwapSchedule( LADate("20180318"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart19 = etrading::isRegularSwapSchedule( LADate("20180319"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart20 = etrading::isRegularSwapSchedule( LADate("20180320"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart21 = etrading::isRegularSwapSchedule( LADate("20180321"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart22 = etrading::isRegularSwapSchedule( LADate("20180322"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart23 = etrading::isRegularSwapSchedule( LADate("20180323"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart24 = etrading::isRegularSwapSchedule( LADate("20180324"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart25 = etrading::isRegularSwapSchedule( LADate("20180325"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart26 = etrading::isRegularSwapSchedule( LADate("20180326"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart27 = etrading::isRegularSwapSchedule( LADate("20180327"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart28 = etrading::isRegularSwapSchedule( LADate("20180328"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart1  = etrading::isRegularSwapSchedule( AQLDate("20180301"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart2  = etrading::isRegularSwapSchedule( AQLDate("20180302"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart3  = etrading::isRegularSwapSchedule( AQLDate("20180303"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart4  = etrading::isRegularSwapSchedule( AQLDate("20180304"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart5  = etrading::isRegularSwapSchedule( AQLDate("20180305"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart6  = etrading::isRegularSwapSchedule( AQLDate("20180306"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart7  = etrading::isRegularSwapSchedule( AQLDate("20180307"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart8  = etrading::isRegularSwapSchedule( AQLDate("20180308"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart9  = etrading::isRegularSwapSchedule( AQLDate("20180309"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart10 = etrading::isRegularSwapSchedule( AQLDate("20180310"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart11 = etrading::isRegularSwapSchedule( AQLDate("20180311"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart12 = etrading::isRegularSwapSchedule( AQLDate("20180312"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart13 = etrading::isRegularSwapSchedule( AQLDate("20180313"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart14 = etrading::isRegularSwapSchedule( AQLDate("20180314"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart15 = etrading::isRegularSwapSchedule( AQLDate("20180315"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart16 = etrading::isRegularSwapSchedule( AQLDate("20180316"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart17 = etrading::isRegularSwapSchedule( AQLDate("20180317"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart18 = etrading::isRegularSwapSchedule( AQLDate("20180318"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart19 = etrading::isRegularSwapSchedule( AQLDate("20180319"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart20 = etrading::isRegularSwapSchedule( AQLDate("20180320"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart21 = etrading::isRegularSwapSchedule( AQLDate("20180321"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart22 = etrading::isRegularSwapSchedule( AQLDate("20180322"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart23 = etrading::isRegularSwapSchedule( AQLDate("20180323"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart24 = etrading::isRegularSwapSchedule( AQLDate("20180324"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart25 = etrading::isRegularSwapSchedule( AQLDate("20180325"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart26 = etrading::isRegularSwapSchedule( AQLDate("20180326"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart27 = etrading::isRegularSwapSchedule( AQLDate("20180327"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart28 = etrading::isRegularSwapSchedule( AQLDate("20180328"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
         // 29th is good start day
-        const bool irregularStart30 = etrading::isRegularSwapSchedule( LADate("20180330"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularStart31 = etrading::isRegularSwapSchedule( LADate("20180331"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart30 = etrading::isRegularSwapSchedule( AQLDate("20180330"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularStart31 = etrading::isRegularSwapSchedule( AQLDate("20180331"), regularEndDate, isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
         
         // 29 is a good start day (30th is a holiday)
         EXPECT_EQ( false, irregularStart1  );
@@ -767,38 +767,38 @@ namespace google_test
         // ---------------------------------------------
 
         // 29 is a good end day (30th is a holiday)
-        const bool irregularEnd1  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180601"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd2  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180602"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd3  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180603"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd4  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180604"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd5  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180605"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd6  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180606"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd7  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180607"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd8  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180608"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd9  = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180609"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd10 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180610"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd11 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180611"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd12 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180612"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd13 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180613"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd14 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180614"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd15 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180615"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd16 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180616"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd17 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180617"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd18 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180618"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd19 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180619"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd20 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180619"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd21 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180621"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd22 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180622"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd23 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180623"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd24 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180624"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd25 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180625"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd26 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180626"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd27 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180627"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
-        const bool irregularEnd28 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180628"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd1  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180601"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd2  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180602"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd3  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180603"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd4  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180604"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd5  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180605"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd6  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180606"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd7  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180607"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd8  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180608"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd9  = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180609"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd10 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180610"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd11 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180611"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd12 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180612"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd13 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180613"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd14 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180614"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd15 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180615"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd16 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180616"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd17 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180617"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd18 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180618"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd19 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180619"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd20 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180619"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd21 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180621"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd22 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180622"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd23 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180623"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd24 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180624"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd25 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180625"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd26 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180626"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd27 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180627"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        const bool irregularEnd28 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180628"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
         // 29th is a good end day
 
         // 30th is a holiday, when isMaturityAdjusted = false the isRegulareSwapSchedule function will adjust the end date and give a true result
-        //const bool irregularEnd30 = etrading::isRegularSwapSchedule( regularStartDate, LADate("20180630"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
+        //const bool irregularEnd30 = etrading::isRegularSwapSchedule( regularStartDate, AQLDate("20180630"), isMaturityDateAdjusted, frequency, busDayAdjustment, calendar, rollDay, rollConvention );
         
         // 29 is a good end day (30th is a holiday)
         EXPECT_EQ( false, irregularEnd1  );
@@ -838,17 +838,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_EOM_ROLL_MONTHLY )
     {
-        const LADate        regularStartDate            = LADate("20180329");
-        const LADate        regularEndDate              = LADate("20180430");
+        const AQLDate        regularStartDate            = AQLDate("20180329");
+        const AQLDate        regularEndDate              = AQLDate("20180430");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("MONTHLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("MONTHLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 0;
-	    const LAString      rollConvention              = LAString("EOM");
+	    const AQLString      rollConvention              = AQLString("EOM");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180415");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180415");
 
         // Test(s) for Success
         // ---------------------------
@@ -873,17 +873,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_1_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180301");
-        const LADate        regularEndDate              = LADate("20180601");
+        const AQLDate        regularStartDate            = AQLDate("20180301");
+        const AQLDate        regularEndDate              = AQLDate("20180601");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 1;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -908,17 +908,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_2_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180302");
-        const LADate        regularEndDate              = LADate("20180602");
+        const AQLDate        regularStartDate            = AQLDate("20180302");
+        const AQLDate        regularEndDate              = AQLDate("20180602");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 2;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -943,17 +943,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_3_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180303");
-        const LADate        regularEndDate              = LADate("20180603");
+        const AQLDate        regularStartDate            = AQLDate("20180303");
+        const AQLDate        regularEndDate              = AQLDate("20180603");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 3;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -978,17 +978,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_4_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180304");
-        const LADate        regularEndDate              = LADate("20180604");
+        const AQLDate        regularStartDate            = AQLDate("20180304");
+        const AQLDate        regularEndDate              = AQLDate("20180604");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 4;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -1013,17 +1013,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_5_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180305");
-        const LADate        regularEndDate              = LADate("20180605");
+        const AQLDate        regularStartDate            = AQLDate("20180305");
+        const AQLDate        regularEndDate              = AQLDate("20180605");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 5;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -1048,17 +1048,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_6_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180306");
-        const LADate        regularEndDate              = LADate("20180606");
+        const AQLDate        regularStartDate            = AQLDate("20180306");
+        const AQLDate        regularEndDate              = AQLDate("20180606");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 6;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -1083,17 +1083,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_7_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180307");
-        const LADate        regularEndDate              = LADate("20180607");
+        const AQLDate        regularStartDate            = AQLDate("20180307");
+        const AQLDate        regularEndDate              = AQLDate("20180607");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 7;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -1118,17 +1118,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_8_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180308");
-        const LADate        regularEndDate              = LADate("20180608");
+        const AQLDate        regularStartDate            = AQLDate("20180308");
+        const AQLDate        regularEndDate              = AQLDate("20180608");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 8;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -1153,17 +1153,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_9_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180309");
-        const LADate        regularEndDate              = LADate("20180609");
+        const AQLDate        regularStartDate            = AQLDate("20180309");
+        const AQLDate        regularEndDate              = AQLDate("20180609");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 9;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -1188,17 +1188,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_10_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180310");
-        const LADate        regularEndDate              = LADate("20180610");
+        const AQLDate        regularStartDate            = AQLDate("20180310");
+        const AQLDate        regularEndDate              = AQLDate("20180610");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 10;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -1223,17 +1223,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_11_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180311");
-        const LADate        regularEndDate              = LADate("20180611");
+        const AQLDate        regularStartDate            = AQLDate("20180311");
+        const AQLDate        regularEndDate              = AQLDate("20180611");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 11;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1258,17 +1258,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_12_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180312");
-        const LADate        regularEndDate              = LADate("20180612");
+        const AQLDate        regularStartDate            = AQLDate("20180312");
+        const AQLDate        regularEndDate              = AQLDate("20180612");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 12;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1293,17 +1293,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_13_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180313");
-        const LADate        regularEndDate              = LADate("20180613");
+        const AQLDate        regularStartDate            = AQLDate("20180313");
+        const AQLDate        regularEndDate              = AQLDate("20180613");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 13;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1328,17 +1328,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_14_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180314");
-        const LADate        regularEndDate              = LADate("20180614");
+        const AQLDate        regularStartDate            = AQLDate("20180314");
+        const AQLDate        regularEndDate              = AQLDate("20180614");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 14;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1363,17 +1363,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_15_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180315");
-        const LADate        regularEndDate              = LADate("20180615");
+        const AQLDate        regularStartDate            = AQLDate("20180315");
+        const AQLDate        regularEndDate              = AQLDate("20180615");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 15;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1398,17 +1398,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_16_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180316");
-        const LADate        regularEndDate              = LADate("20180616");
+        const AQLDate        regularStartDate            = AQLDate("20180316");
+        const AQLDate        regularEndDate              = AQLDate("20180616");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 16;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1433,17 +1433,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_17_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180317");
-        const LADate        regularEndDate              = LADate("20180617");
+        const AQLDate        regularStartDate            = AQLDate("20180317");
+        const AQLDate        regularEndDate              = AQLDate("20180617");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 17;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1468,17 +1468,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_18_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180318");
-        const LADate        regularEndDate              = LADate("20180618");
+        const AQLDate        regularStartDate            = AQLDate("20180318");
+        const AQLDate        regularEndDate              = AQLDate("20180618");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 18;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1503,17 +1503,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_19_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180319");
-        const LADate        regularEndDate              = LADate("20180619");
+        const AQLDate        regularStartDate            = AQLDate("20180319");
+        const AQLDate        regularEndDate              = AQLDate("20180619");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 19;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1538,17 +1538,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_20_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180320");
-        const LADate        regularEndDate              = LADate("20180620");
+        const AQLDate        regularStartDate            = AQLDate("20180320");
+        const AQLDate        regularEndDate              = AQLDate("20180620");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 20;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1573,17 +1573,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_21_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180321");
-        const LADate        regularEndDate              = LADate("20180621");
+        const AQLDate        regularStartDate            = AQLDate("20180321");
+        const AQLDate        regularEndDate              = AQLDate("20180621");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 21;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1608,17 +1608,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_22_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180322");
-        const LADate        regularEndDate              = LADate("20180622");
+        const AQLDate        regularStartDate            = AQLDate("20180322");
+        const AQLDate        regularEndDate              = AQLDate("20180622");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 22;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1643,17 +1643,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_23_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180323");
-        const LADate        regularEndDate              = LADate("20180623");
+        const AQLDate        regularStartDate            = AQLDate("20180323");
+        const AQLDate        regularEndDate              = AQLDate("20180623");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 23;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1678,17 +1678,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_24_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180324");
-        const LADate        regularEndDate              = LADate("20180624");
+        const AQLDate        regularStartDate            = AQLDate("20180324");
+        const AQLDate        regularEndDate              = AQLDate("20180624");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 24;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1713,17 +1713,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_25_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180325");
-        const LADate        regularEndDate              = LADate("20180625");
+        const AQLDate        regularStartDate            = AQLDate("20180325");
+        const AQLDate        regularEndDate              = AQLDate("20180625");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 25;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1748,17 +1748,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_26_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180326");
-        const LADate        regularEndDate              = LADate("20180626");
+        const AQLDate        regularStartDate            = AQLDate("20180326");
+        const AQLDate        regularEndDate              = AQLDate("20180626");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 26;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1783,17 +1783,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_27_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180327");
-        const LADate        regularEndDate              = LADate("20180627");
+        const AQLDate        regularStartDate            = AQLDate("20180327");
+        const AQLDate        regularEndDate              = AQLDate("20180627");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 27;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1818,17 +1818,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_28_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180328");
-        const LADate        regularEndDate              = LADate("20180628");
+        const AQLDate        regularStartDate            = AQLDate("20180328");
+        const AQLDate        regularEndDate              = AQLDate("20180628");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 28;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1853,17 +1853,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_29_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180329");
-        const LADate        regularEndDate              = LADate("20180629");
+        const AQLDate        regularStartDate            = AQLDate("20180329");
+        const AQLDate        regularEndDate              = AQLDate("20180629");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 29;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -1888,17 +1888,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_30_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180330");
-        const LADate        regularEndDate              = LADate("20180630");
+        const AQLDate        regularStartDate            = AQLDate("20180330");
+        const AQLDate        regularEndDate              = AQLDate("20180630");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 30;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -1923,17 +1923,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_ROLLDAY_31_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180331");
-        const LADate        regularEndDate              = LADate("20180630");
+        const AQLDate        regularStartDate            = AQLDate("20180331");
+        const AQLDate        regularEndDate              = AQLDate("20180630");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 31;
-	    const LAString      rollConvention              = LAString();
+	    const AQLString      rollConvention              = AQLString();
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -1958,17 +1958,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_1_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180301");
-        const LADate        regularEndDate              = LADate("20180601");
+        const AQLDate        regularStartDate            = AQLDate("20180301");
+        const AQLDate        regularEndDate              = AQLDate("20180601");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 1;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -1993,17 +1993,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_2_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180302");
-        const LADate        regularEndDate              = LADate("20180602");
+        const AQLDate        regularStartDate            = AQLDate("20180302");
+        const AQLDate        regularEndDate              = AQLDate("20180602");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 2;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -2028,17 +2028,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_3_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180303");
-        const LADate        regularEndDate              = LADate("20180603");
+        const AQLDate        regularStartDate            = AQLDate("20180303");
+        const AQLDate        regularEndDate              = AQLDate("20180603");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 3;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -2063,17 +2063,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_4_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180304");
-        const LADate        regularEndDate              = LADate("20180604");
+        const AQLDate        regularStartDate            = AQLDate("20180304");
+        const AQLDate        regularEndDate              = AQLDate("20180604");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 4;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -2098,17 +2098,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_5_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180305");
-        const LADate        regularEndDate              = LADate("20180605");
+        const AQLDate        regularStartDate            = AQLDate("20180305");
+        const AQLDate        regularEndDate              = AQLDate("20180605");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 5;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -2133,17 +2133,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_6_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180306");
-        const LADate        regularEndDate              = LADate("20180606");
+        const AQLDate        regularStartDate            = AQLDate("20180306");
+        const AQLDate        regularEndDate              = AQLDate("20180606");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 6;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -2168,17 +2168,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_7_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180307");
-        const LADate        regularEndDate              = LADate("20180607");
+        const AQLDate        regularStartDate            = AQLDate("20180307");
+        const AQLDate        regularEndDate              = AQLDate("20180607");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 7;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -2203,17 +2203,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_8_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180308");
-        const LADate        regularEndDate              = LADate("20180608");
+        const AQLDate        regularStartDate            = AQLDate("20180308");
+        const AQLDate        regularEndDate              = AQLDate("20180608");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 8;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -2238,17 +2238,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_9_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180309");
-        const LADate        regularEndDate              = LADate("20180609");
+        const AQLDate        regularStartDate            = AQLDate("20180309");
+        const AQLDate        regularEndDate              = AQLDate("20180609");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 9;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -2273,17 +2273,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_10_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180310");
-        const LADate        regularEndDate              = LADate("20180610");
+        const AQLDate        regularStartDate            = AQLDate("20180310");
+        const AQLDate        regularEndDate              = AQLDate("20180610");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 10;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -2308,17 +2308,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_11_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180311");
-        const LADate        regularEndDate              = LADate("20180611");
+        const AQLDate        regularStartDate            = AQLDate("20180311");
+        const AQLDate        regularEndDate              = AQLDate("20180611");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 11;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2343,17 +2343,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_12_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180312");
-        const LADate        regularEndDate              = LADate("20180612");
+        const AQLDate        regularStartDate            = AQLDate("20180312");
+        const AQLDate        regularEndDate              = AQLDate("20180612");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 12;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2378,17 +2378,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_13_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180313");
-        const LADate        regularEndDate              = LADate("20180613");
+        const AQLDate        regularStartDate            = AQLDate("20180313");
+        const AQLDate        regularEndDate              = AQLDate("20180613");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 13;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2413,17 +2413,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_14_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180314");
-        const LADate        regularEndDate              = LADate("20180614");
+        const AQLDate        regularStartDate            = AQLDate("20180314");
+        const AQLDate        regularEndDate              = AQLDate("20180614");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 14;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2448,17 +2448,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_15_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180315");
-        const LADate        regularEndDate              = LADate("20180615");
+        const AQLDate        regularStartDate            = AQLDate("20180315");
+        const AQLDate        regularEndDate              = AQLDate("20180615");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 15;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2483,17 +2483,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_16_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180316");
-        const LADate        regularEndDate              = LADate("20180616");
+        const AQLDate        regularStartDate            = AQLDate("20180316");
+        const AQLDate        regularEndDate              = AQLDate("20180616");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 16;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2518,17 +2518,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_17_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180317");
-        const LADate        regularEndDate              = LADate("20180617");
+        const AQLDate        regularStartDate            = AQLDate("20180317");
+        const AQLDate        regularEndDate              = AQLDate("20180617");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 17;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2553,17 +2553,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_18_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180318");
-        const LADate        regularEndDate              = LADate("20180618");
+        const AQLDate        regularStartDate            = AQLDate("20180318");
+        const AQLDate        regularEndDate              = AQLDate("20180618");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 18;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2588,17 +2588,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_19_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180319");
-        const LADate        regularEndDate              = LADate("20180619");
+        const AQLDate        regularStartDate            = AQLDate("20180319");
+        const AQLDate        regularEndDate              = AQLDate("20180619");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 19;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2623,17 +2623,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_20_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180320");
-        const LADate        regularEndDate              = LADate("20180620");
+        const AQLDate        regularStartDate            = AQLDate("20180320");
+        const AQLDate        regularEndDate              = AQLDate("20180620");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 20;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2658,17 +2658,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_21_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180321");
-        const LADate        regularEndDate              = LADate("20180621");
+        const AQLDate        regularStartDate            = AQLDate("20180321");
+        const AQLDate        regularEndDate              = AQLDate("20180621");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 21;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2693,17 +2693,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_22_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180322");
-        const LADate        regularEndDate              = LADate("20180622");
+        const AQLDate        regularStartDate            = AQLDate("20180322");
+        const AQLDate        regularEndDate              = AQLDate("20180622");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 22;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2728,17 +2728,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_23_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180323");
-        const LADate        regularEndDate              = LADate("20180623");
+        const AQLDate        regularStartDate            = AQLDate("20180323");
+        const AQLDate        regularEndDate              = AQLDate("20180623");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 23;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2763,17 +2763,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_24_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180324");
-        const LADate        regularEndDate              = LADate("20180624");
+        const AQLDate        regularStartDate            = AQLDate("20180324");
+        const AQLDate        regularEndDate              = AQLDate("20180624");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 24;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2798,17 +2798,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_25_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180325");
-        const LADate        regularEndDate              = LADate("20180625");
+        const AQLDate        regularStartDate            = AQLDate("20180325");
+        const AQLDate        regularEndDate              = AQLDate("20180625");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 25;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2833,17 +2833,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_26_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180326");
-        const LADate        regularEndDate              = LADate("20180626");
+        const AQLDate        regularStartDate            = AQLDate("20180326");
+        const AQLDate        regularEndDate              = AQLDate("20180626");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 26;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2868,17 +2868,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_27_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180327");
-        const LADate        regularEndDate              = LADate("20180627");
+        const AQLDate        regularStartDate            = AQLDate("20180327");
+        const AQLDate        regularEndDate              = AQLDate("20180627");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 27;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2903,17 +2903,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_28_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180328");
-        const LADate        regularEndDate              = LADate("20180628");
+        const AQLDate        regularStartDate            = AQLDate("20180328");
+        const AQLDate        regularEndDate              = AQLDate("20180628");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 28;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2938,17 +2938,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_29_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180329");
-        const LADate        regularEndDate              = LADate("20180629");
+        const AQLDate        regularStartDate            = AQLDate("20180329");
+        const AQLDate        regularEndDate              = AQLDate("20180629");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 29;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180301");
-        const LADate        irregularEndDate            = LADate("20180601");
+        const AQLDate        irregularStartDate          = AQLDate("20180301");
+        const AQLDate        irregularEndDate            = AQLDate("20180601");
 
         // Test(s) for Success
         // ---------------------------
@@ -2973,17 +2973,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_30_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180330");
-        const LADate        regularEndDate              = LADate("20180630");
+        const AQLDate        regularStartDate            = AQLDate("20180330");
+        const AQLDate        regularEndDate              = AQLDate("20180630");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 30;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------
@@ -3008,17 +3008,17 @@ namespace google_test
 
     TEST_F( TestIsRegularSwapSchedule, UNIT_NORMAL_ROLL_WITH_ROLLDAY_31_QUARTERLY )
     {
-        const LADate        regularStartDate            = LADate("20180331");
-        const LADate        regularEndDate              = LADate("20180630");
+        const AQLDate        regularStartDate            = AQLDate("20180331");
+        const AQLDate        regularEndDate              = AQLDate("20180630");
 	    const bool          isMaturityDateAdjusted      = false; // Is the maturity date holiday adjusted
-	    const LAString      frequency                   = LAString("QUARTERLY");
-	    const LAString      busDayAdjustment            = LAString("MOD_FOLLOWING");
-	    const LAString      calendar                    = LAString("TGT");
+	    const AQLString      frequency                   = AQLString("QUARTERLY");
+	    const AQLString      busDayAdjustment            = AQLString("MOD_FOLLOWING");
+	    const AQLString      calendar                    = AQLString("TGT");
 	    const int           rollDay                     = 31;
-	    const LAString      rollConvention              = LAString("NORMAL");
+	    const AQLString      rollConvention              = AQLString("NORMAL");
    
-        const LADate        irregularStartDate          = LADate("20180315");
-        const LADate        irregularEndDate            = LADate("20180615");
+        const AQLDate        irregularStartDate          = AQLDate("20180315");
+        const AQLDate        irregularEndDate            = AQLDate("20180615");
 
         // Test(s) for Success
         // ---------------------------

@@ -13,9 +13,9 @@
 
 //include
 #include <vector>
-#include <LADataInstance.h>
-#include <LAString.h>
-#include <LAPriceDataCalendar.h>
+#include <AQLDataInstance.h>
+#include <AQLString.h>
+#include <AQLPriceDataCalendar.h>
 
 const bool isErrorMessage = false;
 const double EPS_Vol = 0.0000001;
@@ -119,34 +119,34 @@ struct Strangle
 class LAMathFXVolatilitySurfaceGenerate 
 {
 public:
-    static void SetInterpolationTarget( const LAString& target, InterpolationTarget& target_ );
+    static void SetInterpolationTarget( const AQLString& target, InterpolationTarget& target_ );
 
-    static void SetATMInterpolationMethod( const LAString& target, ATMInterpolationMethod& target_ );
+    static void SetATMInterpolationMethod( const AQLString& target, ATMInterpolationMethod& target_ );
 
-    static void SetInterpolationMethod( const LAString& target, InterpolationMethod& target_ );    
+    static void SetInterpolationMethod( const AQLString& target, InterpolationMethod& target_ );    
 
-    static void SetInterpolationVariable( const LAString& variable, InterpolationVariable& variable_ );
+    static void SetInterpolationVariable( const AQLString& variable, InterpolationVariable& variable_ );
 
-    static void SetFXOptionParam( LAStringVector& str, FXOptionData& x );
+    static void SetFXOptionParam( AQLStringVector& str, FXOptionData& x );
 
-    static FXOptionData SetFXOptionParam(LADataInstance& dataInstance,
-                                         const LAString& dCurveID,
-                                         const LAString& fCurveID,
-                                         const LADate& maturityDate,
-                                          const LADate& deliveryDate,
+    static FXOptionData SetFXOptionParam(AQLDataInstance& dataInstance,
+                                         const AQLString& dCurveID,
+                                         const AQLString& fCurveID,
+                                         const AQLDate& maturityDate,
+                                          const AQLDate& deliveryDate,
                                          double spotFX,
-                                         const LAString& deltaType,
-                                         const LAString& atmType,
-                                          const LAPriceDataCalendar& calendar );
+                                         const AQLString& deltaType,
+                                         const AQLString& atmType,
+                                          const AQLPriceDataCalendar& calendar );
 
-    /*static FXOptionData SetFXOptionParam( LADataInstance& dataInstance,
-                                          const LAString& dCurveID,
-                                          const LAString& fCurveID,
+    /*static FXOptionData SetFXOptionParam( AQLDataInstance& dataInstance,
+                                          const AQLString& dCurveID,
+                                          const AQLString& fCurveID,
                                           double termPoint,
                                           double spotFX,
                                           ATMInterpolationMethod method,
-                                          const LAString& spotLag,
-                                          const LAString& calendar );*/
+                                          const AQLString& spotLag,
+                                          const AQLString& calendar );*/
 
     static void SmileDataCheck( SmileData& x, bool isWing );
 
@@ -154,7 +154,7 @@ public:
 									 const FXOptionData& x,
                                      double wf );
 
-    static void SetSmileParam( LAStringVector& str, SmileParam& x );
+    static void SetSmileParam( AQLStringVector& str, SmileParam& x );
 
     static double GetATMStrike( double V, const FXOptionData& x );                      
 
@@ -196,7 +196,7 @@ public:
                                  const FXOptionData& x,
 								 bool isWing,
                                  double wf,
-                                 LAString& warningMSG );
+                                 AQLString& warningMSG );
 
     static double GetSmileInterpolation( double point,
                                          const InterpolationMethod& method,

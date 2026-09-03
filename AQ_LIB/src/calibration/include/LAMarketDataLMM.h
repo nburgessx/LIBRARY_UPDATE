@@ -5,7 +5,7 @@
 #endif
 
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 #if defined (WIN32) || defined (WIN64)
 #include <windows.h>
@@ -14,9 +14,9 @@
 #endif
 
 
-class LADate;
-class LAString;
-class LAPriceDataDayCount;
+class AQLDate;
+class AQLString;
+class AQLPriceDataDayCount;
 
 //===================== Class Declare LAMarketDataLMM==================================
 /*! 
@@ -30,40 +30,40 @@ public:
 	//==============================================================================
 	// get canonincal libor grid
 	static void getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
-		DoubleArray &deltatenor, BoolVector &exFlag, const LADate &asOfDate, const LAPriceDataDayCount &dayCount, const LAString &freq, int max, 
-		LAStringVector &exTenor, const bool isDataOut = false);
+		DoubleArray &deltatenor, BoolVector &exFlag, const AQLDate &asOfDate, const AQLPriceDataDayCount &dayCount, const AQLString &freq, int max, 
+		AQLStringVector &exTenor, const bool isDataOut = false);
 	//==============================================================================
 	//// setup volatility function
-	//static void setUpVolFunc(const LAString &calibFileName, const LAString &adjFileName, const LAString &maxFileName, 
-	//	const DoubleArray &tenor_30_360, const DoubleArray &tenor, double skew, LADataInstance &dataInstance, LAMathVolatility &vol); 
+	//static void setUpVolFunc(const AQLString &calibFileName, const AQLString &adjFileName, const AQLString &maxFileName, 
+	//	const DoubleArray &tenor_30_360, const DoubleArray &tenor, double skew, AQLDataInstance &dataInstance, LAMathVolatility &vol); 
 	////==============================================================================
 	//// create volatility function
-	//static std::vector<LAFunctionBase *> createVolFunc(const LAString &calibFileName, const LAString &adjFileName, const LAString &maxFileName, 
+	//static std::vector<AQLFunctionBase *> createVolFunc(const AQLString &calibFileName, const AQLString &adjFileName, const AQLString &maxFileName, 
 	//								const DoubleArray &tenor_30_360, const DoubleArray &tenor, double skew); 
 	////==============================================================================
 	//// get volatility data matrix
-	//static void getVolMatrix(const LAString &calibFileName, const LAString &adjFileName, const LAString &maxFileName, 
+	//static void getVolMatrix(const AQLString &calibFileName, const AQLString &adjFileName, const AQLString &maxFileName, 
 	//								const DoubleArray &tenor_30_360, const DoubleArray &tenor, double skew, DoubleMatrix &data); 
 
 	//==============================================
 	// get skew
-	static double getSkew(const LAString &currency);
+	static double getSkew(const AQLString &currency);
 
 	//==============================================
 	// get skew
-	static double getConstShift(const LAString &currency);
+	static double getConstShift(const AQLString &currency);
 
 	//==============================================
 	// get max term
-	static double getMaxTerm(const LAString &currency);
+	static double getMaxTerm(const AQLString &currency);
 
 	//==============================================
 	// get extra tenor for simulation grid
-	static LAStringVector getGridExTenor();
+	static AQLStringVector getGridExTenor();
 
 	//==============================================
 	// get extra tenor for canonical grid
-	static LAStringVector getCanonicalGridExTenor();
+	static AQLStringVector getCanonicalGridExTenor();
 
 private:
 	// constructor

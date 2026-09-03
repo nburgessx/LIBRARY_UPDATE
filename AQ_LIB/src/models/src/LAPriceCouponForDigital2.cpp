@@ -41,7 +41,7 @@ LAPriceCouponForDigital2::~LAPriceCouponForDigital2()
 bool
 LAPriceCouponForDigital2::isTypeOf(function_t id) const
 {
-	return (id == FN_CPNSLTOPERATORFORDIGITAL2 ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CPNSLTOPERATORFORDIGITAL2 ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -61,7 +61,7 @@ LAPriceCouponForDigital2::operator()(const DoubleArray& x) const
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceCouponForDigital2::clone() const
 {
     try 
@@ -70,7 +70,7 @@ LAPriceCouponForDigital2::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -95,7 +95,7 @@ double
 LAPriceCouponForDigital2::selectCoupon(const DoubleArray& x, unsigned int& pos) const
 {
 	if(x.size() != mParam.size()+2)
-		throw LACoreInvalidData("cpninfos size should be trigger strike size +2",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("cpninfos size should be trigger strike size +2",__FILE__,__LINE__);
 
 	//check input if mParam[0] < mParam[1] < ... or not
 	if(mParam.size() > 1)
@@ -103,7 +103,7 @@ LAPriceCouponForDigital2::selectCoupon(const DoubleArray& x, unsigned int& pos) 
 		for(unsigned int i =1; i<mParam.size();i++)
 		{
 			if(mParam[i-1] > mParam[i])
-				throw LACoreInvalidData("trigger strike should be in order",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("trigger strike should be in order",__FILE__,__LINE__);
 		}
 	}
 	pos = 0;
@@ -144,15 +144,15 @@ LAPriceCouponForDigital2::selectCoupon(const DoubleArray& x, unsigned int& pos) 
 }
 
 void
-LAPriceCouponForDigital2::setUp(const LADate& basedate, const LAObject& trade,
-								unsigned int legNo, const LAObject& cashlet)
+LAPriceCouponForDigital2::setUp(const AQLDate& basedate, const AQLObject& trade,
+								unsigned int legNo, const AQLObject& cashlet)
 {
 	(void)basedate;(void)trade;(void)legNo;(void)cashlet;
 
 	//check the mCallSpreadVal;
 
 	if(mIsCallSpread && mCallSpreadVal == 0.0)
-		throw LACoreInvalidData("CallSpread must not be 0 when IsCallSpread is true",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("CallSpread must not be 0 when IsCallSpread is true",__FILE__,__LINE__);
 
 }
 

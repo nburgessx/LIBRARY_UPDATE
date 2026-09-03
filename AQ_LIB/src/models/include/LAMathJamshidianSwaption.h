@@ -75,35 +75,35 @@
 #pragma interface
 #endif
 
-#include "LACoreValuation.h"
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LABasic.h"
-#include "LADist.h"
-#include "LADataValuation.h"
-#include "LAFindRootBrent.h"
+#include "AQLCoreValuation.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
+#include "AQLDataValuation.h"
+#include "AQLFindRootBrent.h"
 #include "LAMathJamshidianRStarFinder.h"
-#include "LAGaussLegendre.h"
+#include "AQLGaussLegendre.h"
 
 #include "LAAnalyticFormula.h"
 #include "LABlackScholesCalc.h"
 
 
-// Funciton ID of LAShiftMethod
+// Funciton ID of AQLShiftMethod
 #define FN_JAMSHIDIANSWAPTION	10041
-// Function Name of LAShiftMethod
+// Function Name of AQLShiftMethod
 #define FN_JAMSHIDIANSWAPTION_STR	"fn_jamshidianswaption"
 
 
-class LAObject;
+class AQLObject;
 class LARatesPathElementCurve;
-class LAPriceDataManager;
+class AQLPriceDataManager;
 class LABlackScholesBase;
 class LAMathYieldCurve;
 
 
-class LAMathJamshidianSwaption : public LACoreValuation
+class LAMathJamshidianSwaption : public AQLCoreValuation
 {
 public:
 	// Default constructor
@@ -117,17 +117,17 @@ public:
 	virtual function_t			getType() const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
 
-	virtual double              value(const LADate& basedate, LAObject& inst, const LADataValuation& att) const;
+	virtual double              value(const AQLDate& basedate, AQLObject& inst, const AQLDataValuation& att) const;
 
 	/*!
 		@brief cache class for performance up
 	*/
-	class LAMathJamshidianSwaptionDataProvider : public LADataProvider
+	class LAMathJamshidianSwaptionDataProvider : public AQLDataProvider
 	{
 	public:
 		LAMathJamshidianSwaptionDataProvider();
@@ -150,8 +150,8 @@ public:
 		double mWeight;							// weight;
 		LABlackScholesBase* mAnalyticMethod;
 		AnalyticAFFParam mAFFParam;
-		LAFindRootBrent mDataInstancefind;
-		LAGaussLegendre* mpGL;
+		AQLFindRootBrent mDataInstancefind;
+		AQLGaussLegendre* mpGL;
 		std::vector<pair<double, double> > mBound;
 		double mSimPrem;
 		double mVol;
@@ -161,19 +161,19 @@ public:
    };
 
 		// set up dataProvider
-	LADataProvider*					setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const;
-	DoubleVector				getVolatilityResult(const LADataValuation& att) const;
+	AQLDataProvider*					setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const;
+	DoubleVector				getVolatilityResult(const AQLDataValuation& att) const;
 
-	unsigned int				getNextPos(const LADataValuation& att) const;
+	unsigned int				getNextPos(const AQLDataValuation& att) const;
 	
-	double						getNextRstar(const LADataValuation& att) const;
+	double						getNextRstar(const AQLDataValuation& att) const;
 	
-	double						getSimPrem(const LADataValuation& att) const;
+	double						getSimPrem(const AQLDataValuation& att) const;
 
 private:
 	// create new cache class
-	virtual	LADataProvider*			createNewDataProvider() const;
+	virtual	AQLDataProvider*			createNewDataProvider() const;
 };
 #endif
 

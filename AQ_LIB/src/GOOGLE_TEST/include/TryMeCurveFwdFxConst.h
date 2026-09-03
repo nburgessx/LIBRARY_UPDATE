@@ -10,13 +10,13 @@ namespace google_test
         , public TryMeCurveAccessors
     {
     public:
-        TryMeCurveFwdFxConst( const LAString& inputFile );
+        TryMeCurveFwdFxConst( const AQLString& inputFile );
     };
 
 	/* 
 	*  @brief			Set up fwdfxconst curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeFwdFxConstCurveCurve( const LAString& inputFile );
+	void setUpMeFwdFxConstCurveCurve( const AQLString& inputFile );
 }
 

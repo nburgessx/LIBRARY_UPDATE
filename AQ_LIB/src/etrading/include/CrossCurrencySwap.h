@@ -18,15 +18,15 @@ namespace etrading
         void addToLegCollection(const LegPtr& leg);	
 
 		//Override
-        double spread(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread, const LAString& spreadLegName="");
+        double spread(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread, const AQLString& spreadLegName="");
 
-        double pv(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName="");
+        double pv(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const AQLString& legName="");
         double pv01(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames);         // Swap pv01 = dPV/dParRate
 
-        double annuity(const LabelValueBlock& valuationSettingsLVB, const LAString& legName);
+        double annuity(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName);
         virtual double parRate(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames);
 
-		std::vector<AnyTypeMatrix> view(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName = "", bool showColumnHeaders = true, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList = std::unordered_set<CashflowHeaderEnum,EnumClassHash>());
+		std::vector<AnyTypeMatrix> view(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const AQLString& legName = "", bool showColumnHeaders = true, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList = std::unordered_set<CashflowHeaderEnum,EnumClassHash>());
     
 		double getFxAsOfDateRate(const LabelValueBlock& valuationSettingsLVB);
 
@@ -53,12 +53,12 @@ namespace etrading
 
         //For XCCY Swap, user need to specify if it is a MTM, and if it is MTM, user can specify which leg to have notional adjusted (USD leg by default)
         bool isMTM_;
-        LAString notionalResetLegName_;
+        AQLString notionalResetLegName_;
         CCY valuationCurrency_;
 
         void populateAndValidateXccySwapStaticDataObject(const LegPtr& leg1, const LegPtr& leg2, const LabelValueBlock& swapPropertiesLVB);
 
-        void validateCollectionSize(const LabelValueBlock& valuationSettingsLVB, const LAString& legName="") const;
+        void validateCollectionSize(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName="") const;
 
 		//update valuationSettingLVB with asOfDate fxRate, and do the common precalculation for every pricing function.
 		virtual LabelValueBlock preCalculate(const LabelValueBlock& valuationSettingsLVB);

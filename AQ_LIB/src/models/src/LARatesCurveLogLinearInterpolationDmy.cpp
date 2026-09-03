@@ -23,10 +23,10 @@
 
 
 #include "LARatesCurveLogLinearInterpolationDmy.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAModelDynamicsLMMCurve.h"
 #include "LAModelDynamicsDDLMMCurve.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 using namespace std;
 //================ LARatesCurveLogLinearInterpolationDmy ===================================
@@ -55,7 +55,7 @@ LARatesCurveLogLinearInterpolationDmy::~LARatesCurveLogLinearInterpolationDmy()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesCurveLogLinearInterpolationDmy::clone() const
 {
     try 
@@ -64,7 +64,7 @@ LARatesCurveLogLinearInterpolationDmy::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -125,7 +125,7 @@ LARatesCurveLogLinearInterpolationDmy::value(double t, double t1, double t2,
 		
 		const DoubleArray& tenor = *(dynamic_cast<const LARatesPathElementLMMCurve *>(curve.mpCurve1)->getTenor()); 
 		unsigned int tSize = dynamic_cast<const LARatesPathElementLMMCurve *>(curve.mpCurve1)->getTenor()->size();
-		LAAlgorithm::locate<DoubleArray, double>(tenor, t, tSize, curve.mfixpos);
+		AQLAlgorithm::locate<DoubleArray, double>(tenor, t, tSize, curve.mfixpos);
 	}
 
 	return mValues[t];	
@@ -192,7 +192,7 @@ LARatesCurveLogLinearInterpolationDmy::LARatesCurveForLogLinearInterpolationDmy:
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -209,9 +209,9 @@ LARatesCurveLogLinearInterpolationDmy::LARatesCurveForLogLinearInterpolationDmy:
 
 	if (!a.isTypeOf(PE_CURVEFORLOGLINEARINTERDMY)) 
 	{
-		LAString err = "Assignment error for LARatesCurveForLogLinearInterpolationDmy : from ";
-		err += LAString(a.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignment error for LARatesCurveForLogLinearInterpolationDmy : from ";
+		err += AQLString(a.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	
 	LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::operator=(a);

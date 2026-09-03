@@ -32,7 +32,7 @@
 #include "LADateScheduleHelpers.h"
 #include "ContainerUtilities.h"
 #include "ETradingException.h"
-#include "LADate.h"
+#include "AQLDate.h"
 #include "TypeHelpers.h"
 #include "LADateScheduleHelpers.h"      // Helper methods create date from string
 
@@ -47,7 +47,7 @@ namespace etrading
         return number < 0.0 ? int( ceil( number - 0.5 ) ) : int( floor( number + 0.5 ) );
     }
 
-    const int firstNonBusinessDayIdx( const std::vector<boost::gregorian::date>& dates, const LAMathCalendar& cal )
+    const int firstNonBusinessDayIdx( const std::vector<boost::gregorian::date>& dates, const AQLMathCalendar& cal )
     {
         auto loc_of_non_business_day = std::find_if( dates.cbegin(), dates.cend(), [&cal] ( const boost::gregorian::date & date )
         {
@@ -68,16 +68,16 @@ namespace etrading
         return ( date.day_of_week() ==  boost::date_time::Saturday || date.day_of_week() ==  boost::date_time::Sunday );
     }
 
-    const bool isBusinessDay( const boost::gregorian::date& d, const LAMathCalendar& cal )
+    const bool isBusinessDay( const boost::gregorian::date& d, const AQLMathCalendar& cal )
     {
-        LADate mlibDate( toYYYYMMDDFromGregorianDate( d ).c_str() );
+        AQLDate mlibDate( toYYYYMMDDFromGregorianDate( d ).c_str() );
         return !( cal.isHoliday( mlibDate ) );
     }
 
     std::vector<boost::gregorian::date>
     dayAdjust(	const std::vector<boost::gregorian::date>& inputDates,
                 const BusinessDayAdjustmentEnum bdAdj,
-                const LAMathCalendar& cal )
+                const AQLMathCalendar& cal )
     {
         std::vector<boost::gregorian::date> retDatesUsed;
         std::for_each( inputDates.cbegin(), inputDates.cend(), [&retDatesUsed, &cal, &bdAdj]( const boost::gregorian::date & inputDate )
@@ -89,14 +89,14 @@ namespace etrading
 
     boost::gregorian::date dayAdjust(	const boost::gregorian::date& d,
                                         const BusinessDayAdjustmentEnum busDayAdjust,
-                                        const LAMathCalendar& cal )
+                                        const AQLMathCalendar& cal )
     {
 
         boost::gregorian::date ret = d;
         bool isHoliday = false;
 
-        //const set<const LAMathCalendar *> &calSet = c.getCalendarSet();
-        //set<const LAMathCalendar *>::const_iterator it = calSet.begin();
+        //const set<const AQLMathCalendar *> &calSet = c.getCalendarSet();
+        //set<const AQLMathCalendar *>::const_iterator it = calSet.begin();
 
         if ( !isBusinessDay( ret, cal ) )
         {
@@ -390,7 +390,7 @@ namespace etrading
         }
         else if( dayCount == etrading::ACT_360_DAYCOUNT || dayCount == etrading::ACT_365_DAYCOUNT )
         {
-            // cfr. double LAPriceDataDayCount::getDayTerm(const LADate& fromDate, const double& termY, bool includelast) const
+            // cfr. double AQLPriceDataDayCount::getDayTerm(const AQLDate& fromDate, const double& termY, bool includelast) const
             //  No consensus exists on whether this is right or wrong in the original "common" project but placed here for backward compatability
             // (I think this is wrong because a yearFraction  > 1.0 it could be interpreted as less than a year e.g. 1.0+(1.0/365) )
             int daysToAdd = static_cast<int>( yearFraction ) * ( ( dayCount == etrading::ACT_360_DAYCOUNT ) ? 360 : 365 );
@@ -398,14 +398,14 @@ namespace etrading
         }
         else
         {
-            // cfr. double LAPriceDataDayCount::getDayTerm(const LADate& fromDate, const double& termY, bool includelast) const
+            // cfr. double AQLPriceDataDayCount::getDayTerm(const AQLDate& fromDate, const double& termY, bool includelast) const
             throw ETradingException( "N30_360, E30_360 and ACT_365_FJ are not supported this method" );
         }
 
     };
 
-    // copy from double LAPriceDataDayCount::getTerm(const LADate& fromDate, const LADate& toDate, bool includelast) const
-    // in LAPriceDataDayCount.cpp (line 116)
+    // copy from double AQLPriceDataDayCount::getTerm(const AQLDate& fromDate, const AQLDate& toDate, bool includelast) const
+    // in AQLPriceDataDayCount.cpp (line 116)
     double getYearFractionFromDayCount(	const DayCountEnum dayCountEnum,
                                         const boost::gregorian::date& fromDate,
                                         const boost::gregorian::date& toDate,
@@ -504,7 +504,7 @@ namespace etrading
 
                 // ALTERNATIVE: UNTIL THE ABOVE IS FIXED
                 const bool includeLast = true;
-				LAString dayCount("ACT/365");
+				AQLString dayCount("ACT/365");
                 double yearFraction = LADateScheduleHelpers::getTerm( toLADateFromGregorianDate( fromDate ), toLADateFromGregorianDate( toDate ), dayCount, includeLast );
 
                 return yearFraction;
@@ -600,11 +600,11 @@ namespace etrading
                                                                 % now.time_of_day().seconds() ).str();
     };
 
-    LADate getCurrentMLibDate()
+    AQLDate getCurrentMLibDate()
     {
         boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
         
-        LADate currentDate;
+        AQLDate currentDate;
         currentDate.setYear( now.date().year() );
         currentDate.setMonth( now.date().month().as_number() );
         currentDate.setDay( now.date().day() );
@@ -638,9 +638,9 @@ namespace etrading
                                                    % now.time_of_day().seconds() ).str();
     };
 
-    LADate toLADateFromGregorianDate( const boost::gregorian::date& gregorian_date )
+    AQLDate toLADateFromGregorianDate( const boost::gregorian::date& gregorian_date )
     {
-        LADate laDate;
+        AQLDate laDate;
 		laDate.setYear( gregorian_date.year() );
 		laDate.setMonth( gregorian_date.month() );
 		laDate.setDay( gregorian_date.day() );
@@ -649,9 +649,9 @@ namespace etrading
         return laDate;
     };
 
-    std::vector<LADate> toLADatesFromGregorianDates( const std::vector<boost::gregorian::date>& gregorian_dates )
+    std::vector<AQLDate> toLADatesFromGregorianDates( const std::vector<boost::gregorian::date>& gregorian_dates )
     {
-        std::vector<LADate> LADates;
+        std::vector<AQLDate> LADates;
         std::for_each( gregorian_dates.cbegin(), gregorian_dates.cend(),
                        [&LADates]( const boost::gregorian::date & gDate )
         {
@@ -667,8 +667,8 @@ namespace etrading
         return std::string(  ( boost::format( "%04i%02i%02i" ) % static_cast<short>( gregorian_date.year() ) % static_cast<short>( gregorian_date.month() ) % static_cast<short>( gregorian_date.day() ) ).str() ) ;
     };
 
-    // returns a date string "YYYYMMDD" from an LADate
-    std::string toYYYYMMDDFromDate( const LADate& date )
+    // returns a date string "YYYYMMDD" from an AQLDate
+    std::string toYYYYMMDDFromDate( const AQLDate& date )
     {
         boost::gregorian::date gregorianDate = toGregorianDateFromLADate( date );
         std::string dateString = toYYYYMMDDFromGregorianDate( gregorianDate );
@@ -680,7 +680,7 @@ namespace etrading
         return boost::gregorian::from_undelimited_string( inputDate );
     } ;
 
-    boost::gregorian::date toGregorianDateFromLADate( const LADate& mbd )
+    boost::gregorian::date toGregorianDateFromLADate( const AQLDate& mbd )
     {
         return boost::gregorian::date( mbd.yearOfEra(), mbd.monthOfYear(), mbd.dayOfMonth() );
     };
@@ -750,13 +750,13 @@ namespace etrading
         return boost::gregorian::date( boost::gregorian::min_date_time ); // should never get here
     };
 
-    // Converts a std::string to an LADate using boost regular expression logic.
+    // Converts a std::string to an AQLDate using boost regular expression logic.
     // *** VERY IMPORTANT *** Please do not change the order of the DATE_REGEX list. If adding new types add to the end of the list, this is
     // becuase the "toGregorianDateFromREGEX" method in DateUtilities.cpp operates on the specific position of elements REGEX expression list.
-    LADate toLADateFromREGEX( const std::string& inString )
+    AQLDate toLADateFromREGEX( const std::string& inString )
     {
         boost::gregorian::date gregorianDate = toGregorianDateFromREGEX( inString );
-        LADate laDate = toLADateFromGregorianDate( gregorianDate );
+        AQLDate laDate = toLADateFromGregorianDate( gregorianDate );
         return laDate;
     }
 
@@ -932,21 +932,21 @@ namespace etrading
 
 			if ( ! parseSuccessful && throwOnFailure )
 			{
-				throw LACoreInvalidData( ( boost::format("#Error: Invalid tenor \"%s\". Expecting format \"nnY\" ." )
+				throw AQLCoreInvalidData( ( boost::format("#Error: Invalid tenor \"%s\". Expecting format \"nnY\" ." )
 									   % tenor ).str().c_str(), __FILE__, __LINE__ );
 			}
 		}
 		return tenorYears;
 	}
 
-    /* @brief			Function to populate Date and Value vectors from a DateValue matrix with 2 columns of type LAStringMatrix. Dates must be in ascending order with no duplicates.
+    /* @brief			Function to populate Date and Value vectors from a DateValue matrix with 2 columns of type AQLStringMatrix. Dates must be in ascending order with no duplicates.
     *  @param [out]		dateOutput			The date results output vector
     *  @param [out]		valueOutput	        The value results output vector
     *  @param [in]		inputMatrix	        Input String Matrix: Must have 2 columns with the first column containing dates and the second containing double values
     */
-    void populateDateValueVectorsFromStringMatrix( std::vector<LADate> & dateOutput,
+    void populateDateValueVectorsFromStringMatrix( std::vector<AQLDate> & dateOutput,
                                                    std::vector<double> & valueOutput,
-                                                   const LAStringMatrix & inputMatrix )
+                                                   const AQLStringMatrix & inputMatrix )
     {
         AQ_REQUIRE( inputMatrix.size() > 0, "DateValue input matrix is empty" )
         AQ_REQUIRE( inputMatrix[0].size() == 2, "DateValue input matrix should have exactly 2 columns; The first column should have dates and the second column values" )
@@ -954,7 +954,7 @@ namespace etrading
         dateOutput.resize( inputMatrix.size() );
         valueOutput.resize( inputMatrix.size() );
         
-        LADate lastPaymentDate;
+        AQLDate lastPaymentDate;
 
         for( size_t i = 0; i< inputMatrix.size(); ++i )
         {

@@ -135,34 +135,34 @@
 #pragma interface
 #endif
 
-#include "LACoreValuation.h"
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LABasic.h"
-#include "LADist.h"
-#include "LADataValuation.h"
-#include "LAFindRootBrent.h"
-#include "LA1DDataSet.h"
-#include "LAGaussLegendre.h"
+#include "AQLCoreValuation.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
+#include "AQLDataValuation.h"
+#include "AQLFindRootBrent.h"
+#include "AQL1DDataSet.h"
+#include "AQLGaussLegendre.h"
 #include "LAPriceHWCalibration.h"
 
 #include "LAAnalyticFormula.h"
 #include "LABlackScholesCalc.h"
 
 
-// Funciton ID of LAShiftMethod
+// Funciton ID of AQLShiftMethod
 #define FN_ANTONOVFXOPTIOIN	10043
-// Function Name of LAShiftMethod
+// Function Name of AQLShiftMethod
 #define FN_ANTONOVFXOPTIOIN_STR	"fn_antonovfxoption"
 
 
-class LAObject;
+class AQLObject;
 class LARatesPathElementCurve;
-class LAPriceDataManager;
+class AQLPriceDataManager;
 
 
-class LAMathAntonovFXOption : public LACoreValuation
+class LAMathAntonovFXOption : public AQLCoreValuation
 {
 public:
 	// Default constructor
@@ -174,17 +174,17 @@ public:
 	virtual function_t			getType() const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
 
-	virtual double              value(const LADate& basedate, LAObject& inst, const LADataValuation& att) const;
+	virtual double              value(const AQLDate& basedate, AQLObject& inst, const AQLDataValuation& att) const;
 
 	/*!
 		@brief cache class for performance up
 	*/
-	class LAMathAntonovFXOptionDataProvider : public LADataProvider
+	class LAMathAntonovFXOptionDataProvider : public AQLDataProvider
 	{
 	public:
 		LAMathAntonovFXOptionDataProvider();
@@ -225,9 +225,9 @@ public:
 		mutable DoubleVector mSigmaGrids;	// SigmaStar Vector
 		mutable DoubleVector mSigmaFXGrids;	// SigmaFx Vector
 		mutable DoubleVector mSigmaSt2Grids;// SigmaStar^2 Vector
-		mutable LA1DDataSet mSigmaSt2Data;			// SigmaStar^2 DataSet
+		mutable AQL1DDataSet mSigmaSt2Data;			// SigmaStar^2 DataSet
 		mutable DoubleVector mSigmaStSigmaFXGrids;	// SigmaStSigmaFX Vector
-		mutable LA1DDataSet mSigmaStSigmaFXData;	// SigmaStSigmaFX DataSet
+		mutable AQL1DDataSet mSigmaStSigmaFXData;	// SigmaStSigmaFX DataSet
 		mutable DoubleVector mIntSigmaSt2Grids;		// Integral of SigmaStar^2 Vector
 		mutable DoubleVector mIntSigmaStSigmaFXGrids;	// Integral of SigmaStar* SigmaFx Vector
 		mutable DoubleVector mIntSimgaSt2BetaStIntSigmaSt2; // Integral of SimgaSt2BetaStIntSigmaSt2
@@ -252,28 +252,28 @@ public:
 	};
 
 		// set up dataProvider
-	LADataProvider*					setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const;
+	AQLDataProvider*					setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const;
 	// get volatility result
-	DoubleVector				getVolatilityResult(const LADataValuation& att) const;
+	DoubleVector				getVolatilityResult(const AQLDataValuation& att) const;
 	// get beta result
-	DoubleVector				getBetaResult(const LADataValuation& att) const;
+	DoubleVector				getBetaResult(const AQLDataValuation& att) const;
 	// get next position
-	unsigned int				getNextPos(const LADataValuation& att) const;
+	unsigned int				getNextPos(const AQLDataValuation& att) const;
 	// get time maturity
-	double						getTM(const LADataValuation& att) const;
+	double						getTM(const AQLDataValuation& att) const;
 	// get fx forward
-	double						getFxTM(const LADataValuation& att) const;
+	double						getFxTM(const AQLDataValuation& att) const;
 	// get bond value
-	double						getPTM(const LADataValuation& att) const;
+	double						getPTM(const AQLDataValuation& att) const;
 	// get volatility for black
-	double						getVTM(double T, const LADataValuation& att) const;
+	double						getVTM(double T, const AQLDataValuation& att) const;
 	// get volatility for black
-	double						getVTM(const LADataValuation& att) const;
+	double						getVTM(const AQLDataValuation& att) const;
 	// get beta for black
-	double						getBetaTM(double T, const LADataValuation& att) const;
+	double						getBetaTM(double T, const AQLDataValuation& att) const;
 	// get beta for black
-	double						getBetaTM(const LADataValuation& att) const;
+	double						getBetaTM(const AQLDataValuation& att) const;
 	// get call value
 	double DisplayDiffCall(double beta,double V,double strike,double Fx,double P)  const 
 	 {
@@ -281,11 +281,11 @@ public:
 		 if(f<=0.0)
 			 return 0.0;
 
-		 double sqrtV = (beta > 0.0) ? LAMath::sqrt(V) : -LAMath::sqrt(V);
-		 double d1 = ( LAMath::log(Fx/f) + 0.5*V)/sqrtV;
+		 double sqrtV = (beta > 0.0) ? AQLMath::sqrt(V) : -AQLMath::sqrt(V);
+		 double d1 = ( AQLMath::log(Fx/f) + 0.5*V)/sqrtV;
 		 double d2 = d1 - sqrtV;
 
-		 return P*(Fx/beta*LADist::normsdist(d1)-LADist::normsdist(d2)*(strike+Fx*(1.0-beta)/beta));
+		 return P*(Fx/beta*AQLDist::normsdist(d1)-AQLDist::normsdist(d2)*(strike+Fx*(1.0-beta)/beta));
 	 };
 
 	// get put  value
@@ -295,11 +295,11 @@ public:
 		 if(f<=0.0)
 			 return 0.0;
 
-		 double sqrtV = (beta > 0.0) ? LAMath::sqrt(V) : -LAMath::sqrt(V);
-		 double d1 = ( LAMath::log(Fx/f) + 0.5*V)/sqrtV;
+		 double sqrtV = (beta > 0.0) ? AQLMath::sqrt(V) : -AQLMath::sqrt(V);
+		 double d1 = ( AQLMath::log(Fx/f) + 0.5*V)/sqrtV;
 		 double d2 = d1 - sqrtV;
 
-		 return P*( -Fx/beta*LADist::normsdist(-d1)+LADist::normsdist(-d2)*(strike+Fx*(1.0-beta)/beta));
+		 return P*( -Fx/beta*AQLDist::normsdist(-d1)+AQLDist::normsdist(-d2)*(strike+Fx*(1.0-beta)/beta));
 		
 	 }
 
@@ -313,7 +313,7 @@ public:
 
 private:
 	// create new cache class
-	virtual	LADataProvider*			createNewDataProvider() const;
+	virtual	AQLDataProvider*			createNewDataProvider() const;
 
 };
 #endif

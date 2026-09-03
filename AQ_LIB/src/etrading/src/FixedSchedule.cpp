@@ -33,10 +33,10 @@ namespace etrading
 
 		accrualEndDateOrTenor_ = scheduleLVB.getCompulsoryValueAsLAString(IRS_KEY::MATURITY_DATE, inputLVB);
 
-		LAString fixedBusinessDayAdjustment = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT));
-		LAString fixedCalendar = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR));
-		LAString fixedLegFreq = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY));
-		LAString fixedDayCount = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT));
+		AQLString fixedBusinessDayAdjustment = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT));
+		AQLString fixedCalendar = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR));
+		AQLString fixedLegFreq = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY));
+		AQLString fixedDayCount = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT));
 
 		accrualbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT, IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT, fixedBusinessDayAdjustment).getCString());
 		accrualCalendar_ = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALCALENDAR, IRS_KEY::ACCRUALCALENDAR, fixedCalendar);
@@ -111,12 +111,12 @@ namespace etrading
 		{
 			if (paymentFreqEnum_ != AT_MATURITY_FREQUENCY) 
 			{
-        		throw LACoreInvalidData( "#Error: When FVNotional is specified, the payment frequency must be 'AT MATURITY'", __FILE__, __LINE__ );
+        		throw AQLCoreInvalidData( "#Error: When FVNotional is specified, the payment frequency must be 'AT MATURITY'", __FILE__, __LINE__ );
 			}
 
 			if (!boost::math::isnan(notional_) )
 			{
-	    		throw LACoreInvalidData( "#Error: Please provide either FVNotional or Notional for FixedSchedule, but not both", __FILE__, __LINE__ );
+	    		throw AQLCoreInvalidData( "#Error: Please provide either FVNotional or Notional for FixedSchedule, but not both", __FILE__, __LINE__ );
 			}
 
 			notional_ = futureValueNotional_;
@@ -125,18 +125,18 @@ namespace etrading
 		// When FV Notional is not provided, notinoal is a mandatory field
 		else if (boost::math::isnan(notional_))
         {
-        	throw LACoreInvalidData( "#Error: Notional is a mandatory field for FixedSchedule", __FILE__, __LINE__ );
+        	throw AQLCoreInvalidData( "#Error: Notional is a mandatory field for FixedSchedule", __FILE__, __LINE__ );
         }
 
     }
 
-    void FixedSchedule::createUpfrontCashflow(const LADate& paymentDate, double leverage) 
+    void FixedSchedule::createUpfrontCashflow(const AQLDate& paymentDate, double leverage) 
     {
         if (notionalExchangeEnum_ == START_NE || notionalExchangeEnum_ == START_AND_END_NE)
         {
             auto nanDoubleValue = std::numeric_limits<double>::quiet_NaN();
 
-            upfrontCashflow_= CashflowPtr(new FixedCashflow(payerReceiver_, nanDoubleValue, LADate(), LADate(), 0, nanDoubleValue, paymentDate, nanDoubleValue, leverage, 1.0 /*couponMultiplier*/, paymentFreqEnum_, FIRST_NOTIONAL_EXCHANGE_CASHFLOW_TYPE, CashFlowBespokeInfo()));
+            upfrontCashflow_= CashflowPtr(new FixedCashflow(payerReceiver_, nanDoubleValue, AQLDate(), AQLDate(), 0, nanDoubleValue, paymentDate, nanDoubleValue, leverage, 1.0 /*couponMultiplier*/, paymentFreqEnum_, FIRST_NOTIONAL_EXCHANGE_CASHFLOW_TYPE, CashFlowBespokeInfo()));
             upfrontCashflow_->setFwdFxRate(nanDoubleValue);
     	}
     }
@@ -198,7 +198,7 @@ namespace etrading
 
         if (cashflowLVBs.size() ==0 )
         {
-    		throw LACoreInvalidData( "#Error: The cashflows of bespokeSchedule need to be provided", __FILE__, __LINE__ );
+    		throw AQLCoreInvalidData( "#Error: The cashflows of bespokeSchedule need to be provided", __FILE__, __LINE__ );
         }
 
         //1) Create a upfront cashflow for the notionalExchange is START or START_AND_END
@@ -206,7 +206,7 @@ namespace etrading
         //Use the first accrualStartDate as the paymentDate
 		auto firstCashflowLVB = cashflowLVBs.at(0);
 		
-		LADate paymentDate	= firstCashflowLVB.getCompulsoryValueAsDate(CASHFLOW_KEY::ACCRUAL_START, inputLVB );
+		AQLDate paymentDate	= firstCashflowLVB.getCompulsoryValueAsDate(CASHFLOW_KEY::ACCRUAL_START, inputLVB );
 		double leverage = firstCashflowLVB.getCompulsoryValueAsDouble( IRS_KEY::LEVERAGE,  inputLVB );
         createUpfrontCashflow(paymentDate, leverage);
 
@@ -225,14 +225,14 @@ namespace etrading
 				accrualDaycount = toDayCountEnum(cashflowLVB.getCompulsoryValueAsString(IRS_KEY::ACCRUALDAYCOUNT, inputLVB));
 			}
 
-            LADate accrualStart	= cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::ACCRUAL_START, inputLVB );
-			LADate accrualEnd = cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::ACCRUAL_END,  inputLVB );
+            AQLDate accrualStart	= cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::ACCRUAL_START, inputLVB );
+			AQLDate accrualEnd = cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::ACCRUAL_END,  inputLVB );
 			if (accrualStart > accrualEnd) 
 			{
-				throw LACoreInvalidData( "#Error: Accrual Start Date cannot be later than Accrual End Date", __FILE__, __LINE__ );
+				throw AQLCoreInvalidData( "#Error: Accrual Start Date cannot be later than Accrual End Date", __FILE__, __LINE__ );
 			}
 
-            LADate paymentDate = cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::PAYMENT_DATE,  inputLVB );
+            AQLDate paymentDate = cashflowLVB.getCompulsoryValueAsDate( CASHFLOW_KEY::PAYMENT_DATE,  inputLVB );
 
 			double notional = cashflowLVB.getCompulsoryValueAsDouble( IRS_KEY::NOTIONAL,  inputLVB );
 			double leverage = cashflowLVB.getCompulsoryValueAsDouble( IRS_KEY::LEVERAGE,  inputLVB );

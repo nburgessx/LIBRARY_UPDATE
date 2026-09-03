@@ -4,10 +4,10 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LACalibrate.h"
 
-class LAObject;
+class AQLObject;
 class LAMathYieldCurve;
 
 class LACalibrateSZ : public LACalibrate
@@ -21,8 +21,8 @@ public:
 
 	//=============================================
 	//  setup
-	virtual void	setUp(LAObjectPool &objPool, const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
-	virtual void	setUp2(LAObjectPool &objPool, const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
+	virtual void	setUp(AQLObjectPool &objPool, const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
+	virtual void	setUp2(AQLObjectPool &objPool, const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
 	//=============================================
 	//  calibration method
 	virtual void    doCalibrate();
@@ -32,6 +32,6 @@ protected:
 	bool mIsDDL;
 	DoubleArray mDFRatios;
 	DoubleArray mTimeGrid;
-	LAString mFXCurrency;
+	AQLString mFXCurrency;
 };
 

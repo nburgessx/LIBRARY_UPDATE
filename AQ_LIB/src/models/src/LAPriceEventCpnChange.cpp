@@ -16,13 +16,13 @@
 
 #include "LAPriceEventCpnChange.h"
 
-#include "LADataBasics.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObjectHolder.h"
 #include "LAPriceCouponTool.h"
 #include "LAMathFXEntity.h"
-#include "LAMathDefine.h"
+#include "AQLMathDefine.h"
 using namespace std;
 
 
@@ -48,7 +48,7 @@ LAPriceEventCpnChange::~LAPriceEventCpnChange()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceEventCpnChange::clone() const
 {
     try 
@@ -57,7 +57,7 @@ LAPriceEventCpnChange::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -93,7 +93,7 @@ LAPriceEventCpnChange::getType() const
 	@param[in,out] iter position of nearest payoff from this action expiry date
 */	
 void
-LAPriceEventCpnChange::doAction(const LADate& actiondate,
+LAPriceEventCpnChange::doAction(const AQLDate& actiondate,
 									 double actiontime,
 									 vector<PayOffToolHolderVector>& payoff,
 									 vector<PayOffToolHolderVector>& extrapayoff,
@@ -118,7 +118,7 @@ LAPriceEventCpnChange::doAction(const LADate& actiondate,
 			double notional = it->getPayOff().getNotional();
 			// there is a case of notinalcf currency change trigger hitted before
 			// so we change notinal cf currency
-			LAString notionalCFCur = it->getPayOff().mNotionalCFCur;
+			AQLString notionalCFCur = it->getPayOff().mNotionalCFCur;
 			double notionalCFExchangeRate  =  it->getPayOff().mNotionalCFExchangeRate;
 			
 			*it = mPayOff[i][j];			
@@ -140,15 +140,15 @@ LAPriceEventCpnChange::doAction(const LADate& actiondate,
     @param[in] isCall call flag(true:call,false:trigger)
 */
 void
-LAPriceEventCpnChange::setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+LAPriceEventCpnChange::setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall)
 {
 	LAPriceEventBase::setUp(basedate, trade, triggerinfo, payoff, isCall);
 	
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 
 	for (unsigned int i = 0; i < mPayOff.size(); i++)
 		mPayOff[i].clear();
@@ -159,14 +159,14 @@ LAPriceEventCpnChange::setUp(const LADate& basedate,
 
 	//leg
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+	const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 
 	for (unsigned int i = 0; i < mTargetLegNo.size(); i++)
 	{
 		mPayOff[i].resize(payoff.getPayOff()[mTargetLegNo[i]].size());
 		//couponinfos	
-		dh = &(triggerinfo.getData(PRICING_DATA_COUPONINFOS + LADataInt(mTargetLegNo[i] + 1).convertToString(), ISNOTNULL));
-		const LADataMultiReference& couponinfos = dynamic_cast<const LADataMultiReference&>(dh->get());
+		dh = &(triggerinfo.getData(PRICING_DATA_COUPONINFOS + AQLDataInt(mTargetLegNo[i] + 1).convertToString(), ISNOTNULL));
+		const AQLDataMultiReference& couponinfos = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 		int k = mPayOff[i].size() - 1;
 		for (unsigned int j = couponinfos.getSize(); j > 0 && k >= 0; k--)
 		{
@@ -187,19 +187,19 @@ LAPriceEventCpnChange::setUp(const LADate& basedate,
 										k);
 				//coupon currecny
 				dh = &(couponinfos.get(j - 1).getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-				tool2.mCouponsCur.push_back(dynamic_cast<const LADataString&>(dh->get()).get());
+				tool2.mCouponsCur.push_back(dynamic_cast<const AQLDataString&>(dh->get()).get());
 				if (tool2.mNotionalCur != tool2.mCouponsCur[0] && tool2.mpFX_for_Notional == NULL)
 				{
 					//error
-					LAString msg = "FxRate is need for notional to change into coupon currency ";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);					
+					AQLString msg = "FxRate is need for notional to change into coupon currency ";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);					
 				}
 
 				//fx rate for coupon
 /*				dh = &(couponinfos.get(j - 1).getData(PRICING_DATA_FXRATE, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					const LADataReference& ref = dynamic_cast<const LADataReference&>(dh->get());
+					const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(dh->get());
 					tool2.mpFX_for_Coupons.push_back(&dynamic_cast<const LAMathFXEntity&>(ref.get().get()));	
 				}*/
 				j--;
@@ -209,7 +209,7 @@ LAPriceEventCpnChange::setUp(const LADate& basedate,
 
 		// isArrear
 		dh = &(legs.get(mTargetLegNo[i]).getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL));
-		const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+		const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 		mIsArrearPayment.push_back(LAPriceCFGenUtility::isArrear(timing));
 
 	}

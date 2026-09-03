@@ -2,14 +2,14 @@
     @brief Source code for class to represent FX.
 
 			Following dataValues are registered automatically to data master<BR>
-			1.CALIBRATION_DATA_NAME(LADataString)<BR>
-			2.CALIBRATION_DATA_ASOFDATE(LADataDate)<BR>
-			3.IR_MODEL_DATA_FXTYPE(LADataString)<BR>
-			4.IR_MODEL_DATA_PATHENTITY(LADataReference)<BR>
-			5.IR_MODEL_DATA_YIELDCURVES(LADataMultiReference)<BR>
-			6.IR_MODEL_DATA_CURRENCYS(LADataStrings)<BR>
-			7.IR_MODEL_DATA_SPOTRATES(LADataDoubles)<BR>
-			8.IR_MODEL_DATA_CALENDARNAMES(LADataStrings)<BR>
+			1.CALIBRATION_DATA_NAME(AQLDataString)<BR>
+			2.CALIBRATION_DATA_ASOFDATE(AQLDataDate)<BR>
+			3.IR_MODEL_DATA_FXTYPE(AQLDataString)<BR>
+			4.IR_MODEL_DATA_PATHENTITY(AQLDataReference)<BR>
+			5.IR_MODEL_DATA_YIELDCURVES(AQLDataMultiReference)<BR>
+			6.IR_MODEL_DATA_CURRENCYS(AQLDataStrings)<BR>
+			7.IR_MODEL_DATA_SPOTRATES(AQLDataDoubles)<BR>
+			8.IR_MODEL_DATA_CALENDARNAMES(AQLDataStrings)<BR>
 
 
 */
@@ -24,16 +24,16 @@
 #include "LAMathFXEntity.h"
 #include "LAMathFXUtility.h"
 #include "LAMathDateCalculations.h"
-#include "LAMathDefine.h"
-#include "LABasic.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLMathDefine.h"
+#include "AQLBasic.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
 #include "LAMathYieldCurve.h"
 #include "LAMathPathEntity.h"
 #include "LAMathAttrSDE.h"
@@ -41,7 +41,7 @@
 #include "LAModelDynamicsCurve.h"
 #include "LARatesSDEBase.h"
 
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 #include <cmath>
 
 #define USD			"USD"
@@ -54,15 +54,15 @@ using namespace std;
 /*!
     @brief default constructor
 
-	@param[in] dataInstance pointer of LADataInstance object
+	@param[in] dataInstance pointer of AQLDataInstance object
 
 */
-LAMathFXEntity::LAMathFXEntity(LADataInstance* dataInstance) : 
-LAObject(), mFXVersion(0), mFXType(-1)
+LAMathFXEntity::LAMathFXEntity(AQLDataInstance* dataInstance) : 
+AQLObject(), mFXVersion(0), mFXType(-1)
 {
 	setDataInstance(dataInstance);
   
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 	dm.setData(CALIBRATION_DATA_NAME, DATA_STRING);
 	dm.setData(CALIBRATION_DATA_ASOFDATE, DATA_DATE);
 	dm.setData(IR_MODEL_DATA_FXTYPE, DATA_STRING);
@@ -89,7 +89,7 @@ LAObject(), mFXVersion(0), mFXType(-1)
 */
 LAMathFXEntity::LAMathFXEntity(
 	const LAMathFXEntity& fx) : 
-	LAObject(fx), mFXVersion(fx.mFXVersion), mCurrencyPosMap(fx.mCurrencyPosMap)
+	AQLObject(fx), mFXVersion(fx.mFXVersion), mCurrencyPosMap(fx.mCurrencyPosMap)
 		, mFXType(fx.mFXType), mTodayRates(fx.mTodayRates), mFXSDEPosInfo(fx.mFXSDEPosInfo), mIRSDEPosInfo(fx.mIRSDEPosInfo), mDCPath(fx.mDCPath), mSpotLag(fx.mSpotLag)
 {
 	mpName			= &getData(CALIBRATION_DATA_NAME);
@@ -130,97 +130,97 @@ LAMathFXEntity::getType(void) const
 bool
 LAMathFXEntity::isTypeOf(object_t id) const
 {
-	return (id == ENTITY_FX ? true : LAObject::isTypeOf(id));
+	return (id == ENTITY_FX ? true : AQLObject::isTypeOf(id));
 }
 /*!
     @brief get this FX Object-name.
 	@return name
 */
-const LADataString&	
+const AQLDataString&	
 LAMathFXEntity::getName() const	
 {
-	return dynamic_cast<const LADataString&>(mpName->get());
+	return dynamic_cast<const AQLDataString&>(mpName->get());
 }
 /*!
     @brief get this FX Object-name.The setting of name is also possible.
 	@return name
 */
-LADataString&	
+AQLDataString&	
 LAMathFXEntity::getName()
 {
-	return dynamic_cast<LADataString&>(mpName->get());
+	return dynamic_cast<AQLDataString&>(mpName->get());
 }
 /*!
     @brief get basedate
 	@return basedate
 */
-const LADataDate&  
+const AQLDataDate&  
 LAMathFXEntity::getAsOfDate(void) const
 {
-	return dynamic_cast<const LADataDate&>(mpAsOfDate->get());
+	return dynamic_cast<const AQLDataDate&>(mpAsOfDate->get());
 }
 /*!
     @brief get basedate.The setting of basedate is also possible.
 	@return basedate
 */
-LADataDate&  
+AQLDataDate&  
 LAMathFXEntity::getAsOfDate(void)
 {
-	return dynamic_cast<LADataDate&>(mpAsOfDate->get());
+	return dynamic_cast<AQLDataDate&>(mpAsOfDate->get());
 }
 /*!
     @brief get fx type
 	@return fx type
 */
-const LADataString&
+const AQLDataString&
 LAMathFXEntity::getFXType(void) const
 {
-	return dynamic_cast<const LADataString&>(mpFXType->get());
+	return dynamic_cast<const AQLDataString&>(mpFXType->get());
 }
 /*!
     @brief get get fx type. The setting of fx type is also possible. 
 	@return fx type
 */
-LADataString&
+AQLDataString&
 LAMathFXEntity::getFXType(void)
 {
-	return dynamic_cast<LADataString&>(mpFXType->get());
+	return dynamic_cast<AQLDataString&>(mpFXType->get());
 }
 /*!
     @brief get path object
 	@return path object
 */
-const LADataReference&
+const AQLDataReference&
 LAMathFXEntity::getPathEntity() const
 {
-	return dynamic_cast<const LADataReference&>(mpPathEntity->get());
+	return dynamic_cast<const AQLDataReference&>(mpPathEntity->get());
 }
 /*!
     @brief get path object. The setting of path object is also possible. 
 	@return path object
 */
-LADataReference&
+AQLDataReference&
 LAMathFXEntity::getPathEntity()
 {
-	return dynamic_cast<LADataReference&>(mpPathEntity->get());
+	return dynamic_cast<AQLDataReference&>(mpPathEntity->get());
 }
 /*!
     @brief get currency names
 	@return currency names
 */
-const LADataStrings&
+const AQLDataStrings&
 LAMathFXEntity::getCurrencys() const
 {
-	return dynamic_cast<const LADataStrings&>(mpCurrencys->get());
+	return dynamic_cast<const AQLDataStrings&>(mpCurrencys->get());
 }
 /*!
     @brief get currency names. The setting of get currency names is also possible. 
 	@return currency names
 */
-LADataStrings&
+AQLDataStrings&
 LAMathFXEntity::getCurrencys()
 {
-	return dynamic_cast<LADataStrings&>(mpCurrencys->get());
+	return dynamic_cast<AQLDataStrings&>(mpCurrencys->get());
 }
 
 
@@ -228,84 +228,84 @@ LAMathFXEntity::getCurrencys()
     @brief get yield entities
 	@return yield entities
 */
-const LADataMultiReference&
+const AQLDataMultiReference&
 LAMathFXEntity::getYieldCurves() const
 {
-	return dynamic_cast<const LADataMultiReference&>(mpYieldCurves->get());
+	return dynamic_cast<const AQLDataMultiReference&>(mpYieldCurves->get());
 }
 /*!
     @brief get yiled entities. The setting of yiled entities is also possible. 
 	@return yield entities
 */
-LADataMultiReference&
+AQLDataMultiReference&
 LAMathFXEntity::getYieldCurves()
 {
-	return dynamic_cast<LADataMultiReference&>(mpYieldCurves->get());
+	return dynamic_cast<AQLDataMultiReference&>(mpYieldCurves->get());
 }
 /*!
     @brief get spot rates
 	@return spot rates
 */
-const LADataDoubles&
+const AQLDataDoubles&
 LAMathFXEntity::getSpotRates() const
 {
-	return dynamic_cast<const LADataDoubles&>(mpSpotRates->get());
+	return dynamic_cast<const AQLDataDoubles&>(mpSpotRates->get());
 }
 /*!
     @brief get spot rates. The setting of spot rates is also possible. 
 	@return spot rates
 */
-LADataDoubles&
+AQLDataDoubles&
 LAMathFXEntity::getSpotRates()
 {
-	return dynamic_cast<LADataDoubles&>(mpSpotRates->get());
+	return dynamic_cast<AQLDataDoubles&>(mpSpotRates->get());
 }
 /*!
     @brief get calendar names
 	@return calendar names
 */
-const LADataStrings&
+const AQLDataStrings&
 LAMathFXEntity::getCalendarNames() const
 {
-	return dynamic_cast<const LADataStrings&>(mpCalendarNames->get());
+	return dynamic_cast<const AQLDataStrings&>(mpCalendarNames->get());
 }
 /*!
     @brief get calendar names. The setting of calendar names is also possible. 
 	@return calendar names
 */
-LADataStrings&
+AQLDataStrings&
 LAMathFXEntity::getCalendarNames()
 {
-	return dynamic_cast<LADataStrings&>(mpCalendarNames->get());
+	return dynamic_cast<AQLDataStrings&>(mpCalendarNames->get());
 }
 
 // set spot lag
 void 
-LAMathFXEntity::setSpotLag(const LAString &ccy, unsigned int lag)
+LAMathFXEntity::setSpotLag(const AQLString &ccy, unsigned int lag)
 {
-	mSpotLag.insert(pair<LAString, unsigned int>(ccy, lag));
+	mSpotLag.insert(pair<AQLString, unsigned int>(ccy, lag));
 }
 
 // get spot lag
 unsigned int 
-LAMathFXEntity::getSpotLag(const LAString &fx)
+LAMathFXEntity::getSpotLag(const AQLString &fx)
 {
 	unsigned int ret = 0;
-	LAString fxcur = fx;
+	AQLString fxcur = fx;
 	fxcur.toUpper();
-	LAStringVector ccys = fxcur.toToken('/');
+	AQLStringVector ccys = fxcur.toToken('/');
 	if (ccys.size() != 2)
-		throw LACoreInvalidData("input fx error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("input fx error",__FILE__,__LINE__);
 
-	std::map<LAString, unsigned int>::const_iterator it1 = mSpotLag.find(ccys[0]);
+	std::map<AQLString, unsigned int>::const_iterator it1 = mSpotLag.find(ccys[0]);
 	if (it1 == mSpotLag.end())
-		throw LACoreInvalidData("SpotLag Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("SpotLag Error",__FILE__,__LINE__);
 
 	ret = it1->second;
 	
-	std::map<LAString, unsigned int>::const_iterator it2 = mSpotLag.find(ccys[1]);
+	std::map<AQLString, unsigned int>::const_iterator it2 = mSpotLag.find(ccys[1]);
 	if (it2 == mSpotLag.end())
-		throw LACoreInvalidData("SpotLag Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("SpotLag Error",__FILE__,__LINE__);
 
 	ret = (it2->second > ret) ? it2->second : ret;
 	return ret;
@@ -322,11 +322,11 @@ LAMathFXEntity::getSpotLag(const LAString &fx)
 	@return rate
 */
 double
-LAMathFXEntity::getRate(const LAString& from, const LAString& to,
-								const LADate& date) const
+LAMathFXEntity::getRate(const AQLString& from, const AQLString& to,
+								const AQLDate& date) const
 {
 	if (mFXType == 0) return getRate(from, to, 0);
-	LAPriceDataDayCount dc(ACT_365_ISDA);
+	AQLPriceDataDayCount dc(ACT_365_ISDA);
 	double t = dc.getTerm(getAsOfDate().get(), date);
 	return getRate(from, to, t, ACT_365_ISDA);
 }
@@ -339,28 +339,28 @@ LAMathFXEntity::getRate(const LAString& from, const LAString& to,
 	@return rate
 */
 double
-LAMathFXEntity::getRate(const LAString& from, const LAString& to,
+LAMathFXEntity::getRate(const AQLString& from, const AQLString& to,
 								const double t, DayCount dc) const
 {
 	if (mFXVersion != getModel()) setUp();
 	
-	map<LAString, unsigned int>::const_iterator it_from = mCurrencyPosMap.find(from);
+	map<AQLString, unsigned int>::const_iterator it_from = mCurrencyPosMap.find(from);
 	if (it_from == mCurrencyPosMap.end())
 	{
 		//error
-		LAString msg = "Currency:";
+		AQLString msg = "Currency:";
 		msg += from;
 		msg += " is not registered";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 	}	
-	map<LAString, unsigned int>::const_iterator it_to = mCurrencyPosMap.find(to);
+	map<AQLString, unsigned int>::const_iterator it_to = mCurrencyPosMap.find(to);
 	if (it_to == mCurrencyPosMap.end())
 	{
 		//error
-		LAString msg = "Currency:";
+		AQLString msg = "Currency:";
 		msg += to;
 		msg += " is not registered";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 	}
 
 	unsigned int posfrom = it_from->second;
@@ -395,9 +395,9 @@ LAMathFXEntity::getRate(const LAString& from, const LAString& to,
 		else
 		{
 			//tmp_t =
-			LAPriceDataDayCount attrdc(mDCPath);
-			LAPriceDataDayCount attrdc2(dc);
-			const LADate& asOf = getAsOfDate().get();
+			AQLPriceDataDayCount attrdc(mDCPath);
+			AQLPriceDataDayCount attrdc2(dc);
+			const AQLDate& asOf = getAsOfDate().get();
 			tmp_t = attrdc.getTerm(asOf, attrdc2.getDayTerm(asOf, t));
 		}
 
@@ -405,7 +405,7 @@ LAMathFXEntity::getRate(const LAString& from, const LAString& to,
 		if (fxs.size() == 0)
 		{
 			//error
-			throw LACoreInvalidData("Some FX SDE is missing", __FILE__, __LINE__);			
+			throw AQLCoreInvalidData("Some FX SDE is missing", __FILE__, __LINE__);			
 		}
 		
 		const LAMathPathEntity& path = 	
@@ -429,7 +429,7 @@ LAMathFXEntity::getRate(const LAString& from, const LAString& to,
 
     // Added below line to fix a warning / bug - not all control paths return a value
     // We Should never reach here, so throw an error
-    throw LACoreInvalidData("#Error: Unable to calculate the rate. Unknown error.", __FILE__, __LINE__);
+    throw AQLCoreInvalidData("#Error: Unable to calculate the rate. Unknown error.", __FILE__, __LINE__);
 }
 /*!
     @brief get spot rate 
@@ -440,10 +440,10 @@ LAMathFXEntity::getRate(const LAString& from, const LAString& to,
 	@return spot rate
 */
 /*double
-LAMathFXEntity::getSpotRate(const LAString& from, const LAString& to,
-								const LADate& date) const
+LAMathFXEntity::getSpotRate(const AQLString& from, const AQLString& to,
+								const AQLDate& date) const
 {
-	LAPriceDataDayCount dc(ACT_365);
+	AQLPriceDataDayCount dc(ACT_365);
 	double t = dc.getTerm(getAsOfDate().get(), date);
 	return getSpotRate(from, to, t, ACT_365);
 }*/
@@ -457,7 +457,7 @@ LAMathFXEntity::getSpotRate(const LAString& from, const LAString& to,
 	@return spot rate
 */
 /*double
-LAMathFXEntity::getSpotRate(const LAString& from, const LAString& to,
+LAMathFXEntity::getSpotRate(const AQLString& from, const AQLString& to,
 								double t, DayCount dc) const
 {
 	return 0;
@@ -474,16 +474,16 @@ LAMathFXEntity::getSpotRate(const LAString& from, const LAString& to,
 	@return forward fx rate 
 */
 double
-LAMathFXEntity::getForwardRate(const LAString& from, const LAString& to,
-								const LADate& date, const LADate& forward_date) const
+LAMathFXEntity::getForwardRate(const AQLString& from, const AQLString& to,
+								const AQLDate& date, const AQLDate& forward_date) const
 {
 	//if (date > forward_date)
 	//{
 	//	//error
-	//	throw LACoreInvalidData("forward_date is before date", __FILE__, __LINE__);
+	//	throw AQLCoreInvalidData("forward_date is before date", __FILE__, __LINE__);
 	//}	
 	if (mFXType == 0) return getRate(from, to, 0);
-	LAPriceDataDayCount dc(ACT_365_ISDA);
+	AQLPriceDataDayCount dc(ACT_365_ISDA);
 	double t = dc.getTerm(getAsOfDate().get(), date);
 	double forward_t = dc.getTerm(getAsOfDate().get(), forward_date);
 	return getForwardRate(from, to, t, forward_t, ACT_365_ISDA);
@@ -498,38 +498,38 @@ LAMathFXEntity::getForwardRate(const LAString& from, const LAString& to,
 	@return forward fx rate 
 */
 double
-LAMathFXEntity::getForwardRate(const LAString& from, const LAString& to,
+LAMathFXEntity::getForwardRate(const AQLString& from, const AQLString& to,
 								double t, double forward_t, DayCount dc) const
 {
 	//if (t > forward_t)
 	//{
 	//	//error
-	//	throw LACoreInvalidData("forward_t is before t", __FILE__, __LINE__);
+	//	throw AQLCoreInvalidData("forward_t is before t", __FILE__, __LINE__);
 	//}
 	if (t < 0 || forward_t < 0)
 	{
 		//error
-		throw LACoreInvalidData("t and forward_t must be positive", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("t and forward_t must be positive", __FILE__, __LINE__);
 	}
 	if (mFXVersion != getModel()) setUp();
 
-	map<LAString, unsigned int>::const_iterator it_from = mCurrencyPosMap.find(from);
+	map<AQLString, unsigned int>::const_iterator it_from = mCurrencyPosMap.find(from);
 	if (it_from == mCurrencyPosMap.end())
 	{
 		//error
-		LAString msg = "Currency:";
+		AQLString msg = "Currency:";
 		msg += from;
 		msg += " is not registered";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 	}	
-	map<LAString, unsigned int>::const_iterator it_to = mCurrencyPosMap.find(to);
+	map<AQLString, unsigned int>::const_iterator it_to = mCurrencyPosMap.find(to);
 	if (it_to == mCurrencyPosMap.end())
 	{
 		//error
-		LAString msg = "Currency:";
+		AQLString msg = "Currency:";
 		msg += to;
 		msg += " is not registered";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 	}
 
 	unsigned int posfrom = it_from->second;
@@ -565,9 +565,9 @@ LAMathFXEntity::getForwardRate(const LAString& from, const LAString& to,
 		else
 		{
 			//tmp_t =
-			LAPriceDataDayCount attrdc(mDCPath);
-			LAPriceDataDayCount attrdc2(dc);
-			const LADate& asOf = getAsOfDate().get();
+			AQLPriceDataDayCount attrdc(mDCPath);
+			AQLPriceDataDayCount attrdc2(dc);
+			const AQLDate& asOf = getAsOfDate().get();
 			tmp_t = attrdc.getTerm(asOf, attrdc2.getDayTerm(asOf, t));
 			tmp_forward_t = attrdc.getTerm(asOf, attrdc2.getDayTerm(asOf, forward_t));
 		}		
@@ -603,7 +603,7 @@ LAMathFXEntity::getForwardRate(const LAString& from, const LAString& to,
 
     // Added below line to fix a warning / bug - not all control paths return a value
     // We Should never reach here, so throw an error
-    throw LACoreInvalidData("#Error: Unable to calculate the forward rate. Unknown error.", __FILE__, __LINE__);
+    throw AQLCoreInvalidData("#Error: Unable to calculate the forward rate. Unknown error.", __FILE__, __LINE__);
 }
 
 /*!
@@ -615,11 +615,11 @@ LAMathFXEntity::getForwardRate(const LAString& from, const LAString& to,
 	@return spot date of currency pair of cur1 and cur2 
 */
 
-LADate
-LAMathFXEntity::getSpotDate(const LAString& cur1, const LAString& cur2,
-									const LADate& basedate) const
+AQLDate
+LAMathFXEntity::getSpotDate(const AQLString& cur1, const AQLString& cur2,
+									const AQLDate& basedate) const
 {
-	const LAStringVector& currencys = getCurrencys().get();
+	const AQLStringVector& currencys = getCurrencys().get();
 	int pos1 = -1, pos2 = -1;
 	for (unsigned int i = 0 ; i < currencys.size(); i++)
 	{
@@ -639,14 +639,14 @@ LAMathFXEntity::getSpotDate(const LAString& cur1, const LAString& cur2,
 	if (pos1 == -1 || pos2 == -1)
 	{
 		//error
-		throw LACoreInvalidData("Input currency is not registerd", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Input currency is not registerd", __FILE__, __LINE__);
 	}
 	
-	const LAStringVector& calendars = getCalendarNames().get();
+	const AQLStringVector& calendars = getCalendarNames().get();
 
 	if (cur1 == USD)
 	{
-		map<LAString, unsigned int>::const_iterator it = mSpotLag.find(cur2);
+		map<AQLString, unsigned int>::const_iterator it = mSpotLag.find(cur2);
 		if (it == mSpotLag.end())
 		{
 			return LAMathFXUtility::getSpotDate_IncludedUSD(cur2, basedate, calendars[pos2], calendars[pos1]);
@@ -659,7 +659,7 @@ LAMathFXEntity::getSpotDate(const LAString& cur1, const LAString& cur2,
 	}
 	else if (cur2 == USD)
 	{
-		map<LAString, unsigned int>::const_iterator it = mSpotLag.find(cur1);
+		map<AQLString, unsigned int>::const_iterator it = mSpotLag.find(cur1);
 		if (it == mSpotLag.end())
 		{
 			return LAMathFXUtility::getSpotDate_IncludedUSD(cur1, basedate, calendars[pos1], calendars[pos2]);
@@ -682,12 +682,12 @@ LAMathFXEntity::getSpotDate(const LAString& cur1, const LAString& cur2,
 		if (pos3 == -1)
 		{
 			//error
-			throw LACoreInvalidData("USD is not registerd", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("USD is not registerd", __FILE__, __LINE__);
 		}
-		map<LAString, unsigned int>::const_iterator it1 = mSpotLag.find(cur1);
+		map<AQLString, unsigned int>::const_iterator it1 = mSpotLag.find(cur1);
 		if (it1 == mSpotLag.end())
 		{
-			map<LAString, unsigned int>::const_iterator it2 = mSpotLag.find(cur2);
+			map<AQLString, unsigned int>::const_iterator it2 = mSpotLag.find(cur2);
 			if (it2 == mSpotLag.end())
 			{
 				return LAMathFXUtility::getSpotDate_NotIncludedUSD(cur1, cur2, basedate, calendars[pos1], calendars[pos2], calendars[pos3]);
@@ -701,7 +701,7 @@ LAMathFXEntity::getSpotDate(const LAString& cur1, const LAString& cur2,
 		else
 		{
 			unsigned int lag1 = it1->second;
-			map<LAString, unsigned int>::const_iterator it2 = mSpotLag.find(cur2);
+			map<AQLString, unsigned int>::const_iterator it2 = mSpotLag.find(cur2);
 			if (it2 == mSpotLag.end())
 			{
 				return LAMathFXUtility::getSpotDate_NotIncludedUSD(cur1, cur2, basedate, calendars[pos1], calendars[pos2], calendars[pos3], lag1);
@@ -724,11 +724,11 @@ LAMathFXEntity::getSpotDate(const LAString& cur1, const LAString& cur2,
 	
 	@return forward date
 */
-/*LADate
-LAMathFXEntity::getForwardDate(const LAString& cur1, const LAString& cur2,
-									const LADate& spotdate, const LAString& term) const
+/*AQLDate
+LAMathFXEntity::getForwardDate(const AQLString& cur1, const AQLString& cur2,
+									const AQLDate& spotdate, const AQLString& term) const
 {
-	const LAStringVector& currencys = getCurrencys().get();
+	const AQLStringVector& currencys = getCurrencys().get();
 	int pos1 = -1, pos2 = -1;
 	for (unsigned int i = 0 ; i < currencys.size(); i++)
 	{
@@ -748,17 +748,17 @@ LAMathFXEntity::getForwardDate(const LAString& cur1, const LAString& cur2,
 	if (pos1 == -1 || pos2 == -1)
 	{
 		//error
-		throw LACoreInvalidData("Input currency is not registerd", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Input currency is not registerd", __FILE__, __LINE__);
 	}
 	
 	
-	const LAStringVector& calendars = getCalendarNames().get();
-	LAStringVector calnames(2);
+	const AQLStringVector& calendars = getCalendarNames().get();
+	AQLStringVector calnames(2);
 	calnames[0] = calendars.at(pos1);
 	calnames[1] = calendars.at(pos2);
 	
-	LAPriceDataCalendar cal(calnames);
-	LAPriceDataSlidingRule srule(SLIDING_RULE_FOLLOWING);
+	AQLPriceDataCalendar cal(calnames);
+	AQLPriceDataSlidingRule srule(SLIDING_RULE_FOLLOWING);
 
 	return LAMathDateCalculations::getDate(spotdate, term, srule, &cal, true);
 
@@ -769,7 +769,7 @@ LAMathFXEntity::getForwardDate(const LAString& cur1, const LAString& cur2,
     @brief Make copy(clone) of this FX Object object.
     @return pointer of this FX Object object.
 */
-LAObject* 
+AQLObject* 
 LAMathFXEntity::clone() const
 {
     try {
@@ -777,7 +777,7 @@ LAMathFXEntity::clone() const
     	return pIRScenario;
     }
     catch (bad_alloc & e){
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -788,7 +788,7 @@ LAMathFXEntity::clone() const
 */
 void                
 LAMathFXEntity::remove(
-	const LAString& dataName)
+	const AQLString& dataName)
 {
 	if(dataName == CALIBRATION_DATA_NAME
 		|| dataName == CALIBRATION_DATA_ASOFDATE
@@ -801,7 +801,7 @@ LAMathFXEntity::remove(
 	{
 		return; 
 	}
-	LAObject::remove(dataName);
+	AQLObject::remove(dataName);
 }
 
 /*!
@@ -835,18 +835,18 @@ LAMathFXEntity::reset(void)
 	@param[in] e copy source
 	@return reference to this object
 */
-LAObject&
+AQLObject&
 LAMathFXEntity::copy(
-	const LAObject& e)
+	const AQLObject& e)
 {
 	if (this == &e) return *this;
 
-	LAObject::copy(e);
+	AQLObject::copy(e);
 	if (!e.isTypeOf(ENTITY_FX))
 	{
-		LAString err = "Assignement error for LAMathFXEntity : from ";
-		err += LAString(e.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignement error for LAMathFXEntity : from ";
+		err += AQLString(e.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	mpName			= &getData(CALIBRATION_DATA_NAME);
@@ -873,13 +873,13 @@ LAMathFXEntity::copy(
 	@param[in] name name of certain data
 	@return reference to holder class 
 */
-LADataHolder&
-LAMathFXEntity::add(const LAString& name)
+AQLDataHolder&
+LAMathFXEntity::add(const AQLString& name)
 {
-	LADataInstance* dataInstance = getDataInstance();
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
-	const LADataHolder& dh = dm.getData(name);
-	return LAObject::add(name, dh);
+	AQLDataInstance* dataInstance = getDataInstance();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
+	const AQLDataHolder& dh = dm.getData(name);
+	return AQLObject::add(name, dh);
 }
 
 /*!
@@ -889,7 +889,7 @@ void
 LAMathFXEntity::setUp(void) const
 {
 	//fx type
-	LAString type = getFXType().get();
+	AQLString type = getFXType().get();
 	type.toUpper();
 	if (type == FIXEDRATE) mFXType = 0;
 	else if (type == FORWARDRATE) mFXType = 1;
@@ -897,50 +897,50 @@ LAMathFXEntity::setUp(void) const
 	else
 	{
 		//error
-		LAString msg = "FXType : ";
+		AQLString msg = "FXType : ";
 		msg += type;
 		msg += " is not support";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	//currency position map
 	mCurrencyPosMap.clear();
-	const LAStringVector& currencys = getCurrencys().get();
+	const AQLStringVector& currencys = getCurrencys().get();
 	for (unsigned int i = 0; i < currencys.size(); i++)
-		mCurrencyPosMap.insert(pair<LAString, unsigned int>(currencys[i], i));
+		mCurrencyPosMap.insert(pair<AQLString, unsigned int>(currencys[i], i));
 
 
 	if (mFXType != 0)
 		if (!mpCalendarNames->isDefined() || getCalendarNames().getSize() != currencys.size())
-			throw LACoreInvalidData("CalendarNames size and Currencys size are not same", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("CalendarNames size and Currencys size are not same", __FILE__, __LINE__);
 
 
 	if (mFXType == 0)
 	{
 		if (!mpSpotRates->isDefined() || getSpotRates().getSize() != currencys.size())
-			throw LACoreInvalidData("SpotRates size and Currencys size are not same", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("SpotRates size and Currencys size are not same", __FILE__, __LINE__);
 	
 		mTodayRates = getSpotRates().get();
 	}
 	else if (mFXType == 1)
 	{
 		if (!mpSpotRates->isDefined() || getSpotRates().getSize() != currencys.size())
-			throw LACoreInvalidData("SpotRates size and Currencys size are not same", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("SpotRates size and Currencys size are not same", __FILE__, __LINE__);
 		
 		if (!mpYieldCurves->isDefined() || getYieldCurves().getSize() != currencys.size())
-			throw LACoreInvalidData("YieldCurves size and Currencys size are not same", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("YieldCurves size and Currencys size are not same", __FILE__, __LINE__);
 		
 		calcTodayRates();
 	}
 	else
 	{
-		LADataReference& ref = dynamic_cast<LADataReference&>(mpPathEntity->get());
+		AQLDataReference& ref = dynamic_cast<AQLDataReference&>(mpPathEntity->get());
 		LAMathPathEntity& path = 	
 			dynamic_cast<LAMathPathEntity& >(ref.get().get());
 		mDCPath = path.getDayCount().getDayCount();
 		mIRSDEPosInfo.clear();
 		mIRSDEPosInfo.resize(currencys.size(), -1);
-		LAStringVector sdenames = path.getSimulationSDEAttrNames().get();
+		AQLStringVector sdenames = path.getSimulationSDEAttrNames().get();
 		if (sdenames.size() == 0)
 			sdenames = path.getSDEAttrNames().get();
 
@@ -949,7 +949,7 @@ LAMathFXEntity::setUp(void) const
 		{
 			const LAMathAttrSDE& sde = dynamic_cast<const LAMathAttrSDE& >(path.getData(sdenames[i], ISNOTNULL).get());
 			if (sde.getSDEPathType() != IR) continue;			
-			map<LAString, unsigned int>::const_iterator it = mCurrencyPosMap.find(sde.getCurrency());
+			map<AQLString, unsigned int>::const_iterator it = mCurrencyPosMap.find(sde.getCurrency());
 			if (it == mCurrencyPosMap.end()) continue;
 			mIRSDEPosInfo[it->second] = i;
 //			count++;
@@ -957,7 +957,7 @@ LAMathFXEntity::setUp(void) const
 /*		if (count != currencys.size())
 		{
 			//error
-			throw LACoreInvalidData("Some currency of Yield SDE is not exsist", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Some currency of Yield SDE is not exsist", __FILE__, __LINE__);
 		}*/
 
 
@@ -971,7 +971,7 @@ LAMathFXEntity::setUp(void) const
 		{
 			const LAMathAttrSDE& sde = dynamic_cast<const LAMathAttrSDE& >(path.getData(sdenames[i], ISNOTNULL).get());
 			if (sde.getSDEPathType() != FX) continue;			
-			const LAStringVector& curs = LAMathFXUtility::getCurrencyPair(sde.getCurrency());
+			const AQLStringVector& curs = LAMathFXUtility::getCurrencyPair(sde.getCurrency());
 						
 			unsigned int posto = mCurrencyPosMap.find(curs[0])->second;
 			unsigned int posfrom = mCurrencyPosMap.find(curs[1])->second;
@@ -1013,10 +1013,10 @@ LAMathFXEntity::setUp(void) const
 				if (mFXSDEPosInfo[i][j].size() == 0)
 				{
 					//error
-					LAString msg = currencys[j];
+					AQLString msg = currencys[j];
 					msg += "/" + currencys[i];
 					msg += " can't convert";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);				
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);				
 				}
 */
 	}
@@ -1026,7 +1026,7 @@ LAMathFXEntity::setUp(void) const
 		DoubleArray spotRates = getSpotRates().get();
 		for (unsigned int i = 0; i < spotRates.size(); ++i)
 		{
-			if (spotRates[i] <= 0.) throw LACoreInvalidData("spot rate is negative!", __FILE__, __LINE__);
+			if (spotRates[i] <= 0.) throw AQLCoreInvalidData("spot rate is negative!", __FILE__, __LINE__);
 		}
 	}
 	mFXVersion = getModel();
@@ -1041,14 +1041,14 @@ LAMathFXEntity::calcTodayRates() const
 	
 	const LAMathYieldCurve& baseyield = 
 		dynamic_cast<const LAMathYieldCurve& >(getYieldCurves().get(0).get());
-	const LAStringVector& currencys = getCurrencys().get();
+	const AQLStringVector& currencys = getCurrencys().get();
 	mTodayRates.clear();
 	mTodayRates.resize(currencys.size());
 	mTodayRates[0] = getSpotRates().get()[0];
-	const LADate& asof = getAsOfDate().get();
+	const AQLDate& asof = getAsOfDate().get();
 	for (unsigned int i = 1; i < currencys.size(); i++)
 	{
-		const LADate& spot = getSpotDate(currencys[0], currencys[i], asof);
+		const AQLDate& spot = getSpotDate(currencys[0], currencys[i], asof);
 		const LAMathYieldCurve& yield = 
 			dynamic_cast<const LAMathYieldCurve& >(getYieldCurves().get(i).get());
 		mTodayRates[i] = getSpotRates().get()[i] * baseyield.getBasisDF(asof, spot) / yield.getBasisDF(asof, spot);
@@ -1065,7 +1065,7 @@ LAMathFXEntity::calcTodayRates() const
 void                
 LAMathFXEntity::update(const unsigned int type) 
 {
-	LAObject::update(type);
+	AQLObject::update(type);
     if ((type & TYPE_CACHESIZE_CHANGE) != 0x0000
 		|| (type & TYPE_ANTITHETICFLAG_CHANGE) != 0x0000)
 		mFXVersion = getModel();

@@ -4,7 +4,7 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
+#include "AQLFunctionBase.h"
 #include "LAEvent.h"
 
 
@@ -14,7 +14,7 @@
 #define FN_CALIBRATIONFUNC_STR	"fn_calibrationfunc"
 
 
-class MACalibrationFunc : public LAFunctionBase
+class MACalibrationFunc : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
@@ -30,7 +30,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;
@@ -45,7 +45,7 @@ public :
 
 			                    //==========================================
 	                            // set real function
-	void				         setRealFunction(const LAFunctionBase &method);	
+	void				         setRealFunction(const AQLFunctionBase &method);	
 			                    //==========================================
 	                            // set ready on
 	void				         setOn();	
@@ -53,7 +53,7 @@ public :
 
 	
 protected :
-	const LAFunctionBase *mpRealFunc;		// pointer to real function
+	const AQLFunctionBase *mpRealFunc;		// pointer to real function
 	bool  mIsReady;                         // ready flg
 	mutable MAEvent mEvent;                 // event
 #ifdef __HAS_MIC__

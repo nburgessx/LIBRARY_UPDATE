@@ -104,7 +104,7 @@ namespace etrading
 		return curveCollection_;
 	}
 
-	LADate InflationCurve::getAsOfDate() const
+	AQLDate InflationCurve::getAsOfDate() const
 	{
 		return asOfDate_;
 	}
@@ -129,7 +129,7 @@ namespace etrading
 	*/
 	LabelValueBlock InflationCurve::propertyToLabelValueBlock( const std::string& propertyKey ) const
 	{
-		LAStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
+		AQLStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
 		LabelValueBlock lvb( stringMatrix );
 
 		return lvb;
@@ -140,8 +140,8 @@ namespace etrading
 	LabelValueBlock InflationCurve::setupSwapExpressionLVBforCalibration() const
 	{
 		// Set up the Swap Expression LVB used for repricing swap calibration instruments
-		LAStringVector keys;
-		LAStringVector values;
+		AQLStringVector keys;
+		AQLStringVector values;
 
 		keys.reserve(5);
 		values.reserve(5);
@@ -164,7 +164,7 @@ namespace etrading
 	 * @param [in]   referenceDate		A reference start date used to calculate maturity dates from tenors.
 	 * @returns The InflationMarketDataMap
 	 */
-	InflationMarketDataMap InflationCurve::loadMarketDataMap( const LADate& referenceDate ) const
+	InflationMarketDataMap InflationCurve::loadMarketDataMap( const AQLDate& referenceDate ) const
 	{
 		// Read the market data and perform sanity checks
 		const bool throwIfKeyMissing = false;
@@ -185,7 +185,7 @@ namespace etrading
 		for (size_t i = 0; i < numMarketDataRows; i++)
 		{
 			std::string instrumentID;
-			LADate instrumentMaturityDate;
+			AQLDate instrumentMaturityDate;
 
 			// Only process the row if the data in column 0 is non-blank. i.e. trim blank rows
 			std::string dataInColumnZero = marketData[0][i];
@@ -335,7 +335,7 @@ namespace etrading
 		const std::string curveCurrency = getCurveCurrency(curveCollection_.c_str()).getCString();
 		AQ_REQUIRE( boost::iequals(curveCurrency, toString(currency_)), "CurveCollection currency does not match Inflation Curve currency: '" + curveCurrency + "' vs '" + toString(currency_) + ".");
 
-		const LADate curveAsOfDate = getCurveAsOfDate(curveCollection_.c_str());
+		const AQLDate curveAsOfDate = getCurveAsOfDate(curveCollection_.c_str());
 		AQ_REQUIRE( curveAsOfDate == asOfDate_, "CurveCollection as-of date does not match Inflation Curve as-of date: '" + curveAsOfDate.stringWithFormat() + "' vs '" + asOfDate_.stringWithFormat() + ".");
 
 		// Read the market data, sort maturities in chronological order and perform sanity checks
@@ -377,7 +377,7 @@ namespace etrading
 			if (dataInColumnZero != "")
 			{
 				std::string  cpiTenorOrMaturityDate = dataInColumnZero;
-				LADate cpiQuoteDate = validateMaturityDate( asOfDateWithFixlag_, cpiTenorOrMaturityDate.c_str());
+				AQLDate cpiQuoteDate = validateMaturityDate( asOfDateWithFixlag_, cpiTenorOrMaturityDate.c_str());
 
 				if ( inflationResetType_ == INFLATION_RESET_TYPE_MONTHLY_INTERPOLATION )
 				{
@@ -440,7 +440,7 @@ namespace etrading
 			// For each node point, convert dates to terms and calculate logCPI
 			for ( auto point : calibratedInflationPoints_ )
 			{
-				const LADate pillarDate = point.first;
+				const AQLDate pillarDate = point.first;
 				const double pillarTerm = getYearFraction( asOfDateWithFixlag_, pillarDate, accrualDayCount_ );
 				terms.push_back( pillarTerm );
 
@@ -460,7 +460,7 @@ namespace etrading
 	 * @param [in]  swapGeneratorName	The swap generator used to obtain conventions and to create calibration instruments
 	 * @param [in]  marketDataMap		Input market data, a map from maturity date to break-even par rate,
 	 */
-	void InflationCurve::calibrateToZCInflationSwaps( const LADate& asOfDate, const std::string& swapGeneratorName, const InflationMarketDataMap& marketDataMap )
+	void InflationCurve::calibrateToZCInflationSwaps( const AQLDate& asOfDate, const std::string& swapGeneratorName, const InflationMarketDataMap& marketDataMap )
 	{
 
 		// Additional parameters for creating ZC inflation swap instruments
@@ -469,7 +469,7 @@ namespace etrading
 		LabelValueBlock valuationSettingsLVB( curveCollection_, "" );
 
 		// Calculate the effective date for calibration instruments
-		const LADate effectiveDate = LADateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
+		const AQLDate effectiveDate = LADateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
 		LabelValueBlock swapExpressionLVB(  setupSwapExpressionLVBforCalibration(),
 											IRS_KEY::EFFECTIVE_DATE,
 											std::to_string(static_cast<long long>(LADateScheduleHelpers::getExcelDate( effectiveDate ))));
@@ -478,7 +478,7 @@ namespace etrading
 		bool firstInstrument = true;
 		for (auto it = marketDataMap.begin(); it != marketDataMap.end(); ++it)
 		{
-			const LADate& maturityDate = it->first;
+			const AQLDate& maturityDate = it->first;
 			const ZCInflationSwapMarketData& marketData = it->second;
 
 			// Construct the calibration instrument
@@ -540,7 +540,7 @@ namespace etrading
 	/* @brief	Returns the inflation level for the specified date, no further lag adjustment.
 	*			The inflation level is NOT adjusted for seasonality
 	*/
-	double InflationCurve::getUnadjustedInflationIndexForDate( const LADate& laggedDate ) const
+	double InflationCurve::getUnadjustedInflationIndexForDate( const AQLDate& laggedDate ) const
 	{
 		double inflationIndex = 0.;
 		auto it = calibratedInflationPoints_.find( laggedDate );
@@ -563,7 +563,7 @@ namespace etrading
 	/* @brief	Returns the inflation level for the specified date, no further lag adjustment.
 	*			The inflation level IS adjusted for seasonality
 	*/
-	double InflationCurve::getMonthlyInflationIndexForLaggedDate( const LADate& laggedDate ) const
+	double InflationCurve::getMonthlyInflationIndexForLaggedDate( const AQLDate& laggedDate ) const
 	{
 		// First check the fixingTable to see if there is a fixing for this date
 		auto fixingTable = getFixingTable( fixingTableName_ );
@@ -590,7 +590,7 @@ namespace etrading
 	*			The forward rate is calculated from the CPI level at the curve pillars which bracket the
 	*			specified date and is given as the log return of the CPI level. See Kerkhof p30
 	*/
-	ForwardRateResults InflationCurve::getForwardRateForDate( const LADate& laggedDate ) const
+	ForwardRateResults InflationCurve::getForwardRateForDate( const AQLDate& laggedDate ) const
 	{
 		ForwardRateResults forwardRateResults;
 
@@ -639,7 +639,7 @@ namespace etrading
 	/* @brief	Get the the seasonality adjustment for the specified date, no further lag adjustment.
 	*			The calculation is performed using the exponential seasonal model from Kerkhof p30
 	*/
-	double InflationCurve::getSeasonalityFactor( const LADate& laggedDate ) const
+	double InflationCurve::getSeasonalityFactor( const AQLDate& laggedDate ) const
 	{	
 		double totalSeasonalFactor = 1.0;
 
@@ -697,7 +697,7 @@ namespace etrading
 	* @param[in]	fixLag					Adjust the specified date backwards by this lag tenor.
 	* @returns	The calculated CPI level
 	*/
-	double InflationCurve::getInflationIndexForDate( const LADate& date, const InflationResetTypeEnum& inflationResetType, const std::string& fixLag ) const
+	double InflationCurve::getInflationIndexForDate( const AQLDate& date, const InflationResetTypeEnum& inflationResetType, const std::string& fixLag ) const
 	{
 		switch (inflationResetType)
 		{
@@ -706,7 +706,7 @@ namespace etrading
 			/* When using an InflationResetType of "MonthlyInterpolation", the CPI value does not change within a month.
 			*  So follow a convention where we set the day-of-month to 1 after applying the lag.
 			*/
-			LADate fixingDate = applyFixingLagToDate( date, fixLag );
+			AQLDate fixingDate = applyFixingLagToDate( date, fixLag );
 			fixingDate.setDay( 1 );
 			return getMonthlyInflationIndexForLaggedDate( fixingDate );
 			break;
@@ -715,13 +715,13 @@ namespace etrading
 		{
 			/* 1. Calculate the lagged date, and calculate the monthly inflation index at the beginning of the month
 			*/
-			LADate beginningOfMonthFixingDate = applyFixingLagToDate( date, fixLag );
+			AQLDate beginningOfMonthFixingDate = applyFixingLagToDate( date, fixLag );
 			beginningOfMonthFixingDate.setDay( 1 );
 			const double thisMonthInflationIndex = getMonthlyInflationIndexForLaggedDate( beginningOfMonthFixingDate );
 
 			/* 2. Calculate the inflation index for the beginning of the next month
 			*/
-			LADate nextMonthFixingDate = beginningOfMonthFixingDate;
+			AQLDate nextMonthFixingDate = beginningOfMonthFixingDate;
 			nextMonthFixingDate.addMonths( 1 );
 			const double nextMonthInflationIndex = getMonthlyInflationIndexForLaggedDate( nextMonthFixingDate );
 
@@ -750,7 +750,7 @@ namespace etrading
 	 * @param [in]   date			The date of this calibration point 
 	 * @param [in]   inflationIndex	The inflation index to set for the specified date
 	 */
-	void InflationCurve::setCalibrationPoint( const LADate& date, const double inflationIndex )
+	void InflationCurve::setCalibrationPoint( const AQLDate& date, const double inflationIndex )
 	{
 		calibratedInflationPoints_[ date ] = inflationIndex;
 	}
@@ -765,7 +765,7 @@ namespace etrading
 		for (auto it = calibratedInflationPoints_.begin(); it != calibratedInflationPoints_.end(); ++it)
 		{
 			AnyTypeVector row;
-			const LADate maturityDate = it->first;
+			const AQLDate maturityDate = it->first;
 			const double cpiValue = it->second;
 
 			const int dateAsInt = static_cast<long long> (LADateScheduleHelpers::getExcelDate(maturityDate));
@@ -784,7 +784,7 @@ namespace etrading
 	*  @param	@fixLagTenor	The lag amount, expressed as a tenor. A positive tenor "2M" lags the date backwards
 	*  @returns	A fixing date which is lagged back from the inputDate by the amount specified by fixLagTenor
 	*/
-	LADate InflationCurve::applyFixingLagToDate( const LADate& inputDate, const std::string& fixLagTenor ) const
+	AQLDate InflationCurve::applyFixingLagToDate( const AQLDate& inputDate, const std::string& fixLagTenor ) const
 	{
 		DateVector unadjustedDates = { inputDate };
 		DateVector fixingDates = validateAndGenerateFixingSchedule( unadjustedDates,
@@ -792,7 +792,7 @@ namespace etrading
 																	fixingCalendar_,
 																	fixLagTenor,
 																	toString( fixingAdvanceOrArrears_ ), true /* includeLastExtraFixingDate */);
-		const LADate fixingDate = fixingDates[0];
+		const AQLDate fixingDate = fixingDates[0];
 		return fixingDate;
 	}
 

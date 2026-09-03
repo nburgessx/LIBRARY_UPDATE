@@ -136,15 +136,15 @@ DoubleMatrix LAMathCorrelationLMMDiscAngle::angleFromFactorLoading( const Double
 	//error check
 	if( mFactorLoading.size() < 2)
 	{
-		LAString msg = "mFactorLoading.size() must bigger than 2.";
-		LAString msg_file = " : LAMathCorrelationLMMDiscAngle::angleFromFactorLoading";
-		throw LACoreInvalidData((msg + msg_file).getCString(), __FILE__, __LINE__);
+		AQLString msg = "mFactorLoading.size() must bigger than 2.";
+		AQLString msg_file = " : LAMathCorrelationLMMDiscAngle::angleFromFactorLoading";
+		throw AQLCoreInvalidData((msg + msg_file).getCString(), __FILE__, __LINE__);
 	}
     if( mFactorLoading[0].size() < 2)
 	{
-		LAString msg = "mFactorLoading[0].size() must bigger than 2.";
-		LAString msg_file = " : LAMathCorrelationLMMDiscAngle::angleFromFactorLoading";
-		throw LACoreInvalidData((msg + msg_file).getCString(), __FILE__, __LINE__);
+		AQLString msg = "mFactorLoading[0].size() must bigger than 2.";
+		AQLString msg_file = " : LAMathCorrelationLMMDiscAngle::angleFromFactorLoading";
+		throw AQLCoreInvalidData((msg + msg_file).getCString(), __FILE__, __LINE__);
 	}
 	
 	//
@@ -163,10 +163,10 @@ DoubleMatrix LAMathCorrelationLMMDiscAngle::angleFromFactorLoading( const Double
 		
 		if( fabs(mFactorLoading[i][0]) > 1.0 + tol )
 		{
-			//furuya//LAString msg =  "Element of mFactorLoading is " + LAModelUtilities::n2s(1.0 + tol) + "> 1!.";
-			LAString msg =  "Element of mFactorLoading is " + LAString(LAModelUtilities::n2s(1.0 + tol).c_str()) + "> 1!.";
-			LAString msg_file = " : LAMathCorrelationLMMDiscAngle::angleFromFactorLoading";
-			throw LACoreInvalidData( (msg + msg_file).getCString(), __FILE__, __LINE__ );
+			//furuya//AQLString msg =  "Element of mFactorLoading is " + LAModelUtilities::n2s(1.0 + tol) + "> 1!.";
+			AQLString msg =  "Element of mFactorLoading is " + AQLString(LAModelUtilities::n2s(1.0 + tol).c_str()) + "> 1!.";
+			AQLString msg_file = " : LAMathCorrelationLMMDiscAngle::angleFromFactorLoading";
+			throw AQLCoreInvalidData( (msg + msg_file).getCString(), __FILE__, __LINE__ );
 		}
 
 		theta_[i][0] = fabs( mFactorLoading[i][0] ) > 1.0 ? M_PI / 2.0 : acos(mFactorLoading[i][0]);
@@ -184,10 +184,10 @@ DoubleMatrix LAMathCorrelationLMMDiscAngle::angleFromFactorLoading( const Double
 				double cos_theta_ij = mFactorLoading[i][j] / sin_;
 				if( fabs(cos_theta_ij) > 1.0 + tol)
 				{
-					//furuya//LAString msg =  "Element of mFactorLoading is bigger than : " + LAModelUtilities::n2s(1.0 + tol) + "!.";
-					LAString msg =  "Element of mFactorLoading is bigger than : " + LAString(LAModelUtilities::n2s(1.0 + tol).c_str()) + "!.";
-					LAString msg_file = " : LAMathCorrelationLMMDiscAngle::angleFromFactorLoading";
-					throw LACoreInvalidData( (msg + msg_file).getCString(), __FILE__, __LINE__ );
+					//furuya//AQLString msg =  "Element of mFactorLoading is bigger than : " + LAModelUtilities::n2s(1.0 + tol) + "!.";
+					AQLString msg =  "Element of mFactorLoading is bigger than : " + AQLString(LAModelUtilities::n2s(1.0 + tol).c_str()) + "!.";
+					AQLString msg_file = " : LAMathCorrelationLMMDiscAngle::angleFromFactorLoading";
+					throw AQLCoreInvalidData( (msg + msg_file).getCString(), __FILE__, __LINE__ );
 				}
 				if( fabs(cos_theta_ij) > 1) cos_theta_ij = 1.0;
 				theta_[i][j] = acos(cos_theta_ij);
@@ -203,9 +203,9 @@ DoubleMatrix LAMathCorrelationLMMDiscAngle::angleFromFactorLoading( const Double
 
 		if( fabs( sin_ - mFactorLoading[i][m - 1] ) > tol )
 		{
-			LAString msg =  "sin_ = mFactorLoading[i][m - 1] is not satisfied!";
-			LAString msg_file = " : LAMathCorrelationLMMDiscAngle::angleFromFactorLoading";
-			throw LACoreInvalidData( (msg + msg_file).getCString(), __FILE__, __LINE__ );
+			AQLString msg =  "sin_ = mFactorLoading[i][m - 1] is not satisfied!";
+			AQLString msg_file = " : LAMathCorrelationLMMDiscAngle::angleFromFactorLoading";
+			throw AQLCoreInvalidData( (msg + msg_file).getCString(), __FILE__, __LINE__ );
 		}
 	}
 	

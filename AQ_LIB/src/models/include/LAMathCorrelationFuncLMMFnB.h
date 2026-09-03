@@ -6,11 +6,11 @@
 
 #include <cmath>
 #include <cstdlib>
-#include "LAFunctionBase.h"
+#include "AQLFunctionBase.h"
 #include "LAMathCorrelationFuncLMM.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LABasic.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLBasic.h"
 
 
 // Funciton ID of LAMathCorrelationFuncLMMFnB
@@ -36,7 +36,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;
@@ -53,7 +53,7 @@ public :
 	                            // return 
     virtual double				get(double t, double T1, double T2) const
 	{
-		return LAMath::exp( -LAMath::abs(T1 - T2) * ( mx + my * ( 1.0 - (T1 - t + T2 - t) / ( 2.0 * ( mTMax - t ) ) ) ) );
+		return AQLMath::exp( -AQLMath::abs(T1 - T2) * ( mx + my * ( 1.0 - (T1 - t + T2 - t) / ( 2.0 * ( mTMax - t ) ) ) ) );
 	}
 
 protected :

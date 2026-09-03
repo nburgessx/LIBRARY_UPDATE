@@ -6,10 +6,10 @@
 
 //+++++ include +++++
 #include "LAMathDriftFuncBase.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 #include "LARatesCovariance.h"
-#include "LACoreTemplateType.h"
-#include "LAFunction.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLFunction.h"
 
 #include "LAMathHWFuncMR.h"
 #include "LAModelDynamicsHW1FCurve.h"
@@ -45,7 +45,7 @@ public:
     explicit 
     LAPriceDriftSZDDVolFactor();
 
-    LAPriceDriftSZDDVolFactor( const LAString& sdeAttrName);
+    LAPriceDriftSZDDVolFactor( const AQLString& sdeAttrName);
                                 //======================================
     	                        // copy constructor
 	LAPriceDriftSZDDVolFactor(const LAPriceDriftSZDDVolFactor& rhs);
@@ -59,13 +59,13 @@ public:
 	bool                        isTypeOf(function_t id) const;
 								//======================================
                                 //
-    LACoreFunctionBase*		        clone() const;// %%% COVARIANT RETURN %%%
+    AQLCoreFunctionBase*		        clone() const;// %%% COVARIANT RETURN %%%
                                 //======================================
                                 // Return this class ID
 	function_t			        getType() const;
 								//======================================
 								// return string representaion
-    LAString			        convertToString(void) const;
+    AQLString			        convertToString(void) const;
                                 //======================================
                                 // operator()
     virtual double              operator()(const DoubleArray& x) const;
@@ -73,7 +73,7 @@ public:
  // OPERATION
 								//======================================
 								// transform from string representaion
-    void				        convertFromString(const LAString& str);
+    void				        convertFromString(const AQLString& str);
 								//======================================
 								// set up this class
 	void				        setUp(LAMathPathEntity& path);
@@ -85,11 +85,11 @@ protected:
 	double                      getExpInt_a_theta(const double t) const;
 
 	double                      mInitialValue;
-	const LA1DDataSet*			mpThetaFunc;
+	const AQL1DDataSet*			mpThetaFunc;
 	mutable std::map<double, double> mCacheFuncExpInt_a_theta;
 
 private:
-	LAMathFunction<LAPriceDriftSZDDVolFactor> mFuncExpInt_a_theta;
+	AQLMathFunction<LAPriceDriftSZDDVolFactor> mFuncExpInt_a_theta;
 
 };
 

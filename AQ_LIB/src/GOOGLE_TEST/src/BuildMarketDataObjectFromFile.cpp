@@ -11,12 +11,12 @@ namespace
 {
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 
-	/* @brief			A helper function which converts a LAStringMatrix into a VariantMatrix
-	*                   If the input LAStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns
-	*  @param [in]		stringMatrix		The input LAStringMatrix
+	/* @brief			A helper function which converts a AQLStringMatrix into a VariantMatrix
+	*                   If the input AQLStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns
+	*  @param [in]		stringMatrix		The input AQLStringMatrix
 	*  @returns			The corresponding VariantMatrix
 	*/
-	etrading::VariantMatrix convertStringMatrixToVariantMatrix(LAStringMatrix stringMatrix)
+	etrading::VariantMatrix convertStringMatrixToVariantMatrix(AQLStringMatrix stringMatrix)
 	{
 		etrading::VariantMatrix variantMatrix;
 
@@ -38,7 +38,7 @@ namespace
 		}
 		else
 		{
-			// The input LAStringMatrix is empty.
+			// The input AQLStringMatrix is empty.
 			// Create a default variantMatrix with 2 columns of dummy data.
 			// This simulates an empty block in Excel.
 			etrading::VariantVector dummyVector(1, "");
@@ -49,11 +49,11 @@ namespace
 		return variantMatrix;
 	}
 		
-	/* @brief			Builds a "TableInfo" tuple from a LAStringMatrix of marketdata
+	/* @brief			Builds a "TableInfo" tuple from a AQLStringMatrix of marketdata
 	*                   This tuple consists of columnNames, columnTypes and the actual data values.
-	*  @param [in]		marketDataBlock		A LAStringMatrix containing key/value market data values
+	*  @param [in]		marketDataBlock		A AQLStringMatrix containing key/value market data values
 	*/
-	TableInfo getTableInfoFromMarketDataBlock(const LAStringMatrix& marketDataBlock)
+	TableInfo getTableInfoFromMarketDataBlock(const AQLStringMatrix& marketDataBlock)
 	{
 		etrading::VariantMatrix dataValues = convertStringMatrixToVariantMatrix(marketDataBlock);
 		size_t numColumns = dataValues.size();
@@ -82,7 +82,7 @@ namespace google_test
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*  @return			Handle to the market data object
 	*/
-	std::string createLWOMarketDataObjectFromFileName(const LAString& marketDataFileName)
+	std::string createLWOMarketDataObjectFromFileName(const AQLString& marketDataFileName)
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load(marketDataFileName);
 
@@ -104,7 +104,7 @@ namespace google_test
 
 				// We obtained the enum, so this is a marketData key we are interested in
 				marketDataKeys.push_back(key);
-				LAStringMatrix marketDataBlock = marketDataFileObj[*it];
+				AQLStringMatrix marketDataBlock = marketDataFileObj[*it];
 				infoBlocks.push_back(getTableInfoFromMarketDataBlock(marketDataBlock));
 			}
 			catch (...)

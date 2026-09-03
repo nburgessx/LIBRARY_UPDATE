@@ -156,11 +156,11 @@ namespace google_test
         //
         // disambiguate accessors
         //
-        virtual LAString getCurveID() const
+        virtual AQLString getCurveID() const
         {
             return SourceJPYYC_FWDEUR::getCurveID();
         }
-        virtual const LAStringVector& getCurveNames() const
+        virtual const AQLStringVector& getCurveNames() const
         {
             return SourceJPYYC_FWDEUR::getCurveNames();
         }

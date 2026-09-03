@@ -6,7 +6,7 @@
 
 
 #include "LAStaticDataManager.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "LAStaticData.h"
 #include "LAMarketData.h"
 #ifdef __HAS_MIC__
@@ -14,13 +14,13 @@
 #endif
 
 std::map<StandardString, StandardString *> staticDataMapByCurve_;
-std::map<LAString, LAStaticData *> LAStaticDataManager::mProperties;
-std::map<LAString, LAStaticData *> LAStaticDataManager::mRiskProperties;
-std::map<LAString, LAStaticData *> LAStaticDataManager::mCalibProperties;
-std::map<LAString, LAStaticData *> LAStaticDataManager::mGridStaticData;
-std::map<LAString, LAStaticData *> LAStaticDataManager::mXVAProperties;
-std::map<LAString, LAStaticData *> LAStaticDataManager::mCreditProperties;
-std::map<LAString, LAStaticData *> LAStaticDataManager::mMktCollectionProperties;
+std::map<AQLString, LAStaticData *> LAStaticDataManager::mProperties;
+std::map<AQLString, LAStaticData *> LAStaticDataManager::mRiskProperties;
+std::map<AQLString, LAStaticData *> LAStaticDataManager::mCalibProperties;
+std::map<AQLString, LAStaticData *> LAStaticDataManager::mGridStaticData;
+std::map<AQLString, LAStaticData *> LAStaticDataManager::mXVAProperties;
+std::map<AQLString, LAStaticData *> LAStaticDataManager::mCreditProperties;
+std::map<AQLString, LAStaticData *> LAStaticDataManager::mMktCollectionProperties;
 
 #ifdef __HAS_MIC__
 common_lib::StaticMutex LAStaticDataManager::mMutex;
@@ -136,18 +136,18 @@ LAStaticDataManager::finalize(void)
 
 */
 LAStaticData &
-LAStaticDataManager::getStaticData(const LAString& propertyName, pMap& propertyMap)
+LAStaticDataManager::getStaticData(const AQLString& propertyName, pMap& propertyMap)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
-	LAString id = getPropertiesID();
+	AQLString id = getPropertiesID();
 	pIter itr = propertyMap.find(id);
 	if (itr == propertyMap.end())
 	{
 		try
 		{
-			LAString filePath = LAMarketData::getNumFileName(LAString(PROPERTY_DIR) + propertyName, PROPERTIESID);
+			AQLString filePath = LAMarketData::getNumFileName(AQLString(PROPERTY_DIR) + propertyName, PROPERTIESID);
 			if (!LACoreDataService::isFileExist(filePath))
 			{
 				filePath = LAMarketData::getNumFileName(propertyName, PROPERTIESID);
@@ -155,13 +155,13 @@ LAStaticDataManager::getStaticData(const LAString& propertyName, pMap& propertyM
 			propertyMap.insert(std::make_pair(id, new LAStaticData(filePath)));
 			itr = propertyMap.find(id);
 		}
-		catch (LACoreError &e)
+		catch (AQLCoreError &e)
 		{
 			throw e;
 		}
 		catch (...)
 		{
-			throw LACoreSystemError("Error has occurred in creating property accessor.", __FILE__, __LINE__);
+			throw AQLCoreSystemError("Error has occurred in creating property accessor.", __FILE__, __LINE__);
 		}
 	}
 
@@ -203,13 +203,13 @@ LAStaticData & LAStaticDataManager::getMktCollectionStaticData()
 	return LAStaticDataManager::getStaticData(MKTCOLLECTION_PROPERTY_FILE, mMktCollectionProperties);
 }
 
-void LAStaticDataManager::clearStaticDataObject(const LAString &fileNum)
+void LAStaticDataManager::clearStaticDataObject(const AQLString &fileNum)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear properties
-	std::map<LAString, LAStaticData *>::iterator proIt = mProperties.find(fileNum);
+	std::map<AQLString, LAStaticData *>::iterator proIt = mProperties.find(fileNum);
 	if (proIt != mProperties.end())
 	{
 		delete proIt->second;
@@ -217,13 +217,13 @@ void LAStaticDataManager::clearStaticDataObject(const LAString &fileNum)
 	}
 }
 
-void LAStaticDataManager::clearRiskStaticDataObject(const LAString &fileNum)
+void LAStaticDataManager::clearRiskStaticDataObject(const AQLString &fileNum)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear risk properties
-	std::map<LAString, LAStaticData *>::iterator proIt = mRiskProperties.find(fileNum);
+	std::map<AQLString, LAStaticData *>::iterator proIt = mRiskProperties.find(fileNum);
 	if (proIt != mRiskProperties.end())
 	{
 		delete proIt->second;
@@ -238,13 +238,13 @@ void LAStaticDataManager::clearRiskStaticDataObject(const LAString &fileNum)
  
 */ 
 void 
-LAStaticDataManager::clearCalibStaticDataObject(const LAString &fileNum) 
+LAStaticDataManager::clearCalibStaticDataObject(const AQLString &fileNum) 
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear calib properties 
-	std::map<LAString, LAStaticData *>::iterator proIt = mCalibProperties.find(fileNum); 
+	std::map<AQLString, LAStaticData *>::iterator proIt = mCalibProperties.find(fileNum); 
 	if (proIt != mCalibProperties.end()) 
 	{ 
 		delete proIt->second; 
@@ -259,13 +259,13 @@ LAStaticDataManager::clearCalibStaticDataObject(const LAString &fileNum)
  
 */ 
 void 
-LAStaticDataManager::clearGridStaticData(const LAString &fileNum) 
+LAStaticDataManager::clearGridStaticData(const AQLString &fileNum) 
 { 
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear calib properties 
-	std::map<LAString, LAStaticData *>::iterator proIt = mGridStaticData.find(fileNum); 
+	std::map<AQLString, LAStaticData *>::iterator proIt = mGridStaticData.find(fileNum); 
 	if (proIt != mGridStaticData.end()) 
 	{ 
 		delete proIt->second; 
@@ -280,13 +280,13 @@ LAStaticDataManager::clearGridStaticData(const LAString &fileNum)
 
 */
 void
-LAStaticDataManager::clearXVAStaticDataObject(const LAString &fileNum)
+LAStaticDataManager::clearXVAStaticDataObject(const AQLString &fileNum)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear calib properties 
-	std::map<LAString, LAStaticData *>::iterator proIt = mXVAProperties.find(fileNum);
+	std::map<AQLString, LAStaticData *>::iterator proIt = mXVAProperties.find(fileNum);
 	if (proIt != mXVAProperties.end())
 	{
 		delete proIt->second;
@@ -301,13 +301,13 @@ LAStaticDataManager::clearXVAStaticDataObject(const LAString &fileNum)
 
 */
 void
-LAStaticDataManager::clearCreditStaticDataObject(const LAString &fileNum)
+LAStaticDataManager::clearCreditStaticDataObject(const AQLString &fileNum)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear credit properties 
-	std::map<LAString, LAStaticData *>::iterator proIt = mCreditProperties.find(fileNum);
+	std::map<AQLString, LAStaticData *>::iterator proIt = mCreditProperties.find(fileNum);
 	if (proIt != mCreditProperties.end())
 	{
 		delete proIt->second;
@@ -320,12 +320,12 @@ LAStaticDataManager::clearCreditStaticDataObject(const LAString &fileNum)
 /*!
     @brief get properties id 
 
-	@return  LAString
+	@return  AQLString
 */
-LAString
+AQLString
 LAStaticDataManager::getPropertiesID()
 {
-	LAString id = LACoreDataService::getContext(ARG_KEY_PROPERTIESID);
+	AQLString id = LACoreDataService::getContext(ARG_KEY_PROPERTIESID);
 	if (id == AQ_NO_DATA)
 	{
 		id = LACoreDataService::getContext(ARG_KEY_FILENUM);

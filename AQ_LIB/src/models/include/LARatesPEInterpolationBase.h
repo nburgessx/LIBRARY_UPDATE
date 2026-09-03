@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LACoreFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LAModelDynamicsBase.h"
 
 
@@ -19,7 +19,7 @@
     @brief Declaration of abstract base class of path element interpolation class
 
 */
-class LARatesPEInterpolationBase : public LACoreFunctionBase
+class LARatesPEInterpolationBase : public AQLCoreFunctionBase
 {
 public:
 //  LIFECYCLE
@@ -36,7 +36,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;

@@ -15,11 +15,11 @@
 #endif
 
 #include "LAPriceEventTerminate.h"
-#include "LADataBasics.h"
-#include "LADataMultiReference.h"
-#include "LAObjectHolder.h"
-#include "LAPriceDataDayCount.h"
-#include "LAMathDefine.h"
+#include "AQLDataBasics.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObjectHolder.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLMathDefine.h"
 #include "LAPriceEventNotExCurChange.h"
 #include <algorithm>
 
@@ -48,7 +48,7 @@ LAPriceEventTerminate::~LAPriceEventTerminate()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceEventTerminate::clone() const    
 {
     try 
@@ -57,7 +57,7 @@ LAPriceEventTerminate::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -92,7 +92,7 @@ LAPriceEventTerminate::getType() const
 	@param[in,out] iter position of nearest payoff from this action expiry date
 */	
 void
-LAPriceEventTerminate::doAction(const LADate& actiondate,
+LAPriceEventTerminate::doAction(const AQLDate& actiondate,
 									 double actiontime,
 									 vector<PayOffToolHolderVector>& payoff,
 									 vector<PayOffToolHolderVector>& extrapayoff,
@@ -221,7 +221,7 @@ LAPriceEventTerminate::doAction(const LADate& actiondate,
 	}
 
 //	futureaction.clear();
-	LADate backdate = actiondate;//action
+	AQLDate backdate = actiondate;//action
 	vector<LAPriceEventHolder*>::iterator pItr =  futureaction.begin();
 	while (pItr != futureaction.end())
 	{
@@ -278,19 +278,19 @@ LAPriceEventTerminate::doAction(const LADate& actiondate,
     @param[in] isCall call flag(true:call,false:trigger)
 */
 void
-LAPriceEventTerminate::setUp(const LADate& basedate,	
-								const LAObject& trade,
-								LAObject& triggerinfo,
+LAPriceEventTerminate::setUp(const AQLDate& basedate,	
+								const AQLObject& trade,
+								AQLObject& triggerinfo,
 								const LAPricePayOff& payoff,
 								bool isCall)
 {
 
 	LAPriceEventBase::setUp(basedate, trade, triggerinfo, payoff, isCall);
 	
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	//leg object
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+	const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 		
 	mTargetLegNo.resize(legs.getSize());
 	for (unsigned int i = 0; i < mTargetLegNo.size(); i++)
@@ -300,7 +300,7 @@ LAPriceEventTerminate::setUp(const LADate& basedate,
 	mIsAccrual = false;
 	dh= &triggerinfo.getData(PRICING_DATA_ISACCRUAL, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
-		mIsAccrual = dynamic_cast<const LADataBool&>(dh->get()).get();
+		mIsAccrual = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 
 
 	mIsNotionalExchangeAtEnd.clear();
@@ -311,10 +311,10 @@ LAPriceEventTerminate::setUp(const LADate& basedate,
 	{
 		// isNotionalExchangeAtEnd
 		dh = &(legs.get(i).getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND, ISNOTNULL));
-		mIsNotionalExchangeAtEnd.push_back(dynamic_cast<const LADataBool&>(dh->get()).get());		
+		mIsNotionalExchangeAtEnd.push_back(dynamic_cast<const AQLDataBool&>(dh->get()).get());		
 		//payment timing
 		dh = &(legs.get(i).getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL));
-		const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+		const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 		mIsArrear.push_back(LAPriceCFGenUtility::isArrear(timing));	
 	}
 
@@ -325,8 +325,8 @@ LAPriceEventTerminate::setUp(const LADate& basedate,
 	{
 		//start date of trade
 		dh = &(legs.get(i).getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-		const LADate& startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
-		LADate startdate_sliding = LAPriceCFGenUtility::getDate(startdate, legs.get(i).get(), 
+		const AQLDate& startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
+		AQLDate startdate_sliding = LAPriceCFGenUtility::getDate(startdate, legs.get(i).get(), 
 							CALIBRATION_DATA_SLIDINGRULE, CALIBRATION_DATA_CALENDAR);
 		mLegStart.push_back(startdate_sliding);
 	}
@@ -346,7 +346,7 @@ LAPriceEventTerminate::setUp(const LADate& basedate,
 	@return accrued interest
 */	
 double
-LAPriceEventTerminate::calcAccruedInterest(const LADate& actiondate,
+LAPriceEventTerminate::calcAccruedInterest(const AQLDate& actiondate,
 										 double actiontime,
 										 std::vector<PayOffToolHolderVector>& payoff,
 										 std::vector<PayOffToolHolderIter>& iter,
@@ -373,7 +373,7 @@ LAPriceEventTerminate::calcAccruedInterest(const LADate& actiondate,
 		}
 		else
 		{
-			throw LACoreInvalidData("Not support case(Advance payment and IsAccrual = true)", __FILE__, __LINE__);			
+			throw AQLCoreInvalidData("Not support case(Advance payment and IsAccrual = true)", __FILE__, __LINE__);			
 			/*PayOffToolHolderIter it = iter.at(legno);
 			if (it != payoff[legno].begin())
 			{
@@ -424,7 +424,7 @@ LAPriceEventTerminate::calcAccruedInterest(const LADate& actiondate,
 	@return notional exchange amount
 */	
 double
-LAPriceEventTerminate::calcNotionalExchange(const LADate& actiondate,
+LAPriceEventTerminate::calcNotionalExchange(const AQLDate& actiondate,
 										 double actiontime,
 										 vector<PayOffToolHolderVector>& payoff,
 										 vector<PayOffToolHolderVector>& extrapayoff,
@@ -440,7 +440,7 @@ LAPriceEventTerminate::calcNotionalExchange(const LADate& actiondate,
 	if (mIsNotionalExchangeAtEnd[legno])
 	{
 		LAPriceEventBase* _action = NULL;
-		LADate _date;
+		AQLDate _date;
 		double _time = 0.0;
 		//Notinonal CF currency exchange trigger is hitted in past
 		for (int i = pastaction.size() - 1; i >= 0; i--)

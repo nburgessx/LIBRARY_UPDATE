@@ -15,8 +15,8 @@ namespace validation
     *  @param [in]		strictlyAfter	True if strictly after the base date
     *  @return			Date of the next central bank meeting on/after the base date
     */
-    LADate tryMeDateCentralBank( const LAString& centralBankId,
-                                 const LADate& date,
+    AQLDate tryMeDateCentralBank( const AQLString& centralBankId,
+                                 const AQLDate& date,
                                  bool strictlyAfter )
     {
         VALID_EXCEPTION_START
@@ -31,7 +31,7 @@ namespace validation
             file.write( "strictlyAfter", strictlyAfter );
         }
 
-        LADate ret = etrading::LADateHelpers::getNextCBDate( centralBankId, date, strictlyAfter );
+        AQLDate ret = etrading::LADateHelpers::getNextCBDate( centralBankId, date, strictlyAfter );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -49,7 +49,7 @@ namespace validation
     *  @param [in]		strictlyAfter	True if strictly after the input date
     *  @return			Date of the ECB (European Central Bank) meeting on/after the base date
     */
-    LADate tryMeDateECB( const LADate& date,
+    AQLDate tryMeDateECB( const AQLDate& date,
                          bool strictlyAfter )
     {
         VALID_EXCEPTION_START
@@ -63,7 +63,7 @@ namespace validation
             file.write( "strictlyAfter", strictlyAfter );
         }
 
-        LADate ret = etrading::LADateHelpers::getNextECBDate( date, strictlyAfter );
+        AQLDate ret = etrading::LADateHelpers::getNextECBDate( date, strictlyAfter );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -80,7 +80,7 @@ namespace validation
     *  @param [in]		date	An input date
     *  @return			The start date of an ECB(European Central Bank) Swap based on the given date
     */
-    LADate tryMeDateECBSwapStart( const LADate& date )
+    AQLDate tryMeDateECBSwapStart( const AQLDate& date )
     {
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
 
@@ -93,10 +93,10 @@ namespace validation
         }
 
         //Get the ECB date
-        LADate ecbDate = tryMeDateECB( date, false );
+        AQLDate ecbDate = tryMeDateECB( date, false );
 
         //Get the swap start date based on the ECB date
-        LADate ret = etrading::LADateHelpers::getECBStartDate( ecbDate );
+        AQLDate ret = etrading::LADateHelpers::getECBStartDate( ecbDate );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -114,7 +114,7 @@ namespace validation
     *  @param [in]		date	An input date
     *  @return			The end date of an ECB(European Central Bank) Swap based on the given date
     */
-    LADate tryMeDateECBSwapEnd( const LADate& date )
+    AQLDate tryMeDateECBSwapEnd( const AQLDate& date )
     {
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
 
@@ -127,13 +127,13 @@ namespace validation
         }
 
         //Get the first ECB date based on the input date, always Thursday
-        LADate firstEcbDate = tryMeDateECB( date, false );
+        AQLDate firstEcbDate = tryMeDateECB( date, false );
 
         //Get the second ECB date based on the first ECB, always Thursday
-        LADate secondEcbDate = tryMeDateECB( firstEcbDate, true );
+        AQLDate secondEcbDate = tryMeDateECB( firstEcbDate, true );
 
         //Get the swap start date of the second ECB date, always Wednesday
-        LADate ret = tryMeDateECBSwapStart( secondEcbDate );
+        AQLDate ret = tryMeDateECBSwapStart( secondEcbDate );
 
         //Always Tuesday
         ret.addDays( -1 );
@@ -154,7 +154,7 @@ namespace validation
 	*  @param [in]		n			The nth date to return
 	*  @return			Date of the nth ECB (European Central Bank) meeting on/after the asOfDate
 	*/
-	LADate tryMeDateNthECBMeetingDate(const LADate& asOfDate, const int n)
+	AQLDate tryMeDateNthECBMeetingDate(const AQLDate& asOfDate, const int n)
 	{
 		VALID_EXCEPTION_START
 		
@@ -162,7 +162,7 @@ namespace validation
 		RECORD_INPUTS(asOfDate, n);
 
 		// Calculation
-		const LADate result = etrading::LADateHelpers::getNthECBMeetingDate(asOfDate, n);
+		const AQLDate result = etrading::LADateHelpers::getNthECBMeetingDate(asOfDate, n);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
@@ -175,7 +175,7 @@ namespace validation
 	*  @param [in]		n			The nth date to return
 	*  @return			Date of the nth ECB Swap Start Date on/after the asOfDate
 	*/
-	LADate tryMeDateNthECBSwapStartDate(const LADate& asOfDate, const int n)
+	AQLDate tryMeDateNthECBSwapStartDate(const AQLDate& asOfDate, const int n)
 	{
 		VALID_EXCEPTION_START
 
@@ -183,7 +183,7 @@ namespace validation
 		RECORD_INPUTS(asOfDate, n);
 
 		// Calculation
-		const LADate result = etrading::LADateHelpers::getNthECBSwapStartDate(asOfDate, n);
+		const AQLDate result = etrading::LADateHelpers::getNthECBSwapStartDate(asOfDate, n);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
@@ -196,7 +196,7 @@ namespace validation
 	*  @param [in]		n			The nth date to return
 	*  @return			Date of the nth ECB Swap End Date on/after the asOfDate
 	*/
-	LADate tryMeDateNthECBSwapEndDate(const LADate& asOfDate, const int n)
+	AQLDate tryMeDateNthECBSwapEndDate(const AQLDate& asOfDate, const int n)
 	{
 		VALID_EXCEPTION_START
 
@@ -204,7 +204,7 @@ namespace validation
 		RECORD_INPUTS(asOfDate, n);
 
 		// Calculation
-		const LADate result = etrading::LADateHelpers::getNthECBSwapEndDate(asOfDate, n);
+		const AQLDate result = etrading::LADateHelpers::getNthECBSwapEndDate(asOfDate, n);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
@@ -216,7 +216,7 @@ namespace validation
 	*  @param [in]		meetingDate		The ECB meeting date
 	*  @return			Next ECB Meeting Date
 	*/
-	LADate tryMeDateNextECBMeetingDate(const LADate& meetingDate)
+	AQLDate tryMeDateNextECBMeetingDate(const AQLDate& meetingDate)
 	{
 		VALID_EXCEPTION_START
 
@@ -224,7 +224,7 @@ namespace validation
 		RECORD_INPUTS(meetingDate);
 
 		// Calculation
-		const LADate result = etrading::LADateHelpers::getNextECBMeetingDate(meetingDate);
+		const AQLDate result = etrading::LADateHelpers::getNextECBMeetingDate(meetingDate);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
@@ -236,7 +236,7 @@ namespace validation
 	*  @param [in]		swapStartDate		The ECB swap start date
 	*  @return			Next ECB Swap Start Date
 	*/
-	LADate tryMeDateNextECBSwapStartDate(const LADate& swapStartDate)
+	AQLDate tryMeDateNextECBSwapStartDate(const AQLDate& swapStartDate)
 	{
 		VALID_EXCEPTION_START
 
@@ -244,7 +244,7 @@ namespace validation
 		RECORD_INPUTS(swapStartDate);
 
 		// Calculation
-		const LADate result = etrading::LADateHelpers::getNextECBSwapStartDate(swapStartDate);
+		const AQLDate result = etrading::LADateHelpers::getNextECBSwapStartDate(swapStartDate);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);
@@ -256,7 +256,7 @@ namespace validation
 	*  @param [in]		swapEndDate		The ECB meeting date
 	*  @return			Next ECB Meeting Date
 	*/
-	LADate tryMeDateNextECBSwapEndDate(const LADate& swapEndDate)
+	AQLDate tryMeDateNextECBSwapEndDate(const AQLDate& swapEndDate)
 	{
 		VALID_EXCEPTION_START
 
@@ -264,7 +264,7 @@ namespace validation
 		RECORD_INPUTS(swapEndDate);
 
 		// Calculation
-		const LADate result = etrading::LADateHelpers::getNextECBSwapEndDate(swapEndDate);
+		const AQLDate result = etrading::LADateHelpers::getNextECBSwapEndDate(swapEndDate);
 
 		// Record Outputs AND Return the Result for logs, tests and playback
 		RECORD_OUTPUTS_AND_RETURN_RESULT(result);

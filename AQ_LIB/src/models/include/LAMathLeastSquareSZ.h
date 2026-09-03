@@ -7,9 +7,9 @@
 
 #include <vector>
 
-#include "LABasic.h"
-#include "LACoreTemplateType.h"
-#include "LAInterpolationBase.h"
+#include "AQLBasic.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLInterpolationBase.h"
 #include "LAMathCostFuncSZ.h"
 #include "LAMathConstraintSZ.h"
 #include "LAQuantLibCostFunction.h"

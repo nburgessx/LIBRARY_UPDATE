@@ -4,13 +4,13 @@
 #pragma interface
 #endif
 
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
-class LADate;
-class LAString;
-class LAMathCalendar;
+class AQLDate;
+class AQLString;
+class AQLMathCalendar;
 class LARatesPathElementCurve;
 /*! 
     @brief utility class to calculate about FX. 
@@ -20,19 +20,19 @@ class LAMathFXUtility
 public:
 
 	// calculate spot date case of USD included
-	static LADate		getSpotDate_IncludedUSD(const LAString& cur,
-												const LADate& today, 
-												const LAString& calname,
-												const LAString& calname_usd,
+	static AQLDate		getSpotDate_IncludedUSD(const AQLString& cur,
+												const AQLDate& today, 
+												const AQLString& calname,
+												const AQLString& calname_usd,
 												unsigned int spotlag = 0);
 
 	//// calculate spot date case of USD not included
-	static LADate		getSpotDate_NotIncludedUSD(const LAString& cur1,
-													const LAString& cur2,
-												const LADate& today, 
-												const LAString& calname1,
-												const LAString& calname2,
-												const LAString& calname_usd,
+	static AQLDate		getSpotDate_NotIncludedUSD(const AQLString& cur1,
+													const AQLString& cur2,
+												const AQLDate& today, 
+												const AQLString& calname1,
+												const AQLString& calname2,
+												const AQLString& calname_usd,
 												unsigned int spotlag1 = 0,
 												unsigned int spotlag2 = 0);
 
@@ -42,7 +42,7 @@ public:
 										const LARatesPathElementCurve& curve_toCur,
 										double forward_t);
 	// get currency pair
-	static LAStringVector getCurrencyPair(const LAString& curpair);
+	static AQLStringVector getCurrencyPair(const AQLString& curpair);
 protected:
 	
 

@@ -69,9 +69,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString parRateOutputsFilename   = parRateOutputs; 
+                    AQLString parRateOutputsFilename   = parRateOutputs; 
                 #else
-                    LAString parRateOutputsFilename   = parRateOutputs64; 
+                    AQLString parRateOutputsFilename   = parRateOutputs64; 
                 #endif
 
                 // 2. Load the Input Files
@@ -81,8 +81,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -90,15 +90,15 @@ namespace google_test
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = parRateInputFile["swapName"];
-                LAStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
-                LAStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
+                AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
                 double actualSwapParRate          = validation::tryMeLWOSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParRate, TEST_DIR, parRateOutputsFilename, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -121,8 +121,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -130,8 +130,8 @@ namespace google_test
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = parRateInputFile["swapName"];
-                LAStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
-                LAStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
+                AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
                 double parRate = validation::tryMeLWOSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
 
@@ -151,7 +151,7 @@ namespace google_test
                 // 5. Check the Test Results
                 EXPECT_NEAR( 0, actualPV, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -173,8 +173,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -182,8 +182,8 @@ namespace google_test
                 std::string swapName          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 				auto swap = etrading::getSwap(swapName);
 
-                LAStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
-                LAStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
+                AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
 				// Call any pricing function so that the fwdInter flag will be retrieved from a specific curveCollection and staticTable
                 validation::tryMeLWOSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
@@ -203,7 +203,7 @@ namespace google_test
 
 				EXPECT_EQ(etrading::FALSE_BOOL, swap2->getLeg(1)->getStaticData()->getFwdInter());
 		}
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -225,8 +225,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -262,8 +262,8 @@ namespace google_test
 
 				std::string swapName          = validation::tryMeLWOSwapCreateFromLegLVBs( swapTradeName, firstLegLVB, secondLegLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 
-                LAStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
-                LAStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
+                AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 validation::tryMeLWOSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
 
 				std::string legName3          = validation::tryMeLWOLegCreate("thirdLeg", thirdLegLVB);
@@ -274,8 +274,8 @@ namespace google_test
 				auto swap = etrading::getSwap(swapName);
 
 				// Call any pricing function so that the fwdInter flag will be retrieved from a specific curveCollection and staticTable
-                //LAStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
-                //LAStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                //AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
+                //AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
 				validation::tryMeLWOSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
 
@@ -284,7 +284,7 @@ namespace google_test
 				EXPECT_EQ(etrading::FALSE_BOOL, swap->getLeg(3)->getStaticData()->getFwdInter());
 
 		}
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

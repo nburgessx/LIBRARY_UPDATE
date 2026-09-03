@@ -14,7 +14,7 @@ namespace etrading
         //Cross Currency
         if (leg1->getStaticData()->getCurrency() == leg2->getStaticData()->getCurrency())
         {
-  		    throw LACoreInvalidData( "#Error: Invalid XCCY Swap: Xccy Swap legs cannot have the same currency", __FILE__, __LINE__ );
+  		    throw AQLCoreInvalidData( "#Error: Invalid XCCY Swap: Xccy Swap legs cannot have the same currency", __FILE__, __LINE__ );
         }
 
         //Handle XccySwap properties
@@ -24,7 +24,7 @@ namespace etrading
 
         if (isMTM_ && notionalAdjustedLeg != nullptr && notionalAdjustedLeg->getSchedule()->isPaymentFreqEnumAtMaturity())
         {
-            throw LACoreInvalidData("#Error: For MTM XCCY Swap, NotionalAdjustedLeg's payment frequency cannot be 'AT_MATURITY'.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: For MTM XCCY Swap, NotionalAdjustedLeg's payment frequency cannot be 'AT_MATURITY'.",__FILE__,__LINE__);
         }
 
         addToLegCollection(leg1);

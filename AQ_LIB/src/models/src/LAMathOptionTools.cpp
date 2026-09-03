@@ -25,9 +25,9 @@ double BlackPrice(double strike, bool isCall, double fwd, double stDev)
     double dp = log(fwd / strike) / stDev + 0.5 * stDev;
     double dm = dp - stDev;
     if (isCall)
-        return fwd * LADist::normsdist(dp) - strike * LADist::normsdist(dm);
+        return fwd * AQLDist::normsdist(dp) - strike * AQLDist::normsdist(dm);
     else
-        return strike * LADist::normsdist(-dm) - fwd * LADist::normsdist(-dp);
+        return strike * AQLDist::normsdist(-dm) - fwd * AQLDist::normsdist(-dp);
 }
 
 double BlackImpliedVolatility(double premium, double t, double strike, bool isCall, double fwd,
@@ -59,7 +59,7 @@ double BachelierPrice(double strike, bool isCall, double fwd, double stDev)
 {
     double FK = (isCall ? fwd - strike : strike - fwd);
     double e = FK / stDev;
-    return FK * LADist::normsdist(e) + stDev * NormalDensity(e);
+    return FK * AQLDist::normsdist(e) + stDev * NormalDensity(e);
 }
 
 double BachelierImpliedVolatility(double premium, double t, double strike, bool isCall, double fwd,

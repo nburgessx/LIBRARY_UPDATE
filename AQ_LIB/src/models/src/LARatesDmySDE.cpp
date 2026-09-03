@@ -82,7 +82,7 @@ LARatesDmySDE::getType() const
     @brief make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesDmySDE::clone() const
 {
     try 
@@ -91,7 +91,7 @@ LARatesDmySDE::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -139,11 +139,11 @@ LARatesDmySDE::getPathElement(unsigned int pos)
 	const DoubleArray& grid = mpBM->getTimeGrid();
 	if (pos > grid.size() - 1)
 	{
-		throw LACoreInvalidData("pos is over size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("pos is over size", __FILE__, __LINE__);
 	}
 
 	unsigned int pos_e;
-	LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), pos_e);
+	AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), pos_e);
 
 	if (grid[pos] == mTimeGrid[pos_e])
 	{

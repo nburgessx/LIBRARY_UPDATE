@@ -7,7 +7,7 @@
 #define LAMathLeastSquareSwaptionCapFloor_h
 
 #include "LAQuantLibCostFunction.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 class LAMathLeastSquareSwaptionVol;
 class LAMathLeastSquareCapFloor;

@@ -5,7 +5,7 @@
 #pragma interface
 #endif
 //////////
-#include "LAFunction.h"
+#include "AQLFunction.h"
 //////////////////////////
 
 //using namespace std;
@@ -25,7 +25,7 @@ double BlackImpliedVolatility(double premium, double t, double strike, bool isCa
                               double lowBound = 0.000001, double upBound = 10.0, int maxIter = 1000000, double tol = 0.0000001);
 
 // Target function to solve in order to find the Black-implied volatility.
-class BlackPriceTarget : public LAFunction
+class BlackPriceTarget : public AQLFunction
 {
 public:
     BlackPriceTarget(double premium_, double t, double strike_, bool isCall_, double fwd_);
@@ -48,7 +48,7 @@ double BachelierImpliedVolatility(double premium, double t, double strike, bool 
                                   double lowBound = 0.00000001, double upBound = 5.0, int maxIter = 1000000, double tol = 0.000000001);
 
 // Target function to solve in order to find the Bachelier-implied volatility.
-class BachelierPriceTarget : public LAFunction
+class BachelierPriceTarget : public AQLFunction
 {
 public:
     BachelierPriceTarget(double premium_, double t, double strike_, bool isCall_, double fwd_);

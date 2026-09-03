@@ -64,7 +64,7 @@ namespace etrading
 		auto cashflows = schedule_->getAllCashflows();
 		if (cashflows.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__);
 		}
 
 		double pv = 0;

@@ -6,9 +6,9 @@
 
 
 #include "LARiskConfigurationYieldDelta.h"
-#include "LADataInstance.h"
-#include "LAObjectPool.h"
-#include "LADataReference.h"
+#include "AQLDataInstance.h"
+#include "AQLObjectPool.h"
+#include "AQLDataReference.h"
 #include "LAScenarioConfiguration.h"
 #include "LAScenarioConfigurationManager.h"
 #include "LAMarketData.h"
@@ -41,10 +41,10 @@ LARiskConfigurationYieldDelta::~LARiskConfigurationYieldDelta(void)
 	@param[in,out] dataInstance
 	@param[in] scenario
 	@param[in] index
-	@return vector<LAObject *> 
+	@return vector<AQLObject *> 
 */
-vector<LAObject *> 
-LARiskConfigurationYieldDelta::createYieldEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationYieldDelta::createYieldEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
 {
 	(void)index;
 	double pShift = 0.0;
@@ -61,12 +61,12 @@ LARiskConfigurationYieldDelta::createYieldEntity(const LAString &ccy, LADataInst
 		gShifts = getScenario2GridShift(ccy);
 	}
 
-	const LAString model = LAMarketData::getModelName(ccy);
-	const LAString riskName = getRiskName();
+	const AQLString model = LAMarketData::getModelName(ccy);
+	const AQLString riskName = getRiskName();
 	// set up param
 	MAScenarioParam param;
 	param.ccy = ccy;
-	param.calcType= ccy + "_" + riskName + "_" + LAString(scenarioNum) + "_" + LAString(index);
+	param.calcType= ccy + "_" + riskName + "_" + AQLString(scenarioNum) + "_" + AQLString(index);
 	param.model = model;
 	param.shiftType = RISK_SHIFTTYPE_DIFF;
 	param.targetName = LAMarketData::getBaseYieldName(ccy);
@@ -90,7 +90,7 @@ LARiskConfigurationYieldDelta::createYieldEntity(const LAString &ccy, LADataInst
 	LAScenarioConfiguration *sceCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_YIELDZERO);
 
-	vector<LAObject *> ret = sceCreator->createScenario(dataInstance, param);
+	vector<AQLObject *> ret = sceCreator->createScenario(dataInstance, param);
 	delete sceCreator;
 	return ret;	
 }
@@ -99,9 +99,9 @@ LARiskConfigurationYieldDelta::createYieldEntity(const LAString &ccy, LADataInst
 /*!
     @brief return operator1
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationYieldDelta::getOperator1(void) const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_YIELD_DELTA_OPERATOR1);
@@ -111,9 +111,9 @@ LARiskConfigurationYieldDelta::getOperator1(void) const
 /*!
     @brief return operator2
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationYieldDelta::getOperator2(void) const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_YIELD_DELTA_OPERATOR2);
@@ -123,12 +123,12 @@ LARiskConfigurationYieldDelta::getOperator2(void) const
     @brief return coefficient1
 	
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldDelta::getCoefficient1(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldDelta::getCoefficient1(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_COEFFICIENT1 + getCurveSuffix(ccy));
 }
@@ -138,12 +138,12 @@ LARiskConfigurationYieldDelta::getCoefficient1(const LAString &ccy) const
     @brief return coefficient2
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldDelta::getCoefficient2(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldDelta::getCoefficient2(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_COEFFICIENT2 + getCurveSuffix(ccy));
 }
@@ -153,12 +153,12 @@ LARiskConfigurationYieldDelta::getCoefficient2(const LAString &ccy) const
     @brief return outputname1
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldDelta::getOutPutName1(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldDelta::getOutPutName1(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_OUTPUT1 + getCurveSuffix(ccy));
 }
@@ -167,12 +167,12 @@ LARiskConfigurationYieldDelta::getOutPutName1(const LAString &ccy) const
     @brief return outputname2
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldDelta::getOutPutName2(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldDelta::getOutPutName2(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_OUTPUT2 + getCurveSuffix(ccy));
 }
@@ -184,7 +184,7 @@ LARiskConfigurationYieldDelta::getOutPutName2(const LAString &ccy) const
 	@return bool
 */
 bool
-LARiskConfigurationYieldDelta::isGridSensitivity(const LAString &ccy) const
+LARiskConfigurationYieldDelta::isGridSensitivity(const AQLString &ccy) const
 {
 	(void)ccy;	
 	return  convertBoolFromStr(mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_YIELD_DELTA_ISGRIDSENSITIVITY));
@@ -197,7 +197,7 @@ LARiskConfigurationYieldDelta::isGridSensitivity(const LAString &ccy) const
 	@return bool 
 */
 bool
-LARiskConfigurationYieldDelta::isParallelShift(const LAString &ccy) const
+LARiskConfigurationYieldDelta::isParallelShift(const AQLString &ccy) const
 {
 	(void)ccy;
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_YIELD_DELTA_ISPARALLEL));
@@ -207,9 +207,9 @@ LARiskConfigurationYieldDelta::isParallelShift(const LAString &ccy) const
 /*!
     @brief return riskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationYieldDelta::getRiskName(void) const
 {
 	return RISK_OFFICIAL_YIELD_DELTA;
@@ -219,13 +219,13 @@ LARiskConfigurationYieldDelta::getRiskName(void) const
     @brief return grid term
 
 	@param[in] ccy
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-vector<LAString>
-LARiskConfigurationYieldDelta::getGridTerm(const LAString &ccy) const
+vector<AQLString>
+LARiskConfigurationYieldDelta::getGridTerm(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString strGrid = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString strGrid = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 									STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_TERM + getCurveSuffix(ccy));
 
 	return strGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
@@ -235,12 +235,12 @@ LARiskConfigurationYieldDelta::getGridTerm(const LAString &ccy) const
     @brief return bucket grid term
 
 	@param[in] ccy
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-vector<LAString>
-LARiskConfigurationYieldDelta::getBucketGridTerm(const LAString &ccy) const
+vector<AQLString>
+LARiskConfigurationYieldDelta::getBucketGridTerm(const AQLString &ccy) const
 {
-	vector<LAString> ret;
+	vector<AQLString> ret;
 	ret.push_back(AQ_NO_DATA);
 
 	return ret;
@@ -253,10 +253,10 @@ LARiskConfigurationYieldDelta::getBucketGridTerm(const LAString &ccy) const
 	@return double
 */
 double
-LARiskConfigurationYieldDelta::getScenario1ParallelShift(const LAString &ccy) const
+LARiskConfigurationYieldDelta::getScenario1ParallelShift(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString strBPShift = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString strBPShift = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_PARALLEL_BPSHIFT1 + getCurveSuffix(ccy));
 
 	double bpShift = strBPShift.getDoubleValue();
@@ -270,10 +270,10 @@ LARiskConfigurationYieldDelta::getScenario1ParallelShift(const LAString &ccy) co
 	@return double
 */
 double
-LARiskConfigurationYieldDelta::getScenario2ParallelShift(const LAString &ccy) const
+LARiskConfigurationYieldDelta::getScenario2ParallelShift(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString strBPShift = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString strBPShift = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_PARALLEL_BPSHIFT2 + getCurveSuffix(ccy));
 
 	double bpShift = strBPShift.getDoubleValue();
@@ -287,10 +287,10 @@ LARiskConfigurationYieldDelta::getScenario2ParallelShift(const LAString &ccy) co
 	@return DoubleArray
 */
 DoubleArray
-LARiskConfigurationYieldDelta::getScenario1GridShift(const LAString &ccy) const
+LARiskConfigurationYieldDelta::getScenario1GridShift(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString strBPShifts = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString strBPShifts = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_GRID_BPSHIFT1 + getCurveSuffix(ccy));
 
 	return convertToRateValues(strBPShifts.toToken(MULTI_STATIC_DATA_DELIMITER));
@@ -303,10 +303,10 @@ LARiskConfigurationYieldDelta::getScenario1GridShift(const LAString &ccy) const
 	@return DoubleArray
 */
 DoubleArray
-LARiskConfigurationYieldDelta::getScenario2GridShift(const LAString &ccy) const
+LARiskConfigurationYieldDelta::getScenario2GridShift(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString strBPShifts = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString strBPShifts = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_GRID_BPSHIFT2 + getCurveSuffix(ccy));
 
 	return convertToRateValues(strBPShifts.toToken(MULTI_STATIC_DATA_DELIMITER));
@@ -327,9 +327,9 @@ LARiskConfigurationYieldDelta::getGridCalcBuffer() const
 /*!
     @brief return target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationYieldDelta::getTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_YIELD_DELTA_TARGET_CURRENCY);
@@ -340,9 +340,9 @@ LARiskConfigurationYieldDelta::getTargetCurrencies() const
 /*!
     @brief return calibration target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationYieldDelta::getCalibTargetCurrencies() const
 {
 	if (!isRealCalib())
@@ -359,10 +359,10 @@ LARiskConfigurationYieldDelta::getCalibTargetCurrencies() const
 	@return double
 */
 double
-LARiskConfigurationYieldDelta::getCoefficientRatio1(const LAString &ccy, LAObject& e, LADataInstance& dataInstance) const
+LARiskConfigurationYieldDelta::getCoefficientRatio1(const AQLString &ccy, AQLObject& e, AQLDataInstance& dataInstance) const
 {
-	LAString ircur = ccy;
-	LAString isadjstr = mpRiskStaticData->getStaticData(ircur.toLower() + 
+	AQLString ircur = ccy;
+	AQLString isadjstr = mpRiskStaticData->getStaticData(ircur.toLower() + 
 												STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_ISCOEFFICIENTRATIO1 + getCurveSuffix(ccy));
 	if (isadjstr == AQ_NO_DATA)
 		return 1.0;
@@ -378,10 +378,10 @@ LARiskConfigurationYieldDelta::getCoefficientRatio1(const LAString &ccy, LAObjec
 	@return double
 */
 double
-LARiskConfigurationYieldDelta::getCoefficientRatio2(const LAString &ccy, LAObject& e, LADataInstance& dataInstance) const
+LARiskConfigurationYieldDelta::getCoefficientRatio2(const AQLString &ccy, AQLObject& e, AQLDataInstance& dataInstance) const
 {
-	LAString ircur = ccy;
-	LAString isadjstr = mpRiskStaticData->getStaticData(ircur.toLower() + 
+	AQLString ircur = ccy;
+	AQLString isadjstr = mpRiskStaticData->getStaticData(ircur.toLower() + 
 													STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_ISCOEFFICIENTRATIO2 + getCurveSuffix(ccy));
 	if (isadjstr == AQ_NO_DATA)
 		return 1.0;
@@ -396,11 +396,11 @@ LARiskConfigurationYieldDelta::getCoefficientRatio2(const LAString &ccy, LAObjec
 	@return bool
 */
 bool
-LARiskConfigurationYieldDelta::isRiskCurrencyMode(const LAString &ccy) const
+LARiskConfigurationYieldDelta::isRiskCurrencyMode(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	//if MA_NODATA return false;
-	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_ISRISKCURRENCYMODE);
 	if (proprslt == AQ_NO_DATA)
 		return false;

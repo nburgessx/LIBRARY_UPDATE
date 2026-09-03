@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -18,13 +18,13 @@ namespace validation
     *  @param [in]		isFwdInterp		Boolean that decides if direct interpolation on fwd rates is employed
     *  @return			Zero rate over a given term from the curve's asof date
     */
-    DoubleVector tryMirGetZeroRate1( LADataInstance* dataInstance,
+    DoubleVector tryMirGetZeroRate1( AQLDataInstance* dataInstance,
                                      const DoubleVector& terms,
-                                     const LAString& curveId,
-                                     const LAString& frequency,
-                                     const LAString& dayCount,
-                                     const LAString& interpolation,
-                                     const LAString& curveName,
+                                     const AQLString& curveId,
+                                     const AQLString& frequency,
+                                     const AQLString& dayCount,
+                                     const AQLString& interpolation,
+                                     const AQLString& curveName,
                                      bool isFwdInterp ) ;
 
 
@@ -41,15 +41,15 @@ namespace validation
     *  @param [in]		isFwdInterp		Boolean that decides if direct interpolation on fwd rates is employed
     *  @return			Zero rate over a given term from the curve's asof date
     */
-    DoubleVector tryMirGetZeroRate2( LADataInstance* dataInstance,
-                                     const LAStringVector& terms,
-                                     const LAString& curveId,
-                                     const LAString& frequency,
-                                     const LAString& dayCount,
-                                     const LAString& slidingRule,
-                                     const LAString& calendar,
-                                     const LAString& interpolation,
-                                     const LAString& curveName,
+    DoubleVector tryMirGetZeroRate2( AQLDataInstance* dataInstance,
+                                     const AQLStringVector& terms,
+                                     const AQLString& curveId,
+                                     const AQLString& frequency,
+                                     const AQLString& dayCount,
+                                     const AQLString& slidingRule,
+                                     const AQLString& calendar,
+                                     const AQLString& interpolation,
+                                     const AQLString& curveName,
                                      bool isFwdInterp ) ;
 
 }

@@ -14,9 +14,9 @@
 
 #include "InitializeAQGoogleTest.h"	// DECLARE_TEST_FIXTURE
 #include "CurveInterpolation.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LALinearSplineInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
 
 namespace google_test
 {
@@ -30,7 +30,7 @@ namespace google_test
 
 	TEST_F(TestCurveInterpolation, UNIT_TestStateVariableFwdRate_Polynomial_DegreeZero )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		const std::string curveFrequencyTenor = "3M";
@@ -72,7 +72,7 @@ namespace google_test
 
 	TEST_F( TestCurveInterpolation, UNIT_TestStateVariableFwdRate_LinearInterpolation )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		const std::string curveFrequencyTenor = "3M";
@@ -114,7 +114,7 @@ namespace google_test
 
 	TEST_F(TestCurveInterpolation, UNIT_TestStateVariableFwdRate_Polynomial_DegreeOne )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		const std::string curveFrequencyTenor = "3M";
@@ -156,7 +156,7 @@ namespace google_test
 
 	TEST_F(TestCurveInterpolation, UNIT_TestStateVariableFwdRate_PolynomialDegreeTwo )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		const std::string curveFrequencyTenor = "3M";
@@ -198,7 +198,7 @@ namespace google_test
 
 	TEST_F(TestCurveInterpolation, UNIT_TestStateVariableFwdRate_Polynomial_DegreeThree )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		const std::string curveFrequencyTenor = "3M";
@@ -240,7 +240,7 @@ namespace google_test
 
 	TEST_F(TestCurveInterpolation, UNIT_TestStateVariableFwdRate_Polynomial_DegreeOne_WithToY )
 	{
-		LADate asOfDate("20200101");
+		AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		const std::string curveFrequencyTenor = "3M";
@@ -292,7 +292,7 @@ namespace google_test
 
 	TEST_F(TestCurveInterpolation, UNIT_TestStateVariableDiscountFactor_Polynomial_DegreeThree)
 	{
-		LADate asOfDate("20200101");
+		AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_DF;
 		const std::string curveFrequencyTenor = "3M";
@@ -335,7 +335,7 @@ namespace google_test
 	// Test Fixture Required Here
 	TEST_F(TestCurveInterpolation_BackwardsCompatibility, UNIT_ForwardRates_FromDiscFactors_UsingSplineInterpolation )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::InterpolationEnum interpolationEnum = etrading::SPLINE_INTERPOLATION;
 		const etrading::StateVariableEnum stateVariableEnum = etrading::STATE_VARIABLE_DF;
@@ -343,7 +343,7 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
-		std::shared_ptr<LAInterpolationBase> laInterpolationTable( new LASplineInterpolation() );
+		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
 		laInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
@@ -374,7 +374,7 @@ namespace google_test
 	// Test Fixture Required Here
 	TEST_F(TestCurveInterpolation_BackwardsCompatibility, UNIT_ForwardRates_FromDiscFactors_UsingLinearSplineInterpolation )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::InterpolationEnum interpolationEnum = etrading::LINEARSPLINE_INTERPOLATION;
 		const etrading::StateVariableEnum stateVariableEnum = etrading::STATE_VARIABLE_DF;
@@ -384,7 +384,7 @@ namespace google_test
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
 		// Hybrid Set Method requires the joinDate
-		std::shared_ptr<LAInterpolationBase> laInterpolationTable( new LALinearSplineInterpolation() );
+		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLLinearSplineInterpolation() );
 		laInterpolationTable->set( terms, values, joinDateAsDouble ); 
 
 		etrading::InterpolationPtr interpolationConfig
@@ -415,7 +415,7 @@ namespace google_test
 	// Test Fixture Required Here
 	TEST_F(TestCurveInterpolation_BackwardsCompatibility, UNIT_ForwardRates_FromDiscFactors_UsingLinearInterpolation )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::InterpolationEnum interpolationEnum = etrading::LINEAR_INTERPOLATION;
 		const etrading::StateVariableEnum stateVariableEnum = etrading::STATE_VARIABLE_DF;
@@ -423,7 +423,7 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
-		std::shared_ptr<LAInterpolationBase> laInterpolationTable( new LASplineInterpolation() );
+		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
 		laInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
@@ -454,7 +454,7 @@ namespace google_test
 	// Test Fixture Required Here
 	TEST_F(TestCurveInterpolation_BackwardsCompatibility, CONSISTENCY_DiscountFactors_FromDiscFactors_UsingSplineInterpolation )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::InterpolationEnum interpolationEnum = etrading::SPLINE_INTERPOLATION;
 		const etrading::StateVariableEnum stateVariableEnum = etrading::STATE_VARIABLE_DF;
@@ -462,7 +462,7 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
-		std::shared_ptr<LAInterpolationBase> laInterpolationTable( new LASplineInterpolation() );
+		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
 		laInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
@@ -493,7 +493,7 @@ namespace google_test
 	// Test Fixture Required Here
 	TEST_F(TestCurveInterpolation_BackwardsCompatibility, CONSISTENCY_DiscountFactors_FromDiscFactors_UsingLinearSplineInterpolation )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::InterpolationEnum interpolationEnum = etrading::LINEARSPLINE_INTERPOLATION;
 		const etrading::StateVariableEnum stateVariableEnum = etrading::STATE_VARIABLE_DF;
@@ -503,7 +503,7 @@ namespace google_test
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
 		// Hybrid Set Method requires the joinDate
-		std::shared_ptr<LAInterpolationBase> laInterpolationTable( new LALinearSplineInterpolation() );
+		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLLinearSplineInterpolation() );
 		laInterpolationTable->set( terms, values, joinDateAsDouble ); 
 
 		etrading::InterpolationPtr interpolationConfig
@@ -534,7 +534,7 @@ namespace google_test
 	// Test Fixture Required Here
 	TEST_F(TestCurveInterpolation_BackwardsCompatibility, CONSISTENCY_DiscountFactors_FromDiscFactors_UsingLinearInterpolation )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::InterpolationEnum interpolationEnum = etrading::LINEAR_INTERPOLATION;
 		const etrading::StateVariableEnum stateVariableEnum = etrading::STATE_VARIABLE_DF;
@@ -542,7 +542,7 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 1.0, 0.980392156862745, 0.961168781237985, 0.942322334547044, 0.923845426026514, 0.905730809829916 };
 		
-		std::shared_ptr<LAInterpolationBase> laInterpolationTable( new LASplineInterpolation() );
+		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
 		laInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
@@ -572,7 +572,7 @@ namespace google_test
 	// Test Fixture Required Here
 	TEST_F(TestCurveInterpolation_BackwardsCompatibility, CONSISTENCY_ForwardRates_FromForwardRates_UsingSplineInterpolation )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::InterpolationEnum interpolationEnum = etrading::SPLINE_INTERPOLATION;
 		const etrading::StateVariableEnum stateVariableEnum = etrading::STATE_VARIABLE_FORWARD_RATE;
@@ -580,7 +580,7 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 0.02, 0.02, 0.02, 0.02, 0.02, 0.02 };
 		
-		std::shared_ptr<LAInterpolationBase> laInterpolationTable( new LASplineInterpolation() );
+		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
 		laInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig
@@ -611,7 +611,7 @@ namespace google_test
 	// Test Fixture Required Here
 	TEST_F(TestCurveInterpolation_BackwardsCompatibility, CONSISTENCY_ForwardRates_FromForwardRates_UsingLinearSplineInterpolation )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::InterpolationEnum interpolationEnum = etrading::LINEARSPLINE_INTERPOLATION;
 		const etrading::StateVariableEnum stateVariableEnum = etrading::STATE_VARIABLE_FORWARD_RATE;
@@ -621,7 +621,7 @@ namespace google_test
 		std::vector<double> values = { 0.02, 0.02, 0.02, 0.02, 0.02, 0.02 };
 		
 		// Hybrid Set Method requires the joinDate
-		std::shared_ptr<LAInterpolationBase> laInterpolationTable( new LALinearSplineInterpolation() );
+		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLLinearSplineInterpolation() );
 		laInterpolationTable->set( terms, values, joinDateAsDouble ); 
 
 		etrading::InterpolationPtr interpolationConfig
@@ -652,7 +652,7 @@ namespace google_test
 	// Test Fixture Required Here
 	TEST_F(TestCurveInterpolation_BackwardsCompatibility, CONSISTENCY_ForwardRates_FromForwardRates_UsingLinearInterpolation )
 	{
-		const LADate asOfDate("20200103");
+		const AQLDate asOfDate("20200103");
 		const etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		const etrading::InterpolationEnum interpolationEnum = etrading::LINEAR_INTERPOLATION;
 		const etrading::StateVariableEnum stateVariableEnum = etrading::STATE_VARIABLE_FORWARD_RATE;
@@ -660,7 +660,7 @@ namespace google_test
 		std::vector<double> terms = { 0, 1, 2, 3, 4, 5};
 		std::vector<double> values = { 0.02, 0.02, 0.02, 0.02, 0.02, 0.02 };
 		
-		std::shared_ptr<LAInterpolationBase> laInterpolationTable( new LASplineInterpolation() );
+		std::shared_ptr<AQLInterpolationBase> laInterpolationTable( new AQLSplineInterpolation() );
 		laInterpolationTable->set( terms, values );
 
 		etrading::InterpolationPtr interpolationConfig

@@ -24,10 +24,10 @@
 
 
 #include "LABlackScholesFloorletOptionPayoff.h"
-#include "LABasic.h"
-#include "LADist.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
 #include "LAAnalyticFormula.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 
 using namespace std;
 //================ LABlackScholesFloorletOption ===================================
@@ -51,7 +51,7 @@ LABlackScholesFloorletOption::~LABlackScholesFloorletOption()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LABlackScholesFloorletOption::clone() const
 {
     try 
@@ -60,7 +60,7 @@ LABlackScholesFloorletOption::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -86,29 +86,29 @@ LABlackScholesFloorletOption::getType() const
 }
 
 
-LAStringVector
+AQLStringVector
 LABlackScholesFloorletOption::getOptionTypeVector()
 {
-	LAStringVector ret(1);
-	ret[0] = LAString(PUT);
+	AQLStringVector ret(1);
+	ret[0] = AQLString(PUT);
 	mOptionType = ret;
 	return ret;
 }
 
-LAStringVector 
-LABlackScholesFloorletOption::getBSComponentVector(LAString risktype) const
+AQLStringVector 
+LABlackScholesFloorletOption::getBSComponentVector(AQLString risktype) const
 {
-	LAStringVector ret(1);
-	ret[0] = LAString(BK) + risktype + LAString(PUT);
+	AQLStringVector ret(1);
+	ret[0] = AQLString(BK) + risktype + AQLString(PUT);
 	return ret;
 }
 
 
-LAStringVector 
-LABlackScholesFloorletOption::getBSPayoffComponentVector(LAString risktype) const
+AQLStringVector 
+LABlackScholesFloorletOption::getBSPayoffComponentVector(AQLString risktype) const
 {
-	LAStringVector ret(1);
-	ret[0] = LAString(BKPAYOFF) + risktype + LAString(PUT);
+	AQLStringVector ret(1);
+	ret[0] = AQLString(BKPAYOFF) + risktype + AQLString(PUT);
 	return ret;
 }
 

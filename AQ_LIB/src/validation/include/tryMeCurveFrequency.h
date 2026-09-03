@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -9,8 +9,8 @@ namespace validation
     *  @param [in]		curveIndex			Equivalent names of the curve being built
     *  @param [out]     curveFrequency      The curve frequency i.e the float index frequency
     */
-    const LAString tryMeCurveFrequency( const LAString& curveCollection,
-                                        const LAString& curveIndex );
+    const AQLString tryMeCurveFrequency( const AQLString& curveCollection,
+                                        const AQLString& curveIndex );
 
 }
 

@@ -5,13 +5,13 @@
 #endif
 
 //+++++ INCLUDE +++++
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAInterpolationBase.h"
-#include "LAAlgorithm.h"
-#include "LAGaussLegendre.h"
-#include "LA1DDataSet.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLInterpolationBase.h"
+#include "AQLAlgorithm.h"
+#include "AQLGaussLegendre.h"
+#include "AQL1DDataSet.h"
 #include "LAMathHWFuncTool.h"
 #include "LAMathVolFuncHW.h"
 #include <map>
@@ -35,7 +35,7 @@ public :
 //  LIFECYCLE
                                 //======================================
 	                            // constructor
-    LAMathVolFuncSZDDVolFactor( LAMathHWFuncMR& HW_a_, LAMathHWFuncSigma& HW_s_, LA1DDataSet& HW_theta_);
+    LAMathVolFuncSZDDVolFactor( LAMathHWFuncMR& HW_a_, LAMathHWFuncSigma& HW_s_, AQL1DDataSet& HW_theta_);
                                 //======================================
 	                            //copy constructor
     LAMathVolFuncSZDDVolFactor(const LAMathVolFuncSZDDVolFactor &rhs);
@@ -49,17 +49,17 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;
 	                            //==========================================
 								// Return theta
-	const LAFunctionBase*		getTheta() const {return mpThetaFunc;}
+	const AQLFunctionBase*		getTheta() const {return mpThetaFunc;}
 	                            //==========================================
 
 protected:
-	const LA1DDataSet*			mpThetaFunc;
+	const AQL1DDataSet*			mpThetaFunc;
 	
 };
 

@@ -52,17 +52,17 @@ namespace google_test
 		{
 			const ReadDataFile::Load inputFile(fileStubRateInput);
 
-			LAStringVector curveIndices = inputFile["curveIndices"];
-			LAStringVector curveTenors = inputFile["curveTenors"];
+			AQLStringVector curveIndices = inputFile["curveIndices"];
+			AQLStringVector curveTenors = inputFile["curveTenors"];
 			DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
-			LAStringMatrix swapLVB = inputFile["swapLVB"];
+			AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
 			double stubRate = validation::tryMeProductSwapStubRate(swapLVB, curveIndices, curveTenors, tenorCurveFixings, true);
 
 			CheckTestResultsAndRebaseOnRequest(stubRate, TEST_DIR, fileStubRateOutput, tolerance);
 
 		}
-		catch (const LACoreError& m)
+		catch (const AQLCoreError& m)
 		{
 			std::cout << m.getMsg();
 			ASSERT_FALSE(true);
@@ -83,7 +83,7 @@ namespace google_test
 			const std::string fixingTableName = validation::tryMeLWOLoad(FixingTableObject, etrading::JSON);
 			etrading::DataProvider dataProvider(etrading::ValuationSettings(etrading::fromStringToLVB("GBPLIVE"), etrading::fromStringToLVB(fixingTableName), ""));
 			auto fixingTable = etrading::getFixingTable(fixingTableName, false /* do not throw when missing*/);
-			LADate fixingDate("20200309", "YYYYMMDD");
+			AQLDate fixingDate("20200309", "YYYYMMDD");
 			double expectedFixingRate = fixingTable->getFixingValue(etrading::toGregorianDateFromLADate(fixingDate));
 
 			//2) Get fixing rate from Swap object
@@ -91,7 +91,7 @@ namespace google_test
 
 			std::vector<std::string> columnList = { "FixingDate", "FloatRate" };
 
-			AnyTypeMatrix fixingDateAndFixingRates = validation::tryMeLWOSwapDisplayCashflows(swapName, etrading::fromStringToLVB("GBPLIVE"), LAString("leg2:float"), etrading::fromStringToLVB(fixingTableName), false, columnList).front();
+			AnyTypeMatrix fixingDateAndFixingRates = validation::tryMeLWOSwapDisplayCashflows(swapName, etrading::fromStringToLVB("GBPLIVE"), AQLString("leg2:float"), etrading::fromStringToLVB(fixingTableName), false, columnList).front();
 
 			double fixingRateFromSwap = 0.0;
 			for (auto it : fixingDateAndFixingRates)
@@ -109,7 +109,7 @@ namespace google_test
 			EXPECT_NEAR(fixingRateFromSwap, expectedFixingRate, tolerance);
 
 		}
-		catch (const LACoreError& m)
+		catch (const AQLCoreError& m)
 		{
 			std::cout << m.getMsg();
 			ASSERT_FALSE(true);

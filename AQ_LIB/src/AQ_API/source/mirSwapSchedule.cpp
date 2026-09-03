@@ -48,25 +48,25 @@ SWIG_STRINGMATRIX mirSwapSchedule( const std::string& accrualStartDate,
 	try 
 	{
 		// Input marshalling
-		LAString aStartDate		(accrualStartDate.c_str());
-		LAString aEndDateOrTenor(accrualEndDateOrTenor.c_str());
-		LAString aDaycount		(accrualDaycount.c_str());
-		LAString aFrequency		(accrualFrequency.c_str());
-		LAString aSRule			(accrualSlidingRule.c_str());
-		LAString aCalendar		(accrualCalendar.c_str());
-		LAString pFrequency		(paymentFrequency.c_str());
-		LAString pSRule			(paymentSlidingRule.c_str());
-		LAString pCalendar		(paymentCalendar.c_str());
-		LAString pLag			(paymentLag.c_str());
-		LAString fixingSRule	(fixingSlidingRule.c_str());
-		LAString fixingCal		(fixingCalendar.c_str());
-		LAString fixingLg		(fixingLag.c_str());
-		LAString fixingAdAr		(fixingAdvanceOrArrears.c_str());
-		LAString firstSt		(firstStub.c_str());
-		LAString lastSt			(lastStub.c_str());
-		LAString pRollDay		(paymentRollDay.c_str());
+		AQLString aStartDate		(accrualStartDate.c_str());
+		AQLString aEndDateOrTenor(accrualEndDateOrTenor.c_str());
+		AQLString aDaycount		(accrualDaycount.c_str());
+		AQLString aFrequency		(accrualFrequency.c_str());
+		AQLString aSRule			(accrualSlidingRule.c_str());
+		AQLString aCalendar		(accrualCalendar.c_str());
+		AQLString pFrequency		(paymentFrequency.c_str());
+		AQLString pSRule			(paymentSlidingRule.c_str());
+		AQLString pCalendar		(paymentCalendar.c_str());
+		AQLString pLag			(paymentLag.c_str());
+		AQLString fixingSRule	(fixingSlidingRule.c_str());
+		AQLString fixingCal		(fixingCalendar.c_str());
+		AQLString fixingLg		(fixingLag.c_str());
+		AQLString fixingAdAr		(fixingAdvanceOrArrears.c_str());
+		AQLString firstSt		(firstStub.c_str());
+		AQLString lastSt			(lastStub.c_str());
+		AQLString pRollDay		(paymentRollDay.c_str());
 
-		LAStringMatrix temp = validation::tryMirSwapSchedule(
+		AQLStringMatrix temp = validation::tryMirSwapSchedule(
 										aStartDate, aEndDateOrTenor, aDaycount, aFrequency, aSRule, aCalendar,
 										pFrequency, pSRule, pCalendar, pLag,
 										fixingSRule, fixingCal, fixingLg, fixingAdAr,
@@ -74,7 +74,7 @@ SWIG_STRINGMATRIX mirSwapSchedule( const std::string& accrualStartDate,
 
 		ret = swig::fromStringMatrixToMatrixOfString(temp);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

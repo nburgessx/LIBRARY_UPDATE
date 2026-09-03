@@ -5,9 +5,9 @@
 #endif
 
 #include "LAPriceEventBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LADate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDate.h"
 #include "LAPricePayOffTool.h"
 
 
@@ -38,13 +38,13 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
 
     // execute trigger action
-	virtual void	            doAction(const LADate& actiondate,
+	virtual void	            doAction(const AQLDate& actiondate,
 										 double actiontime,
 										 std::vector<PayOffToolHolderVector>& payoff,
 										 std::vector<PayOffToolHolderVector>& extrapayoff,
@@ -53,22 +53,22 @@ public:
 										 std::vector<PayOffToolHolderIter>& iter);
 
 	// set up this class
-	virtual	void				setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+	virtual	void				setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall = false);
 								
 protected:
 	
 	const LAMathFXEntity*			mpFX;// fx 
-	LAString					mCurrency;// currency after changed
+	AQLString					mCurrency;// currency after changed
 	bool						mIsFixingDate;// fixingdate or fixing term				
-	LADate						mFixingDate;// fixingdate
-	LAString					mFixingTerm;// fixingterm
-	const LAPriceDataCalendar*		mpCalendar;// calendar
-	const LAPriceDataSlidingRule*	mpSlidingRule;// < slidingrule
-	LAFunctionBase*				mpStructureFunc;// < fx rate structure function
+	AQLDate						mFixingDate;// fixingdate
+	AQLString					mFixingTerm;// fixingterm
+	const AQLPriceDataCalendar*		mpCalendar;// calendar
+	const AQLPriceDataSlidingRule*	mpSlidingRule;// < slidingrule
+	AQLFunctionBase*				mpStructureFunc;// < fx rate structure function
 			
 
 };

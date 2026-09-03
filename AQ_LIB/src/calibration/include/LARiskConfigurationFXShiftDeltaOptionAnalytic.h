@@ -29,7 +29,7 @@ class LARiskConfigurationFXShiftDeltaOptionAnalytic : public LARiskConfiguration
 {
 public:
 	// constructor
-	explicit LARiskConfigurationFXShiftDeltaOptionAnalytic(const LAString& risktype);
+	explicit LARiskConfigurationFXShiftDeltaOptionAnalytic(const AQLString& risktype);
 	// destructor
 	virtual ~LARiskConfigurationFXShiftDeltaOptionAnalytic(void);
 	// copy constructor
@@ -39,46 +39,46 @@ public:
 protected:
 	//==============================================
 	// get target names 
-	virtual  LAString getTargetNames(const LAString &fx, LADataInstance &dataInstance)  const {fx; return AQ_NO_DATA;};
+	virtual  AQLString getTargetNames(const AQLString &fx, AQLDataInstance &dataInstance)  const {fx; return AQ_NO_DATA;};
 	//==============================================
 	// create risk object
-	virtual std::vector<std::pair<LAString, std::vector<LAObject *> > > createRiskEntity(LAObjectPool &objPool) const;
+	virtual std::vector<std::pair<AQLString, std::vector<AQLObject *> > > createRiskEntity(AQLObjectPool &objPool) const;
 	//==============================================
 	// setup target names 
-	virtual  void setUpTargetNames(const LAString &ccy, LAObject &e, LADataInstance &dataInstance) const;	
+	virtual  void setUpTargetNames(const AQLString &ccy, AQLObject &e, AQLDataInstance &dataInstance) const;	
 	//==============================================
 	// create scenario1 object 
-	virtual  std::vector<LAObject *> createScenario1Entity(const LAString &fx, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario1Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create scenario2 object
-	virtual  std::vector<LAObject *> createScenario2Entity(const LAString &fx, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario2Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// get coefficient1
-	virtual  LAString  getCoefficient1(const LAString &fx) const;
+	virtual  AQLString  getCoefficient1(const AQLString &fx) const;
 	//==============================================
 	// get risk name
-	virtual  LAString getRiskName(void) const;
+	virtual  AQLString getRiskName(void) const;
 	//==============================================
 	// get ShiftValForOptionAnalytic
-	virtual double getShiftValForOptionAnalytic(const LAString &fx) const ;
+	virtual double getShiftValForOptionAnalytic(const AQLString &fx) const ;
 	//============================================== 
 	// get get FX shift vals
-	virtual  DoubleArray  getBaseShiftVals(const LAString &ccy) const {(void)ccy; return DoubleArray();};
+	virtual  DoubleArray  getBaseShiftVals(const AQLString &ccy) const {(void)ccy; return DoubleArray();};
 	//==============================================
 	// create basescenario object
-	virtual std::vector<LAObject *> createBaseScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, int index) const { (void)ccy, (void)dataInstance, (void)index; return std::vector<LAObject *>(0); }
+	virtual std::vector<AQLObject *> createBaseScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const { (void)ccy, (void)dataInstance, (void)index; return std::vector<AQLObject *>(0); }
 	//==============================================
 	// get baseoutputname
-	virtual  LAString  getBaseOutPutName(const LAString &ccy, int index) const  { (void)ccy, (void)index; return AQ_NO_DATA; }
+	virtual  AQLString  getBaseOutPutName(const AQLString &ccy, int index) const  { (void)ccy, (void)index; return AQ_NO_DATA; }
 	//==============================================
 	// get baseoperator
-	virtual  LAString  getBaseOperator(void) const { return AQ_NO_DATA; }	
+	virtual  AQLString  getBaseOperator(void) const { return AQ_NO_DATA; }	
 	//==============================================
 	// get basecoefficient
-	virtual  LAString  getBaseCoefficient(const LAString &ccy) const  { (void)ccy; return AQ_NO_DATA; }
+	virtual  AQLString  getBaseCoefficient(const AQLString &ccy) const  { (void)ccy; return AQ_NO_DATA; }
 	////==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &ccy, int index) const {(void)index; return LARiskConfigurationFXShiftDelta::getOutPutName1(ccy);}
+	virtual  AQLString  getOutPutName1(const AQLString &ccy, int index) const {(void)index; return LARiskConfigurationFXShiftDelta::getOutPutName1(ccy);}
 	
 };
 

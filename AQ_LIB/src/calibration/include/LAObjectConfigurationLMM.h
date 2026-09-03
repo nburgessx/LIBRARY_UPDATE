@@ -21,7 +21,7 @@
 #include "LADefinitions.h"
 
 
-class LAObjectPool;
+class AQLObjectPool;
 class LAStaticData;
 
 //===================== Class Declare LAObjectConfigurationLMM==================================
@@ -45,7 +45,7 @@ public:
 protected:
 	//==============================================
 	// get model name
-	virtual LAString getModelName() const { return MODEL_LMM; }
+	virtual AQLString getModelName() const { return MODEL_LMM; }
 	//==============================================
 	// get sde timegrid
 	virtual void getSDETimeGrid(DoubleArray &timeGrid) const;

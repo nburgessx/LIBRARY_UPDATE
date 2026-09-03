@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 // Funciton ID of LAMathCorFuncLMM
@@ -16,7 +16,7 @@
 
 
 
-class LAMathCorFuncLMM : public LAFunctionBase
+class LAMathCorFuncLMM : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
@@ -32,7 +32,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;

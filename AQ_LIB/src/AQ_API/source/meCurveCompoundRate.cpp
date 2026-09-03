@@ -1,4 +1,4 @@
-#include "LAString.h"
+#include "AQLString.h"
 #include "TypeUtilities.h"
 #include "meCurveCompoundRate.h"
 #include "tryMeCurveCompoundRate.h"
@@ -48,18 +48,18 @@ std::vector<double> meCurveCompoundRate(const std::vector<std::string>& startDat
 	DateVector tmp_endDates;
 	swig::buildDateVector(tmp_endDates, endDates);
 
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_forecastCurveIndex(forecastCurveIndex.c_str());
-	LAString tmp_frequency(frequency.c_str());
-	LAString tmp_stubType(stubType.c_str());
-	LAString tmp_rollDayInput(rollDayInput.c_str());
-	LAString tmp_calendar(calendar.c_str());
-	LAString tmp_businessDayAdj(businessDayAdj.c_str());
-	LAString tmp_dayCount(dayCount.c_str());
-	LAString tmp_interpolation(interpolation.c_str());
-	LAString tmp_compoundType(compoundType.c_str());
-	LAString tmp_firstStubDate(firstStubDate.c_str());
-	LAString tmp_lastStubDate(lastStubDate.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_forecastCurveIndex(forecastCurveIndex.c_str());
+	AQLString tmp_frequency(frequency.c_str());
+	AQLString tmp_stubType(stubType.c_str());
+	AQLString tmp_rollDayInput(rollDayInput.c_str());
+	AQLString tmp_calendar(calendar.c_str());
+	AQLString tmp_businessDayAdj(businessDayAdj.c_str());
+	AQLString tmp_dayCount(dayCount.c_str());
+	AQLString tmp_interpolation(interpolation.c_str());
+	AQLString tmp_compoundType(compoundType.c_str());
+	AQLString tmp_firstStubDate(firstStubDate.c_str());
+	AQLString tmp_lastStubDate(lastStubDate.c_str());
 
 	ret = validation::tryMeCurveCompoundRate(
 								tmp_startDates,
@@ -119,20 +119,20 @@ double meCurveCompoundRate(const std::string& startDate,
 	double ret;
 
     // Input marshalling
-	LADate tmp_startDate( etrading::stringToDate( startDate ) );
-	LADate tmp_endDate( etrading::stringToDate( endDate ) );
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_forecastCurveIndex(forecastCurveIndex.c_str());
-	LAString tmp_frequency(frequency.c_str());
-	LAString tmp_stubType(stubType.c_str());
-	LAString tmp_rollDayInput(rollDayInput.c_str());
-	LAString tmp_calendar(calendar.c_str());
-	LAString tmp_businessDayAdj(businessDayAdj.c_str());
-	LAString tmp_dayCount(dayCount.c_str());
-	LAString tmp_interpolation(interpolation.c_str());
-	LAString tmp_compoundType(compoundType.c_str());
-	LAString tmp_firstStubDate(firstStubDate.c_str());
-	LAString tmp_lastStubDate(lastStubDate.c_str());
+	AQLDate tmp_startDate( etrading::stringToDate( startDate ) );
+	AQLDate tmp_endDate( etrading::stringToDate( endDate ) );
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_forecastCurveIndex(forecastCurveIndex.c_str());
+	AQLString tmp_frequency(frequency.c_str());
+	AQLString tmp_stubType(stubType.c_str());
+	AQLString tmp_rollDayInput(rollDayInput.c_str());
+	AQLString tmp_calendar(calendar.c_str());
+	AQLString tmp_businessDayAdj(businessDayAdj.c_str());
+	AQLString tmp_dayCount(dayCount.c_str());
+	AQLString tmp_interpolation(interpolation.c_str());
+	AQLString tmp_compoundType(compoundType.c_str());
+	AQLString tmp_firstStubDate(firstStubDate.c_str());
+	AQLString tmp_lastStubDate(lastStubDate.c_str());
 
 	ret = validation::tryMeCurveCompoundRate(
 							tmp_startDate,

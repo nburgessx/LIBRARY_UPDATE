@@ -5,29 +5,29 @@
 #pragma interface
 #endif
 
-#include<LADataInstance.h>
-#include<LACoreTemplateType.h>
-#include<LAString.h>
+#include<AQLDataInstance.h>
+#include<AQLCoreTemplateType.h>
+#include<AQLString.h>
 
 class LAMathCapFloorVolUtility
 {
 public:
-	static void setUpCapFloorVolSurf( LADataInstance* dataInstance, const LAString& capFloorID,
-        LAStringMatrix convMat, const DoubleMatrix& volMat, const DoubleVector& strike,
-        LAStringVector capTerm, const DoubleMatrix& sabrParamMat, LAStringMatrix sabrLimiter,
-        LAString target, LAString interpo, const DoubleVector& weight, bool isSABR,
-		const LAString& curveID, LAString foreCurveName = STD, 
-		LAString dfCurveName = STD);
+	static void setUpCapFloorVolSurf( AQLDataInstance* dataInstance, const AQLString& capFloorID,
+        AQLStringMatrix convMat, const DoubleMatrix& volMat, const DoubleVector& strike,
+        AQLStringVector capTerm, const DoubleMatrix& sabrParamMat, AQLStringMatrix sabrLimiter,
+        AQLString target, AQLString interpo, const DoubleVector& weight, bool isSABR,
+		const AQLString& curveID, AQLString foreCurveName = STD, 
+		AQLString dfCurveName = STD);
 
-    static void outPutCapFloor( LADataInstance* dataInstance, const LAString& capFloorID, LAString capFloorFlag, 
+    static void outPutCapFloor( AQLDataInstance* dataInstance, const AQLString& capFloorID, AQLString capFloorFlag, 
         DoubleVector& ret, size_t& row, size_t& colum);
 
-    static IntVector changeDateFromStringToMonth( const LAStringVector& expiryDate );
+    static IntVector changeDateFromStringToMonth( const AQLStringVector& expiryDate );
 
-    static LAStringVector changeDateFromMonthToString(const IntVector& expiryMonth);
+    static AQLStringVector changeDateFromMonthToString(const IntVector& expiryMonth);
 
-    static double lookUpCapFloorVol( LADataInstance* dataInstance, const LAString& capFloorID,double strike,
-        const LADate& fixingDate );
+    static double lookUpCapFloorVol( AQLDataInstance* dataInstance, const AQLString& capFloorID,double strike,
+        const AQLDate& fixingDate );
 
 private:
     LAMathCapFloorVolUtility(void);

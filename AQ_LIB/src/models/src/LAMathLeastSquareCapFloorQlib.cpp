@@ -98,7 +98,7 @@ void LAMathLeastSquareCapFloorQlib::setWeight( const DoubleVector& weight_)
 {
     if( mWeight.size() != weight_.size() )
     {
-        throw LACoreInvalidData("mWeight.size() != weight_.size()",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("mWeight.size() != weight_.size()",__FILE__,__LINE__);
     }
 
     mWeight = weight_;
@@ -142,7 +142,7 @@ mParamF( DoubleVector(8, 0.0) ),
 mCapFloorLMM(CapFloor_LMM_),
 mCloned(false)
 {
-    if( mn != mCapFloorLMM.size() ) throw LACoreInvalidData( "CapFloor_LMM_ size is not correct!",__FILE__,__LINE__ );
+    if( mn != mCapFloorLMM.size() ) throw AQLCoreInvalidData( "CapFloor_LMM_ size is not correct!",__FILE__,__LINE__ );
 }
 
 LAMathLeastSquareCapFloorVolDiscModelQlib::LAMathLeastSquareCapFloorVolDiscModelQlib( const LAMathLeastSquareCapFloorVolDiscModelQlib& rhs )

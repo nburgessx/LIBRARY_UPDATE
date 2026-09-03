@@ -19,7 +19,7 @@ namespace etrading
 	    boost::mutex instanceProtector;
     }
 
-    InitializeAQETrading::InitializeAQETrading(const bool checkStaticDataLoaded, const bool checkIfCalendarLoaded) : dataInstance_(new LADataInstance())
+    InitializeAQETrading::InitializeAQETrading(const bool checkStaticDataLoaded, const bool checkIfCalendarLoaded) : dataInstance_(new AQLDataInstance())
     {
 	    // moved from LibSetUp/initialize;
 	    libSetUpETrading(dataInstance_.get(), checkIfCalendarLoaded);
@@ -66,16 +66,16 @@ namespace etrading
     // curveCollection:             CurveID, e.g. USDYC
     // throwIfCurveDoesNotExist:    Disallows the creation of a new ycProperties object when true. Defaults to true, which is the typical user-case
     //
-    CurveCalibrationData* InitializeAQETrading::ycStaticDataObject( const LAString& curveCollection, const bool throwIfCurveDoesNotExist )
+    CurveCalibrationData* InitializeAQETrading::ycStaticDataObject( const AQLString& curveCollection, const bool throwIfCurveDoesNotExist )
     {
         // Result Place Holder
         CurveCalibrationData* ycProperties = nullptr;
 
         // Decorated Curve Collection ID used in the object pool
-        LAString ycPropertiesCurveID = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
+        AQLString ycPropertiesCurveID = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
 
         // Get the curve data object holder
-        LAObjectHolder ehCurve = instance_->dataInstance()->getObjectPool().getObject( ycPropertiesCurveID );
+        AQLObjectHolder ehCurve = instance_->dataInstance()->getObjectPool().getObject( ycPropertiesCurveID );
         
         // Get the ycProperties from the object pool or create a new one if is empty / not defined
         if( !ehCurve.isDefined() )

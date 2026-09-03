@@ -59,14 +59,14 @@
 #pragma interface
 #endif
 
-#include "LACoreProcedure.h"
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAOptimumBrent.h"
+#include "AQLCoreProcedure.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLOptimumBrent.h"
 #include "LAModelDynamicsBase.h"
-#include "LADataBasics.h"
-#include "LAObject.h"
+#include "AQLDataBasics.h"
+#include "AQLObject.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathYieldCurvePro.h"
 #include "LAMathAntonovFXOption.h"
@@ -78,10 +78,10 @@
 #define FN_IR_FXDISPLACEDDIFFUSIONCALIBRATION_STR	"fn_ir_fxdisplaceddiffusioncalibration"
 
 
-class LAObject;
-class LADataProcedure;
-class LAPriceDataManager;
-class LADataMultiReference;
+class AQLObject;
+class AQLDataProcedure;
+class AQLPriceDataManager;
+class AQLDataMultiReference;
 class LARatesPathElementCurve;
 ///////////////////////////////////////////////////////////////////////
 /*! 
@@ -89,7 +89,7 @@ class LARatesPathElementCurve;
 
 */
 
-class LAPriceFXDisplacedDiffusionCalibration : public LACoreProcedure
+class LAPriceFXDisplacedDiffusionCalibration : public AQLCoreProcedure
 {
 public:
 //  LIFECYCLE
@@ -100,19 +100,19 @@ public:
     // Check this class ID is the same or not	
 	virtual bool                isTypeOf(function_t id) const;
     // Copy this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
     // Return class type
 	virtual function_t			getType() const;
     // Generate cashlets and trigger/call schedule
-	virtual void	            calibrateModel(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const;
+	virtual void	            calibrateModel(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const;
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
 	// make object for grid calibration data
-			void				makeAttributeForGridEntity(const LADate& basedate,
-															LAObject& object,
-															const LADataProcedure& att) const ;
+			void				makeAttributeForGridEntity(const AQLDate& basedate,
+															AQLObject& object,
+															const AQLDataProcedure& att) const ;
 
 protected:
     // copy constructor
@@ -128,11 +128,11 @@ private:
 			@param[in] _Right another object
 			@return true when right argument maturity date > left argument maturity date
 		*/
-		bool operator()(const LAObject* _Left, const LAObject* _Right) const
+		bool operator()(const AQLObject* _Left, const AQLObject* _Right) const
 		{
-			LADate asof, ldate, rdate;
-			LAString lterm = dynamic_cast<const LADataString&> ((_Left->getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL)).get()).get();
-			LAString rterm = dynamic_cast<const LADataString&> ((_Right->getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL)).get()).get();
+			AQLDate asof, ldate, rdate;
+			AQLString lterm = dynamic_cast<const AQLDataString&> ((_Left->getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL)).get()).get();
+			AQLString rterm = dynamic_cast<const AQLDataString&> ((_Right->getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL)).get()).get();
 			asof.setSystemDate();
 			ldate = LAMathDateCalculations::getDate(asof, lterm, true);
 			rdate = LAMathDateCalculations::getDate(asof, rterm, true);

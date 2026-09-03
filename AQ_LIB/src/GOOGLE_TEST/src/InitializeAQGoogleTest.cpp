@@ -1,13 +1,13 @@
 #include "InitializeAQGoogleTest.h"				// google_test::InitializeAQGoogleTest
 #include "InitializeAQETrading.h"			        // google_test::InitializeAQETrading
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 #include "LACoreDataService.h"
 #include "LAUpdateStaticDataManager.h"
 #include "LADefinitions.h"
 #include "LALinearRatesVolatilityManager.h"
 #include "EnvironmentUtilities.h"
 #include "tryMeUtilitySetup.h"
-#include "LACoreLockControl.h"
+#include "AQLCoreLockControl.h"
 
 // Include Visual Leak Detector in debug builds
 #if defined (_DEBUG) && defined (GTEST32)
@@ -73,10 +73,10 @@ namespace google_test
     InitializeAQGoogleTest::InitializeAQGoogleTest() : dataInstance_( etrading::InitializeAQETrading::instance().dataInstance() )
     {
         // Disable Thread Locking - since we have a local thread guard
-		common::LACoreLockControl::enableThreadLocks( false );
+		common::AQLCoreLockControl::enableThreadLocks( false );
 
         // Initialize the LWO Configuration Files
-        LAString loadLWOConfigStatus = validation::tryMeUtilityLoadConfigurationFiles();
+        AQLString loadLWOConfigStatus = validation::tryMeUtilityLoadConfigurationFiles();
     }
 
     InitializeAQGoogleTest::~InitializeAQGoogleTest()

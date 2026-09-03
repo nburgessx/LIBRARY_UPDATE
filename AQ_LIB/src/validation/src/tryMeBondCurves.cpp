@@ -78,7 +78,7 @@ namespace validation
 			FUNCTION_NAME
 			std::string fileName = functionName;
 			fileName += "_outputs";
-			CreateDataFile outputFile( LAString( fileName.c_str() ) );
+			CreateDataFile outputFile( AQLString( fileName.c_str() ) );
 
 			DoubleVector result(4);
 			result[0] = calibrationResult.parameters_.beta0_;
@@ -153,7 +153,7 @@ namespace validation
 			FUNCTION_NAME
 			std::string fileName = functionName;
 			fileName += "_outputs";
-			CreateDataFile outputFile( LAString( fileName.c_str() ) );
+			CreateDataFile outputFile( AQLString( fileName.c_str() ) );
 
 			DoubleVector result(6);
 			result[0] = calibrationResult.parameters_.beta0_;
@@ -246,7 +246,7 @@ namespace validation
 			// Write out each propertyName and corresponding block of property config data
 			for( unsigned int i = 0; i < dataBlockNames.size(); i++ )
 			{
-				const LAString dataBlockName( dataBlockNames[i].c_str() );
+				const AQLString dataBlockName( dataBlockNames[i].c_str() );
 				const etrading::VariantMatrix& configData = std::get<2>( infoBlocks[ i ] );
 				file.write( dataBlockName, transpose(configData) );
 			}
@@ -312,7 +312,7 @@ namespace validation
 	*  @param[in] bondCurveName		The Bond Curve Name
 	*  @param[in] referenceDate		The forward reference date
 	*/
-	double tryMeBondYield(const std::string& bondCurveName, const LADate& referenceDate )
+	double tryMeBondYield(const std::string& bondCurveName, const AQLDate& referenceDate )
 	{
 	 VALID_EXCEPTION_START
 
@@ -333,7 +333,7 @@ namespace validation
 	*  @param[in] settlementDate	The settlement date to use for bond pricing
 	*  @param[in] bondCurveName		Name of the bond curve
 	*/
-	double tryMeLWOBondPriceFromBondCurve( const std::string& bondObjectName, const LADate& settlementDate, const std::string & bondCurveName )
+	double tryMeLWOBondPriceFromBondCurve( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string & bondCurveName )
 	{
 		VALID_EXCEPTION_START
 
@@ -356,7 +356,7 @@ namespace validation
 	*  @param[in] settlementDate	The settlement date to use for bond pricing
 	*  @param[in] bondCurveName		Name of the bond curve
 	*/
-	double tryMeLWOBondYieldFromBondCurve( const std::string& bondObjectName, const LADate& settlementDate, const std::string & bondCurveName )
+	double tryMeLWOBondYieldFromBondCurve( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string & bondCurveName )
 	{
 		VALID_EXCEPTION_START
 

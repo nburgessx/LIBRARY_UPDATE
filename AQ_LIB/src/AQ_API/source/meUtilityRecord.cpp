@@ -1,4 +1,4 @@
-#include "LAString.h"
+#include "AQLString.h"
 #include "TypeUtilities.h"
 
 #include "meUtilityRecord.h"
@@ -23,10 +23,10 @@ std::string meUtilityRecord( bool enable,
     AQ_API_START
     
     // Input Marshalling 
-    LAString myFolder( folder.c_str() );
+    AQLString myFolder( folder.c_str() );
         
     // Calculate Result
-    LAString result = validation::tryMeUtilityRecord( enable, myFolder, repeat, startIndex, maxIndex );
+    AQLString result = validation::tryMeUtilityRecord( enable, myFolder, repeat, startIndex, maxIndex );
 
     // Return as std::string
     return result.getCString();

@@ -1,7 +1,7 @@
 #include "InitializeAQETrading.h"
 #include "mirGetZeroRate.h"
 #include "TypeUtilities.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "tryMirGetZeroRate.h"
 
 
@@ -31,17 +31,17 @@ double mirGetZeroRate1(double Term,
 		DoubleVector terms;
 		terms.push_back(Term);
 
-		LAString cId(curveId.c_str());
-		LAString freq(frequency.c_str());
-		LAString dayC(dayCount.c_str());
-		LAString interp(interpolation.c_str());
-		LAString cName(curveName.c_str());
+		AQLString cId(curveId.c_str());
+		AQLString freq(frequency.c_str());
+		AQLString dayC(dayCount.c_str());
+		AQLString interp(interpolation.c_str());
+		AQLString cName(curveName.c_str());
 
 		DoubleVector results = validation::tryMirGetZeroRate1(etrading::InitializeAQETrading::instance().dataInstance(), terms, cId, freq, dayC, interp, cName, isFwdInterp);
 		ret = results[0];
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -72,16 +72,16 @@ std::vector<double> mirGetZeroRate1(const std::vector<double>& Terms,
 	try 
 	{
 		// Input marshalling
-		LAString cId(curveId.c_str());
-		LAString freq(frequency.c_str());
-		LAString dayC(dayCount.c_str());
-		LAString interp(interpolation.c_str());
-		LAString cName(curveName.c_str());
+		AQLString cId(curveId.c_str());
+		AQLString freq(frequency.c_str());
+		AQLString dayC(dayCount.c_str());
+		AQLString interp(interpolation.c_str());
+		AQLString cName(curveName.c_str());
 
 		ret = validation::tryMirGetZeroRate1(etrading::InitializeAQETrading::instance().dataInstance(), Terms, cId, freq, dayC, interp, cName, isFwdInterp);
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -114,23 +114,23 @@ double mirGetZeroRate2(const std::string& Term,
 	double ret(0.0);
 	try 
 	{
-		LAStringVector terms;
+		AQLStringVector terms;
 		terms.push_back(Term.c_str());
 
 		// Input marshalling
-		LAString cId(curveId.c_str());
-		LAString freq(frequency.c_str());
-		LAString dayC(dayCount.c_str());
-		LAString interp(interpolation.c_str());
-		LAString slideRule(slidingRule.c_str());
-		LAString cal(calendar.c_str());
-		LAString cName(curveName.c_str());
+		AQLString cId(curveId.c_str());
+		AQLString freq(frequency.c_str());
+		AQLString dayC(dayCount.c_str());
+		AQLString interp(interpolation.c_str());
+		AQLString slideRule(slidingRule.c_str());
+		AQLString cal(calendar.c_str());
+		AQLString cName(curveName.c_str());
 
 		std::vector<double> results = validation::tryMirGetZeroRate2(etrading::InitializeAQETrading::instance().dataInstance(), terms, cId, freq, dayC, slideRule, cal, interp, cName, isFwdInterp);
 		ret = results[0];
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -163,22 +163,22 @@ std::vector<double> mirGetZeroRate2(const std::vector<std::string>& Terms,
 	std::vector<double> ret;
 	try 
 	{
-		LAStringVector terms;
+		AQLStringVector terms;
 		swig::buildStringVector(terms, Terms);
 
 		// Input marshalling
-		LAString cId(curveId.c_str());
-		LAString freq(frequency.c_str());
-		LAString dayC(dayCount.c_str());
-		LAString interp(interpolation.c_str());
-		LAString slideRule(slidingRule.c_str());
-		LAString cal(calendar.c_str());
-		LAString cName(curveName.c_str());
+		AQLString cId(curveId.c_str());
+		AQLString freq(frequency.c_str());
+		AQLString dayC(dayCount.c_str());
+		AQLString interp(interpolation.c_str());
+		AQLString slideRule(slidingRule.c_str());
+		AQLString cal(calendar.c_str());
+		AQLString cName(curveName.c_str());
 
 		ret = validation::tryMirGetZeroRate2(etrading::InitializeAQETrading::instance().dataInstance(), terms, cId, freq, dayC, slideRule, cal, interp, cName, isFwdInterp);
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

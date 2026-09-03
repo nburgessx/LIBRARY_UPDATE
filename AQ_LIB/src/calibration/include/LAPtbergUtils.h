@@ -19,24 +19,24 @@
 #endif
 
 
-#include "LADataInstance.h"
-#include "LAFunctionManager.h"
-#include "LACoreTemplateType.h"
-#include "LAAlgorithm.h"
-#include "LADataBasics.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLDataInstance.h"
+#include "AQLFunctionManager.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLAlgorithm.h"
+#include "AQLDataBasics.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataCalendar.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathPathEntity.h"
 #include "LAMathVolatility.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLPriceDataDayCount.h"
 #include "LADefinitions.h"
 #include "LACoreDataService.h"
 #include "LAStaticDataManager.h"
 #include "LAFileAccessor.h"
 #include "LAMathVolFuncFX.h"
 #include "LAPriceFXVolatility.h"
-#include "LAConstant.h"
+#include "AQLConstant.h"
 
 
 

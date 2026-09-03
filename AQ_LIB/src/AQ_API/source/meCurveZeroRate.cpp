@@ -26,10 +26,10 @@ double meCurveZeroRatesFromYearFractions(double yearFraction,
 	DoubleVector yearFractions;
 	yearFractions.push_back(yearFraction);
 
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
-	LAString tmp_dayCount(dayCount.c_str());
-	LAString tmp_frequency(frequency.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_dayCount(dayCount.c_str());
+	AQLString tmp_frequency(frequency.c_str());
 
 	DoubleVector results = validation::tryMeCurveZeroRatesFromYearFractions(yearFractions,
 																				tmp_curveCollection, 
@@ -60,10 +60,10 @@ std::vector<double> meCurveZeroRatesFromYearFractions(const std::vector<double>&
 	std::vector<double> ret;
 	
 	// Input marshalling
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
-	LAString tmp_dayCount(dayCount.c_str());
-	LAString tmp_frequency(frequency.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_dayCount(dayCount.c_str());
+	AQLString tmp_frequency(frequency.c_str());
 
 	ret = validation::tryMeCurveZeroRatesFromYearFractions(yearFractions,
 																tmp_curveCollection, 
@@ -96,16 +96,16 @@ double meCurveZeroRatesFromTenors(const std::string& tenor,
     AQ_API_START
 	double ret(0.0);
 	
-	LAStringVector tenors;
+	AQLStringVector tenors;
 	tenors.push_back(tenor.c_str());
 
 	// Input marshalling
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
-	LAString tmp_dayCount(dayCount.c_str());
-	LAString tmp_frequency(frequency.c_str());
-	LAString tmp_calendar(calendar.c_str());
-	LAString tmp_businessDayAdj(businessDayAdj.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_dayCount(dayCount.c_str());
+	AQLString tmp_frequency(frequency.c_str());
+	AQLString tmp_calendar(calendar.c_str());
+	AQLString tmp_businessDayAdj(businessDayAdj.c_str());
 
 	std::vector<double> results = validation::tryMeCurveZeroRatesFromTenors(tenors,
 																				tmp_curveCollection, 
@@ -141,16 +141,16 @@ std::vector<double> meCurveZeroRatesFromTenors(const std::vector<std::string>& t
     AQ_API_START
 	std::vector<double> ret;
 	
-	LAStringVector tmp_tenors;
+	AQLStringVector tmp_tenors;
 	swig::buildStringVector(tmp_tenors, tenors);
 
 	// Input marshalling
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
-	LAString tmp_dayCount(dayCount.c_str());
-	LAString tmp_frequency(frequency.c_str());
-	LAString tmp_calendar(calendar.c_str());
-	LAString tmp_businessDayAdj(businessDayAdj.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_dayCount(dayCount.c_str());
+	AQLString tmp_frequency(frequency.c_str());
+	AQLString tmp_calendar(calendar.c_str());
+	AQLString tmp_businessDayAdj(businessDayAdj.c_str());
 
 	ret = validation::tryMeCurveZeroRatesFromTenors(tmp_tenors,
 														tmp_curveCollection, 

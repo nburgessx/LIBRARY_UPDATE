@@ -25,17 +25,17 @@ namespace validation
 	*  @param [in]		shift			shift size of the Shifted SABR
 	*  @param [in]		volType			volType of the SABR, default to lognormal
 	*/
-	double tryMeSABRGetPrem(const LAString& expiryPoint,
-		const LAString& tenorPoint,
+	double tryMeSABRGetPrem(const AQLString& expiryPoint,
+		const AQLString& tenorPoint,
 		double strike,
 		int sign,
-		const LAString& forwardID,
-		const LAString& annuityID,
-		const LAString& alphaID,
-		const LAString& betaID,
-		const LAString& nuID,
-		const LAString& rhoID,
-		const LAString& approxMethod,
+		const AQLString& forwardID,
+		const AQLString& annuityID,
+		const AQLString& alphaID,
+		const AQLString& betaID,
+		const AQLString& nuID,
+		const AQLString& rhoID,
+		const AQLString& approxMethod,
 		double shift,
 		const std::string& volType)
 	{
@@ -44,7 +44,7 @@ namespace validation
 		// Record Inputs for logs, tests and playback
 		RECORD_INPUTS(expiryPoint, tenorPoint, strike, sign, forwardID, annuityID, betaID, nuID, rhoID, approxMethod, shift);
 				
-		LAString sabrMethod = approxMethod;
+		AQLString sabrMethod = approxMethod;
 		if (sabrMethod.size() == 0)
 		{
 			sabrMethod = APPROXIMATION_HAGAN;

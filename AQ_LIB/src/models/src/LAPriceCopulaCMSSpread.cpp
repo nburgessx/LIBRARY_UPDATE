@@ -5,11 +5,11 @@
 #endif
 
 #include "LAPriceCopulaCMSSpread.h"
-#include "LABivariateGaussianCopula.h"
-#include "LABivariateStudentTCopula.h"
-#include "LABivariatePowerCopula.h"
-#include "LAGaussLegendre.h"
-#include "LANormalDistribution.h"
+#include "AQLBivariateGaussianCopula.h"
+#include "AQLBivariateStudentTCopula.h"
+#include "AQLBivariatePowerCopula.h"
+#include "AQLGaussLegendre.h"
+#include "AQLNormalDistribution.h"
 #include "LAMathAnalyticalFormula.h"
 
 //================ CopulaCMSSpread ===================================
@@ -23,8 +23,8 @@ double LAPriceCopulaCMSSpread::Price(double t, double K, bool isCall, double alp
                                 string marginalType, string copulaType, const vector<double>& copulaPars)
 {
     // Calibrate marginals
-    LAUnivariateDistribution* marginal1 = 0;
-    LAUnivariateDistribution* marginal2 = 0;
+    AQLUnivariateDistribution* marginal1 = 0;
+    AQLUnivariateDistribution* marginal2 = 0;
 
     if (marginalType == "Gaussian")
     {
@@ -32,7 +32,7 @@ double LAPriceCopulaCMSSpread::Price(double t, double K, bool isCall, double alp
         marginal2 = Calibrate(t, cmsFwd2, cmsATMCall2, marginalType);
     }
     else
-        throw LACoreInvalidData(("Unknown marginal type: " + marginalType).c_str(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(("Unknown marginal type: " + marginalType).c_str(), __FILE__, __LINE__);
 
     double price = Price(alpha, beta, K, isCall, marginal1, marginal2, copulaType, copulaPars);
 
@@ -47,8 +47,8 @@ double LAPriceCopulaCMSSpread::Price(double t, double K, bool isCall, double alp
 {
     // Create Gaussian marginals
     double sqrtt = sqrt(t);
-    LAUnivariateDistribution* marginal1 = new LANormalDistribution(cmsFwd1, vol1 * sqrtt);
-    LAUnivariateDistribution* marginal2 = new LANormalDistribution(cmsFwd2, vol2 * sqrtt);
+    AQLUnivariateDistribution* marginal1 = new AQLNormalDistribution(cmsFwd1, vol1 * sqrtt);
+    AQLUnivariateDistribution* marginal2 = new AQLNormalDistribution(cmsFwd2, vol2 * sqrtt);
 
     double price = Price(alpha, beta, K, isCall, marginal1, marginal2, copulaType, copulaPars);
 
@@ -58,7 +58,7 @@ double LAPriceCopulaCMSSpread::Price(double t, double K, bool isCall, double alp
 }
 
 double LAPriceCopulaCMSSpread::Price(double alpha, double beta, double K, bool isCall,
-                                LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
+                                AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
                                 string copulaType, const vector<double>& copulaPars)
 {
     double price;
@@ -71,17 +71,17 @@ double LAPriceCopulaCMSSpread::Price(double alpha, double beta, double K, bool i
 }
 
 double LAPriceCopulaCMSSpread::Call(double alpha, double beta, double K,
-                               LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
+                               AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
                                string copulaType, const vector<double>& copulaPars)
 {
-    LABivariateCopula* copula = Copula(copulaType, copulaPars);
+    AQLBivariateCopula* copula = Copula(copulaType, copulaPars);
 
     // Pricing
     int nPoints = 16, nSplits = 10;
-    LAGaussLegendre integrator(nPoints);
+    AQLGaussLegendre integrator(nPoints);
     double lwBound, upBound;
     // V1
-    LAFunction* v1Integrand;
+    AQLFunction* v1Integrand;
     if (beta > 0.0)
         v1Integrand = new MVVIntegrand(marginal1, marginal2, copula, alpha, beta, K, v1Right);
     else
@@ -91,7 +91,7 @@ double LAPriceCopulaCMSSpread::Call(double alpha, double beta, double K,
     upBound = marginal1->Bound(mConfidence, Upper);
     double V1 = integrator.IntegrateByEqualIntervals(*v1Integrand, lwBound, upBound, nSplits);
     // V2
-    LAFunction* v2Integrand;
+    AQLFunction* v2Integrand;
     if (alpha > 0.0)
         v2Integrand = new MVVIntegrand(marginal1, marginal2, copula, alpha, beta, K, v2Right);
     else
@@ -110,42 +110,42 @@ double LAPriceCopulaCMSSpread::Call(double alpha, double beta, double K,
     return callPrice;
 }
 
-LAUnivariateDistribution* LAPriceCopulaCMSSpread::Calibrate(double t, double cmsFwd, double atmCall, string marginalType)
+AQLUnivariateDistribution* LAPriceCopulaCMSSpread::Calibrate(double t, double cmsFwd, double atmCall, string marginalType)
 {
-    LAUnivariateDistribution* marginal;
+    AQLUnivariateDistribution* marginal;
     if (marginalType == "Gaussian")
     {
         double mean = cmsFwd;
         LAMathAnalyticalFormula formula;
         double normalStDev = formula.BlackImplVolDD(atmCall, cmsFwd, cmsFwd, 1, 0);
-        marginal = new LANormalDistribution(mean, normalStDev);
+        marginal = new AQLNormalDistribution(mean, normalStDev);
     }
     else
-        throw LACoreInvalidData(("Unknown marginal type: " + marginalType).c_str(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(("Unknown marginal type: " + marginalType).c_str(), __FILE__, __LINE__);
 
     return marginal;
 }
 
-LABivariateCopula* LAPriceCopulaCMSSpread::Copula(string type, const vector<double>& parameters)
+AQLBivariateCopula* LAPriceCopulaCMSSpread::Copula(string type, const vector<double>& parameters)
 {
-    LABivariateCopula* copula;
+    AQLBivariateCopula* copula;
     if (type == "Gaussian")
-        copula = new LABivariateGaussianCopula(parameters[0]);
+        copula = new AQLBivariateGaussianCopula(parameters[0]);
     else if (type == "StudentT")
-        copula = new LABivariateStudentTCopula(parameters[0], parameters[1]);
+        copula = new AQLBivariateStudentTCopula(parameters[0], parameters[1]);
     else if (type == "PowerGaussian")
-        copula = new LABivariatePowerGaussianCopula(parameters[0], parameters[1], parameters[2]);
+        copula = new AQLBivariatePowerGaussianCopula(parameters[0], parameters[1], parameters[2]);
     else if (type == "PowerStudentT")
-        copula = new LABivariatePowerStudentTCopula(parameters[0], parameters[1], parameters[2], parameters[3]);
+        copula = new AQLBivariatePowerStudentTCopula(parameters[0], parameters[1], parameters[2], parameters[3]);
     else
-        throw LACoreInvalidData(("Unknown copula type: " + type).c_str(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(("Unknown copula type: " + type).c_str(), __FILE__, __LINE__);
 
     return copula;
 }
 
 //================ Non-member helpers ===================================
-double LAPriceCopulaSpreadUtility::V1Right(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                                      LABivariateCopula* copula, double alpha, double beta, double K)
+double LAPriceCopulaSpreadUtility::V1Right(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                                      AQLBivariateCopula* copula, double alpha, double beta, double K)
 {
     double term1 = alpha * S - K;
     double term2 = marginal1->Density(S);
@@ -153,8 +153,8 @@ double LAPriceCopulaSpreadUtility::V1Right(double S, LAUnivariateDistribution* m
     return term1 * term2 * term3;
 }
 
-double LAPriceCopulaSpreadUtility::V1Left(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                                     LABivariateCopula* copula, double alpha, double beta, double K)
+double LAPriceCopulaSpreadUtility::V1Left(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                                     AQLBivariateCopula* copula, double alpha, double beta, double K)
 {
     double term1 = alpha * S - K;
     double term2 = marginal1->Density(S);
@@ -162,8 +162,8 @@ double LAPriceCopulaSpreadUtility::V1Left(double S, LAUnivariateDistribution* ma
     return term1 * term2 * term3;
 }
 
-double LAPriceCopulaSpreadUtility::V2Right(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                                      LABivariateCopula* copula, double alpha, double beta, double K)
+double LAPriceCopulaSpreadUtility::V2Right(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                                      AQLBivariateCopula* copula, double alpha, double beta, double K)
 {
     double term1 = S;
     double term2 = marginal2->Density(S);
@@ -171,8 +171,8 @@ double LAPriceCopulaSpreadUtility::V2Right(double S, LAUnivariateDistribution* m
     return term1 * term2 * term3;
 }
 
-double LAPriceCopulaSpreadUtility::V2Left(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                                     LABivariateCopula* copula, double alpha, double beta, double K)
+double LAPriceCopulaSpreadUtility::V2Left(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                                     AQLBivariateCopula* copula, double alpha, double beta, double K)
 {
     double term1 = S;
     double term2 = marginal2->Density(S);
@@ -180,16 +180,16 @@ double LAPriceCopulaSpreadUtility::V2Left(double S, LAUnivariateDistribution* ma
     return term1 * term2 * term3;
 }
 
-double LAPriceCopulaSpreadUtility::FirstDiff(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                                        LABivariateCopula* copula, double alpha, double beta, double K)
+double LAPriceCopulaSpreadUtility::FirstDiff(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                                        AQLBivariateCopula* copula, double alpha, double beta, double K)
 {
     double f1 = marginal1->Cumulative(S);
     double f2 = marginal2->Cumulative((alpha * S - K) / beta);
     return copula->Diff(f1, f2, First);
 }
 
-double LAPriceCopulaSpreadUtility::SecondDiff(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                                         LABivariateCopula* copula, double alpha, double beta, double K)
+double LAPriceCopulaSpreadUtility::SecondDiff(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                                         AQLBivariateCopula* copula, double alpha, double beta, double K)
 {
     double f1 = marginal1->Cumulative((beta * S + K) / alpha);
     double f2 = marginal2->Cumulative(S);
@@ -197,8 +197,8 @@ double LAPriceCopulaSpreadUtility::SecondDiff(double S, LAUnivariateDistribution
 }
 
 //================ VIntegrand ===================================
-MVVIntegrand::MVVIntegrand(LAUnivariateDistribution* marginal1_, LAUnivariateDistribution* marginal2_,
-                           LABivariateCopula* copula_, double alpha_, double beta_, double K_, VType vType_)
+MVVIntegrand::MVVIntegrand(AQLUnivariateDistribution* marginal1_, AQLUnivariateDistribution* marginal2_,
+                           AQLBivariateCopula* copula_, double alpha_, double beta_, double K_, VType vType_)
 {
     mMarginal1 = marginal1_;
     mMarginal2 = marginal2_;
@@ -221,7 +221,7 @@ double MVVIntegrand::operator()(double x) const
     else if (mVType == v2Left)
         v = LAPriceCopulaSpreadUtility::V2Left(x, mMarginal1, mMarginal2, mCopula, mAlpha, mBeta, mK);
     else
-        throw LACoreInvalidData("Unknown integrand type in CMS Spread copula", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Unknown integrand type in CMS Spread copula", __FILE__, __LINE__);
 
     return v;
 }

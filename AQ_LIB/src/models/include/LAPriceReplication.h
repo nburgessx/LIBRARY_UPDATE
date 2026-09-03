@@ -5,7 +5,7 @@
 #pragma interface
 #endif
 //////////
-#include "LAFunction.h"
+#include "AQLFunction.h"
 #include "LAPriceSwaptionCalculator.h"
 
 using namespace std;
@@ -47,7 +47,7 @@ private:
 };
 
 //================ MVReplicationIntegrand ===================================
-class MVReplicationIntegrand: public LAFunction
+class MVReplicationIntegrand: public AQLFunction
 {
 public:
     MVReplicationIntegrand(double T_, bool isCall_, LAPriceSwaptionCalculator* swpnCalculator_);
@@ -72,6 +72,6 @@ struct ReplicationConfig
     int nPoints;
 };
 
-ReplicationConfig GetReplicationConfig(const LAStringMatrix& calibrationConfig);
+ReplicationConfig GetReplicationConfig(const AQLStringMatrix& calibrationConfig);
 
 #endif 

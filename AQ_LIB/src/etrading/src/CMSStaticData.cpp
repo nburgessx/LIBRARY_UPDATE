@@ -32,11 +32,11 @@ namespace etrading
 																, swapGeneratorName2_( rhs.swapGeneratorName2_ ), swapIndexMaturity2_( rhs.swapIndexMaturity2_ )
     {}
 
-	LAString CMSStaticData::getSwapGeneratorName1() const
+	AQLString CMSStaticData::getSwapGeneratorName1() const
     {
         return swapGeneratorName1_;
     }
-	LAString CMSStaticData::getSwapIndexMaturity1() const
+	AQLString CMSStaticData::getSwapIndexMaturity1() const
     {
         return swapIndexMaturity1_;
     }
@@ -45,11 +45,11 @@ namespace etrading
 		return swapIndexMultiplier1_;
 	}
 
-	LAString CMSStaticData::getSwapGeneratorName2() const
+	AQLString CMSStaticData::getSwapGeneratorName2() const
     {
         return swapGeneratorName2_;
     }
-	LAString CMSStaticData::getSwapIndexMaturity2() const
+	AQLString CMSStaticData::getSwapIndexMaturity2() const
     {
         return swapIndexMaturity2_;
     }

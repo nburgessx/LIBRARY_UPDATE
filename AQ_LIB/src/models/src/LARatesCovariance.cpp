@@ -15,12 +15,12 @@
 
 #include "LARatesCovariance.h"
 
-#include "LAFunctionBase.h"
-#include "LAConstant.h"
-#include "LA1DDataSet.h"
-#include "LACombinationFunc.h"
-#include "LALinearInterpolation.h"
-#include "LAStepInterpolation.h"
+#include "AQLFunctionBase.h"
+#include "AQLConstant.h"
+#include "AQL1DDataSet.h"
+#include "AQLCombinationFunc.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLStepInterpolation.h"
 
 
 using namespace std;
@@ -121,7 +121,7 @@ LARatesCovariance::getIntegratedCov (unsigned int i, unsigned int j, double t1, 
 			return vol * vol2 * (*mCorrelation[i][j])(t1) * (t2 - t1);
 		if (mCorrelation[i][j]->isTypeOf(FN_1DDATASET))
 		{ 
-			const LA1DDataSet* pCor = dynamic_cast<const LA1DDataSet*>(mCorrelation[i][j]);
+			const AQL1DDataSet* pCor = dynamic_cast<const AQL1DDataSet*>(mCorrelation[i][j]);
             if(pCor->getInterpolationType() == FN_STEPINTERPOLATION || pCor->getInterpolationType() == FN_LINEARINTERPOLATION)
 				return vol * vol2 * pCor->integral(t1, t2);
 			else 
@@ -132,9 +132,9 @@ LARatesCovariance::getIntegratedCov (unsigned int i, unsigned int j, double t1, 
 	
 	if (mVolatility[i]->isTypeOf(FN_1DDATASET) && mVolatility[j]->isTypeOf(FN_1DDATASET))
 	{
-		const LA1DDataSet* pVol = dynamic_cast<const LA1DDataSet*>(mVolatility[i]);
-		const LA1DDataSet* pVol2 = dynamic_cast<const LA1DDataSet*>(mVolatility[j]);
-		vector<const LA1DDataSet*> funcs(2);
+		const AQL1DDataSet* pVol = dynamic_cast<const AQL1DDataSet*>(mVolatility[i]);
+		const AQL1DDataSet* pVol2 = dynamic_cast<const AQL1DDataSet*>(mVolatility[j]);
+		vector<const AQL1DDataSet*> funcs(2);
 		funcs[0] = pVol;
 		funcs[1] = pVol2;
 		if (i == j) return integral(t1, t2, funcs);
@@ -142,7 +142,7 @@ LARatesCovariance::getIntegratedCov (unsigned int i, unsigned int j, double t1, 
 			return integral(t1, t2, funcs) * (*mCorrelation[i][j])(t1);
 		else if (mCorrelation[i][j]->isTypeOf(FN_1DDATASET))
 		{
-			funcs.push_back(dynamic_cast<const LA1DDataSet*>(mCorrelation[i][j]));
+			funcs.push_back(dynamic_cast<const AQL1DDataSet*>(mCorrelation[i][j]));
 			return integral(t1, t2, funcs);
 		}
 //		else return mGL.integrate((*mVolatility[i]) * (*mVolatility[j]) * (*mCorrelation[i][j]), t1, t2);
@@ -193,7 +193,7 @@ LARatesCovariance::calcIntegratedCov(const DoubleArray& timegrid, const DoubleAr
 	if (pReset_timegrid != 0 && pReset_timegrid->size() != matsize)
 	{
 		//error
-		throw LACoreInvalidData("reset time size and volatility num are not same", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("reset time size and volatility num are not same", __FILE__, __LINE__);
 	}
 	
 
@@ -221,13 +221,13 @@ LARatesCovariance::calcIntegratedCov(const DoubleArray& timegrid, const DoubleAr
 }
 
 /*!
-	@brief calculte integral of product of LA1DDataSet functions
+	@brief calculte integral of product of AQL1DDataSet functions
 	@param[in] t1 left edge of integral region
 	@param[in] t2 right edge of integral region
-	@param[in] funcs vector of LA1DDataSet functions
+	@param[in] funcs vector of AQL1DDataSet functions
 */
 double
-LARatesCovariance::integral(double t1, double t2, vector<const LA1DDataSet*>& funcs) const
+LARatesCovariance::integral(double t1, double t2, vector<const AQL1DDataSet*>& funcs) const
 {
 	if (t1 > t2) return integral (t2, t1, funcs);
 	else if (t1 == t2) return 0.0;
@@ -272,7 +272,7 @@ LARatesCovariance::integral(double t1, double t2, vector<const LA1DDataSet*>& fu
 		if (funcs.size() == 1)
 			return funcs[0]->integral(t1, t2, &mGL); 
 
-		LACombinationMethod combi = (*funcs[0]) * (*funcs[1]);
+		AQLCombinationMethod combi = (*funcs[0]) * (*funcs[1]);
 		for (unsigned int i = 2; i < func_num; i++)
 			combi = combi * (*funcs[i]);
 		

@@ -16,7 +16,7 @@ namespace etrading
         double coupon;
         double floatRate;
         double spreadAmount;
-		LADate paymentDate;
+		AQLDate paymentDate;
 		double notional;
 	};
 
@@ -31,7 +31,7 @@ namespace etrading
     {
     public:
         Cashflow();
-        Cashflow(const PayReceiveEnum& payReceive, const LADate& fixingDate, const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, double accrualYearFraction, const LADate& paymentDate, 
+        Cashflow(const PayReceiveEnum& payReceive, const AQLDate& fixingDate, const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, double accrualYearFraction, const AQLDate& paymentDate, 
                 double notional, double leverage, double couponMultiplier, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType, const CashFlowBespokeInfo& bespokeInfo);
         virtual ~Cashflow() {}
 
@@ -62,28 +62,28 @@ namespace etrading
 		double getCouponMultiplier() const;
 		double getAccrualDays() const;
 		double getAccrualYearFraction() const;
-		const LADate& getAccrualStartDate() const;
-		const LADate& getAccrualEndDate() const;
-		const LADate& getFixingDate() const;
-		const LADate& getPaymentDate() const;
+		const AQLDate& getAccrualStartDate() const;
+		const AQLDate& getAccrualEndDate() const;
+		const AQLDate& getFixingDate() const;
+		const AQLDate& getPaymentDate() const;
 		double getNotionalExchange() const;
 		double getFwdFxRate() const;
 
         void setNotional(double notional);
         void setNotionalExchange(double notionalExchange);
 		void setFwdFxRate(double fwdFxRate);
-		void setFxFixingDate(const LADate& fxFixingDate);
+		void setFxFixingDate(const AQLDate& fxFixingDate);
 
-		void setPaymentDate(const LADate& paymentDate);
+		void setPaymentDate(const AQLDate& paymentDate);
         bool isUpfrontCashflow() const;
 
-        void setFixingEndDate(const LADate& fixingEndDate); 
-        const LADate& getFixingEndDate() const;
+        void setFixingEndDate(const AQLDate& fixingEndDate); 
+        const AQLDate& getFixingEndDate() const;
 
 		FrequencyEnum getPaymentFreqEnum() const;
 
 		CashFlowBespokeInfo bespokeInfo() const { return bespokeInfo_; };
-		LADate getFxFixingDate() const { return fxFixingDate_; };
+		AQLDate getFxFixingDate() const { return fxFixingDate_; };
 
 		bool isLastCashflow() const;
 
@@ -91,18 +91,18 @@ namespace etrading
 		void setCashflowTypeToLast();
 
         //dummy methods, just to avoid downcasting
-		virtual double getFixedRate() const { throw LACoreInvalidData("#Error: getFixedRate not supported", __FILE__, __LINE__); };
-   		virtual double getSpread() const { throw LACoreInvalidData("#Error: getSpread not supported", __FILE__, __LINE__); };
-   		virtual void setSpread(double spread) { throw LACoreInvalidData("#Error: setSpread not supported", __FILE__, __LINE__); };
-   		virtual double getAmount() const { throw LACoreInvalidData("#Error: getAmount not supported", __FILE__, __LINE__); };
+		virtual double getFixedRate() const { throw AQLCoreInvalidData("#Error: getFixedRate not supported", __FILE__, __LINE__); };
+   		virtual double getSpread() const { throw AQLCoreInvalidData("#Error: getSpread not supported", __FILE__, __LINE__); };
+   		virtual void setSpread(double spread) { throw AQLCoreInvalidData("#Error: setSpread not supported", __FILE__, __LINE__); };
+   		virtual double getAmount() const { throw AQLCoreInvalidData("#Error: getAmount not supported", __FILE__, __LINE__); };
 
-		virtual double getSurvivalProbability() const { throw LACoreInvalidData("#Error: getSurvivalProbability not supported", __FILE__, __LINE__); };
-		virtual double getMarginalDefaultProbability() const { throw LACoreInvalidData("#Error: getMarginalDefaultProbability not supported", __FILE__, __LINE__); };
-		virtual double getCdsSpread() const { throw LACoreInvalidData("#Error: getCdsSpread not supported", __FILE__, __LINE__); };
-		virtual double getPremiumCoupon() const { throw LACoreInvalidData("#Error: getPremiumCoupon not supported", __FILE__, __LINE__); };
-		virtual double getAccrualOnDefaultCoupon() const { throw LACoreInvalidData("#Error: getAccrualOnDefaultCoupon not supported", __FILE__, __LINE__); };
-		virtual const LADate& getBondExDividendDate() const { throw LACoreInvalidData("#Error: getBondExDividendDate not supported", __FILE__, __LINE__); };
-		virtual double getBondTrueYieldYearFraction() const { throw LACoreInvalidData("#Error: getBondTrueYieldYearFraction not supported", __FILE__, __LINE__); };
+		virtual double getSurvivalProbability() const { throw AQLCoreInvalidData("#Error: getSurvivalProbability not supported", __FILE__, __LINE__); };
+		virtual double getMarginalDefaultProbability() const { throw AQLCoreInvalidData("#Error: getMarginalDefaultProbability not supported", __FILE__, __LINE__); };
+		virtual double getCdsSpread() const { throw AQLCoreInvalidData("#Error: getCdsSpread not supported", __FILE__, __LINE__); };
+		virtual double getPremiumCoupon() const { throw AQLCoreInvalidData("#Error: getPremiumCoupon not supported", __FILE__, __LINE__); };
+		virtual double getAccrualOnDefaultCoupon() const { throw AQLCoreInvalidData("#Error: getAccrualOnDefaultCoupon not supported", __FILE__, __LINE__); };
+		virtual const AQLDate& getBondExDividendDate() const { throw AQLCoreInvalidData("#Error: getBondExDividendDate not supported", __FILE__, __LINE__); };
+		virtual double getBondTrueYieldYearFraction() const { throw AQLCoreInvalidData("#Error: getBondTrueYieldYearFraction not supported", __FILE__, __LINE__); };
 
 
 		static std::vector<std::string> bespokeCashflowLVBKeys()
@@ -134,7 +134,7 @@ namespace etrading
         PayReceiveEnum payReceive_;
 
         // These fields are related to MTM xccy swap, user need to select a leg that will be notional adjusted by the fwdFxRate based on t he fxFixingDate
-		LADate fxFixingDate_;		
+		AQLDate fxFixingDate_;		
    	    double fwdFxRate_; 
 
         // previous coupons based on the paymentDate
@@ -150,18 +150,18 @@ namespace etrading
 		double leverage_;
 		// Note: couponMultipler is NOT applied to notionalExchange, but leverage is.
 		double couponMultiplier_;
-		LADate fixingDate_;	
-        LADate accrualStartDate_;			
-		LADate accrualEndDate_;			
+		AQLDate fixingDate_;	
+        AQLDate accrualStartDate_;			
+		AQLDate accrualEndDate_;			
 		int accrualDays_;
         double accrualYearFraction_;		
-		LADate paymentDate_;
+		AQLDate paymentDate_;
 
 		//Bespoke cashflow related:
 		CashFlowBespokeInfo bespokeInfo_;
 
         //This is one required to calculate the OIS float rate
-		LADate fixingEndDate_;			
+		AQLDate fixingEndDate_;			
 
         //These fields required for ZeroCouponSwap
         FrequencyEnum paymentFreqEnum_;

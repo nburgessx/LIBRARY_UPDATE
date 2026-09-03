@@ -4,13 +4,13 @@
 #pragma warning(disable:4786)
 #endif
 
-#include <LACoreTemplateType.h>
-#include <LAString.h>
-#include "LABasic.h"
-#include "LADist.h"
+#include <AQLCoreTemplateType.h>
+#include <AQLString.h>
+#include "AQLBasic.h"
+#include "AQLDist.h"
 #include <LAMathLeastSquareSZ.h>
 #include <LAMathSwaptionFormulaSZ.h>
-#include <LACoreAppError.h>
+#include <AQLCoreAppError.h>
 #include <LAMathCostFuncSZ.h>
 #include <LAMathConstraintSZ.h>
 
@@ -75,12 +75,12 @@ LAMathLeastSquareConstraintSZ::~LAMathLeastSquareConstraintSZ()
 // method to overload to compute the cost function value in x
 Real LAMathLeastSquareCostFuncSZ::value(const Array& x) const
 {
-	if (n == 0) throw LACoreInvalidData("target to fit is not setted! :: CostFunc_SZ::value", __FILE__, __LINE__);
+	if (n == 0) throw AQLCoreInvalidData("target to fit is not setted! :: CostFunc_SZ::value", __FILE__, __LINE__);
 	double m = x.size();
 
 	if (m == 0 || m > 4)
 		//if(m == 0 || m > 3)
-		throw LACoreInvalidData("m == 0 || m > 4 : CostFunc_SZ::value", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("m == 0 || m > 4 : CostFunc_SZ::value", __FILE__, __LINE__);
 
 	set_params(x);
 	//beta[idx] = x[0]; theta[idx] = x[1]; kappa[idx] = x[2]; epsilon[idx] = x[3];
@@ -106,7 +106,7 @@ Array LAMathLeastSquareCostFuncSZ::values(const Array& x) const
 
 	//if(m == 0 || m > 4)
 	if (m == 0 || m > 3)
-		throw LACoreInvalidData("m == 0 || m > 3 : CostFunc_SZ::value", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("m == 0 || m > 3 : CostFunc_SZ::value", __FILE__, __LINE__);
 
 	set_params(x);
 	//beta[idx] = x[0]; theta[idx] = x[1]; kappa[idx] = x[2]; epsilon[idx] = x[3];

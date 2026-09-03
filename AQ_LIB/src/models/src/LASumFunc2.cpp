@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent sum function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //  2006, AlgoQuantHub..
@@ -32,7 +32,7 @@ using namespace std;
 	@brief default constructor
 */
 LASumMethod2::LASumMethod2() 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -48,7 +48,7 @@ LASumMethod2::~LASumMethod2()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LASumMethod2::clone() const
 {
     try 
@@ -57,7 +57,7 @@ LASumMethod2::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -69,7 +69,7 @@ LASumMethod2::clone() const
 bool
 LASumMethod2::isTypeOf(function_t id) const
 {
-	return (id == FN_SUM2 ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_SUM2 ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -112,11 +112,11 @@ LASumMethod2::partialDerivative(const DoubleArray& x, unsigned int pos,
 {
 	if (pos >= x.size())
 	{
-        throw LACoreInvalidData("pos is over x size", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("pos is over x size", __FILE__, __LINE__);
 	}
 	
 	if (calctype == NUMERICAL)
-		return LAFunctionBase::partialDerivative(x, pos, calctype, difftype, delta);
+		return AQLFunctionBase::partialDerivative(x, pos, calctype, difftype, delta);
 	else
 	{
 		return 1.0;
@@ -138,7 +138,7 @@ LASumMethod2::partialDerivative2(const DoubleArray& x, unsigned int posi, unsign
 												CALC_TYPE calctype, double delta) const
 {
 	if (calctype == NUMERICAL)
-		return LAFunctionBase::partialDerivative2(x, 0, 0, calctype, delta);
+		return AQLFunctionBase::partialDerivative2(x, 0, 0, calctype, delta);
 	else
 	{
 		return 0;

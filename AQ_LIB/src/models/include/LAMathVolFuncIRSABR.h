@@ -4,12 +4,12 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAInterpolationBase.h"
-#include "LAAlgorithm.h"
-#include "LADataInstance.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLInterpolationBase.h"
+#include "AQLAlgorithm.h"
+#include "AQLDataInstance.h"
 
 
 
@@ -32,12 +32,12 @@
 #define SABR_RHO	"RHO"
 #endif
 
-class LAMathVolFuncIRSABR : public LAFunctionBase
+class LAMathVolFuncIRSABR : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
 	// constructor
-	explicit LAMathVolFuncIRSABR(LADataInstance* dataInstance);
+	explicit LAMathVolFuncIRSABR(AQLDataInstance* dataInstance);
 	// destructor
 	virtual ~LAMathVolFuncIRSABR(void);
 	// copy constructor
@@ -48,7 +48,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;
@@ -58,34 +58,34 @@ public :
 	virtual double				operator()(const DoubleArray& x) const;
 								 //==========================================
 	                            // return swapconv id
-	LAString					getSwapConvID(void) const;
+	AQLString					getSwapConvID(void) const;
 								//==========================================
 	                            // return capconv id
-	LAString					getCapConvID(void) const;
+	AQLString					getCapConvID(void) const;
 								 //==========================================
 		                        // return parameter ID
-	LAString					getParamID(const LAString& paramName) const;
+	AQLString					getParamID(const AQLString& paramName) const;
 								 //==========================================
 	                            // set swapconv id
-	LAString					setSwapConvID(const LAString& ID) {return mSwapConvID[mTargetUnderlying] = ID;};
+	AQLString					setSwapConvID(const AQLString& ID) {return mSwapConvID[mTargetUnderlying] = ID;};
 								//==========================================
 	                            // set capconv id
-	LAString					setCapConvID(const LAString& ID) {return mCapConvID[mTargetUnderlying] = ID;};
+	AQLString					setCapConvID(const AQLString& ID) {return mCapConvID[mTargetUnderlying] = ID;};
 								//==========================================
 								// set sabr parmeter ID
-	void						setParamID(const LAString& ID, const LAString& paramName);
+	void						setParamID(const AQLString& ID, const AQLString& paramName);
 								//==========================================
 								// set target underlying
-	void						setUnderlying(const LAString& underlying) const;
+	void						setUnderlying(const AQLString& underlying) const;
 								//==========================================
 		                        // return sabr parameter
-	double						getSABRParam(const LAString& paramName, double expPoint, double tenorPoint) const;
+	double						getSABRParam(const AQLString& paramName, double expPoint, double tenorPoint) const;
 								//==========================================
 								// set approxmethod
-	void						setApproxmethod(const LAString& approxmethod);
+	void						setApproxmethod(const AQLString& approxmethod);
 								//==========================================
 								// get approxmethod
-    LAString				    getApproxmethod() const {return mApproxmethod;}
+    AQLString				    getApproxmethod() const {return mApproxmethod;}
 								//==========================================
 								// set forwardshiftvalue
 	void						setForwardShiftValue(const double forwardShiftValue);
@@ -94,15 +94,15 @@ public :
     double						getForwardShiftValue() const {return mForwardShiftValue;}
 
 protected:
-	LADataInstance* mpDataInstance;
-	std::map<LAString, LAString> mAlphaID;
-	std::map<LAString, LAString> mBetaID;
-	std::map<LAString, LAString> mNuID;
-	std::map<LAString, LAString> mRhoID;
-	std::map<LAString, LAString> mSwapConvID;
-	std::map<LAString, LAString> mCapConvID;
-	mutable LAString mTargetUnderlying;
-	LAString mApproxmethod;
+	AQLDataInstance* mpDataInstance;
+	std::map<AQLString, AQLString> mAlphaID;
+	std::map<AQLString, AQLString> mBetaID;
+	std::map<AQLString, AQLString> mNuID;
+	std::map<AQLString, AQLString> mRhoID;
+	std::map<AQLString, AQLString> mSwapConvID;
+	std::map<AQLString, AQLString> mCapConvID;
+	mutable AQLString mTargetUnderlying;
+	AQLString mApproxmethod;
 	double mForwardShiftValue;
 };
 

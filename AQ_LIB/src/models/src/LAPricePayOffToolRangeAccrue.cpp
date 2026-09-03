@@ -14,25 +14,25 @@
 
 #include "LAPricePayOffToolRangeAccrue.h"
 
-#include "LADataHolder.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAObject.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObject.h"
+#include "AQLObjectHolder.h"
 
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathIndexEntity.h"
 #include "LAMathPathEntity.h"
 #include "LAMathFXEntity.h"
-#include "LAMathDefine.h"
+#include "AQLMathDefine.h"
 #include "LAMathDateCalculations.h"
 
-#include "LAAlgorithm.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLBasic.h"
 
 #include "LAPricePayOff.h"
 #include "LAPriceCouponTool.h"
@@ -251,28 +251,28 @@ LAPricePayOffToolRangeAccrue::calcPayOff(void) const
 	@param[in] current position of payoff(first payoff position = 0)
 */
 void
-LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trade,
-						unsigned int legNo, const LAObject& cashlet, 
+LAPricePayOffToolRangeAccrue::setUp(const AQLDate& basedate, const AQLObject& trade,
+						unsigned int legNo, const AQLObject& cashlet, 
 						const LAPricePayOff& payoff,
 						unsigned int currentpos)
 {
 	LAPricePayOffTool::setUp(basedate, trade, legNo, cashlet, payoff, currentpos);
 
 	// days in calculation period
-	const LADataHolder &ahOSD = cashlet.getData(PRICING_DATA_RANGEACCRUEOBSERVATIONSTARTDATE, NOCHECK);
+	const AQLDataHolder &ahOSD = cashlet.getData(PRICING_DATA_RANGEACCRUEOBSERVATIONSTARTDATE, NOCHECK);
 	if (ahOSD.isDefined() && !ahOSD.isNull())
 	{
-		mRAObservationStart = dynamic_cast<const LADataDate &>(ahOSD.get()).get();
+		mRAObservationStart = dynamic_cast<const AQLDataDate &>(ahOSD.get()).get();
 	}
 	else
 	{
 		mRAObservationStart = mStart;
 	}
 
-	const LADataHolder &ahOED = cashlet.getData(PRICING_DATA_RANGEACCRUEOBSERVATIONENDDATE, NOCHECK);
+	const AQLDataHolder &ahOED = cashlet.getData(PRICING_DATA_RANGEACCRUEOBSERVATIONENDDATE, NOCHECK);
 	if (ahOED.isDefined() && !ahOED.isNull())
 	{
-		mRAObservationEnd = dynamic_cast<const LADataDate &>(ahOED.get()).get();
+		mRAObservationEnd = dynamic_cast<const AQLDataDate &>(ahOED.get()).get();
 	}
 	else
 	{
@@ -280,23 +280,23 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 	}
 	mCalcDays = mRAObservationStart.intervalDays(mRAObservationEnd);
 	// index
-	const LADataMultiReference* indexRef;
-	const LADataHolder &ahInfos = cashlet.getData(PRICING_DATA_RANGEACCRUEINFOS, NOCHECK);
+	const AQLDataMultiReference* indexRef;
+	const AQLDataHolder &ahInfos = cashlet.getData(PRICING_DATA_RANGEACCRUEINFOS, NOCHECK);
 	if (ahInfos.isDefined() && !ahInfos.isNull()) //multi index case
 	{
-		const LADataMultiReference& infos = dynamic_cast<const LADataMultiReference &>(ahInfos.get());
-		indexRef = &(dynamic_cast<const LADataMultiReference &>
+		const AQLDataMultiReference& infos = dynamic_cast<const AQLDataMultiReference &>(ahInfos.get());
+		indexRef = &(dynamic_cast<const AQLDataMultiReference &>
 			(infos.get(0).get().getData(PRICING_DATA_RANGEACCRUEINDEXINFOS, ISNOTNULL).get()));
 	}
 	else //single index case
 	{
-		indexRef = &(dynamic_cast<const LADataMultiReference &>
+		indexRef = &(dynamic_cast<const AQLDataMultiReference &>
 			(cashlet.getData(PRICING_DATA_RANGEACCRUEINDEXINFOS, ISNOTNULL).get()));
 	}
 
 	// first slidingrule & calendar (for check)
-	const LAPriceDataSlidingRule *pSrule = 0;
-	const LAPriceDataCalendar *pCal = 0;
+	const AQLPriceDataSlidingRule *pSrule = 0;
+	const AQLPriceDataCalendar *pCal = 0;
 	LAPriceCFGenUtility::getBusDayRuleAndCalendar( indexRef->get(0).get(), 
 												PRICING_DATA_OBSERVATIONSLIDINGRULE,
 												PRICING_DATA_OBSERVATIONCALENDAR,
@@ -307,24 +307,24 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 
 
 	const DateVector *pObservationDates = 0;
-	const LADataHolder &ahOBD = cashlet.getData(PRICING_DATA_OBSERVATIONDATES, NOCHECK);
+	const AQLDataHolder &ahOBD = cashlet.getData(PRICING_DATA_OBSERVATIONDATES, NOCHECK);
 	if (ahOBD.isDefined() && !ahOBD.isNull())
 	{
-		//pObservationDates = &(dynamic_cast<const LADataDates &>(ahOBD.get()).get());
-		pObservationDates = new DateVector(dynamic_cast<const LADataDates &>(ahOBD.get()).get());
+		//pObservationDates = &(dynamic_cast<const AQLDataDates &>(ahOBD.get()).get());
+		pObservationDates = new DateVector(dynamic_cast<const AQLDataDates &>(ahOBD.get()).get());
 		setUpCalcDays(mRAObservationStart, mRAObservationEnd, *pObservationDates, mCalcDays);
 	}
 	else
 	{
-		const LADataHolder &ahBDB = cashlet.getData(PRICING_DATA_BUSINESSDAYSBASE, NOCHECK);
+		const AQLDataHolder &ahBDB = cashlet.getData(PRICING_DATA_BUSINESSDAYSBASE, NOCHECK);
 		if (ahBDB.isDefined() && !ahBDB.isNull())
 		{
-			const bool isBussinessDaysBase = dynamic_cast<const LADataBool &>(ahBDB.get()).get();
+			const bool isBussinessDaysBase = dynamic_cast<const AQLDataBool &>(ahBDB.get()).get();
 			if (isBussinessDaysBase)
 			{
 				if (!pSrule || !pCal)
 				{
-					throw LACoreInvalidData("SlidingRule or Calender is NULL", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("SlidingRule or Calender is NULL", __FILE__, __LINE__);
 				}
 
 				DateVector *out = new DateVector;
@@ -345,7 +345,7 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 	if (ahInfos.isDefined() && !ahInfos.isNull()) //multi index case
 	{
 		// set range accrue implement
-		const LADataMultiReference& infos = dynamic_cast<const LADataMultiReference &>(ahInfos.get());
+		const AQLDataMultiReference& infos = dynamic_cast<const AQLDataMultiReference &>(ahInfos.get());
 		mpRAImpls.clear();
 		mpRAImpls.resize(infos.getSize());
 		for (unsigned int i = 0; i < infos.getSize(); ++i)
@@ -357,16 +357,16 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 
 		// set range accrue index condition
 		mIsAndCondition = false;
-		const LADataHolder &ahIAC = cashlet.getData(PRICING_DATA_ISANDCONDITION, NOCHECK);
+		const AQLDataHolder &ahIAC = cashlet.getData(PRICING_DATA_ISANDCONDITION, NOCHECK);
 		if (ahIAC.isDefined() && !ahIAC.isNull())
 		{
-			mIsAndCondition = dynamic_cast<const LADataBool &>(ahIAC.get()).get();
+			mIsAndCondition = dynamic_cast<const AQLDataBool &>(ahIAC.get()).get();
 		}
 		mIsExcludeAndCondition = false;
-		const LADataHolder &ahIEA = cashlet.getData(PRICING_DATA_ISEXCLUDEANDCONDITION, NOCHECK);
+		const AQLDataHolder &ahIEA = cashlet.getData(PRICING_DATA_ISEXCLUDEANDCONDITION, NOCHECK);
 		if (ahIEA.isDefined() && !ahIEA.isNull())
 		{
-			mIsExcludeAndCondition = dynamic_cast<const LADataBool &>(ahIEA.get()).get();
+			mIsExcludeAndCondition = dynamic_cast<const AQLDataBool &>(ahIEA.get()).get();
 		}
 
 	}
@@ -381,10 +381,10 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 		mIsExcludeAndCondition = false;
 	}
 	mIsNotCondition = false;
-	const LADataHolder &ahINC = cashlet.getData(PRICING_DATA_ISNOTCONDITION, NOCHECK);
+	const AQLDataHolder &ahINC = cashlet.getData(PRICING_DATA_ISNOTCONDITION, NOCHECK);
 	if (ahINC.isDefined() && !ahINC.isNull())
 	{
-		mIsNotCondition = dynamic_cast<const LADataBool &>(ahINC.get()).get();
+		mIsNotCondition = dynamic_cast<const AQLDataBool &>(ahINC.get()).get();
 	}
 	if (pObservationDates)
 	{
@@ -394,13 +394,13 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 	//hit rate operator
 	if (mpHitRateOperator) delete mpHitRateOperator;
 	mpHitRateOperator = NULL;
-	const LADataHolder* dh = &(cashlet.getData(PRICING_DATA_HITRATEOPERATOR, NOCHECK));
+	const AQLDataHolder* dh = &(cashlet.getData(PRICING_DATA_HITRATEOPERATOR, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAFunctionBase& htfunc = dynamic_cast<const LAPriceDataFunction&>(dh->get()).getFunction();
-		mpHitRateOperator = dynamic_cast<LAFunctionBase*>(htfunc.clone());
+		const AQLFunctionBase& htfunc = dynamic_cast<const AQLPriceDataFunction&>(dh->get()).getFunction();
+		mpHitRateOperator = dynamic_cast<AQLFunctionBase*>(htfunc.clone());
 		//hit rate coefficient
-		const LADataDoubles* htcoeffs = &dynamic_cast<const LADataDoubles &>(cashlet.getData(PRICING_DATA_HITRATECOEFFICIENT, ISNOTNULL).get());
+		const AQLDataDoubles* htcoeffs = &dynamic_cast<const AQLDataDoubles &>(cashlet.getData(PRICING_DATA_HITRATECOEFFICIENT, ISNOTNULL).get());
 		mpHitRateOperator->setParam(htcoeffs->get());
 	}
 	//hit rate cap
@@ -409,7 +409,7 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 	if (dh->isDefined() && !dh->isNull())
 	{
 		mIsHitRateCap = true;
-	    mHitRateCap = dynamic_cast<const LADataDouble&>(dh->get()).get();
+	    mHitRateCap = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 	}
 	//hit rate floor
 	mIsHitRateFloor = false;
@@ -417,7 +417,7 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 	if (dh->isDefined() && !dh->isNull())
 	{
 		mIsHitRateFloor = true;
-	    mHitRateFloor = dynamic_cast<const LADataDouble&>(dh->get()).get();
+	    mHitRateFloor = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 	}
 	//final coupon operator
 	if (mpOperator) delete mpOperator;
@@ -425,10 +425,10 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 	dh = &(cashlet.getData(PRICING_DATA_OPERATOR, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAFunctionBase& method = dynamic_cast<const LAPriceDataFunction&>(dh->get()).getFunction();
-		mpOperator = dynamic_cast<LAFunctionBase*>(method.clone());
+		const AQLFunctionBase& method = dynamic_cast<const AQLPriceDataFunction&>(dh->get()).getFunction();
+		mpOperator = dynamic_cast<AQLFunctionBase*>(method.clone());
 		//coefficient
-		const LADataDoubles* coeffs = &dynamic_cast<const LADataDoubles &>(cashlet.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get());
+		const AQLDataDoubles* coeffs = &dynamic_cast<const AQLDataDoubles &>(cashlet.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get());
 		mpOperator->setParam(coeffs->get());
 	}
 	//range accrue strike
@@ -438,7 +438,7 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 	if (dh->isDefined() && !dh->isNull())
 	{
 		mIsRAStrike = true;
-		mRAStrike = dynamic_cast<const LADataDouble&>(dh->get()).get();
+		mRAStrike = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 	}
 }
 
@@ -450,7 +450,7 @@ LAPricePayOffToolRangeAccrue::setUp(const LADate& basedate, const LAObject& trad
 	@param[out] calcDays
 */
 void
-LAPricePayOffToolRangeAccrue::setUpCalcDays(const LADate &start, const LADate &end, const DateVector &observationDates, unsigned int &calcDays)
+LAPricePayOffToolRangeAccrue::setUpCalcDays(const AQLDate &start, const AQLDate &end, const DateVector &observationDates, unsigned int &calcDays)
 {
 	unsigned int excludenum = 0;
 	DateVector::const_iterator it = observationDates.begin();
@@ -509,15 +509,15 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::LAPricePayOffToo
 		mpRAIndexs[i] = dynamic_cast<LAPriceIndexTool *>(v.mpRAIndexs[i]->clone());
 		mRABusDayMap[i] = v.mRABusDayMap[i];
 	}
-	mpRAFunc = dynamic_cast<LAFunctionBase *>(v.mpRAFunc->clone());
+	mpRAFunc = dynamic_cast<AQLFunctionBase *>(v.mpRAFunc->clone());
 
 	mpRABIndexs.resize(v.mpRABIndexs.size());
 	for (unsigned int i = 0; i < v.mpRABIndexs.size(); ++i)
 	{
 		mpRABIndexs[i] = dynamic_cast<LAPriceIndexTool *>(v.mpRABIndexs[i]->clone());
 	}
-	mpRAMaxBFunc = dynamic_cast<LAFunctionBase *>(v.mpRAMaxBFunc->clone());
-	mpRAMinBFunc = dynamic_cast<LAFunctionBase *>(v.mpRAMinBFunc->clone());
+	mpRAMaxBFunc = dynamic_cast<AQLFunctionBase *>(v.mpRAMaxBFunc->clone());
+	mpRAMinBFunc = dynamic_cast<AQLFunctionBase *>(v.mpRAMinBFunc->clone());
 }
 
 /*
@@ -542,21 +542,21 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::clone() const
 	@param[in] sameobservationindex days before same observation date
 */
 void
-LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADate& basedate, const LAObject& trade, 
-															const LAPricePayOff& payoff, const LAObject& info, 
-															const LADate& start, const LADate& end, const LADate& payment,
+LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const AQLDate& basedate, const AQLObject& trade, 
+															const LAPricePayOff& payoff, const AQLObject& info, 
+															const AQLDate& start, const AQLDate& end, const AQLDate& payment,
 															const DateVector* pobservationDates)
 {
 	// range accrue same observation days
 	int sameObservationDays = 0;
-	const LADataHolder &ahSD = info.getData(PRICING_DATA_RANGEACCRUESAMEOBSERVATIONDAYS, NOCHECK);
+	const AQLDataHolder &ahSD = info.getData(PRICING_DATA_RANGEACCRUESAMEOBSERVATIONDAYS, NOCHECK);
 	if (ahSD.isDefined() && !ahSD.isNull())
 	{
-		sameObservationDays = dynamic_cast<const LADataInt &>(ahSD.get()).get();
+		sameObservationDays = dynamic_cast<const AQLDataInt &>(ahSD.get()).get();
 	}
 
 	// index
-	const LADataMultiReference &indexRef = dynamic_cast<const LADataMultiReference &>(info.getData(PRICING_DATA_RANGEACCRUEINDEXINFOS, ISNOTNULL).get());
+	const AQLDataMultiReference &indexRef = dynamic_cast<const AQLDataMultiReference &>(info.getData(PRICING_DATA_RANGEACCRUEINDEXINFOS, ISNOTNULL).get());
 	unsigned int indexSize = indexRef.getSize();
 	mpRAIndexs.clear();
 	mRABusDayMap.clear();
@@ -564,16 +564,16 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADa
 	mRABusDayMap.resize(indexSize);
 	for (unsigned int i = 0; i < indexSize; ++i)
 	{
-		LAString type = dynamic_cast<LADataString &>(indexRef.get(i).getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
+		AQLString type = dynamic_cast<AQLDataString &>(indexRef.get(i).getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
 		type.toUpper();
 		if (type == FIXEDRATE || type == CPN || type == CPNCF)
 		{
-			throw LACoreInvalidData("Index type FIXEDRATE or CPN or CPNCF is not support in Range Accrue", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Index type FIXEDRATE or CPN or CPNCF is not support in Range Accrue", __FILE__, __LINE__);
 		}
 		// check
 		//slidingrule & calendar
-		const LAPriceDataSlidingRule *pSrule = 0;
-		const LAPriceDataCalendar *pCal = 0;
+		const AQLPriceDataSlidingRule *pSrule = 0;
+		const AQLPriceDataCalendar *pCal = 0;
 		LAPriceCFGenUtility::getBusDayRuleAndCalendar( indexRef.get(i).get(), 
 													PRICING_DATA_OBSERVATIONSLIDINGRULE,
 													PRICING_DATA_OBSERVATIONCALENDAR,
@@ -582,11 +582,11 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADa
 													CALIBRATION_DATA_CALENDAR,
 													pSrule, pCal);
 		//frequency
-		LAString freq = dynamic_cast<const LADataString &>(indexRef.get(i).getData(PRICING_DATA_OBSERVATIONFREQUENCY, ISNOTNULL).get());
+		AQLString freq = dynamic_cast<const AQLDataString &>(indexRef.get(i).getData(PRICING_DATA_OBSERVATIONFREQUENCY, ISNOTNULL).get());
 		freq.toUpper();
 		if (freq != BUSINESS_DAYS && freq != DAILY)
 		{
-			throw LACoreInvalidData("Frequency error. BUSINESS_DAYS is only supperted in Range Accrue.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Frequency error. BUSINESS_DAYS is only supperted in Range Accrue.", __FILE__, __LINE__);
 		}
 
 		//set index
@@ -594,11 +594,11 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADa
 		mpRAIndexs[i]->setUp(basedate, payment, trade, indexRef.get(i).get(), payoff);
 
 		DateVector out;
-		const LADataHolder &ahObStart =  indexRef.get(i).getData(PRICING_DATA_OBSERVATIONSTARTDATE, NOCHECK);
+		const AQLDataHolder &ahObStart =  indexRef.get(i).getData(PRICING_DATA_OBSERVATIONSTARTDATE, NOCHECK);
 		if (ahObStart.isDefined() && !ahObStart.isNull())
 		{
-			const LADate &obstart =  dynamic_cast<const LADataDate &>(ahObStart.get()).get();
-			const LADate &obend =  dynamic_cast<const LADataDate &>(indexRef.get(i).getData(PRICING_DATA_OBSERVATIONENDDATE, ISNOTNULL).get());
+			const AQLDate &obstart =  dynamic_cast<const AQLDataDate &>(ahObStart.get()).get();
+			const AQLDate &obend =  dynamic_cast<const AQLDataDate &>(indexRef.get(i).getData(PRICING_DATA_OBSERVATIONENDDATE, ISNOTNULL).get());
 			LAMathDateCalculations::generateSchedule(obstart, obend, BUSINESS_DAYS,	
 										false,
 										NULL, NULL,
@@ -622,17 +622,17 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADa
 		}
 
 		//index calculation end date
-		LADate determinationBusinessDate(end);
+		AQLDate determinationBusinessDate(end);
 		if (ahSD.isDefined() && !ahSD.isNull())
 		{
 			if(pCal == NULL || pSrule == NULL)
 			{
-				LAString msg;
+				AQLString msg;
 				msg += "Calendar and SlidingRule dataValues are necessary ";
 				msg += "when RangeAccrueSameObservationDays is set in range bounday info.";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
-			LAString sameTerm = LAString(sameObservationDays) + "D";
+			AQLString sameTerm = AQLString(sameObservationDays) + "D";
 			determinationBusinessDate = LAMathDateCalculations::getDate(end, sameTerm, *pSrule, pCal, false); 
 		}
 
@@ -640,10 +640,10 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADa
 		{
 			unsigned int count = 0;
 			unsigned int pos = 0;
-			LADate date = start;
+			AQLDate date = start;
 			while (date < end)
 			{
-				LADate tmpDate;
+				AQLDate tmpDate;
 				if (pSrule->getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 				{
 					tmpDate = pSrule->getDate(date, pCal->getCalendar());
@@ -653,10 +653,10 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADa
 					tmpDate = date;
 				}
 
-				if (!LAAlgorithm::find<DateVector, LADate>(out, tmpDate, 0, out.size() - 1, pos))
+				if (!AQLAlgorithm::find<DateVector, AQLDate>(out, tmpDate, 0, out.size() - 1, pos))
 				{
-					LAString msg = "Date vector is inconsistent. Error date = " + tmpDate.stringWithFormat();
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "Date vector is inconsistent. Error date = " + tmpDate.stringWithFormat();
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 				mRABusDayMap[i].insert(make_pair(count, pos));
 				if (tmpDate >= determinationBusinessDate)
@@ -690,10 +690,10 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADa
 			DateVector::const_iterator it = itStart;
 			while (it != pobservationDates->end() && *it < end)
 			{
-				if (!LAAlgorithm::find<DateVector, LADate>(out, *it, 0, out.size() - 1, pos))
+				if (!AQLAlgorithm::find<DateVector, AQLDate>(out, *it, 0, out.size() - 1, pos))
 				{
-					LAString msg = "Observation dates of cashlet are inconsistent with those of index. Error date = " + it->stringWithFormat();
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "Observation dates of cashlet are inconsistent with those of index. Error date = " + it->stringWithFormat();
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 				mRABusDayMap[i].insert(make_pair(distance(itStart, it), pos));
 				if (*it >= determinationBusinessDate)
@@ -715,35 +715,35 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADa
 	}
 
 	// range accrue method
-	LACoreFunctionBase *tmpFunc = dynamic_cast<const LAPriceDataFunction&>(info.getData(PRICING_DATA_RANGEACCRUEOPERATOR, ISNOTNULL).get()).getFunction().clone();
-	mpRAFunc = dynamic_cast<LAFunctionBase *>(tmpFunc);
+	AQLCoreFunctionBase *tmpFunc = dynamic_cast<const AQLPriceDataFunction&>(info.getData(PRICING_DATA_RANGEACCRUEOPERATOR, ISNOTNULL).get()).getFunction().clone();
+	mpRAFunc = dynamic_cast<AQLFunctionBase *>(tmpFunc);
 	// range accrue method coeff
-	const DoubleArray& coeff = dynamic_cast<const LADataDoubles&>(info.getData(PRICING_DATA_RANGEACCRUECOEFFICIENT, ISNOTNULL).get()).get();
+	const DoubleArray& coeff = dynamic_cast<const AQLDataDoubles&>(info.getData(PRICING_DATA_RANGEACCRUECOEFFICIENT, ISNOTNULL).get()).get();
 	mpRAFunc->setParam(coeff);
 	// range accrue max
-	const LADataHolder &ahMAX = info.getData(PRICING_DATA_RANGEACCRUEMAX, NOCHECK);
+	const AQLDataHolder &ahMAX = info.getData(PRICING_DATA_RANGEACCRUEMAX, NOCHECK);
 	if (ahMAX.isDefined() && !ahMAX.isNull())
 	{
-		mRAMax = dynamic_cast<const LADataDouble&>(ahMAX.get()).get();
+		mRAMax = dynamic_cast<const AQLDataDouble&>(ahMAX.get()).get();
 	}	
 	// range accrue min
-	const LADataHolder &ahMIN = info.getData(PRICING_DATA_RANGEACCRUEMIN, NOCHECK);
+	const AQLDataHolder &ahMIN = info.getData(PRICING_DATA_RANGEACCRUEMIN, NOCHECK);
 	if (ahMIN.isDefined() && !ahMIN.isNull())
 	{
-		mRAMin = dynamic_cast<const LADataDouble&>(ahMIN.get()).get();
+		mRAMin = dynamic_cast<const AQLDataDouble&>(ahMIN.get()).get();
 	}
 	
 	// set up boundary index
-	const LADataHolder &ahBII = info.getData(PRICING_DATA_RANGEACCRUEBOUNDARYINDEXINFOS, NOCHECK);
+	const AQLDataHolder &ahBII = info.getData(PRICING_DATA_RANGEACCRUEBOUNDARYINDEXINFOS, NOCHECK);
 	if (ahBII.isDefined() && !ahBII.isNull())
 	{
-		const LADataMultiReference& indexinfos = dynamic_cast<const LADataMultiReference&>(ahBII.get());
+		const AQLDataMultiReference& indexinfos = dynamic_cast<const AQLDataMultiReference&>(ahBII.get());
 		mpRABIndexs.resize(indexinfos.getSize(), NULL);
 		for (unsigned int i = 0; i < indexinfos.getSize(); i++)
 		{
 			// index type
-			const LADataHolder &ahIT = indexinfos.get(i).getData(PRICING_DATA_INDEXTYPE, ISNOTNULL);
-			LAString indextype = dynamic_cast<const LADataString&>(ahIT.get());
+			const AQLDataHolder &ahIT = indexinfos.get(i).getData(PRICING_DATA_INDEXTYPE, ISNOTNULL);
+			AQLString indextype = dynamic_cast<const AQLDataString&>(ahIT.get());
 			indextype.toUpper();
 
 			if(indextype == FIXEDRATE)
@@ -755,13 +755,13 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADa
 			else
 			{
 				//fixing date
-				const LADataHolder &ahFD = indexinfos.get(i).getData(PRICING_DATA_FIXINGDATE, ISNOTNULL);	 
-				const LADate& fixingdate = dynamic_cast<const LADataDate&>(ahFD.get()).get();
+				const AQLDataHolder &ahFD = indexinfos.get(i).getData(PRICING_DATA_FIXINGDATE, ISNOTNULL);	 
+				const AQLDate& fixingdate = dynamic_cast<const AQLDataDate&>(ahFD.get()).get();
 				if (basedate > fixingdate)
 					mpRABIndexs[i] = new LAPriceIndexToolFixed();
 				else if (basedate == fixingdate)
 				{
-					const LADataHolder &ahFR = indexinfos.get(i).getData(PRICING_DATA_FIXEDRATE, NOCHECK);	 
+					const AQLDataHolder &ahFR = indexinfos.get(i).getData(PRICING_DATA_FIXEDRATE, NOCHECK);	 
 					if (ahFR.isDefined() && !ahFR.isNull())
 					{
 						mpRABIndexs[i] = new LAPriceIndexToolFixed();
@@ -779,23 +779,23 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::setUp(const LADa
 		}
 
 		//max operator
-		const LADataHolder &ahMaxBO = info.getData(PRICING_DATA_RANGEACCRUEMAXBOUNDARYOPERATOR, ISNOTNULL);
-		const LAFunctionBase& maxFunc = dynamic_cast<const LAPriceDataFunction&>(ahMaxBO.get()).getFunction();
-		mpRAMaxBFunc = dynamic_cast<LAFunctionBase*>(maxFunc.clone());
+		const AQLDataHolder &ahMaxBO = info.getData(PRICING_DATA_RANGEACCRUEMAXBOUNDARYOPERATOR, ISNOTNULL);
+		const AQLFunctionBase& maxFunc = dynamic_cast<const AQLPriceDataFunction&>(ahMaxBO.get()).getFunction();
+		mpRAMaxBFunc = dynamic_cast<AQLFunctionBase*>(maxFunc.clone());
 		
 		//max coefficient
-		const LADataHolder &ahMaxBC = info.getData(PRICING_DATA_RANGEACCRUEMAXBOUNDARYCOEFFICIENT, ISNOTNULL);
-		const DoubleArray& maxCoeff = dynamic_cast<const LADataDoubles&>(ahMaxBC.get()).get();
+		const AQLDataHolder &ahMaxBC = info.getData(PRICING_DATA_RANGEACCRUEMAXBOUNDARYCOEFFICIENT, ISNOTNULL);
+		const DoubleArray& maxCoeff = dynamic_cast<const AQLDataDoubles&>(ahMaxBC.get()).get();
 		mpRAMaxBFunc->setParam(maxCoeff);
 
 		//max operator
-		const LADataHolder &ahMinBO = info.getData(PRICING_DATA_RANGEACCRUEMINBOUNDARYOPERATOR, ISNOTNULL);
-		const LAFunctionBase& minFunc = dynamic_cast<const LAPriceDataFunction&>(ahMinBO.get()).getFunction();
-		mpRAMinBFunc = dynamic_cast<LAFunctionBase*>(minFunc.clone());
+		const AQLDataHolder &ahMinBO = info.getData(PRICING_DATA_RANGEACCRUEMINBOUNDARYOPERATOR, ISNOTNULL);
+		const AQLFunctionBase& minFunc = dynamic_cast<const AQLPriceDataFunction&>(ahMinBO.get()).getFunction();
+		mpRAMinBFunc = dynamic_cast<AQLFunctionBase*>(minFunc.clone());
 		
 		//min coefficient
-		const LADataHolder &ahMinBC = info.getData(PRICING_DATA_RANGEACCRUEMINBOUNDARYCOEFFICIENT, ISNOTNULL);
-		const DoubleArray& minCoeff = dynamic_cast<const LADataDoubles&>(ahMinBC.get()).get();
+		const AQLDataHolder &ahMinBC = info.getData(PRICING_DATA_RANGEACCRUEMINBOUNDARYCOEFFICIENT, ISNOTNULL);
+		const DoubleArray& minCoeff = dynamic_cast<const AQLDataDoubles&>(ahMinBC.get()).get();
 		mpRAMinBFunc->setParam(minCoeff);
 	}
 }
@@ -840,7 +840,7 @@ LAPricePayOffToolRangeAccrue::LAPricePayOffToolRangeAccrueImpl::isHit(unsigned i
 		map<unsigned int, unsigned int>::const_iterator it = mRABusDayMap[j].find(index);
 		if (it == mRABusDayMap[j].end())
 		{
-			throw LACoreInvalidData("BusinessDay Map is invalid", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("BusinessDay Map is invalid", __FILE__, __LINE__);
 		}
 		indexVec[j] = mpRAIndexs[j]->getIndexResult()[it->second];
 	}

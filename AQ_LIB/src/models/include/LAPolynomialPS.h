@@ -35,7 +35,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;

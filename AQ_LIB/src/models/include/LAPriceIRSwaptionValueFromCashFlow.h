@@ -8,9 +8,9 @@
 #include "LAPriceIRSwaptionValue.h"
 
 
-class LAObject;
+class AQLObject;
 class LARatesPathElementCurve;
-class LAPriceDataManager;
+class AQLPriceDataManager;
 class LABlackScholesBase;
 class LAMathYieldCurve;
 class LAMathPlainVanillaEntity;
@@ -33,30 +33,30 @@ public:
 								//hishida vannavolga
 								//======================================
 								// Return option funcname
-	virtual LAString			getOptionPayoffName() const;
+	virtual AQLString			getOptionPayoffName() const;
 								// Make copy(clone) of this class
 								//======================================
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 
 	//set up analytic param
-	virtual void setUpAnalyticParam(LAObject& object, LADataProvider* dp) const;
+	virtual void setUpAnalyticParam(AQLObject& object, AQLDataProvider* dp) const;
 	
 	// set up dataProvider
-	virtual LADataProvider*					setUpDataProvider(const LADate& basedate, LAObject& object, const LADataValuation& att) const;
+	virtual AQLDataProvider*					setUpDataProvider(const AQLDate& basedate, AQLObject& object, const AQLDataValuation& att) const;
 	
 	//get nearest Frequency
-	LAString getFrequencyFromIndexGenerator(const LAObject& object, unsigned int floatLegNo, bool isMonthString = false) const;
+	AQLString getFrequencyFromIndexGenerator(const AQLObject& object, unsigned int floatLegNo, bool isMonthString = false) const;
 
 	//get Libor Object
-	const LAObject& getLiborEntity(const LAObject& object, unsigned int floatLegNo) const;
+	const AQLObject& getLiborEntity(const AQLObject& object, unsigned int floatLegNo) const;
 
 	//get float leg number
-	unsigned int getFloatLegNum(const LAObject& object) const;
+	unsigned int getFloatLegNum(const AQLObject& object) const;
 
 	//getCalcDataFromCashFlow
-	double getCalcDataFromCashFlow(const LAObject& object, LADataProvider* dp, double& frate, double& annuity, double& equivstrike, double& avenotional) const;
+	double getCalcDataFromCashFlow(const AQLObject& object, AQLDataProvider* dp, double& frate, double& annuity, double& equivstrike, double& avenotional) const;
 	
-	virtual void outputResult( LAObject& object, LADataProvider* dp ) const;
+	virtual void outputResult( AQLObject& object, AQLDataProvider* dp ) const;
 
 private:
 };

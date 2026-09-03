@@ -16,20 +16,20 @@
 using namespace std;
 
 
-std::vector<LAObject *> 
-LARiskConfigurationYieldIRDeltaSimple::createMarketBumpYieldEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
+std::vector<AQLObject *> 
+LARiskConfigurationYieldIRDeltaSimple::createMarketBumpYieldEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
 {
-	LAString bumpDirection = getBumpDirection(ccy);
+	AQLString bumpDirection = getBumpDirection(ccy);
 	bumpDirection.toUpper();
 	if (scenarioNum == SCENARIO_2 && bumpDirection != RISK_BUMPDIRECTION_UPDOWNSHIFT)
 	{
-		return vector<LAObject*>(0);
+		return vector<AQLObject*>(0);
 	}
     if(!isParallelShift(ccy)){
-        return vector<LAObject*>(0);
+        return vector<AQLObject*>(0);
     }
 
-    LAString ccy_lower = ccy; ccy_lower.toLower();
+    AQLString ccy_lower = ccy; ccy_lower.toLower();
     double shift_val = mpRiskStaticData->getStaticData(ccy_lower + STATIC_DATA_KEY_RISK_FRONT_YIELD_IRDELTA_PARALLEL_SHIFTVAL).getDoubleValue() / 10000.0; // The unit of shift val is basis point.
 	if (bumpDirection == RISK_BUMPDIRECTION_DOWNSHIFT || (scenarioNum == SCENARIO_2 && bumpDirection == RISK_BUMPDIRECTION_UPDOWNSHIFT))
 	{
@@ -49,21 +49,21 @@ LARiskConfigurationYieldIRDeltaSimple::createMarketBumpYieldEntity(const LAStrin
     param.isParallel = true;
 
 //  getMarketTerms(ccy, param.paraTerm);
-	LAString attrSuffix = "";
+	AQLString attrSuffix = "";
 	if (param.targetCurveType != STD)
 	{
 		attrSuffix = "_" + param.targetCurveType;
 	}
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get());
-	LADataMultiReference &refMarketDatas = dynamic_cast<LADataMultiReference &>
+	AQLDataMultiReference &refMarketDatas = dynamic_cast<AQLDataMultiReference &>
 		                                  (bYieldPro.getData(CALIBRATION_DATA_MARKETDATA + attrSuffix, ISNOTNULL).get());
 	param.paraTerm.resize(refMarketDatas.getSize());
 	for (unsigned int i = 0; i < refMarketDatas.getSize(); i++)
 	{
-		const LAObjectHolder objHolder = refMarketDatas.get(i);
-		const LAString &dataType = dynamic_cast<const LADataString &>
+		const AQLObjectHolder objHolder = refMarketDatas.get(i);
+		const AQLString &dataType = dynamic_cast<const AQLDataString &>
 			(objHolder.getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL).get()).get();
 		if (dataType == YIELD_TYPE_O_N)
 		{
@@ -75,7 +75,7 @@ LARiskConfigurationYieldIRDeltaSimple::createMarketBumpYieldEntity(const LAStrin
 		}
 		else
 		{
-			param.paraTerm[i] = dynamic_cast<const LADataString &>(objHolder.getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get()).get();
+			param.paraTerm[i] = dynamic_cast<const AQLDataString &>(objHolder.getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get()).get();
 		}
 	}
 

@@ -19,7 +19,7 @@
 
 
 #include "LAModelManager.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "LADefinitions.h"
 #include "LAModelSetupLMM.h"
 #include "LAModelSetupHW.h"
@@ -72,9 +72,9 @@ MAMasterRegistManager::getInstance(void)
 	@return  LAModelSetupBase *
 */
 LAModelSetupBase *
-MAMasterRegistManager::createRegister(const LAString &model)
+MAMasterRegistManager::createRegister(const AQLString &model)
 {
-	LAString tmpModel = model;
+	AQLString tmpModel = model;
 	tmpModel.toUpper();
 	if (tmpModel == MODEL_LMM)
 	{

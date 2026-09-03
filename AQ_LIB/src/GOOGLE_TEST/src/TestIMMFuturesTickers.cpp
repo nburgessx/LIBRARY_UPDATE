@@ -12,21 +12,21 @@ TEST( TestFuturesTickers, UNIT_ConvertFuturesDateToTicker1 )
     // In ascending orderJan - Dec
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
-    const LADate jan2019("20190101");
-    const LADate feb2019("20190201");
-    const LADate mar2019("20190301");
+    const AQLDate jan2019("20190101");
+    const AQLDate feb2019("20190201");
+    const AQLDate mar2019("20190301");
 
-    const LADate apr2019("20190401");
-    const LADate may2019("20190501");
-    const LADate jun2019("20190601");
+    const AQLDate apr2019("20190401");
+    const AQLDate may2019("20190501");
+    const AQLDate jun2019("20190601");
 
-    const LADate jul2019("20190701");
-    const LADate aug2019("20190801");
-    const LADate sep2019("20190901");
+    const AQLDate jul2019("20190701");
+    const AQLDate aug2019("20190801");
+    const AQLDate sep2019("20190901");
 
-    const LADate oct2019("20191001");
-    const LADate nov2019("20191101");
-    const LADate dec2019("20191201");
+    const AQLDate oct2019("20191001");
+    const AQLDate nov2019("20191101");
+    const AQLDate dec2019("20191201");
 
     const std::string resultF9 = etrading::convertDateToFuturesTicker( jan2019 );
     const std::string resultG9 = etrading::convertDateToFuturesTicker( feb2019 );
@@ -68,21 +68,21 @@ TEST( TestFuturesTickers, UNIT_ConvertFuturesDateToTicker2 )
     // In ascending orderJan - Dec
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
-    const LADate jan2020("20200101");
-    const LADate feb2020("20200201");
-    const LADate mar2020("20200301");
+    const AQLDate jan2020("20200101");
+    const AQLDate feb2020("20200201");
+    const AQLDate mar2020("20200301");
 
-    const LADate apr2020("20200401");
-    const LADate may2020("20200501");
-    const LADate jun2020("20200601");
+    const AQLDate apr2020("20200401");
+    const AQLDate may2020("20200501");
+    const AQLDate jun2020("20200601");
 
-    const LADate jul2020("20200701");
-    const LADate aug2020("20200801");
-    const LADate sep2020("20200901");
+    const AQLDate jul2020("20200701");
+    const AQLDate aug2020("20200801");
+    const AQLDate sep2020("20200901");
 
-    const LADate oct2020("20201001");
-    const LADate nov2020("20201101");
-    const LADate dec2020("20201201");
+    const AQLDate oct2020("20201001");
+    const AQLDate nov2020("20201101");
+    const AQLDate dec2020("20201201");
 
     const std::string resultF0 = etrading::convertDateToFuturesTicker( jan2020 );
     const std::string resultG0 = etrading::convertDateToFuturesTicker( feb2020 );
@@ -124,17 +124,17 @@ TEST( TestFuturesTickers, UNIT_ConvertFuturesDateToTicker3 )
     // In ascending orderJan - Dec
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
-    const LADate jan2020("20200101");
-    const LADate jan2021("20210101");
-    const LADate jan2022("20220101");
-    const LADate jan2023("20230101");
-    const LADate jan2024("20240101");
-    const LADate jan2025("20250101");
-    const LADate jan2026("20260101");
-    const LADate jan2027("20270101");
-    const LADate jan2028("20280101");
-    const LADate jan2029("20290101");
-    const LADate jan2030("20300101");
+    const AQLDate jan2020("20200101");
+    const AQLDate jan2021("20210101");
+    const AQLDate jan2022("20220101");
+    const AQLDate jan2023("20230101");
+    const AQLDate jan2024("20240101");
+    const AQLDate jan2025("20250101");
+    const AQLDate jan2026("20260101");
+    const AQLDate jan2027("20270101");
+    const AQLDate jan2028("20280101");
+    const AQLDate jan2029("20290101");
+    const AQLDate jan2030("20300101");
     
     const std::string resultF0  = etrading::convertDateToFuturesTicker( jan2020 );
     const std::string resultF1  = etrading::convertDateToFuturesTicker( jan2021 );
@@ -169,10 +169,10 @@ TEST( TestFuturesTickers, UNIT_CurrentIMMFuturesTicker )
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
     // Current Future is the Future that is Active i.e. start date in past but yet to end.
-    const LADate referenceDate1("20190101");
-    const LADate referenceDate2("20190401");
-    const LADate referenceDate3("20190701");
-    const LADate referenceDate4("20191101");
+    const AQLDate referenceDate1("20190101");
+    const AQLDate referenceDate2("20190401");
+    const AQLDate referenceDate3("20190701");
+    const AQLDate referenceDate4("20191101");
 
     const std::string currentFuturesTicker1 = etrading::currentIMMFuturesTicker( referenceDate1 );
     const std::string currentFuturesTicker2 = etrading::currentIMMFuturesTicker( referenceDate2 );
@@ -193,10 +193,10 @@ TEST( TestFuturesTickers, UNIT_NextIMMFuturesTicker )
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
     // The Next Future is the first future starting after the reference date
-    const LADate referenceDate1("20190101");
-    const LADate referenceDate2("20190401");
-    const LADate referenceDate3("20190701");
-    const LADate referenceDate4("20191101");
+    const AQLDate referenceDate1("20190101");
+    const AQLDate referenceDate2("20190401");
+    const AQLDate referenceDate3("20190701");
+    const AQLDate referenceDate4("20191101");
 
     const std::string nextFuturesTicker1 = etrading::nextIMMFuturesTicker( referenceDate1 );
     const std::string nextFuturesTicker2 = etrading::nextIMMFuturesTicker( referenceDate2 );
@@ -217,10 +217,10 @@ TEST( TestFuturesTickers, UNIT_PreviousIMMFuturesTicker )
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
     // The Previous Future is the first future starting before the reference date
-    const LADate referenceDate1("20190101");
-    const LADate referenceDate2("20190401");
-    const LADate referenceDate3("20190701");
-    const LADate referenceDate4("20191101");
+    const AQLDate referenceDate1("20190101");
+    const AQLDate referenceDate2("20190401");
+    const AQLDate referenceDate3("20190701");
+    const AQLDate referenceDate4("20191101");
 
     const std::string previousFuturesTicker1 = etrading::previousIMMFuturesTicker( referenceDate1 );
     const std::string previousFuturesTicker2 = etrading::previousIMMFuturesTicker( referenceDate2 );
@@ -239,7 +239,7 @@ TEST( TestFuturesTickers, UNIT_NthIMMFuturesTicker )
     // In ascending orderJan - Dec
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
-    const LADate referenceDate1("20190101");
+    const AQLDate referenceDate1("20190101");
     
     const std::string futuresTicker1 = etrading::nthIMMFuturesTicker( referenceDate1, 1 );
     const std::string futuresTicker2 = etrading::nthIMMFuturesTicker( referenceDate1, 2 );
@@ -258,21 +258,21 @@ TEST( TestFuturesTickers, UNIT_ConvertFuturesDateToTicker1_TwoDigitYearFormat )
     // In ascending orderJan - Dec
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
-    const LADate jan2019("20190101");
-    const LADate feb2019("20190201");
-    const LADate mar2019("20190301");
+    const AQLDate jan2019("20190101");
+    const AQLDate feb2019("20190201");
+    const AQLDate mar2019("20190301");
 
-    const LADate apr2019("20190401");
-    const LADate may2019("20190501");
-    const LADate jun2019("20190601");
+    const AQLDate apr2019("20190401");
+    const AQLDate may2019("20190501");
+    const AQLDate jun2019("20190601");
 
-    const LADate jul2019("20190701");
-    const LADate aug2019("20190801");
-    const LADate sep2019("20190901");
+    const AQLDate jul2019("20190701");
+    const AQLDate aug2019("20190801");
+    const AQLDate sep2019("20190901");
 
-    const LADate oct2019("20191001");
-    const LADate nov2019("20191101");
-    const LADate dec2019("20191201");
+    const AQLDate oct2019("20191001");
+    const AQLDate nov2019("20191101");
+    const AQLDate dec2019("20191201");
 
     const std::string resultF9 = etrading::convertDateToFuturesTicker( jan2019, true );
     const std::string resultG9 = etrading::convertDateToFuturesTicker( feb2019, true );
@@ -314,21 +314,21 @@ TEST( TestFuturesTickers, UNIT_ConvertFuturesDateToTicker2_TwoDigitYearFormat )
     // In ascending orderJan - Dec
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
-    const LADate jan2020("20200101");
-    const LADate feb2020("20200201");
-    const LADate mar2020("20200301");
+    const AQLDate jan2020("20200101");
+    const AQLDate feb2020("20200201");
+    const AQLDate mar2020("20200301");
 
-    const LADate apr2020("20200401");
-    const LADate may2020("20200501");
-    const LADate jun2020("20200601");
+    const AQLDate apr2020("20200401");
+    const AQLDate may2020("20200501");
+    const AQLDate jun2020("20200601");
 
-    const LADate jul2020("20200701");
-    const LADate aug2020("20200801");
-    const LADate sep2020("20200901");
+    const AQLDate jul2020("20200701");
+    const AQLDate aug2020("20200801");
+    const AQLDate sep2020("20200901");
 
-    const LADate oct2020("20201001");
-    const LADate nov2020("20201101");
-    const LADate dec2020("20201201");
+    const AQLDate oct2020("20201001");
+    const AQLDate nov2020("20201101");
+    const AQLDate dec2020("20201201");
 
     const std::string resultF0 = etrading::convertDateToFuturesTicker( jan2020, true );
     const std::string resultG0 = etrading::convertDateToFuturesTicker( feb2020, true );
@@ -370,17 +370,17 @@ TEST( TestFuturesTickers, UNIT_ConvertFuturesDateToTicker3_TwoDigitYearFormat )
     // In ascending orderJan - Dec
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
-    const LADate jan2020("20200101");
-    const LADate jan2021("20210101");
-    const LADate jan2022("20220101");
-    const LADate jan2023("20230101");
-    const LADate jan2024("20240101");
-    const LADate jan2025("20250101");
-    const LADate jan2026("20260101");
-    const LADate jan2027("20270101");
-    const LADate jan2028("20280101");
-    const LADate jan2029("20290101");
-    const LADate jan2030("20300101");
+    const AQLDate jan2020("20200101");
+    const AQLDate jan2021("20210101");
+    const AQLDate jan2022("20220101");
+    const AQLDate jan2023("20230101");
+    const AQLDate jan2024("20240101");
+    const AQLDate jan2025("20250101");
+    const AQLDate jan2026("20260101");
+    const AQLDate jan2027("20270101");
+    const AQLDate jan2028("20280101");
+    const AQLDate jan2029("20290101");
+    const AQLDate jan2030("20300101");
     
     const std::string resultF0  = etrading::convertDateToFuturesTicker( jan2020, true );
     const std::string resultF1  = etrading::convertDateToFuturesTicker( jan2021, true );
@@ -415,10 +415,10 @@ TEST( TestFuturesTickers, UNIT_CurrentIMMFuturesTicker_TwoDigitYearFormat )
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
     // Current Future is the Future that is Active i.e. start date in past but yet to end.
-    const LADate referenceDate1("20190101");
-    const LADate referenceDate2("20190401");
-    const LADate referenceDate3("20190701");
-    const LADate referenceDate4("20191101");
+    const AQLDate referenceDate1("20190101");
+    const AQLDate referenceDate2("20190401");
+    const AQLDate referenceDate3("20190701");
+    const AQLDate referenceDate4("20191101");
 
     const std::string currentFuturesTicker1 = etrading::currentIMMFuturesTicker( referenceDate1, false, "", "NO_CHANGE", true /* showYearIn2DigitFormat*/ );
     const std::string currentFuturesTicker2 = etrading::currentIMMFuturesTicker( referenceDate2, false, "", "NO_CHANGE", true /* showYearIn2DigitFormat*/  );
@@ -439,10 +439,10 @@ TEST( TestFuturesTickers, UNIT_NextIMMFuturesTicker_TwoDigitYearFormat )
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
     // The Next Future is the first future starting after the reference date
-    const LADate referenceDate1("20190101");
-    const LADate referenceDate2("20190401");
-    const LADate referenceDate3("20190701");
-    const LADate referenceDate4("20191101");
+    const AQLDate referenceDate1("20190101");
+    const AQLDate referenceDate2("20190401");
+    const AQLDate referenceDate3("20190701");
+    const AQLDate referenceDate4("20191101");
 
     const std::string nextFuturesTicker1 = etrading::nextIMMFuturesTicker( referenceDate1, "", "NO_CHANGE", true /* showYearIn2DigitFormat*/ );
     const std::string nextFuturesTicker2 = etrading::nextIMMFuturesTicker( referenceDate2, "", "NO_CHANGE", true /* showYearIn2DigitFormat*/ );
@@ -463,10 +463,10 @@ TEST( TestFuturesTickers, UNIT_PreviousIMMFuturesTicker_TwoDigitYearFormat )
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
     // The Previous Future is the first future starting before the reference date
-    const LADate referenceDate1("20190101");
-    const LADate referenceDate2("20190401");
-    const LADate referenceDate3("20190701");
-    const LADate referenceDate4("20191101");
+    const AQLDate referenceDate1("20190101");
+    const AQLDate referenceDate2("20190401");
+    const AQLDate referenceDate3("20190701");
+    const AQLDate referenceDate4("20191101");
 
     const std::string previousFuturesTicker1 = etrading::previousIMMFuturesTicker( referenceDate1, "", "NO_CHANGE", true /* showYearIn2DigitFormat*/ );
     const std::string previousFuturesTicker2 = etrading::previousIMMFuturesTicker( referenceDate2, "", "NO_CHANGE", true /* showYearIn2DigitFormat*/ );
@@ -485,7 +485,7 @@ TEST( TestFuturesTickers, UNIT_NthIMMFuturesTicker_TwoDigitYearFormat )
     // In ascending orderJan - Dec
     // "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"
 
-    const LADate referenceDate1("20190101");
+    const AQLDate referenceDate1("20190101");
     
     const std::string futuresTicker1 = etrading::nthIMMFuturesTicker( referenceDate1, 1, false, "", "NO_CHANGE", true /* showYearIn2DigitFormat*/ );
     const std::string futuresTicker2 = etrading::nthIMMFuturesTicker( referenceDate1, 2, false, "", "NO_CHANGE", true /* showYearIn2DigitFormat*/ );

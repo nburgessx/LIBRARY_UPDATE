@@ -20,17 +20,17 @@
 
 #include <algorithm>
 #include "LARiskConfigurationYieldBasisDeltaAnalytic.h"
-#include "LADataInstance.h"
-#include "LABasic.h"
-#include "LAObjectPool.h"
-#include "LADataReference.h"
-#include "LADataProcedure.h"
+#include "AQLDataInstance.h"
+#include "AQLBasic.h"
+#include "AQLObjectPool.h"
+#include "AQLDataReference.h"
+#include "AQLDataProcedure.h"
 #include "LADefinitionsRisk.h"
 #include "LAScenarioConfiguration.h"
 #include "LAScenarioConfigurationManager.h"
 #include "LAFileAccessor.h"
 #include "LAMarketData.h"
-#include "LALinearFunc.h"
+#include "AQLLinearFunc.h"
 #include "LAStaticData.h"
 #include "LADealUtils.h"
 

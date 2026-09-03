@@ -17,13 +17,13 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LADataInstanceConfiguration.h"
 
 
-class LADataInstance;
-class LAObject;
-class LADate;
+class AQLDataInstance;
+class AQLObject;
+class AQLDate;
 
 //===================== Class Declare LADataInstanceConfigurationPV==================================
 /*! 
@@ -47,48 +47,48 @@ public:
 
 	//==============================================
 	// setup master object
-	virtual void setUpMasters(LADataInstance &dataInstance) const;
+	virtual void setUpMasters(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup sde
-	virtual void setUpSDE(LADataInstance &dataInstance) const;
+	virtual void setUpSDE(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// load entities
-	virtual void loadEntities(LADataInstance &dataInstance) const;
+	virtual void loadEntities(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// load entities
-	virtual void loadCSV(LADataInstance &dataInstance) const;
+	virtual void loadCSV(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup entities
-	virtual void setUpEntityes(LADataInstance &dataInstance) const;
+	virtual void setUpEntityes(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup  risk entities
-	virtual void setUpRiskEntityes(LADataInstance &dataInstance) const;
+	virtual void setUpRiskEntityes(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// create path object
-	virtual void createPathEntity(LADataInstance &dataInstance) const;
+	virtual void createPathEntity(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// create fx object
-	virtual void createFXEntity(LADataInstance &dataInstance) const;
+	virtual void createFXEntity(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup path object
-	virtual void setUpPathEntity(LADataInstance &dataInstance) const;
+	virtual void setUpPathEntity(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup fx object
-	virtual void setUpFXEntity(LADataInstance &dataInstance) const;
+	virtual void setUpFXEntity(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup risk info
-	virtual void setUpRiskInfo(LADataInstance &dataInstance) const;
+	virtual void setUpRiskInfo(AQLDataInstance &dataInstance) const;
 
 protected:
 
-	LAStringVector mSDECurrencys; // currency vector
-	LAStringVector mSDEModels;    // model vector for currency
-	LAString mPathEntityName;	// PATH1 or MARKETPARAM
+	AQLStringVector mSDECurrencys; // currency vector
+	AQLStringVector mSDEModels;    // model vector for currency
+	AQLString mPathEntityName;	// PATH1 or MARKETPARAM
 
-    void shiftPaymentDate(LAObject& trade, const LADate& asof1, const LADate& asof2) const;
-    void shiftPaymentDate(LADataInstance& dataInstance) const;
-    LADate getAsOfDate(LADataInstance& dataInstance) const;
-    void insertContext(LAStringMatrix& m, LADataInstance& dataInstance) const;
-    void setupFundingChangeInfo(LADataInstance& dataInstance) const;
+    void shiftPaymentDate(AQLObject& trade, const AQLDate& asof1, const AQLDate& asof2) const;
+    void shiftPaymentDate(AQLDataInstance& dataInstance) const;
+    AQLDate getAsOfDate(AQLDataInstance& dataInstance) const;
+    void insertContext(AQLStringMatrix& m, AQLDataInstance& dataInstance) const;
+    void setupFundingChangeInfo(AQLDataInstance& dataInstance) const;
 };
 #endif

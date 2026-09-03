@@ -27,7 +27,7 @@ namespace etrading
 		}
 	}
 
-	const LADate RateProvider::asOfDate() const
+	const AQLDate RateProvider::asOfDate() const
 	{
 		return getCurveAsOfDate(curveCollection_.c_str());
 	}
@@ -45,7 +45,7 @@ namespace etrading
 		const DateVector paymentDates = schOutput->paymentDates();
 		const auto forecastCurve = schParams->forecastCurve();
 
-		const LADate asOfDt = asOfDate();
+		const AQLDate asOfDt = asOfDate();
 		size_t firstNonpastFixingDateIndex = getFirstNonpastDateIndex(fixingDates, asOfDt);
 
 		const auto forecastCurveMarketName = (forecastCurve.size() != 0) ? getCurveStaticDataTableName(curveCollection_.c_str(), forecastCurve.c_str()) : "";
@@ -86,7 +86,7 @@ namespace etrading
 
 			if (!isOISOrARR && getFrequencyOrTenorMonth(crvFreqTenor.c_str()) != getFrequencyOrTenorMonth(toString(schParams->accrualFrequency()).c_str()))
 			{
-				throw LACoreInvalidData("#Error: Accrual Frequency is not the same as Curve Frequency.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: Accrual Frequency is not the same as Curve Frequency.", __FILE__, __LINE__);
 			}
 
 			// *** Special treatment for OIS leg without compoundMethod: use leg's accrual freq instead of curve's freq to calculate Forward Rates
@@ -105,7 +105,7 @@ namespace etrading
 			//bool isFwdInter = getfwdInterInfo(curveCollection, forecastCurveMarketName_, schParams->fwdInter_).isFwdInter;
 			//schParams->fwdInter_ = (isFwdInter ? TRUE_BOOL : FALSE_BOOL);
 
-			const std::pair<LAStringVector, LAStringVector> curvesInfo = getStubRateCurveIndicesTenors(curveCollection_.c_str());
+			const std::pair<AQLStringVector, AQLStringVector> curvesInfo = getStubRateCurveIndicesTenors(curveCollection_.c_str());
 			const auto curveIndices = curvesInfo.first;
 			const auto curveTenors = curvesInfo.second;
 
@@ -200,7 +200,7 @@ namespace etrading
 					// If a front stub exists, has fixed already, is the current fixing and has not yet been paid out then the firstFixingRate must be provided
 					if (fixingDate < asOfDt && paymentDate >= asOfDt && !hasFirstFixing)
 					{
-						throw LACoreInvalidData("#Error: The float leg 'firstFixing' is required for the front stub rate.", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("#Error: The float leg 'firstFixing' is required for the front stub rate.", __FILE__, __LINE__);
 					}
 
 					floatRate = calculateStubRate(firstStubCurveIndex, curveIndices, curveTenors, crvFreqTenor, interpolation, schParams, schOutput);
@@ -220,7 +220,7 @@ namespace etrading
 					// If a back stub exists, has fixed already, is the current fixing and has not yet been paid out then the lastFixingRate must be provided
 					if (fixingDate <= asOfDt && paymentDate >= asOfDt && !hasLastFixing && !hasFirstFixing)
 					{
-						throw LACoreInvalidData("#Error: The float leg 'lastFixing' is required for the back stub rate.", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("#Error: The float leg 'lastFixing' is required for the back stub rate.", __FILE__, __LINE__);
 					}
 
 					floatRate = calculateStubRate(lastStubCurveIndex, curveIndices, curveTenors, crvFreqTenor, interpolation, schParams, schOutput);
@@ -251,7 +251,7 @@ namespace etrading
 		// The equivalent rate is obtained either through daily compounding over this period or finding the arithmetic average.
 		if (schParams->accrualbusinessDayAdj() == NONE_BUSINESS_DAY_ADJ || schParams->accrualCalendar().size() == 0)
 		{
-			throw LACoreInvalidData("#Error: OIS average rate cannot be calculated without AccrualbusinessDayAdj or AccrualCalendar, please update the float leg schedule", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: OIS average rate cannot be calculated without AccrualbusinessDayAdj or AccrualCalendar, please update the float leg schedule", __FILE__, __LINE__);
 		}
 
 		const size_t expectedSize = fixingEndDates.size();
@@ -303,8 +303,8 @@ namespace etrading
 			{
 				const double spread = schOutput->spreads()[i] * oneBasisPoint;
 
-				const LADate fixingDate = schOutput->fixingDates()[i];
-				const LADate fixingEndDate = fixingEndDates[i];
+				const AQLDate fixingDate = schOutput->fixingDates()[i];
+				const AQLDate fixingEndDate = fixingEndDates[i];
 
 				const double floatRate = calculateCompoundRateWithFixingTable(boost::assign::list_of(fixingDate),
 					boost::assign::list_of(fixingEndDate),
@@ -336,7 +336,7 @@ namespace etrading
 	}
 
 
-	const double RateProvider::calculateStubRate(const std::string& stubCurveIndex, const LAStringVector& curveIndices, const LAStringVector& curveTenors, const std::string& indexFrequency, const std::string& interpolation,
+	const double RateProvider::calculateStubRate(const std::string& stubCurveIndex, const AQLStringVector& curveIndices, const AQLStringVector& curveTenors, const std::string& indexFrequency, const std::string& interpolation,
 										const std::shared_ptr<ScheduleParameters>& schParams, const std::shared_ptr<EnrichedSchedule>& schOutput) const
 	{
 
@@ -372,7 +372,7 @@ namespace etrading
 
 		auto effectiveDate = schOutput->accrualStartDates().front();
 		auto unadjustedMaturityDate = validateMaturityDate(effectiveDate, schParams->accrualEndDateOrTenor());
-		LAString rollConv = getRollConvection(effectiveDate, unadjustedMaturityDate, schParams->rollDayInput());
+		AQLString rollConv = getRollConvection(effectiveDate, unadjustedMaturityDate, schParams->rollDayInput());
 
 		const double ret = CurveInstrumentPricing::getStubRate( fixingDates,
 																curveIndices,

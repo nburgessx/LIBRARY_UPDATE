@@ -1,8 +1,8 @@
 #include "InitializeAQETrading.h"
 #include "TypeUtilities.h"
 #include "mirGetDF.h"
-#include "LADate.h"
-#include "LAString.h"
+#include "AQLDate.h"
+#include "AQLString.h"
 #include "tryMirGetDF.h"
 
 
@@ -30,15 +30,15 @@ double mirGetDF1(double Term,
 		std::vector<double> terms;
 		terms.push_back(Term);
 
-		LAString curveID(CurveID.c_str());
-		LAString dayCount(DayCount.c_str());
-		LAString interpolation(Interpolation.c_str());
-		LAString curveName(CurveName.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString dayCount(DayCount.c_str());
+		AQLString interpolation(Interpolation.c_str());
+		AQLString curveName(CurveName.c_str());
 
 		std::vector<double> DFs = validation::tryMirGetDF1(etrading::InitializeAQETrading::instance().dataInstance(), terms, curveID, dayCount, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -66,14 +66,14 @@ std::vector<double> mirGetDF1(const std::vector<double>& Terms,
 	try 
 	{
 		// Input marshalling
-		LAString curveID(CurveID.c_str());
-		LAString dayCount(DayCount.c_str());
-		LAString interpolation(Interpolation.c_str());
-		LAString curveName(CurveName.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString dayCount(DayCount.c_str());
+		AQLString interpolation(Interpolation.c_str());
+		AQLString curveName(CurveName.c_str());
 
 		ret = validation::tryMirGetDF1(etrading::InitializeAQETrading::instance().dataInstance(), Terms, curveID, dayCount, interpolation, IsBasisFlag, curveName);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -105,20 +105,20 @@ double mirGetDF2(const std::string& Term,
 	try 
 	{
 		// Input marshalling
-		LAStringVector terms;
+		AQLStringVector terms;
 		terms.push_back(Term.c_str());
 
-		LAString curveID(CurveID.c_str());
-		LAString dayCount(DayCount.c_str());
-		LAString slidingRule(SlidingRule.c_str());
-		LAString calendar(Calendar.c_str());
-		LAString interpolation(Interpolation.c_str());
-		LAString curveName(CurveName.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString dayCount(DayCount.c_str());
+		AQLString slidingRule(SlidingRule.c_str());
+		AQLString calendar(Calendar.c_str());
+		AQLString interpolation(Interpolation.c_str());
+		AQLString curveName(CurveName.c_str());
 
 		std::vector<double> DFs = validation::tryMirGetDF2(etrading::InitializeAQETrading::instance().dataInstance(), terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -150,19 +150,19 @@ std::vector<double> mirGetDF2(const std::vector<std::string>& Terms,
 	try 
 	{
 		// Input marshalling
-		LAStringVector terms;
+		AQLStringVector terms;
 		swig::buildStringVector(terms, Terms);
 
-		LAString curveID(CurveID.c_str());
-		LAString dayCount(DayCount.c_str());
-		LAString slidingRule(SlidingRule.c_str());
-		LAString calendar(Calendar.c_str());
-		LAString interpolation(Interpolation.c_str());
-		LAString curveName(CurveName.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString dayCount(DayCount.c_str());
+		AQLString slidingRule(SlidingRule.c_str());
+		AQLString calendar(Calendar.c_str());
+		AQLString interpolation(Interpolation.c_str());
+		AQLString curveName(CurveName.c_str());
 
 		ret = validation::tryMirGetDF2(etrading::InitializeAQETrading::instance().dataInstance(), terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -197,22 +197,22 @@ double mirGetDF3(const std::string& FromDate,
 	{
 		// Input marshalling
 		DateVector fromDates;
-		fromDates.push_back(LADate(FromDate.c_str(), "YYYYMMDD"));
+		fromDates.push_back(AQLDate(FromDate.c_str(), "YYYYMMDD"));
 
 		DateVector toDates;
-		toDates.push_back(LADate(ToDate.c_str(), "YYYYMMDD"));
+		toDates.push_back(AQLDate(ToDate.c_str(), "YYYYMMDD"));
 
-		LAString curveID(CurveID.c_str());
-		LAString dayCount(DayCount.c_str());
-		LAString slidingRule(SlidingRule.c_str());
-		LAString calendar(Calendar.c_str());
-		LAString interpolation(Interpolation.c_str());
-		LAString curveName(CurveName.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString dayCount(DayCount.c_str());
+		AQLString slidingRule(SlidingRule.c_str());
+		AQLString calendar(Calendar.c_str());
+		AQLString interpolation(Interpolation.c_str());
+		AQLString curveName(CurveName.c_str());
 
 		std::vector<double> DFs = validation::tryMirGetDF3(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, toDates, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -248,21 +248,21 @@ std::vector<double> mirGetDF3(const std::string& FromDate,
 	{
 		// Input marshalling
 		DateVector fromDates;
-		fromDates.push_back(LADate(FromDate.c_str(), "YYYYMMDD"));
+		fromDates.push_back(AQLDate(FromDate.c_str(), "YYYYMMDD"));
 
 		DateVector toDates;
 		swig::buildDateVector(toDates, ToDates);
 
-		LAString curveID(CurveID.c_str());
-		LAString dayCount(DayCount.c_str());
-		LAString slidingRule(SlidingRule.c_str());
-		LAString calendar(Calendar.c_str());
-		LAString interpolation(Interpolation.c_str());
-		LAString curveName(CurveName.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString dayCount(DayCount.c_str());
+		AQLString slidingRule(SlidingRule.c_str());
+		AQLString calendar(Calendar.c_str());
+		AQLString interpolation(Interpolation.c_str());
+		AQLString curveName(CurveName.c_str());
 
 		ret = validation::tryMirGetDF3(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, toDates, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -298,22 +298,22 @@ double mirGetDF4(const std::string& FromDate,
 	{
 		// Input marshalling
 		DateVector fromDates;
-		fromDates.push_back(LADate(FromDate.c_str(), "YYYYMMDD"));
+		fromDates.push_back(AQLDate(FromDate.c_str(), "YYYYMMDD"));
 
 		DoubleVector terms;
 		terms.push_back(Term);
 
-		LAString curveID(CurveID.c_str());
-		LAString dayCount(DayCount.c_str());
-		LAString slidingRule(SlidingRule.c_str());
-		LAString calendar(Calendar.c_str());
-		LAString interpolation(Interpolation.c_str());
-		LAString curveName(CurveName.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString dayCount(DayCount.c_str());
+		AQLString slidingRule(SlidingRule.c_str());
+		AQLString calendar(Calendar.c_str());
+		AQLString interpolation(Interpolation.c_str());
+		AQLString curveName(CurveName.c_str());
 
 		std::vector<double> DFs = validation::tryMirGetDF4(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -351,16 +351,16 @@ std::vector<double> mirGetDF4(const std::vector<std::string>& FromDates,
 		DateVector fromDates;
 		swig::buildDateVector(fromDates, FromDates);
 
-		LAString curveID(CurveID.c_str());
-		LAString dayCount(DayCount.c_str());
-		LAString slidingRule(SlidingRule.c_str());
-		LAString calendar(Calendar.c_str());
-		LAString interpolation(Interpolation.c_str());
-		LAString curveName(CurveName.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString dayCount(DayCount.c_str());
+		AQLString slidingRule(SlidingRule.c_str());
+		AQLString calendar(Calendar.c_str());
+		AQLString interpolation(Interpolation.c_str());
+		AQLString curveName(CurveName.c_str());
 
 		ret = validation::tryMirGetDF4(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, Terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -396,20 +396,20 @@ double mirGetDF5(const std::string& FromDate,
 	{
 		// Input marshalling
 		DateVector fromDates;
-		fromDates.push_back(LADate(FromDate.c_str(), "YYYYMMDD"));
+		fromDates.push_back(AQLDate(FromDate.c_str(), "YYYYMMDD"));
 
-		LAString term(TermTenor.c_str());
-		LAString curveID(CurveID.c_str());
-		LAString dayCount(DayCount.c_str());
-		LAString slidingRule(SlidingRule.c_str());
-		LAString calendar(Calendar.c_str());
-		LAString interpolation(Interpolation.c_str());
-		LAString curveName(CurveName.c_str());
+		AQLString term(TermTenor.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString dayCount(DayCount.c_str());
+		AQLString slidingRule(SlidingRule.c_str());
+		AQLString calendar(Calendar.c_str());
+		AQLString interpolation(Interpolation.c_str());
+		AQLString curveName(CurveName.c_str());
 
 		std::vector<double> DFs = validation::tryMirGetDF5(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, term, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -447,17 +447,17 @@ std::vector<double> mirGetDF5(const std::vector<std::string>& FromDates,
 		DateVector fromDates;
 		swig::buildDateVector(fromDates, FromDates);
 
-		LAString term(TermTenor.c_str());
-		LAString curveID(CurveID.c_str());
-		LAString dayCount(DayCount.c_str());
-		LAString slidingRule(SlidingRule.c_str());
-		LAString calendar(Calendar.c_str());
-		LAString interpolation(Interpolation.c_str());
-		LAString curveName(CurveName.c_str());
+		AQLString term(TermTenor.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString dayCount(DayCount.c_str());
+		AQLString slidingRule(SlidingRule.c_str());
+		AQLString calendar(Calendar.c_str());
+		AQLString interpolation(Interpolation.c_str());
+		AQLString curveName(CurveName.c_str());
 
 		ret = validation::tryMirGetDF5(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, term, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

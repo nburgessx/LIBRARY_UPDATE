@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "LADate.h"
+#include "AQLDate.h"
 #include "BondEnumerations.h"
 #include "CoreEnumerations.h"
 #include <string>
@@ -26,7 +26,7 @@ namespace etrading
 	*  @param [in]		bondYieldParameters         Bond Yield Parameters
 	*  @return			Number of Bond Accrued Interest Days for a given coupon
 	*/
-	double calculateBondAccruedInterestDays(const LADate& settlementDate, const BondActiveCouponDates & activeCouponDates , const BondYieldParameters& bondYieldParameters);
+	double calculateBondAccruedInterestDays(const AQLDate& settlementDate, const BondActiveCouponDates & activeCouponDates , const BondYieldParameters& bondYieldParameters);
 
 	/* @brief			Calculate the bond accrued interest year fraction i.e. days between lastCouponDate and settleDate over days between lastCouponDate and currentCouponDate
 	*  @param [in]		settlementDate                      Bond Settlement Date
@@ -34,7 +34,7 @@ namespace etrading
 	*  @param [in]		bondYieldParameters                 Bond Yield Parameters
 	*  @return			Bond Accrual Period as a double
 	*/
-	const double calculateBondAccruedInterestYearFraction(const LADate & settlementDate, const BondActiveCouponDates & activeCouponDates, const BondYieldParameters & bondYieldParameters);
+	const double calculateBondAccruedInterestYearFraction(const AQLDate & settlementDate, const BondActiveCouponDates & activeCouponDates, const BondYieldParameters & bondYieldParameters);
 
 }
 

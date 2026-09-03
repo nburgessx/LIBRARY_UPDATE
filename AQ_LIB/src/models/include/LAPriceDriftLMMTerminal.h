@@ -26,7 +26,7 @@ public:
 	// Default constructor
 	explicit LAPriceDriftLMMTerminal(double Q = 1.0);
 	// constructor
-	LAPriceDriftLMMTerminal(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double Q = 1.0);	
+	LAPriceDriftLMMTerminal(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double Q = 1.0);	
 	//	Copy constructor
 	LAPriceDriftLMMTerminal(const LAPriceDriftLMMTerminal& v);
 	// Destructor
@@ -38,7 +38,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;

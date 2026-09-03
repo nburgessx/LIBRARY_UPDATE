@@ -16,10 +16,10 @@
 //  STATUS      :       
 ////X///////////////////X///////////////////////////////X///////////////////
 
-#include <LACoreUtil.h>
+#include <AQLCoreUtil.h>
 #include <vector>
 #include <map>
-#include "LAFunction.h"
+#include "AQLFunction.h"
 #include <limits>
 
 #include "LAQuantLibCostFunction.h"

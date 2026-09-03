@@ -1,7 +1,7 @@
 // TestCurveSplineInterpolation.cpp
 
 /*
- * @brief			Tests to validate the LASplineInterpolation Class
+ * @brief			Tests to validate the AQLSplineInterpolation Class
  * @Created:		26th March 2020
  * @Author:			Arthur Wu
  * @Department:		AlgoQuantHub London Quant Research
@@ -12,7 +12,7 @@
 // Include: Google Test Library
 #include <gTest/gTest.h>
 
-#include "LASplineInterpolation.h"
+#include "AQLSplineInterpolation.h"
 
 namespace google_test
 {
@@ -26,7 +26,7 @@ namespace google_test
         std::vector<double> values = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         
 		// Interpolator2 uses natural spline
-		LASplineInterpolation interp1(false), interp2(true);
+		AQLSplineInterpolation interp1(false), interp2(true);
 
 		interp1.set(terms, values);
 		interp2.set(terms, values);
@@ -48,7 +48,7 @@ namespace google_test
         std::vector<double> values = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         
 		// Interpolator2 uses natural spline
-		LASplineInterpolation interp1(false), interp2(true);
+		AQLSplineInterpolation interp1(false), interp2(true);
 	
 		interp1.set(terms, values);
 		interp2.set(terms, values);
@@ -70,7 +70,7 @@ namespace google_test
 		std::vector<double> values = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
 		// Interpolator2 uses natural spline
-		LASplineInterpolation interp1(false), interp2(true);
+		AQLSplineInterpolation interp1(false), interp2(true);
 
 		interp1.set(terms, values);
 		interp2.set(terms, values);
@@ -92,7 +92,7 @@ namespace google_test
 		std::vector<double> values = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	
 		// Interpolator2 uses natural spline
-		LASplineInterpolation interp1(false), interp2(true);
+		AQLSplineInterpolation interp1(false), interp2(true);
 	
 		interp1.set(terms, values);
 		interp2.set(terms, values);
@@ -114,7 +114,7 @@ namespace google_test
 		std::vector<double> values = { 1, 3, 6, 7, 2, -6, -10, -7.2, -3.14, 0.1, 1.8 };
 
 		// Interpolator2 uses natural spline
-		LASplineInterpolation interp1(false), interp2(true);
+		AQLSplineInterpolation interp1(false), interp2(true);
 
 		interp1.set(terms, values);
 		interp2.set(terms, values);

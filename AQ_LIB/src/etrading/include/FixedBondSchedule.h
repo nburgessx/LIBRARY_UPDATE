@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "BondSchedule.h"
 
 namespace etrading
@@ -25,7 +25,7 @@ namespace etrading
 		//Input parameters
 		double fixedRate_;
 		//Override
-		void createUpfrontCashflow(const LADate& paymentDate, double leverage);
+		void createUpfrontCashflow(const AQLDate& paymentDate, double leverage);
 		//Override
 		void createCashflows();
 

@@ -167,7 +167,7 @@ namespace etrading
 	*  @param[in]	valuationDate	PV the coupons to this valuation date
 	*  @returns		The PV of all coupons occurring at the specified time period
 	*/
-	double TrancheScheduleData::calculateNPVDiscountMargin( const size_t callPeriod, const LADate& valuationDate ) const
+	double TrancheScheduleData::calculateNPVDiscountMargin( const size_t callPeriod, const AQLDate& valuationDate ) const
 	{
 		// *** Note: valuationDate is not used.
 
@@ -195,7 +195,7 @@ namespace etrading
 	*  @param[in]	valuationDate	PV the coupons to this valuation date
 	*  @returns		The PV of all coupons occurring at the specified time period
 	*/
-	double TrancheScheduleData::calculateNPV( const double& interestRate, const size_t callPeriod, const LADate& valuationDate ) const
+	double TrancheScheduleData::calculateNPV( const double& interestRate, const size_t callPeriod, const AQLDate& valuationDate ) const
 	{
 		AQ_REQUIRE( callPeriod < nPeriods_, "Specified callPeriod is outside of range. Maximum tranch period is: " << nPeriods_ << "; specified callPeriod is: " << callPeriod );
 
@@ -203,7 +203,7 @@ namespace etrading
 
 		// MGEN year fraction calculation
 		// In a correct yearFraction calculation, what should be the dayCount?
-		const LADate& finalPaymentDate = paymentDate_[callPeriod];
+		const AQLDate& finalPaymentDate = paymentDate_[callPeriod];
 		// *** TODO Should we consider days?
 		const int intervalMonths = valuationDate.intervalMonths( finalPaymentDate );
 		const int intervalYears  = valuationDate.intervalYears( finalPaymentDate );
@@ -214,7 +214,7 @@ namespace etrading
 		{
 			// MGEN year fraction calculation
 			// In a correct yearFraction calculation, what should be the dayCount?
-			const LADate& payDate = paymentDate_[ iPeriod ];
+			const AQLDate& payDate = paymentDate_[ iPeriod ];
 			// *** TODO Should we consider days?
 			const int intervalMonthsToPayDate = valuationDate.intervalMonths( payDate );
 			const int intervalYearsToPayDate  = valuationDate.intervalYears( payDate );
@@ -239,7 +239,7 @@ namespace etrading
 		return totalPV;
 	}
 
-	double TrancheScheduleData::calculateIRR( const size_t callPeriod, const LADate& valuationDate, const double& targetPrice ) const
+	double TrancheScheduleData::calculateIRR( const size_t callPeriod, const AQLDate& valuationDate, const double& targetPrice ) const
 	{
 		AQ_REQUIRE( callPeriod < nPeriods_, "Specified callPeriod is outside of range. Maximum tranch period is: " << nPeriods_ << "; specified callPeriod is: " << callPeriod );
 

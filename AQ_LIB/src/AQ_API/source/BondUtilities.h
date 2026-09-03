@@ -11,13 +11,13 @@
 
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "BondTypes.h"                  // For Bond Curve Fitting - Swig Struct Definitions
 #include "BondCurves.h"                 // For Bond Curve Fitting - Struct Definition: NelsonSiegelSvenssonParameters
 #include "NelsonSiegelFitting.h"        // For Bond Curve Fitting - Struct Definition: NelsonSiegelSvenssonCalibrationResults
 #include "PolynomialFitting.h"          // For Bond Curve Fitting - Struct Definition: PolynomialCalibrationResults
 
-class LAString;
+class AQLString;
 
 namespace swig
 {

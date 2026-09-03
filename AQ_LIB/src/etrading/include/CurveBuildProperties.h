@@ -19,8 +19,8 @@
 #include "CoreEnumerations.h"
 #include "HasInstance.h"
 #include "HasSchemaObjectConverter.h"
-#include "LAMathCalendarSet.h"
-#include "LAMathCalendar.h"
+#include "AQLMathCalendarSet.h"
+#include "AQLMathCalendar.h"
 #include "Variant.h"
 #include "IsLWOObject.h"
 
@@ -79,15 +79,15 @@ namespace etrading
 
         void setFixingDayCalendar( const std::string& calendar );
         const std::string getFixingDayCalendar() const;
-        const LAMathCalendar* getMlibFixingCalendar() const;
+        const AQLMathCalendar* getMlibFixingCalendar() const;
 
         void setAccrualDayCalendar( const std::string& calendar );
         const std::string getAccrualDayCalendar() const;
-        const LAMathCalendar* getMlibAccrualCalendar() const;
+        const AQLMathCalendar* getMlibAccrualCalendar() const;
 
         void setPaymentDayCalendar( const std::string& calendar );
         const std::string getPaymentDayCalendar() const;
-        const LAMathCalendar* getMlibPaymentCalendar() const;
+        const AQLMathCalendar* getMlibPaymentCalendar() const;
 
         const ExtrapolationTypeEnum getExtrapolationTypeEnum() const;
 
@@ -118,9 +118,9 @@ namespace etrading
         std::string paymentCalendar_;
 
         // observation pointer so never delete it
-        const LAMathCalendar* mlibFixingCalendar_;
-        const LAMathCalendar* mlibAccrualCalendar_;
-        const LAMathCalendar* mlibPaymentCalendar_;
+        const AQLMathCalendar* mlibFixingCalendar_;
+        const AQLMathCalendar* mlibAccrualCalendar_;
+        const AQLMathCalendar* mlibPaymentCalendar_;
 
         const bool isConsistent() const;
         void assertConsistent() const;

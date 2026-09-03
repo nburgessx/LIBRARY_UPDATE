@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -13,10 +13,10 @@ namespace validation
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The IMM date on the given month
     */
-    LADate tryMeDateIMMFromMonth( int year,
+    AQLDate tryMeDateIMMFromMonth( int year,
                                   int month,
-                                  const LAString& calendar,
-                                  const LAString& businessDayAdj );
+                                  const AQLString& calendar,
+                                  const AQLString& businessDayAdj );
 
     /* @brief			validation interface for meDateNthIMM
     *  @param [in]		year			The year of the IMM date
@@ -25,10 +25,10 @@ namespace validation
     *  @param [in]		businessDayAdj		Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The nth IMM date of the year
     */
-    LADate tryMeDateNthIMM( int year,
+    AQLDate tryMeDateNthIMM( int year,
                             int nth,
-                            const LAString& calendar,
-                            const LAString& businessDayAdj );
+                            const AQLString& calendar,
+                            const AQLString& businessDayAdj );
 
     /* @brief			validation interface for meDateNthIMMFromStartDate
     *  @param [in]		startDate		The start (reference) date
@@ -37,29 +37,29 @@ namespace validation
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The nth IMM date from the start date, starting from the one closest to the start date
     */
-    LADate tryMeDateNthIMMFromStartDate( const LADate& startDate,
+    AQLDate tryMeDateNthIMMFromStartDate( const AQLDate& startDate,
                                          int nth,
-                                         const LAString& calendar,
-                                         const LAString& businessDayAdj );
+                                         const AQLString& calendar,
+                                         const AQLString& businessDayAdj );
 
     /* @brief			validation interface for tryMeDateIMMCurrent
     *  @param [in]		valuationDate	The valuation date
     *  @param [in]		includeToday    Allow the IMM roll date to match the valuation date: TRUE = Don't roll IMM date if it falls on the valuation date
     *  @return			The current IMM start date, which may be in the past
     */
-    LADate tryMeDateIMMCurrent( const LADate & valuationDate, const bool includeToday = false );
+    AQLDate tryMeDateIMMCurrent( const AQLDate & valuationDate, const bool includeToday = false );
     
     /* @brief			validation interface for tryMeDateIMMNext
     *  @param [in]		referenceDate	The IMM reference date
     *  @return			The next IMM start date relative to the reference date
     */
-    LADate tryMeDateIMMNext( const LADate & referenceDate );
+    AQLDate tryMeDateIMMNext( const AQLDate & referenceDate );
     
     /* @brief			validation interface for tryMeDateIMMPrevious
     *  @param [in]		referenceDate	The IMM reference date
     *  @return			The previous IMM start date relative to the reference date
     */
-    LADate tryMeDateIMMPrevious( const LADate & referenceDate );
+    AQLDate tryMeDateIMMPrevious( const AQLDate & referenceDate );
 
     /* @brief			validation interface for tryMeDateIMMNth
     *  @param [in]		valuationDate	The valuation date
@@ -67,6 +67,6 @@ namespace validation
     *  @param [in]		includeToday    Allow the IMM roll date to match the valuation date: TRUE = Don't roll IMM date if it falls on the valuation date
     *  @return			The nth IMM date relative to the valuation date
     */
-    LADate tryMeDateIMMNth( const LADate & valuationDate, const int nthIMM, const bool includeToday = false );
+    AQLDate tryMeDateIMMNth( const AQLDate & valuationDate, const int nthIMM, const bool includeToday = false );
 
 }

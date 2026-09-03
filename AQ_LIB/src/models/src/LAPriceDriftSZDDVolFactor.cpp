@@ -26,24 +26,24 @@
 //+++++ INCLUDE +++++
 #include "LAPriceDriftSZDDVolFactor.h"
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAMathCorrelation.h"
 #include "LAMathVolFuncBase.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include "LAModelDynamicsHW1FCurve.h"
 #include "LAMathHWFuncSigma.h"
 #include "LAMathYieldCurve.h"
 #include "LAPriceDriftQuantAdjustment.h"
-#include "LACombinationFunc.h"
+#include "AQLCombinationFunc.h"
 #include <algorithm>
 #include "LAMathVolFuncSZDDVolFactor.h"
-#include "LAStepInterpolation.h"
+#include "AQLStepInterpolation.h"
 
 using namespace std;
 #define COR "COR"
@@ -68,7 +68,7 @@ mInitialValue(0.)
 	@param[in] sdeAttrName
   
 */
-LAPriceDriftSZDDVolFactor::LAPriceDriftSZDDVolFactor( const LAString& sdeAttrName)
+LAPriceDriftSZDDVolFactor::LAPriceDriftSZDDVolFactor( const AQLString& sdeAttrName)
 :
 LAPriceDriftHW(sdeAttrName),
 mpThetaFunc(0),
@@ -103,7 +103,7 @@ LAPriceDriftSZDDVolFactor::~LAPriceDriftSZDDVolFactor()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftSZDDVolFactor::clone() const
 {
     try 
@@ -112,7 +112,7 @@ LAPriceDriftSZDDVolFactor::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -141,13 +141,13 @@ LAPriceDriftSZDDVolFactor::getType() const
     @brief return string representaion
     @return string representaion (sde attr name : suffix : tenor : deltatenor)
 */
-LAString
+AQLString
 LAPriceDriftSZDDVolFactor::convertToString(void) const
 {
-	LAString ret;
+	AQLString ret;
 	ret += mSDEAttrName;
 	ret += ":";
-	ret += LADataInt(1).convertToString();
+	ret += AQLDataInt(1).convertToString();
 	ret += ":";
 
     return ret;
@@ -158,14 +158,14 @@ LAPriceDriftSZDDVolFactor::convertToString(void) const
     @param[in] string representaion  (sde attr name : suffix : tenor : deltatenor)
 */
 void
-LAPriceDriftSZDDVolFactor::convertFromString(const LAString& str)
+LAPriceDriftSZDDVolFactor::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() < 5 || tmp.getSize() % 2 == 0)
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	}
 
 	mSDEAttrName = tmp.get()[0];
@@ -180,9 +180,9 @@ LAPriceDriftSZDDVolFactor::setUp(LAMathPathEntity& path)
 {
 	LAPriceDriftHW::setUp(path);
 
-	LADataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
+	AQLDataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
 	LAMathAttrSDE* pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
-	const std::vector<std::vector<LAFunctionBase* > > mVolatility = pattrsde->getSDE().getVolatility();
+	const std::vector<std::vector<AQLFunctionBase* > > mVolatility = pattrsde->getSDE().getVolatility();
 
 	mpSimuTimeGrid = &(pattrsde->getSDE().getBM()->getTimeGrid());
 	const LAMathVolFuncSZDDVolFactor* pVolSZDDVolFactor=0;
@@ -191,19 +191,19 @@ LAPriceDriftSZDDVolFactor::setUp(LAMathPathEntity& path)
 		pVolSZDDVolFactor = dynamic_cast<LAMathVolFuncSZDDVolFactor*>(mVolatility[0][0]);
 	else//otherwise
 	{
-		const LAFunctionBase* pbase = dynamic_cast<LAMathVolFuncBase*>(mVolatility[0][0])->getVolatility();
+		const AQLFunctionBase* pbase = dynamic_cast<LAMathVolFuncBase*>(mVolatility[0][0])->getVolatility();
 		pVolSZDDVolFactor = dynamic_cast<const LAMathVolFuncSZDDVolFactor*>(pbase);
 	}
 	if (pVolSZDDVolFactor == 0)
 	{
-        throw LACoreInvalidData("Error Casting volatility object to LAMathVolFuncSZDD was failed.", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Error Casting volatility object to LAMathVolFuncSZDD was failed.", __FILE__, __LINE__);
 	}
 	
 	////get MR and Sigma Datas
-	//const LA1DDataSet &kappaFunc = dynamic_cast<const LA1DDataSet &>(mpvolSZDD->getKappa());
-	//LAMathHWFuncMRTMDPT MR(kappaFunc.getGrids(), kappaFunc.getParam(), *(new LAStepInterpolation()));
-	//const LA1DDataSet &epsilonFunc = dynamic_cast<const LA1DDataSet &>(mpvolSZDD->getEpsilon());
-	//LAMathHWFuncSigmaTMDPT Sigma(epsilonFunc.getGrids(), epsilonFunc.getParam(), *(new LAStepInterpolation()));
+	//const AQL1DDataSet &kappaFunc = dynamic_cast<const AQL1DDataSet &>(mpvolSZDD->getKappa());
+	//LAMathHWFuncMRTMDPT MR(kappaFunc.getGrids(), kappaFunc.getParam(), *(new AQLStepInterpolation()));
+	//const AQL1DDataSet &epsilonFunc = dynamic_cast<const AQL1DDataSet &>(mpvolSZDD->getEpsilon());
+	//LAMathHWFuncSigmaTMDPT Sigma(epsilonFunc.getGrids(), epsilonFunc.getParam(), *(new AQLStepInterpolation()));
 
 	////set MR and Sigma Datas into Drift Class
 	//delete mpHWtool;
@@ -221,7 +221,7 @@ LAPriceDriftSZDDVolFactor::setUp(LAMathPathEntity& path)
 	//mFuncExpInt_a_sigma_SQ_B.SetFunc(*this, &LAPriceDriftSZDDVolFactor::getExpInt_a_sigma_SQ_B);
 
 	//set long term volatility
-	mpThetaFunc = dynamic_cast<const LA1DDataSet *>(pVolSZDDVolFactor->getTheta()->clone());
+	mpThetaFunc = dynamic_cast<const AQL1DDataSet *>(pVolSZDDVolFactor->getTheta()->clone());
 	mFuncExpInt_a_theta.SetFunc(*this, &LAPriceDriftSZDDVolFactor::getExpInt_a_theta);
 
 	////set Cachesize
@@ -279,13 +279,13 @@ LAPriceDriftSZDDVolFactor::operator()(const DoubleArray& x) const
 {	
     if ( x.size() != 3 )
 	{
-        throw LACoreInvalidData(" x.size() != 3 : x[0] = ts, x[1] = te, x[1] = r ", __FILE__, __LINE__);
+        throw AQLCoreInvalidData(" x.size() != 3 : x[0] = ts, x[1] = te, x[1] = r ", __FILE__, __LINE__);
 	}
     
 	double te = x[1];
 
 	unsigned int pos = 0;
-	if (!LAAlgorithm::find<DoubleArray, double>(*mpTimeGrid, te, 0, mpTimeGrid->size() - 1, pos))
+	if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimeGrid, te, 0, mpTimeGrid->size() - 1, pos))
 	{
         double ts = x[0];
 		//double x0 = mpHWtool->ExpIntegralMR(te);
@@ -299,7 +299,7 @@ LAPriceDriftSZDDVolFactor::operator()(const DoubleArray& x) const
 		//double e_cache2 = s_cache2 + mGL.integrate((*mpHWtool2), ts, te);
 		//mpCache1->push_back(e_cache1);
 		//mpCache2->push_back(e_cache2);
-		//LACombinationMethod pi = (*mpHWtool).operator *(*mpHWtool3);
+		//AQLCombinationMethod pi = (*mpHWtool).operator *(*mpHWtool3);
 		//mpCache3->push_back(mGL.integrate(pi, ts, te));
 
 		//double val = x0 * x1 - x2* x3 + e_cache2 * e_cache1 - 
@@ -353,7 +353,7 @@ LAPriceDriftSZDDVolFactor::getExpInt_a_theta(const double t) const
 	{
 		if (!mpHWtool2)
 		{
-			throw LACoreInvalidData("mpHWTool2 is Null", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("mpHWTool2 is Null", __FILE__, __LINE__);
 		}
 		//const double val = mpHWtool->ExpIntegralMR(t) * mpHWtool->getHWSigma()->operator ()(t);
 		//return val * val;

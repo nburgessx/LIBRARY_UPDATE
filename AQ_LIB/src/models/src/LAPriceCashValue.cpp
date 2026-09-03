@@ -12,30 +12,30 @@
 #include <algorithm>
 #include "LAPriceCashValue.h"
 #include "LAPricePortfolioValue.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADate.h"
-#include "LADataValuation.h"
-#include "LADataProcedure.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectHolder.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAMathValuableEntity.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDate.h"
+#include "AQLDataValuation.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectHolder.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLMathValuableEntity.h"
 #include "LAMathIndexEntity.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathFXEntity.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include "LAPricePayOff.h"
 #include "LAPricePayOffTool.h"
 #include "LAPriceAccruedInterest.h"
 #include "LAMathPlainVanillaEntity.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAMathYieldCurve.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 
 #include "LAPriceCouponTool.h"
 #include "LAPriceCashFlowGenerator.h"
@@ -90,7 +90,7 @@ LAPriceCashValue::isTypeOf(function_t id) const
 
 	@return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceCashValue::clone() const
 {
     try 
@@ -99,7 +99,7 @@ LAPriceCashValue::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -119,7 +119,7 @@ LAPriceCashValue::getType() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceCashValue::registerData(LAPriceDataManager& dm) const
+LAPriceCashValue::registerData(AQLPriceDataManager& dm) const
 {
 	LAPriceTradeValue::registerData(dm);
 }
@@ -127,30 +127,30 @@ LAPriceCashValue::registerData(LAPriceDataManager& dm) const
 	@brief value trade
 
 	@param[in] basedate evaluate day
-	@param[in,out] object trade object object(reference to LAMathObjectValue class) 
+	@param[in,out] object trade object object(reference to AQLMathObjectValue class) 
 	@param[in] att Data to hold evaluation procedure class
 
 	@return clean price
 	
 */
 double
-LAPriceCashValue::value(const LADate& basedate, LAObject& object, const LADataValuation& att) const
+LAPriceCashValue::value(const AQLDate& basedate, AQLObject& object, const AQLDataValuation& att) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	bool iscalcrisk = false;
 	dh = &object.getData(PRICING_DATA_ISCALCRISK, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
-		iscalcrisk = dynamic_cast<const LADataBool&>(dh->get()).get();
+		iscalcrisk = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	
 	bool istraderecalc = false;
 	dh = &object.getData(PRICING_DATA_ISRECALCTRADEDATA, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
-		istraderecalc = dynamic_cast<const LADataBool&>(dh->get()).get();
+		istraderecalc = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	
 	bool issetuppayoff = false;
 	dh = &(object.getData(PRICING_DATA_ISSETUPPAYOFF, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		issetuppayoff = dynamic_cast<const LADataBool&>(dh->get()).get();
+		issetuppayoff = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	
 	if (!iscalcrisk || istraderecalc || issetuppayoff )
 	{
@@ -196,8 +196,8 @@ LAPriceCashValue::value(const LADate& basedate, LAObject& object, const LADataVa
 		object.remove(PRICING_DATA_PV_LEG1);
 		object.remove(PRICING_DATA_CURRENCY_LEG1);
 		
-		object.add(PRICING_DATA_DIRTYPRICE, new LADataDouble(dirtyprice1));
-		object.add(PRICING_DATA_CURRENCY_LEG1, new LADataString(dataProvider->basecur));
+		object.add(PRICING_DATA_DIRTYPRICE, new AQLDataDouble(dirtyprice1));
+		object.add(PRICING_DATA_CURRENCY_LEG1, new AQLDataString(dataProvider->basecur));
 	}
 
 	return dirtyprice1;
@@ -208,46 +208,46 @@ LAPriceCashValue::value(const LADate& basedate, LAObject& object, const LADataVa
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*
-LAPriceCashValue::setUpDataProvider(const LADate& basedate, 
-							LAObject& object, 
-							const LADataValuation& att) const
+AQLDataProvider*
+LAPriceCashValue::setUpDataProvider(const AQLDate& basedate, 
+							AQLObject& object, 
+							const AQLDataValuation& att) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceCashValueDataProvider* dataProvider = dynamic_cast<LAPriceCashValueDataProvider*>(createNewDataProvider());
 	att.setDataProvider(dataProvider);
 
 	// base currency
 	dh = &(object.getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-	dataProvider->basecur = dynamic_cast<const LADataString&>(dh->get()).get();
+	dataProvider->basecur = dynamic_cast<const AQLDataString&>(dh->get()).get();
 
 	dh = &(object.getData(PRICING_DATA_VALUATIONCURRENCY, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		dataProvider->basecur = dynamic_cast<const LADataString&>(dh->get()).get();
+		dataProvider->basecur = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	
 	// cash
 	dh = &(object.getData(PRICING_DATA_EXTRACF, ISNOTNULL));
-	dataProvider->cash = dynamic_cast<const LADataDouble&>(dh->get()).get();
+	dataProvider->cash = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 	dh = &(object.getData(PRICING_DATA_EXTRACFCURRENCY, ISNOTNULL));
-	dataProvider->currency = dynamic_cast<const LADataString&>(dh->get()).get();
+	dataProvider->currency = dynamic_cast<const AQLDataString&>(dh->get()).get();
 
 	// today
 	dh = &(object.getData(PRICING_DATA_TODAY, ISNOTNULL));
-	const LADate& today = dynamic_cast<const LADataDate&>(dh->get()).get();
+	const AQLDate& today = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 	if (today > basedate)
 	{
 		//error
-		throw LACoreInvalidData("basedate must be same or after today", __FILE__, __LINE__);	
+		throw AQLCoreInvalidData("basedate must be same or after today", __FILE__, __LINE__);	
 	}
 
 	//this is important flag : create isDataProvidergagerecalc flag
 	object.remove(PRICING_DATA_ISRECALCTRADEDATA);
-	object.add(PRICING_DATA_ISRECALCTRADEDATA,new LADataBool(true));
+	object.add(PRICING_DATA_ISRECALCTRADEDATA,new AQLDataBool(true));
 
 	return dataProvider;	
 }
@@ -259,9 +259,9 @@ LAPriceCashValue::setUpDataProvider(const LADate& basedate,
 	@return FXEntity Ref
 */
 const LAMathFXEntity &
-LAPriceCashValue::getFXEntity(LAObject &object) const
+LAPriceCashValue::getFXEntity(AQLObject &object) const
 {
-	const LADataReference &paramref = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_PATHENTITY, ISNOTNULL).get());
+	const AQLDataReference &paramref = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_PATHENTITY, ISNOTNULL).get());
 	const LAMathPlainVanillaEntity& pvanilla = dynamic_cast<const LAMathPlainVanillaEntity &>(paramref.get().get());
 	return dynamic_cast<const LAMathFXEntity& >(pvanilla.getFXEntity().get().get());
 }
@@ -273,7 +273,7 @@ LAPriceCashValue::getFXEntity(LAObject &object) const
 	@brief create new cache class
 	@return cache class
 */
-LADataProvider*
+AQLDataProvider*
 LAPriceCashValue::createNewDataProvider() const
 {
 	LAPriceCashValueDataProvider* dataProvider = NULL;
@@ -283,7 +283,7 @@ LAPriceCashValue::createNewDataProvider() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 	return dataProvider;
 }

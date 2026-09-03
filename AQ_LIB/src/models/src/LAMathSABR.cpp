@@ -5,14 +5,14 @@
 #endif
 
 
-#include <LACoreTemplateType.h>
-#include <LAString.h>
-#include "LABasic.h"
-#include "LADist.h"
+#include <AQLCoreTemplateType.h>
+#include <AQLString.h>
+#include "AQLBasic.h"
+#include "AQLDist.h"
 
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathInterpolationUtilities.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAAnalyticFormula.h"
 #include "LAMathIRVanillaFuncUtility.h"
 #include "LAMathSABR.h"
@@ -68,31 +68,31 @@
 //void
 //LAMathSABR::checkSABRParam2()
 //{
-//    if(alpha > alpha_high) throw LACoreInvalidData("alpha is too big!",__FILE__,__LINE__);
-//    if(alpha < alpha_low) throw LACoreInvalidData("alpha is too small!",__FILE__,__LINE__);
+//    if(alpha > alpha_high) throw AQLCoreInvalidData("alpha is too big!",__FILE__,__LINE__);
+//    if(alpha < alpha_low) throw AQLCoreInvalidData("alpha is too small!",__FILE__,__LINE__);
 //
-//    if(beta > beta_high) throw LACoreInvalidData("beta is too big!",__FILE__,__LINE__);
-//    if(beta < beta_low) throw LACoreInvalidData("beta is too small!",__FILE__,__LINE__);
+//    if(beta > beta_high) throw AQLCoreInvalidData("beta is too big!",__FILE__,__LINE__);
+//    if(beta < beta_low) throw AQLCoreInvalidData("beta is too small!",__FILE__,__LINE__);
 //    
-//    if(nu > nu_high) throw LACoreInvalidData("nu is too big!",__FILE__,__LINE__);
-//    if(nu < nu_low) throw LACoreInvalidData("nu is too small!",__FILE__,__LINE__);
+//    if(nu > nu_high) throw AQLCoreInvalidData("nu is too big!",__FILE__,__LINE__);
+//    if(nu < nu_low) throw AQLCoreInvalidData("nu is too small!",__FILE__,__LINE__);
 //
-//    if(rho > rho_high) throw LACoreInvalidData("rho is too big!",__FILE__,__LINE__);
-//    if(rho < rho_low) throw LACoreInvalidData("rho is too small!",__FILE__,__LINE__);
+//    if(rho > rho_high) throw AQLCoreInvalidData("rho is too big!",__FILE__,__LINE__);
+//    if(rho < rho_low) throw AQLCoreInvalidData("rho is too small!",__FILE__,__LINE__);
 //}
 //
 //double LAMathSABR::getSABRVol(double T, double F, double K)
 //{
 //    double tmp1 = nu * nu * ( 2. - 3. * rho * rho ) / 24.;
-//    tmp1 += rho * beta * nu * alpha / LAMath::pow( F * K, (1. - beta) / 2. ) / 4.;
-//    tmp1 += (1. - beta) * (1. - beta) * alpha * alpha / LAMath::pow( F * K, (1. - beta) ) / 24.;
+//    tmp1 += rho * beta * nu * alpha / AQLMath::pow( F * K, (1. - beta) / 2. ) / 4.;
+//    tmp1 += (1. - beta) * (1. - beta) * alpha * alpha / AQLMath::pow( F * K, (1. - beta) ) / 24.;
 //    tmp1 = alpha * (1. + tmp1 * T);
 //    
-//    double tmp2 = (1. + LAMath::pow( LAMath::log(F / K) * (1. - beta), 2. )  / 24. 
-//                      + LAMath::pow( LAMath::log(F / K) * (1. - beta), 4. ) / 1920.);
-//    tmp2 *= LAMath::pow( F * K, (1. - beta) / 2. );
+//    double tmp2 = (1. + AQLMath::pow( AQLMath::log(F / K) * (1. - beta), 2. )  / 24. 
+//                      + AQLMath::pow( AQLMath::log(F / K) * (1. - beta), 4. ) / 1920.);
+//    tmp2 *= AQLMath::pow( F * K, (1. - beta) / 2. );
 //
-//    double z = nu / alpha * LAMath::pow( F * K, (1. - beta) / 2. ) * LAMath::log(F / K);
+//    double z = nu / alpha * AQLMath::pow( F * K, (1. - beta) / 2. ) * AQLMath::log(F / K);
 //    double chi_z = chi(z);
 //    
 //    if( tmp1 / tmp2 * z / chi_z == 0. )
@@ -100,63 +100,63 @@
 //        double tmp = chi(z);
 //    }
 //
-//    if(LAMath::abs(F - K) > eps_SABR) return  tmp1 / tmp2 * z / chi_z;
-//    else return tmp1 / LAMath::pow( F, (1. - beta) );
+//    if(AQLMath::abs(F - K) > eps_SABR) return  tmp1 / tmp2 * z / chi_z;
+//    else return tmp1 / AQLMath::pow( F, (1. - beta) );
 //}
 //
 //double LAMathSABR::chi(double z)
 //{
-//    double tmp1 = LAMath::sqrt(1. - 2. * rho * z + z * z);
-//    if(LAMath::abs(z)<eps_SABR) return z;
+//    double tmp1 = AQLMath::sqrt(1. - 2. * rho * z + z * z);
+//    if(AQLMath::abs(z)<eps_SABR) return z;
 //       
 //    if(tmp1 + z - rho > 0.)
 //    {
 //        double tmp2 = (tmp1 + z - rho) / (1. - rho);
-//        return LAMath::log(tmp2);
+//        return AQLMath::log(tmp2);
 //    }
 //    else
 //    {
 //        double tmp2 = tmp1 - (z - rho);
-//        return LAMath::log( (1. + rho) / tmp2 );
+//        return AQLMath::log( (1. + rho) / tmp2 );
 //    }
 //}
 //
 //double LAMathSABR::getSABRPrem(double T, double F, double K, double Nu, unsigned int sgn)
 //{
-//    double stdDev = getSABRVol( T, F, K ) * LAMath::sqrt( T );
+//    double stdDev = getSABRVol( T, F, K ) * AQLMath::sqrt( T );
 //
-//    double d1 = LAMath::log( F/K ) / stdDev + 0.5 * stdDev;
+//    double d1 = AQLMath::log( F/K ) / stdDev + 0.5 * stdDev;
 //
-//    double d2 = LAMath::log( F/K ) / stdDev - 0.5 * stdDev;
+//    double d2 = AQLMath::log( F/K ) / stdDev - 0.5 * stdDev;
 // 
-//    return Nu * ( sgn * F * LADist::normsdist( sgn * d1 ) - sgn * K * LADist::normsdist( sgn * d2 ) );
+//    return Nu * ( sgn * F * AQLDist::normsdist( sgn * d1 ) - sgn * K * AQLDist::normsdist( sgn * d2 ) );
 //}
 //
 //void LAMathSABR::setAlphaForATMVol(double atmVol, double T, double F, bool isAlpha0Use)
 //{
 //	double alpha0 = alpha;
-//    double a0 = (1.-beta)*(1.-beta)/LAMath::pow(F, 3.-3.*beta)/24.*T;
-//    double a1 = rho*beta*nu/LAMath::pow(F, 2.-2.*beta)/4.*T;
-//    double a2 = (1.+(2.-3.*rho*rho)*nu*nu/24.*T)/LAMath::pow(F, 1.-beta);
+//    double a0 = (1.-beta)*(1.-beta)/AQLMath::pow(F, 3.-3.*beta)/24.*T;
+//    double a1 = rho*beta*nu/AQLMath::pow(F, 2.-2.*beta)/4.*T;
+//    double a2 = (1.+(2.-3.*rho*rho)*nu*nu/24.*T)/AQLMath::pow(F, 1.-beta);
 //    double a3 = -atmVol;
 //
 //    DoubleArray sol;
-//	if( LAMath::abs(a0) > eps_SABR )
+//	if( AQLMath::abs(a0) > eps_SABR )
 //	{
 //		sol = LAMathInterpolationUtilities::solve_cubic_equation(a1/a0, a2/a0, a3/a0);
 //	}
-//	else if( LAMath::abs(a1) > eps_SABR )
+//	else if( AQLMath::abs(a1) > eps_SABR )
 //	{
 //		sol = LAMathInterpolationUtilities::solve_quadratic_equation(a2/a1, a3/a1);
-//		if(sol.size() == 0) throw LACoreInvalidData("No solution!",	__FILE__,__LINE__);
+//		if(sol.size() == 0) throw AQLCoreInvalidData("No solution!",	__FILE__,__LINE__);
 //	}
-//	else if( LAMath::abs(a2) > eps_SABR )
+//	else if( AQLMath::abs(a2) > eps_SABR )
 //    {
 //		sol = DoubleArray(1, -a3/a2);
 //    }
 //    else
 //    {
-//		throw LACoreInvalidData("No solution!",	__FILE__,__LINE__);
+//		throw AQLCoreInvalidData("No solution!",	__FILE__,__LINE__);
 //	}
 //
 //    DoubleArray sol_;
@@ -164,13 +164,13 @@
 //        {
 //            if(sol[i]>0.) sol_.push_back(sol[i]);
 //        }
-//        if(sol_.size()==0) throw LACoreInvalidData("solutions are negative!",	__FILE__,__LINE__);
+//        if(sol_.size()==0) throw AQLCoreInvalidData("solutions are negative!",	__FILE__,__LINE__);
 //        alpha = sol_[0];
 //        for(size_t i=1;i<sol_.size();i++)
 //        {
 //		if(isAlpha0Use)
 //		{
-//			if(LAMath::abs(sol_[i]-alpha0)<LAMath::abs(alpha-alpha0)) alpha = sol_[i];
+//			if(AQLMath::abs(sol_[i]-alpha0)<AQLMath::abs(alpha-alpha0)) alpha = sol_[i];
 //		}
 //		else
 //		{
@@ -181,22 +181,22 @@
 //
 //bool LAMathSABR::checkAlphaForATMVol(double atmVol, double T, double F)
 //{
-//    double a0 = (1.-beta)*(1.-beta)/LAMath::pow(F, 3.-3.*beta)/24.*T;
-//    double a1 = rho*beta*nu/LAMath::pow(F, 2.-2.*beta)/4.*T;
-//    double a2 = (1.+(2.-3.*rho*rho)*nu*nu/24.*T)/LAMath::pow(F, 1.-beta);
+//    double a0 = (1.-beta)*(1.-beta)/AQLMath::pow(F, 3.-3.*beta)/24.*T;
+//    double a1 = rho*beta*nu/AQLMath::pow(F, 2.-2.*beta)/4.*T;
+//    double a2 = (1.+(2.-3.*rho*rho)*nu*nu/24.*T)/AQLMath::pow(F, 1.-beta);
 //    double a3 = -atmVol;
 //
 //	DoubleArray sol;
-//    if( LAMath::abs(a0) > eps_SABR )
+//    if( AQLMath::abs(a0) > eps_SABR )
 //	{
 //		sol = LAMathInterpolationUtilities::solve_cubic_equation(a1/a0, a2/a0, a3/a0);
 //	}
-//	else if( LAMath::abs(a1) > eps_SABR )
+//	else if( AQLMath::abs(a1) > eps_SABR )
 //	{
 //		sol = LAMathInterpolationUtilities::solve_quadratic_equation(a2/a1, a3/a1);
 //		if(sol.size() == 0) return true;
 //	}
-//	else if( LAMath::abs(a2) > eps_SABR )
+//	else if( AQLMath::abs(a2) > eps_SABR )
 //    {
 //		sol = DoubleArray(1, -a3/a2);
 //    }
@@ -261,23 +261,23 @@ LAMathSABR::setSABRParam(double alpha_, double beta_, double nu_, double rho_)
 void
 LAMathSABR::checkSABRParam()
 {
-    //if(alpha > alpha_high) throw LACoreInvalidData("alpha is too big!",__FILE__,__LINE__);
-    //if(alpha < alpha_low) throw LACoreInvalidData("alpha is too small!",__FILE__,__LINE__);
+    //if(alpha > alpha_high) throw AQLCoreInvalidData("alpha is too big!",__FILE__,__LINE__);
+    //if(alpha < alpha_low) throw AQLCoreInvalidData("alpha is too small!",__FILE__,__LINE__);
 
-    //if(beta > beta_high) throw LACoreInvalidData("beta is too big!",__FILE__,__LINE__);
-    //if(beta < beta_low) throw LACoreInvalidData("beta is too small!",__FILE__,__LINE__);
+    //if(beta > beta_high) throw AQLCoreInvalidData("beta is too big!",__FILE__,__LINE__);
+    //if(beta < beta_low) throw AQLCoreInvalidData("beta is too small!",__FILE__,__LINE__);
     //
-    //if(nu > nu_high) throw LACoreInvalidData("nu is too big!",__FILE__,__LINE__);
-    //if(nu < nu_low) throw LACoreInvalidData("nu is too small!",__FILE__,__LINE__);
+    //if(nu > nu_high) throw AQLCoreInvalidData("nu is too big!",__FILE__,__LINE__);
+    //if(nu < nu_low) throw AQLCoreInvalidData("nu is too small!",__FILE__,__LINE__);
 
-    //if(rho > rho_high) throw LACoreInvalidData("rho is too big!",__FILE__,__LINE__);
-    //if(rho < rho_low) throw LACoreInvalidData("rho is too small!",__FILE__,__LINE__);
+    //if(rho > rho_high) throw AQLCoreInvalidData("rho is too big!",__FILE__,__LINE__);
+    //if(rho < rho_low) throw AQLCoreInvalidData("rho is too small!",__FILE__,__LINE__);
 }
 
 double LAMathSABR::BlackImplVol( double prem, double F, double T, double K, int sgn, double low, double high)
 {
 
-	class BlackImplVolFunc : public LAFunction
+	class BlackImplVolFunc : public AQLFunction
 	{
 	public:
 		BlackImplVolFunc( double prem_, double F_, double T_, double K_, int sgn_ )
@@ -285,13 +285,13 @@ double LAMathSABR::BlackImplVol( double prem, double F, double T, double K, int 
 		virtual ~BlackImplVolFunc(){};
 		double operator()(double x) const 
 		{ 
-			double stdDev = x * LAMath::sqrt( T );
+			double stdDev = x * AQLMath::sqrt( T );
 
-			double d1 = LAMath::log( F/K ) / stdDev + 0.5 * stdDev;
+			double d1 = AQLMath::log( F/K ) / stdDev + 0.5 * stdDev;
 
-			double d2 = LAMath::log( F/K ) / stdDev - 0.5 * stdDev;
+			double d2 = AQLMath::log( F/K ) / stdDev - 0.5 * stdDev;
  
-			double BlackFormula = static_cast<double>(sgn) * F * LADist::normsdist( static_cast<double>(sgn) * d1 ) - static_cast<double>(sgn) * K * LADist::normsdist( static_cast<double>(sgn) * d2 );
+			double BlackFormula = static_cast<double>(sgn) * F * AQLDist::normsdist( static_cast<double>(sgn) * d1 ) - static_cast<double>(sgn) * K * AQLDist::normsdist( static_cast<double>(sgn) * d2 );
 
 			return BlackFormula / prem - 1.; 
 		};
@@ -308,38 +308,38 @@ double LAMathSABR::BlackImplVol( double prem, double F, double T, double K, int 
 
 double LAMathSABR::BlackPrem( double vol, double F, double T, double K, double Nu, int sgn)
 {
-	double stdDev = vol * LAMath::sqrt( T );
-	double d1 = LAMath::log( F/K ) / stdDev + 0.5 * stdDev;
-	double d2 = LAMath::log( F/K ) / stdDev - 0.5 * stdDev;
-	return Nu * ( static_cast<double>(sgn) * F * LADist::normsdist( static_cast<double>(sgn) * d1 ) - static_cast<double>(sgn) * K * LADist::normsdist( static_cast<double>(sgn) * d2 ) );
+	double stdDev = vol * AQLMath::sqrt( T );
+	double d1 = AQLMath::log( F/K ) / stdDev + 0.5 * stdDev;
+	double d2 = AQLMath::log( F/K ) / stdDev - 0.5 * stdDev;
+	return Nu * ( static_cast<double>(sgn) * F * AQLDist::normsdist( static_cast<double>(sgn) * d1 ) - static_cast<double>(sgn) * K * AQLDist::normsdist( static_cast<double>(sgn) * d2 ) );
 };
 
 void LAMathSABR::set_alpha(double alpha_, bool isMap) 
 { 
     double width = (alpha_high - alpha_low) / 2.;
     double center = (alpha_high + alpha_low) / 2.;
-    alpha = isMap ? atan(alpha_) * 2. / LAMath::pi() * width  + center : alpha_;
+    alpha = isMap ? atan(alpha_) * 2. / AQLMath::pi() * width  + center : alpha_;
 };
 
 void LAMathSABR::set_beta(double beta_, bool isMap) 
 { 
     double width = (beta_high - beta_low) / 2.;
     double center = (beta_high + beta_low) / 2.;
-    beta = isMap ? atan(beta_) * 2. / LAMath::pi() * width  + center : beta_;
+    beta = isMap ? atan(beta_) * 2. / AQLMath::pi() * width  + center : beta_;
 };
 
 void LAMathSABR::set_nu(double nu_, bool isMap)
 { 
     double width = (nu_high - nu_low) / 2.;
     double center = (nu_high + nu_low) / 2.;
-    nu = isMap ? atan(nu_) * 2. / LAMath::pi() * width  + center : nu_;
+    nu = isMap ? atan(nu_) * 2. / AQLMath::pi() * width  + center : nu_;
 };
 
 void LAMathSABR::set_rho(double rho_,   bool isMap )
 { 
     double width = (rho_high - rho_low) / 2.;
     double center = (rho_high + rho_low) / 2.;
-    rho = isMap ? atan(rho_) * 2. / LAMath::pi() * width  + center  : rho_;
+    rho = isMap ? atan(rho_) * 2. / AQLMath::pi() * width  + center  : rho_;
 };
 
 //
@@ -366,7 +366,7 @@ double powWithCheck(double base, double exp)
 	{
 		char_t  msg[128];
 		SPRINTF(msg, "Error: The power [%lf] of Negative input [%lf] is not allowed .", exp, base);
-		throw LACoreNumericalError(msg, __FILE__, __LINE__);
+		throw AQLCoreNumericalError(msg, __FILE__, __LINE__);
 	}
 	return result;
 }
@@ -375,14 +375,14 @@ double powWithCheck(double base, double exp)
 double LAMathSABR_Hagan::getSABRLognormalVol(double T, double F, double K)
 {
 	double tmp1 = nu * nu * (2. - 3. * rho * rho) / 24.;
-	tmp1 += rho * beta * nu * alpha / LAMath::pow(F * K, (1. - beta) / 2.) / 4.;
-	tmp1 += (1. - beta) * (1. - beta) * alpha * alpha / LAMath::pow(F * K, (1. - beta)) / 24.;
+	tmp1 += rho * beta * nu * alpha / AQLMath::pow(F * K, (1. - beta) / 2.) / 4.;
+	tmp1 += (1. - beta) * (1. - beta) * alpha * alpha / AQLMath::pow(F * K, (1. - beta)) / 24.;
 	tmp1 = alpha * (1. + tmp1 * T);
 
 	double sabrVol = 0.0;
 
 	//When F is the same as K 
-	if (LAMath::abs(F - K) < eps_SABR)
+	if (AQLMath::abs(F - K) < eps_SABR)
 	{
 		double tempF = powWithCheck(F, (1. - beta));
 
@@ -391,12 +391,12 @@ double LAMathSABR_Hagan::getSABRLognormalVol(double T, double F, double K)
 	//When F not the same as K 
 	else
 	{
-		double tmp2 = (1. + LAMath::pow(LAMath::log(F / K) * (1. - beta), 2.) / 24.
-			+ LAMath::pow(LAMath::log(F / K) * (1. - beta), 4.) / 1920.);
+		double tmp2 = (1. + AQLMath::pow(AQLMath::log(F / K) * (1. - beta), 2.) / 24.
+			+ AQLMath::pow(AQLMath::log(F / K) * (1. - beta), 4.) / 1920.);
 
-		tmp2 *= LAMath::pow(F * K, (1. - beta) / 2.);
+		tmp2 *= AQLMath::pow(F * K, (1. - beta) / 2.);
 
-		double z = nu / alpha * LAMath::pow(F * K, (1. - beta) / 2.) * LAMath::log(F / K);
+		double z = nu / alpha * AQLMath::pow(F * K, (1. - beta) / 2.) * AQLMath::log(F / K);
 		double chi_z = chi(z);
 
 		//if (tmp1 / tmp2 * z / chi_z == 0.)
@@ -439,7 +439,7 @@ double LAMathSABR_Hagan::getSABRNormalVol(double T, double F, double K)
 		// If beta equals to 1
 		if ((1. - beta)< eps_SABR)
 		{
-			z = nu / alpha * LAMath::log(F / K);
+			z = nu / alpha * AQLMath::log(F / K);
 		}
 		// If beta not equals to 1
 		else
@@ -470,13 +470,13 @@ double LAMathSABR_Hagan::getSABRVol(double T, double F, double K)
 
 double LAMathSABR_Hagan::getSABRPremLognormalVol(double T, double F, double K, double numeraire, int sgn)
 {
-	double stdDev = getSABRVol(T, F, K) * LAMath::sqrt(T);
+	double stdDev = getSABRVol(T, F, K) * AQLMath::sqrt(T);
 
-	double d1 = LAMath::log(F / K) / stdDev + 0.5 * stdDev;
+	double d1 = AQLMath::log(F / K) / stdDev + 0.5 * stdDev;
 
-	double d2 = LAMath::log(F / K) / stdDev - 0.5 * stdDev;
+	double d2 = AQLMath::log(F / K) / stdDev - 0.5 * stdDev;
 
-	double optionPV = numeraire * (static_cast<double>(sgn) * F * LADist::normsdist(static_cast<double>(sgn) * d1) - static_cast<double>(sgn) * K * LADist::normsdist(static_cast<double>(sgn) * d2));
+	double optionPV = numeraire * (static_cast<double>(sgn) * F * AQLDist::normsdist(static_cast<double>(sgn) * d1) - static_cast<double>(sgn) * K * AQLDist::normsdist(static_cast<double>(sgn) * d2));
 
 	return optionPV;
 }
@@ -512,29 +512,29 @@ void LAMathSABR_Hagan::setAlphaForATMVol(double atmVol, double T, double F, bool
 
 	AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(F), "SABR: swapRate/forwardRate cannot be zero.");
 
-	double a0 = isLognormal ? ((1. - beta) * (1. - beta) / LAMath::pow(F, 2. - 2. * beta) / 24. * T)
-							: (beta * (beta - 2.) / LAMath::pow(F, 2. - 2. * beta) / 24. * T);
-	double a1 = rho * beta * nu / LAMath::pow(F, 1. - beta) / 4. * T;
+	double a0 = isLognormal ? ((1. - beta) * (1. - beta) / AQLMath::pow(F, 2. - 2. * beta) / 24. * T)
+							: (beta * (beta - 2.) / AQLMath::pow(F, 2. - 2. * beta) / 24. * T);
+	double a1 = rho * beta * nu / AQLMath::pow(F, 1. - beta) / 4. * T;
 	double a2 = (1. + (2. - 3. * rho * rho) * nu * nu / 24. * T);
-	double a3 = isLognormal ? (-atmVol * LAMath::pow(F, 1. - beta)) : (-atmVol * LAMath::pow(F, -beta));
+	double a3 = isLognormal ? (-atmVol * AQLMath::pow(F, 1. - beta)) : (-atmVol * AQLMath::pow(F, -beta));
 
     DoubleArray sol;
-	if( LAMath::abs(a0) > eps_SABR )
+	if( AQLMath::abs(a0) > eps_SABR )
 	{
 		sol = LAMathInterpolationUtilities::solve_cubic_equation(a1/a0, a2/a0, a3/a0);
 	}
-	else if( LAMath::abs(a1) > eps_SABR )
+	else if( AQLMath::abs(a1) > eps_SABR )
 	{
 		sol = LAMathInterpolationUtilities::solve_quadratic_equation(a2/a1, a3/a1);
-		if(sol.size() == 0) throw LACoreInvalidData("No solution!",	__FILE__,__LINE__);
+		if(sol.size() == 0) throw AQLCoreInvalidData("No solution!",	__FILE__,__LINE__);
 	}
-	else if( LAMath::abs(a2) > eps_SABR )
+	else if( AQLMath::abs(a2) > eps_SABR )
     {
 		sol = DoubleArray(1, -a3/a2);
     }
     else
     {
-		throw LACoreInvalidData("No solution!",	__FILE__,__LINE__);
+		throw AQLCoreInvalidData("No solution!",	__FILE__,__LINE__);
 	}
 
     DoubleArray sol_;
@@ -542,13 +542,13 @@ void LAMathSABR_Hagan::setAlphaForATMVol(double atmVol, double T, double F, bool
     {
 		if(sol[i]>0.) sol_.push_back(sol[i]);
     }
-    if(sol_.size()==0) throw LACoreInvalidData("solutions are negative!",	__FILE__,__LINE__);
+    if(sol_.size()==0) throw AQLCoreInvalidData("solutions are negative!",	__FILE__,__LINE__);
     alpha = sol_[0];
     for(size_t i=1;i<sol_.size();i++)
     {
 		if(isAlpha0Use)
 		{
-			if(LAMath::abs(sol_[i]-alpha0)<LAMath::abs(alpha-alpha0)) alpha = sol_[i];
+			if(AQLMath::abs(sol_[i]-alpha0)<AQLMath::abs(alpha-alpha0)) alpha = sol_[i];
 		}
 		else
 		{
@@ -559,23 +559,23 @@ void LAMathSABR_Hagan::setAlphaForATMVol(double atmVol, double T, double F, bool
 
 bool LAMathSABR_Hagan::checkAlphaForATMVol(double atmVol, double T, double F)
 {
-	double a0 = isLognormal ? ((1. - beta) * (1. - beta) / LAMath::pow(F, 2. - 2. * beta) / 24. * T)
-							: (beta * (beta - 2.) / LAMath::pow(F, 2. - 2. * beta) / 24. * T);
-	double a1 = rho * beta * nu / LAMath::pow(F, 1. - beta) / 4. * T;
+	double a0 = isLognormal ? ((1. - beta) * (1. - beta) / AQLMath::pow(F, 2. - 2. * beta) / 24. * T)
+							: (beta * (beta - 2.) / AQLMath::pow(F, 2. - 2. * beta) / 24. * T);
+	double a1 = rho * beta * nu / AQLMath::pow(F, 1. - beta) / 4. * T;
 	double a2 = (1. + (2. - 3. * rho * rho) * nu * nu / 24. * T);
-	double a3 = isLognormal ? (-atmVol * LAMath::pow(F, 1. - beta)) : (-atmVol * LAMath::pow(F, -beta));
+	double a3 = isLognormal ? (-atmVol * AQLMath::pow(F, 1. - beta)) : (-atmVol * AQLMath::pow(F, -beta));
 
 	DoubleArray sol;
-    if( LAMath::abs(a0) > eps_SABR )
+    if( AQLMath::abs(a0) > eps_SABR )
 	{
 		sol = LAMathInterpolationUtilities::solve_cubic_equation(a1/a0, a2/a0, a3/a0);
 	}
-	else if( LAMath::abs(a1) > eps_SABR )
+	else if( AQLMath::abs(a1) > eps_SABR )
 	{
 		sol = LAMathInterpolationUtilities::solve_quadratic_equation(a2/a1, a3/a1);
 		if(sol.size() == 0) return true;
 	}
-	else if( LAMath::abs(a2) > eps_SABR )
+	else if( AQLMath::abs(a2) > eps_SABR )
     {
 		sol = DoubleArray(1, -a3/a2);
     }
@@ -596,18 +596,18 @@ bool LAMathSABR_Hagan::checkAlphaForATMVol(double atmVol, double T, double F)
 
 double LAMathSABR_Hagan::chi(double z)
 {
-    double tmp1 = LAMath::sqrt(1. - 2. * rho * z + z * z);
-    if(LAMath::abs(z)<eps_SABR) return z;
+    double tmp1 = AQLMath::sqrt(1. - 2. * rho * z + z * z);
+    if(AQLMath::abs(z)<eps_SABR) return z;
        
     if(tmp1 + z - rho > 0.)
     {
         double tmp2 = (tmp1 + z - rho) / (1. - rho);
-        return LAMath::log(tmp2);
+        return AQLMath::log(tmp2);
     }
     else
     {
         double tmp2 = tmp1 - (z - rho);
-        return LAMath::log( (1. + rho) / tmp2 );
+        return AQLMath::log( (1. + rho) / tmp2 );
     }
 }
 
@@ -670,7 +670,7 @@ double LAMathSABR_Antonov::getSABRPrem(double T, double F, double K, double Nu, 
 
 void LAMathSABR_Antonov::setAlphaForATMVol(double atmVol, double T, double F, bool isAlpha0Use)
 {
-	class ATMVolCostFunc : public LAFunction
+	class ATMVolCostFunc : public AQLFunction
 	{
 	public:
 		ATMVolCostFunc( double F_, double T_, double atmVol_, double beta0_, double nu0_, double rho0_)
@@ -715,7 +715,7 @@ flg_negative_nu(false)
 
 void LAMathSABR_Antonov::swaption_prem_antonov::set(double S0_,double T_,const vector<double>& sabr_params)
 {
-	if(S0_ < 0.0) throw LACoreInvalidData("negative foward Rate!",__FILE__,__LINE__);
+	if(S0_ < 0.0) throw AQLCoreInvalidData("negative foward Rate!",__FILE__,__LINE__);
 	S0 = S0_ > eps_SABR ? S0_ : eps_SABR;
 	T = T_;
 	alpha = sabr_params[0];
@@ -872,7 +872,7 @@ double LAMathSABR_Chaos::getSABRPrem(double T, double F, double K, double Nu, in
 		double temp1 = sqrt(2.) * q3(T) * (pow(K_, 4.) - 6. * K_ * K_ * Sigma_ + 3. * Sigma_sq);
 		double temp2 = Sigma_sq * sqrt(2.) * (q4(T) + 2. * q2(T)) * (K_ * K_ - Sigma_);
 		double temp3 = Sigma_sq * Sigma_ * (-2. * sqrt(2.) * q1(T) * K_ + sqrt(2.) * q5(T) * Sigma_ + 2. * sqrt(2.) * Sigma_sq);
-		double temp4 = F * K_ * (1. - LADist::normsdist(-K_ / sqrt(Sigma_)));
+		double temp4 = F * K_ * (1. - AQLDist::normsdist(-K_ / sqrt(Sigma_)));
 
 		double CallValue = coef * (temp1 + temp2 + temp3) + temp4;
 		return sgn < 0 ? Nu * (CallValue - F + K) : Nu * CallValue;
@@ -889,7 +889,7 @@ double LAMathSABR_Chaos::getSABRPrem(double T, double F, double K, double Nu, in
 		double temp1 = sqrt(2.) * q3(T) * (pow(K_, 4.) - 6. * K_ * K_ * Sigma_ + 3. * Sigma_sq);
 		double temp2 = Sigma_sq * sqrt(2.) * (q4(T) + 2. * q2(T)) * (K_ * K_ - Sigma_);
 		double temp3 = Sigma_sq * Sigma_ * (+2. * sqrt(2.) * q1(T) * K_ + sqrt(2.) * q5(T) * Sigma_ + 2. * sqrt(2.) * Sigma_sq);	//Watch a difference fropm above!
-		double temp4 = F * K_ * (1. - LADist::normsdist(-K_ / sqrt(Sigma_)));
+		double temp4 = F * K_ * (1. - AQLDist::normsdist(-K_ / sqrt(Sigma_)));
 
 		double CallValue = coef * (temp1 + temp2 + temp3) + temp4;
 		return sgn < 0 ? Nu * (-CallValue - F + K) : -Nu * CallValue;
@@ -898,7 +898,7 @@ double LAMathSABR_Chaos::getSABRPrem(double T, double F, double K, double Nu, in
 
 void LAMathSABR_Chaos::setAlphaForATMVol(double atmVol, double T, double F, bool isAlpha0Use)
 {
-	class ATMVolCostFunc : public LAFunction
+	class ATMVolCostFunc : public AQLFunction
 	{
 	public:
 		ATMVolCostFunc( double F_, double T_, double atmVol_, double beta0_, double nu0_, double rho0_)
@@ -1047,7 +1047,7 @@ S0(rhs.S0)
 //														  const vector<double>& param0_,
 //														  const vector<bool>& flg_,
 //														  const vector<double>& target2fit_,
-//														  const LAString& target_
+//														  const AQLString& target_
 //														)
 //:
 //CostFunction(),
@@ -1543,7 +1543,7 @@ S0(rhs.S0)
 
 //++++++++ Funahashi ++++++++ // add
 
-LAMathSABRLimiter::LAMathSABRLimiter(LAStringMatrix paramFlag)
+LAMathSABRLimiter::LAMathSABRLimiter(AQLStringMatrix paramFlag)
 {
     upper(paramFlag);
     paramNum = 0;
@@ -1559,7 +1559,7 @@ LAMathSABRLimiter::LAMathSABRLimiter(LAStringMatrix paramFlag)
     }
     else 
     {
-        throw LACoreInvalidData("No alpha!",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("No alpha!",__FILE__,__LINE__);
     }
 
     if( searchbyrow(paramFlag,"BETA",1,true) == "YES" ) 
@@ -1573,7 +1573,7 @@ LAMathSABRLimiter::LAMathSABRLimiter(LAStringMatrix paramFlag)
     }
     else 
     {
-        throw LACoreInvalidData("No beta!",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("No beta!",__FILE__,__LINE__);
     }
 
     if( searchbyrow(paramFlag,"NU",1,true) == "YES" ) 
@@ -1587,7 +1587,7 @@ LAMathSABRLimiter::LAMathSABRLimiter(LAStringMatrix paramFlag)
     }
     else 
     {
-        throw LACoreInvalidData("No nu!",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("No nu!",__FILE__,__LINE__);
     }
 
     if( searchbyrow(paramFlag,"RHO",1,true) == "YES" ) 
@@ -1601,7 +1601,7 @@ LAMathSABRLimiter::LAMathSABRLimiter(LAStringMatrix paramFlag)
     }
     else 
     {
-        throw LACoreInvalidData("No rho!",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("No rho!",__FILE__,__LINE__);
     }
 }
 
@@ -1613,27 +1613,27 @@ LAMathSABRLimiter::getArgument( LAMathSABR_Hagan sabr, DoubleArray& x, bool isMa
     {
         double width = (alpha_high - alpha_low) / 2.;
         double center = (alpha_high + alpha_low) / 2.;
-        x[index] = isMap ? tan(LAMath::pi() / 2. * (sabr.getAlpha()-center) / width) : sabr.getAlpha();
+        x[index] = isMap ? tan(AQLMath::pi() / 2. * (sabr.getAlpha()-center) / width) : sabr.getAlpha();
         index++;
     }
     if( getBetaFlag() ) 
     {
         double width = (beta_high - beta_low) / 2.;
         double center = (beta_high + beta_low) / 2.;
-        x[index] = isMap ? tan(LAMath::pi() / 2. * (sabr.getBeta()-center) / width) : sabr.getBeta();            index++;
+        x[index] = isMap ? tan(AQLMath::pi() / 2. * (sabr.getBeta()-center) / width) : sabr.getBeta();            index++;
     }
     if( getNuFlag() ) 
     {
         double width = (nu_high - nu_low) / 2.;
         double center = (nu_high + nu_low) / 2.;
-        x[index] = isMap ? tan(LAMath::pi() / 2. * (sabr.getNu()-center) / width) : sabr.getNu();
+        x[index] = isMap ? tan(AQLMath::pi() / 2. * (sabr.getNu()-center) / width) : sabr.getNu();
         index++;
     }
     if( getRhoFlag() ) 
     {
         double width = (rho_high - rho_low) / 2.;
         double center = (rho_high + rho_low) / 2.;
-        x[index] = isMap ? tan(LAMath::pi() / 2. * (sabr.getRho()-center) / width): sabr.getRho();
+        x[index] = isMap ? tan(AQLMath::pi() / 2. * (sabr.getRho()-center) / width): sabr.getRho();
         index++;
     }
 }
@@ -1642,7 +1642,7 @@ LAMathSABR_Hagan
 LAMathSABRLimiter::getSABR(LAMathSABR_Hagan& sabrOri, const DoubleArray& x, bool isMap)
 {
     if( x.size() != paramNum ) 
-        throw LACoreInvalidData("sizes are inconsistent",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("sizes are inconsistent",__FILE__,__LINE__);
 
     size_t index=0;
     LAMathSABR_Hagan sabr;
@@ -1700,7 +1700,7 @@ bool
 LAMathSABRLimiter::checkArgument(LAMathSABR_Hagan sabrOri, const DoubleArray& x)
 {
 	if( x.size() != paramNum ) 
-        throw LACoreInvalidData("sizes are inconsistent",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("sizes are inconsistent",__FILE__,__LINE__);
 
     size_t index=0;
     LAMathSABR_Hagan sabr;
@@ -1763,7 +1763,7 @@ LAMathSABRLimiter::checkArgument(LAMathSABR_Hagan sabrOri, const DoubleArray& x)
 LAMathSABRCalibrator::LAMathSABRCalibrator
     (const LAMathSABR_Hagan& sabr_, const DoubleArray& strike_, const DoubleArray& vol_, 
      const DoubleArray& forward_, const DoubleArray& expiry_, const DoubleArray& numeraire_, 
-     const DoubleArray& weight_, const LAString& target_, bool isMap_)
+     const DoubleArray& weight_, const AQLString& target_, bool isMap_)
     : sabr(sabr_), strike(strike_), vol(vol_), forward(forward_), expiry(expiry_), 
       numeraire(numeraire_), weight(weight_), target(target_), isMap(isMap_)
 {
@@ -1771,23 +1771,23 @@ LAMathSABRCalibrator::LAMathSABRCalibrator
     if( targetNum != vol_.size() ||  targetNum != forward_.size() || 
         targetNum != expiry_.size() || targetNum != weight_.size() )
     {
-        throw LACoreInvalidData("sizes are inconsistent",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("sizes are inconsistent",__FILE__,__LINE__);
     }
 
     for(size_t i=0; i<vol.size(); i++)
     {
-        if(vol[i]<0.) throw LACoreInvalidData("volatility is negative!",__FILE__,__LINE__);
+        if(vol[i]<0.) throw AQLCoreInvalidData("volatility is negative!",__FILE__,__LINE__);
     }
 
     if( target != CALIB_TARGET_VOLATILITY && target != CALIB_TARGET_PREMIUM )
-        throw LACoreInvalidData("target is VOLATILITY or PREMIUM",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("target is VOLATILITY or PREMIUM",__FILE__,__LINE__);
 
     if( target == CALIB_TARGET_PREMIUM )
     {
-        std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-        LAString bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
-        std::map<LAString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
-	    if(it==var.end()) throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+        std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+        AQLString bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
+        std::map<AQLString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
+	    if(it==var.end()) throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	    LABlackScholesBase* p1 = it->second;
         AnalyticBKParam param;
         for(size_t i=0; i<vol_.size(); i++)
@@ -1799,7 +1799,7 @@ LAMathSABRCalibrator::LAMathSABRCalibrator
 
         for(size_t i=0; i<prem.size(); i++)
         {
-            if(prem[i]<0.) throw LACoreInvalidData("premium is negative!",__FILE__,__LINE__);
+            if(prem[i]<0.) throw AQLCoreInvalidData("premium is negative!",__FILE__,__LINE__);
         }
     }
 }
@@ -1835,7 +1835,7 @@ LAMathSABRCalibrator::constraintsAreViolated( const DoubleArray& x )
 LAMathSABRCalibratorATMFix::LAMathSABRCalibratorATMFix
     (const LAMathSABR_Hagan& sabr_, const DoubleArray& strike_, const DoubleArray& vol_, 
      double atmVol_, double forward_, double expiry_, 
-     double numeraire_, const DoubleArray& weight_, const LAString& target_, bool isMap_)
+     double numeraire_, const DoubleArray& weight_, const AQLString& target_, bool isMap_)
     : sabr(sabr_), strike(strike_), vol(vol_), atmVol(atmVol_), 
       forward(forward_), expiry(expiry_), 
       numeraire(numeraire_), weight(weight_), target(target_), isMap(isMap_)
@@ -1843,18 +1843,18 @@ LAMathSABRCalibratorATMFix::LAMathSABRCalibratorATMFix
     targetNum = strike_.size();
     if( targetNum != vol_.size() || targetNum != weight_.size() )
     {
-        throw LACoreInvalidData("sizes are inconsistent",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("sizes are inconsistent",__FILE__,__LINE__);
     }
 
     if( target != CALIB_TARGET_VOLATILITY && target != CALIB_TARGET_PREMIUM )
-        throw LACoreInvalidData("target is VOLATILITY or PREMIUM",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("target is VOLATILITY or PREMIUM",__FILE__,__LINE__);
 
     if( target == CALIB_TARGET_PREMIUM )
     {
-        std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-        LAString bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
-        std::map<LAString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
-	    if(it==var.end()) throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+        std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+        AQLString bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
+        std::map<AQLString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
+	    if(it==var.end()) throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	    LABlackScholesBase* p1 = it->second;
         AnalyticBKParam param;
         param.F = forward; param.Nu = numeraire; param.Te =expiry; 

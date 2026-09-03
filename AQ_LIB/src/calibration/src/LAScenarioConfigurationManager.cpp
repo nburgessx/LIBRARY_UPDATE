@@ -74,9 +74,9 @@ LAScenarioConfigurationManager::getInstance()
 	@return  LAScenarioConfiguration *
 */
 LAScenarioConfiguration *
-LAScenarioConfigurationManager::createScenarioCreator(const LAString &type) const
+LAScenarioConfigurationManager::createScenarioCreator(const AQLString &type) const
 {
-	LAString tmpType = type;
+	AQLString tmpType = type;
 	tmpType.toUpper();
 	if (tmpType == RISK_SCENARIO_YIELD)
 	{

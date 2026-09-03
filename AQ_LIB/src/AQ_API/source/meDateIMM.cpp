@@ -20,8 +20,8 @@ std::string meDateIMMFromMonth(int year,
 	AQ_API_START
     std::string ret;
 	
-	LAString tmp_calendar(calendar.c_str());
-	LAString tmp_businessDayAdj(businessDayAdj.c_str());
+	AQLString tmp_calendar(calendar.c_str());
+	AQLString tmp_businessDayAdj(businessDayAdj.c_str());
 
 	ret = validation::tryMeDateIMMFromMonth(year, month, tmp_calendar, tmp_businessDayAdj).stringWithFormat("YYYYMMDD").getCString();
 	return ret;
@@ -44,8 +44,8 @@ std::string meDateNthIMM(int year,
     AQ_API_START
 	std::string ret;
 	
-	LAString tmp_calendar(calendar.c_str());
-	LAString tmp_businessDayAdj(businessDayAdj.c_str());
+	AQLString tmp_calendar(calendar.c_str());
+	AQLString tmp_businessDayAdj(businessDayAdj.c_str());
 
 	ret = validation::tryMeDateNthIMM(year, nth, tmp_calendar, tmp_businessDayAdj).stringWithFormat("YYYYMMDD").getCString();
 	return ret;
@@ -68,9 +68,9 @@ std::string meDateNthIMMFromStartDate(const std::string& startDate,
     AQ_API_START
 	std::string ret;
 
-	LADate tmp_startDate( etrading::stringToDate( startDate ) );
-	LAString tmp_calendar(calendar.c_str());
-	LAString tmp_businessDayAdj(businessDayAdj.c_str());
+	AQLDate tmp_startDate( etrading::stringToDate( startDate ) );
+	AQLString tmp_calendar(calendar.c_str());
+	AQLString tmp_businessDayAdj(businessDayAdj.c_str());
 
 	ret = validation::tryMeDateNthIMMFromStartDate(tmp_startDate, nth, tmp_calendar, tmp_businessDayAdj).stringWithFormat("YYYYMMDD").getCString();
 	return ret;

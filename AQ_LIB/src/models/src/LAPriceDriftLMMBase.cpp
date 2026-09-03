@@ -26,19 +26,19 @@
 #include "LAPriceDriftLMMBase.h"
 
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAMathCorrelation.h"
 #include "LAMathVolFuncBase.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 #include "LAPriceDriftQuantAdjustment.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 using namespace std;
 #define COR "COR"
@@ -50,7 +50,7 @@ using namespace std;
 */
 LAPriceDriftLMMBase::LAPriceDriftLMMBase(double Q)
 : LAMathDriftFuncBase(), m_i(0), mpTimes(0), mPos_old(0), mpCache(0), mpCache2(0), mpCache_before(0), mpCacheTime(0), mpCacheTime_before(0)
-, mpCovariance(0), mSpread(0.0), mIsCovSetuped(false), mLogQ(-LAMath::log(Q)/LAMath::log(2.0)), mL_i(0.0)
+, mpCovariance(0), mSpread(0.0), mIsCovSetuped(false), mLogQ(-AQLMath::log(Q)/AQLMath::log(2.0)), mL_i(0.0)
 {
 
 }
@@ -63,15 +63,15 @@ LAPriceDriftLMMBase::LAPriceDriftLMMBase(double Q)
 	@param[in] Q val for displaced diffusion case
 
 */
-LAPriceDriftLMMBase::LAPriceDriftLMMBase(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double Q)
+LAPriceDriftLMMBase::LAPriceDriftLMMBase(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double Q)
 : LAMathDriftFuncBase(), mTenor(tenor), mDeltaTenor(delta_tenor), m_i(i), mSDEAttrName(sdeAttrName),
 mpTimes(0), mPos_old(0), mpCache(0), mpCache2(0), mpCache_before(0), mpCacheTime(0), mpCacheTime_before(0), mpCovariance(0)
-, mSpread(0.0), mIsCovSetuped(false), mLogQ(-LAMath::log(Q)/LAMath::log(2.0)), mL_i(0.0)
+, mSpread(0.0), mIsCovSetuped(false), mLogQ(-AQLMath::log(Q)/AQLMath::log(2.0)), mL_i(0.0)
 {
 	if (tenor.size() != delta_tenor.size() + 1)
 	{
 		//error
-		throw LACoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
 	}
 	if (mTenor.at(0) == 0.0)
 	{	
@@ -95,8 +95,8 @@ mSDEAttrName(v.mSDEAttrName), mpTimes(v.mpTimes), mCorData(v.mCorData), mPos_old
 		mCorrelation[i].resize(v.mCorrelation[i].size());
 		for (unsigned int j = 0; j < mCorrelation[i].size(); j++)
 		{
-			if (m_i == 0) mCorrelation[i][j] = dynamic_cast<LAFunctionBase*>(v.mCorrelation[i][j]->clone());
-			else mCorrelation[i][j] = dynamic_cast<LAFunctionBase*>(v.mCorrelation[i][j]);
+			if (m_i == 0) mCorrelation[i][j] = dynamic_cast<AQLFunctionBase*>(v.mCorrelation[i][j]->clone());
+			else mCorrelation[i][j] = dynamic_cast<AQLFunctionBase*>(v.mCorrelation[i][j]);
 		}
 	}
 	if (m_i == 0 && v.mpCache != 0)
@@ -156,17 +156,17 @@ LAPriceDriftLMMBase::getType() const
     @brief return string representaion
     @return string representaion (sde attr name : suffix : tenor : deltatenor)
 */
-LAString
+AQLString
 LAPriceDriftLMMBase::convertToString(void) const
 {
-	LAString ret;
+	AQLString ret;
 	ret += mSDEAttrName;
 	ret += ":";
-	ret += LADataInt(m_i).convertToString();
+	ret += AQLDataInt(m_i).convertToString();
 	ret += ":";
-	ret += LADataDoubles(mTenor).convertToString();
+	ret += AQLDataDoubles(mTenor).convertToString();
 	ret += ":";
-	ret += LADataDoubles(mDeltaTenor).convertToString();
+	ret += AQLDataDoubles(mDeltaTenor).convertToString();
 
 	return ret;
 }
@@ -176,14 +176,14 @@ LAPriceDriftLMMBase::convertToString(void) const
     @param[in] string representaion  (sde attr name : suffix : tenor : deltatenor)
 */
 void
-LAPriceDriftLMMBase::convertFromString(const LAString& str)
+LAPriceDriftLMMBase::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() < 5 || tmp.getSize() % 2 == 0)
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	}
 
 	mSDEAttrName = tmp.get()[0];
@@ -218,7 +218,7 @@ LAPriceDriftLMMBase::setTenor(const DoubleArray& tenor, const DoubleArray& delta
 	if (tenor.size() != delta_tenor.size() + 1)
 	{
 		//error
-		throw LACoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
 	}
 	mTenor = tenor;
 	mDeltaTenor = delta_tenor;
@@ -237,7 +237,7 @@ LAPriceDriftLMMBase::setTenor(const DoubleArray& tenor, const DoubleArray& delta
 void
 LAPriceDriftLMMBase::setUp(LAMathPathEntity& path)
 {
-	LADataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
+	AQLDataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
 	LAMathAttrSDE* pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
 	mVolatility = pattrsde->getSDE().getVolatility();
 	const LARatesPathElementCurve* pcurve = dynamic_cast<const LARatesPathElementCurve*>(pattrsde->getSDE().getInitialValue());
@@ -249,11 +249,11 @@ LAPriceDriftLMMBase::setUp(LAMathPathEntity& path)
 	
 	if (m_i == 0)
 	{
-		LAString name = COR;
+		AQLString name = COR;
 		name += "_";
 		name += mSDEAttrName;
 		dh = &path.getData(name, ISNOTNULL);
-		LADataReference* ref = &dynamic_cast<LADataReference&>(dh->get());
+		AQLDataReference* ref = &dynamic_cast<AQLDataReference&>(dh->get());
 		LAMathCorrelation* cor = &dynamic_cast<LAMathCorrelation&>(ref->get().get());
 
 		for (unsigned int i = 0; i < mCorrelation.size(); i++)
@@ -278,14 +278,14 @@ LAPriceDriftLMMBase::setUp(LAMathPathEntity& path)
 	}	
 	else
 	{
-		LAFunctionBase* method = pattrsde->getSDE().getDrift()[0];
+		AQLFunctionBase* method = pattrsde->getSDE().getDrift()[0];
 		if (method->isTypeOf(FN_DRIFTQUANTADJ))
 			method = dynamic_cast<LAPriceDriftQuantAdjustment*>(method)->getDrift();
 	
 		if (!method->isTypeOf(getType()))
 		{
 			//error
-			throw LACoreInvalidData("dirft function is not LAPriceDriftLMMBase", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("dirft function is not LAPriceDriftLMMBase", __FILE__, __LINE__);
 		}
 		LAPriceDriftLMMBase* drift = dynamic_cast<LAPriceDriftLMMBase*>(method);
 		mCorrelation = drift->mCorrelation;
@@ -314,8 +314,8 @@ LAPriceDriftLMMBase::setUpCovariance() const
 	if (m_i != 0) return;
 	mIsCovSetuped = true;
 	unsigned int size = mVolatility.size();
-	vector<const LAFunctionBase*> vol(size);
-	vector<vector<const LAFunctionBase*> > cor(size);
+	vector<const AQLFunctionBase*> vol(size);
+	vector<vector<const AQLFunctionBase*> > cor(size);
 	for (unsigned int i = 0; i < size; i++)
 	{
 		if (mVolatility[i][0]->isTypeOf(FN_VOLFUNCBASE))

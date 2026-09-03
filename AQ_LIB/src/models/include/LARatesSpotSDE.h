@@ -25,8 +25,8 @@ class LARatesSpotSDE : public LARatesSDEBase
 public:
 //  LIFECYCLE
 	// Default constructor
-	explicit LARatesSpotSDE(SDE_TYPE type, LAFunctionBase* pTransformer = 0, LAFunctionBase* pInvTransformer = 0,
-										LAFunctionBase* pAdjuster = 0);
+	explicit LARatesSpotSDE(SDE_TYPE type, AQLFunctionBase* pTransformer = 0, AQLFunctionBase* pInvTransformer = 0,
+										AQLFunctionBase* pAdjuster = 0);
 	//	Copy constructor
 	LARatesSpotSDE(const LARatesSpotSDE& v);
 	// Destructor
@@ -37,7 +37,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -47,16 +47,16 @@ public:
 								getPathElement(unsigned int pos);
    								//==========================================
 							    // get transform function
-	const LAFunctionBase*		getTransfromer() const {return mpTransformer;}
+	const AQLFunctionBase*		getTransfromer() const {return mpTransformer;}
    								//==========================================
 							    // get inverse of transform function
-	const LAFunctionBase*		getInvTransfromer() const {return mpInvTransformer;}
+	const AQLFunctionBase*		getInvTransfromer() const {return mpInvTransformer;}
 								//==========================================
 								// set up this class for path calculation
 	virtual	void				setUp();
 								//==========================================
 								// set adjuster
-	void						setAdjuster(LAFunctionBase* p){mpAdjuster = p;}
+	void						setAdjuster(AQLFunctionBase* p){mpAdjuster = p;}
 private:
 
 protected:
@@ -69,9 +69,9 @@ protected:
 
 	SCALARARRAY	mVar;			// variable for integral
 	LARatesPathElementBase*		mpPathElement;		// current path element
-	LAFunctionBase*				mpTransformer;		// transform function
-	LAFunctionBase*				mpInvTransformer;	// inverse of transform function
-	LAFunctionBase*				mpAdjuster;	        // adjust function
+	AQLFunctionBase*				mpTransformer;		// transform function
+	AQLFunctionBase*				mpInvTransformer;	// inverse of transform function
+	AQLFunctionBase*				mpAdjuster;	        // adjust function
 
 };
 

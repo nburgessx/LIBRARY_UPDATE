@@ -24,7 +24,7 @@ public:
 	// Default constructor
 	explicit LAPriceDriftLMMForward(unsigned int point, double Q = 1.0);
 	// constructor
-	LAPriceDriftLMMForward(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, unsigned int point, double Q = 1.0);	
+	LAPriceDriftLMMForward(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, unsigned int point, double Q = 1.0);	
 	//	Copy constructor
 	LAPriceDriftLMMForward(const LAPriceDriftLMMForward& v);
 	// Destructor
@@ -36,7 +36,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -49,7 +49,7 @@ public:
 //	OPERATION
 								//==========================================
 								// transform from string representaion
-    virtual void				convertFromString(const LAString& str);
+    virtual void				convertFromString(const AQLString& str);
 								//======================================
 								// set tenor
 	virtual void				setTenor(const DoubleArray& tenor, const DoubleArray& delta_tenor);

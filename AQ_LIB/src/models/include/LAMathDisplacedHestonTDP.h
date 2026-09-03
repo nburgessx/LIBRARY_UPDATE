@@ -11,15 +11,15 @@
 #endif
 //#define isQuantLib
 
-#include <LACoreTemplateType.h>
-#include <LADate.h>
+#include <AQLCoreTemplateType.h>
+#include <AQLDate.h>
 #include <complex>
 #include "LAMathFXVolatilitySurfaceGenerate.h"
 
 //Heston Param
 struct HestonParams_TDP
 {
-    LADate asOfDate;
+    AQLDate asOfDate;
 	DoubleVector T;
 	double V0;
 	DoubleVector Kappa;

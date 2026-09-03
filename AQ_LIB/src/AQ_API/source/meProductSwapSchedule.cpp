@@ -1,4 +1,4 @@
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 
 #include "meProductSwapSchedule.h"
@@ -19,13 +19,13 @@ SWIG_STRINGMATRIX meProductSwapSchedule(bool showColumnHeaders,
     AQ_API_START
 
     // marshall all inputs
-	LAStringMatrix swapScheduleParams;
+	AQLStringMatrix swapScheduleParams;
 	swig::buildStringMatrix( swapScheduleParams, swapScheduleLVB );
 	
 	const bool validateKeys = true;
 	const std::vector<std::string> columnList;
 	const bool convertDatesToExcelFormat = false;
-	LAStringMatrix tempResult = validation::tryMeProductSwapSchedule( showColumnHeaders, swapScheduleParams, validateKeys, columnList, convertDatesToExcelFormat );
+	AQLStringMatrix tempResult = validation::tryMeProductSwapSchedule( showColumnHeaders, swapScheduleParams, validateKeys, columnList, convertDatesToExcelFormat );
 
 	etrading::VariantMatrix variantMatrix;
 	swig::buildVariantMatrix( variantMatrix, tempResult );
@@ -47,13 +47,13 @@ SWIG_STRINGMATRIX meProductSwapScheduleFixed( bool showColumnHeaders,
     AQ_API_START
 
     // marshall all inputs
-	LAStringMatrix swapScheduleParams;
+	AQLStringMatrix swapScheduleParams;
 	swig::buildStringMatrix( swapScheduleParams, swapScheduleLVB );
 	
 	const bool validateKeys = true;
 	const std::vector<std::string> columnList;
 	const bool convertDatesToExcelFormat = false;
-	LAStringMatrix tempResult = validation::tryMeProductSwapScheduleFixed( showColumnHeaders, swapScheduleParams, validateKeys, columnList, convertDatesToExcelFormat );
+	AQLStringMatrix tempResult = validation::tryMeProductSwapScheduleFixed( showColumnHeaders, swapScheduleParams, validateKeys, columnList, convertDatesToExcelFormat );
 
 	etrading::VariantMatrix variantMatrix;
 	swig::buildVariantMatrix( variantMatrix, tempResult );
@@ -75,13 +75,13 @@ SWIG_STRINGMATRIX meProductSwapScheduleFloat( bool showColumnHeaders,
     AQ_API_START
 
     // marshall all inputs
-	LAStringMatrix swapScheduleParams;
+	AQLStringMatrix swapScheduleParams;
 	swig::buildStringMatrix( swapScheduleParams, swapScheduleLVB );
 	
 	const bool validateKeys = true;
 	const std::vector<std::string> columnList;
 	const bool convertDatesToExcelFormat = false;
-	LAStringMatrix tempResult = validation::tryMeProductSwapScheduleFloat( showColumnHeaders, swapScheduleParams, validateKeys, columnList, convertDatesToExcelFormat );
+	AQLStringMatrix tempResult = validation::tryMeProductSwapScheduleFloat( showColumnHeaders, swapScheduleParams, validateKeys, columnList, convertDatesToExcelFormat );
 
 	etrading::VariantMatrix variantMatrix;
 	swig::buildVariantMatrix( variantMatrix, tempResult );

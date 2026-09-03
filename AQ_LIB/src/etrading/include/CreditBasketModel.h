@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LADate.h"
+#include "AQLDate.h"
 
 #include "IsLWOObject.h"
 #include "SchemaObject.h"
@@ -67,7 +67,7 @@ namespace etrading
 		*  @param[in]	toDate	The future date to use in the calculation. Must occur after the model as-of date.
 		*  @returns	The survival probability
 		*/
-		double getFirstToDefaultHomogeneousBasketSurvivalProbability( const LADate& toDate ) const;
+		double getFirstToDefaultHomogeneousBasketSurvivalProbability( const AQLDate& toDate ) const;
 
 		/* @brief	Calculate the probability of survival to "toDate", given the contract has already survived up to "fromDate".
 		*  @param[in]	toDate		The future end date to use in the calculation. Must occur after the model as-of date.
@@ -75,7 +75,7 @@ namespace etrading
 		*							This parameter is allowed to be an empty date i.e. an optional paramweter.
 		*  @returns	The survival probability
 		*/
-		double getFirstToDefaultHomogeneousBasketSurvivalProbability( const LADate& toDate, const LADate& fromDate ) const;
+		double getFirstToDefaultHomogeneousBasketSurvivalProbability( const AQLDate& toDate, const AQLDate& fromDate ) const;
 
 		/* @brief	Calculate the probability of default in the time period defined by "fromDate" and "toDate".
 		*  @param[in]	toDate	The future end date to use in the calculation. Must occur after the model as-of date.
@@ -83,7 +83,7 @@ namespace etrading
 		*
 		*  @returns	The survival probability
 		*/
-		double getFirstToDefaultHomogeneousBasketDefaultProbability( const LADate& toDate, const LADate& fromDate ) const;
+		double getFirstToDefaultHomogeneousBasketDefaultProbability( const AQLDate& toDate, const AQLDate& fromDate ) const;
 
 		static std::vector<std::string> model_properties_lvbKeys()
 		{
@@ -114,7 +114,7 @@ namespace etrading
 		 * @param [in]	toDate		The initial date for survival probability calculations
 		 * @param [in]	fromDate	The final date for survival probability calculations
 		 */
-		void validateDates( const LADate& toDate, const LADate& fromDate ) const;
+		void validateDates( const AQLDate& toDate, const AQLDate& fromDate ) const;
 
 		/*
 		*  @brief  Utility method which validates the property keys of this CreditBasketModel, to verify that all are recognized key names.
@@ -128,7 +128,7 @@ namespace etrading
 		* @param[in]	calibrationDate	The date used to compute survivial probabilities from which the defaultFrontier is derived.
 		* @returns		A vector of defaultFrontier values, one per credit in the basket.
 		*/
-		std::vector<double> calibrateDefaultFrontier( const LADate& calibrationDate ) const;
+		std::vector<double> calibrateDefaultFrontier( const AQLDate& calibrationDate ) const;
 
 		/* @brief	Computes the product term in the homogeneous basket integral.
 		*  @param[in]	zMarketFactor	The common market factor ( the integration parameter )
@@ -142,7 +142,7 @@ namespace etrading
 		FreeObject freeObject_;
 
 		// Parameters populated during initialization step
-		LADate asOfDate_;
+		AQLDate asOfDate_;
 		std::vector<std::string> creditModelNames_;	// The name of each credit model in the basket
 		std::vector<double> correlationBetas_;		// The correlation of each credit to a common "market factor"
 		CreditBasketTypeEnum basketType_;			// HOMOGENEOUS_LOSS or INHOMOGENEOUS_LOSS

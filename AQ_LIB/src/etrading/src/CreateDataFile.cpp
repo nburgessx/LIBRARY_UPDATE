@@ -22,9 +22,9 @@
 //
 
 /* static */ int etrading::CreateDataFile::baseIndex_ = -1;
-/* static */ std::map<LAString, int> etrading::CreateDataFile::usedIndices_;
+/* static */ std::map<AQLString, int> etrading::CreateDataFile::usedIndices_;
 /* static */ bool etrading::CreateDataFile::recordEnabled_ = false;
-/* static */ LAString etrading::CreateDataFile::outputFolder_; // This is lazy instantiated the first time it is used
+/* static */ AQLString etrading::CreateDataFile::outputFolder_; // This is lazy instantiated the first time it is used
 /* static */ int etrading::CreateDataFile::maxIndex_ = 10;
 /* static */ bool etrading::CreateDataFile::rebaseResultsEnabled_ = false;
 
@@ -32,7 +32,7 @@ namespace etrading
 {
     namespace
     {
-        LAString makePath( const LAString& name )
+        AQLString makePath( const AQLString& name )
         {
             using etrading::CreateDataFile;
             using boost::filesystem::path;
@@ -40,22 +40,22 @@ namespace etrading
 
             if ( !p.is_absolute() )
             {
-                const LAString outname = etrading::CreateDataFile::outputFolder();
+                const AQLString outname = etrading::CreateDataFile::outputFolder();
                 path out = path( outname.getCString() );
                 if ( !exists( out ) )
                 {
                     if ( !create_directory( out ) )
                     {
-                        throw CreateDataFile::Exception( "error creating folder " + LAString( out.string().c_str() ) );
+                        throw CreateDataFile::Exception( "error creating folder " + AQLString( out.string().c_str() ) );
                     }
                 }
                 p = out / p;
             }
 
-            return LAString( p.string().c_str() );
+            return AQLString( p.string().c_str() );
         }
 
-        std::ostream& operator<<( std::ostream& os, const LAStringVector& v )
+        std::ostream& operator<<( std::ostream& os, const AQLStringVector& v )
         {
             for ( std::size_t i = 0; i != v.size(); ++i )
             {
@@ -112,7 +112,7 @@ namespace etrading
 			return os;
 		}
 
-        std::ostream& operator<<( std::ostream& os, const std::vector<LADate>& v )
+        std::ostream& operator<<( std::ostream& os, const std::vector<AQLDate>& v )
         {
             for ( std::size_t i = 0; i != v.size(); ++i )
             {
@@ -145,7 +145,7 @@ namespace etrading
 	@param[in]  ext		        The file extension, defaults to ".csv"
 	@param[in]  useAppendMode	Set to TRUE to append results to the same file or FALSE to clear file contents and overwrite.
 	*/
-    CreateDataFile::CreateDataFile( const LAString& basename, const LAString& ext, const bool useAppendMode )
+    CreateDataFile::CreateDataFile( const AQLString& basename, const AQLString& ext, const bool useAppendMode )
         : filename_( makeFilename( basename, useTestIndex( basename ), ext ) )
         , fullpath_( makePath( filename_ ) )
         , file_( fullpath_.getCString(), useAppendMode ? std::ios::app : std::ios::out )
@@ -156,7 +156,7 @@ namespace etrading
         }
     }
 
-    void CreateDataFile::write( const LAString& name, const double& value, int precision )
+    void CreateDataFile::write( const AQLString& name, const double& value, int precision )
     {
         double v = value;
         // set the precision to the maximum limit for double and use fixed format specifier, which can trims unwanted zero suffixes
@@ -171,38 +171,38 @@ namespace etrading
         }
     }
 
-    void CreateDataFile::write( const LAString& name, const LAString& value )
+    void CreateDataFile::write( const AQLString& name, const AQLString& value )
     {
         file_ << name << ',' << value << "\n\n";
     }
 
-    void CreateDataFile::write( const LAString& name, bool value )
+    void CreateDataFile::write( const AQLString& name, bool value )
     {
         file_ << name << "," << ( value ? "TRUE" : "FALSE" ) << "\n\n";
     }
 
-    void CreateDataFile::write( const LAString& name, const LAStringVector& value )
+    void CreateDataFile::write( const AQLString& name, const AQLStringVector& value )
     {
         file_ << name << "[]," << value << "\n\n";
     }
 
-	void CreateDataFile::write(const LAString& name, const std::vector<std::string>& value)
+	void CreateDataFile::write(const AQLString& name, const std::vector<std::string>& value)
 	{
 		file_ << name << "[]," << fromStdVectorToStringVector(value) << "\n\n";
 	}
 
-	void CreateDataFile::write(const LAString& name, const std::vector<int>& value)
+	void CreateDataFile::write(const AQLString& name, const std::vector<int>& value)
 	{
 		file_ << name << "[]," << value << "\n\n";
 	}
 
-	void CreateDataFile::write( const LAString& name, const std::vector<bool>& value )
+	void CreateDataFile::write( const AQLString& name, const std::vector<bool>& value )
 	{
 		file_ << name << "[]," << value << "\n\n";
 	}
 
 	
-	void CreateDataFile::write( const LAString& name, const std::vector<double>& value, int precision )
+	void CreateDataFile::write( const AQLString& name, const std::vector<double>& value, int precision )
     {
         if ( precision == -1 )
         {
@@ -214,18 +214,18 @@ namespace etrading
         }
     }
 
-    void CreateDataFile::write( const LAString& name, const std::vector<LADate>& value )
+    void CreateDataFile::write( const AQLString& name, const std::vector<AQLDate>& value )
     {
         file_ << name << "[]," << value << "\n\n";
     }
 
-    void CreateDataFile::write( const LAString& name, const std::vector< boost::gregorian::date >& value )
+    void CreateDataFile::write( const AQLString& name, const std::vector< boost::gregorian::date >& value )
     {
         file_ << name << "[]," << value << "\n\n";
     }
 
 
-    void CreateDataFile::write( const LAString& name, const DoubleMatrix& value )
+    void CreateDataFile::write( const AQLString& name, const DoubleMatrix& value )
     {
         const size_t m = value.size();						// no of rows
         const size_t n = m == 0 ? 0 : value[0].size();		// no of columns
@@ -265,7 +265,7 @@ namespace etrading
         }
     }
 
-    void CreateDataFile::write( const LAString& name, const LAStringMatrix& value )
+    void CreateDataFile::write( const AQLString& name, const AQLStringMatrix& value )
     {
         const size_t m = value.size();						// no of rows
         const size_t n = m == 0 ? 0 : value[0].size();		// no of columns
@@ -309,9 +309,9 @@ namespace etrading
     *  @param [in]		name		Named of the object
     *  @param [in]		value		The LabelValueBlock object being streamed
     */
-    void CreateDataFile::write( const LAString& name, const LabelValueBlock& value )
+    void CreateDataFile::write( const AQLString& name, const LabelValueBlock& value )
     {
-        LAStringMatrix m = value.toLAStringMatrix();
+        AQLStringMatrix m = value.toLAStringMatrix();
         write( name, m );
     }
 
@@ -319,13 +319,13 @@ namespace etrading
     *  @param [in]		name		Named of the object
     *  @param [in]		value		The AnyTypeMatrix object being streamed
     */
-    void CreateDataFile::write( const LAString& name, const AnyTypeMatrix& value )
+    void CreateDataFile::write( const AQLString& name, const AnyTypeMatrix& value )
     {
-		// First convert the AnyTypeMatrix to a LAStringMatrix
-		LAStringMatrix output;
+		// First convert the AnyTypeMatrix to a AQLStringMatrix
+		AQLStringMatrix output;
 		for (size_t row=0; row < value.size(); row++ )
 		{
-			LAStringVector outputRow;
+			AQLStringVector outputRow;
 			for (size_t col=0; col < value[0].size(); col++ )
 			{
 				AnyType anyItem = value[row][col];
@@ -345,15 +345,15 @@ namespace etrading
 			output.push_back( outputRow );
 		}
 
-		// Now write out the LAStringMatrix
+		// Now write out the AQLStringMatrix
 		write( name, output );
     }
 
-	/* @brief writes out a VariantMatrix, based on LAStringMatrix above. Converts Variants to strings with special handling for dates
+	/* @brief writes out a VariantMatrix, based on AQLStringMatrix above. Converts Variants to strings with special handling for dates
 	 * @param[in] name	The name of the VariantMatrix value
 	 * @param[in] value	The actual VariantMatrix data to write out
 	 */
-	void CreateDataFile::write( const LAString& name, const VariantMatrix& value )
+	void CreateDataFile::write( const AQLString& name, const VariantMatrix& value )
     {
         const size_t m = value.size();						// no of rows
         const size_t n = m == 0 ? 0 : value[0].size();		// no of columns
@@ -387,19 +387,19 @@ namespace etrading
             file_ << '\n';
             for ( std::size_t i = 0; i != m; ++i )
             {
-				LAStringVector valuesAsString;
+				AQLStringVector valuesAsString;
 				for ( std::size_t j = 0; j != n; ++j )
 				{
 					Variant variant = value[i][j];
 					if (variant.getType() == DATE_VALUE)
 					{
 						int excelDate = toExcelDateFromGregorianDate( variant.getValue<boost::gregorian::date>() );
-						LAString str( excelDate );
+						AQLString str( excelDate );
 						valuesAsString.push_back( str );
 					}
 					else
 					{
-						LAString str( value[i][j].toString().c_str() );
+						AQLString str( value[i][j].toString().c_str() );
 						valuesAsString.push_back( str );
 					}
 				}
@@ -409,19 +409,19 @@ namespace etrading
         }
     }
 
-    CreateDataFile::Exception::Exception( const LAString& msg )
-        : LACoreAppError( msg.getCString(), __FILE__, __LINE__ )
+    CreateDataFile::Exception::Exception( const AQLString& msg )
+        : AQLCoreAppError( msg.getCString(), __FILE__, __LINE__ )
     {
     }
 
-    CreateDataFile::OutputError::OutputError( const LAString & fileName )
+    CreateDataFile::OutputError::OutputError( const AQLString & fileName )
       : Exception( makeMessage( fileName ) )
     {
     }
 
-    LAString CreateDataFile::OutputError::makeMessage( const LAString & fileName )
+    AQLString CreateDataFile::OutputError::makeMessage( const AQLString & fileName )
     {
-        return LAString( "error opening file " ) + fileName + " for output";
+        return AQLString( "error opening file " ) + fileName + " for output";
     }
 
     const char* etrading::CreateDataFile::Exception::what() const
@@ -434,7 +434,7 @@ namespace etrading
         const char* str = std::getenv( "_DEBUG" );
         if ( str )
         {
-            LAString s( str );
+            AQLString s( str );
             recordEnabled_ = ( s.toLower() == "true" );
         }
         return true;
@@ -447,7 +447,7 @@ namespace etrading
         const char* str = std::getenv( "_DEBUG" );
         if ( str )
         {
-            outputFolder_ = LAString( p.string().c_str() );
+            outputFolder_ = AQLString( p.string().c_str() );
         }
         return;
     }
@@ -497,11 +497,11 @@ namespace etrading
         rebaseResultsEnabled_ = rebaseResults;
     }
 
-    /* static */ LAString etrading::CreateDataFile::setOutputFolder( const LAString& p, bool fullPathGiven )
+    /* static */ AQLString etrading::CreateDataFile::setOutputFolder( const AQLString& p, bool fullPathGiven )
     {
         if ( p.size() == 0 )
         {
-            return outputFolder_ = LAString( boost::filesystem::temp_directory_path().string().c_str() );
+            return outputFolder_ = AQLString( boost::filesystem::temp_directory_path().string().c_str() );
         }
 
         // If a complete path has been given, use it.
@@ -509,7 +509,7 @@ namespace etrading
         {
             if ( boost::filesystem::exists( p.getCString() ) == false )
             {
-                throw Exception(  LAString( "#Error: Output folder " ) + p + LAString( " does not exist" ) );
+                throw Exception(  AQLString( "#Error: Output folder " ) + p + AQLString( " does not exist" ) );
             }
 
             return outputFolder_ = p;
@@ -550,15 +550,15 @@ namespace etrading
 		strftime (buff, 20, "%Y-%m-%d %H:%M:%S", sTm);
 	}
 
-    /* static */ LAString etrading::CreateDataFile::outputFolder()
+    /* static */ AQLString etrading::CreateDataFile::outputFolder()
     {
 		// outputFolder_ is lazy initialized
 		if ( outputFolder_.size() == 0 )
 		{
-			outputFolder_ = LAString( boost::filesystem::temp_directory_path().string().c_str() );
+			outputFolder_ = AQLString( boost::filesystem::temp_directory_path().string().c_str() );
 		}
         boost::filesystem::path p = outputFolder_.getCString();
-        const LAString res( p.string().c_str() );
+        const AQLString res( p.string().c_str() );
         return res;
     }
 
@@ -580,7 +580,7 @@ namespace etrading
         return baseIndex_ = -1;
     }
 
-    /* static */ int CreateDataFile::useTestIndex( const LAString& basename )
+    /* static */ int CreateDataFile::useTestIndex( const AQLString& basename )
     {
         if ( baseIndex_ < 0 )
         {
@@ -597,10 +597,10 @@ namespace etrading
         return baseIndex_ + usedIndices_[basename]++;
     }
 
-    /* static */ LAString etrading::CreateDataFile::makeFilename( const LAString& basename, int index, const LAString& fileExtension )
+    /* static */ AQLString etrading::CreateDataFile::makeFilename( const AQLString& basename, int index, const AQLString& fileExtension )
     {
         // don't add extension if basename ends in extension
-        LAString ext( fileExtension );
+        AQLString ext( fileExtension );
         const int e = fileExtension.size();
         if ( e > 0 )
         {
@@ -621,10 +621,10 @@ namespace etrading
         return basename + infix.c_str() + ext;
     }
 
-    /*static */ LAString CreateDataFile::makeFilename( const LAString& basename, const LAString& suffix, int index, const LAString& fileExtension )
+    /*static */ AQLString CreateDataFile::makeFilename( const AQLString& basename, const AQLString& suffix, int index, const AQLString& fileExtension )
     {
         // don't add extension if basename ends in extension
-        LAString ext( fileExtension );
+        AQLString ext( fileExtension );
         const int e = fileExtension.size();
         if ( e > 0 )
         {
@@ -645,10 +645,10 @@ namespace etrading
         return basename + infix.c_str() + suffix + ext;
     }
 
-    /*static */ LAString CreateDataFile::makeFilename( const LAString& basename, const LAString& prefix, const LAString& suffix, int index, const LAString& fileExtension )
+    /*static */ AQLString CreateDataFile::makeFilename( const AQLString& basename, const AQLString& prefix, const AQLString& suffix, int index, const AQLString& fileExtension )
     {
         // don't add extension if basename ends in extension
-        LAString ext( fileExtension );
+        AQLString ext( fileExtension );
         const int e = fileExtension.size();
         if ( e > 0 )
         {
@@ -670,13 +670,13 @@ namespace etrading
     }
 
 
-    LAString decorateCurvename( const LAString& curvename, const LAString& curveIDPrefix1, const LAString& marketNamePrefix2 )
+    AQLString decorateCurvename( const AQLString& curvename, const AQLString& curveIDPrefix1, const AQLString& marketNamePrefix2 )
     {
         //
         // abbreviate market identifier
         //
-        LAString mktName = marketNamePrefix2;
-        LAString curveID = curveIDPrefix1;
+        AQLString mktName = marketNamePrefix2;
+        AQLString curveID = curveIDPrefix1;
 
         if ( mktName == "XccyBasis" )
         {
@@ -727,7 +727,7 @@ namespace etrading
         }
     }
 
-    LAString decorateFilename( const LAString& filename, const LAString& prefix )
+    AQLString decorateFilename( const AQLString& filename, const AQLString& prefix )
     {
         if( prefix.size() > 0 )
         {
@@ -739,7 +739,7 @@ namespace etrading
         }
     }
 
-    LAString decorateFilename( const LAString& filename, const LAString& prefix, const LAString& suffix )
+    AQLString decorateFilename( const AQLString& filename, const AQLString& prefix, const AQLString& suffix )
     {
         if( prefix.size() > 0 && suffix.size() > 0 )
         {

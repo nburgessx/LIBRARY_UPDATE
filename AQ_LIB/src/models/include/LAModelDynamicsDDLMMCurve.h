@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LAModelDynamicsLMMCurve.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 
 // ID for LARatesPathElementDDLMMCurve
@@ -95,7 +95,7 @@ protected:
 	DoubleArray					mSpreads;		//spread vector = mSpread * mL_i + mConstShift
 	double						mConstShift;	// constant shift
 	double						mTrancateVal;	//infimum of the calculating path 
-	double						mSpread;		// - LAMath::log(Q)/LAMath::log(2.0);
+	double						mSpread;		// - AQLMath::log(Q)/AQLMath::log(2.0);
 	static unsigned int         mSpreadsID;     // spreads ID
 	//mutable SCALARARRAY 		mValue_with_Spread;	// L + spread
 };

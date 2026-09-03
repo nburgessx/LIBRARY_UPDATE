@@ -23,7 +23,7 @@
 #include "LAScenarioConfigurationManager.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
-#include "LALinearFunc.h"
+#include "AQLLinearFunc.h"
 
 using namespace std;
 
@@ -31,7 +31,7 @@ using namespace std;
 /*!
 
 */
-LARiskConfigurationThetaOptionAnalytic::LARiskConfigurationThetaOptionAnalytic(const LAString& risktype)
+LARiskConfigurationThetaOptionAnalytic::LARiskConfigurationThetaOptionAnalytic(const AQLString& risktype)
 : LARiskConfigurationTheta()
 {
 	mAnalyticRiskType = risktype;
@@ -46,8 +46,8 @@ LARiskConfigurationThetaOptionAnalytic::~LARiskConfigurationThetaOptionAnalytic(
 }
 
 
-vector<pair<LAString, vector<LAObject *> > >
-LARiskConfigurationThetaOptionAnalytic::createRiskEntity(LAObjectPool &objPool) const
+vector<pair<AQLString, vector<AQLObject *> > >
+LARiskConfigurationThetaOptionAnalytic::createRiskEntity(AQLObjectPool &objPool) const
 {
 	return LARiskConfigurationTheta::createRiskEntity(objPool);
 	//return LARiskConfiguration::createOptionAnalyticRiskEntity(objPool);
@@ -60,7 +60,7 @@ LARiskConfigurationThetaOptionAnalytic::createRiskEntity(LAObjectPool &objPool) 
 	@param[out] e
 */
 void
-LARiskConfigurationThetaOptionAnalytic::setUpTargetNames(const LAString &ccy, LAObject &e, LADataInstance &dataInstance) const
+LARiskConfigurationThetaOptionAnalytic::setUpTargetNames(const AQLString &ccy, AQLObject &e, AQLDataInstance &dataInstance) const
 {
 	return LARiskConfiguration::setUpOptionAnalyticTargetNames(ccy,e);
 }
@@ -70,10 +70,10 @@ LARiskConfigurationThetaOptionAnalytic::setUpTargetNames(const LAString &ccy, LA
 	@param[in] fx
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationThetaOptionAnalytic::createScenario1Entity(const LAString &fx, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationThetaOptionAnalytic::createScenario1Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index)  const
 {
 	return LARiskConfiguration::createOptionAnalyticEntity(fx,dataInstance,index);
 }
@@ -85,49 +85,49 @@ LARiskConfigurationThetaOptionAnalytic::createScenario1Entity(const LAString &fx
 	@param[in] key fx
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationThetaOptionAnalytic::createScenario2Entity(const LAString &fx, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationThetaOptionAnalytic::createScenario2Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index)  const
 {	
 	(void)fx;(void)dataInstance;(void)index;
-	return vector<LAObject *>(0);
+	return vector<AQLObject *>(0);
 }
 
 /*!
     @brief return coefficient1
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationThetaOptionAnalytic::getCoefficient1(const LAString &fx) const
+AQLString
+LARiskConfigurationThetaOptionAnalytic::getCoefficient1(const AQLString &fx) const
 {
 	(void)fx;
-	return LAString("0.0:") + LAString("1.0") + LAString(":0.0");
+	return AQLString("0.0:") + AQLString("1.0") + AQLString(":0.0");
 }
 
 /*!
     @brief return riskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationThetaOptionAnalytic::getRiskName(void) const
 {
-	LAString ret = LARiskConfigurationTheta::getRiskName();
-	ret += LAString("_") + RISK_FRONT_OPTIONANALYTIC;
+	AQLString ret = LARiskConfigurationTheta::getRiskName();
+	ret += AQLString("_") + RISK_FRONT_OPTIONANALYTIC;
 	return ret;	
 }
 
 double 
-LARiskConfigurationThetaOptionAnalytic::getShiftValForOptionAnalytic(const LAString &fx) const
+LARiskConfigurationThetaOptionAnalytic::getShiftValForOptionAnalytic(const AQLString &fx) const
 {
 	double shiftval = getShiftVal(fx,SCENARIO_1);
 	const double divUnit = getDivUnit(fx);
 	if (divUnit == 0.0)
 	{	
-		throw LACoreInvalidData("Divid unit = 0 !!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Divid unit = 0 !!", __FILE__, __LINE__);
 	}
 	
 	shiftval /= divUnit;

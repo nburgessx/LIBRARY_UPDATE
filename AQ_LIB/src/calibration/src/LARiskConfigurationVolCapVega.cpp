@@ -19,14 +19,14 @@
 
 
 #include "LARiskConfigurationVolCapVega.h"
-#include "LAString.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataFunction.h"
+#include "AQLString.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataFunction.h"
 #include "LAPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
@@ -60,10 +60,10 @@ LARiskConfigurationVolCapVega::~LARiskConfigurationVolCapVega(void)
 	@param[in] ccy
 	@param[out] dataInstance
 	@param[in] scenario
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *>
-LARiskConfigurationVolCapVega::createVolatilityEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
+vector<AQLObject *>
+LARiskConfigurationVolCapVega::createVolatilityEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
 {
 	if (scenarioNum == SCENARIO_1)
 	{
@@ -71,7 +71,7 @@ LARiskConfigurationVolCapVega::createVolatilityEntity(const LAString &ccy, LADat
 	}
 	else
 	{
-		return vector<LAObject *>(0); 
+		return vector<AQLObject *>(0); 
 	}
 }
 
@@ -82,10 +82,10 @@ LARiskConfigurationVolCapVega::createVolatilityEntity(const LAString &ccy, LADat
 	@param[in] ccy
 	@param[out] dataInstance
 	@param[in] scenario
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *>
-LARiskConfigurationVolCapVega::createVolatilityEntityOld(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum) const
+vector<AQLObject *>
+LARiskConfigurationVolCapVega::createVolatilityEntityOld(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum) const
 {
 	if (scenarioNum == SCENARIO_1)
 	{
@@ -93,15 +93,15 @@ LARiskConfigurationVolCapVega::createVolatilityEntityOld(const LAString &ccy, LA
 	}
 	else
 	{
-		return vector<LAObject *>(0); 
+		return vector<AQLObject *>(0); 
 	}
 }
 /*!
     @brief return operator1
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationVolCapVega::getOperator1(void) const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_VOL_CAPVEGA_OPERATOR);
@@ -112,12 +112,12 @@ LARiskConfigurationVolCapVega::getOperator1(void) const
     @brief return coefficient1
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolCapVega::getCoefficient1(const LAString &ccy) const
+AQLString
+LARiskConfigurationVolCapVega::getCoefficient1(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_VOL_CAPVEGA_COEFFICIENT);
 }
@@ -127,12 +127,12 @@ LARiskConfigurationVolCapVega::getCoefficient1(const LAString &ccy) const
     @brief return outputname1
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolCapVega::getOutPutName1(const LAString &ccy) const
+AQLString
+LARiskConfigurationVolCapVega::getOutPutName1(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_VOL_CAPVEGA_OUTPUT);
 }
@@ -141,9 +141,9 @@ LARiskConfigurationVolCapVega::getOutPutName1(const LAString &ccy) const
 /*!
     @brief return getriskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationVolCapVega::getRiskName(void) const
 {
 	return RISK_OFFICIAL_VOL_CAPVEGA;
@@ -152,9 +152,9 @@ LARiskConfigurationVolCapVega::getRiskName(void) const
 /*!
     @brief return target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationVolCapVega::getTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_VOL_CAPVEGA_TARGET_CURRENCY);
@@ -163,9 +163,9 @@ LARiskConfigurationVolCapVega::getTargetCurrencies() const
 /*!
     @brief return calibration target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationVolCapVega::getCalibTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_VOL_CAPVEGA_CALIBRATION_TARGET_CURRENCY);

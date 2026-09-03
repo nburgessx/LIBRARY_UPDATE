@@ -11,12 +11,12 @@ namespace etrading
         //Single Currency
         if ( leg1->getStaticData()->getCurrency() != leg2->getStaticData()->getCurrency() )
         {
-  		    throw LACoreInvalidData( "#Error: It is not a single currency Swap", __FILE__, __LINE__ );
+  		    throw AQLCoreInvalidData( "#Error: It is not a single currency Swap", __FILE__, __LINE__ );
         }
 
         if (boost::math::isnan(leg1->getSchedule()->getNotional()) || boost::math::isnan(leg2->getSchedule()->getNotional()))
         {
-    		throw LACoreInvalidData( "#Error: Please provide Notional", __FILE__, __LINE__ );
+    		throw AQLCoreInvalidData( "#Error: Please provide Notional", __FILE__, __LINE__ );
         }
 
         inputParameters_ = swapPropertiesLVB;

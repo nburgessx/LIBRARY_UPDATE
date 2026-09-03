@@ -43,15 +43,15 @@ namespace etrading
 
 	}
 
-    void FloatBondSchedule::createUpfrontCashflow(const LADate& paymentDate, double leverage)
+    void FloatBondSchedule::createUpfrontCashflow(const AQLDate& paymentDate, double leverage)
     {
 		if (notionalExchangeEnum_ == START_NE || notionalExchangeEnum_ == START_AND_END_NE)
 		{
 			auto nanDoubleValue = std::numeric_limits<double>::quiet_NaN();
 
-			auto exDividendDate = LADate(); 
+			auto exDividendDate = AQLDate(); 
 
-			upfrontCashflow_ = CashflowPtr(new FixedBondCashflow(payerReceiver_, nanDoubleValue, LADate(), LADate(), 0, nanDoubleValue, paymentDate, nanDoubleValue, leverage, paymentFreqEnum_, FIRST_NOTIONAL_EXCHANGE_CASHFLOW_TYPE, nanDoubleValue, exDividendDate));
+			upfrontCashflow_ = CashflowPtr(new FixedBondCashflow(payerReceiver_, nanDoubleValue, AQLDate(), AQLDate(), 0, nanDoubleValue, paymentDate, nanDoubleValue, leverage, paymentFreqEnum_, FIRST_NOTIONAL_EXCHANGE_CASHFLOW_TYPE, nanDoubleValue, exDividendDate));
 			upfrontCashflow_->setFwdFxRate(nanDoubleValue);
 		}
 	}

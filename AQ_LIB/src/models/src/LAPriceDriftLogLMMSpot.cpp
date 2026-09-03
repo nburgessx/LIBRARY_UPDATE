@@ -48,7 +48,7 @@ LAPriceDriftLogLMMSpot::LAPriceDriftLogLMMSpot(double Q)
 	@param[in] delta_tenor delta of tenor
 	@param[in] Q val for displaced diffusion case
 */
-LAPriceDriftLogLMMSpot::LAPriceDriftLogLMMSpot(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double Q)
+LAPriceDriftLogLMMSpot::LAPriceDriftLogLMMSpot(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double Q)
 : LAPriceDriftLMMSpot(sdeAttrName, i, tenor, delta_tenor, Q)
 {
 
@@ -66,7 +66,7 @@ LAPriceDriftLogLMMSpot::~LAPriceDriftLogLMMSpot()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftLogLMMSpot::clone() const	
 {
     try 
@@ -75,7 +75,7 @@ LAPriceDriftLogLMMSpot::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "Swap.h"
 #include "JSONInfoBlock.h"   // JSON Info Blocks
@@ -26,7 +26,7 @@ namespace validation
     *  @param [in]		fixingTableNames	Fixing table object names
 	*  @return			Swap PV
 	*/
-	double tryMeLWOSwapPV(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const LAString& legName="", const LabelValueBlock& fixingTableNames=LabelValueBlock());
+	double tryMeLWOSwapPV(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const AQLString& legName="", const LabelValueBlock& fixingTableNames=LabelValueBlock());
 
     /* @brief			validation interface for the meLWOSwapPV01 method
 	*  @param [in]		swapName		    Swap object name
@@ -43,7 +43,7 @@ namespace validation
     *  @param [in]		legName             	(Optional) Leg Name
 	*  @return			Swap par rate
 	*/
-	double tryMeLWOSwapParRate(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames=LabelValueBlock(), const LAString& legName="" );
+	double tryMeLWOSwapParRate(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames=LabelValueBlock(), const AQLString& legName="" );
 
     /* @brief			validation interface for the meLWOSwapAnnuity method
 	*  @param [in]		swapName		        Swap object name
@@ -51,7 +51,7 @@ namespace validation
 	*  @param [in]		legName		            Leg name
 	*  @return			Swap PV
 	*/
-	double tryMeLWOSwapAnnuity(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const LAString& legName);
+	double tryMeLWOSwapAnnuity(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const AQLString& legName);
 
     /* @brief			validation interface for the meLWOSwapDisplayCashflows method
 	*  @param [in]		swapName		    Swap name
@@ -62,7 +62,7 @@ namespace validation
 	*  @param [in]	    columnList          Column header names to show specified columns. Default to empty list showing all columns.
 	*  @return			Swap display
 	*/
-	std::vector<AnyTypeMatrix> tryMeLWOSwapDisplayCashflows(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const LAString& legName="",
+	std::vector<AnyTypeMatrix> tryMeLWOSwapDisplayCashflows(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const AQLString& legName="",
                                                             const LabelValueBlock& fixingTableNames=LabelValueBlock(), bool showColumnHeaders=true,
                                                             const std::vector<std::string>& columnList=std::vector<std::string>());
 
@@ -74,7 +74,7 @@ namespace validation
 	*  @param [in]		spreadLegName   Leg name the spread will be applied to
 	*  @return			Swap PV
 	*/
-	double tryMeLWOSwapSpread(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames=LabelValueBlock(), const LAString& spreadLegName="");
+	double tryMeLWOSwapSpread(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames=LabelValueBlock(), const AQLString& spreadLegName="");
 
     /* @brief			validation interface for the meLWOSwapParSpread method 
     *  @param [in]		swapName		Swap name
@@ -83,7 +83,7 @@ namespace validation
 	*  @param [in]		spreadLegName   Leg name the spread will be applied to
 	*  @return			The spread that make the swap PV zero, without taking the legs' existing spreads into account
 	*/
-	double tryMeLWOSwapParSpread(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames=LabelValueBlock(), const LAString& spreadLegName="");
+	double tryMeLWOSwapParSpread(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames=LabelValueBlock(), const AQLString& spreadLegName="");
 
 	/* @brief			validation interface for the meLWOSwapAccruedInterest method
 	*  @param [in]		swapName		Swap object name
@@ -92,7 +92,7 @@ namespace validation
     *  @param [in]		fixingTableName	Fixing table object name
 	*  @return			Swap Leg's AccruedInterest
 	*/
-	double tryMeLWOSwapAccruedInterest(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const LAString& legName, const LabelValueBlock& fixingTableName);
+	double tryMeLWOSwapAccruedInterest(const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const AQLString& legName, const LabelValueBlock& fixingTableName);
 
 	/* @brief validation interface for the meLWOCreditDefaultSwapPVFromHazardRate method.
 	*   Calculates the PV of the specified Credit Default Swap.
@@ -105,7 +105,7 @@ namespace validation
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the PV
 	* @returns	The calculated PV value
 	*/
-    double tryMeLWOCreditDefaultSwapPVFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const LAString& legName, const bool includeAccruedInterest );
+    double tryMeLWOCreditDefaultSwapPVFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& legName, const bool includeAccruedInterest );
 
 	/* @brief validation interface for the meLWOCreditDefaultSwapPV method.
 	*   Calculates the PV of the specified Credit Default Swap.
@@ -115,7 +115,7 @@ namespace validation
 	* @param[in]	legName			    If specified, calculate the PV of the single swap leg
 	* @returns	The calculated PV value
 	*/
-	double tryMeLWOCreditDefaultSwapPV( const std::string& swapName, const std::string& creditModelName,  const LAString& legName );
+	double tryMeLWOCreditDefaultSwapPV( const std::string& swapName, const std::string& creditModelName,  const AQLString& legName );
 
 	/* @brief	validation interface for the meLWOCreditDefaultSwapPVByIntegration method.
 	*			Calculates the total PV of all the Credit Default Swap Legs, by integrating the payoff over survivial probability.
@@ -130,7 +130,7 @@ namespace validation
 	*													TRUE means wait to the next coupon date. This flag is used to match the PV by integration to the analytic PV formula.
 	* @returns	The calculated PV value
 	*/
-	double tryMeLWOCreditDefaultSwapPVByIntegration( const std::string& swapName, const std::string& creditModelName, const LAString& legName, const size_t numberOfIntegrationPoints, const bool evaluateInParallel, const bool payDefaultCashflowsOnNextCouponDate );
+	double tryMeLWOCreditDefaultSwapPVByIntegration( const std::string& swapName, const std::string& creditModelName, const AQLString& legName, const size_t numberOfIntegrationPoints, const bool evaluateInParallel, const bool payDefaultCashflowsOnNextCouponDate );
 
 	/* @brief	validation interface for the meLWOCreditDefaultSwapPVByMonteCarlo method.
 	*			Calculates the total PV of all the Credit Default Swap Legs, by a monte-carlo simulation over survivial probability.
@@ -146,7 +146,7 @@ namespace validation
 	*
 	* @returns	The calculated PV value
 	*/
-	double tryMeLWOCreditDefaultSwapPVByMonteCarlo( const std::string& swapName, const std::string& creditModelName, const LAString& legName, const LabelValueBlock& mcParametersLVB, const bool payDefaultCashflowsOnNextCouponDate, double& standardError );
+	double tryMeLWOCreditDefaultSwapPVByMonteCarlo( const std::string& swapName, const std::string& creditModelName, const AQLString& legName, const LabelValueBlock& mcParametersLVB, const bool payDefaultCashflowsOnNextCouponDate, double& standardError );
 
 	/* @brief Calculates the risky annuity of the specified Credit Default Swap Premium leg.
 	*
@@ -158,7 +158,7 @@ namespace validation
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 	* @returns	The risky annuity
 	*/
-	double tryMeLWOCreditDefaultSwapRiskyAnnuityFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const LAString& legName, const bool includeAccruedInterest );
+	double tryMeLWOCreditDefaultSwapRiskyAnnuityFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& legName, const bool includeAccruedInterest );
 
 	/* @brief Calculates the risky annuity of the specified Credit Default Swap Premium leg.
 	*
@@ -167,7 +167,7 @@ namespace validation
 	* @param[in]	legName				The Premium leg to use when calculating the risky annuity. A mandatory parameter
 	* @returns	The risky annuity
 	*/
-	double tryMeLWOCreditDefaultSwapRiskyAnnuity( const std::string& swapName, const std::string& creditModelName, const LAString& legName );
+	double tryMeLWOCreditDefaultSwapRiskyAnnuity( const std::string& swapName, const std::string& creditModelName, const AQLString& legName );
 
 	/* @brief[in]	Computes the accrued year fraction from the previous coupon date to the specified date
 	*				Used in accrued interest calculations.
@@ -178,7 +178,7 @@ namespace validation
 	* @param[in]	legName				The Premium leg name
 	* @returns: The year fraction
 	*/
-	double tryMeLWOCreditDefaultSwapAccruedYearFraction( const std::string& swapName, const std::string& creditModelName, const LADate& toDate, const LAString& legName );
+	double tryMeLWOCreditDefaultSwapAccruedYearFraction( const std::string& swapName, const std::string& creditModelName, const AQLDate& toDate, const AQLString& legName );
 
     /* @brief Calculates the CS01 of the specified Credit Default Swap Premium leg.
 	*
@@ -187,7 +187,7 @@ namespace validation
 	* @param[in]	legName				The Premium leg to use when calculating the risky annuity. A mandatory parameter
 	* @returns	The risky annuity
 	*/
-	double tryMeLWOCreditDefaultSwapCS01( const std::string& swapName, const std::string& creditModelName, const LAString& legName );
+	double tryMeLWOCreditDefaultSwapCS01( const std::string& swapName, const std::string& creditModelName, const AQLString& legName );
 
 	/* @brief Calculates the par spread of the specified Credit Default Swap.
 	*
@@ -200,7 +200,7 @@ namespace validation
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 	* @returns	The CDS par spread
 	*/
-	double tryMeLWOCreditDefaultSwapParSpreadFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const LAString& premiumLegName, const LAString& protectionLegName, const bool includeAccruedInterest );
+	double tryMeLWOCreditDefaultSwapParSpreadFromHazardRate( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest );
 
 	/* @brief Calculates the par spread of the specified Credit Default Swap.
 	*
@@ -210,7 +210,7 @@ namespace validation
 	* @param[in]	protectionLegName		The Protection leg name of the CDS
 	* @returns	The CDS par spread
 	*/
-	double tryMeLWOCreditDefaultSwapParSpread( const std::string& swapName, const std::string& creditModelName, const LAString& premiumLegName, const LAString& protectionLegName );
+	double tryMeLWOCreditDefaultSwapParSpread( const std::string& swapName, const std::string& creditModelName, const AQLString& premiumLegName, const AQLString& protectionLegName );
 
 	/* @brief Solves for the hazard rate, given the specified CDS par spread
 	*
@@ -223,7 +223,7 @@ namespace validation
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 	* @returns	The CDS hazard rate
 	*/
-	double tryMeLWOCreditDefaultSwapHazardRateFromParSpread( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double parSpread, const double recoveryRate, const LAString& premiumLegName, const LAString& protectionLegName, const bool includeAccruedInterest );
+	double tryMeLWOCreditDefaultSwapHazardRateFromParSpread( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double parSpread, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest );
 
 	/* @brief Solves for the hazard rate, given the specified CDS par spread
 	*
@@ -233,7 +233,7 @@ namespace validation
 	* @param[in]	protectionLegName		The Protection leg name of the CDS
 	* @returns	The CDS hazard rate
 	*/
-	double tryMeLWOCreditDefaultSwapHazardRateFromParSpread( const std::string& swapName, const std::string& creditModelName, const double parSpread, const LAString& premiumLegName, const LAString& protectionLegName );
+	double tryMeLWOCreditDefaultSwapHazardRateFromParSpread( const std::string& swapName, const std::string& creditModelName, const double parSpread, const AQLString& premiumLegName, const AQLString& protectionLegName );
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 
@@ -252,7 +252,7 @@ namespace validation
 	 *  @param[in] creditModelName	Credit Model object name
 	 *  @returns The asOfDate.
 	 */
-	LADate tryMeLWOCreditModelAsOfDate( const std::string& creditModelName );
+	AQLDate tryMeLWOCreditModelAsOfDate( const std::string& creditModelName );
 
 	 /* @brief Obtains the calibration parameters from the specified credit model
 	 * @param[in] creditModelName	Credit Model object name
@@ -261,13 +261,13 @@ namespace validation
 	AnyTypeMatrix tryMeLWOCreditModelCalibrationParameters( const std::string& creditModelName );
 
     // Extracts the Hazard Rate from the Credit Model
-	double tryMeLWOCreditModelHazardRate( const std::string& creditModelName, const LADate& paymentDate );
+	double tryMeLWOCreditModelHazardRate( const std::string& creditModelName, const AQLDate& paymentDate );
 
     // Extracts the Survival Probability from the Credit Model
-	double tryMeLWOCreditModelSurvivalProbability( const std::string& creditModelName, const LADate& toDate, const LADate& fromDate );
+	double tryMeLWOCreditModelSurvivalProbability( const std::string& creditModelName, const AQLDate& toDate, const AQLDate& fromDate );
 
     // Extracts the Default Probability from the Credit Model
-	double tryMeLWOCreditModelDefaultProbability( const std::string& creditModelName, const LADate& toDate, const LADate& fromDate );
+	double tryMeLWOCreditModelDefaultProbability( const std::string& creditModelName, const AQLDate& toDate, const AQLDate& fromDate );
 
 	/* @brief	Given a survival probability, calculate the implied survival date from the specified credit model.
 	*			i.e. this function is the inverse of getSurvivalProbability().
@@ -277,7 +277,7 @@ namespace validation
 	*
 	*  @returns		The survival date corresponding to the input survivalProbability.
 	*/ 
-	LADate tryMeLWOCreditModelImpliedSurvivalDate( const std::string& creditModelName, const double survivalProbability );
+	AQLDate tryMeLWOCreditModelImpliedSurvivalDate( const std::string& creditModelName, const double survivalProbability );
 
     // Calculates the Risky Discount Factor from the Credit Model
 	DoubleVector tryMeLWOCreditModelRiskyDiscountFactors( const std::string& creditModelName, const DateVector&  paymentDates );
@@ -292,7 +292,7 @@ namespace validation
 	* @param[in]	EndDate				The date on which credit protection ends
 	* @returns	The calculated forward spread
 	*/
-	double tryMeLWOCreditSpread( const std::string& creditModelName, const LADate& startDate, const LADate& endDate );
+	double tryMeLWOCreditSpread( const std::string& creditModelName, const AQLDate& startDate, const AQLDate& endDate );
 
 	/* @brief validation interface for the meLWOCreditSpread method.
 	*		Given a start and end date, calculates the forward spread of a credit index, implied by the credit model.
@@ -305,7 +305,7 @@ namespace validation
 	* @param[in]	EndDate				The date on which credit protection ends
 	* @returns	The calculated forward spread
 	*/
-	double tryMeLWOCreditIndexSpread( const std::string& creditModelName, const LADate& startDate, const LADate& endDate );
+	double tryMeLWOCreditIndexSpread( const std::string& creditModelName, const AQLDate& startDate, const AQLDate& endDate );
 
 	/* @brief validation interface for the meLWOCreditOptionPV method.
 	*  Calculates the value of a credit option i.e. option on a credit default swap instrument.
@@ -320,7 +320,7 @@ namespace validation
 	* @param[in]	volatility			The volatility of the underlying CDS spread
 	* @returns	The calculated option price
 	*/
-	double tryMeLWOCreditOptionPV( const std::string& creditModelName, const std::string& payerReceiver, const double strike, const LADate& optionExpiryDate, const LADate& cdsMaturityDate, const double volatility );
+	double tryMeLWOCreditOptionPV( const std::string& creditModelName, const std::string& payerReceiver, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsMaturityDate, const double volatility );
 
 	/* @brief validation interface for the meLWOCreditOptionPV method.
 	*  Calculates the value of a credit option i.e. option on a CDS instrument
@@ -337,7 +337,7 @@ namespace validation
 	* @param[in]	forwardSpread				The forward spread at the option expiry date
 	* @returns	The calculated option price
 	*/
-	double tryMeLWOCreditOptionPVFromForward( const std::string& creditModelName, const std::string& payerReceiver, const double strike, const LADate& optionExpiryDate, const LADate& cdsStartDate, const LADate& cdsMaturityDate, const double volatility, const double forwardSpread );
+	double tryMeLWOCreditOptionPVFromForward( const std::string& creditModelName, const std::string& payerReceiver, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsStartDate, const AQLDate& cdsMaturityDate, const double volatility, const double forwardSpread );
 
 	/* @brief validation interface for the meLWOCreditIndexOptionPV method.
 	*  Calculates the value of a credit index option i.e. option on a CDS index
@@ -402,7 +402,7 @@ namespace validation
 	* @param[in]	targetOptionValue	Calculate the implied vol for this target option value
 	* @returns	The implied volatility
 	*/
-	double tryMeLWOCreditOptionImpliedVol( const std::string& creditModelName, const std::string& payerReceiver, const double strike, const LADate& optionExpiryDate, const LADate& cdsMaturityDate, const double targetOptionValue );
+	double tryMeLWOCreditOptionImpliedVol( const std::string& creditModelName, const std::string& payerReceiver, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsMaturityDate, const double targetOptionValue );
 
 
 	/* @brief Calculates the implied vol of a credit option, given a target CDS option quote and a CDS forward spread.
@@ -419,7 +419,7 @@ namespace validation
 	* @param[in]	forwardSpread		The CDS forward spread at the option expiry date
 	* @returns	The implied volatility
 	*/
-	double tryMeLWOCreditOptionImpliedVolFromForward( const std::string& creditModelName, const std::string& payerReceiver, const double strike, const LADate& optionExpiryDate, const LADate& cdsStartDate, const LADate& cdsMaturityDate, const double targetOptionValue, const double forwardSpread );
+	double tryMeLWOCreditOptionImpliedVolFromForward( const std::string& creditModelName, const std::string& payerReceiver, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsStartDate, const AQLDate& cdsMaturityDate, const double targetOptionValue, const double forwardSpread );
 
     /* @brief Creates a Credit Basket-Model, constructed from underlying Credit Models
 	 * @param [in] objectName        The name of the Credit Basket-Model object to create
@@ -435,7 +435,7 @@ namespace validation
 
 
 	// Compute the Survival Probability using the Credit Basket Model
-	double tryMeLWOCreditBasketModelSurvivalProbability( const std::string& creditBasketModelName, const LADate& toDate, const LADate& fromDate );
+	double tryMeLWOCreditBasketModelSurvivalProbability( const std::string& creditBasketModelName, const AQLDate& toDate, const AQLDate& fromDate );
 
 	/* @brief validation interface for the meLWOConstantMaturitySwapPVFromConvexity() method.
 	*   Calculates the PV of a Constant Maturity Swap.
@@ -447,7 +447,7 @@ namespace validation
 	* @param[in]	fixingTableNames	Fixing table object names
 	* @returns	The calculated PV value
 	*/
-	double tryMeLWOConstantMaturitySwapPVUsingConvexityAdjustment( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double convexityAdjustment, const LAString& legName, const LabelValueBlock& fixingTableNames=LabelValueBlock() );
+	double tryMeLWOConstantMaturitySwapPVUsingConvexityAdjustment( const std::string& swapName, const LabelValueBlock& valuationSettingsLVB, const double convexityAdjustment, const AQLString& legName, const LabelValueBlock& fixingTableNames=LabelValueBlock() );
 
 	/* @brief validation interface for the meLWOConstantMaturitySwapParRateFromConvexity() method.
 	*   Calculates the ParRate of a Constant Maturity Swap.

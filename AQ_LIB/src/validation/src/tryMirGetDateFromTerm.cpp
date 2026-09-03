@@ -21,9 +21,9 @@ namespace validation
     *  @param [in]		includeLast			True if include the last day, not used in the core function
     *  @return			The end date derived from the FromDate and given term
     */
-    LAString tryMirGetDateFromTerm( const LADate& fromDate,
+    AQLString tryMirGetDateFromTerm( const AQLDate& fromDate,
                                     double termY,
-                                    const LAString& dayCount,
+                                    const AQLString& dayCount,
                                     bool includeLast )
     {
         VALID_EXCEPTION_START
@@ -39,10 +39,10 @@ namespace validation
             file.write( "includeLast",		includeLast );
         }
 
-		LADate fromDateCopy( fromDate );
-		LAString dayCountCopy( dayCount );
-        LADate mbReturnDate = etrading::LADateScheduleHelpers::getDateFromTerm( fromDateCopy, termY, dayCountCopy, includeLast );
-        LAString ret = mbReturnDate.stringWithFormat( "YYYYMMDD" );
+		AQLDate fromDateCopy( fromDate );
+		AQLString dayCountCopy( dayCount );
+        AQLDate mbReturnDate = etrading::LADateScheduleHelpers::getDateFromTerm( fromDateCopy, termY, dayCountCopy, includeLast );
+        AQLString ret = mbReturnDate.stringWithFormat( "YYYYMMDD" );
 
         if ( CreateDataFile::recordEnabled() )
         {

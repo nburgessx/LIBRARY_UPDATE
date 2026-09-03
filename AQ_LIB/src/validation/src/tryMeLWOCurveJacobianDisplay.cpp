@@ -20,9 +20,9 @@ namespace validation
 	* @param [in] displayInverseMatrix				Display inverse Jacobian matrix or not
 	*/
 	void tryMeLWOCurveEngineJacobianDisplay(DoubleMatrix& matrix,
-											LAStringMatrix& labelMatrix,
-											const LAString& curveEngineObject,
-											const LAString& curveCollection,
+											AQLStringMatrix& labelMatrix,
+											const AQLString& curveEngineObject,
+											const AQLString& curveCollection,
 											bool displayLabels,
 											bool displayInverseMatrix)
     {
@@ -33,12 +33,12 @@ namespace validation
 		
 		if (curveCollection.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: Curve collection name has not been provided.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Curve collection name has not been provided.", __FILE__, __LINE__);
 		}
 
 		if (curveEngineObject.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: Curve engine object name has not been provided.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Curve engine object name has not been provided.", __FILE__, __LINE__);
 		}
 
 		etrading::displayCurveEngineJacobian(matrix,
@@ -58,8 +58,8 @@ namespace validation
 	* @param [in] displayInverseMatrix				Display inverse Jacobian matrix or not
 	*/
 	void tryMeLWOCurveJacobianDisplay(DoubleMatrix& matrix,
-										const LAString& curveCollection,
-										const LAString& curveName,
+										const AQLString& curveCollection,
+										const AQLString& curveName,
 										bool displayInverseMatrix)
 	{
 		VALID_EXCEPTION_START
@@ -69,12 +69,12 @@ namespace validation
 
 		if (curveCollection.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: Curve collection name has not been provided.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Curve collection name has not been provided.", __FILE__, __LINE__);
 		}
 
 		if (curveName.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: Curve name has not been provided.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Curve name has not been provided.", __FILE__, __LINE__);
 		}
 
 		etrading::displayCurveJacobian(matrix,

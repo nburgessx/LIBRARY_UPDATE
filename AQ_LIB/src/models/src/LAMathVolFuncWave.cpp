@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent wave structure volatility function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 //  2007, AlgoQuantHub.
@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       LAMathVolFuncWave
 //  DESCRIPTION :       Class declaration to represent wave structure volatility function
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -49,7 +49,7 @@ using namespace std;
 
 LAMathVolFuncWave::LAMathVolFuncWave(double Tmax, double decay, double amp1, 
 								 double phase1, double amp2, double phase2, double amp3, double phase3, double shift)
-: LAFunctionBase(), mAlpha(0.0), mDecay(decay), mAmp1(amp1), mPhase1(phase1), 
+: AQLFunctionBase(), mAlpha(0.0), mDecay(decay), mAmp1(amp1), mPhase1(phase1), 
 mAmp2(amp2), mPhase2(phase2), mAmp3(amp3), mPhase3(phase3), mShift(shift) 
 {
 	mAlpha = M_PI / Tmax;
@@ -68,7 +68,7 @@ LAMathVolFuncWave::~LAMathVolFuncWave(void)
 	@brief copy constructor
 */
 LAMathVolFuncWave::LAMathVolFuncWave(const LAMathVolFuncWave &rhs) 
-: LAFunctionBase(), mAlpha(rhs.mAlpha), mDecay(rhs.mDecay), mAmp1(rhs.mAmp1), mPhase1(rhs.mPhase1), mAmp2(rhs.mAmp2),
+: AQLFunctionBase(), mAlpha(rhs.mAlpha), mDecay(rhs.mDecay), mAmp1(rhs.mAmp1), mPhase1(rhs.mPhase1), mAmp2(rhs.mAmp2),
  mPhase2(rhs.mPhase2), mAmp3(rhs.mAmp3), mPhase3(rhs.mPhase3), mShift(rhs.mShift)
 {
 
@@ -78,7 +78,7 @@ LAMathVolFuncWave::LAMathVolFuncWave(const LAMathVolFuncWave &rhs)
     @brief make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathVolFuncWave::clone() const
 {
     try 
@@ -87,7 +87,7 @@ LAMathVolFuncWave::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -99,7 +99,7 @@ LAMathVolFuncWave::clone() const
 bool
 LAMathVolFuncWave::isTypeOf(function_t id) const
 {
-	return (id == FN_VOLFUNCWAVE ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_VOLFUNCWAVE ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -123,7 +123,7 @@ LAMathVolFuncWave::operator()(const DoubleArray& x) const
 {
 	if (static_cast<int>(x.size()) < 1)
 	{
-		throw LACoreInvalidData("the argument DoubleArray's size must be more than zero !", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("the argument DoubleArray's size must be more than zero !", __FILE__, __LINE__);
 	}
 	return operator()(x[0]);
 }

@@ -26,9 +26,9 @@
 
 #include "LARatesNumeraireBankAccountHJM.h"
 #include "LAModelDynamicsCurve.h"
-#include "LAAlgorithm.h"
-#include "LA1DDataSet.h"
-#include "LAGaussLegendre.h"
+#include "AQLAlgorithm.h"
+#include "AQL1DDataSet.h"
+#include "AQLGaussLegendre.h"
 
 
 //#ifdef _MSC_VER 	//20070409--Nagase--g++(g++stdext)
@@ -67,7 +67,7 @@ LARatesNumeraireBankAccountHJM::~LARatesNumeraireBankAccountHJM()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesNumeraireBankAccountHJM::clone() const
 {
     try 
@@ -76,7 +76,7 @@ LARatesNumeraireBankAccountHJM::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -116,12 +116,12 @@ LARatesNumeraireBankAccountHJM::operator()(double t) const
 	if (t > mTerminal + INFINITESIMAL || t < 0.0)
 	{
 		//error
-        throw LACoreInvalidData("input t is before 0 or after Terminal", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("input t is before 0 or after Terminal", __FILE__, __LINE__);
 	}
 	
-	//LA1DDataSet method;	
+	//AQL1DDataSet method;	
 	LARatesContiBankAccountFunction method;
-	LAGaussLegendre GL(GAUSSLEGENDREPOINTNUM);// integral method	
+	AQLGaussLegendre GL(GAUSSLEGENDREPOINTNUM);// integral method	
 	if (mUpdateFlag) 
 	{
 		//method.setInterpolation(*mpInter_hjm);
@@ -160,7 +160,7 @@ LARatesNumeraireBankAccountHJM::operator()(double t) const
 	}
 
 	unsigned int pos;
-	LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, t, mTimeGrid.size(), pos);
+	AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, t, mTimeGrid.size(), pos);
 	
 	if (pos == mTimeGrid.size())
 		return mNumeraireArray.back();
@@ -208,7 +208,7 @@ LARatesNumeraireBankAccountHJM::setTerminal(double T)
 }
 
 void
-LARatesNumeraireBankAccountHJM::setInterpolationMethod_hjm(LAInterpolationBase* pinter) 
+LARatesNumeraireBankAccountHJM::setInterpolationMethod_hjm(AQLInterpolationBase* pinter) 
 {
 	mpInter_hjm = pinter; 
 	mUpdateFlag = true;
@@ -265,7 +265,7 @@ LARatesContiBankAccountFunction::getType() const
 	return FN_CONTIBANKACCOUNTFUNC;
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LARatesContiBankAccountFunction::clone() const
 {
     try 
@@ -274,7 +274,7 @@ LARatesContiBankAccountFunction::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -289,7 +289,7 @@ LARatesContiBankAccountFunction::operator()(const DoubleArray& x) const
 {
 	if(x.size() == 1)
 		return operator()(x[0]);
-	throw LACoreInvalidData("parameter size must be one", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("parameter size must be one", __FILE__, __LINE__);
 }
 
 double

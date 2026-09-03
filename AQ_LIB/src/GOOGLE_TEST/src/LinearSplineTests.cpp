@@ -50,11 +50,11 @@ namespace google_test
 		{
 			// Build yield curves of the current test case
 
-			LAString forecastCurveFile = LAString("STD_") + LAString(static_cast<int>(i + 1));
-			LAString discountCurveFile = LAString("OIS_") + LAString(static_cast<int>(i + 1));
+			AQLString forecastCurveFile = AQLString("STD_") + AQLString(static_cast<int>(i + 1));
+			AQLString discountCurveFile = AQLString("OIS_") + AQLString(static_cast<int>(i + 1));
 						
-			LAString forecastFileDir = TEST_STD_DIR + forecastCurveFile + LAString(".csv");
-			LAString discountFileDir = TEST_STD_DIR + discountCurveFile + LAString(".csv");
+			AQLString forecastFileDir = TEST_STD_DIR + forecastCurveFile + AQLString(".csv");
+			AQLString discountFileDir = TEST_STD_DIR + discountCurveFile + AQLString(".csv");
 
 			SET_UP_STD_CURVE(discountFileDir, forecastFileDir);
 			
@@ -62,7 +62,7 @@ namespace google_test
 
 			// Calculate forward rates
 			
-			LAString inputFileName = GetForwardRate2_inputs + LAString("_") + LAString(static_cast<int>(i + 1));
+			AQLString inputFileName = GetForwardRate2_inputs + AQLString("_") + AQLString(static_cast<int>(i + 1));
 									
 			const ReadDataFile::Load testInputFile( inputFileName );
 			
@@ -89,10 +89,10 @@ namespace google_test
 					<< "Results size should match the number of forward rates requested" << std::endl;
 
 			#if defined(GTEST32)
-			LAString outputFileName = GetForwardRate2_outputs_32bit + LAString("_") + LAString(static_cast<int>(i + 1));
+			AQLString outputFileName = GetForwardRate2_outputs_32bit + AQLString("_") + AQLString(static_cast<int>(i + 1));
 			CheckTestResultsAndRebaseOnRequest( results, TEST_STD_DIR, outputFileName, tolerance );
 			#else
-			LAString outputFileName = GetForwardRate2_outputs_64bit + LAString("_") + LAString(static_cast<int>(i + 1));
+			AQLString outputFileName = GetForwardRate2_outputs_64bit + AQLString("_") + AQLString(static_cast<int>(i + 1));
 			CheckTestResultsAndRebaseOnRequest( results, TEST_STD_DIR, outputFileName, tolerance );
 			#endif
 		}
@@ -104,13 +104,13 @@ namespace google_test
 		{
 			// Build yield curves of the current test case
 
-			LAString swapCurveFile	= LAString("STD_") + LAString(static_cast<int>(i + 1));
-			LAString oisCurveFile	= LAString("OIS_") + LAString(static_cast<int>(i + 1));
-			LAString basisCurveFile = LAString("Basis_") + LAString(static_cast<int>(i + 1));
+			AQLString swapCurveFile	= AQLString("STD_") + AQLString(static_cast<int>(i + 1));
+			AQLString oisCurveFile	= AQLString("OIS_") + AQLString(static_cast<int>(i + 1));
+			AQLString basisCurveFile = AQLString("Basis_") + AQLString(static_cast<int>(i + 1));
 						
-			LAString swapFileDir  = TEST_BASIS_DIR + swapCurveFile + LAString(".csv");
-			LAString oisFileDir	  = TEST_BASIS_DIR + oisCurveFile + LAString(".csv");
-			LAString basisFileDir = TEST_BASIS_DIR + basisCurveFile + LAString(".csv");
+			AQLString swapFileDir  = TEST_BASIS_DIR + swapCurveFile + AQLString(".csv");
+			AQLString oisFileDir	  = TEST_BASIS_DIR + oisCurveFile + AQLString(".csv");
+			AQLString basisFileDir = TEST_BASIS_DIR + basisCurveFile + AQLString(".csv");
 
 			SET_UP_TENOR_BASIS_CURVE_1(oisFileDir, swapFileDir, basisFileDir);
 			
@@ -118,7 +118,7 @@ namespace google_test
 
 			// Calculate forward rates
 			
-			LAString inputFileName = BasisCurve_GetForwardRate2_inputs + LAString("_") + LAString(static_cast<int>(i + 1));
+			AQLString inputFileName = BasisCurve_GetForwardRate2_inputs + AQLString("_") + AQLString(static_cast<int>(i + 1));
 									
 			const ReadDataFile::Load testInputFile( inputFileName );
 			
@@ -145,10 +145,10 @@ namespace google_test
 					<< "Results size should match the number of forward rates requested" << std::endl;
 
 			#if defined(GTEST32)
-			LAString outputFileName = BasisCurve_GetForwardRate2_outputs_32bit + LAString("_") + LAString(static_cast<int>(i + 1));
+			AQLString outputFileName = BasisCurve_GetForwardRate2_outputs_32bit + AQLString("_") + AQLString(static_cast<int>(i + 1));
 			CheckTestResultsAndRebaseOnRequest( results, TEST_BASIS_DIR, outputFileName, tolerance );
 			#else
-			LAString outputFileName = BasisCurve_GetForwardRate2_outputs_64bit + LAString("_") + LAString(static_cast<int>(i + 1));
+			AQLString outputFileName = BasisCurve_GetForwardRate2_outputs_64bit + AQLString("_") + AQLString(static_cast<int>(i + 1));
 			CheckTestResultsAndRebaseOnRequest( results, TEST_BASIS_DIR, outputFileName, tolerance );
 			#endif
 		}

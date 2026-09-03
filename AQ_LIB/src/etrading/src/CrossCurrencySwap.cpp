@@ -14,12 +14,12 @@ namespace etrading
 
         if ( leg1->getStaticData()->getCurrency() == leg2->getStaticData()->getCurrency() )
         {
-  		    throw LACoreInvalidData( "#Error: Invalid Xccy Swap: Leg Notionals are in the same currency", __FILE__, __LINE__ );
+  		    throw AQLCoreInvalidData( "#Error: Invalid Xccy Swap: Leg Notionals are in the same currency", __FILE__, __LINE__ );
         }
 
         if (boost::math::isnan(leg1->getSchedule()->getNotional()) || boost::math::isnan(leg2->getSchedule()->getNotional()))
         {
-    		throw LACoreInvalidData( "#Error: Invalid Xccy Swap Notional(s)", __FILE__, __LINE__ );
+    		throw AQLCoreInvalidData( "#Error: Invalid Xccy Swap Notional(s)", __FILE__, __LINE__ );
         }
 
         //Handle XccySwap properties
@@ -89,13 +89,13 @@ namespace etrading
         if ( (valuationCurrency_ != leg1->getStaticData()->getCurrency()) 
                     && (valuationCurrency_ != leg2->getStaticData()->getCurrency()))
         {
-  		    throw LACoreInvalidData( "#Error: Invalid Valuation Currency, For Xccy Swaps valuationCurrency must be one of the swap legs' currencies", __FILE__, __LINE__ );
+  		    throw AQLCoreInvalidData( "#Error: Invalid Valuation Currency, For Xccy Swaps valuationCurrency must be one of the swap legs' currencies", __FILE__, __LINE__ );
         }
 
 		// 1) Clear the Notional Reset Leg Name if specified on a non-MtM Xccy Swap (only required for MtM Xccy Swaps)
 		if( !isMTM_ )
 		{
-			notionalResetLegName_ = LAString();
+			notionalResetLegName_ = AQLString();
 		}
 
         if (notionalResetLegName_.size() != 0)
@@ -103,7 +103,7 @@ namespace etrading
             // 2) notionalResetLeg provided and MTM true, check if the legName is valid 
             if (!same(leg1->getLegName(), notionalResetLegName_) && !same(leg2->getLegName(), notionalResetLegName_))  
             {
-           		throw LACoreInvalidData( "#Error: Invalid Xccy Swap Notional Reset Leg: The NotionalFxResetLeg must match one of the swap legs", __FILE__, __LINE__ );
+           		throw AQLCoreInvalidData( "#Error: Invalid Xccy Swap Notional Reset Leg: The NotionalFxResetLeg must match one of the swap legs", __FILE__, __LINE__ );
             }
         }
         else
@@ -111,7 +111,7 @@ namespace etrading
             // 3) notionalResetLeg not provided and MTM true, use USD leg name as default, if no USD leg, user need to provided one 
             if (isMTM_)
             {
-                LAString defaultNotionalResetLeg ="";
+                AQLString defaultNotionalResetLeg ="";
                 if (leg1->getStaticData()->getCurrency() == USD)
                 {
                     defaultNotionalResetLeg = leg1->getLegName();
@@ -125,7 +125,7 @@ namespace etrading
 
                 if (notionalResetLegName_.size() == 0)
                 {
-               	    throw LACoreInvalidData( "#Error: Invalid Xccy Swap Notional Reset Leg: For MTM XCCY Swaps we must specify a NotionalResetLeg", __FILE__, __LINE__ );
+               	    throw AQLCoreInvalidData( "#Error: Invalid Xccy Swap Notional Reset Leg: For MTM XCCY Swaps we must specify a NotionalResetLeg", __FILE__, __LINE__ );
                 }
             }
             else
@@ -135,7 +135,7 @@ namespace etrading
         }
     }
 
-    void CrossCurrencySwap::validateCollectionSize(const LabelValueBlock& valuationSettingsLVB, const LAString& legName) const
+    void CrossCurrencySwap::validateCollectionSize(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName) const
     {
 
         Swap::validateCollectionSize(valuationSettingsLVB, legName);
@@ -146,7 +146,7 @@ namespace etrading
 		{
 			if (getLWOCurveCollectionFromValuationSettings(valuationSettingsLVB, legs_.get(i)->getLegName()).size() == 0)
 			{
-				throw LACoreInvalidData("#Error: Invalid Valuation Settings: For Xccy Swaps the number of Valuation Settings blocks must match the number of trade legs", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: Invalid Valuation Settings: For Xccy Swaps the number of Valuation Settings blocks must match the number of trade legs", __FILE__, __LINE__);
 			}
 
 		}
@@ -172,7 +172,7 @@ namespace etrading
 		return valSettingLVB;
 	}
 
-    double CrossCurrencySwap::spread(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread, const LAString& spreadLegName)
+    double CrossCurrencySwap::spread(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread, const AQLString& spreadLegName)
 	{
 		LabelValueBlock valSettingLVB = preCalculate(valuationSettingsLVB);
 
@@ -180,7 +180,7 @@ namespace etrading
         return ret;	
     }
 
-    double CrossCurrencySwap::pv(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName)
+    double CrossCurrencySwap::pv(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const AQLString& legName)
 	{
 		LabelValueBlock valSettingLVB = preCalculate(valuationSettingsLVB);
 
@@ -196,7 +196,7 @@ namespace etrading
         return ret;
     }
 
-    double CrossCurrencySwap::annuity(const LabelValueBlock& valuationSettingsLVB, const LAString& legName)
+    double CrossCurrencySwap::annuity(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName)
 	{
 		LabelValueBlock valSettingLVB = preCalculate(valuationSettingsLVB);
 		
@@ -212,7 +212,7 @@ namespace etrading
 		return ret;
 	}
 
-  	std::vector<AnyTypeMatrix> CrossCurrencySwap::view(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName, bool showColumnHeaders, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList)
+  	std::vector<AnyTypeMatrix> CrossCurrencySwap::view(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const AQLString& legName, bool showColumnHeaders, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList)
 	{
 		LabelValueBlock valSettingLVB = preCalculate(valuationSettingsLVB);
 

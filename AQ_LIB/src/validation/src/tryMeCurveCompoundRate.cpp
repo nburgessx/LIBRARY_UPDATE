@@ -37,19 +37,19 @@ namespace validation
     */
     DoubleVector tryMeCurveCompoundRate( const DateVector& startDates,
                                          const DateVector& endDates,
-                                         const LAString& curveCollection,
-                                         const LAString& forecastCurveIndex,
-                                         const LAString& frequency,
+                                         const AQLString& curveCollection,
+                                         const AQLString& forecastCurveIndex,
+                                         const AQLString& frequency,
                                          double spread,
-                                         const LAString& stubType,
-                                         const LAString& rollDayInput,
-                                         const LAString& calendar,
-                                         const LAString& businessDayAdj,
-                                         const LAString& dayCount,
-                                         const LAString& interpolation,
-                                         const LAString& compoundType,
-                                         const LAString& firstStubDate,
-                                         const LAString& lastStubDate )
+                                         const AQLString& stubType,
+                                         const AQLString& rollDayInput,
+                                         const AQLString& calendar,
+                                         const AQLString& businessDayAdj,
+                                         const AQLString& dayCount,
+                                         const AQLString& interpolation,
+                                         const AQLString& compoundType,
+                                         const AQLString& firstStubDate,
+                                         const AQLString& lastStubDate )
 
     {
         VALID_EXCEPTION_START
@@ -78,39 +78,39 @@ namespace validation
 
         if( startDates.size() == 0 || endDates.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: a size of vector is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: a size of vector is zero.", __FILE__, __LINE__ );
         }
 
         if( startDates.size() != endDates.size() )
         {
-            throw LACoreInvalidData( "#Error: The input startDates and endDates must be of the same size.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The input startDates and endDates must be of the same size.", __FILE__, __LINE__ );
         }
 
-        LADate* firstOddDt  = NULL;
-        LADate tmpfirstOddDt;
+        AQLDate* firstOddDt  = NULL;
+        AQLDate tmpfirstOddDt;
         if ( firstStubDate.size() != 0 )
         {
             tmpfirstOddDt = etrading::stringToDate( firstStubDate, "#Error: Invalid 'firstStubDate'." );
             firstOddDt = &tmpfirstOddDt;
         }
-        LADate* lastOddDt  = NULL;
-        LADate tmplastOddDt;
+        AQLDate* lastOddDt  = NULL;
+        AQLDate tmplastOddDt;
         if ( lastStubDate.size() != 0 )
         {
             tmplastOddDt = etrading::stringToDate( lastStubDate, "#Error: Invalid 'lastStubDate'." );
             lastOddDt = &tmplastOddDt;
         }
 
-        LAString cal = etrading::getDefaultCalendarForEmptyString( calendar, curveCollection );
+        AQLString cal = etrading::getDefaultCalendarForEmptyString( calendar, curveCollection );
 
-        LAString rollD( etrading::getDefaultValueForEmptyString( rollDayInput, "ENDDATE" ) );
-        LAString businessDayAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "MOD_FOLLOWING" ) );
-        LAString dayC( etrading::getDefaultValueForEmptyString( dayCount, "ACT/360" ) );
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, "SPLINE" ) );
-        LAString cType( etrading::getDefaultValueForEmptyString( compoundType, "FLAT" ) );
+        AQLString rollD( etrading::getDefaultValueForEmptyString( rollDayInput, "ENDDATE" ) );
+        AQLString businessDayAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "MOD_FOLLOWING" ) );
+        AQLString dayC( etrading::getDefaultValueForEmptyString( dayCount, "ACT/360" ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, "SPLINE" ) );
+        AQLString cType( etrading::getDefaultValueForEmptyString( compoundType, "FLAT" ) );
 
         DoubleVector ret;
-        LADataInstance* dataInstance = etrading::getDataInstance();
+        AQLDataInstance* dataInstance = etrading::getDataInstance();
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
@@ -118,8 +118,8 @@ namespace validation
         for( size_t i = 0; i < startDates.size(); i++ )
         {
 
-            LADate startDt = startDates[i];
-            LADate endDt = endDates[i];
+            AQLDate startDt = startDates[i];
+            AQLDate endDt = endDates[i];
 
             bool isStartRoll = etrading::isStartRollAndPopulateStubDatesFromStubType( etrading::toStubTypeEnum(stubType.getCString()), firstOddDt, lastOddDt, startDt, endDt, frequency );
 
@@ -175,21 +175,21 @@ namespace validation
     *  @param [in]		lastStubDate		Start date of the end stub period
     *  @return			compounding rate calculated based on the startDate, endDate, and compound type
     */
-    double tryMeCurveCompoundRate( const LADate& startDate,
-                                   const LADate& endDate,
-                                   const LAString& curveCollection,
-                                   const LAString& forecastCurveIndex,
-                                   const LAString& frequency,
+    double tryMeCurveCompoundRate( const AQLDate& startDate,
+                                   const AQLDate& endDate,
+                                   const AQLString& curveCollection,
+                                   const AQLString& forecastCurveIndex,
+                                   const AQLString& frequency,
                                    double spread,
-                                   const LAString& stubType,
-                                   const LAString& rollDayInput,
-                                   const LAString& calendar,
-                                   const LAString& businessDayAdj,
-                                   const LAString& dayCount,
-                                   const LAString& interpolation,
-                                   const LAString& compoundType,
-                                   const LAString& firstStubDate,
-                                   const LAString& lastStubDate )
+                                   const AQLString& stubType,
+                                   const AQLString& rollDayInput,
+                                   const AQLString& calendar,
+                                   const AQLString& businessDayAdj,
+                                   const AQLString& dayCount,
+                                   const AQLString& interpolation,
+                                   const AQLString& compoundType,
+                                   const AQLString& firstStubDate,
+                                   const AQLString& lastStubDate )
     {
         VALID_EXCEPTION_START
 
@@ -242,19 +242,19 @@ namespace validation
     */
     DoubleVector tryMeCurveCompoundRateWithFixingTable( const DateVector& startDates,
                                          const DateVector& endDates,
-                                         const LAString& curveCollection,
-                                         const LAString& forecastCurveIndex,
-                                         const LAString& frequency,
+                                         const AQLString& curveCollection,
+                                         const AQLString& forecastCurveIndex,
+                                         const AQLString& frequency,
                                          double spread,
-                                         const LAString& stubType,
-                                         const LAString& rollDayInput,
-                                         const LAString& calendar,
-                                         const LAString& businessDayAdj,
-                                         const LAString& dayCount,
-                                         const LAString& interpolation,
-                                         const LAString& compoundType,
-                                         const LAString& firstStubDate,
-                                         const LAString& lastStubDate,
+                                         const AQLString& stubType,
+                                         const AQLString& rollDayInput,
+                                         const AQLString& calendar,
+                                         const AQLString& businessDayAdj,
+                                         const AQLString& dayCount,
+                                         const AQLString& interpolation,
+                                         const AQLString& compoundType,
+                                         const AQLString& firstStubDate,
+                                         const AQLString& lastStubDate,
                                          const std::string& fixingTableName,
                                          bool annualized)
 
@@ -342,21 +342,21 @@ namespace validation
     *  @param [in]		annualized  		True to return annualized rate. Default to true
     *  @return			compounding rate calculated based on the startDate, endDate, and compound type
     */
-    double tryMeCurveCompoundRateWithFixingTable( const LADate& startDate,
-                                   const LADate& endDate,
-                                   const LAString& curveCollection,
-                                   const LAString& forecastCurveIndex,
-                                   const LAString& frequency,
+    double tryMeCurveCompoundRateWithFixingTable( const AQLDate& startDate,
+                                   const AQLDate& endDate,
+                                   const AQLString& curveCollection,
+                                   const AQLString& forecastCurveIndex,
+                                   const AQLString& frequency,
                                    double spread,
-                                   const LAString& stubType,
-                                   const LAString& rollDayInput,
-                                   const LAString& calendar,
-                                   const LAString& businessDayAdj,
-                                   const LAString& dayCount,
-                                   const LAString& interpolation,
-                                   const LAString& compoundType,
-                                   const LAString& firstStubDate,
-                                   const LAString& lastStubDate, 
+                                   const AQLString& stubType,
+                                   const AQLString& rollDayInput,
+                                   const AQLString& calendar,
+                                   const AQLString& businessDayAdj,
+                                   const AQLString& dayCount,
+                                   const AQLString& interpolation,
+                                   const AQLString& compoundType,
+                                   const AQLString& firstStubDate,
+                                   const AQLString& lastStubDate, 
                                    const std::string& fixingTableName,
                                    bool annualized)
     {

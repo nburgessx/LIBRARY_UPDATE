@@ -49,7 +49,7 @@ namespace validation
         etrading::validateKeysForLVB( tryMeProductSwapParRateLVBKeys(), swapLVB.getKeys(), validateKeys );
 
         const std::string inputLVB = "SwapLVB";
-        LAString curveCollection = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -58,15 +58,15 @@ namespace validation
             file.write( "swapLVB", swapLVB );
         }
 
-        LAString forecastCurveIndex	= swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
-        LAString discountCurveIndex = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        AQLString forecastCurveIndex	= swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
+        AQLString discountCurveIndex = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, discountCurveIndex );
-        LAString forecastCurveStaticDataTable = etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
+        AQLString forecastCurveStaticDataTable = etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
 
         // Synchronize the OIS pricing interpolation with that used within the OIS Curve calibration routine
-        LAString interpolation = etrading::getCurveInterpolation( curveCollection, forecastCurveStaticDataTable );
+        AQLString interpolation = etrading::getCurveInterpolation( curveCollection, forecastCurveStaticDataTable );
 
         DateVector fixedAccrualDates;
         DateVector fixedPaymentDates;
@@ -76,8 +76,8 @@ namespace validation
         etrading::validateAndGenerateSwapCashflows( swapLVB, inputLVB, fixedAccrualDates, fixedPaymentDates, floatFixingDates, floatAccrualDates, floatPaymentDates );
 
         double floatSpread = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_SPREAD );
-        LAString fixedDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
-        LAString floatDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
+        AQLString fixedDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
+        AQLString floatDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
 
         // Float Leg Fixing Parameters
         double floatFirstFix = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_FIRSTFIXING, std::numeric_limits<double>::quiet_NaN() );

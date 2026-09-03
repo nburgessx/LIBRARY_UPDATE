@@ -5,14 +5,14 @@
 #endif
 
 
-#include <LACoreTemplateType.h>
+#include <AQLCoreTemplateType.h>
 #include <complex>
-#include "LABasic.h"
-#include "LAGaussLegendre.h"
-#include "LAGaussLaguerre.h"
-#include "LAFunction.h"
-#include "LAFunctionVector.h"
-#include "LANl2sol.h"
+#include "AQLBasic.h"
+#include "AQLGaussLegendre.h"
+#include "AQLGaussLaguerre.h"
+#include "AQLFunction.h"
+#include "AQLFunctionVector.h"
+#include "AQLNl2sol.h"
 #include "LAMathJumpDiffusion.h"
 #include "LAMathDisplacedHeston.h"
 
@@ -96,7 +96,7 @@ DoubleComplex LAMathDisplacedHeston::G_DD(DoubleComplex phi,
     DoubleComplex  B_ = LAMathDisplacedHeston::B_DD(psi_plus, psi_minus, zeta_, phi, T, beta_);
         
     //
-    DoubleComplex LN_FX0_ = DoubleComplex(LAMath::log(FX0), 0.0);
+    DoubleComplex LN_FX0_ = DoubleComplex(AQLMath::log(FX0), 0.0);
     DoubleComplex tmp =  A_ + B_ * v0 + LN_FX0_ * phi;
 
 	DoubleComplex ret = exp(tmp);
@@ -114,7 +114,7 @@ double LAMathDisplacedHeston::F_Integral_DD(double z,
 {
 	DoubleComplex phi = DoubleComplex(0.5, -z);
 	DoubleComplex G_ = LAMathDisplacedHeston::G_DD(phi, T, FX0, beta_, heston_params);
-	DoubleComplex Ln_K = DoubleComplex(LAMath::log(K),0.0);
+	DoubleComplex Ln_K = DoubleComplex(AQLMath::log(K),0.0);
 
 	double ret = real( exp(-Ln_K * phi) * G_ ) / (z * z + 0.25);
 
@@ -131,7 +131,7 @@ double LAMathDisplacedHeston::Get_F_DD(double T,
 {
 	DoubleVector x(GL_Number);
 	DoubleVector weight(GL_Number);
-	LAGaussLaguerre gauss_laguerre(GL_Number);
+	AQLGaussLaguerre gauss_laguerre(GL_Number);
 	double integral;
 
 	/*for(size_t j=0;j<50000;j++)
@@ -144,7 +144,7 @@ double LAMathDisplacedHeston::Get_F_DD(double T,
 			tmp += integral * weight[i];
 		}
 
-		if(LAMath::abs( integral ) < 1.0e-12 ) break;
+		if(AQLMath::abs( integral ) < 1.0e-12 ) break;
 	}	*/
 
     double tmp = 0.;
@@ -156,7 +156,7 @@ double LAMathDisplacedHeston::Get_F_DD(double T,
 		tmp += integral * weight[i];
 	}
 
-	return tmp * K / LAMath::pi() ;
+	return tmp * K / AQLMath::pi() ;
 };
 
 double LAMathDisplacedHeston::BS_DDHeston(double T,
@@ -171,7 +171,7 @@ double LAMathDisplacedHeston::BS_DDHeston(double T,
 	//param check
 	if(sgn != 1 &&  sgn != -1)
 	{
-		throw LACoreInvalidData("sgn is 1 or -1",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("sgn is 1 or -1",__FILE__, __LINE__);
 	}
 
 	double K_ = beta_ * K + (1 - beta_) * FX0;

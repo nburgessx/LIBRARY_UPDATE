@@ -171,7 +171,7 @@ namespace etrading
         return idx;
     };
 
-	std::vector<double> createDoubleVector(const LAStringVector& inputVector)
+	std::vector<double> createDoubleVector(const AQLStringVector& inputVector)
 	{
 		std::vector<double> dblVec(inputVector.size());
 		for(auto i = 0u; i < inputVector.size(); i++)
@@ -181,7 +181,7 @@ namespace etrading
 		return dblVec;
 	};
 
-	std::vector<std::string> createStringVector(const LAStringVector& inputVector)
+	std::vector<std::string> createStringVector(const AQLStringVector& inputVector)
 	{
 		std::vector<std::string> strVec(inputVector.size());
 		for(auto i = 0u; i < inputVector.size(); i++)
@@ -191,7 +191,7 @@ namespace etrading
 		return strVec;
 	};
 
-	std::vector<boost::gregorian::date> createDateVector(const LAStringVector& inputVector)
+	std::vector<boost::gregorian::date> createDateVector(const AQLStringVector& inputVector)
 	{
 		std::vector<boost::gregorian::date> dateVec(inputVector.size());
 		for(auto i = 0u; i < inputVector.size(); i++)

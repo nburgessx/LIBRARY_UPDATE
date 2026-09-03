@@ -26,8 +26,8 @@
 #include "LARatesLJTermStructureSDE.h"
 #include "LARatesSDEIntegralBase.h"
 
-#include "LAAlgorithm.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLBasic.h"
 
 using namespace std;
 //================ LARatesLJTermStructureSDE ===================================
@@ -69,7 +69,7 @@ LARatesLJTermStructureSDE::~LARatesLJTermStructureSDE()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesLJTermStructureSDE::clone() const
 {
     try 
@@ -78,7 +78,7 @@ LARatesLJTermStructureSDE::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -113,12 +113,12 @@ LARatesLJTermStructureSDE::check(void) const
 		&& mType != DIVIDEdXbyX)
     {
 		//error
-		throw LACoreInvalidData("If SDEType is DIVIDEdXbyX, SDEIntegralType must be LOG", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("If SDEType is DIVIDEdXbyX, SDEIntegralType must be LOG", __FILE__, __LINE__);
 	}
 	else if (mpIntegral->getIntegralType() == NORMAL_INTEGRAL && mType != dX)
 	{
 		//error
-		throw LACoreInvalidData("If SDEType is dX, SDEIntegralType must be NORMAL_INTEGRAL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("If SDEType is dX, SDEIntegralType must be NORMAL_INTEGRAL", __FILE__, __LINE__);
 
 	}
 	return LARatesTermStructureSDE::check();
@@ -162,10 +162,10 @@ LARatesLJTermStructureSDE::calcPath(unsigned int pos)
 
 	
 	unsigned int j;
-	if (!LAAlgorithm::find<DoubleArray, double>(mTimeGrid, grid[mPos], 0, mTimeGrid.size() - 1, j))
+	if (!AQLAlgorithm::find<DoubleArray, double>(mTimeGrid, grid[mPos], 0, mTimeGrid.size() - 1, j))
 	{
 		//error
-		throw LACoreInvalidData("grid is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("grid is something wrong", __FILE__, __LINE__);
 	}
 	j++;
 
@@ -206,7 +206,7 @@ LARatesLJTermStructureSDE::calcPath(unsigned int pos)
 #endif
 			}
 
-			double inv_sqrt_t = 1.0 / LAMath::sqrt(mTimeGrid[j]);
+			double inv_sqrt_t = 1.0 / AQLMath::sqrt(mTimeGrid[j]);
 			for (l = k; l < wt_size; l++)
 			{
 				double vol = mVolatility[l][0]->integral(mIntegralRegion);
@@ -214,13 +214,13 @@ LARatesLJTermStructureSDE::calcPath(unsigned int pos)
 				mVar_LJ[l] =  static_cast<SCALAR>(mDrift[l]->integral(mIntegralRegion));
 				if (mType == DIVIDEdXbyX) mVar_LJ[l] -= static_cast<SCALAR>(0.5 * vol * vol);
 				mVar_LJ[l] += static_cast<SCALAR>(vol * mWt[l] * inv_sqrt_t);
-				if (mpIntegral->getIntegralType() == LOG_INTEGRAL) mVar_LJ[l] = static_cast<SCALAR>(mIntegralRegion[l + 1].first * LAMath::exp(mVar_LJ[l]));
+				if (mpIntegral->getIntegralType() == LOG_INTEGRAL) mVar_LJ[l] = static_cast<SCALAR>(mIntegralRegion[l + 1].first * AQLMath::exp(mVar_LJ[l]));
 				else mVar_LJ[l] += static_cast<SCALAR>(mIntegralRegion[l + 1].first);
 #else
 				mVar_LJ[l] = mDrift[l]->integral(mIntegralRegion);
 				if (mType == DIVIDEdXbyX) mVar_LJ[l] -= 0.5 * vol * vol;
 				mVar_LJ[l] += vol * mWt[l] * inv_sqrt_t;
-				if (mpIntegral->getIntegralType() == LOG_INTEGRAL) mVar_LJ[l] = mIntegralRegion[l + 1].first * LAMath::exp(mVar_LJ[l]);
+				if (mpIntegral->getIntegralType() == LOG_INTEGRAL) mVar_LJ[l] = mIntegralRegion[l + 1].first * AQLMath::exp(mVar_LJ[l]);
 				else mVar_LJ[l] += mIntegralRegion[l + 1].first;
 #endif
 

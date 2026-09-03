@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 #include "LabelValueBlock.h"
 
 using etrading::LabelValueBlock;
@@ -23,16 +23,16 @@ namespace validation
     *  @param [in]		aggregateRisk	    Whether to aggregate risks against the same market instruments from different curves
     */
     void tryMeProductSwapDelta(
-        LAStringVector& pillarNames,
-        LAStringVector& headers,
+        AQLStringVector& pillarNames,
+        AQLStringVector& headers,
         DoubleMatrix& deltas,
-        LADataInstance* dataInstance,
+        AQLDataInstance* dataInstance,
         const std::vector<LabelValueBlock>& dealInfo,
-        const LAStringVector& forecastCurveSet,
-        const LAString& curveCollection,
+        const AQLStringVector& forecastCurveSet,
+        const AQLString& curveCollection,
         double bumpSize,
-        const LAString& bumpMode,
-        const LAString& deltaType,
+        const AQLString& bumpMode,
+        const AQLString& deltaType,
         bool aggregateRisk );
 }
 

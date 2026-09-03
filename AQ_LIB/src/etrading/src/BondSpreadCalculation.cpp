@@ -106,7 +106,7 @@ namespace etrading
 	*  @param [in]		continuouslyCompounding	        True to calculate z-spread using continouslyCompounding
 	*  @return			returns the Z-Spread
 	*/
-	double calculateBondZSpread(const double& bondDirtyPrice, const std::shared_ptr< Bond >& bond, const DoubleVector& zeroRates, const LADate& settleDate, const bool& continuouslyCompounding)
+	double calculateBondZSpread(const double& bondDirtyPrice, const std::shared_ptr< Bond >& bond, const DoubleVector& zeroRates, const AQLDate& settleDate, const bool& continuouslyCompounding)
 	{
 		// OK to use static_pointer_cast here because we know the cashflow type for sure (the schedule created it).
 		const std::shared_ptr<BondSchedule>& schedule = std::static_pointer_cast<BondSchedule>(bond->getSchedule());
@@ -175,7 +175,7 @@ namespace etrading
 	*  @param [in]		continuouslyCompounding	        True to calculate z-spread using continouslyCompounding
 	*  @return			returns the Z-Spread
 	*/
-	double calculateBondZSpread(const double& bondDirtyPrice, const std::shared_ptr< Bond >& bond, const std::string& curveCollection, const std::string& forecastCurve, const LADate& settleDate, const bool& continuouslyCompounding)
+	double calculateBondZSpread(const double& bondDirtyPrice, const std::shared_ptr< Bond >& bond, const std::string& curveCollection, const std::string& forecastCurve, const AQLDate& settleDate, const bool& continuouslyCompounding)
 	{
 
 		// Throw proper exception when the curve has not been built
@@ -203,7 +203,7 @@ namespace etrading
 		{
 			if (i >= firstActiveCashflowIndex)
 			{
-				const LADate paymentDt = paymentDates[i];
+				const AQLDate paymentDt = paymentDates[i];
 
 				const double df = discountFactors[i];
 

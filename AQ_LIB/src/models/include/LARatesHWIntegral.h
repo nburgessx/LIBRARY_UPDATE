@@ -5,8 +5,8 @@
 #endif
 
 #include "LARatesSDEIntegralBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LAMathPathEntity.h"
 #include "LAMathHWFuncTool.h"
 #include <map>
@@ -32,7 +32,7 @@ public:
 	                            // Default constructor
 	explicit LARatesHWIntegral(SDEINTEGRAL_TYPE type);
 	                            // Default constructor
-	explicit LARatesHWIntegral(SDEINTEGRAL_TYPE type, const LAString& sdeAttrName);
+	explicit LARatesHWIntegral(SDEINTEGRAL_TYPE type, const AQLString& sdeAttrName);
 								//======================================
 	                            //	Copy constructor
 	LARatesHWIntegral(const LARatesHWIntegral& v);
@@ -47,15 +47,15 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
 								//======================================
 								// excecute integral
 	inline 	virtual void		integral(double ts, double te, 
-										std::vector<LAFunctionBase*>::const_iterator drift,										
-										std::vector<std::vector<LAFunctionBase*> >::const_iterator vol,
+										std::vector<AQLFunctionBase*>::const_iterator drift,										
+										std::vector<std::vector<AQLFunctionBase*> >::const_iterator vol,
 										DoubleArray::const_iterator	bm,
 										SCALARARRAY::iterator	x_in_out,	
 										unsigned int varnum

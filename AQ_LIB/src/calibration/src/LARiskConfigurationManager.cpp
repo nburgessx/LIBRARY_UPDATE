@@ -110,45 +110,45 @@ LARiskConfigurationManager::getInstance()
 	@return LARiskConfiguration *
 */
 LARiskConfiguration *
-LARiskConfigurationManager::createRiskSetUpper(const LAString &risk, bool isOfficial) const
+LARiskConfigurationManager::createRiskSetUpper(const AQLString &risk, bool isOfficial) const
 {
-	LAString tmpRisk = risk;
+	AQLString tmpRisk = risk;
 	tmpRisk.toUpper();
 
 	if (tmpRisk.findString(RISK_FRONT_OPTIONANALYTIC) >=0)
 	{
-		LAStringVector tmpvec = tmpRisk.toToken('_');
+		AQLStringVector tmpvec = tmpRisk.toToken('_');
 		if (tmpvec.size() != 2)
-			throw LACoreInvalidData("risk variable is wrong",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("risk variable is wrong",__FILE__,__LINE__);
 
 		tmpRisk = tmpvec[0];
 
-		LAString calc = LACoreDataService::getContext(ARG_KEY_CALC).toUpper();
+		AQLString calc = LACoreDataService::getContext(ARG_KEY_CALC).toUpper();
 		if (calc == "VANILLA")
 		{
 			if (tmpRisk == RISK_FX_DELTA)
 			{
-				return new LARiskConfigurationFXDeltaOptionAnalytic(LAString("DELTA"));
+				return new LARiskConfigurationFXDeltaOptionAnalytic(AQLString("DELTA"));
 			}
 			else if (tmpRisk == RISK_FRONT_VOL_FXVEGA)
 			{
-				return new LARiskConfigurationVolFXVegaOptionAnalytic(LAString("VEGA"));
+				return new LARiskConfigurationVolFXVegaOptionAnalytic(AQLString("VEGA"));
 			}
 			else if (tmpRisk == RISK_FRONT_YIELD_IRDELTA)
 			{
-				return new LARiskConfigurationYieldIRDeltaOptionAnalytic(LAString("RHO"));
+				return new LARiskConfigurationYieldIRDeltaOptionAnalytic(AQLString("RHO"));
 			}
 			else if (tmpRisk == RISK_FRONT_YIELD_BASISDELTA)
 			{
-				return new LARiskConfigurationYieldBasisDeltaOptionAnalytic(LAString("RHO"));
+				return new LARiskConfigurationYieldBasisDeltaOptionAnalytic(AQLString("RHO"));
 			}
 			else if (tmpRisk == RISK_FRONT_FX_SHIFTDELTA)
 			{
-				return new LARiskConfigurationFXShiftDeltaOptionAnalytic(LAString("GAMMA"));
+				return new LARiskConfigurationFXShiftDeltaOptionAnalytic(AQLString("GAMMA"));
 			}
 			else if (tmpRisk == RISK_OFFICIAL_THETA)
 			{
-				return new LARiskConfigurationThetaOptionAnalytic(LAString("THETA"));
+				return new LARiskConfigurationThetaOptionAnalytic(AQLString("THETA"));
 			}
 			else
 				return 0;	
@@ -157,12 +157,12 @@ LARiskConfigurationManager::createRiskSetUpper(const LAString &risk, bool isOffi
 
 	
 	LAStaticData &rprop = LACoreDataService::getStaticDataManager().getRiskStaticData();
-	LAString analyticstr = rprop.getStaticData(RISK_KEY_ANALYTIC_CALCTYPE).toUpper();
+	AQLString analyticstr = rprop.getStaticData(RISK_KEY_ANALYTIC_CALCTYPE).toUpper();
 	bool isanalytic = false;
 	if (ANALYTIC == analyticstr)
 	{
 		isanalytic = true;
-		throw LACoreInvalidData("Analytic risk is not supported now!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Analytic risk is not supported now!",__FILE__,__LINE__);
 	}
 	
 	if (isOfficial)

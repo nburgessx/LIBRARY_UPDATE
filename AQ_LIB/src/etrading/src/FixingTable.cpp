@@ -333,17 +333,17 @@ namespace etrading
 		fixingValues = std::vector<Variant>(fixingTableMatrix[1].cbegin() + 3, fixingTableMatrix[1].cend());
 	}
 
-	LAStringMatrix FixingTable::getFixingTableDateValueMatrix() const
+	AQLStringMatrix FixingTable::getFixingTableDateValueMatrix() const
 	{
 		std::vector<Variant> fixingDates;
 		std::vector<Variant> fixingValues;
 
 		populateFixingTableDatesValues(fixingDates, fixingValues);
 
-		LAStringMatrix fixingDatesValues;
+		AQLStringMatrix fixingDatesValues;
 		for (unsigned int i = 0; i < fixingDates.size(); ++i)
 		{
-			LAStringVector tempVec;
+			AQLStringVector tempVec;
 			tempVec.push_back(fixingDates[i].getValueAsString());
 			tempVec.push_back(fixingValues[i].getValueAsString());
 			fixingDatesValues.push_back(tempVec);

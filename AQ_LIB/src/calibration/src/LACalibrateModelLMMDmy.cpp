@@ -19,7 +19,7 @@
 //#define __DATAOUT__
 
 #include "LACalibrateModelLMMDmy.h"
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 #include "LARatesDmySDE.h"
 #include "LARatesCurveLogLinearInterpolationDmy.h"
 
@@ -30,7 +30,7 @@ using namespace std;
 	@param[in] baseCurrency
 
 */
-LACalibrateModelLMMDmy::LACalibrateModelLMMDmy(const LAString &baseCurrency)
+LACalibrateModelLMMDmy::LACalibrateModelLMMDmy(const AQLString &baseCurrency)
 : LACalibrateModelLMM(baseCurrency)
 {
 }
@@ -52,7 +52,7 @@ LACalibrateModelLMMDmy::~LACalibrateModelLMMDmy(void)
 	@param[in]  dataInstance
 */
 LARatesSDEBase *
-LACalibrateModelLMMDmy::createSDEInstance(const LAString &currency, LADataInstance &dataInstance) const
+LACalibrateModelLMMDmy::createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	currency;
 	dataInstance;

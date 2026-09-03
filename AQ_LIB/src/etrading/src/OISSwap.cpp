@@ -2,7 +2,7 @@
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
 #include "CommonConstants.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
 #include "ScheduleValidation.h"
@@ -11,7 +11,7 @@
 #include "InitializeAQETrading.h"
 #include "ConstantDeclarations.h"
 #include "LACurvePricingObject.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLPriceDataSlidingRule.h"
 #include <boost/algorithm/string.hpp>
 
 namespace etrading
@@ -31,18 +31,18 @@ namespace etrading
     {
         LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( etrading::InitializeAQETrading::instance().dataInstance(), curveSet_ );
 
-        LAString fixeddc = LACoreComponentManager::getDayCount( fixedDayCount_ );
-        LAString floatdc = LACoreComponentManager::getDayCount( floatDayCount_ );
+        AQLString fixeddc = AQLCoreComponentManager::getDayCount( fixedDayCount_ );
+        AQLString floatdc = AQLCoreComponentManager::getDayCount( floatDayCount_ );
 
         // Initialise yield curve by reference only once
         if ( !isYieldCurveReady_ )
         {
             if ( interpolation_.size() == 0 )
             {
-                throw LACoreInvalidData( "#Error: Interpolation has not been specified for PV", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Interpolation has not been specified for PV", __FILE__, __LINE__ );
             }
 
-            LAString inter =  LACoreComponentManager::getInterpolation( interpolation_ );
+            AQLString inter =  AQLCoreComponentManager::getInterpolation( interpolation_ );
             yc.setInterpolation( inter );
 
             yc.getDayCount().setDayCount( floatdc ); // floatdc
@@ -66,31 +66,31 @@ namespace etrading
                 || floatAccrualDates_.size() == 0
                 || floatPaymentDates_.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Swap cash flow schedule has not been completely generated", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Swap cash flow schedule has not been completely generated", __FILE__, __LINE__ );
         }
 
-        LAString floatCalendar = floatCalendar_;
+        AQLString floatCalendar = floatCalendar_;
         if ( floatCalendar.size() == 0 )
         {
             floatCalendar = floatAccrualCalendar_;
             if ( floatCalendar.size() == 0 )
             {
-                throw LACoreInvalidData( "#Error: Calendar is missing on the floating leg for compounding purpose", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Calendar is missing on the floating leg for compounding purpose", __FILE__, __LINE__ );
             }
         }
 
-        LAString floatBusinessDayAdj = floatBusinessDayAdjustment_;
+        AQLString floatBusinessDayAdj = floatBusinessDayAdjustment_;
         if ( floatBusinessDayAdj.size() == 0 )
         {
             floatBusinessDayAdj = floatAccrualBusinessDayAdjustment_;
             if ( floatBusinessDayAdj.size() == 0 )
             {
-                throw LACoreInvalidData( "#Error: Roll Convention (or Business Day Adjustment) is missing on the floating leg for compounding purpose", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Roll Convention (or Business Day Adjustment) is missing on the floating leg for compounding purpose", __FILE__, __LINE__ );
             }
         }
 
-        LAString slidingRule( LAString( "NORMAL" ) );
-        LAString compoundingMethod( compoundingMethod_ );
+        AQLString slidingRule( AQLString( "NORMAL" ) );
+        AQLString compoundingMethod( compoundingMethod_ );
         bool eomRoll = false;
         if ( boost::iequals( floatRollDayString_.getCString(), "EOM" ) )
         {

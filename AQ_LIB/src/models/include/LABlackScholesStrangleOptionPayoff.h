@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LABlackScholesCapletOptionPayoff.h"
 
 
@@ -44,7 +44,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -56,20 +56,20 @@ public:
 								// return function value
 	virtual double				operator()(double x) const
 								{
-									return LAFunctionBase::operator()(x);								
+									return AQLFunctionBase::operator()(x);								
 								}
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								};
 
 	virtual std::vector<AnalyticParam* > getAnalyticParam(void);
 
-	virtual LAStringVector getOptionType();
+	virtual AQLStringVector getOptionType();
 
-	virtual LAStringVector getBSComponentVector(LAString risktype) const;
+	virtual AQLStringVector getBSComponentVector(AQLString risktype) const;
 
-	virtual LAStringVector getBSPayoffComponentVector(LAString risktype) const;
+	virtual AQLStringVector getBSPayoffComponentVector(AQLString risktype) const;
 
 	//virtual void setOptionTerm(double Te);
 	

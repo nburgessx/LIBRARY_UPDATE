@@ -10,13 +10,13 @@ namespace google_test
         , public TryMeCurveAccessors
     {
     public:
-        TryMeCurveOis( const LAString& inputFile );
+        TryMeCurveOis( const AQLString& inputFile );
     };
 
 	/* 
 	*  @brief			Set up OIS curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeOISCurve(const LAString& inputFile);
+	void setUpMeOISCurve(const AQLString& inputFile);
 }
 

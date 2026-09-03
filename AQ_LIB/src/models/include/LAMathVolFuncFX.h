@@ -4,13 +4,13 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAInterpolationBase.h"
-#include "LAAlgorithm.h"
-#include "LA1DDataSet.h"
-#include "LAGaussLegendre.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLInterpolationBase.h"
+#include "AQLAlgorithm.h"
+#include "AQL1DDataSet.h"
+#include "AQLGaussLegendre.h"
 
 
 // Funciton ID of LAMathVolFuncFX
@@ -19,13 +19,13 @@
 #define FN_VOLFUNCFX_STR	"fn_volfuncfx"
 
 
-class LAMathVolFuncFX : public LAFunctionBase
+class LAMathVolFuncFX : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
 	// constructor
 	explicit LAMathVolFuncFX(const DoubleArray &timeGrid, const DoubleArray &sigma, 
-									const DoubleArray &fx, const DoubleArray &beta, const LAString &currency, int integrate_n_ = 30);
+									const DoubleArray &fx, const DoubleArray &beta, const AQLString &currency, int integrate_n_ = 30);
 	// destructor
 	virtual ~LAMathVolFuncFX(void);
 	// copy constructor
@@ -36,7 +36,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;
@@ -82,7 +82,7 @@ public :
 	}
 								//==========================================
 	                            // return currency
-	const LAString			    getCurrency() const
+	const AQLString			    getCurrency() const
 	{
 		return mCurrency;
 	}
@@ -103,11 +103,11 @@ protected :
 	DoubleArray mFX0;		    // forward fx
 	DoubleArray mBeta;          // beta
 
-	LAString    mCurrency;		// currency
+	AQLString    mCurrency;		// currency
 	mutable std::map<double, double> mIntegratedCacheSigma; //chache sigma
 	mutable std::map<double, bool> mIsCacheSigma;           //chache flag
-	mutable LA1DDataSet		mSigmaFunc;                     //sigma function
-	LAGaussLegendre	mGL;        // gauss legendre
+	mutable AQL1DDataSet		mSigmaFunc;                     //sigma function
+	AQLGaussLegendre	mGL;        // gauss legendre
 	
 };
 

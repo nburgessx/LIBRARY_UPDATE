@@ -15,29 +15,29 @@
 #include "LAMathLeastSquareSwaptionVol.h"
 #include "LAMathLeastSquareSwaptionCapFloor.h"
 #include "LAMathBoundaryConstraintVolLMM.h"
-#include "LAObject.h"
-#include "LADataProcedure.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLObject.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "LAMathDateCalculations.h"
 #include "LAPriceCFGenUtility.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAMathValuableEntity.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLMathValuableEntity.h"
 
 #include "LAQuantLibEndCriteria.h"
 #include "LAQuantLibProblem.h"
@@ -48,8 +48,8 @@
 #include "LAQuantLibProblem.h"
 #include "LAModelUtilities.h"
 
-#include "LAPriceTargetFunction.h"
-#include "LAPriceLSTargetFunction.h"
+#include "AQLPriceTargetFunction.h"
+#include "AQLPriceLSTargetFunction.h"
 #include "LAPriceCashFlowGenerator.h"
 #include <algorithm>
 
@@ -61,7 +61,7 @@ class IRCalibLSTool
 {
 public:
 	// constructor
-	explicit IRCalibLSTool(LADataDoubles* pAttr) : mpAttr(pAttr) {;}
+	explicit IRCalibLSTool(AQLDataDoubles* pAttr) : mpAttr(pAttr) {;}
 	/*!
 		@brief set up parameter for function pointed by a member variable
 	*/
@@ -73,7 +73,7 @@ public:
     {
         mpAttr->set(param, 0);
     };
-	LADataDoubles* mpAttr; // pointer to LADataDoubles
+	AQLDataDoubles* mpAttr; // pointer to AQLDataDoubles
 };
 
 
@@ -83,7 +83,7 @@ public:
     @brief default constructor
 */
 LAPriceLMMCalibration::LAPriceLMMCalibration()
-: LACoreProcedure()
+: AQLCoreProcedure()
 {
 }
 /*!
@@ -103,14 +103,14 @@ bool
 LAPriceLMMCalibration::isTypeOf(function_t id) const
 {
 	return (id == FN_IR_LMMCALIBRATION ? true :
-						LACoreProcedure::isTypeOf(id));
+						AQLCoreProcedure::isTypeOf(id));
 }
 /*!
     @brief  Copy this class
 
 	@return pointer to copied object
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceLMMCalibration::clone() const
 {
     try
@@ -119,7 +119,7 @@ LAPriceLMMCalibration::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -140,7 +140,7 @@ LAPriceLMMCalibration::getType() const
 	@param[in, out] dm data master
 */
 void
-LAPriceLMMCalibration::registerData(LAPriceDataManager& dm) const
+LAPriceLMMCalibration::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(PRICING_DATA_CALIBRATORENGINE,		DATA_PROCEDURE);
 	dm.setData(CALIBRATION_DATA_CALIBRATIONDATA,				DATA_MULTIREFERENCE);
@@ -158,33 +158,33 @@ LAPriceLMMCalibration::registerData(LAPriceDataManager& dm) const
 	@note basedate is not used in estimation
 */
 void
-LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
-							 LAObject& object,
-							 const LADataProcedure& att) const
+LAPriceLMMCalibration::calibrateModel(const AQLDate& basedate,
+							 AQLObject& object,
+							 const AQLDataProcedure& att) const
 {
 
 	(void)basedate; (void)att;
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	dh = &(object.getData("CalibInfoName", ISNOTNULL));
-	const LAString& calibInfoName = dynamic_cast<LADataString &>(dh->get());
-	const LAObject &calibInfo = object.getDataInstance()->getObjectPool().getObject(calibInfoName, ENCHKTYPE_ISDEFINED).get();
+	const AQLString& calibInfoName = dynamic_cast<AQLDataString &>(dh->get());
+	const AQLObject &calibInfo = object.getDataInstance()->getObjectPool().getObject(calibInfoName, ENCHKTYPE_ISDEFINED).get();
 
 	dh = &(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL));
-	LAObject& models = dynamic_cast<LADataReference&>(dh->get()).get().get();
-	const LAString& calibIDName = dynamic_cast<LADataString &>(models.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	AQLObject& models = dynamic_cast<AQLDataReference&>(dh->get()).get().get();
+	const AQLString& calibIDName = dynamic_cast<AQLDataString &>(models.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 
-    DoubleVector paramV = dynamic_cast<const LADataDoubles &>(calibInfo.getData(CALIBRATION_DATA_PARAM_V, ISNOTNULL).get()).get();
-    DoubleVector paramF = dynamic_cast<const LADataDoubles &>(calibInfo.getData(CALIBRATION_DATA_PARAM_F, ISNOTNULL).get()).get();
-    DoubleVector tenorG = dynamic_cast<const LADataDoubles &>(calibInfo.getData(CALIBRATION_DATA_TENOR_G, ISNOTNULL).get()).get();
-    DoubleVector paramG = dynamic_cast<const LADataDoubles &>(calibInfo.getData(CALIBRATION_DATA_PARAM_G, ISNOTNULL).get()).get();
-	const LAString interGStr = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_INTERPOLATION_G, ISNOTNULL).get()).get();
-	const LAString frequencyG = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_FREQUENCY_G, ISNOTNULL).get()).get();
+    DoubleVector paramV = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(CALIBRATION_DATA_PARAM_V, ISNOTNULL).get()).get();
+    DoubleVector paramF = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(CALIBRATION_DATA_PARAM_F, ISNOTNULL).get()).get();
+    DoubleVector tenorG = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(CALIBRATION_DATA_TENOR_G, ISNOTNULL).get()).get();
+    DoubleVector paramG = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(CALIBRATION_DATA_PARAM_G, ISNOTNULL).get()).get();
+	const AQLString interGStr = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_INTERPOLATION_G, ISNOTNULL).get()).get();
+	const AQLString frequencyG = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_FREQUENCY_G, ISNOTNULL).get()).get();
 
 	bool doCalibration = true;
-	const LADataHolder* temp_ah = &calibInfo.getData(CALIBRATION_DATA_DO_OPT_FLAG);
+	const AQLDataHolder* temp_ah = &calibInfo.getData(CALIBRATION_DATA_DO_OPT_FLAG);
 	if(temp_ah->isDefined() && !temp_ah->isNull()){
-		doCalibration = dynamic_cast<const LADataString&>(temp_ah->get()).get() == "TRUE";
+		doCalibration = dynamic_cast<const AQLDataString&>(temp_ah->get()).get() == "TRUE";
 	}
 
 	if(!doCalibration){
@@ -194,13 +194,13 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 		return;
 	}
 
-	const bool is_extratenor_calib = dynamic_cast<const LADataBool &>(calibInfo.getData(CALIBRATION_DATA_IS_EXTRATENOR_CALIB, ISNOTNULL).get()).get();
+	const bool is_extratenor_calib = dynamic_cast<const AQLDataBool &>(calibInfo.getData(CALIBRATION_DATA_IS_EXTRATENOR_CALIB, ISNOTNULL).get()).get();
 
     // set cannonical T
-	const LAString canonicalFreq = dynamic_cast<const LADataString &>(calibInfo.getData(PRICING_DATA_CALIBCANONICAL_FREQ, ISNOTNULL).get()).get();
-    DoubleVector tenor = dynamic_cast<const LADataDoubles &>(calibInfo.getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
-    DoubleVector tenor_30_360 = dynamic_cast<const LADataDoubles &>(calibInfo.getData(PRICING_DATA_CALIBCANONICAL_T_30_360, ISNOTNULL).get()).get();
-    BoolVector tenor_extraflag = dynamic_cast<const LADataBools &>(calibInfo.getData(PRICING_DATA_CALIBCANONICAL_T_EXTRAFLAG, ISNOTNULL).get()).get();
+	const AQLString canonicalFreq = dynamic_cast<const AQLDataString &>(calibInfo.getData(PRICING_DATA_CALIBCANONICAL_FREQ, ISNOTNULL).get()).get();
+    DoubleVector tenor = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
+    DoubleVector tenor_30_360 = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(PRICING_DATA_CALIBCANONICAL_T_30_360, ISNOTNULL).get()).get();
+    BoolVector tenor_extraflag = dynamic_cast<const AQLDataBools &>(calibInfo.getData(PRICING_DATA_CALIBCANONICAL_T_EXTRAFLAG, ISNOTNULL).get()).get();
 	DoubleVector tenor_vollmm, tenor_30_360_vollmm;
 
 	if(is_extratenor_calib)
@@ -248,10 +248,10 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 
 
 
-	int numSmallSteps = dynamic_cast<const LADataInt &>(calibInfo.getData(CALIBRATION_DATA_NUM_SMALL_STEPS, ISNOTNULL).get()).get();
+	int numSmallSteps = dynamic_cast<const AQLDataInt &>(calibInfo.getData(CALIBRATION_DATA_NUM_SMALL_STEPS, ISNOTNULL).get()).get();
 
 	// LAMathVolatilityLMMDiscModel
-	std::shared_ptr<LAInterpolationBase> interG;
+	std::shared_ptr<AQLInterpolationBase> interG;
 	// If method G input frequency is not same as canonical frequency, method G will be interpolated.
 	if (canonicalFreq != frequencyG)
 	{
@@ -261,38 +261,38 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 
 	//get init curve
 	dh = &(models.getData(PRICING_DATA_CURVEID,ISNOTNULL));
-	LAObject& yldentity = dynamic_cast<LADataReference &>(dh->get()).get().get();
+	AQLObject& yldentity = dynamic_cast<AQLDataReference &>(dh->get()).get().get();
 	dh = &(yldentity.getData(CALIBRATION_DATA_NAME,ISNOTNULL));
-	LAString yldname = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString yldname = dynamic_cast<AQLDataString &>(dh->get()).get();
 
-	LADataInstance* pDataInstance = object.getDataInstance();
+	AQLDataInstance* pDataInstance = object.getDataInstance();
 	//forecast curve
-	const LAString forecastCurve = dynamic_cast<const LADataString &>(calibInfo.getData(PRICING_DATA_FORECASTCURVE, ISNOTNULL).get()).get();
+	const AQLString forecastCurve = dynamic_cast<const AQLDataString &>(calibInfo.getData(PRICING_DATA_FORECASTCURVE, ISNOTNULL).get()).get();
 	LAMathYieldCurve *tmpCurveF = new LAMathYieldCurve(pDataInstance, &forecastCurve);
 	tmpCurveF->getData(IR_CALIBRATION_DATA_YIELDDATA,ISDEFINED).convertFromString(yldname);
 	tmpCurveF->setInterpolation(FN_SPLINEINTERPOLATION_STR);
 	LAMathPathYieldCurve* curve0_F = new LAMathPathYieldCurve(tmpCurveF,0.0,ACT_365_ISDA);
 	//discount curve
-	const LAString discountCurve = dynamic_cast<const LADataString &>(calibInfo.getData(PRICING_DATA_DISCOUNTCURVE, ISNOTNULL).get()).get();
+	const AQLString discountCurve = dynamic_cast<const AQLDataString &>(calibInfo.getData(PRICING_DATA_DISCOUNTCURVE, ISNOTNULL).get()).get();
 	LAMathYieldCurve *tmpCurveD = new LAMathYieldCurve(pDataInstance, &discountCurve);
 	tmpCurveD->getData(IR_CALIBRATION_DATA_YIELDDATA,ISDEFINED).convertFromString(yldname);
 	tmpCurveD->setInterpolation(FN_SPLINEINTERPOLATION_STR);
 	LAMathPathYieldCurve* curve0_D = new LAMathPathYieldCurve(tmpCurveD,0.0,ACT_365_ISDA);
 
 	dh = &(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL));
-	const LADataMultiReference& attrdata = dynamic_cast<LADataMultiReference&>(dh->get());
-	LAObject& capEntity = attrdata.get(0).get();
-	LAObject& swaptionEntity = attrdata.get(1).get();
+	const AQLDataMultiReference& attrdata = dynamic_cast<AQLDataMultiReference&>(dh->get());
+	AQLObject& capEntity = attrdata.get(0).get();
+	AQLObject& swaptionEntity = attrdata.get(1).get();
 
-	const LAStringVector &capTermVec = dynamic_cast<const LADataStrings &>(calibInfo.getData(IR_CALIBRATION_DATA_CAP_TERM, ISNOTNULL).get()).get();
-	const LAStringVector &capTenorVec = dynamic_cast<const LADataStrings &>(calibInfo.getData(IR_CALIBRATION_DATA_CAP_TENOR, ISNOTNULL).get()).get();
-	const DoubleVector &capBlackVolVec = dynamic_cast<const LADataDoubles &>(capEntity.getData(LAString("CAP_") + IR_CALIBRATION_DATA_BLACKVOLATILITY, ISNOTNULL).get()).get();
-	const LAStringVector &optionMatVec = dynamic_cast<const LADataStrings &>(calibInfo.getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL).get()).get();
-	const LAStringVector &swapTenorVec = dynamic_cast<const LADataStrings &>(calibInfo.getData(IR_CALIBRATION_DATA_SWAPTENOR, ISNOTNULL).get()).get();
-	const DoubleMatrix &swaptionVolWeightMat = dynamic_cast<const LADataDoubleMatrix &>(calibInfo.getData(IR_CALIBRATION_DATA_SWAPTIONVOLWEIGHT, ISNOTNULL).get()).get();
-	LAString swaptionVolType = dynamic_cast<const LADataString &>(calibInfo.getData( IR_CALIBRATION_DATA_SWAPTIONVOLTYPE, ISNOTNULL ).get()).get();
-	double swaptionVolForwardShift = dynamic_cast<const LADataDouble &>(calibInfo.getData( IR_CALIBRATION_DATA_SWAPTIONVOL_MARKET_FORWARDSHIFT, ISNOTNULL ).get()).get();
-	const DoubleMatrix &swaptionVolMat = dynamic_cast<const LADataDoubleMatrix &>(swaptionEntity.getData( LAString("SWAPTION_") + IR_CALIBRATION_DATA_BLACKVOLATILITY, ISNOTNULL ).get()).get();	
+	const AQLStringVector &capTermVec = dynamic_cast<const AQLDataStrings &>(calibInfo.getData(IR_CALIBRATION_DATA_CAP_TERM, ISNOTNULL).get()).get();
+	const AQLStringVector &capTenorVec = dynamic_cast<const AQLDataStrings &>(calibInfo.getData(IR_CALIBRATION_DATA_CAP_TENOR, ISNOTNULL).get()).get();
+	const DoubleVector &capBlackVolVec = dynamic_cast<const AQLDataDoubles &>(capEntity.getData(AQLString("CAP_") + IR_CALIBRATION_DATA_BLACKVOLATILITY, ISNOTNULL).get()).get();
+	const AQLStringVector &optionMatVec = dynamic_cast<const AQLDataStrings &>(calibInfo.getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL).get()).get();
+	const AQLStringVector &swapTenorVec = dynamic_cast<const AQLDataStrings &>(calibInfo.getData(IR_CALIBRATION_DATA_SWAPTENOR, ISNOTNULL).get()).get();
+	const DoubleMatrix &swaptionVolWeightMat = dynamic_cast<const AQLDataDoubleMatrix &>(calibInfo.getData(IR_CALIBRATION_DATA_SWAPTIONVOLWEIGHT, ISNOTNULL).get()).get();
+	AQLString swaptionVolType = dynamic_cast<const AQLDataString &>(calibInfo.getData( IR_CALIBRATION_DATA_SWAPTIONVOLTYPE, ISNOTNULL ).get()).get();
+	double swaptionVolForwardShift = dynamic_cast<const AQLDataDouble &>(calibInfo.getData( IR_CALIBRATION_DATA_SWAPTIONVOL_MARKET_FORWARDSHIFT, ISNOTNULL ).get()).get();
+	const DoubleMatrix &swaptionVolMat = dynamic_cast<const AQLDataDoubleMatrix &>(swaptionEntity.getData( AQLString("SWAPTION_") + IR_CALIBRATION_DATA_BLACKVOLATILITY, ISNOTNULL ).get()).get();	
 	
 	// set vol type
 	swaptionVolType.toUpper();
@@ -307,12 +307,12 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 	}
 	else
 	{
-		LAString msg = "Wrong swaption vol type! : " + swaptionVolType + "?";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "Wrong swaption vol type! : " + swaptionVolType + "?";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
 	// set up target
-	LAString costFuncTarget = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_COST_FUNC_TARGET, ISNOTNULL).get()).get();
+	AQLString costFuncTarget = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_COST_FUNC_TARGET, ISNOTNULL).get()).get();
 	LAMathLeastSquareSwaptionVol::target target1;
 	LAMathLeastSquareCapFloor::target target2;
 
@@ -328,8 +328,8 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 	}
 	else
 	{
-		LAString msg = "Wrong costFuncTarget! : " + costFuncTarget + "?";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "Wrong costFuncTarget! : " + costFuncTarget + "?";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
 	// set up cap pricing class
@@ -338,15 +338,15 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 	unsigned int capGridSize = capTermVec.size();
 	for (unsigned int i = 0; i < capGridSize; ++i)
 	{
-		LAString capTerm = capTermVec[i];
-		LAString capTenor = capTenorVec[i];
+		AQLString capTerm = capTermVec[i];
+		AQLString capTenor = capTenorVec[i];
 
-		LAString prefix = "CAP_";
-		LAString postfix = "_" + capTerm + "_" + capTenor;
-		DoubleVector T_pay_cap = dynamic_cast<const LADataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_T_PAY + postfix, ISNOTNULL).get()).get();
-		DoubleVector T_fix_cap = dynamic_cast<const LADataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_T_FIX + postfix, ISNOTNULL).get()).get();
-		DoubleVector tau_L_cap = dynamic_cast<const LADataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_TAU_L + postfix, ISNOTNULL).get()).get();
-		DoubleVector tau_cap = dynamic_cast<const LADataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_TAU + postfix, ISNOTNULL).get()).get();
+		AQLString prefix = "CAP_";
+		AQLString postfix = "_" + capTerm + "_" + capTenor;
+		DoubleVector T_pay_cap = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_T_PAY + postfix, ISNOTNULL).get()).get();
+		DoubleVector T_fix_cap = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_T_FIX + postfix, ISNOTNULL).get()).get();
+		DoubleVector tau_L_cap = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_TAU_L + postfix, ISNOTNULL).get()).get();
+		DoubleVector tau_cap = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_TAU + postfix, ISNOTNULL).get()).get();
 
 		double capBlackVol = capBlackVolVec[i];
 
@@ -363,7 +363,7 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 	}
 
 	// set up correlation class for votatility calibration
-	const LAObject &optCorEntity = dynamic_cast<const LADataReference &>(calibInfo.getData(CALIBRATION_DATA_LMM_CALIB_CORRELATION, ISNOTNULL).get()).get().get();
+	const AQLObject &optCorEntity = dynamic_cast<const AQLDataReference &>(calibInfo.getData(CALIBRATION_DATA_LMM_CALIB_CORRELATION, ISNOTNULL).get()).get().get();
 	const DoubleMatrix &corFactor = dynamic_cast<const LAMathCorrelation &>(optCorEntity).getCorFactors().get();
 	// data of t = 0 will be inserted
 	DoubleVector tenor_corlmm;
@@ -399,25 +399,25 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 	unsigned int optionMatSize = optionMatVec.size();
 	unsigned int swapTenorSize = swapTenorVec.size();
 
-	double Q = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_VOL_SKEW, ISNOTNULL).get()).get();
-	double constShift = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_VOL_CONSTSHIFT, ISNOTNULL).get()).get();
-	LAString swaptionApproxMethod = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_SWAPTION_APPROX_MEHOD, ISNOTNULL).get()).get();
+	double Q = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_VOL_SKEW, ISNOTNULL).get()).get();
+	double constShift = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_VOL_CONSTSHIFT, ISNOTNULL).get()).get();
+	AQLString swaptionApproxMethod = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_SWAPTION_APPROX_MEHOD, ISNOTNULL).get()).get();
 
 	DoubleMatrix swaptionTargetValueMat(optionMatSize, DoubleArray(swapTenorSize, 0.));
 	for(size_t i = 0; i < optionMatSize; ++i)
 	{
-		LAString optionMat = optionMatVec[i];
+		AQLString optionMat = optionMatVec[i];
 		for(size_t j = 0; j < swapTenorSize; ++j)
 		{
-			LAString swapTenor = swapTenorVec[j];
+			AQLString swapTenor = swapTenorVec[j];
 
-			LAString prefix = "SWAPTION_";
-			LAString postfix = "_" + optionMat + "_" + swapTenor;
-			DoubleVector T_fix_L_swaption = dynamic_cast<const LADataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_T_FIX_L + postfix, ISNOTNULL).get()).get();
-			DoubleVector T_pay_L_swaption = dynamic_cast<const LADataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_T_PAY_L + postfix, ISNOTNULL).get()).get();
-			DoubleVector tau_L_swaption = dynamic_cast<const LADataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_TAU_L + postfix, ISNOTNULL).get()).get();
-			DoubleVector T_pay_swaption = dynamic_cast<const LADataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_T_PAY + postfix, ISNOTNULL).get()).get();
-			DoubleVector tau_swaption = dynamic_cast<const LADataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_TAU + postfix, ISNOTNULL).get()).get();
+			AQLString prefix = "SWAPTION_";
+			AQLString postfix = "_" + optionMat + "_" + swapTenor;
+			DoubleVector T_fix_L_swaption = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_T_FIX_L + postfix, ISNOTNULL).get()).get();
+			DoubleVector T_pay_L_swaption = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_T_PAY_L + postfix, ISNOTNULL).get()).get();
+			DoubleVector tau_L_swaption = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_TAU_L + postfix, ISNOTNULL).get()).get();
+			DoubleVector T_pay_swaption = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_T_PAY + postfix, ISNOTNULL).get()).get();
+			DoubleVector tau_swaption = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(prefix + IR_CALIBRATION_DATA_TAU + postfix, ISNOTNULL).get()).get();
 
 			LAMathSwaptionVolLMMDiscModel *swaption;
 			if(swaptionApproxMethod == SWAPTION_REBONATO_DD_APPROXIMATION)
@@ -474,8 +474,8 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 			}
 			else
 			{
-				LAString msg = "SwaptionApproxMethod : " + swaptionApproxMethod + " is not supported.";
-				throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+				AQLString msg = "SwaptionApproxMethod : " + swaptionApproxMethod + " is not supported.";
+				throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 			}
 
 			if(target1 == LAMathLeastSquareSwaptionVol::Volatility)
@@ -499,7 +499,7 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 	}
 
 	// set up CostFunction
-	LAString costFuncMode = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_COST_FUNC_MODE, ISNOTNULL).get()).get();
+	AQLString costFuncMode = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_COST_FUNC_MODE, ISNOTNULL).get()).get();
 	LAMathLeastSquareSwaptionVol::mode mode1;
 	LAMathLeastSquareCapFloor::mode mode2;
 
@@ -520,14 +520,14 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 	}
 	else
 	{
-		LAString msg = "Wrong costFuncMode! : " + costFuncMode + "?";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "Wrong costFuncMode! : " + costFuncMode + "?";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
 	double T_max = paramF.back();
 
 	vector<LAQuantLibCostFunction*> costFunc(9);
-	LAString vegaWeightStr = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_VEGA_WEIGHT, ISNOTNULL).get()).get();
+	AQLString vegaWeightStr = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_VEGA_WEIGHT, ISNOTNULL).get()).get();
 	vegaWeightStr.toUpper();
 	bool vegaWeight = (vegaWeightStr == "TRUE" ? true : false);
 	costFunc[SWAPTION_PARAM_V] = new LAMathLeastSquareSwaptionVolDiscModelV(swaptionTargetValueMat, swaptionLMMs, swaptionVolWeightMat, mode1, target1);
@@ -544,13 +544,13 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 		dynamic_cast<LAMathLeastSquareSwaptionVol&>(*costFunc[SWAPTION_PARAM_G]), dynamic_cast<LAMathLeastSquareCapFloor&>(*costFunc[CAPFLOOR_PARAM_G]));
 
 	// set constraint for optimizers: unconstrained problem
-	double boundaryMaxV = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_V, ISNOTNULL).get()).get();
-	double boundaryMinV = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_V, ISNOTNULL).get()).get();
-	double boundaryMaxF = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_F, ISNOTNULL).get()).get();
-	double boundaryMinF = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_F, ISNOTNULL).get()).get();
-	double boundaryMaxG = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_G, ISNOTNULL).get()).get();
-	double boundaryMinG = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_G, ISNOTNULL).get()).get();
-	double smoothBoundaryG = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_SMOOTH_BOUNDARY_G, ISNOTNULL).get()).get();
+	double boundaryMaxV = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_V, ISNOTNULL).get()).get();
+	double boundaryMinV = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_V, ISNOTNULL).get()).get();
+	double boundaryMaxF = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_F, ISNOTNULL).get()).get();
+	double boundaryMinF = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_F, ISNOTNULL).get()).get();
+	double boundaryMaxG = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_G, ISNOTNULL).get()).get();
+	double boundaryMinG = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_G, ISNOTNULL).get()).get();
+	double smoothBoundaryG = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_SMOOTH_BOUNDARY_G, ISNOTNULL).get()).get();
 	vector<LAQuantLibConstraint*> constraints(3);
 	constraints[PARAM_V] = new LAMathBoundaryConstraintLMMVolV(boundaryMinV, boundaryMaxV);
 	constraints[PARAM_F] = new LAMathBoundaryConstraintLMMVolF(boundaryMinF, boundaryMaxF);
@@ -580,10 +580,10 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 //Here we correct initial parameters for levenberg calibration in Qlib,
 //since the calibration method shows poor performance when initial parameters are too close to constraints.
 //Note that this adjust is an emergency treatment!!
-	LAString optMethodType = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
-	double levenbergAdjustTor = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_LEVENBERG_ADJUST_Tor, ISNOTNULL).get()).get();
-	double levenbergAdjustV = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_LEVENBERG_ADJUST_V, ISNOTNULL).get()).get();
-	double levenbergAdjustF = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_LEVENBERG_ADJUST_F, ISNOTNULL).get()).get();
+	AQLString optMethodType = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
+	double levenbergAdjustTor = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_LEVENBERG_ADJUST_Tor, ISNOTNULL).get()).get();
+	double levenbergAdjustV = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_LEVENBERG_ADJUST_V, ISNOTNULL).get()).get();
+	double levenbergAdjustF = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_LEVENBERG_ADJUST_F, ISNOTNULL).get()).get();
 	if( optMethodType == CALIB_LEVENBERG_MARQUARDT_METHOD )
 	{
 	// V ajust
@@ -624,11 +624,11 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 
 
 	// Set up EndCriteria
-    int maxIteration = dynamic_cast<const LADataInt &>(calibInfo.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
-    int maxStationaryStateIteration = dynamic_cast<const LADataInt &>(calibInfo.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
-    double rootEpsilon = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
-    double functionEpsilon = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
-    double gradientNormEpsilon = dynamic_cast<const LADataDouble &>(calibInfo.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
+    int maxIteration = dynamic_cast<const AQLDataInt &>(calibInfo.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
+    int maxStationaryStateIteration = dynamic_cast<const AQLDataInt &>(calibInfo.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
+    double rootEpsilon = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
+    double functionEpsilon = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
+    double gradientNormEpsilon = dynamic_cast<const AQLDataDouble &>(calibInfo.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
 
 	LAQuantLibEndCriteria *endCriteria = new LAQuantLibEndCriteria(maxIteration, maxStationaryStateIteration,
 				rootEpsilon, functionEpsilon, gradientNormEpsilon);
@@ -647,7 +647,7 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 
 
 	// Set Optimization Method
-//	LAString optMethodType = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
+//	AQLString optMethodType = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
 	optMethodType.toUpper();
 	vector<LAQuantLibOptimizationMethod*> optMethod(9);
 	if( optMethodType == CALIB_NON_LINEAR_CONJUGATE_GRADIENT_METHOD )
@@ -703,19 +703,19 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 		optMethod[SWAPTIONCAPFLOOR_PARAM_G] = new LAQuantLibLevenbergMarquardt(levenbergMarquardtEpsfcn,levenbergMarquardtXtol, levenbergMarquardtGtol);
 	}
 
-    int vfgLoopNum = dynamic_cast<const LADataInt &>(calibInfo.getData(CALIBRATION_DATA_VFG_LOOP_NUM, ISNOTNULL).get()).get();
+    int vfgLoopNum = dynamic_cast<const AQLDataInt &>(calibInfo.getData(CALIBRATION_DATA_VFG_LOOP_NUM, ISNOTNULL).get()).get();
 
 	double convLimit = 1E-7;
     double convValue = 0.0;
     double formerConvValue = 0.0;
 
-    LAStringVector volWeight = dynamic_cast<const LADataStrings &>(calibInfo.getData(CALIBRATION_DATA_VOL_WEIGHT, ISNOTNULL).get()).get();
+    AQLStringVector volWeight = dynamic_cast<const AQLDataStrings &>(calibInfo.getData(CALIBRATION_DATA_VOL_WEIGHT, ISNOTNULL).get()).get();
 	double weight_CapFloor = volWeight[0].getDoubleValue();
 	double weight_Swaption = volWeight[1].getDoubleValue();
 
-	LAString optVFlagStr = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_V_FLAG, ISNOTNULL).get()).get();
-	LAString optFFlagStr = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_F_FLAG, ISNOTNULL).get()).get();
-	LAString optGFlagStr = dynamic_cast<const LADataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_G_FLAG, ISNOTNULL).get()).get();
+	AQLString optVFlagStr = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_V_FLAG, ISNOTNULL).get()).get();
+	AQLString optFFlagStr = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_F_FLAG, ISNOTNULL).get()).get();
+	AQLString optGFlagStr = dynamic_cast<const AQLDataString &>(calibInfo.getData(CALIBRATION_DATA_OPT_G_FLAG, ISNOTNULL).get()).get();
 	optVFlagStr.toUpper();
 	optFFlagStr.toUpper();
 	optGFlagStr.toUpper();
@@ -731,7 +731,7 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
     for(int s = 0; s < vfgLoopNum; ++s) 
 	{
 		//vol_optimized
-		if( !LAModelUtilities::eq(weight_CapFloor + weight_Swaption, 1.0, 0.0001) ) throw LACoreInvalidData("weight_CapFloor + weight_Swaption must be 1.0",__FILE__,__LINE__);
+		if( !LAModelUtilities::eq(weight_CapFloor + weight_Swaption, 1.0, 0.0001) ) throw AQLCoreInvalidData("weight_CapFloor + weight_Swaption must be 1.0",__FILE__,__LINE__);
 
 		int target_V, target_F, target_G;
 		string mode;
@@ -806,8 +806,8 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 		{
 			if (optionMatSize * swapTenorSize < paramG.size() )
 			{
-				LAString msg = "SwaptionVolMat size must be greater than paramG size";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "SwaptionVolMat size must be greater than paramG size";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 
 			LAQuantLibEndCriteria::Type endCriteriaResult_G = optMethod[target_G]->minimize(*problem[target_G], *endCriteria);
@@ -836,7 +836,7 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 
 		convValue = optResult / sqrt( static_cast<double>(optionMatSize * swapTenorSize));
 
-		if( LAMath::abs(convValue - formerConvValue) < convLimit)
+		if( AQLMath::abs(convValue - formerConvValue) < convLimit)
 			break;
 		formerConvValue = convValue;
 	}
@@ -845,7 +845,7 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 	
 	//set V, F and G in volLMM for swaptionLMMVol and capLMMVol
 	bool isResultoutLMMSwaption = true;			// added this flag to prevent swaption vol calculation error occuring in the case of quite small target swaption vol. ex) NZD swaptionvol (1E-12)
-	isResultoutLMMSwaption = dynamic_cast<const LADataBool &>(calibInfo.getData(CALIBRATION_DATA_IS_RESULTOUT_LMM_SWAPTION, NOCHECK).get()).get();
+	isResultoutLMMSwaption = dynamic_cast<const AQLDataBool &>(calibInfo.getData(CALIBRATION_DATA_IS_RESULTOUT_LMM_SWAPTION, NOCHECK).get()).get();
 	if (isResultoutLMMSwaption)
 	{
 		volLMM->setParamV(paramV);
@@ -900,16 +900,16 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 			}
 		}
 
-		models.remove(LAString("Result") + CALIBRATION_DATA_MODELSWAPTIONVOLS);
-		models.add(LAString("Result") + CALIBRATION_DATA_MODELSWAPTIONVOLS, new LADataDoubleMatrix(swaptionLMMVols));
-		models.remove(LAString("Result") + CALIBRATION_DATA_MODELSWAPTION_S0S);
-		models.add(LAString("Result") + CALIBRATION_DATA_MODELSWAPTION_S0S, new LADataDoubleMatrix(swaptionS0s));
-		models.remove(LAString("Result") + CALIBRATION_DATA_MODELSWAPTION_ANNUITIES);
-		models.add(LAString("Result") + CALIBRATION_DATA_MODELSWAPTION_ANNUITIES, new LADataDoubleMatrix(swaptionAnnuities));
-		models.remove(LAString("Result") + CALIBRATION_DATA_MODELSWAPTION_OPTMATS);
-		models.add(LAString("Result") + CALIBRATION_DATA_MODELSWAPTION_OPTMATS, new LADataDoubleMatrix(swaptionOptMats));
-		models.remove(LAString("Result") + CALIBRATION_DATA_MODELCAPFLOORVOLS);
-		models.add(LAString("Result") + CALIBRATION_DATA_MODELCAPFLOORVOLS, new LADataDoubles(capLMMVols));
+		models.remove(AQLString("Result") + CALIBRATION_DATA_MODELSWAPTIONVOLS);
+		models.add(AQLString("Result") + CALIBRATION_DATA_MODELSWAPTIONVOLS, new AQLDataDoubleMatrix(swaptionLMMVols));
+		models.remove(AQLString("Result") + CALIBRATION_DATA_MODELSWAPTION_S0S);
+		models.add(AQLString("Result") + CALIBRATION_DATA_MODELSWAPTION_S0S, new AQLDataDoubleMatrix(swaptionS0s));
+		models.remove(AQLString("Result") + CALIBRATION_DATA_MODELSWAPTION_ANNUITIES);
+		models.add(AQLString("Result") + CALIBRATION_DATA_MODELSWAPTION_ANNUITIES, new AQLDataDoubleMatrix(swaptionAnnuities));
+		models.remove(AQLString("Result") + CALIBRATION_DATA_MODELSWAPTION_OPTMATS);
+		models.add(AQLString("Result") + CALIBRATION_DATA_MODELSWAPTION_OPTMATS, new AQLDataDoubleMatrix(swaptionOptMats));
+		models.remove(AQLString("Result") + CALIBRATION_DATA_MODELCAPFLOORVOLS);
+		models.add(AQLString("Result") + CALIBRATION_DATA_MODELCAPFLOORVOLS, new AQLDataDoubles(capLMMVols));
 	}
 
 	delete volLMM;
@@ -963,27 +963,27 @@ LAPriceLMMCalibration::calibrateModel(const LADate& basedate,
 	delete curve0_D;
 }
 
-void LAPriceLMMCalibration::setResult(LAObject& output, 
+void LAPriceLMMCalibration::setResult(AQLObject& output, 
 	                               const DoubleVector& v, 
 								   const DoubleVector& f, 
 								   const DoubleVector& g, 
 								   const DoubleVector& tenor_g) const
 {
-	output.remove(LAString("Result") + CALIBRATION_DATA_PARAM_V);
-	output.add(LAString("Result") + CALIBRATION_DATA_PARAM_V, new LADataDoubles(v));
+	output.remove(AQLString("Result") + CALIBRATION_DATA_PARAM_V);
+	output.add(AQLString("Result") + CALIBRATION_DATA_PARAM_V, new AQLDataDoubles(v));
 
-	output.remove(LAString("Result") + CALIBRATION_DATA_PARAM_F);
-	output.add(LAString("Result") + CALIBRATION_DATA_PARAM_F, new LADataDoubles(f));
+	output.remove(AQLString("Result") + CALIBRATION_DATA_PARAM_F);
+	output.add(AQLString("Result") + CALIBRATION_DATA_PARAM_F, new AQLDataDoubles(f));
 
-	output.remove(LAString("Result") + CALIBRATION_DATA_PARAM_G);
-	output.add(LAString("Result") + CALIBRATION_DATA_PARAM_G, new LADataDoubles(g));
+	output.remove(AQLString("Result") + CALIBRATION_DATA_PARAM_G);
+	output.add(AQLString("Result") + CALIBRATION_DATA_PARAM_G, new AQLDataDoubles(g));
 	output.remove(CALIBRATION_DATA_TENOR_G);
-	output.add(CALIBRATION_DATA_TENOR_G, new LADataDoubles(tenor_g));
+	output.add(CALIBRATION_DATA_TENOR_G, new AQLDataDoubles(tenor_g));
 }
 
 void ajust_V( LAQuantLibArray& params, double low, double high, double ajustment, double eps )
 {
-	if( params.size() != 4) throw LACoreInvalidData("size out of range",__FILE__,__LINE__);
+	if( params.size() != 4) throw AQLCoreInvalidData("size out of range",__FILE__,__LINE__);
 
 //----------------
 // lower bound
@@ -1006,7 +1006,7 @@ void ajust_V( LAQuantLibArray& params, double low, double high, double ajustment
 
 void ajust_F( LAQuantLibArray& params, double low, double high, double ajustment, double eps )
 {
-	if( params.size() != 8) throw LACoreInvalidData("size out of range : Object::get_ID",__FILE__,__LINE__);
+	if( params.size() != 8) throw AQLCoreInvalidData("size out of range : Object::get_ID",__FILE__,__LINE__);
 
 //----------------
 // lower bound
@@ -1040,7 +1040,7 @@ void ajust_F( LAQuantLibArray& params, double low, double high, double ajustment
 void ajust_G( LAQuantLibArray& params, double low, double high, double ajustment, double eps )
 {
 	params; low; high; ajustment; eps;
- //	 if( params.size() != G_size ) throw LACoreInvalidData("size is not correct! : Object::get_ID",__FILE__,__LINE__);
+ //	 if( params.size() != G_size ) throw AQLCoreInvalidData("size is not correct! : Object::get_ID",__FILE__,__LINE__);
 
  //	 if( params[0] < low_ ) return false;
  //   if( params[0] > high_ ) return false;

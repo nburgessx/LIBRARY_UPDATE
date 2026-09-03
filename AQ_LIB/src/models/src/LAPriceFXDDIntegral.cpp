@@ -24,7 +24,7 @@
 
 
 #include "LAPriceFXDDIntegral.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAPriceDriftFX.h"
 #include "LAMathVolFuncBase.h"
 #include "LAMathVolFuncFXDD.h"
@@ -32,7 +32,7 @@
 
 using namespace std;
 
-static const double MAXIMUM_1804 = LAMath::log(DBL_MAX) - 1.0;
+static const double MAXIMUM_1804 = AQLMath::log(DBL_MAX) - 1.0;
 //================ LAPriceFXDDIntegral ===================================
 /*!
 	@brief default constructor
@@ -66,7 +66,7 @@ LAPriceFXDDIntegral::~LAPriceFXDDIntegral()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceFXDDIntegral::clone() const	
 {
     try 
@@ -75,7 +75,7 @@ LAPriceFXDDIntegral::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -112,8 +112,8 @@ LAPriceFXDDIntegral::getType() const
 */
 void
 LAPriceFXDDIntegral::integral(double ts, double te, 
-							vector<LAFunctionBase*>::const_iterator drift,										
-							vector<vector<LAFunctionBase*> >::const_iterator vol,
+							vector<AQLFunctionBase*>::const_iterator drift,										
+							vector<vector<AQLFunctionBase*> >::const_iterator vol,
 							DoubleArray::const_iterator	bm,
 							SCALARARRAY::iterator	x_in_out,
 							unsigned int varnum
@@ -123,9 +123,9 @@ LAPriceFXDDIntegral::integral(double ts, double te,
 	if (!(*drift)->isTypeOf(FN_DRIFTFX))
 	{
 		//error
-		throw LACoreInvalidData("drift class must be LAPriceDriftFX!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("drift class must be LAPriceDriftFX!", __FILE__, __LINE__);
 	}	
-	const LAFunctionBase* volfunc;
+	const AQLFunctionBase* volfunc;
 	if ((*vol)[0]->isTypeOf(FN_VOLFUNCBASE))
 	{
 		volfunc = dynamic_cast<LAMathVolFuncBase*>((*vol)[0])->getVolatility();
@@ -137,7 +137,7 @@ LAPriceFXDDIntegral::integral(double ts, double te,
 	if (!volfunc->isTypeOf(FN_VOLFUNCFXDD))
 	{
 		//error
-		throw LACoreInvalidData("volatility class must be LAMathVolFuncFXDD!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("volatility class must be LAMathVolFuncFXDD!", __FILE__, __LINE__);
 	}
 	const LAMathVolFuncFXDD* volfuncdd =dynamic_cast<const LAMathVolFuncFXDD*>(volfunc);
 
@@ -152,15 +152,15 @@ LAPriceFXDDIntegral::integral(double ts, double te,
 	
 	double v = volfuncdd->getIntegralofV(ts, te);
 	double mt = -(*drift)->operator ()(mVar) * (te - ts) + 0.5 * v * v 
-				- v / LAMath::sqrt(te - ts) * (*bm);
+				- v / AQLMath::sqrt(te - ts) * (*bm);
 	double ret;
 	if (mt > MAXIMUM_1804) ret = - 0.5 * volfuncdd->getIntegralofSVV(ts, te);
 	else
 	{
-		mt = LAMath::exp(mt); 
+		mt = AQLMath::exp(mt); 
 
 		ret = mVar[1] - 0.5 * (1.0 + 1.0/*mt*/) * volfuncdd->getIntegralofSVV(ts, te)
-				+ volfuncdd->getIntegralofSV(ts, te) / LAMath::sqrt(te - ts) * (*bm);
+				+ volfuncdd->getIntegralofSV(ts, te) / AQLMath::sqrt(te - ts) * (*bm);
 		ret /= mt;
 	}
 #ifdef __SCALAR_FLOAT__

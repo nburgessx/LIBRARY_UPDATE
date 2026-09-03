@@ -6,23 +6,23 @@
 #endif
 
 #include <algorithm>
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LADataReference.h"
-#include "LABasic.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLDataReference.h"
+#include "AQLBasic.h"
 #include "LAMathDateCalculations.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAPriceIRCapFloorOptionValue.h"
 #include "LAMathFXEntity.h"
 #include "LAMathYieldCurve.h"
@@ -32,19 +32,19 @@
 #include "LAMathVolFuncIRSABR.h"
 #include "LALinearRatesOptionValueDataProvider.h"
 #include "LAPriceCashFlowGenerator.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataFunction.h"
 #include "LAPricePayOff.h"
 #include "LABlackScholesBaseFunc.h"
 #include "LABlackScholesDelayedCapletOptionPayoff.h"
 #include "LABlackScholesDelayedFloorletOptionPayoff.h"
 #include "LABlackScholesDigitalCapletOptionPayoff.h"
 #include "LABlackScholesDigitalFloorletOptionPayoff.h"
-#include "LAMathValuableEntity.h"
+#include "AQLMathValuableEntity.h"
 #include "LALinearRatesSwapTradeValue.h"
-#include "LADataProcedure.h"
+#include "AQLDataProcedure.h"
 #include "LAMathIndexEntity.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAInterpolationBase.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLInterpolationBase.h"
 #include "LAPricePortfolioValue.h"
 
 using namespace std;
@@ -87,7 +87,7 @@ LAPriceIRCapFloorOptionValue::isTypeOf(function_t id) const
     @brief get option method name
      @return option method name
 */
-LAString 
+AQLString 
 LAPriceIRCapFloorOptionValue::getOptionPayoffName() const
 {
 	return FN_IR_CAPFLOOROPTIONVALUE_STR;
@@ -100,13 +100,13 @@ LAPriceIRCapFloorOptionValue::getOptionPayoffName() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceIRCapFloorOptionValue::registerData(LAPriceDataManager& dm) const
+LAPriceIRCapFloorOptionValue::registerData(AQLPriceDataManager& dm) const
 {
 
 	LALinearRatesOptionValue::registerData(dm);
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceIRCapFloorOptionValue::clone() const
 {
     try 
@@ -115,27 +115,27 @@ LAPriceIRCapFloorOptionValue::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
 // calc option
 double 
-LAPriceIRCapFloorOptionValue::calcOption(const LADataValuation& att, LADataProvider* dp, LAObject& e) const
+LAPriceIRCapFloorOptionValue::calcOption(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& e) const
 {
-	LADataHolder*dh;
+	AQLDataHolder*dh;
 	LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dp);
 
-	LADataInstance* dataInstance = e.getDataInstance();
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLDataInstance* dataInstance = e.getDataInstance();
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 	
-	LAString nb = dynamic_cast<const LADataString& >(e.getData(CALIBRATION_DATA_NAME,ISNOTNULL).get()).get();
-	LAString tempname = "ChangeToSwap" + nb;
-	LAMathObjectValue* vcapfloor =NULL;
-	const LAObjectHolder ehCur = objPool.getObject(tempname);
+	AQLString nb = dynamic_cast<const AQLDataString& >(e.getData(CALIBRATION_DATA_NAME,ISNOTNULL).get()).get();
+	AQLString tempname = "ChangeToSwap" + nb;
+	AQLMathObjectValue* vcapfloor =NULL;
+	const AQLObjectHolder ehCur = objPool.getObject(tempname);
 	if(!ehCur.isDefined())
 	{	
-		vcapfloor= new LAMathObjectValue(e.getDataInstance());
+		vcapfloor= new AQLMathObjectValue(e.getDataInstance());
 		objPool.set(tempname,vcapfloor);
 		//name
 		vcapfloor->getName().convertFromString(tempname);
@@ -143,31 +143,31 @@ LAPriceIRCapFloorOptionValue::calcOption(const LADataValuation& att, LADataProvi
 		vcapfloor->setValuationMethod(FN_IR_PLAINVANILLASWAPTRADEVALUE_STR);
 
 		//path object
-		LAString pathname = dataProvider->mpvanilla->getName().get();
-		vcapfloor->LAObject::add(PRICING_DATA_PATHENTITY, new LADataReference()).convertFromString(pathname);
+		AQLString pathname = dataProvider->mpvanilla->getName().get();
+		vcapfloor->AQLObject::add(PRICING_DATA_PATHENTITY, new AQLDataReference()).convertFromString(pathname);
 		
 		//isdetailoutput
-		vcapfloor->LAObject::add(PRICING_DATA_ISDETAILOUTPUT, new LADataString()).convertFromString("TRUE");
+		vcapfloor->AQLObject::add(PRICING_DATA_ISDETAILOUTPUT, new AQLDataString()).convertFromString("TRUE");
 
 		//settledate
-		vcapfloor->LAObject::add(PRICING_DATA_SETTLEDATE, new LADataDate(dataProvider->mAsofDate));
+		vcapfloor->AQLObject::add(PRICING_DATA_SETTLEDATE, new AQLDataDate(dataProvider->mAsofDate));
 		//today
-		vcapfloor->LAObject::add(PRICING_DATA_TODAY, new LADataDate(dataProvider->mAsofDate));
+		vcapfloor->AQLObject::add(PRICING_DATA_TODAY, new AQLDataDate(dataProvider->mAsofDate));
 		//underlyings
-		LAString understrs = e.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).convertToString();
-		vcapfloor->LAObject::add(CALIBRATION_DATA_UNDERLYINGS, new LADataMultiReference()).convertFromString(understrs);
+		AQLString understrs = e.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).convertToString();
+		vcapfloor->AQLObject::add(CALIBRATION_DATA_UNDERLYINGS, new AQLDataMultiReference()).convertFromString(understrs);
 
 		//currency
-        const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(e.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
-        const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference&>(legs.get(0).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
+        const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(e.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
+        const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference&>(legs.get(0).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
         vcapfloor->remove(PRICING_DATA_CURRENCY);
-        vcapfloor->LAObject::add(PRICING_DATA_CURRENCY, new LADataString()).convertFromString(cashlets.get(0).getData(PRICING_DATA_CURRENCY, ISNOTNULL).convertToString());
+        vcapfloor->AQLObject::add(PRICING_DATA_CURRENCY, new AQLDataString()).convertFromString(cashlets.get(0).getData(PRICING_DATA_CURRENCY, ISNOTNULL).convertToString());
 
 		//cfgenerator
-		vcapfloor->LAObject::add(PRICING_DATA_CFGENERATOR, new LADataProcedure()).convertFromString(FN_IR_CASHFLOWGENERATOR_STR);
+		vcapfloor->AQLObject::add(PRICING_DATA_CFGENERATOR, new AQLDataProcedure()).convertFromString(FN_IR_CASHFLOWGENERATOR_STR);
 		
 		//resultoutput
-		vcapfloor->LAObject::add(PRICING_DATA_ISRESULTOUTPUT, new LADataBool(true));
+		vcapfloor->AQLObject::add(PRICING_DATA_ISRESULTOUTPUT, new AQLDataBool(true));
 
         if((dh = &e.getData(PRICING_DATA_FXRATE))->isDefined() && !dh->isNull()){
             vcapfloor->add(PRICING_DATA_FXRATE).convertFromString(dh->convertToString());
@@ -175,14 +175,14 @@ LAPriceIRCapFloorOptionValue::calcOption(const LADataValuation& att, LADataProvi
 		
 		
 		//leg select side
-		LAString selectstr = (dataProvider->buysell) ? "RCV" : "PAY"; 
+		AQLString selectstr = (dataProvider->buysell) ? "RCV" : "PAY"; 
 		legs.get(0).get().remove(PRICING_DATA_SELECTSIDE);
-		legs.get(0).get().add(PRICING_DATA_SELECTSIDE, new LADataString(selectstr));
+		legs.get(0).get().add(PRICING_DATA_SELECTSIDE, new AQLDataString(selectstr));
 		
 		dh = &(e.getData(PRICING_DATA_ISSAVEPASTFIXING, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			vcapfloor->LAObject::add(PRICING_DATA_ISSAVEPASTFIXING, dh->clone());
+			vcapfloor->AQLObject::add(PRICING_DATA_ISSAVEPASTFIXING, dh->clone());
 		}
 
 		//forward shift value
@@ -196,8 +196,8 @@ LAPriceIRCapFloorOptionValue::calcOption(const LADataValuation& att, LADataProvi
 			dh = &cashlets.get(i).get().getData(PRICING_DATA_COUPONINFOS, NOCHECK);
 			if(dh->isDefined() && !dh->isNull())
 			{
-				LADataMultiReference& coupons = dynamic_cast<LADataMultiReference& >(dh->get());
-				LAFunctionBase& method = dynamic_cast<LAPriceDataFunction& >(coupons.get(0).get().getData(PRICING_DATA_OPERATOR, ISNOTNULL).get()).getFunction();
+				AQLDataMultiReference& coupons = dynamic_cast<AQLDataMultiReference& >(dh->get());
+				AQLFunctionBase& method = dynamic_cast<AQLPriceDataFunction& >(coupons.get(0).get().getData(PRICING_DATA_OPERATOR, ISNOTNULL).get()).getFunction();
 				if (method.isTypeOf(FN_BSBASEFUNC))
 				{
 					LABlackScholesBaseMethod& bsbasefunc(dynamic_cast<LABlackScholesBaseMethod &>(method));
@@ -209,18 +209,18 @@ LAPriceIRCapFloorOptionValue::calcOption(const LADataValuation& att, LADataProvi
 	}
 	else
 	{
-		vcapfloor	= &dynamic_cast<LAMathObjectValue &>(objPool.getObject(tempname).get());
+		vcapfloor	= &dynamic_cast<AQLMathObjectValue &>(objPool.getObject(tempname).get());
 		//settledate
-		dynamic_cast<LADataDate &>(vcapfloor->getData(PRICING_DATA_SETTLEDATE, ISNOTNULL).get()).set(dataProvider->mAsofDate);
+		dynamic_cast<AQLDataDate &>(vcapfloor->getData(PRICING_DATA_SETTLEDATE, ISNOTNULL).get()).set(dataProvider->mAsofDate);
 		//today
-		dynamic_cast<LADataDate &>(vcapfloor->getData(PRICING_DATA_TODAY, ISNOTNULL).get()).set(dataProvider->mAsofDate);
+		dynamic_cast<AQLDataDate &>(vcapfloor->getData(PRICING_DATA_TODAY, ISNOTNULL).get()).set(dataProvider->mAsofDate);
 		//currency
-        const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(e.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
-        const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference&>(legs.get(0).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
+        const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(e.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
+        const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference&>(legs.get(0).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
         vcapfloor->remove(PRICING_DATA_CURRENCY);
-        vcapfloor->LAObject::add(PRICING_DATA_CURRENCY, new LADataString()).convertFromString(cashlets.get(0).getData(PRICING_DATA_CURRENCY, ISNOTNULL).convertToString());
+        vcapfloor->AQLObject::add(PRICING_DATA_CURRENCY, new AQLDataString()).convertFromString(cashlets.get(0).getData(PRICING_DATA_CURRENCY, ISNOTNULL).convertToString());
 		
-		LAString pathname = dataProvider->mpvanilla->getName().get();
+		AQLString pathname = dataProvider->mpvanilla->getName().get();
 		vcapfloor->getData(PRICING_DATA_PATHENTITY, ISNOTNULL).convertFromString(pathname);
 
 	}
@@ -229,14 +229,14 @@ LAPriceIRCapFloorOptionValue::calcOption(const LADataValuation& att, LADataProvi
 	bool iscalcrisk = false;
 	dh = &e.getData(PRICING_DATA_ISCALCRISK, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
-		iscalcrisk = dynamic_cast<const LADataBool&>(dh->get()).get();
+		iscalcrisk = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	vcapfloor->remove(PRICING_DATA_ISCALCRISK);
-	vcapfloor->LAObject::add(PRICING_DATA_ISCALCRISK, new LADataBool(iscalcrisk));
+	vcapfloor->AQLObject::add(PRICING_DATA_ISCALCRISK, new AQLDataBool(iscalcrisk));
 
 	vcapfloor->remove(PRICING_DATA_ISSETUPPAYOFF);
-	vcapfloor->LAObject::add(PRICING_DATA_ISSETUPPAYOFF, new LADataBool(true));
+	vcapfloor->AQLObject::add(PRICING_DATA_ISSETUPPAYOFF, new AQLDataBool(true));
 
-	LADate basedate;
+	AQLDate basedate;
 	double ret = vcapfloor->value(dataProvider->mAsofDate);
 
 
@@ -245,7 +245,7 @@ LAPriceIRCapFloorOptionValue::calcOption(const LADataValuation& att, LADataProvi
 
 // calc payoff after maturity
 double				
-LAPriceIRCapFloorOptionValue::calcPayOffAterMaturity(const LADataValuation& att, LADataProvider* dataProvider, LAObject& e) const
+LAPriceIRCapFloorOptionValue::calcPayOffAterMaturity(const AQLDataValuation& att, AQLDataProvider* dataProvider, AQLObject& e) const
 {
 	return calcOption(att,dataProvider,e);
 }
@@ -257,36 +257,36 @@ LAPriceIRCapFloorOptionValue::calcPayOffAterMaturity(const LADataValuation& att,
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*					
-LAPriceIRCapFloorOptionValue::setUpDataProvider(const LADate& basedate, LAObject& object, const LADataValuation& att) const
+AQLDataProvider*					
+LAPriceIRCapFloorOptionValue::setUpDataProvider(const AQLDate& basedate, AQLObject& object, const AQLDataValuation& att) const
 {
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceIROptionValueDataProvider* dataProvider = NULL;
 	dataProvider = dynamic_cast<LAPriceIROptionValueDataProvider *>(LALinearRatesOptionValue::setUpDataProvider(basedate,object,att));
 
 	//now set strike and tenorstring
 	dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& unders = dynamic_cast<const LADataMultiReference& >(dh->get());
-	LAObject& leg1 = unders.get(0).get();
+	const AQLDataMultiReference& unders = dynamic_cast<const AQLDataMultiReference& >(dh->get());
+	AQLObject& leg1 = unders.get(0).get();
 
 	// get DiscountCurve
 	dataProvider->mDCurveType = STD;
 	dh = &(leg1.getData(PRICING_DATA_DISCOUNTCURVE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dataProvider->mDCurveType = dynamic_cast<const LADataString &>(dh->get()).get();
+		dataProvider->mDCurveType = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 	
 	dh = &(leg1.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference& >(dh->get());
+	const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference& >(dh->get());
 	if (cashlets.getSize() != dataProvider->mCashletSize)
-		throw LACoreInvalidData("CapFloor Cashlets size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("CapFloor Cashlets size error",__FILE__,__LINE__);
 
 	std::vector< std::vector<AnalyticParam*> > ret(dataProvider->mCashletSize);
 	dataProvider->mMaturityDates.resize(dataProvider->mCashletSize);
@@ -296,34 +296,34 @@ LAPriceIRCapFloorOptionValue::setUpDataProvider(const LADate& basedate, LAObject
 	dataProvider->mUnderlying.resize(dataProvider->mCashletSize, "");
 	dataProvider->mUnTenor.resize(dataProvider->mCashletSize, "");
 
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 	bool isFWDUpdate = false;
 	for (unsigned int i = 0; i < dataProvider->mCashletSize; i++)
 	{
-		LAObject& ecash = cashlets.get(i).get();
+		AQLObject& ecash = cashlets.get(i).get();
 		dh = &(ecash.getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 		if (!dh->isDefined() || dh->isNull())
 			continue;
 		
-		LADataMultiReference& coupons = dynamic_cast<LADataMultiReference& >(dh->get());
+		AQLDataMultiReference& coupons = dynamic_cast<AQLDataMultiReference& >(dh->get());
 		if (coupons.getSize() != 1)
-			throw LACoreInvalidData("CapFloor Coupons size error",__FILE__,__LINE__);
-		LAObject& ecoupon = coupons.get(0).get();
+			throw AQLCoreInvalidData("CapFloor Coupons size error",__FILE__,__LINE__);
+		AQLObject& ecoupon = coupons.get(0).get();
 
 		dh = &(ecoupon.getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-		LAFunctionBase& method = dynamic_cast<LAPriceDataFunction& >(dh->get()).getFunction();
+		AQLFunctionBase& method = dynamic_cast<AQLPriceDataFunction& >(dh->get()).getFunction();
 
 		if (method.isTypeOf(FN_BSBASEFUNC))
 		{
 			LABlackScholesBaseMethod &bsbasefunc = dynamic_cast<LABlackScholesBaseMethod &>(method);
 
 			dh = &(ecoupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
-			LADataMultiReference& indexs = dynamic_cast<LADataMultiReference& >(dh->get());
+			AQLDataMultiReference& indexs = dynamic_cast<AQLDataMultiReference& >(dh->get());
 
-			LAObject& eindex = indexs.get(0).get();
+			AQLObject& eindex = indexs.get(0).get();
 			//indextype == FixedRate means return payoff method
 			dh = &(eindex.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL));
-			LAString indextype = dynamic_cast<const LADataString &>(dh->get());
+			AQLString indextype = dynamic_cast<const AQLDataString &>(dh->get());
 			if (indextype.toUpper() != "FIXEDRATE")
 			{
 				if (!isFWDUpdate)
@@ -331,13 +331,13 @@ LAPriceIRCapFloorOptionValue::setUpDataProvider(const LADate& basedate, LAObject
 					dh = &(eindex.getData(PRICING_DATA_ISFWDINTERPOLATION, NOCHECK));
 					if (dh->isDefined() && !dh->isNull())
 					{
-						dataProvider->mIsFWDInter = dynamic_cast<const LADataBool &>(dh->get()).get();
-						dataProvider->mpFWDInter = dynamic_cast<LAInterpolationBase *>(dynamic_cast<const LAPriceDataInterpolation &>(eindex.getData(PRICING_DATA_FWDINTERPOLATION, NOCHECK).get()).getMethod().clone());
+						dataProvider->mIsFWDInter = dynamic_cast<const AQLDataBool &>(dh->get()).get();
+						dataProvider->mpFWDInter = dynamic_cast<AQLInterpolationBase *>(dynamic_cast<const AQLPriceDataInterpolation &>(eindex.getData(PRICING_DATA_FWDINTERPOLATION, NOCHECK).get()).getMethod().clone());
 						dataProvider->mFCurveType = STD;
 						dh = &(eindex.getData(PRICING_DATA_BASISCURVE, NOCHECK));
 						if (dh->isDefined() && !dh->isNull())
 						{
-							dataProvider->mFCurveType = dynamic_cast<const LADataString &>(dh->get()).get();
+							dataProvider->mFCurveType = dynamic_cast<const AQLDataString &>(dh->get()).get();
 						}
 
 					}
@@ -345,23 +345,23 @@ LAPriceIRCapFloorOptionValue::setUpDataProvider(const LADate& basedate, LAObject
 				}
 				if (dataProvider->mIsFWDInter)
 				{
-					LADate startdate;
+					AQLDate startdate;
 					dh = &(eindex.getData(PRICING_DATA_DATESFORINDEXGENERATE, NOCHECK));
 					if (dh->isDefined() && !dh->isNull())
 					{
-						const DateVector &dates = dynamic_cast<const LADataDates &>(dh->get()).get();
+						const DateVector &dates = dynamic_cast<const AQLDataDates &>(dh->get()).get();
 						if (dates.empty())
 						{
-							throw LACoreInvalidData("dates is empty.", __FILE__, __LINE__);
+							throw AQLCoreInvalidData("dates is empty.", __FILE__, __LINE__);
 						}
 						startdate = dates[0];
 					}
 					else
 					{
-						const LADate &fixdate = dynamic_cast<const LADataDate &>(eindex.getData(PRICING_DATA_FIXINGDATE, ISNOTNULL).get()).get();
-						const int spotLag = dynamic_cast<const LADataInt &>(eindex.getData(PRICING_DATA_SPOTLAG, ISNOTNULL).get()).get();
-						const LAPriceDataSlidingRule *psrule = 0;
-						const LAPriceDataCalendar *pcal = 0;
+						const AQLDate &fixdate = dynamic_cast<const AQLDataDate &>(eindex.getData(PRICING_DATA_FIXINGDATE, ISNOTNULL).get()).get();
+						const int spotLag = dynamic_cast<const AQLDataInt &>(eindex.getData(PRICING_DATA_SPOTLAG, ISNOTNULL).get()).get();
+						const AQLPriceDataSlidingRule *psrule = 0;
+						const AQLPriceDataCalendar *pcal = 0;
 						LAPriceCFGenUtility::getBusDayRuleAndCalendar(eindex, 
 																	PRICING_DATA_FIXINGSLIDINGRULE,
 																	PRICING_DATA_FIXINGCALENDAR,
@@ -383,35 +383,35 @@ LAPriceIRCapFloorOptionValue::setUpDataProvider(const LADate& basedate, LAObject
 					dataProvider->mStartTerms[i] =  dc_act365.getTerm(basedate, startdate);
 				}
 				dh = &(eindex.getData(PRICING_DATA_ACCESSORY, ISNOTNULL));
-				dataProvider->mUnTenor[i] = dynamic_cast<LADataString &>(dh->get()).get();
+				dataProvider->mUnTenor[i] = dynamic_cast<AQLDataString &>(dh->get()).get();
 				if (dataProvider->mUnTenor[i].size() > 0)
 					dataProvider->mUnTenor[i].toUpper();
 
 				dh = &(eindex.getData(PRICING_DATA_FIXINGDATE, ISNOTNULL));
-				const LADate& fixdate = dynamic_cast<const LADataDate& >(dh->get()).get();
+				const AQLDate& fixdate = dynamic_cast<const AQLDataDate& >(dh->get()).get();
 				dataProvider->mMaturityDates[i] = fixdate;
 
 				dh = &(eindex.getData(PRICING_DATA_BASISCURVE, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					dataProvider->mFCurveTypes[i] = dynamic_cast<const LADataString &>(dh->get()).get();
+					dataProvider->mFCurveTypes[i] = dynamic_cast<const AQLDataString &>(dh->get()).get();
 				}
 
 				dh = &(eindex.getData(PRICING_DATA_DISCOUNTCURVE, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					dataProvider->mDCurveTypes[i] = dynamic_cast<const LADataString &>(dh->get()).get();
+					dataProvider->mDCurveTypes[i] = dynamic_cast<const AQLDataString &>(dh->get()).get();
 				}
 
 				dh = &(eindex.getData(PRICING_DATA_VOLATILITYUNDERLYING, ISNOTNULL));
-				dataProvider->mUnderlying[i] = dynamic_cast<const LADataString &>(dh->get()).get();
+				dataProvider->mUnderlying[i] = dynamic_cast<const AQLDataString &>(dh->get()).get();
 			}
 			else
 			{
 				dataProvider->mMaturityDates[i] = dataProvider->mAsofDate;	
 			}
 			dh = &(ecoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-			const DoubleArray& coeff = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+			const DoubleArray& coeff = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 			bsbasefunc.setParam(coeff);
 			bsbasefunc.setOptionStrike();
 		}
@@ -421,24 +421,24 @@ LAPriceIRCapFloorOptionValue::setUpDataProvider(const LADate& basedate, LAObject
 }
 
 std::vector< std::vector<AnalyticParam*> >
-LAPriceIRCapFloorOptionValue::createAnalyticParam(LAObject& object, LADataProvider* dp) const
+LAPriceIRCapFloorOptionValue::createAnalyticParam(AQLObject& object, AQLDataProvider* dp) const
 {
-	LADataHolder*dh;
+	AQLDataHolder*dh;
 	LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dp);
 	
 	dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& unders = dynamic_cast<const LADataMultiReference& >(dh->get());
-	LAObject& leg1 = unders.get(0).get();
+	const AQLDataMultiReference& unders = dynamic_cast<const AQLDataMultiReference& >(dh->get());
+	AQLObject& leg1 = unders.get(0).get();
 	
 	dh = &(leg1.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference& >(dh->get());
+	const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference& >(dh->get());
 	if (cashlets.getSize() != dataProvider->mCashletSize)
-		throw LACoreInvalidData("CapFloor Cashlets size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("CapFloor Cashlets size error",__FILE__,__LINE__);
 
 	std::vector< std::vector<AnalyticParam*> > ret(dataProvider->mCashletSize);
 	for (unsigned int i = 0; i < dataProvider->mCashletSize; i++)
 	{
-		LAObject& ecash = cashlets.get(i).get();
+		AQLObject& ecash = cashlets.get(i).get();
 		dh = &(ecash.getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 		if (!dh->isDefined() || dh->isNull())
 		{
@@ -446,17 +446,17 @@ LAPriceIRCapFloorOptionValue::createAnalyticParam(LAObject& object, LADataProvid
 			continue;
 		}
 		
-		LADataMultiReference& coupons = dynamic_cast<LADataMultiReference& >(dh->get());
+		AQLDataMultiReference& coupons = dynamic_cast<AQLDataMultiReference& >(dh->get());
 		if (coupons.getSize() != 1)
-			throw LACoreInvalidData("CapFloor Coupons size error",__FILE__,__LINE__);
-		LAObject& ecoupon = coupons.get(0).get();
+			throw AQLCoreInvalidData("CapFloor Coupons size error",__FILE__,__LINE__);
+		AQLObject& ecoupon = coupons.get(0).get();
 
 		dh = &(ecoupon.getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-		LAFunctionBase& method = dynamic_cast<LAPriceDataFunction& >(dh->get()).getFunction();
+		AQLFunctionBase& method = dynamic_cast<AQLPriceDataFunction& >(dh->get()).getFunction();
 		
 		//paymentdate check
 		dh = &(ecash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-		const LADate& paydate = dynamic_cast<const LADataDate &>(dh->get()).get();
+		const AQLDate& paydate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 		std::vector<AnalyticParam*> retvec;
 		if (paydate <= dataProvider->mAsofDate)
 		{
@@ -479,27 +479,27 @@ LAPriceIRCapFloorOptionValue::createAnalyticParam(LAObject& object, LADataProvid
 }
 
 void
-LAPriceIRCapFloorOptionValue::setUpAnalyticParam(LAObject& object, LADataProvider* dp) const
+LAPriceIRCapFloorOptionValue::setUpAnalyticParam(AQLObject& object, AQLDataProvider* dp) const
 {
-	LADataHolder*dh;
+	AQLDataHolder*dh;
 	LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dp);
 	
 	dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& unders = dynamic_cast<const LADataMultiReference& >(dh->get());
-	LAObject& leg1 = unders.get(0).get();
+	const AQLDataMultiReference& unders = dynamic_cast<const AQLDataMultiReference& >(dh->get());
+	AQLObject& leg1 = unders.get(0).get();
 	
 	dh = &(leg1.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference& >(dh->get());
+	const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference& >(dh->get());
 	if (cashlets.getSize() != dataProvider->mCashletSize)
-		throw LACoreInvalidData("CapFloor Cashlets size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("CapFloor Cashlets size error",__FILE__,__LINE__);
 
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 	for (unsigned int i = 0; i < dataProvider->mCashletSize; i++)
 	{
-		LAObject& ecash = cashlets.get(i).get();
+		AQLObject& ecash = cashlets.get(i).get();
 		//paymentdate check
 		dh = &(ecash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-		const LADate& paydate = dynamic_cast<const LADataDate &>(dh->get()).get();
+		const AQLDate& paydate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 		if (paydate <= dataProvider->mAsofDate)
 		{
 			continue;
@@ -508,39 +508,39 @@ LAPriceIRCapFloorOptionValue::setUpAnalyticParam(LAObject& object, LADataProvide
 		dh = &(ecash.getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 		if (!dh->isDefined() || dh->isNull())
 			continue;
-		LADataMultiReference& coupons = dynamic_cast<LADataMultiReference& >(dh->get());
+		AQLDataMultiReference& coupons = dynamic_cast<AQLDataMultiReference& >(dh->get());
 		if (coupons.getSize() != 1)
-			throw LACoreInvalidData("CapFloor Coupons size error",__FILE__,__LINE__);
-		LAObject& ecoupon = coupons.get(0).get();
+			throw AQLCoreInvalidData("CapFloor Coupons size error",__FILE__,__LINE__);
+		AQLObject& ecoupon = coupons.get(0).get();
 
 		dh = &(ecoupon.getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-		LAFunctionBase& method = dynamic_cast<LAPriceDataFunction& >(dh->get()).getFunction();
+		AQLFunctionBase& method = dynamic_cast<AQLPriceDataFunction& >(dh->get()).getFunction();
 
 		if (method.isTypeOf(FN_BSBASEFUNC))
 		{
 			dh = &(ecoupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
-			LADataMultiReference& indexs = dynamic_cast<LADataMultiReference& >(dh->get());
+			AQLDataMultiReference& indexs = dynamic_cast<AQLDataMultiReference& >(dh->get());
 		
-			LAObject& eindex = indexs.get(0).get();
+			AQLObject& eindex = indexs.get(0).get();
 			LABlackScholesBaseMethod &bsbasefunc = dynamic_cast<LABlackScholesBaseMethod &>(method);
 			// set up call spread
 			if (bsbasefunc.isTypeOf(FN_IR_DIGITALCAPLETOPTIONFUNC) || bsbasefunc.isTypeOf(FN_IR_DIGITALCAPLETOPTIONFUNC))
 			{
 				// If digital, set call spread value to the operator.
 				dh = &(object.getData(PRICING_DATA_DIGITALSPREAD, ISNOTNULL));
-				double callSpreadValule = dynamic_cast<LADataDouble &>(dh->get()).get();
+				double callSpreadValule = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 				LABlackScholesDigitalCapletOption& digitalBSBaseFunc = dynamic_cast<LABlackScholesDigitalCapletOption&>(bsbasefunc); // LABlackShcolesDigitalFloorletOption is inherited from LABlackScholesDigitalCapletOption
 				digitalBSBaseFunc.setCallSpreadValue(callSpreadValule);
 
 				dh = &(ecoupon.getData(PRICING_DATA_DIGITALCOUPON, ISNOTNULL));
-				double digitalCoupon = dynamic_cast<const LADataDouble &>(dh->get()).get();
+				double digitalCoupon = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 				digitalBSBaseFunc.setDigitalCoupon(digitalCoupon);
 			}
 			bsbasefunc.setOptionNumeraire();
 			bsbasefunc.setOptionStrike();
 			//indextype == FixedRate means return payoff method
 			dh = &(eindex.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL));
-			LAString indextype = dynamic_cast<const LADataString &>(dh->get());
+			AQLString indextype = dynamic_cast<const AQLDataString &>(dh->get());
 			if (indextype.toUpper() == "FIXEDRATE")
 			{
 				bsbasefunc.setIsAfterMaturity(true);
@@ -550,12 +550,12 @@ LAPriceIRCapFloorOptionValue::setUpAnalyticParam(LAObject& object, LADataProvide
 			{
 				if (bsbasefunc.isTypeOf(FN_IR_DELAYEDCAPLETOPTIONFUNC) || bsbasefunc.isTypeOf(FN_IR_DELAYEDFLOORLETOPTIONFUNC))
 				{
-					const LAPriceDataDayCount& dc = dynamic_cast<const LAPriceDataDayCount&>(eindex.getData(PRICING_DATA_DAYCOUNT, ISNOTNULL).get());
+					const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&>(eindex.getData(PRICING_DATA_DAYCOUNT, ISNOTNULL).get());
 					dh = &(ecash.getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL));
-					const LADate& enddate = dynamic_cast<const LADataDate &>(dh->get()).get();
+					const AQLDate& enddate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 					double timingterm = dc.getTerm(paydate, enddate, true);
 
-					const LAInterpolationBase* oiscurve = &dataProvider->mpvanilla->getIRCurve(dataProvider->mPremiumCurrency).getBasisDFInterpolation();
+					const AQLInterpolationBase* oiscurve = &dataProvider->mpvanilla->getIRCurve(dataProvider->mPremiumCurrency).getBasisDFInterpolation();
 					const auto& curvePro = dataProvider->mpvanilla->getIRCurvePro(dataProvider->mPremiumCurrency);
 					const auto& assignedCurveMktMap = curvePro.getAssignedCurveMktMap();
 					for (auto iac = assignedCurveMktMap.begin(); iac != assignedCurveMktMap.end(); ++iac)
@@ -577,7 +577,7 @@ LAPriceIRCapFloorOptionValue::setUpAnalyticParam(LAObject& object, LADataProvide
 					dh = &eindex.getData(PRICING_DATA_CATHRESHOLD, NOCHECK);
 					if (dh->isDefined() && !dh->isNull())
 					{
-						threshold = dynamic_cast<const LADataDouble&> (dh->get()).get();
+						threshold = dynamic_cast<const AQLDataDouble&> (dh->get()).get();
 					}
 
 					DoubleArray convexityFactors(3, 0.0);
@@ -588,7 +588,7 @@ LAPriceIRCapFloorOptionValue::setUpAnalyticParam(LAObject& object, LADataProvide
 				}
 
 				dh = &(eindex.getData(PRICING_DATA_FIXINGDATE, ISNOTNULL));
-				const LADate& fixdate = dynamic_cast<const LADataDate& >(dh->get()).get();
+				const AQLDate& fixdate = dynamic_cast<const AQLDataDate& >(dh->get()).get();
 				//Te
 				double Te = dataProvider->mBlackDayCount.getTerm(dataProvider->mAsofDate, fixdate,true);
 				double actT = dc_act365.getTerm(dataProvider->mAsofDate, fixdate,true);
@@ -601,33 +601,33 @@ LAPriceIRCapFloorOptionValue::setUpAnalyticParam(LAObject& object, LADataProvide
 					bsbasefunc.setIsAfterMaturity(true);
 				}
 			}
-			bsbasefunc.getAnalyticMethod(LAString("PREM"));
-			bsbasefunc.getPayoffMethod(LAString("PREM"));
+			bsbasefunc.getAnalyticMethod(AQLString("PREM"));
+			bsbasefunc.getPayoffMethod(AQLString("PREM"));
 			bsbasefunc.getOptionTypeVector();
 		}
 	}
 	return;
 }
 
-const LADate&
-LAPriceIRCapFloorOptionValue::getMaturityDate(const LAObject& object, LADataProvider* dp) const
+const AQLDate&
+LAPriceIRCapFloorOptionValue::getMaturityDate(const AQLObject& object, AQLDataProvider* dp) const
 {
 	dp;
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dp);
 
 	//when cap floor option, output the final matuirty date
 	
 	dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& unders = dynamic_cast<const LADataMultiReference& >(dh->get());
-	LAObject& leg1 = unders.get(0).get();
+	const AQLDataMultiReference& unders = dynamic_cast<const AQLDataMultiReference& >(dh->get());
+	AQLObject& leg1 = unders.get(0).get();
 	
 	dh = &(leg1.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference& >(dh->get());
+	const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference& >(dh->get());
 	unsigned int cashletsize = getCashletSize(object, dataProvider);
 
-	LAObject* ecoupon;
-	LAObject* ecash;
+	AQLObject* ecoupon;
+	AQLObject* ecash;
 	while (cashletsize > 0 )
 	{
 		ecash = &(cashlets.get(cashletsize-1).get());
@@ -638,14 +638,14 @@ LAPriceIRCapFloorOptionValue::getMaturityDate(const LAObject& object, LADataProv
 			continue;
 		}
 		
-		const LADataMultiReference& coupons = dynamic_cast<const LADataMultiReference& >(dh->get());
+		const AQLDataMultiReference& coupons = dynamic_cast<const AQLDataMultiReference& >(dh->get());
 		if (coupons.getSize() != 1)
-			throw LACoreInvalidData("CapFloor Coupons size error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("CapFloor Coupons size error",__FILE__,__LINE__);
 		
 		ecoupon = &coupons.get(0).get();
 		dh = &(ecoupon->getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
-		const LADataMultiReference& indexs = dynamic_cast<const LADataMultiReference& >(dh->get());
-		LAObject& eindex = indexs.get(0).get();
+		const AQLDataMultiReference& indexs = dynamic_cast<const AQLDataMultiReference& >(dh->get());
+		AQLObject& eindex = indexs.get(0).get();
 		
 		dh = &(eindex.getData(PRICING_DATA_FIXINGDATE, NOCHECK));
 		if (!dh->isDefined() || dh->isNull())
@@ -653,7 +653,7 @@ LAPriceIRCapFloorOptionValue::getMaturityDate(const LAObject& object, LADataProv
 			cashletsize--;
 			continue;
 		}
-		const LADate& finalfixingdate = dynamic_cast<const LADataDate& >(dh->get()).get();
+		const AQLDate& finalfixingdate = dynamic_cast<const AQLDataDate& >(dh->get()).get();
 		return finalfixingdate;
 
 		break;
@@ -661,51 +661,51 @@ LAPriceIRCapFloorOptionValue::getMaturityDate(const LAObject& object, LADataProv
 
 	//error case
 	dh = &(ecash->getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL));
-	const LADate& startdate = dynamic_cast<const LADataDate &>(dh->get()).get();
+	const AQLDate& startdate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 	return startdate;
 }
 
-const LADate&
-LAPriceIRCapFloorOptionValue::getDeliveryDate(const LAObject& object, LADataProvider* dp) const
+const AQLDate&
+LAPriceIRCapFloorOptionValue::getDeliveryDate(const AQLObject& object, AQLDataProvider* dp) const
 {
 	dp;
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	//when cap floor option, output the final payment date
 	
 	dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& unders = dynamic_cast<const LADataMultiReference& >(dh->get());
-	LAObject& leg1 = unders.get(0).get();
+	const AQLDataMultiReference& unders = dynamic_cast<const AQLDataMultiReference& >(dh->get());
+	AQLObject& leg1 = unders.get(0).get();
 	
 	dh = &(leg1.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference& >(dh->get());
+	const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference& >(dh->get());
 	unsigned int cashletsize = getCashletSize(object, dp);
 	
-	LAObject& ecash = cashlets.get(cashletsize-1).get();
+	AQLObject& ecash = cashlets.get(cashletsize-1).get();
 	dh = &(ecash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-	const LADate& finalpaymentdate = dynamic_cast<const LADataDate& >(dh->get()).get();
+	const AQLDate& finalpaymentdate = dynamic_cast<const AQLDataDate& >(dh->get()).get();
 	
 	return finalpaymentdate;
 }
 
 std::vector< std::vector<LABlackScholesBase*> >
-LAPriceIRCapFloorOptionValue::getAnalyticMethod(LAObject& object, LADataProvider* dp) const
+LAPriceIRCapFloorOptionValue::getAnalyticMethod(AQLObject& object, AQLDataProvider* dp) const
 {
-	LADataHolder*dh;
+	AQLDataHolder*dh;
 	LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dp);
 
 	dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& unders = dynamic_cast<const LADataMultiReference& >(dh->get());
-	LAObject& leg1 = unders.get(0).get();
+	const AQLDataMultiReference& unders = dynamic_cast<const AQLDataMultiReference& >(dh->get());
+	AQLObject& leg1 = unders.get(0).get();
 	
 	dh = &(leg1.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference& >(dh->get());
+	const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference& >(dh->get());
 	if (cashlets.getSize() != dataProvider->mCashletSize)
-		throw LACoreInvalidData("CapFloor Cashlets size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("CapFloor Cashlets size error",__FILE__,__LINE__);
 
 	std::vector< std::vector<LABlackScholesBase* > > ret(dataProvider->mCashletSize);
 	for (unsigned int i = 0; i < dataProvider->mCashletSize; i++)
 	{
-		LAObject& ecash = cashlets.get(i).get();
+		AQLObject& ecash = cashlets.get(i).get();
 		dh = &(ecash.getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 		if (!dh->isDefined() || dh->isNull())
 		{
@@ -713,17 +713,17 @@ LAPriceIRCapFloorOptionValue::getAnalyticMethod(LAObject& object, LADataProvider
 			continue;
 		}
 		
-		LADataMultiReference& coupons = dynamic_cast<LADataMultiReference& >(dh->get());
+		AQLDataMultiReference& coupons = dynamic_cast<AQLDataMultiReference& >(dh->get());
 		if (coupons.getSize() != 1)
-			throw LACoreInvalidData("CapFloor Coupons size error",__FILE__,__LINE__);
-		LAObject& ecoupon = coupons.get(0).get();
+			throw AQLCoreInvalidData("CapFloor Coupons size error",__FILE__,__LINE__);
+		AQLObject& ecoupon = coupons.get(0).get();
 
 		dh = &(ecoupon.getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-		LAFunctionBase& method = dynamic_cast<LAPriceDataFunction& >(dh->get()).getFunction();
+		AQLFunctionBase& method = dynamic_cast<AQLPriceDataFunction& >(dh->get()).getFunction();
 		
 		//paymentdate check
 		dh = &(ecash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-		const LADate& paydate = dynamic_cast<const LADataDate &>(dh->get()).get();
+		const AQLDate& paydate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 		std::vector<LABlackScholesBase* > retvec;
 		if (paydate <= dataProvider->mAsofDate)
 		{
@@ -732,7 +732,7 @@ LAPriceIRCapFloorOptionValue::getAnalyticMethod(LAObject& object, LADataProvider
 		else if (method.isTypeOf(FN_BSBASEFUNC))
 		{
 			LABlackScholesBaseMethod &bsbasefunc = dynamic_cast<LABlackScholesBaseMethod &>(method);
-			retvec = bsbasefunc.getAnalyticMethod(LAString("PREM"));
+			retvec = bsbasefunc.getAnalyticMethod(AQLString("PREM"));
 		}
 		else
 		{
@@ -747,7 +747,7 @@ LAPriceIRCapFloorOptionValue::getAnalyticMethod(LAObject& object, LADataProvider
 
 //multiple unit
 double  
-LAPriceIRCapFloorOptionValue::multipleUnit(const LAObject& object, LADataProvider* dp) const
+LAPriceIRCapFloorOptionValue::multipleUnit(const AQLObject& object, AQLDataProvider* dp) const
 {
 	object;
 	dp;
@@ -757,17 +757,17 @@ LAPriceIRCapFloorOptionValue::multipleUnit(const LAObject& object, LADataProvide
 
 //get cashlet size
 unsigned int 
-LAPriceIRCapFloorOptionValue::getCashletSize(const LAObject& object, LADataProvider* dp) const
+LAPriceIRCapFloorOptionValue::getCashletSize(const AQLObject& object, AQLDataProvider* dp) const
 {
 	unsigned int ret = 0;
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 
 	dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& unders = dynamic_cast<const LADataMultiReference& >(dh->get());
-	LAObject& leg1 = unders.get(0).get();
+	const AQLDataMultiReference& unders = dynamic_cast<const AQLDataMultiReference& >(dh->get());
+	AQLObject& leg1 = unders.get(0).get();
 	
 	dh = &(leg1.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference& >(dh->get());
+	const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference& >(dh->get());
 	ret = cashlets.getSize();
 
 	return ret;
@@ -780,7 +780,7 @@ LAPriceIRCapFloorOptionValue::getCashletSize(const LAObject& object, LADataProvi
 	@brief create new cache class
 	@return cache class
 */
-LADataProvider*
+AQLDataProvider*
 LAPriceIRCapFloorOptionValue::createNewDataProvider() const
 {
 	LAPriceIROptionValueDataProvider* dataProvider = NULL;
@@ -790,7 +790,7 @@ LAPriceIRCapFloorOptionValue::createNewDataProvider() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 	return dataProvider;
 }
@@ -801,19 +801,19 @@ LAPriceIRCapFloorOptionValue::createNewDataProvider() const
 
 // Output cashflow
 void
-LAPriceIRCapFloorOptionValue::outputResult( LAObject& object, LADataProvider* dp ) const
+LAPriceIRCapFloorOptionValue::outputResult( AQLObject& object, AQLDataProvider* dp ) const
 {
 	// ! Get valuable object
-	LAString nb = dynamic_cast<const LADataString& >(object.getData(CALIBRATION_DATA_NAME,ISNOTNULL).get()).get();
-	LAString tempname = "ChangeToSwap" + nb;
+	AQLString nb = dynamic_cast<const AQLDataString& >(object.getData(CALIBRATION_DATA_NAME,ISNOTNULL).get()).get();
+	AQLString tempname = "ChangeToSwap" + nb;
 	
-	LAObjectPool& objPool = object.getDataInstance()->getObjectPool(); 
-	LAObjectHolder objHolder = objPool.getObject( tempname, ENCHKTYPE_NOCHECK );
-	LAMathObjectValue* vcapfloor = NULL;
+	AQLObjectPool& objPool = object.getDataInstance()->getObjectPool(); 
+	AQLObjectHolder objHolder = objPool.getObject( tempname, ENCHKTYPE_NOCHECK );
+	AQLMathObjectValue* vcapfloor = NULL;
 	if ( objHolder.isDefined() )
-		vcapfloor = dynamic_cast< LAMathObjectValue* >( &( objHolder.get() ) );
+		vcapfloor = dynamic_cast< AQLMathObjectValue* >( &( objHolder.get() ) );
 	else
-		throw LACoreInvalidData( "vcapfloor is not set! LAPriceIRCapFloorOptionVlaue::outputResult() ",__FILE__,__LINE__);
+		throw AQLCoreInvalidData( "vcapfloor is not set! LAPriceIRCapFloorOptionVlaue::outputResult() ",__FILE__,__LINE__);
 	
 	LALinearRatesOptionValueDataProvider* dataProvider = dynamic_cast< LALinearRatesOptionValueDataProvider* >( dataProvider );
 
@@ -890,118 +890,118 @@ LAPriceIRCapFloorOptionValue::outputResult( LAObject& object, LADataProvider* dp
 
 	// ! Set Cashlet to TradeEntity
 	// ! CFCalcStartDate
-	LAString cfCalcStartDateName = PRICING_DATA_CFCALCSTARTDATE_LEG + LAString( 1 );
+	AQLString cfCalcStartDateName = PRICING_DATA_CFCALCSTARTDATE_LEG + AQLString( 1 );
 	object.remove( cfCalcStartDateName );
-	object.add( cfCalcStartDateName, new LADataDates() ).convertFromString( vcapfloor->getData( cfCalcStartDateName, ISDEFINED ).convertToString() );	
+	object.add( cfCalcStartDateName, new AQLDataDates() ).convertFromString( vcapfloor->getData( cfCalcStartDateName, ISDEFINED ).convertToString() );	
 	
 	// ! CFCalcEndDate
-	LAString cfCalcEndDateName = PRICING_DATA_CFCALCENDDATE_LEG + LAString( 1 );
+	AQLString cfCalcEndDateName = PRICING_DATA_CFCALCENDDATE_LEG + AQLString( 1 );
 	object.remove( cfCalcEndDateName );
-	object.add( cfCalcEndDateName, new LADataDates() ).convertFromString( vcapfloor->getData( cfCalcEndDateName, ISDEFINED ).convertToString() );
+	object.add( cfCalcEndDateName, new AQLDataDates() ).convertFromString( vcapfloor->getData( cfCalcEndDateName, ISDEFINED ).convertToString() );
 
 	// ! PaymentDate
-	LAString paymentDateName = PRICING_DATA_PAYMENTDATE_LEG + LAString( 1 );
+	AQLString paymentDateName = PRICING_DATA_PAYMENTDATE_LEG + AQLString( 1 );
 	object.remove( paymentDateName );
-	object.add( paymentDateName, new LADataDates() ).convertFromString( vcapfloor->getData( paymentDateName, ISDEFINED ).convertToString() );
+	object.add( paymentDateName, new AQLDataDates() ).convertFromString( vcapfloor->getData( paymentDateName, ISDEFINED ).convertToString() );
 	
 	// ! PaymentTime
-	LAString time = PRICING_DATA_CASHLETVALUETIME_LEG + LAString( 1 );		
+	AQLString time = PRICING_DATA_CASHLETVALUETIME_LEG + AQLString( 1 );		
 	object.remove(time);
-	object.add( time, new LADataDoubles() ).convertFromString( vcapfloor->getData( time, ISDEFINED ).convertToString() );
+	object.add( time, new AQLDataDoubles() ).convertFromString( vcapfloor->getData( time, ISDEFINED ).convertToString() );
 	
 	// ! Cachflow
-	LAString cfname = PRICING_DATA_CASHLETVALUE_LEG + LAString( 1 );		
+	AQLString cfname = PRICING_DATA_CASHLETVALUE_LEG + AQLString( 1 );		
 	object.remove( cfname );
-	object.add( cfname, new LADataDoubles() ).convertFromString( vcapfloor->getData( cfname, ISDEFINED ).convertToString() );
+	object.add( cfname, new AQLDataDoubles() ).convertFromString( vcapfloor->getData( cfname, ISDEFINED ).convertToString() );
 
 	// ! PV
-	LAString pvname = PRICING_DATA_PVVALUE_LEG + LAString( 1 );
+	AQLString pvname = PRICING_DATA_PVVALUE_LEG + AQLString( 1 );
 	object.remove( pvname );
-	object.add( pvname, new LADataDoubles() ).convertFromString( vcapfloor->getData( pvname, ISDEFINED ).convertToString() );
+	object.add( pvname, new AQLDataDoubles() ).convertFromString( vcapfloor->getData( pvname, ISDEFINED ).convertToString() );
 
 	// ! DF
-	LAString dfName = PRICING_DATA_DF_LEG + LAString( 1 );
+	AQLString dfName = PRICING_DATA_DF_LEG + AQLString( 1 );
 	object.remove( dfName );
-	object.add( dfName, new LADataDoubles() ).convertFromString( vcapfloor->getData( dfName, ISDEFINED ).convertToString() );
+	object.add( dfName, new AQLDataDoubles() ).convertFromString( vcapfloor->getData( dfName, ISDEFINED ).convertToString() );
 	
 	// ! Gearing
-	LAString gearingName = PRICING_DATA_GEARING_LEG + LAString( 1 );
+	AQLString gearingName = PRICING_DATA_GEARING_LEG + AQLString( 1 );
 	object.remove( gearingName );
-	object.add( gearingName, new LADataDoubles() ).convertFromString( vcapfloor->getData( gearingName, ISDEFINED ).convertToString() );
+	object.add( gearingName, new AQLDataDoubles() ).convertFromString( vcapfloor->getData( gearingName, ISDEFINED ).convertToString() );
 
 	// ! Forward
-	LAString forwardName = PRICING_DATA_FORWARD_LEG + LAString( 1 );
+	AQLString forwardName = PRICING_DATA_FORWARD_LEG + AQLString( 1 );
 	object.remove( forwardName );
-	object.add( forwardName, new LADataDoubles() ).convertFromString( vcapfloor->getData( forwardName, ISDEFINED ).convertToString() );
+	object.add( forwardName, new AQLDataDoubles() ).convertFromString( vcapfloor->getData( forwardName, ISDEFINED ).convertToString() );
 
 	// ! AccrualDays
-	LAString accDaysName = PRICING_DATA_ACCRUALDAYS_LEG + LAString( 1 );
+	AQLString accDaysName = PRICING_DATA_ACCRUALDAYS_LEG + AQLString( 1 );
 	object.remove( accDaysName );
-	object.add( accDaysName, new LADataDoubles() ).convertFromString( vcapfloor->getData( accDaysName, ISDEFINED ).convertToString() );
+	object.add( accDaysName, new AQLDataDoubles() ).convertFromString( vcapfloor->getData( accDaysName, ISDEFINED ).convertToString() );
 
 	// ! Notional
-	LAString notionalName = PRICING_CALIBRATION_DATAOTIONAL_LEG + LAString( 1 );
+	AQLString notionalName = PRICING_CALIBRATION_DATAOTIONAL_LEG + AQLString( 1 );
 	object.remove( notionalName );
-	object.add( notionalName, new LADataDoubles() ).convertFromString( vcapfloor->getData( notionalName, ISDEFINED ).convertToString() );
+	object.add( notionalName, new AQLDataDoubles() ).convertFromString( vcapfloor->getData( notionalName, ISDEFINED ).convertToString() );
 
 	// ! FixingDate
-	LAString fixingDateName = PRICING_DATA_FIXINGDATE_LEG + LAString( 1 );
+	AQLString fixingDateName = PRICING_DATA_FIXINGDATE_LEG + AQLString( 1 );
 	object.remove( fixingDateName );
-	object.add( fixingDateName, new LADataDates() ).convertFromString( vcapfloor->getData( fixingDateName, ISDEFINED ).convertToString() );
+	object.add( fixingDateName, new AQLDataDates() ).convertFromString( vcapfloor->getData( fixingDateName, ISDEFINED ).convertToString() );
 
 	// ! FixingFlag
-	LAString fixingFlagName = PRICING_DATA_FIXINGFLAG_LEG + LAString( 1 );
+	AQLString fixingFlagName = PRICING_DATA_FIXINGFLAG_LEG + AQLString( 1 );
 	object.remove( fixingFlagName );
-	object.add( fixingFlagName, new LADataStrings() ).convertFromString( vcapfloor->getData( fixingFlagName, ISDEFINED ).convertToString() );
+	object.add( fixingFlagName, new AQLDataStrings() ).convertFromString( vcapfloor->getData( fixingFlagName, ISDEFINED ).convertToString() );
 
 	for (int i=0; i<vols_mat.size(); i++)
 	{
 		// ! Volatility
-		LAString volName = PRICING_DATA_VOLATILITY_LEG + LAString( 1 ) + LAString("_") + LAString( i + 1 );
+		AQLString volName = PRICING_DATA_VOLATILITY_LEG + AQLString( 1 ) + AQLString("_") + AQLString( i + 1 );
 		object.remove( volName );
-		object.add( volName, new LADataDoubles( vols_mat[i] ) );
+		object.add( volName, new AQLDataDoubles( vols_mat[i] ) );
 
 		// ! Strike
-		LAString strikeName = PRICING_DATA_STRIKE_LEG + LAString( 1 ) + LAString("_") + LAString( i + 1 );
+		AQLString strikeName = PRICING_DATA_STRIKE_LEG + AQLString( 1 ) + AQLString("_") + AQLString( i + 1 );
 		object.remove( strikeName );
-		object.add( strikeName, new LADataDoubles( strikes_mat[i] ) );
+		object.add( strikeName, new AQLDataDoubles( strikes_mat[i] ) );
 
 		// ! ExpiryTerm
-		LAString expiryTermName = PRICING_DATA_EXPIRYTERM_LEG + LAString( 1 );
+		AQLString expiryTermName = PRICING_DATA_EXPIRYTERM_LEG + AQLString( 1 );
 		object.remove( expiryTermName );
-		object.add( expiryTermName, new LADataDoubles( expiryTerms_mat[i] ) );
+		object.add( expiryTermName, new AQLDataDoubles( expiryTerms_mat[i] ) );
 	}
 
 	// ! Get OptionValue and PremiumValue
 	object.remove( PRICING_DATA_OPTIONVALUE );
-	object.add( PRICING_DATA_OPTIONVALUE, new LADataDouble( dataProvider->mOptionValue ) );
+	object.add( PRICING_DATA_OPTIONVALUE, new AQLDataDouble( dataProvider->mOptionValue ) );
 
 	object.remove( PRICING_DATA_PREMIUMVALUE );
-	object.add( PRICING_DATA_PREMIUMVALUE, new LADataDouble( dataProvider->mPremiumValue ) );
+	object.add( PRICING_DATA_PREMIUMVALUE, new AQLDataDouble( dataProvider->mPremiumValue ) );
 }
 
 void 
-LAPriceIRCapFloorOptionValue::setUpNumeraireCurrency(const LAObject& trade, LALinearRatesOptionValueDataProvider* dataProvider) const
+LAPriceIRCapFloorOptionValue::setUpNumeraireCurrency(const AQLObject& trade, LALinearRatesOptionValueDataProvider* dataProvider) const
 {
-    const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
-    const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference&>(legs.get(0).get().getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
-    const LAString& ccy = dynamic_cast<const LADataString&>(cashlets.get(0).get().getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
+    const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
+    const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference&>(legs.get(0).get().getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
+    const AQLString& ccy = dynamic_cast<const AQLDataString&>(cashlets.get(0).get().getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
     dataProvider->mnumerairecur = ccy;
     dataProvider->mnumerairecur.toUpper();
 }
 
-bool LAPriceIRCapFloorOptionValue::hasCashflow(const LAObject& trade) const
+bool LAPriceIRCapFloorOptionValue::hasCashflow(const AQLObject& trade) const
 {   
-    const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
+    const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
     for(size_t i = 0; i < legs.getSize(); i++){
-        const LADataHolder* dh = &legs.get(i).getData(PRICING_DATA_CASHLETS);
+        const AQLDataHolder* dh = &legs.get(i).getData(PRICING_DATA_CASHLETS);
         if(!dh->isDefined() || dh->isNull()) return false;
     }
     return true;
 }
 
 double
-LAPriceIRCapFloorOptionValue::value(const LADate& basedate, LAObject& inst, const LADataValuation& att) const
+LAPriceIRCapFloorOptionValue::value(const AQLDate& basedate, AQLObject& inst, const AQLDataValuation& att) const
 {
     if(hasCashflow(inst)){
         return LALinearRatesOptionValue::value(basedate, inst, att);
@@ -1009,9 +1009,9 @@ LAPriceIRCapFloorOptionValue::value(const LADate& basedate, LAObject& inst, cons
     else{
         const double pv = 0;
         inst.remove(PRICING_DATA_DIRTYPRICE);
-        inst.add(PRICING_DATA_DIRTYPRICE, new LADataDouble(pv));
+        inst.add(PRICING_DATA_DIRTYPRICE, new AQLDataDouble(pv));
         inst.remove(PRICING_DATA_CLEANPRICE);
-        inst.add(PRICING_DATA_CLEANPRICE, new LADataDouble(pv));
+        inst.add(PRICING_DATA_CLEANPRICE, new AQLDataDouble(pv));
 		return pv;
     }
 }

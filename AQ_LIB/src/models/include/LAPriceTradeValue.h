@@ -4,11 +4,11 @@
 #pragma interface
 #endif
 
-#include "LACoreValuation.h"
-#include "LADataValuation.h"
-#include "LACoreAppError.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreValuation.h"
+#include "AQLDataValuation.h"
+#include "AQLCoreAppError.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "LAPricePayOff.h"
 
 
@@ -457,23 +457,23 @@
 #define PAYOFFBASIS "PAYOFFBASIS"
 
 //// FROTOTYPE ////
-class LADate;
-class LAObject;
-class LAPriceDataManager;
+class AQLDate;
+class AQLObject;
+class AQLPriceDataManager;
 class LAMathFXEntity;
 class LAMathIndexEntity;
 class LAMathPathEntity;
 class LARatesNumeraireBase;
 class LAPriceAccruedInterest;
 class LAPolynomialBase;
-class LADataDoubleMatrix;
-class LADataBools;
+class AQLDataDoubleMatrix;
+class AQLDataBools;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief class that evaluates trade
 
 */
-class LAPriceTradeValue : public LACoreValuation
+class LAPriceTradeValue : public AQLCoreValuation
 {
 public:
     // constructor	
@@ -483,15 +483,15 @@ public:
 	// Check function for this class ID	
 	virtual bool                isTypeOf(function_t id) const;
     // Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
     // Return this class type
 	virtual function_t			getType() const;
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
     // evaluation function
-	virtual double              value(const LADate& basedate, 
-										LAObject& object,
-									const LADataValuation& att) const;
+	virtual double              value(const AQLDate& basedate, 
+										AQLObject& object,
+									const AQLDataValuation& att) const;
 
 
 	//Remove warning:C4512
@@ -500,7 +500,7 @@ public:
 	/*!
 		@brief cache class for performance up
 	*/
-	class LAPriceTradeValueDataProvider : public LADataProvider
+	class LAPriceTradeValueDataProvider : public AQLDataProvider
 	{
 	public:
 		virtual ~LAPriceTradeValueDataProvider(); 
@@ -510,19 +510,19 @@ public:
 		LARatesNumeraireBase*				pNumeraire; // numeraire
 		int								mcnum;		// mc num
 		BoolVector						rcvpay;		// rcv(true) or pay(false) flag of each leg
-		LADate							settledate;	// settle date
+		AQLDate							settledate;	// settle date
 		double							settle;		// settle term from today
 		double							baseterm;	// term from today to basedate
 		bool							isstartable;// startable or not
 		LAPricePayOff						payoff;		// payoff class
-		LACoreFunctionHolder				acc;		// accrued interest function
+		AQLCoreFunctionHolder				acc;		// accrued interest function
 		DoubleArray						expirytimes;	// call expiry times 
 		DoubleArray						actiontimes;	// call action times
 		bool							iscall;			// callable or not
 		int								lsmcnum;		// lsmc num
 		LAPolynomialBase*				poly;			// polynomial function
-		LADataDoubleMatrix*				coefficient;	// coefficient
-		LADataDoubleMatrix*				coefficient_rebate;	// coefficient
+		AQLDataDoubleMatrix*				coefficient;	// coefficient
+		AQLDataDoubleMatrix*				coefficient_rebate;	// coefficient
 		std::vector<LAPolynomialBase*>	polies;			// polynomial functions
 		std::vector<LAPolynomialBase*>	polies_rebate;		// polynomial functions
 		DateVector						actiondates;	// call action dates
@@ -530,9 +530,9 @@ public:
 		std::vector<PayOffToolHolderVector> cashvec;    // cash vector
 		DoubleMatrix					paytimes;       // payment timing
 		int                             maxcfnum;       // maxcfnum
-		LAString						basecur;		// basecur
-		LAString						numerairecur;	// numerairecur
-		LAString						credit_ccy;		// credit currency
+		AQLString						basecur;		// basecur
+		AQLString						numerairecur;	// numerairecur
+		AQLString						credit_ccy;		// credit currency
 		bool							iscalcswap;		// calc flag for underlying swap
         bool                            isexcludeoutlier_y; //IsExcludeOutlier_Y flag
         bool                            isexcludeoutlier_x; //IsExcludeOutlier_X flag
@@ -545,49 +545,49 @@ public:
         bool                            isshift_x;      //IsShift_X flag
 		bool                            isscale_y;      //IsScale_Y flag
         bool                            isscale_x;      //IsScale_X flag
-		LADataBools*                    isconvert_xy;   //isconvert_xy flag
-		LADataDoubles*                  shift_y;        //shift_y value
-		LADataDoubles*                  scale_y;        //scale_y value
-		LADataDoubleMatrix*				shift_x;	    //shift_x value
-		LADataDoubleMatrix*				scale_x;	    //scale_x value
-		LADataBools*                    isconvert_xy_rebate;      //isconvert_xy_rebate flag
-		LADataDoubles*                  shift_y_rebate;       //shift_y_rebate value
-		LADataDoubles*                  scale_y_rebate;       //scale_y_rebate value
-		LADataDoubleMatrix*				shift_x_rebate;	    //shift_x_rebate value
-		LADataDoubleMatrix*				scale_x_rebate;	    //scale_x_rebate value
+		AQLDataBools*                    isconvert_xy;   //isconvert_xy flag
+		AQLDataDoubles*                  shift_y;        //shift_y value
+		AQLDataDoubles*                  scale_y;        //scale_y value
+		AQLDataDoubleMatrix*				shift_x;	    //shift_x value
+		AQLDataDoubleMatrix*				scale_x;	    //scale_x value
+		AQLDataBools*                    isconvert_xy_rebate;      //isconvert_xy_rebate flag
+		AQLDataDoubles*                  shift_y_rebate;       //shift_y_rebate value
+		AQLDataDoubles*                  scale_y_rebate;       //scale_y_rebate value
+		AQLDataDoubleMatrix*				shift_x_rebate;	    //shift_x_rebate value
+		AQLDataDoubleMatrix*				scale_x_rebate;	    //scale_x_rebate value
 
-		LADate							valueDate;		// value date
+		AQLDate							valueDate;		// value date
 		DoubleArray						basisgrid_payoff;	// grids of yield spread for payoff
 		DoubleArray						basisspread_payoff;	// yield spreads for payoff(corresponding to basisgrid_payoff)
-		LAString						basisname_payoff;	// name of spreads for payoff
+		AQLString						basisname_payoff;	// name of spreads for payoff
 
 	};
 
-	virtual double calcFeeValueExo(LAObject &tradeEntity, LAPriceTradeValueDataProvider* dataProvider) const;
+	virtual double calcFeeValueExo(AQLObject &tradeEntity, LAPriceTradeValueDataProvider* dataProvider) const;
 
 protected:
     // copy constructor
     LAPriceTradeValue(const LAPriceTradeValue& v);	
 
     // evaluation function
-	virtual double              value(const LADate& basedate, 
-										LAObject& object, LADataProvider* dp,
+	virtual double              value(const AQLDate& basedate, 
+										AQLObject& object, AQLDataProvider* dp,
 										unsigned int startpathnum = 0) const;
 
 
 	// get reference indexs
 	std::set<LAMathIndexEntity*>
-								getReferenceIndex(LAObject& trade) const;
+								getReferenceIndex(AQLObject& trade) const;
 	// set up dataProvider
-	LADataProvider*					setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const;	
+	AQLDataProvider*					setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const;	
 	// value by backward
 	virtual double				value_backward(const DoubleMatrix& time,
 											const DoubleMatrix& cf,
-											std::vector<std::pair<unsigned int, LADate> >& triggerhit,
+											std::vector<std::pair<unsigned int, AQLDate> >& triggerhit,
 											const DoubleArray& rebate,
 											const DoubleMatrix& explanatory,
-											const LADataProvider* dp,
+											const AQLDataProvider* dp,
 											DoubleVector &callval,
 											BoolVector* afterjudge = 0,
 											BoolVector* judge = 0,
@@ -596,12 +596,12 @@ protected:
 	// calc ValueTerm ratio
 	double calcValueTermRatio(const LAPriceTradeValueDataProvider &dataProvider) const;
 	// get FXEntity
-	const LAMathFXEntity &getFXEntity(LAObject &object) const;
+	const LAMathFXEntity &getFXEntity(AQLObject &object) const;
 
 	LAPriceAccruedInterest*		mpAcc;// < accrued interest calulatetor
 	void clearLSMCPointers(LAPriceTradeValueDataProvider &dataProvider) const; // clear LSMC pointers
 private:
 	// create new cache class
-	virtual	LADataProvider*			createNewDataProvider() const;	
+	virtual	AQLDataProvider*			createNewDataProvider() const;	
 };
 

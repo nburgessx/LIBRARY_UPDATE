@@ -21,8 +21,8 @@
 #include "LACalibrateModel.h"
 
 
-class LADataInstance;
-class LAString;
+class AQLDataInstance;
+class AQLString;
 class LAStaticData;
 
 
@@ -45,33 +45,33 @@ public:
 	LACalibrateModelVolFactor &operator=(const LACalibrateModelVolFactor &rhs);
 	//==============================================
 	// generate SDE market data
-	virtual void loadModelDataAndCalibrate(const LAString &vola, LADataInstance &dataInstance, const bool isCurve = true, const bool isModel = true, const LAString & curveID = "", const LAString & marketName = "") const;
+	virtual void loadModelDataAndCalibrate(const AQLString &vola, AQLDataInstance &dataInstance, const bool isCurve = true, const bool isModel = true, const AQLString & curveID = "", const AQLString & marketName = "") const;
 	//==============================================
 	// generate sde initial value for fwdvola constant curve
-	virtual void loadFwdFXConstCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance, bool isCalcFwdBeforeFwdFXConsant = false) const {}
+	virtual void loadFwdFXConstCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance, bool isCalcFwdBeforeFwdFXConsant = false) const {}
 
 protected:
 	// set path 
-	virtual  void setOutputTemplate(const LAString &vola, LARatesSDEBase &sde)  const;
+	virtual  void setOutputTemplate(const AQLString &vola, LARatesSDEBase &sde)  const;
 	//==============================================
 	// set interpolation method 
-	virtual  void setInterpolationMethod(const LAString &vola, LARatesSDEBase &sde) const;
+	virtual  void setInterpolationMethod(const AQLString &vola, LARatesSDEBase &sde) const;
 	//==============================================
 	// set numeraire 
-	virtual  void setNumeraire(const LAString &vola, LARatesSDEBase &sde) const;
+	virtual  void setNumeraire(const AQLString &vola, LARatesSDEBase &sde) const;
 	//==============================================
 	// create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const LAString &vola, LADataInstance &dataInstance) const;
+	virtual LARatesSDEBase *createSDEInstance(const AQLString &vola, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// get SDE data name
-	virtual LAString getSDEAttrName(const LAString &vola) const;
+	virtual AQLString getSDEAttrName(const AQLString &vola) const;
 	// check cancel target for funding change 
 	////==============================================
 	//// check cancel target for funding change 
-	//virtual  bool isCancelForFunding(const LAString &ccy) const;
+	//virtual  bool isCancelForFunding(const AQLString &ccy) const;
 	////==============================================
 	// get Spot SDE data name
-	LAString getSpotIndex(const LAString &vola) const;
+	AQLString getSpotIndex(const AQLString &vola) const;
 
 
 };

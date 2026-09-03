@@ -29,9 +29,9 @@ namespace validation
 	* @param [in] marketDataObjects			The list of market data objects that correponds curve generators
 	* @param [out]    The curve indexes
 	*/
-	LAStringVector tryMeLWOCurveEngineCalibrate(const std::string& engineObjectName,
+	AQLStringVector tryMeLWOCurveEngineCalibrate(const std::string& engineObjectName,
 												const std::string& curveCollection,
-												const LAStringMatrix& engineSettings,
+												const AQLStringMatrix& engineSettings,
 												const std::vector<std::string>& curveGeneratorNames,
 												const std::vector<std::string>& marketDataObjects)
     {
@@ -73,7 +73,7 @@ namespace validation
 
         etrading::copyToCache<etrading::MultiCurveObject>( curveObject );
 
-		LAStringVector curveIndexes = curveObject.getCurveIndexNames();
+		AQLStringVector curveIndexes = curveObject.getCurveIndexNames();
 
 		return curveIndexes;
 

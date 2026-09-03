@@ -71,11 +71,11 @@ namespace google_test
     class TestCurveStdEURwithTension : public virtual testing::Test, public CurveStdBuilt
     {
     public:
-        virtual LAString getCurveID() const
+        virtual AQLString getCurveID() const
         {
             return CurveStdBound::getCurveID();
         }
-        virtual LAString getMarketName() const
+        virtual AQLString getMarketName() const
         {
             return CurveStdBound::getMarketName();
         };

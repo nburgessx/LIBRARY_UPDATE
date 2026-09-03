@@ -19,7 +19,7 @@
 
 
 
-class LAString;
+class AQLString;
 class LACoreDataService;
 class LACalibrateModel;
 //===================== Class Declare LAModelConfiguration==================================
@@ -36,7 +36,7 @@ public:
 	static LAModelConfiguration     *getInstance();
 	//==============================================
 	// create LACalibrateModel
-	LACalibrateModel *createSDEGenerator(const LAString &model) const;
+	LACalibrateModel *createSDEGenerator(const AQLString &model) const;
 
 private:
 

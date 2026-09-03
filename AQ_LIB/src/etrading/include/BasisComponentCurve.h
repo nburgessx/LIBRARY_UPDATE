@@ -1,13 +1,13 @@
 #pragma once
 
 #include "GlobalCalibrationComponentCurve.h"
-#include "LAObject.h"
-#include "LADataReference.h"
+#include "AQLObject.h"
+#include "AQLDataReference.h"
 #include "CurveCalibrationData.h"
 #include <map>
 
-class LAInterpolationBase;
-class LADate;
+class AQLInterpolationBase;
+class AQLDate;
 
 /*! 
     @brief Class of BasisComponentCurve
@@ -17,7 +17,7 @@ class BasisComponentCurve : public GlobalCalibrationComponentCurve
 public:
 	
 	// Constructor
-	BasisComponentCurve(const LAString& curveName, CurveCalibrationData& curveCalibrationData, const LADate& baseDate, const bool& fastRebuildRequested = false);
+	BasisComponentCurve(const AQLString& curveName, CurveCalibrationData& curveCalibrationData, const AQLDate& baseDate, const bool& fastRebuildRequested = false);
 
 	// Destructor
 	virtual ~BasisComponentCurve() {}
@@ -29,49 +29,49 @@ public:
 	virtual void priceCalibrationInstruments(DoubleArray& allPVs);
 	
 	// Post processing results once instruments have been consumed in calibration steps
-	virtual void postProcessing(LAObject& yieldCurveProEntity);
+	virtual void postProcessing(AQLObject& yieldCurveProEntity);
 
 	// Set target leg DF interpolator	
-	void setTargetLegDFInterpolator(const std::shared_ptr<LAInterpolationBase>& dfInterp);
+	void setTargetLegDFInterpolator(const std::shared_ptr<AQLInterpolationBase>& dfInterp);
 
 	// Set against leg DF interpolator	
-	void setAgainstLegDFInterpolator(const std::shared_ptr<LAInterpolationBase>& dfInterp);
+	void setAgainstLegDFInterpolator(const std::shared_ptr<AQLInterpolationBase>& dfInterp);
 
 	// Set target leg Forecast interpolator	
-	void setTargetLegFwdInterpolator(const std::shared_ptr<LAInterpolationBase>& fwdInterp);
+	void setTargetLegFwdInterpolator(const std::shared_ptr<AQLInterpolationBase>& fwdInterp);
 
 	// Set against leg Forecast interpolator	
-	void setAgainstLegFwdInterpolator(const std::shared_ptr<LAInterpolationBase>& fwdInterp);
+	void setAgainstLegFwdInterpolator(const std::shared_ptr<AQLInterpolationBase>& fwdInterp);
 
 private:
 
-	std::shared_ptr<LAInterpolationBase> pInter_fwd_againstLeg;
-	std::shared_ptr<LAInterpolationBase> pInter_df_againstLeg;
+	std::shared_ptr<AQLInterpolationBase> pInter_fwd_againstLeg;
+	std::shared_ptr<AQLInterpolationBase> pInter_df_againstLeg;
 
-	std::shared_ptr<LAInterpolationBase> pInter_fwd_targetLeg;
-	std::shared_ptr<LAInterpolationBase> pInter_df_targetLeg;
+	std::shared_ptr<AQLInterpolationBase> pInter_fwd_targetLeg;
+	std::shared_ptr<AQLInterpolationBase> pInter_df_targetLeg;
 
 	/////////////////////////////////////////
 
-	LADate spotDate_;
+	AQLDate spotDate_;
 
-	LADate asOfDate_;
+	AQLDate asOfDate_;
 
-	std::vector<LAObject*> data_;
+	std::vector<AQLObject*> data_;
 
-	LADataReference yieldDataRef_;
+	AQLDataReference yieldDataRef_;
 
 	CurveCalibrationData& curveCalibrationData_;
 
 	DoubleArray extrapolateTerms_;
 
-	LAString spotRateTerm_;
+	AQLString spotRateTerm_;
 
-	LADate liborDate_;
+	AQLDate liborDate_;
 
-	LAString firstInstrumentTerm_;
+	AQLString firstInstrumentTerm_;
 
-	LADate firstInstrumentDate_;
+	AQLDate firstInstrumentDate_;
 
 	double spotTerm_;
 
@@ -91,13 +91,13 @@ private:
 
 	unsigned int fxfwd_size_;
 
-	LAString curveNameCaseless_;
+	AQLString curveNameCaseless_;
 
 	/////////////////////////////////////////
 
-	LAString interpolationStr_;
+	AQLString interpolationStr_;
 
-	std::shared_ptr<LAInterpolationBase> pInter_adj_;
+	std::shared_ptr<AQLInterpolationBase> pInter_adj_;
 
 	int interpType_;
 

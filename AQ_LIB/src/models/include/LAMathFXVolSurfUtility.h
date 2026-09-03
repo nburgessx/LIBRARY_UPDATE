@@ -4,10 +4,10 @@
 #pragma interface
 #endif
 
-#include <LADataInstance.h>
-#include <LAString.h>
-#include <LADate.h>
-#include <LACoreTemplateType.h>
+#include <AQLDataInstance.h>
+#include <AQLString.h>
+#include <AQLDate.h>
+#include <AQLCoreTemplateType.h>
 #include <ConstantDeclarations.h>
 #include "LAMathFXVolatilitySurfaceGenerate.h"
 #include "LAMathDisplacedHestonTDP.h"
@@ -69,36 +69,36 @@
 class LAMathFXVolSurfUtility
 {
 public:
-    static double FindStrikeFromDelta( LADataInstance* dataInstance, double delta, double vol, int sgn, 
-        LAStringMatrix volSurfaceInfo, const LADate& expiryDate, const LAString& deltaType );
+    static double FindStrikeFromDelta( AQLDataInstance* dataInstance, double delta, double vol, int sgn, 
+        AQLStringMatrix volSurfaceInfo, const AQLDate& expiryDate, const AQLString& deltaType );
 
-    static void SetDeltaType( const LAString& deltaType_str, FXDeltaType& deltaType );
+    static void SetDeltaType( const AQLString& deltaType_str, FXDeltaType& deltaType );
 
-    static LAString SetUpFXVolatilitySurface( LADataInstance* dataInstance, LAStringMatrix& volSurfaceInfo, 
-        LAStringMatrix& fxOptionData, LAStringMatrix& smParams_str, LAStringMatrix& wingFactor );
+    static AQLString SetUpFXVolatilitySurface( AQLDataInstance* dataInstance, AQLStringMatrix& volSurfaceInfo, 
+        AQLStringMatrix& fxOptionData, AQLStringMatrix& smParams_str, AQLStringMatrix& wingFactor );
 
-    static void OutPutVolatilitySurface( LADataInstance* dataInstance, const LAString& volSurfaceID, DoubleVector& ret, 
+    static void OutPutVolatilitySurface( AQLDataInstance* dataInstance, const AQLString& volSurfaceID, DoubleVector& ret, 
                                          size_t& maturitySize, size_t& strikeSize );
 
-    static void OutPutFXOptionData( LADataInstance* dataInstance, const LAString& volSurfaceID, DoubleVector& ret,
+    static void OutPutFXOptionData( AQLDataInstance* dataInstance, const AQLString& volSurfaceID, DoubleVector& ret,
                                     size_t& dataNum );
 
-    static double GetVolatility( LADataInstance* dataInstance, const LAString& volSurfaceID, double point, const LADate& expiryPoint, 
-        const LAString& variable_str, const LAString& maturityMethod_str );
+    static double GetVolatility( AQLDataInstance* dataInstance, const AQLString& volSurfaceID, double point, const AQLDate& expiryPoint, 
+        const AQLString& variable_str, const AQLString& maturityMethod_str );
 
-	static double GetVolatility2( LADataInstance* dataInstance, const LAString& volSurfaceID, double point, double expiryPoint, 
-        double forwardFX, const LAString& variable_str, const LAString& maturityMethod_str );
+	static double GetVolatility2( AQLDataInstance* dataInstance, const AQLString& volSurfaceID, double point, double expiryPoint, 
+        double forwardFX, const AQLString& variable_str, const AQLString& maturityMethod_str );
 
-    static double GetATMVolatility( LADataInstance* dataInstance, const LAString& volSurfaceID, const LADate& expiryPoint,
-        const LAString& maturityMethod_str );
+    static double GetATMVolatility( AQLDataInstance* dataInstance, const AQLString& volSurfaceID, const AQLDate& expiryPoint,
+        const AQLString& maturityMethod_str );
 
-    static double GetFXPremiumFromSurface( LADataInstance* dataInstance, const LAString& volSurfaceID, double point, const LADate& expiryPoint,
-        const LAString& variable_str, const LAString& maturityMethod_str, const LAString& callput, const LAString& deltaType_str );
+    static double GetFXPremiumFromSurface( AQLDataInstance* dataInstance, const AQLString& volSurfaceID, double point, const AQLDate& expiryPoint,
+        const AQLString& variable_str, const AQLString& maturityMethod_str, const AQLString& callput, const AQLString& deltaType_str );
 
-    static void GetWingFactorFromHeston( LADataInstance* dataInstance, LAStringMatrix& volSurfaceInfo, LAStringMatrix& fxOptionData, 
-                                         LAStringMatrix& smParams_str, const HestonParams_TDP& hestonParam, DoubleVector& wfs );
+    static void GetWingFactorFromHeston( AQLDataInstance* dataInstance, AQLStringMatrix& volSurfaceInfo, AQLStringMatrix& fxOptionData, 
+                                         AQLStringMatrix& smParams_str, const HestonParams_TDP& hestonParam, DoubleVector& wfs );
 
-    static void GetMarketDataFromSmileData( LADataInstance* dataInstance, const LAString& volSurfaceID, DoubleVector& mkDatas, size_t& dataNum );
+    static void GetMarketDataFromSmileData( AQLDataInstance* dataInstance, const AQLString& volSurfaceID, DoubleVector& mkDatas, size_t& dataNum );
 
 private:
 	LAMathFXVolSurfUtility(void);

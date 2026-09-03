@@ -5,7 +5,7 @@
 #endif
 
 
-#include "LAObject.h"
+#include "AQLObject.h"
 
 //// DEFINES ////
 // Entitiy id of LAMathPathEntity
@@ -42,31 +42,31 @@
 #define IR_MODEL_DATA_IRCURVETYPES			"IRCurveTypes"		//  data name of IRCurves 
 #endif
 
-class LADataInstance;
-class LADataInt;
-class LADataDoubles;
-class LADataDoubleMatrix;
-class LADataDate;
-class LADataString;
-class LADataStrings;
-class LADataMultiReference;
-class LAPriceDataDayCount;
-class LADataReference;
+class AQLDataInstance;
+class AQLDataInt;
+class AQLDataDoubles;
+class AQLDataDoubleMatrix;
+class AQLDataDate;
+class AQLDataString;
+class AQLDataStrings;
+class AQLDataMultiReference;
+class AQLPriceDataDayCount;
+class AQLDataReference;
 class LAMathYieldCurvePro;
 class LAMathYieldCurve;
-class LAFunctionBase;
+class AQLFunctionBase;
 class LAMathVolatility;
-class LAInterpolationBase;
+class AQLInterpolationBase;
 
 /*! 
     @brief Class to represent Plain Vanilla Data.
 */
-class LAMathPlainVanillaEntity : public LAObject
+class LAMathPlainVanillaEntity : public AQLObject
 {
 public:
 // LIFECYCLE
     // default constructor
-	LAMathPlainVanillaEntity(LADataInstance* dataInstance);
+	LAMathPlainVanillaEntity(AQLDataInstance* dataInstance);
     // copy constructor
 	LAMathPlainVanillaEntity(const LAMathPlainVanillaEntity& irse);
     // destructor
@@ -78,123 +78,123 @@ public:
     // Check function for this class type
 	virtual bool		isTypeOf(object_t id) const;
     // get basedate
-	const LADataDate&	getAsOfDate(void) const;
+	const AQLDataDate&	getAsOfDate(void) const;
     // get basedate. The setting of basedate is also possible. 
-	LADataDate&			getAsOfDate(void);
+	AQLDataDate&			getAsOfDate(void);
 	// get this path name
-	const LADataString&	getName() const;
+	const AQLDataString&	getName() const;
 	// get this path name. The setting of name is also possible. 
-	LADataString&		getName();
+	AQLDataString&		getName();
 	// get daycount
-	const LAPriceDataDayCount&	
+	const AQLPriceDataDayCount&	
 						getDayCount() const;
 	// get daycount. The setting of daycount is also possible. 
-	LAPriceDataDayCount&	    getDayCount();
+	AQLPriceDataDayCount&	    getDayCount();
 	// get this ir currencys
-	const LADataStrings& getIRCurrencys() const;
+	const AQLDataStrings& getIRCurrencys() const;
 	// get this ir currencys
-	LADataStrings& getIRCurrencys();
+	AQLDataStrings& getIRCurrencys();
 	// get this ir simulation currencys
-	const LADataStrings& getIRSimCurrencys() const;
+	const AQLDataStrings& getIRSimCurrencys() const;
 	// get this ir simulation currencys
-	LADataStrings& getIRSimCurrencys();
+	AQLDataStrings& getIRSimCurrencys();
 	// get this ir currencys
-	const LADataStrings& getFXCurrencys() const;
+	const AQLDataStrings& getFXCurrencys() const;
 	// get this ir currencys
-	LADataStrings& getFXCurrencys();
+	AQLDataStrings& getFXCurrencys();
 
 	// get this ir curves
-	const LADataMultiReference& getIRCurves() const;
+	const AQLDataMultiReference& getIRCurves() const;
 	// get this ir curves
-	LADataMultiReference& getIRCurves();
+	AQLDataMultiReference& getIRCurves();
 
 	// get this ir curvepro names
-	const LADataStrings& getIRCurveProNames() const;
+	const AQLDataStrings& getIRCurveProNames() const;
 	// get this ir curvepro names
-	LADataStrings& getIRCurveProNames();
+	AQLDataStrings& getIRCurveProNames();
 	// get curvepro name
-	const LAString& getIRCurveProName(const LAString &key) const;
+	const AQLString& getIRCurveProName(const AQLString &key) const;
 
 	// get this ir volatilitys
-	const LADataMultiReference& getIRVolatilitys() const;
+	const AQLDataMultiReference& getIRVolatilitys() const;
 	// get this ir volaitilitys
-	LADataMultiReference& getIRVolatilitys();
+	AQLDataMultiReference& getIRVolatilitys();
 
-	const LADataStrings& getIRCurveTypes() const;
+	const AQLDataStrings& getIRCurveTypes() const;
 	// get this ir curves
-	LADataStrings& getIRCurveTypes();
+	AQLDataStrings& getIRCurveTypes();
 	// set up ir curve type
 	void setUpIRCurveTypes();
 
 	// get this fx volatilitys
-	const LADataMultiReference& getFXVolatilitys() const;
+	const AQLDataMultiReference& getFXVolatilitys() const;
 	// get this fx volaitilitys
-	LADataMultiReference& getFXVolatilitys();
+	AQLDataMultiReference& getFXVolatilitys();
 
 	// get this fx object
-	const LADataReference& getFXEntity() const;
+	const AQLDataReference& getFXEntity() const;
 	// get this fx object
-	LADataReference& getFXEntity();
+	AQLDataReference& getFXEntity();
 
 	// get IR Curve
-	const LAMathYieldCurve& getIRCurve(const LAString &key) const;
+	const LAMathYieldCurve& getIRCurve(const AQLString &key) const;
 	// get IR Curve
-	LAMathYieldCurve& getIRCurve(const LAString &key);
+	LAMathYieldCurve& getIRCurve(const AQLString &key);
 	// get IR CurvePro
-	const LAMathYieldCurvePro& getIRCurvePro(const LAString &key) const;
+	const LAMathYieldCurvePro& getIRCurvePro(const AQLString &key) const;
 	// get IR CurvePro
-	LAMathYieldCurvePro& getIRCurvePro(const LAString &key);
+	LAMathYieldCurvePro& getIRCurvePro(const AQLString &key);
 	// get FX Vol
-	LAMathVolatility& getFXVol(const LAString &key);
+	LAMathVolatility& getFXVol(const AQLString &key);
 	// get FX Vol method
-	const LAFunctionBase* getFXVolFunc(const LAString &key);
+	const AQLFunctionBase* getFXVolFunc(const AQLString &key);
 	// get IR Vol
-	LAMathVolatility& getIRVol(const LAString &key);
+	LAMathVolatility& getIRVol(const AQLString &key);
 	// get IR Vol method
-	const LAFunctionBase* getIRVolFunc(const LAString &key);
+	const AQLFunctionBase* getIRVolFunc(const AQLString &key);
 	////////////////////////////////
 	// get correlation matrix between SDEs
-	const LADataDoubleMatrix&	
+	const AQLDataDoubleMatrix&	
 						getCorrelationMatrix() const;
 	// get correlation matrix between SDEs. The setting of correlation matrix is also possible. 
-	LADataDoubleMatrix&	getCorrelationMatrix();
+	AQLDataDoubleMatrix&	getCorrelationMatrix();
 	
 	//	make copy(clone) of this path object object.
-	LAObject*			clone() const;// %%% COVARIANT RETURN %%%
+	AQLObject*			clone() const;// %%% COVARIANT RETURN %%%
 	
 //  OPERATION 
 	// remove specified Data.If there is not Data to remove, do nothing.If member variable is specified to remove, do not remove it.
-	virtual void        remove(const LAString& dataName);
+	virtual void        remove(const AQLString& dataName);
 	// Initialize this Object.
 	virtual void		reset(void);
 
 
 	void  setUpLiborRateMap(void) const;
 	void  clearLiborRateMap(void) const;
-	std::map<LAString, LAInterpolationBase*>& getLiborRateMap(void) {return mLiborRateMap;};
-	std::map<LAString, DoubleVector>& getLiborGridTermMap(void) {return mLiborGridTermMap;};
+	std::map<AQLString, AQLInterpolationBase*>& getLiborRateMap(void) {return mLiborRateMap;};
+	std::map<AQLString, DoubleVector>& getLiborGridTermMap(void) {return mLiborGridTermMap;};
 	
 
 protected:
 	// copy path object	 
-	virtual LAObject&	copy(const LAObject& e);
+	virtual AQLObject&	copy(const AQLObject& e);
 private:
 	// set Data specified by the name.
-	LADataHolder&				add(const LAString& name);
+	AQLDataHolder&				add(const AQLString& name);
 	
-	LADataHolder*				mpName;			// name (DATA_STRING)
-	LADataHolder*               mpAsOfDate;		// base date (DATA_DATE)
-	LADataHolder*				mpDC;			// daycount convention(DATA_DAYCOUNT)
-	LADataHolder*				mpCor;// correlation matrix between SDEs(DATA_DOUBLEMATRIX)
-	LADataHolder*				mpIRCurs; // ir currencys (DATA_STRINGS)
-	LADataHolder*				mpIRSimCurs; // ir simulation currencys (DATA_STRINGS)
-	LADataHolder*				mpFXCurs; // ir currencys (DATA_STRINGS)
-	LADataHolder*				mpIRCurves; // ir curves (DATA_MULTIREFERENCE)
-	LADataHolder*				mpIRCurveProNames; // ir curves (CALIBRATION_DATAAMES)
-	LADataHolder*				mpIRVols; // ir vols (DATA_MULTIREFERENCE)
-	LADataHolder*				mpFXVols; // fx vols (DATA_MULTIREFERENCE)
-	LADataHolder*				mpFX; // fx vols (DATA_REFERENCE)
-	LADataHolder*				mpIRCurveTypes; // ir curvetypes (DATA_STRINGS)
-	mutable std::map<LAString, LAInterpolationBase*> mLiborRateMap;
-	mutable std::map<LAString, DoubleVector> mLiborGridTermMap;
+	AQLDataHolder*				mpName;			// name (DATA_STRING)
+	AQLDataHolder*               mpAsOfDate;		// base date (DATA_DATE)
+	AQLDataHolder*				mpDC;			// daycount convention(DATA_DAYCOUNT)
+	AQLDataHolder*				mpCor;// correlation matrix between SDEs(DATA_DOUBLEMATRIX)
+	AQLDataHolder*				mpIRCurs; // ir currencys (DATA_STRINGS)
+	AQLDataHolder*				mpIRSimCurs; // ir simulation currencys (DATA_STRINGS)
+	AQLDataHolder*				mpFXCurs; // ir currencys (DATA_STRINGS)
+	AQLDataHolder*				mpIRCurves; // ir curves (DATA_MULTIREFERENCE)
+	AQLDataHolder*				mpIRCurveProNames; // ir curves (CALIBRATION_DATAAMES)
+	AQLDataHolder*				mpIRVols; // ir vols (DATA_MULTIREFERENCE)
+	AQLDataHolder*				mpFXVols; // fx vols (DATA_MULTIREFERENCE)
+	AQLDataHolder*				mpFX; // fx vols (DATA_REFERENCE)
+	AQLDataHolder*				mpIRCurveTypes; // ir curvetypes (DATA_STRINGS)
+	mutable std::map<AQLString, AQLInterpolationBase*> mLiborRateMap;
+	mutable std::map<AQLString, DoubleVector> mLiborGridTermMap;
 };

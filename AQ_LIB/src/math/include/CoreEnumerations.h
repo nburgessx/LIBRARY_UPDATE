@@ -16,7 +16,7 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <unordered_set>
 
-#include "LAString.h"
+#include "AQLString.h"
 
 namespace etrading
 {
@@ -27,9 +27,9 @@ namespace etrading
 	// This function takes a std::string and returns a new std::string which is trimmed and upper case
 	std::string trim_to_upper(const std::string & inputStr);
 
-	// Template to convert enums to LAString calling using the underlying toString (std::string) methods
+	// Template to convert enums to AQLString calling using the underlying toString (std::string) methods
     template<class T>
-    LAString toLAString( const T enumValue )
+    AQLString toLAString( const T enumValue )
     {
         return toString(enumValue).c_str();
     }

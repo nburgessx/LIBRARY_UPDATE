@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LACoreFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 
@@ -20,7 +20,7 @@ class LAPolynomialBase;
     @brief Declaration of abstract base class of polynomial fitting class
 
 */
-class LAPolyFitBase : public LACoreFunctionBase
+class LAPolyFitBase : public AQLCoreFunctionBase
 {
 public:
 //  LIFECYCLE
@@ -37,7 +37,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;

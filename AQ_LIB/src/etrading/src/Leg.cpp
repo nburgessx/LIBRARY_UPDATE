@@ -28,7 +28,7 @@ namespace etrading
     {
   		if (legStaticData_ == nullptr || schedule_ == nullptr)
 		{
-			throw LACoreInvalidData( "#Error: LegStaticData or Schedule has not been built", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: LegStaticData or Schedule has not been built", __FILE__, __LINE__ );
 		}
 
         inputParameters_ = LabelValueBlock( legStaticData_->getInputParameters(), schedule_->getInputParameters() );
@@ -77,7 +77,7 @@ namespace etrading
         if ((notSameCurve || notSameFixingTable) && legStaticData_ !=nullptr && updateCurveData)
         {
 
-			const LAString curveCollection  = dataProvider.getValuationSettings().getCurveCollection().c_str();
+			const AQLString curveCollection  = dataProvider.getValuationSettings().getCurveCollection().c_str();
 			
 			legStaticData_->validateCurveInput(curveCollection);
 
@@ -127,15 +127,15 @@ namespace etrading
 
 	double Leg::pv( DataProvider& dataProvider, bool nativeCurrencyPV, bool updateCurveData)
     {
-		throw LACoreInvalidData( ( boost::format( "#Error: pv() method is not implemented for swap leg with name (%s) ." )
+		throw AQLCoreInvalidData( ( boost::format( "#Error: pv() method is not implemented for swap leg with name (%s) ." )
                                    % getLegName() ).str().c_str(), __FILE__, __LINE__ );
 	}
 
-	LAString Leg::getLegName() const
+	AQLString Leg::getLegName() const
 	{
    		if (legStaticData_ == nullptr)
 		{
-			throw LACoreInvalidData( "#Error: LegStaticData has not been built", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: LegStaticData has not been built", __FILE__, __LINE__ );
 		}
 
 		return legStaticData_->getLegName();
@@ -156,7 +156,7 @@ namespace etrading
         double annuity = 0.0;
 		if (schedule_ == nullptr)
 		{
-			throw LACoreInvalidData( "#Error: Schedule has not been built", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: Schedule has not been built", __FILE__, __LINE__ );
 		}
 
 		for( size_t i = 0; i < schedule_->getCashflowSize(); i++ )
@@ -178,7 +178,7 @@ namespace etrading
     {
 		if (schedule_ == nullptr)
 		{
-			throw LACoreInvalidData( "#Error: Schedule has not been built", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: Schedule has not been built", __FILE__, __LINE__ );
 		}
 
         schedule_->flipPayerReceiver();
@@ -222,7 +222,7 @@ namespace etrading
 		AQ_REQUIRE(cashflowSize != 0, "Cashflow size cannot be empty.");
 
 		//Get the first non-upfront cashflow
-		bool isNotionalReset = (schedule_->getCashflow(0)->getFxFixingDate() != LADate());
+		bool isNotionalReset = (schedule_->getCashflow(0)->getFxFixingDate() != AQLDate());
 		bool includeFxFixingDate = includeCashflowColumn(FX_FIXING_DATE_HEADER, columnList, allowColumns, isNotionalReset);
 		bool includeFxRate = includeCashflowColumn(FX_RATE_HEADER, columnList, allowColumns, isNotionalReset);
 
@@ -358,7 +358,7 @@ namespace etrading
 
         if (schedule_ == nullptr)
         {
-            throw LACoreInvalidData( "#Error: Missing leg schedule.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Missing leg schedule.", __FILE__, __LINE__ );
         }
 
 		//only add the schema of Bespoke schedule, and Fee Schedule

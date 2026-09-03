@@ -4,26 +4,26 @@
 #include <iostream>
 #include <string>
 
-class LAString;
+class AQLString;
 
 class LACurveProperties{
 public:
-    static const LAString* ir_prop_path();
-	static const LAString* calib_prop_path();
-    static const LAString* calendar_path();
-    static void set_ir_prop_path(const LAString& s);
-	static void set_calib_prop_path(const LAString& s);
-    static void set_calendar_path(const LAString& s);
+    static const AQLString* ir_prop_path();
+	static const AQLString* calib_prop_path();
+    static const AQLString* calendar_path();
+    static void set_ir_prop_path(const AQLString& s);
+	static void set_calib_prop_path(const AQLString& s);
+    static void set_calendar_path(const AQLString& s);
 
-	static LAString toPath(const LAString& environmentVariable, const LAString& suffix );
+	static AQLString toPath(const AQLString& environmentVariable, const AQLString& suffix );
 
 protected:
-    static std::shared_ptr<LAString> ir_prop_path_;
-	static std::shared_ptr<LAString> calib_prop_path_;
-    static std::shared_ptr<LAString> calendar_path_;
+    static std::shared_ptr<AQLString> ir_prop_path_;
+	static std::shared_ptr<AQLString> calib_prop_path_;
+    static std::shared_ptr<AQLString> calendar_path_;
 
-    static void read_config_file(const LAString& key, std::shared_ptr<LAString>& dest);
-    static bool check_file_availability(const LAString& file_path);
+    static void read_config_file(const AQLString& key, std::shared_ptr<AQLString>& dest);
+    static bool check_file_availability(const AQLString& file_path);
 
 };
 

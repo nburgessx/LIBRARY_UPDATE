@@ -5,22 +5,22 @@
 #pragma interface
 #endif
 
-#include "LAString.h"
-#include "LADate.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLString.h"
+#include "AQLDate.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
 #include <vector>
 
 using namespace std;
 
 struct CashFlowTiming
 {
-    LADate fixing;
-    LADate start;
-    LADate end;
-    LADate payment;
-    LADate indexSettlement;
+    AQLDate fixing;
+    AQLDate start;
+    AQLDate end;
+    AQLDate payment;
+    AQLDate indexSettlement;
     double accrual;
 };
 
@@ -28,29 +28,29 @@ class LAMathScheduleUtility
 {
 public:
 //================ Single Flow ===================================
-static CashFlowTiming CashFlowSchedule(LADate valDate, LAString mtyTerm, LAStringMatrix legScheduler, LAStringMatrix indexScheduler);
+static CashFlowTiming CashFlowSchedule(AQLDate valDate, AQLString mtyTerm, AQLStringMatrix legScheduler, AQLStringMatrix indexScheduler);
 
 //================ Multiple Flows ===================================
-static vector<CashFlowTiming> LegSchedule(LADate valDate, LAString mtyTerm, LAStringMatrix legScheduler, LAStringMatrix indexScheduler);
+static vector<CashFlowTiming> LegSchedule(AQLDate valDate, AQLString mtyTerm, AQLStringMatrix legScheduler, AQLStringMatrix indexScheduler);
 
-static DateVector BaseDates(LAString frequency, LAString calendar, LAString slidingRule,
-                     LADate startDate, LADate endDate, int* day);
+static DateVector BaseDates(AQLString frequency, AQLString calendar, AQLString slidingRule,
+                     AQLDate startDate, AQLDate endDate, int* day);
 
 static DateVector StartDates(DateVector baseDates);
 
 static DateVector EndDates(DateVector baseDates);
 
-static DateVector PayDates(DateVector endDates, LAString term, LAPriceDataSlidingRule slidingRule, LAPriceDataCalendar calendar);
+static DateVector PayDates(DateVector endDates, AQLString term, AQLPriceDataSlidingRule slidingRule, AQLPriceDataCalendar calendar);
 
-static DateVector FixingDates(DateVector startDates, DateVector payDates, bool isAdvance, LAString fixingLag, LAString calendar);
+static DateVector FixingDates(DateVector startDates, DateVector payDates, bool isAdvance, AQLString fixingLag, AQLString calendar);
 
-static DateVector IndexSettlementDates(DateVector fixingDates, LAString settlLag, LAString calendar);
+static DateVector IndexSettlementDates(DateVector fixingDates, AQLString settlLag, AQLString calendar);
 
-static DoubleVector Accruals(LAPriceDataDayCount daycount, DateVector startDates, DateVector endDates);
+static DoubleVector Accruals(AQLPriceDataDayCount daycount, DateVector startDates, DateVector endDates);
 
-static LAPriceDataSlidingRule ModelSlidingRule();
+static AQLPriceDataSlidingRule ModelSlidingRule();
 
-static LAPriceDataCalendar ModelCalendar();
+static AQLPriceDataCalendar ModelCalendar();
 };
 
 #endif

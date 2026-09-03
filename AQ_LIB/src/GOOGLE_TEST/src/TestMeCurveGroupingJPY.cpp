@@ -85,7 +85,7 @@ namespace google_test
     TEST_F( TestMeCurveGroupingJPY, SNAPSHOT_CheckMeCurveDisplay )
     {
 		// JPYYC OIS, JPYYCLCH_OIS and JPYYCTIBOR_OIS
-		LAString inputDir = JPYYC_OIS;
+		AQLString inputDir = JPYYC_OIS;
 		setUpMeOISCurve(inputDir);
 
 		inputDir = JPYYCLCH_OIS;
@@ -106,9 +106,9 @@ namespace google_test
 					inputFile0["curveIndex"] );
 
 		#ifdef GTEST32
-		LAString outputDir = JPYYC_6M_STD_displayOutputs_32bit;
+		AQLString outputDir = JPYYC_6M_STD_displayOutputs_32bit;
 		#else
-		LAString outputDir = JPYYC_6M_STD_displayOutputs_64bit;
+		AQLString outputDir = JPYYC_6M_STD_displayOutputs_64bit;
 		#endif
 			
 		CheckTestResultsAndRebaseOnRequest( results, TEST_DIR, outputDir, tolerance );

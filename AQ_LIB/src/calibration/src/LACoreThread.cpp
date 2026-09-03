@@ -6,7 +6,7 @@
 #endif
 
 #include "LACoreThread.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 
 #ifndef WINDOWS
 #include <unistd.h>
@@ -71,14 +71,14 @@ LACoreThread::start()
 	mThread = reinterpret_cast<HANDLE>(_beginthread(LACoreThread::start_routine, 0, reinterpret_cast<LPVOID>(this)));
 	if (!mThread)
 	{
-		throw LACoreInvalidData("Thread create failed.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Thread create failed.", __FILE__, __LINE__);
 	}
 #else
 	//mThread = new pthread_t();
 	int ret = pthread_create(&mThread, 0, LACoreThread::start_routine, this);
 	if (ret != 0)
 	{
-		throw LACoreInvalidData("Thread create failed.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Thread create failed.", __FILE__, __LINE__);
 	}
 #endif
 }

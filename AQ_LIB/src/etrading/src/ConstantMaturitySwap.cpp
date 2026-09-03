@@ -46,7 +46,7 @@ namespace etrading
 	* @param[in]	legName					Optionally calculate the PV of the specified leg only.
 	* @returns	The calculated PV value
 	*/
-	double ConstantMaturitySwap::pvUsingConvexityAdjustment( const LabelValueBlock& valuationSettingsLVB, const double convexityAdjustment, const LabelValueBlock& fixingTableNames, const LAString& legName) const
+	double ConstantMaturitySwap::pvUsingConvexityAdjustment( const LabelValueBlock& valuationSettingsLVB, const double convexityAdjustment, const LabelValueBlock& fixingTableNames, const AQLString& legName) const
 	{
 		double pv = 0.0;
 
@@ -123,10 +123,10 @@ namespace etrading
 	*/
 	double ConstantMaturitySwap::parRateUsingConvexityAdjustment( const LabelValueBlock& valuationSettingsLVB, double convexityAdjustment, const LabelValueBlock& fixingTableNames )
 	{
-		LAString fixedLeg;
-		LAString cmsLeg;
-		LAString validatedFixedLegName = validateLegName( fixedLeg, FIXED_SCHEDULE_TYPE, legs_ );
-		LAString validatedCMSLegName   = validateLegName( cmsLeg, CMS_SCHEDULE_TYPE, legs_ );
+		AQLString fixedLeg;
+		AQLString cmsLeg;
+		AQLString validatedFixedLegName = validateLegName( fixedLeg, FIXED_SCHEDULE_TYPE, legs_ );
+		AQLString validatedCMSLegName   = validateLegName( cmsLeg, CMS_SCHEDULE_TYPE, legs_ );
 
 		const double cmsLegPV = pvUsingConvexityAdjustment( valuationSettingsLVB, convexityAdjustment, fixingTableNames, validatedCMSLegName);
 

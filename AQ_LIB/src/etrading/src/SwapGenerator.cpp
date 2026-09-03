@@ -18,7 +18,7 @@ namespace etrading
         return legGenerators_.at(i);
     }
 
-	LAStringMatrix SwapGenerator::viewInputParameters() const
+	AQLStringMatrix SwapGenerator::viewInputParameters() const
 	{
 		// Find the user-input key set from all legs
 		std::set<std::string> legKeys;
@@ -42,8 +42,8 @@ namespace etrading
 		}
 
 		// Show common key and each leg value 
-		LAStringMatrix result;
-		LAStringVector row;
+		AQLStringMatrix result;
+		AQLStringVector row;
 		for (size_t i = 0; i < orderedKeys.size(); ++i)
 		{
 			key = orderedKeys[i]; 

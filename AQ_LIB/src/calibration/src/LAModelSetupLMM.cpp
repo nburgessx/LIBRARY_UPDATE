@@ -19,11 +19,11 @@
 
 
 #include "LAModelSetupLMM.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataBasics.h"
-#include "LASobol.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataBasics.h"
+#include "AQLSobol.h"
 #include "LADefinitions.h"
 #include "LADefinitionsLMM.h"
 #include "LACoreDataService.h"
@@ -53,11 +53,11 @@ LAModelSetupLMM::~LAModelSetupLMM(void)
 /*!
     @brief regist extra data data to attributemaster object
 
-	@param[in,out] dm LAPriceDataManager &	
+	@param[in,out] dm AQLPriceDataManager &	
 	@return void 
 */
 void
-LAModelSetupLMM::registAttrMasterEx(LAPriceDataManager &dm)
+LAModelSetupLMM::registAttrMasterEx(AQLPriceDataManager &dm)
 {
 	dm;
 }
@@ -67,11 +67,11 @@ LAModelSetupLMM::registAttrMasterEx(LAPriceDataManager &dm)
 /*!
     @brief regist extra object data to entitymaster object
 
-	@param[in,out] dataInstance LADataInstance &	
+	@param[in,out] dataInstance AQLDataInstance &	
 	@return void 
 */
 void
-LAModelSetupLMM::registEntityMasterEx(LADataInstance &dataInstance)
+LAModelSetupLMM::registEntityMasterEx(AQLDataInstance &dataInstance)
 {
 	dataInstance;
 }
@@ -80,40 +80,40 @@ LAModelSetupLMM::registEntityMasterEx(LADataInstance &dataInstance)
 /*!
     @brief regist extra function data to functionmaster object
 
-	@param[in,out] dataInstance LADataInstance &
+	@param[in,out] dataInstance AQLDataInstance &
 	@return void 
 */
 void
-LAModelSetupLMM::registFunctionMasterEx(LADataInstance &dataInstance)
+LAModelSetupLMM::registFunctionMasterEx(AQLDataInstance &dataInstance)
 {
-	LAFunctionManager &fm = dataInstance.getFunctionMaster();
+	AQLFunctionManager &fm = dataInstance.getFunctionMaster();
 	// get property
 	const LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	const unsigned long seedVal = static_cast<unsigned long>(staticData.getStaticData(KEY_SIMULATION_SEED).getDoubleValue());
 	UlongArray seed(1, seedVal);
 	// Sobol
 	// direction integers
-	LAString sobolDI = staticData.getStaticData(KEY_SIMULATION_RAND_SOBOL_DIRECTIONINTEGERS);
+	AQLString sobolDI = staticData.getStaticData(KEY_SIMULATION_RAND_SOBOL_DIRECTIONINTEGERS);
 	// factor num
-	LAString factorNumKey = STATIC_DATA_KEY_LMM_CORRELATION_CROSS_FACTOR_NUM;
+	AQLString factorNumKey = STATIC_DATA_KEY_LMM_CORRELATION_CROSS_FACTOR_NUM;
 	if (MADealUtils::getSDECurrencys().size() == 1)
 	{
 		factorNumKey = STATIC_DATA_KEY_LMM_CORRELATION_SIGLE_FACTOR_NUM;
 	}
 
-	LAString baseCCY;
+	AQLString baseCCY;
 	if ( MADealUtils::getSimulationSDECurrencys().size() == 0 ) 
 		baseCCY = MADealUtils::getSDECurrencys()[0].toLower();
 	else
 		baseCCY = MADealUtils::getSimulationSDECurrencys()[0].toLower(); 
 
-	LAString factorNumStr = staticData.getStaticData(baseCCY + factorNumKey);
+	AQLString factorNumStr = staticData.getStaticData(baseCCY + factorNumKey);
 	const unsigned int factorNum = factorNumStr.getIntValue();
 	// is halley modification
-	LADataBool tmp;
+	AQLDataBool tmp;
 	tmp.convertFromString(staticData.getStaticData(KEY_SIMULATION_RAND_GAUSSIAN_ISHALLEYMODE));
 
-	LASobol *pSobol = new LASobol(sobolDI, factorNum, tmp.get());
+	AQLSobol *pSobol = new AQLSobol(sobolDI, factorNum, tmp.get());
 	fm.setFunction(pSobol, FN_RAND_SOBOL_STR);
 	pSobol->setSeed(seed);
 }

@@ -8,48 +8,48 @@
 #include "LAPriceCMSSpreadTools.h"
 #include "LAMathDateUtilities.h"
 #include "LAMathDateCalculations.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathParameterUtility.h"
 #include "LAMathCashFlowSchedules.h"
-#include "LAMathDefine.h"
+#include "AQLMathDefine.h"
 #include "LAPriceCashFlowGenerator.h"
-#include "LADataBasics.h"
+#include "AQLDataBasics.h"
 #include "LAPriceCopulaCMSSpread.h"
 #include "LAMathAnalyticalFormula.h"
 #include "LAPriceReplication.h"
 #include "LAPriceSwaptionCalculator.h"
-#include "LAOptimumBrent.h"
+#include "AQLOptimumBrent.h"
 #include "LAMathInterpolationUtilities.h"
-#include "LACoreUtil.h"
+#include "AQLCoreUtil.h"
 #include "LAPriceCMSSpreadStrip.h"
-#include "LANl2sol.h"
+#include "AQLNl2sol.h"
 #include <algorithm>
 
 //================ Calibration ===================================
-LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LAStringMatrix calibrationConfig, LAStringMatrix legScheduler, LAStringMatrix cmsScheduler,
-                                           LAStringMatrix inputTypes, const LAStringVector& optionTypes, const DoubleVector& smileWeights)
+AQLString LAPriceCMSSpreadCalibration::Calibrate(AQLDataInstance* dataInstance, AQLStringMatrix calibrationConfig, AQLStringMatrix legScheduler, AQLStringMatrix cmsScheduler,
+                                           AQLStringMatrix inputTypes, const AQLStringVector& optionTypes, const DoubleVector& smileWeights)
 {
     // Calibration config
-    LADate valDate = LAStringToDate(LAFunctionUtilities::findElement(calibrationConfig, "AsOfDate"));
-    LAString ccy = LAFunctionUtilities::findElement(calibrationConfig, "Currency");
-    LAString colCcy = ccy;
-    LAString convID = LAFunctionUtilities::findElement(calibrationConfig, "ConventionID");
-    LAObject conventions = dataInstance->getObjectPool().getObject(convID, ENCHKTYPE_ISDEFINED ).get();
-    LAPriceDataCalendar pCalendar = dynamic_cast<const LAPriceDataCalendar& >(conventions.getData(PRICING_DATA_FIXINGCALENDAR, ISDEFINED).get());
-    LAPriceDataSlidingRule pSlidingRule = dynamic_cast<const LAPriceDataSlidingRule& >(conventions.getData(CALIBRATION_DATA_SLIDINGRULE, ISDEFINED).get());
-    LADate pAsOfDate = dynamic_cast<const LADataDate& >(conventions.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get()).get();
-    LAString smileType = LAFunctionUtilities::findElement(calibrationConfig, "SmileType");
+    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(calibrationConfig, "AsOfDate"));
+    AQLString ccy = AQLFunctionUtilities::findElement(calibrationConfig, "Currency");
+    AQLString colCcy = ccy;
+    AQLString convID = AQLFunctionUtilities::findElement(calibrationConfig, "ConventionID");
+    AQLObject conventions = dataInstance->getObjectPool().getObject(convID, ENCHKTYPE_ISDEFINED ).get();
+    AQLPriceDataCalendar pCalendar = dynamic_cast<const AQLPriceDataCalendar& >(conventions.getData(PRICING_DATA_FIXINGCALENDAR, ISDEFINED).get());
+    AQLPriceDataSlidingRule pSlidingRule = dynamic_cast<const AQLPriceDataSlidingRule& >(conventions.getData(CALIBRATION_DATA_SLIDINGRULE, ISDEFINED).get());
+    AQLDate pAsOfDate = dynamic_cast<const AQLDataDate& >(conventions.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get()).get();
+    AQLString smileType = AQLFunctionUtilities::findElement(calibrationConfig, "SmileType");
 
     // Read pairs to calibrate
     size_t nPairs = inputTypes.size();
-    LAStringVector pairIDs(nPairs), modes(nPairs);
+    AQLStringVector pairIDs(nPairs), modes(nPairs);
     for (int i = 0; i < nPairs; i++)
     {
         pairIDs[i] = inputTypes[i][0];
         modes[i] = inputTypes[i][1];
     }
     // Check initial parameter consistency
-    LAStringVector initExpiryTerms, initIndexes;
+    AQLStringVector initExpiryTerms, initIndexes;
     LAPriceCMSSpreadUtility::CheckInitialParameters(dataInstance, ccy, initExpiryTerms, initIndexes);
     // Check index consistency
     bool calibrate = LAPriceCMSSpreadUtility::CheckModes(modes);
@@ -57,27 +57,27 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
 
     //// Create time grid ////
     // Get time grid of SLs
-    LAStringVector slTerms;
+    AQLStringVector slTerms;
     LAPriceCMSSpreadUtility::ReadSLGrid(dataInstance, ccy, slTerms);
 
     // Merge input parameter grid and SL grid if needed
-    LAStringVector gridTerms = initExpiryTerms;
+    AQLStringVector gridTerms = initExpiryTerms;
     if (calibrate)
     {
-        gridTerms = MergeVectors<LAString>(initExpiryTerms, slTerms);
-        gridTerms = EliminateDuplicates<LAString>(gridTerms);
+        gridTerms = MergeVectors<AQLString>(initExpiryTerms, slTerms);
+        gridTerms = EliminateDuplicates<AQLString>(gridTerms);
     }
 
     // Transform into dates and sort
     size_t nGrid = gridTerms.size();
-    vector<pair<LADate, LAString> > grid(nGrid);
+    vector<pair<AQLDate, AQLString> > grid(nGrid);
     for (size_t i = 0; i < nGrid; i++)
     {
-        LAString term = gridTerms[i];
-        LADate date = CalendarAdvance(valDate, term, pSlidingRule, pCalendar);
+        AQLString term = gridTerms[i];
+        AQLDate date = CalendarAdvance(valDate, term, pSlidingRule, pCalendar);
         grid[i] = make_pair(date, term);
     }
-    sort(grid.begin(), grid.end(), leq<LAString>);
+    sort(grid.begin(), grid.end(), leq<AQLString>);
     // Retrieve sorted grids
     DateVector gridDates(nGrid);
     DoubleVector gridTimes(nGrid);
@@ -91,30 +91,30 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
 
     // Curves and schedules
     CurveInfo discCurveInfo = LAPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
-    LAString cmsFloatFreq = LAFunctionUtilities::findElement(cmsScheduler, "FloatLegFrequency");
+    AQLString cmsFloatFreq = AQLFunctionUtilities::findElement(cmsScheduler, "FloatLegFrequency");
     CurveInfo cmsCurveInfo = LAPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, FrequencyToTerm(cmsFloatFreq));
 
     // Model info
     ReplicationConfig repConfig = GetReplicationConfig(calibrationConfig);
-    double shift = LAFunctionUtilities::findElement(calibrationConfig, "Shift").getDoubleValue();
+    double shift = AQLFunctionUtilities::findElement(calibrationConfig, "Shift").getDoubleValue();
 
     // Option types (for smile calibration)
     size_t nStrikes = optionTypes.size();
     if (smileWeights.size() != nStrikes)
-        throw LACoreInvalidData("Invalid smile weight size", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Invalid smile weight size", __FILE__, __LINE__);
 
     vector<bool> isCalls(nStrikes);
     for (size_t i = 0; i < nStrikes; i++)
-        isCalls[i] = LAFunctionUtilities::StringToBool(optionTypes[i]);
+        isCalls[i] = AQLFunctionUtilities::StringToBool(optionTypes[i]);
 
     //// Calibration ////
     DoubleMatrix theta1(nPairs, DoubleVector(nGrid)), theta2(nPairs, DoubleVector(nGrid)), rho(nPairs, DoubleVector(nGrid));
     DoubleMatrix targets(nPairs, DoubleVector(nGrid, 0.0));
     for (size_t pairIdx = 0; pairIdx < nPairs; pairIdx++)
     {
-        LAString pairID = pairIDs[pairIdx];
-        LAString mode = modes[pairIdx];
-        LAString tenor1, tenor2;
+        AQLString pairID = pairIDs[pairIdx];
+        AQLString mode = modes[pairIdx];
+        AQLString tenor1, tenor2;
         LAPriceCMSObject::ParseTenors(pairID, tenor1, tenor2);
 
         theta1[pairIdx] = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, gridDates, pairID, AQ_THETA1_IN, ccy);
@@ -131,11 +131,11 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
             size_t nSLTimes = slTerms.size();
             DoubleVector slTimes(nSLTimes);
             DateVector slDates(nSLTimes);
-            LAString spotLag = LAFunctionUtilities::findElement(legScheduler, "SpotLag");
-            LADate startDate = CalendarAdvance(valDate, spotLag, pSlidingRule, pCalendar);
-            LAPriceDataSlidingRule noChangeSlidingRule;
+            AQLString spotLag = AQLFunctionUtilities::findElement(legScheduler, "SpotLag");
+            AQLDate startDate = CalendarAdvance(valDate, spotLag, pSlidingRule, pCalendar);
+            AQLPriceDataSlidingRule noChangeSlidingRule;
             noChangeSlidingRule.convertFromString("no_change");
-            LAPriceDataCalendar noChangeCalendar;
+            AQLPriceDataCalendar noChangeCalendar;
             noChangeCalendar.convertFromString("");
             for (size_t timeIdx = 0; timeIdx < nSLTimes; timeIdx++)
             {
@@ -177,7 +177,7 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
                     double init = rhoInit[timeIdx];
                     double lwBound = -0.9999;
                     double upBound = 0.9999;
-                    LAOptimumBrent minimizer(init, lwBound, upBound, maxIter, tol);
+                    AQLOptimumBrent minimizer(init, lwBound, upBound, maxIter, tol);
                     DoubleVector solution(1, init);
                     minimizer.findMinimum(target, solution);
 
@@ -199,24 +199,24 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
                 DoubleVector smileStrikes;
                 if (smileType == "ML") // Strip SL from ML
                 {
-                    LAString quoteMatrixID = LAPriceCMSObject::MatrixID(LAString(AQ_ML_SMILE + pairID + "_"), ccy);
-                    LAStringMatrix quoteMatrix = LAMathParameterObject::ParameterMatrix(dataInstance, quoteMatrixID);
+                    AQLString quoteMatrixID = LAPriceCMSObject::MatrixID(AQLString(AQ_ML_SMILE + pairID + "_"), ccy);
+                    AQLStringMatrix quoteMatrix = LAMathParameterObject::ParameterMatrix(dataInstance, quoteMatrixID);
                     LAPriceCMSSpreadStrip::Strip(dataInstance, convID, ccy,  valDate, pairID, legScheduler, cmsScheduler, quoteMatrix, isCalls,
                                             discCurveInfo, cmsCurveInfo, repConfig, shift, slTerms, slDates, smileStrikes, smilePrices);
                 }
                 else if (smileType == "SL") // Just read SL
                 {
-                    LAString quoteMatrixID = LAPriceCMSObject::MatrixID(LAString(AQ_SL_SMILE + pairID + "_"), ccy);
-                    LAStringMatrix quoteMatrix = LAMathParameterObject::ParameterMatrix(dataInstance, quoteMatrixID);
+                    AQLString quoteMatrixID = LAPriceCMSObject::MatrixID(AQLString(AQ_SL_SMILE + pairID + "_"), ccy);
+                    AQLStringMatrix quoteMatrix = LAMathParameterObject::ParameterMatrix(dataInstance, quoteMatrixID);
                     ParseSLSmile(quoteMatrix, slTerms, isCalls, smileStrikes, smilePrices);
                 }
                 else
-                    throw LACoreInvalidData("Invalid smile type", __FILE__, __LINE__);
+                    throw AQLCoreInvalidData("Invalid smile type", __FILE__, __LINE__);
 
                 // Group sl and ml prices
                 DoubleVector allQuotes(1 + nStrikes), allStrikes(1 + nStrikes), allWeights(1 + nStrikes);
                 vector<bool> allIsCall(1 + nStrikes);
-                LAStringVector indexes(11 + nStrikes);
+                AQLStringVector indexes(11 + nStrikes);
                 indexes[0] = "T"; indexes[1] = "S1"; indexes[2] = "Vol1"; indexes[3] = "S2"; indexes[4] = "Vol2";
                 indexes[5] = "Theta1"; indexes[6] = "Theta2"; indexes[7] = "Rho"; indexes[8] = "Target";
                 indexes[9] = "DF"; indexes[10] = "ATM_Price";
@@ -227,11 +227,11 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
                     allStrikes[k + 1] = smileStrikes[k];
                     allWeights[k + 1] = smileWeights[k];
                     allIsCall[k + 1] = isCalls[k];
-                    indexes[11 + k] = LAString(n2s(smileStrikes[k]).c_str());
+                    indexes[11 + k] = AQLString(n2s(smileStrikes[k]).c_str());
                 }
-                LAStringMatrix outMatrix;
+                AQLStringMatrix outMatrix;
                 DoubleMatrix dataMatrix(nSLTimes, DoubleVector(11 + nStrikes));
-                LAString qID = "_AllSLQuotes_" + pairID + "_";
+                AQLString qID = "_AllSLQuotes_" + pairID + "_";
                 LAMathParameterObject::SetMatrixAxis(qID, slTerms, indexes, outMatrix);
 
                 // Calibrate on the SL times
@@ -281,15 +281,15 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
             }
         }
         else
-            throw LACoreInvalidData("Invalid calibration mode", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("Invalid calibration mode", __FILE__, __LINE__);
     }
 
     // Load results in memory
     /// \todo Put this in a helper function
-    LAStringMatrix theta1Out(nGrid + 1, LAStringVector(nPairs + 1));
-    LAStringMatrix theta2Out(nGrid + 1, LAStringVector(nPairs + 1));
-    LAStringMatrix rhoOut(nGrid + 1, LAStringVector(nPairs + 1));
-    LAStringMatrix targetsOut(nGrid + 1, LAStringVector(nPairs + 1));
+    AQLStringMatrix theta1Out(nGrid + 1, AQLStringVector(nPairs + 1));
+    AQLStringMatrix theta2Out(nGrid + 1, AQLStringVector(nPairs + 1));
+    AQLStringMatrix rhoOut(nGrid + 1, AQLStringVector(nPairs + 1));
+    AQLStringMatrix targetsOut(nGrid + 1, AQLStringVector(nPairs + 1));
     for (size_t timeIdx = 0; timeIdx < nGrid + 1; timeIdx++)
     {
         if (timeIdx == 0)
@@ -300,7 +300,7 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
             targetsOut[0][0] = AQ_CMSSPRD_TGT_OUT;
             for (size_t pairIdx = 0; pairIdx < nPairs; pairIdx++)
             {
-                LAString pairID = pairIDs[pairIdx];
+                AQLString pairID = pairIDs[pairIdx];
                 theta1Out[0][pairIdx + 1] = pairID;
                 theta2Out[0][pairIdx + 1] = pairID;
                 rhoOut[0][pairIdx + 1] = pairID;
@@ -309,17 +309,17 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
         }
         else
         {
-            LAString term = gridTerms[timeIdx - 1];
+            AQLString term = gridTerms[timeIdx - 1];
             theta1Out[timeIdx][0] = term;
             theta2Out[timeIdx][0] = term;
             rhoOut[timeIdx][0] = term;
             targetsOut[timeIdx][0] = term;
             for (size_t pairIdx = 0; pairIdx < nPairs; pairIdx++)
             {
-                theta1Out[timeIdx][pairIdx + 1] = LAString(n2s(theta1[pairIdx][timeIdx - 1]).c_str());
-                theta2Out[timeIdx][pairIdx + 1] = LAString(n2s(theta2[pairIdx][timeIdx - 1]).c_str());
-                rhoOut[timeIdx][pairIdx + 1] = LAString(n2s(rho[pairIdx][timeIdx - 1]).c_str());
-                targetsOut[timeIdx][pairIdx + 1] = LAString(n2s(targets[pairIdx][timeIdx - 1]).c_str());
+                theta1Out[timeIdx][pairIdx + 1] = AQLString(n2s(theta1[pairIdx][timeIdx - 1]).c_str());
+                theta2Out[timeIdx][pairIdx + 1] = AQLString(n2s(theta2[pairIdx][timeIdx - 1]).c_str());
+                rhoOut[timeIdx][pairIdx + 1] = AQLString(n2s(rho[pairIdx][timeIdx - 1]).c_str());
+                targetsOut[timeIdx][pairIdx + 1] = AQLString(n2s(targets[pairIdx][timeIdx - 1]).c_str());
             }
         }
     }
@@ -332,13 +332,13 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
     return "Success";
 }
 
-void LAPriceCMSSpreadCalibration::ParseSLSmile(const LAStringMatrix& quoteMatrix, const LAStringVector& refTerms,
+void LAPriceCMSSpreadCalibration::ParseSLSmile(const AQLStringMatrix& quoteMatrix, const AQLStringVector& refTerms,
                                           const vector<bool>& isCalls,
                                           DoubleVector& smileStrikes, DoubleMatrix& smilePrices)
 {
     // Expiries
     size_t nExpiries = quoteMatrix.size() - 1;
-    LAStringVector expiryTerms(nExpiries);
+    AQLStringVector expiryTerms(nExpiries);
     for (size_t i = 0; i < nExpiries; i++)
         expiryTerms[i] = quoteMatrix[i + 1][0];
 
@@ -351,7 +351,7 @@ void LAPriceCMSSpreadCalibration::ParseSLSmile(const LAStringMatrix& quoteMatrix
         strikes[j] = quoteMatrix[0][j + 1].getDoubleValue() / 100.0;
 
     if (isCalls.size() != nStrikes)
-        throw LACoreInvalidData("Inconsistent strike sizes in spread strip", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Inconsistent strike sizes in spread strip", __FILE__, __LINE__);
 
     // Return result
     smileStrikes = strikes;
@@ -362,7 +362,7 @@ void LAPriceCMSSpreadCalibration::ParseSLSmile(const LAStringMatrix& quoteMatrix
 }
 
 //================ Calibration Targets ===================================
-LAPriceCMSSpreadATMTarget::LAPriceCMSSpreadATMTarget(LADate valDate, CashFlowTiming cf, CurveInfo discCurveInfo,
+LAPriceCMSSpreadATMTarget::LAPriceCMSSpreadATMTarget(AQLDate valDate, CashFlowTiming cf, CurveInfo discCurveInfo,
                                            const SwapRateInfo& swapRate1, const SwapRateInfo& swapRate2,
                                            double quote, bool isCall, double theta1, double theta2)
 {
@@ -400,7 +400,7 @@ double LAPriceCMSSpreadATMTarget::operator()(double x) const
     return fabs(pv - mQuote);
 }
 
-LAPriceCMSSpreadSmileTarget::LAPriceCMSSpreadSmileTarget(LADate valDate, CashFlowTiming cf, CurveInfo discCurveInfo,
+LAPriceCMSSpreadSmileTarget::LAPriceCMSSpreadSmileTarget(AQLDate valDate, CashFlowTiming cf, CurveInfo discCurveInfo,
                                                const SwapRateInfo& swapRate1, const SwapRateInfo& swapRate2,
                                                const DoubleVector& quotes, const DoubleVector& strikes, const vector<bool>& isCall,
                                                const DoubleVector& weights)
@@ -413,7 +413,7 @@ LAPriceCMSSpreadSmileTarget::LAPriceCMSSpreadSmileTarget(LADate valDate, CashFlo
     mSwapRate2 = swapRate2;
     mNStrikes = strikes.size();
     if (mWeights.size() != mNStrikes || mIsCall.size() != mNStrikes || mQuotes.size() != mNStrikes)
-        throw LACoreInvalidData("Invalid input size in CMS Spread Smile target", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Invalid input size in CMS Spread Smile target", __FILE__, __LINE__);
 
     mWeightTotal = 0.0;
     for (size_t i = 0; i < mNStrikes; i++)
@@ -427,7 +427,7 @@ LAPriceCMSSpreadSmileTarget::LAPriceCMSSpreadSmileTarget(LADate valDate, CashFlo
     mUpBound = DoubleVector { 1.5, 1.5, +0.9999 };
 
     if (mLwBound.size() != mArgSize || mUpBound.size() != mArgSize)
-        throw LACoreInvalidData("Invalid constraint size in CMS Spread Smile target", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Invalid constraint size in CMS Spread Smile target", __FILE__, __LINE__);
 
     //// Cache ////
     mExpiry = ModelTime(valDate, cf.fixing);
@@ -449,7 +449,7 @@ void LAPriceCMSSpreadSmileTarget::operator()(DoubleVector& f, const DoubleVector
 {
     f.resize(mArgSize);
     if (x.size() != mArgSize)
-        throw LACoreInvalidData("Invalid argument size in CMS Spread Smile objective function", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Invalid argument size in CMS Spread Smile objective function", __FILE__, __LINE__);
 
     // Calculate objective
     double pv, objective = 0.0;

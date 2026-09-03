@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "Swap.h"
 
@@ -40,7 +40,7 @@ namespace validation
 	*  @param [in]		validateKeys	True to validate the all keys provided are valid. Default to True
 	*  @return			swapName
 	*/
-	std::string tryMeLWOSwapCreate(const std::string& swapName, const LAStringMatrix& swapLVB, const LabelValueBlock& swapPropertiesLVB, bool isXccySwap, bool validateKeys=true);
+	std::string tryMeLWOSwapCreate(const std::string& swapName, const AQLStringMatrix& swapLVB, const LabelValueBlock& swapPropertiesLVB, bool isXccySwap, bool validateKeys=true);
 
 	/* @brief			validation interface for the meLWOSwapCreateFromLegs method
 	*  @param [in]		swapName		Swap name
@@ -83,7 +83,7 @@ namespace validation
 	*  @param [in]		validateKeys	True to validate the all keys provided are valid. Default to True
 	*  @return			swapGeneratorName
 	*/
-	std::string tryMeLWOSwapGeneratorCreate(const std::string& swapGeneratorName, const LAStringMatrix& swapGeneratorLVB, bool validateKeys=true);
+	std::string tryMeLWOSwapGeneratorCreate(const std::string& swapGeneratorName, const AQLStringMatrix& swapGeneratorLVB, bool validateKeys=true);
 
     /* @brief			validation interface for the meLWOSwapCreateFromGenerator method
 	*  @param [in]		swapName		        Swap name
@@ -106,7 +106,7 @@ namespace validation
 	*  @param [in]		swapGeneratorName		Swap generator name
 	*  @return			Swap generator display of the input parameters
 	*/
-	LAStringMatrix tryMeLWOSwapGeneratorDisplay(const std::string& swapGeneratorName);
+	AQLStringMatrix tryMeLWOSwapGeneratorDisplay(const std::string& swapGeneratorName);
 
 
 }

@@ -4,11 +4,11 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LAModelDynamicsCurve.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include <map>
 
 
@@ -25,14 +25,14 @@ class LARatesSDEBase;
     @brief Declaration of abstract base class of numeraire class
 
 */
-class LARatesNumeraireBase : public LACoreFunctionBase
+class LARatesNumeraireBase : public AQLCoreFunctionBase
 {
 public:
 //  LIFECYCLE
 	// Default constructor
 	explicit LARatesNumeraireBase(bool isStochasticIR = true);
 	// constructor
-	LARatesNumeraireBase(const LAString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis, bool isStochasticIR = true);
+	LARatesNumeraireBase(const AQLString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis, bool isStochasticIR = true);
 	//	Copy constructor
 	LARatesNumeraireBase(const LARatesNumeraireBase& v);
 	// Destructor
@@ -44,7 +44,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -67,13 +67,13 @@ public:
 	virtual void				setCurve(double t, const LARatesPathElementCurve* pcurve);
 								//======================================
 								// set basis spread
-	virtual void				setBasisSpread(const LAString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis);
+	virtual void				setBasisSpread(const AQLString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis);
 								//======================================
 								// set basis name
-	virtual void				setBasisName(const LAString& basisName);
+	virtual void				setBasisName(const AQLString& basisName);
 								//======================================
 								// get basis name
-	virtual LAString			getBasisName();
+	virtual AQLString			getBasisName();
 								//======================================
 								// reset 
 	virtual void				reset();
@@ -122,7 +122,7 @@ protected:
 		// get discount bond price
 		virtual double				getP (double T) const
 									{return mpCurve->getP(T)
-										* LAMath::exp((*mpBasisCurve)(m_t) * m_t - (*mpBasisCurve)(T) * T);} 	
+										* AQLMath::exp((*mpBasisCurve)(m_t) * m_t - (*mpBasisCurve)(T) * T);} 	
 
 		// set base curve(without basis)
 		/*!
@@ -134,12 +134,12 @@ protected:
 		/*!
 			@param[in] pBasisCurve basis curve
 		*/
-		void						setBasisCurve(const LAFunctionBase* pBasisCurve)
+		void						setBasisCurve(const AQLFunctionBase* pBasisCurve)
 									{mpBasisCurve = pBasisCurve;}
 		
 	protected:
 		const LARatesPathElementCurve* mpCurve;// base curve(without basis)
-        const LAFunctionBase*	mpBasisCurve;//basis curve
+        const AQLFunctionBase*	mpBasisCurve;//basis curve
 	};	
 
 	class LARatesCurveForNumeraire: public LARatesPathElementCurve
@@ -175,13 +175,13 @@ protected:
 	bool												mIsStochastic;// IR is stochastic or not
 	LARatesCurveForNumeraire								mLastCurve;// curve for last curve element
 	bool												mIsLongJump;// LongJump or Not
-	LAFunctionBase*										mpBasisCurve;//basis curve
+	AQLFunctionBase*										mpBasisCurve;//basis curve
 	LARatesCurveWithBasis*									mpCurveWithBasis;// curve with Basis
 	LARatesSDEBase*										mpSDE;// pointer to SDE that holds this Numerarire
 	//bool												mCancelSpread;//this is set when LMM and funding change
 	mutable bool										mUpdateFlag;		// update flag
-	LAString											mBasisName;
-	std::map<LAString, LAFunctionBase*>					mBasisCurveMap;
+	AQLString											mBasisName;
+	std::map<AQLString, AQLFunctionBase*>					mBasisCurveMap;
 
 private:
 	virtual LARatesCurveWithBasis* getCurveWithBasis() const;

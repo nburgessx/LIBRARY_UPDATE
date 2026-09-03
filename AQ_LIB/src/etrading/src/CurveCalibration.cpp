@@ -13,31 +13,31 @@
 #include <numeric>
 
 #include "CurveCalibration.h"
-#include "LAMathDefine.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LAInterpolationBase.h"
-#include "LABasic.h"
-#include "LAMatrix.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
-#include "LADataReference.h"
-#include "LAObjectPool.h"
-#include "LADataInstance.h"
+#include "AQLMathDefine.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLInterpolationBase.h"
+#include "AQLBasic.h"
+#include "AQLMatrix.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataReference.h"
+#include "AQLObjectPool.h"
+#include "AQLDataInstance.h"
 #include "LADefinitions.h"
 
 #include "BasisComponentCurve.h"
 #include "LADateHelpers.h"
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
-#include "LAAlgorithm.h"
-#include "LALinearInterpolation.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
-#include "LADate.h"
+#include "AQLAlgorithm.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
+#include "AQLDate.h"
 #include "CurveInstruments.h"
 #include "ExceptionMacros.h"
 
@@ -55,45 +55,45 @@ namespace etrading
 	{
 
 		// Important Note: Here we Deprecate LA Define Statements from Common and IR Projects
-		// #define statements have been replaced as LAString with AlgoQuantLib prefix
+		// #define statements have been replaced as AQLString with AlgoQuantLib prefix
 
-		const LAString AQ_O_N				= "O_N";
-		const LAString AQ_T_N				= "T_N";
-		const LAString AQ_ON				= "ON";
-		const LAString AQ_TN				= "TN";
-		const LAString AQ_LIBOR_DATA		= "ZERORATE";	// Libor or Zero Rate
-		const LAString AQ_ZERORATE		= "ZERORATE";	// Libor or Zero Rate
-		const LAString AQ_SWAP_DATA		= "PARRATE";	// Swap Par Rate
-		const LAString AQ_PARRATE			= "PARRATE";	// Swap Par Rate
-		const LAString AQ_FWD				= "FWDRATE";
-		const LAString AQ_BASIS			= "BASISRATE";
-		const LAString AQ_MPC_SWAP		= "BOJRATE";	// This is meant to read Central Bank MPC Swaps not just BOJ Central Bank
-		const LAString AQ_FOMC_SWAP		= "FFRATE";		// FED FUND MPC SWAP i.e FOMC Swap
-		const LAString AQ_ARR_FUTURE		= "ARRFUTURE";
-		const LAString AQ_STD				= "STD";
-		const LAString AQ_FRA3M			= "FRA3M";
-		const LAString AQ_FRA6M			= "FRA6M";
-		const LAString AQ_TERM_3M			= "3M";
-		const LAString AQ_TERM_6M			= "6M";
-		const LAString AQ_TERM_1M			= "1M";
-		const LAString AQ_TERM_12M		= "12M";
+		const AQLString AQ_O_N				= "O_N";
+		const AQLString AQ_T_N				= "T_N";
+		const AQLString AQ_ON				= "ON";
+		const AQLString AQ_TN				= "TN";
+		const AQLString AQ_LIBOR_DATA		= "ZERORATE";	// Libor or Zero Rate
+		const AQLString AQ_ZERORATE		= "ZERORATE";	// Libor or Zero Rate
+		const AQLString AQ_SWAP_DATA		= "PARRATE";	// Swap Par Rate
+		const AQLString AQ_PARRATE			= "PARRATE";	// Swap Par Rate
+		const AQLString AQ_FWD				= "FWDRATE";
+		const AQLString AQ_BASIS			= "BASISRATE";
+		const AQLString AQ_MPC_SWAP		= "BOJRATE";	// This is meant to read Central Bank MPC Swaps not just BOJ Central Bank
+		const AQLString AQ_FOMC_SWAP		= "FFRATE";		// FED FUND MPC SWAP i.e FOMC Swap
+		const AQLString AQ_ARR_FUTURE		= "ARRFUTURE";
+		const AQLString AQ_STD				= "STD";
+		const AQLString AQ_FRA3M			= "FRA3M";
+		const AQLString AQ_FRA6M			= "FRA6M";
+		const AQLString AQ_TERM_3M			= "3M";
+		const AQLString AQ_TERM_6M			= "6M";
+		const AQLString AQ_TERM_1M			= "1M";
+		const AQLString AQ_TERM_12M		= "12M";
 
-		const LAString AQ_SIMPLE			= "SIMPLE";
-		const LAString AQ_ANNUAL			= "ANNUAL";
-		const LAString AQ_SEMI_ANNUAL		= "SEMI-ANNUAL";
-		const LAString AQ_QUARTERLY		= "QUARTERLY";
-		const LAString AQ_MONTHLY			= "MONTHLY";
-		const LAString AQ_LUNAR			= "LUNAR";
-		const LAString AQ_BUSINESS_DAYS	= "BUSINESS_DAYS";
+		const AQLString AQ_SIMPLE			= "SIMPLE";
+		const AQLString AQ_ANNUAL			= "ANNUAL";
+		const AQLString AQ_SEMI_ANNUAL		= "SEMI-ANNUAL";
+		const AQLString AQ_QUARTERLY		= "QUARTERLY";
+		const AQLString AQ_MONTHLY			= "MONTHLY";
+		const AQLString AQ_LUNAR			= "LUNAR";
+		const AQLString AQ_BUSINESS_DAYS	= "BUSINESS_DAYS";
 
-		const LAString AQ_ROLLCONV_NORMAL = "NORMAL";
-		const LAString AQ_ROLLCONV_EOM	= "EOM";
-		const LAString AQ_ROLLCONV_LUNAR	= "LUNAR";
+		const AQLString AQ_ROLLCONV_NORMAL = "NORMAL";
+		const AQLString AQ_ROLLCONV_EOM	= "EOM";
+		const AQLString AQ_ROLLCONV_LUNAR	= "LUNAR";
 
-		const LAString AQ_LIBOR			= "LIBOR";
-		const LAString AQ_FUTURE			= "FUTURE";
-		const LAString AQ_FRA				= "FRA";
-		const LAString AQ_SWAP			= "SWAP";
+		const AQLString AQ_LIBOR			= "LIBOR";
+		const AQLString AQ_FUTURE			= "FUTURE";
+		const AQLString AQ_FRA				= "FRA";
+		const AQLString AQ_SWAP			= "SWAP";
 	}
 }
 
@@ -113,39 +113,39 @@ SwapCurveDiscountFactors initialiseSwapCurveDiscountFactors( LACurveStaticDataHo
 	results.swapSpotDateDF_		= 1.0;
 	results.swapSpotDateTerm_	= 0.0;
 		
-	results.dfInterpolator_ = std::unique_ptr<LAInterpolationBase>( dynamic_cast<LAInterpolationBase *>( resultsObj.interpolationObj_->interpolatorForDiscountFactors_->clone() ) );
+	results.dfInterpolator_ = std::unique_ptr<AQLInterpolationBase>( dynamic_cast<AQLInterpolationBase *>( resultsObj.interpolationObj_->interpolatorForDiscountFactors_->clone() ) );
 	results.dfInterpolator_->setJoinDateAsDouble(resultsObj.interpolationObj_->interpolationJoinDateAsDouble_);
 	
 	const bool isCurveSelfDiscounting = (staticDataObj.dfCurveName_ == "" || staticDataObj.dfCurveName_ == ITSELF );
 	if (!isCurveSelfDiscounting)
 	{
 		// Non-STD Curves Require Curve Suffix
-		LAString suffix = "";
+		AQLString suffix = "";
 		if (staticDataObj.dfCurveName_ != AQ_STD)
 		{
-			suffix = LAString("_") + staticDataObj.dfCurveName_;
+			suffix = AQLString("_") + staticDataObj.dfCurveName_;
 		}
 
 		// Get Terms from Discount Curve
 		if (!staticDataObj.curveDataObjectHolder_.getData(CALIBRATION_DATA_TERMS + suffix).isDefined())
 		{
-			throw LACoreInvalidData("Error: Dependency curves have not been built. Terms error", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Error: Dependency curves have not been built. Terms error", __FILE__, __LINE__);
 		}
-		const DoubleVector &terms = dynamic_cast<const LADataDoubles&> (staticDataObj.curveDataObjectHolder_.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL).get()).get();
+		const DoubleVector &terms = dynamic_cast<const AQLDataDoubles&> (staticDataObj.curveDataObjectHolder_.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL).get()).get();
 
 		// Get Discount Factors from Discount Curve
 		if (!staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_DFS + suffix).isDefined())
 		{
-			throw LACoreInvalidData("Error: Dependency curves have not been built. Discount error", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Error: Dependency curves have not been built. Discount error", __FILE__, __LINE__);
 		}
-		const DoubleVector &dfs = dynamic_cast<const LADataDoubles&> (staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL).get()).get();
+		const DoubleVector &dfs = dynamic_cast<const AQLDataDoubles&> (staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL).get()).get();
 
 		// Copy Terms and DFs to our Results Interpolator
-		LAPriceDataInterpolation interpolationDataAttribute = etrading::getYieldGenInterpolationByCurveName(staticDataObj.curveDataObjectHolder_, suffix);
-		results.dfInterpolator_ = std::unique_ptr<LAInterpolationBase>(dynamic_cast<LAInterpolationBase*>(interpolationDataAttribute.getMethod().clone()));
+		AQLPriceDataInterpolation interpolationDataAttribute = etrading::getYieldGenInterpolationByCurveName(staticDataObj.curveDataObjectHolder_, suffix);
+		results.dfInterpolator_ = std::unique_ptr<AQLInterpolationBase>(dynamic_cast<AQLInterpolationBase*>(interpolationDataAttribute.getMethod().clone()));
 		results.dfInterpolator_->set( terms, dfs, resultsObj.interpolationObj_->interpolationJoinDateAsDouble_ );
 
-		LAPriceDataDayCount dc_act365(ACT_365);
+		AQLPriceDataDayCount dc_act365(ACT_365);
 		results.swapSpotDateTerm_ = dc_act365.getTerm(resultsObj.asOfDate_, liborIndex.curveSpotDate_ ); // note curve spot date = swap spot date
 		results.swapSpotDateDF_ = results.dfInterpolator_->value(results.swapSpotDateTerm_);
 	}
@@ -153,12 +153,12 @@ SwapCurveDiscountFactors initialiseSwapCurveDiscountFactors( LACurveStaticDataHo
 }
 
 // Curve Data Holder for the 'CalibrateModel' Method
-LACurveStaticDataHolder::LACurveStaticDataHolder( LAObject & curveDataObject,
+LACurveStaticDataHolder::LACurveStaticDataHolder( AQLObject & curveDataObject,
                                                   CurveCalibrationData & curveData,
                                                   CurveProperties& curveProperties,
-                                                  const LADataProcedure & curveAttributeData,
-                                                  const LAString & curveCollection,  // curveID
-                                                  const LAString & curveIndex )     // or marketName
+                                                  const AQLDataProcedure & curveAttributeData,
+                                                  const AQLString & curveCollection,  // curveID
+                                                  const AQLString & curveIndex )     // or marketName
 	: curveDataObject_(curveDataObject),
       curveCalibrationData_(curveData),
       curveProperties_(curveProperties),
@@ -169,7 +169,7 @@ LACurveStaticDataHolder::LACurveStaticDataHolder( LAObject & curveDataObject,
 	// 1. Initialise Calibration Data Objects
 	// *******************************************************************
 	( void )curveAttributeData_;
-	const LADataReference& dataReference = curveCalibrationData_.getYieldData();
+	const AQLDataReference& dataReference = curveCalibrationData_.getYieldData();
 	curveDataObjectHolder_ = dataReference.get();
 
 	// 2. Get the Target Curve and the Target Curve Market Data Suffix
@@ -177,19 +177,19 @@ LACurveStaticDataHolder::LACurveStaticDataHolder( LAObject & curveDataObject,
 	targetCurve_			= "";
 	targetCurveMktSuffix_	= "";
 
-	const LADataHolder *dh = &curveCalibrationData_.getData( IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK );
+	const AQLDataHolder *dh = &curveCalibrationData_.getData( IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		targetCurve_ = dynamic_cast< const LADataString & >( dh->get() ).get();
+		targetCurve_ = dynamic_cast< const AQLDataString & >( dh->get() ).get();
 	}
 
-	if( LAString( targetCurve_ ).toUpper() == AQ_STD )
+	if( AQLString( targetCurve_ ).toUpper() == AQ_STD )
 	{
 		targetCurve_ = AQ_STD;
 	}
 	else
 	{
-		 targetCurveMktSuffix_ = LAString( "_" ) + curveCalibrationData_.getMarketForCurve( targetCurve_ );
+		 targetCurveMktSuffix_ = AQLString( "_" ) + curveCalibrationData_.getMarketForCurve( targetCurve_ );
 	}
 
 	// 3. Get the Target Curve Alias List and List of Curves Already Built
@@ -203,7 +203,7 @@ LACurveStaticDataHolder::LACurveStaticDataHolder( LAObject & curveDataObject,
 	dh = &curveCalibrationData_.getData( IR_CALIBRATION_DATA_DFCURVENAME + targetCurveMktSuffix_, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		dfCurveName_ = dynamic_cast< const LADataString & >( dh->get() ).get();
+		dfCurveName_ = dynamic_cast< const AQLDataString & >( dh->get() ).get();
 	}
 }
 
@@ -214,7 +214,7 @@ void LACurveStaticDataHolder::updateSwapCurveStateVariables( CurveMarketDataHold
 }
 
 // Curve resultsObj container helper for the CurveDataProvider class
-CalibrationResults::CalibrationResults( LACurveStaticDataHolder & staticDataObj, const LADate& asOfDate )
+CalibrationResults::CalibrationResults( LACurveStaticDataHolder & staticDataObj, const AQLDate& asOfDate )
 	: interpolationObj_(nullptr), asOfDate_(asOfDate), dfResults_(DiscountFactors()), fwdStartEndDatesAsTerms_(DoubleMatrix()), fwdRates_(DoubleArray())
 {
 	interpolationObj_= std::shared_ptr<InterpolationDataHolder>( new InterpolationDataHolder( staticDataObj ) );
@@ -227,7 +227,7 @@ CalibrationResults::CalibrationResults( LACurveStaticDataHolder & staticDataObj,
 
 // Curve resultsObj container helper for the CurveDataProvider class
 CalibrationResults::CalibrationResults( LACurveStaticDataHolder & staticDataObj,
-										const LADate & asOfDate,
+										const AQLDate & asOfDate,
 										DiscountFactors & dfResults,
 										DoubleMatrix& fwdStartEndDatesAsTerms,
 										DoubleArray& fwdRates )
@@ -245,7 +245,7 @@ CalibrationResults::CalibrationResults( LACurveStaticDataHolder & staticDataObj,
 void CalibrationResults::resetAll()
 {
 	// Discount Factors and Forwards
-	asOfDate_						= LADate();
+	asOfDate_						= AQLDate();
 	dfResults_						= DiscountFactors();
 	fwdStartEndDatesAsTerms_		= DoubleMatrix();
 	fwdRates_						= DoubleArray();
@@ -288,20 +288,20 @@ CurveProperties::CurveProperties()
 CurveProperties::CurveProperties( CurveCalibrationData & curveData )
 {
 	// Target Curve Info
-	LAString targetCurve = "";
-	LAString targetCurveMktSuffix = "";
+	AQLString targetCurve = "";
+	AQLString targetCurveMktSuffix = "";
 
-	const LADataHolder *dh = &curveData.getData( IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK );
+	const AQLDataHolder *dh = &curveData.getData( IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		targetCurve = dynamic_cast< const LADataString & >( dh->get() ).get();
+		targetCurve = dynamic_cast< const AQLDataString & >( dh->get() ).get();
 		targetCurve.toUpper();
 	}
 
 	if( targetCurve != AQ_STD )
 	{
 		// Non-STD Swap Curves have a market data suffix
-		targetCurveMktSuffix = LAString( "_" ) + curveData.getMarketForCurve( targetCurve );
+		targetCurveMktSuffix = AQLString( "_" ) + curveData.getMarketForCurve( targetCurve );
 	}
 
 
@@ -310,7 +310,7 @@ CurveProperties::CurveProperties( CurveCalibrationData & curveData )
 	dh = &curveData.getData( IR_CALIBRATION_DATA_ISFUTUREUSE + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		useFutures_ = dynamic_cast< const LADataBool& >( dh->get() );
+		useFutures_ = dynamic_cast< const AQLDataBool& >( dh->get() );
 	}
 	
 	// Update 'useFRAs_'
@@ -318,7 +318,7 @@ CurveProperties::CurveProperties( CurveCalibrationData & curveData )
 	dh = &curveData.getData( IR_CALIBRATION_DATA_ISFRAUSE + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		useFRAs_ = dynamic_cast< const LADataBool& >( dh->get() );
+		useFRAs_ = dynamic_cast< const AQLDataBool& >( dh->get() );
 	}
 	
 	// Check useFutures and useFRAs not enabled at the same time
@@ -329,7 +329,7 @@ CurveProperties::CurveProperties( CurveCalibrationData & curveData )
 	dh = &curveData.getData( PRICING_DATA_RATEPRIORITY + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		ratePriorityStringVector_ = &( dynamic_cast< const LADataStrings& >( dh->get() ).get() );
+		ratePriorityStringVector_ = &( dynamic_cast< const AQLDataStrings& >( dh->get() ).get() );
 	}
 	
 	// Update 'useTenorBasisSwaps_' also known as 'swapTenorAdjust'
@@ -337,7 +337,7 @@ CurveProperties::CurveProperties( CurveCalibrationData & curveData )
 	dh = &curveData.getData( IR_CALIBRATION_DATA_ISSWAPTENORADJUST + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		useTenorBasisSwaps_ = dynamic_cast< const LADataBool& >( dh->get() );
+		useTenorBasisSwaps_ = dynamic_cast< const AQLDataBool& >( dh->get() );
 	}
 
 	// Update 'prioritizeSwaps_' also known as 'generateForwardsFromSwapsOnly'
@@ -345,7 +345,7 @@ CurveProperties::CurveProperties( CurveCalibrationData & curveData )
 	dh = &curveData.getData( IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		prioritizeSwaps_ = dynamic_cast< const LADataBool& >( dh->get() );
+		prioritizeSwaps_ = dynamic_cast< const AQLDataBool& >( dh->get() );
 	}
 
 	// Imply Forwards when calibrating curves
@@ -368,13 +368,13 @@ void CurveProperties::updateSwapCurveStateVariables( LACurveStaticDataHolder & s
 	stateVariableTenorBasis_	= STATE_VARIABLE_ZERO_RATE_TIMES_TIME;
 
 	// Initialize DataHolder
-	const LADataHolder* dh = 0;
+	const AQLDataHolder* dh = 0;
 
 	// Set Swap State Variable 
 	dh = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_STATEVARIABLE + staticDataObj.targetCurveMktSuffix_, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		staticDataObj.curveProperties_.stateVariableSwaps_ = toStateVariableEnum(dynamic_cast<const LADataString&>(dh->get()).get().getCString());
+		staticDataObj.curveProperties_.stateVariableSwaps_ = toStateVariableEnum(dynamic_cast<const AQLDataString&>(dh->get()).get().getCString());
 		AQ_THROW_IF(stateVariableSwaps_ != STATE_VARIABLE_DF && stateVariableSwaps_ != STATE_VARIABLE_ZERO_RATE_TIMES_TIME,
 					  "Invalid Swap Data: Swap Calibration StateVariable must be DiscountFactor or RateTime")
 	}
@@ -389,7 +389,7 @@ void CurveProperties::updateSwapCurveStateVariables( LACurveStaticDataHolder & s
 		dh = &( mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONSW, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			useRateTime = dynamic_cast<const LADataBool &>(dh->get()).get();
+			useRateTime = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 	
 		if ( !useRateTime )
@@ -406,7 +406,7 @@ InterpolationDataHolder::InterpolationDataHolder()
 	  interpolatorForFuturesAndFRAs_( NULL ),
 	  interpolationStringDiscountFactors_( "" ),
 	  interpolationStringSwaps_( "" ),
-	  interpolationJoinDate_( LADate() ),
+	  interpolationJoinDate_( AQLDate() ),
 	  interpolationJoinDateAsDouble_( 0.0 )
 {
 }
@@ -418,7 +418,7 @@ InterpolationDataHolder::InterpolationDataHolder( LACurveStaticDataHolder & stat
 		interpolatorForFuturesAndFRAs_( NULL ),	
 		interpolationStringDiscountFactors_( "" ),
 		interpolationStringSwaps_( "" ),
-	    interpolationJoinDate_( LADate() ),
+	    interpolationJoinDate_( AQLDate() ),
 	    interpolationJoinDateAsDouble_( 0.0 )
 {
 	// Initialize interpolation strings
@@ -426,15 +426,15 @@ InterpolationDataHolder::InterpolationDataHolder( LACurveStaticDataHolder & stat
 	interpolationStringSwaps_			= staticDataObj.curveCalibrationData_.getInterpolation_yg().convertToString();
 
 	// Target Curve Market Suffix
-	LAString targetCurveMktSuffix = staticDataObj.targetCurveMktSuffix_;
+	AQLString targetCurveMktSuffix = staticDataObj.targetCurveMktSuffix_;
 
 	// Initialize Discount Factor Interpolation
-	const LADataHolder *dh = &staticDataObj.curveCalibrationData_.getData( CALIBRATION_DATA_INTERPOLATION + targetCurveMktSuffix, NOCHECK );
+	const AQLDataHolder *dh = &staticDataObj.curveCalibrationData_.getData( CALIBRATION_DATA_INTERPOLATION + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		LAPriceDataInterpolation thisInterpolator = dynamic_cast< const LAPriceDataInterpolation & >( dh->get() );
+		AQLPriceDataInterpolation thisInterpolator = dynamic_cast< const AQLPriceDataInterpolation & >( dh->get() );
 		interpolationStringDiscountFactors_ = thisInterpolator.convertToString();
-		interpolatorForDiscountFactors_ = dynamic_cast< LAInterpolationBase* >( thisInterpolator.getMethod().clone() );
+		interpolatorForDiscountFactors_ = dynamic_cast< AQLInterpolationBase* >( thisInterpolator.getMethod().clone() );
 		fh_DiscountFactors_.set( interpolatorForDiscountFactors_, true );
 	}
 
@@ -442,9 +442,9 @@ InterpolationDataHolder::InterpolationDataHolder( LACurveStaticDataHolder & stat
 	dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_INTERPOLATIONYG + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		LAPriceDataInterpolation thisInterpolator = dynamic_cast< const LAPriceDataInterpolation & >( dh->get() );
+		AQLPriceDataInterpolation thisInterpolator = dynamic_cast< const AQLPriceDataInterpolation & >( dh->get() );
 		interpolationStringSwaps_ = thisInterpolator.convertToString();
-		interpolatorForSwaps_ = dynamic_cast< LAInterpolationBase* >( thisInterpolator.getMethod().clone() );
+		interpolatorForSwaps_ = dynamic_cast< AQLInterpolationBase* >( thisInterpolator.getMethod().clone() );
 		fh_Swaps_.set( interpolatorForSwaps_, true );
 	}
 
@@ -452,7 +452,7 @@ InterpolationDataHolder::InterpolationDataHolder( LACurveStaticDataHolder & stat
 	dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_INTERPOLATIONFW + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		interpolatorForFuturesAndFRAs_ = dynamic_cast< LAInterpolationBase* >( dynamic_cast< const LAPriceDataInterpolation & >( dh->get() ).getMethod().clone() );
+		interpolatorForFuturesAndFRAs_ = dynamic_cast< AQLInterpolationBase* >( dynamic_cast< const AQLPriceDataInterpolation & >( dh->get() ).getMethod().clone() );
 		fh_FuturesAndFRAs_.set( interpolatorForFuturesAndFRAs_, true );
 	}
 }
@@ -465,43 +465,43 @@ void InterpolationDataHolder::reset()
 	interpolatorForFuturesAndFRAs_		= NULL;
 	interpolationStringDiscountFactors_	= "";
 	interpolationStringSwaps_			= "";
-	interpolationJoinDate_				= LADate();
+	interpolationJoinDate_				= AQLDate();
 	interpolationJoinDateAsDouble_		= 0.0;
 }
 
-LADate getFirstSwapMaturityDate( const LACurveMarketData & mktData )
+AQLDate getFirstSwapMaturityDate( const LACurveMarketData & mktData )
 {
-	LADate swapMaturity;
+	AQLDate swapMaturity;
 
 	AQ_REQUIRE( mktData.swap_size_ > 0, "Invalid Market Data: Missing Swap Instruments" )
 
-	const LADate& spotdate				= dynamic_cast<const LADataDate&> ((mktData.swap_[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
-	const LAString& term_str			= dynamic_cast<const LADataString&> ((mktData.swap_[0]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-	const LAString& freq				= dynamic_cast<const LADataString&> ((mktData.swap_[0]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
-	const LAPriceDataCalendar& cal		= dynamic_cast<const LAPriceDataCalendar&> ((mktData.swap_[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-	const LAPriceDataSlidingRule& sld	= dynamic_cast<const LAPriceDataSlidingRule&> ((mktData.swap_[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+	const AQLDate& spotdate				= dynamic_cast<const AQLDataDate&> ((mktData.swap_[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+	const AQLString& term_str			= dynamic_cast<const AQLDataString&> ((mktData.swap_[0]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+	const AQLString& freq				= dynamic_cast<const AQLDataString&> ((mktData.swap_[0]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+	const AQLPriceDataCalendar& cal		= dynamic_cast<const AQLPriceDataCalendar&> ((mktData.swap_[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+	const AQLPriceDataSlidingRule& sld	= dynamic_cast<const AQLPriceDataSlidingRule&> ((mktData.swap_[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 
 	// set isEOMRoll
 	bool isEOMRoll = false;
-	const LADataHolder *dh = &(mktData.swap_[0]->getData(IR_CALIBRATION_DATA_ISEOMROLLSW, NOCHECK));
+	const AQLDataHolder *dh = &(mktData.swap_[0]->getData(IR_CALIBRATION_DATA_ISEOMROLLSW, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	// set roll convention
-	LAString roll_conv = getRollConv(freq, isEOMRoll);
+	AQLString roll_conv = getRollConv(freq, isEOMRoll);
 
 	swapMaturity = LADateHelpers::getDate(spotdate, term_str, sld, &cal, true, &roll_conv);
 	return swapMaturity;
 }
 
 // Get the Spot Date for the Libor Cash Deposit Instruments
-LADate getLiborSpotDate( const LACurveMarketData & mktData )
+AQLDate getLiborSpotDate( const LACurveMarketData & mktData )
 {
-	LADate liborSpotDate;
+	AQLDate liborSpotDate;
 	for (unsigned int i = 0; i < mktData.libor_size_; i++)
 	{
-		const LADate& spotdate = dynamic_cast<const LADataDate&> ((mktData.libor_[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+		const AQLDate& spotdate = dynamic_cast<const AQLDataDate&> ((mktData.libor_[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 		if (i == 0)
 		{
 			liborSpotDate = spotdate;
@@ -529,17 +529,17 @@ bool isSwapForwardStarting( const LACurveMarketData & mktData )
 
 	if ( mktData.swap_.empty() ) // Prevent Access Violation
 	{ 
-		const LADataHolder *dh = &(mktData.swap_[0]->getData(PRICING_DATA_ISFWDSWAP, NOCHECK));
+		const AQLDataHolder *dh = &(mktData.swap_[0]->getData(PRICING_DATA_ISFWDSWAP, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			is_fwdswap = dynamic_cast<const LADataBool &>(dh->get()).get();
+			is_fwdswap = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 	}
 	return is_fwdswap;
 }
 
 // Group the Curve Market Data by Instrument and Sort the Data
-void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder & staticDataObj, const LADate& asOfDate )
+void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder & staticDataObj, const AQLDate& asOfDate )
 {
 	// 0.	Store Market Data AsOfDate
 	asOfDate_ = asOfDate;
@@ -547,8 +547,8 @@ void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder
 	// 1.	Group Market Data by Instrument
 	// ***************************************************************************************************
 	
-	LAString datatype_str;
-	LAPriceDataDayCount dc_act365(ACT_365);
+	AQLString datatype_str;
+	AQLPriceDataDayCount dc_act365(ACT_365);
 	mktData_.isO_N_ = false;
 	mktData_.isT_N_ = false;
 	
@@ -556,13 +556,13 @@ void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder
 	for (unsigned i = 0; i < size_marketdata; i++)
 	{
 		// check use grid
-		const LADataHolder *dh = &rawMarketData_[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
-		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const LADataBool &>(dh->get()).get())
+		const AQLDataHolder *dh = &rawMarketData_[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
+		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const AQLDataBool &>(dh->get()).get())
 		{
 			continue;
 		}
 
-		datatype_str = dynamic_cast<const LADataString&> ((rawMarketData_[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+		datatype_str = dynamic_cast<const AQLDataString&> ((rawMarketData_[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		datatype_str.toUpper();
 
 		if (datatype_str == AQ_LIBOR_DATA)
@@ -598,11 +598,11 @@ void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder
 		else 
 		{
 			// money market case
-			const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&> ((rawMarketData_[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-			const LAPriceDataSlidingRule& sld = dynamic_cast<const LAPriceDataSlidingRule&> ((rawMarketData_[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+			const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&> ((rawMarketData_[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+			const AQLPriceDataSlidingRule& sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((rawMarketData_[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 			if (datatype_str == AQ_O_N)
 			{
-				LADate end = asOfDate;
+				AQLDate end = asOfDate;
 				end.addDays(1);
 				end = sld.getDate(end, cal);
 
@@ -614,20 +614,20 @@ void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder
 				
 				if (!rawMarketData_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, NOCHECK).isDefined())
 				{
-					rawMarketData_[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new LADataDates(depositDates));
+					rawMarketData_[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new AQLDataDates(depositDates));
 				}
 				else
 				{
-					dynamic_cast<LADataDates&>(rawMarketData_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(depositDates);
+					dynamic_cast<AQLDataDates&>(rawMarketData_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(depositDates);
 				}
 			}
 			else if (datatype_str == AQ_T_N)
 			{
-				LADate start = asOfDate;
+				AQLDate start = asOfDate;
 				start.addDays(1);
 				start = sld.getDate(start, cal);
 
-				LADate end = start;
+				AQLDate end = start;
 				end.addDays(1);
 				end = sld.getDate(end, cal);
 				
@@ -639,16 +639,16 @@ void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder
 				
 				if (!rawMarketData_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, NOCHECK).isDefined())
 				{
-					rawMarketData_[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new LADataDates(depositDates));
+					rawMarketData_[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new AQLDataDates(depositDates));
 				}
 				else
 				{
-					dynamic_cast<LADataDates&>(rawMarketData_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(depositDates);
+					dynamic_cast<AQLDataDates&>(rawMarketData_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(depositDates);
 				}
 			}
 			else
 			{
-				LADate start, end;
+				AQLDate start, end;
 				if (datatype_str == "0D_1D") mktData_.isO_N_ = true;
 				else if (datatype_str == "1D_1D") mktData_.isT_N_ = true;
 
@@ -717,10 +717,10 @@ void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder
 }
 
 // Curve Market Data Holder Constructor
-CurveMarketDataHolder::CurveMarketDataHolder( LACurveStaticDataHolder & staticDataObj, const LADate & asOfDate )
+CurveMarketDataHolder::CurveMarketDataHolder( LACurveStaticDataHolder & staticDataObj, const AQLDate & asOfDate )
 	: asOfDate_(asOfDate)
 {
-	marketDataSharedObject_ = &dynamic_cast<const LADataMultiReference&>
+	marketDataSharedObject_ = &dynamic_cast<const AQLDataMultiReference&>
 		(staticDataObj.curveCalibrationData_.getData(CALIBRATION_DATA_MARKETDATA + staticDataObj.targetCurveMktSuffix_, ISNOTNULL).get());
 	
 	for (unsigned int j = 0; j < marketDataSharedObject_->getSize(); j++)
@@ -735,10 +735,10 @@ CurveMarketDataHolder::CurveMarketDataHolder( LACurveStaticDataHolder & staticDa
 		// Append SwapTenorAdjustments to market data if required
 		if( staticDataObj.curveProperties_.useTenorBasisSwaps_ )
 		{
-			LAString tenorSwapName = dynamic_cast< const LADataString& > ( staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_TENORSWAPNAME, ISNOTNULL ).get() );
+			AQLString tenorSwapName = dynamic_cast< const AQLDataString& > ( staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_TENORSWAPNAME, ISNOTNULL ).get() );
 			tenorSwapName.toUpper();
 
-			const LADataMultiReference& basisSwapSharedObject = dynamic_cast< const LADataMultiReference& > ( staticDataObj.curveCalibrationData_.getData( CALIBRATION_DATA_MARKETDATA + LAString( "_" ) + tenorSwapName, ISNOTNULL ).get() );
+			const AQLDataMultiReference& basisSwapSharedObject = dynamic_cast< const AQLDataMultiReference& > ( staticDataObj.curveCalibrationData_.getData( CALIBRATION_DATA_MARKETDATA + AQLString( "_" ) + tenorSwapName, ISNOTNULL ).get() );
 			for( unsigned int i = 0; i < basisSwapSharedObject.getSize(); i++ )
 			{
 				rawMarketData_.push_back( &basisSwapSharedObject.get( i ).get() );
@@ -754,7 +754,7 @@ CurveMarketDataHolder::CurveMarketDataHolder( LACurveStaticDataHolder & staticDa
 bool CurveMarketDataHolder::isTargetSwapCurve( LACurveStaticDataHolder & staticDataObj ) const
 {
 	// Curve Info
-	LAString targetCurve = staticDataObj.targetCurve_;
+	AQLString targetCurve = staticDataObj.targetCurve_;
 	ListOfBuiltCurves listOfCurvesAlreadyBuilt = staticDataObj.listOfCurvesAlreadyBuilt_;
 
 	/*
@@ -789,17 +789,17 @@ LiborIndex::LiborIndex( CurveMarketDataHolder & mktDataObj )
 	
 	
 	
-	fixingBusDayAdj_	= &dynamic_cast<const LAPriceDataSlidingRule&> ((mktDataObj.mktData_.libor_[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-	fixingCalendar_		= &dynamic_cast<const LAPriceDataCalendar&> ((mktDataObj.mktData_.libor_[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+	fixingBusDayAdj_	= &dynamic_cast<const AQLPriceDataSlidingRule&> ((mktDataObj.mktData_.libor_[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+	fixingCalendar_		= &dynamic_cast<const AQLPriceDataCalendar&> ((mktDataObj.mktData_.libor_[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 
-	daycount_			= &dynamic_cast<const LAPriceDataDayCount&> ((mktDataObj.mktData_.libor_[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+	daycount_			= &dynamic_cast<const AQLPriceDataDayCount&> ((mktDataObj.mktData_.libor_[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 	daycountEnum_		= daycount_->dayCountEnum();
 
 	// Curve Spot Date is the Swap Spot Date - if no swaps are present use the Libor spot date
 	curveSpotDate_	= spotDate_;
 	if( mktDataObj.mktData_.swap_size_ > 0 )
 	{
-		curveSpotDate_ = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+		curveSpotDate_ = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 	}
 
 	// TODO - Remove the Libor Index Dependency on Swap Instrument Parameters
@@ -809,10 +809,10 @@ LiborIndex::LiborIndex( CurveMarketDataHolder & mktDataObj )
 
 	// Libor Index Frequency - Use Swap Float Frequency as a Proxy
 	// The Curve Frequency is a better proxy but the parameter has not been made available to the property manager and entity pool
-	const LADataHolder*dh = &mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, NOCHECK);
+	const AQLDataHolder*dh = &mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		frequency_ = dynamic_cast<const LADataString&> (dh->get());
+		frequency_ = dynamic_cast<const AQLDataString&> (dh->get());
 		frequency_.toUpper();
 	}
 	else
@@ -856,7 +856,7 @@ FuturesInstruments::FuturesInstruments()
 	  includeSwapsBeforeMPCSwaps_(true),
 	  applyTensionFutures_(false),
 	  tensionDayGap_(0),
-	  lastStartDate_(LADate())
+	  lastStartDate_(AQLDate())
 {
 }
 
@@ -873,7 +873,7 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 	  includeSwapsBeforeMPCSwaps_(true),
 	  applyTensionFutures_(false),
 	  tensionDayGap_(0),
-	  lastStartDate_(LADate())
+	  lastStartDate_(AQLDate())
 {
 	if ( !staticDataObj.curveProperties_.useFutures_ || mktDataObj.mktData_.future_size_ == 0 )
 	{
@@ -882,10 +882,10 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 	
 	// isEOMRoll
 	isEOMRoll_ = false;
-	const LADataHolder* dh = &(mktDataObj.mktData_.future_[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
+	const AQLDataHolder* dh = &(mktDataObj.mktData_.future_[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isEOMRoll_ = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isEOMRoll_ = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	// Roll Convention
@@ -897,10 +897,10 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 	// UseConvexityAdj means Convexity Quoted as a Price not vol
 	// not very clear so replaced by CONVEXITYQUOTEDASVOL it's alias and inverse
 	isConvexityQuotedAsVol_ = true;
-	const LADataHolder* dhConvexityQuotedAsPrice = &(mktDataObj.mktData_.future_[0]->getData(PRICING_DATA_USECONVEXADJUSTMENT, NOCHECK));
+	const AQLDataHolder* dhConvexityQuotedAsPrice = &(mktDataObj.mktData_.future_[0]->getData(PRICING_DATA_USECONVEXADJUSTMENT, NOCHECK));
 	if (dhConvexityQuotedAsPrice->isDefined() && !dhConvexityQuotedAsPrice->isNull())
 	{
-		const bool convexityQuotedAsPrice = dynamic_cast<const LADataBool &>(dhConvexityQuotedAsPrice->get()).get();
+		const bool convexityQuotedAsPrice = dynamic_cast<const AQLDataBool &>(dhConvexityQuotedAsPrice->get()).get();
 		isConvexityQuotedAsVol_ = !convexityQuotedAsPrice;
 	}
 
@@ -909,7 +909,7 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 	dh = &(mktDataObj.mktData_.future_[0]->getData(PRICING_DATA_CONVEXITYQUOTETYPE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		LAString convexityQuoteTypeStr = dynamic_cast<const LADataString &>(dh->get()).get();
+		AQLString convexityQuoteTypeStr = dynamic_cast<const AQLDataString &>(dh->get()).get();
 		convexityQuoteTypeStr.toUpper();
 		AQ_REQUIRE( convexityQuoteTypeStr == "VOL" || convexityQuoteTypeStr == "PRICE", "Invalid Futures Convexity Quote Type: ConvexityQuoteType must be VOL or PRICE" )
 		isConvexityQuotedAsVol_ = ( convexityQuoteTypeStr == "VOL" ) ? true : false;
@@ -928,11 +928,11 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 	dh = &(mktDataObj.mktData_.future_[0]->getData(IR_CALIBRATION_DATA_APPLYTENSION, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		applyTensionFutures_ = dynamic_cast<const LADataBool &>(dh->get()).get();
+		applyTensionFutures_ = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	// Tension Gap Days
-	tensionDayGap_ = dynamic_cast<const LADataInt&> ((mktDataObj.mktData_.future_[0]->getData(IR_CALIBRATION_DATA_TENSIONGAP, ISNOTNULL)).get()).get();
+	tensionDayGap_ = dynamic_cast<const AQLDataInt&> ((mktDataObj.mktData_.future_[0]->getData(IR_CALIBRATION_DATA_TENSIONGAP, ISNOTNULL)).get()).get();
 	AQ_THROW_IF( applyTensionFutures_ && tensionDayGap_ < 1, "Invalid Futures Parameter: The TensionGap days must be greater than zero")
 
 	// Include Swaps Before MPC Swaps (also known as 'SmoothShortEnd')
@@ -940,7 +940,7 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 	dh = &(mktDataObj.mktData_.future_[0]->getData(IR_CALIBRATION_DATA_SMOOTHSHORTEND, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		includeSwapsBeforeMPCSwaps_ = dynamic_cast<const LADataBool &>(dh->get()).get();
+		includeSwapsBeforeMPCSwaps_ = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	// Future Type
@@ -948,15 +948,15 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 	dh = &(mktDataObj.mktData_.future_[0]->getData(IR_CALIBRATION_DATA_FRAFUTURE_SERIAL_CALC_TYPE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		LAString futuresTypeString = dynamic_cast<const LADataString&>(dh->get());
+		AQLString futuresTypeString = dynamic_cast<const AQLDataString&>(dh->get());
 		type_ = toFuturesTypeEnum( futuresTypeString.c_str() );
 	}
 
 	// Futures Daycount
-	daycount_ = dynamic_cast<const LAPriceDataDayCount&> ((mktDataObj.mktData_.future_[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+	daycount_ = dynamic_cast<const AQLPriceDataDayCount&> ((mktDataObj.mktData_.future_[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 
 	// Internal Curve Daycount
-	LAPriceDataDayCount curveDaycount_act365(ACT_365);
+	AQLPriceDataDayCount curveDaycount_act365(ACT_365);
 
 	// Populate ForwardRates
 	// ******************************************************************
@@ -969,7 +969,7 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 
 	for (unsigned int i = 0; i < mktDataObj.mktData_.future_size_; ++i)
 	{
-		const LADate& startDate = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.future_[i]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
+		const AQLDate& startDate = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.future_[i]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
 
 		// Ignore the future if current future's startDate is before swap spot date
 		if (startDate <= liborIndex.curveSpotDate_ )
@@ -983,7 +983,7 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 			lastStartDate_ = startDate;
 		}
 
-		const LADate endDate = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.future_[i]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
+		const AQLDate endDate = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.future_[i]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
 		if (endDate >= mktDataObj.mktData_.firstSwapMaturityDate_)
 		{
 			break;
@@ -994,11 +994,11 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 		dh = &(mktDataObj.mktData_.future_[i]->getData(CALIBRATION_DATA_RATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			marketRate = dynamic_cast<const LADataDouble&> (dh->get()).get();
+			marketRate = dynamic_cast<const AQLDataDouble&> (dh->get()).get();
 		}
 		else
 		{
-			double price = dynamic_cast<const LADataDouble&> ((mktDataObj.mktData_.future_[i]->getData(PRICING_DATA_PRICE, ISNOTNULL)).get()).get();
+			double price = dynamic_cast<const AQLDataDouble&> ((mktDataObj.mktData_.future_[i]->getData(PRICING_DATA_PRICE, ISNOTNULL)).get()).get();
 			marketRate = 1.0 - price * 0.01;
 		}
 
@@ -1007,7 +1007,7 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 		dh = &(mktDataObj.mktData_.future_[i]->getData(PRICING_DATA_SPREAD, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			spread = dynamic_cast<const LADataDouble&> (dh->get()).get();
+			spread = dynamic_cast<const AQLDataDouble&> (dh->get()).get();
 		}
 		marketRate += spread;
 
@@ -1016,7 +1016,7 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 		dh = &(mktDataObj.mktData_.future_[i]->getData(IR_CALIBRATION_DATA_MEANREVERSION, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			meanReversion = dynamic_cast<const LADataDouble &>(dh->get()).get();
+			meanReversion = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 		}
 
 		// add convexity adjustment to the future rate
@@ -1060,19 +1060,19 @@ std::vector<ForwardRate> FuturesInstruments::getForwardRates() const
 // SwapInstruments Constructor
 SwapInstruments::SwapInstruments()
 	:	spotDate_( DateVector() ),
-		calendar_( std::vector<const LAPriceDataCalendar*>(0) ),
-		busDayAdj_( std::vector<const LAPriceDataSlidingRule*>(0) ),
+		calendar_( std::vector<const AQLPriceDataCalendar*>(0) ),
+		busDayAdj_( std::vector<const AQLPriceDataSlidingRule*>(0) ),
 		isEOMRoll_( std::vector<bool>() ),
-		rollConvention_( std::vector<LAString>() ),
+		rollConvention_( std::vector<AQLString>() ),
 		daycountAct365_(ACT_365),
-		daycountFixed_( std::vector<const LAPriceDataDayCount*>(0) ),
-		frequencyFixed_( std::vector<LAString>() ),
-		daycountFloat_( std::vector<const LAPriceDataDayCount*>(0) ),
-		frequencyFloat_( std::vector<LAString>() ),
-		compoundFrequencyFloat_( std::vector<LAString>() ),
+		daycountFixed_( std::vector<const AQLPriceDataDayCount*>(0) ),
+		frequencyFixed_( std::vector<AQLString>() ),
+		daycountFloat_( std::vector<const AQLPriceDataDayCount*>(0) ),
+		frequencyFloat_( std::vector<AQLString>() ),
+		compoundFrequencyFloat_( std::vector<AQLString>() ),
 		numberOfCompoundPeriodsFloat_( std::vector<int>() ),
-		liborIndexFrequency_( std::vector<LAString>() ),
-		liborIndexTenor_( std::vector<LAString>() )
+		liborIndexFrequency_( std::vector<AQLString>() ),
+		liborIndexTenor_( std::vector<AQLString>() )
 {}
 
 // Resize Vector Member Data
@@ -1101,15 +1101,15 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 	AQ_REQUIRE( mktDataObj.mktData_.swap_size_ > 0, "Invalid Calibration Instruments: Missing Swap Instruments" )
 	this->resize( mktDataObj.mktData_.swap_size_ );
 
-	const LADataHolder *dh = 0;
+	const AQLDataHolder *dh = 0;
 	
 	for (unsigned int i = 0; i < mktDataObj.mktData_.swap_size_; i++)
 	{
 		// Trade Conventions
 		// *************************************************************
-		spotDate_[i]	= dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
-		calendar_[i]	= &dynamic_cast<const LAPriceDataCalendar&> ((mktDataObj.mktData_.swap_[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-		busDayAdj_[i]	= &dynamic_cast<const LAPriceDataSlidingRule&> ((mktDataObj.mktData_.swap_[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+		spotDate_[i]	= dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+		calendar_[i]	= &dynamic_cast<const AQLPriceDataCalendar&> ((mktDataObj.mktData_.swap_[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+		busDayAdj_[i]	= &dynamic_cast<const AQLPriceDataSlidingRule&> ((mktDataObj.mktData_.swap_[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 		
 		if ( spotDate_[i] != spotDate_[0] )
 		{
@@ -1120,19 +1120,19 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 		// *************************************************************
 		
 		// Frequency Fixed
-		frequencyFixed_[i] = dynamic_cast<const LADataString&> ((mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+		frequencyFixed_[i] = dynamic_cast<const AQLDataString&> ((mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 		frequencyFixed_[i].toUpper();
 		AQ_THROW_IF(frequencyFixed_[i] == AQ_SIMPLE, "Swap frequency 'SIMPLE' is not supported")
 		
 		// Daycount Fixed
-		daycountFixed_[i] = &dynamic_cast<const LAPriceDataDayCount&> ((mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+		daycountFixed_[i] = &dynamic_cast<const AQLPriceDataDayCount&> ((mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 
 		// isEOMRoll
 		isEOMRoll_[i] = false;
 		dh = &mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_ISEOMROLLSW, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			isEOMRoll_[i] = dynamic_cast<const LADataBool &>(dh->get()).get();
+			isEOMRoll_[i] = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 
 		// Roll Convention
@@ -1145,7 +1145,7 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 		dh = &mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			frequencyFloat_[i] = dynamic_cast<const LADataString&> (dh->get());
+			frequencyFloat_[i] = dynamic_cast<const AQLDataString&> (dh->get());
 		}
 		else
 		{
@@ -1156,7 +1156,7 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 		dh = &mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			daycountFloat_[i] = &dynamic_cast<const LAPriceDataDayCount&> (dh->get());
+			daycountFloat_[i] = &dynamic_cast<const AQLPriceDataDayCount&> (dh->get());
 		}
 		else
 		{
@@ -1168,7 +1168,7 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 		dh = &mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_FREQUENCY_COMPOUND, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			compoundFrequencyFloat_[i] = dynamic_cast<const LADataString&> (dh->get());
+			compoundFrequencyFloat_[i] = dynamic_cast<const AQLDataString&> (dh->get());
 		}
 		
 		// Number of Compound Periods Float
@@ -1179,7 +1179,7 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 		dh = &mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			liborIndexFrequency_[i] = dynamic_cast<const LADataString&> (dh->get());
+			liborIndexFrequency_[i] = dynamic_cast<const AQLDataString&> (dh->get());
 		}
 
 		// Libor Index Tenor
@@ -1250,7 +1250,7 @@ TenorBasisInstruments::TenorBasisInstruments( LACurveStaticDataHolder & staticDa
 {
 	if (staticDataObj.curveProperties_.useTenorBasisSwaps_)
 	{
-		const LADataHolder* dh = 0;
+		const AQLDataHolder* dh = 0;
 
 		// Validate Data Dimensions
 		AQ_THROW_IF( mktDataObj.mktData_.tenorswap_.size() == 0, "Invalid Tenor Basis Swap Data: Market Data is Empty" )
@@ -1261,11 +1261,11 @@ TenorBasisInstruments::TenorBasisInstruments( LACurveStaticDataHolder & staticDa
 		AQ_REQUIRE( spreads_.size() == mktDataObj.mktData_.tenorswap_.size(), "Invalid Tenor Basis Swap Data: Inconsistent number of Tenor Basis Swap Instruments and Market Data Quotes" )
 
 		// Spread Leg	
-		applySpreadLeg2_ = dynamic_cast<const LADataBool&> ((mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL)).get()).get();
+		applySpreadLeg2_ = dynamic_cast<const AQLDataBool&> ((mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL)).get()).get();
 
 		// Tenor Basis Leg Frequencies
-		leg1Frequency_ = dynamic_cast<const LADataString&> ((mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCY, ISNOTNULL)).get()).get();
-		leg2Frequency_ = dynamic_cast<const LADataString&> ((mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCY, ISNOTNULL)).get()).get();
+		leg1Frequency_ = dynamic_cast<const AQLDataString&> ((mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCY, ISNOTNULL)).get()).get();
+		leg2Frequency_ = dynamic_cast<const AQLDataString&> ((mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCY, ISNOTNULL)).get()).get();
 
 		// Against Leg Frequency
 		if (applySpreadLeg2_)
@@ -1292,19 +1292,19 @@ TenorBasisInstruments::TenorBasisInstruments( LACurveStaticDataHolder & staticDa
 		}
 
 		// Daycount
-		daycount_	= &dynamic_cast<LAPriceDataDayCount &>(mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, ISNOTNULL).get());
+		daycount_	= &dynamic_cast<AQLPriceDataDayCount &>(mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, ISNOTNULL).get());
 		
 		// Calendar
-		calendar_	= &dynamic_cast<LAPriceDataCalendar &>(mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL).get());
+		calendar_	= &dynamic_cast<AQLPriceDataCalendar &>(mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL).get());
 		
 		// Business Day Adjustment
-		busDayAdj_	= &dynamic_cast<LAPriceDataSlidingRule &>(mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL).get());
+		busDayAdj_	= &dynamic_cast<AQLPriceDataSlidingRule &>(mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL).get());
 		
 		// isEOMRoll
 		dh = &(mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			isRollEOM_ = dynamic_cast<const LADataBool &>(dh->get()).get();
+			isRollEOM_ = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 		
 		// Roll Convention
@@ -1339,23 +1339,23 @@ void TenorBasisInstruments::populateSpreadMarketData( LACurveStaticDataHolder & 
 		DoubleArray stateVariableValues(1, 0.0);
 		spreads_ = DoubleVector( mktDataObj.mktData_.tenorswap_.size(), 0.0 );
 		
-		const LADataHolder* dh = &(mktDataObj.mktData_.tenorswap_[0]->getData(CALIBRATION_DATA_INTERPOLATION, NOCHECK));
+		const AQLDataHolder* dh = &(mktDataObj.mktData_.tenorswap_[0]->getData(CALIBRATION_DATA_INTERPOLATION, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			spreadInterpolator_ = dynamic_cast<LAInterpolationBase*> ((dynamic_cast<const LAPriceDataInterpolation&>
+			spreadInterpolator_ = dynamic_cast<AQLInterpolationBase*> ((dynamic_cast<const AQLPriceDataInterpolation&>
 				(mktDataObj.mktData_.tenorswap_[0]->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get())).getMethod().clone());
 		}
 		else
 		{
-			spreadInterpolator_ = dynamic_cast<LAInterpolationBase *>(resultsObj.interpolationObj_->interpolatorForSwaps_->clone());
+			spreadInterpolator_ = dynamic_cast<AQLInterpolationBase *>(resultsObj.interpolationObj_->interpolatorForSwaps_->clone());
 		}
 
 		// Populate Tenor Basis Interpolator
 		for (unsigned int i = 0; i < mktDataObj.mktData_.tenorswap_.size(); i++)
 		{
-			const LAString &maturityString	= dynamic_cast<const LADataString &>((mktDataObj.mktData_.tenorswap_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			double zeroRate					= dynamic_cast<const LADataDouble &>((mktDataObj.mktData_.tenorswap_[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-			LADate maturityDate				= LADateHelpers::getDate(liborIndex.curveSpotDate_, maturityString, *busDayAdj_, calendar_, true, &rollConv_);
+			const AQLString &maturityString	= dynamic_cast<const AQLDataString &>((mktDataObj.mktData_.tenorswap_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			double zeroRate					= dynamic_cast<const AQLDataDouble &>((mktDataObj.mktData_.tenorswap_[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			AQLDate maturityDate				= LADateHelpers::getDate(liborIndex.curveSpotDate_, maturityString, *busDayAdj_, calendar_, true, &rollConv_);
 			double maturityDateAsTerm		= daycount_->getTerm(liborIndex.curveSpotDate_, maturityDate);
 			
 			// State Variable: Time
@@ -1460,7 +1460,7 @@ void SwapCashflows::updateRatePriority( LACurveStaticDataHolder & staticDataObj,
 			AQ_REQUIRE( staticDataObj.curveProperties_.ratePriorityStringVector_->size() == 3, "Invalid Rate priority specified - Must be a size 3 colon seperated list specifying instrument priority e.g. Libor:Futures:Swap" )
 		}
 
-		LAString ratePriorityInstrument = (*staticDataObj.curveProperties_.ratePriorityStringVector_)[0];
+		AQLString ratePriorityInstrument = (*staticDataObj.curveProperties_.ratePriorityStringVector_)[0];
 		ratePriorityInstrument.toUpper();
 		if (ratePriorityInstrument == AQ_SWAP)
 		{
@@ -1488,22 +1488,22 @@ void SwapCashflows::updateInstrumentDatesAndRates( LACurveStaticDataHolder & sta
 	// Update Swap Schedule Data
 	for (size_t i = 0; i < mktDataObj.mktData_.swap_size_; i++)
 	{
-		LADate thisSwapEndDate;
+		AQLDate thisSwapEndDate;
 		if (mktDataObj.mktData_.areSwapsForwardStarting_)
 		{
-			const bool is_date = dynamic_cast<const LADataBool&> ((mktDataObj.mktData_.swap_[i]->getData(PRICING_DATA_ISDATE, ISNOTNULL)).get()).get();
+			const bool is_date = dynamic_cast<const AQLDataBool&> ((mktDataObj.mktData_.swap_[i]->getData(PRICING_DATA_ISDATE, ISNOTNULL)).get()).get();
 			if (is_date)
 			{
-				swapStartDates_[i] = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.swap_[i]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
-				swapEndDates_[i] = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.swap_[i]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
+				swapStartDates_[i] = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.swap_[i]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
+				swapEndDates_[i] = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.swap_[i]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
 			}
 			else
 			{
-				const LAString startTermString = dynamic_cast<const LADataString&> ((mktDataObj.mktData_.swap_[i]->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
+				const AQLString startTermString = dynamic_cast<const AQLDataString&> ((mktDataObj.mktData_.swap_[i]->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
 				swapStartDates_[i] = LADateHelpers::getDate(swaps.spotDate_[i], startTermString, *swaps.busDayAdj_[i], swaps.calendar_[i], true, &swaps.rollConvention_[i]);
 				
-				const LAString maturityTermString = dynamic_cast<const LADataString&> ((mktDataObj.mktData_.swap_[i]->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-				swapEndDatesUnadjusted_[i] = LADateHelpers::getDate(swapStartDates_[i], maturityTermString, LAPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+				const AQLString maturityTermString = dynamic_cast<const AQLDataString&> ((mktDataObj.mktData_.swap_[i]->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
+				swapEndDatesUnadjusted_[i] = LADateHelpers::getDate(swapStartDates_[i], maturityTermString, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 				swapEndDates_[i] = LADateHelpers::getDate(swapStartDates_[i], maturityTermString, *swaps.busDayAdj_[i], swaps.calendar_[i], true, &swaps.rollConvention_[i]);
 			}
 			thisSwapEndDate = swapEndDates_[i];
@@ -1511,27 +1511,27 @@ void SwapCashflows::updateInstrumentDatesAndRates( LACurveStaticDataHolder & sta
 		else
 		{
 			swapStartDates_[i] = swaps.spotDate_[i];
-			const LAString& maturityTermString = getMaturityAsTermString(i, mktDataObj.mktData_.swap_);
-			swapEndDatesUnadjusted_[i] = LADateHelpers::getDate(swaps.spotDate_[i], maturityTermString, LAPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+			const AQLString& maturityTermString = getMaturityAsTermString(i, mktDataObj.mktData_.swap_);
+			swapEndDatesUnadjusted_[i] = LADateHelpers::getDate(swaps.spotDate_[i], maturityTermString, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 			swapEndDates_[i] = LADateHelpers::getDate(swaps.spotDate_[i], maturityTermString, *swaps.busDayAdj_[i], swaps.calendar_[i], true, &swaps.rollConvention_[i]);
 			thisSwapEndDate = swapEndDates_[i];
 		}
 
 		// Skip to Next Swap Instrument if there is a Rate Priority Clash
-		LADate lastLiborEndDate = resultsObj.dfResults_.paymentDates_.back();
+		AQLDate lastLiborEndDate = resultsObj.dfResults_.paymentDates_.back();
 		if ( !ratePriority_.isSwapPriority_ && lastLiborEndDate.intervalDays(swapEndDates_[i]) <= RATE_PRIORITY_PROXIMITY_DAY_TOLERANCE)
 		{
 			continue;
 		}
 
-		swapRates_[i] = dynamic_cast<const LADataDouble&> ((mktDataObj.mktData_.swap_[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+		swapRates_[i] = dynamic_cast<const AQLDataDouble&> ((mktDataObj.mktData_.swap_[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 
 		if (staticDataObj.curveProperties_.useTenorBasisSwaps_)
 		{
 			if (swaps.frequencyFloat_[i] != swaps.liborIndexFrequency_[i])
 			{
-				const LAString& tenorSwapMaturityString	= dynamic_cast<const LADataString&> ((mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-				const LADate tenorSwapMaturityDate		= LADateHelpers::getDate(swaps.spotDate_[i], tenorSwapMaturityString, *tenorBasisSwaps.busDayAdj_, tenorBasisSwaps.calendar_, true, &tenorBasisSwaps.rollConv_);
+				const AQLString& tenorSwapMaturityString	= dynamic_cast<const AQLDataString&> ((mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+				const AQLDate tenorSwapMaturityDate		= LADateHelpers::getDate(swaps.spotDate_[i], tenorSwapMaturityString, *tenorBasisSwaps.busDayAdj_, tenorBasisSwaps.calendar_, true, &tenorBasisSwaps.rollConv_);
 				const double tenorSwapMaturityAsTerm	= tenorBasisSwaps.daycount_->getTerm(swaps.spotDate_[i], tenorSwapMaturityDate);
 				
 				switch( staticDataObj.curveProperties_.stateVariableTenorBasis_ )
@@ -1652,11 +1652,11 @@ void SwapCashflows::updateSwapFixedCashflows( CurveMarketDataHolder & mktDataObj
 		thisFixedCashflowPaymentDates.insert(thisFixedCashflowPaymentDates.begin(), swaps.spotDate_[nthSwap]);
 		if (!mktDataObj.mktData_.swap_[nthSwap]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, NOCHECK).isDefined())
 		{
-			mktDataObj.mktData_.swap_[nthSwap]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new LADataDates(thisFixedCashflowPaymentDates));
+			mktDataObj.mktData_.swap_[nthSwap]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new AQLDataDates(thisFixedCashflowPaymentDates));
 		}
 		else
 		{
-			dynamic_cast<LADataDates&>(mktDataObj.mktData_.swap_[nthSwap]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(thisFixedCashflowPaymentDates);
+			dynamic_cast<AQLDataDates&>(mktDataObj.mktData_.swap_[nthSwap]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(thisFixedCashflowPaymentDates);
 		}
 	}
 }
@@ -1842,29 +1842,29 @@ void importHybridInterpolationJoinDateDefaults( LACurveStaticDataHolder & static
 {
 	// Set Output Variable: linear-spline interpolation join date
 	resultsObj.interpolationObj_->interpolationJoinDateAsDouble_ = 0.0;
-	resultsObj.interpolationObj_->interpolationJoinDate_ = LADate();
+	resultsObj.interpolationObj_->interpolationJoinDate_ = AQLDate();
 	resultsObj.joinDateGiven_		= false;
 	resultsObj.calculateJoinDate_	= true;
 
 	if ( resultsObj.doesCurveUseHybridInterpolation_ )
 	{
 		AQ_REQUIRE( mktDataObj.mktData_.swap_size_ > 0, "Invalid Swap Instruments: Swap Instruments are Missing" )
-		LADate spotDate_swap	= dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+		AQLDate spotDate_swap	= dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 
 		// Internal curve model daycount required to tranform a date to a double
-		LAPriceDataDayCount dc_act365(ACT_365);
+		AQLPriceDataDayCount dc_act365(ACT_365);
 
 		// If a join date is given by user as an input, we use this join date and don't calculate join date;
 		// If no user-given join date exists, we will decide whether we always re-calculate the dynamic
 		// join date, or only calculate it once and re-use thie join date in subsequent calibrations of the same curve.
 
 		// Calculate the initial linear spline join date
-		const LADataHolder* handle = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + staticDataObj.targetCurveMktSuffix_, NOCHECK));
+		const AQLDataHolder* handle = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + staticDataObj.targetCurveMktSuffix_, NOCHECK));
 		if (handle->isDefined() && !handle->isNull())
 		{
 			// Use a linear spline join date supplied by user
 			resultsObj.joinDateGiven_ = true;
-			LADate joinDate = dynamic_cast<const LADataDate&>(handle->get()).get();
+			AQLDate joinDate = dynamic_cast<const AQLDataDate&>(handle->get()).get();
 			resultsObj.interpolationObj_->interpolationJoinDate_ = joinDate;
 			resultsObj.interpolationObj_->interpolationJoinDateAsDouble_ = dc_act365.getTerm(spotDate_swap, joinDate);
 		}
@@ -1872,10 +1872,10 @@ void importHybridInterpolationJoinDateDefaults( LACurveStaticDataHolder & static
 		{
 			// Always recalculate the dynamic join date?
 			bool alwaysRecalcJoinDate = true;
-			const LADataHolder* handle = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + staticDataObj.targetCurveMktSuffix_, NOCHECK));
+			const AQLDataHolder* handle = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + staticDataObj.targetCurveMktSuffix_, NOCHECK));
 			if (handle->isDefined() && !handle->isNull())
 			{
-				alwaysRecalcJoinDate = dynamic_cast<const LADataBool&>(handle->get()).get();
+				alwaysRecalcJoinDate = dynamic_cast<const AQLDataBool&>(handle->get()).get();
 			}
 
 			if (!alwaysRecalcJoinDate)
@@ -1883,11 +1883,11 @@ void importHybridInterpolationJoinDateDefaults( LACurveStaticDataHolder & static
 				handle = &(staticDataObj.curveDataObjectHolder_.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + staticDataObj.targetCurveMktSuffix_, NOCHECK));
 				if (handle->isDefined() && !handle->isNull())
 				{
-					double existingJoinDateAsDouble = dynamic_cast<const LADataDouble&>(handle->get()).get();
+					double existingJoinDateAsDouble = dynamic_cast<const AQLDataDouble&>(handle->get()).get();
 					resultsObj.interpolationObj_->interpolationJoinDateAsDouble_ = existingJoinDateAsDouble;
 
 					handle = &(staticDataObj.curveDataObjectHolder_.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE + staticDataObj.targetCurveMktSuffix_, NOCHECK));
-					resultsObj.interpolationObj_->interpolationJoinDate_ = dynamic_cast<const LADataDate&>(handle->get()).get();
+					resultsObj.interpolationObj_->interpolationJoinDate_ = dynamic_cast<const AQLDataDate&>(handle->get()).get();
 
 					resultsObj.calculateJoinDate_ = false;
 				}
@@ -1902,13 +1902,13 @@ void importHybridInterpolationJoinDateDefaults( LACurveStaticDataHolder & static
 				double joinDateAsDouble = 0.0;
 				if (staticDataObj.curveProperties_.useFRAs_ && mktDataObj.mktData_.fra_size_ > 0)
 				{
-					const LADate spotDate = dynamic_cast<const LADataDate&>((mktDataObj.mktData_.fra_[mktDataObj.mktData_.fra_size_ - 1]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
-					const LAPriceDataDayCount& fraDayCount = dynamic_cast<const LAPriceDataDayCount&>((mktDataObj.mktData_.fra_[mktDataObj.mktData_.fra_size_ - 1]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+					const AQLDate spotDate = dynamic_cast<const AQLDataDate&>((mktDataObj.mktData_.fra_[mktDataObj.mktData_.fra_size_ - 1]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
+					const AQLPriceDataDayCount& fraDayCount = dynamic_cast<const AQLPriceDataDayCount&>((mktDataObj.mktData_.fra_[mktDataObj.mktData_.fra_size_ - 1]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 
 					AQ_REQUIRE( liborIndex.frequency_ != "", "Invalid Libor Index: Libor Index Frequency is Missing" )
 					AQ_REQUIRE( liborIndex.tenor_ == AQ_TERM_3M || liborIndex.tenor_ == AQ_TERM_6M, "Invalid Libor Index: FRA Instrument Frequency must be 3M or 6M" )
 
-					LADate lastFraStartDate, lastFraEndDate;
+					AQLDate lastFraStartDate, lastFraEndDate;
 					calculateFraDates(lastFraStartDate, lastFraEndDate, spotDate, mktDataObj.mktData_.fra_[mktDataObj.mktData_.fra_size_ - 1], liborIndex.tenor_, liborIndex.frequency_, fraDayCount);
 
 					// Do not allow join date to be beyond the first swap maturity date
@@ -1959,7 +1959,7 @@ void rebaseDiscountFactorsToCurveAsOfDate( LACurveStaticDataHolder & staticDataO
 	// Calculate AsofDate base df
 	DoubleMatrix df_moneymarket(2);
 	DateVector df_moneymarket_date;
-	LAPriceDataDayCount	daycountAct365(ACT_365);
+	AQLPriceDataDayCount	daycountAct365(ACT_365);
 
 	// Populate dfSpot, df_moneymarket, df_moneymarket_date
 	const double dfSpot = getSpotDFandUpdateMoneyMarket(df_moneymarket, df_moneymarket_date, mktDataObj.mktData_.moneyMarket_, daycountAct365, liborIndex.curveSpotDate_);
@@ -1998,7 +1998,7 @@ void rebaseDiscountFactorsToCurveAsOfDate( LACurveStaticDataHolder & staticDataO
 	// Find FirstPaymentDatePosition, search for "paymentDates[0]" in "df_moneymarket_date"
 	unsigned int firstPaymentDatePosition;
 	unsigned int size_marketdata = df_moneymarket_date.size();
-	LAAlgorithm::locate(df_moneymarket_date, resultsObj.dfResults_.paymentDates_[0], size_marketdata, firstPaymentDatePosition);
+	AQLAlgorithm::locate(df_moneymarket_date, resultsObj.dfResults_.paymentDates_[0], size_marketdata, firstPaymentDatePosition);
 	
 	if (firstPaymentDatePosition == size_marketdata)
 	{
@@ -2017,7 +2017,7 @@ void rebaseDiscountFactorsToCurveAsOfDate( LACurveStaticDataHolder & staticDataO
 		{
 
 			// Find moneyMarketInstrumentPosition, search for "paymentDates[0]" in "df_moneymarket_date"
-			LAAlgorithm::locate(resultsObj.dfResults_.paymentDates_, df_moneymarket_date[i], resultsObj.dfResults_.paymentDates_.size(), moneyMarketInstrumentPosition);
+			AQLAlgorithm::locate(resultsObj.dfResults_.paymentDates_, df_moneymarket_date[i], resultsObj.dfResults_.paymentDates_.size(), moneyMarketInstrumentPosition);
 			
 			if (moneyMarketInstrumentPosition == resultsObj.dfResults_.paymentDates_.size())
 			{
@@ -2044,14 +2044,14 @@ void rebaseDiscountFactorsToCurveAsOfDate( LACurveStaticDataHolder & staticDataO
 	// 3.	Insert Extrapolation Terms
 	// ***********************************************************************************************************
 
-	const LADataHolder* dh = &staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_MAXTERM);
+	const AQLDataHolder* dh = &staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_MAXTERM);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAString maxTerm = dynamic_cast<const LADataString&>(dh->get()).get() + "Y";
-		const LADate& maxDate = LADateHelpers::getDate(liborIndex.curveSpotDate_, maxTerm, LAPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+		const AQLString maxTerm = dynamic_cast<const AQLDataString&>(dh->get()).get() + "Y";
+		const AQLDate& maxDate = LADateHelpers::getDate(liborIndex.curveSpotDate_, maxTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 		if (maxDate > swapCashflows.swapEndDates_.back())
 		{
-			const LAString maxFreq = dynamic_cast<const LADataString&>(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_MAXTERMFREQ).get()).get();
+			const AQLString maxFreq = dynamic_cast<const AQLDataString&>(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_MAXTERMFREQ).get()).get();
 			DoubleArray extra_terms;
 			DateVector tmp_dates; DoubleArray tmp_taus;
 			updateAccrualPeriodsAndPaymentDates(liborIndex.curveSpotDate_, maxDate, maxFreq, *swaps.calendar_[0], *swaps.busDayAdj_[0], *swaps.daycountFixed_[0], tmp_dates, extra_terms, tmp_taus, swaps.isEOMRoll_[0]);
@@ -2278,14 +2278,14 @@ void SwapCalibration::importCalibrationParameters( LACurveStaticDataHolder & sta
 												   CalibrationResults & resultsObj )
 {
 	// Data Holder Accessor
-	const LADataHolder* dh = 0;
+	const AQLDataHolder* dh = 0;
 
 	// ResultTolerance (epsilson, eps)
 	resultTolerance_ = 1.0e-9;
 	dh = &(mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_EPSILON, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		resultTolerance_ = dynamic_cast<const LADataDouble &>(dh->get()).get();
+		resultTolerance_ = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 
 	// Newton-Raphson Slope Tolerance
@@ -2293,7 +2293,7 @@ void SwapCalibration::importCalibrationParameters( LACurveStaticDataHolder & sta
 	dh = &(mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_GRADIENTEPSILON, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		gradientTolerance_ = dynamic_cast<const LADataDouble &>(dh->get()).get();
+		gradientTolerance_ = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 
 	// Shift-Size (Delta)
@@ -2301,7 +2301,7 @@ void SwapCalibration::importCalibrationParameters( LACurveStaticDataHolder & sta
 	dh = &(mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_DELTA, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		shiftSize_ = dynamic_cast<const LADataDouble &>(dh->get()).get();
+		shiftSize_ = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 
 	// Maximum Iteration Loops
@@ -2309,7 +2309,7 @@ void SwapCalibration::importCalibrationParameters( LACurveStaticDataHolder & sta
 	dh = &(mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_MAXLOOP, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		maxIterations_ = dynamic_cast<const LADataInt &>(dh->get()).get();
+		maxIterations_ = dynamic_cast<const AQLDataInt &>(dh->get()).get();
 	}
 
 	// Fast Convergence Check to Optimize Performance
@@ -2317,7 +2317,7 @@ void SwapCalibration::importCalibrationParameters( LACurveStaticDataHolder & sta
 	dh = &(mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_OPTIMIZEPERFORMANCE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		fastConvergenceCheck_ = dynamic_cast<const LADataBool &>(dh->get()).get();
+		fastConvergenceCheck_ = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	// Fast Rebuild, Reuse previous solution for fast rebuild
@@ -2325,7 +2325,7 @@ void SwapCalibration::importCalibrationParameters( LACurveStaticDataHolder & sta
 	dh = &(mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_FASTREBUILD, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		fastRebuild_ = dynamic_cast<const LADataBool &>(dh->get()).get();
+		fastRebuild_ = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	// isSwapCurveSelfDiscounting
@@ -2342,7 +2342,7 @@ void SwapCalibration::applyPreviousSolution( LACurveStaticDataHolder & staticDat
 										     CalibrationResults & resultsObj )
 {
 	// Data Holder
-	const LADataHolder* dh = 0;
+	const AQLDataHolder* dh = 0;
 
 	// Initialise state variables in preparation of solving
 	DoubleArray stateVariableTerms( resultsObj.dfResults_.paymentDatesAsTerms_ );
@@ -2360,7 +2360,7 @@ void SwapCalibration::applyPreviousSolution( LACurveStaticDataHolder & staticDat
 		dh = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_JACOBIAN_STATE_VARIABLES + staticDataObj.targetCurveMktSuffix_, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const DoubleArray& previousSolution = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+			const DoubleArray& previousSolution = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 			
 			// Sanity check: Verify that the previous solution is the correct size
 			if (previousSolution.size() == mktDataObj.mktData_.swap_size_)
@@ -2375,7 +2375,7 @@ void SwapCalibration::applyPreviousSolution( LACurveStaticDataHolder & staticDat
 				dh = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_INVERSE_CURVE_JACOBIAN + staticDataObj.targetCurveMktSuffix_, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					previousInverseJacobian_ = dynamic_cast<const LADataDoubleMatrix &>(dh->get()).get();
+					previousInverseJacobian_ = dynamic_cast<const AQLDataDoubleMatrix &>(dh->get()).get();
 					
 					// Sanity check: Verify the previous jacobian has the correct size
 					if ((previousInverseJacobian_.size() == mktDataObj.mktData_.swap_size_) && (previousInverseJacobian_[0].size() == mktDataObj.mktData_.swap_size_))
@@ -2424,7 +2424,7 @@ void SwapCalibration::optimizeFuturesJoinDateWithSwaps( LACurveStaticDataHolder 
 		// solved for the most optimal interpolation join date. The optimal choice should make the
 		// linear-spline forward rates as linear as possible at the linear vs spline joining point.
 		// -------------------------------------------------------------------------------
-		std::unique_ptr<LAInterpolationBase> joinDateInterpolationByRateTime(dynamic_cast<LAInterpolationBase *>(resultsObj.interpolationObj_->interpolatorForSwaps_->clone()));
+		std::unique_ptr<AQLInterpolationBase> joinDateInterpolationByRateTime(dynamic_cast<AQLInterpolationBase *>(resultsObj.interpolationObj_->interpolatorForSwaps_->clone()));
 		joinDateInterpolationByRateTime->setJoinDateAsDouble(resultsObj.interpolationObj_->interpolationJoinDateAsDouble_);
 		joinDateInterpolationByRateTime->set( stateVariableTerms(), stateVariableValues() );
 
@@ -2457,9 +2457,9 @@ void SwapCalibration::optimizeFuturesJoinDateWithSwaps( LACurveStaticDataHolder 
 			double joinDateZoneStart = futuresStartDateTerms.back();
 			double fractionFromLastFutureStartToJoin = resultsObj.interpolationObj_->interpolationJoinDateAsDouble_ - joinDateZoneStart;
 
-			LAPriceDataDayCount dc = *swaps.daycountFloat_[0];
-			LAPriceDataCalendar cal = *swaps.calendar_[0];
-			LAPriceDataSlidingRule sl = *swaps.busDayAdj_[0];
+			AQLPriceDataDayCount dc = *swaps.daycountFloat_[0];
+			AQLPriceDataCalendar cal = *swaps.calendar_[0];
+			AQLPriceDataSlidingRule sl = *swaps.busDayAdj_[0];
 			resultsObj.interpolationObj_->interpolationJoinDate_ = LADateScheduleHelpers::getDateFromTerm(futures.lastStartDate_, fractionFromLastFutureStartToJoin, dc);
 
 			// Adjust the joinDate and joinDateAsDouble for holidays
@@ -2531,20 +2531,20 @@ DoubleArray SwapCalibration::calculateSwapPVs( LACurveStaticDataHolder & staticD
 }
 
 // Price Swap Calibration Instruments, where SwapPVs is the result (input/output)
-void SwapCalibration::calculateSwapPVs( LAInterpolationBase &interpolationForForwardsRates,
+void SwapCalibration::calculateSwapPVs( AQLInterpolationBase &interpolationForForwardsRates,
 										const StateVariableEnum& stateVariable,
 										DoubleArray& swapPVs, // <--- Result
 										const bool isCurveSelfDiscounting,
 										const bool useTenorBasisSwaps,
 										const bool areSwapsForwardStarting,
-										LAInterpolationBase &interpolationForDiscountFactors,
+										AQLInterpolationBase &interpolationForDiscountFactors,
 										const double spotDiscountFactor,
 										const DoubleMatrix &fixedCoupons,
 										const DoubleMatrix &tenorSwapCoupons,
 										const DoubleMatrix &fixedCashflowPaymentDatesAsTerms,
 										const DoubleMatrix &tenorSwapCashflowPaymentDatesAsTerms,
 										const DoubleMatrix &floatCashflowPaymentDatesAsTerms,
-										const LADate & asOfDate,
+										const AQLDate & asOfDate,
 										const DayCountEnum & accrualDaycount,
 										const double spotDateAsTerms,
 										const IntArray &numberOfCompoundPeriodsFloat,
@@ -2785,11 +2785,11 @@ CurveCalibration::~CurveCalibration()
 // Enumerator
 bool CurveCalibration::isTypeOf(function_t id) const
 {
-	return (id == FN_IRYIELDGENERATOR ? true : LACoreProcedure::isTypeOf(id));
+	return (id == FN_IRYIELDGENERATOR ? true : AQLCoreProcedure::isTypeOf(id));
 }
 
 // Clone
-LACoreFunctionBase* CurveCalibration::clone() const
+AQLCoreFunctionBase* CurveCalibration::clone() const
 {
 	try
 	{
@@ -2797,12 +2797,12 @@ LACoreFunctionBase* CurveCalibration::clone() const
 	}
 	catch (std::bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 }
 
 // Register data used by class
-void CurveCalibration::registerData(LAPriceDataManager& dm) const
+void CurveCalibration::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(CALIBRATION_DATA_ASOFDATE, DATA_DATE);
 	dm.setData(CALIBRATION_DATA_TERMS, DATA_DOUBLES);
@@ -2843,25 +2843,25 @@ function_t CurveCalibration::getType() const
 *  @param[in]	curveData	EntityPool properties object
 *  @returns	A string vector specifying all of the curve names
 */
-LAStringVector CurveCalibration::getGlobalEngineCurveNames( const CurveCalibrationData& curveData )
+AQLStringVector CurveCalibration::getGlobalEngineCurveNames( const CurveCalibrationData& curveData )
 {
 	// Get the engine name
-	LAString engineName;
-	const LADataHolder *dh = &curveData.getData( IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK );
+	AQLString engineName;
+	const AQLDataHolder *dh = &curveData.getData( IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK );
 	if ( dh->isDefined() && !dh->isNull() )
 	{
-		engineName = dynamic_cast<const LADataString &>(dh->get()).get();
+		engineName = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
-	LAString suffix_engine = engineName;
+	AQLString suffix_engine = engineName;
 	suffix_engine = ( engineName == AQ_STD ) ? "" : "_" + engineName;
 	suffix_engine.toUpper();
 
-	LAStringVector allCurveNames;
+	AQLStringVector allCurveNames;
 	dh = &curveData.getData( IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffix_engine, NOCHECK);
 	if ( dh->isDefined() && !dh->isNull() )
 	{
-		LAString allCurveNamesString = dynamic_cast<const LADataString &>(dh->get()).get();
+		AQLString allCurveNamesString = dynamic_cast<const AQLDataString &>(dh->get()).get();
 		allCurveNames = allCurveNamesString.toToken( MULTI_STATIC_DATA_DELIMITER );
 	}
 	return allCurveNames;
@@ -2870,31 +2870,31 @@ LAStringVector CurveCalibration::getGlobalEngineCurveNames( const CurveCalibrati
 /*!
 @brief  Calibrate yield curves through a yield curve engine
 */
-void CurveCalibration::buildEngineCurves(const LADate& asOfDate, LAObject& calibrationDataObject, const LADataProcedure& att, bool includeBasisCurves) const
+void CurveCalibration::buildEngineCurves(const AQLDate& asOfDate, AQLObject& calibrationDataObject, const AQLDataProcedure& att, bool includeBasisCurves) const
 {
 	CurveCalibrationData& curveData = dynamic_cast<CurveCalibrationData&>(calibrationDataObject);
 
 	// Get the engine name
-	LAString engineName = "";
-	const LADataHolder *dh = &curveData.getData(IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK);
+	AQLString engineName = "";
+	const AQLDataHolder *dh = &curveData.getData(IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		engineName = dynamic_cast<const LADataString &>(dh->get()).get();
+		engineName = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
-	LAString suffix_engine = engineName;
+	AQLString suffix_engine = engineName;
 	suffix_engine = (engineName == AQ_STD) ? "" : "_" + engineName;
 	suffix_engine.toUpper();
 
-	const LADataReference& ref = curveData.getYieldData();
-	LAObjectHolder objHolder = ref.get();
+	const AQLDataReference& ref = curveData.getYieldData();
+	AQLObjectHolder objHolder = ref.get();
 
 	// Fast rebuild?
 	bool fastRebuildRequested = true;
 	dh = &curveData.getData(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffix_engine, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		fastRebuildRequested = dynamic_cast<const LADataBool &>(dh->get()).get();
+		fastRebuildRequested = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	//-------------------------------------------------------------------------
@@ -2904,14 +2904,14 @@ void CurveCalibration::buildEngineCurves(const LADate& asOfDate, LAObject& calib
 	GlobalCurveCalibrationEnginePtr curveEngine(new GlobalCurveCalibrationEngine(curveData, engineName));
 
 	// Get OIS curve
-	LAString oisCurveName = "";
+	AQLString oisCurveName = "";
 	dh = &curveData.getData(IR_CALIBRATION_DATA_DUALBOOTSTRAP_OISCURVE + suffix_engine, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		oisCurveName = dynamic_cast<const LADataString &>(dh->get()).get();
+		oisCurveName = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
-	const LAStringVector allCurveNames = getGlobalEngineCurveNames( curveData );
+	const AQLStringVector allCurveNames = getGlobalEngineCurveNames( curveData );
 	if (allCurveNames.size() == 0)
 	{
 		AQ_THROW("Yield curve engine has no component curves to build.");
@@ -2924,15 +2924,15 @@ void CurveCalibration::buildEngineCurves(const LADate& asOfDate, LAObject& calib
 
 	for (unsigned int i = 0; i < allCurveNames.size(); ++i)
 	{
-		LAString curveName = allCurveNames[i];
-		LAString curveNameUppercase = LAString(curveName).toUpper();
-		LAString suffix_curve = (curveNameUppercase == AQ_STD) ? "" : "_" + curveNameUppercase;
+		AQLString curveName = allCurveNames[i];
+		AQLString curveNameUppercase = AQLString(curveName).toUpper();
+		AQLString suffix_curve = (curveNameUppercase == AQ_STD) ? "" : "_" + curveNameUppercase;
 
-		LAString curveType("");
+		AQLString curveType("");
 		dh = &curveData.getData(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffix_engine + suffix_curve, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			curveType = dynamic_cast<const LADataString &>(dh->get()).get();
+			curveType = dynamic_cast<const AQLDataString &>(dh->get()).get();
 		}
 		else
 		{
@@ -2962,8 +2962,8 @@ void CurveCalibration::buildEngineCurves(const LADate& asOfDate, LAObject& calib
 		}
 	}
 
-	std::shared_ptr<LAInterpolationBase> oisCurve_stateVarInterp	= oisComponentCurve->getStateVarInterp();
-	std::shared_ptr<LAInterpolationBase> swapCurve_stateVarInterp	= swapComponentCurve->getStateVarInterp();
+	std::shared_ptr<AQLInterpolationBase> oisCurve_stateVarInterp	= oisComponentCurve->getStateVarInterp();
+	std::shared_ptr<AQLInterpolationBase> swapCurve_stateVarInterp	= swapComponentCurve->getStateVarInterp();
 
 	// Set OIS curve's dependencies and add to engine
 	oisComponentCurve->setLiborInterp(swapCurve_stateVarInterp);
@@ -2996,31 +2996,31 @@ void CurveCalibration::buildEngineCurves(const LADate& asOfDate, LAObject& calib
 /*!
 	@brief  Calibrate swap and OIS curves using dual bootstrapping technique
 */
-void CurveCalibration::dualbootstrap(const LADate& asOfDate, LAObject& calibrationDataObject, const LADataProcedure& att) const
+void CurveCalibration::dualbootstrap(const AQLDate& asOfDate, AQLObject& calibrationDataObject, const AQLDataProcedure& att) const
 {
 	CurveCalibrationData& curveData = dynamic_cast<CurveCalibrationData&>(calibrationDataObject);
 
 	// Get the engine name
-	LAString engineName = "";
-	const LADataHolder *dh = &curveData.getData(IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK);
+	AQLString engineName = "";
+	const AQLDataHolder *dh = &curveData.getData(IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		engineName = dynamic_cast<const LADataString &>(dh->get()).get();
+		engineName = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
-	LAString suffix_engine = engineName;
+	AQLString suffix_engine = engineName;
 	suffix_engine = (engineName == AQ_STD) ? "" : "_" + engineName;
 	suffix_engine.toUpper();
 
-	const LADataReference& ref = curveData.getYieldData();
-	LAObjectHolder objHolder = ref.get();
+	const AQLDataReference& ref = curveData.getYieldData();
+	AQLObjectHolder objHolder = ref.get();
 
 	// Fast rebuild?
 	bool fastRebuildRequested = true;
 	dh = &curveData.getData(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffix_engine, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		fastRebuildRequested = dynamic_cast<const LADataBool &>(dh->get()).get();
+		fastRebuildRequested = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	//-------------------------------------------------------------------------
@@ -3030,34 +3030,34 @@ void CurveCalibration::dualbootstrap(const LADate& asOfDate, LAObject& calibrati
 	GlobalCurveCalibrationEnginePtr curveEngine(new GlobalCurveCalibrationEngine(curveData, engineName));
 
 	// Get OIS curve
-	LAString oisCurveName = "";
+	AQLString oisCurveName = "";
 	dh = &curveData.getData(IR_CALIBRATION_DATA_DUALBOOTSTRAP_OISCURVE + suffix_engine, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		oisCurveName = dynamic_cast<const LADataString &>(dh->get()).get();
+		oisCurveName = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
 	oisCurveName.toUpper();
-	LAString suffix_ois = "_" + oisCurveName;
+	AQLString suffix_ois = "_" + oisCurveName;
 
 	// Get swap curve
-	LAString swapCurveName = "";
+	AQLString swapCurveName = "";
 	dh = &curveData.getData(IR_CALIBRATION_DATA_DUALBOOTSTRAP_SWAPCURVE + suffix_engine, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		swapCurveName = dynamic_cast<const LADataString &>(dh->get()).get();
+		swapCurveName = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
 	swapCurveName.toUpper();
-	LAString suffix_swap = (swapCurveName == AQ_STD) ? "" : "_" + swapCurveName;
+	AQLString suffix_swap = (swapCurveName == AQ_STD) ? "" : "_" + swapCurveName;
 
 	// Create and initialise individual curve objects
 	OISComponentCurvePtr oisComponentCurve(new OISComponentCurve(oisCurveName, curveData, asOfDate, fastRebuildRequested));
 	SwapComponentCurvePtr swapComponentCurve(new SwapComponentCurve(swapCurveName, curveData, asOfDate, fastRebuildRequested));
 
 	// For each curve object, set its dependent curves
-	std::shared_ptr<LAInterpolationBase> oisCurve_stateVarInterp = oisComponentCurve->getStateVarInterp();
-	std::shared_ptr<LAInterpolationBase> swapCurve_stateVarInterp = swapComponentCurve->getStateVarInterp();
+	std::shared_ptr<AQLInterpolationBase> oisCurve_stateVarInterp = oisComponentCurve->getStateVarInterp();
+	std::shared_ptr<AQLInterpolationBase> swapCurve_stateVarInterp = swapComponentCurve->getStateVarInterp();
 
 	oisComponentCurve->setLiborInterp(swapCurve_stateVarInterp);
 
@@ -3075,22 +3075,22 @@ void CurveCalibration::dualbootstrap(const LADate& asOfDate, LAObject& calibrati
 // Helper Method for the Curve Calibration 'CalibrateModel' Routine
 
 // Get Target Curve and Target Curve Market Data Suffix
-void CurveCalibration::getTargetCurveAndMarketDataSuffix( LAString & targetCurve, LAString & marketDataSuffix, CurveCalibrationData & curveData ) const
+void CurveCalibration::getTargetCurveAndMarketDataSuffix( AQLString & targetCurve, AQLString & marketDataSuffix, CurveCalibrationData & curveData ) const
 {
 	targetCurve				= "";
 	marketDataSuffix		= "";
 
-	const LADataHolder *dh = &curveData.getData( IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK );
+	const AQLDataHolder *dh = &curveData.getData( IR_CALIBRATION_DATA_GENTARGETDF, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		targetCurve = dynamic_cast< const LADataString & >( dh->get() ).get();
+		targetCurve = dynamic_cast< const AQLDataString & >( dh->get() ).get();
 		targetCurve.toUpper();
 	}
 
 	if( targetCurve != AQ_STD )
 	{
 		// Non-STD Swap Curves have a market data suffix
-		 marketDataSuffix = LAString( "_" ) + curveData.getMarketForCurve( targetCurve );
+		 marketDataSuffix = AQLString( "_" ) + curveData.getMarketForCurve( targetCurve );
 	}
 }
 
@@ -3119,7 +3119,7 @@ void CurveCalibration::updateObjectPoolCurveBuildListForTargetCurve( LACurveStat
 }
 
 // Update Object Pool List of Curves Built
-void CurveCalibration::updateObjectPoolCurveBuildListForTargetCurve( LACurveStaticDataHolder & staticDataObj, const LAString & targetCurve ) const
+void CurveCalibration::updateObjectPoolCurveBuildListForTargetCurve( LACurveStaticDataHolder & staticDataObj, const AQLString & targetCurve ) const
 {
 	dynamic_cast< CurveCalibrationData & >( staticDataObj.curveCalibrationData_ ).setGCurveGenerateMap( targetCurve );
 }
@@ -3127,7 +3127,7 @@ void CurveCalibration::updateObjectPoolCurveBuildListForTargetCurve( LACurveStat
 // Update Object Pool List of Curves Built Including Alias Names
 void CurveCalibration::updateObjectPoolCurveBuildListForAliasCurves( LACurveStaticDataHolder & staticDataObj ) const
 {
-	const LAString targetCurve = staticDataObj.targetCurve_;
+	const AQLString targetCurve = staticDataObj.targetCurve_;
 	TargetCurveAliasList targetCurveAliasList = staticDataObj.targetCurveAliasList_;
 
 	// Curve Aliases - Update Curve Build list
@@ -3135,8 +3135,8 @@ void CurveCalibration::updateObjectPoolCurveBuildListForAliasCurves( LACurveStat
 	{
 		if( it->second == staticDataObj.curveCalibrationData_.getMarketForCurve( targetCurve ) )
 		{
-			const LAString& curveName = it->first;
-			LAString suffix_curve = "";
+			const AQLString& curveName = it->first;
+			AQLString suffix_curve = "";
 			if( curveName != AQ_STD )
 			{
 				suffix_curve = "_" + curveName;
@@ -3156,7 +3156,7 @@ void CurveCalibration::updateObjectPoolCurveBuildList( LACurveStaticDataHolder &
 // Helper Method to Update the Object Pool Curve Results
 void CurveCalibration::updateObjectPoolCurveResults( LACurveStaticDataHolder & staticDataObj,
 													 const CalibrationResults& resultsObj,
-													 const LAString & curveSuffix ) const
+													 const AQLString & curveSuffix ) const
 {
 	// Check Calibration Discount Factor Dates are not in the Past
 	DoubleArray::const_iterator min_it = min_element( resultsObj.dfResults_.paymentDatesAsTerms_.begin(), resultsObj.dfResults_.paymentDatesAsTerms_.end() );
@@ -3180,42 +3180,42 @@ void CurveCalibration::updateObjectPoolCurveResults( LACurveStaticDataHolder & s
 	staticDataObj.curveDataObjectHolder_.remove( IR_CALIBRATION_DATA_JACOBIAN_STATE_VARIABLES + curveSuffix );
 	staticDataObj.curveDataObjectHolder_.remove( IR_CALIBRATION_DATA_BUILTBYCURVEENGINE + curveSuffix );
 
-	staticDataObj.curveDataObjectHolder_.add( CALIBRATION_DATA_ASOFDATE + curveSuffix, new LADataDate( resultsObj.asOfDate_ ) );
-	staticDataObj.curveDataObjectHolder_.add( CALIBRATION_DATA_TERMS + curveSuffix, new LADataDoubles( resultsObj.dfResults_.paymentDatesAsTerms_ ) );
-	staticDataObj.curveDataObjectHolder_.add( CALIBRATION_DATA_FWDTERMSMATRIX + curveSuffix, new LADataDoubleMatrix( resultsObj.fwdStartEndDatesAsTerms_ ) );
-	staticDataObj.curveDataObjectHolder_.add( IR_CALIBRATION_DATA_FORWARDRATES + curveSuffix, new LADataDoubles( resultsObj.fwdRates_ ) );
-	staticDataObj.curveDataObjectHolder_.add( IR_CALIBRATION_DATA_DFS + curveSuffix, new LADataDoubles( resultsObj.dfResults_.discountFactors_ ) );
-	staticDataObj.curveDataObjectHolder_.add( CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + curveSuffix, new LADataDouble( resultsObj.interpolationObj_->interpolationJoinDateAsDouble_ ) );
-	staticDataObj.curveDataObjectHolder_.add( CALIBRATION_DATA_INTERPOLATION_JOINDATE + curveSuffix, new LADataDate( resultsObj.interpolationObj_->interpolationJoinDate_ ) );
-	staticDataObj.curveDataObjectHolder_.add( IR_CALIBRATION_DATA_JACOBIAN_STATE_VARIABLES + curveSuffix, new LADataDoubles( resultsObj.jacobianStateVariables_ ) );
-	staticDataObj.curveDataObjectHolder_.add( IR_CALIBRATION_DATA_BUILTBYCURVEENGINE + curveSuffix, new LADataBool( false ) );
+	staticDataObj.curveDataObjectHolder_.add( CALIBRATION_DATA_ASOFDATE + curveSuffix, new AQLDataDate( resultsObj.asOfDate_ ) );
+	staticDataObj.curveDataObjectHolder_.add( CALIBRATION_DATA_TERMS + curveSuffix, new AQLDataDoubles( resultsObj.dfResults_.paymentDatesAsTerms_ ) );
+	staticDataObj.curveDataObjectHolder_.add( CALIBRATION_DATA_FWDTERMSMATRIX + curveSuffix, new AQLDataDoubleMatrix( resultsObj.fwdStartEndDatesAsTerms_ ) );
+	staticDataObj.curveDataObjectHolder_.add( IR_CALIBRATION_DATA_FORWARDRATES + curveSuffix, new AQLDataDoubles( resultsObj.fwdRates_ ) );
+	staticDataObj.curveDataObjectHolder_.add( IR_CALIBRATION_DATA_DFS + curveSuffix, new AQLDataDoubles( resultsObj.dfResults_.discountFactors_ ) );
+	staticDataObj.curveDataObjectHolder_.add( CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + curveSuffix, new AQLDataDouble( resultsObj.interpolationObj_->interpolationJoinDateAsDouble_ ) );
+	staticDataObj.curveDataObjectHolder_.add( CALIBRATION_DATA_INTERPOLATION_JOINDATE + curveSuffix, new AQLDataDate( resultsObj.interpolationObj_->interpolationJoinDate_ ) );
+	staticDataObj.curveDataObjectHolder_.add( IR_CALIBRATION_DATA_JACOBIAN_STATE_VARIABLES + curveSuffix, new AQLDataDoubles( resultsObj.jacobianStateVariables_ ) );
+	staticDataObj.curveDataObjectHolder_.add( IR_CALIBRATION_DATA_BUILTBYCURVEENGINE + curveSuffix, new AQLDataBool( false ) );
 
 	// Update Risk Metrics if Available
 	if (resultsObj.inverseJacobian_.size() != 0)
 	{
 		staticDataObj.curveDataObjectHolder_.remove(IR_CALIBRATION_DATA_INVERSE_CURVE_JACOBIAN + curveSuffix);
-		staticDataObj.curveDataObjectHolder_.add(IR_CALIBRATION_DATA_INVERSE_CURVE_JACOBIAN + curveSuffix, new LADataDoubleMatrix(resultsObj.inverseJacobian_));
+		staticDataObj.curveDataObjectHolder_.add(IR_CALIBRATION_DATA_INVERSE_CURVE_JACOBIAN + curveSuffix, new AQLDataDoubleMatrix(resultsObj.inverseJacobian_));
 	}
 
 	// Update Risk Metrics if Available
 	if (resultsObj.jacobian_.size() != 0)
 	{
 		staticDataObj.curveDataObjectHolder_.remove(IR_CALIBRATION_DATA_CURVE_JACOBIAN + curveSuffix);
-		staticDataObj.curveDataObjectHolder_.add(IR_CALIBRATION_DATA_CURVE_JACOBIAN + curveSuffix, new LADataDoubleMatrix(resultsObj.jacobian_));
+		staticDataObj.curveDataObjectHolder_.add(IR_CALIBRATION_DATA_CURVE_JACOBIAN + curveSuffix, new AQLDataDoubleMatrix(resultsObj.jacobian_));
 	}
 	
 	// Update Interpolation Method for Discount Factors if Avaliable
 	if ( resultsObj.interpolationObj_->interpolationStringDiscountFactors_ != "" )
 	{ 
 		staticDataObj.curveDataObjectHolder_.remove(CALIBRATION_DATA_INTERPOLATION + curveSuffix);
-		staticDataObj.curveDataObjectHolder_.add(CALIBRATION_DATA_INTERPOLATION + curveSuffix,	new LAPriceDataInterpolation()).convertFromString(resultsObj.interpolationObj_->interpolationStringDiscountFactors_);
+		staticDataObj.curveDataObjectHolder_.add(CALIBRATION_DATA_INTERPOLATION + curveSuffix,	new AQLPriceDataInterpolation()).convertFromString(resultsObj.interpolationObj_->interpolationStringDiscountFactors_);
 	}
 
 	// Update Interpolation Method for Swaps if Avaliable
 	if ( resultsObj.interpolationObj_->interpolationStringSwaps_ != "" )
 	{ 
 		staticDataObj.curveDataObjectHolder_.remove(IR_CALIBRATION_DATA_INTERPOLATIONYG + curveSuffix);
-		staticDataObj.curveDataObjectHolder_.add(IR_CALIBRATION_DATA_INTERPOLATIONYG + curveSuffix, new LAPriceDataInterpolation()).convertFromString(resultsObj.interpolationObj_->interpolationStringSwaps_);
+		staticDataObj.curveDataObjectHolder_.add(IR_CALIBRATION_DATA_INTERPOLATIONYG + curveSuffix, new AQLPriceDataInterpolation()).convertFromString(resultsObj.interpolationObj_->interpolationStringSwaps_);
 	}
 }
 
@@ -3225,19 +3225,19 @@ void CurveCalibration::updateObjectPoolCurveConventionsAndResults( LACurveStatic
 																   const CalibrationResults& resultsObj ) const
 { 
 	// Curve Info
-	LAString targetCurve = staticDataObj.targetCurve_;
+	AQLString targetCurve = staticDataObj.targetCurve_;
 	TargetCurveAliasList targetCurveAliasList = staticDataObj.targetCurveAliasList_;
 
 	for( TargetCurveAliasList::const_iterator it = targetCurveAliasList.begin(); it != targetCurveAliasList.end(); it++ )
 	{
-		LAString currentMkt		= it->second;
-		LAString mktForCurve	= staticDataObj.curveCalibrationData_.getMarketForCurve( targetCurve );
+		AQLString currentMkt		= it->second;
+		AQLString mktForCurve	= staticDataObj.curveCalibrationData_.getMarketForCurve( targetCurve );
 
 		if( currentMkt == mktForCurve )
 		{
 			// Get Curve Name and Suffix (if any)
-			const LAString& curveName = it->first;
-			LAString curveSuffix = ( curveName == AQ_STD ) ? "" : "_" + curveName;
+			const AQLString& curveName = it->first;
+			AQLString curveSuffix = ( curveName == AQ_STD ) ? "" : "_" + curveName;
 
 			// Set Object Pool Results
 			updateObjectPoolCurveResults( staticDataObj, resultsObj, curveSuffix );
@@ -3261,32 +3261,32 @@ void CurveCalibration::updateObjectPoolResultsAndBuildList( LACurveStaticDataHol
 bool CurveCalibration::areCurveUpdatesEnabled( LACurveStaticDataHolder & staticDataObj ) const
 {
 	bool isEnabled = false;
-	const LADataHolder *dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_ENABLECALCULATION, NOCHECK );
+	const AQLDataHolder *dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_ENABLECALCULATION, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		isEnabled = dynamic_cast< const LADataBool & >( dh->get() ).get();
+		isEnabled = dynamic_cast< const AQLDataBool & >( dh->get() ).get();
 	}
 	return isEnabled;
 }
 
 // Helper Method to get the DFCurveName
-LAString CurveCalibration::getDFCurveName( LACurveStaticDataHolder & staticDataObj, const LAString & curveSuffix ) const
+AQLString CurveCalibration::getDFCurveName( LACurveStaticDataHolder & staticDataObj, const AQLString & curveSuffix ) const
 {
-	LAString dfCurveName = ITSELF;
-	const LADataHolder *dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_DFCURVENAME + curveSuffix, NOCHECK );
+	AQLString dfCurveName = ITSELF;
+	const AQLDataHolder *dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_DFCURVENAME + curveSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		dfCurveName = dynamic_cast< const LADataString & >( dh->get() ).get();
+		dfCurveName = dynamic_cast< const AQLDataString & >( dh->get() ).get();
 	}
 	return dfCurveName;
 }
 
 // Check if Curve Exists and Contains Valid Data
-bool CurveCalibration::doesValidCurveExist( const LAString & targetCurve, LACurveStaticDataHolder & staticDataObj ) const
+bool CurveCalibration::doesValidCurveExist( const AQLString & targetCurve, LACurveStaticDataHolder & staticDataObj ) const
 {
 	bool doesCurveExist = false;
-	const LADataHolder *dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_ISCURVEEXISTCHECK, NOCHECK );
-	if( dh->isDefined() && !dh->isNull() ) doesCurveExist = dynamic_cast< const LADataBool & >( dh->get() ).get();
+	const AQLDataHolder *dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_ISCURVEEXISTCHECK, NOCHECK );
+	if( dh->isDefined() && !dh->isNull() ) doesCurveExist = dynamic_cast< const AQLDataBool & >( dh->get() ).get();
 	bool doCurveResultsExist = staticDataObj.curveCalibrationData_.checkCurveAttr( staticDataObj.curveCalibrationData_.getMarketForCurve( targetCurve ) );
 	
 	bool result = false;
@@ -3298,29 +3298,29 @@ bool CurveCalibration::doesValidCurveExist( const LAString & targetCurve, LACurv
 }
 
 // Get DFCurveName
-LAString CurveCalibration::getDFCurvename( LACurveStaticDataHolder & staticDataObj, const LAString & targetCurve, const LAString & curveSuffix ) const
+AQLString CurveCalibration::getDFCurvename( LACurveStaticDataHolder & staticDataObj, const AQLString & targetCurve, const AQLString & curveSuffix ) const
 {
-	LAString dfCurveName = ITSELF;
-	const LADataHolder *dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_DFCURVENAME + curveSuffix, NOCHECK );
+	AQLString dfCurveName = ITSELF;
+	const AQLDataHolder *dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_DFCURVENAME + curveSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
-		dfCurveName = dynamic_cast< const LADataString & >( dh->get() ).get();
+		dfCurveName = dynamic_cast< const AQLDataString & >( dh->get() ).get();
 	}
 	return dfCurveName;
 }
 
 // Virtual Method to Calibrate the Curve Model
-void CurveCalibration::calibrateModel( const LADate& asOfDate, LAObject& dataObject, const LADataProcedure& laAttributeData ) const
+void CurveCalibration::calibrateModel( const AQLDate& asOfDate, AQLObject& dataObject, const AQLDataProcedure& laAttributeData ) const
 {
 	calibrateOISAndSwapCurve( asOfDate, dataObject, laAttributeData, "", "" ); 
 }
 
 // Virtual Method to Calibrate the Curve Model for OIS and Swap Curve with additional Curve Collection and Curve Index Info
-void CurveCalibration::calibrateOISAndSwapCurve( const LADate& asOfDate,
-                                                 LAObject& dataObject,
-                                                 const LADataProcedure& laAttributeData,
-                                                 const LAString & curveCollection,
-                                                 const LAString & curveIndex ) const
+void CurveCalibration::calibrateOISAndSwapCurve( const AQLDate& asOfDate,
+                                                 AQLObject& dataObject,
+                                                 const AQLDataProcedure& laAttributeData,
+                                                 const AQLString & curveCollection,
+                                                 const AQLString & curveIndex ) const
 {
 	// 1.	Initialize Curve Calibration Data & Curve Properties
 	CurveCalibrationData& curveData = dynamic_cast< CurveCalibrationData& >( dataObject );
@@ -3402,27 +3402,27 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	//-------------------------------------------------------------------------------
 	// Classify marketData object by marketData type
 
-	std::vector<LAObject*> data_swap, data_on, data_tn;
+	std::vector<AQLObject*> data_swap, data_on, data_tn;
 	unsigned int size_marketdata = mktDataObj.rawMarketData_.size();
-	LAString datatype_str;
+	AQLString datatype_str;
 
-	LAPriceDataDayCount dc_act365(ACT_365);
+	AQLPriceDataDayCount dc_act365(ACT_365);
 	for (unsigned i = 0; i < size_marketdata; i++)
 	{
 		// check use grid
-		const LADataHolder *dh = &mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
-		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const LADataBool &>(dh->get()).get()) continue;
+		const AQLDataHolder *dh = &mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
+		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const AQLDataBool &>(dh->get()).get()) continue;
 
-		datatype_str = dynamic_cast<const LADataString&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+		datatype_str = dynamic_cast<const AQLDataString&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		datatype_str.toUpper();
 
 		if (datatype_str == AQ_SWAP_DATA)
 		{
-			const LAString& term = dynamic_cast<const LADataString&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			const AQLString& term = dynamic_cast<const AQLDataString&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			if (term == AQ_ON)
 			{
                 // Treat O/N as a regular 1D Swap if reset lag = 0D i.e. if spotDate = asOfDate
-                const LADate& spotdate_ = dynamic_cast<const LADataDate&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+                const AQLDate& spotdate_ = dynamic_cast<const AQLDataDate&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
                 if (spotdate_ == resultsObj.asOfDate_ )
                 {
                     // data_swap: Treat O/N as a regular OIS Swap
@@ -3437,7 +3437,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			else if (term == AQ_TN)
 			{
                 // Disallow T/N Instruments when Curve SpotLag = 0D i.e. when spotDate = asOfDate
-                const LADate& spotdate_ = dynamic_cast<const LADataDate&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+                const AQLDate& spotdate_ = dynamic_cast<const AQLDataDate&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
                 AQ_THROW_IF( spotdate_== resultsObj.asOfDate_, "Invalid Curve Instrument: T/N is not a valid instrument for curves with 0D spot lag" )
                 
                 // data_tn: Append T/N data, not part of swap calibration    
@@ -3462,19 +3462,19 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 
 	// Short term swaps overrule central bank swaps?
 	bool shortTermSwapOverrules = false;
-	const LADataHolder *dh = &mktDataObj.rawMarketData_.front()->getData(IR_CALIBRATION_DATA_SHORTTERMSWAPOVERRULES, NOCHECK);
+	const AQLDataHolder *dh = &mktDataObj.rawMarketData_.front()->getData(IR_CALIBRATION_DATA_SHORTTERMSWAPOVERRULES, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		shortTermSwapOverrules = dynamic_cast<const LADataBool &>(dh->get()).get();
+		shortTermSwapOverrules = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	//Spot date
 	//-------------------------------------------------------------------------------
-	LADate spotdate;
+	AQLDate spotdate;
 	size_marketdata = mpc_swap_size + swap_size;
 	for (unsigned int i = 0; i < size_marketdata; ++i)
 	{
-		const LAObject *thisMarketData = 0;
+		const AQLObject *thisMarketData = 0;
 		if (i < mpc_swap_size)
 		{
 			thisMarketData = mktDataObj.mktData_.mpc_swaps_[i];
@@ -3484,7 +3484,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			thisMarketData = data_swap[i - mpc_swap_size];
 		}
 
-		const LADate& spotdate_ = dynamic_cast<const LADataDate&> ((thisMarketData->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+		const AQLDate& spotdate_ = dynamic_cast<const AQLDataDate&> ((thisMarketData->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 		if (i == 0)
 		{
 			spotdate = spotdate_;
@@ -3498,23 +3498,23 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	//-------------------------------------------------------------------------------
 	// Get standard swap conventions
 
-	const LAPriceDataDayCount& dc = dynamic_cast<const LAPriceDataDayCount&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-	const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&> ((data_swap[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-	const LAPriceDataSlidingRule& sld = dynamic_cast<const LAPriceDataSlidingRule&> ((data_swap[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+	const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+	const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&> ((data_swap[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+	const AQLPriceDataSlidingRule& sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((data_swap[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
-	LAPriceDataConvention conv(dc.getDayCount(), rc);
+	AQLPriceDataConvention conv(dc.getDayCount(), rc);
 
 	// Get shortterm_date
 	// If not given directly as an input, short term date is the LAST central bank swap/future END date. Failing that, it is the spot date
-	LADate shortterm_date = spotdate;
+	AQLDate shortterm_date = spotdate;
 
 	dh = &data_swap[0]->getData(IR_CALIBRATION_DATA_SHORTTERMDATE, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		shortterm_date = dynamic_cast<const LADataDate&>(dh->get());
+		shortterm_date = dynamic_cast<const AQLDataDate&>(dh->get());
 		if (mpc_swap_size)
 		{
-			const LADate &mpc_swap_enddate = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_.back()->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get());
+			const AQLDate &mpc_swap_enddate = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_.back()->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get());
 			if (shortterm_date > mpc_swap_enddate)
 			{
 				shortterm_date = mpc_swap_enddate;
@@ -3525,7 +3525,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	{
 		if (mpc_swap_size)
 		{
-			shortterm_date = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_.back()->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get());
+			shortterm_date = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_.back()->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get());
 		}
 	}
 
@@ -3535,13 +3535,13 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	dh = &(data_swap[0]->getData(IR_CALIBRATION_DATA_ISEOMROLLOIS, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
-	LAString freq = dynamic_cast<const LADataString&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+	AQLString freq = dynamic_cast<const AQLDataString&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 	freq.toUpper();
 
 	// set roll convention
-	LAString roll_conv("");
+	AQLString roll_conv("");
 	if (freq == AQ_LUNAR)
 	{
 		roll_conv = AQ_ROLLCONV_LUNAR;
@@ -3558,59 +3558,59 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	//-------------------------------------------------------------------------------
 	// Group together short end swaps that sit in front of Central Bank Swaps
 	
-	LADate firstCBSStartDate;
-	LADate lastCBSEndDate;
+	AQLDate firstCBSStartDate;
+	AQLDate lastCBSEndDate;
 	if (mpc_swap_size > 0)
 	{
 		if (shortTermSwapOverrules)
 		{
 			if (mpc_swap_size > 2)
 			{
-				firstCBSStartDate = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_[1]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
+				firstCBSStartDate = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_[1]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
 			}
 			else
 			{
-				firstCBSStartDate = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
+				firstCBSStartDate = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
 			}
 		}
 		else
 		{
-			firstCBSStartDate = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
+			firstCBSStartDate = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
 		}
 
-		lastCBSEndDate = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_[mpc_swap_size - 1]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get());
+		lastCBSEndDate = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_[mpc_swap_size - 1]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get());
 	}
 
-	std::vector<LAObject*> swap_curvefront;
-	std::vector<LAObject*> swap_longend;
+	std::vector<AQLObject*> swap_curvefront;
+	std::vector<AQLObject*> swap_longend;
 	size_t i = 0;
 	for (i = 0; i < swap_size; ++i)
 	{
-		const LAString& term_str = getMaturityAsTermString(i, data_swap);
+		const AQLString& term_str = getMaturityAsTermString(i, data_swap);
 		// Unused Variable
-		//const LAPriceDataDayCount* dc = &dynamic_cast<const LAPriceDataDayCount&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-		const LAPriceDataCalendar* cal = &dynamic_cast<const LAPriceDataCalendar&> ((data_swap[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-		const LAPriceDataSlidingRule* sld = &dynamic_cast<const LAPriceDataSlidingRule&> ((data_swap[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-		LAString freq = dynamic_cast<const LADataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+		//const AQLPriceDataDayCount* dc = &dynamic_cast<const AQLPriceDataDayCount&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+		const AQLPriceDataCalendar* cal = &dynamic_cast<const AQLPriceDataCalendar&> ((data_swap[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+		const AQLPriceDataSlidingRule* sld = &dynamic_cast<const AQLPriceDataSlidingRule&> ((data_swap[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+		AQLString freq = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 
-		LADate maturityDate = LADateHelpers::getDate(spotdate, term_str, *sld, cal, true, &roll_conv);
+		AQLDate maturityDate = LADateHelpers::getDate(spotdate, term_str, *sld, cal, true, &roll_conv);
 		double term = dc_act365.getTerm(spotdate, maturityDate);
-		LADate date1Y = LADateHelpers::getDate(spotdate, "1Y", *sld, cal, true, &roll_conv);
+		AQLDate date1Y = LADateHelpers::getDate(spotdate, "1Y", *sld, cal, true, &roll_conv);
 		double term1Y = dc_act365.getTerm(spotdate, date1Y);
 
 		if (mpc_swap_size > 0)
 		{
 			if (maturityDate < firstCBSStartDate)
 			{
-				LAObject* shortEndSwap = data_swap[i];
+				AQLObject* shortEndSwap = data_swap[i];
 
 				dh = &shortEndSwap->getData(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD, NOCHECK);
 				if (!dh->isDefined() || !dh->isNull())
 				{
 					// If short term swaps do not already have a user-specified compounding method, it will be defaulted as specified in the calcEffectiveOISRate method
-					LAString compoundMethod = dynamic_cast<const LADataString&> (dh->get());
+					AQLString compoundMethod = dynamic_cast<const AQLDataString&> (dh->get());
 					shortEndSwap->remove(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD);
-					shortEndSwap->add(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD, new LADataString()).convertFromString("NONE");
+					shortEndSwap->add(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD, new AQLDataString()).convertFromString("NONE");
 				}
 
 				// When Central Bank Swaps are present in the curve, short term swaps can NOT be built from
@@ -3636,10 +3636,10 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			{
 				// When there is no Central Bank Swaps in the curve, if a swap is built from libor swap + basis, it
 				// can not be grouped as a short term swap
-				const LADataHolder *dh = &data_swap[i]->getData(IR_CALIBRATION_DATA_LONGTERMCONVENTION);
+				const AQLDataHolder *dh = &data_swap[i]->getData(IR_CALIBRATION_DATA_LONGTERMCONVENTION);
 				if (dh->isDefined() && !dh->isNull())
 				{
-					const OISLongTermInstrumentsEnum longTermConvEnum = toOISLongTermInstrumentsEnum(dynamic_cast<const LADataString&> (dh->get()).get().getCString());
+					const OISLongTermInstrumentsEnum longTermConvEnum = toOISLongTermInstrumentsEnum(dynamic_cast<const AQLDataString&> (dh->get()).get().getCString());
 					if (longTermConvEnum == LIBOROIS_OIS_LONGTERM_INSTRUMENTS)
 					{
 						shortterm_date = maturityDate;
@@ -3647,16 +3647,16 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 					}
 				}
 
-				LAObject* shortEndSwap = data_swap[i];
+				AQLObject* shortEndSwap = data_swap[i];
 
 				dh = &shortEndSwap->getData(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD, NOCHECK);
 				if (!dh->isDefined() || !dh->isNull())
 				{
 					// If short term swaps do not already have a user-specified compounding method, it will be defaulted as specified in the calcEffectiveOISRate method
 					// Arithmetic Instruments Less than 1Y switch to SIMPLE / GEOMETRIC Compounding as a market convention, this is managed in the calcEffectiveOISRate method
-					LAString compoundMethod = dynamic_cast<const LADataString&> (dh->get());
+					AQLString compoundMethod = dynamic_cast<const AQLDataString&> (dh->get());
 					shortEndSwap->remove(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD);
-					shortEndSwap->add(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD, new LADataString()).convertFromString("NONE");
+					shortEndSwap->add(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD, new AQLDataString()).convertFromString("NONE");
 				}
 
 				swap_curvefront.push_back(shortEndSwap);
@@ -3676,13 +3676,13 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	}
 
 	// This suffix was using the target curve instead of the targetCurveMktSuffix
-	LAString targetSuffix = "_" + staticDataObj.targetCurve_;
+	AQLString targetSuffix = "_" + staticDataObj.targetCurve_;
 
 	StateVariableEnum stateVariable = STATE_VARIABLE_ZERO_RATE;
-	const LADataHolder* handle = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_STATEVARIABLE + targetSuffix, NOCHECK));
+	const AQLDataHolder* handle = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_STATEVARIABLE + targetSuffix, NOCHECK));
 	if (handle->isDefined() && !handle->isNull())
 	{
-		stateVariable = toStateVariableEnum(dynamic_cast<const LADataString&>(handle->get()).get().getCString());
+		stateVariable = toStateVariableEnum(dynamic_cast<const AQLDataString&>(handle->get()).get().getCString());
 		AQ_THROW_IF(stateVariable != STATE_VARIABLE_ZERO_RATE, "For OIS/ARR Curve, interpolator's StateVariable only supports ZeroRate")
 	}
 
@@ -3707,11 +3707,11 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	// Set interpolation join date
 	if (interpolatorForDiscFactors_IsHybrid || interpolatorForSwaps_IsHybrid)
 	{
-		const LADataHolder* handle = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + targetSuffix, NOCHECK));
+		const AQLDataHolder* handle = &(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + targetSuffix, NOCHECK));
 		if (handle->isDefined() && !handle->isNull())
 		{
 			// Use a linear spline join date supplied by user
-			LADate joinDate = dynamic_cast<const LADataDate&>(handle->get()).get();
+			AQLDate joinDate = dynamic_cast<const AQLDataDate&>(handle->get()).get();
 			resultsObj.interpolationObj_->interpolationJoinDate_ = joinDate;
 			resultsObj.interpolationObj_->interpolationJoinDateAsDouble_ = dc_act365.getTerm(spotdate, joinDate);
 		}
@@ -3720,12 +3720,12 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			if (mpc_swap_size > 1)
 			{
 				// More than one future, default the joinDate to be the second last ECB/ARRfuture's END date
-				resultsObj.interpolationObj_->interpolationJoinDate_ = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_[mpc_swap_size - 2]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get());
+				resultsObj.interpolationObj_->interpolationJoinDate_ = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_[mpc_swap_size - 2]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get());
 			}
 			else
 			{
 				// Only one future, default the joinDate to be the ECB/ARRfuture's START date
-				resultsObj.interpolationObj_->interpolationJoinDate_ = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_[mpc_swap_size - 1]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
+				resultsObj.interpolationObj_->interpolationJoinDate_ = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_[mpc_swap_size - 1]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
 			}
 
 			resultsObj.interpolationObj_->interpolationJoinDateAsDouble_ = dc_act365.getTerm(spotdate, resultsObj.interpolationObj_->interpolationJoinDate_);
@@ -3756,14 +3756,14 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	DoubleArray accrualPeriod;
 	DateVector cashflowPaymentDates;
 
-	std::unique_ptr<LAInterpolationBase> interpolationForSwaps_;
+	std::unique_ptr<AQLInterpolationBase> interpolationForSwaps_;
 	if (resultsObj.interpolationObj_->interpolatorForSwaps_->getType() == FN_LINEARINTERPOLATION)
 	{
-		interpolationForSwaps_.reset(new LALinearInterpolation(LINEAR_EXTRAPOLATION_TYPE));
+		interpolationForSwaps_.reset(new AQLLinearInterpolation(LINEAR_EXTRAPOLATION_TYPE));
 	}
 	else
 	{
-		interpolationForSwaps_.reset(dynamic_cast<LAInterpolationBase *>(resultsObj.interpolationObj_->interpolatorForSwaps_->clone()));
+		interpolationForSwaps_.reset(dynamic_cast<AQLInterpolationBase *>(resultsObj.interpolationObj_->interpolatorForSwaps_->clone()));
 	}
 
 	const double spotterm = dc_act365.getTerm(resultsObj.asOfDate_, spotdate);
@@ -3823,26 +3823,26 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 		// Compute the flat OIS rates used in the Central Bank Swaps section
 		//-------------------------------------------------------------------------------
 
-		const LAString userInputShortTermConvStr = dynamic_cast<const LADataString&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(IR_CALIBRATION_DATA_SHORTTERMCONVENTION, ISNOTNULL)).get()).get().getCString();
+		const AQLString userInputShortTermConvStr = dynamic_cast<const AQLDataString&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(IR_CALIBRATION_DATA_SHORTTERMCONVENTION, ISNOTNULL)).get()).get().getCString();
 
 		// For CentralBank and FedFund rates
 		// The pair contains endDate and rate
-		std::map<LADate, std::pair<LADate, double> > mpcSwapRates;
+		std::map<AQLDate, std::pair<AQLDate, double> > mpcSwapRates;
 
 		// For Future rates
 		// The pair contains endDate and rate
-		std::map<LADate, std::pair<LADate, double> > futureRates;
+		std::map<AQLDate, std::pair<AQLDate, double> > futureRates;
 
-		const LAPriceDataDayCount& dc = dynamic_cast<const LAPriceDataDayCount&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-		const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+		const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+		const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 
 		for (unsigned int i = 0; i < mpc_swap_size; ++i)
 		{
-			const LADate& startdate = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_[i]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
-			const LADate& enddate = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_[i]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get());
-			const double rate = dynamic_cast<const LADataDouble&> ((mktDataObj.mktData_.mpc_swaps_[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			const AQLDate& startdate = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_[i]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
+			const AQLDate& enddate = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_[i]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get());
+			const double rate = dynamic_cast<const AQLDataDouble&> ((mktDataObj.mktData_.mpc_swaps_[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 
-			auto instrumentType = getOISMidTermInstrumentsEnum(dynamic_cast<const LADataString&> ((mktDataObj.mktData_.mpc_swaps_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get().getCString());
+			auto instrumentType = getOISMidTermInstrumentsEnum(dynamic_cast<const AQLDataString&> ((mktDataObj.mktData_.mpc_swaps_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get().getCString());
 
 			OISCompoundingEnum shortTermConv = getDefaultOISCompounding(instrumentType, userInputShortTermConvStr);
 
@@ -3864,7 +3864,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 					bool istodayrateexist = false;
 					if (data_on.size() > 0)
 					{
-						todayffrate = dynamic_cast<const LADataDouble&> ((data_on[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+						todayffrate = dynamic_cast<const AQLDataDouble&> ((data_on[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 						istodayrateexist = true;
 					}
 					double implyrate = getAverageRateFromHistRates(startdate, enddate, dc, cal, rate, mktDataObj.mktData_.mpc_swaps_[i], resultsObj.asOfDate_, istodayrateexist, todayffrate);
@@ -3904,11 +3904,11 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			mpc_swap_dates[1] = enddate;
 			if (!mktDataObj.mktData_.mpc_swaps_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, NOCHECK).isDefined())
 			{
-				mktDataObj.mktData_.mpc_swaps_[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new LADataDates(mpc_swap_dates));
+				mktDataObj.mktData_.mpc_swaps_[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new AQLDataDates(mpc_swap_dates));
 			}
 			else
 			{
-				dynamic_cast<LADataDates&>(mktDataObj.mktData_.mpc_swaps_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(mpc_swap_dates);
+				dynamic_cast<AQLDataDates&>(mktDataObj.mktData_.mpc_swaps_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(mpc_swap_dates);
 			}
 
 		}
@@ -3918,23 +3918,23 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 		const bool hasCentralBank = (mpcSwapRates.size() > 0);
 		const bool hasFuture = (futureRates.size() > 0);
 
-		const LADate& firstFutureStart = hasFuture ? futureRates.begin()->first : LADate();
-		const LADate& firstCentralBankStart = hasCentralBank ? mpcSwapRates.begin()->first : LADate();
+		const AQLDate& firstFutureStart = hasFuture ? futureRates.begin()->first : AQLDate();
+		const AQLDate& firstCentralBankStart = hasCentralBank ? mpcSwapRates.begin()->first : AQLDate();
         
         //This date is used as the last date for the central bank bootstrap routine
-		LADate centralBankShortTermDate = shortterm_date;
+		AQLDate centralBankShortTermDate = shortterm_date;
 		if (hasCentralBank)
 		{
-			const LADate& lastKey = mpcSwapRates.rbegin()->first;
-			const LADate& lastCentralBankSwapEndDate = mpcSwapRates[lastKey].first;
+			const AQLDate& lastKey = mpcSwapRates.rbegin()->first;
+			const AQLDate& lastCentralBankSwapEndDate = mpcSwapRates[lastKey].first;
 			if (centralBankShortTermDate > lastCentralBankSwapEndDate)
 			{
 				centralBankShortTermDate = lastCentralBankSwapEndDate;
 			}
 		}
 
-		LADate tmp_date;
-		firstCBSStartDate = dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
+		AQLDate tmp_date;
+		firstCBSStartDate = dynamic_cast<const AQLDataDate&> ((mktDataObj.mktData_.mpc_swaps_[0]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get());
 		double firstCBSTerm = dc_act365.getTerm(spotdate, firstCBSStartDate);
 
 		if (swap_curvefront.size() != 0)
@@ -3943,8 +3943,8 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			// When short term swaps are provided, bootstrap the central bank swaps section from the end of short terms swaps
 
 			// End date of the last short term swap
-			const LAString& term_str = dynamic_cast<const LADataString&> ((swap_curvefront.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get());
-			LADate lastSwapEndDate = LADateHelpers::getDate(spotdate, term_str, sld, &cal, true, &roll_conv);
+			const AQLString& term_str = dynamic_cast<const AQLDataString&> ((swap_curvefront.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get());
+			AQLDate lastSwapEndDate = LADateHelpers::getDate(spotdate, term_str, sld, &cal, true, &roll_conv);
 
 			double lastYield = yields.back();
 			double lastShortSwapTerm = grid.back();
@@ -3952,7 +3952,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			//There is a gap between short term swap and first ECB swap
 			if (lastShortSwapTerm <= firstCBSTerm)
 			{
-				double lastSwapRate = dynamic_cast<const LADataDouble&> ((swap_curvefront.back()->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+				double lastSwapRate = dynamic_cast<const AQLDataDouble&> ((swap_curvefront.back()->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 
 				// Linearly interpolate the gap between the end of the last short term swap and the start of the first mid instrument
 				insertZeroRatesFromShortTermSwapToMidInstrument(grid, 
@@ -3967,7 +3967,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 																cal, 
 																conv);
 				
-				double initialDF = LAMath::exp(-yields.back() * grid.back());
+				double initialDF = AQLMath::exp(-yields.back() * grid.back());
 				insertZeroRatesForOISMidInstruments(grid,
 													yields,
 													cashflowPaymentDates,
@@ -4016,7 +4016,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 					yields = thisYieldVector;
 					grid = thisGridVector;
 
-					double initialDF = LAMath::exp(-yield * term);
+					double initialDF = AQLMath::exp(-yield * term);
 
 					insertZeroRatesForOISMidInstruments(grid,
 														yields,
@@ -4036,7 +4036,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 				else
 				{
 
-					double initialDF = LAMath::exp(-lastYield * lastShortSwapTerm);
+					double initialDF = AQLMath::exp(-lastYield * lastShortSwapTerm);
 
 					insertZeroRatesForOISMidInstruments(grid,
 														yields,
@@ -4081,7 +4081,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 
 		//-------------------------------------------------------------------------------
 		// Bootstrap the long tenor swaps
-		interpolationForSwaps_.reset(dynamic_cast<LAInterpolationBase *>(resultsObj.interpolationObj_->interpolatorForSwaps_->clone()));
+		interpolationForSwaps_.reset(dynamic_cast<AQLInterpolationBase *>(resultsObj.interpolationObj_->interpolatorForSwaps_->clone()));
 		if (swap_longend.size() != 0)
 		{
 			calcOISDFBySwapRates(yields,
@@ -4136,15 +4136,15 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	{
 		if (size_on > 0 || size_tn > 0)
 		{
-           LADate thisEndDate;
+           AQLDate thisEndDate;
 			double rate_on = 0.0;
 			if (size_on > 0)
 			{
 				// O/N Instrument: from asOfDate to tomorrow
-				rate_on = dynamic_cast<const LADataDouble&> ((data_on[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-				const LAPriceDataDayCount& dc_on = dynamic_cast<const LAPriceDataDayCount&> ((data_on[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+				rate_on = dynamic_cast<const AQLDataDouble&> ((data_on[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+				const AQLPriceDataDayCount& dc_on = dynamic_cast<const AQLPriceDataDayCount&> ((data_on[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 				RateConvention rc_on = LAMathYieldCurve::setRC(AQ_SIMPLE);
-				LAPriceDataConvention conv_on(dc_on.getDayCount(), rc_on);
+				AQLPriceDataConvention conv_on(dc_on.getDayCount(), rc_on);
 
 				thisEndDate = cal.getBusinessDay(resultsObj.asOfDate_, 1);
 				double termON = dc_act365.getTerm(resultsObj.asOfDate_, thisEndDate);
@@ -4158,12 +4158,12 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			if (size_tn > 0 && thisEndDate < spotdate)
 			{
 				// T/N Instrument: from tomorrow to a day after
-				rate_tn = dynamic_cast<const LADataDouble&> ((data_tn[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-				const LAPriceDataDayCount& dc_tn = dynamic_cast<const LAPriceDataDayCount&> ((data_tn[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+				rate_tn = dynamic_cast<const AQLDataDouble&> ((data_tn[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+				const AQLPriceDataDayCount& dc_tn = dynamic_cast<const AQLPriceDataDayCount&> ((data_tn[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 				RateConvention rc_tn = LAMathYieldCurve::setRC(AQ_SIMPLE);
-				LAPriceDataConvention conv_tn(dc_tn.getDayCount(), rc_tn);
+				AQLPriceDataConvention conv_tn(dc_tn.getDayCount(), rc_tn);
 
-				LADate on_EndDate;
+				AQLDate on_EndDate;
 				double on_df = 1.0;
 				if (size_on > 0)
 				{
@@ -4199,7 +4199,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			}
 
 			// Go through the rest of the spot period
-			LADate lastDate = thisEndDate;
+			AQLDate lastDate = thisEndDate;
 			thisEndDate = cal.getBusinessDay(thisEndDate, 1);
 			while (thisEndDate <= spotdate)
 			{
@@ -4222,17 +4222,17 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 		{
 			const double spotyield = yields[1];
 			// set business date before spotdate
-			LADate businessDateBeforeSpotDate = cal.getBusinessDay(resultsObj.asOfDate_, 1);
+			AQLDate businessDateBeforeSpotDate = cal.getBusinessDay(resultsObj.asOfDate_, 1);
 			while (businessDateBeforeSpotDate < spotdate)
 			{
 				const double thisTerm = dc_act365.getTerm(resultsObj.asOfDate_, businessDateBeforeSpotDate);
 				resultsObj.dfResults_.paymentDatesAsTerms_.push_back(thisTerm);
-				resultsObj.dfResults_.discountFactors_.push_back(LAMath::exp(-spotyield * thisTerm));
+				resultsObj.dfResults_.discountFactors_.push_back(AQLMath::exp(-spotyield * thisTerm));
 				businessDateBeforeSpotDate = cal.getBusinessDay(businessDateBeforeSpotDate, 1);
 			}
 
 			resultsObj.dfResults_.paymentDatesAsTerms_.push_back(spotterm);
-			const double spotdf = LAMath::exp(-spotyield * spotterm);
+			const double spotdf = AQLMath::exp(-spotyield * spotterm);
 			resultsObj.dfResults_.discountFactors_.push_back(spotdf);
 			
             for (unsigned int i = 1; i < grid.size(); ++i)
@@ -4269,11 +4269,11 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	dh = &staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_MAXTERM);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAString maxTerm = dynamic_cast<const LADataString&>(dh->get()).get() + "Y";
-		const LADate& maxDate = LADateHelpers::getDate(spotdate, maxTerm, LAPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+		const AQLString maxTerm = dynamic_cast<const AQLDataString&>(dh->get()).get() + "Y";
+		const AQLDate& maxDate = LADateHelpers::getDate(spotdate, maxTerm, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 		if (maxDate > cashflowPaymentDates.back())
 		{
-			const LAString maxFreq = dynamic_cast<const LADataString&>(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_MAXTERMFREQ).get()).get();
+			const AQLString maxFreq = dynamic_cast<const AQLDataString&>(staticDataObj.curveDataObjectHolder_.getData(IR_CALIBRATION_DATA_MAXTERMFREQ).get()).get();
 			DoubleArray extra_terms;
 			DateVector tmp_dates; DoubleArray tmp_taus;
 			updateAccrualPeriodsAndPaymentDates(spotdate, maxDate, maxFreq, cal, sld, dc, tmp_dates, extra_terms, tmp_taus, isEOMRoll);
@@ -4311,12 +4311,12 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 
 	@return oisrate
 */
-double CurveCalibration::solveOISRateS(const LADate& startdate,
-									   const LADate& enddate,
-									   const LAPriceDataDayCount& dc,
-									   const LAPriceDataCalendar& cal,
+double CurveCalibration::solveOISRateS(const AQLDate& startdate,
+									   const AQLDate& enddate,
+									   const AQLPriceDataDayCount& dc,
+									   const AQLPriceDataCalendar& cal,
 									   double market_rate,
-									   const std::map<LADate, double> &onforward_map)
+									   const std::map<AQLDate, double> &onforward_map)
 {
 	if (onforward_map.empty() || onforward_map.begin()->first > enddate)
 	{
@@ -4324,13 +4324,13 @@ double CurveCalibration::solveOISRateS(const LADate& startdate,
 	}
 	// calc target market rate
 	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
-	LAPriceDataConvention conv(dc.getDayCount(), rc);
+	AQLPriceDataConvention conv(dc.getDayCount(), rc);
 	double val = 1.0;
-	std::map<LADate, double>::const_iterator it = onforward_map.begin();
-	LADate thisFwdDate = it->first;
+	std::map<AQLDate, double>::const_iterator it = onforward_map.begin();
+	AQLDate thisFwdDate = it->first;
 	while (thisFwdDate <= enddate)
 	{
-		std::map<LADate, double>::const_iterator n_it = it;
+		std::map<AQLDate, double>::const_iterator n_it = it;
 		++n_it;
 		if (thisFwdDate >= n_it->first)
 		{
@@ -4338,14 +4338,14 @@ double CurveCalibration::solveOISRateS(const LADate& startdate,
 		}
 
 		const double onforward_rate = it->second;
-		LADate n_date = cal.getBusinessDay(thisFwdDate, 1);
+		AQLDate n_date = cal.getBusinessDay(thisFwdDate, 1);
 		const double term_d = dc.getTerm(thisFwdDate, n_date);
-		val *= LAPriceDataConvention::rateToRet(onforward_rate, term_d, conv);
+		val *= AQLPriceDataConvention::rateToRet(onforward_rate, term_d, conv);
 		thisFwdDate = n_date;
 	}
 	const double term = dc.getTerm(startdate, cal.getBusinessDay(enddate, 1));
 
-	LADate enddate_ = onforward_map.begin()->first;
+	AQLDate enddate_ = onforward_map.begin()->first;
 	const double term_s = dc.getTerm(startdate, enddate_);
 	const double target_rate = ((1.0 + term * market_rate) / val - 1.0) / term_s;
 
@@ -4365,10 +4365,10 @@ double CurveCalibration::solveOISRateS(const LADate& startdate,
 	@return oisrate
 */
 double
-CurveCalibration::solveOISRate(const LADate& startdate,
-	const LADate& enddate,
-	const LAPriceDataDayCount& dc,
-	const LAPriceDataCalendar& cal,
+CurveCalibration::solveOISRate(const AQLDate& startdate,
+	const AQLDate& enddate,
+	const AQLPriceDataDayCount& dc,
+	const AQLPriceDataCalendar& cal,
 	double market_rate)
 
 {
@@ -4385,7 +4385,7 @@ CurveCalibration::solveOISRate(const LADate& startdate,
 	{
 		while (loopNum--)
 		{
-			if (LAMath::abs(val0 - val1) < EPS_PV)
+			if (AQLMath::abs(val0 - val1) < EPS_PV)
 			{
 				break;
 			}
@@ -4397,7 +4397,7 @@ CurveCalibration::solveOISRate(const LADate& startdate,
 			val1 = market_rate - calcSettleRate(startdate, enddate, dc, cal, rate1);
 		}
 	}
-	catch (LACoreError &e)
+	catch (AQLCoreError &e)
 	{
 		AQ_THROW("OIS curve calibration solver unable to find a solution with the existing precision and number of iteration settings - " + std::string( e.getMsg() ) )
 	}
@@ -4417,25 +4417,25 @@ CurveCalibration::solveOISRate(const LADate& startdate,
 
 	@return settlerate
 */
-double CurveCalibration::calcSettleRate(const LADate& startdate,
-									    const LADate& enddate,
-									    const LAPriceDataDayCount& dc,
-									    const LAPriceDataCalendar& cal,
+double CurveCalibration::calcSettleRate(const AQLDate& startdate,
+									    const AQLDate& enddate,
+									    const AQLPriceDataDayCount& dc,
+									    const AQLPriceDataCalendar& cal,
 									    double onforward_rate)
 {
 	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
-	LAPriceDataConvention conv(dc.getDayCount(), rc);
-	LADate thisFwdDate = startdate;
-	LAPriceDataSlidingRule sld(SLIDING_RULE_FOLLOWING);
+	AQLPriceDataConvention conv(dc.getDayCount(), rc);
+	AQLDate thisFwdDate = startdate;
+	AQLPriceDataSlidingRule sld(SLIDING_RULE_FOLLOWING);
 	thisFwdDate = sld.getDate(thisFwdDate, cal);
-	LADate adj_startdate = thisFwdDate;
+	AQLDate adj_startdate = thisFwdDate;
 	double val = 1.0;
-	LADate n_date = thisFwdDate;
+	AQLDate n_date = thisFwdDate;
 	while (thisFwdDate <= enddate)
 	{
 		n_date = cal.getBusinessDay(thisFwdDate, 1);
 		const double term = dc.getTerm(thisFwdDate, n_date);
-		val *= LAPriceDataConvention::rateToRet(onforward_rate, term, conv);
+		val *= AQLPriceDataConvention::rateToRet(onforward_rate, term, conv);
 		thisFwdDate = n_date;
 	}
 	val -= 1.0;
@@ -4456,7 +4456,7 @@ double CurveCalibration::calcSettleRate(const LADate& startdate,
 double CurveCalibration::calcSettleRates(const DateVector& startdates,
 										const DateVector& enddates,
 										const DoubleVector& onforward_rates,
-										const LAPriceDataDayCount& dc)
+										const AQLPriceDataDayCount& dc)
 {
 	unsigned int size = startdates.size();
 	if (!size)
@@ -4466,12 +4466,12 @@ double CurveCalibration::calcSettleRates(const DateVector& startdates,
 	AQ_THROW_IF(size != enddates.size() || size != onforward_rates.size(), "Unable to calculate settle rates. Inconsistent number of dates and rates specified")
 
 	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
-	LAPriceDataConvention conv(dc.getDayCount(), rc);
+	AQLPriceDataConvention conv(dc.getDayCount(), rc);
 	double val = 1.0;
 	for (unsigned int i = 0; i < size; ++i)
 	{
 		const double term = dc.getTerm(startdates[i], enddates[i]);
-		val *= LAPriceDataConvention::rateToRet(onforward_rates[i], term, conv);
+		val *= AQLPriceDataConvention::rateToRet(onforward_rates[i], term, conv);
 	}
 	val -= 1.0;
 	return val / dc.getTerm(startdates[0], enddates.back());
@@ -4501,17 +4501,17 @@ double CurveCalibration::calcEffectiveOISRate(DoubleVector& startTerms,
 											  DoubleVector& endTerms,
 											  const OISCompoundingEnum& swapAveragingMethodEnum,
 											  const OISLongTermInstrumentsEnum& longTermConvEnum,
-											  const LAString& longTermGen,
-											  const LADate& spotDate,
-											  const LADate& startDate,
-											  const LADate& endDate,
-											  const LAPriceDataDayCount* dc,
-											  const LAPriceDataCalendar* cal,
-											  const LAInterpolationBase* interpolateByZeroRate,
+											  const AQLString& longTermGen,
+											  const AQLDate& spotDate,
+											  const AQLDate& startDate,
+											  const AQLDate& endDate,
+											  const AQLPriceDataDayCount* dc,
+											  const AQLPriceDataCalendar* cal,
+											  const AQLInterpolationBase* interpolateByZeroRate,
 											  double accrualPeriod,
 											  bool isLogDF)
 {
-	LAPriceDataDayCount dc_act365(ACT_365);
+	AQLPriceDataDayCount dc_act365(ACT_365);
 	double settlerate(0.0);
 
 	switch (longTermConvEnum)
@@ -4535,28 +4535,28 @@ double CurveCalibration::calcEffectiveOISRate(DoubleVector& startTerms,
 				// DF = exp( - LogDF ) = exp( - zeroRate x time )
 				// ForwardRate = exp[ DF(End) - DF(Start) ) ] - 1 / tau
 				// ForwardRate = exp( logDF(Start) - logDF(End) - 1 / tau
-				settlerate = (LAMath::exp(interpolateByZeroRate->value(endterm) - interpolateByZeroRate->value(startterm)) - 1.0) / accrualPeriod;
+				settlerate = (AQLMath::exp(interpolateByZeroRate->value(endterm) - interpolateByZeroRate->value(startterm)) - 1.0) / accrualPeriod;
 			}
 			else
 			{
 				// State Variable: Zero Rate
 				// DF = exp( -ZeroRate.tau )
 				// ForwardRate = exp[ DF(End) - DF(Start) ) ] - 1 / tau
-				settlerate = (LAMath::exp(interpolateByZeroRate->value(endterm) * endterm - interpolateByZeroRate->value(startterm) * startterm) - 1.0) / accrualPeriod;
+				settlerate = (AQLMath::exp(interpolateByZeroRate->value(endterm) * endterm - interpolateByZeroRate->value(startterm) * startterm) - 1.0) / accrualPeriod;
 			}
 		}
 		else if (swapAveragingMethodEnum == ARITHMETIC_OIS_COMPOUNDING)
 		{
 			// TODO: Arithmetic Instruments Less than 1Y switch to SIMPLE / GEOMETRIC Compounding as a market convention
 			//const bool isTenorLessThanOneYear = ( dc_act365.getTerm(spotDate, endDate) < 1.0 );
-			//const LAString compoundMethod = toString( isTenorLessThanOneYear ? GEOMETRIC_OIS_COMPOUNDING : ARITHMETIC_OIS_COMPOUNDING ).c_str();
-			const LAString compoundMethod = toString(ARITHMETIC_OIS_COMPOUNDING).c_str();
+			//const AQLString compoundMethod = toString( isTenorLessThanOneYear ? GEOMETRIC_OIS_COMPOUNDING : ARITHMETIC_OIS_COMPOUNDING ).c_str();
+			const AQLString compoundMethod = toString(ARITHMETIC_OIS_COMPOUNDING).c_str();
 			settlerate = calcAverageRate(startTerms, endTerms, swapAveragingMethodEnum, spotDate, startDate, endDate, dc, cal, interpolateByZeroRate, accrualPeriod, isLogDF);
 
 		}
 		else if (swapAveragingMethodEnum == GEOMETRIC_OIS_COMPOUNDING)
 		{
-			const LAString compoundMethod = toString(GEOMETRIC_OIS_COMPOUNDING).c_str();
+			const AQLString compoundMethod = toString(GEOMETRIC_OIS_COMPOUNDING).c_str();
 			settlerate = calcAverageRate(startTerms, endTerms, swapAveragingMethodEnum, spotDate, startDate, endDate, dc, cal, interpolateByZeroRate, accrualPeriod, isLogDF);
 		}
 		else
@@ -4601,14 +4601,14 @@ double CurveCalibration::calcEffectiveOISRate(DoubleVector& startTerms,
 				// DF = exp( - LogDF ) = exp( - zeroRate x time )
 				// ForwardRate = exp[ DF(End) - DF(Start) ) ] - 1 / tau
 				// ForwardRate = exp( logDF(Start) - logDF(End) - 1 / tau
-				settlerate = (LAMath::exp(interpolateByZeroRate->value(endterm) - interpolateByZeroRate->value(startterm)) - 1.0) / accrualPeriod;
+				settlerate = (AQLMath::exp(interpolateByZeroRate->value(endterm) - interpolateByZeroRate->value(startterm)) - 1.0) / accrualPeriod;
 			}
 			else
 			{
 				// State Variable: Zero Rate
 				// DF = exp( -ZeroRate.tau )
 				// ForwardRate = exp[ DF(End) - DF(Start) ) ] - 1 / tau
-				settlerate = (LAMath::exp(interpolateByZeroRate->value(endterm) * endterm - interpolateByZeroRate->value(startterm) * startterm) - 1.0) / accrualPeriod;
+				settlerate = (AQLMath::exp(interpolateByZeroRate->value(endterm) * endterm - interpolateByZeroRate->value(startterm) * startterm) - 1.0) / accrualPeriod;
 			}
 		}
 		else
@@ -4651,24 +4651,24 @@ double CurveCalibration::calcEffectiveOISRate(DoubleVector& startTerms,
 double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 										 DoubleVector& endTerms,
 										 const OISCompoundingEnum& averagingMethodEnum,
-										 const LADate& spotDate,
-										 const LADate& startDate,
-										 const LADate& endDate,
-										 const LAPriceDataDayCount* dc,
-										 const LAPriceDataCalendar* cal,
-										 const LAInterpolationBase* interpolateByZeroRate,
+										 const AQLDate& spotDate,
+										 const AQLDate& startDate,
+										 const AQLDate& endDate,
+										 const AQLPriceDataDayCount* dc,
+										 const AQLPriceDataCalendar* cal,
+										 const AQLInterpolationBase* interpolateByZeroRate,
 										 double accrualPeriod,
 										 bool isLogDF)
 {
-	LAPriceDataDayCount dc_act365(ACT_365);
+	AQLPriceDataDayCount dc_act365(ACT_365);
 
 	// Find the daily date schedule of the current period
 	if (startTerms.size() == 0 || endTerms.size() == 0)
 	{
-		LADate tmp_date = startDate;
+		AQLDate tmp_date = startDate;
 		while (tmp_date < endDate)
 		{
-			const LADate nextdate = cal->getBusinessDay(tmp_date, 1);
+			const AQLDate nextdate = cal->getBusinessDay(tmp_date, 1);
 
 			// TODO: The daycount structure here looks incorrect - Think two sets of terms are required ???
 			// 1. The internal daycount for discount factor lookup should be ACT/365
@@ -4692,7 +4692,7 @@ double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 
 		// Daily Geometric Compounding, which is the default behaviour
 		RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
-		LAPriceDataConvention conv(dc->getDayCount(), rc);
+		AQLPriceDataConvention conv(dc->getDayCount(), rc);
 
 		/* We make use of the geometric effective-rate shortcut:
 		 * The product of daily returns may be replaced by the ratio of start / end return.
@@ -4711,7 +4711,7 @@ double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 			const double initialLogDF = interpolateByZeroRate->value(initialStartTerm);
 			const double finalLogDF = interpolateByZeroRate->value(finalEndTerm);
 
-			val = LAMath::exp(finalLogDF - initialLogDF);
+			val = AQLMath::exp(finalLogDF - initialLogDF);
 		}
 		else
 		{
@@ -4720,7 +4720,7 @@ double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 			const double initialZeroTerm = interpolateByZeroRate->value(initialStartTerm) * initialStartTerm;
 			const double finalZeroTerm = interpolateByZeroRate->value(finalEndTerm) * finalEndTerm;
 
-			val = LAMath::exp(finalZeroTerm - initialZeroTerm);
+			val = AQLMath::exp(finalZeroTerm - initialZeroTerm);
 		}
 
 		// Explicit effective rate code, calculating the overnight rate in each time period
@@ -4741,16 +4741,16 @@ double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 				{
 					// State Variable: Log Discount Factor
 					// ForwardRate = [ DF(Start) / DF(End) - 1 ] / tau
-					effectiveRate = (LAMath::exp(interpolateByZeroRate->value(endterm) - interpolateByZeroRate->value(startterm)) - 1.0) / term;
+					effectiveRate = (AQLMath::exp(interpolateByZeroRate->value(endterm) - interpolateByZeroRate->value(startterm)) - 1.0) / term;
 				}
 				else
 				{
 					// State Variable: Zero Rate
 					// DiscountFactor = exp(-z.t)
-					effectiveRate = (LAMath::exp(interpolateByZeroRate->value(endterm) * endterm - interpolateByZeroRate->value(startterm) * startterm) - 1.0) / term;
+					effectiveRate = (AQLMath::exp(interpolateByZeroRate->value(endterm) * endterm - interpolateByZeroRate->value(startterm) * startterm) - 1.0) / term;
 				}
 
-				val *= LAPriceDataConvention::rateToRet(effectiveRate, term, conv);
+				val *= AQLPriceDataConvention::rateToRet(effectiveRate, term, conv);
 			}
 
 		*/
@@ -4798,7 +4798,7 @@ double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 double
 CurveCalibration::calcArithmeticAverageRate(const DoubleVector& startterms,
 											const DoubleVector& endterms,
-											const LAInterpolationBase* interpolateByZeroRate,
+											const AQLInterpolationBase* interpolateByZeroRate,
 											const double wholeterm,
 											bool isLogDF)
 {
@@ -4825,14 +4825,14 @@ CurveCalibration::calcArithmeticAverageRate(const DoubleVector& startterms,
 			// DF = exp( - LogDF ) = exp( - zeroRate x time )
 			// ForwardRate.tau = exp[ DF(End) - DF(Start) ) ] - 1
 			// ForwardRate.tau = exp( logDF(Start) - logDF(End) - 1
-			forwardRatesTimesYearFractions += LAMath::exp(interpolateByZeroRate->value(endterms[i]) - interpolateByZeroRate->value(startterms[i])) - 1.0;
+			forwardRatesTimesYearFractions += AQLMath::exp(interpolateByZeroRate->value(endterms[i]) - interpolateByZeroRate->value(startterms[i])) - 1.0;
 		}
 		else
 		{
 			// State Variable: Zero Rate
 			// ForwardRate.tau = exp[ ZeroRate(End).tau(End) - ZeroRate(Start).tau(Start) ] - 1
 			// DF = exp( -ZeroRate.tau )
-			forwardRatesTimesYearFractions += LAMath::exp(interpolateByZeroRate->value(endterms[i]) * endterms[i] - interpolateByZeroRate->value(startterms[i]) * startterms[i]) - 1.0;
+			forwardRatesTimesYearFractions += AQLMath::exp(interpolateByZeroRate->value(endterms[i]) * endterms[i] - interpolateByZeroRate->value(startterms[i]) * startterms[i]) - 1.0;
 		}
 	}
 
@@ -4851,27 +4851,27 @@ CurveCalibration::calcArithmeticAverageRate(const DoubleVector& startterms,
 
 	@return oisrate
 */
-double CurveCalibration::getAverageRateFromHistRates(const LADate& startdate,
-													 const LADate& enddate,
-													 const LAPriceDataDayCount& dc,
-													 const LAPriceDataCalendar& cal,
+double CurveCalibration::getAverageRateFromHistRates(const AQLDate& startdate,
+													 const AQLDate& enddate,
+													 const AQLPriceDataDayCount& dc,
+													 const AQLPriceDataCalendar& cal,
 													 double market_rate,
-													 LAObject* marketData,
-													 const LADate& asOfDate,
+													 AQLObject* marketData,
+													 const AQLDate& asOfDate,
 													 bool istodayrateexist,
 													 double todayffrate)
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	dh = &(marketData->getData(IR_CALIBRATION_DATA_HISTORICALDATES, ISNOTNULL));
-	DateVector histdates = dynamic_cast<const LADataDates &>(dh->get()).get();
+	DateVector histdates = dynamic_cast<const AQLDataDates &>(dh->get()).get();
 
 	dh = &(marketData->getData(IR_CALIBRATION_DATA_HISTORICALRATES, ISNOTNULL));
-	DoubleVector histrates = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	DoubleVector histrates = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 
 	AQ_THROW_IF(histdates.size() != histrates.size(), "Invalid ON fixing rates specified. The number of dates and fixings don't match")
 
 	//sort histrical datas
-	std::map<LADate, double> map_date_rate;
+	std::map<AQLDate, double> map_date_rate;
 	for (size_t i = 0; i < histdates.size(); ++i)
 	{
 		AQ_THROW_IF(map_date_rate.find(histdates[i]) != map_date_rate.end(), "Duplicate dates specified in the historical ON fixing rates table")
@@ -4884,7 +4884,7 @@ double CurveCalibration::getAverageRateFromHistRates(const LADate& startdate,
 		histrates.push_back(map_date_rate[histdates[i]]);
 	}
 
-	LADate fixingDate = startdate;
+	AQLDate fixingDate = startdate;
 	double val = 0.0;
 	unsigned int pos = 0;
 	int realizednumber = startdate.intervalDays(asOfDate) + 1;
@@ -4896,7 +4896,7 @@ double CurveCalibration::getAverageRateFromHistRates(const LADate& startdate,
 		}
 		else
 		{
-			LAAlgorithm::locate<DateVector, LADate>(histdates, fixingDate, histdates.size(), pos);
+			AQLAlgorithm::locate<DateVector, AQLDate>(histdates, fixingDate, histdates.size(), pos);
 
 			if (fixingDate == asOfDate && istodayrateexist)
 			{
@@ -4928,27 +4928,27 @@ double CurveCalibration::getAverageRateFromHistRates(const LADate& startdate,
 }
 
 // Store curve conventions at the end of swap curve calibration
-void CurveCalibration::setCurveConvention( LAObjectHolder& objHolder, std::vector<LAObject*>& mktData, const LAString& curveName )
+void CurveCalibration::setCurveConvention( AQLObjectHolder& objHolder, std::vector<AQLObject*>& mktData, const AQLString& curveName )
 {
-	const LADataHolder *dh;
+	const AQLDataHolder *dh;
 
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveName != AQ_STD)
 	{
 		suffix = "_" + curveName;
 	}
 
-	std::vector<LAObject*> mktData_swap, mktData_libor;
+	std::vector<AQLObject*> mktData_swap, mktData_libor;
 	for (unsigned i = 0; i < mktData.size(); i++)
 	{
 		// check use grid
 		dh = &mktData[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
-		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const LADataBool &>(dh->get()).get())
+		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const AQLDataBool &>(dh->get()).get())
 		{
 			continue;
 		}
 
-		LAString datatype_str = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+		AQLString datatype_str = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		datatype_str.toUpper();
 
 		if (datatype_str == AQ_SWAP_DATA)
@@ -4963,49 +4963,49 @@ void CurveCalibration::setCurveConvention( LAObjectHolder& objHolder, std::vecto
 
 	AQ_THROW_IF(mktData_swap.size() == 0, "Calibration instrument error. Swap instruments must be provided")
 
-	LAString freq = "";
+	AQLString freq = "";
 	dh = &mktData_swap[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		freq = dynamic_cast<const LADataString&> (dh->get());
+		freq = dynamic_cast<const AQLDataString&> (dh->get());
 	}
 	else
 	{
-		const LADataHolder *dh = &mktData_swap[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, NOCHECK);
+		const AQLDataHolder *dh = &mktData_swap[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			freq = dynamic_cast<const LADataString&> (dh->get());
+			freq = dynamic_cast<const AQLDataString&> (dh->get());
 		}
 		else
 		{
-			freq = dynamic_cast<const LADataString&> ((mktData_swap[0]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+			freq = dynamic_cast<const AQLDataString&> ((mktData_swap[0]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 		}
 	}
 
-	const LAPriceDataCalendar* cal = NULL;
+	const AQLPriceDataCalendar* cal = NULL;
 	if (mktData_libor.size() != 0)
 	{
-		cal = &dynamic_cast<const LAPriceDataCalendar&> ((mktData_libor[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+		cal = &dynamic_cast<const AQLPriceDataCalendar&> ((mktData_libor[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 	}
 
-	const LAPriceDataSlidingRule* sld = NULL;
+	const AQLPriceDataSlidingRule* sld = NULL;
 	if (mktData_libor.size() != 0)
 	{
-		sld = &dynamic_cast<const LAPriceDataSlidingRule&> ((mktData_libor[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+		sld = &dynamic_cast<const AQLPriceDataSlidingRule&> ((mktData_libor[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 	}
 
-	const LAPriceDataDayCount* dc = NULL;
+	const AQLPriceDataDayCount* dc = NULL;
 	dh = &mktData_swap[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dc = &dynamic_cast<const LAPriceDataDayCount&> (dh->get());
+		dc = &dynamic_cast<const AQLPriceDataDayCount&> (dh->get());
 	}
 	else
 	{
-		dc = &dynamic_cast<const LAPriceDataDayCount&> ((mktData_swap[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+		dc = &dynamic_cast<const AQLPriceDataDayCount&> ((mktData_swap[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 	}
 
-	LAString accessary = "";
+	AQLString accessary = "";
 	if (freq == AQ_ANNUAL) accessary = "12M";
 	else if (freq == AQ_SEMI_ANNUAL) accessary = "6M";
 	else if (freq == AQ_QUARTERLY) accessary = "3M";
@@ -5021,15 +5021,15 @@ void CurveCalibration::setCurveConvention( LAObjectHolder& objHolder, std::vecto
 	objHolder.remove(IR_CALIBRATION_DATA_DAYCOUNT + suffix);
 	objHolder.remove(IR_CALIBRATION_DATA_ACCESSARY + suffix);
 
-	objHolder.add(IR_CALIBRATION_DATA_FREQUENCY + suffix, new LADataString(AQ_SIMPLE));
-	if (cal) objHolder.add(CALIBRATION_DATA_CALENDAR + suffix, new LAPriceDataCalendar(*cal));
-	if (sld) objHolder.add(CALIBRATION_DATA_SLIDINGRULE + suffix, new LAPriceDataSlidingRule(*sld));
-	objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT + suffix, new LAPriceDataDayCount(*dc));
-	objHolder.add(IR_CALIBRATION_DATA_ACCESSARY + suffix, new LADataString(accessary));
+	objHolder.add(IR_CALIBRATION_DATA_FREQUENCY + suffix, new AQLDataString(AQ_SIMPLE));
+	if (cal) objHolder.add(CALIBRATION_DATA_CALENDAR + suffix, new AQLPriceDataCalendar(*cal));
+	if (sld) objHolder.add(CALIBRATION_DATA_SLIDINGRULE + suffix, new AQLPriceDataSlidingRule(*sld));
+	objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT + suffix, new AQLPriceDataDayCount(*dc));
+	objHolder.add(IR_CALIBRATION_DATA_ACCESSARY + suffix, new AQLDataString(accessary));
 }
 
 // Store curve conventions at the end of swap curve calibration
-void CurveCalibration::setCurveConvention(LACurveStaticDataHolder & staticDataObj, std::vector<LAObject*>& mktData, const LAString& curveName)
+void CurveCalibration::setCurveConvention(LACurveStaticDataHolder & staticDataObj, std::vector<AQLObject*>& mktData, const AQLString& curveName)
 {
 	setCurveConvention( staticDataObj.curveDataObjectHolder_, mktData, curveName );
 }
@@ -5060,16 +5060,16 @@ void CurveCalibration::calcOISDFBySwapRates( DoubleArray& yields,
 											 DoubleArray& terms_grid,
 											 DoubleArray& accrualPeriod,
 											 DateVector& cashflowPaymentDates,
-											 LAInterpolationBase* interpolatorForDiscountFactors,
-											 LAInterpolationBase* interpolationForSwaps,
-											 std::vector<LAObject*>& marketData,
-											 const std::vector<LAObject*>& data_swap,
+											 AQLInterpolationBase* interpolatorForDiscountFactors,
+											 AQLInterpolationBase* interpolationForSwaps,
+											 std::vector<AQLObject*>& marketData,
+											 const std::vector<AQLObject*>& data_swap,
 											 LACurveStaticDataHolder & staticDataObj,
-											 const LAPriceDataDayCount& dc_act365,
-											 const LADate& asOfDate,
-											 const LADate& spotdate,
-											 const LADate& shortterm_date,
-											 const LAString* pDFCurveName,
+											 const AQLPriceDataDayCount& dc_act365,
+											 const AQLDate& asOfDate,
+											 const AQLDate& spotdate,
+											 const AQLDate& shortterm_date,
+											 const AQLString* pDFCurveName,
 											 const size_t& mpc_swap_size,
 											 bool isEOMRoll,
 											 bool useShortEndSwaps,
@@ -5122,16 +5122,16 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 											DoubleArray& terms_grid,
 											DoubleArray& accrualPeriod,
 											DateVector& cashflowPaymentDates,
-											LAInterpolationBase* interpolatorForDiscountFactors,
-											LAInterpolationBase* interpolationForSwaps,
-											std::vector<LAObject*>& marketData,
-											const std::vector<LAObject*>& data_swap,
-											LAObjectHolder& objHolder,
-											const LAPriceDataDayCount& dc_act365,
-											const LADate& asOfDate,
-											const LADate& spotdate,
-											const LADate& shortterm_date,
-											const LAString* pDFCurveName,
+											AQLInterpolationBase* interpolatorForDiscountFactors,
+											AQLInterpolationBase* interpolationForSwaps,
+											std::vector<AQLObject*>& marketData,
+											const std::vector<AQLObject*>& data_swap,
+											AQLObjectHolder& objHolder,
+											const AQLPriceDataDayCount& dc_act365,
+											const AQLDate& asOfDate,
+											const AQLDate& spotdate,
+											const AQLDate& shortterm_date,
+											const AQLString* pDFCurveName,
 											const size_t& mpc_swap_size,
 											bool isEOMRoll,
 											bool useShortEndSwaps,
@@ -5141,51 +5141,51 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 
 	// calc df by swap rate
 
-	LAString suffix = "";
-	LAInterpolationBase *interpolationForDiscountFactors_ = NULL;
+	AQLString suffix = "";
+	AQLInterpolationBase *interpolationForDiscountFactors_ = NULL;
 	const double spotterm = dc_act365.getTerm(asOfDate, spotdate);
 	double d_spotdf = 1.0;
 	bool is_selfdf = true;
 	if (pDFCurveName && *pDFCurveName != ITSELF)
 	{
 		is_selfdf = false;
-		if (*pDFCurveName != AQ_STD) suffix = LAString("_") + *pDFCurveName;
+		if (*pDFCurveName != AQ_STD) suffix = AQLString("_") + *pDFCurveName;
 		AQ_THROW_IF(!objHolder.getData(CALIBRATION_DATA_TERMS + suffix).isDefined(),"Invalid Curve: Curve with name '" + *pDFCurveName + "' does not exist")
 
-		const DoubleVector &terms_ = dynamic_cast<const LADataDoubles&> ((objHolder.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
-		const DoubleVector &dfs_ = dynamic_cast<const LADataDoubles&> ((objHolder.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
+		const DoubleVector &terms_ = dynamic_cast<const AQLDataDoubles&> ((objHolder.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
+		const DoubleVector &dfs_ = dynamic_cast<const AQLDataDoubles&> ((objHolder.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
 
 		// Use the discount curve's native interpolation method
-		LAPriceDataInterpolation attrInter = getYieldGenInterpolationByCurveName(const_cast<LAObjectHolder&>(objHolder), suffix);
-		interpolationForDiscountFactors_ = dynamic_cast<LAInterpolationBase*>(attrInter.getMethod().clone());
+		AQLPriceDataInterpolation attrInter = getYieldGenInterpolationByCurveName(const_cast<AQLObjectHolder&>(objHolder), suffix);
+		interpolationForDiscountFactors_ = dynamic_cast<AQLInterpolationBase*>(attrInter.getMethod().clone());
 
 		interpolationForDiscountFactors_->set(terms_, dfs_);
 		d_spotdf = interpolationForDiscountFactors_->value(spotterm);
 	}
 
 	double eps = 1.0e-10;
-	const LADataHolder *dh = &(marketData[0]->getData(IR_CALIBRATION_DATA_EPSILON, NOCHECK));
+	const AQLDataHolder *dh = &(marketData[0]->getData(IR_CALIBRATION_DATA_EPSILON, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		eps = dynamic_cast<const LADataDouble &>(dh->get()).get();
+		eps = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 	int max_loop = 100;
 	dh = &(marketData[0]->getData(IR_CALIBRATION_DATA_MAXLOOP, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		max_loop = dynamic_cast<const LADataInt &>(dh->get()).get();
+		max_loop = dynamic_cast<const AQLDataInt &>(dh->get()).get();
 	}
 
 	unsigned int calced_size = 0;
 	// double _sumCF = 0.0; <-- Unused Variable
 	// double _sumT = 0.0;  <-- Unused Variable
 
-	LAString longTermConv = "NONE";
-	LAString last_longTermConv = "NONE";
+	AQLString longTermConv = "NONE";
+	AQLString last_longTermConv = "NONE";
 	OISLongTermInstrumentsEnum longTermConvEnum = NONE_OIS_LONGTERM_INSTRUMENTS;
 	OISLongTermInstrumentsEnum last_longTermConvEnum = NONE_OIS_LONGTERM_INSTRUMENTS;
 
-	LAString longTermGen;
+	AQLString longTermGen;
 	// bool reset = false; <-- Unused Variable
 	unsigned int calced_swap_size = 0;
 	// double _sumT_s = 0.0; <-- Unused Variable
@@ -5193,21 +5193,21 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 	DateVector dates_s;
 
 	// double settlerate = 0.0; <-- Unused Variable
-	LADate lastSwapEndDate = spotdate;
+	AQLDate lastSwapEndDate = spotdate;
 
 	{
 
-		LAString oldFreq("");
-		LAString oldFreq_s("");
+		AQLString oldFreq("");
+		AQLString oldFreq_s("");
 		oldFreq.toUpper();
 
-		std::vector<LAString> term_strs;
-		std::vector<LADate> endDates_s;
+		std::vector<AQLString> term_strs;
+		std::vector<AQLDate> endDates_s;
 		std::vector<double> marketRates;
 		std::vector<double> marketRates_s;
 		std::vector<double> swapEndDateInTerms;
-		std::vector<const LAPriceDataCalendar*> cals;
-		std::vector<const LAPriceDataDayCount*> dateCounts;
+		std::vector<const AQLPriceDataCalendar*> cals;
+		std::vector<const AQLPriceDataDayCount*> dateCounts;
 		std::vector<size_t> size_cashlets;
 		std::vector<size_t> size_cashlets_s;
 		std::vector<size_t> calced_sizes;
@@ -5227,30 +5227,30 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 		std::vector<DateVector> fixingEndDates;
 		std::vector<DoubleVector> fixingAccrualPeriods;
 
-		std::vector<LAString> longTermGens;
+		std::vector<AQLString> longTermGens;
 		std::vector< OISLongTermInstrumentsEnum > longTermConvEnums;
 		std::vector< OISCompoundingEnum > swapCompoundingMethodEnums;
 
 		for (unsigned int i = 0; i < swap_size; ++i)
 		{
-			LAString term_str = dynamic_cast<const LADataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get());
+			AQLString term_str = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get());
 			term_str.toUpper();
 
 			dh = &data_swap[i]->getData(IR_CALIBRATION_DATA_LONGTERMCONVENTION);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				longTermConv = dynamic_cast<const LADataString&> (dh->get()).get();
-				longTermGen = dynamic_cast<const LADataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_LONGTERMGENMETHOD, ISNOTNULL)).get());
+				longTermConv = dynamic_cast<const AQLDataString&> (dh->get()).get();
+				longTermGen = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_LONGTERMGENMETHOD, ISNOTNULL)).get());
 			}
 
 			longTermConvEnum = toOISLongTermInstrumentsEnum(longTermConv.getCString());
 			last_longTermConvEnum = toOISLongTermInstrumentsEnum(last_longTermConv.getCString());
 
 			double marketrate = 0.0;
-			const LAPriceDataDayCount* dc;
-			const LAPriceDataCalendar* cal;
-			const LAPriceDataSlidingRule* sld;
-			LAString freq;
+			const AQLPriceDataDayCount* dc;
+			const AQLPriceDataCalendar* cal;
+			const AQLPriceDataSlidingRule* sld;
+			AQLString freq;
 
 			//---------------------------------------------------------
 			// Produce full OIS swap schedules
@@ -5258,27 +5258,27 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 			// load ois marketdata
 			if (longTermConvEnum == NONE_OIS_LONGTERM_INSTRUMENTS)
 			{
-				marketrate = dynamic_cast<const LADataDouble&> ((data_swap[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-				dc = &dynamic_cast<const LAPriceDataDayCount&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-				cal = &dynamic_cast<const LAPriceDataCalendar&> ((data_swap[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-				sld = &dynamic_cast<const LAPriceDataSlidingRule&> ((data_swap[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-				freq = dynamic_cast<const LADataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+				marketrate = dynamic_cast<const AQLDataDouble&> ((data_swap[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+				dc = &dynamic_cast<const AQLPriceDataDayCount&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+				cal = &dynamic_cast<const AQLPriceDataCalendar&> ((data_swap[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+				sld = &dynamic_cast<const AQLPriceDataSlidingRule&> ((data_swap[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+				freq = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 			}
 			// load lobasis marketdata
 			else if (longTermConvEnum == LIBOROIS_OIS_LONGTERM_INSTRUMENTS)
 			{
-				marketrate = dynamic_cast<const LADataDouble&> (data_swap[i]->getData(IR_CALIBRATION_DATA_RATE_LOBASIS, ISNOTNULL).get()).get();
-				dc = &dynamic_cast<const LAPriceDataDayCount&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT_LOBASIS, ISNOTNULL)).get());
-				cal = &dynamic_cast<const LAPriceDataCalendar&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_CALENDAR_LOBASIS, ISNOTNULL)).get());
-				sld = &dynamic_cast<const LAPriceDataSlidingRule&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_SLIDINGRULE_LOBASIS, ISNOTNULL)).get());
-				freq = dynamic_cast<const LADataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_FREQUENCY_LOBASIS, ISNOTNULL)).get()).get();
+				marketrate = dynamic_cast<const AQLDataDouble&> (data_swap[i]->getData(IR_CALIBRATION_DATA_RATE_LOBASIS, ISNOTNULL).get()).get();
+				dc = &dynamic_cast<const AQLPriceDataDayCount&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT_LOBASIS, ISNOTNULL)).get());
+				cal = &dynamic_cast<const AQLPriceDataCalendar&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_CALENDAR_LOBASIS, ISNOTNULL)).get());
+				sld = &dynamic_cast<const AQLPriceDataSlidingRule&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_SLIDINGRULE_LOBASIS, ISNOTNULL)).get());
+				freq = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_FREQUENCY_LOBASIS, ISNOTNULL)).get()).get();
 			}
 			else
 			{
 				AQ_THROW("Invalid LongTermConvention - Must be set to 'LOBASIS' to calibrate to Libor-OIS Instruments or 'NONE' for OIS Outrights only")
 			}
 
-			LAString roll_conv("");
+			AQLString roll_conv("");
 			freq.toUpper();
 			if (freq == AQ_LUNAR)
 			{
@@ -5293,8 +5293,8 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 				roll_conv = AQ_ROLLCONV_NORMAL;
 			}
 
-			LADate swapEndDate = LADateHelpers::getDate(spotdate, term_str, *sld, cal, true, &roll_conv);
-			LADate date_unadjusted = LADateHelpers::getDate(spotdate, term_str, LAPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+			AQLDate swapEndDate = LADateHelpers::getDate(spotdate, term_str, *sld, cal, true, &roll_conv);
+			AQLDate date_unadjusted = LADateHelpers::getDate(spotdate, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 
 			if (!useShortEndSwaps &&
 				(((mpc_swap_size || shortTermSwapSize) && swapEndDate < shortterm_date) || (!mpc_swap_size && i == 0) || (lastSwapEndDate >= swapEndDate)))
@@ -5365,11 +5365,11 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 			bLiborSwapCalcReset.push_back(false);
 			if (longTermConvEnum == LIBOROIS_OIS_LONGTERM_INSTRUMENTS)
 			{
-				marketrate_s = dynamic_cast<const LADataDouble&> (data_swap[i]->getData(IR_CALIBRATION_DATA_RATE_SWAP, ISNOTNULL).get()).get();
-				const LAPriceDataDayCount& swapDaycountFixed = dynamic_cast<const LAPriceDataDayCount&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT_SWAP, ISNOTNULL)).get());
-				const LAPriceDataCalendar& swapCalendar = dynamic_cast<const LAPriceDataCalendar&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_CALENDAR_SWAP, ISNOTNULL)).get());
-				const LAPriceDataSlidingRule& swapBusDayAdj = dynamic_cast<const LAPriceDataSlidingRule&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_SLIDINGRULE_SWAP, ISNOTNULL)).get());
-				LAString swapFrequencyFixed = dynamic_cast<const LADataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_FREQUENCY_SWAP, ISNOTNULL)).get()).get();
+				marketrate_s = dynamic_cast<const AQLDataDouble&> (data_swap[i]->getData(IR_CALIBRATION_DATA_RATE_SWAP, ISNOTNULL).get()).get();
+				const AQLPriceDataDayCount& swapDaycountFixed = dynamic_cast<const AQLPriceDataDayCount&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT_SWAP, ISNOTNULL)).get());
+				const AQLPriceDataCalendar& swapCalendar = dynamic_cast<const AQLPriceDataCalendar&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_CALENDAR_SWAP, ISNOTNULL)).get());
+				const AQLPriceDataSlidingRule& swapBusDayAdj = dynamic_cast<const AQLPriceDataSlidingRule&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_SLIDINGRULE_SWAP, ISNOTNULL)).get());
+				AQLString swapFrequencyFixed = dynamic_cast<const AQLDataString&> ((data_swap[i]->getData(IR_CALIBRATION_DATA_FREQUENCY_SWAP, ISNOTNULL)).get()).get();
 				swapFrequencyFixed.toUpper();
 
 				if (oldFreq_s.size() != 0 && oldFreq_s != swapFrequencyFixed)
@@ -5380,13 +5380,13 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 				}
 				oldFreq_s = swapFrequencyFixed;
 
-				LAString swapRollConvention("");
+				AQLString swapRollConvention("");
 				if (freq == AQ_LUNAR) swapRollConvention = AQ_ROLLCONV_LUNAR;
 				else if (isEOMRoll) swapRollConvention = AQ_ROLLCONV_EOM;
 				else swapRollConvention = AQ_ROLLCONV_NORMAL;
 
 				// scheduling libor swap
-				const LADate date_s_unadjusted = LADateHelpers::getDate(spotdate, term_str, LAPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+				const AQLDate date_s_unadjusted = LADateHelpers::getDate(spotdate, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 				terms_grid_s.clear();
 				terms_interval_s.clear();
 				dates_s.clear();
@@ -5403,7 +5403,7 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 					thisFixingStartDates.push_back(cashflowPaymentDates[j]);
 				}
 
-				LAString indexTenor;
+				AQLString indexTenor;
 				if (freq == AQ_SEMI_ANNUAL)
 				{
 					indexTenor = AQ_TERM_6M;
@@ -5489,11 +5489,11 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 			lastSwapEndDate = cashflowPaymentDates[size_cashlet - 1];
 
 			// Compounding methods
-			LAString swapCompoundingMethod("");
+			AQLString swapCompoundingMethod("");
 			dh = &data_swap[i]->getData(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				swapCompoundingMethod = dynamic_cast<const LADataString&> (dh->get()).get();
+				swapCompoundingMethod = dynamic_cast<const AQLDataString&> (dh->get()).get();
 			}
 			swapCompoundingMethodEnums.push_back(toOISCompoundingEnum(swapCompoundingMethod.getCString()));
 
@@ -5592,7 +5592,7 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 			// Check whether solving can no longer produce meaningful difference to the output.
 			for (size_t i = 0; i < swapCount; ++i)
 			{
-				if (LAMath::abs(allPVs_new[i] - allPVs_old[i]) >= grad_eps)
+				if (AQLMath::abs(allPVs_new[i] - allPVs_old[i]) >= grad_eps)
 				{
 					isEnd = false;
 					break;
@@ -5606,7 +5606,7 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 
 			// -----------------------------------------------------------------------
 			// 3.1 Perturb x by amount 'delta' in order to calculate y_after_bump
-			LAMatrix jacobianMatrix(swapCount, swapCount);
+			AQLMatrix jacobianMatrix(swapCount, swapCount);
 			for (size_t i = 0; i < swapCount; ++i)
 			{
 				DoubleArray thisYieldVector(yields);
@@ -5627,12 +5627,12 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 
 			// -----------------------------------------------------------------------
 			// 3.2 Update x as in y = f(x) according to Newton Raphson
-			LAMatrix valMat(allPVs_new);
+			AQLMatrix valMat(allPVs_new);
 
-			LAMatrix inverseJacobian(swapCount, swapCount);
+			AQLMatrix inverseJacobian(swapCount, swapCount);
 			inverseJacobian = jacobianMatrix.inverseMatrix();
 
-			LAMatrix deltaMat = inverseJacobian * valMat;
+			AQLMatrix deltaMat = inverseJacobian * valMat;
 
 			for (size_t i = 0; i < swapCount; ++i)
 			{
@@ -5651,7 +5651,7 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 			for (unsigned int i = 0; i < swapCount; ++i)
 			{
 				// A solution is considered acceptable only when all calibration instruments reprice to zero
-				if (LAMath::abs(allPVs_new[i]) >= eps)
+				if (AQLMath::abs(allPVs_new[i]) >= eps)
 				{
 					solutionFound = false;
 					break;

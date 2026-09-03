@@ -1,8 +1,8 @@
 #include "InitializeAQETrading.h"
 #include "mirSetUpFwdFXConstantCurve.h"
-#include "LADate.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLDate.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "tryMirSetUpFwdFXConstantCurve.h"
 #include "TypeUtilities.h"
 
@@ -20,18 +20,18 @@ const std::string mirSetUpFwdFXConstantCurve(const std::string& CurveID,
 											const SWIG_STRINGMATRIX & FwdFXConstantConv,
 											const std::string& CurveNames) 
 {
-	LAString ret;
+	AQLString ret;
 	try 
 	{
 		// marshall all inputs
-		LAString curveID(CurveID.c_str());
-		LAString marketName(MarketName.c_str());
-		LAString curveNames(CurveNames.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString marketName(MarketName.c_str());
+		AQLString curveNames(CurveNames.c_str());
 
-		LAStringMatrix generalProps;
+		AQLStringMatrix generalProps;
 		swig::buildStringMatrix(generalProps, GeneralProps);
 
-		LAStringMatrix fwdFXConstantConv;
+		AQLStringMatrix fwdFXConstantConv;
 		swig::buildStringMatrix(fwdFXConstantConv, FwdFXConstantConv);
 
 		ret = validation::tryMirSetUpFwdFXConstantCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
@@ -41,7 +41,7 @@ const std::string mirSetUpFwdFXConstantCurve(const std::string& CurveID,
 																	fwdFXConstantConv,
 																	curveNames).getCString();
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

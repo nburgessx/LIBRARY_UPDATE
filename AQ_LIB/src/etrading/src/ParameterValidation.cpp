@@ -2,8 +2,8 @@
 
 #include "LAMarketData.h"
 #include "LAStaticData.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataInterpolation.h"
 #include "LACurveForwardRateHelpers.h"
 #include "LADateScheduleHelpers.h"
 
@@ -26,9 +26,9 @@ namespace etrading
     * @param [in]			defVal  Default value
     * @output				non-empty value
     */
-    LAString getDefaultValueForEmptyString( const LAString& val, const LAString& defVal )
+    AQLString getDefaultValueForEmptyString( const AQLString& val, const AQLString& defVal )
     {
-        if( val == LAString( "" ) || !val.isDefined() )
+        if( val == AQLString( "" ) || !val.isDefined() )
         {
             return defVal;
         }
@@ -39,11 +39,11 @@ namespace etrading
     * @param [in]			str		String under validation
     * @param [in]			err		If err is not empty, throw it
     */
-    void validateStringEmptiness( const LAString& str, const LAString& err )
+    void validateStringEmptiness( const AQLString& str, const AQLString& err )
     {
-        if( str == LAString( "" ) && err.size() != 0 )
+        if( str == AQLString( "" ) && err.size() != 0 )
         {
-            throw LACoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
         }
     }
 
@@ -51,9 +51,9 @@ namespace etrading
     *  @param [in]		date Given date
     *  @param [in]		cal Calendar
     */
-    bool isLastDayOfMonth( const LADate& date, const LAString& cal )
+    bool isLastDayOfMonth( const AQLDate& date, const AQLString& cal )
     {
-        const LADate nextDay = LADateScheduleHelpers::getDate( date, "1d", "FOLLOWING", cal );
+        const AQLDate nextDay = LADateScheduleHelpers::getDate( date, "1d", "FOLLOWING", cal );
         return nextDay.monthOfYear() != date.monthOfYear();
     }
 
@@ -62,10 +62,10 @@ namespace etrading
     *  @param [in]		err		error string
     *  @output			date with expected format
     */
-    LADate stringToDate( const LAString& in, const LAString& err )
+    AQLDate stringToDate( const AQLString& in, const AQLString& err )
     {
-        LAString inDate( in );
-        LADate outDate;
+        AQLString inDate( in );
+        AQLDate outDate;
 
         int forwardSlashCheck = inDate.findString( "/" );
 
@@ -90,7 +90,7 @@ namespace etrading
 							return outDate;
 						}
 					}
-					catch ( LACoreError& ){};
+					catch ( AQLCoreError& ){};
 				}
                 try
                 {
@@ -102,7 +102,7 @@ namespace etrading
                         return outDate;
                     }
                 }
-                catch( LACoreError& ) {}
+                catch( AQLCoreError& ) {}
             }
 
             // 2. If our date string is 8 chars in length try YYYYMMDD string format first then Excel Format
@@ -112,7 +112,7 @@ namespace etrading
                 // 2a) Try AlgoQuantLib String YYYYMMDD Date Format
                 try
                 {
-                    outDate = LADate( inDate.getCString(), "YYYYMMDD" );
+                    outDate = AQLDate( inDate.getCString(), "YYYYMMDD" );
 
                     // Return Valid Dates only
                     if ( LADateScheduleHelpers::isValidDate( outDate ) )
@@ -120,7 +120,7 @@ namespace etrading
                         return outDate;
                     }
                 }
-                catch( LACoreError& ) {}
+                catch( AQLCoreError& ) {}
 
                 // 2b) Try Excel Date Format
                 try
@@ -133,7 +133,7 @@ namespace etrading
                         return outDate;
                     }
                 }
-                catch( LACoreError& ) {}
+                catch( AQLCoreError& ) {}
             }
         }
 
@@ -154,9 +154,9 @@ namespace etrading
                     AQ_REQUIRE( inDate.size() == 8, "Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
                     try
                     {
-                        outDate = LADate( inDate.getCString(), "DDMMYYYY" );
+                        outDate = AQLDate( inDate.getCString(), "DDMMYYYY" );
                     }
-                    catch( LACoreError& )
+                    catch( AQLCoreError& )
                     {
                             
                         AQ_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
@@ -199,7 +199,7 @@ namespace etrading
                     AQ_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
                 }
 
-                LADate ret_( inDate.getCString() );
+                AQLDate ret_( inDate.getCString() );
                 outDate = ret_;
             }
 
@@ -208,7 +208,7 @@ namespace etrading
             {
                 if ( err.size() != 0 )
                 {
-                    throw LACoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+                    throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
                 }
                 else
                 {
@@ -229,9 +229,9 @@ namespace etrading
     *  @param [in]		err		error string
     *  @output			date with expected format
     */
-    boost::gregorian::date validateAndConvertStringToGregorianDate( const LAString & inDate, const LAString& err )
+    boost::gregorian::date validateAndConvertStringToGregorianDate( const AQLString & inDate, const AQLString& err )
     {
-        LADate laDate = stringToDate( inDate, err );
+        AQLDate laDate = stringToDate( inDate, err );
         boost::gregorian::date gregorianDate = toGregorianDateFromLADate( laDate );
         return gregorianDate;
     }
@@ -255,7 +255,7 @@ namespace etrading
     *  @param [in]		inputString        The input string
     *  @output			boolean; True if the string is a number and False otherwise
     */
-    bool isNumber( const LAString& inputString )
+    bool isNumber( const AQLString& inputString )
     {
         std::string s = inputString.getCString();
 		return isNumber(s);
@@ -264,7 +264,7 @@ namespace etrading
     /* @brief			Get AlgoQuantLib dataInstance object
     * @output			AlgoQuantLib dataInstance
     */
-    LADataInstance* getDataInstance()
+    AQLDataInstance* getDataInstance()
     {
         return etrading::InitializeAQETrading::instance( false ).dataInstance();
 
@@ -275,12 +275,12 @@ namespace etrading
     * @param [in]		curveCollection	curve collection set id
     * @output			Non-empty calendar string
     */
-    LAString getDefaultCalendarForEmptyString( const LAString& calendar, const LAString& curveCollection )
+    AQLString getDefaultCalendarForEmptyString( const AQLString& calendar, const AQLString& curveCollection )
     {
-        LAString cal = calendar;
-        if( calendar == LAString( "" ) || calendar == nullptr )
+        AQLString cal = calendar;
+        if( calendar == AQLString( "" ) || calendar == nullptr )
         {
-            LAPriceDataCalendar calAttr = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( getDataInstance(), curveCollection ).getCalendar();
+            AQLPriceDataCalendar calAttr = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( getDataInstance(), curveCollection ).getCalendar();
             if ( !calAttr.isNull() )
             {
                 cal  = calAttr.convertToString();
@@ -288,7 +288,7 @@ namespace etrading
             else
             {
                 // Allow null calendar
-                //throw LACoreInvalidData( "#Error: 'Calendar' must be specified.", __FILE__, __LINE__ );
+                //throw AQLCoreInvalidData( "#Error: 'Calendar' must be specified.", __FILE__, __LINE__ );
             }
         }
         return cal;
@@ -310,7 +310,7 @@ namespace etrading
     * @param [in]		value2	second value
     * @output			True if two values are the same
     */
-    bool same(const LAString& value1, const LAString& value2)
+    bool same(const AQLString& value1, const AQLString& value2)
     {
         return boost::iequals(value1.getCString(), value2.getCString());
     }
@@ -406,23 +406,23 @@ namespace etrading
 		}
 	}
 
-	/* @brief			Validate endDate string and convert it to LADate. 
+	/* @brief			Validate endDate string and convert it to AQLDate. 
 	* @param [in]		startDate				Start date
 	* @param [in]		endDateStr				End Date in string format, can be a date or tenor
 	* @param [in]		businessDayAdjustment	Business day adjustment (MOD_FOLLOWING, NO_CHANGE, etc)
 	* @param [in]		calendar				Calendar
 	* @param [in]		errorStr				Error string
-	* @output			End date in LADate format
+	* @output			End date in AQLDate format
 	*/
-	LADate validateDateOrTenor(const LADate& startDate, const LAString& endDateStr, const LAString& businessDayAdjustment, const LAString& calendar, const std::string& errorStr)
+	AQLDate validateDateOrTenor(const AQLDate& startDate, const AQLString& endDateStr, const AQLString& businessDayAdjustment, const AQLString& calendar, const std::string& errorStr)
 	{
-		LADate endDate;
+		AQLDate endDate;
 		bool isInputStrInDateFormat = true;
 		try
 		{
 			endDate = stringToDate(endDateStr, errorStr);
 		}
-		catch (LACoreError&)
+		catch (AQLCoreError&)
 		{
 			isInputStrInDateFormat = false;
 		}

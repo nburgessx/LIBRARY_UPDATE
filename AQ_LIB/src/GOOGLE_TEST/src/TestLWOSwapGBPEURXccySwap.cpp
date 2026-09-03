@@ -84,9 +84,9 @@ namespace google_test
                 // 1. Create the Input File Names and Append the TestCase Index + ".csv"
                 
                 #if defined(GTEST32)
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs;
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs;
                 #else
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs64;
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs64;
                 #endif
 
                 // 2. Load the Input Files
@@ -96,8 +96,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -105,8 +105,8 @@ namespace google_test
                 
                 // 4. Get the Par Spread Inputs & the Basis Spreads
                 std::string swapName            = parSpreadInputFile["swapName"];
-                LAStringMatrix curveCollectionLVB = parSpreadInputFile["curveCollections"];
-                LAStringMatrix fixingTableLVB     = parSpreadInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = parSpreadInputFile["curveCollections"];
+                AQLStringMatrix fixingTableLVB     = parSpreadInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 auto spreadLegName              = parSpreadInputFile["spreadLegName"];
                 
                 double actualBasisSpread        = validation::tryMeLWOSwapParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName );
@@ -114,7 +114,7 @@ namespace google_test
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualBasisSpread, TEST_DIR, parSpreadOutputsFilename, basisSpreadTolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

@@ -16,19 +16,19 @@
 #include "LACurveForwardRateHelpers.h"
 #include "LADateScheduleHelpers.h"
 #include "LAStaticData.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMarketData.h"
 #include "LACoreDataService.h"
-#include "LAInterpolationBase.h"
-#include "LALinearInterpolation.h"
-#include "LAAlgorithm.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataCalendar.h"
-#include "LABasic.h"
-#include "LAMatrix.h"
+#include "AQLInterpolationBase.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLAlgorithm.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLBasic.h"
+#include "AQLMatrix.h"
 #include "LADefinitions.h"		// Put legacy defines last
-#include "LAMathDefine.h"       // Put legacy defines last
+#include "AQLMathDefine.h"       // Put legacy defines last
 #include "CurveUtilities.h"		// accrualPeriod method
 #include "CurveValidation.h"
 #include "Solvers.h"			// Newton-Raphson Minimizer
@@ -71,49 +71,49 @@ namespace etrading
 	*  @param [inout]	useGrid_FRA		A string used for market data validation
 	*  @return			File carrying FRA market data
 	*/
-	LAString buildFRAMarketDataFile(const LAString& fraFileName,
-		const LAStringMatrix& fraRates,
+	AQLString buildFRAMarketDataFile(const AQLString& fraFileName,
+		const AQLStringMatrix& fraRates,
 		bool areSwapsForwardStarting,
-		LAString& useGrid_FRA)
+		AQLString& useGrid_FRA)
 	{
-		LAString fraMarketStream;
+		AQLString fraMarketStream;
 		for (size_t i = 0; i < fraRates.size(); i++)
 		{
 			fraMarketStream += fraRates[i][0];
 			double frarate = fraRates[i][1].getDoubleValue() * 100.0;
-			fraMarketStream += "," + LAString(frarate);
+			fraMarketStream += "," + AQLString(frarate);
 
 			if (fraRates[i].size() >= 5)
 			{
-				LAString isDate_str = fraRates[i][2];
+				AQLString isDate_str = fraRates[i][2];
 				isDate_str.toUpper();
 				fraMarketStream += "," + isDate_str;
 
 				if (isDate_str == "TRUE")
 				{
-					const LADate& startdate = LADateScheduleHelpers::getLADate(fraRates[i][3]);
-					LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+					const AQLDate& startdate = LADateScheduleHelpers::getLADate(fraRates[i][3]);
+					AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 					fraMarketStream += "," + startdate_str;
-					const LADate& enddate = LADateScheduleHelpers::getLADate(fraRates[i][4]);
-					LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+					const AQLDate& enddate = LADateScheduleHelpers::getLADate(fraRates[i][4]);
+					AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 					fraMarketStream += "," + enddate_str;
 				}
 				else if (isDate_str == "FALSE")
 				{
-					LAString startterm_str = fraRates[i][3];
+					AQLString startterm_str = fraRates[i][3];
 					fraMarketStream += "," + startterm_str.toUpper();
-					LAString tenor_str = fraRates[i][4];
+					AQLString tenor_str = fraRates[i][4];
 					fraMarketStream += "," + tenor_str.toUpper();
 				}
 				else
 				{
-					throw LACoreInvalidData("#Error: Third column of the FRA market data block only takes boolean value", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("#Error: Third column of the FRA market data block only takes boolean value", __FILE__, __LINE__);
 				}
 
 				// set use grid
 				if (fraRates[i].size() == 6)
 				{
-					LAString useGridFrag = fraRates[i][5];
+					AQLString useGridFrag = fraRates[i][5];
 					upper(useGridFrag);
 					if (useGridFrag == "TRUE")
 					{
@@ -128,7 +128,7 @@ namespace etrading
 			// set use grid
 			else if (fraRates[i].size() == 3)
 			{
-				LAString useGridFrag = fraRates[i][2]; upper(useGridFrag);
+				AQLString useGridFrag = fraRates[i][2]; upper(useGridFrag);
 				if (useGridFrag == "TRUE")
 				{
 					useGrid_FRA += fraRates[i][0] + ":";
@@ -140,7 +140,7 @@ namespace etrading
 			}
 			else if (fraRates[i].size() == 4)
 			{
-				throw LACoreInvalidData("#Error: FRA market data block does not accept four columns", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: FRA market data block does not accept four columns", __FILE__, __LINE__);
 			}
 
 			fraMarketStream += "\n";
@@ -168,22 +168,22 @@ namespace etrading
 	*/
 	void populateFRADataToEntityPool(LAStaticData * mpStaticData,
 									 CurveCalibrationData &curveCalibrationData,
-									 LAString& refData,
-									 LAObjectPool& objPool,
-									 const LAString& currency,
-									 const LAString& marketName,
-									 const LAString& yieldDataName,
-									 const LAString& staticDataSuffix,
-									 const LAString& suffix_data,
+									 AQLString& refData,
+									 AQLObjectPool& objPool,
+									 const AQLString& currency,
+									 const AQLString& marketName,
+									 const AQLString& yieldDataName,
+									 const AQLString& staticDataSuffix,
+									 const AQLString& suffix_data,
 									 bool isAudExtra,
 									 bool isSpotUse,
 									 bool areSwapsForwardStarting,
-									 const LADate &asOfDate,
+									 const AQLDate &asOfDate,
 									 bool isBasisCurve)
 	{
 		bool isFRAUse = false;
-		LAString isFRAUse_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
-		LADataBool tmpAttrB;
+		AQLString isFRAUse_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
+		AQLDataBool tmpAttrB;
 		if (isFRAUse_str != AQ_NO_DATA)
 		{
 			tmpAttrB.convertFromString(isFRAUse_str);
@@ -203,40 +203,40 @@ namespace etrading
 		}
 		else
 		{
-			curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_ISFRAUSE + suffix_data);
-			curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_ISFRAUSE + suffix_data, new LADataBool(isFRAUse));
+			curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_ISFRAUSE + suffix_data);
+			curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_ISFRAUSE + suffix_data, new AQLDataBool(isFRAUse));
 		}
-		if (isAudExtra && isFRAUse) throw LACoreInvalidData("We can not set AUD extra and FRA use at a same time!", __FILE__, __LINE__);
+		if (isAudExtra && isFRAUse) throw AQLCoreInvalidData("We can not set AUD extra and FRA use at a same time!", __FILE__, __LINE__);
 
 		if (isFRAUse)
 		{
 			// use grid
-			LAStringVector fraUseGrid;
-			LAString tmpFraUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_USEGRID + staticDataSuffix).toUpper();
+			AQLStringVector fraUseGrid;
+			AQLString tmpFraUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_USEGRID + staticDataSuffix).toUpper();
 			if (tmpFraUseGrid != AQ_NO_DATA)
 			{
 				fraUseGrid = tmpFraUseGrid.toToken(':');
 			}
 
 			// get market rate
-			LAString fraFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
+			AQLString fraFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
 			if (fraFileName == AQ_NO_DATA)
 			{
-				throw LACoreInvalidData("No FRA File", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("No FRA File", __FILE__, __LINE__);
 			}
 			MAFileAccessor fraFile(LAMarketData::getNumFileName(fraFileName));
-			LAStringMatrix fraDataMtx;
+			AQLStringMatrix fraDataMtx;
 			fraFile.readAllData(MARKET_DATA_DELIMITER, fraDataMtx);
 			fraFile.close();
 			const int fraSize = fraDataMtx.size();
 
 			// get cal
-			LAString calFRAStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_CALENDAR + staticDataSuffix);
-			LAPriceDataCalendar calFRA;
+			AQLString calFRAStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_CALENDAR + staticDataSuffix);
+			AQLPriceDataCalendar calFRA;
 			calFRA.convertFromString(calFRAStr);
 
 			// get spot date
-			LADate spotDateFRA;
+			AQLDate spotDateFRA;
 			if (isSpotUse)
 			{
 				spotDateFRA.setDate(mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_SPOTDATE + staticDataSuffix).getCString());
@@ -247,17 +247,17 @@ namespace etrading
 			}
 
 			// get daycount
-			LAString daycFRAStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_DAYCOUNT + staticDataSuffix).toUpper();
+			AQLString daycFRAStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_DAYCOUNT + staticDataSuffix).toUpper();
 
 			// get sliding
-			LAString slidingFRAStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_SLIDINGRULE + staticDataSuffix).toUpper();
+			AQLString slidingFRAStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_SLIDINGRULE + staticDataSuffix).toUpper();
 
 			// get applyTension
 			bool applyTensionFRAs = false;
-			LAString applyTensionFRAsStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_APPLYTENSION + staticDataSuffix).toUpper();
+			AQLString applyTensionFRAsStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_APPLYTENSION + staticDataSuffix).toUpper();
 			if (applyTensionFRAsStr != AQ_NO_DATA)
 			{
-				LADataBool tmpApplyTensionFRAs;
+				AQLDataBool tmpApplyTensionFRAs;
 				tmpApplyTensionFRAs.convertFromString(applyTensionFRAsStr);
 				applyTensionFRAs = tmpApplyTensionFRAs.get();
 			}
@@ -273,17 +273,17 @@ namespace etrading
 			}
 			else
 			{
-				LAString strSmoothShortEnd = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_SMOOTHSHORTEND + staticDataSuffix);
+				AQLString strSmoothShortEnd = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_SMOOTHSHORTEND + staticDataSuffix);
 				if (strSmoothShortEnd != AQ_NO_DATA)
 				{
-					LADataBool tmpSmoothShortEnd;
+					AQLDataBool tmpSmoothShortEnd;
 					tmpSmoothShortEnd.convertFromString(strSmoothShortEnd);
 					includeSwapsBeforeMPCSwaps = tmpSmoothShortEnd.get();
 				}
 			}
 
 			//Default to Contiguous for fra
-			LAString fraSerialCalcType = etrading::toString(etrading::CONTIGUOUS_FUTURES);
+			AQLString fraSerialCalcType = etrading::toString(etrading::CONTIGUOUS_FUTURES);
 			
 			// Alias Method
 			auto dh = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_SERIAL_CALC_TYPE + staticDataSuffix,
@@ -295,16 +295,16 @@ namespace etrading
 
 			// get eomroll
 			bool isEOMRollFRA = false;
-			LAString strEOMRollFRA = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_ISEOMROLL + staticDataSuffix).toUpper();
+			AQLString strEOMRollFRA = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_ISEOMROLL + staticDataSuffix).toUpper();
 			if (strEOMRollFRA != AQ_NO_DATA)
 			{
-				LADataBool tmpIsEOMRoll;
+				AQLDataBool tmpIsEOMRoll;
 				tmpIsEOMRoll.convertFromString(strEOMRollFRA);
 				isEOMRollFRA = tmpIsEOMRoll.get();
 			}
 			if (isEOMRollFRA)
 			{
-				LAString strEOMDay = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_EOMDAY + staticDataSuffix).toUpper();
+				AQLString strEOMDay = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_EOMDAY + staticDataSuffix).toUpper();
 				if (strEOMDay != AQ_NO_DATA)
 				{
 					if (spotDateFRA.dayOfMonth() != strEOMDay.getIntValue())
@@ -314,7 +314,7 @@ namespace etrading
 				}
 				else
 				{
-					LADate eomDate = calFRA.getEOMDay(spotDateFRA);
+					AQLDate eomDate = calFRA.getEOMDay(spotDateFRA);
 					if (spotDateFRA != eomDate)
 					{
 						isEOMRollFRA = false;
@@ -324,16 +324,16 @@ namespace etrading
 
 			for (int i = 0; i < fraSize; ++i)
 			{
-				LAString term = fraDataMtx[i][0].toUpper();
+				AQLString term = fraDataMtx[i][0].toUpper();
 				double rate = fraDataMtx[i][1].getDoubleValue() / 100.0;
 
 				//set FRA object
-				LAObject *mktDataFRA = NULL;
-				LAString nameFRA = yieldDataName + AQ_FRA + LAString("_") + LAString(i) + suffix_data;
-				const LAObjectHolder ehfra = objPool.getObject(nameFRA);
+				AQLObject *mktDataFRA = NULL;
+				AQLString nameFRA = yieldDataName + AQ_FRA + AQLString("_") + AQLString(i) + suffix_data;
+				const AQLObjectHolder ehfra = objPool.getObject(nameFRA);
 				if (!ehfra.isDefined())
 				{
-					mktDataFRA = new LAObject();
+					mktDataFRA = new AQLObject();
 					objPool.set(nameFRA, mktDataFRA);
 				}
 				else
@@ -342,61 +342,61 @@ namespace etrading
 					mktDataFRA = &objPool.getObject(nameFRA).get();
 				}
 				refData += nameFRA + ":";
-				mktDataFRA->add(CALIBRATION_DATA_NAME, new LADataString(nameFRA));
+				mktDataFRA->add(CALIBRATION_DATA_NAME, new AQLDataString(nameFRA));
 
 				if (fraDataMtx[i].size() >= 5)
 				{
-					mktDataFRA->add(PRICING_DATA_ISFWDSWAP, new LADataBool(true));
+					mktDataFRA->add(PRICING_DATA_ISFWDSWAP, new AQLDataBool(true));
 
-					LAString isDateStr = fraDataMtx[i][2].toUpper();
+					AQLString isDateStr = fraDataMtx[i][2].toUpper();
 					if (isDateStr != "TRUE" && isDateStr != "FALSE")
 					{
-						throw LACoreInvalidData("#Error: Third column of the FRA market data block only takes boolean value", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("#Error: Third column of the FRA market data block only takes boolean value", __FILE__, __LINE__);
 					}
 
 					bool isDate = isDateStr == "TRUE";
-					mktDataFRA->add(PRICING_DATA_ISDATE, new LADataBool(isDate));
+					mktDataFRA->add(PRICING_DATA_ISDATE, new AQLDataBool(isDate));
 					if (isDate)
 					{
-						const LADate startDate = LADate(fraDataMtx[i][3].getCString());
-						mktDataFRA->add(PRICING_DATA_STARTDATE, new LADataDate(startDate));
-						const LADate endDate = LADate(fraDataMtx[i][4].getCString());
-						mktDataFRA->add(PRICING_DATA_ENDDATE, new LADataDate(endDate));
+						const AQLDate startDate = AQLDate(fraDataMtx[i][3].getCString());
+						mktDataFRA->add(PRICING_DATA_STARTDATE, new AQLDataDate(startDate));
+						const AQLDate endDate = AQLDate(fraDataMtx[i][4].getCString());
+						mktDataFRA->add(PRICING_DATA_ENDDATE, new AQLDataDate(endDate));
 					}
 					else
 					{
-						const LAString startTerm = fraDataMtx[i][3].toUpper();
-						mktDataFRA->add(PRICING_DATA_STARTTERM, new LADataString(startTerm));
-						const LAString tenor = fraDataMtx[i][4].toUpper();
-						mktDataFRA->add(PRICING_DATA_TENOR, new LADataString(tenor));
+						const AQLString startTerm = fraDataMtx[i][3].toUpper();
+						mktDataFRA->add(PRICING_DATA_STARTTERM, new AQLDataString(startTerm));
+						const AQLString tenor = fraDataMtx[i][4].toUpper();
+						mktDataFRA->add(PRICING_DATA_TENOR, new AQLDataString(tenor));
 					}
 
-					mktDataFRA->add(IR_CALIBRATION_DATA_INSTRUMENTSUBTYPE, new LADataString()).convertFromString(IMMFRA);
+					mktDataFRA->add(IR_CALIBRATION_DATA_INSTRUMENTSUBTYPE, new AQLDataString()).convertFromString(IMMFRA);
 				}
-				mktDataFRA->add(IR_CALIBRATION_DATA_TERM, new LADataString(term));
-				mktDataFRA->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar(calFRA));
-				mktDataFRA->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(slidingFRAStr);
-				mktDataFRA->add(IR_CALIBRATION_DATA_SPOTDATE, new LADataDate(spotDateFRA));
-				mktDataFRA->add(CALIBRATION_DATA_RATE, new LADataDouble(rate));
-				mktDataFRA->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(daycFRAStr);
-				mktDataFRA->add(IR_CALIBRATION_DATA_APPLYTENSION, new LADataBool(applyTensionFRAs));
-				mktDataFRA->add(IR_CALIBRATION_DATA_TENSIONGAP, new LADataInt(tensionGapFRAs));
-				mktDataFRA->add(IR_CALIBRATION_DATA_ISEOMROLL, new LADataBool(isEOMRollFRA));
+				mktDataFRA->add(IR_CALIBRATION_DATA_TERM, new AQLDataString(term));
+				mktDataFRA->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar(calFRA));
+				mktDataFRA->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(slidingFRAStr);
+				mktDataFRA->add(IR_CALIBRATION_DATA_SPOTDATE, new AQLDataDate(spotDateFRA));
+				mktDataFRA->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate));
+				mktDataFRA->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(daycFRAStr);
+				mktDataFRA->add(IR_CALIBRATION_DATA_APPLYTENSION, new AQLDataBool(applyTensionFRAs));
+				mktDataFRA->add(IR_CALIBRATION_DATA_TENSIONGAP, new AQLDataInt(tensionGapFRAs));
+				mktDataFRA->add(IR_CALIBRATION_DATA_ISEOMROLL, new AQLDataBool(isEOMRollFRA));
 				//grid use
 				if (fraUseGrid.size() != 0 && find(fraUseGrid.begin(), fraUseGrid.end(), term) == fraUseGrid.end())
 				{
-					mktDataFRA->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(false));
+					mktDataFRA->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(false));
 				}
 				else
 				{
-					mktDataFRA->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(true));
+					mktDataFRA->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
 				}
 				//set yield type
-				mktDataFRA->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(AQ_FRA);
+				mktDataFRA->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(AQ_FRA);
 				// smooth short end of curve
-				mktDataFRA->add(IR_CALIBRATION_DATA_SMOOTHSHORTEND, new LADataBool(includeSwapsBeforeMPCSwaps));
+				mktDataFRA->add(IR_CALIBRATION_DATA_SMOOTHSHORTEND, new AQLDataBool(includeSwapsBeforeMPCSwaps));
 				// serial calc type
-				mktDataFRA->add(IR_CALIBRATION_DATA_FRAFUTURE_SERIAL_CALC_TYPE, new LADataString(fraSerialCalcType));
+				mktDataFRA->add(IR_CALIBRATION_DATA_FRAFUTURE_SERIAL_CALC_TYPE, new AQLDataString(fraSerialCalcType));
 			}
 		}
 	}
@@ -424,19 +424,19 @@ namespace etrading
 	void insertSyntheticTensionPoints( DiscountFactors & dfResults,
 									   DoubleArray& forwardRatesVector,
 									   DoubleMatrix& forwardTermsMatrix,
-									   LAInterpolationBase* discountFactorInterpolationTable,
+									   AQLInterpolationBase* discountFactorInterpolationTable,
 									   const StateVariableEnum& stateVariable,
-									   const LADate & asOfDate,
-									   const LADate& spotDate,
-									   const LADate& startDate,
-									   const LADate& endDate,
+									   const AQLDate & asOfDate,
+									   const AQLDate& spotDate,
+									   const AQLDate& startDate,
+									   const AQLDate& endDate,
 									   const double& forwardRate,
 									   const bool& isFirstDataPoint,
-									   const LAPriceDataDayCount& termsToDateDaycount,
-									   const LAPriceDataDayCount& instrumentDaycount,
+									   const AQLPriceDataDayCount& termsToDateDaycount,
+									   const AQLPriceDataDayCount& instrumentDaycount,
 									   const unsigned int& tensionGap,
 									   tensionMarketData& instrumentData,
-									   const LADate& cutoffDate,
+									   const AQLDate& cutoffDate,
 									   bool implyForwards )
 
 	{
@@ -456,14 +456,14 @@ namespace etrading
 			instrumentData.backEndTerm = termsToDateDaycount.getTerm(spotDate, endDate);
 
 			// Generate Synthetic Start- and End-Date
-			LADate syntheticStartDate = instrumentData.frontStartDate;
+			AQLDate syntheticStartDate = instrumentData.frontStartDate;
 			syntheticStartDate.addDays(tensionGap);
 
-			LADate syntheticEndDate = instrumentData.frontEndDate;
+			AQLDate syntheticEndDate = instrumentData.frontEndDate;
 			syntheticEndDate.addDays(tensionGap);
 
 			RateConvention rateConvention = LACurvePricingObject::setRC(AQ_SIMPLE);
-			LAPriceDataConvention discountConvention(instrumentDaycount.getDayCount(), rateConvention);
+			AQLPriceDataConvention discountConvention(instrumentDaycount.getDayCount(), rateConvention);
 			const etrading::DayCountEnum accrualDaycount = instrumentDaycount.dayCountEnum();
 
 			// Linear Interpolate on Forward Rates
@@ -482,8 +482,8 @@ namespace etrading
 			while (syntheticStartDate < instrumentData.backStartDate && syntheticEndDate < instrumentData.backEndDate && syntheticStartDate < instrumentData.frontEndDate)
 			{
 				// Must ensure new synthetic points don't overlap into the next existing Forward or Adjacent Instrument Group e.g. Swaps
-				// Note: cutoffDate is optional and set to LADate() by default
-				if (cutoffDate != LADate())
+				// Note: cutoffDate is optional and set to AQLDate() by default
+				if (cutoffDate != AQLDate())
 				{
 					if (syntheticEndDate >= cutoffDate) break;
 				}
@@ -493,7 +493,7 @@ namespace etrading
 
 				// Interest Rate Convention - Controls instrument daycount and interest rate compounding conventions e.g. Simple Interest Act/Act.
 				RateConvention rateCompoundingMethod = LACurvePricingObject::setRC(AQ_SIMPLE);
-				LAPriceDataConvention discFactConvention(instrumentDaycount.getDayCount(), rateCompoundingMethod);
+				AQLPriceDataConvention discFactConvention(instrumentDaycount.getDayCount(), rateCompoundingMethod);
 
 				// Linear interpolate existing FRAs to imply an artificial / synthetic FRA rate
 				double linearInterpSlopeCoefft = (syntheticStartTerm - instrumentData.frontStartTerm);
@@ -547,12 +547,12 @@ namespace etrading
 		@param[in]		yield_insert	Yield to be insert
 		@param[in]		overrideIfDatesClash	Override DF(DiscountFactor)/Yields if dates clashed
 	*/
-	void insertDFData(DoubleVector& dfTerms, DoubleVector& dfValues, DateVector& dfDates, double df_insert, double term_insert, const LADate& date_insert, DoubleVector& yields, const double yield_insert, const bool overrideIfDatesClash)
+	void insertDFData(DoubleVector& dfTerms, DoubleVector& dfValues, DateVector& dfDates, double df_insert, double term_insert, const AQLDate& date_insert, DoubleVector& yields, const double yield_insert, const bool overrideIfDatesClash)
 	{
 
 		if (dfTerms.size() != dfDates.size())
 		{
-			throw LACoreInvalidData("Size of DF data and Size of dates must be same!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Size of DF data and Size of dates must be same!", __FILE__, __LINE__);
 		}
 
 		if (dfDates.back() < date_insert)
@@ -600,7 +600,7 @@ namespace etrading
 	}
 
 	// Update dfResults, insert df, term and date info data into the dfResults
-	void insertDFData( DiscountFactors & dfResults, double df_insert, double term_insert, const LADate& date_insert, const bool overrideIfDatesClash )
+	void insertDFData( DiscountFactors & dfResults, double df_insert, double term_insert, const AQLDate& date_insert, const bool overrideIfDatesClash )
 	{
 		DoubleVector dummyYields;
 		insertDFData(dfResults.paymentDatesAsTerms_, dfResults.discountFactors_, dfResults.paymentDates_, df_insert, term_insert, date_insert, dummyYields, std::numeric_limits<double>::quiet_NaN(), overrideIfDatesClash);
@@ -615,7 +615,7 @@ namespace etrading
 		@param[in]		date_in					Discount factor date
 		@param[in]		overrideIfDatesClash	Override DF(DiscountFactor) if dates clashed
 	*/
-	void insertDFData(DoubleMatrix& dfs, DateVector& dates, double df_insert, double term_insert, const LADate& date_insert, bool overrideIfDatesClash)
+	void insertDFData(DoubleMatrix& dfs, DateVector& dates, double df_insert, double term_insert, const AQLDate& date_insert, bool overrideIfDatesClash)
 	{
 		AQ_REQUIRE( dfs.size() == 2, "Invalid Discount Factor Data: TermsDF matrix must have two columns with payment dates and discount factors" )
 		DoubleVector dummyYields;
@@ -635,11 +635,11 @@ namespace etrading
 	{
 		// Data Validation
 		if (fwd_termsmtx.size() != 2)
-			throw LACoreInvalidData("#Error: Unable to update forward rates, fwd_termsmtx size must be 2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Unable to update forward rates, fwd_termsmtx size must be 2", __FILE__, __LINE__);
 
 		// Sort and Insert Forward Data into "fwd_termsmtx" and "fwds" containers
 		unsigned int pos = 0;
-		LAAlgorithm::locate<DoubleArray, double>(fwd_termsmtx[0], insertStartTerm, fwd_termsmtx[0].size(), pos);
+		AQLAlgorithm::locate<DoubleArray, double>(fwd_termsmtx[0], insertStartTerm, fwd_termsmtx[0].size(), pos);
 
 		if (pos == fwd_termsmtx[0].size())
 		{
@@ -670,15 +670,15 @@ namespace etrading
 		@param[in] term in "X" format
 		@return term in "M" format
 	*/
-	LAString changeFRATermFormat(const LAString& inputTerm)
+	AQLString changeFRATermFormat(const AQLString& inputTerm)
 	{
 		int pos = -1;
-		pos = LAString(inputTerm).toUpper().findString("X");
+		pos = AQLString(inputTerm).toUpper().findString("X");
 		if (pos == -1)
 		{
-			throw LACoreInvalidData("x does not exist in FRA Term.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("x does not exist in FRA Term.", __FILE__, __LINE__);
 		}
-		return inputTerm.subString(0, pos - 1) + LAString("M");
+		return inputTerm.subString(0, pos - 1) + AQLString("M");
 	}
 
 	/*
@@ -695,17 +695,17 @@ namespace etrading
 		// Data Validation
 		if (fwd_termsmtx.size() != 2)
 		{
-			throw LACoreInvalidData("#Error: Unable to update forward rates, fwd_termsmtx size must be 2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Unable to update forward rates, fwd_termsmtx size must be 2", __FILE__, __LINE__);
 		}
 
 		if (insesrtStartTerms.empty() || insertEndTerms.empty() || insertFwdRates.empty())
 		{
-			throw LACoreInvalidData("#Error: Unable to update forward rates, startTerms, endTerms and fwdRates data cannot be empty", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Unable to update forward rates, startTerms, endTerms and fwdRates data cannot be empty", __FILE__, __LINE__);
 		}
 
 		if (insesrtStartTerms.size() != insertEndTerms.size() || insesrtStartTerms.size() != insertFwdRates.size())
 		{
-			throw LACoreInvalidData("#Error: Unable to update forward rates, inconsistent startTerms, endTerms and fwdRates data", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Unable to update forward rates, inconsistent startTerms, endTerms and fwdRates data", __FILE__, __LINE__);
 		}
 
 		// Sort and Insert Forward Data into "fwd_termsmtx" and "fwds" containers
@@ -713,7 +713,7 @@ namespace etrading
 		for (unsigned int i = 0; i < insertFwdRates.size() - 1; ++i)
 		{
 
-			LAAlgorithm::locate<DoubleArray, double>(fwd_termsmtx[0], insesrtStartTerms[i], fwd_termsmtx[0].size(), pos);
+			AQLAlgorithm::locate<DoubleArray, double>(fwd_termsmtx[0], insesrtStartTerms[i], fwd_termsmtx[0].size(), pos);
 
 			if (pos == fwd_termsmtx[0].size())
 			{
@@ -762,21 +762,21 @@ namespace etrading
 	void bootstrapFRAs( DiscountFactors & dfResults,
 						DoubleArray& fwds,
 						DoubleMatrix& fwd_termsmtx,
-						const std::vector<LAObject*>& data_fra,
-						const std::vector<LAObject*>&  data_libor,
-						LAInterpolationBase* pInter_fw,
+						const std::vector<AQLObject*>& data_fra,
+						const std::vector<AQLObject*>&  data_libor,
+						AQLInterpolationBase* pInter_fw,
 						const StateVariableEnum& stateVariable,
 						bool is_fwdswap,
-						const LAString& frequency,
-						const LAString& liborIndexTerm,
-						const LADate & asOfDate,
-						const LADate& spotdate,
-						const LADate& spotDateLibor,
-						const LADate& firstSwapDate,
+						const AQLString& frequency,
+						const AQLString& liborIndexTerm,
+						const AQLDate & asOfDate,
+						const AQLDate& spotdate,
+						const AQLDate& spotDateLibor,
+						const AQLDate& firstSwapDate,
 						bool implyForwards,
 					    const double linearSplineJoinDate,
 					    unsigned int lastLiborPosition,
-					    const LADate& lastLiborEndDate )
+					    const AQLDate& lastLiborEndDate )
 	{
 		if (data_fra.empty())
 		{
@@ -788,32 +788,32 @@ namespace etrading
 		int tensionGapFRAs = 0;
 
 		// set applyTensionFRAs flag            
-		const LADataHolder *dh = &(data_fra[0]->getData(IR_CALIBRATION_DATA_APPLYTENSION, NOCHECK));
+		const AQLDataHolder *dh = &(data_fra[0]->getData(IR_CALIBRATION_DATA_APPLYTENSION, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			applyTensionFRAs = dynamic_cast<const LADataBool &>(dh->get()).get();
+			applyTensionFRAs = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 
 		// set TensionGap flag
-		tensionGapFRAs = dynamic_cast<const LADataInt&> ((data_fra[0]->getData(IR_CALIBRATION_DATA_TENSIONGAP, ISNOTNULL)).get()).get();
+		tensionGapFRAs = dynamic_cast<const AQLDataInt&> ((data_fra[0]->getData(IR_CALIBRATION_DATA_TENSIONGAP, ISNOTNULL)).get()).get();
 		if (applyTensionFRAs && tensionGapFRAs < 1)
 		{
-			LAString msg = "#Error: The TensionGap parameter in the FRA conventions table must be a positive integer.";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "#Error: The TensionGap parameter in the FRA conventions table must be a positive integer.";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
 		// get SmoothShortEnd		
 		dh = &(data_fra[0]->getData(IR_CALIBRATION_DATA_SMOOTHSHORTEND, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			includeSwapsBeforeMPCSwaps = dynamic_cast<const LADataBool &>(dh->get()).get();
+			includeSwapsBeforeMPCSwaps = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 
 		etrading::FuturesTypeEnum futuresType = etrading::SERIAL_FUTURES_BY_RATE;
 		dh = &(data_fra[0]->getData(IR_CALIBRATION_DATA_FRAFUTURE_SERIAL_CALC_TYPE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			LAString strfraFutureType = dynamic_cast<const LADataString&>(dh->get());
+			AQLString strfraFutureType = dynamic_cast<const AQLDataString&>(dh->get());
 			futuresType = etrading::toFuturesTypeEnum(strfraFutureType.getCString());
 		}
 
@@ -821,14 +821,14 @@ namespace etrading
 		dh = &(data_fra[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+			isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 
-		const LAString roll_conv = etrading::getRollConv(frequency, isEOMRoll);
+		const AQLString roll_conv = etrading::getRollConv(frequency, isEOMRoll);
 
-		const LAPriceDataSlidingRule& sld = dynamic_cast<const LAPriceDataSlidingRule&> ((data_fra[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-		const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&> ((data_fra[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-		const LAPriceDataDayCount& dc = dynamic_cast<const LAPriceDataDayCount&> ((data_fra[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+		const AQLPriceDataSlidingRule& sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((data_fra[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+		const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&> ((data_fra[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+		const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&> ((data_fra[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 
 		auto size_f = data_fra.size();
 
@@ -849,10 +849,10 @@ namespace etrading
 		for (size_t i = 0; i < data_fra.size(); i++)
 		{
 
-			double rate = dynamic_cast<const LADataDouble&> ((data_fra[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-			const LADate spotDate = dynamic_cast<const LADataDate&> ((data_fra[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
+			double rate = dynamic_cast<const AQLDataDouble&> ((data_fra[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			const AQLDate spotDate = dynamic_cast<const AQLDataDate&> ((data_fra[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
 
-			LADate startDate, endDate;
+			AQLDate startDate, endDate;
 			etrading::populateFraDates(startDate, endDate, spotDate, data_fra[i], liborIndexTerm, roll_conv, sld, cal, dc);
 
 			// Don't Insert Any Forwards if EndDate >= FirstSwapDate
@@ -865,7 +865,7 @@ namespace etrading
 
 		}
 
-		LAPriceDataDayCount dc_act365(ACT_365);
+		AQLPriceDataDayCount dc_act365(ACT_365);
 
 		//If all FRAs are contiguous, use the contiguous routine
 		if (allContiguousFra)
@@ -916,20 +916,20 @@ namespace etrading
 	@param[in]	baseFreq		The frequency of the curve
 	@param[in]	dc				FRA day count
 */
-	void calculateFraDates(LADate& startDate,
-		LADate& endDate,
-		const LADate& spotDate,
-		const LAObject* data_fra,
-		const LAString& liborIndexTerm,
-		const LAString& baseFreq,
-		const LAPriceDataDayCount& dc)
+	void calculateFraDates(AQLDate& startDate,
+		AQLDate& endDate,
+		const AQLDate& spotDate,
+		const AQLObject* data_fra,
+		const AQLString& liborIndexTerm,
+		const AQLString& baseFreq,
+		const AQLPriceDataDayCount& dc)
 	{
-		LAString roll_conv("");
+		AQLString roll_conv("");
 		bool isEOMRoll = false;
-		const LADataHolder* dh = &(data_fra->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
+		const AQLDataHolder* dh = &(data_fra->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+			isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 
 		// set roll convention			
@@ -946,8 +946,8 @@ namespace etrading
 			roll_conv = AQ_ROLLCONV_NORMAL;
 		}
 
-		const LAPriceDataSlidingRule& sld = dynamic_cast<const LAPriceDataSlidingRule&> ((data_fra->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-		const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&> ((data_fra->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+		const AQLPriceDataSlidingRule& sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((data_fra->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+		const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&> ((data_fra->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 
 		populateFraDates(startDate, endDate, spotDate, data_fra, liborIndexTerm, roll_conv, sld, cal, dc);
 
@@ -965,37 +965,37 @@ namespace etrading
 		@param[in]	baseFreq		The frequency of the curve
 		@param[in]	dc				FRA day count
 	*/
-	void populateFraDates(LADate& startDate,
-						  LADate& endDate,
-						  const LADate& spotDate,
-						  const LAObject* data_fra,
-						  const LAString& liborIndexTerm,
-						  const LAString& roll_conv,
-						  const LAPriceDataSlidingRule& sld,
-						  const LAPriceDataCalendar& cal,
-						  const LAPriceDataDayCount& dc)
+	void populateFraDates(AQLDate& startDate,
+						  AQLDate& endDate,
+						  const AQLDate& spotDate,
+						  const AQLObject* data_fra,
+						  const AQLString& liborIndexTerm,
+						  const AQLString& roll_conv,
+						  const AQLPriceDataSlidingRule& sld,
+						  const AQLPriceDataCalendar& cal,
+						  const AQLPriceDataDayCount& dc)
 	{
-		const LADataHolder* dh = &data_fra->getData(PRICING_DATA_ISDATE, NOCHECK);
+		const AQLDataHolder* dh = &data_fra->getData(PRICING_DATA_ISDATE, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const bool is_date = dynamic_cast<const LADataBool&> (dh->get()).get();
+			const bool is_date = dynamic_cast<const AQLDataBool&> (dh->get()).get();
 			if (is_date)
 			{
-				startDate = dynamic_cast<const LADataDate&> ((data_fra->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
-				endDate = dynamic_cast<const LADataDate&> ((data_fra->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
+				startDate = dynamic_cast<const AQLDataDate&> ((data_fra->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
+				endDate = dynamic_cast<const AQLDataDate&> ((data_fra->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
 			}
 			else
 			{
-				const LAString sterm_str = dynamic_cast<const LADataString&> ((data_fra->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
+				const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((data_fra->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
 				startDate = etrading::LADateHelpers::getDate(spotDate, sterm_str, sld, &cal, true, &roll_conv);
-				const LAString tenor_str = dynamic_cast<const LADataString&> ((data_fra->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
+				const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((data_fra->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
 				endDate = etrading::LADateHelpers::getDate(startDate, tenor_str, sld, &cal, true, &roll_conv);
 			}
 		}
 		else
 		{
-			const LAString& terms_str_x = dynamic_cast<const LADataString&> ((data_fra->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			const LAString& terms_str = changeFRATermFormat(terms_str_x);
+			const AQLString& terms_str_x = dynamic_cast<const AQLDataString&> ((data_fra->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			const AQLString& terms_str = changeFRATermFormat(terms_str_x);
 			startDate = etrading::LADateHelpers::getDate(spotDate, terms_str, sld, &cal, true, &roll_conv);
 			endDate = etrading::LADateHelpers::getDate(startDate, liborIndexTerm, sld, &cal, true, &roll_conv);
 		}
@@ -1019,13 +1019,13 @@ namespace etrading
 	*/
 	DiscountFactors bootstrapLibors( DoubleArray& fwds,
 									 DoubleMatrix& fwd_termsmtx,
-									 const std::vector<LAObject*> & data_libor,
+									 const std::vector<AQLObject*> & data_libor,
 									 const MoneyMarketData & data_moneymarket,
 									 bool is_fra_use,
 									 bool is_f_use,
-									 const LADate& spotDateSwap,
-									 const LADate& spotDateLibor,
-									 const LAString& liborIndexTerm,
+									 const AQLDate& spotDateSwap,
+									 const AQLDate& spotDateLibor,
+									 const AQLString& liborIndexTerm,
 									 bool implyForwards )
 	{
 		// Initialize Results with Boundary Condition
@@ -1042,18 +1042,18 @@ namespace etrading
 		//df from spotDateSwap to spotDateLibor or from spotDateLibor to spotDateSwap 
 		double discountFactorSpotAdjustment = 1.0;	
 
-		LADate thisEndDate;
-		LAString instrumentFrequency;
+		AQLDate thisEndDate;
+		AQLString instrumentFrequency;
 		size_t size_libor = data_libor.size();
-		LAPriceDataDayCount dc_act365(ACT_365);
+		AQLPriceDataDayCount dc_act365(ACT_365);
 		
 		results.lastLiborPosition_ = 0;
 		for (size_t i = 0; i < size_libor; i++)
 		{
-			instrumentFrequency = dynamic_cast<const LADataString&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+			instrumentFrequency = dynamic_cast<const AQLDataString&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 			instrumentFrequency.toUpper();
 
-			const LAString& instrumentTerm = dynamic_cast<const LADataString&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			const AQLString& instrumentTerm = dynamic_cast<const AQLDataString&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			if ( (is_fra_use || is_f_use) && instrumentTerm != liborIndexTerm)
 			{
 				continue;
@@ -1061,21 +1061,21 @@ namespace etrading
 
 			// Instrument Conventions
 			results.lastLiborPosition_							= i;
-			double instrumentRate								= dynamic_cast<const LADataDouble&> ((data_libor[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-			const LAPriceDataCalendar& instrumentCalendar		= dynamic_cast<const LAPriceDataCalendar&> ((data_libor[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-			const LAPriceDataSlidingRule& instrumentBusDayAdj	= dynamic_cast<const LAPriceDataSlidingRule&> ((data_libor[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-			const LAPriceDataDayCount& instrumentDaycount		= dynamic_cast<const LAPriceDataDayCount&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+			double instrumentRate								= dynamic_cast<const AQLDataDouble&> ((data_libor[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			const AQLPriceDataCalendar& instrumentCalendar		= dynamic_cast<const AQLPriceDataCalendar&> ((data_libor[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+			const AQLPriceDataSlidingRule& instrumentBusDayAdj	= dynamic_cast<const AQLPriceDataSlidingRule&> ((data_libor[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+			const AQLPriceDataDayCount& instrumentDaycount		= dynamic_cast<const AQLPriceDataDayCount&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 			
 			// Set EOM Roll
 			bool isEOMRoll = false;
-			const LADataHolder *dh = &(data_libor[i]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
+			const AQLDataHolder *dh = &(data_libor[i]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+				isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 			}
 
 			// Set Roll Convention
-			LAString instrumentRollConvention("");
+			AQLString instrumentRollConvention("");
 			if (instrumentFrequency == AQ_LUNAR)
 			{
 				instrumentRollConvention = AQ_ROLLCONV_LUNAR;
@@ -1090,7 +1090,7 @@ namespace etrading
 			}
 
 			RateConvention instrumentRateConvention	= LACurvePricingObject::setRC(instrumentFrequency);
-			LAPriceDataConvention conv(instrumentDaycount.getDayCount(), instrumentRateConvention);
+			AQLPriceDataConvention conv(instrumentDaycount.getDayCount(), instrumentRateConvention);
 
 			// Libor Instrument End Date
 			results.lastLiborEndDate_ = etrading::LADateHelpers::getDate(spotDateLibor, instrumentTerm, instrumentBusDayAdj, &instrumentCalendar, true, &instrumentRollConvention);
@@ -1128,23 +1128,23 @@ namespace etrading
 			dh = &(data_libor[0]->getData(IR_CALIBRATION_DATA_ISONFORSPOTADJUST, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				applyMoneyMarketOvernightAdjustment = dynamic_cast<const LADataBool &>(dh->get()).get();
+				applyMoneyMarketOvernightAdjustment = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 			}
 
 			if (is_fra_use || i == 0)
 			{
 				bool isMoneyMarketAvailable = false;
 				double rate_on				= 0.0;
-				LAPriceDataConvention conv_on;
+				AQLPriceDataConvention conv_on;
 				if (data_moneymarket.size() > 0)
 				{
 					// Money Market Conventions
 					isMoneyMarketAvailable				= true;
 					MoneyMarketData::const_iterator it_ = data_moneymarket.begin();
-					rate_on								= dynamic_cast<const LADataDouble&> ((it_->second->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-					const LAPriceDataDayCount& dc_on	= dynamic_cast<const LAPriceDataDayCount&> ((it_->second->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+					rate_on								= dynamic_cast<const AQLDataDouble&> ((it_->second->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+					const AQLPriceDataDayCount& dc_on	= dynamic_cast<const AQLPriceDataDayCount&> ((it_->second->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 					RateConvention rc_on				= LACurvePricingObject::setRC(AQ_SIMPLE);
-					conv_on								= LAPriceDataConvention(dc_on.getDayCount(), rc_on);
+					conv_on								= AQLPriceDataConvention(dc_on.getDayCount(), rc_on);
 				}
 
 				if (spotDateLibor > spotDateSwap)
@@ -1177,11 +1177,11 @@ namespace etrading
 			liborStartAndEndDates[1] = results.lastLiborEndDate_;
 			if (!data_libor[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, NOCHECK).isDefined())
 			{
-				data_libor[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new LADataDates(liborStartAndEndDates));
+				data_libor[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new AQLDataDates(liborStartAndEndDates));
 			}
 			else
 			{
-				dynamic_cast<LADataDates&>(data_libor[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(liborStartAndEndDates);
+				dynamic_cast<AQLDataDates&>(data_libor[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(liborStartAndEndDates);
 			}
 		}
 
@@ -1252,19 +1252,19 @@ namespace etrading
 		@param[in]		suffix				Name of the curve concerned
 		@return			Curve's interpolation
 	*/
-	LAPriceDataInterpolation getYieldGenInterpolationByCurveName(LAObjectHolder& objHolder, const LAString& suffix)
+	AQLPriceDataInterpolation getYieldGenInterpolationByCurveName(AQLObjectHolder& objHolder, const AQLString& suffix)
 	{
-		LADataHolder *dh = &objHolder.getData(IR_CALIBRATION_DATA_INTERPOLATIONYG + suffix, NOCHECK);
-		LAPriceDataInterpolation inter;
+		AQLDataHolder *dh = &objHolder.getData(IR_CALIBRATION_DATA_INTERPOLATIONYG + suffix, NOCHECK);
+		AQLPriceDataInterpolation inter;
 		if (dh->isDefined() && !dh->isNull())
 		{
-			inter = dynamic_cast<LAPriceDataInterpolation &>(dh->get());
+			inter = dynamic_cast<AQLPriceDataInterpolation &>(dh->get());
 
 			//Set the joinDate if it has been populated
 			dh = &objHolder.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + suffix, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				double interpolationJoinDateAsDouble = dynamic_cast<LADataDouble &>(dh->get());
+				double interpolationJoinDateAsDouble = dynamic_cast<AQLDataDouble &>(dh->get());
 				inter.setJoinDateAsDouble(interpolationJoinDateAsDouble);
 			}
 		}
@@ -1274,18 +1274,18 @@ namespace etrading
 			dh = &objHolder.getData(CALIBRATION_DATA_INTERPOLATION + suffix, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				inter = dynamic_cast<LAPriceDataInterpolation &>(dh->get());
+				inter = dynamic_cast<AQLPriceDataInterpolation &>(dh->get());
 			}
 			else
 			{
 				dh = &objHolder.getData(CALIBRATION_DATA_INTERPOLATION, NOCHECK);
 				if (dh->isDefined() && !dh->isNull())
 				{
-					inter = dynamic_cast<LAPriceDataInterpolation &>(dh->get());
+					inter = dynamic_cast<AQLPriceDataInterpolation &>(dh->get());
 				}
 				else
 				{
-					throw LACoreInvalidData("#Error: Failed to read interpolation method from the curve.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("#Error: Failed to read interpolation method from the curve.", __FILE__, __LINE__);
 				}
 			}
 		}
@@ -1310,13 +1310,13 @@ namespace etrading
 
 		@return floatside pv
 	*/
-	double calcFloatPV( LAInterpolationBase &fwdRate_Interpolation,
+	double calcFloatPV( AQLInterpolationBase &fwdRate_Interpolation,
 						const StateVariableEnum& stateVariable,
-						LAInterpolationBase &discFactor_Interpolation,
+						AQLInterpolationBase &discFactor_Interpolation,
 						const double spotDiscountFactor,
 						const double spotDateAsTerms,
 						const DoubleArray &terms_grid,
-						const LADate & asOfDate,
+						const AQLDate & asOfDate,
 						const DayCountEnum & accrualDaycount,
 						const CompoundingFrequencyEnum & compoundFreq,
 						const int cpd_times,
@@ -1440,17 +1440,17 @@ namespace etrading
 	*/
 	void solveSmoothSTDShortEnd(double& startDF,
 								double& endDF,
-								const LADate& startDate,
-								const LADate& endDate,
-								const LADate& spotDateLibor,
-								const LADate& spotDateSwap,
-								const LADate& liborDate,
-								const LAObject* data_libor,
-								const std::unique_ptr<LAInterpolationBase>& cashDepositInterpolation,
+								const AQLDate& startDate,
+								const AQLDate& endDate,
+								const AQLDate& spotDateLibor,
+								const AQLDate& spotDateSwap,
+								const AQLDate& liborDate,
+								const AQLObject* data_libor,
+								const std::unique_ptr<AQLInterpolationBase>& cashDepositInterpolation,
 								const StateVariableEnum& stateVariable,
 								const DiscountFactors & dfResults,
 								const double forwardRate,
-								const LAPriceDataConvention& forwardConv)
+								const AQLPriceDataConvention& forwardConv)
 	{
 		const double DISCFACTOR_FLOOR = 1e-5;
 
@@ -1460,15 +1460,15 @@ namespace etrading
 			// Log - DiscountFactor State Variable
 			// -----------------------------------
 
-			const LAPriceDataDayCount& liborDC = dynamic_cast<const LAPriceDataDayCount&> ((data_libor->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-			double liborRate = dynamic_cast<const LADataDouble&> ((data_libor->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-			LAString liborFreq = dynamic_cast<const LADataString&> ((data_libor->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+			const AQLPriceDataDayCount& liborDC = dynamic_cast<const AQLPriceDataDayCount&> ((data_libor->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+			double liborRate = dynamic_cast<const AQLDataDouble&> ((data_libor->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			AQLString liborFreq = dynamic_cast<const AQLDataString&> ((data_libor->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 			liborFreq.toUpper();
 
 			RateConvention liborRC = LACurvePricingObject::setRC(liborFreq);
-			LAPriceDataConvention liborConv(liborDC.getDayCount(), liborRC);
+			AQLPriceDataConvention liborConv(liborDC.getDayCount(), liborRC);
 
-			LAPriceDataDayCount dc_act365(ACT_365);
+			AQLPriceDataDayCount dc_act365(ACT_365);
 			double startTerm = dc_act365.getTerm(spotDateSwap, startDate);
 			double endTerm = dc_act365.getTerm(spotDateSwap, endDate);
 
@@ -1487,14 +1487,14 @@ namespace etrading
 			
 			// dfs column 1: discount factors 
 			DoubleVector cashDeposit_LogDFs;
-			cashDeposit_LogDFs.push_back(LAMath::log(dfResults.discountFactors_.front()));	// Transform to LogDF
-			cashDeposit_LogDFs.push_back(LAMath::log(startDF));								// Transform to LogDF
-			cashDeposit_LogDFs.push_back(LAMath::log(endDF));								// Transform to LogDF
+			cashDeposit_LogDFs.push_back(AQLMath::log(dfResults.discountFactors_.front()));	// Transform to LogDF
+			cashDeposit_LogDFs.push_back(AQLMath::log(startDF));								// Transform to LogDF
+			cashDeposit_LogDFs.push_back(AQLMath::log(endDF));								// Transform to LogDF
 
 			cashDepositInterpolation->set(cashDepositTerms, cashDeposit_LogDFs);
 
 			double liborTerm = dc_act365.getTerm(spotDateLibor, liborDate);
-			double liborDF = LAMath::exp(cashDepositInterpolation->value(liborTerm));	// Transform to DF - cashDepositInterpolation is using LogDF
+			double liborDF = AQLMath::exp(cashDepositInterpolation->value(liborTerm));	// Transform to DF - cashDepositInterpolation is using LogDF
 			double impliedLiborDiff0 = liborConv.getRate(liborDF, spotDateLibor, liborDate);
 
 			// Imply libor rate again once DF on the first future start date has been purturbed
@@ -1505,10 +1505,10 @@ namespace etrading
 			startDF			= std::max<double>( startDF, DISCFACTOR_FLOOR );
 			endDF			= std::max<double>( endDF, DISCFACTOR_FLOOR );
 
-			cashDeposit_LogDFs[1] = LAMath::log(startDF);	// Transform to LogDF
-			cashDeposit_LogDFs[2] = LAMath::log(endDF);		// Transform to LogDF
+			cashDeposit_LogDFs[1] = AQLMath::log(startDF);	// Transform to LogDF
+			cashDeposit_LogDFs[2] = AQLMath::log(endDF);		// Transform to LogDF
 			cashDepositInterpolation->set(cashDepositTerms, cashDeposit_LogDFs);
-			liborDF = LAMath::exp(cashDepositInterpolation->value(liborTerm)); // Transform to DF - cashDepositInterpolation is using LogDF
+			liborDF = AQLMath::exp(cashDepositInterpolation->value(liborTerm)); // Transform to DF - cashDepositInterpolation is using LogDF
 
 			double impliedLiborDiff1 = liborRate - liborConv.getRate(liborDF, spotDateLibor, liborDate);
 
@@ -1525,7 +1525,7 @@ namespace etrading
 			while (loopNum--)
 			{
 				bool isEnd = true;
-				if (LAMath::abs(impliedLiborDiff0 - impliedLiborDiff1) >= grad_eps)
+				if (AQLMath::abs(impliedLiborDiff0 - impliedLiborDiff1) >= grad_eps)
 				{
 					isEnd = false;
 				}
@@ -1545,10 +1545,10 @@ namespace etrading
 				startDF			= std::max<double>( startDF, DISCFACTOR_FLOOR );
 				endDF			= std::max<double>( endDF, DISCFACTOR_FLOOR );
 
-				cashDeposit_LogDFs[1] = LAMath::log(startDF_temp);	// Transform to LogDF
-				cashDeposit_LogDFs[2] = LAMath::log(endDF);			// Transform to LogDF
+				cashDeposit_LogDFs[1] = AQLMath::log(startDF_temp);	// Transform to LogDF
+				cashDeposit_LogDFs[2] = AQLMath::log(endDF);			// Transform to LogDF
 				cashDepositInterpolation->set(cashDepositTerms, cashDeposit_LogDFs);
-				liborDF = LAMath::exp(cashDepositInterpolation->value(liborTerm)); // Transform to DF - cashDepositInterpolation is using LogDF
+				liborDF = AQLMath::exp(cashDepositInterpolation->value(liborTerm)); // Transform to DF - cashDepositInterpolation is using LogDF
 
 				double impliedLiborDiff1_temp = liborRate - liborConv.getRate(liborDF, spotDateLibor, liborDate);
 				double gradient = (impliedLiborDiff1 - impliedLiborDiff1_temp) / delta;
@@ -1564,14 +1564,14 @@ namespace etrading
 				startDF			= std::max<double>( startDF, DISCFACTOR_FLOOR );
 				endDF			= std::max<double>( endDF, DISCFACTOR_FLOOR );
 
-				cashDeposit_LogDFs[1] = LAMath::log(startDF);		// Transform to LogDF
-				cashDeposit_LogDFs[2] = LAMath::log(endDF);			// Transform to LogDF
+				cashDeposit_LogDFs[1] = AQLMath::log(startDF);		// Transform to LogDF
+				cashDeposit_LogDFs[2] = AQLMath::log(endDF);			// Transform to LogDF
 				cashDepositInterpolation->set(cashDepositTerms, cashDeposit_LogDFs);
-				liborDF = LAMath::exp(cashDepositInterpolation->value(liborTerm)); // Transform to DF - cashDepositInterpolation is using LogDF
+				liborDF = AQLMath::exp(cashDepositInterpolation->value(liborTerm)); // Transform to DF - cashDepositInterpolation is using LogDF
 
 				impliedLiborDiff1 = liborRate - liborConv.getRate(liborDF, spotDateLibor, liborDate);
 
-				if (LAMath::abs(impliedLiborDiff1) < eps)
+				if (AQLMath::abs(impliedLiborDiff1) < eps)
 				{
 					solutionFound = true;
 					break;
@@ -1585,15 +1585,15 @@ namespace etrading
 			// Discount Factor State Variable
 			// ------------------------------
 
-			const LAPriceDataDayCount& liborDC = dynamic_cast<const LAPriceDataDayCount&> ((data_libor->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-			double liborRate = dynamic_cast<const LADataDouble&> ((data_libor->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-			LAString liborFreq = dynamic_cast<const LADataString&> ((data_libor->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+			const AQLPriceDataDayCount& liborDC = dynamic_cast<const AQLPriceDataDayCount&> ((data_libor->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+			double liborRate = dynamic_cast<const AQLDataDouble&> ((data_libor->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			AQLString liborFreq = dynamic_cast<const AQLDataString&> ((data_libor->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 			liborFreq.toUpper();
 
 			RateConvention liborRC = LACurvePricingObject::setRC(liborFreq);
-			LAPriceDataConvention liborConv(liborDC.getDayCount(), liborRC);
+			AQLPriceDataConvention liborConv(liborDC.getDayCount(), liborRC);
 
-			LAPriceDataDayCount dc_act365(ACT_365);
+			AQLPriceDataDayCount dc_act365(ACT_365);
 			double startTerm = dc_act365.getTerm(spotDateSwap, startDate);
 			double endTerm = dc_act365.getTerm(spotDateSwap, endDate);
 
@@ -1642,7 +1642,7 @@ namespace etrading
 			while (loopNum--)
 			{
 				bool isEnd = true;
-				if (LAMath::abs(impliedLiborDiff0 - impliedLiborDiff1) >= grad_eps)
+				if (AQLMath::abs(impliedLiborDiff0 - impliedLiborDiff1) >= grad_eps)
 				{
 					isEnd = false;
 				}
@@ -1687,7 +1687,7 @@ namespace etrading
 				liborDF = cashDepositInterpolation->value(liborTerm); // cashDepositInterpolation is using DF
 				impliedLiborDiff1 = liborRate - liborConv.getRate(liborDF, spotDateLibor, liborDate);
 
-				if (LAMath::abs(impliedLiborDiff1) < eps)
+				if (AQLMath::abs(impliedLiborDiff1) < eps)
 				{
 					solutionFound = true;
 					break;
@@ -1698,13 +1698,13 @@ namespace etrading
 		}
 	}
 
-	SwapPaymentSchedule::SwapPaymentSchedule( const LADate & startDate,
-											  const LADate & endDate,
-											  const LAString & frequency,
-											  const LAPriceDataCalendar & calendar,
-											  const LAPriceDataSlidingRule & businessDayAdjustment,
-											  const LAPriceDataDayCount & daycount,
-											  const LADate & forwardStartingSpotDate )
+	SwapPaymentSchedule::SwapPaymentSchedule( const AQLDate & startDate,
+											  const AQLDate & endDate,
+											  const AQLString & frequency,
+											  const AQLPriceDataCalendar & calendar,
+											  const AQLPriceDataSlidingRule & businessDayAdjustment,
+											  const AQLPriceDataDayCount & daycount,
+											  const AQLDate & forwardStartingSpotDate )
 		: startDate_(startDate), endDate_(endDate), frequency_(frequency), calendar_(&calendar),
 		  businessDayAdjustment_(&businessDayAdjustment), daycount_(&daycount), forwardStartingSpotDate_(&forwardStartingSpotDate)
 	{
@@ -1730,26 +1730,26 @@ namespace etrading
 		@param[out] isEOMRoll roll end-of-month
 		@param[in] spotDateSwap (swap spot date, optionally)
 	*/
-	void updateAccrualPeriodsAndPaymentDates( const LADate& startDate,
-										      const LADate& endDate,
-										      const LAString& frequency,
-										      const LAPriceDataCalendar& calendar,
-										      const LAPriceDataSlidingRule& busDayAdj,
-										      const LAPriceDataDayCount& daycount,
+	void updateAccrualPeriodsAndPaymentDates( const AQLDate& startDate,
+										      const AQLDate& endDate,
+										      const AQLString& frequency,
+										      const AQLPriceDataCalendar& calendar,
+										      const AQLPriceDataSlidingRule& busDayAdj,
+										      const AQLPriceDataDayCount& daycount,
 										      DateVector& cashflowPaymentDates,
 										      DoubleArray& cashflowPaymentDatesAsTerms,
 										      DoubleArray& accuralPeriods,
 										      bool isEOMRoll,
-										      const LADate* spotDateSwap)
+										      const AQLDate* spotDateSwap)
 	{
 		// Roll Conventions
 		// ****************************************
-		LADate* firstStubDate	= NULL;
-		LADate* lastStubDate	= NULL;
+		AQLDate* firstStubDate	= NULL;
+		AQLDate* lastStubDate	= NULL;
 		int*	rollDay			= NULL;
 
-		LAString thisRollConv = AQ_ROLLCONV_NORMAL;
-		LAString* roll_convention;
+		AQLString thisRollConv = AQ_ROLLCONV_NORMAL;
+		AQLString* roll_convention;
 		
 		// TODO: EOM Roll is missing its implementation
 		//
@@ -1791,12 +1791,12 @@ namespace etrading
 		{
 			// *** IMPORTANT ***
 			// Use ACT/365 instead of ACT/365_ISDA which causes leap-year irregularities
-			LAPriceDataDayCount dc_act365(ACT_365);
+			AQLPriceDataDayCount dc_act365(ACT_365);
 			
-			LADate thisStartDate = startDate;
+			AQLDate thisStartDate = startDate;
 			for (size_t i = 0; i < cashflowPaymentDates.size(); ++i)
 			{
-				LADate thisEndDate = cashflowPaymentDates[i];
+				AQLDate thisEndDate = cashflowPaymentDates[i];
 				
 				// Discount Factor Lookup Year Fraction - Use internal curve daycount ACT/365
 				cashflowPaymentDatesAsTerms.push_back(dc_act365.getTerm(*spotDateSwap, thisEndDate));
@@ -1823,61 +1823,61 @@ namespace etrading
 		@param[in] is_fwdswap			Is forward starting swap used?
 		@return	   Linear spline join date
 	*/
-	LADate determineLinearSplineInterpolationJoinDate(const LAObject* lastFuture,
-													  const LAObject* firstSwap,
-													  const LADate& spotDate_swap,
+	AQLDate determineLinearSplineInterpolationJoinDate(const AQLObject* lastFuture,
+													  const AQLObject* firstSwap,
+													  const AQLDate& spotDate_swap,
 													  bool is_fwdswap
 	)
 	{
-		LADate joinDate;
-		LADate lastFutureEndDate = dynamic_cast<const LADataDate&>((lastFuture->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
-		LADate lastFutureStartDate = dynamic_cast<const LADataDate&>((lastFuture->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
+		AQLDate joinDate;
+		AQLDate lastFutureEndDate = dynamic_cast<const AQLDataDate&>((lastFuture->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
+		AQLDate lastFutureStartDate = dynamic_cast<const AQLDataDate&>((lastFuture->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
 
 		//-------------------------------------------------------------------------------------------------
 		// Find the date schedule of the first swap
 
-		LAString freq = dynamic_cast<const LADataString&> ((firstSwap->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, ISNOTNULL)).get()).get();
-		const LAPriceDataCalendar * cal = &dynamic_cast<const LAPriceDataCalendar&> ((firstSwap->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-		const LAPriceDataSlidingRule * sld = &dynamic_cast<const LAPriceDataSlidingRule&> ((firstSwap->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-		const LAPriceDataDayCount * dc = &dynamic_cast<const LAPriceDataDayCount&> ((firstSwap->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+		AQLString freq = dynamic_cast<const AQLDataString&> ((firstSwap->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, ISNOTNULL)).get()).get();
+		const AQLPriceDataCalendar * cal = &dynamic_cast<const AQLPriceDataCalendar&> ((firstSwap->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+		const AQLPriceDataSlidingRule * sld = &dynamic_cast<const AQLPriceDataSlidingRule&> ((firstSwap->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+		const AQLPriceDataDayCount * dc = &dynamic_cast<const AQLPriceDataDayCount&> ((firstSwap->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 
 		bool isEOMRoll = false;
-		const LADataHolder* dh = &firstSwap->getData(IR_CALIBRATION_DATA_ISEOMROLLSW, NOCHECK);
+		const AQLDataHolder* dh = &firstSwap->getData(IR_CALIBRATION_DATA_ISEOMROLLSW, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+			isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 
-		LAString roll_conv;
+		AQLString roll_conv;
 		if (freq == AQ_LUNAR) roll_conv = AQ_ROLLCONV_LUNAR;
 		else if (isEOMRoll) roll_conv = AQ_ROLLCONV_EOM;
 		else roll_conv = AQ_ROLLCONV_NORMAL;
 
-		LADate startDate, endDate;
+		AQLDate startDate, endDate;
 		DateVector datesVec;
 		DoubleArray thisAccrualPeriod;
 		if (is_fwdswap)
 		{
-			const bool is_date = dynamic_cast<const LADataBool&> ((firstSwap->getData(PRICING_DATA_ISDATE, ISNOTNULL)).get()).get();
+			const bool is_date = dynamic_cast<const AQLDataBool&> ((firstSwap->getData(PRICING_DATA_ISDATE, ISNOTNULL)).get()).get();
 			if (is_date)
 			{
-				startDate = dynamic_cast<const LADataDate&> ((firstSwap->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
-				endDate = dynamic_cast<const LADataDate&> ((firstSwap->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
+				startDate = dynamic_cast<const AQLDataDate&> ((firstSwap->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
+				endDate = dynamic_cast<const AQLDataDate&> ((firstSwap->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
 			}
 			else
 			{
-				const LAString sterm_str = dynamic_cast<const LADataString&> ((firstSwap->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
+				const AQLString sterm_str = dynamic_cast<const AQLDataString&> ((firstSwap->getData(PRICING_DATA_STARTTERM, ISNOTNULL)).get()).get();
 				startDate = etrading::LADateHelpers::getDate(spotDate_swap, sterm_str, *sld, cal, true, &roll_conv);
-				const LAString tenor_str = dynamic_cast<const LADataString&> ((firstSwap->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
-				endDate = etrading::LADateHelpers::getDate(startDate, tenor_str, LAPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+				const AQLString tenor_str = dynamic_cast<const AQLDataString&> ((firstSwap->getData(PRICING_DATA_TENOR, ISNOTNULL)).get()).get();
+				endDate = etrading::LADateHelpers::getDate(startDate, tenor_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 			}
 
 			updateAccrualPeriodsAndPaymentDates(startDate, endDate, freq, *cal, *sld, *dc, datesVec, thisAccrualPeriod, thisAccrualPeriod, isEOMRoll);
 		}
 		else
 		{
-			const LAString& term_str = dynamic_cast<const LADataString&> ((firstSwap->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			endDate = etrading::LADateHelpers::getDate(spotDate_swap, term_str, LAPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
+			const AQLString& term_str = dynamic_cast<const AQLDataString&> ((firstSwap->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			endDate = etrading::LADateHelpers::getDate(spotDate_swap, term_str, AQLPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
 
 			updateAccrualPeriodsAndPaymentDates(spotDate_swap, endDate, freq, *cal, *sld, *dc, datesVec, thisAccrualPeriod, thisAccrualPeriod, isEOMRoll);
 		}
@@ -1885,7 +1885,7 @@ namespace etrading
 		//-------------------------------------------------------------------------------------------------
 		// determine the future/swap join date
 
-		LADate firstDate, secondDate;
+		AQLDate firstDate, secondDate;
 		size_t dateCount = datesVec.size();
 		for (size_t i = 0; i < dateCount - 1; ++i)
 		{
@@ -1917,7 +1917,7 @@ namespace etrading
 		}
 
 		// If joinDate fails to be set by now, set it to be the middle date between the start and end of the last future.
-		if (joinDate == LADate())
+		if (joinDate == AQLDate())
 		{
 			firstDate = lastFutureStartDate;
 			secondDate = lastFutureEndDate;
@@ -1936,18 +1936,18 @@ namespace etrading
 		@param[in] data_swap	The market data object
 		@returns				The term string
 	*/
-	const LAString& getMaturityAsTermString(unsigned int i, const std::vector<LAObject*>& data_item)
+	const AQLString& getMaturityAsTermString(unsigned int i, const std::vector<AQLObject*>& data_item)
 	{
-		const LAString& maturityTermString = dynamic_cast<const LADataString&> ((data_item[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+		const AQLString& maturityTermString = dynamic_cast<const AQLDataString&> ((data_item[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 
 		if (i > 0)
 		{
 			// Perform a sanity check for duplicates terms.
 			// We assume the terms are sorted, so any duplicates will be next to each other.
-			const LAString& previousTermString = dynamic_cast<const LADataString&> ((data_item[i - 1]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			const AQLString& previousTermString = dynamic_cast<const AQLDataString&> ((data_item[i - 1]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			if (previousTermString == maturityTermString)
 			{
-				throw LACoreInvalidData((boost::format("#Error: Duplicate Swap Instrument Detected, Duplicate Maturity Term: '%s'.") % maturityTermString.getCString()).str().c_str(), __FILE__, __LINE__);
+				throw AQLCoreInvalidData((boost::format("#Error: Duplicate Swap Instrument Detected, Duplicate Maturity Term: '%s'.") % maturityTermString.getCString()).str().c_str(), __FILE__, __LINE__);
 			}
 		}
 
@@ -1962,11 +1962,11 @@ namespace etrading
 		@param[in] grid
 		@return Property data value
 	*/
-	LAString getGridStaticData(LAStaticData * mpStaticData, const LAString &key, const LAString &curve, const LAString &grid)
+	AQLString getGridStaticData(LAStaticData * mpStaticData, const AQLString &key, const AQLString &curve, const AQLString &grid)
 	{
-		LAString suffix = "." + grid + curve;
+		AQLString suffix = "." + grid + curve;
 		suffix.toLower();
-		LAString val = mpStaticData->getStaticData(key + suffix);
+		AQLString val = mpStaticData->getStaticData(key + suffix);
 		if (val != AQ_NO_DATA)
 		{
 			return val;
@@ -1999,22 +1999,22 @@ namespace etrading
 	*  @return			Libor rate that matches spot rate term (if provided)
 	*/
 	double populateCashInstrumentsToEntityPool(LAStaticData * mpStaticData,
-											   LAString& refData,
-											   LAObjectPool& objPool,
-											   const LAString& currency,
-											   const LAString& marketName,
-											   const LAString& yieldDataName,
-											   const LAString& staticDataSuffix,
-											   const LAString& suffix_data,
+											   AQLString& refData,
+											   AQLObjectPool& objPool,
+											   const AQLString& currency,
+											   const AQLString& marketName,
+											   const AQLString& yieldDataName,
+											   const AQLString& staticDataSuffix,
+											   const AQLString& suffix_data,
 											   bool isSpotUse,
 											   bool isFwdFX,
-											   const LADate &asOfDate,
-											   const LAString& fixingSource,
-											   const LAString& spotRateTerm)
+											   const AQLDate &asOfDate,
+											   const AQLString& fixingSource,
+											   const AQLString& spotRateTerm)
 	{
-		LAString liborFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
+		AQLString liborFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
 		MAFileAccessor liborFile(LAMarketData::getNumFileName(liborFileName));
-		LAStringMatrix liborDataMtx;
+		AQLStringMatrix liborDataMtx;
 		if (!isFwdFX)
 		{
 			liborFile.readAllData(MARKET_DATA_DELIMITER, liborDataMtx);
@@ -2023,7 +2023,7 @@ namespace etrading
 
 		if ((liborDataMtx.size() == 0 || liborDataMtx[0].size() < 2) && !isFwdFX)
 		{
-			throw LACoreInvalidData("#Error: This curve requires Libor fixing rates to be provided as its inputs which are currently missing", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: This curve requires Libor fixing rates to be provided as its inputs which are currently missing", __FILE__, __LINE__);
 		}
 
 		double firstVal = 0.0;
@@ -2033,24 +2033,24 @@ namespace etrading
 		}
 
 		bool skipONTN = false;
-		LAString calMStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_MONEYMARKET_CALENDAR + staticDataSuffix);
+		AQLString calMStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_MONEYMARKET_CALENDAR + staticDataSuffix);
 		if (calMStr == AQ_NO_DATA && fixingSource == ITSELF)
 		{
 			skipONTN = true;
 		}
 
-		LAObject *mktDataO_N = NULL;
-		LAObject *mktDataT_N = NULL;
-		LAString daycMStr = "";
-		LAString slidingMStr = "";
+		AQLObject *mktDataO_N = NULL;
+		AQLObject *mktDataT_N = NULL;
+		AQLString daycMStr = "";
+		AQLString slidingMStr = "";
 		if (!skipONTN)
 		{
 			// create O_N			
-			LAString nameO_N = yieldDataName + "_O_N" + suffix_data;
-			const LAObjectHolder ehois = objPool.getObject(nameO_N);
+			AQLString nameO_N = yieldDataName + "_O_N" + suffix_data;
+			const AQLObjectHolder ehois = objPool.getObject(nameO_N);
 			if (!ehois.isDefined())
 			{
-				mktDataO_N = new LAObject();
+				mktDataO_N = new AQLObject();
 				objPool.set(nameO_N, mktDataO_N);
 			}
 			else
@@ -2059,29 +2059,29 @@ namespace etrading
 				mktDataO_N = &objPool.getObject(nameO_N).get();
 			}
 
-			mktDataO_N->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(nameO_N);
+			mktDataO_N->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(nameO_N);
 
 			// set calendar		
-			mktDataO_N->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(calMStr);
+			mktDataO_N->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(calMStr);
 			// set spotdate
 			if (isSpotUse)
 			{
-				LADate spotDateM(mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_MONEYMARKET_SPOTDATE + staticDataSuffix).getCString());
-				mktDataO_N->add(IR_CALIBRATION_DATA_SPOTDATE, new LADataDate(spotDateM));
+				AQLDate spotDateM(mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_MONEYMARKET_SPOTDATE + staticDataSuffix).getCString());
+				mktDataO_N->add(IR_CALIBRATION_DATA_SPOTDATE, new AQLDataDate(spotDateM));
 			}
 			// set daycount
 			daycMStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_MONEYMARKET_DAYCOUNT + staticDataSuffix).toUpper();
-			mktDataO_N->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(daycMStr);
+			mktDataO_N->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(daycMStr);
 			// set sliding
 			slidingMStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_MONEYMARKET_SLIDINGRULE + staticDataSuffix).toUpper();
-			mktDataO_N->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(slidingMStr);
+			mktDataO_N->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(slidingMStr);
 			// set data type
-			mktDataO_N->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_O_N);
+			mktDataO_N->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_O_N);
 			refData += nameO_N + ":";
 
 			// create T_N			
-			LAString nameT_N = yieldDataName + "_T_N" + suffix_data;
-			const LAObjectHolder ehtn = objPool.getObject(nameT_N);
+			AQLString nameT_N = yieldDataName + "_T_N" + suffix_data;
+			const AQLObjectHolder ehtn = objPool.getObject(nameT_N);
 			if (!ehtn.isDefined())
 			{
 				mktDataT_N = mktDataO_N->clone();
@@ -2099,10 +2099,10 @@ namespace etrading
 		}
 
 		// get cal and calc spot date
-		LAPriceDataCalendar calL;
-		LAString calLStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_CALENDAR + staticDataSuffix);
+		AQLPriceDataCalendar calL;
+		AQLString calLStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_CALENDAR + staticDataSuffix);
 		calL.convertFromString(calLStr);
-		LADate spotDateL;
+		AQLDate spotDateL;
 		if (isSpotUse)
 		{
 			spotDateL.setDate(mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_SPOTDATE + staticDataSuffix).getCString());
@@ -2113,10 +2113,10 @@ namespace etrading
 		}
 
 		bool isOnSpotAdj = false;
-		LAString strIsOnSpotAdj = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_ISONFORSPOTADJUST + staticDataSuffix).toUpper();
+		AQLString strIsOnSpotAdj = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_ISONFORSPOTADJUST + staticDataSuffix).toUpper();
 		if (strIsOnSpotAdj != AQ_NO_DATA)
 		{
-			LADataBool tmpIsOnSpotAdj;
+			AQLDataBool tmpIsOnSpotAdj;
 			tmpIsOnSpotAdj.convertFromString(strIsOnSpotAdj);
 			isOnSpotAdj = tmpIsOnSpotAdj.get();
 		}
@@ -2126,24 +2126,24 @@ namespace etrading
 
 		const int liborSize = liborDataMtx.size();
 		// use grid
-		LAStringVector liborUseGrid;
-		LAString tmpLiborUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_USEGRID + staticDataSuffix).toUpper();
+		AQLStringVector liborUseGrid;
+		AQLString tmpLiborUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_USEGRID + staticDataSuffix).toUpper();
 		if (tmpLiborUseGrid != AQ_NO_DATA)
 		{
 			liborUseGrid = tmpLiborUseGrid.toToken(':');
 		}
 		// get eomroll
 		bool isEOMRollL = false;
-		LAString strEOMRollL = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_ISEOMROLL + staticDataSuffix).toUpper();
+		AQLString strEOMRollL = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_ISEOMROLL + staticDataSuffix).toUpper();
 		if (strEOMRollL != AQ_NO_DATA)
 		{
-			LADataBool tmpIsEOMRoll;
+			AQLDataBool tmpIsEOMRoll;
 			tmpIsEOMRoll.convertFromString(strEOMRollL);
 			isEOMRollL = tmpIsEOMRoll.get();
 		}
 		if (isEOMRollL)
 		{
-			LAString strEOMDay = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_EOMDAY + staticDataSuffix).toUpper();
+			AQLString strEOMDay = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_EOMDAY + staticDataSuffix).toUpper();
 			if (strEOMDay != AQ_NO_DATA)
 			{
 				if (spotDateL.dayOfMonth() != strEOMDay.getIntValue())
@@ -2153,7 +2153,7 @@ namespace etrading
 			}
 			else
 			{
-				LADate eomDate = calL.getEOMDay(spotDateL);
+				AQLDate eomDate = calL.getEOMDay(spotDateL);
 				if (spotDateL != eomDate)
 				{
 					isEOMRollL = false;
@@ -2164,46 +2164,46 @@ namespace etrading
 		double spotLibor = DBL_MAX;
 		for (int j = 0; j < liborSize; ++j)
 		{
-			LAString term = liborDataMtx[j][0].toUpper();
+			AQLString term = liborDataMtx[j][0].toUpper();
 			double rate = liborDataMtx[j][1].getDoubleValue();
 
 			// When 'spotRateTerm' is not specified, add all Libor rates to market data collection
 			// Otherwise only add the Libor tenor that is equal to 'spotRateTerm'
 			if (spotRateTerm.size() == 0
-				|| term.toUpper() == LAString(spotRateTerm).toUpper())
+				|| term.toUpper() == AQLString(spotRateTerm).toUpper())
 			{
-				if (term.toUpper() == LAString(spotRateTerm).toUpper())
+				if (term.toUpper() == AQLString(spotRateTerm).toUpper())
 				{
 					spotLibor = rate;
 				}
 
 				// get freq
-				LAString freqLStr = getGridStaticData(mpStaticData, currency + STATIC_DATA_KEY_YIELD_LIBOR_FREQUENCY, staticDataSuffix, term).toUpper();
+				AQLString freqLStr = getGridStaticData(mpStaticData, currency + STATIC_DATA_KEY_YIELD_LIBOR_FREQUENCY, staticDataSuffix, term).toUpper();
 				// get daycount
-				LAString daycLStr = getGridStaticData(mpStaticData, currency + STATIC_DATA_KEY_YIELD_LIBOR_DAYCOUNT, staticDataSuffix, term).toUpper();
+				AQLString daycLStr = getGridStaticData(mpStaticData, currency + STATIC_DATA_KEY_YIELD_LIBOR_DAYCOUNT, staticDataSuffix, term).toUpper();
 				// get sliding
-				LAString slidingLStr = getGridStaticData(mpStaticData, currency + STATIC_DATA_KEY_YIELD_LIBOR_SLIDINGRULE, staticDataSuffix, term).toUpper();
+				AQLString slidingLStr = getGridStaticData(mpStaticData, currency + STATIC_DATA_KEY_YIELD_LIBOR_SLIDINGRULE, staticDataSuffix, term).toUpper();
 
 				if (term == "ON" && mktDataO_N != NULL)
 				{
-					mktDataO_N->add(CALIBRATION_DATA_RATE, new LADataDouble(rate / 100.0));
+					mktDataO_N->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate / 100.0));
 					onValFlg = true;
 					continue;
 				}
 				else if (term == "TN" && mktDataT_N != NULL)
 				{
 					mktDataT_N->remove(CALIBRATION_DATA_RATE);
-					mktDataT_N->add(CALIBRATION_DATA_RATE, new LADataDouble(rate / 100.0));
+					mktDataT_N->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate / 100.0));
 					tnValFlg = true;
 					continue;
 				}
 
-				LAObject *mktData = NULL;
-				LAString nameL = yieldDataName + "_LIBOR_" + LAString(j) + suffix_data;
-				const LAObjectHolder ehlibor = objPool.getObject(nameL);
+				AQLObject *mktData = NULL;
+				AQLString nameL = yieldDataName + "_LIBOR_" + AQLString(j) + suffix_data;
+				const AQLObjectHolder ehlibor = objPool.getObject(nameL);
 				if (!ehlibor.isDefined())
 				{
-					mktData = new LAObject();
+					mktData = new AQLObject();
 					objPool.set(nameL, mktData);
 				}
 				else
@@ -2213,56 +2213,56 @@ namespace etrading
 				}
 				refData += nameL + ":";
 				// set name
-				mktData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(nameL);
+				mktData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(nameL);
 				// set spot date
-				mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new LADataDate(spotDateL));
+				mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new AQLDataDate(spotDateL));
 				// set calendar, sliding, daycount
 				if (term == "SN")
 				{
-					mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(calMStr);
-					mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(daycMStr);
-					mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(slidingMStr);
+					mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(calMStr);
+					mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(daycMStr);
+					mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(slidingMStr);
 				}
 				else
 				{
-					mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(calLStr);
-					mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(daycLStr);
-					mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(slidingLStr);
+					mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(calLStr);
+					mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(daycLStr);
+					mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(slidingLStr);
 				}
 				// is on for spot adjust
-				mktData->add(IR_CALIBRATION_DATA_ISONFORSPOTADJUST, new LADataBool(isOnSpotAdj));
+				mktData->add(IR_CALIBRATION_DATA_ISONFORSPOTADJUST, new AQLDataBool(isOnSpotAdj));
 				// set data type
-				mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_ZERO);
+				mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_ZERO);
 				// set frequency
-				mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString()).convertFromString(freqLStr);
+				mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString()).convertFromString(freqLStr);
 				// set eomroll
-				mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new LADataBool(isEOMRollL));
+				mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new AQLDataBool(isEOMRollL));
 				// set term
-				mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
+				mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
 				//grid use
 				if (liborUseGrid.size() != 0 && find(liborUseGrid.begin(), liborUseGrid.end(), term) == liborUseGrid.end())
 				{
-					mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(false));
+					mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(false));
 				}
 				else
 				{
-					mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(true));
+					mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
 				}
 				// set rate
-				mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(rate / 100.0));
+				mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate / 100.0));
 			}
 		}
 
 		// if no data for ON and TN set first Libor data to ON and TN
 		if (!onValFlg && !skipONTN)
 		{
-			mktDataO_N->add(CALIBRATION_DATA_RATE, new LADataDouble(firstVal / 100.0));
+			mktDataO_N->add(CALIBRATION_DATA_RATE, new AQLDataDouble(firstVal / 100.0));
 		}
 
 		if (!tnValFlg && !skipONTN)
 		{
 			mktDataT_N->remove(CALIBRATION_DATA_RATE);
-			mktDataT_N->add(CALIBRATION_DATA_RATE, new LADataDouble(firstVal / 100.0));
+			mktDataT_N->add(CALIBRATION_DATA_RATE, new AQLDataDouble(firstVal / 100.0));
 		}
 
 		return spotLibor;
@@ -2301,8 +2301,8 @@ namespace etrading
 		@param[inout]  endterms			Terms from spot to end date of each OIS cash flow
 	*/
 	void priceOISSwaps( DoubleVector& allPVs,
-						LAInterpolationBase* pInter_yield,
-						LAInterpolationBase *df_inter,
+						AQLInterpolationBase* pInter_yield,
+						AQLInterpolationBase *df_inter,
 						const std::vector<size_t>& size_calcs,
 						const std::vector<size_t>& size_calcs_s,
 						const std::vector<size_t>& calced_sizes,
@@ -2316,16 +2316,16 @@ namespace etrading
 						const std::vector<DateVector>& fixingStartDates,
 						const std::vector<DateVector>& fixingEndDates,
 						const DoubleMatrix& fixingTaus,
-						const LAStringVector& term_strs,
+						const AQLStringVector& term_strs,
 						bool is_selfdf,
 						double d_spotdf,
 						double spotterm,
-						const LADate& spotdate,
+						const AQLDate& spotdate,
 						const std::vector<etrading::OISCompoundingEnum> & swapCompoundingMethodEnums,
 						const std::vector<etrading::OISLongTermInstrumentsEnum> & longTermConvEnums,
-						const LAStringVector& longTermGens,
-						const std::vector<const LAPriceDataCalendar*>& cals,
-						const std::vector<const LAPriceDataDayCount*>& dateCounts,
+						const AQLStringVector& longTermGens,
+						const std::vector<const AQLPriceDataCalendar*>& cals,
+						const std::vector<const AQLPriceDataDayCount*>& dateCounts,
 						const std::vector<bool>& bOISSwapCalcReset,
 						const std::vector<bool>& bFullSigmaReset,
 						const std::vector<bool>& bLiborSwapCalcReset,
@@ -2374,7 +2374,7 @@ namespace etrading
 			}
 
 			const OISLongTermInstrumentsEnum longTermConvEnum = longTermConvEnums[i];
-			const LAString longTermGen = longTermGens[i];
+			const AQLString longTermGen = longTermGens[i];
 
 			startterms[i].resize(size_calcs[i]);
 			endterms[i].resize(size_calcs[i]);
@@ -2480,8 +2480,8 @@ namespace etrading
 	double priceSingleOISSwapPV(double oisParRate,
 								double liborOisParSpread,
 								double liborParRate,
-								LAInterpolationBase* pInter_yield,
-								LAInterpolationBase* df_inter,
+								AQLInterpolationBase* pInter_yield,
+								AQLInterpolationBase* df_inter,
 								double& oisFloatLegPV_WithoutSpread,
 								double& oisFloatLegAnnuity,
 								double& oisFixedLegAnnuity,
@@ -2504,12 +2504,12 @@ namespace etrading
 								bool is_selfdf,
 								double spotterm,
 								double d_spotdf,
-								const LADate& spotdate,
+								const AQLDate& spotdate,
 								const etrading::OISCompoundingEnum& swapAveragingMethodEnum,
 								const etrading::OISLongTermInstrumentsEnum& longTermConvEnum,
-								const LAString& longTermGen,
-								const LAPriceDataDayCount* dayCount,
-								const LAPriceDataCalendar* cal,
+								const AQLString& longTermGen,
+								const AQLPriceDataDayCount* dayCount,
+								const AQLPriceDataCalendar* cal,
 								DoubleMatrix& startterms,
 								DoubleMatrix& endterms)
 	{
@@ -2529,7 +2529,7 @@ namespace etrading
 			unsigned int pos = j + calced_size;
 			if (is_selfdf)
 			{
-				dfs_[j] = LAMath::exp(-pInter_yield->value(terms_grids[pos]) * terms_grids[pos]);
+				dfs_[j] = AQLMath::exp(-pInter_yield->value(terms_grids[pos]) * terms_grids[pos]);
 			}
 			else
 			{
@@ -2539,8 +2539,8 @@ namespace etrading
 			oisFloatLegAnnuity += terms_intervals[pos] * dfs_[j];
 
 			// Calculate the OIS Float Leg Effective Rate and PV
-			LADate startdate = fixingStartDates[pos];
-			LADate enddate = fixingEndDates[pos];
+			AQLDate startdate = fixingStartDates[pos];
+			AQLDate enddate = fixingEndDates[pos];
 			double fixingTau = fixingTaus[pos];
 
 			double effectiveRate = CurveCalibration::calcEffectiveOISRate(startterms[j], endterms[j], swapAveragingMethodEnum, longTermConvEnum, longTermGen, spotdate, startdate, enddate, dayCount, cal, pInter_yield, fixingTau);
@@ -2563,7 +2563,7 @@ namespace etrading
 				unsigned int pos_s = j + calced_size_s;
 				if (is_selfdf)
 				{
-					dfs_s[j] = LAMath::exp(-pInter_yield->value(terms_grids_s[pos_s]) * terms_grids_s[pos_s]);
+					dfs_s[j] = AQLMath::exp(-pInter_yield->value(terms_grids_s[pos_s]) * terms_grids_s[pos_s]);
 				}
 				else
 				{
@@ -2592,13 +2592,13 @@ namespace etrading
 		double liborFloatLegPV = 0.0;
 
 		// LOG FILE PARAMETERS: OIS FIXED LEG
-		// LADate oisFixedLegMaturity                      = fixingEndDates[size_calc-1];
+		// AQLDate oisFixedLegMaturity                      = fixingEndDates[size_calc-1];
 		// DateVector oisFixedLegStartDates                = fixingStartDates;
 		// DateVector oisFixedLegEndDates                  = fixingEndDates;
 		// DoubleVector oisFixedLegAccrualYearFractions    = terms_intervals;
 		// DoubleVector oisFixedLegDiscountFactors         = dfs_;
-		// LAString oisFixedLegCalendar                    = cal->convertToString();
-		// LAString oisDayCount                            = dayCount->convertToString();
+		// AQLString oisFixedLegCalendar                    = cal->convertToString();
+		// AQLString oisDayCount                            = dayCount->convertToString();
 
 		if (longTermConvEnum == etrading::LIBOROIS_OIS_LONGTERM_INSTRUMENTS)
 		{
@@ -2657,7 +2657,7 @@ namespace etrading
 
 		@return a pair of boolean indicating success and the refined join date
 	*/
-	InterpolationJoinDate optimizeInterpolationJoinDate( std::unique_ptr<LAInterpolationBase>& interp,
+	InterpolationJoinDate optimizeInterpolationJoinDate( std::unique_ptr<AQLInterpolationBase>& interp,
 														 const DoubleArray& futuresStartDateTerms,
 														 const DoubleArray& futuresEndDateTerms,
 														 const DoubleVector& futuresRates,
@@ -2691,7 +2691,7 @@ namespace etrading
 		double oneDayTerm = 1 / 365.;
 
 		// Linear interpolation of all futures rates
-		std::shared_ptr<LALinearInterpolation> futuresRatesInter(new LALinearInterpolation(LINEAR_EXTRAPOLATION_TYPE));
+		std::shared_ptr<AQLLinearInterpolation> futuresRatesInter(new AQLLinearInterpolation(LINEAR_EXTRAPOLATION_TYPE));
 		futuresRatesInter->set(futuresStartDateTerms, futuresRates);
 
 		unsigned int i = 0;
@@ -2735,7 +2735,7 @@ namespace etrading
 					// Forward rate from linearly interpolating futures rates
 					double linearFwdRate = linearFuturesRates[i];
 
-					double diff = LAMath::abs(fwdRate - linearFwdRate);
+					double diff = AQLMath::abs(fwdRate - linearFwdRate);
 
 					totalDiffs += diff;
 					i++;
@@ -2795,7 +2795,7 @@ namespace etrading
 					// Forward rate from linearly interpolating futures rates
 					double linearFwdRate = linearFuturesRates[i];
 
-					double diff = LAMath::abs(fwdRate - linearFwdRate);
+					double diff = AQLMath::abs(fwdRate - linearFwdRate);
 
 					totalDiffs += diff;
 					i++;
@@ -2835,16 +2835,16 @@ namespace etrading
 		@param[in,out] start start date
 		@param[in,out] end end date
 	*/
-	void getMoneyMarketDates(const LADate& basedate, const LAString& termstr, const LAPriceDataCalendar& cal, const LAPriceDataSlidingRule& srule, LADate& start, LADate& end)
+	void getMoneyMarketDates(const AQLDate& basedate, const AQLString& termstr, const AQLPriceDataCalendar& cal, const AQLPriceDataSlidingRule& srule, AQLDate& start, AQLDate& end)
 	{
-		LAString str = termstr;
+		AQLString str = termstr;
 		str.trimLeft();
 		str.trimRight();
-		LAStringVector str_v = str.toToken('_');
+		AQLStringVector str_v = str.toToken('_');
 		if (str_v.size() != 2 || str_v[0].size() < 2 || str_v[1].size() < 2)
 		{
 			//error
-			throw LACoreInvalidData((boost::format("#Error: Date Error: Invalid term string %s. Acceptable formats include: '2D_1D' or '2D_1W'") % str.getCString()).str().c_str(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData((boost::format("#Error: Date Error: Invalid term string %s. Acceptable formats include: '2D_1D' or '2D_1W'") % str.getCString()).str().c_str(), __FILE__, __LINE__);
 		}
 		unsigned int size = str_v[0].size();
 		str = str_v[0].subString(size - 1, size - 1);
@@ -2852,9 +2852,9 @@ namespace etrading
 		if (str != "D")
 		{
 			//error
-			throw LACoreInvalidData((boost::format("#Error: Date Error: Invalid term string: '%s'") % str_v[0].getCString()).str().c_str(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData((boost::format("#Error: Date Error: Invalid term string: '%s'") % str_v[0].getCString()).str().c_str(), __FILE__, __LINE__);
 		}
-		LAString str2 = str_v[0].subString(0, size - 2);
+		AQLString str2 = str_v[0].subString(0, size - 2);
 		char * pFirstNonNumber;
         int d = strtol(str2.getCString(), &pFirstNonNumber, 10); // base 10 numbers
 		start = cal.getBusinessDay(basedate, d);
@@ -2888,7 +2888,7 @@ namespace etrading
 		else
 		{
 			//error
-			throw LACoreInvalidData((boost::format("#Error: Date Error: Invalid term string %s, must use 'D', 'W', 'M' or 'Y'") % termstr.getCString()).str().c_str(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData((boost::format("#Error: Date Error: Invalid term string %s, must use 'D', 'W', 'M' or 'Y'") % termstr.getCString()).str().c_str(), __FILE__, __LINE__);
 		}
 		end = srule.getDate(end, cal);
 	}
@@ -2906,22 +2906,22 @@ namespace etrading
 	*/
 	void initialiseStateVariablesForSolving(DoubleArray& stateVariable_rates,
 		DoubleArray&stateVariable_grid,
-		const LAObjectHolder& objHolder,
+		const AQLObjectHolder& objHolder,
 		const StateVariableEnum& stateVariable,
 		const DoubleArray& rates,
 		const DoubleArray& grids,
 		const bool& fastRebuildRequested,
-		const LAString& targetSuffix,
+		const AQLString& targetSuffix,
 		size_t dataSize)
 	{
 		bool previousSolutionAvailable = false;
 		if (fastRebuildRequested)
 		{
 			// Attempt to fetch the previous curve state-variable std::vector
-			const LADataHolder* ahStateVariable = &(objHolder.getData(IR_CALIBRATION_DATA_JACOBIAN_STATE_VARIABLES + targetSuffix, NOCHECK));
+			const AQLDataHolder* ahStateVariable = &(objHolder.getData(IR_CALIBRATION_DATA_JACOBIAN_STATE_VARIABLES + targetSuffix, NOCHECK));
 			if (ahStateVariable->isDefined() && !ahStateVariable->isNull())
 			{
-				const DoubleArray& previousSolution = dynamic_cast<const LADataDoubles &>(ahStateVariable->get()).get();
+				const DoubleArray& previousSolution = dynamic_cast<const AQLDataDoubles &>(ahStateVariable->get()).get();
 				// Sanity check: Verify that the previous solution is the correct size
 				if (previousSolution.size() == dataSize)
 				{
@@ -2954,23 +2954,23 @@ namespace etrading
 	void insertDailyZeroRatesForCentralBankFromShortTermSwaps(DoubleVector& grid,
 															DoubleVector& yields,
 															DateVector& dates,
-															const LADate& fromDate,
-															const LADate& spotdate,
-															const LADate& shortterm_date,
+															const AQLDate& fromDate,
+															const AQLDate& spotdate,
+															const AQLDate& shortterm_date,
 															const double lastSwapRate,
-															const LADate& firstCBSStartDate,
+															const AQLDate& firstCBSStartDate,
 															const double firstCBSRate,
-															const std::map<LADate, std::pair<LADate, double>>& mpcSwapRates,
+															const std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates,
 															const double initialDF,
-															const LAPriceDataDayCount& dc_act365,
-															const LAPriceDataCalendar& cal,
-															const LAPriceDataConvention& conv)
+															const AQLPriceDataDayCount& dc_act365,
+															const AQLPriceDataCalendar& cal,
+															const AQLPriceDataConvention& conv)
 	{
 
 		double gapTerm = firstCBSStartDate.intervalDays(fromDate);
 		double rateIncrement = (firstCBSRate - lastSwapRate) / gapTerm;
 
-		LADate tmp_date = fromDate;
+		AQLDate tmp_date = fromDate;
 
 		double df = initialDF;
 
@@ -2978,14 +2978,14 @@ namespace etrading
 
 		while (tmp_date < shortterm_date)	// shortterm_date is end of the Central Bank Swaps section on the curve and can be a user given date date that can come before the last Central Bank Swaps end date
 		{
-			std::map<LADate, std::pair<LADate, double>>::const_iterator it_n = it;
+			std::map<AQLDate, std::pair<AQLDate, double>>::const_iterator it_n = it;
 
 			if (it != (--mpcSwapRates.end()) && (++it_n)->first <= tmp_date)
 			{
 				++it;
 			}
 
-			LADate n_date = cal.getBusinessDay(tmp_date, 1);
+			AQLDate n_date = cal.getBusinessDay(tmp_date, 1);
 			const double endTerm = dc_act365.getTerm(spotdate, n_date);
 			double instanteneousFwdRate(0.0);
 			if (n_date < firstCBSStartDate)
@@ -3002,7 +3002,7 @@ namespace etrading
 
 			grid.push_back(endTerm);
 
-			yields.push_back(-LAMath::log(df) / endTerm);
+			yields.push_back(-AQLMath::log(df) / endTerm);
 
 			dates.push_back(n_date);
 
@@ -3015,19 +3015,19 @@ namespace etrading
 	void insertDailyZeroRatesForCentralBank(DoubleVector& grid,
 											DoubleVector& yields,
 											DateVector& dates,
-											const LADate& fromDate,
-											const LADate& spotdate,
-											const LADate& shortterm_date,
-											const std::map<LADate, std::pair<LADate, double>>& mpcSwapRates,
+											const AQLDate& fromDate,
+											const AQLDate& spotdate,
+											const AQLDate& shortterm_date,
+											const std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates,
 											const double initialDF,
-											const LAPriceDataDayCount& dc_act365,
-											const LAPriceDataCalendar& cal,
-											const LAPriceDataConvention& conv,
+											const AQLPriceDataDayCount& dc_act365,
+											const AQLPriceDataCalendar& cal,
+											const AQLPriceDataConvention& conv,
 											const double lastShortSwapTerm)
 	{
 
 
-		LADate tmp_date = fromDate;
+		AQLDate tmp_date = fromDate;
 
 		double df = initialDF;
 
@@ -3035,14 +3035,14 @@ namespace etrading
 
 		while (tmp_date < shortterm_date)	// shortterm_date is end of the Central Bank Swaps section on the curve and can be a user given date date that can come before the last Central Bank Swaps end date
 		{
-			std::map<LADate, std::pair<LADate, double>>::const_iterator it_n = it;
+			std::map<AQLDate, std::pair<AQLDate, double>>::const_iterator it_n = it;
 
 			if (it != (--mpcSwapRates.end()) && (++it_n)->first <= tmp_date)
 			{
 				++it;
 			}
 
-			LADate n_date = cal.getBusinessDay(tmp_date, 1);
+			AQLDate n_date = cal.getBusinessDay(tmp_date, 1);
 
 			const double endTerm = dc_act365.getTerm(spotdate, n_date);
 
@@ -3053,7 +3053,7 @@ namespace etrading
 			if (std::isnan(lastShortSwapTerm) || endTerm > lastShortSwapTerm)
 			{
 				grid.push_back(endTerm);
-				yields.push_back(-LAMath::log(df) / endTerm);
+				yields.push_back(-AQLMath::log(df) / endTerm);
 				dates.push_back(n_date);
 			}
 
@@ -3065,12 +3065,12 @@ namespace etrading
 	void insertZeroRatesForFutures(DoubleVector& grid,
 									DoubleVector& yields,
 									DateVector& dates,
-									const LADate& spotdate,
-									const std::unique_ptr<LAInterpolationBase>& pInter_yield,
-									const std::map<LADate, std::pair<LADate, double>>& futureRates, // key as startDate, values as endDate and fwdRate
-									const LAPriceDataDayCount& dc_act365,
-									const LAPriceDataConvention& conv,
-									const LAPriceDataCalendar& cal,
+									const AQLDate& spotdate,
+									const std::unique_ptr<AQLInterpolationBase>& pInter_yield,
+									const std::map<AQLDate, std::pair<AQLDate, double>>& futureRates, // key as startDate, values as endDate and fwdRate
+									const AQLPriceDataDayCount& dc_act365,
+									const AQLPriceDataConvention& conv,
+									const AQLPriceDataCalendar& cal,
 									const bool interpOnFwdRate)
 	{
 
@@ -3089,17 +3089,17 @@ namespace etrading
 	void insertDailyZeroRatesByConstantFwdRate(DoubleVector& grid,
 											DoubleVector& yields,
 											DateVector& dates,
-											const LADate& spotdate,
-											const LADate& startDate,
-											const LADate& endDate,
+											const AQLDate& spotdate,
+											const AQLDate& startDate,
+											const AQLDate& endDate,
 											const double fwdRateToUse,
 											const double initialDF,
-											const LAPriceDataDayCount& dc_act365,
-											const LAPriceDataCalendar& cal,
-											const LAPriceDataConvention& conv)
+											const AQLPriceDataDayCount& dc_act365,
+											const AQLPriceDataCalendar& cal,
+											const AQLPriceDataConvention& conv)
 	{
 		//From lastDate to lastFutureEndDate, use flat fwd rate
-		LADate tempDate = startDate;
+		AQLDate tempDate = startDate;
 
 		double df = initialDF;
 
@@ -3113,7 +3113,7 @@ namespace etrading
 			// Cal df from the interpolated fwdRate
 			df *= conv.getDF(fwdRateToUse, tempDate, endDate);
 
-			double rateTimeEnd = -1.0 * LAMath::log(df);
+			double rateTimeEnd = -1.0 * AQLMath::log(df);
 
 			double endTerm = dc_act365.getTerm(spotdate, endDate);
 
@@ -3134,12 +3134,12 @@ namespace etrading
 	void insertZeroRatesWithStepFwdRates(DoubleVector& grid,
 										DoubleVector& yields,
 										DateVector& dates,
-										const LADate& spotdate,
-										const std::unique_ptr<LAInterpolationBase>& pInter_yield,
-										const std::map<LADate, std::pair<LADate, double>>& futureRates, // key as startDate, values as endDate and fwdRate
-										const LAPriceDataDayCount& dc_act365,
-										const LAPriceDataConvention& conv,
-										const LAPriceDataCalendar& cal)
+										const AQLDate& spotdate,
+										const std::unique_ptr<AQLInterpolationBase>& pInter_yield,
+										const std::map<AQLDate, std::pair<AQLDate, double>>& futureRates, // key as startDate, values as endDate and fwdRate
+										const AQLPriceDataDayCount& dc_act365,
+										const AQLPriceDataConvention& conv,
+										const AQLPriceDataCalendar& cal)
 	{
 		size_t totalSize = futureRates.size() + yields.size();
 
@@ -3149,7 +3149,7 @@ namespace etrading
 		dfDates.insert(std::end(dfDates), std::begin(dates), std::end(dates));
 
 		//State variable: Linear interp on negative log DF 
-		std::unique_ptr<LAInterpolationBase> rateTime_inter(dynamic_cast<LAInterpolationBase *>(pInter_yield->clone()));
+		std::unique_ptr<AQLInterpolationBase> rateTime_inter(dynamic_cast<AQLInterpolationBase *>(pInter_yield->clone()));
 
 		for (auto it : futureRates)
 		{
@@ -3165,9 +3165,9 @@ namespace etrading
 			rateTime_inter->set(grid, rateTimeVec);
 
 			//if the map's startDate is earlier than spotDate, use spotDate
-			const LADate& startDate = (it.first < spotdate) ? spotdate : it.first;
+			const AQLDate& startDate = (it.first < spotdate) ? spotdate : it.first;
 			// endDate: key as startDate, values as endDate and fwdRate
-			const LADate& endDate = it.second.first;
+			const AQLDate& endDate = it.second.first;
 			// fwdRate: key as startDate, values as endDate and fwdRate
 			const double fwdRate = it.second.second;
 
@@ -3180,7 +3180,7 @@ namespace etrading
 			double startDF = std::exp(-1.0 * rateTimeStart);
 			
 			double endDF = startDF * conv.getDF(fwdRate, startDate, endDate);
-			double rateTimeEnd = -1.0 * LAMath::log(endDF);
+			double rateTimeEnd = -1.0 * AQLMath::log(endDF);
 
 			// r = -lnDF/t
 			double zeroRateStart = rateTimeStart / start_term;
@@ -3208,12 +3208,12 @@ namespace etrading
 	void insertZeroRatesWithLinearFwdRates(DoubleVector& grid,
 										DoubleVector& yields,
 										DateVector& dates,
-										const LADate& spotdate,
-										const std::unique_ptr<LAInterpolationBase>& pInter_yield,
-										const std::map<LADate, std::pair<LADate, double>>& futureRates, // key as startDate, values as endDate and fwdRate
-										const LAPriceDataDayCount& dc_act365,
-										const LAPriceDataConvention& conv,
-										const LAPriceDataCalendar& cal)
+										const AQLDate& spotdate,
+										const std::unique_ptr<AQLInterpolationBase>& pInter_yield,
+										const std::map<AQLDate, std::pair<AQLDate, double>>& futureRates, // key as startDate, values as endDate and fwdRate
+										const AQLPriceDataDayCount& dc_act365,
+										const AQLPriceDataConvention& conv,
+										const AQLPriceDataCalendar& cal)
 	{
 		size_t futureSize = futureRates.size();
 
@@ -3226,7 +3226,7 @@ namespace etrading
 		for (auto it : futureRates)
 		{
 			//if the map's startDate is earlier than spotDate, use spotDate
-			const LADate& startDate = (it.first < spotdate) ? spotdate : it.first;
+			const AQLDate& startDate = (it.first < spotdate) ? spotdate : it.first;
 
 			// fwdRate: key as startDate, values as endDate and fwdRate
 			const double fwdRate = it.second.second;
@@ -3238,24 +3238,24 @@ namespace etrading
 		}
 
 		// ARRCurve: directly interpolate on fwdRate, i.e. fwdRate as stateVariable
-		std::unique_ptr<LAInterpolationBase> fwdRate_inter(dynamic_cast<LAInterpolationBase *>(pInter_yield->clone()));
+		std::unique_ptr<AQLInterpolationBase> fwdRate_inter(dynamic_cast<AQLInterpolationBase *>(pInter_yield->clone()));
 		fwdRate_inter->set(fwdStartTerms, fwdRates);
 
 		// Populate daily entry to Discount factor table, which is required for daily compounding, so that the trade can be repriced when interpolating on fwdRateTable
-		LADate firstDate = LADateScheduleHelpers::getDateFromTerm(spotdate, grid.back(), dc_act365);
+		AQLDate firstDate = LADateScheduleHelpers::getDateFromTerm(spotdate, grid.back(), dc_act365);
 
 		double joinDateAsDouble = fwdRate_inter->getJoinDateAsDouble();
 
 		// Insert daily DFs till the last term, use the interpolationJoinDate when it is specified 
 		double lastTerm = (joinDateAsDouble != 0) ? joinDateAsDouble : fwdStartTerms.back();
-		LADate lastDate = LADateScheduleHelpers::getDateFromTerm(spotdate, lastTerm, dc_act365);
+		AQLDate lastDate = LADateScheduleHelpers::getDateFromTerm(spotdate, lastTerm, dc_act365);
 
 		auto lastFutureStartDate = futureRates.rbegin()->first;
-		const LADate& lastFutureEndDate = futureRates.at(lastFutureStartDate).first;
+		const AQLDate& lastFutureEndDate = futureRates.at(lastFutureStartDate).first;
 		const double flatFwdRateForLastFuture = fwdRates.back();
 
 		//initialize the DF to 1 for the spot term 0.0
-		double df = (grid.size() == 1) ? 1.0 : LAMath::exp(-yields.back() * grid.back());
+		double df = (grid.size() == 1) ? 1.0 : AQLMath::exp(-yields.back() * grid.back());
 
 		auto tempDate = firstDate;
 
@@ -3277,7 +3277,7 @@ namespace etrading
 			// Cal df from the interpolated fwdRate
 			df *= conv.getDF(interpFwdRate, tempDate, endDate);
 
-			double rateTimeEnd = -1.0 * LAMath::log(df);
+			double rateTimeEnd = -1.0 * AQLMath::log(df);
 
 			double endTerm = dc_act365.getTerm(spotdate, endDate);
 
@@ -3294,7 +3294,7 @@ namespace etrading
 	}
 
 	// Helper function to get the DF from zero rate
-	double getOISdiscountFactor(const double term, const std::unordered_map<double, double>& termYieldMap, const std::unique_ptr<LAInterpolationBase>& pInter_yield)
+	double getOISdiscountFactor(const double term, const std::unordered_map<double, double>& termYieldMap, const std::unique_ptr<AQLInterpolationBase>& pInter_yield)
 	{
 		double yield = 0.0;
 
@@ -3309,16 +3309,16 @@ namespace etrading
 			yield = pInter_yield->value(term);
 		}
 
-		double df = LAMath::exp(-yield * term);
+		double df = AQLMath::exp(-yield * term);
 
 		return df;
 	}
 
 	// Helper function to populate the input fixings to the market date object
-	void populateHistoricalDataToMarketData(LAObject *mktData, const LAString& oisHistFileName)
+	void populateHistoricalDataToMarketData(AQLObject *mktData, const AQLString& oisHistFileName)
 	{
 		MAFileAccessor oisHistFile(LAMarketData::getNumFileName(oisHistFileName));
-		LAStringMatrix oisHistDataMtx;
+		AQLStringMatrix oisHistDataMtx;
 		oisHistFile.readAllData(MARKET_DATA_DELIMITER, oisHistDataMtx);
 		oisHistFile.close();
 
@@ -3337,31 +3337,31 @@ namespace etrading
 
 		for (unsigned int j = 0; j < fixingsSize; j++)
 		{
-			histdates.push_back(LADataDate(oisHistDataMtx[j][0]).get());
+			histdates.push_back(AQLDataDate(oisHistDataMtx[j][0]).get());
 			histrates.push_back(oisHistDataMtx[j][1].getDoubleValue() * 0.01);
 		}
-		mktData->add(IR_CALIBRATION_DATA_HISTORICALDATES, new LADataDates(histdates));
-		mktData->add(IR_CALIBRATION_DATA_HISTORICALRATES, new LADataDoubles(histrates));
+		mktData->add(IR_CALIBRATION_DATA_HISTORICALDATES, new AQLDataDates(histdates));
+		mktData->add(IR_CALIBRATION_DATA_HISTORICALRATES, new AQLDataDoubles(histrates));
 	}
 
 	// Helper function to get the convexity adjustment for future instruments
-	double getConvexityAdjustedFutureRate(LAObject *mktData, const double futureRate, const LADate& asOfDate, const double meanReversion, const LAPriceDataDayCount& dc)
+	double getConvexityAdjustedFutureRate(AQLObject *mktData, const double futureRate, const AQLDate& asOfDate, const double meanReversion, const AQLPriceDataDayCount& dc)
 	{
 		// Legacy name 'useConvexAdj' means convexity quoted as a price ... poor name so replaced by convexityQuoteType
 		bool useConvexAdj = false;
 		bool convexityQuotedAsVol = true;
-		const LADataHolder *dhUseConvexAdj = &(mktData->getData(PRICING_DATA_USECONVEXADJUSTMENT, NOCHECK));
+		const AQLDataHolder *dhUseConvexAdj = &(mktData->getData(PRICING_DATA_USECONVEXADJUSTMENT, NOCHECK));
 		if (dhUseConvexAdj->isDefined() && !dhUseConvexAdj->isNull())
 		{
-			useConvexAdj = dynamic_cast<const LADataBool &>(dhUseConvexAdj->get()).get();
+			useConvexAdj = dynamic_cast<const AQLDataBool &>(dhUseConvexAdj->get()).get();
 			convexityQuotedAsVol = !useConvexAdj;
 		}
 
 		// Alias and replacement for legacy useConvexAdj parameter
-		const LADataHolder *dh = &(mktData->getData(PRICING_DATA_CONVEXITYQUOTETYPE, NOCHECK));
+		const AQLDataHolder *dh = &(mktData->getData(PRICING_DATA_CONVEXITYQUOTETYPE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			LAString convexityQuoteTypeStr = dynamic_cast<const LADataString &>(dh->get()).get();
+			AQLString convexityQuoteTypeStr = dynamic_cast<const AQLDataString &>(dh->get()).get();
 			convexityQuoteTypeStr.toUpper();
 			AQ_REQUIRE( convexityQuoteTypeStr == "VOL" || convexityQuoteTypeStr == "PRICE", "Invalid Futures Convexity Quote Type: ConvexityQuoteType must be VOL or PRICE" )
 			convexityQuotedAsVol = ( convexityQuoteTypeStr == "VOL" ) ? true : false;
@@ -3386,23 +3386,23 @@ namespace etrading
 			dh = &(mktData->getData(PRICING_DATA_FUTUREVOLATILITY, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				volatility = dynamic_cast<const LADataDouble&> (dh->get()).get();
+				volatility = dynamic_cast<const AQLDataDouble&> (dh->get()).get();
 			}
 
 			if (volatility > 0)
 			{
-				LADate futuresStartDate;
+				AQLDate futuresStartDate;
 				dh = &(mktData->getData(PRICING_DATA_STARTDATE, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					futuresStartDate = dynamic_cast<const LADataDate&> (dh->get()).get();
+					futuresStartDate = dynamic_cast<const AQLDataDate&> (dh->get()).get();
 				}
 
-				LADate futuresEndDate;
+				AQLDate futuresEndDate;
 				dh = &(mktData->getData(PRICING_DATA_ENDDATE, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					futuresEndDate = dynamic_cast<const LADataDate&> (dh->get()).get();
+					futuresEndDate = dynamic_cast<const AQLDataDate&> (dh->get()).get();
 				}
 
 				convexityAdjustment = etrading::getCurveEuroDollarConvexityAdjustment(asOfDate, futuresStartDate, futuresEndDate, meanReversion, volatility);
@@ -3411,7 +3411,7 @@ namespace etrading
 				dh = &(mktData->getData(IR_CALIBRATION_DATA_ISCONVADJPRECISE, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					useImprovedConvexityAdjustment = dynamic_cast<const LADataBool &>(dh->get()).get();
+					useImprovedConvexityAdjustment = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 				}
 
 				if (useImprovedConvexityAdjustment)
@@ -3421,10 +3421,10 @@ namespace etrading
 					double tau = dc.getTerm(futuresStartDate, futuresEndDate);
 					if (tau <= 0.0)
 					{
-						throw LACoreInvalidData("#Error: CurveCalibration::calcDiscountFactor failed. Invalid futures market data, a futures end date is before it's start date", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("#Error: CurveCalibration::calcDiscountFactor failed. Invalid futures market data, a futures end date is before it's start date", __FILE__, __LINE__);
 					}
 
-					convexityAdjustment = (1.0 - LAMath::exp(-convexityAdjustment * tau)) * (futureRate + 1.0 / tau);
+					convexityAdjustment = (1.0 - AQLMath::exp(-convexityAdjustment * tau)) * (futureRate + 1.0 / tau);
 				}
 			}
 		}
@@ -3436,7 +3436,7 @@ namespace etrading
 			dh = &(mktData->getData(PRICING_DATA_CONVEXADJUSTMENT, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				convexityAdjustment = dynamic_cast<const LADataDouble&> (dh->get()).get();
+				convexityAdjustment = dynamic_cast<const AQLDataDouble&> (dh->get()).get();
 			}
 		}
 
@@ -3448,7 +3448,7 @@ namespace etrading
 	/*
 	@brief Helper function to check if it's a Central bank swap based on the term string
 	*/
-	bool isCentralBankSwap(const LAString& term)
+	bool isCentralBankSwap(const AQLString& term)
 	{
 		return (term.findString("BOJ") >= 0         // Bank of Japan
 			|| term.findString("EUSF") >= 0         // European Central Bank (Bloomberg Ticker)
@@ -3461,7 +3461,7 @@ namespace etrading
 	/*
 	@brief Helper function to check if it's a Future based on the term string
 	*/
-	bool isFuture(const LAString& term)
+	bool isFuture(const AQLString& term)
 	{
 		return (term.findString("SF") >= 0 /** SOFR */
 			|| term.findString("FUTURE") >= 0 /** general name */);
@@ -3470,7 +3470,7 @@ namespace etrading
 	/*
 	@brief Helper function to get the instrument type enum based on the term string
 	*/
-	OISMidTermInstrumentsEnum getOISMidTermInstrumentsEnum(const LAString& term)
+	OISMidTermInstrumentsEnum getOISMidTermInstrumentsEnum(const AQLString& term)
 	{
 
 		if (isCentralBankSwap(term))
@@ -3503,7 +3503,7 @@ namespace etrading
 	/*
 	@brief Helper function to get the default OIS compounding method, based on the instrument type
 	*/
-	OISCompoundingEnum getDefaultOISCompounding(const OISMidTermInstrumentsEnum& instrumentType, const LAString& userInputShortTermConvStr)
+	OISCompoundingEnum getDefaultOISCompounding(const OISMidTermInstrumentsEnum& instrumentType, const AQLString& userInputShortTermConvStr)
 	{
 
 		OISCompoundingEnum compounding = NONE_OIS_COMPOUNDING;
@@ -3532,20 +3532,20 @@ namespace etrading
 	}
 
 	//curveMarketName is the unique staticDataTable, which is different from a curveIndex
-	CurveTypeEnum getCurveTypeEnum(const LAObject& yieldData, const LAString& curveMarketName)
+	CurveTypeEnum getCurveTypeEnum(const AQLObject& yieldData, const AQLString& curveMarketName)
 	{
 
 		std::string curveType = "";
 
 		// Get curve type
 
-		LAString suffix = (curveMarketName == SWAP || curveMarketName == STD) ? "" : LAString("_") + curveMarketName;
+		AQLString suffix = (curveMarketName == SWAP || curveMarketName == STD) ? "" : AQLString("_") + curveMarketName;
 
-		const LADataHolder* dh = &yieldData.getData(CALIBRATION_DATA_CURVETYPE + suffix);
+		const AQLDataHolder* dh = &yieldData.getData(CALIBRATION_DATA_CURVETYPE + suffix);
 
 		if (dh->isDefined() && !dh->isNull())
 		{
-			curveType = dynamic_cast<const LADataString&>(dh->get()).get().getCString();
+			curveType = dynamic_cast<const AQLDataString&>(dh->get()).get().getCString();
 		}
 
 		return etrading::toCurveTypeEnum(curveType);
@@ -3564,16 +3564,16 @@ namespace etrading
 	@param[out] fwd_termsmtx
 	@param[out] fwds
 	*/
-	void updateImpliedForwardRates(const LAInterpolationBase &inter, const StateVariableEnum& stateVariable, const DoubleArray &fixingStarts, const DoubleArray &fixingEnds, const DoubleArray &tau_swap, bool generateForwardsFromSwapsOnly, const LADate & asOfDate, const DayCountEnum & accrualDaycount, DoubleMatrix &fwd_termsmtx, DoubleArray &fwds)
+	void updateImpliedForwardRates(const AQLInterpolationBase &inter, const StateVariableEnum& stateVariable, const DoubleArray &fixingStarts, const DoubleArray &fixingEnds, const DoubleArray &tau_swap, bool generateForwardsFromSwapsOnly, const AQLDate & asOfDate, const DayCountEnum & accrualDaycount, DoubleMatrix &fwd_termsmtx, DoubleArray &fwds)
 	{
 
 		if (fwd_termsmtx.size() != 2)
 		{
-			throw LACoreInvalidData("Error: Unable to calculate forward rates. The fwd_termsmtx size must be 2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Error: Unable to calculate forward rates. The fwd_termsmtx size must be 2", __FILE__, __LINE__);
 		}
 		if (fixingStarts.empty() || fixingEnds.empty())
 		{
-			throw LACoreInvalidData("#Error Unable to calculate forward rates. The fwd_grid is empty", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error Unable to calculate forward rates. The fwd_grid is empty", __FILE__, __LINE__);
 		}
 
 
@@ -3588,7 +3588,7 @@ namespace etrading
 		unsigned int pos = 0;
 		for (unsigned int i = 0; i < fixingStarts.size() - 1; ++i)
 		{
-			LAAlgorithm::locate<DoubleArray, double>(fwd_termsmtx[0], fixingStarts[i], fwd_termsmtx[0].size(), pos);
+			AQLAlgorithm::locate<DoubleArray, double>(fwd_termsmtx[0], fixingStarts[i], fwd_termsmtx[0].size(), pos);
 			if (pos == fwd_termsmtx[0].size())
 			{
 				fwd_termsmtx[0].push_back(fixingStarts[i]);
@@ -3633,21 +3633,21 @@ namespace etrading
 	@param[out] fwd_termsmtx    From/to terms of forward rate table
 	@param[out] fwds			Forward rates of forward rate table
 	*/
-	void populateARRCurveForwardRateTable(const LAInterpolationBase &inter,
-										const LADate& baseDate,
+	void populateARRCurveForwardRateTable(const AQLInterpolationBase &inter,
+										const AQLDate& baseDate,
 										const DoubleVector& terms, 
 										const DoubleVector& dfs, 
-										const LAPriceDataCalendar& cal, 
-										const LAPriceDataDayCount& dc_act365, 
-										const LAPriceDataDayCount& dc, 
+										const AQLPriceDataCalendar& cal, 
+										const AQLPriceDataDayCount& dc_act365, 
+										const AQLPriceDataDayCount& dc, 
 										DoubleMatrix& fwd_termsmtx, 
 										DoubleArray& fwds)
 	{
-		std::unique_ptr<LAInterpolationBase> discountFactor_inter(dynamic_cast<LAInterpolationBase *>(inter.clone()));
+		std::unique_ptr<AQLInterpolationBase> discountFactor_inter(dynamic_cast<AQLInterpolationBase *>(inter.clone()));
 		discountFactor_inter->set(terms, dfs);
 
-		LADate firstDate = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, terms.front(), dc_act365);
-		LADate lastDate = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, terms.back(), dc_act365);
+		AQLDate firstDate = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, terms.front(), dc_act365);
+		AQLDate lastDate = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, terms.back(), dc_act365);
 
 		size_t numberOfFixingDates = firstDate.intervalDays(lastDate);
 
@@ -3666,7 +3666,7 @@ namespace etrading
 
 			auto startDate = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, terms[i], dc_act365);
 
-			LADate endDate;
+			AQLDate endDate;
 			if (i == lastIndex)
 			{
 				endDate = cal.getBusinessDay(startDate, 1);
@@ -3676,11 +3676,11 @@ namespace etrading
 				endDate = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, terms[i + 1], dc_act365);
 			}
 
-			LADate tmp_date = startDate;
+			AQLDate tmp_date = startDate;
 
 			while (tmp_date < endDate)
 			{
-				const LADate nextdate = cal.getBusinessDay(tmp_date, 1);
+				const AQLDate nextdate = cal.getBusinessDay(tmp_date, 1);
 
 				double startTerm = dc_act365.getTerm(baseDate, tmp_date);
 				double endTerm = dc_act365.getTerm(baseDate, nextdate);
@@ -3714,9 +3714,9 @@ namespace etrading
 	}
 
 	// Calculate the Swap Curve Spot Discount Factor and update money market discount factors and dates
-	double getSpotDFandUpdateMoneyMarket(DoubleMatrix& df_moneymarket, DateVector& df_moneymarket_date, const std::map<std::pair<LADate, LADate>, const LAObject*>&  data_moneymarket, const LAPriceDataDayCount& dc_act365, const LADate& spotDateSwap)
+	double getSpotDFandUpdateMoneyMarket(DoubleMatrix& df_moneymarket, DateVector& df_moneymarket_date, const std::map<std::pair<AQLDate, AQLDate>, const AQLObject*>&  data_moneymarket, const AQLPriceDataDayCount& dc_act365, const AQLDate& spotDateSwap)
 	{
-		std::map<std::pair<LADate, LADate>, const LAObject*>::const_iterator it, it_last, it_tmp;
+		std::map<std::pair<AQLDate, AQLDate>, const AQLObject*>::const_iterator it, it_last, it_tmp;
 		double term_from_asof = 0.0;
 		double df = 1.0;
 		double dfSpot = 1.0;
@@ -3729,12 +3729,12 @@ namespace etrading
 			if (it != data_moneymarket.begin() && it->first.first != it_tmp->first.second)
 			{
 				//error
-				LAString msg = "#Error: Invalid Money Market data, money market end dates must not overlap the start date of next instrument";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "#Error: Invalid Money Market data, money market end dates must not overlap the start date of next instrument";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 
-			double rate = dynamic_cast<const LADataDouble&> ((it->second->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-			const LAPriceDataDayCount& dc = dynamic_cast<const LAPriceDataDayCount&> ((it->second->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+			double rate = dynamic_cast<const AQLDataDouble&> ((it->second->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&> ((it->second->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 			double term = dc.getTerm(it->first.first, it->first.second, false);
 			term_from_asof += dc_act365.getTerm(it->first.first, it->first.second);
 			double df_tmp = 1.0 / (1.0 + rate * term);
@@ -3800,7 +3800,7 @@ namespace etrading
 			break;
 
 		case STATE_VARIABLE_DF:
-			result = LAMath::exp(-zeroRate * accrualPeriod);
+			result = AQLMath::exp(-zeroRate * accrualPeriod);
 			break;
 
 		default:
@@ -3826,13 +3826,13 @@ namespace etrading
 		switch (stateVariableType)
 		{
 		case STATE_VARIABLE_ZERO_RATE_TIMES_TIME:
-			result = -LAMath::log(discountFactor);
+			result = -AQLMath::log(discountFactor);
 			break;
 		case STATE_VARIABLE_DF:
 			result = discountFactor;
 			break;
 		case STATE_VARIABLE_LOG_DF:
-			result = LAMath::log(discountFactor);
+			result = AQLMath::log(discountFactor);
 			break;
 
 		default:
@@ -3859,7 +3859,7 @@ namespace etrading
 			result = rateTime;
 			break;
 		case STATE_VARIABLE_DF:
-			result = LAMath::exp(-rateTime);
+			result = AQLMath::exp(-rateTime);
 			break;
 
 		default:
@@ -3909,7 +3909,7 @@ namespace etrading
 			break;
 		case STATE_VARIABLE_DF:
 			AQ_REQUIRE(AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO(stateVariableValue), "Unable to calculate the zero rate from a negative discount factor")
-			zeroRate = -LAMath::log(stateVariableValue) / accrualPeriod;
+			zeroRate = -AQLMath::log(stateVariableValue) / accrualPeriod;
 			break;
 		default:
 			AQ_THROW("Invalid State Variable used in curve calibration")
@@ -3934,10 +3934,10 @@ namespace etrading
 	@param[in]  compoundFreq		The compounding frequency, defaults to SIMPLE
 	@return    returns a single adiscount factor applying the appropriate state variable conversion
 	*/
-	double getInterpolatedDiscountfactor(const LAInterpolationBase& interpolator,
+	double getInterpolatedDiscountfactor(const AQLInterpolationBase& interpolator,
 										  const double& paymentDateAsTerm,
 										  const StateVariableEnum& stateVariableType,
-									      const LADate & asOfDate,
+									      const AQLDate & asOfDate,
 									      const DayCountEnum & accrualDaycount,
 									      const CompoundingFrequencyEnum & compoundFreq )
 	{
@@ -3960,17 +3960,17 @@ namespace etrading
 			const double accrualTerm = accrualPeriod( 0.0, paymentDateAsTerm, asOfDate, accrualDaycount, compoundFreq );
 			AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( accrualTerm ), "Unable to imply Discount Factor - The fixing start date must be before the fixing end date" )
 			
-			df = LAMath::exp(-interpolator.value(paymentDateAsTerm) * accrualTerm);
+			df = AQLMath::exp(-interpolator.value(paymentDateAsTerm) * accrualTerm);
 			break;
 		}
 		case STATE_VARIABLE_ZERO_RATE_TIMES_TIME:
 		{
-			df = LAMath::exp(-interpolator.value(paymentDateAsTerm));
+			df = AQLMath::exp(-interpolator.value(paymentDateAsTerm));
 			break;
 		}
 		case STATE_VARIABLE_LOG_DF:
 		{
-			df = LAMath::exp(interpolator.value(paymentDateAsTerm));
+			df = AQLMath::exp(interpolator.value(paymentDateAsTerm));
 			break;
 		}
 		case STATE_VARIABLE_DF:
@@ -4004,9 +4004,9 @@ namespace etrading
 	*/
 	double getInterpolatedForwardRate(const double& fixingStartTerm,
 									   const double& fixingEndTerm,
-									   const LAInterpolationBase& interpolator,
+									   const AQLInterpolationBase& interpolator,
 									   const StateVariableEnum& stateVariableType,
-									   const LADate & asOfDate,
+									   const AQLDate & asOfDate,
 									   const DayCountEnum & accrualDaycount,
 									   const CompoundingFrequencyEnum & compoundFreq )
 	{
@@ -4037,20 +4037,20 @@ namespace etrading
 			const double startAccrualPeriod = accrualPeriod( 0.0, fixingStartTerm, asOfDate, accrualDaycount, compoundFreq );
 			const double endAccrualPeriod	= accrualPeriod( 0.0, fixingEndTerm, asOfDate, accrualDaycount, compoundFreq );
 
-			startDF = isStartTermZero ? 1.0 : LAMath::exp(-interpolator.value(fixingStartTerm) * startAccrualPeriod);
-			endDF = isEndTermZero ? 1.0 : LAMath::exp(-interpolator.value(fixingEndTerm) * endAccrualPeriod);
+			startDF = isStartTermZero ? 1.0 : AQLMath::exp(-interpolator.value(fixingStartTerm) * startAccrualPeriod);
+			endDF = isEndTermZero ? 1.0 : AQLMath::exp(-interpolator.value(fixingEndTerm) * endAccrualPeriod);
 			break;
 		}
 		case STATE_VARIABLE_ZERO_RATE_TIMES_TIME:
 		{
-			startDF = isStartTermZero ? 1.0 : LAMath::exp(-interpolator.value(fixingStartTerm));
-			endDF = isEndTermZero ? 1.0 : LAMath::exp(-interpolator.value(fixingEndTerm));
+			startDF = isStartTermZero ? 1.0 : AQLMath::exp(-interpolator.value(fixingStartTerm));
+			endDF = isEndTermZero ? 1.0 : AQLMath::exp(-interpolator.value(fixingEndTerm));
 			break;
 		}
 		case STATE_VARIABLE_LOG_DF:
 		{
-			startDF = isStartTermZero ? 1.0 : LAMath::exp(interpolator.value(fixingStartTerm));
-			endDF = isEndTermZero ? 1.0 : LAMath::exp(interpolator.value(fixingEndTerm));
+			startDF = isStartTermZero ? 1.0 : AQLMath::exp(interpolator.value(fixingStartTerm));
+			endDF = isEndTermZero ? 1.0 : AQLMath::exp(interpolator.value(fixingEndTerm));
 			break;
 		}
 		case STATE_VARIABLE_DF:
@@ -4086,9 +4086,9 @@ namespace etrading
 	@return    returns a single zero rate applying the appropriate state variable conversion
 	*/
 	double getInterpolatedZeroRate( const double& dateInTermFormat,
-									const LAInterpolationBase* interpolator,
+									const AQLInterpolationBase* interpolator,
 									const StateVariableEnum& stateVariableType,
-									const LADate & asOfDate,
+									const AQLDate & asOfDate,
 									const DayCountEnum & accrualDaycount,
 									const CompoundingFrequencyEnum & compoundFreq )
 	{
@@ -4122,7 +4122,7 @@ namespace etrading
 			break;
 
 		case STATE_VARIABLE_DF:
-			zeroRate = -LAMath::log( interpolator->value(dateInTermFormat) ) / accrualTerm;
+			zeroRate = -AQLMath::log( interpolator->value(dateInTermFormat) ) / accrualTerm;
 			break;
 
 		default:
@@ -4135,9 +4135,9 @@ namespace etrading
 
 	// Method to get a discount factor given the state variable
 	double getdiscountFactor( const double& paymentDateAsTerm,
-							  const LAInterpolationBase & interpolator,
+							  const AQLInterpolationBase & interpolator,
 							  const StateVariableEnum& stateVariableType,
-							  const LADate & asOfDate,
+							  const AQLDate & asOfDate,
 							  const DayCountEnum & accrualDaycount,
 							  const CompoundingFrequencyEnum & compoundFreq )
 	{
@@ -4153,9 +4153,9 @@ namespace etrading
 	// Method to get a forward rate given the state variable
 	double getForwardRate( const double& fixingStartDateAsTerm,
 						   const double& fixingEndDateAsTerm,
-						   const LAInterpolationBase & interpolator,
+						   const AQLInterpolationBase & interpolator,
 						   const StateVariableEnum& stateVariableType,
-						   const LADate & asOfDate,
+						   const AQLDate & asOfDate,
 						   const DayCountEnum & accrualDaycount,
 						   const CompoundingFrequencyEnum & compoundFreq )
 	{
@@ -4169,7 +4169,7 @@ namespace etrading
 		return forwardRate;
 	}
 
-	bool isContiguousFraFuture(const LADate& spotDate, const LADate& startDate, const LAString& liborIndexTerm, const bool isFuture)
+	bool isContiguousFraFuture(const AQLDate& spotDate, const AQLDate& startDate, const AQLString& liborIndexTerm, const bool isFuture)
 	{
 		// Normal by default, specially handling for 3M and 6M curve
 		bool isContiguous = true;
@@ -4195,7 +4195,7 @@ namespace etrading
 		//FRA: check term between spotDate and startDate
 		else
 		{
-			LAPriceDataDayCount dc_act365(ACT_365);
+			AQLPriceDataDayCount dc_act365(ACT_365);
 
 			double startTerm = dc_act365.getTerm(spotDate, startDate);
 
@@ -4241,15 +4241,15 @@ namespace etrading
 									  DoubleMatrix& fwd_termsmtx,
 									  DoubleArray& fwds,
 									  const std::vector<ForwardRate>& serialFraFutures,
-									  const LADate & asOfDate,
-									  const LADate& spotdate,
-									  const LAInterpolationBase& pInter_fw,
-									  const LAString& liborIndexTerm,
-									  const LAString& roll_conv,
-									  const LAPriceDataSlidingRule& sld,
-									  const LAPriceDataCalendar& cal,
-									  const LAPriceDataDayCount& dc,
-									  const LAPriceDataDayCount& dc_act365,
+									  const AQLDate & asOfDate,
+									  const AQLDate& spotdate,
+									  const AQLInterpolationBase& pInter_fw,
+									  const AQLString& liborIndexTerm,
+									  const AQLString& roll_conv,
+									  const AQLPriceDataSlidingRule& sld,
+									  const AQLPriceDataCalendar& cal,
+									  const AQLPriceDataDayCount& dc,
+									  const AQLPriceDataDayCount& dc_act365,
 									  const StateVariableEnum& stateVariable,
 									  const bool populateFwdTable,
 									  const int dayIntervalTolerance)
@@ -4329,7 +4329,7 @@ namespace etrading
 
 		//2) Back out the startDFs of serial futures 
 
-		std::unique_ptr<LAInterpolationBase> df_inter(dynamic_cast<LAInterpolationBase *>(pInter_fw.clone()));
+		std::unique_ptr<AQLInterpolationBase> df_inter(dynamic_cast<AQLInterpolationBase *>(pInter_fw.clone()));
 
 		/**
 		// Approach 2 : back out the last future's end DF from existing dfs and forward rates
@@ -4341,7 +4341,7 @@ namespace etrading
 		}
 		df_inter->set(df_2[0], dfs);
 
-		std::unique_ptr<LAInterpolationBase> fwdRate_inter(dynamic_cast<LAInterpolationBase *>(pInter_fw.clone()));
+		std::unique_ptr<AQLInterpolationBase> fwdRate_inter(dynamic_cast<AQLInterpolationBase *>(pInter_fw.clone()));
 		fwdRate_inter->set(fwd_termsmtx[0], fwds);
 		*/
 
@@ -4349,10 +4349,10 @@ namespace etrading
 		{
 			/**
 			// Approach 2 : back out the last future's end DF from existing dfs and forward rates
-			LADate crossFutureStartDate = serialChain.back().endDate;
+			AQLDate crossFutureStartDate = serialChain.back().endDate;
 			double crossFutureStartTerm = dc_act365.getTerm(spotdate, crossFutureStartDate);
 
-			LADate crossFutureEndDate = etrading::LADateHelpers::getDate(crossFutureStartDate, liborIndexTerm, sld, &cal, true, &roll_conv);
+			AQLDate crossFutureEndDate = etrading::LADateHelpers::getDate(crossFutureStartDate, liborIndexTerm, sld, &cal, true, &roll_conv);
 			double crossFutureEndTerm = dc_act365.getTerm(spotdate, crossFutureEndDate);
 			double crossFutureTau = dc.getTerm(crossFutureStartDate, crossFutureEndDate);
 
@@ -4372,8 +4372,8 @@ namespace etrading
 				}
 				df_inter->set(dfResults.paymentDatesAsTerms_, dfs);
 
-				const LADate& startDate = serialChain[i].startDate;
-				LADate& endDate = serialChain[i].endDate;
+				const AQLDate& startDate = serialChain[i].startDate;
+				AQLDate& endDate = serialChain[i].endDate;
 				double fwdRate = serialChain[i].fwdRate;
 
 				double startTerm = dc_act365.getTerm(spotdate, startDate);
@@ -4434,16 +4434,16 @@ namespace etrading
 										const DateVector& futureStartDates,
 										const DateVector& futureEndDates,
 										const DoubleVector& futureRates,
-										const LADate & asOfDate,
-										const LADate& spotDateSwap,
-										const LADate& spotDateLibor,
-										const LAInterpolationBase& pInter_fw,
-										const LAPriceDataDayCount& dc,
-										const LAPriceDataDayCount& dc_act365,
+										const AQLDate & asOfDate,
+										const AQLDate& spotDateSwap,
+										const AQLDate& spotDateLibor,
+										const AQLInterpolationBase& pInter_fw,
+										const AQLPriceDataDayCount& dc,
+										const AQLPriceDataDayCount& dc_act365,
 										const StateVariableEnum& stateVariableFutureFra,
 										const bool includeSwapsBeforeMPCSwaps,
-										const LAObject* data_libor,
-										const LADate& liborDate,
+										const AQLObject* data_libor,
+										const AQLDate& liborDate,
 										const bool populateFwdTable,
 										const int dayIntervalTolerance )
 	{
@@ -4455,11 +4455,11 @@ namespace etrading
 
 		for (unsigned int i = 0; i < fSize; ++i)
 		{
-			LADate endDate = futureEndDates[i];
+			AQLDate endDate = futureEndDates[i];
 
 			if (i < fSize - 1)
 			{
-				const LADate& nextStartDate = futureStartDates[i + 1];
+				const AQLDate& nextStartDate = futureStartDates[i + 1];
 
 				// Only adjust the endDate that caused due to serial futures, not due to days overlap
 				const bool isInOverlapTolerance = (std::abs(endDate.intervalDays(nextStartDate)) <= dayIntervalTolerance);
@@ -4481,9 +4481,9 @@ namespace etrading
 		for (int i = lastIndex; i >= 0; --i)
 		{
 			const double quotedFwdRate = futureRates[i];
-			const LADate& startDate = futureStartDates[i];
-			const LADate& quotedEndDate = futureEndDates[i];
-			const LADate& endDate = futureAdjustedEndDates[i];
+			const AQLDate& startDate = futureStartDates[i];
+			const AQLDate& quotedEndDate = futureEndDates[i];
+			const AQLDate& endDate = futureAdjustedEndDates[i];
 
 			double fwdRateToUse = quotedFwdRate;
 
@@ -4497,8 +4497,8 @@ namespace etrading
 				for (unsigned int j = i + 1; j < futureAdjustedRates.size(); ++j)
 				{
 					const double nextFwdRate = futureAdjustedRates[j];
-					const LADate& nextStartDt = futureStartDates[j];
-					const LADate& nextEndDt = futureAdjustedEndDates[j];
+					const AQLDate& nextStartDt = futureStartDates[j];
+					const AQLDate& nextEndDt = futureAdjustedEndDates[j];
 
 					const bool isInOverlapTolerance = (std::abs(quotedEndDate.intervalDays(nextStartDt)) <= dayIntervalTolerance);
 					// Skip the difference due to days overlap
@@ -4540,17 +4540,17 @@ namespace etrading
 
 		}
 
-		std::unique_ptr<LAInterpolationBase> futureDFInterp(dynamic_cast<LAInterpolationBase *>(pInter_fw.clone()));
+		std::unique_ptr<AQLInterpolationBase> futureDFInterp(dynamic_cast<AQLInterpolationBase *>(pInter_fw.clone()));
 
 		RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
-		LAPriceDataConvention conv(dc.getDayCount(), rc);
+		AQLPriceDataConvention conv(dc.getDayCount(), rc);
 		DayCountEnum accrualDaycount = dc.dayCountEnum();
 
 		// 3) Insert extra points due to the adjusted future end dates, i.e. endDF and forward tables.
 		for (unsigned int i = 0; i < fSize; ++i)
 		{
-			const LADate& startDate = futureStartDates[i];
-			const LADate& endDate = futureAdjustedEndDates[i];
+			const AQLDate& startDate = futureStartDates[i];
+			const AQLDate& endDate = futureAdjustedEndDates[i];
 			const double rate = futureAdjustedRates[i];
 
 			// df_2 is a Matrix of Terms and DFs
@@ -4577,7 +4577,7 @@ namespace etrading
 			bool OVERRIDE_DF = false;
 			if (includeSwapsBeforeMPCSwaps && (startDate <= liborDate) && (liborDate < endDate))
 			{
-				std::unique_ptr<LAInterpolationBase> cashDepositInterpolation(dynamic_cast<LAInterpolationBase *>(pInter_fw.clone()));
+				std::unique_ptr<AQLInterpolationBase> cashDepositInterpolation(dynamic_cast<AQLInterpolationBase *>(pInter_fw.clone()));
 
 				// Solve for the level of startDF and endDF so that they can imply a discount factor at liboDate that
 				// allows for the libor instrument to be correctly repriced
@@ -4607,7 +4607,7 @@ namespace etrading
 				etrading::insertForwardRateData(fwd_termsmtx, fwds, start_term, end_term, rate);
 			}
 
-			const LADate& endQuotedDate = futureEndDates[i];
+			const AQLDate& endQuotedDate = futureEndDates[i];
 			if (endDate < endQuotedDate)
 			{
 				//*** Need to insert extra end points here to avoid the side effect of interpolating DFs
@@ -4659,24 +4659,24 @@ namespace etrading
 	void insertDFs_ContiguousFutures( DiscountFactors & dfResults,
 									  DoubleMatrix& fwd_termsmtx,
 									  DoubleArray& fwds,
-									  const std::vector<LAObject*>&  data_libor,
-									  const std::vector<LAObject*>& data_fraFuture,
+									  const std::vector<AQLObject*>&  data_libor,
+									  const std::vector<AQLObject*>& data_fraFuture,
 									  const DateVector& fraFutureStartDates,
 									  const DateVector& fraFutureEndDates,
 									  const DoubleVector& fraFutureRates,
-									  const LADate & asOfDate,
-									  const LADate& spotDateSwap,
-									  const LADate& spotDateLibor,
-									  const LAInterpolationBase& pInter_fw,
-									  const LAString& liborIndexTerm,
-									  const LAString& roll_conv,
-									  const LAPriceDataDayCount& dc,
-									  const LAPriceDataDayCount& dc_act365,
+									  const AQLDate & asOfDate,
+									  const AQLDate& spotDateSwap,
+									  const AQLDate& spotDateLibor,
+									  const AQLInterpolationBase& pInter_fw,
+									  const AQLString& liborIndexTerm,
+									  const AQLString& roll_conv,
+									  const AQLPriceDataDayCount& dc,
+									  const AQLPriceDataDayCount& dc_act365,
 									  const StateVariableEnum& stateVariable,
 									  const double interpolationJoinDateAsDouble,
-									  const LADate& liborDate,
+									  const AQLDate& liborDate,
 									  const int liborPos,
-									  const LADate& firstSwapDate,
+									  const AQLDate& firstSwapDate,
 									  const bool includeSwapsBeforeMPCSwaps,
 									  const bool applyTension,
 									  const int tensionGap,
@@ -4688,11 +4688,11 @@ namespace etrading
 		etrading::tensionMarketData fraFuturesInstrumentData;
 
 		// Interpolate on Futures on LogDF the same state variable as the Swaps
-		std::unique_ptr<LAInterpolationBase> logDF_FuturesInterpolation(dynamic_cast<LAInterpolationBase *>(pInter_fw.clone()));
+		std::unique_ptr<AQLInterpolationBase> logDF_FuturesInterpolation(dynamic_cast<AQLInterpolationBase *>(pInter_fw.clone()));
 		logDF_FuturesInterpolation->setJoinDateAsDouble(interpolationJoinDateAsDouble);
 
 		RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
-		LAPriceDataConvention conv(dc.getDayCount(), rc);
+		AQLPriceDataConvention conv(dc.getDayCount(), rc);
 		DayCountEnum accrualDayCount = dc.dayCountEnum();
 
 		// Contiguous futures: not serial futures
@@ -4709,8 +4709,8 @@ namespace etrading
 			}
 			logDF_FuturesInterpolation->set(terms, logDFs);
 
-			const LADate& startDate = fraFutureStartDates[i];
-			const LADate& endDate = fraFutureEndDates[i];
+			const AQLDate& startDate = fraFutureStartDates[i];
+			const AQLDate& endDate = fraFutureEndDates[i];
 			double rate = fraFutureRates[i];
 
 			// Calculate Discount Factors
@@ -4729,7 +4729,7 @@ namespace etrading
 			bool OVERRIDE_DF = false;
 			if (i == 0 && includeSwapsBeforeMPCSwaps && (startDate <= liborDate))
 			{
-				std::unique_ptr<LAInterpolationBase> cashDepositInterpolation(dynamic_cast<LAInterpolationBase *>(pInter_fw.clone()));
+				std::unique_ptr<AQLInterpolationBase> cashDepositInterpolation(dynamic_cast<AQLInterpolationBase *>(pInter_fw.clone()));
 				cashDepositInterpolation->setJoinDateAsDouble(interpolationJoinDateAsDouble);
 
 				// Solve for the level of startDF and endDF that allows the libor instruments to be correctly repriced
@@ -4785,30 +4785,30 @@ namespace etrading
 				{
 					for (unsigned int i = 0; i < data_libor.size(); i++)
 					{
-						const LAString& term_str = dynamic_cast<const LADataString&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+						const AQLString& term_str = dynamic_cast<const AQLDataString&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 						if (term_str != liborIndexTerm)
 						{
 							continue;
 						}
 						isFirstDataPoint = false;
 
-						LAString freq = dynamic_cast<const LADataString&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+						AQLString freq = dynamic_cast<const AQLDataString&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 						freq.toUpper();
-						double rate = dynamic_cast<const LADataDouble&> ((data_libor[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-						const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&> ((data_libor[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-						const LAPriceDataSlidingRule& sld = dynamic_cast<const LAPriceDataSlidingRule&> ((data_libor[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-						const LAPriceDataDayCount& dc = dynamic_cast<const LAPriceDataDayCount&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+						double rate = dynamic_cast<const AQLDataDouble&> ((data_libor[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+						const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&> ((data_libor[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+						const AQLPriceDataSlidingRule& sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((data_libor[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+						const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&> ((data_libor[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 						bool isEOMRoll = false;
-						const LADataHolder *dh = &(data_libor[i]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
+						const AQLDataHolder *dh = &(data_libor[i]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 						if (dh->isDefined() && !dh->isNull())
 						{
-							isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+							isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 						}
 
 						// set roll convention
-						LAString roll_conv = getRollConv(freq, isEOMRoll);
+						AQLString roll_conv = getRollConv(freq, isEOMRoll);
 
-						LADate endDate = etrading::LADateHelpers::getDate(spotDateLibor, term_str, sld, &cal, true, &roll_conv);
+						AQLDate endDate = etrading::LADateHelpers::getDate(spotDateLibor, term_str, sld, &cal, true, &roll_conv);
 
 						// Use the money market LIBOR rate as the first data point
 						// Note: Must update termsDFMatrix at end of routine
@@ -4859,11 +4859,11 @@ namespace etrading
 			fraFutureCalcDates[0] = startDate; fraFutureCalcDates[1] = endDate;
 			if (!data_fraFuture[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, NOCHECK).isDefined())
 			{
-				data_fraFuture[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new LADataDates(fraFutureCalcDates));
+				data_fraFuture[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new AQLDataDates(fraFutureCalcDates));
 			}
 			else
 			{
-				dynamic_cast<LADataDates&>(data_fraFuture[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(fraFutureCalcDates);
+				dynamic_cast<AQLDataDates&>(data_fraFuture[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(fraFutureCalcDates);
 			}
 		}
 	}
@@ -4875,9 +4875,9 @@ namespace etrading
 	@param[in]	freq	Frequency
 	@param[in]	isEOMRoll	    End of the Month flag
 	*/
-	LAString getRollConv(const LAString& freq, const bool isEOMRoll)
+	AQLString getRollConv(const AQLString& freq, const bool isEOMRoll)
 	{
-		LAString roll_conv("");
+		AQLString roll_conv("");
 
 		if (freq == AQ_LUNAR)
 		{
@@ -4931,26 +4931,26 @@ namespace etrading
 								  DoubleArray& fwds,
 								  const etrading::FuturesTypeEnum& futuresType,
 								  const std::vector<ForwardRate>& serialFraFutures,
-								  const std::vector<LAObject*>&  data_libor,
-								  const std::vector<LAObject*>& data_fraFuture,
+								  const std::vector<AQLObject*>&  data_libor,
+								  const std::vector<AQLObject*>& data_fraFuture,
 								  const DateVector& fraFutureStartDates,
 								  const DateVector& fraFutureEndDates,
 								  const DoubleVector& fraFutureRates,
-								  const LADate & asOfDate,
-								  const LADate& spotDateSwap,
-								  const LADate& spotDateLibor,
-								  const LAInterpolationBase& pInter_fw,
-								  const LAString& liborIndexTerm,
-								  const LAString& roll_conv,
-								  const LAPriceDataSlidingRule& sld,
-								  const LAPriceDataCalendar& cal,
-								  const LAPriceDataDayCount& dc,
-								  const LAPriceDataDayCount& dc_act365,
+								  const AQLDate & asOfDate,
+								  const AQLDate& spotDateSwap,
+								  const AQLDate& spotDateLibor,
+								  const AQLInterpolationBase& pInter_fw,
+								  const AQLString& liborIndexTerm,
+								  const AQLString& roll_conv,
+								  const AQLPriceDataSlidingRule& sld,
+								  const AQLPriceDataCalendar& cal,
+								  const AQLPriceDataDayCount& dc,
+								  const AQLPriceDataDayCount& dc_act365,
 								  const StateVariableEnum& stateVariable,
 								  const double interpolationJoinDateAsDouble,
-								  const LADate& liborDate,
+								  const AQLDate& liborDate,
 								  const int liborPos,
-								  const LADate& firstSwapDate,
+								  const AQLDate& firstSwapDate,
 								  const bool includeSwapsBeforeMPCSwaps,
 								  const bool applyTension,
 								  const int tensionGap,
@@ -5016,10 +5016,10 @@ namespace etrading
 							   std::vector<ForwardRate>& serialFraFutures,
 							   bool& allContiguous,
 							   const etrading::FuturesTypeEnum& futuresType,
-							   const LAString& liborIndexTerm,
-							   const LADate& spotDate,
-							   const LADate& startDate,
-							   const LADate& endDate,
+							   const AQLString& liborIndexTerm,
+							   const AQLDate& spotDate,
+							   const AQLDate& startDate,
+							   const AQLDate& endDate,
 							   const double fwdRate,
 							   const bool isFuture)
 	{
@@ -5054,10 +5054,10 @@ namespace etrading
 	void updateMarketQuotes( ForwardQuotes& marketQuotes,
 							 bool& areAllForwardsContiguous,
 							 const etrading::FuturesTypeEnum& futuresType,
-							 const LAString& liborIndexTerm,
-							 const LADate& spotDate,
-							 const LADate& startDate,
-							 const LADate& endDate,
+							 const AQLString& liborIndexTerm,
+							 const AQLDate& spotDate,
+							 const AQLDate& startDate,
+							 const AQLDate& endDate,
 							 const double fwdRate,
 							 const bool isFuture )
 	{
@@ -5078,11 +5078,11 @@ namespace etrading
 	@param[in]	endDate			EndDate of Fra/Future
 	@param[in]	fwdRate			Forward rate of Fra/Future
 	*/
-	void populateOISMidInstrumentRate(std::map<LADate, std::pair<LADate, double>>& mpcSwapRates,
-									std::map<LADate, std::pair<LADate, double>>& futureRates,
+	void populateOISMidInstrumentRate(std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates,
+									std::map<AQLDate, std::pair<AQLDate, double>>& futureRates,
 									const OISMidTermInstrumentsEnum& instrumentType,
-									const LADate& startDate,
-									const LADate& endDate,
+									const AQLDate& startDate,
+									const AQLDate& endDate,
 									const double fwdRate)
 	{
 
@@ -5102,24 +5102,24 @@ namespace etrading
 	*/
 	void insertZeroRatesFromShortTermSwapToMidInstrument(DoubleVector& grid,
 														DoubleVector& yields,
-														std::vector<LADate>& dates,
-														const LADate& lastShortTermSwapDate,
+														std::vector<AQLDate>& dates,
+														const AQLDate& lastShortTermSwapDate,
 														const double lastShortTermSwapRate,
-														const std::map<LADate, std::pair<LADate, double>>& mpcSwapRates,
-														const std::map<LADate, std::pair<LADate, double>>& futureRates,
-														const LADate& spotdate,
-														const LAPriceDataDayCount& dc_act365,
-														const LAPriceDataCalendar& cal,
-														const LAPriceDataConvention& conv)
+														const std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates,
+														const std::map<AQLDate, std::pair<AQLDate, double>>& futureRates,
+														const AQLDate& spotdate,
+														const AQLPriceDataDayCount& dc_act365,
+														const AQLPriceDataCalendar& cal,
+														const AQLPriceDataConvention& conv)
 	{
 
 		const bool hasCentralBank = (mpcSwapRates.size() > 0);
 		const bool hasFuture = (futureRates.size() > 0);
 
-		const LADate& firstFutureStart = hasFuture ? futureRates.begin()->first : LADate();
-		const LADate& firstCentralBankStart = hasCentralBank ? mpcSwapRates.begin()->first : LADate();
+		const AQLDate& firstFutureStart = hasFuture ? futureRates.begin()->first : AQLDate();
+		const AQLDate& firstCentralBankStart = hasCentralBank ? mpcSwapRates.begin()->first : AQLDate();
 
-		LADate firstMidInstrumentStartDt;
+		AQLDate firstMidInstrumentStartDt;
 		double firstMidInstrumentRate = 0.0;
 
 		// With Central Bank and Future
@@ -5145,14 +5145,14 @@ namespace etrading
 		double gapTerm = firstMidInstrumentStartDt.intervalDays(lastShortTermSwapDate);
 		double rateIncrement = (firstMidInstrumentRate - lastShortTermSwapRate) / gapTerm;
 
-		LADate tmp_date = lastShortTermSwapDate;
+		AQLDate tmp_date = lastShortTermSwapDate;
 
 		//Initial DF
-		double df = LAMath::exp(-yields.back() * grid.back());
+		double df = AQLMath::exp(-yields.back() * grid.back());
 
 		while (tmp_date < firstMidInstrumentStartDt)
 		{
-			LADate n_date = cal.getBusinessDay(tmp_date, 1);
+			AQLDate n_date = cal.getBusinessDay(tmp_date, 1);
 			const double endTerm = dc_act365.getTerm(spotdate, n_date);
 
 			//Directly linear interpolation on forward rate, between LastSwapRate and the first ECB/ArrFuture
@@ -5161,7 +5161,7 @@ namespace etrading
 			df *= conv.getDF(instanteneousFwdRate, tmp_date, n_date);
 
 			grid.push_back(endTerm);
-			yields.push_back(-LAMath::log(df) / endTerm);
+			yields.push_back(-AQLMath::log(df) / endTerm);
 			dates.push_back(n_date);
 
 			tmp_date = n_date;
@@ -5175,16 +5175,16 @@ namespace etrading
 	void insertZeroRatesForOISMidInstruments(DoubleVector& grid,
 											DoubleVector& yields,
 											DateVector& dates,
-											const LADate& spotdate,
-											const LADate& centralBankFromDate,
-											const LADate& centralBankShortTermDate,
+											const AQLDate& spotdate,
+											const AQLDate& centralBankFromDate,
+											const AQLDate& centralBankShortTermDate,
 											const double initialDF,
-											const std::map<LADate, std::pair<LADate, double>>& mpcSwapRates,
-											const std::map<LADate, std::pair<LADate, double>>& futureRates,
-											const std::unique_ptr<LAInterpolationBase>& pInter_yield,
-											const LAPriceDataDayCount& dc_act365,
-											const LAPriceDataCalendar& cal,
-											const LAPriceDataConvention& conv,
+											const std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates,
+											const std::map<AQLDate, std::pair<AQLDate, double>>& futureRates,
+											const std::unique_ptr<AQLInterpolationBase>& pInter_yield,
+											const AQLPriceDataDayCount& dc_act365,
+											const AQLPriceDataCalendar& cal,
+											const AQLPriceDataConvention& conv,
 											const bool isARRCurve,
 											const double lastShortSwapTerm)
 
@@ -5193,8 +5193,8 @@ namespace etrading
 		const bool hasCentralBank = (mpcSwapRates.size() > 0);
 		const bool hasFuture = (futureRates.size() > 0);
 
-		const LADate& firstFutureStart = hasFuture ? futureRates.begin()->first : LADate();
-		const LADate& firstCentralBankStart = hasCentralBank ? mpcSwapRates.begin()->first : LADate();
+		const AQLDate& firstFutureStart = hasFuture ? futureRates.begin()->first : AQLDate();
+		const AQLDate& firstCentralBankStart = hasCentralBank ? mpcSwapRates.begin()->first : AQLDate();
 
 		if (hasCentralBank && hasFuture)
 		{
@@ -5231,10 +5231,10 @@ namespace etrading
 				insertZeroRatesForFutures(grid, yields, dates, spotdate, pInter_yield, futureRates, dc_act365, conv, cal, isARRCurve);
 
 				//CentralBank
-				const LADate centralBankFromDateToUse = (centralBankFromDate < firstCentralBankStart) ? firstCentralBankStart : centralBankFromDate;
+				const AQLDate centralBankFromDateToUse = (centralBankFromDate < firstCentralBankStart) ? firstCentralBankStart : centralBankFromDate;
 
 				// Calculate the initial DF for Central bank section, based on the latest yield
-				const double initialDFToUse = LAMath::exp(-yields.back() * grid.back());
+				const double initialDFToUse = AQLMath::exp(-yields.back() * grid.back());
 
 				insertDailyZeroRatesForCentralBank(grid, yields, dates, centralBankFromDateToUse/*fromDate*/, spotdate, centralBankShortTermDate, mpcSwapRates, initialDFToUse, dc_act365, cal, conv, lastShortSwapTerm);
 
@@ -5291,14 +5291,14 @@ namespace etrading
 	*/
 	void insertDFsForFixingStartEnds(DoubleMatrix& df_2,
 									DateVector& df_2_date, 
-									const LAInterpolationBase &inter,
+									const AQLInterpolationBase &inter,
 									const StateVariableEnum& stateVariable, 
 									const DoubleArray &fixingStartTerms,
 									const DoubleArray &fixingEndTerms,
 									const DateVector &fixingStartDates,
 									const DateVector &fixingEndDates,
 									bool generateForwardsFromSwapsOnly, 
-									const LADate & asOfDate, 
+									const AQLDate & asOfDate, 
 									const DayCountEnum & accrualDaycount)
 	{
 		for (unsigned int i = 0; i < fixingStartTerms.size(); ++i)
@@ -5326,14 +5326,14 @@ namespace etrading
 	@param[in] accrualDaycount
 	*/
 	void insertDFsForFixingStartEnds( DiscountFactors & dfResults,
-									  const LAInterpolationBase &inter,
+									  const AQLInterpolationBase &inter,
 									  const StateVariableEnum& stateVariable,
 									  const DoubleArray &fixingStartTerms,
 									  const DoubleArray &fixingEndTerms,
 									  const DateVector &fixingStartDates,
 									  const DateVector &fixingEndDates,
 									  bool generateForwardsFromSwapsOnly,
-									  const LADate & asOfDate,
+									  const AQLDate & asOfDate,
 									  const DayCountEnum & accrualDaycount )
 	{
 		for (unsigned int i = 0; i < fixingStartTerms.size(); ++i)

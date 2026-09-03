@@ -50,14 +50,14 @@ namespace etrading
 		//Is it right to use DF's dayCount?
 		const auto expiryYearFractionDayCount = ACT_365_DAYCOUNT; // toDayCountEnum(getDiscountFactorDayCount().getCString());
 
-		const LADate valuationDate = getDateFromTenor(boost::assign::list_of(volProvider_->asOfDate()), schParams->spotLag().c_str(),
+		const AQLDate valuationDate = getDateFromTenor(boost::assign::list_of(volProvider_->asOfDate()), schParams->spotLag().c_str(),
 													toString(schParams->spotBusinessDayAdj()).c_str(), schParams->spotCalendar().c_str(), "")[0];
 		for (size_t i = 0; i < cashflowSize; ++i)
 		{
-			const LADate fixingDate = schOutput->fixingDates()[i];
-			const LADate accrualStartDate = schOutput->accrualStartDates()[i];
-			const LADate accrualEndDate = schOutput->accrualEndDates()[i];
-			const LADate paymentDate = schOutput->paymentDates()[i];
+			const AQLDate fixingDate = schOutput->fixingDates()[i];
+			const AQLDate accrualStartDate = schOutput->accrualStartDates()[i];
+			const AQLDate accrualEndDate = schOutput->accrualEndDates()[i];
+			const AQLDate paymentDate = schOutput->paymentDates()[i];
 			const double yearFraction = schOutput->accrualYearFractions()[i];
 
 			const CoreCashflow coreCf(fixingDate, accrualStartDate, accrualEndDate, paymentDate, yearFraction, notional, leverage, strikeRate, spread);

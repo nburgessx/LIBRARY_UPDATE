@@ -19,7 +19,7 @@
 
 
 #include <algorithm>
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 #include "LACalibratePool.h"
 #include "LACalibrationThread.h"
 #ifdef __HAS_MIC__
@@ -131,7 +131,7 @@ LACalibratePool::putRequest(LACalibrate *request)
 {
 	if (!request)
 	{
-		throw LACoreInvalidData("Request pointer is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Request pointer is NULL", __FILE__, __LINE__);
 	}
 #ifdef __HAS_MIC__
 	mMutex.lock();
@@ -169,7 +169,7 @@ LACalibratePool::releaseRequest(LACalibrate *request)
 {
 	if (!request)
 	{
-		throw LACoreInvalidData("Request pointer is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Request pointer is NULL", __FILE__, __LINE__);
 	}
 #ifdef __HAS_MIC__
 	mMutex.lock();
@@ -179,7 +179,7 @@ LACalibratePool::releaseRequest(LACalibrate *request)
 
 	if (it == mRequestQueue.end())
 	{
-		throw LACoreInvalidData("Request pointer is not registed in requestqueue", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Request pointer is not registed in requestqueue", __FILE__, __LINE__);
 	}
 	delete (*it);
 	(*it) = 0;

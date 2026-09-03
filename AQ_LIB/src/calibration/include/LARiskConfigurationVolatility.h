@@ -40,18 +40,18 @@ public:
 protected:
 	//==============================================
 	// create scenario1 object 
-	virtual  std::vector<LAObject *> createScenario1Entity(const LAString &key, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario1Entity(const AQLString &key, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create scenario2 object
-	virtual  std::vector<LAObject *> createScenario2Entity(const LAString &key, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario2Entity(const AQLString &key, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create scenario volatility object
-	virtual std::vector<LAObject *> createVolatilityEntity(const LAString &key, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const = 0;
+	virtual std::vector<AQLObject *> createVolatilityEntity(const AQLString &key, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const = 0;
 	//==============================================
 	// create scenario volatility object old
-	virtual std::vector<LAObject *> createVolatilityEntityOld(const LAString &key, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const { return createVolatilityEntity(key, dataInstance, scenarioNum); }
+	virtual std::vector<AQLObject *> createVolatilityEntityOld(const AQLString &key, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const { return createVolatilityEntity(key, dataInstance, scenarioNum); }
 	//==============================================
 	// check target currency or fx
-	virtual  bool isTarget(const LAString &ccy) const;
+	virtual  bool isTarget(const AQLString &ccy) const;
 };
 #endif

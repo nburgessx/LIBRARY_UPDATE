@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 #include <boost/lexical_cast.hpp>
 #include "LabelValueBlock.h"
 #include "Swap.h"
@@ -19,7 +19,7 @@ namespace etrading
     * @param [in]		legName  Leg name, e.g. leg1:fixed
     * @output			Schedule type enum
     */
-    ScheduleTypeEnum getScheduleTypeFromLegName( const LAString& legName);
+    ScheduleTypeEnum getScheduleTypeFromLegName( const AQLString& legName);
 
 	/* @brief			Return a leg pointer based on the Leg Label Value Block and Schedule
     *  @param [in]		legLVB              Leg label value block
@@ -107,13 +107,13 @@ namespace etrading
 	*  @param [in]	withScheduleKeys	True to include keys from Schedule (Fixed/Float). Default to true
     *  @Return     label value block keys for the swap leg
     */
-	std::vector<std::string> getSwapLegLVBKeys(const LAString& legName, bool withScheduleKeys=true); 
+	std::vector<std::string> getSwapLegLVBKeys(const AQLString& legName, bool withScheduleKeys=true); 
 
 	/* @brief label value block keys for the swap schedule
     *  @param [in] scheduleType	   Schedule type, e.g. fixed/float/fee
     *  @Return     label value block keys for the swap schedule
     */
-	std::vector<std::string> getScheduleLVBKeys(const LAString& scheduleType=""); 
+	std::vector<std::string> getScheduleLVBKeys(const AQLString& scheduleType=""); 
 
 	/* @brief			Validate if the swap keys, with or without prefix "fixed"/"float" 
 	*  @param [in]		legName				Leg name, e.g. leg1:fixed
@@ -121,7 +121,7 @@ namespace etrading
 	*  @param [in]		validateKeys		True to do the verification. Default to true
 	*  @param [in]		withScheduleKeys	True to include keys from Schedule (Fixed/Float). Default to true
 	*/
-	void validateSwapLegLVBKeys(const LAString& legName, const std::vector<std::string>& keysFromUser, bool validateKeys=true, bool withScheduleKeys=true);
+	void validateSwapLegLVBKeys(const AQLString& legName, const std::vector<std::string>& keysFromUser, bool validateKeys=true, bool withScheduleKeys=true);
 
 
 	/* @brief Create a Bespoke Schedule object based on the label value blocks of schedule properties and schedule cashflows
@@ -200,7 +200,7 @@ namespace etrading
 	* @param[in] legs		Mandatory, specifies a collection of legs to search for the required legType
 	* @returns The validated leg name matching the specified legType
 	*/
-	LAString validateLegName( const LAString& legName, ScheduleTypeEnum legType, const LegCollection& legs );
+	AQLString validateLegName( const AQLString& legName, ScheduleTypeEnum legType, const LegCollection& legs );
 
 	/* @brief Given an accrual frequency, returns the corresponding number of coupons per year.
 	*

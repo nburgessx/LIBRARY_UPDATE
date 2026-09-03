@@ -4,10 +4,10 @@
 #pragma interface
 #endif
 
-#include "LACoreProcedure.h"
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreProcedure.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LAPriceCashFlowGenerator.h"
 
 
@@ -28,10 +28,10 @@
 
 
 
-class LAObject;
-class LADataProcedure;
-class LAPriceDataManager;
-class LADataMultiReference;
+class AQLObject;
+class AQLDataProcedure;
+class AQLPriceDataManager;
+class AQLDataMultiReference;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief Generate Cashlets and trigger/call schedule
@@ -48,15 +48,15 @@ public:
     // Check this class ID is the same or not	
 	virtual bool                isTypeOf(function_t id) const;
     // Copy this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
     // Return class type
 	virtual function_t			getType() const;
     // Generate cashlets and trigger/call schedule
-	virtual void	            calibrateModel(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const;
+	virtual void	            calibrateModel(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const;
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
 
 protected:
     // copy constructor
@@ -64,9 +64,9 @@ protected:
 
 private:
 	// Create cashlets
-	void						createOptions(LAObject& leg, LAObject& trade) const;  
+	void						createOptions(AQLObject& leg, AQLObject& trade) const;  
 
 	
 	// setup leg maturity
-	void						setUpLegMaturity(LAObject& trade) const;
+	void						setUpLegMaturity(AQLObject& trade) const;
 };

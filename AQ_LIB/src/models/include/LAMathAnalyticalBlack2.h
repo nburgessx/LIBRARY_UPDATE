@@ -2,9 +2,9 @@
 #define LAMathAnalyticalBlack2_h
 
 #include <cmath>
-#include "LAFunction.h"
+#include "AQLFunction.h"
 #include "LAAnalyticFormula.h"
-#include "LADist.h"
+#include "AQLDist.h"
 
 namespace local
 {
@@ -39,26 +39,26 @@ double BlackFormula( T1 mean_LN,   //[in] Mean of Lognoraml distribution
     //error check
     if ( sgn != -1 && sgn != 1 )
     {
-        LAString msg("Sign must be -1 or 1. (Last argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Sign must be -1 or 1. (Last argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     if ( mean_LN < 0 )
     {
-        LAString msg("Mean negative! (1st argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Mean negative! (1st argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     
     if ( margin == lower && lower < 0 )
     {
-        LAString msg("Margin negative! (3rd argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Margin negative! (3rd argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     if ( lower < 0 )
     {
-        LAString msg("Lower bound negative! (4th argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Lower bound negative! (4th argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     //
@@ -68,7 +68,7 @@ double BlackFormula( T1 mean_LN,   //[in] Mean of Lognoraml distribution
     double d1 = 0.000000001 < var_LN ? (tmp + 0.5 * var_LN) / stdDev_LN : 0 < tmp ? 10000000 : -10000000;
     double d2 = d1 - stdDev_LN;
 
-    return sgn * ( mean_LN * LADist::normsdist( sgn * d1 ) - margin *LADist::normsdist( sgn * d2 ) );
+    return sgn * ( mean_LN * AQLDist::normsdist( sgn * d1 ) - margin *AQLDist::normsdist( sgn * d2 ) );
 };
 
 //
@@ -98,8 +98,8 @@ double BlackFormula( T1 mean_LN,   //[in] Mean of Lognoraml distribution
 
     if ( sgn != -1 && sgn != 1 )
     {
-        LAString msg("Sign must be -1 or 1. (Last argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Sign must be -1 or 1. (Last argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     if ( stdDev_LN == 0. || mean_LN <= 0 || margin <= 0 ) return max( sgn * (mean_LN - margin), 0.0 );
@@ -110,7 +110,7 @@ double BlackFormula( T1 mean_LN,   //[in] Mean of Lognoraml distribution
     double d1 = (tmp + 0.5 * var_LN) / stdDev_LN;
     double d2 = d1 - stdDev_LN;
 
-    return sgn * ( mean_LN * LADist::normsdist( sgn * d1 ) - margin * LADist::normsdist( sgn * d2 ) );
+    return sgn * ( mean_LN * AQLDist::normsdist( sgn * d1 ) - margin * AQLDist::normsdist( sgn * d2 ) );
 };
 
 
@@ -141,7 +141,7 @@ double BlackFormulaDD( T1 mean_LN,   //[in] Mean of Lognoraml distribution
     {
         double s = fabs(stdDev_LN);
         double tmp = (mean_LN - margin) / s;
-        return s * (AnalyticFormulae::diffNormdist(tmp) + sgn * tmp * LADist::normsdist(sgn * tmp));
+        return s * (AnalyticFormulae::diffNormdist(tmp) + sgn * tmp * AQLDist::normsdist(sgn * tmp));
     }
 
     double s = mean_LN * (1. - beta) / static_cast<double>(beta);
@@ -155,7 +155,7 @@ double BlackFormulaDD( T1 mean_LN,   //[in] Mean of Lognoraml distribution
 //-----
 //  Black Implied Vol
 template <typename T1, typename T2, typename T3>
-class Sub_func_BlackImplVol : public LAFunction
+class Sub_func_BlackImplVol : public AQLFunction
 {
 public:
     Sub_func_BlackImplVol( T1 prem_, T2 mean_LN_, T3 margin_, int sgn_ )
@@ -193,7 +193,7 @@ double BlackImplVol( T1 prem,
 //-----
 // Black Implied Vol in the Displaced Diffusion model
 template <typename T1, typename T2, typename T3, typename T4>
-class Sub_func_BlackImplVolDD : public LAFunction
+class Sub_func_BlackImplVolDD : public AQLFunction
 {
 public:
     Sub_func_BlackImplVolDD( T1 prem_, T2 mean_LN_, T3 margin_, int sgn_, T4 beta_ )
@@ -257,26 +257,26 @@ double FW_Vega( T1 mean_LN,   //[in] Initial value
     //error check
     if ( mean_LN < 0 )
     {
-        LAString msg("mean_LN negative! (1st argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("mean_LN negative! (1st argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     if ( sigma < 0 )
     {
-        LAString msg("sigma! (2nd argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("sigma! (2nd argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     if ( T < 0 )
     {
-        LAString msg("T negative! (3rd argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T negative! (3rd argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     if ( margin < 0 )
     {
-        LAString msg("margin negative! (4th argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("margin negative! (4th argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     double tmp = log( static_cast<double>(mean_LN) / static_cast<double>(margin) );

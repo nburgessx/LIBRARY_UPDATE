@@ -1,6 +1,6 @@
 #include "InitializeAQETrading.h"
 #include "mirOutputCurve.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "tryMirOutputCurve.h"
 #include "LACurvePricingObject.h"
 
@@ -16,14 +16,14 @@ std::vector<std::vector<double> > mirOutputCurve(const std::string& curveId,
 	try 
 	{
 		// marshall all inputs		
-		LAString curId			(curveId.c_str());
-		LAString curName		(curveName.c_str());
+		AQLString curId			(curveId.c_str());
+		AQLString curName		(curveName.c_str());
 		
 		DoubleArray ans = validation::tryMirOutputCurve(etrading::InitializeAQETrading::instance().dataInstance(),
 												            curId,
 												            curName);
 
-		LADataHolder* dh = &(etrading::InitializeAQETrading::instance().dataInstance()->getObjectPool().getObject(curId,ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_DFS2));
+		AQLDataHolder* dh = &(etrading::InitializeAQETrading::instance().dataInstance()->getObjectPool().getObject(curId,ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_DFS2));
 		if(dh->isDefined() && !dh->isNull() && curveName == STD)
 		{
 			DoubleVector terms;
@@ -61,7 +61,7 @@ std::vector<std::vector<double> > mirOutputCurve(const std::string& curveId,
 
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

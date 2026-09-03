@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -41,39 +41,39 @@ namespace validation
     *  @param [in]		useFwdData		Use fwd rates directly or derive them from spot rates
     *  @param [in]		floatFixingCalendar		Optional float fixing calendar - needed by the server team to price USD swaps
     */
-    double tryMirGetParRate4( LADataInstance* dataInstance,
-                              const LAString& effectDt,
-                              const LAString& maturity,
-                              const LAString& curveID,
-                              const LAString& fixedFrequency,
-                              const LAString& fixedDaycount,
-                              const LAString& fixedBusinessDayAdjustment,
-                              const LAString& fixedCalendar,
-                              const LAString& fixedFirstStub,
-                              const LAString& fixedLastStub,
-                              const LAString& fixedRollDay,
-                              const LAString& fixedPayLag,
-                              const LAString& fixedStubType,
-                              const LAString& floatFrequency,
-                              const LAString& floatDayCount,
-                              const LAString& floatBusinessDayAdjustment,
-                              const LAString& floatCalendar,
-                              const LAString& floatFirstStub,
-                              const LAString& floatLastStub,
-                              const LAString& floatRollDay,
-                              const LAString& floatFixingLag,
+    double tryMirGetParRate4( AQLDataInstance* dataInstance,
+                              const AQLString& effectDt,
+                              const AQLString& maturity,
+                              const AQLString& curveID,
+                              const AQLString& fixedFrequency,
+                              const AQLString& fixedDaycount,
+                              const AQLString& fixedBusinessDayAdjustment,
+                              const AQLString& fixedCalendar,
+                              const AQLString& fixedFirstStub,
+                              const AQLString& fixedLastStub,
+                              const AQLString& fixedRollDay,
+                              const AQLString& fixedPayLag,
+                              const AQLString& fixedStubType,
+                              const AQLString& floatFrequency,
+                              const AQLString& floatDayCount,
+                              const AQLString& floatBusinessDayAdjustment,
+                              const AQLString& floatCalendar,
+                              const AQLString& floatFirstStub,
+                              const AQLString& floatLastStub,
+                              const AQLString& floatRollDay,
+                              const AQLString& floatFixingLag,
                               double floatFirstFixing,
                               double floatLastFixing,
-                              const LAString& floatPayLag,
-                              const LAString& floatStubType,
-                              const LAString& interpolation,
-                              const LAString& forecastCurve,
-                              const LAString& discountCurve,
+                              const AQLString& floatPayLag,
+                              const AQLString& floatStubType,
+                              const AQLString& interpolation,
+                              const AQLString& forecastCurve,
+                              const AQLString& discountCurve,
                               bool interpFwds,
                               bool eomRoll,
                               double floatSpread,
                               bool useFwdData,
-                              const LAString& floatFixingCalendar = LAString("") ); // Optional Parameter: Needed by ther server team to price USD swaps
+                              const AQLString& floatFixingCalendar = AQLString("") ); // Optional Parameter: Needed by ther server team to price USD swaps
 
 
     /* @brief			validation interface for the tryMirGetParRate3 method
@@ -97,20 +97,20 @@ namespace validation
     *  @param [in]		eomRoll			Boolean that decides if EOM rolling is enforced (only when effective date is on EOM)
     *  @return			par rate
     */
-    double tryMirGetParRate3( LADataInstance* dataInstance,
-                              const LAString& fromDate,
-                              const LAString& toDate,
-                              const LAString& curveId,
-                              const LAString& frequency,
-                              const LAString& dayCount,
-                              const LAString& slidingRule,
-                              const LAString& calendar,
-                              const LAString& interpolation,
-                              const LAString& firstOddDate,
-                              const LAString& lastOddDate,
-                              const LAString& paymentDay,
-                              const LAString& foreCurveName,
-                              const LAString& dfCurveName,
+    double tryMirGetParRate3( AQLDataInstance* dataInstance,
+                              const AQLString& fromDate,
+                              const AQLString& toDate,
+                              const AQLString& curveId,
+                              const AQLString& frequency,
+                              const AQLString& dayCount,
+                              const AQLString& slidingRule,
+                              const AQLString& calendar,
+                              const AQLString& interpolation,
+                              const AQLString& firstOddDate,
+                              const AQLString& lastOddDate,
+                              const AQLString& paymentDay,
+                              const AQLString& foreCurveName,
+                              const AQLString& dfCurveName,
                               bool interpFwds,
                               bool eomRoll );
 }

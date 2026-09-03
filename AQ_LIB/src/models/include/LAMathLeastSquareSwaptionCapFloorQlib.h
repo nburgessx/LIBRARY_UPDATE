@@ -8,7 +8,7 @@
 
 #include <ql/math/optimization/costfunction.hpp>
 #include <ql/math/array.hpp>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 class LAMathLeastSquareSwaptionVolQlib;
 class LAMathLeastSquareCapFloorQlib;

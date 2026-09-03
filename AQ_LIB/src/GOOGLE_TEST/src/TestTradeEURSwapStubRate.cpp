@@ -97,7 +97,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -148,7 +148,7 @@ namespace google_test
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR2, getStubRateOutputsUsingTenor, tolerance, i );
             }
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

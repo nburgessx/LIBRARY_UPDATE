@@ -54,7 +54,7 @@ LARatesScalarLinearInterpolation::~LARatesScalarLinearInterpolation()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesScalarLinearInterpolation::clone() const
 {
     try 
@@ -63,7 +63,7 @@ LARatesScalarLinearInterpolation::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!

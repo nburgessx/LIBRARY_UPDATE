@@ -24,7 +24,7 @@ namespace etrading
 		std::map<std::string, Variant> getDataMap() const; //helper method for caching
 														   
 		// Get Accessors:
-		const LADate& asOfDate() const              { return asOfDate_; };
+		const AQLDate& asOfDate() const              { return asOfDate_; };
 		const CCY currency() const                  { return currency_; };
         const VolatilityTypeEnum volType() const    { return volType_; };
 		const double vol() const                    { return vol_; };
@@ -33,7 +33,7 @@ namespace etrading
 
 	private:
 		
-		LADate asOfDate_;
+		AQLDate asOfDate_;
 		CCY currency_;
 
 		std::string volDataSource_;

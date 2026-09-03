@@ -3,13 +3,13 @@
     @brief Source code for class to represent YieldCurve.
 
 			Following dataValues are registered automatically to data master<BR>
-			1.CALIBRATION_DATA_NAME(LADataString)<BR>
-			2.CALIBRATION_DATA_INTERPOLATION(LAPriceDataInterpolation)<BR>
-			3.IR_CALIBRATION_DATA_DAYCOUNT(LAPriceDataDayCount)<BR>
-			4.CALIBRATION_DATA_CALENDAR(LAPriceDataCalendar)<BR>
-			5.CALIBRATION_DATA_SLIDINGRULE(LAPriceDataSlidingRule)<BR>
-			6.IR_CALIBRATION_DATA_FREQUENCY(LADataString)<BR>
-			7.IR_CALIBRATION_DATA_YIELDDATA(LADataReference)<BR>
+			1.CALIBRATION_DATA_NAME(AQLDataString)<BR>
+			2.CALIBRATION_DATA_INTERPOLATION(AQLPriceDataInterpolation)<BR>
+			3.IR_CALIBRATION_DATA_DAYCOUNT(AQLPriceDataDayCount)<BR>
+			4.CALIBRATION_DATA_CALENDAR(AQLPriceDataCalendar)<BR>
+			5.CALIBRATION_DATA_SLIDINGRULE(AQLPriceDataSlidingRule)<BR>
+			6.IR_CALIBRATION_DATA_FREQUENCY(AQLDataString)<BR>
+			7.IR_CALIBRATION_DATA_YIELDDATA(AQLDataReference)<BR>
 */
 //  2007, AlgoQuantHub..
 
@@ -31,29 +31,29 @@
 //#define STD     "STD"
 
 #include "LAMathYieldCurve.h"
-#include "LAMathDefine.h"
-#include "LABasic.h"
-#include "LAPriceDataConvention.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAPriceDataManager.h"
-#include "LADataProcedure.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataInterpolation.h"
-#include "LADataMultiReference.h"
-#include "LADataMatrix.h"
-#include "LADataInstance.h"
-#include "LAFunctionUtilities.h"
+#include "AQLMathDefine.h"
+#include "AQLBasic.h"
+#include "AQLPriceDataConvention.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataProcedure.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataMatrix.h"
+#include "AQLDataInstance.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathCurveFuncUtility.h"
 #include "LAMathDateUtilities.h"
-#include "LAAlgorithm.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
-#include "LAFindRootBrent.h"
+#include "AQLAlgorithm.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
+#include "AQLFindRootBrent.h"
 
 #include <cmath>
 #include <algorithm>
@@ -63,7 +63,7 @@
 namespace 
 {
 	template<typename F>
-	class PortableMMFunc final : public LAFunctionBase
+	class PortableMMFunc final : public AQLFunctionBase
 	{
 	public:
 		template<typename G>
@@ -72,7 +72,7 @@ namespace
 
 		virtual ~PortableMMFunc() {};
 
-		virtual LACoreFunctionBase*	clone() const override
+		virtual AQLCoreFunctionBase*	clone() const override
 		{
 			return new PortableMMFunc(f_);
 		}
@@ -99,13 +99,13 @@ namespace
 		const std::vector<std::pair<double, double>> x = { { lowerBound, upperBound } };
 		DoubleArray out;
 
-		LAFindRootBrent().findRoot(pv, x, out);
+		AQLFindRootBrent().findRoot(pv, x, out);
 
 		return out[0];
 	}
 
 	// Find the index for the next cashflow, so that we can ignore cashflows in the past
-	size_t getNextCashFlowIndex(const DateVector& floatAccrualDates, const LADate& asOf)
+	size_t getNextCashFlowIndex(const DateVector& floatAccrualDates, const AQLDate& asOf)
 	{
         unsigned int nextCashflowIndex = 1;
         for (unsigned int i = 0; i < floatAccrualDates.size(); ++i)
@@ -113,7 +113,7 @@ namespace
             if ( i == floatAccrualDates.size()-1  )
             {
                 if ( floatAccrualDates[i] < asOf ) 
-                    throw LACoreInvalidData("#Error: Par rate error; The underlying swap has expired.", __FILE__, __LINE__ );
+                    throw AQLCoreInvalidData("#Error: Par rate error; The underlying swap has expired.", __FILE__, __LINE__ );
 
                 nextCashflowIndex++;
                 break; 
@@ -129,21 +129,21 @@ namespace
 							const DateVector& floatAccrualDates, 
 							const DoubleVector& accrualDateYearFractions, 
 							size_t nextCashflowIndex,
-							LADataInstance* dataInstance,
+							AQLDataInstance* dataInstance,
 							double floatSpread,
-							const LADate& asOf,
-							const LAString& curveID,
-							const LAString& foreCurveName,							
-							const LAString& slidingRule,
-							const LAString& calendar,
-							const LAString& rollConvention,
-							const LAString& dayCount,
-							const LAString& interpolation,
-							const LAString& oisCompoundingType)
+							const AQLDate& asOf,
+							const AQLString& curveID,
+							const AQLString& foreCurveName,							
+							const AQLString& slidingRule,
+							const AQLString& calendar,
+							const AQLString& rollConvention,
+							const AQLString& dayCount,
+							const AQLString& interpolation,
+							const AQLString& oisCompoundingType)
 	{
 		if (floatAccrualDates[0] < asOf)
 		{
-			throw LACoreInvalidData("#Error: Only Spot or Forward Starting OIS Swaps supported", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: Only Spot or Forward Starting OIS Swaps supported", __FILE__, __LINE__ );
 		}
 
 		// Get equivalent rates over accrual periods
@@ -188,14 +188,14 @@ using namespace std;
 /*!
     @brief constructor
 
-	@param[in] dataInstance pointer of LADataInstance
+	@param[in] dataInstance pointer of AQLDataInstance
 
 */
-LAMathYieldCurve::LAMathYieldCurve(LADataInstance* dataInstance, const LAString *const pCurveType) : 
-LAObject(), mCurveSuffix(""), mCurveType(STD), mpBasisCurveType(NULL)
+LAMathYieldCurve::LAMathYieldCurve(AQLDataInstance* dataInstance, const AQLString *const pCurveType) : 
+AQLObject(), mCurveSuffix(""), mCurveType(STD), mpBasisCurveType(NULL)
 {
 	setDataInstance(dataInstance);
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 
 	dm.setData(CALIBRATION_DATA_NAME,			DATA_STRING			);
 	dm.setData(CALIBRATION_DATA_INTERPOLATION,	DATA_INTERPOLATION	);
@@ -221,8 +221,8 @@ LAObject(), mCurveSuffix(""), mCurveType(STD), mpBasisCurveType(NULL)
 	mpYieldData  = &add(IR_CALIBRATION_DATA_YIELDDATA);
 	mpValueToInterp = &add(IR_CALIBRATION_DATA_DFSVALUETOINTERPOLATE);
 	mpValueToInterp2 = &add(IR_CALIBRATION_DATA_DFS2VALUETOINTERPOLATE);
-	dynamic_cast<LADataString &>(mpValueToInterp->get()).set("DiscountFactor");
-	dynamic_cast<LADataString &>(mpValueToInterp2->get()).set("DiscountFactor");
+	dynamic_cast<AQLDataString &>(mpValueToInterp->get()).set("DiscountFactor");
+	dynamic_cast<AQLDataString &>(mpValueToInterp2->get()).set("DiscountFactor");
 	if (pCurveType)
 	{
 		if (*pCurveType != STD)
@@ -240,7 +240,7 @@ LAObject(), mCurveSuffix(""), mCurveType(STD), mpBasisCurveType(NULL)
 */
 LAMathYieldCurve::LAMathYieldCurve(
 	const LAMathYieldCurve& curve) : 
-LAObject(curve), mCurveSuffix(curve.mCurveSuffix), mCurveType(curve.mCurveType)
+AQLObject(curve), mCurveSuffix(curve.mCurveSuffix), mCurveType(curve.mCurveType)
 {
 	mpName		 = &getData(CALIBRATION_DATA_NAME);
 	mpInter		 = &getData(CALIBRATION_DATA_INTERPOLATION);
@@ -257,11 +257,11 @@ LAObject(curve), mCurveSuffix(curve.mCurveSuffix), mCurveType(curve.mCurveType)
 
 
 	// df inter
-	map<LAString, LAPriceDataInterpolation *>::const_iterator it = curve.mDFInterMap.begin();
+	map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = curve.mDFInterMap.begin();
 	while (it != curve.mDFInterMap.end())
 	{
-		LAPriceDataInterpolation *inter = dynamic_cast<LAPriceDataInterpolation *>(it->second->clone());
-		dynamic_cast<LAPriceDataType *>(inter)->setHolder(mpInter);
+		AQLPriceDataInterpolation *inter = dynamic_cast<AQLPriceDataInterpolation *>(it->second->clone());
+		dynamic_cast<AQLPriceDataType *>(inter)->setHolder(mpInter);
 		mDFInterMap.insert(make_pair(it->first, inter));
 		mCurveVersionMap[it->first] = 0;
 		++it;
@@ -271,24 +271,24 @@ LAObject(curve), mCurveSuffix(curve.mCurveSuffix), mCurveType(curve.mCurveType)
 	it = curve.mFWDInterMap.begin();
 	while (it != curve.mFWDInterMap.end())
 	{
-		LAPriceDataInterpolation *inter = dynamic_cast<LAPriceDataInterpolation *>(it->second->clone());
-		dynamic_cast<LAPriceDataType *>(inter)->setHolder(mpInter);
+		AQLPriceDataInterpolation *inter = dynamic_cast<AQLPriceDataInterpolation *>(it->second->clone());
+		dynamic_cast<AQLPriceDataType *>(inter)->setHolder(mpInter);
 		mFWDInterMap.insert(make_pair(it->first, inter));
 		++it;
 	}
 
 	// daycount
-	map<LAString, LAPriceDataDayCount *>::const_iterator it_ = curve.mDayCountMap.begin();
+	map<AQLString, AQLPriceDataDayCount *>::const_iterator it_ = curve.mDayCountMap.begin();
 	while (it_ != curve.mDayCountMap.end())
 	{
-		LAPriceDataDayCount *dc = dynamic_cast<LAPriceDataDayCount *>(it_->second->clone());
-		dynamic_cast<LAPriceDataType *>(dc)->setHolder(mpDayCount);
+		AQLPriceDataDayCount *dc = dynamic_cast<AQLPriceDataDayCount *>(it_->second->clone());
+		dynamic_cast<AQLPriceDataType *>(dc)->setHolder(mpDayCount);
 		mDayCountMap.insert(make_pair(it_->first, dc));
 		++it_;
 	}
 
 	// basis curve type
-	if (curve.mpBasisCurveType)	mpBasisCurveType = new LAString(*curve.mpBasisCurveType);
+	if (curve.mpBasisCurveType)	mpBasisCurveType = new AQLString(*curve.mpBasisCurveType);
 	else mpBasisCurveType = NULL;
 
 }
@@ -324,7 +324,7 @@ LAMathYieldCurve::getType(void) const
 bool
 LAMathYieldCurve::isTypeOf(object_t id) const
 {
-	return (id == ENTITY_IRYIELDCURVE ? true : LAObject::isTypeOf(id));
+	return (id == ENTITY_IRYIELDCURVE ? true : AQLObject::isTypeOf(id));
 }
 
 /*!
@@ -332,20 +332,20 @@ LAMathYieldCurve::isTypeOf(object_t id) const
 
 	@return name
 */
-const LADataString&	
+const AQLDataString&	
 LAMathYieldCurve::getName() const	
 {
-	return dynamic_cast<const LADataString&>(mpName->get());
+	return dynamic_cast<const AQLDataString&>(mpName->get());
 }
 /*!
     @brief get name
 
 	@return name
 */
-LADataString&	
+AQLDataString&	
 LAMathYieldCurve::getName()
 {
-	return dynamic_cast<LADataString&>(mpName->get());
+	return dynamic_cast<AQLDataString&>(mpName->get());
 }
 
 /*!
@@ -353,10 +353,10 @@ LAMathYieldCurve::getName()
 			
 	@return Interpolation
 */
-const LAPriceDataInterpolation&
+const AQLPriceDataInterpolation&
 LAMathYieldCurve::getInterpolation() const	
 {
-	return dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get());
+	return dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get());
 }
 
 /*!
@@ -364,10 +364,10 @@ LAMathYieldCurve::getInterpolation() const
 			
 	@return Interpolation
 */
-LAPriceDataInterpolation&
+AQLPriceDataInterpolation&
 LAMathYieldCurve::getInterpolation() 
 {
-	return dynamic_cast<LAPriceDataInterpolation&>(mpInter->get());
+	return dynamic_cast<AQLPriceDataInterpolation&>(mpInter->get());
 }
 
 /*!
@@ -376,8 +376,8 @@ LAMathYieldCurve::getInterpolation()
 
 	@return Interpolation
 */
-const LAPriceDataInterpolation&
-LAMathYieldCurve::getInterpolation(const LAString &curveType) const	
+const AQLPriceDataInterpolation&
+LAMathYieldCurve::getInterpolation(const AQLString &curveType) const	
 {
 	return getCurveTypeInterpolation(curveType);
 }
@@ -388,8 +388,8 @@ LAMathYieldCurve::getInterpolation(const LAString &curveType) const
 			
 	@return Interpolation
 */
-LAPriceDataInterpolation&
-LAMathYieldCurve::getInterpolation(const LAString &curveType) 
+AQLPriceDataInterpolation&
+LAMathYieldCurve::getInterpolation(const AQLString &curveType) 
 {
 	return getCurveTypeInterpolation(curveType);
 }
@@ -400,10 +400,10 @@ LAMathYieldCurve::getInterpolation(const LAString &curveType)
 			
 	@return Interpolation
 */
-LAPriceDataInterpolation&
-LAMathYieldCurve::getCurveTypeInterpolation(const LAString &curveType) const 
+AQLPriceDataInterpolation&
+LAMathYieldCurve::getCurveTypeInterpolation(const AQLString &curveType) const 
 {
-	map<LAString, LAPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curveType);
+	map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curveType);
 	if (it != mDFInterMap.end())
 	{
 		return *it->second;
@@ -421,10 +421,10 @@ LAMathYieldCurve::getCurveTypeInterpolation(const LAString &curveType) const
 	@return DayCount Convension
 */
 
-const LAPriceDataDayCount&
+const AQLPriceDataDayCount&
 LAMathYieldCurve::getDayCount() const	
 {
-	return dynamic_cast<const LAPriceDataDayCount&>(mpDayCount->get());
+	return dynamic_cast<const AQLPriceDataDayCount&>(mpDayCount->get());
 }
 
 /*!
@@ -432,53 +432,53 @@ LAMathYieldCurve::getDayCount() const
 			
 	@return DayCount Convension
 */
-LAPriceDataDayCount&
+AQLPriceDataDayCount&
 LAMathYieldCurve::getDayCount() 
 {
-	return dynamic_cast<LAPriceDataDayCount&>(mpDayCount->get());
+	return dynamic_cast<AQLPriceDataDayCount&>(mpDayCount->get());
 }
 
 /*!
     @brief get convention from yield curve data object
 */
 void 
-LAMathYieldCurve::getCurveConvention(LAString& freq, 
-								   LAPriceDataCalendar& cal, 
-								   LAPriceDataSlidingRule& sld, 
-								   LAPriceDataDayCount& dc, 
-								   LAString& accessary,
-								   const LAString& curveName)
+LAMathYieldCurve::getCurveConvention(AQLString& freq, 
+								   AQLPriceDataCalendar& cal, 
+								   AQLPriceDataSlidingRule& sld, 
+								   AQLPriceDataDayCount& dc, 
+								   AQLString& accessary,
+								   const AQLString& curveName)
 {
-	const LAObject& yieldData = getYieldData().get().get();
+	const AQLObject& yieldData = getYieldData().get().get();
 
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveName != STD) suffix = "_" + curveName;
 
-	const LADataHolder *dh;
+	const AQLDataHolder *dh;
 	dh = &yieldData.getData(IR_CALIBRATION_DATA_FREQUENCY + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		freq = dynamic_cast<const LADataString&> (dh->get()); 
+		freq = dynamic_cast<const AQLDataString&> (dh->get()); 
 	}
 	dh = &yieldData.getData(CALIBRATION_DATA_CALENDAR + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		cal = dynamic_cast<const LAPriceDataCalendar&> (dh->get());
+		cal = dynamic_cast<const AQLPriceDataCalendar&> (dh->get());
 	}
 	dh = &yieldData.getData(CALIBRATION_DATA_SLIDINGRULE + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		sld = dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+		sld = dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 	}
 	dh = &yieldData.getData(IR_CALIBRATION_DATA_DAYCOUNT + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dc = dynamic_cast<const LAPriceDataDayCount&>(dh->get());
+		dc = dynamic_cast<const AQLPriceDataDayCount&>(dh->get());
 	}
 	dh = &yieldData.getData(IR_CALIBRATION_DATA_ACCESSARY + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		accessary = dynamic_cast<const LADataString&>(dh->get());
+		accessary = dynamic_cast<const AQLDataString&>(dh->get());
 	}
 }
 
@@ -486,43 +486,43 @@ LAMathYieldCurve::getCurveConvention(LAString& freq,
     @brief get convention from yield curve data object
 */
 void 
-LAMathYieldCurve::getCurveConvention(LAString& freq, 
-								   LAPriceDataCalendar& cal, 
-								   LAPriceDataSlidingRule& sld, 
-								   LAPriceDataDayCount& dc, 
-								   LAString& accessary,
-								   const LAString& curveName) const
+LAMathYieldCurve::getCurveConvention(AQLString& freq, 
+								   AQLPriceDataCalendar& cal, 
+								   AQLPriceDataSlidingRule& sld, 
+								   AQLPriceDataDayCount& dc, 
+								   AQLString& accessary,
+								   const AQLString& curveName) const
 {
-	const LAObject& yieldData = getYieldData().get().get();
+	const AQLObject& yieldData = getYieldData().get().get();
 
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveName != STD) suffix = "_" + curveName;
 
-	const LADataHolder *dh;
+	const AQLDataHolder *dh;
 	dh = &yieldData.getData(IR_CALIBRATION_DATA_FREQUENCY + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		freq = dynamic_cast<const LADataString&> (dh->get()); 
+		freq = dynamic_cast<const AQLDataString&> (dh->get()); 
 	}
 	dh = &yieldData.getData(CALIBRATION_DATA_CALENDAR + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		cal = dynamic_cast<const LAPriceDataCalendar&> (dh->get());
+		cal = dynamic_cast<const AQLPriceDataCalendar&> (dh->get());
 	}
 	dh = &yieldData.getData(CALIBRATION_DATA_SLIDINGRULE + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		sld = dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+		sld = dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 	}
 	dh = &yieldData.getData(IR_CALIBRATION_DATA_DAYCOUNT + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dc = dynamic_cast<const LAPriceDataDayCount&>(dh->get());
+		dc = dynamic_cast<const AQLPriceDataDayCount&>(dh->get());
 	}
 	dh = &yieldData.getData(IR_CALIBRATION_DATA_ACCESSARY + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		accessary = dynamic_cast<const LADataString&>(dh->get());
+		accessary = dynamic_cast<const AQLDataString&>(dh->get());
 	}
 }
 
@@ -531,74 +531,74 @@ LAMathYieldCurve::getCurveConvention(LAString& freq,
 
 	@return 
 */
-const LADataReference&
+const AQLDataReference&
 LAMathYieldCurve::getYieldData() const
 {
-	return dynamic_cast<const LADataReference&>(mpYieldData->get());
+	return dynamic_cast<const AQLDataReference&>(mpYieldData->get());
 }
 /*!
     @brief 
 			
 	@return 
 */
-LADataReference&
+AQLDataReference&
 LAMathYieldCurve::getYieldData()
 {
-	return dynamic_cast<LADataReference&>(mpYieldData->get());
+	return dynamic_cast<AQLDataReference&>(mpYieldData->get());
 }
 
-const LAPriceDataCalendar&
+const AQLPriceDataCalendar&
 LAMathYieldCurve::getCalendar() const
 {
-	return dynamic_cast<const LAPriceDataCalendar&>(mpCalendar->get());
+	return dynamic_cast<const AQLPriceDataCalendar&>(mpCalendar->get());
 }
 
-LAPriceDataCalendar&
+AQLPriceDataCalendar&
 LAMathYieldCurve::getCalendar()
 {
-	return dynamic_cast<LAPriceDataCalendar&>(mpCalendar->get());
+	return dynamic_cast<AQLPriceDataCalendar&>(mpCalendar->get());
 }
-const LAPriceDataSlidingRule&
+const AQLPriceDataSlidingRule&
 LAMathYieldCurve::getSlidingRule() const
 {
-	return dynamic_cast<const LAPriceDataSlidingRule&>(mpSlidingRule->get());
+	return dynamic_cast<const AQLPriceDataSlidingRule&>(mpSlidingRule->get());
 }
-LAPriceDataSlidingRule&
+AQLPriceDataSlidingRule&
 LAMathYieldCurve::getSlidingRule()
 {
-	return dynamic_cast<LAPriceDataSlidingRule&>(mpSlidingRule->get());
+	return dynamic_cast<AQLPriceDataSlidingRule&>(mpSlidingRule->get());
 }
-const LADataString&
+const AQLDataString&
 LAMathYieldCurve::getFrequency() const
 {
-	return dynamic_cast<const LADataString&>(mpFreq->get());
+	return dynamic_cast<const AQLDataString&>(mpFreq->get());
 }
-LADataString&
+AQLDataString&
 LAMathYieldCurve::getFrequency()
 {
-	return dynamic_cast<LADataString&>(mpFreq->get());
+	return dynamic_cast<AQLDataString&>(mpFreq->get());
 }
 
-const LADataString&
+const AQLDataString&
 LAMathYieldCurve::getDFInterpolationMethod() const
 {
-	return dynamic_cast<const LADataString&>(mpValueToInterp->get());
+	return dynamic_cast<const AQLDataString&>(mpValueToInterp->get());
 }
-LADataString&
+AQLDataString&
 LAMathYieldCurve::getDFInterpolationMethod()
 {
-	return dynamic_cast<LADataString&>(mpValueToInterp->get());
+	return dynamic_cast<AQLDataString&>(mpValueToInterp->get());
 }
 
-const LADataString&
+const AQLDataString&
 LAMathYieldCurve::getDF2InterpolationMethod() const
 {
-	return dynamic_cast<const LADataString&>(mpValueToInterp2->get());
+	return dynamic_cast<const AQLDataString&>(mpValueToInterp2->get());
 }
-LADataString&
+AQLDataString&
 LAMathYieldCurve::getDF2InterpolationMethod()
 {
-	return dynamic_cast<LADataString&>(mpValueToInterp2->get());
+	return dynamic_cast<AQLDataString&>(mpValueToInterp2->get());
 }
 /*!
     @brief get ZeroRate from fromDate to toDate
@@ -609,20 +609,20 @@ LAMathYieldCurve::getDF2InterpolationMethod()
 	@return ZeroRate
 
 double
-LAMathYieldCurve::getZeroRate(const LADate& fromDate, const LADate& toDate) const
+LAMathYieldCurve::getZeroRate(const AQLDate& fromDate, const AQLDate& toDate) const
 {
 	RateConvention rc = setRC(getFrequency().get());
 	
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
-	LAPriceDataConvention conv(getDayCount().getDayCount(), rc);
+	AQLPriceDataConvention conv(getDayCount().getDayCount(), rc);
 
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
 
-	LADate fdate = fromDate;
-	LADate tdate = toDate;
+	AQLDate fdate = fromDate;
+	AQLDate tdate = toDate;
 	if(!cal.isNull() && !sr.isNull())
 	{
 		fdate = sr.getDate(fdate, cal);
@@ -633,14 +633,14 @@ LAMathYieldCurve::getZeroRate(const LADate& fromDate, const LADate& toDate) cons
 	double dff = getDF(termf);
 	double dft = getDF(termt);
 	
-	return LAPriceDataConvention::retToRate(dff / dft, termt - termf, conv);
+	return AQLPriceDataConvention::retToRate(dff / dft, termt - termf, conv);
 }
 */
 
 void LAMathYieldCurve::analyzeLeg(
 	const DateVector& dates,
-	const LAString& foreCurveName,
-	const LAString& dfCurveName,
+	const AQLString& foreCurveName,
+	const AQLString& dfCurveName,
 	bool isFWDInter,
 	DoubleArray& rates,
 	DoubleArray& terms,
@@ -654,16 +654,16 @@ void LAMathYieldCurve::analyzeLeg(
 	dfs_start.resize(dates.size() - 1);
 	dfs_end  .resize(dates.size() - 1);
 
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((getYieldData().get().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((getYieldData().get().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	const DayCount dc_act(ACT_365_ISDA);
-	const LAPriceDataDayCount data_dc_act(dc_act);
+	const AQLPriceDataDayCount data_dc_act(dc_act);
 
 	size_t nextCashflowIndex = 0;
-	LAString freq = "";
-	LAPriceDataCalendar data_cal;
-	LAPriceDataSlidingRule data_sld;
-	LAPriceDataDayCount data_dc;
-	LAString accessary = "";
+	AQLString freq = "";
+	AQLPriceDataCalendar data_cal;
+	AQLPriceDataSlidingRule data_sld;
+	AQLPriceDataDayCount data_dc;
+	AQLString accessary = "";
 
 	if(foreCurveName.size() == 0)
 	{
@@ -685,7 +685,7 @@ void LAMathYieldCurve::analyzeLeg(
 
 		if (isFWDInter)
 		{
-			const LAInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName);
+			const AQLInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName);
 			for (size_t i = 1; i < dates.size(); i++)
 			{
 				terms[i - 1] = data_dc.getTerm(dates[i - 1], dates[i]);
@@ -714,28 +714,28 @@ void LAMathYieldCurve::analyzeLeg(
 }
 
 double
-LAMathYieldCurve::getZeroRate(const LADate& fromDate, const LADate& toDate, bool isFWDInter, bool useFwdData ) const
+LAMathYieldCurve::getZeroRate(const AQLDate& fromDate, const AQLDate& toDate, bool isFWDInter, bool useFwdData ) const
 {
 	
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	
 	if (fromDate > toDate)
 	{
-		LAString err = "#Error: Unable to calculate a zero rate in the past. The toDate must be after fromDate";
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "#Error: Unable to calculate a zero rate in the past. The toDate must be after fromDate";
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
     RateConvention rc = setRC(getFrequency().get());
-	LAPriceDataConvention conv(getDayCount().getDayCount(), rc);
+	AQLPriceDataConvention conv(getDayCount().getDayCount(), rc);
 	DayCount dc_act(ACT_365_ISDA);
-	LAPriceDataDayCount dc(dc_act);
+	AQLPriceDataDayCount dc(dc_act);
 	
-    LADate fdate = (fromDate < asOf) ? asOf : fromDate;
-	LADate tdate = (toDate < asOf) ? asOf : toDate;
+    AQLDate fdate = (fromDate < asOf) ? asOf : fromDate;
+	AQLDate tdate = (toDate < asOf) ? asOf : toDate;
 	
-    //const LAPriceDataCalendar& cal = getCalendar();
-	//const LAPriceDataSlidingRule& sr = getSlidingRule();
+    //const AQLPriceDataCalendar& cal = getCalendar();
+	//const AQLPriceDataSlidingRule& sr = getSlidingRule();
     //if(!cal.isNull() && !sr.isNull())
 	//{
 	//	if (sr.getDate(fdate, cal) >= asOf) fdate = sr.getDate(fdate, cal);
@@ -748,8 +748,8 @@ LAMathYieldCurve::getZeroRate(const LADate& fromDate, const LADate& toDate, bool
 	if (rc == SIMPL && isFWDInter)
 	{
 		// 0 is null pointer
-        const LAInterpolationBase &fwd_inter = getFWDInterpolation(0, useFwdData);
-		LAPriceDataDayCount dc_act(ACT_365_ISDA);
+        const AQLInterpolationBase &fwd_inter = getFWDInterpolation(0, useFwdData);
+		AQLPriceDataDayCount dc_act(ACT_365_ISDA);
 		const double term = dc_act.getTerm(asOf, fdate);
 		return fwd_inter.value(term);
 	}
@@ -763,37 +763,37 @@ LAMathYieldCurve::getZeroRate(const LADate& fromDate, const LADate& toDate, bool
 		termf = conv.getTerm(asOf, fdate);
 		termt = conv.getTerm(asOf, tdate);
 
-		return LAPriceDataConvention::retToRate(dff / dft, termt - termf, conv);
+		return AQLPriceDataConvention::retToRate(dff / dft, termt - termf, conv);
 	}
 }
 
 double
-LAMathYieldCurve::getBasisZeroRate(const LADate& fromDate, const LADate& toDate) const
+LAMathYieldCurve::getBasisZeroRate(const AQLDate& fromDate, const AQLDate& toDate) const
 {
 	
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	
 	if (fromDate > toDate)
 	{
-		LAString err = "#Error: Unable to calculate a zero rate in the past. The toDate must be after fromDate";
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "#Error: Unable to calculate a zero rate in the past. The toDate must be after fromDate";
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	//if (fromDate < asOf)
 	//{
-	//	LAString err = "fromDate must be after asOf";
-	//	throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+	//	AQLString err = "fromDate must be after asOf";
+	//	throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	//}
 
 	RateConvention rc = setRC(getFrequency().get());
-	LAPriceDataConvention conv(getDayCount().getDayCount(), rc);
+	AQLPriceDataConvention conv(getDayCount().getDayCount(), rc);
 	DayCount dc_act(ACT_365_ISDA);
-	LAPriceDataDayCount dc(dc_act);
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
+	AQLPriceDataDayCount dc(dc_act);
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
 
-	LADate fdate = (fromDate < asOf) ? asOf : fromDate;
-	LADate tdate = (toDate < asOf) ? asOf : toDate;
+	AQLDate fdate = (fromDate < asOf) ? asOf : fromDate;
+	AQLDate tdate = (toDate < asOf) ? asOf : toDate;
 	if (!cal.isNull() && !sr.isNull())
 	{
 		if (sr.getDate(fdate, cal) >= asOf) fdate = sr.getDate(fdate, cal);
@@ -810,7 +810,7 @@ LAMathYieldCurve::getBasisZeroRate(const LADate& fromDate, const LADate& toDate)
 	termf = conv.getTerm(asOf, fdate);
 	termt = conv.getTerm(asOf, tdate);
 
-	return LAPriceDataConvention::retToRate(dff / dft, termt - termf, conv);
+	return AQLPriceDataConvention::retToRate(dff / dft, termt - termf, conv);
 }
 
 /*!
@@ -823,22 +823,22 @@ LAMathYieldCurve::getBasisZeroRate(const LADate& fromDate, const LADate& toDate)
 */
 
 double
-LAMathYieldCurve::getZeroRate(const LADate& fromDate,	const double term, bool isFWDInter, bool useFwdData ) const
+LAMathYieldCurve::getZeroRate(const AQLDate& fromDate,	const double term, bool isFWDInter, bool useFwdData ) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
 	if (term < 0.0)
 	{
-        LAString err = "#Error: Unable to calculate a zero rate in the past";
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+        AQLString err = "#Error: Unable to calculate a zero rate in the past";
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	RateConvention rc = setRC(getFrequency().get());
-	LAPriceDataConvention conv(getDayCount().getDayCount(), rc);
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
+	AQLPriceDataConvention conv(getDayCount().getDayCount(), rc);
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
 
-	LADate fdate = (fromDate < asOf) ? asOf : fromDate;
+	AQLDate fdate = (fromDate < asOf) ? asOf : fromDate;
 	if(!cal.isNull() && !sr.isNull())
 	{
 		if (sr.getDate(fdate, cal) >= asOf) fdate = sr.getDate(fdate, cal);
@@ -849,8 +849,8 @@ LAMathYieldCurve::getZeroRate(const LADate& fromDate,	const double term, bool is
 	if (rc == SIMPL && isFWDInter)
 	{        
 		// 0 is null pointer
-		const LAInterpolationBase &fwd_inter = getFWDInterpolation(0, useFwdData);
-		LAPriceDataDayCount dc_act(ACT_365_ISDA);
+		const AQLInterpolationBase &fwd_inter = getFWDInterpolation(0, useFwdData);
+		AQLPriceDataDayCount dc_act(ACT_365_ISDA);
 		const double term = dc_act.getTerm(asOf, fdate);
 		return fwd_inter.value(term);
 	}
@@ -860,7 +860,7 @@ LAMathYieldCurve::getZeroRate(const LADate& fromDate,	const double term, bool is
 		double dff = getDF(asOf, fdate);
 		double dft = getDF(termTmp);
 		
-		return LAPriceDataConvention::retToRate(dff / dft, term, conv);
+		return AQLPriceDataConvention::retToRate(dff / dft, term, conv);
 	}
 
 }
@@ -875,27 +875,27 @@ LAMathYieldCurve::getZeroRate(const LADate& fromDate,	const double term, bool is
 */
 
 double
-LAMathYieldCurve::getBasisZeroRate(const LADate& fromDate, const double term)const
+LAMathYieldCurve::getBasisZeroRate(const AQLDate& fromDate, const double term)const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
 	if (term < 0.0)
 	{
-        LAString err = "#Error: Unable to calculate a zero rate in the past";
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+        AQLString err = "#Error: Unable to calculate a zero rate in the past";
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	//if (fromDate < asOf)
 	//{
-	//	LAString err = "fromDate must be after asOf";
-	//	throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+	//	AQLString err = "fromDate must be after asOf";
+	//	throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	//}
 	RateConvention rc = setRC(getFrequency().get());
-	LAPriceDataConvention conv(getDayCount().getDayCount(), rc);
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
+	AQLPriceDataConvention conv(getDayCount().getDayCount(), rc);
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
 
-	LADate fdate = (fromDate < asOf) ? asOf : fromDate;
+	AQLDate fdate = (fromDate < asOf) ? asOf : fromDate;
 	if(!cal.isNull() && !sr.isNull())
 	{
 		if (sr.getDate(fdate, cal) >= asOf) fdate = sr.getDate(fdate, cal);
@@ -907,7 +907,7 @@ LAMathYieldCurve::getBasisZeroRate(const LADate& fromDate, const double term)con
 	double dff = getBasisDF(asOf, fdate);
 	double dft = getBasisDF(termTmp);
 	
-	return LAPriceDataConvention::retToRate(dff / dft, term, conv);
+	return AQLPriceDataConvention::retToRate(dff / dft, term, conv);
 }
 
 /*!
@@ -921,8 +921,8 @@ LAMathYieldCurve::getBasisZeroRate(const LADate& fromDate, const double term)con
 double
 LAMathYieldCurve::getZeroRate(const double term, bool isFWDInter) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
 	return getZeroRate(asOf, term, isFWDInter);
 }
@@ -938,8 +938,8 @@ LAMathYieldCurve::getZeroRate(const double term, bool isFWDInter) const
 double
 LAMathYieldCurve::getBasisZeroRate(const double term) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
 	return getBasisZeroRate(asOf, term);
 }
@@ -955,9 +955,9 @@ LAMathYieldCurve::getBasisZeroRate(const double term) const
 */
 
 double
-LAMathYieldCurve::getZeroRate(const LADate& fromDate,	const LAString& term_str, bool isFWDInter) const
+LAMathYieldCurve::getZeroRate(const AQLDate& fromDate,	const AQLString& term_str, bool isFWDInter) const
 {
-	LADate toDate = LAMathDateCalculations::getDate(fromDate, term_str, true);
+	AQLDate toDate = LAMathDateCalculations::getDate(fromDate, term_str, true);
 	return getZeroRate(fromDate, toDate, isFWDInter);
 }
 
@@ -971,9 +971,9 @@ LAMathYieldCurve::getZeroRate(const LADate& fromDate,	const LAString& term_str, 
 */
 
 double
-LAMathYieldCurve::getBasisZeroRate(const LADate& fromDate, const LAString& term_str) const
+LAMathYieldCurve::getBasisZeroRate(const AQLDate& fromDate, const AQLString& term_str) const
 {
-	LADate toDate = LAMathDateCalculations::getDate(fromDate, term_str, true);
+	AQLDate toDate = LAMathDateCalculations::getDate(fromDate, term_str, true);
 	return getBasisZeroRate(fromDate, toDate);
 }
 
@@ -986,10 +986,10 @@ LAMathYieldCurve::getBasisZeroRate(const LADate& fromDate, const LAString& term_
 */
 
 double
-LAMathYieldCurve::getZeroRate(const LAString& term_str, bool isFWDInter) const
+LAMathYieldCurve::getZeroRate(const AQLString& term_str, bool isFWDInter) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	return getZeroRate(asOf, term_str, isFWDInter);
 }
 
@@ -1002,10 +1002,10 @@ LAMathYieldCurve::getZeroRate(const LAString& term_str, bool isFWDInter) const
 */
 
 double
-LAMathYieldCurve::getBasisZeroRate(const LAString& term_str) const
+LAMathYieldCurve::getBasisZeroRate(const AQLString& term_str) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	return getBasisZeroRate(asOf, term_str);
 }
 
@@ -1018,10 +1018,10 @@ LAMathYieldCurve::getBasisZeroRate(const LAString& term_str) const
 */
 
 double
-LAMathYieldCurve::getParRate(const LAString& term_str, LAString foreCurveName, LAString dfCurveName, bool isFWDInter, const LAString* roll_convention)
+LAMathYieldCurve::getParRate(const AQLString& term_str, AQLString foreCurveName, AQLString dfCurveName, bool isFWDInter, const AQLString* roll_convention)
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	return getParRate(asOf, term_str,NULL,NULL,NULL, foreCurveName, dfCurveName, isFWDInter, roll_convention);
 }
 	
@@ -1036,17 +1036,17 @@ LAMathYieldCurve::getParRate(const LAString& term_str, LAString foreCurveName, L
 double
 LAMathYieldCurve::getAnnuity(const DateVector& Dates) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
 
-	LAPriceDataDayCount dc(getDayCount());
+	AQLPriceDataDayCount dc(getDayCount());
 	DayCount dc_act(ACT_365_ISDA);
-	LAPriceDataDayCount data_dc_act(dc_act);
+	AQLPriceDataDayCount data_dc_act(dc_act);
 	
 	double ret = 0.0;
-	LADate fromDate,  tmpDate;
+	AQLDate fromDate,  tmpDate;
 	if (Dates[0] != asOf)
 	{
         fromDate = sr.getDate(Dates[0], cal);
@@ -1058,12 +1058,12 @@ LAMathYieldCurve::getAnnuity(const DateVector& Dates) const
 	if (fromDate < asOf)
 	{
 		fromDate = asOf;
-//		LAString err = "fromDate must be after asOf";
-//        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+//		AQLString err = "fromDate must be after asOf";
+//        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	double tmp = dc.getTerm(asOf, fromDate);
 
-	LADate lastDate = Dates[0];
+	AQLDate lastDate = Dates[0];
 	lastDate = sr.getDate(lastDate, cal);
 	for(unsigned int i = 1; i < Dates.size(); i++)
 	{
@@ -1092,29 +1092,29 @@ LAMathYieldCurve::getAnnuity(const DateVector& Dates) const
 			
 	@param[in] DateVector       accrualDates 
     @param[in] DateVector       paymentDates 
-    @param[in] LAPriceDataDayCount   daycount
-    @param[in] LADate           settlementDate - Optional: required for bond calculations
+    @param[in] AQLPriceDataDayCount   daycount
+    @param[in] AQLDate           settlementDate - Optional: required for bond calculations
     @param[in] bool             deductAccruedInterest - Optional: defaults to false, this is for bond / asset swap spread calculations
 	@param[in] bool             isCleanPrice - Optional: defaults to true, this is for bond / asset swap spread calculations
 
 	@return Annuity
 */
 double
-LAMathYieldCurve::getAnnuity( const DateVector& accrualDates, const DateVector& paymentDates, const LAPriceDataDayCount& daycount, const LADate settlementDate, const bool deductAccruedInterest, const bool isCleanPrice ) const
+LAMathYieldCurve::getAnnuity( const DateVector& accrualDates, const DateVector& paymentDates, const AQLPriceDataDayCount& daycount, const AQLDate settlementDate, const bool deductAccruedInterest, const bool isCleanPrice ) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
 
-	LAPriceDataDayCount dc( getDayCount() );
+	AQLPriceDataDayCount dc( getDayCount() );
 	DayCount dc_act( ACT_365_ISDA );
-	LAPriceDataDayCount data_dc_act( dc_act );
+	AQLPriceDataDayCount data_dc_act( dc_act );
 	
 	double ret = 0.0;
-	LADate fromDate;
-    LADate tmpAccrualEndDate;
-    LADate tmpPaymentDate;
+	AQLDate fromDate;
+    AQLDate tmpAccrualEndDate;
+    AQLDate tmpPaymentDate;
 	
     if ( accrualDates[0] != asOf )
 	{
@@ -1130,7 +1130,7 @@ LAMathYieldCurve::getAnnuity( const DateVector& accrualDates, const DateVector& 
 		fromDate = asOf;
 	}
 
-	LADate accrualStartDate = accrualDates[0];
+	AQLDate accrualStartDate = accrualDates[0];
 	accrualStartDate = sr.getDate( accrualStartDate, cal );
 
 	for( unsigned int i = 1; i < accrualDates.size(); i++ )
@@ -1142,7 +1142,7 @@ LAMathYieldCurve::getAnnuity( const DateVector& accrualDates, const DateVector& 
         tmpPaymentDate = sr.getDate( tmpPaymentDate, cal );
 
         if ( tmpPaymentDate < tmpAccrualEndDate )
-            throw LACoreInvalidData("#Error: Annuity Payment Date cannot be before the Accrual End Date.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Annuity Payment Date cannot be before the Accrual End Date.", __FILE__, __LINE__ );
             
         // ret += discount factor * year fraction
         // discount factor is based on ACT/ACT daycount
@@ -1160,9 +1160,9 @@ LAMathYieldCurve::getAnnuity( const DateVector& accrualDates, const DateVector& 
             // Optional: Deduct Accrued Interest - This is for Bond / Asset Swap Spread Calculations
             if ( deductAccruedInterest && accrualStartDate < asOf)
             {
-                if ( settlementDate == LADate() )
+                if ( settlementDate == AQLDate() )
                 {
-                    throw LACoreInvalidData("#Error: Annuity Calculation Error: For Bond-type calculations the settlement date is required to deduct accrued interest.", __FILE__, __LINE__ );
+                    throw AQLCoreInvalidData("#Error: Annuity Calculation Error: For Bond-type calculations the settlement date is required to deduct accrued interest.", __FILE__, __LINE__ );
                 }
 
                 const double accruedYearFraction    = daycount.getTerm( accrualStartDate, settlementDate );
@@ -1208,18 +1208,18 @@ LAMathYieldCurve::getAnnuity( const DateVector& accrualDates, const DateVector& 
 	@return ParRate
 */
 double
-LAMathYieldCurve::getParRate(const DateVector& dates, const DateVector& dates_float, LAString foreCurveName, LAString dfCurveName, bool isFWDInter)
+LAMathYieldCurve::getParRate(const DateVector& dates, const DateVector& dates_float, AQLString foreCurveName, AQLString dfCurveName, bool isFWDInter)
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
 
-	LADate fromDate = sr.getDate(dates.front(), cal);
-	LADate tmpDate  = sr.getDate(dates.back(), cal);
+	AQLDate fromDate = sr.getDate(dates.front(), cal);
+	AQLDate tmpDate  = sr.getDate(dates.back(), cal);
 
 	DayCount dc_act(ACT_365_ISDA);
-	LAPriceDataDayCount data_dc_act(dc_act);
+	AQLPriceDataDayCount data_dc_act(dc_act);
 
 	setCurveType(dfCurveName);
 	double annuity = getAnnuity(dates);
@@ -1228,11 +1228,11 @@ LAMathYieldCurve::getParRate(const DateVector& dates, const DateVector& dates_fl
 	//if (foreCurveName != STD || dfCurveName != STD)
 	if (foreCurveName != dfCurveName)
 	{
-		LAString freq_forecast = ""; 
-		LAPriceDataCalendar cal_forecast; 
-		LAPriceDataSlidingRule sld_forecast; 
-		LAPriceDataDayCount dc_forecast;
-		LAString accessary_forecast = "";
+		AQLString freq_forecast = ""; 
+		AQLPriceDataCalendar cal_forecast; 
+		AQLPriceDataSlidingRule sld_forecast; 
+		AQLPriceDataDayCount dc_forecast;
+		AQLString accessary_forecast = "";
 		
 		getCurveConvention(freq_forecast, cal_forecast, sld_forecast, dc_forecast, accessary_forecast, foreCurveName);
 		
@@ -1245,7 +1245,7 @@ LAMathYieldCurve::getParRate(const DateVector& dates, const DateVector& dates_fl
             if ( i == dates_float.size()-1  )
             {
                 if ( dates_float[i] < asOf ) 
-                    throw LACoreInvalidData("#Error: Par rate error; the underlying swap has expired.", __FILE__, __LINE__ );
+                    throw AQLCoreInvalidData("#Error: Par rate error; the underlying swap has expired.", __FILE__, __LINE__ );
                 
 				nextCashflowIndex++;
                 break; 
@@ -1257,7 +1257,7 @@ LAMathYieldCurve::getParRate(const DateVector& dates, const DateVector& dates_fl
         //get rate
 		if (isFWDInter)
 		{
-			const LAInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName);
+			const AQLInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName);
 			for(size_t i=1; i<dates_float.size(); i++)
 			{
 				terms[i-1] = dc_forecast.getTerm(dates_float[i-1],dates_float[i]);
@@ -1298,9 +1298,9 @@ double
 LAMathYieldCurve::getParCompoundSpread(
 	const DateVector& dates,
 	const DateVector& dates_Cmp,
-	LAString foreCurveName,
-	LAString foreCurveName_Cmp,
-	LAString dfCurveName,
+	AQLString foreCurveName,
+	AQLString foreCurveName_Cmp,
+	AQLString dfCurveName,
 	bool isStraight,
 	bool isFWDInter)
 {
@@ -1366,10 +1366,10 @@ double
 LAMathYieldCurve::getParBasis(
 	const DateVector& dates,
 	const DateVector& dates_USD,
-	LAString modifiedDiscountName,
-	LAString foreCurveName,
-	LAString foreCurveName_USD,
-	LAString dfCurveName_USD,
+	AQLString modifiedDiscountName,
+	AQLString foreCurveName,
+	AQLString foreCurveName_USD,
+	AQLString dfCurveName_USD,
 	bool isMtMCCS,
 	bool isFWDInter)
 {
@@ -1401,7 +1401,7 @@ LAMathYieldCurve::getParBasis(
 
 	LAMathYieldCurve* usdCurve = nullptr;
 	{
-		const LAObjectHolder objHolder = getDataInstance()->getObjectPool().getObject("YIELD_SDE_USD_IR");
+		const AQLObjectHolder objHolder = getDataInstance()->getObjectPool().getObject("YIELD_SDE_USD_IR");
 		if (objHolder.isDefined())
 		{
 			usdCurve = &dynamic_cast<LAMathYieldCurve&>(
@@ -1435,63 +1435,63 @@ LAMathYieldCurve::getParBasis(
 * @brief	Calculate stub rate of a defined stub period
 */
 double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
-									const LAStringVector& curveNames,
-									const LAStringVector& curveTenors,
+									const AQLStringVector& curveNames,
+									const AQLStringVector& curveTenors,
 									const DoubleVector& tenorCurveFixings,									
-									const LAString& curveid,									
-									const LAString& stubType,
-									const LAString& dateCount,
-									const LAString& calendar,
-									const LAString& busDayAdj,
+									const AQLString& curveid,									
+									const AQLString& stubType,
+									const AQLString& dateCount,
+									const AQLString& calendar,
+									const AQLString& busDayAdj,
 									bool  useNearbyCurve,
 									bool  useGivenFixings,
 									bool  isFwdInter,
 									bool  useFwdData,
-									const LAString& toleranceTenor,
-									const LAString& useCurveName )
+									const AQLString& toleranceTenor,
+									const AQLString& useCurveName )
 {
-    LAString STUBTYPE( stubType );
+    AQLString STUBTYPE( stubType );
 	upper( STUBTYPE );
 
-	LAString DATECOUNT( dateCount );
+	AQLString DATECOUNT( dateCount );
     upper( DATECOUNT );
 
-	LAString CALENDAR( calendar );
+	AQLString CALENDAR( calendar );
     upper( CALENDAR );
 
-    LAString BUSDAYADJ( busDayAdj );
+    AQLString BUSDAYADJ( busDayAdj );
 	upper( BUSDAYADJ );
 
 
 	// Get yield curve AsOf date
-	const LAObject& YieldData       = getYieldData().get().get();
-	const LADate& asOf              = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData       = getYieldData().get().get();
+	const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
  
 	double stubRate(0.);
 	   
 	size_t nFixingDates = fixingDates.size();
 
 	DayCount dc_act_2( ACT_365_ISDA );			
-	LAPriceDataDayCount dc_act( dc_act_2 );
+	AQLPriceDataDayCount dc_act( dc_act_2 );
 
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(BUSDAYADJ);
 
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(CALENDAR);
 		
-	LAPriceDataDayCount floatingLegDateCount;
+	AQLPriceDataDayCount floatingLegDateCount;
 	floatingLegDateCount.convertFromString(DATECOUNT);	
 
     // Bounds Check
     if ( fixingDates.size() < 2 )
     {
-        throw LACoreInvalidData("#Error: Unable to calculate the swap stub rate. Invalid fixing dates.", __FILE__, __LINE__ );
+        throw AQLCoreInvalidData("#Error: Unable to calculate the swap stub rate. Invalid fixing dates.", __FILE__, __LINE__ );
     }
 
 	// Determine the exact stub period. Must guaranteee that stub end date is after the asOf date.
-	LADate stubStart;
-	LADate stubEnd;
+	AQLDate stubStart;
+	AQLDate stubEnd;
 	if ( STUBTYPE == "NONE" || STUBTYPE == "SHORTSTART" || STUBTYPE == "SS" || STUBTYPE == "LONGSTART" || STUBTYPE == "LS")
 	{
         stubStart   = fixingDates[0];
@@ -1503,7 +1503,7 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
             // Throw an error if the stub rate is in the past, but paying in the future. Such a front stub needs to be set using the 'FirstFixing' parameter
             if ( stubEnd >= asOf )
             {
-                throw LACoreInvalidData("#Error: Front stub fixing rate required.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData("#Error: Front stub fixing rate required.", __FILE__, __LINE__ );
             }
 
             // Set the Stub to Zero if it is in the past and the payment date is also in the past
@@ -1537,13 +1537,13 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 	}
 	else
 	{
-		throw LACoreInvalidData("#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__ );
+		throw AQLCoreInvalidData("#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__ );
 	}
 
 	// Calculate stub rate - either (1) use a given curve, (2.a) pick the nearest curve, or (2.b) interpolate between adjacent curves
 	//if (useCurveName.size() != 0 && _stricmp(useCurveName.getCString(), "NATURAL") != 0)
 	//20161207 - Fixed on compiler error for _stricmp
-	LAString useCurveNameTemp(useCurveName);
+	AQLString useCurveNameTemp(useCurveName);
 	useCurveNameTemp.toUpper();
 	if (useCurveNameTemp.size() != 0 && useCurveNameTemp.findString( "NATURAL") != 0)
 	{
@@ -1564,7 +1564,7 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 
 		if (idx == -1)
 		{
-			throw LACoreInvalidData("#Error: The 'useCurveName' should also be part of the curveNames list", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: The 'useCurveName' should also be part of the curveNames list", __FILE__, __LINE__ );
 		}
 
 		if (useGivenFixings)
@@ -1581,22 +1581,22 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 			// Set the right curve to use
 			setCurveType(useCurveNameTemp);
 
-            auto dh = YieldData.getData(CALIBRATION_DATA_CURVETYPE + LAString("_OIS"));
+            auto dh = YieldData.getData(CALIBRATION_DATA_CURVETYPE + AQLString("_OIS"));
             bool isCurveTypeOIS = dh.isDefined() && !dh.isNull();
 
 			if (isFwdInter && !isCurveTypeOIS)
 			{
-				LAPriceDataDayCount dc;
+				AQLPriceDataDayCount dc;
 				if (!LAMathCurveFuncUtility::setUpForwardDayCount(getDataInstance(), curveid, useCurveNameTemp, dc))
 				{
-					throw LACoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by LAMathYieldCurvePro !!",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by LAMathYieldCurvePro !!",__FILE__,__LINE__);
 				}
 				else
 				{
 					getDayCount(useCurveNameTemp) = dc;
 				}
 
-				const LAInterpolationBase &fwd_inter = getFWDInterpolation(&useCurveNameTemp, useFwdData);
+				const AQLInterpolationBase &fwd_inter = getFWDInterpolation(&useCurveNameTemp, useFwdData);
 				const double yearFraction = dc_act.getTerm( asOf, stubStart); 
 				stubRate = fwd_inter.value( yearFraction );
 			}
@@ -1610,7 +1610,7 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 				}
 				else
 				{
-					throw LACoreInvalidData("#Error: Do not support past starting swap when isFwdInter is set FALSE", __FILE__, __LINE__ );
+					throw AQLCoreInvalidData("#Error: Do not support past starting swap when isFwdInter is set FALSE", __FILE__, __LINE__ );
 				}
 			}
 		}
@@ -1623,18 +1623,18 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 		
 		size_t lowerIndex = 0;
 		size_t upperIndex = 0;
-		LADate lowerDate;
-		LADate upperDate;
+		AQLDate lowerDate;
+		AQLDate upperDate;
 
 		size_t curveCount = curveNames.size();
 		if (curveCount == 0)
 		{
-			throw LACoreInvalidData("#Error: Please provide at least one curve to calculate stub rate", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: Please provide at least one curve to calculate stub rate", __FILE__, __LINE__ );
 		}
 
 		// Pick the curves to interpolate from
-		LADate firstTenorDate = LAMathDateCalculations::getDate(stubStart, curveTenors.at(0), sr, &cal, true, NULL);
-		LADate lastTenorDate = LAMathDateCalculations::getDate(stubStart, curveTenors.at(curveTenors.size() - 1), sr, &cal, true, NULL);
+		AQLDate firstTenorDate = LAMathDateCalculations::getDate(stubStart, curveTenors.at(0), sr, &cal, true, NULL);
+		AQLDate lastTenorDate = LAMathDateCalculations::getDate(stubStart, curveTenors.at(curveTenors.size() - 1), sr, &cal, true, NULL);
 		if (stubEnd == firstTenorDate)
 		{
 			lowerIndex = 0;
@@ -1655,8 +1655,8 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 		{
 			for(size_t i = 0; i < curveCount; ++i)
 			{
-				LAString curveTenor = curveTenors.at(i);
-				LADate tenorEnd = LAMathDateCalculations::getDate(stubStart, curveTenor, sr, &cal, true, NULL);
+				AQLString curveTenor = curveTenors.at(i);
+				AQLDate tenorEnd = LAMathDateCalculations::getDate(stubStart, curveTenor, sr, &cal, true, NULL);
 
 				if (tenorEnd < stubEnd)
 				{
@@ -1673,11 +1673,11 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 
 			if (upperIndex == 0)
 			{
-				throw LACoreInvalidData("#Error: Stub term is shorter than the shortest tenor term available in the curves. Stub rate can't be interpolated.", __FILE__, __LINE__ );
+				throw AQLCoreInvalidData("#Error: Stub term is shorter than the shortest tenor term available in the curves. Stub rate can't be interpolated.", __FILE__, __LINE__ );
 			}
 			else if (lowerIndex == curveCount - 1)
 			{
-				throw LACoreInvalidData("#Error: Stub term is longer than the longest tenor term available in the curves. Stub rate can't be interpolated.", __FILE__, __LINE__ );
+				throw AQLCoreInvalidData("#Error: Stub term is longer than the longest tenor term available in the curves. Stub rate can't be interpolated.", __FILE__, __LINE__ );
 			}
 		}
 
@@ -1686,11 +1686,11 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 			// Try to determine if we can pick a nearby curve to use
 			bool isUsingNearbyCurve = false;
 			size_t nearbyIndex;
-			LADate nearbyDate;
+			AQLDate nearbyDate;
 			if (useNearbyCurve)
 			{
-				LADate lowerToleranceDate = LAMathDateCalculations::getDate(lowerDate, toleranceTenor, sr, &cal, true  /*forward add date*/ , NULL);
-				LADate upperToleranceDate = LAMathDateCalculations::getDate(upperDate, toleranceTenor, sr, &cal, false /*backward add date*/, NULL);
+				AQLDate lowerToleranceDate = LAMathDateCalculations::getDate(lowerDate, toleranceTenor, sr, &cal, true  /*forward add date*/ , NULL);
+				AQLDate upperToleranceDate = LAMathDateCalculations::getDate(upperDate, toleranceTenor, sr, &cal, false /*backward add date*/, NULL);
 						
 				if (lowerToleranceDate >= stubEnd)
 				{
@@ -1717,25 +1717,25 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 				else
 				{
 					// Set the right curve to use
-					LAString curveName = curveNames[nearbyIndex];
+					AQLString curveName = curveNames[nearbyIndex];
 					setCurveType(curveName);
 
-                    auto dh = YieldData.getData(CALIBRATION_DATA_CURVETYPE + LAString("_OIS"));
+                    auto dh = YieldData.getData(CALIBRATION_DATA_CURVETYPE + AQLString("_OIS"));
                     bool isCurveTypeOIS = dh.isDefined() && !dh.isNull();
 
                     if (isFwdInter && !isCurveTypeOIS )
 					{						
-						LAPriceDataDayCount dc;
+						AQLPriceDataDayCount dc;
 						if (!LAMathCurveFuncUtility::setUpForwardDayCount(getDataInstance(), curveid, curveName, dc))
 						{
-							throw LACoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by LAMathYieldCurvePro !!",__FILE__,__LINE__);
+							throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by LAMathYieldCurvePro !!",__FILE__,__LINE__);
 						}
 						else
 						{
 							getDayCount(curveName) = dc;
 						}
 
-						const LAInterpolationBase &fwd_inter = getFWDInterpolation(&curveName, useFwdData);
+						const AQLInterpolationBase &fwd_inter = getFWDInterpolation(&curveName, useFwdData);
 						const double yearFraction = dc_act.getTerm( asOf, nearbyDate); 
 						stubRate = fwd_inter.value( yearFraction );
 					}
@@ -1751,7 +1751,7 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 						{
 							stringstream s;
 							s << "Error: Curve name '" << curveNames[nearbyIndex] << "' is chosen as the approximate curve but this curve's tenor is too short";
-							throw LACoreInvalidData(s.str().c_str(), __FILE__, __LINE__ );
+							throw AQLCoreInvalidData(s.str().c_str(), __FILE__, __LINE__ );
 						}
 					}
 				}
@@ -1786,25 +1786,25 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 					// Calculate the lower and upper forward rates from which the target stub rate is to be interpolated 
                     setCurveType(curveNames[lowerIndex]);
 
-                    auto dh = YieldData.getData(CALIBRATION_DATA_CURVETYPE + LAString("_OIS"));
+                    auto dh = YieldData.getData(CALIBRATION_DATA_CURVETYPE + AQLString("_OIS"));
                     bool isLowerIndexCurveTypeOIS = dh.isDefined() && !dh.isNull();
 
                     if (isFwdInter && !isLowerIndexCurveTypeOIS)
 					{
 						// get lower rate
 
-						LAPriceDataDayCount dc;
+						AQLPriceDataDayCount dc;
 						setCurveType(curveNames[lowerIndex]);
 						if (!LAMathCurveFuncUtility::setUpForwardDayCount(getDataInstance(), curveid, curveNames[lowerIndex], dc))
 						{
-							throw LACoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by LAMathYieldCurvePro !!",__FILE__,__LINE__);
+							throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by LAMathYieldCurvePro !!",__FILE__,__LINE__);
 						}
 						else
 						{
 							getDayCount(curveNames[lowerIndex]) = dc;
 						}					
 					
-						const LAInterpolationBase &lowerCurve_fwd_inter = getFWDInterpolation(&curveNames[lowerIndex], useFwdData);
+						const AQLInterpolationBase &lowerCurve_fwd_inter = getFWDInterpolation(&curveNames[lowerIndex], useFwdData);
 						const double lowerDateYearFraction = dc_act.getTerm( asOf, stubStart ); 
 						lowerTenorRate = lowerCurve_fwd_inter.value( lowerDateYearFraction );
 
@@ -1812,14 +1812,14 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 						setCurveType(curveNames[upperIndex]);
 						if (!LAMathCurveFuncUtility::setUpForwardDayCount(getDataInstance(), curveid, curveNames[upperIndex], dc))
 						{
-							throw LACoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by LAMathYieldCurvePro !!",__FILE__,__LINE__);
+							throw AQLCoreInvalidData("Interpolation on forward rate failed. Check whether the forward rate was generated by LAMathYieldCurvePro !!",__FILE__,__LINE__);
 						}
 						else
 						{
 							getDayCount(curveNames[upperIndex]) = dc;
 						}
 
-						const LAInterpolationBase &upperCurve_fwd_inter = getFWDInterpolation(&curveNames[upperIndex], useFwdData);
+						const AQLInterpolationBase &upperCurve_fwd_inter = getFWDInterpolation(&curveNames[upperIndex], useFwdData);
 						const double upperDateYearFraction = dc_act.getTerm( asOf, stubStart ); 
 						upperTenorRate = upperCurve_fwd_inter.value( upperDateYearFraction );
 					}
@@ -1839,7 +1839,7 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
 						}
 						else
 						{
-							throw LACoreInvalidData("#Error: Do not support past starting swap when isFwdInter is set FALSE", __FILE__, __LINE__ );
+							throw AQLCoreInvalidData("#Error: Do not support past starting swap when isFwdInter is set FALSE", __FILE__, __LINE__ );
 						}
 					}				
 			
@@ -1876,17 +1876,17 @@ double LAMathYieldCurve::getStubRate( const DateVector& fixingDates,
     *  @param [in]      double                firstFixing
     *  @param [in]      bool                  useLastFixing
     *  @param [in]      double                lastFixing
-    *  @param [in]      LAString              fixedDaycount
-    *  @param [in]      LAString              floatDaycount
-    *  @param [in]      LAString              foreCurveName; forecast curve name, defaults to STD
-    *  @param [in]      LAString              dfCurveName; discount curve name, defaults OIS
+    *  @param [in]      AQLString              fixedDaycount
+    *  @param [in]      AQLString              floatDaycount
+    *  @param [in]      AQLString              foreCurveName; forecast curve name, defaults to STD
+    *  @param [in]      AQLString              dfCurveName; discount curve name, defaults OIS
     *  @param [in]      bool                  isFWDInter, This flag controls how forwards are calculated; True = interpolate forwards, False = imply forwards from discount factors         
 	*  @param [in]		bool				  isOIS, Is the forecasting curve an OIS Curve?: True or False
-	*  @param [in]		LAString			  oisCompoundingType, Ois Curve Compounding Method
-	*  @param [in]		LAString			  calendar
-	*  @param [in]		LAString			  interpolation
-	*  @param [in]		LAString			  rollConvention
-	*  @param [in]		LAString			  slidingRule
+	*  @param [in]		AQLString			  oisCompoundingType, Ois Curve Compounding Method
+	*  @param [in]		AQLString			  calendar
+	*  @param [in]		AQLString			  interpolation
+	*  @param [in]		AQLString			  rollConvention
+	*  @param [in]		AQLString			  slidingRule
     *
 	*/
 void 
@@ -1903,17 +1903,17 @@ LAMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRate
                                            const double            firstFixing,               
                                            const bool              useLastFixing,             
                                            const double            lastFixing,                
-                                           const LAString &        fixedDaycount,             
-                                           const LAString &        floatDaycount,             
-                                           const LAString &        foreCurveName,       
-                                           const LAString &        dfCurveName,
+                                           const AQLString &        fixedDaycount,             
+                                           const AQLString &        floatDaycount,             
+                                           const AQLString &        foreCurveName,       
+                                           const AQLString &        dfCurveName,
                                            const bool              isFWDInter,
 								           const bool		       isOIS,
-								           const LAString &	       oisCompoundingType,
-								           const LAString &	       calendar,
-								           const LAString &	       inputInterpolation,
-								           const LAString &	       rollConvention,
-								           const LAString &	       slidingRule )
+								           const AQLString &	       oisCompoundingType,
+								           const AQLString &	       calendar,
+								           const AQLString &	       inputInterpolation,
+								           const AQLString &	       rollConvention,
+								           const AQLString &	       slidingRule )
 {
     // Initialize Swap Calculations
     swapPV_                                 = 0.0;
@@ -1943,8 +1943,8 @@ LAMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRate
     //
     
 
-    const LAObject& YieldData       = getYieldData().get().get();
-	const LADate& asOf              = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+    const AQLObject& YieldData       = getYieldData().get().get();
+	const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
     // Check if Swap has Expired
     if ( floatPaymentDates[floatPaymentDates.size()-1] < asOf && fixedPaymentDates[fixedPaymentDates.size()-1] < asOf) 
@@ -1952,23 +1952,23 @@ LAMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRate
         return;
     }
         
-    const LAPriceDataCalendar& cal       = getCalendar();
-	const LAPriceDataSlidingRule& sr     = getSlidingRule();
+    const AQLPriceDataCalendar& cal       = getCalendar();
+	const AQLPriceDataSlidingRule& sr     = getSlidingRule();
 
-	LADate fixedAccrualStartDate    = sr.getDate( fixedAccrualDates.front(), cal );
-    LADate floatAccrualStartDate    = sr.getDate( floatAccrualDates.front(), cal );
+	AQLDate fixedAccrualStartDate    = sr.getDate( fixedAccrualDates.front(), cal );
+    AQLDate floatAccrualStartDate    = sr.getDate( floatAccrualDates.front(), cal );
         
-    LADate fixedAccrualEndDate      = sr.getDate( fixedAccrualDates.back(), cal );
-    LADate floatAccrualEndDate      = sr.getDate( floatAccrualDates.back(), cal );
+    AQLDate fixedAccrualEndDate      = sr.getDate( fixedAccrualDates.back(), cal );
+    AQLDate floatAccrualEndDate      = sr.getDate( floatAccrualDates.back(), cal );
 
 	DayCount dc_act( ACT_365_ISDA );
-	LAPriceDataDayCount data_dc_act( dc_act );
+	AQLPriceDataDayCount data_dc_act( dc_act );
 
     // Get client specified daycount conventions
-    LAPriceDataDayCount fixedLegDaycount;
+    AQLPriceDataDayCount fixedLegDaycount;
     fixedLegDaycount.convertFromString( fixedDaycount );
             
-    LAPriceDataDayCount floatLegDaycount;
+    AQLPriceDataDayCount floatLegDaycount;
     floatLegDaycount.convertFromString( floatDaycount );
 
 	setCurveType(dfCurveName);
@@ -1984,7 +1984,7 @@ LAMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRate
     DoubleArray fixedLegDiscFactors( fixedPaymentDates.size() -1 );
         
     if ( fixedAccrualDates.size() != fixedPaymentDates.size() )
-        throw LACoreInvalidData("#Error: Fixed schedule error. Inconsistent number of acrrual and payment dates.", __FILE__, __LINE__ );
+        throw AQLCoreInvalidData("#Error: Fixed schedule error. Inconsistent number of acrrual and payment dates.", __FILE__, __LINE__ );
 
     for( size_t i = 1; i < fixedAccrualDates.size(); i++ )
     {
@@ -2002,11 +2002,11 @@ LAMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRate
     //
 	
 
-    LAString            freq_forecast       = ""; 
-	LAPriceDataCalendar      cal_forecast; 
-	LAPriceDataSlidingRule   sld_forecast; 
-	LAPriceDataDayCount      dc_forecast;
-	LAString            accessary_forecast  = "";
+    AQLString            freq_forecast       = ""; 
+	AQLPriceDataCalendar      cal_forecast; 
+	AQLPriceDataSlidingRule   sld_forecast; 
+	AQLPriceDataDayCount      dc_forecast;
+	AQLString            accessary_forecast  = "";
 	    	
 	getCurveConvention( freq_forecast, cal_forecast, sld_forecast, dc_forecast, accessary_forecast, foreCurveName );
 
@@ -2018,7 +2018,7 @@ LAMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRate
     DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
     if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-        throw LACoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+        throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
              
     // Calculate the floating coupon accrual periods
     for( size_t i = 1; i < floatAccrualDates.size(); i++ )
@@ -2051,7 +2051,7 @@ LAMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRate
 	    	curveID = curveID.substr(pos + len, curveID.length() - len - pos - 1); 
 	    }
 
-	    LAString dayCount = getDayCount().convertToString();
+	    AQLString dayCount = getDayCount().convertToString();
 
 	    // Get equivalent rate over accrual periods
 	    getCompoundingRates(floatLegRates, 
@@ -2061,7 +2061,7 @@ LAMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRate
 	    					getDataInstance(),
 	    					floatSpreadInBasisPoints * oneBasisPoint,
 	    					asOf,
-	    					LAString(curveID.c_str()),
+	    					AQLString(curveID.c_str()),
 	    					foreCurveName,							
 	    					slidingRule,
 	    					calendar,
@@ -2074,7 +2074,7 @@ LAMathYieldCurve::calculateSwapPriceAndRisk( const bool              isFixedRate
 	{
 	    if ( isFWDInter )
 	    {
-	    	const LAInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName);
+	    	const AQLInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName);
 	    	for( size_t i = 1; i < floatAccrualDates.size(); i++ )
 	    	{
 	    		fixingDateYearFractions[i-1]            = dc_forecast.getTerm( floatFixingDates[i-1], floatFixingDates[i] );
@@ -2280,44 +2280,44 @@ LAMathYieldCurve::getParRate( const DateVector& fixedAccrualDates,
                             double firstFixing,
                             bool useLastFixing,
                             double lastFixing,
-                            LAString fixedDaycount,
-                            LAString floatDaycount, 
-                            LAString foreCurveName,
-                            LAString dfCurveName,
+                            AQLString fixedDaycount,
+                            AQLString floatDaycount, 
+                            AQLString foreCurveName,
+                            AQLString dfCurveName,
                             bool isFWDInter,
                             double floatSpread,
                             bool useFwdData,
 							bool isOIS,
-							LAString oisCompoundingType,
-							LAString calendar,
-							LAString interpolation,
-							LAString rollConvention,
-							LAString slidingRule
+							AQLString oisCompoundingType,
+							AQLString calendar,
+							AQLString interpolation,
+							AQLString rollConvention,
+							AQLString slidingRule
 							)
 {
-	const LAObject& YieldData       = getYieldData().get().get();
-	const LADate& asOf              = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData       = getYieldData().get().get();
+	const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
     
     if ( floatPaymentDates[floatPaymentDates.size()-1] < asOf && fixedPaymentDates[fixedPaymentDates.size()-1] < asOf) 
-        throw LACoreInvalidData("#Error: Par rate error; the underlying swap has expired.", __FILE__, __LINE__ );
+        throw AQLCoreInvalidData("#Error: Par rate error; the underlying swap has expired.", __FILE__, __LINE__ );
     
-    const LAPriceDataCalendar& cal       = getCalendar();
-	const LAPriceDataSlidingRule& sr     = getSlidingRule();
+    const AQLPriceDataCalendar& cal       = getCalendar();
+	const AQLPriceDataSlidingRule& sr     = getSlidingRule();
 
-	LADate fixedAccrualStartDate    = sr.getDate( fixedAccrualDates.front(), cal );
-    LADate floatAccrualStartDate    = sr.getDate( floatAccrualDates.front(), cal );
+	AQLDate fixedAccrualStartDate    = sr.getDate( fixedAccrualDates.front(), cal );
+    AQLDate floatAccrualStartDate    = sr.getDate( floatAccrualDates.front(), cal );
     
-    LADate fixedAccrualEndDate      = sr.getDate( fixedAccrualDates.back(), cal );
-    LADate floatAccrualEndDate      = sr.getDate( floatAccrualDates.back(), cal );
+    AQLDate fixedAccrualEndDate      = sr.getDate( fixedAccrualDates.back(), cal );
+    AQLDate floatAccrualEndDate      = sr.getDate( floatAccrualDates.back(), cal );
 
 	DayCount dc_act( ACT_365_ISDA );
-	LAPriceDataDayCount data_dc_act( dc_act );
+	AQLPriceDataDayCount data_dc_act( dc_act );
 
     // Get client specified daycount conventions
-    LAPriceDataDayCount fixedLegDaycount;
+    AQLPriceDataDayCount fixedLegDaycount;
     fixedLegDaycount.convertFromString( fixedDaycount );
         
-    LAPriceDataDayCount floatLegDaycount;
+    AQLPriceDataDayCount floatLegDaycount;
     floatLegDaycount.convertFromString( floatDaycount );
 
 	setCurveType(dfCurveName);
@@ -2348,7 +2348,7 @@ LAMathYieldCurve::getParRate( const DateVector& fixedAccrualDates,
 			curveID = curveID.substr(pos + len, curveID.length() - len - pos - 1); 
 		}
 
-		LAString dayCount = getDayCount().convertToString();
+		AQLString dayCount = getDayCount().convertToString();
 
 		// Get equivalent rate over accrual periods
 		DoubleArray equivalentRates( floatAccrualDates.size()  -1 );		
@@ -2359,7 +2359,7 @@ LAMathYieldCurve::getParRate( const DateVector& fixedAccrualDates,
 							getDataInstance(),
 							floatSpread,
 							asOf,
-							LAString(curveID.c_str()),
+							AQLString(curveID.c_str()),
 							foreCurveName,							
 							slidingRule,
 							calendar,
@@ -2397,11 +2397,11 @@ LAMathYieldCurve::getParRate( const DateVector& fixedAccrualDates,
 		//
 		if (foreCurveName != dfCurveName)
 		{
-			LAString            freq_forecast = ""; 
-			LAPriceDataCalendar      cal_forecast; 
-			LAPriceDataSlidingRule   sld_forecast; 
-			LAPriceDataDayCount      dc_forecast;
-			LAString            accessary_forecast = "";
+			AQLString            freq_forecast = ""; 
+			AQLPriceDataCalendar      cal_forecast; 
+			AQLPriceDataSlidingRule   sld_forecast; 
+			AQLPriceDataDayCount      dc_forecast;
+			AQLString            accessary_forecast = "";
 		
 			getCurveConvention( freq_forecast, cal_forecast, sld_forecast, dc_forecast, accessary_forecast, foreCurveName );
 
@@ -2412,13 +2412,13 @@ LAMathYieldCurve::getParRate( const DateVector& fixedAccrualDates,
 			DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
 			if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-				throw LACoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+				throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
          			
 			// Get forward rates from interpolation
 			if ( isFWDInter )
 			{
 				// Optional 'UseFwdData', False (default) = imply forward from discount factors, True = use forward data directly
-				const LAInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName, useFwdData);
+				const AQLInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName, useFwdData);
 				for( size_t i = 1; i < floatAccrualDates.size(); ++i )
 				{
 					fixingDateYearFractions[i-1]            = dc_forecast.getTerm( floatFixingDates[i-1], floatFixingDates[i] );
@@ -2469,8 +2469,8 @@ LAMathYieldCurve::getParRate( const DateVector& fixedAccrualDates,
 							/ getDF( data_dc_act.getTerm( asOf, floatFixingDates[i] ), &dc_act ) - 1.) / fixingDateYearFractions[i-1];
 
 						double thisRate         = rates[i-1];
-						LADate thisFixingStart  = floatFixingDates[i-1];
-						LADate thisFixingEnd    = floatFixingDates[i];
+						AQLDate thisFixingStart  = floatFixingDates[i-1];
+						AQLDate thisFixingEnd    = floatFixingDates[i];
 					}
 				}
 			}
@@ -2524,42 +2524,42 @@ LAMathYieldCurve::getSwapPV( const bool&            isFixedRatePayerSwap,
                            double                 firstFixing,
                            bool                   useLastFixing,
                            double                 lastFixing,
-                           LAString               fixedDaycount,
-                           LAString               floatDaycount, 
-                           LAString               foreCurveName,
-                           LAString               dfCurveName,
+                           AQLString               fixedDaycount,
+                           AQLString               floatDaycount, 
+                           AQLString               foreCurveName,
+                           AQLString               dfCurveName,
                            bool                   isFWDInter,
                            bool                   useFwdData,
 						   bool					  isOIS, 
-						   LAString				  oisCompoundingType, 
-						   LAString				  calendar, 
-						   LAString				  inputInterpolation, 
-						   LAString				  rollConvention, 
-						   LAString				  slidingRule)
+						   AQLString				  oisCompoundingType, 
+						   AQLString				  calendar, 
+						   AQLString				  inputInterpolation, 
+						   AQLString				  rollConvention, 
+						   AQLString				  slidingRule)
 {
-	const LAObject& YieldData       = getYieldData().get().get();
-	const LADate& asOf              = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData       = getYieldData().get().get();
+	const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
     
     if ( floatPaymentDates[floatPaymentDates.size()-1] < asOf && fixedPaymentDates[fixedPaymentDates.size()-1] < asOf) 
         return 0.0; // Swap has expired return swap pv = 0.0
     
-    const LAPriceDataCalendar& cal       = getCalendar();
-	const LAPriceDataSlidingRule& sr     = getSlidingRule();
+    const AQLPriceDataCalendar& cal       = getCalendar();
+	const AQLPriceDataSlidingRule& sr     = getSlidingRule();
 
-	LADate fixedAccrualStartDate    = sr.getDate( fixedAccrualDates.front(), cal );
-    LADate floatAccrualStartDate    = sr.getDate( floatAccrualDates.front(), cal );
+	AQLDate fixedAccrualStartDate    = sr.getDate( fixedAccrualDates.front(), cal );
+    AQLDate floatAccrualStartDate    = sr.getDate( floatAccrualDates.front(), cal );
     
-    LADate fixedAccrualEndDate      = sr.getDate( fixedAccrualDates.back(), cal );
-    LADate floatAccrualEndDate      = sr.getDate( floatAccrualDates.back(), cal );
+    AQLDate fixedAccrualEndDate      = sr.getDate( fixedAccrualDates.back(), cal );
+    AQLDate floatAccrualEndDate      = sr.getDate( floatAccrualDates.back(), cal );
 
 	DayCount dc_act( ACT_365_ISDA );
-	LAPriceDataDayCount data_dc_act( dc_act );
+	AQLPriceDataDayCount data_dc_act( dc_act );
 
     // Get client specified daycount conventions
-    LAPriceDataDayCount fixedLegDaycount;
+    AQLPriceDataDayCount fixedLegDaycount;
     fixedLegDaycount.convertFromString( fixedDaycount );
         
-    LAPriceDataDayCount floatLegDaycount;
+    AQLPriceDataDayCount floatLegDaycount;
     floatLegDaycount.convertFromString( floatDaycount );
 
 	setCurveType(dfCurveName);
@@ -2572,11 +2572,11 @@ LAMathYieldCurve::getSwapPV( const bool&            isFixedRatePayerSwap,
     //
     // Calculate Floating Leg Values
     //
-	LAString            freq_forecast       = ""; 
-	LAPriceDataCalendar      cal_forecast; 
-	LAPriceDataSlidingRule   sld_forecast; 
-	LAPriceDataDayCount      dc_forecast;
-	LAString            accessary_forecast  = "";
+	AQLString            freq_forecast       = ""; 
+	AQLPriceDataCalendar      cal_forecast; 
+	AQLPriceDataSlidingRule   sld_forecast; 
+	AQLPriceDataDayCount      dc_forecast;
+	AQLString            accessary_forecast  = "";
 		
 	getCurveConvention( freq_forecast, cal_forecast, sld_forecast, dc_forecast, accessary_forecast, foreCurveName );
 
@@ -2588,7 +2588,7 @@ LAMathYieldCurve::getSwapPV( const bool&            isFixedRatePayerSwap,
     DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
     if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-        throw LACoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+        throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
          
     // Calculate the floating coupon accrual periods
     for( size_t i = 1; i < floatAccrualDates.size(); i++ )
@@ -2623,7 +2623,7 @@ LAMathYieldCurve::getSwapPV( const bool&            isFixedRatePayerSwap,
 			curveID = curveID.substr(pos + len, curveID.length() - len - pos - 1); 
 		}
 
-		LAString dayCount = getDayCount().convertToString();
+		AQLString dayCount = getDayCount().convertToString();
 
 		// Get equivalent rate over accrual periods
 		getCompoundingRates(rates, 
@@ -2633,7 +2633,7 @@ LAMathYieldCurve::getSwapPV( const bool&            isFixedRatePayerSwap,
 							getDataInstance(),
 							floatSpreadInBasisPoints * oneBasisPoint,
 							asOf,
-							LAString(curveID.c_str()),
+							AQLString(curveID.c_str()),
 							foreCurveName,							
 							slidingRule,
 							calendar,
@@ -2646,8 +2646,8 @@ LAMathYieldCurve::getSwapPV( const bool&            isFixedRatePayerSwap,
 	{
 		if ( isFWDInter )
 		{
-			//const LAInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName);
-			const LAInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName, useFwdData);
+			//const AQLInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName);
+			const AQLInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName, useFwdData);
 	
 			for( size_t i = 1; i < floatAccrualDates.size(); i++ )
 			{
@@ -2749,17 +2749,17 @@ LAMathYieldCurve::getSwapDV01( bool                   isFixedRatePayerSwap,
                              double                 firstFixing,
                              bool                   useLastFixing,
                              double                 lastFixing,
-                             LAString               fixedDaycount,
-                             LAString               floatDaycount, 
-                             LAString               foreCurveName,
-                             LAString               dfCurveName,
+                             AQLString               fixedDaycount,
+                             AQLString               floatDaycount, 
+                             AQLString               foreCurveName,
+                             AQLString               dfCurveName,
                              bool                   isFWDInter,
 						     bool					isOIS, 
-						     LAString				oisCompoundingType, 
-						     LAString				calendar, 
-						     LAString				inputInterpolation, 
-						     LAString				rollConvention, 
-						     LAString				slidingRule )
+						     AQLString				oisCompoundingType, 
+						     AQLString				calendar, 
+						     AQLString				inputInterpolation, 
+						     AQLString				rollConvention, 
+						     AQLString				slidingRule )
 {
 
 
@@ -2796,23 +2796,23 @@ LAMathYieldCurve::getSwapPV01( const bool&            isFixedRatePayerSwap,
                              const double&          notional,
                              const DateVector&      fixedAccrualDates,
                              const DateVector&      fixedPaymentDates,
-                             LAString               fixedDaycount,
-                             LAString               foreCurveName,
-                             LAString               dfCurveName )
+                             AQLString               fixedDaycount,
+                             AQLString               foreCurveName,
+                             AQLString               dfCurveName )
 {
-	const LAObject& YieldData       = getYieldData().get().get();
-	const LADate& asOf              = dynamic_cast<const LADataDate&> ( ( YieldData.getData( CALIBRATION_DATA_ASOFDATE, ISNOTNULL ) ).get() ).get();
-    const LAPriceDataCalendar& cal       = getCalendar();
-	const LAPriceDataSlidingRule& sr     = getSlidingRule();
+	const AQLObject& YieldData       = getYieldData().get().get();
+	const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ( ( YieldData.getData( CALIBRATION_DATA_ASOFDATE, ISNOTNULL ) ).get() ).get();
+    const AQLPriceDataCalendar& cal       = getCalendar();
+	const AQLPriceDataSlidingRule& sr     = getSlidingRule();
 
-	LADate fixedAccrualStartDate    = sr.getDate( fixedAccrualDates.front(), cal );
-    LADate fixedAccrualEndDate      = sr.getDate( fixedAccrualDates.back(), cal );
+	AQLDate fixedAccrualStartDate    = sr.getDate( fixedAccrualDates.front(), cal );
+    AQLDate fixedAccrualEndDate      = sr.getDate( fixedAccrualDates.back(), cal );
 
 	DayCount dc_act( ACT_365_ISDA );
-	LAPriceDataDayCount data_dc_act( dc_act );
+	AQLPriceDataDayCount data_dc_act( dc_act );
 
     // Get client specified daycount conventions
-    LAPriceDataDayCount fixedLegDaycount;
+    AQLPriceDataDayCount fixedLegDaycount;
     fixedLegDaycount.convertFromString( fixedDaycount );
 
 	setCurveType(dfCurveName);
@@ -2846,37 +2846,37 @@ LAMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
                                     double                 firstFixing,
                                     bool                   useLastFixing,
                                     double                 lastFixing,
-                                    LAString               fixedDaycount,
-                                    LAString               floatDaycount, 
-                                    LAString               foreCurveName,
-                                    LAString               dfCurveName,
+                                    AQLString               fixedDaycount,
+                                    AQLString               floatDaycount, 
+                                    AQLString               foreCurveName,
+                                    AQLString               dfCurveName,
                                     bool                   isFWDInter,
                                     bool                   isCleanPrice,
-                                    const LADate&          settlementDate )
+                                    const AQLDate&          settlementDate )
 {
-    const LAObject& YieldData       = getYieldData().get().get();
-	const LADate& asOf              = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+    const AQLObject& YieldData       = getYieldData().get().get();
+	const AQLDate& asOf              = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
     
     if ( floatPaymentDates[floatPaymentDates.size()-1] < asOf && fixedPaymentDates[fixedPaymentDates.size()-1] < asOf) 
-        throw LACoreInvalidData("#Error: Asset swap spread error; the underlying swap has expired.", __FILE__, __LINE__ );
+        throw AQLCoreInvalidData("#Error: Asset swap spread error; the underlying swap has expired.", __FILE__, __LINE__ );
     
-    const LAPriceDataCalendar& cal       = getCalendar();
-	const LAPriceDataSlidingRule& sr     = getSlidingRule();
+    const AQLPriceDataCalendar& cal       = getCalendar();
+	const AQLPriceDataSlidingRule& sr     = getSlidingRule();
 
-	LADate fixedAccrualStartDate    = sr.getDate( fixedAccrualDates.front(), cal );
-    LADate floatAccrualStartDate    = sr.getDate( floatAccrualDates.front(), cal );
+	AQLDate fixedAccrualStartDate    = sr.getDate( fixedAccrualDates.front(), cal );
+    AQLDate floatAccrualStartDate    = sr.getDate( floatAccrualDates.front(), cal );
     
-    LADate fixedAccrualEndDate      = sr.getDate( fixedAccrualDates.back(), cal );
-    LADate floatAccrualEndDate      = sr.getDate( floatAccrualDates.back(), cal );
+    AQLDate fixedAccrualEndDate      = sr.getDate( fixedAccrualDates.back(), cal );
+    AQLDate floatAccrualEndDate      = sr.getDate( floatAccrualDates.back(), cal );
 
 	DayCount dc_act( ACT_365_ISDA );
-	LAPriceDataDayCount data_dc_act( dc_act );
+	AQLPriceDataDayCount data_dc_act( dc_act );
 
     // Get client specified daycount conventions
-    LAPriceDataDayCount fixedLegDaycount;
+    AQLPriceDataDayCount fixedLegDaycount;
     fixedLegDaycount.convertFromString( fixedDaycount );
         
-    LAPriceDataDayCount floatLegDaycount;
+    AQLPriceDataDayCount floatLegDaycount;
     floatLegDaycount.convertFromString( floatDaycount );
 
 	setCurveType(dfCurveName);
@@ -2895,11 +2895,11 @@ LAMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
     //
     // Calculate Floating Leg Values
     //
-	LAString            freq_forecast       = ""; 
-	LAPriceDataCalendar      cal_forecast; 
-	LAPriceDataSlidingRule   sld_forecast; 
-	LAPriceDataDayCount      dc_forecast;
-	LAString            accessary_forecast  = "";
+	AQLString            freq_forecast       = ""; 
+	AQLPriceDataCalendar      cal_forecast; 
+	AQLPriceDataSlidingRule   sld_forecast; 
+	AQLPriceDataDayCount      dc_forecast;
+	AQLString            accessary_forecast  = "";
 		
 	getCurveConvention( freq_forecast, cal_forecast, sld_forecast, dc_forecast, accessary_forecast, foreCurveName );
 
@@ -2911,7 +2911,7 @@ LAMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
     DoubleArray payDateYearFractions( floatPaymentDates.size() -1 );  
 
     if ( floatFixingDates.size() != floatAccrualDates.size() || floatAccrualDates.size() != floatPaymentDates.size() )
-        throw LACoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
+        throw AQLCoreInvalidData("#Error: Floating schedule error. Inconsistent number of fixing, acrrual and payment dates.", __FILE__, __LINE__ );
 
     // Calculate the floating coupon accrual periods
     for( size_t i = 1; i < floatAccrualDates.size(); i++ )
@@ -2927,7 +2927,7 @@ LAMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
         if ( i == floatAccrualDates.size()-1  )
         {
             if ( floatAccrualDates[i] < asOf ) 
-                throw LACoreInvalidData("#Error: Asset swap spread error; the underlying swap has expired.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData("#Error: Asset swap spread error; the underlying swap has expired.", __FILE__, __LINE__ );
 			
 			nextCashflowIndex++;                
             break; 
@@ -2939,7 +2939,7 @@ LAMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
     // Get forward rates from interpolation
 	if ( isFWDInter )
 	{
-		const LAInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName);
+		const AQLInterpolationBase &fwd_inter = getFWDInterpolation(&foreCurveName);
 		for( size_t i = 1; i < floatAccrualDates.size(); i++ )
 		{
             fixingDateYearFractions[i-1]            = dc_forecast.getTerm( floatFixingDates[i-1], floatFixingDates[i] );
@@ -3037,7 +3037,7 @@ LAMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
     // Asset Swap Spread
     //
     if ( floatAnnuity == 0 )
-        throw LACoreInvalidData("#Error: Floating schedule error. The float leg annuity value cannot be zero.", __FILE__, __LINE__ );
+        throw AQLCoreInvalidData("#Error: Floating schedule error. The float leg annuity value cannot be zero.", __FILE__, __LINE__ );
 
     // Note: Accrued Interest is deducted from the fixedLegPV ( via the Fixed Annuity ) when working with the dirty bond price
     swapSpread    = ( fixedLegPV - floatLegPV + parParAdjustmentInPercent ) / floatAnnuity;
@@ -3059,9 +3059,9 @@ LAMathYieldCurve::getAssetSwapSpread( const double&          bondPrice,
 */
 
 double
-LAMathYieldCurve::getParRate(const LADate& fromDate, const LADate& toDate, 
-						   const LADate* firstStubDate, const LADate* lastStubDate, const int* pday, LAString foreCurveName, 
-						   LAString dfCurveName, bool isFWDInter, const LAString* roll_convention)
+LAMathYieldCurve::getParRate(const AQLDate& fromDate, const AQLDate& toDate, 
+						   const AQLDate* firstStubDate, const AQLDate* lastStubDate, const int* pday, AQLString foreCurveName, 
+						   AQLString dfCurveName, bool isFWDInter, const AQLString* roll_convention)
 {
 	DateVector out;
 	LAMathDateCalculations::generateSchedule(fromDate, toDate, getFrequency().get(),
@@ -3073,24 +3073,24 @@ LAMathYieldCurve::getParRate(const LADate& fromDate, const LADate& toDate,
 	//if (foreCurveName != STD || dfCurveName != STD)
 	if (foreCurveName != dfCurveName)
 	{
-		LAString freq_forecast = ""; 
-		LAPriceDataCalendar cal_forecast; 
-		LAPriceDataSlidingRule sld_forecast; 
-		LAPriceDataDayCount dc_forecast;
-		LAString accessary_forecast = "";
+		AQLString freq_forecast = ""; 
+		AQLPriceDataCalendar cal_forecast; 
+		AQLPriceDataSlidingRule sld_forecast; 
+		AQLPriceDataDayCount dc_forecast;
+		AQLString accessary_forecast = "";
 		
 		getCurveConvention(freq_forecast, cal_forecast, sld_forecast, dc_forecast, accessary_forecast, foreCurveName);
 		if (accessary_forecast == "" || dc_forecast.isNull())
 		{
-			throw LACoreInvalidData("getParRate failed. Check whether daycount and frequency were set in forecast curve!!",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("getParRate failed. Check whether daycount and frequency were set in forecast curve!!",__FILE__,__LINE__);
 		}
 
-		LAString freq_float = "";
-		if (accessary_forecast == LAString("12M")) freq_float = ANNUAL;
-		else if (accessary_forecast == LAString("6M")) freq_float = SEMI_ANNUAL;
-		else if (accessary_forecast == LAString("3M")) freq_float = QUARTERLY;
-		else if (accessary_forecast == LAString("1M")) freq_float = MONTHLY;
-		else throw LACoreInvalidData("getParRate failed. Check accessary of forecast curve!!",__FILE__,__LINE__);
+		AQLString freq_float = "";
+		if (accessary_forecast == AQLString("12M")) freq_float = ANNUAL;
+		else if (accessary_forecast == AQLString("6M")) freq_float = SEMI_ANNUAL;
+		else if (accessary_forecast == AQLString("3M")) freq_float = QUARTERLY;
+		else if (accessary_forecast == AQLString("1M")) freq_float = MONTHLY;
+		else throw AQLCoreInvalidData("getParRate failed. Check accessary of forecast curve!!",__FILE__,__LINE__);
 
 		LAMathDateCalculations::generateSchedule(fromDate, toDate, freq_float,
 								true, firstStubDate, lastStubDate, pday, dates_float, &getSlidingRule(), &getCalendar(), true, roll_convention);
@@ -3113,11 +3113,11 @@ LAMathYieldCurve::getParRate(const LADate& fromDate, const LADate& toDate,
 */
 
 double
-LAMathYieldCurve::getParRate(const LADate& fromDate, const LAString& term_str, 
-						   const LADate* firstStubDate, const LADate* lastStubDate, const int* pday, 
-						   LAString foreCurveName, LAString dfCurveName, bool isFWDInter, const LAString* roll_convention)
+LAMathYieldCurve::getParRate(const AQLDate& fromDate, const AQLString& term_str, 
+						   const AQLDate* firstStubDate, const AQLDate* lastStubDate, const int* pday, 
+						   AQLString foreCurveName, AQLString dfCurveName, bool isFWDInter, const AQLString* roll_convention)
 {
-	LADate toDate = LAMathDateCalculations::getDate(fromDate, term_str, true, roll_convention);
+	AQLDate toDate = LAMathDateCalculations::getDate(fromDate, term_str, true, roll_convention);
 	return getParRate(fromDate, toDate, firstStubDate, lastStubDate, pday, foreCurveName, dfCurveName, isFWDInter, roll_convention);
 }
 
@@ -3131,25 +3131,25 @@ LAMathYieldCurve::getParRate(const LADate& fromDate, const LAString& term_str,
 */
 
 double        
-LAMathYieldCurve::getDF(const LADate& fromDate, const LADate& toDate) const
+LAMathYieldCurve::getDF(const AQLDate& fromDate, const AQLDate& toDate) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&>((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&>((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	
 	if (fromDate > toDate)
 	{
-		LAString err = "#Error: Unable to calculate a discount factor in the past. The toDate must be after fromDate";
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "#Error: Unable to calculate a discount factor in the past. The toDate must be after fromDate";
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	//if (fromDate < asOf)
 	//{
-	//	LAString err = "fromDate must be after asOf";
-	//	throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+	//	AQLString err = "fromDate must be after asOf";
+	//	throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	//}
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
-	LADate fdate = (fromDate < asOf) ? asOf : fromDate;
-	LADate tdate = (toDate < asOf) ? asOf : toDate;
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
+	AQLDate fdate = (fromDate < asOf) ? asOf : fromDate;
+	AQLDate tdate = (toDate < asOf) ? asOf : toDate;
 	if(!cal.isNull() && !sr.isNull())
 	{
 		if (sr.getDate(fdate, cal) >= asOf) fdate = sr.getDate(fdate, cal);
@@ -3158,7 +3158,7 @@ LAMathYieldCurve::getDF(const LADate& fromDate, const LADate& toDate) const
 	
 	if (fdate == tdate) return 1.0;
 
-	LAPriceDataDayCount dc(getDayCount());
+	AQLPriceDataDayCount dc(getDayCount());
 	double dff = getDF(dc.getTerm(asOf, fdate));
 	double dft = getDF(dc.getTerm(asOf, tdate));
 	
@@ -3166,26 +3166,26 @@ LAMathYieldCurve::getDF(const LADate& fromDate, const LADate& toDate) const
 }
 
 double        
-LAMathYieldCurve::getBasisDF(const LADate& fromDate, const LADate& toDate) const
+LAMathYieldCurve::getBasisDF(const AQLDate& fromDate, const AQLDate& toDate) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&>((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&>((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	
 	if (fromDate > toDate)
 	{
-        LAString err = "#Error: Unable to calculate a discount factor in the past. The toDate must be after fromDate";
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+        AQLString err = "#Error: Unable to calculate a discount factor in the past. The toDate must be after fromDate";
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
  //   if (fromDate < asOf)
 	//{
-	//	LAString err = "fromDate must be after asOf";
-	//	throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+	//	AQLString err = "fromDate must be after asOf";
+	//	throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	//}
 	
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
-	LADate fdate = (fromDate < asOf) ? asOf : fromDate;
-	LADate tdate = (toDate < asOf) ? asOf : toDate;
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
+	AQLDate fdate = (fromDate < asOf) ? asOf : fromDate;
+	AQLDate tdate = (toDate < asOf) ? asOf : toDate;
 	if(!cal.isNull() && !sr.isNull())
 	{
 		if (sr.getDate(fdate, cal) >= asOf) fdate = sr.getDate(fdate, cal);
@@ -3194,7 +3194,7 @@ LAMathYieldCurve::getBasisDF(const LADate& fromDate, const LADate& toDate) const
 	
 	if (fdate == tdate) return 1.0;
 
-	LAPriceDataDayCount dc(getDayCount());
+	AQLPriceDataDayCount dc(getDayCount());
 	double dff = getBasisDF(dc.getTerm(asOf, fdate));
 	double dft = getBasisDF(dc.getTerm(asOf, tdate));
 	
@@ -3211,26 +3211,26 @@ LAMathYieldCurve::getBasisDF(const LADate& fromDate, const LADate& toDate) const
 */
 
 double        
-LAMathYieldCurve::getDF(const LADate& fromDate, const double& term) const
+LAMathYieldCurve::getDF(const AQLDate& fromDate, const double& term) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
 	if (term < 0.0)
 	{
-        LAString err = "#Error: Unable to calculate a discount factor in the past";
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+        AQLString err = "#Error: Unable to calculate a discount factor in the past";
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	//if (fromDate < asOf)
 	//{
-	//	LAString err = "fromDate must be after asOf";
-	//       throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+	//	AQLString err = "fromDate must be after asOf";
+	//       throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	//}
-	LAPriceDataDayCount dc(getDayCount());
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
+	AQLPriceDataDayCount dc(getDayCount());
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
 
-	LADate fdate = (fromDate < asOf) ? asOf : fromDate;
+	AQLDate fdate = (fromDate < asOf) ? asOf : fromDate;
 	if(!cal.isNull() && !sr.isNull())
 	{
 		if (sr.getDate(fdate, cal) >= asOf) fdate = sr.getDate(fdate, cal);
@@ -3246,26 +3246,26 @@ LAMathYieldCurve::getDF(const LADate& fromDate, const double& term) const
 }
 
 double        
-LAMathYieldCurve::getBasisDF(const LADate& fromDate, const double& term) const
+LAMathYieldCurve::getBasisDF(const AQLDate& fromDate, const double& term) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
 	if (term < 0.0)
 	{
-        LAString err = "#Error unable to calculate a discount factor in the past";
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+        AQLString err = "#Error unable to calculate a discount factor in the past";
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	//if (fromDate < asOf)
 	//{
-	//	LAString err = "fromDate must be after asOf";
- //       throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+	//	AQLString err = "fromDate must be after asOf";
+ //       throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	//}
-	LAPriceDataDayCount dc(getDayCount());
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& sr = getSlidingRule();
+	AQLPriceDataDayCount dc(getDayCount());
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& sr = getSlidingRule();
 
-	LADate fdate = (fromDate < asOf) ? asOf : fromDate;
+	AQLDate fdate = (fromDate < asOf) ? asOf : fromDate;
 	if(!cal.isNull() && !sr.isNull())
 	{
 		if (sr.getDate(fdate, cal) >= asOf) fdate = sr.getDate(fdate, cal);
@@ -3289,21 +3289,21 @@ LAMathYieldCurve::getBasisDF(const LADate& fromDate, const double& term) const
 double
 LAMathYieldCurve::getDF(const double term) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
+	const AQLObject& YieldData = getYieldData().get().get();
 	if (mCurveVersion != getModel())
 	{
-		const DoubleArray& terms = dynamic_cast<const LADataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
-		const DoubleArray& dfs   = dynamic_cast<const LADataDoubles&> ((YieldData.getData(IR_CALIBRATION_DATA_DFS, ISNOTNULL)).get()).get();
-		dynamic_cast<LAPriceDataInterpolation&>(mpInter->get()).set(terms, dfs);
+		const DoubleArray& terms = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
+		const DoubleArray& dfs   = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(IR_CALIBRATION_DATA_DFS, ISNOTNULL)).get()).get();
+		dynamic_cast<AQLPriceDataInterpolation&>(mpInter->get()).set(terms, dfs);
 		mCurveVersion = getModel();
 	}
-	LAPriceDataDayCount dc(getDayCount()), dc_act;
+	AQLPriceDataDayCount dc(getDayCount()), dc_act;
 	dc_act.setDayCount(ACT_365_ISDA);
 
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	double termTmp = dc_act.getTerm(asOf, dc.getDayTerm(asOf, term));
 	
-	return dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).value(termTmp);
+	return dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).value(termTmp);
 }
 */
 
@@ -3316,16 +3316,16 @@ LAMathYieldCurve::getDF(const double term) const
 double
 LAMathYieldCurve::getDF(const double term, const DayCount* pdc) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
+	const AQLObject& YieldData = getYieldData().get().get();
 
-	const LAString interpmethod = getDFInterpolationMethod().get();
+	const AQLString interpmethod = getDFInterpolationMethod().get();
 	bool isinterprateterm = false;
 	if (interpmethod == "DiscountFactor")
 		isinterprateterm = false;
 	else if (interpmethod == "RateTerm")
 		isinterprateterm = true;
 	else
-		throw LACoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
 	
     if (mCurveVersionMap[mCurveType] != getModel())
 	{
@@ -3334,8 +3334,8 @@ LAMathYieldCurve::getDF(const double term, const DayCount* pdc) const
 
 	if (term < 0.0)
 	{
-        LAString err = "#Error: Unable to calculate a discount factor in the past";
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+        AQLString err = "#Error: Unable to calculate a discount factor in the past";
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	if (term < EPS) return 1.0;
 
@@ -3343,19 +3343,19 @@ LAMathYieldCurve::getDF(const double term, const DayCount* pdc) const
 	if(pdc != 0 && *pdc == ACT_365_ISDA)
 	{
 		ret = getCurveTypeInterpolation(mCurveType).value(term);
-		ret = (isinterprateterm) ? LAMath::exp(-ret) : ret;
+		ret = (isinterprateterm) ? AQLMath::exp(-ret) : ret;
 		return ret;
 	}
 
 	if(pdc == 0 && getDayCount().getDayCount() == ACT_365_ISDA)
 	{
 		ret = getCurveTypeInterpolation(mCurveType).value(term);
-		ret = (isinterprateterm) ? LAMath::exp(-ret) : ret;
+		ret = (isinterprateterm) ? AQLMath::exp(-ret) : ret;
 		return ret;
 	}
 		
 	
-	LAPriceDataDayCount dc, dc_act;
+	AQLPriceDataDayCount dc, dc_act;
 
 	if(pdc == 0)
 		dc.setDayCount(getDayCount().getDayCount());
@@ -3364,21 +3364,21 @@ LAMathYieldCurve::getDF(const double term, const DayCount* pdc) const
 
 	dc_act.setDayCount(ACT_365_ISDA);
 
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	double termTmp = dc_act.getTerm(asOf, dc.getDayTerm(asOf, term));
 	
 	ret =  getCurveTypeInterpolation(mCurveType).value(termTmp);
-	ret = (isinterprateterm) ? LAMath::exp(-ret) : ret;
+	ret = (isinterprateterm) ? AQLMath::exp(-ret) : ret;
 	return ret;
 	
 	
 	/*if(pdc != 0 && *pdc == ACT_365_ISDA)
-		return dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).value(term);
+		return dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).value(term);
 	
 	if(pdc == 0 && getDayCount().getDayCount() == ACT_365_ISDA)
-		return dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).value(term);
+		return dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).value(term);
 	
-	LAPriceDataDayCount dc, dc_act;
+	AQLPriceDataDayCount dc, dc_act;
 
 	if(pdc == 0)
 		dc.setDayCount(getDayCount().getDayCount());
@@ -3387,10 +3387,10 @@ LAMathYieldCurve::getDF(const double term, const DayCount* pdc) const
 
 	dc_act.setDayCount(ACT_365_ISDA);
 
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	double termTmp = dc_act.getTerm(asOf, dc.getDayTerm(asOf, term));
 	
-	return dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).value(termTmp);*/
+	return dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).value(termTmp);*/
 }
 
 /*!
@@ -3404,23 +3404,23 @@ LAMathYieldCurve::getDF(const double term, const DayCount* pdc) const
 double
 LAMathYieldCurve::getBasisDF(const double term, const DayCount* pdc) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
+	const AQLObject& YieldData = getYieldData().get().get();
 
-	const LAString interpmethod = getDF2InterpolationMethod().get();
+	const AQLString interpmethod = getDF2InterpolationMethod().get();
 	bool isinterprateterm = false;
 	if (interpmethod == "DiscountFactor")
 		isinterprateterm = false;
 	else if (interpmethod == "RateTerm")
 		isinterprateterm = true;
 	else
-		throw LACoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
 
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	dh = &(YieldData.getData(IR_CALIBRATION_DATA_DFS2,NOCHECK));
 	if(!dh->isDefined() || dh->isNull())
 		return getDF(term,pdc);
 
-	LAString curveName = IR_CALIBRATION_DATA_DFS2;
+	AQLString curveName = IR_CALIBRATION_DATA_DFS2;
 	if (mpBasisCurveType != NULL)
 	{
 		curveName = *mpBasisCurveType;
@@ -3434,8 +3434,8 @@ LAMathYieldCurve::getBasisDF(const double term, const DayCount* pdc) const
 
 	if (term < 0.0)
 	{
-        LAString err = "#Error: Unable to calculate a discount factor in the past";
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+        AQLString err = "#Error: Unable to calculate a discount factor in the past";
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	if (term < EPS) return 1.0;
 
@@ -3444,7 +3444,7 @@ LAMathYieldCurve::getBasisDF(const double term, const DayCount* pdc) const
 	{
 		//ret = getCurveTypeInterpolation(IR_CALIBRATION_DATA_DFS2).value(term);
 		ret = getCurveTypeInterpolation(curveName).value(term);
-		ret = (isinterprateterm) ? LAMath::exp(-ret) : ret;
+		ret = (isinterprateterm) ? AQLMath::exp(-ret) : ret;
 		return ret;
 	}
 
@@ -3452,11 +3452,11 @@ LAMathYieldCurve::getBasisDF(const double term, const DayCount* pdc) const
 	{
 		//ret = getCurveTypeInterpolation(IR_CALIBRATION_DATA_DFS2).value(term);
 		ret = getCurveTypeInterpolation(curveName).value(term);
-		ret = (isinterprateterm) ? LAMath::exp(-ret) : ret;
+		ret = (isinterprateterm) ? AQLMath::exp(-ret) : ret;
 		return ret;
 	}
 
-	LAPriceDataDayCount dc, dc_act;
+	AQLPriceDataDayCount dc, dc_act;
 
 	if(pdc == 0)
 		dc.setDayCount(getDayCount().getDayCount());
@@ -3465,12 +3465,12 @@ LAMathYieldCurve::getBasisDF(const double term, const DayCount* pdc) const
 
 	dc_act.setDayCount(ACT_365_ISDA);
 
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	double termTmp = dc_act.getTerm(asOf, dc.getDayTerm(asOf, term));
 	
 	//ret = getCurveTypeInterpolation(IR_CALIBRATION_DATA_DFS2).value(termTmp);
 	ret = getCurveTypeInterpolation(curveName).value(termTmp);
-	ret = (isinterprateterm) ? LAMath::exp(-ret) : ret;
+	ret = (isinterprateterm) ? AQLMath::exp(-ret) : ret;
 	return ret;
 }
 
@@ -3486,9 +3486,9 @@ LAMathYieldCurve::getBasisDF(const double term, const DayCount* pdc) const
 void
 LAMathYieldCurve::getRawDFs(DoubleArray& terms, DoubleArray& dfs) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const DoubleArray& _terms = dynamic_cast<const LADataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL)).get()).get();
-	const DoubleArray& _dfs   = dynamic_cast<const LADataDoubles&> ((YieldData.getData(IR_CALIBRATION_DATA_DFS + mCurveSuffix, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const DoubleArray& _terms = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL)).get()).get();
+	const DoubleArray& _dfs   = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(IR_CALIBRATION_DATA_DFS + mCurveSuffix, ISNOTNULL)).get()).get();
 	terms = _terms;
 	dfs = _dfs;
 }
@@ -3498,17 +3498,17 @@ LAMathYieldCurve::getRawDFs(DoubleArray& terms, DoubleArray& dfs) const
 	       Also set extra interpolation paramters needed for linear-spline interpolation et al
 */
 void
-LAMathYieldCurve::setValuesToInterpolator( const LAString &curveType, const DoubleArray &index, const DoubleArray &value ) const
+LAMathYieldCurve::setValuesToInterpolator( const AQLString &curveType, const DoubleArray &index, const DoubleArray &value ) const
 {	
-	LAPriceDataInterpolation* pInterpolationAttr;
-	std::map<LAString, LAPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curveType);
+	AQLPriceDataInterpolation* pInterpolationAttr;
+	std::map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curveType);
 
 	bool setUpInterp = true;	
 	if (it != mDFInterMap.end())
 	{
 		// When trying to use an existing DF interpolator, not only check its existence 
 		// but also check if the interpolator has been changed to a different scheme
-		const LAPriceDataInterpolation &inter = getInterpolation();
+		const AQLPriceDataInterpolation &inter = getInterpolation();
 		if (inter.convertToString().toUpper() == it->second->convertToString().toUpper())
 		{
 			pInterpolationAttr = it->second;
@@ -3530,23 +3530,23 @@ LAMathYieldCurve::setValuesToInterpolator( const LAString &curveType, const Doub
 	       Also set extra interpolation paramters needed for linear-spline interpolation et al
 */
 void 
-LAMathYieldCurve::setValuesToInterpolator( LAPriceDataInterpolation* pInter, const LAString &curveType, const DoubleArray &index, const DoubleArray &value ) const
+LAMathYieldCurve::setValuesToInterpolator( AQLPriceDataInterpolation* pInter, const AQLString &curveType, const DoubleArray &index, const DoubleArray &value ) const
 {
     // Linear-Spline only works with the STD / Basis Yield Curve
     	
 	if ( pInter->isHybrid() )
 	{
         // Linear-Spline Interpolation Requires the Join Date to be initialized
-        const LAObject& yieldData = getYieldData().get().get();
+        const AQLObject& yieldData = getYieldData().get().get();
         
 		// Get curve suffix
-		LAString suffix = (curveType == "STD") ? "" : LAString( "_" ) + curveType;
+		AQLString suffix = (curveType == "STD") ? "" : AQLString( "_" ) + curveType;
 
 		// Use ISDEFINED i.e. throw if join date not set
-		const LADataHolder* cutOffAttr = &(yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + suffix, NOCHECK));
+		const AQLDataHolder* cutOffAttr = &(yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + suffix, NOCHECK));
 		if(cutOffAttr->isDefined() && !cutOffAttr->isNull())
 		{
-			double cuttOffDate = dynamic_cast<const LADataDouble&> (cutOffAttr->get()).get();
+			double cuttOffDate = dynamic_cast<const AQLDataDouble&> (cutOffAttr->get()).get();
 			pInter->setJoinDateAsDouble(cuttOffDate);
 		}
 		else
@@ -3567,33 +3567,33 @@ void
 LAMathYieldCurve::setUpInterpolation() const
 {
 
-	const LAString interpmethod = getDFInterpolationMethod().get();
+	const AQLString interpmethod = getDFInterpolationMethod().get();
 	bool isinterprateterm = false;
 	if (interpmethod == "DiscountFactor")
 		isinterprateterm = false;
 	else if (interpmethod == "RateTerm")
 		isinterprateterm = true;
 	else
-		throw LACoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
 
-	const LAString interpmethod2 = getDF2InterpolationMethod().get();
+	const AQLString interpmethod2 = getDF2InterpolationMethod().get();
 	bool isinterprateterm2 = false;
 	if (interpmethod2 == "DiscountFactor")
 		isinterprateterm2 = false;
 	else if (interpmethod2 == "RateTerm")
 		isinterprateterm2 = true;
 	else
-		throw LACoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("DFInterpolation Error",__FILE__,__LINE__);
 
 
-	const LAObject& YieldData = getYieldData().get().get();
-	const DoubleArray& terms = dynamic_cast<const LADataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL)).get()).get();
-	const DoubleArray& dfs   = dynamic_cast<const LADataDoubles&> ((YieldData.getData(IR_CALIBRATION_DATA_DFS + mCurveSuffix, ISNOTNULL)).get()).get();
-	const LADataHolder &ahDF2 = YieldData.getData(IR_CALIBRATION_DATA_DFS2, NOCHECK);
-	LAObjectHolder objHolder = getYieldData().get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const DoubleArray& terms = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL)).get()).get();
+	const DoubleArray& dfs   = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(IR_CALIBRATION_DATA_DFS + mCurveSuffix, ISNOTNULL)).get()).get();
+	const AQLDataHolder &ahDF2 = YieldData.getData(IR_CALIBRATION_DATA_DFS2, NOCHECK);
+	AQLObjectHolder objHolder = getYieldData().get();
 	double interpolationJoinDateAsDouble = 0.0;
-	objHolder.remove(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + LAString("_") + IR_CALIBRATION_DATA_DFS2);
-	objHolder.add(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + LAString("_") + IR_CALIBRATION_DATA_DFS2, new LADataDouble(interpolationJoinDateAsDouble));
+	objHolder.remove(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + AQLString("_") + IR_CALIBRATION_DATA_DFS2);
+	objHolder.add(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + AQLString("_") + IR_CALIBRATION_DATA_DFS2, new AQLDataDouble(interpolationJoinDateAsDouble));
 	if (terms.at(0) != 0.0)
 	{
 		DoubleArray _terms = terms;
@@ -3606,9 +3606,9 @@ LAMathYieldCurve::setUpInterpolation() const
 			for (unsigned int i = 0; i < _dfs.size(); i++)
 			{
 				if (_dfs[i] <= 0.0)
-					throw LACoreInvalidData("Discount Error",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
 				
-				_dfs[i] = -LAMath::log(_dfs[i]);
+				_dfs[i] = -AQLMath::log(_dfs[i]);
 			}
 		}
 		setValuesToInterpolator(mCurveType, _terms, _dfs);
@@ -3616,8 +3616,8 @@ LAMathYieldCurve::setUpInterpolation() const
         // df2
 		if (ahDF2.isDefined() && !ahDF2.isNull())
 		{
-			const DoubleArray& terms2 = dynamic_cast<const LADataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
-			const DoubleArray& dfs2 = dynamic_cast<const LADataDoubles&> (ahDF2.get()).get();
+			const DoubleArray& terms2 = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
+			const DoubleArray& dfs2 = dynamic_cast<const AQLDataDoubles&> (ahDF2.get()).get();
 			
             DoubleArray _terms2 = terms2;
 			_terms2.insert(_terms2.begin(), 0.0);
@@ -3630,9 +3630,9 @@ LAMathYieldCurve::setUpInterpolation() const
 				for (unsigned int i = 0; i < _dfs2.size(); i++)
 				{
 					if (_dfs2[i] <= 0.0)
-						throw LACoreInvalidData("Discount Error",__FILE__,__LINE__);
+						throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
 					
-					_dfs2[i] = -LAMath::log(_dfs2[i]);
+					_dfs2[i] = -AQLMath::log(_dfs2[i]);
 				}
 			}
             setValuesToInterpolator(IR_CALIBRATION_DATA_DFS2, _terms2, _dfs2);
@@ -3647,9 +3647,9 @@ LAMathYieldCurve::setUpInterpolation() const
 			for (unsigned int i = 0; i < _dfs.size(); i++)
 			{
 				if (_dfs[i] <= 0.0)
-					throw LACoreInvalidData("Discount Error",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
 				
-				_dfs[i] = -LAMath::log(_dfs[i]);
+				_dfs[i] = -AQLMath::log(_dfs[i]);
 			}
             setValuesToInterpolator(mCurveType, terms, _dfs);
         }
@@ -3662,8 +3662,8 @@ LAMathYieldCurve::setUpInterpolation() const
 		if (ahDF2.isDefined() && !ahDF2.isNull())
 		{
 			
-			const DoubleArray& dfs2 = dynamic_cast<const LADataDoubles&> (ahDF2.get()).get();
-			const DoubleArray& terms2 = dynamic_cast<const LADataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
+			const DoubleArray& dfs2 = dynamic_cast<const AQLDataDoubles&> (ahDF2.get()).get();
+			const DoubleArray& terms2 = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
 			
             if (isinterprateterm2)
 			{
@@ -3671,9 +3671,9 @@ LAMathYieldCurve::setUpInterpolation() const
 				for (unsigned int i = 0; i < _dfs2.size(); i++)
 				{
 					if (_dfs2[i] <= 0.0)
-						throw LACoreInvalidData("Discount Error",__FILE__,__LINE__);
+						throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
 					
-					_dfs2[i] = -LAMath::log(_dfs2[i]);
+					_dfs2[i] = -AQLMath::log(_dfs2[i]);
 				}
                 setValuesToInterpolator(IR_CALIBRATION_DATA_DFS2, terms2, _dfs2);
 			}
@@ -3688,8 +3688,8 @@ LAMathYieldCurve::setUpInterpolation() const
 
 	if (mpBasisCurveType)
 	{
-		const DoubleArray& terms_basis = dynamic_cast<const LADataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + LAString("_") + *mpBasisCurveType, ISNOTNULL)).get()).get();
-		const DoubleArray& dfs_basis   = dynamic_cast<const LADataDoubles&> ((YieldData.getData(IR_CALIBRATION_DATA_DFS + LAString("_") + *mpBasisCurveType, ISNOTNULL)).get()).get();
+		const DoubleArray& terms_basis = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + AQLString("_") + *mpBasisCurveType, ISNOTNULL)).get()).get();
+		const DoubleArray& dfs_basis   = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(IR_CALIBRATION_DATA_DFS + AQLString("_") + *mpBasisCurveType, ISNOTNULL)).get()).get();
 		
         if (terms_basis.at(0) != 0.0)
 		{
@@ -3703,9 +3703,9 @@ LAMathYieldCurve::setUpInterpolation() const
 				for (unsigned int i = 0; i < _dfs.size(); i++)
 				{
 					if (_dfs[i] <= 0.0)
-						throw LACoreInvalidData("Discount Error",__FILE__,__LINE__);
+						throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
 					
-					_dfs[i] = -LAMath::log(_dfs[i]);
+					_dfs[i] = -AQLMath::log(_dfs[i]);
 				}
 			}
             setValuesToInterpolator(*mpBasisCurveType, _terms, _dfs);
@@ -3718,9 +3718,9 @@ LAMathYieldCurve::setUpInterpolation() const
 				for (unsigned int i = 0; i < _dfs.size(); i++)
 				{
 					if (_dfs[i] <= 0.0)
-						throw LACoreInvalidData("Discount Error",__FILE__,__LINE__);
+						throw AQLCoreInvalidData("Discount Error",__FILE__,__LINE__);
 					
-					_dfs[i] = -LAMath::log(_dfs[i]);
+					_dfs[i] = -AQLMath::log(_dfs[i]);
 				}
                 setValuesToInterpolator(*mpBasisCurveType, terms_basis, _dfs);
 			}
@@ -3739,7 +3739,7 @@ LAMathYieldCurve::setUpInterpolation() const
 
 */
 void
-LAMathYieldCurve::setCurveType(const LAString &curveType)
+LAMathYieldCurve::setCurveType(const AQLString &curveType)
 {
 	if (curveType == mCurveType)
 	{
@@ -3764,7 +3764,7 @@ LAMathYieldCurve::setCurveType(const LAString &curveType)
 	@param[in] interpolation	Interpolation used by the active curve
 */
 void
-LAMathYieldCurve::setCurveNameAndInterpolation(const LAString &curveName, const LAString &interpolation)
+LAMathYieldCurve::setCurveNameAndInterpolation(const AQLString &curveName, const AQLString &interpolation)
 {
 	setCurveType(curveName);
 	setInterpolation(interpolation);
@@ -3777,14 +3777,14 @@ LAMathYieldCurve::setCurveNameAndInterpolation(const LAString &curveName, const 
 
 */
 void
-LAMathYieldCurve::setBasisCurveType(const LAString &basisCurveType)
+LAMathYieldCurve::setBasisCurveType(const AQLString &basisCurveType)
 {
 	if (mpBasisCurveType != NULL && basisCurveType == *mpBasisCurveType)
 	{
 		return;
 	}
 	if (mpBasisCurveType) delete mpBasisCurveType;
-	mpBasisCurveType = new LAString(basisCurveType);
+	mpBasisCurveType = new AQLString(basisCurveType);
 
 }
 
@@ -3794,7 +3794,7 @@ LAMathYieldCurve::setBasisCurveType(const LAString &basisCurveType)
 	@return curve type
 
 */
-LAString 
+AQLString 
 LAMathYieldCurve::getCurveType(void) const 
 {
 	return mCurveType;
@@ -3809,11 +3809,11 @@ LAMathYieldCurve::getCurveType(void) const
 	@param[in] pCurveType discount factor curve name
 
 */
-const LAInterpolationBase &
-LAMathYieldCurve::getDFInterpolation(const LAString *pCurveType) const
+const AQLInterpolationBase &
+LAMathYieldCurve::getDFInterpolation(const AQLString *pCurveType) const
 {
-	LAString curveType("");
-	LAString suffix("");
+	AQLString curveType("");
+	AQLString suffix("");
 	if (pCurveType)
 	{
 		curveType = *pCurveType;
@@ -3828,13 +3828,13 @@ LAMathYieldCurve::getDFInterpolation(const LAString *pCurveType) const
 		suffix = mCurveSuffix;
 	}
 
-	const DoubleArray &terms = dynamic_cast<const LADataDoubles &>((getYieldData().get().getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL).get())).get();
-	const DoubleArray &dfs = dynamic_cast<const LADataDoubles &>((getYieldData().get().getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL).get())).get();
+	const DoubleArray &terms = dynamic_cast<const AQLDataDoubles &>((getYieldData().get().getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL).get())).get();
+	const DoubleArray &dfs = dynamic_cast<const AQLDataDoubles &>((getYieldData().get().getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL).get())).get();
 
-	map<LAString, LAPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curveType);
+	map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curveType);
 	if (it != mDFInterMap.end())
 	{
-		const LAPriceDataInterpolation &inter = getInterpolation();
+		const AQLPriceDataInterpolation &inter = getInterpolation();
 		if (inter.convertToString().toUpper() == it->second->convertToString().toUpper())
 		{
 			if (mCurveVersionMap[curveType] != getModel())
@@ -3858,11 +3858,11 @@ LAMathYieldCurve::getDFInterpolation(const LAString *pCurveType) const
 	@param[in] pCurveType discount factor curve name
 
 */
-const LAInterpolationBase &
-LAMathYieldCurve::getForwardsInterpolation(const LAString *pCurveType) const
+const AQLInterpolationBase &
+LAMathYieldCurve::getForwardsInterpolation(const AQLString *pCurveType) const
 {
-	LAString curveType("");
-	LAString suffix("");
+	AQLString curveType("");
+	AQLString suffix("");
 	if (pCurveType)
 	{
 		curveType = *pCurveType;
@@ -3877,15 +3877,15 @@ LAMathYieldCurve::getForwardsInterpolation(const LAString *pCurveType) const
 		suffix = mCurveSuffix;
 	}
 		
-	const DoubleMatrix &fwd_termsmtx = dynamic_cast<const LADataDoubleMatrix &>(getYieldData().get().getData(CALIBRATION_DATA_FWDTERMSMATRIX + suffix, ISNOTNULL).get()).get();
+	const DoubleMatrix &fwd_termsmtx = dynamic_cast<const AQLDataDoubleMatrix &>(getYieldData().get().getData(CALIBRATION_DATA_FWDTERMSMATRIX + suffix, ISNOTNULL).get()).get();
 	const DoubleArray &terms = fwd_termsmtx[0];
-    const DoubleArray &forwardRates = dynamic_cast<const LADataDoubles &>((getYieldData().get().getData(IR_CALIBRATION_DATA_FORWARDRATES + suffix, ISNOTNULL).get())).get();
+    const DoubleArray &forwardRates = dynamic_cast<const AQLDataDoubles &>((getYieldData().get().getData(IR_CALIBRATION_DATA_FORWARDRATES + suffix, ISNOTNULL).get())).get();
 
 	// Check if we aleady have the interpolator for this curve type
-	map<LAString, LAPriceDataInterpolation *>::const_iterator it = mFWDInterMap.find(curveType); 
+	map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mFWDInterMap.find(curveType); 
 	if (it != mFWDInterMap.end())
 	{
-		const LAPriceDataInterpolation &inter = getInterpolation();
+		const AQLPriceDataInterpolation &inter = getInterpolation();
 		if (inter.convertToString().toUpper() == it->second->convertToString().toUpper())
 		{
 			if (mCurveVersionMap[curveType] != getModel())
@@ -3909,16 +3909,16 @@ LAMathYieldCurve::getForwardsInterpolation(const LAString *pCurveType) const
     @brief get discount factor interpolation
 	@param[in] pCurveType discount factor curve name
 */
-const LAInterpolationBase &
+const AQLInterpolationBase &
 LAMathYieldCurve::getBasisDFInterpolation() const
 {
-	const LADataHolder *dh = &getYieldData().get().getData(IR_CALIBRATION_DATA_DFS2, NOCHECK);
+	const AQLDataHolder *dh = &getYieldData().get().getData(IR_CALIBRATION_DATA_DFS2, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const DoubleArray &terms = dynamic_cast<const LADataDoubles &>((getYieldData().get().getData(CALIBRATION_DATA_TERMS, ISNOTNULL).get())).get();
-		const DoubleArray &dfs = dynamic_cast<const LADataDoubles &>((getYieldData().get().getData(IR_CALIBRATION_DATA_DFS2, ISNOTNULL).get())).get();
+		const DoubleArray &terms = dynamic_cast<const AQLDataDoubles &>((getYieldData().get().getData(CALIBRATION_DATA_TERMS, ISNOTNULL).get())).get();
+		const DoubleArray &dfs = dynamic_cast<const AQLDataDoubles &>((getYieldData().get().getData(IR_CALIBRATION_DATA_DFS2, ISNOTNULL).get())).get();
 
-		map<LAString, LAPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(IR_CALIBRATION_DATA_DFS2);
+		map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(IR_CALIBRATION_DATA_DFS2);
 		if (it != mDFInterMap.end())
 		{
 			if (mCurveVersionMap[IR_CALIBRATION_DATA_DFS2] != getModel())
@@ -3943,7 +3943,7 @@ LAMathYieldCurve::getBasisDFInterpolation() const
 	}
 	else
 	{
-		LAString curveType = STD;
+		AQLString curveType = STD;
 		return getDFInterpolation(&curveType);
 	}
 }
@@ -3954,7 +3954,7 @@ LAMathYieldCurve::getBasisDFInterpolation() const
 void
 LAMathYieldCurve::delDFInterpolations()
 {
-	map<LAString, LAPriceDataInterpolation *>::iterator it = mDFInterMap.begin();
+	map<AQLString, AQLPriceDataInterpolation *>::iterator it = mDFInterMap.begin();
 	while (it != mDFInterMap.end())
 	{
 		delete it->second;
@@ -3968,9 +3968,9 @@ LAMathYieldCurve::delDFInterpolations()
 	@param[in] curve	Name of the curve
 
 */
-void LAMathYieldCurve::delDFInterpolationsByCurve(const LAString& curve)
+void LAMathYieldCurve::delDFInterpolationsByCurve(const AQLString& curve)
 {
-	map<LAString, LAPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curve);
+	map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mDFInterMap.find(curve);
 	//if (it != mDFInterMap.end())
 	//{
 	//	mDFInterMap.erase(it);
@@ -3991,20 +3991,20 @@ void LAMathYieldCurve::delDFInterpolationsByCurve(const LAString& curve)
 
 */
 void
-LAMathYieldCurve::addDFInterpolation(const LAString &curveType) const
+LAMathYieldCurve::addDFInterpolation(const AQLString &curveType) const
 {
-	map<LAString, LAPriceDataInterpolation *>::iterator it = mDFInterMap.find( curveType );
+	map<AQLString, AQLPriceDataInterpolation *>::iterator it = mDFInterMap.find( curveType );
 	if ( it != mDFInterMap.end() )
 	{
 		// An interpolator for this curveType is already in the map. Delete the old interpolator
 		delete it->second;
 		mDFInterMap.erase( it );
 	}
-	const LAPriceDataInterpolation &inter = getInterpolation();
-	LAPriceDataInterpolation *calculator = dynamic_cast<LAPriceDataInterpolation *>(inter.clone());
+	const AQLPriceDataInterpolation &inter = getInterpolation();
+	AQLPriceDataInterpolation *calculator = dynamic_cast<AQLPriceDataInterpolation *>(inter.clone());
 	mDFInterMap[curveType] = calculator;
 	mCurveVersionMap[curveType] = 0;
-	dynamic_cast<LAPriceDataType *>(calculator)->setHolder(mpInter);
+	dynamic_cast<AQLPriceDataType *>(calculator)->setHolder(mpInter);
 }
 /*!
     @brief get DF for specified term from fromDate 
@@ -4018,18 +4018,18 @@ LAMathYieldCurve::addDFInterpolation(const LAString &curveType) const
 */
 
 //double        
-//LAMathYieldCurve::getDF(const LADate& fromDate, const LAString& term_str) const
+//LAMathYieldCurve::getDF(const AQLDate& fromDate, const AQLString& term_str) const
 //{
-//	LADate toDate = LAMathDateCalculations::getDate(fromDate, term_str, true);
+//	AQLDate toDate = LAMathDateCalculations::getDate(fromDate, term_str, true);
 //	return getDF(fromDate, toDate);
 //}
 
-//double LAMathYieldCurve::getDF(const LADate& fromDate, const LAString& term_str, LAString& bdc, LAString& cal) const
+//double LAMathYieldCurve::getDF(const AQLDate& fromDate, const AQLString& term_str, AQLString& bdc, AQLString& cal) const
 //20161207 - Fixed on default values
-double LAMathYieldCurve::getDF(const LADate& fromDate, const LAString& term_str, LAString bdc, LAString cal) const
+double LAMathYieldCurve::getDF(const AQLDate& fromDate, const AQLString& term_str, AQLString bdc, AQLString cal) const
 {
 
-    LADate toDate = LADate();
+    AQLDate toDate = AQLDate();
     
     // Adjust the term_str to a business day on request ... needed to fix a bug in the getDF using Tenor or TermString function
     bdc.toUpper();
@@ -4037,10 +4037,10 @@ double LAMathYieldCurve::getDF(const LADate& fromDate, const LAString& term_str,
 
     if ( bdc != "NO_CHANGE" )
     {
-        LAPriceDataCalendar attrCalendar;
+        AQLPriceDataCalendar attrCalendar;
 		attrCalendar.convertFromString(cal);
 
-        LAPriceDataSlidingRule attrBusinessDayAdjustment;
+        AQLPriceDataSlidingRule attrBusinessDayAdjustment;
         attrBusinessDayAdjustment.convertFromString(bdc);
 
         toDate = LAMathDateCalculations::getDate( fromDate, 
@@ -4059,9 +4059,9 @@ double LAMathYieldCurve::getDF(const LADate& fromDate, const LAString& term_str,
 }
 
 double        
-LAMathYieldCurve::getBasisDF(const LADate& fromDate, const LAString& term_str) const
+LAMathYieldCurve::getBasisDF(const AQLDate& fromDate, const AQLString& term_str) const
 {
-	LADate toDate = LAMathDateCalculations::getDate(fromDate, term_str, true);
+	AQLDate toDate = LAMathDateCalculations::getDate(fromDate, term_str, true);
 	return getBasisDF(fromDate, toDate);
 }
 
@@ -4074,21 +4074,21 @@ LAMathYieldCurve::getBasisDF(const LADate& fromDate, const LAString& term_str) c
 
 	@return DiscountFactor
 */
-//double LAMathYieldCurve::getDF(const LAString& term_str, LAString& bdc, LAString& cal) const
+//double LAMathYieldCurve::getDF(const AQLString& term_str, AQLString& bdc, AQLString& cal) const
 //20161207 - Fixed compiler failure on default value 
-double LAMathYieldCurve::getDF(const LAString& term_str, LAString bdc, LAString cal) const
+double LAMathYieldCurve::getDF(const AQLString& term_str, AQLString bdc, AQLString cal) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	
 	return getDF(asOf, term_str, bdc, cal);
 }
 
 double
-LAMathYieldCurve::getBasisDF(const LAString& term_str) const
+LAMathYieldCurve::getBasisDF(const AQLString& term_str) const
 {
-	const LAObject& YieldData = getYieldData().get().get();
-	const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLObject& YieldData = getYieldData().get().get();
+	const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 	
 	return getBasisDF(asOf, term_str);
 }
@@ -4111,17 +4111,17 @@ LAMathYieldCurve::getCurve(double t, DayCount d) const
 
 */
 void 
-LAMathYieldCurve::getBaseForwardRate(const LAString &curveType, DoubleArray &terms, DoubleMatrix &termsMat, DoubleArray &taus, DoubleArray &rates, double& joinDateAsDouble, vector<DateVector> *pDateMat_out, vector<DateVector> *pDateMat_in, const bool & useForwardData) const
+LAMathYieldCurve::getBaseForwardRate(const AQLString &curveType, DoubleArray &terms, DoubleMatrix &termsMat, DoubleArray &taus, DoubleArray &rates, double& joinDateAsDouble, vector<DateVector> *pDateMat_out, vector<DateVector> *pDateMat_in, const bool & useForwardData) const
 {
 	terms.clear();
 	termsMat.clear();
 	taus.clear();
 	rates.clear();
 
-	LAString suffix = "";
-	const LAPriceDataDayCount *daycount = 0;
-	const LAInterpolationBase &dfInter = useForwardData ? getForwardsInterpolation(&curveType) : getDFInterpolation(&curveType);
-	LAString t_curveType = curveType;
+	AQLString suffix = "";
+	const AQLPriceDataDayCount *daycount = 0;
+	const AQLInterpolationBase &dfInter = useForwardData ? getForwardsInterpolation(&curveType) : getDFInterpolation(&curveType);
+	AQLString t_curveType = curveType;
 	t_curveType.toUpper();
 	if (t_curveType != STD)
 	{
@@ -4129,21 +4129,21 @@ LAMathYieldCurve::getBaseForwardRate(const LAString &curveType, DoubleArray &ter
 	}
 	daycount = &getDayCount(curveType);
 
-	const LAObject& yieldData = getYieldData().get().get();
-	const DoubleMatrix &fwd_termsmtx = dynamic_cast<const LADataDoubleMatrix &>(yieldData.getData(CALIBRATION_DATA_FWDTERMSMATRIX + suffix, ISNOTNULL).get()).get();
+	const AQLObject& yieldData = getYieldData().get().get();
+	const DoubleMatrix &fwd_termsmtx = dynamic_cast<const AQLDataDoubleMatrix &>(yieldData.getData(CALIBRATION_DATA_FWDTERMSMATRIX + suffix, ISNOTNULL).get()).get();
 	if (fwd_termsmtx.size() != 2 || fwd_termsmtx[0].size() != fwd_termsmtx[1].size())
 	{
-		throw LACoreInvalidData("forward terms matrix is invalid.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("forward terms matrix is invalid.", __FILE__, __LINE__);
 	}
 	terms = fwd_termsmtx[0];
 
 	const double DAY_EPS = 0.1 / 365.25;
 
-	const LADate& asofDate = dynamic_cast<const LADataDate&> ((yieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
-	const double term_end = dynamic_cast<const LADataDoubles &>(yieldData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL).get()).get().back();
+	const AQLDate& asofDate = dynamic_cast<const AQLDataDate&> ((yieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const double term_end = dynamic_cast<const AQLDataDoubles &>(yieldData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL).get()).get().back();
 	if (fwd_termsmtx[0].back() >= term_end)
 	{
-		throw LACoreInvalidData("Forward Term is not consistent with DF Term", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Forward Term is not consistent with DF Term", __FILE__, __LINE__);
 	}
 	//terms_.push_back(term_end);
 	vector<DateVector> fwd_datesmtx;
@@ -4162,16 +4162,16 @@ LAMathYieldCurve::getBaseForwardRate(const LAString &curveType, DoubleArray &ter
 		unsigned int pos;
 		for (unsigned int i = 0; i < fwd_termsmtx[1].size(); ++i)
 		{
-			if (!LAAlgorithm::find<DoubleArray, double>(s_fwdtermsmtx_1, fwd_termsmtx[1][i], 0, s_fwdtermsmtx_1.size() - 1, pos))
+			if (!AQLAlgorithm::find<DoubleArray, double>(s_fwdtermsmtx_1, fwd_termsmtx[1][i], 0, s_fwdtermsmtx_1.size() - 1, pos))
 			{
 				//error
-				throw LACoreInvalidData("forward rate grid is invalid", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("forward rate grid is invalid", __FILE__, __LINE__);
 			}
 			fwd_datesmtx[1].push_back(tmpDates[pos]);
 		}
 	}
 
-	const LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	const AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 	termsMat.resize(terms.size());
 	taus.resize(terms.size());
 	rates.resize(terms.size());
@@ -4218,7 +4218,7 @@ LAMathYieldCurve::getBaseForwardRate(const LAString &curveType, DoubleArray &ter
 
 */
 void
-LAMathYieldCurve::getBaseForwardRate(const LAString &curveType, DoubleArray &terms, DoubleMatrix &termsMat, DoubleArray &taus, DoubleArray &rates, vector<DateVector> *pDateMat_out, vector<DateVector> *pDateMat_in, const bool & useForwardData) const
+LAMathYieldCurve::getBaseForwardRate(const AQLString &curveType, DoubleArray &terms, DoubleMatrix &termsMat, DoubleArray &taus, DoubleArray &rates, vector<DateVector> *pDateMat_out, vector<DateVector> *pDateMat_in, const bool & useForwardData) const
 {
 	double dummyJoinDateAsDouble;
 	getBaseForwardRate(curveType, terms, termsMat, taus, rates, dummyJoinDateAsDouble, pDateMat_out, pDateMat_in, useForwardData);
@@ -4236,7 +4236,7 @@ LAMathYieldCurve::getBaseForwardRate(const LAString &curveType, DoubleArray &ter
 
 */
 void 
-LAMathYieldCurve::getAdjForwardRate(const LAString &curveType, const LAPriceDataDayCount &dc, DoubleArray &terms, DoubleMatrix &termsMat, 
+LAMathYieldCurve::getAdjForwardRate(const AQLString &curveType, const AQLPriceDataDayCount &dc, DoubleArray &terms, DoubleMatrix &termsMat, 
 								  DoubleArray &taus, DoubleArray &rates, DateMatrix *pDateMat_in) const
 {
 	vector<DateVector> dateMat;
@@ -4244,20 +4244,20 @@ LAMathYieldCurve::getAdjForwardRate(const LAString &curveType, const LAPriceData
 
 	if (dateMat.size() != 2)
 	{
-		throw LACoreInvalidData("Date Matrix format is wrong.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Date Matrix format is wrong.", __FILE__, __LINE__);
 	}
 	unsigned int size = dateMat[0].size();
 	if (dateMat[1].size() != size)
 	{
-		throw LACoreInvalidData("Date Matrix format is wrong.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Date Matrix format is wrong.", __FILE__, __LINE__);
 	}
 	if (taus.size() != size)
 	{
-		throw LACoreInvalidData("tau vector format is wrong.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tau vector format is wrong.", __FILE__, __LINE__);
 	}
 	if (rates.size() != size)
 	{
-		throw LACoreInvalidData("forward rate vector format is wrong.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("forward rate vector format is wrong.", __FILE__, __LINE__);
 	}
 	// adjust daycount
 	for (unsigned int i = 0; i < size; ++i)
@@ -4272,7 +4272,7 @@ LAMathYieldCurve::getAdjForwardRate(const LAString &curveType, const LAPriceData
 
 	@return	pointer of this class
 */
-LAObject* 
+AQLObject* 
 LAMathYieldCurve::clone() const
 {
     try {
@@ -4280,7 +4280,7 @@ LAMathYieldCurve::clone() const
     	return pCurve;
     }
     catch (bad_alloc & e){
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -4295,9 +4295,9 @@ LAMathYieldCurve::clone() const
 
 void
 LAMathYieldCurve::setInterpolation(
-	LAInterpolationBase* a, const LAString& name)
+	AQLInterpolationBase* a, const AQLString& name)
 {
-	dynamic_cast<LAPriceDataInterpolation*>(&(
+	dynamic_cast<AQLPriceDataInterpolation*>(&(
 		getData(CALIBRATION_DATA_INTERPOLATION).get()))->setMethod(a, name);
 }
 /*!
@@ -4306,9 +4306,9 @@ LAMathYieldCurve::setInterpolation(
 	@param[in] name name of Interpolation 
 */
 void
-LAMathYieldCurve::setInterpolation(const LAString& name)
+LAMathYieldCurve::setInterpolation(const AQLString& name)
 {
-	dynamic_cast<LAPriceDataInterpolation*>(&(
+	dynamic_cast<AQLPriceDataInterpolation*>(&(
 		getData(CALIBRATION_DATA_INTERPOLATION).get()))->setMethod(name);
 }
  
@@ -4319,7 +4319,7 @@ LAMathYieldCurve::setInterpolation(const LAString& name)
 */
 void                
 LAMathYieldCurve::remove(
-	const LAString& dataName)
+	const AQLString& dataName)
 {
 	if (dataName == CALIBRATION_DATA_NAME
 		|| dataName == CALIBRATION_DATA_INTERPOLATION
@@ -4333,7 +4333,7 @@ LAMathYieldCurve::remove(
 	{
 		return; 
 	}
-	LAObject::remove(dataName);
+	AQLObject::remove(dataName);
 }
 
 void               
@@ -4349,8 +4349,8 @@ LAMathYieldCurve::reset(void)
 	mpYieldData  = &add(IR_CALIBRATION_DATA_YIELDDATA);
 	mpValueToInterp = &add(IR_CALIBRATION_DATA_DFSVALUETOINTERPOLATE);
 	mpValueToInterp2 = &add(IR_CALIBRATION_DATA_DFS2VALUETOINTERPOLATE);
-	dynamic_cast<LADataString &>(mpValueToInterp->get()).set("DiscountFactor");
-	dynamic_cast<LADataString &>(mpValueToInterp2->get()).set("DiscountFactor");
+	dynamic_cast<AQLDataString &>(mpValueToInterp->get()).set("DiscountFactor");
+	dynamic_cast<AQLDataString &>(mpValueToInterp2->get()).set("DiscountFactor");
 
     mCurveSuffix = "";
 	mCurveType = STD;
@@ -4370,18 +4370,18 @@ LAMathYieldCurve::reset(void)
 	@param[in] e copy object
 	@return Reference of this object
 */
-LAObject&
+AQLObject&
 LAMathYieldCurve::copy(
-	const LAObject& e)
+	const AQLObject& e)
 {
 	if (this == &e) return *this;
 
-	LAObject::copy(e);
+	AQLObject::copy(e);
 	if (!e.isTypeOf(ENTITY_IRYIELDCURVE))
 	{
-		LAString err = "Assignement error for LAMathYieldCurve : from ";
-		err += LAString(e.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignement error for LAMathYieldCurve : from ";
+		err += AQLString(e.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	mpName		 = &getData(CALIBRATION_DATA_NAME);
 	mpInter		 = &getData(CALIBRATION_DATA_INTERPOLATION);
@@ -4406,21 +4406,21 @@ LAMathYieldCurve::copy(
 
 	@param[in] name name of Data
 
-	@return Reference of LADataHolder include this Data
+	@return Reference of AQLDataHolder include this Data
 
 */
-LADataHolder&
-LAMathYieldCurve::add(const LAString& name)
+AQLDataHolder&
+LAMathYieldCurve::add(const AQLString& name)
 {
-	LADataInstance* dataInstance = getDataInstance();
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
-	const LADataHolder& dh = dm.getData(name);
-	return LAObject::add(name, dh);
+	AQLDataInstance* dataInstance = getDataInstance();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
+	const AQLDataHolder& dh = dm.getData(name);
+	return AQLObject::add(name, dh);
 }
 
 
 const RateConvention
-LAMathYieldCurve::setRC(LAString Freq)
+LAMathYieldCurve::setRC(AQLString Freq)
 {
 	Freq.toUpper();
 	if(Freq == SIMPLE || Freq == LUNAR)
@@ -4437,13 +4437,13 @@ LAMathYieldCurve::setRC(LAString Freq)
 		return  CONT;
 	else
 	{
-		LAString msg = "Frequency is wrong";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Frequency is wrong";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
 unsigned int 
-LAMathYieldCurve::setSpanFromFrequency(const LAString& freq )
+LAMathYieldCurve::setSpanFromFrequency(const AQLString& freq )
 {
     if (freq == ANNUAL) return 12;
 	else if (freq == SEMI_ANNUAL) return 6;
@@ -4451,27 +4451,27 @@ LAMathYieldCurve::setSpanFromFrequency(const LAString& freq )
 	else if (freq == MONTHLY || freq == LUNAR) return 1;
 	else 
 	{
-		LAString msg = "frequency is wrong";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "frequency is wrong";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
 double 
 LAMathYieldCurve::getBasisSwapValue
-(const LADate& valueDate, const LADate& startDate, const LAString& term, double basis, 
- bool isPrincipal, const LAString& frequency, const LAPriceDataDayCount& daycount, 
-  const LAString& forecastCurveID, const LAString& discountCurveID, double firstFixingRate, 
+(const AQLDate& valueDate, const AQLDate& startDate, const AQLString& term, double basis, 
+ bool isPrincipal, const AQLString& frequency, const AQLPriceDataDayCount& daycount, 
+  const AQLString& forecastCurveID, const AQLString& discountCurveID, double firstFixingRate, 
   bool isEOMRoll, bool isFRN)
 {
-	LADate endDate = LAMathDateCalculations::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
+	AQLDate endDate = LAMathDateCalculations::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
     DateVector payDates;
 	LAMathDateCalculations::generateSchedule(startDate, endDate, frequency, true, NULL, NULL, 0, 
 		payDates, &getSlidingRule(), &getCalendar());
     
 	if (isEOMRoll)
 	{
-		const LAPriceDataCalendar& calS = getCalendar();
-		LADate eomDate = calS.getEOMDay(startDate);
+		const AQLPriceDataCalendar& calS = getCalendar();
+		AQLDate eomDate = calS.getEOMDay(startDate);
 		if (eomDate == startDate)
 		{
 			for (size_t i=0; i<payDates.size(); i++)
@@ -4498,11 +4498,11 @@ LAMathYieldCurve::getBasisSwapValue
 
 	size_t legSize = payDates.size();
 	if( legSize != accruTerms.size() ) 
-		throw LACoreInvalidData("fixing,payment and accrual times are not same!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("fixing,payment and accrual times are not same!",__FILE__,__LINE__);
 	
 	DoubleArray rates(legSize, 0.);
-	LAString indexTerm;
-	if( forecastCurveID!=LAString("") )
+	AQLString indexTerm;
+	if( forecastCurveID!=AQLString("") )
 	{
 		setCurveType(forecastCurveID);
 		if( startDate < valueDate ) rates[index] = firstFixingRate;
@@ -4515,7 +4515,7 @@ LAMathYieldCurve::getBasisSwapValue
 				else if (frequency == SEMI_ANNUAL) indexTerm = "6M";
 				else if (frequency == QUARTERLY) indexTerm = "3M";
 				else if (frequency == MONTHLY) indexTerm = "1M";
-				LADate calcEndDate = LAMathDateCalculations::getDate(payDates[i-1], indexTerm, getSlidingRule(), &getCalendar(), true);
+				AQLDate calcEndDate = LAMathDateCalculations::getDate(payDates[i-1], indexTerm, getSlidingRule(), &getCalendar(), true);
 				rates[i] = getZeroRate(payDates[i-1], calcEndDate);
 			}
 			else
@@ -4525,14 +4525,14 @@ LAMathYieldCurve::getBasisSwapValue
 		}
 	}
 	
-	const LADate& asOfDate = dynamic_cast<const LADataDate&> ((getYieldData().get().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+	const AQLDate& asOfDate = dynamic_cast<const AQLDataDate&> ((getYieldData().get().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 	DayCount dc_act(ACT_365_ISDA);
 	double PV=0.;
 
 	setCurveType(STD);
-	if (discountCurveID != LAString("")) setCurveType(discountCurveID);
+	if (discountCurveID != AQLString("")) setCurveType(discountCurveID);
 
     for(size_t i=index; i<legSize; i++)
     {
@@ -4546,11 +4546,11 @@ LAMathYieldCurve::getBasisSwapValue
 
 double 
 LAMathYieldCurve::getCurBasisSwapValue
-(const LAMathYieldCurve& yc, const LADate& valueDate, const LADate& startDate, const LAString& term, 
- const LAString& frequency, const LAPriceDataDayCount& daycount, const LAString& forecastCurveID, 
- const LAString& discountCurveID, bool isEOMRoll, double firstFixingAmount, double firstFixingRate)
+(const LAMathYieldCurve& yc, const AQLDate& valueDate, const AQLDate& startDate, const AQLString& term, 
+ const AQLString& frequency, const AQLPriceDataDayCount& daycount, const AQLString& forecastCurveID, 
+ const AQLString& discountCurveID, bool isEOMRoll, double firstFixingAmount, double firstFixingRate)
 {
-	LADate endDate = LAMathDateCalculations::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
+	AQLDate endDate = LAMathDateCalculations::getDate(startDate, term, getSlidingRule(), &getCalendar(), true);
 
 	DateVector payDates;
 	LAMathDateCalculations::generateSchedule(startDate, endDate, frequency, true, NULL, NULL, 0, 
@@ -4558,8 +4558,8 @@ LAMathYieldCurve::getCurBasisSwapValue
 
 	if (isEOMRoll)
 	{
-		const LAPriceDataCalendar& calS = getCalendar();
-		LADate eomDate = calS.getEOMDay(startDate);
+		const AQLPriceDataCalendar& calS = getCalendar();
+		AQLDate eomDate = calS.getEOMDay(startDate);
 		if (eomDate == startDate)
 		{
 			for (size_t i=0; i<payDates.size(); i++)
@@ -4582,14 +4582,14 @@ LAMathYieldCurve::getCurBasisSwapValue
 	for(size_t i=index; i<payDates.size(); i++)
 	{		
 		setCurveType(STD);
-		if (forecastCurveID != LAString("")) setCurveType(forecastCurveID);
+		if (forecastCurveID != AQLString("")) setCurveType(forecastCurveID);
 		
 		if(i==index && startDate < valueDate)
 		{
 			rate = firstFixingRate;
 
 			setCurveType(STD);
-			if (discountCurveID != LAString("")) setCurveType(discountCurveID);
+			if (discountCurveID != AQLString("")) setCurveType(discountCurveID);
 
 			df_Dol = getDF(startDate, payDates[i]);
 			accruTerm = daycount.getTerm(startDate, payDates[i], false);
@@ -4600,7 +4600,7 @@ LAMathYieldCurve::getCurBasisSwapValue
 			rate = getZeroRate(startDate, payDates[i]); 
 
 			setCurveType(STD);
-			if (discountCurveID != LAString("")) setCurveType(discountCurveID);
+			if (discountCurveID != AQLString("")) setCurveType(discountCurveID);
 
 			df_be = yc.getDF(valueDate, startDate);
 			df_Dol_be = getDF(valueDate, startDate);
@@ -4614,7 +4614,7 @@ LAMathYieldCurve::getCurBasisSwapValue
 			rate = getZeroRate(payDates[i-1], payDates[i]);
 
 			setCurveType(STD);
-			if (discountCurveID != LAString("")) setCurveType(discountCurveID);
+			if (discountCurveID != AQLString("")) setCurveType(discountCurveID);
 
 			df_be = yc.getDF(valueDate, payDates[i-1]);
 			df_Dol_be = getDF(valueDate, payDates[i-1]);
@@ -4635,17 +4635,17 @@ LAMathYieldCurve::getCurBasisSwapValue
 	@return DayCount Convension
 */
 
-const LAPriceDataDayCount&
-LAMathYieldCurve::getDayCount(const LAString &curveType) const	
+const AQLPriceDataDayCount&
+LAMathYieldCurve::getDayCount(const AQLString &curveType) const	
 {
-	map<LAString, LAPriceDataDayCount *>::const_iterator it = mDayCountMap.find(curveType);
+	map<AQLString, AQLPriceDataDayCount *>::const_iterator it = mDayCountMap.find(curveType);
 	if (it != mDayCountMap.end())
 	{
 		return *it->second;
 	}
 	else
 	{
-		mDayCountMap[curveType] = dynamic_cast<LAPriceDataDayCount*>(mpDayCount->clone());
+		mDayCountMap[curveType] = dynamic_cast<AQLPriceDataDayCount*>(mpDayCount->clone());
 		return *mDayCountMap[curveType];
 	}
 }
@@ -4655,17 +4655,17 @@ LAMathYieldCurve::getDayCount(const LAString &curveType) const
 			
 	@return DayCount Convension
 */
-LAPriceDataDayCount&
-LAMathYieldCurve::getDayCount(const LAString &curveType) 
+AQLPriceDataDayCount&
+LAMathYieldCurve::getDayCount(const AQLString &curveType) 
 {
-	map<LAString, LAPriceDataDayCount *>::const_iterator it = mDayCountMap.find(curveType);
+	map<AQLString, AQLPriceDataDayCount *>::const_iterator it = mDayCountMap.find(curveType);
 	if (it != mDayCountMap.end())
 	{
 		return *it->second;
 	}
 	else
 	{
-		mDayCountMap[curveType] = dynamic_cast<LAPriceDataDayCount*>(mpDayCount->clone());
+		mDayCountMap[curveType] = dynamic_cast<AQLPriceDataDayCount*>(mpDayCount->clone());
 		return *mDayCountMap[curveType];
 	}
 }
@@ -4676,13 +4676,13 @@ LAMathYieldCurve::getDayCount(const LAString &curveType)
 @return DayCount Convension
 */
 
-const LAPriceDataDayCount&
-LAMathYieldCurve::getDayCountFromYieldData(const LAString &curveType) const
+const AQLPriceDataDayCount&
+LAMathYieldCurve::getDayCountFromYieldData(const AQLString &curveType) const
 {
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveType != STD) suffix = "_" + curveType;
 
-	return dynamic_cast<const LAPriceDataDayCount&>(getYieldData().get().get().getData(IR_CALIBRATION_DATA_DAYCOUNT + suffix, ISNOTNULL).get());
+	return dynamic_cast<const AQLPriceDataDayCount&>(getYieldData().get().get().getData(IR_CALIBRATION_DATA_DAYCOUNT + suffix, ISNOTNULL).get());
 }
 
 /*!
@@ -4692,7 +4692,7 @@ LAMathYieldCurve::getDayCountFromYieldData(const LAString &curveType) const
 void
 LAMathYieldCurve::delDayCounts()
 {
-	map<LAString, LAPriceDataDayCount *>::iterator it = mDayCountMap.begin();
+	map<AQLString, AQLPriceDataDayCount *>::iterator it = mDayCountMap.begin();
 	while (it != mDayCountMap.end())
 	{
 		delete it->second;
@@ -4706,9 +4706,9 @@ LAMathYieldCurve::delDayCounts()
 	@param[in] curve	Name of the curve
 
 */
-void LAMathYieldCurve::delDayCountsByCurve(const LAString& curve)
+void LAMathYieldCurve::delDayCountsByCurve(const AQLString& curve)
 {
-	map<LAString, LAPriceDataDayCount *>::const_iterator it = mDayCountMap.find(curve);
+	map<AQLString, AQLPriceDataDayCount *>::const_iterator it = mDayCountMap.find(curve);
 	//if (it != mDayCountMap.end())
 	//{
 	//	mDayCountMap.erase(it);
@@ -4732,15 +4732,15 @@ void LAMathYieldCurve::delDayCountsByCurve(const LAString& curve)
 	@param[in] useFwdData When true, calculates forwards from discount factors using formula F(t,T) = [ ( P(0,t) / P(0,T) ) - 1 ] / ( T - t )
 						  When false, calculates forwards using forward data directly when isFWDInter is set to TRUE
 */
-const LAInterpolationBase &
-LAMathYieldCurve::getFWDInterpolation(const LAString *pCurveType, const bool & useFwdData) const
+const AQLInterpolationBase &
+LAMathYieldCurve::getFWDInterpolation(const AQLString *pCurveType, const bool & useFwdData) const
 {
 	DoubleArray terms;
 	DoubleMatrix termsMat;
 	DoubleArray tau;
 	DoubleArray fwds;
 
-	LAString curveType;
+	AQLString curveType;
 	if (pCurveType)
 	{
 		curveType = *pCurveType;
@@ -4751,12 +4751,12 @@ LAMathYieldCurve::getFWDInterpolation(const LAString *pCurveType, const bool & u
 	}
 	
 	// Check if we aleady have the interpolator for this curve type
-	map<LAString, LAPriceDataInterpolation *>::const_iterator it = mFWDInterMap.find(curveType);
+	map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mFWDInterMap.find(curveType);
 	
 	
 	if (it != mFWDInterMap.end())
 	{
-		const LAPriceDataInterpolation &inter = getInterpolation();
+		const AQLPriceDataInterpolation &inter = getInterpolation();
 		if (inter.convertToString().toUpper() == it->second->convertToString().toUpper())
 		{
 			// Only re-use interpolator if it hasn't changed
@@ -4784,19 +4784,19 @@ LAMathYieldCurve::getFWDInterpolation(const LAString *pCurveType, const bool & u
 
 */
 void
-LAMathYieldCurve::addFWDInterpolation(const LAString &curveType) const
+LAMathYieldCurve::addFWDInterpolation(const AQLString &curveType) const
 {
-	map<LAString, LAPriceDataInterpolation *>::iterator it = mFWDInterMap.find( curveType );
+	map<AQLString, AQLPriceDataInterpolation *>::iterator it = mFWDInterMap.find( curveType );
 	if ( it != mFWDInterMap.end() )
 	{
 		// An interpolator for this curveType is already in the map. Delete the old interpolator
 		delete it->second;
 		mFWDInterMap.erase( it );
 	}
-	const LAPriceDataInterpolation &inter = getInterpolation();
-	LAPriceDataInterpolation *fwd_inter = dynamic_cast<LAPriceDataInterpolation *>(inter.clone());
+	const AQLPriceDataInterpolation &inter = getInterpolation();
+	AQLPriceDataInterpolation *fwd_inter = dynamic_cast<AQLPriceDataInterpolation *>(inter.clone());
 	mFWDInterMap[curveType] = fwd_inter;
-	dynamic_cast<LAPriceDataType *>(fwd_inter)->setHolder(mpInter);
+	dynamic_cast<AQLPriceDataType *>(fwd_inter)->setHolder(mpInter);
 }
 
 /*!
@@ -4806,7 +4806,7 @@ LAMathYieldCurve::addFWDInterpolation(const LAString &curveType) const
 void
 LAMathYieldCurve::delFWDInterpolations()
 {
-	map<LAString, LAPriceDataInterpolation *>::iterator it = mFWDInterMap.begin();
+	map<AQLString, AQLPriceDataInterpolation *>::iterator it = mFWDInterMap.begin();
 	while (it != mFWDInterMap.end())
 	{
 		delete it->second;
@@ -4820,9 +4820,9 @@ LAMathYieldCurve::delFWDInterpolations()
 	@param[in] curve	Name of the curve
 
 */
-void LAMathYieldCurve::delFWDInterpolationsByCurve(const LAString& curve)
+void LAMathYieldCurve::delFWDInterpolationsByCurve(const AQLString& curve)
 {
-	map<LAString, LAPriceDataInterpolation *>::const_iterator it = mFWDInterMap.find(curve);
+	map<AQLString, AQLPriceDataInterpolation *>::const_iterator it = mFWDInterMap.find(curve);
 	//if (it != mFWDInterMap.end())
 	//{
 	//	mFWDInterMap.erase(it);
@@ -4841,7 +4841,7 @@ void LAMathYieldCurve::delFWDInterpolationsByCurve(const LAString& curve)
 	@param[in] curve	Name of the curve
 
 */
-void LAMathYieldCurve::deleteCurveDataByCurveName(const LAString& curveName)
+void LAMathYieldCurve::deleteCurveDataByCurveName(const AQLString& curveName)
 {
 	delDFInterpolationsByCurve(curveName);
 	delFWDInterpolationsByCurve(curveName);
@@ -4855,7 +4855,7 @@ void LAMathYieldCurve::deleteCurveDataByCurveName(const LAString& curveName)
 int
 LAMathYieldCurve::getYieldDataVersion() const
 {
-	const LAObject& yieldData = getYieldData().get().get();
+	const AQLObject& yieldData = getYieldData().get().get();
 	int version = yieldData.getModel();
 	return yieldData.getModel();
 }
@@ -4892,7 +4892,7 @@ LAMathPathYieldCurve::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -4901,8 +4901,8 @@ LAMathPathYieldCurve::getP(double T) const
 {
 	if(T < m_t)
 	{
-		LAString msg = "T is before BaseDate";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "T is before BaseDate";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 //	DayCount dc = mpYC->getDayCount().getDayCount();
 //	if (mDC == dc)
@@ -4913,10 +4913,10 @@ LAMathPathYieldCurve::getP(double T) const
 //	}
 /*	else
 	{
-		LAPriceDataDayCount data_dc1(mDC);
-		LAPriceDataDayCount data_dc2(dc);
-		const LAObject& YieldData = mpYC->getYieldData().get().get();
-		const LADate& asOf = dynamic_cast<const LADataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+		AQLPriceDataDayCount data_dc1(mDC);
+		AQLPriceDataDayCount data_dc2(dc);
+		const AQLObject& YieldData = mpYC->getYieldData().get().get();
+		const AQLDate& asOf = dynamic_cast<const AQLDataDate&> ((YieldData.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
 		double term_t = data_dc1.getTerm(asOf, data_dc2.getDayTerm(asOf, m_t));
 		double term_T = data_dc1.getTerm(asOf, data_dc2.getDayTerm(asOf, T));

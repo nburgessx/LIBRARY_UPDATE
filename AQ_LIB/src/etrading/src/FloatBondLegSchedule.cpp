@@ -34,8 +34,8 @@ namespace etrading
 		auto accrualDateSize = accrualDates.size();
 		auto cashflowSize = accrualDateSize - 1;
 
-		const LADate adjustedMaturityDate = accrualDates[accrualDateSize - 1];
-		const LADate unAdjustedMaturityDt = validateMaturityDate(getEffectiveDate(), accrualEndDateOrTenor_);
+		const AQLDate adjustedMaturityDate = accrualDates[accrualDateSize - 1];
+		const AQLDate unAdjustedMaturityDt = validateMaturityDate(getEffectiveDate(), accrualEndDateOrTenor_);
 
 		// For bond, the maturity date is NEVER adjusted, so we need to update the last accrualEndDate, paymentDate, and accrualDate
 		if (unAdjustedMaturityDt != adjustedMaturityDate)

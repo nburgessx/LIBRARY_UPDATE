@@ -50,10 +50,10 @@ LARiskConfigurationVolatility::~LARiskConfigurationVolatility(void)
 	@param[in] key ccy or fx
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationVolatility::createScenario1Entity(const LAString &key, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationVolatility::createScenario1Entity(const AQLString &key, AQLDataInstance &dataInstance, int index)  const
 {
 	index;
 	if (isRealCalib())
@@ -73,10 +73,10 @@ LARiskConfigurationVolatility::createScenario1Entity(const LAString &key, LAData
 	@param[in] key ccy or fx
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationVolatility::createScenario2Entity(const LAString &key, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationVolatility::createScenario2Entity(const AQLString &key, AQLDataInstance &dataInstance, int index)  const
 {
 	index;
 	if (isRealCalib())
@@ -96,12 +96,12 @@ LARiskConfigurationVolatility::createScenario2Entity(const LAString &key, LAData
 	@return bool 
 */
 bool
-LARiskConfigurationVolatility::isTarget(const LAString &ccy) const
+LARiskConfigurationVolatility::isTarget(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	bool ret = LARiskConfiguration::isTarget(ccy);
 
-	LAStringVector simsde = MADealUtils::getSimulationSDECurrencys();
+	AQLStringVector simsde = MADealUtils::getSimulationSDECurrencys();
 	unsigned int sdesize = simsde.size();
 
 	if (sdesize == 0)

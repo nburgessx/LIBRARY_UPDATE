@@ -2,9 +2,9 @@
     @brief Source code for class to represent Market Parameter Data for Plain Vanilla Calculation.
 
 			Following dataValues are registered automatically to data master<BR>
-			1.CALIBRATION_DATA_NAME(LADataString)<BR>
-			2.CALIBRATION_DATA_ASOFDATE(LADataDate)<BR>
-			10.IR_MODEL_DATA_CORRELATIONMATRIX(LADataDoubleMatrix)<BR>
+			1.CALIBRATION_DATA_NAME(AQLDataString)<BR>
+			2.CALIBRATION_DATA_ASOFDATE(AQLDataDate)<BR>
+			10.IR_MODEL_DATA_CORRELATIONMATRIX(AQLDataDoubleMatrix)<BR>
 			
 
 */
@@ -18,30 +18,30 @@
 #include "LAMathPathEntity.h"
 #include "LAMathVolatility.h"
 
-#include "LADataInstance.h"
-#include "LABasic.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LAPriceDataManager.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLBasic.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
 
-#include "LAMathDefine.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathVolFuncBase.h"
 #include "LAMathCorrelation.h"
 #include "LAMathYieldCurve.h"
 #include "LAMathFXEntity.h"
 #include "LAMathFXUtility.h"
 
-#include "LAMatrix.h"
-#include "LACholeskyDecompSC.h"
-#include "LAAlgorithm.h"
+#include "AQLMatrix.h"
+#include "AQLCholeskyDecompSC.h"
+#include "AQLAlgorithm.h"
 #include "LAMathYieldCurvePro.h"
-#include "LALinearInterpolation.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
 
 
 #include <cmath>
@@ -54,15 +54,15 @@ using namespace std;
 /*!
     @brief default constructor
 
-	@param[in] dataInstance pointer of LADataInstance object
+	@param[in] dataInstance pointer of AQLDataInstance object
 
 */
-LAMathPlainVanillaEntity::LAMathPlainVanillaEntity(LADataInstance* dataInstance) :
-LAObject()
+LAMathPlainVanillaEntity::LAMathPlainVanillaEntity(AQLDataInstance* dataInstance) :
+AQLObject()
 {
 	setDataInstance(dataInstance);
 
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 	dm.setData(CALIBRATION_DATA_NAME, DATA_STRING);
 	dm.setData(CALIBRATION_DATA_ASOFDATE, DATA_DATE);
 	dm.setData(IR_MODEL_DATA_DAYCOUNT, DATA_DAYCOUNT);
@@ -110,7 +110,7 @@ LAObject()
 */
 LAMathPlainVanillaEntity::LAMathPlainVanillaEntity(
 	const LAMathPlainVanillaEntity& evanilla) :
-LAObject(evanilla)
+AQLObject(evanilla)
 {
 	mpName		 = &getData(CALIBRATION_DATA_NAME);
 	mpAsOfDate   = &getData(CALIBRATION_DATA_ASOFDATE);
@@ -153,63 +153,63 @@ LAMathPlainVanillaEntity::getType(void) const
 bool
 LAMathPlainVanillaEntity::isTypeOf(object_t id) const
 {
-	return (id == ENTITY_PLAINVANILLA ? true : LAObject::isTypeOf(id));
+	return (id == ENTITY_PLAINVANILLA ? true : AQLObject::isTypeOf(id));
 }
 /*!
     @brief get basedate
 	@return basedate
 */
-const LADataDate&  
+const AQLDataDate&  
 LAMathPlainVanillaEntity::getAsOfDate(void) const
 {
-	return dynamic_cast<const LADataDate&>(mpAsOfDate->get());
+	return dynamic_cast<const AQLDataDate&>(mpAsOfDate->get());
 }
 /*!
     @brief Get basedate.The setting of basedate is also possible.
 	@return basedate
 */
-LADataDate&  
+AQLDataDate&  
 LAMathPlainVanillaEntity::getAsOfDate(void)
 {
-	return dynamic_cast<LADataDate&>(mpAsOfDate->get());
+	return dynamic_cast<AQLDataDate&>(mpAsOfDate->get());
 }
 /*!
     @brief get this Plain vanilla Object-name.
 	@return name
 */
-const LADataString&	
+const AQLDataString&	
 LAMathPlainVanillaEntity::getName() const	
 {
-	return dynamic_cast<const LADataString&>(mpName->get());
+	return dynamic_cast<const AQLDataString&>(mpName->get());
 }
 
 /*!
     @brief get this Plain vanilla Object-name.
 	@return name
 */
-LADataString&	
+AQLDataString&	
 LAMathPlainVanillaEntity::getName() 	
 {
-	return dynamic_cast<LADataString&>(mpName->get());
+	return dynamic_cast<AQLDataString&>(mpName->get());
 }
 
 /*!
 	@brief get DayCount
 	@return DayCount
 */
-const LAPriceDataDayCount&	
+const AQLPriceDataDayCount&	
 LAMathPlainVanillaEntity::getDayCount(void) const
 {
-	return dynamic_cast<const LAPriceDataDayCount&>(mpDC->get());
+	return dynamic_cast<const AQLPriceDataDayCount&>(mpDC->get());
 }
 /*!
 	@brief get DayCount.The setting of DayCount is also possible.
 	@return DayCount
 */
-LAPriceDataDayCount&
+AQLPriceDataDayCount&
 LAMathPlainVanillaEntity::getDayCount(void)
 {
-	return dynamic_cast<LAPriceDataDayCount&>(mpDC->get());
+	return dynamic_cast<AQLPriceDataDayCount&>(mpDC->get());
 }
 /*!
 
@@ -219,148 +219,148 @@ LAMathPlainVanillaEntity::getDayCount(void)
     @brief get this Plain vanilla IR CCYS.
 	@return CCYS
 */
-const LADataStrings&	
+const AQLDataStrings&	
 LAMathPlainVanillaEntity::getIRCurrencys() const
 {
-	return dynamic_cast<const LADataStrings &>(mpIRCurs->get());
+	return dynamic_cast<const AQLDataStrings &>(mpIRCurs->get());
 }
 
 /*!
     @brief get this Plain vanilla IR CCYS.
 	@return CCYS
 */
-LADataStrings&	
+AQLDataStrings&	
 LAMathPlainVanillaEntity::getIRCurrencys()
 {
-	return dynamic_cast<LADataStrings &>(mpIRCurs->get());
+	return dynamic_cast<AQLDataStrings &>(mpIRCurs->get());
 }
 
 /*!
     @brief get this Plain vanilla IR Simulation CCYS.
 	@return CCYS
 */
-const LADataStrings&	
+const AQLDataStrings&	
 LAMathPlainVanillaEntity::getIRSimCurrencys() const
 {
-	return dynamic_cast<const LADataStrings &>(mpIRSimCurs->get());
+	return dynamic_cast<const AQLDataStrings &>(mpIRSimCurs->get());
 }
 
 /*!
     @brief get this Plain vanilla IR Simulation CCYS.
 	@return CCYS
 */
-LADataStrings&	
+AQLDataStrings&	
 LAMathPlainVanillaEntity::getIRSimCurrencys()
 {
-	return dynamic_cast<LADataStrings &>(mpIRSimCurs->get());
+	return dynamic_cast<AQLDataStrings &>(mpIRSimCurs->get());
 }
 
 /*!
     @brief get this Plain vanilla IR CurveTypes.
 	@return CCYS
 */
-const LADataStrings&	
+const AQLDataStrings&	
 LAMathPlainVanillaEntity::getIRCurveTypes() const
 {
-	return dynamic_cast<const LADataStrings &>(mpIRCurveTypes->get());
+	return dynamic_cast<const AQLDataStrings &>(mpIRCurveTypes->get());
 }
 
 /*!
     @brief get this Plain vanilla IR CurveTypes.
 	@return CCYS
 */
-LADataStrings&	
+AQLDataStrings&	
 LAMathPlainVanillaEntity::getIRCurveTypes()
 {
-	return dynamic_cast<LADataStrings &>(mpIRCurveTypes->get());
+	return dynamic_cast<AQLDataStrings &>(mpIRCurveTypes->get());
 }
 
 /*!
     @brief get this Plain vanilla FX CCYS.
 	@return CCYS
 */
-const LADataStrings&	
+const AQLDataStrings&	
 LAMathPlainVanillaEntity::getFXCurrencys() const
 {
-	return dynamic_cast<const LADataStrings &>(mpFXCurs->get());
+	return dynamic_cast<const AQLDataStrings &>(mpFXCurs->get());
 }
 
 /*!
     @brief get this Plain vanilla FX CCYS.
 	@return CCYS
 */
-LADataStrings&	
+AQLDataStrings&	
 LAMathPlainVanillaEntity::getFXCurrencys()
 {
-	return dynamic_cast<LADataStrings &>(mpFXCurs->get());
+	return dynamic_cast<AQLDataStrings &>(mpFXCurs->get());
 }
 
 
 // get ir curves
-const LADataMultiReference&	
+const AQLDataMultiReference&	
 LAMathPlainVanillaEntity::getIRCurves() const
 {
-	return dynamic_cast<const LADataMultiReference&>(mpIRCurves->get());
+	return dynamic_cast<const AQLDataMultiReference&>(mpIRCurves->get());
 }
 // get ir curves
-LADataMultiReference&
+AQLDataMultiReference&
 LAMathPlainVanillaEntity::getIRCurves()
 {
-	return dynamic_cast<LADataMultiReference&>(mpIRCurves->get());
+	return dynamic_cast<AQLDataMultiReference&>(mpIRCurves->get());
 }
 
 // get ir curvepro names
-const LADataStrings&	
+const AQLDataStrings&	
 LAMathPlainVanillaEntity::getIRCurveProNames() const
 {
-	return dynamic_cast<const LADataStrings&>(mpIRCurveProNames->get());
+	return dynamic_cast<const AQLDataStrings&>(mpIRCurveProNames->get());
 }
 // get ir curvepro names
-LADataStrings&
+AQLDataStrings&
 LAMathPlainVanillaEntity::getIRCurveProNames()
 {
-	return dynamic_cast<LADataStrings&>(mpIRCurveProNames->get());
+	return dynamic_cast<AQLDataStrings&>(mpIRCurveProNames->get());
 }
 
 
 
 // get ir volatilitys
-const LADataMultiReference&	
+const AQLDataMultiReference&	
 LAMathPlainVanillaEntity::getIRVolatilitys() const
 {
-	return dynamic_cast<const LADataMultiReference&>(mpIRVols->get());
+	return dynamic_cast<const AQLDataMultiReference&>(mpIRVols->get());
 }
 // get ir volatilitys
-LADataMultiReference&
+AQLDataMultiReference&
 LAMathPlainVanillaEntity::getIRVolatilitys()
 {
-	return dynamic_cast<LADataMultiReference&>(mpIRVols->get());
+	return dynamic_cast<AQLDataMultiReference&>(mpIRVols->get());
 }
 
 // get fx volatilitys
-const LADataMultiReference&	
+const AQLDataMultiReference&	
 LAMathPlainVanillaEntity::getFXVolatilitys() const
 {
-	return dynamic_cast<const LADataMultiReference&>(mpFXVols->get());
+	return dynamic_cast<const AQLDataMultiReference&>(mpFXVols->get());
 }
 // get fx volatilitys
-LADataMultiReference&
+AQLDataMultiReference&
 LAMathPlainVanillaEntity::getFXVolatilitys()
 {
-	return dynamic_cast<LADataMultiReference&>(mpFXVols->get());
+	return dynamic_cast<AQLDataMultiReference&>(mpFXVols->get());
 }
 
 // get fx object
-const LADataReference&
+const AQLDataReference&
 LAMathPlainVanillaEntity::getFXEntity() const
 {
-	return dynamic_cast<const LADataReference&>(mpFX->get());
+	return dynamic_cast<const AQLDataReference&>(mpFX->get());
 }
 // get fx object
-LADataReference&
+AQLDataReference&
 LAMathPlainVanillaEntity::getFXEntity()
 {
-	return dynamic_cast<LADataReference&>(mpFX->get());
+	return dynamic_cast<AQLDataReference&>(mpFX->get());
 }
 
 /*!
@@ -373,7 +373,7 @@ LAMathPlainVanillaEntity::setUpIRCurveTypes()
 	const unsigned int size = getIRCurveTypes().getSize();
 	if (size != getIRCurves().getSize())
 	{
-		throw LACoreInvalidData("Curve size and CurveType size is not same", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Curve size and CurveType size is not same", __FILE__, __LINE__);
 	}
 	for (unsigned int i = 0; i < size; ++i)
 	{
@@ -384,13 +384,13 @@ LAMathPlainVanillaEntity::setUpIRCurveTypes()
 
 // get IR Curve
 const LAMathYieldCurve& 
-LAMathPlainVanillaEntity::getIRCurve(const LAString &key) const
+LAMathPlainVanillaEntity::getIRCurve(const AQLString &key) const
 {
-	LAString tmpKey = key;
-	const LAStringVector& ircurs = getIRCurrencys().get();
-	LAStringVector::const_iterator it = std::find(ircurs.begin(), ircurs.end(), tmpKey.toUpper());
+	AQLString tmpKey = key;
+	const AQLStringVector& ircurs = getIRCurrencys().get();
+	AQLStringVector::const_iterator it = std::find(ircurs.begin(), ircurs.end(), tmpKey.toUpper());
 	if (it == ircurs.end())
-		throw LACoreInvalidData("Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Error",__FILE__,__LINE__);
 
 	unsigned int pos = static_cast<unsigned int>(it - ircurs.begin());
 	const LAMathYieldCurve &curve = dynamic_cast<LAMathYieldCurve &>(getIRCurves().get(pos).get());
@@ -399,13 +399,13 @@ LAMathPlainVanillaEntity::getIRCurve(const LAString &key) const
 
 // get IR Curve
 LAMathYieldCurve&
-LAMathPlainVanillaEntity::getIRCurve(const LAString &key)
+LAMathPlainVanillaEntity::getIRCurve(const AQLString &key)
 {
-	LAString tmpKey = key;
-	const LAStringVector& ircurs = getIRCurrencys().get();
-	LAStringVector::const_iterator it = std::find(ircurs.begin(), ircurs.end(), tmpKey.toUpper());
+	AQLString tmpKey = key;
+	const AQLStringVector& ircurs = getIRCurrencys().get();
+	AQLStringVector::const_iterator it = std::find(ircurs.begin(), ircurs.end(), tmpKey.toUpper());
 	if (it == ircurs.end())
-		throw LACoreInvalidData("Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Error",__FILE__,__LINE__);
 
 	unsigned int pos = static_cast<unsigned int>(it - ircurs.begin());
 	LAMathYieldCurve &curve = dynamic_cast<LAMathYieldCurve &>(getIRCurves().get(pos).get());
@@ -413,24 +413,24 @@ LAMathPlainVanillaEntity::getIRCurve(const LAString &key)
 }
 
 // get CurvePro Names
-const LAString&
-LAMathPlainVanillaEntity::getIRCurveProName(const LAString &key) const
+const AQLString&
+LAMathPlainVanillaEntity::getIRCurveProName(const AQLString &key) const
 {
-	LAString tmpKey = key;
-	const LAStringVector& ircurs = getIRCurrencys().get();
-	LAStringVector::const_iterator it = std::find(ircurs.begin(), ircurs.end(), tmpKey.toUpper());
+	AQLString tmpKey = key;
+	const AQLStringVector& ircurs = getIRCurrencys().get();
+	AQLStringVector::const_iterator it = std::find(ircurs.begin(), ircurs.end(), tmpKey.toUpper());
 	if (it == ircurs.end())
 	{
-		LAString msg = "The ccy is not registered. ccy = " + key;
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "The ccy is not registered. ccy = " + key;
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
 	unsigned int pos = static_cast<unsigned int>(it - ircurs.begin());
-	const LAStringVector &curveProNames = getIRCurveProNames().get();
+	const AQLStringVector &curveProNames = getIRCurveProNames().get();
 	if (curveProNames.size() <= pos)
 	{
-		LAString msg = "YieldCurvePro Name is not registered. ccy = " + key;
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "YieldCurvePro Name is not registered. ccy = " + key;
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
 	return curveProNames[pos];
@@ -438,19 +438,19 @@ LAMathPlainVanillaEntity::getIRCurveProName(const LAString &key) const
 
 // get IR CurvePro
 const LAMathYieldCurvePro& 
-LAMathPlainVanillaEntity::getIRCurvePro(const LAString &key) const
+LAMathPlainVanillaEntity::getIRCurvePro(const AQLString &key) const
 {
-	const LAString &name = getIRCurveProName(key);
-	LAObjectPool &objPool = getDataInstance()->getObjectPool();
+	const AQLString &name = getIRCurveProName(key);
+	AQLObjectPool &objPool = getDataInstance()->getObjectPool();
 	return  dynamic_cast<const LAMathYieldCurvePro &>(objPool.getObject(name, ENCHKTYPE_ISDEFINED).get());
 }
 
 // get IR CurvePro
 LAMathYieldCurvePro&
-LAMathPlainVanillaEntity::getIRCurvePro(const LAString &key)
+LAMathPlainVanillaEntity::getIRCurvePro(const AQLString &key)
 {
-	const LAString &name = getIRCurveProName(key);
-	LAObjectPool &objPool = getDataInstance()->getObjectPool();
+	const AQLString &name = getIRCurveProName(key);
+	AQLObjectPool &objPool = getDataInstance()->getObjectPool();
 	return  dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(name, ENCHKTYPE_ISDEFINED).get());
 }
 
@@ -458,14 +458,14 @@ LAMathPlainVanillaEntity::getIRCurvePro(const LAString &key)
 
 // get FX Vol
 LAMathVolatility& 
-LAMathPlainVanillaEntity::getFXVol(const LAString &key)
+LAMathPlainVanillaEntity::getFXVol(const AQLString &key)
 {
-	LAString tmpKey = key;
-	const LAStringVector& fxcurs = getFXCurrencys().get();
+	AQLString tmpKey = key;
+	const AQLStringVector& fxcurs = getFXCurrencys().get();
 	
-	LAStringVector::const_iterator it = std::find(fxcurs.begin(), fxcurs.end(), tmpKey.toUpper());
+	AQLStringVector::const_iterator it = std::find(fxcurs.begin(), fxcurs.end(), tmpKey.toUpper());
 	if (it == fxcurs.end())
-		throw LACoreInvalidData("Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Error",__FILE__,__LINE__);
 
 	unsigned int pos = static_cast<unsigned int>(it - fxcurs.begin());
 	return dynamic_cast<LAMathVolatility &>(getFXVolatilitys().get(pos).get());
@@ -474,34 +474,34 @@ LAMathPlainVanillaEntity::getFXVol(const LAString &key)
 
 
 // get FXVol method
-const LAFunctionBase*
-LAMathPlainVanillaEntity::getFXVolFunc(const LAString &key)
+const AQLFunctionBase*
+LAMathPlainVanillaEntity::getFXVolFunc(const AQLString &key)
 {
 	LAMathVolatility& fxvol = getFXVol(key);
-	const LAFunctionBase* ret = fxvol.getVolatilityFunc();
+	const AQLFunctionBase* ret = fxvol.getVolatilityFunc();
 	return ret;
 }
 
 // get IR Vol
 LAMathVolatility& 
-LAMathPlainVanillaEntity::getIRVol(const LAString &key)
+LAMathPlainVanillaEntity::getIRVol(const AQLString &key)
 {
-	LAString tmpKey = key;
-	const LAStringVector& ircurs = getIRCurrencys().get();
-	LAStringVector::const_iterator it = std::find(ircurs.begin(), ircurs.end(), tmpKey.toUpper());
+	AQLString tmpKey = key;
+	const AQLStringVector& ircurs = getIRCurrencys().get();
+	AQLStringVector::const_iterator it = std::find(ircurs.begin(), ircurs.end(), tmpKey.toUpper());
 	if (it == ircurs.end())
-		throw LACoreInvalidData("Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Error",__FILE__,__LINE__);
 
 	unsigned int pos = static_cast<unsigned int>(it - ircurs.begin());
 	return dynamic_cast<LAMathVolatility &>(getIRVolatilitys().get(pos).get());
 }
 
 // get IRVol method
-const LAFunctionBase*
-LAMathPlainVanillaEntity::getIRVolFunc(const LAString &key)
+const AQLFunctionBase*
+LAMathPlainVanillaEntity::getIRVolFunc(const AQLString &key)
 {
 	LAMathVolatility& irvol = getIRVol(key);
-	const LAFunctionBase* ret = irvol.getVolatilityFunc();
+	const AQLFunctionBase* ret = irvol.getVolatilityFunc();
 	return ret;
 }
 
@@ -511,26 +511,26 @@ LAMathPlainVanillaEntity::getIRVolFunc(const LAString &key)
 	@brief get correlation matrix between SDEs
 	@return correlation matrix
 */
-const LADataDoubleMatrix&
+const AQLDataDoubleMatrix&
 LAMathPlainVanillaEntity::getCorrelationMatrix() const
 {
-	return dynamic_cast<const LADataDoubleMatrix&>(mpCor->get());
+	return dynamic_cast<const AQLDataDoubleMatrix&>(mpCor->get());
 }
 /*!
 	@brief get correlation matrix between SDEs. The setting of correlation matrix is also possible. 
 	@return correlation matrix
 */
-LADataDoubleMatrix&
+AQLDataDoubleMatrix&
 LAMathPlainVanillaEntity::getCorrelationMatrix()
 {
-	return dynamic_cast<LADataDoubleMatrix&>(mpCor->get());
+	return dynamic_cast<AQLDataDoubleMatrix&>(mpCor->get());
 }
 
 /*!
     @brief Make copy(clone) of this PlainVanilla Object object.
     @return pointer of this PlainVanilla Object object.
 */
-LAObject* 
+AQLObject* 
 LAMathPlainVanillaEntity::clone() const
 {
     try 
@@ -538,7 +538,7 @@ LAMathPlainVanillaEntity::clone() const
     	return new LAMathPlainVanillaEntity(*this);
     }
     catch (bad_alloc & e){
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -548,7 +548,7 @@ LAMathPlainVanillaEntity::clone() const
 */
 void                
 LAMathPlainVanillaEntity::remove(
-	const LAString& dataName)
+	const AQLString& dataName)
 {
 	if(dataName == CALIBRATION_DATA_NAME
 		|| dataName == CALIBRATION_DATA_ASOFDATE 
@@ -567,7 +567,7 @@ LAMathPlainVanillaEntity::remove(
 	{
 		return; 
 	}
-	LAObject::remove(dataName);
+	AQLObject::remove(dataName);
 }
 
 /*!
@@ -601,18 +601,18 @@ LAMathPlainVanillaEntity::reset(void)
 	@param[in] e copy source
 	@return reference to this object
 */
-LAObject&
+AQLObject&
 LAMathPlainVanillaEntity::copy(
-	const LAObject& e)
+	const AQLObject& e)
 {
 	if (this == &e) return *this;
 
-	LAObject::copy(e);
+	AQLObject::copy(e);
 	if (!e.isTypeOf(ENTITY_PLAINVANILLA))
 	{
-		LAString err = "Assignement error for LAMathPlainVanillaEntity : from ";
-		err += LAString(e.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignement error for LAMathPlainVanillaEntity : from ";
+		err += AQLString(e.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	mpName		 = &getData(CALIBRATION_DATA_NAME);
@@ -638,14 +638,14 @@ LAMathPlainVanillaEntity::copy(
 	@param[in] name name of certain data
 	@return reference to holder class 
 */
-LADataHolder&
-LAMathPlainVanillaEntity::add(const LAString& name)
+AQLDataHolder&
+LAMathPlainVanillaEntity::add(const AQLString& name)
 {
 	// search Data of name
-	LADataInstance* dataInstance = getDataInstance();
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
-	const LADataHolder& dh = dm.getData(name);
-	return LAObject::add(name, dh);
+	AQLDataInstance* dataInstance = getDataInstance();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
+	const AQLDataHolder& dh = dm.getData(name);
+	return AQLObject::add(name, dh);
 }
 
 // 
@@ -663,18 +663,18 @@ LAMathPlainVanillaEntity::setUpLiborRateMap(void) const
 	if (!mLiborRateMap.empty())
 		return;
 	
-	LAObjectPool& objPool = getDataInstance()->getObjectPool();
-	LADate asOf = getAsOfDate().get();
-	LAPriceDataDayCount dc(ACT_365_ISDA);
+	AQLObjectPool& objPool = getDataInstance()->getObjectPool();
+	AQLDate asOf = getAsOfDate().get();
+	AQLPriceDataDayCount dc(ACT_365_ISDA);
 
-	const LAStringVector &ircurs = getIRCurrencys().get();
+	const AQLStringVector &ircurs = getIRCurrencys().get();
 	for (unsigned int i = 0; i < ircurs.size(); i++)
 	{
-		LAString ccy = ircurs[i];
+		AQLString ccy = ircurs[i];
 		ccy.toLower();
 		
 		const LAMathYieldCurvePro& bYieldPro = getIRCurvePro(ccy);
-		const LADataMultiReference& refMarketDatas = bYieldPro.getMarketData();
+		const AQLDataMultiReference& refMarketDatas = bYieldPro.getMarketData();
 		
 		const unsigned int dataSize = refMarketDatas.getSize();
 		if (dataSize == 0)
@@ -684,25 +684,25 @@ LAMathPlainVanillaEntity::setUpLiborRateMap(void) const
 		DoubleVector termvec,ratevec;
 		for (unsigned int j = 0; j < dataSize; ++j)
 		{
-			const LAObject& data = refMarketDatas.get(j).get();
-			LAString type = dynamic_cast<const LADataString&> ((data.getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+			const AQLObject& data = refMarketDatas.get(j).get();
+			AQLString type = dynamic_cast<const AQLDataString&> ((data.getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 			type.toUpper();
 			if (type !=  "ZERORATE") //Libor only
 				continue;
 			
-			double rate  = dynamic_cast<const LADataDouble &>(data.getData(CALIBRATION_DATA_RATE, ISNOTNULL).get()).get();
-			const LAString& termStr = dynamic_cast<const LADataString &>(data.getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get()).get();			
-			const LADate& spotdate = dynamic_cast<const LADataDate&> ((data.getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
-			const LAPriceDataCalendar& cal  = dynamic_cast<const LAPriceDataCalendar&> ((data.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-			const LAPriceDataSlidingRule& sld  = dynamic_cast<const LAPriceDataSlidingRule&> ((data.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-			const LAString& freq = dynamic_cast<const LADataString &>(data.getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL).get()).get();
-			const LADataBool& eom  = dynamic_cast<const LADataBool&> ((data.getData(IR_CALIBRATION_DATA_ISEOMROLL, ISNOTNULL)).get());
-			LAString roll_conv("");
+			double rate  = dynamic_cast<const AQLDataDouble &>(data.getData(CALIBRATION_DATA_RATE, ISNOTNULL).get()).get();
+			const AQLString& termStr = dynamic_cast<const AQLDataString &>(data.getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get()).get();			
+			const AQLDate& spotdate = dynamic_cast<const AQLDataDate&> ((data.getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+			const AQLPriceDataCalendar& cal  = dynamic_cast<const AQLPriceDataCalendar&> ((data.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+			const AQLPriceDataSlidingRule& sld  = dynamic_cast<const AQLPriceDataSlidingRule&> ((data.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+			const AQLString& freq = dynamic_cast<const AQLDataString &>(data.getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL).get()).get();
+			const AQLDataBool& eom  = dynamic_cast<const AQLDataBool&> ((data.getData(IR_CALIBRATION_DATA_ISEOMROLL, ISNOTNULL)).get());
+			AQLString roll_conv("");
 			if (freq == "LUNAR") roll_conv = "LUNAR";
 			else if (eom) roll_conv = "EOM";
 			else roll_conv = "NORMAL";
 
-			LADate enddate = LAMathDateCalculations::getDate(spotdate, termStr, sld, &cal, true, &roll_conv);
+			AQLDate enddate = LAMathDateCalculations::getDate(spotdate, termStr, sld, &cal, true, &roll_conv);
 		
 			const double term = dc.getTerm(spotdate, enddate, false);
 			
@@ -712,14 +712,14 @@ LAMathPlainVanillaEntity::setUpLiborRateMap(void) const
 		if (termvec.size() < 1)
 		{
 			bool isFwdFX = false;
-			const LADataHolder& dh = bYieldPro.getYieldData().get().getData(IR_CALIBRATION_DATA_ISFWDFX);
+			const AQLDataHolder& dh = bYieldPro.getYieldData().get().getData(IR_CALIBRATION_DATA_ISFWDFX);
 			if (dh.isDefined() && !dh.isNull()) 
-				isFwdFX = dynamic_cast<const LADataBool&>(dh.get()).get();
+				isFwdFX = dynamic_cast<const AQLDataBool&>(dh.get()).get();
 			if (!isFwdFX)
-				throw LACoreInvalidData("Libor Rate Map Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("Libor Rate Map Error",__FILE__,__LINE__);
 		}
 		
-		LALinearInterpolation* pInter = new LALinearInterpolation();
+		AQLLinearInterpolation* pInter = new AQLLinearInterpolation();
 		pInter->set(termvec, ratevec);
 
 		mLiborRateMap.insert(std::make_pair(ircurs[i], pInter));
@@ -735,7 +735,7 @@ LAMathPlainVanillaEntity::setUpLiborRateMap(void) const
 void 
 LAMathPlainVanillaEntity::clearLiborRateMap(void) const
 {
-	std::map<LAString, LAInterpolationBase *>::iterator it = mLiborRateMap.begin();
+	std::map<AQLString, AQLInterpolationBase *>::iterator it = mLiborRateMap.begin();
 	while (it != mLiborRateMap.end())
 	{
 		delete it->second;

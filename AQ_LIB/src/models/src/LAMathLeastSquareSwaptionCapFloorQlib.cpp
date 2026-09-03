@@ -13,7 +13,7 @@ mCapfloor(&capfloor_),
 mSwaptionVol(&swaption_vol_),
 mCloned(false)
 {
-    if( mWeight.size() != 2 ) throw LACoreInvalidData("mWeight.size() != 2",__FILE__,__LINE__);
+    if( mWeight.size() != 2 ) throw AQLCoreInvalidData("mWeight.size() != 2",__FILE__,__LINE__);
 }
 
 LAMathLeastSquareSwaptionCapFloorQlib::LAMathLeastSquareSwaptionCapFloorQlib( const LAMathLeastSquareSwaptionCapFloorQlib& rhs )

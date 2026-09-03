@@ -1035,7 +1035,7 @@
     <ClInclude Include="..\src\models\include\LATime.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LACoreComponentManager.h">
+    <ClInclude Include="..\src\models\include\AQLCoreComponentManager.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
     <ClInclude Include="..\src\models\include\LALinearRatesOptionValueDataProvider.h">
@@ -1853,7 +1853,7 @@
     <ClCompile Include="..\src\models\src\LAEigenSystems.cpp">
       <Filter>src\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LACoreComponentManager.cpp">
+    <ClCompile Include="..\src\models\src\AQLCoreComponentManager.cpp">
       <Filter>src\Infrastructure</Filter>
     </ClCompile>
     <ClCompile Include="..\src\models\src\LALinearRatesOptionValueDataProvider.cpp">

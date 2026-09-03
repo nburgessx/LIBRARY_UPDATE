@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CommonConstants.h"
 #include "CoreEnumerations.h"
 #include "LabelValueBlock.h"
@@ -26,8 +26,8 @@ namespace etrading
         SettlementTypeEnum settlementType() const       { return settlementType_;       };
         
         double strike() const                           { return strike_;               };
-        LADate effectiveDate() const                    { return effectiveDate_;        };
-        LADate adjustedOptionExpiryDate() const         { return adjustedOptionExpiryDate_;  };
+        AQLDate effectiveDate() const                    { return effectiveDate_;        };
+        AQLDate adjustedOptionExpiryDate() const         { return adjustedOptionExpiryDate_;  };
         std::string tenorDescription() const            { return tenorDescription_;     };
         DayCountEnum optionDayCount() const             { return optionDayCount_;       };
         std::string notificationDays() const            { return notificationDays_;     };
@@ -39,8 +39,8 @@ namespace etrading
 
         std::string swapGeneratorString() const         { return swapGeneratorString_;  };
         SwapPtr underlyingSwap() const                  { return underlyingSwap_;       };
-        LADate swapStartDate() const                    { return swapStartDate_;        };
-        LADate swapMaturityDate() const                 { return swapMaturityDate_;     };
+        AQLDate swapStartDate() const                    { return swapStartDate_;        };
+        AQLDate swapMaturityDate() const                 { return swapMaturityDate_;     };
 
         BusinessDayAdjustmentEnum busDayAdj() const     { return busDayAdj_;            };
         std::string calendar() const                    { return calendar_;             };
@@ -49,7 +49,7 @@ namespace etrading
         PayReceiveEnum feePayReceive() const            { return feePayReceive_;        };  
         double feePayReceiveIndicator() const           { return feePayReceiveIndicator_; };  
         double fee() const                              { return fee_;                  };
-        LADate feeDate() const                          { return feeDate_;              };
+        AQLDate feeDate() const                          { return feeDate_;              };
 
 	private:
 
@@ -58,7 +58,7 @@ namespace etrading
         * @param [in]   swapStartDate   The Swap Start date. We explicitly provide the date, because the underlying swap cannot imply the start date if provided as a tenor, since it is the base / reference date.
         * @param [in]   deaLVB	        The deal LVB used for building the Swap
 		*/
-		LabelValueBlock setupSwapExpressionLVBforSwaption( const LADate& swapStartDate, const LabelValueBlock& dealLVB ) const;
+		LabelValueBlock setupSwapExpressionLVBforSwaption( const AQLDate& swapStartDate, const LabelValueBlock& dealLVB ) const;
 
 		// Member data
 		OptionStyleEnum optionStyle_;					// European, Bermudan, American
@@ -67,8 +67,8 @@ namespace etrading
         SettlementTypeEnum settlementType_;				// Price Cash / Price Yield / Physical Bilateral / Physical Cleared
         
         double strike_;
-        LADate effectiveDate_;
-        LADate adjustedOptionExpiryDate_;               // Adjusted for Notification Lag
+        AQLDate effectiveDate_;
+        AQLDate adjustedOptionExpiryDate_;               // Adjusted for Notification Lag
         std::string tenorDescription_;                  // Optional Swaption Description
 		std::string notificationDays_;                  // This is actually a tenor string, which is typically a number of days
         DayCountEnum optionDayCount_;	                // Used to calculate year fraction from asOf date to maturity
@@ -80,8 +80,8 @@ namespace etrading
 
         std::string swapGeneratorString_;
 		SwapPtr underlyingSwap_;
-		LADate swapStartDate_;
-		LADate swapMaturityDate_;
+		AQLDate swapStartDate_;
+		AQLDate swapMaturityDate_;
 
         BusinessDayAdjustmentEnum busDayAdj_;
         std::string calendar_;
@@ -90,7 +90,7 @@ namespace etrading
         PayReceiveEnum feePayReceive_;
         double feePayReceiveIndicator_;
         double fee_;
-        LADate feeDate_;
+        AQLDate feeDate_;
 	};
 
 }

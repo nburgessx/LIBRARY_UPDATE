@@ -29,19 +29,19 @@ namespace validation
 	*  @param [in]		liborConv			Libor instrument conventions
 	*  @param [in]		liborRates			Libor market data
     */
-    const LAString tryMeCurveCalibrateBasis( const LAString& curveCollection,
-											 const LAString& staticDataTable,
-											 const LAString& curveIndexInput,
-											 const LAStringMatrix& curveConv,
-											 const LAStringMatrix& basisConv,
-											 const LAStringMatrix& basisRates,
-											 const LAStringMatrix& fxFwdConv,
-											 const LAStringMatrix& fxFwdRates,
-											 const LAStringMatrix& spotFxRates,
-											 const LAStringMatrix& fraConv,
-											 const LAStringMatrix& fraRates,
-											 const LAStringMatrix& liborConv,
-											 const LAStringMatrix& liborRates)
+    const AQLString tryMeCurveCalibrateBasis( const AQLString& curveCollection,
+											 const AQLString& staticDataTable,
+											 const AQLString& curveIndexInput,
+											 const AQLStringMatrix& curveConv,
+											 const AQLStringMatrix& basisConv,
+											 const AQLStringMatrix& basisRates,
+											 const AQLStringMatrix& fxFwdConv,
+											 const AQLStringMatrix& fxFwdRates,
+											 const AQLStringMatrix& spotFxRates,
+											 const AQLStringMatrix& fraConv,
+											 const AQLStringMatrix& fraRates,
+											 const AQLStringMatrix& liborConv,
+											 const AQLStringMatrix& liborRates)
     {
         VALID_EXCEPTION_START
 
@@ -51,7 +51,7 @@ namespace validation
         // Prefix the staticDataTable to the curveIndex Name Set, ensuring to use the ':' delimiter
         std::string curveIndexStdStr =  curveIndexInput.getCString();
         curveIndexStdStr = etrading::addPrefixStringAndCheckForDuplicates( curveIndexStdStr, std::string(staticDataTable.getCString()) );
-        LAString curveIndex  = curveIndexStdStr.c_str();
+        AQLString curveIndex  = curveIndexStdStr.c_str();
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -75,7 +75,7 @@ namespace validation
 
         if( ( fxFwdRates.empty() && basisRates.empty() ) || basisConv.empty() || curveConv.empty() )
         {
-            throw LACoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
             AQ_THROW("Invalid Data: Input data is missing")
         }
 
@@ -99,7 +99,7 @@ namespace validation
             AQ_THROW("Invalid Data: Input matix data must have column size 3")
         }
 
-        LAStringMatrix moneyConv = LAStringMatrix( 0 );
+        AQLStringMatrix moneyConv = AQLStringMatrix( 0 );
 
         etrading::LAUpdateStaticDataManager::setUpBasisCurve( etrading::getDataInstance(),
                                                               curveCollection,
@@ -118,7 +118,7 @@ namespace validation
 										                      liborRates );
 
         // note that curveIndexCopy is actually the staticDataTable ...
-        LAString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "3M6MBasis" ) );
+        AQLString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "3M6MBasis" ) );
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndexCopy );
         /*
@@ -126,7 +126,7 @@ namespace validation
         	********** The long term and more appropriate plan is to display an object handle rather than simply a message
         */
 
-        LAString ret( curveCollection + " " + staticDataTable + " Curve has been set" );
+        AQLString ret( curveCollection + " " + staticDataTable + " Curve has been set" );
 
         if ( CreateDataFile::recordEnabled() )
         {

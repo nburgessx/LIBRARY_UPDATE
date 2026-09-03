@@ -23,11 +23,11 @@ namespace validation
     *  @param [in]		rollConvention		Roll conventions, ie, Normal, IMM, EOM, Lunar, etc
     *  @return			The end date
     */
-    LAString tryMirGetDate( const LADate& baseDate,
-                            const LAString& term,
-                            const LAString& slidingRule,
-                            const LAString& calendar,
-                            const LAString& rollConvention )
+    AQLString tryMirGetDate( const AQLDate& baseDate,
+                            const AQLString& term,
+                            const AQLString& slidingRule,
+                            const AQLString& calendar,
+                            const AQLString& rollConvention )
     {
         VALID_EXCEPTION_START
 
@@ -45,8 +45,8 @@ namespace validation
             file.write( "rollConvention",	rollConvention );
         }
 
-        LADate mbReturnDate = etrading::LADateScheduleHelpers::getDate( baseDate, term, slidingRule, calendar );
-        LAString ret = mbReturnDate.stringWithFormat( "YYYYMMDD" );
+        AQLDate mbReturnDate = etrading::LADateScheduleHelpers::getDate( baseDate, term, slidingRule, calendar );
+        AQLString ret = mbReturnDate.stringWithFormat( "YYYYMMDD" );
         if ( CreateDataFile::recordEnabled() )
         {
 
@@ -69,10 +69,10 @@ namespace validation
     *  @return			A vector of end dates
     */
     DateVector tryMirGetDate( const DateVector& baseDates,
-                              const LAString& term,
-                              const LAString& slidingRule,
-                              const LAString& calendar,
-                              const LAString& rollConvention )
+                              const AQLString& term,
+                              const AQLString& slidingRule,
+                              const AQLString& calendar,
+                              const AQLString& rollConvention )
     {
         VALID_EXCEPTION_START
 

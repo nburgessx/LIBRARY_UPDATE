@@ -5,13 +5,13 @@
 #pragma interface
 #endif
 
-#include "LAString.h"
-#include "LADate.h"
-#include "LADataInstance.h"
+#include "AQLString.h"
+#include "AQLDate.h"
+#include "AQLDataInstance.h"
 #include <utility>
-#include "LAFunction.h"
+#include "AQLFunction.h"
 #include "LAPriceCMSCalibration.h"
-#include "LAFunctionVector.h"
+#include "AQLFunctionVector.h"
 
 using namespace std;
 
@@ -19,19 +19,19 @@ using namespace std;
 class LAPriceCMSSpreadCalibration
 {
 public:
-    static LAString Calibrate(LADataInstance* dataInstance, LAStringMatrix calibrationConfig, LAStringMatrix legScheduler, LAStringMatrix cmsScheduler,
-                              LAStringMatrix inputTypes, const LAStringVector& optionTypes, const DoubleVector& smileWeights);
+    static AQLString Calibrate(AQLDataInstance* dataInstance, AQLStringMatrix calibrationConfig, AQLStringMatrix legScheduler, AQLStringMatrix cmsScheduler,
+                              AQLStringMatrix inputTypes, const AQLStringVector& optionTypes, const DoubleVector& smileWeights);
 
-    static void ParseSLSmile(const LAStringMatrix& quoteMatrix, const LAStringVector& refTerms,
+    static void ParseSLSmile(const AQLStringMatrix& quoteMatrix, const AQLStringVector& refTerms,
                              const vector<bool>& isCalls,
                              DoubleVector& smileStrikes, DoubleMatrix& smilePrices);
 };
 
 //================ Calibration Targets ===================================
-class LAPriceCMSSpreadATMTarget : public LAFunction
+class LAPriceCMSSpreadATMTarget : public AQLFunction
 {
 public:
-    LAPriceCMSSpreadATMTarget(LADate valDate, CashFlowTiming cf, CurveInfo discCurveInfo,
+    LAPriceCMSSpreadATMTarget(AQLDate valDate, CashFlowTiming cf, CurveInfo discCurveInfo,
                          const SwapRateInfo& swapRate1, const SwapRateInfo& swapRate2,
                          double quote, bool isCall, double theta1, double theta2);
 
@@ -45,10 +45,10 @@ private:
     string mCopulaType = "Power Gaussian";
 };
 
-class LAPriceCMSSpreadSmileTarget : public LAFunctionVector
+class LAPriceCMSSpreadSmileTarget : public AQLFunctionVector
 {
 public:
-    LAPriceCMSSpreadSmileTarget(LADate valDate, CashFlowTiming cf, CurveInfo discCurveInfo,
+    LAPriceCMSSpreadSmileTarget(AQLDate valDate, CashFlowTiming cf, CurveInfo discCurveInfo,
                            const SwapRateInfo& swapRate1, const SwapRateInfo& swapRate2,
                            const DoubleVector& quotes, const DoubleVector& strikes, const vector<bool>& isCall,
                            const DoubleVector& weights);

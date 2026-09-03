@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace etrading
 {
@@ -9,12 +9,12 @@ namespace etrading
     *  @param [in]		curveIndex			Name of the curve to be removed from object pool
     *  @return	A message showing the output of the action
     */
-	LAString removeCurveFromEntityPool(const LAString& curveCollection, const LAString& curveIndex);
+	AQLString removeCurveFromEntityPool(const AQLString& curveCollection, const AQLString& curveIndex);
 
 	/* @brief			Method that returns a boolean indicator, telling us whether the specified curve is registerd in the object pool or not
     *  @param [in]		curveCollection		Name of curve collection
     *  @param [in]		curveIndex			Name of the curve to be removed from object pool
     *  @return	A message showing the output of the action
     */
-    const bool isCurveRegistered(const LAString& curveCollection);
+    const bool isCurveRegistered(const AQLString& curveCollection);
 }

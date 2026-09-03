@@ -14,7 +14,7 @@ MVThresholdSABRSwaptionCalculator::MVThresholdSABRSwaptionCalculator(double S0_,
 : MVSABRSwaptionCalculator(S0_, sabrParameters_)
 {
     if (extraParameters_.size() < 1)
-        LACoreInvalidData("Invalid parameter size in Threshold SABR swaption calculator",__FILE__,__LINE__);
+        AQLCoreInvalidData("Invalid parameter size in Threshold SABR swaption calculator",__FILE__,__LINE__);
 
     mThreshold = extraParameters_[0];
 }

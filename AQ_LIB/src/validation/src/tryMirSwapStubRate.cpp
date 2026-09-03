@@ -19,35 +19,35 @@ using etrading::decorateFilename;
 
 namespace
 {
-	StubRateAndFixingDate getStubRateAndFixingDate( LADataInstance* dataInstance,
-													const LAString& effDt,
-													const LAString& mat,
-													const LAString& freq,
-													const LAString& dayCt,
-													const LAString& busDayAdj,
-													const LAString& cal,
-													const LAString& rollDayString,
-													const LAString& fixLag,
+	StubRateAndFixingDate getStubRateAndFixingDate( AQLDataInstance* dataInstance,
+													const AQLString& effDt,
+													const AQLString& mat,
+													const AQLString& freq,
+													const AQLString& dayCt,
+													const AQLString& busDayAdj,
+													const AQLString& cal,
+													const AQLString& rollDayString,
+													const AQLString& fixLag,
 													bool eomRoll,
-													const LAString& interpolation,
-													const LAString& firstStub,
-													const LAString& lastStub,
-													const LAString& stub,
-													const LAString& crvID,
-													const LAStringVector& curveNames,
-													const LAStringVector& curveTenors,
+													const AQLString& interpolation,
+													const AQLString& firstStub,
+													const AQLString& lastStub,
+													const AQLString& stub,
+													const AQLString& crvID,
+													const AQLStringVector& curveNames,
+													const AQLStringVector& curveTenors,
 													const DoubleVector& tenorCurveFixings,
-													const LAString& useCurveName,
-													const LAString& toleranceTenor,
+													const AQLString& useCurveName,
+													const AQLString& toleranceTenor,
 													bool isFwdInterp,
 													bool useFwdData )
 	{
-		LADate effectiveDate = etrading::stringToDate( effDt, "#Error: Invalid 'EffectiveDate'." );
+		AQLDate effectiveDate = etrading::stringToDate( effDt, "#Error: Invalid 'EffectiveDate'." );
         
         // For Stub Purposes Only: we require the fixing end date not the maturity date, so we should not adjust the end date for payment holidays
-        LADate maturityDate  = etrading::validateMaturityDate( effectiveDate, mat);		
+        AQLDate maturityDate  = etrading::validateMaturityDate( effectiveDate, mat);		
 
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, "SPLINE" ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, "SPLINE" ) );
 
         etrading::validateStringEmptiness( freq,		    "#Error: 'Frequency' must be specified." );
         etrading::validateStringEmptiness( busDayAdj,	"#Error: 'BusinessDayAdjustment' must be specified." );
@@ -55,31 +55,31 @@ namespace
         etrading::validateStringEmptiness( cal,		    "#Error: 'Calendar' must be specified." );
 
         //----------------------------------------
-        LAString stubType( stub );
-        LAString stubTypeTmp( stub );
-        LAString* stubTypePtr = NULL;
+        AQLString stubType( stub );
+        AQLString stubTypeTmp( stub );
+        AQLString* stubTypePtr = NULL;
         if( stubType.size() != 0  )
         {
-            stubTypePtr = const_cast<LAString*>( &stubTypeTmp );
+            stubTypePtr = const_cast<AQLString*>( &stubTypeTmp );
         }
 
         // Set-Up First and Last Stub Parameters
-        LADate* firstOddDate    = NULL;
-        LADate* lastOddDate     = NULL;
-        LADate tempFirst;
-        LADate tempLast;
+        AQLDate* firstOddDate    = NULL;
+        AQLDate* lastOddDate     = NULL;
+        AQLDate tempFirst;
+        AQLDate tempLast;
 		
         if( firstStub.size() != 0 && lastStub.size() != 0 )
         {
-            throw LACoreInvalidData( "#Error: Don't support setting FirstStub and LastStub at the same time. Function won't know which stub period to calculate stub rate for.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Don't support setting FirstStub and LastStub at the same time. Function won't know which stub period to calculate stub rate for.", __FILE__, __LINE__ );
         }
 
         if( firstStub.size() != 0 )
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( stub.size() != 0 && ( LAString( stub ).toUpper() ) != "NONE" )
+            if( stub.size() != 0 && ( AQLString( stub ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             tempFirst       = etrading::stringToDate( firstStub, "#Error: Invalid 'FirstStubDate'." );
@@ -89,9 +89,9 @@ namespace
         else if( lastStub.size() != 0 )
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( stub.size() != 0 && ( LAString( stub ).toUpper() ) != "NONE" )
+            if( stub.size() != 0 && ( AQLString( stub ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             tempLast        = etrading::stringToDate( lastStub, "#Error: Invalid 'LastStubDate'." );
@@ -114,15 +114,15 @@ namespace
         // -----------------------------------------------------------------------------------
         //
         int* rollDayPtr                             = nullptr;
-        LAString* rollConventionPtr                 = nullptr;
+        AQLString* rollConventionPtr                 = nullptr;
 
         int  rollDay                                = 0;
-        LAString rollConvention                     = LAString( "" );
+        AQLString rollConvention                     = AQLString( "" );
         bool isEOMRoll                              = false;
         bool isStartRoll                            = false;
 
-        // Note: We check for RollDayString = LAString("0") for backwards compatibility
-        if ( rollDayString != LAString( "0" )  && rollDayString.size() != 0 )
+        // Note: We check for RollDayString = AQLString("0") for backwards compatibility
+        if ( rollDayString != AQLString( "0" )  && rollDayString.size() != 0 )
         {
             // Generate Fixed Leg Coupon Roll Conventions if the rollDayString is not empty or set to zero
             rollDayPtr          = &rollDay;
@@ -139,7 +139,7 @@ namespace
                                                                 freq,
                                                                 busDayAdj,
                                                                 cal,
-                                                                LAString( "PRECEDING" ),    // fixingRollConvention
+                                                                AQLString( "PRECEDING" ),    // fixingRollConvention
                                                                 cal,
                                                                 fixLag,
                                                                 stubTypePtr,
@@ -158,7 +158,7 @@ namespace
 		}
 
 		bool isRegularSwapSchedule = false;
-		LAString rollConv("");
+		AQLString rollConv("");
 		if (isStubDateSpecified)
 		{
 			isRegularSwapSchedule = false;
@@ -230,26 +230,26 @@ namespace validation
     *  @param [in]		isFwdInterp			Boolean that decides if direct interpolation on fwd rates is employed
     *  @param [in]		useFwdData			Use fwd rates directly or derive them from spot rates
     */
-    double tryMirSwapStubRate( LADataInstance* dataInstance,
-                               const LAString& effDt,
-                               const LAString& mat,
-                               const LAString& freq,
-                               const LAString& dayCt,
-                               const LAString& busDayAdj,
-                               const LAString& cal,
-                               const LAString& rollDayString,
-                               const LAString& fixLag,
+    double tryMirSwapStubRate( AQLDataInstance* dataInstance,
+                               const AQLString& effDt,
+                               const AQLString& mat,
+                               const AQLString& freq,
+                               const AQLString& dayCt,
+                               const AQLString& busDayAdj,
+                               const AQLString& cal,
+                               const AQLString& rollDayString,
+                               const AQLString& fixLag,
                                bool eomRoll,
-                               const LAString& interpolation,
-                               const LAString& firstStub,
-                               const LAString& lastStub,
-                               const LAString& stub,
-                               const LAString& crvID,
-                               const LAStringVector& curveNames,
-                               const LAStringVector& curveTenors,
+                               const AQLString& interpolation,
+                               const AQLString& firstStub,
+                               const AQLString& lastStub,
+                               const AQLString& stub,
+                               const AQLString& crvID,
+                               const AQLStringVector& curveNames,
+                               const AQLStringVector& curveTenors,
                                const DoubleVector& tenorCurveFixings,
-                               const LAString& useCurveName,
-                               const LAString& toleranceTenor,
+                               const AQLString& useCurveName,
+                               const AQLString& toleranceTenor,
                                bool isFwdInterp,
                                bool useFwdData )
     {
@@ -341,26 +341,26 @@ namespace validation
     *  @param [in]		isFwdInterp			Boolean that decides if direct interpolation on fwd rates is employed
     *  @param [in]		useFwdData			Use fwd rates directly or derive them from spot rates
     */
-    LADate tryMirSwapStubFixingDate( LADataInstance* dataInstance,
-									 const LAString& effDt,
-									 const LAString& mat,
-									 const LAString& freq,
-									 const LAString& dayCt,
-									 const LAString& busDayAdj,
-									 const LAString& cal,
-									 const LAString& rollDayString,
-									 const LAString& fixLag,
+    AQLDate tryMirSwapStubFixingDate( AQLDataInstance* dataInstance,
+									 const AQLString& effDt,
+									 const AQLString& mat,
+									 const AQLString& freq,
+									 const AQLString& dayCt,
+									 const AQLString& busDayAdj,
+									 const AQLString& cal,
+									 const AQLString& rollDayString,
+									 const AQLString& fixLag,
 									 bool eomRoll,
-									 const LAString& interpolation,
-									 const LAString& firstStub,
-									 const LAString& lastStub,
-									 const LAString& stub,
-									 const LAString& crvID,
-									 const LAStringVector& curveNames,
-									 const LAStringVector& curveTenors,
+									 const AQLString& interpolation,
+									 const AQLString& firstStub,
+									 const AQLString& lastStub,
+									 const AQLString& stub,
+									 const AQLString& crvID,
+									 const AQLStringVector& curveNames,
+									 const AQLStringVector& curveTenors,
 									 const DoubleVector& tenorCurveFixings,
-									 const LAString& useCurveName,
-									 const LAString& toleranceTenor,
+									 const AQLString& useCurveName,
+									 const AQLString& toleranceTenor,
 									 bool isFwdInterp,
 									 bool useFwdData )
     {
@@ -394,7 +394,7 @@ namespace validation
             file.write( "useFwdData", useFwdData );
         }
 
-        const LADate stubFixingDate = getStubRateAndFixingDate( dataInstance,
+        const AQLDate stubFixingDate = getStubRateAndFixingDate( dataInstance,
 																effDt,
 																mat,
 																freq,

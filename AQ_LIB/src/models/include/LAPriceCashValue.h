@@ -10,11 +10,11 @@
 #pragma interface
 #endif
 
-#include "LACoreValuation.h"
-#include "LADataValuation.h"
-#include "LACoreAppError.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreValuation.h"
+#include "AQLDataValuation.h"
+#include "AQLCoreAppError.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "LAPricePayOff.h"
 #include "LAPriceTradeValue.h"
 
@@ -26,9 +26,9 @@
 
 //#define __ITM_CHECK__ 
 //// FROTOTYPE ////
-class LADate;
-class LAObject;
-class LAPriceDataManager;
+class AQLDate;
+class AQLObject;
+class AQLPriceDataManager;
 class LAMathFXEntity;
 class LAMathPlainVanillaEntity;
 class LAPriceAccruedInterest;
@@ -48,13 +48,13 @@ public:
 	// Check function for this class ID	
 	virtual bool                isTypeOf(function_t id) const;
     // Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
     // Return this class type
 	virtual function_t			getType() const;
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
     // evaluation function
-	virtual double              value(	const LADate& basedate, LAObject& object, const LADataValuation& att) const;
+	virtual double              value(	const AQLDate& basedate, AQLObject& object, const AQLDataValuation& att) const;
 
 	//Remove warning:C4512
 	LAPriceCashValue & operator=( const LAPriceCashValue & ) { return *this; }
@@ -67,7 +67,7 @@ public:
 	{
 	public:
 		virtual ~LAPriceCashValueDataProvider(); 
-		LAString currency;
+		AQLString currency;
 		double cash;
 	};
 
@@ -75,12 +75,12 @@ protected:
     // copy constructor
     LAPriceCashValue(const LAPriceCashValue& v);	
 	// set up dataProvider
-	LADataProvider*					setUpDataProvider(const LADate& basedate, LAObject& object, const LADataValuation& att) const;
+	AQLDataProvider*					setUpDataProvider(const AQLDate& basedate, AQLObject& object, const AQLDataValuation& att) const;
 	// get FXEntity
-	const LAMathFXEntity &getFXEntity(LAObject &object) const;
+	const LAMathFXEntity &getFXEntity(AQLObject &object) const;
 
 private:
 	// create new cache class
-	virtual	LADataProvider*			createNewDataProvider() const;
+	virtual	AQLDataProvider*			createNewDataProvider() const;
 };
 #endif

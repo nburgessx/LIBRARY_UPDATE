@@ -14,7 +14,7 @@ namespace etrading
         //Single Currency
         if ( leg1->getStaticData()->getCurrency() != leg2->getStaticData()->getCurrency() )
         {
-  		    throw LACoreInvalidData( "#Error: It is not a single currency Swap", __FILE__, __LINE__ );
+  		    throw AQLCoreInvalidData( "#Error: It is not a single currency Swap", __FILE__, __LINE__ );
         }
 
         setNotionalFromFutureValueNotional(leg1, leg2);

@@ -29,7 +29,7 @@ namespace etrading
 
 	}
 
-    void FloatStaticData::validateCurveInput(const LAString& curveCollection)
+    void FloatStaticData::validateCurveInput(const AQLString& curveCollection)
     {
         LegStaticData::validateCurveInput(curveCollection);
 
@@ -55,16 +55,16 @@ namespace etrading
 		fwdInter_(rhs.fwdInter_)
     {}
 
-    LAString FloatStaticData::getForecastCurve() const
+    AQLString FloatStaticData::getForecastCurve() const
     {
         return forecastCurve_;
     }
 
-    LAString FloatStaticData::getForecastCurveMarketName() const
+    AQLString FloatStaticData::getForecastCurveMarketName() const
     {
 		if (forecastCurve_.size() != 0 && forecastCurveMarketName_.size() == 0 )
 		{
-	    	throw LACoreInvalidData( "#Error: Float's forecastCurveMarketName has not been populated", __FILE__, __LINE__ );
+	    	throw AQLCoreInvalidData( "#Error: Float's forecastCurveMarketName has not been populated", __FILE__, __LINE__ );
 		}
         return forecastCurveMarketName_;
     }
@@ -79,12 +79,12 @@ namespace etrading
         return lastFixing_;
     }
 
-    LAString FloatStaticData::getFirstStubCurveIndex() const
+    AQLString FloatStaticData::getFirstStubCurveIndex() const
     {
         return firstStubCurveIndex_;
     }
 
-    LAString FloatStaticData::getLastStubCurveIndex() const
+    AQLString FloatStaticData::getLastStubCurveIndex() const
     {
         return lastStubCurveIndex_;
     }

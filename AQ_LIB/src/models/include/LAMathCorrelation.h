@@ -5,9 +5,9 @@
 #endif
 
 
-#include "LAObject.h"
-#include "LACoreAutoPtr.h"
-#include "LAFunctionBase.h"
+#include "AQLObject.h"
+#include "AQLCoreAutoPtr.h"
+#include "AQLFunctionBase.h"
 
 //// DEFINES ////
 // Entitiy id of LAMathCorrelation
@@ -63,27 +63,27 @@
 #endif
 
 
-class LADataInstance;
-class LADate;
-class LADataBool;
-class LADataBools;
-class LADataDate;
-class LAString;
-class LADataDoubles;
-class LADataDoubleMatrix;
-class LADataString;
-class LAPriceDataInterpolation;
-class LAFunctionBase;
+class AQLDataInstance;
+class AQLDate;
+class AQLDataBool;
+class AQLDataBools;
+class AQLDataDate;
+class AQLString;
+class AQLDataDoubles;
+class AQLDataDoubleMatrix;
+class AQLDataString;
+class AQLPriceDataInterpolation;
+class AQLFunctionBase;
 
 /*! 
     @brief Class to represent correlation.
 */
-class LAMathCorrelation : public LAObject
+class LAMathCorrelation : public AQLObject
 {
 public:
 // LIFECYCLE
     // default constructor
-	LAMathCorrelation(LADataInstance* dataInstance);
+	LAMathCorrelation(AQLDataInstance* dataInstance);
     // copy constructor
 	LAMathCorrelation(const LAMathCorrelation& cor);
     // destructor
@@ -95,43 +95,43 @@ public:
     // Check function for this class type
 	virtual bool		isTypeOf(object_t id) const;
 	// get this FX name
-	const LADataString&	getName() const;
+	const AQLDataString&	getName() const;
 	// get this FX name. The setting of name is also possible. 
-	LADataString&		getName();
+	AQLDataString&		getName();
 	//	get interpolation method
-	const LAPriceDataInterpolation&
+	const AQLPriceDataInterpolation&
 						getInterpolation() const;
 	//	get interpolation method. The setting of interpolation method is also possible. 
-	LAPriceDataInterpolation&
+	AQLPriceDataInterpolation&
 						getInterpolation();	 
 	//	get multi volatility flag
-	const LADataBool&	getIsMultiVol() const;
+	const AQLDataBool&	getIsMultiVol() const;
 	//	get multi volatility or not. The setting of multi volatility flag is also possible. 
-	LADataBool&			getIsMultiVol();
+	AQLDataBool&			getIsMultiVol();
 	//	get T (rate reset time) grid
-	const LADataDoubles&
+	const AQLDataDoubles&
 						getTGrid() const;
 	//	get T (rate reset time) grid. The setting of T grid is also possible. 
-	LADataDoubles&		getTGrid();	    	
+	AQLDataDoubles&		getTGrid();	    	
 	// get Optimize Weight
-	const LADataDoubleMatrix&
+	const AQLDataDoubleMatrix&
 						getOptWeight() const;
 	// get Optimize Weight. The setting of name is also possible. 
-	LADataDoubleMatrix&	getOptWeight();
+	AQLDataDoubleMatrix&	getOptWeight();
 
-    const LADataDoubleMatrix&
+    const AQLDataDoubleMatrix&
                         getCorFactors() const;
 
-	LADataDoubleMatrix& getCorFactors();
+	AQLDataDoubleMatrix& getCorFactors();
 
-	const LADataBools&	getIsExtraTGrid() const;
+	const AQLDataBools&	getIsExtraTGrid() const;
 
-	LADataBools&		getIsExtraTGrid();
+	AQLDataBools&		getIsExtraTGrid();
 
 	//	make copy(clone) of this FX object object.
-	LAObject*			clone() const;// %%% COVARIANT RETURN %%%
+	AQLObject*			clone() const;// %%% COVARIANT RETURN %%%
 	//	get correlation as function matrix
-	std::vector<std::vector<LAFunctionBase*> >
+	std::vector<std::vector<AQLFunctionBase*> >
 						getCorrelationFunc() const;
 
 	// get FactorLoading(ijt)
@@ -144,16 +144,16 @@ public:
 	// set FactorLoading from loading
 	void				setFactorLoading(const DoubleMatrix& loading);
 	// set FactorLoading from loading as function matrix
-	void				setFactorLoading(const std::vector<std::vector<LAFunctionBase*> >& loading);
+	void				setFactorLoading(const std::vector<std::vector<AQLFunctionBase*> >& loading);
 	// set Correlation from grid_t and correlation of DoubleMatrix vector
 	void				setCorrelation(const DoubleArray& grid_t, 
 									 const std::vector<DoubleMatrix>& cor);
 	// set Correlation as DoubleMatrix
 	void				setCorrelation(const DoubleMatrix& cor);
 	// set Correlation as function matrix
-	void				setCorrelation(const std::vector<std::vector<LAFunctionBase*> >& cor);
+	void				setCorrelation(const std::vector<std::vector<AQLFunctionBase*> >& cor);
 	// set Correlation as function 
-	void				setCorrelation(LAFunctionBase* cor);
+	void				setCorrelation(AQLFunctionBase* cor);
 	// set Correlation as zero 
 	void				setCorrelation(unsigned int factornum);
 	// calc FactorLoading
@@ -162,16 +162,16 @@ public:
 	DoubleMatrix		calcFactorLoading(const DoubleMatrix& corrMat, const DoubleMatrix& initialValue) const;
 
 	// remove specified Data.If there is not Data to remove, do nothing.If member variable is specified to remove, do not remove it.
-	virtual void        remove(const LAString& dataName);
+	virtual void        remove(const AQLString& dataName);
 	// Initialize this Object.
 	virtual void		reset(void);
 	
 protected:
 	// calc Correlation From FactorLoading
-	std::vector<std::vector<LAFunctionBase*> >
+	std::vector<std::vector<AQLFunctionBase*> >
 						calcCorrelationFromFactorLoading() const;
 	// calc Correlation From Correlation
-	std::vector<std::vector<LAFunctionBase*> >
+	std::vector<std::vector<AQLFunctionBase*> >
 						calcCorrelationFromCorrelation() const;
 
 	// culc Principal Component
@@ -180,32 +180,32 @@ protected:
 	virtual void		calcFactorLoading(const DoubleMatrix& cor, DoubleMatrix& loading, unsigned int factornum, bool isOptim) const;
 
 	// copy FX object	 
-	virtual LAObject&	copy(const LAObject& e);
+	virtual AQLObject&	copy(const AQLObject& e);
 
 private:
 	// set Data specified by the name.
-	LADataHolder&				add(const LAString& name);
+	AQLDataHolder&				add(const AQLString& name);
 
-	LADataHolder*				mpName;     // name (DATA_STRING)
-	LADataHolder*				mpIsCorInput;// correlation input or not (DATA_BOOL)
-	LADataHolder*				mpInter;// interpolation (DATA_INTERPOLATION)
-	LADataHolder*				mpFactorNum_after;// factornum(after factor reduction) (DATA_INT)
-	LADataHolder*				mpFactorNum_before;// factornum(before factor reduction) (DATA_INT)
-	LADataHolder*				mpIsExtraGrid_T;// Extra T Grid flag(DATA_BOOLS)
-	LADataHolder*				mpIsOptim;// optimization flag(DATA_BOOL)
-	LADataHolder*				mpIsMultiVol;// multi volatility flag(DATA_BOOL)
-	LADataHolder*				mpGrid_T;   // T grid (DATA_DOUBLES)
-	LADataHolder*				mpGrid_t;   // t grid (DATA_DOUBLES)
-	LADataHolder*				mpIsDataInput;// data input or function input(DATA_BOOL)
-	LADataHolder*				mpCorrelation;// correlation data (DATA_DOUBLE_MATRIX)
-	LADataHolder*				mpFactorLoading;// factor loading data (DATA_DOUBLE_MATRIX)
-	LADataHolder*				mpFunctions;// data (DATA_FUNCTIONS)
-	LADataHolder*				mpOptWeight;// Optimize Weight (DATA_DOUBLE_MATRIX)
-    LADataHolder*				mpCorFactors;// correlation factors (DATA_DOUBLE_MATRIX)
-    LADataHolder*				mpEigenValues;// eigen values (DATA_DOUBLES)
-    LADataHolder*				mpEigenVectors;// eigen vectorss (DATA_DOUBLE_MATRIX)
+	AQLDataHolder*				mpName;     // name (DATA_STRING)
+	AQLDataHolder*				mpIsCorInput;// correlation input or not (DATA_BOOL)
+	AQLDataHolder*				mpInter;// interpolation (DATA_INTERPOLATION)
+	AQLDataHolder*				mpFactorNum_after;// factornum(after factor reduction) (DATA_INT)
+	AQLDataHolder*				mpFactorNum_before;// factornum(before factor reduction) (DATA_INT)
+	AQLDataHolder*				mpIsExtraGrid_T;// Extra T Grid flag(DATA_BOOLS)
+	AQLDataHolder*				mpIsOptim;// optimization flag(DATA_BOOL)
+	AQLDataHolder*				mpIsMultiVol;// multi volatility flag(DATA_BOOL)
+	AQLDataHolder*				mpGrid_T;   // T grid (DATA_DOUBLES)
+	AQLDataHolder*				mpGrid_t;   // t grid (DATA_DOUBLES)
+	AQLDataHolder*				mpIsDataInput;// data input or function input(DATA_BOOL)
+	AQLDataHolder*				mpCorrelation;// correlation data (DATA_DOUBLE_MATRIX)
+	AQLDataHolder*				mpFactorLoading;// factor loading data (DATA_DOUBLE_MATRIX)
+	AQLDataHolder*				mpFunctions;// data (DATA_FUNCTIONS)
+	AQLDataHolder*				mpOptWeight;// Optimize Weight (DATA_DOUBLE_MATRIX)
+    AQLDataHolder*				mpCorFactors;// correlation factors (DATA_DOUBLE_MATRIX)
+    AQLDataHolder*				mpEigenValues;// eigen values (DATA_DOUBLES)
+    AQLDataHolder*				mpEigenVectors;// eigen vectorss (DATA_DOUBLE_MATRIX)
 
-	class LAMathFactorLoadingFunction : public LAFunctionBase
+	class LAMathFactorLoadingFunction : public AQLFunctionBase
 	{
 	public:
 		// Default constructor
@@ -214,14 +214,14 @@ private:
 		~LAMathFactorLoadingFunction();
 
 									// Make copy(clone) of this class
-		virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+		virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 									// purpose value for optimize
 		virtual double				operator()(const DoubleArray& x) const;
 		virtual double				operator()(const double& x) const;
 
-		virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+		virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 									{
-										return LAFunctionBase::operator()(pos, x);
+										return AQLFunctionBase::operator()(pos, x);
 									}
 		
 		LAMathFactorLoadingFunction & operator=( const LAMathFactorLoadingFunction & ) { return *this; }

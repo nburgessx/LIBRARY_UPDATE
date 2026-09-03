@@ -1,8 +1,8 @@
 #pragma once
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LABlackScholesFloorletOptionPayoff.h"
 
 
@@ -36,7 +36,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;

@@ -76,7 +76,7 @@ double LAMathHybridHWLVProcessHelper::calcE_d(double t) const
 	
 		if( m == 0 )
     	{
-            return LAMath::exp( mpHWParams_d->mA[0] * t );
+            return AQLMath::exp( mpHWParams_d->mA[0] * t );
 	    }
 
 	    //
@@ -96,7 +96,7 @@ double LAMathHybridHWLVProcessHelper::calcE_d(double t) const
 	    }
 		
 	    mIsCacheE_d[t] = true;
-	    mCacheE_d[t] = LAMath::exp(tmp);
+	    mCacheE_d[t] = AQLMath::exp(tmp);
     }
     return mCacheE_d[t];
 }
@@ -179,7 +179,7 @@ double LAMathHybridHWLVProcessHelper::calcE_f(double t) const
 		
 		if( m == 0 )
 		{
-			return LAMath::exp( mpHWParams_f->mA[0] * t );
+			return AQLMath::exp( mpHWParams_f->mA[0] * t );
 		}
 
 		//
@@ -199,7 +199,7 @@ double LAMathHybridHWLVProcessHelper::calcE_f(double t) const
 		}
 		
 		mIsCacheE_f[t] = true;
-		mCacheE_f[t] = LAMath::exp(tmp);
+		mCacheE_f[t] = AQLMath::exp(tmp);
 	}
 	return mCacheE_f[t];
 }
@@ -279,7 +279,7 @@ double LAMathHybridHWLVProcessHelper::calcLambda(double t) const
 	double b = 2. * mpCorParams->mRho[t_idx][0][2] * calcVol_Pd(t) - 2. * mpCorParams->mRho[t_idx][1][2] * calcVol_Pf(t);
 
     double gamma = calcGamma(t);
-	return LAMath::sqrt(a + b * gamma + gamma * gamma);
+	return AQLMath::sqrt(a + b * gamma + gamma * gamma);
 }
 
 /*!
@@ -340,22 +340,22 @@ void LAMathHybridHWLVProcessHelper::setT(double T) const
         
     if( mIntegralTimeSteps.back() < T )
     {
-        throw LACoreInvalidData("mIntegralTimeSteps.back() < T :: LAMathHybridHWLVProcessHelper::setT", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mIntegralTimeSteps.back() < T :: LAMathHybridHWLVProcessHelper::setT", __FILE__, __LINE__);
     }
 
     if( mpHWParams_f->mT.back() < T )
     {
-        throw LACoreInvalidData("mpHWParams_f->mT.back() < T :: LAMathHybridHWLVProcessHelper::setT", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mpHWParams_f->mT.back() < T :: LAMathHybridHWLVProcessHelper::setT", __FILE__, __LINE__);
     }
     
     if( mpHWParams_d->mT.back() < T )
     {
-        throw LACoreInvalidData("mpHWParams_d->mT.back() < T :: LAMathHybridHWLVProcessHelper::setT", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mpHWParams_d->mT.back() < T :: LAMathHybridHWLVProcessHelper::setT", __FILE__, __LINE__);
     }
 
     if( mpCorParams->mT.back() < T )
     {
-        throw LACoreInvalidData("LAMathCorrelationParams->mT.back() < T :: LAMathHybridHWLVProcessHelper::setT", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("LAMathCorrelationParams->mT.back() < T :: LAMathHybridHWLVProcessHelper::setT", __FILE__, __LINE__);
     }
 
     mT = T;
@@ -397,7 +397,7 @@ void LAMathHybridHWLVProcessHelper::clearCache2() const
 */
 double LAMathHybridHWDDProcessHelper::calcGamma(double t, double x) const
 {
-     if( LAMath::abs(x) < numeric_limits<double>::epsilon() )
+     if( AQLMath::abs(x) < numeric_limits<double>::epsilon() )
      {
          x = x < 0 ? -numeric_limits<double>::epsilon() : numeric_limits<double>::epsilon();
      }
@@ -581,22 +581,22 @@ void LAMathHybridHWDDMPProcessHelper::set_t(double t) const
         
     if( mIntegralTimeSteps.back() < t )
     {
-        throw LACoreInvalidData("mIntegralTimeSteps.back() < t :: LAMathHybridHWLVProcessHelper::set_t", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mIntegralTimeSteps.back() < t :: LAMathHybridHWLVProcessHelper::set_t", __FILE__, __LINE__);
     }
 
     if( mpHWParams_f->mT.back() < t )
     {
-        throw LACoreInvalidData("mpHWParams_f->mT.back() < t :: LAMathHybridHWLVProcessHelper::set_t", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mpHWParams_f->mT.back() < t :: LAMathHybridHWLVProcessHelper::set_t", __FILE__, __LINE__);
     }
     
     if( mpHWParams_d->mT.back() < t )
     {
-        throw LACoreInvalidData("mpHWParams_d->mT.back() < t :: LAMathHybridHWLVProcessHelper::set_t", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mpHWParams_d->mT.back() < t :: LAMathHybridHWLVProcessHelper::set_t", __FILE__, __LINE__);
     }
 
     if( mpCorParams->mT.back() < t )
     {
-        throw LACoreInvalidData("LAMathCorrelationParams->mT.back() < t :: LAMathHybridHWLVProcessHelper::set_t", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("LAMathCorrelationParams->mT.back() < t :: LAMathHybridHWLVProcessHelper::set_t", __FILE__, __LINE__);
     }
 
     if(m_t != t)
@@ -628,7 +628,7 @@ double LAMathHybridHWDDMPProcessHelper::calcGamma(double t, double x) const
     }
     else
     {
-        return simga * ( beta + (1. - beta) * mFX0 / x * LAMath::exp(-calcR(t) *  log(x / mFX0) ) );
+        return simga * ( beta + (1. - beta) * mFX0 / x * AQLMath::exp(-calcR(t) *  log(x / mFX0) ) );
     }
 }
 
@@ -1017,5 +1017,5 @@ double LAMathHybridHWDDMPProcessHelper2::calcLambdaApproximated(double t) const
 
     //double gamma_ = LAMathHybridHWDDMPProcessHelper::gamma(t, mFX0);
     double gamma = calcGamma(t, mFX0);
-    return LAMath::sqrt( a + b * gamma + gamma * gamma );
+    return AQLMath::sqrt( a + b * gamma + gamma * gamma );
 }

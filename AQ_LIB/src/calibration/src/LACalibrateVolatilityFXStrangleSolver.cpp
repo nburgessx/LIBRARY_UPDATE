@@ -23,14 +23,14 @@
 #include "LAMarketData.h"
 #include "LADealUtils.h"
 #include "LAScenarioConfiguration.h"
-#include "LADate.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLDate.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathFXUtility.h"
 #include "LAMathVolFuncFX.h"
 #include "LAMathVolFuncFXDD.h"
 #include "LAPriceFXVolatility.h"
-#include "LAConstant.h"
-#include "LABasic.h"
+#include "AQLConstant.h"
+#include "AQLBasic.h"
 #include "LACalibrationFunc.h"
 #include "LACalibrateFXStrangleSolver.h"
 #include "LACalibratePool.h"
@@ -67,10 +67,10 @@ LACalibrateVolatilityFXStrangleSolver::~LACalibrateVolatilityFXStrangleSolver(vo
 
 */
 void 
-LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_t, vector<DoubleMatrix> &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_t, vector<DoubleMatrix> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_t, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 /*!
@@ -83,10 +83,10 @@ LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_t, vec
 
 */
 void 
-LACalibrateVolatilityFXStrangleSolver::createVolatility(vector<vector<LAFunctionBase *> > &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityFXStrangleSolver::createVolatility(vector<vector<AQLFunctionBase *> > &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 
@@ -101,10 +101,10 @@ LACalibrateVolatilityFXStrangleSolver::createVolatility(vector<vector<LAFunction
 
 */
 void 
-LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_T, vector<LAFunctionBase *> &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_T, vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_T, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 
@@ -119,10 +119,10 @@ LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_T, vec
 
 */
 void 
-LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_t, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 
@@ -136,11 +136,11 @@ LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_t, Dou
 
 */
 void 
-LACalibrateVolatilityFXStrangleSolver::createVolatility(vector<LAFunctionBase *> &vol, const LAStringVector &filePath, 
-											const MAScenarioParam *param, LAObjectPool *objPool, int gridPos) const
+LACalibrateVolatilityFXStrangleSolver::createVolatility(vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, 
+											const MAScenarioParam *param, AQLObjectPool *objPool, int gridPos) const
 {
 	vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 
 }
 
@@ -156,10 +156,10 @@ LACalibrateVolatilityFXStrangleSolver::createVolatility(vector<LAFunctionBase *>
 
 */
 void 
-LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_T, LAFunctionBase *vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_T, AQLFunctionBase *vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_T, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 
@@ -174,10 +174,10 @@ LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_T, LAF
 
 */
 void 
-LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_t, DoubleArray &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_t, DoubleArray &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_t, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 /*!
@@ -189,18 +189,18 @@ LACalibrateVolatilityFXStrangleSolver::createVolatility(DoubleArray &grid_t, Dou
 	@param[return]  vol		Volatility as function 
 
 */
-LAFunctionBase * 
-LACalibrateVolatilityFXStrangleSolver::createVolatility(const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool, int gridPos) const
+AQLFunctionBase * 
+LACalibrateVolatilityFXStrangleSolver::createVolatility(const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool, int gridPos) const
 {
 	// null check
 	if (!param || !objPool)
 	{
-		throw LACoreInvalidData("Param or entitypool is null .", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Param or entitypool is null .", __FILE__, __LINE__);
 	}
 	// refrence check
 	if (param->refName.size() < 2)
 	{
-		throw LACoreInvalidData("Reference object size must be more than 2.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Reference object size must be more than 2.", __FILE__, __LINE__);
 	}
 
 	if (param->isCalib)
@@ -210,12 +210,12 @@ LACalibrateVolatilityFXStrangleSolver::createVolatility(const LAStringVector &fi
 		request.setUp(*objPool,*param,&method,gridPos);
 		request.doCalibrate();
 
-		return dynamic_cast<LAFunctionBase *>(method.clone());
+		return dynamic_cast<AQLFunctionBase *>(method.clone());
 
 	}
 	else
 	{
-		throw LACoreInvalidData("Only Calibration supports",__FILE__,__LINE__); 
+		throw AQLCoreInvalidData("Only Calibration supports",__FILE__,__LINE__); 
 	}	
 }
 
@@ -229,10 +229,10 @@ LACalibrateVolatilityFXStrangleSolver::createVolatility(const LAStringVector &fi
 
 */
 void 
-LACalibrateVolatilityFXStrangleSolver::createVolatility(double &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityFXStrangleSolver::createVolatility(double &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 /*!
@@ -242,7 +242,7 @@ LACalibrateVolatilityFXStrangleSolver::createVolatility(double &vol, const LAStr
 	@param[in] filepath
 */
 void 
-LACalibrateVolatilityFXStrangleSolver::getGrid_T(DoubleArray &grid_T, const LAStringVector &filePath) const
+LACalibrateVolatilityFXStrangleSolver::getGrid_T(DoubleArray &grid_T, const AQLStringVector &filePath) const
 {
 	filePath;
 	// FXStrangleSolver(FX) has no grid_T

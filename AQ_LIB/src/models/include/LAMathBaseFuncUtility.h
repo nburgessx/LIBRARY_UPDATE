@@ -5,10 +5,10 @@
 #pragma interface
 #endif
 
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
-#include "LAString.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
+#include "AQLString.h"
 #include "ConstantDeclarations.h"
 #include "LATime.h"
 
@@ -16,7 +16,7 @@ class LAMathBaseFuncUtility
 {
 public:
 	//option unit
-	static void adjustunit(double& ret, LAString& optiontype);
+	static void adjustunit(double& ret, AQLString& optiontype);
 
 private:
 	LAMathBaseFuncUtility(void);

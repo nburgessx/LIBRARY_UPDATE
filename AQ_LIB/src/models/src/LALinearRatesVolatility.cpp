@@ -18,26 +18,26 @@
 #endif
 
 
-#include "LADataBasics.h"
-#include "LAObject.h"
+#include "AQLDataBasics.h"
+#include "AQLObject.h"
 #include "LALinearRatesVolatility.h"
 #include "LAMathVolFuncFXStrangleSolver.h"
 //hishida vannavolga
 #include "LAMathVolFuncFXVannaVolga.h"
 #include "LALinearRatesOptionValueDataProvider.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
 #include "LAPriceCashFlowGenerator.h"
-#include "LAMathDefine.h"
+#include "AQLMathDefine.h"
 #include "LALinearRatesOptionValue.h"
 #include "LAMathVolFuncIRSABR.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathSwaptionVolUtility.h"
 #include "LAMathYieldCurve.h"
-#include "LADataReference.h"
+#include "AQLDataReference.h"
 #include "LAMathSABR.h"
 #include "LAMathCurveFuncUtility.h"
-#include "LADataMatrix.h"
+#include "AQLDataMatrix.h"
 #include "LAMathYieldCurvePro.h"
 
 using namespace std;
@@ -53,7 +53,7 @@ LALinearRatesVolatility::~LALinearRatesVolatility(void)
 {}
 // ! setupvol
 void 
-LALinearRatesVolatility::setVolatility(LADataProvider* dp, LAObject& object, LAString model)
+LALinearRatesVolatility::setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model)
 {
 	return;
 }
@@ -69,10 +69,10 @@ LAPricePlainVolatilityFromDirectInput::~LAPricePlainVolatilityFromDirectInput(vo
 {}
 // ! setupvol
 void 
-LAPricePlainVolatilityFromDirectInput::setVolatility(LADataProvider* dp, LAObject& object, LAString model)
+LAPricePlainVolatilityFromDirectInput::setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model)
 {
-	LADataHolder* dh = &(object.getData(PRICING_DATA_VOLATILITYDIRECTINPUT,ISDEFINED));
-	double volval = dynamic_cast<LADataDouble &>(dh->get()).get();
+	AQLDataHolder* dh = &(object.getData(PRICING_DATA_VOLATILITYDIRECTINPUT,ISDEFINED));
+	double volval = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 
 	LALinearRatesOptionValueDataProvider* dataProvider = dynamic_cast<LALinearRatesOptionValueDataProvider*>(dp);
 	for (unsigned int i = 0; i < dataProvider->mParam[0].size(); i++)
@@ -94,35 +94,35 @@ LAPricePlainVolatilityFromDirectInputOfCashlets::~LAPricePlainVolatilityFromDire
 {}
 // ! setupvol
 void 
-LAPricePlainVolatilityFromDirectInputOfCashlets::setVolatility(LADataProvider* dp, LAObject& object, LAString model)
+LAPricePlainVolatilityFromDirectInputOfCashlets::setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model)
 {
 	LALinearRatesOptionValueDataProvider* dataProvider = dynamic_cast<LALinearRatesOptionValueDataProvider*>(dp);
 
-	LADataHolder* dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	LADataMultiReference& legs = dynamic_cast<LADataMultiReference &>(dh->get());
-	LAObject& leg = legs.get(0).get();
+	AQLDataHolder* dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
+	AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
+	AQLObject& leg = legs.get(0).get();
 
 	dh = &(leg.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	LADataMultiReference& cashlets = dynamic_cast<LADataMultiReference &>(dh->get());
+	AQLDataMultiReference& cashlets = dynamic_cast<AQLDataMultiReference &>(dh->get());
 	unsigned N = cashlets.getSize();
 	//check
 	if (N != dataProvider->mParam.size())
-		throw LACoreInvalidData("Cashlets size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Cashlets size error",__FILE__,__LINE__);
 
 	for (unsigned int i = 0; i < N; i++)
 	{
 		if (dataProvider->mParam[i].size() == 0)
 			continue;
 
-		LAObject& ecash = cashlets.get(i).get();
+		AQLObject& ecash = cashlets.get(i).get();
 		dh = &(ecash.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL));
-		LADataMultiReference& coupons = dynamic_cast<LADataMultiReference &>(dh->get());
-		LAObject& ecoupon = coupons.get(0).get();
+		AQLDataMultiReference& coupons = dynamic_cast<AQLDataMultiReference &>(dh->get());
+		AQLObject& ecoupon = coupons.get(0).get();
 
 		dh = &(ecoupon.getData(PRICING_DATA_VOLATILITYDIRECTINPUTS,ISDEFINED));
-		const DoubleArray& vols = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+		const DoubleArray& vols = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 		if (vols.size() != dataProvider->mParam[i].size())
-			throw LACoreInvalidData("Volatility size error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Volatility size error",__FILE__,__LINE__);
 
 		for (unsigned int j = 0; j < dataProvider->mParam[i].size(); j++)
 		{
@@ -151,7 +151,7 @@ LAPriceFXStrangleSolverVolatility::~LAPriceFXStrangleSolverVolatility(void)
 }
 // ! setupvol
 void 
-LAPriceFXStrangleSolverVolatility::setVolatility(LADataProvider* dp, LAObject& object, LAString model)
+LAPriceFXStrangleSolverVolatility::setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model)
 {
 	
 	DoubleVector volvec(2,0.0);
@@ -169,9 +169,9 @@ LAPriceFXStrangleSolverVolatility::setVolatility(LADataProvider* dp, LAObject& o
 		gkparam[i] = dynamic_cast<AnalyticGKParam* >(dataProvider->mParam[0][i]);
 
 		if (interpvari == VariableLogStrike && gkparam[i]->F != 0.0)
-			volvec[0] = LAMath::log(gkparam[i]->K/gkparam[i]->F);
+			volvec[0] = AQLMath::log(gkparam[i]->K/gkparam[i]->F);
 		else
-			throw LACoreInvalidData("Not support now", __FILE__,__LINE__);
+			throw AQLCoreInvalidData("Not support now", __FILE__,__LINE__);
 	
 		if (interpatm == TermWeighted || TermNoWeighted)
 		{
@@ -206,7 +206,7 @@ LAPriceFXStrangleSolverATMVolatility::~LAPriceFXStrangleSolverATMVolatility(void
 }
 // ! setupvol
 void 
-LAPriceFXStrangleSolverATMVolatility::setVolatility(LADataProvider* dp, LAObject& object, LAString model)
+LAPriceFXStrangleSolverATMVolatility::setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model)
 {
 	DoubleVector volvec(1,0.0);
 	
@@ -256,7 +256,7 @@ LAPriceFXVannaVolgaVolatility::~LAPriceFXVannaVolgaVolatility(void)
 }
 // ! setupvol
 void 
-LAPriceFXVannaVolgaVolatility::setVolatility(LADataProvider* dp, LAObject& object, LAString model)
+LAPriceFXVannaVolgaVolatility::setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model)
 {
 
 	//temporary after that, we must edit 
@@ -311,7 +311,7 @@ LAPriceIRSABRVolatility::~LAPriceIRSABRVolatility(void)
 }
 // ! setupvol
 void 
-LAPriceIRSABRVolatility::setVolatility(LADataProvider* dp, LAObject& object, LAString model)
+LAPriceIRSABRVolatility::setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model)
 {
 	DoubleVector volvec(4,0.0);
 	
@@ -322,20 +322,20 @@ LAPriceIRSABRVolatility::setVolatility(LADataProvider* dp, LAObject& object, LAS
 	const LAMathVolFuncIRSABR& irvol = dynamic_cast<const LAMathVolFuncIRSABR&>(*(dataProvider->mVolfunc));
 
 	const LAMathYieldCurve &yc = dataProvider->mpvanilla->getIRCurve(dataProvider->mnumerairecur);
-	LAString curveid = dynamic_cast<const LADataString &>(yc.getYieldData().get().getData(CALIBRATION_DATA_NAME,ISNOTNULL).get()).get();
+	AQLString curveid = dynamic_cast<const AQLDataString &>(yc.getYieldData().get().getData(CALIBRATION_DATA_NAME,ISNOTNULL).get()).get();
 	
 	
 	//dataProvider->mUnTenor == NULL means we do not use volatility
 	if (dataProvider->mUnTenor.size() <= 0)
 		return ;
 
-	LAString convid;	
+	AQLString convid;	
 	int y,m,d,w;
 
-	const LADate &asofdate = dataProvider->mpvanilla->getAsOfDate();
+	const AQLDate &asofdate = dataProvider->mpvanilla->getAsOfDate();
 	if (dataProvider->mParam.size() != dataProvider->mMaturityDates.size() ||
 		dataProvider->mParam.size() != dataProvider->mFCurveTypes.size() )
-		throw LACoreInvalidData("Cashlets size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Cashlets size error",__FILE__,__LINE__);
 
 	/*if (dataProvider->mIsFWDInter)
 	{
@@ -405,8 +405,8 @@ LAPriceIRSABRVolatility::setVolatility(LADataProvider* dp, LAObject& object, LAS
 				}
 				else
 				{
-					volvec[2] = LAMath::max(volvec[2], 0.0001);
-					volvec[3] = LAMath::max(volvec[3], 0.0001);
+					volvec[2] = AQLMath::max(volvec[2], 0.0001);
+					volvec[3] = AQLMath::max(volvec[3], 0.0001);
 				}
 				dataProvider->mParam[i][j]->Vol = (dataProvider->mVolfunc)->operator ()(volvec);
 			}
@@ -434,18 +434,18 @@ LAPricePlainVolatilityPVVolMatrixUse::~LAPricePlainVolatilityPVVolMatrixUse(void
 }
 // ! setupvol
 void 
-LAPricePlainVolatilityPVVolMatrixUse::setVolatility(LADataProvider* dp, LAObject& object, LAString model)
+LAPricePlainVolatilityPVVolMatrixUse::setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model)
 {
 	LALinearRatesOptionValueDataProvider* dataProvider = dynamic_cast<LALinearRatesOptionValueDataProvider*>(dp);
-	LADataHolder* dh = &(object.getData(PRICING_DATA_PVVOLMATRIX, ISNOTNULL));
-	const DoubleMatrix& volmat = dynamic_cast<const LADataDoubleMatrix &>(dh->get()).get();
+	AQLDataHolder* dh = &(object.getData(PRICING_DATA_PVVOLMATRIX, ISNOTNULL));
+	const DoubleMatrix& volmat = dynamic_cast<const AQLDataDoubleMatrix &>(dh->get()).get();
 	if (volmat.size() != dataProvider->mParam.size())
-		throw LACoreInvalidData("Volatility Matrix Size Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Volatility Matrix Size Error",__FILE__,__LINE__);
 
 	for (unsigned int i = 0; i < dataProvider->mParam.size(); i++)
 	{
 		if (volmat[i].size() != dataProvider->mParam[i].size())
-			throw LACoreInvalidData("Volatility Matrix Size Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Volatility Matrix Size Error",__FILE__,__LINE__);
 
 		if (dataProvider->mParam[i].size() == 0)
 			continue;

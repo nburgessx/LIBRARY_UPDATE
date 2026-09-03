@@ -4,7 +4,7 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LAModelDynamicsCurve.h"
 
 

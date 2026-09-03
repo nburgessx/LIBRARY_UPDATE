@@ -4,10 +4,10 @@
 #pragma interface
 #endif
 
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAFunctionBase.h"
-#include "LAConstant.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLConstant.h"
 #include "LARatesAccruedCouponFuncBase.h"
 #include "LAPriceIndexTool.h"
 #include "LAPriceCFGenUtility.h"
@@ -17,7 +17,7 @@
 
 
 
-class LAObject;
+class AQLObject;
 class LAPricePayOff;
 ///////////////////////////////////////////////////////////////////////
 /*! 
@@ -76,10 +76,10 @@ public:
 	*/		
 	double						getCoupon(void) const {return mCoupon;}
 	// set up this class
-	virtual	void				setUp(const LADate& basedate,	
-									const LAObject& trade,
+	virtual	void				setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
 									unsigned int legNo,
-									const LAObject& couponinfo,
+									const AQLObject& couponinfo,
 									const LAPricePayOff& payoff,
 									unsigned int currentpos);
 
@@ -88,7 +88,7 @@ public:
 
 	bool						isCompoundCoupon(void) const {return mIsCompoundCoupon;}
 	// ! Get Operator
-	const LAFunctionBase*		getOperator(void) const{ return mpOperator;}
+	const AQLFunctionBase*		getOperator(void) const{ return mpOperator;}
 
 	std::vector<LAPriceIndexToolBase*> getIndexs(void) const {return mpIndexs;}// index
 
@@ -140,15 +140,15 @@ protected:
 	void						getPastCoupons(DoubleArray& x) const;
 	void						getPastCouponPayoffs(DoubleArray& x) const;
 
-	virtual LAPriceIndexToolBase* createIndexTool(const LAObject& indexInfo, const LADate& baseDate);
+	virtual LAPriceIndexToolBase* createIndexTool(const AQLObject& indexInfo, const AQLDate& baseDate);
 						
 	
 	std::vector<LAPriceIndexToolBase*> mpIndexs;// index
-	LAFunctionBase* mpOperator;// operator 
+	AQLFunctionBase* mpOperator;// operator 
 	
     const LAPricePayOff* mpPayOff;// payoff
 	UintArray mPayOffPos;// past payoff positions that are used to calutate this coupon
-	const LAFunctionBase* mpObservationOperator;// observation operator
+	const AQLFunctionBase* mpObservationOperator;// observation operator
 	unsigned int mCurrentPos;//! current payoff position
 	DoubleArray	mFixedRates;// fixed past coupons that are used to calutate this coupon
 	bool mIsObservationTerm;// flag of coupon observation term or not
@@ -156,8 +156,8 @@ protected:
 	//cap floor
 	bool mIsCap;// cap flag
 	bool mIsFloor;// < floor flag
-	const LAFunctionBase*	mpCap;// cap
-	const LAFunctionBase*	mpFloor;// floor
+	const AQLFunctionBase*	mpCap;// cap
+	const AQLFunctionBase*	mpFloor;// floor
 	
 
 	unsigned int mLegNo;// leg number that are corresponed to this coupon	
@@ -173,21 +173,21 @@ protected:
 	mutable DoubleArray	mX3;// variable for coupon calculation
 
 	bool mIsCompoundCoupon;
-	const LADataDoubles* mpCoefficient;
+	const AQLDataDoubles* mpCoefficient;
 };
 
 class LAPriceCouponToolCompound : public LAPriceCouponTool
 {
 public:
-	virtual	void setUp(const LADate& basedate,	
-                       const LAObject& trade,
+	virtual	void setUp(const AQLDate& basedate,	
+                       const AQLObject& trade,
                        unsigned int legNo,
-                       const LAObject& couponinfo,
+                       const AQLObject& couponinfo,
                        const LAPricePayOff& payoff,
                        unsigned int currentpos);
     virtual void calcCoupons(DoubleVector& coupons, const size_t start_pos, const size_t end_pos);
-    virtual void setFixingInfo(LADate& fixing_date, LAString& fixing_flag) const;
-    virtual void setFixingInfo(DateVector& fixing_date, LAStringVector& fixing_flag) const;
+    virtual void setFixingInfo(AQLDate& fixing_date, AQLString& fixing_flag) const;
+    virtual void setFixingInfo(DateVector& fixing_date, AQLStringVector& fixing_flag) const;
 protected:
-    virtual LAPriceIndexToolBase* createIndexTool(const LAObject& indexInfo, const LADate& baseDate);
+    virtual LAPriceIndexToolBase* createIndexTool(const AQLObject& indexInfo, const AQLDate& baseDate);
 };

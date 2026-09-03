@@ -19,8 +19,8 @@
 
 
 
-class LADataInstance;
-class LAPriceDataManager;
+class AQLDataInstance;
+class AQLPriceDataManager;
 
 //===================== Class Declare LAModelSetupBase==================================
 /*! 
@@ -37,30 +37,30 @@ public:
 	virtual ~LAModelSetupBase(void);
 								//======================================
 								// regist master data to dataInstance object
-	void                          registMaster(LADataInstance &dataInstance);
+	void                          registMaster(AQLDataInstance &dataInstance);
 								//======================================
 	                            // extra regist method
 	                            // sub class override this method
 								//======================================
 								// regist extra data
-	virtual void                 registAttrMasterEx(LAPriceDataManager &dm) = 0;
+	virtual void                 registAttrMasterEx(AQLPriceDataManager &dm) = 0;
 								//======================================
 								// regist extra object 
-	virtual void                 registEntityMasterEx(LADataInstance &dataInstance) = 0;
+	virtual void                 registEntityMasterEx(AQLDataInstance &dataInstance) = 0;
 								//======================================
 								// regist extra function 
-	virtual void                 registFunctionMasterEx(LADataInstance &dataInstance) = 0;		
+	virtual void                 registFunctionMasterEx(AQLDataInstance &dataInstance) = 0;		
 
 protected:
 								//======================================
 								// regist data 
-	void                          registAttrMaster(LAPriceDataManager &dm);
+	void                          registAttrMaster(AQLPriceDataManager &dm);
 								//======================================
 								// regist object 
-	void                           registEntityMaster(LADataInstance &dataInstance);
+	void                           registEntityMaster(AQLDataInstance &dataInstance);
 								//======================================
 								// regist function 
-	virtual void                          registFunctionMaster(LADataInstance &dataInstance);
+	virtual void                          registFunctionMaster(AQLDataInstance &dataInstance);
 
 
 

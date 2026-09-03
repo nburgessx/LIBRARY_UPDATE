@@ -8,9 +8,9 @@
 #endif
 
 
-#include "LACoreAppError.h"
-#include "LACoreSystemError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreSystemError.h"
+#include "AQLCoreTemplateType.h"
 
 
 ///////////////////////////////////////////////////////////////////////

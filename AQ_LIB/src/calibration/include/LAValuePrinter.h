@@ -24,9 +24,9 @@
 #include "LADefinitions.h"
 
 
-class LADataInstance;
-class LAObject;
-class LAString;
+class AQLDataInstance;
+class AQLObject;
+class AQLString;
 struct MAIndexData;
 
 //===================== Class Declare MAValuePrinter==================================
@@ -40,61 +40,61 @@ class MAValuePrinter
 public:
 	//==============================================================================
 	// print value
-	static int printValue(const std::vector<LAString> &mainTradeVec, 
-		const std::vector<LAString> &fileNumVec, const std::vector<LADataInstance *> &rootVec, const std::vector<LAString> &ccyVec, LAString calc = AQ_NO_DATA);
+	static int printValue(const std::vector<AQLString> &mainTradeVec, 
+		const std::vector<AQLString> &fileNumVec, const std::vector<AQLDataInstance *> &rootVec, const std::vector<AQLString> &ccyVec, AQLString calc = AQ_NO_DATA);
 
 	// print fee value
-	static int printFeeValue(const std::vector<LAString> &mainTradeVec,
-		const std::vector<LAString> &fileNumVec, const std::vector<LADataInstance *> &rootVec);
+	static int printFeeValue(const std::vector<AQLString> &mainTradeVec,
+		const std::vector<AQLString> &fileNumVec, const std::vector<AQLDataInstance *> &rootVec);
 
 	// ! print leg cashflow and option param
-	static int printCF( const std::vector< LAString >& mainTradeVec,
-						const std::vector< LAString >& fileNumVec,
-						const std::vector< LADataInstance* >& rootVec,
-						const std::vector< LAString >& ccyVec,
-						LAString calc = AQ_NO_DATA
+	static int printCF( const std::vector< AQLString >& mainTradeVec,
+						const std::vector< AQLString >& fileNumVec,
+						const std::vector< AQLDataInstance* >& rootVec,
+						const std::vector< AQLString >& ccyVec,
+						AQLString calc = AQ_NO_DATA
 					  );
 	// ! print object dump
-	static int printEntityDump(const std::vector< LAString >& fileNumVec,
-                               const std::vector< LADataInstance* >& rootVec
+	static int printEntityDump(const std::vector< AQLString >& fileNumVec,
+                               const std::vector< AQLDataInstance* >& rootVec
                                );
 	// ! print compounded rate
-	static int printCompoundedRates(const LAObject& trade,
-						            const LAString& fileNum,
-									const LADataInstance* dataInstance,
-									const LAString& ccy,
+	static int printCompoundedRates(const AQLObject& trade,
+						            const AQLString& fileNum,
+									const AQLDataInstance* dataInstance,
+									const AQLString& ccy,
 									std::ostream& dest,
-									LAString calc = AQ_NO_DATA);
+									AQLString calc = AQ_NO_DATA);
 	// ! print compounded rate
 	static void printCompoundedRates(const int leg_num,
-		                             const LAObject& trade,
-									 const LAString& fileNum,
-									 const LADataInstance* dataInstance,
-									 const LAString& ccy,
+		                             const AQLObject& trade,
+									 const AQLString& fileNum,
+									 const AQLDataInstance* dataInstance,
+									 const AQLString& ccy,
 									 std::ostream& dest,
-									 LAString calc = AQ_NO_DATA);
+									 AQLString calc = AQ_NO_DATA);
 
 
-	static void changeSemiAnalyticResult(LADataInstance& dataInstance,const LAString& infileName, std::ofstream &file);
+	static void changeSemiAnalyticResult(AQLDataInstance& dataInstance,const AQLString& infileName, std::ofstream &file);
 
-    static void printFxOptionMatrix(LADataInstance* dataInstance, const LAString& filenum);
+    static void printFxOptionMatrix(AQLDataInstance* dataInstance, const AQLString& filenum);
 private:
 	//==============================================================================
 	// print pv value
-	static bool printPV(const LAString &name, const std::vector<const LAObject*> &tradeEntities, std::ofstream &file, const LAString &ccys, bool isDetail, bool isvanilla = false);
+	static bool printPV(const AQLString &name, const std::vector<const AQLObject*> &tradeEntities, std::ofstream &file, const AQLString &ccys, bool isDetail, bool isvanilla = false);
 	//==============================================================================
 	// print risk value
-	static bool printRisk(const LAString &name, const LAString &riskName, const std::vector<const LAObject*> &tradeEntities, const LAObject &riske, std::ofstream &file, bool isBase = false);
+	static bool printRisk(const AQLString &name, const AQLString &riskName, const std::vector<const AQLObject*> &tradeEntities, const AQLObject &riske, std::ofstream &file, bool isBase = false);
 	//==============================================================================
 	// print data name
-	static bool printAttr(LADataInstance *dataInstance, std::ofstream &file, const LAString &ccys, bool isDetail, bool isvanilla = false, bool isSummary = false);
+	static bool printAttr(AQLDataInstance *dataInstance, std::ofstream &file, const AQLString &ccys, bool isDetail, bool isvanilla = false, bool isSummary = false);
 	
-	static bool printIMMFwdRisk(const LAString &name, const LAString &riskName, const std::vector<const LAObject*> &tradeEntities, const LAObject &riske, std::ofstream &file);
+	static bool printIMMFwdRisk(const AQLString &name, const AQLString &riskName, const std::vector<const AQLObject*> &tradeEntities, const AQLObject &riske, std::ofstream &file);
 
-	static LAString outStr(double value);
+	static AQLString outStr(double value);
 
 	//print fee cash flow
-	static void MAValuePrinter::printFeeCF(LAObjectHolder& tradeEntity, std::ofstream& outFile);
+	static void MAValuePrinter::printFeeCF(AQLObjectHolder& tradeEntity, std::ofstream& outFile);
 
 private:
 	// constructor

@@ -71,7 +71,7 @@ namespace validation
 	*  @param [in]		discountDayCount	Day count for the discounting
 	*  @return			The Bond Option PV
 	*/
-	double tryMeLWOBondOptionPV(const std::string& objectName, const LAStringMatrix& valuationSettings, const double& bondPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount)
+	double tryMeLWOBondOptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount)
 	{
 		VALID_EXCEPTION_START
 
@@ -101,7 +101,7 @@ namespace validation
 	*  @param [in]		discountDayCount	Day count for the discounting
 	*  @return			The Bond Option PV
 	*/
-	double tryMeLWOBondFutureOptionPV(const std::string& objectName, const LAStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount)
+	double tryMeLWOBondFutureOptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount)
 	{
 		VALID_EXCEPTION_START
 
@@ -138,7 +138,7 @@ namespace validation
 	*  @param [in]		showColumnHeaders	showColumnHeaders
 	*  @return			Bond option Greeks' display
 	*/
-	AnyTypeMatrix tryMeLWOBondFutureOptionGreeks(const std::string& greekType, const std::string& objectName, const LAStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders)
+	AnyTypeMatrix tryMeLWOBondFutureOptionGreeks(const std::string& greekType, const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders)
 	{
 		VALID_EXCEPTION_START
 
@@ -185,7 +185,7 @@ namespace validation
 	*  @param [in]		showColumnHeaders	showColumnHeaders
 	*  @return			Bond option Greeks' display
 	*/
-	AnyTypeMatrix tryMeLWOBondOptionGreeks(const std::string& greekType, const std::string& objectName, const LAStringMatrix& valuationSettings, const double& bondSpotPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders)
+	AnyTypeMatrix tryMeLWOBondOptionGreeks(const std::string& greekType, const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondSpotPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders)
 	{
 		VALID_EXCEPTION_START
 

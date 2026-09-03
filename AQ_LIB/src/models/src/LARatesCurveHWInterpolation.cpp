@@ -57,7 +57,7 @@ LARatesCurveHWInterpolation::~LARatesCurveHWInterpolation()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesCurveHWInterpolation::clone() const
 		//20070410--Nagase--g++ throw
 {
@@ -67,7 +67,7 @@ LARatesCurveHWInterpolation::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -191,7 +191,7 @@ LARatesCurveHWInterpolation::LARatesCurveForHWInterpolation::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -210,9 +210,9 @@ LARatesCurveHWInterpolation::LARatesCurveForHWInterpolation::operator = (const L
 	if (!a.isTypeOf(PE_CURVEFORHW)) 
 	{	// 
 		// 
-		LAString err = "Assignment error for LARatesCurveForHWInterpolation : from ";
-		err += LAString(a.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignment error for LARatesCurveForHWInterpolation : from ";
+		err += AQLString(a.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	// 	
@@ -237,7 +237,7 @@ LARatesCurveHWInterpolation::LARatesCurveForHWInterpolation::getP (double T) con
 	if (t1 > m_t || t2 < m_t)
 	{
 		//error
-		throw LACoreInvalidData("Condition of t1 <= t <= t2 is not maintain", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Condition of t1 <= t <= t2 is not maintain", __FILE__, __LINE__);
 	}
 	    
     if (T <= m_t) return 1.0;

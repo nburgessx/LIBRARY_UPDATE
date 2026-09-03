@@ -19,7 +19,7 @@ namespace etrading
 		AQ_REQUIRE(volProvider_->volType() == LOGNORMAL_VOLATILITY , "Bond Option/Bond Future Option - only Lognormal Volatility is supported.");
 
 		asOfDate_ = volProvider_->asOfDate();
-		AQ_REQUIRE(asOfDate_ != LADate(), "Invalid AsOfDate.");
+		AQ_REQUIRE(asOfDate_ != AQLDate(), "Invalid AsOfDate.");
 
 		// Default to Settlement Date
 		valuationDate_ = valuationSettingsLVB.getCompulsoryValueAsDate(VALUATION_SETTING_KEYS::VALUATION_DATE, "ValuationSettings");
@@ -157,7 +157,7 @@ namespace etrading
 			break;
 		}
 		default:
-			throw LACoreInvalidData("#Error: Only Analytical or Numerical Greek is supported", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Only Analytical or Numerical Greek is supported", __FILE__, __LINE__);
 			break;
 		}
 
@@ -209,10 +209,10 @@ namespace etrading
 		case ANALYTICAL_GREEK_TYPE:
 		{
 			//TODO Yongyan
-			throw LACoreInvalidData("#Error: Only Numerical Greek is supported", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Only Numerical Greek is supported", __FILE__, __LINE__);
 
 			//// Note: Delta, Gamma, and Theta cannot be used the BlackScholes formula directly as the carry (r-q) is changing when bondSpotPrice change
-			////throw LACoreInvalidData("#Error: Bond Option Analytical Greek is not supported", __FILE__, __LINE__);
+			////throw AQLCoreInvalidData("#Error: Bond Option Analytical Greek is not supported", __FILE__, __LINE__);
 
 			//greeks = BlackScholes::calculatePriceAndGreeks(callPut,
 			//												bondSpotPrice,
@@ -259,7 +259,7 @@ namespace etrading
 			break;
 		}
 		default:
-			throw LACoreInvalidData("#Error: Only Analytical or Numerical Greek is supported", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Only Analytical or Numerical Greek is supported", __FILE__, __LINE__);
 			break;
 		}
 

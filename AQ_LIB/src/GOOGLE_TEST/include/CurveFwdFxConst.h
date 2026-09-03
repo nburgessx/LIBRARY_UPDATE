@@ -2,7 +2,7 @@
 
 #include "InitializeAQGoogleTest.h"
 #include "CurveAccessors.h"
-#include "LAString.h"
+#include "AQLString.h"
 
 namespace google_test
 {
@@ -12,7 +12,7 @@ namespace google_test
         , public CurveAccessors
     {
     public:
-        CurveFwdFxConst( const LAString& inputFile );
+        CurveFwdFxConst( const AQLString& inputFile );
     };
 }
 

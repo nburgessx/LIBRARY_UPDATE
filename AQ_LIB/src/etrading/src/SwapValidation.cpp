@@ -3,10 +3,10 @@
 
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLPriceDataCalendar.h"
 #include <cctype>
 #include "LAMarketData.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "CommonConstants.h"
 #include <utility>
 #include "LAStaticData.h"
@@ -22,7 +22,7 @@ namespace etrading
     * @param [in]			eomRoll				Do we do EOM rolling?
     * @output				A boolean indicating the fixed leg direction
     */
-    void validateOISParameters( LAString& slidingRule, LAString& compoundingMethod, bool eomRoll )
+    void validateOISParameters( AQLString& slidingRule, AQLString& compoundingMethod, bool eomRoll )
     {
 		if (compoundingMethod.size() != 0)
 		{
@@ -36,7 +36,7 @@ namespace etrading
 			}
 			else if ( !( boost::iequals( compoundingMethod.getCString(), "FLAT" ) || boost::iequals( compoundingMethod.getCString(), "SIMPLE" ) ) )
 			{
-				throw LACoreInvalidData( "#Error: Invalid compounding method, 'CompMethod' should either be 'Arithmetic', 'Geometric', 'FLAT', or 'SIMPLE'", __FILE__, __LINE__ );
+				throw AQLCoreInvalidData( "#Error: Invalid compounding method, 'CompMethod' should either be 'Arithmetic', 'Geometric', 'FLAT', or 'SIMPLE'", __FILE__, __LINE__ );
 			}
 		}
 
@@ -46,20 +46,20 @@ namespace etrading
         }
     }
 
-    /* @brief			Validate maturity string and convert it to LADate. As a market convention, maturity date is NOT adjusted for holiday, so businessAdjustment and calendar are not required.
+    /* @brief			Validate maturity string and convert it to AQLDate. As a market convention, maturity date is NOT adjusted for holiday, so businessAdjustment and calendar are not required.
     * @param [in]		effectiveDate		The start date
     * @param [in]		maturityDateStr	    Maturity Date in string format, can be a date or tenor
-    * @output			maturity date in LADate format
+    * @output			maturity date in AQLDate format
     */
-    LADate validateMaturityDate( const LADate& effectiveDate, const LAString& maturityDateStr )
+    AQLDate validateMaturityDate( const AQLDate& effectiveDate, const AQLString& maturityDateStr )
     {
-        LADate maturityDate;
+        AQLDate maturityDate;
         bool isMaturityInDateFormat = true;
         try
         {
             maturityDate = stringToDate( maturityDateStr, "#Error: Invalid 'MaturityDate'." );
         }
-        catch ( LACoreError& )
+        catch ( AQLCoreError& )
         {
             isMaturityInDateFormat = false;
         }
@@ -71,38 +71,38 @@ namespace etrading
             AQ_REQUIRE( LADateScheduleHelpers::isValidDate( effectiveDate ), "Invalid Date: Unable to convert MaturityTenor to a date" )
             maturityDate = LADateScheduleHelpers::getDate( effectiveDate,
                                                          maturityDateStr,		// maturity is Tenor
-                                                         LAString(),         // BusinessDayAdjustment is NO_CHANGE
-                                                         LAString());       // Calendar is NONE
+                                                         AQLString(),         // BusinessDayAdjustment is NO_CHANGE
+                                                         AQLString());       // Calendar is NONE
         }
         
         AQ_REQUIRE( LADateScheduleHelpers::isValidDate( maturityDate ), "Invalid Maturity Date " + maturityDateStr )
         return maturityDate;
     }
 
-    /* @brief			Validate maturity string and convert it to LADate, given the effective date as a string
+    /* @brief			Validate maturity string and convert it to AQLDate, given the effective date as a string
     * @param [in]		effectiveDateStr		The start date as a string
     * @param [in]		maturityDateStr 	    Maturity Date in string format, can be a date or tenor
-    * @output			maturity date in LADate format
+    * @output			maturity date in AQLDate format
     */
-    LADate validateMaturityDate( const LAString& effectiveDateStr, const LAString& maturityDateStr )
+    AQLDate validateMaturityDate( const AQLString& effectiveDateStr, const AQLString& maturityDateStr )
     {
         // Convert the Effective Date from a string to a date
-        LADate effectiveDate = stringToDate( effectiveDateStr, "#Error: Invalid 'EffectiveDate'." );
+        AQLDate effectiveDate = stringToDate( effectiveDateStr, "#Error: Invalid 'EffectiveDate'." );
 
         // Convert the Maturity Date from a String to a Date
-        LADate maturityDate = validateMaturityDate( effectiveDate, maturityDateStr );
+        AQLDate maturityDate = validateMaturityDate( effectiveDate, maturityDateStr );
         return maturityDate;
     }
 
-    /* @brief			Validate maturity string and convert it to LAString, given the effective date as a string
+    /* @brief			Validate maturity string and convert it to AQLString, given the effective date as a string
     * @param [in]		effectiveDateStr	The start date as a string
     * @param [in]		maturityDateStr		Maturity Date in string format, can be a date or tenor
-    * @output			maturity date in LADate format
+    * @output			maturity date in AQLDate format
     */
-    LAString validateMaturityDateString( const LAString& effectiveDateStr, const LAString& maturityDateStr )
+    AQLString validateMaturityDateString( const AQLString& effectiveDateStr, const AQLString& maturityDateStr )
     {
         // Convert the Maturity Date from a String to a Date
-        LAString maturityDate = validateMaturityDate( effectiveDateStr, maturityDateStr ).stringWithFormat( "YYYYMMDD" );
+        AQLString maturityDate = validateMaturityDate( effectiveDateStr, maturityDateStr ).stringWithFormat( "YYYYMMDD" );
         return maturityDate;
     }
 
@@ -110,14 +110,14 @@ namespace etrading
     * @param [in]		maturtiyStr			Maturity in string format
     * @output			TRUE for tenor format
     */
-	bool isMaturityDateTenor(const LAString& maturityStr)
+	bool isMaturityDateTenor(const AQLString& maturityStr)
 	{
 		bool isMaturityInDateFormat = true;
         try
         {
-            LADate maturityDate = stringToDate( maturityStr, "#Error: Invalid 'MaturityDate'." );
+            AQLDate maturityDate = stringToDate( maturityStr, "#Error: Invalid 'MaturityDate'." );
         }
-        catch ( LACoreError& )
+        catch ( AQLCoreError& )
         {
             isMaturityInDateFormat = false;
         }
@@ -129,11 +129,11 @@ namespace etrading
     * @param [in]		payRec		A string representing the fixed leg direction
     * @output			A boolean indicating the fixed leg direction
     */
-    bool validateSwapPayRecFlag( const LAString& payRec )
+    bool validateSwapPayRecFlag( const AQLString& payRec )
     {
         bool isFixedRatePayerSwap = true;
 
-        LAString payerReceiver = LAString( payRec ).toUpper();
+        AQLString payerReceiver = AQLString( payRec ).toUpper();
 
         if ( payerReceiver == "PAYER" || payerReceiver == "PAY" || payerReceiver == "P" )
         {
@@ -183,9 +183,9 @@ namespace etrading
     *  @param [out]     isEndOfMonthRoll    Are coupons rolling on the end of the month? True or False
     *  @param [out]     isStartRoll         Are we rolling forwards from the start? True = coupons roll from the start date i.e. ShortEnd stub, False = coupons roll from the end date i.e. ShortStart stub
     */
-    void validateAndPopulateRollDayConventions( const LAString& rollDayStr, const LADate& startDate, const LADate& endDate, int** rollDay, LAString** rollConvention, bool& isEndOfMonthRoll, bool& isStartRoll )
+    void validateAndPopulateRollDayConventions( const AQLString& rollDayStr, const AQLDate& startDate, const AQLDate& endDate, int** rollDay, AQLString** rollConvention, bool& isEndOfMonthRoll, bool& isStartRoll )
     {
-        LAString rollDayString = rollDayStr;
+        AQLString rollDayString = rollDayStr;
         rollDayString.toUpper();
 
         if ( rollDayString.size() == 0 )
@@ -193,7 +193,7 @@ namespace etrading
             // If rollDayString is Empty or Null
             // ---------------------------------
             // Do nothing, leave values as already set in their default state
-            rollDayString = LAString( "NORMAL" );
+            rollDayString = AQLString( "NORMAL" );
         }
 
         if ( isValid< int >( rollDayString.getCString() ) || isValid< double >( rollDayString.getCString() ) )
@@ -208,8 +208,8 @@ namespace etrading
             // Check the rollDayInteger is Valid
             if ( **rollDay < 1 || **rollDay > 31 )
             {
-                LAString msg = "#Error: The rollDay must be a day of the month i.e. a number from 1 to 31 or a convention e.g. 'IMM' or 'EOM'.";
-                throw LACoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
+                AQLString msg = "#Error: The rollDay must be a day of the month i.e. a number from 1 to 31 or a convention e.g. 'IMM' or 'EOM'.";
+                throw AQLCoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
             }
 
             // Update Roll Conventions
@@ -222,32 +222,32 @@ namespace etrading
             // If rollDayString is Non-Numeric
             // -------------------------------
 
-            if ( rollDayString == LAString( "IMM" ) )
+            if ( rollDayString == AQLString( "IMM" ) )
             {
                 // Roll Day is ignored when the roll convention is IMM
                 *rollDay            = nullptr; 				// Not Used
-                **rollConvention    = LAString( "IMM" );    // IMM Roll
+                **rollConvention    = AQLString( "IMM" );    // IMM Roll
                 isEndOfMonthRoll    = false;                // Not Rolling on End of Month
                 isStartRoll         = false;                // ShortStart Stub
             }
-            //else if ( rollDayString == LAString( "START" ) )
+            //else if ( rollDayString == AQLString( "START" ) )
             //{
             //    // "START" This means use the start date for the rollDay and roll forwards i.e. short end stub
             //    **rollDay           = startDate.dayOfMonth();
-            //    ** rollConvention    = LAString( "START" ); // Roll Forwards from the Start Date i.e. ShortEnd Stub
+            //    ** rollConvention    = AQLString( "START" ); // Roll Forwards from the Start Date i.e. ShortEnd Stub
             //    isEndOfMonthRoll    = false;                // Not Rolling on End of Month
             //    isStartRoll         = true;                 // ShortEnd Stub
             //}
-            //else if ( rollDayString == LAString( "END" ) )
+            //else if ( rollDayString == AQLString( "END" ) )
             //{
             //    // "END" This means use the end date for the rollDay and roll backwards i.e. short start stub
             //    // Please do not confuse with EOM i.e. End of month roll
             //    **rollDay           = endDate.dayOfMonth();
-            //    ** rollConvention    = LAString( "END" );   // Roll Backwards from the End Date i.e. ShortStart Stub
+            //    ** rollConvention    = AQLString( "END" );   // Roll Backwards from the End Date i.e. ShortStart Stub
             //    isEndOfMonthRoll    = false;                // Not Rolling on End of Month
             //    isStartRoll         = false;                // ShortStart Stub
             //}
-            else if ( rollDayString == LAString( "NORMAL" ) )
+            else if ( rollDayString == AQLString( "NORMAL" ) )
             {
                 // NORMAL: Do nothing ... Kept for backwards compaitbility purposes
                 // Normal indicates that the analytics should imply the correct roll day and other stub settings
@@ -256,18 +256,18 @@ namespace etrading
                 isEndOfMonthRoll    = false;                // Not Rolling on End of Month
                 isStartRoll         = false;                // ShortStart Stub
             }
-            else if ( rollDayString == LAString( "EOM" ) )
+            else if ( rollDayString == AQLString( "EOM" ) )
             {
                 *rollDay            = nullptr;              // Not Used
-                **rollConvention    = LAString( "EOM" );    // End of Month Roll
+                **rollConvention    = AQLString( "EOM" );    // End of Month Roll
                 isEndOfMonthRoll    = true;                 // Rolling on End of Month
                 isStartRoll         = false;                // ShortStart Stub
             }
             else
             {
                 // Possible choices of roll convention are: IMM and EOM (End-Of-Month)
-                LAString msg = "#Error: The rollDay must be a day of the month i.e. a  from 1 to 31 or a convention e.g. 'IMM' or 'EOM'.";
-                throw LACoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
+                AQLString msg = "#Error: The rollDay must be a day of the month i.e. a  from 1 to 31 or a convention e.g. 'IMM' or 'EOM'.";
+                throw AQLCoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
             }
         }
     }
@@ -346,11 +346,11 @@ namespace etrading
 
         if (!isXccySwap && !sameCurrency)
         {
-            throw LACoreInvalidData( "#Error: For Single Currency Swap, two legs should have same Currency", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: For Single Currency Swap, two legs should have same Currency", __FILE__, __LINE__ );
         }
         if (isXccySwap && sameCurrency)
         {
-            throw LACoreInvalidData( "#Error: For Cross Currency Swap, two legs should have different Currencies", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: For Cross Currency Swap, two legs should have different Currencies", __FILE__, __LINE__ );
         }
     }
 

@@ -36,7 +36,7 @@ namespace etrading
 		*  @param[in]	swapIndexMaturity	A string containing the IRS maturity tenor, e.g '5Y'
 		*  @returns		The IRS par-rate
 		*/
-		double calculateUnderlyingParRate( const LabelValueBlock& valuationSettingsLVB, const LAString& swapGeneratorName, const LADate& underlyingEffectiveDate, const LAString& underlyingMaturity ) const;
+		double calculateUnderlyingParRate( const LabelValueBlock& valuationSettingsLVB, const AQLString& swapGeneratorName, const AQLDate& underlyingEffectiveDate, const AQLString& underlyingMaturity ) const;
 	
 
 	};

@@ -4,7 +4,7 @@
 #include <gTest/gTest.h>
 
 #include <vector>
-#include "LAString.h"
+#include "AQLString.h"
 
 #include <numeric>
 
@@ -12,13 +12,13 @@ TEST( TestRandomNumberGenerator, UNIT_TestMersenneTwisterUniform )
 {
 	const int numberOfSamples = 100;
 
-	std::vector<LAString> rngType		= { "RandomNumberGenerator", "MersenneTwister" };
-	std::vector<LAString> distribution	= { "Distribution", "Uniform" };
-	std::vector<LAString> numPaths		= { "NumberOfPaths", LAString(numberOfSamples) };
-	std::vector<LAString> antithetic	= { "AntitheticSampling", "TRUE" };
-	std::vector<LAString> inParallel	= { "EvaluateInParallel", "FALSE" };
+	std::vector<AQLString> rngType		= { "RandomNumberGenerator", "MersenneTwister" };
+	std::vector<AQLString> distribution	= { "Distribution", "Uniform" };
+	std::vector<AQLString> numPaths		= { "NumberOfPaths", AQLString(numberOfSamples) };
+	std::vector<AQLString> antithetic	= { "AntitheticSampling", "TRUE" };
+	std::vector<AQLString> inParallel	= { "EvaluateInParallel", "FALSE" };
 
-	LAStringMatrix mcParametersLVB = { rngType, distribution, numPaths, antithetic, inParallel };
+	AQLStringMatrix mcParametersLVB = { rngType, distribution, numPaths, antithetic, inParallel };
 
 	const double minSample = 10.0;
 	const double maxSample = 20.0;
@@ -38,13 +38,13 @@ TEST( TestRandomNumberGenerator, UNIT_TestMersenneTwisterNormal )
 {
 	const int numberOfSamples = 100;
 
-	std::vector<LAString> rngType		= { "RandomNumberGenerator", "MersenneTwister" };
-	std::vector<LAString> distribution	= { "Distribution", "Normal" };
-	std::vector<LAString> numPaths		= { "NumberOfPaths", LAString(numberOfSamples) };
-	std::vector<LAString> antithetic	= { "AntitheticSampling", "TRUE" };
-	std::vector<LAString> inParallel	= { "EvaluateInParallel", "FALSE" };
+	std::vector<AQLString> rngType		= { "RandomNumberGenerator", "MersenneTwister" };
+	std::vector<AQLString> distribution	= { "Distribution", "Normal" };
+	std::vector<AQLString> numPaths		= { "NumberOfPaths", AQLString(numberOfSamples) };
+	std::vector<AQLString> antithetic	= { "AntitheticSampling", "TRUE" };
+	std::vector<AQLString> inParallel	= { "EvaluateInParallel", "FALSE" };
 
-	LAStringMatrix mcParametersLVB = { rngType, distribution, numPaths, antithetic, inParallel };
+	AQLStringMatrix mcParametersLVB = { rngType, distribution, numPaths, antithetic, inParallel };
 
 	// --- Test Standard Normals ---
 	const double standardNormalMean = 0.0;
@@ -78,13 +78,13 @@ TEST( TestRandomNumberGenerator, UNIT_TestSobolSequence )
 {
 	const int numberOfSamples = 1023; // 2^n-1
 
-	std::vector<LAString> rngType		= { "RandomNumberGenerator", "Sobol" };
-	std::vector<LAString> distribution	= { "Distribution", "Uniform" };
-	std::vector<LAString> numPaths		= { "NumberOfPaths", LAString(numberOfSamples) };
-	std::vector<LAString> antithetic	= { "AntitheticSampling", "FALSE" };
-	std::vector<LAString> inParallel	= { "EvaluateInParallel", "FALSE" };
+	std::vector<AQLString> rngType		= { "RandomNumberGenerator", "Sobol" };
+	std::vector<AQLString> distribution	= { "Distribution", "Uniform" };
+	std::vector<AQLString> numPaths		= { "NumberOfPaths", AQLString(numberOfSamples) };
+	std::vector<AQLString> antithetic	= { "AntitheticSampling", "FALSE" };
+	std::vector<AQLString> inParallel	= { "EvaluateInParallel", "FALSE" };
 
-	LAStringMatrix mcParametersLVB = { rngType, distribution, numPaths, antithetic, inParallel };
+	AQLStringMatrix mcParametersLVB = { rngType, distribution, numPaths, antithetic, inParallel };
 
 	const double minSample = 10.0;
 	const double maxSample = 20.0;

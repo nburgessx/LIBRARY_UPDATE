@@ -146,14 +146,14 @@ namespace etrading
 		constructPropertyIndexFromCurveGenerator( baseCurveGenerator, propertyIndex, mergedProperties );
 
 		// Update property values using the modifiedValuesLVB
-		const LAStringMatrix& modifiedValues = modifiedValuesLVB.toLAStringMatrix();
+		const AQLStringMatrix& modifiedValues = modifiedValuesLVB.toLAStringMatrix();
 		BOOST_FOREACH( auto rowData, modifiedValues )
 		{
-			const LAString& key      = rowData[0];
-			const LAString& newValue = rowData[1];
+			const AQLString& key      = rowData[0];
+			const AQLString& newValue = rowData[1];
 
 			// Split the key into two components delimited by ':'   requiredPropertyName:requiredKeyName
-			LAStringVector tokens = key.toToken(':');
+			AQLStringVector tokens = key.toToken(':');
             
             // Uppercase
             for( size_t i = 0; i < tokens.size(); ++i )
@@ -164,7 +164,7 @@ namespace etrading
             // Check Format
             if (tokens.size() != 2)
 			{
-				throw LACoreInvalidData( ( boost::format( "#Error: Invalid format of property key: Expecting 'PROPERTYNAME:KEYNAME', but found '%s'. " ) % key ).str().c_str() , __FILE__, __LINE__ );
+				throw AQLCoreInvalidData( ( boost::format( "#Error: Invalid format of property key: Expecting 'PROPERTYNAME:KEYNAME', but found '%s'. " ) % key ).str().c_str() , __FILE__, __LINE__ );
 			}
 			
             const std::string requiredPropertyName = tokens[0].getCString();
@@ -191,7 +191,7 @@ namespace etrading
 			}
 			else
 			{
-				throw LACoreInvalidData( ( boost::format( "#Error: Base CurveGenerator '%s' does not contain property name '%s'. " ) 
+				throw AQLCoreInvalidData( ( boost::format( "#Error: Base CurveGenerator '%s' does not contain property name '%s'. " ) 
 					% baseCurveGenerator.getRefToName()
 					% requiredPropertyName ).str().c_str() , __FILE__, __LINE__ );
 			}
@@ -415,14 +415,14 @@ namespace etrading
 		return variantMatrix;
 	}
 
-	/* @brief Returns a LAStringMatrix containing the configuration information for the specified propertyKey
+	/* @brief Returns a AQLStringMatrix containing the configuration information for the specified propertyKey
 	* @param [in]   propertyKey   The property to be displayed
-	* @param [in]   trimBlankRows Whether to remove blank rows from the end of the LAStringMatrix
-	* @param [out]  A LAStringMatrix containing the LabelValue block
+	* @param [in]   trimBlankRows Whether to remove blank rows from the end of the AQLStringMatrix
+	* @param [out]  A AQLStringMatrix containing the LabelValue block
 	*/
-	LAStringMatrix CurveGenerator::toLAStringMatrix( const std::string& propertyKey, const bool trimBlankRows ) const
+	AQLStringMatrix CurveGenerator::toLAStringMatrix( const std::string& propertyKey, const bool trimBlankRows ) const
 	{
-		LAStringMatrix stringMatrix;
+		AQLStringMatrix stringMatrix;
 		auto iter = stringMatrixByKey_.find(propertyKey);
 		
 		if (iter == stringMatrixByKey_.end())
@@ -440,24 +440,24 @@ namespace etrading
 
     /* @brief Returns a StandardStringMatrix containing the configuration information for the specified propertyKey
 	 * @param [in]   propertyKey   The property to be displayed
-	 * @param [in]   trimBlankRows Whether to remove blank rows from the end of the LAStringMatrix
+	 * @param [in]   trimBlankRows Whether to remove blank rows from the end of the AQLStringMatrix
 	 * @param [out]  A StandardStringMatrix containing the LabelValue block
 	 */
 	StandardStringMatrix CurveGenerator::toStandardStringMatrix( const std::string& propertyKey, const bool trimBlankRows ) const
     {
-        const LAStringMatrix laStringMatrix =  toLAStringMatrix( propertyKey, trimBlankRows );
+        const AQLStringMatrix laStringMatrix =  toLAStringMatrix( propertyKey, trimBlankRows );
         const StandardStringMatrix standardStringMatrix = convertToStandardStringMatrix( laStringMatrix );
         return standardStringMatrix;
     }
 
     /* @brief Returns a LabelValueBlock containing the configuration information for the specified propertyKey
 	 * @param [in]   propertyKey   The property to be displayed
-	 * @param [in]   trimBlankRows Whether to remove blank rows from the end of the LAStringMatrix
+	 * @param [in]   trimBlankRows Whether to remove blank rows from the end of the AQLStringMatrix
 	 * @param [out]  A LabelValueBlock containing the LabelValue block
 	 */
 	LabelValueBlock CurveGenerator::toLabelValueBlock( const std::string& propertyKey, const bool trimBlankRows ) const
     {
-        const LAStringMatrix laStringMatrix =  toLAStringMatrix( propertyKey, trimBlankRows );
+        const AQLStringMatrix laStringMatrix =  toLAStringMatrix( propertyKey, trimBlankRows );
         const LabelValueBlock LVB( laStringMatrix );
         return LVB;
     }
@@ -471,7 +471,7 @@ namespace etrading
     {
         bool keyFound = true;
 
-        // 1. FirstCheck for the propertyKey in the LAStringMatrix Cache
+        // 1. FirstCheck for the propertyKey in the AQLStringMatrix Cache
         auto iter = stringMatrixByKey_.find( propertyKey );
 		if (iter == stringMatrixByKey_.end())  // Not Found
         {

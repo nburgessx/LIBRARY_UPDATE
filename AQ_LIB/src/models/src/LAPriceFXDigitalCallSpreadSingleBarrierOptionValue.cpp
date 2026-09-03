@@ -6,24 +6,24 @@
 #endif
 
 #include <algorithm>
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LADataReference.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
 #include "LAMathDateCalculations.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAPriceFXDigitalCallSpreadSingleBarrierOptionValue.h"
 #include "LAMathFXEntity.h"
 #include "LAMathYieldCurve.h"
@@ -72,7 +72,7 @@ LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::isTypeOf(function_t id) cons
     @brief get option method name
      @return option method name
 */
-LAString 
+AQLString 
 LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::getOptionPayoffName() const
 {
 	return FN_FXDIGITALCALLSPREADSINGLEBARRIEROPTIONVALUE_STR;
@@ -85,7 +85,7 @@ LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::getOptionPayoffName() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::registerData(LAPriceDataManager& dm) const
+LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::registerData(AQLPriceDataManager& dm) const
 {
 	LAPriceFXSingleBarrierOptionValue::registerData(dm);
 	dm.setData(PRICING_DATA_DIGITALPAYOFF, DATA_DOUBLE);
@@ -94,7 +94,7 @@ LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::registerData(LAPriceDataMana
 	
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::clone() const
 {
     try 
@@ -103,20 +103,20 @@ LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
 // calc option
 double 
-LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::calcOption(const LADataValuation& att, LADataProvider* dataProvider, LAObject& e) const
+LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::calcOption(const AQLDataValuation& att, AQLDataProvider* dataProvider, AQLObject& e) const
 {
 	return LAPriceFXOptionValue::calcFXDigitalCallSpreadOption(att,dataProvider,e);
 }
 
 // calc payoff after maturity
 double				
-LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::calcPayOffAterMaturity(const LADataValuation& att, LADataProvider* dataProvider, LAObject& e) const
+LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::calcPayOffAterMaturity(const AQLDataValuation& att, AQLDataProvider* dataProvider, AQLObject& e) const
 {
 	return LAPriceFXOptionValue::calcPayOffFXDigitalCallSpreadAterMaturity(att,dataProvider,e);	
 }
@@ -130,43 +130,43 @@ LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::calcPayOffAterMaturity(const
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*					
-LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const
+AQLDataProvider*					
+LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const
 {
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceFXOptionValueDataProvider* dataProvider = NULL;
 	dataProvider = dynamic_cast<LAPriceFXOptionValueDataProvider *>(LAPriceFXSingleBarrierOptionValue::setUpDataProvider(basedate,object,att));
 
 	dh = &(object.getData(PRICING_DATA_DIGITALPAYOFF, ISNOTNULL));
-	double digpayoff = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	double digpayoff = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	
 	dh = &(object.getData(PRICING_DATA_DIGITALSPREAD, ISNOTNULL));
-	double spread = dynamic_cast<LADataDouble &>(dh->get()).get();
+	double spread = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	if (spread == 0.0)
-		throw LACoreInvalidData("0 Digital Spread",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("0 Digital Spread",__FILE__,__LINE__);
 
 	//adjust unit
 	dataProvider->unit *= digpayoff/spread;
 
 	dh = &(object.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
-	LAString optiontype = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString optiontype = dynamic_cast<AQLDataString &>(dh->get()).get();
 	optiontype.toUpper();
 	bool iscall = (optiontype == "CALL");
 
 	//buyselldistinguish
 	dh = &(object.getData(PRICING_DATA_BUYSELLDISTINGUISH, ISNOTNULL));
-	bool isdiffbybuysell = dynamic_cast<LADataBool &>(dh->get()).get();
+	bool isdiffbybuysell = dynamic_cast<AQLDataBool &>(dh->get()).get();
 
 
 	dh = &(object.getData(PRICING_DATA_STRIKE, ISNOTNULL));
-	double orgstrike = dynamic_cast<LADataDouble &>(dh->get()).get();
+	double orgstrike = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	if (dataProvider->buysell && iscall)
 	{
 		dataProvider->mParam[0][0]->K = orgstrike;
@@ -220,7 +220,7 @@ LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::setUpDataProvider(const LADa
 }
 
 std::vector< std::vector<AnalyticParam*> >
-LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::createAnalyticParam(LAObject& object, LADataProvider* dataProvider) const
+LAPriceFXDigitalCallSpreadSingleBarrierOptionValue::createAnalyticParam(AQLObject& object, AQLDataProvider* dataProvider) const
 {
 	(void)object;(void)dataProvider;
 	std::vector<AnalyticParam*> retvec(2);

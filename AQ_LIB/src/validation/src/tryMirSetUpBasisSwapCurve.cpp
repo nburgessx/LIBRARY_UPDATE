@@ -30,18 +30,18 @@ namespace validation
 	*  @param [in]		fraConv			FRA Conventions
 	*  @param [in]		fraRates		FRA market quotes
     */
-    const LAString tryMirSetUpBasisSwapCurve( LADataInstance* dataInstance,
-                                              const LAString& curveID,
-                                              const LAString& marketName,
-                                              const LAStringMatrix& generalProps,
-                                              const LAStringMatrix& basisConv,
-                                              const LAStringMatrix& basisRates,
-                                              const LAString& curveNames,
-                                              const LAStringMatrix& fwdConv,
-                                              const LAStringMatrix& fwdFXs,
-                                              const LAStringMatrix& spotFXs,
-			                                  const LAStringMatrix& fraConv,
-			                                  const LAStringMatrix& fraRates)
+    const AQLString tryMirSetUpBasisSwapCurve( AQLDataInstance* dataInstance,
+                                              const AQLString& curveID,
+                                              const AQLString& marketName,
+                                              const AQLStringMatrix& generalProps,
+                                              const AQLStringMatrix& basisConv,
+                                              const AQLStringMatrix& basisRates,
+                                              const AQLString& curveNames,
+                                              const AQLStringMatrix& fwdConv,
+                                              const AQLStringMatrix& fwdFXs,
+                                              const AQLStringMatrix& spotFXs,
+			                                  const AQLStringMatrix& fraConv,
+			                                  const AQLStringMatrix& fraRates)
     {
         VALID_EXCEPTION_START
         
@@ -68,40 +68,40 @@ namespace validation
 
         if( ( fwdFXs.empty() && basisRates.empty() ) || basisConv.empty() || generalProps.empty() )
         {
-            throw LACoreInvalidData( "Input Matrix 'fwdFXs' is empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Input Matrix 'fwdFXs' is empty", __FILE__, __LINE__ );
         }
 
         if( ( fwdFXs.empty() && 2 > basisRates[0].size() ) || 2 > basisConv[0].size() || 2 > generalProps[0].size() )
         {
-            throw LACoreInvalidData( "Matrix column size for 'fwdFXs' must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Matrix column size for 'fwdFXs' must be 2", __FILE__, __LINE__ );
         }
 
         if ( !fwdFXs.empty() && fwdFXs[0].size() < 2 )
         {
-            throw LACoreInvalidData( "Matrix column size for 'fwdFXs' must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Matrix column size for 'fwdFXs' must be 2", __FILE__, __LINE__ );
         }
 
         if ( !fwdConv.empty() && fwdConv[0].size() < 2 )
         {
-            throw LACoreInvalidData( "Matrix column size for 'fwdConv' must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Matrix column size for 'fwdConv' must be 2", __FILE__, __LINE__ );
         }
 
         if ( !spotFXs.empty() && spotFXs[0].size() < 3 )
         {
-            throw LACoreInvalidData( "Matrix column size for 'spotFXs' must be 3", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Matrix column size for 'spotFXs' must be 3", __FILE__, __LINE__ );
         }
 
 		if ( !fraConv.empty() && fraConv[0].size() < 2 )
         {
-            throw LACoreInvalidData( "Matrix column size for 'fraConv' must be at least 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Matrix column size for 'fraConv' must be at least 2", __FILE__, __LINE__ );
         }
 
 		if ( !fraRates.empty() && fraRates[0].size() < 2 )
         {
-            throw LACoreInvalidData( "Matrix column size for 'fraRates' must be at least 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Matrix column size for 'fraRates' must be at least 2", __FILE__, __LINE__ );
         }
 
-        LAStringMatrix moneyConv = LAStringMatrix( 0 );
+        AQLStringMatrix moneyConv = AQLStringMatrix( 0 );
 
         etrading::LAUpdateStaticDataManager::setUpBasisCurve( dataInstance,
                                                           curveID,
@@ -125,7 +125,7 @@ namespace validation
         	********** We display a message indicating the success of the curve build.
         	********** The long term and more appropriate plan is to display an object handle rather than simply a message
         */
-        LAString ret( marketName + " Curve has been set" );
+        AQLString ret( marketName + " Curve has been set" );
 
         if ( CreateDataFile::recordEnabled() )
         {

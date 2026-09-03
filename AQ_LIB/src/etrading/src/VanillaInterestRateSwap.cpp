@@ -2,7 +2,7 @@
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
 #include "CommonConstants.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
 #include "ScheduleValidation.h"
@@ -12,7 +12,7 @@
 #include "ConstantDeclarations.h"
 #include "LACurvePricingObject.h"
 #include "CurveInstrumentPricing.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLPriceDataSlidingRule.h"
 
 namespace etrading
 {
@@ -32,7 +32,7 @@ namespace etrading
 			// Is forward interpolation possible?
 			LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( etrading::InitializeAQETrading::instance().dataInstance(), curveSet_ );
 
-			LAString curveType = getCurveType( curveSet_, forecastCurve_ );
+			AQLString curveType = getCurveType( curveSet_, forecastCurve_ );
 			if (etrading::LACurveForwardRateHelpers::setUpForwardDayCount( etrading::getDataInstance(), curveSet_, forecastCurve_, yc )
 					&& curveType.getCString() != MARKET_KEY::CURVE_TYPE_BASIS
 					&& curveType.getCString() != MARKET_KEY::CURVE_TYPE_TENORBASIS

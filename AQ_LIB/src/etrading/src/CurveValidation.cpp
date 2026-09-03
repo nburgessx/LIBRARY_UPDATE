@@ -7,10 +7,10 @@
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
 #include "LACurveCalibrationHelpers.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLPriceDataCalendar.h"
 #include "CurveCalibrationData.h"
 #include "LAMarketData.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "CommonConstants.h"
 #include "LAStaticData.h"
 #include "ExceptionMacros.h"
@@ -30,9 +30,9 @@ namespace etrading
     *  @param [in]		dataInstance		Pointer to the object pool
     *  @param [in]		curveId		CurveID
     */
-    void checkIfCurveExists( LADataInstance* dataInstance, const LAString& curveId )
+    void checkIfCurveExists( AQLDataInstance* dataInstance, const AQLString& curveId )
     {
-        LAObjectPool& objPool = dataInstance->getObjectPool();
+        AQLObjectPool& objPool = dataInstance->getObjectPool();
         if ( !objPool.getObject( curveId ).isDefined() )
         {
             AQ_THROW("Invalid Curve: CurveCollection '" + curveId + "' does not exist");
@@ -43,10 +43,10 @@ namespace etrading
     * @param [in]		freqquency	Frequencey
     * @output			Term: 1Y, 6M, 3M, 1M, 1W
     */
-    LAString fromFrequencyToTerm( const LAString& frequency )
+    AQLString fromFrequencyToTerm( const AQLString& frequency )
     {
-        LAString term;
-        LAString freq  = LAString( frequency ).toUpper();
+        AQLString term;
+        AQLString freq  = AQLString( frequency ).toUpper();
 
         if ( freq == "ANNUAL" )
         {
@@ -84,37 +84,37 @@ namespace etrading
     * @param [in]		isForwardInterp	True to indicate the interpolation is applied on forwards.
     * @param [inout]	frequency	Frequency
     */
-    void validateFrequency( bool isForwardInterp, LAString& frequency )
+    void validateFrequency( bool isForwardInterp, AQLString& frequency )
     {
         if ( isForwardInterp )
         {
-            frequency = getDefaultValueForEmptyString( frequency, LAString( "SIMPLE" ) );
-            if( LAString( frequency ).toUpper() != "SIMPLE" )
+            frequency = getDefaultValueForEmptyString( frequency, AQLString( "SIMPLE" ) );
+            if( AQLString( frequency ).toUpper() != "SIMPLE" )
             {
                 AQ_THROW("Forward interpolation may not be used with a frequency other than 'SIMPLE'");
             }
         }
         else
         {
-            frequency =	getDefaultValueForEmptyString( frequency, LAString( "ANNUAL" ) );
+            frequency =	getDefaultValueForEmptyString( frequency, AQLString( "ANNUAL" ) );
         }
     }
 
     /* @brief			Get the curve currency
     * @output			currency name
     */
-    LAString getCurveCurrency( const LAString& curveCollection )
+    AQLString getCurveCurrency( const AQLString& curveCollection )
     {
-        LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
-        LAObjectHolder* objHolder = &objPool.getObject( curveCollection, ENCHKTYPE_NOCHECK );
-        LAString currency = "";
+        AQLObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
+        AQLObjectHolder* objHolder = &objPool.getObject( curveCollection, ENCHKTYPE_NOCHECK );
+        AQLString currency = "";
         if ( objHolder->isDefined() )
         {
-            LADataHolder* dh = &objHolder->get().getData( IR_CALIBRATION_DATA_CURRENCY );
+            AQLDataHolder* dh = &objHolder->get().getData( IR_CALIBRATION_DATA_CURRENCY );
 
             if ( dh->isDefined() && !dh->isNull() )
             {
-                currency = ( dynamic_cast<const LADataString&> ( dh->get() ) ).get();
+                currency = ( dynamic_cast<const AQLDataString&> ( dh->get() ) ).get();
                 currency.toLower();
             }
             else
@@ -134,12 +134,12 @@ namespace etrading
     * @param[in]   staticDataTable  Static data table/market name
     * @param[out]   is fwdfx constant curve or not
     */
-    bool isFwdFXConst( const LAString& currency, const LAString& staticDataTable )
+    bool isFwdFXConst( const AQLString& currency, const AQLString& staticDataTable )
     {
-        LAString tmpCcy = currency;
+        AQLString tmpCcy = currency;
         LAStaticData& irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
-        LAString suffix = "." + staticDataTable;
-        LAString str = irStaticData.getStaticData( tmpCcy.toLower() + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST + suffix.toLower() );
+        AQLString suffix = "." + staticDataTable;
+        AQLString str = irStaticData.getStaticData( tmpCcy.toLower() + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST + suffix.toLower() );
         bool isFwdFx = ( str.toUpper() == "TRUE" );
         return isFwdFx;
     }
@@ -151,10 +151,10 @@ namespace etrading
     * @param [in]		fwdInterOverride			User specified fwdInter flag
     * @output			FwdInterInfo
     */
-    FwdInterInfo getfwdInterInfo( const LAString& curveCollection, const LAString& staticDataTable, const BooleanEnum& fwdInterOverride )
+    FwdInterInfo getfwdInterInfo( const AQLString& curveCollection, const AQLString& staticDataTable, const BooleanEnum& fwdInterOverride )
     {
 
-		LAString curveType = (curveCollection.size() != 0 && staticDataTable.size() != 0) ? getCurveType(curveCollection, staticDataTable) : "";
+		AQLString curveType = (curveCollection.size() != 0 && staticDataTable.size() != 0) ? getCurveType(curveCollection, staticDataTable) : "";
 		bool isCurveWithFwdTable = (curveType == SWAP);
 		// bool isCurveWithFwdTable = (curveType == SWAP || curveType == CURVETYPE_ARR); // Needed if we want to use a foward table on ARR Curve
 
@@ -187,10 +187,10 @@ namespace etrading
     }
 
 	// Get the frequency string e.g 1D -> DAILY, 1W -> WEEKLY, 1M -> MONTHLY etc ...
-	LAString getFrequencyString(const LAString& frequencyTenor)
+	AQLString getFrequencyString(const AQLString& frequencyTenor)
 	{
-		LAString frequencyString = "";
-        LAString frequencyTenorUpperCase = frequencyTenor;
+		AQLString frequencyString = "";
+        AQLString frequencyTenorUpperCase = frequencyTenor;
         frequencyTenorUpperCase.toUpper();
 
         if( frequencyTenorUpperCase == "1Y" )
@@ -233,7 +233,7 @@ namespace etrading
     * @param [in]		freqOrTenor Frequency or Tenor
     * @output			number of months 
     */
-    unsigned int getFrequencyOrTenorMonth( const LAString& freqOrTenor )
+    unsigned int getFrequencyOrTenorMonth( const AQLString& freqOrTenor )
     {
         if (same(freqOrTenor, "ANNUAL") || same(freqOrTenor, "1Y") || same(freqOrTenor, "12M")) return 12;
 	    else if (same(freqOrTenor, "SEMI-ANNUAL")  || same(freqOrTenor, "6M") ) return 6;
@@ -271,9 +271,9 @@ namespace etrading
     }
 
  	// Convert a frequency to a tenor
-	LAString getFrequencyTenor(const FrequencyEnum& frequencyString)
+	AQLString getFrequencyTenor(const FrequencyEnum& frequencyString)
 	{
-		LAString frequencyTenor = "";
+		AQLString frequencyTenor = "";
 
         if( frequencyString == ANNUAL_FREQUENCY )
         {
@@ -313,18 +313,18 @@ namespace etrading
     * @param [in]		uppercaseResult		The market name result is returned uppercase by default (true), some functions require the marketname to be un touched (false)
     * @output			curveFrequency
     */
-    LAString validateCurveAndGetCurveFrequency( const LAString& curveCollection, const LAString& curveIndex )
+    AQLString validateCurveAndGetCurveFrequency( const AQLString& curveCollection, const AQLString& curveIndex )
     {
         // Get the Market Name
-        LAString marketName = etrading::getCurveStaticDataTableName( curveCollection, curveIndex, false ); // uppercase result = false
+        AQLString marketName = etrading::getCurveStaticDataTableName( curveCollection, curveIndex, false ); // uppercase result = false
 
-        LAString marketNameUppercase = marketName;
+        AQLString marketNameUppercase = marketName;
         marketNameUppercase.toUpper();
 
         // ------------------------------------------------------------------------------------------------
         // Create an instance of the yield curve procedure class that contains yield curve market data
 
-        LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
+        AQLObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
         if ( !objPool.getObject( curveCollection ).isDefined() )
         {
             AQ_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
@@ -334,8 +334,8 @@ namespace etrading
         // ------------------------------------------------------------------------------------------------
 
         // Default Curve Frequency to Match USD Swaps and Xccy Basis Instruments
-        LAString curveFrequencyString;
-        LAString curveFrequencyTenor;
+        AQLString curveFrequencyString;
+        AQLString curveFrequencyTenor;
 		getCurveFrequency(objPool, marketNameUppercase, curveCollection, curveIndex, curveFrequencyString, curveFrequencyTenor);
 
         return curveFrequencyTenor;
@@ -346,9 +346,9 @@ namespace etrading
     * @param [in]		curveIndex		    Curve index name
     * @output			curveFrequency as a year fraction
     */
-    double getCurveFrequencyAsYearFraction( const LAString& curveCollection, const LAString& curveIndex )
+    double getCurveFrequencyAsYearFraction( const AQLString& curveCollection, const AQLString& curveIndex )
     {
-        const LAString curveFrequencyTenor = validateCurveAndGetCurveFrequency( curveCollection, curveIndex );
+        const AQLString curveFrequencyTenor = validateCurveAndGetCurveFrequency( curveCollection, curveIndex );
         
         if( curveFrequencyTenor == "1Y" || curveFrequencyTenor == "12M")
         {
@@ -391,7 +391,7 @@ namespace etrading
 	 * @param [out]		curveFrequencyTenor		The curveFrequencyTenor corresponding to the specified curveIndex
      * @param [in]		enableThrow		        Enable Throw - Throw on Error True or False - Defaults to True
 	 */
-	void getCurveFrequency(LAObjectPool& objPool, const LAString& marketNameUppercase, const LAString& curveCollection, const LAString& curveIndex, LAString& curveFrequencyString, LAString& curveFrequencyTenor, const bool enableThrow)
+	void getCurveFrequency(AQLObjectPool& objPool, const AQLString& marketNameUppercase, const AQLString& curveCollection, const AQLString& curveIndex, AQLString& curveFrequencyString, AQLString& curveFrequencyTenor, const bool enableThrow)
 	{
         // Get the Frequency from the Curve Results Object if available, else from the object pool (slow)
         // --------------------------------------------------------------
@@ -416,25 +416,25 @@ namespace etrading
 
         // LEGACY: Get the Curve Frequency from the object pool ( Very Slow )
         // --------------------------------------------------------------
-		LAString curveType = getCurveType( objPool, curveCollection, marketNameUppercase );
+		AQLString curveType = getCurveType( objPool, curveCollection, marketNameUppercase );
 		
 		// Now determine the curveFrequency based on the input parameters
         if ( curveType == CURVETYPE_OIS || curveType == CURVETYPE_ARR || curveType == CURVETYPE_FWDFXCONST || curveType == CURVETYPE_CHEAPESTTODELIVER )
         {
             // It has been agreed that on a temperary basis we set the frequency to
 			// '1D' for these curve types. 
-            curveFrequencyString = LAString( "DAILY" );
-            curveFrequencyTenor = LAString( "1D" );
+            curveFrequencyString = AQLString( "DAILY" );
+            curveFrequencyTenor = AQLString( "1D" );
         }
         else if( curveType == CURVETYPE_SWAP )
         {
             // Standard Swap Curve
 
-            LAString curveName = (marketNameUppercase == STD) ? "" : "_" + marketNameUppercase;
-            LAString swapCurveEntityName = curveCollection + "_SWAP_0" + curveName;
+            AQLString curveName = (marketNameUppercase == STD) ? "" : "_" + marketNameUppercase;
+            AQLString swapCurveEntityName = curveCollection + "_SWAP_0" + curveName;
 
             // Get the Swap Curve from the Object Pool
-            const LAObjectHolder swapEntity = objPool.getObject( swapCurveEntityName );
+            const AQLObjectHolder swapEntity = objPool.getObject( swapCurveEntityName );
 
             if ( !swapEntity.isDefined() )
             {
@@ -442,14 +442,14 @@ namespace etrading
             }
 
             // Get the Swap Market Data
-            LAObject* swapMarketData = &objPool.getObject( swapCurveEntityName ).get();
+            AQLObject* swapMarketData = &objPool.getObject( swapCurveEntityName ).get();
 
             if ( swapMarketData == nullptr )
             {
                 AQ_THROW("Invalid Curve: Market data for STD Swap Curve does not exist");
             }
 
-            curveFrequencyString = dynamic_cast< const LADataString& >( swapMarketData->getData( IR_CALIBRATION_DATA_FREQUENCY_FLOAT, ISNOTNULL ).get() );
+            curveFrequencyString = dynamic_cast< const AQLDataString& >( swapMarketData->getData( IR_CALIBRATION_DATA_FREQUENCY_FLOAT, ISNOTNULL ).get() );
             curveFrequencyTenor = getFrequencyTenor( toFrequencyEnum(curveFrequencyString.getCString()) );
         }
         else if( curveType == CURVETYPE_BASIS || curveType == "TENORBASIS" || curveType == XCCYBASIS )
@@ -491,18 +491,18 @@ namespace etrading
     * @param [in]		curveIndex		    Curve index name
     * @output			FloatDaycount
     */
-    LAString validateCurveAndGetFloatDaycount( const LAString& curveCollection, const LAString& curveIndex )
+    AQLString validateCurveAndGetFloatDaycount( const AQLString& curveCollection, const AQLString& curveIndex )
     {
         // Get the Market Name
-        LAString marketName = etrading::getCurveStaticDataTableName( curveCollection, curveIndex, false ); // uppercase result = false
+        AQLString marketName = etrading::getCurveStaticDataTableName( curveCollection, curveIndex, false ); // uppercase result = false
 
-        LAString marketNameUppercase = marketName;
+        AQLString marketNameUppercase = marketName;
         marketNameUppercase.toUpper();
 
         // ------------------------------------------------------------------------------------------------
         // Create an instance of the yield curve procedure class that contains yield curve market data
 
-        LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
+        AQLObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
         if ( !objPool.getObject( curveCollection ).isDefined() )
         {
             AQ_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
@@ -514,14 +514,14 @@ namespace etrading
         // ------------------------------------------------------------------------------------------------
 
         // Default Curve Frequency to Match USD Swaps and Xccy Basis Instruments
-        LAString curveDaycount;
+        AQLString curveDaycount;
 
-		LAString curveType = getCurveType( objPool, curveCollection, marketNameUppercase );
+		AQLString curveType = getCurveType( objPool, curveCollection, marketNameUppercase );
         if ( curveType == CURVETYPE_OIS || curveType == CURVETYPE_ARR)
         {
             // OIS Curve
-            LAString currency           = getCurveCurrency( curveCollection );
-            LAString keyName            = currency + STATIC_DATA_KEY_YIELD_OIS_DAYCOUNT + "." + marketNameUppercase;
+            AQLString currency           = getCurveCurrency( curveCollection );
+            AQLString keyName            = currency + STATIC_DATA_KEY_YIELD_OIS_DAYCOUNT + "." + marketNameUppercase;
 			keyName.toLower();
             LAStaticData& irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
             curveDaycount               = irStaticData.getStaticData( keyName );
@@ -530,11 +530,11 @@ namespace etrading
         {
             // Standard Swap Curve
 
-			LAString curveName = (marketNameUppercase == STD) ? "" : "_" + marketNameUppercase;
-            LAString swapCurveEntityName = curveCollection + "_SWAP_0" + curveName;
+			AQLString curveName = (marketNameUppercase == STD) ? "" : "_" + marketNameUppercase;
+            AQLString swapCurveEntityName = curveCollection + "_SWAP_0" + curveName;
 
             // Get the Swap Curve from the Object Pool
-            const LAObjectHolder swapEntity = objPool.getObject( swapCurveEntityName );
+            const AQLObjectHolder swapEntity = objPool.getObject( swapCurveEntityName );
 
             if ( !swapEntity.isDefined() )
             {
@@ -542,28 +542,28 @@ namespace etrading
             }
 
             // Get the Swap Market Data
-            LAObject* swapMarketData = &objPool.getObject( swapCurveEntityName ).get();
+            AQLObject* swapMarketData = &objPool.getObject( swapCurveEntityName ).get();
 
             if ( swapMarketData == nullptr )
             {
                 AQ_THROW("Unable to find the market data for the STD Swap Curve");
             }
 
-            curveDaycount =  dynamic_cast<const LAPriceDataDayCount& >( swapMarketData->getData( IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, ISNOTNULL ).get() ).convertToString();
+            curveDaycount =  dynamic_cast<const AQLPriceDataDayCount& >( swapMarketData->getData( IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, ISNOTNULL ).get() ).convertToString();
 
         }
         else if ( curveType == CURVETYPE_FWDFXCONST)
         {
             // FX Forward Curve ... market convention for FX Forward Curves is to match the daycount USD leg of the XCCY Basis
-            curveDaycount = LAString( "ACT/360" );
+            curveDaycount = AQLString( "ACT/360" );
         }
         else
         {
             // Basis Curves
-            LAPriceDataDayCount      attrDayCount;
-            LAPriceDataSlidingRule   attrBusinessDayAdjustment;
-            LAPriceDataCalendar      attrCalendar;
-            LAString            curveFrequencyTenor;
+            AQLPriceDataDayCount      attrDayCount;
+            AQLPriceDataSlidingRule   attrBusinessDayAdjustment;
+            AQLPriceDataCalendar      attrCalendar;
+            AQLString            curveFrequencyTenor;
 
             // Get the CurveFrequencyTenor: This function populates forward conventions given the curveIndex, which includes the curveFrequencyTenor
             curveCalibrationData->getForwardConvention( curveIndex, attrDayCount, attrBusinessDayAdjustment, attrCalendar, curveFrequencyTenor );
@@ -577,13 +577,13 @@ namespace etrading
 	 * @param [in]		curveCollection	    Curve collection Id
 	 * @param [out]		A vector of items, where each item consists of:  StaticDataTable, CurveIndex, CurveTenor
 	 */
-	std::vector<LAStringVector> getCurveNamesInCurveCollection( const LAString& curveCollection )
+	std::vector<AQLStringVector> getCurveNamesInCurveCollection( const AQLString& curveCollection )
     {
 		// The return value
-        std::vector<LAStringVector> curves;
+        std::vector<AQLStringVector> curves;
 
 		// First get a refererence to the Entitypool
-		LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
+		AQLObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
         if ( objPool.getSize() == 0 || !objPool.getObject( curveCollection ).isDefined() )
         {
             AQ_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
@@ -597,20 +597,20 @@ namespace etrading
 
 		// Get the assignedCurveMktMap from the CurveCalibrationData
 		// This is a map from curveIndex to staticDataTable
-		const std::map<LAString, LAString>& assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
+		const std::map<AQLString, AQLString>& assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
 		
 		// For a given StaticDataTable, we would like return a single curveIndex name,
 		// ideally the most recently added curveIndex.
 		// So here we iterate over the curveIndexes and take the first one we find, for a given StaticDataTable.
 		// To allow us to return a single curveIndex for each StaticDataTable, we maintain a set containing
 		// the StaticDataTables already visited.
-		std::set<LAString> staticDataTablesVisited;
-		for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+		std::set<AQLString> staticDataTablesVisited;
+		for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 		{
-			const LAString& curveIndex = it->first;
+			const AQLString& curveIndex = it->first;
 			if ( curveIndex.isDefined() )
 			{
-				LAString staticDataTable = it->second;
+				AQLString staticDataTable = it->second;
 				if ( staticDataTable == IR_NO_DATA )
 				{
 					// This can happen if the curve has not been built.
@@ -623,14 +623,14 @@ namespace etrading
 					// A new StaticDataTable. We will process it.
 					staticDataTablesVisited.insert(staticDataTable);
 
-					if ( staticDataTable == LAString( "SWAP" ) )
+					if ( staticDataTable == AQLString( "SWAP" ) )
 					{
-						staticDataTable = LAString( "STD" );
+						staticDataTable = AQLString( "STD" );
 					}
 
 					// Determine the curve frequency tenor
-			        LAString curveFrequencyString;
-			        LAString curveFrequencyTenor;
+			        AQLString curveFrequencyString;
+			        AQLString curveFrequencyTenor;
 
                     getCurveFrequency(objPool, staticDataTable, curveCollection, curveIndex, curveFrequencyString, curveFrequencyTenor, false); // false = dont throw if can't find frequency
 
@@ -649,12 +649,12 @@ namespace etrading
     * @param [in]		uppercaseResult		The market name result is returned uppercase by default (true), some functions require the marketname to be un touched (false)
     * @output			staticDataTable
     */
-    LAString getCurveStaticDataTableName( const LAString& curveCollection, const LAString& curveIndex, const bool& uppercaseResult )
+    AQLString getCurveStaticDataTableName( const AQLString& curveCollection, const AQLString& curveIndex, const bool& uppercaseResult )
     {
 
 		AQ_REQUIRE(curveIndex.size() != 0, "Curve index must be provided.");
 
-        LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
+        AQLObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
         if ( objPool.getSize() == 0 || !objPool.getObject( curveCollection ).isDefined() )
         {
             AQ_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
@@ -663,28 +663,28 @@ namespace etrading
         // Get Yield Curve Pro Object Object
         CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject( curveCollection );
         
-        LAString singleIndex = curveIndex;
+        AQLString singleIndex = curveIndex;
         if ( curveIndex.findString( MULTI_STATIC_DATA_DELIMITER ) != -1 )
         {
             singleIndex = curveIndex.toToken( MULTI_STATIC_DATA_DELIMITER )[0];
         }
-        LAString staticDataTable = curveCalibrationData->getMarketForCurve( singleIndex );
+        AQLString staticDataTable = curveCalibrationData->getMarketForCurve( singleIndex );
         if ( staticDataTable == IR_NO_DATA )
         {
             AQ_THROW("Invalid Curve: CurveIndex '" + curveIndex + "' in collection " + curveCollection + " does not exist");
         }
 
         // For the Standard Swap Curve the Market Name is transformed from STD to SWAP, but STD is expected
-        if ( staticDataTable == LAString( "SWAP" ) )
+        if ( staticDataTable == AQLString( "SWAP" ) )
         {
-            staticDataTable = LAString( "STD" );
+            staticDataTable = AQLString( "STD" );
         }
 
         // if the curve index = market name then don't modify it to be uppercase
         if ( uppercaseResult == false )
         {
-            LAString tempCurveIndex = curveIndex;
-            LAString tempStaticDataTable = staticDataTable;
+            AQLString tempCurveIndex = curveIndex;
+            AQLString tempStaticDataTable = staticDataTable;
 
             if ( tempCurveIndex.toLower() == tempStaticDataTable.toLower() )
             {
@@ -701,15 +701,15 @@ namespace etrading
     * @param [in]		upperCaseStaticDataTable    Curve staticDataTable / MarketName - must be in uppercase !!!
     * @output			Curve type
     */
-    LAString getCurveType( LAObjectPool& objPool, const LAString& curveCollection, const LAString& upperCaseStaticDataTable )
+    AQLString getCurveType( AQLObjectPool& objPool, const AQLString& curveCollection, const AQLString& upperCaseStaticDataTable )
     {
         //Note: CurveType suffix is always upper case
-        LAString curveType("");
-        LADataHolder* dh;
-		LAString curveTypeAttributeName;
+        AQLString curveType("");
+        AQLDataHolder* dh;
+		AQLString curveTypeAttributeName;
 
         // The static data table may be an alias for 'STD' so we have to check each of the  alias' for the STD curve type keyword
-        LAStringVector curveIndexAliasGroup = curveIndexAliasList( curveCollection, upperCaseStaticDataTable );
+        AQLStringVector curveIndexAliasGroup = curveIndexAliasList( curveCollection, upperCaseStaticDataTable );
         bool isSTDCurve = false;
         for ( size_t i = 0; i < curveIndexAliasGroup.size(); ++i )
         {
@@ -722,11 +722,11 @@ namespace etrading
 
         if ( isSTDCurve )
 		{
-            curveTypeAttributeName = LAString( CALIBRATION_DATA_CURVETYPE );
+            curveTypeAttributeName = AQLString( CALIBRATION_DATA_CURVETYPE );
 		}
 		else
 		{
-            curveTypeAttributeName = LAString( CALIBRATION_DATA_CURVETYPE + LAString("_") + upperCaseStaticDataTable );
+            curveTypeAttributeName = AQLString( CALIBRATION_DATA_CURVETYPE + AQLString("_") + upperCaseStaticDataTable );
         }
         
         // Initialize Yield Curve Pro
@@ -735,7 +735,7 @@ namespace etrading
         dh = &curveCalibrationData->getData( curveTypeAttributeName );
         if ( dh->isDefined() && !dh->isNull() )
         {
-            curveType = dynamic_cast<LADataString&> ( dh->get() );
+            curveType = dynamic_cast<AQLDataString&> ( dh->get() );
         }
 
         // Fail if no curve type returned
@@ -749,11 +749,11 @@ namespace etrading
     * @param [in]		staticDataTable		Curve staticDataTable(MarketName)
     * @output			Curve type
     */
-    LAString getCurveType( const LAString& curveCollection, const LAString& staticDataTable )
+    AQLString getCurveType( const AQLString& curveCollection, const AQLString& staticDataTable )
     {
         // get yield curve set
-        LADataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
-        LAObjectPool& objPool = dataInstance->getObjectPool();
+        AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+        AQLObjectPool& objPool = dataInstance->getObjectPool();
 
         if ( !objPool.getObject( curveCollection ).isDefined() )
         {
@@ -761,7 +761,7 @@ namespace etrading
         }
 
         //Note: CurveType suffix is always upper case
-        LAString upperCaseStaticDataTable( staticDataTable );
+        AQLString upperCaseStaticDataTable( staticDataTable );
         upperCaseStaticDataTable.toUpper();
         
         return getCurveType( objPool, curveCollection, upperCaseStaticDataTable );
@@ -772,9 +772,9 @@ namespace etrading
 	* @param [in]		curveIndex			Curve index
 	* @output			Curve type
 	*/
-	CurveTypeEnum getCurveTypeFromCurveIndex(const LAString& curveCollection, const LAString& curveIndex)
+	CurveTypeEnum getCurveTypeFromCurveIndex(const AQLString& curveCollection, const AQLString& curveIndex)
 	{
-		const LAString curveMarketName = getCurveStaticDataTableName(curveCollection, curveIndex);
+		const AQLString curveMarketName = getCurveStaticDataTableName(curveCollection, curveIndex);
 
 		return toCurveTypeEnum(getCurveType(curveCollection, curveMarketName).getCString());
 	}
@@ -788,16 +788,16 @@ namespace etrading
     * @param [in]		staticDataTable	Curve staticDataTable(MarketName)
     * @output			Interpolation method
     */
-    LAString getCurveInterpolation( const LAString& curveCollection, const LAString& staticDataTable )
+    AQLString getCurveInterpolation( const AQLString& curveCollection, const AQLString& staticDataTable )
     {
 		LAStaticData& irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
         //Get curve currency
-        LAString currency = getCurveCurrency( curveCollection );
+        AQLString currency = getCurveCurrency( curveCollection );
 
 		
-		LAString market = staticDataTable;
-		LAString keyName;
+		AQLString market = staticDataTable;
+		AQLString keyName;
 		if (market.toUpper() == "STD")
 		{
 			keyName = currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE;
@@ -807,11 +807,11 @@ namespace etrading
 			keyName = currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + "." + market.toLower();
 		}
 		
-		LAString curveType = irStaticData.getStaticData(keyName).toUpper();
+		AQLString curveType = irStaticData.getStaticData(keyName).toUpper();
 		
 		bool isSTDCurve = (curveType == SWAP) ? true : false;
 
-        LAString suffix;
+        AQLString suffix;
         if ( isSTDCurve )
         {
             suffix = "";
@@ -835,7 +835,7 @@ namespace etrading
         }
 
         //Get interpolation method from the curve building, e.g. fn_monotoneconvexinterpolation
-        LAString interp = irStaticData.getStaticData( keyName );
+        AQLString interp = irStaticData.getStaticData( keyName );
 
         if ( interp == IR_NO_DATA )
         {
@@ -862,10 +862,10 @@ namespace etrading
     * @param [in]		curveCollection	Curve collection Id
     * @output			Boolean for Does Curve Exist?
     */
-	bool doesCurveExist( const LAString& curveCollection )
+	bool doesCurveExist( const AQLString& curveCollection )
 	{
 		AQ_REQUIRE(curveCollection.size() !=0, "Invalid Curve: CurveCollection not provided.");
-        LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
+        AQLObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
 		
 		bool result = true;
 		if( objPool.getSize() == 0 || !objPool.getObject( curveCollection ).isDefined() )
@@ -879,15 +879,15 @@ namespace etrading
     * @param [in]		curveCollection	Curve collection Id
     * @output			As of Date
     */
-    LADate getCurveAsOfDate( const LAString& curveCollection )
+    AQLDate getCurveAsOfDate( const AQLString& curveCollection )
     {
 		if ( !doesCurveExist( curveCollection ) )
 		{
 			AQ_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
 		}
 
-		LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
-        LADate asOfDate = dynamic_cast<const LADataDate& >( objPool.getObject( curveCollection ).get().getData( CALIBRATION_DATA_ASOFDATE, ISNOTNULL ).get() ).get();
+		AQLObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
+        AQLDate asOfDate = dynamic_cast<const AQLDataDate& >( objPool.getObject( curveCollection ).get().getData( CALIBRATION_DATA_ASOFDATE, ISNOTNULL ).get() ).get();
         return asOfDate;
     }
     
@@ -896,13 +896,13 @@ namespace etrading
     *  @param [in]		term                The term or year fraction
 	*  @param [out]		paymentDate         The corresponding payment date
 	*/
-    LADate convertCurveTermToDate( const LADate& asOfDate, const double& term )
+    AQLDate convertCurveTermToDate( const AQLDate& asOfDate, const double& term )
     {
         // Curve terms are always calculated using ACT/365_ISDA as defined in ConstantDeclarations.h [sic] - see #define AC_365I
         // We const_cast the asOfDate because the underlying function incorrectly wants a non-const asOfDate and we can't touch it
         // Update: We now use ACT/365 instead of ACT/365_ISDA which causes leap year irregularities in the yield curve.
-		LAString dayCount("ACT/365");
-        LADate paymentDate = LADateScheduleHelpers::getDateFromTerm( const_cast<LADate&>(asOfDate), term, dayCount );
+		AQLString dayCount("ACT/365");
+        AQLDate paymentDate = LADateScheduleHelpers::getDateFromTerm( const_cast<AQLDate&>(asOfDate), term, dayCount );
         return paymentDate;
     }
 
@@ -911,7 +911,7 @@ namespace etrading
     *  @param [in]		terms               The terms or year fractions corresponding
 	*  @param [out]		paymentDates        The corresponding payment dates
 	*/
-    DateVector convertCurveTermsToDates( const LADate& asOfDate, const DoubleVector& terms )
+    DateVector convertCurveTermsToDates( const AQLDate& asOfDate, const DoubleVector& terms )
     {
         // Imply the curve payment dates from their terms values
         DateVector paymentDates( terms.size() );
@@ -927,9 +927,9 @@ namespace etrading
     *  @param [in]		terms               The terms or year fractions
 	*  @param [out]		paymentDates        The corresponding payment dates
 	*/
-    DateVector convertCurveTermsToDates( const LAString& curveCollection, const DoubleVector& terms )
+    DateVector convertCurveTermsToDates( const AQLString& curveCollection, const DoubleVector& terms )
     {
-        const LADate asOfDate = getCurveAsOfDate( curveCollection );
+        const AQLDate asOfDate = getCurveAsOfDate( curveCollection );
         const DateVector paymentDates = convertCurveTermsToDates( asOfDate, terms );
         return paymentDates;
     }
@@ -939,11 +939,11 @@ namespace etrading
     *  @param [in]		paymentDate         The payment date
 	*  @param [out]		term                The corresponding term value
 	*/
-    double convertCurveDateToTerm( const LADate& asOfDate, const LADate& paymentDate )
+    double convertCurveDateToTerm( const AQLDate& asOfDate, const AQLDate& paymentDate )
     {
         // Curve terms are always calculated using ACT/365_ISDA as defined in ConstantDeclarations.h [sic] - see #define AC_365I
         // Update: We have migrated curve dates to ACT/365 because ACT/365_ISDA causes leap year irregularities in curves.
-         LAPriceDataDayCount dc_act365(ACT_365); 
+         AQLPriceDataDayCount dc_act365(ACT_365); 
          double term = dc_act365.getTerm( asOfDate, paymentDate );
          return term;
     }
@@ -953,7 +953,7 @@ namespace etrading
     *  @param [in]		paymentDates        The payment dates
 	*  @param [out]		terms               The corresponding terms values
 	*/
-    DoubleVector convertCurveDatesToTerms( const LADate& asOfDate, const DateVector& paymentDates )
+    DoubleVector convertCurveDatesToTerms( const AQLDate& asOfDate, const DateVector& paymentDates )
     {
         DoubleVector terms( paymentDates.size() );
         for( size_t i = 0; i<paymentDates.size(); ++i )
@@ -968,9 +968,9 @@ namespace etrading
     *  @param [in]		paymentDates        The payment dates
 	*  @param [out]		terms               The corresponding terms values
 	*/
-    DoubleVector convertCurveDatesToTerms( const LAString& curveCollection, const DateVector& paymentDates )
+    DoubleVector convertCurveDatesToTerms( const AQLString& curveCollection, const DateVector& paymentDates )
     {
-        const LADate asOfDate = getCurveAsOfDate( curveCollection );
+        const AQLDate asOfDate = getCurveAsOfDate( curveCollection );
         const DoubleVector terms = convertCurveDatesToTerms( asOfDate, paymentDates );
         return terms;
     }
@@ -979,9 +979,9 @@ namespace etrading
 	*  @param [in]		curveIndex  	        The unformatted curve index, usually in uppercase
     *  @param [out]		formattedCurveIndex     The object pool formatted curve index, usually in camel case
 	*/
-    LAString formatCurveIndex( const LAString& curveIndex )
+    AQLString formatCurveIndex( const AQLString& curveIndex )
     {
-        LAString upperCaseCurveIndex = curveIndex;
+        AQLString upperCaseCurveIndex = curveIndex;
         upperCaseCurveIndex.toUpper();
 
         // Rules:
@@ -1045,20 +1045,20 @@ namespace etrading
 	*  @param [in]		throwOnError        throw on error if TRUE or return empty string vector if FALSE
 	*  @param [out]		A vector of all curve index alias' used
 	*/
-    LAStringVector curveIndexAliasList( const LAString& curveCollection, const LAString& curveIndex, const bool throwOnError )
+    AQLStringVector curveIndexAliasList( const AQLString& curveCollection, const AQLString& curveIndex, const bool throwOnError )
     {
         // *** Important - We must format the curve index when searching the object pool, since the object pool is case sensitive and LWO is all uppercase ***
-        const LAString formattedCurveIndex = formatCurveIndex( curveIndex );
+        const AQLString formattedCurveIndex = formatCurveIndex( curveIndex );
 
         // Results Place Holder
-        LAStringVector curveIndexList;
+        AQLStringVector curveIndexList;
 
         // 1. Initialize the Object Pool
-        LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();					
+        AQLObjectPool& objPool = etrading::getDataInstance()->getObjectPool();					
         
         // 2. Initialize Yield Curve Properties					
-        LAString yieldProName = "PRO_YIELD_" + curveCollection;					
-        LAObjectHolder ehYieldCurveProperties = objPool.getObject( yieldProName );				
+        AQLString yieldProName = "PRO_YIELD_" + curveCollection;					
+        AQLObjectHolder ehYieldCurveProperties = objPool.getObject( yieldProName );				
         
 		// Throw if Curve Index Not Found or Return Empty Alias List
 		if ( !ehYieldCurveProperties.isDefined() )
@@ -1076,16 +1076,16 @@ namespace etrading
         CurveCalibrationData *ycProperties = &dynamic_cast<CurveCalibrationData &>( ehYieldCurveProperties.get() );
 
         // 3. Get the Yield Curve Properties Map of CurveIndices and Corresponding Markets or Curve Types
-	    const std::map<LAString, LAString>& mapOfCurveIndexAndMarket = ycProperties->getAssignedCurveMktMap();				
-        LAString searchForCurveMarketType = ycProperties->getMarketForCurve( formattedCurveIndex );
+	    const std::map<AQLString, AQLString>& mapOfCurveIndexAndMarket = ycProperties->getAssignedCurveMktMap();				
+        AQLString searchForCurveMarketType = ycProperties->getMarketForCurve( formattedCurveIndex );
 
         // 4. Iterate Over the CurveIndexAndMarket map and extract all curve indices mapped to the market or curve type
-        for ( std::map<LAString, LAString>::const_iterator it = mapOfCurveIndexAndMarket.begin(); it != mapOfCurveIndexAndMarket.end(); ++it )
+        for ( std::map<AQLString, AQLString>::const_iterator it = mapOfCurveIndexAndMarket.begin(); it != mapOfCurveIndexAndMarket.end(); ++it )
 		{
-			LAString currentMarketType = it->second;
+			AQLString currentMarketType = it->second;
             if ( currentMarketType == searchForCurveMarketType )
 			{
-                LAString currentCurveIndex = it->first;
+                AQLString currentCurveIndex = it->first;
 				curveIndexList.push_back( currentCurveIndex );
 			}
 		}
@@ -1107,33 +1107,33 @@ namespace etrading
     StandardStringVector curveIndexAliasListAsStandardString( const StandardString& curveCollection, const StandardString& curveIndex )
     {
         // *** Important - We must format the curve index when searching the object pool, since the object pool is case sensitive and LWO is all uppercase ***
-        const LAString formattedCurveIndex = formatCurveIndex( curveIndex.c_str() );
+        const AQLString formattedCurveIndex = formatCurveIndex( curveIndex.c_str() );
 
         // Results Place Holder
         StandardStringVector curveIndexList;
 
         // 1. Initialize the Object Pool
-        LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();					
+        AQLObjectPool& objPool = etrading::getDataInstance()->getObjectPool();					
         
         // 2. Initialize Yield Curve Properties					
         StandardString yieldProName = "PRO_YIELD_" + curveCollection;					
-        LAObjectHolder ehYieldCurveProperties = objPool.getObject( yieldProName.c_str() );				
+        AQLObjectHolder ehYieldCurveProperties = objPool.getObject( yieldProName.c_str() );				
         
         AQ_REQUIRE( ehYieldCurveProperties.isDefined(), "Curve '" + formattedCurveIndex + "' does not exist in collection '" + curveCollection.c_str() + "'" )
         
         CurveCalibrationData *ycProperties = &dynamic_cast<CurveCalibrationData &>( ehYieldCurveProperties.get() );
 
         // 3. Get the Yield Curve Properties Map of CurveIndices and Corresponding Markets or Curve Types
-	    const std::map<LAString, LAString>& mapOfCurveIndexAndMarket = ycProperties->getAssignedCurveMktMap();				
-        LAString searchForCurveMarketType = ycProperties->getMarketForCurve( formattedCurveIndex );
+	    const std::map<AQLString, AQLString>& mapOfCurveIndexAndMarket = ycProperties->getAssignedCurveMktMap();				
+        AQLString searchForCurveMarketType = ycProperties->getMarketForCurve( formattedCurveIndex );
 
         // 4. Iterate Over the CurveIndexAndMarket map and extract all curve indices mapped to the market or curve type
-        for ( std::map<LAString, LAString>::const_iterator it = mapOfCurveIndexAndMarket.begin(); it != mapOfCurveIndexAndMarket.end(); ++it )
+        for ( std::map<AQLString, AQLString>::const_iterator it = mapOfCurveIndexAndMarket.begin(); it != mapOfCurveIndexAndMarket.end(); ++it )
 		{
-			LAString currentMarketType = it->second;
+			AQLString currentMarketType = it->second;
             if ( currentMarketType == searchForCurveMarketType )
 			{
-                LAString currentCurveIndex = it->first;
+                AQLString currentCurveIndex = it->first;
 				curveIndexList.push_back( currentCurveIndex.getCString() );
 			}
 		}
@@ -1152,9 +1152,9 @@ namespace etrading
     *  @param [in]		curveIndex          A single curve index in the curve collection
 	*  @param [out]		A boolean of true if STD curve and false otherwise
 	*/
-    bool isSTDCurve( const LAString& curveCollection, const LAString& curveIndex )
+    bool isSTDCurve( const AQLString& curveCollection, const AQLString& curveIndex )
     {
-        const LAString curveType = etrading::getCurveType( curveCollection, curveIndex );
+        const AQLString curveType = etrading::getCurveType( curveCollection, curveIndex );
 		const bool isSTDCurve = (curveType == SWAP );
         return isSTDCurve;
     }

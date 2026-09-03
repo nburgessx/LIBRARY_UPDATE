@@ -41,7 +41,7 @@ namespace validation
 	*  @param [in]		fraObjectName		Fra object name
 	*  @return			Fra display of the input parameters
 	*/
-	LAStringMatrix tryMeLWOFraDisplay(const std::string& fraObjectName)
+	AQLStringMatrix tryMeLWOFraDisplay(const std::string& fraObjectName)
 	{
 		return tryMeLWOLegDisplay(fraObjectName);
 	}
@@ -77,7 +77,7 @@ namespace validation
 		auto fraObject = std::dynamic_pointer_cast<etrading::Fra>(leg);
 		if (fraObject == nullptr)
 		{
-			throw LACoreInvalidData("#Error: The leg is not a Fra type", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: The leg is not a Fra type", __FILE__, __LINE__);
 		}
 
 		auto result = fraObject->fraRate(valuationSettingsLVB);
@@ -108,7 +108,7 @@ namespace validation
 		auto fraObject = std::dynamic_pointer_cast<etrading::Fra>(leg);
 		if (fraObject == nullptr)
 		{
-			throw LACoreInvalidData("#Error: The leg is not a Fra type", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: The leg is not a Fra type", __FILE__, __LINE__);
 		}
 
 		double result = fraObject->fraRateToFuturePrice(valuationSettingsLVB, meanReversion, volatility);
@@ -139,7 +139,7 @@ namespace validation
 		auto fraObject = std::dynamic_pointer_cast<etrading::Fra>(leg);
 		if (fraObject == nullptr)
 		{
-			throw LACoreInvalidData("#Error: The leg is not a Fra type", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: The leg is not a Fra type", __FILE__, __LINE__);
 		}
 
 		double result = fraObject->fraRateToFuturePrice(valuationSettingsLVB, convexityAdjustment);

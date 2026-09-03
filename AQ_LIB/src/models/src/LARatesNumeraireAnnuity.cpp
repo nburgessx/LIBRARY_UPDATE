@@ -59,7 +59,7 @@ LARatesNumeraireAnnuity::~LARatesNumeraireAnnuity()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesNumeraireAnnuity::clone() const
 {
     try 
@@ -68,7 +68,7 @@ LARatesNumeraireAnnuity::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -130,12 +130,12 @@ LARatesNumeraireAnnuity::setAnnuityInfo(const DoubleArray& grid, const DoubleArr
 	if (term.size() != grid.size())
 	{
 		//error
-		throw LACoreInvalidData("temr size must be same as grid size", __FILE__, __LINE__);	
+		throw AQLCoreInvalidData("temr size must be same as grid size", __FILE__, __LINE__);	
 	}
 	if (term.size() == 0)
 	{
 		//error
-		throw LACoreInvalidData("temr size and grid size is zero", __FILE__, __LINE__);	
+		throw AQLCoreInvalidData("temr size and grid size is zero", __FILE__, __LINE__);	
 	}
 	mTerms = term;
 	mTimeGrid = grid;

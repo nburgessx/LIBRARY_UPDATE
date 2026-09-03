@@ -10,10 +10,10 @@
 #pragma interface
 #endif
 
-#include "LACoreValuation.h"
-#include "LACoreAppError.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreValuation.h"
+#include "AQLCoreAppError.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include <float.h>
 #include <utility>
 
@@ -206,20 +206,20 @@ class LAMathYieldCurve;
 
 
 //// FROTOTYPE ////
-class LADate;
-class LAObject;
-class LAObjectPool;
-class LACoreReferencePool;
-class LADataMultiReference;
-class LAPriceDataManager;
-class LAMathObjectValue;
-class LAFunctionBase;
+class AQLDate;
+class AQLObject;
+class AQLObjectPool;
+class AQLCoreReferencePool;
+class AQLDataMultiReference;
+class AQLPriceDataManager;
+class AQLMathObjectValue;
+class AQLFunctionBase;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief class that evaluates portfolio
 
 */
-class LAPricePortfolioValue : public LACoreValuation
+class LAPricePortfolioValue : public AQLCoreValuation
 {
 public:
     // constructor	
@@ -229,64 +229,64 @@ public:
 	// Check function for this class ID	
 	virtual bool                isTypeOf(function_t id) const;
     // Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
     // Return this class type
 	virtual function_t			getType() const;
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
     // evaluation function
-	virtual double              value(const LADate& basedate, 
-										LAObject& object,
-									const LADataValuation& att) const;
+	virtual double              value(const AQLDate& basedate, 
+										AQLObject& object,
+									const AQLDataValuation& att) const;
 	//Remove warning:C4512
 	LAPricePortfolioValue & operator=( const LAPricePortfolioValue & ) { return *this; }
 private:
     // calculate pv of scenario cases
-	void						calcPV(const LADate& basedate,
-										std::vector<LAMathObjectValue*> trades,
-										const LAStringVector& targets,
-										LADataMultiReference& scenario, 
+	void						calcPV(const AQLDate& basedate,
+										std::vector<AQLMathObjectValue*> trades,
+										const AQLStringVector& targets,
+										AQLDataMultiReference& scenario, 
 										bool isgrid,
-										LAObjectPool& objPool, 
-										LACoreReferencePool& rpool,
+										AQLObjectPool& objPool, 
+										AQLCoreReferencePool& rpool,
 										DoubleMatrix& output,
-										std::vector<LAStringVector>* ex_targets = 0,
-										std::vector<LADataMultiReference*>* ex_scenarios = 0) const;
+										std::vector<AQLStringVector>* ex_targets = 0,
+										std::vector<AQLDataMultiReference*>* ex_scenarios = 0) const;
     // set risk value 
-	void		setRiskValue(const LADataMultiReference &unders,
-					const LADataMultiReference &scenario1, 
-					const LADataMultiReference *pscenario2,
-					const LAFunctionBase &method,
+	void		setRiskValue(const AQLDataMultiReference &unders,
+					const AQLDataMultiReference &scenario1, 
+					const AQLDataMultiReference *pscenario2,
+					const AQLFunctionBase &method,
 					bool isgrid,
-					const LAString &outputname,
+					const AQLString &outputname,
 					const DoubleArray &pv_base, 
 					const DoubleMatrix &pv_1,
 					const DoubleMatrix &pv_2,
-					const LAObject &riskEntity) const;
+					const AQLObject &riskEntity) const;
    // set wave risk value 
-	void			setWaveRiskValue(const LADataMultiReference &unders,
-					const LADataMultiReference &scenario1, 
-					const LADataMultiReference *pscenario2,
+	void			setWaveRiskValue(const AQLDataMultiReference &unders,
+					const AQLDataMultiReference &scenario1, 
+					const AQLDataMultiReference *pscenario2,
 					const DoubleMatrix &coeffW,
-					LAFunctionBase &funcW,
-					const LAFunctionBase &method,
-					const LAString &outputname,
+					AQLFunctionBase &funcW,
+					const AQLFunctionBase &method,
+					const AQLString &outputname,
 					const DoubleArray &pv_base, 
 					const DoubleMatrix &pv_1,
 					const DoubleMatrix &pv_2) const;
 
     // set scenario
-    void		setScenario(const LAString& name, 
-				    LAObject& scenario, 
-				    LACoreReferencePool& rpool) const;
+    void		setScenario(const AQLString& name, 
+				    AQLObject& scenario, 
+				    AQLCoreReferencePool& rpool) const;
     // back to base market data
-    void		backToBase(const LAString& name, 
-				   LAObjectPool& objPool, 
-				   LACoreReferencePool& rpool) const;
+    void		backToBase(const AQLString& name, 
+				   AQLObjectPool& objPool, 
+				   AQLCoreReferencePool& rpool) const;
 
 	static const double FAIL_VALUE;     // FAIL_VALUE
-	static const LAString ERROR;        // ERROR string
-	static const LAString PV_ERROR;     // PV_ERROR string
+	static const AQLString ERROR;        // ERROR string
+	static const AQLString PV_ERROR;     // PV_ERROR string
 	static const unsigned int EXTRASCENARIO_MAX; // Extra Scenario max num
 
 };

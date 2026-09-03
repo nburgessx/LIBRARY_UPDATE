@@ -98,12 +98,12 @@ namespace etrading
 	double Fra::fraRateToFuturePrice(const LabelValueBlock& valuationSettingsLVB, const double& meanReversion, const double& volatility)
 	{
 
-		const LADate futuresStartDate = schedule_->getEffectiveDate();
-		const LADate futuresEndDate = schedule_->getMaturityDate();
+		const AQLDate futuresStartDate = schedule_->getEffectiveDate();
+		const AQLDate futuresEndDate = schedule_->getMaturityDate();
 
 		ValuationSettings valSettings(valuationSettingsLVB, {}, getLegName());
 
-		const LADate valuationDate = valSettings.getValuationDate();
+		const AQLDate valuationDate = valSettings.getValuationDate();
 
 		double convexityAdjustment = getCurveEuroDollarConvexityAdjustment(valuationDate, futuresStartDate, futuresEndDate, meanReversion, volatility);
 

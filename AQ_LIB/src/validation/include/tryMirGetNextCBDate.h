@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LADate.h"
+#include "AQLDate.h"
 
 namespace validation
 {
@@ -11,8 +11,8 @@ namespace validation
     *  @param [in]		strictlyAfter	True if strictly after the base date
     *  @return			Date of the next central bank meeting on/after the base date
     */
-    LADate tryMirGetNextCBDate( const LAString& centralBankId,
-                                const LADate& baseDate,
+    AQLDate tryMirGetNextCBDate( const AQLString& centralBankId,
+                                const AQLDate& baseDate,
                                 bool strictlyAfter );
 
 

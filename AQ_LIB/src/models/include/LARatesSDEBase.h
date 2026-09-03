@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LARatesBM.h"
 #include "LARatesNumeraireBase.h"
 #include "LARatesPEInterpolationBase.h"
@@ -28,7 +28,7 @@ enum SDE_TYPE {
     @brief Declaration of abstract base class of sde class
 
 */
-class LARatesSDEBase : public LACoreFunctionBase
+class LARatesSDEBase : public AQLCoreFunctionBase
 {
 public:
 //  LIFECYCLE
@@ -44,7 +44,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -87,14 +87,14 @@ public:
 								/*!
 									@return drift
 								*/		
-	const std::vector<LAFunctionBase*>&	
+	const std::vector<AQLFunctionBase*>&	
 								getDrift(void) const {return mDrift;}
 								//==========================================
 	                            // get volatility
 								/*!
 									@return volatility
 								*/	
-	const std::vector<std::vector<LAFunctionBase*> >& 
+	const std::vector<std::vector<AQLFunctionBase*> >& 
 								getVolatility(void) const {return mVolatility;}
 								//==========================================
 	                            // get Brownian Motion class
@@ -118,20 +118,20 @@ public:
 								getPathElement(unsigned int pos) = 0;
  								//==========================================
 								// return string representaion
-//    virtual LAString			convertToString(void) const;
+//    virtual AQLString			convertToString(void) const;
 //	OPERATION
 								//==========================================
 								// transform from string representaion
-//     virtual void				convertFromString(const LAString& str);
+//     virtual void				convertFromString(const AQLString& str);
 								//==========================================
 	                            // set numeraire		
 	virtual void				setNumeraire(LARatesNumeraireBase* pnumeraire);
 								//==========================================
 	                            // set drift
-	void						setDrift(std::vector<LAFunctionBase*>& drift);								
+	void						setDrift(std::vector<AQLFunctionBase*>& drift);								
 								//==========================================
 	                            // set volatility				
-	void						setVolatility(std::vector<std::vector<LAFunctionBase*> >& volatility);
+	void						setVolatility(std::vector<std::vector<AQLFunctionBase*> >& volatility);
 								//==========================================
 	                            // set Brownian Motion class
 								/*!
@@ -201,8 +201,8 @@ protected:
 	LARatesPEInterpolationBase*					mpInter;			// interpolation method
 	DoubleArray									mTimeGrid;			// time grid
 	std::vector<LARatesPathElementBase*>			mPath;				// path
-	std::vector<LAFunctionBase*>				mDrift;				// drift
-	std::vector<std::vector<LAFunctionBase*> >	mVolatility;		// volatility
+	std::vector<AQLFunctionBase*>				mDrift;				// drift
+	std::vector<std::vector<AQLFunctionBase*> >	mVolatility;		// volatility
 	LARatesSDEIntegralBase*						mpIntegral;			// sde integral function
 	const LARatesPathElementBase*					mpInitial;			// initial value
 	const LARatesPathElementBase*					mpTemplate;			// templete of output path element

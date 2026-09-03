@@ -1,6 +1,6 @@
-#include "LADate.h"
+#include "AQLDate.h"
 
-// (copied by LADate.cpp) 
+// (copied by AQLDate.cpp) 
 static const unsigned short LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[2][2][12] =
     {{{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
       { 0, 31, 59, 90,120,151,181,212,243,273,304,334}},
@@ -80,38 +80,38 @@ static const double q_[6] __attribute__ ((aligned(64))) = {
 #endif
 
 #include "LAMathIRVanillaFuncUtility.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathCurveFuncUtility.h"
 #include "LAMathDateUtilities.h"
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LALinearInterpolation.h"
-#include "LAInterpolationBase.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLInterpolationBase.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAPriceCFGenUtility.h"
 #include "LAMathDateCalculations.h"
 #include "LAPriceYieldGenerator.h"
-#include "LADataReference.h"
+#include "AQLDataReference.h"
 #include "LAAnalyticFormula.h"
 #include "LABlackScholesCalc.h"
 #include "LAMathYieldCurve.h"
 #include "LAMathYieldCurvePro.h"
-#include "LADataProcedure.h"
-#include "LAPriceDataInterpolation.h"
-#include "LACoreComponentManager.h"
-#include "LAPriceDataConvention.h"
-#include "LADataMultiReference.h"
-#include "LAMathValuableEntity.h"
-#include "LAGaussLegendre.h"
+#include "AQLDataProcedure.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLCoreComponentManager.h"
+#include "AQLPriceDataConvention.h"
+#include "AQLDataMultiReference.h"
+#include "AQLMathValuableEntity.h"
+#include "AQLGaussLegendre.h"
 #include "LAMathSwaptionVolUtility.h"
 #include <cmath>
 #include <map>
@@ -124,9 +124,9 @@ const size_t LAMathIRVanillaFuncUtility::busDayPerYear = 250;
 //////////////////////////Option method//////////////////////////////////////////////////////////
 double 
 LAMathIRVanillaFuncUtility::bkOption(AnalyticBKParam& param, 
-								   LAString& optiontype, 
-								   LAString& buysell, 
-								   LAString& callput,
+								   AQLString& optiontype, 
+								   AQLString& buysell, 
+								   AQLString& callput,
 								   bool isUnitAdjust)
 {
 	upper(optiontype);
@@ -134,11 +134,11 @@ LAMathIRVanillaFuncUtility::bkOption(AnalyticBKParam& param,
 	upper(buysell);
 
 	//Main sorce
-	LAString bscomponent = BK + optiontype  + callput;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+	AQLString bscomponent = BK + optiontype  + callput;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 	
 	LABlackScholesBase* p = it->second;
 	double ret=0.0;
@@ -147,7 +147,7 @@ LAMathIRVanillaFuncUtility::bkOption(AnalyticBKParam& param,
 	else if(SELL==buysell)
 		ret = -1* p->calc(param);
 	else 
-		throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__);
+		throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__);
 
 	if (isUnitAdjust)
 		LAMathBaseFuncUtility::adjustunit(ret,optiontype);
@@ -156,12 +156,12 @@ LAMathIRVanillaFuncUtility::bkOption(AnalyticBKParam& param,
 }
 
 double 
-LAMathIRVanillaFuncUtility::bkOption(LAString& optiontype, LAString& buysell, LAString& callput,
+LAMathIRVanillaFuncUtility::bkOption(AQLString& optiontype, AQLString& buysell, AQLString& callput,
 							       double futureprice, double strike, double vol, 
-                                   double localrate,const LADate& basedate, 
-                                   const LADate& spotdate, const LADate& expirydate, const LADate& deliverydate)
+                                   double localrate,const AQLDate& basedate, 
+                                   const AQLDate& spotdate, const AQLDate& expirydate, const AQLDate& deliverydate)
 {
-	LAString daycount(AC_365I);
+	AQLString daycount(AC_365I);
 
 	AnalyticBKParam param;
 	param.F   = futureprice;
@@ -170,16 +170,16 @@ LAMathIRVanillaFuncUtility::bkOption(LAString& optiontype, LAString& buysell, LA
 	param.rd  = localrate;
 	param.Te  = LAMathDateUtilities::getTerm(basedate, expirydate, daycount, true);
 	param.Td  = LAMathDateUtilities::getTerm(spotdate, deliverydate, daycount, true);
-	param.Nu  = LAMath::exp(-param.rd * param.Td );
+	param.Nu  = AQLMath::exp(-param.rd * param.Td );
 	param.ErrorCheck();	
 	
     return bkOption(param, optiontype, buysell, callput);
 }
 
 double 
-LAMathIRVanillaFuncUtility::bkOption(LAString optiontype,
-								   LAString buysell,
-								   LAString callput,
+LAMathIRVanillaFuncUtility::bkOption(AQLString optiontype,
+								   AQLString buysell,
+								   AQLString callput,
 							       double futureprice,
 								   double strike,
 								   double vol,
@@ -201,11 +201,11 @@ LAMathIRVanillaFuncUtility::bkOption(LAString optiontype,
 }
 
 double 
-LAMathIRVanillaFuncUtility::bkOption(LAString& optiontype, LAString& buysell, LAString& callput,
+LAMathIRVanillaFuncUtility::bkOption(AQLString& optiontype, AQLString& buysell, AQLString& callput,
 							       double futureprice, double strike, double vol, 
-                                   double localrate,const LADate& basedate, 
-                                   const LADate& spotdate, const LADate& expirydate, const LADate& deliverydate,
-                                   const LAString& calendar)
+                                   double localrate,const AQLDate& basedate, 
+                                   const AQLDate& spotdate, const AQLDate& expirydate, const AQLDate& deliverydate,
+                                   const AQLString& calendar)
 {
 	AnalyticBKParam param;
 	param.F   = futureprice;
@@ -214,31 +214,31 @@ LAMathIRVanillaFuncUtility::bkOption(LAString& optiontype, LAString& buysell, LA
 	param.rd  = localrate;
     param.Te  = (double)businessDaysBetween(basedate, expirydate, calendar) / LAMathIRVanillaFuncUtility::busDayPerYear;
     param.Td  = (double)businessDaysBetween(basedate, deliverydate, calendar) / LAMathIRVanillaFuncUtility::busDayPerYear;
-	param.Nu  = LAMath::exp(-param.rd * param.Td );
+	param.Nu  = AQLMath::exp(-param.rd * param.Td );
 	param.ErrorCheck();	
 	
     return bkOption(param, optiontype, buysell, callput);
 }
 
 double 
-LAMathIRVanillaFuncUtility::bkOption(LAString optiontype, 
-								   LAString buysell, 
-								   LAString callput,
+LAMathIRVanillaFuncUtility::bkOption(AQLString optiontype, 
+								   AQLString buysell, 
+								   AQLString callput,
 								   double futureprice, 
 								   double strike, 
 								   double vol,
 								   double NumeraireRatio,
-								   const LADate& basedate, 
-								   const LADate& expirydate)
+								   const AQLDate& basedate, 
+								   const AQLDate& expirydate)
 {
 	//Change nospace & upper
 	upper(optiontype);
 	upper(callput);
 	upper(buysell);
-	LAString daycount(AC_365I);
+	AQLString daycount(AC_365I);
 
 	//Type Select
-	LAString bscomponent;
+	AQLString bscomponent;
 	if (basedate < expirydate)
 	{
 		bscomponent = BK + optiontype  + callput;
@@ -247,8 +247,8 @@ LAMathIRVanillaFuncUtility::bkOption(LAString optiontype,
 	{
 		bscomponent = BKPAYOFF + optiontype  + callput;
 	}
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 
 	//Setup
 	AnalyticBKParam param;
@@ -258,9 +258,9 @@ LAMathIRVanillaFuncUtility::bkOption(LAString optiontype,
 	param.Te  = LAMathDateUtilities::getTerm(basedate,expirydate,daycount,true);
 	param.Nu  = NumeraireRatio;
 	param.ErrorCheck();	
-	if (it==var.end())							throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
-	if (buysell != BUY && buysell != SELL)		throw LACoreInvalidData("Choose Buy or Sell!", __FILE__,__LINE__);
-	if (THETA == optiontype)						throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+	if (it==var.end())							throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+	if (buysell != BUY && buysell != SELL)		throw AQLCoreInvalidData("Choose Buy or Sell!", __FILE__,__LINE__);
+	if (THETA == optiontype)						throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 	
 	//Calculate
 	LABlackScholesBase* p = it->second;
@@ -272,17 +272,17 @@ LAMathIRVanillaFuncUtility::bkOption(LAString optiontype,
 //============================================================================
 
 double 
-LAMathIRVanillaFuncUtility::bkOptionIV(LAString& buysell, LAString& callput,
+LAMathIRVanillaFuncUtility::bkOptionIV(AQLString& buysell, AQLString& callput,
 							double futureprice, double strike, double prem, 
-							double localrate, const LADate& basedate, const LADate& spotdate, 
-							const LADate& expirydate, const LADate& deliverydate,
-							double high, double low, const bool isBusinessAdjust, const LAString& cal)
+							double localrate, const AQLDate& basedate, const AQLDate& spotdate, 
+							const AQLDate& expirydate, const AQLDate& deliverydate,
+							double high, double low, const bool isBusinessAdjust, const AQLString& cal)
 {
 	//Change nospace & upper
 	upper(callput);
 	upper(buysell);
-//	LAString daycount(AC_365I);
-	LAString daycount(AC_365I);
+//	AQLString daycount(AC_365I);
+	AQLString daycount(AC_365I);
 	//Parameter
 	AnalyticBKParam param;
 	param.F   = futureprice;
@@ -290,19 +290,19 @@ LAMathIRVanillaFuncUtility::bkOptionIV(LAString& buysell, LAString& callput,
 	param.rd  = localrate;
 	param.Te  = LAMathDateUtilities::getTerm(basedate,expirydate,   daycount, true);
 	param.Td  = LAMathDateUtilities::getTerm(spotdate,deliverydate, daycount, true);
-	param.Nu  = LAMath::exp(-param.rd * param.Td );
+	param.Nu  = AQLMath::exp(-param.rd * param.Td );
 	param.ErrorCheck();
 	//Ready for p->calc method1
-	LAString bscomponent = LAString(BK) + LAString(PREM)  + callput ;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+	AQLString bscomponent = AQLString(BK) + AQLString(PREM)  + callput ;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("CallPut Type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("CallPut Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p1 = it->second;
 
 	//Ready for p->calc method2
-	bscomponent = LAString(BK) + LAString(VEGA)  + callput ;
-	var = LACoreComponentManager::getBlackComponentMap();
+	bscomponent = AQLString(BK) + AQLString(VEGA)  + callput ;
+	var = AQLCoreComponentManager::getBlackComponentMap();
 	it = var.find(bscomponent);
 	LABlackScholesBase* p2 = it->second;
 
@@ -313,19 +313,19 @@ LAMathIRVanillaFuncUtility::bkOptionIV(LAString& buysell, LAString& callput,
 	{
 		double std_Dev = ret * ret * param.Te;
 
-		LAPriceDataCalendar aCal;
+		AQLPriceDataCalendar aCal;
 		aCal.convertFromString( cal );		
 
 		int horidayNum = aCal.getCalendar().countHoliday(basedate, expirydate);
 		double Te_b = static_cast<double > ( basedate.intervalDays(expirydate) - horidayNum ) / 250.;
-		ret = LAMath::sqrt( std_Dev / Te_b );
+		ret = AQLMath::sqrt( std_Dev / Te_b );
 	}
 
 	return ret;
 }
 
 double 
-LAMathIRVanillaFuncUtility::bkOptionIV(const LAString& callput,
+LAMathIRVanillaFuncUtility::bkOptionIV(const AQLString& callput,
 									 double futureprice,
 									 double strike,
 									 double numeraire,
@@ -345,17 +345,17 @@ LAMathIRVanillaFuncUtility::bkOptionIV(const LAString& callput,
 }
 
 double 
-LAMathIRVanillaFuncUtility::bkOptionIV(const LAString& callput,
+LAMathIRVanillaFuncUtility::bkOptionIV(const AQLString& callput,
 									 double futureprice,
 									 double strike,
 									 double numeraire,
-									 const LADate& basedate, 
-									 const LADate& expirydate, 
+									 const AQLDate& basedate, 
+									 const AQLDate& expirydate, 
 									 double prem, 
 									 double high, 
 									 double low)
 {
-	LAString daycount(AC_365I);
+	AQLString daycount(AC_365I);
 
 	AnalyticBKParam param;
 	param.F   = futureprice;
@@ -368,23 +368,23 @@ LAMathIRVanillaFuncUtility::bkOptionIV(const LAString& callput,
 }
 
 double 
-LAMathIRVanillaFuncUtility::bkOptionIV(AnalyticBKParam& param, const LAString& callput, double prem, double high, double low)
+LAMathIRVanillaFuncUtility::bkOptionIV(AnalyticBKParam& param, const AQLString& callput, double prem, double high, double low)
 {
 	//Change nospace & upper
-	LAString callput_upper = callput;
+	AQLString callput_upper = callput;
 	upper(callput_upper);
 
 	//Ready for p->calc method1
-	LAString bscomponent = LAString(BK) + LAString(PREM)  + callput_upper ;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+	AQLString bscomponent = AQLString(BK) + AQLString(PREM)  + callput_upper ;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("CallPut Type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("CallPut Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p1 = it->second;
 
 	//Ready for p->calc method2
-	bscomponent = LAString(BK) + LAString(VEGA)  + callput_upper ;
-	var = LACoreComponentManager::getBlackComponentMap();
+	bscomponent = AQLString(BK) + AQLString(VEGA)  + callput_upper ;
+	var = AQLCoreComponentManager::getBlackComponentMap();
 	it = var.find(bscomponent);
 	LABlackScholesBase* p2 = it->second;
 
@@ -395,12 +395,12 @@ LAMathIRVanillaFuncUtility::bkOptionIV(AnalyticBKParam& param, const LAString& c
 }
 
 double 
-LAMathIRVanillaFuncUtility::getAnnuity(const LADate& fromdate, LAString& term_str, const LAMathYieldCurve& yc)
+LAMathIRVanillaFuncUtility::getAnnuity(const AQLDate& fromdate, AQLString& term_str, const LAMathYieldCurve& yc)
 {
 	//change nospace & upper
 	upper(term_str);
 	
-	LADate toDate = LAMathDateCalculations::getDate(fromdate, term_str, true);
+	AQLDate toDate = LAMathDateCalculations::getDate(fromdate, term_str, true);
 	DateVector out;
 	LAMathDateCalculations::generateSchedule(fromdate, toDate, yc.getFrequency().get(),
 							true, NULL, NULL, NULL, out, &yc.getSlidingRule(), &yc.getCalendar());
@@ -412,14 +412,14 @@ LAMathIRVanillaFuncUtility::getAnnuity(const LADate& fromdate, LAString& term_st
 }
 
 double 
-LAMathIRVanillaFuncUtility::getCashSettledAnnuity(const LADate& fromdate, LAString& term_str, const LAMathYieldCurve& yc, const double swaprate)
+LAMathIRVanillaFuncUtility::getCashSettledAnnuity(const AQLDate& fromdate, AQLString& term_str, const LAMathYieldCurve& yc, const double swaprate)
 {
 	//change nospace & upper
 	upper(term_str);
 	
-	LADate toDate = LAMathDateCalculations::getDate(fromdate, term_str, true);
+	AQLDate toDate = LAMathDateCalculations::getDate(fromdate, term_str, true);
 	DateVector out;
-	LAString freq = yc.getFrequency().get();
+	AQLString freq = yc.getFrequency().get();
 	LAMathDateCalculations::generateSchedule(fromdate, toDate, freq,
 							true, NULL, NULL, NULL, out, &yc.getSlidingRule(), &yc.getCalendar());
 	if(out.front() != fromdate)
@@ -436,7 +436,7 @@ LAMathIRVanillaFuncUtility::getCashSettledAnnuity(const LADate& fromdate, LAStri
 	else if(freq == MONTHLY)
 		unadjterm = 1.0/12.0;
 	else
-		throw LACoreInvalidData("Frequency is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Frequency is not supported",__FILE__,__LINE__);
 
 	double ret = 0.0;
 	double dfval = 1.0;
@@ -455,12 +455,12 @@ LAMathIRVanillaFuncUtility::getCashSettledAnnuity(const LADate& fromdate, LAStri
 }
 
 double 
-LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid, 
-					   LAString& buysell,double nominal, double strike, double avevol, 
-					   LAString& frequency, LAString& daycount, const DateVector& payVec, const LADate& fixingdate, const LADate& valuedate, 
-					   LAString& paymentslidingrule, LAString& paymentcalendar, LAString& spotlag,  
-					   LAString& fixingcalendar, bool iswithoutfirst, double firstfixingrate,
-					   double forwardrate, LAString foreCurveName, LAString dfCurveName, const bool isFWDInter)
+LAMathIRVanillaFuncUtility::capfloorOption(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid, 
+					   AQLString& buysell,double nominal, double strike, double avevol, 
+					   AQLString& frequency, AQLString& daycount, const DateVector& payVec, const AQLDate& fixingdate, const AQLDate& valuedate, 
+					   AQLString& paymentslidingrule, AQLString& paymentcalendar, AQLString& spotlag,  
+					   AQLString& fixingcalendar, bool iswithoutfirst, double firstfixingrate,
+					   double forwardrate, AQLString foreCurveName, AQLString dfCurveName, const bool isFWDInter)
 {
 	//change nospace & upper
 	upper(caporfloor);
@@ -473,11 +473,11 @@ LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAStrin
 	upper(fixingcalendar);
 
 	//slidingrule 
-	LAPriceDataSlidingRule sr2;
+	AQLPriceDataSlidingRule sr2;
 	sr2.convertFromString(PRE);
 
 	//calendar
-	LAPriceDataCalendar cal2;
+	AQLPriceDataCalendar cal2;
 	cal2.convertFromString(fixingcalendar);
 
 	//fixingVector
@@ -488,7 +488,7 @@ LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAStrin
 	if(fixingdate > valuedate)
 		fixVec[0] = fixingdate;
 
-    /*LADate tradeDate;
+    /*AQLDate tradeDate;
     if(fixingdate > valuedate)
     {
         tradeDate = LAMathDateCalculations::getDate(valuedate,spotlag,sr2,&cal2,false);
@@ -498,7 +498,7 @@ LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAStrin
         tradeDate = fixingdate;
     }*/
 
-	daycount = LACoreComponentManager::getDayCount(daycount);
+	daycount = AQLCoreComponentManager::getDayCount(daycount);
 
 	//LAMathYieldCurve
 	LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveid);
@@ -514,39 +514,39 @@ LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAStrin
 	param.K = strike;
 	//
 	
-	LAObject YieldDate = yc.getYieldData().get().get();
-	LAPriceDataConvention conv(ACT_365_ISDA,CONT);
-	LAPriceDataConvention conv2(yc.getDayCount().getDayCount(),CONT);
+	AQLObject YieldDate = yc.getYieldData().get().get();
+	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
+	AQLPriceDataConvention conv2(yc.getDayCount().getDayCount(),CONT);
 	yc.getFrequency().set("SIMPLE");//To caluculate forward libor rate	
 	
 	//find the pos between fixVec[pos-1] < valuedate < fixVec[pos]
 	//if valuedate < fixVec[0] pos =0 if valuedate > fixVec[end] return error!!
 	unsigned int pos=0;
-	LAAlgorithm::locate<DateVector,LADate>(fixVec,valuedate,N-1,pos);
+	AQLAlgorithm::locate<DateVector,AQLDate>(fixVec,valuedate,N-1,pos);
 	if(N-1==static_cast<int>(pos))  
 	{	
-		LAString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD")+" is not support for this option pricing";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		AQLString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD")+" is not support for this option pricing";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 	}
 	//if isfirstinclude = true then caluculate first CashFlow which has already 1st firxing rate.
 
 	//Ready for p->calc method
-	LAString bscomponent;
+	AQLString bscomponent;
 	if(CAP	 == caporfloor)
-		bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
+		bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
 	else if(FLOOR == caporfloor)
-		bscomponent = LAString(BK)+LAString(PREM)+LAString(PUT);
+		bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(PUT);
 	else if(STRADDLE == caporfloor)
-		bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
-	std::map<LAString, LABlackScholesBase*>& var2 = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*>::iterator it2= var2.find(bscomponent);
+		bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
+	std::map<AQLString, LABlackScholesBase*>& var2 = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*>::iterator it2= var2.find(bscomponent);
 	if(it2==var2.end())
-		throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p = it2->second;
 	
 	double ret=0.0;
 	if(!iswithoutfirst&& (fixingdate > valuedate) )
-		throw LACoreInvalidData("WithoutFirst is only when fixingdate = valuedate",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("WithoutFirst is only when fixingdate = valuedate",__FILE__,__LINE__);
 	if(!iswithoutfirst)
 	{
 		param.F			=	firstfixingrate;
@@ -554,9 +554,9 @@ LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAStrin
 		yc.setCurveType(dfCurveName);
 		param.Nu		=	yc.getDF(valuedate,payVec[pos])*del;
 		if(-1 != bscomponent.findString(PUT))
-			ret+=	LAMath::max((param.K-param.F)* param.Nu,0) ;
+			ret+=	AQLMath::max((param.K-param.F)* param.Nu,0) ;
 		else
-			ret+=	LAMath::max((param.F-param.K)*param.Nu,0);
+			ret+=	AQLMath::max((param.F-param.K)*param.Nu,0);
 	}
 	for(int i=pos; i<N-1;i++)
 	{
@@ -580,7 +580,7 @@ LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAStrin
 
 	if(STRADDLE == caporfloor)
 	{
-		bscomponent	= LAString(BK) + LAString(PREM) + LAString(PUT);
+		bscomponent	= AQLString(BK) + AQLString(PREM) + AQLString(PUT);
 		p = var2.find(bscomponent)->second;
 		if(!iswithoutfirst)
 		{
@@ -589,9 +589,9 @@ LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAStrin
 			yc.setCurveType(dfCurveName);
 			param.Nu		=	yc.getDF(valuedate,payVec[pos])*del;
 			if(-1 != bscomponent.findString(PUT))
-				ret+=	LAMath::max((param.K-param.F)* param.Nu,0) ;
+				ret+=	AQLMath::max((param.K-param.F)* param.Nu,0) ;
 			else
-				ret+=	LAMath::max((param.F-param.K)*param.Nu,0);
+				ret+=	AQLMath::max((param.F-param.K)*param.Nu,0);
 		}
 		for(int i=pos; i<N-1;i++)
 		{
@@ -619,17 +619,17 @@ LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAStrin
 	else if(SELL==buysell)
 		ret *= -nominal;
 	else 
-		throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
+		throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
 	
 	return ret;
 }
 double
-LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid,
-	LAString& buysell, double nominal, double strike, const LAString& alphaid, const LAString& betaid, 
-	const LAString& nuid, const LAString& rhoid, LAString& frequency, LAString& daycount, const DateVector& payVec, 
-	const LADate& fixingdate, const LADate& valuedate, LAString& paymentslidingrule, LAString& paymentcalendar, 
-	LAString& spotlag, LAString& fixingcalendar, bool iswithoutfirst, double firstfixingrate, double forwardrate, 
-	LAString foreCurveName, LAString dfCurveName, const bool isFWDInter, double shiftvalue)
+LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid,
+	AQLString& buysell, double nominal, double strike, const AQLString& alphaid, const AQLString& betaid, 
+	const AQLString& nuid, const AQLString& rhoid, AQLString& frequency, AQLString& daycount, const DateVector& payVec, 
+	const AQLDate& fixingdate, const AQLDate& valuedate, AQLString& paymentslidingrule, AQLString& paymentcalendar, 
+	AQLString& spotlag, AQLString& fixingcalendar, bool iswithoutfirst, double firstfixingrate, double forwardrate, 
+	AQLString foreCurveName, AQLString dfCurveName, const bool isFWDInter, double shiftvalue)
 {
 	//change nospace & upper
 	upper(caporfloor);
@@ -642,11 +642,11 @@ LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstan
 	upper(fixingcalendar);
 
 	//slidingrule 
-	LAPriceDataSlidingRule sr2;
+	AQLPriceDataSlidingRule sr2;
 	sr2.convertFromString(PRE);
 
 	//calendar
-	LAPriceDataCalendar cal2;
+	AQLPriceDataCalendar cal2;
 	cal2.convertFromString(fixingcalendar);
 
 	//fixingVector
@@ -657,20 +657,20 @@ LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstan
 	if (fixingdate > valuedate)
 		fixVec[0] = fixingdate;
 
-	daycount = LACoreComponentManager::getDayCount(daycount);
+	daycount = AQLCoreComponentManager::getDayCount(daycount);
 
 	//tenor string
-	LADataString tenor;
+	AQLDataString tenor;
 	if (frequency == "MONTHLY")
 		tenor = "1M";
 	else if (frequency == "QUARTERLY")
 		tenor = "3M";
 	else 
 		tenor = "6M";
-	LAString tenorstr = dynamic_cast<LADataString &>(tenor);
+	AQLString tenorstr = dynamic_cast<AQLDataString &>(tenor);
 
-	const LAString approx_method = "Hagan";
-	const LAString conventionid;
+	const AQLString approx_method = "Hagan";
+	const AQLString conventionid;
 
 	//LAMathYieldCurve
 	LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance, curveid);
@@ -685,9 +685,9 @@ LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstan
 	param.K = strike + shiftvalue;
 	//
 
-	LAObject YieldDate = yc.getYieldData().get().get();
-	LAPriceDataConvention conv(ACT_ACT, CONT);
-	LAPriceDataConvention conv2(yc.getDayCount().getDayCount(), CONT);
+	AQLObject YieldDate = yc.getYieldData().get().get();
+	AQLPriceDataConvention conv(ACT_ACT, CONT);
+	AQLPriceDataConvention conv2(yc.getDayCount().getDayCount(), CONT);
 	yc.getFrequency().set("SIMPLE");
 
 	LAMathYieldCurve& yc_nu = yc;
@@ -695,31 +695,31 @@ LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstan
 	yc_nu.getDayCount().setDayCount(ACT_ACT);
 
 	unsigned int pos = 0;
-	LAAlgorithm::locate<DateVector, LADate>(fixVec, valuedate, N - 1, pos);
+	AQLAlgorithm::locate<DateVector, AQLDate>(fixVec, valuedate, N - 1, pos);
 	if (N - 1 == static_cast<int>(pos))
 	{
-		LAString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD") + " is not support for this option pricing";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD") + " is not support for this option pricing";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	//if isfirstinclude = true then caluculate first CashFlow which has already 1st firxing rate.
 
 	//Ready for p->calc method
-	LAString bscomponent;
+	AQLString bscomponent;
 	if (CAP == caporfloor)
-		bscomponent = LAString(BK) + LAString(PREM) + LAString(CALL);
+		bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(CALL);
 	else if (FLOOR == caporfloor)
-		bscomponent = LAString(BK) + LAString(PREM) + LAString(PUT);
+		bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(PUT);
 	else if (STRADDLE == caporfloor)
-		bscomponent = LAString(BK) + LAString(PREM) + LAString(CALL);
-	std::map<LAString, LABlackScholesBase*>& var2 = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*>::iterator it2 = var2.find(bscomponent);
+		bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(CALL);
+	std::map<AQLString, LABlackScholesBase*>& var2 = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*>::iterator it2 = var2.find(bscomponent);
 	if (it2 == var2.end())
-		throw LACoreInvalidData("Product Type is not supported", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Product Type is not supported", __FILE__, __LINE__);
 	LABlackScholesBase* p = it2->second;
 
 	double ret = 0.0;
 	if (!iswithoutfirst && (fixingdate > valuedate))
-		throw LACoreInvalidData("WithoutFirst is only when fixingdate = valuedate", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("WithoutFirst is only when fixingdate = valuedate", __FILE__, __LINE__);
 	if (!iswithoutfirst)
 	{
 		param.F = firstfixingrate + shiftvalue;
@@ -727,9 +727,9 @@ LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstan
 		yc_nu.setCurveType(dfCurveName);
 		param.Nu = yc_nu.getDF(valuedate, payVec[pos])*del;
 		if (-1 != bscomponent.findString(PUT))
-			ret += LAMath::max((param.K - param.F)* param.Nu, 0);
+			ret += AQLMath::max((param.K - param.F)* param.Nu, 0);
 		else
-			ret += LAMath::max((param.F - param.K)*param.Nu, 0);
+			ret += AQLMath::max((param.F - param.K)*param.Nu, 0);
 	}
 	for (int i = pos; i<N - 1; i++)
 	{
@@ -755,7 +755,7 @@ LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstan
 
 	if (STRADDLE == caporfloor)
 	{
-		bscomponent = LAString(BK) + LAString(PREM) + LAString(PUT);
+		bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(PUT);
 		p = var2.find(bscomponent)->second;
 		if (!iswithoutfirst)
 		{
@@ -764,9 +764,9 @@ LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstan
 			yc_nu.setCurveType(dfCurveName);
 			param.Nu = yc_nu.getDF(valuedate, payVec[pos])*del;
 			if (-1 != bscomponent.findString(PUT))
-				ret += LAMath::max((param.K - param.F)* param.Nu, 0);
+				ret += AQLMath::max((param.K - param.F)* param.Nu, 0);
 			else
-				ret += LAMath::max((param.F - param.K)*param.Nu, 0);
+				ret += AQLMath::max((param.F - param.K)*param.Nu, 0);
 		}
 		// get cap/floor premium by summing up each caplet/floorlet premium
 		for (int i = pos; i<N - 1; i++)
@@ -797,18 +797,18 @@ LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstan
 	else if (SELL == buysell)
 		ret *= -nominal;
 	else
-		throw LACoreInvalidData("Choose Buy or Sell", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__, __LINE__);
 
 	return ret;
 }
 double 
-LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid, 
-					   LAString& buysell,double nominal, double strike, double avevol, 
-					   LAString& frequency, LAString& daycount, const LADate& fixingdate, const LADate& valuedate,
-					   LAString& capterm, int roll, 
-					   LAString& paymentslidingrule, LAString& paymentcalendar, LAString& spotlag,  
-					   LAString& fixingcalendar, bool iswithoutfirst, double firstfixingrate,
-					   double forwardrate, LAString foreCurveName, LAString dfCurveName, const bool isFWDInter)
+LAMathIRVanillaFuncUtility::capfloorOption(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid, 
+					   AQLString& buysell,double nominal, double strike, double avevol, 
+					   AQLString& frequency, AQLString& daycount, const AQLDate& fixingdate, const AQLDate& valuedate,
+					   AQLString& capterm, int roll, 
+					   AQLString& paymentslidingrule, AQLString& paymentcalendar, AQLString& spotlag,  
+					   AQLString& fixingcalendar, bool iswithoutfirst, double firstfixingrate,
+					   double forwardrate, AQLString foreCurveName, AQLString dfCurveName, const bool isFWDInter)
 				
 {
 	//change nospace & upper
@@ -823,17 +823,17 @@ LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAStrin
 	upper(fixingcalendar);
 	
 	//slidingrule 
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(paymentslidingrule);
 	//calendar
-	LAPriceDataCalendar cal;
-	LAPriceDataCalendar cal2;
+	AQLPriceDataCalendar cal;
+	AQLPriceDataCalendar cal2;
 	cal.convertFromString(paymentcalendar);
 	cal2.convertFromString(fixingcalendar);
 
 	//lastpaymentdate
-	LADate tmpstart = LAMathDateCalculations::getDate(fixingdate,spotlag,sr,&cal2,true);
-	LADate endpay(tmpstart);
+	AQLDate tmpstart = LAMathDateCalculations::getDate(fixingdate,spotlag,sr,&cal2,true);
+	AQLDate endpay(tmpstart);
 	int y=0,m=0,d=0,w=0;
 	LAMathDateCalculations::termStrtoYMDW(capterm,y,m,d,w);
 	endpay.addYears(y);
@@ -863,12 +863,12 @@ LAMathIRVanillaFuncUtility::capfloorOption(LADataInstance* dataInstance, LAStrin
 
 }
 double
-LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid,
-	LAString& buysell, double nominal, double strike, const LAString& alphaid, const LAString& betaid, const LAString& nuid,
-	const LAString& rhoid, LAString& frequency, LAString& daycount, const LADate& fixingdate,
-	const LADate& valuedate, LAString& capterm, int roll, LAString& paymentslidingrule, LAString& paymentcalendar, 
-	LAString& spotlag, LAString& fixingcalendar, bool iswithoutfirst, double firstfixingrate,
-	double forwardrate, LAString foreCurveName, LAString dfCurveName, const bool isFWDInter, double shiftvalue)
+LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid,
+	AQLString& buysell, double nominal, double strike, const AQLString& alphaid, const AQLString& betaid, const AQLString& nuid,
+	const AQLString& rhoid, AQLString& frequency, AQLString& daycount, const AQLDate& fixingdate,
+	const AQLDate& valuedate, AQLString& capterm, int roll, AQLString& paymentslidingrule, AQLString& paymentcalendar, 
+	AQLString& spotlag, AQLString& fixingcalendar, bool iswithoutfirst, double firstfixingrate,
+	double forwardrate, AQLString foreCurveName, AQLString dfCurveName, const bool isFWDInter, double shiftvalue)
 
 {
 	//change nospace & upper
@@ -883,18 +883,18 @@ LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstan
 	upper(fixingcalendar);
 
 	//slidingrule 
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(paymentslidingrule);
 	//calendar
-	LAPriceDataCalendar cal;
-	LAPriceDataCalendar cal2;
+	AQLPriceDataCalendar cal;
+	AQLPriceDataCalendar cal2;
 	cal.convertFromString(paymentcalendar);
 	cal2.convertFromString(fixingcalendar);
 
 	//lastpaymentdate
-	LAString roll_conv = "TRUE";
-	LADate tmpstart = LAMathDateCalculations::getDate(fixingdate, spotlag, sr, &cal2, true, &roll_conv);
-	LADate endpay(tmpstart);
+	AQLString roll_conv = "TRUE";
+	AQLDate tmpstart = LAMathDateCalculations::getDate(fixingdate, spotlag, sr, &cal2, true, &roll_conv);
+	AQLDate endpay(tmpstart);
 	int y = 0, m = 0, d = 0, w = 0;
 	LAMathDateCalculations::termStrtoYMDW(capterm, y, m, d, w);
 	endpay.addYears(y);
@@ -925,17 +925,17 @@ LAMathIRVanillaFuncUtility::capfloorOption_SABRParams(LADataInstance* dataInstan
 }
 double 
 LAMathIRVanillaFuncUtility::capFloorLet
-(LADataInstance* dataInstance,LAString& caporfloor, const LAString& curveid, LAString& buysell,
- double strike, double vol, LAString& daycount, const LADate& tradedate,
- const LADate& valuedate, const LADate& expirydate, const LADate& startdate, const LADate& enddate,
- LAString foreCurveName, LAString dfCurveName, const bool isFwdInter)
+(AQLDataInstance* dataInstance,AQLString& caporfloor, const AQLString& curveid, AQLString& buysell,
+ double strike, double vol, AQLString& daycount, const AQLDate& tradedate,
+ const AQLDate& valuedate, const AQLDate& expirydate, const AQLDate& startdate, const AQLDate& enddate,
+ AQLString foreCurveName, AQLString dfCurveName, const bool isFwdInter)
 {
 	//change nospace & upper
 	upper(caporfloor);
 	upper(buysell);
 	upper(daycount);
 
-	daycount = LACoreComponentManager::getDayCount(daycount);
+	daycount = AQLCoreComponentManager::getDayCount(daycount);
 
 	//LAMathYieldCurve
 	LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveid);
@@ -949,27 +949,27 @@ LAMathIRVanillaFuncUtility::capFloorLet
 	param.Vol = vol;
 	param.K = strike;
 	
-	LAPriceDataConvention conv(ACT_365_ISDA,CONT);
-	LAPriceDataConvention conv2(yc.getDayCount().getDayCount(),CONT);
+	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
+	AQLPriceDataConvention conv2(yc.getDayCount().getDayCount(),CONT);
 	
 	if(tradedate>valuedate || expirydate > startdate || startdate>enddate || valuedate>startdate)  
 	{	
-		LAString msg = "order of dates is not support for this option pricing";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		AQLString msg = "order of dates is not support for this option pricing";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 	}
 
 	//Ready for p->calc method
-	LAString bscomponent;
+	AQLString bscomponent;
 	if(CAP	 == caporfloor)
-		bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
+		bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
 	else if(FLOOR == caporfloor)
-		bscomponent = LAString(BK)+LAString(PREM)+LAString(PUT);
+		bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(PUT);
 	else if(STRADDLE == caporfloor)
-		bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
-	std::map<LAString, LABlackScholesBase*>& var2 = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*>::iterator it2= var2.find(bscomponent);
+		bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
+	std::map<AQLString, LABlackScholesBase*>& var2 = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*>::iterator it2= var2.find(bscomponent);
 	if(it2==var2.end())
-		throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p = it2->second;
 	
 	double ret=0.0;
@@ -984,7 +984,7 @@ LAMathIRVanillaFuncUtility::capFloorLet
 
 	if(STRADDLE == caporfloor)
 	{
-		bscomponent	= LAString(BK) + LAString(PREM) + LAString(PUT);
+		bscomponent	= AQLString(BK) + AQLString(PREM) + AQLString(PUT);
 		p = var2.find(bscomponent)->second;
 		yc.setCurveType(foreCurveName);
 		param.F		= yc.getZeroRate(startdate,enddate);
@@ -1001,24 +1001,24 @@ LAMathIRVanillaFuncUtility::capFloorLet
 	else if(SELL==buysell)
 		ret *= -1.;
 	else 
-		throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
+		throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
 	
 	return ret;
 }
 
 double 
 LAMathIRVanillaFuncUtility::capFloorLetVol
-(LADataInstance* dataInstance,LAString& caporfloor, const LAString& curveid, 
- double strike, double prem, LAString& daycount, const LADate& tradedate,
- const LADate& valuedate, const LADate& expirydate, const LADate& startdate, const LADate& enddate,
+(AQLDataInstance* dataInstance,AQLString& caporfloor, const AQLString& curveid, 
+ double strike, double prem, AQLString& daycount, const AQLDate& tradedate,
+ const AQLDate& valuedate, const AQLDate& expirydate, const AQLDate& startdate, const AQLDate& enddate,
  double low, double high,
- LAString foreCurveName, LAString dfCurveName)
+ AQLString foreCurveName, AQLString dfCurveName)
 {
 	//change nospace & upper
 	upper(caporfloor);
 	upper(daycount);
 
-	daycount = LACoreComponentManager::getDayCount(daycount);
+	daycount = AQLCoreComponentManager::getDayCount(daycount);
 
 	//LAMathYieldCurve
 	LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveid);
@@ -1028,38 +1028,38 @@ LAMathIRVanillaFuncUtility::capFloorLetVol
 	yc.getSlidingRule().convertFromString(NO_CH);
 	yc.getFrequency().set("SIMPLE");//To caluculate forward libor rate	
 	
-	LAPriceDataConvention conv(ACT_365_ISDA,CONT);
-	LAPriceDataConvention conv2(yc.getDayCount().getDayCount(),CONT);
+	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
+	AQLPriceDataConvention conv2(yc.getDayCount().getDayCount(),CONT);
 	
 	if(tradedate>valuedate || expirydate > startdate || startdate>enddate || valuedate>startdate)  
 	{	
-		LAString msg = "order of dates is not support for this option pricing";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		AQLString msg = "order of dates is not support for this option pricing";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 	}
 
 	//Ready for p->calc method
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	LAString bscomponent;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	AQLString bscomponent;
 	if(CAP	 == caporfloor)
-			bscomponent = LAString(CF) + LAString(PREM) + LAString(CALL);
+			bscomponent = AQLString(CF) + AQLString(PREM) + AQLString(CALL);
 	else if(FLOOR == caporfloor)
-			bscomponent = LAString(CF) + LAString(PREM) + LAString(PUT);
+			bscomponent = AQLString(CF) + AQLString(PREM) + AQLString(PUT);
 	else if(STRADDLE == caporfloor)
-			bscomponent = LAString(CF) + LAString(PREM) + LAString(CALL);
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+			bscomponent = AQLString(CF) + AQLString(PREM) + AQLString(CALL);
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p1 = it->second;
 
 	//Ready for p->calc method VEGA
-	//std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	//LAString bscomponent;
+	//std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	//AQLString bscomponent;
 	if(CAP	 == caporfloor)
-			bscomponent = LAString(CF) + LAString(VEGA) + LAString(CALL);
+			bscomponent = AQLString(CF) + AQLString(VEGA) + AQLString(CALL);
 	else if(FLOOR == caporfloor)
-			bscomponent = LAString(CF) + LAString(VEGA) + LAString(PUT);
+			bscomponent = AQLString(CF) + AQLString(VEGA) + AQLString(PUT);
 	else if(STRADDLE == caporfloor)
-			bscomponent = LAString(CF) + LAString(VEGA) + LAString(CALL); 
+			bscomponent = AQLString(CF) + AQLString(VEGA) + AQLString(CALL); 
 	it = var.find(bscomponent);
 	LABlackScholesBase* p2 = it->second;
 
@@ -1068,10 +1068,10 @@ LAMathIRVanillaFuncUtility::capFloorLetVol
 
 	if(STRADDLE == caporfloor)
 	{
-		bscomponent = LAString(CF) + LAString(PREM) + LAString(PUT);
+		bscomponent = AQLString(CF) + AQLString(PREM) + AQLString(PUT);
 		it = var.find(bscomponent);
 		p3 = it->second;
-		bscomponent = LAString(CF) + LAString(VEGA) + LAString(PUT);
+		bscomponent = AQLString(CF) + AQLString(VEGA) + AQLString(PUT);
 		it = var.find(bscomponent);
 		p4 = it->second;
 	}
@@ -1102,13 +1102,13 @@ LAMathIRVanillaFuncUtility::capFloorLetVol
 }
 
 double 
-LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid, 
-					    double strike, double prem, LAString& frequency, LAString& daycount,
-						const DateVector& payVec, const LADate& fixingdate, const LADate& valuedate, 
-					   LAString& paymentslidingrule, LAString& paymentcalendar, LAString& spotlag,  
-					   LAString& fixingcalendar, double low, double high, bool iswithoutfirst, 
-					   double firstfixingrate, double forwardrate, LAString foreCurveName,
-					   LAString dfCurveName, const bool isFWDInter)
+LAMathIRVanillaFuncUtility::capfloorOptionVol(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid, 
+					    double strike, double prem, AQLString& frequency, AQLString& daycount,
+						const DateVector& payVec, const AQLDate& fixingdate, const AQLDate& valuedate, 
+					   AQLString& paymentslidingrule, AQLString& paymentcalendar, AQLString& spotlag,  
+					   AQLString& fixingcalendar, double low, double high, bool iswithoutfirst, 
+					   double firstfixingrate, double forwardrate, AQLString foreCurveName,
+					   AQLString dfCurveName, const bool isFWDInter)
 {
 	//change nospace & upper
 	upper(caporfloor);
@@ -1120,11 +1120,11 @@ LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LASt
 	upper(fixingcalendar);
 
 	//slidingrule 
-	LAPriceDataSlidingRule sr2;
+	AQLPriceDataSlidingRule sr2;
 	sr2.convertFromString(PRE);
 
 	//calendar
-	LAPriceDataCalendar cal2;
+	AQLPriceDataCalendar cal2;
 	cal2.convertFromString(fixingcalendar);
 
 	//fixingVector
@@ -1135,7 +1135,7 @@ LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LASt
 	if(fixingdate > valuedate)
 		fixVec[0] = fixingdate;
 
-    /*LADate tradeDate;
+    /*AQLDate tradeDate;
     if(fixingdate > valuedate)
     {
         tradeDate = LAMathDateCalculations::getDate(valuedate,spotlag,sr2,&cal2,false);
@@ -1145,7 +1145,7 @@ LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LASt
         tradeDate = fixingdate;
     }*/
 
-	daycount = LACoreComponentManager::getDayCount(daycount);
+	daycount = AQLCoreComponentManager::getDayCount(daycount);
 
 	//LAMathYieldCurve
 	LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveid);
@@ -1156,45 +1156,45 @@ LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LASt
 	LAMathCurveFuncUtility::setCalendarForCurveID(yc,paymentcalendar);
 	yc.getFrequency().convertFromString(frequency);
 	
-	LAObject YieldDate = yc.getYieldData().get().get();
-	LAPriceDataConvention conv(ACT_365_ISDA,CONT);
-	LAPriceDataConvention conv2(yc.getDayCount().getDayCount(),CONT);
+	AQLObject YieldDate = yc.getYieldData().get().get();
+	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
+	AQLPriceDataConvention conv2(yc.getDayCount().getDayCount(),CONT);
 	yc.getFrequency().set("SIMPLE");//To caluculate forward libor rate	
 	
 	//find the pos between fixVec[pos-1] < valuedate < fixVec[pos]
 	//if valuedate < fixVec[0] pos =0 if valuedate > fixVec[end] return error!!
 	unsigned int pos=0;
-	LAAlgorithm::locate<DateVector,LADate>(fixVec,valuedate,N-1,pos);
+	AQLAlgorithm::locate<DateVector,AQLDate>(fixVec,valuedate,N-1,pos);
 	if(N-1==static_cast<int>(pos))  
 	{	
-		LAString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD")+" is not support for this option pricing";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		AQLString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD")+" is not support for this option pricing";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 	}
 	//if isfirstinclude = true then caluculate first CashFlow which has already 1st firxing rate.
 
 	//Ready for p->calc method
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	LAString bscomponent;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	AQLString bscomponent;
 	if(CAP	 == caporfloor)
-			bscomponent = LAString(CF) + LAString(PREM) + LAString(CALL);
+			bscomponent = AQLString(CF) + AQLString(PREM) + AQLString(CALL);
 	else if(FLOOR == caporfloor)
-			bscomponent = LAString(CF) + LAString(PREM) + LAString(PUT);
+			bscomponent = AQLString(CF) + AQLString(PREM) + AQLString(PUT);
 	else if(STRADDLE == caporfloor)
-			bscomponent = LAString(CF) + LAString(PREM) + LAString(CALL);
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+			bscomponent = AQLString(CF) + AQLString(PREM) + AQLString(CALL);
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p1 = it->second;
 
 	//Ready for p->calc method VEGA
-	//std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	//LAString bscomponent;
+	//std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	//AQLString bscomponent;
 	if(CAP	 == caporfloor)
-			bscomponent = LAString(CF) + LAString(VEGA) + LAString(CALL);
+			bscomponent = AQLString(CF) + AQLString(VEGA) + AQLString(CALL);
 	else if(FLOOR == caporfloor)
-			bscomponent = LAString(CF) + LAString(VEGA) + LAString(PUT);
+			bscomponent = AQLString(CF) + AQLString(VEGA) + AQLString(PUT);
 	else if(STRADDLE == caporfloor)
-			bscomponent = LAString(CF) + LAString(VEGA) + LAString(CALL); 
+			bscomponent = AQLString(CF) + AQLString(VEGA) + AQLString(CALL); 
 	it = var.find(bscomponent);
 	LABlackScholesBase* p2 = it->second;
 
@@ -1203,10 +1203,10 @@ LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LASt
 
 	if(STRADDLE == caporfloor)
 	{
-		bscomponent = LAString(CF) + LAString(PREM) + LAString(PUT);
+		bscomponent = AQLString(CF) + AQLString(PREM) + AQLString(PUT);
 		it = var.find(bscomponent);
 		p3 = it->second;
-		bscomponent = LAString(CF) + LAString(VEGA) + LAString(PUT);
+		bscomponent = AQLString(CF) + AQLString(VEGA) + AQLString(PUT);
 		it = var.find(bscomponent);
 		p4 = it->second;
 	}
@@ -1217,7 +1217,7 @@ LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LASt
 	param.iswithoutfirst = iswithoutfirst;
 
 	if(!iswithoutfirst&& (fixingdate > valuedate) )
-		throw LACoreInvalidData("WithoutFirst is only when fixingdate = valuedate",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("WithoutFirst is only when fixingdate = valuedate",__FILE__,__LINE__);
 	if(!iswithoutfirst)
 	{
 		param.F.push_back(firstfixingrate);
@@ -1262,13 +1262,13 @@ LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LASt
 }
 
 double 
-LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid, 
-					   double strike, double prem, LAString& frequency, LAString& daycount,
-					   const LADate& fixingdate, const LADate& valuedate,LAString& capterm, int roll, 
-					   LAString& paymentslidingrule, LAString& paymentcalendar, LAString& spotlag,  
-					   LAString& fixingcalendar, double low, double high,
-					   bool iswithoutfirst, double firstfixingrate, double forwardrate, LAString foreCurveName, 
-					   LAString dfCurveName, const bool isFWDInter)
+LAMathIRVanillaFuncUtility::capfloorOptionVol(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid, 
+					   double strike, double prem, AQLString& frequency, AQLString& daycount,
+					   const AQLDate& fixingdate, const AQLDate& valuedate,AQLString& capterm, int roll, 
+					   AQLString& paymentslidingrule, AQLString& paymentcalendar, AQLString& spotlag,  
+					   AQLString& fixingcalendar, double low, double high,
+					   bool iswithoutfirst, double firstfixingrate, double forwardrate, AQLString foreCurveName, 
+					   AQLString dfCurveName, const bool isFWDInter)
 {
 	//change nospace & upper
 	upper(caporfloor);
@@ -1281,17 +1281,17 @@ LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LASt
 	upper(fixingcalendar);
 	
 	//slidingrule 
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(paymentslidingrule);
 	//calendar
-	LAPriceDataCalendar cal;
-	LAPriceDataCalendar cal2;
+	AQLPriceDataCalendar cal;
+	AQLPriceDataCalendar cal2;
 	cal.convertFromString(paymentcalendar);
 	cal2.convertFromString(fixingcalendar);
 
 	//lastpaymentdate
-	LADate tmpstart = LAMathDateCalculations::getDate(fixingdate,spotlag,sr,&cal2,true);
-	LADate endpay(tmpstart);
+	AQLDate tmpstart = LAMathDateCalculations::getDate(fixingdate,spotlag,sr,&cal2,true);
+	AQLDate endpay(tmpstart);
 	int y=0,m=0,d=0,w=0;
 	LAMathDateCalculations::termStrtoYMDW(capterm,y,m,d,w);
 	endpay.addYears(y);
@@ -1322,10 +1322,10 @@ LAMathIRVanillaFuncUtility::capfloorOptionVol(LADataInstance* dataInstance, LASt
 }
 
 double 
-LAMathIRVanillaFuncUtility::swaption(LADataInstance* dataInstance, const LAString& curveid, LAString& buysell, LAString& callput, 
-								   double nominal, double strike, const LADate& tradedate, const LADate& valuedate,
-								   LAString& optionmaturity, LAString& swapterm, double vol, LAString foreCurveName, 
-								   const LAString dfCurveName, const bool isIRRModel)
+LAMathIRVanillaFuncUtility::swaption(AQLDataInstance* dataInstance, const AQLString& curveid, AQLString& buysell, AQLString& callput, 
+								   double nominal, double strike, const AQLDate& tradedate, const AQLDate& valuedate,
+								   AQLString& optionmaturity, AQLString& swapterm, double vol, AQLString foreCurveName, 
+								   const AQLString dfCurveName, const bool isIRRModel)
 {
 	//change nospace & upper
 	upper(callput);
@@ -1334,15 +1334,15 @@ LAMathIRVanillaFuncUtility::swaption(LADataInstance* dataInstance, const LAStrin
 	upper(swapterm);
 	
 	//LAMathYieldCurve
-	LAString mod(MOD_FOL);
-	LAString cal("TKB:LNB");
-	LAString cal2("LNB");
-	LAString fre(SEMI_ANNUAL);
-	LAString offset("2d");
-	LAString daycount(AC_365);
+	AQLString mod(MOD_FOL);
+	AQLString cal("TKB:LNB");
+	AQLString cal2("LNB");
+	AQLString fre(SEMI_ANNUAL);
+	AQLString offset("2d");
+	AQLString daycount(AC_365);
 		
-	LADate tmpMDate = LAMathDateUtilities::getDate(tradedate,optionmaturity,mod,cal);
-	LAPriceDataConvention conv(ACT_365_ISDA,CONT);
+	AQLDate tmpMDate = LAMathDateUtilities::getDate(tradedate,optionmaturity,mod,cal);
+	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
 	
 	double ret = LAMathIRVanillaFuncUtility::swaption(dataInstance,curveid,buysell,callput,nominal,strike,vol,
 													tradedate,tmpMDate,valuedate,offset,swapterm,
@@ -1351,12 +1351,12 @@ LAMathIRVanillaFuncUtility::swaption(LADataInstance* dataInstance, const LAStrin
 }
 
 double 
-LAMathIRVanillaFuncUtility::swaption(LADataInstance* dataInstance, const LAString& curveid, LAString& buysell, LAString& callput, 
+LAMathIRVanillaFuncUtility::swaption(AQLDataInstance* dataInstance, const AQLString& curveid, AQLString& buysell, AQLString& callput, 
 									double nominal, double strike, double vol,
-									const LADate& optiontradedate, const LADate& optionmaturitydate, const LADate& valuedate,
-									LAString& spotlag, LAString& swapterm,
-									LAString& frequency, LAString& slidingrule, LAString& daycount, LAString& calendar, 
-									LAString& fixingcalendar, double forwardrate, double forwardShift, LAString foreCurveName, LAString dfCurveName,
+									const AQLDate& optiontradedate, const AQLDate& optionmaturitydate, const AQLDate& valuedate,
+									AQLString& spotlag, AQLString& swapterm,
+									AQLString& frequency, AQLString& slidingrule, AQLString& daycount, AQLString& calendar, 
+									AQLString& fixingcalendar, double forwardrate, double forwardShift, AQLString foreCurveName, AQLString dfCurveName,
 									const bool isIRRModel)
 {
 	//change nospace & upper
@@ -1369,26 +1369,26 @@ LAMathIRVanillaFuncUtility::swaption(LADataInstance* dataInstance, const LAStrin
 	upper(spotlag);
 	upper(swapterm);
 	upper(fixingcalendar);
-	LAString interpolation(SPLINE);
-	LAString fol(FOL);
+	AQLString interpolation(SPLINE);
+	AQLString fol(FOL);
 	
 	//LAMathYieldCurve
 	LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveid);
 	yc.setInterpolation(FN_SPLINEINTERPOLATION_STR);
-	yc.getDayCount().setDayCount(LACoreComponentManager::getDayCount(daycount));
+	yc.getDayCount().setDayCount(AQLCoreComponentManager::getDayCount(daycount));
 	yc.getSlidingRule().convertFromString(slidingrule);
 	LAMathCurveFuncUtility::setCalendarForCurveID(yc,calendar);
 	yc.getFrequency().convertFromString(frequency);
 	
 	DayCount dc_act(ACT_365_ISDA);
-	LAPriceDataConvention conv(ACT_365_ISDA,CONT);
+	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
 	double oterm = conv.getTerm(optiontradedate,optionmaturitydate); 
 	//slidingRule is "FOLLOWING";
-	LADate tmpDate = LAMathDateUtilities::getDate(optionmaturitydate,spotlag,fol,fixingcalendar); 
+	AQLDate tmpDate = LAMathDateUtilities::getDate(optionmaturitydate,spotlag,fol,fixingcalendar); 
 	yc.setCurveType(dfCurveName);
 
 	//Suppose that optiontradedate is as of date
-	const LADate& asOfDate = dynamic_cast<const LADataDate& >(dataInstance->getObjectPool().getObject(curveid,ENCHKTYPE_ISDEFINED).
+	const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(curveid,ENCHKTYPE_ISDEFINED).
                                 get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
 	double numeraire;
 	if (!isIRRModel)
@@ -1405,10 +1405,10 @@ LAMathIRVanillaFuncUtility::swaption(LADataInstance* dataInstance, const LAStrin
 	//changet the premium as the valuedate value.
 	if(valuedate >= optionmaturitydate)
 	{	
-		LAString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD") + " is not support for this option pricing";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		AQLString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD") + " is not support for this option pricing";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 	}
-    //if( asOfDate != optiontradedate ) throw LACoreInvalidData("as of date is not tradedate!", __FILE__, __LINE__);		
+    //if( asOfDate != optiontradedate ) throw AQLCoreInvalidData("as of date is not tradedate!", __FILE__, __LINE__);		
 	oterm -= conv.getTerm(optiontradedate,valuedate);
     yc.getSlidingRule().convertFromString(NO_CH);
 	yc.setCurveType(dfCurveName);
@@ -1430,24 +1430,24 @@ LAMathIRVanillaFuncUtility::swaption(LADataInstance* dataInstance, const LAStrin
 	//calc
 	
 	//Ready for p->calc method
-	LAString bscomponent;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
+	AQLString bscomponent;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
 	if		(PAYERS == callput)
-			bscomponent = LAString(BK) + LAString(PREM) + LAString(CALL);
+			bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(CALL);
 	else if(RECEIVERS==callput)
-			bscomponent = LAString(BK) + LAString(PREM) + LAString(PUT);
+			bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(PUT);
 	else if(STRADDLE == callput)
-			bscomponent = LAString(BK) + LAString(PREM) + LAString(CALL);
+			bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(CALL);
 		
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p = it->second;
 	
 	double ret = p->calc(param);
 	if(STRADDLE == callput)
 	{	
-		bscomponent	= LAString(BK) + LAString(PREM) + LAString(PUT);
+		bscomponent	= AQLString(BK) + AQLString(PREM) + AQLString(PUT);
 		p = var.find(bscomponent)->second;
 		ret+= p->calc(param);
 	}
@@ -1456,23 +1456,23 @@ LAMathIRVanillaFuncUtility::swaption(LADataInstance* dataInstance, const LAStrin
 	else if(SELL==buysell)
 		ret *= -nominal;
 	else 
-		throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
+		throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
 	return ret;
 	
 }
 
 double 
-LAMathIRVanillaFuncUtility::swaptionVol(LADataInstance* dataInstance, const LAString& curveid, LAString& callput, 
+LAMathIRVanillaFuncUtility::swaptionVol(AQLDataInstance* dataInstance, const AQLString& curveid, AQLString& callput, 
 									  double strike, double prem,
-									  const LADate& optiontradedate, 
-									  const LADate& optionmaturitydate, 
-									  const LADate& valuedate,
-									  LAString& spotlag, LAString& swapterm,
-									  LAString& frequency, LAString& slidingrule, 
-									  LAString& daycount, LAString& calendar, 
-									  LAString& fixingcalendar,
+									  const AQLDate& optiontradedate, 
+									  const AQLDate& optionmaturitydate, 
+									  const AQLDate& valuedate,
+									  AQLString& spotlag, AQLString& swapterm,
+									  AQLString& frequency, AQLString& slidingrule, 
+									  AQLString& daycount, AQLString& calendar, 
+									  AQLString& fixingcalendar,
 									  double& low, double& high, bool isBusinessAdjust,
-									  LAString foreCurveName, LAString dfCurveName,
+									  AQLString foreCurveName, AQLString dfCurveName,
                                       const double* forwardRate, double forwardShift,
 									  const bool isIRRModel)
 {
@@ -1485,34 +1485,34 @@ LAMathIRVanillaFuncUtility::swaptionVol(LADataInstance* dataInstance, const LASt
 	upper(spotlag);
 	upper(swapterm);
 	upper(fixingcalendar);
-	LAString interpolation(SPLINE);
+	AQLString interpolation(SPLINE);
 
-	daycount = LACoreComponentManager::getDayCount(daycount);
+	daycount = AQLCoreComponentManager::getDayCount(daycount);
 	
 	//Ready for p->calc method
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	LAString bscomponent;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	AQLString bscomponent;
 	if(PAYERS == callput)
-			bscomponent = LAString(BK) + LAString(PREM) + LAString(CALL);
+			bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(CALL);
 	else if(RECEIVERS==callput)
-			bscomponent = LAString(BK) + LAString(PREM) + LAString(PUT);
+			bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(PUT);
 	else if(STRADDLE==callput)
-			bscomponent = LAString(BK) + LAString(PREM) + LAString(CALL);
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+			bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(CALL);
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p1 = it->second;
 
 	
 	//Ready for p->calc method VEGA
-	//std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	//LAString bscomponent;
+	//std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	//AQLString bscomponent;
 	if(PAYERS == callput)
-			bscomponent = LAString(BK) + LAString(VEGA) + LAString(CALL);
+			bscomponent = AQLString(BK) + AQLString(VEGA) + AQLString(CALL);
 	else if(RECEIVERS==callput)
-			bscomponent = LAString(BK) + LAString(VEGA) + LAString(PUT);
+			bscomponent = AQLString(BK) + AQLString(VEGA) + AQLString(PUT);
 	else if(STRADDLE==callput)
-			bscomponent = LAString(BK) + LAString(VEGA) + LAString(CALL); 
+			bscomponent = AQLString(BK) + AQLString(VEGA) + AQLString(CALL); 
 	it = var.find(bscomponent);
 	LABlackScholesBase* p2 = it->second;
 	LABlackScholesBase* p3;
@@ -1520,10 +1520,10 @@ LAMathIRVanillaFuncUtility::swaptionVol(LADataInstance* dataInstance, const LASt
 
 	if(STRADDLE==callput)
 	{
-		bscomponent = LAString(BK) + LAString(PREM) + LAString(PUT);
+		bscomponent = AQLString(BK) + AQLString(PREM) + AQLString(PUT);
 		it = var.find(bscomponent);
 		p3 = it->second;
-		bscomponent = LAString(BK) + LAString(VEGA) + LAString(PUT);
+		bscomponent = AQLString(BK) + AQLString(VEGA) + AQLString(PUT);
 		it = var.find(bscomponent);
 		p4 = it->second;
 	}
@@ -1537,15 +1537,15 @@ LAMathIRVanillaFuncUtility::swaptionVol(LADataInstance* dataInstance, const LASt
 	yc.getFrequency().convertFromString(frequency);
 	
 	DayCount dc_act(ACT_365_ISDA);
-	LAPriceDataConvention conv(ACT_365_ISDA,CONT);
+	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
 	double oterm = conv.getTerm(optiontradedate,optionmaturitydate); 
 	//slidingRule is "FOLLOWING";
-	LAString fol(FOL);
-	LADate tmpDate = LAMathDateUtilities::getDate(optionmaturitydate,spotlag,fol,fixingcalendar);
+	AQLString fol(FOL);
+	AQLDate tmpDate = LAMathDateUtilities::getDate(optionmaturitydate,spotlag,fol,fixingcalendar);
 	yc.setCurveType(dfCurveName);
 
 	//Suppose that optiontradedate is as of date
-    const LADate& asOfDate = dynamic_cast<const LADataDate& >(dataInstance->getObjectPool().getObject(curveid,ENCHKTYPE_ISDEFINED).
+    const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(curveid,ENCHKTYPE_ISDEFINED).
                                 get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
 
 	double forward;
@@ -1569,10 +1569,10 @@ LAMathIRVanillaFuncUtility::swaptionVol(LADataInstance* dataInstance, const LASt
 	//changet the premium as the valuedate value.
 	if(valuedate >= optionmaturitydate)
 	{	
-		LAString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD")+" is not support for this option pricing";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		AQLString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD")+" is not support for this option pricing";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 	}
-    //if( asOfDate != optiontradedate ) throw LACoreInvalidData("as of date is not tradedate!", __FILE__, __LINE__);		
+    //if( asOfDate != optiontradedate ) throw AQLCoreInvalidData("as of date is not tradedate!", __FILE__, __LINE__);		
 	oterm -= conv.getTerm(optiontradedate,valuedate);
     yc.getSlidingRule().convertFromString(NO_CH);
 	yc.setCurveType(dfCurveName);
@@ -1597,19 +1597,19 @@ LAMathIRVanillaFuncUtility::swaptionVol(LADataInstance* dataInstance, const LASt
 		double std_Dev = ret * ret * param.Te;
 		int horidayNum = yc.getCalendar().getCalendar().countHoliday(valuedate, optionmaturitydate);
 		double Te_b = static_cast<double > ( valuedate.intervalDays(optionmaturitydate) - horidayNum ) / 245.;
-		ret = LAMath::sqrt( std_Dev / Te_b );
+		ret = AQLMath::sqrt( std_Dev / Te_b );
 	}
 
 	return ret;
 }
 
 double 
-LAMathIRVanillaFuncUtility::swaption_NormalDist(LADataInstance* dataInstance, const LAString& curveid, LAString& buysell, LAString& callput, 
+LAMathIRVanillaFuncUtility::swaption_NormalDist(AQLDataInstance* dataInstance, const AQLString& curveid, AQLString& buysell, AQLString& callput, 
 									          double nominal, double strike, double vol,
-									          const LADate& optiontradedate, const LADate& optionmaturitydate, const LADate& valuedate,
-									          LAString& spotlag, LAString& swapterm,
-									          LAString& frequency, LAString& slidingrule, LAString& daycount, LAString& calendar, 
-									          LAString& fixingcalendar, double forwardrate, LAString foreCurveName, LAString dfCurveName,
+									          const AQLDate& optiontradedate, const AQLDate& optionmaturitydate, const AQLDate& valuedate,
+									          AQLString& spotlag, AQLString& swapterm,
+									          AQLString& frequency, AQLString& slidingrule, AQLString& daycount, AQLString& calendar, 
+									          AQLString& fixingcalendar, double forwardrate, AQLString foreCurveName, AQLString dfCurveName,
 									          const bool isIRRModel)
 {
 	//change nospace & upper
@@ -1622,26 +1622,26 @@ LAMathIRVanillaFuncUtility::swaption_NormalDist(LADataInstance* dataInstance, co
 	upper(spotlag);
 	upper(swapterm);
 	upper(fixingcalendar);
-	LAString interpolation(SPLINE);
-	LAString fol(FOL);
+	AQLString interpolation(SPLINE);
+	AQLString fol(FOL);
 	
 	//LAMathYieldCurve
 	LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveid);
 	yc.setInterpolation(FN_SPLINEINTERPOLATION_STR);
-	yc.getDayCount().setDayCount(LACoreComponentManager::getDayCount(daycount));
+	yc.getDayCount().setDayCount(AQLCoreComponentManager::getDayCount(daycount));
 	yc.getSlidingRule().convertFromString(slidingrule);
 	LAMathCurveFuncUtility::setCalendarForCurveID(yc,calendar);
 	yc.getFrequency().convertFromString(frequency);
 	
 	DayCount dc_act(ACT_365_ISDA);
-	LAPriceDataConvention conv(ACT_365_ISDA,CONT);
+	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
 	double oterm = conv.getTerm(optiontradedate,optionmaturitydate); 
 	//slidingRule is "FOLLOWING";
-	LADate tmpDate = LAMathDateUtilities::getDate(optionmaturitydate,spotlag,fol,fixingcalendar); 
+	AQLDate tmpDate = LAMathDateUtilities::getDate(optionmaturitydate,spotlag,fol,fixingcalendar); 
 	yc.setCurveType(dfCurveName);
 
 	//Suppose that optiontradedate is as of date
-	const LADate& asOfDate = dynamic_cast<const LADataDate& >(dataInstance->getObjectPool().getObject(curveid,ENCHKTYPE_ISDEFINED).
+	const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(curveid,ENCHKTYPE_ISDEFINED).
                                 get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
 	double numeraire;
 	if (!isIRRModel)
@@ -1658,10 +1658,10 @@ LAMathIRVanillaFuncUtility::swaption_NormalDist(LADataInstance* dataInstance, co
 	//changet the premium as the valuedate value.
 	if(valuedate >= optionmaturitydate)
 	{	
-		LAString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD") + " is not support for this option pricing";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		AQLString msg = "valuedate : " + valuedate.stringWithFormat("YYYYMMDD") + " is not support for this option pricing";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 	}
-    //if( asOfDate != optiontradedate ) throw LACoreInvalidData("as of date is not tradedate!", __FILE__, __LINE__);		
+    //if( asOfDate != optiontradedate ) throw AQLCoreInvalidData("as of date is not tradedate!", __FILE__, __LINE__);		
 	oterm -= conv.getTerm(optiontradedate,valuedate);
     yc.getSlidingRule().convertFromString(NO_CH);
 	yc.setCurveType(dfCurveName);
@@ -1697,7 +1697,7 @@ LAMathIRVanillaFuncUtility::swaption_NormalDist(LADataInstance* dataInstance, co
 	else if(SELL==buysell)
 		ret *= -nominal;
 	else 
-		throw LACoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
+		throw AQLCoreInvalidData("Choose Buy or Sell", __FILE__,__LINE__); 
 	return ret;
 	
 }
@@ -1728,26 +1728,26 @@ getConvexityAdjust(double fwd,
 	// error check
 	if(fwd<=0.)
 	{
-		throw LACoreInvalidData("Forward Swap Rate is negative!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Forward Swap Rate is negative!",__FILE__,__LINE__);
 	}
 
 	if(tau<=0. || delta<0.)
 	{
-		throw LACoreInvalidData("accrual term is negative!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("accrual term is negative!",__FILE__,__LINE__);
 	}
 
 	if(atmVol<0.)
 	{
-		throw LACoreInvalidData("vol is negative!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("vol is negative!",__FILE__,__LINE__);
 	}
 
 	if(cfNum<=0)
 	{
-		throw LACoreInvalidData("number of cash flow is negative!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("number of cash flow is negative!",__FILE__,__LINE__);
 	}
 
-	double theta = 1. - tau * fwd / (1. + tau * fwd) * (delta / tau + cfNum / (LAMath::pow((1. + tau * fwd),cfNum) - 1.));
-	return fwd * theta * (LAMath::exp(atmVol * atmVol * fixTerm) - 1.);
+	double theta = 1. - tau * fwd / (1. + tau * fwd) * (delta / tau + cfNum / (AQLMath::pow((1. + tau * fwd),cfNum) - 1.));
+	return fwd * theta * (AQLMath::exp(atmVol * atmVol * fixTerm) - 1.);
 }
 
 //++++++++ Funahashi ++++++++
@@ -1779,14 +1779,14 @@ getSABRConvexityAdjust2(double S0,
 						size_t num_int_step
 						)
 {
-	if(sabr_params.size() != 4) throw LACoreInvalidData("SABR params.size() != 4",__FILE__,__LINE__);
-	if(sabr_params[0] < 0) throw LACoreInvalidData("alpha must be positive",__FILE__,__LINE__);
-    if(sabr_params[1] < 0 || 1 < sabr_params[1]) throw LACoreInvalidData("beta must be in (0,1)",__FILE__,__LINE__);
-    if(sabr_params[2] < 0 ) throw LACoreInvalidData("nu must be possitive.",__FILE__,__LINE__);
-    if(fabs(sabr_params[3]) > 1 ) throw LACoreInvalidData("rho must be in (-1,1).",__FILE__,__LINE__);
+	if(sabr_params.size() != 4) throw AQLCoreInvalidData("SABR params.size() != 4",__FILE__,__LINE__);
+	if(sabr_params[0] < 0) throw AQLCoreInvalidData("alpha must be positive",__FILE__,__LINE__);
+    if(sabr_params[1] < 0 || 1 < sabr_params[1]) throw AQLCoreInvalidData("beta must be in (0,1)",__FILE__,__LINE__);
+    if(sabr_params[2] < 0 ) throw AQLCoreInvalidData("nu must be possitive.",__FILE__,__LINE__);
+    if(fabs(sabr_params[3]) > 1 ) throw AQLCoreInvalidData("rho must be in (-1,1).",__FILE__,__LINE__);
 
-	if(S0 <= 0.0) throw LACoreInvalidData("Foward Rate must be positive!",__FILE__,__LINE__);
-	if(T < 0.0) throw LACoreInvalidData("Time to Maturity must be non negative!",__FILE__,__LINE__);
+	if(S0 <= 0.0) throw AQLCoreInvalidData("Foward Rate must be positive!",__FILE__,__LINE__);
+	if(T < 0.0) throw AQLCoreInvalidData("Time to Maturity must be non negative!",__FILE__,__LINE__);
 
 	double theta = 1. - tau * S0 / (1. + tau * S0) * ( delta / tau + num_swap / (pow(1. + tau * S0,num_swap) - 1.) );
 
@@ -1835,87 +1835,87 @@ getSABRConvexityAdjust2(double S0,
 */
 double 
 LAMathIRVanillaFuncUtility::
-getConvexityAdjust2(LADataInstance* dataInstance, const LADate& asof, 
-				   const LAString& curveID,
+getConvexityAdjust2(AQLDataInstance* dataInstance, const AQLDate& asof, 
+				   const AQLString& curveID,
 				   const double& fwd,
 				   const double& fwdVol,
-				   const LADate& fixingDate,
+				   const AQLDate& fixingDate,
 				   const double& swapTerm,
 				   const unsigned int& paymentsPerYear,
 				   const DayCount& indexdaycount,
-				   const LAString* pCalendar,
-				   const LAString* pCurveType)
+				   const AQLString* pCalendar,
+				   const AQLString* pCurveType)
 {
 	// error check
 	if(fwd<=0.)
 	{
-		throw LACoreInvalidData("Forward Swap Rate is negative!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Forward Swap Rate is negative!",__FILE__,__LINE__);
 	}
 
 	if(asof >= fixingDate)
 	{
-		throw LACoreInvalidData("fixing Date have been past!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("fixing Date have been past!",__FILE__,__LINE__);
 	}
 
 	if(fwdVol<0.)
 	{
-		throw LACoreInvalidData("vol is negative!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("vol is negative!",__FILE__,__LINE__);
 	}
 	if(swapTerm<=0)
 	{
-		throw LACoreInvalidData("swapTenor is negative!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("swapTenor is negative!",__FILE__,__LINE__);
 	}
 
 	if(paymentsPerYear<=0)
 	{
-		throw LACoreInvalidData("number of cash flow per year is negative!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("number of cash flow per year is negative!",__FILE__,__LINE__);
 	}
 
 	vector<double> termvec(swapTerm * paymentsPerYear);
 	vector<double> gridvec(swapTerm * paymentsPerYear + 1);
-	vector<LADate> datevec(swapTerm * paymentsPerYear + 1);	
+	vector<AQLDate> datevec(swapTerm * paymentsPerYear + 1);	
 	vector<double> dfvec(swapTerm * paymentsPerYear + 1);
 
 	if (gridvec.size() < 2)
 	{
-		throw LACoreInvalidData("grid size is less than 2!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("grid size is less than 2!",__FILE__,__LINE__);
 	}
 
-	LAPriceDataConvention conv(ACT_365_ISDA,CONT);
-	LAString fol(MOD_FOL);
+	AQLPriceDataConvention conv(ACT_365_ISDA,CONT);
+	AQLString fol(MOD_FOL);
 
-	LADate date_nonadjust;
+	AQLDate date_nonadjust;
 	if (pCalendar)
-		date_nonadjust = LAMathDateUtilities::getDate(fixingDate, LAString("0D"), fol, *pCalendar);
+		date_nonadjust = LAMathDateUtilities::getDate(fixingDate, AQLString("0D"), fol, *pCalendar);
 	else
-		date_nonadjust = LAMathDateUtilities::getDate(fixingDate, LAString("0D"), fol, LAString("TKB"));
+		date_nonadjust = LAMathDateUtilities::getDate(fixingDate, AQLString("0D"), fol, AQLString("TKB"));
 
-    LADate date1 = date_nonadjust;
+    AQLDate date1 = date_nonadjust;
 
 	gridvec[0] = conv.getTerm(asof, date_nonadjust);
 	datevec[0] = date_nonadjust;
 
     for (unsigned int i = 1; i < gridvec.size();i++)
 	{
-        LADate oldDate = date1;
-        LAString term = LAString(int(i * 6)) + LAString("M");
+        AQLDate oldDate = date1;
+        AQLString term = AQLString(int(i * 6)) + AQLString("M");
 
 		if (pCalendar)
-			date_nonadjust = LAMathDateUtilities::getDate(fixingDate, term, LAString("NO_CHANGE"), *pCalendar);
+			date_nonadjust = LAMathDateUtilities::getDate(fixingDate, term, AQLString("NO_CHANGE"), *pCalendar);
 		else
-			date_nonadjust = LAMathDateUtilities::getDate(fixingDate, term, LAString("NO_CHANGE"), LAString("TKB"));
+			date_nonadjust = LAMathDateUtilities::getDate(fixingDate, term, AQLString("NO_CHANGE"), AQLString("TKB"));
 
-        LADate tmpDate = date_nonadjust;
+        AQLDate tmpDate = date_nonadjust;
 
 		if (pCalendar)
-			date1 = LAMathDateUtilities::getDate(tmpDate, LAString("0D"), fol, *pCalendar);
+			date1 = LAMathDateUtilities::getDate(tmpDate, AQLString("0D"), fol, *pCalendar);
 		else
-			date1 = LAMathDateUtilities::getDate(tmpDate, LAString("0D"), fol, LAString("TKB"));
+			date1 = LAMathDateUtilities::getDate(tmpDate, AQLString("0D"), fol, AQLString("TKB"));
         
         datevec[i] = date1;
-		LAPriceDataConvention conv1(ACT_365_ISDA,CONT);
+		AQLPriceDataConvention conv1(ACT_365_ISDA,CONT);
         gridvec[i] = conv1.getTerm(asof, date1);
-		LAPriceDataConvention conv2(DayCount(indexdaycount),CONT);
+		AQLPriceDataConvention conv2(DayCount(indexdaycount),CONT);
 		//E30_360
         termvec[i - 1] = conv2.getTerm(oldDate, date1);
 	}
@@ -1923,20 +1923,20 @@ getConvexityAdjust2(LADataInstance* dataInstance, const LADate& asof,
 	//LAMathYieldCurve
 	LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveID);
 	yc.setInterpolation(FN_SPLINEINTERPOLATION_STR);
-	yc.getDayCount().setDayCount(LACoreComponentManager::getDayCount(AC_360));
+	yc.getDayCount().setDayCount(AQLCoreComponentManager::getDayCount(AC_360));
 	yc.getSlidingRule().convertFromString(MOD_FOL);
 
 	if (pCalendar)
 		LAMathCurveFuncUtility::setCalendarForCurveID(yc, *pCalendar);
 	else
-		LAMathCurveFuncUtility::setCalendarForCurveID(yc, LAString("TKB"));
+		LAMathCurveFuncUtility::setCalendarForCurveID(yc, AQLString("TKB"));
 
-	yc.getFrequency().convertFromString(LAString("SEMI_ANNUAL"));
+	yc.getFrequency().convertFromString(AQLString("SEMI_ANNUAL"));
 
 	if (pCurveType)
 		yc.setCurveType(*pCurveType);
 	else
-		yc.setCurveType(LAString("STD"));
+		yc.setCurveType(AQLString("STD"));
 	
 	// get DF
     for (unsigned int i = 0; i < gridvec.size();i++)
@@ -1963,7 +1963,7 @@ getConvexityAdjust2(LADataInstance* dataInstance, const LADate& asof,
     second = second + dfvec.back() * (Tn - T0) * (Tn - T0 + 1.) / dfvec[0];
 
 	if (0.0==first)
-		throw LACoreInvalidData("Convexity Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Convexity Error",__FILE__,__LINE__);
 
     return fwd + 0.5 * fwd * fwd * fwdVol * fwdVol * optionTerm * second / first;
 }
@@ -1996,11 +1996,11 @@ getSABRConvexityAdjust(	double S0,
 						const DoubleArray& int_cond
 						)
 {
-	if(sabr_params.size() != 4) throw LACoreInvalidData("SABR params.size() != 4",__FILE__,__LINE__);
-	if(sabr_params[0] < 0) throw LACoreInvalidData("alpha must be positive",__FILE__,__LINE__);
-    if(sabr_params[1] < 0 || 1 < sabr_params[1]) throw LACoreInvalidData("beta must be in (0,1)",__FILE__,__LINE__);
-    if(sabr_params[2] < 0 ) throw LACoreInvalidData("nu must be possitive.",__FILE__,__LINE__);
-    if(fabs(sabr_params[3]) > 1 ) throw LACoreInvalidData("rho must be in (-1,1).",__FILE__,__LINE__);
+	if(sabr_params.size() != 4) throw AQLCoreInvalidData("SABR params.size() != 4",__FILE__,__LINE__);
+	if(sabr_params[0] < 0) throw AQLCoreInvalidData("alpha must be positive",__FILE__,__LINE__);
+    if(sabr_params[1] < 0 || 1 < sabr_params[1]) throw AQLCoreInvalidData("beta must be in (0,1)",__FILE__,__LINE__);
+    if(sabr_params[2] < 0 ) throw AQLCoreInvalidData("nu must be possitive.",__FILE__,__LINE__);
+    if(fabs(sabr_params[3]) > 1 ) throw AQLCoreInvalidData("rho must be in (-1,1).",__FILE__,__LINE__);
 
 	LASABRCAIntegral sub_func(S0, T, sabr_params, threshold);
 
@@ -2035,7 +2035,7 @@ double rtsafe( calcBase& cb, const double x1, const double x2, const double xacc
 	cb.calc(x1, fl, df);
 	cb.calc(x2, fh, df);
 	if ((fl > 0.0 && fh > 0.0) || (fl < 0.0 && fh < 0.0))
-		throw LACoreNumericalError("Not Convergence from rtsafe", __FILE__,__LINE__);
+		throw AQLCoreNumericalError("Not Convergence from rtsafe", __FILE__,__LINE__);
 	if (fl == 0.0) return x1;
 	if (fh == 0.0) return x2;
 	if (fl < 0.0) {
@@ -2070,7 +2070,7 @@ double rtsafe( calcBase& cb, const double x1, const double x2, const double xacc
 		else
 			xh=rts;
 	}
-	throw LACoreNumericalError("Maximum number of iterations exceeded in rtsafe",__FILE__,__LINE__);
+	throw AQLCoreNumericalError("Maximum number of iterations exceeded in rtsafe",__FILE__,__LINE__);
 	return 0.0;
 }
 
@@ -2086,7 +2086,7 @@ void cubic(const double x, double& pre, double& deri)
 
 	pre  = x*x*x + a1*x*x + a2*x + a3;
 	deri = 3.0*x*x + 2.0*a1*x + a2;
-	if(LAMath::abs(deri)<0.000000001)
+	if(AQLMath::abs(deri)<0.000000001)
 		deri = 0.000000001;
 }
 
@@ -2104,7 +2104,7 @@ impliedVolFinder::calc( const double x, double& pre, double& deri)
 	//if(abs(pre) < 1.e-7)
 	//	pre = 0.0;
 	deri = _vega->calc(_param)  ;
-	if(LAMath::abs(deri) < 0.0000000001)
+	if(AQLMath::abs(deri) < 0.0000000001)
 		deri = 0.0000000001;
 }
 
@@ -2119,7 +2119,7 @@ impliedStraddleVolFinder::calc( const double x, double& pre, double& deri)
 #endif
 	pre  = _bscall->calc(_param) + _bsput->calc(_param) - _prem;
 	deri = _vegacall->calc(_param) + _vegaput->calc(_param);
-	if(LAMath::abs(deri) < 0.0000000001)
+	if(AQLMath::abs(deri) < 0.0000000001)
 	deri = 0.0000000001;
 }
 
@@ -2129,7 +2129,7 @@ fwdDeltaFinder::calc( const double x, double& pre, double& deri)
 	_param.K = x;
 	pre  = _delta->calc(_param) - _target;
 	deri = _gamma->calc(_param)  ;
-	if(LAMath::abs(deri) < 0.0000000001)
+	if(AQLMath::abs(deri) < 0.0000000001)
 		deri = 0.0000000001;
 }
 
@@ -2167,13 +2167,13 @@ LAMathIRVanillaFuncUtility::optimize2( double x1, double x2, double x3, Analytic
 }
 
 int
-LAMathIRVanillaFuncUtility::businessDaysBetween(const LADate& d1, const LADate& d2, const LAString& calendar)
+LAMathIRVanillaFuncUtility::businessDaysBetween(const AQLDate& d1, const AQLDate& d2, const AQLString& calendar)
 {
     const int inc = d1 < d2 ? 1 : -1;
     int ret = 0;
-    LAPriceDataCalendar cal;
+    AQLPriceDataCalendar cal;
     cal.convertFromString(calendar);
-    for(LADate temp = d1; temp != d2; temp.addDays(inc)){
+    for(AQLDate temp = d1; temp != d2; temp.addDays(inc)){
         if(cal.getBusinessDay(temp, 0)==temp) ret += inc;
     }
     return ret;
@@ -2182,11 +2182,11 @@ LAMathIRVanillaFuncUtility::businessDaysBetween(const LADate& d1, const LADate& 
 
 //const unsigned int LASABRCAIntegral::MAX_INTEGRALNUM = 20;
 LASABRCAIntegral::LASABRCAIntegral(double S0_,double T_,const vector<double>& sabr_params, double threshold_)
-:mS0(S0_),mT(T_),mT_sqr(LAMath::sqrt(mT)),mAlpha(sabr_params[0]), mBeta(sabr_params[1]), mNu(sabr_params[2]), mRho(sabr_params[3]), mBeta_m(1.0 - mBeta),
+:mS0(S0_),mT(T_),mT_sqr(AQLMath::sqrt(mT)),mAlpha(sabr_params[0]), mBeta(sabr_params[1]), mNu(sabr_params[2]), mRho(sabr_params[3]), mBeta_m(1.0 - mBeta),
 mIntegralStart(0.0), mIntegralStep(0.0), mIntegralNum(0), mThreshold(threshold_), sabr(new LAMathSABR_Hagan(sabr_params[0],sabr_params[1],sabr_params[2],sabr_params[3]))
 {
-	mTmp1 = mRho * mBeta * mNu *  LAMath::pow(mAlpha, 2) * mT * 0.25;
-	mTmp2 = LAMath::pow(mBeta_m, 2) * LAMath::pow(mAlpha, 3) * mT * INV_24;
+	mTmp1 = mRho * mBeta * mNu *  AQLMath::pow(mAlpha, 2) * mT * 0.25;
+	mTmp2 = AQLMath::pow(mBeta_m, 2) * AQLMath::pow(mAlpha, 3) * mT * INV_24;
 	mTmp3 = mAlpha * mNu * mNu * ( 2.0 - 3.0 * mRho * mRho ) * mT * INV_24;
 	for (unsigned int i = 0; i < MAX_INTEGRALNUM; ++i)
 	{
@@ -2206,7 +2206,7 @@ LASABRCAIntegral::setIntegralParams(const double start, const double step, size_
 {
 	if (num > MAX_INTEGRALNUM)
 	{
-		throw LACoreInvalidData("wrong integralnumber", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("wrong integralnumber", __FILE__, __LINE__);
 	}
 	mIntegralStart = start;
 	mIntegralStep = step;
@@ -2215,7 +2215,7 @@ LASABRCAIntegral::setIntegralParams(const double start, const double step, size_
 	DoubleArray tmpAbs(mIntegralNum);
 	DoubleArray tmpWeights(mIntegralNum);
 
-	LAGaussLegendre GQ(static_cast<int>(mIntegralNum));
+	AQLGaussLegendre GQ(static_cast<int>(mIntegralNum));
 
 	GQ.get(tmpAbs, tmpWeights, start, start + step);
 	for (unsigned int i = 0; i < mIntegralNum; ++i)

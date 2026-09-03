@@ -19,15 +19,15 @@
 
 
 #include "LACalibrateVolatilityHW.h"
-#include "LADataReference.h"
+#include "AQLDataReference.h"
 #include "LACoreDataService.h"
 #include "LAMarketData.h"
 #include "LAScenarioConfiguration.h"
-#include "LADate.h"
-#include "LABasic.h"
-#include "LALinearInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLDate.h"
+#include "AQLBasic.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathHWFuncMR.h"
 #include "LAMathHWFuncSigma.h"
 #include "LAMathVolFuncHW.h"
@@ -71,10 +71,10 @@ LACalibrateVolatilityHW::~LACalibrateVolatilityHW(void)
 
 */
 void 
-LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_t, vector<DoubleMatrix> &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_t, vector<DoubleMatrix> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)grid_t, (void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
 }
 
 /*!
@@ -87,10 +87,10 @@ LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_t, vector<DoubleMatr
 
 */
 void 
-LACalibrateVolatilityHW::createVolatility(vector<vector<LAFunctionBase *> > &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityHW::createVolatility(vector<vector<AQLFunctionBase *> > &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
 }
 
 
@@ -105,10 +105,10 @@ LACalibrateVolatilityHW::createVolatility(vector<vector<LAFunctionBase *> > &vol
 
 */
 void 
-LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_T, vector<LAFunctionBase *> &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_T, vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)grid_T, (void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
 }
 
 
@@ -123,10 +123,10 @@ LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_T, vector<LAFunction
 
 */
 void 
-LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)grid_t, (void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
 }
 
 
@@ -140,13 +140,13 @@ LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol
 
 */
 void 
-LACalibrateVolatilityHW::createVolatility(vector<LAFunctionBase *> &vol, const LAStringVector &filePath, 
-										const MAScenarioParam *param, LAObjectPool *objPool, int gridPos) const
+LACalibrateVolatilityHW::createVolatility(vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, 
+										const MAScenarioParam *param, AQLObjectPool *objPool, int gridPos) const
 {
 	// null check
 	if (!param || !objPool)
 	{
-		throw LACoreInvalidData("Param or entitypool is null.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Param or entitypool is null.", __FILE__, __LINE__);
 	}
 
 	if (param->isCalib)
@@ -175,19 +175,19 @@ LACalibrateVolatilityHW::createVolatility(vector<LAFunctionBase *> &vol, const L
 
 		if (filePath.empty())
 		{
-			throw LACoreInvalidData("File path is empty", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("File path is empty", __FILE__, __LINE__);
 		}
 
 		//unsigned int index = 0;
 		//if (param->is
 		//if (gridPos == -1 && param->refName.empty())
 		//{
-		//	throw LACoreInvalidData("Reference name is empty", __FILE__, __LINE__);
+		//	throw AQLCoreInvalidData("Reference name is empty", __FILE__, __LINE__);
 		//}
 
 		//if (gridPos >= 0 && param->refName.size() - 1 < gridPos)
 		//{
-		//	throw LACoreInvalidData("Reference name size is less than grid size", __FILE__, __LINE__);
+		//	throw AQLCoreInvalidData("Reference name size is less than grid size", __FILE__, __LINE__);
 		//}
 		DoubleArray tenor;
 		DoubleArray hw_a;
@@ -206,7 +206,7 @@ LACalibrateVolatilityHW::createVolatility(vector<LAFunctionBase *> &vol, const L
 		hw_s_zero.resize(tenor.size(), 1.E-12);
 
 		// hull-white volatility parameter
-		LAMathHWFuncSigma* func_s = new LAMathHWFuncSigmaTMDPT(tenor, (param->isZeroVol ? hw_s_zero : hw_s), *(new LAStepInterpolation()));
+		LAMathHWFuncSigma* func_s = new LAMathHWFuncSigmaTMDPT(tenor, (param->isZeroVol ? hw_s_zero : hw_s), *(new AQLStepInterpolation()));
 		vol.resize(1, new LAMathVolFuncHW(*func_a, *func_s));
 
 		unsigned int index = 0;
@@ -227,17 +227,17 @@ LACalibrateVolatilityHW::createVolatility(vector<LAFunctionBase *> &vol, const L
 
 		if (param->refName.size() - 1 <  index)
 		{
-			throw LACoreInvalidData("Scenario param refname YieldCurve name is need.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Scenario param refname YieldCurve name is need.", __FILE__, __LINE__);
 		}
 
 		// set object pool as calib data
 		const LAMathYieldCurve &yc = dynamic_cast<LAMathYieldCurve &>(objPool->getObject(param->refName[index], ENCHKTYPE_ISDEFINED).get());
-		LAString calibDataName = LAMarketData::getCalibDataName(param->calcType, yc.getYieldData().get().getName(), gridPos);
-		LAObject *calibData = new LAObject();
-		calibData->add(CALIBRATION_DATA_NAME, new LADataString(calibDataName));
-		calibData->add(PRICING_DATA_CALIBCANONICAL_T, new LADataDoubles(tenor));
-		calibData->add(PRICING_DATA_CALIBMEANREV_T, new LADataDoubles(hw_a));
-		calibData->add(PRICING_DATA_CALIBVOL_T, new LADataDoubles(hw_s));
+		AQLString calibDataName = LAMarketData::getCalibDataName(param->calcType, yc.getYieldData().get().getName(), gridPos);
+		AQLObject *calibData = new AQLObject();
+		calibData->add(CALIBRATION_DATA_NAME, new AQLDataString(calibDataName));
+		calibData->add(PRICING_DATA_CALIBCANONICAL_T, new AQLDataDoubles(tenor));
+		calibData->add(PRICING_DATA_CALIBMEANREV_T, new AQLDataDoubles(hw_a));
+		calibData->add(PRICING_DATA_CALIBVOL_T, new AQLDataDoubles(hw_s));
 
 		objPool->set(calibDataName, calibData);
 	}
@@ -255,10 +255,10 @@ LACalibrateVolatilityHW::createVolatility(vector<LAFunctionBase *> &vol, const L
 
 */
 void 
-LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_T, LAFunctionBase *vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_T, AQLFunctionBase *vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)grid_T, (void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
 }
 
 
@@ -273,10 +273,10 @@ LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_T, LAFunctionBase *v
 
 */
 void 
-LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_t, DoubleArray &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_t, DoubleArray &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)grid_t, (void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
 }
 
 /*!
@@ -288,11 +288,11 @@ LACalibrateVolatilityHW::createVolatility(DoubleArray &grid_t, DoubleArray &vol,
 	@return vol		Volatility as function 
 
 */
-LAFunctionBase * 
-LACalibrateVolatilityHW::createVolatility(const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool, int gridPos) const
+AQLFunctionBase * 
+LACalibrateVolatilityHW::createVolatility(const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool, int gridPos) const
 {
 	(void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
 }
 
 /*!
@@ -305,10 +305,10 @@ LACalibrateVolatilityHW::createVolatility(const LAStringVector &filePath, const 
 
 */
 void 
-LACalibrateVolatilityHW::createVolatility(double &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityHW::createVolatility(double &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in hw.", __FILE__, __LINE__);
 }
 
 /*!
@@ -318,7 +318,7 @@ LACalibrateVolatilityHW::createVolatility(double &vol, const LAStringVector &fil
 	@param[in] filepath
 */
 void 
-LACalibrateVolatilityHW::getGrid_T(DoubleArray &grid_T, const LAStringVector &filePath) const
+LACalibrateVolatilityHW::getGrid_T(DoubleArray &grid_T, const AQLStringVector &filePath) const
 {
 	(void)filePath;
 	grid_T.clear();
@@ -326,12 +326,12 @@ LACalibrateVolatilityHW::getGrid_T(DoubleArray &grid_T, const LAStringVector &fi
 	DoubleArray tenor;
 
 	int term = LACoreDataService::getContext(CONTEXT_KEY_MAXTERM).getIntValue();
-	LAString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
-	LAPriceDataDayCount dayCount;
+	AQLString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
+	AQLPriceDataDayCount dayCount;
 	dayCount.convertFromString(dayCountStr);
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 	// create tenor SA
-    //LAString cFreq = LACoreDataService::getContext(ARG_KEY_CANONICALFREQ);
+    //AQLString cFreq = LACoreDataService::getContext(ARG_KEY_CANONICALFREQ);
     //LACoreDataService::setContext(ARG_KEY_CANONICALFREQ, "SA");
 	LAMarketDataHW::getCanonicalGrid(grid_T, asOfDate, dayCount, term);
 	//LACoreDataService::setContext(ARG_KEY_CANONICALFREQ, cFreq);

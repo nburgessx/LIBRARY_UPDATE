@@ -5,7 +5,7 @@
 #pragma interface
 #endif
 
-#include "LAFunction.h"
+#include "AQLFunction.h"
 #include "LAPriceCMSTools.h"
 #include "LAMathCashFlowSchedules.h"
 #include "LAPriceReplication.h"
@@ -16,25 +16,25 @@ class LAPriceCMSCalibration
 {
 public:
 
-    static LAString Calibrate(LADataInstance* dataInstance, LAStringMatrix calibrationConfig,
-                              LAStringMatrix structLegScheduler, LAStringMatrix cmsScheduler,
-                              LAStringMatrix fundLegScheduler, LAStringMatrix liborScheduler,
-                              const LAStringVector& tenors, const LAStringVector& mtyTerms,
+    static AQLString Calibrate(AQLDataInstance* dataInstance, AQLStringMatrix calibrationConfig,
+                              AQLStringMatrix structLegScheduler, AQLStringMatrix cmsScheduler,
+                              AQLStringMatrix fundLegScheduler, AQLStringMatrix liborScheduler,
+                              const AQLStringVector& tenors, const AQLStringVector& mtyTerms,
                               const DoubleMatrix& quotes);
 };
 
 //================ CMSCalibrationTarget ===================================
-class LAPriceCMSCalibrationTarget : public LAFunction
+class LAPriceCMSCalibrationTarget : public AQLFunction
 {
 public:
     LAPriceCMSCalibrationTarget() {};
 
-    LAPriceCMSCalibrationTarget(LADate valDate, LAString tenor, LAString maturity,
-                           LAStringMatrix structLegScheduler, LAStringMatrix cmsScheduler,
-                           LAStringMatrix fundLegScheduler, LAStringMatrix liborScheduler,
+    LAPriceCMSCalibrationTarget(AQLDate valDate, AQLString tenor, AQLString maturity,
+                           AQLStringMatrix structLegScheduler, AQLStringMatrix cmsScheduler,
+                           AQLStringMatrix fundLegScheduler, AQLStringMatrix liborScheduler,
                            CurveInfo discCurveInfo, CurveInfo fundLiborCurveInfo,
                            CurveInfo cmsCurveInfo, SwapRateInfo* rateInfo, double quote,
-                           size_t parameterIdx, LADataInstance* dataInstance, const LAStringVector& sabrIDs,
+                           size_t parameterIdx, AQLDataInstance* dataInstance, const AQLStringVector& sabrIDs,
                            double defaultTail1, double defaultTail3, double defaultTail4);
 
     double operator()(double x) const;
@@ -52,7 +52,7 @@ private:
     SwapRateInfo* mRateInfo;
     double mQuote, mFundLegPV, mFundLegAnnuity;
     double mDefaultTail1, mDefaultTail3, mDefaultTail4;
-    LAString mIndexTenor, mSwapMaturity;
+    AQLString mIndexTenor, mSwapMaturity;
     DoubleVector mAccs, mFwdSwapRates, mAnnuities, mDFs, mTFix;
     DoubleVector mtGrid, mpGrid;
     DoubleMatrix mSABR;

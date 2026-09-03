@@ -56,7 +56,7 @@ LARatesCurveLinearInterpolation::~LARatesCurveLinearInterpolation()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesCurveLinearInterpolation::clone() const
 		//20070410--Nagase--g++ throw
 {
@@ -66,7 +66,7 @@ LARatesCurveLinearInterpolation::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -170,7 +170,7 @@ LARatesCurveLinearInterpolation::LARatesCurveForLinearInterpolation::clone() con
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -189,9 +189,9 @@ LARatesCurveLinearInterpolation::LARatesCurveForLinearInterpolation::operator = 
 	if (!a.isTypeOf(PE_CURVEFORLINEARINTER)) 
 	{	// 
 		// 
-		LAString err = "Assignment error for LARatesCurveForLinearInterpolation : from ";
-		err += LAString(a.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignment error for LARatesCurveForLinearInterpolation : from ";
+		err += AQLString(a.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	// 	
@@ -215,7 +215,7 @@ LARatesCurveLinearInterpolation::LARatesCurveForLinearInterpolation::getP (doubl
 	if (t1 > m_t || t2 < m_t)
 	{
 		//error
-		throw LACoreInvalidData("Condition of t1 <= t <= t2 is not maintain", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Condition of t1 <= t <= t2 is not maintain", __FILE__, __LINE__);
 	}
 	if (T <= m_t) return 1.0;
 	else if (T <= t2)

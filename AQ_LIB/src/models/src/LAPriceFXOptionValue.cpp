@@ -6,23 +6,23 @@
 #endif
 
 #include <algorithm>
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LADataReference.h"
-#include "LABasic.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLDataReference.h"
+#include "AQLBasic.h"
 #include "LAMathDateCalculations.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAPriceFXOptionValue.h"
 #include "LAMathFXEntity.h"
 #include "LAMathYieldCurve.h"
@@ -70,7 +70,7 @@ LAPriceFXOptionValue::isTypeOf(function_t id) const
     @brief get option method name
      @return option method name
 */
-LAString 
+AQLString 
 LAPriceFXOptionValue::getOptionPayoffName() const
 {
 	return FN_FXOPTIONVALUE_STR;
@@ -83,7 +83,7 @@ LAPriceFXOptionValue::getOptionPayoffName() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceFXOptionValue::registerData(LAPriceDataManager& dm) const
+LAPriceFXOptionValue::registerData(AQLPriceDataManager& dm) const
 {
 
 	LALinearRatesOptionValue::registerData(dm);
@@ -107,7 +107,7 @@ LAPriceFXOptionValue::registerData(LAPriceDataManager& dm) const
 	dm.setData(PRICING_DATA_CASHSETTLEMENTPAYMENTDATE, DATA_DATE);
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceFXOptionValue::clone() const
 {
     try 
@@ -116,13 +116,13 @@ LAPriceFXOptionValue::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
 // calc option
 double 
-LAPriceFXOptionValue::calcOption(const LADataValuation& att, LADataProvider* dp, LAObject& e) const
+LAPriceFXOptionValue::calcOption(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& e) const
 {
 	dp;
 	LALinearRatesOptionValueDataProvider* dataProvider = &dynamic_cast<LALinearRatesOptionValueDataProvider &>(att.getDataProvider());
@@ -135,7 +135,7 @@ LAPriceFXOptionValue::calcOption(const LADataValuation& att, LADataProvider* dp,
 
 // calc option
 double 
-LAPriceFXOptionValue::calcFXDigitalCallSpreadOption(const LADataValuation& att, LADataProvider* dp, LAObject& e) const
+LAPriceFXOptionValue::calcFXDigitalCallSpreadOption(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& e) const
 {
 	LALinearRatesOptionValueDataProvider* dataProvider = &dynamic_cast<LALinearRatesOptionValueDataProvider &>(att.getDataProvider());
 	//this means call spread value
@@ -153,22 +153,22 @@ LAPriceFXOptionValue::calcFXDigitalCallSpreadOption(const LADataValuation& att, 
 
 // calc payoff after maturity
 double				
-LAPriceFXOptionValue::calcPayOffAterMaturity(const LADataValuation& att, LADataProvider* dp, LAObject& e) const
+LAPriceFXOptionValue::calcPayOffAterMaturity(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& e) const
 {
 	//dp;
 	LAPriceFXOptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceFXOptionValueDataProvider*>(dp);
 	
-	LADataHolder* dh = &(e.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
-	LAString optiontype = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLDataHolder* dh = &(e.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
+	AQLString optiontype = dynamic_cast<AQLDataString &>(dh->get()).get();
 	optiontype.toUpper();
 	
 	double ret = 0.0;
 	AnalyticGKParam* gkparam = dynamic_cast<AnalyticGKParam* >(dataProvider->mParam[0][0]);
-	if (LAString("CALL") == optiontype && gkparam->S > gkparam->K)
+	if (AQLString("CALL") == optiontype && gkparam->S > gkparam->K)
 	{
 		ret = gkparam->S - gkparam->K;
 	}
-	else if(LAString("PUT") == optiontype && gkparam->K > gkparam->S)
+	else if(AQLString("PUT") == optiontype && gkparam->K > gkparam->S)
 	{
 		ret = gkparam->K - gkparam->S;
 	}
@@ -178,22 +178,22 @@ LAPriceFXOptionValue::calcPayOffAterMaturity(const LADataValuation& att, LADataP
 }
 
 double
-LAPriceFXOptionValue::calcPayOffFXDigitalCallSpreadAterMaturity(const LADataValuation& att, LADataProvider* dp, LAObject& e) const
+LAPriceFXOptionValue::calcPayOffFXDigitalCallSpreadAterMaturity(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& e) const
 {
 	//dp;
 	LAPriceFXOptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceFXOptionValueDataProvider*>(dp);
 	
-	LADataHolder* dh = &(e.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
-	LAString optiontype = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLDataHolder* dh = &(e.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
+	AQLString optiontype = dynamic_cast<AQLDataString &>(dh->get()).get();
 	optiontype.toUpper();
 	
 	double val1 = 0.0;
 	AnalyticGKParam* gkparam = dynamic_cast<AnalyticGKParam* >(dataProvider->mParam[0][0]);
-	if (LAString("CALL") == optiontype && gkparam->S > gkparam->K)
+	if (AQLString("CALL") == optiontype && gkparam->S > gkparam->K)
 	{
 		val1 = gkparam->S - gkparam->K;
 	}
-	else if(LAString("PUT") == optiontype && gkparam->K > gkparam->S)
+	else if(AQLString("PUT") == optiontype && gkparam->K > gkparam->S)
 	{
 		val1 = gkparam->K - gkparam->S;
 	}
@@ -202,11 +202,11 @@ LAPriceFXOptionValue::calcPayOffFXDigitalCallSpreadAterMaturity(const LADataValu
 
 	double val2 = 0.0;
 	gkparam = dynamic_cast<AnalyticGKParam* >(dataProvider->mParam[0][1]);
-	if (LAString("CALL") == optiontype && gkparam->S > gkparam->K)
+	if (AQLString("CALL") == optiontype && gkparam->S > gkparam->K)
 	{
 		val2 = gkparam->S - gkparam->K;
 	}
-	else if(LAString("PUT") == optiontype && gkparam->K > gkparam->S)
+	else if(AQLString("PUT") == optiontype && gkparam->K > gkparam->S)
 	{
 		val2 = gkparam->K - gkparam->S;
 	}
@@ -225,7 +225,7 @@ LAPriceFXOptionValue::calcPayOffFXDigitalCallSpreadAterMaturity(const LADataValu
 
 
 double
-LAPriceFXOptionValue::adjustForAnalyticalRisk(const LADataValuation& att, LADataProvider* dp, LAObject& e, AnalyticParam& param) const
+LAPriceFXOptionValue::adjustForAnalyticalRisk(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& e, AnalyticParam& param) const
 {
 	(void)e;
 	(void)dp;
@@ -241,7 +241,7 @@ LAPriceFXOptionValue::adjustForAnalyticalRisk(const LADataValuation& att, LAData
 
 
 	////at first check theta
-	if (dataProvider->mAnalyticalRiskType == LAString(THETA))
+	if (dataProvider->mAnalyticalRiskType == AQLString(THETA))
 	{
 		ret/= 365.0;
 		return ret;
@@ -254,21 +254,21 @@ LAPriceFXOptionValue::adjustForAnalyticalRisk(const LADataValuation& att, LAData
 
 	AnalyticGKParam& pGk = dynamic_cast<AnalyticGKParam& >(param);
 	//if ratio pick up base
-	if (dataProvider->mAnalyticalRiskType == LAString(DELTA) || 
-		dataProvider->mAnalyticalRiskType == LAString(GAMMA))
+	if (dataProvider->mAnalyticalRiskType == AQLString(DELTA) || 
+		dataProvider->mAnalyticalRiskType == AQLString(GAMMA))
 	{
 		ret *= pGk.S;
 		ret *= 0.01; //change from %
 	}
-	else if(dataProvider->mAnalyticalRiskType == LAString(VEGA))
+	else if(dataProvider->mAnalyticalRiskType == AQLString(VEGA))
 	{
 		ret *= pGk.Vol;
 	}
-	else if (dataProvider->mAnalyticalRiskType == LAString(RHO))
+	else if (dataProvider->mAnalyticalRiskType == AQLString(RHO))
 	{
 		ret *= pGk.rd;
 	}
-	else if (dataProvider->mAnalyticalRiskType == LAString(PHI))
+	else if (dataProvider->mAnalyticalRiskType == AQLString(PHI))
 	{
 		ret *= pGk.rf;
 	}
@@ -282,34 +282,34 @@ LAPriceFXOptionValue::adjustForAnalyticalRisk(const LADataValuation& att, LAData
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*					
-LAPriceFXOptionValue::setUpDataProvider(const LADate& basedate, LAObject& object, const LADataValuation& att) const
+AQLDataProvider*					
+LAPriceFXOptionValue::setUpDataProvider(const AQLDate& basedate, AQLObject& object, const AQLDataValuation& att) const
 {
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceFXOptionValueDataProvider* dataProvider = NULL;
 	dataProvider = dynamic_cast<LAPriceFXOptionValueDataProvider *>(LALinearRatesOptionValue::setUpDataProvider(basedate,object,att));
 	
 
 	//unit
 	dh = &(object.getData(PRICING_DATA_FOREIGNQUANTITY, ISNOTNULL));
-	dataProvider->unit = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	dataProvider->unit = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	
 	//domcurrency
 	dh = &(object.getData(PRICING_DATA_DOMESTICCURRENCY, ISNOTNULL));
-	dataProvider->mdomcur = dynamic_cast<LADataString &>(dh->get()).get();
+	dataProvider->mdomcur = dynamic_cast<AQLDataString &>(dh->get()).get();
 	dataProvider->mdomcur.toUpper();
 	if(dataProvider->mdomcur != dataProvider->mnumerairecur)
-		throw LACoreInvalidData("DomesticCurrency must be the same as NumeraireCurrency",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("DomesticCurrency must be the same as NumeraireCurrency",__FILE__,__LINE__);
 	
 	//foreigncurrency
 	dh = &(object.getData(PRICING_DATA_FOREIGNCURRENCY, ISNOTNULL));
-	dataProvider->mforcur = dynamic_cast<LADataString &>(dh->get()).get();
+	dataProvider->mforcur = dynamic_cast<AQLDataString &>(dh->get()).get();
 	dataProvider->mforcur.toUpper();
 
 	//fxcur
@@ -318,7 +318,7 @@ LAPriceFXOptionValue::setUpDataProvider(const LADate& basedate, LAObject& object
 	//special case if we use libor df for fxoption
 	dh = &(object.getData(PRICING_DATA_ISLIBORDISCOUNTFORFXOPTION, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		dataProvider->mIsLiborDFForFX = dynamic_cast<LADataBool &>(dh->get()).get();
+		dataProvider->mIsLiborDFForFX = dynamic_cast<AQLDataBool &>(dh->get()).get();
 
 	dataProvider->mSpotDate = dataProvider->mAsofDate;
 
@@ -327,24 +327,24 @@ LAPriceFXOptionValue::setUpDataProvider(const LADate& basedate, LAObject& object
 	{
 		dataProvider->mIsPremAdjust = true;
 
-		dataProvider->mPremPayDate = dynamic_cast<const LADataDate &>(dh->get()).get();
+		dataProvider->mPremPayDate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 		dataProvider->mPremAmount = 0.0;
 		dh = &(object.getData(PRICING_DATA_PREMIUMAMOUT, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			dataProvider->mPremAmount = dynamic_cast<const LADataDouble &>(dh->get()).get();
+			dataProvider->mPremAmount = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 
 		dh = &(object.getData(PRICING_DATA_PREMIUMPAYCURRENCY, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			LAString chkccy = dynamic_cast<const LADataString &>(dh->get()).get();
+			AQLString chkccy = dynamic_cast<const AQLDataString &>(dh->get()).get();
 			if (chkccy.toUpper () != dataProvider->mpvcur)
-				throw LACoreInvalidData("PremiumCurrency Error",__FILE__,__LINE__); 
+				throw AQLCoreInvalidData("PremiumCurrency Error",__FILE__,__LINE__); 
 		}
 
 		dataProvider->mIsAddFwdPremPV = false;
 		dh = &(object.getData( PRICING_DATA_ISADDFWDPREMPV, NOCHECK ));
 		if (dh->isDefined() && !dh->isNull())
-			dataProvider->mIsAddFwdPremPV = dynamic_cast<const LADataBool &>(dh->get()).get();
+			dataProvider->mIsAddFwdPremPV = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	dh = &(object.getData(PRICING_DATA_CASHSETTLEMENTPAYMENTDATE, NOCHECK));
@@ -352,19 +352,19 @@ LAPriceFXOptionValue::setUpDataProvider(const LADate& basedate, LAObject& object
 	{
 		dataProvider->mIsCashSettlementAdjust = true;
 
-		dataProvider->mCashSettlementPayDate = dynamic_cast<const LADataDate &>(dh->get()).get();
+		dataProvider->mCashSettlementPayDate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 		
 		dataProvider->mCashSettlementAmount = 0.0;
 		dh = &(object.getData(PRICING_DATA_CASHSETTLEMENTAMOUNT, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			dataProvider->mCashSettlementAmount = dynamic_cast<const LADataDouble &>(dh->get()).get();
+			dataProvider->mCashSettlementAmount = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 
 	return dataProvider;
 }
 
 std::vector< std::vector<AnalyticParam*> >
-LAPriceFXOptionValue::createAnalyticParam(LAObject& object, LADataProvider* dp) const
+LAPriceFXOptionValue::createAnalyticParam(AQLObject& object, AQLDataProvider* dp) const
 {
 	(void)object;
 	(void)dp;
@@ -375,19 +375,19 @@ LAPriceFXOptionValue::createAnalyticParam(LAObject& object, LADataProvider* dp) 
 }
 
 void
-LAPriceFXOptionValue::setUpAnalyticParam(LAObject& object, LADataProvider* dp) const
+LAPriceFXOptionValue::setUpAnalyticParam(AQLObject& object, AQLDataProvider* dp) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceFXOptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceFXOptionValueDataProvider*>(dp);
 
 	dataProvider->mSpotDate = (dataProvider->mSpotDate < dataProvider->mAsofDate) ? dataProvider->mAsofDate : dataProvider->mSpotDate;
 	
-	LADate mdydelivdate = (dataProvider->mSpotDate < dataProvider->mDeliveryDate) ? dataProvider->mDeliveryDate : dataProvider->mSpotDate;
-	LADate mdymatudate = (dataProvider->mAsofDate < dataProvider->mMaturityDate) ? dataProvider->mMaturityDate : dataProvider->mAsofDate;
+	AQLDate mdydelivdate = (dataProvider->mSpotDate < dataProvider->mDeliveryDate) ? dataProvider->mDeliveryDate : dataProvider->mSpotDate;
+	AQLDate mdymatudate = (dataProvider->mAsofDate < dataProvider->mMaturityDate) ? dataProvider->mMaturityDate : dataProvider->mAsofDate;
 
 	//even if maturity date has passed, set up gkparam for obtaining the temporary volatility, forward
 	//Td, Te, actT
-	LAPriceDataDayCount dc(ACT_365_ISDA);
+	AQLPriceDataDayCount dc(ACT_365_ISDA);
 	double td = dc.getTerm(dataProvider->mSpotDate, mdydelivdate,false);
 	double te = dataProvider->mBlackDayCount.getTerm(dataProvider->mAsofDate, mdymatudate,false);
 	double actt = dc.getTerm(dataProvider->mAsofDate, mdymatudate,false);
@@ -439,9 +439,9 @@ LAPriceFXOptionValue::setUpAnalyticParam(LAObject& object, LADataProvider* dp) c
 
 //get additional premium
 double
-LAPriceFXOptionValue::getAdditionalPremium(const LAObject& object, LADataProvider* dp) const
+LAPriceFXOptionValue::getAdditionalPremium(const AQLObject& object, AQLDataProvider* dp) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceFXOptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceFXOptionValueDataProvider*>(dp);
 	return dataProvider->mMargin;
 
@@ -452,7 +452,7 @@ LAPriceFXOptionValue::getAdditionalPremium(const LAObject& object, LADataProvide
 	@brief create new cache class
 	@return cache class
 */
-LADataProvider*
+AQLDataProvider*
 LAPriceFXOptionValue::createNewDataProvider() const
 {
 	LAPriceFXOptionValueDataProvider* dataProvider = NULL;
@@ -462,7 +462,7 @@ LAPriceFXOptionValue::createNewDataProvider() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 	return dataProvider;
 }

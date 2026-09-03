@@ -13,10 +13,10 @@
 #include "RecordMacros.h"                   // Record Macros
 #include "CreateDataFile.h"                 // Record File Creation
 #include "StructuredExceptionHandler.h"     // Validation Start and End Macros for Structured Exception Management
-#include "DateUtilities.h"                  // Date helper methods and LAStringMatrix to Date and Value vector helper
+#include "DateUtilities.h"                  // Date helper methods and AQLStringMatrix to Date and Value vector helper
 #include "tryMeUtilityClean.h"              // trimming utility methods
 #include "LADateScheduleHelpers.h"          // Convert Strings to Dates and vice versa
-#include "LabelValueBlock.h"                // String Matrix Conversion Helpers to/from LAStringMatrix
+#include "LabelValueBlock.h"                // String Matrix Conversion Helpers to/from AQLStringMatrix
 #include "CoreEnumerations.h"
 #include "CurveGroup.h"
 
@@ -76,15 +76,15 @@ namespace validation
 	}
 
     // Function to update discount factors for a chosen curve results object
-    std::string tryMeCurveResultsDiscountFactorsUpdate( const LAStringMatrix & curveLVB,
-														const LAStringMatrix & parameterLVB,
-														const LAStringMatrix & discountFactorLVB,
+    std::string tryMeCurveResultsDiscountFactorsUpdate( const AQLStringMatrix & curveLVB,
+														const AQLStringMatrix & parameterLVB,
+														const AQLStringMatrix & discountFactorLVB,
 														const StandardStringMatrix & forwardAdjustments )
     {
         VALID_EXCEPTION_START
 	
         // Trim Discount Factors
-        const LAStringMatrix trimmedDiscountFactors = validation::trimLAStringMatrix( discountFactorLVB );
+        const AQLStringMatrix trimmedDiscountFactors = validation::trimLAStringMatrix( discountFactorLVB );
 
 		// Record Inputs
         RECORD_INPUTS( curveLVB, parameterLVB, trimmedDiscountFactors ) // forwardAdjustments // TODO: Fix me! - Record Inputs does not support StandardStringMatrix
@@ -247,18 +247,18 @@ namespace validation
     }
 
     // Function to update the jacobian for the chosen curve results object
-    std::string tryMeCurveResultsJacobianUpdate( const LAStringMatrix & curveLVB,
-                                                 const LAStringMatrix & discountFactorParameterLVB,
-                                                 const LAStringMatrix & discountFactors,
-                                                 const LAStringMatrix & jacobianParameterLVB,
+    std::string tryMeCurveResultsJacobianUpdate( const AQLStringMatrix & curveLVB,
+                                                 const AQLStringMatrix & discountFactorParameterLVB,
+                                                 const AQLStringMatrix & discountFactors,
+                                                 const AQLStringMatrix & jacobianParameterLVB,
 												 const std::vector<bool> & outrightInstruments,
                                                  const DoubleVector & marketDataShiftSizeInPercent,
-                                                 const LAStringMatrix jacobianMatrix )
+                                                 const AQLStringMatrix jacobianMatrix )
     {
         VALID_EXCEPTION_START
 	
         // Trim Jacobian
-        const LAStringMatrix trimmedJacobian = validation::trimLAStringMatrix( jacobianMatrix );
+        const AQLStringMatrix trimmedJacobian = validation::trimLAStringMatrix( jacobianMatrix );
 
         RECORD_INPUTS( curveLVB, discountFactorParameterLVB, discountFactors, jacobianParameterLVB, marketDataShiftSizeInPercent, trimmedJacobian );
         
@@ -299,7 +299,7 @@ namespace validation
         LabelValueBlock jacobianParameterLVB_( jacobianParameterLVB );
         
         // As of Date is part of the discountFactorParameterLVB which is stored in the discount factor results object pointer
-        const LADate asOfDate                                   = curveDescriptionAndDiscFactors.discountFactorsResults_->asOfDate();
+        const AQLDate asOfDate                                   = curveDescriptionAndDiscFactors.discountFactorsResults_->asOfDate();
         const etrading::RiskTypeEnum riskType                   = etrading::toRiskTypeEnum( jacobianParameterLVB_.getCompulsoryValue("RISKTYPE") );
         const etrading::ShiftTypeEnum shiftType                 = etrading::toShiftTypeEnum( jacobianParameterLVB_.getCompulsoryValue("SHIFTTYPE") );
         const double gradientShiftSize                          = jacobianParameterLVB_.getCompulsoryValueAsDouble("GRADIENTSHIFTSIZE");

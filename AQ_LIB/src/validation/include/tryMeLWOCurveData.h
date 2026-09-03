@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "Swap.h"
 #include "Variant.h"
@@ -14,13 +14,13 @@ namespace validation
 		const std::string& currency,
 		const std::string& tenorString,
 		const std::string& swapType = "",
-		const LAStringMatrix& swapStringBlock = LAStringMatrix(0),
+		const AQLStringMatrix& swapStringBlock = AQLStringMatrix(0),
 		const std::string& toTenorString = "",
-		const LAStringMatrix& fraStringBlock = LAStringMatrix(0),
-		const LAStringMatrix& irFuturesStringBlock = LAStringMatrix(0),
+		const AQLStringMatrix& fraStringBlock = AQLStringMatrix(0),
+		const AQLStringMatrix& irFuturesStringBlock = AQLStringMatrix(0),
 		const std::string& centralBankTypeString = "",
-		const LAStringMatrix& centralBankStringBlock = LAStringMatrix(0),
-		const LAStringMatrix& fxStringBlock = LAStringMatrix(0),
+		const AQLStringMatrix& centralBankStringBlock = AQLStringMatrix(0),
+		const AQLStringMatrix& fxStringBlock = AQLStringMatrix(0),
 		const std::string& unitCurrency = "",
 		const bool isInvertedFX = false
 		);

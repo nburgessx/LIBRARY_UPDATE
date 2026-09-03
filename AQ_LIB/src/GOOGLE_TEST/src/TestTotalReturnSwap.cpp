@@ -98,12 +98,12 @@ namespace
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 
-	/* @brief			A helper function which converts a LAStringMatrix into a VariantMatrix
-	*                   If the input LAStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns 
-	*  @param [in]		stringMatrix		The input LAStringMatrix
+	/* @brief			A helper function which converts a AQLStringMatrix into a VariantMatrix
+	*                   If the input AQLStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns 
+	*  @param [in]		stringMatrix		The input AQLStringMatrix
 	*  @returns			The corresponding VariantMatrix
 	*/
-	etrading::VariantMatrix convertStringMatrixToVariantMatrix( LAStringMatrix stringMatrix )
+	etrading::VariantMatrix convertStringMatrixToVariantMatrix( AQLStringMatrix stringMatrix )
 	{
 		etrading::VariantMatrix variantMatrix;
 
@@ -125,7 +125,7 @@ namespace
 		}
 		else
 		{
-			// The input LAStringMatrix is empty.
+			// The input AQLStringMatrix is empty.
 			// Create a default variantMatrix with 2 columns of dummy data.
 			// This simulates an empty block in Excel.
 			etrading::VariantVector dummyVector ( 1, "" );
@@ -136,11 +136,11 @@ namespace
 		return variantMatrix;
 	}
 
-	/* @brief			Builds a "TableInfo" tuple from a LAStringMatrix of marketdata
+	/* @brief			Builds a "TableInfo" tuple from a AQLStringMatrix of marketdata
 	*                   This tuple consists of columnNames, columnTypes and the actual data values.
-	*  @param [in]		marketDataBlock		A LAStringMatrix containing key/value market data values
+	*  @param [in]		marketDataBlock		A AQLStringMatrix containing key/value market data values
 	*/
-	TableInfo getTableInfoFromStringMatrix( const LAStringMatrix& marketDataBlock )
+	TableInfo getTableInfoFromStringMatrix( const AQLStringMatrix& marketDataBlock )
 	{
 		etrading::VariantMatrix dataValues =  convertStringMatrixToVariantMatrix( marketDataBlock );
 		size_t numColumns = dataValues.size();
@@ -163,7 +163,7 @@ namespace
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOMarketDataObjectFromFileName( const LAString& marketDataFileName )
+	void createLWOMarketDataObjectFromFileName( const AQLString& marketDataFileName )
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load( marketDataFileName );
 
@@ -185,7 +185,7 @@ namespace
 
 				// We obtained the enum, so this is a marketData key we are interested in
 				marketDataKeys.push_back( key );
-				LAStringMatrix marketDataBlock = marketDataFileObj[ *it ];
+				AQLStringMatrix marketDataBlock = marketDataFileObj[ *it ];
 				infoBlocks.push_back ( getTableInfoFromStringMatrix( marketDataBlock ) );
 			}
 			catch( ... )
@@ -201,7 +201,7 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOCurveFromFileName( const LAString& curveCalibrationFileName )
+	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
@@ -219,18 +219,18 @@ namespace
 	*  @param [in]		marketDataFileName			The filename specifying generator curve data
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/
-	void setUpGeneratorCurve( const LAString& marketDataFileName, const LAString& curveCalibrationFileName )
+	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
 		createLWOMarketDataObjectFromFileName( marketDataFileName );
 		createLWOCurveFromFileName( curveCalibrationFileName );
 	}
 
-	std::string createLWOCreditModelFromFileName( const LAString& creditModelFileName )
+	std::string createLWOCreditModelFromFileName( const AQLString& creditModelFileName )
 	{
 		etrading::ReadDataFile::Load creditModelFileObj = etrading::ReadDataFile::Load( creditModelFileName );
 		const std::string creditModelName		= creditModelFileObj[ "objectName" ];
-		const LAStringMatrix modelProperties		= creditModelFileObj[ "MODEL_PROPERTIES" ];
-		const LAStringMatrix cdsMarketData		= creditModelFileObj[ "CDS_MARKETDATA" ];
+		const AQLStringMatrix modelProperties		= creditModelFileObj[ "MODEL_PROPERTIES" ];
+		const AQLStringMatrix cdsMarketData		= creditModelFileObj[ "CDS_MARKETDATA" ];
 
 		std::vector<std::string> propertyNames;
 		propertyNames.push_back( "MODEL_PROPERTIES" );
@@ -244,25 +244,25 @@ namespace
 		return objectName;
 	}
 
-	std::string createLWOSwapGeneratorFromFileName( const LAString& swapGeneratorFilename )
+	std::string createLWOSwapGeneratorFromFileName( const AQLString& swapGeneratorFilename )
 	{
 		etrading::ReadDataFile::Load swapGeneratorFileObj = etrading::ReadDataFile::Load( swapGeneratorFilename );
 		const std::string swapGeneratorName		= swapGeneratorFileObj[ "swapGeneratorName" ];
-		const LAStringMatrix swapGeneratorLVB		= swapGeneratorFileObj[ "swapGeneratorLVB" ];
+		const AQLStringMatrix swapGeneratorLVB		= swapGeneratorFileObj[ "swapGeneratorLVB" ];
 
 		std::string objectName = validation::tryMeLWOSwapGeneratorCreate( swapGeneratorName, swapGeneratorLVB );
 		return objectName;
 	}
 
 
-	std::string createLWOTotalReturnSwapFromFileName( const LAString& cmsFileName )
+	std::string createLWOTotalReturnSwapFromFileName( const AQLString& cmsFileName )
 	{
 		etrading::ReadDataFile::Load constantMaturitySwapFileObj = etrading::ReadDataFile::Load( cmsFileName );
 		
 		const std::string swapName				= constantMaturitySwapFileObj[ "swapName" ];
 		const std::string lwoswapGeneratorName	= constantMaturitySwapFileObj[ "swapGeneratorName" ];
-		const LAStringMatrix expressionLVB		= constantMaturitySwapFileObj[ "expressionLVB" ];
-		const LAStringMatrix swapPropertiesLVB	= constantMaturitySwapFileObj[ "swapPropertiesLVB" ];
+		const AQLStringMatrix expressionLVB		= constantMaturitySwapFileObj[ "expressionLVB" ];
+		const AQLStringMatrix swapPropertiesLVB	= constantMaturitySwapFileObj[ "swapPropertiesLVB" ];
 		const bool isXccySwap					= constantMaturitySwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= constantMaturitySwapFileObj[ "validateKeys" ];
 		
@@ -270,7 +270,7 @@ namespace
 		return swapName;
 	}
 
-	void validateCashflowsForLegName( const std::string& swapName, const std::string& creditModelName, const LAStringMatrix& displayModelNames, const std::string legName )
+	void validateCashflowsForLegName( const std::string& swapName, const std::string& creditModelName, const AQLStringMatrix& displayModelNames, const std::string legName )
 	{
 	
 		std::vector<AnyTypeMatrix> cashflowMatrices = validation::tryMeLWOSwapDisplayCashflows( swapName, displayModelNames, legName.c_str() );
@@ -511,7 +511,7 @@ namespace google_test
 		// Check that we can display cashflows without needing to first invoking PV
 
 		etrading::ReadDataFile::Load displayFileObj = etrading::ReadDataFile::Load( TRS_DISPLAY_CASHFLOWS );
-		LAStringMatrix displayModelNames	= displayFileObj[ "modelNames" ];
+		AQLStringMatrix displayModelNames	= displayFileObj[ "modelNames" ];
 
 		validateCashflowsForLegName( swapName_payOnSurvival, creditModelName, displayModelNames, "Leg1:PREMIUM");
 		validateCashflowsForLegName( swapName_payOnSurvival, creditModelName, displayModelNames, "Leg2:FLOAT");

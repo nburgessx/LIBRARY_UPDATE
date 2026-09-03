@@ -19,10 +19,10 @@
 
 
 #include "LACalibrateModelFXVanilla.h"
-#include "LAFunctionBase.h"
-#include "LAFunctionManager.h"
+#include "AQLFunctionBase.h"
+#include "AQLFunctionManager.h"
 #include "LAMathVolFuncBase.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "LAPriceDriftLMMSpot.h"
 #include "LAPriceDriftFX.h"
 #include "LARatesSpotSDE.h"
@@ -37,7 +37,7 @@
 #include "LAScenarioConfiguration.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
-#include "LAConstant.h"
+#include "AQLConstant.h"
 #include "LAPriceFXVolatility.h"
 #include "LAPriceFXDDIntegral.h"
 #include "LAPriceFXDDIntegralMelstein.h"
@@ -70,7 +70,7 @@ LACalibrateModelFXVanilla::~LACalibrateModelFXVanilla(void)
 	@param[in] dataInstance
 */
 LARatesSDEBase *
-LACalibrateModelFXVanilla::createSDEInstance(const LAString &fx, LADataInstance &dataInstance) const
+LACalibrateModelFXVanilla::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	return 0;
 }
@@ -83,7 +83,7 @@ LACalibrateModelFXVanilla::createSDEInstance(const LAString &fx, LADataInstance 
 
 */
 SDE_TYPE
-LACalibrateModelFXVanilla::getSDEType(const LAString &fx) const
+LACalibrateModelFXVanilla::getSDEType(const AQLString &fx) const
 {
 	SDE_TYPE a;
 	return a;
@@ -96,7 +96,7 @@ LACalibrateModelFXVanilla::getSDEType(const LAString &fx) const
 
 */
 bool 
-LACalibrateModelFXVanilla::isLJ(const LAString &fx) const
+LACalibrateModelFXVanilla::isLJ(const AQLString &fx) const
 {
 	return false;
 }
@@ -108,7 +108,7 @@ LACalibrateModelFXVanilla::isLJ(const LAString &fx) const
 	@param[out] sde
 */
 void
-LACalibrateModelFXVanilla::setVolatility(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVanilla::setVolatility(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -124,7 +124,7 @@ LACalibrateModelFXVanilla::setVolatility(const LAString &fx, LARatesSDEBase &sde
 
 */
 void
-LACalibrateModelFXVanilla::setDrift(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVanilla::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -140,7 +140,7 @@ LACalibrateModelFXVanilla::setDrift(const LAString &fx, LARatesSDEBase &sde) con
 
 */
 void
-LACalibrateModelFXVanilla::setIntegralFunction(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVanilla::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -154,7 +154,7 @@ LACalibrateModelFXVanilla::setIntegralFunction(const LAString &fx, LARatesSDEBas
 	@param[out] sde
 */
 void
-LACalibrateModelFXVanilla::setOutputTemplate(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVanilla::setOutputTemplate(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -168,7 +168,7 @@ LACalibrateModelFXVanilla::setOutputTemplate(const LAString &fx, LARatesSDEBase 
 	@param[out] sde
 */
 void
-LACalibrateModelFXVanilla::setInterpolationMethod(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVanilla::setInterpolationMethod(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -181,10 +181,10 @@ LACalibrateModelFXVanilla::setInterpolationMethod(const LAString &fx, LARatesSDE
 
 	@param[in] fx
 */
-LAString 
-LACalibrateModelFXVanilla::getFunctionMasterResistName(const LAString &fx) const
+AQLString 
+LACalibrateModelFXVanilla::getFunctionMasterResistName(const AQLString &fx) const
 {
-	LAString tmpFX = fx;
+	AQLString tmpFX = fx;
 	return fx;
 	
 }
@@ -195,8 +195,8 @@ LACalibrateModelFXVanilla::getFunctionMasterResistName(const LAString &fx) const
 
 	@param[in]  fx 
 */
-LAString
-LACalibrateModelFXVanilla::getVolType(const LAString &fx) const
+AQLString
+LACalibrateModelFXVanilla::getVolType(const AQLString &fx) const
 {
 	return INPUT_FUNC;
 }
@@ -210,7 +210,7 @@ LACalibrateModelFXVanilla::getVolType(const LAString &fx) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelFXVanilla::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelFXVanilla::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	fx;
 	vol;
@@ -227,7 +227,7 @@ LACalibrateModelFXVanilla::setUpVolFunc(const LAString &fx, LAMathVolatility &vo
 	@param[out] dataInstance
 */
 void
-LACalibrateModelFXVanilla::setUpVolData(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelFXVanilla::setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	fx;
 	vol;
@@ -243,12 +243,12 @@ LACalibrateModelFXVanilla::setUpVolData(const LAString &fx, LAMathVolatility &vo
 
 */
 void
-LACalibrateModelFXVanilla::setUpVolEntity(const LAString &fx, LAMathVolatility &vol) const
+LACalibrateModelFXVanilla::setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const
 {
 	//// set interpolation
-	//LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	//LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	//LAString interp = "fn_linearinterpolation";
+	//AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	//AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	//AQLString interp = "fn_linearinterpolation";
 	//vol.getInterpolation().convertFromString(interp);
 	fx;
 	vol;

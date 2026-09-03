@@ -25,7 +25,7 @@ namespace etrading
    	protected:
 
 		//Override
-		void createUpfrontCashflow(const LADate& paymentDate, double leverage);
+		void createUpfrontCashflow(const AQLDate& paymentDate, double leverage);
 		//Override
         void createCashflows();
 		//Override

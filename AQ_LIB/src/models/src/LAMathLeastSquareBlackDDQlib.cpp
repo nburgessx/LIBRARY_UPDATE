@@ -4,7 +4,7 @@
 */
 
 #include "LAMathLeastSquareBlackDDQlib.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 using namespace QuantLib;
 
 /*!
@@ -49,27 +49,27 @@ mCloned(false)
     
     if( n != mPrem.size() )
     {
-        throw LACoreInvalidData("mT.size() != mPrem.size() :: LAMathLeastSquareBlackDDQlib::LAMathLeastSquareBlackDDQlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mT.size() != mPrem.size() :: LAMathLeastSquareBlackDDQlib::LAMathLeastSquareBlackDDQlib", __FILE__, __LINE__);
     }
 
     if( n != mStrike.size() )
     {
-        throw LACoreInvalidData("mPrem.size() != mStrike.size() :: LAMathLeastSquareBlackDDQlib::LAMathLeastSquareBlackDDQlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mPrem.size() != mStrike.size() :: LAMathLeastSquareBlackDDQlib::LAMathLeastSquareBlackDDQlib", __FILE__, __LINE__);
     }
 
     if( m != mStrike[0].size() )
     {
-        throw LACoreInvalidData("mPrem[0].size() != mStrike[0].size() :: LAMathLeastSquareBlackDDQlib::LAMathLeastSquareBlackDDQlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mPrem[0].size() != mStrike[0].size() :: LAMathLeastSquareBlackDDQlib::LAMathLeastSquareBlackDDQlib", __FILE__, __LINE__);
     }
     
     if( n != mCallPutFlg.size() )
     {
-        throw LACoreInvalidData("mPrem.size() != mCallPutFlg.size() :: LAMathLeastSquareBlackDDQlib::LAMathLeastSquareBlackDDQlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mPrem.size() != mCallPutFlg.size() :: LAMathLeastSquareBlackDDQlib::LAMathLeastSquareBlackDDQlib", __FILE__, __LINE__);
     }
 
     if( m != mCallPutFlg[0].size() )
     {
-        throw LACoreInvalidData("mPrem[0].size() != mCallPutFlg[0].size() :: LAMathLeastSquareBlackDDQlib::LAMathLeastSquareBlackDDQlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mPrem[0].size() != mCallPutFlg[0].size() :: LAMathLeastSquareBlackDDQlib::LAMathLeastSquareBlackDDQlib", __FILE__, __LINE__);
     }
 
     mTarget2Fit.resize(n * m, 0.);
@@ -152,7 +152,7 @@ Real LAMathLeastSquareBlackDDQlib::value(const Array& x) const
 	//double diff_ = mFct2Fit[2] - mTarget2Fit[2];
 	//diffSQ += 20.0 * diff_ * diff_;
 
-	//return LAMath::sqrt(diffSQ);
+	//return AQLMath::sqrt(diffSQ);
     return diffSQ;
 }
 
@@ -174,7 +174,7 @@ Array LAMathLeastSquareBlackDDQlib::values(const Array& x) const
 	for(size_t i = 0; i < mFct2Fit.size(); ++i)
     {
         const double diff = mFct2Fit[i] - mTarget2Fit[i];
-		diffSQs[k++] = diff * LAMath::sqrt(mWeight[i]);
+		diffSQs[k++] = diff * AQLMath::sqrt(mWeight[i]);
     }
     return diffSQs;
 }
@@ -205,7 +205,7 @@ void LAMathLeastSquareBlackDDQlib::getFct2Fit(const Array& x) const
 {
     if( x.size() != 2 * mT.size() )
     {
-        throw LACoreInvalidData("x.size() != 2 * mT.size() : LAMathLeastSquareBlackDDQlib::getFct2Fit", __FILE__, __LINE__);        
+        throw AQLCoreInvalidData("x.size() != 2 * mT.size() : LAMathLeastSquareBlackDDQlib::getFct2Fit", __FILE__, __LINE__);        
     }
 
     // volatility
@@ -244,7 +244,7 @@ void LAMathLeastSquareBlackDDQlib::getFct2Fit(const Array& x) const
         double p = mCurve0_d->getP(mT[i]);
         for(size_t j = 0; j < mPrem[0].size(); ++j)
         {
-			mFct2Fit[k++] =  p * LAMathAnalyticalFormula::BlackFormulaDD(mFX0[i], mMktSigma[i] * LAMath::sqrt(mT[i]), mStrike[i][j], mCallPutFlg[i][j], mMktSkew[i]);
+			mFct2Fit[k++] =  p * LAMathAnalyticalFormula::BlackFormulaDD(mFX0[i], mMktSigma[i] * AQLMath::sqrt(mT[i]), mStrike[i][j], mCallPutFlg[i][j], mMktSkew[i]);
         }
     }
 }
@@ -258,7 +258,7 @@ DoubleArray LAMathLeastSquareBlackDDQlib::getBlackVol(const DoubleArray& x) cons
 {
     if( x.size() != 2 * mT.size() )
     {
-        throw LACoreInvalidData("x.size() != 2 * mT.size() : LAMathLeastSquareBlackDDQlib::getFct2Fit", __FILE__, __LINE__);        
+        throw AQLCoreInvalidData("x.size() != 2 * mT.size() : LAMathLeastSquareBlackDDQlib::getFct2Fit", __FILE__, __LINE__);        
     }
 
     // volatility
@@ -295,8 +295,8 @@ DoubleArray LAMathLeastSquareBlackDDQlib::getBlackVol(const DoubleArray& x) cons
     {
         for(size_t j = 0; j < mPrem[0].size(); ++j)
         {
-			double prem = LAMathAnalyticalFormula::BlackFormulaDD(mFX0[i], mktSigma[i] * LAMath::sqrt(mT[i]), mStrike[i][j], mCallPutFlg[i][j], mktSkew[i]);
-			ret.push_back( LAMathAnalyticalFormula::BlackImplVolDD( prem, mFX0[i], mStrike[i][j], mCallPutFlg[i][j], 1. ) / LAMath::sqrt(mT[i]) );
+			double prem = LAMathAnalyticalFormula::BlackFormulaDD(mFX0[i], mktSigma[i] * AQLMath::sqrt(mT[i]), mStrike[i][j], mCallPutFlg[i][j], mktSkew[i]);
+			ret.push_back( LAMathAnalyticalFormula::BlackImplVolDD( prem, mFX0[i], mStrike[i][j], mCallPutFlg[i][j], 1. ) / AQLMath::sqrt(mT[i]) );
         }
     }
 
@@ -391,7 +391,7 @@ void LAMathLeastSquareBlackDDVolQlib::getFct2Fit(const Array& x) const
 {
     if (x.size() != mT.size())
     {
-        throw LACoreInvalidData("x.size() != mT.size() : LAMathLeastSquareBlackDDQlib::Get_fct2fit", __FILE__, __LINE__);        
+        throw AQLCoreInvalidData("x.size() != mT.size() : LAMathLeastSquareBlackDDQlib::Get_fct2fit", __FILE__, __LINE__);        
     }
 
     // volatility
@@ -407,7 +407,7 @@ void LAMathLeastSquareBlackDDVolQlib::getFct2Fit(const Array& x) const
         double p = mCurve0_d->getP(mT[i]);
         for(size_t j = 0; j < mPrem[0].size(); ++j)
         {
-			mFct2Fit[k++] =  p * LAMathAnalyticalFormula::BlackFormulaDD(mFX0[i], mMktSigma[i] * LAMath::sqrt(mT[i]), mStrike[i][j], mCallPutFlg[i][j], 1.);
+			mFct2Fit[k++] =  p * LAMathAnalyticalFormula::BlackFormulaDD(mFX0[i], mMktSigma[i] * AQLMath::sqrt(mT[i]), mStrike[i][j], mCallPutFlg[i][j], 1.);
         }
     }
 }
@@ -458,7 +458,7 @@ mCloned(false)
 {
     if(impVol.size() != t.size())
     {
-        throw LACoreInvalidData("impVol.size() != t.size() :  LAMathLeastSquareBlackDDSkewQlib::LAMathLeastSquareBlackDDSkewQlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("impVol.size() != t.size() :  LAMathLeastSquareBlackDDSkewQlib::LAMathLeastSquareBlackDDSkewQlib", __FILE__, __LINE__);
     }
     mMktSigma = impVol;
 }
@@ -498,7 +498,7 @@ void LAMathLeastSquareBlackDDSkewQlib::getFct2Fit(const Array& x) const
 {
     if (x.size() != mT.size())
     {
-        throw LACoreInvalidData("x.size() != mT.size()  : LAMathLeastSquareBlackDDQlib::Get_fct2fit", __FILE__, __LINE__);        
+        throw AQLCoreInvalidData("x.size() != mT.size()  : LAMathLeastSquareBlackDDQlib::Get_fct2fit", __FILE__, __LINE__);        
     }
 
     // volatility
@@ -514,7 +514,7 @@ void LAMathLeastSquareBlackDDSkewQlib::getFct2Fit(const Array& x) const
         double p = mCurve0_d->getP(mT[i]);
         for(size_t j = 0; j < mPrem[0].size(); ++j)
         {
-			mFct2Fit[k++] =  p * LAMathAnalyticalFormula::BlackFormulaDD(mFX0[i], mMktSigma[i] * LAMath::sqrt(mT[i]), mStrike[i][j], mCallPutFlg[i][j], mMktSkew[i]);
+			mFct2Fit[k++] =  p * LAMathAnalyticalFormula::BlackFormulaDD(mFX0[i], mMktSigma[i] * AQLMath::sqrt(mT[i]), mStrike[i][j], mCallPutFlg[i][j], mMktSkew[i]);
         }
     }
 }
@@ -529,7 +529,7 @@ void LAMathLeastSquareBlackDDSkewQlib::setImpVol(const DoubleArray& impVol)
 {
     if( mT.size() != impVol.size() )
     {
-        throw LACoreInvalidData("mT.size() != impVol.size() : LAMathLeastSquareBlackDDSkewQlib::setImpVol", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mT.size() != impVol.size() : LAMathLeastSquareBlackDDSkewQlib::setImpVol", __FILE__, __LINE__);
     }
 
     mMktSigma = impVol;

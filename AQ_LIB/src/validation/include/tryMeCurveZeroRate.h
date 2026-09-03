@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -15,10 +15,10 @@ namespace validation
     *  @return			Zero rate over the yearFractions from the curve's asof date
     */
     DoubleVector tryMeCurveZeroRatesFromYearFractions( const DoubleVector& yearFractions,
-														const LAString& curveCollection,
-														const LAString& curveIndex,
-														const LAString& frequency,
-														const LAString& dayCount,
+														const AQLString& curveCollection,
+														const AQLString& curveIndex,
+														const AQLString& frequency,
+														const AQLString& dayCount,
 														const std::string& fwdInter="");
 
 
@@ -32,13 +32,13 @@ namespace validation
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc. Default to NO_CHANGE
     *  @return			Zero rate over the tenors from the curve's asof date
     */
-    DoubleVector tryMeCurveZeroRatesFromTenors( const LAStringVector& tenors,
-												const LAString& curveCollection,
-												const LAString& curveIndex,
-												const LAString& frequency,
-												const LAString& dayCount,
-												const LAString& calendar,
-												const LAString& businessDayAdj,
+    DoubleVector tryMeCurveZeroRatesFromTenors( const AQLStringVector& tenors,
+												const AQLString& curveCollection,
+												const AQLString& curveIndex,
+												const AQLString& frequency,
+												const AQLString& dayCount,
+												const AQLString& calendar,
+												const AQLString& businessDayAdj,
 												const std::string& fwdInter="");
 
 }

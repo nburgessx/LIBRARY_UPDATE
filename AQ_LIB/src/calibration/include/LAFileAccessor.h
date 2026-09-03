@@ -14,12 +14,12 @@
 #include <pthread.h>
 #endif
 
-#include "LACoreTemplateType.h"
-#include "LACoreSystemError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLCoreSystemError.h"
 #include "LADefinitions.h"
 
 class LACoreDataService;
-class LAString;
+class AQLString;
 //===================== Class Declare MAFileAccessor==================================
 /*! 
     @brief txt file accessor class
@@ -30,21 +30,21 @@ class MAFileAccessor
 {
 public:
 	// constructor
-	explicit MAFileAccessor(const LAString &file, 
+	explicit MAFileAccessor(const AQLString &file, 
 					std::ios_base::openmode mode = std::ios_base::in);
 	// destructor
 	virtual ~MAFileAccessor(void);
 	// copy constructor
 	MAFileAccessor(const MAFileAccessor &rhs);
 	//==============================================================================
-	// read all data as vector<LAString>
-	virtual void				readAllData(LAStringVector &vec);
+	// read all data as vector<AQLString>
+	virtual void				readAllData(AQLStringVector &vec);
 	//==============================================================================
-	// read all data as vector<vector<LAString> >  
-	virtual void			readAllData(const char demi, LAStringMatrix &mat);
+	// read all data as vector<vector<AQLString> >  
+	virtual void			readAllData(const char demi, AQLStringMatrix &mat);
 //==============================================================================
-	// read all data as vector<vector<LAString> >  
-	virtual void			readAllData(const char demi, const LAString trimStr, LAStringMatrix &mat);
+	// read all data as vector<vector<AQLString> >  
+	virtual void			readAllData(const char demi, const AQLString trimStr, AQLStringMatrix &mat);
 
 	//==============================================================================
 	// ! file open method
@@ -65,22 +65,22 @@ friend class LACoreDataService;
 
 	//==============================================
 	// file cache clear method
-	static void         clearFileCache(const LAString &fileNum);
+	static void         clearFileCache(const AQLString &fileNum);
 	//==============================================
 	// file cache all clear method
 	static void         clearAllFileCache();
 	//==============================================
 	// file member clear
-	static void         clearFileMember(const LAString &key);
+	static void         clearFileMember(const AQLString &key);
 
 private:
-	const LAString mName;     // file or stream name
-	//LAStringVector mData;       // file data 
+	const AQLString mName;     // file or stream name
+	//AQLStringVector mData;       // file data 
 	//std::ifstream *mFilestream;   // file stream
 	std::istream *mIstream;   // stream
 	std::ios_base::openmode mFilemode; // open mode 
 
-	static std::map<LAString, LAStringVector> mDataMap; // staic data map
+	static std::map<AQLString, AQLStringVector> mDataMap; // staic data map
 	static bool mIsIStringStream; // string stream flg
 	static bool mIsSFlgInitial; // string stream flg
 #ifdef __HAS_MIC__

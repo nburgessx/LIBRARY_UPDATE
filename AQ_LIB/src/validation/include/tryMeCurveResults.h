@@ -11,7 +11,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "LADate.h"
+#include "AQLDate.h"
 #include "Variant.h"            // Includes DateVector, DoubleVector, VariantVector, VariantMatrix et al.
 #include "CoreEnumerations.h"
 
@@ -24,9 +24,9 @@ namespace validation
 	std::string tryMeCurveResultsIsEnabled();
 
     // Function to update discount factors for a chosen curve results object
-    std::string tryMeCurveResultsDiscountFactorsUpdate( const LAStringMatrix & curveLVB,
-														const LAStringMatrix & parameterLVB,
-														const LAStringMatrix & discountFactorLVB,
+    std::string tryMeCurveResultsDiscountFactorsUpdate( const AQLStringMatrix & curveLVB,
+														const AQLStringMatrix & parameterLVB,
+														const AQLStringMatrix & discountFactorLVB,
 														const StandardStringMatrix & forwardAdjustments = StandardStringMatrix() );
 
     // Function to display all discount factors stored in curve results object
@@ -50,13 +50,13 @@ namespace validation
                                                        const std::string & fixingCalendar = ""  );
 
     // Function to update the jacobian for the chosen curve results object
-    std::string tryMeCurveResultsJacobianUpdate( const LAStringMatrix & curveLVB,
-                                                 const LAStringMatrix & discountFactorParameterLVB,
-                                                 const LAStringMatrix & discountFactors,
-                                                 const LAStringMatrix & jacobianParameterLVB,
+    std::string tryMeCurveResultsJacobianUpdate( const AQLStringMatrix & curveLVB,
+                                                 const AQLStringMatrix & discountFactorParameterLVB,
+                                                 const AQLStringMatrix & discountFactors,
+                                                 const AQLStringMatrix & jacobianParameterLVB,
                                                  const std::vector<bool> & outrightInstruments,
 												 const DoubleVector & marketDataShiftSizeInPercent,
-                                                 const LAStringMatrix jacobianMatrix );
+                                                 const AQLStringMatrix jacobianMatrix );
 
     // Function to display Jacobian stored in curve results object
     etrading::VariantMatrix tryMeCurveResultsJacobianDisplay( const std::string & curveCollection, const std::string & curveIndex, const etrading::RiskTypeEnum & riskType );

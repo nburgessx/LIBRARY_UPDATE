@@ -8,22 +8,22 @@
 
 #include <math.h>
 #include "LACalibrateModelLMM.h"
-#include "LAFunctionManager.h"
-#include "LAFunctionBase.h"
-#include "LADataVector.h"
-#include "LADataProcedure.h"
-#include "LAAlgorithm.h"
+#include "AQLFunctionManager.h"
+#include "AQLFunctionBase.h"
+#include "AQLDataVector.h"
+#include "AQLDataProcedure.h"
+#include "AQLAlgorithm.h"
 #include "LAMathVolFuncBase.h"
 #include "LAMathYieldCurve.h"
 #include "LAMathVolatility.h"
 #include "LAPriceYieldGenerator.h"
 #include "LAMathCorrelation.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
 #include "LAPriceDriftLMMTerminal.h"
 #include "LAPriceDriftLMMSpot.h"
 #include "LARatesNumeraireBankAccount.h"
@@ -76,7 +76,7 @@ using namespace std;
 	@param[in] baseCurrency
 
 */
-LACalibrateModelLMM::LACalibrateModelLMM(const LAString &baseCurrency)
+LACalibrateModelLMM::LACalibrateModelLMM(const AQLString &baseCurrency)
 : LACalibrateModelIR(baseCurrency)
 {
 	setUp();
@@ -99,16 +99,16 @@ void
 LACalibrateModelLMM::setUp(void)
 {
 	int term = LACoreDataService::getContext(CONTEXT_KEY_MAXTERM).getIntValue();
-	LAString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
-	LAPriceDataDayCount dayCount;
+	AQLString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
+	AQLPriceDataDayCount dayCount;
 	dayCount.convertFromString(dayCountStr);
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
-	LAString freq = FREQ_SEMI_ANNUAL;
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLString freq = FREQ_SEMI_ANNUAL;
 	if (LACoreDataService::getContext(ARG_KEY_CANONICALFREQ) == "QA")
 	{
 		freq = FREQ_QUARTERLY;
 	}
-	LAStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
+	AQLStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
 	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA);
 	LAMarketDataLMM::getCanonicalGrid(mTenor_30_360, mTenor, mDeltatenor, mExtraTenorFlag, asOfDate, dayCount, freq, term, exTenor, isDataOut);
 }
@@ -121,10 +121,10 @@ LACalibrateModelLMM::setUp(void)
 
 */
 SDE_TYPE
-LACalibrateModelLMM::getSDEType(const LAString &currency) const
+LACalibrateModelLMM::getSDEType(const AQLString &currency) const
 {
-	LAString key_ccy = currency;
-	LAString type = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_TYPE);
+	AQLString key_ccy = currency;
+	AQLString type = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_TYPE);
 	type.toUpper();
 	if (type == "DX/X")
 	{
@@ -136,8 +136,8 @@ LACalibrateModelLMM::getSDEType(const LAString &currency) const
 	}
 	else
 	{
-		LAString msg = LAString("Sde type is not support. type = ") + type;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("Sde type is not support. type = ") + type;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
@@ -148,10 +148,10 @@ LACalibrateModelLMM::getSDEType(const LAString &currency) const
 
 */
 bool 
-LACalibrateModelLMM::isLJ(const LAString &currency) const
+LACalibrateModelLMM::isLJ(const AQLString &currency) const
 {
-	LAString key_ccy = currency;
-	LAString type = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_INTEGRAL_STEP);
+	AQLString key_ccy = currency;
+	AQLString type = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_INTEGRAL_STEP);
 	type.toUpper();
 	if (type == "LONGJUMP")
 	{
@@ -172,7 +172,7 @@ LACalibrateModelLMM::isLJ(const LAString &currency) const
 	@param[in]  dataInstance
 */
 LARatesSDEBase *
-LACalibrateModelLMM::createSDEInstance(const LAString &currency, LADataInstance &dataInstance) const
+LACalibrateModelLMM::createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	SDE_TYPE type = getSDEType(currency);
@@ -187,7 +187,7 @@ LACalibrateModelLMM::createSDEInstance(const LAString &currency, LADataInstance 
 		psde =  new LARatesTermStructureSDE(type);
 	}
 	// set cap ratio
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	psde->setCapRatio(mpStaticData->getStaticData(key_ccy.toLower() +
 							STATIC_DATA_KEY_LMM_PATH_CAPRATIO).getDoubleValue());
 
@@ -203,13 +203,13 @@ LACalibrateModelLMM::createSDEInstance(const LAString &currency, LADataInstance 
 	@param[out] sde
 */
 void
-LACalibrateModelLMM::setVolatility(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setVolatility(const AQLString &currency, LARatesSDEBase &sde) const
 {
-	LAString key_ccy = currency;
-	LAString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLString key_ccy = currency;
+	AQLString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 
 	const int size = mTenor.size() - 2;
-	vector<vector<LAFunctionBase *> > volMtx(size);
+	vector<vector<AQLFunctionBase *> > volMtx(size);
 	for (int i = 0; i < size; ++i)
 	{
 		volMtx[i].resize(1, new LAMathVolFuncBase(sdeName, i, 0, false));
@@ -225,13 +225,13 @@ LACalibrateModelLMM::setVolatility(const LAString &currency, LARatesSDEBase &sde
 
 */
 void
-LACalibrateModelLMM::setDrift(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setDrift(const AQLString &currency, LARatesSDEBase &sde) const
 {
-	LAString key_ccy = currency;
-	LAString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLString key_ccy = currency;
+	AQLString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 	const int size = mTenor.size() - 2;
-	vector<LAFunctionBase *> driftVec(size);
-	LAString tmp_baseccy = mBaseCurrency;
+	vector<AQLFunctionBase *> driftVec(size);
+	AQLString tmp_baseccy = mBaseCurrency;
 	tmp_baseccy.toLower();
 
 	// get skew
@@ -245,14 +245,14 @@ LACalibrateModelLMM::setDrift(const LAString &currency, LARatesSDEBase &sde) con
 		if (key_ccy != tmp_baseccy)
 		{
 			//avoiding the error in getFXKey
-			LAString bccy = MADealUtils::getSDECurrencys()[0];
+			AQLString bccy = MADealUtils::getSDECurrencys()[0];
 			if (bccy.toLower() != tmp_baseccy && bccy != key_ccy)
 				tmp_baseccy = bccy;
 
 			// forein drift
 			// get fx sde name
-			LAString key_fx = LAMarketData::getFXKey(tmp_baseccy, key_ccy);
-			LAString fx_sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
+			AQLString key_fx = LAMarketData::getFXKey(tmp_baseccy, key_ccy);
+			AQLString fx_sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
 			for (int i = 0; i < size; ++i)
 			{
 				driftVec[i] = new LAPriceDriftQuantAdjustment(sdeName, fx_sdeName, i, 
@@ -273,9 +273,9 @@ LACalibrateModelLMM::setDrift(const LAString &currency, LARatesSDEBase &sde) con
 		// check only one ccy
 		if (key_ccy != tmp_baseccy)
 		{
-			throw LACoreInvalidData("Sigle currency suport only one currency", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Sigle currency suport only one currency", __FILE__, __LINE__);
 		}
-		LAString driftType = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_DRIFT_SINGLE);
+		AQLString driftType = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_DRIFT_SINGLE);
 		driftType.toUpper();
 		if (driftType == "SPOT")
 		{
@@ -297,7 +297,7 @@ LACalibrateModelLMM::setDrift(const LAString &currency, LARatesSDEBase &sde) con
 		}
 		else
 		{
-			throw LACoreInvalidData("Drift suport only spot and terminal", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Drift suport only spot and terminal", __FILE__, __LINE__);
 		}
 	}
 	sde.setDrift(driftVec);
@@ -312,7 +312,7 @@ LACalibrateModelLMM::setDrift(const LAString &currency, LARatesSDEBase &sde) con
 
 */
 void
-LACalibrateModelLMM::setNumeraire(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setNumeraire(const AQLString &currency, LARatesSDEBase &sde) const
 {
 	if (MADealUtils::getSDECurrencys().size() != 1)
 	{
@@ -322,15 +322,15 @@ LACalibrateModelLMM::setNumeraire(const LAString &currency, LARatesSDEBase &sde)
 	}
 	else
 	{
-		LAString key_ccy = currency;
-		LAString tmp_baseccy = mBaseCurrency;
+		AQLString key_ccy = currency;
+		AQLString tmp_baseccy = mBaseCurrency;
 		// check only one ccy
 		if (key_ccy.toLower() != tmp_baseccy.toLower())
 		{
-			throw LACoreInvalidData("Sigle currency suport only one currency", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Sigle currency suport only one currency", __FILE__, __LINE__);
 		}
 
-		LAString driftType = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_DRIFT_SINGLE);
+		AQLString driftType = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_DRIFT_SINGLE);
 		driftType.toUpper();
 		if (driftType == "SPOT")
 		{
@@ -342,7 +342,7 @@ LACalibrateModelLMM::setNumeraire(const LAString &currency, LARatesSDEBase &sde)
 		}
 		else
 		{
-			throw LACoreInvalidData("Drift suport only spot and terminal", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Drift suport only spot and terminal", __FILE__, __LINE__);
 		}
 	}
 }
@@ -355,7 +355,7 @@ LACalibrateModelLMM::setNumeraire(const LAString &currency, LARatesSDEBase &sde)
 
 */
 void
-LACalibrateModelLMM::setOutputTemplate(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setOutputTemplate(const AQLString &currency, LARatesSDEBase &sde) const
 {
 	
 	double skew = 1.0;
@@ -368,11 +368,11 @@ LACalibrateModelLMM::setOutputTemplate(const LAString &currency, LARatesSDEBase 
 	}
 	if (skew <= 0. || skew >= 2.)
 	{
-		LAString msg = currency + " Q = " + LAString(skew, 2) + " is out of range. Q must be in (0, 2).";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = currency + " Q = " + AQLString(skew, 2) + " is out of range. Q must be in (0, 2).";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
-	skew = - LAMath::log(skew) / LAMath::log(2.0);
+	skew = - AQLMath::log(skew) / AQLMath::log(2.0);
 	sde.setOutputTemplate(new LARatesPathElementDDLMMCurve(skew, constShift, mTenor, mDeltatenor, 0.0));
 }
 
@@ -384,12 +384,12 @@ LACalibrateModelLMM::setOutputTemplate(const LAString &currency, LARatesSDEBase 
 
 */
 void
-LACalibrateModelLMM::setIntegralFunction(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setIntegralFunction(const AQLString &currency, LARatesSDEBase &sde) const
 {
-	LAString key_ccy = currency;
-	LAString integralType = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_INTEGRAL_TYPE);
+	AQLString key_ccy = currency;
+	AQLString integralType = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_INTEGRAL_TYPE);
 	integralType.toUpper();
-	LAString isPC = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_INTEGRAL_ISPC);
+	AQLString isPC = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_INTEGRAL_ISPC);
 	isPC.toUpper();
 
 	if (isPC == "TRUE")
@@ -408,8 +408,8 @@ LACalibrateModelLMM::setIntegralFunction(const LAString &currency, LARatesSDEBas
 		}
 		else
 		{
-			LAString msg = LAString("Integraltype is not support integraltype = ") +integralType;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = AQLString("Integraltype is not support integraltype = ") +integralType;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 	else
@@ -428,8 +428,8 @@ LACalibrateModelLMM::setIntegralFunction(const LAString &currency, LARatesSDEBas
 		}
 		else
 		{
-			LAString msg = LAString("Integraltype is not support integraltype = ") +integralType;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = AQLString("Integraltype is not support integraltype = ") +integralType;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 }
@@ -439,10 +439,10 @@ LACalibrateModelLMM::setIntegralFunction(const LAString &currency, LARatesSDEBas
 
 	@param[in] currency
 */
-LAString 
-LACalibrateModelLMM::getFunctionMasterResistName(const LAString &currency) const
+AQLString 
+LACalibrateModelLMM::getFunctionMasterResistName(const AQLString &currency) const
 {
-	LAString tmpCurrency = currency;
+	AQLString tmpCurrency = currency;
 	return mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_LMM_FUNCTION_NAME);
 }
 
@@ -453,10 +453,10 @@ LACalibrateModelLMM::getFunctionMasterResistName(const LAString &currency) const
 
 	@param[in] currency 
 */
-LAString
-LACalibrateModelLMM::getCorTye(const LAString &currency) const
+AQLString
+LACalibrateModelLMM::getCorTye(const AQLString &currency) const
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	return mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_CORRELATION_TYPE);
 }
 
@@ -470,36 +470,36 @@ LACalibrateModelLMM::getCorTye(const LAString &currency) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelLMM::setUpCorFactor(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const
+LACalibrateModelLMM::setUpCorFactor(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	setUpCorEntity(currency,cor);
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
 	
-	LAString factorNumKey = STATIC_DATA_KEY_LMM_CORRELATION_CROSS_FACTOR_NUM;
+	AQLString factorNumKey = STATIC_DATA_KEY_LMM_CORRELATION_CROSS_FACTOR_NUM;
 	if (MADealUtils::getSDECurrencys().size() == 1)
 	{
 		factorNumKey = STATIC_DATA_KEY_LMM_CORRELATION_SIGLE_FACTOR_NUM;
 	}
 
-	LAString factorNumStr = mpStaticData->getStaticData(key_ccy + factorNumKey);
+	AQLString factorNumStr = mpStaticData->getStaticData(key_ccy + factorNumKey);
 	const unsigned int factorNum = factorNumStr.getIntValue();
 
 	if (isCancelForFunding(currency))
 		return;
 
-	LAString filePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_CORRELATION_FACTOR_FILE);
+	AQLString filePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_CORRELATION_FACTOR_FILE);
 	MAFileAccessor file(LAMarketData::getNumFileName(filePath));
-	LAStringMatrix loadingData;
+	AQLStringMatrix loadingData;
 	file.readAllData(MARKET_DATA_DELIMITER, loadingData);
 	file.close();
 
 	// check
 	if (factorNum != static_cast<unsigned int>(loadingData.size()))
 	{
-		LAString msg = LAString("Correlation factor file format is wrong factorNum is ") + factorNumStr;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("Correlation factor file format is wrong factorNum is ") + factorNumStr;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	// convert
@@ -517,17 +517,17 @@ LACalibrateModelLMM::setUpCorFactor(const LAString &currency, LAMathCorrelation 
 	unsigned int canonicSize = cor.getTGrid().get().size();
 	DoubleMatrix loading(canonicSize);
 
-	LAString isExTUseStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_ISEXTRATENORUSE);
+	AQLString isExTUseStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_ISEXTRATENORUSE);
 	if (isExTUseStr == AQ_NO_DATA)
 	{
 		isExTUseStr = "FALSE";
 	}
-	LADataBool isExTUse;
+	AQLDataBool isExTUse;
 	isExTUse.convertFromString(isExTUseStr);	
 	unsigned int truncateSize = 0;
 	if (!isExTUse.get())
 	{
-		LAString exTenorStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_EXTRATENOR);
+		AQLString exTenorStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_EXTRATENOR);
 		if (exTenorStr != AQ_NO_DATA)
 		{
 			truncateSize = exTenorStr.toToken(MULTI_STATIC_DATA_DELIMITER).size();
@@ -537,8 +537,8 @@ LACalibrateModelLMM::setUpCorFactor(const LAString &currency, LAMathCorrelation 
 	// copy
 	if (canonicSize + truncateSize > static_cast<unsigned int>(fullLoading.size()))
 	{
-		LAString msg = LAString("Correlation factor file format is wrong: Grid size must be greater than ") + LAString(static_cast<int>(canonicSize + truncateSize));
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("Correlation factor file format is wrong: Grid size must be greater than ") + AQLString(static_cast<int>(canonicSize + truncateSize));
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	for(unsigned int i = 0; i < canonicSize; i++)
 	{
@@ -557,16 +557,16 @@ LACalibrateModelLMM::setUpCorFactor(const LAString &currency, LAMathCorrelation 
 	@param[out] dataInstance
 */
 void
-LACalibrateModelLMM::setUpCorData(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const
+LACalibrateModelLMM::setUpCorData(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	setUpCorEntity(currency, cor);
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
-	LAString filePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_CORRELATION_DATA_FILE);
+	AQLString filePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_CORRELATION_DATA_FILE);
 	
 	MAFileAccessor file(LAMarketData::getNumFileName(filePath));
-	LAStringMatrix corData;
+	AQLStringMatrix corData;
 	file.readAllData(MARKET_DATA_DELIMITER, corData);
 	file.close();
 
@@ -597,17 +597,17 @@ LACalibrateModelLMM::setUpCorData(const LAString &currency, LAMathCorrelation &c
 	@param[out] dataInstance
 */
 void
-LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const
+LACalibrateModelLMM::setUpCorFunc(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	setUpCorEntity(currency, cor);
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
 
-	LAFunctionBase *corFunc = NULL;
+	AQLFunctionBase *corFunc = NULL;
 
 	MAScenarioParam param;
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	param.isCalib = isCalibTarget(currency);
 	param.calcType = KEY_PV;
 	if (param.isCalib)
@@ -627,22 +627,22 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 		}
 		else
 		{
-			LAString msg = LAString("not support cor method type = ") + calibCorParam.corFuncType;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = AQLString("not support cor method type = ") + calibCorParam.corFuncType;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
 		// mExoCalibLMMSetOptCorr
-		LAString isExTUseStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_ISEXTRATENORUSE);
+		AQLString isExTUseStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_ISEXTRATENORUSE);
 		if (isExTUseStr == AQ_NO_DATA)
 		{
 			isExTUseStr = "FALSE";
 		}
-		LADataBool isExTUse;
+		AQLDataBool isExTUse;
 		isExTUse.convertFromString(isExTUseStr);	
 		unsigned int extraSize = 0;
 		if (isExTUse.get())
 		{
-			LAString exTenorStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_EXTRATENOR);
+			AQLString exTenorStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_EXTRATENOR);
 			if (exTenorStr != AQ_NO_DATA)
 			{
 				extraSize = exTenorStr.toToken(MULTI_STATIC_DATA_DELIMITER).size();
@@ -686,8 +686,8 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 		}
 		else
 		{
-			LAString msg = LAString("not support: opt cor type = ") + calibCorParam.optCorType;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = AQLString("not support: opt cor type = ") + calibCorParam.optCorType;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
 		// mExoCalibLMMInitOptCorMethod
@@ -831,9 +831,9 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 
 			if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 			{
-				const LAString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);
-				const LAString dirName = LACoreDataService::getOutputDirectory(); 
-				const LAString fileName  = dirName + "LMM_CORRELATON_DATA" + fileSuffix + ".csv";
+				const AQLString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);
+				const AQLString dirName = LACoreDataService::getOutputDirectory(); 
+				const AQLString fileName  = dirName + "LMM_CORRELATON_DATA" + fileSuffix + ".csv";
 
 				ifstream fin;
 				ofstream fout;
@@ -845,10 +845,10 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 
 					for (unsigned int i = 0; i < factorLoadingOptimized_.size(); ++i)
 					{
-						LAString line = "";
+						AQLString line = "";
 						for (unsigned int j = 0; j < factorLoadingOptimized_[0].size(); ++j)
 						{
-							line += LAString(factorLoadingOptimized_[i][j]) +  ",";							
+							line += AQLString(factorLoadingOptimized_[i][j]) +  ",";							
 						}
 						line = line.subString(0, line.size() - 2);
 
@@ -866,7 +866,7 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 					while (getline(fin, line))
 					{
 						const char *c_line = line.c_str();
-						LAStringVector lineVec = LAString(c_line).toToken(MARKET_DATA_DELIMITER);
+						AQLStringVector lineVec = AQLString(c_line).toToken(MARKET_DATA_DELIMITER);
 						line_d.clear();
 						for (unsigned int i = 0; i < lineVec.size(); ++i)
 						{
@@ -882,12 +882,12 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 			cor.setFactorLoading(factorLoadingOptimized_);
 		}
 
-		const LAString corName = PREFIX_COR + getSDEAttrName(currency);
+		const AQLString corName = PREFIX_COR + getSDEAttrName(currency);
 		// set function master
-		dataInstance.getFunctionMaster().removeFunction(corName + LAString("_0_0"));
-		dataInstance.getFunctionMaster().setFunction(corFunc->clone(), corName + LAString("_0_0"));
+		dataInstance.getFunctionMaster().removeFunction(corName + AQLString("_0_0"));
+		dataInstance.getFunctionMaster().setFunction(corFunc->clone(), corName + AQLString("_0_0"));
 
-		//LAString tmp_currency = currency;
+		//AQLString tmp_currency = currency;
 		//tmp_currency.toUpper();
 		//objPool.remove(tmp_currency + "_" + CALIBRATION_DATA_LMM_CALIB_CORRELATION);
 		//objPool.set(tmp_currency + "_" + CALIBRATION_DATA_LMM_CALIB_CORRELATION, optCor);
@@ -902,24 +902,24 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 	}
 	else
 	{
-		LAString paramFilePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_CORRELATION_FUNC_FILE);
-		LAString maxFilePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_MAXTERM_FILE);
+		AQLString paramFilePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_CORRELATION_FUNC_FILE);
+		AQLString maxFilePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_MAXTERM_FILE);
 
 		// read method param
 		MAFileAccessor paramFile(LAMarketData::getNumFileName(paramFilePath));
-		LAStringMatrix funcParamMtx;
+		AQLStringMatrix funcParamMtx;
 		paramFile.readAllData(MARKET_DATA_DELIMITER, funcParamMtx);
 		paramFile.close();
 
 		// read max param
 		MAFileAccessor maxFile(LAMarketData::getNumFileName(maxFilePath));
-		LAStringMatrix maxMtx;
+		AQLStringMatrix maxMtx;
 		maxFile.readAllData(MARKET_DATA_DELIMITER, maxMtx);
 		maxFile.close();
 
 		if (funcParamMtx.size() != 2)
 		{
-			throw LACoreInvalidData("Correlation function param format is wrong .", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Correlation function param format is wrong .", __FILE__, __LINE__);
 		}
 
 		double x = funcParamMtx[0][0].trimLeft().trimRight().getDoubleValue();
@@ -930,10 +930,10 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 		cor.setCorrelation(corFunc);
 		cor.calcFactorLoading();
 
-		const LAString corName = PREFIX_COR + getSDEAttrName(currency);
+		const AQLString corName = PREFIX_COR + getSDEAttrName(currency);
 		// set function master
-		dataInstance.getFunctionMaster().removeFunction(corName + LAString("_0_0"));
-		dataInstance.getFunctionMaster().setFunction(corFunc->clone(), corName + LAString("_0_0"));
+		dataInstance.getFunctionMaster().removeFunction(corName + AQLString("_0_0"));
+		dataInstance.getFunctionMaster().setFunction(corFunc->clone(), corName + AQLString("_0_0"));
 	}
 }
 
@@ -943,10 +943,10 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 
 	@param[in]  currency 
 */
-LAString
-LACalibrateModelLMM::getVolType(const LAString &currency) const
+AQLString
+LACalibrateModelLMM::getVolType(const AQLString &currency) const
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	return mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_VOLATILITY_TYPE);
 }
 
@@ -959,16 +959,16 @@ LACalibrateModelLMM::getVolType(const LAString &currency) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelLMM::setUpVolFunc(const LAString &currency, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelLMM::setUpVolFunc(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	setUpVolEntity(currency, vol);
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
 
 	if (isCancelForFunding(currency))
 		return;
 
-	LAStringVector fileVec(4);
+	AQLStringVector fileVec(4);
 	fileVec[0] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_CALIB_FILE));
 	fileVec[1] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_ADJ_FILE));
 	fileVec[2] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_MAXTERM_FILE));
@@ -985,10 +985,10 @@ LACalibrateModelLMM::setUpVolFunc(const LAString &currency, LAMathVolatility &vo
 	
 	LACalibrateVolatilityLMM volCreator;
 	// create method vec
-	vector<LAFunctionBase *> funcVec;
+	vector<AQLFunctionBase *> funcVec;
 
 	MAScenarioParam param;
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	param.isCalib = isCalibTarget(currency);
 	param.calcType = KEY_PV;
 	param.bumpType = RISK_MODEL_VOL_BUMP;
@@ -997,7 +997,7 @@ LACalibrateModelLMM::setUpVolFunc(const LAString &currency, LAMathVolatility &vo
 	{
 		// create calib info
 		LACalibrationParametersLMM cInfo;
-		LAString cInfoName = cInfo.createCalibrationInfo(objPool, currency);
+		AQLString cInfoName = cInfo.createCalibrationInfo(objPool, currency);
         // first element set calib info
 		param.refName.push_back(cInfoName);
 
@@ -1015,26 +1015,26 @@ LACalibrateModelLMM::setUpVolFunc(const LAString &currency, LAMathVolatility &vo
 	}
 	else
 	{
-		LAString AdjParamInter = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_ADJ_INTERPOLATION);
+		AQLString AdjParamInter = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_ADJ_INTERPOLATION);
 		if (AdjParamInter == AQ_NO_DATA)
 		{
 				AdjParamInter = "fn_stepinterpolation";
 		}
 		volCreator.setAdjParamInterpolation(AdjParamInter);
-		LAString AdjParamFreq = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_ADJ_FREQUENCY);
+		AQLString AdjParamFreq = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_ADJ_FREQUENCY);
 		if (AdjParamFreq != "QA" && AdjParamFreq != "SA")
 		{
-			LAString msg = "Frequency of LMM function G input must be ""SA"" or ""QA"", However input is " + AdjParamFreq + ".";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "Frequency of LMM function G input must be ""SA"" or ""QA"", However input is " + AdjParamFreq + ".";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		volCreator.setAdjParamFrequency(AdjParamFreq);
 
 	    volCreator.createVolatility(funcVec, fileVec, &param, &objPool);
-		const LAString &volName = vol.getName().get();
+		const AQLString &volName = vol.getName().get();
 		const int size = funcVec.size();
 		for (int i = 0; i < size; ++i)
 		{
-			dataInstance.getFunctionMaster().setFunction(funcVec[i]->clone(), volName + LAString("_") + LAString(i) + LAString("_0"));
+			dataInstance.getFunctionMaster().setFunction(funcVec[i]->clone(), volName + AQLString("_") + AQLString(i) + AQLString("_0"));
 		}
 	}
 
@@ -1042,7 +1042,7 @@ LACalibrateModelLMM::setUpVolFunc(const LAString &currency, LAMathVolatility &vo
 
 //	if (param.isCalib)
 //	{
-//		LAString interType = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_PATH_INTERPOLATION);
+//		AQLString interType = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_PATH_INTERPOLATION);
 //		interType.toUpper();
 //
 //		if (interType == "LOGLINEAR")
@@ -1076,7 +1076,7 @@ LACalibrateModelLMM::setUpVolFunc(const LAString &currency, LAMathVolatility &vo
 //				}
 //			}
 //
-//			LAString sdeName = getFunctionMasterResistName(currency);
+//			AQLString sdeName = getFunctionMasterResistName(currency);
 //			const LARatesSDEBase &sde = dynamic_cast<const LARatesSDEBase &>(dataInstance.getFunctionMaster().getFunction(sdeName).get());
 //
 //			LARatesCurveLogLinearInterpolation *pInter = dynamic_cast<LARatesCurveLogLinearInterpolation *>(sde.getInterpolationMethod());
@@ -1093,11 +1093,11 @@ LACalibrateModelLMM::setUpVolFunc(const LAString &currency, LAMathVolatility &vo
 	@param[out] sde
 */
 void
-LACalibrateModelLMM::setInterpolationMethod(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setInterpolationMethod(const AQLString &currency, LARatesSDEBase &sde) const
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
-	LAString interType = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_PATH_INTERPOLATION);
+	AQLString interType = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_PATH_INTERPOLATION);
 	interType.toUpper();
 	
 	if(isCancelForFunding(currency))
@@ -1108,7 +1108,7 @@ LACalibrateModelLMM::setInterpolationMethod(const LAString &currency, LARatesSDE
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// >>>>>>>>>>>>> for XLL plus
 /*
-		LAStringVector fileVec(4);
+		AQLStringVector fileVec(4);
 		fileVec[0] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_CALIB_FILE));
 		fileVec[1] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_ADJ_FILE));
 		fileVec[2]= LAMarketData::getNumFileName(mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_MAXTERM_FILE));
@@ -1141,20 +1141,20 @@ LACalibrateModelLMM::setInterpolationMethod(const LAString &currency, LARatesSDE
 		}
 */
 
-//		LAString key_ccy = currency;
+//		AQLString key_ccy = currency;
 //		key_ccy.toLower();
 //
 //		bool isCalibTarget = LACalibrateModel::isCalibTarget(currency); 
 //
 //		if (! isCalibTarget)
 //		{
-//			LAString volType = getVolType(currency);
+//			AQLString volType = getVolType(currency);
 //			volType.toUpper();
 //
 //			//DoubleMatrix volMat;
 //			if (volType == INPUT_FUNC)
 //			{
-//				LAStringVector fileVec(4);
+//				AQLStringVector fileVec(4);
 //				fileVec[0] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_CALIB_FILE));
 //				fileVec[1] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_ADJ_FILE));
 //				fileVec[2] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_MAXTERM_FILE));
@@ -1187,10 +1187,10 @@ LACalibrateModelLMM::setInterpolationMethod(const LAString &currency, LARatesSDE
 //			}
 //			else if (volType == INPUT_DATA)
 //			{
-//				LAString filePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_DATA_FILE);
+//				AQLString filePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_DATA_FILE);
 //				MAFileAccessor file(LAMarketData::getNumFileName(filePath));
 //
-//				LAStringMatrix volData;
+//				AQLStringMatrix volData;
 //				file.readAllData(MARKET_DATA_DELIMITER, volData);
 //				file.close();
 //
@@ -1233,7 +1233,7 @@ LACalibrateModelLMM::setInterpolationMethod(const LAString &currency, LARatesSDE
 	}
 	else
 	{
-		throw LACoreInvalidData("InterpolationType is wrong. Only loglinear, linear, step support.",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("InterpolationType is wrong. Only loglinear, linear, step support.",__FILE__,__LINE__);
 	}
 }
 
@@ -1258,16 +1258,16 @@ LACalibrateModelLMM::createCurveLogLinearInterpolation() const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelLMM::setUpVolData(const LAString &currency, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelLMM::setUpVolData(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	setUpVolEntity(currency, vol);
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
-	LAString filePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_DATA_FILE);
+	AQLString filePath = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_DATA_FILE);
 	
 	MAFileAccessor file(LAMarketData::getNumFileName(filePath));
-	LAStringMatrix volData;
+	AQLStringMatrix volData;
 	file.readAllData(MARKET_DATA_DELIMITER, volData);
 	file.close();
 
@@ -1322,7 +1322,7 @@ LACalibrateModelLMM::setUpVolData(const LAString &currency, LAMathVolatility &vo
 
 */
 void
-LACalibrateModelLMM::setUpCorEntity(const LAString &currency, LAMathCorrelation &cor) const
+LACalibrateModelLMM::setUpCorEntity(const AQLString &currency, LAMathCorrelation &cor) const
 {
 	// set grid_T
 	DoubleArray grid_T;
@@ -1349,29 +1349,29 @@ LACalibrateModelLMM::setUpCorEntity(const LAString &currency, LAMathCorrelation 
 	cor.getIsExtraTGrid().set(extraTenorFlag);
 
 	// set interpolation
-	LAString tmpCurrency = currency;
-	LAString interp = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_LMM_CORRELATION_INTERPOLATION);
+	AQLString tmpCurrency = currency;
+	AQLString interp = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_LMM_CORRELATION_INTERPOLATION);
 	cor.getInterpolation().convertFromString(interp);
 
 	// set mulitvol false
 	cor.getIsMultiVol().set(false);
 
 	// set optimization
-	LAString optimization = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_LMM_CORRELATION_ISOPTIMIZATION);
+	AQLString optimization = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_LMM_CORRELATION_ISOPTIMIZATION);
 	cor.getData(IR_CALIBRATION_DATA_ISOPTIM, ISDEFINED).convertFromString(optimization);
 
 	// set factor num before
-	LAString TSizeStr(static_cast<const int>(grid_T.size()));
+	AQLString TSizeStr(static_cast<const int>(grid_T.size()));
 	cor.getData(IR_CALIBRATION_DATA_FACTORNUM_BEFORE, NOCHECK).convertFromString(TSizeStr);
 
 	// set factor num after
-	LAString factorNumKey = STATIC_DATA_KEY_LMM_CORRELATION_CROSS_FACTOR_NUM;
+	AQLString factorNumKey = STATIC_DATA_KEY_LMM_CORRELATION_CROSS_FACTOR_NUM;
 	if (MADealUtils::getSDECurrencys().size() == 1)
 	{
 		factorNumKey = STATIC_DATA_KEY_LMM_CORRELATION_SIGLE_FACTOR_NUM;
 	}
 	
-	LAString factorNumStr = mpStaticData->getStaticData(tmpCurrency.toLower() + factorNumKey);
+	AQLString factorNumStr = mpStaticData->getStaticData(tmpCurrency.toLower() + factorNumKey);
 	cor.getData(IR_CALIBRATION_DATA_FACTORNUM_AFTER, NOCHECK).convertFromString(factorNumStr);
 
 
@@ -1385,11 +1385,11 @@ LACalibrateModelLMM::setUpCorEntity(const LAString &currency, LAMathCorrelation 
 	@param[out] vol
 */
 void
-LACalibrateModelLMM::setUpVolEntity(const LAString &currency, LAMathVolatility &vol) const
+LACalibrateModelLMM::setUpVolEntity(const AQLString &currency, LAMathVolatility &vol) const
 {
 	// set interpolation
-	LAString tmpCurrency = currency;
-	LAString interp = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_LMM_VOLATILITY_INTERPOLATION);
+	AQLString tmpCurrency = currency;
+	AQLString interp = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_LMM_VOLATILITY_INTERPOLATION);
 	vol.getInterpolation().convertFromString(interp);
 }
 
@@ -1400,22 +1400,22 @@ LACalibrateModelLMM::setUpVolEntity(const LAString &currency, LAMathVolatility &
 	@param[in] currency
 */
 void
-LACalibrateModelLMM::setUpTenorForCalib(const LAString &currency, DoubleArray &tenor_30_360, DoubleArray &tenor, DoubleArray &deltatenor, BoolVector &extraTenorFlag) const
+LACalibrateModelLMM::setUpTenorForCalib(const AQLString &currency, DoubleArray &tenor_30_360, DoubleArray &tenor, DoubleArray &deltatenor, BoolVector &extraTenorFlag) const
 {
 	int maxTerm = (int)LAMarketDataLMM::getMaxTerm(currency);
 	BoolVector tenor_extraflag;
 
-	LAString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
-	LAPriceDataDayCount dayCount;
+	AQLString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
+	AQLPriceDataDayCount dayCount;
 	dayCount.convertFromString(dayCountStr);
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 	// create tenor 
-	LAString freq = FREQ_SEMI_ANNUAL;
+	AQLString freq = FREQ_SEMI_ANNUAL;
 	if (LACoreDataService::getContext(ARG_KEY_CANONICALFREQ) == "QA")
 	{
 		freq = FREQ_QUARTERLY;
 	}
-	LAStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
+	AQLStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
  	LAMarketDataLMM::getCanonicalGrid(tenor_30_360, tenor, deltatenor, extraTenorFlag, asOfDate, dayCount, freq, maxTerm, exTenor);
 }
 

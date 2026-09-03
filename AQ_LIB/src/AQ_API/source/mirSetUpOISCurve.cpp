@@ -1,9 +1,9 @@
 #include "InitializeAQETrading.h"
 #include "TypeUtilities.h"
 #include "mirSetUpOISCurve.h"
-#include "LADate.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLDate.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "tryMirSetUpOISCurve.h"
 
 
@@ -32,36 +32,36 @@ const std::string mirSetUpOISCurve(const std::string& CurveID,
 								const SWIG_STRINGMATRIX & SwapRates, 
 								const SWIG_STRINGMATRIX & LOBasisConv) 
 {
-	LAString ret;
+	AQLString ret;
 	try 
 	{
 		// marshall all inputs
-		LAString curveID(CurveID.c_str());
-		LAString marketName(MarketName.c_str());
-		LAString curveNames(CurveNames.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString marketName(MarketName.c_str());
+		AQLString curveNames(CurveNames.c_str());
 
-		LAStringMatrix generalProps;
+		AQLStringMatrix generalProps;
 		swig::buildStringMatrix(generalProps, GeneralProps);
 
-		LAStringMatrix oisConv;
+		AQLStringMatrix oisConv;
 		swig::buildStringMatrix(oisConv, OISConv);
 
-		LAStringMatrix oisRates;
+		AQLStringMatrix oisRates;
 		swig::buildStringMatrix(oisRates, OISRates);
 
-		LAStringMatrix oisHistRates;
+		AQLStringMatrix oisHistRates;
 		swig::buildStringMatrix(oisHistRates, OISHistRates);
 
-		LAStringMatrix loBasisRates;
+		AQLStringMatrix loBasisRates;
 		swig::buildStringMatrix(loBasisRates, LOBasisRates);
 
-		LAStringMatrix swapConv;
+		AQLStringMatrix swapConv;
 		swig::buildStringMatrix(swapConv, SwapConv);
 
-		LAStringMatrix swapRates;
+		AQLStringMatrix swapRates;
 		swig::buildStringMatrix(swapRates, SwapRates);
 
-		LAStringMatrix loBasisConv;
+		AQLStringMatrix loBasisConv;
 		swig::buildStringMatrix(loBasisConv, LOBasisConv);
 
 		ret = validation::tryMirSetUpOISCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
@@ -77,7 +77,7 @@ const std::string mirSetUpOISCurve(const std::string& CurveID,
 												  swapRates,
 												  swapConv);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

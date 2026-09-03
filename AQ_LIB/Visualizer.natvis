@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
 
-  <Type Name="LAString">
-    <DisplayString>[LAString]{stringData_->string_,sb}</DisplayString>
+  <Type Name="AQLString">
+    <DisplayString>[AQLString]{stringData_->string_,sb}</DisplayString>
     <Expand>
-      <Item Name="[LAString]">stringData_->string_,sb</Item>
+      <Item Name="[AQLString]">stringData_->string_,sb</Item>
     </Expand>
   </Type>
   
-  <Type Name="LADate">
-    <DisplayString>[LADate]{mDay}-{mMonth}-{mYear}</DisplayString>
+  <Type Name="AQLDate">
+    <DisplayString>[AQLDate]{mDay}-{mMonth}-{mYear}</DisplayString>
     <Expand>
       <Item Name="[Day]">mDay</Item>
       <Item Name="[Month]">mMonth</Item>

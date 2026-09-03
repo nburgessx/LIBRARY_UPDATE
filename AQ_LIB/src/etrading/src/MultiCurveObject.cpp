@@ -40,7 +40,7 @@ namespace etrading
 	MultiCurveObject::MultiCurveObject(const std::string& objectName,
 						               const std::vector<std::string>& curveGeneratorNames,
 						               const std::vector<std::string>& curveMarketDataNames,
-						               const LAStringMatrix& engineParams,
+						               const AQLStringMatrix& engineParams,
 						               const std::string& domesticCurveCollection,
 						               const std::string& foreignCurveCollection )
         : CurveObject(objectName),
@@ -106,7 +106,7 @@ namespace etrading
 
 		if (tmpObjectName != objectName)
 		{
-			throw LACoreInvalidData((boost::format("#Error: Inconsistent data when deserializing curve: Object handle name is '%s' while CurveData contains '%s' .")
+			throw AQLCoreInvalidData((boost::format("#Error: Inconsistent data when deserializing curve: Object handle name is '%s' while CurveData contains '%s' .")
 				% objectName % tmpObjectName).str().c_str(), __FILE__, __LINE__);
 		}
 		
@@ -239,10 +239,10 @@ namespace etrading
 		// Add engine parameters if there's any
 		for (size_t i = 0; i < engineParams_.size(); ++i)
 		{
-			LAStringVector param = engineParams_[i];
+			AQLStringVector param = engineParams_[i];
 			if (param.size() == 2)
 			{
-				LAString attributeName = param[0];
+				AQLString attributeName = param[0];
 				attributeName.toUpper();
 				attributeNames.push_back(attributeName);
 			}
@@ -269,7 +269,7 @@ namespace etrading
 		// Add engine parameters if there's any
 		for (size_t i = 0; i < engineParams_.size(); ++i)
 		{
-			LAStringVector param = engineParams_[i];
+			AQLStringVector param = engineParams_[i];
 			if (param.size() == 2)
 			{
 				attributeValues.push_back(param[1]);
@@ -311,7 +311,7 @@ namespace etrading
 											   std::vector<std::string>& curveMarketDataNames,
 											   std::string& domesticCurveCollection,
 											   std::string& foreignCurveCollection,
-												LAStringMatrix& engineParams) const
+												AQLStringMatrix& engineParams) const
 	{
 		// Get the curve build parameters
 		const etrading::VariantMatrix& allDataView = freeObject_.viewAllData();
@@ -325,7 +325,7 @@ namespace etrading
 
 		if (variantMatrix.size() != 2)
 		{
-			throw LACoreInvalidData((boost::format("#Error: Invalid number of columns in deserialised data. Expecting 2 columns, found '%d'. ") % variantMatrix.size()).str().c_str(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData((boost::format("#Error: Invalid number of columns in deserialised data. Expecting 2 columns, found '%d'. ") % variantMatrix.size()).str().c_str(), __FILE__, __LINE__);
 		}
 
 		const VariantVector& attributeNames = variantMatrix[0];
@@ -340,28 +340,28 @@ namespace etrading
 			}
 			else if (attributeNames[i] == FAST_REBUILD)
 			{
-				LAStringVector param;
+				AQLStringVector param;
 				param.push_back(FAST_REBUILD.c_str());
 				param.push_back(attributeValues[i].getValueAsString().c_str());
 				engineParams.push_back(param);
 			}
 			else if (attributeNames[i] == EPSILON)
 			{
-				LAStringVector param;
+				AQLStringVector param;
 				param.push_back(EPSILON.c_str());
 				param.push_back(attributeValues[i].getValueAsString().c_str());
 				engineParams.push_back(param);
 			}
 			else if (attributeNames[i] == GRADIENT_EPSILON)
 			{
-				LAStringVector param;
+				AQLStringVector param;
 				param.push_back(GRADIENT_EPSILON.c_str());
 				param.push_back(attributeValues[i].getValueAsString().c_str());
 				engineParams.push_back(param);
 			}
 			else if (attributeNames[i] == DELTA_EPSILON)
 			{
-				LAStringVector param;
+				AQLStringVector param;
 				param.push_back(DELTA_EPSILON.c_str());
 				param.push_back(attributeValues[i].getValueAsString().c_str());
 				engineParams.push_back(param);
@@ -387,7 +387,7 @@ namespace etrading
 				}
 				else
 				{
-					throw LACoreInvalidData((boost::format("#Error: Unsupported Data Name: %s .")
+					throw AQLCoreInvalidData((boost::format("#Error: Unsupported Data Name: %s .")
 						% attributeNames[i]).str().c_str(), __FILE__, __LINE__);
 				}
 			}
@@ -438,7 +438,7 @@ namespace etrading
 	*           The CurveIndex names are populated from the curve generator conventions
 	* @returns	The curveIndexNames
 	*/
-	const LAStringVector& MultiCurveObject::getCurveIndexNames() const
+	const AQLStringVector& MultiCurveObject::getCurveIndexNames() const
 	{
 		return componentCurveIndexNames_;
 	}

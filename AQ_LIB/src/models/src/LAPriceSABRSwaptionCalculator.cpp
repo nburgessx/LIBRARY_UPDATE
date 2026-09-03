@@ -62,9 +62,9 @@ double MVSABRSwaptionCalculator::SABRIV(double t, double strike)
 // Check parameter consistency
 void MVSABRSwaptionCalculator::CheckParameters()
 {
-    if(mSabrParameters.size() != 4) throw LACoreInvalidData("SABR params.size() != 4",__FILE__,__LINE__);
-    if(mSabrParameters[0] < 0) throw LACoreInvalidData("Alpha must be positive",__FILE__,__LINE__);
-    if(mSabrParameters[1] < 0 || 1 < mSabrParameters[1]) throw LACoreInvalidData("Beta must be in (0,1)",__FILE__,__LINE__);
-    if(mSabrParameters[2] < 0 ) throw LACoreInvalidData("Nu must be possitive.",__FILE__,__LINE__);
-    if(fabs(mSabrParameters[3]) > 1 ) throw LACoreInvalidData("Rho must be in (-1,1).",__FILE__,__LINE__);
+    if(mSabrParameters.size() != 4) throw AQLCoreInvalidData("SABR params.size() != 4",__FILE__,__LINE__);
+    if(mSabrParameters[0] < 0) throw AQLCoreInvalidData("Alpha must be positive",__FILE__,__LINE__);
+    if(mSabrParameters[1] < 0 || 1 < mSabrParameters[1]) throw AQLCoreInvalidData("Beta must be in (0,1)",__FILE__,__LINE__);
+    if(mSabrParameters[2] < 0 ) throw AQLCoreInvalidData("Nu must be possitive.",__FILE__,__LINE__);
+    if(fabs(mSabrParameters[3]) > 1 ) throw AQLCoreInvalidData("Rho must be in (-1,1).",__FILE__,__LINE__);
 }

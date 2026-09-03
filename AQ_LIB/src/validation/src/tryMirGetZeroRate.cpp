@@ -24,13 +24,13 @@ namespace validation
     *  @param [in]		isFwdInterp		Boolean that decides if direct interpolation on fwd rates is employed
     *  @return			Zero rate over a given term from the curve's asof date
     */
-    DoubleVector tryMirGetZeroRate1( LADataInstance* dataInstance,
+    DoubleVector tryMirGetZeroRate1( AQLDataInstance* dataInstance,
                                      const DoubleVector& terms,
-                                     const LAString& curveid,
-                                     const LAString& frequency,
-                                     const LAString& dayCount,
-                                     const LAString& interpolation,
-                                     const LAString& curveName,
+                                     const AQLString& curveid,
+                                     const AQLString& frequency,
+                                     const AQLString& dayCount,
+                                     const AQLString& interpolation,
+                                     const AQLString& curveName,
                                      bool isFwdInterp )
 
     {
@@ -51,20 +51,20 @@ namespace validation
         }
 
         // Validate parameters
-        if( isFwdInterp && LAString( frequency ).toUpper() != "SIMPLE" )
+        if( isFwdInterp && AQLString( frequency ).toUpper() != "SIMPLE" )
         {
-            throw LACoreInvalidData( "forward interpolation may not be used with Frequency other than 'SIMPLE'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "forward interpolation may not be used with Frequency other than 'SIMPLE'", __FILE__, __LINE__ );
         }
 
         if( terms.size() == 0 )
         {
-            throw LACoreInvalidData( "a size of  vector is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "a size of  vector is zero.", __FILE__, __LINE__ );
         }
 
-        LAString freq( etrading::getDefaultValueForEmptyString( frequency, LAString( "SEMI-ANNUAL" ) ) );
-        LAString dayC( etrading::getDefaultValueForEmptyString( dayCount, LAString( "ACT/365" ) ) );
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, LAString( "SPLINE" ) ) );
-        LAString curvename( etrading::getDefaultValueForEmptyString( curveName, LAString( "STD" ) ) );
+        AQLString freq( etrading::getDefaultValueForEmptyString( frequency, AQLString( "SEMI-ANNUAL" ) ) );
+        AQLString dayC( etrading::getDefaultValueForEmptyString( dayCount, AQLString( "ACT/365" ) ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
+        AQLString curvename( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
         DoubleArray arr = etrading::LACurveForwardRateHelpers::getMultiZeroRate( terms, dataInstance, curveid, freq, dayC, interp, curvename, isFwdInterp );
 
@@ -93,15 +93,15 @@ namespace validation
     *  @param [in]		isFwdInterp		Boolean that decides if direct interpolation on fwd rates is employed
     *  @return			Zero rate over a given term from the curve's asof date
     */
-    DoubleVector tryMirGetZeroRate2( LADataInstance* dataInstance,
-                                     const LAStringVector& terms,
-                                     const LAString& curveId,
-                                     const LAString& frequency,
-                                     const LAString& dayCount,
-                                     const LAString& slidingRule,
-                                     const LAString& calendar,
-                                     const LAString& interpolation,
-                                     const LAString& curveName,
+    DoubleVector tryMirGetZeroRate2( AQLDataInstance* dataInstance,
+                                     const AQLStringVector& terms,
+                                     const AQLString& curveId,
+                                     const AQLString& frequency,
+                                     const AQLString& dayCount,
+                                     const AQLString& slidingRule,
+                                     const AQLString& calendar,
+                                     const AQLString& interpolation,
+                                     const AQLString& curveName,
                                      bool isFwdInterp )
     {
         VALID_EXCEPTION_START
@@ -123,22 +123,22 @@ namespace validation
         }
 
         // Validate parameters
-        if( isFwdInterp && LAString( frequency ).toUpper() != "SIMPLE" )
+        if( isFwdInterp && AQLString( frequency ).toUpper() != "SIMPLE" )
         {
-            throw LACoreInvalidData( "forward interpolation may not be used with Frequency other than 'SIMPLE'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "forward interpolation may not be used with Frequency other than 'SIMPLE'", __FILE__, __LINE__ );
         }
 
         if( terms.size() == 0 )
         {
-            throw LACoreInvalidData( "a size of  vector is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "a size of  vector is zero.", __FILE__, __LINE__ );
         }
 
-        LAString freq( etrading::getDefaultValueForEmptyString( frequency, LAString( "SEMI-ANNUAL" ) ) );
-        LAString dayC( etrading::getDefaultValueForEmptyString( dayCount, LAString( "ACT/365" ) ) );
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, LAString( "SPLINE" ) ) );
-        LAString cal( etrading::getDefaultValueForEmptyString( calendar, LAString( "TKB:LNB" ) ) );
-        LAString rollConv( etrading::getDefaultValueForEmptyString( slidingRule, LAString( "NO_CHANGE" ) ) );
-        LAString curvename( etrading::getDefaultValueForEmptyString( curveName, LAString( "STD" ) ) );
+        AQLString freq( etrading::getDefaultValueForEmptyString( frequency, AQLString( "SEMI-ANNUAL" ) ) );
+        AQLString dayC( etrading::getDefaultValueForEmptyString( dayCount, AQLString( "ACT/365" ) ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
+        AQLString cal( etrading::getDefaultValueForEmptyString( calendar, AQLString( "TKB:LNB" ) ) );
+        AQLString rollConv( etrading::getDefaultValueForEmptyString( slidingRule, AQLString( "NO_CHANGE" ) ) );
+        AQLString curvename( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
         DoubleArray arr = etrading::LACurveForwardRateHelpers::getMultiZeroRate( terms, dataInstance, curveId, freq, dayC, rollConv, cal, interp, curvename, isFwdInterp );
 

@@ -8,27 +8,27 @@
 
 #include "LAPriceEventTool.h"
 
-#include "LADataHolder.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAObject.h"
-#include "LAObjectHolder.h"
-#include "LAObjectPool.h"
-#include "LADataInstance.h"
+#include "AQLDataHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObject.h"
+#include "AQLObjectHolder.h"
+#include "AQLObjectPool.h"
+#include "AQLDataInstance.h"
 
 #include "LARatesNumeraireBase.h"
 #include "LARatesSDEBase.h"
 
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataFunction.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathPathEntity.h"
 #include "LAMathIndexEntity.h"
-#include "LAMathDefine.h"
+#include "AQLMathDefine.h"
 #include "LAPriceCFGenUtility.h"
 
 #include "LAPriceEventExtraCF.h"
@@ -83,8 +83,8 @@ LAPriceEventTool::~LAPriceEventTool()
     @param[in] isLSMC lsmcl mode flag(true:lsmc mode,false:not lsmc mode)
 */
 void
-LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
-						LAObject& trigger,
+LAPriceEventTool::setUp(const AQLDate& basedate, const AQLObject& trade,
+						AQLObject& trigger,
 						const LAPricePayOff& payoff,
 						unsigned int id,
 						bool isCall,
@@ -92,39 +92,39 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 {
 	clear();
 
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	//one time or multi time
 	bool isOneTime;
 	if (isCall) isOneTime = true;
 	else
 	{
 		dh = &(trigger.getData(PRICING_DATA_TRIGGERTYPE, ISNOTNULL));
-		LAString triggertype = dynamic_cast<const LADataString&>(dh->get()).get();
+		AQLString triggertype = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		triggertype.toUpper();
 		if (triggertype == MULTITIME) isOneTime = false;
 		else if (triggertype == ONETIME) isOneTime = true;
 		else
 		{
 			//error
-			LAString msg = "TriggerType: ";
+			AQLString msg = "TriggerType: ";
 			msg += triggertype;
 			msg += " is not support";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 		}
 	}
 
 	//expiry dates
 	dh = &(trigger.getData(PRICING_DATA_EXPIRYDATES, ISNOTNULL));
-	const DateVector& expirydates = dynamic_cast<const LADataDates&>(dh->get()).get();
+	const DateVector& expirydates = dynamic_cast<const AQLDataDates&>(dh->get()).get();
 
 	//action dates
 	dh = &(trigger.getData(PRICING_DATA_ACTIONDATES, ISNOTNULL));
-	const DateVector& actiondates = dynamic_cast<const LADataDates&>(dh->get()).get();
+	const DateVector& actiondates = dynamic_cast<const AQLDataDates&>(dh->get()).get();
 	if (expirydates.size() != actiondates.size())
 	{
 		//error
-		LAString msg = "ExpiryDates size is not same as ActionDates size";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "ExpiryDates size is not same as ActionDates size";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 
 	}
 	
@@ -133,8 +133,8 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 		if (expirydates[i] > actiondates[i])
 		{
 			//error
-			LAString msg = "action date is befor expiry date! Check input.";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+			AQLString msg = "action date is befor expiry date! Check input.";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 		}		
 	}	
 
@@ -145,12 +145,12 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 		dh = &(trigger.getData(PRICING_DATA_EXTRACFDATES, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			pExtracfdates = &dynamic_cast<const LADataDates&>(dh->get()).get();
+			pExtracfdates = &dynamic_cast<const AQLDataDates&>(dh->get()).get();
 			if (expirydates.size() != pExtracfdates->size())
 			{
 				//error
-				LAString msg = "ExpiryDates size is not same as ExtraCFDates size";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "ExpiryDates size is not same as ExtraCFDates size";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 		
 			for (unsigned int i = 0; i < expirydates.size(); i++)
@@ -158,8 +158,8 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 				if (expirydates[i] > (*pExtracfdates)[i])
 				{
 					//error
-					LAString msg = "ExtraCF date is befor expiry date! Check input.";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+					AQLString msg = "ExtraCF date is befor expiry date! Check input.";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 				}		
 			}	
 		}
@@ -175,8 +175,8 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 
 	//operator
 	dh = &(trigger.getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-	const LAFunctionBase& method = dynamic_cast<const LAPriceDataFunction&>(dh->get()).getFunction();
-    mpOperator = dynamic_cast<LAFunctionBase*>(method.clone());
+	const AQLFunctionBase& method = dynamic_cast<const AQLPriceDataFunction&>(dh->get()).getFunction();
+    mpOperator = dynamic_cast<AQLFunctionBase*>(method.clone());
 	
 	//coefficient
 	bool isChangeTriggerTargetValue = false;
@@ -184,15 +184,15 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
     if (!isLSMC)
 	{
 		dh = &(trigger.getData(PRICING_DATA_COEFFICIENTS, ISNOTNULL));
-		pCoeff = &dynamic_cast<const LADataDoubleMatrix&>(dh->get()).get();
+		pCoeff = &dynamic_cast<const AQLDataDoubleMatrix&>(dh->get()).get();
 		if (pCoeff->size() == 1) mpOperator->setParam((*pCoeff)[0]);
 		else if (pCoeff->size() == expirydates.size() || pCoeff->size() == expirydates.size() - startpos)
 			isChangeTriggerTargetValue = true;
 		else
 		{
 			//error
-			LAString msg = "Coefficient column size must be one or same as ExpiryFDates size";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "Coefficient column size must be one or same as ExpiryFDates size";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 	else
@@ -207,8 +207,8 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 	dh = &(trigger.getData(PRICING_DATA_INDEXINFOS, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LADataMultiReference& indexinfos
-				= dynamic_cast<const LADataMultiReference&>(dh->get());
+		const AQLDataMultiReference& indexinfos
+				= dynamic_cast<const AQLDataMultiReference&>(dh->get());
 		
 		for (unsigned int i = 0; i < mIndex.size(); i++)
 			mIndex[i].resize(indexinfos.getSize(), NULL);
@@ -217,7 +217,7 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 		{
 			//index type
 			dh = &(indexinfos.get(i).getData(PRICING_DATA_INDEXTYPE, ISNOTNULL));		
-			LAString indextype = dynamic_cast<const LADataString&>(dh->get()).get();
+			AQLString indextype = dynamic_cast<const AQLDataString&>(dh->get()).get();
 			indextype.toUpper();
 			
 			if (indextype == FIXED_RATE)
@@ -250,22 +250,22 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 	
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAStringVector& names = dynamic_cast<const LADataStrings&>(dh->get()).get();
+		const AQLStringVector& names = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
 		
 		unsigned int oldsize = mIndex.at(0).size();
 		for (unsigned int i = 0; i < mIndex.size(); i++)
 			mIndex[i].resize(oldsize + names.size());	
 		
-		LAString name;
+		AQLString name;
 		for (unsigned int i = 0; i < names.size(); i++)
 		{
 			name = names[i];
 			name.toUpper();
 			if (name.findString(CPN) == 0)// Coupon
 			{
-				LAObject tmp;
-				tmp.add(PRICING_DATA_INDEXTYPE, new LADataString(CPN));   
-				tmp.add(PRICING_DATA_ACCESSORY, new LADataString(LEG + name.subString(3, name.size() - 1)));
+				AQLObject tmp;
+				tmp.add(PRICING_DATA_INDEXTYPE, new AQLDataString(CPN));   
+				tmp.add(PRICING_DATA_ACCESSORY, new AQLDataString(LEG + name.subString(3, name.size() - 1)));
 
 				for (unsigned int j = 0; j < mIndex.size(); j++)
 				{
@@ -276,9 +276,9 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 			}
 			else if (name.findString(CPNCF) == 0)//CouponCF
 			{
-				LAObject tmp;
-				tmp.add(PRICING_DATA_INDEXTYPE, new LADataString(CPNCF));   
-				tmp.add(PRICING_DATA_ACCESSORY, new LADataString(LEG + name.subString(5, name.size() - 1)));
+				AQLObject tmp;
+				tmp.add(PRICING_DATA_INDEXTYPE, new AQLDataString(CPNCF));   
+				tmp.add(PRICING_DATA_ACCESSORY, new AQLDataString(LEG + name.subString(5, name.size() - 1)));
 				for (unsigned int j = 0; j < mIndex.size(); j++)
 				{
 					mIndex[j][oldsize + i] = new LAPriceIndexToolCpnCF();	
@@ -287,12 +287,12 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 			}
 			else//index
 			{
-				LAObjectPool& objPool = trade.getDataInstance()->getObjectPool();
-				const LAObject& tmp = objPool.getObject(names[i], ENCHKTYPE_ISDEFINED).get();
+				AQLObjectPool& objPool = trade.getDataInstance()->getObjectPool();
+				const AQLObject& tmp = objPool.getObject(names[i], ENCHKTYPE_ISDEFINED).get();
 			
 				//index type
 				dh = &(tmp.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL));		
-				LAString indextype = dynamic_cast<const LADataString&>(dh->get()).get();
+				AQLString indextype = dynamic_cast<const AQLDataString&>(dh->get()).get();
 				indextype.toUpper();
 				
 				if (indextype == FIXED_RATE)
@@ -341,7 +341,7 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 		//terminate
 		dh = &(trigger.getData(PRICING_DATA_ISTERMINATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull()
-			&& dynamic_cast<const LADataBool&>(dh->get()).get())
+			&& dynamic_cast<const AQLDataBool&>(dh->get()).get())
 				mActionMaster.push_back(new LAPriceEventTerminate());
 		else
 		{
@@ -352,10 +352,10 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 			else
 			{
 				dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-				const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+				const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 				for (unsigned int i = 0; i < legs.getSize(); i++)
 				{
-					dh = &(trigger.getData(PRICING_DATA_COUPONINFOS + LADataInt(i + 1).convertToString(), NOCHECK));
+					dh = &(trigger.getData(PRICING_DATA_COUPONINFOS + AQLDataInt(i + 1).convertToString(), NOCHECK));
 					if (dh->isDefined() && !dh->isNull())
 					{
 						mActionMaster.push_back(new LAPriceEventCpnChange());
@@ -371,7 +371,7 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 		if (mActionMaster.size() == 0)
 		{
 			//error
-			throw LACoreInvalidData("No Trigger Action.", __FILE__, __LINE__);			
+			throw AQLCoreInvalidData("No Trigger Action.", __FILE__, __LINE__);			
 		}
 
 	}
@@ -391,8 +391,8 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 
 	//path object
 	dh = &(trade.getData(PRICING_DATA_PATHENTITY, ISNOTNULL));
-	const LADataReference& ref = dynamic_cast<const LADataReference&>(dh->get());
-	const LAPriceDataDayCount* pdc_path=NULL;
+	const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(dh->get());
+	const AQLPriceDataDayCount* pdc_path=NULL;
 	if (ref.get().get().isTypeOf(ENTITY_PLAINVANILLA))
 	{
 		const LAMathPlainVanillaEntity& path = dynamic_cast<const LAMathPlainVanillaEntity&>(ref.get().get());
@@ -413,9 +413,9 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 
 		// base currency
 		dh = &(trade.getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-		const LAString& cur = dynamic_cast<const LADataString&>(dh->get()).get();
+		const AQLString& cur = dynamic_cast<const AQLDataString&>(dh->get()).get();
 
-		const LAStringVector& names = path.getSDEAttrNames().get();
+		const AQLStringVector& names = path.getSDEAttrNames().get();
 		for (unsigned int i = 0; i < names.size(); i++)
 		{
 			dh = &path.getData(names[i], ISNOTNULL);
@@ -426,27 +426,27 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 		if (pNumeraire == NULL)
 		{
 			//error
-			throw LACoreInvalidData("Numeraire does not exist", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("Numeraire does not exist", __FILE__, __LINE__);	
 		}
 
 		//leg object
 		dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-		const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+		const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 		isRcvPay.resize(legs.getSize());
 		for (unsigned int i = 0; i < legs.getSize(); i++)
 		{
 			dh = &(legs.get(i).getData(PRICING_DATA_SELECTSIDE, ISNOTNULL));
-			LAString sltside = dynamic_cast<const LADataString&>(dh->get()).get();
+			AQLString sltside = dynamic_cast<const AQLDataString&>(dh->get()).get();
 			sltside.toUpper();
 			if (sltside == RCV) isRcvPay[i] = true;
 			else if (sltside == PAY) isRcvPay[i] = false;
 			else
 			{
 				//error
-				LAString msg = PRICING_DATA_SELECTSIDE;
+				AQLString msg = PRICING_DATA_SELECTSIDE;
 				msg += ": " + sltside;
 				msg += " is a wrong input";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 			}
 
 		}
@@ -481,7 +481,7 @@ LAPriceEventTool::setUp(const LADate& basedate, const LAObject& trade,
 		if (isChangeTriggerTargetValue)
 		{	
 			if (!isLSMC) mpOperator->setParam((*pCoeff)[ii]);
-			mAction[i]->mpOperator = dynamic_cast<LAFunctionBase*>(mpOperator->clone());
+			mAction[i]->mpOperator = dynamic_cast<AQLFunctionBase*>(mpOperator->clone());
 			mAction[i]->mOperatorHolder.set(mAction[i]->mpOperator, true);
 		}
 		else 

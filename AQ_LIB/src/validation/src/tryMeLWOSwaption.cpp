@@ -68,7 +68,7 @@ namespace validation
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption PV
 	*/
-	double tryMeLWOSwaptionPV(const std::string& objectName, const LAStringMatrix& valuationSettingsLVB )
+	double tryMeLWOSwaptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
 	{
 		VALID_EXCEPTION_START
 
@@ -94,7 +94,7 @@ namespace validation
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption implied vol
 	*/
-	double tryMeLWOSwaptionImpliedVol(const std::string& objectName, const double & price, const LAStringMatrix& valuationSettingsLVB )
+	double tryMeLWOSwaptionImpliedVol(const std::string& objectName, const double & price, const AQLStringMatrix& valuationSettingsLVB )
     {
         VALID_EXCEPTION_START
 
@@ -119,7 +119,7 @@ namespace validation
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Delta
 	*/
-	double tryMeLWOSwaptionDelta(const std::string& objectName, const LAStringMatrix& valuationSettingsLVB )
+	double tryMeLWOSwaptionDelta(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
     {
         VALID_EXCEPTION_START
 
@@ -144,7 +144,7 @@ namespace validation
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Gamma
 	*/
-	double tryMeLWOSwaptionGamma(const std::string& objectName, const LAStringMatrix& valuationSettingsLVB )
+	double tryMeLWOSwaptionGamma(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
     {
         VALID_EXCEPTION_START
 
@@ -169,7 +169,7 @@ namespace validation
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Vega
 	*/
-	double tryMeLWOSwaptionVega(const std::string& objectName, const LAStringMatrix& valuationSettingsLVB )
+	double tryMeLWOSwaptionVega(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
     {
         VALID_EXCEPTION_START
 
@@ -194,7 +194,7 @@ namespace validation
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Theta
 	*/
-	double tryMeLWOSwaptionTheta(const std::string& objectName, const LAStringMatrix& valuationSettingsLVB )
+	double tryMeLWOSwaptionTheta(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB )
     {
         VALID_EXCEPTION_START
 

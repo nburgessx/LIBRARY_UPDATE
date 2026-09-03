@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
  
 
 
@@ -21,10 +21,10 @@
 /*! 
     @brief Class declaration to represent Product function.
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
-class LAProductMethod : public LAFunctionBase
+class LAProductMethod : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
@@ -43,7 +43,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;// %%% COVARIANT RETURN %%%
+    virtual AQLCoreFunctionBase*     clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -55,38 +55,38 @@ public:
 								// return function value
 	virtual double				operator()(double x) const
 								{
-									return LAFunctionBase::operator()(x);								
+									return AQLFunctionBase::operator()(x);								
 								}
 
 
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								};
 
 	                            //==========================================
 								// return integral result
 	virtual double				integral(const std::vector<std::pair<double,double> >& x) const
 								{
-									return LAFunctionBase::integral(x);
+									return AQLFunctionBase::integral(x);
 								}
 
 	                            //==========================================
 								// return integral result
 	virtual double				integral(double xl, double xu) const
 								{
-									return LAFunctionBase::integral(xl, xu);
+									return AQLFunctionBase::integral(xl, xu);
 								}
 	
 	virtual double				integral(const std::vector<std::pair<double,double> >& x,
-										const LAIntegralBase* pIntegral) const
+										const AQLIntegralBase* pIntegral) const
 								{
-									return LAFunctionBase::integral(x, pIntegral);
+									return AQLFunctionBase::integral(x, pIntegral);
 								};
 	virtual double				integral(double xl, double xu,
-										const LA1DIntegral* pIntegral) const
+										const AQL1DIntegral* pIntegral) const
 								{
-									return LAFunctionBase::integral(xl, xu, pIntegral);
+									return AQLFunctionBase::integral(xl, xu, pIntegral);
 								};
 
 	                            //==========================================

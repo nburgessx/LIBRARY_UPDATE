@@ -10,7 +10,7 @@
  */
 
 #pragma once
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CoreEnumerations.h"
 
 namespace google_test

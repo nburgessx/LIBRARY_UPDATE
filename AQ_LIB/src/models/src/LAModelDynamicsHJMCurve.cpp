@@ -15,10 +15,10 @@
 
 
 #include "LAModelDynamicsHJMCurve.h"
-#include "LAAlgorithm.h"
-#include "LA1DDataSet.h"
-#include "LAGaussLegendre.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQL1DDataSet.h"
+#include "AQLGaussLegendre.h"
+#include "AQLBasic.h"
 
 using namespace std;
 const double INFINITESIMAL = 1E-7; 
@@ -38,12 +38,12 @@ LARatesPathElementHJMCurve::LARatesPathElementHJMCurve(const DoubleArray& tenor,
 	if (tenor.size() <= 1 || (tenor[0] == 0.0 && tenor.size() <= 2))
 	{
 		//error
-		throw LACoreInvalidData("tenor size is one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size is one", __FILE__, __LINE__);
 	}
 	if (tenor.size() != delta_tenor.size() + 1)
 	{
 		//error
-		throw LACoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
 	}
 
 	mpRefCount = new int(1);
@@ -111,7 +111,7 @@ LARatesPathElementHJMCurve::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -130,9 +130,9 @@ LARatesPathElementHJMCurve::operator = (const LARatesPathElementHJMCurve& a)
 /*	if (!a.isTypeOf(PE_HJMCURVE)) 
 	{	// 
 		// 
-		LAString err = "Assignment error for LARatesPathElementHJMCurve : from ";
-		err += LAString(a.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignment error for LARatesPathElementHJMCurve : from ";
+		err += AQLString(a.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}*/
 
 	// 
@@ -161,31 +161,31 @@ LARatesPathElementHJMCurve::getP (double T) const
 {
 	if (m_t > T + INFINITESIMAL)
 	{
-		throw LACoreInvalidData("maturity is before start", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("maturity is before start", __FILE__, __LINE__);
 	}
 	else if (T > mpTenor->back() + INFINITESIMAL)
 	{
-		throw LACoreInvalidData("maturity is after last tenor", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("maturity is after last tenor", __FILE__, __LINE__);
 	}
 	else if (m_t >= T) return 1.0;
 	else if (m_t == 0.0) return mpInitialCurve->getP(T);
 	
 
 	unsigned int pos  = 0;
-	LAGaussLegendre GL(GAUSSLEGENDREPOINTNUM);// integral method
+	AQLGaussLegendre GL(GAUSSLEGENDREPOINTNUM);// integral method
 
-	LAAlgorithm::locate<DoubleArray,double>(*mpTenor, m_t, mpTenor->size(), pos);
+	AQLAlgorithm::locate<DoubleArray,double>(*mpTenor, m_t, mpTenor->size(), pos);
 	
 	DoubleArray tenor = *mpTenor;
 	tenor.erase(tenor.begin(), tenor.begin() + pos + 1);
 
-	LA1DDataSet method;
+	AQL1DDataSet method;
 	//method.setParam(mValue);
 	method.set(tenor, mValue);
 	method.setInterpolation(*mpInter);
 	
 	double ret = method.integral(m_t, T, &GL);
-	ret = LAMath::exp(-ret * (T - m_t));
+	ret = AQLMath::exp(-ret * (T - m_t));
 
 	return ret;	//method.integral(m_t, T, &GL);
 
@@ -217,10 +217,10 @@ LARatesPathElementHJMCurve::set_t(void)
 		return;
 	}	
 	unsigned int pos;
-	LAAlgorithm::locate<DoubleArray, double>(*mpTenor, m_t, mpTenor->size(), pos);
+	AQLAlgorithm::locate<DoubleArray, double>(*mpTenor, m_t, mpTenor->size(), pos);
 	if (pos == mpTenor->size())
 	{
-		throw LACoreInvalidData("curve start time is after last tenor", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("curve start time is after last tenor", __FILE__, __LINE__);
 	}
 	else if ((*mpTenor)[pos] == m_t)
 	{
@@ -244,7 +244,7 @@ LARatesPathElementHJMCurve::set_t(void)
 		if (diff > INFINITESIMAL)
 		{
 			//error
-			throw LACoreInvalidData("Curve start time is not on tenor grid", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Curve start time is not on tenor grid", __FILE__, __LINE__);
 		}
 	}
 	
@@ -313,7 +313,7 @@ LARatesPathElementHJMCurve::set(const LARatesPathElementBase& a)
 
 }
 void
-LARatesPathElementHJMCurve::setInterpolationMethod(LAInterpolationBase* pinter) 
+LARatesPathElementHJMCurve::setInterpolationMethod(AQLInterpolationBase* pinter) 
 {
 	mpInter = pinter; 
 }

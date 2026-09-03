@@ -11,27 +11,27 @@
 
 #include "LAUpdateCurveObject.h"
 #include <fstream>
-#include "LADataInstance.h"
-#include "LAFunctionManager.h"
-#include "LAPriceDataManager.h"
-#include "LADataReference.h"
-#include "LADataMatrix.h"
+#include "AQLDataInstance.h"
+#include "AQLFunctionManager.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataReference.h"
+#include "AQLDataMatrix.h"
 #include "LAMathYieldCurve.h"
 #include "LARatesCurveLinearInterpolation.h"
 #include "LAStaticData.h"
 #include "LADealUtils.h"
-#include "LADataVector.h"
-#include "LADataProcedure.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAMonotoneSplineInterpolation.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
+#include "AQLDataVector.h"
+#include "AQLDataProcedure.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLMonotoneSplineInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMarketData.h"
 #include "LAPriceArbFreeGenerator.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LADateHelpers.h"
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
@@ -75,7 +75,7 @@ using namespace std;
 
 
 // constructor
-LAUpdateCurveObject::LAUpdateCurveObject(const LAString &baseCurrency)
+LAUpdateCurveObject::LAUpdateCurveObject(const AQLString &baseCurrency)
 	: LAObjectPoolBase(), mBaseCurrency(baseCurrency)
 {
 }
@@ -93,7 +93,7 @@ LAUpdateCurveObject::~LAUpdateCurveObject(void)
 	@param[out] sde
 */
 void
-LAUpdateCurveObject::setInterpolationMethod(const LAString &currency, LARatesSDEBase &sde) const
+LAUpdateCurveObject::setInterpolationMethod(const AQLString &currency, LARatesSDEBase &sde) const
 {
 	(void)currency;
 	sde.setInterpolationMethod(new LARatesCurveLinearInterpolation());
@@ -109,7 +109,7 @@ LAUpdateCurveObject::setInterpolationMethod(const LAString &currency, LARatesSDE
 	@param[in] dataInstance
 */
 void
-LAUpdateCurveObject::loadModelDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance, const bool isModel, const bool isModelData, const LAString & curveIndex, const LAString & marketName ) const
+LAUpdateCurveObject::loadModelDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance, const bool isModel, const bool isModelData, const AQLString & curveIndex, const AQLString & marketName ) const
 {
 	if (isModel)
 	{
@@ -132,32 +132,32 @@ LAUpdateCurveObject::loadModelDataAndCalibrate(const LAString &currency, LADataI
 	@param[in/out] dataInstance
 */
 void
-LAUpdateCurveObject::loadFwdFXConstCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance, const LAString & curveID, const LAString & marketName) const
+LAUpdateCurveObject::loadFwdFXConstCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance, const AQLString & curveID, const AQLString & marketName) const
 {
 	if (!isFwdFXConst(currency))
 		return;
-	LAString ccy = currency; ccy.toLower();
+	AQLString ccy = currency; ccy.toLower();
 
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	bool isPricer = false;
-	LAString strIsPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
+	AQLString strIsPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
 	if (strIsPricer == "TRUE") isPricer = true;
 	bool isSetCurveID = false;
-	LAString strIsSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
+	AQLString strIsSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
 	if (strIsSetCurveID == "TRUE") isSetCurveID = true;
 
-	LAString market = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_FWDFXCONST_USEMARKET);
+	AQLString market = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_FWDFXCONST_USEMARKET);
 
 	// get curve ccy and name
-	LAString strFCurve, strDCurve, strA_fCurve, strA_dCurve;
-	LAString ccy_fCurve, ccy_dCurve, ccy_a_fCurve, ccy_a_dCurve;
-	LAString fCurve, dCurve, a_fCurve, a_dCurve;
-	LAString suffixLowerCase = "." + LAString(market).toLower();
-	LAString epSuffix = LAString(market).toUpper();
-	LAString basisTarget = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_BASIS_TARGET + suffixLowerCase).toUpper();
+	AQLString strFCurve, strDCurve, strA_fCurve, strA_dCurve;
+	AQLString ccy_fCurve, ccy_dCurve, ccy_a_fCurve, ccy_a_dCurve;
+	AQLString fCurve, dCurve, a_fCurve, a_dCurve;
+	AQLString suffixLowerCase = "." + AQLString(market).toLower();
+	AQLString epSuffix = AQLString(market).toUpper();
+	AQLString basisTarget = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_BASIS_TARGET + suffixLowerCase).toUpper();
 	if (basisTarget == LEG1FORECAST || basisTarget == LEG2FORECAST)
 	{
-		throw LACoreInvalidData("fwdfx constant curve must be discount curve!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("fwdfx constant curve must be discount curve!", __FILE__, __LINE__);
 	}
 	else if (basisTarget == LEG1DISCOUNT)
 	{
@@ -175,20 +175,20 @@ LAUpdateCurveObject::loadFwdFXConstCurveDataAndCalibrate(const LAString &currenc
 	}
 	else
 	{
-		throw LACoreInvalidData("basisTarget curve is invalid!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("basisTarget curve is invalid!", __FILE__, __LINE__);
 	}
 	convertCurveName(strFCurve, ccy, ccy_fCurve, fCurve, isPricer, objPool);
 	convertCurveName(strDCurve, ccy, ccy_dCurve, dCurve, isPricer, objPool);
 	convertCurveName(strA_fCurve, ccy, ccy_a_fCurve, a_fCurve, isPricer, objPool);
 	convertCurveName(strA_dCurve, ccy, ccy_a_dCurve, a_dCurve, isPricer, objPool);
 	if (ccy_dCurve != ccy || ccy_fCurve != ccy || ccy_a_dCurve != ccy_a_fCurve)
-		throw LACoreInvalidData("currency of curve is inconsistent!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("currency of curve is inconsistent!", __FILE__, __LINE__);
 
-	const LAString &ycProName = LAMarketData::getBaseYieldProName(ccy);
+	const AQLString &ycProName = LAMarketData::getBaseYieldProName(ccy);
 	CurveCalibrationData &curveCalibrationData = dynamic_cast<CurveCalibrationData &>(objPool.getObject(ycProName).get());
 
-	LAObjectHolder& yData = curveCalibrationData.getYieldData().get();
-	LAString ydName = yData.getName();
+	AQLObjectHolder& yData = curveCalibrationData.getYieldData().get();
+	AQLString ydName = yData.getName();
 	if (isSetCurveID)
 		ydName = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATECURVEID);
 
@@ -202,23 +202,23 @@ LAUpdateCurveObject::loadFwdFXConstCurveDataAndCalibrate(const LAString &currenc
 	CurveCalibrationData* colYCPro = NULL;
 	if (!isPricer)
 	{
-		const LAString &colYCProName = LAMarketData::getBaseYieldProName(ccy_a_fCurve);
+		const AQLString &colYCProName = LAMarketData::getBaseYieldProName(ccy_a_fCurve);
 		colYCPro = &(dynamic_cast<CurveCalibrationData &>(objPool.getObject(colYCProName).get()));
 		colYCPro->setColAffectingCcy(ccy.toUpper());
 		curveCalibrationData.setColAffectedCcy(ccy_a_fCurve.toUpper());
 	}
-	const LAString &fYCName = LAMarketData::getBaseYieldName(ccy_a_fCurve);
+	const AQLString &fYCName = LAMarketData::getBaseYieldName(ccy_a_fCurve);
 	LAMathYieldCurve& fYC = dynamic_cast<LAMathYieldCurve &>(objPool.getObject(fYCName).get());
-	const LAString &fYDName = fYC.getYieldData().get().getName();
+	const AQLString &fYDName = fYC.getYieldData().get().getName();
 	curveCalibrationData.getColYieldData().convertFromString(fYDName);
 
 	// save market data
-	LAObject *mktData = NULL;
-	LAString basicCurveName = ydName + "_" + market.toUpper() + "_" + LAString(static_cast<int>(0));
-	const LAObjectHolder ehbasis = objPool.getObject(basicCurveName);
+	AQLObject *mktData = NULL;
+	AQLString basicCurveName = ydName + "_" + market.toUpper() + "_" + AQLString(static_cast<int>(0));
+	const AQLObjectHolder ehbasis = objPool.getObject(basicCurveName);
 	if (!ehbasis.isDefined())
 	{
-		mktData = new LAObject();
+		mktData = new AQLObject();
 		objPool.set(basicCurveName, mktData);
 	}
 	else
@@ -226,26 +226,26 @@ LAUpdateCurveObject::loadFwdFXConstCurveDataAndCalibrate(const LAString &currenc
 		objPool.getObject(basicCurveName).get().clear();
 		mktData = &objPool.getObject(basicCurveName).get();
 	}
-	mktData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(basicCurveName);
-	mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_FWDFXCONST);
-	mktData->add(IR_CALIBRATION_DATA_FORECAST, new LADataString()).convertFromString(fCurve);
-	mktData->add(IR_CALIBRATION_DATA_DISCOUNT, new LADataString()).convertFromString(dCurve);
-	mktData->add(IR_CALIBRATION_DATA_AGTFORECAST, new LADataString()).convertFromString(a_fCurve);
-	mktData->add(IR_CALIBRATION_DATA_AGTDISCOUNT, new LADataString()).convertFromString(a_dCurve);
+	mktData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(basicCurveName);
+	mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_FWDFXCONST);
+	mktData->add(IR_CALIBRATION_DATA_FORECAST, new AQLDataString()).convertFromString(fCurve);
+	mktData->add(IR_CALIBRATION_DATA_DISCOUNT, new AQLDataString()).convertFromString(dCurve);
+	mktData->add(IR_CALIBRATION_DATA_AGTFORECAST, new AQLDataString()).convertFromString(a_fCurve);
+	mktData->add(IR_CALIBRATION_DATA_AGTDISCOUNT, new AQLDataString()).convertFromString(a_dCurve);
 
-	LAStringVector tokens = strA_fCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector tokens = strA_fCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
 	if (tokens.size() == 2)
 	{
-		LAString againstCurveCollectionID = tokens[0];
-		mktData->add(IR_CALIBRATION_DATA_AGTCURVECOLLECTION, new LADataString()).convertFromString(againstCurveCollectionID);
+		AQLString againstCurveCollectionID = tokens[0];
+		mktData->add(IR_CALIBRATION_DATA_AGTCURVECOLLECTION, new AQLDataString()).convertFromString(againstCurveCollectionID);
 	}
 
-	curveCalibrationData.LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + epSuffix);
-	curveCalibrationData.LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + epSuffix, new LADataMultiReference()).convertFromString(basicCurveName);
+	curveCalibrationData.AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + epSuffix);
+	curveCalibrationData.AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + epSuffix, new AQLDataMultiReference()).convertFromString(basicCurveName);
 
 	// save assigned curves
-	LAStringVector assignedCurves;
-	LAString strAssignedCurves = mpStaticData->getStaticData(ccy.toLower() + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + suffixLowerCase);
+	AQLStringVector assignedCurves;
+	AQLString strAssignedCurves = mpStaticData->getStaticData(ccy.toLower() + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + suffixLowerCase);
 	if (strAssignedCurves != AQ_NO_DATA)
 	{
 		assignedCurves = strAssignedCurves.toToken(MULTI_STATIC_DATA_DELIMITER);
@@ -259,18 +259,18 @@ LAUpdateCurveObject::loadFwdFXConstCurveDataAndCalibrate(const LAString &currenc
 	}
 
 	// set curve type
-	LAString curveType = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffixLowerCase);
+	AQLString curveType = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffixLowerCase);
 	if (curveType != AQ_NO_DATA)
 	{
-		curveCalibrationData.LAObject::remove(CALIBRATION_DATA_CURVETYPE + LAString("_") + epSuffix);
-		curveCalibrationData.LAObject::add(CALIBRATION_DATA_CURVETYPE + LAString("_") + epSuffix, new LADataString(curveType.toUpper()));
+		curveCalibrationData.AQLObject::remove(CALIBRATION_DATA_CURVETYPE + AQLString("_") + epSuffix);
+		curveCalibrationData.AQLObject::add(CALIBRATION_DATA_CURVETYPE + AQLString("_") + epSuffix, new AQLDataString(curveType.toUpper()));
 
-		yData.remove(CALIBRATION_DATA_CURVETYPE + LAString("_") + epSuffix);
-		yData.add(CALIBRATION_DATA_CURVETYPE + LAString("_") + epSuffix, new LADataString(curveType.toUpper()));
+		yData.remove(CALIBRATION_DATA_CURVETYPE + AQLString("_") + epSuffix);
+		yData.add(CALIBRATION_DATA_CURVETYPE + AQLString("_") + epSuffix, new AQLDataString(curveType.toUpper()));
 	}
 
 	// set interpolation
-	LAString genInterp = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase);
+	AQLString genInterp = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase);
 	if (genInterp == AQ_NO_DATA)
 	{
 		genInterp = FN_SPLINEINTERPOLATION_STR;
@@ -281,12 +281,12 @@ LAUpdateCurveObject::loadFwdFXConstCurveDataAndCalibrate(const LAString &currenc
 	}
 	else
 	{
-		curveCalibrationData.LAObject::remove(CALIBRATION_DATA_INTERPOLATION + LAString("_") + epSuffix);
-		curveCalibrationData.LAObject::add(CALIBRATION_DATA_INTERPOLATION + LAString("_") + epSuffix, new LAPriceDataInterpolation()).convertFromString(genInterp);
+		curveCalibrationData.AQLObject::remove(CALIBRATION_DATA_INTERPOLATION + AQLString("_") + epSuffix);
+		curveCalibrationData.AQLObject::add(CALIBRATION_DATA_INTERPOLATION + AQLString("_") + epSuffix, new AQLPriceDataInterpolation()).convertFromString(genInterp);
 	}
 
 	// set yieldgen interpolation
-	LAString genYieldGenInterp = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_YIELDGEN_INTERPOLATION + suffixLowerCase);
+	AQLString genYieldGenInterp = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_YIELDGEN_INTERPOLATION + suffixLowerCase);
 	if (genYieldGenInterp == AQ_NO_DATA)
 	{
 		if (genInterp != AQ_NO_DATA)
@@ -304,8 +304,8 @@ LAUpdateCurveObject::loadFwdFXConstCurveDataAndCalibrate(const LAString &currenc
 	}
 	else
 	{
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONYG + LAString("_") + epSuffix);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_INTERPOLATIONYG + LAString("_") + epSuffix, new LAPriceDataInterpolation()).convertFromString(genYieldGenInterp);
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONYG + AQLString("_") + epSuffix);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONYG + AQLString("_") + epSuffix, new AQLPriceDataInterpolation()).convertFromString(genYieldGenInterp);
 	}
 
 	// calc curve
@@ -323,67 +323,67 @@ LAUpdateCurveObject::loadFwdFXConstCurveDataAndCalibrate(const LAString &currenc
 
 	@param[in/out] dataInstance
 */
-void LAUpdateCurveObject::loadCheapestToDeliverCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance) const
+void LAUpdateCurveObject::loadCheapestToDeliverCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
-	LAString ccy = currency;
+	AQLString ccy = currency;
 	ccy.toLower();
 
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
 	bool isPricer = false;
-	LAString strIsPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
+	AQLString strIsPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
 	if (strIsPricer == "TRUE")
 	{
 		isPricer = true;
 	}
 
 	bool isSetCurveID = false;
-	LAString strIsSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
+	AQLString strIsSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
 	if (strIsSetCurveID == "TRUE")
 	{
 		isSetCurveID = true;
 	}
 
 	// Curve name and yieldCurvePro
-	const LAString &ycProName = LAMarketData::getBaseYieldProName(ccy);
-	LAObjectHolder objHolder = objPool.getObject(ycProName);
+	const AQLString &ycProName = LAMarketData::getBaseYieldProName(ccy);
+	AQLObjectHolder objHolder = objPool.getObject(ycProName);
 	if (!objHolder.isDefined())
 	{
-		LAString err = "#Error: CurveCollection for currency '" + ccy + "' is not defined. Please check your CurveCollection";
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "#Error: CurveCollection for currency '" + ccy + "' is not defined. Please check your CurveCollection";
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	CurveCalibrationData &curveCalibrationData = dynamic_cast<CurveCalibrationData &>(objHolder.get());
 
-	LAObjectHolder& yData = curveCalibrationData.getYieldData().get();
-	LAString ydName = yData.getName();
+	AQLObjectHolder& yData = curveCalibrationData.getYieldData().get();
+	AQLString ydName = yData.getName();
 	if (isSetCurveID)
 	{
 		ydName = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATECURVEID);
 	}
 
 	// set asofdate
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 	yData.remove(CALIBRATION_DATA_ASOFDATE);
-	yData.add(CALIBRATION_DATA_ASOFDATE, new LADataDate(asOfDate));
+	yData.add(CALIBRATION_DATA_ASOFDATE, new AQLDataDate(asOfDate));
 
 	// set currency
 	yData.remove(IR_CALIBRATION_DATA_CURRENCY);
-	yData.add(IR_CALIBRATION_DATA_CURRENCY, new LADataString(currency));
+	yData.add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString(currency));
 
 	// Curve name
-	LAString market = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET).toUpper();
-	LAString suffixLowerCase = "." + market;
+	AQLString market = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET).toUpper();
+	AQLString suffixLowerCase = "." + market;
 	suffixLowerCase.toLower();
-	LAString epSuffix = market;
+	AQLString epSuffix = market;
 	epSuffix.toUpper();
 
 	// save market data
-	LAObject *mktData = NULL;
-	LAString basicCurveName = ydName + "_" + epSuffix;
-	const LAObjectHolder ehbasis = objPool.getObject(basicCurveName);
+	AQLObject *mktData = NULL;
+	AQLString basicCurveName = ydName + "_" + epSuffix;
+	const AQLObjectHolder ehbasis = objPool.getObject(basicCurveName);
 	if (!ehbasis.isDefined())
 	{
-		mktData = new LAObject();
+		mktData = new AQLObject();
 		objPool.set(basicCurveName, mktData);
 	}
 	else
@@ -393,23 +393,23 @@ void LAUpdateCurveObject::loadCheapestToDeliverCurveDataAndCalibrate(const LAStr
 	}
 
 	// Convention data
-	LAString calendar = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_CALENDAR + suffixLowerCase).toUpper();
-	LAString dayCount = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_DAYCOUNT + suffixLowerCase).toUpper();
-	LAString businessAdj = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_SLIDINGRULE + suffixLowerCase).toUpper();
-	LAString frequency = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_FREQUENCY + suffixLowerCase).toUpper();
+	AQLString calendar = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_CALENDAR + suffixLowerCase).toUpper();
+	AQLString dayCount = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_DAYCOUNT + suffixLowerCase).toUpper();
+	AQLString businessAdj = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_SLIDINGRULE + suffixLowerCase).toUpper();
+	AQLString frequency = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_FREQUENCY + suffixLowerCase).toUpper();
 
-	mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(calendar);
-	mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(dayCount);
-	mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(businessAdj);
-	mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString()).convertFromString(frequency);
-	mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_CTD);
+	mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(calendar);
+	mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(dayCount);
+	mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(businessAdj);
+	mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString()).convertFromString(frequency);
+	mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_CTD);
 
-	curveCalibrationData.LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + epSuffix);
-	curveCalibrationData.LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + epSuffix, new LADataMultiReference()).convertFromString(basicCurveName);
+	curveCalibrationData.AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + epSuffix);
+	curveCalibrationData.AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + epSuffix, new AQLDataMultiReference()).convertFromString(basicCurveName);
 
 	// save assigned curves
-	LAStringVector assignedCurves;
-	LAString strAssignedCurves = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + suffixLowerCase);
+	AQLStringVector assignedCurves;
+	AQLString strAssignedCurves = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + suffixLowerCase);
 	if (strAssignedCurves != AQ_NO_DATA)
 	{
 		assignedCurves = strAssignedCurves.toToken(MULTI_STATIC_DATA_DELIMITER);
@@ -423,30 +423,30 @@ void LAUpdateCurveObject::loadCheapestToDeliverCurveDataAndCalibrate(const LAStr
 	}
 
 	// set curve type
-	LAString curveType = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffixLowerCase);
+	AQLString curveType = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffixLowerCase);
 	if (curveType != AQ_NO_DATA)
 	{
-		curveCalibrationData.LAObject::remove(CALIBRATION_DATA_CURVETYPE + LAString("_") + epSuffix);
-		curveCalibrationData.LAObject::add(CALIBRATION_DATA_CURVETYPE + LAString("_") + epSuffix, new LADataString(curveType.toUpper()));
+		curveCalibrationData.AQLObject::remove(CALIBRATION_DATA_CURVETYPE + AQLString("_") + epSuffix);
+		curveCalibrationData.AQLObject::add(CALIBRATION_DATA_CURVETYPE + AQLString("_") + epSuffix, new AQLDataString(curveType.toUpper()));
 
-		yData.remove(CALIBRATION_DATA_CURVETYPE + LAString("_") + epSuffix);
-		yData.add(CALIBRATION_DATA_CURVETYPE + LAString("_") + epSuffix, new LADataString(curveType.toUpper()));
+		yData.remove(CALIBRATION_DATA_CURVETYPE + AQLString("_") + epSuffix);
+		yData.add(CALIBRATION_DATA_CURVETYPE + AQLString("_") + epSuffix, new AQLDataString(curveType.toUpper()));
 	}
 
 	// Get CSA collateral curves
-	LAStringVector csaCurves;
-	LAString csaCurvesTemp = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_CTD_COLLATERALCURVES + suffixLowerCase);
+	AQLStringVector csaCurves;
+	AQLString csaCurvesTemp = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_CTD_COLLATERALCURVES + suffixLowerCase);
 	if (csaCurvesTemp != AQ_NO_DATA)
 	{
 		csaCurves = csaCurvesTemp.toToken(MULTI_STATIC_DATA_DELIMITER);
 	}
 	else
 	{
-		throw LACoreInvalidData("#Error: Must provide at least one CSA curve", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("#Error: Must provide at least one CSA curve", __FILE__, __LINE__);
 	}
 
 	// set interpolation
-	LAString genInterp = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase);
+	AQLString genInterp = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase);
 	if (genInterp == AQ_NO_DATA)
 	{
 		genInterp = FN_SPLINEINTERPOLATION_STR;
@@ -457,12 +457,12 @@ void LAUpdateCurveObject::loadCheapestToDeliverCurveDataAndCalibrate(const LAStr
 	}
 	else
 	{
-		curveCalibrationData.LAObject::remove(CALIBRATION_DATA_INTERPOLATION + LAString("_") + epSuffix);
-		curveCalibrationData.LAObject::add(CALIBRATION_DATA_INTERPOLATION + LAString("_") + epSuffix, new LAPriceDataInterpolation()).convertFromString(genInterp);
+		curveCalibrationData.AQLObject::remove(CALIBRATION_DATA_INTERPOLATION + AQLString("_") + epSuffix);
+		curveCalibrationData.AQLObject::add(CALIBRATION_DATA_INTERPOLATION + AQLString("_") + epSuffix, new AQLPriceDataInterpolation()).convertFromString(genInterp);
 	}
 
 	// set yieldgen interpolation
-	LAString genYieldGenInterp = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_YIELDGEN_INTERPOLATION + suffixLowerCase);
+	AQLString genYieldGenInterp = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_YIELDGEN_INTERPOLATION + suffixLowerCase);
 	if (genYieldGenInterp == AQ_NO_DATA)
 	{
 		if (genInterp != AQ_NO_DATA)
@@ -480,8 +480,8 @@ void LAUpdateCurveObject::loadCheapestToDeliverCurveDataAndCalibrate(const LAStr
 	}
 	else
 	{
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONYG + LAString("_") + epSuffix);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_INTERPOLATIONYG + LAString("_") + epSuffix, new LAPriceDataInterpolation()).convertFromString(genYieldGenInterp);
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONYG + AQLString("_") + epSuffix);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONYG + AQLString("_") + epSuffix, new AQLPriceDataInterpolation()).convertFromString(genYieldGenInterp);
 	}
 
 	// calc curve
@@ -500,7 +500,7 @@ void LAUpdateCurveObject::loadCheapestToDeliverCurveDataAndCalibrate(const LAStr
 	@param[in] objPool
 */
 void
-LAUpdateCurveObject::convertCurveName(const LAString &propCurve, const LAString &ccy, LAString &curveCcy, LAString &curveName, const bool isPricer, LAObjectPool& objPool) const
+LAUpdateCurveObject::convertCurveName(const AQLString &propCurve, const AQLString &ccy, AQLString &curveCcy, AQLString &curveName, const bool isPricer, AQLObjectPool& objPool) const
 {
 	if (propCurve.findString(DUMMY) >= 0)
 	{
@@ -508,7 +508,7 @@ LAUpdateCurveObject::convertCurveName(const LAString &propCurve, const LAString 
 	}
 	else
 	{
-		LAStringVector propCurves = propCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
+		AQLStringVector propCurves = propCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
 		if (propCurves.size() == 1)
 		{
 			curveCcy = ccy;
@@ -518,8 +518,8 @@ LAUpdateCurveObject::convertCurveName(const LAString &propCurve, const LAString 
 		{
 			if (isPricer)
 			{
-				LAObject* yieldData = &(objPool.getObject(propCurves[0], ENCHKTYPE_ISDEFINED).get());
-				curveCcy = dynamic_cast<LADataString&>((yieldData->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL)).get());
+				AQLObject* yieldData = &(objPool.getObject(propCurves[0], ENCHKTYPE_ISDEFINED).get());
+				curveCcy = dynamic_cast<AQLDataString&>((yieldData->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL)).get());
 				curveCcy.toLower();
 			}
 			else
@@ -530,7 +530,7 @@ LAUpdateCurveObject::convertCurveName(const LAString &propCurve, const LAString 
 		}
 		else
 		{
-			throw LACoreInvalidData("currency and curve name are not set!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("currency and curve name are not set!", __FILE__, __LINE__);
 		}
 	}
 }
@@ -541,12 +541,12 @@ LAUpdateCurveObject::convertCurveName(const LAString &propCurve, const LAString 
 	@param[in] freq : frequency
 	@return accessory
 */
-const LAString
-LAUpdateCurveObject::getAccFromFreq(const LAString &freq_) const
+const AQLString
+LAUpdateCurveObject::getAccFromFreq(const AQLString &freq_) const
 {
-	LAString freq = freq_;
+	AQLString freq = freq_;
 	freq.toUpper();
-	LAString acc;
+	AQLString acc;
 	if (freq == ANNUAL)
 	{
 		acc = "1Y";
@@ -565,8 +565,8 @@ LAUpdateCurveObject::getAccFromFreq(const LAString &freq_) const
 	}
 	else
 	{
-		LAString msg = "can't convert this frequency(" + freq_ + ") to accessory.";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "can't convert this frequency(" + freq_ + ") to accessory.";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	return acc;
 }
@@ -580,21 +580,21 @@ LAUpdateCurveObject::getAccFromFreq(const LAString &freq_) const
 	@param[out] dataInstance
 */
 void
-LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance) const
+LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	if (mCurveGenCcyMap[currency]) return;
 
-	LAString tmpCurrency = currency;
+	AQLString tmpCurrency = currency;
 	tmpCurrency.toLower();
 
 	// Get YieldCurve and CurveCalibrationData objects (as dataValues)
-	LAObjectPool &objPool = dataInstance.getObjectPool();
-	LAString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
+	AQLString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
 
-	LAString yieldName = LAMarketData::getBaseYieldName(currency);
+	AQLString yieldName = LAMarketData::getBaseYieldName(currency);
 
 	LAMathYieldCurve *yc = NULL;
-	const LAObjectHolder ehyc = objPool.getObject(yieldName);
+	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
 		yc = new LAMathYieldCurve(&dataInstance);
@@ -607,9 +607,9 @@ LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const LAString &curr
 	}
 	yc->getName().convertFromString(yieldName);
 
-	LAString curvePropertiesName = "PRO_" + yieldName;
+	AQLString curvePropertiesName = "PRO_" + yieldName;
 	CurveCalibrationData *curveCalibrationData = NULL;
-	const LAObjectHolder ehycpro = objPool.getObject(curvePropertiesName);
+	const AQLObjectHolder ehycpro = objPool.getObject(curvePropertiesName);
 	if (!ehycpro.isDefined())
 	{
 		curveCalibrationData = new CurveCalibrationData(&dataInstance);
@@ -625,16 +625,16 @@ LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const LAString &curr
 	curveCalibrationData->getIsArbFree().set(isArbFree);
 
 	// Get YieldData object (as an data)
-	LAObject *objectPool = NULL;
-	LAString yieldDataName = yieldName + "_DATA";
+	AQLObject *objectPool = NULL;
+	AQLString yieldDataName = yieldName + "_DATA";
 	if (isSetCurveID == "TRUE")
 	{
 		yieldDataName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATECURVEID);
 	}
-	const LAObjectHolder ehdata = objPool.getObject(yieldDataName);
+	const AQLObjectHolder ehdata = objPool.getObject(yieldDataName);
 	if (!ehdata.isDefined())
 	{
-		objectPool = new LAObject();
+		objectPool = new AQLObject();
 		objPool.set(yieldDataName, objectPool);
 	}
 	else
@@ -643,18 +643,18 @@ LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const LAString &curr
 		objectPool = &objPool.getObject(yieldDataName).get();
 	}
 	objectPool->remove(CALIBRATION_DATA_NAME);
-	objectPool->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(yieldDataName);
+	objectPool->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(yieldDataName);
 
 	// As of date
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 
 	// Main curve name
 	bool enableCalculation = true;
-	LAString target = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET);
+	AQLString target = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET);
 
 	if (target == AQ_NO_DATA)
 	{
-		throw LACoreInvalidData("#Error: Dual bootstrapping curve name is not detected", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("#Error: Dual bootstrapping curve name is not detected", __FILE__, __LINE__);
 	}
 	else
 	{
@@ -662,101 +662,101 @@ LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const LAString &curr
 	}
 
 	target.toUpper();
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new LADataString(target));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new AQLDataString(target));
 
-	LAString suffixCurveObj = (target == STD || target == SWAP) ? "" : "_" + target;
-	LAString suffixLowerCase = (target == STD || target == SWAP) ? "" : "." + target;
+	AQLString suffixCurveObj = (target == STD || target == SWAP) ? "" : "_" + target;
+	AQLString suffixLowerCase = (target == STD || target == SWAP) ? "" : "." + target;
 	suffixLowerCase.toLower();
 
 	// OIS curve name and suffixLowerCase
-	LAString currentCurveName_ois = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_OISCURVENAME + suffixLowerCase).toUpper();
+	AQLString currentCurveName_ois = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_OISCURVENAME + suffixLowerCase).toUpper();
 	if (currentCurveName_ois == AQ_NO_DATA)
 	{
-		throw LACoreInvalidData("#Error: OIS curve name is not found in performing dual bootstrapping", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("#Error: OIS curve name is not found in performing dual bootstrapping", __FILE__, __LINE__);
 	}
 
-	LAString suffix_ois = (currentCurveName_ois == STD || currentCurveName_ois == SWAP) ? "" : "." + currentCurveName_ois;
+	AQLString suffix_ois = (currentCurveName_ois == STD || currentCurveName_ois == SWAP) ? "" : "." + currentCurveName_ois;
 	suffix_ois.toLower();
 
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_DUALBOOTSTRAP_OISCURVE + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_DUALBOOTSTRAP_OISCURVE + suffixCurveObj, new LADataString(currentCurveName_ois));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_DUALBOOTSTRAP_OISCURVE + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_DUALBOOTSTRAP_OISCURVE + suffixCurveObj, new AQLDataString(currentCurveName_ois));
 
 	// Swap curve name and suffixLowerCase
-	LAString currentCurveName_swap = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_SWAPCURVENAME + suffixLowerCase);
+	AQLString currentCurveName_swap = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_SWAPCURVENAME + suffixLowerCase);
 	currentCurveName_swap.toUpper();
 	if (currentCurveName_swap == AQ_NO_DATA)
 	{
-		throw LACoreInvalidData("#Error: Swap curve name is not found in performing dual bootstrapping", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("#Error: Swap curve name is not found in performing dual bootstrapping", __FILE__, __LINE__);
 	}
 
-	LAString suffix_swap = (currentCurveName_swap == STD || currentCurveName_swap == SWAP) ? "" : "." + currentCurveName_swap;
+	AQLString suffix_swap = (currentCurveName_swap == STD || currentCurveName_swap == SWAP) ? "" : "." + currentCurveName_swap;
 	suffix_swap.toLower();
 
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_DUALBOOTSTRAP_SWAPCURVE + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_DUALBOOTSTRAP_SWAPCURVE + suffixCurveObj, new LADataString(currentCurveName_swap));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_DUALBOOTSTRAP_SWAPCURVE + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_DUALBOOTSTRAP_SWAPCURVE + suffixCurveObj, new AQLDataString(currentCurveName_swap));
 
 	//-----------------------------------------------------------------
 	// Extract common curve building parameters
 
-	LAObject& yldEntity = objPool.getObject(yieldDataName, ENCHKTYPE_ISDEFINED).get();
+	AQLObject& yldEntity = objPool.getObject(yieldDataName, ENCHKTYPE_ISDEFINED).get();
 
 	// Fast rebuild	
-	LAString tmpFastRebuild_str = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_FASTREBUILD + suffixLowerCase).toUpper();
+	AQLString tmpFastRebuild_str = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_FASTREBUILD + suffixLowerCase).toUpper();
 	bool fastRebuild = true;
 	if (tmpFastRebuild_str == "FALSE")
 	{
 		fastRebuild = false;
 	}
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj, new LADataBool(fastRebuild));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj, new AQLDataBool(fastRebuild));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj, new LADataBool(fastRebuild));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj, new AQLDataBool(fastRebuild));
 
 	//get constant for convergence
 	double eps = 1.0e-9;
-	LAString strEPS = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_EPSILON + suffixLowerCase);
+	AQLString strEPS = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_EPSILON + suffixLowerCase);
 	if (strEPS.toUpper() != AQ_NO_DATA)
 	{
 		eps = strEPS.getDoubleValue();
 	}
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj, new LADataDouble(eps));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj, new AQLDataDouble(eps));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj, new LADataDouble(eps));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj, new AQLDataDouble(eps));
 
 	double grad_eps = 1.0e-15;
-	LAString strGEPS = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_GRADIENTEPSILON + suffixLowerCase);
+	AQLString strGEPS = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_GRADIENTEPSILON + suffixLowerCase);
 	if (strGEPS.toUpper() != AQ_NO_DATA)
 	{
 		grad_eps = strGEPS.getDoubleValue();
 	}
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj, new LADataDouble(grad_eps));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj, new AQLDataDouble(grad_eps));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj, new LADataDouble(grad_eps));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj, new AQLDataDouble(grad_eps));
 
 	double delta = 1.0e-10;
-	LAString strDLT = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_DELTA + suffixLowerCase);
+	AQLString strDLT = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_DELTA + suffixLowerCase);
 	if (strDLT.toUpper() != AQ_NO_DATA)
 	{
 		delta = strDLT.getDoubleValue();
 	}
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj, new LADataDouble(delta));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj, new AQLDataDouble(delta));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj, new LADataDouble(delta));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj, new AQLDataDouble(delta));
 
 	int maxLoop = 1000;
-	LAString strMLP = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_MAXLOOP + suffixLowerCase);
+	AQLString strMLP = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_MAXLOOP + suffixLowerCase);
 	if (strMLP.toUpper() != AQ_NO_DATA)
 	{
 		maxLoop = strMLP.getIntValue();
 	}
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj, new LADataInt(maxLoop));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj, new AQLDataInt(maxLoop));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj, new LADataInt(maxLoop));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj, new AQLDataInt(maxLoop));
 
 	//-----------------------------------------------------------------
 	// Extract individual curve's configuration parameters
@@ -767,15 +767,15 @@ LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const LAString &curr
 	bool isSpotStarting = false;
 
 	// Set up curve Generate Config for the swap curve
-	LAString suffixCurveObj_swap = (currentCurveName_swap == STD || currentCurveName_swap == SWAP) ? "" : "_" + currentCurveName_swap;
+	AQLString suffixCurveObj_swap = (currentCurveName_swap == STD || currentCurveName_swap == SWAP) ? "" : "_" + currentCurveName_swap;
 	setUpGenerateConfig(dataInstance, asOfDate, currency, *yc, *curveCalibrationData, *objectPool, useTenorBasis, useTenorBasisInstruments, isSpotStarting, isArbFree, suffix_swap, suffixCurveObj_swap);
 
 	// Set up curve Generate Config for the OIS curve
-	LAString suffixCurveObj_ois = (currentCurveName_ois == STD || currentCurveName_ois == SWAP) ? "" : "_" + currentCurveName_ois;
+	AQLString suffixCurveObj_ois = (currentCurveName_ois == STD || currentCurveName_ois == SWAP) ? "" : "_" + currentCurveName_ois;
 	setUpGenerateConfig(dataInstance, asOfDate, currency, *yc, *curveCalibrationData, *objectPool, useTenorBasis, useTenorBasisInstruments, isSpotStarting, isArbFree, suffix_ois, suffixCurveObj_ois);
 
 	// Support on FX?
-	LAString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
+	AQLString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
 	if (fxName != AQ_NO_DATA)
 	{
 		curveCalibrationData->getFXEntity().convertFromString(fxName);
@@ -797,18 +797,18 @@ LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const LAString &curr
 		useTenorBasis,
 		useTenorBasisInstruments);
 
-	const std::map<LAString, LAString>& assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
-	for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+	const std::map<AQLString, AQLString>& assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
+	for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 	{
-		const LAString& curveName = it->first;
+		const AQLString& curveName = it->first;
 		curveCalibrationData->setDualBootstrapOISCurveMktMap(curveName, it->second);
 	}
 
 	// Store curve type to object pool under current engine name + current curve name
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_ois);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_ois, new LADataString("OIS"));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_ois);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_ois, new AQLDataString("OIS"));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_ois);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_ois, new LADataString("OIS"));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_ois, new AQLDataString("OIS"));
 
 	// Swap curve configuration
 	configureCurve(mpStaticData,
@@ -827,34 +827,34 @@ LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const LAString &curr
 		useTenorBasisInstruments);
 
 	// Store curve type to object pool under current engine name + current curve name
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_swap);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_swap, new LADataString("SWAP"));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_swap);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_swap, new AQLDataString("SWAP"));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_swap);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_swap, new LADataString("SWAP"));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_swap, new AQLDataString("SWAP"));
 
-	for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+	for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 	{
-		const LAString& curveName = it->first;
+		const AQLString& curveName = it->first;
 		curveCalibrationData->setDualBootstrapSwapCurveMktMap(curveName, it->second);
 	}
 
 	mCurveGenCcyMap[currency] = true;
 
 	// Store all curve names
-	LAString allCurveNames = currentCurveName_ois + LAString(MULTI_STATIC_DATA_DELIMITER) + currentCurveName_swap;
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj, new LADataString(allCurveNames));
+	AQLString allCurveNames = currentCurveName_ois + AQLString(MULTI_STATIC_DATA_DELIMITER) + currentCurveName_swap;
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj, new AQLDataString(allCurveNames));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj, new LADataString(allCurveNames));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj, new AQLDataString(allCurveNames));
 
 	// Get CurveCalibration out of CurveCalibrationData
-	LADataProcedure &modelDataObj = dynamic_cast<LADataProcedure &>(curveCalibrationData->getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
-	const LACoreProcedure& yieldGenProcedure = modelDataObj.getMethod();
+	AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &>(curveCalibrationData->getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
+	const AQLCoreProcedure& yieldGenProcedure = modelDataObj.getMethod();
 	const CurveCalibration& curveCalibrationEngine = dynamic_cast<const CurveCalibration&>(yieldGenProcedure);
 
 	// Peform dual-bootstrapping
-	LAObject* parent = dynamic_cast<LAObject*>(curveCalibrationData);
-	curveCalibrationEngine.dualbootstrap(asOfDate, *parent, LADataProcedure());
+	AQLObject* parent = dynamic_cast<AQLObject*>(curveCalibrationData);
+	curveCalibrationEngine.dualbootstrap(asOfDate, *parent, AQLDataProcedure());
 
 }
 
@@ -866,21 +866,21 @@ LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const LAString &curr
 @param[in] currency  currency of the curve
 @param[out] dataInstance
 */
-void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance) const
+void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	if (mCurveGenCcyMap[currency]) return;
 
-	LAString tmpCurrency = currency;
+	AQLString tmpCurrency = currency;
 	tmpCurrency.toLower();
 
 	// Get YieldCurve and CurveCalibrationData objects (as dataValues)
-	LAObjectPool &objPool = dataInstance.getObjectPool();
-	LAString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
+	AQLString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
 
-	LAString yieldName = LAMarketData::getBaseYieldName(currency);
+	AQLString yieldName = LAMarketData::getBaseYieldName(currency);
 
 	LAMathYieldCurve *yc = NULL;
-	const LAObjectHolder ehyc = objPool.getObject(yieldName);
+	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
 		yc = new LAMathYieldCurve(&dataInstance);
@@ -893,9 +893,9 @@ void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const LAString &curren
 	}
 	yc->getName().convertFromString(yieldName);
 
-	LAString curvePropertiesName = "PRO_" + yieldName;
+	AQLString curvePropertiesName = "PRO_" + yieldName;
 	CurveCalibrationData *curveCalibrationData = NULL;
-	const LAObjectHolder ehycpro = objPool.getObject(curvePropertiesName);
+	const AQLObjectHolder ehycpro = objPool.getObject(curvePropertiesName);
 	if (!ehycpro.isDefined())
 	{
 		curveCalibrationData = new CurveCalibrationData(&dataInstance);
@@ -911,16 +911,16 @@ void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const LAString &curren
 	curveCalibrationData->getIsArbFree().set(isArbFree);
 
 	// Get YieldData object (as an data)
-	LAObject *objectPool = NULL;
-	LAString yieldDataName = yieldName + "_DATA";
+	AQLObject *objectPool = NULL;
+	AQLString yieldDataName = yieldName + "_DATA";
 	if (isSetCurveID == "TRUE")
 	{
 		yieldDataName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATECURVEID);
 	}
-	const LAObjectHolder ehdata = objPool.getObject(yieldDataName);
+	const AQLObjectHolder ehdata = objPool.getObject(yieldDataName);
 	if (!ehdata.isDefined())
 	{
-		objectPool = new LAObject();
+		objectPool = new AQLObject();
 		objPool.set(yieldDataName, objectPool);
 	}
 	else
@@ -929,20 +929,20 @@ void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const LAString &curren
 		objectPool = &objPool.getObject(yieldDataName).get();
 	}
 	objectPool->remove(CALIBRATION_DATA_NAME);
-	objectPool->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(yieldDataName);
+	objectPool->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(yieldDataName);
 
-	LAObject& yldEntity = objPool.getObject(yieldDataName, ENCHKTYPE_ISDEFINED).get();
+	AQLObject& yldEntity = objPool.getObject(yieldDataName, ENCHKTYPE_ISDEFINED).get();
 
 	// As of date
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 
 	// Main curve name
 	bool enableCalculation = true;
-	LAString engineName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET);
+	AQLString engineName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET);
 
 	if (engineName == AQ_NO_DATA)
 	{
-		throw LACoreInvalidData("#Error: Name of the global yield curve calibration engine is not detected", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("#Error: Name of the global yield curve calibration engine is not detected", __FILE__, __LINE__);
 	}
 	else
 	{
@@ -950,72 +950,72 @@ void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const LAString &curren
 	}
 
 	engineName.toUpper();
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new LADataString(engineName));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new AQLDataString(engineName));
 
-	LAString suffixCurveObj = (engineName == STD || engineName == SWAP) ? "" : "_" + engineName;
-	LAString suffixLowerCase = (engineName == STD || engineName == SWAP) ? "" : "." + engineName;
+	AQLString suffixCurveObj = (engineName == STD || engineName == SWAP) ? "" : "_" + engineName;
+	AQLString suffixLowerCase = (engineName == STD || engineName == SWAP) ? "" : "." + engineName;
 	suffixLowerCase.toLower();
 
 	//-----------------------------------------------------------------
 	// Extract common curve building parameters
 
 	// Fast rebuild	
-	LAString tmpFastRebuild_str = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_FASTREBUILD + suffixLowerCase).toUpper();
+	AQLString tmpFastRebuild_str = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_FASTREBUILD + suffixLowerCase).toUpper();
 	bool fastRebuild = true;
 	if (tmpFastRebuild_str == "FALSE")
 	{
 		fastRebuild = false;
 	}
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj, new LADataBool(fastRebuild));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj, new AQLDataBool(fastRebuild));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj, new LADataBool(fastRebuild));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + suffixCurveObj, new AQLDataBool(fastRebuild));
 
 	//get constant for convergence
 	double eps = 1.0e-9;
-	LAString strEPS = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_EPSILON + suffixLowerCase);
+	AQLString strEPS = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_EPSILON + suffixLowerCase);
 	if (strEPS.toUpper() != AQ_NO_DATA)
 	{
 		eps = strEPS.getDoubleValue();
 	}
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj, new LADataDouble(eps));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj, new AQLDataDouble(eps));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj, new LADataDouble(eps));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + suffixCurveObj, new AQLDataDouble(eps));
 
 	double grad_eps = 1.0e-15;
-	LAString strGEPS = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_GRADIENTEPSILON + suffixLowerCase);
+	AQLString strGEPS = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_GRADIENTEPSILON + suffixLowerCase);
 	if (strGEPS.toUpper() != AQ_NO_DATA)
 	{
 		grad_eps = strGEPS.getDoubleValue();
 	}
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj, new LADataDouble(grad_eps));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj, new AQLDataDouble(grad_eps));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj, new LADataDouble(grad_eps));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + suffixCurveObj, new AQLDataDouble(grad_eps));
 
 	double delta = 1.0e-10;
-	LAString strDLT = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_DELTA + suffixLowerCase);
+	AQLString strDLT = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_DELTA + suffixLowerCase);
 	if (strDLT.toUpper() != AQ_NO_DATA)
 	{
 		delta = strDLT.getDoubleValue();
 	}
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj, new LADataDouble(delta));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj, new AQLDataDouble(delta));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj, new LADataDouble(delta));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + suffixCurveObj, new AQLDataDouble(delta));
 
 	int maxLoop = 1000;
-	LAString strMLP = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_MAXLOOP + suffixLowerCase);
+	AQLString strMLP = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GLOBALENGINECURVES_MAXLOOP + suffixLowerCase);
 	if (strMLP.toUpper() != AQ_NO_DATA)
 	{
 		maxLoop = strMLP.getIntValue();
 	}
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj, new LADataInt(maxLoop));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj, new AQLDataInt(maxLoop));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj, new LADataInt(maxLoop));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + suffixCurveObj, new AQLDataInt(maxLoop));
 
 	//-----------------------------------------------------------------------------------------------------------
 	// Loop through each curve in the engine and prepare its calibration parameters and data in the object pool
@@ -1025,39 +1025,39 @@ void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const LAString &curren
 	bool useTenorBasisInstruments = false;
 	bool isSpotStarting = false;
 
-	LAString allCurveTypes = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_GLOBALENGINECURVES_ALLCURVETYPES + suffixLowerCase);
-	LAStringVector curveTypeVector = allCurveTypes.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLString allCurveTypes = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_GLOBALENGINECURVES_ALLCURVETYPES + suffixLowerCase);
+	AQLStringVector curveTypeVector = allCurveTypes.toToken(MULTI_STATIC_DATA_DELIMITER);
 
-	LAString allCurveNames = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_GLOBALENGINECURVES_ALLCURVENAMES + suffixLowerCase);
-	LAStringVector curveNameVector = allCurveNames.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLString allCurveNames = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_GLOBALENGINECURVES_ALLCURVENAMES + suffixLowerCase);
+	AQLStringVector curveNameVector = allCurveNames.toToken(MULTI_STATIC_DATA_DELIMITER);
 
 	if (curveTypeVector.size() != curveNameVector.size())
 	{
 		AQ_THROW("Not all the curves in the global curve engine has been given a curve type.");
 	}
 
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj, new LADataString(allCurveNames));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj, new AQLDataString(allCurveNames));
 	yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj);
-	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj, new LADataString(allCurveNames));
+	yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_ALLCURVENAMES + suffixCurveObj, new AQLDataString(allCurveNames));
 
 	for (unsigned int i = 0; i < curveNameVector.size(); ++i)
 	{
 		// Get single curve's name and suffixLowerCase
-		LAString propertyManagerCurveName = curveNameVector[i].toUpper();
-		LAString propertyManagerCurveType = curveTypeVector[i].toUpper();
+		AQLString propertyManagerCurveName = curveNameVector[i].toUpper();
+		AQLString propertyManagerCurveType = curveTypeVector[i].toUpper();
 
-		LAString suffix_currentCurve = (propertyManagerCurveName == STD || propertyManagerCurveName == SWAP) ? "" : "." + propertyManagerCurveName;
+		AQLString suffix_currentCurve = (propertyManagerCurveName == STD || propertyManagerCurveName == SWAP) ? "" : "." + propertyManagerCurveName;
 		suffix_currentCurve.toLower();
 
-		LAString suffixCurveObj_currentCurve = (propertyManagerCurveName == STD || propertyManagerCurveName == SWAP) ? "" : "_" + propertyManagerCurveName;
+		AQLString suffixCurveObj_currentCurve = (propertyManagerCurveName == STD || propertyManagerCurveName == SWAP) ? "" : "_" + propertyManagerCurveName;
 		suffixCurveObj_currentCurve.toUpper();
 
 		// Store curve type to object pool under current engine name + current curve name
-		curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_currentCurve);
-		curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_currentCurve, new LADataString(propertyManagerCurveType));
+		curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_currentCurve);
+		curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_currentCurve, new AQLDataString(propertyManagerCurveType));
 		yldEntity.remove(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_currentCurve);
-		yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_currentCurve, new LADataString(propertyManagerCurveType));
+		yldEntity.add(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffixCurveObj + suffixCurveObj_currentCurve, new AQLDataString(propertyManagerCurveType));
 
 		// Set up curve Generate Config for the current curve
 		setUpGenerateConfig(dataInstance, asOfDate, currency, *yc, *curveCalibrationData, *objectPool, useTenorBasis, useTenorBasisInstruments, isSpotStarting, isArbFree, suffix_currentCurve, suffixCurveObj_currentCurve);
@@ -1078,10 +1078,10 @@ void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const LAString &curren
 			useTenorBasis,
 			useTenorBasisInstruments);
 
-		//const std::map<LAString, LAString>& assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
-		//for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+		//const std::map<AQLString, AQLString>& assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
+		//for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 		//{
-		//	const LAString& curveName = it->first;
+		//	const AQLString& curveName = it->first;
 		//	curveCalibrationData->setDualBootstrapOISCurveMktMap(curveName, it->second);
 		//}
 	}
@@ -1089,13 +1089,13 @@ void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const LAString &curren
 	mCurveGenCcyMap[currency] = true;
 
 	// Get CurveCalibration out of CurveCalibrationData
-	LADataProcedure &modelDataObj = dynamic_cast<LADataProcedure &>(curveCalibrationData->getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
-	const LACoreProcedure& yieldGenProcedure = modelDataObj.getMethod();
+	AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &>(curveCalibrationData->getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
+	const AQLCoreProcedure& yieldGenProcedure = modelDataObj.getMethod();
 	const CurveCalibration& curveCalibrationEngine = dynamic_cast<const CurveCalibration&>(yieldGenProcedure);
 
 	// Peform dual-bootstrapping
-	LAObject* parent = dynamic_cast<LAObject*>(curveCalibrationData);
-	curveCalibrationEngine.buildEngineCurves(asOfDate, *parent, LADataProcedure());
+	AQLObject* parent = dynamic_cast<AQLObject*>(curveCalibrationData);
+	curveCalibrationEngine.buildEngineCurves(asOfDate, *parent, AQLDataProcedure());
 
 }
 
@@ -1106,51 +1106,51 @@ void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const LAString &curren
 void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 	CurveCalibrationData *curveCalibrationData,
 	LAMathYieldCurve *yc,
-	LADataInstance &dataInstance,
-	const LADate& asOfDate,
-	const LAString& currency,
-	const LAString& curveName,
-	const LAString& yieldDataName,
-	const LAString& suffixLowerCase,
-	const LAString& suffixCurveObj,
+	AQLDataInstance &dataInstance,
+	const AQLDate& asOfDate,
+	const AQLString& currency,
+	const AQLString& curveName,
+	const AQLString& yieldDataName,
+	const AQLString& suffixLowerCase,
+	const AQLString& suffixCurveObj,
 	bool enableCalculation,
 	bool isSpotStarting,
 	bool useTenorBasis,
 	bool useTenorBasisInstruments) const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
-	LAString propertyManagerCurveType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffixLowerCase);
+	AQLString propertyManagerCurveType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffixLowerCase);
 	propertyManagerCurveType.toUpper();
 
 	// reference data for market pro
-	LAString staticDataName;
-	LAString tenorBasisStaticDataName;
-	std::map<LAString, std::map<LAString, double> > tenorBasisMarketQuotes;
+	AQLString staticDataName;
+	AQLString tenorBasisStaticDataName;
+	std::map<AQLString, std::map<AQLString, double> > tenorBasisMarketQuotes;
 
 	if (enableCalculation || propertyManagerCurveType == SWAP)
 	{
 		// Variable 'target' is essentially the name of the curve
-		setUpGenCurveData(dataInstance, staticDataName, asOfDate, currency, SWAP, yieldDataName, isSpotStarting, useTenorBasis, *curveCalibrationData, tenorBasisMarketQuotes, LAString(curveName).toUpper());
+		setUpGenCurveData(dataInstance, staticDataName, asOfDate, currency, SWAP, yieldDataName, isSpotStarting, useTenorBasis, *curveCalibrationData, tenorBasisMarketQuotes, AQLString(curveName).toUpper());
 	}
 
 	// Get isXccyMarkedToMarket
 	bool isXccyMarkedToMarket = false;
-	LAString isXccyMarkedToMarketString = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISRENOTIONALADJUST + suffixLowerCase).toUpper();
+	AQLString isXccyMarkedToMarketString = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISRENOTIONALADJUST + suffixLowerCase).toUpper();
 	if (isXccyMarkedToMarketString == "TRUE")
 	{
 		isXccyMarkedToMarket = true;
 	}
 
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_ISRENOTIONALADJUST + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_ISRENOTIONALADJUST + suffixCurveObj, new LADataBool(isXccyMarkedToMarket));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_ISRENOTIONALADJUST + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_ISRENOTIONALADJUST + suffixCurveObj, new AQLDataBool(isXccyMarkedToMarket));
 
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET + suffixCurveObj);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET + suffixCurveObj, new LADataBool(isXccyMarkedToMarket));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET + suffixCurveObj);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET + suffixCurveObj, new AQLDataBool(isXccyMarkedToMarket));
 
 	// Get the list of curve indexes
-	LAStringVector listOfCurvesBuilt;
-	LAString tmpMarket = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_USEMAKETS + suffixLowerCase).toUpper();
+	AQLStringVector listOfCurvesBuilt;
+	AQLString tmpMarket = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_USEMAKETS + suffixLowerCase).toUpper();
 	if (tmpMarket == AQ_NO_DATA)
 	{
 		listOfCurvesBuilt = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATEDFS).toToken(MULTI_STATIC_DATA_DELIMITER);
@@ -1168,45 +1168,45 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 		curveCalibrationData->getMarketData().convertFromString(staticDataName);
 	}
 
-	LADataHolder* dh;
-	LAStringVector swapCurveDiscountFactors;
+	AQLDataHolder* dh;
+	AQLStringVector swapCurveDiscountFactors;
 	dh = &curveCalibrationData->getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		swapCurveDiscountFactors = dynamic_cast<LADataStrings &>(dh->get()).get();
+		swapCurveDiscountFactors = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 	}
 
-	LAStringVector basisCurves;
+	AQLStringVector basisCurves;
 	dh = &curveCalibrationData->getData(IR_CALIBRATION_DATA_BASISDFS, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		basisCurves = dynamic_cast<LADataStrings &>(dh->get()).get();
+		basisCurves = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 	}
 
-	LAString tenorBasisDiscountFactors = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_DF2);
-	LAStringVector tenorBasisMarkets;
+	AQLString tenorBasisDiscountFactors = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_DF2);
+	AQLStringVector tenorBasisMarkets;
 	if (!listOfCurvesBuilt.empty() && listOfCurvesBuilt[0] != AQ_NO_DATA)
 	{
 		for (unsigned int i = 0; i < listOfCurvesBuilt.size(); ++i)
 		{
-			LAString thisCurveStaticData;
-			LAString suffixLowerCase = "." + listOfCurvesBuilt[i];
+			AQLString thisCurveStaticData;
+			AQLString suffixLowerCase = "." + listOfCurvesBuilt[i];
 			suffixLowerCase.toLower();
 
 			// set curve type			
-			LAString curveType;
-			LAObjectHolder& yieldData = curveCalibrationData->getYieldData().get();
+			AQLString curveType;
+			AQLObjectHolder& yieldData = curveCalibrationData->getYieldData().get();
 
 			if (listOfCurvesBuilt[i] == SWAP)
 			{
 				curveType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE);
 				if (curveType != AQ_NO_DATA)
 				{
-					curveCalibrationData->LAObject::remove(CALIBRATION_DATA_CURVETYPE);
-					curveCalibrationData->LAObject::add(CALIBRATION_DATA_CURVETYPE, new LADataString(curveType.toUpper()));
+					curveCalibrationData->AQLObject::remove(CALIBRATION_DATA_CURVETYPE);
+					curveCalibrationData->AQLObject::add(CALIBRATION_DATA_CURVETYPE, new AQLDataString(curveType.toUpper()));
 
 					yieldData.remove(CALIBRATION_DATA_CURVETYPE);
-					yieldData.add(CALIBRATION_DATA_CURVETYPE, new LADataString(curveType.toUpper()));
+					yieldData.add(CALIBRATION_DATA_CURVETYPE, new AQLDataString(curveType.toUpper()));
 				}
 			}
 			else
@@ -1214,11 +1214,11 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 				curveType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffixLowerCase);
 				if (curveType != AQ_NO_DATA)
 				{
-					curveCalibrationData->LAObject::remove(CALIBRATION_DATA_CURVETYPE + LAString("_") + listOfCurvesBuilt[i]);
-					curveCalibrationData->LAObject::add(CALIBRATION_DATA_CURVETYPE + LAString("_") + listOfCurvesBuilt[i], new LADataString(curveType.toUpper()));
+					curveCalibrationData->AQLObject::remove(CALIBRATION_DATA_CURVETYPE + AQLString("_") + listOfCurvesBuilt[i]);
+					curveCalibrationData->AQLObject::add(CALIBRATION_DATA_CURVETYPE + AQLString("_") + listOfCurvesBuilt[i], new AQLDataString(curveType.toUpper()));
 
-					yieldData.remove(CALIBRATION_DATA_CURVETYPE + LAString("_") + listOfCurvesBuilt[i]);
-					yieldData.add(CALIBRATION_DATA_CURVETYPE + LAString("_") + listOfCurvesBuilt[i], new LADataString(curveType.toUpper()));
+					yieldData.remove(CALIBRATION_DATA_CURVETYPE + AQLString("_") + listOfCurvesBuilt[i]);
+					yieldData.add(CALIBRATION_DATA_CURVETYPE + AQLString("_") + listOfCurvesBuilt[i], new AQLDataString(curveType.toUpper()));
 				}
 			}
 
@@ -1226,10 +1226,10 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 			{
 				if (enableCalculation || curveName == STD)
 				{
-					LAString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE);
+					AQLString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE);
 					if (aliasCurveNames != AQ_NO_DATA)
 					{
-						LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+						AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 						for (size_t i = 0; i < assignedCurves.size(); i++)
 						{
 							if (swapCurveDiscountFactors.end() == std::find(swapCurveDiscountFactors.begin(), swapCurveDiscountFactors.end(), assignedCurves[i]))
@@ -1258,14 +1258,14 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 				continue;
 			}
 
-			LAString marketType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_MARKETTYPE + suffixLowerCase).toUpper();
-			curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_MARKETTYPE + LAString("_") + listOfCurvesBuilt[i]);
-			curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_MARKETTYPE + LAString("_") + listOfCurvesBuilt[i], new LADataString(marketType));
+			AQLString marketType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_MARKETTYPE + suffixLowerCase).toUpper();
+			curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_MARKETTYPE + AQLString("_") + listOfCurvesBuilt[i]);
+			curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_MARKETTYPE + AQLString("_") + listOfCurvesBuilt[i], new AQLDataString(marketType));
 
 			if (marketType == AQ_NO_DATA)
 			{
-				LAString isBasisStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ISBASIS + suffixLowerCase).toUpper();
-				LAString isReadFile = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ISREADFILE + suffixLowerCase).toUpper();
+				AQLString isBasisStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ISBASIS + suffixLowerCase).toUpper();
+				AQLString isReadFile = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ISREADFILE + suffixLowerCase).toUpper();
 				if (isBasisStr == "TRUE")
 				{
 					marketType = MARKETTYPE_BASIS;
@@ -1281,7 +1281,7 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 			}
 
 			// set up interpolation
-			LAString strInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase).toUpper();
+			AQLString strInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase).toUpper();
 			if (strInter != AQ_NO_DATA)
 			{
 				yc->getInterpolation(listOfCurvesBuilt[i]).convertFromString(strInter.toLower());
@@ -1300,12 +1300,12 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 					continue;
 				}
 
-				LAString thisMarketName = listOfCurvesBuilt[i];
+				AQLString thisMarketName = listOfCurvesBuilt[i];
 				tenorBasisMarkets.push_back(listOfCurvesBuilt[i]);
-				LAString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + "." + thisMarketName.toLower());
+				AQLString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + "." + thisMarketName.toLower());
 				if (aliasCurveNames != AQ_NO_DATA && (enableCalculation || curveName == listOfCurvesBuilt[i]))
 				{
-					LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+					AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 					for (unsigned int j = 0; j < assignedCurves.size(); j++)
 					{
 						if (basisCurves.end() == std::find(basisCurves.begin(), basisCurves.end(), assignedCurves[j]))
@@ -1313,7 +1313,7 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 							basisCurves.push_back(assignedCurves[j]);
 						}
 					}
-					LAStringVector marketNames = listOfCurvesBuilt[i].toToken('_');
+					AQLStringVector marketNames = listOfCurvesBuilt[i].toToken('_');
 					if (marketNames.size() == 2)
 					{
 						setUpBasisCurveData(dataInstance, thisCurveStaticData, asOfDate, currency, marketNames[1], yieldDataName, isSpotStarting, *curveCalibrationData, curveName, &marketNames[0]);
@@ -1340,7 +1340,7 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 					else if (!enableCalculation && useTenorBasisInstruments)
 					{
 						//only entitysetup
-						LAString tenorswapname = dynamic_cast<const LADataString &>(curveCalibrationData->getData(IR_CALIBRATION_DATA_TENORSWAPNAME, ISNOTNULL).get());
+						AQLString tenorswapname = dynamic_cast<const AQLDataString &>(curveCalibrationData->getData(IR_CALIBRATION_DATA_TENORSWAPNAME, ISNOTNULL).get());
 						if (tenorswapname == listOfCurvesBuilt[i])
 						{
 							setUpBasisCurveData(dataInstance, thisCurveStaticData, asOfDate, currency, listOfCurvesBuilt[i], yieldDataName, isSpotStarting, *curveCalibrationData, curveName);
@@ -1371,11 +1371,11 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 					continue;
 				}
 
-				LAString thisMarketName = listOfCurvesBuilt[i];
-				LAString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + "." + thisMarketName.toLower());
+				AQLString thisMarketName = listOfCurvesBuilt[i];
+				AQLString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + "." + thisMarketName.toLower());
 				if (aliasCurveNames != AQ_NO_DATA)
 				{
-					LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+					AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 					for (size_t i = 0; i < assignedCurves.size(); i++)
 					{
 						if (swapCurveDiscountFactors.end() == std::find(swapCurveDiscountFactors.begin(), swapCurveDiscountFactors.end(), assignedCurves[i]))
@@ -1392,7 +1392,7 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 					}
 				}
 
-				LAString oisCompoundType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + suffixLowerCase).toUpper();
+				AQLString oisCompoundType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + suffixLowerCase).toUpper();
 				if (oisCompoundType.toUpper() == "DAILYCOMPOUNDING")
 				{
 					setUpGenCurveDataOIS(dataInstance, thisCurveStaticData, asOfDate, currency, listOfCurvesBuilt[i], yieldDataName, isSpotStarting, useTenorBasis, *curveCalibrationData, tenorBasisMarketQuotes);
@@ -1404,67 +1404,67 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 			}
 			else
 			{
-				throw LACoreInvalidData("Market type is not supported!!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Market type is not supported!!", __FILE__, __LINE__);
 			}
 
 			// set yield curve pro
 			thisCurveStaticData = thisCurveStaticData.subString(0, thisCurveStaticData.size() - 2);
-			LAStringVector marketNames = listOfCurvesBuilt[i].toToken('_');
+			AQLStringVector marketNames = listOfCurvesBuilt[i].toToken('_');
 			if (marketNames.size() == 2)
 			{
 				CurveCalibrationData &fYcPro = dynamic_cast<CurveCalibrationData &>
 					(objPool.getObject(LAMarketData::getBaseYieldProName(marketNames[0]), ENCHKTYPE_ISDEFINED).get());
-				fYcPro.LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + marketNames[1]);
-				fYcPro.LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + marketNames[1], new LADataMultiReference()).convertFromString(thisCurveStaticData);
+				fYcPro.AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + marketNames[1]);
+				fYcPro.AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + marketNames[1], new AQLDataMultiReference()).convertFromString(thisCurveStaticData);
 			}
 			else
 			{
-				curveCalibrationData->LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + listOfCurvesBuilt[i]);
-				curveCalibrationData->LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + listOfCurvesBuilt[i], new LADataMultiReference()).convertFromString(thisCurveStaticData);
+				curveCalibrationData->AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + listOfCurvesBuilt[i]);
+				curveCalibrationData->AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + listOfCurvesBuilt[i], new AQLDataMultiReference()).convertFromString(thisCurveStaticData);
 			}
 		}
 	}
 
 	//set tenorswap convention
-	LAString tenorSwapName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_TENORSWAPNAME).toUpper();
+	AQLString tenorSwapName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_TENORSWAPNAME).toUpper();
 	if (find(listOfCurvesBuilt.begin(), listOfCurvesBuilt.end(), tenorSwapName) == listOfCurvesBuilt.end() && tenorSwapName != AQ_NO_DATA)
 	{
-		LAString refData_tenor = "";
+		AQLString refData_tenor = "";
 		setUpBasisCurveData(dataInstance, refData_tenor, asOfDate, currency, tenorSwapName, yieldDataName, isSpotStarting, *curveCalibrationData, curveName);
 		refData_tenor = refData_tenor.subString(0, refData_tenor.size() - 2);
-		curveCalibrationData->LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + tenorSwapName);
-		curveCalibrationData->LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + tenorSwapName, new LADataMultiReference()).convertFromString(refData_tenor);
+		curveCalibrationData->AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + tenorSwapName);
+		curveCalibrationData->AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + tenorSwapName, new AQLDataMultiReference()).convertFromString(refData_tenor);
 	}
 
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GENERATEDFS);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GENERATEDFS, new LADataStrings(swapCurveDiscountFactors));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GENERATEDFS);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GENERATEDFS, new AQLDataStrings(swapCurveDiscountFactors));
 
 	if (tenorBasisDiscountFactors != AQ_NO_DATA)
 	{
-		curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_MAINBASISDF);
-		curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_MAINBASISDF, new LADataString(tenorBasisDiscountFactors));
+		curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_MAINBASISDF);
+		curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_MAINBASISDF, new AQLDataString(tenorBasisDiscountFactors));
 	}
 
 	dataInstance.getReferencePool().completeDependency();
 
 	// Whether to generate output forward rates only from swaps or from swaps + futures/FRA
-	LAString prioritizeSwaps = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_GENERATEFORWARDSFROMSWAPSONLY);
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY);
+	AQLString prioritizeSwaps = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_GENERATEFORWARDSFROMSWAPSONLY);
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY);
 	if (prioritizeSwaps != AQ_NO_DATA)
 	{
 		if (prioritizeSwaps.toUpper() == "TRUE")
 		{
-			curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY, new LADataBool(true));
+			curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY, new AQLDataBool(true));
 		}
 		else
 		{
-			curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY, new LADataBool(false));
+			curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY, new AQLDataBool(false));
 		}
 	}
 
 	if (!tenorBasisMarketQuotes.empty())
 	{
-		map<LAString, map<LAString, double> >::const_iterator it = tenorBasisMarketQuotes.begin();
+		map<AQLString, map<AQLString, double> >::const_iterator it = tenorBasisMarketQuotes.begin();
 		while (it != tenorBasisMarketQuotes.end())
 		{
 			LACurveMarketDataHelpers::restoreSwapRateFromLibor(*curveCalibrationData, it->second, currency, &(it->first));
@@ -1475,14 +1475,14 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 	// Data settings that are consistent with the single-curve building mechanism of basis curve
 	bool hasNoBasisCurve = false;
 	hasNoBasisCurve = tenorBasisMarkets.end() == std::find(tenorBasisMarkets.begin(), tenorBasisMarkets.end(), curveName);
-	LAString thisMarketName;
+	AQLString thisMarketName;
 	if (curveName != STD)
 	{
-		thisMarketName = LAString(".") + curveName;
+		thisMarketName = AQLString(".") + curveName;
 		thisMarketName.toLower();
 	}
 
-	LAString aliasCurveNames;
+	AQLString aliasCurveNames;
 	if (hasNoBasisCurve)
 	{
 		aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + thisMarketName);
@@ -1492,10 +1492,10 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 		aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + thisMarketName);
 	}
 
-	LAString targetCurve;
+	AQLString targetCurve;
 	if (aliasCurveNames != AQ_NO_DATA && aliasCurveNames != "")
 	{
-		LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+		AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 		targetCurve = assignedCurves[0];
 	}
 	else
@@ -1505,10 +1505,10 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 
 	if (!hasNoBasisCurve)
 	{
-		LAString suffixLowerCase = LAString("_") + targetCurve;
+		AQLString suffixLowerCase = AQLString("_") + targetCurve;
 		suffixLowerCase.toUpper();
-		curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_BASISTARGETDF + suffixLowerCase);
-		curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_BASISTARGETDF + suffixLowerCase, new LADataString(targetCurve));
+		curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_BASISTARGETDF + suffixLowerCase);
+		curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_BASISTARGETDF + suffixLowerCase, new AQLDataString(targetCurve));
 	}
 
 	// basis
@@ -1516,8 +1516,8 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 	if (!basisCurves.empty() && !hasNoBasisCurve)
 	{
 		isBasis = true;
-		curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_BASISDFS);
-		curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_BASISDFS, new LADataStrings(basisCurves));
+		curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_BASISDFS);
+		curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_BASISDFS, new AQLDataStrings(basisCurves));
 	}
 
 }
@@ -1527,21 +1527,21 @@ void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 // **************** HELPER METHODS FOR 'loadModelDataAndCalibrate' ROUTINE ********************************
 
 // Method to Initialize and Check if Legacy Curves are to be Used, if boolean result is true must exit calibration
-bool LAUpdateCurveObject::useLegacyCurves( const LAString &currency, LADataInstance &dataInstance ) const
+bool LAUpdateCurveObject::useLegacyCurves( const AQLString &currency, AQLDataInstance &dataInstance ) const
 {
 	// Result Flag
 	bool exitFlag = false;
 
 	// Currency Names
-	LAString curveCurrencyLowerCase = currency;
+	AQLString curveCurrencyLowerCase = currency;
 	curveCurrencyLowerCase.toLower();
 
 	// Required for Legacy Method to Initialize the Curve for a Stand Alone Pricing Tool
 	// ***********************************************************************************************
-	LAString useLegacyYieldModel = LACoreDataService::getContext(CONTEXT_KEY_USE_SDE_YIELD);
+	AQLString useLegacyYieldModel = LACoreDataService::getContext(CONTEXT_KEY_USE_SDE_YIELD);
 	if (useLegacyYieldModel != AQ_NO_DATA)
 	{
-		LADataBool useYieldModelBool;
+		AQLDataBool useYieldModelBool;
 		useYieldModelBool.convertFromString(useLegacyYieldModel);
 		if (useYieldModelBool.get())
 		{
@@ -1555,10 +1555,10 @@ bool LAUpdateCurveObject::useLegacyCurves( const LAString &currency, LADataInsta
 	// Required for Legacy Aribitrage-Free Curves
 	// ***********************************************************************************************
 	bool useLegacyArbitrageFreeCurve = false;
-	LAString isArbitrageFreeString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_ISARBFREE);
+	AQLString isArbitrageFreeString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_ISARBFREE);
 	if (isArbitrageFreeString != AQ_NO_DATA)
 	{
-		LADataBool useArbFreeModelBool;
+		AQLDataBool useArbFreeModelBool;
 		useArbFreeModelBool.convertFromString(isArbitrageFreeString);
 		useLegacyArbitrageFreeCurve = useArbFreeModelBool.get();
 	}
@@ -1620,17 +1620,17 @@ void LAUpdateCurveObject::updateCurveObjectAndImportPropertyManagerData( CurveOb
 void LAUpdateCurveObject::initializeCurveObject( CurveObject & curveObj ) const
 {
 	// Currency Names
-	LAString curveCurrencyLowerCase = curveObj.currency_;
+	AQLString curveCurrencyLowerCase = curveObj.currency_;
 	curveCurrencyLowerCase.toLower();
 	
 	// Object Pool
-	LAObjectPool & objPool = curveObj.dataInstance_.getObjectPool();
+	AQLObjectPool & objPool = curveObj.dataInstance_.getObjectPool();
 
-	LAString yieldName = LAMarketData::getBaseYieldName(curveObj.currency_);
-	LAString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
+	AQLString yieldName = LAMarketData::getBaseYieldName(curveObj.currency_);
+	AQLString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
 
 	curveObj.mathObj_ = NULL;
-	const LAObjectHolder yieldCurveObjHolder = objPool.getObject(yieldName);
+	const AQLObjectHolder yieldCurveObjHolder = objPool.getObject(yieldName);
 	if (!yieldCurveObjHolder.isDefined())
 	{
 		curveObj.mathObj_ = new LAMathYieldCurve(&curveObj.dataInstance_);
@@ -1643,9 +1643,9 @@ void LAUpdateCurveObject::initializeCurveObject( CurveObject & curveObj ) const
 	}
 	curveObj.mathObj_->getName().convertFromString(yieldName);
 
-	LAString curvePropertiesName = "PRO_" + yieldName;
+	AQLString curvePropertiesName = "PRO_" + yieldName;
 	curveObj.calibrationData_ = NULL;
-	const LAObjectHolder yieldCurvePropertiesObj = objPool.getObject(curvePropertiesName);
+	const AQLObjectHolder yieldCurvePropertiesObj = objPool.getObject(curvePropertiesName);
 	if (!yieldCurvePropertiesObj.isDefined())
 	{
 		curveObj.calibrationData_ = new CurveCalibrationData(&curveObj.dataInstance_);
@@ -1665,10 +1665,10 @@ void LAUpdateCurveObject::initializeCurveObject( CurveObject & curveObj ) const
 	{
 		curveObj.name_ = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_GENERATECURVEID);
 	}
-	const LAObjectHolder ehdata = objPool.getObject(curveObj.name_);
+	const AQLObjectHolder ehdata = objPool.getObject(curveObj.name_);
 	if (!ehdata.isDefined())
 	{
-		curveObj.instance_ = new LAObject();
+		curveObj.instance_ = new AQLObject();
 		objPool.set(curveObj.name_, curveObj.instance_);
 	}
 	else
@@ -1677,7 +1677,7 @@ void LAUpdateCurveObject::initializeCurveObject( CurveObject & curveObj ) const
 		curveObj.instance_ = &objPool.getObject(curveObj.name_).get();
 	}
 	curveObj.instance_->remove(CALIBRATION_DATA_NAME);
-	curveObj.instance_->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(curveObj.name_);
+	curveObj.instance_->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(curveObj.name_);
 
 
 	// Enable Curve Calculations Only if Target Curve Type Specified
@@ -1693,10 +1693,10 @@ void LAUpdateCurveObject::initializeCurveObject( CurveObject & curveObj ) const
 // Method to Initialise the Curve Object using Property Manager Config Data
 void LAUpdateCurveObject::updateCurveObjectPropertyMangerData( CurveObject & curveObj ) const
 {
-	LAString suffixLowerCase = (curveObj.targetCurveType_ == STD || curveObj.targetCurveType_ == SWAP) ? "" : "." + curveObj.targetCurveType_;
+	AQLString suffixLowerCase = (curveObj.targetCurveType_ == STD || curveObj.targetCurveType_ == SWAP) ? "" : "." + curveObj.targetCurveType_;
 	suffixLowerCase.toLower();
 
-	LAString suffixCurveObj = (curveObj.targetCurveType_ == STD || curveObj.targetCurveType_ == SWAP) ? "" : "_" + curveObj.targetCurveType_;
+	AQLString suffixCurveObj = (curveObj.targetCurveType_ == STD || curveObj.targetCurveType_ == SWAP) ? "" : "_" + curveObj.targetCurveType_;
 	bool useLegacyArbitrageFreeCurve = false;
 
 	// Initialize Curve Object using Property Manager Config Data
@@ -1713,7 +1713,7 @@ void LAUpdateCurveObject::updateCurveObjectPropertyMangerData( CurveObject & cur
 						 suffixLowerCase,
 						 suffixCurveObj );
 
-	LAString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
+	AQLString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
 	if (fxName != AQ_NO_DATA)
 	{
 		curveObj.calibrationData_->getFXEntity().convertFromString(fxName);
@@ -1724,9 +1724,9 @@ void LAUpdateCurveObject::updateCurveObjectPropertyMangerData( CurveObject & cur
 void LAUpdateCurveObject::updateCurveObjectRiskData( CurveObject & curveObj ) const
 {
 	// Context Key for Curve Data Interface
-	LAString contextKey = curveObj.currency_;
+	AQLString contextKey = curveObj.currency_;
 	contextKey.toLower();
-	LAString curveContext = LACoreDataService::getContext(contextKey + CONTEXT_KEY_SDE_YIELD);
+	AQLString curveContext = LACoreDataService::getContext(contextKey + CONTEXT_KEY_SDE_YIELD);
 
 	// Do we have the Risk Results?
 	bool doesRiskDataExist = false;
@@ -1738,7 +1738,7 @@ void LAUpdateCurveObject::updateCurveObjectRiskData( CurveObject & curveObj ) co
 	// Update Risk if we have the Risk Results and they are Missing from the Curve Context / Data Instance
 	if ( !doesRiskDataExist && curveContext != AQ_NO_DATA )
 	{
-		LADataDoubleMatrix matrix;
+		AQLDataDoubleMatrix matrix;
 		matrix.convertFromString(curveContext);
 		unsigned int rowSize = matrix.get1DSize();
 		unsigned int colSize = matrix.getSize(0);
@@ -1755,21 +1755,21 @@ void LAUpdateCurveObject::updateCurveObjectRiskData( CurveObject & curveObj ) co
 			if (isBasisDiscountFactor)
 				dfs2[i] = matrix.get(i, 2);
 		}
-		dynamic_cast<LADataDoubles &>(curveObj.instance_->getData(CALIBRATION_DATA_TERMS, ISDEFINED).get()).set(terms);
-		dynamic_cast<LADataDoubles &>(curveObj.instance_->getData(IR_CALIBRATION_DATA_DFS, ISDEFINED).get()).set(dfs);
+		dynamic_cast<AQLDataDoubles &>(curveObj.instance_->getData(CALIBRATION_DATA_TERMS, ISDEFINED).get()).set(terms);
+		dynamic_cast<AQLDataDoubles &>(curveObj.instance_->getData(IR_CALIBRATION_DATA_DFS, ISDEFINED).get()).set(dfs);
 		if (isBasisDiscountFactor)
 		{
-			LADataDoubles* attrDF2 = NULL;
-			LADataHolder* df2H = &curveObj.instance_->getData(IR_CALIBRATION_DATA_DFS2);
+			AQLDataDoubles* attrDF2 = NULL;
+			AQLDataHolder* df2H = &curveObj.instance_->getData(IR_CALIBRATION_DATA_DFS2);
 			if (!df2H->isDefined())
 			{
-				attrDF2 = new LADataDoubles();
+				attrDF2 = new AQLDataDoubles();
 				curveObj.instance_->remove(IR_CALIBRATION_DATA_DFS2);
 				curveObj.instance_->add(IR_CALIBRATION_DATA_DFS2, attrDF2);
 			}
 			else
 			{
-				attrDF2 = dynamic_cast<LADataDoubles*>(&df2H->get());
+				attrDF2 = dynamic_cast<AQLDataDoubles*>(&df2H->get());
 			}
 			attrDF2->set(dfs2);
 		}
@@ -1786,7 +1786,7 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 	// The ir.Properties file hard codes the listOfCurvesBuilt list in some instances to indicate which curves *** NOT *** to build
 
 	// Object Pool
-	LAObjectPool & objPool = curveObj.dataInstance_.getObjectPool();
+	AQLObjectPool & objPool = curveObj.dataInstance_.getObjectPool();
 
 	// set curve properties
 	if (curveObj.staticDataName_.size() > 0 && (curveObj.targetCurveType_ == STD || curveObj.targetCurveType_ == SWAP))
@@ -1795,17 +1795,17 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 		curveObj.calibrationData_->getMarketData().convertFromString(curveObj.staticDataName_);
 	}
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	dh = &curveObj.calibrationData_->getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		curveObj.swapCurveDiscountFactors_ = dynamic_cast<LADataStrings &>(dh->get()).get();
+		curveObj.swapCurveDiscountFactors_ = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 	}
 
 	dh = &curveObj.calibrationData_->getData(IR_CALIBRATION_DATA_BASISDFS, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		curveObj.tenorBasisCurves_ = dynamic_cast<LADataStrings &>(dh->get()).get();
+		curveObj.tenorBasisCurves_ = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 	}
 
 	curveObj.tenorBasisDiscountFactors_ = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_DF2);
@@ -1813,24 +1813,24 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 	{
 		for (unsigned int i = 0; i < curveObj.listOfCurvesBuilt_.size(); ++i)
 		{
-			LAString thisCurveStaticData;
-			LAString suffixLowerCase = "." + curveObj.listOfCurvesBuilt_[i];
+			AQLString thisCurveStaticData;
+			AQLString suffixLowerCase = "." + curveObj.listOfCurvesBuilt_[i];
 			suffixLowerCase.toLower();
 
 			// set curve type			
-			LAString curveType;
-			LAObjectHolder& yieldData = curveObj.calibrationData_->getYieldData().get();
+			AQLString curveType;
+			AQLObjectHolder& yieldData = curveObj.calibrationData_->getYieldData().get();
 
 			if (curveObj.listOfCurvesBuilt_[i] == SWAP)
 			{
 				curveType = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE);
 				if (curveType != AQ_NO_DATA)
 				{
-					curveObj.calibrationData_->LAObject::remove(CALIBRATION_DATA_CURVETYPE);
-					curveObj.calibrationData_->LAObject::add(CALIBRATION_DATA_CURVETYPE, new LADataString(curveType.toUpper()));
+					curveObj.calibrationData_->AQLObject::remove(CALIBRATION_DATA_CURVETYPE);
+					curveObj.calibrationData_->AQLObject::add(CALIBRATION_DATA_CURVETYPE, new AQLDataString(curveType.toUpper()));
 
 					yieldData.remove(CALIBRATION_DATA_CURVETYPE);
-					yieldData.add(CALIBRATION_DATA_CURVETYPE, new LADataString(curveType.toUpper()));
+					yieldData.add(CALIBRATION_DATA_CURVETYPE, new AQLDataString(curveType.toUpper()));
 				}
 			}
 			else
@@ -1838,11 +1838,11 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 				curveType = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffixLowerCase);
 				if (curveType != AQ_NO_DATA)
 				{
-					curveObj.calibrationData_->LAObject::remove(CALIBRATION_DATA_CURVETYPE + LAString("_") + curveObj.listOfCurvesBuilt_[i]);
-					curveObj.calibrationData_->LAObject::add(CALIBRATION_DATA_CURVETYPE + LAString("_") + curveObj.listOfCurvesBuilt_[i], new LADataString(curveType.toUpper()));
+					curveObj.calibrationData_->AQLObject::remove(CALIBRATION_DATA_CURVETYPE + AQLString("_") + curveObj.listOfCurvesBuilt_[i]);
+					curveObj.calibrationData_->AQLObject::add(CALIBRATION_DATA_CURVETYPE + AQLString("_") + curveObj.listOfCurvesBuilt_[i], new AQLDataString(curveType.toUpper()));
 
-					yieldData.remove(CALIBRATION_DATA_CURVETYPE + LAString("_") + curveObj.listOfCurvesBuilt_[i]);
-					yieldData.add(CALIBRATION_DATA_CURVETYPE + LAString("_") + curveObj.listOfCurvesBuilt_[i], new LADataString(curveType.toUpper()));
+					yieldData.remove(CALIBRATION_DATA_CURVETYPE + AQLString("_") + curveObj.listOfCurvesBuilt_[i]);
+					yieldData.add(CALIBRATION_DATA_CURVETYPE + AQLString("_") + curveObj.listOfCurvesBuilt_[i], new AQLDataString(curveType.toUpper()));
 				}
 			}
 
@@ -1850,10 +1850,10 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 			{
 				if (curveObj.enableCalculation_ || curveObj.targetCurveType_ == STD)
 				{
-					LAString aliasCurveNames = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE);
+					AQLString aliasCurveNames = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE);
 					if (aliasCurveNames != AQ_NO_DATA)
 					{
-						LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+						AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 						for (size_t i = 0; i < assignedCurves.size(); i++)
 						{
 							if (curveObj.swapCurveDiscountFactors_.end() == std::find(curveObj.swapCurveDiscountFactors_.begin(), curveObj.swapCurveDiscountFactors_.end(), assignedCurves[i]))
@@ -1882,14 +1882,14 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 				continue;
 			}
 
-			LAString marketType = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_MARKETTYPE + suffixLowerCase).toUpper();
-			curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_MARKETTYPE + LAString("_") + curveObj.listOfCurvesBuilt_[i]);
-			curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_MARKETTYPE + LAString("_") + curveObj.listOfCurvesBuilt_[i], new LADataString(marketType));
+			AQLString marketType = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_MARKETTYPE + suffixLowerCase).toUpper();
+			curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_MARKETTYPE + AQLString("_") + curveObj.listOfCurvesBuilt_[i]);
+			curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_MARKETTYPE + AQLString("_") + curveObj.listOfCurvesBuilt_[i], new AQLDataString(marketType));
 
 			if (marketType == AQ_NO_DATA)
 			{
-				LAString isBasisStr = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_ISBASIS + suffixLowerCase).toUpper();
-				LAString isReadFile = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_ISREADFILE + suffixLowerCase).toUpper();
+				AQLString isBasisStr = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_ISBASIS + suffixLowerCase).toUpper();
+				AQLString isReadFile = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_ISREADFILE + suffixLowerCase).toUpper();
 				if (isBasisStr == "TRUE")
 				{
 					marketType = MARKETTYPE_BASIS;
@@ -1905,7 +1905,7 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 			}
 
 			// set up interpolation
-			LAString strInter = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase).toUpper();
+			AQLString strInter = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase).toUpper();
 			if (strInter != AQ_NO_DATA)
 			{
 				curveObj.mathObj_->getInterpolation(curveObj.listOfCurvesBuilt_[i]).convertFromString(strInter.toLower());
@@ -1924,12 +1924,12 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 					continue;
 				}
 
-				LAString thisMarketName = curveObj.listOfCurvesBuilt_[i];
+				AQLString thisMarketName = curveObj.listOfCurvesBuilt_[i];
 				curveObj.tenorBasisMarkets_.push_back(curveObj.listOfCurvesBuilt_[i]);
-				LAString  aliasCurveNames = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + "." + thisMarketName.toLower());
+				AQLString  aliasCurveNames = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + "." + thisMarketName.toLower());
 				if (aliasCurveNames != AQ_NO_DATA && (curveObj.enableCalculation_ || curveObj.targetCurveType_ == curveObj.listOfCurvesBuilt_[i]))
 				{
-					LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+					AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 					for (unsigned int j = 0; j < assignedCurves.size(); j++)
 					{
 						if (curveObj.tenorBasisCurves_.end() == std::find(curveObj.tenorBasisCurves_.begin(), curveObj.tenorBasisCurves_.end(), assignedCurves[j]))
@@ -1937,7 +1937,7 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 							curveObj.tenorBasisCurves_.push_back(assignedCurves[j]);
 						}
 					}
-					LAStringVector marketNames = curveObj.listOfCurvesBuilt_[i].toToken('_');
+					AQLStringVector marketNames = curveObj.listOfCurvesBuilt_[i].toToken('_');
 					if (marketNames.size() == 2)
 					{
 						setUpBasisCurveData( curveObj.dataInstance_,
@@ -1997,7 +1997,7 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 					else if (!curveObj.enableCalculation_ && curveObj.useTenorBasisInstruments_)
 					{
 						//only entitysetup
-						LAString tenorswapname = dynamic_cast<const LADataString &>(curveObj.calibrationData_->getData(IR_CALIBRATION_DATA_TENORSWAPNAME, ISNOTNULL).get());
+						AQLString tenorswapname = dynamic_cast<const AQLDataString &>(curveObj.calibrationData_->getData(IR_CALIBRATION_DATA_TENORSWAPNAME, ISNOTNULL).get());
 						if (tenorswapname == curveObj.listOfCurvesBuilt_[i])
 						{
 							setUpBasisCurveData( curveObj.dataInstance_,
@@ -2041,11 +2041,11 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 					continue;
 				}
 
-				LAString thisMarketName = curveObj.listOfCurvesBuilt_[i];
-				LAString aliasCurveNames = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + "." + thisMarketName.toLower());
+				AQLString thisMarketName = curveObj.listOfCurvesBuilt_[i];
+				AQLString aliasCurveNames = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + "." + thisMarketName.toLower());
 				if (aliasCurveNames != AQ_NO_DATA)
 				{
-					LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+					AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 					for (size_t i = 0; i < assignedCurves.size(); i++)
 					{
 						if (curveObj.swapCurveDiscountFactors_.end() == std::find(curveObj.swapCurveDiscountFactors_.begin(), curveObj.swapCurveDiscountFactors_.end(), assignedCurves[i]))
@@ -2062,7 +2062,7 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 					}
 				}
 
-				LAString oisCompoundType = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + suffixLowerCase).toUpper();
+				AQLString oisCompoundType = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + suffixLowerCase).toUpper();
 				if (oisCompoundType.toUpper() == "DAILYCOMPOUNDING")
 				{
 					setUpGenCurveDataOIS( curveObj.dataInstance_,
@@ -2093,22 +2093,22 @@ void LAUpdateCurveObject::updateCurveObjectMarketData( CurveObject & curveObj ) 
 			}
 			else
 			{
-				throw LACoreInvalidData("Invalid Market Data Type", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Invalid Market Data Type", __FILE__, __LINE__);
 			}
 
 			// set yield curve properties
 			thisCurveStaticData = thisCurveStaticData.subString(0, thisCurveStaticData.size() - 2);
-			LAStringVector marketNames = curveObj.listOfCurvesBuilt_[i].toToken('_');
+			AQLStringVector marketNames = curveObj.listOfCurvesBuilt_[i].toToken('_');
 			if (marketNames.size() == 2)
 			{
 				CurveCalibrationData &yieldCurveProperties = dynamic_cast<CurveCalibrationData &> (objPool.getObject(LAMarketData::getBaseYieldProName(marketNames[0]), ENCHKTYPE_ISDEFINED).get());
-				yieldCurveProperties.LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + marketNames[1]);
-				yieldCurveProperties.LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + marketNames[1], new LADataMultiReference()).convertFromString(thisCurveStaticData);
+				yieldCurveProperties.AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + marketNames[1]);
+				yieldCurveProperties.AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + marketNames[1], new AQLDataMultiReference()).convertFromString(thisCurveStaticData);
 			}
 			else
 			{
-				curveObj.calibrationData_->LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + curveObj.listOfCurvesBuilt_[i]);
-				curveObj.calibrationData_->LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + curveObj.listOfCurvesBuilt_[i], new LADataMultiReference()).convertFromString(thisCurveStaticData);
+				curveObj.calibrationData_->AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + curveObj.listOfCurvesBuilt_[i]);
+				curveObj.calibrationData_->AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + curveObj.listOfCurvesBuilt_[i], new AQLDataMultiReference()).convertFromString(thisCurveStaticData);
 			}
 		}
 	}
@@ -2119,7 +2119,7 @@ void LAUpdateCurveObject::updateCurveObjectSwapCurveInstrumentsAndCashflows( Cur
 {
 	// Current curve type is the type of the curve currently being constructed
 	// To be distinguished from the curve type within the for loop below
-	LAString propertyManagerCurveName("");
+	AQLString propertyManagerCurveName("");
 	if (curveObj.targetCurveType_ != STD)
 	{
 		propertyManagerCurveName = "." + curveObj.targetCurveType_;
@@ -2141,7 +2141,7 @@ void LAUpdateCurveObject::updateCurveObjectSwapCurveInstrumentsAndCashflows( Cur
 						   curveObj.useTenorBasisExtrapolation_,
 						   *curveObj.calibrationData_,
 						   curveObj.tenorBasisMarketQuotes_,
-						   LAString(curveObj.targetCurveType_).toUpper() );
+						   AQLString(curveObj.targetCurveType_).toUpper() );
 	}
 }
 
@@ -2149,16 +2149,16 @@ void LAUpdateCurveObject::updateCurveObjectSwapCurveInstrumentsAndCashflows( Cur
 void LAUpdateCurveObject::updateCurveObjectBasisCurveInstrumentParameters( CurveObject & curveObj ) const
 {
 	// Currency
-	LAString curveCurrencyLowerCase = curveObj.currency_;
+	AQLString curveCurrencyLowerCase = curveObj.currency_;
 	curveCurrencyLowerCase.toLower();
 
 	// Object Pool
-	LAObjectPool & objPool = curveObj.dataInstance_.getObjectPool();
+	AQLObjectPool & objPool = curveObj.dataInstance_.getObjectPool();
 
 	// Set-Up Tenor-Basis Curve
 	if ( curveObj.listOfCurvesBuilt_.empty() || curveObj.listOfCurvesBuilt_[0] == AQ_NO_DATA)
 	{
-		LAString basisCurrency = mpStaticData->getStaticData(KEY_SDE_BASIS_BASE_CURRENCY);
+		AQLString basisCurrency = mpStaticData->getStaticData(KEY_SDE_BASIS_BASE_CURRENCY);
 		basisCurrency.toUpper();
 
 		// Set-Up Basis Curve if Basis Currency Provided
@@ -2168,17 +2168,17 @@ void LAUpdateCurveObject::updateCurveObjectBasisCurveInstrumentParameters( Curve
 		{
 			curveCurrencyLowerCase.toLower();
 			// if not base currency set basis curve
-			LAString basisFileName = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASISSWAP_FILE);
+			AQLString basisFileName = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASISSWAP_FILE);
 			MAFileAccessor basisFile(LAMarketData::getNumFileName(basisFileName));
-			LAStringMatrix basisDataMtx;
+			AQLStringMatrix basisDataMtx;
 			basisFile.readAllData(MARKET_DATA_DELIMITER, basisDataMtx);
 			basisFile.close();
 
 			// get cal and calc spot date
-			LAPriceDataCalendar tenorBasisCalendar;
-			LAString tenorBasisCalendarString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_CALENDAR);
+			AQLPriceDataCalendar tenorBasisCalendar;
+			AQLString tenorBasisCalendarString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_CALENDAR);
 			tenorBasisCalendar.convertFromString(tenorBasisCalendarString);
-			LADate tenorBasisSpotDate;
+			AQLDate tenorBasisSpotDate;
 			if (curveObj.isSpotStarting_)
 			{
 				tenorBasisSpotDate.setDate(mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_SPOTDATE).getCString());
@@ -2188,61 +2188,61 @@ void LAUpdateCurveObject::updateCurveObjectBasisCurveInstrumentParameters( Curve
 				tenorBasisSpotDate = tenorBasisCalendar.getBusinessDay(curveObj.asOfDate_, mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_RESETLAG).getIntValue());
 			}
 			// get freq
-			LAString tenorBasisFrequencyString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_FREQUENCY).toUpper();
+			AQLString tenorBasisFrequencyString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_FREQUENCY).toUpper();
 			// get daycount
-			LAString tenorBasisDaycountString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_DAYCOUNT).toUpper();
+			AQLString tenorBasisDaycountString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_DAYCOUNT).toUpper();
 			// get sliding
-			LAString tenorBasisBusDayAdjString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_SLIDINGRULE).toUpper();
+			AQLString tenorBasisBusDayAdjString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_SLIDINGRULE).toUpper();
 			// get freq
-			LAString tenorBasisIndexFrequencyString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_BASEFREQUENCY).toUpper();
+			AQLString tenorBasisIndexFrequencyString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_BASEFREQUENCY).toUpper();
 			// get daycount
-			LAString tenorBasisIndexDaycountString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_BASEDAYCOUNT).toUpper();
+			AQLString tenorBasisIndexDaycountString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_BASEDAYCOUNT).toUpper();
 			// get sliding
-			LAString tenorBasisIndexBusDayAdjString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_BASESLIDINGRULE).toUpper();
+			AQLString tenorBasisIndexBusDayAdjString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_BASESLIDINGRULE).toUpper();
 			// get calendar
-			LAString tenorBasisIndexCalendarString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_BASECALENDAR);
+			AQLString tenorBasisIndexCalendarString = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_BASECALENDAR);
 			// baseyield name
-			LAString baseCurrency = curveObj.currency_;
-			LAString baseYieldName = PREFIX_YIELD + getSDEAttrName(baseCurrency.toUpper());
+			AQLString baseCurrency = curveObj.currency_;
+			AQLString baseYieldName = PREFIX_YIELD + getSDEAttrName(baseCurrency.toUpper());
 
 			const int basisSize = basisDataMtx.size();
 			for (int i = 0; i < basisSize; ++i)
 			{
-				LAString term = basisDataMtx[i][0].toUpper();
+				AQLString term = basisDataMtx[i][0].toUpper();
 				double basis = basisDataMtx[i][1].getDoubleValue();
 
-				LAObject *mktData = new LAObject();
-				LAString basicCurveName = curveObj.name_ + "_BASIS_" + LAString(i);
+				AQLObject *mktData = new AQLObject();
+				AQLString basicCurveName = curveObj.name_ + "_BASIS_" + AQLString(i);
 				curveObj.staticDataName_ += basicCurveName + ":";
 				curveObj.tenorBasisStaticDataName_ += basicCurveName + ":";
 				
 				// set name
-				mktData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(basicCurveName);
+				mktData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(basicCurveName);
 				// set spot date
-				mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new LADataDate(tenorBasisSpotDate));
+				mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new AQLDataDate(tenorBasisSpotDate));
 				// set calendar
-				mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(tenorBasisCalendarString);
+				mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(tenorBasisCalendarString);
 				// set daycount
-				mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(tenorBasisDaycountString);
+				mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(tenorBasisDaycountString);
 				// set data type
-				mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_BASIS);
+				mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_BASIS);
 				// set frequency
-				mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString()).convertFromString(tenorBasisFrequencyString);
+				mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString()).convertFromString(tenorBasisFrequencyString);
 				// set slidingrule
-				mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(tenorBasisBusDayAdjString);
+				mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(tenorBasisBusDayAdjString);
 				// set term
-				mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
+				mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
 				// set rate
-				mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(basis / 10000.0) );
+				mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(basis / 10000.0) );
 				// set base basis info
 				// freq
-				mktData->add(IR_CALIBRATION_DATA_FREQUENCYBASE, new LADataString).convertFromString(tenorBasisIndexFrequencyString);
+				mktData->add(IR_CALIBRATION_DATA_FREQUENCYBASE, new AQLDataString).convertFromString(tenorBasisIndexFrequencyString);
 				// calender
-				mktData->add(IR_CALIBRATION_DATA_CALENDARBASE, new LAPriceDataCalendar()).convertFromString(tenorBasisIndexCalendarString);
+				mktData->add(IR_CALIBRATION_DATA_CALENDARBASE, new AQLPriceDataCalendar()).convertFromString(tenorBasisIndexCalendarString);
 				// daycount
-				mktData->add(IR_CALIBRATION_DATA_DAYCOUNTBASE, new LAPriceDataDayCount()).convertFromString(tenorBasisIndexDaycountString);
+				mktData->add(IR_CALIBRATION_DATA_DAYCOUNTBASE, new AQLPriceDataDayCount()).convertFromString(tenorBasisIndexDaycountString);
 				// sliding
-				mktData->add(IR_CALIBRATION_DATA_SLIDINGRULEBASE, new LAPriceDataSlidingRule()).convertFromString(tenorBasisIndexBusDayAdjString);
+				mktData->add(IR_CALIBRATION_DATA_SLIDINGRULEBASE, new AQLPriceDataSlidingRule()).convertFromString(tenorBasisIndexBusDayAdjString);
 
 				// set object pool
 				objPool.set(basicCurveName, mktData);
@@ -2256,29 +2256,29 @@ void LAUpdateCurveObject::updateCurveObjectBasisCurveInstrumentParameters( Curve
 // Method to Update the Curve Object with Xccy and FX Forward Curve Parameters
 void LAUpdateCurveObject::updateCurveObjectXccyAndFXForwardParameters( CurveObject & curveObj ) const
 {
-	LAString suffixLowerCase = (curveObj.targetCurveType_ == STD || curveObj.targetCurveType_ == SWAP) ? "" : "." + curveObj.targetCurveType_;
+	AQLString suffixLowerCase = (curveObj.targetCurveType_ == STD || curveObj.targetCurveType_ == SWAP) ? "" : "." + curveObj.targetCurveType_;
 	suffixLowerCase.toLower();
 
-	LAString suffixCurveObj = (curveObj.targetCurveType_ == STD || curveObj.targetCurveType_ == SWAP) ? "" : "_" + curveObj.targetCurveType_;
+	AQLString suffixCurveObj = (curveObj.targetCurveType_ == STD || curveObj.targetCurveType_ == SWAP) ? "" : "_" + curveObj.targetCurveType_;
 
 	// set isXccyMarkedToMarket
 	bool isXccyMarkedToMarket = false;
-	LAString isXccyMarkedToMarketString = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_ISRENOTIONALADJUST + suffixLowerCase).toUpper();
+	AQLString isXccyMarkedToMarketString = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_ISRENOTIONALADJUST + suffixLowerCase).toUpper();
 	if (isXccyMarkedToMarketString == "TRUE")
 	{
 		isXccyMarkedToMarket = true;
 	}
 
 	// RENOTIONAL ADJUST HAS ALIAS XCCY MARKED TO MARKET
-	curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_ISRENOTIONALADJUST + suffixCurveObj);
-	curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_ISRENOTIONALADJUST + suffixCurveObj, new LADataBool(isXccyMarkedToMarket));
+	curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_ISRENOTIONALADJUST + suffixCurveObj);
+	curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_ISRENOTIONALADJUST + suffixCurveObj, new AQLDataBool(isXccyMarkedToMarket));
 
-	curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET + suffixCurveObj);
-	curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET + suffixCurveObj, new LADataBool(isXccyMarkedToMarket));
+	curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET + suffixCurveObj);
+	curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET + suffixCurveObj, new AQLDataBool(isXccyMarkedToMarket));
 
 	// IsForwardFX
 	curveObj.isForwardFXCurve_ = false;
-	LAString isFwdFXStr = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFX);
+	AQLString isFwdFXStr = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFX);
 	if (isFwdFXStr.toUpper() == "TRUE")
 	{
 		curveObj.isForwardFXCurve_ = true;
@@ -2293,7 +2293,7 @@ void LAUpdateCurveObject::updateCurveObjectListOfCurvesBuilt( CurveObject & curv
 	// manager code will try to build any missing curve index. Therefore adding a market to the list, tells this code *NOT* to 
 	// calibrate it since the code will think it exists already. 
 
-	LAString existingMarketsString = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	AQLString existingMarketsString = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	if (existingMarketsString == AQ_NO_DATA)
 	{
 		curveObj.listOfCurvesBuilt_ = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATEDFS).toToken(MULTI_STATIC_DATA_DELIMITER);
@@ -2309,26 +2309,26 @@ void LAUpdateCurveObject::updateCurveObjectListOfCurvesBuilt( CurveObject & curv
 void LAUpdateCurveObject::updateCurveObjectBasisCurveInstrumentCashflows( CurveObject & curveObj ) const
 {
 	// Set tenorswap convention
-	LAString tenorSwapName = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_TENORSWAPNAME).toUpper();
+	AQLString tenorSwapName = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_TENORSWAPNAME).toUpper();
 	if (find(curveObj.listOfCurvesBuilt_.begin(), curveObj.listOfCurvesBuilt_.end(), tenorSwapName) == curveObj.listOfCurvesBuilt_.end() && tenorSwapName != AQ_NO_DATA)
 	{
-		LAString refData_tenor = "";
+		AQLString refData_tenor = "";
 
 		// Set-Up Basis Curve Instruments and Cashflows
 		setUpBasisCurveData( curveObj.dataInstance_, refData_tenor, curveObj.asOfDate_, curveObj.currencyLowercase_, tenorSwapName, curveObj.name_, curveObj.isSpotStarting_, *curveObj.calibrationData_, curveObj.targetCurveType_);
 		
 		refData_tenor = refData_tenor.subString(0, refData_tenor.size() - 2);
-		curveObj.calibrationData_->LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + tenorSwapName);
-		curveObj.calibrationData_->LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + tenorSwapName, new LADataMultiReference()).convertFromString(refData_tenor);
+		curveObj.calibrationData_->AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + tenorSwapName);
+		curveObj.calibrationData_->AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + tenorSwapName, new AQLDataMultiReference()).convertFromString(refData_tenor);
 	}
 
-	curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_GENERATEDFS);
-	curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_GENERATEDFS, new LADataStrings(curveObj.swapCurveDiscountFactors_));
+	curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_GENERATEDFS);
+	curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_GENERATEDFS, new AQLDataStrings(curveObj.swapCurveDiscountFactors_));
 
 	if (curveObj.tenorBasisDiscountFactors_ != AQ_NO_DATA)
 	{
-		curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_MAINBASISDF);
-		curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_MAINBASISDF, new LADataString(curveObj.tenorBasisDiscountFactors_));
+		curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_MAINBASISDF);
+		curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_MAINBASISDF, new AQLDataString(curveObj.tenorBasisDiscountFactors_));
 	}
 }
 
@@ -2337,17 +2337,17 @@ void LAUpdateCurveObject::updateCurveObjectInstrumentPriority( CurveObject & cur
 {
 	// Update parameters that control whether to prioritise swap calibration instruments
 	// Whether to generate output forward rates only from swaps or from swaps + futures/FRA
-	LAString prioritizeSwaps = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_GENERATEFORWARDSFROMSWAPSONLY);
-	curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY);
+	AQLString prioritizeSwaps = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATOR_GENERATEFORWARDSFROMSWAPSONLY);
+	curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY);
 	if (prioritizeSwaps != AQ_NO_DATA)
 	{
 		if (prioritizeSwaps.toUpper() == "TRUE")
 		{
-			curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY, new LADataBool(true));
+			curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY, new AQLDataBool(true));
 		}
 		else
 		{
-			curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY, new LADataBool(false));
+			curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_GENERATEFORWARDSFROMSWAPSONLY, new AQLDataBool(false));
 		}
 	}
 }
@@ -2361,14 +2361,14 @@ void LAUpdateCurveObject::updateCurveObjectTargetDiscountFactors( CurveObject & 
 	
 		if (curveObj.targetCurveType_ != CURVETYPE_FLOATER)
 		{
-			LAString curveMktName;
+			AQLString curveMktName;
 			if (curveObj.targetCurveType_ != STD)
 			{
-				curveMktName = LAString(".") + curveObj.targetCurveType_;
+				curveMktName = AQLString(".") + curveObj.targetCurveType_;
 				curveMktName.toLower();
 			}
 
-			LAString targetCurve;
+			AQLString targetCurve;
 			if (curveObj.isTargetCurveFound_)
 			{
 				targetCurve = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + curveMktName);
@@ -2378,26 +2378,26 @@ void LAUpdateCurveObject::updateCurveObjectTargetDiscountFactors( CurveObject & 
 				targetCurve = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + curveMktName);
 			}
 
-			LAString targetDF;
+			AQLString targetDF;
 			if (targetCurve != AQ_NO_DATA && targetCurve != "")
 			{
-				LAStringVector assignedCurves = targetCurve.toToken(':');
+				AQLStringVector assignedCurves = targetCurve.toToken(':');
 				targetDF = assignedCurves[0];
 			}
 			else
 			{
-				throw LACoreInvalidData("Missing TargetCurve Discount Factors", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Missing TargetCurve Discount Factors", __FILE__, __LINE__);
 			}
 
 			if (curveObj.isTargetCurveFound_)
 			{
-				curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
-				curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new LADataString(targetDF));
+				curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
+				curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new AQLDataString(targetDF));
 			}
 			else
 			{
-				curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_BASISTARGETDF);
-				curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_BASISTARGETDF, new LADataString(targetDF));
+				curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_BASISTARGETDF);
+				curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_BASISTARGETDF, new AQLDataString(targetDF));
 			}
 		}
 	}
@@ -2416,12 +2416,12 @@ void LAUpdateCurveObject::calibrateOISAndSwapCurve( CurveObject & curveObj ) con
 	{
 		if (curveObj.isTargetCurveFound_)
 		{
-			curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_ENABLECALCULATION);
-			curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_ENABLECALCULATION, new LADataBool(true));
+			curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_ENABLECALCULATION);
+			curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_ENABLECALCULATION, new AQLDataBool(true));
 		}
 		
 		// Load the Curve Model Generator
-		LADataProcedure &curveGenerator = dynamic_cast<LADataProcedure &>( curveObj.calibrationData_->getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
+		AQLDataProcedure &curveGenerator = dynamic_cast<AQLDataProcedure &>( curveObj.calibrationData_->getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
 
 		// Main Calibration Routine
 		// **********************************************
@@ -2430,8 +2430,8 @@ void LAUpdateCurveObject::calibrateOISAndSwapCurve( CurveObject & curveObj ) con
                                                  curveObj.curveIndex_ );
 		// **********************************************
 
-		curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_ENABLECALCULATION);
-		curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
+		curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_ENABLECALCULATION);
+		curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
 	}
 }
 
@@ -2444,8 +2444,8 @@ void LAUpdateCurveObject::calibrateBasisCurve( CurveObject & curveObj ) const
 	if (!curveObj.tenorBasisCurves_.empty() && !curveObj.isTargetCurveFound_ && curveObj.targetCurveType_ != CURVETYPE_FLOATER)
 	{
 		isBasis = true;
-		curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_BASISDFS);
-		curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_BASISDFS, new LADataStrings(curveObj.tenorBasisCurves_));
+		curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_BASISDFS);
+		curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_BASISDFS, new AQLDataStrings(curveObj.tenorBasisCurves_));
 	}
 
 	if (curveObj.tenorBasisStaticDataName_.size() > 1)
@@ -2463,18 +2463,18 @@ void LAUpdateCurveObject::calibrateBasisCurve( CurveObject & curveObj ) const
 		bool isBasisEnabled = (!curveObj.enableCalculation_ && !curveObj.isTargetCurveFound_);
 		if (isBasisEnabled)
 		{
-			curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_ENABLECALCULATION);
-			curveObj.calibrationData_->LAObject::add(IR_CALIBRATION_DATA_ENABLECALCULATION, new LADataBool(true));
+			curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_ENABLECALCULATION);
+			curveObj.calibrationData_->AQLObject::add(IR_CALIBRATION_DATA_ENABLECALCULATION, new AQLDataBool(true));
 		}
 		
         // Main Basis Curve Calibration Routine
         curveObj.calibrationData_->setBasisRates();
 
-		curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_ENABLECALCULATION);
-		curveObj.calibrationData_->LAObject::remove(IR_CALIBRATION_DATA_BASISTARGETDF);
+		curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_ENABLECALCULATION);
+		curveObj.calibrationData_->AQLObject::remove(IR_CALIBRATION_DATA_BASISTARGETDF);
 	}
 
-	LAString genFloaterName = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATEFLOATERS).toUpper();
+	AQLString genFloaterName = mpStaticData->getStaticData(curveObj.currencyLowercase_ + STATIC_DATA_KEY_YIELD_GENERATEFLOATERS).toUpper();
 	if ( genFloaterName != AQ_NO_DATA && (curveObj.enableCalculation_ || curveObj.targetCurveType_ == CURVETYPE_FLOATER) )
 	{
 		setUpFloater(curveObj.currencyLowercase_, *curveObj.calibrationData_, genFloaterName);
@@ -2488,7 +2488,7 @@ void LAUpdateCurveObject::calibrateBasisCurve( CurveObject & curveObj ) const
 
 	if (!curveObj.tenorBasisMarketQuotes_.empty())
 	{
-		map<LAString, map<LAString, double> >::const_iterator it = curveObj.tenorBasisMarketQuotes_.begin();
+		map<AQLString, map<AQLString, double> >::const_iterator it = curveObj.tenorBasisMarketQuotes_.begin();
 		while (it != curveObj.tenorBasisMarketQuotes_.end())
 		{
 			LACurveMarketDataHelpers::restoreSwapRateFromLibor(*curveObj.calibrationData_, it->second, curveObj.currency_, &(it->first));
@@ -2503,13 +2503,13 @@ void LAUpdateCurveObject::calibrateBasisCurve( CurveObject & curveObj ) const
 	mCurveGenCcyMap[curveObj.currency_] = true;
 	
 	// Context Key for Curve Data Interface
-	LAString contextKey = curveObj.currency_;
+	AQLString contextKey = curveObj.currency_;
 	contextKey.toLower();
-	LAString curveContext = LACoreDataService::getContext(contextKey + CONTEXT_KEY_SDE_YIELD);
+	AQLString curveContext = LACoreDataService::getContext(contextKey + CONTEXT_KEY_SDE_YIELD);
 
 	if ( curveContext != AQ_NO_DATA )
 	{
-		LADataDoubleMatrix matrix;
+		AQLDataDoubleMatrix matrix;
 		matrix.convertFromString(curveContext);
 		unsigned int rowSize = matrix.get1DSize();
 		unsigned int colSize = matrix.getSize(0);
@@ -2526,12 +2526,12 @@ void LAUpdateCurveObject::calibrateBasisCurve( CurveObject & curveObj ) const
 			if (isBasisDiscountFactor)
 				dfs2[i] = matrix.get(i, 2);
 		}
-		dynamic_cast<LADataDoubles &>(curveObj.instance_->getData(CALIBRATION_DATA_TERMS, ISDEFINED).get()).set(terms);
-		dynamic_cast<LADataDoubles &>(curveObj.instance_->getData(IR_CALIBRATION_DATA_DFS, ISDEFINED).get()).set(dfs);
+		dynamic_cast<AQLDataDoubles &>(curveObj.instance_->getData(CALIBRATION_DATA_TERMS, ISDEFINED).get()).set(terms);
+		dynamic_cast<AQLDataDoubles &>(curveObj.instance_->getData(IR_CALIBRATION_DATA_DFS, ISDEFINED).get()).set(dfs);
 		curveObj.instance_->remove(IR_CALIBRATION_DATA_DFS2);
 		if (isBasisDiscountFactor)
 		{
-			curveObj.instance_->add(IR_CALIBRATION_DATA_DFS2, new LADataDoubles(dfs2));
+			curveObj.instance_->add(IR_CALIBRATION_DATA_DFS2, new AQLDataDoubles(dfs2));
 		}
 	}
 	else
@@ -2540,11 +2540,11 @@ void LAUpdateCurveObject::calibrateBasisCurve( CurveObject & curveObj ) const
 		// *********************************************************************************************************
 		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
-			LAStringVector dataoutCurves;
+			AQLStringVector dataoutCurves;
 			dataoutCurves.push_back(STD);
 
-			const std::map<LAString, LAString>& curveAliasList = curveObj.calibrationData_->getAssignedCurveMktMap();
-			for (std::map<LAString, LAString>::const_iterator it = curveAliasList.begin(); it != curveAliasList.end(); it++)
+			const std::map<AQLString, AQLString>& curveAliasList = curveObj.calibrationData_->getAssignedCurveMktMap();
+			for (std::map<AQLString, AQLString>::const_iterator it = curveAliasList.begin(); it != curveAliasList.end(); it++)
 			{
 				if (it->first != STD && std::find(curveObj.listOfCurvesBuilt_.begin(), curveObj.listOfCurvesBuilt_.end(), it->second) != curveObj.listOfCurvesBuilt_.end())
 				{
@@ -2563,7 +2563,7 @@ void LAUpdateCurveObject::calibrateBasisCurve( CurveObject & curveObj ) const
 }
 	
 // Load curve object pool data and calibrate with dataInstance as output
-void LAUpdateCurveObject::loadYieldCurveDataAndCalibrate( const LAString &currency, LADataInstance &dataInstance, const LAString & curveID, const LAString & marketName ) const
+void LAUpdateCurveObject::loadYieldCurveDataAndCalibrate( const AQLString &currency, AQLDataInstance &dataInstance, const AQLString & curveID, const AQLString & marketName ) const
 {
 	// 1.	Exit if Curve Already Flagged as Built or if Using Legacy Curves
 	if ( useLegacyCurves( currency, dataInstance ) || mCurveGenCcyMap[currency] ) return;
@@ -2592,14 +2592,14 @@ void
 LAUpdateCurveObject::setUpCurveTypeDayCount(CurveCalibrationData &curveCalibrationData, LAMathYieldCurve &yc) const
 {
 	// set daycount
-	const map<LAString, LAString> &assignedCurveMktMap = curveCalibrationData.getAssignedCurveMktMap();
-	map<LAString, LAString>::const_iterator it_cur = assignedCurveMktMap.begin();
+	const map<AQLString, AQLString> &assignedCurveMktMap = curveCalibrationData.getAssignedCurveMktMap();
+	map<AQLString, AQLString>::const_iterator it_cur = assignedCurveMktMap.begin();
 	while (it_cur != assignedCurveMktMap.end())
 	{
-		LAPriceDataDayCount dc;
-		LAPriceDataCalendar cal;
-		LAPriceDataSlidingRule sld;
-		LAString accessory;
+		AQLPriceDataDayCount dc;
+		AQLPriceDataCalendar cal;
+		AQLPriceDataSlidingRule sld;
+		AQLString accessory;
 		curveCalibrationData.getForwardConvention(it_cur->first, dc, sld, cal, accessory);
 		yc.getDayCount(it_cur->first) = dc;
 		curveCalibrationData.getDayCount(it_cur->first) = dc;
@@ -2615,22 +2615,22 @@ LAUpdateCurveObject::setUpCurveTypeDayCount(CurveCalibrationData &curveCalibrati
 	@param[out] dataInstance
 */
 void
-LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADataInstance &dataInstance) const
+LAUpdateCurveObject::generateInitialValueArbfree(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
-	LAString tmpCurrency = currency;
+	AQLString tmpCurrency = currency;
 	tmpCurrency.toLower();
 
-	LADataBool tmpAttrB;
+	AQLDataBool tmpAttrB;
 
-	LAString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
+	AQLString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
 
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
-	//LAString yieldName = PREFIX_YIELD + getSDEAttrName(currency);	
-	LAString yieldName = LAMarketData::getBaseYieldName(currency);
+	//AQLString yieldName = PREFIX_YIELD + getSDEAttrName(currency);	
+	AQLString yieldName = LAMarketData::getBaseYieldName(currency);
 
 	LAMathYieldCurve *yc = NULL;
-	const LAObjectHolder ehyc = objPool.getObject(yieldName);
+	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
 		yc = new LAMathYieldCurve(&dataInstance);
@@ -2644,9 +2644,9 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 	}
 	yc->getName().convertFromString(yieldName);
 
-	LAString curvePropertiesName = "PRO_" + yieldName;
+	AQLString curvePropertiesName = "PRO_" + yieldName;
 	CurveCalibrationData *curveCalibrationData = NULL;
-	const LAObjectHolder ehycpro = objPool.getObject(curvePropertiesName);
+	const AQLObjectHolder ehycpro = objPool.getObject(curvePropertiesName);
 	if (!ehycpro.isDefined())
 	{
 		curveCalibrationData = new CurveCalibrationData(&dataInstance);
@@ -2659,17 +2659,17 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 	}
 	curveCalibrationData->getName().convertFromString(curvePropertiesName);
 
-	LAObject *objectPool = NULL;
-	LAString yieldDataName = yieldName + "_DATA";
+	AQLObject *objectPool = NULL;
+	AQLString yieldDataName = yieldName + "_DATA";
 	if (isSetCurveID == "TRUE")
 	{
 		yieldDataName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATECURVEID);
 	}
-	const LAObjectHolder ehdata = objPool.getObject(yieldDataName);
+	const AQLObjectHolder ehdata = objPool.getObject(yieldDataName);
 	if (!ehdata.isDefined())
 	{
-		objectPool = new LAObject();
-		objectPool->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(yieldDataName);
+		objectPool = new AQLObject();
+		objectPool->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(yieldDataName);
 		objPool.set(yieldDataName, objectPool);
 	}
 	else
@@ -2677,7 +2677,7 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 		//we must not erase the reset method for only edata
 		objectPool = &objPool.getObject(yieldDataName).get();
 	}
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 	bool useTenorBasis = false;
 	bool useTenorBasisInstruments = false;
 	bool isSpotStarting = false;
@@ -2686,19 +2686,19 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 	// set isArbFree
 	curveCalibrationData->getIsArbFree().set(true);
 	bool isXccyMarkedToMarket = false;
-	LAString isXccyMarkedToMarketString = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISRENOTIONALADJUST).toUpper();
+	AQLString isXccyMarkedToMarketString = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISRENOTIONALADJUST).toUpper();
 	if (isXccyMarkedToMarketString != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(isXccyMarkedToMarketString);
 		isXccyMarkedToMarket = tmpAttrB.get();
 	}
 
-	LAStringVector curveNames_6ML;
-	LAStringVector curveNames_3ML;
-	LAStringVector curveNames_DF;
-	LAString curveName_6ML = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MLCURVENAME).toUpper();
-	LAString curveName_DF = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_DFCURVENAME).toUpper();
-	LAString curveName_3ML = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MLCURVENAME).toUpper();
+	AQLStringVector curveNames_6ML;
+	AQLStringVector curveNames_3ML;
+	AQLStringVector curveNames_DF;
+	AQLString curveName_6ML = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MLCURVENAME).toUpper();
+	AQLString curveName_DF = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_DFCURVENAME).toUpper();
+	AQLString curveName_3ML = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MLCURVENAME).toUpper();
 	if (curveName_6ML != AQ_NO_DATA)
 	{
 		curveNames_6ML = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MLCURVENAME).toToken(':');
@@ -2715,23 +2715,23 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 	objectPool->remove(IR_CALIBRATION_DATA_6MLCURVENAMES);
 	objectPool->remove(IR_CALIBRATION_DATA_DFCURVENAMES);
 	objectPool->remove(IR_CALIBRATION_DATA_3MLCURVENAMES);
-	objectPool->add(IR_CALIBRATION_DATA_6MLCURVENAMES, new LADataStrings(curveNames_6ML));
-	objectPool->add(IR_CALIBRATION_DATA_DFCURVENAMES, new LADataStrings(curveNames_DF));
-	objectPool->add(IR_CALIBRATION_DATA_3MLCURVENAMES, new LADataStrings(curveNames_3ML));
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_ISRENOTIONALADJUST);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_ISRENOTIONALADJUST, new LADataBool(isXccyMarkedToMarket));
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET, new LADataBool(isXccyMarkedToMarket));
+	objectPool->add(IR_CALIBRATION_DATA_6MLCURVENAMES, new AQLDataStrings(curveNames_6ML));
+	objectPool->add(IR_CALIBRATION_DATA_DFCURVENAMES, new AQLDataStrings(curveNames_DF));
+	objectPool->add(IR_CALIBRATION_DATA_3MLCURVENAMES, new AQLDataStrings(curveNames_3ML));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_ISRENOTIONALADJUST);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_ISRENOTIONALADJUST, new AQLDataBool(isXccyMarkedToMarket));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET, new AQLDataBool(isXccyMarkedToMarket));
 	curveCalibrationData->setArbFreeCurveName(curveNames_6ML, curveNames_DF, curveNames_3ML);
 
 	// reference data for market pro
-	LAString staticDataName;
-	LAString tenorBasisStaticDataName;
+	AQLString staticDataName;
+	AQLString tenorBasisStaticDataName;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// >>>>>>>>>>>>> for XLL plus
 		// setup context key
-	LAString contextKey = currency;
+	AQLString contextKey = currency;
 	contextKey.toLower();
 
 	// setup risk info
@@ -2739,11 +2739,11 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 	isrisk |= LACoreDataService::getContext(ARG_KEY_OFFICIALRISK) != AQ_NO_DATA ? true : false;
 	isrisk |= LACoreDataService::getContext(ARG_KEY_FRONTRISK) != AQ_NO_DATA ? true : false;
 
-	LAString curveContext = LACoreDataService::getContext(contextKey + CONTEXT_KEY_SDE_YIELD);
+	AQLString curveContext = LACoreDataService::getContext(contextKey + CONTEXT_KEY_SDE_YIELD);
 
 	if (!isrisk&&curveContext != AQ_NO_DATA)
 	{
-		LADataDoubleMatrix matrix;
+		AQLDataDoubleMatrix matrix;
 		matrix.convertFromString(curveContext);
 		unsigned int rowSize = matrix.get1DSize();
 		unsigned int colSize = matrix.getSize(0);
@@ -2760,20 +2760,20 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 			if (isBasisDiscountFactor)
 				dfs2[i] = matrix.get(i, 2);
 		}
-		dynamic_cast<LADataDoubles &>(objectPool->getData(CALIBRATION_DATA_TERMS, ISDEFINED).get()).set(terms);
-		dynamic_cast<LADataDoubles &>(objectPool->getData(IR_CALIBRATION_DATA_DFS, ISDEFINED).get()).set(dfs);
+		dynamic_cast<AQLDataDoubles &>(objectPool->getData(CALIBRATION_DATA_TERMS, ISDEFINED).get()).set(terms);
+		dynamic_cast<AQLDataDoubles &>(objectPool->getData(IR_CALIBRATION_DATA_DFS, ISDEFINED).get()).set(dfs);
 		if (isBasisDiscountFactor)
 		{
-			LADataDoubles* attrDF2 = NULL;
-			LADataHolder* df2H = &objectPool->getData(IR_CALIBRATION_DATA_DFS2);
+			AQLDataDoubles* attrDF2 = NULL;
+			AQLDataHolder* df2H = &objectPool->getData(IR_CALIBRATION_DATA_DFS2);
 			if (!df2H->isDefined())
 			{
-				attrDF2 = new LADataDoubles();
+				attrDF2 = new AQLDataDoubles();
 				objectPool->add(IR_CALIBRATION_DATA_DFS2, attrDF2);
 			}
 			else
 			{
-				attrDF2 = dynamic_cast<LADataDoubles*>(&df2H->get());
+				attrDF2 = dynamic_cast<AQLDataDoubles*>(&df2H->get());
 			}
 			attrDF2->set(dfs2);
 		}
@@ -2782,24 +2782,24 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	bool enableCalculation = true;
-	LAString target = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET);
+	AQLString target = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET);
 	if (target != AQ_NO_DATA) enableCalculation = false;
 
-	map<LAString, map<LAString, double> > tenorBasisMarketQuotes;
+	map<AQLString, map<AQLString, double> > tenorBasisMarketQuotes;
 	setUpGenCurveData(dataInstance, staticDataName, asOfDate, tmpCurrency, SWAP, yieldDataName, isSpotStarting, useTenorBasis, *curveCalibrationData, tenorBasisMarketQuotes);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		// create Xccy Basis information object
-	LAString refData_XccyBasis = "";
+	AQLString refData_XccyBasis = "";
 	if (currency == CURRENCY_USD)
 	{
-		LAObject *xccyBasis = NULL;
-		LAString nameXccyBasis = yieldDataName + "_" + XCCYBASIS;
-		const LAObjectHolder ehdata = objPool.getObject(nameXccyBasis);
+		AQLObject *xccyBasis = NULL;
+		AQLString nameXccyBasis = yieldDataName + "_" + XCCYBASIS;
+		const AQLObjectHolder ehdata = objPool.getObject(nameXccyBasis);
 		if (!ehdata.isDefined())
 		{
-			xccyBasis = new LAObject();
+			xccyBasis = new AQLObject();
 			objPool.set(nameXccyBasis, xccyBasis);
 		}
 		else
@@ -2810,28 +2810,28 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 
 		refData_XccyBasis += nameXccyBasis + ":";
 		// set name
-		xccyBasis->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(nameXccyBasis);
+		xccyBasis->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(nameXccyBasis);
 		// set data type
-		xccyBasis->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_BASIS);
+		xccyBasis->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_BASIS);
 		// set curve name
-		LAStringVector usd3mlFloaterInfo = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_USD3MLFLOATER).toToken(':');
-		if (usd3mlFloaterInfo.size() != 2) throw LACoreInvalidData("No XccyBasis information!", __FILE__, __LINE__);
-		xccyBasis->add(IR_CALIBRATION_DATA_AGTFORECAST, new LADataString()).convertFromString(usd3mlFloaterInfo[1]);
+		AQLStringVector usd3mlFloaterInfo = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_USD3MLFLOATER).toToken(':');
+		if (usd3mlFloaterInfo.size() != 2) throw AQLCoreInvalidData("No XccyBasis information!", __FILE__, __LINE__);
+		xccyBasis->add(IR_CALIBRATION_DATA_AGTFORECAST, new AQLDataString()).convertFromString(usd3mlFloaterInfo[1]);
 		// set foreign ccy info
-		LAString ccy_floater, fYieldDataName;
+		AQLString ccy_floater, fYieldDataName;
 		if (isSetCurveID == "TRUE")
 		{
-			LAObject* fYieldData = &objPool.getObject(usd3mlFloaterInfo[0], ENCHKTYPE_ISDEFINED).get();
-			ccy_floater = dynamic_cast<LADataString&> ((fYieldData->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL)).get());
+			AQLObject* fYieldData = &objPool.getObject(usd3mlFloaterInfo[0], ENCHKTYPE_ISDEFINED).get();
+			ccy_floater = dynamic_cast<AQLDataString&> ((fYieldData->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL)).get());
 			fYieldDataName = usd3mlFloaterInfo[0];
 		}
 		else
 		{
-			LAString isPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
+			AQLString isPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
 			if (isPricer == "TRUE")
 			{
-				LAObject* yieldData = &objPool.getObject(usd3mlFloaterInfo[0], ENCHKTYPE_ISDEFINED).get();
-				ccy_floater = dynamic_cast<LADataString&> ((yieldData->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL)).get());
+				AQLObject* yieldData = &objPool.getObject(usd3mlFloaterInfo[0], ENCHKTYPE_ISDEFINED).get();
+				ccy_floater = dynamic_cast<AQLDataString&> ((yieldData->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL)).get());
 			}
 			else
 			{
@@ -2844,12 +2844,12 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 		{
 			loadYieldCurveDataAndCalibrate(ccy_floater, dataInstance);
 		}
-		LAString curveName_floater = usd3mlFloaterInfo[1];
+		AQLString curveName_floater = usd3mlFloaterInfo[1];
 		curveCalibrationData->getForeignYieldData().convertFromString(fYieldDataName);
 
 		if (isSetCurveID != "TRUE")
 		{
-			LAString baseCcy = currency; LAString domCcy = currency; LAString forCcy = ccy_floater;
+			AQLString baseCcy = currency; AQLString domCcy = currency; AQLString forCcy = ccy_floater;
 			while (1)
 			{
 				CurveCalibrationData &ycPro_dccy = dynamic_cast<CurveCalibrationData &>
@@ -2858,9 +2858,9 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 					(objPool.getObject(LAMarketData::getBaseYieldProName(forCcy.toUpper()), ENCHKTYPE_ISDEFINED).get());
 
 				ycPro_fccy.setAffectingCcy(baseCcy.toUpper());
-				const LAString& affectedCcy_fccy = ycPro_fccy.getAffectedCcy();
+				const AQLString& affectedCcy_fccy = ycPro_fccy.getAffectedCcy();
 				if (affectedCcy_fccy == domCcy)
-					throw LACoreInvalidData("The affected currency includes in Affecting currencies!", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("The affected currency includes in Affecting currencies!", __FILE__, __LINE__);
 
 				ycPro_dccy.setAffectedCcy(forCcy.toUpper());
 
@@ -2874,21 +2874,21 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 
 		if (isXccyMarkedToMarket)
 		{
-			LAStringVector baseCcyDFInfo = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_BASECCYDF).toToken(':');
-			if (baseCcyDFInfo.size() != 2) throw LACoreInvalidData("No XccyBasis information!", __FILE__, __LINE__);
-			if (usd3mlFloaterInfo[0] != baseCcyDFInfo[0]) throw LACoreInvalidData("Reference currencies are inconsistent!", __FILE__, __LINE__);
-			xccyBasis->add(IR_CALIBRATION_DATA_AGTDISCOUNT, new LADataString()).convertFromString(baseCcyDFInfo[1]);
+			AQLStringVector baseCcyDFInfo = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_BASECCYDF).toToken(':');
+			if (baseCcyDFInfo.size() != 2) throw AQLCoreInvalidData("No XccyBasis information!", __FILE__, __LINE__);
+			if (usd3mlFloaterInfo[0] != baseCcyDFInfo[0]) throw AQLCoreInvalidData("Reference currencies are inconsistent!", __FILE__, __LINE__);
+			xccyBasis->add(IR_CALIBRATION_DATA_AGTDISCOUNT, new AQLDataString()).convertFromString(baseCcyDFInfo[1]);
 		}
 
 		// set yield curve pro
 		refData_XccyBasis = refData_XccyBasis.subString(0, refData_XccyBasis.size() - 2);
-		curveCalibrationData->LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + XCCYBASIS);
-		curveCalibrationData->LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + XCCYBASIS, new LADataMultiReference()).convertFromString(refData_XccyBasis);
+		curveCalibrationData->AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + XCCYBASIS);
+		curveCalibrationData->AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + XCCYBASIS, new AQLDataMultiReference()).convertFromString(refData_XccyBasis);
 	}
 
 	tmpCurrency.toLower();
-	LAStringVector listOfCurvesBuilt;
-	LAString tmpMarket = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	AQLStringVector listOfCurvesBuilt;
+	AQLString tmpMarket = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	if (tmpMarket == AQ_NO_DATA)
 	{
 		listOfCurvesBuilt = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATEDFS).toToken(MULTI_STATIC_DATA_DELIMITER);
@@ -2898,53 +2898,53 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 		listOfCurvesBuilt = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toToken(MULTI_STATIC_DATA_DELIMITER);
 	}
 	uppervec(listOfCurvesBuilt);
-	if (currency != CURRENCY_USD && find(listOfCurvesBuilt.begin(), listOfCurvesBuilt.end(), XCCYBASIS) == listOfCurvesBuilt.end()) throw LACoreInvalidData("XCCYBASIS is not in generate dfs!!", __FILE__, __LINE__);
+	if (currency != CURRENCY_USD && find(listOfCurvesBuilt.begin(), listOfCurvesBuilt.end(), XCCYBASIS) == listOfCurvesBuilt.end()) throw AQLCoreInvalidData("XCCYBASIS is not in generate dfs!!", __FILE__, __LINE__);
 	if (find(listOfCurvesBuilt.begin(), listOfCurvesBuilt.end(), THREESIXBASIS) == listOfCurvesBuilt.end())
 	{
-		LAString thisCurveStaticData;
+		AQLString thisCurveStaticData;
 		setUp36BasisDummyData(dataInstance, thisCurveStaticData, asOfDate, tmpCurrency, THREESIXBASIS, yieldDataName, isSpotStarting, *curveCalibrationData);
 		// set yield curve pro
 		thisCurveStaticData = thisCurveStaticData.subString(0, thisCurveStaticData.size() - 2);
-		curveCalibrationData->LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + THREESIXBASIS);
-		curveCalibrationData->LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + THREESIXBASIS, new LADataMultiReference()).convertFromString(thisCurveStaticData);
+		curveCalibrationData->AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + THREESIXBASIS);
+		curveCalibrationData->AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + THREESIXBASIS, new AQLDataMultiReference()).convertFromString(thisCurveStaticData);
 	}
 	// set yield curve pro
 	staticDataName = staticDataName.subString(0, staticDataName.size() - 2);
 	curveCalibrationData->getMarketData().convertFromString(staticDataName);
 
-	LADataHolder* dh;
-	LAStringVector swapCurveDiscountFactors;
+	AQLDataHolder* dh;
+	AQLStringVector swapCurveDiscountFactors;
 	dh = &curveCalibrationData->getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK);
-	if (dh->isDefined() && !dh->isNull()) swapCurveDiscountFactors = dynamic_cast<const LADataStrings &>(dh->get()).get();
+	if (dh->isDefined() && !dh->isNull()) swapCurveDiscountFactors = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 
-	LAStringVector basisCurves;
+	AQLStringVector basisCurves;
 	dh = &curveCalibrationData->getData(IR_CALIBRATION_DATA_BASISDFS, NOCHECK);
-	if (dh->isDefined() && !dh->isNull()) basisCurves = dynamic_cast<const LADataStrings &>(dh->get()).get();
+	if (dh->isDefined() && !dh->isNull()) basisCurves = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 
-	LAString tenorBasisDiscountFactors = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_DF2);
+	AQLString tenorBasisDiscountFactors = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_DF2);
 	if (!listOfCurvesBuilt.empty() && listOfCurvesBuilt[0] != AQ_NO_DATA)
 	{
-		//LADataStrings &attrGenCurves = dynamic_cast<LADataStrings &>(curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GENERATEDFS, new LADataStrings()).get());		
+		//AQLDataStrings &attrGenCurves = dynamic_cast<AQLDataStrings &>(curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GENERATEDFS, new AQLDataStrings()).get());		
 		for (unsigned int i = 0; i < listOfCurvesBuilt.size(); ++i)
 		{
 			if (listOfCurvesBuilt[i] == SWAP) continue;
 
 			tmpCurrency.toLower();
-			LAString thisCurveStaticData;
-			LAString suffixLowerCase = "." + listOfCurvesBuilt[i];
+			AQLString thisCurveStaticData;
+			AQLString suffixLowerCase = "." + listOfCurvesBuilt[i];
 			suffixLowerCase.toLower();
-			LAString marketType = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MARKETTYPE + suffixLowerCase).toUpper();
+			AQLString marketType = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MARKETTYPE + suffixLowerCase).toUpper();
 			if (marketType == AQ_NO_DATA)
 			{
-				LAString isBasisStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ISBASIS + suffixLowerCase).toUpper();
-				LAString isReadFile = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ISREADFILE + suffixLowerCase).toUpper();
+				AQLString isBasisStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ISBASIS + suffixLowerCase).toUpper();
+				AQLString isReadFile = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ISREADFILE + suffixLowerCase).toUpper();
 				if (isBasisStr == "TRUE") marketType = MARKETTYPE_BASIS;
 				else if (isReadFile == "TRUE") marketType = MARKETTYPE_ZERORATE;
 				else marketType = MARKETTYPE_SWAP;
 			}
 
 			// set up interpolation
-			LAString strInter = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase).toUpper();
+			AQLString strInter = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase).toUpper();
 			if (strInter != AQ_NO_DATA)
 			{
 				yc->getInterpolation(listOfCurvesBuilt[i]).convertFromString(strInter.toLower());
@@ -2964,11 +2964,11 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 
 				if (listOfCurvesBuilt[i] != XCCYBASIS && listOfCurvesBuilt[i] != THREESIXBASIS)
 				{
-					LAString thisMarketName = listOfCurvesBuilt[i];
-					LAString aliasCurveNames = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + "." + thisMarketName.toLower());
+					AQLString thisMarketName = listOfCurvesBuilt[i];
+					AQLString aliasCurveNames = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + "." + thisMarketName.toLower());
 					if (aliasCurveNames != AQ_NO_DATA)
 					{
-						LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+						AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 						for (size_t i = 0; i < assignedCurves.size(); i++)
 						{
 							basisCurves.push_back(assignedCurves[i]);
@@ -2991,11 +2991,11 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 			{
 				if (!enableCalculation) continue;
 
-				LAString thisMarketName = listOfCurvesBuilt[i];
-				LAString aliasCurveNames = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + "." + thisMarketName.toLower());
+				AQLString thisMarketName = listOfCurvesBuilt[i];
+				AQLString aliasCurveNames = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + "." + thisMarketName.toLower());
 				if (aliasCurveNames != AQ_NO_DATA)
 				{
-					LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+					AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 					for (size_t i = 0; i < assignedCurves.size(); i++)
 					{
 						if (swapCurveDiscountFactors.end() == std::find(swapCurveDiscountFactors.begin(), swapCurveDiscountFactors.end(), assignedCurves[i]))
@@ -3014,7 +3014,7 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 
 				//attrGenCurves.set(swapCurveDiscountFactors);
 
-				LAString oisCompoundType = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + suffixLowerCase).toUpper();
+				AQLString oisCompoundType = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + suffixLowerCase).toUpper();
 				if (oisCompoundType.toUpper() == "DAILYCOMPOUNDING")
 					setUpGenCurveDataOIS(dataInstance, thisCurveStaticData, asOfDate, tmpCurrency, listOfCurvesBuilt[i], yieldDataName, isSpotStarting, useTenorBasis, *curveCalibrationData, tenorBasisMarketQuotes);
 				else
@@ -3022,24 +3022,24 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 			}
 			else
 			{
-				throw LACoreInvalidData("Market type is not supported!!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Market type is not supported!!", __FILE__, __LINE__);
 			}
 
 			// set yield curve pro
 			thisCurveStaticData = thisCurveStaticData.subString(0, thisCurveStaticData.size() - 2);
-			curveCalibrationData->LAObject::remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + listOfCurvesBuilt[i]);
-			curveCalibrationData->LAObject::add(CALIBRATION_DATA_MARKETDATA + LAString("_") + listOfCurvesBuilt[i], new LADataMultiReference()).convertFromString(thisCurveStaticData);
+			curveCalibrationData->AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + listOfCurvesBuilt[i]);
+			curveCalibrationData->AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + listOfCurvesBuilt[i], new AQLDataMultiReference()).convertFromString(thisCurveStaticData);
 		}
 	}
 
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GENERATEDFS);
-	curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GENERATEDFS, new LADataStrings(swapCurveDiscountFactors));
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GENERATEDFS);
+	curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GENERATEDFS, new AQLDataStrings(swapCurveDiscountFactors));
 
 	// generate yield data
 	curveCalibrationData->getData(CALIBRATION_DATA_CURVEGENERATOR, NOCHECK).convertFromString(FN_IRARBFREEGENERATOR_STR);
-	LADataProcedure &modelDataObj = dynamic_cast<LADataProcedure &>
+	AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &>
 		(curveCalibrationData->getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
 
 	dataInstance.getReferencePool().completeDependency();
 	modelDataObj.calibrateModel(asOfDate);
@@ -3050,22 +3050,22 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 		curveCalibrationData->getData(CALIBRATION_DATA_CURVEGENERATOR, NOCHECK).convertFromString(FN_IRYIELDGENERATOR_STR);
 		for (size_t i = 0; i < swapCurveDiscountFactors.size(); i++)
 		{
-			curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new LADataString(swapCurveDiscountFactors[i]));
-			modelDataObj = dynamic_cast<LADataProcedure &> (curveCalibrationData->getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
+			curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new AQLDataString(swapCurveDiscountFactors[i]));
+			modelDataObj = dynamic_cast<AQLDataProcedure &> (curveCalibrationData->getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
 			modelDataObj.calibrateModel(asOfDate);
-			curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
+			curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
 		}
 		curveCalibrationData->getData(CALIBRATION_DATA_CURVEGENERATOR, NOCHECK).convertFromString(FN_IRARBFREEGENERATOR_STR);
 	}
 
 	//adjust discountfactor
 	tmpCurrency.toLower();
-	LADataBool tmpAttrDF;
+	AQLDataBool tmpAttrDF;
 	tmpAttrDF.convertFromString(mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISADJUSTDF));
 	if (tmpAttrDF.get())
 	{
-		const std::map<LAString, LAString> &assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
-		for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+		const std::map<AQLString, AQLString> &assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
+		for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 		{
 			if (!curveCalibrationData->isBasisCurve(it->first) && (enableCalculation || target == it->second))
 			{
@@ -3076,18 +3076,18 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 
 	// basis
 	bool isBasis = false;
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_BASISDFS);
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_BASISDFS);
 	if (!basisCurves.empty() && enableCalculation)
 	{
 		isBasis = true;
-		curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_BASISDFS, new LADataStrings(basisCurves));
+		curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_BASISDFS, new AQLDataStrings(basisCurves));
 	}
 
-	curveCalibrationData->LAObject::remove(IR_CALIBRATION_DATA_MAINBASISDF);
+	curveCalibrationData->AQLObject::remove(IR_CALIBRATION_DATA_MAINBASISDF);
 	if (tenorBasisDiscountFactors != AQ_NO_DATA)
 	{
 		isBasis = true;
-		curveCalibrationData->LAObject::add(IR_CALIBRATION_DATA_MAINBASISDF, new LADataString(tenorBasisDiscountFactors));
+		curveCalibrationData->AQLObject::add(IR_CALIBRATION_DATA_MAINBASISDF, new AQLDataString(tenorBasisDiscountFactors));
 	}
 	if (tenorBasisStaticDataName.size() > 1)
 	{
@@ -3105,7 +3105,7 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 	// set daycount
 	setUpCurveTypeDayCount(*curveCalibrationData, *yc);
 
-	LAString genFloaterName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATEFLOATERS).toUpper();
+	AQLString genFloaterName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATEFLOATERS).toUpper();
 	if (genFloaterName != AQ_NO_DATA || target == CURVETYPE_FLOATER) setUpFloater(tmpCurrency, *curveCalibrationData, genFloaterName);
 
 
@@ -3113,7 +3113,7 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 		// >>>>>>>>>>>>> for XLL plus
 	if (curveContext != AQ_NO_DATA)
 	{
-		LADataDoubleMatrix matrix;
+		AQLDataDoubleMatrix matrix;
 		matrix.convertFromString(curveContext);
 		unsigned int rowSize = matrix.get1DSize();
 		unsigned int colSize = matrix.getSize(0);
@@ -3130,12 +3130,12 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 			if (isBasisDiscountFactor)
 				dfs2[i] = matrix.get(i, 2);
 		}
-		dynamic_cast<LADataDoubles &>(objectPool->getData(CALIBRATION_DATA_TERMS, ISDEFINED).get()).set(terms);
-		dynamic_cast<LADataDoubles &>(objectPool->getData(IR_CALIBRATION_DATA_DFS, ISDEFINED).get()).set(dfs);
+		dynamic_cast<AQLDataDoubles &>(objectPool->getData(CALIBRATION_DATA_TERMS, ISDEFINED).get()).set(terms);
+		dynamic_cast<AQLDataDoubles &>(objectPool->getData(IR_CALIBRATION_DATA_DFS, ISDEFINED).get()).set(dfs);
 		objectPool->remove(IR_CALIBRATION_DATA_DFS2);
 		if (isBasisDiscountFactor)
 		{
-			objectPool->add(IR_CALIBRATION_DATA_DFS2, new LADataDoubles(dfs2));
+			objectPool->add(IR_CALIBRATION_DATA_DFS2, new AQLDataDoubles(dfs2));
 		}
 
 		return;
@@ -3144,7 +3144,7 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 
 	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
-		LAStringVector dataoutCurves;
+		AQLStringVector dataoutCurves;
 		dataoutCurves.push_back(STD);
 		for (size_t i = 0; i < curveNames_6ML.size(); i++)
 		{
@@ -3159,8 +3159,8 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 			if (curveNames_3ML[i] != STD) dataoutCurves.push_back(curveNames_3ML[i]);
 		}
 
-		const std::map<LAString, LAString>& assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
-		for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+		const std::map<AQLString, AQLString>& assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
+		for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 		{
 			if (it->second != SWAP && it->second != XCCYBASIS && it->second != THREESIXBASIS) dataoutCurves.push_back(it->first);
 		}
@@ -3179,15 +3179,15 @@ LAUpdateCurveObject::generateInitialValueArbfree(const LAString &currency, LADat
 	@param[in] dataInstance
 */
 void
-LAUpdateCurveObject::loadCorrelationDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance) const
+LAUpdateCurveObject::loadCorrelationDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
-	LAString sdeName = getSDEAttrName(currency);
-	LAString type = getCorTye(currency);
+	AQLString sdeName = getSDEAttrName(currency);
+	AQLString type = getCorTye(currency);
 	type.toUpper();
 
 	LAMathCorrelation *corEntity = new LAMathCorrelation(&dataInstance);
-	LADataString &corAttrName = corEntity->getName();
-	LAString corName = PREFIX_COR + sdeName;
+	AQLDataString &corAttrName = corEntity->getName();
+	AQLString corName = PREFIX_COR + sdeName;
 	corAttrName.set(corName);
 
 	if (!isCancelForFunding(currency))
@@ -3206,7 +3206,7 @@ LAUpdateCurveObject::loadCorrelationDataAndCalibrate(const LAString &currency, L
 		}
 		else
 		{
-			throw LACoreInvalidData("Volatility input type. only function or data is support", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Volatility input type. only function or data is support", __FILE__, __LINE__);
 		}
 	}
 	// set data as reference
@@ -3221,12 +3221,12 @@ LAUpdateCurveObject::loadCorrelationDataAndCalibrate(const LAString &currency, L
 	@brief get SDE data name
 
 	@param[in] currency
-	@return LAString
+	@return AQLString
 */
-LAString
-LAUpdateCurveObject::getSDEAttrName(const LAString &currency) const
+AQLString
+LAUpdateCurveObject::getSDEAttrName(const AQLString &currency) const
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	return  mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 }
 
@@ -3237,10 +3237,10 @@ LAUpdateCurveObject::getSDEAttrName(const LAString &currency) const
 	@param[in] key
 	@param[in] curve
 	@param[in] grid
-	@return LAString
+	@return AQLString
 */
-LAString
-LAUpdateCurveObject::getGridStaticData(const LAString &key, const LAString &curve, const LAString &grid) const
+AQLString
+LAUpdateCurveObject::getGridStaticData(const AQLString &key, const AQLString &curve, const AQLString &grid) const
 {
 	return etrading::getGridStaticData(mpStaticData, key, curve, grid);
 }
@@ -3251,21 +3251,21 @@ LAUpdateCurveObject::getGridStaticData(const LAString &key, const LAString &curv
 */
 void
 LAUpdateCurveObject::setUpGenerateConfig
-(LADataInstance &dataInstance, const LADate &asOfDate, const LAString &currency, LAMathYieldCurve &yc, CurveCalibrationData &curveCalibrationData,
-	LAObject &ycData, bool &useTenorBasis, bool &useTenorBasisInstruments, bool &isSpotStarting, bool isArbFree, const LAString& suffixLowerCase, const LAString& epSuffix) const
+(AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, LAMathYieldCurve &yc, CurveCalibrationData &curveCalibrationData,
+	AQLObject &ycData, bool &useTenorBasis, bool &useTenorBasisInstruments, bool &isSpotStarting, bool isArbFree, const AQLString& suffixLowerCase, const AQLString& epSuffix) const
 {
-	LAString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
+	AQLString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
 
-	LAString tmpCurrency = currency;
+	AQLString tmpCurrency = currency;
 	tmpCurrency.toLower();
 
-	LAString yieldName = yc.getName().get();
+	AQLString yieldName = yc.getName().get();
 
-	yc.LAObject::remove(CALIBRATION_DATA_ASOFDATE);
-	yc.LAObject::add(CALIBRATION_DATA_ASOFDATE, new LADataDate(asOfDate));
+	yc.AQLObject::remove(CALIBRATION_DATA_ASOFDATE);
+	yc.AQLObject::add(CALIBRATION_DATA_ASOFDATE, new AQLDataDate(asOfDate));
 
 	// set interpolation
-	LAString interp = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase);
+	AQLString interp = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase);
 	if (interp == AQ_NO_DATA)
 	{
 		interp = FN_SPLINEINTERPOLATION_STR;
@@ -3273,29 +3273,29 @@ LAUpdateCurveObject::setUpGenerateConfig
 	yc.getInterpolation().convertFromString(interp.toLower());
 
 	// set daycount
-	LAString dayCount = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DAYCOUNT);
+	AQLString dayCount = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DAYCOUNT);
 	if (dayCount != AQ_NO_DATA)
 	{
 		yc.getDayCount().convertFromString(dayCount.toUpper());
 	}
 
 	// set freq
-	LAString freq = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FREQUENCY);
+	AQLString freq = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FREQUENCY);
 	if (freq != AQ_NO_DATA)
 	{
 		yc.getFrequency().convertFromString(freq.toUpper());
 	}
 
 	// set sliding rule
-	LAString slidingRule = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_SLIDINGRULE);
+	AQLString slidingRule = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_SLIDINGRULE);
 	if (slidingRule != AQ_NO_DATA)
 	{
 		yc.getSlidingRule().convertFromString(slidingRule.toUpper());
 	}
 
 	// set cal 
-	LAPriceDataCalendar calY;
-	LAString calYStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_CALENDAR);
+	AQLPriceDataCalendar calY;
+	AQLString calYStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_CALENDAR);
 	if (calYStr != AQ_NO_DATA)
 	{
 		calY.convertFromString(calYStr);
@@ -3303,14 +3303,14 @@ LAUpdateCurveObject::setUpGenerateConfig
 	}
 
 	//set basis DF
-	LAString tenorBasisDiscountFactors = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_DF2);
+	AQLString tenorBasisDiscountFactors = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_DF2);
 	if (tenorBasisDiscountFactors != AQ_NO_DATA)
 	{
 		yc.setBasisCurveType(tenorBasisDiscountFactors);
 	}
 
 	// set yield to object pool
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
 	// set yieldpro to object pool
 	// set as of date
@@ -3320,7 +3320,7 @@ LAUpdateCurveObject::setUpGenerateConfig
 	curveCalibrationData.getData(CALIBRATION_DATA_CURVEGENERATOR, NOCHECK).convertFromString(FN_IRYIELDGENERATOR_STR);
 
 	// set interpolation
-	LAString genInterp = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase);
+	AQLString genInterp = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATION + suffixLowerCase);
 	if (genInterp == AQ_NO_DATA)
 	{
 		genInterp = FN_SPLINEINTERPOLATION_STR;
@@ -3331,13 +3331,13 @@ LAUpdateCurveObject::setUpGenerateConfig
 	}
 	else
 	{
-		curveCalibrationData.LAObject::remove(CALIBRATION_DATA_INTERPOLATION + epSuffix);
-		curveCalibrationData.LAObject::add(CALIBRATION_DATA_INTERPOLATION + epSuffix, new LAPriceDataInterpolation()).convertFromString(genInterp);
+		curveCalibrationData.AQLObject::remove(CALIBRATION_DATA_INTERPOLATION + epSuffix);
+		curveCalibrationData.AQLObject::add(CALIBRATION_DATA_INTERPOLATION + epSuffix, new AQLPriceDataInterpolation()).convertFromString(genInterp);
 	}
 	curveCalibrationData.getInterpolation().convertFromString(genInterp.toLower());
 
 	// interpolation for OIS and STD swaps
-	LAString genYieldGenInterp = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_YIELDGEN_INTERPOLATION + suffixLowerCase);
+	AQLString genYieldGenInterp = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_YIELDGEN_INTERPOLATION + suffixLowerCase);
 	if (genYieldGenInterp == AQ_NO_DATA)
 	{
 		if (genInterp != AQ_NO_DATA)
@@ -3355,12 +3355,12 @@ LAUpdateCurveObject::setUpGenerateConfig
 	}
 	else
 	{
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONYG + epSuffix);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_INTERPOLATIONYG + epSuffix, new LAPriceDataInterpolation()).convertFromString(genYieldGenInterp);
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONYG + epSuffix);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONYG + epSuffix, new AQLPriceDataInterpolation()).convertFromString(genYieldGenInterp);
 	}
 
 	// interpolation for FRA/futures
-	LAString genFutureInterp = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FUTURE_INTERPOLATION + suffixLowerCase);
+	AQLString genFutureInterp = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FUTURE_INTERPOLATION + suffixLowerCase);
 	if (genFutureInterp == AQ_NO_DATA)
 	{
 		if (genInterp != AQ_NO_DATA)
@@ -3378,12 +3378,12 @@ LAUpdateCurveObject::setUpGenerateConfig
 	}
 	else
 	{
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONFW + epSuffix);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_INTERPOLATIONFW + epSuffix, new LAPriceDataInterpolation()).convertFromString(genFutureInterp);
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONFW + epSuffix);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONFW + epSuffix, new AQLPriceDataInterpolation()).convertFromString(genFutureInterp);
 	}
 
 	// interpolation for basis
-	LAString genBasisInterp = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_BASIS_INTERPOLATION + suffixLowerCase);
+	AQLString genBasisInterp = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_BASIS_INTERPOLATION + suffixLowerCase);
 	if (genBasisInterp == AQ_NO_DATA)
 	{
 		if (genInterp != AQ_NO_DATA)
@@ -3401,12 +3401,12 @@ LAUpdateCurveObject::setUpGenerateConfig
 	}
 	else
 	{
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONBS + epSuffix);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_INTERPOLATIONBS + epSuffix, new LAPriceDataInterpolation()).convertFromString(genBasisInterp);
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONBS + epSuffix);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONBS + epSuffix, new AQLPriceDataInterpolation()).convertFromString(genBasisInterp);
 	}
 
 	// set basis function
-	LAString genBasisFunc = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_BASISFUNCTION);
+	AQLString genBasisFunc = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_BASISFUNCTION);
 	if (genBasisFunc == AQ_NO_DATA)
 	{
 		genBasisFunc = FN_BASISFUNC2_STR;
@@ -3414,36 +3414,36 @@ LAUpdateCurveObject::setUpGenerateConfig
 	curveCalibrationData.getBasisFunction().setFunction(genBasisFunc.toLower());
 
 	// set daycount
-	LAString genDayCount = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DAYCOUNT);
+	AQLString genDayCount = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DAYCOUNT);
 	if (genDayCount != AQ_NO_DATA)
 	{
 		curveCalibrationData.getDayCount().convertFromString(genDayCount.toUpper());
 	}
 
 	// set freq
-	LAString genFreq = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FREQUENCY);
+	AQLString genFreq = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FREQUENCY);
 	if (genFreq != AQ_NO_DATA)
 	{
 		curveCalibrationData.getFrequency().convertFromString(genFreq.toUpper());
 	}
 
 	// set sliding rulue
-	LAString genSlidingRule = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_SLIDINGRULE);
+	AQLString genSlidingRule = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_SLIDINGRULE);
 	if (genSlidingRule != AQ_NO_DATA)
 	{
 		curveCalibrationData.getSlidingRule().convertFromString(genSlidingRule.toUpper());
 	}
 
 	// set rate priority
-	LAString ratePrio_str = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_RATEPRIORITY).toUpper();
+	AQLString ratePrio_str = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_RATEPRIORITY).toUpper();
 	if (ratePrio_str != AQ_NO_DATA)
 	{
 		curveCalibrationData.getData(PRICING_DATA_RATEPRIORITY).convertFromString(ratePrio_str);
 	}
 
 	// set tenor adjust
-	LADataBool tmpAttrB;
-	LAString strSwapTenorAdj = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISSWAPTENORADJUST + suffixLowerCase).toUpper();
+	AQLDataBool tmpAttrB;
+	AQLString strSwapTenorAdj = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISSWAPTENORADJUST + suffixLowerCase).toUpper();
 	if (strSwapTenorAdj == AQ_NO_DATA)
 	{
 		if (tmpCurrency == "aud")
@@ -3460,49 +3460,49 @@ LAUpdateCurveObject::setUpGenerateConfig
 
 	//20170531 - Fixed Fatal Error For Win-Server2012
 #if (WINVER >= 0x0601)
-	LADataHolder *ahTemp;
-	ahTemp = &curveCalibrationData.LAObject::getData(IR_CALIBRATION_DATA_ISSWAPTENORADJUST + epSuffix, NOCHECK);
+	AQLDataHolder *ahTemp;
+	ahTemp = &curveCalibrationData.AQLObject::getData(IR_CALIBRATION_DATA_ISSWAPTENORADJUST + epSuffix, NOCHECK);
 	if (!ahTemp->isDefined())
 	{
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_ISSWAPTENORADJUST + epSuffix, new LADataBool(useTenorBasisInstruments));
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_ISSWAPTENORADJUST + epSuffix, new AQLDataBool(useTenorBasisInstruments));
 	}
 	else
 	{
-		dynamic_cast<LADataBool&>(ahTemp->get()).set(useTenorBasisInstruments);
+		dynamic_cast<AQLDataBool&>(ahTemp->get()).set(useTenorBasisInstruments);
 	}
 #else	
-	curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_ISSWAPTENORADJUST + epSuffix);
-	curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_ISSWAPTENORADJUST + epSuffix, new LADataBool(useTenorBasisInstruments));
+	curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_ISSWAPTENORADJUST + epSuffix);
+	curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_ISSWAPTENORADJUST + epSuffix, new AQLDataBool(useTenorBasisInstruments));
 #endif
 
 	if (useTenorBasisInstruments)
 	{
-		LAString tenorSwapName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TENORSWAPNAME).toUpper();
+		AQLString tenorSwapName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TENORSWAPNAME).toUpper();
 		if (tenorSwapName == AQ_NO_DATA)
 		{
-			throw LACoreInvalidData("Set tenor swap name!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Set tenor swap name!", __FILE__, __LINE__);
 		}
 
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_TENORSWAPNAME);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_TENORSWAPNAME, new LADataString(tenorSwapName));
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_TENORSWAPNAME);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_TENORSWAPNAME, new AQLDataString(tenorSwapName));
 	}
 
-	/*LAString yieldDataName = yieldName + "_DATA";
+	/*AQLString yieldDataName = yieldName + "_DATA";
 	ycData.remove(CALIBRATION_DATA_NAME);
-	ycData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(yieldDataName);*/
-	LAString yieldDataName = dynamic_cast<const LADataString&> ((ycData.getData(CALIBRATION_DATA_NAME, ISNOTNULL)).get()).get();
+	ycData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(yieldDataName);*/
+	AQLString yieldDataName = dynamic_cast<const AQLDataString&> ((ycData.getData(CALIBRATION_DATA_NAME, ISNOTNULL)).get()).get();
 
 	// set asofdate
 	ycData.remove(CALIBRATION_DATA_ASOFDATE);
-	ycData.add(CALIBRATION_DATA_ASOFDATE, new LADataDate(asOfDate));
+	ycData.add(CALIBRATION_DATA_ASOFDATE, new AQLDataDate(asOfDate));
 
 	// set currency
 	ycData.remove(IR_CALIBRATION_DATA_CURRENCY);
-	ycData.add(IR_CALIBRATION_DATA_CURRENCY, new LADataString(currency));
+	ycData.add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString(currency));
 
 	// set interpolation
 	ycData.remove(CALIBRATION_DATA_INTERPOLATION);
-	ycData.add(CALIBRATION_DATA_INTERPOLATION, new LAPriceDataInterpolation()).convertFromString(genInterp.toLower());
+	ycData.add(CALIBRATION_DATA_INTERPOLATION, new AQLPriceDataInterpolation()).convertFromString(genInterp.toLower());
 
 	// set yield data
 	yc.getYieldData().convertFromString(yieldDataName);
@@ -3512,15 +3512,15 @@ LAUpdateCurveObject::setUpGenerateConfig
 	curveCalibrationData.getData(IR_CALIBRATION_DATA_BASEYIELDCURVE, ISDEFINED).convertFromString(yieldName);
 
 	// set currency in curve ID for excel pricer 
-	const LAString isPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
+	const AQLString isPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
 	if (isPricer == "TRUE" && isSetCurveID != "TRUE")
 	{
-		LAString curveIndex = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATECURVEID);
-		const LAObjectHolder ehdata = objPool.getObject(curveIndex);
-		LAObject *eCurveID = NULL;
+		AQLString curveIndex = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATECURVEID);
+		const AQLObjectHolder ehdata = objPool.getObject(curveIndex);
+		AQLObject *eCurveID = NULL;
 		if (!ehdata.isDefined())
 		{
-			eCurveID = new LAObject();
+			eCurveID = new AQLObject();
 			objPool.set(curveIndex, eCurveID);
 		}
 		else
@@ -3528,25 +3528,25 @@ LAUpdateCurveObject::setUpGenerateConfig
 			objPool.getObject(curveIndex).get().reset();
 			eCurveID = &objPool.getObject(curveIndex).get();
 		}
-		eCurveID->add(CALIBRATION_DATA_NAME, new LADataString(curveIndex));
-		eCurveID->add(IR_CALIBRATION_DATA_CURRENCY, new LADataString(currency));
+		eCurveID->add(CALIBRATION_DATA_NAME, new AQLDataString(curveIndex));
+		eCurveID->add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString(currency));
 	}
 
-	LAString strIsAudExtra = mpStaticData->getStaticData(KEY_SDE_YIELD_ISAUDEXTRA);
+	AQLString strIsAudExtra = mpStaticData->getStaticData(KEY_SDE_YIELD_ISAUDEXTRA);
 	if (strIsAudExtra != AQ_NO_DATA)
 	{
-		LADataBool tmpIsAudExtra;
+		AQLDataBool tmpIsAudExtra;
 		tmpIsAudExtra.convertFromString(strIsAudExtra);
 		useTenorBasis = tmpIsAudExtra.get();
 	}
 
 	if (useTenorBasis && useTenorBasisInstruments)
 	{
-		throw LACoreInvalidData("We can not set AUD extra and swap tenor adjust at a same time!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("We can not set AUD extra and swap tenor adjust at a same time!", __FILE__, __LINE__);
 	}
 
 	// spotDate use flag
-	LAString isSpotUseStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISSPOTUSE);
+	AQLString isSpotUseStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISSPOTUSE);
 	if (isSpotUseStr == AQ_NO_DATA)
 	{
 		isSpotUseStr = "FALSE";
@@ -3557,12 +3557,12 @@ LAUpdateCurveObject::setUpGenerateConfig
 	// set curve exist check
 	if (isPricer == "FALSE" || isPricer == AQ_NO_DATA)
 	{
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_ISCURVEEXISTCHECK);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_ISCURVEEXISTCHECK, new LADataBool(true));
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_ISCURVEEXISTCHECK);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_ISCURVEEXISTCHECK, new AQLDataBool(true));
 	}
 
 	// set max term of curve
-	LAString maxTerm = LACoreDataService::getContext(CONTEXT_KEY_MAXTERM);
+	AQLString maxTerm = LACoreDataService::getContext(CONTEXT_KEY_MAXTERM);
 	if (maxTerm == AQ_NO_DATA)
 	{
 		maxTerm = mpStaticData->getStaticData(KEY_SIMULATION_TERM_MAX);
@@ -3571,8 +3571,8 @@ LAUpdateCurveObject::setUpGenerateConfig
 	if (maxTerm != AQ_NO_DATA)
 	{
 		ycData.remove(IR_CALIBRATION_DATA_MAXTERM);
-		ycData.add(IR_CALIBRATION_DATA_MAXTERM, new LADataString(maxTerm));
-		LAString maxFreq = LACoreDataService::getContext(CONTEXT_KEY_MAXTERMFREQ);
+		ycData.add(IR_CALIBRATION_DATA_MAXTERM, new AQLDataString(maxTerm));
+		AQLString maxFreq = LACoreDataService::getContext(CONTEXT_KEY_MAXTERMFREQ);
 
 		if (maxFreq == AQ_NO_DATA)
 		{
@@ -3581,11 +3581,11 @@ LAUpdateCurveObject::setUpGenerateConfig
 
 		if (maxFreq == AQ_NO_DATA)
 		{
-			throw LACoreInvalidData("Max term frequency is needed for curve extrapolation!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Max term frequency is needed for curve extrapolation!", __FILE__, __LINE__);
 		}
 
 		ycData.remove(IR_CALIBRATION_DATA_MAXTERMFREQ);
-		ycData.add(IR_CALIBRATION_DATA_MAXTERMFREQ, new LADataString(maxFreq.toUpper()));
+		ycData.add(IR_CALIBRATION_DATA_MAXTERMFREQ, new AQLDataString(maxFreq.toUpper()));
 	}
 }
 
@@ -3594,39 +3594,39 @@ LAUpdateCurveObject::setUpGenerateConfig
 	@brief fuction to set up basis curve data
 */
 void
-LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString &staticDataName, const LADate &asOfDate, const LAString &curveCurrencyLowerCase,
-	const LAString &marketName, const LAString &yieldDataName, bool isSpotStarting, CurveCalibrationData &curveCalibrationData, const LAString& propertyManagerCurveName, const LAString* pMktCurrency) const
+LAUpdateCurveObject::setUpBasisCurveData(AQLDataInstance &dataInstance, AQLString &staticDataName, const AQLDate &asOfDate, const AQLString &curveCurrencyLowerCase,
+	const AQLString &marketName, const AQLString &yieldDataName, bool isSpotStarting, CurveCalibrationData &curveCalibrationData, const AQLString& propertyManagerCurveName, const AQLString* pMktCurrency) const
 {
-	LAString mktCurrency = pMktCurrency ? *pMktCurrency : curveCurrencyLowerCase;
-	LAString curveMktName = pMktCurrency ? mktCurrency + "_" + marketName : marketName;
+	AQLString mktCurrency = pMktCurrency ? *pMktCurrency : curveCurrencyLowerCase;
+	AQLString curveMktName = pMktCurrency ? mktCurrency + "_" + marketName : marketName;
 	mktCurrency.toLower();
 	curveMktName.toUpper();
 
-	LAString isPricerStr = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
+	AQLString isPricerStr = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
 	const bool isPricer = isPricerStr == "TRUE";
-	LAString isSetCurveIDStr = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
+	AQLString isSetCurveIDStr = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
 	const bool isSetCurveID = isSetCurveIDStr == "TRUE";
 	bool enableCalculation = true;
-	LAString yieldGeneratorTarget = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET);
+	AQLString yieldGeneratorTarget = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET);
 	if (yieldGeneratorTarget != AQ_NO_DATA) enableCalculation = false;
 
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
-	LAString mktSuffix = "." + marketName;
-	LAString curveSuffix = pMktCurrency ? "." + mktCurrency + "_" + marketName : "." + marketName;
+	AQLString mktSuffix = "." + marketName;
+	AQLString curveSuffix = pMktCurrency ? "." + mktCurrency + "_" + marketName : "." + marketName;
 	mktSuffix.toLower();
 	curveSuffix.toLower();
 
-	LAString isLeg1SpreadStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISLEG1SPREAD + mktSuffix).toUpper();
+	AQLString isLeg1SpreadStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISLEG1SPREAD + mktSuffix).toUpper();
 	// get market rate interpolation
-	LAString interpStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_BASIS_INTERPOLATION + mktSuffix).toUpper();
-	LAString isTimeInterStr = "TRUE";
+	AQLString interpStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_BASIS_INTERPOLATION + mktSuffix).toUpper();
+	AQLString isTimeInterStr = "TRUE";
 
 	bool isDiscount = true;
 	bool isLeg1 = true;
 	bool isAgtSpread = true;
 
-	LAString yieldBasisTarget = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_TARGET + curveSuffix).toUpper();
+	AQLString yieldBasisTarget = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_TARGET + curveSuffix).toUpper();
 	if (yieldBasisTarget == LEG1FORECAST)
 	{
 		isDiscount = false;
@@ -3664,48 +3664,48 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 		}
 	}
 
-	LAString fCurve;
-	LAString dCurve;
-	LAString ccy_fCurve;
-	LAString ccy_dCurve;
-	LAString a_fCurve;
-	LAString a_dCurve;
-	LAString ccy_a_fCurve;
-	LAString ccy_a_dCurve;
+	AQLString fCurve;
+	AQLString dCurve;
+	AQLString ccy_fCurve;
+	AQLString ccy_dCurve;
+	AQLString a_fCurve;
+	AQLString a_dCurve;
+	AQLString ccy_a_fCurve;
+	AQLString ccy_a_dCurve;
 	// cashflow info
-	LAString c_freqStr;
-	LAString c_freqcpdStr;
-	LAString c_daycStr;
-	LAString c_slidingStr;
-	LAString c_calStr;
-	LADate c_spotDate;
+	AQLString c_freqStr;
+	AQLString c_freqcpdStr;
+	AQLString c_daycStr;
+	AQLString c_slidingStr;
+	AQLString c_calStr;
+	AQLDate c_spotDate;
 	int c_resetLag;
 	// index info
-	LAString i_freqStr;
-	LAString i_accessaryStr;
-	LAString i_daycStr;
-	LAString i_slidingStr;
-	LAString i_fixcalStr;
-	LAString i_paycalStr;
+	AQLString i_freqStr;
+	AQLString i_accessaryStr;
+	AQLString i_daycStr;
+	AQLString i_slidingStr;
+	AQLString i_fixcalStr;
+	AQLString i_paycalStr;
 	int i_resetLag;
 	// against cashflow info
-	LAString a_c_freqStr;
-	LAString a_c_freqcpdStr;
-	LAString a_c_daycStr;
-	LAString a_c_slidingStr;
-	LAString a_c_calStr;
-	LADate a_c_spotDate;
+	AQLString a_c_freqStr;
+	AQLString a_c_freqcpdStr;
+	AQLString a_c_daycStr;
+	AQLString a_c_slidingStr;
+	AQLString a_c_calStr;
+	AQLDate a_c_spotDate;
 	int a_c_resetLag;
 	// against index info
-	LAString a_i_freqStr;
-	LAString a_i_accessaryStr;
-	LAString a_i_daycStr;
-	LAString a_i_slidingStr;
-	LAString a_i_fixcalStr;
-	LAString a_i_paycalStr;
+	AQLString a_i_freqStr;
+	AQLString a_i_accessaryStr;
+	AQLString a_i_daycStr;
+	AQLString a_i_slidingStr;
+	AQLString a_i_fixcalStr;
+	AQLString a_i_paycalStr;
 	int a_i_resetLag;
 
-	LAPriceDataCalendar tmpCal;
+	AQLPriceDataCalendar tmpCal;
 	if (isLeg1)
 	{
 		fCurve = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_LEG1FORECAST + curveSuffix);
@@ -3822,42 +3822,42 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 	{
 		// When target curve is a discount curve, the base curve is a discount curve but there is
 		// also a secondary base curve which is the forecast curve on the same side
-		curveCalibrationData.remove(CALIBRATION_DATA_BASISCURVEBASE + LAString("_") + curveMktName);
-		curveCalibrationData.LAObject::add(CALIBRATION_DATA_BASISCURVEBASE + LAString("_") + curveMktName, new LADataString(a_dCurve));
+		curveCalibrationData.remove(CALIBRATION_DATA_BASISCURVEBASE + AQLString("_") + curveMktName);
+		curveCalibrationData.AQLObject::add(CALIBRATION_DATA_BASISCURVEBASE + AQLString("_") + curveMktName, new AQLDataString(a_dCurve));
 
-		curveCalibrationData.remove(CALIBRATION_DATA_BASISCURVESECONDARYBASE + LAString("_") + curveMktName);
-		curveCalibrationData.LAObject::add(CALIBRATION_DATA_BASISCURVESECONDARYBASE + LAString("_") + curveMktName, new LADataString(a_fCurve));
+		curveCalibrationData.remove(CALIBRATION_DATA_BASISCURVESECONDARYBASE + AQLString("_") + curveMktName);
+		curveCalibrationData.AQLObject::add(CALIBRATION_DATA_BASISCURVESECONDARYBASE + AQLString("_") + curveMktName, new AQLDataString(a_fCurve));
 
 		// Store the forecast curve on the same side as the target discount
-		curveCalibrationData.remove(CALIBRATION_DATA_XCCYSAMESIDEFORECASTCURVE + LAString("_") + curveMktName);
-		curveCalibrationData.LAObject::add(CALIBRATION_DATA_XCCYSAMESIDEFORECASTCURVE + LAString("_") + curveMktName, new LADataString(fCurve));
+		curveCalibrationData.remove(CALIBRATION_DATA_XCCYSAMESIDEFORECASTCURVE + AQLString("_") + curveMktName);
+		curveCalibrationData.AQLObject::add(CALIBRATION_DATA_XCCYSAMESIDEFORECASTCURVE + AQLString("_") + curveMktName, new AQLDataString(fCurve));
 	}
 	else
 	{
-		curveCalibrationData.remove(CALIBRATION_DATA_BASISCURVEBASE + LAString("_") + curveMktName);
-		curveCalibrationData.LAObject::add(CALIBRATION_DATA_BASISCURVEBASE + LAString("_") + curveMktName, new LADataString(a_fCurve));
+		curveCalibrationData.remove(CALIBRATION_DATA_BASISCURVEBASE + AQLString("_") + curveMktName);
+		curveCalibrationData.AQLObject::add(CALIBRATION_DATA_BASISCURVEBASE + AQLString("_") + curveMktName, new AQLDataString(a_fCurve));
 	}
 
-	LAStringMatrix basisDataMtx;
+	AQLStringMatrix basisDataMtx;
 	// rate is virtual or not
 	bool isVirtualRate = false;
-	LAString isVirtualRateSr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_ISVIRTUAL + mktSuffix).toUpper();
+	AQLString isVirtualRateSr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_ISVIRTUAL + mktSuffix).toUpper();
 	if (isVirtualRateSr == "TRUE")
 	{
 		isVirtualRate = true;
 	}
 	if (isVirtualRate)
 	{
-		LAString tmp = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_VIRTUALGRID + mktSuffix).toUpper();
-		LAStringVector virtualGrid = tmp.toToken(':');
+		AQLString tmp = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_VIRTUALGRID + mktSuffix).toUpper();
+		AQLStringVector virtualGrid = tmp.toToken(':');
 		tmp = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_VIRTUALRATE + mktSuffix).toUpper();
-		LAStringVector virtualRate = tmp.toToken(':');
+		AQLStringVector virtualRate = tmp.toToken(':');
 		// size check
 		if (virtualRate.size() != virtualGrid.size())
-			throw LACoreInvalidData("virtual grids and virtual rates are not same size!!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("virtual grids and virtual rates are not same size!!", __FILE__, __LINE__);
 		for (size_t i = 0; i < virtualRate.size(); ++i)
 		{
-			LAStringVector tmp2;
+			AQLStringVector tmp2;
 			tmp2.push_back(virtualGrid[i]);
 			tmp2.push_back(virtualRate[i]);
 			basisDataMtx.push_back(tmp2);
@@ -3872,14 +3872,14 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 		// Result String Format:	data/in/CCY_yield_basisswap_3m6mbasis.csv
 
 		// 1. A temporary data file name is read from the irProp config file
-		LAString basisFileName = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + mktSuffix);
+		AQLString basisFileName = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + mktSuffix);
 		
 		// 2. If the temp object file name is missing from the irProperties file then create a local name using the same format
 		// I think the name used here is irrelevant, but I keep the same format just in case, since who really knows what this crazy code expects
 		if( basisFileName.size() == 0 || basisFileName == "NO_DATA" )
 		{
 			// Remove the '.' (dot) prefix from the mktSuffix and if suffixLowerCase is ill formed then assume 3m6mbasis
-			LAString basisMarket = mktSuffix.size() > 1 ? mktSuffix.subString( 1, mktSuffix.size()-1 ) : "3m6mbasis";
+			AQLString basisMarket = mktSuffix.size() > 1 ? mktSuffix.subString( 1, mktSuffix.size()-1 ) : "3m6mbasis";
 			basisFileName = "data/in/" + mktCurrency + "_yield_basisswap_" + basisMarket + ".csv";
 		}
 
@@ -3889,8 +3889,8 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 		basisFile.close();
 	}
 
-	LAStringMatrix adjustValueMtx;
-	LAString adjustFileName = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + mktSuffix);
+	AQLStringMatrix adjustValueMtx;
+	AQLString adjustFileName = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + mktSuffix);
 	if (adjustFileName != AQ_NO_DATA)
 	{
 		MAFileAccessor adjustValueFile(LAMarketData::getNumFileName(adjustFileName));
@@ -3909,26 +3909,26 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 		adjustValue.push_back(adjustValueMtx[i][1].getDoubleValue());
 	}
 	// get adjust value interpolation
-	LAString interpAdjustStr
+	AQLString interpAdjustStr
 		= mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_INTERPOLATION + mktSuffix).toUpper();
 
 	// get curve ccy and name
-	LAString tmp_fCurve = fCurve;
-	LAString tmp_dCurve = dCurve;
-	LAString tmp_a_fCurve = a_fCurve;
-	LAString tmp_a_dCurve = a_dCurve;
+	AQLString tmp_fCurve = fCurve;
+	AQLString tmp_dCurve = dCurve;
+	AQLString tmp_a_fCurve = a_fCurve;
+	AQLString tmp_a_dCurve = a_dCurve;
 	convertCurveName(tmp_fCurve, curveCurrencyLowerCase, ccy_fCurve, fCurve, isPricer, objPool);
 	convertCurveName(tmp_dCurve, curveCurrencyLowerCase, ccy_dCurve, dCurve, isPricer, objPool);
 	convertCurveName(tmp_a_fCurve, curveCurrencyLowerCase, ccy_a_fCurve, a_fCurve, isPricer, objPool);
 	convertCurveName(tmp_a_dCurve, curveCurrencyLowerCase, ccy_a_dCurve, a_dCurve, isPricer, objPool);
 	if (ccy_dCurve != curveCurrencyLowerCase || ccy_fCurve != curveCurrencyLowerCase || ccy_a_dCurve != ccy_a_fCurve)
 	{
-		throw LACoreInvalidData("currency of curve is inconsistent!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("currency of curve is inconsistent!", __FILE__, __LINE__);
 	}
 
 	// Get curve collection ID
-	LAObjectHolder& yData = curveCalibrationData.getYieldData().get();
-	LAString ydName = yData.getName();
+	AQLObjectHolder& yData = curveCalibrationData.getYieldData().get();
+	AQLString ydName = yData.getName();
 	if (isSetCurveID)
 	{
 		ydName = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATECURVEID);
@@ -3938,17 +3938,17 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 	// Allow the two curves of the 'against leg' to come from a different curve collection
 	// regardless of currency
 	bool useAgainstCurveCollection = false;
-	LAStringVector a_fCurves_partitioned = tmp_a_fCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
-	LAStringVector a_dCurves_partitioned = tmp_a_dCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector a_fCurves_partitioned = tmp_a_fCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector a_dCurves_partitioned = tmp_a_dCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
 	if (a_fCurves_partitioned.size() == 2 && a_dCurves_partitioned.size() == 2)
 	{
-		LAString curveID1 = a_fCurves_partitioned[0].toUpper();
-		LAString curveID2 = a_dCurves_partitioned[0].toUpper();
+		AQLString curveID1 = a_fCurves_partitioned[0].toUpper();
+		AQLString curveID2 = a_dCurves_partitioned[0].toUpper();
 		if (curveID1 == curveID2)
 		{
 			if (curveID1 == ydName)
 			{
-				throw LACoreInvalidData("#Error: Please don't prefix dependent curves with a curve collection name that is the same as the target curve.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: Please don't prefix dependent curves with a curve collection name that is the same as the target curve.", __FILE__, __LINE__);
 			}
 
 			useAgainstCurveCollection = true;
@@ -3956,33 +3956,33 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 	}
 
 	// Allow the two curves of the 'target leg' to come from a different curve collection
-	curveCalibrationData.remove(IR_CALIBRATION_DATA_EXTERNALCURVECOLLECTION + LAString("_") + curveMktName);
-	LAStringVector fCurves_partitioned = tmp_fCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
-	LAStringVector dCurves_partitioned = tmp_dCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
+	curveCalibrationData.remove(IR_CALIBRATION_DATA_EXTERNALCURVECOLLECTION + AQLString("_") + curveMktName);
+	AQLStringVector fCurves_partitioned = tmp_fCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector dCurves_partitioned = tmp_dCurve.toToken(MULTI_STATIC_DATA_DELIMITER);
 	if (fCurves_partitioned.size() == 2 && dCurves_partitioned.size() == 2)
 	{
-		LAString curveID1 = fCurves_partitioned[0].toUpper();
-		LAString curveID2 = dCurves_partitioned[0].toUpper();
+		AQLString curveID1 = fCurves_partitioned[0].toUpper();
+		AQLString curveID2 = dCurves_partitioned[0].toUpper();
 
 		if (curveID1 == curveID2)
 		{
 			if (curveID1 == ydName)
 			{
-				throw LACoreInvalidData("#Error: Please don't prefix dependent curves with a curve collection name that is the same as the target curve.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: Please don't prefix dependent curves with a curve collection name that is the same as the target curve.", __FILE__, __LINE__);
 			}
 
-			curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_EXTERNALCURVECOLLECTION + LAString("_") + curveMktName, new LADataString(fCurves_partitioned[0]));
+			curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_EXTERNALCURVECOLLECTION + AQLString("_") + curveMktName, new AQLDataString(fCurves_partitioned[0]));
 		}
 		else
 		{
-			throw LACoreInvalidData("#Error: Forecast curve and discount curve of the target leg must have the same curve collection prefix", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Forecast curve and discount curve of the target leg must have the same curve collection prefix", __FILE__, __LINE__);
 		}
 	}
 
 	// against currency
 	bool isForeignCcyLeg = false;
-	LAString fYieldDataName;
-	curveCalibrationData.remove(IR_CALIBRATION_DATA_ISFOREIGNCCYLEG + LAString("_") + curveMktName);
+	AQLString fYieldDataName;
+	curveCalibrationData.remove(IR_CALIBRATION_DATA_ISFOREIGNCCYLEG + AQLString("_") + curveMktName);
 	if (a_fCurve != DUMMY && ccy_a_fCurve != curveCurrencyLowerCase
 		|| useAgainstCurveCollection)
 	{
@@ -3991,13 +3991,13 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 		if (a_fCurve != DUMMY && ccy_a_fCurve != curveCurrencyLowerCase)
 		{
 			// Re-set the curveType to be XCCYBASIS
-			LAString curveType = XCCYBASIS;
-			curveCalibrationData.LAObject::remove(CALIBRATION_DATA_CURVETYPE + LAString("_") + curveMktName);
-			curveCalibrationData.LAObject::add(CALIBRATION_DATA_CURVETYPE + LAString("_") + curveMktName, new LADataString(curveType.toUpper()));
+			AQLString curveType = XCCYBASIS;
+			curveCalibrationData.AQLObject::remove(CALIBRATION_DATA_CURVETYPE + AQLString("_") + curveMktName);
+			curveCalibrationData.AQLObject::add(CALIBRATION_DATA_CURVETYPE + AQLString("_") + curveMktName, new AQLDataString(curveType.toUpper()));
 
-			LAObjectHolder& yieldData = curveCalibrationData.getYieldData().get();
-			yieldData.remove(CALIBRATION_DATA_CURVETYPE + LAString("_") + curveMktName);
-			yieldData.add(CALIBRATION_DATA_CURVETYPE + LAString("_") + curveMktName, new LADataString(curveType.toUpper()));
+			AQLObjectHolder& yieldData = curveCalibrationData.getYieldData().get();
+			yieldData.remove(CALIBRATION_DATA_CURVETYPE + AQLString("_") + curveMktName);
+			yieldData.add(CALIBRATION_DATA_CURVETYPE + AQLString("_") + curveMktName, new AQLDataString(curveType.toUpper()));
 
 			// Also re-set the curveType to be XCCYBASIS within the properties
 			mpStaticData->setStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + mktSuffix, XCCYBASIS);
@@ -4006,14 +4006,14 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 		ccy_a_fCurve.toUpper();
 		if (isSetCurveID)
 		{
-			LAStringVector tmp_ccy_a_fCurve = tmp_a_fCurve.toToken(':');
+			AQLStringVector tmp_ccy_a_fCurve = tmp_a_fCurve.toToken(':');
 			if (tmp_ccy_a_fCurve.size() == 2)
 			{
 				fYieldDataName = tmp_ccy_a_fCurve[0];
 			}
 			else
 			{
-				throw LACoreInvalidData("no foreign yield data!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("no foreign yield data!", __FILE__, __LINE__);
 			}
 		}
 		else
@@ -4026,11 +4026,11 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 			loadYieldCurveDataAndCalibrate(ccy_a_fCurve, dataInstance);
 		}
 		curveCalibrationData.getForeignYieldData().convertFromString(fYieldDataName);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_ISFOREIGNCCYLEG + LAString("_") + curveMktName, new LADataBool(isForeignCcyLeg));
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_ISFOREIGNCCYLEG + AQLString("_") + curveMktName, new AQLDataBool(isForeignCcyLeg));
 
 		if (!isSetCurveID)
 		{
-			LAString baseCcy = curveCurrencyLowerCase; LAString domCcy = curveCurrencyLowerCase; LAString forCcy = ccy_a_fCurve;
+			AQLString baseCcy = curveCurrencyLowerCase; AQLString domCcy = curveCurrencyLowerCase; AQLString forCcy = ccy_a_fCurve;
 			while (1)
 			{
 				CurveCalibrationData &ycPro_dccy = dynamic_cast<CurveCalibrationData &>
@@ -4039,9 +4039,9 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 					(objPool.getObject(LAMarketData::getBaseYieldProName(forCcy.toUpper()), ENCHKTYPE_ISDEFINED).get());
 
 				ycPro_fccy.setAffectingCcy(baseCcy.toUpper());
-				const LAString& affectedCcy_fccy = ycPro_fccy.getAffectedCcy();
+				const AQLString& affectedCcy_fccy = ycPro_fccy.getAffectedCcy();
 				if (affectedCcy_fccy == baseCcy)
-					throw LACoreInvalidData("The affected currency includes in Affecting currencies!", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("The affected currency includes in Affecting currencies!", __FILE__, __LINE__);
 
 				ycPro_dccy.setAffectedCcy(forCcy.toUpper());
 
@@ -4063,49 +4063,49 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 
 	const unsigned int basisSize = basisDataMtx.size();
 	// use grid
-	LAStringVector basisUseGrid;
-	LAString tmpBasisUseGrid = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_USEGRID + mktSuffix).toUpper();
+	AQLStringVector basisUseGrid;
+	AQLString tmpBasisUseGrid = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_USEGRID + mktSuffix).toUpper();
 	if (tmpBasisUseGrid != AQ_NO_DATA)
 	{
 		basisUseGrid = tmpBasisUseGrid.toToken(':');
 	}
 	bool isSimuEq = false;
-	LAString strIsSimuEq = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISSIMULTANEOUSEQ + mktSuffix).toUpper();
+	AQLString strIsSimuEq = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISSIMULTANEOUSEQ + mktSuffix).toUpper();
 	if (strIsSimuEq == "TRUE")
 	{
 		isSimuEq = true;
 	}
 	bool isSameGridIndex = false;
-	LAString strIsFRNMethod = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISSAMEGRIDINDEX + mktSuffix).toUpper();
+	AQLString strIsFRNMethod = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISSAMEGRIDINDEX + mktSuffix).toUpper();
 	if (strIsFRNMethod == "TRUE")
 	{
 		isSameGridIndex = true;
 	}
 	bool isYieldSpreadCalc = true;
-	LAString strIsYieldSpreadCalc = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISYIELDSPREADCALC + mktSuffix).toUpper();
+	AQLString strIsYieldSpreadCalc = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISYIELDSPREADCALC + mktSuffix).toUpper();
 	if (strIsYieldSpreadCalc == "FALSE")
 	{
 		isYieldSpreadCalc = false;
 	}
 	bool isFWDInter = false;
-	LAString strFWDInter = FN_SPLINEINTERPOLATION_STR;
-	LAString strIsFWDInter = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISFWDINTER + mktSuffix).toUpper();
+	AQLString strFWDInter = FN_SPLINEINTERPOLATION_STR;
+	AQLString strIsFWDInter = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISFWDINTER + mktSuffix).toUpper();
 	if (strIsFWDInter == "TRUE")
 	{
 		isFWDInter = true;
 		strFWDInter = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDINTERPOLATION + mktSuffix);
 	}
 	bool isEOMRoll = false;
-	LAString strEOMRoll = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISEOMRLL + mktSuffix).toUpper();
+	AQLString strEOMRoll = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISEOMRLL + mktSuffix).toUpper();
 	if (strEOMRoll != AQ_NO_DATA)
 	{
-		LADataBool tmpIsEOMRoll;
+		AQLDataBool tmpIsEOMRoll;
 		tmpIsEOMRoll.convertFromString(strEOMRoll);
 		isEOMRoll = tmpIsEOMRoll.get();
 	}
 	if (isEOMRoll)
 	{
-		LAString strEOMDay = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_EOMDAY + mktSuffix).toUpper();
+		AQLString strEOMDay = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_EOMDAY + mktSuffix).toUpper();
 		if (strEOMDay != AQ_NO_DATA)
 		{
 			if (c_spotDate.dayOfMonth() != strEOMDay.getIntValue())
@@ -4115,9 +4115,9 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 		}
 		else
 		{
-			LAPriceDataCalendar cal;
+			AQLPriceDataCalendar cal;
 			cal.convertFromString(c_calStr);
-			LADate eomDate = cal.getEOMDay(c_spotDate);
+			AQLDate eomDate = cal.getEOMDay(c_spotDate);
 			if (c_spotDate != eomDate)
 			{
 				isEOMRoll = false;
@@ -4125,22 +4125,22 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 		}
 	}
 	bool isFwdFX = false;
-	LAString isFwdFXStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFX + mktSuffix).toUpper();
+	AQLString isFwdFXStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFX + mktSuffix).toUpper();
 	if (isFwdFXStr == "TRUE")
 	{
 		isFwdFX = true;
 	}
 
 	// If spotRateTerm is provided, try to find the Libor instrument with matching tenor and make it one of the basis curve instruments
-	LAString spotRateTerm = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_SPOTRATETERM + mktSuffix).toUpper();
+	AQLString spotRateTerm = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_SPOTRATETERM + mktSuffix).toUpper();
 	double spotRate = DBL_MAX;
 	if (spotRateTerm != AQ_NO_DATA)
 	{
-		LADataMultiReference marketRef;
+		AQLDataMultiReference marketRef;
 
 		// User-specified source of the Libor fixing
-		LAString fixingSource = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FIXINGSOURCE + mktSuffix);
-		if (LAString(fixingSource).toUpper() == ITSELF)
+		AQLString fixingSource = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FIXINGSOURCE + mktSuffix);
+		if (AQLString(fixingSource).toUpper() == ITSELF)
 		{
 			// Populate cash market instruments to object pool
 			// Cash instruments include ON, TN and Libor listOfCurvesBuilt
@@ -4169,20 +4169,20 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 			else
 			{
 				// Use fixingSource to obtain an external yieldCurvePro
-				LAString foreignYcProName = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + fixingSource;
+				AQLString foreignYcProName = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + fixingSource;
 				foreignYcProName.toUpper();
 
 				CurveCalibrationData* foreignYieldCurvePro = NULL;
 
-				const LAObjectHolder tmpHolder = objPool.getObject(foreignYcProName);
+				const AQLObjectHolder tmpHolder = objPool.getObject(foreignYcProName);
 				if (tmpHolder.isDefined())
 				{
 					foreignYieldCurvePro = &dynamic_cast<CurveCalibrationData&>(objPool.getObject(foreignYcProName).get());
 				}
 				else
 				{
-					LAString err = "#Error: Could not locate the foreign Yield Curve data using '" + foreignYcProName + "'";
-					throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+					AQLString err = "#Error: Could not locate the foreign Yield Curve data using '" + foreignYcProName + "'";
+					throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 				}
 
 				marketRef = foreignYieldCurvePro->getMarketData();
@@ -4190,21 +4190,21 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 
 			for (unsigned int i = 0; i < marketRef.getSize(); ++i)
 			{
-				const LADataHolder &dh = marketRef.get(i).getData(IR_CALIBRATION_DATA_TERM, NOCHECK);
+				const AQLDataHolder &dh = marketRef.get(i).getData(IR_CALIBRATION_DATA_TERM, NOCHECK);
 				if (dh.isDefined() && !dh.isNull())
 				{
-					LAString term = dynamic_cast<const LADataString &>(dh.get()).get();
+					AQLString term = dynamic_cast<const AQLDataString &>(dh.get()).get();
 					term.toUpper();
 					if (spotRateTerm == term)
 					{
-						spotRate = dynamic_cast<const LADataDouble &>(marketRef.get(i).getData(CALIBRATION_DATA_RATE, ISNOTNULL).get()).get();
+						spotRate = dynamic_cast<const AQLDataDouble &>(marketRef.get(i).getData(CALIBRATION_DATA_RATE, ISNOTNULL).get()).get();
 
-						LAObject *mktData = NULL;
-						LAString basicCurveName = yieldDataName + "_LIBOR_" + LAString(0) + "_" + curveMktName;
-						const LAObjectHolder ehbasis = objPool.getObject(basicCurveName);
+						AQLObject *mktData = NULL;
+						AQLString basicCurveName = yieldDataName + "_LIBOR_" + AQLString(0) + "_" + curveMktName;
+						const AQLObjectHolder ehbasis = objPool.getObject(basicCurveName);
 						if (!ehbasis.isDefined())
 						{
-							mktData = new LAObject();
+							mktData = new AQLObject();
 							objPool.set(basicCurveName, mktData);
 						}
 						else
@@ -4216,46 +4216,46 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 						staticDataName += basicCurveName + ":";
 
 						// set term
-						mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
+						mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
 
 						// set name
-						mktData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(basicCurveName);
+						mktData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(basicCurveName);
 
 						// set spot rate term
-						mktData->add(IR_CALIBRATION_DATA_SPOTRATETERM, new LADataString()).convertFromString(term);
+						mktData->add(IR_CALIBRATION_DATA_SPOTRATETERM, new AQLDataString()).convertFromString(term);
 
 						// set data type
-						mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_ZERO);
+						mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_ZERO);
 
 						// Set frequency
-						LAString freq = dynamic_cast<const LADataString&> ((marketRef.get(i).getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
-						mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString()).convertFromString(freq);
+						AQLString freq = dynamic_cast<const AQLDataString&> ((marketRef.get(i).getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
+						mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString()).convertFromString(freq);
 
 						// Set rate
-						mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(spotRate));
+						mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(spotRate));
 
 						// Set calendar
-						const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&> ((marketRef.get(i).getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-						mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar(cal));
+						const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&> ((marketRef.get(i).getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+						mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar(cal));
 
 						// Set sliding rule
-						const LAPriceDataSlidingRule& sld = dynamic_cast<const LAPriceDataSlidingRule&> ((marketRef.get(i).getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-						mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule(sld));
+						const AQLPriceDataSlidingRule& sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((marketRef.get(i).getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+						mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule(sld));
 
 						// Set date count
-						const LAPriceDataDayCount& dc = dynamic_cast<const LAPriceDataDayCount&> ((marketRef.get(i).getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-						mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount(dc));
+						const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&> ((marketRef.get(i).getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+						mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount(dc));
 
 						// Set Spot date
-						const LADate& spotdate = dynamic_cast<const LADataDate&> ((marketRef.get(i).getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
-						mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new LADataDate(spotdate));
+						const AQLDate& spotdate = dynamic_cast<const AQLDataDate&> ((marketRef.get(i).getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+						mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new AQLDataDate(spotdate));
 
 						// Set EOM
-						const LADataHolder* dh = &(marketRef.get(i).getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
+						const AQLDataHolder* dh = &(marketRef.get(i).getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 						if (dh->isDefined() && !dh->isNull())
 						{
-							bool isEOM = dynamic_cast<const LADataBool &>(dh->get()).get();
-							mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new LADataBool(isEOM));
+							bool isEOM = dynamic_cast<const AQLDataBool &>(dh->get()).get();
+							mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new AQLDataBool(isEOM));
 						}
 
 						break;
@@ -4267,25 +4267,25 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 
 	//get constant for convergence
 	double eps = 1.0e-9;
-	LAString strEPS = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_EPSILON + mktSuffix);
+	AQLString strEPS = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_EPSILON + mktSuffix);
 	if (strEPS.toUpper() != AQ_NO_DATA)
 	{
 		eps = strEPS.getDoubleValue();
 	}
 	double grad_eps = 1.0e-15;
-	LAString strGEPS = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_GRADIENTEPSILON + mktSuffix);
+	AQLString strGEPS = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_GRADIENTEPSILON + mktSuffix);
 	if (strGEPS.toUpper() != AQ_NO_DATA)
 	{
 		grad_eps = strGEPS.getDoubleValue();
 	}
 	double delta = 1.0e-10;
-	LAString strDLT = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_DELTA + mktSuffix);
+	AQLString strDLT = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_DELTA + mktSuffix);
 	if (strDLT.toUpper() != AQ_NO_DATA)
 	{
 		delta = strDLT.getDoubleValue();
 	}
 	int maxLoop = 1000;
-	LAString strMLP = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_MAXLOOP + mktSuffix);
+	AQLString strMLP = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_MAXLOOP + mktSuffix);
 	if (strMLP.toUpper() != AQ_NO_DATA)
 	{
 		maxLoop = strMLP.getIntValue();
@@ -4294,29 +4294,29 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 	// cashflow info
 	bool isFXForwardQuotesAsOutright = false;
 	bool fwd_isPriceCcy = false;
-	LAString fwd_slidingStr;
-	LAString fwd_calStr;
-	LAString fwd_freqStr;
-	LADate fwd_spotDate;
+	AQLString fwd_slidingStr;
+	AQLString fwd_calStr;
+	AQLString fwd_freqStr;
+	AQLDate fwd_spotDate;
 	int fwd_resetLag = 0;
 	bool fwd_eom = false;
-	LAStringMatrix fwdFXDataMtx;
+	AQLStringMatrix fwdFXDataMtx;
 	unsigned int fwdFXSize = 0;
-	LAStringVector fwdFXUseGrid;
+	AQLStringVector fwdFXUseGrid;
 	double fwdFXPipsizeFactor = 1.0; // The Inverted Pipsize Denominator i.e. 10,000 = 4 d.p. FX Forward Pipsize Quote
 
 	// for fwd fx	
 	if (isFwdFX)
 	{
 		// getStaticData has been overloaded to search for the key and then an alias if missing
-		LAString isFXForwardQuotesAsOutrightString = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_ISRATIO + mktSuffix, mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_ISFXOUTRIGHT + mktSuffix).toUpper();
+		AQLString isFXForwardQuotesAsOutrightString = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_ISRATIO + mktSuffix, mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_ISFXOUTRIGHT + mktSuffix).toUpper();
 		if (isFXForwardQuotesAsOutrightString == "TRUE") isFXForwardQuotesAsOutright = true;
 		// isFXForwardQuotedAsOutright (can be Fx Outright or Forward Points) - aka isRatio
 		if (!isFXForwardQuotesAsOutright)
 		{
 			fwdFXPipsizeFactor = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_DENOMINATOR + mktSuffix,
 															 mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_PIPSIZE + mktSuffix).getDoubleValue(); // Alias Method: First Parameter Takes Priority
-			LAString isPriceCcyStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_ISPRICECCY + mktSuffix,
+			AQLString isPriceCcyStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_ISPRICECCY + mktSuffix,
 																  mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_ISDOMESTICCURRENCY + mktSuffix).toUpper(); // Alias Method: First Parameter Takes Priority
 			if (isPriceCcyStr == "TRUE") fwd_isPriceCcy = true;
 		}
@@ -4333,11 +4333,11 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 			tmpCal.convertFromString(fwd_calStr);
 			fwd_spotDate = tmpCal.getBusinessDay(asOfDate, fwd_resetLag);
 		}
-		LAString strEOM = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_ISEOMROLL + mktSuffix).toUpper();
+		AQLString strEOM = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_ISEOMROLL + mktSuffix).toUpper();
 		if (strEOM == "TRUE") fwd_eom = true;
 		if (fwd_eom)
 		{
-			LAString strEOMDay = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_EOMDAY + mktSuffix).toUpper();
+			AQLString strEOMDay = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_EOMDAY + mktSuffix).toUpper();
 			if (strEOMDay != AQ_NO_DATA)
 			{
 				if (fwd_spotDate.dayOfMonth() != strEOMDay.getIntValue())
@@ -4348,7 +4348,7 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 			else
 			{
 				tmpCal.convertFromString(fwd_calStr);
-				LADate eomDate = tmpCal.getEOMDay(fwd_spotDate);
+				AQLDate eomDate = tmpCal.getEOMDay(fwd_spotDate);
 				if (fwd_spotDate != eomDate)
 				{
 					fwd_eom = false;
@@ -4356,7 +4356,7 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 			}
 		}
 
-		LAString fwdFXFileName = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + mktSuffix);
+		AQLString fwdFXFileName = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + mktSuffix);
 		MAFileAccessor fwdFXFile(LAMarketData::getNumFileName(fwdFXFileName));
 		fwdFXFile.readAllData(MARKET_DATA_DELIMITER, fwdFXDataMtx);
 		fwdFXFile.close();
@@ -4366,7 +4366,7 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 		}
 		fwdFXSize = fwdFXDataMtx.size();
 
-		LAString tmpfwdFXUseGrid = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_USEGRID + mktSuffix).toUpper();
+		AQLString tmpfwdFXUseGrid = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_USEGRID + mktSuffix).toUpper();
 		if (tmpfwdFXUseGrid != AQ_NO_DATA)
 		{
 			fwdFXUseGrid = tmpfwdFXUseGrid.toToken(':');
@@ -4379,7 +4379,7 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 
 	// get fwd basis
 	bool isFwdBasis = false;
-	LAString isFwdBasisStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDBASIS + mktSuffix);
+	AQLString isFwdBasisStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDBASIS + mktSuffix);
 	if (isFwdBasisStr.toUpper() == "TRUE")
 	{
 		isFwdBasis = true;
@@ -4387,7 +4387,7 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 
 	// optimise performance
 	bool optimizePerformance = false;
-	LAString optimizePerformanceStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_OPTIMIZEPERFORMANCE + mktSuffix);
+	AQLString optimizePerformanceStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_OPTIMIZEPERFORMANCE + mktSuffix);
 	if (optimizePerformanceStr.toUpper() == "TRUE")
 	{
 		optimizePerformance = true;
@@ -4395,31 +4395,31 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 
 	// fast jacobian rebuild
 	bool fastRebuild = false;
-	LAString fastRebuildStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FASTREBUILD + mktSuffix);
+	AQLString fastRebuildStr = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FASTREBUILD + mktSuffix);
 	if (fastRebuildStr.toUpper() == "TRUE")
 	{
 		fastRebuild = true;
 	}
 
 
-	LAString fixedRateXccyStartTenor = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FIXEDRATEXCCYSTARTTENOR + mktSuffix);
+	AQLString fixedRateXccyStartTenor = mpStaticData->getStaticData(mktCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FIXEDRATEXCCYSTARTTENOR + mktSuffix);
 	if (fixedRateXccyStartTenor == AQ_NO_DATA || fixedRateXccyStartTenor.size() == 0)
 	{
 		//default to 1Y
 		fixedRateXccyStartTenor = "1Y";
 	}
 
-	LADate fixedRateXccyStartDate = etrading::LADateHelpers::getDate(asOfDate, fixedRateXccyStartTenor, true);
+	AQLDate fixedRateXccyStartDate = etrading::LADateHelpers::getDate(asOfDate, fixedRateXccyStartTenor, true);
 	
 	double ndfSize = 0.0;
 	for (unsigned int j = 0; j < fwdFXSize + basisSize; ++j)
 	{
-		LAObject *mktData = NULL;
-		LAString basicCurveName = yieldDataName + "_BASIS_" + LAString(static_cast<int>(j)) + "_" + curveMktName;
-		const LAObjectHolder ehbasis = objPool.getObject(basicCurveName);
+		AQLObject *mktData = NULL;
+		AQLString basicCurveName = yieldDataName + "_BASIS_" + AQLString(static_cast<int>(j)) + "_" + curveMktName;
+		const AQLObjectHolder ehbasis = objPool.getObject(basicCurveName);
 		if (!ehbasis.isDefined())
 		{
-			mktData = new LAObject();
+			mktData = new AQLObject();
 			objPool.set(basicCurveName, mktData);
 		}
 		else
@@ -4430,43 +4430,43 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 
 		staticDataName += basicCurveName + ":";
 		// set name
-		mktData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(basicCurveName);
+		mktData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(basicCurveName);
 
 		// set forward ratio
 		if (j < fwdFXSize)
 		{
-			LAString fwd_term = fwdFXDataMtx[j][0].toUpper();
+			AQLString fwd_term = fwdFXDataMtx[j][0].toUpper();
 			double fwd_fx = fwdFXDataMtx[j][1].getDoubleValue();
 
-			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_FWDFX);
-			mktData->add(IR_CALIBRATION_DATA_ISRATIO, new LADataBool(isFXForwardQuotesAsOutright));
-			mktData->add(IR_CALIBRATION_DATA_ISFXOUTRIGHT, new LADataBool(isFXForwardQuotesAsOutright)); // alias for ISRATIO
+			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_FWDFX);
+			mktData->add(IR_CALIBRATION_DATA_ISRATIO, new AQLDataBool(isFXForwardQuotesAsOutright));
+			mktData->add(IR_CALIBRATION_DATA_ISFXOUTRIGHT, new AQLDataBool(isFXForwardQuotesAsOutright)); // alias for ISRATIO
 			
 			// isFXForwardQuotedAsOutright (can be Fx Outright or Forward Points) - aka isRatio
 			if (isFXForwardQuotesAsOutright)
 			{
-				mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(fwd_fx));
+				mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(fwd_fx));
 			}
 			else
 			{
-				mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(fwd_fx / fwdFXPipsizeFactor));
-				mktData->add(IR_CALIBRATION_DATA_ISPRICECCY, new LADataBool(fwd_isPriceCcy));
-				mktData->add(IR_CALIBRATION_DATA_ISDOMESTICCURRENCY, new LADataBool(fwd_isPriceCcy)); // alias for isPriceCcy
+				mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(fwd_fx / fwdFXPipsizeFactor));
+				mktData->add(IR_CALIBRATION_DATA_ISPRICECCY, new AQLDataBool(fwd_isPriceCcy));
+				mktData->add(IR_CALIBRATION_DATA_ISDOMESTICCURRENCY, new AQLDataBool(fwd_isPriceCcy)); // alias for isPriceCcy
 			}
-			mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(LAMarketData::convertToMLibTerm(fwd_term));
-			mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(fwd_slidingStr);
-			mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(fwd_calStr);
-			mktData->add(IR_CALIBRATION_DATA_SPOTLAG, new LADataInt(fwd_resetLag));
-			mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new LADataDate(fwd_spotDate));
-			mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString()).convertFromString(fwd_freqStr);
-			mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new LADataBool(fwd_eom));
+			mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(fwd_term));
+			mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(fwd_slidingStr);
+			mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(fwd_calStr);
+			mktData->add(IR_CALIBRATION_DATA_SPOTLAG, new AQLDataInt(fwd_resetLag));
+			mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new AQLDataDate(fwd_spotDate));
+			mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString()).convertFromString(fwd_freqStr);
+			mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new AQLDataBool(fwd_eom));
 			if (fwdFXUseGrid.size() != 0 && find(fwdFXUseGrid.begin(), fwdFXUseGrid.end(), fwd_term) == fwdFXUseGrid.end())
 			{
-				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(false));
+				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(false));
 			}
 			else
 			{
-				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(true));
+				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
 			}
 		}
 		else
@@ -4476,32 +4476,32 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 			{
 				const unsigned int j1 = j - fwdFXSize;
 
-				LAString ndfTerm = basisDataMtx[j1][0].toUpper();
-				const LADate date = etrading::LADateHelpers::getDate(asOfDate, ndfTerm, true);
+				AQLString ndfTerm = basisDataMtx[j1][0].toUpper();
+				const AQLDate date = etrading::LADateHelpers::getDate(asOfDate, ndfTerm, true);
 
 				// treat swap with less than 1Y as NDF
 				if (date < fixedRateXccyStartDate)
 				{
 					// set term
-					mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(LAMarketData::convertToMLibTerm(ndfTerm));
+					mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(ndfTerm));
 
 					// set rate
 					double ndfRate = basisDataMtx[j1][1].getDoubleValue();
-					mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(ndfRate / 10000.0));
+					mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(ndfRate / 10000.0));
 
-					mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(NDF);
+					mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(NDF);
 					if (spotRate != DBL_MAX)
 					{
 						// set spot rate
-						mktData->add(IR_CALIBRATION_DATA_SPOTRATE, new LADataDouble(spotRate));
-						mktData->add(IR_CALIBRATION_DATA_SPOTRATETERM, new LADataString(spotRateTerm));
+						mktData->add(IR_CALIBRATION_DATA_SPOTRATE, new AQLDataDouble(spotRate));
+						mktData->add(IR_CALIBRATION_DATA_SPOTRATETERM, new AQLDataString(spotRateTerm));
 					}
 					// cashflow info
-					mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(c_calStr);
-					mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString()).convertFromString(c_freqStr);
-					mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(c_daycStr);
-					mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(c_slidingStr);
-					//mktData->add(IR_CALIBRATION_DATA_CASHLETSPOTDATE, new LADataDate(c_spotDate));
+					mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(c_calStr);
+					mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString()).convertFromString(c_freqStr);
+					mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(c_daycStr);
+					mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(c_slidingStr);
+					//mktData->add(IR_CALIBRATION_DATA_CASHLETSPOTDATE, new AQLDataDate(c_spotDate));
 
 					ndfSize++;
 					continue;
@@ -4509,193 +4509,193 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 			}
 
 			// set data type
-			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_BASIS);
+			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_BASIS);
 			const unsigned int j2 = j - fwdFXSize;
 
 			// set term
-			LAString term = basisDataMtx[j2][0].toUpper();
-			mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
+			AQLString term = basisDataMtx[j2][0].toUpper();
+			mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
 
 			// set rate
 			double basis = basisDataMtx[j2][1].getDoubleValue();
-			mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(basis / 10000.0));
+			mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(basis / 10000.0));
 
 			//set fwd basis
 			if (isFwdBasis)
 			{
-				mktData->add(IR_CALIBRATION_DATA_ISFWDBASIS, new LADataBool(isFwdBasis));
+				mktData->add(IR_CALIBRATION_DATA_ISFWDBASIS, new AQLDataBool(isFwdBasis));
 				if (basisDataMtx[j2].size() != 5)
 				{
-					throw LACoreInvalidData("#Error: Invalid FwdBasis Data: FwdBasis data must have 5 columns when isFwdBasis = TRUE and indicate the forward start- and end-dates.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("#Error: Invalid FwdBasis Data: FwdBasis data must have 5 columns when isFwdBasis = TRUE and indicate the forward start- and end-dates.", __FILE__, __LINE__);
 				}
 				const bool isDate = basisDataMtx[j2][2].toUpper() == "TRUE";
-				mktData->add(PRICING_DATA_ISDATE, new LADataBool(isDate));
+				mktData->add(PRICING_DATA_ISDATE, new AQLDataBool(isDate));
 				if (isDate)
 				{
-					const LADate startDate = LADate(basisDataMtx[j2][3].getCString());
-					mktData->add(PRICING_DATA_STARTDATE, new LADataDate(startDate));
-					const LADate endDate = LADate(basisDataMtx[j2][4].getCString());
-					mktData->add(PRICING_DATA_ENDDATE, new LADataDate(endDate));
+					const AQLDate startDate = AQLDate(basisDataMtx[j2][3].getCString());
+					mktData->add(PRICING_DATA_STARTDATE, new AQLDataDate(startDate));
+					const AQLDate endDate = AQLDate(basisDataMtx[j2][4].getCString());
+					mktData->add(PRICING_DATA_ENDDATE, new AQLDataDate(endDate));
 				}
 				else
 				{
-					const LAString startTerm = basisDataMtx[j2][3].toUpper();
-					mktData->add(PRICING_DATA_STARTTERM, new LADataString(startTerm));
-					const LAString tenor = basisDataMtx[j2][4].toUpper();
-					mktData->add(PRICING_DATA_TENOR, new LADataString(tenor));
+					const AQLString startTerm = basisDataMtx[j2][3].toUpper();
+					mktData->add(PRICING_DATA_STARTTERM, new AQLDataString(startTerm));
+					const AQLString tenor = basisDataMtx[j2][4].toUpper();
+					mktData->add(PRICING_DATA_TENOR, new AQLDataString(tenor));
 				}
 			}
 			// is eom roll
-			mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new LADataBool(isEOMRoll));
+			mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new AQLDataBool(isEOMRoll));
 			//grid use
 			if (basisUseGrid.size() != 0 && find(basisUseGrid.begin(), basisUseGrid.end(), term) == basisUseGrid.end())
 			{
-				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(false));
+				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(false));
 			}
 			else
 			{
-				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(true));
+				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
 			}
 		}
 
 		// set optimize performance
-		mktData->add(IR_CALIBRATION_DATA_OPTIMIZEPERFORMANCE, new LADataBool(optimizePerformance));
+		mktData->add(IR_CALIBRATION_DATA_OPTIMIZEPERFORMANCE, new AQLDataBool(optimizePerformance));
 		// set fastrebuild
-		mktData->add(IR_CALIBRATION_DATA_FASTREBUILD, new LADataBool(fastRebuild));
+		mktData->add(IR_CALIBRATION_DATA_FASTREBUILD, new AQLDataBool(fastRebuild));
 		// set simultaneous equation
-		mktData->add(IR_CALIBRATION_DATA_ISSIMULTANEOUSEQBS, new LADataBool(isSimuEq));
+		mktData->add(IR_CALIBRATION_DATA_ISSIMULTANEOUSEQBS, new AQLDataBool(isSimuEq));
 		// set epsilon
-		mktData->add(IR_CALIBRATION_DATA_EPSILON, new LADataDouble(eps));
+		mktData->add(IR_CALIBRATION_DATA_EPSILON, new AQLDataDouble(eps));
 		// set gradient epsilon
-		mktData->add(IR_CALIBRATION_DATA_GRADIENTEPSILON, new LADataDouble(grad_eps));
+		mktData->add(IR_CALIBRATION_DATA_GRADIENTEPSILON, new AQLDataDouble(grad_eps));
 		// set delta
-		mktData->add(IR_CALIBRATION_DATA_DELTA, new LADataDouble(delta));
+		mktData->add(IR_CALIBRATION_DATA_DELTA, new AQLDataDouble(delta));
 		// set maxloop
-		mktData->add(IR_CALIBRATION_DATA_MAXLOOP, new LADataInt(maxLoop));
+		mktData->add(IR_CALIBRATION_DATA_MAXLOOP, new AQLDataInt(maxLoop));
 		// set issamegridindex
-		mktData->add(IR_CALIBRATION_DATA_ISSAMEGRIDINDEX, new LADataBool(isSameGridIndex));
+		mktData->add(IR_CALIBRATION_DATA_ISSAMEGRIDINDEX, new AQLDataBool(isSameGridIndex));
 		// set isyieldspreadcalc
-		mktData->add(IR_CALIBRATION_DATA_ISYIELDSPREADCALC, new LADataBool(isYieldSpreadCalc));
+		mktData->add(IR_CALIBRATION_DATA_ISYIELDSPREADCALC, new AQLDataBool(isYieldSpreadCalc));
 		if (spotRate != DBL_MAX)
 		{
 			// set spot rate
-			mktData->add(IR_CALIBRATION_DATA_SPOTRATE, new LADataDouble(spotRate));
-			mktData->add(IR_CALIBRATION_DATA_SPOTRATETERM, new LADataString(spotRateTerm));
+			mktData->add(IR_CALIBRATION_DATA_SPOTRATE, new AQLDataDouble(spotRate));
+			mktData->add(IR_CALIBRATION_DATA_SPOTRATETERM, new AQLDataString(spotRateTerm));
 		}
 		// set fwd interpolation
-		mktData->add(IR_CALIBRATION_DATA_ISFWDINTERPOLATION, new LADataBool(isFWDInter));
-		mktData->add(IR_CALIBRATION_DATA_FWDINTERPOLATION, new LAPriceDataInterpolation()).convertFromString(strFWDInter);
+		mktData->add(IR_CALIBRATION_DATA_ISFWDINTERPOLATION, new AQLDataBool(isFWDInter));
+		mktData->add(IR_CALIBRATION_DATA_FWDINTERPOLATION, new AQLPriceDataInterpolation()).convertFromString(strFWDInter);
 		// curve info
-		mktData->add(IR_CALIBRATION_DATA_ISDISCOUNT, new LADataBool(isDiscount));
-		mktData->add(IR_CALIBRATION_DATA_ISAGTSPREAD, new LADataBool(isAgtSpread));
-		mktData->add(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONBS, new LADataBool()).convertFromString(isTimeInterStr);
+		mktData->add(IR_CALIBRATION_DATA_ISDISCOUNT, new AQLDataBool(isDiscount));
+		mktData->add(IR_CALIBRATION_DATA_ISAGTSPREAD, new AQLDataBool(isAgtSpread));
+		mktData->add(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONBS, new AQLDataBool()).convertFromString(isTimeInterStr);
 
-		mktData->add(IR_CALIBRATION_DATA_FORECAST, new LADataString()).convertFromString(fCurve);
-		mktData->add(IR_CALIBRATION_DATA_DISCOUNT, new LADataString()).convertFromString(dCurve);
-		mktData->add(IR_CALIBRATION_DATA_AGTCURRENCY, new LADataString()).convertFromString(ccy_a_fCurve);
-		mktData->add(IR_CALIBRATION_DATA_AGTFORECAST, new LADataString()).convertFromString(a_fCurve);
-		mktData->add(IR_CALIBRATION_DATA_AGTDISCOUNT, new LADataString()).convertFromString(a_dCurve);
+		mktData->add(IR_CALIBRATION_DATA_FORECAST, new AQLDataString()).convertFromString(fCurve);
+		mktData->add(IR_CALIBRATION_DATA_DISCOUNT, new AQLDataString()).convertFromString(dCurve);
+		mktData->add(IR_CALIBRATION_DATA_AGTCURRENCY, new AQLDataString()).convertFromString(ccy_a_fCurve);
+		mktData->add(IR_CALIBRATION_DATA_AGTFORECAST, new AQLDataString()).convertFromString(a_fCurve);
+		mktData->add(IR_CALIBRATION_DATA_AGTDISCOUNT, new AQLDataString()).convertFromString(a_dCurve);
 		// cashflow info
-		mktData->add(IR_CALIBRATION_DATA_CASHLETCALENDAR, new LAPriceDataCalendar()).convertFromString(c_calStr);
-		mktData->add(IR_CALIBRATION_DATA_CASHLETFREQUENCY, new LADataString()).convertFromString(c_freqStr);
+		mktData->add(IR_CALIBRATION_DATA_CASHLETCALENDAR, new AQLPriceDataCalendar()).convertFromString(c_calStr);
+		mktData->add(IR_CALIBRATION_DATA_CASHLETFREQUENCY, new AQLDataString()).convertFromString(c_freqStr);
 		// set frequency of compounding
 		if (c_freqcpdStr != AQ_NO_DATA)
 		{
-			mktData->add(IR_CALIBRATION_DATA_CASHLETFREQUENCYCOMPOUND, new LADataString()).convertFromString(c_freqcpdStr);
+			mktData->add(IR_CALIBRATION_DATA_CASHLETFREQUENCYCOMPOUND, new AQLDataString()).convertFromString(c_freqcpdStr);
 		}
-		mktData->add(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, new LAPriceDataDayCount()).convertFromString(c_daycStr);
-		mktData->add(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(c_slidingStr);
-		mktData->add(IR_CALIBRATION_DATA_CASHLETSPOTDATE, new LADataDate(c_spotDate));
-		mktData->add(IR_CALIBRATION_DATA_CASHLETRESETLAG, new LADataInt(c_resetLag));
+		mktData->add(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, new AQLPriceDataDayCount()).convertFromString(c_daycStr);
+		mktData->add(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(c_slidingStr);
+		mktData->add(IR_CALIBRATION_DATA_CASHLETSPOTDATE, new AQLDataDate(c_spotDate));
+		mktData->add(IR_CALIBRATION_DATA_CASHLETRESETLAG, new AQLDataInt(c_resetLag));
 		// index info
 		if (isSameGridIndex)
 		{
-			mktData->add(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, new LAPriceDataCalendar()).convertFromString(c_calStr);
-			mktData->add(IR_CALIBRATION_DATA_INDEXPAYMENTCALENDAR, new LAPriceDataCalendar()).convertFromString(c_calStr);
-			mktData->add(IR_CALIBRATION_DATA_INDEXFREQUENCY, new LADataString()).convertFromString(SIMPLE);
-			mktData->add(IR_CALIBRATION_DATA_INDEXACCESSARY, new LADataString()).convertFromString(getAccFromFreq(c_freqStr));
-			mktData->add(IR_CALIBRATION_DATA_INDEXDAYCOUNT, new LAPriceDataDayCount()).convertFromString(c_daycStr);
-			mktData->add(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(c_slidingStr);
-			mktData->add(IR_CALIBRATION_DATA_INDEXRESETLAG, new LADataInt(c_resetLag));
+			mktData->add(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, new AQLPriceDataCalendar()).convertFromString(c_calStr);
+			mktData->add(IR_CALIBRATION_DATA_INDEXPAYMENTCALENDAR, new AQLPriceDataCalendar()).convertFromString(c_calStr);
+			mktData->add(IR_CALIBRATION_DATA_INDEXFREQUENCY, new AQLDataString()).convertFromString(SIMPLE);
+			mktData->add(IR_CALIBRATION_DATA_INDEXACCESSARY, new AQLDataString()).convertFromString(getAccFromFreq(c_freqStr));
+			mktData->add(IR_CALIBRATION_DATA_INDEXDAYCOUNT, new AQLPriceDataDayCount()).convertFromString(c_daycStr);
+			mktData->add(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(c_slidingStr);
+			mktData->add(IR_CALIBRATION_DATA_INDEXRESETLAG, new AQLDataInt(c_resetLag));
 		}
 		else
 		{
-			mktData->add(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, new LAPriceDataCalendar()).convertFromString(i_fixcalStr);
-			mktData->add(IR_CALIBRATION_DATA_INDEXPAYMENTCALENDAR, new LAPriceDataCalendar()).convertFromString(i_paycalStr);
-			mktData->add(IR_CALIBRATION_DATA_INDEXFREQUENCY, new LADataString()).convertFromString(i_freqStr);
-			mktData->add(IR_CALIBRATION_DATA_INDEXACCESSARY, new LADataString()).convertFromString(i_accessaryStr);
-			mktData->add(IR_CALIBRATION_DATA_INDEXDAYCOUNT, new LAPriceDataDayCount()).convertFromString(i_daycStr);
-			mktData->add(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(i_slidingStr);
-			mktData->add(IR_CALIBRATION_DATA_INDEXRESETLAG, new LADataInt(i_resetLag));
+			mktData->add(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, new AQLPriceDataCalendar()).convertFromString(i_fixcalStr);
+			mktData->add(IR_CALIBRATION_DATA_INDEXPAYMENTCALENDAR, new AQLPriceDataCalendar()).convertFromString(i_paycalStr);
+			mktData->add(IR_CALIBRATION_DATA_INDEXFREQUENCY, new AQLDataString()).convertFromString(i_freqStr);
+			mktData->add(IR_CALIBRATION_DATA_INDEXACCESSARY, new AQLDataString()).convertFromString(i_accessaryStr);
+			mktData->add(IR_CALIBRATION_DATA_INDEXDAYCOUNT, new AQLPriceDataDayCount()).convertFromString(i_daycStr);
+			mktData->add(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(i_slidingStr);
+			mktData->add(IR_CALIBRATION_DATA_INDEXRESETLAG, new AQLDataInt(i_resetLag));
 		}
 		// against cashflow info
-		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETCALENDAR, new LAPriceDataCalendar()).convertFromString(a_c_calStr);
-		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCY, new LADataString()).convertFromString(a_c_freqStr);
+		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETCALENDAR, new AQLPriceDataCalendar()).convertFromString(a_c_calStr);
+		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCY, new AQLDataString()).convertFromString(a_c_freqStr);
 		// set frequency of compounding
 		if (a_c_freqcpdStr != AQ_NO_DATA)
 		{
-			mktData->add(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCYCOMPOUND, new LADataString()).convertFromString(a_c_freqcpdStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCYCOMPOUND, new AQLDataString()).convertFromString(a_c_freqcpdStr);
 		}
-		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETDAYCOUNT, new LAPriceDataDayCount()).convertFromString(a_c_daycStr);
-		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(a_c_slidingStr);
-		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETSPOTDATE, new LADataDate(a_c_spotDate));
-		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETRESETLAG, new LADataInt(a_c_resetLag));
+		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETDAYCOUNT, new AQLPriceDataDayCount()).convertFromString(a_c_daycStr);
+		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(a_c_slidingStr);
+		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETSPOTDATE, new AQLDataDate(a_c_spotDate));
+		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETRESETLAG, new AQLDataInt(a_c_resetLag));
 		// against index info
 		if (isSameGridIndex)
 		{
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXFIXINGCALENDAR, new LAPriceDataCalendar()).convertFromString(a_c_calStr);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXPAYMENTCALENDAR, new LAPriceDataCalendar()).convertFromString(a_c_calStr);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXFREQUENCY, new LADataString()).convertFromString(SIMPLE);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXACCESSARY, new LADataString()).convertFromString(getAccFromFreq(a_c_freqStr));
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, new LAPriceDataDayCount()).convertFromString(a_c_daycStr);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(a_c_slidingStr);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXRESETLAG, new LADataInt(a_c_resetLag));
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXFIXINGCALENDAR, new AQLPriceDataCalendar()).convertFromString(a_c_calStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXPAYMENTCALENDAR, new AQLPriceDataCalendar()).convertFromString(a_c_calStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXFREQUENCY, new AQLDataString()).convertFromString(SIMPLE);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXACCESSARY, new AQLDataString()).convertFromString(getAccFromFreq(a_c_freqStr));
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, new AQLPriceDataDayCount()).convertFromString(a_c_daycStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(a_c_slidingStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXRESETLAG, new AQLDataInt(a_c_resetLag));
 		}
 		else
 		{
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXFIXINGCALENDAR, new LAPriceDataCalendar()).convertFromString(a_i_fixcalStr);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXPAYMENTCALENDAR, new LAPriceDataCalendar()).convertFromString(a_i_paycalStr);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXFREQUENCY, new LADataString()).convertFromString(a_i_freqStr);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXACCESSARY, new LADataString()).convertFromString(a_i_accessaryStr);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, new LAPriceDataDayCount()).convertFromString(a_i_daycStr);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(a_i_slidingStr);
-			mktData->add(IR_CALIBRATION_DATA_AGTINDEXRESETLAG, new LADataInt(a_i_resetLag));
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXFIXINGCALENDAR, new AQLPriceDataCalendar()).convertFromString(a_i_fixcalStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXPAYMENTCALENDAR, new AQLPriceDataCalendar()).convertFromString(a_i_paycalStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXFREQUENCY, new AQLDataString()).convertFromString(a_i_freqStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXACCESSARY, new AQLDataString()).convertFromString(a_i_accessaryStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, new AQLPriceDataDayCount()).convertFromString(a_i_daycStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(a_i_slidingStr);
+			mktData->add(IR_CALIBRATION_DATA_AGTINDEXRESETLAG, new AQLDataInt(a_i_resetLag));
 		}
 		// set market rate interpolation
 		if (interpStr != AQ_NO_DATA)
 		{
 			interpStr.toLower();
-			LAPriceDataInterpolation interpAtt;
+			AQLPriceDataInterpolation interpAtt;
 			interpAtt.convertFromString(interpStr);
-			mktData->add(CALIBRATION_DATA_INTERPOLATION, new LAPriceDataInterpolation(interpAtt));
+			mktData->add(CALIBRATION_DATA_INTERPOLATION, new AQLPriceDataInterpolation(interpAtt));
 		}
 		// set adjust value interpolation
 		if (interpAdjustStr != AQ_NO_DATA)
 		{
 			interpAdjustStr.toLower();
-			LAPriceDataInterpolation interpAtt;
+			AQLPriceDataInterpolation interpAtt;
 			interpAtt.convertFromString(interpAdjustStr);
-			mktData->add(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, new LAPriceDataInterpolation(interpAtt));
-			mktData->add(IR_CALIBRATION_DATA_ADJUSTVALUETERM, new LADataDoubles(adjustValue_term));
-			mktData->add(IR_CALIBRATION_DATA_ADJUSTVALUE, new LADataDoubles(adjustValue));
+			mktData->add(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, new AQLPriceDataInterpolation(interpAtt));
+			mktData->add(IR_CALIBRATION_DATA_ADJUSTVALUETERM, new AQLDataDoubles(adjustValue_term));
+			mktData->add(IR_CALIBRATION_DATA_ADJUSTVALUE, new AQLDataDoubles(adjustValue));
 		}
 		// set adjust value
-		//mktData->add(IR_CALIBRATION_DATA_ADJUSTVALUETERM, new LADataDoubles(adjustValue_term));
-		//mktData->add(IR_CALIBRATION_DATA_ADJUSTVALUE, new LADataDoubles(adjustValue));
+		//mktData->add(IR_CALIBRATION_DATA_ADJUSTVALUETERM, new AQLDataDoubles(adjustValue_term));
+		//mktData->add(IR_CALIBRATION_DATA_ADJUSTVALUE, new AQLDataDoubles(adjustValue));
 	}
 
 	//set foreign curve data
 	if (pMktCurrency)
 	{
-		LAObject& fYieldData = objPool.getObject(fYieldDataName, ENCHKTYPE_ISDEFINED).get();
-		fYieldData.remove(CALIBRATION_DATA_MARKETDATA + LAString("_") + marketName);
-		fYieldData.add(CALIBRATION_DATA_MARKETDATA + LAString("_") + marketName, new LADataMultiReference()).convertFromString(staticDataName.subString(0, staticDataName.size() - 2));
+		AQLObject& fYieldData = objPool.getObject(fYieldDataName, ENCHKTYPE_ISDEFINED).get();
+		fYieldData.remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + marketName);
+		fYieldData.add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + marketName, new AQLDataMultiReference()).convertFromString(staticDataName.subString(0, staticDataName.size() - 2));
 	}
 
-	LAString aliasCurveNames = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + curveSuffix);
+	AQLString aliasCurveNames = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + curveSuffix);
 	if (aliasCurveNames != AQ_NO_DATA)
 	{
-		LAStringVector assignedCurves = aliasCurveNames.toToken(MULTI_STATIC_DATA_DELIMITER);
+		AQLStringVector assignedCurves = aliasCurveNames.toToken(MULTI_STATIC_DATA_DELIMITER);
 		for (size_t i = 0; i < assignedCurves.size(); i++)
 		{
 			curveCalibrationData.setAssignedCurveMktMap(assignedCurves[i], curveMktName);
@@ -4709,34 +4709,34 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 	if (interpAdjustStr != AQ_NO_DATA)
 	{
 		interpAdjustStr.toLower();
-		LAPriceDataInterpolation interpAtt;
+		AQLPriceDataInterpolation interpAtt;
 		interpAtt.convertFromString(interpAdjustStr);
 		if (pMktCurrency)
 		{
-			LAObject& fYieldData = objPool.getObject(fYieldDataName, ENCHKTYPE_ISDEFINED).get();
+			AQLObject& fYieldData = objPool.getObject(fYieldDataName, ENCHKTYPE_ISDEFINED).get();
 			fYieldData.remove(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION);
 			fYieldData.remove(IR_CALIBRATION_DATA_ADJUSTVALUETERM);
 			fYieldData.remove(IR_CALIBRATION_DATA_ADJUSTVALUE);
-			fYieldData.add(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, new LAPriceDataInterpolation(interpAtt));
-			fYieldData.add(IR_CALIBRATION_DATA_ADJUSTVALUETERM, new LADataDoubles(adjustValue_term));
-			fYieldData.add(IR_CALIBRATION_DATA_ADJUSTVALUE, new LADataDoubles(adjustValue));
+			fYieldData.add(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, new AQLPriceDataInterpolation(interpAtt));
+			fYieldData.add(IR_CALIBRATION_DATA_ADJUSTVALUETERM, new AQLDataDoubles(adjustValue_term));
+			fYieldData.add(IR_CALIBRATION_DATA_ADJUSTVALUE, new AQLDataDoubles(adjustValue));
 		}
 		else
 		{
-			LAObject& yldEntity = objPool.getObject(yieldDataName, ENCHKTYPE_ISDEFINED).get();
+			AQLObject& yldEntity = objPool.getObject(yieldDataName, ENCHKTYPE_ISDEFINED).get();
 			yldEntity.remove(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION);
 			yldEntity.remove(IR_CALIBRATION_DATA_ADJUSTVALUETERM);
 			yldEntity.remove(IR_CALIBRATION_DATA_ADJUSTVALUE);
-			yldEntity.add(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, new LAPriceDataInterpolation(interpAtt));
-			yldEntity.add(IR_CALIBRATION_DATA_ADJUSTVALUETERM, new LADataDoubles(adjustValue_term));
-			yldEntity.add(IR_CALIBRATION_DATA_ADJUSTVALUE, new LADataDoubles(adjustValue));
+			yldEntity.add(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, new AQLPriceDataInterpolation(interpAtt));
+			yldEntity.add(IR_CALIBRATION_DATA_ADJUSTVALUETERM, new AQLDataDoubles(adjustValue_term));
+			yldEntity.add(IR_CALIBRATION_DATA_ADJUSTVALUE, new AQLDataDoubles(adjustValue));
 		}
 	}
 
 	// get fwd swap
 	bool areSwapsForwardStarting = false;
-	LADataBool tmpAttrB;
-	LAString isFwdSwap_str = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + mktSuffix);
+	AQLDataBool tmpAttrB;
+	AQLString isFwdSwap_str = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + mktSuffix);
 	if (isFwdSwap_str != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(isFwdSwap_str);
@@ -4745,17 +4745,17 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 
 	//FRA Data
 	bool useTenorBasis = false;
-	LAString staticDataSuffix = "." + marketName;
+	AQLString staticDataSuffix = "." + marketName;
 	staticDataSuffix.toLower();
-	LAString suffix_data = "_" + marketName;
+	AQLString suffix_data = "_" + marketName;
 
-	LAString curveName("");
+	AQLString curveName("");
 	if (propertyManagerCurveName != STD)
 	{
 		curveName = "." + propertyManagerCurveName;
 	}
 	curveName.toLower();
-	LAString curveType = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + curveName);
+	AQLString curveType = mpStaticData->getStaticData(curveCurrencyLowerCase + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + curveName);
 
 	// Only process FRAs when building basis curves.
 	// In the case of AUD curves, OIS and STD curves would process basis instruments and the
@@ -4784,19 +4784,19 @@ LAUpdateCurveObject::setUpBasisCurveData(LADataInstance &dataInstance, LAString 
 	@brief fuction to set up 36 basis curve dummy data
 */
 void
-LAUpdateCurveObject::setUp36BasisDummyData(LADataInstance &dataInstance, LAString &staticDataName, const LADate &asOfDate, const LAString &currency,
-	const LAString &marketName, const LAString &yieldDataName, bool isSpotStarting,
+LAUpdateCurveObject::setUp36BasisDummyData(AQLDataInstance &dataInstance, AQLString &staticDataName, const AQLDate &asOfDate, const AQLString &currency,
+	const AQLString &marketName, const AQLString &yieldDataName, bool isSpotStarting,
 	CurveCalibrationData &curveCalibrationData) const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
-	LAString suffixLowerCase = "." + marketName;
+	AQLString suffixLowerCase = "." + marketName;
 	suffixLowerCase.toLower();
 
 	// get swap market
-	LAString swapFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE);
+	AQLString swapFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE);
 	MAFileAccessor swapFile(LAMarketData::getNumFileName(swapFileName));
-	LAStringMatrix swapDataMtx;
+	AQLStringMatrix swapDataMtx;
 	swapFile.readAllData(MARKET_DATA_DELIMITER, swapDataMtx);
 	swapFile.close();
 	if (swapDataMtx.size() == 0 || swapDataMtx[0].size() < 2)
@@ -4804,12 +4804,12 @@ LAUpdateCurveObject::setUp36BasisDummyData(LADataInstance &dataInstance, LAStrin
 		AQ_THROW("Invalid Market Data: Swap data is missing")
 	}
 	const int swapSize = swapDataMtx.size();
-	LAString daycSStr_float = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_DAYCOUNTFLOAT).toUpper();
-	LAString interpSStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_INTERPOLATION).toLower();
-	LAPriceDataCalendar cal;
-	LAString calStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_CALENDAR).toLower();
+	AQLString daycSStr_float = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_DAYCOUNTFLOAT).toUpper();
+	AQLString interpSStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_INTERPOLATION).toLower();
+	AQLPriceDataCalendar cal;
+	AQLString calStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_CALENDAR).toLower();
 	cal.convertFromString(calStr);
-	LADate spotDate;
+	AQLDate spotDate;
 	int resetLag;
 	if (isSpotStarting)
 	{
@@ -4817,11 +4817,11 @@ LAUpdateCurveObject::setUp36BasisDummyData(LADataInstance &dataInstance, LAStrin
 	}
 	else
 	{
-		LAString reseLag_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_RESETLAG);
+		AQLString reseLag_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_RESETLAG);
 		resetLag = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_RESETLAG).getIntValue();
 		if (reseLag_str == AQ_NO_DATA)
 		{
-			throw LACoreInvalidData("Reset Lag is not set !!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Reset Lag is not set !!", __FILE__, __LINE__);
 		}
 		else
 		{
@@ -4829,19 +4829,19 @@ LAUpdateCurveObject::setUp36BasisDummyData(LADataInstance &dataInstance, LAStrin
 		}
 	}
 	// get sliding
-	LAString slidingStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SLIDINGRULE).toUpper();
+	AQLString slidingStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SLIDINGRULE).toUpper();
 
 	for (int j = 0; j < swapSize; ++j)
 	{
-		LAString term = swapDataMtx[j][0].toUpper();
+		AQLString term = swapDataMtx[j][0].toUpper();
 		double basis = 0.;
 
-		LAObject *mktData = NULL;
-		LAString basicCurveName = yieldDataName + "_" + marketName + "_" + LAString(static_cast<int>(j));
-		const LAObjectHolder ehbdummy = objPool.getObject(basicCurveName);
+		AQLObject *mktData = NULL;
+		AQLString basicCurveName = yieldDataName + "_" + marketName + "_" + AQLString(static_cast<int>(j));
+		const AQLObjectHolder ehbdummy = objPool.getObject(basicCurveName);
 		if (!ehbdummy.isDefined())
 		{
-			mktData = new LAObject();
+			mktData = new AQLObject();
 			objPool.set(basicCurveName, mktData);
 		}
 		else
@@ -4851,43 +4851,43 @@ LAUpdateCurveObject::setUp36BasisDummyData(LADataInstance &dataInstance, LAStrin
 		}
 		staticDataName += basicCurveName + ":";
 		// set name
-		mktData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(basicCurveName);
+		mktData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(basicCurveName);
 		// curve info
-		mktData->add(IR_CALIBRATION_DATA_ISAGTSPREAD, new LADataBool(false));
+		mktData->add(IR_CALIBRATION_DATA_ISAGTSPREAD, new AQLDataBool(false));
 		// frequency info
-		mktData->add(IR_CALIBRATION_DATA_CASHLETFREQUENCY, new LADataString()).convertFromString(QUARTERLY);
+		mktData->add(IR_CALIBRATION_DATA_CASHLETFREQUENCY, new AQLDataString()).convertFromString(QUARTERLY);
 		// against frequency info
-		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCY, new LADataString()).convertFromString(SEMI_ANNUAL);
+		mktData->add(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCY, new AQLDataString()).convertFromString(SEMI_ANNUAL);
 		// index info
-		mktData->add(IR_CALIBRATION_DATA_INDEXDAYCOUNT, new LAPriceDataDayCount()).convertFromString(daycSStr_float);
+		mktData->add(IR_CALIBRATION_DATA_INDEXDAYCOUNT, new AQLPriceDataDayCount()).convertFromString(daycSStr_float);
 		// against index info
-		mktData->add(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, new LAPriceDataDayCount()).convertFromString(daycSStr_float);
+		mktData->add(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, new AQLPriceDataDayCount()).convertFromString(daycSStr_float);
 		// calendar
-		mktData->add(IR_CALIBRATION_DATA_CASHLETCALENDAR, new LAPriceDataCalendar(cal));
+		mktData->add(IR_CALIBRATION_DATA_CASHLETCALENDAR, new AQLPriceDataCalendar(cal));
 		// spot date
-		mktData->add(IR_CALIBRATION_DATA_CASHLETSPOTDATE, new LADataDate(spotDate));
+		mktData->add(IR_CALIBRATION_DATA_CASHLETSPOTDATE, new AQLDataDate(spotDate));
 		// slidingrule
-		mktData->add(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(slidingStr);
+		mktData->add(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(slidingStr);
 		// market rate interpolation
-		LAPriceDataInterpolation interpSAtt;
+		AQLPriceDataInterpolation interpSAtt;
 		interpSAtt.convertFromString(interpSStr);
-		mktData->add(CALIBRATION_DATA_INTERPOLATION, new LAPriceDataInterpolation(interpSAtt));
+		mktData->add(CALIBRATION_DATA_INTERPOLATION, new AQLPriceDataInterpolation(interpSAtt));
 		// set data type
-		mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_BASIS);
+		mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_BASIS);
 		// set term
-		mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
+		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
 		// set rate
-		mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(basis / 10000.0));
+		mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(basis / 10000.0));
 	}
 }
 
 // Set-up Base Curve Data
-void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAString &staticDataName, const LADate &asOfDate, const LAString &currency,
-	const LAString &marketName, const LAString &yieldDataName, bool isSpotStarting, bool useTenorBasis, CurveCalibrationData &curveCalibrationData,
-	MarketDataTenorQuotes &tenorBasisMarketQuotes, const LAString& curveName) const
+void LAUpdateCurveObject::setUpGenCurveData(AQLDataInstance &dataInstance, AQLString &staticDataName, const AQLDate &asOfDate, const AQLString &currency,
+	const AQLString &marketName, const AQLString &yieldDataName, bool isSpotStarting, bool useTenorBasis, CurveCalibrationData &curveCalibrationData,
+	MarketDataTenorQuotes &tenorBasisMarketQuotes, const AQLString& curveName) const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
-	LAString staticDataSuffix = "";
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
+	AQLString staticDataSuffix = "";
 
 	if (marketName == SWAP)
 	{
@@ -4904,7 +4904,7 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	}
 
 
-	LAString suffix_data = "";
+	AQLString suffix_data = "";
 	if (marketName == SWAP)
 	{
 		if (curveName != STD && curveName.size() != 0)
@@ -4918,7 +4918,7 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	}
 
 	bool isFwdFX = false;
-	LAString isFwdFXStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFX + staticDataSuffix);
+	AQLString isFwdFXStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFX + staticDataSuffix);
 	if (isFwdFXStr.toUpper() == "TRUE")
 	{
 		isFwdFX = true;
@@ -4939,21 +4939,21 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 												  asOfDate);
 
 	//DF curve name
-	LAString dfCurveName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_DFCURVENAME + staticDataSuffix);
+	AQLString dfCurveName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_DFCURVENAME + staticDataSuffix);
 	if (dfCurveName == AQ_NO_DATA)
 	{
 		dfCurveName = ITSELF;
 	}
-	curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_DFCURVENAME + suffix_data);
-	curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_DFCURVENAME + suffix_data, new LADataString(dfCurveName));
-	LAObject& yldEntity = objPool.getObject(yieldDataName, ENCHKTYPE_ISDEFINED).get();
+	curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_DFCURVENAME + suffix_data);
+	curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_DFCURVENAME + suffix_data, new AQLDataString(dfCurveName));
+	AQLObject& yldEntity = objPool.getObject(yieldDataName, ENCHKTYPE_ISDEFINED).get();
 	yldEntity.remove(IR_CALIBRATION_DATA_DFCURVENAME + suffix_data);
-	yldEntity.add(IR_CALIBRATION_DATA_DFCURVENAME + suffix_data, new LADataString(dfCurveName));
+	yldEntity.add(IR_CALIBRATION_DATA_DFCURVENAME + suffix_data, new AQLDataString(dfCurveName));
 
 	// get fwd swap
 	bool areSwapsForwardStarting = false;
-	LADataBool tmpAttrB;
-	LAString isFwdSwap_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
+	AQLDataBool tmpAttrB;
+	AQLString isFwdSwap_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
 	if (isFwdSwap_str != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(isFwdSwap_str);
@@ -4961,38 +4961,38 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	}
 
 	// Do we always recalculate the dynamic linear spline join date?
-	LAString alwaysCalcJoinDate = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ALWAYSCALCJOINDATE + staticDataSuffix);
-	curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data);
+	AQLString alwaysCalcJoinDate = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ALWAYSCALCJOINDATE + staticDataSuffix);
+	curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data);
 	yldEntity.remove(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data);
 	if (alwaysCalcJoinDate != AQ_NO_DATA && alwaysCalcJoinDate.size() != 0)
 	{
 		if (alwaysCalcJoinDate.toUpper() == "TRUE")
 		{
-			curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data, new LADataBool(true));
-			yldEntity.add(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data, new LADataBool(true));
+			curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data, new AQLDataBool(true));
+			yldEntity.add(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data, new AQLDataBool(true));
 		}
 		else
 		{
-			curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data, new LADataBool(false));
-			yldEntity.add(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data, new LADataBool(false));
+			curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data, new AQLDataBool(false));
+			yldEntity.add(IR_CALIBRATION_DATA_ALWAYSCALCJOINDATE + suffix_data, new AQLDataBool(false));
 		}
 	}
 
 	//Set stateVariable
-	LAString stateVariableStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_STATEVARIABLE + staticDataSuffix);
-	curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_STATEVARIABLE + suffix_data);
+	AQLString stateVariableStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_STATEVARIABLE + staticDataSuffix);
+	curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_STATEVARIABLE + suffix_data);
 	yldEntity.remove(IR_CALIBRATION_DATA_STATEVARIABLE + suffix_data);
 	if (stateVariableStr != AQ_NO_DATA && stateVariableStr.size() != 0)
 	{
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_STATEVARIABLE + suffix_data, new LADataString(stateVariableStr));
-		yldEntity.add(IR_CALIBRATION_DATA_STATEVARIABLE + suffix_data, new LADataString(stateVariableStr));
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_STATEVARIABLE + suffix_data, new AQLDataString(stateVariableStr));
+		yldEntity.add(IR_CALIBRATION_DATA_STATEVARIABLE + suffix_data, new AQLDataString(stateVariableStr));
 	}
 
 	// IsFutureUse flag
-	LAString tmpCurrency = currency;
+	AQLString tmpCurrency = currency;
 	tmpCurrency.toLower();
 	bool isFutureUse = false;
-	LAString tmpFutureStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + staticDataSuffix);
+	AQLString tmpFutureStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + staticDataSuffix);
 	if (tmpFutureStr != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(tmpFutureStr);
@@ -5000,8 +5000,8 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	}
 
 	// Hybrid Spline interpolation cut off date
-	LAString inputInterpJoinDateStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATIONJOINDATE + staticDataSuffix);
-	curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data);
+	AQLString inputInterpJoinDateStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_INTERPOLATIONJOINDATE + staticDataSuffix);
+	curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data);
 	yldEntity.remove(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data);
 	if (inputInterpJoinDateStr != AQ_NO_DATA && inputInterpJoinDateStr.size() != 0)
 	{
@@ -5009,11 +5009,11 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		std::string spotDateKey = isFutureUse ? STATIC_DATA_KEY_YIELD_FUTURE_SPOTDATE : STATIC_DATA_KEY_YIELD_FRA_SPOTDATE;
 		std::string spotLagKey = isFutureUse ? STATIC_DATA_KEY_YIELD_FUTURE_RESETLAG : STATIC_DATA_KEY_YIELD_FRA_RESETLAG;
 
-		LAPriceDataCalendar cal;
-		LAString calStr = mpStaticData->getStaticData(currency + calKey + staticDataSuffix);
+		AQLPriceDataCalendar cal;
+		AQLString calStr = mpStaticData->getStaticData(currency + calKey + staticDataSuffix);
 		cal.convertFromString(calStr);
 
-		LADate spotDate;
+		AQLDate spotDate;
 		if (isSpotStarting)
 		{
 			spotDate.setDate(mpStaticData->getStaticData(currency + spotDateKey + staticDataSuffix).getCString());
@@ -5024,10 +5024,10 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		}
 
 		//Use NO_CHANGE as businessDayAdj
-		LADate inputInterpolationJoinDate = etrading::validateDateOrTenor(spotDate, inputInterpJoinDateStr, "NO_CHANGE", calStr, "Invalid joinDate");
+		AQLDate inputInterpolationJoinDate = etrading::validateDateOrTenor(spotDate, inputInterpJoinDateStr, "NO_CHANGE", calStr, "Invalid joinDate");
 
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data, new LADataDate(inputInterpolationJoinDate));
-		yldEntity.add(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data, new LADataDate(inputInterpolationJoinDate));
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data, new AQLDataDate(inputInterpolationJoinDate));
+		yldEntity.add(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data, new AQLDataDate(inputInterpolationJoinDate));
 	}
 
 	//FRA Data
@@ -5059,27 +5059,27 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	}
 	else
 	{
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_ISFUTUREUSE + suffix_data);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_ISFUTUREUSE + suffix_data, new LADataBool(isFutureUse));
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_ISFUTUREUSE + suffix_data);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_ISFUTUREUSE + suffix_data, new AQLDataBool(isFutureUse));
 	}
 
 	if (isFutureUse)
 	{
-		LAString futureFileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix);
+		AQLString futureFileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix);
 		MAFileAccessor futureFile(LAMarketData::getNumFileName(futureFileName));
-		LAStringMatrix futureDataMtx;
+		AQLStringMatrix futureDataMtx;
 		futureFile.readAllData(MARKET_DATA_DELIMITER, futureDataMtx);
 		futureFile.close();
 		// use grid
-		LAStringVector futureUseGrid;
-		LAString tmpFutureUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_USEGRID + staticDataSuffix).toUpper();
+		AQLStringVector futureUseGrid;
+		AQLString tmpFutureUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_USEGRID + staticDataSuffix).toUpper();
 		if (tmpFutureUseGrid != AQ_NO_DATA)
 		{
 			futureUseGrid = tmpFutureUseGrid.toToken(':');
 		}
 		else
 		{
-			LAString tmpUseGridNum = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_USEGRIDNUM + staticDataSuffix).toUpper();
+			AQLString tmpUseGridNum = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_USEGRIDNUM + staticDataSuffix).toUpper();
 			if (tmpUseGridNum != AQ_NO_DATA)
 			{
 				int useGridNum = tmpUseGridNum.getIntValue();
@@ -5099,22 +5099,22 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		}
 
 		// get cal and calc spot date
-		LAPriceDataCalendar calF;
-		LAString calFStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_CALENDAR + staticDataSuffix);
+		AQLPriceDataCalendar calF;
+		AQLString calFStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_CALENDAR + staticDataSuffix);
 		calF.convertFromString(calFStr);
 		// get freq
-		LAString freqFStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FREQUENCY + staticDataSuffix).toUpper();
+		AQLString freqFStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FREQUENCY + staticDataSuffix).toUpper();
 		// get daycount
-		LAString daycFStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_DAYCOUNT + staticDataSuffix).toUpper();
+		AQLString daycFStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_DAYCOUNT + staticDataSuffix).toUpper();
 		// get sliding
-		LAPriceDataSlidingRule slidingF;
-		LAString slidingFStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_SLIDINGRULE + staticDataSuffix).toUpper();
+		AQLPriceDataSlidingRule slidingF;
+		AQLString slidingFStr = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_SLIDINGRULE + staticDataSuffix).toUpper();
 		slidingF.convertFromString(slidingFStr);
 		//spot lag
-		LAString spotLagF = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_RESETLAG + staticDataSuffix);
+		AQLString spotLagF = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_RESETLAG + staticDataSuffix);
 		//is convexity adjust precise
 		bool isConvAdjPrecise = false;
-		LAString isConvAdjPrecise_str = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_ISCONVADJPRECISE + staticDataSuffix);
+		AQLString isConvAdjPrecise_str = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_ISCONVADJPRECISE + staticDataSuffix);
 		if (isConvAdjPrecise_str != AQ_NO_DATA)
 		{
 			tmpAttrB.convertFromString(isConvAdjPrecise_str);
@@ -5122,20 +5122,20 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		}
 		// get mean reversion
 		double meanReversion = 0.0;
-		LAString meanReversion_str = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_MEANREVERSION + staticDataSuffix);
+		AQLString meanReversion_str = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_MEANREVERSION + staticDataSuffix);
 		if (meanReversion_str != AQ_NO_DATA)
 		{
-			LADataDouble tmpAttrDouble;
+			AQLDataDouble tmpAttrDouble;
 			tmpAttrDouble.convertFromString(meanReversion_str);
 			meanReversion = tmpAttrDouble.get();
 		}
 
 		// get applyTension
 		bool applyTensionFutures = false;
-		LAString applyTensionFuturesStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_APPLYTENSION + staticDataSuffix).toUpper();
+		AQLString applyTensionFuturesStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_APPLYTENSION + staticDataSuffix).toUpper();
 		if (applyTensionFuturesStr != AQ_NO_DATA)
 		{
-			LADataBool tmpApplyTensionFutures;
+			AQLDataBool tmpApplyTensionFutures;
 			tmpApplyTensionFutures.convertFromString(applyTensionFuturesStr);
 			applyTensionFutures = tmpApplyTensionFutures.get();
 		}
@@ -5146,17 +5146,17 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		// get UseConvexAdjustment (ConvexityQuotedAsPrice), legacy parameter replaced by ConvexityQuoteType
 		bool useConvexAdjustment = false;
 		bool convexityQuotedAsVol = true;
-		LAString useConvexAdjustmentStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_USECONVEXADJUSTMENT + staticDataSuffix).toUpper();
+		AQLString useConvexAdjustmentStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_USECONVEXADJUSTMENT + staticDataSuffix).toUpper();
 		if (useConvexAdjustmentStr != AQ_NO_DATA)
 		{
-			LADataBool tmpUseConvexAdjustment;
+			AQLDataBool tmpUseConvexAdjustment;
 			tmpUseConvexAdjustment.convertFromString(useConvexAdjustmentStr);
 			useConvexAdjustment = tmpUseConvexAdjustment.get();
 			convexityQuotedAsVol = !useConvexAdjustment;
 		}
 
 		// get convexityQuoteType *** Alias for UseConvexAdjustment (convexityQuoteAsPrice) ***
-		LAString convexityQuoteTypeStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_CONVEXITYQUOTETYPE + staticDataSuffix).toUpper();
+		AQLString convexityQuoteTypeStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_CONVEXITYQUOTETYPE + staticDataSuffix).toUpper();
 		if (convexityQuoteTypeStr != AQ_NO_DATA)
 		{
 			convexityQuoteTypeStr.toUpper();
@@ -5177,10 +5177,10 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 
 		// Curve controls
 		bool smoothShortEnd = true;
-		LAString strSmoothShortEnd = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_SMOOTHSHORTEND + staticDataSuffix);
+		AQLString strSmoothShortEnd = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_SMOOTHSHORTEND + staticDataSuffix);
 		if (strSmoothShortEnd != AQ_NO_DATA)
 		{
-			LADataBool tmpSmoothShortEnd;
+			AQLDataBool tmpSmoothShortEnd;
 			tmpSmoothShortEnd.convertFromString(strSmoothShortEnd);
 			smoothShortEnd = tmpSmoothShortEnd.get();
 		}
@@ -5189,7 +5189,7 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		int tensionGapFutures = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_TENSIONGAP + staticDataSuffix).getIntValue();
 
 		// Default to RATE
-		LAString futureSerialCalcType = etrading::toString(etrading::SERIAL_FUTURES_BY_RATE);
+		AQLString futureSerialCalcType = etrading::toString(etrading::SERIAL_FUTURES_BY_RATE);
 		auto dh = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_SERIAL_CALC_TYPE + staticDataSuffix);
 		if (dh != AQ_NO_DATA)
 		{
@@ -5201,17 +5201,17 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		{
 			if (futureDataMtx[i].size() != 5 && futureDataMtx[i].size() != 3)
 			{
-				throw LACoreInvalidData("Future File format is wrong", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Future File format is wrong", __FILE__, __LINE__);
 			}
-			LAString term;
-			LADate startDate, endDate;
+			AQLString term;
+			AQLDate startDate, endDate;
 			double futurePrice(0.0), rate(0.0), futureVol(0.0), convexAdj(0.0);
 
 			if (futureDataMtx[i].size() == 5)
 			{
 				term = futureDataMtx[i][0].toUpper();
-				startDate = LADate(futureDataMtx[i][1].getCString());
-				endDate = LADate(futureDataMtx[i][2].getCString());
+				startDate = AQLDate(futureDataMtx[i][1].getCString());
+				endDate = AQLDate(futureDataMtx[i][2].getCString());
 				futurePrice = futureDataMtx[i][3].getDoubleValue();
 				rate = 1.0 - futurePrice * 0.01;
 
@@ -5253,15 +5253,15 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 			}
 			else
 			{
-				throw LACoreInvalidData("Future File format is wrong", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Future File format is wrong", __FILE__, __LINE__);
 			}
 
-			LAObject *mktData = NULL;
-			LAString nameF = yieldDataName + "_FUTURE_" + LAString(i) + suffix_data;
-			const LAObjectHolder ehfuture = objPool.getObject(nameF);
+			AQLObject *mktData = NULL;
+			AQLString nameF = yieldDataName + "_FUTURE_" + AQLString(i) + suffix_data;
+			const AQLObjectHolder ehfuture = objPool.getObject(nameF);
 			if (!ehfuture.isDefined())
 			{
-				mktData = new LAObject();
+				mktData = new AQLObject();
 				objPool.set(nameF, mktData);
 			}
 			else
@@ -5271,61 +5271,61 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 			}
 			staticDataName += nameF + ":";
 			// set name
-			mktData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(nameF);
+			mktData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(nameF);
 			// set term
-			mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(term);
+			mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(term);
 			// set calendar
-			mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(calFStr);
+			mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(calFStr);
 			// set daycount
-			mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(daycFStr);
+			mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(daycFStr);
 			// set data type
-			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_FUTURE);
+			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_FUTURE);
 			// set slidingrule
-			mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(slidingFStr);
+			mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(slidingFStr);
 			// set start date
-			mktData->add(PRICING_DATA_STARTDATE, new LADataDate(startDate));
+			mktData->add(PRICING_DATA_STARTDATE, new AQLDataDate(startDate));
 			// set end date
-			mktData->add(PRICING_DATA_ENDDATE, new LADataDate(endDate));
+			mktData->add(PRICING_DATA_ENDDATE, new AQLDataDate(endDate));
 			// set rate
-			mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(rate));
+			mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate));
 			// is convexity adjsut presice
-			mktData->add(IR_CALIBRATION_DATA_ISCONVADJPRECISE, new LADataBool(isConvAdjPrecise));
+			mktData->add(IR_CALIBRATION_DATA_ISCONVADJPRECISE, new AQLDataBool(isConvAdjPrecise));
 			// set mean reversion
-			mktData->add(IR_CALIBRATION_DATA_MEANREVERSION, new LADataDouble(meanReversion));
+			mktData->add(IR_CALIBRATION_DATA_MEANREVERSION, new AQLDataDouble(meanReversion));
 			// set vol
-			mktData->add(PRICING_DATA_FUTUREVOLATILITY, new LADataDouble(futureVol));
+			mktData->add(PRICING_DATA_FUTUREVOLATILITY, new AQLDataDouble(futureVol));
 			
 			// set convexAdj - The numerical convexity value
-			mktData->add(PRICING_DATA_CONVEXADJUSTMENT, new LADataDouble(convexAdj));
+			mktData->add(PRICING_DATA_CONVEXADJUSTMENT, new AQLDataDouble(convexAdj));
 			
 			// Convexity Quoted as Price (useConvexAdj) or as Vol
 			// set the replacement convexityQuotedAsVol alias for legacy parameter useConvexAdj, which is deprecated
-			mktData->add(PRICING_DATA_CONVEXITYQUOTETYPE, new LADataString(convexityQuoteTypeStr));
+			mktData->add(PRICING_DATA_CONVEXITYQUOTETYPE, new AQLDataString(convexityQuoteTypeStr));
 			
 			// set tension
-			mktData->add(IR_CALIBRATION_DATA_APPLYTENSION, new LADataBool(applyTensionFutures));
+			mktData->add(IR_CALIBRATION_DATA_APPLYTENSION, new AQLDataBool(applyTensionFutures));
 			// set tension gap
-			mktData->add(IR_CALIBRATION_DATA_TENSIONGAP, new LADataInt(tensionGapFutures));
+			mktData->add(IR_CALIBRATION_DATA_TENSIONGAP, new AQLDataInt(tensionGapFutures));
 			// use grid
 			if (futureUseGrid.size() != 0 && find(futureUseGrid.begin(), futureUseGrid.end(), term) == futureUseGrid.end())
 			{
-				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(false));
+				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(false));
 			}
 			else
 			{
-				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(true));
+				mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
 			}
 			// smooth short end of curve
-			mktData->add(IR_CALIBRATION_DATA_SMOOTHSHORTEND, new LADataBool(smoothShortEnd));
+			mktData->add(IR_CALIBRATION_DATA_SMOOTHSHORTEND, new AQLDataBool(smoothShortEnd));
 			// serial calc type
-			mktData->add(IR_CALIBRATION_DATA_FRAFUTURE_SERIAL_CALC_TYPE, new LADataString(futureSerialCalcType));
+			mktData->add(IR_CALIBRATION_DATA_FRAFUTURE_SERIAL_CALC_TYPE, new AQLDataString(futureSerialCalcType));
 		}
 	}
 
 	// swap
-	LAString swapFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
+	AQLString swapFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
 	MAFileAccessor swapFile(LAMarketData::getNumFileName(swapFileName));
-	LAStringMatrix swapDataMtx;
+	AQLStringMatrix swapDataMtx;
 	if (!isFwdFX)
 	{
 		swapFile.readAllData(MARKET_DATA_DELIMITER, swapDataMtx);
@@ -5338,11 +5338,11 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	}
 
 	// get cal and calc spot date
-	LAPriceDataCalendar calS;
-	LAString calSStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_CALENDAR + staticDataSuffix);
+	AQLPriceDataCalendar calS;
+	AQLString calSStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_CALENDAR + staticDataSuffix);
 	calS.convertFromString(calSStr);
 
-	LADate spotDateS;
+	AQLDate spotDateS;
 	int resetLag;
 	if (isSpotStarting)
 	{
@@ -5350,11 +5350,11 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	}
 	else
 	{
-		LAString resetLag_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_RESETLAG + staticDataSuffix);
+		AQLString resetLag_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_RESETLAG + staticDataSuffix);
 		resetLag = resetLag_str.getIntValue();
 		if (resetLag_str == AQ_NO_DATA)
 		{
-			throw LACoreInvalidData("Reset Lag is not set !!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Reset Lag is not set !!", __FILE__, __LINE__);
 		}
 		else
 		{
@@ -5366,7 +5366,7 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 					final business day.
 					This is important to get right around US holidays.
 				*/
-				const LAString liborFixingCalendar = mpStaticData->getStaticData( currency + STATIC_DATA_KEY_YIELD_LIBOR_CALENDAR + staticDataSuffix );
+				const AQLString liborFixingCalendar = mpStaticData->getStaticData( currency + STATIC_DATA_KEY_YIELD_LIBOR_CALENDAR + staticDataSuffix );
 
 				const int tenorPosition = resetLag_str.findString('D');
 				if ( tenorPosition == -1 )
@@ -5374,8 +5374,8 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 					// Add the 'D' tenor if it is missing
 					resetLag_str += 'D';
 				}
-				const LAString businessDayAdjustment("FOLLOWING"); // Specify this to request a Business-day adjustment
-				const LAString rollConvention;
+				const AQLString businessDayAdjustment("FOLLOWING"); // Specify this to request a Business-day adjustment
+				const AQLString rollConvention;
 				spotDateS = etrading::getCurveUSDSpotDate( asOfDate, resetLag_str, liborFixingCalendar, calSStr, businessDayAdjustment, rollConvention );
 			}
 			else
@@ -5390,37 +5390,37 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	bool isSimuEQSW = false;
 	bool isEOMRollSW = false;
 	bool isFWDInter = false;
-	LAString strIsTimeInterSW = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_ISTIMEINTERPOLATION + staticDataSuffix).toUpper();
+	AQLString strIsTimeInterSW = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_ISTIMEINTERPOLATION + staticDataSuffix).toUpper();
 	if (strIsTimeInterSW != AQ_NO_DATA)
 	{
-		LADataBool tmpIsTimeInterSW;
+		AQLDataBool tmpIsTimeInterSW;
 		tmpIsTimeInterSW.convertFromString(strIsTimeInterSW);
 		isTimeInterSW = tmpIsTimeInterSW.get();
 	}
-	LAString strNRSW = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_ISNEWTONRAPHSON + staticDataSuffix).toUpper();
+	AQLString strNRSW = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_ISNEWTONRAPHSON + staticDataSuffix).toUpper();
 	if (strNRSW != AQ_NO_DATA)
 	{
-		LADataBool tmpIsNRSW;
+		AQLDataBool tmpIsNRSW;
 		tmpIsNRSW.convertFromString(strNRSW);
 		isNRSW = tmpIsNRSW.get();
 	}
-	LAString strSimuEQSW = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_ISSIMULTANEOUSEQ + staticDataSuffix).toUpper();
+	AQLString strSimuEQSW = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_ISSIMULTANEOUSEQ + staticDataSuffix).toUpper();
 	if (strSimuEQSW != AQ_NO_DATA)
 	{
-		LADataBool tmpIsSimuEQSW;
+		AQLDataBool tmpIsSimuEQSW;
 		tmpIsSimuEQSW.convertFromString(strSimuEQSW);
 		isSimuEQSW = tmpIsSimuEQSW.get();
 	}
-	LAString strEOMRollSW = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_ISEOMRLL + staticDataSuffix).toUpper();
+	AQLString strEOMRollSW = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_ISEOMRLL + staticDataSuffix).toUpper();
 	if (strEOMRollSW != AQ_NO_DATA)
 	{
-		LADataBool tmpIsEOMRollSW;
+		AQLDataBool tmpIsEOMRollSW;
 		tmpIsEOMRollSW.convertFromString(strEOMRollSW);
 		isEOMRollSW = tmpIsEOMRollSW.get();
 	}
 	if (isEOMRollSW)
 	{
-		LAString strEOMDay = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_EOMDAY + staticDataSuffix).toUpper();
+		AQLString strEOMDay = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_EOMDAY + staticDataSuffix).toUpper();
 		if (strEOMDay != AQ_NO_DATA)
 		{
 			if (spotDateS.dayOfMonth() != strEOMDay.getIntValue())
@@ -5430,7 +5430,7 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		}
 		else
 		{
-			const LADate eomDate = calS.getEOMDay(spotDateS);
+			const AQLDate eomDate = calS.getEOMDay(spotDateS);
 			if (spotDateS != eomDate)
 			{
 				isEOMRollSW = false;
@@ -5438,49 +5438,49 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		}
 	}
 
-	LAString strFWDInter = FN_SPLINEINTERPOLATION_STR;
-	LAString strIsFWDInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_ISFWDINTER + staticDataSuffix).toUpper();
+	AQLString strFWDInter = FN_SPLINEINTERPOLATION_STR;
+	AQLString strIsFWDInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_ISFWDINTER + staticDataSuffix).toUpper();
 	if (strIsFWDInter == "TRUE")
 	{
 		isFWDInter = true;
 		strFWDInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FWDINTERPOLATION + staticDataSuffix);
 	}
 
-	LAString optimizeMethod = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_OPTIMIZEMETHOD + staticDataSuffix).toUpper();
+	AQLString optimizeMethod = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_OPTIMIZEMETHOD + staticDataSuffix).toUpper();
 
 	//get constant for convergence
 	double eps = 1.0e-9;
-	LAString strEPS = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_EPSILON + staticDataSuffix);
+	AQLString strEPS = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_EPSILON + staticDataSuffix);
 	if (strEPS.toUpper() != AQ_NO_DATA)
 	{
 		eps = strEPS.getDoubleValue();
 	}
 	double grad_eps = 1.0e-15;
-	LAString strGEPS = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_GRADIENTEPSILON + staticDataSuffix);
+	AQLString strGEPS = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_GRADIENTEPSILON + staticDataSuffix);
 	if (strGEPS.toUpper() != AQ_NO_DATA)
 	{
 		grad_eps = strGEPS.getDoubleValue();
 	}
 	double delta = 1.0e-10;
-	LAString strDLT = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_DELTA + staticDataSuffix);
+	AQLString strDLT = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_DELTA + staticDataSuffix);
 	if (strDLT.toUpper() != AQ_NO_DATA)
 	{
 		delta = strDLT.getDoubleValue();
 	}
 	int maxLoop = 1000;
-	LAString strMLP = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_MAXLOOP + staticDataSuffix);
+	AQLString strMLP = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_MAXLOOP + staticDataSuffix);
 	if (strMLP.toUpper() != AQ_NO_DATA)
 	{
 		maxLoop = strMLP.getIntValue();
 	}
-	LAString swapTenor("");
-	LAString strSwapTenor = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SWAPTENOR + staticDataSuffix);
+	AQLString swapTenor("");
+	AQLString strSwapTenor = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SWAPTENOR + staticDataSuffix);
 	if (strSwapTenor.toUpper() != AQ_NO_DATA)
 	{
 		swapTenor = strSwapTenor;
 	}
-	LAString swapType("LIBOR");
-	LAString strSwapType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SWAPTYPE + staticDataSuffix);
+	AQLString swapType("LIBOR");
+	AQLString strSwapType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SWAPTYPE + staticDataSuffix);
 	if (strSwapType.toUpper() != AQ_NO_DATA)
 	{
 		swapType = strSwapType;
@@ -5488,7 +5488,7 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 
 	// optimise performance
 	bool optimizePerformance = false;
-	LAString optimizePerformanceStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_OPTIMIZEPERFORMANCE + staticDataSuffix);
+	AQLString optimizePerformanceStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_OPTIMIZEPERFORMANCE + staticDataSuffix);
 	if (optimizePerformanceStr.toUpper() == "TRUE")
 	{
 		optimizePerformance = true;
@@ -5496,7 +5496,7 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 
 	// fast jacobian rebuild
 	bool fastRebuild = false;
-	LAString fastRebuildStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_FASTREBUILD + staticDataSuffix);
+	AQLString fastRebuildStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_FASTREBUILD + staticDataSuffix);
 	if (fastRebuildStr.toUpper() == "TRUE")
 	{
 		fastRebuild = true;
@@ -5504,25 +5504,25 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// >>>>>>>>>>>>> for XLL plus
-	LAString isResetSkipStr = mpStaticData->getStaticData(KEY_YIELD_IS_AUD_RESET_SKIP);
+	AQLString isResetSkipStr = mpStaticData->getStaticData(KEY_YIELD_IS_AUD_RESET_SKIP);
 	if (isResetSkipStr != AQ_NO_DATA)
 	{
-		LADataBool tmpIsResetSkip;
+		AQLDataBool tmpIsResetSkip;
 		tmpIsResetSkip.convertFromString(isResetSkipStr);
 		resetFlg = !tmpIsResetSkip.get();
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	const int swapSize = swapDataMtx.size();
 	// use grid
-	LAStringVector swapUseGrid;
-	LAString tmpSwapUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_USEGRID + staticDataSuffix).toUpper();
+	AQLStringVector swapUseGrid;
+	AQLString tmpSwapUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_USEGRID + staticDataSuffix).toUpper();
 	if (tmpSwapUseGrid != AQ_NO_DATA)
 	{
 		swapUseGrid = tmpSwapUseGrid.toToken(':');
 	}
 	// set tenor adjust
 	bool useTenorBasisInstruments = false;
-	LAString strSwapTenorAdj = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISSWAPTENORADJUST + staticDataSuffix).toUpper();
+	AQLString strSwapTenorAdj = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISSWAPTENORADJUST + staticDataSuffix).toUpper();
 	if (strSwapTenorAdj != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(strSwapTenorAdj);
@@ -5530,8 +5530,8 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	}
 	for (int j = 0; j < swapSize; ++j)
 	{
-		LAString term = swapDataMtx[j][0].toUpper();
-		LAString tmpCurrency = currency;
+		AQLString term = swapDataMtx[j][0].toUpper();
+		AQLString tmpCurrency = currency;
 		if (useTenorBasis && tmpCurrency.toUpper() == CURRENCY_AUD &&
 			term.findString("Y") == static_cast<int>(term.size() - 1) &&
 			term.subString(0, term.size() - 2).getIntValue() > 3 && resetFlg)
@@ -5539,8 +5539,8 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 			// set yield curve pro
 			if (marketName != SWAP)
 			{
-				curveCalibrationData.LAObject::remove(CALIBRATION_DATA_MARKETDATA + suffix_data);
-				curveCalibrationData.LAObject::add(CALIBRATION_DATA_MARKETDATA + suffix_data, new LADataMultiReference()).
+				curveCalibrationData.AQLObject::remove(CALIBRATION_DATA_MARKETDATA + suffix_data);
+				curveCalibrationData.AQLObject::add(CALIBRATION_DATA_MARKETDATA + suffix_data, new AQLDataMultiReference()).
 					convertFromString(staticDataName.subString(0, staticDataName.size() - 2));
 			}
 			else
@@ -5549,11 +5549,11 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 			}
 
 			// generate yield data
-			LADataProcedure &modelDataObj = dynamic_cast<LADataProcedure &>
+			AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &>
 				(curveCalibrationData.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
 
-			curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
-			curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new LADataString(marketName));
+			curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
+			curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new AQLDataString(marketName));
 
 			dataInstance.getReferencePool().completeDependency();
 			modelDataObj.calibrateModel(asOfDate);
@@ -5563,40 +5563,40 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 			resetFlg = false;
 			if (marketName != SWAP)
 			{
-				curveCalibrationData.LAObject::remove(CALIBRATION_DATA_MARKETDATA + suffix_data);
+				curveCalibrationData.AQLObject::remove(CALIBRATION_DATA_MARKETDATA + suffix_data);
 			}
 		}
 
 		double rate = swapDataMtx[j][1].getDoubleValue();
 		// get freq
-		LAString freqSStr = getGridStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCY, staticDataSuffix, term).toUpper();
-		LAString freqSStr_Fix = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCY + staticDataSuffix).toUpper();
+		AQLString freqSStr = getGridStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCY, staticDataSuffix, term).toUpper();
+		AQLString freqSStr_Fix = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCY + staticDataSuffix).toUpper();
 		// get frequency of floating leg
-		LAString baseFreqSStr_float;
+		AQLString baseFreqSStr_float;
 		baseFreqSStr_float = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_BASEFREQUENCYFLOAT + staticDataSuffix).toUpper();
 		if (baseFreqSStr_float == AQ_NO_DATA) baseFreqSStr_float = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCYFLOAT + staticDataSuffix).toUpper();
-		LAString freqSStr_float = getGridStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCYFLOAT, staticDataSuffix, term).toUpper();
+		AQLString freqSStr_float = getGridStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCYFLOAT, staticDataSuffix, term).toUpper();
 		// get frequency of compounding
-		LAString freqSStr_cpd = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCYCOMPOUND + staticDataSuffix).toUpper();
+		AQLString freqSStr_cpd = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCYCOMPOUND + staticDataSuffix).toUpper();
 		// get daycount
-		LAString daycSStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_DAYCOUNT, staticDataSuffix, term).toUpper();
+		AQLString daycSStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_DAYCOUNT, staticDataSuffix, term).toUpper();
 		// get daycount of floating leg
-		LAString daycSStr_float = getGridStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_DAYCOUNTFLOAT, staticDataSuffix, term).toUpper();
+		AQLString daycSStr_float = getGridStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_DAYCOUNTFLOAT, staticDataSuffix, term).toUpper();
 		// get sliding
-		LAString slidingSStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SLIDINGRULE, staticDataSuffix, term).toUpper();
+		AQLString slidingSStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SLIDINGRULE, staticDataSuffix, term).toUpper();
 		// get market rate interpolation
-		LAString interpSStr = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_INTERPOLATION + staticDataSuffix);
+		AQLString interpSStr = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_YIELD_SWAP_INTERPOLATION + staticDataSuffix);
 
 		if (useTenorBasis && tmpCurrency.toUpper() == CURRENCY_AUD && resetFlg)
 		{
 			tenorBasisMarketQuotes[marketName].insert(make_pair(term, rate / 100.0));
 		}
-		LAObject *mktData = NULL;
-		LAString nameS = yieldDataName + "_SWAP_" + LAString(j) + suffix_data;
-		const LAObjectHolder ehswap = objPool.getObject(nameS);
+		AQLObject *mktData = NULL;
+		AQLString nameS = yieldDataName + "_SWAP_" + AQLString(j) + suffix_data;
+		const AQLObjectHolder ehswap = objPool.getObject(nameS);
 		if (!ehswap.isDefined())
 		{
-			mktData = new LAObject();
+			mktData = new AQLObject();
 			objPool.set(nameS, mktData);
 		}
 		else
@@ -5606,120 +5606,120 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		}
 		staticDataName += nameS + ":";
 		// set name
-		mktData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(nameS);
+		mktData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(nameS);
 		// set spot date
-		mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new LADataDate(spotDateS));
+		mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new AQLDataDate(spotDateS));
 		// set spot date
-		mktData->add(IR_CALIBRATION_DATA_SPOTLAG, new LADataInt(resetLag));
+		mktData->add(IR_CALIBRATION_DATA_SPOTLAG, new AQLDataInt(resetLag));
 		// set calendar
-		mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(calSStr);
+		mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(calSStr);
 		// set daycount
-		mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(daycSStr);
+		mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(daycSStr);
 		// set daycount of floating leg
 		if (daycSStr_float != AQ_NO_DATA)
 		{
-			mktData->add(IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, new LAPriceDataDayCount()).convertFromString(daycSStr_float);
+			mktData->add(IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, new AQLPriceDataDayCount()).convertFromString(daycSStr_float);
 		}
 		// set data type
-		mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_PAR);
+		mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_PAR);
 		// set slidingrule
-		mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(slidingSStr);
+		mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(slidingSStr);
 		// set fwdbasis
 		if (areSwapsForwardStarting)
 		{
-			mktData->add(PRICING_DATA_ISFWDSWAP, new LADataBool(areSwapsForwardStarting));
+			mktData->add(PRICING_DATA_ISFWDSWAP, new AQLDataBool(areSwapsForwardStarting));
 			if (swapDataMtx[j].size() != 5)
-				throw LACoreInvalidData("FwdSwap File format is wrong", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("FwdSwap File format is wrong", __FILE__, __LINE__);
 			const bool isDate = swapDataMtx[j][2].toUpper() == "TRUE";
-			mktData->add(PRICING_DATA_ISDATE, new LADataBool(isDate));
+			mktData->add(PRICING_DATA_ISDATE, new AQLDataBool(isDate));
 			if (isDate)
 			{
-				const LADate startDate = LADate(swapDataMtx[j][3].getCString());
-				mktData->add(PRICING_DATA_STARTDATE, new LADataDate(startDate));
-				const LADate endDate = LADate(swapDataMtx[j][4].getCString());
-				mktData->add(PRICING_DATA_ENDDATE, new LADataDate(endDate));
+				const AQLDate startDate = AQLDate(swapDataMtx[j][3].getCString());
+				mktData->add(PRICING_DATA_STARTDATE, new AQLDataDate(startDate));
+				const AQLDate endDate = AQLDate(swapDataMtx[j][4].getCString());
+				mktData->add(PRICING_DATA_ENDDATE, new AQLDataDate(endDate));
 			}
 			else
 			{
-				const LAString startTerm = swapDataMtx[j][3].toUpper();
-				mktData->add(PRICING_DATA_STARTTERM, new LADataString(startTerm));
-				const LAString tenor = swapDataMtx[j][4].toUpper();
-				mktData->add(PRICING_DATA_TENOR, new LADataString(tenor));
+				const AQLString startTerm = swapDataMtx[j][3].toUpper();
+				mktData->add(PRICING_DATA_STARTTERM, new AQLDataString(startTerm));
+				const AQLString tenor = swapDataMtx[j][4].toUpper();
+				mktData->add(PRICING_DATA_TENOR, new AQLDataString(tenor));
 			}
 		}
 		// set term
-		mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
+		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
 		// set rate
-		mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(rate / 100.0));
+		mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate / 100.0));
 		// time inter
-		mktData->add(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONSW, new LADataBool(isTimeInterSW));
+		mktData->add(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONSW, new AQLDataBool(isTimeInterSW));
 		// newton raphson
-		mktData->add(IR_CALIBRATION_DATA_ISNEWTONRAPHSONSW, new LADataBool(isNRSW));
+		mktData->add(IR_CALIBRATION_DATA_ISNEWTONRAPHSONSW, new AQLDataBool(isNRSW));
 		// optimize method
-		mktData->add(IR_CALIBRATION_DATA_OPTIMIZEMETHOD, new LADataString(optimizeMethod));
+		mktData->add(IR_CALIBRATION_DATA_OPTIMIZEMETHOD, new AQLDataString(optimizeMethod));
 		// Swap tenor
 		mktData->remove(IR_CALIBRATION_DATA_SWAPTENOR);
-		mktData->add(IR_CALIBRATION_DATA_SWAPTENOR, new LADataString(swapTenor));
+		mktData->add(IR_CALIBRATION_DATA_SWAPTENOR, new AQLDataString(swapTenor));
 		// Swap type
 		mktData->remove(IR_CALIBRATION_DATA_SWAPTYPE);
-		mktData->add(IR_CALIBRATION_DATA_SWAPTYPE, new LADataString(swapType));
+		mktData->add(IR_CALIBRATION_DATA_SWAPTYPE, new AQLDataString(swapType));
 		// iseomroll
-		mktData->add(IR_CALIBRATION_DATA_ISEOMROLLSW, new LADataBool(isEOMRollSW));
+		mktData->add(IR_CALIBRATION_DATA_ISEOMROLLSW, new AQLDataBool(isEOMRollSW));
 		// simultaneous equation
-		mktData->add(IR_CALIBRATION_DATA_ISSIMULTANEOUSEQSW, new LADataBool(isSimuEQSW));
+		mktData->add(IR_CALIBRATION_DATA_ISSIMULTANEOUSEQSW, new AQLDataBool(isSimuEQSW));
 		// set epsilon
-		mktData->add(IR_CALIBRATION_DATA_EPSILON, new LADataDouble(eps));
+		mktData->add(IR_CALIBRATION_DATA_EPSILON, new AQLDataDouble(eps));
 		// set gradient epsilon
-		mktData->add(IR_CALIBRATION_DATA_GRADIENTEPSILON, new LADataDouble(grad_eps));
+		mktData->add(IR_CALIBRATION_DATA_GRADIENTEPSILON, new AQLDataDouble(grad_eps));
 		// set delta
-		mktData->add(IR_CALIBRATION_DATA_DELTA, new LADataDouble(delta));
+		mktData->add(IR_CALIBRATION_DATA_DELTA, new AQLDataDouble(delta));
 		// set maxloop
-		mktData->add(IR_CALIBRATION_DATA_MAXLOOP, new LADataInt(maxLoop));
+		mktData->add(IR_CALIBRATION_DATA_MAXLOOP, new AQLDataInt(maxLoop));
 		// is frequency change
-		mktData->add(IR_CALIBRATION_DATA_ISSWAPTENORADJUST, new LADataBool(useTenorBasisInstruments));
+		mktData->add(IR_CALIBRATION_DATA_ISSWAPTENORADJUST, new AQLDataBool(useTenorBasisInstruments));
 		// set optimize performance
-		mktData->add(IR_CALIBRATION_DATA_OPTIMIZEPERFORMANCE, new LADataBool(optimizePerformance));
+		mktData->add(IR_CALIBRATION_DATA_OPTIMIZEPERFORMANCE, new AQLDataBool(optimizePerformance));
 		// set fast rebuild
-		mktData->add(IR_CALIBRATION_DATA_FASTREBUILD, new LADataBool(fastRebuild));
+		mktData->add(IR_CALIBRATION_DATA_FASTREBUILD, new AQLDataBool(fastRebuild));
 		// market rate interpolation
 		if (interpSStr != AQ_NO_DATA)
 		{
-			LAPriceDataInterpolation interpSAtt;
+			AQLPriceDataInterpolation interpSAtt;
 			interpSAtt.convertFromString(interpSStr);
-			mktData->add(CALIBRATION_DATA_INTERPOLATION, new LAPriceDataInterpolation(interpSAtt));
+			mktData->add(CALIBRATION_DATA_INTERPOLATION, new AQLPriceDataInterpolation(interpSAtt));
 		}
 		// set fwd interpolation
-		mktData->add(IR_CALIBRATION_DATA_ISFWDINTERPOLATION, new LADataBool(isFWDInter));
-		mktData->add(IR_CALIBRATION_DATA_FWDINTERPOLATION, new LAPriceDataInterpolation()).convertFromString(strFWDInter);
+		mktData->add(IR_CALIBRATION_DATA_ISFWDINTERPOLATION, new AQLDataBool(isFWDInter));
+		mktData->add(IR_CALIBRATION_DATA_FWDINTERPOLATION, new AQLPriceDataInterpolation()).convertFromString(strFWDInter);
 		//grid use
 		bool isUse = false;
 		if (swapUseGrid.size() != 0 && find(swapUseGrid.begin(), swapUseGrid.end(), term) == swapUseGrid.end())
 		{
-			mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(false));
+			mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(false));
 		}
 		else
 		{
 			isUse = true;
-			mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(true));
+			mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
 		}
 		
 		// Check and Set Swap Instrument Fixed Frequency
 		//*** Note *** Commented out the fixed frequency constraint, which can prohibit valid short dated swaps under 1 year.
 		// if ((!checkFrequency(freqSStr, term) || !checkFrequency(freqSStr_Fix, term)) && isUse)
 		// {
-		// 		AQ_THROW("Invalid Swap Instrument: Swap tenor '" +  LAString(term) + "' is inconsistent with the swap instrument fixed frequency")
+		// 		AQ_THROW("Invalid Swap Instrument: Swap tenor '" +  AQLString(term) + "' is inconsistent with the swap instrument fixed frequency")
 		// }
-		mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString()).convertFromString(freqSStr);
-		mktData->add(IR_CALIBRATION_DATA_BASEFREQUENCY_FIX, new LADataString()).convertFromString(freqSStr_Fix);
+		mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString()).convertFromString(freqSStr);
+		mktData->add(IR_CALIBRATION_DATA_BASEFREQUENCY_FIX, new AQLDataString()).convertFromString(freqSStr_Fix);
 		
 		// Check and Set the Curve Base Float Frequency
 		if (baseFreqSStr_float != AQ_NO_DATA)
 		{
 			if( !checkFrequency( baseFreqSStr_float, term ) && isUse )
 			{
-				AQ_THROW("Invalid Swap Instrument: Swap tenor '" +  LAString(term) + "' is inconsistent with the curve frequency '" +  LAString(baseFreqSStr_float) + "'")
+				AQ_THROW("Invalid Swap Instrument: Swap tenor '" +  AQLString(term) + "' is inconsistent with the curve frequency '" +  AQLString(baseFreqSStr_float) + "'")
 			}
-			mktData->add(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, new LADataString()).convertFromString(baseFreqSStr_float);
+			mktData->add(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, new AQLDataString()).convertFromString(baseFreqSStr_float);
 		}
 		
 		// Check and Set the Swap Instrument Float Frequency
@@ -5727,9 +5727,9 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		{
 			if (!checkFrequency(freqSStr_float, term) && isUse)
 			{
-				AQ_THROW("Invalid Swap Instrument: Swap tenor '" +  LAString(term) + "' is inconsistent with the swap instrument float frequency '" +  LAString(freqSStr_float) + "'")
+				AQ_THROW("Invalid Swap Instrument: Swap tenor '" +  AQLString(term) + "' is inconsistent with the swap instrument float frequency '" +  AQLString(freqSStr_float) + "'")
 			}
-			mktData->add(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, new LADataString()).convertFromString(freqSStr_float);
+			mktData->add(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, new AQLDataString()).convertFromString(freqSStr_float);
 		}
 
 		// Check and Set the Compounding Frequency
@@ -5737,21 +5737,21 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 		{
 			if (!checkFrequency(freqSStr_cpd, term) && isUse)
 			{
-				AQ_THROW("Invalid Swap Instrument: Swap tenor '" +  LAString(term) + "' is inconsistent with the swap instrument compound frequency '" +  LAString(freqSStr_cpd) + "'")
+				AQ_THROW("Invalid Swap Instrument: Swap tenor '" +  AQLString(term) + "' is inconsistent with the swap instrument compound frequency '" +  AQLString(freqSStr_cpd) + "'")
 			}
-			mktData->add(IR_CALIBRATION_DATA_FREQUENCY_COMPOUND, new LADataString()).convertFromString(freqSStr_cpd);
+			mktData->add(IR_CALIBRATION_DATA_FREQUENCY_COMPOUND, new AQLDataString()).convertFromString(freqSStr_cpd);
 		}
 	}
 
 	if (staticDataName.size() < 2)
 	{
-		throw LACoreInvalidData("#Error: Missing Market Data. Market Data is not set !!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("#Error: Missing Market Data. Market Data is not set !!", __FILE__, __LINE__);
 	}
 
-	LAString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + staticDataSuffix);
+	AQLString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + staticDataSuffix);
 	if (aliasCurveNames != AQ_NO_DATA)
 	{
-		LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+		AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 		for (size_t i = 0; i < assignedCurves.size(); i++)
 		{
 			curveCalibrationData.setAssignedCurveMktMap(assignedCurves[i], marketName);
@@ -5770,12 +5770,12 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	}
 
 	// remove curve generate map
-	const LAString isPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
+	const AQLString isPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
 	if (isPricer == "TRUE")
 	{
-		std::map<LAString, bool>& gCurveMap = curveCalibrationData.getGCurveGenerateMap();
-		const std::map<LAString, LAString>& assignedCurveMktMap = curveCalibrationData.getAssignedCurveMktMap();
-		for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+		std::map<AQLString, bool>& gCurveMap = curveCalibrationData.getGCurveGenerateMap();
+		const std::map<AQLString, AQLString>& assignedCurveMktMap = curveCalibrationData.getAssignedCurveMktMap();
+		for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 		{
 			if (it->second == marketName)
 			{
@@ -5791,30 +5791,30 @@ void LAUpdateCurveObject::setUpGenCurveData(LADataInstance &dataInstance, LAStri
 	@brief fuction to set up base curve data
 */
 void
-LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString &staticDataName, const LADate &asOfDate, const LAString &currency,
-	const LAString &marketName, const LAString &yieldDataName, bool isSpotStarting,
+LAUpdateCurveObject::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLString &staticDataName, const AQLDate &asOfDate, const AQLString &currency,
+	const AQLString &marketName, const AQLString &yieldDataName, bool isSpotStarting,
 	bool useTenorBasis, CurveCalibrationData &curveCalibrationData,
-	std::map<LAString, std::map<LAString, double> > &tenorBasisMarketQuotes) const
+	std::map<AQLString, std::map<AQLString, double> > &tenorBasisMarketQuotes) const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
-	LAObject& yldEntity = objPool.getObject(yieldDataName, ENCHKTYPE_ISDEFINED).get();
+	AQLObject& yldEntity = objPool.getObject(yieldDataName, ENCHKTYPE_ISDEFINED).get();
 
-	LAString suffixLowerCase = "." + marketName;
+	AQLString suffixLowerCase = "." + marketName;
 	suffixLowerCase.toLower();
 
-	LAString suffix_data = "_" + marketName;
+	AQLString suffix_data = "_" + marketName;
 
-	LAString yeildGenInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_YIELDGEN_INTERPOLATION + suffixLowerCase);
+	AQLString yeildGenInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_YIELDGEN_INTERPOLATION + suffixLowerCase);
 	if (yeildGenInter != AQ_NO_DATA)
 	{
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONYG + suffix_data);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_INTERPOLATIONYG + suffix_data, new LAPriceDataInterpolation()).convertFromString(yeildGenInter);
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_INTERPOLATIONYG + suffix_data);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONYG + suffix_data, new AQLPriceDataInterpolation()).convertFromString(yeildGenInter);
 	}
 
-	LAString oisFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffixLowerCase);
+	AQLString oisFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffixLowerCase);
 	MAFileAccessor oisFile(LAMarketData::getNumFileName(oisFileName));
-	LAStringMatrix oisDataMtx;
+	AQLStringMatrix oisDataMtx;
 	oisFile.readAllData(MARKET_DATA_DELIMITER, oisDataMtx);
 
 	oisFile.close();
@@ -5825,10 +5825,10 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 	}
 
 	// get cal and calc spot date
-	LAPriceDataCalendar calOIS;
-	LAString calOISStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_CALENDAR + suffixLowerCase);
+	AQLPriceDataCalendar calOIS;
+	AQLString calOISStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_CALENDAR + suffixLowerCase);
 	calOIS.convertFromString(calOISStr);
-	LADate spotDateOIS;
+	AQLDate spotDateOIS;
 	if (isSpotStarting)
 	{
 		spotDateOIS.setDate(mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SPOTDATE + suffixLowerCase).getCString());
@@ -5839,17 +5839,17 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 	}
 
 	bool isEOMRollOIS = false;
-	LAString strEOMRollOIS = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_ISEOMRLL + suffixLowerCase).toUpper();
+	AQLString strEOMRollOIS = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_ISEOMRLL + suffixLowerCase).toUpper();
 	if (strEOMRollOIS != AQ_NO_DATA)
 	{
-		LADataBool tmpIsEOMRollOIS;
+		AQLDataBool tmpIsEOMRollOIS;
 		tmpIsEOMRollOIS.convertFromString(strEOMRollOIS);
 		isEOMRollOIS = tmpIsEOMRollOIS.get();
 	}
 
 	if (isEOMRollOIS)
 	{
-		LAString strEOMDay = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_EOMDAY + suffixLowerCase).toUpper();
+		AQLString strEOMDay = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_EOMDAY + suffixLowerCase).toUpper();
 		if (strEOMDay != AQ_NO_DATA)
 		{
 			if (spotDateOIS.dayOfMonth() != strEOMDay.getIntValue())
@@ -5859,7 +5859,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 		}
 		else
 		{
-			const LADate eomDate = calOIS.getEOMDay(spotDateOIS);
+			const AQLDate eomDate = calOIS.getEOMDay(spotDateOIS);
 			if (spotDateOIS != eomDate)
 			{
 				isEOMRollOIS = false;
@@ -5868,34 +5868,34 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 	}
 
 	// Linear Spline interpolation cut off date
-	LAString inputInterpJoinDateStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_INTERPOLATIONJOINDATE + suffixLowerCase).toUpper();
-	curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data);
+	AQLString inputInterpJoinDateStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_INTERPOLATIONJOINDATE + suffixLowerCase).toUpper();
+	curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data);
 
 	yldEntity.remove(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data);
 	if (inputInterpJoinDateStr != AQ_NO_DATA && inputInterpJoinDateStr.size() != 0)
 	{
-		//LADate inputLinearSplineJoinDate = etrading::stringToDate(inputInterpJoinDateStr, "Invalid joinDate");
-		LAString busDayAdj = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SLIDINGRULE + suffixLowerCase).toUpper();
-		LADate inputInterpolationJoinDate = etrading::validateDateOrTenor(spotDateOIS, inputInterpJoinDateStr, busDayAdj, calOISStr, "Invalid joinDate");
+		//AQLDate inputLinearSplineJoinDate = etrading::stringToDate(inputInterpJoinDateStr, "Invalid joinDate");
+		AQLString busDayAdj = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SLIDINGRULE + suffixLowerCase).toUpper();
+		AQLDate inputInterpolationJoinDate = etrading::validateDateOrTenor(spotDateOIS, inputInterpJoinDateStr, busDayAdj, calOISStr, "Invalid joinDate");
 
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data, new LADataDate(inputInterpolationJoinDate));
-		yldEntity.add(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data, new LADataDate(inputInterpolationJoinDate));
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data, new AQLDataDate(inputInterpolationJoinDate));
+		yldEntity.add(IR_CALIBRATION_DATA_INPUT_INTERPOLATIONJOINDATE + suffix_data, new AQLDataDate(inputInterpolationJoinDate));
 	}
 
 	// Various OIS control parameters
-	LAString str_shortTerm = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SHORTTERM + suffixLowerCase);
-	LADate shortTermDate;
+	AQLString str_shortTerm = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SHORTTERM + suffixLowerCase);
+	AQLDate shortTermDate;
 	if (str_shortTerm != AQ_NO_DATA)
 	{
 		shortTermDate = calOIS.getBusinessDay(asOfDate, str_shortTerm.getIntValue());
 	}
 
-	LAString shortTermConv = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SHORTTERMCONVENTION + suffixLowerCase).toUpper();
-	LAString firstRate = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FIRSTRATE + suffixLowerCase).toUpper();
+	AQLString shortTermConv = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SHORTTERMCONVENTION + suffixLowerCase).toUpper();
+	AQLString firstRate = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FIRSTRATE + suffixLowerCase).toUpper();
 
-	LAString swapCompoundingMethod("");
-	LAString compoundValue = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_COMPOUNDMETHOD + suffixLowerCase).toUpper();
-	LAString compoundValueAlias = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_COMPOUNDINGMETHOD + suffixLowerCase).toUpper();
+	AQLString swapCompoundingMethod("");
+	AQLString compoundValue = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_COMPOUNDMETHOD + suffixLowerCase).toUpper();
+	AQLString compoundValueAlias = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_COMPOUNDINGMETHOD + suffixLowerCase).toUpper();
 
 	if (compoundValue != AQ_NO_DATA && compoundValueAlias != AQ_NO_DATA)
 	{
@@ -5934,26 +5934,26 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 
 	// Curve controls
 	bool smoothShortEnd = false;
-	LAString strSmoothShortEnd = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SMOOTHSHORTEND + suffixLowerCase);
+	AQLString strSmoothShortEnd = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SMOOTHSHORTEND + suffixLowerCase);
 	if (strSmoothShortEnd != AQ_NO_DATA)
 	{
-		LADataBool tmpSmoothShortEnd;
+		AQLDataBool tmpSmoothShortEnd;
 		tmpSmoothShortEnd.convertFromString(strSmoothShortEnd);
 		smoothShortEnd = tmpSmoothShortEnd.get();
 	}
 
 	bool shortTermSwapOverrules = false;
-	LAString strShortTermSwapOverrules = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SHORTTERMSWAPOVERRULES + suffixLowerCase);
+	AQLString strShortTermSwapOverrules = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SHORTTERMSWAPOVERRULES + suffixLowerCase);
 	if (strShortTermSwapOverrules != AQ_NO_DATA)
 	{
-		LADataBool tmpShortTermSwapOverrules;
+		AQLDataBool tmpShortTermSwapOverrules;
 		tmpShortTermSwapOverrules.convertFromString(strShortTermSwapOverrules);
 		shortTermSwapOverrules = tmpShortTermSwapOverrules.get();
 	}
 
 	// use grid
-	LAStringVector oisUseGrid;
-	LAString tmpOISUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_USEGRID + suffixLowerCase).toUpper();
+	AQLStringVector oisUseGrid;
+	AQLString tmpOISUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_USEGRID + suffixLowerCase).toUpper();
 	if (tmpOISUseGrid != AQ_NO_DATA)
 	{
 		oisUseGrid = tmpOISUseGrid.toToken(':');
@@ -5961,27 +5961,27 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 
 	// doing dual bootstrapping?
 	bool isDualBootstrapping = false;
-	LAString strIsDualBootstrapping = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_ISDUALBOOTSTRAPPING + suffixLowerCase);
+	AQLString strIsDualBootstrapping = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_ISDUALBOOTSTRAPPING + suffixLowerCase);
 	if (strIsDualBootstrapping != AQ_NO_DATA)
 	{
-		LADataBool tmpIsDualBootstrapping;
+		AQLDataBool tmpIsDualBootstrapping;
 		tmpIsDualBootstrapping.convertFromString(strIsDualBootstrapping);
 		isDualBootstrapping = tmpIsDualBootstrapping.get();
 	}
 
 	// Validate LongTerm Convention Parameter
-	LAString longTermConvStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_LONGTERMCONVENTION + suffixLowerCase).toUpper();
+	AQLString longTermConvStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_LONGTERMCONVENTION + suffixLowerCase).toUpper();
 
 	etrading::OISLongTermInstrumentsEnum longTermConv = (longTermConvStr != AQ_NO_DATA) ? etrading::toOISLongTermInstrumentsEnum(longTermConvStr.getCString()) : etrading::NONE_OIS_LONGTERM_INSTRUMENTS;
 
-	LAString longTerm = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_LONGTERM + suffixLowerCase).toUpper();
+	AQLString longTerm = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_LONGTERM + suffixLowerCase).toUpper();
 
-	LADate date_lt;
-	LAStringMatrix lobasisDataMtx, swapDataMtx;
+	AQLDate date_lt;
+	AQLStringMatrix lobasisDataMtx, swapDataMtx;
 
 	// LongTermGenerate Methodolgy Defaults are managed within the in calcEffectiveOISRate method, see CurveCalibration.cpp
-	LAString longTermGenStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_LONGTERMGENMETHOD + suffixLowerCase).toUpper();
-	LAString longTermGenArrOisStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_LONGTERMGENMETHOD_ARROIS + suffixLowerCase).toUpper();
+	AQLString longTermGenStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_LONGTERMGENMETHOD + suffixLowerCase).toUpper();
+	AQLString longTermGenArrOisStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_LONGTERMGENMETHOD_ARROIS + suffixLowerCase).toUpper();
 
 	etrading::OISLongTermCompoundingEnum longTermGen = (longTermGenStr != AQ_NO_DATA) ? etrading::toOISLongTermCompoundingEnum(longTermGenStr.getCString()) : etrading::NONE_OIS_LONGTERM_COMPOUNDING;
 	etrading::OISLongTermCompoundingEnum longTermGenArrOis = (longTermGenArrOisStr != AQ_NO_DATA) ? etrading::toOISLongTermCompoundingEnum(longTermGenArrOisStr.getCString()) : etrading::NONE_OIS_LONGTERM_COMPOUNDING;
@@ -5990,11 +5990,11 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 	{
 		if (longTerm == AQ_NO_DATA)
 		{
-			throw LACoreInvalidData("#Error: LongTerm parameter is needed, when the LongTermConvention 'LOBASIS' is specified.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: LongTerm parameter is needed, when the LongTermConvention 'LOBASIS' is specified.", __FILE__, __LINE__);
 		}
 
 		date_lt = etrading::LADateHelpers::getDate(asOfDate, longTerm, true);
-		LAString lobasisFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffixLowerCase);
+		AQLString lobasisFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffixLowerCase);
 		MAFileAccessor lobasisFile(LAMarketData::getNumFileName(lobasisFileName));
 		lobasisFile.readAllData(MARKET_DATA_DELIMITER, lobasisDataMtx);
 		lobasisFile.close();
@@ -6002,7 +6002,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 		{
 			AQ_THROW("Missing Libor-OIS Basis Market Data")
 		}
-		LAString swapFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffixLowerCase);
+		AQLString swapFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffixLowerCase);
 		if (swapFileName != AQ_NO_DATA)
 		{
 			MAFileAccessor swapFile(LAMarketData::getNumFileName(swapFileName));
@@ -6028,13 +6028,13 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 
 	//get constant for convergence
 	double epsilon = 1.0e-9;
-	LAString strEPS = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_EPSILON + suffixLowerCase);
+	AQLString strEPS = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_EPSILON + suffixLowerCase);
 	if (strEPS.toUpper() != AQ_NO_DATA)
 	{
 		epsilon = strEPS.getDoubleValue();
 	}
 	int maxLoop = 1000;
-	LAString strMLP = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_MAXLOOP + suffixLowerCase);
+	AQLString strMLP = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_MAXLOOP + suffixLowerCase);
 	if (strMLP.toUpper() != AQ_NO_DATA)
 	{
 		maxLoop = strMLP.getIntValue();
@@ -6045,7 +6045,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 	size_t longTermStartIndex = 0;
 	if (longTermConv == etrading::LIBOROIS_OIS_LONGTERM_INSTRUMENTS)
 	{
-		LAString lastOisTerm = oisDataMtx[oisSize - 1][0].toUpper();
+		AQLString lastOisTerm = oisDataMtx[oisSize - 1][0].toUpper();
 
 		// When the outright swap tenors overlap with the basis tenors, if the max basis tenor is larger
 		// than the max outright swap tenor, find those tenors that are larger than the max outright swap
@@ -6053,7 +6053,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 		bool isOverlapped = false;
 		for (size_t i = 0; i < lobasisDataMtx.size(); ++i)
 		{
-			LAString term = lobasisDataMtx[i][0].toUpper();
+			AQLString term = lobasisDataMtx[i][0].toUpper();
 			if (term == lastOisTerm)
 			{
 				isOverlapped = true;
@@ -6075,8 +6075,8 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 			extraBasisCount = 0;
 			for (size_t i = 0; i < lobasisDataMtx.size(); ++i)
 			{
-				LAString term = lobasisDataMtx[i][0].toUpper();
-				const LADate date = etrading::LADateHelpers::getDate(asOfDate, term, true);
+				AQLString term = lobasisDataMtx[i][0].toUpper();
+				const AQLDate date = etrading::LADateHelpers::getDate(asOfDate, term, true);
 
 				if (date >= date_lt)
 				{
@@ -6095,7 +6095,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 	// get UseConvexAdjustment - Legacy parameter for ConvexityQuotedAsPrice, replaced by ConvexityQuoteType
 	bool useConvexAdjustment = false;
 	bool convexityQuotedAsVol = true;
-	LAString useConvexAdjustmentStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_USECONVEXADJUSTMENT + suffixLowerCase).toUpper();
+	AQLString useConvexAdjustmentStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_USECONVEXADJUSTMENT + suffixLowerCase).toUpper();
 	if (useConvexAdjustmentStr != AQ_NO_DATA)
 	{
 		useConvexAdjustment = (useConvexAdjustmentStr == "TRUE");
@@ -6103,7 +6103,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 	}
 
 	// get ConvexityQuoteType *** An alias for UseConvexAdjustment***
-	LAString convexityQuoteTypeStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_CONVEXITYQUOTETYPE + suffixLowerCase).toUpper();
+	AQLString convexityQuoteTypeStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_CONVEXITYQUOTETYPE + suffixLowerCase).toUpper();
 	if (convexityQuoteTypeStr != AQ_NO_DATA)
 	{
 		convexityQuoteTypeStr.toUpper();
@@ -6136,12 +6136,12 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 	size_t lobasisIndex = 0;
 	for (size_t i = 0; i < oisSize + extraBasisCount; ++i)
 	{
-		LAObject *mktData = NULL;
-		LAString nameOIS = yieldDataName + "_OIS_" + LAString((int)i) + "_" + marketName;
-		const LAObjectHolder ehois = objPool.getObject(nameOIS);
+		AQLObject *mktData = NULL;
+		AQLString nameOIS = yieldDataName + "_OIS_" + AQLString((int)i) + "_" + marketName;
+		const AQLObjectHolder ehois = objPool.getObject(nameOIS);
 		if (!ehois.isDefined())
 		{
-			mktData = new LAObject();
+			mktData = new AQLObject();
 			objPool.set(nameOIS, mktData);
 		}
 		else
@@ -6157,11 +6157,11 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 		}
 
 		// set name
-		mktData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(nameOIS);
+		mktData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(nameOIS);
 
 		// Always get term tenor from the OIS outright swap table first. If the OIS outright swap table
 		// is not long enough, get the subsequent term tenors from the LOBASIS table
-		LAString term("");
+		AQLString term("");
 		double rate = 0.0;
 		if (i < oisSize)
 		{
@@ -6179,20 +6179,20 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 		{
 			if (oisDataMtx[i].size() != 4)
 			{
-				throw LACoreInvalidData("#Error: OIS Market Data must contain 4 columns. OIS Market Data column size is incorrect.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: OIS Market Data must contain 4 columns. OIS Market Data column size is incorrect.", __FILE__, __LINE__);
 			}
 			// boj type
 			// ** Currently all Central Bank swaps are labelled as BOJ regardless of currency. **
-			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_BOJ);
-			LADate startDate = LADataDate(oisDataMtx[i][2]).get();
-			LADate endDate = LADataDate(oisDataMtx[i][3]).get();
-			mktData->add(PRICING_DATA_STARTDATE, new LADataDate(startDate));
-			mktData->add(PRICING_DATA_ENDDATE, new LADataDate(endDate));
+			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_BOJ);
+			AQLDate startDate = AQLDataDate(oisDataMtx[i][2]).get();
+			AQLDate endDate = AQLDataDate(oisDataMtx[i][3]).get();
+			mktData->add(PRICING_DATA_STARTDATE, new AQLDataDate(startDate));
+			mktData->add(PRICING_DATA_ENDDATE, new AQLDataDate(endDate));
 
 			//When the startDate is in the past and endDate is in the future, use Historical data in the FixingTable
 			if (startDate < asOfDate && endDate > asOfDate)
 			{
-				LAString oisHistFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffixLowerCase);
+				AQLString oisHistFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffixLowerCase);
 				etrading::populateHistoricalDataToMarketData(mktData, oisHistFileName);
 			}
 
@@ -6202,17 +6202,17 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 			const int NUM_COLUMNS_FUTURE = 5; // Term, Rate, StartDate, EndDate, VolOrConvAdj
 			if (oisDataMtx[i].size() != NUM_COLUMNS_FUTURE)
 			{
-				throw LACoreInvalidData("#Error: OIS Market Data must contain 4 columns. OIS Market Data column size is incorrect.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: OIS Market Data must contain 4 columns. OIS Market Data column size is incorrect.", __FILE__, __LINE__);
 			}
 
 			// ARR Future type
-			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_ARR_FUTURE);
+			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_ARR_FUTURE);
 
 			// set startDate, endDate
-			LADate startDate = etrading::stringToDate(oisDataMtx[i][2]);
-			LADate endDate = etrading::stringToDate(oisDataMtx[i][3]);
-			mktData->add(PRICING_DATA_STARTDATE, new LADataDate(startDate));
-			mktData->add(PRICING_DATA_ENDDATE, new LADataDate(endDate));
+			AQLDate startDate = etrading::stringToDate(oisDataMtx[i][2]);
+			AQLDate endDate = etrading::stringToDate(oisDataMtx[i][3]);
+			mktData->add(PRICING_DATA_STARTDATE, new AQLDataDate(startDate));
+			mktData->add(PRICING_DATA_ENDDATE, new AQLDataDate(endDate));
 
 			// Futures Convexity Quote
 			double futureVol(0.0), convexAdj(0.0);
@@ -6231,102 +6231,102 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 			// -------------------------------------
 
 			// set convexityQuoteType, which is the alias for legacy parameter useConvexAdj (convexity quoted as price)
-			mktData->add(PRICING_DATA_CONVEXITYQUOTETYPE, new LADataString(convexityQuoteTypeStr));
+			mktData->add(PRICING_DATA_CONVEXITYQUOTETYPE, new AQLDataString(convexityQuoteTypeStr));
 			
 			// set convexAdj ... futures convexity adjustment when quoted as a price
-			mktData->add(PRICING_DATA_CONVEXADJUSTMENT, new LADataDouble(convexAdj));
+			mktData->add(PRICING_DATA_CONVEXADJUSTMENT, new AQLDataDouble(convexAdj));
 			
 			// set vol ... futures convexity adjustment when quoted as a volatility
-			mktData->add(PRICING_DATA_FUTUREVOLATILITY, new LADataDouble(futureVol));
+			mktData->add(PRICING_DATA_FUTUREVOLATILITY, new AQLDataDouble(futureVol));
 
 			// -------------------------------------
 
 			//When the startDate is in the past and endDate is in the future, use Historical data in the FixingTable
 			if (startDate < asOfDate && endDate > asOfDate)
 			{
-				LAString oisHistFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffixLowerCase);
+				AQLString oisHistFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffixLowerCase);
 				etrading::populateHistoricalDataToMarketData(mktData, oisHistFileName);
 			}
 		}
 		else
 		{
 			// swap type
-			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_PAR);
+			mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_PAR);
 		}
 
 		// get freq
-		LAString freqOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FREQUENCY, suffixLowerCase, term).toUpper();
+		AQLString freqOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FREQUENCY, suffixLowerCase, term).toUpper();
 		// get daycount
-		LAString daycOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_DAYCOUNT, suffixLowerCase, term).toUpper();
+		AQLString daycOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_DAYCOUNT, suffixLowerCase, term).toUpper();
 		// get sliding
-		LAString slidingOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SLIDINGRULE, suffixLowerCase, term).toUpper();
+		AQLString slidingOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SLIDINGRULE, suffixLowerCase, term).toUpper();
 		// get swap type
-		LAString swapType("OIS");
-		LAString strSwapType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SWAPTYPE + suffixLowerCase).toUpper();
+		AQLString swapType("OIS");
+		AQLString strSwapType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SWAPTYPE + suffixLowerCase).toUpper();
 		if (strSwapType != AQ_NO_DATA)
 		{
 			swapType = strSwapType;
 		}
 		// set spot date
-		mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new LADataDate(spotDateOIS));
+		mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new AQLDataDate(spotDateOIS));
 		// set calendar
-		mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(calOISStr);
+		mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(calOISStr);
 		// set sliding
-		mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(daycOISStr);
+		mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(daycOISStr);
 		// set daycount
-		mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(slidingOISStr);
+		mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(slidingOISStr);
 		// set frequency
-		mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString()).convertFromString(freqOISStr);
+		mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString()).convertFromString(freqOISStr);
 		// set short term rate convention
-		mktData->add(IR_CALIBRATION_DATA_SHORTTERMCONVENTION, new LADataString()).convertFromString(shortTermConv);
+		mktData->add(IR_CALIBRATION_DATA_SHORTTERMCONVENTION, new AQLDataString()).convertFromString(shortTermConv);
 		// set first market
-		mktData->add(IR_CALIBRATION_DATA_FIRSTRATE, new LADataString()).convertFromString(firstRate);
+		mktData->add(IR_CALIBRATION_DATA_FIRSTRATE, new AQLDataString()).convertFromString(firstRate);
 		// set term
-		mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
+		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
 		// set swap averaging method
-		mktData->add(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD, new LADataString()).convertFromString(swapCompoundingMethod);
+		mktData->add(IR_CALIBRATION_DATA_COMPOUNDINGMETHOD, new AQLDataString()).convertFromString(swapCompoundingMethod);
 
-		auto datatype = dynamic_cast<const LADataString&> ((mktData->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+		auto datatype = dynamic_cast<const AQLDataString&> ((mktData->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 
 		if (datatype == YIELD_TYPE_ARR_FUTURE)
 		{
 			// 1) transform future price to rate
 			rate = 1.0 - rate / 100.0;
 
-			LAPriceDataDayCount dc;
+			AQLPriceDataDayCount dc;
 			dc.convertFromString(daycOISStr);
 
 			// 2) add convexity adjustment to the future rate
 			rate = etrading::getConvexityAdjustedFutureRate(mktData, rate, asOfDate, meanReversion, dc);
 
 			// 3) set convexity adjusted forward rate
-			mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(rate));
+			mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate));
 		}
 		else
 		{
 			// set rate
-			mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(rate / 100.0));
+			mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate / 100.0));
 		}
 
 		// iseomroll
-		mktData->add(IR_CALIBRATION_DATA_ISEOMROLLOIS, new LADataBool(isEOMRollOIS));
+		mktData->add(IR_CALIBRATION_DATA_ISEOMROLLOIS, new AQLDataBool(isEOMRollOIS));
 		// set short term date
 		if (str_shortTerm != AQ_NO_DATA)
 		{
-			mktData->add(IR_CALIBRATION_DATA_SHORTTERMDATE, new LADataDate(shortTermDate));
+			mktData->add(IR_CALIBRATION_DATA_SHORTTERMDATE, new AQLDataDate(shortTermDate));
 		}
 		//grid use
-		mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(true));
+		mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
 		// set epsilon
-		mktData->add(IR_CALIBRATION_DATA_EPSILON, new LADataDouble(epsilon));
+		mktData->add(IR_CALIBRATION_DATA_EPSILON, new AQLDataDouble(epsilon));
 		// set maxloop
-		mktData->add(IR_CALIBRATION_DATA_MAXLOOP, new LADataInt(maxLoop));
+		mktData->add(IR_CALIBRATION_DATA_MAXLOOP, new AQLDataInt(maxLoop));
 		// set swap type
-		mktData->add(IR_CALIBRATION_DATA_SWAPTYPE, new LADataString(swapType));
+		mktData->add(IR_CALIBRATION_DATA_SWAPTYPE, new AQLDataString(swapType));
 		// short term swap overrules
-		mktData->add(IR_CALIBRATION_DATA_SHORTTERMSWAPOVERRULES, new LADataBool(shortTermSwapOverrules));
+		mktData->add(IR_CALIBRATION_DATA_SHORTTERMSWAPOVERRULES, new AQLDataBool(shortTermSwapOverrules));
 		// smooth short end of curve
-		mktData->add(IR_CALIBRATION_DATA_SMOOTHSHORTEND, new LADataBool(smoothShortEnd));
+		mktData->add(IR_CALIBRATION_DATA_SMOOTHSHORTEND, new AQLDataBool(smoothShortEnd));
 
 		if (longTermConv == etrading::LIBOROIS_OIS_LONGTERM_INSTRUMENTS)
 		{
@@ -6337,7 +6337,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 			}
 
 			// Skip tenors whose end date is below the 'longTermTenor'
-			const LADate date = etrading::LADateHelpers::getDate(asOfDate, term, true);
+			const AQLDate date = etrading::LADateHelpers::getDate(asOfDate, term, true);
 			if (date < date_lt)
 			{
 				continue;
@@ -6346,7 +6346,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 			// Look up on the lobasis table and find the basis instrument with the same term tenor
 			while (currentLOBasisInstrument < lobasisDataMtx.size())
 			{
-				const LAString term_lo = lobasisDataMtx[currentLOBasisInstrument][0].toUpper();
+				const AQLString term_lo = lobasisDataMtx[currentLOBasisInstrument][0].toUpper();
 				if (term_lo == term)
 				{
 					break;
@@ -6363,7 +6363,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 			// Look up on the libor swap table and find the libor swap instrument with the same term tenor
 			while (currentSwapInstrument < swapDataMtx.size())
 			{
-				const LAString term_s = swapDataMtx[currentSwapInstrument][0].toUpper();
+				const AQLString term_s = swapDataMtx[currentSwapInstrument][0].toUpper();
 				if (term_s == term)
 				{
 					break;
@@ -6395,7 +6395,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 			// get lobasis data
 			double rate_lo = lobasisDataMtx[currentLOBasisInstrument][1].getDoubleValue();
 			
-			LAString calLOStr(""), freqLOStr(""), daycLOStr(""), slidingLOStr("");
+			AQLString calLOStr(""), freqLOStr(""), daycLOStr(""), slidingLOStr("");
 			if (basisSwapType == etrading::OIS_OISBASIS_INSTRUMENT_SWAP_TYPE)
 			{
 				calLOStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_CALENDAR_ARROIS + suffixLowerCase);
@@ -6416,7 +6416,7 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 
 
 			// get swap data, use fixed leg's frequency and day count			
-			LAString calSwapStr(""), freqSwapStr(""), daycSwapStr(""), slidingSwapStr(""), swapTenor(""), swapType("LIBOR");
+			AQLString calSwapStr(""), freqSwapStr(""), daycSwapStr(""), slidingSwapStr(""), swapTenor(""), swapType("LIBOR");
 			if (basisSwapType == etrading::OIS_OISBASIS_INSTRUMENT_SWAP_TYPE)
 			{
 				calSwapStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_CALENDAR_ARROIS + suffixLowerCase);
@@ -6431,13 +6431,13 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 				daycSwapStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_DAYCOUNTFIX, suffixLowerCase, term).toUpper();
 				slidingSwapStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SLIDINGRULE, suffixLowerCase, term).toUpper();
 
-				LAString strSwapTenor = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SWAPTENOR + suffixLowerCase).toUpper();
+				AQLString strSwapTenor = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SWAPTENOR + suffixLowerCase).toUpper();
 				if (strSwapTenor != AQ_NO_DATA)
 				{
 					swapTenor = strSwapTenor;
 				}
 
-				LAString strSwapType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SWAPTYPE + suffixLowerCase).toUpper();
+				AQLString strSwapType = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_SWAPTYPE + suffixLowerCase).toUpper();
 				if (strSwapType != AQ_NO_DATA)
 				{
 					swapType = strSwapType;
@@ -6446,49 +6446,49 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 			}
 
 			// set long term rate convention
-			mktData->add(IR_CALIBRATION_DATA_LONGTERMCONVENTION, new LADataString()).convertFromString(toString(longTermConv));
-			mktData->add(IR_CALIBRATION_DATA_LONGTERM, new LADataString()).convertFromString(longTerm);
+			mktData->add(IR_CALIBRATION_DATA_LONGTERMCONVENTION, new AQLDataString()).convertFromString(toString(longTermConv));
+			mktData->add(IR_CALIBRATION_DATA_LONGTERM, new AQLDataString()).convertFromString(longTerm);
 						
 			if (basisSwapType == etrading::OIS_OISBASIS_INSTRUMENT_SWAP_TYPE)
 			{
-				mktData->add(IR_CALIBRATION_DATA_LONGTERMGENMETHOD, new LADataString()).convertFromString(toString(longTermGenArrOis));
+				mktData->add(IR_CALIBRATION_DATA_LONGTERMGENMETHOD, new AQLDataString()).convertFromString(toString(longTermGenArrOis));
 			}
 			else
 			{
-				mktData->add(IR_CALIBRATION_DATA_LONGTERMGENMETHOD, new LADataString()).convertFromString(toString(longTermGen));
+				mktData->add(IR_CALIBRATION_DATA_LONGTERMGENMETHOD, new AQLDataString()).convertFromString(toString(longTermGen));
 			}
 
 			// set lobasis data
-			mktData->add(IR_CALIBRATION_DATA_RATE_LOBASIS, new LADataDouble(rate_lo / 100.0));
+			mktData->add(IR_CALIBRATION_DATA_RATE_LOBASIS, new AQLDataDouble(rate_lo / 100.0));
 			if (calLOStr == AQ_NO_DATA) calLOStr = calOISStr;
-			mktData->add(IR_CALIBRATION_DATA_CALENDAR_LOBASIS, new LAPriceDataCalendar()).convertFromString(calLOStr);
+			mktData->add(IR_CALIBRATION_DATA_CALENDAR_LOBASIS, new AQLPriceDataCalendar()).convertFromString(calLOStr);
 			if (daycLOStr == AQ_NO_DATA) daycLOStr = daycOISStr;
-			mktData->add(IR_CALIBRATION_DATA_DAYCOUNT_LOBASIS, new LAPriceDataDayCount()).convertFromString(daycLOStr);
+			mktData->add(IR_CALIBRATION_DATA_DAYCOUNT_LOBASIS, new AQLPriceDataDayCount()).convertFromString(daycLOStr);
 			if (slidingLOStr == AQ_NO_DATA) slidingLOStr = slidingOISStr;
-			mktData->add(IR_CALIBRATION_DATA_SLIDINGRULE_LOBASIS, new LAPriceDataSlidingRule()).convertFromString(slidingLOStr);
+			mktData->add(IR_CALIBRATION_DATA_SLIDINGRULE_LOBASIS, new AQLPriceDataSlidingRule()).convertFromString(slidingLOStr);
 			if (freqLOStr == AQ_NO_DATA) freqLOStr = freqOISStr;
-			mktData->add(IR_CALIBRATION_DATA_FREQUENCY_LOBASIS, new LADataString()).convertFromString(freqLOStr);
+			mktData->add(IR_CALIBRATION_DATA_FREQUENCY_LOBASIS, new AQLDataString()).convertFromString(freqLOStr);
 
 			// set swap data
 			if (isSwapRateAvailable)
 			{
 				double rate_s = swapDataMtx[currentSwapInstrument][1].getDoubleValue();
-				mktData->add(IR_CALIBRATION_DATA_RATE_SWAP, new LADataDouble(rate_s / 100.0));
+				mktData->add(IR_CALIBRATION_DATA_RATE_SWAP, new AQLDataDouble(rate_s / 100.0));
 			}
-			mktData->add(IR_CALIBRATION_DATA_CALENDAR_SWAP, new LAPriceDataCalendar()).convertFromString(calSwapStr);
-			mktData->add(IR_CALIBRATION_DATA_DAYCOUNT_SWAP, new LAPriceDataDayCount()).convertFromString(daycSwapStr);
-			mktData->add(IR_CALIBRATION_DATA_SLIDINGRULE_SWAP, new LAPriceDataSlidingRule()).convertFromString(slidingSwapStr);
-			mktData->add(IR_CALIBRATION_DATA_FREQUENCY_SWAP, new LADataString()).convertFromString(freqSwapStr);
+			mktData->add(IR_CALIBRATION_DATA_CALENDAR_SWAP, new AQLPriceDataCalendar()).convertFromString(calSwapStr);
+			mktData->add(IR_CALIBRATION_DATA_DAYCOUNT_SWAP, new AQLPriceDataDayCount()).convertFromString(daycSwapStr);
+			mktData->add(IR_CALIBRATION_DATA_SLIDINGRULE_SWAP, new AQLPriceDataSlidingRule()).convertFromString(slidingSwapStr);
+			mktData->add(IR_CALIBRATION_DATA_FREQUENCY_SWAP, new AQLDataString()).convertFromString(freqSwapStr);
 
 			mktData->remove(IR_CALIBRATION_DATA_REFSWAPTENOR);
 			mktData->remove(IR_CALIBRATION_DATA_REFSWAPTYPE);
-			mktData->add(IR_CALIBRATION_DATA_REFSWAPTENOR, new LADataString()).convertFromString(swapTenor);
-			mktData->add(IR_CALIBRATION_DATA_REFSWAPTYPE, new LADataString()).convertFromString(swapType);
+			mktData->add(IR_CALIBRATION_DATA_REFSWAPTENOR, new AQLDataString()).convertFromString(swapTenor);
+			mktData->add(IR_CALIBRATION_DATA_REFSWAPTYPE, new AQLDataString()).convertFromString(swapType);
 		}
 	}
 
-	LAStringMatrix fedFundFutureDataMtx;
-	LAString fedFundFutureFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffixLowerCase);
+	AQLStringMatrix fedFundFutureDataMtx;
+	AQLString fedFundFutureFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffixLowerCase);
 	if (fedFundFutureFileName != AQ_NO_DATA)
 	{
 		MAFileAccessor fedFundFutureFile(LAMarketData::getNumFileName(fedFundFutureFileName));
@@ -6498,15 +6498,15 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 
 	const int fedFundFutureSize = fedFundFutureDataMtx.size();
 	// use grid
-	LAStringVector ffFutureUseGrid;
-	LAString tmpFFFutureUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_USEGRID + suffixLowerCase).toUpper();
+	AQLStringVector ffFutureUseGrid;
+	AQLString tmpFFFutureUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_USEGRID + suffixLowerCase).toUpper();
 	if (tmpFFFutureUseGrid != AQ_NO_DATA)
 	{
 		ffFutureUseGrid = tmpFFFutureUseGrid.toToken(':');
 	}
 	else
 	{
-		LAString tmpUseGridNum = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_USEGRIDNUM + suffixLowerCase).toUpper();
+		AQLString tmpUseGridNum = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_USEGRIDNUM + suffixLowerCase).toUpper();
 		if (tmpUseGridNum != AQ_NO_DATA)
 		{
 			int useGridNum = tmpUseGridNum.getIntValue();
@@ -6527,12 +6527,12 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 
 	for (int i = 0; i < fedFundFutureSize; ++i)
 	{
-		LAObject *mktData = NULL;
-		LAString nameOIS = yieldDataName + "_OIS_" + LAString((int)oisSize + i) + "_" + marketName;
-		const LAObjectHolder ehois = objPool.getObject(nameOIS);
+		AQLObject *mktData = NULL;
+		AQLString nameOIS = yieldDataName + "_OIS_" + AQLString((int)oisSize + i) + "_" + marketName;
+		const AQLObjectHolder ehois = objPool.getObject(nameOIS);
 		if (!ehois.isDefined())
 		{
-			mktData = new LAObject();
+			mktData = new AQLObject();
 			objPool.set(nameOIS, mktData);
 		}
 		else
@@ -6548,85 +6548,85 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 		}
 
 		// set name
-		mktData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(nameOIS);
+		mktData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(nameOIS);
 
-		LADate startDate, endDate;
-		LAString term = fedFundFutureDataMtx[i][0].toUpper();
+		AQLDate startDate, endDate;
+		AQLString term = fedFundFutureDataMtx[i][0].toUpper();
 
 		if (fedFundFutureDataMtx[i].size() < 2)
 		{
-			throw LACoreInvalidData("#Error: FF Futures data cannot contain more than 2 columns. FF Future File format is wrong", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: FF Futures data cannot contain more than 2 columns. FF Future File format is wrong", __FILE__, __LINE__);
 		}
 
-		mktData->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(YIELD_TYPE_FF);
+		mktData->add(IR_CALIBRATION_DATA_DATATYPE, new AQLDataString()).convertFromString(YIELD_TYPE_FF);
 		if (fedFundFutureDataMtx[i].size() == 4)
 		{
-			startDate = LADataDate(fedFundFutureDataMtx[i][2]).get();
-			endDate = LADataDate(fedFundFutureDataMtx[i][3]).get();
-			mktData->add(PRICING_DATA_STARTDATE, new LADataDate(startDate));
-			mktData->add(PRICING_DATA_ENDDATE, new LADataDate(endDate));
+			startDate = AQLDataDate(fedFundFutureDataMtx[i][2]).get();
+			endDate = AQLDataDate(fedFundFutureDataMtx[i][3]).get();
+			mktData->add(PRICING_DATA_STARTDATE, new AQLDataDate(startDate));
+			mktData->add(PRICING_DATA_ENDDATE, new AQLDataDate(endDate));
 		}
 		else //FF non startdate type
 		{
-			LAString term = fedFundFutureDataMtx[i][0].toUpper();
+			AQLString term = fedFundFutureDataMtx[i][0].toUpper();
 			DateVector ffdates = etrading::LADateHelpers::getFFDatesFromTerm(asOfDate, term);
 			if (ffdates.size() != 2)
-				throw LACoreInvalidData("#Error: FF Dates Data must contain 2 columns. FF dates error", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: FF Dates Data must contain 2 columns. FF dates error", __FILE__, __LINE__);
 
 			startDate = ffdates[0];
 			endDate = ffdates[1];
-			mktData->add(PRICING_DATA_STARTDATE, new LADataDate(startDate));
-			mktData->add(PRICING_DATA_ENDDATE, new LADataDate(endDate));
+			mktData->add(PRICING_DATA_STARTDATE, new AQLDataDate(startDate));
+			mktData->add(PRICING_DATA_ENDDATE, new AQLDataDate(endDate));
 		}
 
 		double rate = fedFundFutureDataMtx[i][1].getDoubleValue();
 		rate = 100. - rate;
 
 		// get freq
-		LAString freqOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FREQUENCY, suffixLowerCase, term).toUpper();
+		AQLString freqOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FREQUENCY, suffixLowerCase, term).toUpper();
 		// get daycount
-		LAString daycOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_DAYCOUNT, suffixLowerCase, term).toUpper();
+		AQLString daycOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_DAYCOUNT, suffixLowerCase, term).toUpper();
 		// get sliding
-		LAString slidingOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SLIDINGRULE, suffixLowerCase, term).toUpper();
+		AQLString slidingOISStr = getGridStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_SLIDINGRULE, suffixLowerCase, term).toUpper();
 		// set spot date
-		mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new LADataDate(spotDateOIS));
+		mktData->add(IR_CALIBRATION_DATA_SPOTDATE, new AQLDataDate(spotDateOIS));
 		// set calendar
-		mktData->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(calOISStr);
+		mktData->add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(calOISStr);
 		// set sliding
-		mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(daycOISStr);
+		mktData->add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(daycOISStr);
 		// set daycount
-		mktData->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(slidingOISStr);
+		mktData->add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(slidingOISStr);
 		// set frequency
-		mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString()).convertFromString(freqOISStr);
+		mktData->add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString()).convertFromString(freqOISStr);
 		// set short term rate convention
-		mktData->add(IR_CALIBRATION_DATA_SHORTTERMCONVENTION, new LADataString()).convertFromString(shortTermConv);
+		mktData->add(IR_CALIBRATION_DATA_SHORTTERMCONVENTION, new AQLDataString()).convertFromString(shortTermConv);
 		// set first market
-		mktData->add(IR_CALIBRATION_DATA_FIRSTRATE, new LADataString()).convertFromString(firstRate);
+		mktData->add(IR_CALIBRATION_DATA_FIRSTRATE, new AQLDataString()).convertFromString(firstRate);
 		// set term
-		mktData->add(IR_CALIBRATION_DATA_TERM, new LADataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
+		mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
 		// set rate
-		mktData->add(CALIBRATION_DATA_RATE, new LADataDouble(rate / 100.0));
+		mktData->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate / 100.0));
 		// iseomroll
-		mktData->add(IR_CALIBRATION_DATA_ISEOMROLLOIS, new LADataBool(isEOMRollOIS));
+		mktData->add(IR_CALIBRATION_DATA_ISEOMROLLOIS, new AQLDataBool(isEOMRollOIS));
 		// set short term date
 		if (str_shortTerm != AQ_NO_DATA)
 		{
-			mktData->add(IR_CALIBRATION_DATA_SHORTTERMDATE, new LADataDate(shortTermDate));
+			mktData->add(IR_CALIBRATION_DATA_SHORTTERMDATE, new AQLDataDate(shortTermDate));
 		}
 		//grid use
 		if (ffFutureUseGrid.size() != 0 && find(ffFutureUseGrid.begin(), ffFutureUseGrid.end(), term) == ffFutureUseGrid.end())
 		{
-			mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(false));
+			mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(false));
 		}
 		else
 		{
-			mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(true));
+			mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
 		}
 
 
-		if (startDate < asOfDate && dynamic_cast<LADataBool &>(mktData->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, ISNOTNULL).get()).get())
+		if (startDate < asOfDate && dynamic_cast<AQLDataBool &>(mktData->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, ISNOTNULL).get()).get())
 		{
-			LAString oisHistFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffixLowerCase);
+			AQLString oisHistFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffixLowerCase);
 
 			etrading::populateHistoricalDataToMarketData(mktData, oisHistFileName);
 		}
@@ -6635,25 +6635,25 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 
 	if (staticDataName.size() < 2)
 	{
-		throw LACoreInvalidData("Market Data is not set !!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Market Data is not set !!", __FILE__, __LINE__);
 	}
 
 	//DF curve name
-	LAString dfCurveName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_DFCURVENAME + suffixLowerCase);
+	AQLString dfCurveName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_DFCURVENAME + suffixLowerCase);
 	if (dfCurveName == AQ_NO_DATA)
 	{
 		dfCurveName = ITSELF;
 	}
-	curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_DFCURVENAME + LAString("_") + marketName);
-	curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_DFCURVENAME + LAString("_") + marketName, new LADataString(dfCurveName));
-	yldEntity.remove(IR_CALIBRATION_DATA_DFCURVENAME + LAString("_") + marketName);
-	yldEntity.add(IR_CALIBRATION_DATA_DFCURVENAME + LAString("_") + marketName, new LADataString(dfCurveName));
+	curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_DFCURVENAME + AQLString("_") + marketName);
+	curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_DFCURVENAME + AQLString("_") + marketName, new AQLDataString(dfCurveName));
+	yldEntity.remove(IR_CALIBRATION_DATA_DFCURVENAME + AQLString("_") + marketName);
+	yldEntity.add(IR_CALIBRATION_DATA_DFCURVENAME + AQLString("_") + marketName, new AQLDataString(dfCurveName));
 
-	//const std::map<LAString, LAString>& assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
-	LAString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + suffixLowerCase);
+	//const std::map<AQLString, AQLString>& assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
+	AQLString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + suffixLowerCase);
 	if (aliasCurveNames != AQ_NO_DATA)
 	{
-		LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+		AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 		for (size_t i = 0; i < assignedCurves.size(); i++)
 		{
 			curveCalibrationData.setAssignedCurveMktMap(assignedCurves[i], marketName);
@@ -6665,12 +6665,12 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 	}
 
 	// remove curve generate map
-	const LAString isPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
+	const AQLString isPricer = LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST);
 	if (isPricer == "TRUE")
 	{
-		std::map<LAString, bool>& gCurveMap = curveCalibrationData.getGCurveGenerateMap();
-		const std::map<LAString, LAString>& assignedCurveMktMap = curveCalibrationData.getAssignedCurveMktMap();
-		for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+		std::map<AQLString, bool>& gCurveMap = curveCalibrationData.getGCurveGenerateMap();
+		const std::map<AQLString, AQLString>& assignedCurveMktMap = curveCalibrationData.getAssignedCurveMktMap();
+		for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 		{
 			if (it->second == marketName)
 			{
@@ -6681,42 +6681,42 @@ LAUpdateCurveObject::setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString
 }
 
 void
-LAUpdateCurveObject::setUpFloater(const LAString &currency, CurveCalibrationData &curveCalibrationData, const LAString &genFloaterName) const
+LAUpdateCurveObject::setUpFloater(const AQLString &currency, CurveCalibrationData &curveCalibrationData, const AQLString &genFloaterName) const
 {
-	LAStringVector listOfCurvesBuilt = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_USEMAKETS).toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector listOfCurvesBuilt = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_USEMAKETS).toToken(MULTI_STATIC_DATA_DELIMITER);
 	uppervec(listOfCurvesBuilt);
 	if (genFloaterName != AQ_NO_DATA)
 	{
 		curveCalibrationData.setAssignedCurveMktMap(genFloaterName, genFloaterName);
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_FLOATERDFS);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_FLOATERDFS, new LADataString(genFloaterName));
-		LAString tmpGenFloaterName = genFloaterName;
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_FLOATERDFS);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_FLOATERDFS, new AQLDataString(genFloaterName));
+		AQLString tmpGenFloaterName = genFloaterName;
 		tmpGenFloaterName.toLower();
-		LAString basisMkt = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_BASISNAME);
+		AQLString basisMkt = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_BASISNAME);
 		if (basisMkt != AQ_NO_DATA)
 		{
 			if (std::find(listOfCurvesBuilt.begin(), listOfCurvesBuilt.end(), basisMkt) == listOfCurvesBuilt.end())
 			{
-				throw LACoreInvalidData("Basis market does not exist!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Basis market does not exist!", __FILE__, __LINE__);
 			}
-			curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_BASISDATA + LAString("_") + tmpGenFloaterName);
-			curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_BASISDATA + LAString("_") + tmpGenFloaterName, new LADataString(basisMkt));
+			curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_BASISDATA + AQLString("_") + tmpGenFloaterName);
+			curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_BASISDATA + AQLString("_") + tmpGenFloaterName, new AQLDataString(basisMkt));
 		}
-		LAString discountName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_DISCOUNT);
-		LAString forecastName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_FORECAST);
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_FORECAST + LAString("_") + tmpGenFloaterName);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_FORECAST + LAString("_") + tmpGenFloaterName, new LADataString(forecastName));
-		curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_DISCOUNT + LAString("_") + tmpGenFloaterName);
-		curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_DISCOUNT + LAString("_") + tmpGenFloaterName, new LADataString(discountName));
+		AQLString discountName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_DISCOUNT);
+		AQLString forecastName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_FORECAST);
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_FORECAST + AQLString("_") + tmpGenFloaterName);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_FORECAST + AQLString("_") + tmpGenFloaterName, new AQLDataString(forecastName));
+		curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_DISCOUNT + AQLString("_") + tmpGenFloaterName);
+		curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_DISCOUNT + AQLString("_") + tmpGenFloaterName, new AQLDataString(discountName));
 
-		/*LAString isFWDInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_ISFWDINTER).toUpper();
+		/*AQLString isFWDInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_ISFWDINTER).toUpper();
 		if (isFWDInter == "TRUE")
 		{
-			curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_ISFWDINTERPOLATION + LAString("_") + tmpGenFloaterName);
-			curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_ISFWDINTERPOLATION + LAString("_") + tmpGenFloaterName, new LADataBool(true));
-			LAString fwdInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_FWDINTERPOLATION).toLower();
-			curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_FWDINTERPOLATION + LAString("_") + tmpGenFloaterName);
-			curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_FWDINTERPOLATION + LAString("_") + tmpGenFloaterName, new LAPriceDataInterpolation()).convertFromString(fwdInter);;
+			curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_ISFWDINTERPOLATION + AQLString("_") + tmpGenFloaterName);
+			curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_ISFWDINTERPOLATION + AQLString("_") + tmpGenFloaterName, new AQLDataBool(true));
+			AQLString fwdInter = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FLOATER_FWDINTERPOLATION).toLower();
+			curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_FWDINTERPOLATION + AQLString("_") + tmpGenFloaterName);
+			curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_FWDINTERPOLATION + AQLString("_") + tmpGenFloaterName, new AQLPriceDataInterpolation()).convertFromString(fwdInter);;
 		}*/
 
 		curveCalibrationData.setFloater(genFloaterName);
@@ -6724,22 +6724,22 @@ LAUpdateCurveObject::setUpFloater(const LAString &currency, CurveCalibrationData
 }
 
 void
-LAUpdateCurveObject::setUpCurveDataByReadFile(LADataInstance &dataInstance, const LADate& asOfDate, const LAString& currency,
-	const LAString& marketName, const LAString& yieldDataName, CurveCalibrationData &curveCalibrationData) const
+LAUpdateCurveObject::setUpCurveDataByReadFile(AQLDataInstance &dataInstance, const AQLDate& asOfDate, const AQLString& currency,
+	const AQLString& marketName, const AQLString& yieldDataName, CurveCalibrationData &curveCalibrationData) const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
-	LAObjectHolder objHolder = objPool.getObject(yieldDataName, ENCHKTYPE_NOCHECK);
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectHolder objHolder = objPool.getObject(yieldDataName, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
-		throw LACoreInvalidData("yield Object is not set! LAUpdateCurveObject::setUpCurveDataByReadFile", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("yield Object is not set! LAUpdateCurveObject::setUpCurveDataByReadFile", __FILE__, __LINE__);
 
-	LAObject &objectPool = objHolder.get();
+	AQLObject &objectPool = objHolder.get();
 
-	LAString thisMarketName = marketName;
-	LAString suffixLowerCase = "." + thisMarketName.toLower();
+	AQLString thisMarketName = marketName;
+	AQLString suffixLowerCase = "." + thisMarketName.toLower();
 
-	LAString dfFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_DF_FILE + suffixLowerCase);
+	AQLString dfFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_DF_FILE + suffixLowerCase);
 	MAFileAccessor dfFile(LAMarketData::getNumFileName(dfFileName));
-	LAStringMatrix dfDataMtx;
+	AQLStringMatrix dfDataMtx;
 	dfFile.readAllData(MARKET_DATA_DELIMITER, dfDataMtx);
 	dfFile.close();
 
@@ -6775,49 +6775,49 @@ LAUpdateCurveObject::setUpCurveDataByReadFile(LADataInstance &dataInstance, cons
 			dfs2.insert(dfs2.begin(), 1.0);
 	}
 
-	LAString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ZERORATE_ASSIGNEDCURVE + suffixLowerCase);
+	AQLString aliasCurveNames = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_ZERORATE_ASSIGNEDCURVE + suffixLowerCase);
 	if (aliasCurveNames != AQ_NO_DATA)
 	{
-		LAStringVector assignedCurves = aliasCurveNames.toToken(':');
+		AQLStringVector assignedCurves = aliasCurveNames.toToken(':');
 		for (size_t i = 0; i < assignedCurves.size(); i++)
 		{
 			curveCalibrationData.setAssignedCurveMktMap(assignedCurves[i], marketName);
 
-			LAString modCurveName = "_" + assignedCurves[i].toUpper();
+			AQLString modCurveName = "_" + assignedCurves[i].toUpper();
 
 			objectPool.remove(CALIBRATION_DATA_TERMS + modCurveName);
-			objectPool.add(CALIBRATION_DATA_TERMS + modCurveName, new LADataDoubles(terms));
+			objectPool.add(CALIBRATION_DATA_TERMS + modCurveName, new AQLDataDoubles(terms));
 
 			objectPool.remove(IR_CALIBRATION_DATA_DFS + modCurveName);
-			objectPool.add(IR_CALIBRATION_DATA_DFS + modCurveName, new LADataDoubles(dfs));
+			objectPool.add(IR_CALIBRATION_DATA_DFS + modCurveName, new AQLDataDoubles(dfs));
 
 			objectPool.remove(IR_CALIBRATION_DATA_ACCESSARY + modCurveName);
-			objectPool.add(IR_CALIBRATION_DATA_ACCESSARY + modCurveName, new LADataString("DF"));
+			objectPool.add(IR_CALIBRATION_DATA_ACCESSARY + modCurveName, new AQLDataString("DF"));
 
 			if (!dfs2.empty())
 			{
 				objectPool.remove(IR_CALIBRATION_DATA_DFS2 + modCurveName);
-				objectPool.add(IR_CALIBRATION_DATA_DFS2 + modCurveName, new LADataDoubles(dfs2));
+				objectPool.add(IR_CALIBRATION_DATA_DFS2 + modCurveName, new AQLDataDoubles(dfs2));
 			}
 		}
 	}
 	else
 	{
-		LAString modCurveName = "_" + thisMarketName.toUpper();
+		AQLString modCurveName = "_" + thisMarketName.toUpper();
 
 		objectPool.remove(CALIBRATION_DATA_TERMS + modCurveName);
-		objectPool.add(CALIBRATION_DATA_TERMS + modCurveName, new LADataDoubles(terms));
+		objectPool.add(CALIBRATION_DATA_TERMS + modCurveName, new AQLDataDoubles(terms));
 
 		objectPool.remove(IR_CALIBRATION_DATA_DFS + modCurveName);
-		objectPool.add(IR_CALIBRATION_DATA_DFS + modCurveName, new LADataDoubles(dfs));
+		objectPool.add(IR_CALIBRATION_DATA_DFS + modCurveName, new AQLDataDoubles(dfs));
 
 		objectPool.remove(IR_CALIBRATION_DATA_ACCESSARY + modCurveName);
-		objectPool.add(IR_CALIBRATION_DATA_ACCESSARY + modCurveName, new LADataString("DF"));
+		objectPool.add(IR_CALIBRATION_DATA_ACCESSARY + modCurveName, new AQLDataString("DF"));
 
 		if (!dfs2.empty())
 		{
 			objectPool.remove(IR_CALIBRATION_DATA_DFS2 + modCurveName);
-			objectPool.add(IR_CALIBRATION_DATA_DFS2 + modCurveName, new LADataDoubles(dfs2));
+			objectPool.add(IR_CALIBRATION_DATA_DFS2 + modCurveName, new AQLDataDoubles(dfs2));
 		}
 		curveCalibrationData.setAssignedCurveMktMap(marketName, marketName);
 	}
@@ -6826,21 +6826,21 @@ LAUpdateCurveObject::setUpCurveDataByReadFile(LADataInstance &dataInstance, cons
 }
 
 void
-LAUpdateCurveObject::dataoutCurve(const LAStringVector &curveNames, LAObject &objectPool, const LAString &yieldDataName) const
+LAUpdateCurveObject::dataoutCurve(const AQLStringVector &curveNames, AQLObject &objectPool, const AQLString &yieldDataName) const
 {
 	for (unsigned int i = 0; i < curveNames.size(); i++)
 	{
-		LAString curveSuffix;
+		AQLString curveSuffix;
 		if (curveNames[i] == STD) curveSuffix = "";
 		else curveSuffix = "_" + curveNames[i];
-		LAString curveSuffix_file = curveSuffix;
+		AQLString curveSuffix_file = curveSuffix;
 		while (curveSuffix_file.findString("/") != -1)
 		{
 			curveSuffix_file.remove(curveSuffix_file.findString("/"), 1);
 		}
-		const LAString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);
-		const LAString dirName = LACoreDataService::getOutputDirectory();
-		const LAString fileName = dirName + yieldDataName + curveSuffix_file + fileSuffix + ".csv";
+		const AQLString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);
+		const AQLString dirName = LACoreDataService::getOutputDirectory();
+		const AQLString fileName = dirName + yieldDataName + curveSuffix_file + fileSuffix + ".csv";
 
 		ifstream fin;
 		ofstream fout;
@@ -6848,40 +6848,40 @@ LAUpdateCurveObject::dataoutCurve(const LAStringVector &curveNames, LAObject &ob
 
 		if (!fin)
 		{
-			LADataHolder* dh = &objectPool.getData(CALIBRATION_DATA_TERMS + curveSuffix, NOCHECK);
+			AQLDataHolder* dh = &objectPool.getData(CALIBRATION_DATA_TERMS + curveSuffix, NOCHECK);
 			if (!dh->isDefined() || dh->isNull())
 				continue;
 
 			const DoubleArray &terms =
-				dynamic_cast<const LADataDoubles &>(objectPool.getData(CALIBRATION_DATA_TERMS + curveSuffix, ISNOTNULL).get()).get();
+				dynamic_cast<const AQLDataDoubles &>(objectPool.getData(CALIBRATION_DATA_TERMS + curveSuffix, ISNOTNULL).get()).get();
 			const DoubleArray &dfs =
-				dynamic_cast<const LADataDoubles &>(objectPool.getData(IR_CALIBRATION_DATA_DFS + curveSuffix, ISNOTNULL).get()).get();
+				dynamic_cast<const AQLDataDoubles &>(objectPool.getData(IR_CALIBRATION_DATA_DFS + curveSuffix, ISNOTNULL).get()).get();
 
 			int size = terms.size();
 			if (size != static_cast<int>(dfs.size()))
 			{
-				throw LACoreInvalidData("Term size and df size must be same !!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Term size and df size must be same !!", __FILE__, __LINE__);
 			}
 			fout.open(fileName.getCString());
 
-			const LADataHolder &dfsH2 = objectPool.getData(IR_CALIBRATION_DATA_DFS2 + curveSuffix, NOCHECK);
+			const AQLDataHolder &dfsH2 = objectPool.getData(IR_CALIBRATION_DATA_DFS2 + curveSuffix, NOCHECK);
 			if (!dfsH2.isDefined() || dfsH2.isNull())
 			{
 				for (int j = 0; j < size; ++j)
 				{
-					LAString termOStr = LAString(terms[j]);
-					LAString dfOStr = LAString(dfs[j]);
+					AQLString termOStr = AQLString(terms[j]);
+					AQLString dfOStr = AQLString(dfs[j]);
 					fout << termOStr.getCString() << "," << dfOStr.getCString() << std::endl;
 				}
 			}
 			else
 			{
-				const DoubleArray &dfs2 = dynamic_cast<const LADataDoubles &>(dfsH2.get()).get();
+				const DoubleArray &dfs2 = dynamic_cast<const AQLDataDoubles &>(dfsH2.get()).get();
 				for (int j = 0; j < size; ++j)
 				{
-					LAString termOStr = LAString(terms[j]);
-					LAString dfOStr = LAString(dfs[j]);
-					LAString df2OStr = LAString(dfs2[j]);
+					AQLString termOStr = AQLString(terms[j]);
+					AQLString dfOStr = AQLString(dfs[j]);
+					AQLString df2OStr = AQLString(dfs2[j]);
 					fout << termOStr.getCString() << "," << dfOStr.getCString() << "," << df2OStr.getCString() << std::endl;
 				}
 
@@ -6898,7 +6898,7 @@ LAUpdateCurveObject::dataoutCurve(const LAStringVector &curveNames, LAObject &ob
 			while (getline(fin, line))
 			{
 				const char *c_line = line.c_str();
-				LAStringVector lineVec = LAString(c_line).toToken(MARKET_DATA_DELIMITER);
+				AQLStringVector lineVec = AQLString(c_line).toToken(MARKET_DATA_DELIMITER);
 				if (lineVec.size() == 3)
 				{
 					terms.push_back(lineVec[0].trimLeft().trimRight().getDoubleValue());
@@ -6912,11 +6912,11 @@ LAUpdateCurveObject::dataoutCurve(const LAStringVector &curveNames, LAObject &ob
 				}
 			}
 			fin.close();
-			dynamic_cast<LADataDoubles &>(objectPool.getData(CALIBRATION_DATA_TERMS + curveSuffix, ISNOTNULL).get()).set(terms);
-			dynamic_cast<LADataDoubles &>(objectPool.getData(IR_CALIBRATION_DATA_DFS + curveSuffix, ISNOTNULL).get()).set(dfs);
+			dynamic_cast<AQLDataDoubles &>(objectPool.getData(CALIBRATION_DATA_TERMS + curveSuffix, ISNOTNULL).get()).set(terms);
+			dynamic_cast<AQLDataDoubles &>(objectPool.getData(IR_CALIBRATION_DATA_DFS + curveSuffix, ISNOTNULL).get()).set(dfs);
 			if (!dfs2.empty() && objectPool.getData(IR_CALIBRATION_DATA_DFS2 + curveSuffix).isDefined())
 			{
-				dynamic_cast<LADataDoubles &>(objectPool.getData(IR_CALIBRATION_DATA_DFS2 + curveSuffix, ISNOTNULL).get()).set(dfs2);
+				dynamic_cast<AQLDataDoubles &>(objectPool.getData(IR_CALIBRATION_DATA_DFS2 + curveSuffix, ISNOTNULL).get()).set(dfs2);
 			}
 		}
 	}
@@ -6925,7 +6925,7 @@ LAUpdateCurveObject::dataoutCurve(const LAStringVector &curveNames, LAObject &ob
 
 
 bool
-LAUpdateCurveObject::checkFrequency(const LAString& freq, const LAString& mktRateTerm) const
+LAUpdateCurveObject::checkFrequency(const AQLString& freq, const AQLString& mktRateTerm) const
 {
 	int span = etrading::LADateHelpers::getPeriodFrequencyInMonths(freq);
 
@@ -6940,16 +6940,16 @@ LAUpdateCurveObject::checkFrequency(const LAString& freq, const LAString& mktRat
 #include "LAUpdateModelObject.h"
 
 void
-LAUpdateCurveObject::generateInitialValueForPricer(const LAString &currency, LADataInstance &dataInstance) const
+LAUpdateCurveObject::generateInitialValueForPricer(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
-	LAString tmpCurrency = currency;
+	AQLString tmpCurrency = currency;
 	tmpCurrency.toLower();
 
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
-	LAString yieldName = PREFIX_YIELD + getSDEAttrName(currency);
+	AQLString yieldName = PREFIX_YIELD + getSDEAttrName(currency);
 	LAMathYieldCurve *yc = NULL;
-	const LAObjectHolder ehyc = objPool.getObject(yieldName);
+	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
 		yc = new LAMathYieldCurve(&dataInstance);
@@ -6963,9 +6963,9 @@ LAUpdateCurveObject::generateInitialValueForPricer(const LAString &currency, LAD
 	}
 	yc->getName().convertFromString(yieldName);
 
-	LAString curvePropertiesName = "PRO_" + yieldName;
+	AQLString curvePropertiesName = "PRO_" + yieldName;
 	CurveCalibrationData *curveCalibrationData = NULL;
-	const LAObjectHolder ehycpro = objPool.getObject(curvePropertiesName);
+	const AQLObjectHolder ehycpro = objPool.getObject(curvePropertiesName);
 	if (!ehycpro.isDefined())
 	{
 		curveCalibrationData = new CurveCalibrationData(&dataInstance);
@@ -6980,12 +6980,12 @@ LAUpdateCurveObject::generateInitialValueForPricer(const LAString &currency, LAD
 
 	curveCalibrationData->getIsArbFree().set(false);
 
-	LAObject *objectPool = NULL;
-	LAString yieldDataName = yieldName + "_DATA";
-	const LAObjectHolder ehdata = objPool.getObject(yieldDataName);
+	AQLObject *objectPool = NULL;
+	AQLString yieldDataName = yieldName + "_DATA";
+	const AQLObjectHolder ehdata = objPool.getObject(yieldDataName);
 	if (!ehdata.isDefined())
 	{
-		objectPool = new LAObject();
+		objectPool = new AQLObject();
 		objPool.set(yieldDataName, objectPool);
 	}
 	else
@@ -6994,9 +6994,9 @@ LAUpdateCurveObject::generateInitialValueForPricer(const LAString &currency, LAD
 		objectPool = &objPool.getObject(yieldDataName).get();
 	}
 	objectPool->remove(CALIBRATION_DATA_NAME);
-	objectPool->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(yieldDataName);
+	objectPool->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(yieldDataName);
 
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 	bool useTenorBasis = false;
 	bool useTenorBasisInstruments = false;
 	bool isSpotStarting = false;
@@ -7005,8 +7005,8 @@ LAUpdateCurveObject::generateInitialValueForPricer(const LAString &currency, LAD
 	setUpCurveDataByContext(*curveCalibrationData, objectPool, currency, SWAP);
 
 
-	LAStringVector listOfCurvesBuilt;
-	LAString tmpMarket = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	AQLStringVector listOfCurvesBuilt;
+	AQLString tmpMarket = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	if (tmpMarket == AQ_NO_DATA)
 	{
 		listOfCurvesBuilt = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATEDFS).toToken(MULTI_STATIC_DATA_DELIMITER);
@@ -7020,18 +7020,18 @@ LAUpdateCurveObject::generateInitialValueForPricer(const LAString &currency, LAD
 	{
 		for (unsigned int i = 0; i < listOfCurvesBuilt.size(); ++i)
 		{
-			LAString suffixLowerCase = listOfCurvesBuilt[i];
+			AQLString suffixLowerCase = listOfCurvesBuilt[i];
 			suffixLowerCase.toLower();
-			LAString contextKey = tmpCurrency + CONTEXT_KEY_SDE_YIELD_WITH_MARKET + suffixLowerCase;
-			LAString contextWithMarket = LACoreDataService::getContext(contextKey);
+			AQLString contextKey = tmpCurrency + CONTEXT_KEY_SDE_YIELD_WITH_MARKET + suffixLowerCase;
+			AQLString contextWithMarket = LACoreDataService::getContext(contextKey);
 			if (contextWithMarket != AQ_NO_DATA)
 			{
-				LAString marketType = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MARKETTYPE + "." + suffixLowerCase).toUpper();
+				AQLString marketType = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MARKETTYPE + "." + suffixLowerCase).toUpper();
 				if (marketType == MARKETTYPE_BASIS)
 				{
-					LAString useYieldSDEIRStr = LACoreDataService::getContext(CONTEXT_KEY_USE_SDE_YIELD);
+					AQLString useYieldSDEIRStr = LACoreDataService::getContext(CONTEXT_KEY_USE_SDE_YIELD);
 					LACoreDataService::setContext(CONTEXT_KEY_USE_SDE_YIELD, AQ_NO_DATA);
-					LAString tmpCurveName = listOfCurvesBuilt[i];
+					AQLString tmpCurveName = listOfCurvesBuilt[i];
 					tmpCurveName.toUpper();
 					mpStaticData->setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET, tmpCurveName);
 					UpdateObjectPoolForSDEsAndCurves generator(currency);
@@ -7046,12 +7046,12 @@ LAUpdateCurveObject::generateInitialValueForPricer(const LAString &currency, LAD
 }
 
 void
-LAUpdateCurveObject::setUpCurveDataByContext(CurveCalibrationData &curveCalibrationData, LAObject *objectPool, const LAString& currency, const LAString& marketName) const
+LAUpdateCurveObject::setUpCurveDataByContext(CurveCalibrationData &curveCalibrationData, AQLObject *objectPool, const AQLString& currency, const AQLString& marketName) const
 {
-	LAString prefix = currency;
+	AQLString prefix = currency;
 	prefix.toLower();
-	LAString suffixLowerCase;
-	LAString data_suffix;
+	AQLString suffixLowerCase;
+	AQLString data_suffix;
 	if (marketName != SWAP)
 	{
 		suffixLowerCase = marketName;
@@ -7059,16 +7059,16 @@ LAUpdateCurveObject::setUpCurveDataByContext(CurveCalibrationData &curveCalibrat
 		data_suffix = "_" + marketName;
 	}
 
-	LAString contextKey = prefix + CONTEXT_KEY_SDE_YIELD + suffixLowerCase;
-	LAString curveContext = LACoreDataService::getContext(contextKey);
+	AQLString contextKey = prefix + CONTEXT_KEY_SDE_YIELD + suffixLowerCase;
+	AQLString curveContext = LACoreDataService::getContext(contextKey);
 	if (curveContext == AQ_NO_DATA)
 	{
-		LAString msg = "context data for generated dfs don't exist.";
+		AQLString msg = "context data for generated dfs don't exist.";
 		msg += "(" + contextKey + ")";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
-	LADataDoubleMatrix matrix;
+	AQLDataDoubleMatrix matrix;
 	matrix.convertFromString(curveContext);
 	unsigned int rowSize = matrix.get1DSize();
 	unsigned int colSize = matrix.getSize(0);
@@ -7087,60 +7087,60 @@ LAUpdateCurveObject::setUpCurveDataByContext(CurveCalibrationData &curveCalibrat
 	}
 
 	objectPool->remove(CALIBRATION_DATA_TERMS + data_suffix);
-	objectPool->add(CALIBRATION_DATA_TERMS + data_suffix, new LADataDoubles(terms));
+	objectPool->add(CALIBRATION_DATA_TERMS + data_suffix, new AQLDataDoubles(terms));
 
 	objectPool->remove(IR_CALIBRATION_DATA_DFS + data_suffix);
-	objectPool->add(IR_CALIBRATION_DATA_DFS + data_suffix, new LADataDoubles(dfs));
+	objectPool->add(IR_CALIBRATION_DATA_DFS + data_suffix, new AQLDataDoubles(dfs));
 
 	if (isBasisDiscountFactor)
 	{
-		LADataDoubles* attrDF2 = NULL;
-		LADataHolder* df2H = &objectPool->getData(IR_CALIBRATION_DATA_DFS2 + data_suffix);
+		AQLDataDoubles* attrDF2 = NULL;
+		AQLDataHolder* df2H = &objectPool->getData(IR_CALIBRATION_DATA_DFS2 + data_suffix);
 		if (!df2H->isDefined())
 		{
-			attrDF2 = new LADataDoubles();
+			attrDF2 = new AQLDataDoubles();
 			objectPool->remove(IR_CALIBRATION_DATA_DFS2 + data_suffix);
 			objectPool->add(IR_CALIBRATION_DATA_DFS2 + data_suffix, attrDF2);
 		}
 		else
 		{
-			attrDF2 = dynamic_cast<LADataDoubles*>(&df2H->get());
+			attrDF2 = dynamic_cast<AQLDataDoubles*>(&df2H->get());
 		}
 		attrDF2->set(dfs2);
 		return;
 	}
 
 	// check DF2 by properties
-	//LAString df2name = mpStaticData->getStaticData(prefix + STATIC_DATA_KEY_YIELD_DF2);
-	LAString df2name = currency + "BASISDISCOUNT";
+	//AQLString df2name = mpStaticData->getStaticData(prefix + STATIC_DATA_KEY_YIELD_DF2);
+	AQLString df2name = currency + "BASISDISCOUNT";
 	df2name.toUpper();
 	if (df2name != AQ_NO_DATA && df2name == marketName)
 	{
-		LADataHolder* dh = &(objectPool->getData(CALIBRATION_DATA_TERMS, ISDEFINED));
-		const DoubleVector& baseterms = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+		AQLDataHolder* dh = &(objectPool->getData(CALIBRATION_DATA_TERMS, ISDEFINED));
+		const DoubleVector& baseterms = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 
 		DoubleVector calcdf2(baseterms.size(), 1.0);
-		LASplineInterpolation attrspline;
+		AQLSplineInterpolation attrspline;
 		attrspline.set(terms, dfs);
 		for (unsigned int i = 0; i < baseterms.size(); i++)
 			calcdf2[i] = attrspline.value(baseterms[i]);
 
 		objectPool->remove(IR_CALIBRATION_DATA_DFS2);
-		objectPool->add(IR_CALIBRATION_DATA_DFS2, new LADataDoubles(calcdf2));
+		objectPool->add(IR_CALIBRATION_DATA_DFS2, new AQLDataDoubles(calcdf2));
 	}
 
 
 
 	// set curve name to yield curve pro
-	LAStringVector gCurveNames;
-	LADataHolder *dh = &(curveCalibrationData.getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK));
+	AQLStringVector gCurveNames;
+	AQLDataHolder *dh = &(curveCalibrationData.getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		gCurveNames = dynamic_cast<const LADataStrings &>(dh->get()).get();
+		gCurveNames = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 	}
 	gCurveNames.push_back(marketName);
-	curveCalibrationData.LAObject::remove(IR_CALIBRATION_DATA_GENERATEDFS);
-	curveCalibrationData.LAObject::add(IR_CALIBRATION_DATA_GENERATEDFS, new LADataStrings(gCurveNames));
+	curveCalibrationData.AQLObject::remove(IR_CALIBRATION_DATA_GENERATEDFS);
+	curveCalibrationData.AQLObject::add(IR_CALIBRATION_DATA_GENERATEDFS, new AQLDataStrings(gCurveNames));
 }
 ////////////////////////////////////////////////////
 

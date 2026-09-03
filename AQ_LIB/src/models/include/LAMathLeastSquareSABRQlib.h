@@ -15,10 +15,10 @@
 #include <ql/math/optimization/constraint.hpp>
 
 
-#include "LAFunctionVector.h"
-#include "LABasic.h"
-#include "LACoreTemplateType.h"
-#include "LAInterpolationBase.h"
+#include "AQLFunctionVector.h"
+#include "AQLBasic.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLInterpolationBase.h"
 #include "LACoreUtility.h"
 #include "LAMathBaseFuncUtility.h"
 #include <vector>
@@ -45,7 +45,7 @@ public:
 				                const std::vector<double>& param0_,
 								const std::vector<bool>& flg_,
 				                const std::vector<double>& target2fit_,
-								const LAString& target_);
+								const AQLString& target_);
 
 	LAMathLeastSquareSABRCostFuncQlib() {}
 
@@ -94,7 +94,7 @@ private:
 	mutable double nu;
 	mutable double rho;
 	
-	LAString target;
+	AQLString target;
 
 	bool cloned;
 
@@ -250,8 +250,8 @@ public:
 		DoubleMatrix numat_,
 		DoubleMatrix rhomat_,
 		const std::vector<int>& param_pos_,
-		const LAString& approxmethod_,
-		const LAString& tenor_point_str_,
+		const AQLString& approxmethod_,
+		const AQLString& tenor_point_str_,
 		const std::vector<double>& expiry_capfloor_,
 		const std::vector<double>& expiry_capfloorlet_,
 		const std::vector<double>& tenor_,
@@ -263,7 +263,7 @@ public:
 		const std::vector<double>& param0_,
 		const std::vector<bool>& flg_,
 		const std::vector<double>& vol0_,
-		const LAString& target2fit_,
+		const AQLString& target2fit_,
 		const size_t& num_capfloorlet_,
 		const size_t& num_diffterm_
 	);
@@ -303,7 +303,7 @@ private:
 	DoubleMatrix  numat;
 	DoubleMatrix  rhomat;
 	std::vector<int> param_pos;
-	LAString approxmethod;
+	AQLString approxmethod;
 	double tenor_point;
 	std::vector<double> expiry_capfloor;
 	std::vector<double> expiry_capfloorlet;
@@ -332,7 +332,7 @@ private:
 	mutable double nu;
 	mutable double rho;
 
-	LAString target;
+	AQLString target;
 
 	bool cloned;
 

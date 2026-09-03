@@ -7,7 +7,7 @@
 #include "tryMirGetNextECBDate.h"
 #include "tryMirGetECBStartDate.h"
 
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 
 // Include: Google Test Library
 #include <gTest/gTest.h>
@@ -17,31 +17,31 @@ namespace google_test
 	 
     TEST( TestDatesECB, UNIT_ErrorHandling )
     {
-        const LADate farAway( "21151008" );
-        EXPECT_THROW( validation::tryMirGetNextECBDate( farAway ), LACoreError );
+        const AQLDate farAway( "21151008" );
+        EXPECT_THROW( validation::tryMirGetNextECBDate( farAway ), AQLCoreError );
     }
 	  
     TEST( TestDatesECB, UNIT_haveNextECBDate )
     {
-        const LADate today( "20151008" );
+        const AQLDate today( "20151008" );
         EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( today ), true );
 
-        const LADate ecbLast = LAMathCentralBank::meetingSchedule( "ecb" ).back();
+        const AQLDate ecbLast = LAMathCentralBank::meetingSchedule( "ecb" ).back();
         EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( ecbLast ), false );
         EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( ecbLast, false ), true );
 
-        const LADate farAway( "21151008" );
+        const AQLDate farAway( "21151008" );
         EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( farAway ), false );
     }
 
     TEST( TestDatesECB, UNIT_getNextECBDate )
     {
-        const LADate ecb1( "20150122" );
-        const LADate ecb2( "20150305" );
-        const LADate ecb3( "20150415" );
+        const AQLDate ecb1( "20150122" );
+        const AQLDate ecb2( "20150305" );
+        const AQLDate ecb3( "20150415" );
 
-        const LADate d0( "20141231" );
-        const LADate d1( "20150124" );
+        const AQLDate d0( "20141231" );
+        const AQLDate d1( "20150124" );
 
         EXPECT_EQ( validation::tryMirGetNextECBDate( d0 ), ecb1 );
         EXPECT_EQ( validation::tryMirGetNextECBDate( d0, false ), ecb1 );
@@ -52,48 +52,48 @@ namespace google_test
         EXPECT_EQ( validation::tryMirGetNextECBDate( d1 ), ecb2 );
         EXPECT_EQ( validation::tryMirGetNextECBDate( d1, false ), ecb2 );
 
-        const LADate ecbLast = LAMathCentralBank::meetingSchedule( "ECB" ).back();
+        const AQLDate ecbLast = LAMathCentralBank::meetingSchedule( "ECB" ).back();
         EXPECT_EQ( validation::tryMirGetNextECBDate( ecbLast, false ), ecbLast );
 
-        EXPECT_THROW( validation::tryMirGetNextECBDate( ecbLast ), LACoreError );
+        EXPECT_THROW( validation::tryMirGetNextECBDate( ecbLast ), AQLCoreError );
     }
 
     TEST( TestDatesECB, UNIT_getECBStartDate )
     {
-        const LADate ecb1( "20160121" );		// Thursday
-        const LADate start1( "20160127" );	// Wednesday after
+        const AQLDate ecb1( "20160121" );		// Thursday
+        const AQLDate start1( "20160127" );	// Wednesday after
         EXPECT_EQ( validation::tryMirGetECBStartDate( ecb1 ), start1 );
 
-        const LADate ecb2( "20150415" );		// a Wednesday
-        const LADate start2( "20150422" );	// a week later
+        const AQLDate ecb2( "20150415" );		// a Wednesday
+        const AQLDate start2( "20150422" );	// a week later
         EXPECT_EQ( validation::tryMirGetECBStartDate( ecb2 ), start2 );
 
-        const LADate ecb3( "20150416" );		// Thursday
-        const LADate start3( "20150422" );	// Wednesday after
+        const AQLDate ecb3( "20150416" );		// Thursday
+        const AQLDate start3( "20150422" );	// Wednesday after
         EXPECT_EQ( validation::tryMirGetECBStartDate( ecb3 ), start3 );
 
-        const LADate ecb4( "20150417" );		// Friday
-        const LADate start4( "20150422" );	// Wednesday after
+        const AQLDate ecb4( "20150417" );		// Friday
+        const AQLDate start4( "20150422" );	// Wednesday after
         EXPECT_EQ( validation::tryMirGetECBStartDate( ecb4 ), start4 );
 
-        const LADate ecb5( "20150418" );		// Saturday
-        const LADate start5( "20150422" );	// Wednesday after
+        const AQLDate ecb5( "20150418" );		// Saturday
+        const AQLDate start5( "20150422" );	// Wednesday after
         EXPECT_EQ( validation::tryMirGetECBStartDate( ecb5 ), start5 );
 
-        const LADate ecb6( "20150419" );		// Sunday
-        const LADate start6( "20150422" );	// Wednesday after
+        const AQLDate ecb6( "20150419" );		// Sunday
+        const AQLDate start6( "20150422" );	// Wednesday after
         EXPECT_EQ( validation::tryMirGetECBStartDate( ecb6 ), start6 );
 
-        const LADate ecb7( "20150420" );		// Monday
-        const LADate start7( "20150422" );	// Wednesday after
+        const AQLDate ecb7( "20150420" );		// Monday
+        const AQLDate start7( "20150422" );	// Wednesday after
         EXPECT_EQ( validation::tryMirGetECBStartDate( ecb7 ), start7 );
 
-        const LADate ecb8( "20150421" );		// Tuesday
-        const LADate start8( "20150422" );	// Wednesday after
+        const AQLDate ecb8( "20150421" );		// Tuesday
+        const AQLDate start8( "20150422" );	// Wednesday after
         EXPECT_EQ( validation::tryMirGetECBStartDate( ecb8 ), start8 );
 
-        const LADate ecb9( "20150422" );		// Wednesday
-        const LADate start9( "20150429" );	// a week later
+        const AQLDate ecb9( "20150422" );		// Wednesday
+        const AQLDate start9( "20150429" );	// a week later
         EXPECT_EQ( validation::tryMirGetECBStartDate( ecb9 ), start9 );
     }
 }

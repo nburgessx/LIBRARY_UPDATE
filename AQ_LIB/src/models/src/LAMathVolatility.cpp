@@ -2,15 +2,15 @@
     @brief Source code for class to represent volatility.
 
 			Following dataValues are registered automatically to data master<BR>
-			1.CALIBRATION_DATA_NAME(LADataString)<BR>
-			2.IR_CALIBRATION_DATA_GRID_LARGE_T(LADataDoubles)<BR>
-			3.IR_CALIBRATION_DATA_GRID_SMALL_T(LADataDoubles)<BR>
-			4.CALIBRATION_DATA_INTERPOLATION(LAPriceDataInterpolation)<BR>
-			5.IR_CALIBRATION_DATA_VOLDATA_MAT(LADataDoubleMatrix)<BR>
+			1.CALIBRATION_DATA_NAME(AQLDataString)<BR>
+			2.IR_CALIBRATION_DATA_GRID_LARGE_T(AQLDataDoubles)<BR>
+			3.IR_CALIBRATION_DATA_GRID_SMALL_T(AQLDataDoubles)<BR>
+			4.CALIBRATION_DATA_INTERPOLATION(AQLPriceDataInterpolation)<BR>
+			5.IR_CALIBRATION_DATA_VOLDATA_MAT(AQLDataDoubleMatrix)<BR>
 			6.IR_CALIBRATION_DATA_VOLDATA_FUNCTIONS(LADataFunctions)<BR>
 			7.IR_CALIBRATION_DATA_VOLDATA_FUNCTION(LADataFunction)<BR>
-			8.IR_CALIBRATION_DATA_VOLDATA_VECTOR(LADataDoubles)<BR>
-			9.IR_CALIBRATION_DATA_VOLDATA_SCALAR(LADataDouble)<BR>
+			8.IR_CALIBRATION_DATA_VOLDATA_VECTOR(AQLDataDoubles)<BR>
+			9.IR_CALIBRATION_DATA_VOLDATA_SCALAR(AQLDataDouble)<BR>
 			10.IR_CALIBRATION_DATA_FACTORNUM(LAPriceInt)<BR>
 			11.IR_CALIBRATION_DATA_INPUTTYPE(LAPriceInt)<BR>
 	
@@ -25,20 +25,20 @@
 #endif
 
 #include "LAMathVolatility.h"
-#include "LAMathDefine.h"
-#include "LABasic.h"
-#include "LAConstant.h"
-#include "LA1DDataSet.h"
+#include "AQLMathDefine.h"
+#include "AQLBasic.h"
+#include "AQLConstant.h"
+#include "AQL1DDataSet.h"
 
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LAPriceDataManager.h"
-#include "LADataProcedure.h"
-#include "LADataInstance.h"
-#include "LAPriceDataFunction.h"
-#include "LAPriceDataFunctions.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLPriceDataFunctions.h"
+#include "AQLPriceDataInterpolation.h"
 
 #include <cmath>
 
@@ -59,14 +59,14 @@ using namespace std;
 /*!
     @brief default constructor
 
-	@param[in] dataInstance pointer of LADataInstance object
+	@param[in] dataInstance pointer of AQLDataInstance object
 
 */
-LAMathVolatility::LAMathVolatility(LADataInstance* dataInstance) : 
-				LAObject()
+LAMathVolatility::LAMathVolatility(AQLDataInstance* dataInstance) : 
+				AQLObject()
 {
 	setDataInstance(dataInstance);
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 	dm.setData(CALIBRATION_DATA_NAME						, DATA_STRING);
 	dm.setData(IR_CALIBRATION_DATA_GRID_LARGE_T			, DATA_DOUBLES);
 	dm.setData(IR_CALIBRATION_DATA_GRID_SMALL_T			, DATA_DOUBLES);
@@ -102,7 +102,7 @@ LAMathVolatility::LAMathVolatility(LADataInstance* dataInstance) :
 */
 LAMathVolatility::LAMathVolatility(
 	const LAMathVolatility& vol) : 
-	LAObject(vol)
+	AQLObject(vol)
 {
 	mpName			= &getData(CALIBRATION_DATA_NAME	);
 	mpGrid_T		= &getData(IR_CALIBRATION_DATA_GRID_LARGE_T	);
@@ -146,7 +146,7 @@ LAMathVolatility::getType(void) const
 bool
 LAMathVolatility::isTypeOf(object_t id) const
 {
-	return (id == ENTITY_IR_VOLATILITY ? true : LAObject::isTypeOf(id));
+	return (id == ENTITY_IR_VOLATILITY ? true : AQLObject::isTypeOf(id));
 }
 
 
@@ -154,19 +154,19 @@ LAMathVolatility::isTypeOf(object_t id) const
     @brief get this volatility Object-name.
 	@return name
 */
-const LADataString&	
+const AQLDataString&	
 LAMathVolatility::getName() const	
 {
-	return dynamic_cast<const LADataString&>(mpName->get());
+	return dynamic_cast<const AQLDataString&>(mpName->get());
 }
 /*!
     @brief get this volatility  Object-name.The setting of name is also possible.
 	@return name
 */
-LADataString&	
+AQLDataString&	
 LAMathVolatility::getName()
 {
-	return dynamic_cast<LADataString&>(mpName->get());
+	return dynamic_cast<AQLDataString&>(mpName->get());
 }
 
 
@@ -174,7 +174,7 @@ LAMathVolatility::getName()
     @brief Make copy(clone) of this Volatility Object object.
     @return pointer of this Volatility Object object.
 */
-LAObject* 
+AQLObject* 
 LAMathVolatility::clone() const
 {
     try {
@@ -182,7 +182,7 @@ LAMathVolatility::clone() const
     	return pVol;
     }
     catch (bad_alloc & e){
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -192,10 +192,10 @@ LAMathVolatility::clone() const
 			
 	@return Interpolation
 */
-const LAPriceDataInterpolation&
+const AQLPriceDataInterpolation&
 LAMathVolatility::getInterpolation() const	
 {
-	return dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get());
+	return dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get());
 }
 
 /*!
@@ -203,10 +203,10 @@ LAMathVolatility::getInterpolation() const
 			
 	@return Interpolation. The setting of interpolation method is also possible.
 */
-LAPriceDataInterpolation&
+AQLPriceDataInterpolation&
 LAMathVolatility::getInterpolation() 
 {
-	return dynamic_cast<LAPriceDataInterpolation&>(mpInter->get());
+	return dynamic_cast<AQLPriceDataInterpolation&>(mpInter->get());
 }
 
 /*!
@@ -215,35 +215,35 @@ LAMathVolatility::getInterpolation()
 	@return volatility function   get volatility function.
 */
 
-LAFunctionBase*
+AQLFunctionBase*
 LAMathVolatility::getVolatilityFunc(unsigned i, unsigned int j) const
 {
-	int type = dynamic_cast<LADataInt&>(mpVolType->get()).get();
+	int type = dynamic_cast<AQLDataInt&>(mpVolType->get()).get();
 	
 	if (type == DATA_SCALAR)
 	{
-		double ret = dynamic_cast<const LADataDouble&>(mpVol_d->get()).get();
-		return  dynamic_cast<LAFunctionBase*>(LAConstant(ret).clone());
+		double ret = dynamic_cast<const AQLDataDouble&>(mpVol_d->get()).get();
+		return  dynamic_cast<AQLFunctionBase*>(AQLConstant(ret).clone());
 	}
 	else if (type == FUNC_SCALAR)
 	{
-		const LAFunctionBase& method = dynamic_cast<const LAPriceDataFunction&>(mpVol_f->get()).getFunction();
-		return  dynamic_cast<LAFunctionBase*>(method.clone());
+		const AQLFunctionBase& method = dynamic_cast<const AQLPriceDataFunction&>(mpVol_f->get()).getFunction();
+		return  dynamic_cast<AQLFunctionBase*>(method.clone());
 	}	
 
 	
 	else if (type == T_I_DATA_MATRIX)
 	{
-		unsigned int factornum = dynamic_cast<const LADataInt&>(mpFactorNum->get()).get();
-		const DoubleMatrix& mat = dynamic_cast<LADataDoubleMatrix&>(mpVol_mat_d->get()).get();
+		unsigned int factornum = dynamic_cast<const AQLDataInt&>(mpFactorNum->get()).get();
+		const DoubleMatrix& mat = dynamic_cast<AQLDataDoubleMatrix&>(mpVol_mat_d->get()).get();
 		if (i * factornum + j >= mat.size())
 		{
 			//error
-			throw LACoreInvalidData("Suffix is over Size", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Suffix is over Size", __FILE__, __LINE__);
 		}
 		const DoubleArray& data = mat[i * factornum + j];
-		const DoubleArray& time = dynamic_cast<LADataDoubles&>(mpGrid_t->get()).get();		
-		LA1DDataSet method;
+		const DoubleArray& time = dynamic_cast<AQLDataDoubles&>(mpGrid_t->get()).get();		
+		AQL1DDataSet method;
 		if (data.size() < time.size())
 		{
 			DoubleArray _time = time;
@@ -253,42 +253,42 @@ LAMathVolatility::getVolatilityFunc(unsigned i, unsigned int j) const
 		else if (data.size() > time.size())
 		{
 			//error
-			throw LACoreInvalidData("gird_t size is smaller than data size", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("gird_t size is smaller than data size", __FILE__, __LINE__);
 		}
 		else
 			method.set(time, data);
-		const LAInterpolationBase& inter = dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).getMethod();
+		const AQLInterpolationBase& inter = dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).getMethod();
 		method.setInterpolation(inter);
-		return  dynamic_cast<LAFunctionBase*>(method.clone());
+		return  dynamic_cast<AQLFunctionBase*>(method.clone());
 	}
 	
 	else if (type == T_I_FUNC_MATRIX)
 	{
-		unsigned int factornum = dynamic_cast<const LADataInt&>(mpFactorNum->get()).get();
-		const LAPriceDataFunctions& attr = dynamic_cast<const LAPriceDataFunctions&>(mpVol_vec_f->get());
+		unsigned int factornum = dynamic_cast<const AQLDataInt&>(mpFactorNum->get()).get();
+		const AQLPriceDataFunctions& attr = dynamic_cast<const AQLPriceDataFunctions&>(mpVol_vec_f->get());
 		if (i * factornum + j >= attr.getSize())
 		{
 			//error
-			throw LACoreInvalidData("Suffix is over Size", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Suffix is over Size", __FILE__, __LINE__);
 		}		
-		const LAFunctionBase& method = attr[i * factornum + j];
-		return  dynamic_cast<LAFunctionBase*>(method.clone());
+		const AQLFunctionBase& method = attr[i * factornum + j];
+		return  dynamic_cast<AQLFunctionBase*>(method.clone());
 	}
 
 	else if (type == T_I_FUNC_VECTOR)
 	{
-		//unsigned int factornum = dynamic_cast<const LADataInt&>(mpFactorNum->get()).get();
-		const LAPriceDataFunctions& attr = dynamic_cast<const LAPriceDataFunctions&>(mpVol_vec_f->get());
+		//unsigned int factornum = dynamic_cast<const AQLDataInt&>(mpFactorNum->get()).get();
+		const AQLPriceDataFunctions& attr = dynamic_cast<const AQLPriceDataFunctions&>(mpVol_vec_f->get());
 		if (j >= attr.getSize())
 		{
 			//error
-			throw LACoreInvalidData("Suffix is over Size", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Suffix is over Size", __FILE__, __LINE__);
 		}			
-		const LAFunctionBase& method = attr[j];
-		const DoubleArray& grid_T = dynamic_cast<LADataDoubles&>(mpGrid_T->get()).get();
+		const AQLFunctionBase& method = attr[j];
+		const DoubleArray& grid_T = dynamic_cast<AQLDataDoubles&>(mpGrid_T->get()).get();
 		DoubleArray x(2);
 		x[1] = grid_T.at(i);
-		LAFunctionBase* pfunc = dynamic_cast<LAFunctionBase*>(method.clone());
+		AQLFunctionBase* pfunc = dynamic_cast<AQLFunctionBase*>(method.clone());
 		pfunc->operator ()(0, x);
 		return pfunc; 	
 	}
@@ -296,14 +296,14 @@ LAMathVolatility::getVolatilityFunc(unsigned i, unsigned int j) const
 	if (j != 0)
 	{
 		//error
-		throw LACoreInvalidData("Suffix is over Size(j must be 0)", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Suffix is over Size(j must be 0)", __FILE__, __LINE__);
 	}	
 	
 	if (type == T_DATA_MATRIX)
 	{
-		const DoubleArray& data = dynamic_cast<LADataDoubleMatrix&>(mpVol_mat_d->get()).get()[i];
-		const DoubleArray& time = dynamic_cast<LADataDoubles&>(mpGrid_t->get()).get();
-		LA1DDataSet method;
+		const DoubleArray& data = dynamic_cast<AQLDataDoubleMatrix&>(mpVol_mat_d->get()).get()[i];
+		const DoubleArray& time = dynamic_cast<AQLDataDoubles&>(mpGrid_t->get()).get();
+		AQL1DDataSet method;
 		if (data.size() < time.size())
 		{
 			DoubleArray _time = time;
@@ -313,73 +313,73 @@ LAMathVolatility::getVolatilityFunc(unsigned i, unsigned int j) const
 		else if (data.size() > time.size())
 		{
 			//error
-			throw LACoreInvalidData("grid_t size is smaller than data size", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("grid_t size is smaller than data size", __FILE__, __LINE__);
 		}
 		else
 			method.set(time, data);
-		const LAInterpolationBase& inter = dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).getMethod();
+		const AQLInterpolationBase& inter = dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).getMethod();
 		method.setInterpolation(inter);
-		return  dynamic_cast<LAFunctionBase*>(method.clone());
+		return  dynamic_cast<AQLFunctionBase*>(method.clone());
 	}
 	else if (type == T_FUNC_VECTOR)
 	{
-		const LAFunctionBase& method = dynamic_cast<const LAPriceDataFunctions&>(mpVol_vec_f->get())[i];
-		return  dynamic_cast<LAFunctionBase*>(method.clone());
+		const AQLFunctionBase& method = dynamic_cast<const AQLPriceDataFunctions&>(mpVol_vec_f->get())[i];
+		return  dynamic_cast<AQLFunctionBase*>(method.clone());
 	}
 	else if (type == T_FUNC_SCALAR)
 	{
-		const LAFunctionBase& method = dynamic_cast<const LAPriceDataFunction&>(mpVol_f->get()).getFunction();
-		const DoubleArray& grid_T = dynamic_cast<LADataDoubles&>(mpGrid_T->get()).get();
+		const AQLFunctionBase& method = dynamic_cast<const AQLPriceDataFunction&>(mpVol_f->get()).getFunction();
+		const DoubleArray& grid_T = dynamic_cast<AQLDataDoubles&>(mpGrid_T->get()).get();
 		DoubleArray x(2);
 		x[1] = grid_T.at(i);
-		LAFunctionBase* pfunc = dynamic_cast<LAFunctionBase*>(method.clone());
+		AQLFunctionBase* pfunc = dynamic_cast<AQLFunctionBase*>(method.clone());
 		pfunc->operator ()(0, x);
 		return pfunc; 
 	}
 	
 	if (i != 0)
 	{
-		throw LACoreInvalidData("Suffix is over Size(i must be 0)", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Suffix is over Size(i must be 0)", __FILE__, __LINE__);
 	}
 	
 	else if (type == DATA_VECTOR)
 	{
-		const DoubleArray& data = dynamic_cast<LADataDoubles&>(mpVol_vec_d->get()).get();
-		const DoubleArray& time = dynamic_cast<LADataDoubles&>(mpGrid_t->get()).get();
-		LA1DDataSet method;
+		const DoubleArray& data = dynamic_cast<AQLDataDoubles&>(mpVol_vec_d->get()).get();
+		const DoubleArray& time = dynamic_cast<AQLDataDoubles&>(mpGrid_t->get()).get();
+		AQL1DDataSet method;
 		method.set(time, data);
-		const LAInterpolationBase& inter = dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).getMethod();
+		const AQLInterpolationBase& inter = dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).getMethod();
 		method.setInterpolation(inter);
-		return  dynamic_cast<LAFunctionBase*>(method.clone());			
+		return  dynamic_cast<AQLFunctionBase*>(method.clone());			
 	}
 	else
 	{
 		//error
-		throw LACoreInvalidData("Not support InputType", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Not support InputType", __FILE__, __LINE__);
 	}
 	return NULL;
 
 }
 
-const LAFunctionBase*
+const AQLFunctionBase*
 LAMathVolatility::getVolatilityFunc() const
 {
-	int type = dynamic_cast<LADataInt&>(mpVolType->get()).get();
+	int type = dynamic_cast<AQLDataInt&>(mpVolType->get()).get();
 	
 	if (type == FUNC_SCALAR)
 	{
-		const LAFunctionBase* method = &(dynamic_cast<const LAPriceDataFunction&>(mpVol_f->get()).getFunction());
+		const AQLFunctionBase* method = &(dynamic_cast<const AQLPriceDataFunction&>(mpVol_f->get()).getFunction());
 		return method;
 	}
 	else if (type == T_FUNC_VECTOR)
 	{
-		const LAFunctionBase* method = &(dynamic_cast<const LAPriceDataFunctions&>(mpVol_vec_f->get())[0]);
+		const AQLFunctionBase* method = &(dynamic_cast<const AQLPriceDataFunctions&>(mpVol_vec_f->get())[0]);
 		return method;
 		
 	}
 	else
 	{
-		throw LACoreInvalidData("Error in LAMathVolatility",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Error in LAMathVolatility",__FILE__,__LINE__);
 	}
 
 
@@ -397,8 +397,8 @@ LAMathVolatility::getVolatilityFunc() const
 void
 LAMathVolatility::setVolatility(const DoubleArray& grid_t, const vector<DoubleMatrix>& vol)
 {
-	dynamic_cast<LADataInt&>(mpVolType->get()).set(T_I_DATA_MATRIX);
-	dynamic_cast<LADataInt&>(mpFactorNum->get()).set(vol[0].size());
+	dynamic_cast<AQLDataInt&>(mpVolType->get()).set(T_I_DATA_MATRIX);
+	dynamic_cast<AQLDataInt&>(mpFactorNum->get()).set(vol[0].size());
 	
 
 	DoubleMatrix mat;
@@ -414,7 +414,7 @@ LAMathVolatility::setVolatility(const DoubleArray& grid_t, const vector<DoubleMa
 			count++;
 		}
 	}
-	dynamic_cast<LADataDoubleMatrix&>(mpVol_mat_d->get()).set(mat);
+	dynamic_cast<AQLDataDoubleMatrix&>(mpVol_mat_d->get()).set(mat);
 }
 
 
@@ -426,21 +426,21 @@ LAMathVolatility::setVolatility(const DoubleArray& grid_t, const vector<DoubleMa
 */
 
 void
-LAMathVolatility::setVolatility(const vector<vector<LAFunctionBase*> >& vol)
+LAMathVolatility::setVolatility(const vector<vector<AQLFunctionBase*> >& vol)
 {
-	dynamic_cast<LADataInt&>(mpVolType->get()).set(T_I_FUNC_MATRIX);
-	dynamic_cast<LADataInt&>(mpFactorNum->get()).set(vol[0].size());
+	dynamic_cast<AQLDataInt&>(mpVolType->get()).set(T_I_FUNC_MATRIX);
+	dynamic_cast<AQLDataInt&>(mpFactorNum->get()).set(vol[0].size());
 	
-	LAPriceDataFunctions& attr = dynamic_cast<LAPriceDataFunctions&>(mpVol_vec_f->get());
+	AQLPriceDataFunctions& attr = dynamic_cast<AQLPriceDataFunctions&>(mpVol_vec_f->get());
 	attr.clear();
 	for (unsigned int i = 0; i < vol.size(); i++)
 		for (unsigned int j = 0; j < vol[i].size(); j++)
 		{
-			LAString name = getName().get();
+			AQLString name = getName().get();
 			name += "_";
-			name += LADataInt(i).convertToString();
+			name += AQLDataInt(i).convertToString();
 			name += "_";
-			name += LADataInt(j).convertToString();
+			name += AQLDataInt(j).convertToString();
 			attr.push_back(vol[i][j], name);
 		}
 
@@ -457,21 +457,21 @@ LAMathVolatility::setVolatility(const vector<vector<LAFunctionBase*> >& vol)
 */
 
 void
-LAMathVolatility::setVolatility(const DoubleArray& grid_T, const vector<LAFunctionBase*>& vol)
+LAMathVolatility::setVolatility(const DoubleArray& grid_T, const vector<AQLFunctionBase*>& vol)
 {
-	dynamic_cast<LADataInt&>(mpVolType->get()).set(T_I_FUNC_VECTOR);
-	dynamic_cast<LADataDoubles&>(mpGrid_T->get()).set(grid_T);
-	dynamic_cast<LADataInt&>(mpFactorNum->get()).set(vol.size());
+	dynamic_cast<AQLDataInt&>(mpVolType->get()).set(T_I_FUNC_VECTOR);
+	dynamic_cast<AQLDataDoubles&>(mpGrid_T->get()).set(grid_T);
+	dynamic_cast<AQLDataInt&>(mpFactorNum->get()).set(vol.size());
 	
 	DoubleArray x(2);
-	LAPriceDataFunctions& attr = dynamic_cast<LAPriceDataFunctions&>(mpVol_vec_f->get());
+	AQLPriceDataFunctions& attr = dynamic_cast<AQLPriceDataFunctions&>(mpVol_vec_f->get());
 	attr.clear();
 
 	for (unsigned int j = 0; j < vol.size(); j++)
 	{
-		LAString name = getName().get();
+		AQLString name = getName().get();
 		name += "_0_";
-		name += LADataInt(j).convertToString();
+		name += AQLDataInt(j).convertToString();
 		attr.push_back(vol[j], name);
 	}
 
@@ -481,15 +481,15 @@ LAMathVolatility::setVolatility(const DoubleArray& grid_T, const vector<LAFuncti
 		x[1] = grid_T[i];
 		for (unsigned int j = 0; j < vol.size(); j++)
 		{
-			LAString name = getName().get();
+			AQLString name = getName().get();
 			name += "_";
-			name += LADataInt(i).convertToString();
+			name += AQLDataInt(i).convertToString();
 			name += "_";
-			name += LADataInt(j).convertToString();
-			LAFunctionBase* method;
+			name += AQLDataInt(j).convertToString();
+			AQLFunctionBase* method;
 			
 			if (i == 0) method = vol[j];
-			else method = dynamic_cast<LAFunctionBase*>(vol[j]->clone());
+			else method = dynamic_cast<AQLFunctionBase*>(vol[j]->clone());
 			
 			method->operator ()(1, x);
 			attr.push_back(method, name);
@@ -508,10 +508,10 @@ LAMathVolatility::setVolatility(const DoubleArray& grid_T, const vector<LAFuncti
 void
 LAMathVolatility::setVolatility(const DoubleArray& grid_t, const DoubleMatrix& vol)
 {
-	dynamic_cast<LADataInt&>(mpVolType->get()).set(T_DATA_MATRIX);
-	dynamic_cast<LADataDoubles&>(mpGrid_t->get()).set(grid_t);
-	dynamic_cast<LADataInt&>(mpFactorNum->get()).set(1);
-	dynamic_cast<LADataDoubleMatrix&>(mpVol_mat_d->get()).set(vol);
+	dynamic_cast<AQLDataInt&>(mpVolType->get()).set(T_DATA_MATRIX);
+	dynamic_cast<AQLDataDoubles&>(mpGrid_t->get()).set(grid_t);
+	dynamic_cast<AQLDataInt&>(mpFactorNum->get()).set(1);
+	dynamic_cast<AQLDataDoubleMatrix&>(mpVol_mat_d->get()).set(vol);
 }
 	
 /*!
@@ -522,20 +522,20 @@ LAMathVolatility::setVolatility(const DoubleArray& grid_t, const DoubleMatrix& v
 */
 
 void
-LAMathVolatility::setVolatility(const vector<LAFunctionBase*>& vol)
+LAMathVolatility::setVolatility(const vector<AQLFunctionBase*>& vol)
 {
-	dynamic_cast<LADataInt&>(mpVolType->get()).set(T_FUNC_VECTOR);
-	dynamic_cast<LADataInt&>(mpFactorNum->get()).set(1);
+	dynamic_cast<AQLDataInt&>(mpVolType->get()).set(T_FUNC_VECTOR);
+	dynamic_cast<AQLDataInt&>(mpFactorNum->get()).set(1);
 	
-	LAPriceDataFunctions& attr = dynamic_cast<LAPriceDataFunctions&>(mpVol_vec_f->get());
+	AQLPriceDataFunctions& attr = dynamic_cast<AQLPriceDataFunctions&>(mpVol_vec_f->get());
 	attr.clear();
 	for (unsigned int i = 0; i < vol.size(); i++)
 	{
-		LAString name = getName().get();
+		AQLString name = getName().get();
 		name += "_";
-		name += LADataInt(i).convertToString();
+		name += AQLDataInt(i).convertToString();
 		name += "_";
-		name += LADataInt(0).convertToString();
+		name += AQLDataInt(0).convertToString();
 			
 		attr.push_back(vol[i], name);
 	}
@@ -549,31 +549,31 @@ LAMathVolatility::setVolatility(const vector<LAFunctionBase*>& vol)
 
 */
 void
-LAMathVolatility::setVolatility(const DoubleArray& grid_T, LAFunctionBase* vol)
+LAMathVolatility::setVolatility(const DoubleArray& grid_T, AQLFunctionBase* vol)
 {
-	dynamic_cast<LADataInt&>(mpVolType->get()).set(T_FUNC_SCALAR);
-	dynamic_cast<LADataDoubles&>(mpGrid_T->get()).set(grid_T);
-	dynamic_cast<LADataInt&>(mpFactorNum->get()).set(1);
-	LAPriceDataFunction& attr = dynamic_cast<LAPriceDataFunction&>(mpVol_f->get());
-	LAString name = getName().get();
+	dynamic_cast<AQLDataInt&>(mpVolType->get()).set(T_FUNC_SCALAR);
+	dynamic_cast<AQLDataDoubles&>(mpGrid_T->get()).set(grid_T);
+	dynamic_cast<AQLDataInt&>(mpFactorNum->get()).set(1);
+	AQLPriceDataFunction& attr = dynamic_cast<AQLPriceDataFunction&>(mpVol_f->get());
+	AQLString name = getName().get();
 	name += "_0_0";	
 	attr.setFunction(vol, name);
 
-/*	LAPriceDataFunctions& attr = dynamic_cast<LAPriceDataFunctions&>(mpVol_vec_f->get());
+/*	AQLPriceDataFunctions& attr = dynamic_cast<AQLPriceDataFunctions&>(mpVol_vec_f->get());
 	attr.clear();
 	DoubleArray x(2);
 	for (unsigned int i = 0; i < grid_T.size(); i++)
 	{
 		x[1] = grid_T[i];
-		LAString name = getName().get();
+		AQLString name = getName().get();
 		name += "_";
-		name += LADataInt(i).convertToString();
+		name += AQLDataInt(i).convertToString();
 		name += "_";
-		name += LADataInt(0).convertToString();
-		LAFunctionBase* method;
+		name += AQLDataInt(0).convertToString();
+		AQLFunctionBase* method;
 			
 		if (i == 0) method = vol;
-		else method = dynamic_cast<LAFunctionBase*>(vol->clone());
+		else method = dynamic_cast<AQLFunctionBase*>(vol->clone());
 			
 		method->operator ()(1, x);
 		attr.push_back(method, name);
@@ -591,10 +591,10 @@ LAMathVolatility::setVolatility(const DoubleArray& grid_T, LAFunctionBase* vol)
 void
 LAMathVolatility::setVolatility(const DoubleArray& grid_t, const DoubleArray& vol)
 {
-	dynamic_cast<LADataInt&>(mpVolType->get()).set(DATA_VECTOR);
-	dynamic_cast<LADataDoubles&>(mpGrid_t->get()).set(grid_t);
-	dynamic_cast<LADataInt&>(mpFactorNum->get()).set(1);
-	dynamic_cast<LADataDoubles&>(mpVol_vec_d->get()).set(vol);
+	dynamic_cast<AQLDataInt&>(mpVolType->get()).set(DATA_VECTOR);
+	dynamic_cast<AQLDataDoubles&>(mpGrid_t->get()).set(grid_t);
+	dynamic_cast<AQLDataInt&>(mpFactorNum->get()).set(1);
+	dynamic_cast<AQLDataDoubles&>(mpVol_vec_d->get()).set(vol);
 }
 
 
@@ -608,12 +608,12 @@ LAMathVolatility::setVolatility(const DoubleArray& grid_t, const DoubleArray& vo
 
 
 void
-LAMathVolatility::setVolatility(LAFunctionBase* vol)
+LAMathVolatility::setVolatility(AQLFunctionBase* vol)
 {
-	dynamic_cast<LADataInt&>(mpVolType->get()).set(FUNC_SCALAR);
-	dynamic_cast<LADataInt&>(mpFactorNum->get()).set(1);
-	LAPriceDataFunction& attr = dynamic_cast<LAPriceDataFunction&>(mpVol_f->get());
-	LAString name = getName().get();
+	dynamic_cast<AQLDataInt&>(mpVolType->get()).set(FUNC_SCALAR);
+	dynamic_cast<AQLDataInt&>(mpFactorNum->get()).set(1);
+	AQLPriceDataFunction& attr = dynamic_cast<AQLPriceDataFunction&>(mpVol_f->get());
+	AQLString name = getName().get();
 	name += "_0_0";	
 	attr.setFunction(vol, name);
 }
@@ -628,9 +628,9 @@ LAMathVolatility::setVolatility(LAFunctionBase* vol)
 void
 LAMathVolatility::setVolatility(double vol)
 {
-	dynamic_cast<LADataInt&>(mpVolType->get()).set(DATA_SCALAR);
-	dynamic_cast<LADataInt&>(mpFactorNum->get()).set(1);
-	dynamic_cast<LADataDouble&>(mpVol_d->get()).set(vol);
+	dynamic_cast<AQLDataInt&>(mpVolType->get()).set(DATA_SCALAR);
+	dynamic_cast<AQLDataInt&>(mpFactorNum->get()).set(1);
+	dynamic_cast<AQLDataDouble&>(mpVol_d->get()).set(vol);
 }
 
 
@@ -641,7 +641,7 @@ LAMathVolatility::setVolatility(double vol)
 */
 void                
 LAMathVolatility::remove(
-	const LAString& dataName)
+	const AQLString& dataName)
 {
 	if(dataName == CALIBRATION_DATA_NAME
 		|| dataName == CALIBRATION_DATA_INTERPOLATION
@@ -657,7 +657,7 @@ LAMathVolatility::remove(
 	{
 		return; 
 	}
-	LAObject::remove(dataName);
+	AQLObject::remove(dataName);
 }
 
 /*!
@@ -688,7 +688,7 @@ LAMathVolatility::reset(void)
 void
 LAMathVolatility::setInitialValue(const DoubleArray& vol0vec)
 {
-	dynamic_cast<LADataDoubles&>(mpInitialValues->get()).set(vol0vec);
+	dynamic_cast<AQLDataDoubles&>(mpInitialValues->get()).set(vol0vec);
 }
 
 /*!
@@ -699,7 +699,7 @@ LAMathVolatility::setInitialValue(const DoubleArray& vol0vec)
 void
 LAMathVolatility::setInitialValue(const double vol0)
 {
-	dynamic_cast<LADataDouble&>(mpInitialValue->get()).set(vol0);
+	dynamic_cast<AQLDataDouble&>(mpInitialValue->get()).set(vol0);
 }
 
 /*!
@@ -709,21 +709,21 @@ LAMathVolatility::setInitialValue(const double vol0)
 const double
 LAMathVolatility::getInitialValue() const
 {
-	int type = dynamic_cast<LADataInt&>(mpVolType->get()).get();
+	int type = dynamic_cast<AQLDataInt&>(mpVolType->get()).get();
 	
 	if (type == FUNC_SCALAR)
 	{
-		const double ret = dynamic_cast<const LADataDouble&>(mpInitialValue->get()).get();
+		const double ret = dynamic_cast<const AQLDataDouble&>(mpInitialValue->get()).get();
 		return ret;
 	}
 	else if (type == T_FUNC_VECTOR)
 	{
-		const double ret = dynamic_cast<const LADataDoubles&>(mpInitialValues->get()).get()[0];
+		const double ret = dynamic_cast<const AQLDataDoubles&>(mpInitialValues->get()).get()[0];
 		return ret;		
 	}
 	else
 	{
-		throw LACoreInvalidData("Error in LAMathVolatility",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Error in LAMathVolatility",__FILE__,__LINE__);
 	}
 
 
@@ -736,18 +736,18 @@ LAMathVolatility::getInitialValue() const
 	@param[in] e copy source
 	@return reference to this object
 */
-LAObject&
+AQLObject&
 LAMathVolatility::copy(
-	const LAObject& e)
+	const AQLObject& e)
 {
 	if (this == &e) return *this;
 
-	LAObject::copy(e);
+	AQLObject::copy(e);
 	if (!e.isTypeOf(ENTITY_IR_VOLATILITY))
 	{
-		LAString err = "Assignement error for LAMathVolatility : from ";
-		err += LAString(e.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignement error for LAMathVolatility : from ";
+		err += AQLString(e.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	mpName		 = &getData(CALIBRATION_DATA_NAME	);
 	mpGrid_T	 = &getData(IR_CALIBRATION_DATA_GRID_LARGE_T	);
@@ -768,11 +768,11 @@ LAMathVolatility::copy(
 	@param[in] name name of certain data
 	@return reference to holder class 
 */
-LADataHolder&
-LAMathVolatility::add(const LAString& name)
+AQLDataHolder&
+LAMathVolatility::add(const AQLString& name)
 {
-	LADataInstance* dataInstance = getDataInstance();
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
-	const LADataHolder& dh = dm.getData(name);
-	return LAObject::add(name, dh);
+	AQLDataInstance* dataInstance = getDataInstance();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
+	const AQLDataHolder& dh = dm.getData(name);
+	return AQLObject::add(name, dh);
 }

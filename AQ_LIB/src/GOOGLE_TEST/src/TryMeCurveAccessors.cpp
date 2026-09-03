@@ -4,7 +4,7 @@
 
 namespace google_test
 {
-    TryMeCurveAccessors::TryMeCurveAccessors( const LAString& inputFile )
+    TryMeCurveAccessors::TryMeCurveAccessors( const AQLString& inputFile )
         : fileLoaded_( false )
     {
         if ( inputFile.size() != 0 )

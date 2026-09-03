@@ -10,7 +10,7 @@
  */
 
 #include "meLWOBondCreate.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "tryMeLWOBond.h"
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
@@ -31,10 +31,10 @@ const std::string meLWOBondCreate( const std::string& bondObjectName,
     AQ_API_START
 
     // Marshall Inputs
-	LAStringMatrix bondLVBAsStringMatrix;
+	AQLStringMatrix bondLVBAsStringMatrix;
 	swig::buildStringMatrix( bondLVBAsStringMatrix, bondLVB );
 
-    LAStringMatrix scheduleLVBAsStringMatrix;
+    AQLStringMatrix scheduleLVBAsStringMatrix;
 	swig::buildStringMatrix( scheduleLVBAsStringMatrix, scheduleLVB );
 
     // Call validation method
@@ -59,7 +59,7 @@ const std::string meLWOBondCreateFromGenerator( const std::string& bondObjectNam
     AQ_API_START
 
     // Marshall Inputs
-    LAStringMatrix bondExpressionLVBAsStringMatrix;
+    AQLStringMatrix bondExpressionLVBAsStringMatrix;
 	swig::buildStringMatrix( bondExpressionLVBAsStringMatrix, bondExpressionLVB );
 
     // Call validation method

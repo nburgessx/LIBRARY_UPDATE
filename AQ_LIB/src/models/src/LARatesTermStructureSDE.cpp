@@ -26,7 +26,7 @@
 #include "LARatesTermStructureSDE.h"
 #include "LARatesSDEIntegralBase.h"
 
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 #define ISINCLUEDECAP
 using namespace std;
@@ -60,7 +60,7 @@ LARatesTermStructureSDE::~LARatesTermStructureSDE()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesTermStructureSDE::clone() const
 {
     try 
@@ -69,7 +69,7 @@ LARatesTermStructureSDE::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -114,11 +114,11 @@ LARatesTermStructureSDE::getPathElement(unsigned int pos)
 	const DoubleArray& grid = mpBM->getTimeGrid();
 	if (pos > grid.size() - 1)
 	{
-		throw LACoreInvalidData("pos is over size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("pos is over size", __FILE__, __LINE__);
 	}
 
 	unsigned int pos_e;
-	LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), pos_e);
+	AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), pos_e);
 
 	if (mpBM->getCurrentID() == mID && pos <= mPos)
 	{
@@ -138,10 +138,10 @@ LARatesTermStructureSDE::getPathElement(unsigned int pos)
 	mID = mpBM->getCurrentID();
 
 	unsigned int _pos_e;
-	if (!LAAlgorithm::find<DoubleArray, double>(grid, mTimeGrid[pos_e], 0, grid.size() - 1, _pos_e))
+	if (!AQLAlgorithm::find<DoubleArray, double>(grid, mTimeGrid[pos_e], 0, grid.size() - 1, _pos_e))
 	{
 		//error
-		throw LACoreInvalidData("grid is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("grid is something wrong", __FILE__, __LINE__);
 	}
     //calculate path
 	calcPath(_pos_e);
@@ -240,10 +240,10 @@ LARatesTermStructureSDE::calcPath(unsigned int pos)
 
 	
 	unsigned int j;
-	if (!LAAlgorithm::find<DoubleArray, double>(mTimeGrid, grid[mPos], 0, mTimeGrid.size() - 1, j))
+	if (!AQLAlgorithm::find<DoubleArray, double>(mTimeGrid, grid[mPos], 0, mTimeGrid.size() - 1, j))
 	{
 		//error
-		throw LACoreInvalidData("grid is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("grid is something wrong", __FILE__, __LINE__);
 	}
 	j++;
 
@@ -294,13 +294,13 @@ LARatesTermStructureSDE::calcPath(unsigned int pos)
 	else if (pos < mPos)
 	{
 		unsigned int _pos_s;
-		LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), _pos_s);
+		AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), _pos_s);
 		if (grid[pos] != mTimeGrid[_pos_s])
 		{
 			if (_pos_s == 0)
 			{
 				//error
-				throw LACoreInvalidData("grid is something wrong", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("grid is something wrong", __FILE__, __LINE__);
 			}
 			_pos_s--;
 		}		
@@ -309,19 +309,19 @@ LARatesTermStructureSDE::calcPath(unsigned int pos)
 		for (i = var.size() - 1, j = mVar.size() - 1; i >= 0; i--, j--)
 			mVar[j] = var[i];
 		
-		if (!LAAlgorithm::find<DoubleArray, double>(grid, mTimeGrid[_pos_s], 0, grid.size() - 1, pos_s))
+		if (!AQLAlgorithm::find<DoubleArray, double>(grid, mTimeGrid[_pos_s], 0, grid.size() - 1, pos_s))
 		{
-			throw LACoreInvalidData("TimeGrid is inconsistent with BM grid", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("TimeGrid is inconsistent with BM grid", __FILE__, __LINE__);
 		}	
 	}
 	else pos_s = mPos;
 		
 	unsigned int j;
-	LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos_s], mTimeGrid.size(), j);
+	AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos_s], mTimeGrid.size(), j);
 	if (grid[pos_s] == mTimeGrid[j]) j++;
 	
 	unsigned int pos_e;
-	LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), pos_e);
+	AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), pos_e);
 
 
 	unsigned int k = 0;
@@ -371,6 +371,6 @@ LARatesTermStructureSDE::setUp()
 	mCAP.resize(initial_L.size());
 	
 	for (unsigned int i = 0; i < mCAP.size(); ++i)
-		mCAP[i] =  LAMath::max(0.05, LAMath::abs(mCapRatio * initial_L[i])) ;
+		mCAP[i] =  AQLMath::max(0.05, AQLMath::abs(mCapRatio * initial_L[i])) ;
 #endif
 }

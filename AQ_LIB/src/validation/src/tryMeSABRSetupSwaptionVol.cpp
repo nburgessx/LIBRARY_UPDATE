@@ -18,7 +18,7 @@ namespace validation
 	*  @param [inout]		strikeMat		Matrix of strikes
 	*  @param [inout]		signMat			Matrix of signs
 	*/
-	void tryMeSABRSetupSwaptionVol(const LAString& gridID, LAStringMatrix& volMat, LAStringMatrix& strikeMat, LAStringMatrix& signMat)
+	void tryMeSABRSetupSwaptionVol(const AQLString& gridID, AQLStringMatrix& volMat, AQLStringMatrix& strikeMat, AQLStringMatrix& signMat)
 	{
 		VALID_EXCEPTION_START
 

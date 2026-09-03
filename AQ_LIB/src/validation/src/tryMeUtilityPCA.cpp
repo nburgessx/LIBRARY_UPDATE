@@ -22,21 +22,21 @@ namespace validation
 
     /* @brief			Retrieve the PCA results based on the PCA key
     *  @param [in]		key			Key used to identify a PCA analysis
-    *  @return			A LAStringMatrix for the PCA results
+    *  @return			A AQLStringMatrix for the PCA results
     */
-    LAStringMatrix getPCAResults( const LAString& key )
+    AQLStringMatrix getPCAResults( const AQLString& key )
     {
 
-        LADataInstance* dataInstance = etrading::getDataInstance();
+        AQLDataInstance* dataInstance = etrading::getDataInstance();
 
         // Get Eigen vector results
         DoubleMatrix tmp;
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, LAString( "EIGEN_VECTORS" ), key );
+        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VECTORS" ), key );
         size_t num_factor = tmp.size();
         size_t dim_data = tmp[0].size();
 
         // Initialise output matrix
-        LAStringMatrix ret;
+        AQLStringMatrix ret;
         ret.resize( dim_data + 3 );
         for( size_t i = 0; i < dim_data + 3; ++i )
         {
@@ -44,16 +44,16 @@ namespace validation
         }
 
         // Headers
-        ret[0][0] = LAString();
+        ret[0][0] = AQLString();
         for( size_t i = 0; i < num_factor; i++ )
         {
-            ret[0][i + 1] = LAString( "PC" ) + LAString( static_cast<double>( i + 1 ), 0 );
+            ret[0][i + 1] = AQLString( "PC" ) + AQLString( static_cast<double>( i + 1 ), 0 );
         }
 
         // Data
         for ( size_t j = 0; j < dim_data; j++ )
         {
-            ret[j + 1][0] = LAString( "Series" ) + LAString( static_cast<double>( j + 1 ), 0 );
+            ret[j + 1][0] = AQLString( "Series" ) + AQLString( static_cast<double>( j + 1 ), 0 );
 
             for( unsigned int i = 0; i < num_factor; i++ )
             {
@@ -65,7 +65,7 @@ namespace validation
         }
 
         // Get POV results
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, LAString( "POV" ), key );
+        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "POV" ), key );
 
         ret[dim_data + 1][0] = "Proportion of Variance";
         for( unsigned int i = 0; i < num_factor; i++ )
@@ -76,7 +76,7 @@ namespace validation
         }
 
         // Get Eigen value results
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, LAString( "EIGEN_VALUES" ), key );
+        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VALUES" ), key );
         ret[dim_data + 2][0] = "Eigen Values";
         for( unsigned int i = 0; i < num_factor; i++ )
         {
@@ -93,9 +93,9 @@ namespace validation
     *  @param [in]		data					Data under analysis
     *  @param [in]		useCorrelationMatrix	True to use correlation matrix. False to use covariance matrix. Default to False
     *  @param [in]		nFactors				The number of PCA factors
-    *  @return			A LAStringMatrix for the PCA results
+    *  @return			A AQLStringMatrix for the PCA results
     */
-    LAStringMatrix tryMeUtilityPCA( const LAString& key, const DoubleMatrix& data, bool useCorrelationMatrix, int nFactors )
+    AQLStringMatrix tryMeUtilityPCA( const AQLString& key, const DoubleMatrix& data, bool useCorrelationMatrix, int nFactors )
     {
         VALID_EXCEPTION_START
 
@@ -145,9 +145,9 @@ namespace validation
         etrading::LAUpdateStaticDataManager::SetUpPCA( etrading::getDataInstance(), corr, nFactors, key );
 
         //++num_call_pca[key.getCString()];
-        //LAString msg = key + ":" + LAString( static_cast<int > (num_call_pca[key.getCString()]) );
+        //AQLString msg = key + ":" + AQLString( static_cast<int > (num_call_pca[key.getCString()]) );
 
-        LAStringMatrix ret = getPCAResults( key );
+        AQLStringMatrix ret = getPCAResults( key );
 
         if ( CreateDataFile::recordEnabled() )
         {

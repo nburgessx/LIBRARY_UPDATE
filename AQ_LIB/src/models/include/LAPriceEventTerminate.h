@@ -5,9 +5,9 @@
 #endif
 
 #include "LAPriceEventBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LADate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDate.h"
 #include "LAPricePayOffTool.h"
 
 
@@ -38,13 +38,13 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
 
     // execute trigger action
-	virtual void	            doAction(const LADate& actiondate,
+	virtual void	            doAction(const AQLDate& actiondate,
 										 double actiontime,
 										 std::vector<PayOffToolHolderVector>& payoff,
 										 std::vector<PayOffToolHolderVector>& extrapayoff,
@@ -53,21 +53,21 @@ public:
 										 std::vector<PayOffToolHolderIter>& iter);
 
 	// set up this class
-	virtual	void				setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+	virtual	void				setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall = false);
 
 	// calculate accrued interest at actiondate
-	double						calcAccruedInterest(const LADate& actiondate,
+	double						calcAccruedInterest(const AQLDate& actiondate,
 										 double actiontime,
 										 std::vector<PayOffToolHolderVector>& payoff,
 										 std::vector<PayOffToolHolderIter>& iter,
 										 unsigned int legno,
 										 LAPricePayOffToolHolder& ph) const;
 	// calculate notional exchange at actiondate
-	double						calcNotionalExchange(const LADate& actiondate,
+	double						calcNotionalExchange(const AQLDate& actiondate,
 										 double actiontime,
 										 std::vector<PayOffToolHolderVector>& payoff,
 										 std::vector<PayOffToolHolderVector>& extrapayoff,
@@ -83,7 +83,7 @@ protected:
 	BoolVector	mIsArrear;// arrear or advance
 	BoolVector	mIsNotionalExchangeAtEnd;// notional exchange at last or not
 	
-//	std::vector<const LAObject*> mCashlets;// legs
+//	std::vector<const AQLObject*> mCashlets;// legs
 
 };
 

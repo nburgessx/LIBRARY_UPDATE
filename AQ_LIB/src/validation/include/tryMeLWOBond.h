@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "Bond.h"
 
@@ -51,7 +51,7 @@ namespace validation
 	*  @param [in]  	columnList              Column header names to show specified columns. Default to empty list showing all columns.
 	*  @return			Bond Cashflows
 	*/
-	AnyTypeMatrix tryMeLWOBondDisplayCashflows( const std::string& bondObjectName, const LADate& settlementDate, const double& yield, const std::string& yieldCalculationType = "", const bool& showColumnHeaders = true, const std::vector<std::string>& columnList=std::vector<std::string>() );
+	AnyTypeMatrix tryMeLWOBondDisplayCashflows( const std::string& bondObjectName, const AQLDate& settlementDate, const double& yield, const std::string& yieldCalculationType = "", const bool& showColumnHeaders = true, const std::vector<std::string>& columnList=std::vector<std::string>() );
 
     /* @brief			validation interface for the meLWOBondDirtyPrice method
 	*  @param [in]		bondObjectName		Bond object name
@@ -60,21 +60,21 @@ namespace validation
     *  @param [in]		yieldCalculationType = ""	yield calculation type	        
     *  @return			Bond Dirty Price(s)
 	*/
-	std::vector< double > tryMeLWOBondDirtyPrice( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
+	std::vector< double > tryMeLWOBondDirtyPrice( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
 
     /* @brief			validation interface for the meLWOBondAccruedInterestDays method
 	*  @param [in]		bondObjectName		Bond object name
     *  @param [in]		settlementDates		settlement dates
     *  @return			Bond Accrual Day(s)
 	*/
-	std::vector< int > tryMeLWOBondAccruedInterestDays( const std::string& bondObjectName, const std::vector< LADate >& settlementDates );
+	std::vector< int > tryMeLWOBondAccruedInterestDays( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates );
 
     /* @brief			validation interface for the meLWOBondAccruedInterest method
 	*  @param [in]		bondObjectName		Bond object name
     *  @param [in]		settlementDates		settlement dates
     *  @return			The bond accrued interest
 	*/
-	std::vector< double > tryMeLWOBondAccruedInterest( const std::string& bondObjectName, const std::vector< LADate >& settlementDates );
+	std::vector< double > tryMeLWOBondAccruedInterest( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates );
 
     /* @brief			validation interface for the meLWOBondAccruedInterest method
 	*  @param [in]		bondObjectName			Bond object name
@@ -90,7 +90,7 @@ namespace validation
     *  @param [in]		yieldCalculationType = ""	yield calculation type	        
     *  @return			Bond Dirty Price(s)
 	*/
-	std::vector< double > tryMeLWOBondCleanPrice( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
+	std::vector< double > tryMeLWOBondCleanPrice( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
 
     /* @brief			validation interface for the meLWOBondPrice method
 	*  @param [in]		bondObjectName		Bond object name
@@ -99,7 +99,7 @@ namespace validation
     *  @param [in]		yieldCalculationType = ""	yield calculation type	        
     *  @return			Bond Dirty Price(s)
 	*/
-	std::vector< double > tryMeLWOBondPrice( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
+	std::vector< double > tryMeLWOBondPrice( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
 
     /* @brief			validation interface for the meLWOBondQuote method
 	*  @param [in]		bondObjectName		Bond object name
@@ -108,7 +108,7 @@ namespace validation
     *  @param [in]		yieldCalculationType = ""	yield calculation type	        
     *  @return			Bond Dirty Price(s)
 	*/
-	std::vector< double > tryMeLWOBondQuote( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
+	std::vector< double > tryMeLWOBondQuote( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
 
     /* @brief			Helper function to calculate the yield of a bond given the bond object
 	*  @param [in]		bondObject		    Bond Object
@@ -117,7 +117,7 @@ namespace validation
     *  @param [in]		yieldCalculationType = ""	yield calculation type	        
     *  @return			Bond Yield
 	*/
-    double tryMeLWOBondYieldFromObject( const etrading::BondPtr bondObject, const LADate & settlementDate, const double & price, const std::string& yieldCalculationType = "" );
+    double tryMeLWOBondYieldFromObject( const etrading::BondPtr bondObject, const AQLDate & settlementDate, const double & price, const std::string& yieldCalculationType = "" );
 
     /* @brief			Helper function to optimize the performance of the bond yield calculation
 	*  @param [in]		bondObject		    Bond object pointer
@@ -126,7 +126,7 @@ namespace validation
     *  @param [in]		yieldCalculationType = ""	yield calculation type	        
     *  @return			Bond Yield(s)
 	*/
-    std::vector< double > tryMeLWOBondYieldOptimized( const etrading::BondPtr bondObject, const std::vector< LADate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType = ""  );
+    std::vector< double > tryMeLWOBondYieldOptimized( const etrading::BondPtr bondObject, const std::vector< AQLDate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType = ""  );
 
     /* @brief			validation interface for the meLWOBondYield method
 	*  @param [in]		bondObjectName		    Bond object name
@@ -136,7 +136,7 @@ namespace validation
     *  @param [in]      optimizePerformance     Use multi-threading to optimize performance, defaults to FALSE
     *  @return			Bond Yield(s)
 	*/
-	std::vector< double > tryMeLWOBondYield( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType = "" , const bool & optimizePerformance = false);
+	std::vector< double > tryMeLWOBondYield( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType = "" , const bool & optimizePerformance = false);
 
     /* @brief			validation interface for the meLWOBondYield method
 	*  @param [in]		bondObjectName		    Bond object name
@@ -164,7 +164,7 @@ namespace validation
     *  @param [in]		yieldCalculationType	yield calculation type	        
     *  @return			Compound Yields used as bond discount factors
 	*/
-    std::vector< double > tryMeLWOBondCompoundYields( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType = "" );
+    std::vector< double > tryMeLWOBondCompoundYields( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType = "" );
 
 	/* @brief			validation interface for the meLWOBondDV01Numerical method. Calculate the DV01(s) via numerical bumping.
 	*  @param [in]		bondObjectName		Bond object name
@@ -175,7 +175,7 @@ namespace validation
     *  @param [in]		yieldCalculationType = ""	yield calculation type	        
     *  @return			Bond DV01(s)
 	*/
-	std::vector< double > tryMeLWOBondDV01Numerical( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const double bumpSize, const LAString& bumpMode, const std::string& yieldCalculationType = "" );
+	std::vector< double > tryMeLWOBondDV01Numerical( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const double bumpSize, const AQLString& bumpMode, const std::string& yieldCalculationType = "" );
 
 	/* @brief			validation interface for the meLWOBondDV01 method. Calculate the DV01(s) analytically.
 	*  @param [in]		bondObjectName		Bond object name
@@ -186,7 +186,7 @@ namespace validation
 	*  @param [in]		bumpMode			How to calculate the delta: Up, Down or Central difference
     *  @return			Bond DV01(s)
 	*/
-	std::vector< double > tryMeLWOBondDV01( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
+	std::vector< double > tryMeLWOBondDV01( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
 
 	/* @brief			validation interface for the meLWOBondModifiedDuration method. Calculate the Modified Duration analytically.
 	*  @param [in]		bondObjectName		Bond object name
@@ -197,7 +197,7 @@ namespace validation
 	*  @param [in]		bumpMode			How to calculate the delta: Up, Down or Central difference
     *  @return			Bond Duration(s)
 	*/
-	std::vector< double > tryMeLWOBondModifiedDuration( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
+	std::vector< double > tryMeLWOBondModifiedDuration( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType = "" );
 
     /* @brief			validation interface for the meLWOBondSpreadOIS method. Calculate the O-Spread (BondYield to OIS ParRate spread) using linear interpolation on the OIS ParRate on standard tenors.
 	*  @param [in]		bondObjectName		Bond object name
@@ -206,7 +206,7 @@ namespace validation
     *  @param [in]		bondYields		    Bond yields
     *  @return			A vector of O-Spreads
 	*/
-    std::vector< double > tryMeLWOBondOisSpread( const std::string& bondObjectName, const std::string& marketObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields );
+    std::vector< double > tryMeLWOBondOisSpread( const std::string& bondObjectName, const std::string& marketObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields );
 
    /* @brief			validation interface for the meLWOBondOisSpread method. Calculate the O-Spread (BondYield to OIS ParRate spread) using linear interpolation on the OIS ParRate on standard tenors.
 	*  @param [in]		bondObjectName		Bond object name
@@ -215,14 +215,14 @@ namespace validation
     *  @param [in]		bondYield		    Bond yield
     *  @return			Bond Yield and OIS ParRate Spread
 	*/
-    double tryMeLWOBondOisSpread( const std::string& bondObjectName, const std::string& marketObjectName, const LADate& settleDate, const double& bondYield);
+    double tryMeLWOBondOisSpread( const std::string& bondObjectName, const std::string& marketObjectName, const AQLDate& settleDate, const double& bondYield);
 
 	/* @brief			Validation interface for the meLWOBondLastCouponDate method. Calculate the bond's last coupon date.
 	*  @param [in]		bondObjectName		Bond object name
     *  @param [in]		settlementDates		Bond's Settlement Dates 
     *  @return			The bond's last coupon date.
 	*/
-    std::vector< double > tryMeLWOBondLastCouponDate( const std::string& bondObjectName, const std::vector< LADate >& settlementDates);
+    std::vector< double > tryMeLWOBondLastCouponDate( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates);
 
 	/* @brief			validation interface for the meLWOBondPriceFromDirtyToClean method. 
 	*  @param [in]		bondObjectName			Bond object name
@@ -246,7 +246,7 @@ namespace validation
      *  @param [in]		creditModelName		Credit model name
      *  @return			The calculated Bond price
 	 */
-	 double tryMeLWOBondPriceFromCreditModel( const std::string& bondObjectName, const LADate& settlementDate, const std::string& creditModelName );
+	 double tryMeLWOBondPriceFromCreditModel( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string& creditModelName );
 
 	 /* @brief Creates a LWOBondGenerator object, containing the bond static properties.
 	 * @param [in] objectName        The name of the Bond Generator object
@@ -283,7 +283,7 @@ namespace validation
 	*  @param [in]		continuouslyCompounding	        True to calculate z-spread using continouslyCompounding
 	*  @return			Z Spread
 	*/
-	double tryMeLWOBondZSpread(const std::string& bondObjectName, const LADate& settlementDate, const double& bondPrice, const std::string& curveCollection, const std::string& forecastCurve, const bool& continuouslyCompounding);
+	double tryMeLWOBondZSpread(const std::string& bondObjectName, const AQLDate& settlementDate, const double& bondPrice, const std::string& curveCollection, const std::string& forecastCurve, const bool& continuouslyCompounding);
 
 	/* @brief			Validation interface for the meLWOBondZSpread method. Bond Z Spread.
 	*  @param [in]		bondObjectNames		Bond object name
@@ -294,7 +294,7 @@ namespace validation
 	*  @param [in]		continuouslyCompounding	        True to calculate z-spread using continouslyCompounding
 	*  @return			Z Spread
 	*/
-	DoubleVector tryMeLWOBondZSpreads(const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& bondPrices, const std::vector< std::string >& curveCollections, const std::vector< std::string >& forecastCurves, const bool& continuouslyCompounding);
+	DoubleVector tryMeLWOBondZSpreads(const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& bondPrices, const std::vector< std::string >& curveCollections, const std::vector< std::string >& forecastCurves, const bool& continuouslyCompounding);
 
 	/* @brief			Validation interface for the meLWOBondZSpreadFromRates method. Bond Z Spread.
 	*  @param [in]		bondObjectName		Bond object name
@@ -304,7 +304,7 @@ namespace validation
 	*  @param [in]		continuouslyCompounding	        True to calculate z-spread using continouslyCompounding
 	*  @return			Z Spread
 	*/
-	double tryMeLWOBondZSpreadFromRates(const std::string& bondObjectName, const LADate& settlementDate, const double& bondPrice, const DoubleVector& zeroRates, const bool& continuouslyCompounding);
+	double tryMeLWOBondZSpreadFromRates(const std::string& bondObjectName, const AQLDate& settlementDate, const double& bondPrice, const DoubleVector& zeroRates, const bool& continuouslyCompounding);
 
 	/* @brief			Validation interface for the meLWOBondForwardPrice method. Calculate Bond's forward price at forward settle date, from repo rate.
 	*  @param [in]		bondObjectName		Bond object name
@@ -315,7 +315,7 @@ namespace validation
 	*  @param [in]		repoDayCount		Day count for repo year fraction
 	*  @return			Bond forward price
 	*/
-	double tryMeLWOBondForwardPrice(const std::string& bondObjectName, const LADate& settleDate, const LADate& forwardSettleDate, const double& price, const double& repoRate, const std::string& repoDayCount);
+	double tryMeLWOBondForwardPrice(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const double& price, const double& repoRate, const std::string& repoDayCount);
 
 	/* @brief			Validation interface for the meLWOBondForwardReinvestedCoupon method. Calculate Bond's recieved coupon value at forward settle date, from repo rate.
 	*  @param [in]		bondObjectName		Bond object name
@@ -326,7 +326,7 @@ namespace validation
 	*  @param [in]		repoDayCount		Day count for repo year fraction
 	*  @return			Bond's recieved coupon value at forward settle date
 	*/
-	double tryMeLWOBondForwardReinvestedCoupon(const std::string& bondObjectName, const LADate& settleDate, const LADate& forwardSettleDate, const double& price, const double& repoRate, const std::string& repoDayCount);
+	double tryMeLWOBondForwardReinvestedCoupon(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const double& price, const double& repoRate, const std::string& repoDayCount);
 
 	/* @brief			Validation interface for the meLWOBondRepoRate method. Calculate Bond's implied repo rate from bond's forward price at settle date.
 	*  @param [in]		bondObjectName		Bond object name
@@ -337,7 +337,7 @@ namespace validation
 	*  @param [in]		repoDayCount		Day count for repo year fraction
 	*  @return			Bond implied repo rate
 	*/
-	double tryMeLWOBondRepoRate(const std::string& bondObjectName, const LADate& settleDate, const LADate& forwardSettleDate, const double& price, const double& forwardPrice, const std::string& repoDayCount);
+	double tryMeLWOBondRepoRate(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const double& price, const double& forwardPrice, const std::string& repoDayCount);
 
 	/* @brief			Validation interface for the meLWOBondRepoRateFromFuture method. Calculate Bond's implied repo rate from bond's FUTURE price at settle date.
 	*  @param [in]		bondObjectName		Bond object name
@@ -349,7 +349,7 @@ namespace validation
 	*  @param [in]		repoDayCount		Day count for repo year fraction
 	*  @return			Bond implied repo rate
 	*/
-	double tryMeLWOBondRepoRateFromFuture(const std::string& bondObjectName, const LADate& settleDate, const LADate& deliveryDate, const double& price, const double& futurePrice, const double& conversionFactor, const std::string& repoDayCount);
+	double tryMeLWOBondRepoRateFromFuture(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& deliveryDate, const double& price, const double& futurePrice, const double& conversionFactor, const std::string& repoDayCount);
 
 	/* @brief			Validation interface for the meLWOBondFuturePrice method. Calculate Bond's Future price at future settle date, from repo rate.
 	*  @param [in]		bondObjectName		Bond object name
@@ -361,7 +361,7 @@ namespace validation
 	*  @param [in]		conversionFactor	Bond's conversion factor
 	*  @return			Bond Future price
 	*/
-	double tryMeLWOBondFuturePrice(const std::string& bondObjectName, const LADate& settleDate, const LADate& deliveryDate, const double& bondPrice, const double& repoRate, const std::string& repoDayCount, const double& conversionFactor);
+	double tryMeLWOBondFuturePrice(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& deliveryDate, const double& bondPrice, const double& repoRate, const std::string& repoDayCount, const double& conversionFactor);
 
 	/* @brief			Validation interface for the meLWOBondConversionFactor method. Calculate Bond conversionFactor based on future settle date and future's notional coupon rate.
 	*  @param [in]		bondObjectName		Bond object name
@@ -369,7 +369,7 @@ namespace validation
 	*  @param [in]		notionalBondCouponRate	Bond future notionalBondCouponRate
 	*  @return			Bond conversionFactor against the future contract
 	*/
-	double tryMeLWOBondConversionFactor(const std::string& bondObjectName, const LADate& firstFutureSettleDate, const double& notionalBondCouponRate);
+	double tryMeLWOBondConversionFactor(const std::string& bondObjectName, const AQLDate& firstFutureSettleDate, const double& notionalBondCouponRate);
 
 	/* @brief			Validation interface for the meLWOBondGrossBasis method. Calculate the Bond Gross Basis
 	*  @param [in]		bondObjectName		Bond object name
@@ -379,7 +379,7 @@ namespace validation
 	*  @param [in]		conversionFactor	Conversion factor
 	*  @return			Bond Gross Basis
 	*/
-	double tryMeLWOBondGrossBasis(const std::string& bondObjectName, const LADate& settleDate, const double& price, const double& futurePrice, const double& conversionFactor);
+	double tryMeLWOBondGrossBasis(const std::string& bondObjectName, const AQLDate& settleDate, const double& price, const double& futurePrice, const double& conversionFactor);
 
 	/* @brief			Validation interface for the meLWOBondNetBasis method. Calculate the Bond Gross Basis
 	*  @param [in]		bondObjectName		Bond object name
@@ -389,7 +389,7 @@ namespace validation
 	*  @param [in]		conversionFactor	Conversion factor
 	*  @return			Bond Gross Basis
 	*/
-	double tryMeLWOBondNetBasis(const std::string& bondObjectName, const LADate& settleDate, const LADate& deliveryDate, const double& bondPrice, const double& actualRepoRate, const std::string& repoDayCount, const double& futurePrice, const double& conversionFactor);
+	double tryMeLWOBondNetBasis(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& deliveryDate, const double& bondPrice, const double& actualRepoRate, const std::string& repoDayCount, const double& futurePrice, const double& conversionFactor);
 
 	/* @brief			Validation interface for the meLWOBondCheapestToDeliverByImpliedRepoRate method. Calculate the Cheapest to deliver (CTD) bond via Implied Repo Rates, return the bond name.
 	*  @param [in]		futurePrice			Future price
@@ -401,7 +401,7 @@ namespace validation
 	*  @param [in]		conversionFactors	A list of conversion factors
 	*  @return			The Cheapest to deliver (CTD) bond's name
 	*/
-	std::string tryMeLWOBondCheapestToDeliver(const double& futurePrice, const LADate& settleDate, const LADate& deliveryDate, const std::string& repoDayCount, const std::vector<std::string>& bondObjectNames, const std::vector<double>& bondPrices, const std::vector<double>& conversionFactors);
+	std::string tryMeLWOBondCheapestToDeliver(const double& futurePrice, const AQLDate& settleDate, const AQLDate& deliveryDate, const std::string& repoDayCount, const std::vector<std::string>& bondObjectNames, const std::vector<double>& bondPrices, const std::vector<double>& conversionFactors);
 
 	/* @brief			Validation interface for the meLWOBondCheapestToDeliverByNetBasis method. Calculate the Cheapest to deliver (CTD) bond via Net Basis, return the bond name.
 	*  @param [in]		futurePrice			Future price
@@ -414,7 +414,7 @@ namespace validation
 	*  @param [in]		actualRepoRates		Actual repo rates
 	*  @return			The Cheapest to deliver (CTD) bond's name
 	*/
-	std::string tryMeLWOBondCheapestToDeliverByNetBasis(const double& futurePrice, const LADate& settleDate, const LADate& deliveryDate, const std::string& repoDayCount, const std::vector<std::string>& bondObjectNames, const std::vector<double>& bondPrices, const std::vector<double>& conversionFactors, const std::vector<double>& actualRepoRates);
+	std::string tryMeLWOBondCheapestToDeliverByNetBasis(const double& futurePrice, const AQLDate& settleDate, const AQLDate& deliveryDate, const std::string& repoDayCount, const std::vector<std::string>& bondObjectNames, const std::vector<double>& bondPrices, const std::vector<double>& conversionFactors, const std::vector<double>& actualRepoRates);
 
 	/* @brief			validation interface for the tryMeLWOBondCreateAUDNotionalBond method
 	*  @param [in]		bondName			Bond object name
@@ -428,7 +428,7 @@ namespace validation
 	*  @param [in]		bondQuoteConv		Bond quote convention, default to blank
 	*  @return			bondName
 	*/
-	std::string tryMeLWOBondCreateAUDNotionalBond(const std::string& bondObjectName, const LADate& settleDate, const std::string& maturityDate, const std::string& couponRate, const std::string& payReceive, const std::string& calendar, const std::string& frequency, const std::string& dayCount, const std::string& bondQuoteConv);
+	std::string tryMeLWOBondCreateAUDNotionalBond(const std::string& bondObjectName, const AQLDate& settleDate, const std::string& maturityDate, const std::string& couponRate, const std::string& payReceive, const std::string& calendar, const std::string& frequency, const std::string& dayCount, const std::string& bondQuoteConv);
 
 	/* @brief			validation interface for the meUtilityBondAverageYield method, calculate the average of underlying bonds' yields
 	*  @param [in]		underlyingBondYields	Bond future's underlying bond yields
@@ -458,7 +458,7 @@ namespace validation
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The clean / dirty floating bond price	
 	*/
-	double tryMeLWOBondFRNPriceFromDiscountMargin( const std::string& bondObjectName, const LADate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate );
+	double tryMeLWOBondFRNPriceFromDiscountMargin( const std::string& bondObjectName, const AQLDate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate );
 
 	/* @brief	validation interface for the meLWOBondFRNPriceFromYield method
 	*			Computes the price of a floating rate bond from the yield, without requiring curves discount and forecast curves.
@@ -475,7 +475,7 @@ namespace validation
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The clean / dirty floating bond price	
 	*/
-	double tryMeLWOBondFRNPriceFromYield( const std::string& bondObjectName, const LADate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate );
+	double tryMeLWOBondFRNPriceFromYield( const std::string& bondObjectName, const AQLDate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate );
 
 	/* @brief	validation interface for the meLWOBondFRNYieldFromPrice method
 	*			Computes the yield of a floating rate bond from quoted price, without requiring discount and forecast curves.
@@ -492,7 +492,7 @@ namespace validation
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The bond yield	
 	*/
-	double tryMeLWOBondFRNYieldFromPrice( const std::string& bondObjectName, const LADate& settlementDate, const double& price, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate );
+	double tryMeLWOBondFRNYieldFromPrice( const std::string& bondObjectName, const AQLDate& settlementDate, const double& price, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate );
 
 	/* @brief	validation interface for the meLWOBondFRNDiscountMarginFromPrice method
 	*			Computes the discount margin of a floating rate bond from quoted price, without requiring discount and forecast curves.
@@ -509,6 +509,6 @@ namespace validation
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The bond discount margin
 	*/
-	double tryMeLWOBondFRNDiscountMarginFromPrice( const std::string& bondObjectName, const LADate& settlementDate, const double& price, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate );
+	double tryMeLWOBondFRNDiscountMarginFromPrice( const std::string& bondObjectName, const AQLDate& settlementDate, const double& price, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate );
 
 }

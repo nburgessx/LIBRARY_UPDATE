@@ -6,42 +6,42 @@
 #endif
 
 
-#include "LADataBasics.h"
-#include "LADataVector.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
 #include "LAMathYieldCurve.h"
 #include "LAMathYieldCurvePro.h"
 #include "LAMultiSwapPricer.h"
 #include "LACalibrateModelIRVanilla.h"
 #include "LADefinitions.h"
 #include "LAStaticData.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathDateUtilities.h"
 #include <cmath>
 #include <map>
 
 #define CALIBRATION_DATA_CURVEID					"CurveID"
 
-#include "LAMathValuableEntity.h"
+#include "AQLMathValuableEntity.h"
 #include "LAMathPlainVanillaEntity.h"
 #include "LAPriceCashFlowGenerator.h"
-#include "LALinearFunc.h"
+#include "AQLLinearFunc.h"
 #include "LAPricePayOff.h"
 #include "LALinearRatesSwapTradeValue.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathIndexEntity.h"
 #include <algorithm>
-#include "LAObject.h"
-#include "LAPriceDataInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LALinearInterpolation.h"
-#include "LADataMultiReference.h"
-#include "LADataReference.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LADataProcedure.h"
-#include "LAString.h"
-#include "LADataMatrix.h"
-#include "LAPriceDataManager.h"
+#include "AQLObject.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLDataProcedure.h"
+#include "AQLString.h"
+#include "AQLDataMatrix.h"
+#include "AQLPriceDataManager.h"
 #include "LAPriceConvergenceValue.h"
 
 #include "LAPricePortfolioValue.h"
@@ -54,44 +54,44 @@
 using namespace std;
 
 DoubleArray
-LAMultiSwapPricer::convergentPlainVanillaTrade(LADataInstance* dataInstance, std::map<LAString, LAString> maptrade)
+LAMultiSwapPricer::convergentPlainVanillaTrade(AQLDataInstance* dataInstance, std::map<AQLString, AQLString> maptrade)
 {
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-	LAObjectHolder objHolder;
-	LADataHolder* dh;
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObjectHolder objHolder;
+	AQLDataHolder* dh;
 	//important clasee "lineparam1"
-	LAObject& eline = objPool.getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
-	LAString asofdateInput = dynamic_cast<LADataString &>(eline.getData("CALC_ASOFDATE", ISNOTNULL).get());
-	LADate basedate(asofdateInput.getCString(),"YYYYMMDD");
+	AQLObject& eline = objPool.getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
+	AQLString asofdateInput = dynamic_cast<AQLDataString &>(eline.getData("CALC_ASOFDATE", ISNOTNULL).get());
+	AQLDate basedate(asofdateInput.getCString(),"YYYYMMDD");
 
 
 	///////////trade infors/////////////////////////
 	//at first no calcvec
-	LAString nocalcswapstr = maptrade["NoCalcSwapTrades"];
-	LAStringVector tradeNoCalcInputVec;
+	AQLString nocalcswapstr = maptrade["NoCalcSwapTrades"];
+	AQLStringVector tradeNoCalcInputVec;
 	if (nocalcswapstr != "")
-		throw LACoreInvalidData("No calc mode",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("No calc mode",__FILE__,__LINE__);
 	//if (nocalcswapstr != "")
 	//	tradeNoCalcInputVec = nocalcswapstr.toToken(':');
 	
 	//get tradevec;
-	LAString calcswapstr = maptrade["CalcSwapTrades"];
-	LAStringVector tradeInputVec;
+	AQLString calcswapstr = maptrade["CalcSwapTrades"];
+	AQLStringVector tradeInputVec;
 	if (calcswapstr != "")
 		tradeInputVec = calcswapstr.toToken(':');
 
-	LAStringVector tradeVec;
+	AQLStringVector tradeVec;
 	//if (tradeNoCalcInputVec.size() == 1)
 	//	tradeVec = tradeNoCalcInputVec;
 	//else if (tradeInputVec.size() == 1)
 	//	tradeVec = tradeInputVec;
 	//else 
-	//	throw LACoreInvalidData("convergent set error",__FILE__,__LINE__);
+	//	throw AQLCoreInvalidData("convergent set error",__FILE__,__LINE__);
 	
 	if (tradeInputVec.size() != 0)
 		tradeVec = tradeInputVec;
 	else 
-		throw LACoreInvalidData("convergent set error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("convergent set error",__FILE__,__LINE__);
 
 	
 
@@ -100,7 +100,7 @@ LAMultiSwapPricer::convergentPlainVanillaTrade(LADataInstance* dataInstance, std
 
 	
 	//single trade 
-	LAString key_suffix = "_CLONE";
+	AQLString key_suffix = "_CLONE";
 	DoubleArray ret;
 	for (unsigned int i = 0; i < tradeVec.size(); ++i)
 	{
@@ -113,35 +113,35 @@ LAMultiSwapPricer::convergentPlainVanillaTrade(LADataInstance* dataInstance, std
 		//createOfferBidAdjustEntity(dataInstance,maptrade,tradeVec,true,key_suffix);
 		
 		
-		LAStringVector tmpVec(1, tradeVec[i] + key_suffix);
+		AQLStringVector tmpVec(1, tradeVec[i] + key_suffix);
 		//change into convergence intofixed rate;
-		LAMathObjectValue& eval = dynamic_cast<LAMathObjectValue& >(objPool.getObject(tmpVec[0], ENCHKTYPE_ISDEFINED).get());
+		AQLMathObjectValue& eval = dynamic_cast<AQLMathObjectValue& >(objPool.getObject(tmpVec[0], ENCHKTYPE_ISDEFINED).get());
 		eval.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).convertFromString(FN_IR_CONVERGENCEVALUE_STR);
 		eval.remove(PRICING_DATA_SUBVALUE);
-		eval.LAObject::add(PRICING_DATA_SUBVALUE, new LADataValuation()).convertFromString(FN_IR_PLAINVANILLASWAPTRADEVALUE_STR);
+		eval.AQLObject::add(PRICING_DATA_SUBVALUE, new AQLDataValuation()).convertFromString(FN_IR_PLAINVANILLASWAPTRADEVALUE_STR);
 		eval.remove(PRICING_DATA_DIRTYPRICE);
-		eval.LAObject::add(PRICING_DATA_DIRTYPRICE, new LADataDouble(0.0));
+		eval.AQLObject::add(PRICING_DATA_DIRTYPRICE, new AQLDataDouble(0.0));
 		//check line product 
-		LAString lineproduct = dynamic_cast<LADataString &>(eval.getData("LineProductType", ISNOTNULL).get()).get();
-		LAString target = "";
+		AQLString lineproduct = dynamic_cast<AQLDataString &>(eval.getData("LineProductType", ISNOTNULL).get()).get();
+		AQLString target = "";
 		if (lineproduct == "SWAP" )
 		{
 			target = "LEG1FIXEDRATE";
 			/*if (target !=  "LEG1FIXEDRATE" && target != "LEG2SPREAD")
-				throw LACoreInvalidData("target error",__FILE__,__LINE__);*/
+				throw AQLCoreInvalidData("target error",__FILE__,__LINE__);*/
 
 		}
 		else if (lineproduct == "BASISSWAP")
 		{
 			target = "LEG1SPREAD";
-			LAStringVector leg1Coeff_str = maptrade[tradeVec[i] + "/" + PRICING_DATA_COEFFICIENT + "/COUPON1"].toToken(':');
+			AQLStringVector leg1Coeff_str = maptrade[tradeVec[i] + "/" + PRICING_DATA_COEFFICIENT + "/COUPON1"].toToken(':');
 			if (leg1Coeff_str.size() != 2)
-				throw LACoreInvalidData("convergentPlainVanillaTrade Failed! A size of leg1 coefficient is not 2!",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("convergentPlainVanillaTrade Failed! A size of leg1 coefficient is not 2!",__FILE__,__LINE__);
 			double leg1Spread = leg1Coeff_str[1].getDoubleValue();
 
-			LAStringVector leg2Coeff_str = maptrade[tradeVec[i] + "/" + PRICING_DATA_COEFFICIENT + "/COUPON2"].toToken(':');
+			AQLStringVector leg2Coeff_str = maptrade[tradeVec[i] + "/" + PRICING_DATA_COEFFICIENT + "/COUPON2"].toToken(':');
 			if (leg2Coeff_str.size() != 2)
-				throw LACoreInvalidData("convergentPlainVanillaTrade Failed! A size of leg2 coefficient is not 2!",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("convergentPlainVanillaTrade Failed! A size of leg2 coefficient is not 2!",__FILE__,__LINE__);
 			double leg2Spread = leg2Coeff_str[1].getDoubleValue();
 
 			if (leg2Spread !=  0. && leg1Spread == 0.)
@@ -151,15 +151,15 @@ LAMultiSwapPricer::convergentPlainVanillaTrade(LADataInstance* dataInstance, std
 		{
 			target = "LEG1FIXEDRATE";
 			/*if (target !=  "LEG1FIXEDRATE")
-				throw LACoreInvalidData("target error",__FILE__,__LINE__);*/
+				throw AQLCoreInvalidData("target error",__FILE__,__LINE__);*/
 		}
 
 		eval.remove(PRICING_DATA_CONVERGENCETARGET);
-		eval.LAObject::add(PRICING_DATA_CONVERGENCETARGET, new LADataString()).convertFromString(target);
+		eval.AQLObject::add(PRICING_DATA_CONVERGENCETARGET, new AQLDataString()).convertFromString(target);
 
 		////set for offerbid curve pricing
 		//eline.remove("offerbidentity");
-		//eline.add("offerbidentity", new LADataReference()).convertFromString("lineofferbidentity");
+		//eline.add("offerbidentity", new AQLDataReference()).convertFromString("lineofferbidentity");
 
 		dataInstance->getReferencePool().completeDependency();
 		DoubleVector convegVec;
@@ -169,7 +169,7 @@ LAMultiSwapPricer::convergentPlainVanillaTrade(LADataInstance* dataInstance, std
 
 		
 		dh = &(eval.getData(PRICING_DATA_CONVERGENCEVALUE, ISNOTNULL));
-		double convValue = dynamic_cast<LADataDouble &>(dh->get());
+		double convValue = dynamic_cast<AQLDataDouble &>(dh->get());
 		if (target == "LEG1FIXEDRATE")
 			convValue *= 100; //% display
 		else if (target == "LEG1SPREAD" || target == "LEG2SPREAD")
@@ -178,18 +178,18 @@ LAMultiSwapPricer::convergentPlainVanillaTrade(LADataInstance* dataInstance, std
 
 		//in case of convergent at first we must expand cashflows.
 		dh = &eval.getData(PRICING_DATA_CFGENERATOR, ISNOTNULL);
-		LADataProcedure& modelDataObj = dynamic_cast<LADataProcedure&>(dh->get());
+		AQLDataProcedure& modelDataObj = dynamic_cast<AQLDataProcedure&>(dh->get());
 		const LAPriceCashFlowGenerator& cfgen = dynamic_cast<const LAPriceCashFlowGenerator &>(modelDataObj.getMethod());
 		
 		//delete cashlet coupon index
 		//set Detail into Manual not to cashflow expand
-		LADataMultiReference& refs = dynamic_cast<LADataMultiReference &>(eval.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
+		AQLDataMultiReference& refs = dynamic_cast<AQLDataMultiReference &>(eval.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
 		while (refs.getSize() > 0)
 		{
-			LAObjectHolder& ehleg = refs.get(0);
+			AQLObjectHolder& ehleg = refs.get(0);
 			cfgen.clearCashlets(ehleg.get());
 
-			LAString legname = ehleg.getName();
+			AQLString legname = ehleg.getName();
 			refs.remove(legname);
 			//delete leg
 			objPool.remove(legname);
@@ -203,53 +203,53 @@ LAMultiSwapPricer::convergentPlainVanillaTrade(LADataInstance* dataInstance, std
 
 
 void
-LAMultiSwapPricer::calcPlainVanillaTrades(LADataInstance* dataInstance, std::map<LAString, LAString> maptrade, DoubleVector& pvResultVec)
+LAMultiSwapPricer::calcPlainVanillaTrades(AQLDataInstance* dataInstance, std::map<AQLString, AQLString> maptrade, DoubleVector& pvResultVec)
 {
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-	LAObjectHolder objHolder;
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObjectHolder objHolder;
 	//important clasee "lineparam1"
-	LAObject& eline = objPool.getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
+	AQLObject& eline = objPool.getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
 
 	///////////trade infors/////////////////////////
 	//at first no calcvec
-	LAString nocalcswapstr = maptrade["NoCalcSwapTrades"];
-	LAStringVector tradeNoCalcInputVec;
+	AQLString nocalcswapstr = maptrade["NoCalcSwapTrades"];
+	AQLStringVector tradeNoCalcInputVec;
 	if (nocalcswapstr != "")
 		tradeNoCalcInputVec = nocalcswapstr.toToken(':');
 	
 	for (unsigned int i = 0; i < tradeNoCalcInputVec.size(); i++)
 	{
-		LAString tradeid = tradeNoCalcInputVec[i];
-		LAMathObjectValue* vtrade = NULL;
+		AQLString tradeid = tradeNoCalcInputVec[i];
+		AQLMathObjectValue* vtrade = NULL;
 		objHolder = objPool.getObject(tradeid);
 		if (objHolder.isDefined())
 		{
 			if (!objHolder.isTypeOf(ENTITY_VENTITY))
-				throw LACoreInvalidData("Trans ID Error",__FILE__,__LINE__);
-			vtrade = dynamic_cast<LAMathObjectValue *>(&objHolder.get());
+				throw AQLCoreInvalidData("Trans ID Error",__FILE__,__LINE__);
+			vtrade = dynamic_cast<AQLMathObjectValue *>(&objHolder.get());
 			vtrade->reset();
 		}
 		else
 		{
-			vtrade = new LAMathObjectValue(dataInstance);
+			vtrade = new AQLMathObjectValue(dataInstance);
 			objPool.set(tradeid, vtrade);
 		}
 
 		//set mintradefile
 		//name
 		vtrade->getData(CALIBRATION_DATA_NAME, ISDEFINED).convertFromString(tradeid);
-		vtrade->LAObject::remove("PV");
-		vtrade->LAObject::add("PV", new LADataDouble(0.0));
+		vtrade->AQLObject::remove("PV");
+		vtrade->AQLObject::add("PV", new AQLDataDouble(0.0));
 
 		//line product
-		LAString lineproduc = maptrade[tradeid + "/" + "LineProductType"];
-		vtrade->LAObject::remove("LineProductType");
-		vtrade->LAObject::add("LineProductType", new LADataString(lineproduc));
+		AQLString lineproduc = maptrade[tradeid + "/" + "LineProductType"];
+		vtrade->AQLObject::remove("LineProductType");
+		vtrade->AQLObject::add("LineProductType", new AQLDataString(lineproduc));
 
 		//IsPnL
-		LAString ispnl = maptrade[tradeid + "/" + "IsPnL"];
-		vtrade->LAObject::remove("IsPnL");
-		vtrade->LAObject::add("IsPnL", new LADataBool()).convertFromString(ispnl);
+		AQLString ispnl = maptrade[tradeid + "/" + "IsPnL"];
+		vtrade->AQLObject::remove("IsPnL");
+		vtrade->AQLObject::add("IsPnL", new AQLDataBool()).convertFromString(ispnl);
 
 		//store pv result vec
 		pvResultVec.push_back(0.0);
@@ -258,8 +258,8 @@ LAMultiSwapPricer::calcPlainVanillaTrades(LADataInstance* dataInstance, std::map
 	//////////////////////////////
 
 	//get tradevec;
-	LAString calcswapstr = maptrade["CalcSwapTrades"];
-	LAStringVector tradeInputVec;
+	AQLString calcswapstr = maptrade["CalcSwapTrades"];
+	AQLStringVector tradeInputVec;
 	if (calcswapstr != "")
 		tradeInputVec = calcswapstr.toToken(':');
 	
@@ -267,7 +267,7 @@ LAMultiSwapPricer::calcPlainVanillaTrades(LADataInstance* dataInstance, std::map
 		createSingleTrade(dataInstance,maptrade,tradeInputVec[i],false, "");
 
 	//if there exists easy risk, then set risk, otherwise only pv = not new anything in "riskentity"
-	LAString riskentitystr;
+	AQLString riskentitystr;
 	if (objPool.getObject("lineriskentityZERODELTA").isDefined())
 		riskentitystr += ":lineriskentityZERODELTA";
 		
@@ -282,7 +282,7 @@ LAMultiSwapPricer::calcPlainVanillaTrades(LADataInstance* dataInstance, std::map
 	eline.remove("riskentity");
 	if (riskentitystr.size() > 0)
 	{
-		eline.add("riskentity", new LADataMultiReference()).convertFromString(riskentitystr);
+		eline.add("riskentity", new AQLDataMultiReference()).convertFromString(riskentitystr);
 	}
 	
 	dataInstance->getReferencePool().completeDependency();
@@ -297,7 +297,7 @@ LAMultiSwapPricer::calcPlainVanillaTrades(LADataInstance* dataInstance, std::map
 
 	//set for offerbid curve pricing
 	eline.remove("offerbidentity");
-	eline.add("offerbidentity", new LADataReference()).convertFromString("lineofferbidentity");
+	eline.add("offerbidentity", new AQLDataReference()).convertFromString("lineofferbidentity");
 
 	dataInstance->getReferencePool().completeDependency();
 	calcRiskAndPV(dataInstance,tradeInputVec,pvResultVec);
@@ -308,23 +308,23 @@ LAMultiSwapPricer::calcPlainVanillaTrades(LADataInstance* dataInstance, std::map
 }
 
 void
-LAMultiSwapPricer::calcPlainVanillaTrades(LADataInstance* dataInstance, std::map<LAString, LAString> maptrade, const LAStringVector& calcTargetVector, 
+LAMultiSwapPricer::calcPlainVanillaTrades(AQLDataInstance* dataInstance, std::map<AQLString, AQLString> maptrade, const AQLStringVector& calcTargetVector, 
 												 DoubleMatrix& pvResultMatrix)
 {
 	//check whether NoCalcTrade exists or not
 	if (maptrade["NoCalcSwapTrades"] != "")
-		throw LACoreInvalidData("No calc mode",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("No calc mode",__FILE__,__LINE__);
 
 	//get tradevec;
-	LAString calcswapstr = maptrade["CalcSwapTrades"];
-	LAStringVector tradeVec;
+	AQLString calcswapstr = maptrade["CalcSwapTrades"];
+	AQLStringVector tradeVec;
 	if (calcswapstr != "")
 	{
 		tradeVec = calcswapstr.toToken(':');
 	}
 	else
 	{
-		throw LACoreInvalidData("No calc trade",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("No calc trade",__FILE__,__LINE__);
 	}
 
 	DoubleVector pvResultVec;
@@ -336,16 +336,16 @@ LAMultiSwapPricer::calcPlainVanillaTrades(LADataInstance* dataInstance, std::map
 		parRateSpreadVec = convergentPlainVanillaTrade(dataInstance, maptrade);
 	}
 
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 	pvResultMatrix.clear();
 	DoubleVector singleTradeResult(calcTargetVector.size());
 	for (unsigned int i = 0; i < tradeVec.size(); ++i)
 	{
-		LAMathObjectValue& trade = dynamic_cast<LAMathObjectValue &>(objPool.getObject(tradeVec[i],ENCHKTYPE_ISDEFINED).get());
+		AQLMathObjectValue& trade = dynamic_cast<AQLMathObjectValue &>(objPool.getObject(tradeVec[i],ENCHKTYPE_ISDEFINED).get());
 
 		for (unsigned int j = 0; j < calcTargetVector.size(); ++j)
 		{
-			LADataHolder* dh = &trade.getData(calcTargetVector[j]);
+			AQLDataHolder* dh = &trade.getData(calcTargetVector[j]);
 
 			if (calcTargetVector[j] == "PV")
 			{
@@ -363,8 +363,8 @@ LAMultiSwapPricer::calcPlainVanillaTrades(LADataInstance* dataInstance, std::map
 				}
 				else
 				{
-					LAString msg = "No " + calcTargetVector[j] + " in " + LAString(static_cast<int>(i)) + " th trade";
-					throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+					AQLString msg = "No " + calcTargetVector[j] + " in " + AQLString(static_cast<int>(i)) + " th trade";
+					throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 				}
 			}
 		}
@@ -375,62 +375,62 @@ LAMultiSwapPricer::calcPlainVanillaTrades(LADataInstance* dataInstance, std::map
 }
 
 void 
-LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVector& tradeVec, DoubleVector& pvResultVec)
+LAMultiSwapPricer::calcRiskAndPV(AQLDataInstance* dataInstance, const AQLStringVector& tradeVec, DoubleVector& pvResultVec)
 {
-	LADataHolder* dh;
-	LAObjectHolder objHolder;
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAObject& eline = objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).get();
+	AQLDataHolder* dh;
+	AQLObjectHolder objHolder;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObject& eline = objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).get();
 	
 	unsigned int sizeScenario = 0;
-	LAStringVector orgEntityName,pvriskScenario,riskDetail1,riskDetail2;
-	LAStringVector discountcurves, paraEntityName;
-	LAString ccyInput,discountcurve; 
+	AQLStringVector orgEntityName,pvriskScenario,riskDetail1,riskDetail2;
+	AQLStringVector discountcurves, paraEntityName;
+	AQLString ccyInput,discountcurve; 
 	
 	//get risk set object
 	dh = &(eline.getData("riskentity", NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
 		//get risk info
-		LADataMultiReference& refs = dynamic_cast<LADataMultiReference &>(dh->get());
+		AQLDataMultiReference& refs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		for (unsigned int i = 0; i < refs.getSize(); i++)
 		{
-			LAObject& erisk = refs.get(i).get();
+			AQLObject& erisk = refs.get(i).get();
 			dh = &(erisk.getData("orgEntityName",ISNOTNULL));
-			LAStringVector tmporgEntityName = dynamic_cast<LADataStrings &>(dh->get()).get();
+			AQLStringVector tmporgEntityName = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 
 			dh = &(erisk.getData("pvriskScenario", ISNOTNULL));
-			LAStringVector tmppvriskScenario = dynamic_cast<LADataStrings &>(dh->get()).get();
+			AQLStringVector tmppvriskScenario = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 
 			dh = &(erisk.getData("riskDetail1", ISNOTNULL));
-			LAStringVector tmpriskDetail1 = dynamic_cast<LADataStrings &>(dh->get()).get();
+			AQLStringVector tmpriskDetail1 = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 
 			dh = &(erisk.getData("riskDetail2", ISNOTNULL));
-			LAStringVector tmpriskDetail2 = dynamic_cast<LADataStrings &>(dh->get()).get();
+			AQLStringVector tmpriskDetail2 = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 
 			dh = &(erisk.getData("paramEntityName", ISNOTNULL));
-			LAStringVector tmpparamEntityName = dynamic_cast<LADataStrings &>(dh->get()).get();
+			AQLStringVector tmpparamEntityName = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 
 			if (tmppvriskScenario.size() != tmporgEntityName.size() ||
 				tmppvriskScenario.size() != tmpriskDetail1.size() || 
 				tmppvriskScenario.size() != tmpriskDetail2.size() ||
 				tmppvriskScenario.size() != tmpparamEntityName.size() ||
 				tmppvriskScenario.size() < 1)
-				throw LACoreInvalidData("pv and risk set size error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("pv and risk set size error",__FILE__,__LINE__);
 
 			//tmporgEntityName is curveID
-			LAStringVector tmpdfcurves(tmporgEntityName.size());
+			AQLStringVector tmpdfcurves(tmporgEntityName.size());
 			for (unsigned int j = 0; j < tmporgEntityName.size(); j++)
 			{
 				dh =&(eline.getData("CURVE_DISCOUNT", NOCHECK));
-				LAString tmp_dfcurve;
+				AQLString tmp_dfcurve;
 				if (!dh->isDefined() || dh->isNull())
 				{
 					tmp_dfcurve = getDiscountCurveName(dataInstance, tmporgEntityName[j]);
 				}
 				else
 				{
-					tmp_dfcurve = dynamic_cast<LADataString &>(eline.getData("CURVE_DISCOUNT", NOCHECK).get());;
+					tmp_dfcurve = dynamic_cast<AQLDataString &>(eline.getData("CURVE_DISCOUNT", NOCHECK).get());;
 				}
 				tmpdfcurves[j] = tmp_dfcurve;
 			}
@@ -444,29 +444,29 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 		}
 
 		sizeScenario = pvriskScenario.size();
-		ccyInput= dynamic_cast<LADataString &>(eline.getData("CALC_CURRENCY", ISNOTNULL).get());
+		ccyInput= dynamic_cast<AQLDataString &>(eline.getData("CALC_CURRENCY", ISNOTNULL).get());
 	}
 
 	//get set offer bid adjust pricing set
-	LAStringVector offerbidcurves;
-	LAStringVector orgcurves;
-	LAStringVector tradenames;
-	LAStringVector paranames;
+	AQLStringVector offerbidcurves;
+	AQLStringVector orgcurves;
+	AQLStringVector tradenames;
+	AQLStringVector paranames;
 	dh = &(eline.getData("offerbidentity", NOCHECK));
 	bool isofferbidadj = false;
 	if (dh->isDefined() && !dh->isNull())
 	{
 		//get offer bid info
-		LADataReference& ref = dynamic_cast<LADataReference &>(dh->get());
-		orgcurves = dynamic_cast<LADataStrings &>(ref.get().getData("orgEntityName",ISDEFINED).get()).get();
-		offerbidcurves = dynamic_cast<LADataStrings &>(ref.get().getData("adjsutEntityName",ISDEFINED).get()).get();
-		tradenames = dynamic_cast<LADataStrings &>(ref.get().getData("tradeEntityName",ISDEFINED).get()).get();
-		paranames = dynamic_cast<LADataStrings &>(ref.get().getData("paramEntityName",ISDEFINED).get()).get();
+		AQLDataReference& ref = dynamic_cast<AQLDataReference &>(dh->get());
+		orgcurves = dynamic_cast<AQLDataStrings &>(ref.get().getData("orgEntityName",ISDEFINED).get()).get();
+		offerbidcurves = dynamic_cast<AQLDataStrings &>(ref.get().getData("adjsutEntityName",ISDEFINED).get()).get();
+		tradenames = dynamic_cast<AQLDataStrings &>(ref.get().getData("tradeEntityName",ISDEFINED).get()).get();
+		paranames = dynamic_cast<AQLDataStrings &>(ref.get().getData("paramEntityName",ISDEFINED).get()).get();
 
 		if (orgcurves.size() != offerbidcurves.size() || orgcurves.size() != tradenames.size() || orgcurves.size() != paranames.size())
-			throw LACoreInvalidData("offer bid curve error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("offer bid curve error",__FILE__,__LINE__);
 
-		ccyInput= dynamic_cast<LADataString &>(eline.getData("CALC_CURRENCY", ISNOTNULL).get());
+		ccyInput= dynamic_cast<AQLDataString &>(eline.getData("CALC_CURRENCY", ISNOTNULL).get());
 
 		if (orgcurves.size() >= 1)
 			isofferbidadj = true;
@@ -478,22 +478,22 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 
 	//get PV
 	//////////////////////////////////////////////////
-	LAString asofdateInput = dynamic_cast<LADataString &>(eline.getData("CALC_ASOFDATE", ISNOTNULL).get());
-	LADate basedate(asofdateInput.getCString(),"YYYYMMDD");
+	AQLString asofdateInput = dynamic_cast<AQLDataString &>(eline.getData("CALC_ASOFDATE", ISNOTNULL).get());
+	AQLDate basedate(asofdateInput.getCString(),"YYYYMMDD");
 	//dataInstance->getReferencePool().completeDependency();
 
 	for (unsigned int i = 0; i < tradeVec.size(); i++)
 	{
 		//offer bid adjust case
 		unsigned int pos = 0;
-		LAMathObjectValue* vtrade = dynamic_cast<LAMathObjectValue* >(&objPool.getObject(tradeVec[i], ENCHKTYPE_ISDEFINED).get());
+		AQLMathObjectValue* vtrade = dynamic_cast<AQLMathObjectValue* >(&objPool.getObject(tradeVec[i], ENCHKTYPE_ISDEFINED).get());
 		if (isofferbidadj)
 		{
-			LAStringVector::iterator itpos = std::find(tradenames.begin(),tradenames.end(),tradeVec[i]);
+			AQLStringVector::iterator itpos = std::find(tradenames.begin(),tradenames.end(),tradeVec[i]);
 			if (itpos != tradenames.end())
 			{
 				pos = static_cast<unsigned int>(itpos - tradenames.begin());
-				LADataReference& refvnl = dynamic_cast<LADataReference &>(vtrade->getData(PRICING_DATA_PATHENTITY, ISNOTNULL).get());
+				AQLDataReference& refvnl = dynamic_cast<AQLDataReference &>(vtrade->getData(PRICING_DATA_PATHENTITY, ISNOTNULL).get());
 				LAMathPlainVanillaEntity& pvanilla = dynamic_cast<LAMathPlainVanillaEntity &>(refvnl.get().get());
 				if (pvanilla.getName().get() != paranames[pos])
 					continue;
@@ -505,7 +505,7 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 		}
 		
 		dh = &(vtrade->getData(CALIBRATION_DATA_VALUE, ISDEFINED));
-		LADataValuation& val = dynamic_cast<LADataValuation &>(dh->get());
+		AQLDataValuation& val = dynamic_cast<AQLDataValuation &>(dh->get());
 		double ret = val.value(basedate);
 		//store pv and return;
 		pvResultVec.push_back(ret);
@@ -514,7 +514,7 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 		if (isofferbidadj)
 		{
 		
-			LADataReference& refvnl = dynamic_cast<LADataReference &>(vtrade->getData(PRICING_DATA_PATHENTITY, ISNOTNULL).get());
+			AQLDataReference& refvnl = dynamic_cast<AQLDataReference &>(vtrade->getData(PRICING_DATA_PATHENTITY, ISNOTNULL).get());
 			LAMathPlainVanillaEntity& pvanilla = dynamic_cast<LAMathPlainVanillaEntity &>(refvnl.get().get());
 			if (pvanilla.getName().get() != paranames[pos])
 				continue;
@@ -523,9 +523,9 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 		}
 	}
 		
-	LAString chgentityname;
-	LAString orgentityname;
-	LAString paraentityname;
+	AQLString chgentityname;
+	AQLString orgentityname;
+	AQLString paraentityname;
 	//get risk
 	//////////////////////////////////////////////////
 	for (unsigned int h = 0; h < sizeScenario; h++)
@@ -544,23 +544,23 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 	
 		for (unsigned int i = 0; i < tradeVec.size(); i++)
 		{
-			LAString tradeid = tradeVec[i];
+			AQLString tradeid = tradeVec[i];
 
 			//in case path object is different such as libor df pricing or ois df pricing per each trade
-			LAString traderefparam = getMarketParamfromTradeReference(dataInstance,tradeid);
+			AQLString traderefparam = getMarketParamfromTradeReference(dataInstance,tradeid);
 			if (traderefparam != paraentityname)
 				continue;
 	
 			//in case of zero rate risk, we must use zero risk of discount curve and index forecast curve
 			if (pvriskScenario[h] == "ZERODELTA")
 			{
-				LAStringVector riskTargetVec;
+				AQLStringVector riskTargetVec;
 				//discount
 				riskTargetVec.push_back(discountcurves[h]);
 				//find forecast
 				for (unsigned int j = 0; j < 2; j++)
 				{
-					LAString indexInput;
+					AQLString indexInput;
 					if (0 == j)
 						indexInput = tradeid + "_leg1_coupon1_index1";
 					else 
@@ -569,7 +569,7 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 					objHolder = objPool.getObject(indexInput, ENCHKTYPE_ISDEFINED);
 					dh = &(objHolder.getData(PRICING_DATA_BASISCURVE, NOCHECK));
 					if (dh->isDefined() && !dh->isNull())
-						riskTargetVec.push_back(dynamic_cast<LADataString &>(dh->get()));
+						riskTargetVec.push_back(dynamic_cast<AQLDataString &>(dh->get()));
 
 				}
 			
@@ -580,27 +580,27 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 
 
 
-			LAMathObjectValue* vtrade = dynamic_cast<LAMathObjectValue* >(&objPool.getObject(tradeid, ENCHKTYPE_ISDEFINED).get());
+			AQLMathObjectValue* vtrade = dynamic_cast<AQLMathObjectValue* >(&objPool.getObject(tradeid, ENCHKTYPE_ISDEFINED).get());
 			//common set up for each deal				
 			vtrade->remove(PRICING_DATA_ISCALCRISK);
-			vtrade->LAObject::add(PRICING_DATA_ISCALCRISK, new LADataBool(true));
+			vtrade->AQLObject::add(PRICING_DATA_ISCALCRISK, new AQLDataBool(true));
 			//no need for data out info.
 			vtrade->remove(PRICING_DATA_ISRESULTOUTPUT);
-			vtrade->LAObject::add(PRICING_DATA_ISRESULTOUTPUT, new LADataBool(false));
+			vtrade->AQLObject::add(PRICING_DATA_ISRESULTOUTPUT, new AQLDataBool(false));
 
 			dh = &(vtrade->getData(CALIBRATION_DATA_VALUE, ISDEFINED));
-			LADataValuation& val = dynamic_cast<LADataValuation &>(dh->get());
+			AQLDataValuation& val = dynamic_cast<AQLDataValuation &>(dh->get());
 			
 			double ret = val.value(basedate);
 			//add the risk information on TradeData
-			LAString key = "PVValueBy" + chgentityname;
+			AQLString key = "PVValueBy" + chgentityname;
 			vtrade->remove(key);
-			vtrade->LAObject::add(key, new LADataDouble(ret));
+			vtrade->AQLObject::add(key, new AQLDataDouble(ret));
 
 			//if we do not remove, the unexpected results might cause.				
 			vtrade->remove(PRICING_DATA_ISCALCRISK);
 			vtrade->remove(PRICING_DATA_ISRESULTOUTPUT);
-			vtrade->LAObject::add(PRICING_DATA_ISRESULTOUTPUT, new LADataBool(true));
+			vtrade->AQLObject::add(PRICING_DATA_ISRESULTOUTPUT, new AQLDataBool(true));
 			
 		}
 
@@ -612,9 +612,9 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 	//zero case, oiszero + 3mzero.
 	for (unsigned int i = 0; i < tradeVec.size(); i++)
 	{
-		LAString tradeid = tradeVec[i];
-		LAMathObjectValue* vtrade = dynamic_cast<LAMathObjectValue *>(&objPool.getObject(tradeVec[i], ENCHKTYPE_ISDEFINED).get());
-		double orgpv = dynamic_cast<LADataDouble &>(vtrade->LAObject::getData("PV",ISNOTNULL).get());
+		AQLString tradeid = tradeVec[i];
+		AQLMathObjectValue* vtrade = dynamic_cast<AQLMathObjectValue *>(&objPool.getObject(tradeVec[i], ENCHKTYPE_ISDEFINED).get());
+		double orgpv = dynamic_cast<AQLDataDouble &>(vtrade->AQLObject::getData("PV",ISNOTNULL).get());
 		double zerodelta = 0.0;
 		double sourcedeltaup = 0.0;
 		double sourcedeltadown = 0.0;
@@ -631,11 +631,11 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 				chgentityname += "_" + riskDetail2[j];
 
 			double chgpv = 0.0;
-			LAString key = "PVValueBy" + chgentityname;
-			dh = &	(vtrade->LAObject::getData(key,NOCHECK));
+			AQLString key = "PVValueBy" + chgentityname;
+			dh = &	(vtrade->AQLObject::getData(key,NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				chgpv = dynamic_cast<LADataDouble &>(dh->get());
+				chgpv = dynamic_cast<AQLDataDouble &>(dh->get());
 			}
 			else
 			{
@@ -651,7 +651,7 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 
 			if (pvriskScenario[j] == "SOURCEDELTA" && riskDetail2[j].findString("_BPPARALLEL") != -1)
 			{
-				LAString shiftstr = riskDetail2[j].toToken('_')[0];
+				AQLString shiftstr = riskDetail2[j].toToken('_')[0];
 				double shiftval = shiftstr.getDoubleValue();
 				if (shiftval >= 0.0)
 				{
@@ -673,12 +673,12 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 
 				//from PVValueBy"curveID" + "_SOURCEDELTA_STD_swapRates;1Y;0
 				//into SOURCEBUMPRISK_STD_swapRates_1Y
-				LAStringVector tmpvec = riskDetail2[j].toToken(';');
+				AQLStringVector tmpvec = riskDetail2[j].toToken(';');
 				if (tmpvec.size() != 3)
-					throw LACoreInvalidData("bump risk set error",__FILE__,__LINE__);
-				LAString key = "SOURCEBUMPRISK_" + riskDetail1[j] + "_" + tmpvec[0] + "_" + tmpvec[1];
+					throw AQLCoreInvalidData("bump risk set error",__FILE__,__LINE__);
+				AQLString key = "SOURCEBUMPRISK_" + riskDetail1[j] + "_" + tmpvec[0] + "_" + tmpvec[1];
 				vtrade->remove(key);
-				vtrade->LAObject::add(key, new LADataDouble(chgpv- orgpv));
+				vtrade->AQLObject::add(key, new AQLDataDouble(chgpv- orgpv));
 			}
 
 			//zero bump risk
@@ -688,12 +688,12 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 
 				//from PVValueBy"curveID" + "_SOURCEDELTA_STD_swapRates;1Y;0
 				//into ZEROBUMPRISK_STD_1Y
-				LAStringVector tmpvec = riskDetail2[j].toToken(';');
+				AQLStringVector tmpvec = riskDetail2[j].toToken(';');
 				if (tmpvec.size() != 3)
-					throw LACoreInvalidData("bump zero risk set error",__FILE__,__LINE__);
-				LAString key = "ZEROBUMPRISK_" + riskDetail1[j] + "_" + tmpvec[0] + "_" + tmpvec[1];
+					throw AQLCoreInvalidData("bump zero risk set error",__FILE__,__LINE__);
+				AQLString key = "ZEROBUMPRISK_" + riskDetail1[j] + "_" + tmpvec[0] + "_" + tmpvec[1];
 				vtrade->remove(key);
-				vtrade->LAObject::add(key, new LADataDouble(chgpv- orgpv));
+				vtrade->AQLObject::add(key, new AQLDataDouble(chgpv- orgpv));
 			}
 
 		}
@@ -701,19 +701,19 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 		if (iszeropara)
 		{
 			vtrade->remove("Zero delta");
-			vtrade->LAObject::add("Zero delta", new LADataDouble(zerodelta));
+			vtrade->AQLObject::add("Zero delta", new AQLDataDouble(zerodelta));
 		}
 
 		if (issourcepara)
 		{
 			vtrade->remove("Source delta");
-			vtrade->LAObject::add("Source delta", new LADataDouble(sourcedeltaup));
+			vtrade->AQLObject::add("Source delta", new AQLDataDouble(sourcedeltaup));
 		}
 
 		if (isgammapara)
 		{
 			vtrade->remove("gamma");
-			vtrade->LAObject::add("gamma", new LADataDouble(sourcedeltaup- sourcedeltadown));
+			vtrade->AQLObject::add("gamma", new AQLDataDouble(sourcedeltaup- sourcedeltadown));
 		}
 	}
 
@@ -722,71 +722,71 @@ LAMultiSwapPricer::calcRiskAndPV(LADataInstance* dataInstance, const LAStringVec
 
 
 void
-LAMultiSwapPricer::setUpPreparetionForcalcTrades(LADataInstance* dataInstance, std::map<LAString, LAString> mapcalcinfo)
+LAMultiSwapPricer::setUpPreparetionForcalcTrades(AQLDataInstance* dataInstance, std::map<AQLString, AQLString> mapcalcinfo)
 {
 	
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-	LAObjectHolder objHolder;
-	LADataHolder* dh;
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObjectHolder objHolder;
+	AQLDataHolder* dh;
 
 	/////////////////////////////
 	//set up lineparam1
 	setUpLineParams(dataInstance, mapcalcinfo);
 
 	///////////plain vanilla object///////////////////
-	LAString lineparam("lineparam1");
-	LAObject* eline = &(objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get());
+	AQLString lineparam("lineparam1");
+	AQLObject* eline = &(objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get());
 
 
-	LAStringVector curveIDs = mapcalcinfo[LAString("CURVE/") + CALIBRATION_DATA_CURVEID].toToken(':');
-	LAStringVector params(curveIDs.size());
+	AQLStringVector curveIDs = mapcalcinfo[AQLString("CURVE/") + CALIBRATION_DATA_CURVEID].toToken(':');
+	AQLStringVector params(curveIDs.size());
 	//in case of global shift curveIDs change
 	for (unsigned int i = 0; i < curveIDs.size(); i++)
 		params[i] = setUpMarketParamsAndGlobalShift(dataInstance, mapcalcinfo, curveIDs[i]);
 
 	eline->remove("CALC_MARKETPARAMS");
-	eline->add("CALC_MARKETPARAMS", new LADataStrings(params));
+	eline->add("CALC_MARKETPARAMS", new AQLDataStrings(params));
 	///////////////////////////////////////////////////////////////////////
 	
 	//////////////////////////////////////
 	//set up risk object for zerodelta source delta and gamma
-	LAStringVector orgEntityName, pvriskScenario, riskDetail1, riskDetail2;
+	AQLStringVector orgEntityName, pvriskScenario, riskDetail1, riskDetail2;
 	//zero delta;
 
 	//set up zero delta it can be extended of bumprisk!!
-	LAStringVector riskDetail1zerodelta(4);
-	riskDetail1zerodelta[0] = dynamic_cast<LADataString &>(eline->getData("CURVE_3MFORECAST",ISNOTNULL).get());
-	riskDetail1zerodelta[1] = dynamic_cast<LADataString &>(eline->getData("CURVE_6MFORECAST",ISNOTNULL).get());
-	riskDetail1zerodelta[2] = dynamic_cast<LADataString &>(eline->getData("CURVE_1MFORECAST",ISNOTNULL).get());
-	riskDetail1zerodelta[3] = dynamic_cast<LADataString &>(eline->getData("CURVE_OISFORECAST",ISNOTNULL).get());
+	AQLStringVector riskDetail1zerodelta(4);
+	riskDetail1zerodelta[0] = dynamic_cast<AQLDataString &>(eline->getData("CURVE_3MFORECAST",ISNOTNULL).get());
+	riskDetail1zerodelta[1] = dynamic_cast<AQLDataString &>(eline->getData("CURVE_6MFORECAST",ISNOTNULL).get());
+	riskDetail1zerodelta[2] = dynamic_cast<AQLDataString &>(eline->getData("CURVE_1MFORECAST",ISNOTNULL).get());
+	riskDetail1zerodelta[3] = dynamic_cast<AQLDataString &>(eline->getData("CURVE_OISFORECAST",ISNOTNULL).get());
 
 
 	//set whether we prepare many curves for delta or gamma pricing
-	LAString sourcestr = mapcalcinfo[LAString("CALC/") + "IsCalcSourceDelta"];
-	LAString zerostr = mapcalcinfo[LAString("CALC/") + "IsCalcZeroDelta"];
-	LAString gammastr = mapcalcinfo[LAString("CALC/") + "IsCalcGamma"];
+	AQLString sourcestr = mapcalcinfo[AQLString("CALC/") + "IsCalcSourceDelta"];
+	AQLString zerostr = mapcalcinfo[AQLString("CALC/") + "IsCalcZeroDelta"];
+	AQLString gammastr = mapcalcinfo[AQLString("CALC/") + "IsCalcGamma"];
 
 	if (sourcestr.toUpper() == "FALSE" && gammastr.toUpper() == "TRUE")
-		throw LACoreInvalidData("inconsitency of calc common info", __FILE__,__LINE__);
+		throw AQLCoreInvalidData("inconsitency of calc common info", __FILE__,__LINE__);
 
-	LAString keyshiftval = mapcalcinfo[LAString("CALC/") + "ParaShiftScenario"];
-	LAString upshiftstr, downshiftstr;
+	AQLString keyshiftval = mapcalcinfo[AQLString("CALC/") + "ParaShiftScenario"];
+	AQLString upshiftstr, downshiftstr;
 	if (keyshiftval != "")
 	{
-		upshiftstr = LAString(keyshiftval.getDoubleValue(),3);
-		downshiftstr = LAString(keyshiftval.getDoubleValue() * -1.0 ,3);
+		upshiftstr = AQLString(keyshiftval.getDoubleValue(),3);
+		downshiftstr = AQLString(keyshiftval.getDoubleValue() * -1.0 ,3);
 	}
 	else
 	{
-		upshiftstr = LAString(1.0, 3);
-		downshiftstr = LAString(-1.0, 3);
+		upshiftstr = AQLString(1.0, 3);
+		downshiftstr = AQLString(-1.0, 3);
 
 	}
 
 	////to calc zero para delta 1.000 bp
 	if (zerostr == "TRUE")
 	{
-		LAStringVector riskDetail2zerodelta(1);
+		AQLStringVector riskDetail2zerodelta(1);
 		riskDetail2zerodelta[0] = upshiftstr + "_BPPARALLEL";
 
 		//for both curves (libobasecurve oisbasecurve)
@@ -804,26 +804,26 @@ LAMultiSwapPricer::setUpPreparetionForcalcTrades(LADataInstance* dataInstance, s
 	
 	
 	dh = &(eline->getData("CURVE_OISFORECAST", ISNOTNULL));
-	LAString fcurvestrois = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString fcurvestrois = dynamic_cast<AQLDataString &>(dh->get()).get();
 
 	dh = &(eline->getData("SWAP_FREQUENCY", ISNOTNULL));
-	LAString swapfreq = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString swapfreq = dynamic_cast<AQLDataString &>(dh->get()).get();
 
 //	dh = &(eline->getData("CURVE_3MFORECAST", ISNOTNULL));
-	dh = &(eline->getData(LAString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL));
-//	LAString fcurvestr3m = dynamic_cast<LADataString &>(dh->get()).get();
-	LAString fcurvestrstd = dynamic_cast<LADataString &>(dh->get()).get();
+	dh = &(eline->getData(AQLString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL));
+//	AQLString fcurvestr3m = dynamic_cast<AQLDataString &>(dh->get()).get();
+	AQLString fcurvestrstd = dynamic_cast<AQLDataString &>(dh->get()).get();
 	//source delta;
 	if (sourcestr != "FALSE")
 	{
 		//set up source delta it can be extended of bumprisk!!
 
-		LAStringVector riskDetail1sordelta(1);
+		AQLStringVector riskDetail1sordelta(1);
 //		riskDetail1sordelta[0] = fcurvestrois + "+" + fcurvestr3m;
 		riskDetail1sordelta[0] = fcurvestrois + "+" + fcurvestrstd;
 
 		//
-		LAStringVector riskDetail2sordelta;
+		AQLStringVector riskDetail2sordelta;
 		riskDetail2sordelta.push_back(upshiftstr + "_BPPARALLEL");
 		
 		////to calc gamma 1bp up and 1bp down need developing
@@ -845,48 +845,48 @@ LAMultiSwapPricer::setUpPreparetionForcalcTrades(LADataInstance* dataInstance, s
 }
 
 void 
-LAMultiSwapPricer::createSourceDeltaRiskEntity(LADataInstance* dataInstance, LAString scenarioname, LAStringVector riskDetail1sordelta, LAStringVector riskDetail2sordelta, bool isbumpgridauto, LAString paraName)
+LAMultiSwapPricer::createSourceDeltaRiskEntity(AQLDataInstance* dataInstance, AQLString scenarioname, AQLStringVector riskDetail1sordelta, AQLStringVector riskDetail2sordelta, bool isbumpgridauto, AQLString paraName)
 {
 
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LADataHolder* dh;
-	LAObjectHolder objHolder;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLDataHolder* dh;
+	AQLObjectHolder objHolder;
 
-	LAString lineparam("lineparam1");
-	LAObject* eline = &(objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get());
+	AQLString lineparam("lineparam1");
+	AQLObject* eline = &(objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get());
 
 	//if paraName is directly selected, then only one curve is created, otherwise both curves (libor base curve and ois base curve)
-	LAStringVector paramVec;
+	AQLStringVector paramVec;
 	if (paraName != "")
 		paramVec.push_back(paraName);
 	else
 	{
 		dh = &(eline->getData("CALC_MARKETPARAMS", ISNOTNULL));
-		paramVec = dynamic_cast<LADataStrings &>(dh->get()).get();
+		paramVec = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 	}
-	LAStringVector::iterator itpara = paramVec.begin();
+	AQLStringVector::iterator itpara = paramVec.begin();
 	
 	dh = &(eline->getData("CALC_CURRENCY", ISNOTNULL));
-	LAString ccyInput = dynamic_cast<LADataString &>(dh->get());
+	AQLString ccyInput = dynamic_cast<AQLDataString &>(dh->get());
 
 	//this curve id is imporatant for using zero delta para
-	LAString oisforecurve = dynamic_cast<LADataString &>(objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).getData("CURVE_OISFORECAST", ISNOTNULL).get());
-	LAString libor3mforecurve = dynamic_cast<LADataString &>(objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).getData("CURVE_3MFORECAST", ISNOTNULL).get());
-	LAString libor6mforecurve = dynamic_cast<LADataString &>(objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).getData("CURVE_6MFORECAST", ISNOTNULL).get());
-	LAString libor1mforecurve = dynamic_cast<LADataString &>(objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).getData("CURVE_1MFORECAST", ISNOTNULL).get());
+	AQLString oisforecurve = dynamic_cast<AQLDataString &>(objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).getData("CURVE_OISFORECAST", ISNOTNULL).get());
+	AQLString libor3mforecurve = dynamic_cast<AQLDataString &>(objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).getData("CURVE_3MFORECAST", ISNOTNULL).get());
+	AQLString libor6mforecurve = dynamic_cast<AQLDataString &>(objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).getData("CURVE_6MFORECAST", ISNOTNULL).get());
+	AQLString libor1mforecurve = dynamic_cast<AQLDataString &>(objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).getData("CURVE_1MFORECAST", ISNOTNULL).get());
 
 
 	//set up risk object for source delta and gamma
-	LAStringVector orgEntityNameSource, pvriskScenarioSource, riskDetail1Source, riskDetail2Source, paramEntityNameSource;
+	AQLStringVector orgEntityNameSource, pvriskScenarioSource, riskDetail1Source, riskDetail2Source, paramEntityNameSource;
 	while (itpara != paramVec.end())
 	{
 		//set up market bump rate
 		LAMathPlainVanillaEntity& pvanilla = dynamic_cast<LAMathPlainVanillaEntity &>(objPool.getObject(*itpara,ENCHKTYPE_ISDEFINED).get());
-		LAString curveID = pvanilla.getIRCurve(ccyInput).getYieldData().get().getName();
+		AQLString curveID = pvanilla.getIRCurve(ccyInput).getYieldData().get().getName();
 
-		LAMathYieldCurvePro& ypro = dynamic_cast<LAMathYieldCurvePro&>(objPool.getObject(LAString("PRO_") + PREFIX_YIELD + curveID, ENCHKTYPE_ISDEFINED).get());
+		LAMathYieldCurvePro& ypro = dynamic_cast<LAMathYieldCurvePro&>(objPool.getObject(AQLString("PRO_") + PREFIX_YIELD + curveID, ENCHKTYPE_ISDEFINED).get());
 
-		LAStringVector changed2Vec;
+		AQLStringVector changed2Vec;
 		if (isbumpgridauto)
 		{
 			//in case of riskDetail1sordelta[0] = "OISCurve"
@@ -894,25 +894,25 @@ LAMultiSwapPricer::createSourceDeltaRiskEntity(LADataInstance* dataInstance, LAS
 			//then changed2Vec is changed as oisRates;FFV1;0,oisRates;FFX1;1,.....
 			
 			if (riskDetail2sordelta.size() != 1)
-				throw LACoreInvalidData("bump source delta set error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("bump source delta set error",__FILE__,__LINE__);
 
-			LAStringVector ret2Vec;
-			LAStringVector tmpdetail2vec;
-			LAString rateboxname = riskDetail2sordelta[0];
+			AQLStringVector ret2Vec;
+			AQLStringVector tmpdetail2vec;
+			AQLString rateboxname = riskDetail2sordelta[0];
 			if (rateboxname != "liborRates" && rateboxname != "swapRates" &&
 				rateboxname != "fra3mRates" && rateboxname != "fra6mRates" &&
 				rateboxname != "futureRates" && rateboxname != "basisMkt" && rateboxname != "oisRates")
-				throw LACoreInvalidData("bump source initial error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("bump source initial error",__FILE__,__LINE__);
 
-			LAString mkt_name = ypro.getMarketForCurve(riskDetail1sordelta[0]);
-			//LAString curveorginfo = "lineparam1_" + curveID + riskDetail1sordelta[0];
-			LAString curveorginfo = "lineparam1_" + curveID + mkt_name;
-			LAObject* ecurveorg = &(objPool.getObject(curveorginfo,ENCHKTYPE_ISDEFINED).get());
+			AQLString mkt_name = ypro.getMarketForCurve(riskDetail1sordelta[0]);
+			//AQLString curveorginfo = "lineparam1_" + curveID + riskDetail1sordelta[0];
+			AQLString curveorginfo = "lineparam1_" + curveID + mkt_name;
+			AQLObject* ecurveorg = &(objPool.getObject(curveorginfo,ENCHKTYPE_ISDEFINED).get());
 			dh = &(ecurveorg->getData(rateboxname, ISNOTNULL));
 			{
-				const LAStringMatrix& ratemat = dynamic_cast<LADataStringMatrix& >(dh->get()).get();
+				const AQLStringMatrix& ratemat = dynamic_cast<AQLDataStringMatrix& >(dh->get()).get();
 				for (unsigned int j = 0; j < ratemat.size(); j++)
-					tmpdetail2vec.push_back(rateboxname + ";" +ratemat[j][0] + ";" + LADataInt(j).convertToString());
+					tmpdetail2vec.push_back(rateboxname + ";" +ratemat[j][0] + ";" + AQLDataInt(j).convertToString());
 			}
 
 			changed2Vec = tmpdetail2vec;
@@ -921,8 +921,8 @@ LAMultiSwapPricer::createSourceDeltaRiskEntity(LADataInstance* dataInstance, LAS
 			changed2Vec = riskDetail2sordelta;
 
 		////set up order 
-		LAStringVector setupOrder = getCurveNamesFromSetUpOrder(dataInstance, curveID);
-		vector<LAString> mkt_name(setupOrder.size());
+		AQLStringVector setupOrder = getCurveNamesFromSetUpOrder(dataInstance, curveID);
+		vector<AQLString> mkt_name(setupOrder.size());
 		for(unsigned int i = 0; i < setupOrder.size(); i++)
 		{
 			mkt_name[i] = ypro.getMarketForCurve(setupOrder[i]);
@@ -935,11 +935,11 @@ LAMultiSwapPricer::createSourceDeltaRiskEntity(LADataInstance* dataInstance, LAS
 		{
 			for (unsigned int j = 0; j < changed2Vec.size(); j++)
 			{
-				LAString strSourceShiftCurve = "Temporary_SOURCEDELTA";
+				AQLString strSourceShiftCurve = "Temporary_SOURCEDELTA";
 				for (unsigned int k = 0; k < setupOrder.size(); k++)
 				{
 					double shiftval = 0.0;
-					LAString market ;
+					AQLString market ;
 					bool isshiftarget = true;
 
 					//imporatant judge
@@ -947,7 +947,7 @@ LAMultiSwapPricer::createSourceDeltaRiskEntity(LADataInstance* dataInstance, LAS
 					if (riskDetail1sordelta[i].findString(setupOrder[k]) != -1 && changed2Vec[j].findString("_BPPARALLEL") != -1)
 					{
 						//always +(-)x.xxx_BPPARALLEL
-						LAString shiftstr = changed2Vec[j].toToken('_')[0];
+						AQLString shiftstr = changed2Vec[j].toToken('_')[0];
 						shiftval = shiftstr.getDoubleValue();
 						shiftval *= 0.0001;
 						ispara = true;
@@ -961,9 +961,9 @@ LAMultiSwapPricer::createSourceDeltaRiskEntity(LADataInstance* dataInstance, LAS
 						shiftval = 0.0001;
 						ispara = false;
 						//e.x. swapRates;1Y;0
-						LAStringVector marketandgrid = changed2Vec[j].toToken(';');
+						AQLStringVector marketandgrid = changed2Vec[j].toToken(';');
 						if (marketandgrid.size() != 3)
-							throw LACoreInvalidData("market and grid error",__FILE__,__LINE__);
+							throw AQLCoreInvalidData("market and grid error",__FILE__,__LINE__);
 						
 						shiftpos = static_cast<unsigned int>(marketandgrid[2].getIntValue());
 
@@ -979,9 +979,9 @@ LAMultiSwapPricer::createSourceDeltaRiskEntity(LADataInstance* dataInstance, LAS
 
 
 					//org object from setUpStoreFunc
-					//LAString curveorginfo = "lineparam1_" + curveID + setupOrder[k];
-					LAString curveorginfo = "lineparam1_" + curveID + mkt_name[k];
-					LAObject* ecurveorg = &(objPool.getObject(curveorginfo,ENCHKTYPE_ISDEFINED).get());
+					//AQLString curveorginfo = "lineparam1_" + curveID + setupOrder[k];
+					AQLString curveorginfo = "lineparam1_" + curveID + mkt_name[k];
+					AQLObject* ecurveorg = &(objPool.getObject(curveorginfo,ENCHKTYPE_ISDEFINED).get());
 
 					//create shift curves
 					createShiftCurves(dataInstance, *ecurveorg, setupOrder[k], strSourceShiftCurve,isshiftarget,ispara, 
@@ -992,10 +992,10 @@ LAMultiSwapPricer::createSourceDeltaRiskEntity(LADataInstance* dataInstance, LAS
 				}
 				//curve generate
 				//name is very imporatant!!
-				LAObject* eclone = objPool.getObject(strSourceShiftCurve, ENCHKTYPE_ISDEFINED).clone();
+				AQLObject* eclone = objPool.getObject(strSourceShiftCurve, ENCHKTYPE_ISDEFINED).clone();
 				//objPool.remove(strSourceShiftCurve);
 
-				LAString keyname= curveID + "_SOURCEDELTA_";
+				AQLString keyname= curveID + "_SOURCEDELTA_";
 				keyname += riskDetail1sordelta[i] + "_" + changed2Vec[j];
 				if (objPool.getObject(keyname).isDefined())
 					objPool.remove(keyname);
@@ -1017,11 +1017,11 @@ LAMultiSwapPricer::createSourceDeltaRiskEntity(LADataInstance* dataInstance, LAS
 		itpara++;
 	}
 	
-	LAObject* eSource = NULL;
+	AQLObject* eSource = NULL;
 	objHolder = objPool.getObject(scenarioname, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
-		eSource = new LAObject();
+		eSource = new AQLObject();
 		objPool.set(scenarioname,eSource);
 	
 	}
@@ -1030,97 +1030,97 @@ LAMultiSwapPricer::createSourceDeltaRiskEntity(LADataInstance* dataInstance, LAS
 		eSource = &(objHolder.get());
 		eSource->clear();
 	}
-	eSource->add("orgEntityName", new LADataStrings(orgEntityNameSource));
-	eSource->add("pvriskScenario", new LADataStrings(pvriskScenarioSource));
-	eSource->add("riskDetail1", new LADataStrings(riskDetail1Source));
-	eSource->add("riskDetail2", new LADataStrings(riskDetail2Source));
-	eSource->add("paramEntityName", new LADataStrings(paramEntityNameSource));
+	eSource->add("orgEntityName", new AQLDataStrings(orgEntityNameSource));
+	eSource->add("pvriskScenario", new AQLDataStrings(pvriskScenarioSource));
+	eSource->add("riskDetail1", new AQLDataStrings(riskDetail1Source));
+	eSource->add("riskDetail2", new AQLDataStrings(riskDetail2Source));
+	eSource->add("paramEntityName", new AQLDataStrings(paramEntityNameSource));
 
 	return;
 
 }
 
 void 
-LAMultiSwapPricer::createZeroDeltaRiskEntity(LADataInstance* dataInstance, LAString scenarioname, LAStringVector riskDetail1zerodelta, LAStringVector riskDetail2zerodelta, bool isbumpgridauto, LAString paraName)
+LAMultiSwapPricer::createZeroDeltaRiskEntity(AQLDataInstance* dataInstance, AQLString scenarioname, AQLStringVector riskDetail1zerodelta, AQLStringVector riskDetail2zerodelta, bool isbumpgridauto, AQLString paraName)
 {
 
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LADataHolder* dh;
-	LAObjectHolder objHolder;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLDataHolder* dh;
+	AQLObjectHolder objHolder;
 
-	LAString lineparam("lineparam1");
-	LAObject* eline = &(objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get());
+	AQLString lineparam("lineparam1");
+	AQLObject* eline = &(objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get());
 
 	//if paraName is directly selected, then only one curve is created, otherwise both curves (libor base curve and ois base curve)
-	LAStringVector paramVec;
+	AQLStringVector paramVec;
 	if (paraName != "")
 		paramVec.push_back(paraName);
 	else
 	{
 		dh = &(eline->getData("CALC_MARKETPARAMS", ISNOTNULL));
-		paramVec = dynamic_cast<LADataStrings &>(dh->get()).get();
+		paramVec = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 	}
-	LAStringVector::iterator itpara = paramVec.begin();
+	AQLStringVector::iterator itpara = paramVec.begin();
 
 	dh = &(eline->getData("CALC_CURRENCY", ISNOTNULL));
-	LAString ccyInput = dynamic_cast<LADataString &>(dh->get());
+	AQLString ccyInput = dynamic_cast<AQLDataString &>(dh->get());
 	dh = &(eline->getData("SWAP_FREQUENCY", ISNOTNULL));
-	LAString swapfreq = dynamic_cast<LADataString &>(dh->get());
+	AQLString swapfreq = dynamic_cast<AQLDataString &>(dh->get());
 
 
 	//set up risk object for source delta and gamma
-	LAStringVector orgEntityNameZero, pvriskScenarioZero, riskDetail1Zero, riskDetail2Zero, paramEntityNameZero;
+	AQLStringVector orgEntityNameZero, pvriskScenarioZero, riskDetail1Zero, riskDetail2Zero, paramEntityNameZero;
 	while (itpara != paramVec.end())
 	{
 		//set up market bump rate
 		LAMathPlainVanillaEntity& pvanilla = dynamic_cast<LAMathPlainVanillaEntity &>(objPool.getObject(*itpara,ENCHKTYPE_ISDEFINED).get());
-		LAString curveID = pvanilla.getIRCurve(ccyInput).getYieldData().get().getName();
+		AQLString curveID = pvanilla.getIRCurve(ccyInput).getYieldData().get().getName();
 		
-		LAObject* porgyield = &(objPool.getObject(curveID, ENCHKTYPE_ISDEFINED).get());
-		LAString yieldProName = "PRO_YIELD_" + curveID;
+		AQLObject* porgyield = &(objPool.getObject(curveID, ENCHKTYPE_ISDEFINED).get());
+		AQLString yieldProName = "PRO_YIELD_" + curveID;
 		LAMathYieldCurvePro* porgpro = &(dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(yieldProName, ENCHKTYPE_ISDEFINED).get()));
-		LAString orgcurvetype = porgpro->getCurveType();
+		AQLString orgcurvetype = porgpro->getCurveType();
 
 
 		//this curve id is imporatant for using zero delta para
-		LAString suffix_data;
+		AQLString suffix_data;
 		unsigned int shiftpos = 0;
 		bool ispara = true;
 		for (unsigned int i = 0; i < riskDetail1zerodelta.size(); i++)
 		{
-			LAString curvetype = riskDetail1zerodelta[i];
+			AQLString curvetype = riskDetail1zerodelta[i];
 			if (riskDetail1zerodelta[i] != STD)
 			{
 				suffix_data = "_" + curvetype;
 			}
 
 			UintArray gridPos;
-			LAStringVector changed2Vec;
+			AQLStringVector changed2Vec;
 			if (isbumpgridauto)
 			{
-				const LAStringVector& zerodeltagrids = porgpro->getConversionMatrixTermTypes(curvetype).get();
+				const AQLStringVector& zerodeltagrids = porgpro->getConversionMatrixTermTypes(curvetype).get();
 				//this data should be added to avoid duplicate the same grid of dirrerent market
 				//e.x. STD;swapRates1Y, STD:liborRates1Y
-				const LAStringVector& markettypesvec = porgpro->getConversionMarketTypes(curvetype).get();
+				const AQLStringVector& markettypesvec = porgpro->getConversionMarketTypes(curvetype).get();
 
 				if (zerodeltagrids.size() != markettypesvec.size())
-					throw LACoreInvalidData("curve set error",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("curve set error",__FILE__,__LINE__);
 
-				LAStringVector rateboxvec(markettypesvec.size());
+				AQLStringVector rateboxvec(markettypesvec.size());
 				for (unsigned int j = 0; j < markettypesvec.size(); j++)
 				{
-					LAString key = markettypesvec[j];
+					AQLString key = markettypesvec[j];
 					if (BASIS == key)
 					{
 						rateboxvec[j] = "basisMkt";
 					
 					}
-					else if (PAR == key && curvetype == dynamic_cast<LADataString &>(eline->getData("CURVE_OISFORECAST", ISNOTNULL).get()).get())
+					else if (PAR == key && curvetype == dynamic_cast<AQLDataString &>(eline->getData("CURVE_OISFORECAST", ISNOTNULL).get()).get())
 					{
 						rateboxvec[j] = "oisRates";
 					}
-//					else if (PAR == key && curvetype == dynamic_cast<LADataString &>(eline->getData("CURVE_3MFORECAST", ISNOTNULL).get()).get())
-					else if (PAR == key && curvetype == dynamic_cast<LADataString &>(eline->getData(LAString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get()).get())
+//					else if (PAR == key && curvetype == dynamic_cast<AQLDataString &>(eline->getData("CURVE_3MFORECAST", ISNOTNULL).get()).get())
+					else if (PAR == key && curvetype == dynamic_cast<AQLDataString &>(eline->getData(AQLString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get()).get())
 					{
 						rateboxvec[j] = "swapRates";
 					}
@@ -1149,12 +1149,12 @@ LAMultiSwapPricer::createZeroDeltaRiskEntity(LADataInstance* dataInstance, LAStr
 						rateboxvec[j] = "fra3mRates";
 					}
 					else 
-						throw LACoreInvalidData("market type error",__FILE__,__LINE__);
+						throw AQLCoreInvalidData("market type error",__FILE__,__LINE__);
 				}
 
-				LAStringVector tmpdetail2vec;
+				AQLStringVector tmpdetail2vec;
 				for (unsigned int j = 0; j < zerodeltagrids.size(); j++)
-					tmpdetail2vec.push_back(rateboxvec[j] + ";" + zerodeltagrids[j] + ";" + LADataInt(j).convertToString());
+					tmpdetail2vec.push_back(rateboxvec[j] + ";" + zerodeltagrids[j] + ";" + AQLDataInt(j).convertToString());
 
 				changed2Vec = tmpdetail2vec;
 				gridPos.resize(tmpdetail2vec.size());
@@ -1162,10 +1162,10 @@ LAMultiSwapPricer::createZeroDeltaRiskEntity(LADataInstance* dataInstance, LAStr
 				//in case of zero only supports grid zero delta
 				
 				dh = &(porgyield->getData(IR_CALIBRATION_DATA_CONVERSIONMATRIXTERM + suffix_data, ISNOTNULL));
-				const DoubleVector& zerodeltaterms = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+				const DoubleVector& zerodeltaterms = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 
 				dh = &(porgyield->getData(CALIBRATION_DATA_TERMS + suffix_data, ISNOTNULL));
-				const DoubleVector& terms = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+				const DoubleVector& terms = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 
 				for (unsigned int j = 0; j < zerodeltagrids.size(); j++)
 					LACalibrationUtilities<double>::searchNearestPos(terms, zerodeltaterms[j], gridPos[j]);
@@ -1183,7 +1183,7 @@ LAMultiSwapPricer::createZeroDeltaRiskEntity(LADataInstance* dataInstance, LAStr
 				if (changed2Vec[j].findString("_BPPARALLEL") != -1)
 				{
 					//always +(-)x.xxx_BPPARALLEL
-					LAString shiftstr = changed2Vec[j].toToken('_')[0];
+					AQLString shiftstr = changed2Vec[j].toToken('_')[0];
 					shiftval = shiftstr.getDoubleValue();
 					shiftval *= 0.0001;
 					ispara = true;
@@ -1195,19 +1195,19 @@ LAMultiSwapPricer::createZeroDeltaRiskEntity(LADataInstance* dataInstance, LAStr
 					shiftval = 0.0001;
 					ispara = false;
 					//e.x. 1Y;0
-					LAStringVector marketandgrid = changed2Vec[j].toToken(';');
+					AQLStringVector marketandgrid = changed2Vec[j].toToken(';');
 					if (marketandgrid.size() != 3)
-						throw LACoreInvalidData("zero rate grid error",__FILE__,__LINE__);
+						throw AQLCoreInvalidData("zero rate grid error",__FILE__,__LINE__);
 					
 					//shiftpos = static_cast<unsigned int>(marketandgrid[2].getIntValue());
 				}
 
-				LAString strShiftCurve = curveID + "_ZERODELTA_" + riskDetail1zerodelta[i] + "_" + changed2Vec[j] ;
+				AQLString strShiftCurve = curveID + "_ZERODELTA_" + riskDetail1zerodelta[i] + "_" + changed2Vec[j] ;
 				objHolder = objPool.getObject(strShiftCurve);
 				if (objHolder.isDefined())
 					objPool.remove(strShiftCurve);
 
-				LAObject* shiftCurve = porgyield->clone();
+				AQLObject* shiftCurve = porgyield->clone();
 				objPool.set(strShiftCurve, shiftCurve);
 				shiftCurve->getData(CALIBRATION_DATA_NAME, ISDEFINED).convertFromString(strShiftCurve);
 
@@ -1215,17 +1215,17 @@ LAMultiSwapPricer::createZeroDeltaRiskEntity(LADataInstance* dataInstance, LAStr
 				{
 
 					dh = &(shiftCurve->getData(CALIBRATION_DATA_TERMS + suffix_data, ISNOTNULL));
-					const DoubleVector& terms = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+					const DoubleVector& terms = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 					
 					dh = &(shiftCurve->getData(IR_CALIBRATION_DATA_DFS + suffix_data, ISNOTNULL));
-					DoubleVector dfs = dynamic_cast<LADataDoubles &>(dh->get()).get();
+					DoubleVector dfs = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 					
 					if (terms.size() != dfs.size())
-						throw LACoreInvalidData("Discount Size Error",__FILE__,__LINE__);
+						throw AQLCoreInvalidData("Discount Size Error",__FILE__,__LINE__);
 					for (unsigned int k = 0; k < terms.size(); k++)
-						dfs[k] *= LAMath::exp(-shiftval * terms[k]);
+						dfs[k] *= AQLMath::exp(-shiftval * terms[k]);
 
-					dynamic_cast<LADataDoubles &>(dh->get()).set(dfs);
+					dynamic_cast<AQLDataDoubles &>(dh->get()).set(dfs);
 				}
 				else
 				{
@@ -1251,11 +1251,11 @@ LAMultiSwapPricer::createZeroDeltaRiskEntity(LADataInstance* dataInstance, LAStr
 		itpara++;
 	}
 
-	LAObject* eSource = NULL;
+	AQLObject* eSource = NULL;
 	objHolder = objPool.getObject(scenarioname, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
-		eSource = new LAObject();
+		eSource = new AQLObject();
 		objPool.set(scenarioname,eSource);
 	
 	}
@@ -1264,36 +1264,36 @@ LAMultiSwapPricer::createZeroDeltaRiskEntity(LADataInstance* dataInstance, LAStr
 		eSource = &(objHolder.get());
 		eSource->clear();
 	}
-	eSource->add("orgEntityName", new LADataStrings(orgEntityNameZero));
-	eSource->add("pvriskScenario", new LADataStrings(pvriskScenarioZero));
-	eSource->add("riskDetail1", new LADataStrings(riskDetail1Zero));
-	eSource->add("riskDetail2", new LADataStrings(riskDetail2Zero));
-	eSource->add("paramEntityName", new LADataStrings(paramEntityNameZero));
+	eSource->add("orgEntityName", new AQLDataStrings(orgEntityNameZero));
+	eSource->add("pvriskScenario", new AQLDataStrings(pvriskScenarioZero));
+	eSource->add("riskDetail1", new AQLDataStrings(riskDetail1Zero));
+	eSource->add("riskDetail2", new AQLDataStrings(riskDetail2Zero));
+	eSource->add("paramEntityName", new AQLDataStrings(paramEntityNameZero));
 
 	return;
 
 }
 
 void
-LAMultiSwapPricer::setUpStoreBasisCurve(LADataInstance* dataInstance,
-                                const LAString& curveID, 
-                                const LAString& basisCurveName, 
-                                const LAStringMatrix& basisMkt, 
-                                const LAStringMatrix& basisConv,
-								const LAStringMatrix& generateProp,
-								const LAStringMatrix& moneyConv)
+LAMultiSwapPricer::setUpStoreBasisCurve(AQLDataInstance* dataInstance,
+                                const AQLString& curveID, 
+                                const AQLString& basisCurveName, 
+                                const AQLStringMatrix& basisMkt, 
+                                const AQLStringMatrix& basisConv,
+								const AQLStringMatrix& generateProp,
+								const AQLStringMatrix& moneyConv)
 {
 
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAObject* curvestore = NULL;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObject* curvestore = NULL;
 	// Special Treatment for picking up market name through YieldCurvePro class
-	LAString basisCurveNameTmp = basisCurveName;
+	AQLString basisCurveNameTmp = basisCurveName;
 	basisCurveNameTmp.toUpper();
-	LAString keyname = "lineparam1_" + curveID + basisCurveNameTmp;
-	LAObjectHolder objHolder = objPool.getObject(keyname, ENCHKTYPE_NOCHECK);
+	AQLString keyname = "lineparam1_" + curveID + basisCurveNameTmp;
+	AQLObjectHolder objHolder = objPool.getObject(keyname, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
-		curvestore = new LAObject();
+		curvestore = new AQLObject();
 		objPool.set(keyname, curvestore);
 	}
 	else
@@ -1302,55 +1302,55 @@ LAMultiSwapPricer::setUpStoreBasisCurve(LADataInstance* dataInstance,
 		curvestore->clear();
 	}
 	
-	curvestore->add(CALIBRATION_DATA_NAME, new LADataString(keyname));
-	curvestore->add("basisCurveName", new LADataString(basisCurveName));
-	curvestore->add("basisMkt", new LADataStringMatrix(basisMkt));
-	curvestore->add("basisConv", new LADataStringMatrix(basisConv));
-	curvestore->add("generateProp", new LADataStringMatrix(generateProp));
-	curvestore->add("moneyConv", new LADataStringMatrix(moneyConv));
+	curvestore->add(CALIBRATION_DATA_NAME, new AQLDataString(keyname));
+	curvestore->add("basisCurveName", new AQLDataString(basisCurveName));
+	curvestore->add("basisMkt", new AQLDataStringMatrix(basisMkt));
+	curvestore->add("basisConv", new AQLDataStringMatrix(basisConv));
+	curvestore->add("generateProp", new AQLDataStringMatrix(generateProp));
+	curvestore->add("moneyConv", new AQLDataStringMatrix(moneyConv));
 
 
-	//LAString key = "SOURCEBUMPRISK_" + riskDetail1[j] + "_" + tmpvec[0] + "_" + tmpvec[1];
+	//AQLString key = "SOURCEBUMPRISK_" + riskDetail1[j] + "_" + tmpvec[0] + "_" + tmpvec[1];
 	//register attrmaster to output to be able to display excel
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 	for (unsigned int i = 0; i < basisMkt.size(); i++)
 	{
-		LAString key = "SOURCEBUMPRISK_" + basisCurveName + "_" + "basisMkt" + "_" + basisMkt[i][0];
+		AQLString key = "SOURCEBUMPRISK_" + basisCurveName + "_" + "basisMkt" + "_" + basisMkt[i][0];
 		dm.setData(key, DATA_DOUBLE);
 
-		LAString zerokey = "ZEROBUMPRISK_" + basisCurveName + "_" + "basisMkt" + "_" + basisMkt[i][0];
+		AQLString zerokey = "ZEROBUMPRISK_" + basisCurveName + "_" + "basisMkt" + "_" + basisMkt[i][0];
 		dm.setData(zerokey, DATA_DOUBLE);
 	}
 }
 
 void
-LAMultiSwapPricer::setUpStoreSwapCurve(LADataInstance* dataInstance,
-								 const LAString& curveID,
-								 const LAString& genCurveName,
-								 const LAStringMatrix& generateProp, 
-								 const LAStringMatrix& moneyConv,
-								 const LAStringMatrix& liborRates, 
-								 const LAStringMatrix& liborConv,
-								 const LAStringMatrix& swapRates, 
-								 const LAStringMatrix& swapConv,
-								 const LAStringMatrix& fra3mRates,
-								 const LAStringMatrix& fra6mRates,
-								 const LAStringMatrix& fraConv,
-								 const LAStringMatrix& futureRates, 
-								 const LAStringMatrix& futureConv,
-								 const LAStringMatrix& adjustSwapConv,
-								 const LAStringMatrix& adjustSwapRates)
+LAMultiSwapPricer::setUpStoreSwapCurve(AQLDataInstance* dataInstance,
+								 const AQLString& curveID,
+								 const AQLString& genCurveName,
+								 const AQLStringMatrix& generateProp, 
+								 const AQLStringMatrix& moneyConv,
+								 const AQLStringMatrix& liborRates, 
+								 const AQLStringMatrix& liborConv,
+								 const AQLStringMatrix& swapRates, 
+								 const AQLStringMatrix& swapConv,
+								 const AQLStringMatrix& fra3mRates,
+								 const AQLStringMatrix& fra6mRates,
+								 const AQLStringMatrix& fraConv,
+								 const AQLStringMatrix& futureRates, 
+								 const AQLStringMatrix& futureConv,
+								 const AQLStringMatrix& adjustSwapConv,
+								 const AQLStringMatrix& adjustSwapRates)
 {
 
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAObject* curvestore = NULL;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObject* curvestore = NULL;
 	// Special Treatment for picking up market name through YieldCurvePro class
-	LAString genCurveNameTmp = "SWAP";
-	LAString keyname = "lineparam1_" + curveID + genCurveNameTmp;
-	LAObjectHolder objHolder = objPool.getObject(keyname, ENCHKTYPE_NOCHECK);
+	AQLString genCurveNameTmp = "SWAP";
+	AQLString keyname = "lineparam1_" + curveID + genCurveNameTmp;
+	AQLObjectHolder objHolder = objPool.getObject(keyname, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
-		curvestore = new LAObject();
+		curvestore = new AQLObject();
 		objPool.set(keyname, curvestore);
 	}
 	else
@@ -1359,48 +1359,48 @@ LAMultiSwapPricer::setUpStoreSwapCurve(LADataInstance* dataInstance,
 		curvestore->clear();
 	}
 	
-	curvestore->add(CALIBRATION_DATA_NAME, new LADataString(keyname));
-	curvestore->add("genCurveName", new LADataString(genCurveName));
-	curvestore->add("generateProp", new LADataStringMatrix(generateProp));
-	curvestore->add("moneyConv", new LADataStringMatrix(moneyConv));
-	curvestore->add("liborRates", new LADataStringMatrix(liborRates));
-	curvestore->add("liborConv", new LADataStringMatrix(liborConv));
-	curvestore->add("swapRates", new LADataStringMatrix(swapRates));
-	curvestore->add("swapConv", new LADataStringMatrix(swapConv));
-	curvestore->add("fra3mRates", new LADataStringMatrix(fra3mRates));
-	curvestore->add("fra6mRates", new LADataStringMatrix(fra6mRates));
-	curvestore->add("fraConv", new LADataStringMatrix(fraConv));
-	curvestore->add("futureRates", new LADataStringMatrix(futureRates));
-	curvestore->add("futureConv", new LADataStringMatrix(futureConv));
-	curvestore->add("adjustSwapConv", new LADataStringMatrix(adjustSwapConv));
-	curvestore->add("adjustSwapRates", new LADataStringMatrix(adjustSwapRates));
+	curvestore->add(CALIBRATION_DATA_NAME, new AQLDataString(keyname));
+	curvestore->add("genCurveName", new AQLDataString(genCurveName));
+	curvestore->add("generateProp", new AQLDataStringMatrix(generateProp));
+	curvestore->add("moneyConv", new AQLDataStringMatrix(moneyConv));
+	curvestore->add("liborRates", new AQLDataStringMatrix(liborRates));
+	curvestore->add("liborConv", new AQLDataStringMatrix(liborConv));
+	curvestore->add("swapRates", new AQLDataStringMatrix(swapRates));
+	curvestore->add("swapConv", new AQLDataStringMatrix(swapConv));
+	curvestore->add("fra3mRates", new AQLDataStringMatrix(fra3mRates));
+	curvestore->add("fra6mRates", new AQLDataStringMatrix(fra6mRates));
+	curvestore->add("fraConv", new AQLDataStringMatrix(fraConv));
+	curvestore->add("futureRates", new AQLDataStringMatrix(futureRates));
+	curvestore->add("futureConv", new AQLDataStringMatrix(futureConv));
+	curvestore->add("adjustSwapConv", new AQLDataStringMatrix(adjustSwapConv));
+	curvestore->add("adjustSwapRates", new AQLDataStringMatrix(adjustSwapRates));
 
 	//register attrmaster to output to be able to display excel
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 	for (unsigned int i = 0; i < liborRates.size(); i++)
 	{
-		LAString key = "SOURCEBUMPRISK_" + genCurveName + "_" + "liborRates" + "_" + liborRates[i][0];
+		AQLString key = "SOURCEBUMPRISK_" + genCurveName + "_" + "liborRates" + "_" + liborRates[i][0];
 		dm.setData(key, DATA_DOUBLE);
 
-		LAString zerokey = "ZEROBUMPRISK_" + genCurveName + "_" + "liborRates" + "_" + liborRates[i][0];
+		AQLString zerokey = "ZEROBUMPRISK_" + genCurveName + "_" + "liborRates" + "_" + liborRates[i][0];
 		dm.setData(zerokey, DATA_DOUBLE);
 	}
 
 	for (unsigned int i = 0; i < swapRates.size(); i++)
 	{
-		LAString key = "SOURCEBUMPRISK_" + genCurveName + "_" + "swapRates" + "_" + swapRates[i][0];
+		AQLString key = "SOURCEBUMPRISK_" + genCurveName + "_" + "swapRates" + "_" + swapRates[i][0];
 		dm.setData(key, DATA_DOUBLE);
 
-		LAString zerokey = "ZEROBUMPRISK_" + genCurveName + "_" + "swapRates" + "_" + swapRates[i][0];
+		AQLString zerokey = "ZEROBUMPRISK_" + genCurveName + "_" + "swapRates" + "_" + swapRates[i][0];
 		dm.setData(zerokey, DATA_DOUBLE);
 	}
 
 	for (unsigned int i = 0; i < futureRates.size(); i++)
 	{
-		LAString key = "SOURCEBUMPRISK_" + genCurveName + "_" + "futureRates" + "_" + futureRates[i][0];
+		AQLString key = "SOURCEBUMPRISK_" + genCurveName + "_" + "futureRates" + "_" + futureRates[i][0];
 		dm.setData(key, DATA_DOUBLE);
 
-		LAString zerokey = "ZEROBUMPRISK_" + genCurveName + "_" + "futureRates" + "_" + futureRates[i][0];
+		AQLString zerokey = "ZEROBUMPRISK_" + genCurveName + "_" + "futureRates" + "_" + futureRates[i][0];
 		dm.setData(zerokey, DATA_DOUBLE);
 	}
 
@@ -1409,29 +1409,29 @@ LAMultiSwapPricer::setUpStoreSwapCurve(LADataInstance* dataInstance,
 
 
 void
-LAMultiSwapPricer::setUpStoreOISCurve(LADataInstance* dataInstance,
-								const LAString& curveID,
-								const LAString& genCurveName,
-								const LAStringMatrix& generateProp, 
-								const LAStringMatrix& oisRates, 
-								const LAStringMatrix& oisConv,
-								const LAStringMatrix& histRates,
-								const LAStringMatrix& lobasisRates, 
-								const LAStringMatrix& lobasisConv, 
-								const LAStringMatrix& swapRates, 
-								const LAStringMatrix& swapConv)
+LAMultiSwapPricer::setUpStoreOISCurve(AQLDataInstance* dataInstance,
+								const AQLString& curveID,
+								const AQLString& genCurveName,
+								const AQLStringMatrix& generateProp, 
+								const AQLStringMatrix& oisRates, 
+								const AQLStringMatrix& oisConv,
+								const AQLStringMatrix& histRates,
+								const AQLStringMatrix& lobasisRates, 
+								const AQLStringMatrix& lobasisConv, 
+								const AQLStringMatrix& swapRates, 
+								const AQLStringMatrix& swapConv)
 {
 
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAObject* curvestore = NULL;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObject* curvestore = NULL;
 	// Special Treatment for picking up market name through YieldCurvePro class
-	LAString genCurveNameTmp = genCurveName;
+	AQLString genCurveNameTmp = genCurveName;
 	genCurveNameTmp.toUpper();
-	LAString keyname = "lineparam1_" + curveID + genCurveNameTmp;
-	LAObjectHolder objHolder = objPool.getObject(keyname, ENCHKTYPE_NOCHECK);
+	AQLString keyname = "lineparam1_" + curveID + genCurveNameTmp;
+	AQLObjectHolder objHolder = objPool.getObject(keyname, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
-		curvestore = new LAObject();
+		curvestore = new AQLObject();
 		objPool.set(keyname, curvestore);
 	}
 	else
@@ -1440,35 +1440,35 @@ LAMultiSwapPricer::setUpStoreOISCurve(LADataInstance* dataInstance,
 		curvestore->clear();
 	}
 	
-	curvestore->add(CALIBRATION_DATA_NAME, new LADataString(keyname));
-	curvestore->add("genCurveName", new LADataString(genCurveName));
-	curvestore->add("generateProp", new LADataStringMatrix(generateProp));
-	curvestore->add("oisRates", new LADataStringMatrix(oisRates));
-	curvestore->add("oisConv", new LADataStringMatrix(oisConv));
-	curvestore->add("histRates", new LADataStringMatrix(histRates));
-	curvestore->add("lobasisRates", new LADataStringMatrix(lobasisRates));
-	curvestore->add("lobasisConv", new LADataStringMatrix(lobasisConv));
-	curvestore->add("swapRates", new LADataStringMatrix(swapRates));
-	curvestore->add("swapConv", new LADataStringMatrix(swapConv));
+	curvestore->add(CALIBRATION_DATA_NAME, new AQLDataString(keyname));
+	curvestore->add("genCurveName", new AQLDataString(genCurveName));
+	curvestore->add("generateProp", new AQLDataStringMatrix(generateProp));
+	curvestore->add("oisRates", new AQLDataStringMatrix(oisRates));
+	curvestore->add("oisConv", new AQLDataStringMatrix(oisConv));
+	curvestore->add("histRates", new AQLDataStringMatrix(histRates));
+	curvestore->add("lobasisRates", new AQLDataStringMatrix(lobasisRates));
+	curvestore->add("lobasisConv", new AQLDataStringMatrix(lobasisConv));
+	curvestore->add("swapRates", new AQLDataStringMatrix(swapRates));
+	curvestore->add("swapConv", new AQLDataStringMatrix(swapConv));
 
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 	for (unsigned int i = 0; i < oisRates.size(); i++)
 	{
-		LAString key = "SOURCEBUMPRISK_" + genCurveName + "_" + "oisRates" + "_" + oisRates[i][0];
+		AQLString key = "SOURCEBUMPRISK_" + genCurveName + "_" + "oisRates" + "_" + oisRates[i][0];
 		dm.setData(key, DATA_DOUBLE);
 
-		LAString zerokey = "ZEROBUMPRISK_" + genCurveName + "_" + "oisRates" + "_" + oisRates[i][0];
+		AQLString zerokey = "ZEROBUMPRISK_" + genCurveName + "_" + "oisRates" + "_" + oisRates[i][0];
 		dm.setData(zerokey, DATA_DOUBLE);
 	}
 }
 
 
 void
-LAMultiSwapPricer::shiftMarketRate(LAStringMatrix& rateMat, double shiftval, bool ispara, unsigned int shiftpos)
+LAMultiSwapPricer::shiftMarketRate(AQLStringMatrix& rateMat, double shiftval, bool ispara, unsigned int shiftpos)
 {
 	//check input mat
 	if (rateMat.empty() || rateMat[0].size() < 2)
-		throw LACoreInvalidData("Rate matrix error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Rate matrix error",__FILE__,__LINE__);
 
 	for (unsigned int i = 0; i < rateMat.size(); i++)
 	{
@@ -1476,7 +1476,7 @@ LAMultiSwapPricer::shiftMarketRate(LAStringMatrix& rateMat, double shiftval, boo
 		{
 			//check shiftpos
 			if (shiftpos >= rateMat.size())
-				throw LACoreInvalidData("shift pos error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("shift pos error",__FILE__,__LINE__);
 
 			i = shiftpos;
 		}
@@ -1485,13 +1485,13 @@ LAMultiSwapPricer::shiftMarketRate(LAStringMatrix& rateMat, double shiftval, boo
 		//special case price flag is only "FF" or "ED", this is not temporary
 		if (rateMat[i][0].findString("FF") == -1 && rateMat[i][0].findString("ED") == -1)
 		{
-			rateMat[i][1] = LAString(orgval+shiftval);
+			rateMat[i][1] = AQLString(orgval+shiftval);
 
 		}
 		else
 		{
 			//future case
-			rateMat[i][1] = LAString(orgval - shiftval * 100.0);
+			rateMat[i][1] = AQLString(orgval - shiftval * 100.0);
 		}
 
 		if (!ispara)
@@ -1500,69 +1500,69 @@ LAMultiSwapPricer::shiftMarketRate(LAStringMatrix& rateMat, double shiftval, boo
 }
 
 
-LAMathObjectValue* 
-LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LAString, LAString> maptrade, LAString orgtradeid, bool isduplicatemode, LAString key_suffix, bool istypicalpardeal)
+AQLMathObjectValue* 
+LAMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQLString, AQLString> maptrade, AQLString orgtradeid, bool isduplicatemode, AQLString key_suffix, bool istypicalpardeal)
 {
-	LAMathObjectValue* ret = NULL;
-	LADataHolder* dh;
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLMathObjectValue* ret = NULL;
+	AQLDataHolder* dh;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 	
 
-	LAString copytradeid = orgtradeid;
+	AQLString copytradeid = orgtradeid;
 	if (isduplicatemode)
 		copytradeid += key_suffix;
 
 	//important clasee "lineparam1"
-	LAObject& eline = objPool.getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
-	map<LAString, LAString>::iterator itmap = maptrade.begin();
+	AQLObject& eline = objPool.getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
+	map<AQLString, AQLString>::iterator itmap = maptrade.begin();
 
 
-	LAString leg1Input = copytradeid + "_leg1";
-	LAString leg2Input = copytradeid + "_leg2";
-	LAString coupon1Input = leg1Input + "_coupon1";
-	LAString coupon2Input = leg2Input + "_coupon2";
-	LAString index1Input =  coupon1Input + "_index1";
-	LAString index2Input =  coupon2Input + "_index2";
+	AQLString leg1Input = copytradeid + "_leg1";
+	AQLString leg2Input = copytradeid + "_leg2";
+	AQLString coupon1Input = leg1Input + "_coupon1";
+	AQLString coupon2Input = leg2Input + "_coupon2";
+	AQLString index1Input =  coupon1Input + "_index1";
+	AQLString index2Input =  coupon2Input + "_index2";
 
 	//common info
 	//calc info
-	LAString ccyInput = dynamic_cast<LADataString &>(eline.getData("CALC_CURRENCY", ISNOTNULL).get());
-	LAString asofdateInput = dynamic_cast<LADataString &>(eline.getData("CALC_ASOFDATE", ISNOTNULL).get());
-	LAString valuedateInput = dynamic_cast<LADataString &>(eline.getData("CALC_VALUEDATE", ISNOTNULL).get());
-	LADate basedate(asofdateInput.getCString(),"YYYYMMDD");
+	AQLString ccyInput = dynamic_cast<AQLDataString &>(eline.getData("CALC_CURRENCY", ISNOTNULL).get());
+	AQLString asofdateInput = dynamic_cast<AQLDataString &>(eline.getData("CALC_ASOFDATE", ISNOTNULL).get());
+	AQLString valuedateInput = dynamic_cast<AQLDataString &>(eline.getData("CALC_VALUEDATE", ISNOTNULL).get());
+	AQLDate basedate(asofdateInput.getCString(),"YYYYMMDD");
 
 	// necessary in case of index set
-	LAString fcurvestr1m = dynamic_cast<LADataString &>(eline.getData("CURVE_1MFORECAST", ISNOTNULL).get());
-	LAString fcurvestr3m = dynamic_cast<LADataString &>(eline.getData("CURVE_3MFORECAST", ISNOTNULL).get());
-	LAString fcurvestr6m = dynamic_cast<LADataString &>(eline.getData("CURVE_6MFORECAST", ISNOTNULL).get());
-	LAString fcurvestrois = dynamic_cast<LADataString &>(eline.getData("CURVE_OISFORECAST", ISNOTNULL).get());
-	LAString curveID = maptrade[orgtradeid + "/" + "CURVEID"];
+	AQLString fcurvestr1m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_1MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr3m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_3MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr6m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_6MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestrois = dynamic_cast<AQLDataString &>(eline.getData("CURVE_OISFORECAST", ISNOTNULL).get());
+	AQLString curveID = maptrade[orgtradeid + "/" + "CURVEID"];
 
 	dh =&(eline.getData("CURVE_DISCOUNT", NOCHECK));
-	LAString discountcurve;
+	AQLString discountcurve;
 	if (!dh->isDefined() || dh->isNull())
 	{
 		discountcurve = getDiscountCurveName(dataInstance, curveID);
 	}
 	else
 	{
-		discountcurve = dynamic_cast<LADataString &>(eline.getData("CURVE_DISCOUNT", NOCHECK).get());
+		discountcurve = dynamic_cast<AQLDataString &>(eline.getData("CURVE_DISCOUNT", NOCHECK).get());
 	}
 
 	//line product
-	LAString lineproduc = maptrade[orgtradeid + "/" + "LineProductType"];
-	LAString ispnl = maptrade[orgtradeid + "/" + "IsPnL"];
-	LAObjectHolder objHolder = objPool.getObject(copytradeid);
+	AQLString lineproduc = maptrade[orgtradeid + "/" + "LineProductType"];
+	AQLString ispnl = maptrade[orgtradeid + "/" + "IsPnL"];
+	AQLObjectHolder objHolder = objPool.getObject(copytradeid);
 	if (objHolder.isDefined())
 	{
 		if (!objHolder.isTypeOf(ENTITY_VENTITY))
-			throw LACoreInvalidData("Trans ID Error",__FILE__,__LINE__);
-		ret = dynamic_cast<LAMathObjectValue *>(&objHolder.get());
+			throw AQLCoreInvalidData("Trans ID Error",__FILE__,__LINE__);
+		ret = dynamic_cast<AQLMathObjectValue *>(&objHolder.get());
 		ret->reset();
 	}
 	else
 	{
-		ret = new LAMathObjectValue(dataInstance);
+		ret = new AQLMathObjectValue(dataInstance);
 		objPool.set(copytradeid, ret);
 	}
 	//set mintradefile
@@ -1571,91 +1571,91 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 	//value
 	ret->getData(CALIBRATION_DATA_VALUE, ISDEFINED).convertFromString(FN_IR_PLAINVANILLASWAPTRADEVALUE_STR);
 	//isdetailoutput
-	ret->LAObject::add(PRICING_DATA_ISDETAILOUTPUT, new LADataBool(true));
+	ret->AQLObject::add(PRICING_DATA_ISDETAILOUTPUT, new AQLDataBool(true));
 	//cfgenerator
-	ret->LAObject::add(PRICING_DATA_CFGENERATOR, new LADataProcedure()).convertFromString(FN_IR_CASHFLOWGENERATOR_STR);
+	ret->AQLObject::add(PRICING_DATA_CFGENERATOR, new AQLDataProcedure()).convertFromString(FN_IR_CASHFLOWGENERATOR_STR);
 	//currency
-	ret->LAObject::add(IR_CALIBRATION_DATA_CURRENCY, new LADataString()).convertFromString(ccyInput);
+	ret->AQLObject::add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString()).convertFromString(ccyInput);
 	//settle
-	ret->LAObject::add(PRICING_DATA_SETTLEDATE, new LADataDate()).convertFromString(valuedateInput);
+	ret->AQLObject::add(PRICING_DATA_SETTLEDATE, new AQLDataDate()).convertFromString(valuedateInput);
 	//valuedate
-	ret->LAObject::add(PRICING_DATA_VALUEDATE, new LADataDate()).convertFromString(valuedateInput);
+	ret->AQLObject::add(PRICING_DATA_VALUEDATE, new AQLDataDate()).convertFromString(valuedateInput);
 	//today
-	ret->LAObject::add(PRICING_DATA_TODAY, new LADataDate()).convertFromString(asofdateInput);
+	ret->AQLObject::add(PRICING_DATA_TODAY, new AQLDataDate()).convertFromString(asofdateInput);
 	//underlyings
-	ret->LAObject::add(CALIBRATION_DATA_UNDERLYINGS, new LADataMultiReference()).convertFromString(leg1Input + LAString(":") + leg2Input);
+	ret->AQLObject::add(CALIBRATION_DATA_UNDERLYINGS, new AQLDataMultiReference()).convertFromString(leg1Input + AQLString(":") + leg2Input);
 	//is result out ---> the same output as webtool
-	ret->LAObject::add(PRICING_DATA_ISRESULTOUTPUT, new LADataBool(true));
+	ret->AQLObject::add(PRICING_DATA_ISRESULTOUTPUT, new AQLDataBool(true));
 	//temporary to avoid erro in past trade
-	ret->LAObject::add(PRICING_DATA_ISSAVEPASTFIXING, new LADataBool(true));
+	ret->AQLObject::add(PRICING_DATA_ISSAVEPASTFIXING, new AQLDataBool(true));
 	//path object
-	ret->LAObject::add(PRICING_DATA_PATHENTITY, new LADataReference()).convertFromString("marketparam1_" + curveID);
+	ret->AQLObject::add(PRICING_DATA_PATHENTITY, new AQLDataReference()).convertFromString("marketparam1_" + curveID);
 	//Line product type
-	ret->LAObject::add("LineProductType", new LADataString(lineproduc));
+	ret->AQLObject::add("LineProductType", new AQLDataString(lineproduc));
 	//IsPnL
-	ret->LAObject::add("IsPnL", new LADataBool()).convertFromString(ispnl);
+	ret->AQLObject::add("IsPnL", new AQLDataBool()).convertFromString(ispnl);
 
 	//each single deal
-	LAString tradetypekey = LAString("TRADE_") + lineproduc + "_";
+	AQLString tradetypekey = AQLString("TRADE_") + lineproduc + "_";
 	//is forward roll
-	LAString isforwardInput = dynamic_cast<LADataString &>(eline.getData(tradetypekey + PRICING_DATA_ISFORWARDROLL, ISNOTNULL).get());
+	AQLString isforwardInput = dynamic_cast<AQLDataString &>(eline.getData(tradetypekey + PRICING_DATA_ISFORWARDROLL, ISNOTNULL).get());
 	//is forward interpolation
-	LAString isforwardinterInput = dynamic_cast<LADataString &>(eline.getData(tradetypekey + PRICING_DATA_ISFWDINTERPOLATION, ISNOTNULL).get());
+	AQLString isforwardinterInput = dynamic_cast<AQLDataString &>(eline.getData(tradetypekey + PRICING_DATA_ISFWDINTERPOLATION, ISNOTNULL).get());
 
 	//is paymenttiming (priority: trade(leg) > trade > commoninfo)
-	LAString paytimingInput1, paytimingInput2;
+	AQLString paytimingInput1, paytimingInput2;
 	if (maptrade.find(orgtradeid + "/" + PRICING_DATA_PAYMENTTIMING + "/LEG1") != maptrade.end())
 		paytimingInput1 = maptrade[orgtradeid + "/" + PRICING_DATA_PAYMENTTIMING + "/LEG1"];
 	else if (maptrade.find(orgtradeid + "/" + PRICING_DATA_PAYMENTTIMING) != maptrade.end())
 		paytimingInput1 = maptrade[orgtradeid + "/" + PRICING_DATA_PAYMENTTIMING];
 	else
-		paytimingInput1 = dynamic_cast<LADataString &>(eline.getData(tradetypekey + PRICING_DATA_PAYMENTTIMING, ISNOTNULL).get());
+		paytimingInput1 = dynamic_cast<AQLDataString &>(eline.getData(tradetypekey + PRICING_DATA_PAYMENTTIMING, ISNOTNULL).get());
 
 	if (maptrade.find(orgtradeid + "/" + PRICING_DATA_PAYMENTTIMING + "/LEG2") != maptrade.end())
 		paytimingInput2 = maptrade[orgtradeid + "/" + PRICING_DATA_PAYMENTTIMING + "/LEG2"];
 	else if (maptrade.find(orgtradeid + "/" + PRICING_DATA_PAYMENTTIMING) != maptrade.end())
 		paytimingInput2 = maptrade[orgtradeid + "/" + PRICING_DATA_PAYMENTTIMING];
 	else
-		paytimingInput2 = dynamic_cast<LADataString &>(eline.getData(tradetypekey + PRICING_DATA_PAYMENTTIMING, ISNOTNULL).get());
+		paytimingInput2 = dynamic_cast<AQLDataString &>(eline.getData(tradetypekey + PRICING_DATA_PAYMENTTIMING, ISNOTNULL).get());
 
 
 	//payment calendar (priority: trade(leg) > trade > commoninfo)
-	LAString leg1calendarInput, leg2calendarInput;
+	AQLString leg1calendarInput, leg2calendarInput;
 	if (maptrade.find(orgtradeid + "/" + CALIBRATION_DATA_CALENDAR + "/LEG1") != maptrade.end())
 		leg1calendarInput = maptrade[orgtradeid + "/" + CALIBRATION_DATA_CALENDAR + "/LEG1"];
 	else if (maptrade.find(orgtradeid + "/" + CALIBRATION_DATA_CALENDAR) != maptrade.end())
 		leg1calendarInput = maptrade[orgtradeid + "/" + CALIBRATION_DATA_CALENDAR];
 	else
-		leg1calendarInput = dynamic_cast<LADataString &>(eline.getData(tradetypekey + CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+		leg1calendarInput = dynamic_cast<AQLDataString &>(eline.getData(tradetypekey + CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
 
 	if (maptrade.find(orgtradeid + "/" + CALIBRATION_DATA_CALENDAR + "/LEG2") != maptrade.end())
 		leg2calendarInput = maptrade[orgtradeid + "/" + CALIBRATION_DATA_CALENDAR + "/LEG2"];
 	else if (maptrade.find(orgtradeid + "/" + CALIBRATION_DATA_CALENDAR) != maptrade.end())
 		leg2calendarInput = maptrade[orgtradeid + "/" + CALIBRATION_DATA_CALENDAR];
 	else
-		leg2calendarInput = dynamic_cast<LADataString &>(eline.getData(tradetypekey + CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+		leg2calendarInput = dynamic_cast<AQLDataString &>(eline.getData(tradetypekey + CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
 
 
 	//trade business day convnention (priority: trade(leg) > trade > commoninfo)
-	LAString bdayconvInput1, bdayconvInput2;
+	AQLString bdayconvInput1, bdayconvInput2;
 	if (maptrade.find(orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE + "/LEG1") != maptrade.end())
 		bdayconvInput1 = maptrade[orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE + "/LEG1"];
 	else if (maptrade.find(orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE) != maptrade.end())
 		bdayconvInput1 = maptrade[orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE];
 	else
-		bdayconvInput1 = dynamic_cast<LADataString &>(eline.getData(tradetypekey + CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+		bdayconvInput1 = dynamic_cast<AQLDataString &>(eline.getData(tradetypekey + CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
 
 	if (maptrade.find(orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE + "/LEG2") != maptrade.end())
 		bdayconvInput2 = maptrade[orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE + "/LEG2"];
 	else if (maptrade.find(orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE) != maptrade.end())
 		bdayconvInput2 = maptrade[orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE];
 	else
-		bdayconvInput2 = dynamic_cast<LADataString &>(eline.getData(tradetypekey + CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+		bdayconvInput2 = dynamic_cast<AQLDataString &>(eline.getData(tradetypekey + CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
 
-	LAString leg1indextypeInput = maptrade[orgtradeid + "/" + PRICING_DATA_INDEXTYPE + "/INDEX1"];
-	LAString leg2indextypeInput = maptrade[orgtradeid + "/" + PRICING_DATA_INDEXTYPE + "/INDEX2"];
-	LAString leg1compfreqInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLFREQUENCY + "/LEG1"];
-	LAString leg2compfreqInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLFREQUENCY + "/LEG2"];
+	AQLString leg1indextypeInput = maptrade[orgtradeid + "/" + PRICING_DATA_INDEXTYPE + "/INDEX1"];
+	AQLString leg2indextypeInput = maptrade[orgtradeid + "/" + PRICING_DATA_INDEXTYPE + "/INDEX2"];
+	AQLString leg1compfreqInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLFREQUENCY + "/LEG1"];
+	AQLString leg2compfreqInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLFREQUENCY + "/LEG2"];
 
 	bool isleg1compounding = ("OIS" == leg1indextypeInput || leg1compfreqInput.size() > 0);
 	bool isleg2compounding = ("OIS" == leg2indextypeInput || leg2compfreqInput.size() > 0);
@@ -1668,119 +1668,119 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 		leg2compfreqInput = "BUSINESS_DAYS";
 
 	//set minlegfile
-	LAObject* pleg1 = NULL;
-	LAObject* pleg2 = NULL;
+	AQLObject* pleg1 = NULL;
+	AQLObject* pleg2 = NULL;
 	objHolder = objPool.getObject(leg1Input);
 	if (objHolder.isDefined())
 	{
 		pleg1 = &objHolder.get();
 		//cf generate
 		dh = &(ret->getData(PRICING_DATA_CFGENERATOR,ISDEFINED));
-		LADataProcedure &modelDataObj = dynamic_cast<LADataProcedure &>(dh->get());
+		AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &>(dh->get());
 		const LAPriceCashFlowGenerator& cfgen = dynamic_cast<const LAPriceCashFlowGenerator &>(modelDataObj.getMethod());
 		cfgen.clearCashlets(*pleg1);
 		pleg1->clear();
 	}
 	else
 	{
-		pleg1= new LAObject();
+		pleg1= new AQLObject();
 		objPool.set(leg1Input,pleg1);
 	}
 
 	//name 
-	pleg1->LAObject::add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(leg1Input);
+	pleg1->AQLObject::add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(leg1Input);
 	//ccyInput
-	pleg1->LAObject::add(IR_CALIBRATION_DATA_CURRENCY, new LADataString()).convertFromString(ccyInput);
+	pleg1->AQLObject::add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString()).convertFromString(ccyInput);
 	//inputtype
-	pleg1->LAObject::add(PRICING_DATA_INPUTTYPE, new LADataString()).convertFromString("Detail");
+	pleg1->AQLObject::add(PRICING_DATA_INPUTTYPE, new AQLDataString()).convertFromString("Detail");
 	//isamortize
-	pleg1->LAObject::add(PRICING_DATA_ISAMORTIZE, new LADataBool(false));
+	pleg1->AQLObject::add(PRICING_DATA_ISAMORTIZE, new AQLDataBool(false));
 	//isnotionalend
-	pleg1->LAObject::add(PRICING_DATA_ISNOTIONALEXCHANGEATEND, new LADataBool(false));
+	pleg1->AQLObject::add(PRICING_DATA_ISNOTIONALEXCHANGEATEND, new AQLDataBool(false));
 	//isnotionalstart
-	pleg1->LAObject::add(PRICING_DATA_ISNOTIONALEXCHANGEATSTART, new LADataBool(false));
+	pleg1->AQLObject::add(PRICING_DATA_ISNOTIONALEXCHANGEATSTART, new AQLDataBool(false));
 	//underlyings
-	pleg1->LAObject::add(PRICING_DATA_COUPONINFOS, new LADataMultiReference()).convertFromString(coupon1Input);
+	pleg1->AQLObject::add(PRICING_DATA_COUPONINFOS, new AQLDataMultiReference()).convertFromString(coupon1Input);
 	//calendar
-	pleg1->LAObject::add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(leg1calendarInput);
+	pleg1->AQLObject::add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(leg1calendarInput);
 	//slidingrule
-	LAString leg1conventionInput = maptrade[orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE + "/Adjustment/LEG1"];
+	AQLString leg1conventionInput = maptrade[orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE + "/Adjustment/LEG1"];
 	//NO_CHANGE means unadjsuted
 	if (leg1conventionInput != "NO_CHANGE")
 		leg1conventionInput = bdayconvInput1; 
 	
-	pleg1->LAObject::add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(leg1conventionInput);
+	pleg1->AQLObject::add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(leg1conventionInput);
 	//slidingrule (strat/end date)
 	leg1conventionInput = maptrade[orgtradeid + "/" + PRICING_DATA_CASHFLOWSLIDINGRULE + "/Adjustment/LEG1"];
 	//NO_CHANGE means unadjsuted
 	if (leg1conventionInput != "NO_CHANGE")
 		leg1conventionInput = bdayconvInput1; 
 	
-	pleg1->LAObject::add(PRICING_DATA_CASHFLOWSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(leg1conventionInput);
+	pleg1->AQLObject::add(PRICING_DATA_CASHFLOWSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(leg1conventionInput);
 	//daycount
-	LAString leg1daycountInput = maptrade[orgtradeid + "/" + PRICING_DATA_DAYCOUNT + "/LEG1"];
-	pleg1->LAObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(leg1daycountInput);
+	AQLString leg1daycountInput = maptrade[orgtradeid + "/" + PRICING_DATA_DAYCOUNT + "/LEG1"];
+	pleg1->AQLObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(leg1daycountInput);
 	//startdate
-	LAString leg1startdateInput = maptrade[orgtradeid + "/" + PRICING_DATA_STARTDATE + "/LEG1"];
+	AQLString leg1startdateInput = maptrade[orgtradeid + "/" + PRICING_DATA_STARTDATE + "/LEG1"];
 	//change string into date 
 	if (leg1startdateInput.findString('Y') != -1 || leg1startdateInput.findString('M') != -1 || 
 		leg1startdateInput.findString('W') != -1 || leg1startdateInput.findString('D') != -1)
 	{
-		LADate tmpstartdate = LAMathDateUtilities::getDate(basedate,leg1startdateInput,leg1conventionInput,leg1calendarInput);
-		pleg1->LAObject::add(PRICING_DATA_STARTDATE, new LADataDate(tmpstartdate));
+		AQLDate tmpstartdate = LAMathDateUtilities::getDate(basedate,leg1startdateInput,leg1conventionInput,leg1calendarInput);
+		pleg1->AQLObject::add(PRICING_DATA_STARTDATE, new AQLDataDate(tmpstartdate));
 	}
 	else if (leg1startdateInput.size() == 8)
 	{
-		pleg1->LAObject::add(PRICING_DATA_STARTDATE, new LADataDate()).convertFromString(leg1startdateInput);
+		pleg1->AQLObject::add(PRICING_DATA_STARTDATE, new AQLDataDate()).convertFromString(leg1startdateInput);
 	}
 	else 
-		throw LACoreInvalidData("Leg1 StartDate input error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Leg1 StartDate input error",__FILE__,__LINE__);
 
 	//enddate
 	//change string into date
-	LAString leg1enddateInput = maptrade[orgtradeid + "/" + PRICING_DATA_ENDDATE + "/LEG1"];
+	AQLString leg1enddateInput = maptrade[orgtradeid + "/" + PRICING_DATA_ENDDATE + "/LEG1"];
 	if (leg1enddateInput.findString('Y') != -1 || leg1enddateInput.findString('M') != -1 || 
 		leg1enddateInput.findString('W') != -1 || leg1enddateInput.findString('D') != -1)
 	{
-		LADate startdate = dynamic_cast<LADataDate &>(pleg1->getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
-		LADate tmpenddate = LAMathDateUtilities::getDate(startdate,leg1enddateInput,leg1conventionInput,leg1calendarInput);
-		pleg1->LAObject::add(PRICING_DATA_ENDDATE, new LADataDate(tmpenddate));
+		AQLDate startdate = dynamic_cast<AQLDataDate &>(pleg1->getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
+		AQLDate tmpenddate = LAMathDateUtilities::getDate(startdate,leg1enddateInput,leg1conventionInput,leg1calendarInput);
+		pleg1->AQLObject::add(PRICING_DATA_ENDDATE, new AQLDataDate(tmpenddate));
 	}
 	else if (leg1enddateInput.size() == 8)
 	{
-		pleg1->LAObject::add(PRICING_DATA_ENDDATE, new LADataDate()).convertFromString(leg1enddateInput);
+		pleg1->AQLObject::add(PRICING_DATA_ENDDATE, new AQLDataDate()).convertFromString(leg1enddateInput);
 	}
 	else 
-		throw LACoreInvalidData("Leg1 EndDate input error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Leg1 EndDate input error",__FILE__,__LINE__);
 
 	//frequency
-	LAString leg1fregInput = maptrade[orgtradeid + "/" + PRICING_DATA_FREQUENCY + "/LEG1"];
-	pleg1->LAObject::add(PRICING_DATA_FREQUENCY, new LADataString()).convertFromString(leg1fregInput);
+	AQLString leg1fregInput = maptrade[orgtradeid + "/" + PRICING_DATA_FREQUENCY + "/LEG1"];
+	pleg1->AQLObject::add(PRICING_DATA_FREQUENCY, new AQLDataString()).convertFromString(leg1fregInput);
 	//rollconvention
-	LAString leg1rollconvInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLCONVENTION + "/LEG1"];
+	AQLString leg1rollconvInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLCONVENTION + "/LEG1"];
 	if(leg1rollconvInput != "")
-		pleg1->LAObject::add(PRICING_DATA_ROLLCONVENTION, new LADataString()).convertFromString(leg1rollconvInput);
+		pleg1->AQLObject::add(PRICING_DATA_ROLLCONVENTION, new AQLDataString()).convertFromString(leg1rollconvInput);
 	//notional
-	LAString leg1notionalInput = maptrade[orgtradeid + "/" + PRICING_CALIBRATION_DATAOTIONAL + "/LEG1"];
-	pleg1->LAObject::add(PRICING_CALIBRATION_DATAOTIONAL, new LADataDouble()).convertFromString(leg1notionalInput);
+	AQLString leg1notionalInput = maptrade[orgtradeid + "/" + PRICING_CALIBRATION_DATAOTIONAL + "/LEG1"];
+	pleg1->AQLObject::add(PRICING_CALIBRATION_DATAOTIONAL, new AQLDataDouble()).convertFromString(leg1notionalInput);
 	//paymenttiming
-	pleg1->LAObject::add(PRICING_DATA_PAYMENTTIMING, new LADataString()).convertFromString(paytimingInput1);
+	pleg1->AQLObject::add(PRICING_DATA_PAYMENTTIMING, new AQLDataString()).convertFromString(paytimingInput1);
 	//selectside
-	LAString leg1PRInput = maptrade[orgtradeid + "/" + PRICING_DATA_SELECTSIDE + "/LEG1"];
-	pleg1->LAObject::add(PRICING_DATA_SELECTSIDE, new LADataString()).convertFromString(leg1PRInput);
+	AQLString leg1PRInput = maptrade[orgtradeid + "/" + PRICING_DATA_SELECTSIDE + "/LEG1"];
+	pleg1->AQLObject::add(PRICING_DATA_SELECTSIDE, new AQLDataString()).convertFromString(leg1PRInput);
 	//coupondays
-	LAString leg1cdayInput = maptrade[orgtradeid + "/" + PRICING_DATA_COUPONDAY + "/LEG1"];
-	pleg1->LAObject::add(PRICING_DATA_COUPONDAY, new LADataInt()).convertFromString(leg1cdayInput);
+	AQLString leg1cdayInput = maptrade[orgtradeid + "/" + PRICING_DATA_COUPONDAY + "/LEG1"];
+	pleg1->AQLObject::add(PRICING_DATA_COUPONDAY, new AQLDataInt()).convertFromString(leg1cdayInput);
 	//isforwardroll
-	LAString leg1isforwardInput=maptrade[orgtradeid + "/" + PRICING_DATA_ISFORWARDROLL + "/LEG1"];
+	AQLString leg1isforwardInput=maptrade[orgtradeid + "/" + PRICING_DATA_ISFORWARDROLL + "/LEG1"];
 	if(leg1isforwardInput != "")	//if maptrade contains PRICING_DATA_ISFORWARDROLL, overwittern
 		isforwardInput = leg1isforwardInput;
-	pleg1->LAObject::add(PRICING_DATA_ISFORWARDROLL, new LADataBool()).convertFromString(isforwardInput);
+	pleg1->AQLObject::add(PRICING_DATA_ISFORWARDROLL, new AQLDataBool()).convertFromString(isforwardInput);
 	//discountcurve
-	pleg1->LAObject::add(PRICING_DATA_DISCOUNTCURVE, new LADataString()).convertFromString(discountcurve);
+	pleg1->AQLObject::add(PRICING_DATA_DISCOUNTCURVE, new AQLDataString()).convertFromString(discountcurve);
 
-	//LAString leg1compfreqInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLFREQUENCY + "/LEG1"];
-	pleg1->LAObject::add(PRICING_DATA_ROLLFREQUENCY, new LADataString()).convertFromString(leg1compfreqInput);
+	//AQLString leg1compfreqInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLFREQUENCY + "/LEG1"];
+	pleg1->AQLObject::add(PRICING_DATA_ROLLFREQUENCY, new AQLDataString()).convertFromString(leg1compfreqInput);
 	
 	//UpfrontFees	
 	//UpfrontPaymentDates
@@ -1796,39 +1796,39 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 				if (leg1PRInput == "PAY")
 					upfee *= -1;
 
-				LADate tmppaydate = dynamic_cast<LADataDate &>(pleg1->getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
+				AQLDate tmppaydate = dynamic_cast<AQLDataDate &>(pleg1->getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
 				
 				//upfront payment is always spot
 				DoubleVector upfeevec(1,upfee);
-				pleg1->LAObject::add(PRICING_DATA_UPFRONTFEES, new LADataDoubles(upfeevec));
+				pleg1->AQLObject::add(PRICING_DATA_UPFRONTFEES, new AQLDataDoubles(upfeevec));
 				DateVector payvec(1,tmppaydate);
-				pleg1->LAObject::add(PRICING_DATA_UPFRONTPAYMENTDATES, new LADataDates(payvec));
+				pleg1->AQLObject::add(PRICING_DATA_UPFRONTPAYMENTDATES, new AQLDataDates(payvec));
 			}
 		}
 	}
 	//firstodddate
 	itmap = maptrade.find(orgtradeid + "/" + PRICING_DATA_FIRSTODDDATE + "/LEG1");
 	if(itmap != maptrade.end()){
-		LAString leg1firstodddateInput = itmap->second;
-		pleg1->LAObject::add(PRICING_DATA_FIRSTODDDATE, new LADataDate()).convertFromString(leg1firstodddateInput);
+		AQLString leg1firstodddateInput = itmap->second;
+		pleg1->AQLObject::add(PRICING_DATA_FIRSTODDDATE, new AQLDataDate()).convertFromString(leg1firstodddateInput);
 	}
 	//lastodddate
 	itmap = maptrade.find(orgtradeid + "/" + PRICING_DATA_LASTODDDATE + "/LEG1");
 	if(itmap != maptrade.end()){
-		LAString leg1lastodddateInput = itmap->second;
-		pleg1->LAObject::add(PRICING_DATA_LASTODDDATE, new LADataDate()).convertFromString(leg1lastodddateInput);
+		AQLString leg1lastodddateInput = itmap->second;
+		pleg1->AQLObject::add(PRICING_DATA_LASTODDDATE, new AQLDataDate()).convertFromString(leg1lastodddateInput);
 	}
 	//firsoddindextype
 	itmap = maptrade.find(orgtradeid + "/" + PRICING_DATA_FIRSTODDINDEXTYPE + "/LEG1");
 	if(itmap != maptrade.end()){
-		LAString leg1firstoddindexInput = itmap->second;
-		pleg1->LAObject::add(PRICING_DATA_FIRSTODDINDEXTYPE, new LADataString()).convertFromString(leg1firstoddindexInput);
+		AQLString leg1firstoddindexInput = itmap->second;
+		pleg1->AQLObject::add(PRICING_DATA_FIRSTODDINDEXTYPE, new AQLDataString()).convertFromString(leg1firstoddindexInput);
 	}
 	//lastoddindextype
 	itmap = maptrade.find(orgtradeid + "/" + PRICING_DATA_LASTODDINDEXTYPE + "/LEG1");
 	if(itmap != maptrade.end()){
-		LAString leg1firstoddindexInput = itmap->second;
-		pleg1->LAObject::add(PRICING_DATA_LASTODDINDEXTYPE, new LADataString()).convertFromString(leg1firstoddindexInput);
+		AQLString leg1firstoddindexInput = itmap->second;
+		pleg1->AQLObject::add(PRICING_DATA_LASTODDINDEXTYPE, new AQLDataString()).convertFromString(leg1firstoddindexInput);
 	}
 	
 
@@ -1839,144 +1839,144 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 		//pleg2->clear();
 		//cf generate
 		dh = &(ret->getData(PRICING_DATA_CFGENERATOR,ISDEFINED));
-		LADataProcedure &modelDataObj = dynamic_cast<LADataProcedure &>(dh->get());
+		AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &>(dh->get());
 		const LAPriceCashFlowGenerator& cfgen = dynamic_cast<const LAPriceCashFlowGenerator &>(modelDataObj.getMethod());
 		cfgen.clearCashlets(*pleg2);
 		pleg2->clear();
 	}
 	else
 	{
-		pleg2= new LAObject();
+		pleg2= new AQLObject();
 		objPool.set(leg2Input,pleg2);
 	}
 
 	//name 
-	pleg2->LAObject::add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(leg2Input);
+	pleg2->AQLObject::add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(leg2Input);
 	//ccyInput
-	pleg2->LAObject::add(IR_CALIBRATION_DATA_CURRENCY, new LADataString()).convertFromString(ccyInput);
+	pleg2->AQLObject::add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString()).convertFromString(ccyInput);
 	//inputtype
-	pleg2->LAObject::add(PRICING_DATA_INPUTTYPE, new LADataString()).convertFromString("Detail");
+	pleg2->AQLObject::add(PRICING_DATA_INPUTTYPE, new AQLDataString()).convertFromString("Detail");
 	//isamortize
-	pleg2->LAObject::add(PRICING_DATA_ISAMORTIZE, new LADataBool(false));
+	pleg2->AQLObject::add(PRICING_DATA_ISAMORTIZE, new AQLDataBool(false));
 	//isnotionalend
-	pleg2->LAObject::add(PRICING_DATA_ISNOTIONALEXCHANGEATEND, new LADataBool(false));
+	pleg2->AQLObject::add(PRICING_DATA_ISNOTIONALEXCHANGEATEND, new AQLDataBool(false));
 	//isnotionalstart
-	pleg2->LAObject::add(PRICING_DATA_ISNOTIONALEXCHANGEATSTART, new LADataBool(false));
+	pleg2->AQLObject::add(PRICING_DATA_ISNOTIONALEXCHANGEATSTART, new AQLDataBool(false));
 	//underlyings
-	pleg2->LAObject::add(PRICING_DATA_COUPONINFOS, new LADataMultiReference()).convertFromString(coupon2Input);
+	pleg2->AQLObject::add(PRICING_DATA_COUPONINFOS, new AQLDataMultiReference()).convertFromString(coupon2Input);
 	//calendar
-	pleg2->LAObject::add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(leg2calendarInput);
+	pleg2->AQLObject::add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(leg2calendarInput);
 	//slidingrule (payment)
-	LAString leg2conventionInput = maptrade[orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE + "/Adjustment/LEG2"];
+	AQLString leg2conventionInput = maptrade[orgtradeid + "/" + CALIBRATION_DATA_SLIDINGRULE + "/Adjustment/LEG2"];
 	//NO_CHANGE means unadjsuted
 	if (leg2conventionInput != "NO_CHANGE")
 		leg2conventionInput = bdayconvInput2; 
 
-	pleg2->LAObject::add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(leg2conventionInput);
+	pleg2->AQLObject::add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(leg2conventionInput);
 	//slidingrule (strat/end date)
 	leg2conventionInput = maptrade[orgtradeid + "/" + PRICING_DATA_CASHFLOWSLIDINGRULE + "/Adjustment/LEG2"];
 	//NO_CHANGE means unadjsuted
 	if (leg2conventionInput != "NO_CHANGE")
 		leg2conventionInput = bdayconvInput2; 
 	
-	pleg2->LAObject::add(PRICING_DATA_CASHFLOWSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString(leg2conventionInput);
+	pleg2->AQLObject::add(PRICING_DATA_CASHFLOWSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString(leg2conventionInput);
 
 	//daycount
-	LAString leg2daycountInput = maptrade[orgtradeid + "/" + PRICING_DATA_DAYCOUNT + "/LEG2"];
-	pleg2->LAObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(leg2daycountInput);
+	AQLString leg2daycountInput = maptrade[orgtradeid + "/" + PRICING_DATA_DAYCOUNT + "/LEG2"];
+	pleg2->AQLObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(leg2daycountInput);
 	
 	//startdate
-	LAString leg2startdateInput = maptrade[orgtradeid + "/" + PRICING_DATA_STARTDATE + "/LEG2"];
+	AQLString leg2startdateInput = maptrade[orgtradeid + "/" + PRICING_DATA_STARTDATE + "/LEG2"];
 	//change string into date 
 	if (leg2startdateInput.findString('Y') != -1 || leg2startdateInput.findString('M') != -1 || 
 		leg2startdateInput.findString('W') != -1 || leg2startdateInput.findString('D') != -1)
 	{
-		LADate tmpstartdate = LAMathDateUtilities::getDate(basedate,leg2startdateInput,leg2conventionInput,leg2calendarInput);
-		pleg2->LAObject::add(PRICING_DATA_STARTDATE, new LADataDate(tmpstartdate));
+		AQLDate tmpstartdate = LAMathDateUtilities::getDate(basedate,leg2startdateInput,leg2conventionInput,leg2calendarInput);
+		pleg2->AQLObject::add(PRICING_DATA_STARTDATE, new AQLDataDate(tmpstartdate));
 	}
 	else if (leg2startdateInput.size() == 8)
 	{
-		pleg2->LAObject::add(PRICING_DATA_STARTDATE, new LADataDate()).convertFromString(leg2startdateInput);
+		pleg2->AQLObject::add(PRICING_DATA_STARTDATE, new AQLDataDate()).convertFromString(leg2startdateInput);
 	}
 	else 
-		throw LACoreInvalidData("Leg2 StartDate input error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Leg2 StartDate input error",__FILE__,__LINE__);
 
 	//enddate
 	//change string into date
-	LAString leg2enddateInput = maptrade[orgtradeid + "/" + PRICING_DATA_ENDDATE + "/LEG2"];
+	AQLString leg2enddateInput = maptrade[orgtradeid + "/" + PRICING_DATA_ENDDATE + "/LEG2"];
 	if (leg2enddateInput.findString('Y') != -1 || leg2enddateInput.findString('M') != -1 || 
 		leg2enddateInput.findString('W') != -1 || leg2enddateInput.findString('D') != -1)
 	{
-		LADate startdate = dynamic_cast<LADataDate &>(pleg2->getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
-		LADate tmpenddate = LAMathDateUtilities::getDate(startdate,leg2enddateInput,leg2conventionInput,leg2calendarInput);
-		pleg2->LAObject::add(PRICING_DATA_ENDDATE, new LADataDate(tmpenddate));
+		AQLDate startdate = dynamic_cast<AQLDataDate &>(pleg2->getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
+		AQLDate tmpenddate = LAMathDateUtilities::getDate(startdate,leg2enddateInput,leg2conventionInput,leg2calendarInput);
+		pleg2->AQLObject::add(PRICING_DATA_ENDDATE, new AQLDataDate(tmpenddate));
 	}
 	else if (leg2enddateInput.size() == 8)
 	{
-		pleg2->LAObject::add(PRICING_DATA_ENDDATE, new LADataDate()).convertFromString(leg2enddateInput);
+		pleg2->AQLObject::add(PRICING_DATA_ENDDATE, new AQLDataDate()).convertFromString(leg2enddateInput);
 	}
 	else 
-		throw LACoreInvalidData("Leg2 EndDate input error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Leg2 EndDate input error",__FILE__,__LINE__);
 
 	//frequency
-	LAString leg2fregInput = maptrade[orgtradeid + "/" + PRICING_DATA_FREQUENCY + "/LEG2"];
-	pleg2->LAObject::add(PRICING_DATA_FREQUENCY, new LADataString()).convertFromString(leg2fregInput);
+	AQLString leg2fregInput = maptrade[orgtradeid + "/" + PRICING_DATA_FREQUENCY + "/LEG2"];
+	pleg2->AQLObject::add(PRICING_DATA_FREQUENCY, new AQLDataString()).convertFromString(leg2fregInput);
 	//roll convention
-	LAString leg2rollconvInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLCONVENTION + "/LEG2"];
+	AQLString leg2rollconvInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLCONVENTION + "/LEG2"];
 	if(leg2rollconvInput != "")
-		pleg2->LAObject::add(PRICING_DATA_ROLLCONVENTION, new LADataString()).convertFromString(leg2rollconvInput);
+		pleg2->AQLObject::add(PRICING_DATA_ROLLCONVENTION, new AQLDataString()).convertFromString(leg2rollconvInput);
 	//notional
-	LAString leg2notionalInput = maptrade[orgtradeid + "/" + PRICING_CALIBRATION_DATAOTIONAL + "/LEG2"];
-	pleg2->LAObject::add(PRICING_CALIBRATION_DATAOTIONAL, new LADataDouble()).convertFromString(leg2notionalInput);
+	AQLString leg2notionalInput = maptrade[orgtradeid + "/" + PRICING_CALIBRATION_DATAOTIONAL + "/LEG2"];
+	pleg2->AQLObject::add(PRICING_CALIBRATION_DATAOTIONAL, new AQLDataDouble()).convertFromString(leg2notionalInput);
 	//paymenttiming
-	pleg2->LAObject::add(PRICING_DATA_PAYMENTTIMING, new LADataString()).convertFromString(paytimingInput2);
+	pleg2->AQLObject::add(PRICING_DATA_PAYMENTTIMING, new AQLDataString()).convertFromString(paytimingInput2);
 	//selectside
-	LAString leg2PRInput = maptrade[orgtradeid + "/" + PRICING_DATA_SELECTSIDE + "/LEG2"];
-	pleg2->LAObject::add(PRICING_DATA_SELECTSIDE, new LADataString()).convertFromString(leg2PRInput);
+	AQLString leg2PRInput = maptrade[orgtradeid + "/" + PRICING_DATA_SELECTSIDE + "/LEG2"];
+	pleg2->AQLObject::add(PRICING_DATA_SELECTSIDE, new AQLDataString()).convertFromString(leg2PRInput);
 	//coupondays
-	LAString leg2cdayInput = maptrade[orgtradeid + "/" + PRICING_DATA_COUPONDAY + "/LEG2"];
-	pleg2->LAObject::add(PRICING_DATA_COUPONDAY, new LADataInt()).convertFromString(leg2cdayInput);
+	AQLString leg2cdayInput = maptrade[orgtradeid + "/" + PRICING_DATA_COUPONDAY + "/LEG2"];
+	pleg2->AQLObject::add(PRICING_DATA_COUPONDAY, new AQLDataInt()).convertFromString(leg2cdayInput);
 	//isforwardroll 
-	LAString leg2isforwardInput=maptrade[orgtradeid + "/" + PRICING_DATA_ISFORWARDROLL + "/LEG2"];
+	AQLString leg2isforwardInput=maptrade[orgtradeid + "/" + PRICING_DATA_ISFORWARDROLL + "/LEG2"];
 	if(leg2isforwardInput != "")	//if maptrade contains PRICING_DATA_ISFORWARDROLL, overwittern
 		isforwardInput = leg2isforwardInput;
-	pleg2->LAObject::add(PRICING_DATA_ISFORWARDROLL, new LADataBool()).convertFromString(isforwardInput);
+	pleg2->AQLObject::add(PRICING_DATA_ISFORWARDROLL, new AQLDataBool()).convertFromString(isforwardInput);
 	//discountcurve
-	pleg2->LAObject::add(PRICING_DATA_DISCOUNTCURVE, new LADataString()).convertFromString(discountcurve);
+	pleg2->AQLObject::add(PRICING_DATA_DISCOUNTCURVE, new AQLDataString()).convertFromString(discountcurve);
 
-	//LAString leg2compfreqInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLFREQUENCY + "/LEG2"];
-	pleg2->LAObject::add(PRICING_DATA_ROLLFREQUENCY, new LADataString()).convertFromString(leg2compfreqInput);
+	//AQLString leg2compfreqInput = maptrade[orgtradeid + "/" + PRICING_DATA_ROLLFREQUENCY + "/LEG2"];
+	pleg2->AQLObject::add(PRICING_DATA_ROLLFREQUENCY, new AQLDataString()).convertFromString(leg2compfreqInput);
 
 	//firstodddate
 	itmap = maptrade.find(orgtradeid + "/" + PRICING_DATA_FIRSTODDDATE + "/LEG2");
 	if(itmap != maptrade.end()){
-		LAString leg2firstodddateInput = itmap->second;
-		pleg2->LAObject::add(PRICING_DATA_FIRSTODDDATE, new LADataDate()).convertFromString(leg2firstodddateInput);
+		AQLString leg2firstodddateInput = itmap->second;
+		pleg2->AQLObject::add(PRICING_DATA_FIRSTODDDATE, new AQLDataDate()).convertFromString(leg2firstodddateInput);
 	}
 	//lastodddate
 	itmap = maptrade.find(orgtradeid + "/" + PRICING_DATA_LASTODDDATE + "/LEG2");
 	if(itmap != maptrade.end()){
-		LAString leg2lastodddateInput = itmap->second;
-		pleg2->LAObject::add(PRICING_DATA_LASTODDDATE, new LADataDate()).convertFromString(leg2lastodddateInput);
+		AQLString leg2lastodddateInput = itmap->second;
+		pleg2->AQLObject::add(PRICING_DATA_LASTODDDATE, new AQLDataDate()).convertFromString(leg2lastodddateInput);
 	}
 	//firsoddindextype
 	itmap = maptrade.find(orgtradeid + "/" + PRICING_DATA_FIRSTODDINDEXTYPE + "/LEG2");
 	if(itmap != maptrade.end()){
-		LAString leg2firstoddindexInput = itmap->second;
-		pleg2->LAObject::add(PRICING_DATA_FIRSTODDINDEXTYPE, new LADataString()).convertFromString(leg2firstoddindexInput);
+		AQLString leg2firstoddindexInput = itmap->second;
+		pleg2->AQLObject::add(PRICING_DATA_FIRSTODDINDEXTYPE, new AQLDataString()).convertFromString(leg2firstoddindexInput);
 	}
 	//lastoddindextype
 	itmap = maptrade.find(orgtradeid + "/" + PRICING_DATA_LASTODDINDEXTYPE + "/LEG2");
 	if(itmap != maptrade.end()){
-		LAString leg2firstoddindexInput = itmap->second;
-		pleg2->LAObject::add(PRICING_DATA_LASTODDINDEXTYPE, new LADataString()).convertFromString(leg2firstoddindexInput);
+		AQLString leg2firstoddindexInput = itmap->second;
+		pleg2->AQLObject::add(PRICING_DATA_LASTODDINDEXTYPE, new AQLDataString()).convertFromString(leg2firstoddindexInput);
 	}
 	//UpfrontFees	
 	//UpfrontPaymentDates
 
 	//set mincouponfile
-	LAObject* pcoupon1 = NULL;
-	LAObject* pcoupon2 = NULL;
+	AQLObject* pcoupon1 = NULL;
+	AQLObject* pcoupon2 = NULL;
 	
 	objHolder = objPool.getObject(coupon1Input);
 	if (objHolder.isDefined())
@@ -1986,31 +1986,31 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 	}
 	else
 	{
-		pcoupon1= new LAObject();
+		pcoupon1= new AQLObject();
 		objPool.set(coupon1Input,pcoupon1);
 	}
 
 	//name
-	pcoupon1->LAObject::add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(coupon1Input);
+	pcoupon1->AQLObject::add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(coupon1Input);
 	//ccyInput
-	pcoupon1->LAObject::add(IR_CALIBRATION_DATA_CURRENCY, new LADataString()).convertFromString(ccyInput);
+	pcoupon1->AQLObject::add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString()).convertFromString(ccyInput);
 	//operator
-	pcoupon1->LAObject::add(PRICING_DATA_OPERATOR, new LAPriceDataFunction()).convertFromString(FN_LINEAR_STR);
+	pcoupon1->AQLObject::add(PRICING_DATA_OPERATOR, new AQLPriceDataFunction()).convertFromString(FN_LINEAR_STR);
 	//underlyings
-	pcoupon1->LAObject::add(PRICING_DATA_INDEXINFOS, new LADataMultiReference()).convertFromString(index1Input);
+	pcoupon1->AQLObject::add(PRICING_DATA_INDEXINFOS, new AQLDataMultiReference()).convertFromString(index1Input);
 	//coeff
 	if (!istypicalpardeal)
 	{
-		LAString leg1coeffInput = maptrade[orgtradeid + "/" + PRICING_DATA_COEFFICIENT + "/COUPON1"];
+		AQLString leg1coeffInput = maptrade[orgtradeid + "/" + PRICING_DATA_COEFFICIENT + "/COUPON1"];
 		//if (!isleg1compounding)
-		pcoupon1->LAObject::add(PRICING_DATA_COEFFICIENT, new LADataDoubles()).convertFromString(leg1coeffInput);
+		pcoupon1->AQLObject::add(PRICING_DATA_COEFFICIENT, new AQLDataDoubles()).convertFromString(leg1coeffInput);
 		/*else
-			pcoupon1->LAObject::add(PRICING_DATA_COEFFICIENT, new LADataDoubles()).convertFromString("1.0:0.0");*/
+			pcoupon1->AQLObject::add(PRICING_DATA_COEFFICIENT, new AQLDataDoubles()).convertFromString("1.0:0.0");*/
 	}
 	// requirement by Lenny
 	else
 	{
-		pcoupon1->LAObject::add(PRICING_DATA_COEFFICIENT, new LADataDoubles()).convertFromString("1.0:0.0");
+		pcoupon1->AQLObject::add(PRICING_DATA_COEFFICIENT, new AQLDataDoubles()).convertFromString("1.0:0.0");
 	}
 
 
@@ -2022,36 +2022,36 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 	}
 	else
 	{
-		pcoupon2= new LAObject();
+		pcoupon2= new AQLObject();
 		objPool.set(coupon2Input,pcoupon2);
 	}
 
 	//name
-	pcoupon2->LAObject::add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(coupon2Input);
+	pcoupon2->AQLObject::add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(coupon2Input);
 	//ccyInput
-	pcoupon2->LAObject::add(IR_CALIBRATION_DATA_CURRENCY, new LADataString()).convertFromString(ccyInput);
+	pcoupon2->AQLObject::add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString()).convertFromString(ccyInput);
 	//operator
-	pcoupon2->LAObject::add(PRICING_DATA_OPERATOR, new LAPriceDataFunction()).convertFromString(FN_LINEAR_STR);
+	pcoupon2->AQLObject::add(PRICING_DATA_OPERATOR, new AQLPriceDataFunction()).convertFromString(FN_LINEAR_STR);
 	//underlyings
-	pcoupon2->LAObject::add(PRICING_DATA_INDEXINFOS, new LADataMultiReference()).convertFromString(index2Input);
+	pcoupon2->AQLObject::add(PRICING_DATA_INDEXINFOS, new AQLDataMultiReference()).convertFromString(index2Input);
 	//coeff
 	if (!istypicalpardeal)
 	{
-		LAString leg2coeffInput = maptrade[orgtradeid + "/" + PRICING_DATA_COEFFICIENT + "/COUPON2"];
+		AQLString leg2coeffInput = maptrade[orgtradeid + "/" + PRICING_DATA_COEFFICIENT + "/COUPON2"];
 		//if (!isleg2compounding)
-		pcoupon2->LAObject::add(PRICING_DATA_COEFFICIENT, new LADataDoubles()).convertFromString(leg2coeffInput);
+		pcoupon2->AQLObject::add(PRICING_DATA_COEFFICIENT, new AQLDataDoubles()).convertFromString(leg2coeffInput);
 		/*else
-			pcoupon2->LAObject::add(PRICING_DATA_COEFFICIENT, new LADataDoubles()).convertFromString("1.0:0.0");*/
+			pcoupon2->AQLObject::add(PRICING_DATA_COEFFICIENT, new AQLDataDoubles()).convertFromString("1.0:0.0");*/
 	}
 	// requirement by Lenny
 	else
 	{
-		pcoupon2->LAObject::add(PRICING_DATA_COEFFICIENT, new LADataDoubles()).convertFromString("1.0:0.0");
+		pcoupon2->AQLObject::add(PRICING_DATA_COEFFICIENT, new AQLDataDoubles()).convertFromString("1.0:0.0");
 	}
 
 	//set minindexfile
-	LAObject* pindex2 = NULL;
-	LAObject* pindex1 = NULL;
+	AQLObject* pindex2 = NULL;
+	AQLObject* pindex1 = NULL;
 
 
 	//counpon1 index setting --------------------------------  
@@ -2064,23 +2064,23 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 	}
 	else
 	{
-		pindex1= new LAObject();
+		pindex1= new AQLObject();
 		objPool.set(index1Input,pindex1);
 	}
 
 	//name
-	pindex1->LAObject::add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(index1Input);
+	pindex1->AQLObject::add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(index1Input);
 	//ccyInput
-	pindex1->LAObject::add(IR_CALIBRATION_DATA_CURRENCY, new LADataString()).convertFromString(ccyInput);
+	pindex1->AQLObject::add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString()).convertFromString(ccyInput);
 
 	//indextype 
 	//if "" then LIBOR 
-	LAString leg1acessoryInput = maptrade[orgtradeid + "/" + PRICING_DATA_ACCESSORY + "/INDEX1"];
+	AQLString leg1acessoryInput = maptrade[orgtradeid + "/" + PRICING_DATA_ACCESSORY + "/INDEX1"];
 	if (leg1indextypeInput == "OIS")
 	{
 		//in case of OIS we must change offset,spotlag as 0 and Accessory must be 1D
 		if (leg1acessoryInput.toUpper() != "1D")
-			throw LACoreInvalidData("ois, ff index set error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("ois, ff index set error",__FILE__,__LINE__);
 
 	}
 	else if (leg1indextypeInput == "FIXEDRATE" || leg1indextypeInput.size() < 1)
@@ -2088,84 +2088,84 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 		leg1indextypeInput = "FIXEDRATE";
 	}
 	else if (leg1indextypeInput != "LIBOR")
-		throw LACoreInvalidData("index set error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("index set error",__FILE__,__LINE__);
 
 	if (isleg1compounding)
 	{
-		LAString leg1coeffInput = maptrade[orgtradeid + "/" + PRICING_DATA_COEFFICIENT + "/COUPON1"];
-		LAStringVector tmp = leg1coeffInput.toToken(':');
+		AQLString leg1coeffInput = maptrade[orgtradeid + "/" + PRICING_DATA_COEFFICIENT + "/COUPON1"];
+		AQLStringVector tmp = leg1coeffInput.toToken(':');
 		if (tmp.size() != 2) 
-			throw LACoreInvalidData("coefficient error", __FILE__,__LINE__);
+			throw AQLCoreInvalidData("coefficient error", __FILE__,__LINE__);
 
-		//pindex1->LAObject::add(PRICING_DATA_COMPOUNDINGMARGIN, new LADataDouble(tmp[1].getDoubleValue()));
+		//pindex1->AQLObject::add(PRICING_DATA_COMPOUNDINGMARGIN, new AQLDataDouble(tmp[1].getDoubleValue()));
 
-		LAString leg1compcalcInput = maptrade[orgtradeid + "/" + PRICING_DATA_OBSERVATIONOPERATOR + "/INDEX1"];
+		AQLString leg1compcalcInput = maptrade[orgtradeid + "/" + PRICING_DATA_OBSERVATIONOPERATOR + "/INDEX1"];
 		if (leg1compcalcInput == "COMPOUNDING")
 		{
-			pleg1->LAObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new LAPriceDataFunction()).convertFromString(FN_COMPOUNDING1_STR);
+			pleg1->AQLObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new AQLPriceDataFunction()).convertFromString(FN_COMPOUNDING1_STR);
 		}
 		else if (leg1compcalcInput == "FLATCOMPOUNDING")
 		{
-			pleg1->LAObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new LAPriceDataFunction()).convertFromString(FN_COMPOUNDING8_STR);
+			pleg1->AQLObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new AQLPriceDataFunction()).convertFromString(FN_COMPOUNDING8_STR);
 		}
 		else if (leg1compcalcInput == "DAILYAVERAGING")
 		{
-			pleg1->LAObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new LAPriceDataFunction()).convertFromString(FN_COMPOUNDING10_STR);
-			pleg1->LAObject::add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new LADataBool(true));
+			pleg1->AQLObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new AQLPriceDataFunction()).convertFromString(FN_COMPOUNDING10_STR);
+			pleg1->AQLObject::add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new AQLDataBool(true));
 		}
 		else if (leg1compcalcInput == "AVERAGING")
 		{
-			pleg1->LAObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new LAPriceDataFunction()).convertFromString(FN_COMPOUNDING10_STR);
-			pleg1->LAObject::add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new LADataBool(false));
+			pleg1->AQLObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new AQLPriceDataFunction()).convertFromString(FN_COMPOUNDING10_STR);
+			pleg1->AQLObject::add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new AQLDataBool(false));
 		}
 		else
-			throw LACoreInvalidData("compounding function error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("compounding function error",__FILE__,__LINE__);
 
-        pleg1->add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new LADataBool(true));
+        pleg1->add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new AQLDataBool(true));
 	}
 
 	//each single deal
-	LAString leg1indextypekey = LAString("INDEX_") + ccyInput + "_" + leg1indextypeInput + "_";
-	LAString leg1offset,leg1fixingtimingInput,leg1fixingcalendarInput;
+	AQLString leg1indextypekey = AQLString("INDEX_") + ccyInput + "_" + leg1indextypeInput + "_";
+	AQLString leg1offset,leg1fixingtimingInput,leg1fixingcalendarInput;
 	if (leg1indextypeInput != "FIXEDRATE")
 	{
 		//spot lag
-		leg1offset = dynamic_cast<LADataString &>(eline.getData(leg1indextypekey + PRICING_DATA_SPOTLAG, ISNOTNULL).get());
+		leg1offset = dynamic_cast<AQLDataString &>(eline.getData(leg1indextypekey + PRICING_DATA_SPOTLAG, ISNOTNULL).get());
 		//fixing timing
-		leg1fixingtimingInput = dynamic_cast<LADataString &>(eline.getData(leg1indextypekey + PRICING_DATA_FIXINGTIMING, ISNOTNULL).get());
+		leg1fixingtimingInput = dynamic_cast<AQLDataString &>(eline.getData(leg1indextypekey + PRICING_DATA_FIXINGTIMING, ISNOTNULL).get());
 		//fixing calendar
 		if (maptrade.find(orgtradeid + "/" + leg1indextypeInput + "/" + PRICING_DATA_FIXINGCALENDAR + "/LEG1") != maptrade.end())
 			leg1fixingcalendarInput = maptrade[orgtradeid + "/" + leg1indextypeInput + "/" + PRICING_DATA_FIXINGCALENDAR + "/LEG1"];
 		else if (maptrade.find(orgtradeid + "/" + leg1indextypeInput + "/" + PRICING_DATA_FIXINGCALENDAR) != maptrade.end())
 			leg1fixingcalendarInput = maptrade[orgtradeid + "/" + leg1indextypeInput + "/" + PRICING_DATA_FIXINGCALENDAR];
 		else
-			leg1fixingcalendarInput = dynamic_cast<LADataString &>(eline.getData(leg1indextypekey + PRICING_DATA_FIXINGCALENDAR, ISNOTNULL).get());
+			leg1fixingcalendarInput = dynamic_cast<AQLDataString &>(eline.getData(leg1indextypekey + PRICING_DATA_FIXINGCALENDAR, ISNOTNULL).get());
 	}
 
 	////daycount
-	pindex1->LAObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(leg1daycountInput);
+	pindex1->AQLObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(leg1daycountInput);
 	
 	//accessory
 	if (leg1indextypeInput != "FIXEDRATE")
 	{
-		pindex1->LAObject::add(PRICING_DATA_ACCESSORY, new LADataString()).convertFromString(leg1acessoryInput);
+		pindex1->AQLObject::add(PRICING_DATA_ACCESSORY, new AQLDataString()).convertFromString(leg1acessoryInput);
 		//calendar
-		pindex1->LAObject::add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(leg1fixingcalendarInput);
+		pindex1->AQLObject::add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(leg1fixingcalendarInput);
 		//off set
-		pindex1->LAObject::add(PRICING_DATA_OFFSET, new LADataInt()).convertFromString(leg1offset);
+		pindex1->AQLObject::add(PRICING_DATA_OFFSET, new AQLDataInt()).convertFromString(leg1offset);
 		////spot lag
-		pindex1->LAObject::add(PRICING_DATA_SPOTLAG, new LADataInt()).convertFromString(leg1offset);
+		pindex1->AQLObject::add(PRICING_DATA_SPOTLAG, new AQLDataInt()).convertFromString(leg1offset);
 		//fixing timing
-		pindex1->LAObject::add(PRICING_DATA_FIXINGTIMING, new LADataString()).convertFromString(leg1fixingtimingInput);
+		pindex1->AQLObject::add(PRICING_DATA_FIXINGTIMING, new AQLDataString()).convertFromString(leg1fixingtimingInput);
 		//
-		pindex1->LAObject::add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString("FOLLOWING");
+		pindex1->AQLObject::add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString("FOLLOWING");
 		////fixing slidingrule
-		pindex1->LAObject::add(PRICING_DATA_FIXINGSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString("FOLLOWING");
+		pindex1->AQLObject::add(PRICING_DATA_FIXINGSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString("FOLLOWING");
 		//fixing calendar
-		pindex1->LAObject::add(PRICING_DATA_FIXINGCALENDAR, new LAPriceDataCalendar()).convertFromString(leg1fixingcalendarInput);
+		pindex1->AQLObject::add(PRICING_DATA_FIXINGCALENDAR, new AQLPriceDataCalendar()).convertFromString(leg1fixingcalendarInput);
 
 		//basiscurve 
-		LAString leg1forcuaveInput;
+		AQLString leg1forcuaveInput;
 		if ("OIS" == leg1indextypeInput)
 			leg1forcuaveInput = fcurvestrois;
 		else if ("1M" == leg1acessoryInput)
@@ -2177,21 +2177,21 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 		else if ("1Y" == leg1acessoryInput)
 			leg1forcuaveInput = fcurvestr6m;
 		else
-			throw LACoreInvalidData("Index Curve Set Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Index Curve Set Error",__FILE__,__LINE__);
 		
-		pindex1->LAObject::add(PRICING_DATA_BASISCURVE, new LADataString()).convertFromString(leg1forcuaveInput);
+		pindex1->AQLObject::add(PRICING_DATA_BASISCURVE, new AQLDataString()).convertFromString(leg1forcuaveInput);
 		//basisinterpolation
-		pindex1->LAObject::add(PRICING_DATA_BASISINTERPOLATION, new LADataString()).convertFromString(FN_LINEARINTERPOLATION_STR);
+		pindex1->AQLObject::add(PRICING_DATA_BASISINTERPOLATION, new AQLDataString()).convertFromString(FN_LINEARINTERPOLATION_STR);
 	}
 	
 	if (leg1indextypeInput == "LIBOR")
 	{
 		//is fwd intepolation
-		pindex1->LAObject::add(PRICING_DATA_ISFWDINTERPOLATION, new LADataBool()).convertFromString(isforwardinterInput);
+		pindex1->AQLObject::add(PRICING_DATA_ISFWDINTERPOLATION, new AQLDataBool()).convertFromString(isforwardinterInput);
 		//fwd intepolation 
-		pindex1->LAObject::add(PRICING_DATA_FWDINTERPOLATION, new LAPriceDataInterpolation()).convertFromString(FN_SPLINEINTERPOLATION_STR);
+		pindex1->AQLObject::add(PRICING_DATA_FWDINTERPOLATION, new AQLPriceDataInterpolation()).convertFromString(FN_SPLINEINTERPOLATION_STR);
 		//frn
-		pindex1->LAObject::add(PRICING_DATA_INDEXGENERATEMETHOD, new LADataString()).convertFromString("FRN");
+		pindex1->AQLObject::add(PRICING_DATA_INDEXGENERATEMETHOD, new AQLDataString()).convertFromString("FRN");
 	}
 
 	//fixedrate
@@ -2203,30 +2203,30 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 			if (itmap != maptrade.end())
 			{
 				//fixed rate case
-				LAString leg1rateInput = itmap->second;
-				pindex1->LAObject::add(PRICING_DATA_FIXEDRATE, new LADataDouble()).convertFromString(leg1rateInput);
+				AQLString leg1rateInput = itmap->second;
+				pindex1->AQLObject::add(PRICING_DATA_FIXEDRATE, new AQLDataDouble()).convertFromString(leg1rateInput);
 
 				//index type
-				pindex1->LAObject::add(PRICING_DATA_INDEXTYPE, new LADataString()).convertFromString("FIXEDRATE");
+				pindex1->AQLObject::add(PRICING_DATA_INDEXTYPE, new AQLDataString()).convertFromString("FIXEDRATE");
 
 				//index name
-				pleg1->LAObject::add(PRICING_DATA_INDEXNAME, new LADataString()).convertFromString("FIXEDRATE");
+				pleg1->AQLObject::add(PRICING_DATA_INDEXNAME, new AQLDataString()).convertFromString("FIXEDRATE");
 			}
 			else 
-				throw LACoreInvalidData("fixed rate set error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("fixed rate set error",__FILE__,__LINE__);
 		}
 		else if (lineproduc == "BASISSWAP")
 		{
 			//basis case
 			////libor freq
-			pindex1->LAObject::add(PRICING_DATA_FREQUENCY, new LADataString()).convertFromString("SIMPLE");
+			pindex1->AQLObject::add(PRICING_DATA_FREQUENCY, new AQLDataString()).convertFromString("SIMPLE");
 			//inex type
-			pindex1->LAObject::add(PRICING_DATA_INDEXTYPE, new LADataString()).convertFromString(leg1indextypeInput);
+			pindex1->AQLObject::add(PRICING_DATA_INDEXTYPE, new AQLDataString()).convertFromString(leg1indextypeInput);
 			//index name
-			pleg1->LAObject::add(PRICING_DATA_INDEXNAME, new LADataString()).convertFromString(ccyInput.toUpper() + "_" + leg1indextypeInput);
+			pleg1->AQLObject::add(PRICING_DATA_INDEXNAME, new AQLDataString()).convertFromString(ccyInput.toUpper() + "_" + leg1indextypeInput);
 		}
 		else 
-			throw LACoreInvalidData("product error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("product error",__FILE__,__LINE__);
 	}
 	else
 	{
@@ -2234,29 +2234,29 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 		if (lineproduc == "SWAP" || lineproduc == "FRA")
 		{
 			itmap = maptrade.find(orgtradeid + "/" + PRICING_DATA_FIXEDRATE + "/INDEX1");
-			LAString leg1rateInput = itmap->second;
+			AQLString leg1rateInput = itmap->second;
 			if (itmap != maptrade.end())
-				pindex1->LAObject::add(PRICING_DATA_FIXEDRATE, new LADataDouble()).convertFromString(leg1rateInput);
+				pindex1->AQLObject::add(PRICING_DATA_FIXEDRATE, new AQLDataDouble()).convertFromString(leg1rateInput);
 			else
-				pindex1->LAObject::add(PRICING_DATA_FIXEDRATE, new LADataDouble()).convertFromString("0.01");
+				pindex1->AQLObject::add(PRICING_DATA_FIXEDRATE, new AQLDataDouble()).convertFromString("0.01");
 
 			//inex type
-			pindex1->LAObject::add(PRICING_DATA_INDEXTYPE, new LADataString()).convertFromString("FIXEDRATE");
+			pindex1->AQLObject::add(PRICING_DATA_INDEXTYPE, new AQLDataString()).convertFromString("FIXEDRATE");
 			//inex name
-			pleg1->LAObject::add(PRICING_DATA_INDEXNAME, new LADataString()).convertFromString("FIXEDRATE");
+			pleg1->AQLObject::add(PRICING_DATA_INDEXNAME, new AQLDataString()).convertFromString("FIXEDRATE");
 		}
 		else if (lineproduc == "BASISSWAP")
 		{
 			//basis case
 			////libor freq
-			pindex1->LAObject::add(PRICING_DATA_FREQUENCY, new LADataString()).convertFromString("SIMPLE");
+			pindex1->AQLObject::add(PRICING_DATA_FREQUENCY, new AQLDataString()).convertFromString("SIMPLE");
 			//inex type
-			pindex1->LAObject::add(PRICING_DATA_INDEXTYPE, new LADataString()).convertFromString(leg1indextypeInput);
+			pindex1->AQLObject::add(PRICING_DATA_INDEXTYPE, new AQLDataString()).convertFromString(leg1indextypeInput);
 			//inex name
-			pleg1->LAObject::add(PRICING_DATA_INDEXNAME, new LADataString()).convertFromString(ccyInput.toUpper() + "_" + leg1indextypeInput);
+			pleg1->AQLObject::add(PRICING_DATA_INDEXNAME, new AQLDataString()).convertFromString(ccyInput.toUpper() + "_" + leg1indextypeInput);
 		}
 		else 
-			throw LACoreInvalidData("product error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("product error",__FILE__,__LINE__);
 	}
 	
 	//first fixing rate
@@ -2267,24 +2267,24 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 		itmap = maptrade.find(orgtradeid + "/" + "FirstFixingRate" + "/INDEX1");
 		if (itmap != maptrade.end())
 		{
-			LAString leg1firstfixngrateInput = itmap->second;
-			pindex1->LAObject::add(PRICING_DATA_FIRSTFIXINGRATE, new LADataDouble()).convertFromString(leg1firstfixngrateInput);
-			pindex1->LAObject::add(PRICING_DATA_FIRSTFIXINGBASEDATE, new LADataDate()).convertFromString(asofdateInput);
+			AQLString leg1firstfixngrateInput = itmap->second;
+			pindex1->AQLObject::add(PRICING_DATA_FIRSTFIXINGRATE, new AQLDataDouble()).convertFromString(leg1firstfixngrateInput);
+			pindex1->AQLObject::add(PRICING_DATA_FIRSTFIXINGBASEDATE, new AQLDataDate()).convertFromString(asofdateInput);
 		}
 	}
 
 	//add oddindexinfo and generate oddindexinfo incase there are firstodddate or lastodddate in paymentdates
-	LADataHolder* ah_temp1 = &(pleg1->getData(PRICING_DATA_FIRSTODDDATE, NOCHECK));
-	LADataHolder* ah_temp2 = &(pleg1->getData(PRICING_DATA_LASTODDDATE, NOCHECK));
+	AQLDataHolder* ah_temp1 = &(pleg1->getData(PRICING_DATA_FIRSTODDDATE, NOCHECK));
+	AQLDataHolder* ah_temp2 = &(pleg1->getData(PRICING_DATA_LASTODDDATE, NOCHECK));
 	if(leg1indextypeInput == "LIBOR" && (ah_temp1->isDefined() || ah_temp2->isDefined()))
 	{
 		// we must add two libor index except index of trade for stub interpolation.
-		vector<LAString> oddIndex1Input(2);
+		vector<AQLString> oddIndex1Input(2);
 		oddIndex1Input[0] = coupon1Input + "_oddIndex1";
 		oddIndex1Input[1] = coupon1Input + "_oddIndex2";
-		pcoupon1->LAObject::add(PRICING_DATA_ODDINDEXINFOS, new LADataMultiReference()).convertFromString(oddIndex1Input[0] + ":" + oddIndex1Input[1]);
+		pcoupon1->AQLObject::add(PRICING_DATA_ODDINDEXINFOS, new AQLDataMultiReference()).convertFromString(oddIndex1Input[0] + ":" + oddIndex1Input[1]);
 
-		vector<LAString> accessory(2), basisCurve(2);
+		vector<AQLString> accessory(2), basisCurve(2);
 		if("1M" == leg1acessoryInput)
 		{
 			accessory[0] = "3M";
@@ -2307,11 +2307,11 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 			basisCurve[1] = fcurvestr3m;
 		}
 		else
-			throw LACoreInvalidData("invaild accessory type for stub interpolation.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("invaild accessory type for stub interpolation.",__FILE__,__LINE__);
 
 		for (unsigned int i = 0; i < oddIndex1Input.size(); i++ )
 		{
-			LAObject* pindex1 = NULL;
+			AQLObject* pindex1 = NULL;
 			objHolder = objPool.getObject(oddIndex1Input[i]);
 			if (objHolder.isDefined())
 			{
@@ -2320,47 +2320,47 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 			}
 			else
 			{
-				pindex1= new LAObject();
+				pindex1= new AQLObject();
 				objPool.set(oddIndex1Input[i], pindex1);
 			}
 
 			//name
-			pindex1->LAObject::add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(oddIndex1Input[i]);
+			pindex1->AQLObject::add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(oddIndex1Input[i]);
 			//ccyInput
-			pindex1->LAObject::add(IR_CALIBRATION_DATA_CURRENCY, new LADataString()).convertFromString(ccyInput);
+			pindex1->AQLObject::add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString()).convertFromString(ccyInput);
 			////daycount
-			pindex1->LAObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(leg1daycountInput);
+			pindex1->AQLObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(leg1daycountInput);
 			//accessory
-			pindex1->LAObject::add(PRICING_DATA_ACCESSORY, new LADataString()).convertFromString(accessory[i]);
+			pindex1->AQLObject::add(PRICING_DATA_ACCESSORY, new AQLDataString()).convertFromString(accessory[i]);
 			//calendar
-			pindex1->LAObject::add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(leg1fixingcalendarInput);
+			pindex1->AQLObject::add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(leg1fixingcalendarInput);
 			//off set
-			pindex1->LAObject::add(PRICING_DATA_OFFSET, new LADataInt()).convertFromString(leg1offset);
+			pindex1->AQLObject::add(PRICING_DATA_OFFSET, new AQLDataInt()).convertFromString(leg1offset);
 			////spot lag
-			pindex1->LAObject::add(PRICING_DATA_SPOTLAG, new LADataInt()).convertFromString(leg1offset);
+			pindex1->AQLObject::add(PRICING_DATA_SPOTLAG, new AQLDataInt()).convertFromString(leg1offset);
 			//fixing timing
-			pindex1->LAObject::add(PRICING_DATA_FIXINGTIMING, new LADataString()).convertFromString(leg1fixingtimingInput);
+			pindex1->AQLObject::add(PRICING_DATA_FIXINGTIMING, new AQLDataString()).convertFromString(leg1fixingtimingInput);
 			//
-			pindex1->LAObject::add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString("FOLLOWING");
+			pindex1->AQLObject::add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString("FOLLOWING");
 			////fixing slidingrule
-			pindex1->LAObject::add(PRICING_DATA_FIXINGSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString("FOLLOWING");
+			pindex1->AQLObject::add(PRICING_DATA_FIXINGSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString("FOLLOWING");
 			//fixing calendar
-			pindex1->LAObject::add(PRICING_DATA_FIXINGCALENDAR, new LAPriceDataCalendar()).convertFromString(leg1fixingcalendarInput);
+			pindex1->AQLObject::add(PRICING_DATA_FIXINGCALENDAR, new AQLPriceDataCalendar()).convertFromString(leg1fixingcalendarInput);
 			//fwd intepolation 
-			pindex1->LAObject::add(PRICING_DATA_ISFWDINTERPOLATION, new LADataBool()).convertFromString(isforwardinterInput);
-			pindex1->LAObject::add(PRICING_DATA_FWDINTERPOLATION, new LAPriceDataInterpolation()).convertFromString(FN_SPLINEINTERPOLATION_STR);
+			pindex1->AQLObject::add(PRICING_DATA_ISFWDINTERPOLATION, new AQLDataBool()).convertFromString(isforwardinterInput);
+			pindex1->AQLObject::add(PRICING_DATA_FWDINTERPOLATION, new AQLPriceDataInterpolation()).convertFromString(FN_SPLINEINTERPOLATION_STR);
 			//frn
-			pindex1->LAObject::add(PRICING_DATA_INDEXGENERATEMETHOD, new LADataString()).convertFromString("FRN");
+			pindex1->AQLObject::add(PRICING_DATA_INDEXGENERATEMETHOD, new AQLDataString()).convertFromString("FRN");
 			////libor freq
-			pindex1->LAObject::add(PRICING_DATA_FREQUENCY, new LADataString()).convertFromString("SIMPLE");
+			pindex1->AQLObject::add(PRICING_DATA_FREQUENCY, new AQLDataString()).convertFromString("SIMPLE");
 			//inex type
-			pindex1->LAObject::add(PRICING_DATA_INDEXTYPE, new LADataString()).convertFromString(leg1indextypeInput);
+			pindex1->AQLObject::add(PRICING_DATA_INDEXTYPE, new AQLDataString()).convertFromString(leg1indextypeInput);
 			////index name
-			//pleg1->LAObject::add(PRICING_DATA_INDEXNAME, new LADataString()).convertFromString(ccyInput.toUpper() + "_" + leg1indextypeInput);
+			//pleg1->AQLObject::add(PRICING_DATA_INDEXNAME, new AQLDataString()).convertFromString(ccyInput.toUpper() + "_" + leg1indextypeInput);
 			//basiscurve
-			pindex1->LAObject::add(PRICING_DATA_BASISCURVE, new LADataString()).convertFromString(basisCurve[i]);
+			pindex1->AQLObject::add(PRICING_DATA_BASISCURVE, new AQLDataString()).convertFromString(basisCurve[i]);
 			//basisinterpolation
-			pindex1->LAObject::add(PRICING_DATA_BASISINTERPOLATION, new LADataString()).convertFromString(FN_LINEARINTERPOLATION_STR);
+			pindex1->AQLObject::add(PRICING_DATA_BASISINTERPOLATION, new AQLDataString()).convertFromString(FN_LINEARINTERPOLATION_STR);
 
 		}
 
@@ -2376,121 +2376,121 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 	}
 	else
 	{
-		pindex2= new LAObject();
+		pindex2= new AQLObject();
 		objPool.set(index2Input,pindex2);
 	}
 
 	//name
-	pindex2->LAObject::add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(index2Input);
+	pindex2->AQLObject::add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(index2Input);
 	//ccyInput
-	pindex2->LAObject::add(IR_CALIBRATION_DATA_CURRENCY, new LADataString()).convertFromString(ccyInput);
+	pindex2->AQLObject::add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString()).convertFromString(ccyInput);
 
 	//indextype 
 	//if "" then LIBOR 
-	LAString leg2acessoryInput = maptrade[orgtradeid + "/" + PRICING_DATA_ACCESSORY + "/INDEX2"];
+	AQLString leg2acessoryInput = maptrade[orgtradeid + "/" + PRICING_DATA_ACCESSORY + "/INDEX2"];
 	if (leg2indextypeInput == "OIS")
 	{
 		//in case of OIS we must change offset,spotlag as 0 and Accessory must be 1D
 		if (leg2acessoryInput.toUpper() != "1D")
-			throw LACoreInvalidData("index set error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("index set error",__FILE__,__LINE__);
 	}
 	else if (leg2indextypeInput == "FIXEDRATE" || leg2indextypeInput.size() < 1)
 	{
-		throw LACoreInvalidData("index set error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("index set error",__FILE__,__LINE__);
 	}
 	else if (leg2indextypeInput != "LIBOR")
-		throw LACoreInvalidData("index set error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("index set error",__FILE__,__LINE__);
 
 	if (isleg2compounding)
 	{
-		LAString leg2coeffInput = maptrade[orgtradeid + "/" + PRICING_DATA_COEFFICIENT + "/COUPON2"];
-		LAStringVector tmp = leg2coeffInput.toToken(':');
+		AQLString leg2coeffInput = maptrade[orgtradeid + "/" + PRICING_DATA_COEFFICIENT + "/COUPON2"];
+		AQLStringVector tmp = leg2coeffInput.toToken(':');
 		if (tmp.size() != 2) 
-			throw LACoreInvalidData("coefficient error", __FILE__,__LINE__);
+			throw AQLCoreInvalidData("coefficient error", __FILE__,__LINE__);
 
-		//pindex2->LAObject::add(PRICING_DATA_COMPOUNDINGMARGIN, new LADataDouble(tmp[1].getDoubleValue()));
+		//pindex2->AQLObject::add(PRICING_DATA_COMPOUNDINGMARGIN, new AQLDataDouble(tmp[1].getDoubleValue()));
 
-		LAString leg2compcalcInput = maptrade[orgtradeid + "/" + PRICING_DATA_OBSERVATIONOPERATOR + "/INDEX2"];
+		AQLString leg2compcalcInput = maptrade[orgtradeid + "/" + PRICING_DATA_OBSERVATIONOPERATOR + "/INDEX2"];
 		if (leg2compcalcInput == "COMPOUNDING")
-			pleg2->LAObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new LAPriceDataFunction()).convertFromString(FN_COMPOUNDING1_STR);
+			pleg2->AQLObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new AQLPriceDataFunction()).convertFromString(FN_COMPOUNDING1_STR);
 		else if (leg2compcalcInput == "DAILYAVERAGING")
 		{
-			pleg2->LAObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new LAPriceDataFunction()).convertFromString(FN_COMPOUNDING10_STR);
-			pleg2->LAObject::add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new LADataBool(true));
+			pleg2->AQLObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new AQLPriceDataFunction()).convertFromString(FN_COMPOUNDING10_STR);
+			pleg2->AQLObject::add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new AQLDataBool(true));
 		}
 		else if (leg2compcalcInput == "AVERAGING")
 		{
-			pleg2->LAObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new LAPriceDataFunction()).convertFromString(FN_COMPOUNDING10_STR);
-			pleg2->LAObject::add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new LADataBool(false));
+			pleg2->AQLObject::add(PRICING_DATA_COMPOUNDING_FUNCTION, new AQLPriceDataFunction()).convertFromString(FN_COMPOUNDING10_STR);
+			pleg2->AQLObject::add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new AQLDataBool(false));
 		}
 		else
-			throw LACoreInvalidData("compounding function error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("compounding function error",__FILE__,__LINE__);
 
-        pleg2->add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new LADataBool(true));
+        pleg2->add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new AQLDataBool(true));
 	}
 
 
 
 	//each single deal
-	LAString leg2indextypekey = LAString("INDEX_") + ccyInput + "_" + leg2indextypeInput + "_";
+	AQLString leg2indextypekey = AQLString("INDEX_") + ccyInput + "_" + leg2indextypeInput + "_";
 	//spot lag
-	LAString leg2offset = dynamic_cast<LADataString &>(eline.getData(leg2indextypekey + PRICING_DATA_SPOTLAG, ISNOTNULL).get());
+	AQLString leg2offset = dynamic_cast<AQLDataString &>(eline.getData(leg2indextypekey + PRICING_DATA_SPOTLAG, ISNOTNULL).get());
 	//fixing timing
-	LAString leg2fixingtimingInput = dynamic_cast<LADataString &>(eline.getData(leg2indextypekey + PRICING_DATA_FIXINGTIMING, ISNOTNULL).get());
+	AQLString leg2fixingtimingInput = dynamic_cast<AQLDataString &>(eline.getData(leg2indextypekey + PRICING_DATA_FIXINGTIMING, ISNOTNULL).get());
 	//fixing calendar
-	LAString leg2fixingcalendarInput;
+	AQLString leg2fixingcalendarInput;
 	if (maptrade.find(orgtradeid + "/" + leg2indextypeInput + "/" + PRICING_DATA_FIXINGCALENDAR + "/LEG2") != maptrade.end())
 		leg2fixingcalendarInput = maptrade[orgtradeid + "/" + leg2indextypeInput + "/" + PRICING_DATA_FIXINGCALENDAR + "/LEG2"];
 	else if (maptrade.find(orgtradeid + "/" + leg2indextypeInput + "/" + PRICING_DATA_FIXINGCALENDAR) != maptrade.end())
 		leg2fixingcalendarInput = maptrade[orgtradeid + "/" + leg2indextypeInput + "/" + PRICING_DATA_FIXINGCALENDAR];
 	else
-		leg2fixingcalendarInput = dynamic_cast<LADataString &>(eline.getData(leg2indextypekey + PRICING_DATA_FIXINGCALENDAR, ISNOTNULL).get());
+		leg2fixingcalendarInput = dynamic_cast<AQLDataString &>(eline.getData(leg2indextypekey + PRICING_DATA_FIXINGCALENDAR, ISNOTNULL).get());
 	//accessory
-	pindex2->LAObject::add(PRICING_DATA_ACCESSORY, new LADataString()).convertFromString(leg2acessoryInput);
+	pindex2->AQLObject::add(PRICING_DATA_ACCESSORY, new AQLDataString()).convertFromString(leg2acessoryInput);
 	//calendar
-	pindex2->LAObject::add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(leg2fixingcalendarInput);
+	pindex2->AQLObject::add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(leg2fixingcalendarInput);
 	//daycount
-	pindex2->LAObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(leg2daycountInput);
+	pindex2->AQLObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(leg2daycountInput);
 	//libor freq
-	pindex2->LAObject::add(PRICING_DATA_FREQUENCY, new LADataString()).convertFromString("SIMPLE");
+	pindex2->AQLObject::add(PRICING_DATA_FREQUENCY, new AQLDataString()).convertFromString("SIMPLE");
 	//inex type
-	pindex2->LAObject::add(PRICING_DATA_INDEXTYPE, new LADataString()).convertFromString(leg2indextypeInput);
+	pindex2->AQLObject::add(PRICING_DATA_INDEXTYPE, new AQLDataString()).convertFromString(leg2indextypeInput);
 	//sliding rule
-	pindex2->LAObject::add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString("FOLLOWING");
+	pindex2->AQLObject::add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString("FOLLOWING");
 	//spot lag
-	pindex2->LAObject::add(PRICING_DATA_SPOTLAG, new LADataInt()).convertFromString(leg2offset);
+	pindex2->AQLObject::add(PRICING_DATA_SPOTLAG, new AQLDataInt()).convertFromString(leg2offset);
 	//fixing timing
-	pindex2->LAObject::add(PRICING_DATA_FIXINGTIMING, new LADataString()).convertFromString(leg2fixingtimingInput);
+	pindex2->AQLObject::add(PRICING_DATA_FIXINGTIMING, new AQLDataString()).convertFromString(leg2fixingtimingInput);
 	//off set
-	pindex2->LAObject::add(PRICING_DATA_OFFSET, new LADataInt()).convertFromString(leg2offset);
+	pindex2->AQLObject::add(PRICING_DATA_OFFSET, new AQLDataInt()).convertFromString(leg2offset);
 	//fixing slidingrule
-	pindex2->LAObject::add(PRICING_DATA_FIXINGSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString("FOLLOWING");
+	pindex2->AQLObject::add(PRICING_DATA_FIXINGSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString("FOLLOWING");
 	//fixing calendar
-	pindex2->LAObject::add(PRICING_DATA_FIXINGCALENDAR, new LAPriceDataCalendar()).convertFromString(leg2fixingcalendarInput);
+	pindex2->AQLObject::add(PRICING_DATA_FIXINGCALENDAR, new AQLPriceDataCalendar()).convertFromString(leg2fixingcalendarInput);
 	//is fwd intepolation
 	if (leg2indextypeInput == "LIBOR")
 	{
-		pindex2->LAObject::add(PRICING_DATA_ISFWDINTERPOLATION, new LADataBool()).convertFromString(isforwardinterInput);
+		pindex2->AQLObject::add(PRICING_DATA_ISFWDINTERPOLATION, new AQLDataBool()).convertFromString(isforwardinterInput);
 		//fwd intepolation 
-		pindex2->LAObject::add(PRICING_DATA_FWDINTERPOLATION, new LAPriceDataInterpolation()).convertFromString(FN_SPLINEINTERPOLATION_STR);
+		pindex2->AQLObject::add(PRICING_DATA_FWDINTERPOLATION, new AQLPriceDataInterpolation()).convertFromString(FN_SPLINEINTERPOLATION_STR);
 		//frn
-		pindex2->LAObject::add(PRICING_DATA_INDEXGENERATEMETHOD, new LADataString()).convertFromString("FRN");
+		pindex2->AQLObject::add(PRICING_DATA_INDEXGENERATEMETHOD, new AQLDataString()).convertFromString("FRN");
 		
 	}
 
 	if (leg2indextypeInput == "FIXEDRATE")
 	{
 		//index name
-		pleg2->LAObject::add(PRICING_DATA_INDEXNAME, new LADataString()).convertFromString("FIXEDRATE");
+		pleg2->AQLObject::add(PRICING_DATA_INDEXNAME, new AQLDataString()).convertFromString("FIXEDRATE");
 	}
 	else 
 	{
 		//index name
-		pleg2->LAObject::add(PRICING_DATA_INDEXNAME, new LADataString()).convertFromString(ccyInput.toUpper() + "_" + leg2indextypeInput);
+		pleg2->AQLObject::add(PRICING_DATA_INDEXNAME, new AQLDataString()).convertFromString(ccyInput.toUpper() + "_" + leg2indextypeInput);
 	}
 	
 	//basiscurve
-	LAString leg2forcuaveInput;
+	AQLString leg2forcuaveInput;
 	if ("OIS" == leg2indextypeInput)
 		leg2forcuaveInput = fcurvestrois;
 	else if ("1M" == leg2acessoryInput)
@@ -2502,11 +2502,11 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 	else if ("1Y" == leg2acessoryInput)
 		leg2forcuaveInput = fcurvestr6m;
 	else
-		throw LACoreInvalidData("Index Curve Set Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Index Curve Set Error",__FILE__,__LINE__);
 	
-	pindex2->LAObject::add(PRICING_DATA_BASISCURVE, new LADataString()).convertFromString(leg2forcuaveInput);
+	pindex2->AQLObject::add(PRICING_DATA_BASISCURVE, new AQLDataString()).convertFromString(leg2forcuaveInput);
 	//basisinterpolation
-	pindex2->LAObject::add(PRICING_DATA_BASISINTERPOLATION, new LADataString()).convertFromString(FN_LINEARINTERPOLATION_STR);
+	pindex2->AQLObject::add(PRICING_DATA_BASISINTERPOLATION, new AQLDataString()).convertFromString(FN_LINEARINTERPOLATION_STR);
 
 	//first fixing rate
 	//first fixing basedate
@@ -2515,9 +2515,9 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 		itmap = maptrade.find(orgtradeid + "/" + "FirstFixingRate" + "/INDEX2");
 		if (itmap != maptrade.end())
 		{
-			LAString leg2firstfixngrateInput = itmap->second;
-			pindex2->LAObject::add(PRICING_DATA_FIRSTFIXINGRATE, new LADataDouble()).convertFromString(leg2firstfixngrateInput);
-			pindex2->LAObject::add(PRICING_DATA_FIRSTFIXINGBASEDATE, new LADataDate()).convertFromString(asofdateInput);
+			AQLString leg2firstfixngrateInput = itmap->second;
+			pindex2->AQLObject::add(PRICING_DATA_FIRSTFIXINGRATE, new AQLDataDouble()).convertFromString(leg2firstfixngrateInput);
+			pindex2->AQLObject::add(PRICING_DATA_FIRSTFIXINGBASEDATE, new AQLDataDate()).convertFromString(asofdateInput);
 		}
 	}
 
@@ -2527,12 +2527,12 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 	if(leg2indextypeInput == "LIBOR" && (ah_temp1->isDefined() || ah_temp2->isDefined()))
 	{
 		// we must add two libor index except index of trade for stub interpolation.
-		vector<LAString> oddIndex2Input(2);
+		vector<AQLString> oddIndex2Input(2);
 		oddIndex2Input[0] = coupon2Input + "_oddIndex1";
 		oddIndex2Input[1] = coupon2Input + "_oddIndex2";
-		pcoupon2->LAObject::add(PRICING_DATA_ODDINDEXINFOS, new LADataMultiReference()).convertFromString(oddIndex2Input[0] + ":" + oddIndex2Input[1]);
+		pcoupon2->AQLObject::add(PRICING_DATA_ODDINDEXINFOS, new AQLDataMultiReference()).convertFromString(oddIndex2Input[0] + ":" + oddIndex2Input[1]);
 
-		vector<LAString> accessory(2), basisCurve(2);
+		vector<AQLString> accessory(2), basisCurve(2);
 		if("1M" == leg2acessoryInput)
 		{
 			accessory[0] = "3M";
@@ -2555,11 +2555,11 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 			basisCurve[1] = fcurvestr3m;
 		}
 		else
-			throw LACoreInvalidData("invaild accessory type for stub interpolation.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("invaild accessory type for stub interpolation.",__FILE__,__LINE__);
 
 		for (unsigned int i = 0; i < oddIndex2Input.size(); i++ )
 		{
-			LAObject* pindex2 = NULL;
+			AQLObject* pindex2 = NULL;
 			objHolder = objPool.getObject(oddIndex2Input[i]);
 			if (objHolder.isDefined())
 			{
@@ -2568,47 +2568,47 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 			}
 			else
 			{
-				pindex2= new LAObject();
+				pindex2= new AQLObject();
 				objPool.set(oddIndex2Input[i], pindex2);
 			}
 
 			//name
-			pindex2->LAObject::add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(oddIndex2Input[i]);
+			pindex2->AQLObject::add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(oddIndex2Input[i]);
 			//ccyInput
-			pindex2->LAObject::add(IR_CALIBRATION_DATA_CURRENCY, new LADataString()).convertFromString(ccyInput);
+			pindex2->AQLObject::add(IR_CALIBRATION_DATA_CURRENCY, new AQLDataString()).convertFromString(ccyInput);
 			////daycount
-			pindex2->LAObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount()).convertFromString(leg2daycountInput);
+			pindex2->AQLObject::add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount()).convertFromString(leg2daycountInput);
 			//accessory
-			pindex2->LAObject::add(PRICING_DATA_ACCESSORY, new LADataString()).convertFromString(accessory[i]);
+			pindex2->AQLObject::add(PRICING_DATA_ACCESSORY, new AQLDataString()).convertFromString(accessory[i]);
 			//calendar
-			pindex2->LAObject::add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar()).convertFromString(leg2fixingcalendarInput);
+			pindex2->AQLObject::add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar()).convertFromString(leg2fixingcalendarInput);
 			//off set
-			pindex2->LAObject::add(PRICING_DATA_OFFSET, new LADataInt()).convertFromString(leg2offset);
+			pindex2->AQLObject::add(PRICING_DATA_OFFSET, new AQLDataInt()).convertFromString(leg2offset);
 			////spot lag
-			pindex2->LAObject::add(PRICING_DATA_SPOTLAG, new LADataInt()).convertFromString(leg2offset);
+			pindex2->AQLObject::add(PRICING_DATA_SPOTLAG, new AQLDataInt()).convertFromString(leg2offset);
 			//fixing timing
-			pindex2->LAObject::add(PRICING_DATA_FIXINGTIMING, new LADataString()).convertFromString(leg2fixingtimingInput);
+			pindex2->AQLObject::add(PRICING_DATA_FIXINGTIMING, new AQLDataString()).convertFromString(leg2fixingtimingInput);
 			//
-			pindex2->LAObject::add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString("FOLLOWING");
+			pindex2->AQLObject::add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString("FOLLOWING");
 			////fixing slidingrule
-			pindex2->LAObject::add(PRICING_DATA_FIXINGSLIDINGRULE, new LAPriceDataSlidingRule()).convertFromString("FOLLOWING");
+			pindex2->AQLObject::add(PRICING_DATA_FIXINGSLIDINGRULE, new AQLPriceDataSlidingRule()).convertFromString("FOLLOWING");
 			//fixing calendar
-			pindex2->LAObject::add(PRICING_DATA_FIXINGCALENDAR, new LAPriceDataCalendar()).convertFromString(leg2fixingcalendarInput);
+			pindex2->AQLObject::add(PRICING_DATA_FIXINGCALENDAR, new AQLPriceDataCalendar()).convertFromString(leg2fixingcalendarInput);
 			//fwd intepolation 
-			pindex2->LAObject::add(PRICING_DATA_ISFWDINTERPOLATION, new LADataBool()).convertFromString(isforwardinterInput);
-			pindex2->LAObject::add(PRICING_DATA_FWDINTERPOLATION, new LAPriceDataInterpolation()).convertFromString(FN_SPLINEINTERPOLATION_STR);
+			pindex2->AQLObject::add(PRICING_DATA_ISFWDINTERPOLATION, new AQLDataBool()).convertFromString(isforwardinterInput);
+			pindex2->AQLObject::add(PRICING_DATA_FWDINTERPOLATION, new AQLPriceDataInterpolation()).convertFromString(FN_SPLINEINTERPOLATION_STR);
 			//frn
-			pindex2->LAObject::add(PRICING_DATA_INDEXGENERATEMETHOD, new LADataString()).convertFromString("FRN");
+			pindex2->AQLObject::add(PRICING_DATA_INDEXGENERATEMETHOD, new AQLDataString()).convertFromString("FRN");
 			////libor freq
-			pindex2->LAObject::add(PRICING_DATA_FREQUENCY, new LADataString()).convertFromString("SIMPLE");
+			pindex2->AQLObject::add(PRICING_DATA_FREQUENCY, new AQLDataString()).convertFromString("SIMPLE");
 			//inex type
-			pindex2->LAObject::add(PRICING_DATA_INDEXTYPE, new LADataString()).convertFromString(leg2indextypeInput);
+			pindex2->AQLObject::add(PRICING_DATA_INDEXTYPE, new AQLDataString()).convertFromString(leg2indextypeInput);
 			////index name
-			//pleg1->LAObject::add(PRICING_DATA_INDEXNAME, new LADataString()).convertFromString(ccyInput.toUpper() + "_" + leg1indextypeInput);
+			//pleg1->AQLObject::add(PRICING_DATA_INDEXNAME, new AQLDataString()).convertFromString(ccyInput.toUpper() + "_" + leg1indextypeInput);
 			//basiscurve
-			pindex2->LAObject::add(PRICING_DATA_BASISCURVE, new LADataString()).convertFromString(basisCurve[i]);
+			pindex2->AQLObject::add(PRICING_DATA_BASISCURVE, new AQLDataString()).convertFromString(basisCurve[i]);
 			//basisinterpolation
-			pindex2->LAObject::add(PRICING_DATA_BASISINTERPOLATION, new LADataString()).convertFromString(FN_LINEARINTERPOLATION_STR);
+			pindex2->AQLObject::add(PRICING_DATA_BASISINTERPOLATION, new AQLDataString()).convertFromString(FN_LINEARINTERPOLATION_STR);
 
 		}
 
@@ -2620,7 +2620,7 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 
 	//in case of convergent at first we must expand cashflows.
 	dh = &(ret->getData(PRICING_DATA_CFGENERATOR, ISNOTNULL));
-	LADataProcedure& modelDataObj = dynamic_cast<LADataProcedure&>(dh->get());
+	AQLDataProcedure& modelDataObj = dynamic_cast<AQLDataProcedure&>(dh->get());
 	modelDataObj.calibrateModel(basedate);
 	pleg1->getData(PRICING_DATA_INPUTTYPE, ISNOTNULL).convertFromString("MANUAL");
 	pleg2->getData(PRICING_DATA_INPUTTYPE, ISNOTNULL).convertFromString("MANUAL");
@@ -2634,30 +2634,30 @@ LAMultiSwapPricer::createSingleTrade(LADataInstance* dataInstance, std::map<LASt
 }
 
 void 
-LAMultiSwapPricer::createOfferBidAdjustEntity(LADataInstance* dataInstance, std::map<LAString, LAString> maptrade, LAStringVector orgtradevec, bool isduplicatemode, LAString key_suffix)
+LAMultiSwapPricer::createOfferBidAdjustEntity(AQLDataInstance* dataInstance, std::map<AQLString, AQLString> maptrade, AQLStringVector orgtradevec, bool isduplicatemode, AQLString key_suffix)
 {
 	
-	LADataHolder* dh;
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLDataHolder* dh;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 
-	LAStringVector orgEntityNameVec,adjustEntityNameVec,tradeNameVec,paraNameVec;
+	AQLStringVector orgEntityNameVec,adjustEntityNameVec,tradeNameVec,paraNameVec;
 
 	//important clasee "lineparam1"
-	LAObject& eline = objPool.getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
+	AQLObject& eline = objPool.getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
 	// necessary in case of index set
-	LAString fcurvestr1m = dynamic_cast<LADataString &>(eline.getData("CURVE_1MFORECAST", ISNOTNULL).get());
-	LAString fcurvestr3m = dynamic_cast<LADataString &>(eline.getData("CURVE_3MFORECAST", ISNOTNULL).get());
-	LAString fcurvestr6m = dynamic_cast<LADataString &>(eline.getData("CURVE_6MFORECAST", ISNOTNULL).get());
-	LAString fcurvestrois = dynamic_cast<LADataString &>(eline.getData("CURVE_OISFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr1m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_1MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr3m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_3MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr6m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_6MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestrois = dynamic_cast<AQLDataString &>(eline.getData("CURVE_OISFORECAST", ISNOTNULL).get());
 	// std forcast
-	LAString swapfreq = dynamic_cast<LADataString &>(eline.getData("SWAP_FREQUENCY", ISNOTNULL).get());
-	LAString fcurvestrstd = dynamic_cast<LADataString &>(eline.getData(LAString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get());
+	AQLString swapfreq = dynamic_cast<AQLDataString &>(eline.getData("SWAP_FREQUENCY", ISNOTNULL).get());
+	AQLString fcurvestrstd = dynamic_cast<AQLDataString &>(eline.getData(AQLString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get());
 
 
-	map<LAString, LAString>::iterator itmap = maptrade.begin();
+	map<AQLString, AQLString>::iterator itmap = maptrade.begin();
 	for (unsigned int i = 0; i < orgtradevec.size(); i++)
 	{
-		LAString copytradeid = orgtradevec[i];
+		AQLString copytradeid = orgtradevec[i];
 		if (isduplicatemode)
 			copytradeid += key_suffix;
 
@@ -2672,23 +2672,23 @@ LAMultiSwapPricer::createOfferBidAdjustEntity(LADataInstance* dataInstance, std:
 			continue;
 
 		//from product type and rcv pay, index info, we create new curve
-		LAMathObjectValue& etrade = dynamic_cast<LAMathObjectValue &>(objPool.getObject(copytradeid, ENCHKTYPE_ISDEFINED).get());
+		AQLMathObjectValue& etrade = dynamic_cast<AQLMathObjectValue &>(objPool.getObject(copytradeid, ENCHKTYPE_ISDEFINED).get());
 
 		dh = &(etrade.getData("LineProductType", ISNOTNULL));
-		LAString linetype = dynamic_cast<LADataString &>(dh->get());
+		AQLString linetype = dynamic_cast<AQLDataString &>(dh->get());
 		linetype.toUpper();
 
-		LAStringVector riskDetail1obadjust(1);
-		LAStringVector riskDetail2obadjust(1);
+		AQLStringVector riskDetail1obadjust(1);
+		AQLStringVector riskDetail2obadjust(1);
 
 		bool ispositivedirection = true;
 		if (linetype == "SWAP" || linetype == "FRA")
 		{
-			LAString leg1name = copytradeid + "_leg1";
-			LAObject& eleg1 = objPool.getObject(leg1name, ENCHKTYPE_ISDEFINED).get();
+			AQLString leg1name = copytradeid + "_leg1";
+			AQLObject& eleg1 = objPool.getObject(leg1name, ENCHKTYPE_ISDEFINED).get();
 			dh = &(eleg1.getData(PRICING_DATA_SELECTSIDE,ISNOTNULL));
 			//leg 1 is fixed side. if leg1 rcv direction is positive
-			LAString leg1PRname = dynamic_cast<LADataString &>(dh->get());
+			AQLString leg1PRname = dynamic_cast<AQLDataString &>(dh->get());
 			if (leg1PRname.toUpper() == "RCV")
 				ispositivedirection = true;
 			else 			
@@ -2698,28 +2698,28 @@ LAMultiSwapPricer::createOfferBidAdjustEntity(LADataInstance* dataInstance, std:
 				offerbidspread *= -1;
 
 			riskDetail1obadjust[0] =  fcurvestrois + "+" + fcurvestrstd;
-			riskDetail2obadjust[0] =  LAString(offerbidspread,3) + "_BPPARALLEL";
+			riskDetail2obadjust[0] =  AQLString(offerbidspread,3) + "_BPPARALLEL";
 		}
 		else if (linetype == "BASISSWAP")
 		{
 			
-			LAString leg1name = copytradeid + "_leg1";
-			LAObject& eleg1 = objPool.getObject(leg1name, ENCHKTYPE_ISDEFINED).get();
+			AQLString leg1name = copytradeid + "_leg1";
+			AQLObject& eleg1 = objPool.getObject(leg1name, ENCHKTYPE_ISDEFINED).get();
 			dh = &(eleg1.getData(PRICING_DATA_SELECTSIDE,ISNOTNULL));
-			LAString leg1PRname = dynamic_cast<LADataString &>(dh->get());
-			LAString index1name =  copytradeid + "_leg1_coupon1_index1";
-			LAObject& eindex1 = objPool.getObject(index1name, ENCHKTYPE_ISDEFINED).get();
+			AQLString leg1PRname = dynamic_cast<AQLDataString &>(dh->get());
+			AQLString index1name =  copytradeid + "_leg1_coupon1_index1";
+			AQLObject& eindex1 = objPool.getObject(index1name, ENCHKTYPE_ISDEFINED).get();
 			dh = &(eindex1.getData(PRICING_DATA_BASISCURVE,ISNOTNULL));
-			LAString index1curve = dynamic_cast<LADataString &>(dh->get());
+			AQLString index1curve = dynamic_cast<AQLDataString &>(dh->get());
 
-			LAString leg2name = copytradeid + "_leg2";
-			LAObject& eleg2 = objPool.getObject(leg2name, ENCHKTYPE_ISDEFINED).get();
+			AQLString leg2name = copytradeid + "_leg2";
+			AQLObject& eleg2 = objPool.getObject(leg2name, ENCHKTYPE_ISDEFINED).get();
 			dh = &(eleg2.getData(PRICING_DATA_SELECTSIDE,ISNOTNULL));
-			LAString leg2PRname = dynamic_cast<LADataString &>(dh->get());
-			LAString index2name =  copytradeid + "_leg2_coupon2_index2";
-			LAObject& eindex2 = objPool.getObject(index2name, ENCHKTYPE_ISDEFINED).get();
+			AQLString leg2PRname = dynamic_cast<AQLDataString &>(dh->get());
+			AQLString index2name =  copytradeid + "_leg2_coupon2_index2";
+			AQLObject& eindex2 = objPool.getObject(index2name, ENCHKTYPE_ISDEFINED).get();
 			dh = &(eindex2.getData(PRICING_DATA_BASISCURVE,ISNOTNULL));
-			LAString index2curve = dynamic_cast<LADataString &>(dh->get());
+			AQLString index2curve = dynamic_cast<AQLDataString &>(dh->get());
 
 			//if there is at least one month index riskDetail1obadjust[0] = 1mcurve.
 			//1st
@@ -2776,21 +2776,21 @@ LAMultiSwapPricer::createOfferBidAdjustEntity(LADataInstance* dataInstance, std:
 					ispositivedirection = true;
 			}
 			else 
-				throw LACoreInvalidData("index pair is wrong setting",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("index pair is wrong setting",__FILE__,__LINE__);
 
 			if (!ispositivedirection)
 				offerbidspread *= -1;
 
-			riskDetail2obadjust[0] =  LAString(offerbidspread,3) + "_BPPARALLEL";
+			riskDetail2obadjust[0] =  AQLString(offerbidspread,3) + "_BPPARALLEL";
 		}
 
-		LAString curveID = getCurveIDfromTradeReference(dataInstance,orgtradevec[i]);
-		LAString paraname = getMarketParamfromTradeReference(dataInstance,orgtradevec[i]);
+		AQLString curveID = getCurveIDfromTradeReference(dataInstance,orgtradevec[i]);
+		AQLString paraname = getMarketParamfromTradeReference(dataInstance,orgtradevec[i]);
 		
-		LAString keyname= curveID + "_SOURCEDELTA_";
+		AQLString keyname= curveID + "_SOURCEDELTA_";
 		keyname += riskDetail1obadjust[0] + "_" + riskDetail2obadjust[0];
 
-		LAObjectHolder objHolder = objPool.getObject(keyname,ENCHKTYPE_NOCHECK);
+		AQLObjectHolder objHolder = objPool.getObject(keyname,ENCHKTYPE_NOCHECK);
 		if (!objHolder.isDefined())
 		{
 			//if no exist
@@ -2807,11 +2807,11 @@ LAMultiSwapPricer::createOfferBidAdjustEntity(LADataInstance* dataInstance, std:
 
 
 	//if b/o adjust create it and calc PV again
-	LAObject* pob = NULL;
-	LAObjectHolder objHolder = objPool.getObject("lineofferbidentity", ENCHKTYPE_NOCHECK);
+	AQLObject* pob = NULL;
+	AQLObjectHolder objHolder = objPool.getObject("lineofferbidentity", ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
-		pob = new LAObject();
+		pob = new AQLObject();
 		objPool.set("lineofferbidentity",pob);
 	
 	}
@@ -2820,34 +2820,34 @@ LAMultiSwapPricer::createOfferBidAdjustEntity(LADataInstance* dataInstance, std:
 		pob = &(objHolder.get());
 		pob->clear();
 	}
-	pob->add(CALIBRATION_DATA_NAME, new LADataString("lineofferbidentity"));
+	pob->add(CALIBRATION_DATA_NAME, new AQLDataString("lineofferbidentity"));
 
 	
 	pob->remove("orgEntityName");
-	pob->add("orgEntityName", new LADataStrings(orgEntityNameVec));
+	pob->add("orgEntityName", new AQLDataStrings(orgEntityNameVec));
 
 	pob->remove("adjsutEntityName");
-	pob->add("adjsutEntityName", new LADataStrings(adjustEntityNameVec));
+	pob->add("adjsutEntityName", new AQLDataStrings(adjustEntityNameVec));
 
 	pob->remove("tradeEntityName");
-	pob->add("tradeEntityName", new LADataStrings(tradeNameVec));
+	pob->add("tradeEntityName", new AQLDataStrings(tradeNameVec));
 
 	pob->remove("paramEntityName");
-	pob->add("paramEntityName", new LADataStrings(paraNameVec));
+	pob->add("paramEntityName", new AQLDataStrings(paraNameVec));
 
 	return;
 }
 
 
 void
-LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map<LAString, LAString> mapriskinfo)
+LAMultiSwapPricer::calcPortfolioRiskAndPV(AQLDataInstance* dataInstance, std::map<AQLString, AQLString> mapriskinfo)
 {
 
-	LADataHolder* dh;
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLDataHolder* dh;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 
 	//calc ports
-	LAStringVector tradeVec;
+	AQLStringVector tradeVec;
 	EntityIter it = objPool.begin();
 	for (it = objPool.begin(); it != objPool.end(); it++)
 	{
@@ -2863,7 +2863,7 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 		dh = &(it->second.getData("IsPnL", NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			bool ispnl = dynamic_cast<LADataBool &>(dh->get());
+			bool ispnl = dynamic_cast<AQLDataBool &>(dh->get());
 			if (!ispnl)
 				continue;
 		}
@@ -2871,28 +2871,28 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 	}
 
 	if (tradeVec.size() < 1)
-		throw LACoreInvalidData("no trades for risk calc",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("no trades for risk calc",__FILE__,__LINE__);
 
 	//important clasee "lineparam1"
-	LAObject& eline = objPool.getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
+	AQLObject& eline = objPool.getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
 	
 	// necessary in case of index set
-	LAString fcurvestr1m = dynamic_cast<LADataString &>(eline.getData("CURVE_1MFORECAST", ISNOTNULL).get());
-	LAString fcurvestr3m = dynamic_cast<LADataString &>(eline.getData("CURVE_3MFORECAST", ISNOTNULL).get());
-	LAString fcurvestr6m = dynamic_cast<LADataString &>(eline.getData("CURVE_6MFORECAST", ISNOTNULL).get());
-	LAString fcurvestrois = dynamic_cast<LADataString &>(eline.getData("CURVE_OISFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr1m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_1MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr3m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_3MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr6m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_6MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestrois = dynamic_cast<AQLDataString &>(eline.getData("CURVE_OISFORECAST", ISNOTNULL).get());
 	// std forcast
-	LAString swapfreq = dynamic_cast<LADataString &>(eline.getData("SWAP_FREQUENCY", ISNOTNULL).get());
-	LAString fcurvestrstd = dynamic_cast<LADataString &>(eline.getData(LAString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get());
+	AQLString swapfreq = dynamic_cast<AQLDataString &>(eline.getData("SWAP_FREQUENCY", ISNOTNULL).get());
+	AQLString fcurvestrstd = dynamic_cast<AQLDataString &>(eline.getData(AQLString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get());
 	////to calc gamma 1bp up and 1bp down need developing
 	
 	//swap shift
-	LAStringVector marketboxvec(1);
-	LAStringVector rateboxvec(1);
-	LAString risktarget;
-	LAString riskentitystr = "";
+	AQLStringVector marketboxvec(1);
+	AQLStringVector rateboxvec(1);
+	AQLString risktarget;
+	AQLString riskentitystr = "";
 	
-	risktarget = mapriskinfo[LAString("RISK/") + "Swap"].toUpper();
+	risktarget = mapriskinfo[AQLString("RISK/") + "Swap"].toUpper();
 	if ("TRUE" == risktarget)
 	{
 		marketboxvec[0] = "swapRates";
@@ -2904,7 +2904,7 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 		riskentitystr += ":";
 	}
 
-	risktarget = mapriskinfo[LAString("RISK/") + "Libor"].toUpper();
+	risktarget = mapriskinfo[AQLString("RISK/") + "Libor"].toUpper();
 	if ("TRUE" == risktarget)
 	{
 		//libor shift
@@ -2916,7 +2916,7 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 		riskentitystr += ":";
 	}
 
-	risktarget = mapriskinfo[LAString("RISK/") + "FRA3M"].toUpper();
+	risktarget = mapriskinfo[AQLString("RISK/") + "FRA3M"].toUpper();
 	if ("TRUE" == risktarget)
 	{
 		//future shift
@@ -2927,7 +2927,7 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 		riskentitystr += ":";
 	}
 
-	risktarget = mapriskinfo[LAString("RISK/") + "FRA6M"].toUpper();
+	risktarget = mapriskinfo[AQLString("RISK/") + "FRA6M"].toUpper();
 	if ("TRUE" == risktarget)
 	{
 		//future shift
@@ -2939,7 +2939,7 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 	}
 
 
-	risktarget = mapriskinfo[LAString("RISK/") + "Future"].toUpper();
+	risktarget = mapriskinfo[AQLString("RISK/") + "Future"].toUpper();
 	if ("TRUE" == risktarget)
 	{
 		//future shift
@@ -2951,7 +2951,7 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 		riskentitystr += ":";
 	}
 
-	risktarget = mapriskinfo[LAString("RISK/") + "OISCurve"].toUpper();
+	risktarget = mapriskinfo[AQLString("RISK/") + "OISCurve"].toUpper();
 	if ("TRUE" == risktarget)
 	{
 		//ois shift
@@ -2963,7 +2963,7 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 	}
 
 
-	risktarget = mapriskinfo[LAString("RISK/") + "3M6MBasis"].toUpper();
+	risktarget = mapriskinfo[AQLString("RISK/") + "3M6MBasis"].toUpper();
 	if ("TRUE" == risktarget)
 	{
 		marketboxvec[0] = "basisMkt";
@@ -2978,8 +2978,8 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 		riskentitystr += ":";
 	}
 
-	//risktarget = mapriskinfo[LAString("RISK/") + "1M3MBasis"].toUpper();
-	risktarget = mapriskinfo[LAString("RISK/") + "1M" + swapfreq + "Basis"].toUpper();
+	//risktarget = mapriskinfo[AQLString("RISK/") + "1M3MBasis"].toUpper();
+	risktarget = mapriskinfo[AQLString("RISK/") + "1M" + swapfreq + "Basis"].toUpper();
 	if ("TRUE" == risktarget)
 	{
 		marketboxvec[0] = "basisMkt";
@@ -2992,13 +2992,13 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 	}
 	else if("" == risktarget)
 		// there is something wrong because 1M forcast riskentity must be set and will not be empty.
-		throw LACoreInvalidData("1MFrocast input error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("1MFrocast input error",__FILE__,__LINE__);
 
-	risktarget = mapriskinfo[LAString("RISK/") + "ZeroRiskTemporary"];
+	risktarget = mapriskinfo[AQLString("RISK/") + "ZeroRiskTemporary"];
 	if ("TRUE" == risktarget)
 	{
-		LAStringVector marketboxvec;
-		LAStringVector rateboxvec(4);
+		AQLStringVector marketboxvec;
+		AQLStringVector rateboxvec(4);
 //		rateboxvec[0] = fcurvestr3m;
 //		rateboxvec[1] = fcurvestrois;
 //		rateboxvec[2] = fcurvestr6m;
@@ -3026,7 +3026,7 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 		riskentitystr = riskentitystr.subString(0, riskentitystr.size() - 2);
 	//set linedelta
 	eline.remove("riskentity");
-	eline.add("riskentity", new LADataMultiReference()).convertFromString(riskentitystr);
+	eline.add("riskentity", new AQLDataMultiReference()).convertFromString(riskentitystr);
 
 	
 	DoubleVector pvResultVec;
@@ -3037,37 +3037,37 @@ LAMultiSwapPricer::calcPortfolioRiskAndPV(LADataInstance* dataInstance, std::map
 	//regsitered tradevecs eline. it is used when calling get risk result function.
 	eline.remove("tradeforportrisk");
 	if (tradeVec.size() != 0)
-		eline.add("tradeforportrisk", new LADataStrings(tradeVec));
+		eline.add("tradeforportrisk", new AQLDataStrings(tradeVec));
 
 	return;
 }
 
 
 double 
-LAMultiSwapPricer::getPortfolioRiskResult(LADataInstance* dataInstance, LAString marketkey, LAString marketgrid, LAString risktype)
+LAMultiSwapPricer::getPortfolioRiskResult(AQLDataInstance* dataInstance, AQLString marketkey, AQLString marketgrid, AQLString risktype)
 {
 	double ret = 0.0;
 
-	LAObject& eline = dataInstance->getObjectPool().getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
-	LADataHolder* dh = &(eline.getData("tradeforportrisk"));
+	AQLObject& eline = dataInstance->getObjectPool().getObject("lineparam1", ENCHKTYPE_ISDEFINED).get();
+	AQLDataHolder* dh = &(eline.getData("tradeforportrisk"));
 	if (!dh->isDefined() || dh->isNull())
 		return 0.0;
 
-	const LAStringVector& tradeVec = dynamic_cast<LADataStrings &>(dh->get()).get();
+	const AQLStringVector& tradeVec = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 
 	//now only support marketkey is curve box.
-	LAString marketStr = marketkey;
+	AQLString marketStr = marketkey;
 	if (marketStr != "Libor" && marketStr != "Swap" && marketStr != "FRA3M" && marketStr != "FRA6M" && marketStr != "Future" &&
 		marketStr != "3M6MBasis" && marketStr != "1M3MBasis" && marketStr != "1M6MBasis" &&
 		marketStr != "OISCurve")
-		throw LACoreInvalidData("market key error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("market key error",__FILE__,__LINE__);
 
 
 	//this is related with CalcportfolioRiskAndPV function
 	//in source delta, typical example is 
-	//LAString key = "SOURCEBUMPRISK_" + riskDetail1[j] + "_" + tmpvec[0] + "_" + tmpvec[1];
+	//AQLString key = "SOURCEBUMPRISK_" + riskDetail1[j] + "_" + tmpvec[0] + "_" + tmpvec[1];
 
-	LAString marketbox;
+	AQLString marketbox;
 	if (marketStr == "Libor")
 		marketbox = "liborRates";
 	else if (marketStr == "Swap")
@@ -3088,17 +3088,17 @@ LAMultiSwapPricer::getPortfolioRiskResult(LADataInstance* dataInstance, LAString
 		marketbox = "oisRates";
 
 	// necessary in case of index set
-	LAString fcurvestr1m = dynamic_cast<LADataString &>(eline.getData("CURVE_1MFORECAST", ISNOTNULL).get());
-	LAString fcurvestr3m = dynamic_cast<LADataString &>(eline.getData("CURVE_3MFORECAST", ISNOTNULL).get());
-	LAString fcurvestr6m = dynamic_cast<LADataString &>(eline.getData("CURVE_6MFORECAST", ISNOTNULL).get());
-	LAString fcurvestrois = dynamic_cast<LADataString &>(eline.getData("CURVE_OISFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr1m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_1MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr3m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_3MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr6m = dynamic_cast<AQLDataString &>(eline.getData("CURVE_6MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestrois = dynamic_cast<AQLDataString &>(eline.getData("CURVE_OISFORECAST", ISNOTNULL).get());
 	// std forcast
-	LAString swapfreq = dynamic_cast<LADataString &>(eline.getData("SWAP_FREQUENCY", ISNOTNULL).get());
-	LAString fcurvestrstd = dynamic_cast<LADataString &>(eline.getData(LAString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get());
+	AQLString swapfreq = dynamic_cast<AQLDataString &>(eline.getData("SWAP_FREQUENCY", ISNOTNULL).get());
+	AQLString fcurvestrstd = dynamic_cast<AQLDataString &>(eline.getData(AQLString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get());
 
 	
 	//search gencurvename from market box !! it depends on Currency so that we change the map in JPY case.
-	LAString riskDetail;
+	AQLString riskDetail;
 	if (marketStr == "Libor")
 		riskDetail = fcurvestrstd;
 	else if	(marketStr == "Swap")
@@ -3123,17 +3123,17 @@ LAMultiSwapPricer::getPortfolioRiskResult(LADataInstance* dataInstance, LAString
 
 	//risktype = sourcebump or zero bump
 	if (risktype != "ZEROBUMP" && risktype != "SOURCEBUMP")
-		throw LACoreInvalidData("risktyp input error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("risktyp input error",__FILE__,__LINE__);
 
-	LAString key = risktype + "RISK_" + riskDetail + "_" + marketbox + "_" + marketgrid;
+	AQLString key = risktype + "RISK_" + riskDetail + "_" + marketbox + "_" + marketgrid;
 
 
 	for (unsigned int i = 0; i < tradeVec.size(); i++)
 	{
-		LAObject& val = dataInstance->getObjectPool().getObject(tradeVec[i], ENCHKTYPE_ISDEFINED).get();
+		AQLObject& val = dataInstance->getObjectPool().getObject(tradeVec[i], ENCHKTYPE_ISDEFINED).get();
 		dh = &(val.getData(key));
 		if (dh->isDefined() && !dh->isNull())
-			ret += dynamic_cast<LADataDouble &>(dh->get());
+			ret += dynamic_cast<AQLDataDouble &>(dh->get());
 	
 	}
 
@@ -3142,21 +3142,21 @@ LAMultiSwapPricer::getPortfolioRiskResult(LADataInstance* dataInstance, LAString
 
 
 void
-LAMultiSwapPricer::storePastRates(LADataInstance* dataInstance, const LAStringMatrix& IndexInfo, const LAStringMatrix& PastRates)
+LAMultiSwapPricer::storePastRates(AQLDataInstance* dataInstance, const AQLStringMatrix& IndexInfo, const AQLStringMatrix& PastRates)
 {
 
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-	LAObjectHolder objHolder;
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObjectHolder objHolder;
 
-	LAStringMatrix tmpInfos = IndexInfo;
+	AQLStringMatrix tmpInfos = IndexInfo;
 
 	///////////////////line param object///////////////////////////////
-	LAString lineparam("lineparam1");
+	AQLString lineparam("lineparam1");
 	objHolder = objPool.getObject(lineparam, ENCHKTYPE_NOCHECK);
-	LAObject* eline = NULL;
+	AQLObject* eline = NULL;
 	if (!objHolder.isDefined())
 	{
-		eline = new LAObject();
+		eline = new AQLObject();
 		objPool.set(lineparam, eline);
 	}
 	else
@@ -3164,12 +3164,12 @@ LAMultiSwapPricer::storePastRates(LADataInstance* dataInstance, const LAStringMa
 		eline = &(objHolder.get());
 	}
 
-	LAString ccy = LAFunctionUtilities::findElement(tmpInfos,"Currency",0,1,true,true).toUpper();
-	LAString indextype = LAFunctionUtilities::findElement(tmpInfos,"Rate",0,1,true,true).toUpper();
-	LAString accessory;
+	AQLString ccy = AQLFunctionUtilities::findElement(tmpInfos,"Currency",0,1,true,true).toUpper();
+	AQLString indextype = AQLFunctionUtilities::findElement(tmpInfos,"Rate",0,1,true,true).toUpper();
+	AQLString accessory;
 	if (indextype == "LIBOR")
 	{
-		accessory = LAFunctionUtilities::findElement(tmpInfos,"Term",0,1,true,true);
+		accessory = AQLFunctionUtilities::findElement(tmpInfos,"Term",0,1,true,true);
 	}
 	else if (indextype == "FF" || indextype == "OIS")
 	{
@@ -3177,9 +3177,9 @@ LAMultiSwapPricer::storePastRates(LADataInstance* dataInstance, const LAStringMa
 		accessory = "1D";
 	}
 	else 
-		throw LACoreInvalidData("Rate type supports only Libor, FF and OIS",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Rate type supports only Libor, FF and OIS",__FILE__,__LINE__);
 
-	LAString keynamesuffix = "_" + ccy + "_" + indextype + "_" + accessory; 
+	AQLString keynamesuffix = "_" + ccy + "_" + indextype + "_" + accessory; 
 
 	unsigned int pastSize = PastRates.size();
 	DoubleVector ratesvec(pastSize);
@@ -3187,15 +3187,15 @@ LAMultiSwapPricer::storePastRates(LADataInstance* dataInstance, const LAStringMa
 
 	if (pastSize == 0)
 	{
-		throw LACoreInvalidData("PastRates set error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("PastRates set error",__FILE__,__LINE__);
 	}
 	
 	if (pastSize != 0 && PastRates[0].size() < 2)
 	{
-		throw LACoreInvalidData("PastRates set error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("PastRates set error",__FILE__,__LINE__);
 	}
 
-	map<LADate, double> map_date_rate;
+	map<AQLDate, double> map_date_rate;
 	for (unsigned int i = 0; i < pastSize; i++)
 	{
 		pastdates[i] = LAMathDateUtilities::getLADate(PastRates[i][0]);
@@ -3210,10 +3210,10 @@ LAMultiSwapPricer::storePastRates(LADataInstance* dataInstance, const LAStringMa
 	}
 
 	eline->remove("PastDates"+ keynamesuffix);
-	eline->add("PastDates"+ keynamesuffix, new LADataDates(pastdates));
+	eline->add("PastDates"+ keynamesuffix, new AQLDataDates(pastdates));
 
 	eline->remove("PastRates"+ keynamesuffix);
-	eline->add("PastRates"+ keynamesuffix, new LADataDoubles(ratesvec));
+	eline->add("PastRates"+ keynamesuffix, new AQLDataDoubles(ratesvec));
 
 
 
@@ -3222,23 +3222,23 @@ LAMultiSwapPricer::storePastRates(LADataInstance* dataInstance, const LAStringMa
 }
 
 void
-LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LAString copytradeid, const LADate& asOfDate)
+LAMultiSwapPricer::setUpFixingRateFromPastRates(AQLDataInstance* dataInstance, AQLString copytradeid, const AQLDate& asOfDate)
 {
 
-	LADataHolder* dh;
-	LAObjectPool &objPool = dataInstance->getObjectPool();
+	AQLDataHolder* dh;
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
 
-	LAObject& eline = objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).get();
+	AQLObject& eline = objPool.getObject("lineparam1",ENCHKTYPE_ISDEFINED).get();
 	
-	LAObjectHolder objHolder = objPool.getObject(copytradeid, ENCHKTYPE_ISDEFINED);
+	AQLObjectHolder objHolder = objPool.getObject(copytradeid, ENCHKTYPE_ISDEFINED);
 
-	LAMathObjectValue& val = dynamic_cast<LAMathObjectValue&>(objHolder.get());
+	AQLMathObjectValue& val = dynamic_cast<AQLMathObjectValue&>(objHolder.get());
 	
 	dh = &(val.getData(CALIBRATION_DATA_UNDERLYINGS, NOCHECK));
 	if (!dh->isDefined() || dh->isNull())
 		return;
 
-	LADataMultiReference& legs = dynamic_cast<LADataMultiReference &>(dh->get());
+	AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 	unsigned int legSize = legs.getSize();
 
 	
@@ -3250,7 +3250,7 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 		if (!dh->isDefined() || dh->isNull())
 			continue;
 		
-		LADataMultiReference& cashlets = dynamic_cast<LADataMultiReference &>(dh->get());
+		AQLDataMultiReference& cashlets = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		unsigned int cashletSize = cashlets.getSize();
 		for (unsigned int j = 0; j < cashletSize; j++)
 		{
@@ -3263,7 +3263,7 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 
 			//if past cashflow, continu
 			dh = &(cashlets.get(j).getData(PRICING_DATA_PAYMENTDATE, ISDEFINED));
-			const LADate& paydate = dynamic_cast<LADataDate &>(dh->get()).get();
+			const AQLDate& paydate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 			if (paydate < asOfDate)
 				continue;
 
@@ -3272,7 +3272,7 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 				continue;
 			
 				//multi coupon is only stub case
-			LADataMultiReference& coupons = dynamic_cast<LADataMultiReference &>(dh->get());
+			AQLDataMultiReference& coupons = dynamic_cast<AQLDataMultiReference &>(dh->get());
 			unsigned int couponSize = coupons.getSize();
 			for (unsigned int k = 0; k < couponSize; k++)
 			{
@@ -3280,25 +3280,25 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 				if (!dh->isDefined() || dh->isNull())
 					continue;
 		
-				LADataMultiReference& indexs = dynamic_cast<LADataMultiReference &>(dh->get());
-				LAObject& eindex = indexs.get(0).get();
+				AQLDataMultiReference& indexs = dynamic_cast<AQLDataMultiReference &>(dh->get());
+				AQLObject& eindex = indexs.get(0).get();
 
 				//first priority is FixingDates
 				dh = &(eindex.getData(PRICING_DATA_FIXINGDATES, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					const DateVector& fixingdates = dynamic_cast<const LADataDates &>(dh->get()).get();
-					LADate firstfixingdate = fixingdates[0];
+					const DateVector& fixingdates = dynamic_cast<const AQLDataDates &>(dh->get()).get();
+					AQLDate firstfixingdate = fixingdates[0];
 					
 					if (firstfixingdate > asOfDate)
 						issearchend = true;
 					else
 					{
 						//set up past rates
-						LAString ccy = dynamic_cast<LADataString &>(eindex.getData(IR_CALIBRATION_DATA_CURRENCY, ISDEFINED).get());
-						LAString accessory = dynamic_cast<LADataString &>(eindex.getData(PRICING_DATA_ACCESSORY, ISDEFINED).get());
+						AQLString ccy = dynamic_cast<AQLDataString &>(eindex.getData(IR_CALIBRATION_DATA_CURRENCY, ISDEFINED).get());
+						AQLString accessory = dynamic_cast<AQLDataString &>(eindex.getData(PRICING_DATA_ACCESSORY, ISDEFINED).get());
 
-						LAString keynamesuffix;
+						AQLString keynamesuffix;
 						if (accessory == "1D")
 						{
 							keynamesuffix = "_" + ccy + "_OIS_" + accessory;
@@ -3315,40 +3315,40 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 							if (firstfixingdate == asOfDate)
 								continue;
 							
-							throw LACoreInvalidData("past rates have not been stored", __FILE__,__LINE__);
+							throw AQLCoreInvalidData("past rates have not been stored", __FILE__,__LINE__);
 						}
 							
-						DateVector pastdates = dynamic_cast<LADataDates &>(dh->get()).get();
+						DateVector pastdates = dynamic_cast<AQLDataDates &>(dh->get()).get();
 
 						unsigned int firstpos = 0;
-						bool isexist = LAAlgorithm::find<DateVector, LADate>(pastdates, firstfixingdate, 0, pastdates.size()-1, firstpos);
+						bool isexist = AQLAlgorithm::find<DateVector, AQLDate>(pastdates, firstfixingdate, 0, pastdates.size()-1, firstpos);
 						if (!isexist)
 						{
 							//if not exist and today fixing then, we adopt forecast, that is, we do not have any action.
 							if (firstfixingdate == asOfDate)
 								continue;
 
-							LAString ans = "fixing date " + LADataDate(firstfixingdate).convertToString() + " is not set";
-							throw LACoreInvalidData(ans.getCString(), __FILE__,__LINE__);
+							AQLString ans = "fixing date " + AQLDataDate(firstfixingdate).convertToString() + " is not set";
+							throw AQLCoreInvalidData(ans.getCString(), __FILE__,__LINE__);
 						}
 
 						dh = &(eline.getData("PastRates" + keynamesuffix, ISDEFINED));
-						DoubleVector pastrates = dynamic_cast<LADataDoubles &>(dh->get()).get();
+						DoubleVector pastrates = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 						if (pastdates.size() != pastrates.size())
-							throw LACoreInvalidData("Past rates size error",__FILE__,__LINE__);
+							throw AQLCoreInvalidData("Past rates size error",__FILE__,__LINE__);
 
 						pastrates.erase(pastrates.begin(),pastrates.begin() + firstpos);
 						pastdates.erase(pastdates.begin(),pastdates.begin() + firstpos);
 
 						eindex.remove(PRICING_DATA_OBSERVATIONDATES);
-						eindex.add(PRICING_DATA_OBSERVATIONDATES, new LADataDates(pastdates));
+						eindex.add(PRICING_DATA_OBSERVATIONDATES, new AQLDataDates(pastdates));
 
 						eindex.remove(PRICING_DATA_OBSERVATIONRATES);
-						eindex.add(PRICING_DATA_OBSERVATIONRATES, new LADataDoubles(pastrates));
+						eindex.add(PRICING_DATA_OBSERVATIONRATES, new AQLDataDoubles(pastrates));
 
 						/*double fixedrate = pastrates[pos];
 						eindex.remove(PRICING_DATA_FIXEDRATE);
-						eindex.add(PRICING_DATA_FIXEDRATE, new LADataDouble(fixedrate));*/
+						eindex.add(PRICING_DATA_FIXEDRATE, new AQLDataDouble(fixedrate));*/
 					}
 					
 					continue;
@@ -3360,10 +3360,10 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 					continue;
 
 
-				if (dynamic_cast<LADataString &>(dh->get()).get() == "LIBOR")
+				if (dynamic_cast<AQLDataString &>(dh->get()).get() == "LIBOR")
 				{
 					dh = &(eindex.getData(PRICING_DATA_FIXINGDATE, ISDEFINED));
-					const LADate& fixingdate = dynamic_cast<LADataDate &>(dh->get()).get();
+					const AQLDate& fixingdate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 					
 					//if fixing does not come, go out of for loop
 					if (fixingdate > asOfDate)
@@ -3371,8 +3371,8 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 					else
 					{
 						//set up past rates
-						LAString ccy = dynamic_cast<LADataString &>(eindex.getData(IR_CALIBRATION_DATA_CURRENCY, ISDEFINED).get());
-						LAString accessory = dynamic_cast<LADataString &>(eindex.getData(PRICING_DATA_ACCESSORY, ISDEFINED).get());
+						AQLString ccy = dynamic_cast<AQLDataString &>(eindex.getData(IR_CALIBRATION_DATA_CURRENCY, ISDEFINED).get());
+						AQLString accessory = dynamic_cast<AQLDataString &>(eindex.getData(PRICING_DATA_ACCESSORY, ISDEFINED).get());
 
 						//if already have fixed rate, then we do not need to get from pastrates
 						dh = &(eindex.getData(PRICING_DATA_FIXEDRATE, NOCHECK));
@@ -3380,7 +3380,7 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 							continue;
 
 
-						LAString keynamesuffix = "_" + ccy + "_LIBOR_" + accessory;
+						AQLString keynamesuffix = "_" + ccy + "_LIBOR_" + accessory;
 						dh = &(eline.getData("PastDates" + keynamesuffix, NOCHECK));
 						if (!dh->isDefined() || dh->isNull())
 						{
@@ -3388,41 +3388,41 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 							if (fixingdate == asOfDate)
 								continue;
 							
-							throw LACoreInvalidData("past rates have not been stored", __FILE__,__LINE__);
+							throw AQLCoreInvalidData("past rates have not been stored", __FILE__,__LINE__);
 						}
 							
-						const DateVector& pastdates = dynamic_cast<LADataDates &>(dh->get()).get();
+						const DateVector& pastdates = dynamic_cast<AQLDataDates &>(dh->get()).get();
 
 						unsigned int pos = 0;
-						bool isexist = LAAlgorithm::find<DateVector, LADate>(pastdates, fixingdate, 0, pastdates.size()-1, pos);
+						bool isexist = AQLAlgorithm::find<DateVector, AQLDate>(pastdates, fixingdate, 0, pastdates.size()-1, pos);
 						if (!isexist)
 						{
 							//if not exist and today fixing then, we adopt forecast, that is, we do not have any action.
 							if (fixingdate == asOfDate)
 								continue;
 
-							LAString ans = "fixing date " + LADataDate(fixingdate).convertToString() + " is not set";
-							throw LACoreInvalidData(ans.getCString(), __FILE__,__LINE__);
+							AQLString ans = "fixing date " + AQLDataDate(fixingdate).convertToString() + " is not set";
+							throw AQLCoreInvalidData(ans.getCString(), __FILE__,__LINE__);
 						}
 
 						dh = &(eline.getData("PastRates" + keynamesuffix, ISDEFINED));
-						const DoubleVector& pastrates = dynamic_cast<LADataDoubles &>(dh->get()).get();
+						const DoubleVector& pastrates = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 						if (pastdates.size() != pastrates.size())
-							throw LACoreInvalidData("Past rates size error",__FILE__,__LINE__);
+							throw AQLCoreInvalidData("Past rates size error",__FILE__,__LINE__);
 
 						double fixedrate = pastrates[pos];
 						eindex.remove(PRICING_DATA_FIXEDRATE);
-						eindex.add(PRICING_DATA_FIXEDRATE, new LADataDouble(fixedrate));
+						eindex.add(PRICING_DATA_FIXEDRATE, new AQLDataDouble(fixedrate));
 					}
 				}
-				else if (dynamic_cast<LADataString &>(dh->get()).get() == "OIS")
+				else if (dynamic_cast<AQLDataString &>(dh->get()).get() == "OIS")
 				{
 
 					dh = &(eindex.getData(PRICING_DATA_OBSERVATIONSTARTDATE, ISDEFINED));
-					const LADate& firstfixingdate = dynamic_cast<LADataDate &>(dh->get()).get();
+					const AQLDate& firstfixingdate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 
 					dh = &(eindex.getData(PRICING_DATA_OBSERVATIONENDDATE, ISDEFINED));
-					const LADate& lastfixingdate = dynamic_cast<LADataDate &>(dh->get()).get();
+					const AQLDate& lastfixingdate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 					
 					//if fixing does not come, go out of for loop
 					if (firstfixingdate > asOfDate)
@@ -3430,10 +3430,10 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 					else
 					{
 						//set up past rates
-						LAString ccy = dynamic_cast<LADataString &>(eindex.getData(IR_CALIBRATION_DATA_CURRENCY, ISDEFINED).get());
-						LAString accessory = dynamic_cast<LADataString &>(eindex.getData(PRICING_DATA_ACCESSORY, ISDEFINED).get());
+						AQLString ccy = dynamic_cast<AQLDataString &>(eindex.getData(IR_CALIBRATION_DATA_CURRENCY, ISDEFINED).get());
+						AQLString accessory = dynamic_cast<AQLDataString &>(eindex.getData(PRICING_DATA_ACCESSORY, ISDEFINED).get());
 
-						LAString keynamesuffix = "_" + ccy + "_OIS_" + accessory;
+						AQLString keynamesuffix = "_" + ccy + "_OIS_" + accessory;
 						dh = &(eline.getData("PastDates" + keynamesuffix, NOCHECK));
 						if (!dh->isDefined() || dh->isNull())
 						{
@@ -3441,40 +3441,40 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 							if (firstfixingdate == asOfDate)
 								continue;
 							
-							throw LACoreInvalidData("past rates have not been stored", __FILE__,__LINE__);
+							throw AQLCoreInvalidData("past rates have not been stored", __FILE__,__LINE__);
 						}
 							
-						DateVector pastdates = dynamic_cast<LADataDates &>(dh->get()).get();
+						DateVector pastdates = dynamic_cast<AQLDataDates &>(dh->get()).get();
 
 						unsigned int firstpos = 0;
-						bool isexist = LAAlgorithm::find<DateVector, LADate>(pastdates, firstfixingdate, 0, pastdates.size()-1, firstpos);
+						bool isexist = AQLAlgorithm::find<DateVector, AQLDate>(pastdates, firstfixingdate, 0, pastdates.size()-1, firstpos);
 						if (!isexist)
 						{
 							//if not exist and today fixing then, we adopt forecast, that is, we do not have any action.
 							if (firstfixingdate == asOfDate)
 								continue;
 
-							LAString ans = "fixing date " + LADataDate(firstfixingdate).convertToString() + " is not set";
-							throw LACoreInvalidData(ans.getCString(), __FILE__,__LINE__);
+							AQLString ans = "fixing date " + AQLDataDate(firstfixingdate).convertToString() + " is not set";
+							throw AQLCoreInvalidData(ans.getCString(), __FILE__,__LINE__);
 						}
 
 						dh = &(eline.getData("PastRates" + keynamesuffix, ISDEFINED));
-						DoubleVector pastrates = dynamic_cast<LADataDoubles &>(dh->get()).get();
+						DoubleVector pastrates = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 						if (pastdates.size() != pastrates.size())
-							throw LACoreInvalidData("Past rates size error",__FILE__,__LINE__);
+							throw AQLCoreInvalidData("Past rates size error",__FILE__,__LINE__);
 
 						pastrates.erase(pastrates.begin(),pastrates.begin() + firstpos);
 						pastdates.erase(pastdates.begin(),pastdates.begin() + firstpos);
 
 						eindex.remove(PRICING_DATA_OBSERVATIONDATES);
-						eindex.add(PRICING_DATA_OBSERVATIONDATES, new LADataDates(pastdates));
+						eindex.add(PRICING_DATA_OBSERVATIONDATES, new AQLDataDates(pastdates));
 
 						eindex.remove(PRICING_DATA_OBSERVATIONRATES);
-						eindex.add(PRICING_DATA_OBSERVATIONRATES, new LADataDoubles(pastrates));
+						eindex.add(PRICING_DATA_OBSERVATIONRATES, new AQLDataDoubles(pastrates));
 
 						/*double fixedrate = pastrates[pos];
 						eindex.remove(PRICING_DATA_FIXEDRATE);
-						eindex.add(PRICING_DATA_FIXEDRATE, new LADataDouble(fixedrate));*/
+						eindex.add(PRICING_DATA_FIXEDRATE, new AQLDataDouble(fixedrate));*/
 					}
 				}
 			}
@@ -3492,23 +3492,23 @@ LAMultiSwapPricer::setUpFixingRateFromPastRates(LADataInstance* dataInstance, LA
 }
 
 
-LAString
-LAMultiSwapPricer::setUpMarketParamsAndGlobalShift(LADataInstance* dataInstance, std::map<LAString, LAString> mapcalcinfo, LAString curveID)
+AQLString
+LAMultiSwapPricer::setUpMarketParamsAndGlobalShift(AQLDataInstance* dataInstance, std::map<AQLString, AQLString> mapcalcinfo, AQLString curveID)
 {
 
-	LADataHolder* dh;
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-	LAObjectHolder objHolder;
+	AQLDataHolder* dh;
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObjectHolder objHolder;
 
-	map<LAString, LAString>::iterator itcalcmap = mapcalcinfo.begin();
+	map<AQLString, AQLString>::iterator itcalcmap = mapcalcinfo.begin();
 
-	LAString marketparamInput = "marketparam1_" + curveID;
+	AQLString marketparamInput = "marketparam1_" + curveID;
 	LAMathPlainVanillaEntity* pvanilla = NULL;
 	objHolder = objPool.getObject(marketparamInput);
 	if (objHolder.isDefined())
 	{
 		if (!objHolder.isTypeOf(ENTITY_PLAINVANILLA))
-			throw LACoreInvalidData("Vanilla Setup Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Vanilla Setup Error",__FILE__,__LINE__);
 
 		pvanilla = dynamic_cast<LAMathPlainVanillaEntity *>(&objHolder.get());
 		pvanilla->reset();
@@ -3524,31 +3524,31 @@ LAMultiSwapPricer::setUpMarketParamsAndGlobalShift(LADataInstance* dataInstance,
 	//daycount
 	pvanilla->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISDEFINED).convertFromString("ACT/365_ISDA");
 	//asofdate
-	LAObject* pyldEntity = &(objPool.getObject(curveID,ENCHKTYPE_ISDEFINED).get());
+	AQLObject* pyldEntity = &(objPool.getObject(curveID,ENCHKTYPE_ISDEFINED).get());
 	dh = &(pyldEntity->getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL));
-	LAString asofdateInput = dh->convertToString();
+	AQLString asofdateInput = dh->convertToString();
 	pvanilla->getData(CALIBRATION_DATA_ASOFDATE, ISDEFINED).convertFromString(asofdateInput);
 	
 	//ircurs
-	//LAStringVector irccys(ccy,1)
+	//AQLStringVector irccys(ccy,1)
 	dh = &(pyldEntity->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL));
-	LAString ccyInput = dynamic_cast<LADataString &>(dh->get()).get();
-	LAStringVector ccys = ccyInput.toToken(':');
+	AQLString ccyInput = dynamic_cast<AQLDataString &>(dh->get()).get();
+	AQLStringVector ccys = ccyInput.toToken(':');
 	if (ccys.size() > 1)
 	{
-		throw LACoreInvalidData("Multi currency pricing is not supported at the moment.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Multi currency pricing is not supported at the moment.", __FILE__, __LINE__);
 	}
 	pvanilla->getIRCurrencys().set(ccys);
 	
 	//set yield curve
-	LAStringVector yieldNames(ccys.size());
+	AQLStringVector yieldNames(ccys.size());
 	if (LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST).toUpper() == "TRUE")
 	{
-		std::for_each(yieldNames.begin(), yieldNames.end(), [curveID](LAString& yieldName) { yieldName = PREFIX_YIELD + curveID; });
+		std::for_each(yieldNames.begin(), yieldNames.end(), [curveID](AQLString& yieldName) { yieldName = PREFIX_YIELD + curveID; });
 	}
 	else
 	{
-		std::transform(ccys.cbegin(), ccys.cend(), yieldNames.begin(), [](const LAString& ccy) { return LAMarketData::getBaseYieldName(ccy); });
+		std::transform(ccys.cbegin(), ccys.cend(), yieldNames.begin(), [](const AQLString& ccy) { return LAMarketData::getBaseYieldName(ccy); });
 	}
 	for (auto&& yieldName : yieldNames)
 	{
@@ -3562,17 +3562,17 @@ LAMultiSwapPricer::setUpMarketParamsAndGlobalShift(LADataInstance* dataInstance,
 			objPool.set(yieldName, pYield);
 		}
 	}
-	pvanilla->getIRCurves().convertFromString(LADataStrings(yieldNames).convertToString());
+	pvanilla->getIRCurves().convertFromString(AQLDataStrings(yieldNames).convertToString());
 
 	//set names of yield curve pro
-	LAStringVector yieldProNames(ccys.size());
+	AQLStringVector yieldProNames(ccys.size());
 	if (LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST).toUpper() == "TRUE")
 	{
-		std::transform(yieldNames.cbegin(), yieldNames.cend(), yieldProNames.begin(), [](const LAString& yieldName) { return LAString("PRO_") + yieldName; });
+		std::transform(yieldNames.cbegin(), yieldNames.cend(), yieldProNames.begin(), [](const AQLString& yieldName) { return AQLString("PRO_") + yieldName; });
 	}
 	else
 	{
-		std::transform(ccys.cbegin(), ccys.cend(), yieldProNames.begin(), [](const LAString& ccy) { return LAMarketData::getBaseYieldProName(ccy); });
+		std::transform(ccys.cbegin(), ccys.cend(), yieldProNames.begin(), [](const AQLString& ccy) { return LAMarketData::getBaseYieldProName(ccy); });
 	}
 	for (auto&& yieldProName : yieldProNames)
 	{
@@ -3590,10 +3590,10 @@ LAMultiSwapPricer::setUpMarketParamsAndGlobalShift(LADataInstance* dataInstance,
 
 	//temporary 
 	//interpolationset, usually, we should on curve generate
-	LAString fcurvestr1m = mapcalcinfo[LAString("CURVE/") + "1MForecast"];
-	LAString fcurvestr3m = mapcalcinfo[LAString("CURVE/") + "3MForecast"];
-	LAString fcurvestr6m = mapcalcinfo[LAString("CURVE/") + "6MForecast"];
-	LAString fcurvestrois = mapcalcinfo[LAString("CURVE/") + "OISForecast"];
+	AQLString fcurvestr1m = mapcalcinfo[AQLString("CURVE/") + "1MForecast"];
+	AQLString fcurvestr3m = mapcalcinfo[AQLString("CURVE/") + "3MForecast"];
+	AQLString fcurvestr6m = mapcalcinfo[AQLString("CURVE/") + "6MForecast"];
+	AQLString fcurvestrois = mapcalcinfo[AQLString("CURVE/") + "OISForecast"];
 	pvanilla->getIRCurve(ccyInput).getInterpolation(fcurvestr1m).convertFromString(FN_SPLINEINTERPOLATION_STR);
 	pvanilla->getIRCurve(ccyInput).getInterpolation(fcurvestr3m).convertFromString(FN_SPLINEINTERPOLATION_STR);
 	pvanilla->getIRCurve(ccyInput).getInterpolation(fcurvestr6m).convertFromString(FN_SPLINEINTERPOLATION_STR);
@@ -3601,30 +3601,30 @@ LAMultiSwapPricer::setUpMarketParamsAndGlobalShift(LADataInstance* dataInstance,
 	///////////////////////////////////////////////////////////////////////////////
 
 	//global shift scenario////////////////////////////////////////////////
-	std::map<LAString, LAString>::iterator it = mapcalcinfo.find(LAString("CURVE/") + "GlobalShiftScenario");
+	std::map<AQLString, AQLString>::iterator it = mapcalcinfo.find(AQLString("CURVE/") + "GlobalShiftScenario");
 	if (it != mapcalcinfo.end() && it->second != "" && it->second.getDoubleValue() != 0.0)
 	{
 
 		////set up order 
-		LAStringVector setupOrder = getCurveNamesFromSetUpOrder(dataInstance, curveID);
-		LAString glshiftstr = it->second;
+		AQLStringVector setupOrder = getCurveNamesFromSetUpOrder(dataInstance, curveID);
+		AQLString glshiftstr = it->second;
 		double glshiftval = glshiftstr.getDoubleValue() * 0.0001;
-		LAString orgcurveID = curveID;
+		AQLString orgcurveID = curveID;
 		curveID += "_GlobalShift_" + glshiftstr + "BP";
 		for (unsigned int j = 0; j < setupOrder.size(); j++)
 		{
-			LAString generateCurveName = setupOrder[j];
+			AQLString generateCurveName = setupOrder[j];
 			
 			
-			LAString orgkeyname = "lineparam1_" + orgcurveID + generateCurveName;
-			LAString newkeyname = "lineparam1_" + curveID + generateCurveName;
+			AQLString orgkeyname = "lineparam1_" + orgcurveID + generateCurveName;
+			AQLString newkeyname = "lineparam1_" + curveID + generateCurveName;
 			
 			objHolder = objPool.getObject(newkeyname, ENCHKTYPE_NOCHECK);
 			if (objHolder.isDefined())
 				objPool.remove(newkeyname);
 
 							
-			LAObject* eglcurvestore = objPool.getObject(orgkeyname, ENCHKTYPE_ISDEFINED).clone();
+			AQLObject* eglcurvestore = objPool.getObject(orgkeyname, ENCHKTYPE_ISDEFINED).clone();
 			objPool.set(newkeyname, eglcurvestore);
 			eglcurvestore->getData(CALIBRATION_DATA_NAME, ISNOTNULL).convertFromString(newkeyname);
 
@@ -3637,61 +3637,61 @@ LAMultiSwapPricer::setUpMarketParamsAndGlobalShift(LADataInstance* dataInstance,
 
 
 		//reset into curve pro
-		LAString yieldName = "YIELD_" + curveID;
+		AQLString yieldName = "YIELD_" + curveID;
 		pvanilla->getIRCurves().convertFromString(yieldName);
 		////reset yldpro
-		//LAString yieldProName = "PRO_YIELD_" + curveID;
+		//AQLString yieldProName = "PRO_YIELD_" + curveID;
 		//pvanilla->getIRCurvePros().convertFromString(yieldProName);
 
 		//asofdate
 		pyldEntity = &(objPool.getObject(curveID,ENCHKTYPE_ISDEFINED).get());
 		dh = &(pyldEntity->getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL));
-		LAString asofdateInput = dh->convertToString();
+		AQLString asofdateInput = dh->convertToString();
 		pvanilla->getData(CALIBRATION_DATA_ASOFDATE, ISDEFINED).convertFromString(asofdateInput);
 		
 		//ircurs
-		//LAStringVector irccys(ccy,1)
+		//AQLStringVector irccys(ccy,1)
 		dh = &(pyldEntity->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL));
-		LAString ccyInput = dynamic_cast<LADataString &>(dh->get());
+		AQLString ccyInput = dynamic_cast<AQLDataString &>(dh->get());
 		pvanilla->getIRCurrencys().convertFromString(ccyInput);
 	}
 
-	LAString ret = marketparamInput;
+	AQLString ret = marketparamInput;
 	return ret;
 }
 
 
-LAString
-LAMultiSwapPricer::getDiscountCurveName(LADataInstance* dataInstance, LAString curveID)
+AQLString
+LAMultiSwapPricer::getDiscountCurveName(AQLDataInstance* dataInstance, AQLString curveID)
 {
-	LAString ret;
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLString ret;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 
 
 
 
-	const LAString lineparam("lineparam1");
-	const LAObject* eline = &objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get();
-    const LAObject* pyldEntity = &(objPool.getObject(curveID, ENCHKTYPE_ISDEFINED).get());
+	const AQLString lineparam("lineparam1");
+	const AQLObject* eline = &objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get();
+    const AQLObject* pyldEntity = &(objPool.getObject(curveID, ENCHKTYPE_ISDEFINED).get());
 
     
-	const LAString swapfreq = dynamic_cast<const LADataString &>(eline->getData("SWAP_FREQUENCY", ISNOTNULL).get()).get();
+	const AQLString swapfreq = dynamic_cast<const AQLDataString &>(eline->getData("SWAP_FREQUENCY", ISNOTNULL).get()).get();
 
-	const LAString ois_fcurve_name = dynamic_cast<const LADataString &>(eline->getData("CURVE_OISFORECAST", ISNOTNULL).get()).get();
-	const LAString std_fcurve_name = dynamic_cast<const LADataString &>(eline->getData(LAString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get()).get();
+	const AQLString ois_fcurve_name = dynamic_cast<const AQLDataString &>(eline->getData("CURVE_OISFORECAST", ISNOTNULL).get()).get();
+	const AQLString std_fcurve_name = dynamic_cast<const AQLDataString &>(eline->getData(AQLString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get()).get();
 
 
-    const LAString& ccy = dynamic_cast<const LADataString&>(pyldEntity->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL).get()).get();
-    //const LAString& ypro_name = "PRO_" + LAMarketData::getBaseYieldName(ccy);
-    const LAString& ypro_name = LAString("PRO_") + PREFIX_YIELD + curveID;
+    const AQLString& ccy = dynamic_cast<const AQLDataString&>(pyldEntity->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL).get()).get();
+    //const AQLString& ypro_name = "PRO_" + LAMarketData::getBaseYieldName(ccy);
+    const AQLString& ypro_name = AQLString("PRO_") + PREFIX_YIELD + curveID;
     const LAMathYieldCurvePro& ypro = dynamic_cast<const LAMathYieldCurvePro&>(objPool.getObject(ypro_name, ENCHKTYPE_ISDEFINED).get());
-    const LAString& ois_mkt_name = ypro.getMarketForCurve(ois_fcurve_name);
+    const AQLString& ois_mkt_name = ypro.getMarketForCurve(ois_fcurve_name);
 
 
 	
-    const LAString ois_dcurve_data_name = IR_CALIBRATION_DATA_DFCURVENAME + LAString("_") + ois_mkt_name;
-	const LAString std_dcurve_name = dynamic_cast<const LADataString &>(pyldEntity->getData(IR_CALIBRATION_DATA_DFCURVENAME, ISNOTNULL).get());
-	const LAString ois_dcurve_name = dynamic_cast<const LADataString &>(pyldEntity->getData(ois_dcurve_data_name , ISNOTNULL).get());
+    const AQLString ois_dcurve_data_name = IR_CALIBRATION_DATA_DFCURVENAME + AQLString("_") + ois_mkt_name;
+	const AQLString std_dcurve_name = dynamic_cast<const AQLDataString &>(pyldEntity->getData(IR_CALIBRATION_DATA_DFCURVENAME, ISNOTNULL).get());
+	const AQLString ois_dcurve_name = dynamic_cast<const AQLDataString &>(pyldEntity->getData(ois_dcurve_data_name , ISNOTNULL).get());
 
 
 
@@ -3704,82 +3704,82 @@ LAMultiSwapPricer::getDiscountCurveName(LADataInstance* dataInstance, LAString c
 	else if (ois_fcurve_name == std_dcurve_name && "ITSELF" == ois_dcurve_name)
 		ret = ois_fcurve_name;
 	else
-		throw LACoreInvalidData("Discount curve set logic is not consistent", __FILE__,__LINE__);
+		throw AQLCoreInvalidData("Discount curve set logic is not consistent", __FILE__,__LINE__);
 
 	return ret;
 }
 
 
 
-LAString
-LAMultiSwapPricer::getCurveIDfromTradeReference(LADataInstance* dataInstance, LAString tradeID)
+AQLString
+LAMultiSwapPricer::getCurveIDfromTradeReference(AQLDataInstance* dataInstance, AQLString tradeID)
 {
 
-	LAString ret;
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LADataHolder* dh;
+	AQLString ret;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLDataHolder* dh;
 
-	LAString lineparam("lineparam1");
-	LAObject* eline = &objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get();
+	AQLString lineparam("lineparam1");
+	AQLObject* eline = &objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get();
 
-	LAString ccyInput = dynamic_cast<LADataString &>(eline->getData("CALC_CURRENCY", ISNOTNULL).get());
+	AQLString ccyInput = dynamic_cast<AQLDataString &>(eline->getData("CALC_CURRENCY", ISNOTNULL).get());
 	
 	//discount curve search
-	LAObjectHolder objHolder = objPool.getObject(tradeID, ENCHKTYPE_ISDEFINED);
-	LAMathObjectValue& val = dynamic_cast<LAMathObjectValue &>(objHolder.get());
+	AQLObjectHolder objHolder = objPool.getObject(tradeID, ENCHKTYPE_ISDEFINED);
+	AQLMathObjectValue& val = dynamic_cast<AQLMathObjectValue &>(objHolder.get());
 
 	dh = &(val.getData(PRICING_DATA_PATHENTITY, ISNOTNULL));
-	LADataReference& ref = dynamic_cast<LADataReference& >(dh->get());
+	AQLDataReference& ref = dynamic_cast<AQLDataReference& >(dh->get());
 	LAMathPlainVanillaEntity& vanilla = dynamic_cast<LAMathPlainVanillaEntity &>(ref.get().get());
 	
-	LADataReference& yielddata = dynamic_cast<LADataReference& >(vanilla.getIRCurve(ccyInput).getData(IR_CALIBRATION_DATA_YIELDDATA, ISNOTNULL).get());
+	AQLDataReference& yielddata = dynamic_cast<AQLDataReference& >(vanilla.getIRCurve(ccyInput).getData(IR_CALIBRATION_DATA_YIELDDATA, ISNOTNULL).get());
 	return yielddata.get().getName();
 
 }
 
-LAString
-LAMultiSwapPricer::getMarketParamfromTradeReference(LADataInstance* dataInstance, LAString tradeID)
+AQLString
+LAMultiSwapPricer::getMarketParamfromTradeReference(AQLDataInstance* dataInstance, AQLString tradeID)
 {
 
-	LAString ret;
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LADataHolder* dh;
+	AQLString ret;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLDataHolder* dh;
 
-	LAString lineparam("lineparam1");
-	LAObject* eline = &objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get();
+	AQLString lineparam("lineparam1");
+	AQLObject* eline = &objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get();
 
-	LAString ccyInput = dynamic_cast<LADataString &>(eline->getData("CALC_CURRENCY", ISNOTNULL).get());
+	AQLString ccyInput = dynamic_cast<AQLDataString &>(eline->getData("CALC_CURRENCY", ISNOTNULL).get());
 	
 	//discount curve search
-	LAObjectHolder objHolder = objPool.getObject(tradeID, ENCHKTYPE_ISDEFINED);
-	LAMathObjectValue& val = dynamic_cast<LAMathObjectValue &>(objHolder.get());
+	AQLObjectHolder objHolder = objPool.getObject(tradeID, ENCHKTYPE_ISDEFINED);
+	AQLMathObjectValue& val = dynamic_cast<AQLMathObjectValue &>(objHolder.get());
 
 	dh = &(val.getData(PRICING_DATA_PATHENTITY, ISNOTNULL));
-	LADataReference& ref = dynamic_cast<LADataReference &>(dh->get());
+	AQLDataReference& ref = dynamic_cast<AQLDataReference &>(dh->get());
 
 	return ref.get().getName();
 
 }
 
 void
-LAMultiSwapPricer::setUpLineParams(LADataInstance* dataInstance, std::map<LAString, LAString> mapcalcinfo)
+LAMultiSwapPricer::setUpLineParams(AQLDataInstance* dataInstance, std::map<AQLString, AQLString> mapcalcinfo)
 {
-	LAObjectHolder objHolder;
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObjectHolder objHolder;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 
 	///////////////////line param object///////////////////////////////
 	//interpolationset, usually, we should on curve generate
-	LAString fcurvestr1m = mapcalcinfo[LAString("CURVE/") + "1MForecast"];
-	LAString fcurvestr3m = mapcalcinfo[LAString("CURVE/") + "3MForecast"];
-	LAString fcurvestr6m = mapcalcinfo[LAString("CURVE/") + "6MForecast"];
-	LAString fcurvestrois = mapcalcinfo[LAString("CURVE/") + "OISForecast"];
-	LAString discount = mapcalcinfo[LAString("CURVE/") + "Discount"];
-	LAString lineparam("lineparam1");
+	AQLString fcurvestr1m = mapcalcinfo[AQLString("CURVE/") + "1MForecast"];
+	AQLString fcurvestr3m = mapcalcinfo[AQLString("CURVE/") + "3MForecast"];
+	AQLString fcurvestr6m = mapcalcinfo[AQLString("CURVE/") + "6MForecast"];
+	AQLString fcurvestrois = mapcalcinfo[AQLString("CURVE/") + "OISForecast"];
+	AQLString discount = mapcalcinfo[AQLString("CURVE/") + "Discount"];
+	AQLString lineparam("lineparam1");
 	objHolder = objPool.getObject(lineparam, ENCHKTYPE_NOCHECK);
-	LAObject* eline = NULL;
+	AQLObject* eline = NULL;
 	if (!objHolder.isDefined())
 	{
-		eline = new LAObject();
+		eline = new AQLObject();
 		objPool.set(lineparam, eline);
 	}
 	else
@@ -3788,146 +3788,146 @@ LAMultiSwapPricer::setUpLineParams(LADataInstance* dataInstance, std::map<LAStri
 	}
 	
 	//calc info
-	LAString calcstr = mapcalcinfo[LAString("CALC/") + IR_CALIBRATION_DATA_CURRENCY];
+	AQLString calcstr = mapcalcinfo[AQLString("CALC/") + IR_CALIBRATION_DATA_CURRENCY];
 	eline->remove("CALC_CURRENCY");
-	eline->add("CALC_CURRENCY", new LADataString(calcstr));
+	eline->add("CALC_CURRENCY", new AQLDataString(calcstr));
 
-	LAString calcasofstr = mapcalcinfo[LAString("CALC/") + CALIBRATION_DATA_ASOFDATE];
+	AQLString calcasofstr = mapcalcinfo[AQLString("CALC/") + CALIBRATION_DATA_ASOFDATE];
 	eline->remove("CALC_ASOFDATE");
-	eline->add("CALC_ASOFDATE", new LADataString(calcasofstr));
+	eline->add("CALC_ASOFDATE", new AQLDataString(calcasofstr));
 
-	LAString calcvaluestr = mapcalcinfo[LAString("CALC/") + CALIBRATION_DATA_VALUEDATE];
+	AQLString calcvaluestr = mapcalcinfo[AQLString("CALC/") + CALIBRATION_DATA_VALUEDATE];
 	eline->remove("CALC_VALUEDATE");
-	eline->add("CALC_VALUEDATE", new LADataString(calcvaluestr));
+	eline->add("CALC_VALUEDATE", new AQLDataString(calcvaluestr));
 
 
 	//curve info
 	eline->remove("CURVE_1MFORECAST");
-	eline->add("CURVE_1MFORECAST", new LADataString(fcurvestr1m));
+	eline->add("CURVE_1MFORECAST", new AQLDataString(fcurvestr1m));
 
 	eline->remove("CURVE_3MFORECAST");
-	eline->add("CURVE_3MFORECAST", new LADataString(fcurvestr3m));
+	eline->add("CURVE_3MFORECAST", new AQLDataString(fcurvestr3m));
 	
 	eline->remove("CURVE_6MFORECAST");
-	eline->add("CURVE_6MFORECAST", new LADataString(fcurvestr6m));
+	eline->add("CURVE_6MFORECAST", new AQLDataString(fcurvestr6m));
 
 	eline->remove("CURVE_OISFORECAST");
-	eline->add("CURVE_OISFORECAST", new LADataString(fcurvestrois));
+	eline->add("CURVE_OISFORECAST", new AQLDataString(fcurvestrois));
 
 	eline->remove("CURVE_DISCOUNT");
 	if (discount.isDefined())
 	{
-		eline->add("CURVE_DISCOUNT", new LADataString(discount));
+		eline->add("CURVE_DISCOUNT", new AQLDataString(discount));
 	}
 
 	
 	// isforward roll
-	LAString isforwardstr1 = mapcalcinfo[LAString("TRADE/SWAP/") + PRICING_DATA_ISFORWARDROLL];
-	LAString isforwardstr2 = mapcalcinfo[LAString("TRADE/BASISSWAP/") + PRICING_DATA_ISFORWARDROLL];
-	LAString isforwardstr3 = mapcalcinfo[LAString("TRADE/FRA/") + PRICING_DATA_ISFORWARDROLL];
+	AQLString isforwardstr1 = mapcalcinfo[AQLString("TRADE/SWAP/") + PRICING_DATA_ISFORWARDROLL];
+	AQLString isforwardstr2 = mapcalcinfo[AQLString("TRADE/BASISSWAP/") + PRICING_DATA_ISFORWARDROLL];
+	AQLString isforwardstr3 = mapcalcinfo[AQLString("TRADE/FRA/") + PRICING_DATA_ISFORWARDROLL];
 	
-	eline->remove(LAString("TRADE_SWAP_") + PRICING_DATA_ISFORWARDROLL);
-	eline->add(LAString("TRADE_SWAP_") + PRICING_DATA_ISFORWARDROLL, new LADataString(isforwardstr1));
+	eline->remove(AQLString("TRADE_SWAP_") + PRICING_DATA_ISFORWARDROLL);
+	eline->add(AQLString("TRADE_SWAP_") + PRICING_DATA_ISFORWARDROLL, new AQLDataString(isforwardstr1));
 
-	eline->remove(LAString("TRADE_BASISSWAP_") + PRICING_DATA_ISFORWARDROLL);
-	eline->add(LAString("TRADE_BASISSWAP_") + PRICING_DATA_ISFORWARDROLL, new LADataString(isforwardstr2));
+	eline->remove(AQLString("TRADE_BASISSWAP_") + PRICING_DATA_ISFORWARDROLL);
+	eline->add(AQLString("TRADE_BASISSWAP_") + PRICING_DATA_ISFORWARDROLL, new AQLDataString(isforwardstr2));
 
 	//up to now, fra is always true
-	eline->remove(LAString("TRADE_FRA_") + PRICING_DATA_ISFORWARDROLL);
-	eline->add(LAString("TRADE_FRA_") + PRICING_DATA_ISFORWARDROLL, new LADataString(isforwardstr3));
+	eline->remove(AQLString("TRADE_FRA_") + PRICING_DATA_ISFORWARDROLL);
+	eline->add(AQLString("TRADE_FRA_") + PRICING_DATA_ISFORWARDROLL, new AQLDataString(isforwardstr3));
 
 	// isforward inter
-	LAString isforwardinterstr1 = mapcalcinfo[LAString("TRADE/SWAP/") + PRICING_DATA_ISFWDINTERPOLATION];
-	LAString isforwardinterstr2 = mapcalcinfo[LAString("TRADE/BASISSWAP/") + PRICING_DATA_ISFWDINTERPOLATION];
-	LAString isforwardinterstr3 = mapcalcinfo[LAString("TRADE/FRA/") + PRICING_DATA_ISFWDINTERPOLATION];
+	AQLString isforwardinterstr1 = mapcalcinfo[AQLString("TRADE/SWAP/") + PRICING_DATA_ISFWDINTERPOLATION];
+	AQLString isforwardinterstr2 = mapcalcinfo[AQLString("TRADE/BASISSWAP/") + PRICING_DATA_ISFWDINTERPOLATION];
+	AQLString isforwardinterstr3 = mapcalcinfo[AQLString("TRADE/FRA/") + PRICING_DATA_ISFWDINTERPOLATION];
 
-	eline->remove(LAString("TRADE_SWAP_") + PRICING_DATA_ISFWDINTERPOLATION);
-	eline->add(LAString("TRADE_SWAP_") + PRICING_DATA_ISFWDINTERPOLATION, new LADataString(isforwardinterstr1));
+	eline->remove(AQLString("TRADE_SWAP_") + PRICING_DATA_ISFWDINTERPOLATION);
+	eline->add(AQLString("TRADE_SWAP_") + PRICING_DATA_ISFWDINTERPOLATION, new AQLDataString(isforwardinterstr1));
 
-	eline->remove(LAString("TRADE_BASISSWAP_") + PRICING_DATA_ISFWDINTERPOLATION);
-	eline->add(LAString("TRADE_BASISSWAP_") + PRICING_DATA_ISFWDINTERPOLATION, new LADataString(isforwardinterstr2));
+	eline->remove(AQLString("TRADE_BASISSWAP_") + PRICING_DATA_ISFWDINTERPOLATION);
+	eline->add(AQLString("TRADE_BASISSWAP_") + PRICING_DATA_ISFWDINTERPOLATION, new AQLDataString(isforwardinterstr2));
 
-	eline->remove(LAString("TRADE_FRA_") + PRICING_DATA_ISFWDINTERPOLATION);
-	eline->add(LAString("TRADE_FRA_") + PRICING_DATA_ISFWDINTERPOLATION, new LADataString(isforwardinterstr3));
+	eline->remove(AQLString("TRADE_FRA_") + PRICING_DATA_ISFWDINTERPOLATION);
+	eline->add(AQLString("TRADE_FRA_") + PRICING_DATA_ISFWDINTERPOLATION, new AQLDataString(isforwardinterstr3));
 
 	// paymenttiming
-	LAString paytimingstr1 = mapcalcinfo[LAString("TRADE/SWAP/") + PRICING_DATA_PAYMENTTIMING];
-	LAString paytimingstr2 = mapcalcinfo[LAString("TRADE/BASISSWAP/") + PRICING_DATA_PAYMENTTIMING];
-	LAString paytimingstr3 = mapcalcinfo[LAString("TRADE/FRA/") + PRICING_DATA_PAYMENTTIMING];
+	AQLString paytimingstr1 = mapcalcinfo[AQLString("TRADE/SWAP/") + PRICING_DATA_PAYMENTTIMING];
+	AQLString paytimingstr2 = mapcalcinfo[AQLString("TRADE/BASISSWAP/") + PRICING_DATA_PAYMENTTIMING];
+	AQLString paytimingstr3 = mapcalcinfo[AQLString("TRADE/FRA/") + PRICING_DATA_PAYMENTTIMING];
 	
-	eline->remove(LAString("TRADE_SWAP_") + PRICING_DATA_PAYMENTTIMING);
-	eline->add(LAString("TRADE_SWAP_") + PRICING_DATA_PAYMENTTIMING, new LADataString(paytimingstr1));
+	eline->remove(AQLString("TRADE_SWAP_") + PRICING_DATA_PAYMENTTIMING);
+	eline->add(AQLString("TRADE_SWAP_") + PRICING_DATA_PAYMENTTIMING, new AQLDataString(paytimingstr1));
 	
-	eline->remove(LAString("TRADE_BASISSWAP_") + PRICING_DATA_PAYMENTTIMING);
-	eline->add(LAString("TRADE_BASISSWAP_") + PRICING_DATA_PAYMENTTIMING, new LADataString(paytimingstr2));
+	eline->remove(AQLString("TRADE_BASISSWAP_") + PRICING_DATA_PAYMENTTIMING);
+	eline->add(AQLString("TRADE_BASISSWAP_") + PRICING_DATA_PAYMENTTIMING, new AQLDataString(paytimingstr2));
 	//up to now, fra is always advance payment
-	eline->remove(LAString("TRADE_FRA_") + PRICING_DATA_PAYMENTTIMING);
-	eline->add(LAString("TRADE_FRA_") + PRICING_DATA_PAYMENTTIMING, new LADataString(paytimingstr3));
+	eline->remove(AQLString("TRADE_FRA_") + PRICING_DATA_PAYMENTTIMING);
+	eline->add(AQLString("TRADE_FRA_") + PRICING_DATA_PAYMENTTIMING, new AQLDataString(paytimingstr3));
 
 	//payment calendar
-	LAString paycalstr1 = mapcalcinfo[LAString("TRADE/SWAP/") + CALIBRATION_DATA_CALENDAR];
-	LAString paycalstr2 = mapcalcinfo[LAString("TRADE/BASISSWAP/") + CALIBRATION_DATA_CALENDAR];
-	LAString paycalstr3 = mapcalcinfo[LAString("TRADE/FRA/") + CALIBRATION_DATA_CALENDAR];
+	AQLString paycalstr1 = mapcalcinfo[AQLString("TRADE/SWAP/") + CALIBRATION_DATA_CALENDAR];
+	AQLString paycalstr2 = mapcalcinfo[AQLString("TRADE/BASISSWAP/") + CALIBRATION_DATA_CALENDAR];
+	AQLString paycalstr3 = mapcalcinfo[AQLString("TRADE/FRA/") + CALIBRATION_DATA_CALENDAR];
 	
-	eline->remove(LAString("TRADE_SWAP_") + CALIBRATION_DATA_CALENDAR);
-	eline->add(LAString("TRADE_SWAP_") + CALIBRATION_DATA_CALENDAR, new LADataString(paycalstr1));
+	eline->remove(AQLString("TRADE_SWAP_") + CALIBRATION_DATA_CALENDAR);
+	eline->add(AQLString("TRADE_SWAP_") + CALIBRATION_DATA_CALENDAR, new AQLDataString(paycalstr1));
 
-	eline->remove(LAString("TRADE_BASISSWAP_") + CALIBRATION_DATA_CALENDAR);
-	eline->add(LAString("TRADE_BASISSWAP_") + CALIBRATION_DATA_CALENDAR, new LADataString(paycalstr2));
+	eline->remove(AQLString("TRADE_BASISSWAP_") + CALIBRATION_DATA_CALENDAR);
+	eline->add(AQLString("TRADE_BASISSWAP_") + CALIBRATION_DATA_CALENDAR, new AQLDataString(paycalstr2));
 
-	eline->remove(LAString("TRADE_FRA_") + CALIBRATION_DATA_CALENDAR);
-	eline->add(LAString("TRADE_FRA_") + CALIBRATION_DATA_CALENDAR, new LADataString(paycalstr3));
+	eline->remove(AQLString("TRADE_FRA_") + CALIBRATION_DATA_CALENDAR);
+	eline->add(AQLString("TRADE_FRA_") + CALIBRATION_DATA_CALENDAR, new AQLDataString(paycalstr3));
 
 	//payment business days convention
-	LAString bdconv1 = mapcalcinfo[LAString("TRADE/SWAP/") + CALIBRATION_DATA_SLIDINGRULE];
-	LAString bdconv2 = mapcalcinfo[LAString("TRADE/BASISSWAP/") + CALIBRATION_DATA_SLIDINGRULE];
-	LAString bdconv3 = mapcalcinfo[LAString("TRADE/FRA/") + CALIBRATION_DATA_SLIDINGRULE];
+	AQLString bdconv1 = mapcalcinfo[AQLString("TRADE/SWAP/") + CALIBRATION_DATA_SLIDINGRULE];
+	AQLString bdconv2 = mapcalcinfo[AQLString("TRADE/BASISSWAP/") + CALIBRATION_DATA_SLIDINGRULE];
+	AQLString bdconv3 = mapcalcinfo[AQLString("TRADE/FRA/") + CALIBRATION_DATA_SLIDINGRULE];
 
-	eline->remove(LAString("TRADE_SWAP_") + CALIBRATION_DATA_SLIDINGRULE);
-	eline->add(LAString("TRADE_SWAP_") + CALIBRATION_DATA_SLIDINGRULE, new LADataString(bdconv1));
+	eline->remove(AQLString("TRADE_SWAP_") + CALIBRATION_DATA_SLIDINGRULE);
+	eline->add(AQLString("TRADE_SWAP_") + CALIBRATION_DATA_SLIDINGRULE, new AQLDataString(bdconv1));
 
-	eline->remove(LAString("TRADE_BASISSWAP_") + CALIBRATION_DATA_SLIDINGRULE);
-	eline->add(LAString("TRADE_BASISSWAP_") + CALIBRATION_DATA_SLIDINGRULE, new LADataString(bdconv2));
+	eline->remove(AQLString("TRADE_BASISSWAP_") + CALIBRATION_DATA_SLIDINGRULE);
+	eline->add(AQLString("TRADE_BASISSWAP_") + CALIBRATION_DATA_SLIDINGRULE, new AQLDataString(bdconv2));
 
-	eline->remove(LAString("TRADE_FRA_") + CALIBRATION_DATA_SLIDINGRULE);
-	eline->add(LAString("TRADE_FRA_") + CALIBRATION_DATA_SLIDINGRULE, new LADataString(bdconv3));
+	eline->remove(AQLString("TRADE_FRA_") + CALIBRATION_DATA_SLIDINGRULE);
+	eline->add(AQLString("TRADE_FRA_") + CALIBRATION_DATA_SLIDINGRULE, new AQLDataString(bdconv3));
 
-	LAString ccyInput = mapcalcinfo[LAString("CALC/") + IR_CALIBRATION_DATA_CURRENCY];
+	AQLString ccyInput = mapcalcinfo[AQLString("CALC/") + IR_CALIBRATION_DATA_CURRENCY];
 	//fixing calenar
-	LAString fixingcalstr1 = mapcalcinfo[LAString("INDEX/LIBOR/") + PRICING_DATA_FIXINGCALENDAR];
-	LAString fixingcalstr2 = mapcalcinfo[LAString("INDEX/OIS/") + PRICING_DATA_FIXINGCALENDAR];
+	AQLString fixingcalstr1 = mapcalcinfo[AQLString("INDEX/LIBOR/") + PRICING_DATA_FIXINGCALENDAR];
+	AQLString fixingcalstr2 = mapcalcinfo[AQLString("INDEX/OIS/") + PRICING_DATA_FIXINGCALENDAR];
 
-	eline->remove(LAString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_FIXINGCALENDAR);
-	eline->add(LAString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_FIXINGCALENDAR,  new LADataString(fixingcalstr1));
+	eline->remove(AQLString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_FIXINGCALENDAR);
+	eline->add(AQLString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_FIXINGCALENDAR,  new AQLDataString(fixingcalstr1));
 
-	eline->remove(LAString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_FIXINGCALENDAR);
-	eline->add(LAString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_FIXINGCALENDAR,  new LADataString(fixingcalstr2));
+	eline->remove(AQLString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_FIXINGCALENDAR);
+	eline->add(AQLString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_FIXINGCALENDAR,  new AQLDataString(fixingcalstr2));
 
 	//fixing timing
-	LAString fixingtimingstr1 = mapcalcinfo[LAString("INDEX/LIBOR/") + PRICING_DATA_FIXINGTIMING];
-	LAString fixingtimingstr2 = mapcalcinfo[LAString("INDEX/OIS/") + PRICING_DATA_FIXINGTIMING];
+	AQLString fixingtimingstr1 = mapcalcinfo[AQLString("INDEX/LIBOR/") + PRICING_DATA_FIXINGTIMING];
+	AQLString fixingtimingstr2 = mapcalcinfo[AQLString("INDEX/OIS/") + PRICING_DATA_FIXINGTIMING];
 
-	eline->remove(LAString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_FIXINGTIMING);
-	eline->add(LAString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_FIXINGTIMING,  new LADataString(fixingtimingstr1));
+	eline->remove(AQLString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_FIXINGTIMING);
+	eline->add(AQLString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_FIXINGTIMING,  new AQLDataString(fixingtimingstr1));
 
-	eline->remove(LAString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_FIXINGTIMING);
-	eline->add(LAString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_FIXINGTIMING,  new LADataString(fixingtimingstr2));
+	eline->remove(AQLString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_FIXINGTIMING);
+	eline->add(AQLString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_FIXINGTIMING,  new AQLDataString(fixingtimingstr2));
 
 	//spot lag
-	LAString spotlagstr1 = mapcalcinfo[LAString("INDEX/LIBOR/") + PRICING_DATA_SPOTLAG];
-	LAString spotlagstr2 = mapcalcinfo[LAString("INDEX/OIS/") + PRICING_DATA_SPOTLAG];
+	AQLString spotlagstr1 = mapcalcinfo[AQLString("INDEX/LIBOR/") + PRICING_DATA_SPOTLAG];
+	AQLString spotlagstr2 = mapcalcinfo[AQLString("INDEX/OIS/") + PRICING_DATA_SPOTLAG];
 
-	eline->remove(LAString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_SPOTLAG);
-	eline->add(LAString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_SPOTLAG,  new LADataString(spotlagstr1));
+	eline->remove(AQLString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_SPOTLAG);
+	eline->add(AQLString("INDEX_") + ccyInput + "_LIBOR_" + PRICING_DATA_SPOTLAG,  new AQLDataString(spotlagstr1));
 
-	eline->remove(LAString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_SPOTLAG);
-	eline->add(LAString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_SPOTLAG,  new LADataString(spotlagstr2));
+	eline->remove(AQLString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_SPOTLAG);
+	eline->add(AQLString("INDEX_") + ccyInput + "_OIS_" + PRICING_DATA_SPOTLAG,  new AQLDataString(spotlagstr2));
 
 	//swap frequency
 	LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
-	LAString tmpCurrency;
+	AQLString tmpCurrency;
 	tmpCurrency = calcstr; tmpCurrency.toLower();
-	LAString swapfreq = irStaticData.getStaticData(tmpCurrency + ".sde.yield.swap.frequencyfloat");
+	AQLString swapfreq = irStaticData.getStaticData(tmpCurrency + ".sde.yield.swap.frequencyfloat");
 	if(swapfreq == "quarterly")
 		swapfreq = "3M";
 	else if(swapfreq == "semi-annual")
@@ -3935,12 +3935,12 @@ LAMultiSwapPricer::setUpLineParams(LADataInstance* dataInstance, std::map<LAStri
 	else if(swapfreq == "monthly" || swapfreq == "lunar")
 		swapfreq = "1M";
 	else
-		throw LACoreInvalidData("Cannot find swap frequency",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Cannot find swap frequency",__FILE__,__LINE__);
 
 	if(calcstr == "AUD")	//special case!!
 		swapfreq = "3M";
 	eline->remove("SWAP_FREQUENCY");
-	eline->add("SWAP_FREQUENCY",  new LADataString(swapfreq));
+	eline->add("SWAP_FREQUENCY",  new AQLDataString(swapfreq));
 
 
 }
@@ -3948,37 +3948,37 @@ LAMultiSwapPricer::setUpLineParams(LADataInstance* dataInstance, std::map<LAStri
 //in the current case, there exist four curves libor3m libor6m libor1m and ois
 //if we need more curve to generate, we have to modify this function
 //e.g. xccy curves (arbitrage free case) case, we need more.
-LAStringVector
-LAMultiSwapPricer::getCurveNamesFromSetUpOrder(LADataInstance* dataInstance, LAString curveID)
+AQLStringVector
+LAMultiSwapPricer::getCurveNamesFromSetUpOrder(AQLDataInstance* dataInstance, AQLString curveID)
 {
-	LAStringVector ret(4);
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAString lineparam("lineparam1");
-	LAObject* eline = &objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get();
+	AQLStringVector ret(4);
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLString lineparam("lineparam1");
+	AQLObject* eline = &objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get();
 
-	LAString swapfreq = dynamic_cast<LADataString &>(eline->getData("SWAP_FREQUENCY", ISNOTNULL).get());
+	AQLString swapfreq = dynamic_cast<AQLDataString &>(eline->getData("SWAP_FREQUENCY", ISNOTNULL).get());
 
-	LAString fcurvestr1m = dynamic_cast<LADataString &>(eline->getData("CURVE_1MFORECAST", ISNOTNULL).get());
-	LAString fcurvestr3m = dynamic_cast<LADataString &>(eline->getData("CURVE_3MFORECAST", ISNOTNULL).get());
-	LAString fcurvestr6m = dynamic_cast<LADataString &>(eline->getData("CURVE_6MFORECAST", ISNOTNULL).get());
-	LAString fcurvestrois = dynamic_cast<LADataString &>(eline->getData("CURVE_OISFORECAST", ISNOTNULL).get());
-	LAString fcurvestrstd = dynamic_cast<LADataString &>(eline->getData(LAString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get());
+	AQLString fcurvestr1m = dynamic_cast<AQLDataString &>(eline->getData("CURVE_1MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr3m = dynamic_cast<AQLDataString &>(eline->getData("CURVE_3MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestr6m = dynamic_cast<AQLDataString &>(eline->getData("CURVE_6MFORECAST", ISNOTNULL).get());
+	AQLString fcurvestrois = dynamic_cast<AQLDataString &>(eline->getData("CURVE_OISFORECAST", ISNOTNULL).get());
+	AQLString fcurvestrstd = dynamic_cast<AQLDataString &>(eline->getData(AQLString("CURVE_") + swapfreq + "FORECAST", ISNOTNULL).get());
 
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	dh =&(eline->getData("CURVE_DISCOUNT", NOCHECK));
-	LAString discountcurve;
+	AQLString discountcurve;
 	if (!dh->isDefined() || dh->isNull())
 	{
 		discountcurve = getDiscountCurveName(dataInstance,curveID);
 	}
 	else
 	{
-		discountcurve = dynamic_cast<LADataString &>(eline->getData("CURVE_DISCOUNT", NOCHECK).get());;
+		discountcurve = dynamic_cast<AQLDataString &>(eline->getData("CURVE_DISCOUNT", NOCHECK).get());;
 	}
 	
 
-	//LAString discountcurve = getDiscountCurveName(dataInstance, curveID);
+	//AQLString discountcurve = getDiscountCurveName(dataInstance, curveID);
 	////set up order 
 	bool isoisbase = true;
 	if (discountcurve == fcurvestrois)
@@ -3986,7 +3986,7 @@ LAMultiSwapPricer::getCurveNamesFromSetUpOrder(LADataInstance* dataInstance, LAS
 	else if (discountcurve == fcurvestrstd)
 		isoisbase = false;
 	else
-		throw LACoreInvalidData("Curve set inconsisntent",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Curve set inconsisntent",__FILE__,__LINE__);
 
 	bool is3mbase = true;
 	if (swapfreq != "3M")
@@ -4030,22 +4030,22 @@ LAMultiSwapPricer::getCurveNamesFromSetUpOrder(LADataInstance* dataInstance, LAS
 }
 
 void
-LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eorgCurve, LAString targetMarketName, LAString newCurveID, bool isshiftarget, bool ispara, 
-											double shiftval, unsigned int shiftpos, LAString market, bool isglobalscenario)
+LAMultiSwapPricer::createShiftCurves(AQLDataInstance* dataInstance, AQLObject& eorgCurve, AQLString targetMarketName, AQLString newCurveID, bool isshiftarget, bool ispara, 
+											double shiftval, unsigned int shiftpos, AQLString market, bool isglobalscenario)
 {
-	LADataHolder* dh;
-	LADataHolder* se;
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLDataHolder* dh;
+	AQLDataHolder* se;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 	
-	LAString lineparam("lineparam1");
-	LAObject* eline = &objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get();
+	AQLString lineparam("lineparam1");
+	AQLObject* eline = &objPool.getObject(lineparam, ENCHKTYPE_ISDEFINED).get();
 
-	LAString swapfreq = dynamic_cast<LADataString &>(eline->getData("SWAP_FREQUENCY", ISNOTNULL).get());
+	AQLString swapfreq = dynamic_cast<AQLDataString &>(eline->getData("SWAP_FREQUENCY", ISNOTNULL).get());
 
-	LAString libor1mforecurve = dynamic_cast<LADataString &>(eline->getData("CURVE_1MFORECAST", ISNOTNULL).get());
-	LAString libor3mforecurve = dynamic_cast<LADataString &>(eline->getData("CURVE_3MFORECAST", ISNOTNULL).get());
-	LAString libor6mforecurve = dynamic_cast<LADataString &>(eline->getData("CURVE_6MFORECAST", ISNOTNULL).get());
-	LAString oisforecurve = dynamic_cast<LADataString &>(eline->getData("CURVE_OISFORECAST", ISNOTNULL).get());
+	AQLString libor1mforecurve = dynamic_cast<AQLDataString &>(eline->getData("CURVE_1MFORECAST", ISNOTNULL).get());
+	AQLString libor3mforecurve = dynamic_cast<AQLDataString &>(eline->getData("CURVE_3MFORECAST", ISNOTNULL).get());
+	AQLString libor6mforecurve = dynamic_cast<AQLDataString &>(eline->getData("CURVE_6MFORECAST", ISNOTNULL).get());
+	AQLString oisforecurve = dynamic_cast<AQLDataString &>(eline->getData("CURVE_OISFORECAST", ISNOTNULL).get());
 
 	// boolean of libor base curve
 	bool isbase, isnobase;
@@ -4060,44 +4060,44 @@ LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eor
 	//mir set up ois
 	if (targetMarketName == oisforecurve)
 	{	
-		LAString genCurveName;
+		AQLString genCurveName;
 		dh = &(eorgCurve.getData("genCurveName", ISNOTNULL));
-		LAString tmp_genCurveName;
+		AQLString tmp_genCurveName;
 		se =&(eline->getData("CURVE_DISCOUNT", NOCHECK));
 		if (!se->isDefined() || se->isNull())
 		{
-			tmp_genCurveName = genCurveName = dynamic_cast<LADataString &>(dh->get());
+			tmp_genCurveName = genCurveName = dynamic_cast<AQLDataString &>(dh->get());
 		}
 		else
 		{
-			tmp_genCurveName = dynamic_cast<LADataString &>(eline->getData("CURVE_DISCOUNT", NOCHECK).get());
+			tmp_genCurveName = dynamic_cast<AQLDataString &>(eline->getData("CURVE_DISCOUNT", NOCHECK).get());
 		}
 		genCurveName = tmp_genCurveName;
 		
-		LAStringMatrix generateProp,oisRates,oisConv;
+		AQLStringMatrix generateProp,oisRates,oisConv;
 		dh = &(eorgCurve.getData("generateProp"));
 		if (dh->isDefined() && !dh->isNull())
-			generateProp = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			generateProp = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("oisRates"));
 		if (dh->isDefined() && !dh->isNull())
-			oisRates = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			oisRates = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("oisConv"));
 		if (dh->isDefined() && !dh->isNull())
-			oisConv = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			oisConv = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
-		LAStringMatrix histRates;
+		AQLStringMatrix histRates;
 		dh = &(eorgCurve.getData("histRates"));
 		if (dh->isDefined() && !dh->isNull())
-			histRates = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			histRates = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		//change shift rate
 		if (isshiftarget)
 			LAMultiSwapPricer::shiftMarketRate(oisRates,shiftval,ispara,shiftpos);
 
 		if (isglobalscenario)
-			dynamic_cast<LADataStringMatrix &>(eorgCurve.getData("oisRates", ISNOTNULL).get()).set(oisRates);
+			dynamic_cast<AQLDataStringMatrix &>(eorgCurve.getData("oisRates", ISNOTNULL).get()).set(oisRates);
 		
 		//LACurveSetup::setUpOISCurve(dataInstance,newCurveID,genCurveName,generateProp,oisRates,oisConv,"", histRates);
 		LACurveSetup::setUpOISCurve(dataInstance,newCurveID,genCurveName,generateProp,oisRates,oisConv,targetMarketName, histRates);
@@ -4106,64 +4106,64 @@ LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eor
 	else if (isbase)
 	{
 		//mir set up swap;
-		LAString genCurveName;
+		AQLString genCurveName;
 		dh = &(eorgCurve.getData("genCurveName", ISNOTNULL));
-		genCurveName = dynamic_cast<LADataString &>(dh->get());
+		genCurveName = dynamic_cast<AQLDataString &>(dh->get());
 
-		LAStringMatrix generateProp,moneyConv,liborRates,liborConv,swapRates,swapConv,
+		AQLStringMatrix generateProp,moneyConv,liborRates,liborConv,swapRates,swapConv,
 			fra3mRates,fra6mRates,fraConv,futureRates,futureConv,adjustSwapConv,adjustSwapRates;
 		
 		dh = &(eorgCurve.getData("generateProp"));
 		if (dh->isDefined() && !dh->isNull())
-			generateProp = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			generateProp = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("moneyConv"));
 		if (dh->isDefined() && !dh->isNull())
-			moneyConv = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			moneyConv = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("liborRates"));
 		if (dh->isDefined() && !dh->isNull())
-			liborRates = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			liborRates = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("liborConv"));
 		if (dh->isDefined() && !dh->isNull())
-			liborConv = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			liborConv = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("swapRates"));
 		if (dh->isDefined() && !dh->isNull())
-			swapRates = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			swapRates = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("swapConv"));
 		if (dh->isDefined() && !dh->isNull())
-			swapConv = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			swapConv = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("fra3mRates"));
 		if (dh->isDefined() && !dh->isNull())
-			fra3mRates = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			fra3mRates = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("fra6mRates"));
 		if (dh->isDefined() && !dh->isNull())
-			fra6mRates = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			fra6mRates = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("fraConv"));
 		if (dh->isDefined() && !dh->isNull())
-			fraConv = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			fraConv = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("futureRates"));
 		if (dh->isDefined() && !dh->isNull())
-			futureRates = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			futureRates = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("futureConv"));
 		if (dh->isDefined() && !dh->isNull())
-			futureConv = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			futureConv = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("adjustSwapConv"));
 		if (dh->isDefined() && !dh->isNull())
-			adjustSwapConv = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			adjustSwapConv = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("adjustSwapRates"));
 		if (dh->isDefined() && !dh->isNull())
-			adjustSwapRates = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			adjustSwapRates = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 
 		//change shift rate
@@ -4171,7 +4171,7 @@ LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eor
 		{
 			LAMultiSwapPricer::shiftMarketRate(liborRates,shiftval,ispara,shiftpos);
 			if (isglobalscenario)
-				dynamic_cast<LADataStringMatrix &>(eorgCurve.getData("liborRates").get()).set(liborRates);
+				dynamic_cast<AQLDataStringMatrix &>(eorgCurve.getData("liborRates").get()).set(liborRates);
 		}
 		else if (!liborRates.empty() && isshiftarget && market == "liborRates")
 			LAMultiSwapPricer::shiftMarketRate(liborRates,shiftval,ispara,shiftpos);
@@ -4180,7 +4180,7 @@ LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eor
 		{
 			LAMultiSwapPricer::shiftMarketRate(swapRates,shiftval,ispara,shiftpos);
 			if (isglobalscenario)
-				dynamic_cast<LADataStringMatrix &>(eorgCurve.getData("swapRates").get()).set(swapRates);
+				dynamic_cast<AQLDataStringMatrix &>(eorgCurve.getData("swapRates").get()).set(swapRates);
 		}
 		else if (!swapRates.empty() && isshiftarget && market == "swapRates")
 			LAMultiSwapPricer::shiftMarketRate(swapRates,shiftval,ispara,shiftpos);
@@ -4189,7 +4189,7 @@ LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eor
 		{
 			LAMultiSwapPricer::shiftMarketRate(fra3mRates,shiftval,ispara,shiftpos);
 			if (isglobalscenario)
-				dynamic_cast<LADataStringMatrix &>(eorgCurve.getData("fra3mRates").get()).set(fra3mRates);
+				dynamic_cast<AQLDataStringMatrix &>(eorgCurve.getData("fra3mRates").get()).set(fra3mRates);
 		
 		}
 		else if (!fra3mRates.empty() && isshiftarget && market == "fra3mRates")
@@ -4199,7 +4199,7 @@ LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eor
 		{
 			LAMultiSwapPricer::shiftMarketRate(fra6mRates,shiftval,ispara,shiftpos);
 			if (isglobalscenario)
-				dynamic_cast<LADataStringMatrix &>(eorgCurve.getData("fra6mRates").get()).set(fra6mRates);
+				dynamic_cast<AQLDataStringMatrix &>(eorgCurve.getData("fra6mRates").get()).set(fra6mRates);
 
 		}
 		else if (!fra6mRates.empty() && isshiftarget && market == "fra6mRates")
@@ -4209,7 +4209,7 @@ LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eor
 		{
 			LAMultiSwapPricer::shiftMarketRate(futureRates,shiftval,ispara,shiftpos);
 			if (isglobalscenario)
-				dynamic_cast<LADataStringMatrix &>(eorgCurve.getData("futureRates").get()).set(futureRates);
+				dynamic_cast<AQLDataStringMatrix &>(eorgCurve.getData("futureRates").get()).set(futureRates);
 
 		}
 		else if (!futureRates.empty() && isshiftarget && market == "futureRates")
@@ -4219,7 +4219,7 @@ LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eor
 		{
 			LAMultiSwapPricer::shiftMarketRate(adjustSwapRates,shiftval,ispara,shiftpos);
 			if (isglobalscenario)
-				dynamic_cast<LADataStringMatrix &>(eorgCurve.getData("adjustSwapRates").get()).set(adjustSwapRates);
+				dynamic_cast<AQLDataStringMatrix &>(eorgCurve.getData("adjustSwapRates").get()).set(adjustSwapRates);
 		}
 		else if (!adjustSwapRates.empty() && isshiftarget && market == "adjustSwapRates")
 			LAMultiSwapPricer::shiftMarketRate(adjustSwapRates,shiftval,ispara,shiftpos);
@@ -4235,39 +4235,39 @@ LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eor
 	else if (isnobase)
 	{
 		//mir set up basis swap
-		LAString basisCurveName;
+		AQLString basisCurveName;
 		dh = &(eorgCurve.getData("basisCurveName", ISNOTNULL));
-		basisCurveName = dynamic_cast<LADataString &>(dh->get());
+		basisCurveName = dynamic_cast<AQLDataString &>(dh->get());
 
-		LAStringMatrix basisMkt,basisConv,fwdFX,fwdConv,spotFX,generateProp,moneyConv;
+		AQLStringMatrix basisMkt,basisConv,fwdFX,fwdConv,spotFX,generateProp,moneyConv;
 		
 		dh = &(eorgCurve.getData("basisMkt"));
 		if (dh->isDefined() && !dh->isNull())
-			basisMkt = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			basisMkt = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("basisConv"));
 		if (dh->isDefined() && !dh->isNull())
-			basisConv = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			basisConv = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("fwdFX"));
 		if (dh->isDefined() && !dh->isNull())
-			fwdFX = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			fwdFX = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("fwdConv"));
 		if (dh->isDefined() && !dh->isNull())
-			fwdConv = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			fwdConv = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("spotFX"));
 		if (dh->isDefined() && !dh->isNull())
-			spotFX = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			spotFX = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("generateProp"));
 		if (dh->isDefined() && !dh->isNull())
-			generateProp = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			generateProp = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 		dh = &(eorgCurve.getData("moneyConv"));
 		if (dh->isDefined() && !dh->isNull())
-			moneyConv = dynamic_cast<LADataStringMatrix &>(dh->get()).get();
+			moneyConv = dynamic_cast<AQLDataStringMatrix &>(dh->get()).get();
 
 
 		//change shift rate
@@ -4280,7 +4280,7 @@ LAMultiSwapPricer::createShiftCurves(LADataInstance* dataInstance, LAObject& eor
 		LACurveSetup::setUpBasisCurve(dataInstance,newCurveID,basisCurveName,basisMkt,basisConv,fwdFX,fwdConv,spotFX,generateProp,moneyConv,targetMarketName);
 	}
 	else
-		throw LACoreInvalidData("Source Delta Scenario Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Source Delta Scenario Error",__FILE__,__LINE__);
 
 
 	return;

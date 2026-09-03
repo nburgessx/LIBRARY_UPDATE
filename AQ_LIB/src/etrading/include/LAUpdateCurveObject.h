@@ -4,7 +4,7 @@
 //
 #pragma once
 
-#include "LAString.h"
+#include "AQLString.h"
 #include "LAObjectPoolBase.h"
 #include "LADefinitions.h"		// Required for CONTEXT_KEY_ASOFDATE key 
 #include "LACoreDataService.h"	// Required to import the
@@ -12,19 +12,19 @@
 
 
 // TypeDefs
-typedef std::map<LAString, std::map<LAString, double> > MarketDataTenorQuotes;
+typedef std::map<AQLString, std::map<AQLString, double> > MarketDataTenorQuotes;
 
 
 // Forward Declarations
-class LADataInstance;
+class AQLDataInstance;
 class LARatesCurveLogLinearInterpolation;
 class LAMathCorrelation;
 class CurveCalibrationData;
 class LAStaticData;
 class LAMathYieldCurve;
-class LAObject;
-class LAObjectPool;
-class LADataProcedure;
+class AQLObject;
+class AQLObjectPool;
+class AQLDataProcedure;
 
 //===================== Class Declare LAUpdateCurveObject ==================================
 /*! 
@@ -38,7 +38,7 @@ class LAUpdateCurveObject : public LAObjectPoolBase
 public:
 	
 	// constructor
-	explicit LAUpdateCurveObject(const LAString &baseCurrency);
+	explicit LAUpdateCurveObject(const AQLString &baseCurrency);
 	
 	// destructor
 	virtual ~LAUpdateCurveObject(void);
@@ -53,11 +53,11 @@ public:
 	// **************** HELPER METHODS FOR 'loadModelDataAndCalibrate' ROUTINE ********************************
 
 	// Method to Initialize and Check if Legacy Curves are to be Used, if boolean result is true must exit calibration
-	bool useLegacyCurves( const LAString &currency, LADataInstance &dataInstance ) const;
+	bool useLegacyCurves( const AQLString &currency, AQLDataInstance &dataInstance ) const;
 
 	struct CurveObject
 	{
-		CurveObject( LADataInstance & dataInstance, const LAString & currency, const LAString & curveID, const LAString & marketName )
+		CurveObject( AQLDataInstance & dataInstance, const AQLString & currency, const AQLString & curveID, const AQLString & marketName )
 			: mathObj_(NULL),
 			  calibrationData_(NULL),
 			  instance_(NULL),
@@ -65,7 +65,7 @@ public:
 			  dataInstance_(dataInstance),
               curveCollection_(curveID),
               curveIndex_(marketName),
-			  asOfDate_(LADate()),
+			  asOfDate_(AQLDate()),
 			  currency_(currency),
 			  currencyLowercase_(currency), // Make Lowercase in Body
 			  isForwardFXCurve_(false),
@@ -74,18 +74,18 @@ public:
 			  isTargetCurveFound_(false),
 			  staticDataName_(""),
 			  tenorBasisStaticDataName_(""),
-			  listOfCurvesBuilt_(LAStringVector()),
+			  listOfCurvesBuilt_(AQLStringVector()),
 			  enableCalculation_(true),
 			  isSpotStarting_(true),
 			  useTenorBasisExtrapolation_(false),
 			  useTenorBasisInstruments_(false),
-			  swapCurveDiscountFactors_(LAStringVector()),
+			  swapCurveDiscountFactors_(AQLStringVector()),
 			  tenorBasisDiscountFactors_(""),
-			  tenorBasisCurves_(LAStringVector()),
-			  tenorBasisMarkets_(LAStringVector())
+			  tenorBasisCurves_(AQLStringVector()),
+			  tenorBasisMarkets_(AQLStringVector())
 		{
 			// Update the curve AsOfDate
-			asOfDate_ = LADate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+			asOfDate_ = AQLDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 
 			// Must keep a copy of lower case currency for property manager references
 			currencyLowercase_.toLower();
@@ -93,34 +93,34 @@ public:
 
 		LAMathYieldCurve*		mathObj_;
 		CurveCalibrationData*	calibrationData_;
-		LAObject*				instance_;
-		LAString				name_;
+		AQLObject*				instance_;
+		AQLString				name_;
 
 		// Data Instance
-		LADataInstance &		dataInstance_;
+		AQLDataInstance &		dataInstance_;
 
 		// Curve Parameters
-		LAString curveCollection_;  // also known as curve ID
-        LAString curveIndex_;       // also known as marketName
-        LADate asOfDate_;
-		LAString currency_;
-		LAString currencyLowercase_;
+		AQLString curveCollection_;  // also known as curve ID
+        AQLString curveIndex_;       // also known as marketName
+        AQLDate asOfDate_;
+		AQLString currency_;
+		AQLString currencyLowercase_;
 		bool isForwardFXCurve_;
-		LAString targetCurveType_;
-		LAString propertyManagerCurveType_;
+		AQLString targetCurveType_;
+		AQLString propertyManagerCurveType_;
 		bool isTargetCurveFound_;
-		LAString staticDataName_;
-		LAString tenorBasisStaticDataName_;
-		LAStringVector listOfCurvesBuilt_;
+		AQLString staticDataName_;
+		AQLString tenorBasisStaticDataName_;
+		AQLStringVector listOfCurvesBuilt_;
 		bool enableCalculation_;
 		bool isSpotStarting_;
 		bool useTenorBasisExtrapolation_;
 		bool useTenorBasisInstruments_;
 		MarketDataTenorQuotes tenorBasisMarketQuotes_;
-		LAStringVector swapCurveDiscountFactors_;
-		LAString tenorBasisDiscountFactors_;
-		LAStringVector tenorBasisCurves_;
-		LAStringVector tenorBasisMarkets_;
+		AQLStringVector swapCurveDiscountFactors_;
+		AQLString tenorBasisDiscountFactors_;
+		AQLStringVector tenorBasisCurves_;
+		AQLStringVector tenorBasisMarkets_;
 	};
 
 	// Method to Initialize the Curve Object and Import Property Manager Data
@@ -169,109 +169,109 @@ public:
 	// ********************************************************************************************************
 
 	// Load Model Static Data Properties and Calibrate
-	virtual void loadModelDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance, const bool isModel = true, const bool isModelData = false, const LAString & curveIndex = "", const LAString & marketName = "" ) const;
+	virtual void loadModelDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance, const bool isModel = true, const bool isModelData = false, const AQLString & curveIndex = "", const AQLString & marketName = "" ) const;
 
 	// Load curve object pool data and calibrate with dataInstance as output
-	virtual void loadYieldCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance, const LAString & curveID = "", const LAString & marketName = "" ) const;
+	virtual void loadYieldCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance, const AQLString & curveID = "", const AQLString & marketName = "" ) const;
 
-	virtual void loadDualBootstrapCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance) const;
+	virtual void loadDualBootstrapCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance) const;
 
-	virtual void loadGlobalCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance) const;
+	virtual void loadGlobalCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance) const;
 
 	// generate sde initial value for fwdfx constant curve
-	virtual void loadFwdFXConstCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance, const LAString & curveID = "", const LAString & marketName = "") const;
+	virtual void loadFwdFXConstCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance, const AQLString & curveID = "", const AQLString & marketName = "") const;
 
 	// generate sde initial value for cheapest-to-deliver curve
-	virtual void loadCheapestToDeliverCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance) const;
+	virtual void loadCheapestToDeliverCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance) const;
 
 	// generate sde correlation
-	virtual void loadCorrelationDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance) const;
+	virtual void loadCorrelationDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance) const;
 
 protected:
 
 	// generate sde initial value when arbfree curve is generated
-	virtual void generateInitialValueArbfree(const LAString &currency, LADataInstance &dataInstance) const;
+	virtual void generateInitialValueArbfree(const AQLString &currency, AQLDataInstance &dataInstance) const;
 
 	// set interpolation method 
-	virtual  void setInterpolationMethod(const LAString &currency, LARatesSDEBase &sde) const;
+	virtual  void setInterpolationMethod(const AQLString &currency, LARatesSDEBase &sde) const;
 
 	// setup correlation input type
-	virtual LAString getCorTye(const LAString &currency) const = 0;
+	virtual AQLString getCorTye(const AQLString &currency) const = 0;
 	
 	// setup correlation factor
-	virtual void setUpCorFactor(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const = 0;
+	virtual void setUpCorFactor(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const = 0;
 	
 	// setup correlation data
-	virtual void setUpCorData(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const = 0;
+	virtual void setUpCorData(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const = 0;
 	
 	// setup correlation method
-	virtual void setUpCorFunc(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const = 0;
+	virtual void setUpCorFunc(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const = 0;
 
 	// get SDE data name
-	virtual LAString getSDEAttrName(const LAString &currency) const;
+	virtual AQLString getSDEAttrName(const AQLString &currency) const;
 	
 	// get grid properties and static data
-	LAString getGridStaticData(const LAString &key, const LAString &curve, const LAString &grid) const;
+	AQLString getGridStaticData(const AQLString &key, const AQLString &curve, const AQLString &grid) const;
 	
 	// set up generate configuration
-	void setUpGenerateConfig(LADataInstance &dataInstance, const LADate &asOfDate, const LAString &currency, LAMathYieldCurve &yc, CurveCalibrationData &curveCalibrationData,
-							 LAObject &ycData, bool &useTenorBasis, bool &useTenorBasisInstruments, bool &isSpotUse, bool isArbFree, const LAString& suffix = "", const LAString& epSuffix = "") const;
+	void setUpGenerateConfig(AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, LAMathYieldCurve &yc, CurveCalibrationData &curveCalibrationData,
+							 AQLObject &ycData, bool &useTenorBasis, bool &useTenorBasisInstruments, bool &isSpotUse, bool isArbFree, const AQLString& suffix = "", const AQLString& epSuffix = "") const;
 	
 	// set up basis curve data
-	void setUpBasisCurveData(LADataInstance &dataInstance, LAString &staticDataName, const LADate &asOfDate, const LAString &curveCurrencyLowerCase, 
-							 const LAString &marketName, const LAString &yieldDataName, bool isSpotUse, CurveCalibrationData &curveCalibrationData, const LAString& currentCurveName = LAString(), const LAString* pMktCurrency = 0) const;
+	void setUpBasisCurveData(AQLDataInstance &dataInstance, AQLString &staticDataName, const AQLDate &asOfDate, const AQLString &curveCurrencyLowerCase, 
+							 const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse, CurveCalibrationData &curveCalibrationData, const AQLString& currentCurveName = AQLString(), const AQLString* pMktCurrency = 0) const;
 	
 	// set up base curve data
-	void setUpGenCurveData(LADataInstance &dataInstance, LAString &staticDataName, const LADate &asOfDate, const LAString &currency, 
-						   const LAString &marketName, const LAString &yieldDataName, bool isSpotUse,
-						   bool useTenorBasis, CurveCalibrationData &curveCalibrationData, std::map<LAString, std::map<LAString, double> > &aud_origSwapRate, const LAString& curveName = "") const;
+	void setUpGenCurveData(AQLDataInstance &dataInstance, AQLString &staticDataName, const AQLDate &asOfDate, const AQLString &currency, 
+						   const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse,
+						   bool useTenorBasis, CurveCalibrationData &curveCalibrationData, std::map<AQLString, std::map<AQLString, double> > &aud_origSwapRate, const AQLString& curveName = "") const;
 	
 	// set up ois curve data
-	void setUpGenCurveDataOIS(LADataInstance &dataInstance, LAString &staticDataName, const LADate &asOfDate, const LAString &currency, 
-							  const LAString &marketName, const LAString &yieldDataName, bool isSpotUse, bool useTenorBasis, CurveCalibrationData &curveCalibrationData, 
-							  std::map<LAString, std::map<LAString, double> >& aud_origSwapRate) const;
+	void setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLString &staticDataName, const AQLDate &asOfDate, const AQLString &currency, 
+							  const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse, bool useTenorBasis, CurveCalibrationData &curveCalibrationData, 
+							  std::map<AQLString, std::map<AQLString, double> >& aud_origSwapRate) const;
 	
 	// set up 36basis curve dummy data
-	void setUp36BasisDummyData(LADataInstance &dataInstance, LAString &staticDataName, const LADate &asOfDate, const LAString &currency, 
-							   const LAString &marketName, const LAString &yieldDataName, bool isSpotUse, CurveCalibrationData &curveCalibrationData) const;
+	void setUp36BasisDummyData(AQLDataInstance &dataInstance, AQLString &staticDataName, const AQLDate &asOfDate, const AQLString &currency, 
+							   const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse, CurveCalibrationData &curveCalibrationData) const;
 	
 	// set up floater
-	void setUpFloater(const LAString &currency, CurveCalibrationData &curveCalibrationData, const LAString &genFloaterName) const;
+	void setUpFloater(const AQLString &currency, CurveCalibrationData &curveCalibrationData, const AQLString &genFloaterName) const;
 	
 	// set up curve data by reading file
-	void setUpCurveDataByReadFile(LADataInstance &dataInstance, const LADate &asOfDate, const LAString &currency, const LAString &marketName, const LAString &yieldDataName, CurveCalibrationData &curveCalibrationData ) const;
+	void setUpCurveDataByReadFile(AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, const AQLString &marketName, const AQLString &yieldDataName, CurveCalibrationData &curveCalibrationData ) const;
 	
 	// set up daycount
 	void setUpCurveTypeDayCount(CurveCalibrationData &curveCalibrationData, LAMathYieldCurve &yc) const;
 
-	void dataoutCurve(const LAStringVector &dataoutCurves, LAObject &eData, const LAString &yieldDataName) const;
+	void dataoutCurve(const AQLStringVector &dataoutCurves, AQLObject &eData, const AQLString &yieldDataName) const;
 
 	// generate sde initial value when use curve that generated by excel pricer.
-	void generateInitialValueForPricer(const LAString &currency, LADataInstance &dataInstance) const;
+	void generateInitialValueForPricer(const AQLString &currency, AQLDataInstance &dataInstance) const;
 	
 	// set up curve data by context for excel pricer
-	void setUpCurveDataByContext(CurveCalibrationData &curveCalibrationData, LAObject *eData, const LAString& currency, const LAString& marketName ) const;
+	void setUpCurveDataByContext(CurveCalibrationData &curveCalibrationData, AQLObject *eData, const AQLString& currency, const AQLString& marketName ) const;
 
 	// Generate Curve Currency Map
-	const LAString mBaseCurrency;
+	const AQLString mBaseCurrency;
 
 	// Generate Curve Currency Map
-	mutable std::map<LAString, bool> mCurveGenCcyMap; 
+	mutable std::map<AQLString, bool> mCurveGenCcyMap; 
 	
 	// check frequency
-	virtual bool checkFrequency(const LAString& freq, const LAString& mktRateTerm) const;
+	virtual bool checkFrequency(const AQLString& freq, const AQLString& mktRateTerm) const;
 	
 	// Configure curve by preparing data used for calibration
 	void configureCurve(LAStaticData *mpStaticData,
 						CurveCalibrationData *curveCalibrationData,
 						LAMathYieldCurve *yc,
-						LADataInstance &dataInstance,
-						const LADate& asOfDate,
-						const LAString& currency,
-						const LAString& curveName,
-						const LAString& yieldDataName,
-						const LAString& suffix,
-						const LAString& ep_suffix,
+						AQLDataInstance &dataInstance,
+						const AQLDate& asOfDate,
+						const AQLString& currency,
+						const AQLString& curveName,
+						const AQLString& yieldDataName,
+						const AQLString& suffix,
+						const AQLString& ep_suffix,
 						bool enableCalculation,
 						bool isSpotUse,
 						bool useTenorBasis,
@@ -279,9 +279,9 @@ protected:
 private:
 
 	// convertcurve name from properties
-	void convertCurveName(const LAString &propCurve, const LAString &ccy, LAString &curveCcy, LAString &curveName, const bool isPricer, LAObjectPool& objPool) const;
+	void convertCurveName(const AQLString &propCurve, const AQLString &ccy, AQLString &curveCcy, AQLString &curveName, const bool isPricer, AQLObjectPool& objPool) const;
 	
 	// get Accessory from Frequency
-	const LAString getAccFromFreq(const LAString &freq) const;
+	const AQLString getAccFromFreq(const AQLString &freq) const;
 
 };

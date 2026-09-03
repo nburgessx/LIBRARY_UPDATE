@@ -4,7 +4,7 @@
 
 namespace google_test
 {
-    TryMeCurveStd::TryMeCurveStd( const LAString& inputFile )
+    TryMeCurveStd::TryMeCurveStd( const AQLString& inputFile )
         : TryMeCurveAccessors( inputFile )
     {
         if ( fileLoaded_ )
@@ -29,7 +29,7 @@ namespace google_test
                     inputFile_["convexityAdjConv"],
                     inputFile_["convexityAdjRates"] );
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }
@@ -44,7 +44,7 @@ namespace google_test
 	*  @brief			Set up STD swap curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeSTDCurve(const LAString& inputFile)
+	void setUpMeSTDCurve(const AQLString& inputFile)
 	{
 		if ( inputFile.size() != 0 )
         {
@@ -70,7 +70,7 @@ namespace google_test
                     inputFileObj["convexityAdjConv"],
                     inputFileObj["convexityAdjRates"] );
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }

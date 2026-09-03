@@ -80,11 +80,11 @@ namespace google_test
     class TestCurveStdEUR : public virtual testing::Test, public CurveStdBuilt
     {
     public:
-        virtual LAString getCurveID() const
+        virtual AQLString getCurveID() const
         {
             return CurveStdBound::getCurveID();
         }
-        virtual LAString getMarketName() const
+        virtual AQLString getMarketName() const
         {
             return CurveStdBound::getMarketName();
         };
@@ -106,8 +106,8 @@ namespace google_test
         {
             // Record outputs and rebase test outputs
             etrading::CreateDataFile::setOutputFolder( TEST_DIR, false );
-            LAStringVector v = LAString( OutPutDFReference ).toToken( '/' );
-            LAString outputFileName = v.back();
+            AQLStringVector v = AQLString( OutPutDFReference ).toToken( '/' );
+            AQLString outputFileName = v.back();
             etrading::CreateDataFile file( etrading::decorateFilename( outputFileName ) );
             file.write( "output", results );
         }

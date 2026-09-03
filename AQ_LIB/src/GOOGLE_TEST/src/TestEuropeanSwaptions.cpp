@@ -16,7 +16,7 @@
 #include "GetGoogleTestFolder.h"
 #include "CoreEnumerations.h"
 
-#include "LACoreTemplateType.h"                 // LAStringVector and LAStringMatrix TypeDefs
+#include "AQLCoreTemplateType.h"                 // AQLStringVector and AQLStringMatrix TypeDefs
 #include "tryMeLWO.h"                       // Curve, Trade and Volatility Object Loading
 #include "EuropeanIRSwaption.h"             // Swaption Mathematics
 #include "tryMeLWOSwaption.h"               // Swaption Pricing
@@ -57,11 +57,11 @@ namespace google_test
 {
 
     // Helper Method to Create the Valuation Settings String Matrix LVB
-    LAStringMatrix createValationSettingsLVB( const std::string & curveCollection, const std::string & volatilityModel )
+    AQLStringMatrix createValationSettingsLVB( const std::string & curveCollection, const std::string & volatilityModel )
     {
-        LAStringMatrix valuationSettings(2);
-        valuationSettings[0] = { LAString("CurveCollection"), curveCollection.c_str() };
-        valuationSettings[1] = { LAString("VolatilityModel"), volatilityModel.c_str() };
+        AQLStringMatrix valuationSettings(2);
+        valuationSettings[0] = { AQLString("CurveCollection"), curveCollection.c_str() };
+        valuationSettings[1] = { AQLString("VolatilityModel"), volatilityModel.c_str() };
         return valuationSettings;
     }
 
@@ -97,7 +97,7 @@ namespace google_test
     TEST_F( TestEuropeanSwaption, SNAPSHOT_USDSwaptionPV_Normal )
     {
         // Create Valuation Settings LVB
-        LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolNormal_ );
+        AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolNormal_ );
         
         // Price the European Swaption
         const double swaptionPV = validation::tryMeLWOSwaptionPV( loadTradeSwaption_, valuationSettings );
@@ -111,7 +111,7 @@ namespace google_test
     TEST_F( TestEuropeanSwaption, SNAPSHOT_USDSwaptionPV_LogNormal )
     {
         // Create Valuation Settings LVB
-        LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
+        AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
         
         // Price the European Swaption
         const double swaptionPV = validation::tryMeLWOSwaptionPV( loadTradeSwaption_, valuationSettings );
@@ -125,7 +125,7 @@ namespace google_test
     TEST_F( TestEuropeanSwaption, SNAPSHOT_USDSwaptionPV_LogNormal_WithFee )
     {
         // Create Valuation Settings LVB
-        LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
+        AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
         
         // Price the European Swaption
         const double swaptionPV = validation::tryMeLWOSwaptionPV( loadTradeSwaptionWithFee_, valuationSettings );
@@ -139,7 +139,7 @@ namespace google_test
     TEST_F( TestEuropeanSwaption, SNAPSHOT_USDSwaptionPV_LogNormal_CashParYieldSettlement )
     {
          // Create Valuation Settings LVB
-        LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
+        AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
         
         // Price the European Swaption
         const double swaptionPV = validation::tryMeLWOSwaptionPV( loadTradeSwaptionCashParYield_, valuationSettings );
@@ -153,7 +153,7 @@ namespace google_test
     TEST_F( TestEuropeanSwaption, SNAPSHOT_USDSwaptionPV_ShiftedLogNormal )
     {
         // Create Valuation Settings LVB
-        LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolShiftedLogNormal_ );
+        AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolShiftedLogNormal_ );
         
         // Price the European Swaption
         const double swaptionPV = validation::tryMeLWOSwaptionPV( loadTradeNegativeRates_, valuationSettings );
@@ -167,7 +167,7 @@ namespace google_test
     TEST_F( TestEuropeanSwaption, CONSISTENCY_TestSwaptionParityForNonArbitrage )
     {
         // Create Valuation Settings LVB
-        LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolShiftedLogNormal_ );
+        AQLStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolShiftedLogNormal_ );
         
         // Price the European Swaptions and the Underlying Swap
         const double longPayerSwaption          = validation::tryMeLWOSwaptionPV( loadTradePayerSwaption_, valuationSettings );

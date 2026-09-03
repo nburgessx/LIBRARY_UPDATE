@@ -52,7 +52,7 @@ LAPolyFitLS::LAPolyFitLS(bool isExcludeOutlier_Y, double criteria_Y, bool isExcl
 	@brief copy constructor
 */
 /*LAPolyFitLS::LAPolyFitLS(const LAPolyFitLS& v) 
-: LACoreFunctionBase(v)
+: AQLCoreFunctionBase(v)
 {
 
 }*/
@@ -68,7 +68,7 @@ LAPolyFitLS::~LAPolyFitLS()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPolyFitLS::clone() const
 {
     try 
@@ -77,7 +77,7 @@ LAPolyFitLS::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -117,7 +117,7 @@ LAPolyFitLS::regress(const DoubleArray& y, const DoubleMatrix& x, LAPolynomialBa
 	if (x.size() != y.size())
 	{
 		//error
-        throw LACoreInvalidData("size of y and size of x rows are not same", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("size of y and size of x rows are not same", __FILE__, __LINE__);
 	}
 	DoubleMatrix basis_func(y.size());
 
@@ -155,7 +155,7 @@ LAPolyFitLS::regress(const DoubleArray& y, const DoubleMatrix& x, LAPolynomialBa
     if (count == 0 || count < basis_func[0].size())
 	{
 		//error
-        throw LACoreInvalidData("Data size is less than polynomial basis_func num.", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Data size is less than polynomial basis_func num.", __FILE__, __LINE__);
 		
 	}
 	if (count != y_t.size())

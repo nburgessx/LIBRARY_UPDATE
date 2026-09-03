@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code for class to represent constant function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 */
 //  2008, AlgoQuantHub.
 
@@ -30,7 +30,7 @@ using namespace std;
 	@brief default constructor
 */
 LAMathHWFuncTool::LAMathHWFuncTool(LAMathHWFuncMR& funcHWMR, LAMathHWFuncSigma& funcHWSigma)
-: LAFunctionBase(),mpHWMR(&funcHWMR),mpHWSigma(&funcHWSigma)
+: AQLFunctionBase(),mpHWMR(&funcHWMR),mpHWSigma(&funcHWSigma)
 {
 	/*mpHWMR(funcHWMR.clone());
 	mpHWSigma(funcHWSigma.clone());*/
@@ -51,7 +51,7 @@ LAMathHWFuncTool::~LAMathHWFuncTool()
 */
 LAMathHWFuncTool::LAMathHWFuncTool(const LAMathHWFuncTool &rhs) 
 :
-LAFunctionBase(rhs),
+AQLFunctionBase(rhs),
 mpHWMR(rhs.mpHWMR !=0 ? dynamic_cast<LAMathHWFuncMR*>(rhs.mpHWMR->clone()) : 0),
 mpHWSigma(rhs.mpHWSigma !=0 ? dynamic_cast<LAMathHWFuncSigma*>(rhs.mpHWSigma->clone()) : 0 )
 {
@@ -61,7 +61,7 @@ mpHWSigma(rhs.mpHWSigma !=0 ? dynamic_cast<LAMathHWFuncSigma*>(rhs.mpHWSigma->cl
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathHWFuncTool::clone() const	
 {
     try 
@@ -70,7 +70,7 @@ LAMathHWFuncTool::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -82,7 +82,7 @@ LAMathHWFuncTool::clone() const
 bool
 LAMathHWFuncTool::isTypeOf(function_t id) const
 {
-	return (id == FN_HWFUNCTIONTOOL ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_HWFUNCTIONTOOL ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -103,7 +103,7 @@ LAMathHWFuncTool::getType() const
 double
 LAMathHWFuncTool::operator()(const DoubleArray& x) const
 {
-	throw LACoreInvalidData("This Operator should not be allowded",__FILE__,__LINE__);
+	throw AQLCoreInvalidData("This Operator should not be allowded",__FILE__,__LINE__);
 }
 
 /*!
@@ -114,7 +114,7 @@ LAMathHWFuncTool::operator()(const DoubleArray& x) const
 double
 LAMathHWFuncTool::operator()(double x) const
 {
-	throw LACoreInvalidData("This Operator is not allowded",__FILE__,__LINE__);
+	throw AQLCoreInvalidData("This Operator is not allowded",__FILE__,__LINE__);
 }
 
 
@@ -146,7 +146,7 @@ LAMathHWFuncTool(rhs)
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathHWFuncToolForVar::clone() const	
 {
     try 
@@ -155,7 +155,7 @@ LAMathHWFuncToolForVar::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -188,7 +188,7 @@ LAMathHWFuncToolForVar::getType() const
 double
 LAMathHWFuncToolForVar::operator()(const DoubleArray& x) const
 {
-	throw LACoreInvalidData("This operator is not supported",__FILE__,__LINE__);
+	throw AQLCoreInvalidData("This operator is not supported",__FILE__,__LINE__);
 }
 
 /*!
@@ -199,7 +199,7 @@ LAMathHWFuncToolForVar::operator()(const DoubleArray& x) const
 double
 LAMathHWFuncToolForVar::operator()(double x) const
 {
-	double val = LAMath::exp(mpHWMR->integrate(0,x)) * mpHWSigma->operator()(x);
+	double val = AQLMath::exp(mpHWMR->integrate(0,x)) * mpHWSigma->operator()(x);
 	return val * val;
 }
 
@@ -231,7 +231,7 @@ LAMathHWFuncTool(rhs)
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathHWFuncToolForMR::clone() const	
 {
     try 
@@ -240,7 +240,7 @@ LAMathHWFuncToolForMR::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -273,7 +273,7 @@ LAMathHWFuncToolForMR::getType() const
 double
 LAMathHWFuncToolForMR::operator()(const DoubleArray& x) const
 {
-	throw LACoreInvalidData("This operator is not supported",__FILE__,__LINE__);
+	throw AQLCoreInvalidData("This operator is not supported",__FILE__,__LINE__);
 }
 
 /*!
@@ -321,7 +321,7 @@ mGL(rhs.mGL)
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathHWFuncToolForMRIntegral::clone() const	
 {
     try 
@@ -330,7 +330,7 @@ LAMathHWFuncToolForMRIntegral::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -363,7 +363,7 @@ LAMathHWFuncToolForMRIntegral::getType() const
 double
 LAMathHWFuncToolForMRIntegral::operator()(const DoubleArray& x) const
 {
-	throw LACoreInvalidData("NotSupportedNow",__FILE__,__LINE__);
+	throw AQLCoreInvalidData("NotSupportedNow",__FILE__,__LINE__);
 }
 
 /*!

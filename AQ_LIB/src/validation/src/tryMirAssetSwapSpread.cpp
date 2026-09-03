@@ -8,7 +8,7 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "StructuredExceptionHandler.h"
-#include "LADate.h"
+#include "AQLDate.h"
 
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
@@ -21,10 +21,10 @@ namespace validation
     * @param [in]		err			If err is not empty, throw it
     * @output			Accrued Interest Term
     */
-    LAString fromFreqToAccruedInterestTerm( const LAString& frequency, const LAString& err )
+    AQLString fromFreqToAccruedInterestTerm( const AQLString& frequency, const AQLString& err )
     {
-        LAString accruedInterestTerm = LAString();
-        LAString freq = LAString( frequency ).toUpper();
+        AQLString accruedInterestTerm = AQLString();
+        AQLString freq = AQLString( frequency ).toUpper();
 
         if ( freq == "ANNUAL" )
         {
@@ -48,7 +48,7 @@ namespace validation
         }
         else
         {
-            throw LACoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
         }
         return accruedInterestTerm;
     }
@@ -88,39 +88,39 @@ namespace validation
     *  @param [in]		eomRoll			                Boolean that decides if EOM rolling is enforced (only when effective date is on EOM)
     *  @return			Asset Swap Spread
     */
-    double tryMirAssetSwapSpread( LADataInstance* dataInstance,
+    double tryMirAssetSwapSpread( AQLDataInstance* dataInstance,
                                   double bondPrice,
-                                  const LAString& effectDt,
-                                  const LAString& maturity,
-                                  const LAString& curveID,
+                                  const AQLString& effectDt,
+                                  const AQLString& maturity,
+                                  const AQLString& curveID,
                                   double fixedRate,
-                                  const LAString& fixedFrequency,
-                                  const LAString& fixedDaycount,
-                                  const LAString& fixedBusinessDayAdjustment,
-                                  const LAString& fixedCalendar,
-                                  const LAString& fixedFirstStub,
-                                  const LAString& fixedLastStub,
-                                  const LAString& fixedRollDay,
-                                  const LAString& fixedPayLag,
-                                  const LAString& fixedStubType,
-                                  const LAString& floatFrequency,
-                                  const LAString& floatDayCount,
-                                  const LAString& floatBusinessDayAdjustment,
-                                  const LAString& floatCalendar,
-                                  const LAString& floatFirstStub,
-                                  const LAString& floatLastStub,
-                                  const LAString& floatRollDay,
-                                  const LAString& floatFixingLag,
+                                  const AQLString& fixedFrequency,
+                                  const AQLString& fixedDaycount,
+                                  const AQLString& fixedBusinessDayAdjustment,
+                                  const AQLString& fixedCalendar,
+                                  const AQLString& fixedFirstStub,
+                                  const AQLString& fixedLastStub,
+                                  const AQLString& fixedRollDay,
+                                  const AQLString& fixedPayLag,
+                                  const AQLString& fixedStubType,
+                                  const AQLString& floatFrequency,
+                                  const AQLString& floatDayCount,
+                                  const AQLString& floatBusinessDayAdjustment,
+                                  const AQLString& floatCalendar,
+                                  const AQLString& floatFirstStub,
+                                  const AQLString& floatLastStub,
+                                  const AQLString& floatRollDay,
+                                  const AQLString& floatFixingLag,
                                   double floatFirstFixing,
                                   double floatLastFixing,
-                                  const LAString& floatPayLag,
-                                  const LAString& floatStubType,
-                                  const LAString& interpolation,
-                                  const LAString& forecastCurve,
-                                  const LAString& discountCurve,
+                                  const AQLString& floatPayLag,
+                                  const AQLString& floatStubType,
+                                  const AQLString& interpolation,
+                                  const AQLString& forecastCurve,
+                                  const AQLString& discountCurve,
                                   bool interpFwds,
                                   bool eomRoll,
-                                  const LAString& issueDt,
+                                  const AQLString& issueDt,
                                   bool isCleanPrice )
     {
         VALID_EXCEPTION_START
@@ -176,15 +176,15 @@ namespace validation
         DateVector floatPaymentDates;
 
         const bool isAssetSwap = true;
-        LADate issueDate;
-        if ( issueDt != LAString( "" ) )
+        AQLDate issueDate;
+        if ( issueDt != AQLString( "" ) )
         {
             issueDate = etrading::stringToDate( issueDt, "#Error: Invalid 'EffectiveDate'" );
         }
         else
         {
             // Set issue date to the first accrual start date if not provided
-            issueDate = ( fixedAccrualDates.size() > 1 ) ? fixedAccrualDates[0] : LADate();
+            issueDate = ( fixedAccrualDates.size() > 1 ) ? fixedAccrualDates[0] : AQLDate();
         }
 
         //
@@ -227,9 +227,9 @@ namespace validation
                 floatLastFixing,
                 floatPayLag,
                 floatStubType,
-                LAString(),                             // FixedFrequency
-                LAString(),                             // FloatFrequency
-                LAString( "ADVANCE" ),                  // fixingInAdvanceOrArrears
+                AQLString(),                             // FixedFrequency
+                AQLString(),                             // FloatFrequency
+                AQLString( "ADVANCE" ),                  // fixingInAdvanceOrArrears
                 isAssetSwap,
                 issueDate );
 
@@ -239,7 +239,7 @@ namespace validation
 
         etrading::validateStringEmptiness( forecastCurve,		"#Error: The Swap 'forecast Curve' must be specified." );
         etrading::validateStringEmptiness( discountCurve,		"#Error: The Swap 'discount Curve' must be specified." );
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, LAString( "SPLINE" ) ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
 
 
         // Float Leg Fixing Parameters
@@ -257,18 +257,18 @@ namespace validation
 
         if ( fixedAccrualDates.size() < 1 || floatAccrualDates.size() < 1 )
         {
-            throw LACoreInvalidData( "#Error: Swap schedule error. There must be at least 1 fixed and float coupon.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Swap schedule error. There must be at least 1 fixed and float coupon.", __FILE__, __LINE__ );
         }
 
-        LAString fixedAccruedInterestTerm = fromFreqToAccruedInterestTerm( fixedFrequency, "#Error: Invalid 'FixedFrequency'. Available frequencies are Annual, Semi-Annual, Quarterly, Monthly and Weekly." );
-        LAString floatAccruedInterestTerm = fromFreqToAccruedInterestTerm( floatFrequency, "#Error: Invalid 'FloatFrequency'. Available frequencies are Annual, Semi-Annual, Quarterly, Monthly and Weekly." );
+        AQLString fixedAccruedInterestTerm = fromFreqToAccruedInterestTerm( fixedFrequency, "#Error: Invalid 'FixedFrequency'. Available frequencies are Annual, Semi-Annual, Quarterly, Monthly and Weekly." );
+        AQLString floatAccruedInterestTerm = fromFreqToAccruedInterestTerm( floatFrequency, "#Error: Invalid 'FloatFrequency'. Available frequencies are Annual, Semi-Annual, Quarterly, Monthly and Weekly." );
 
 
-        if ( effectDt == LAString( "" ) || effectDt == LAString() )
+        if ( effectDt == AQLString( "" ) || effectDt == AQLString() )
         {
-            throw LACoreInvalidData( "#Error: Asset Swap 'effectiveDate' required", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Asset Swap 'effectiveDate' required", __FILE__, __LINE__ );
         }
-        LADate effectiveDate = etrading::stringToDate( effectDt, "#Error: Invalid 'EffectiveDate'" );
+        AQLDate effectiveDate = etrading::stringToDate( effectDt, "#Error: Invalid 'EffectiveDate'" );
 
 
         double ret = CurveInstrumentPricing::getAssetSwapSpread( bondPrice,

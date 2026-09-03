@@ -1,4 +1,4 @@
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 
 #include "meProductSwapStubRate.h"
@@ -24,10 +24,10 @@ double meProductSwapStubRate(const std::vector<std::string>& curveIndices,
     double ret;
 	
 	// marshall all inputs		
-	LAStringVector tmp_curveIndices;
+	AQLStringVector tmp_curveIndices;
 	swig::buildStringVector(tmp_curveIndices, curveIndices);
 
-	LAStringVector tmp_curveTenors;
+	AQLStringVector tmp_curveTenors;
 	swig::buildStringVector(tmp_curveTenors, curveTenors);
 
 	LabelValueBlock lvb = swig::buildSingleLabelValueBlock(swapLVB);

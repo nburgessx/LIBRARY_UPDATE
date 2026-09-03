@@ -19,6 +19,6 @@ namespace validation
 	*  @param [in] 	    columnList          Column header names to show specified columns. Default to empty list showing all columns.
     *  @return			A matrix of floating leg/fixing leg schedules
     */
-    LAStringMatrix tryMeProductBondSchedule( const LabelValueBlock& bondScheduleLVB, bool validateKeys = true, bool showColumnHeaders = true, const std::vector<std::string>& columnList=std::vector<std::string>() );
+    AQLStringMatrix tryMeProductBondSchedule( const LabelValueBlock& bondScheduleLVB, bool validateKeys = true, bool showColumnHeaders = true, const std::vector<std::string>& columnList=std::vector<std::string>() );
 }
 

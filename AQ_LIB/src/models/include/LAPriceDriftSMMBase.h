@@ -5,9 +5,9 @@
 #endif
 
 #include "LAMathDriftFuncBase.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 #include "LARatesCovariance.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 // ID for LAPriceDriftSMMBase
 #define FN_DRIFTSMMBASE	2210
@@ -27,7 +27,7 @@ public:
 	// Default constructor
 	explicit LAPriceDriftSMMBase(double s = 0.0);
 	// constructor
-	LAPriceDriftSMMBase(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double s = 0.0);	
+	LAPriceDriftSMMBase(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double s = 0.0);	
 	//	Copy constructor
 	LAPriceDriftSMMBase(const LAPriceDriftSMMBase& v);
 	// Destructor
@@ -42,11 +42,11 @@ public:
 	virtual function_t			getType() const;
 								//==========================================
 								// return string representaion
-    virtual LAString			convertToString(void) const;
+    virtual AQLString			convertToString(void) const;
 //	OPERATION
 								//==========================================
 								// transform from string representaion
-    virtual void				convertFromString(const LAString& str);
+    virtual void				convertFromString(const AQLString& str);
 								//======================================
 								// set up this class
 	virtual void				setUp(LAMathPathEntity& path);
@@ -56,7 +56,7 @@ public:
 									@param[in] vol volatility
 									@note this class is not pointer owner of input function
 								*/
-    void						setVolaility(const std::vector<std::vector<LAFunctionBase*> > & vol) 
+    void						setVolaility(const std::vector<std::vector<AQLFunctionBase*> > & vol) 
 								{mVolatility = vol;}
 								//======================================
 								// set correlation
@@ -65,7 +65,7 @@ public:
 									@note	this class is pointer owner of input function for m_i = 0
 											this class is not pointer owner of input function for m_i > 0
 								*/
-	void						setCorrelation(const std::vector<std::vector<LAFunctionBase*> >& cor)
+	void						setCorrelation(const std::vector<std::vector<AQLFunctionBase*> >& cor)
 								{mCorrelation = cor;}
 								//======================================
 								// set tenor
@@ -112,9 +112,9 @@ protected:
 	DoubleArray									mTenor;			// tenor
 	DoubleArray									mDeltaTenor;	// delta tenor
 	unsigned int								m_i;			// suffix
-	std::vector<std::vector<LAFunctionBase*> >	mVolatility;	// volatility
-	std::vector<std::vector<LAFunctionBase*> >	mCorrelation;	// correlation
-	LAString									mSDEAttrName;	// data name of ir sde
+	std::vector<std::vector<AQLFunctionBase*> >	mVolatility;	// volatility
+	std::vector<std::vector<AQLFunctionBase*> >	mCorrelation;	// correlation
+	AQLString									mSDEAttrName;	// data name of ir sde
 	const DoubleArray*							mpTimes;		// correlation data time
 	DoubleMatrix								mCorData;		// correlation data
 	mutable	unsigned int						mPos_old;		// tempolary variable	

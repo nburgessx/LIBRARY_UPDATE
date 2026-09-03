@@ -12,9 +12,9 @@
 #include <vector>
 #include <memory>
 
-#include "LADate.h"
+#include "AQLDate.h"
 #include "CoreEnumerations.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 #include "Variant.h"
 
 namespace etrading

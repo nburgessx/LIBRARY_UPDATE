@@ -7,7 +7,7 @@ namespace etrading
     class FeeCashflow : public Cashflow
     {
     public:
-        FeeCashflow(const PayReceiveEnum& payReceive, const LADate& paymentDate, double amount);
+        FeeCashflow(const PayReceiveEnum& payReceive, const AQLDate& paymentDate, double amount);
 		virtual ~FeeCashflow() {}
 
         CashflowPtr clone();

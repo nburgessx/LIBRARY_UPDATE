@@ -9,9 +9,9 @@ namespace etrading
     {
     public:
 		FixedBondCashflow();
-		FixedBondCashflow(const PayReceiveEnum& payReceive, double fixedRate,const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, double accrualYearFraction, const LADate& paymentDate,
+		FixedBondCashflow(const PayReceiveEnum& payReceive, double fixedRate,const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, double accrualYearFraction, const AQLDate& paymentDate,
 							double notional, double leverage, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType,
-							const double& bondTrueYieldYearFraction, const LADate& bondExDividendDate);
+							const double& bondTrueYieldYearFraction, const AQLDate& bondExDividendDate);
         virtual ~FixedBondCashflow() {}
 
 		CashflowPtr clone();
@@ -19,7 +19,7 @@ namespace etrading
 		// Override
 		double getCompoundRate(const CashflowData& cashflowData) const;
 
-		const LADate& getBondExDividendDate() const { return bondExDividendDate_; };
+		const AQLDate& getBondExDividendDate() const { return bondExDividendDate_; };
 		double getBondTrueYieldYearFraction() const { return bondTrueYieldYearFraction_; };
 
 	protected:
@@ -28,7 +28,7 @@ namespace etrading
         double bondTrueYieldYearFraction_;
 
 		// For exDividend Bond, the exDividendDate is required so that we can design whether to include the coupon or not.
-		LADate bondExDividendDate_;
+		AQLDate bondExDividendDate_;
 
     };
 

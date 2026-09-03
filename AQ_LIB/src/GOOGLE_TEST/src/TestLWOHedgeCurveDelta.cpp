@@ -97,8 +97,8 @@ namespace
 		// Swap
 		const ReadDataFile::Load swapInputFile( swapInputs );
 		std::string swapName			= swapInputFile[ "swapName" ];
-		LAStringMatrix expressionLVB		= swapInputFile[ "expressionLVB" ];
-		LAStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
+		AQLStringMatrix expressionLVB		= swapInputFile[ "expressionLVB" ];
+		AQLStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
 		return validation::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
@@ -107,7 +107,7 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOCurveFromFileName( const LAString& curveCalibrationFileName )
+	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
@@ -125,13 +125,13 @@ namespace
 	*  @param [in]		marketDataFileName			The filename specifying generator curve data
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/
-	void setUpGeneratorCurve( const LAString& marketDataFileName, const LAString& curveCalibrationFileName )
+	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
 		google_test::createLWOMarketDataObjectFromFileName( marketDataFileName );
 		createLWOCurveFromFileName( curveCalibrationFileName );
 	}
 
-	void setupGeneratorHedgeCurve( const LAString& marketDataFileName, const LAString& curveGeneratorModifyInterpolation, const LAString& curveCalibrationFileName )
+	void setupGeneratorHedgeCurve( const AQLString& marketDataFileName, const AQLString& curveGeneratorModifyInterpolation, const AQLString& curveCalibrationFileName )
 	{
 		// a. Load Hedge Curve Market Data
 		google_test::createLWOMarketDataObjectFromFileName( marketDataFileName );
@@ -140,7 +140,7 @@ namespace
 		const ReadDataFile::Load hedgeCurveGeneratorInputFile( curveGeneratorModifyInterpolation );
 		std::string newObjectName  = hedgeCurveGeneratorInputFile[ "newObjectName" ];
 		std::string baseObjectName = hedgeCurveGeneratorInputFile[ "baseObjectName" ];
-		LAStringMatrix modifiedValues = hedgeCurveGeneratorInputFile[ "modifiedValues" ];
+		AQLStringMatrix modifiedValues = hedgeCurveGeneratorInputFile[ "modifiedValues" ];
 		validation::tryMeLWOCurveGeneratorModify( newObjectName, baseObjectName, modifiedValues );
 
 		// c. Construct Hedge Curve
@@ -167,14 +167,14 @@ namespace
 	}
 
 
-	void runDeltaLadderCalculation( const ReadDataFile::Load& deltaLadder, LAStringVector& pillarNames, LAStringVector& headers, DoubleMatrix& deltas )
+	void runDeltaLadderCalculation( const ReadDataFile::Load& deltaLadder, AQLStringVector& pillarNames, AQLStringVector& headers, DoubleMatrix& deltas )
 	{
-		LAStringVector swapNames					= deltaLadder[ "swapNames" ];
-		LAStringMatrix curveCollectionNames		= deltaLadder[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames			= deltaLadder[ "fixingTableNames" ];
+		AQLStringVector swapNames					= deltaLadder[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames		= deltaLadder[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames			= deltaLadder[ "fixingTableNames" ];
 		bool bumpSpreadInstruments				= deltaLadder[ "bumpSpreadInstruments" ];
 		double bumpSize							= deltaLadder[ "bumpSize" ];
-		LAString bumpMode						= deltaLadder[ "bumpMode" ];
+		AQLString bumpMode						= deltaLadder[ "bumpMode" ];
 		bool aggregateRisks						= deltaLadder[ "aggregateRisks" ];
 		bool reportInLegCCY						= deltaLadder[ "reportInLegCCY" ];
 		std::string riskCutOffTenor				= deltaLadder[ "riskCutOffTenor" ];
@@ -197,7 +197,7 @@ namespace
                                                 dummyXccyFXSpotRates );
 	}
 
-//	void verifyDeltaBucketAmounts( const LAStringVector& pillarNames, const LAStringVector& headers, const DoubleMatrix& deltas,
+//	void verifyDeltaBucketAmounts( const AQLStringVector& pillarNames, const AQLStringVector& headers, const DoubleMatrix& deltas,
 //									const std::string& raw_output_32,
 //									const std::string& raw_output_64,
 //									const std::string& output_32,
@@ -207,9 +207,9 @@ namespace
 //        if ( etrading::CreateDataFile::rebaseResultsEnabled() )
 //        {
 //#ifdef GTEST32
-//            LAString outputFileName = raw_output_32.c_str();
+//            AQLString outputFileName = raw_output_32.c_str();
 //#else
-//            LAString outputFileName = raw_output_64.c_str();
+//            AQLString outputFileName = raw_output_64.c_str();
 //#endif
 //
 //            // Record outputs and rebase test outputs
@@ -238,7 +238,7 @@ namespace
 //				FAIL() << "Reference baseline does not contain delta column headers" << std::endl;
 //			}
 //
-//			LAStringVector refHeaders = resultFile["headers"];
+//			AQLStringVector refHeaders = resultFile["headers"];
 //			if ( headers.size() != refHeaders.size() )
 //			{
 //				FAIL() << "Calculated delta has different number of column headers compared to reference baseline : " << headers.size() << " vs " << refHeaders.size() << std::endl;
@@ -250,7 +250,7 @@ namespace
 //
 //            for ( size_t i = 0; i < pillarNames.size(); ++i )
 //            {
-//                LAString key	= pillarNames[i];
+//                AQLString key	= pillarNames[i];
 //
 //				if ( ! resultFile.hasItem(key) )
 //				{
@@ -279,14 +279,14 @@ namespace
 	{
 		// Swap Generator
         const ReadDataFile::Load swapGeneratorInputFile( swapGeneratorInputs );
-		LAStringMatrix swapGeneratorLVB = swapGeneratorInputFile[ "swapGeneratorLVB" ];
+		AQLStringMatrix swapGeneratorLVB = swapGeneratorInputFile[ "swapGeneratorLVB" ];
 		std::string swapGeneratorName = validation::tryMeLWOSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
 
 		// Swap
 		const ReadDataFile::Load swapInputFile( swapInputs );
 		std::string swapName			= swapInputFile[ "swapName" ];
-		LAStringMatrix expressionLVB		= swapInputFile[ "expressionLVB" ];
-		LAStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
+		AQLStringMatrix expressionLVB		= swapInputFile[ "expressionLVB" ];
+		AQLStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
 		return validation::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
@@ -297,8 +297,8 @@ namespace
 	{
 		const ReadDataFile::Load swapInputFile( swapInputs );
 		std::string swapName		= swapInputFile[ "swapName" ];
-		LAStringMatrix swapLvb		= swapInputFile[ "swapLVB" ];
-		LAStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
+		AQLStringMatrix swapLvb		= swapInputFile[ "swapLVB" ];
+		AQLStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
 		return validation::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
@@ -321,8 +321,8 @@ namespace google_test
 
 		// 3. Run Delta Ladder calculation using pricing curves
 		const ReadDataFile::Load deltaLadder_spot_4Y_swap ( deltaLadder_spot_4Y_swap_pricingCurveCollection_input );
-		LAStringVector pillarNames;
-		LAStringVector headers;
+		AQLStringVector pillarNames;
+		AQLStringVector headers;
 		DoubleMatrix deltas;
 		runDeltaLadderCalculation( deltaLadder_spot_4Y_swap, pillarNames, headers, deltas );	
 
@@ -349,8 +349,8 @@ namespace google_test
 		// 4. Run Delta Ladder calculation using hedge  curves (with 4Y point missing)
 		const ReadDataFile::Load deltaLadder_spot_4Y_swap ( deltaLadder_spot_4Y_swap_hedgeCurveCollection_input );
 
-		LAStringVector pillarNames;
-		LAStringVector headers;
+		AQLStringVector pillarNames;
+		AQLStringVector headers;
 		DoubleMatrix deltas;
 		runDeltaLadderCalculation( deltaLadder_spot_4Y_swap, pillarNames, headers, deltas );
 
@@ -377,8 +377,8 @@ namespace google_test
 		// 4. Run Delta Ladder calculation
 		const ReadDataFile::Load deltaLadder_spot_4Y_swap ( deltaLadder_3Yfwdst_4Y_swap_hedgeCurveCollection_input );
 
-		LAStringVector pillarNames;
-		LAStringVector headers;
+		AQLStringVector pillarNames;
+		AQLStringVector headers;
 		DoubleMatrix deltas;
 		runDeltaLadderCalculation( deltaLadder_spot_4Y_swap, pillarNames, headers, deltas );
 
@@ -405,8 +405,8 @@ namespace google_test
 		// 4. Run Delta Ladder calculation
 		const ReadDataFile::Load deltaLadder_spot_4Y_swap ( deltaLadder_3Y9Mfwdst_3M_swap_hedgeCurveCollection_input );
 
-		LAStringVector pillarNames;
-		LAStringVector headers;
+		AQLStringVector pillarNames;
+		AQLStringVector headers;
 		DoubleMatrix deltas;
 		runDeltaLadderCalculation( deltaLadder_spot_4Y_swap, pillarNames, headers, deltas );
 

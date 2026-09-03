@@ -21,11 +21,11 @@ namespace validation
     *  @param [in]		curveConv			General curve properties such as asofdate, ccy, interp, etc
     *  @param [in]		collateralCurves	The group of collateral curves out of which the CTD curve is constructed
     */
-    LAString tryMeCurveCalibrateCTD( const LAString& curveCollection,
-                                    const LAString& curveName,
-                                    const LAString& curveIndexInput,
-                                    const LAStringMatrix& curveConv,
-                                    const LAStringVector& collateralCurves )
+    AQLString tryMeCurveCalibrateCTD( const AQLString& curveCollection,
+                                    const AQLString& curveName,
+                                    const AQLString& curveIndexInput,
+                                    const AQLStringMatrix& curveConv,
+                                    const AQLStringVector& collateralCurves )
     {
         VALID_EXCEPTION_START
         
@@ -35,7 +35,7 @@ namespace validation
         // Prefix the curveName to the curveIndex Name Set, ensuring to use the ':' delimiter
         std::string prefixedCurveIndexStr =  curveIndexInput.getCString();
         prefixedCurveIndexStr = etrading::addPrefixStringAndCheckForDuplicates( prefixedCurveIndexStr, std::string(curveName.getCString()) );
-        LAString curveIndex  = prefixedCurveIndexStr.c_str();
+        AQLString curveIndex  = prefixedCurveIndexStr.c_str();
         
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -51,7 +51,7 @@ namespace validation
 
         if( collateralCurves.size() == 0 )
         {
-			throw LACoreInvalidData( "#Error: No collateral curves are given. ", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: No collateral curves are given. ", __FILE__, __LINE__ );
         }
 				
         LAUpdateStaticDataManager::setUpCheapestToDeliverCurve(etrading::getDataInstance(),
@@ -64,7 +64,7 @@ namespace validation
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
 
-        LAString ret( curveCollection + " " + curveName + " Curve has been set" );
+        AQLString ret( curveCollection + " " + curveName + " Curve has been set" );
 
         if ( CreateDataFile::recordEnabled() )
         {

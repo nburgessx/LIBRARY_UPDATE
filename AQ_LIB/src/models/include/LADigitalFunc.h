@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
  
 
 
@@ -21,10 +21,10 @@
 /*! 
     @brief Class declaration to represent average function.
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
-class LADigitalMethod : public LAFunctionBase
+class LADigitalMethod : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
@@ -43,7 +43,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -56,14 +56,14 @@ public:
 								// return function value
 	virtual double				operator()(double x) const
 								{
-									return LAFunctionBase::operator()(x);								
+									return AQLFunctionBase::operator()(x);								
 								}
 
 
 	// 20060929 override virtual function of base class
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								};
 
 private:

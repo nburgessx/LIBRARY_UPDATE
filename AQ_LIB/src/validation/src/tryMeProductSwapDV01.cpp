@@ -52,7 +52,7 @@ namespace validation
         etrading::validateKeysForLVB( tryMeProductSwapDV01LVBKeys(), swapLVB.getKeys(), validateKeys );
 
         const std::string inputLVB = "SwapLVB";
-        LAString curveCollection = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -65,21 +65,21 @@ namespace validation
 
         //----------------------------------------------------------------------------------
         // Validate non-cash flow related parameters
-        LAString forecastCurveIndex	= swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
-        LAString discountCurveIndex = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        AQLString forecastCurveIndex	= swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
+        AQLString discountCurveIndex = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, discountCurveIndex );
-        LAString forecastCurvestaticDataTable = etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
+        AQLString forecastCurvestaticDataTable = etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
 
         // Synchronize the OIS pricing interpolation with that used within the OIS Curve calibration routine
-        LAString interpolation = etrading::getCurveInterpolation( curveCollection, forecastCurvestaticDataTable );
+        AQLString interpolation = etrading::getCurveInterpolation( curveCollection, forecastCurvestaticDataTable );
 
         //----------------------------------------------------------------------------------
         // Validate swap trade specific parameters
 
         // Payer or Receiver Swap i.e. Pay or Receive Fixed Coupons
-        LAString payRec	= swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE , inputLVB );
+        AQLString payRec	= swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE , inputLVB );
         bool isFixedRatePayerSwap = etrading::validateSwapPayRecFlag( payRec );
 
         //----------------------------------------------------------------------------------
@@ -109,8 +109,8 @@ namespace validation
         double notional = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::NOTIONAL );
         double fixedRate = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FIXED_RATE );
         double floatSpread = swapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_SPREAD );
-        LAString fixedDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
-        LAString floatDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
+        AQLString fixedDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
+        AQLString floatDayCount = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
 
         double ret = CurveInstrumentPricing::getSwapDV01( isFixedRatePayerSwap,
                      notional,

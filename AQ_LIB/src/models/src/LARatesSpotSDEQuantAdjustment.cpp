@@ -25,7 +25,7 @@
 
 #include "LARatesSpotSDEQuantAdjustment.h"
 #include "LARatesSDEIntegralBase.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include "LARatesHWIntegral.h"
 #include "LAPriceQuantAdjustmentFuncBase.h"
 
@@ -38,7 +38,7 @@ using namespace std;
 	@param[in] pInvTransformer inverse of transformation fcuntion X = f^{-1}(t,X')
 	@param[in] pAdjuster adjustment function
 */
-LARatesSpotSDEQuantAdjustment::LARatesSpotSDEQuantAdjustment(SDE_TYPE type, LAPriceQuantAdjustmentFuncBase* pQuantAduster, LAFunctionBase* pTransformer, LAFunctionBase* pInvTransformer, LAFunctionBase* pAdjuster)
+LARatesSpotSDEQuantAdjustment::LARatesSpotSDEQuantAdjustment(SDE_TYPE type, LAPriceQuantAdjustmentFuncBase* pQuantAduster, AQLFunctionBase* pTransformer, AQLFunctionBase* pInvTransformer, AQLFunctionBase* pAdjuster)
 : LARatesSpotSDE(type, pTransformer, pInvTransformer, pAdjuster), mpQuantAduster(pQuantAduster)
 {
 
@@ -64,7 +64,7 @@ LARatesSpotSDEQuantAdjustment::~LARatesSpotSDEQuantAdjustment()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesSpotSDEQuantAdjustment::clone() const
 {
     try 
@@ -73,7 +73,7 @@ LARatesSpotSDEQuantAdjustment::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -111,12 +111,12 @@ LARatesSpotSDEQuantAdjustment::calcPath(unsigned int pos)
 
 	if (!mpQuantAduster)
 	{
-		throw LACoreInvalidData("mpQuantAduster is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("mpQuantAduster is NULL", __FILE__, __LINE__);
 	}
 	const DoubleArray& grid = mpBM->getTimeGrid();//sde time grid (= BM time grid)
 	unsigned int pos_s = mPos;		
 	unsigned int j;
-	LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos_s], mTimeGrid.size(), j);
+	AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos_s], mTimeGrid.size(), j);
 	if (grid[pos_s] == mTimeGrid[j]) j++;
 	
 	const DoubleMatrix& bm = mpBM->getBM();
@@ -159,7 +159,7 @@ LARatesSpotSDEQuantAdjustment::getQuantAdjuster(void)
 {
 	if (!mpQuantAduster)
 	{
-		throw LACoreInvalidData("mpQuantAduster is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("mpQuantAduster is NULL", __FILE__, __LINE__);
 	}
 	return *mpQuantAduster;
 }

@@ -75,9 +75,9 @@ namespace google_test
 		{
 			// 1. Create the Input File Names 
 			#if defined(GTEST32)
-				LAString pvOutputsFilename = pvOutputs1;
+				AQLString pvOutputsFilename = pvOutputs1;
 			#else
-				LAString pvOutputsFilename = pvOutputs1_64;
+				AQLString pvOutputsFilename = pvOutputs1_64;
 			#endif
 
 			// 2. Load the Input Files
@@ -87,7 +87,7 @@ namespace google_test
 
 			// Get the Trade Inputs & Create the Swap
 			std::string legObjectName = tradeInputFile["legObjectName"];
-			LAStringMatrix legLVB = tradeInputFile["legLVB"];
+			AQLStringMatrix legLVB = tradeInputFile["legLVB"];
 			bool validateKeys = tradeInputFile["validateKeys"];
 
 			std::string createSwap = validation::tryMeLWOLegCreate(legObjectName, legLVB, validateKeys);
@@ -101,7 +101,7 @@ namespace google_test
 			CheckTestResultsAndRebaseOnRequest(actualPV, TEST_DIR, pvOutputsFilename, tolerance);
 
 		}
-		catch (const LACoreError& m)
+		catch (const AQLCoreError& m)
 		{
 			std::cout << m.getMsg();
 			ASSERT_FALSE(true);
@@ -120,9 +120,9 @@ namespace google_test
 		{
 			// 1. Create the Input File Names 
 			#if defined(GTEST32)
-				LAString pvOutputsFilename = pvOutputs2;
+				AQLString pvOutputsFilename = pvOutputs2;
 			#else
-				LAString pvOutputsFilename = pvOutputs2_64;
+				AQLString pvOutputsFilename = pvOutputs2_64;
 			#endif
 
 			// 2. Load the Input Files
@@ -132,7 +132,7 @@ namespace google_test
 
 			// Get the Trade Inputs & Create the Swap
 			std::string legObjectName = tradeInputFile["legObjectName"];
-			LAStringMatrix legLVB = tradeInputFile["legLVB"];
+			AQLStringMatrix legLVB = tradeInputFile["legLVB"];
 			bool validateKeys = tradeInputFile["validateKeys"];
 
 			std::string createSwap = validation::tryMeLWOLegCreate(legObjectName, legLVB, validateKeys);
@@ -146,7 +146,7 @@ namespace google_test
 			CheckTestResultsAndRebaseOnRequest(actualPV, TEST_DIR, pvOutputsFilename, tolerance);
 
 		}
-		catch (const LACoreError& m)
+		catch (const AQLCoreError& m)
 		{
 			std::cout << m.getMsg();
 			ASSERT_FALSE(true);

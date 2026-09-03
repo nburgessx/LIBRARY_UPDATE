@@ -7,7 +7,7 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "StructuredExceptionHandler.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "RecordMacros.h"
 
 using etrading::CreateDataFile;
@@ -25,7 +25,7 @@ namespace validation
     double tryMirInterpolation(	const DoubleVector& array1,
                                 const DoubleVector& array2,
                                 double point,
-                                const LAString& interpolation )
+                                const AQLString& interpolation )
 
     {
         VALID_EXCEPTION_START

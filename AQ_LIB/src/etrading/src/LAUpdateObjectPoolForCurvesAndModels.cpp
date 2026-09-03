@@ -11,10 +11,10 @@
 
 #include "LAUpdateObjectPoolForCurvesAndModels.h"
 #include <fstream>
-#include "LADataInstance.h"
-#include "LAFunctionManager.h"
-#include "LAPriceDataManager.h"
-#include "LADataReference.h"
+#include "AQLDataInstance.h"
+#include "AQLFunctionManager.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataReference.h"
 #include "LACurvePricingObject.h"
 
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
@@ -27,14 +27,14 @@
 
 #include "LACoreDataService.h"
 #include "LAStaticData.h"
-#include "LADataVector.h"
-#include "LADataProcedure.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
+#include "AQLDataVector.h"
+#include "AQLDataProcedure.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
 
 
 using namespace std;
@@ -44,7 +44,7 @@ using namespace std;
 
 */
 
-UpdateObjectPoolForSDEsAndCurves::UpdateObjectPoolForSDEsAndCurves(const LAString &baseCurrency)
+UpdateObjectPoolForSDEsAndCurves::UpdateObjectPoolForSDEsAndCurves(const AQLString &baseCurrency)
 : LAUpdateObjectPoolForCurves(baseCurrency){
 }
 //! destructor

@@ -5,19 +5,19 @@
 #pragma interface
 #endif
 
-#include "LADataInstance.h"
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLDataInstance.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include <map>
 #include "ConstantDeclarations.h"
-#include "LADataVector.h"
-#include "LADataCSVFileLoader.h"
+#include "AQLDataVector.h"
+#include "AQLDataCSVFileLoader.h"
 
-class LAString;
-class LAObject;
-class LAPriceDataSlidingRule;
-class LAPriceDataCalendar;
+class AQLString;
+class AQLObject;
+class AQLPriceDataSlidingRule;
+class AQLPriceDataCalendar;
 
 #define searchbyrow(mat,str,c,iserror)(LACoreUtility::findElement(mat,str,0,c,true,iserror))
 #define searchbycol(mat,str,r,iserror)(LACoreUtility::findElement(mat,str,r,0,false,iserror))
@@ -28,33 +28,33 @@ class LACoreUtility
 {
 public:
 	// find vector
-	static LAStringVector findVector(LAStringMatrix& mat, const LAString& input,bool ischangeroworcol, bool isemptyerror);
+	static AQLStringVector findVector(AQLStringMatrix& mat, const AQLString& input,bool ischangeroworcol, bool isemptyerror);
 	// find element
-	static LAString findElement(LAStringMatrix& mat, const LAString& input, const int row, const int col, 
+	static AQLString findElement(AQLStringMatrix& mat, const AQLString& input, const int row, const int col, 
 								bool ischangeroworcol, bool isemptyerror);
 	// find rows number
-	static const int  findRowsNumber(LAStringMatrix& defmat, const LAString& input);
+	static const int  findRowsNumber(AQLStringMatrix& defmat, const AQLString& input);
 	// find cols number
-	static const int  findColsNumber(LAStringMatrix& defmat, const LAString& input);
+	static const int  findColsNumber(AQLStringMatrix& defmat, const AQLString& input);
 	// removequotation2
-	static void removeQuotation2(LAString &input);
+	static void removeQuotation2(AQLString &input);
 	// removequotation
-	static LAString removeQuotation(const LAString & input);
+	static AQLString removeQuotation(const AQLString & input);
 	// removequotation
-	static LAStringVector removeQuotation(const LAStringVector& inputvec);
+	static AQLStringVector removeQuotation(const AQLStringVector& inputvec);
 	// removequotation
-	static void removeQuotation(LAStringVector& inputvec);
+	static void removeQuotation(AQLStringVector& inputvec);
 	// xll dump memory
-	static void xlDumpMemory(LADataInstance* dataInstance, const LAString& file);
+	static void xlDumpMemory(AQLDataInstance* dataInstance, const AQLString& file);
 	// find object
-	static std::vector<const LAObject*> findEntity(LADataInstance* dataInstance, const LAString& keyname);
+	static std::vector<const AQLObject*> findEntity(AQLDataInstance* dataInstance, const AQLString& keyname);
 	// data load
-	static void dataLoad(const LAString& fname, LADataInstance &dataInstance, bool isolddataclear, bool iscompletedependency);
+	static void dataLoad(const AQLString& fname, AQLDataInstance &dataInstance, bool isolddataclear, bool iscompletedependency);
 	// change double from string
-	static DoubleArray changeDoubleFromString(const LAStringVector& strvec);
-    static DoubleMatrix changeDoubleFromString(const LAStringMatrix& strMat);
+	static DoubleArray changeDoubleFromString(const AQLStringVector& strvec);
+    static DoubleMatrix changeDoubleFromString(const AQLStringMatrix& strMat);
     // change date from string
-	static DateVector changeDateFromString(const LAStringVector& strvec);
+	static DateVector changeDateFromString(const AQLStringVector& strvec);
 
 private:
 	LACoreUtility(void);

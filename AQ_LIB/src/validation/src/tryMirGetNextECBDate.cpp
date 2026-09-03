@@ -14,7 +14,7 @@ namespace validation
     *  @param [in]		strictlyAfter	True if strictly after the base date
     *  @return			Date of the next ECB (European Central Bank) meeting on/after the base date
     */
-    LADate tryMirGetNextECBDate( const LADate& baseDate,
+    AQLDate tryMirGetNextECBDate( const AQLDate& baseDate,
                                  bool strictlyAfter )
     {
         VALID_EXCEPTION_START
@@ -28,7 +28,7 @@ namespace validation
             file.write( "strictlyAfter", strictlyAfter );
         }
 
-        LADate ret = etrading::LADateHelpers::getNextECBDate( baseDate, strictlyAfter );
+        AQLDate ret = etrading::LADateHelpers::getNextECBDate( baseDate, strictlyAfter );
 
         if ( CreateDataFile::recordEnabled() )
         {

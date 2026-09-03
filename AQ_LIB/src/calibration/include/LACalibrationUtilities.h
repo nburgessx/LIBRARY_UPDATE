@@ -6,8 +6,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <algorithm>
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 
 #if !defined(WIN32) && !defined(WIN64)
 #include <values.h>
@@ -53,7 +53,7 @@ template <class T> void
 LACalibrationUtilities<T>::searchNearestPos(const std::vector<T> &vec, const T &data, unsigned int &pos)
 {
 	
-	LAAlgorithm::locate<std::vector<T>, T>(vec, data, vec.size(), pos);
+	AQLAlgorithm::locate<std::vector<T>, T>(vec, data, vec.size(), pos);
 
 	if (pos == vec.size())
 	{
@@ -61,8 +61,8 @@ LACalibrationUtilities<T>::searchNearestPos(const std::vector<T> &vec, const T &
 	}
 	else if (pos != 0)
 	{
-		double diff = LAMath::abs(vec[pos] - data); 
-		if (diff > LAMath::abs(data - vec[pos - 1]))
+		double diff = AQLMath::abs(vec[pos] - data); 
+		if (diff > AQLMath::abs(data - vec[pos - 1]))
 		{
 			--pos;
 		}
@@ -74,7 +74,7 @@ LACalibrationUtilities<T>::searchNearestPos(const std::vector<T> &vec, const T &
     @brief check vector unique data
 
 	check vector has unique data for target data.
-	if no data or multi data throw LACoreInvalidData.
+	if no data or multi data throw AQLCoreInvalidData.
 
 	@param[in]     vec
 	@param[in]     data
@@ -95,7 +95,7 @@ LACalibrationUtilities<T>::checkUnique(const std::vector<T> &vec, const T &data,
 			// duplicate error
 			if (pos != INT_MIN)
 			{
-				throw LACoreInvalidData("The data must be unique !!" , __FILE__, __LINE__);
+				throw AQLCoreInvalidData("The data must be unique !!" , __FILE__, __LINE__);
 			}
 			// set position
 			pos = i;
@@ -105,7 +105,7 @@ LACalibrationUtilities<T>::checkUnique(const std::vector<T> &vec, const T &data,
 	// no data error
 	if (pos == INT_MIN)
 	{
-		throw LACoreInvalidData("The data must !!" , __FILE__, __LINE__);
+		throw AQLCoreInvalidData("The data must !!" , __FILE__, __LINE__);
 	}
 }
 

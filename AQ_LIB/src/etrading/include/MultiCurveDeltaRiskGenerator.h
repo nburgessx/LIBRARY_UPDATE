@@ -6,13 +6,13 @@
 #include "CurveResultsContainer.h"      // New Non-Object Pool Curve Results Objects
 
 #include <boost/shared_array.hpp>
-#include "LAString.h"
+#include "AQLString.h"
 #include <boost/shared_array.hpp>
 
 class YieldCurvePro;
-class LADataMultiReference;
-class LADataDouble;
-class LADataProcedure;
+class AQLDataMultiReference;
+class AQLDataDouble;
+class AQLDataProcedure;
 
 namespace etrading
 {
@@ -29,23 +29,23 @@ namespace etrading
         *  Note2:   We must disable the CurveResults Object otherwise Products will price outside the object pool and not incorporate curve bumps and shift results
 		*/
         MultiCurveDeltaGenerator( const std::vector<LabelValueBlock>& dealsInfo,
-                                  const LAString curveCollection,
+                                  const AQLString curveCollection,
 								  const bool bumpSpreadInstruments,
                                   const double bumpSize,
-                                  const LAString& bumpMode,
+                                  const AQLString& bumpMode,
                                   const bool aggregateRisks,
 								  const std::string& riskCutOffTenor );
 
 		/* @brief	Constructor for LWO Swaps
         *  Note1:   We must disable the CurveResults Object otherwise Products will price outside the object pool and not incorporate curve bumps and shift results
 		*/
-		MultiCurveDeltaGenerator( const LAStringVector& swapNames,
-			                      const LAStringMatrix& curveCollectionNames,
-		                          const LAStringMatrix& fixingTableNames,
+		MultiCurveDeltaGenerator( const AQLStringVector& swapNames,
+			                      const AQLStringMatrix& curveCollectionNames,
+		                          const AQLStringMatrix& fixingTableNames,
                                   const DoubleVector& xccyFXSpotRates,
 								  const bool bumpSpreadInstruments,
                                   const double bumpSize,
-								  const LAString& bumpMode,
+								  const AQLString& bumpMode,
                                   const bool aggregateRisks,
 								  const bool reportInLegCCY,
 								  const std::string& riskCutOffTenor ); 
@@ -56,20 +56,20 @@ namespace etrading
         *  @param [in]		curveSetID		Name or handle of the curve set
         *  @param [in]		curves			A collection of yield curves
         */
-        void setCurves( const LAString& curveCollectionID, const LAStringVector& curves );
+        void setCurves( const AQLString& curveCollectionID, const AQLStringVector& curves );
 
         /* @brief			Calculate delta ladder for the given trade(s)
         *  @param [out]		pillarNames		Name of pillar points
         *  @param [out]		headers			Headers of the delta matrix
         *  @param [out]		deltas			All the deltas
         */
-        void deltaLadder( LAStringVector& pillarNames, LAStringVector& headers, LAStringVector& deltaCCYs, DoubleMatrix& deltas );
+        void deltaLadder( AQLStringVector& pillarNames, AQLStringVector& headers, AQLStringVector& deltaCCYs, DoubleMatrix& deltas );
 
 		/* @brief			Calculate flat-shift delta for the given trade(s)
         *  @param [out]		positionIDs		Name of each SwapID / LegID for which the delta is calculated
         *  @param [out]		deltas			The flat-shift delta of each swap leg.
         */
-		void flatShiftDelta( LAStringVector& positionIDs, DoubleVector& deltas, const LAString& groupRiskBy);
+		void flatShiftDelta( AQLStringVector& positionIDs, DoubleVector& deltas, const AQLString& groupRiskBy);
 
 
     private:
@@ -88,12 +88,12 @@ namespace etrading
 		*/
 		struct CurveDependencies
 		{
-			LAString curveCollectionID_;
-			LAString forecastCurve_;
-			LAString discountCurve_;
+			AQLString curveCollectionID_;
+			AQLString forecastCurve_;
+			AQLString discountCurve_;
 
 			CurveDependencies() {}
-			CurveDependencies(const LAString& curveCollectionID, const LAString& forecastCurve, const LAString& discountCurve)
+			CurveDependencies(const AQLString& curveCollectionID, const AQLString& forecastCurve, const AQLString& discountCurve)
 				: curveCollectionID_(curveCollectionID), forecastCurve_(forecastCurve), discountCurve_(discountCurve)
 				{}
 
@@ -121,11 +121,11 @@ namespace etrading
 		void groupLWOTradeLegsByCurveDependencies( const std::shared_ptr<Swap>& lwoTrade,
 											       const LabelValueBlock& curveCollectionForTrade,
 											       const LabelValueBlock& fixingTableForTrade,
-											       LAStringVector& allLegIDs,
-											       LAStringVector& allLegCCYs,
+											       AQLStringVector& allLegIDs,
+											       AQLStringVector& allLegCCYs,
 											       std::map< CurveDependencies, std::vector< std::shared_ptr<Leg> > >& lwoSwapLegsByCurves,
-											       std::map< CurveDependencies, std::vector< LAString > >& lwoTradeIDsByCurves,
-											       std::map< CurveDependencies, std::vector< LAString > >& lwoLegIDsByCurves,
+											       std::map< CurveDependencies, std::vector< AQLString > >& lwoTradeIDsByCurves,
+											       std::map< CurveDependencies, std::vector< AQLString > >& lwoLegIDsByCurves,
 											       std::map< CurveDependencies, std::vector< LabelValueBlock > >& fixingTableNamesByCurves);
 
 		/* @brief		Examines the lwoTrade input and adds the trade data to a map based on the curve dependencies required to PV that leg
@@ -140,10 +140,10 @@ namespace etrading
 		void groupLWOTradesByCurveDependencies(const SwapPtr& lwoTrade,
 												const LabelValueBlock& curveCollectionForTrade,
 												const LabelValueBlock& fixingTableForTrade,
-												LAStringVector& allTradeIDs,
-												LAStringVector& allTradeCcys,
+												AQLStringVector& allTradeIDs,
+												AQLStringVector& allTradeCcys,
 												std::map< CurveDependencies, std::vector< SwapPtr > >& lwoSwapByCurves,
-												std::map< CurveDependencies, std::vector< LAString > >& lwoTradeIDsByCurves,
+												std::map< CurveDependencies, std::vector< AQLString > >& lwoTradeIDsByCurves,
 												std::map< CurveDependencies, std::vector< LabelValueBlock > >& fixingTableNamesByCurves);
 
 		/* @brief		Invokes the delta risk generator on a mini portfolio to calculate the delta-ladder, and post-processes the results
@@ -154,15 +154,15 @@ namespace etrading
 		 * @param [out]	uniquePillarNamesInSet		An output containing the unique instrument names across all curves that were bumped
 		*/
 		void calculateDeltaLadderAndProcessResults( DeltaGenerator& riskGen,
-													const std::vector<LAString>& miniPortfolioTradeIDs,
-													std::map< std::pair<LAString, LAString>, double>& deltaMap,
-													std::vector<LAString>& pillarNamesFromAllCurves,
-													std::set<LAString>& uniquePillarNamesInSet );
+													const std::vector<AQLString>& miniPortfolioTradeIDs,
+													std::map< std::pair<AQLString, AQLString>, double>& deltaMap,
+													std::vector<AQLString>& pillarNamesFromAllCurves,
+													std::set<AQLString>& uniquePillarNamesInSet );
 
         std::vector<BaseInstrumentPtr> portfolio_;
 
 		// For LWO Swaps
-		LAStringVector lwoSwapNames_;
+		AQLStringVector lwoSwapNames_;
 		std::vector<std::shared_ptr<Swap> > lwoPortfolio_;
 		std::vector<LabelValueBlock> fixingTableNames_;
 		std::vector<LabelValueBlock> curveCollections_;
@@ -174,17 +174,17 @@ namespace etrading
 		// Stores the CurveDependencies for a portfolio of BaseInstrument Swaps
         std::vector<CurveDependencies> forecastAndDiscountCurves_;
 
-        LAStringVector allYieldCurves_;
+        AQLStringVector allYieldCurves_;
 
         LabelValueBlock pricingParams_;
 
-        LAString curveCollectionID_;
+        AQLString curveCollectionID_;
 
 		bool bumpSpreadInstruments_;
 
 		double bumpSize_;
 
-        LAString bumpMode_;
+        AQLString bumpMode_;
 
         bool aggregateRisks_;
 
@@ -205,16 +205,16 @@ namespace etrading
 		};
 
         // Trade - Valuation Settings Map
-        std::map<LAString, ValuationSettings> tradeValuationSettingsMap_;
+        std::map<AQLString, ValuationSettings> tradeValuationSettingsMap_;
 
         // Helpers
-        double getXccyFXSpotRateByTradeID( const LAString & tradeID )
+        double getXccyFXSpotRateByTradeID( const AQLString & tradeID )
         {
             const double xccyFXSpotRate = tradeValuationSettingsMap_.find( tradeID )->second.xccyFXSpotRate_;
             return xccyFXSpotRate;
         }
 
-        std::vector<double> getXccyFXSpotRatesByTradeIDs( const std::vector<LAString> tradeIDs )
+        std::vector<double> getXccyFXSpotRatesByTradeIDs( const std::vector<AQLString> tradeIDs )
         {
             std::vector<double> xccyFXSpotRates( tradeIDs.size(), 0.0 );
             for (size_t i = 0; i < tradeIDs.size(); ++i )
@@ -224,13 +224,13 @@ namespace etrading
             return xccyFXSpotRates;
         }
 
-		double getXccyFXAsOfDateRateByTradeID(const LAString & tradeID)
+		double getXccyFXAsOfDateRateByTradeID(const AQLString & tradeID)
 		{
 			const double xccyFXAsOfDateRate = tradeValuationSettingsMap_.find(tradeID)->second.xccyFXAsOfDateRate_;
 			return xccyFXAsOfDateRate;
 		}
 
-		std::vector<double> getXccyFXAsOfDateRatesByTradeIDs(const std::vector<LAString> tradeIDs)
+		std::vector<double> getXccyFXAsOfDateRatesByTradeIDs(const std::vector<AQLString> tradeIDs)
 		{
 			std::vector<double> xccyFXAsOfDateRates(tradeIDs.size(), 0.0);
 			for (size_t i = 0; i < tradeIDs.size(); ++i)

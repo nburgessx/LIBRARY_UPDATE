@@ -342,7 +342,7 @@ namespace etrading
 		const unsigned int maxIterations = 1000;
 		const double shiftSize = 0.0000001;
 
-		LADate finalFixingDate = inflationLeg->getSchedule()->getFixingDates().back();
+		AQLDate finalFixingDate = inflationLeg->getSchedule()->getFixingDates().back();
 		const std::string curveCollection = inflationCurve.getCurveCollection();
 
 		// One-dimensional objective function used by the solver:

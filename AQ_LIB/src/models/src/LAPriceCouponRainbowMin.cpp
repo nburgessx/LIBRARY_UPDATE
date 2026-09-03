@@ -41,14 +41,14 @@ LAPriceCouponRainbowMin::~LAPriceCouponRainbowMin()
 bool
 LAPriceCouponRainbowMin::isTypeOf(function_t id) const
 {
-	return (id == FN_CPNSLTOPERATORRAINBOWMIN ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CPNSLTOPERATORRAINBOWMIN ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceCouponRainbowMin::clone() const    
 {
     try 
@@ -57,7 +57,7 @@ LAPriceCouponRainbowMin::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 

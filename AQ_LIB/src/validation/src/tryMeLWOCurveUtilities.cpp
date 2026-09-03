@@ -15,7 +15,7 @@
 #include "FileUtilities.h"
 #include "Environment.h"
 #include "ObjectUtilities.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "EntityPoolUtilities.h"
 
 using etrading::CreateDataFile;
@@ -92,7 +92,7 @@ namespace validation
         auto& curveStore = etrading::getObjectStore<etrading::LWOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( !curveStore.has( objectName ) )
         {
-            throw LACoreAppError( ( boost::format( "File (%s) was loaded and read but was not a Curve, found object of type %s" )
+            throw AQLCoreAppError( ( boost::format( "File (%s) was loaded and read but was not a Curve, found object of type %s" )
                                 % fileName.c_str()
                                 % toString( cacheInfoOnDeserialization.second ) ).str().c_str(), __FILE__, __LINE__ );
         }

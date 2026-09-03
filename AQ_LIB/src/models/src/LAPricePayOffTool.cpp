@@ -12,24 +12,24 @@
 
 #include "LAPricePayOffTool.h"
 
-#include "LADataHolder.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAObject.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObject.h"
+#include "AQLObjectHolder.h"
 
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathIndexEntity.h"
 #include "LAMathPathEntity.h"
 #include "LAMathFXEntity.h"
-#include "LAMathDefine.h"
+#include "AQLMathDefine.h"
 
-#include "LAAlgorithm.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLBasic.h"
 
 #include "LAPricePayOff.h"
 #include "LAPriceCouponTool.h"
@@ -37,7 +37,7 @@
 #include "LAPriceCouponBase.h"
 #include "LAPriceCouponForDigital2.h"
 #include "LAMathPlainVanillaEntity.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 #include "LAMathYieldCurvePro.h"
 #include "LAPriceCashFlowGenerator.h"
 #include "LAMathDateCalculations.h"
@@ -112,7 +112,7 @@ mRefCount(0), mIsTermCalc(v.mIsTermCalc), mIsRedemption(v.mIsRedemption), mpNoti
 		}
 		catch(bad_alloc& e)
 		{
-			throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+			throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 		}
 	}
 
@@ -124,7 +124,7 @@ mRefCount(0), mIsTermCalc(v.mIsTermCalc), mIsRedemption(v.mIsRedemption), mpNoti
 		}
 		catch(bad_alloc& e)
 		{
-			throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+			throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 		}
 	}
 	mpCoupons.resize(v.mpCoupons.size(), NULL);
@@ -137,7 +137,7 @@ mRefCount(0), mIsTermCalc(v.mIsTermCalc), mIsRedemption(v.mIsRedemption), mpNoti
 		}
 		catch (bad_alloc& e)
 		{
-			throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+			throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 		}			
 	}
 	if (v.mpCpnSelectOperator != NULL) 
@@ -258,7 +258,7 @@ LAPricePayOffTool::calcPayOff(void) const
     @brief calculate payoff
 */
 void
-LAPricePayOffTool::calcDerivationOfLibor(std::map<LAString, std::map<double, double> >& delivationLiborMap, const LAInterpolationBase* pNumeInterp, bool isRec) const
+LAPricePayOffTool::calcDerivationOfLibor(std::map<AQLString, std::map<double, double> >& delivationLiborMap, const AQLInterpolationBase* pNumeInterp, bool isRec) const
 {
 	double sgn = (isRec) ? 1.0 : -1.0;
 	double notionalcf = mNotional;
@@ -267,7 +267,7 @@ LAPricePayOffTool::calcDerivationOfLibor(std::map<LAString, std::map<double, dou
 
 	if (mpCpnSelectOperator != NULL)
 	{
-		throw LACoreInvalidData("Not supported in the coupon select case", __FILE__,__LINE__);
+		throw AQLCoreInvalidData("Not supported in the coupon select case", __FILE__,__LINE__);
 	}
 	
 	std::vector<LAPriceIndexToolBase*> indexs = mpCoupons[0]->getIndexs();
@@ -290,14 +290,14 @@ LAPricePayOffTool::calcDerivationOfLibor(std::map<LAString, std::map<double, dou
 		//in libor case pick coefficient
 		const DoubleArray& coefvec = mpCoupons[0]->getOperator()->getParam();
 		if (coefvec.size() <indexSize)
-			throw LACoreInvalidData("Coefficient Size Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Coefficient Size Error",__FILE__,__LINE__);
 		double leverage = coefvec[i];
 		const DoubleMatrix& gridmat = pentity->getGridMat();
 		const DoubleMatrix& dfmat = pentity->getDFMat();
 		const DoubleMatrix& termmat = pentity->getTermMat();
 
 		if (gridmat.size() <= pos || dfmat.size() <= pos)
-			throw LACoreInvalidData("GridMatSizeError",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("GridMatSizeError",__FILE__,__LINE__);
 		
 		if (gridmat[pos].size() < 2)
 			continue;
@@ -333,15 +333,15 @@ LAPricePayOffTool::calcDerivationOfLibor(std::map<LAString, std::map<double, dou
 
 		
 		//const LAMathYieldCurvePro& yldPro = pentity->getYieldCurvePro();
-		LAString curvetype = pentity->getBasis().get();
+		AQLString curvetype = pentity->getBasis().get();
 		curvetype = (curvetype.size() == 0) ? "STD": curvetype;
-		//std::map<LAString, double>& curvemap = yldPro.getCurveDependeny(curvetype);
+		//std::map<AQLString, double>& curvemap = yldPro.getCurveDependeny(curvetype);
 		
-		//std::map<LAString, double>::iterator it;
+		//std::map<AQLString, double>::iterator it;
 		//for (it = curvemap.begin(); it != curvemap.end(); ++it)
 		//{
-			//LAString key = pentity->getCurrency().get() + "_" + it->first;
-			LAString key = pentity->getCurrency().get() + "_" + curvetype;
+			//AQLString key = pentity->getCurrency().get() + "_" + it->first;
+			AQLString key = pentity->getCurrency().get() + "_" + curvetype;
 			//double direction = it->second;
 			double direction = 1.0;
 			for (unsigned int j = 0; j < differentialvec.size(); j++)
@@ -366,12 +366,12 @@ LAPricePayOffTool::calcDerivationOfLibor(std::map<LAString, std::map<double, dou
 	@param[in] current position of payoff(first payoff position = 0)
 */
 void
-LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
-						unsigned int legNo, const LAObject& cashlet, 
+LAPricePayOffTool::setUp(const AQLDate& basedate, const AQLObject& trade,
+						unsigned int legNo, const AQLObject& cashlet, 
 						const LAPricePayOff& payoff,
 						unsigned int currentpos)
 {
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	
 	//initialize
 	mpCpnSelectOperator = NULL;
@@ -402,11 +402,11 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 
 	//payment date
 	dh = &(cashlet.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-	mPaymentDate = dynamic_cast<const LADataDate&>(dh->get()).get();
+	mPaymentDate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 	//path object
 	dh = &(trade.getData(PRICING_DATA_PATHENTITY, ISNOTNULL));
-	const LADataReference& ref = dynamic_cast<const LADataReference&>(dh->get());
-	LAPriceDataDayCount dc_path;
+	const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(dh->get());
+	AQLPriceDataDayCount dc_path;
 
 	if (ref.get().get().isTypeOf(ENTITY_PLAINVANILLA))
 	{
@@ -431,47 +431,47 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	if(dh->isDefined() && !dh->isNull())
 	{
 		dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-		const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+		const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 		dh = &(legs.get(legNo).getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-		const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
-		int extraCFFixingOffSet = dynamic_cast<const LADataInt&>((cashlet.getData(PRICING_DATA_EXTRACFFIXINGOFFSET, NOCHECK)).get());
+		const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
+		int extraCFFixingOffSet = dynamic_cast<const AQLDataInt&>((cashlet.getData(PRICING_DATA_EXTRACFFIXINGOFFSET, NOCHECK)).get());
 		if (extraCFFixingOffSet < 0)
 		{
 			//error
-			LAString msg = "extraCFFixingOffSet is not minus";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "extraCFFixingOffSet is not minus";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
-		LADate ExtraCFFixingDate = cal.getBusinessDay(mPaymentDate, -extraCFFixingOffSet);
+		AQLDate ExtraCFFixingDate = cal.getBusinessDay(mPaymentDate, -extraCFFixingOffSet);
 		mExtraCFFixingTime = dc_path.getTerm(basedate, ExtraCFFixingDate);		
 	}
 	//base currency
 	dh = &(trade.getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-	mBaseCur = dynamic_cast<const LADataString&>(dh->get()).get();
+	mBaseCur = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	dh = &(trade.getData(PRICING_DATA_ISLEGBASECURRENCY, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		if (dynamic_cast<const LADataBool &>(dh->get()).get())
+		if (dynamic_cast<const AQLDataBool &>(dh->get()).get())
 		{
 			dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-			const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
-			mBaseCur = dynamic_cast<LADataString &>(legs.get(legNo).getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
+			const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
+			mBaseCur = dynamic_cast<AQLDataString &>(legs.get(legNo).getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
 		}
 	}
 	//fx rate for pv
 	dh = &(trade.getData(PRICING_DATA_FXRATE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LADataReference& ref = dynamic_cast<const LADataReference&>(dh->get());
+		const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(dh->get());
 		mpRefFX_for_PayOff = &ref;
 		mpFX_for_PayOff = &dynamic_cast<const LAMathFXEntity&>(ref.get().get());	
 	}
 	//notional
 	dh = &(cashlet.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL));
-	mNotional = dynamic_cast<const LADataDouble&>(dh->get()).get();
+	mNotional = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 	//denominator
 	dh = &(cashlet.getData(PRICING_DATA_DENOMINATOR, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		mDenomiRatio = mNotional / dynamic_cast<const LADataDouble&>(dh->get()).get();
+		mDenomiRatio = mNotional / dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 	else
 		mDenomiRatio = 1;
 
@@ -479,7 +479,7 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	dh = &(cashlet.getData(PRICING_DATA_SETTLEMENTADJUSTRATIO, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		mSettlementAdjustRatio = dynamic_cast<const LADataDouble&>(dh->get()).get();
+		mSettlementAdjustRatio = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 		mIsNonDeliverable = true;
 	}
 	else
@@ -489,32 +489,32 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	}
 	dh = &(cashlet.getData(PRICING_DATA_SETTLEMENTFIXINGDATE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		mSettlementFixingDate = dynamic_cast<const LADataDate&>(dh->get()).get();
+		mSettlementFixingDate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 
 	//round function
 	dh = &(cashlet.getData(PRICING_DATA_ROUNDFUNCTION, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
 		mIsRound = true;
-		LAString roundfunction = dynamic_cast<const LADataString&>(dh->get()).get();
+		AQLString roundfunction = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		roundfunction.toUpper();
 		if (roundfunction == ROUND_STR) mRoundFunction = ROUND;
 		else if (roundfunction == ROUND_UP_STR) mRoundFunction = ROUND_UP;
 		else mRoundFunction = ROUND_DOWN;
 
 		dh = &(cashlet.getData(PRICING_DATA_ROUNDDIGIT, ISNOTNULL));
-		mRoundDigit = dynamic_cast<const LADataInt&>(dh->get()).get();
+		mRoundDigit = dynamic_cast<const AQLDataInt&>(dh->get()).get();
 	}
 
 	//notional currecny
 	dh = &(cashlet.getData(PRICING_DATA_CURRENCY, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		mNotionalCur = dynamic_cast<const LADataString&>(dh->get()).get();
+		mNotionalCur = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	else
 		mNotionalCur = mBaseCur;
 
     if( (dh=&cashlet.getData(PRICING_CALIBRATION_DATAOTIONALCFCURRENCY))->isDefined() && !dh->isNull() ){
-        mNotionalCFCur = dynamic_cast<const LADataString&>(dh->get()).get();
+        mNotionalCFCur = dynamic_cast<const AQLDataString&>(dh->get()).get();
     }
     else{
         mNotionalCFCur = mNotionalCur;
@@ -522,14 +522,14 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	
     mpCouponCFFXRateValue.release();
     if( (dh=&cashlet.getData(PRICING_DATA_COUPONCFFXRATEVALUE))->isDefined() && !dh->isNull() ){
-        mpCouponCFFXRateValue.reset(new double(dynamic_cast<const LADataDouble&>(dh->get()).get()));
+        mpCouponCFFXRateValue.reset(new double(dynamic_cast<const AQLDataDouble&>(dh->get()).get()));
     }
 
 	//fx rate for notional
 	dh = &(cashlet.getData(PRICING_DATA_FXRATE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LADataReference& ref = dynamic_cast<const LADataReference&>(dh->get());
+		const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(dh->get());
 		mpRefFX_for_Notional = &ref;
 		mpFX_for_Notional = &dynamic_cast<const LAMathFXEntity&>(ref.get().get());	
 	}
@@ -537,25 +537,25 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	mNotionalCF = 0;
 	dh = &(cashlet.getData(PRICING_CALIBRATION_DATAOTIONALCF, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		mNotionalCF = dynamic_cast<const LADataDouble&>(dh->get()).get();
+		mNotionalCF = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 
 	dh = &(cashlet.getData(PRICING_DATA_RENOTIONALFIXINGDATE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		mRenotionalFixingDate = dynamic_cast<const LADataDate&>(dh->get()).get();
+		mRenotionalFixingDate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 	
 	//check
 	if (mNotionalCF != 0 && mBaseCur != mNotionalCur &&  mpFX_for_PayOff == NULL)
 	{
 		//error
-		LAString msg = "FxRate is needed for notional cf to change into base currency";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "FxRate is needed for notional cf to change into base currency";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	//notionalcf info
 	dh = &(cashlet.getData(PRICING_CALIBRATION_DATAOTIONALCFCOUPONINFOS, NOCHECK));
 	if(dh->isDefined() && !dh->isNull())
 	{ 
-		const LADataMultiReference& notionalcfinfos = dynamic_cast<const LADataMultiReference&>(dh->get());	
+		const AQLDataMultiReference& notionalcfinfos = dynamic_cast<const AQLDataMultiReference&>(dh->get());	
 
 		mNotionalCFCouponsCur.resize(notionalcfinfos.getSize());
 		for (unsigned int i = 0; i < notionalcfinfos.getSize(); i++)
@@ -564,15 +564,15 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 			mpNotionalCFCoupons[i]->setUp(basedate, trade, legNo, notionalcfinfos.get(i).get(), payoff, currentpos); 
 			//notional coupon currecny
 			dh = &(notionalcfinfos.get(i).getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-			mNotionalCFCouponsCur[i] = dynamic_cast<const LADataString&>(dh->get()).get();
+			mNotionalCFCouponsCur[i] = dynamic_cast<const AQLDataString&>(dh->get()).get();
 			//check
 			if(mNotionalCFCur != mNotionalCFCouponsCur[i])
 			{ 
 				if (mpFX_for_PayOff == NULL)
 				{
 					//error
-					LAString msg = "FxEntity is need When notionalCFcoupon's currency and notionalCF's currency differ ";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "FxEntity is need When notionalCFcoupon's currency and notionalCF's currency differ ";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 			}
 		}
@@ -581,10 +581,10 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 			dh = &(cashlet.getData(PRICING_CALIBRATION_DATAOTIONALCFCOUPONSELECTOPERATOR, NOCHECK));
 			if (!dh->isDefined() || dh->isNull())
 			{
-				LAString msg = "NotionalSelectCFFunction is need for more than 2 notionalCFcoupon ";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "NotionalSelectCFFunction is need for more than 2 notionalCFcoupon ";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
-			const LAPriceDataFunction& method = dynamic_cast<const LAPriceDataFunction&>(dh->get());
+			const AQLPriceDataFunction& method = dynamic_cast<const AQLPriceDataFunction&>(dh->get());
 			mpNotionalCFCpnSelectOperator = dynamic_cast<LAPriceCouponBase*>(method.getFunction().clone());	
 		}
 	}
@@ -593,18 +593,18 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	mExtraCF = 0;
 	dh = &(cashlet.getData(PRICING_DATA_EXTRACF, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		mExtraCF = dynamic_cast<const LADataDouble&>(dh->get()).get();
+		mExtraCF = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 	//extra cf currency
 	dh = &(cashlet.getData(PRICING_DATA_EXTRACFCURRENCY, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		mExtraCFCur = dynamic_cast<const LADataString&>(dh->get()).get();
+		mExtraCFCur = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	else
 		mExtraCFCur = mNotionalCur;
 	//fx rate for extra cf
 	dh = &(cashlet.getData(PRICING_DATA_EXTRACFFXRATE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LADataReference& ref = dynamic_cast<const LADataReference&>(dh->get());
+		const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(dh->get());
 		mpRefFX_for_ExtraCF = &ref;
 		mpFX_for_ExtraCF = &dynamic_cast<const LAMathFXEntity&>(ref.get().get());	
 	}
@@ -618,8 +618,8 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	if (mExtraCF != 0 && mBaseCur != mExtraCFCur &&  mpFX_for_ExtraCF == NULL)
 	{
 		//error
-		LAString msg = "FxRate is needed for extra cf to change into base currency";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "FxRate is needed for extra cf to change into base currency";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	//check for ExtraCFForInitialExchange
@@ -627,11 +627,11 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	if (dh->isDefined() && !dh->isNull())
 	{
 		if (mExtraCFCur != mNotionalCur)
-			throw LACoreInvalidData("ExtraCFForInitialExchange must not have ExtraCFCurrency",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("ExtraCFForInitialExchange must not have ExtraCFCurrency",__FILE__,__LINE__);
 		
-		double extracfval =  dynamic_cast<const LADataDouble&>(dh->get()).get();
+		double extracfval =  dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 		dh = &(cashlet.getData(PRICING_DATA_FXFORINITIALEXCHANGE, NOCHECK));
-		extracfval *= dynamic_cast<const LADataDouble&>(dh->get()).get();
+		extracfval *= dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 		mExtraCFFdChg = extracfval;
 	}
 	
@@ -639,7 +639,7 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	dh = &(cashlet.getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 	if (dh->isDefined() && !dh->isNull()) //except extra cf only
 	{
-		const LADataMultiReference& couponinfos = dynamic_cast<const LADataMultiReference&>(dh->get());
+		const AQLDataMultiReference& couponinfos = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 		
 		mCouponsCur.resize(couponinfos.getSize());
 		for (unsigned int i = 0; i < couponinfos.getSize(); i++)
@@ -648,7 +648,7 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 			mpCoupons[i]->setUp(basedate, trade, legNo, couponinfos.get(i).get(), payoff, currentpos);
 			//coupon currecny
 			dh = &(couponinfos.get(i).getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-			mCouponsCur[i] = dynamic_cast<const LADataString&>(dh->get()).get();
+			mCouponsCur[i] = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		}
 
 		if (1 == couponinfos.getSize() && mpCoupons[0]->isCompoundCoupon())
@@ -663,7 +663,7 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	dh = &(cashlet.getData(PRICING_DATA_COUPONSELECTOPERATOR, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAPriceDataFunction& method = dynamic_cast<const LAPriceDataFunction&>(dh->get());
+		const AQLPriceDataFunction& method = dynamic_cast<const AQLPriceDataFunction&>(dh->get());
 		mpCpnSelectOperator = dynamic_cast<LAPriceCouponBase*>(method.getFunction().clone());	
 		mpCpnSelectOperator->setUp(basedate, trade, legNo, cashlet);
 	}
@@ -671,26 +671,26 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	dh = &(cashlet.getData(PRICING_DATA_DAYCOUNT, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		mDC = dynamic_cast<const LAPriceDataDayCount&>(dh->get());
+		mDC = dynamic_cast<const AQLPriceDataDayCount&>(dh->get());
 		if(mDC.getDayCount() == ACT_ACT_ICMA)
 		{
-			const LAObjectHolder& leg = dynamic_cast<const LADataMultiReference&>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get()).get(legNo);
+			const AQLObjectHolder& leg = dynamic_cast<const AQLDataMultiReference&>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get()).get(legNo);
 
-			const LAString frequency = LACoreUtility::removeQuotation(leg.getData(PRICING_DATA_FREQUENCY, ISNOTNULL).convertToString());	
-			const LAString calendar = leg.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).convertToString();
-			const LAString slidingrule = leg.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).convertToString();
+			const AQLString frequency = LACoreUtility::removeQuotation(leg.getData(PRICING_DATA_FREQUENCY, ISNOTNULL).convertToString());	
+			const AQLString calendar = leg.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).convertToString();
+			const AQLString slidingrule = leg.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).convertToString();
 			
-			const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference &>(leg.getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
-			std::vector<LADate> startdates;
-			std::vector<LADate> enddates;
+			const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference &>(leg.getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
+			std::vector<AQLDate> startdates;
+			std::vector<AQLDate> enddates;
 			for (unsigned int i = 0; i < cashlets.getSize(); ++i)
 			{
 				dh = &(cashlets.get(i).get().getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 				if(!dh->isDefined() || dh->isNull())
 					continue;
 
-				startdates.push_back(dynamic_cast<const LADataDate &>(cashlets.get(i).get().getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL).get()).get());
-				enddates.push_back(dynamic_cast<const LADataDate &>(cashlets.get(i).get().getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL).get()).get());
+				startdates.push_back(dynamic_cast<const AQLDataDate &>(cashlets.get(i).get().getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL).get()).get());
+				enddates.push_back(dynamic_cast<const AQLDataDate &>(cashlets.get(i).get().getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL).get()).get());
 			}
 			DateMatrix regular_startenddates = LAMathDateUtilities::calcRegularDates(frequency, calendar, slidingrule, startdates, enddates);
 
@@ -702,7 +702,7 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	}
 
 	dh = &(cashlet.getData(PRICING_DATA_ISREDEMPTION, NOCHECK));
-	if (dh->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get())
+	if (dh->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get())
 	{
 		mIsRedemption = true;
 		mIsTermCalc = false;
@@ -713,11 +713,11 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	//CFCalcStartDate
 	dh = &(cashlet.getData(PRICING_DATA_CFCALCSTARTDATE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		mStart = dynamic_cast<const LADataDate&>(dh->get()).get();
+		mStart = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 	//CFCalcEndDate
 	dh = &(cashlet.getData(PRICING_DATA_CFCALCENDDATE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		mEnd = dynamic_cast<const LADataDate&>(dh->get()).get();
+		mEnd = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 	//term
 	mTerm = (mIsTermCalc) ? mDC.getTerm(mStart, mEnd, false) : 1.0;
 	//check
@@ -726,14 +726,14 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 		if (mNotionalCur != mCouponsCur[i] && mpFX_for_Notional == NULL && mpCouponCFFXRateValue.get() == NULL)
 		{
 			//error
-			LAString msg = "FxRate is need for notional to change into coupon currency ";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+			AQLString msg = "FxRate is need for notional to change into coupon currency ";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 		}
 		if (mBaseCur != mCouponsCur[i] && mpFX_for_PayOff == NULL)
 		{
 			//error
-			LAString msg = "FxRate in trade object is needed for cf to change into base currency";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "FxRate in trade object is needed for cf to change into base currency";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 
@@ -741,17 +741,17 @@ LAPricePayOffTool::setUp(const LADate& basedate, const LAObject& trade,
 	dh = &(cashlet.getData(PRICING_DATA_PAYMENTTIMING, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+		const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 		mIsArrear = LAPriceCFGenUtility::isArrear(timing);
 	}
 	else
 	{
 		dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-		const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+		const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 		dh = &(legs.get(legNo).getData(PRICING_DATA_PAYMENTTIMING, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+			const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 			mIsArrear = LAPriceCFGenUtility::isArrear(timing);
 		}
 	}
@@ -825,7 +825,7 @@ LAPricePayOffTool::copy(const LAPricePayOffTool& a)
 	@return accrued interest by base currency
 */
 double
-LAPricePayOffTool::calcAccruedInt(const LADate& date) const
+LAPricePayOffTool::calcAccruedInt(const AQLDate& date) const
 {
 	double ret = calcAccruedIntbyPayOffCur(date);
 	if (mBaseCur != mCouponsCur[mSelectedCpnPos])
@@ -840,9 +840,9 @@ LAPricePayOffTool::calcAccruedInt(const LADate& date) const
 	@return accrued interest by payoff currency
 */
 double
-LAPricePayOffTool::calcAccruedIntbyPayOffCur(const LADate& date) const
+LAPricePayOffTool::calcAccruedIntbyPayOffCur(const AQLDate& date) const
 {
-//	LADate tmpdate = date;
+//	AQLDate tmpdate = date;
 //	tmpdate.addDays(1);
 	if (!isCouponPayment() || date <= mStart) return 0;
 	
@@ -897,12 +897,12 @@ LAPricePayOffTool::getCouponBeforeSelection(unsigned int i) const
 }
 
 void 
-LAPricePayOffTool::getCompoundedRateInfo(DateVector& start, DateVector& end, DoubleVector& term, DateVector& fixing_date, LAStringVector& fixing_flag, DoubleVector& rate) const
+LAPricePayOffTool::getCompoundedRateInfo(DateVector& start, DateVector& end, DoubleVector& term, DateVector& fixing_date, AQLStringVector& fixing_flag, DoubleVector& rate) const
 {
     return;
 }
 
-LAPriceCouponTool* LAPricePayOffTool::createCouponTool(const LAObject& cashlet, const LAObject& coupon_info)
+LAPriceCouponTool* LAPricePayOffTool::createCouponTool(const AQLObject& cashlet, const AQLObject& coupon_info)
 { 
     return new LAPriceCouponTool(); 
 }
@@ -927,10 +927,10 @@ double LAPricePayOffTool::calculateCouponCashflow() const
 
 
 
-void LAPricePayOffToolCompound::setUp(const LADate& basedate, 
-                                   const LAObject& trade,
+void LAPricePayOffToolCompound::setUp(const AQLDate& basedate, 
+                                   const AQLObject& trade,
                                    unsigned int legNo,
-                                   const LAObject& cashlet, 
+                                   const AQLObject& cashlet, 
                                    const LAPricePayOff& payoff,
                                    unsigned int currentpos)
 {
@@ -941,27 +941,27 @@ void LAPricePayOffToolCompound::setUp(const LADate& basedate,
                           payoff,
                           currentpos);
 
-    const LADataHolder* dh;
+    const AQLDataHolder* dh;
 	mpCoefficient = NULL;
-    first_stub = (dh = &cashlet.getData(PRICING_DATA_FIRSTSTUBCOUPON))->isDefined() && !dh->isNull() ? getStubCoupon(dynamic_cast<const LADataString&>(dh->get()).get(), cashlet) : NULL;
-    last_stub = (dh = &cashlet.getData(PRICING_DATA_LASTSTUBCOUPON))->isDefined() && !dh->isNull() ? getStubCoupon(dynamic_cast<const LADataString&>(dh->get()).get(), cashlet) : NULL;
+    first_stub = (dh = &cashlet.getData(PRICING_DATA_FIRSTSTUBCOUPON))->isDefined() && !dh->isNull() ? getStubCoupon(dynamic_cast<const AQLDataString&>(dh->get()).get(), cashlet) : NULL;
+    last_stub = (dh = &cashlet.getData(PRICING_DATA_LASTSTUBCOUPON))->isDefined() && !dh->isNull() ? getStubCoupon(dynamic_cast<const AQLDataString&>(dh->get()).get(), cashlet) : NULL;
 
 
-    compound_all_days = (dh = &cashlet.getData(PRICING_DATA_COMPOUND_ON_ALL_DAYS))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get();
+    compound_all_days = (dh = &cashlet.getData(PRICING_DATA_COMPOUND_ON_ALL_DAYS))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get();
     setupStartEndDates(cashlet);
     
-    const LAPriceDataDayCount& dc = dynamic_cast<const LAPriceDataDayCount&>(cashlet.getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL).get());
+    const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&>(cashlet.getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL).get());
 
 	if(dc.getDayCount() == ACT_ACT_ICMA)
 	{
-		LAString msg = "Daycount ACT/ACT.ICMA is not supported in the compounding case";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Daycount ACT/ACT.ICMA is not supported in the compounding case";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
-	const LAObject& coupon = dynamic_cast<const LADataMultiReference&>(cashlet.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL).get()).get(0).get();
-	mpCoefficient = &dynamic_cast<const LADataDoubles&>(coupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get());
+	const AQLObject& coupon = dynamic_cast<const AQLDataMultiReference&>(cashlet.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL).get()).get(0).get();
+	mpCoefficient = &dynamic_cast<const AQLDataDoubles&>(coupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get());
     const double spread = mpCoefficient->get().back();
-    compounding_function = &dynamic_cast<const LACompoundMethod&>(dynamic_cast<const LAPriceDataFunction&>(cashlet.getData(PRICING_DATA_COMPOUNDING_FUNCTION, ISNOTNULL).get()).getFunction());
+    compounding_function = &dynamic_cast<const LACompoundMethod&>(dynamic_cast<const AQLPriceDataFunction&>(cashlet.getData(PRICING_DATA_COMPOUNDING_FUNCTION, ISNOTNULL).get()).getFunction());
 
     
         
@@ -986,17 +986,17 @@ double LAPricePayOffToolCompound::calculateCouponCashflow() const
     size_t n = start_dates.size();
     if(compounding_function->isTypeOf(FN_COMPOUNDING9) || 
        compounding_function->isTypeOf(FN_COMPOUNDING10)){           
-           if(rate_term_spread.size() > 3*n + 1) throw LACoreInvalidData("size of rate_term_spread is invalid", __FILE__, __LINE__);
+           if(rate_term_spread.size() > 3*n + 1) throw AQLCoreInvalidData("size of rate_term_spread is invalid", __FILE__, __LINE__);
            if(rate_term_spread.size() == 3*n)    rate_term_spread.resize(3*n + 1);
            rate_term_spread[3*n] = mDC.getTerm(start_dates[0], end_dates.back());
     }
 
     LAPriceCouponToolCompound* coupon = dynamic_cast<LAPriceCouponToolCompound*>(mpCoupons[0]);
     if(coupon==NULL){
-        LAString msg;
+        AQLString msg;
         msg += "CAST ERROR:";
         msg += "coupon tool cannot be casted to LAPriceCouponToolCompound";
-        throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
     const size_t start_pos = 0;
     const size_t end_pos = n;
@@ -1009,12 +1009,12 @@ double LAPricePayOffToolCompound::calculateCouponCashflow() const
     return (*compounding_function)(rate_term_spread) * mNotional;
 }
 
-LAPriceCouponTool* LAPricePayOffToolCompound::createCouponTool(const LAObject& cashlet, const LAObject& coupon_info)
+LAPriceCouponTool* LAPricePayOffToolCompound::createCouponTool(const AQLObject& cashlet, const AQLObject& coupon_info)
 { 
-    const LADataHolder* dh;
-    const LAString& coupon_name = dynamic_cast<const LADataString&>(coupon_info.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-    const LAString& fstub_name = (dh=&cashlet.getData(PRICING_DATA_FIRSTSTUBCOUPON))->isDefined() && !dh->isNull() ? dynamic_cast<const LADataString&>(dh->get()).get() : "";
-    const LAString& lstub_name = (dh=&cashlet.getData(PRICING_DATA_LASTSTUBCOUPON))->isDefined() && !dh->isNull() ? dynamic_cast<const LADataString&>(dh->get()).get() : "";
+    const AQLDataHolder* dh;
+    const AQLString& coupon_name = dynamic_cast<const AQLDataString&>(coupon_info.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+    const AQLString& fstub_name = (dh=&cashlet.getData(PRICING_DATA_FIRSTSTUBCOUPON))->isDefined() && !dh->isNull() ? dynamic_cast<const AQLDataString&>(dh->get()).get() : "";
+    const AQLString& lstub_name = (dh=&cashlet.getData(PRICING_DATA_LASTSTUBCOUPON))->isDefined() && !dh->isNull() ? dynamic_cast<const AQLDataString&>(dh->get()).get() : "";
     if(coupon_name == fstub_name || coupon_name == lstub_name){
         return LAPricePayOffTool::createCouponTool(cashlet, coupon_info);
     }
@@ -1023,7 +1023,7 @@ LAPriceCouponTool* LAPricePayOffToolCompound::createCouponTool(const LAObject& c
     }
 }
 
-void LAPricePayOffToolCompound::setupStartEndDates(const LAObject& cashlet)
+void LAPricePayOffToolCompound::setupStartEndDates(const AQLObject& cashlet)
 {
     /* 
     Set cf calc start/end dates from cashlet object or index object.
@@ -1031,42 +1031,42 @@ void LAPricePayOffToolCompound::setupStartEndDates(const LAObject& cashlet)
     they are generated under assumption that compounding term is daily.
     */
 
-    const LADataHolder* dh;
+    const AQLDataHolder* dh;
     if((dh = &cashlet.getData(PRICING_DATA_CFCALCSTARTDATES))->isDefined() && !dh->isNull() && !compound_all_days){
-        start_dates = dynamic_cast<const LADataDates&>(dh->get()).get();
-        end_dates = dynamic_cast<const LADataDates&>(cashlet.getData(PRICING_DATA_CFCALCENDDATES, ISNOTNULL).get()).get();
+        start_dates = dynamic_cast<const AQLDataDates&>(dh->get()).get();
+        end_dates = dynamic_cast<const AQLDataDates&>(cashlet.getData(PRICING_DATA_CFCALCENDDATES, ISNOTNULL).get()).get();
         return;
     }
 
     
-    const LAObject& coupon = dynamic_cast<const LADataMultiReference&>(cashlet.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL).get()).get(0).get();
-    const LAObject& index  = dynamic_cast<const LADataMultiReference&>(coupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL).get()).get(0).get();
+    const AQLObject& coupon = dynamic_cast<const AQLDataMultiReference&>(cashlet.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL).get()).get(0).get();
+    const AQLObject& index  = dynamic_cast<const AQLDataMultiReference&>(coupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL).get()).get(0).get();
 
 	if ((dh = &index.getData(PRICING_DATA_CFCALCSTARTDATES))->isDefined() && !dh->isNull() && !compound_all_days) {
-		start_dates = dynamic_cast<const LADataDates&>(dh->get()).get();
-		end_dates = dynamic_cast<const LADataDates&>(index.getData(PRICING_DATA_CFCALCENDDATES, ISNOTNULL).get()).get();
+		start_dates = dynamic_cast<const AQLDataDates&>(dh->get()).get();
+		end_dates = dynamic_cast<const AQLDataDates&>(index.getData(PRICING_DATA_CFCALCENDDATES, ISNOTNULL).get()).get();
 		return;
 	}
 
 
-    const LAPriceDataCalendar& calendar = dynamic_cast<const LAPriceDataCalendar&>(index.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
-    LAPriceDataSlidingRule sliding_rule(SLIDING_RULE_FOLLOWING);
-    const LADate& start_date = dynamic_cast<const LADataDate&>(cashlet.getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL).get()).get();
-    const LADate& end_date = dynamic_cast<const LADataDate&>(cashlet.getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL).get()).get();
+    const AQLPriceDataCalendar& calendar = dynamic_cast<const AQLPriceDataCalendar&>(index.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+    AQLPriceDataSlidingRule sliding_rule(SLIDING_RULE_FOLLOWING);
+    const AQLDate& start_date = dynamic_cast<const AQLDataDate&>(cashlet.getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL).get()).get();
+    const AQLDate& end_date = dynamic_cast<const AQLDataDate&>(cashlet.getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL).get()).get();
 
 	if (calendar.getCalendar().isHoliday(end_date) || calendar.getCalendar().isHoliday(start_date)) {
-		throw LACoreInvalidData("LAPricePayOffToolCompound::setupStartEndDates failed! Start date or end date is a holiday!", __FILE__,__LINE__);
+		throw AQLCoreInvalidData("LAPricePayOffToolCompound::setupStartEndDates failed! Start date or end date is a holiday!", __FILE__,__LINE__);
 	}
 
     start_dates.clear();
     end_dates.clear();
-    LADate temp_start, temp_end;
+    AQLDate temp_start, temp_end;
     temp_start = temp_end = start_date;
     temp_end.addDays(1);
     temp_end = sliding_rule.getDate(temp_end, calendar);
     while(temp_start != end_date){
         if(compound_all_days){
-            LADate temp2 = temp_start;
+            AQLDate temp2 = temp_start;
             while(temp2 != temp_end){
                 start_dates.push_back(temp2);
                 temp2.addDays(1);
@@ -1083,7 +1083,7 @@ void LAPricePayOffToolCompound::setupStartEndDates(const LAObject& cashlet)
     }
 }
 
-void LAPricePayOffToolCompound::setCashflow(double& gearing, double& forward, double& spread, LADate& fixing_date, LAString& fixing_flag) const 
+void LAPricePayOffToolCompound::setCashflow(double& gearing, double& forward, double& spread, AQLDate& fixing_date, AQLString& fixing_flag) const 
 {
 	// gearing must be 1 in a case of compounding
 	gearing = 1.;
@@ -1093,17 +1093,17 @@ void LAPricePayOffToolCompound::setCashflow(double& gearing, double& forward, do
     spread = rate_term_spread[2*n + n-1];
     LAPriceCouponToolCompound* coupon = dynamic_cast<LAPriceCouponToolCompound*>(mpCoupons[0]);
     if(coupon==NULL){
-        LAString msg;
+        AQLString msg;
         msg += "CAST ERROR:";
         msg += "coupon tool cannot be casted to LAPriceCouponToolCompound";
-        throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
     coupon->setFixingInfo(fixing_date, fixing_flag);
     return;
 }
 
 void 
-LAPricePayOffToolCompound::getCompoundedRateInfo(DateVector& start, DateVector& end, DoubleVector& term, DateVector& fixing_date, LAStringVector& fixing_flag, DoubleVector& rate) const
+LAPricePayOffToolCompound::getCompoundedRateInfo(DateVector& start, DateVector& end, DoubleVector& term, DateVector& fixing_date, AQLStringVector& fixing_flag, DoubleVector& rate) const
 {
     for(DateVector::const_iterator it = start_dates.begin(); it != start_dates.end(); ++it){ start.push_back(*it); }
     for(DateVector::const_iterator it = end_dates.begin(); it != end_dates.end(); ++it){ end.push_back(*it); }
@@ -1115,22 +1115,22 @@ LAPricePayOffToolCompound::getCompoundedRateInfo(DateVector& start, DateVector& 
 
     LAPriceCouponToolCompound* coupon = dynamic_cast<LAPriceCouponToolCompound*>(mpCoupons[0]);
     if(coupon==NULL){
-        LAString msg;
+        AQLString msg;
         msg += "CAST ERROR:";
         msg += "coupon tool cannot be casted to LAPriceCouponToolCompound";
-        throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
     coupon->setFixingInfo(fixing_date, fixing_flag);
 }
 
-LAPriceCouponTool* LAPricePayOffToolCompound::getStubCoupon(const LAString& stub_coupon_name, const LAObject& cashlet_info)
+LAPriceCouponTool* LAPricePayOffToolCompound::getStubCoupon(const AQLString& stub_coupon_name, const AQLObject& cashlet_info)
 {
-    const LADataMultiReference& coupon_infos = dynamic_cast<const LADataMultiReference&>(cashlet_info.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL).get());
+    const AQLDataMultiReference& coupon_infos = dynamic_cast<const AQLDataMultiReference&>(cashlet_info.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL).get());
     for(size_t i = 0; i < coupon_infos.getSize(); i++){
-        const LAString& name = dynamic_cast<const LADataString&>(coupon_infos.get(i).get().getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+        const AQLString& name = dynamic_cast<const AQLDataString&>(coupon_infos.get(i).get().getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
         if(name == stub_coupon_name) return mpCoupons[i];
     }
     std::stringstream sst;
-    sst << stub_coupon_name << " is not set in " << dynamic_cast<const LADataString&>(cashlet_info.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get().getCString() << std::endl;
-    throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+    sst << stub_coupon_name << " is not set in " << dynamic_cast<const AQLDataString&>(cashlet_info.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get().getCString() << std::endl;
+    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 }

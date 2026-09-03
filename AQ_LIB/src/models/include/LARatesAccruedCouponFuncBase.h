@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
  
 
 
@@ -21,10 +21,10 @@
 /*! 
     @brief Class declaration to represent Coupon Cap function.
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
-class LARatesAccruedCouponFuncBase : public LAFunctionBase
+class LARatesAccruedCouponFuncBase : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE

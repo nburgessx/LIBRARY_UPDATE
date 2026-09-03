@@ -2,7 +2,7 @@
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
 #include "CommonConstants.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
 #include "ScheduleValidation.h"
@@ -10,7 +10,7 @@
 #include "ParameterValidation.h"
 #include "ConstantDeclarations.h"
 #include "LACurvePricingObject.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLPriceDataSlidingRule.h"
 
 namespace etrading
 {
@@ -30,7 +30,7 @@ namespace etrading
         effectiveDate_	                        = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::EFFECTIVE_DATE,                         nameCollectionName         );
         maturityDate_				            = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::MATURITY_DATE,                          nameCollectionName         );
         
-        LAString payRec	                        = swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE, nameCollectionName );
+        AQLString payRec	                        = swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE, nameCollectionName );
         isPayerSwap_	                        = validateSwapPayRecFlag(              payRec                                                                           );
 
 
@@ -63,12 +63,12 @@ namespace etrading
 
         if ( fixedAccrualBusinessDayAdjustment_.size() == 0 || fixedPaymentBusinessDayAdjustment_.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'FixedBusinessDayAdjustment' must be specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'FixedBusinessDayAdjustment' must be specified.", __FILE__, __LINE__ );
         }
 
         if ( fixedAccrualCalendar_.size() == 0 || fixedPaymentCalendar_.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'FixedCelendar' must be specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'FixedCelendar' must be specified.", __FILE__, __LINE__ );
         }
 
         //-------------------------------------
@@ -106,12 +106,12 @@ namespace etrading
 
         if ( floatFixingBusinessDayAdjustment_.size() == 0 || floatAccrualBusinessDayAdjustment_.size() == 0 || floatPaymentBusinessDayAdjustment_.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'FloatBusinessDayAdjustment' must be specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'FloatBusinessDayAdjustment' must be specified.", __FILE__, __LINE__ );
         }
 
         if ( floatFixingCalendar_.size() == 0 || floatAccrualCalendar_.size() == 0 || floatPaymentCalendar_.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'FloatCalendar' must be specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'FloatCalendar' must be specified.", __FILE__, __LINE__ );
         }
 
         // Generate the Swap Schedule
@@ -167,19 +167,19 @@ namespace etrading
 
         if ( forecastCurve_.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Forecast curve has not been specified for PV", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Forecast curve has not been specified for PV", __FILE__, __LINE__ );
         }
 
         if ( discountCurve_.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Discount curve has not been specified for PV", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Discount curve has not been specified for PV", __FILE__, __LINE__ );
         }
     }
 
     /* @brief		Set interpolation for pricing
     *  @param [in]	interpolation	Yield curve interpolation
     */
-    void InterestRateSwap::setInterpolation( const LAString& interpolation )
+    void InterestRateSwap::setInterpolation( const AQLString& interpolation )
     {
         interpolation_ = interpolation;
         interpolation_.toUpper();

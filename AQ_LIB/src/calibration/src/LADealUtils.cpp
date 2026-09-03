@@ -21,11 +21,11 @@
 
 
 #include "LADealUtils.h"
-#include "LADataInstance.h"
-#include "LACoreTemplateType.h"
-#include "LADataValuation.h"
-#include "LADataBasics.h"
-#include "LADataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataValuation.h"
+#include "AQLDataBasics.h"
+#include "AQLDataMultiReference.h"
 #include "LAPricePortfolioValue.h"
 #include "LAPricePayOff.h"
 #include "LAPriceCashFlowGenerator.h"
@@ -76,14 +76,14 @@ MADealUtils::~MADealUtils(void)
 /*!
     @brief get sde currencys
 
-	@return LAStringVector
+	@return AQLStringVector
 */
-LAStringVector 
+AQLStringVector 
 MADealUtils::getSDECurrencys(const bool isIncludeVol)
 {
 	// get currencys
-	LAStringVector ret;
-	LAString ccys = LACoreDataService::getContext(ARG_KEY_CURRENCY);
+	AQLStringVector ret;
+	AQLString ccys = LACoreDataService::getContext(ARG_KEY_CURRENCY);
 	ret = ccys.toToken(':');
 	if (isIncludeVol)
 	{
@@ -96,14 +96,14 @@ MADealUtils::getSDECurrencys(const bool isIncludeVol)
 /*!
     @brief get simulationsde currencys
 
-	@return LAStringVector
+	@return AQLStringVector
 */
-LAStringVector 
+AQLStringVector 
 MADealUtils::getSimulationSDECurrencys(const bool isIncludeVol)
 {
 	// get currencys
-	LAStringVector ret;
-	LAString ccys = LACoreDataService::getContext(ARG_KEY_SIMCURRENCY);
+	AQLStringVector ret;
+	AQLString ccys = LACoreDataService::getContext(ARG_KEY_SIMCURRENCY);
 	if (ccys != AQ_NO_DATA)
 	{
 		ret = ccys.toToken(':');
@@ -120,17 +120,17 @@ MADealUtils::getSimulationSDECurrencys(const bool isIncludeVol)
 /*!
     @brief get sde currencys all
 
-	@return LAStringVector
+	@return AQLStringVector
 */
-LAStringVector 
+AQLStringVector 
 MADealUtils::getSDECurrencysAll()
 {
 	// get currencys
-	LAStringVector ret;
-	LAString ccys = LACoreDataService::getContext(ARG_KEY_CURRENCY);
+	AQLStringVector ret;
+	AQLString ccys = LACoreDataService::getContext(ARG_KEY_CURRENCY);
 	if (ccys != AQ_NO_DATA)
 	{
-		LAStringVector irvec, fxvec;
+		AQLStringVector irvec, fxvec;
 		ret = ccys.toToken(':');
 		for (unsigned int i = 0; i < ret.size(); i++)
 		{
@@ -147,17 +147,17 @@ MADealUtils::getSDECurrencysAll()
 		if (irvec.size() < 2)
 			return ret;
 
-		LAStringVector addvec;
+		AQLStringVector addvec;
 		for (unsigned int i = 0; i < irvec.size()-1; i++)
 		{
 			for (unsigned int j = i+1; j < irvec.size(); j++)
 			{
-				LAString chkccy1 = irvec[i] + '/' + irvec[j];
+				AQLString chkccy1 = irvec[i] + '/' + irvec[j];
 				if (std::find(fxvec.begin(), fxvec.end(), chkccy1) == fxvec.end())
 				{
 					addvec.push_back(chkccy1);
 				}
-				LAString chkccy2 = irvec[j] + '/' + irvec[i];
+				AQLString chkccy2 = irvec[j] + '/' + irvec[i];
 				if (std::find(fxvec.begin(), fxvec.end(), chkccy2) == fxvec.end())
 				{
 					addvec.push_back(chkccy2);
@@ -177,25 +177,25 @@ MADealUtils::getSDECurrencysAll()
 /*!
     @brief get sde currencys all
 
-	@return LAStringVector
+	@return AQLStringVector
 */
-LAStringVector 
+AQLStringVector 
 MADealUtils::getAllSingleCurrencys()
 {
 	// get currencys
-	LAStringVector ret;
-	LAString ccys = LACoreDataService::getContext(ARG_KEY_CURRENCY);
+	AQLStringVector ret;
+	AQLString ccys = LACoreDataService::getContext(ARG_KEY_CURRENCY);
 	if (ccys != AQ_NO_DATA)
 	{
-		//LAStringVector irvec, fxvec;
-		LAStringVector sdeccys = ccys.toToken(':');
+		//AQLStringVector irvec, fxvec;
+		AQLStringVector sdeccys = ccys.toToken(':');
 		for (unsigned int i = 0; i < sdeccys.size(); i++)
 		{
 			if (sdeccys[i].findString(FX_DELIMITER) < 0)
 				ret.push_back(sdeccys[i]);
 			else
 			{
-				LAStringVector tmp = sdeccys[i].toToken(FX_DELIMITER);
+				AQLStringVector tmp = sdeccys[i].toToken(FX_DELIMITER);
 				if (std::find(ret.begin(),ret.end(),tmp[0]) == ret.end())
 					ret.push_back(tmp[0]);
 
@@ -220,26 +220,26 @@ MADealUtils::getAllSingleCurrencys()
 	@return int
 */
 int
-MADealUtils::getCMSYears(const LADataMultiReference &ref, const LAString &indexAttr)
+MADealUtils::getCMSYears(const AQLDataMultiReference &ref, const AQLString &indexAttr)
 {
 	int ret = 0;
 	const int refSize = ref.getSize();
 	// reference loop
 	for (int i = 0; i < refSize; ++i)
 	{
-		const LADataMultiReference &indexes = dynamic_cast<const LADataMultiReference &>
+		const AQLDataMultiReference &indexes = dynamic_cast<const AQLDataMultiReference &>
 												(ref.get(i).getData(indexAttr, ISNOTNULL).get());
 		const int indexSize = indexes.getSize();
 		// index info loop
 		for(int j = 0; j < indexSize; ++j)
 		{
-			LAString indexType = dynamic_cast<const LADataString &>
+			AQLString indexType = dynamic_cast<const AQLDataString &>
 									(indexes.get(j).getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
 			if (indexType.toUpper() == "CMS")
 			{
-				LAString accessary = dynamic_cast<const LADataString &>
+				AQLString accessary = dynamic_cast<const AQLDataString &>
 										(indexes.get(j).getData(PRICING_DATA_ACCESSORY, ISNOTNULL).get());
-				LAString suffix = accessary.subString(accessary.size() - 1, accessary.size() - 1);
+				AQLString suffix = accessary.subString(accessary.size() - 1, accessary.size() - 1);
 
 				if (suffix.toUpper() == "Y")
 				{
@@ -270,11 +270,11 @@ MADealUtils::getCMSYears(const LADataMultiReference &ref, const LAString &indexA
 	@return int
 */
 int
-MADealUtils::getMaxTerm(LAObjectPool &objPool, const LADate &asOfDate, LAString tradetype)
+MADealUtils::getMaxTerm(AQLObjectPool &objPool, const AQLDate &asOfDate, AQLString tradetype)
 {
 
-	LAString mainTradeName = LACoreDataService::getContext(ARG_KEY_MAINTRADE);
-	LAObjectHolder objHolder = objPool.getObject(mainTradeName, ENCHKTYPE_ISDEFINED);
+	AQLString mainTradeName = LACoreDataService::getContext(ARG_KEY_MAINTRADE);
+	AQLObjectHolder objHolder = objPool.getObject(mainTradeName, ENCHKTYPE_ISDEFINED);
 
 
 
@@ -282,26 +282,26 @@ MADealUtils::getMaxTerm(LAObjectPool &objPool, const LADate &asOfDate, LAString 
 	{
 		// calc maxterm
 		// if fail return MAX_TERM
-		if (dynamic_cast<const LADataValuation &>
+		if (dynamic_cast<const AQLDataValuation &>
 			(objHolder.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get()).getType() == FN_IR_PORTFOLIOVALUE)
 		{
 			int maxTerm = 0;
-			const LADataMultiReference &unders = dynamic_cast<const LADataMultiReference &>
+			const AQLDataMultiReference &unders = dynamic_cast<const AQLDataMultiReference &>
 												(objHolder.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
 			const int tradeSize = unders.getSize();
 			for (int i = 0; i < tradeSize; ++i)
 			{
 				int tmpTerm = 0;
-				if (tradetype == LAString("EXODERIVA"))
+				if (tradetype == AQLString("EXODERIVA"))
 				{
 					tmpTerm = getMaxTerm(unders.get(i), asOfDate);
 				}
-				else if (tradetype == LAString("VANILLA"))
+				else if (tradetype == AQLString("VANILLA"))
 				{
 					tmpTerm = getMaxTermFromPlainVanilla(unders.get(i),asOfDate);
 				}
 				else 
-				throw LACoreInvalidData("MaxTermError",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("MaxTermError",__FILE__,__LINE__);
 
 				if (tmpTerm > maxTerm)
 				{
@@ -312,19 +312,19 @@ MADealUtils::getMaxTerm(LAObjectPool &objPool, const LADate &asOfDate, LAString 
 		}
 		else
 		{
-			if (tradetype == LAString("EXODERIVA"))
+			if (tradetype == AQLString("EXODERIVA"))
 			{
 				return getMaxTerm(objHolder, asOfDate);
 			}
-			else if (tradetype == LAString("VANILLA"))
+			else if (tradetype == AQLString("VANILLA"))
 			{
 				return getMaxTermFromPlainVanilla(objHolder, asOfDate);
 			}
 			else 
-				throw LACoreInvalidData("MaxTermError",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("MaxTermError",__FILE__,__LINE__);
 		}
 	}
-	catch(LACoreError &e)
+	catch(AQLCoreError &e)
 	{
 		e.print();
 		MALogger &logger = LACoreDataService::getLogManager().getLogger();
@@ -347,27 +347,27 @@ MADealUtils::getMaxTerm(LAObjectPool &objPool, const LADate &asOfDate, LAString 
 	@return int
 */
 int
-MADealUtils::getMaxTerm(const LAObjectHolder &objHolder, const LADate &asOfDate)
+MADealUtils::getMaxTerm(const AQLObjectHolder &objHolder, const AQLDate &asOfDate)
 {
 	// max date
-	LADate maxDate;
+	AQLDate maxDate;
 	maxDate.setSystemDate();
 	int addYears = 0;
 
-	const LADataMultiReference &unders = dynamic_cast<const LADataMultiReference &>
+	const AQLDataMultiReference &unders = dynamic_cast<const AQLDataMultiReference &>
 										(objHolder.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
 
 	const int legSize = unders.getSize();
 	for (int i = 0; i < legSize; ++i)
 	{
-		const LAObjectHolder &leg = unders.get(i);
+		const AQLObjectHolder &leg = unders.get(i);
 		
-		LAString inputType = dynamic_cast<const LADataString &>(leg.getData(PRICING_DATA_INPUTTYPE, ISNOTNULL).get()).get();
-		const LADataHolder &attrEndDate = leg.getData(PRICING_DATA_ENDDATE, NOCHECK);
+		AQLString inputType = dynamic_cast<const AQLDataString &>(leg.getData(PRICING_DATA_INPUTTYPE, ISNOTNULL).get()).get();
+		const AQLDataHolder &attrEndDate = leg.getData(PRICING_DATA_ENDDATE, NOCHECK);
 		if (attrEndDate.isDefined() && !attrEndDate.isNull())
 		{
 			// end date
-			const LADate &endDate = dynamic_cast<const LADataDate &>(attrEndDate.get()).get();
+			const AQLDate &endDate = dynamic_cast<const AQLDataDate &>(attrEndDate.get()).get();
 			if (endDate > maxDate)
 			{
 				maxDate = endDate;
@@ -377,7 +377,7 @@ MADealUtils::getMaxTerm(const LAObjectHolder &objHolder, const LADate &asOfDate)
 		{
 			// if end date is null, endterm is indispensable
 			int endTerm = leg.getData(PRICING_DATA_ENDTERM, ISNOTNULL).convertToString().getIntValue();
-			LADate date =  dynamic_cast<const LADataDate &>(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
+			AQLDate date =  dynamic_cast<const AQLDataDate &>(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
 			date.addYears(endTerm);
 			if ( date > maxDate)
 			{
@@ -387,28 +387,28 @@ MADealUtils::getMaxTerm(const LAObjectHolder &objHolder, const LADate &asOfDate)
 
 		if (inputType.toUpper() == "MANUAL")
 		{
-			const LADataHolder &attrCashlets = leg.getData(PRICING_DATA_CASHLETS, NOCHECK);
+			const AQLDataHolder &attrCashlets = leg.getData(PRICING_DATA_CASHLETS, NOCHECK);
 			if (attrCashlets.isDefined() && !attrCashlets.isNull())
 			{
-				const LADataMultiReference &cashlets = dynamic_cast<const LADataMultiReference &>(attrCashlets.get());
+				const AQLDataMultiReference &cashlets = dynamic_cast<const AQLDataMultiReference &>(attrCashlets.get());
 				const int cashletSize = cashlets.getSize();
 				// cashlet loop
 				for (int j = 0; j < cashletSize; ++j)
 				{
-					const LADataHolder &attrCoupons = cashlets.get(j).getData(PRICING_DATA_COUPONINFOS, NOCHECK);
+					const AQLDataHolder &attrCoupons = cashlets.get(j).getData(PRICING_DATA_COUPONINFOS, NOCHECK);
 					if (attrCoupons.isDefined() && !attrCoupons.isNull())
 					{
-						const LADataMultiReference &coupons = dynamic_cast<const LADataMultiReference &>(attrCoupons.get());
+						const AQLDataMultiReference &coupons = dynamic_cast<const AQLDataMultiReference &>(attrCoupons.get());
 						int tmp = getCMSYears(coupons, PRICING_DATA_INDEXINFOS);
 						if (addYears < tmp)
 						{
 							addYears = tmp;
 						}
 					}
-					const LADataHolder &attrRangeInfos = cashlets.get(j).getData(PRICING_DATA_RANGEACCRUEINFOS, NOCHECK);
+					const AQLDataHolder &attrRangeInfos = cashlets.get(j).getData(PRICING_DATA_RANGEACCRUEINFOS, NOCHECK);
 					if (attrRangeInfos.isDefined() && !attrRangeInfos.isNull())
 					{
-						const LADataMultiReference &rangeinfos = dynamic_cast<const LADataMultiReference &>(attrRangeInfos.get());
+						const AQLDataMultiReference &rangeinfos = dynamic_cast<const AQLDataMultiReference &>(attrRangeInfos.get());
 						int tmp = getCMSYears(rangeinfos, PRICING_DATA_RANGEACCRUEINDEXINFOS);
 						if (addYears < tmp)
 						{
@@ -420,17 +420,17 @@ MADealUtils::getMaxTerm(const LAObjectHolder &objHolder, const LADate &asOfDate)
 		}
 		else
 		{
-			const LADataMultiReference &coupons = dynamic_cast<const LADataMultiReference &>
+			const AQLDataMultiReference &coupons = dynamic_cast<const AQLDataMultiReference &>
 										(leg.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL).get());
 			int tmp = getCMSYears(coupons, PRICING_DATA_INDEXINFOS);
 			if (addYears < tmp)
 			{
 				addYears = tmp;
 			}
-			const LADataHolder &attrRangeInfos = leg.getData(PRICING_DATA_RANGEACCRUEINFOS, NOCHECK);
+			const AQLDataHolder &attrRangeInfos = leg.getData(PRICING_DATA_RANGEACCRUEINFOS, NOCHECK);
 			if (attrRangeInfos.isDefined() && !attrRangeInfos.isNull())
 			{
-				const LADataMultiReference &rangeinfos = dynamic_cast<const LADataMultiReference &>(attrRangeInfos.get());
+				const AQLDataMultiReference &rangeinfos = dynamic_cast<const AQLDataMultiReference &>(attrRangeInfos.get());
 				int tmp = getCMSYears(rangeinfos, PRICING_DATA_RANGEACCRUEINDEXINFOS);
 				if (addYears < tmp)
 				{
@@ -452,24 +452,24 @@ MADealUtils::getMaxTerm(const LAObjectHolder &objHolder, const LADate &asOfDate)
 	@return int
 */
 int
-MADealUtils::getMaxTermFromPlainVanilla(const LAObjectHolder &objHolder, const LADate &asOfDate)
+MADealUtils::getMaxTermFromPlainVanilla(const AQLObjectHolder &objHolder, const AQLDate &asOfDate)
 {
 	// max date
-	LADate maxDate;
+	AQLDate maxDate;
 	maxDate.setSystemDate();
 	//int addYears = 0;
 	int addYears = 1;
 
-	const LADataHolder* dh;
-	const LAObject& e = objHolder.get();
-	const LADataValuation& attrval = dynamic_cast<const LADataValuation& >(e.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
-	const LACoreValuation& val = attrval.getMethod();
+	const AQLDataHolder* dh;
+	const AQLObject& e = objHolder.get();
+	const AQLDataValuation& attrval = dynamic_cast<const AQLDataValuation& >(e.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
+	const AQLCoreValuation& val = attrval.getMethod();
 	//if option
 	if (val.isTypeOf(FN_PLAINVANILLAVALUE))
 	{
 		const LALinearRatesOptionValue & val2 = dynamic_cast<const LALinearRatesOptionValue &>(val);
-		const LADate& expirydate = val2.getMaturityDate(e,NULL);
-		const LADate& deliverydate = val2.getDeliveryDate(e,NULL);
+		const AQLDate& expirydate = val2.getMaturityDate(e,NULL);
+		const AQLDate& deliverydate = val2.getDeliveryDate(e,NULL);
 		maxDate = (expirydate > deliverydate) ? expirydate : deliverydate;
 	}
 	else if(val.isTypeOf(FN_IR_PLAINVANILLASWAPTRADEVALUE))
@@ -488,12 +488,12 @@ MADealUtils::getMaxTermFromPlainVanilla(const LAObjectHolder &objHolder, const L
 /*!
     @brief get applied maturity
 
-	@return LAString
+	@return AQLString
 */
-LAString 
+AQLString 
 MADealUtils::getAppMat()
 {
-	LAString appMat = LACoreDataService::getContext(ARG_KEY_APPMAT);
+	AQLString appMat = LACoreDataService::getContext(ARG_KEY_APPMAT);
 
 	if (appMat == AQ_NO_DATA)
 	{
@@ -507,42 +507,42 @@ MADealUtils::getAppMat()
 /*!
     @brief get ir volatility grids which are used for calculation
 
-	@return LAStringVector
+	@return AQLStringVector
 */
 BoolMatrix 
-MADealUtils::getCalibTargetIRVolGrids(LAObjectPool &objPool, 
-									  const LADate &asOfDate,
-									  const LAString& ccy,
-									  const LAString& underlying,
+MADealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool, 
+									  const AQLDate &asOfDate,
+									  const AQLString& ccy,
+									  const AQLString& underlying,
 									  const bool isPropSource)
 {
-	LAString ccy_small =ccy;
+	AQLString ccy_small =ccy;
 	ccy_small.toLower();
 	//set daycount
-	LAPriceDataDayCount act365ISDA(ACT_365_ISDA);
+	AQLPriceDataDayCount act365ISDA(ACT_365_ISDA);
 
 	//get calib property
 	LAStaticData &calibProp = LACoreDataService::getStaticDataManager().getCalibStaticData();
 
 	//expiry string and expiry vector
 	// optionmaturity
-	LAStringVector expiryVec_str = calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_OPTIONMATURITY + "." + underlying).toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector expiryVec_str = calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_OPTIONMATURITY + "." + underlying).toToken(MULTI_STATIC_DATA_DELIMITER);
 	DoubleVector expiryVec(expiryVec_str.size());
 	//sliding rule
-	LAString sr_str = calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_SWAPTIONSLIDINGRULE + "." + underlying).toUpper();
-	LAPriceDataSlidingRule sr;
+	AQLString sr_str = calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_SWAPTIONSLIDINGRULE + "." + underlying).toUpper();
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(sr_str);
 	//swaption fixing calendar
-	LAString cal_str = calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_SWAPTIONFIXINGCALENDAR + "." + underlying);
-	LAPriceDataCalendar cal;
+	AQLString cal_str = calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_SWAPTIONFIXINGCALENDAR + "." + underlying);
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(cal_str);
 	for (size_t i = 0; i < expiryVec_str.size(); ++i)
 	{
-		LADate toDate = LAMathDateCalculations::getDate(asOfDate, expiryVec_str[i], sr, &cal,true);
+		AQLDate toDate = LAMathDateCalculations::getDate(asOfDate, expiryVec_str[i], sr, &cal,true);
 		expiryVec[i] = act365ISDA.getTerm(asOfDate, toDate, true);
 	}
 	// tenor string and tenor vector
-	LAStringVector tenorVec_str = calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_SWAPTENOR + "." + underlying).toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector tenorVec_str = calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_SWAPTENOR + "." + underlying).toToken(MULTI_STATIC_DATA_DELIMITER);
 	DoubleVector tenorVec(tenorVec_str.size());
 	for (unsigned int i = 0; i < tenorVec_str.size(); i++)
 	{
@@ -552,19 +552,19 @@ MADealUtils::getCalibTargetIRVolGrids(LAObjectPool &objPool,
 	}
 
 	if (expiryVec.size() == 0)
-		throw LACoreInvalidData("Expiry dates has nod ata!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Expiry dates has nod ata!",__FILE__,__LINE__);
 
 	if (tenorVec.size() == 0)
-		throw LACoreInvalidData("Expiry dates has nod ata!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Expiry dates has nod ata!",__FILE__,__LINE__);
 
 	BoolVector tmp(tenorVec.size(), false);
 	BoolMatrix ret(expiryVec.size(), tmp);
 
 	if (isPropSource)
 	{
-		const LAString fileName = LAMarketData::getNumFileName(calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_TARGETVOLGRID_FILE + "." + underlying), MLIBID);
+		const AQLString fileName = LAMarketData::getNumFileName(calibProp.getStaticData(ccy_small + STATIC_DATA_KEY_CALIB_IRSABR_TARGETVOLGRID_FILE + "." + underlying), MLIBID);
 		MAFileAccessor file(fileName);
-		LAStringMatrix dataMtx;
+		AQLStringMatrix dataMtx;
 		file.readAllData(MARKET_DATA_DELIMITER, dataMtx);
 		file.close();
 
@@ -572,14 +572,14 @@ MADealUtils::getCalibTargetIRVolGrids(LAObjectPool &objPool,
 		{
 			if (dataMtx[i].size() != 2)
 			{
-				throw LACoreInvalidData("IRSABR ReductionInfo file format is wrong", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("IRSABR ReductionInfo file format is wrong", __FILE__, __LINE__);
 			}
-			const LAString expiryDate = dataMtx[i][0].toUpper();
-			const double expiryTerm = LAMath::max(act365ISDA.getTerm(asOfDate, LADate(expiryDate.getCString())), 0.0);
-			LAStringVector tenorInfos = dataMtx[i][1].toToken(':');
+			const AQLString expiryDate = dataMtx[i][0].toUpper();
+			const double expiryTerm = AQLMath::max(act365ISDA.getTerm(asOfDate, AQLDate(expiryDate.getCString())), 0.0);
+			AQLStringVector tenorInfos = dataMtx[i][1].toToken(':');
 			if (tenorInfos.size() == 1)
 			{
-				const LAString tenor = tenorInfos[0].toUpper();
+				const AQLString tenor = tenorInfos[0].toUpper();
 				int y, m, d, w;
 				LAMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 				const double tenor_d = static_cast<double>(y) + static_cast<double>(m) / 12;
@@ -588,17 +588,17 @@ MADealUtils::getCalibTargetIRVolGrids(LAObjectPool &objPool,
 			else if (tenorInfos.size() == 3)
 			{
 				LAPriceIRSwaptionValueFromCashFlow val_swaption;
-				const LADate startDate(tenorInfos[0].getCString());
-				const LADate endDate(tenorInfos[1].getCString());
-				LAObject entityInfo;
-				entityInfo.add(PRICING_DATA_STARTDATE, new LADataDate(startDate));
-				entityInfo.add(PRICING_DATA_ENDDATE, new LADataDate(endDate));
+				const AQLDate startDate(tenorInfos[0].getCString());
+				const AQLDate endDate(tenorInfos[1].getCString());
+				AQLObject entityInfo;
+				entityInfo.add(PRICING_DATA_STARTDATE, new AQLDataDate(startDate));
+				entityInfo.add(PRICING_DATA_ENDDATE, new AQLDataDate(endDate));
 
 				//get frequency
-				const LAString accessory = tenorInfos[2].toUpper();
-				const LAString frequency = LAMarketData::getFrequency(accessory);
+				const AQLString accessory = tenorInfos[2].toUpper();
+				const AQLString frequency = LAMarketData::getFrequency(accessory);
 				//get tenor
-				const LAString tenor = val_swaption.getNearestTenorString(entityInfo, frequency);
+				const AQLString tenor = val_swaption.getNearestTenorString(entityInfo, frequency);
 				int y, m, d, w;
 				LAMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 				const double tenor_d = static_cast<double>(y) + static_cast<double>(m) / 12;
@@ -606,23 +606,23 @@ MADealUtils::getCalibTargetIRVolGrids(LAObjectPool &objPool,
 			}
 			else
 			{
-				LAString msg = "TenorInfos format is wrong";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "TenorInfos format is wrong";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 
 		}		
 	}
 	else
 	{
-		LAString mainTradeName = LACoreDataService::getContext(ARG_KEY_MAINTRADE);
-		LAObjectHolder objHolder = objPool.getObject(mainTradeName, ENCHKTYPE_ISDEFINED);
+		AQLString mainTradeName = LACoreDataService::getContext(ARG_KEY_MAINTRADE);
+		AQLObjectHolder objHolder = objPool.getObject(mainTradeName, ENCHKTYPE_ISDEFINED);
 
-		std::vector<LAObject* > tradeEntities;
-		if (dynamic_cast<const LADataValuation &>
+		std::vector<AQLObject* > tradeEntities;
+		if (dynamic_cast<const AQLDataValuation &>
 			(objHolder.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get()).getType() == FN_IR_PORTFOLIOVALUE)
 		{
 			int maxTerm = 0;
-			const LADataMultiReference &unders = dynamic_cast<const LADataMultiReference &>
+			const AQLDataMultiReference &unders = dynamic_cast<const AQLDataMultiReference &>
 												(objHolder.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
 			const int tradeSize = unders.getSize();
 			for (int i = 0; i < tradeSize; ++i)
@@ -635,22 +635,22 @@ MADealUtils::getCalibTargetIRVolGrids(LAObjectPool &objPool,
 			tradeEntities.push_back(&objHolder.get());
 		}
 
-		LAString underlying_calib = underlying;
+		AQLString underlying_calib = underlying;
 		underlying_calib.toLower();
 		for (int i = 0; i < tradeEntities.size(); ++i)
 		{
-			const LADataHolder* dh;
-			const LADataValuation& attrval = dynamic_cast<const LADataValuation& >(tradeEntities[i]->getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
-			const LACoreValuation* pVal = &attrval.getMethod();
+			const AQLDataHolder* dh;
+			const AQLDataValuation& attrval = dynamic_cast<const AQLDataValuation& >(tradeEntities[i]->getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
+			const AQLCoreValuation* pVal = &attrval.getMethod();
 			// if value function is convergence value, we get sub value
 			if (pVal->isTypeOf(FN_IR_CONVERGENCEVALUE))
 			{
-				const LADataValuation& attrval = dynamic_cast<const LADataValuation& >(tradeEntities[i]->getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
+				const AQLDataValuation& attrval = dynamic_cast<const AQLDataValuation& >(tradeEntities[i]->getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
 				pVal = &attrval.getMethod();
 			}
 
 			double expiryTerm;
-			LAString tenor = "";
+			AQLString tenor = "";
 			if (pVal->isTypeOf(FN_IR_PLAINVANILLASWAPTRADEVALUE) || pVal->isTypeOf(FN_IR_CAPFLOOROPTIONVALUE))
 			{
 				if(pVal->isTypeOf(FN_IR_PLAINVANILLASWAPTRADEVALUE)){
@@ -662,66 +662,66 @@ MADealUtils::getCalibTargetIRVolGrids(LAObjectPool &objPool,
 					if(!capfloor_value->hasCashflow(*tradeEntities[i])) continue;
 				}
 
-				const LADataMultiReference &legs = dynamic_cast<const LADataMultiReference &>(tradeEntities[i]->getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
+				const AQLDataMultiReference &legs = dynamic_cast<const AQLDataMultiReference &>(tradeEntities[i]->getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
 				for (size_t i_leg = 0; i_leg < legs.getSize(); ++i_leg)
 				{
-					const LADataMultiReference &cashlets = dynamic_cast<const LADataMultiReference &>(legs.get(i_leg).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
+					const AQLDataMultiReference &cashlets = dynamic_cast<const AQLDataMultiReference &>(legs.get(i_leg).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
 					for (size_t i_chashlet = 0; i_chashlet < cashlets.getSize(); ++i_chashlet)
 					{
 						dh = &cashlets.get(i_chashlet).getData(PRICING_DATA_COUPONINFOS, NOCHECK);
 						if (dh->isDefined() && !dh->isNull())
 						{
-							const LADataMultiReference &coupons = dynamic_cast<const LADataMultiReference &>(dh->get());
+							const AQLDataMultiReference &coupons = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 							for (size_t i_cpn = 0; i_cpn < coupons.getSize(); ++i_cpn)
 							{
 								dh = &coupons.get(i_cpn).getData(PRICING_DATA_INDEXINFOS, NOCHECK);
 								if (dh->isDefined() && !dh->isNull())
 								{
-									const LADataMultiReference &indexs = dynamic_cast<const LADataMultiReference &>(dh->get());
+									const AQLDataMultiReference &indexs = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 									for (size_t i_index = 0; i_index < indexs.getSize(); ++i_index)
 									{
 										//check currency
 										dh = &indexs.get(i_index).getData(PRICING_DATA_CURRENCY, NOCHECK);
 										if (!dh->isDefined() || dh->isNull()) continue;
-										LAString ccy_index = dynamic_cast<const LADataString &> (dh->get()).get();
+										AQLString ccy_index = dynamic_cast<const AQLDataString &> (dh->get()).get();
 										ccy_index.toLower();
 										if (ccy_index != ccy_small) continue;
 										//check index type
-										LAString indexType = dynamic_cast<const LADataString &>(indexs.get(i_index).getData(IR_MODEL_DATA_INDEXTYPE, ISNOTNULL).get()).get();
+										AQLString indexType = dynamic_cast<const AQLDataString &>(indexs.get(i_index).getData(IR_MODEL_DATA_INDEXTYPE, ISNOTNULL).get()).get();
 										indexType.toUpper();
 
 										bool isDelayedConvexityAdjusted = false;
 										dh = &(indexs.get(i_index).getData(PRICING_DATA_CONVEXITYADJUSTMENT, NOCHECK));
 										if (dh->isDefined() && !dh->isNull())
 										{
-											const LAString& caModel = dynamic_cast<const LADataString&>(dh->get()).get();
+											const AQLString& caModel = dynamic_cast<const AQLDataString&>(dh->get()).get();
 											isDelayedConvexityAdjusted = LAMathIndexEntity::isDelayedConvexityAdjustModel(caModel) && (indexType == LIBOR);
 										}
 
 										if (pVal->isTypeOf(FN_IR_PLAINVANILLASWAPTRADEVALUE) && indexType != CMS && !isDelayedConvexityAdjusted) continue;
 										if (pVal->isTypeOf(FN_IR_CAPFLOOROPTIONVALUE) && indexType != CMS && indexType != LIBOR) continue;
 										//check underlying
-										LAString underlying_index = dynamic_cast<const LADataString &>(indexs.get(i_index).getData(PRICING_DATA_VOLATILITYUNDERLYING, ISNOTNULL).get()).get();
+										AQLString underlying_index = dynamic_cast<const AQLDataString &>(indexs.get(i_index).getData(PRICING_DATA_VOLATILITYUNDERLYING, ISNOTNULL).get()).get();
 										underlying_index.toLower();
 										if (underlying_calib != underlying_index) continue;
 										//get expiry term
 										/*if (pVal->isTypeOf(FN_IR_PLAINVANILLASWAPTRADEVALUE))
 										{
-											const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar &>(indexs.get(i_index).getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
-											int spotLag = dynamic_cast<const LADataInt &>(indexs.get(i_index).getData(PRICING_DATA_SPOTLAG, ISNOTNULL).get()).get();
-											const LADate& fixingDate = dynamic_cast<const LADataDate &>(indexs.get(i_index).getData(PRICING_DATA_FIXINGDATE, ISNOTNULL).get()).get();
-											LADate spotDate = cal.getBusinessDay(fixingDate, spotLag);
+											const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar &>(indexs.get(i_index).getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+											int spotLag = dynamic_cast<const AQLDataInt &>(indexs.get(i_index).getData(PRICING_DATA_SPOTLAG, ISNOTNULL).get()).get();
+											const AQLDate& fixingDate = dynamic_cast<const AQLDataDate &>(indexs.get(i_index).getData(PRICING_DATA_FIXINGDATE, ISNOTNULL).get()).get();
+											AQLDate spotDate = cal.getBusinessDay(fixingDate, spotLag);
 											expiryTerm = act365ISDA.getTerm(asOfDate, spotDate);
 										}
 										else if (pVal->isTypeOf(FN_IR_CAPFLOOROPTIONVALUE))
 										{*/
-										const LADate& fixingDate = dynamic_cast<const LADataDate &>(indexs.get(i_index).getData(PRICING_DATA_FIXINGDATE, ISNOTNULL).get()).get();
+										const AQLDate& fixingDate = dynamic_cast<const AQLDataDate &>(indexs.get(i_index).getData(PRICING_DATA_FIXINGDATE, ISNOTNULL).get()).get();
 										expiryTerm = act365ISDA.getTerm(asOfDate, fixingDate);
 										//}
 
 										if (expiryTerm < 0.) expiryTerm = 0.;
 										//get tenor
-										tenor = dynamic_cast<const LADataString &>(indexs.get(i_index).getData(PRICING_DATA_ACCESSORY, ISNOTNULL).get()).get();
+										tenor = dynamic_cast<const AQLDataString &>(indexs.get(i_index).getData(PRICING_DATA_ACCESSORY, ISNOTNULL).get()).get();
 										int y,m,d,w;
 										LAMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 										double tenor_d = static_cast<double > (y) + static_cast<double > (m) / 12;
@@ -738,39 +738,39 @@ MADealUtils::getCalibTargetIRVolGrids(LAObjectPool &objPool,
 			else if (pVal->isTypeOf(FN_IR_SWAPTIONVALUEFROMCASHFLOW))
 			{
 				//get leg
-				const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference &>(tradeEntities[i]->getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
+				const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference &>(tradeEntities[i]->getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
 				if (legs.getSize() != 2)
-					throw LACoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
 				const LAPriceIRSwaptionValueFromCashFlow& val_swaption = dynamic_cast<const LAPriceIRSwaptionValueFromCashFlow &> (*pVal);
 				if(!val_swaption.hasCashflow(*tradeEntities[i])) continue;
                 
 				//check currency
-				LAString ccy_index = dynamic_cast<const LADataString &>(legs.get(0).get().getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
+				AQLString ccy_index = dynamic_cast<const AQLDataString &>(legs.get(0).get().getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
 				ccy_index.toLower();
 				if (ccy_index != ccy_small) continue;
 				//check underlying
-				LAString underlying_trade = dynamic_cast<const LADataString &>(tradeEntities[i]->getData(PRICING_DATA_VOLATILITYUNDERLYING, ISNOTNULL).get()).get();
+				AQLString underlying_trade = dynamic_cast<const AQLDataString &>(tradeEntities[i]->getData(PRICING_DATA_VOLATILITYUNDERLYING, ISNOTNULL).get()).get();
 				underlying_trade.toLower();
 				if (underlying_calib != underlying_trade) continue;
 
-				const LADate& maturityDate = dynamic_cast<const LADataDate &>(tradeEntities[i]->getData(PRICING_DATA_EXPIRYDATE, ISNOTNULL).get()).get();
+				const AQLDate& maturityDate = dynamic_cast<const AQLDataDate &>(tradeEntities[i]->getData(PRICING_DATA_EXPIRYDATE, ISNOTNULL).get()).get();
 				expiryTerm = act365ISDA.getTerm(asOfDate, maturityDate);
 
 
 				//get float leg number
 				unsigned int floatLegNum = val_swaption.getFloatLegNum(*tradeEntities[i]);
 				//get float leg object
-				LAObject& floatleg = legs.get(floatLegNum).get();
+				AQLObject& floatleg = legs.get(floatLegNum).get();
 				//get frequency
-				LAString frequency = val_swaption.getFrequencyFromIndexGenerator(*tradeEntities[i], floatLegNum);
+				AQLString frequency = val_swaption.getFrequencyFromIndexGenerator(*tradeEntities[i], floatLegNum);
 				//get tenor
 				tenor = val_swaption.getNearestTenorString(floatleg, frequency);
 				int y,m,d,w;
 				LAMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 				double tenor_d = static_cast<double > (y) + static_cast<double > (m) / 12;
 
-				expiryTerm = LAMath::max(expiryTerm, 0.0);
-				tenor_d = LAMath::max(tenor_d, 0.0);
+				expiryTerm = AQLMath::max(expiryTerm, 0.0);
+				tenor_d = AQLMath::max(tenor_d, 0.0);
 				addCalibTargetFlag(ret, expiryTerm, tenor_d, expiryVec, tenorVec);
 			}
 //#ifndef RH6
@@ -786,7 +786,7 @@ MADealUtils::getCalibTargetIRVolGrids(LAObjectPool &objPool,
 //#endif
 			else
 			{
-				throw LACoreInvalidData(pVal->getType() + " does not use swaption volatility matrix!",__FILE__,__LINE__);
+				throw AQLCoreInvalidData(pVal->getType() + " does not use swaption volatility matrix!",__FILE__,__LINE__);
 			}
 		}
 	}
@@ -803,7 +803,7 @@ MADealUtils::addCalibTargetFlag( BoolMatrix& calibTaretMat,
 {
 	if(expiry<0. || tenor<0.) 
 	{
-		throw LACoreInvalidData("expiry or tenor is negative!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("expiry or tenor is negative!",__FILE__,__LINE__);
 	}
 
     size_t size_te = tenorVec.size();
@@ -883,14 +883,14 @@ MADealUtils::addCalibTargetFlag( BoolMatrix& calibTaretMat,
 }
 
 void 
-MADealUtils::addStochasticVolIndex(LAStringVector& ccys)
+MADealUtils::addStochasticVolIndex(AQLStringVector& ccys)
 {
 	unsigned int initialsize = ccys.size();
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	for (int i = 0; i < initialsize; ++i)
 	{
-		LAString ccy(ccys[i]);
-		LAString model(LAMarketData::getModelName(ccys[i]));
+		AQLString ccy(ccys[i]);
+		AQLString model(LAMarketData::getModelName(ccys[i]));
 		if(staticData.getStaticData(ccy.toLower() + ".sde." + model.toLower() + ".volatility.isstochastic").toUpper() == "TRUE")
 		{
 			ccys.push_back(ccys[i] + POSTFIX_VOL);

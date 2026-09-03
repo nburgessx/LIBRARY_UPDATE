@@ -4,7 +4,7 @@
 #include "BaseInstrument.h"
 #include "DeltaRiskGenerator.h"
 
-class LADate;
+class AQLDate;
 
 namespace etrading
 {
@@ -29,7 +29,7 @@ namespace etrading
         /* @brief		Set interpolation for pricing
         *  @param [in]	interpolation	Yield curve interpolation
         */
-        virtual void setInterpolation( const LAString& interpolation );
+        virtual void setInterpolation( const AQLString& interpolation );
 
         /* @brief		Method that returns swap PV
         *  @return		instrument PV
@@ -40,56 +40,56 @@ namespace etrading
 
         // Common parameters
         double		notional_;
-        LAString	effectiveDate_;
-        LAString	maturityDate_;
+        AQLString	effectiveDate_;
+        AQLString	maturityDate_;
         bool		isPayerSwap_;
 
         // Fixed leg parameters
         double		fixedRate_;
-        LAString    fixedBusinessDayAdjustment_;
-        LAString    fixedCalendar_;
-        LAString	fixedFrequency_;
-        LAString	fixedDayCount_;
-        LAString	fixedAccrualBusinessDayAdjustment_;
-        LAString	fixedAccrualCalendar_;
-        LAString	fixedPaymentBusinessDayAdjustment_;
-        LAString	fixedPaymentCalendar_;
-        LAString	fixedFirstStubDate_;
-        LAString	fixedLastStubDate_;
-        LAString	fixedRollDayString_;
-        LAString	fixedPaymentLag_;
-        LAString	fixedStubType_;
+        AQLString    fixedBusinessDayAdjustment_;
+        AQLString    fixedCalendar_;
+        AQLString	fixedFrequency_;
+        AQLString	fixedDayCount_;
+        AQLString	fixedAccrualBusinessDayAdjustment_;
+        AQLString	fixedAccrualCalendar_;
+        AQLString	fixedPaymentBusinessDayAdjustment_;
+        AQLString	fixedPaymentCalendar_;
+        AQLString	fixedFirstStubDate_;
+        AQLString	fixedLastStubDate_;
+        AQLString	fixedRollDayString_;
+        AQLString	fixedPaymentLag_;
+        AQLString	fixedStubType_;
 
         // LA fixed leg parameters
         int         fixedLegRollDay_;
-        LAString    fixedLegRollConvention_;   // Options: IMM, EOM, Start, End or NULL
+        AQLString    fixedLegRollConvention_;   // Options: IMM, EOM, Start, End or NULL
         bool        fixedLegIsEOMRoll_;
         bool        fixedLegIsStartRoll_;
 
         // Float leg parameters
-        LAString    floatBusinessDayAdjustment_;
-        LAString    floatCalendar_;
-        LAString	floatFrequency_;
-        LAString	floatDayCount_;
-        LAString	floatFixingBusinessDayAdjustment_;
-        LAString	floatFixingCalendar_;
-        LAString	floatAccrualBusinessDayAdjustment_;
-        LAString	floatAccrualCalendar_;
-        LAString	floatPaymentBusinessDayAdjustment_;
-        LAString	floatPaymentCalendar_;
-        LAString	floatFirstStubDate_;
-        LAString	floatLastStubDate_;
-        LAString	floatRollDayString_;
-        LAString	floatPaymentLag_;
-        LAString	floatFixingLag_;
-        LAString	floatStubType_;
+        AQLString    floatBusinessDayAdjustment_;
+        AQLString    floatCalendar_;
+        AQLString	floatFrequency_;
+        AQLString	floatDayCount_;
+        AQLString	floatFixingBusinessDayAdjustment_;
+        AQLString	floatFixingCalendar_;
+        AQLString	floatAccrualBusinessDayAdjustment_;
+        AQLString	floatAccrualCalendar_;
+        AQLString	floatPaymentBusinessDayAdjustment_;
+        AQLString	floatPaymentCalendar_;
+        AQLString	floatFirstStubDate_;
+        AQLString	floatLastStubDate_;
+        AQLString	floatRollDayString_;
+        AQLString	floatPaymentLag_;
+        AQLString	floatFixingLag_;
+        AQLString	floatStubType_;
         double		floatSpread_;
         double		floatFirstFixing_;
         double		floatLastFixing_;
 
         // LA float leg parameters
         int         floatLegRollDay_;
-        LAString    floatLegRollConvention_;   // Options: IMM, EOM, Start, End or NULL
+        AQLString    floatLegRollConvention_;   // Options: IMM, EOM, Start, End or NULL
         bool        floatLegIsEOMRoll_;
         bool        floatLegIsStartRoll_;
 
@@ -105,10 +105,10 @@ namespace etrading
         DateVector floatPaymentDates_;
 
         // Market
-        LAString curveSet_;
-        LAString forecastCurve_;
-        LAString discountCurve_;
-        LAString interpolation_;
+        AQLString curveSet_;
+        AQLString forecastCurve_;
+        AQLString discountCurve_;
+        AQLString interpolation_;
 
     };
 

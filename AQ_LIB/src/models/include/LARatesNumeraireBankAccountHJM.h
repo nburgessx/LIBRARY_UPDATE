@@ -5,9 +5,9 @@
 #endif
 
 #include "LARatesNumeraireBase.h"
-#include "LAInterpolationBase.h"
-#include "LA1DDataSet.h"
-#include "LABasic.h"
+#include "AQLInterpolationBase.h"
+#include "AQL1DDataSet.h"
+#include "AQLBasic.h"
 
 
 // ID for LARatesNumeraireBankAccountHJM
@@ -38,7 +38,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -51,7 +51,7 @@ public:
 								//======================================
 								// set terminal	
 	void						setTerminal(double T);
-	void						setInterpolationMethod_hjm(LAInterpolationBase* pinter); 
+	void						setInterpolationMethod_hjm(AQLInterpolationBase* pinter); 
 
 //	OPERATION
 private:
@@ -64,8 +64,8 @@ private:
 	mutable	DoubleArray	mTimeGrid;		// time grid
 	
 	double						mTerminal;// terminal
-	LAInterpolationBase*		mpInter_hjm;	// pointer to interpolation function
-	LA1DDataSet					mfunc;
+	AQLInterpolationBase*		mpInter_hjm;	// pointer to interpolation function
+	AQL1DDataSet					mfunc;
 
 protected:
 
@@ -81,18 +81,18 @@ protected:
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
-// Funciton ID of LAShiftMethod
+// Funciton ID of AQLShiftMethod
 #define FN_CONTIBANKACCOUNTFUNC	2702
-// Function Name of LAShiftMethod
+// Function Name of AQLShiftMethod
 #define FN_CONTIBANKACCOUNTFUNC_STR	"fn_contibankaccountfunc"
 
 
-class LARatesContiBankAccountFunction : public LAFunctionBase
+class LARatesContiBankAccountFunction : public AQLFunctionBase
 {
 public:
 	// Default constructor
@@ -104,15 +104,15 @@ public:
 	virtual function_t			getType() const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 
 	virtual double				operator()(const DoubleArray& x) const;
 	virtual double				operator()(const double& x) const;
 
 	// 
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								}
 	//
 	LARatesContiBankAccountFunction & operator=( const LARatesContiBankAccountFunction & ) { return *this; }

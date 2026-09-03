@@ -6,27 +6,27 @@
 #define LAPriceIMMFwdRiskConversionMatrix_h
 
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 class LAPriceIMMFwdRiskConversionMatrix
 {
 public:
 	LAPriceIMMFwdRiskConversionMatrix(
-		const LAStringVector& terms,
+		const AQLStringVector& terms,
 		const DateVector& dates,
 		const DateVector& immGridDates,
 		const DoubleMatrix& dfds,
 		const DoubleMatrix& dsdf,
 		const DoubleMatrix& dsdfExpanded);
 
-	const LAStringVector& getTerms() const;
+	const AQLStringVector& getTerms() const;
 	const DateVector& getDates() const;
 	const DateVector& getIMMGridDates() const;
 	const DoubleMatrix& getDfDs() const;
 	const DoubleMatrix& getDsDf() const;
 	const DoubleMatrix& getDsDfExpanded() const;
 
-	DoubleVector apply(const LAStringVector& riskTerms, const DoubleVector& riskValues) const;
+	DoubleVector apply(const AQLStringVector& riskTerms, const DoubleVector& riskValues) const;
 
 	static DoubleMatrix calcInverseMatrix(const DoubleMatrix &original);
 	static DoubleMatrix expand(const DoubleMatrix& dsdf, const DateVector& gridDates, const DateVector& immGridDates);
@@ -46,7 +46,7 @@ public:
 	static DoubleVector expand(const DoubleVector& original, const DateVector& gridDates, const DateVector& immGridDates);
 
 private:
-	LAStringVector mTerms;
+	AQLStringVector mTerms;
 	DateVector mDates;
 	DateVector mIMMGridDates;
 	DoubleMatrix mDfDs;

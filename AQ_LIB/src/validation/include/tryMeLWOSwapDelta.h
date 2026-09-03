@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 #include "LabelValueBlock.h"
 
 using etrading::LabelValueBlock;
@@ -23,15 +23,15 @@ namespace validation
 	*  @param [in]		riskCutOffTenor	    		The maximum tenor in years (e.g. 10Y) beyond which the curves are no longer bumped
     *  @param [in]		xccyFXSpotRates			        A vector of doubles representing Xccy FX Spot Rates
     */
-	 void tryMeLWOSwapDeltaLadder( LAStringVector& headers,
-								   LAStringVector& pillarNames,
+	 void tryMeLWOSwapDeltaLadder( AQLStringVector& headers,
+								   AQLStringVector& pillarNames,
 								   DoubleMatrix& deltas,
-								   const LAStringVector& swapNames,
-								   const LAStringMatrix& curveCollectionNames,
-								   const LAStringMatrix& fixingTableNames,
+								   const AQLStringVector& swapNames,
+								   const AQLStringMatrix& curveCollectionNames,
+								   const AQLStringMatrix& fixingTableNames,
 								   const bool bumpSpreadInstruments,
 								   const double bumpSize,
-								   const LAString& bumpMode,
+								   const AQLString& bumpMode,
 								   const bool aggregateRisk,
 								   const bool reportInLegCCY,
 								   const std::string& riskCutOffTenor,
@@ -41,7 +41,7 @@ namespace validation
     *                   This version presents the delta buckets for each curve in separate columns. Each consecutive pairs of columns
 	*                   (pillarName, delta) are aligned horizontally.
 	*  @param [out]		headers						Headers of the delta report
-    *  @param [out]		pillarNames					A vector of LAStringVector, with each LAStringVector representing a column of pillarNames for a curve
+    *  @param [out]		pillarNames					A vector of AQLStringVector, with each AQLStringVector representing a column of pillarNames for a curve
     *  @param [out]		deltas						A vector of DoubleVector, with each DoubleVector representing a column of delta sensitivities for a curve
     *  @param [in]		swapNames					A vector of strings representing the LWO Swap names
 	*  @param [in]		curveCollectionNames		A vector of strings representing the CurveCollection names for each leg of swap
@@ -54,15 +54,15 @@ namespace validation
 	*  @param [in]		riskCutOffTenor	    		The maximum tenor in years (e.g. 10Y) beyond which the curves are no longer bumped
     *  @param [in]		xccyFXSpotRates			        A vector of doubles representing Xccy FX Spot Rates
     */
-	 void tryMeLWOSwapDeltaLadderHorizontally( LAStringVector& headers,
-											   std::vector<LAStringVector>& pillarNames,
+	 void tryMeLWOSwapDeltaLadderHorizontally( AQLStringVector& headers,
+											   std::vector<AQLStringVector>& pillarNames,
 											   std::vector<DoubleVector>& deltas,
-											   const LAStringVector& swapNames,
-											   const LAStringMatrix& curveCollectionNames,
-											   const LAStringMatrix& fixingTableNames,
+											   const AQLStringVector& swapNames,
+											   const AQLStringMatrix& curveCollectionNames,
+											   const AQLStringMatrix& fixingTableNames,
 											   const bool bumpSpreadInstruments,
 											   const double bumpSize,
-											   const LAString& bumpMode,
+											   const AQLString& bumpMode,
 											   const bool aggregateRisk,
 											   const bool reportInLegCCY,
 											   const std::string& riskCutOffTenor,
@@ -84,15 +84,15 @@ namespace validation
 	*  @param [in]		reportInLegCCY				Whether to report the risk in LegCCY (if true) or valuationCCY (if false)
     *  @param [in]		xccyFXSpotRates			        A vector of doubles representing Xccy FX Spot Rates
     */
-	void tryMeLWOSwapDelta( LAStringVector& positionIDs,
+	void tryMeLWOSwapDelta( AQLStringVector& positionIDs,
 							DoubleVector& deltas,
-							const LAStringVector& swapNames,
-							const LAStringMatrix& curveCollectionNames,
-							const LAStringMatrix& fixingTableNames,
+							const AQLStringVector& swapNames,
+							const AQLStringMatrix& curveCollectionNames,
+							const AQLStringMatrix& fixingTableNames,
 							const bool bumpSpreadInstruments,
 							const double bumpSize,
-							const LAString& bumpMode,
-							const LAString& groupRiskBy,
+							const AQLString& bumpMode,
+							const AQLString& groupRiskBy,
 							const bool aggregateRisks,
 							const bool reportInLegCCY,
                             const DoubleVector& xccyFXSpotRates);

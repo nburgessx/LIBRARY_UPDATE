@@ -37,7 +37,7 @@ public:
 
 	//==============================================
 	// create  calibration info object
-	virtual LAString createCalibrationInfo(LAObjectPool &objPool, const LAString &fx); 
+	virtual AQLString createCalibrationInfo(AQLObjectPool &objPool, const AQLString &fx); 
 
 };
 

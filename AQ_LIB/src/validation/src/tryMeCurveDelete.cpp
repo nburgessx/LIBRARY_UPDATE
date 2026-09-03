@@ -15,7 +15,7 @@ namespace validation
     *  @param [in]		curveIndex			Name of the curve to be removed from object pool
     *  @return	A message showing the output of the action
     */
-	LAString tryMeCurveDelete(const LAString& curveCollection, const LAString& curveIndex)
+	AQLString tryMeCurveDelete(const AQLString& curveCollection, const AQLString& curveIndex)
 	{
 		VALID_EXCEPTION_START
 
@@ -27,7 +27,7 @@ namespace validation
             file.write( "curveIndex",		curveIndex );
         }
 
-		LAString ret = etrading::removeCurveFromEntityPool(curveCollection, curveIndex);
+		AQLString ret = etrading::removeCurveFromEntityPool(curveCollection, curveIndex);
 		return ret;
 
 		VALID_EXCEPTION_END

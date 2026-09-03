@@ -3,7 +3,7 @@
 #include "LabelValueBlock.h"
 #include "InterestRateSwap.h"
 
-class LADate;
+class AQLDate;
 
 namespace etrading
 {
@@ -22,7 +22,7 @@ namespace etrading
 
     private:
 
-        LAString compoundingMethod_;
+        AQLString compoundingMethod_;
         bool isYieldCurveReady_;
         bool isFwdInterp_;
 

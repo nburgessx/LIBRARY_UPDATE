@@ -5,7 +5,7 @@
 #endif
 
 
-#include "LAObject.h"
+#include "AQLObject.h"
 #include "LAMathAttrSDE.h"
 
 //// DEFINES ////
@@ -67,17 +67,17 @@
 #define SIMUBASIS "SIMUBASIS"
 
 
-class LADataInstance;
-class LADataInt;
-class LADataDoubles;
-class LADataDoubleMatrix;
-class LADataDate;
-class LADataReference;
-class LADataString;
-class LADataStrings;
-class LADataMultiReference;
-class LAPriceDataDayCount;
-class LAPriceDataRand;
+class AQLDataInstance;
+class AQLDataInt;
+class AQLDataDoubles;
+class AQLDataDoubleMatrix;
+class AQLDataDate;
+class AQLDataReference;
+class AQLDataString;
+class AQLDataStrings;
+class AQLDataMultiReference;
+class AQLPriceDataDayCount;
+class AQLPriceDataRand;
 class LARatesPathElementBase;
 class LARatesSDEBase;
 class LARatesBM;
@@ -89,12 +89,12 @@ typedef std::vector<ONEPATH>				MCPATH;   // matrix of pointer to path element
 /*! 
     @brief Class to represent MC path.
 */
-class LAMathPathEntity : public LAObject
+class LAMathPathEntity : public AQLObject
 {
 public:
 // LIFECYCLE
     // default constructor
-	LAMathPathEntity(LADataInstance* dataInstance);
+	LAMathPathEntity(AQLDataInstance* dataInstance);
     // copy constructor
 	LAMathPathEntity(const LAMathPathEntity& irse);
     // destructor
@@ -106,73 +106,73 @@ public:
     // Check function for this class type
 	virtual bool		isTypeOf(object_t id) const;
     // get basedate
-	const LADataDate&	getAsOfDate(void) const;
+	const AQLDataDate&	getAsOfDate(void) const;
     // get basedate. The setting of basedate is also possible. 
-	LADataDate&			getAsOfDate(void);
+	AQLDataDate&			getAsOfDate(void);
 	// get this path name
-	const LADataString&	getName() const;
+	const AQLDataString&	getName() const;
 	// get this path name. The setting of name is also possible. 
-	LADataString&		getName();
+	AQLDataString&		getName();
 	// get daycount
-	const LAPriceDataDayCount&	
+	const AQLPriceDataDayCount&	
 						getDayCount() const;
 	// get daycount. The setting of daycount is also possible. 
-	LAPriceDataDayCount&	    getDayCount();
+	AQLPriceDataDayCount&	    getDayCount();
 	// get sde time grid
-	const LADataDoubles&	
+	const AQLDataDoubles&	
 						getSDETimeGrid() const;
 	// get sde time grid. The setting of sde time grid is also possible. 
-	LADataDoubles&		getSDETimeGrid();
+	AQLDataDoubles&		getSDETimeGrid();
 	// get sde integral time grid
-	const LADataDoubles&	
+	const AQLDataDoubles&	
 						getSDEIntegralTimeGrid() const;
 	// get sde integral time grid. The setting of integral time grid is also possible. 
-	LADataDoubles&	getSDEIntegralTimeGrid();
+	AQLDataDoubles&	getSDEIntegralTimeGrid();
 	// get divided number of integral time grid 
-	const LADataInt&	
+	const AQLDataInt&	
 						getSDEIntegralDivNum() const;
 	// get divided number of integral time grid . The setting of divided number is also possible. 
-	LADataInt&			getSDEIntegralDivNum();
+	AQLDataInt&			getSDEIntegralDivNum();
 	// get rand generator
-	const LAPriceDataRand&	
+	const AQLPriceDataRand&	
 						getRand() const;
 	// get rand generator. The setting of rand generator is also possible. 
-	LAPriceDataRand&			getRand();
+	AQLPriceDataRand&			getRand();
 	// get data names of SDEs
-	const LADataStrings&	
+	const AQLDataStrings&	
 						getSDEAttrNames() const;
 	// get data names of SDEs. The setting of data names of SDEs is also possible. 
-	LADataStrings&		getSDEAttrNames();
+	AQLDataStrings&		getSDEAttrNames();
 	// get data names of SimulationSDEs
-	const LADataStrings&	
+	const AQLDataStrings&	
 						getSimulationSDEAttrNames() const;
 	// get data names of SimulationSDEs. The setting of data names of SDEs is also possible. 
-	LADataStrings&		getSimulationSDEAttrNames();
+	AQLDataStrings&		getSimulationSDEAttrNames();
 
 	// get initial values of SDEs
-	const LADataMultiReference&	
+	const AQLDataMultiReference&	
 						getInitialValues() const;
 	// get initial values of SDEs. The setting of initial values of SDEs is also possible. 
-	LADataMultiReference&
+	AQLDataMultiReference&
 						getInitialValues();	
 	// get start path number
-	const LADataInt&	
+	const AQLDataInt&	
 						getStartPathNum() const;
 	// get start path number. The setting of start path number is also possible. 
-	LADataInt&			getStartPathNum();
+	AQLDataInt&			getStartPathNum();
 
 	// get object name which has correlation matrix.
-	LAString			getCorrelationMatrixEntityName() const;
+	AQLString			getCorrelationMatrixEntityName() const;
 
 	// get correlation matrix between SDEs
-	const LADataDoubleMatrix&	
+	const AQLDataDoubleMatrix&	
 						getCorrelationMatrix() const;
 	// get correlation matrix between SDEs. The setting of correlation matrix is also possible. 
-	LADataDoubleMatrix&	getCorrelationMatrix();
+	AQLDataDoubleMatrix&	getCorrelationMatrix();
 	// get this ir curvepros names
-	const LADataStrings& getIRCurveProNames() const;
+	const AQLDataStrings& getIRCurveProNames() const;
 	// get this ir curvepros names
-	LADataStrings& getIRCurveProNames();
+	AQLDataStrings& getIRCurveProNames();
 
 	//  set antithetic or not
 	void				setAntithetic(bool flag = true); 
@@ -221,17 +221,17 @@ public:
 	bool				isOdd() const {return mIsOdd;}	
 	
 	//	make copy(clone) of this path object object.
-	LAObject*			clone() const;// %%% COVARIANT RETURN %%%
+	AQLObject*			clone() const;// %%% COVARIANT RETURN %%%
 	
 //  OPERATION 
 	// remove specified Data.If there is not Data to remove, do nothing.If member variable is specified to remove, do not remove it.
-	virtual void        remove(const LAString& dataName);
+	virtual void        remove(const AQLString& dataName);
 	// Initialize this Object.
 	virtual void		reset(void);
 
 protected:
 	// copy path object	 
-	virtual LAObject&	copy(const LAObject& e);
+	virtual AQLObject&	copy(const AQLObject& e);
 	// set intial value to sde except
 	void				setInitialValue();
 
@@ -243,26 +243,26 @@ private:
 	// calculate factor loading from correlation
 	DoubleMatrix				calcFactorLoading(const DoubleMatrix& cor);
 	// set Data specified by the name.
-	LADataHolder&				add(const LAString& name);
+	AQLDataHolder&				add(const AQLString& name);
 	// get correlation holder. Initialize it if not yet.
-	LADataHolder*				getCorrelationHolder() const;
+	AQLDataHolder*				getCorrelationHolder() const;
 
-	LADataHolder*				mpName;			// name (DATA_STRING)
-	LADataHolder*               mpAsOfDate;		// base date (DATA_DATE)
-	LADataHolder*				mpDC;			// daycount convention(DATA_DAYCOUNT)
-	LADataHolder*				mpSDETimeGrid;// time gird of output(DATA_DOUBLES)
-	LADataHolder*				mpSDEIntegralTimeGrid;// time gird of sde integral(DATA_DOUBLES)
-	LADataHolder*				mpRand;			// rand generator(DATA_RAND)
-	LADataHolder*				mpStartPathNum;	// start path number(DATA_INT)
-	LADataHolder*				mpSDEAttrNames;	// data names of SDEs(DATA_STRINGS)
-	LADataHolder*				mpSimSDEAttrNames;	// data names of SimSDEs(DATA_STRINGS)
-	LADataHolder*				mpInitialValues;// initial values of SDEs(DATA_MULTIREFERENCE)
-	LADataHolder*				mpCor;// correlation matrix between SDEs(DATA_DOUBLEMATRIX)
-	LADataHolder*				mpSDEIntegralDivNum;// divided number of time gird of sde integral(DATA_INT)
-	LADataHolder*				mpIsAntithetic;// antithetic flag
-	LADataHolder*				mpCacheSize;// cache size
-	LADataHolder*				mpIsBrownianBridge;// brownian bridge flag
-	LADataHolder*				mpIRCurveProNames; // ir curvespro names (DATA_STRINGS)
+	AQLDataHolder*				mpName;			// name (DATA_STRING)
+	AQLDataHolder*               mpAsOfDate;		// base date (DATA_DATE)
+	AQLDataHolder*				mpDC;			// daycount convention(DATA_DAYCOUNT)
+	AQLDataHolder*				mpSDETimeGrid;// time gird of output(DATA_DOUBLES)
+	AQLDataHolder*				mpSDEIntegralTimeGrid;// time gird of sde integral(DATA_DOUBLES)
+	AQLDataHolder*				mpRand;			// rand generator(DATA_RAND)
+	AQLDataHolder*				mpStartPathNum;	// start path number(DATA_INT)
+	AQLDataHolder*				mpSDEAttrNames;	// data names of SDEs(DATA_STRINGS)
+	AQLDataHolder*				mpSimSDEAttrNames;	// data names of SimSDEs(DATA_STRINGS)
+	AQLDataHolder*				mpInitialValues;// initial values of SDEs(DATA_MULTIREFERENCE)
+	AQLDataHolder*				mpCor;// correlation matrix between SDEs(DATA_DOUBLEMATRIX)
+	AQLDataHolder*				mpSDEIntegralDivNum;// divided number of time gird of sde integral(DATA_INT)
+	AQLDataHolder*				mpIsAntithetic;// antithetic flag
+	AQLDataHolder*				mpCacheSize;// cache size
+	AQLDataHolder*				mpIsBrownianBridge;// brownian bridge flag
+	AQLDataHolder*				mpIRCurveProNames; // ir curvespro names (DATA_STRINGS)
 	
 
 	std::vector<LARatesSDEBase*>	mSDEs;			// vector of pointer to sde

@@ -67,7 +67,7 @@ namespace etrading
 	    double pv = 0.0;
 		if (schedule_ == nullptr)
 		{
-			throw LACoreInvalidData( "#Error: Schedule has not been built", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: Schedule has not been built", __FILE__, __LINE__ );
 		}
 
 		CashflowPtr cf;
@@ -88,7 +88,7 @@ namespace etrading
     {
 		if (schedule_ == nullptr)
 		{
-			throw LACoreInvalidData( "#Error: LegStaticData or Schedule has not been built", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: LegStaticData or Schedule has not been built", __FILE__, __LINE__ );
 		}
 
         size_t expectedSize = schedule_->getCashflowSize();

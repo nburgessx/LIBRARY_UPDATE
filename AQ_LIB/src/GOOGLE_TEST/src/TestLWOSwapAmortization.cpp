@@ -78,9 +78,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString pvOutputsFilename   = pvOutputs; 
+                    AQLString pvOutputsFilename   = pvOutputs; 
                 #else
-                    LAString pvOutputsFilename   = pvOutputs64; 
+                    AQLString pvOutputsFilename   = pvOutputs64; 
                 #endif
 
                 // 2. Load the Input Files
@@ -89,8 +89,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -98,8 +98,8 @@ namespace google_test
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = pvInputFile["swapName"];
-                LAStringMatrix curveCollectionLVB = pvInputFile["curveCollections"];
-                LAStringMatrix fixingTableLVB     = pvInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = pvInputFile["curveCollections"];
+                AQLStringMatrix fixingTableLVB     = pvInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
            		auto swap = etrading::getSwap(swapName);
 
@@ -109,7 +109,7 @@ namespace google_test
 				const double tolerancePV = 1e-5;	// Notional of test trade is 1MM
                 CheckTestResultsAndRebaseOnRequest( actualPV, TEST_DIR, pvOutputsFilename, tolerancePV );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -127,9 +127,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString parRateOutputsFilename   = parRateOutputs; 
+                    AQLString parRateOutputsFilename   = parRateOutputs; 
                 #else
-                    LAString parRateOutputsFilename   = parRateOutputs64; 
+                    AQLString parRateOutputsFilename   = parRateOutputs64; 
                 #endif
 
                 // 2. Load the Input Files
@@ -138,8 +138,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -147,8 +147,8 @@ namespace google_test
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = parRateInputFile["swapName"];
-                LAStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
-                LAStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
+                AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
            		auto swap = etrading::getSwap(swapName);
 
@@ -157,7 +157,7 @@ namespace google_test
                 // 5. Check the Test Results
                 CheckTestResultsAndRebaseOnRequest( actualParRate, TEST_DIR, parRateOutputsFilename, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -175,9 +175,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString pv01OutputsFilename   = pv01Outputs; 
+                    AQLString pv01OutputsFilename   = pv01Outputs; 
                 #else
-                    LAString pv01OutputsFilename   = pv01Outputs64; 
+                    AQLString pv01OutputsFilename   = pv01Outputs64; 
                 #endif
 
                 // 2. Load the Input Files
@@ -186,8 +186,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -195,8 +195,8 @@ namespace google_test
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = pv01InputFile["swapName"];
-                LAStringMatrix curveCollectionLVB = pv01InputFile["curveCollections"];
-                LAStringMatrix fixingTableLVB     = pv01InputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = pv01InputFile["curveCollections"];
+                AQLStringMatrix fixingTableLVB     = pv01InputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
            		auto swap = etrading::getSwap(swapName);
 
@@ -205,7 +205,7 @@ namespace google_test
                 // 5. Check the Test Results
                 CheckTestResultsAndRebaseOnRequest( actualPV01, TEST_DIR, pv01OutputsFilename, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

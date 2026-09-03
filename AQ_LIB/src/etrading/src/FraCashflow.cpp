@@ -8,8 +8,8 @@ namespace etrading
 	FraCashflow::FraCashflow() : Cashflow(), strikeRate_(std::numeric_limits<double>::quiet_NaN())
     {}
     
-    FraCashflow::FraCashflow(const PayReceiveEnum& payReceive, double strikeRate, const LADate& fixingDate, const LADate& accrualStartDate, const LADate& accrualEndDate, 
-					int accrualDays, double accrualYearFraction, const LADate& paymentDate, double notional, double leverage)
+    FraCashflow::FraCashflow(const PayReceiveEnum& payReceive, double strikeRate, const AQLDate& fixingDate, const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, 
+					int accrualDays, double accrualYearFraction, const AQLDate& paymentDate, double notional, double leverage)
 					: strikeRate_(strikeRate), 
 					Cashflow(payReceive, fixingDate, accrualStartDate, accrualEndDate, accrualDays, accrualYearFraction, paymentDate, notional, leverage, 1.0/*couponMultiplier*/, NONE_FREQUENCY, NORMAL_CASHFLOW_TYPE, CashFlowBespokeInfo())
     {

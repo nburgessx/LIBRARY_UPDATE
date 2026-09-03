@@ -18,11 +18,11 @@
 #endif
 
 
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LARiskConfigurationFXDeltaGamma.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
-#include "LALinearFunc.h"
+#include "AQLLinearFunc.h"
 
 #include "LAFileAccessor.h"
 #include "LADealUtils.h"
@@ -52,44 +52,44 @@ LARiskConfigurationFXDeltaGamma::~LARiskConfigurationFXDeltaGamma(void)
     @brief return coefficient1
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXDeltaGamma::getCoefficient1(const LAString &fx) const
+AQLString
+LARiskConfigurationFXDeltaGamma::getCoefficient1(const AQLString &fx) const
 {
-	LAString bumpDirection = getPropBumpDirection(fx);
+	AQLString bumpDirection = getPropBumpDirection(fx);
 	bumpDirection.toUpper();
 	const double divUnit = getDivUnit(fx);
 	if (divUnit == 0.0)
 	{
-		throw LACoreInvalidData("Divid unit = 0 !!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Divid unit = 0 !!", __FILE__, __LINE__);
 	}
 	if (bumpDirection == RISK_BUMPDIRECTION_UPSHIFT)
 	{
 		const double val = 1.0 / divUnit;
-		return LAString(-val) + LAString(":")
-				+  LAString(val) + LAString(":0.0:0.0");
+		return AQLString(-val) + AQLString(":")
+				+  AQLString(val) + AQLString(":0.0:0.0");
 	}
 	else if (bumpDirection == RISK_BUMPDIRECTION_DOWNSHIFT)
 	{
 		const double val = 1.0 / divUnit;
-		return LAString(val) + LAString(":0.0:")
-				+  LAString(-val) + LAString(":0.0");
+		return AQLString(val) + AQLString(":0.0:")
+				+  AQLString(-val) + AQLString(":0.0");
 	}
 	else
 	{
 		const double val = 0.5 / divUnit;
-		return LAString("0.0:") + LAString(val) + LAString(":")
-						+  LAString(-val) + LAString(":0.0");
+		return AQLString("0.0:") + AQLString(val) + AQLString(":")
+						+  AQLString(-val) + AQLString(":0.0");
 	}
 }
 
 /*!
     @brief return operator2
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationFXDeltaGamma::getOperator2(void) const
 {
 	return FN_LINEAR_STR;
@@ -99,28 +99,28 @@ LARiskConfigurationFXDeltaGamma::getOperator2(void) const
     @brief return coefficient2
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXDeltaGamma::getCoefficient2(const LAString &fx) const
+AQLString
+LARiskConfigurationFXDeltaGamma::getCoefficient2(const AQLString &fx) const
 {
 	const double divUnit = getDivUnit(fx);
-	const double val = 1.0 / LAMath::pow(divUnit, 2.0);
-	return LAString(-2.0 * val)  + LAString(":") + LAString(val) + LAString(":")
-						+  LAString(val) + LAString(":0.0");
+	const double val = 1.0 / AQLMath::pow(divUnit, 2.0);
+	return AQLString(-2.0 * val)  + AQLString(":") + AQLString(val) + AQLString(":")
+						+  AQLString(val) + AQLString(":0.0");
 }
 
 /*!
     @brief return outputname2
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXDeltaGamma::getOutPutName2(const LAString &fx) const
+AQLString
+LARiskConfigurationFXDeltaGamma::getOutPutName2(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey.toLower() + 
 										FX_KEY_RISK_FRONT_FX_DELTA_OUTPUTNAME2);	
 }
@@ -131,17 +131,17 @@ LARiskConfigurationFXDeltaGamma::getOutPutName2(const LAString &fx) const
 	@param[in] key fx
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationFXDeltaGamma::createScenario2Entity(const LAString &fx, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationFXDeltaGamma::createScenario2Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index)  const
 {
-	vector<LAObject *> ret = LARiskConfigurationFX::createFXEntity(fx, dataInstance, SCENARIO_2,index);
+	vector<AQLObject *> ret = LARiskConfigurationFX::createFXEntity(fx, dataInstance, SCENARIO_2,index);
 
 	// fx vol calibration has been replaced to extra scenario
 	//if (isCalibTarget(fx))
 	//{
-	//	vector<LAObject *> volVec = LARiskConfigurationFX::createFXVolEntity(fx, dataInstance, SCENARIO_2, index);
+	//	vector<AQLObject *> volVec = LARiskConfigurationFX::createFXVolEntity(fx, dataInstance, SCENARIO_2, index);
 	//	ret.insert(ret.end(), volVec.begin(), volVec.end());
 	//}
 	return ret;
@@ -151,10 +151,10 @@ LARiskConfigurationFXDeltaGamma::createScenario2Entity(const LAString &fx, LADat
     @brief return bump direction
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXDeltaGamma::getBumpDirection(const LAString &ccy) const
+AQLString
+LARiskConfigurationFXDeltaGamma::getBumpDirection(const AQLString &ccy) const
 {
 	return RISK_BUMPDIRECTION_UPDOWNSHIFT;
 }
@@ -163,10 +163,10 @@ LARiskConfigurationFXDeltaGamma::getBumpDirection(const LAString &ccy) const
     @brief return bump direction
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXDeltaGamma::getPropBumpDirection(const LAString &ccy) const
+AQLString
+LARiskConfigurationFXDeltaGamma::getPropBumpDirection(const AQLString &ccy) const
 {
 	return  LARiskConfigurationFXDeltaEx1::getBumpDirection(ccy);
 }

@@ -23,13 +23,13 @@ namespace etrading
 	*  @param [in]		bondYieldParameters         Bond Yield Parameters
 	*  @return			Number of Bond Accrued Interest Days for a given coupon
     */
-    double calculateBondAccruedInterestDays(const LADate & settlementDate, const BondActiveCouponDates & activeCouponDates, const BondYieldParameters & bondYieldParameters)
+    double calculateBondAccruedInterestDays(const AQLDate & settlementDate, const BondActiveCouponDates & activeCouponDates, const BondYieldParameters & bondYieldParameters)
     {
 
 		//First accrualStartDate for the first cashflow, or the payment date before the first active coupon(payment) date for the non - first cashflow
-		LADate firstActivePaymentDate = activeCouponDates.firstActiveCouponDate_;
-		LADate priorFirstActivePaymentDate = activeCouponDates.priorFirstActiveCouponDate_;
-		LADate  firstActiveCashflowExDividendDate = activeCouponDates.firstActiveCashflowExDividendDate_;
+		AQLDate firstActivePaymentDate = activeCouponDates.firstActiveCouponDate_;
+		AQLDate priorFirstActivePaymentDate = activeCouponDates.priorFirstActiveCouponDate_;
+		AQLDate  firstActiveCashflowExDividendDate = activeCouponDates.firstActiveCashflowExDividendDate_;
 
 		// For JGB Bond, Accrued interest is on ACT/365 basis
         auto bondDaycount = isJapaneseGovenmentBond(bondYieldParameters.calculationType_) ? ACT_365_DAYCOUNT : bondYieldParameters.dayCount_;
@@ -55,14 +55,14 @@ namespace etrading
 	*  @param [in]		bondYieldParameters                 Bond Yield Parameters
 	*  @return			Bond Accrual Period as a double
 	*/
-	const double calculateBondAccruedInterestYearFraction(const LADate & settlementDate, const BondActiveCouponDates & activeCouponDates, const BondYieldParameters & bondYieldParameters)
+	const double calculateBondAccruedInterestYearFraction(const AQLDate & settlementDate, const BondActiveCouponDates & activeCouponDates, const BondYieldParameters & bondYieldParameters)
 	{
 
-		LADate firstActivePaymentDate = activeCouponDates.firstActiveCouponDate_;
-		LADate priorFirstActivePaymentDate = activeCouponDates.priorFirstActiveCouponDate_;
-		LADate  firstActiveCashflowExDividendDate = activeCouponDates.firstActiveCashflowExDividendDate_;
-		LADate  firstPriorVirtualPaymentDate = activeCouponDates.firstPriorVirtualCouponDate_;
-		LADate  secondPriorVirtualPaymentDate = activeCouponDates.secondPriorVirtualCouponDate_;
+		AQLDate firstActivePaymentDate = activeCouponDates.firstActiveCouponDate_;
+		AQLDate priorFirstActivePaymentDate = activeCouponDates.priorFirstActiveCouponDate_;
+		AQLDate  firstActiveCashflowExDividendDate = activeCouponDates.firstActiveCashflowExDividendDate_;
+		AQLDate  firstPriorVirtualPaymentDate = activeCouponDates.firstPriorVirtualCouponDate_;
+		AQLDate  secondPriorVirtualPaymentDate = activeCouponDates.secondPriorVirtualCouponDate_;
 
 		double accruedInterestYearFraction = 0.0;
 

@@ -41,7 +41,7 @@ LAPriceCouponMin::~LAPriceCouponMin()
 bool
 LAPriceCouponMin::isTypeOf(function_t id) const
 {
-	return (id == FN_CPNSLTOPERATORMIN ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CPNSLTOPERATORMIN ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -60,7 +60,7 @@ LAPriceCouponMin::operator()(const DoubleArray& x) const
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceCouponMin::clone() const
 {
     try 
@@ -69,7 +69,7 @@ LAPriceCouponMin::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 

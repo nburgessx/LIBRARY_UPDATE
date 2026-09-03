@@ -37,12 +37,12 @@ public:
 
 	//==============================================
 	// create  calibration info object
-	virtual LAString createCalibrationInfo(LAObjectPool &objPool, const LAString &fx);
-	virtual LAString createCalibrationInfo2(LAObjectPool &objPool, const LAString &fx);
+	virtual AQLString createCalibrationInfo(AQLObjectPool &objPool, const AQLString &fx);
+	virtual AQLString createCalibrationInfo2(AQLObjectPool &objPool, const AQLString &fx);
 protected:
 	//==============================================
 	// create  calibration  property value
-	LAString getCalibStaticDataValue(const LAString &key, const LAString &grid);
+	AQLString getCalibStaticDataValue(const AQLString &key, const AQLString &grid);
 
 };
 

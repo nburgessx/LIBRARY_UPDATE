@@ -14,9 +14,9 @@
 #include "LAQuantLibCostFunction.h"
 #include "LAQuantLibConstraint.h"
 #include "LAMathLeastSquareSABRQlib.h"
-#include "LABasic.h"
-#include "LACoreTemplateType.h"
-#include "LAInterpolationBase.h"
+#include "AQLBasic.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLInterpolationBase.h"
 #include <vector>
 
 class LAMathSABR;
@@ -40,7 +40,7 @@ public:
 				                const std::vector<double>& param0_,
 								const std::vector<bool>& flg_,
 				                const std::vector<double>& vol0_,
-								const LAString& target2fit_
+								const AQLString& target2fit_
 				                );
 
 	LAMathLeastSquareSABRCostFunc(const LAMathLeastSquareSABRCostFunc& rhs);
@@ -110,8 +110,8 @@ public:
 		DoubleMatrix numat_,
 		DoubleMatrix rhomat_,
 		const std::vector<int>& param_pos_,
-		const LAString& approxmethod_,
-		const LAString& tenorpoint_,
+		const AQLString& approxmethod_,
+		const AQLString& tenorpoint_,
 		const std::vector<double>& expiry_capfloor_,
 		const std::vector<double>& expiry_capfloorlet_,
 		const std::vector<double>& tenor_,
@@ -123,7 +123,7 @@ public:
 		const std::vector<double>& param0_,
 		const std::vector<bool>& flg_,
 		const std::vector<double>& vol0_,
-		const LAString& target2fit_,
+		const AQLString& target2fit_,
 		const size_t& num_capfloorlet_,
 		const size_t& num_diffterm_
 	);

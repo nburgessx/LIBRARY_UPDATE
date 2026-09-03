@@ -16,20 +16,20 @@
 
 #include "LAPriceEventExtraCF.h"
 
-#include "LADataHolder.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADataReference.h"
-#include "LAObject.h"
-#include "LAObjectHolder.h"
-#include "LADataMultiReference.h"
+#include "AQLDataHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDataReference.h"
+#include "AQLObject.h"
+#include "AQLObjectHolder.h"
+#include "AQLDataMultiReference.h"
 
-#include "LAAlgorithm.h"
-#include "LAConstant.h"
+#include "AQLAlgorithm.h"
+#include "AQLConstant.h"
 
-#include "LAMathDefine.h"
-#include "LAPriceDataFunction.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathFXEntity.h"
 
 #include "LAPricePayOff.h"
@@ -83,7 +83,7 @@ void LAPriceEventExtraCF::destroy()
 	}
 	mIndex.clear();
 
-	std::map<LADate, std::vector<LAPriceIndexToolBase*> >::iterator its = mIndexMap.begin();
+	std::map<AQLDate, std::vector<LAPriceIndexToolBase*> >::iterator its = mIndexMap.begin();
 	while(its != mIndexMap.end())
 	{
 		its->second.clear();
@@ -97,7 +97,7 @@ void LAPriceEventExtraCF::destroy()
 */
 void LAPriceEventExtraCF::copyIndex(const LAPriceEventExtraCF& v)
 {
-	std::map<LADate, std::vector<LAPriceIndexToolBase*> >::const_iterator it = v.mIndexMap.begin();
+	std::map<AQLDate, std::vector<LAPriceIndexToolBase*> >::const_iterator it = v.mIndexMap.begin();
 	while(it != v.mIndexMap.end())
 	{
 		std::vector<LAPriceIndexToolBase*>::const_iterator itv = it->second.begin();
@@ -118,7 +118,7 @@ void LAPriceEventExtraCF::copyIndex(const LAPriceEventExtraCF& v)
 			}
 			catch (bad_alloc & e)
 			{
-				throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+				throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 			}
 		}
 		// map insert
@@ -145,7 +145,7 @@ LAPriceEventExtraCF::LAPriceEventExtraCF(const LAPriceEventExtraCF& v)
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceEventExtraCF::clone() const    
 {
     try 
@@ -154,7 +154,7 @@ LAPriceEventExtraCF::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 
 }
@@ -219,7 +219,7 @@ LAPriceEventExtraCF::getType() const
 	@param[in,out] iter position of nearest payoff from this action expiry date
 */	
 void
-LAPriceEventExtraCF::doAction(const LADate& actiondate,
+LAPriceEventExtraCF::doAction(const AQLDate& actiondate,
 								   double actiontime,
 								   vector<PayOffToolHolderVector>& payoff,
 								   vector<PayOffToolHolderVector>& extrapayoff,
@@ -255,9 +255,9 @@ LAPriceEventExtraCF::doAction(const LADate& actiondate,
     @param[in] isCall call flag(true:call,false:trigger)
 */
 void
-LAPriceEventExtraCF::setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+LAPriceEventExtraCF::setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall)
 {
@@ -268,7 +268,7 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 		mTargetLegNo.push_back(0);
 	}
 
-	const LADataHolder* cah;
+	const AQLDataHolder* cah;
 
 	mpActionDates = NULL;
 	mpExpiryDates = NULL;
@@ -279,32 +279,32 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 	mIsMultiExtraCF = false;
 	cah = &(triggerinfo.getData(PRICING_DATA_ISMULTIEXTRACF, NOCHECK));
 	if (cah->isDefined() && !cah->isNull())
-		mIsMultiExtraCF = dynamic_cast<const LADataBool&>(cah->get()).get();
+		mIsMultiExtraCF = dynamic_cast<const AQLDataBool&>(cah->get()).get();
 	if(mIsMultiExtraCF)
 	{
 		//extra cf currencies
 		cah = &(triggerinfo.getData(PRICING_DATA_EXTRACFCURRENCIES, ISNOTNULL));
-		mExtraCFCurs = dynamic_cast<const LADataStrings&>(cah->get()).get();
+		mExtraCFCurs = dynamic_cast<const AQLDataStrings&>(cah->get()).get();
 	}
 
 	//base currency
 	cah = &(trade.getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-	mBaseCur = dynamic_cast<const LADataString&>(cah->get()).get();
+	mBaseCur = dynamic_cast<const AQLDataString&>(cah->get()).get();
 	//extra cf currency
 	cah = &(triggerinfo.getData(PRICING_DATA_EXTRACFCURRENCY, ISNOTNULL));
-	mExtraCFCur = dynamic_cast<const LADataString&>(cah->get()).get();
+	mExtraCFCur = dynamic_cast<const AQLDataString&>(cah->get()).get();
 	//fx rate for extra cf
 	mpFX_for_ExtraCF = NULL;
 	if (mBaseCur != mExtraCFCur || mIsMultiExtraCF)
 	{
 		cah = &(triggerinfo.getData(PRICING_DATA_EXTRACFFXRATE, ISNOTNULL));
-		const LADataReference& ref = dynamic_cast<const LADataReference&>(cah->get());
+		const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(cah->get());
 		mpFX_for_ExtraCF = &dynamic_cast<const LAMathFXEntity&>(ref.get().get());	
 	}
 
 	//expiry dates
 	cah = &(triggerinfo.getData(PRICING_DATA_EXPIRYDATES, ISNOTNULL));
-	mpExpiryDates = &dynamic_cast<const LADataDates&>(cah->get()).get();	
+	mpExpiryDates = &dynamic_cast<const AQLDataDates&>(cah->get()).get();	
 
 	//extra cf dates
 	if (isCall)
@@ -312,21 +312,21 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 		cah = &(triggerinfo.getData(PRICING_DATA_EXTRACFDATES, NOCHECK));
 		if (!cah->isDefined() || cah->isNull())
 			cah = &(triggerinfo.getData(PRICING_DATA_ACTIONDATES, ISNOTNULL));
-		mpActionDates = &dynamic_cast<const LADataDates&>(cah->get()).get();
+		mpActionDates = &dynamic_cast<const AQLDataDates&>(cah->get()).get();
 	}
 	else
 	{
 		cah = &(triggerinfo.getData(PRICING_DATA_ACTIONDATES, ISNOTNULL));
-		mpActionDates = &dynamic_cast<const LADataDates&>(cah->get()).get();	
+		mpActionDates = &dynamic_cast<const AQLDataDates&>(cah->get()).get();	
 	}
 	
 	//coefficients
 	cah = &(triggerinfo.getData(PRICING_DATA_EXTRACFFUNCCOEFFICIENTS, ISNOTNULL));
-	mpCoefficients = &dynamic_cast<const LADataDoubleMatrix&>(cah->get()).get();
+	mpCoefficients = &dynamic_cast<const AQLDataDoubleMatrix&>(cah->get()).get();
 	if (mpCoefficients->size() != 1 && mpCoefficients->size() != mpActionDates->size())
 	{
 		//error
-		throw LACoreInvalidData("ExtraCFFuncCoefficients row size must be one or same as ActionDates size", __FILE__, __LINE__);				
+		throw AQLCoreInvalidData("ExtraCFFuncCoefficients row size must be one or same as ActionDates size", __FILE__, __LINE__);				
 	}
 
 	if(mIsMultiExtraCF)
@@ -335,16 +335,16 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 		{
 			if((*mpCoefficients)[i].size() != mExtraCFCurs.size())
 			{
-				throw LACoreInvalidData("Invalid ExtraCFFuncCoefficients column size",__FILE__,__LINE__);				
+				throw AQLCoreInvalidData("Invalid ExtraCFFuncCoefficients column size",__FILE__,__LINE__);				
 			}
 		}
 	}
 	
-    //LADataHolder* index;
-	LADataHolder* dh;
+    //AQLDataHolder* index;
+	AQLDataHolder* dh;
 	//extra cf method
 	dh = &(triggerinfo.getData(PRICING_DATA_EXTRACFFUNC, ISNOTNULL));
-	mpExtraCFFunc = &dynamic_cast<LAPriceDataFunction&>(dh->get()).getFunction();	
+	mpExtraCFFunc = &dynamic_cast<AQLPriceDataFunction&>(dh->get()).getFunction();	
 
 	if (/*mpCoefficients != NULL && */mpCoefficients->size() == 1)
 	{
@@ -352,9 +352,9 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 		{
 			DoubleMatrix temp = DoubleMatrix(mpActionDates->size(), (*mpCoefficients)[0]);
 			dh = &(triggerinfo.getData(PRICING_DATA_EXTRACFFUNCCOEFFICIENTS, ISNOTNULL));
-			dynamic_cast<LADataDoubleMatrix &>(dh->get()).set(temp);
+			dynamic_cast<AQLDataDoubleMatrix &>(dh->get()).set(temp);
 			cah = &(triggerinfo.getData(PRICING_DATA_EXTRACFFUNCCOEFFICIENTS, ISNOTNULL));
-			mpCoefficients = &dynamic_cast<const LADataDoubleMatrix&>(cah->get()).get();
+			mpCoefficients = &dynamic_cast<const AQLDataDoubleMatrix&>(cah->get()).get();
 		}
 		else
 		{
@@ -366,13 +366,13 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 	cah = &(triggerinfo.getData(PRICING_DATA_EXTRACFFUNCINPUTS, NOCHECK));
 	if (cah->isDefined() && !cah->isNull())
 	{
-		const LAStringVector inputs = dynamic_cast<const LADataStrings&>(cah->get()).get();		
+		const AQLStringVector inputs = dynamic_cast<const AQLDataStrings&>(cah->get()).get();		
 		mInputsInfo.resize(inputs.size());
 		cah = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-		const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(cah->get());
+		const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(cah->get());
 		for (unsigned int i = 0; i < inputs.size(); i++)
 		{
-			LAString input = inputs[i];
+			AQLString input = inputs[i];
 			input.toUpper();
 			unsigned int size;
 			if (input.findString(CPNCF) == 0)
@@ -396,7 +396,7 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 				if (!cah->isDefined() || cah->isNull())
 				{
 					//error
-					throw LACoreInvalidData("INDEXTYPE is needed when EXTRACFFUNCINPUTS is index ", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("INDEXTYPE is needed when EXTRACFFUNCINPUTS is index ", __FILE__, __LINE__);
 				}	
 				mInputsInfo[i].first = 3;
 				unsigned int startpos = 0;
@@ -415,12 +415,12 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 				for (unsigned int j = 0; j < mpActionDates->size() - startpos; j++)
 				{
 					// do
-					const LADataMultiReference& infonum = dynamic_cast<const LADataMultiReference&>(cah->get());
+					const AQLDataMultiReference& infonum = dynamic_cast<const AQLDataMultiReference&>(cah->get());
 					mIndex[j].resize(infonum.getSize());
 					
 					for (unsigned int k = 0; k < static_cast<unsigned int>(infonum.getSize()); k++)
 					{
-						LAString type = dynamic_cast<LADataString &>(infonum.get(k).getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
+						AQLString type = dynamic_cast<AQLDataString &>(infonum.get(k).getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
 						type.toUpper();
 						if (type == FIXEDRATE)
 						{
@@ -446,10 +446,10 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 			else 
 			{
 				//error
-				LAString msg = PRICING_DATA_EXTRACFFUNCINPUTS;
+				AQLString msg = PRICING_DATA_EXTRACFFUNCINPUTS;
 				msg += ": " + input;
 				msg += " is a wrong input";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);				
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);				
 			}
 			if (input.findString(INDEX) == -1)
 			{
@@ -459,10 +459,10 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 					|| legs.getSize() < legNo)
 				{
 					//error
-					LAString msg = PRICING_DATA_EXTRACFFUNCINPUTS;
+					AQLString msg = PRICING_DATA_EXTRACFFUNCINPUTS;
 					msg += ": " + input;
 					msg += " is a wrong input";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);				
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);				
 				}
 			
 				mInputsInfo[i].second = legNo - 1;
@@ -476,26 +476,26 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 		{			
 			dh = &legs.get(i).getData(PRICING_DATA_COUPONPAYOFFS, NOCHECK);
 			if (dh->isDefined() && ! dh->isNull())
-				mPastCouponPayOff[i] = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+				mPastCouponPayOff[i] = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 			dh = &legs.get(i).getData(PRICING_CALIBRATION_DATAOTIONALCFS, NOCHECK);
 			if (dh->isDefined() && ! dh->isNull())
-				mPastNotionalExchange[i] = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+				mPastNotionalExchange[i] = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 			dh = &legs.get(i).getData(PRICING_DATA_EXTRACFS, NOCHECK);
 			if (dh->isDefined() && ! dh->isNull())
-				mPastExtraCF[i] = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+				mPastExtraCF[i] = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 		}
 	}
 	else if (!mpExtraCFFunc->isTypeOf(FN_CONSTANT))
 	{
 		//error
-		throw LACoreInvalidData("If ExtraCFFuncInputs is not set. ExtraCFFunc must be LAConstant", __FILE__, __LINE__);				
+		throw AQLCoreInvalidData("If ExtraCFFuncInputs is not set. ExtraCFFunc must be AQLConstant", __FILE__, __LINE__);				
 
 	}
 
 	// settlement adjust ratio
 	cah = &(triggerinfo.getData(PRICING_DATA_SETTLEMENTADJUSTRATIOS, NOCHECK));
 	if (cah->isDefined() && !dh->isNull())
-		mSettlementAdjustRatios = dynamic_cast<const LADataDoubles &>(cah->get()).get();
+		mSettlementAdjustRatios = dynamic_cast<const AQLDataDoubles &>(cah->get()).get();
 	else
 		mSettlementAdjustRatios.resize(mpActionDates->size(), 1.0);
 
@@ -512,7 +512,7 @@ LAPriceEventExtraCF::setUp(const LADate& basedate,
 	@param[in,out] iter position of nearest payoff from this action expiry date
 */	
 double
-LAPriceEventExtraCF::calcExtraCF(const LADate& actiondate,
+LAPriceEventExtraCF::calcExtraCF(const AQLDate& actiondate,
 								   double actiontime,
 								   vector<PayOffToolHolderVector>& payoff,
 								   vector<PayOffToolHolderVector>& extrapayoff,
@@ -524,19 +524,19 @@ LAPriceEventExtraCF::calcExtraCF(const LADate& actiondate,
 	(void)actiontime; (void)pastaction; (void)futureaction; //20070411--Nagase--gcc
 	double extracf = 0;
 	////product index
-	//std::map<LADate, std::vector<LAPriceIndexToolBase*> >::const_iterator it = mIndexMap.begin();
+	//std::map<AQLDate, std::vector<LAPriceIndexToolBase*> >::const_iterator it = mIndexMap.begin();
 	//vector<LAPriceIndexToolBase*> c_vec;
 	//while(it != mIndexMap.end())
 	//{
 
 	unsigned int pos;
-	if (LAAlgorithm::find<DateVector, LADate>((*mpActionDates), actiondate, 0, mpActionDates->size() - 1, pos))
+	if (AQLAlgorithm::find<DateVector, AQLDate>((*mpActionDates), actiondate, 0, mpActionDates->size() - 1, pos))
 		;
 	else
 	{
 		//error
-		LAString msg = "ExtraCF action date is something wrong";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "ExtraCF action date is something wrong";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	if (mInputsInfo.size() == 0)
@@ -615,14 +615,14 @@ LAPriceEventExtraCF::calcExtraCF(const LADate& actiondate,
 			}
 			else if (mInputsInfo[i].first == 3)
 			{
-				map<LADate, std::vector<LAPriceIndexToolBase*> >::const_iterator its = mIndexMap.begin();
+				map<AQLDate, std::vector<LAPriceIndexToolBase*> >::const_iterator its = mIndexMap.begin();
 				its = mIndexMap.find(actiondate);
 				//check
 				if (its == mIndexMap.end())
 				{
 					//error
-					LAString msg = "ActionDates don't exit in mIndexMap";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "ActionDates don't exit in mIndexMap";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 				vector<LAPriceIndexToolBase*>::const_iterator itvec = its->second.begin();
 				for (itvec = its->second.begin(); itvec != its->second.end(); itvec++)

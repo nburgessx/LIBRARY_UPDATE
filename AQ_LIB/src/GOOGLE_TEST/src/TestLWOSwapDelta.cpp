@@ -94,14 +94,14 @@ namespace
 	{
 		// Swap Generator
         const ReadDataFile::Load swapGeneratorInputFile( swapGeneratorInputs );
-		LAStringMatrix swapGeneratorLVB = swapGeneratorInputFile[ "swapGeneratorLVB" ];
+		AQLStringMatrix swapGeneratorLVB = swapGeneratorInputFile[ "swapGeneratorLVB" ];
 		std::string swapGeneratorName = validation::tryMeLWOSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
 
 		// Swap
 		const ReadDataFile::Load swapInputFile( swapInputs );
 		std::string swapName			= swapInputFile[ "swapName" ];
-		LAStringMatrix expressionLVB		= swapInputFile[ "expressionLVB" ];
-		LAStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
+		AQLStringMatrix expressionLVB		= swapInputFile[ "expressionLVB" ];
+		AQLStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
 		return validation::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
@@ -111,9 +111,9 @@ namespace
 	{
 		const ReadDataFile::Load swapInputFile( swapInputs );
 		std::string swapName		= swapInputFile[ "swapName" ];
-		LAStringMatrix leg1Lvb		= swapInputFile[ "leg1LVB" ];
-		LAStringMatrix leg2Lvb		= swapInputFile[ "leg2LVB" ];
-		LAStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
+		AQLStringMatrix leg1Lvb		= swapInputFile[ "leg1LVB" ];
+		AQLStringMatrix leg2Lvb		= swapInputFile[ "leg2LVB" ];
+		AQLStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
 		return validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1Lvb, leg2Lvb, swapProperties, isXccySwap, validateKeys );
@@ -123,8 +123,8 @@ namespace
 	{
 		const ReadDataFile::Load swapInputFile( swapInputs );
 		std::string swapName		= swapInputFile[ "swapName" ];
-		LAStringMatrix swapLvb		= swapInputFile[ "swapLVB" ];
-		LAStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
+		AQLStringMatrix swapLvb		= swapInputFile[ "swapLVB" ];
+		AQLStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
 		return validation::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
@@ -153,20 +153,20 @@ namespace google_test
 		std::string oisSwap = helperCreateSwapFromLegLVBs( oisSwapInputs );
 		
 		const ReadDataFile::Load flatShiftDelta( flatShiftDeltaInputs_ois );
-		LAStringVector swapNames					= flatShiftDelta[ "swapNames" ];
-		LAStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
+		AQLStringVector swapNames					= flatShiftDelta[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
 		bool bumpSpreadInstruments				= flatShiftDelta[ "bumpSpreadInstruments" ];
 		double bumpSize							= flatShiftDelta[ "bumpSize" ];
-		LAString bumpMode						= flatShiftDelta[ "bumpMode" ];
-		LAString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
+		AQLString bumpMode						= flatShiftDelta[ "bumpMode" ];
+		AQLString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
 		bool aggregateRisks						= flatShiftDelta[ "aggregateRisks" ];
 		bool reportInLegCCY						= flatShiftDelta[ "reportInLegCCY" ];
 
         // Dummy Xccy FX Spot Rates
         DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 
-		LAStringVector legNames;
+		AQLStringVector legNames;
 		DoubleVector deltas;
 		validation::tryMeLWOSwapDelta( legNames,
 										   deltas,
@@ -184,9 +184,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_delta_outputs_ois_32;
+            AQLString outputFileName = raw_delta_outputs_ois_32;
 #else
-            LAString outputFileName = raw_delta_outputs_ois_64;
+            AQLString outputFileName = raw_delta_outputs_ois_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -210,7 +210,7 @@ namespace google_test
 			double flatShiftDeltaTolerance = 1.e-4; // 1MM notional
             for ( size_t i = 0; i < legNames.size(); ++i )
             {
-                LAString key	= legNames[i];
+                AQLString key	= legNames[i];
 
                 double delta	= deltas[i];
                 double ref		= resultFile[key];
@@ -241,20 +241,20 @@ namespace google_test
 		std::string fixingTableLeg1 = validation::tryMeLWOFixingTableCreate( tableName, currency, tenor, fixingDates, fixingValues );
 		
 		const ReadDataFile::Load flatShiftDelta( flatShiftDeltaInputs_irs );
-		LAStringVector swapNames					= flatShiftDelta[ "swapNames" ];
-		LAStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
+		AQLStringVector swapNames					= flatShiftDelta[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
 		bool bumpSpreadInstruments				= flatShiftDelta[ "bumpSpreadInstruments" ];
 		double bumpSize							= flatShiftDelta[ "bumpSize" ];
-		LAString bumpMode						= flatShiftDelta[ "bumpMode" ];
-		LAString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
+		AQLString bumpMode						= flatShiftDelta[ "bumpMode" ];
+		AQLString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
 		bool aggregateRisks						= flatShiftDelta[ "aggregateRisks" ];
 		bool reportInLegCCY						= flatShiftDelta[ "reportInLegCCY" ];
         
         // Dummy Xccy FX Spot Rates
         DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 
-		LAStringVector legNames;
+		AQLStringVector legNames;
 		DoubleVector deltas;
 		validation::tryMeLWOSwapDelta( legNames,
 										   deltas,
@@ -272,9 +272,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_delta_outputs_irs_32;
+            AQLString outputFileName = raw_delta_outputs_irs_32;
 #else
-            LAString outputFileName = raw_delta_outputs_irs_64;
+            AQLString outputFileName = raw_delta_outputs_irs_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -301,7 +301,7 @@ namespace google_test
 			double sumDelta = 0.0;
             for ( size_t i = 0; i < legNames.size(); ++i )
             {
-                LAString key	= legNames[i];
+                AQLString key	= legNames[i];
 
                 double delta	= deltas[i];
                 double ref		= resultFile[key];
@@ -313,7 +313,7 @@ namespace google_test
 
 			// 2. Now recalculate the risk by SWAP
 			DoubleVector deltaBySwap;
-			LAString groupRiskBySwap = "SWAP";
+			AQLString groupRiskBySwap = "SWAP";
 			validation::tryMeLWOSwapDelta( legNames,
 											   deltaBySwap,
 											   swapNames,
@@ -335,7 +335,7 @@ namespace google_test
 			// 3. Finally recalculate the TOTAL delta of the portfolio 
 			// As this is a single trade, this will match the SWAP level delta
 			DoubleVector deltaByTotal;
-			LAString groupRiskByTotal = "TOTAL";
+			AQLString groupRiskByTotal = "TOTAL";
 			validation::tryMeLWOSwapDelta( legNames,
 											   deltaByTotal,
 											   swapNames,
@@ -366,20 +366,20 @@ namespace google_test
 		std::string tenorBasisSwap = helperCreateSwapFromLegLVBs( tenorBasisSwapInputs );
 		
 		const ReadDataFile::Load flatShiftDelta( flatShiftDeltaInputs_tb );
-		LAStringVector swapNames					= flatShiftDelta[ "swapNames" ];
-		LAStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
+		AQLStringVector swapNames					= flatShiftDelta[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
 		bool bumpSpreadInstruments				= flatShiftDelta[ "bumpSpreadInstruments" ];
 		double bumpSize							= flatShiftDelta[ "bumpSize" ];
-		LAString bumpMode						= flatShiftDelta[ "bumpMode" ];
-		LAString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
+		AQLString bumpMode						= flatShiftDelta[ "bumpMode" ];
+		AQLString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
 		bool aggregateRisks						= flatShiftDelta[ "aggregateRisks" ];
 		bool reportInLegCCY						= flatShiftDelta[ "reportInLegCCY" ];;
 
         // Dummy Xccy FX Spot Rates
         DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 
-		LAStringVector legNames;
+		AQLStringVector legNames;
 		DoubleVector deltas;
 		validation::tryMeLWOSwapDelta( legNames,
 										   deltas,
@@ -397,9 +397,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_delta_outputs_tb_32;
+            AQLString outputFileName = raw_delta_outputs_tb_32;
 #else
-            LAString outputFileName = raw_delta_outputs_tb_64;
+            AQLString outputFileName = raw_delta_outputs_tb_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -422,7 +422,7 @@ namespace google_test
 
             for ( size_t i = 0; i < legNames.size(); ++i )
             {
-                LAString key	= legNames[i];
+                AQLString key	= legNames[i];
 
                 double delta	= deltas[i];
                 double ref		= resultFile[key];
@@ -442,18 +442,18 @@ namespace google_test
 		std::string xccySwap = createSwapFromDataFile( xccySwapInputs );
 		
 		const ReadDataFile::Load flatShiftDelta( flatShiftDeltaInputs_xccy );
-		LAStringVector swapNames					= flatShiftDelta[ "swapNames" ];
-		LAStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
+		AQLStringVector swapNames					= flatShiftDelta[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
 		bool bumpSpreadInstruments				= flatShiftDelta[ "bumpSpreadInstruments" ];
 		double bumpSize							= flatShiftDelta[ "bumpSize" ];
-		LAString bumpMode						= flatShiftDelta[ "bumpMode" ];
-		LAString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
+		AQLString bumpMode						= flatShiftDelta[ "bumpMode" ];
+		AQLString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
 		bool aggregateRisks						= flatShiftDelta[ "aggregateRisks" ];
 		bool reportInLegCCY						= flatShiftDelta[ "reportInLegCCY" ];
         DoubleVector xccyFXSpotRates            = flatShiftDelta[ "xccyFXSpotRates" ];
 
-		LAStringVector legNames;
+		AQLStringVector legNames;
 		DoubleVector deltas;
 		validation::tryMeLWOSwapDelta( legNames,
 										   deltas,
@@ -471,9 +471,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_delta_outputs_xccy_32;
+            AQLString outputFileName = raw_delta_outputs_xccy_32;
 #else
-            LAString outputFileName = raw_delta_outputs_xccy_64;
+            AQLString outputFileName = raw_delta_outputs_xccy_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -496,7 +496,7 @@ namespace google_test
 
             for ( size_t i = 0; i < legNames.size(); ++i )
             {
-                LAString key	= legNames[i];
+                AQLString key	= legNames[i];
 
                 double delta	= deltas[i];
                 double ref		= resultFile[key];
@@ -524,18 +524,18 @@ namespace google_test
 		std::string xccySwap = createSwapFromDataFile( xccySwapInputs );
 		
 		const ReadDataFile::Load flatShiftDelta( flatShiftDeltaInputs_xccy );
-		LAStringVector swapNames					= flatShiftDelta[ "swapNames" ];
-		LAStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
+		AQLStringVector swapNames					= flatShiftDelta[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
 		bool bumpSpreadInstruments				= flatShiftDelta[ "bumpSpreadInstruments" ];
 		double bumpSize							= flatShiftDelta[ "bumpSize" ];
-		LAString bumpMode						= flatShiftDelta[ "bumpMode" ];
-		LAString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
+		AQLString bumpMode						= flatShiftDelta[ "bumpMode" ];
+		AQLString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
 		bool aggregateRisks						= flatShiftDelta[ "aggregateRisks" ];
 		bool reportInLegCCY						= flatShiftDelta[ "reportInLegCCY" ];
         DoubleVector xccyFXSpotRates            = flatShiftDelta[ "xccyFXSpotRates" ];
 
-		LAStringVector legNames;
+		AQLStringVector legNames;
 		DoubleVector deltas;
 		validation::tryMeLWOSwapDelta( legNames,
 										   deltas,
@@ -553,9 +553,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_delta_outputs_xccy_32;
+            AQLString outputFileName = raw_delta_outputs_xccy_32;
 #else
-            LAString outputFileName = raw_delta_outputs_xccy_64;
+            AQLString outputFileName = raw_delta_outputs_xccy_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -578,7 +578,7 @@ namespace google_test
 
             for ( size_t i = 0; i < legNames.size(); ++i )
             {
-                LAString key	= legNames[i];
+                AQLString key	= legNames[i];
 
                 double delta	= deltas[i];
                 double ref		= resultFile[key];
@@ -608,18 +608,18 @@ namespace google_test
 		std::string xccySwap = createSwapFromDataFile( xccySwapInputs );
 		
 		const ReadDataFile::Load flatShiftDelta( swapDV01Inputs );
-		LAStringVector swapNames					= flatShiftDelta[ "swapNames" ];
-		LAStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
+		AQLStringVector swapNames					= flatShiftDelta[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
 		bool bumpSpreadInstruments				= flatShiftDelta[ "bumpSpreadInstruments" ];
 		double bumpSize							= flatShiftDelta[ "bumpSize" ];
-		LAString bumpMode						= flatShiftDelta[ "bumpMode" ];
-		LAString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
+		AQLString bumpMode						= flatShiftDelta[ "bumpMode" ];
+		AQLString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
 		bool aggregateRisks						= flatShiftDelta[ "aggregateRisks" ];
 		bool reportInLegCCY						= flatShiftDelta[ "reportInLegCCY" ];
         DoubleVector xccyFXSpotRates            = flatShiftDelta[ "xccyFXSpotRates" ];
 
-		LAStringVector positionIDs;
+		AQLStringVector positionIDs;
 		DoubleVector deltas;
 		// The DV01 is actually calculated by the tryMeLWOSwapDelta function
 		validation::tryMeLWOSwapDelta( positionIDs,
@@ -638,9 +638,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_dv01_outputs_32;
+            AQLString outputFileName = raw_dv01_outputs_32;
 #else
-            LAString outputFileName = raw_dv01_outputs_64;
+            AQLString outputFileName = raw_dv01_outputs_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -663,7 +663,7 @@ namespace google_test
 
             for ( size_t i = 0; i < positionIDs.size(); ++i )
             {
-                LAString key	= positionIDs[i];
+                AQLString key	= positionIDs[i];
 
                 double delta	= deltas[i];
                 double ref		= resultFile[key];
@@ -693,19 +693,19 @@ namespace google_test
 		std::string xccySwap = createSwapFromDataFile( xccySwapInputs );
 
 		const ReadDataFile::Load deltaLadder ( deltaLadderInputs );
-		LAStringVector swapNames					= deltaLadder[ "swapNames" ];
-		LAStringMatrix curveCollectionNames		= deltaLadder[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames			= deltaLadder[ "fixingTableNames" ];
+		AQLStringVector swapNames					= deltaLadder[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames		= deltaLadder[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames			= deltaLadder[ "fixingTableNames" ];
 		bool bumpSpreadInstruments				= deltaLadder[ "bumpSpreadInstruments" ];
 		double bumpSize							= deltaLadder[ "bumpSize" ];
-		LAString bumpMode						= deltaLadder[ "bumpMode" ];
+		AQLString bumpMode						= deltaLadder[ "bumpMode" ];
 		bool aggregateRisks						= deltaLadder[ "aggregateRisks" ];
 		bool reportInLegCCY						= deltaLadder[ "reportInLegCCY" ];
 		DoubleVector xccyFXSpotRates            = deltaLadder[ "xccyFXSpotRates" ];
         std::string riskCutOffTenor             = "";
 
-		LAStringVector pillarNames;
-		LAStringVector headers;
+		AQLStringVector pillarNames;
+		AQLStringVector headers;
 		DoubleMatrix deltas;
 		validation::tryMeLWOSwapDeltaLadder(headers,
 												pillarNames,
@@ -724,9 +724,9 @@ namespace google_test
        if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_delta_ladder_outputs_32;
+            AQLString outputFileName = raw_delta_ladder_outputs_32;
 #else
-            LAString outputFileName = raw_delta_ladder_outputs_64;
+            AQLString outputFileName = raw_delta_ladder_outputs_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -755,7 +755,7 @@ namespace google_test
 				FAIL() << "Reference baseline does not contain delta column headers" << std::endl;
 			}
 
-			LAStringVector refHeaders = resultFile["headers"];
+			AQLStringVector refHeaders = resultFile["headers"];
 			if ( headers.size() != refHeaders.size() )
 			{
 				FAIL() << "Calculated delta has different number of column headers compared to reference baseline : " << headers.size() << " vs " << refHeaders.size() << std::endl;
@@ -767,7 +767,7 @@ namespace google_test
 
             for ( size_t i = 0; i < pillarNames.size(); ++i )
             {
-                LAString key	= pillarNames[i];
+                AQLString key	= pillarNames[i];
 
 				if ( ! resultFile.hasItem(key) )
 				{

@@ -53,13 +53,13 @@ namespace validation
                                      const bool &               trimByRow = true );
 
 	// Function to trim a LA String Vector and remove blanks
-	LAStringVector trimLAStringVector( const LAStringVector & inputVector );
+	AQLStringVector trimLAStringVector( const AQLStringVector & inputVector );
 
 	// Function to trim a Standard String Vector and remove blanks
 	StandardStringVector trimStandardStringVector( const StandardStringVector & inputVector );
 	
     // Function to trim a LA String Matrix and remove blanks
-	LAStringMatrix trimLAStringMatrix( const LAStringMatrix & inputMatrix );
+	AQLStringMatrix trimLAStringMatrix( const AQLStringMatrix & inputMatrix );
 	
 	// Function to trim a Standard String Matrix and remove blanks
 	StandardStringMatrix trimStandardStringMatrix( const StandardStringMatrix & inputMatrix );

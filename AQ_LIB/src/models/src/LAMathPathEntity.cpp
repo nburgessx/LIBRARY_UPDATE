@@ -2,20 +2,20 @@
     @brief Source code for class to represent MC Path.
 
 			Following dataValues are registered automatically to data master<BR>
-			1.CALIBRATION_DATA_NAME(LADataString)<BR>
-			2.CALIBRATION_DATA_ASOFDATE(LADataDate)<BR>
-			3.IR_MODEL_DATA_DAYCOUNT(LAPriceDataDayCount)<BR>
-			4.IR_MODEL_DATA_SDETIMEGRID(LADataDoubles)<BR>
-			5.IR_MODEL_DATA_SDEINTEGRALTIMEGRID(LADataDoubles)<BR>
-			6.IR_MODEL_DATA_RANDGENERATOR(LAPriceDataRand)<BR>
-			7.IR_MODEL_DATA_STARTPATHNUM(LADataInt)<BR>
-			8.IR_MODEL_DATA_SDEDATANAMES(LADataStrings)<BR>
-			9.IR_MODEL_DATA_INITIALVALUES(LADataMultiReference)<BR>
-			10.IR_MODEL_DATA_CORRELATIONMATRIX(LADataDoubleMatrix)<BR>
-			11.IR_MODEL_DATA_SDEINTEGRALDIVNUM(LADataInt)<BR>
-			12.IR_MODEL_DATA_ISANTITHETIC(LADataBool)<BR>
-			13.IR_MODEL_DATA_CACHESIZE(LADataInt)<BR>
-			14.IR_MODEL_DATA_CORRELATIONMATRIXREF(LADataReference)<BR>
+			1.CALIBRATION_DATA_NAME(AQLDataString)<BR>
+			2.CALIBRATION_DATA_ASOFDATE(AQLDataDate)<BR>
+			3.IR_MODEL_DATA_DAYCOUNT(AQLPriceDataDayCount)<BR>
+			4.IR_MODEL_DATA_SDETIMEGRID(AQLDataDoubles)<BR>
+			5.IR_MODEL_DATA_SDEINTEGRALTIMEGRID(AQLDataDoubles)<BR>
+			6.IR_MODEL_DATA_RANDGENERATOR(AQLPriceDataRand)<BR>
+			7.IR_MODEL_DATA_STARTPATHNUM(AQLDataInt)<BR>
+			8.IR_MODEL_DATA_SDEDATANAMES(AQLDataStrings)<BR>
+			9.IR_MODEL_DATA_INITIALVALUES(AQLDataMultiReference)<BR>
+			10.IR_MODEL_DATA_CORRELATIONMATRIX(AQLDataDoubleMatrix)<BR>
+			11.IR_MODEL_DATA_SDEINTEGRALDIVNUM(AQLDataInt)<BR>
+			12.IR_MODEL_DATA_ISANTITHETIC(AQLDataBool)<BR>
+			13.IR_MODEL_DATA_CACHESIZE(AQLDataInt)<BR>
+			14.IR_MODEL_DATA_CORRELATIONMATRIXREF(AQLDataReference)<BR>
 
 */
 //  2007, AlgoQuantHub..
@@ -29,18 +29,18 @@
 
 #include "LAMathPathEntity.h"
 
-#include "LADataInstance.h"
-#include "LABasic.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LAPriceDataManager.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLBasic.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
 
-#include "LAMathDefine.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataRand.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataRand.h"
 #include "LAMathDriftFuncBase.h"
 #include "LAMathVolFuncBase.h"
 #include "LAMathCorrelation.h"
@@ -52,9 +52,9 @@
 #include "LAModelDynamicsBase.h"
 #include "LAModelDynamicsScalar.h"
 #include "LAModelDynamicsCurve.h"
-#include "LAMatrix.h"
-#include "LACholeskyDecompSC.h"
-#include "LAAlgorithm.h"
+#include "AQLMatrix.h"
+#include "AQLCholeskyDecompSC.h"
+#include "AQLAlgorithm.h"
 #include "LARatesBM_BB.h"
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 #include "LARatesCurveLogLinearInterpolation.h"
@@ -80,17 +80,17 @@ using namespace std;
 /*!
     @brief default constructor
 
-	@param[in] dataInstance pointer of LADataInstance object
+	@param[in] dataInstance pointer of AQLDataInstance object
 
 */
-LAMathPathEntity::LAMathPathEntity(LADataInstance* dataInstance) : 
-LAObject(),
+LAMathPathEntity::LAMathPathEntity(AQLDataInstance* dataInstance) : 
+AQLObject(),
 /*mIsAntithetic(false), *//*mCacheSize(0), */mCachePos(-1), mAntiCachePos(-1),
 mPos(0), mIsOdd(true),	mpBM(0), mPathVersion(0)
 {
 	setDataInstance(dataInstance);
 
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 	dm.setData(CALIBRATION_DATA_NAME, DATA_STRING);
 	dm.setData(CALIBRATION_DATA_ASOFDATE, DATA_DATE);
 	dm.setData(IR_MODEL_DATA_DAYCOUNT, DATA_DAYCOUNT);
@@ -123,11 +123,11 @@ mPos(0), mIsOdd(true),	mpBM(0), mPathVersion(0)
 	mpCor = &add(IR_MODEL_DATA_CORRELATIONMATRIXREF);
 	mpSDEIntegralDivNum = &add(IR_MODEL_DATA_SDEINTEGRALDIVNUM);
 	mpIsAntithetic = &add(IR_MODEL_DATA_ISANTITHETIC);
-	dynamic_cast<LADataBool&>(mpIsAntithetic->get()).set(false);
+	dynamic_cast<AQLDataBool&>(mpIsAntithetic->get()).set(false);
 	mpCacheSize = &add(IR_MODEL_DATA_CACHESIZE);
-	dynamic_cast<LADataInt&>(mpCacheSize->get()).set(0);
+	dynamic_cast<AQLDataInt&>(mpCacheSize->get()).set(0);
 	mpIsBrownianBridge = &add(IR_MODEL_DATA_ISBROWNIANBRIDGE);
-	dynamic_cast<LADataBool&>(mpIsBrownianBridge->get()).set(false);
+	dynamic_cast<AQLDataBool&>(mpIsBrownianBridge->get()).set(false);
 	mpIRCurveProNames = &add(IR_MODEL_DATA_IRCURVEPRONAMES);
 }
 /*!
@@ -139,7 +139,7 @@ mPos(0), mIsOdd(true),	mpBM(0), mPathVersion(0)
 */
 LAMathPathEntity::LAMathPathEntity(
 	const LAMathPathEntity& path) : 
-	LAObject(path),
+	AQLObject(path),
 /*mIsAntithetic(path.mIsAntithetic), *//*mCacheSize(path.mCacheSize),*/ 
 mCachePos(path.mCachePos), mAntiCachePos(path.mAntiCachePos),
 mPos(path.mPos), mpPath(path.mpPath), mIsOdd(path.mIsOdd), mpBM(0), 
@@ -162,8 +162,8 @@ mPathVersion(path.mPathVersion), mSDEIntegralTimeGrid(path.mSDEIntegralTimeGrid)
 	mpIsBrownianBridge = &getData(IR_MODEL_DATA_ISBROWNIANBRIDGE);
 	mpIRCurveProNames = &getData(IR_MODEL_DATA_IRCURVEPRONAMES);
 
-	const LAStringVector& simsde_attrnames = getSimulationSDEAttrNames().get();
-	//const LAStringVector& sde_attrnames = getSDEAttrNames().get();
+	const AQLStringVector& simsde_attrnames = getSimulationSDEAttrNames().get();
+	//const AQLStringVector& sde_attrnames = getSDEAttrNames().get();
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 	mSDEs.resize(simsde_attrnames.size());
 	for (unsigned int i = 0; i < mSDEs.size(); i++)
@@ -245,170 +245,170 @@ LAMathPathEntity::getType(void) const
 bool
 LAMathPathEntity::isTypeOf(object_t id) const
 {
-	return (id == ENTITY_PATH ? true : LAObject::isTypeOf(id));
+	return (id == ENTITY_PATH ? true : AQLObject::isTypeOf(id));
 }
 /*!
     @brief get basedate
 	@return basedate
 */
-const LADataDate&  
+const AQLDataDate&  
 LAMathPathEntity::getAsOfDate(void) const
 {
-	return dynamic_cast<const LADataDate&>(mpAsOfDate->get());
+	return dynamic_cast<const AQLDataDate&>(mpAsOfDate->get());
 }
 /*!
     @brief Get basedate.The setting of basedate is also possible.
 	@return basedate
 */
-LADataDate&  
+AQLDataDate&  
 LAMathPathEntity::getAsOfDate(void)
 {
-	return dynamic_cast<LADataDate&>(mpAsOfDate->get());
+	return dynamic_cast<AQLDataDate&>(mpAsOfDate->get());
 }
 /*!
     @brief get this Path Object-name.
 	@return name
 */
-const LADataString&	
+const AQLDataString&	
 LAMathPathEntity::getName() const	
 {
-	return dynamic_cast<const LADataString&>(mpName->get());
+	return dynamic_cast<const AQLDataString&>(mpName->get());
 }
 /*!
     @brief get this Path Object-name.The setting of name is also possible.
 	@return name
 */
-LADataString&	
+AQLDataString&	
 LAMathPathEntity::getName()
 {
-	return dynamic_cast<LADataString&>(mpName->get());
+	return dynamic_cast<AQLDataString&>(mpName->get());
 }
 /*!
 	@brief get DayCount
 	@return DayCount
 */
-const LAPriceDataDayCount&	
+const AQLPriceDataDayCount&	
 LAMathPathEntity::getDayCount(void) const
 {
-	return dynamic_cast<const LAPriceDataDayCount&>(mpDC->get());
+	return dynamic_cast<const AQLPriceDataDayCount&>(mpDC->get());
 }
 /*!
 	@brief get DayCount.The setting of DayCount is also possible.
 	@return DayCount
 */
-LAPriceDataDayCount&
+AQLPriceDataDayCount&
 LAMathPathEntity::getDayCount(void)
 {
-	return dynamic_cast<LAPriceDataDayCount&>(mpDC->get());
+	return dynamic_cast<AQLPriceDataDayCount&>(mpDC->get());
 }
 /*!
 	@brief get sde time grid
 	@return sde time grid
 */
-const LADataDoubles&
+const AQLDataDoubles&
 LAMathPathEntity::getSDETimeGrid() const
 {
-	return dynamic_cast<const LADataDoubles&>(mpSDETimeGrid->get());
+	return dynamic_cast<const AQLDataDoubles&>(mpSDETimeGrid->get());
 }
 /*!
 	@brief get sde time grid. The setting of sde time grid is also possible. 
 	@return sde time grid
 */
-LADataDoubles&
+AQLDataDoubles&
 LAMathPathEntity::getSDETimeGrid()
 {
-	return dynamic_cast<LADataDoubles&>(mpSDETimeGrid->get());
+	return dynamic_cast<AQLDataDoubles&>(mpSDETimeGrid->get());
 }
 /*!
 	@brief get sde integral time grid
 	@return sde integral time grid
 */
-const LADataDoubles&
+const AQLDataDoubles&
 LAMathPathEntity::getSDEIntegralTimeGrid() const
 {
-	return dynamic_cast<const LADataDoubles&>(mpSDEIntegralTimeGrid->get());
+	return dynamic_cast<const AQLDataDoubles&>(mpSDEIntegralTimeGrid->get());
 }
 /*!
 	@brief get sde integral time grid. The setting of sde integral time grid is also possible. 
 	@return sde integral time grid
 */
-LADataDoubles&
+AQLDataDoubles&
 LAMathPathEntity::getSDEIntegralTimeGrid()
 {
-	return dynamic_cast<LADataDoubles&>(mpSDEIntegralTimeGrid->get());
+	return dynamic_cast<AQLDataDoubles&>(mpSDEIntegralTimeGrid->get());
 }
 /*!
 	@brief get divided number of integral time grid 
 	@return divided number
 */
-const LADataInt&
+const AQLDataInt&
 LAMathPathEntity::getSDEIntegralDivNum() const
 {
-	return dynamic_cast<const LADataInt&>(mpSDEIntegralDivNum->get());
+	return dynamic_cast<const AQLDataInt&>(mpSDEIntegralDivNum->get());
 }
 /*!
 	@brief get divided number of integral time grid . The setting of divided number is also possible. 
 	@return divided number
 */
-LADataInt&
+AQLDataInt&
 LAMathPathEntity::getSDEIntegralDivNum()
 {
-	return dynamic_cast<LADataInt&>(mpSDEIntegralDivNum->get());
+	return dynamic_cast<AQLDataInt&>(mpSDEIntegralDivNum->get());
 }
 /*!
 	@brief get rand generator
 	@return rand generator
 */
-const LAPriceDataRand&
+const AQLPriceDataRand&
 LAMathPathEntity::getRand() const
 {
-	return dynamic_cast<const LAPriceDataRand&>(mpRand->get());
+	return dynamic_cast<const AQLPriceDataRand&>(mpRand->get());
 }
 /*!
 	@brief get rand generator. The setting of integral time grid is also possible. 
 	@return rand generator
 */
-LAPriceDataRand&
+AQLPriceDataRand&
 LAMathPathEntity::getRand()
 {
-	return dynamic_cast<LAPriceDataRand&>(mpRand->get());
+	return dynamic_cast<AQLPriceDataRand&>(mpRand->get());
 }
 /*!
 	@brief get data names of SDEs
 	@return data names of SDEs
 */
-const LADataStrings&
+const AQLDataStrings&
 LAMathPathEntity::getSDEAttrNames() const
 {
-	return dynamic_cast<const LADataStrings&>(mpSDEAttrNames->get());
+	return dynamic_cast<const AQLDataStrings&>(mpSDEAttrNames->get());
 }
 /*!
 	@brief get data names of SDEs. The setting of data names of SDEs is also possible. 
 	@return data names of SDEs
 */
-LADataStrings&
+AQLDataStrings&
 LAMathPathEntity::getSDEAttrNames()
 {
-	return dynamic_cast<LADataStrings&>(mpSDEAttrNames->get());
+	return dynamic_cast<AQLDataStrings&>(mpSDEAttrNames->get());
 }
 
 /*!
 	@brief get data names of SDEs
 	@return data names of SimulationSDEs
 */
-const LADataStrings&
+const AQLDataStrings&
 LAMathPathEntity::getSimulationSDEAttrNames() const
 {
-	return dynamic_cast<const LADataStrings&>(mpSimSDEAttrNames->get());
+	return dynamic_cast<const AQLDataStrings&>(mpSimSDEAttrNames->get());
 }
 /*!
 	@brief get data names of SDEs. The setting of data names of SDEs is also possible. 
 	@return data names of SimulationSDEs
 */
-LADataStrings&
+AQLDataStrings&
 LAMathPathEntity::getSimulationSDEAttrNames()
 {
-	return dynamic_cast<LADataStrings&>(mpSimSDEAttrNames->get());
+	return dynamic_cast<AQLDataStrings&>(mpSimSDEAttrNames->get());
 }
 
 
@@ -417,19 +417,19 @@ LAMathPathEntity::getSimulationSDEAttrNames()
 	@brief get initial values of SDEs
 	@return initial values of SDEs
 */
-const LADataMultiReference&	
+const AQLDataMultiReference&	
 LAMathPathEntity::getInitialValues() const
 {
-	return dynamic_cast<const LADataMultiReference&>(mpInitialValues->get());
+	return dynamic_cast<const AQLDataMultiReference&>(mpInitialValues->get());
 }
 /*!
 	@brief get initial values of SDEs. The setting of initial values of SDEs is also possible. 
 	@return initial values of SDEs
 */
-LADataMultiReference&
+AQLDataMultiReference&
 LAMathPathEntity::getInitialValues()
 {
-	return dynamic_cast<LADataMultiReference&>(mpInitialValues->get());
+	return dynamic_cast<AQLDataMultiReference&>(mpInitialValues->get());
 }
 /*!
 	@brief get start path number of MC simulation
@@ -437,10 +437,10 @@ LAMathPathEntity::getInitialValues()
 
 	@note first path number is 0
 */
-const LADataInt&
+const AQLDataInt&
 LAMathPathEntity::getStartPathNum() const
 {
-	return dynamic_cast<const LADataInt&>(mpStartPathNum->get());
+	return dynamic_cast<const AQLDataInt&>(mpStartPathNum->get());
 }
 /*!
 	@brief get start path number of MC simulation. The setting of start path number is also possible. 
@@ -449,25 +449,25 @@ LAMathPathEntity::getStartPathNum() const
 	@note first path number is 0
 	
 */
-LADataInt&
+AQLDataInt&
 LAMathPathEntity::getStartPathNum()
 {
-	return dynamic_cast<LADataInt&>(mpStartPathNum->get());
+	return dynamic_cast<AQLDataInt&>(mpStartPathNum->get());
 }
 /*!
 	@brief get data holder which has correlation matrix. If object has been not created yet, make it.
 	@return correlation matrix holder
 */
-LADataHolder*
+AQLDataHolder*
 LAMathPathEntity::getCorrelationHolder() const
 {
 	if (mpCor->get().isNull())
 	{
-		LAObject* pPathCor = new LAObject;
-		pPathCor->add(IR_MODEL_DATA_CORRELATIONMATRIX, new LADataDoubleMatrix);
-		const LAString pathCorName = getName().get() + "_" + IR_MODEL_DATA_CORRELATIONMATRIX;
+		AQLObject* pPathCor = new AQLObject;
+		pPathCor->add(IR_MODEL_DATA_CORRELATIONMATRIX, new AQLDataDoubleMatrix);
+		const AQLString pathCorName = getName().get() + "_" + IR_MODEL_DATA_CORRELATIONMATRIX;
 		getDataInstance()->getObjectPool().set(pathCorName, pPathCor);
-		dynamic_cast<LADataReference&>(mpCor->get()).convertFromString(pathCorName);
+		dynamic_cast<AQLDataReference&>(mpCor->get()).convertFromString(pathCorName);
 	}
 	return mpCor;
 }
@@ -476,38 +476,38 @@ LAMathPathEntity::getCorrelationHolder() const
 	@brief get object name which has correlation matrix.
 	@return correlation object name
 */
-LAString
+AQLString
 LAMathPathEntity::getCorrelationMatrixEntityName() const
 {
-	return dynamic_cast<const LADataReference&>(getCorrelationHolder()->get()).get().getName();
+	return dynamic_cast<const AQLDataReference&>(getCorrelationHolder()->get()).get().getName();
 }
 
 /*!
 	@brief get correlation matrix between SDEs
 	@return correlation matrix
 */
-const LADataDoubleMatrix&
+const AQLDataDoubleMatrix&
 LAMathPathEntity::getCorrelationMatrix() const
 {
-	const LAObjectHolder& correlationEntity = dynamic_cast<const LADataReference&>(getCorrelationHolder()->get()).get();
-	return dynamic_cast<const LADataDoubleMatrix&>(correlationEntity.getData(IR_MODEL_DATA_CORRELATIONMATRIX).get());
+	const AQLObjectHolder& correlationEntity = dynamic_cast<const AQLDataReference&>(getCorrelationHolder()->get()).get();
+	return dynamic_cast<const AQLDataDoubleMatrix&>(correlationEntity.getData(IR_MODEL_DATA_CORRELATIONMATRIX).get());
 }
 /*!
 	@brief get correlation matrix between SDEs. The setting of correlation matrix is also possible. 
 	@return correlation matrix
 */
-LADataDoubleMatrix&
+AQLDataDoubleMatrix&
 LAMathPathEntity::getCorrelationMatrix()
 {
-	LAObjectHolder& correlationEntity = dynamic_cast<LADataReference&>(getCorrelationHolder()->get()).get();
-	return dynamic_cast<LADataDoubleMatrix&>(correlationEntity.getData(IR_MODEL_DATA_CORRELATIONMATRIX).get());
+	AQLObjectHolder& correlationEntity = dynamic_cast<AQLDataReference&>(getCorrelationHolder()->get()).get();
+	return dynamic_cast<AQLDataDoubleMatrix&>(correlationEntity.getData(IR_MODEL_DATA_CORRELATIONMATRIX).get());
 }
 
 /*!
     @brief Make copy(clone) of this FX Object object.
     @return pointer of this FX Object object.
 */
-LAObject* 
+AQLObject* 
 LAMathPathEntity::clone() const
 {
     try 
@@ -515,7 +515,7 @@ LAMathPathEntity::clone() const
     	return new LAMathPathEntity(*this);
     }
     catch (bad_alloc & e){
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
  
@@ -530,19 +530,19 @@ const LARatesPathElementBase&
 LAMathPathEntity::getPath(unsigned int pos, double t) const
 {
 	unsigned int i;
-	const DoubleArray& timegrid = dynamic_cast<const LADataDoubles&>(getSDETimeGrid()).get();
-	LAAlgorithm::locate<DoubleArray, double>(timegrid, t, timegrid.size(), i);
+	const DoubleArray& timegrid = dynamic_cast<const AQLDataDoubles&>(getSDETimeGrid()).get();
+	AQLAlgorithm::locate<DoubleArray, double>(timegrid, t, timegrid.size(), i);
 	if (i == timegrid.size())
 	{
 		//error
-        throw LACoreInvalidData("input t is after last timegrid", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("input t is after last timegrid", __FILE__, __LINE__);
 	}
 	else if (timegrid[i] == t)
 		return *(*mpPath[pos])[i];
 	else if (i == 0)
 	{
 		//error
-        throw LACoreInvalidData("input t is before first time of timegrid", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("input t is before first time of timegrid", __FILE__, __LINE__);
 	}
 	else
 	{
@@ -563,7 +563,7 @@ LAMathPathEntity::getCache(unsigned int mnum, unsigned int pos) const
 			return mCache[mnum][pos];
 	else
 	{
-		throw LACoreInvalidData("PathError",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("PathError",__FILE__,__LINE__);
 	}
 
 }
@@ -711,12 +711,12 @@ LAMathPathEntity::setUpforMC()
 	
 	if (mPathVersion != getModel())//first call or calculation condition is changed, so set up from first
 	{	
-		const DoubleArray& timegrid_output = dynamic_cast<const LADataDoubles&>(getSDETimeGrid()).get();
+		const DoubleArray& timegrid_output = dynamic_cast<const AQLDataDoubles&>(getSDETimeGrid()).get();
 		
 		//mSDEIntegralTimeGrid;
 		if (!getSDEIntegralTimeGrid().isNull())
 		{
-			const DoubleArray& timegrid_integral = dynamic_cast<const LADataDoubles&>(getSDEIntegralTimeGrid()).get();
+			const DoubleArray& timegrid_integral = dynamic_cast<const AQLDataDoubles&>(getSDEIntegralTimeGrid()).get();
 			mSDEIntegralTimeGrid.clear();			
 			unsigned int j = 0;
 			for (unsigned int i = 0; i < timegrid_integral.size(); i++)
@@ -738,11 +738,11 @@ LAMathPathEntity::setUpforMC()
 		}
 		else if (!getSDEIntegralDivNum().isNull() || getSDEIntegralDivNum().get() > 1)
 		{
-			int divnum = dynamic_cast<const LADataInt&>(getSDEIntegralDivNum()).get();
+			int divnum = dynamic_cast<const AQLDataInt&>(getSDEIntegralDivNum()).get();
 			if (divnum <= 0)
 			{
 				//error
-				throw LACoreInvalidData("IntegralDivNum must be more than 1", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("IntegralDivNum must be more than 1", __FILE__, __LINE__);
 			}
 			mSDEIntegralTimeGrid.resize(1 + (timegrid_output.size() - 1)* divnum);
 			mSDEIntegralTimeGrid[0] = timegrid_output[0];
@@ -786,7 +786,7 @@ LAMathPathEntity::setUpforMC()
 	}
 	else //set up cash only
 	{
-		const DoubleArray& timegrid_output = dynamic_cast<const LADataDoubles&>(getSDETimeGrid()).get();
+		const DoubleArray& timegrid_output = dynamic_cast<const AQLDataDoubles&>(getSDETimeGrid()).get();
 		//setUp Cache
 		unsigned int oldsize = mCache.size();
 		unsigned int cache_size = getCacheSize();
@@ -837,7 +837,7 @@ LAMathPathEntity::setUpforMC()
 	}
 	
 	//initialize rand seed
-	const LARandBase& rand = dynamic_cast<const LARandBase&>(getRand().getMethod());//rand generator
+	const AQLRandBase& rand = dynamic_cast<const AQLRandBase&>(getRand().getMethod());//rand generator
 	mpBM->setSeed(rand.getSeed());	
 
 	// set path start position
@@ -880,7 +880,7 @@ LAMathPathEntity::setUpforMC()
 bool
 LAMathPathEntity::isAntithetic(void)
 {
-	return dynamic_cast<const LADataBool&>(mpIsAntithetic->get()).get();
+	return dynamic_cast<const AQLDataBool&>(mpIsAntithetic->get()).get();
 }
 
 /*!
@@ -891,7 +891,7 @@ void
 LAMathPathEntity::setAntithetic(bool flag) 
 {	
 	bool tmp_b = (mPathVersion == getModel());
-	dynamic_cast<LADataBool&>(mpIsAntithetic->get()).set(flag);
+	dynamic_cast<AQLDataBool&>(mpIsAntithetic->get()).set(flag);
 	update(TYPE_ANTITHETICFLAG_CHANGE);
     if (tmp_b) mPathVersion = getModel();
 }			
@@ -903,7 +903,7 @@ LAMathPathEntity::setAntithetic(bool flag)
 int
 LAMathPathEntity::getCacheSize() const
 {
-	return dynamic_cast<const LADataInt&>(mpCacheSize->get()).get();
+	return dynamic_cast<const AQLDataInt&>(mpCacheSize->get()).get();
 }
 
 
@@ -915,7 +915,7 @@ void
 LAMathPathEntity::setCacheSize(unsigned int size)
 {
 	bool flag = (mPathVersion == getModel());
-	dynamic_cast<LADataInt&>(mpCacheSize->get()).set(size);
+	dynamic_cast<AQLDataInt&>(mpCacheSize->get()).set(size);
 	update(TYPE_CACHESIZE_CHANGE);
     if (flag) mPathVersion = getModel();
 }
@@ -927,7 +927,7 @@ LAMathPathEntity::setCacheSize(unsigned int size)
 bool
 LAMathPathEntity::isBrownianBridge(void)
 {
-	return dynamic_cast<const LADataBool&>(mpIsBrownianBridge->get()).get();
+	return dynamic_cast<const AQLDataBool&>(mpIsBrownianBridge->get()).get();
 }
 
 /*!
@@ -938,23 +938,23 @@ void
 LAMathPathEntity::setBrownianBridge(bool flag) 
 {	
 	bool tmp_b = (mPathVersion == getModel());
-	dynamic_cast<LADataBool&>(mpIsBrownianBridge->get()).set(flag);
+	dynamic_cast<AQLDataBool&>(mpIsBrownianBridge->get()).set(flag);
 	update(TYPE_BROWNIANBRIDGE_CHANGE);
     if (tmp_b) mPathVersion = getModel();
 }			
 
 
 // get ir curvepros names
-const LADataStrings&	
+const AQLDataStrings&	
 LAMathPathEntity::getIRCurveProNames() const
 {
-	return dynamic_cast<const LADataStrings&>(mpIRCurveProNames->get());
+	return dynamic_cast<const AQLDataStrings&>(mpIRCurveProNames->get());
 }
 // get ir curvepros names
-LADataStrings&
+AQLDataStrings&
 LAMathPathEntity::getIRCurveProNames()
 {
-	return dynamic_cast<LADataStrings&>(mpIRCurveProNames->get());
+	return dynamic_cast<AQLDataStrings&>(mpIRCurveProNames->get());
 }
 
 
@@ -964,7 +964,7 @@ LAMathPathEntity::getIRCurveProNames()
 */
 void                
 LAMathPathEntity::remove(
-	const LAString& dataName)
+	const AQLString& dataName)
 {
 	if(dataName == CALIBRATION_DATA_NAME
 		|| dataName == CALIBRATION_DATA_ASOFDATE 
@@ -985,7 +985,7 @@ LAMathPathEntity::remove(
 	{
 		return; 
 	}
-	LAObject::remove(dataName);
+	AQLObject::remove(dataName);
 }
 
 /*!
@@ -1032,18 +1032,18 @@ LAMathPathEntity::reset(void)
 	@param[in] e copy source
 	@return reference to this object
 */
-LAObject&
+AQLObject&
 LAMathPathEntity::copy(
-	const LAObject& e)
+	const AQLObject& e)
 {
 	if (this == &e) return *this;
 
-	LAObject::copy(e);
+	AQLObject::copy(e);
 	if (!e.isTypeOf(ENTITY_PATH))
 	{
-		LAString err = "Assignement error for LAMathPathEntity : from ";
-		err += LAString(e.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignement error for LAMathPathEntity : from ";
+		err += AQLString(e.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	mpName		 = &getData(CALIBRATION_DATA_NAME);
@@ -1083,7 +1083,7 @@ LAMathPathEntity::copy(
 	mPathVersion = path.mPathVersion; 
 	mSDEIntegralTimeGrid = path.mSDEIntegralTimeGrid;
 	
-	const LAStringVector& simsde_attrnames = getSimulationSDEAttrNames().get();
+	const AQLStringVector& simsde_attrnames = getSimulationSDEAttrNames().get();
 	mSDEs.resize(simsde_attrnames.size());
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 	for (unsigned int i = 0; i < mSDEs.size(); i++)
@@ -1136,14 +1136,14 @@ LAMathPathEntity::copy(
 	@param[in] name name of certain data
 	@return reference to holder class 
 */
-LADataHolder&
-LAMathPathEntity::add(const LAString& name)
+AQLDataHolder&
+LAMathPathEntity::add(const AQLString& name)
 {
 	// search Data of name
-	LADataInstance* dataInstance = getDataInstance();
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
-	const LADataHolder& dh = dm.getData(name);
-	return LAObject::add(name, dh);
+	AQLDataInstance* dataInstance = getDataInstance();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
+	const AQLDataHolder& dh = dm.getData(name);
+	return AQLObject::add(name, dh);
 }
 
 /*!
@@ -1186,15 +1186,15 @@ LAMathPathEntity::clearCache(void)
 void
 LAMathPathEntity::setInitialValue()
 {
-	const LAStringVector& sde_attrnames = getSDEAttrNames().get();
-	const LADataMultiReference& initialvalues = getInitialValues();
+	const AQLStringVector& sde_attrnames = getSDEAttrNames().get();
+	const AQLDataMultiReference& initialvalues = getInitialValues();
 	if (sde_attrnames.size() != initialvalues.getSize())
 	{
 		//error
-		throw LACoreInvalidData("number of sde and number of initial values are not same", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("number of sde and number of initial values are not same", __FILE__, __LINE__);
 	}
 
-	const LAStringVector& simsde_attrnames = getSimulationSDEAttrNames().get();
+	const AQLStringVector& simsde_attrnames = getSimulationSDEAttrNames().get();
 	
 	for (unsigned int i = 0; i < sde_attrnames.size(); i++)
 	{
@@ -1205,12 +1205,12 @@ LAMathPathEntity::setInitialValue()
 		LAMathAttrSDE& attrsde = dynamic_cast<LAMathAttrSDE&>(getData(sde_attrnames[i]).get());
 		LARatesSDEBase& sde = attrsde.getSDE();
 		SDEPATH_TYPE type = attrsde.getSDEPathType();
-		LAObjectHolder& objHolder = initialvalues.get(i);
+		AQLObjectHolder& objHolder = initialvalues.get(i);
 		if (type == IR)
 		{
 			if (!objHolder.isTypeOf(ENTITY_IRYIELDCURVE))
 			{
-				throw LACoreInvalidData("Initial Value Object is not YieldCurve", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Initial Value Object is not YieldCurve", __FILE__, __LINE__);
 			}
 
 			LAMathYieldCurve& yield = dynamic_cast<LAMathYieldCurve&>(objHolder.get());
@@ -1218,28 +1218,28 @@ LAMathPathEntity::setInitialValue()
 			sde.setInitialValue(yield.getCurve(0, getDayCount().getDayCount()));
 			
 			LARatesNumeraireBase *nume = sde.getNumeraire();
-			const LAObjectHolder &yieldData =  yield.getYieldData().get();
-			const LADataHolder &ahDF2 = yieldData.getData(IR_CALIBRATION_DATA_DFS2, NOCHECK);
+			const AQLObjectHolder &yieldData =  yield.getYieldData().get();
+			const AQLDataHolder &ahDF2 = yieldData.getData(IR_CALIBRATION_DATA_DFS2, NOCHECK);
 			if (ahDF2.isDefined() && !ahDF2.isNull())
 			{
 				// set basis spread to numeraire
-				const DoubleArray &dfs2 = dynamic_cast<const LADataDoubles &>(ahDF2.get()).get();
-				const DoubleArray &dfs = dynamic_cast<const LADataDoubles &>(yieldData.getData(IR_CALIBRATION_DATA_DFS, ISNOTNULL).get()).get();
-				const DoubleArray &terms = dynamic_cast<const LADataDoubles &>(yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL).get()).get();
+				const DoubleArray &dfs2 = dynamic_cast<const AQLDataDoubles &>(ahDF2.get()).get();
+				const DoubleArray &dfs = dynamic_cast<const AQLDataDoubles &>(yieldData.getData(IR_CALIBRATION_DATA_DFS, ISNOTNULL).get()).get();
+				const DoubleArray &terms = dynamic_cast<const AQLDataDoubles &>(yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL).get()).get();
 
 				unsigned int size = terms.size();
 				if (size != dfs.size() || size != dfs2.size())
 				{
-					throw LACoreInvalidData("Term and DF and DF2 should be the same size.",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Term and DF and DF2 should be the same size.",__FILE__,__LINE__);
 				}
 				DoubleArray spreads(size, 0.0);
 				for (unsigned int i = 1; i < size; ++i)
 				{
 					if (dfs2[i] <= 0.0 || dfs[i] <= 0.0)
 					{
-						throw LACoreInvalidData("DF or DF2 is below zero value.",__FILE__,__LINE__);
+						throw AQLCoreInvalidData("DF or DF2 is below zero value.",__FILE__,__LINE__);
 					}
-					spreads[i] = -LAMath::log(dfs2[i] / dfs[i]) / terms[i];
+					spreads[i] = -AQLMath::log(dfs2[i] / dfs[i]) / terms[i];
 				}
 				nume->reset();
 				nume->setBasisSpread(SIMUBASIS, terms, spreads);
@@ -1254,11 +1254,11 @@ LAMathPathEntity::setInitialValue()
 		{
 			if (!objHolder.isTypeOf(ENTITY_FX))
 			{
-				throw LACoreInvalidData("Initial Value Object is not FX", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Initial Value Object is not FX", __FILE__, __LINE__);
 			}		
 			LAMathFXEntity& fx = dynamic_cast<LAMathFXEntity&>(objHolder.get());	
-			const LAString& currency = attrsde.getCurrency();
-		    const LAStringVector& curs = LAMathFXUtility::getCurrencyPair(currency);
+			const AQLString& currency = attrsde.getCurrency();
+		    const AQLStringVector& curs = LAMathFXUtility::getCurrencyPair(currency);
 			SCALAR rate = static_cast<SCALAR>(fx.getRate(curs[1], curs[0], 0));
 			LARatesPathElementScalar element(rate);
 			sde.setInitialValue(element);
@@ -1267,7 +1267,7 @@ LAMathPathEntity::setInitialValue()
 		{
 			if (!objHolder.isTypeOf(ENTITY_IR_VOLATILITY))
 			{
-				throw LACoreInvalidData("Initial Value Object is not Volatility", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Initial Value Object is not Volatility", __FILE__, __LINE__);
 			}		
 			LAMathVolatility& vol = dynamic_cast<LAMathVolatility&>(objHolder.get());	
 			SCALAR rate = static_cast<SCALAR>(vol.getInitialValue());
@@ -1277,7 +1277,7 @@ LAMathPathEntity::setInitialValue()
 		else
 		{
 			//error
-			throw LACoreInvalidData("Not support this SDEPATH_TPYE", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Not support this SDEPATH_TPYE", __FILE__, __LINE__);
 		}
 
 	}
@@ -1290,22 +1290,22 @@ LAMathPathEntity::setInitialValue()
 void
 LAMathPathEntity::setUpSDE(void)
 {
-	const LAStringVector& sde_attrnames = getSDEAttrNames().get();
+	const AQLStringVector& sde_attrnames = getSDEAttrNames().get();
 	if (sde_attrnames.size() == 0)
 	{
 		//error
-		LACoreInvalidData err("SDEAttrNames size is zero!", __FILE__, __LINE__);
+		AQLCoreInvalidData err("SDEAttrNames size is zero!", __FILE__, __LINE__);
 	}
 	/////////////
 	//setUp SDE//
 	/////////////
 	//set initial value to sdes
 	setInitialValue();
-	const DoubleArray& timegrid_output = dynamic_cast<const LADataDoubles&>(getSDETimeGrid()).get();
+	const DoubleArray& timegrid_output = dynamic_cast<const AQLDataDoubles&>(getSDETimeGrid()).get();
 	mSDEs.clear();
 	//mSDEs.resize(sde_attrnames.size());
 
-	LAStringVector simsde_attrnames = getSimulationSDEAttrNames().get();
+	AQLStringVector simsde_attrnames = getSimulationSDEAttrNames().get();
 	if (simsde_attrnames.size() == 0)
 		simsde_attrnames = sde_attrnames;
 
@@ -1330,9 +1330,9 @@ LAMathPathEntity::setUpSDE(void)
 	//get factor loading for each sde
 	for (unsigned int i = 0; i < mSDEs.size(); i++)
 	{
-		LAString name = COR;
+		AQLString name = COR;
 		name += "_" + simsde_attrnames[i];
-		LADataHolder* dh = &getData(name, NOCHECK);
+		AQLDataHolder* dh = &getData(name, NOCHECK);
 		if (!dh->isDefined() || dh->isNull())//
 		{
 			loadings[i].resize(1);
@@ -1341,7 +1341,7 @@ LAMathPathEntity::setUpSDE(void)
 		}
 		else
 		{
-			LADataReference& ref = dynamic_cast<LADataReference&>(dh->get());
+			AQLDataReference& ref = dynamic_cast<AQLDataReference&>(dh->get());
 			LAMathCorrelation& cor = dynamic_cast<LAMathCorrelation&>(ref.get().get());
 			vector<DoubleMatrix> whole_loading = cor.getFactorLoading(timegrid_loading);
 			const DoubleArray whole_timegrid = cor.getTGrid().get();
@@ -1354,7 +1354,7 @@ LAMathPathEntity::setUpSDE(void)
 		if (loadings[i][0].size() > factor_max) factor_max = loadings[i][0].size();
 
 	}	
-	LACoreAutoPtr<LARandBase> rand_auto(dynamic_cast<LARandBase*>(getRand().getMethod().clone()));//rand generator
+	AQLCoreAutoPtr<AQLRandBase> rand_auto(dynamic_cast<AQLRandBase*>(getRand().getMethod().clone()));//rand generator
 	UintArray dim = rand_auto->getDim();
 	dim[0] = timegrid_loading.size() * factor_size;
 	rand_auto->setDim(dim);
@@ -1381,7 +1381,7 @@ LAMathPathEntity::setUpSDE(void)
 		}
 		catch (bad_alloc & e)
 		{
-			throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+			throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 		}
 		//set brownian motion class
 		mSDEs[0]->setBM(mpBM);
@@ -1406,7 +1406,7 @@ LAMathPathEntity::setUpSDE(void)
 		}
 		catch (bad_alloc & e)
 		{
-			throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+			throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 		}
 		mpBMs.insert(mpBM);
 			
@@ -1452,7 +1452,7 @@ LAMathPathEntity::setUpSDE(void)
 			}
 			catch (bad_alloc & e)
 			{
-				throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+				throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 			}
 			mpBMs.insert(bms_mid[i]);
 	            
@@ -1475,7 +1475,7 @@ LAMathPathEntity::setUpSDE(void)
 			}
 			catch (bad_alloc & e)
 			{
-				throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+				throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 			}			
 		}
 	}
@@ -1483,7 +1483,7 @@ LAMathPathEntity::setUpSDE(void)
 
 	for (unsigned int i = 0; i < mSDEs.size(); i++)
 	{
-		const vector<vector<LAFunctionBase*> >& vol = mSDEs[i]->getVolatility();
+		const vector<vector<AQLFunctionBase*> >& vol = mSDEs[i]->getVolatility();
 		for (unsigned int j = 0; j < vol.size(); j++)
 			for (unsigned int k = 0; k < vol[j].size(); k++)
 				if (vol[j][k]->isTypeOf(FN_VOLFUNCBASE))
@@ -1492,7 +1492,7 @@ LAMathPathEntity::setUpSDE(void)
 	//drift function setup
 	for (unsigned int i = 0; i < mSDEs.size(); i++)
 	{
-		const vector<LAFunctionBase*>& drift = mSDEs[i]->getDrift();
+		const vector<AQLFunctionBase*>& drift = mSDEs[i]->getDrift();
 		for (unsigned int j = 0; j < drift.size(); j++)
 			if (drift[j]->isTypeOf(FN_DRIFTFUNCBASE))
 				dynamic_cast<LAMathDriftFuncBase*>(drift[j])->setUp(*this);
@@ -1534,18 +1534,18 @@ LAMathPathEntity::setUpSDE(void)
 			const LARatesPathElementBase *path = mSDEs[i]->getPathElement(0);
 			if (path && path->isTypeOf(PE_LMMCURVE))
 			{
-				LAString name = VOL;
+				AQLString name = VOL;
 				name += "_" + simsde_attrnames[i];
-				LADataHolder* dh = &getData(name, NOCHECK);
+				AQLDataHolder* dh = &getData(name, NOCHECK);
 				if (dh->isDefined() && !dh->isNull())
 				{
-					LADataReference &ref = dynamic_cast<LADataReference &>(dh->get());
+					AQLDataReference &ref = dynamic_cast<AQLDataReference &>(dh->get());
 					LAMathVolatility &vol = dynamic_cast<LAMathVolatility&>(ref.get().get());
 					DoubleMatrix volMat;
 					DoubleArray grid_t = *(dynamic_cast<const LARatesPathElementLMMCurve *>(path)->getTenor());
 					if (grid_t.empty())
 					{
-						throw LACoreInvalidData("LARatesPathElementLMMCurve tenor size is empty", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("LARatesPathElementLMMCurve tenor size is empty", __FILE__, __LINE__);
 					}
 					unsigned int marketSize = 0;
 					if (grid_t[0] == 0.0)
@@ -1566,7 +1566,7 @@ LAMathPathEntity::setUpSDE(void)
 						volMat[i].resize(marketSize, 0.0);
 						for (unsigned int j = 0; j < marketSize; ++j)
 						{
-							LAFunctionBase *volFunc = vol.getVolatilityFunc(j, 0);
+							AQLFunctionBase *volFunc = vol.getVolatilityFunc(j, 0);
 							volMat[i][j] = volFunc->operator ()(grid_t[i]);
 							delete volFunc;
 						}
@@ -1590,7 +1590,7 @@ LAMathPathEntity::setUpSDE(void)
 DoubleMatrix
 LAMathPathEntity::calcFactorLoading(const DoubleMatrix& cor)
 {
-	LAMatrix mat_cor(cor);
+	AQLMatrix mat_cor(cor);
 	for (unsigned int i = 0; i < cor.size(); i++)
 	{
 		for (unsigned int j = 0; j < cor.size(); j++)
@@ -1598,7 +1598,7 @@ LAMathPathEntity::calcFactorLoading(const DoubleMatrix& cor)
 			mat_cor.setValue(i, j, cor.at(i).at(j));
 		}
 	}
-	const LAMatrix& mat_fl = LACholeskyDecompSC::choleskyDecompositionSC(mat_cor);
+	const AQLMatrix& mat_fl = AQLCholeskyDecompSC::choleskyDecompositionSC(mat_cor);
 	DoubleMatrix ret(cor.size());
 	for (unsigned int i = 0; i < cor.size(); i++)
 	{

@@ -6,30 +6,30 @@
 #endif
 
 #include "LAPriceSZCalibration.h"
-#include "LAObject.h"
-#include "LADataProcedure.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLObject.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "LAMathDateCalculations.h"
 #include "LAPriceCFGenUtility.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LADataMatrix.h"
-#include "LAMathValuableEntity.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLDataMatrix.h"
+#include "AQLMathValuableEntity.h"
 #include "LAMathLeastSquareBlackDD.h"
 //#include "LAQuantLibCostFunction.h"
 //#include "LAQuantLibConstraint.h"
@@ -43,10 +43,10 @@
 #include "LAQuantLibBoundaryConstraint.h"
 #include "LAMathLeastSquareSZ.h"
 
-#include "LAPriceTargetFunction.h"
-#include "LAPriceLSTargetFunction.h"
+#include "AQLPriceTargetFunction.h"
+#include "AQLPriceLSTargetFunction.h"
 #include "LAPriceCashFlowGenerator.h"
-#include "LAOptimumBFGS.h"
+#include "AQLOptimumBFGS.h"
 #include <algorithm>
 #include <float.h>
 
@@ -57,7 +57,7 @@ using namespace std;
 @brief default constructor
 */
 LAPriceSZCalibration::LAPriceSZCalibration()
-	: LACoreProcedure()
+	: AQLCoreProcedure()
 {
 }
 
@@ -65,7 +65,7 @@ LAPriceSZCalibration::LAPriceSZCalibration()
 @brief copy constructor
 */
 LAPriceSZCalibration::LAPriceSZCalibration(const LAPriceSZCalibration& p)
-	: LACoreProcedure(p)
+	: AQLCoreProcedure(p)
 {
 
 }
@@ -87,14 +87,14 @@ bool
 LAPriceSZCalibration::isTypeOf(function_t id) const
 {
 	return (id == FN_IR_SZCALIBRATION ? true :
-		LACoreProcedure::isTypeOf(id));
+		AQLCoreProcedure::isTypeOf(id));
 }
 /*!
 @brief  Copy this class
 
 @return pointer to copied object
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceSZCalibration::clone() const
 {
 	try
@@ -103,7 +103,7 @@ LAPriceSZCalibration::clone() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 }
 
@@ -124,7 +124,7 @@ LAPriceSZCalibration::getType() const
 @param[in, out] dm data master
 */
 void
-LAPriceSZCalibration::registerData(LAPriceDataManager& dm) const
+LAPriceSZCalibration::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(PRICING_DATA_SKEWVOLCALIBINFO, DATA_REFERENCE);
 	dm.setData(PRICING_DATA_DIFFVOLV0, DATA_DOUBLE);
@@ -169,9 +169,9 @@ LAPriceSZCalibration::registerData(LAPriceDataManager& dm) const
 @note basedate is not used in estimation
 */
 void
-LAPriceSZCalibration::calibrateModel(const LADate& basedate,
-	LAObject& object,
-	const LADataProcedure& att) const
+LAPriceSZCalibration::calibrateModel(const AQLDate& basedate,
+	AQLObject& object,
+	const AQLDataProcedure& att) const
 {
 	calibSZ(basedate, object, att);
 }
@@ -186,67 +186,67 @@ LAPriceSZCalibration::calibrateModel(const LADate& basedate,
 @note basedate is not used in estimation
 */
 void
-LAPriceSZCalibration::calibSZ(const LADate& basedate,
-	LAObject& object,
-	const LADataProcedure& att) const
+LAPriceSZCalibration::calibSZ(const AQLDate& basedate,
+	AQLObject& object,
+	const AQLDataProcedure& att) const
 {
-	const LAObject &calibinfo = dynamic_cast<LADataReference &>(object.getData(PRICING_DATA_SZPARAMSCALIBINFO, ISNOTNULL).get()).get().get();
-	LAObject& vole = dynamic_cast<LADataReference &>(object.getData(PRICING_DATA_SDEINFO, ISNOTNULL).get()).get().get();
+	const AQLObject &calibinfo = dynamic_cast<AQLDataReference &>(object.getData(PRICING_DATA_SZPARAMSCALIBINFO, ISNOTNULL).get()).get().get();
+	AQLObject& vole = dynamic_cast<AQLDataReference &>(object.getData(PRICING_DATA_SDEINFO, ISNOTNULL).get()).get().get();
 	// calib flag
-	const bool optFlag = dynamic_cast<const LADataBool &>(calibinfo.getData(CALIBRATION_DATA_OPT_PARAMETER_FLAG, ISNOTNULL).get()).get();
+	const bool optFlag = dynamic_cast<const AQLDataBool &>(calibinfo.getData(CALIBRATION_DATA_OPT_PARAMETER_FLAG, ISNOTNULL).get()).get();
 
-	const LADataMultiReference &refData = dynamic_cast<LADataMultiReference &>(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL).get());
+	const AQLDataMultiReference &refData = dynamic_cast<AQLDataMultiReference &>(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL).get());
 	unsigned int gridSize = refData.getSize();
-	LADataInstance* pDataInstance = object.getDataInstance();
+	AQLDataInstance* pDataInstance = object.getDataInstance();
 	// create domestic curve
-	const LAObject &yldentity_d = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_DOMESTICCURVE, ISNOTNULL).get()).get().get();
-	const LAString &yldname_d = dynamic_cast<const LADataString &>(yldentity_d.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-	const LAString &curveType_d = dynamic_cast<const LADataString &>(object.getData(PRICING_DATA_DOMESTICCURVETYPE, ISNOTNULL).get()).get();
+	const AQLObject &yldentity_d = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_DOMESTICCURVE, ISNOTNULL).get()).get().get();
+	const AQLString &yldname_d = dynamic_cast<const AQLDataString &>(yldentity_d.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	const AQLString &curveType_d = dynamic_cast<const AQLDataString &>(object.getData(PRICING_DATA_DOMESTICCURVETYPE, ISNOTNULL).get()).get();
 	LAMathYieldCurve yc_d(pDataInstance);
 	yc_d.getData(IR_CALIBRATION_DATA_YIELDDATA, ISDEFINED).convertFromString(yldname_d);
 	yc_d.setCurveType(curveType_d);
 	yc_d.setInterpolation(FN_SPLINEINTERPOLATION_STR);
 	LAMathPathYieldCurve curve0_d(&yc_d, 0.0, ACT_365_ISDA);
 	// create foreign curve
-	const LAObject &yldentity_f = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_FOREIGNCURVE, ISNOTNULL).get()).get().get();
-	const LAString &yldname_f = dynamic_cast<const LADataString &>(yldentity_f.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-	const LAString &curveType_f = dynamic_cast<const LADataString &>(object.getData(PRICING_DATA_FOREIGNCURVETYPE, ISNOTNULL).get()).get();
+	const AQLObject &yldentity_f = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_FOREIGNCURVE, ISNOTNULL).get()).get().get();
+	const AQLString &yldname_f = dynamic_cast<const AQLDataString &>(yldentity_f.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	const AQLString &curveType_f = dynamic_cast<const AQLDataString &>(object.getData(PRICING_DATA_FOREIGNCURVETYPE, ISNOTNULL).get()).get();
 	LAMathYieldCurve yc_f(pDataInstance);
 	yc_f.getData(IR_CALIBRATION_DATA_YIELDDATA, ISDEFINED).convertFromString(yldname_f);
 	yc_f.setCurveType(curveType_f);
 	yc_f.setInterpolation(FN_SPLINEINTERPOLATION_STR);
 	LAMathPathYieldCurve curve0_f(&yc_f, 0.0, ACT_365_ISDA);
 	// spot fx
-	double spotFX = dynamic_cast<const LADataDouble &>(object.getData(PRICING_DATA_SPOTFX, ISNOTNULL).get()).get();
+	double spotFX = dynamic_cast<const AQLDataDouble &>(object.getData(PRICING_DATA_SPOTFX, ISNOTNULL).get()).get();
 
 	// set up parameters calibration flag
-	const bool calibflagBeta = dynamic_cast<const LADataBool&>(calibinfo.getData(CALIBRATION_DATA_OPT_BETA_FLAG, ISNOTNULL).get()).get();
-	const bool calibflagTheta = dynamic_cast<const LADataBool&>(calibinfo.getData(CALIBRATION_DATA_OPT_THETA_FLAG, ISNOTNULL).get()).get();
-	const bool calibflagKappa = dynamic_cast<const LADataBool&>(calibinfo.getData(CALIBRATION_DATA_OPT_KAPPA_FLAG, ISNOTNULL).get()).get();
-	const bool calibflagEpsilon = dynamic_cast<const LADataBool&>(calibinfo.getData(CALIBRATION_DATA_OPT_EPSILON_FLAG, ISNOTNULL).get()).get();
+	const bool calibflagBeta = dynamic_cast<const AQLDataBool&>(calibinfo.getData(CALIBRATION_DATA_OPT_BETA_FLAG, ISNOTNULL).get()).get();
+	const bool calibflagTheta = dynamic_cast<const AQLDataBool&>(calibinfo.getData(CALIBRATION_DATA_OPT_THETA_FLAG, ISNOTNULL).get()).get();
+	const bool calibflagKappa = dynamic_cast<const AQLDataBool&>(calibinfo.getData(CALIBRATION_DATA_OPT_KAPPA_FLAG, ISNOTNULL).get()).get();
+	const bool calibflagEpsilon = dynamic_cast<const AQLDataBool&>(calibinfo.getData(CALIBRATION_DATA_OPT_EPSILON_FLAG, ISNOTNULL).get()).get();
 	BoolVector calibFlag = { calibflagBeta, calibflagTheta, calibflagKappa, calibflagEpsilon };
 
 	// set up parameters boundary
-	const double boundaryMaxBeta = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_BETA, ISNOTNULL).get()).get();
-	const double boundaryMinBeta = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_BETA, ISNOTNULL).get()).get();
-	const double boundaryMaxTheta = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_THETA, ISNOTNULL).get()).get();
-	const double boundaryMinTheta = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_THETA, ISNOTNULL).get()).get();
-	const double boundaryMaxKappa = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_KAPPA, ISNOTNULL).get()).get();
-	const double boundaryMinKappa = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_KAPPA, ISNOTNULL).get()).get();
-	const double boundaryMaxEpsilon = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_EPSILON, ISNOTNULL).get()).get();
-	const double boundaryMinEpsilon = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_EPSILON, ISNOTNULL).get()).get();
+	const double boundaryMaxBeta = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_BETA, ISNOTNULL).get()).get();
+	const double boundaryMinBeta = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_BETA, ISNOTNULL).get()).get();
+	const double boundaryMaxTheta = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_THETA, ISNOTNULL).get()).get();
+	const double boundaryMinTheta = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_THETA, ISNOTNULL).get()).get();
+	const double boundaryMaxKappa = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_KAPPA, ISNOTNULL).get()).get();
+	const double boundaryMinKappa = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_KAPPA, ISNOTNULL).get()).get();
+	const double boundaryMaxEpsilon = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MAX_EPSILON, ISNOTNULL).get()).get();
+	const double boundaryMinEpsilon = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_BOUNDARY_MIN_EPSILON, ISNOTNULL).get()).get();
 	DoubleVector boundaryMax = { boundaryMaxBeta, boundaryMaxTheta, boundaryMaxKappa, boundaryMaxEpsilon };
 	DoubleVector boundaryMin = { boundaryMinBeta, boundaryMinTheta, boundaryMinKappa, boundaryMinEpsilon };
 
 	//opt method
-	LAString optMethodType_sz = dynamic_cast<const LADataString &>(calibinfo.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
+	AQLString optMethodType_sz = dynamic_cast<const AQLDataString &>(calibinfo.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
 
 	// set up end criteria
-	const int maxIteration_sz = dynamic_cast<const LADataInt &>(calibinfo.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
-	const int maxStationaryStateIteration_sz = dynamic_cast<const LADataInt &>(calibinfo.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
-	const double rootEpsilon_sz = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
-	const double functionEpsilon_sz = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
-	const double gradientNormEpsilon_sz = dynamic_cast<const LADataDouble &>(calibinfo.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
+	const int maxIteration_sz = dynamic_cast<const AQLDataInt &>(calibinfo.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
+	const int maxStationaryStateIteration_sz = dynamic_cast<const AQLDataInt &>(calibinfo.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
+	const double rootEpsilon_sz = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
+	const double functionEpsilon_sz = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
+	const double gradientNormEpsilon_sz = dynamic_cast<const AQLDataDouble &>(calibinfo.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
 
 	// set up vol, premium, strike, weight
 	DoubleVector timegrid_start(gridSize);
@@ -265,29 +265,29 @@ LAPriceSZCalibration::calibSZ(const LADate& basedate,
 	{
 		if (i < gridSize - 1)
 		{
-			timegrid_start[i+1] = dynamic_cast<const LADataDouble &>(refData.get(i).getData(PRICING_DATA_FXTERM, ISNOTNULL).get()).get();
+			timegrid_start[i+1] = dynamic_cast<const AQLDataDouble &>(refData.get(i).getData(PRICING_DATA_FXTERM, ISNOTNULL).get()).get();
 		}
-		timegrid_end[i] = dynamic_cast<const LADataDouble &>(refData.get(i).getData(PRICING_DATA_FXTERM, ISNOTNULL).get()).get();
+		timegrid_end[i] = dynamic_cast<const AQLDataDouble &>(refData.get(i).getData(PRICING_DATA_FXTERM, ISNOTNULL).get()).get();
 		//vol, premium, strike, weight
-		volMat[i] = dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_VOLATILITYS, ISNOTNULL).get()).get();
-		premMat[i] = dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_OPTIONPREMIUMS, ISNOTNULL).get()).get();
-		strikeMat[i] = dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_STRIKES, ISNOTNULL).get()).get();
-		weightMat[i] = dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_WEIGHTS, ISNOTNULL).get()).get();
+		volMat[i] = dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_VOLATILITYS, ISNOTNULL).get()).get();
+		premMat[i] = dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_OPTIONPREMIUMS, ISNOTNULL).get()).get();
+		strikeMat[i] = dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_STRIKES, ISNOTNULL).get()).get();
+		weightMat[i] = dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_WEIGHTS, ISNOTNULL).get()).get();
 		//parameters
-		initialBetaVec[i] = dynamic_cast<const LADataDouble &>(refData.get(i).getData(PRICING_DATA_INITIALBETA, ISNOTNULL).get()).get();
-		initialThetaVec[i] = dynamic_cast<const LADataDouble &>(refData.get(i).getData(PRICING_DATA_INITIALTHETA, ISNOTNULL).get()).get();
-		initialKappaVec[i] = dynamic_cast<const LADataDouble &>(refData.get(i).getData(PRICING_DATA_INITIALKAPPA, ISNOTNULL).get()).get();
-		initialEpsilonVec[i] = dynamic_cast<const LADataDouble &>(refData.get(i).getData(PRICING_DATA_INITIALEPSILON, ISNOTNULL).get()).get();
+		initialBetaVec[i] = dynamic_cast<const AQLDataDouble &>(refData.get(i).getData(PRICING_DATA_INITIALBETA, ISNOTNULL).get()).get();
+		initialThetaVec[i] = dynamic_cast<const AQLDataDouble &>(refData.get(i).getData(PRICING_DATA_INITIALTHETA, ISNOTNULL).get()).get();
+		initialKappaVec[i] = dynamic_cast<const AQLDataDouble &>(refData.get(i).getData(PRICING_DATA_INITIALKAPPA, ISNOTNULL).get()).get();
+		initialEpsilonVec[i] = dynamic_cast<const AQLDataDouble &>(refData.get(i).getData(PRICING_DATA_INITIALEPSILON, ISNOTNULL).get()).get();
 		initialparameters[i] = {initialBetaVec[i], initialThetaVec[i], initialKappaVec[i], initialEpsilonVec[i] };
 	}
 
 	//Initial Vol
-	double diffVolV0 = dynamic_cast<const LADataDouble &>(object.getData(PRICING_DATA_DIFFVOLV0, ISNOTNULL).get()).get();
+	double diffVolV0 = dynamic_cast<const AQLDataDouble &>(object.getData(PRICING_DATA_DIFFVOLV0, ISNOTNULL).get()).get();
 	DoubleVector ATMVol_shortestterm = volMat[0];
 	double vol0 = ATMVol_shortestterm[2] - diffVolV0;
 	
 	//Rho
-	double rho = dynamic_cast<const LADataDouble &>(object.getData(PRICING_DATA_SDEVOLCORRELATIONS, ISNOTNULL).get()).get();
+	double rho = dynamic_cast<const AQLDataDouble &>(object.getData(PRICING_DATA_SDEVOLCORRELATIONS, ISNOTNULL).get()).get();
 
 	//------set up functions
 	//set up CostFuncSZ
@@ -312,7 +312,7 @@ LAPriceSZCalibration::calibSZ(const LADate& basedate,
 																			calibFlag
 																			);
 	//set upopt method
-	LAString type(optMethodType_sz.toUpper());
+	AQLString type(optMethodType_sz.toUpper());
 	std::shared_ptr<LAQuantLibOptimizationMethod> opt_method;
 
 	if (type == "NON_LINEAR_CONJUGATE_GRADIENT_METHOD")
@@ -336,8 +336,8 @@ LAPriceSZCalibration::calibSZ(const LADate& basedate,
 	}
 	else
 	{	
-		const LAString msg = "Invalid optimization method: " + type;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		const AQLString msg = "Invalid optimization method: " + type;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	//set up end criteria
@@ -350,11 +350,11 @@ LAPriceSZCalibration::calibSZ(const LADate& basedate,
 
 	// check lack ofinput 
 	if (initialBetaVec.empty() || initialThetaVec.empty() || initialKappaVec.empty() || initialEpsilonVec.empty())
-	throw LACoreInvalidData("initial value size is not 4!", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("initial value size is not 4!", __FILE__, __LINE__);
 
 	size_t o = std::count(calibFlag.begin(), calibFlag.end(), true);
 	if (o == 0)
-		throw LACoreInvalidData("Calibration target size is 0!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Calibration target size is 0!", __FILE__, __LINE__);
 
 	// optimize parameters
 	LAQuantLibArray x(o);
@@ -369,7 +369,7 @@ LAPriceSZCalibration::calibSZ(const LADate& basedate,
 			{
 				x[counter] = initialparameters[i][j];
 				if (x[counter] < boundaryMin[j] || boundaryMax[j] < x[counter])
-					throw LACoreInvalidData("the initial value is out of boundary range", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("the initial value is out of boundary range", __FILE__, __LINE__);
 				counter++;
 			}
 		}
@@ -419,7 +419,7 @@ LAPriceSZCalibration::calibSZ(const LADate& basedate,
 	}
 
 	//time grid
-	DoubleVector timegrid_fx = dynamic_cast<LADataDoubles &>(vole.getData(PRICING_DATA_FXTIMEGRIDS, ISNOTNULL).get()).get();
+	DoubleVector timegrid_fx = dynamic_cast<AQLDataDoubles &>(vole.getData(PRICING_DATA_FXTIMEGRIDS, ISNOTNULL).get()).get();
 	//step interpolation for optimized params
 	DoubleVector BetaVec = stepinterpolation_SZ(optimizedBetaVec, timegrid_fx, timegrid_end);
 	DoubleVector ThetaVec = stepinterpolation_SZ(optimizedThetaVec, timegrid_fx, timegrid_end);
@@ -427,16 +427,16 @@ LAPriceSZCalibration::calibSZ(const LADate& basedate,
 	DoubleVector EpsilonVec = stepinterpolation_SZ(optimizedEpsilonVec, timegrid_fx, timegrid_end);
 
 	vole.remove(PRICING_DATA_OPTIMIZEDBETA);
-	vole.add(PRICING_DATA_OPTIMIZEDBETA, new LADataDoubles(BetaVec));
+	vole.add(PRICING_DATA_OPTIMIZEDBETA, new AQLDataDoubles(BetaVec));
 	vole.remove(PRICING_DATA_OPTIMIZEDTHETA);
-	vole.add(PRICING_DATA_OPTIMIZEDTHETA, new LADataDoubles(ThetaVec));
+	vole.add(PRICING_DATA_OPTIMIZEDTHETA, new AQLDataDoubles(ThetaVec));
 	vole.remove(PRICING_DATA_OPTIMIZEDKAPPA);
-	vole.add(PRICING_DATA_OPTIMIZEDKAPPA, new LADataDoubles(KappaVec));
+	vole.add(PRICING_DATA_OPTIMIZEDKAPPA, new AQLDataDoubles(KappaVec));
 	vole.remove(PRICING_DATA_OPTIMIZEDEPSILON);
-	vole.add(PRICING_DATA_OPTIMIZEDEPSILON, new LADataDoubles(EpsilonVec));
+	vole.add(PRICING_DATA_OPTIMIZEDEPSILON, new AQLDataDoubles(EpsilonVec));
 
 	const DoubleArray v0Vec(timegrid_fx.size(), vol0);
-	vole.add(PRICING_DATA_VOLV0, new LADataDoubles(v0Vec));
+	vole.add(PRICING_DATA_VOLV0, new AQLDataDoubles(v0Vec));
 }
 
 /*!
@@ -455,7 +455,7 @@ DoubleVector LAPriceSZCalibration::stepinterpolation_SZ(DoubleVector& param, Dou
 	// check
 	if (param.size() != gridSize_calib)
 	{
-		throw LACoreInvalidData("Calibrated Param size is not the same with calibration target term size  is wroing.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Calibrated Param size is not the same with calibration target term size  is wroing.", __FILE__, __LINE__);
 	}
 
 	for (int i = 0; i < gridSize; i++)

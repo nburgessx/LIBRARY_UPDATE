@@ -44,32 +44,32 @@ namespace etrading
         virtual std::size_t cols() const;
 
         // scalar interface
-        virtual const LAString& operator()() const;
+        virtual const AQLString& operator()() const;
 
         // vector interface
-        virtual const LAString& operator[]( std::size_t i ) const;
+        virtual const AQLString& operator[]( std::size_t i ) const;
 
         // associative array interface
-        virtual const LAString& operator[]( const LAString& key ) const;
+        virtual const AQLString& operator[]( const AQLString& key ) const;
 
         // table interface
-        virtual const LAString& operator()( const LAString& key, const LAString& col ) const;
+        virtual const AQLString& operator()( const AQLString& key, const AQLString& col ) const;
 
         //
         // mixed interface
         //
-        virtual const LAString& operator()( std::size_t i, const LAString& col ) const;
+        virtual const AQLString& operator()( std::size_t i, const AQLString& col ) const;
 
-        virtual const LAString& operator()( const LAString& key, std::size_t j ) const;
+        virtual const AQLString& operator()( const AQLString& key, std::size_t j ) const;
 
         // matrix interface
-        virtual const LAString& operator()( std::size_t i, std::size_t j ) const;
+        virtual const AQLString& operator()( std::size_t i, std::size_t j ) const;
 
 		// Get keys
-		virtual const std::set<LAString>& getKeys() const;
+		virtual const std::set<AQLString>& getKeys() const;
 
-        // conversion to LAStringMatrix
-        virtual operator const LAStringMatrix& () const;
+        // conversion to AQLStringMatrix
+        virtual operator const AQLStringMatrix& () const;
 
         // stream output
         virtual std::ostream& print( std::ostream& ) const = 0;
@@ -90,7 +90,7 @@ namespace etrading
         typedef etrading::ReadDataFile ReadTestData;
 
         // return true iff name ends in "[]", in which case the suffix is chopped off
-        bool isVector( LAString& name )
+        bool isVector( AQLString& name )
         {
             const char* s = name.getCString();
             const std::size_t n = std::strlen( s );
@@ -111,16 +111,16 @@ namespace etrading
         class XScalar : public ReadDataFile::DataInstance
         {
         public:
-            XScalar( const LAString& value ) : value_( value ) {}
+            XScalar( const AQLString& value ) : value_( value ) {}
             /* virtual */ Type type() const
             {
                 return etrading::ReadDataFile::Scalar;
             }
-            /* virtual */ const LAString& operator()() const
+            /* virtual */ const AQLString& operator()() const
             {
                 return value_;
             }
-            /* virtual */ LAString& operator()()
+            /* virtual */ AQLString& operator()()
             {
                 return value_;
             }
@@ -129,13 +129,13 @@ namespace etrading
                 return os << value_;
             }
         private:
-            LAString value_;
+            AQLString value_;
         };
 
         class XVector : public ReadTestData::DataInstance
         {
         public:
-            XVector( const LAStringVector& values ) : values_( values ) {}
+            XVector( const AQLStringVector& values ) : values_( values ) {}
 
             /* virtual */ Type type() const
             {
@@ -145,7 +145,7 @@ namespace etrading
             {
                 return values_.size();
             }
-            /* virtual */ const LAString& operator[]( std::size_t i ) const
+            /* virtual */ const AQLString& operator[]( std::size_t i ) const
             {
                 return values_.at( i );
             }
@@ -163,13 +163,13 @@ namespace etrading
                 return os << ']';
             }
         private:
-            LAStringVector values_;
+            AQLStringVector values_;
         };
 
         class XAssociativeArray : public ReadTestData::DataInstance
         {
         public:
-            XAssociativeArray( const LAStringMatrix& kvp )
+            XAssociativeArray( const AQLStringMatrix& kvp )
                 : kvpairs_( kvp )
                 , duplicates_( false )
             {
@@ -181,8 +181,8 @@ namespace etrading
                 }
                 for ( std::size_t i = 0; i != kvp.size(); ++i )
                 {
-                    typedef std::map<LAString, std::size_t>::value_type P;
-					LAString key = kvp[i].at( 0 );
+                    typedef std::map<AQLString, std::size_t>::value_type P;
+					AQLString key = kvp[i].at( 0 );
 					key.toUpper();
                     if ( !( rowind_.insert( P( key, i ) ).second ) )
                     {
@@ -201,37 +201,37 @@ namespace etrading
                 return kvpairs_.size();
             }
 
-            /* virtual */ const LAString& operator[]( const LAString& key ) const
+            /* virtual */ const AQLString& operator[]( const AQLString& key ) const
             {
                 return kvpairs_.at( rowind( key ) )[1];
             }
 
-            /* virtual */ const LAString& operator()( const LAString& key, const LAString& col ) const
+            /* virtual */ const AQLString& operator()( const AQLString& key, const AQLString& col ) const
             {
                 return kvpairs_.at( rowind( key ) ).at( colind( col ) );
             }
 
-            /* virtual */ const LAString& operator()( std::size_t i, const LAString& col ) const
+            /* virtual */ const AQLString& operator()( std::size_t i, const AQLString& col ) const
             {
                 return kvpairs_.at( i ).at( colind( col ) );
             }
 
-            /* virtual */ const LAString& operator()( const LAString& key, std::size_t j ) const
+            /* virtual */ const AQLString& operator()( const AQLString& key, std::size_t j ) const
             {
                 return  kvpairs_.at( rowind( key ) ).at( j );
             }
 
-            /* virtual */ const LAString& operator()( std::size_t i, std::size_t j ) const
+            /* virtual */ const AQLString& operator()( std::size_t i, std::size_t j ) const
             {
                 return kvpairs_.at( i ).at( j );
             }
 
-            /* virtual */ operator const LAStringMatrix& () const
+            /* virtual */ operator const AQLStringMatrix& () const
             {
                 return kvpairs_;
             }
 
-			/* virtual */ const std::set<LAString>& getKeys() const
+			/* virtual */ const std::set<AQLString>& getKeys() const
             {
                 return keys_;
             }
@@ -252,17 +252,17 @@ namespace etrading
             }
 
         private:
-            std::size_t rowind( const LAString& key ) const
+            std::size_t rowind( const AQLString& key ) const
             {
                 if ( duplicates_ )
                 {
                     throw Exception( "duplicate value in associative array index: " );
                 }
-                return rowind_.at( LAString(key).toUpper() );
+                return rowind_.at( AQLString(key).toUpper() );
             }
-            std::size_t colind( const LAString& col ) const
+            std::size_t colind( const AQLString& col ) const
             {
-                LAString c = col;
+                AQLString c = col;
                 if ( c.toLower() == "key" )
                 {
                     return 0;
@@ -271,19 +271,19 @@ namespace etrading
                 {
                     return 1;
                 }
-                throw Exception( LAString( "unexpected column in associative array: " ) + col );
+                throw Exception( AQLString( "unexpected column in associative array: " ) + col );
             }
 
-            std::map<LAString, std::size_t> rowind_;
-			std::set<LAString> keys_;
-            LAStringMatrix kvpairs_;
+            std::map<AQLString, std::size_t> rowind_;
+			std::set<AQLString> keys_;
+            AQLStringMatrix kvpairs_;
             bool duplicates_;
         };
 
         class XTable : public ReadTestData::DataInstance
         {
         public:
-            XTable( const LAStringVector& cols, const LAStringMatrix rows )
+            XTable( const AQLStringVector& cols, const AQLStringMatrix rows )
                 : cols_( cols )
                 , rows_( rows )
                 , duplicates_( false )
@@ -298,8 +298,8 @@ namespace etrading
                 }
                 for ( std::size_t i = 0; i != rows.size(); ++i )
                 {
-                    typedef std::map<LAString, std::size_t>::value_type P;
-					LAString key = rows[i].at( 0 );
+                    typedef std::map<AQLString, std::size_t>::value_type P;
+					AQLString key = rows[i].at( 0 );
 					key.toUpper();
                     if ( !( rowind_.insert( P( key, i ) ).second ) )
                     {
@@ -315,7 +315,7 @@ namespace etrading
                 return ReadTestData::Table;
             }
 
-			/* virtual */ const std::set<LAString>& getKeys() const
+			/* virtual */ const std::set<AQLString>& getKeys() const
             {
                 return keys_;
             }
@@ -334,27 +334,27 @@ namespace etrading
                 return rows_.at( 0 ).size();
             }
 
-            /* virtual */ const LAString& operator()( const LAString& key, const LAString& col ) const
+            /* virtual */ const AQLString& operator()( const AQLString& key, const AQLString& col ) const
             {
                 return rows_.at( rowind( key ) ).at( colind( col ) );
             }
 
-            /* virtual */ const LAString& operator()( std::size_t i, const LAString& col ) const
+            /* virtual */ const AQLString& operator()( std::size_t i, const AQLString& col ) const
             {
                 return rows_.at( i ).at( colind( col ) );
             }
 
-            /* virtual */ const LAString& operator()( const LAString& key, std::size_t j ) const
+            /* virtual */ const AQLString& operator()( const AQLString& key, std::size_t j ) const
             {
                 return rows_.at( rowind( key ) ).at( j );
             }
 
-            /* virtual */ const LAString& operator()( std::size_t i, std::size_t j ) const
+            /* virtual */ const AQLString& operator()( std::size_t i, std::size_t j ) const
             {
                 return rows_.at( i ).at( j );
             }
 
-            /* virtual */ operator const LAStringMatrix& () const
+            /* virtual */ operator const AQLStringMatrix& () const
             {
                 return rows_;
             }
@@ -378,23 +378,23 @@ namespace etrading
                 return os << "\n]";
             }
         private:
-            std::size_t colind( const LAString& col ) const
+            std::size_t colind( const AQLString& col ) const
             {
                 return colind_.at( col );
             }
-            std::size_t rowind( const LAString& key ) const
+            std::size_t rowind( const AQLString& key ) const
             {
                 if ( duplicates_ )
                 {
                     throw Exception( "duplicate value in table index" );
                 }
-                return rowind_.at( LAString(key).toUpper() );
+                return rowind_.at( AQLString(key).toUpper() );
             }
-            LAStringVector cols_;
-            std::map<LAString, std::size_t> colind_;
-            std::map<LAString, std::size_t> rowind_;
-			std::set<LAString> keys_;
-            LAStringMatrix rows_;
+            AQLStringVector cols_;
+            std::map<AQLString, std::size_t> colind_;
+            std::map<AQLString, std::size_t> rowind_;
+			std::set<AQLString> keys_;
+            AQLStringMatrix rows_;
             bool duplicates_;
         };
     }
@@ -454,7 +454,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::DataInstance::operator()() const
+    const AQLString& etrading::ReadDataFile::DataInstance::operator()() const
     {
         switch( type() )
         {
@@ -471,7 +471,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::DataInstance::operator[]( std::size_t i ) const
+    const AQLString& etrading::ReadDataFile::DataInstance::operator[]( std::size_t i ) const
     {
         switch( type() )
         {
@@ -488,7 +488,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::DataInstance::operator[]( const LAString& ) const
+    const AQLString& etrading::ReadDataFile::DataInstance::operator[]( const AQLString& ) const
     {
         switch( type() )
         {
@@ -505,7 +505,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::DataInstance::operator()( const LAString& key, const LAString& ) const
+    const AQLString& etrading::ReadDataFile::DataInstance::operator()( const AQLString& key, const AQLString& ) const
     {
         switch( type() )
         {
@@ -522,7 +522,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::DataInstance::operator()( std::size_t, const LAString& ) const
+    const AQLString& etrading::ReadDataFile::DataInstance::operator()( std::size_t, const AQLString& ) const
     {
         switch( type() )
         {
@@ -539,7 +539,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::DataInstance::operator()( const LAString&, std::size_t ) const
+    const AQLString& etrading::ReadDataFile::DataInstance::operator()( const AQLString&, std::size_t ) const
     {
         switch( type() )
         {
@@ -556,7 +556,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::DataInstance::operator()( std::size_t, std::size_t ) const
+    const AQLString& etrading::ReadDataFile::DataInstance::operator()( std::size_t, std::size_t ) const
     {
         switch( type() )
         {
@@ -573,14 +573,14 @@ namespace etrading
         }
     }
 
-    etrading::ReadDataFile::DataInstance::operator const LAStringMatrix& () const
+    etrading::ReadDataFile::DataInstance::operator const AQLStringMatrix& () const
     {
         switch( type() )
         {
             case Scalar:
-                throw Exception( "can't convert scalar to LAStringMatrix" );
+                throw Exception( "can't convert scalar to AQLStringMatrix" );
             case Vector:
-                throw Exception( "can't convert vector to LAStringMatrix" );
+                throw Exception( "can't convert vector to AQLStringMatrix" );
             case AssociativeArray:
                 throw Exception( "internal error: missing override", __FILE__, __LINE__ );
             case Table:
@@ -590,14 +590,14 @@ namespace etrading
         }
     }
 
-	const std::set<LAString>& etrading::ReadDataFile::DataInstance::getKeys() const
+	const std::set<AQLString>& etrading::ReadDataFile::DataInstance::getKeys() const
     {
         switch( type() )
         {
             case Scalar:
-                throw Exception( "can't convert scalar to LAStringMatrix" );
+                throw Exception( "can't convert scalar to AQLStringMatrix" );
             case Vector:
-                throw Exception( "can't convert vector to LAStringMatrix" );
+                throw Exception( "can't convert vector to AQLStringMatrix" );
             case AssociativeArray:
                 throw Exception( "internal error: missing override", __FILE__, __LINE__ );
             case Table:
@@ -611,29 +611,29 @@ namespace etrading
     // implementation of ReadTestData
     //
 
-    etrading::ReadDataFile::ReadDataFile( const LAString& value )
+    etrading::ReadDataFile::ReadDataFile( const AQLString& value )
         : data_( new XScalar( value ) )
     {
     }
 
-    etrading::ReadDataFile::ReadDataFile( const LAStringVector& values )
+    etrading::ReadDataFile::ReadDataFile( const AQLStringVector& values )
         : data_( new XVector( values ) )
     {
     }
 
-    etrading::ReadDataFile::ReadDataFile( const LAStringMatrix& kvp )
+    etrading::ReadDataFile::ReadDataFile( const AQLStringMatrix& kvp )
         : data_( new XAssociativeArray( kvp ) )
     {
     }
 
-    etrading::ReadDataFile::ReadDataFile( const LAStringVector& cols, const LAStringMatrix& rows )
+    etrading::ReadDataFile::ReadDataFile( const AQLStringVector& cols, const AQLStringMatrix& rows )
         : data_( new XTable( cols, rows ) )
     {
     }
 
-    etrading::ReadDataFile::operator const LAStringMatrix& () const
+    etrading::ReadDataFile::operator const AQLStringMatrix& () const
     {
-        return static_cast<const LAStringMatrix&>( *data_ );
+        return static_cast<const AQLStringMatrix&>( *data_ );
     }
 
     etrading::ReadDataFile::Type etrading::ReadDataFile::type() const
@@ -656,18 +656,18 @@ namespace etrading
         return data_->cols();
     }
 
-    const LAString& etrading::ReadDataFile::operator()() const
+    const AQLString& etrading::ReadDataFile::operator()() const
     {
         return ( *data_ )();
     }
 
 	// Return keys
-	const std::set<LAString>& etrading::ReadDataFile::getKeys() const
+	const std::set<AQLString>& etrading::ReadDataFile::getKeys() const
 	{
 		return data_->getKeys();
 	}
 
-    const LAString& etrading::ReadDataFile::operator[]( std::size_t i ) const
+    const AQLString& etrading::ReadDataFile::operator[]( std::size_t i ) const
     {
         try
         {
@@ -679,7 +679,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::operator[]( const LAString& key ) const
+    const AQLString& etrading::ReadDataFile::operator[]( const AQLString& key ) const
     {
         try
         {
@@ -691,7 +691,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::operator()( const LAString& key, const LAString& col ) const
+    const AQLString& etrading::ReadDataFile::operator()( const AQLString& key, const AQLString& col ) const
     {
         try
         {
@@ -703,7 +703,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::operator()( std::size_t i, const LAString& col ) const
+    const AQLString& etrading::ReadDataFile::operator()( std::size_t i, const AQLString& col ) const
     {
         try
         {
@@ -716,7 +716,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::operator()( const LAString& key, std::size_t j ) const
+    const AQLString& etrading::ReadDataFile::operator()( const AQLString& key, std::size_t j ) const
     {
         try
         {
@@ -729,7 +729,7 @@ namespace etrading
         }
     }
 
-    const LAString& etrading::ReadDataFile::operator()( std::size_t i, std::size_t j ) const
+    const AQLString& etrading::ReadDataFile::operator()( std::size_t i, std::size_t j ) const
     {
         try
         {
@@ -764,8 +764,8 @@ namespace etrading
     // member functions of nested classes
     //
 
-    etrading::ReadDataFile::Exception::Exception( const LAString& msg, const char* file, unsigned int line )
-        : LACoreAppError( msg.getCString(), file ? file : __FILE__, line ? line : __LINE__ )
+    etrading::ReadDataFile::Exception::Exception( const AQLString& msg, const char* file, unsigned int line )
+        : AQLCoreAppError( msg.getCString(), file ? file : __FILE__, line ? line : __LINE__ )
     {
     }
 
@@ -774,7 +774,7 @@ namespace etrading
         return getMsg();
     }
 
-    etrading::ReadDataFile::LoadError::LoadError( const LAString& fileName )
+    etrading::ReadDataFile::LoadError::LoadError( const AQLString& fileName )
               : Exception( makeMessage( fileName ) )
     {
     }
@@ -784,16 +784,16 @@ namespace etrading
         return getMsg();
     }
 
-	LAString  etrading::ReadDataFile::LoadError::makeMessage( const LAString& fileName )
+	AQLString  etrading::ReadDataFile::LoadError::makeMessage( const AQLString& fileName )
     {
-        return LAString( "error opening file " ) + fileName + " for input";
+        return AQLString( "error opening file " ) + fileName + " for input";
     }
 
     //
     // input handling
     //
 
-    etrading::ReadDataFile::Load::Load( const LAString& name )
+    etrading::ReadDataFile::Load::Load( const AQLString& name )
         : index_( readCSV( etrading::CreateDataFile::makeFilename( name ) ) )
     {
     }
@@ -810,7 +810,7 @@ namespace etrading
         index_ = rhs.index_;
     }
 
-    bool etrading::ReadDataFile::Load::hasItem( const LAString& name ) const
+    bool etrading::ReadDataFile::Load::hasItem( const AQLString& name ) const
     {
         typedef Index::const_iterator Iter;
         const Iter it = index_.find( name );
@@ -818,7 +818,7 @@ namespace etrading
     }
 
     const etrading::ReadDataFile&
-    etrading::ReadDataFile::Load::operator[]( const LAString& s ) const
+    etrading::ReadDataFile::Load::operator[]( const AQLString& s ) const
     {
         try
         {
@@ -830,10 +830,10 @@ namespace etrading
         }
     }
 
-	std::vector<LAString>
+	std::vector<AQLString>
 	etrading::ReadDataFile::Load::getKeys() const
 	{
-		std::vector<LAString> keys;
+		std::vector<AQLString> keys;
 
 		for ( auto it = index_.begin(); it != index_.end(); ++it )
 		{
@@ -843,7 +843,7 @@ namespace etrading
 	}
 
     etrading::ReadDataFile::Load::Index
-    etrading::ReadDataFile::Load::readCSV( const LAString& name )
+    etrading::ReadDataFile::Load::readCSV( const AQLString& name )
     {
         
         boost::filesystem::path p( name.getCString() );
@@ -866,23 +866,23 @@ namespace etrading
         return doReadCSV( in );
     }
 
-    std::map<LAString, ReadTestData>
+    std::map<AQLString, ReadTestData>
     etrading::ReadDataFile::Load::doReadCSV( std::istream& in )
     {
-        std::map<LAString, ReadTestData> res;
-        LAStringVector header;
+        std::map<AQLString, ReadTestData> res;
+        AQLStringVector header;
         while ( getSectionHeader( in, header ) )
         {
-            LAString name = header[0];
+            AQLString name = header[0];
             if ( isVector( name ) )
             {
                 // vector
-                res[name] = ReadTestData( LAStringVector( header.begin() + 1, header.end() ) );
+                res[name] = ReadTestData( AQLStringVector( header.begin() + 1, header.end() ) );
             }
             else if ( header.size() == 2 )
             {
                 // scalar with non-blank value (standard case)
-                LAString value = header[1];
+                AQLString value = header[1];
                 res[name] = ReadTestData( value );
             }
             else if ( header.size() > 2 )
@@ -893,20 +893,20 @@ namespace etrading
             else
             {
                 // associative array or table
-                LAStringVector cols;
+                AQLStringVector cols;
                 switch ( getType( in, cols ) )
                 {
                     case Scalar:
                         // scalar value was blank value (exceptional case)
-                        res[name] = LAString();
+                        res[name] = AQLString();
                         break;
                     case AssociativeArray:
                     {
                         const std::size_t ncols = 2;
-                        LAStringMatrix table;
+                        AQLStringMatrix table;
                         while ( true )
                         {
-                            LAStringVector row = getFields( in, ncols, false );
+                            AQLStringVector row = getFields( in, ncols, false );
                             if ( row.size() == 0 )
                             {
                                 break;
@@ -920,10 +920,10 @@ namespace etrading
                     case Table:
                     {
                         const std::size_t ncols = cols.size();
-                        LAStringMatrix table;
+                        AQLStringMatrix table;
                         while ( true )
                         {
-                            LAStringVector row = getFields( in, ncols, false );
+                            AQLStringVector row = getFields( in, ncols, false );
                             if ( row.size() == 0 )
                             {
                                 break;
@@ -942,7 +942,7 @@ namespace etrading
         return res;
     }
 
-    bool etrading::ReadDataFile::Load::getSectionHeader( std::istream& in, LAStringVector& header )
+    bool etrading::ReadDataFile::Load::getSectionHeader( std::istream& in, AQLStringVector& header )
     {
         header = getFields( in, 0, true );
         if ( header.size() == 0 )
@@ -954,7 +954,7 @@ namespace etrading
     }
 
     etrading::ReadDataFile::Type
-    etrading::ReadDataFile::Load::getType( std::istream& in, LAStringVector& cols )
+    etrading::ReadDataFile::Load::getType( std::istream& in, AQLStringVector& cols )
     {
         cols = getFields( in, 0, false );
         switch ( cols.size() )
@@ -973,7 +973,7 @@ namespace etrading
     }
 
     // http://mybyteofcode.blogspot.co.uk/2010/02/parse-csv-file-with-boost-tokenizer-in.html
-    LAStringVector
+    AQLStringVector
     etrading::ReadDataFile::Load::getFields( std::istream& in, std::size_t n, bool gobbleEmptyLines )
     {
         typedef boost::tokenizer< boost::escaped_list_separator<char> > Tokenizer;
@@ -986,10 +986,10 @@ namespace etrading
             Tokenizer tok( line );
             vec.assign( tok.begin(), tok.end() );
 
-            LAStringVector fields( vec.size() );
+            AQLStringVector fields( vec.size() );
             for ( std::size_t i = 0; i != vec.size(); ++i )
             {
-                fields[i] = LAString( vec[i].c_str() );
+                fields[i] = AQLString( vec[i].c_str() );
             }
 
             if ( gobbleEmptyLines && isBlank( fields ) )
@@ -1025,7 +1025,7 @@ namespace etrading
                 // check for end of section
                 if ( isBlank( fields ) )
                 {
-                    return LAStringVector();
+                    return AQLStringVector();
                 }
                 // check for unexpected non-blank fields
                 for ( std::size_t i = n; i < fields.size(); ++i )
@@ -1042,10 +1042,10 @@ namespace etrading
             }
         }
         assert( in.eofbit );
-        return LAStringVector();	// no data found - end of file
+        return AQLStringVector();	// no data found - end of file
     }
 
-    bool etrading::ReadDataFile::Load::isBlank( const LAStringVector& fields )
+    bool etrading::ReadDataFile::Load::isBlank( const AQLStringVector& fields )
     {
         for ( std::size_t i = 0; i < fields.size(); ++i )
         {
@@ -1063,9 +1063,9 @@ namespace etrading
 // support for streaming booleans
 //
 
-inline bool parse( const LAString& flag )
+inline bool parse( const AQLString& flag )
 {
-    LAString s = flag;
+    AQLString s = flag;
     if ( s.toLower() == "false" )
     {
         return false;
@@ -1078,13 +1078,13 @@ inline bool parse( const LAString& flag )
 }
 
 template<>
-bool boost::lexical_cast<bool>( const LAString& flag )
+bool boost::lexical_cast<bool>( const AQLString& flag )
 {
     return parse( flag );
 }
 
 template<>
-LAString boost::lexical_cast<LAString>( const bool& flag )
+AQLString boost::lexical_cast<AQLString>( const bool& flag )
 {
     return flag ? "TRUE" : "FALSE";
 }

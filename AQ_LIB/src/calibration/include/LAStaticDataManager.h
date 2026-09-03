@@ -5,7 +5,7 @@
 #endif
 
 #include <map>
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 
 #if defined(WIN32) || defined(WIN64)
 #include <windows.h>
@@ -14,7 +14,7 @@
 #endif
 
 class LACoreDataService;
-class LAString;
+class AQLString;
 class LAStaticData;
 
 #ifdef __HAS_MIC__
@@ -67,35 +67,35 @@ friend class LACoreDataService;
 
 	//==============================================
 	// file cache all clear method                 
-	static void         clearStaticDataObject(const LAString &fileNum);
+	static void         clearStaticDataObject(const AQLString &fileNum);
 	//==============================================
 	// clear risk properties                 
-	static void         clearRiskStaticDataObject(const LAString &fileNum);
+	static void         clearRiskStaticDataObject(const AQLString &fileNum);
 	//==============================================
     // clear calib properties 
-    static void         clearCalibStaticDataObject(const LAString &fileNum);
+    static void         clearCalibStaticDataObject(const AQLString &fileNum);
 	//==============================================
     // clear grid properties 
-    static void         clearGridStaticData(const LAString &fileNum);
+    static void         clearGridStaticData(const AQLString &fileNum);
 	//==============================================
 	// clear xva properties 
-	static void         clearXVAStaticDataObject(const LAString &fileNum);
+	static void         clearXVAStaticDataObject(const AQLString &fileNum);
 	//==============================================
 	// clear credit properties 
-	static void         clearCreditStaticDataObject(const LAString &fileNum);
+	static void         clearCreditStaticDataObject(const AQLString &fileNum);
 
 private:
 	//==============================================
 	// return property ID
-	static LAString     getPropertiesID();
+	static AQLString     getPropertiesID();
 	//==============================================
 
-	typedef std::map<LAString, LAStaticData *> pMap;
-    typedef std::map<LAString, LAStaticData *>::iterator pIter;
+	typedef std::map<AQLString, LAStaticData *> pMap;
+    typedef std::map<AQLString, LAStaticData *>::iterator pIter;
 
 	//==============================================
 	// return propertyAccessor
-	static LAStaticData     &getStaticData(const LAString& propertyName, pMap& propertyMap);
+	static LAStaticData     &getStaticData(const AQLString& propertyName, pMap& propertyMap);
 
 	static pMap mProperties;
 	static pMap mRiskProperties;

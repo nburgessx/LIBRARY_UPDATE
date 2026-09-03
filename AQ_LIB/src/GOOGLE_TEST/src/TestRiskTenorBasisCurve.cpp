@@ -76,15 +76,15 @@ namespace google_test
             std::stringstream ss;
             ss << i;
             std::string name = "dealInfo_" + ss.str();
-            LAStringMatrix m = inputFile[name.c_str()];
+            AQLStringMatrix m = inputFile[name.c_str()];
             LabelValueBlock oneDeal( m );
             dealInfo.push_back( oneDeal );
         }
 
-        LAStringVector forecastCurveSet = inputFile["forecastCurveSet"];
-        LAString curveCollection = inputFile["curveCollection"];
-        LAStringVector pillarNames;
-        LAStringVector headers;
+        AQLStringVector forecastCurveSet = inputFile["forecastCurveSet"];
+        AQLString curveCollection = inputFile["curveCollection"];
+        AQLStringVector pillarNames;
+        AQLStringVector headers;
         DoubleMatrix deltas;
 
         validation::tryMeProductSwapDelta(
@@ -103,9 +103,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = RAW_TEST1_DELTA_OUTPUTS_32;
+            AQLString outputFileName = RAW_TEST1_DELTA_OUTPUTS_32;
 #else
-            LAString outputFileName = RAW_TEST1_DELTA_OUTPUTS_64;
+            AQLString outputFileName = RAW_TEST1_DELTA_OUTPUTS_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -129,7 +129,7 @@ namespace google_test
 
             for ( size_t i = 0; i < pillarNames.size(); ++i )
             {
-                LAString key	= pillarNames[i];
+                AQLString key	= pillarNames[i];
 
                 DoubleVector delta	= deltas[i];
                 DoubleVector ref = resultFile[key];
@@ -165,15 +165,15 @@ namespace google_test
             std::stringstream ss;
             ss << i;
             std::string name = "dealInfo_" + ss.str();
-            LAStringMatrix m = inputFile[name.c_str()];
+            AQLStringMatrix m = inputFile[name.c_str()];
             LabelValueBlock oneDeal( m );
             dealInfo.push_back( oneDeal );
         }
 
-        LAStringVector forecastCurveSet = inputFile["forecastCurveSet"];
-        LAString curveCollection = inputFile["curveCollection"];
-        LAStringVector pillarNames;
-        LAStringVector headers;
+        AQLStringVector forecastCurveSet = inputFile["forecastCurveSet"];
+        AQLString curveCollection = inputFile["curveCollection"];
+        AQLStringVector pillarNames;
+        AQLStringVector headers;
         DoubleMatrix deltas;
         
         // Dummy Xccy FX Spot Rates
@@ -195,9 +195,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = RAW_TEST2_DELTA_OUTPUTS_32;
+            AQLString outputFileName = RAW_TEST2_DELTA_OUTPUTS_32;
 #else
-            LAString outputFileName = RAW_TEST2_DELTA_OUTPUTS_64;
+            AQLString outputFileName = RAW_TEST2_DELTA_OUTPUTS_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -221,7 +221,7 @@ namespace google_test
 
             for ( size_t i = 0; i < pillarNames.size(); ++i )
             {
-                LAString key	= pillarNames[i];
+                AQLString key	= pillarNames[i];
 
                 DoubleVector delta	= deltas[i];
                 DoubleVector ref = resultFile[key];

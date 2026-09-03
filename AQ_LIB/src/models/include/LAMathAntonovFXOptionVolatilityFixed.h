@@ -11,16 +11,16 @@
 #pragma interface
 #endif
 
-#include "LACoreValuation.h"
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LABasic.h"
-#include "LADist.h"
-#include "LADataValuation.h"
-#include "LAFindRootBrent.h"
-#include "LA1DDataSet.h"
-#include "LAGaussLegendre.h"
+#include "AQLCoreValuation.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
+#include "AQLDataValuation.h"
+#include "AQLFindRootBrent.h"
+#include "AQL1DDataSet.h"
+#include "AQLGaussLegendre.h"
 #include "LAMathAntonovFXOption.h"
 
 #include "LAAnalyticFormula.h"
@@ -28,15 +28,15 @@
 
 
 
-// Funciton ID of LAShiftMethod
+// Funciton ID of AQLShiftMethod
 #define FN_ANTONOVFXOPTIOINVOLATILITYFIXED	10046
-// Function Name of LAShiftMethod
+// Function Name of AQLShiftMethod
 #define FN_ANTONOVFXOPTIOINVOLATILITYFIXED_STR	"fn_antonovfxoptionvolatilityfixed"
 
 
-class LAObject;
+class AQLObject;
 class LARatesPathElementCurve;
-class LAPriceDataManager;
+class AQLPriceDataManager;
 
 
 class LAMathAntonovFXOptionVolatilityFixed : public LAMathAntonovFXOption
@@ -51,7 +51,7 @@ public:
 	virtual function_t			getType() const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 
 	
 protected:

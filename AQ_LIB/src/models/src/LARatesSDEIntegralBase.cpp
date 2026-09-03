@@ -43,7 +43,7 @@ LARatesSDEIntegralBase::LARatesSDEIntegralBase(SDEINTEGRAL_TYPE type)
 	
 	@param[in] type sde integral type
 */
-LARatesSDEIntegralBase::LARatesSDEIntegralBase(SDEINTEGRAL_TYPE type, const LAString& sdeAttrName)
+LARatesSDEIntegralBase::LARatesSDEIntegralBase(SDEINTEGRAL_TYPE type, const AQLString& sdeAttrName)
 : mSdeType(dX), mIntegralType(type), mSDEAttrName(sdeAttrName)
 {
 
@@ -52,7 +52,7 @@ LARatesSDEIntegralBase::LARatesSDEIntegralBase(SDEINTEGRAL_TYPE type, const LASt
 	@brief copy constructor
 */
 LARatesSDEIntegralBase::LARatesSDEIntegralBase(const LARatesSDEIntegralBase& v) 
-: LACoreFunctionBase(v), mIntegralType(v.mIntegralType), mSdeType(v.mSdeType), mSDEAttrName(v.mSDEAttrName)
+: AQLCoreFunctionBase(v), mIntegralType(v.mIntegralType), mSdeType(v.mSdeType), mSDEAttrName(v.mSDEAttrName)
 {
 
 }
@@ -73,7 +73,7 @@ LARatesSDEIntegralBase::~LARatesSDEIntegralBase()
 bool
 LARatesSDEIntegralBase::isTypeOf(function_t id) const
 {
-	return (id==FN_SDEINTEGRALBASE ? true : LACoreFunctionBase::isTypeOf(id));
+	return (id==FN_SDEINTEGRALBASE ? true : AQLCoreFunctionBase::isTypeOf(id));
 }
 
 /*!

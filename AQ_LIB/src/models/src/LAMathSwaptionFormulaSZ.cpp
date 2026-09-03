@@ -1,5 +1,5 @@
 #include <LAMathSwaptionFormulaSZ.h>
-#include "LAFunction.h"
+#include "AQLFunction.h"
 
 const size_t int_step = 10;
 
@@ -418,7 +418,7 @@ double DDSZ_util::Int_E_theta(double ts, double te) const
 	}
 	else
 	{
-		if (LAMath::abs(ts - T_param[idx1]) > 1.0e-7)
+		if (AQLMath::abs(ts - T_param[idx1]) > 1.0e-7)
 		{
 			int_E_theta_ += theta_over_kappa[idx1] * (exp(kappa[idx1] * ts) - exp_kappa_t[idx1][idx1]);
 		}
@@ -426,7 +426,7 @@ double DDSZ_util::Int_E_theta(double ts, double te) const
 		{
 			int_E_theta_ += theta_over_kappa[i] * ( exp_kappa_t[i][i + 1] - exp_kappa_t[i][i] );
 		}
-		if (LAMath::abs(te - T_param[idx2]) > 1.0e-7)
+		if (AQLMath::abs(te - T_param[idx2]) > 1.0e-7)
 		{
 			int_E_theta_ += theta_over_kappa[idx2] * (exp(kappa[idx2] * te) - exp_kappa_t[idx2][idx2]);
 		}
@@ -1038,7 +1038,7 @@ int_multi(new LAMathIntegralMulti())
 double LAMathSwaptionFormulaSZ::q1( double t )
 {
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(2); funcs[0] = p1_p2; funcs[1] = p1_vol1;
@@ -1051,7 +1051,7 @@ double LAMathSwaptionFormulaSZ::q1( double t )
 double LAMathSwaptionFormulaSZ::q1( double ts, double te )
 {
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(2); funcs[0] = p1_p2; funcs[1] = p1_vol1;
@@ -1065,7 +1065,7 @@ double LAMathSwaptionFormulaSZ::q1( double ts, double te )
 double LAMathSwaptionFormulaSZ::q2( double t )
 { 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(2); funcs[0] = p1_p6; funcs[1] = rho_p1_p4;
@@ -1079,7 +1079,7 @@ double LAMathSwaptionFormulaSZ::q2( double t )
 double LAMathSwaptionFormulaSZ::q2( double ts, double te )
 {
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(2); funcs[0] = p1_p6; funcs[1] = rho_p1_p4;
@@ -1094,7 +1094,7 @@ double LAMathSwaptionFormulaSZ::q3( double t )
 {
 	double q3_;
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(3); funcs[0] = p1_p3; funcs[1] = p1_vol1; funcs[2] = p1_vol1;
@@ -1154,7 +1154,7 @@ double LAMathSwaptionFormulaSZ::q3( double ts, double te )
 {
 	double q3_;
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(3); funcs[0] = p1_p3; funcs[1] = p1_vol1; funcs[2] = p1_vol1;
@@ -1228,7 +1228,7 @@ double LAMathSwaptionFormulaSZ::q5( double t )
 	double q5_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(3); funcs[0] = p1_p2; funcs[1] = p1_p2; funcs[2] = vol1_SQ;
@@ -1257,7 +1257,7 @@ double LAMathSwaptionFormulaSZ::q5( double ts, double te )
 	double q5_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(3); funcs[0] = p1_p2; funcs[1] = p1_p2; funcs[2] = vol1_SQ;
@@ -1286,7 +1286,7 @@ double LAMathSwaptionFormulaSZ::q6( double t )
 	double q6_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(2); funcs[0] = p2_SQ; funcs[1] = vol1_SQ;
@@ -1303,7 +1303,7 @@ double LAMathSwaptionFormulaSZ::q6( double ts, double te )
 	double q6_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(2); funcs[0] = p2_SQ; funcs[1] = vol1_SQ;
@@ -1332,7 +1332,7 @@ double LAMathSwaptionFormulaSZ::q8( double t )
 	double q8_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(3); funcs[0] = p1_p6; funcs[1] = p1_p6; funcs[2] = p4_SQ;
@@ -1361,7 +1361,7 @@ double LAMathSwaptionFormulaSZ::q8( double ts, double te )
 	double q8_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(3); funcs[0] = p1_p6; funcs[1] = p1_p6; funcs[2] = p4_SQ;
@@ -1390,7 +1390,7 @@ double LAMathSwaptionFormulaSZ::q9( double t )
 	double q9_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(2); funcs[0] = p6_SQ; funcs[1] = p4_SQ;
@@ -1407,7 +1407,7 @@ double LAMathSwaptionFormulaSZ::q9( double ts, double te )
 	double q9_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(2); funcs[0] = p6_SQ; funcs[1] = p4_SQ;
@@ -1437,7 +1437,7 @@ double LAMathSwaptionFormulaSZ::q11( double t )
 	double q11_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
     //
@@ -1484,7 +1484,7 @@ double LAMathSwaptionFormulaSZ::q11( double ts, double te )
 	double q11_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
     //
@@ -1531,7 +1531,7 @@ double LAMathSwaptionFormulaSZ::q12( double t )
 	double q12_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(2); funcs[0] = p2_p6; funcs[1] = rho_vol1_p4;
@@ -1549,7 +1549,7 @@ double LAMathSwaptionFormulaSZ::q12( double ts, double te )
 	double q12_;
 
 	//
-	vector<LAFunction*> funcs;
+	vector<AQLFunction*> funcs;
 	vector<int> steps;
 
 	funcs.resize(2); funcs[0] = p2_p6; funcs[1] = rho_vol1_p4;

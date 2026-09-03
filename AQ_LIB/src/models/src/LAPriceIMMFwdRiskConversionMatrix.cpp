@@ -7,7 +7,7 @@
 #include <boost/numeric/ublas/lu.hpp>
 
 LAPriceIMMFwdRiskConversionMatrix::LAPriceIMMFwdRiskConversionMatrix(
-	const LAStringVector& terms,
+	const AQLStringVector& terms,
 	const DateVector& dates,
 	const DateVector& immGridDates,
 	const DoubleMatrix& dfds,
@@ -22,7 +22,7 @@ LAPriceIMMFwdRiskConversionMatrix::LAPriceIMMFwdRiskConversionMatrix(
 {
 }
 
-const LAStringVector& LAPriceIMMFwdRiskConversionMatrix::getTerms() const
+const AQLStringVector& LAPriceIMMFwdRiskConversionMatrix::getTerms() const
 {
 	return mTerms;
 }
@@ -52,13 +52,13 @@ const DoubleMatrix& LAPriceIMMFwdRiskConversionMatrix::getDsDf() const
 	return mDsDf;
 }
 
-DoubleVector LAPriceIMMFwdRiskConversionMatrix::apply(const LAStringVector& riskTerms, const DoubleVector& riskValues) const
+DoubleVector LAPriceIMMFwdRiskConversionMatrix::apply(const AQLStringVector& riskTerms, const DoubleVector& riskValues) const
 {
 	DoubleVector immFwdDeltas(getDsDfExpanded().front().size());
 
-	LAStringVector::size_type m = 0;
+	AQLStringVector::size_type m = 0;
 	DoubleVector::size_type riskValueStart = (riskTerms.size() == riskValues.size()) ? 0/* no parallel*/ : 1/* with parallel*/;
-	for (LAStringVector::size_type l = 0, lend = getTerms().size(); l < lend; ++l)
+	for (AQLStringVector::size_type l = 0, lend = getTerms().size(); l < lend; ++l)
 	{
 		while ((m < riskTerms.size()) && (riskTerms[m] != getTerms()[l]))
 		{
@@ -124,7 +124,7 @@ LAPriceIMMFwdRiskConversionMatrix::calcInverseMatrix(const DoubleMatrix &origina
 	}
 	if (bad)
 	{
-		throw LACoreInvalidData("Arithmetic error occurred during creating the IMM forward risk conversion matrix",
+		throw AQLCoreInvalidData("Arithmetic error occurred during creating the IMM forward risk conversion matrix",
 			__FILE__, __LINE__);
 	}
 
@@ -156,8 +156,8 @@ LAPriceIMMFwdRiskConversionMatrix::expand(const DoubleMatrix& dsdf, const DateVe
 
 	for (DateVector::size_type i = 1U, iend = gridDates.size(); i < iend; ++i)
 	{
-		const LADate startDate = gridDates[i - 1];
-		const LADate endDate = gridDates[i];
+		const AQLDate startDate = gridDates[i - 1];
+		const AQLDate endDate = gridDates[i];
 		DateVector::size_type s = std::upper_bound(immGridDates.begin(), immGridDates.end(), startDate) - immGridDates.begin();
 
 		// For each i that
@@ -224,8 +224,8 @@ LAPriceIMMFwdRiskConversionMatrix::expand(const DoubleVector& original, const Da
 	for (DateVector::size_type i = 1, iend = gridDates.size(); i < iend; ++i)
 	{
 		// Original interval
-		const LADate startDate = gridDates[i - 1];
-		const LADate endDate = gridDates[i];
+		const AQLDate startDate = gridDates[i - 1];
+		const AQLDate endDate = gridDates[i];
 
 		// Original value
 		const double v = original[i - 1];

@@ -8,14 +8,14 @@
 #pragma interface
 #endif
  
-#include "LACoreProcedure.h"
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreProcedure.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "CurveInstruments.h"
-#include "LAObject.h"
-#include "LAObjectHolder.h"
-#include "LADataProcedure.h"
+#include "AQLObject.h"
+#include "AQLObjectHolder.h"
+#include "AQLDataProcedure.h"
 #include "CurveCalibrationData.h"
 #include "CoreEnumerations.h"
 #include <vector>
@@ -100,21 +100,21 @@
 #endif
 
 // Typedefs
-typedef std::map<LAString, bool>					ListOfBuiltCurves;
-typedef std::map<LAString, LAString>				TargetCurveAliasList;
-typedef std::pair<LADate, LADate>					StartAndEndDate;
-typedef std::map<StartAndEndDate, const LAObject*>	MoneyMarketData;
+typedef std::map<AQLString, bool>					ListOfBuiltCurves;
+typedef std::map<AQLString, AQLString>				TargetCurveAliasList;
+typedef std::pair<AQLDate, AQLDate>					StartAndEndDate;
+typedef std::map<StartAndEndDate, const AQLObject*>	MoneyMarketData;
 
 // Forward Declarations
-class LAObject;
-class LAObjectHolder;
-class LADataProcedure;
+class AQLObject;
+class AQLObjectHolder;
+class AQLDataProcedure;
 class CurveCalibrationData;
-class LAInterpolationBase;
-class LAPriceDataManager;
-class LAPriceDataCalendar;
-class LAPriceDataDayCount;
-class LAPriceDataSlidingRule;
+class AQLInterpolationBase;
+class AQLPriceDataManager;
+class AQLPriceDataCalendar;
+class AQLPriceDataDayCount;
+class AQLPriceDataSlidingRule;
 class LACurveStaticDataHolder;
 class LACurveMarketData;
 class CurveProperties;
@@ -137,44 +137,44 @@ namespace etrading
     {
         //
         // Important Note: Here we Deprecate LA Define Statements from Common and IR Projects
-        // #define statements have been replaced as LAString with AlgoQuantLib prefix
+        // #define statements have been replaced as AQLString with AlgoQuantLib prefix
         //
-        extern const LAString AQ_O_N;
-        extern const LAString AQ_T_N;
-        extern const LAString AQ_ON;
-        extern const LAString AQ_TN;
-		extern const LAString AQ_LIBOR_DATA;
-        extern const LAString AQ_ZERO;
-		extern const LAString AQ_SWAP_DATA;
-        extern const LAString AQ_PARRATE;
-        extern const LAString AQ_FWD;
-        extern const LAString AQ_BASIS;
-        extern const LAString AQ_MPC_SWAP;
-        extern const LAString AQ_FOMC_SWAP;
-        extern const LAString AQ_STD;
-        extern const LAString AQ_FRA3M;
-        extern const LAString AQ_FRA6M;
-        extern const LAString AQ_TERM_3M;
-        extern const LAString AQ_TERM_6M;
-        extern const LAString AQ_TERM_1M;
-		extern const LAString AQ_TERM_12M;
+        extern const AQLString AQ_O_N;
+        extern const AQLString AQ_T_N;
+        extern const AQLString AQ_ON;
+        extern const AQLString AQ_TN;
+		extern const AQLString AQ_LIBOR_DATA;
+        extern const AQLString AQ_ZERO;
+		extern const AQLString AQ_SWAP_DATA;
+        extern const AQLString AQ_PARRATE;
+        extern const AQLString AQ_FWD;
+        extern const AQLString AQ_BASIS;
+        extern const AQLString AQ_MPC_SWAP;
+        extern const AQLString AQ_FOMC_SWAP;
+        extern const AQLString AQ_STD;
+        extern const AQLString AQ_FRA3M;
+        extern const AQLString AQ_FRA6M;
+        extern const AQLString AQ_TERM_3M;
+        extern const AQLString AQ_TERM_6M;
+        extern const AQLString AQ_TERM_1M;
+		extern const AQLString AQ_TERM_12M;
 
-        extern const LAString AQ_SIMPLE;
-        extern const LAString AQ_ANNUAL;
-        extern const LAString AQ_SEMI_ANNUAL;
-        extern const LAString AQ_QUARTERLY;
-        extern const LAString AQ_MONTHLY;
-        extern const LAString AQ_LUNAR;
-        extern const LAString AQ_BUSINESS_DAYS;
+        extern const AQLString AQ_SIMPLE;
+        extern const AQLString AQ_ANNUAL;
+        extern const AQLString AQ_SEMI_ANNUAL;
+        extern const AQLString AQ_QUARTERLY;
+        extern const AQLString AQ_MONTHLY;
+        extern const AQLString AQ_LUNAR;
+        extern const AQLString AQ_BUSINESS_DAYS;
 
-        extern const LAString AQ_ROLLCONV_NORMAL;
-        extern const LAString AQ_ROLLCONV_EOM;
-        extern const LAString AQ_ROLLCONV_LUNAR;
+        extern const AQLString AQ_ROLLCONV_NORMAL;
+        extern const AQLString AQ_ROLLCONV_EOM;
+        extern const AQLString AQ_ROLLCONV_LUNAR;
     
-        extern const LAString AQ_LIBOR;
-        extern const LAString AQ_FUTURE;
-        extern const LAString AQ_FRA;
-        extern const LAString AQ_SWAP;
+        extern const AQLString AQ_LIBOR;
+        extern const AQLString AQ_FUTURE;
+        extern const AQLString AQ_FRA;
+        extern const AQLString AQ_SWAP;
     }
 }
 
@@ -189,7 +189,7 @@ struct SwapCurveDiscountFactors
 	~SwapCurveDiscountFactors() {};
 
 	// Member Variables
-	std::shared_ptr<LAInterpolationBase> dfInterpolator_;
+	std::shared_ptr<AQLInterpolationBase> dfInterpolator_;
 	double swapSpotDateDF_;
 	double swapSpotDateTerm_;
 };
@@ -204,12 +204,12 @@ class LACurveStaticDataHolder
 public:
 
 	// Main Constructor & Destructor
-	LACurveStaticDataHolder( LAObject & curveDataObject,
+	LACurveStaticDataHolder( AQLObject & curveDataObject,
                              CurveCalibrationData & curveData,
                              CurveProperties& instrumentSettings,
-                             const LADataProcedure & curveAttributeData,
-                             const LAString & curveCollection,  // or curveID
-                             const LAString & curveIndex );     // or marketName
+                             const AQLDataProcedure & curveAttributeData,
+                             const AQLString & curveCollection,  // or curveID
+                             const AQLString & curveIndex );     // or marketName
 	
     virtual ~LACurveStaticDataHolder() {};
 
@@ -217,15 +217,15 @@ public:
 	void updateSwapCurveStateVariables( CurveMarketDataHolder & mktDataObj );
 	
 	// Legacy Curve Data Objects
-	LAObject						curveDataObject_;
-	LAObjectHolder					curveDataObjectHolder_;
+	AQLObject						curveDataObject_;
+	AQLObjectHolder					curveDataObjectHolder_;
 	CurveCalibrationData &			curveCalibrationData_;
-	LADataProcedure					curveAttributeData_;
+	AQLDataProcedure					curveAttributeData_;
 
 	// Legacy Curve Name Parameters
-	LAString targetCurve_;
-	LAString targetCurveMktSuffix_;
-	LAString dfCurveName_;
+	AQLString targetCurve_;
+	AQLString targetCurveMktSuffix_;
+	AQLString dfCurveName_;
 
 	ListOfBuiltCurves listOfCurvesAlreadyBuilt_;
 	TargetCurveAliasList targetCurveAliasList_;
@@ -234,8 +234,8 @@ public:
 	CurveProperties & curveProperties_;
 
     // Curve Info
-    LAString curveCollection_;  // or curveID
-    LAString curveIndex_;       // or marketName
+    AQLString curveCollection_;  // or curveID
+    AQLString curveIndex_;       // or marketName
 };
 
 // Curve resultsObj container helper for the CurveDataProvider class
@@ -246,10 +246,10 @@ class CalibrationResults
 	CalibrationResults() : interpolationObj_( nullptr ) {};
 	~CalibrationResults() {};
 
-	CalibrationResults( LACurveStaticDataHolder & staticDataObj, const LADate& asOfDate );
+	CalibrationResults( LACurveStaticDataHolder & staticDataObj, const AQLDate& asOfDate );
 
 	CalibrationResults( LACurveStaticDataHolder & staticDataObj,
-						const LADate & asOfDate,
+						const AQLDate & asOfDate,
 						DiscountFactors & dfResults,
 						DoubleMatrix& fwdStartEndDatesAsTerms,
 						DoubleArray& fwdRates );
@@ -269,7 +269,7 @@ class CalibrationResults
 	bool						doesCurveUseHybridInterpolation_;
 	
 	// Discount Factors and Forwards
-	LADate						asOfDate_;
+	AQLDate						asOfDate_;
 	DiscountFactors				dfResults_;
 	DoubleMatrix				fwdStartEndDatesAsTerms_;
 	DoubleArray					fwdRates_;
@@ -300,7 +300,7 @@ class CurveProperties
 
 	bool useFutures_;
 	bool useFRAs_;
-	const LAStringVector* ratePriorityStringVector_;
+	const AQLStringVector* ratePriorityStringVector_;
 
 	// Adjust swap instrument tenors to allow mixed floating index frequencies in a single curve
 	// e.g. to allow both 3M and 6M Libor in AUD curve calibration
@@ -336,24 +336,24 @@ class InterpolationDataHolder
 	// Clear and Reset InterpolationDataHolder member variables
 	void reset();
 
-	LAInterpolationBase*		interpolatorForDiscountFactors_;
-	LAInterpolationBase*		interpolatorForSwaps_;
-	LAInterpolationBase*		interpolatorForFuturesAndFRAs_;
+	AQLInterpolationBase*		interpolatorForDiscountFactors_;
+	AQLInterpolationBase*		interpolatorForSwaps_;
+	AQLInterpolationBase*		interpolatorForFuturesAndFRAs_;
 
-	LAString					interpolationStringDiscountFactors_;
-	LAString					interpolationStringSwaps_;
+	AQLString					interpolationStringDiscountFactors_;
+	AQLString					interpolationStringSwaps_;
 
-	LACoreFunctionHolder		fh_DiscountFactors_;
-	LACoreFunctionHolder		fh_Swaps_;
-	LACoreFunctionHolder		fh_FuturesAndFRAs_;
+	AQLCoreFunctionHolder		fh_DiscountFactors_;
+	AQLCoreFunctionHolder		fh_Swaps_;
+	AQLCoreFunctionHolder		fh_FuturesAndFRAs_;
 
-	LADate						interpolationJoinDate_;
+	AQLDate						interpolationJoinDate_;
 	double						interpolationJoinDateAsDouble_;	
 };
 
 struct LACurveMarketData
 {
-	LADate asOfDate_;
+	AQLDate asOfDate_;
 
 	bool isOISMarketData_;
 
@@ -362,12 +362,12 @@ struct LACurveMarketData
 	
 	MoneyMarketData moneyMarket_;
 	
-	std::vector<LAObject*> libor_;
-	std::vector<LAObject*> swap_;
-	std::vector<LAObject*> future_;
-	std::vector<LAObject*> mpc_swaps_;
-	std::vector<LAObject*> fra_;
-	std::vector<LAObject*> tenorswap_;
+	std::vector<AQLObject*> libor_;
+	std::vector<AQLObject*> swap_;
+	std::vector<AQLObject*> future_;
+	std::vector<AQLObject*> mpc_swaps_;
+	std::vector<AQLObject*> fra_;
+	std::vector<AQLObject*> tenorswap_;
 
 	unsigned int libor_size_;
 	unsigned int swap_size_;
@@ -376,14 +376,14 @@ struct LACurveMarketData
 	unsigned int fra_size_;
 
 	bool areSwapsForwardStarting_;
-	LADate firstSwapMaturityDate_;
+	AQLDate firstSwapMaturityDate_;
 };
 
 // Get the First Swap Maturity Date
-LADate getFirstSwapMaturityDate( const LACurveMarketData & mktData );
+AQLDate getFirstSwapMaturityDate( const LACurveMarketData & mktData );
 
 // Get the Spot Date for the Libor Cash Deposit Instruments
-LADate getLiborSpotDate( const LACurveMarketData & mktData );
+AQLDate getLiborSpotDate( const LACurveMarketData & mktData );
 
 // Check if we have been given OIS Market Data
 bool isOISMarketData( const LACurveMarketData & mktData );
@@ -400,24 +400,24 @@ class CurveMarketDataHolder
 	~CurveMarketDataHolder() {};
 
 	// Main Constructor
-	CurveMarketDataHolder( LACurveStaticDataHolder & staticDataObj, const LADate & asOfDate );
+	CurveMarketDataHolder( LACurveStaticDataHolder & staticDataObj, const AQLDate & asOfDate );
 	
 	// Populate and Group Market Data by Instrument
-	void groupMarketDataByInstrument( LACurveStaticDataHolder & staticDataObj, const LADate& asOfDate );
+	void groupMarketDataByInstrument( LACurveStaticDataHolder & staticDataObj, const AQLDate& asOfDate );
 
 	// Check if the targetCurve is a STD Swap Curve
 	bool isTargetSwapCurve( LACurveStaticDataHolder & staticDataObj ) const;
 
-	const LADataMultiReference* marketDataSharedObject_;
-	LAString targetCurve_;
-	LAString targetCurveMktSuffix_;
+	const AQLDataMultiReference* marketDataSharedObject_;
+	AQLString targetCurve_;
+	AQLString targetCurveMktSuffix_;
 
 	// Raw Market Data - Ungrouped and Unsorted
-	std::vector<LAObject*> rawMarketData_;
+	std::vector<AQLObject*> rawMarketData_;
 
 	// Market Data Container by Instrument
 	LACurveMarketData mktData_;
-	LADate asOfDate_;
+	AQLDate asOfDate_;
 };
 
 class LiborIndex
@@ -431,17 +431,17 @@ class LiborIndex
 	// Main Constructor
 	LiborIndex( CurveMarketDataHolder & mktDataObj );
 	
-	LADate							spotDate_;
-	LAString						frequency_;
-	LAString						tenor_;
-	const LAPriceDataCalendar *		fixingCalendar_;
-	const LAPriceDataSlidingRule *	fixingBusDayAdj_;
-	const LAPriceDataDayCount *		daycount_;
+	AQLDate							spotDate_;
+	AQLString						frequency_;
+	AQLString						tenor_;
+	const AQLPriceDataCalendar *		fixingCalendar_;
+	const AQLPriceDataSlidingRule *	fixingBusDayAdj_;
+	const AQLPriceDataDayCount *		daycount_;
 	etrading::DayCountEnum			daycountEnum_; 
 
 	// Curve & Swap Spot Date
-	LADate							curveSpotDate_;
-	LAPriceDataDayCount				daycountAct365_;
+	AQLDate							curveSpotDate_;
+	AQLPriceDataDayCount				daycountAct365_;
 };
 
 class FuturesInstruments
@@ -464,9 +464,9 @@ class FuturesInstruments
 	FuturesTypeEnum type_;
 	bool areAllFuturesContiguous_;
 	bool isEOMRoll_;
-	LAString rollConvention_;
-	LAPriceDataDayCount daycount_;
-	LAPriceDataDayCount daycountAct365_;
+	AQLString rollConvention_;
+	AQLPriceDataDayCount daycount_;
+	AQLPriceDataDayCount daycountAct365_;
 		
 	// Is the Convexity Adjustment Provided as a volatility instead of a price, an alais for as 'useconvexadj' the inverse i.e. quoted as price
 	// FALSE = use convexity price given, TRUE = imply from model using volatility
@@ -481,7 +481,7 @@ class FuturesInstruments
 	unsigned int tensionDayGap_;
 
 	// Required for Swaps Calibration
-	LADate lastStartDate_;
+	AQLDate lastStartDate_;
 };
 
 class SwapInstruments
@@ -503,23 +503,23 @@ class SwapInstruments
 
 	// Trade Conventions 
 	DateVector									spotDate_;
-	std::vector<const LAPriceDataCalendar*>		calendar_;
-	std::vector<const LAPriceDataSlidingRule*>	busDayAdj_;
+	std::vector<const AQLPriceDataCalendar*>		calendar_;
+	std::vector<const AQLPriceDataSlidingRule*>	busDayAdj_;
 	std::vector<bool>							isEOMRoll_;
-	std::vector<LAString>						rollConvention_;
-	LAPriceDataDayCount							daycountAct365_;
+	std::vector<AQLString>						rollConvention_;
+	AQLPriceDataDayCount							daycountAct365_;
 
 	// Fixed Leg
-	std::vector<const LAPriceDataDayCount*>		daycountFixed_;
-	std::vector<LAString>						frequencyFixed_;
+	std::vector<const AQLPriceDataDayCount*>		daycountFixed_;
+	std::vector<AQLString>						frequencyFixed_;
 
 	// Float Leg
-	std::vector<const LAPriceDataDayCount*>		daycountFloat_;
-	std::vector<LAString>						frequencyFloat_;
-	std::vector<LAString>						compoundFrequencyFloat_;
+	std::vector<const AQLPriceDataDayCount*>		daycountFloat_;
+	std::vector<AQLString>						frequencyFloat_;
+	std::vector<AQLString>						compoundFrequencyFloat_;
 	std::vector<int>							numberOfCompoundPeriodsFloat_;
-	std::vector<LAString>						liborIndexFrequency_;
-	std::vector<LAString>						liborIndexTenor_;
+	std::vector<AQLString>						liborIndexFrequency_;
+	std::vector<AQLString>						liborIndexTenor_;
 };
 
 class TenorBasisInstruments
@@ -538,23 +538,23 @@ class TenorBasisInstruments
 	// Populate Tenor Basis Spread Market Data
 	void populateSpreadMarketData( LACurveStaticDataHolder & staticDataObj, CurveMarketDataHolder & mktDataObj, LiborIndex & liborIndex, CalibrationResults & resultsObj );
 
-	LAInterpolationBase*			spreadInterpolator_;
+	AQLInterpolationBase*			spreadInterpolator_;
 	DoubleVector					spreads_;
 
 	bool							isTargetLeg1_;
 	bool							applySpreadLeg2_;
 
-	LAString						leg1Frequency_;
-	LAString						leg2Frequency_;
-	LAString						againstLegFrequency_;
+	AQLString						leg1Frequency_;
+	AQLString						leg2Frequency_;
+	AQLString						againstLegFrequency_;
 
-	LAPriceDataDayCount *			daycount_;
-	LAPriceDataDayCount				daycountAct365_;
-	LAPriceDataCalendar *			calendar_;
-	LAPriceDataSlidingRule *		busDayAdj_;
+	AQLPriceDataDayCount *			daycount_;
+	AQLPriceDataDayCount				daycountAct365_;
+	AQLPriceDataCalendar *			calendar_;
+	AQLPriceDataSlidingRule *		busDayAdj_;
 
 	bool							isRollEOM_;
-	LAString						rollConv_;
+	AQLString						rollConv_;
 };
 
 struct LARatePriority
@@ -618,7 +618,7 @@ class SwapCashflows
 	std::vector<DoubleArray>	floatCashflowPaymentDatesAsTerms_;
 		
 	// Fixing Schedule Parameters
-	std::vector<LAString>		fixingLags_;
+	std::vector<AQLString>		fixingLags_;
 	std::vector<DoubleArray>	fixingStarts_;
 	std::vector<DoubleArray>	fixingEnds_;
 	std::vector<DateVector>		fixingStartDates_;
@@ -718,20 +718,20 @@ public:
 								  CalibrationResults & resultsObj );
 	
 	// Price Swap Calibration Instruments, where SwapPVs is the result (input/output)
-	void calculateSwapPVs( LAInterpolationBase &interpolationForForwardsRates,
+	void calculateSwapPVs( AQLInterpolationBase &interpolationForForwardsRates,
 						   const StateVariableEnum& stateVariable,
 						   DoubleArray& swapPVs, // <--- Result
 						   const bool isCurveSelfDiscounting,
 						   const bool useTenorBasisSwaps,
 						   const bool areSwapsForwardStarting,
-						   LAInterpolationBase &interpolationForDiscountFactors,
+						   AQLInterpolationBase &interpolationForDiscountFactors,
 						   const double spotDiscountFactor,
 						   const DoubleMatrix &fixedCoupons,
 						   const DoubleMatrix &tenorSwapCoupons,
 						   const DoubleMatrix &fixedCashflowPaymentDatesAsTerms,
 						   const DoubleMatrix &tenorSwapCashflowPaymentDatesAsTerms,
 						   const DoubleMatrix &floatCashflowPaymentDatesAsTerms,
-						   const LADate & asOfDate,
+						   const AQLDate & asOfDate,
 						   const DayCountEnum & accrualDaycount,
 						   const double spotDateAsTerms,
 						   const IntArray &numberOfCompoundPeriodsFloat,
@@ -813,7 +813,7 @@ private:
 /*! 
     @brief Class to calc IR DiscoutFactor
 */
-class CurveCalibration : public LACoreProcedure
+class CurveCalibration : public AQLCoreProcedure
 {
 public:
 
@@ -827,10 +827,10 @@ public:
     virtual bool                isTypeOf(function_t id) const;
     
 	// Make copy(clone) of this class
-    virtual LACoreFunctionBase* clone() const;
+    virtual AQLCoreFunctionBase* clone() const;
    	
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
 	
 	// Return this class type
     virtual function_t          getType() const;
@@ -840,7 +840,7 @@ public:
 	// ********************************************************************
 
 	// Get Target Curve & Target Curve Market Data Suffix
-	void getTargetCurveAndMarketDataSuffix( LAString & targetCurve, LAString & marketDataSuffix, CurveCalibrationData & curveData ) const;
+	void getTargetCurveAndMarketDataSuffix( AQLString & targetCurve, AQLString & marketDataSuffix, CurveCalibrationData & curveData ) const;
 	
 	// Get Object Pool Target Curve Alias List
 	TargetCurveAliasList getTargetCurveAliasList( LACurveStaticDataHolder & staticDataObj ) const;
@@ -855,7 +855,7 @@ public:
 	void updateObjectPoolCurveBuildListForTargetCurve( LACurveStaticDataHolder & staticDataObj ) const;
 
 	// Update Object Pool List of Curves Built *** For Target Curve ONLY ***
-	void updateObjectPoolCurveBuildListForTargetCurve( LACurveStaticDataHolder & staticDataObj, const LAString & targetCurve ) const;
+	void updateObjectPoolCurveBuildListForTargetCurve( LACurveStaticDataHolder & staticDataObj, const AQLString & targetCurve ) const;
 
 	// Update Object Pool List of Curves Built *** For Alias Curves ONLY ***
 	void updateObjectPoolCurveBuildListForAliasCurves( LACurveStaticDataHolder & staticDataObj ) const;
@@ -866,7 +866,7 @@ public:
 	// Update Object Pool Curve Results
 	void updateObjectPoolCurveResults( LACurveStaticDataHolder & staticDataObj,
 									   const CalibrationResults& resultsObj,
-									   const LAString & curveSuffix = "" ) const;
+									   const AQLString & curveSuffix = "" ) const;
 	
 	// Update Object Pool Curve Conventions and Results
 	void updateObjectPoolCurveConventionsAndResults( LACurveStaticDataHolder & staticDataObj,
@@ -882,25 +882,25 @@ public:
 	bool areCurveUpdatesEnabled( LACurveStaticDataHolder & staticDataObj ) const;
 
 	// Get the DF Curve Name
-	LAString getDFCurveName( LACurveStaticDataHolder & staticDataObj, const LAString & curveSuffix = "" ) const;
+	AQLString getDFCurveName( LACurveStaticDataHolder & staticDataObj, const AQLString & curveSuffix = "" ) const;
 	
 	// Check if Curve Exists and Contains Valid Data
-	bool doesValidCurveExist( const LAString & targetCurve, LACurveStaticDataHolder & staticDataObj ) const;
+	bool doesValidCurveExist( const AQLString & targetCurve, LACurveStaticDataHolder & staticDataObj ) const;
 
 	// Calibrate DFCurveName
-	LAString getDFCurvename( LACurveStaticDataHolder & staticDataObj, const LAString & targetCurve, const LAString & curveSuffix ) const;
+	AQLString getDFCurvename( LACurveStaticDataHolder & staticDataObj, const AQLString & targetCurve, const AQLString & curveSuffix ) const;
 
 	// ********************************************************************
 
 	// Virtual Method to Calibrate the Curve Model
-    virtual void				calibrateModel( const LADate& asOfDate, LAObject& dataObject, const LADataProcedure& laAttributeData ) const;
+    virtual void				calibrateModel( const AQLDate& asOfDate, AQLObject& dataObject, const AQLDataProcedure& laAttributeData ) const;
 
     // Virtual Method to Calibrate the Curve Model with Curve Collection and Curve Index Info
-    virtual void				calibrateOISAndSwapCurve( const LADate& asOfDate,
-                                                          LAObject& dataObject,
-                                                          const LADataProcedure& laAttributeData,
-                                                          const LAString & curveCollection,
-                                                          const LAString & curveIndex ) const;
+    virtual void				calibrateOISAndSwapCurve( const AQLDate& asOfDate,
+                                                          AQLObject& dataObject,
+                                                          const AQLDataProcedure& laAttributeData,
+                                                          const AQLString & curveCollection,
+                                                          const AQLString & curveIndex ) const;
 
     // Calibrate Standard Swap Curve - CurveCollection and CurveIndex part of of StaticDataObj
     static void                 calibrateSwapCurve( LACurveStaticDataHolder & staticDataObj,
@@ -917,31 +917,31 @@ public:
 													  DoubleVector& endTerms,
 													  const etrading::OISCompoundingEnum& swapAveragingMethodEnum,
 							                          const etrading::OISLongTermInstrumentsEnum& longTermConvEnum,
-													  const LAString& longTermGen,
-													  const LADate& spotDate,
-													  const LADate& startDate,
-													  const LADate& endDate,
-													  const LAPriceDataDayCount* dc,
-													  const LAPriceDataCalendar* cal,
-													  const LAInterpolationBase* interpolateByZeroRate,
+													  const AQLString& longTermGen,
+													  const AQLDate& spotDate,
+													  const AQLDate& startDate,
+													  const AQLDate& endDate,
+													  const AQLPriceDataDayCount* dc,
+													  const AQLPriceDataCalendar* cal,
+													  const AQLInterpolationBase* interpolateByZeroRate,
 													  double terms_interval,
 													  bool isLogDF = false );
 	
     static double				calcAverageRate( DoubleVector& startterms,
 											     DoubleVector& endterms,
 											     const etrading::OISCompoundingEnum& averagingMethodEnum,
-											     const LADate& spotDate,
-											     const LADate& startDate,
-											     const LADate& endDate,
-											     const LAPriceDataDayCount* dc,
-											     const LAPriceDataCalendar* cal,
-											     const LAInterpolationBase* interpolateByZeroRate,
+											     const AQLDate& spotDate,
+											     const AQLDate& startDate,
+											     const AQLDate& endDate,
+											     const AQLPriceDataDayCount* dc,
+											     const AQLPriceDataCalendar* cal,
+											     const AQLInterpolationBase* interpolateByZeroRate,
 											     double terms_interval,
 											     bool isLogDF = false );
 
 	static double                calcArithmeticAverageRate( const DoubleVector& startterms,
 											                const DoubleVector& endterms,
-											                const LAInterpolationBase* interpolateByZeroRate,
+											                const AQLInterpolationBase* interpolateByZeroRate,
 											                const double wholeterm,
 											                bool isLogDF = false );
 
@@ -950,42 +950,42 @@ public:
 	*  @param[in]	curveData	EntityPool properties object
 	*  @returns	A string vector specifying all of the curve names
 	*/
-	static LAStringVector		getGlobalEngineCurveNames( const CurveCalibrationData& curveData );
+	static AQLStringVector		getGlobalEngineCurveNames( const CurveCalibrationData& curveData );
 
 	// Calibrate swap and OIS curves using dual bootstrapping technique
-	void						dualbootstrap(const LADate& asOfDate, LAObject& calibrationDataObject, const LADataProcedure& att) const;
+	void						dualbootstrap(const AQLDate& asOfDate, AQLObject& calibrationDataObject, const AQLDataProcedure& att) const;
 
 	// Calibrate yield curves through a yield curve engine
-	void						buildEngineCurves(const LADate& asOfDate, LAObject& calibrationDataObject, const LADataProcedure& att, bool includeBasisCurves = true) const;
+	void						buildEngineCurves(const AQLDate& asOfDate, AQLObject& calibrationDataObject, const AQLDataProcedure& att, bool includeBasisCurves = true) const;
 
 	// Solve for effective OIS rate given a market rate
-	static double				solveOISRate( const LADate& startdate,
-											  const LADate& enddate,
-											  const LAPriceDataDayCount& dc,
-											  const LAPriceDataCalendar& cal,
+	static double				solveOISRate( const AQLDate& startdate,
+											  const AQLDate& enddate,
+											  const AQLPriceDataDayCount& dc,
+											  const AQLPriceDataCalendar& cal,
 											  double market_rate );
 
 	// Calculate average rate out of historical rates
-	static double				getAverageRateFromHistRates( const LADate& startdate,
-												             const LADate& enddate,
-												             const LAPriceDataDayCount& dc,
-												             const LAPriceDataCalendar& cal,
+	static double				getAverageRateFromHistRates( const AQLDate& startdate,
+												             const AQLDate& enddate,
+												             const AQLPriceDataDayCount& dc,
+												             const AQLPriceDataCalendar& cal,
 												             double market_rate,
-												             LAObject* marketData,
-												             const LADate& asOfDate,
+												             AQLObject* marketData,
+												             const AQLDate& asOfDate,
 												             bool istodayrateexist,
 												             double todayffrate );
 
 
 	// Store curve conventions at the end of swap curve calibration
-	static void					setCurveConvention( LAObjectHolder& objHolder,
-												    std::vector<LAObject*>& mktData,
-												    const LAString& curveName );
+	static void					setCurveConvention( AQLObjectHolder& objHolder,
+												    std::vector<AQLObject*>& mktData,
+												    const AQLString& curveName );
 
 	// Store curve conventions at the end of swap curve calibration
 	static void					setCurveConvention( LACurveStaticDataHolder & staticDataObj,
-												    std::vector<LAObject*>& mktData,
-												    const LAString& curveName );
+												    std::vector<AQLObject*>& mktData,
+												    const AQLString& curveName );
 
 	// Calibrate OIS curve's discount factors using market OIS swap rates
 	static void					calcOISDFBySwapRates( DoubleArray& yields,
@@ -993,16 +993,16 @@ public:
 													  DoubleArray& terms_grid, 
 													  DoubleArray& terms_interval,
 													  DateVector& cashflowPaymentDates,
-													  LAInterpolationBase* interpolatorForDiscountFactors,
-													  LAInterpolationBase* interpolationForSwaps,
-													  std::vector<LAObject*>& marketData,
-													  const std::vector<LAObject*>& data_swap,
+													  AQLInterpolationBase* interpolatorForDiscountFactors,
+													  AQLInterpolationBase* interpolationForSwaps,
+													  std::vector<AQLObject*>& marketData,
+													  const std::vector<AQLObject*>& data_swap,
 													  LACurveStaticDataHolder & staticDataObj,
-													  const LAPriceDataDayCount& dc_act365, 
-													  const LADate& asOfDate,
-													  const LADate& spotdate,
-													  const LADate& shortterm_date,
-													  const LAString* pDFCurveName,
+													  const AQLPriceDataDayCount& dc_act365, 
+													  const AQLDate& asOfDate,
+													  const AQLDate& spotdate,
+													  const AQLDate& shortterm_date,
+													  const AQLString* pDFCurveName,
 													  const size_t& size_mpc_swaps,
 													  bool isEOMRoll,
 													  bool useShortEndSwaps = false,
@@ -1014,16 +1014,16 @@ public:
 													  DoubleArray& terms_grid, 
 													  DoubleArray& terms_interval,
 													  DateVector& cashflowPaymentDates,
-													  LAInterpolationBase* interpolatorForDiscountFactors,
-													  LAInterpolationBase* interpolationForSwaps,
-													  std::vector<LAObject*>& marketData,
-													  const std::vector<LAObject*>& data_swap,
-													  LAObjectHolder& objHolder,
-													  const LAPriceDataDayCount& dc_act365, 
-													  const LADate& asOfDate,
-													  const LADate& spotdate,
-													  const LADate& shortterm_date,
-													  const LAString* pDFCurveName,
+													  AQLInterpolationBase* interpolatorForDiscountFactors,
+													  AQLInterpolationBase* interpolationForSwaps,
+													  std::vector<AQLObject*>& marketData,
+													  const std::vector<AQLObject*>& data_swap,
+													  AQLObjectHolder& objHolder,
+													  const AQLPriceDataDayCount& dc_act365, 
+													  const AQLDate& asOfDate,
+													  const AQLDate& spotdate,
+													  const AQLDate& shortterm_date,
+													  const AQLString* pDFCurveName,
 													  const size_t& size_mpc_swaps,
 													  bool isEOMRoll,
 													  bool useShortEndSwaps = false,
@@ -1035,23 +1035,23 @@ protected:
 	// Think the original author wanted users to create a new class instance and reset the marketdata instead of copying it 
     CurveCalibration(const CurveCalibration& p) = delete;
 
-	static double                solveOISRateS(const LADate& startdate,
-											   const LADate& enddate,
-											   const LAPriceDataDayCount& dc,
-											   const LAPriceDataCalendar& cal,
+	static double                solveOISRateS(const AQLDate& startdate,
+											   const AQLDate& enddate,
+											   const AQLPriceDataDayCount& dc,
+											   const AQLPriceDataCalendar& cal,
 											   double market_rate,
-											   const std::map<LADate, double> &onforward_map);
+											   const std::map<AQLDate, double> &onforward_map);
 		
-	static double                calcSettleRate(const LADate& startdate,
-											    const LADate& enddate,
-											    const LAPriceDataDayCount& dc,
-											    const LAPriceDataCalendar& cal,
+	static double                calcSettleRate(const AQLDate& startdate,
+											    const AQLDate& enddate,
+											    const AQLPriceDataDayCount& dc,
+											    const AQLPriceDataCalendar& cal,
 											    double onforward_rate);
 
 	static double                calcSettleRates(const DateVector& startdates,
 											     const DateVector& enddates,
 											     const DoubleVector& onforward_rates,
-											     const LAPriceDataDayCount& dc);
+											     const AQLPriceDataDayCount& dc);
 };
 
 

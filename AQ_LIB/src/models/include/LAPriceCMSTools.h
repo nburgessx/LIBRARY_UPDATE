@@ -5,17 +5,17 @@
 #pragma interface
 #endif
 
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 #include "LAMathCashFlowSchedules.h"
 #include "LAMathYieldCurve.h"
 #include <utility>
 
 #ifndef AQ_SABR_NAMES
-#define AQ_SABR_NAMES LAStringVector { "Alpha", "Beta", "Nu", "Rho"}
+#define AQ_SABR_NAMES AQLStringVector { "Alpha", "Beta", "Nu", "Rho"}
 #endif
 
 #ifndef AQ_TAIL_NAMES
-#define AQ_TAIL_NAMES LAStringVector { "Tail1", "Tail2", "Tail3", "Tail4"}
+#define AQ_TAIL_NAMES AQLStringVector { "Tail1", "Tail2", "Tail3", "Tail4"}
 #endif
 
 #ifndef AQ_TAIL2_OUT
@@ -29,9 +29,9 @@
 //================ Data structures ===================================
 struct CurveInfo
 {
-    LADataInstance* dataInstance;
-    LAString curveID;
-    LAString curveName;
+    AQLDataInstance* dataInstance;
+    AQLString curveID;
+    AQLString curveName;
     bool isBasis;
     bool isFwdInterpolated;
 };
@@ -39,15 +39,15 @@ struct CurveInfo
 class MVCurveWrap
 {
 public:
-    MVCurveWrap(LADataInstance* dataInstance, const LAString& curveID, const LAString& curveName);
+    MVCurveWrap(AQLDataInstance* dataInstance, const AQLString& curveID, const AQLString& curveName);
 
-    double P(LADate date);
+    double P(AQLDate date);
 
-    LADate BaseDate() { return mBaseDate; }
+    AQLDate BaseDate() { return mBaseDate; }
 
 private:
-    LADate mBaseDate;
-    LAString mCurveName;
+    AQLDate mBaseDate;
+    AQLString mCurveName;
     LAMathYieldCurve* mpCoreCurve;
 };
 
@@ -55,40 +55,40 @@ class LAPriceCMSObject
 {
 public:
     //================ Parameters ========================================
-    //static DoubleMatrix GetParameterMatrix(LADataInstance* dataInstance, LADate valDate, const LAString& currency,
-    //                                       const LAString& tenor, const LAStringVector& mtyTerms,
-    //                                       const LAStringVector& paramNames);
+    //static DoubleMatrix GetParameterMatrix(AQLDataInstance* dataInstance, AQLDate valDate, const AQLString& currency,
+    //                                       const AQLString& tenor, const AQLStringVector& mtyTerms,
+    //                                       const AQLStringVector& paramNames);
 
-    //static DoubleVector InterpolateParameterMatrix(double t, const DoubleMatrix& matrix, LAString interpolation);
+    //static DoubleVector InterpolateParameterMatrix(double t, const DoubleMatrix& matrix, AQLString interpolation);
 
-    static DoubleVector InterpolateParameterMatrix(LADataInstance* dataInstance, LADate expDate, const LAString& tenor, const LAStringVector& paramIDs);
+    static DoubleVector InterpolateParameterMatrix(AQLDataInstance* dataInstance, AQLDate expDate, const AQLString& tenor, const AQLStringVector& paramIDs);
 
     //================ Curve-based calculations ===================================
-    static double DiscountFactor(CurveInfo curveInfo, LADate valDate, LADate expiry);
+    static double DiscountFactor(CurveInfo curveInfo, AQLDate valDate, AQLDate expiry);
 
-    static double ForwardLibor(CurveInfo curveInfo, LADate startDate, LADate endDate, LAStringMatrix liborScheduler);
+    static double ForwardLibor(CurveInfo curveInfo, AQLDate startDate, AQLDate endDate, AQLStringMatrix liborScheduler);
 
-    static void CalculateFundingLeg(LADate valDate, const vector<CashFlowTiming>& schedule,
+    static void CalculateFundingLeg(AQLDate valDate, const vector<CashFlowTiming>& schedule,
                                     CurveInfo discCurveInfo, CurveInfo fwdCurveInfo,
-                                    LAStringMatrix indexScheduler, double& pv, double& annuity);
+                                    AQLStringMatrix indexScheduler, double& pv, double& annuity);
 
     //================ Conversions ===================================
-    static double TermToTau(LAString term);
+    static double TermToTau(AQLString term);
 
-    static void ParseTenors(const LAString& pairID, LAString& tenor1, LAString& tenor2);
+    static void ParseTenors(const AQLString& pairID, AQLString& tenor1, AQLString& tenor2);
 
     //================ Others ===================================
-    static LAString MatrixID(const LAString& id, const LAString& currency);
+    static AQLString MatrixID(const AQLString& id, const AQLString& currency);
 
-    static LAString CurveID(const LAString& ccy, const LAString& colCcy);
+    static AQLString CurveID(const AQLString& ccy, const AQLString& colCcy);
 
-    static CurveInfo DiscountCurveInfo(LADataInstance* dataInstance, const LAString& ccy, const LAString& colCcy);
+    static CurveInfo DiscountCurveInfo(AQLDataInstance* dataInstance, const AQLString& ccy, const AQLString& colCcy);
 
-    static CurveInfo ForecastCurveInfo(LADataInstance* dataInstance, const LAString& ccy, const LAString& colCcy, const LAString& term);
+    static CurveInfo ForecastCurveInfo(AQLDataInstance* dataInstance, const AQLString& ccy, const AQLString& colCcy, const AQLString& term);
 };
 
 template<typename T>
-bool leq(const pair<LADate, T>& x, const pair<LADate, T>& y)
+bool leq(const pair<AQLDate, T>& x, const pair<AQLDate, T>& y)
 {
     return x.first < y.first;
 }

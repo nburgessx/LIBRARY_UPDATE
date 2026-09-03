@@ -1,8 +1,8 @@
 #pragma once
 
 #include "meCurveInterpolationJoinDate.h"
-#include "LADate.h"
-#include "LAString.h"
+#include "AQLDate.h"
+#include "AQLString.h"
 #include "tryMeCurveInterpolation.h"
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
@@ -18,9 +18,9 @@ std::string meCurveInterpolationJoinDate(const std::string& curveCollection, con
     AQ_API_START
 	std::string ret;
 
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
-	LAString tmp_interpolation(interpolation.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_interpolation(interpolation.c_str());
 
 	ret = validation::tryMeCurveInterpolationJoinDate(tmp_curveCollection, tmp_curveIndex, tmp_interpolation).stringWithFormat("YYYYMMDD").getCString();
 	 

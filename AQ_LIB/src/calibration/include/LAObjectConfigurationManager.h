@@ -20,7 +20,7 @@
 
 
 class LACoreDataService;
-class LAString;
+class AQLString;
 class LAObjectConfiguration;
 
 //===================== Class Declare LAObjectConfigurationManager==================================
@@ -37,7 +37,7 @@ public:
 	static LAObjectConfigurationManager     *getInstance();
 	//==============================================
 	// create LAObjectConfiguration
-	LAObjectConfiguration *createEntitySetUpper(const LAString &model) const;
+	LAObjectConfiguration *createEntitySetUpper(const AQLString &model) const;
 
 private:
 

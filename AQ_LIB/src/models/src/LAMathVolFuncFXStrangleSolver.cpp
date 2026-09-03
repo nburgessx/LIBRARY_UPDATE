@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent FX volatility function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 //  2007, AlgoQuantHub.
@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       LAMathVolFuncFXStrangleSolver
 //  DESCRIPTION :       Source code of class  to represent volatility of FX
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -25,7 +25,7 @@
 
 #include "LAMathVolFuncFXStrangleSolver.h"
 #include "LAMathFXVolatilitySurfaceGenerate.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 using namespace std;
 
@@ -43,7 +43,7 @@ LAMathVolFuncFXStrangleSolver::LAMathVolFuncFXStrangleSolver(const Interpolation
 									const InterpolationVariable &variable, const ATMInterpolationMethod &atmMethod, 
 									const std::vector<FXOptionData> &opdata, const std::vector<SmileData> &smiledata,
 									bool iswing)
-: LAFunctionBase(), mMethod(method), mTarget(target), mVariable(variable),mAtmMethod(atmMethod),
+: AQLFunctionBase(), mMethod(method), mTarget(target), mVariable(variable),mAtmMethod(atmMethod),
 mOpData(opdata),mSmileData(smiledata), mIsWing(iswing)
 {
 	mAtmMethod = atmMethod;
@@ -61,7 +61,7 @@ LAMathVolFuncFXStrangleSolver::~LAMathVolFuncFXStrangleSolver(void)
 	@brief copy constructor
 */
 LAMathVolFuncFXStrangleSolver::LAMathVolFuncFXStrangleSolver(const LAMathVolFuncFXStrangleSolver &rhs) 
-: LAFunctionBase(), mMethod(rhs.mMethod), mTarget(rhs.mTarget), mVariable(rhs.mVariable), mAtmMethod(rhs.mAtmMethod),
+: AQLFunctionBase(), mMethod(rhs.mMethod), mTarget(rhs.mTarget), mVariable(rhs.mVariable), mAtmMethod(rhs.mAtmMethod),
 mOpData(rhs.mOpData), mSmileData(rhs.mSmileData), mIsWing(rhs.mIsWing)
 {
 }
@@ -70,7 +70,7 @@ mOpData(rhs.mOpData), mSmileData(rhs.mSmileData), mIsWing(rhs.mIsWing)
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathVolFuncFXStrangleSolver::clone() const
 {
     try 
@@ -80,7 +80,7 @@ LAMathVolFuncFXStrangleSolver::clone() const
 	}
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -92,7 +92,7 @@ LAMathVolFuncFXStrangleSolver::clone() const
 bool
 LAMathVolFuncFXStrangleSolver::isTypeOf(function_t id) const
 {
-	return (id == FN_VOLFUNCFXSTRANGLESOLV ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_VOLFUNCFXSTRANGLESOLV ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!

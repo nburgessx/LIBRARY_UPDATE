@@ -139,12 +139,12 @@ namespace etrading
 
 		if (! boost::iequals( marketDataAsOfDate_ois.c_str(), marketDataAsOfDate_swap.c_str()) )
 		{
-			throw LACoreInvalidData("#Error: OIS curve and swap curve are given different asof dates", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: OIS curve and swap curve are given different asof dates", __FILE__, __LINE__);
 		}
 
 		if (! boost::iequals(curveCollection_ois, curveCollection_swap) )
 		{
-			throw LACoreInvalidData("#Error: OIS curve and swap curve are from different curve collections", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: OIS curve and swap curve are from different curve collections", __FILE__, __LINE__);
 		}
 
 		// Create OIS curve data object that supplies curve data for OIS curve build

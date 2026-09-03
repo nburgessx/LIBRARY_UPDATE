@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 // ID for LAMathDriftFuncBase
@@ -19,7 +19,7 @@ class LAMathPathEntity;
     @brief Declaration of abstract base class of drift function class
 
 */
-class LAMathDriftFuncBase : public LAFunctionBase
+class LAMathDriftFuncBase : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE

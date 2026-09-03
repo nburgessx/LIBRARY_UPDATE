@@ -26,11 +26,11 @@ std::string meDateFromTenor(const std::string& startDate,
     std::string result="";
 
     // Input marshalling
-	LADate tmp_startDate( etrading::stringToDate(startDate ) );
-	LAString tmp_tenor(tenor.c_str());
-	LAString tmp_businessDayAdj(businessDayAdj.c_str());
-	LAString tmp_calendar(calendar.c_str());
-	LAString tmp_rollConvention(rollConvention.c_str());
+	AQLDate tmp_startDate( etrading::stringToDate(startDate ) );
+	AQLString tmp_tenor(tenor.c_str());
+	AQLString tmp_businessDayAdj(businessDayAdj.c_str());
+	AQLString tmp_calendar(calendar.c_str());
+	AQLString tmp_rollConvention(rollConvention.c_str());
 
     DateVector startDateVector;
     startDateVector.push_back( tmp_startDate );
@@ -66,10 +66,10 @@ std::string meDateFromTenor(const std::string& startDate,
     std::string result="";
 
     // Input marshalling
-	LADate tmp_startDate( etrading::stringToDate(startDate ) );
-	LAString tmp_tenor(tenor.c_str());
-	LAString tmp_businessDayAdj(businessDayAdj.c_str());
-	LAString tmp_calendar(calendar.c_str());
+	AQLDate tmp_startDate( etrading::stringToDate(startDate ) );
+	AQLString tmp_tenor(tenor.c_str());
+	AQLString tmp_businessDayAdj(businessDayAdj.c_str());
+	AQLString tmp_calendar(calendar.c_str());
 	
     DateVector startDateVector;
     startDateVector.push_back( tmp_startDate );
@@ -101,8 +101,8 @@ std::string meDateFromTenor(const std::string& startDate,
     std::string result="";
 
     // Input marshalling
-	LADate tmp_startDate( etrading::stringToDate( startDate ) );
-	LAString tmp_tenor(tenor.c_str());
+	AQLDate tmp_startDate( etrading::stringToDate( startDate ) );
+	AQLString tmp_tenor(tenor.c_str());
 	
     DateVector startDateVector;
     startDateVector.push_back( tmp_startDate );
@@ -142,10 +142,10 @@ std::vector<std::string> meDateFromTenor( const std::vector<std::string>& startD
 	DateVector tmp_startDates;
 	swig::buildDateVector(tmp_startDates, startDates);
 
-	LAString tmp_tenor(tenor.c_str());
-	LAString tmp_businessDayAdj(businessDayAdj.c_str());
-	LAString tmp_calendar(calendar.c_str());
-	LAString tmp_rollConvention(rollConvention.c_str());
+	AQLString tmp_tenor(tenor.c_str());
+	AQLString tmp_businessDayAdj(businessDayAdj.c_str());
+	AQLString tmp_calendar(calendar.c_str());
+	AQLString tmp_rollConvention(rollConvention.c_str());
 
 	DateVector dates = validation::tryMeDateFromTenor( tmp_startDates, 
 												            tmp_tenor, 
@@ -175,8 +175,8 @@ const std::string meDateFromYearFraction(const std::string& startDate,
 	std::string ret;
 
     // Data type marshalling
-	LADate tmp_startDate(etrading::stringToDate( startDate ) );
-	LAString tmp_dayCount(dayCount.c_str());
+	AQLDate tmp_startDate(etrading::stringToDate( startDate ) );
+	AQLString tmp_dayCount(dayCount.c_str());
 
     ret = validation::tryMeDateFromYearFraction(tmp_startDate, yearFraction, tmp_dayCount).stringWithFormat("YYYYMMDD").getCString();
     return ret;
@@ -197,9 +197,9 @@ int meDateBusinessDays(const std::string& fromDate,
 	int ret = 0;
 	
     // Input marshalling
-	LADate fromDt( etrading::stringToDate( fromDate ) );
-	LADate toDt ( etrading::stringToDate( toDate ) );
-	LAString cal			(calendar.c_str());
+	AQLDate fromDt( etrading::stringToDate( fromDate ) );
+	AQLDate toDt ( etrading::stringToDate( toDate ) );
+	AQLString cal			(calendar.c_str());
 
 	ret = validation::tryMeDateBusinessDays(fromDt, toDt, cal);		
 	return ret;
@@ -221,8 +221,8 @@ double meDateYearFraction( const std::string& fromDate,
     AQ_API_START
 
 	// Input marshalling
-	LADate fromLADate( etrading::stringToDate( fromDate ) );
-	LADate toLADate( etrading::stringToDate( toDate ) );
+	AQLDate fromLADate( etrading::stringToDate( fromDate ) );
+	AQLDate toLADate( etrading::stringToDate( toDate ) );
 
 	double yearFraction = validation::tryMeDateYearFraction( fromLADate, toLADate, dayCount, includeLast );
 	return yearFraction;
@@ -243,8 +243,8 @@ double meDateYearFraction( const std::string& fromDate,
     AQ_API_START
 
 	// Input marshalling
-	LADate fromLADate( etrading::stringToDate( fromDate ) );
-	LADate toLADate( etrading::stringToDate( toDate ) );
+	AQLDate fromLADate( etrading::stringToDate( fromDate ) );
+	AQLDate toLADate( etrading::stringToDate( toDate ) );
 
 	double yearFraction = validation::tryMeDateYearFraction( fromLADate, toLADate, dayCount );
 	return yearFraction;
@@ -272,10 +272,10 @@ std::string meLWOSwapUSDSpotDate( const std::string & asOfDate,
 	AQ_API_START
 
 	// Marshall Inputs
-	LADate asOfDate_( etrading::stringToDate( asOfDate ) );
+	AQLDate asOfDate_( etrading::stringToDate( asOfDate ) );
 
 	// Call Spot Date Method
-	const LADate spotDate = validation::tryMeCurveUSDSpotDate( asOfDate_, spotLag.c_str(), fixingCalendar.c_str(), paymentCalendar.c_str(), businessDayAdj.c_str(), rollConvention.c_str() );
+	const AQLDate spotDate = validation::tryMeCurveUSDSpotDate( asOfDate_, spotLag.c_str(), fixingCalendar.c_str(), paymentCalendar.c_str(), businessDayAdj.c_str(), rollConvention.c_str() );
 	
 	// Marshall Outputs
 	const std::string spotDateString = spotDate.stringWithFormat("YYYYMMDD").c_str();
@@ -305,10 +305,10 @@ std::string meDateShiftedSpotDate( const std::string& asOfDate,
     AQ_API_START
 
 	// Marshall Inputs
-	LADate asOfDate_( etrading::stringToDate( asOfDate ) );
+	AQLDate asOfDate_( etrading::stringToDate( asOfDate ) );
 
 	// Call Spot Date Method
-	const LADate spotDate = validation::tryMeDateShiftedSpotDate( asOfDate_, fixingLag.c_str(), fixingCalendar.c_str(), fixingBusDayAdj.c_str(), paymentLag.c_str(), paymentCalendar.c_str(), paymentBusDayAdj.c_str() );
+	const AQLDate spotDate = validation::tryMeDateShiftedSpotDate( asOfDate_, fixingLag.c_str(), fixingCalendar.c_str(), fixingBusDayAdj.c_str(), paymentLag.c_str(), paymentCalendar.c_str(), paymentBusDayAdj.c_str() );
 
     // Marshall Outputs
 	const std::string spotDateString = spotDate.stringWithFormat("YYYYMMDD").c_str();

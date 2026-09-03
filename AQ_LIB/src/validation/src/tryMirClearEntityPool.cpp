@@ -14,18 +14,18 @@ namespace validation
     /* @brief			validation interface for the mirClearEntityPool function, to clear the object pool
     *  @return			A notification string
     */
-    LAString tryMirClearEntityPool()
+    AQLString tryMirClearEntityPool()
     {
         VALID_EXCEPTION_START
 
-        LADataInstance* dataInstance = etrading::getDataInstance();
+        AQLDataInstance* dataInstance = etrading::getDataInstance();
         dataInstance->getObjectPool().clear();
         LACoreDataService::finalize();
         etrading::LAUpdateStaticDataManager::setUpForIRServer();
         LACoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
         etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance );
 
-        LAString ret( "AllEntityPoolCleared" );
+        AQLString ret( "AllEntityPoolCleared" );
         return ret;
 
         VALID_EXCEPTION_END

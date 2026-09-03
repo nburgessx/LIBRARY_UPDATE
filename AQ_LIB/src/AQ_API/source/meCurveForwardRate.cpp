@@ -26,9 +26,9 @@ std::vector<double> meCurveForwardRatesFromYearFraction( const std::vector<std::
 	DateVector tmp_fromDates;
 	swig::buildDateVector(tmp_fromDates, fromDates);
 
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
-	LAString tmp_dayCount(dayCount.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_dayCount(dayCount.c_str());
 
 	results = validation::tryMeCurveForwardRatesFromYearFraction( tmp_fromDates, 
 																	    yearFraction,
@@ -57,8 +57,8 @@ std::vector<double> meCurveForwardRates( const std::vector<std::string>& fixingD
 	DateVector tmp_fixingDates;
 	swig::buildDateVector(tmp_fixingDates, fixingDates);
 
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
 
 	results = validation::tryMeCurveForwardRates( tmp_fixingDates, 
 														tmp_curveCollection, 
@@ -90,8 +90,8 @@ std::vector<double> meCurveForwardRatesFromForwardDates( const std::vector<std::
     DateVector tmp_toDates;
     swig::buildDateVector(tmp_toDates, toDates);
 
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
 
 	results = validation::tryMeCurveForwardRatesFromForwardDates( tmp_fromDates,
                                                                         tmp_toDates,
@@ -118,8 +118,8 @@ std::vector<double> meCurveForwardRatesFromForwardDates(const std::vector<std::s
 	DateVector tmp_toDates;
 	swig::buildDateVector(tmp_toDates, toDates);
 
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
 
 	results = validation::tryMeCurveForwardRatesFromForwardDates(tmp_fromDates,
 																	 tmp_toDates,

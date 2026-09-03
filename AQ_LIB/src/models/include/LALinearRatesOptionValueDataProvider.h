@@ -48,21 +48,21 @@
 
 
 
-#include "LADataValuation.h"
+#include "AQLDataValuation.h"
 #include "LAMathPlainVanillaEntity.h"
-#include "LAFunctionBase.h"
+#include "AQLFunctionBase.h"
 #include "LABlackScholesCalc.h"
-#include "LADate.h"
+#include "AQLDate.h"
 #include "LABlackScholesBaseFunc.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
 
-class LAInterpolationBase;
+class AQLInterpolationBase;
 /*!
 		@brief cache class for performance up
 */
-class LALinearRatesOptionValueDataProvider : public LADataProvider
+class LALinearRatesOptionValueDataProvider : public AQLDataProvider
 {
 public:
 	LALinearRatesOptionValueDataProvider();
@@ -76,43 +76,43 @@ public:
 	std::vector< std::vector<AnalyticParam* > > mParam;
 	bool buysell;
 	double unit;
-	const LAFunctionBase* mVolfunc;
-	LADate mAsofDate;
-	LADate mValueDate;
-	LADate mMaturityDate;
-	LADate mDeliveryDate;
-	LADate mTradeDate;
+	const AQLFunctionBase* mVolfunc;
+	AQLDate mAsofDate;
+	AQLDate mValueDate;
+	AQLDate mMaturityDate;
+	AQLDate mDeliveryDate;
+	AQLDate mTradeDate;
 	bool mIsStillAlive; // true for options that are still alive on or after the expiry date
 	double mMargin;
-	LAString mnumerairecur;
-	LAString mpvcur;
-    LAString mPremiumCurrency;
+	AQLString mnumerairecur;
+	AQLString mpvcur;
+    AQLString mPremiumCurrency;
 	bool mIsAnalyticalRisk;
 	double mShiftValForRisk;
 	bool mIsDiffForRisk;
-	LAString mAnalyticalRiskType;
+	AQLString mAnalyticalRiskType;
 	bool mIsAsofAfterMaturity;
 	bool mIsPayOffCalculateAfterMaturity;
 	unsigned int mCashletSize;
-	LAPriceDataDayCount mBlackDayCount;
+	AQLPriceDataDayCount mBlackDayCount;
 	
 	bool mIsPremAdjust;
-	LADate mPremPayDate;
+	AQLDate mPremPayDate;
 	double mPremAmount;
 	bool mIsFWDInter;
-	LAInterpolationBase *mpFWDInter;
+	AQLInterpolationBase *mpFWDInter;
 	DoubleVector mStartTerms;
 	double mPremiumValue;
 	double mOptionValue;
 	bool mIsAddFwdPremPV;
 	double mCashSettlementAmount;
 	double mCashSettlementValue;
-	LADate mCashSettlementPayDate;
+	AQLDate mCashSettlementPayDate;
 	bool mIsCashSettlementAdjust;
-	LAString mCashSettlementCurrency;
+	AQLString mCashSettlementCurrency;
 
 	//hishida vannavolga
-	LAString mValueModel;
+	AQLString mValueModel;
 
 	
 };
@@ -123,11 +123,11 @@ public:
 	LAPriceFXOptionValueDataProvider();
 	
 	virtual ~LAPriceFXOptionValueDataProvider();
-	LAString mdomcur;
-	LAString mforcur;
-	LAString mfxcur;
+	AQLString mdomcur;
+	AQLString mforcur;
+	AQLString mfxcur;
 	bool mIsLiborDFForFX;
-	LADate mSpotDate;
+	AQLDate mSpotDate;
 };
 
 /*!
@@ -155,24 +155,24 @@ public:
 	LAPriceIROptionValueDataProvider();
 	
 	virtual ~LAPriceIROptionValueDataProvider();
-	LAStringVector mUnTenor;
-	LAString mUnFrequency;
-	LADate mUnStartDate;
-	LAPriceDataDayCount* mpUnDayCount;
-	LAPriceDataSlidingRule* mpUnSlidingRule;
-	LAPriceDataCalendar* mpUnCalendar;
-	LAString mUnCurrency;
-	LAString mDCurveType;
-	LAString mFCurveType;
-	LAPriceDataDayCount* mpUnDayCountOfFixedLeg;
-	LAPriceDataCalendar* mpUnCalendarOfFixedLeg;
-	std::vector<LADate> mMaturityDates;
-	LAStringVector mFCurveTypes;
-	LAStringVector mDCurveTypes;
+	AQLStringVector mUnTenor;
+	AQLString mUnFrequency;
+	AQLDate mUnStartDate;
+	AQLPriceDataDayCount* mpUnDayCount;
+	AQLPriceDataSlidingRule* mpUnSlidingRule;
+	AQLPriceDataCalendar* mpUnCalendar;
+	AQLString mUnCurrency;
+	AQLString mDCurveType;
+	AQLString mFCurveType;
+	AQLPriceDataDayCount* mpUnDayCountOfFixedLeg;
+	AQLPriceDataCalendar* mpUnCalendarOfFixedLeg;
+	std::vector<AQLDate> mMaturityDates;
+	AQLStringVector mFCurveTypes;
+	AQLStringVector mDCurveTypes;
 	unsigned int mFloatLegNo;
 	unsigned int mFixedLegNo;
 	bool mIsCalcEquivStrike;
 	bool mIsFRateFromCurve;
 	bool mIsIRRModel;
-	LAStringVector mUnderlying;
+	AQLStringVector mUnderlying;
 };

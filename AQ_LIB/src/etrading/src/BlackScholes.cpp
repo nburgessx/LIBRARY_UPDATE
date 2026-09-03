@@ -313,7 +313,7 @@ namespace etrading
 
             return impliedVolatility;
         }
-        catch( LACoreError &)
+        catch( AQLCoreError &)
         {
             throw;
         }

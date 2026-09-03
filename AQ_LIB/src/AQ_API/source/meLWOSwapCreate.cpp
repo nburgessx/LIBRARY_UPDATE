@@ -10,7 +10,7 @@
  */
 
 #include "meLWOSwapCreate.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "tryMeLWOSwapCreation.h"
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
@@ -33,10 +33,10 @@ const std::string meLWOSwapCreate( const std::string& swapObjectName,
     AQ_API_START
     
     // Marshall Inputs
-	LAStringMatrix swapLVBAsStringMatrix;
+	AQLStringMatrix swapLVBAsStringMatrix;
 	swig::buildStringMatrix( swapLVBAsStringMatrix, swapLVB );
 
-    LAStringMatrix xccyPropertiesLVBAsStringMatrix;
+    AQLStringMatrix xccyPropertiesLVBAsStringMatrix;
 	swig::buildStringMatrix( xccyPropertiesLVBAsStringMatrix, xccyPropertiesLVB );
 
     // Call validation method
@@ -65,10 +65,10 @@ const std::string meLWOSwapCreateFromGenerator( const std::string& swapObjectNam
     AQ_API_START
     
     // Marshall Inputs
-	LAStringMatrix swapLVBAsStringMatrix;
+	AQLStringMatrix swapLVBAsStringMatrix;
 	swig::buildStringMatrix( swapLVBAsStringMatrix, swapLVB );
 
-    LAStringMatrix xccyPropertiesLVBAsStringMatrix;
+    AQLStringMatrix xccyPropertiesLVBAsStringMatrix;
 	swig::buildStringMatrix( xccyPropertiesLVBAsStringMatrix, xccyPropertiesLVB );
 
     // Call validation method

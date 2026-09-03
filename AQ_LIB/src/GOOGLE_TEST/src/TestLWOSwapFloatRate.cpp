@@ -115,8 +115,8 @@ namespace google_test
 
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -128,14 +128,14 @@ namespace google_test
 				double actualFloatRate = dataProvider.getCashflowDataExcludingUpfront( 0 ).floatRateData.resetRate;
 
                 auto floatLegFirstCashflow = swap->getLeg(1)->getSchedule()->getCashflow(0);
-                LADate floatLegFirstCashflowFixingDate = floatLegFirstCashflow->getFixingDate();
+                AQLDate floatLegFirstCashflowFixingDate = floatLegFirstCashflow->getFixingDate();
                 auto fixingTable = etrading::getFixingTable(tableName, false /* do not throw when missing*/);
                 double expectedFixingRate = fixingTable->getFixingValue( etrading::toGregorianDateFromLADate(floatLegFirstCashflowFixingDate) );
 
                 // Check the Test Results
                 EXPECT_NEAR( expectedFixingRate, actualFloatRate, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -169,8 +169,8 @@ namespace google_test
 
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -196,7 +196,7 @@ namespace google_test
                 EXPECT_NEAR( expectedLastFixing, actualLastCashflowFloatRate, tolerance );
 
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -219,8 +219,8 @@ namespace google_test
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -235,7 +235,7 @@ namespace google_test
                 EXPECT_NEAR( 0, actualFirstCashflowFloatRate, tolerance );
 
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -267,8 +267,8 @@ namespace google_test
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -281,7 +281,7 @@ namespace google_test
 
                 auto floatLegFirstCashflow = swap->getLeg(1)->getSchedule()->getCashflow(0);
 
-                LADate floatLegFirstCashflowFixingDate = floatLegFirstCashflow->getFixingDate();
+                AQLDate floatLegFirstCashflowFixingDate = floatLegFirstCashflow->getFixingDate();
                 auto fixingTable = etrading::getFixingTable(tableName, false /* do not throw when missing*/);
                 double expectedFixingRate = fixingTable->getFixingValue( etrading::toGregorianDateFromLADate(floatLegFirstCashflowFixingDate) );
 
@@ -289,7 +289,7 @@ namespace google_test
                 EXPECT_NEAR( expectedFixingRate, actualFirstCashflowFloatRate, tolerance );
 
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -322,8 +322,8 @@ namespace google_test
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -336,7 +336,7 @@ namespace google_test
 
                 //1) Check the first cashflow's floatRate is from Fixing Table
                 auto floatLegFirstCashflow = swap->getLeg(1)->getSchedule()->getCashflow(0);
-                LADate floatLegFirstCashflowFixingDate = floatLegFirstCashflow->getFixingDate();
+                AQLDate floatLegFirstCashflowFixingDate = floatLegFirstCashflow->getFixingDate();
                 auto fixingTable = etrading::getFixingTable(tableName, false /* do not throw when missing*/);
                 double expectedFixingRate = fixingTable->getFixingValue( etrading::toGregorianDateFromLADate(floatLegFirstCashflowFixingDate) );
 
@@ -353,7 +353,7 @@ namespace google_test
                 // Check the Test Results
                 EXPECT_NEAR( expectedFirstFixing, floatLegCurrentCashflowFloatRate, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -385,8 +385,8 @@ namespace google_test
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -404,7 +404,7 @@ namespace google_test
                 EXPECT_NEAR( expectedFirstFixing, actualFirstCashflowFloatRate, tolerance );
 
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -436,8 +436,8 @@ namespace google_test
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -455,7 +455,7 @@ namespace google_test
                 EXPECT_NEAR( expectedFirstFixing, actualFirstCashflowFloatRate, tolerance );
 
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -477,8 +477,8 @@ namespace google_test
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -488,15 +488,15 @@ namespace google_test
 				double actualFirstCashflowFloatRate = dataProvider.getCashflowDataExcludingUpfront( 0 ).floatRateData.resetRate;
 
 				#if defined(GTEST32)
-				LAString outputFileName = TestOutputs_6_32bit;
+				AQLString outputFileName = TestOutputs_6_32bit;
 				CheckTestResultsAndRebaseOnRequest( actualFirstCashflowFloatRate, TEST_DIR, outputFileName, tolerance );
 				#else
-				LAString outputFileName = TestOutputs_6_64bit;
+				AQLString outputFileName = TestOutputs_6_64bit;
 				CheckTestResultsAndRebaseOnRequest( actualFirstCashflowFloatRate, TEST_DIR, outputFileName, tolerance );
 				#endif
 
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -528,8 +528,8 @@ namespace google_test
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
@@ -545,7 +545,7 @@ namespace google_test
                 EXPECT_NEAR( expectedFirstFixing, actualFirstCashflowFloatRate, tolerance );
 
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

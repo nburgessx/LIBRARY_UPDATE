@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 #include <boost/lexical_cast.hpp>
 #include "LabelValueBlock.h"
 #include "FixingTable.h"
@@ -37,27 +37,27 @@ namespace etrading
     * @param [in]			defVal  Default value
     * @output				non-empty value
     */
-    LAString getDefaultValueForEmptyString( const LAString& val, const LAString& defVal );
+    AQLString getDefaultValueForEmptyString( const AQLString& val, const AQLString& defVal );
 
     /* @brief				Validate if a string is empty and throw if yes
     * @param [in]			str		String under validation
     * @param [in]			err		If err is not empty, throw it
     */
-    void validateStringEmptiness( const LAString& str, const LAString& err );
+    void validateStringEmptiness( const AQLString& str, const AQLString& err );
 
     /* @brief			Converts a string to a Date or throws an error if the string format is invalid
     *  @param [in]		inDate  Date under validation
     *  @param [in]		err		error string
     *  @output			date with expected format
     */
-    LADate stringToDate( const LAString& inDate, const LAString& err = LAString("") );
+    AQLDate stringToDate( const AQLString& inDate, const AQLString& err = AQLString("") );
 
     /* @brief			Converts a string to a boost::gregorian::date or throws an error if the string format is invalid
     *  @param [in]		inDate  Date under validation
     *  @param [in]		err		error string
     *  @output			date with expected format
     */
-    boost::gregorian::date validateAndConvertStringToGregorianDate( const LAString & inDate, const LAString& err = LAString("") );
+    boost::gregorian::date validateAndConvertStringToGregorianDate( const AQLString & inDate, const AQLString& err = AQLString("") );
     
     // this function returns a boolean indicating whether the input std::string can be validly converted to a type T
     template<typename T> bool isValid( const std::string& num )
@@ -84,20 +84,20 @@ namespace etrading
     *  @param [in]		inputString        The input string
     *  @output			boolean; True if the string is a number and False otherwise
     */
-    bool isNumber( const LAString& inputString );
+    bool isNumber( const AQLString& inputString );
 
 
     /* @brief			Get AlgoQuantLib dataInstance object
     * @output			AlgoQuantLib dataInstance
     */
-    LADataInstance* getDataInstance();
+    AQLDataInstance* getDataInstance();
 
     /* @brief			Get default calendar based on the curveCollection if calendar is empty
     * @param [in]		calendar		Calendar
     * @param [in]		curveCollection	curve collection set id
     * @output			Non-empty calendar string
     */
-    LAString getDefaultCalendarForEmptyString( const LAString& calendar, const LAString& curveCollection );
+    AQLString getDefaultCalendarForEmptyString( const AQLString& calendar, const AQLString& curveCollection );
 
     std::string addIndexToSchemaName(const std::string& schemaName, const int& i);
 
@@ -106,7 +106,7 @@ namespace etrading
     * @param [in]		value2	second value
     * @output			True if two values are the same
     */
-    bool same(const LAString& value1, const LAString& value2);
+    bool same(const AQLString& value1, const AQLString& value2);
 
     /* @brief			Check if two string values are the same
     * @param [in]		value1	first value
@@ -157,15 +157,15 @@ namespace etrading
 	*/
 	void validateDisplayCashflowHeaderAndBody(const bool& showColumnHeaders, const AnyTypeVector& headers, const AnyTypeMatrix& bodyBlock);
 
-	/* @brief			Validate endDate string and convert it to LADate.
+	/* @brief			Validate endDate string and convert it to AQLDate.
 	* @param [in]		startDate				Start date
 	* @param [in]		endDateStr				End Date in string format, can be a date or tenor
 	* @param [in]		businessDayAdjustment	Business day adjustment (MOD_FOLLOWING, NO_CHANGE, etc)
 	* @param [in]		calendar				Calendar
 	* @param [in]		errorStr				Error string
-	* @output			End date in LADate format
+	* @output			End date in AQLDate format
 	*/
-	LADate validateDateOrTenor(const LADate& startDate, const LAString& endDateStr, const LAString& businessDayAdjustment, const LAString& calendar, const std::string& errorStr);
+	AQLDate validateDateOrTenor(const AQLDate& startDate, const AQLString& endDateStr, const AQLString& businessDayAdjustment, const AQLString& calendar, const std::string& errorStr);
 
 
 }

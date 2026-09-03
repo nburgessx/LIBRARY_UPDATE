@@ -14,17 +14,17 @@
 #include "CurveValidation.h"			        // Convert Dates to Terms and vice versa
 #include "CurveUtilities.h"				        // DateFromTenor methods
 #include "LACurvePricingObject.h"	            // Methods to get the curve daycount conventions
-#include "LAEnumConversion.h"		            // Methods to convert enum values to legacy enums
+#include "AQLEnumConversion.h"		            // Methods to convert enum values to legacy enums
 
 // Interpolation Methods
-#include "LAMonotoneConvexInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAParabolicInterpolation.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
-#include "LAConstrainedSplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LALinearInterpolation.h"
+#include "AQLMonotoneConvexInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLParabolicInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
+#include "AQLConstrainedSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLLinearInterpolation.h"
 
 
 namespace etrading
@@ -33,9 +33,9 @@ namespace etrading
     // ================================= HELPER METHOD(S) ===================================================================
     
 	// Shared Helper Method to Create Discount Factor Results Object
-    CurveDescriptionAndDiscountFactorResults curveDescriptionAndDiscountFactorResults( const LAStringMatrix & curveLVB,
-																					   const LAStringMatrix & discFactorParameterLVB,
-																					   const LAStringMatrix & discountFactors,
+    CurveDescriptionAndDiscountFactorResults curveDescriptionAndDiscountFactorResults( const AQLStringMatrix & curveLVB,
+																					   const AQLStringMatrix & discFactorParameterLVB,
+																					   const AQLStringMatrix & discountFactors,
 																					   const StandardStringMatrix & forwardAdjustments )
     {
         // Input Validation
@@ -68,14 +68,14 @@ namespace etrading
         
         // Extract Parameter LVB Values
         LabelValueBlock parameterLVB_( discFactorParameterLVB );
-        const LADate asOfDate                                       = parameterLVB_.getCompulsoryValueAsDate("ASOFDATE");
+        const AQLDate asOfDate                                       = parameterLVB_.getCompulsoryValueAsDate("ASOFDATE");
 		const etrading::InterpolationEnum interpolationEnum         = etrading::toInterpolationEnum( parameterLVB_.getCompulsoryValue("INTERPOLATION") );
 		const etrading::DayCountEnum daycountEnum				    = etrading::toDayCountEnum( parameterLVB_.getCompulsoryValue("DAYCOUNT") );
         const etrading::BusinessDayAdjustmentEnum fixingBusDayAdj   = etrading::toBusinessDayAdjustmentEnum( parameterLVB_.getCompulsoryValue("FIXINGBUSINESSDAYADJUSTMENT") );
         const std::string fixingCalendar                            = parameterLVB_.getCompulsoryValueAsString("FIXINGCALENDAR");
 
-		LADate joinDate;
-		LADate spotDate;
+		AQLDate joinDate;
+		AQLDate spotDate;
 		
 		// Join- and Spot Date is only required for Linear-Spline Interpolation to calculate 'joinDateAsDouble'
 		if ( interpolationEnum == etrading::LINEARSPLINE_INTERPOLATION )
@@ -85,12 +85,12 @@ namespace etrading
 		}
 		else
 		{
-			joinDate = parameterLVB_.getOptionalValueAsDate("JOINDATE", LADate() );
-			spotDate = parameterLVB_.getOptionalValueAsDate( "SPOTDATE", LADate() );
+			joinDate = parameterLVB_.getOptionalValueAsDate("JOINDATE", AQLDate() );
+			spotDate = parameterLVB_.getOptionalValueAsDate( "SPOTDATE", AQLDate() );
 		}
 
         // Extract Discount Factor Information
-        std::vector<LADate> paymentDates_( discountFactors.size() );
+        std::vector<AQLDate> paymentDates_( discountFactors.size() );
         std::vector<double> discountFactors_( discountFactors.size() );
         etrading::populateDateValueVectorsFromStringMatrix( paymentDates_, discountFactors_, discountFactors );
 

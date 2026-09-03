@@ -4,12 +4,12 @@
 namespace etrading
 {
 
-	FixedBondCashflow::FixedBondCashflow() : FixedCashflow(), bondTrueYieldYearFraction_(std::numeric_limits<double>::quiet_NaN()), bondExDividendDate_(LADate())
+	FixedBondCashflow::FixedBondCashflow() : FixedCashflow(), bondTrueYieldYearFraction_(std::numeric_limits<double>::quiet_NaN()), bondExDividendDate_(AQLDate())
 	{}
 
-	FixedBondCashflow::FixedBondCashflow(const PayReceiveEnum& payReceive, double fixedRate, const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, double accrualYearFraction, const LADate& paymentDate,
+	FixedBondCashflow::FixedBondCashflow(const PayReceiveEnum& payReceive, double fixedRate, const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, double accrualYearFraction, const AQLDate& paymentDate,
 										double notional, double leverage, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType,
-										const double& bondTrueYieldYearFraction, const LADate& bondExDividendDate)
+										const double& bondTrueYieldYearFraction, const AQLDate& bondExDividendDate)
 		: FixedCashflow(payReceive, fixedRate, accrualStartDate, accrualEndDate, accrualDays, accrualYearFraction, paymentDate, notional, leverage, 1.0 /*couponMultiplier*/, zeroCouponSwapPaymentFreq, cashflowType, CashFlowBespokeInfo()),
 		bondTrueYieldYearFraction_(bondTrueYieldYearFraction), bondExDividendDate_(bondExDividendDate)
 	{}
@@ -24,7 +24,7 @@ namespace etrading
 	{
 		if (boost::math::isnan(getFixedRate()))
 		{
-			throw LACoreInvalidData("#Error: fixedRate is not set for the cashflow", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: fixedRate is not set for the cashflow", __FILE__, __LINE__);
 		}
 		//When includeCouponRate is false, the couponRate need to be excluded
 		return cashflowData.includeCouponRate ? getFixedRate() : 0.0;

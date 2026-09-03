@@ -13,7 +13,7 @@
 #include <pthread.h>
 #endif
 
-class LAString;
+class AQLString;
 class LAStaticDataManager;
 class MALogManager;
 
@@ -52,36 +52,36 @@ public:
 	}
 	//==============================================
 	// set context
-	static void setContext(const LAString &key, const LAString &data);
+	static void setContext(const AQLString &key, const AQLString &data);
 	//==============================================
 	// get context
-	static LAString getContext(const LAString &key);
+	static AQLString getContext(const AQLString &key);
 	//==============================================
 	// set istring stream
-	static void setIStringStream(const LAString &key, std::istringstream *pstream);
+	static void setIStringStream(const AQLString &key, std::istringstream *pstream);
 	//==============================================
 	// get istring stream
-	static std::istringstream *getIStringStream(const LAString &key);
+	static std::istringstream *getIStringStream(const AQLString &key);
 	//==============================================
 	// set setting file stream
-	static void setSettingFileStream(LAString key, LAString data);
+	static void setSettingFileStream(AQLString key, AQLString data);
 	//==============================================
 	// get setting file stream
-	static LAString getSettingFileStream(LAString key);
+	static AQLString getSettingFileStream(AQLString key);
 	//==============================================
 	// initialize method                 
 	static void         initialize();
 	//==============================================
 	// clear method                 
-	static void         clear(const LAString &fileNum);
+	static void         clear(const AQLString &fileNum);
     //==============================================
 	// finalize method
 	static void finalize();
 
-	static LAString		getOutputDirectory( void );
+	static AQLString		getOutputDirectory( void );
 	//==============================================================================
 	// ! file exists or not
-	static bool			isFileExist(const LAString &key);
+	static bool			isFileExist(const AQLString &key);
 
 	//==============================================
 	// context clear method                 
@@ -89,7 +89,7 @@ public:
 private:
 	//==============================================
 	// string stream clear method                 
-	static void         clearStringStream(const LAString &fileNum);
+	static void         clearStringStream(const AQLString &fileNum);
 	//==============================================
 	// string stream all clear method                 
 	static void         clearAllStringStream();
@@ -100,14 +100,14 @@ private:
 	static bool mInitializeFlg; // initialize flag
 
 #if defined (WIN32) || defined (WIN64)
-	static std::map<DWORD, std::map<LAString, LAString> > mContextMap;// context
+	static std::map<DWORD, std::map<AQLString, AQLString> > mContextMap;// context
 #else
-	static std::map<pthread_t, std::map<LAString, LAString> > mContextMap;// context
+	static std::map<pthread_t, std::map<AQLString, AQLString> > mContextMap;// context
 #endif
 
-	static std::map<LAString, std::istringstream *> mIStringStreamMap;// istringstream map
+	static std::map<AQLString, std::istringstream *> mIStringStreamMap;// istringstream map
 
-    static std::map<LAString, LAString> mSettingFiles;
+    static std::map<AQLString, AQLString> mSettingFiles;
 	static LAStaticDataManager *mpPropertyManager; //! property manager
 	static MALogManager  *mpLogManager;      //! log manager
 

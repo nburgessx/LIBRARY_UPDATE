@@ -17,15 +17,15 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
-#include "LADataMultiReference.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataMultiReference.h"
 
 
-class LADataInstance;
-class LAObjectPool;
-class LAMathObjectValue;
+class AQLDataInstance;
+class AQLObjectPool;
+class AQLMathObjectValue;
 class LAStaticData;
-class LAObject;
+class AQLObject;
 //===================== Class Declare LAObjectConfiguration==================================
 /*! 
     @brief Object setup class
@@ -46,58 +46,58 @@ public:
 
 	//==============================================
 	// setup object
-	virtual void setUpEntityes(LADataInstance &dataInstance) const;
+	virtual void setUpEntityes(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup  pathentity
-	virtual void setUpPathEntity(LAObjectPool &objPool, const LAString *pPathName = 0) const;
+	virtual void setUpPathEntity(AQLObjectPool &objPool, const AQLString *pPathName = 0) const;
 
 	//==============================================
 	// setUpExtraLibor
-	void setUpExtraLibor(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpExtraLibor(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setup future fixing object
-	virtual void setUpFutureFixingEntity(LAObjectPool &objPool) const;
+	virtual void setUpFutureFixingEntity(AQLObjectPool &objPool) const;
 	//==============================================
 	// setup future fixing function
-	void setUpFutureFixingFunc(LAObjectPool &objPool,  LAMathObjectValue &trade) const;
+	void setUpFutureFixingFunc(AQLObjectPool &objPool,  AQLMathObjectValue &trade) const;
 	//==============================================
 	// get fixed rate from property
-	double getFixedRate(const LAString &key, const LAString &index) const;
+	double getFixedRate(const AQLString &key, const AQLString &index) const;
 	//==============================================
 	// setUpDigitalCallSpreadCoupon
-	void setUpDigitalCallSpreadCoupon(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpDigitalCallSpreadCoupon(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setUpDiscountCurve
-	void setUpDiscountCurve(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpDiscountCurve(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setUpFundingSpread
-	void setUpFundingSpread(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpFundingSpread(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setup  fx object
-	virtual void setUpFXEntity(LAObjectPool &objPool) const;
+	virtual void setUpFXEntity(AQLObjectPool &objPool) const;
 	//==============================================
 	// setup  risk info
-	void setUpRiskInfo(LADataInstance &dataInstance) const;
+	void setUpRiskInfo(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setUpCoTermOfLSMCIndex
-	void setUpCoTermOfLSMCIndex(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpCoTermOfLSMCIndex(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setUpDirtyPrice
-	void setUpDirtyPrice(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpDirtyPrice(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setUpScaleShftOfLSMC
-	void setUpScaleShftOfLSMC(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpScaleShftOfLSMC(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 
 protected :
 	//==============================================
 	// setup  valuable object
-	virtual void setUpValuableEntity(LAObjectPool &objPool) const;
+	virtual void setUpValuableEntity(AQLObjectPool &objPool) const;
 	//==============================================
 	// setup  extra object
-	virtual void setUpExtraEntity(LAObjectPool &objPool) const;
+	virtual void setUpExtraEntity(AQLObjectPool &objPool) const;
 	//==============================================
 	// get model name
-	virtual LAString getModelName() const = 0;
+	virtual AQLString getModelName() const = 0;
 	//==============================================
 	// get sde timegrid
 	virtual void getSDETimeGrid(DoubleArray &timeGrid) const = 0;
@@ -106,52 +106,52 @@ protected :
 	virtual void getSDEIntegralTimeGrid(DoubleArray &timeGrid) const = 0;
 	//==============================================
 	// setUpRecalcTrade
-	virtual void setUpRecalcTrade(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	virtual void setUpRecalcTrade(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setup forward interpolation
-	virtual void setUpFwdInterpolation(LAObjectPool &objPool) const;
+	virtual void setUpFwdInterpolation(AQLObjectPool &objPool) const;
 	//==============================================
 	// setUpAsOfDateForTradeEntity
-	void setUpAsOfDateForTradeEntity(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpAsOfDateForTradeEntity(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setup  valuable object
-	void setUpRiskInfo(std::vector<const LAObject *> &riskEVec, LAObject &e) const;
+	void setUpRiskInfo(std::vector<const AQLObject *> &riskEVec, AQLObject &e) const;
 	//==============================================
 	// setUpPastIndexRate
-	void setUpPastIndexRate(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpPastIndexRate(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setUpCompoundingFixedRates
-	void setUpCompoundingFixedRates(const LADate& asOfDate, LAObjectHolder& ehTrade) const;
+	void setUpCompoundingFixedRates(const AQLDate& asOfDate, AQLObjectHolder& ehTrade) const;
 	//==============================================
 	// setUpScaleShftOfLSMC
-	void setUpSVDToleranceForLSMC(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpSVDToleranceForLSMC(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setUpBondFundingLeg
-	void setUpBondFundingLeg(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpBondFundingLeg(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 
 	LAStaticData *mpStaticData; // property accessor
-	mutable std::map<LAString, bool> mIsFwdInterMap;
-	mutable std::map<LAString, LAString> mFwdInterMap;
-	mutable std::map<LAString, double> mFdSpdMap;
-	mutable std::map<LAString, double> mDirtyPriceMap;
+	mutable std::map<AQLString, bool> mIsFwdInterMap;
+	mutable std::map<AQLString, AQLString> mFwdInterMap;
+	mutable std::map<AQLString, double> mFdSpdMap;
+	mutable std::map<AQLString, double> mDirtyPriceMap;
 
-    LAString createCoTermTenorString(const LADate& today, const LADate& matdate, const LAString& freq) const;
+    AQLString createCoTermTenorString(const AQLDate& today, const AQLDate& matdate, const AQLString& freq) const;
 
 private :
 	//==============================================
 	// setup forward interpolation
-	void setUpFwdInterpolation(LAMathObjectValue &trade) const;
+	void setUpFwdInterpolation(AQLMathObjectValue &trade) const;
 	//==============================================
 	// setUpPastCouponPayOffs
-	void setUpPastCouponPayOffs(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	void setUpPastCouponPayOffs(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	//==============================================
 	// setUpRangeAccrueFixedRates
-	void setUpRangeAccrueFixedRates(const LADate& asOfDate, LAObjectHolder& ehTrade) const;
+	void setUpRangeAccrueFixedRates(const AQLDate& asOfDate, AQLObjectHolder& ehTrade) const;
 	// setUpIndexFixedRates
-	void setUpIndexFixedRates(const LAStringMatrix& ratesMatrix, LADataMultiReference& indexs) const;
+	void setUpIndexFixedRates(const AQLStringMatrix& ratesMatrix, AQLDataMultiReference& indexs) const;
 	// setUpIndexFixedRates for ovservation operator
-	void setUpIndexFixedRates_ObsvOpr(const LAStringMatrix& ratesMatrix, LADataMultiReference& indexs) const;
+	void setUpIndexFixedRates_ObsvOpr(const AQLStringMatrix& ratesMatrix, AQLDataMultiReference& indexs) const;
 	// setUpBoundaryIndexFixedRates
-	void setUpBoundaryIndexFixedRate(const LAStringMatrix& ratesMatrix, LADataMultiReference& indexs) const;
+	void setUpBoundaryIndexFixedRate(const AQLStringMatrix& ratesMatrix, AQLDataMultiReference& indexs) const;
 };
 #endif

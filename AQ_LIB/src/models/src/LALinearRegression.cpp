@@ -14,7 +14,7 @@
 
 
 #include "LALinearRegression.h"
-#include "LAMatrix.h"
+#include "AQLMatrix.h"
 
 using namespace std;
 
@@ -56,7 +56,7 @@ LALinearRegression::~LALinearRegression()
 /*void
 LALinearRegression::executeRegression()
 {
-	LAMatrix x;
+	AQLMatrix x;
 	if (mIsZeroInterception)
 	{
 		x.resize(mX.size(), mX[0].size());
@@ -75,11 +75,11 @@ LALinearRegression::executeRegression()
 		}
 	}
 
-	LAMatrix y(mY);
+	AQLMatrix y(mY);
 
-//	const LAMatrix& beta = (x.transpose() * x).inverseMatrix() * x.transpose() * y;
-	LAMatrix u, w, v;
-	const LAMatrix& tmp = (x.transpose() * x);
+//	const AQLMatrix& beta = (x.transpose() * x).inverseMatrix() * x.transpose() * y;
+	AQLMatrix u, w, v;
+	const AQLMatrix& tmp = (x.transpose() * x);
 	tmp.svDecomp(u, w, v);
 	const double TOL = 1.0E-13;
 	double wmax = 0.0;
@@ -91,7 +91,7 @@ LALinearRegression::executeRegression()
 		if (w[i][i] < thresh) w.setValue(i, i, 0.0);
 		else w.setValue(i, i, 1.0/w[i][i]);
 	}
-	const LAMatrix& beta = v * w * u.transpose() * (x.transpose() * y);
+	const AQLMatrix& beta = v * w * u.transpose() * (x.transpose() * y);
 
 	mCoefficient.resize(beta.row());
 	for (unsigned int i = 0; i < mCoefficient.size(); i++)
@@ -125,7 +125,7 @@ LALinearRegression::executeRegression()
 		sum1 /= static_cast<double>(size_y);
 		sum2 /= static_cast<double>(size_y);
 		sum2 -= sum1 * sum1;
-		sum2 = LAMath::sqrt(sum2);
+		sum2 = AQLMath::sqrt(sum2);
 		ubound_y = sum1 + sum2 * mCriteria_Y;
 		lbound_y = sum1 - sum2 * mCriteria_Y;
 		for (unsigned int i = 0; i < size_y; i++)
@@ -154,7 +154,7 @@ LALinearRegression::executeRegression()
 			sum1 /= static_cast<double>(size_x);
 			sum2 /= static_cast<double>(size_x);
 			sum2 -= sum1 * sum1;
-			sum2 = LAMath::sqrt(sum2);
+			sum2 = AQLMath::sqrt(sum2);
 			ubound_x[j] = sum1 + sum2 * mCriteria_X;
 			lbound_x[j] = sum1 - sum2 * mCriteria_X;
 		}
@@ -172,7 +172,7 @@ LALinearRegression::executeRegression()
 		}
 	}	
 		
-	LAMatrix x, y;
+	AQLMatrix x, y;
 	if (mIsExcludeOutlier_e)
 	{
 		y.resize(mY.size(), 1);
@@ -198,10 +198,10 @@ LALinearRegression::executeRegression()
 			}
 		}
 
-		LAMatrix y(mY);
+		AQLMatrix y(mY);
 
-		LAMatrix u, w, v;
-		const LAMatrix& tmp = (x.transpose() * x);
+		AQLMatrix u, w, v;
+		const AQLMatrix& tmp = (x.transpose() * x);
 		tmp.svDecomp(u, w, v);
 		const double TOL = 1.0E-13;
 		double wmax = 0.0;
@@ -213,9 +213,9 @@ LALinearRegression::executeRegression()
 			if (w[i][i] < thresh) w.setValue(i, i, 0.0);
 			else w.setValue(i, i, 1.0/w[i][i]);
 		}
-		const LAMatrix& beta = v * w * u.transpose() * (x.transpose() * y);		
+		const AQLMatrix& beta = v * w * u.transpose() * (x.transpose() * y);		
 
-		const LAMatrix& residual = y - x * beta;
+		const AQLMatrix& residual = y - x * beta;
 		double sum1 = 0.0, sum2 = 0.0;
 		for (unsigned int i = 0; i < residual.row(); i++)
 		{
@@ -225,7 +225,7 @@ LALinearRegression::executeRegression()
 		sum1 /= static_cast<double>(residual.row());
 		sum2 /= static_cast<double>(residual.row());
 		sum2 -= sum1 * sum1;
-		sum2 = LAMath::sqrt(sum2);
+		sum2 = AQLMath::sqrt(sum2);
 		double ubound = sum1 + sum2 * mCriteria_e;
 		double lbound = sum1 - sum2 * mCriteria_e;
 		unsigned int count = 0;
@@ -273,9 +273,9 @@ LALinearRegression::executeRegression()
 		}
 	}
 
-//	const LAMatrix& beta = (x.transpose() * x).inverseMatrix() * x.transpose() * y;
-	LAMatrix u, w, v;
-	const LAMatrix& tmp = (x.transpose() * x);
+//	const AQLMatrix& beta = (x.transpose() * x).inverseMatrix() * x.transpose() * y;
+	AQLMatrix u, w, v;
+	const AQLMatrix& tmp = (x.transpose() * x);
 	tmp.svDecomp(u, w, v);
 	const double TOL = mSVDTolerance;
 	double wmax = 0.0;
@@ -287,7 +287,7 @@ LALinearRegression::executeRegression()
 		if (w[i][i] < thresh) w.setValue(i, i, 0.0);
 		else w.setValue(i, i, 1.0/w[i][i]);
 	}
-	const LAMatrix& beta = v * w * u.transpose() * (x.transpose() * y);
+	const AQLMatrix& beta = v * w * u.transpose() * (x.transpose() * y);
 
 	mCoefficient.resize(beta.row());
 	for (unsigned int i = 0; i < mCoefficient.size(); i++)

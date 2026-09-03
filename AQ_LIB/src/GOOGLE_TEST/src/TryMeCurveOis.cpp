@@ -4,7 +4,7 @@
 
 namespace google_test
 {
-    TryMeCurveOis::TryMeCurveOis( const LAString& inputFile )
+    TryMeCurveOis::TryMeCurveOis( const AQLString& inputFile )
         : TryMeCurveAccessors( inputFile )
     {
         if ( fileLoaded_ )
@@ -23,7 +23,7 @@ namespace google_test
                                                         inputFile_.getOptional( "swapConv" ),
                                                         inputFile_.getOptional( "swapRates" ) );
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }
@@ -38,7 +38,7 @@ namespace google_test
 	*  @brief			Set up OIS curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeOISCurve(const LAString& inputFile)
+	void setUpMeOISCurve(const AQLString& inputFile)
 	{
 		if ( inputFile.size() != 0 )
         {
@@ -58,7 +58,7 @@ namespace google_test
                                                         inputFileObj.getOptional( "swapConv" ),
                                                         inputFileObj.getOptional( "swapRates" ) );
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }

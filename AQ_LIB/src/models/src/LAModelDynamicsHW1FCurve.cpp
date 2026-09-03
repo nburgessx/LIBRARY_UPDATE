@@ -13,7 +13,7 @@
 
 
 #include "LAModelDynamicsHW1FCurve.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include <cmath>
 
 using namespace std;
@@ -43,7 +43,7 @@ mInitialF(0)
 {
     if ( a < 0 || s < 0 )
     {
-		throw LACoreInvalidData("Wrong a or s : YieldCurve_HW1F::YieldCurve_HW1F", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Wrong a or s : YieldCurve_HW1F::YieldCurve_HW1F", __FILE__, __LINE__);
     }
 
 	E_cache = new map<double, double>;
@@ -129,7 +129,7 @@ LARatesPathElementHW1FCurve::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -380,7 +380,7 @@ LARatesPathElementHW1FCurveTMDPT::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 

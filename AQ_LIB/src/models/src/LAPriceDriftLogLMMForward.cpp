@@ -50,7 +50,7 @@ LAPriceDriftLogLMMForward::LAPriceDriftLogLMMForward(unsigned int point, double 
 	@param[in] point forward measure point(DiscountBond who's maturity is  mPoint-th forward libor cf time(mTenor[mPoint + 1]) is numerarire)  
 	@param[in] Q val for displaced diffusion case
 */
-LAPriceDriftLogLMMForward::LAPriceDriftLogLMMForward(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, unsigned int point, double Q)
+LAPriceDriftLogLMMForward::LAPriceDriftLogLMMForward(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, unsigned int point, double Q)
 : LAPriceDriftLMMForward(sdeAttrName, i, tenor, delta_tenor, point, Q)
 {
 
@@ -68,7 +68,7 @@ LAPriceDriftLogLMMForward::~LAPriceDriftLogLMMForward()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftLogLMMForward::clone() const	
 {
     try 
@@ -77,7 +77,7 @@ LAPriceDriftLogLMMForward::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!

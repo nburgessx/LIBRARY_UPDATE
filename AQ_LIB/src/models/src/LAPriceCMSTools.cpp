@@ -6,29 +6,29 @@
 
 #include "LAPriceCMSTools.h"
 #include "LAMathDateUtilities.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathCurveFuncUtility.h"
 #include "LAMathInterpolationUtilities.h"
 #include "LAMathSwaptionVolUtility.h"
 
 #include "LAMathCurveFuncUtility.h"
-#include "LAMathDefine.h"
-#include "LADataBasics.h"
-#include "LADataReference.h"
-#include "LACoreComponentManager.h"
+#include "AQLMathDefine.h"
+#include "AQLDataBasics.h"
+#include "AQLDataReference.h"
+#include "AQLCoreComponentManager.h"
 
-MVCurveWrap::MVCurveWrap(LADataInstance* dataInstance, const LAString& curveID, const LAString& curveName)
+MVCurveWrap::MVCurveWrap(AQLDataInstance* dataInstance, const AQLString& curveID, const AQLString& curveName)
 {
-    LAString interpolation = LAString("SPLINE");
-    LAString calendar = LAString("TKB:LNB");
-    LAString slidingRule = LAString("NO_CHANGE");
-    LAString daycount = LAString("ACT/365_ISDA");
+    AQLString interpolation = AQLString("SPLINE");
+    AQLString calendar = AQLString("TKB:LNB");
+    AQLString slidingRule = AQLString("NO_CHANGE");
+    AQLString daycount = AQLString("ACT/365_ISDA");
 
     mpCoreCurve = &LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance, curveID);
-    mBaseDate = dynamic_cast<const LADataDate&> ((mpCoreCurve->getYieldData().get().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+    mBaseDate = dynamic_cast<const AQLDataDate&> ((mpCoreCurve->getYieldData().get().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
 
-    LAString inter =  LACoreComponentManager::getInterpolation(interpolation);
-    LAString dc = LACoreComponentManager::getDayCount(daycount);
+    AQLString inter =  AQLCoreComponentManager::getInterpolation(interpolation);
+    AQLString dc = AQLCoreComponentManager::getDayCount(daycount);
     mpCoreCurve->setInterpolation(inter);
     mpCoreCurve->getDayCount().setDayCount(dc);
     mpCoreCurve->getSlidingRule().convertFromString(slidingRule);
@@ -36,13 +36,13 @@ MVCurveWrap::MVCurveWrap(LADataInstance* dataInstance, const LAString& curveID, 
     mCurveName = curveName;
 }
 
-double MVCurveWrap::P(LADate date)
+double MVCurveWrap::P(AQLDate date)
 {
     mpCoreCurve->setCurveType(mCurveName);
     return mpCoreCurve->getDF(mBaseDate, date);
 }
 
-DoubleVector LAPriceCMSObject::InterpolateParameterMatrix(LADataInstance* dataInstance, LADate expDate, const LAString& tenor, const LAStringVector& paramIDs)
+DoubleVector LAPriceCMSObject::InterpolateParameterMatrix(AQLDataInstance* dataInstance, AQLDate expDate, const AQLString& tenor, const AQLStringVector& paramIDs)
 {
     size_t nParameters = paramIDs.size();
     DoubleVector p(nParameters);
@@ -53,29 +53,29 @@ DoubleVector LAPriceCMSObject::InterpolateParameterMatrix(LADataInstance* dataIn
 }
 
 //================ Curve-based calculations ===================================
-double LAPriceCMSObject::DiscountFactor(CurveInfo curveInfo, LADate valDate, LADate expiry)
+double LAPriceCMSObject::DiscountFactor(CurveInfo curveInfo, AQLDate valDate, AQLDate expiry)
 {
     DateVector fromDateVec(1); fromDateVec[0] = valDate;
     DateVector toDateVec(1); toDateVec[0] = expiry;
-    LAString interpolation = LAString("SPLINE");
-    LAString calendar = LAString("TKB:LNB");
-    LAString slidingRule = LAString("NO_CHANGE");
-    LAString daycount = LAString("ACT/365_ISDA");
+    AQLString interpolation = AQLString("SPLINE");
+    AQLString calendar = AQLString("TKB:LNB");
+    AQLString slidingRule = AQLString("NO_CHANGE");
+    AQLString daycount = AQLString("ACT/365_ISDA");
     DoubleArray a = LAMathCurveFuncUtility::getMultiDF(fromDateVec, toDateVec, curveInfo.dataInstance, curveInfo.curveID,
                                                      daycount, slidingRule, calendar, interpolation,
                                                      curveInfo.isBasis, curveInfo.curveName);
     return a[0];
 }
 
-double LAPriceCMSObject::ForwardLibor(CurveInfo curveInfo, LADate startDate, LADate endDate, LAStringMatrix liborScheduler)
+double LAPriceCMSObject::ForwardLibor(CurveInfo curveInfo, AQLDate startDate, AQLDate endDate, AQLStringMatrix liborScheduler)
 {
     DateVector fromDateVec(1); fromDateVec[0] = startDate;
     DateVector toDateVec(1); toDateVec[0] = endDate;
-    LAString frequency = LAString("Simple");
-    LAString daycount = LAFunctionUtilities::findElement(liborScheduler, "Daycount");
-    LAString slidingRule = LAFunctionUtilities::findElement(liborScheduler, "SlidingRule");
-    LAString calendar = LAFunctionUtilities::findElement(liborScheduler, "IndexCalendar");
-    LAString interpolation = LAString("SPLINE");
+    AQLString frequency = AQLString("Simple");
+    AQLString daycount = AQLFunctionUtilities::findElement(liborScheduler, "Daycount");
+    AQLString slidingRule = AQLFunctionUtilities::findElement(liborScheduler, "SlidingRule");
+    AQLString calendar = AQLFunctionUtilities::findElement(liborScheduler, "IndexCalendar");
+    AQLString interpolation = AQLString("SPLINE");
     bool useFwdData = false;
     DoubleArray a = LAMathCurveFuncUtility::getMultiForwardRate(fromDateVec, toDateVec, curveInfo.dataInstance, curveInfo.curveID,
                                                               frequency, daycount, slidingRule, calendar, interpolation,
@@ -84,8 +84,8 @@ double LAPriceCMSObject::ForwardLibor(CurveInfo curveInfo, LADate startDate, LAD
     return a[0];
 }
 
-void LAPriceCMSObject::CalculateFundingLeg(LADate valDate, const vector<CashFlowTiming>& schedule, CurveInfo discCurveInfo,
-                         CurveInfo fwdCurveInfo, LAStringMatrix indexScheduler, double& pv, double& annuity)
+void LAPriceCMSObject::CalculateFundingLeg(AQLDate valDate, const vector<CashFlowTiming>& schedule, CurveInfo discCurveInfo,
+                         CurveInfo fwdCurveInfo, AQLStringMatrix indexScheduler, double& pv, double& annuity)
 {
     size_t nFlows = schedule.size();
     pv = 0.0, annuity = 0.0;
@@ -100,7 +100,7 @@ void LAPriceCMSObject::CalculateFundingLeg(LADate valDate, const vector<CashFlow
 }
 
 //================ Conversions ===================================
-double LAPriceCMSObject::TermToTau(LAString term)
+double LAPriceCMSObject::TermToTau(AQLString term)
 {
     if (term == "12M")
         return 1.0;
@@ -109,14 +109,14 @@ double LAPriceCMSObject::TermToTau(LAString term)
     else if (term == "3M")
         return 0.25;
     else
-        throw LACoreInvalidData("Unknown term in conversion to Tau", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Unknown term in conversion to Tau", __FILE__, __LINE__);
 }
 
-void LAPriceCMSObject::ParseTenors(const LAString& pairID, LAString& tenor1, LAString& tenor2)
+void LAPriceCMSObject::ParseTenors(const AQLString& pairID, AQLString& tenor1, AQLString& tenor2)
 {
     int slashIdx = pairID.findString("/");
     if (slashIdx < 1)
-        throw LACoreInvalidData(LAString("Invalid spread pair: " + pairID).getCString(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(AQLString("Invalid spread pair: " + pairID).getCString(), __FILE__, __LINE__);
     else
     {
         tenor1 = pairID.subString(0, slashIdx - 1) + "Y";
@@ -124,35 +124,35 @@ void LAPriceCMSObject::ParseTenors(const LAString& pairID, LAString& tenor1, LAS
     }
 }
 
-LAString LAPriceCMSObject::MatrixID(const LAString& id, const LAString& currency)
+AQLString LAPriceCMSObject::MatrixID(const AQLString& id, const AQLString& currency)
 {
-    LAString suffix = LAString(currency.subString(0, 0) + "col");
-    return LAString(currency + id + suffix);
+    AQLString suffix = AQLString(currency.subString(0, 0) + "col");
+    return AQLString(currency + id + suffix);
 }
 
-LAString LAPriceCMSObject::CurveID(const LAString& ccy, const LAString& colCcy)
+AQLString LAPriceCMSObject::CurveID(const AQLString& ccy, const AQLString& colCcy)
 {
-    return LAString(ccy + "_ConsFwdFXCurve_" + colCcy.subString(0, 0) + "col");
+    return AQLString(ccy + "_ConsFwdFXCurve_" + colCcy.subString(0, 0) + "col");
 }
 
-CurveInfo LAPriceCMSObject::DiscountCurveInfo(LADataInstance* dataInstance, const LAString& ccy, const LAString& colCcy)
+CurveInfo LAPriceCMSObject::DiscountCurveInfo(AQLDataInstance* dataInstance, const AQLString& ccy, const AQLString& colCcy)
 {
-    LAString curveID = CurveID(ccy, colCcy);
-    LAString curveName;
+    AQLString curveID = CurveID(ccy, colCcy);
+    AQLString curveName;
     if (ccy == "JPY" || ccy == "USD" || ccy == "AUD" || ccy == "EUR" || ccy == "GBP")
-        curveName = LAString(ccy + "DISCOUNT");
+        curveName = AQLString(ccy + "DISCOUNT");
     else
-        curveName = LAString(ccy + "OIS");
+        curveName = AQLString(ccy + "OIS");
 
     bool isBasis = false;
     bool isFwdInterpolated = false;
     return CurveInfo{ dataInstance, curveID, curveName, isBasis, isFwdInterpolated };
 }
 
-CurveInfo LAPriceCMSObject::ForecastCurveInfo(LADataInstance* dataInstance, const LAString& ccy, const LAString& colCcy, const LAString& term)
+CurveInfo LAPriceCMSObject::ForecastCurveInfo(AQLDataInstance* dataInstance, const AQLString& ccy, const AQLString& colCcy, const AQLString& term)
 {
-    LAString curveID = CurveID(ccy, colCcy);
-    LAString fundLiborCurveName = LAString(ccy + term + "LFORECAST");
+    AQLString curveID = CurveID(ccy, colCcy);
+    AQLString fundLiborCurveName = AQLString(ccy + term + "LFORECAST");
     bool isBasis = false;
     bool isFwdInterpolated = (ccy == "AUD" || ccy == "CAD" || ccy == "EUR" || ccy == "GBP" || ccy == "HKD" ||
                               ccy == "JPY" || ccy == "MXN" || ccy == "NZD" || ccy == "RUB" || ccy == "SGD" ||

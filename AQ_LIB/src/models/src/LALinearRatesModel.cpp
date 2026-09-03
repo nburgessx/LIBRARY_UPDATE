@@ -18,17 +18,17 @@
 #endif
 
 
-#include "LADataBasics.h"
-#include "LAObject.h"
+#include "AQLDataBasics.h"
+#include "AQLObject.h"
 #include "LALinearRatesModel.h"
 #include "LALinearRatesOptionValueDataProvider.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LAMathDefine.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLMathDefine.h"
 #include "LALinearRatesOptionValue.h"
-#include "LADataReference.h"
+#include "AQLDataReference.h"
 #include "LAMathVolFuncFXVannaVolga.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAMathFXVanillaFuncUtility.h"
 
 using namespace std;
@@ -55,7 +55,7 @@ LAPriceBSValueModel::~LAPriceBSValueModel(void)
 {}
 // ! calcvalue
 double 
-LAPriceBSValueModel::calcValue(const LADataValuation& att, LADataProvider* dp, LAObject& object, LAString productname)
+LAPriceBSValueModel::calcValue(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& object, AQLString productname)
 {
 	const LALinearRatesOptionValue& bsval = dynamic_cast<const LALinearRatesOptionValue &>(att.getMethod());
 	double ret = bsval.calcOption(att,dp,object);
@@ -75,7 +75,7 @@ LAPriceVVValueModel::~LAPriceVVValueModel(void)
 {}
 // ! calcvalue
 double 
-LAPriceVVValueModel::calcValue(const LADataValuation& att, LADataProvider* dp, LAObject& object, LAString productname)
+LAPriceVVValueModel::calcValue(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& object, AQLString productname)
 {
 	double ret = 0.0;
 
@@ -177,10 +177,10 @@ LAPriceVVValueModel::calcValue(const LADataValuation& att, LADataProvider* dp, L
 	double valvolga = ( valvolgaVp + valvolgaVm - 2.0 * orgval) / voltiny / voltiny;
 
 	//////test volga
-	//LAString vannacall = LAString(GK) + LAString(VANNA) + LAString(CALL);
-	//LAString volgacall = LAString(GK) + LAString(VOLGA) + LAString(CALL);
-	//std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	//std::map<LAString, LABlackScholesBase*>::iterator itcalc = var.begin();
+	//AQLString vannacall = AQLString(GK) + AQLString(VANNA) + AQLString(CALL);
+	//AQLString volgacall = AQLString(GK) + AQLString(VOLGA) + AQLString(CALL);
+	//std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	//std::map<AQLString, LABlackScholesBase*>::iterator itcalc = var.begin();
 	//LABlackScholesBase* panalytic;
 	//panalytic = var.find(vannacall)->second;
 	//double testvanna =  panalytic->calc(*gkOrg[0]);
@@ -211,28 +211,28 @@ LAPriceVVValueModel::calcValue(const LADataValuation& att, LADataProvider* dp, L
 	double ntprob = 1.0;
 	if (productname.findString("fn_fxsinglebarrieroptionvalue") != -1)
 	{
-		LAString valname;
+		AQLString valname;
 
-		LADataHolder* dh = &(object.getData(PRICING_DATA_UPANDDOWN, ISNOTNULL));
-		LAString updown = dynamic_cast<LADataString &>(dh->get()).get();
+		AQLDataHolder* dh = &(object.getData(PRICING_DATA_UPANDDOWN, ISNOTNULL));
+		AQLString updown = dynamic_cast<AQLDataString &>(dh->get()).get();
 		updown.toUpper();
 		
 		if (updown == "DOWN")
 		{
-			valname = LAString(SB) + LAString(PROB)	+ LAString(SBDOWN) + LAString(NOTOUCH);
+			valname = AQLString(SB) + AQLString(PROB)	+ AQLString(SBDOWN) + AQLString(NOTOUCH);
 		}
 		else if (updown == "UP")
 		{
-			valname = LAString(SB) + LAString(PROB)	+ LAString(SBUP) + LAString(NOTOUCH);
+			valname = AQLString(SB) + AQLString(PROB)	+ AQLString(SBUP) + AQLString(NOTOUCH);
 		}
 		
-		std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-		std::map<LAString, LABlackScholesBase*>::iterator itcalc = var.begin();
+		std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+		std::map<AQLString, LABlackScholesBase*>::iterator itcalc = var.begin();
 		itcalc = var.find(valname);
 		ntprob = itcalc->second->calc(*dataProvider->mParam[0][0]);
 
 		object.remove("ImplyVolFromVannaVolga");
-		object.add("ImplyVolFromVannaVolga", new LADataDouble(ntprob));
+		object.add("ImplyVolFromVannaVolga", new AQLDataDouble(ntprob));
 	}
 	ret = orgval + ntprob * valvanna * omegavec[1] + ntprob * valvolga * omegavec[2];
 	//double testret = orgval + ntprob * testvanna * omegavec[1] + ntprob * testvolga * omegavec[2];
@@ -241,8 +241,8 @@ LAPriceVVValueModel::calcValue(const LADataValuation& att, LADataProvider* dp, L
 
 	if (productname.findString("fn_fxoptionvalue") != -1)
 	{
-		LAString tmpType = PREM; LAString tmpBuySell = BUY;
-		LAString optiontype = dynamic_cast<LADataString &>(object.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL).get()).get();
+		AQLString tmpType = PREM; AQLString tmpBuySell = BUY;
+		AQLString optiontype = dynamic_cast<AQLDataString &>(object.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL).get()).get();
 		optiontype.toUpper();
 		const double high= /*0.5*/3.0; const double low = 0.00000001;
 		double highprem = LAMathFXVanillaFuncUtility::gkOption
@@ -264,7 +264,7 @@ LAPriceVVValueModel::calcValue(const LADataValuation& att, LADataProvider* dp, L
 		{
 			try
 			{
-				LAString buysell = (dataProvider->buysell) ? "BUY" : "SELL";
+				AQLString buysell = (dataProvider->buysell) ? "BUY" : "SELL";
 				/*double implyvol = LAMathIRVanillaFuncUtility::bkOptionIV(buysell,
 										optiontype,gkOrg[0]->S,gkOrg[0]->K,ret,
 										gkOrg[0]->rd,dataProvider->mAsofDate,dataProvider->mAsofDate,
@@ -274,16 +274,16 @@ LAPriceVVValueModel::calcValue(const LADataValuation& att, LADataProvider* dp, L
 											gkOrg[0]->rd,gkOrg[0]->rf,dataProvider->mAsofDate,dataProvider->mAsofDate,
 											dataProvider->mMaturityDate,dataProvider->mDeliveryDate,high,low);
 			}
-			catch(LACoreNumericalError e)
+			catch(AQLCoreNumericalError e)
 			{
-				LAString msg = e.getMsg();
+				AQLString msg = e.getMsg();
 				if (msg.findString("Not Convergence from rtsafe") == -1) throw e;
 				implyvol = 0.0; // if it cannot solve implied vol, set zero.
 			}
 		}
 		//test put callparity
-		//double discount = LAMath::exp(-gkOrg[0]->rd * gkOrg[0]->Td);
-		//double discountfrn = LAMath::exp(-gkOrg[0]->rf * gkOrg[0]->Td);
+		//double discount = AQLMath::exp(-gkOrg[0]->rd * gkOrg[0]->Td);
+		//double discountfrn = AQLMath::exp(-gkOrg[0]->rf * gkOrg[0]->Td);
 
 		/*double testimplyvol = LAMathFXVanillaFuncUtility::gkOptionIV
 										(buysell,optiontype,gkOrg[0]->S,gkOrg[0]->K,testret,
@@ -292,12 +292,12 @@ LAPriceVVValueModel::calcValue(const LADataValuation& att, LADataProvider* dp, L
 
 
 		object.remove("ImplyVolFromVannaVolga");
-		object.add("ImplyVolFromVannaVolga", new LADataDouble(implyvol));
-		//object.add("ImplyVolFromVannaVolga", new LADataDouble(discount));
-		//object.add("ImplyVolFromVannaVolga", new LADataDouble(discountfrn));
+		object.add("ImplyVolFromVannaVolga", new AQLDataDouble(implyvol));
+		//object.add("ImplyVolFromVannaVolga", new AQLDataDouble(discount));
+		//object.add("ImplyVolFromVannaVolga", new AQLDataDouble(discountfrn));
 	}
 
-	//object.add("ImplyVolFromVannaVolga", new LADataDouble(testimplyvol));
+	//object.add("ImplyVolFromVannaVolga", new AQLDataDouble(testimplyvol));
 
 	return ret;
 }

@@ -1,7 +1,7 @@
 #include "InitializeAQETrading.h"
 #include "mirCompound.h"
 #include "TypeUtilities.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "tryMirCompound.h"
 
 
@@ -49,17 +49,17 @@ std::vector<double> mirCompound3(const std::vector<std::string>& startDates,
 		DateVector endDateVec;
 		swig::buildDateVector(endDateVec, endDates);
 
-		LAString cId(curveId.c_str());
-		LAString forCurve(forecastCurve.c_str());
-		LAString freq(frequency.c_str());
-		LAString rollCon(rollConvention.c_str());
-		LAString cal(calendar.c_str());
-		LAString sRule(slidingRule.c_str());
-		LAString dayC(dayCount.c_str());
-		LAString interp(interpolation.c_str());
-		LAString cType(compoundType.c_str());
-		LAString firstOddDt(firstOddDate.c_str());
-		LAString lastOddDt(lastOddDate.c_str());
+		AQLString cId(curveId.c_str());
+		AQLString forCurve(forecastCurve.c_str());
+		AQLString freq(frequency.c_str());
+		AQLString rollCon(rollConvention.c_str());
+		AQLString cal(calendar.c_str());
+		AQLString sRule(slidingRule.c_str());
+		AQLString dayC(dayCount.c_str());
+		AQLString interp(interpolation.c_str());
+		AQLString cType(compoundType.c_str());
+		AQLString firstOddDt(firstOddDate.c_str());
+		AQLString lastOddDt(lastOddDate.c_str());
 
 		ret = validation::tryMirCompound3(etrading::InitializeAQETrading::instance().dataInstance(),
 								startDateVec,
@@ -79,7 +79,7 @@ std::vector<double> mirCompound3(const std::vector<std::string>& startDates,
 								lastOddDt);
 		
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -129,19 +129,19 @@ double mirCompound3(const std::string& startDate,
 	try 
 	{
 		// Input marshalling
-		LADate startDt(startDate.c_str(),"YYYYMMDD");
-		LADate endDt(startDate.c_str(),"YYYYMMDD");
-		LAString cId(curveId.c_str());
-		LAString forCurve(forecastCurve.c_str());
-		LAString freq(frequency.c_str());
-		LAString rollCon(rollConvention.c_str());
-		LAString cal(calendar.c_str());
-		LAString sRule(slidingRule.c_str());
-		LAString dayC(dayCount.c_str());
-		LAString interp(interpolation.c_str());
-		LAString cType(compoundType.c_str());
-		LAString firstOddDt(firstOddDate.c_str());
-		LAString lastOddDt(lastOddDate.c_str());
+		AQLDate startDt(startDate.c_str(),"YYYYMMDD");
+		AQLDate endDt(startDate.c_str(),"YYYYMMDD");
+		AQLString cId(curveId.c_str());
+		AQLString forCurve(forecastCurve.c_str());
+		AQLString freq(frequency.c_str());
+		AQLString rollCon(rollConvention.c_str());
+		AQLString cal(calendar.c_str());
+		AQLString sRule(slidingRule.c_str());
+		AQLString dayC(dayCount.c_str());
+		AQLString interp(interpolation.c_str());
+		AQLString cType(compoundType.c_str());
+		AQLString firstOddDt(firstOddDate.c_str());
+		AQLString lastOddDt(lastOddDate.c_str());
 
 		ret = validation::tryMirCompound3(etrading::InitializeAQETrading::instance().dataInstance(),
 								startDt,
@@ -161,7 +161,7 @@ double mirCompound3(const std::string& startDate,
 								lastOddDt);
 		
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

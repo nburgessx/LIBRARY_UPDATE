@@ -2,7 +2,7 @@
 
 #include "InitializeAQGoogleTest.h"
 #include "CurveAccessors.h"
-#include "LAString.h"
+#include "AQLString.h"
 
 namespace google_test
 {
@@ -12,13 +12,13 @@ namespace google_test
         , public CurveAccessors
     {
     public:
-        CurveXccyBasis( const LAString& inputOis1 );
+        CurveXccyBasis( const AQLString& inputOis1 );
     };
 
 	/* 
 	*  @brief			Set up xccy basis curve
 	*  @param [in]		inputFile	File representation of the curve
     */
-	void setUpXccyBasisCurve(const LAString& inputFile);
+	void setUpXccyBasisCurve(const AQLString& inputFile);
 }
 

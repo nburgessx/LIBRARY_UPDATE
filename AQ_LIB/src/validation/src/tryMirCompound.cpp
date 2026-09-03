@@ -6,7 +6,7 @@
 #include "ScheduleValidation.h"
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLPriceDataCalendar.h"
 #include "StructuredExceptionHandler.h"
 
 
@@ -36,22 +36,22 @@ namespace validation
     *  @param [in]		lastOddDate		Start date of the end stub period
     *  @return			interest rates calculated based on the startDates, endDates, and compound type
     */
-    DoubleVector tryMirCompound3( LADataInstance* dataInstance,
+    DoubleVector tryMirCompound3( AQLDataInstance* dataInstance,
                                   const DateVector& startDates,
                                   const DateVector& endDates,
-                                  const LAString& curveId,
-                                  const LAString& forecastCurve,
-                                  const LAString& frequency,
+                                  const AQLString& curveId,
+                                  const AQLString& forecastCurve,
+                                  const AQLString& frequency,
                                   double spread,
                                   bool isStartRoll,
-                                  const LAString& rollConvention,
-                                  const LAString& calendar,
-                                  const LAString& slidingRule,
-                                  const LAString& dayCount,
-                                  const LAString& interpolation,
-                                  const LAString& compoundType,
-                                  const LAString& firstOddDate,
-                                  const LAString& lastOddDate )
+                                  const AQLString& rollConvention,
+                                  const AQLString& calendar,
+                                  const AQLString& slidingRule,
+                                  const AQLString& dayCount,
+                                  const AQLString& interpolation,
+                                  const AQLString& compoundType,
+                                  const AQLString& firstOddDate,
+                                  const AQLString& lastOddDate )
 
     {
         VALID_EXCEPTION_START
@@ -80,31 +80,31 @@ namespace validation
 
         if( startDates.size() != endDates.size() )
         {
-            throw LACoreInvalidData( "#Error: The input startDates and endDates must be of the same size.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The input startDates and endDates must be of the same size.", __FILE__, __LINE__ );
         }
 
-        LADate* firstOddDt  = NULL;
+        AQLDate* firstOddDt  = NULL;
         if ( firstOddDate.size() != 0 )
         {
             firstOddDt = &etrading::stringToDate( firstOddDate, "#Error: Invalid 'firstOddDate'." );
         }
-        LADate* lastOddDt  = NULL;
+        AQLDate* lastOddDt  = NULL;
         if ( lastOddDate.size() != 0 )
         {
             lastOddDt = &etrading::stringToDate( lastOddDate, "#Error: Invalid 'lastOddDate'." );
         }
 
-        LAString cal( calendar );
-        if( calendar == LAString( "" ) )
+        AQLString cal( calendar );
+        if( calendar == AQLString( "" ) )
         {
             cal = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( dataInstance, curveId ).getCalendar().convertToString();
         }
 
-        LAString rollCon( etrading::getDefaultValueForEmptyString( rollConvention, LAString( "ENDDATE" ) ) );
-        LAString sRule( etrading::getDefaultValueForEmptyString( slidingRule, LAString( "MOD_FOLLOWING" ) ) );
-        LAString dayC( etrading::getDefaultValueForEmptyString( dayCount, LAString( "ACT/360" ) ) );
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, LAString( "SPLINE" ) ) );
-        LAString cType( etrading::getDefaultValueForEmptyString( compoundType, LAString( "FLAT" ) ) );
+        AQLString rollCon( etrading::getDefaultValueForEmptyString( rollConvention, AQLString( "ENDDATE" ) ) );
+        AQLString sRule( etrading::getDefaultValueForEmptyString( slidingRule, AQLString( "MOD_FOLLOWING" ) ) );
+        AQLString dayC( etrading::getDefaultValueForEmptyString( dayCount, AQLString( "ACT/360" ) ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
+        AQLString cType( etrading::getDefaultValueForEmptyString( compoundType, AQLString( "FLAT" ) ) );
 
         DoubleVector ret;
         for( size_t i = 0; i < startDates.size(); i++ )
@@ -160,22 +160,22 @@ namespace validation
     *  @param [in]		lastOddDate		Start date of the end stub period
     *  @return			compounding rate calculated based on the startDate, endDate, and compound type
     */
-    double tryMirCompound3( LADataInstance* dataInstance,
-                            const LADate& startDate,
-                            const LADate& endDate,
-                            const LAString& curveId,
-                            const LAString& forecastCurve,
-                            const LAString& frequency,
+    double tryMirCompound3( AQLDataInstance* dataInstance,
+                            const AQLDate& startDate,
+                            const AQLDate& endDate,
+                            const AQLString& curveId,
+                            const AQLString& forecastCurve,
+                            const AQLString& frequency,
                             double spread,
                             bool isStartRoll,
-                            const LAString& rollConvention,
-                            const LAString& calendar,
-                            const LAString& slidingRule,
-                            const LAString& dayCount,
-                            const LAString& interpolation,
-                            const LAString& compoundType,
-                            const LAString& firstOddDate,
-                            const LAString& lastOddDate )
+                            const AQLString& rollConvention,
+                            const AQLString& calendar,
+                            const AQLString& slidingRule,
+                            const AQLString& dayCount,
+                            const AQLString& interpolation,
+                            const AQLString& compoundType,
+                            const AQLString& firstOddDate,
+                            const AQLString& lastOddDate )
     {
         VALID_EXCEPTION_START
 

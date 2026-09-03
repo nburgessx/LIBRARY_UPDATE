@@ -10,7 +10,7 @@
 #include "StepInterpolation.h"
 #include "InterpolationParameters.h"
 #include "ETradingException.h"
-#include "LACoreUtil.h"
+#include "AQLCoreUtil.h"
 // include these if getting the lambda from a property file
 //#include "LAStaticData.h"
 //#include "LACoreDataService.h"
@@ -58,7 +58,7 @@ namespace etrading
             if( boost::math::isnan( lambda ) )
             {
                 //const LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
-                //const LAString strLambda = staticData.getStaticData(KEY_MONOTONECONVEX_LAMBDA);
+                //const AQLString strLambda = staticData.getStaticData(KEY_MONOTONECONVEX_LAMBDA);
                 //lambda = (strLambda == "NO_DATA") ? 0.0 : boost::lexical_cast<double>(std::string(strLambda.getCString()));
                 lambda = 0.0;
             }

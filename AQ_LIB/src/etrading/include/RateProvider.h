@@ -19,7 +19,7 @@ namespace etrading
 		virtual const DoubleVector discountFactors(const std::shared_ptr<ScheduleParameters>& schParams, const DateVector& paymentDates) const;
 		virtual const DoubleVector liborRates(const std::shared_ptr<ScheduleParameters>& schParams, const std::shared_ptr<EnrichedSchedule>& schOutput) const;
 
-		virtual const LADate asOfDate() const;
+		virtual const AQLDate asOfDate() const;
 
 	private:
 
@@ -28,7 +28,7 @@ namespace etrading
 
 		const DoubleVector calculateOisFloatRates(size_t firstNonpastFixingDateIndex, const std::string& interpolation, const std::shared_ptr<ScheduleParameters>& schParams, const std::shared_ptr<EnrichedSchedule>& schOutput) const;
 
-		const double calculateStubRate(const std::string& stubCurveIndex, const LAStringVector& curveIndices, const LAStringVector& curveTenors, const std::string& indexFrequency, const std::string& interpolation,
+		const double calculateStubRate(const std::string& stubCurveIndex, const AQLStringVector& curveIndices, const AQLStringVector& curveTenors, const std::string& indexFrequency, const std::string& interpolation,
 								 const std::shared_ptr<ScheduleParameters>& schParams, const std::shared_ptr<EnrichedSchedule>& schOutput) const;
 
 	};

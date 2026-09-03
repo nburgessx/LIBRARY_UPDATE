@@ -9,7 +9,7 @@ namespace etrading
     public:
         PremiumCashflow();
         PremiumCashflow(const PayReceiveEnum& payReceive, double cdsSpread,
-					const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, double accrualYearFraction, const LADate& paymentDate,
+					const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, double accrualYearFraction, const AQLDate& paymentDate,
                     double notional, double leverage, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType);
 		virtual ~PremiumCashflow() {}
 

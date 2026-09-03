@@ -2,7 +2,7 @@
 #include "StructuredExceptionHandler.h"
 #include "CurveUtilities.h"
 #include "CreateDataFile.h"
-#include "LADate.h"
+#include "AQLDate.h"
 
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;
@@ -15,7 +15,7 @@ namespace validation
 	*  @param [in]		interpolation		Interpolation type
 	*  @return			Interpolation join date
     */
-    LADate tryMeCurveGetInterpolationJoinDate(const LAString& curveCollection, const LAString& curveIndex, const LAString& interpolation)
+    AQLDate tryMeCurveGetInterpolationJoinDate(const AQLString& curveCollection, const AQLString& curveIndex, const AQLString& interpolation)
     {
         VALID_EXCEPTION_START
 
@@ -29,14 +29,14 @@ namespace validation
 			file.write( "interpolation", interpolation );
         }
 
-		LADate joinDate;
-		if (interpolation.size() == 0 || LAString(interpolation) == "LINEARSPLINE")
+		AQLDate joinDate;
+		if (interpolation.size() == 0 || AQLString(interpolation) == "LINEARSPLINE")
 		{
 			joinDate = etrading::getLinearSplineJoinDate(curveCollection, curveIndex);
 		}
 		else
 		{
-			throw LACoreInvalidData( "#Error: Unsupported interpolation method", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: Unsupported interpolation method", __FILE__, __LINE__ );
 		}
 
 		if ( CreateDataFile::recordEnabled() )

@@ -5,7 +5,7 @@
 #endif
 
 #include "LARatesNumeraireBase.h"
-#include "LA1DDataSet.h"
+#include "AQL1DDataSet.h"
 
 // ID for LARatesNumeraireBankAccountHW
 #define FN_NUMERAIREBANKACCOUNTHW	10039 
@@ -25,7 +25,7 @@ public:
 	// Default constructor
 	LARatesNumeraireBankAccountHW();
 	// constructor
-	LARatesNumeraireBankAccountHW(const LAString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis);
+	LARatesNumeraireBankAccountHW(const AQLString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis);
 	//	Copy constructor
 //	LARatesNumeraireBankAccountHW(const LARatesNumeraireBankAccountHW& v);
 	// Destructor
@@ -37,7 +37,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -49,10 +49,10 @@ public:
 	virtual void				setCurve(double t, const LARatesPathElementCurve* pcurve);
 								//======================================
 								// set basis spread
-	virtual void				setBasisSpread(const LAString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis);
+	virtual void				setBasisSpread(const AQLString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis);
 								//======================================
 								// set basis name
-	virtual void				setBasisName(const LAString& basisName);
+	virtual void				setBasisName(const AQLString& basisName);
 								//======================================
 								// set SDE that holds this Numerarire
 	virtual void				setSDE(LARatesSDEBase* pSDE);
@@ -91,7 +91,7 @@ protected:
 	private:
 		//mutable std::map<double, double>	cache;
 		//mutable std::map<double, bool>		is_cache;
-		LA1DDataSet							mBasisForwardCurve;
+		AQL1DDataSet							mBasisForwardCurve;
 	};	
 
 //	OPERATION

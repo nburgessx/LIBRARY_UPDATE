@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent RangeCount function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //   2007,AlgoQuantHub.
@@ -32,7 +32,7 @@ using namespace std;
 	@brief default constructor
 */
 LARatesUnionFunc::LARatesUnionFunc() 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -48,7 +48,7 @@ LARatesUnionFunc::~LARatesUnionFunc()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesUnionFunc::clone() const
 {
     try 
@@ -57,7 +57,7 @@ LARatesUnionFunc::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -69,7 +69,7 @@ LARatesUnionFunc::clone() const
 bool
 LARatesUnionFunc::isTypeOf(function_t id) const
 {
-	return (id == FN_UNIONFUNC ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_UNIONFUNC ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -92,8 +92,8 @@ LARatesUnionFunc::operator()(const DoubleArray& x) const
 {
 	if (mParam.size() != x.size() * 4 + 1)
 	{
-		LAString msg = "parameter size must be index * 4 + 1:lower[1],upper[1],,,,inequalityflag[1],inequalityflag[1],...,union or intersection flag";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "parameter size must be index * 4 + 1:lower[1],upper[1],,,,inequalityflag[1],inequalityflag[1],...,union or intersection flag";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	double ret = -1.0;
@@ -106,7 +106,7 @@ LARatesUnionFunc::operator()(const DoubleArray& x) const
 	else if (mParam.back() == 0.)
 		isUnion = true;
 	else
-		throw LACoreInvalidData("The last parameter must be 1 or 0!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("The last parameter must be 1 or 0!",__FILE__,__LINE__);
 	
 	if (isUnion)
 	{
@@ -115,10 +115,10 @@ LARatesUnionFunc::operator()(const DoubleArray& x) const
 		for (unsigned int i = 0; i < x.size(); ++i)
 		{
 			if (mParam[2*i] > mParam[2*i+1])
-				throw LACoreInvalidData("wrong input lower > upper",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("wrong input lower > upper",__FILE__,__LINE__);
 
 			if ((mParam[2*i+N] != 0. && mParam[2*i+N] != 1.) || (mParam[2*i+1+N] != 0. && mParam[2*i+1+N] != 1.))
-				throw LACoreInvalidData("Equal include parameter must be 1 or 0!",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("Equal include parameter must be 1 or 0!",__FILE__,__LINE__);
 		}
 
 		for (unsigned int i = 0; i < x.size(); ++i)
@@ -157,10 +157,10 @@ LARatesUnionFunc::operator()(const DoubleArray& x) const
 		for (unsigned int i = 0; i < x.size(); ++i)
 		{
 			if (mParam[2*i] > mParam[2*i+1])
-				throw LACoreInvalidData("wrong input lower > upper",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("wrong input lower > upper",__FILE__,__LINE__);
 
 			if ((mParam[2*i+N] != 0. && mParam[2*i+N] != 1.) || (mParam[2*i+1+N] != 0. && mParam[2*i+1+N] != 1.))
-				throw LACoreInvalidData("Equal include parameter must be 1 or 0!",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("Equal include parameter must be 1 or 0!",__FILE__,__LINE__);
 		}
 
 		for (unsigned int i = 0; i < x.size(); ++i)

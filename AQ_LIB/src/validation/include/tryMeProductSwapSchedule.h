@@ -19,7 +19,7 @@ namespace validation
 	*  @param [in]	    columnList          Column header names to show specified columns. Default to empty list 
     *  @return			A matrix containing the swap schedule
     */
-    LAStringMatrix tryMeProductSwapSchedule( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys = true, const std::vector<std::string>& columnList=std::vector<std::string>(), const bool& convertDatesToExcelFormat=true );
+    AQLStringMatrix tryMeProductSwapSchedule( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys = true, const std::vector<std::string>& columnList=std::vector<std::string>(), const bool& convertDatesToExcelFormat=true );
 
 	/* @brief			validation interface for the tryMeProductSwapScheduleFixed method
     *  @param [in]		showColumnHeaders	A boolean to specify whether to include the column headers in the output
@@ -28,7 +28,7 @@ namespace validation
 	*  @param [in]	    columnList          Column header names to show specified columns. Default to empty list 
     *  @return			A matrix containing the swap schedule
     */
-    LAStringMatrix tryMeProductSwapScheduleFixed( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys = true, const std::vector<std::string>& columnList=std::vector<std::string>(), const bool& convertDatesToExcelFormat=true );
+    AQLStringMatrix tryMeProductSwapScheduleFixed( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys = true, const std::vector<std::string>& columnList=std::vector<std::string>(), const bool& convertDatesToExcelFormat=true );
 
 	/* @brief			validation interface for the tryMeProductSwapScheduleFloat method
     *  @param [in]		showColumnHeaders	A boolean to specify whether to include the column headers in the output
@@ -37,6 +37,6 @@ namespace validation
 	*  @param [in]	    columnList          Column header names to show specified columns. Default to empty list 
     *  @return			A matrix containing the swap schedule
     */
-    LAStringMatrix tryMeProductSwapScheduleFloat( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys = true, const std::vector<std::string>& columnList=std::vector<std::string>(), const bool& convertDatesToExcelFormat=true );
+    AQLStringMatrix tryMeProductSwapScheduleFloat( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys = true, const std::vector<std::string>& columnList=std::vector<std::string>(), const bool& convertDatesToExcelFormat=true );
 
 }

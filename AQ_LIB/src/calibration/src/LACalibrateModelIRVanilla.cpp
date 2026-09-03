@@ -5,10 +5,10 @@
 #endif
 
 #include <fstream>
-#include "LADataInstance.h"
-#include "LAFunctionManager.h"
-#include "LAPriceDataManager.h"
-#include "LADataReference.h"
+#include "AQLDataInstance.h"
+#include "AQLFunctionManager.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataReference.h"
 #include "LAMathYieldCurve.h"
 #include "LAMathYieldCurvePro.h"
 
@@ -23,16 +23,16 @@
 #include "LACoreDataService.h"
 #include "LAStaticData.h"
 #include "LACalibrateModelIRVanilla.h"
-#include "LADataVector.h"
-#include "LADataProcedure.h"
+#include "AQLDataVector.h"
+#include "AQLDataProcedure.h"
 #include "LAMathYieldCurve.h"
 #include "LAPriceYieldGenerator.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMarketData.h"
 
 
@@ -43,7 +43,7 @@ using namespace std;
 
 */
 
-LACalibrateModelIRVanilla::LACalibrateModelIRVanilla(const LAString &baseCurrency)
+LACalibrateModelIRVanilla::LACalibrateModelIRVanilla(const AQLString &baseCurrency)
 : LACalibrateModelIR(baseCurrency){
 }
 // destructor

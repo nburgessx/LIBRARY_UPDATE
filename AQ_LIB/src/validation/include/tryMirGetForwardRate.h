@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -20,16 +20,16 @@ namespace validation
     *  @param [in]		isFwdInterp		Boolean that decides if direct interpolation on fwd rates is employed
     *  @return			The forward rates based on fromDates and term
     */
-    DoubleVector tryMirGetForwardRate1( LADataInstance* dataInstance,
+    DoubleVector tryMirGetForwardRate1( AQLDataInstance* dataInstance,
                                         const DateVector& fromDateVec,
                                         double term,
-                                        const LAString& curveId,
-                                        const LAString& frequency,
-                                        const LAString& dayCount,
-                                        const LAString& slidingRule,
-                                        const LAString& calendar,
-                                        const LAString& interpolation,
-                                        const LAString& curveName,
+                                        const AQLString& curveId,
+                                        const AQLString& frequency,
+                                        const AQLString& dayCount,
+                                        const AQLString& slidingRule,
+                                        const AQLString& calendar,
+                                        const AQLString& interpolation,
+                                        const AQLString& curveName,
                                         bool isFwdInterp = false );
 
     /* @brief			validation interface for mrGetForwardRate2
@@ -47,16 +47,16 @@ namespace validation
     *  @param [in]		useFwdData		Use False to imply forwards from Discount Factors and True to use Forward Data directly. It's default to False.
     *  @return			The forward rates based on fromDates and toDates
     */
-    DoubleVector tryMirGetForwardRate2( LADataInstance* dataInstance,
+    DoubleVector tryMirGetForwardRate2( AQLDataInstance* dataInstance,
                                         const DateVector& fromDates,
                                         const DateVector& toDates,
-                                        const LAString& curveId,
-                                        const LAString& frequency,
-                                        const LAString& dayCount,
-                                        const LAString& slidingRule,
-                                        const LAString& calendar,
-                                        const LAString& interpolation,
-                                        const LAString& curveName,
+                                        const AQLString& curveId,
+                                        const AQLString& frequency,
+                                        const AQLString& dayCount,
+                                        const AQLString& slidingRule,
+                                        const AQLString& calendar,
+                                        const AQLString& interpolation,
+                                        const AQLString& curveName,
                                         bool isFwdInterp,
                                         bool useFwdData );
 

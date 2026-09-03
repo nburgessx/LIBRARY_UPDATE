@@ -1,6 +1,6 @@
 #include "mirInterpolation.h"
 #include "TypeUtilities.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "tryMirInterpolation.h"
 
 /* @brief			swig interface for mirInterpolation
@@ -19,12 +19,12 @@ double mirInterpolation(const std::vector<double>& array1,
 	try 
 	{
 		
-		LAString interp(interpolation.c_str());
+		AQLString interp(interpolation.c_str());
 		ret = validation::tryMirInterpolation(array1, array2, point, interp);
 
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

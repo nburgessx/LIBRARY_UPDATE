@@ -14,27 +14,27 @@
 
 #include <algorithm>
 
-#include "LAObject.h"
-#include "LADataProcedure.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLObject.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataInterpolation.h"
 
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
-#include "LAConstant.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLConstant.h"
 
 #include "LAMathDateCalculations.h"
 #include "LAPriceCFGenUtility.h"
@@ -45,9 +45,9 @@
 #include "LAMathYieldCurve.h"
 
 #include "LAMathPlainVanillaEntity.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 #include "LACompoundingFunc.h"
-#include "LALinearFunc.h"
+#include "AQLLinearFunc.h"
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 #include "LALinearRatesOptionValueDataProvider.h"
 #endif
@@ -146,7 +146,7 @@ using namespace std;
 #endif
 
 LAPriceCashFlowGenerator::CashletCreator::CashletCreator(const LAPriceCashFlowGenerator* cf_gen_,
-                                                      LAObject* leg_)
+                                                      AQLObject* leg_)
 : is_first_stub(false),
   is_last_stub(false)
 {
@@ -158,42 +158,42 @@ LAPriceCashFlowGenerator::CashletCreator::CashletCreator(const LAPriceCashFlowGe
 void
 LAPriceCashFlowGenerator::CashletCreator::setup()
 {
-    LADataHolder* dh;
+    AQLDataHolder* dh;
     
     cf_gen->calcNotionalArray(*leg, cf_size, notional_array);
-    is_comp_roll               = (dh=&leg->getData(PRICING_DATA_ISCOMPOUNDINGCOUPON))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get();
-    timing                     = dynamic_cast<const LADataString&>(leg->getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL).get()).get();
+    is_comp_roll               = (dh=&leg->getData(PRICING_DATA_ISCOMPOUNDINGCOUPON))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get();
+    timing                     = dynamic_cast<const AQLDataString&>(leg->getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL).get()).get();
     is_arrear                  = LAPriceCFGenUtility::isArrear(timing);
-    is_notional_exchange_start = (dh=&leg->getData(PRICING_DATA_ISNOTIONALEXCHANGEATSTART))->isDefined() && !dh->isNull() &&  dynamic_cast<const LADataBool&>(dh->get()).get();
-    is_notional_exchange_end   = (dh=&leg->getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND))->isDefined() && !dh->isNull() &&  dynamic_cast<const LADataBool&>(dh->get()).get();
-    name                       = dynamic_cast<const LADataString&>(leg->getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-    coupon_infos               = &dynamic_cast<const LADataMultiReference&>(leg->getData(PRICING_DATA_COUPONINFOS, ISNOTNULL).get());
-    is_renotional              = (dh=&leg->getData(PRICING_DATA_ISRENOTIONAL))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get();
-    first_odd_idx_type         = (dh=&leg->getData(PRICING_DATA_FIRSTODDINDEXTYPE))->isDefined() && !dh->isNull() ? dynamic_cast<const LADataString&>(dh->get()).get() : "";
-    last_odd_idx_type          = (dh=&leg->getData(PRICING_DATA_LASTODDINDEXTYPE))->isDefined() && !dh->isNull() ? dynamic_cast<const LADataString&>(dh->get()).get() : "";
+    is_notional_exchange_start = (dh=&leg->getData(PRICING_DATA_ISNOTIONALEXCHANGEATSTART))->isDefined() && !dh->isNull() &&  dynamic_cast<const AQLDataBool&>(dh->get()).get();
+    is_notional_exchange_end   = (dh=&leg->getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND))->isDefined() && !dh->isNull() &&  dynamic_cast<const AQLDataBool&>(dh->get()).get();
+    name                       = dynamic_cast<const AQLDataString&>(leg->getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+    coupon_infos               = &dynamic_cast<const AQLDataMultiReference&>(leg->getData(PRICING_DATA_COUPONINFOS, ISNOTNULL).get());
+    is_renotional              = (dh=&leg->getData(PRICING_DATA_ISRENOTIONAL))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get();
+    first_odd_idx_type         = (dh=&leg->getData(PRICING_DATA_FIRSTODDINDEXTYPE))->isDefined() && !dh->isNull() ? dynamic_cast<const AQLDataString&>(dh->get()).get() : "";
+    last_odd_idx_type          = (dh=&leg->getData(PRICING_DATA_LASTODDINDEXTYPE))->isDefined() && !dh->isNull() ? dynamic_cast<const AQLDataString&>(dh->get()).get() : "";
     currency                   = (dh=&leg->getData(PRICING_DATA_CURRENCY))->isDefined() && !dh->isNull() ? dh : NULL;
     fx_rate                    = (dh=&leg->getData(PRICING_DATA_FXRATE))->isDefined() && !dh->isNull() ? dh : NULL;
 	is_notionalcfcoupon		   = (dh=&leg->getData(PRICING_CALIBRATION_DATAOTIONALCFCOUPONINFOS))->isDefined() && !dh->isNull() ? true : false;
 
 	dh = &leg->getData(PRICING_CALIBRATION_DATAOTIONALCFCOUPONINFOS, NOCHECK);
 	if(dh->isDefined() && !dh->isNull())
-		notionalcfcoupon_infos = &dynamic_cast<const LADataMultiReference&>(dh->get());
+		notionalcfcoupon_infos = &dynamic_cast<const AQLDataMultiReference&>(dh->get());
 }
 
-LAObject*
+AQLObject*
 LAPriceCashFlowGenerator::CashletCreator::createNotionalCashlet(const size_t cf_pos,
-                                                             const LAString& name)
+                                                             const AQLString& name)
 {
-	std::unique_ptr<LAObject> ret(new LAObject());
+	std::unique_ptr<AQLObject> ret(new AQLObject());
 
-    const LADate payment_date = payment_dates[cf_pos];
-
-
+    const AQLDate payment_date = payment_dates[cf_pos];
 
 
-    ret->add(CALIBRATION_DATA_NAME, new LADataString(name));
-    ret->add(PRICING_DATA_PAYMENTDATE, new LADataDate(payment_date));
-    ret->add(PRICING_CALIBRATION_DATAOTIONAL, new LADataDouble(notional_array[cf_pos]));
+
+
+    ret->add(CALIBRATION_DATA_NAME, new AQLDataString(name));
+    ret->add(PRICING_DATA_PAYMENTDATE, new AQLDataDate(payment_date));
+    ret->add(PRICING_CALIBRATION_DATAOTIONAL, new AQLDataDouble(notional_array[cf_pos]));
     if(currency!=NULL) ret->add(PRICING_DATA_CURRENCY, *currency);
     if(fx_rate!=NULL) ret->add(PRICING_DATA_FXRATE, *fx_rate);
 
@@ -208,14 +208,14 @@ LAPriceCashFlowGenerator::CashletCreator::createNotionalCashlet(const size_t cf_
         && is_notional_exchange_end
         && notional_array[cf_pos] - notional_array[cf_pos + 1] != 0)
     {
-        ret->add(PRICING_CALIBRATION_DATAOTIONALCF, new LADataDouble(notional_array[cf_pos] - notional_array[cf_pos + 1]));
+        ret->add(PRICING_CALIBRATION_DATAOTIONALCF, new AQLDataDouble(notional_array[cf_pos] - notional_array[cf_pos + 1]));
     }
     if(cf_pos > 0 && cf_pos < cf_size - 1
         && !is_arrear 
         && is_notional_exchange_end
         && notional_array[cf_pos - 1] - notional_array[cf_pos] != 0)
     {
-        ret->add(PRICING_CALIBRATION_DATAOTIONALCF, new LADataDouble(notional_array[cf_pos - 1] - notional_array[cf_pos]));
+        ret->add(PRICING_CALIBRATION_DATAOTIONALCF, new AQLDataDouble(notional_array[cf_pos - 1] - notional_array[cf_pos]));
     }
     if(cf_pos == cf_size - 1
         && is_notional_exchange_end)
@@ -223,12 +223,12 @@ LAPriceCashFlowGenerator::CashletCreator::createNotionalCashlet(const size_t cf_
 		// notionalcf coupon setup is only performed for the last cashlet
 		if(is_notionalcfcoupon)
 		{
-			LAString notionalcfcouponinfo_name = name + "_" + NOTIONALCOUPONINFO;
-			LADate advancepaymentdate = payment_dates[cf_pos-1]; 
-			LADate start_date = payment_dates[cf_pos];
-			LADate end_date = payment_dates[cf_pos];
+			AQLString notionalcfcouponinfo_name = name + "_" + NOTIONALCOUPONINFO;
+			AQLDate advancepaymentdate = payment_dates[cf_pos-1]; 
+			AQLDate start_date = payment_dates[cf_pos];
+			AQLDate end_date = payment_dates[cf_pos];
 
-			LAObjectHolder objHolder;
+			AQLObjectHolder objHolder;
 			objHolder.setEntity(cf_gen->createCouponInfo(notionalcfcouponinfo_name,
 					advancepaymentdate, 
 					payment_dates[cf_pos], 
@@ -241,102 +241,102 @@ LAPriceCashFlowGenerator::CashletCreator::createNotionalCashlet(const size_t cf_
 			objectPool->set(notionalcfcouponinfo_name, &objHolder.get());
 			objHolder.setDeleteFlag(false);
 
-			LADataHolder* dh = &ret->add(PRICING_CALIBRATION_DATAOTIONALCFCOUPONINFOS, new LADataMultiReference());
+			AQLDataHolder* dh = &ret->add(PRICING_CALIBRATION_DATAOTIONALCFCOUPONINFOS, new AQLDataMultiReference());
 			dh->convertFromString(notionalcfcouponinfo_name);
 		}
 		else
-			ret->add(PRICING_CALIBRATION_DATAOTIONALCF, new LADataDouble(notional_array[cf_pos]));
+			ret->add(PRICING_CALIBRATION_DATAOTIONALCF, new AQLDataDouble(notional_array[cf_pos]));
     }
     if(cf_pos == 0
         && is_notional_exchange_start)
     {
-		LADataHolder &dh = ret->getData(PRICING_CALIBRATION_DATAOTIONALCF, NOCHECK);
+		AQLDataHolder &dh = ret->getData(PRICING_CALIBRATION_DATAOTIONALCF, NOCHECK);
 		if (dh.isDefined() && !dh.isNull())
 		{
-			LADataDouble &notionalCF = dynamic_cast<LADataDouble &>(dh.get());
+			AQLDataDouble &notionalCF = dynamic_cast<AQLDataDouble &>(dh.get());
 			double val = notionalCF.get();
 			val -= notional_array[cf_pos];
 			notionalCF.set(val);
 		}
 		else
 		{
-			ret->add(PRICING_CALIBRATION_DATAOTIONALCF, new LADataDouble(-notional_array[cf_pos]));
+			ret->add(PRICING_CALIBRATION_DATAOTIONALCF, new AQLDataDouble(-notional_array[cf_pos]));
 		}        
         if(is_renotional)
         {
             ret->remove(PRICING_CALIBRATION_DATAOTIONAL);
-            ret->add(PRICING_CALIBRATION_DATAOTIONAL, new LADataDouble(0.0));
+            ret->add(PRICING_CALIBRATION_DATAOTIONAL, new AQLDataDouble(0.0));
 
-			LADataHolder* dh = &(leg->getData(PRICING_DATA_ISFIRSTNOTIONALRESET, NOCHECK));
+			AQLDataHolder* dh = &(leg->getData(PRICING_DATA_ISFIRSTNOTIONALRESET, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				if(dynamic_cast<LADataBool &>(dh->get()).get())
+				if(dynamic_cast<AQLDataBool &>(dh->get()).get())
 				{
 					ret->remove(PRICING_CALIBRATION_DATAOTIONALCF);
 				}
 			}
 
-			LADate fixingdate;
+			AQLDate fixingdate;
 			dh = &(leg->getData(PRICING_DATA_RENOTIONALOFFSET, ISNOTNULL));
-			int offset = dynamic_cast<const LADataInt&>(dh->get()).get();		
+			int offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();		
 			//leg.remove(PRICING_DATA_RENOTIONALOFFSET);
 			if (offset == 0) 
 				fixingdate = payment_date;
 			else
 			{
 				//calendar
-				LAPriceDataCalendar cal;
+				AQLPriceDataCalendar cal;
 				dh = &(leg->getData(PRICING_DATA_RENOTIONALCALENDAR, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+					cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 				}
 				else
 				{
 					dh = &(leg->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-					cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+					cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 				}
 				fixingdate = cal.getBusinessDay(payment_date, -offset);
 			}
 			ret->remove(PRICING_DATA_RENOTIONALFIXINGDATE);
-			ret->add(PRICING_DATA_RENOTIONALFIXINGDATE, new LADataDate(fixingdate));
+			ret->add(PRICING_DATA_RENOTIONALFIXINGDATE, new AQLDataDate(fixingdate));
         }
     }
 
     return ret.release();
 }
 
-LAObject* 
+AQLObject* 
 LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
-                                                     const LAString& name,
-                                                     const LADate& start_date,
-                                                     const LADate& end_date,
+                                                     const AQLString& name,
+                                                     const AQLDate& start_date,
+                                                     const AQLDate& end_date,
                                                      const DateVector& roll_payment_dates,
                                                      const DateVector& roll_start_dates,
                                                      const DateVector& roll_end_dates,
 													 const double fixed_rate,
 													 const bool is_digital,
 													 const size_t cf_pos2,
-													 const LAString* p_basename)
+													 const AQLString* p_basename)
 {
 	const bool is_fixed_coupon = (fixed_rate > static_cast<double>(DEFAULT_SMALL_FIXEDRATE));
 
-    std::unique_ptr<LAObject> ret(createNotionalCashlet(cf_pos, name));
+    std::unique_ptr<AQLObject> ret(createNotionalCashlet(cf_pos, name));
 
 
 
 
 
     ret->add(PRICING_DATA_PAYMENTTIMING, leg->getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL));
-    ret->add(PRICING_DATA_CFCALCSTARTDATE, new LADataDate(start_date));
-    ret->add(PRICING_DATA_CFCALCENDDATE, new LADataDate(end_date));
+    ret->add(PRICING_DATA_CFCALCSTARTDATE, new AQLDataDate(start_date));
+    ret->add(PRICING_DATA_CFCALCENDDATE, new AQLDataDate(end_date));
     ret->add(PRICING_DATA_DAYCOUNT, leg->getData(PRICING_DATA_DAYCOUNT, ISNOTNULL));
 
 
 
-    LADataHolder* dh;
+    AQLDataHolder* dh;
     if((dh=&leg->getData(PRICING_DATA_COMPOUND_ON_ALL_DAYS))->isDefined() && !dh->isNull()){
-        ret->add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new LADataBool(dynamic_cast<const LADataBool&>(dh->get())));
+        ret->add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new AQLDataBool(dynamic_cast<const AQLDataBool&>(dh->get())));
     }
 
 
@@ -352,7 +352,7 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 	{
 		--last_cfpos;
 	}
-    LAString stubindextype;
+    AQLString stubindextype;
     if(first_cfpos == cf_pos && is_first_stub)
 	{
 		stubindextype = first_odd_idx_type;
@@ -365,20 +365,20 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 
 
     if(is_comp_roll && !is_fixed_coupon){
-        ret->add(PRICING_DATA_CFCALCSTARTDATES, new LADataDates(roll_start_dates));
-        ret->add(PRICING_DATA_CFCALCENDDATES, new LADataDates(roll_end_dates));
-        ret->add(PRICING_DATA_COMPOUNDING_FUNCTION, new LAPriceDataFunction(dynamic_cast<const LAPriceDataFunction&>(leg->getData(PRICING_DATA_COMPOUNDING_FUNCTION, ISNOTNULL).get())));
-        ret->add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new LADataBool(true));
+        ret->add(PRICING_DATA_CFCALCSTARTDATES, new AQLDataDates(roll_start_dates));
+        ret->add(PRICING_DATA_CFCALCENDDATES, new AQLDataDates(roll_end_dates));
+        ret->add(PRICING_DATA_COMPOUNDING_FUNCTION, new AQLPriceDataFunction(dynamic_cast<const AQLPriceDataFunction&>(leg->getData(PRICING_DATA_COMPOUNDING_FUNCTION, ISNOTNULL).get())));
+        ret->add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new AQLDataBool(true));
     }
 
 
-    LADate advancepaymentdate;
+    AQLDate advancepaymentdate;
     if (!is_arrear) advancepaymentdate = payment_dates[cf_pos];
     else if (cf_pos > 0) advancepaymentdate = payment_dates[cf_pos - 1];
     else
     {
         dh = &(leg->getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-        const LADate& startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+        const AQLDate& startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 
         advancepaymentdate = LAPriceCFGenUtility::getDate(startdate, 
                                                        *leg, 
@@ -390,22 +390,22 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 	dh = &(leg->getData(PRICING_DATA_ISDOUBLERANGE, NOCHECK));
     if (dh->isDefined() && !dh->isNull())
     {
-        is_doublerange = dynamic_cast<const LADataBool &>(dh->get()).get();
+        is_doublerange = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	if (is_doublerange && !p_basename)
 	{
-		throw LACoreInvalidData("p_basename is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("p_basename is NULL", __FILE__, __LINE__);
 	}
 
 	if (is_doublerange && cf_pos2 > 0)
 	{
-		LAObject *couponinfo = new LAObject;
-		LAString couponinfo_name = name + "_" + COUPONINFO + "1_" + LADataInt(cf_pos2).convertToString();
+		AQLObject *couponinfo = new AQLObject;
+		AQLString couponinfo_name = name + "_" + COUPONINFO + "1_" + AQLDataInt(cf_pos2).convertToString();
 
 		couponinfo->remove(CALIBRATION_DATA_NAME);
-		couponinfo->add(CALIBRATION_DATA_NAME, new LADataString(couponinfo_name));
-		LAString fixedRateAttr = "";
+		couponinfo->add(CALIBRATION_DATA_NAME, new AQLDataString(couponinfo_name));
+		AQLString fixedRateAttr = "";
 		if (cf_pos2 == 1)
 		{
 			fixedRateAttr = PRICING_DATA_RANGEACCRUEFIXEDRATE1;
@@ -418,19 +418,19 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 		{
 			fixedRateAttr = PRICING_DATA_RANGEACCRUEFIXEDRATE3;
 		}
-		const double fixedRate = dynamic_cast<const LADataDouble &>(leg->getData(fixedRateAttr, ISNOTNULL).get()).get();
+		const double fixedRate = dynamic_cast<const AQLDataDouble &>(leg->getData(fixedRateAttr, ISNOTNULL).get()).get();
 		const DoubleArray fixedRates(1, fixedRate);
-		couponinfo->add(PRICING_DATA_COEFFICIENT, new LADataDoubles(fixedRates));
-		couponinfo->add(PRICING_DATA_OPERATOR, new LAPriceDataFunction()).convertFromString(FN_CONSTANT_STR);
+		couponinfo->add(PRICING_DATA_COEFFICIENT, new AQLDataDoubles(fixedRates));
+		couponinfo->add(PRICING_DATA_OPERATOR, new AQLPriceDataFunction()).convertFromString(FN_CONSTANT_STR);
 		couponinfo->add(PRICING_DATA_CURRENCY, leg->getData(PRICING_DATA_CURRENCY, ISNOTNULL));
 
-		LAString couponinfo_name_base = *p_basename + "_" + COUPONINFO + "1";
+		AQLString couponinfo_name_base = *p_basename + "_" + COUPONINFO + "1";
 		dh = &(objectPool->getObject(couponinfo_name_base, ENCHKTYPE_ISDEFINED).getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
 		couponinfo->add(PRICING_DATA_INDEXINFOS, dh->clone());
 
-		dh = &ret->add(PRICING_DATA_COUPONINFOS, new LADataMultiReference());
+		dh = &ret->add(PRICING_DATA_COUPONINFOS, new AQLDataMultiReference());
 		dh->convertFromString(couponinfo_name);
-		LAObjectHolder eholder;
+		AQLObjectHolder eholder;
 		eholder.setEntity(couponinfo, true);
 		objectPool->remove(couponinfo_name);
 		objectPool->set(couponinfo_name, &eholder.get());
@@ -439,17 +439,17 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 	}
 	else
 	{
-		LAString couponinfo_str;
+		AQLString couponinfo_str;
 		for (unsigned int j = 0; j < coupon_infos->getSize(); j++)
 		{
 			if (is_digital && is_fixed_coupon && j != 1) continue; //if it is digital product & fixed rate, only coupon2 remains.
 
 			if (!(is_digital && is_fixed_coupon) && j != 0) couponinfo_str += ":";
 
-			LAString couponinfo_name = name + "_" + COUPONINFO + LADataInt(j + 1).convertToString();
+			AQLString couponinfo_name = name + "_" + COUPONINFO + AQLDataInt(j + 1).convertToString();
 
 			if(!is_comp_roll || stubindextype==""){
-				LAObjectHolder eholder;
+				AQLObjectHolder eholder;
 				eholder.setEntity(cf_gen->createCouponInfo(couponinfo_name, 
 					advancepaymentdate, 
 					payment_dates[cf_pos], 
@@ -466,8 +466,8 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 					is_digital), 
 					true);
 				if(is_comp_roll){
-					eholder.add(PRICING_DATA_CFCALCSTARTDATE, new LADataDate(start_date));
-					eholder.add(PRICING_DATA_CFCALCENDDATE, new LADataDate(end_date));
+					eholder.add(PRICING_DATA_CFCALCSTARTDATE, new AQLDataDate(start_date));
+					eholder.add(PRICING_DATA_CFCALCENDDATE, new AQLDataDate(end_date));
 				}
 
 				objectPool->remove(couponinfo_name);
@@ -476,7 +476,7 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 				couponinfo_str += couponinfo_name;
 			}
 			else{
-				LAObjectHolder eholder;
+				AQLObjectHolder eholder;
 				eholder.setEntity(cf_gen->createCouponInfo(couponinfo_name, 
 					advancepaymentdate, 
 					payment_dates[cf_pos], 
@@ -499,8 +499,8 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 				couponinfo_str += couponinfo_name;
 
 				if(cf_pos == first_cfpos && is_first_stub){
-					LAString temp_name = couponinfo_name + "_FirstStub";
-					LAObjectHolder temp_eh;
+					AQLString temp_name = couponinfo_name + "_FirstStub";
+					AQLObjectHolder temp_eh;
 					temp_eh.setEntity(cf_gen->createCouponInfo(temp_name,
 						advancepaymentdate, 
 						payment_dates[cf_pos], 
@@ -513,19 +513,19 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 						fixed_rate,
 						is_digital), 
 						true);
-					temp_eh.add(PRICING_DATA_CFCALCSTARTDATE, new LADataDate(roll_start_dates[0]));
-					temp_eh.add(PRICING_DATA_CFCALCENDDATE, new LADataDate(roll_end_dates[0]));
+					temp_eh.add(PRICING_DATA_CFCALCSTARTDATE, new AQLDataDate(roll_start_dates[0]));
+					temp_eh.add(PRICING_DATA_CFCALCENDDATE, new AQLDataDate(roll_end_dates[0]));
 
 					objectPool->remove(temp_name);
 					objectPool->set(temp_name, &temp_eh.get());
 					temp_eh.setDeleteFlag(false);
 					couponinfo_str += ":";
 					couponinfo_str += temp_name;
-					ret->add(PRICING_DATA_FIRSTSTUBCOUPON, new LADataString(temp_name));
+					ret->add(PRICING_DATA_FIRSTSTUBCOUPON, new AQLDataString(temp_name));
 				}
 				if(cf_pos == last_cfpos && is_last_stub){
-					LAString temp_name = couponinfo_name + "_LastStub";
-					LAObjectHolder temp_eh;
+					AQLString temp_name = couponinfo_name + "_LastStub";
+					AQLObjectHolder temp_eh;
 					temp_eh.setEntity(cf_gen->createCouponInfo(temp_name,
 						advancepaymentdate, 
 						payment_dates[cf_pos], 
@@ -538,26 +538,26 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 						fixed_rate,
 						is_digital), 
 						true);
-					temp_eh.add(PRICING_DATA_CFCALCSTARTDATE, new LADataDate(roll_start_dates.back()));
-					temp_eh.add(PRICING_DATA_CFCALCENDDATE, new LADataDate(roll_end_dates.back()));
+					temp_eh.add(PRICING_DATA_CFCALCSTARTDATE, new AQLDataDate(roll_start_dates.back()));
+					temp_eh.add(PRICING_DATA_CFCALCENDDATE, new AQLDataDate(roll_end_dates.back()));
 
 					objectPool->remove(temp_name);
 					objectPool->set(temp_name, &temp_eh.get());
 					temp_eh.setDeleteFlag(false);
 					couponinfo_str += ":";
 					couponinfo_str += temp_name;
-					ret->add(PRICING_DATA_LASTSTUBCOUPON, new LADataString(temp_name));
+					ret->add(PRICING_DATA_LASTSTUBCOUPON, new AQLDataString(temp_name));
 				}
 			}
 		}
-		dh = &ret->add(PRICING_DATA_COUPONINFOS, new LADataMultiReference());
+		dh = &ret->add(PRICING_DATA_COUPONINFOS, new AQLDataMultiReference());
 		dh->convertFromString(couponinfo_str);
 	}
 
 	if (is_fixed_coupon)
 	{
 		ret->remove(PRICING_DATA_ISFIXEDTERM);
-		ret->add(PRICING_DATA_ISFIXEDTERM, new LADataBool(true));
+		ret->add(PRICING_DATA_ISFIXEDTERM, new AQLDataBool(true));
 	}
 
     // Coupon selet oeprator
@@ -576,33 +576,33 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 
     // isamortize
     dh = &(leg->getData(PRICING_DATA_ISAMORTIZE, ISNOTNULL));
-    bool isamortize = dynamic_cast<const LADataBool&>(dh->get()).get();
+    bool isamortize = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 
     // DENOMINATOR
 	dh = &(leg->getData(PRICING_DATA_DENOMINATOR, NOCHECK));
     if (dh->isDefined() && !dh->isNull())
     {
-        double denominator = dynamic_cast<const LADataDouble&>(dh->get()).get();
+        double denominator = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 
         if (isamortize)
-            ret->add(PRICING_DATA_DENOMINATOR, new LADataDouble(denominator / notional_array[0] * notional_array[cf_pos]));
+            ret->add(PRICING_DATA_DENOMINATOR, new AQLDataDouble(denominator / notional_array[0] * notional_array[cf_pos]));
         else
-            ret->add(PRICING_DATA_DENOMINATOR, new LADataDouble(denominator));
+            ret->add(PRICING_DATA_DENOMINATOR, new AQLDataDouble(denominator));
     }
 
     if (is_renotional)
     {
 		if(isamortize)
 		{
-			throw LACoreInvalidData("amortization on renotional cashflow is not supported.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("amortization on renotional cashflow is not supported.", __FILE__, __LINE__);
 		}
-        LADate advancepaymentdate;
+        AQLDate advancepaymentdate;
         if (!is_arrear) advancepaymentdate = payment_dates[cf_pos];
         else if (cf_pos > 0) advancepaymentdate = payment_dates[cf_pos - 1];
         else
         {
             dh = &(leg->getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-            const LADate& temp_startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+            const AQLDate& temp_startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 
             advancepaymentdate = LAPriceCFGenUtility::getDate(temp_startdate, 
                                                            *leg, 
@@ -623,9 +623,9 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
     dh = &(leg->getData(PRICING_DATA_ISRANGEACCRUE, NOCHECK));
     if (dh->isDefined() && !dh->isNull())
     {
-        if (dynamic_cast<const LADataBool &>(dh->get()).get())
+        if (dynamic_cast<const AQLDataBool &>(dh->get()).get())
         {
-            ret->add(PRICING_DATA_ISRANGEACCRUE, new LADataBool(true));
+            ret->add(PRICING_DATA_ISRANGEACCRUE, new AQLDataBool(true));
 			
 			// range accrue strike
 			dh = &(leg->getData(PRICING_DATA_RANGEACCRUESTRIKE, NOCHECK));
@@ -637,21 +637,21 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 			dh = &(leg->getData(PRICING_DATA_RANGEACCRUEINFOS, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
             {
-				const LADataMultiReference& rangeInfos = dynamic_cast<const LADataMultiReference&>(dh->get());
-				LAString rangeinfo_str;
+				const AQLDataMultiReference& rangeInfos = dynamic_cast<const AQLDataMultiReference&>(dh->get());
+				AQLString rangeinfo_str;
 				if (is_doublerange)
 				{
 					if (rangeInfos.getSize() != 2)
 					{
-						throw LACoreInvalidData("Double Range must have 2 Range Infos", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("Double Range must have 2 Range Infos", __FILE__, __LINE__);
 					}
 					rangeinfo_str = *p_basename + "_" + RANGEINFO + "1:" + *p_basename + "_" + RANGEINFO + "2";
 					if (cf_pos2 == 0)
 					{
 						for (unsigned int j = 0; j < rangeInfos.getSize(); j++)
 						{
-							const LAString rangeinfo_name = name + "_" + RANGEINFO + LADataInt(j + 1).convertToString();
-							LAObjectHolder eholder;
+							const AQLString rangeinfo_name = name + "_" + RANGEINFO + AQLDataInt(j + 1).convertToString();
+							AQLObjectHolder eholder;
 							eholder.setEntity(cf_gen->createRangeAccrueInfo(rangeinfo_name, rangeInfos.get(j).get(), 
 								start_date, end_date, is_arrear, cf_pos, payment_dates, payment_dates_unadj), true);
 							objectPool->remove(rangeinfo_name);
@@ -659,26 +659,26 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 							eholder.setDeleteFlag(false);
 						}
 					}
-					dh = &ret->add(PRICING_DATA_RANGEACCRUEINFOS, new LADataMultiReference());
+					dh = &ret->add(PRICING_DATA_RANGEACCRUEINFOS, new AQLDataMultiReference());
 					dh->convertFromString(rangeinfo_str);
 
 					if (cf_pos2 == 0)
 					{
-						ret->add(PRICING_DATA_ISANDCONDITION, new LADataBool(false));
+						ret->add(PRICING_DATA_ISANDCONDITION, new AQLDataBool(false));
 					}
 					else if (cf_pos2 == 1)
 					{
-						ret->add(PRICING_DATA_ISANDCONDITION, new LADataBool(true));
+						ret->add(PRICING_DATA_ISANDCONDITION, new AQLDataBool(true));
 					}
 					else if (cf_pos2 == 2)
 					{
-						ret->add(PRICING_DATA_ISANDCONDITION, new LADataBool(false));
-						ret->add(PRICING_DATA_ISEXCLUDEANDCONDITION, new LADataBool(true));
+						ret->add(PRICING_DATA_ISANDCONDITION, new AQLDataBool(false));
+						ret->add(PRICING_DATA_ISEXCLUDEANDCONDITION, new AQLDataBool(true));
 					}
 					else if (cf_pos2 == 3)
 					{
-						ret->add(PRICING_DATA_ISANDCONDITION, new LADataBool(false));
-						ret->add(PRICING_DATA_ISNOTCONDITION, new LADataBool(true));
+						ret->add(PRICING_DATA_ISANDCONDITION, new AQLDataBool(false));
+						ret->add(PRICING_DATA_ISNOTCONDITION, new AQLDataBool(true));
 					}
 				}
 				else
@@ -686,8 +686,8 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 					for (unsigned int j = 0; j < rangeInfos.getSize(); j++)
 					{
 						if (j != 0) rangeinfo_str += ":";
-						const LAString rangeinfo_name = name + "_" + RANGEINFO + LADataInt(j + 1).convertToString();
-						LAObjectHolder eholder;
+						const AQLString rangeinfo_name = name + "_" + RANGEINFO + AQLDataInt(j + 1).convertToString();
+						AQLObjectHolder eholder;
 						eholder.setEntity(cf_gen->createRangeAccrueInfo(rangeinfo_name, rangeInfos.get(j).get(), 
 							start_date, end_date, is_arrear, cf_pos, payment_dates, payment_dates_unadj), true);
 						objectPool->remove(rangeinfo_name);
@@ -696,7 +696,7 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 
 						rangeinfo_str += rangeinfo_name;
 					}
-					dh = &ret->add(PRICING_DATA_RANGEACCRUEINFOS, new LADataMultiReference());
+					dh = &ret->add(PRICING_DATA_RANGEACCRUEINFOS, new AQLDataMultiReference());
 					dh->convertFromString(rangeinfo_str);
 
 					// range accrue condition is And or OR
@@ -711,29 +711,29 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 			{
 				// range accrue indexinfos
 				dh = &(leg->getData(PRICING_DATA_RANGEACCRUEINDEXINFOS, ISNOTNULL));
-				const LADataMultiReference& raindexinfos
-					= dynamic_cast<const LADataMultiReference&>(dh->get());
-				LAString raindexinfo_str;
+				const AQLDataMultiReference& raindexinfos
+					= dynamic_cast<const AQLDataMultiReference&>(dh->get());
+				AQLString raindexinfo_str;
 				for (unsigned int j = 0; j < raindexinfos.getSize(); j++)
 				{
 					if (j != 0) raindexinfo_str += ":";
 
-					LAString raindexinfo_name = name + "_" + RANGEACCUREINDEXINFO + LADataInt(j + 1).convertToString();
+					AQLString raindexinfo_name = name + "_" + RANGEACCUREINDEXINFO + AQLDataInt(j + 1).convertToString();
 
-					LAObjectHolder eholder;
+					AQLObjectHolder eholder;
 
 					// observation offset
 					dh = &(leg->getData(PRICING_DATA_RANGEACCRUEOBSERVATIONOFFSET, NOCHECK));
-					LADate obsSDate = start_date;
-					LADate obsEDate = end_date;
+					AQLDate obsSDate = start_date;
+					AQLDate obsEDate = end_date;
 					if(dh->isDefined() && !dh->isNull())
 					{
-						int offset = dynamic_cast<const LADataInt&>(dh->get()).get();
-						LAString offset_str = LAString(offset) + LAString("d");
-						const LAPriceDataSlidingRule& srl
-							= dynamic_cast<const LAPriceDataSlidingRule& >(leg->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
-						const LAPriceDataCalendar& cal 
-							= dynamic_cast<const LAPriceDataCalendar& >(leg->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+						int offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();
+						AQLString offset_str = AQLString(offset) + AQLString("d");
+						const AQLPriceDataSlidingRule& srl
+							= dynamic_cast<const AQLPriceDataSlidingRule& >(leg->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+						const AQLPriceDataCalendar& cal 
+							= dynamic_cast<const AQLPriceDataCalendar& >(leg->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
 						// range observation start date
 						obsSDate = LAMathDateCalculations::getDate(start_date, offset_str, srl, &cal, false);
 						// range observation end date
@@ -749,7 +749,7 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 					raindexinfo_str += raindexinfo_name;
 
 				}
-				dh = &ret->add(PRICING_DATA_RANGEACCRUEINDEXINFOS, new LADataMultiReference());
+				dh = &ret->add(PRICING_DATA_RANGEACCRUEINDEXINFOS, new AQLDataMultiReference());
 				dh->convertFromString(raindexinfo_str);
 
 				// range accrue operator
@@ -775,31 +775,31 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 				dh = &(leg->getData(PRICING_DATA_RANGEACCRUEBOUNDARYINDEXINFOS, NOCHECK));
 				if(dh->isDefined() && !dh->isNull())
 				{
-					const LADataMultiReference& boundaryIndexInfos 
-						= dynamic_cast<const LADataMultiReference&>(dh->get());
+					const AQLDataMultiReference& boundaryIndexInfos 
+						= dynamic_cast<const AQLDataMultiReference&>(dh->get());
 
-					LAString boundaryIndexInfo_str;
+					AQLString boundaryIndexInfo_str;
 					for (unsigned int j = 0; j < boundaryIndexInfos.getSize(); j++)
 					{
 						if (j != 0) boundaryIndexInfo_str += ":";
 
-						LAString indexinfo_name 
-							= name + "_" + RANGEACCUREBOUNDARYINDEXINFO + LADataInt(j + 1).convertToString();
+						AQLString indexinfo_name 
+							= name + "_" + RANGEACCUREBOUNDARYINDEXINFO + AQLDataInt(j + 1).convertToString();
 
-						LADate advancepaymentdate;
+						AQLDate advancepaymentdate;
 						if (!is_arrear) advancepaymentdate = payment_dates[cf_pos];
 						else if (cf_pos > 0) advancepaymentdate = payment_dates[cf_pos - 1];
 						else
 						{
 							dh = &(leg->getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-							const LADate& temp_startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+							const AQLDate& temp_startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 
 							advancepaymentdate = LAPriceCFGenUtility::getDate(temp_startdate, *leg, 
 								CALIBRATION_DATA_SLIDINGRULE, CALIBRATION_DATA_CALENDAR);
 						}
 
 						DateVector tmpdates;
-						LAObjectHolder eholder;
+						AQLObjectHolder eholder;
 						eholder.setEntity(cf_gen->createIndexInfo(indexinfo_name, 
 																  advancepaymentdate, 
 																  payment_dates[cf_pos], 
@@ -817,7 +817,7 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 
 						boundaryIndexInfo_str += indexinfo_name;
 					}
-					dh = &ret->add(PRICING_DATA_RANGEACCRUEBOUNDARYINDEXINFOS, new LADataMultiReference());
+					dh = &ret->add(PRICING_DATA_RANGEACCRUEBOUNDARYINDEXINFOS, new AQLDataMultiReference());
 					dh->convertFromString(boundaryIndexInfo_str);
 
 					// range accrue max boundary operator
@@ -854,20 +854,20 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
             dh = &(leg->getData(PRICING_DATA_RANGEACCRUEOBSERVATIONOFFSET, NOCHECK));
             if(dh->isDefined() && !dh->isNull())
             {
-                int offset = dynamic_cast<const LADataInt&>(dh->get()).get();
-                LAString offset_str = LAString(offset) + LAString("d");
-                const LAPriceDataSlidingRule& srl
-                    = dynamic_cast<const LAPriceDataSlidingRule& >(leg->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
-                const LAPriceDataCalendar& cal 
-                    = dynamic_cast<const LAPriceDataCalendar& >(leg->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+                int offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();
+                AQLString offset_str = AQLString(offset) + AQLString("d");
+                const AQLPriceDataSlidingRule& srl
+                    = dynamic_cast<const AQLPriceDataSlidingRule& >(leg->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+                const AQLPriceDataCalendar& cal 
+                    = dynamic_cast<const AQLPriceDataCalendar& >(leg->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
                 // range observation start date
-                LADate obsSDate = LAMathDateCalculations::getDate(start_date, offset_str, srl, &cal, false);
-                dh = &ret->add(PRICING_DATA_RANGEACCRUEOBSERVATIONSTARTDATE, new LADataDate());
-                dynamic_cast<LADataDate&>(dh->get()).set(obsSDate);
+                AQLDate obsSDate = LAMathDateCalculations::getDate(start_date, offset_str, srl, &cal, false);
+                dh = &ret->add(PRICING_DATA_RANGEACCRUEOBSERVATIONSTARTDATE, new AQLDataDate());
+                dynamic_cast<AQLDataDate&>(dh->get()).set(obsSDate);
                 // range observation end date
-                LADate obsEDate = LAMathDateCalculations::getDate(end_date, offset_str, srl, &cal, false);
-                dh = &ret->add(PRICING_DATA_RANGEACCRUEOBSERVATIONENDDATE, new LADataDate());
-                dynamic_cast<LADataDate&>(dh->get()).set(obsEDate); 
+                AQLDate obsEDate = LAMathDateCalculations::getDate(end_date, offset_str, srl, &cal, false);
+                dh = &ret->add(PRICING_DATA_RANGEACCRUEOBSERVATIONENDDATE, new AQLDataDate());
+                dynamic_cast<AQLDataDate&>(dh->get()).set(obsEDate); 
             }
 
 			// operator for range accrue hit rate
@@ -913,10 +913,10 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 	dh = &leg->getData(PRICING_DATA_SETTLEMENTCURRENCY, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		ret->add(PRICING_DATA_SETTLEMENTCURRENCY, new LADataString(dynamic_cast<LADataString&>(dh->get())));
+		ret->add(PRICING_DATA_SETTLEMENTCURRENCY, new AQLDataString(dynamic_cast<AQLDataString&>(dh->get())));
 
-		const LAPriceDataSlidingRule* psrule = NULL;
-		const LAPriceDataCalendar* pcal = NULL;
+		const AQLPriceDataSlidingRule* psrule = NULL;
+		const AQLPriceDataCalendar* pcal = NULL;
 		LAPriceCFGenUtility::getBusDayRuleAndCalendar(*leg,
 			PRICING_DATA_SETTLEMENTFIXINGSLIDINGRULE,
 			PRICING_DATA_SETTLEMENTFIXINGCALENDAR,
@@ -924,11 +924,11 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
 			PRICING_DATA_SETTLEMENTFIXINGSLIDINGRULE,
 			PRICING_DATA_SETTLEMENTFIXINGCALENDAR,
 			psrule, pcal);
-		const int offset = dynamic_cast<const LADataInt&>((leg->getData(PRICING_DATA_SETTLEMENTFIXINGOFFSET, NOCHECK)).get());
-		const LAString offset_str = LAString(offset) + LAString("d");
-		const LADate paydate = dynamic_cast<const LADataDate&>(ret->getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL).get());
-		const LADate fixgdate = LAMathDateCalculations::getDate(paydate, offset_str, *psrule, pcal, false);
-		ret->add(PRICING_DATA_SETTLEMENTFIXINGDATE, new LADataDate(fixgdate));
+		const int offset = dynamic_cast<const AQLDataInt&>((leg->getData(PRICING_DATA_SETTLEMENTFIXINGOFFSET, NOCHECK)).get());
+		const AQLString offset_str = AQLString(offset) + AQLString("d");
+		const AQLDate paydate = dynamic_cast<const AQLDataDate&>(ret->getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL).get());
+		const AQLDate fixgdate = LAMathDateCalculations::getDate(paydate, offset_str, *psrule, pcal, false);
+		ret->add(PRICING_DATA_SETTLEMENTFIXINGDATE, new AQLDataDate(fixgdate));
 	}
 
     return ret.release();
@@ -939,7 +939,7 @@ LAPriceCashFlowGenerator::CashletCreator::createCashlet(const size_t cf_pos,
     @brief default constructor
 */
 LAPriceCashFlowGenerator::LAPriceCashFlowGenerator()
-: LACoreProcedure()
+: AQLCoreProcedure()
 {
 }
 /*!
@@ -959,14 +959,14 @@ bool
 LAPriceCashFlowGenerator::isTypeOf(function_t id) const
 {
 	return (id == FN_IR_CASHFLOWGENERATOR ? true :
-						LACoreProcedure::isTypeOf(id));
+						AQLCoreProcedure::isTypeOf(id));
 }
 /*!
     @brief  Copy this class
 
 	@return pointer to original object
 */
-LACoreFunctionBase*		
+AQLCoreFunctionBase*		
 LAPriceCashFlowGenerator::clone() const
 {
     try 
@@ -975,7 +975,7 @@ LAPriceCashFlowGenerator::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -996,7 +996,7 @@ LAPriceCashFlowGenerator::getType() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceCashFlowGenerator::registerData(LAPriceDataManager& dm) const
+LAPriceCashFlowGenerator::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(PRICING_DATA_STARTDATE, DATA_DATE);
 	dm.setData(PRICING_DATA_ENDDATE, DATA_DATE);
@@ -1201,9 +1201,9 @@ LAPriceCashFlowGenerator::registerData(LAPriceDataManager& dm) const
 	@note basedate is not used in estimation
 */
 void	            
-LAPriceCashFlowGenerator::calibrateModel(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const
+LAPriceCashFlowGenerator::calibrateModel(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const
 {
 
 	(void)basedate; (void)att; //20070411--Nagase--gcc
@@ -1211,14 +1211,14 @@ LAPriceCashFlowGenerator::calibrateModel(const LADate& basedate,
 	setUpLegMaturity(object);
 
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	//for equivalent strike for swaption value
 	setUpEquivalentStrike(object);
 
 	//leg object
 	dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	LADataMultiReference& legs = dynamic_cast<LADataMultiReference&>(dh->get());
+	AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference&>(dh->get());
 	//create Cashlets
     for (unsigned int i = 0; i < legs.getSize(); i++){
         modifyLegInfo(legs.get(i).get());
@@ -1229,7 +1229,7 @@ LAPriceCashFlowGenerator::calibrateModel(const LADate& basedate,
 	dh = &object.getData(PRICING_DATA_DONOTMODIFYTRADE, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		if(dynamic_cast<LADataBool&>(dh->get()).get())
+		if(dynamic_cast<AQLDataBool&>(dh->get()).get())
 			return;
 	}
 
@@ -1262,9 +1262,9 @@ LAPriceCashFlowGenerator::calibrateModel(const LADate& basedate,
 	@param[in, out] leg object
 */
 void
-LAPriceCashFlowGenerator::createCashlets(LAObject& leg) const  
+LAPriceCashFlowGenerator::createCashlets(AQLObject& leg) const  
 {
-    LAString input_type = dynamic_cast<const LADataString&>(leg.getData(PRICING_DATA_INPUTTYPE, ISNOTNULL).get()).get();
+    AQLString input_type = dynamic_cast<const AQLDataString&>(leg.getData(PRICING_DATA_INPUTTYPE, ISNOTNULL).get()).get();
     input_type.toUpper();
     if(input_type == MANUAL) return;
 
@@ -1286,30 +1286,30 @@ LAPriceCashFlowGenerator::createCashlets(LAObject& leg) const
 
 
 
-    const LAString leg_name = dynamic_cast<const LADataString&>(leg.getData(CALIBRATION_DATA_NAME).get()).get();
+    const AQLString leg_name = dynamic_cast<const AQLDataString&>(leg.getData(CALIBRATION_DATA_NAME).get()).get();
 
 
 	// for fixed terms
 	DateVector fixeddates;
 	DoubleArray fixedrates;
 	bool is_digital = false;
-	LADataHolder* dh = &(leg.getData(PRICING_DATA_FIXEDTERMS, NOCHECK));
+	AQLDataHolder* dh = &(leg.getData(PRICING_DATA_FIXEDTERMS, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
 		fixeddates = getFixedDates(leg);
-		fixedrates = dynamic_cast<const LADataDoubles&>(leg.getData(PRICING_DATA_FIXEDRATES, ISNOTNULL).get()).get();
+		fixedrates = dynamic_cast<const AQLDataDoubles&>(leg.getData(PRICING_DATA_FIXEDRATES, ISNOTNULL).get()).get();
 		if (fixeddates.size() != fixedrates.size())
 		{
 			//error
-			LAString msg = "FixedRates is not same size as FixedDates.";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+			AQLString msg = "FixedRates is not same size as FixedDates.";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 		}
 
 		// for digital product
 		dh = &(leg.getData(PRICING_DATA_COUPONSELECTOPERATOR, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const LAString& cpnop = dynamic_cast<const LAPriceDataFunction&>(dh->get()).convertToString();
+			const AQLString& cpnop = dynamic_cast<const AQLPriceDataFunction&>(dh->get()).convertToString();
 			if (cpnop.findString(FN_CPNSLTOPERATORFORDIGITAL2_STR) != -1) is_digital = true;
 		}
 	}
@@ -1317,15 +1317,15 @@ LAPriceCashFlowGenerator::createCashlets(LAObject& leg) const
 	dh =  &(leg.getData(PRICING_DATA_ISDOUBLERANGE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		is_doublerange = dynamic_cast<const LADataBool&>(dh->get()).get();
+		is_doublerange = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	}
 
-    LAString cashlet_names = "";
+    AQLString cashlet_names = "";
     unsigned int k = 0;              // indices for start/end dates
     unsigned int sPos = 0, ePos = 0, payPos = 0; // indices for compound dates
     for(unsigned int i = 0; i < cf_size; i++){
         if (i != 0) cashlet_names += ":";
-		const LAString cashlet_name = leg_name + "_" + CASHLET + LADataInt(i + 1).convertToString();
+		const AQLString cashlet_name = leg_name + "_" + CASHLET + AQLDataInt(i + 1).convertToString();
 		cashlet_names += cashlet_name;
 
 		const bool is_notional_exchange_only =
@@ -1337,10 +1337,10 @@ LAPriceCashFlowGenerator::createCashlets(LAObject& leg) const
         {
             unsigned int allSize = rolldates.size();
             if (allSize != rolldates_unadjust.size())
-                throw LACoreInvalidData("roll generator size error",__FILE__,__LINE__);
+                throw AQLCoreInvalidData("roll generator size error",__FILE__,__LINE__);
 
-            if (!LAAlgorithm::find<DateVector, LADate>(rollenddates, enddates[k],0, rollenddates.size() -1, ePos))
-                throw LACoreInvalidData("roll end date error",__FILE__,__LINE__);
+            if (!AQLAlgorithm::find<DateVector, AQLDate>(rollenddates, enddates[k],0, rollenddates.size() -1, ePos))
+                throw AQLCoreInvalidData("roll end date error",__FILE__,__LINE__);
 
             unsigned int rollSize = ePos + 1 -sPos;
 
@@ -1349,11 +1349,11 @@ LAPriceCashFlowGenerator::createCashlets(LAObject& leg) const
             compendvec.resize(rollSize);
 
             if (rollstartdates.size() != rollenddates.size())
-                throw LACoreInvalidData("roll generator size error",__FILE__,__LINE__);
+                throw AQLCoreInvalidData("roll generator size error",__FILE__,__LINE__);
 
             unsigned int scfPos = 0;
-            if (!LAAlgorithm::find<DateVector, LADate>(rollstartdates, startdates[k],0, rollstartdates.size() -1, scfPos))
-                throw LACoreInvalidData("roll calcd start date error",__FILE__,__LINE__);
+            if (!AQLAlgorithm::find<DateVector, AQLDate>(rollstartdates, startdates[k],0, rollstartdates.size() -1, scfPos))
+                throw AQLCoreInvalidData("roll calcd start date error",__FILE__,__LINE__);
 
 			if (creator.getIsArrear() && creator.getIsNotionalExchangeStart())
 				payPos = sPos + 1;
@@ -1380,7 +1380,7 @@ LAPriceCashFlowGenerator::createCashlets(LAObject& leg) const
 			}
 		}
 
-        std::unique_ptr<LAObject> cashlet;
+        std::unique_ptr<AQLObject> cashlet;
 		if (is_doublerange)
 		{
 			if(is_notional_exchange_only){
@@ -1400,7 +1400,7 @@ LAPriceCashFlowGenerator::createCashlets(LAObject& leg) const
 													&cashlet_name));
 			}
 
-			LAObjectPool& objPool = leg.getDataInstance()->getObjectPool();
+			AQLObjectPool& objPool = leg.getDataInstance()->getObjectPool();
 			objPool.remove(cashlet_name);
 			objPool.set(cashlet_name, cashlet.release());
 
@@ -1408,7 +1408,7 @@ LAPriceCashFlowGenerator::createCashlets(LAObject& leg) const
 			unsigned int fixedrate_size = 3;
 			for (unsigned int l = 0; l < fixedrate_size; ++l)
 			{
-				const LAString cashlet_name2 = cashlet_name + "_" + LADataInt(l + 1).convertToString();
+				const AQLString cashlet_name2 = cashlet_name + "_" + AQLDataInt(l + 1).convertToString();
 				cashlet.reset(creator.createCashlet(i,
 													cashlet_name2,
 													startdates[k],
@@ -1446,12 +1446,12 @@ LAPriceCashFlowGenerator::createCashlets(LAObject& leg) const
 				k++;
 			}
 
-			LAObjectPool& objPool = leg.getDataInstance()->getObjectPool();
+			AQLObjectPool& objPool = leg.getDataInstance()->getObjectPool();
 			objPool.remove(cashlet_name);
 			objPool.set(cashlet_name, cashlet.release());
 		}
     }
-	leg.add(PRICING_DATA_CASHLETS, new LADataMultiReference()).convertFromString(cashlet_names);
+	leg.add(PRICING_DATA_CASHLETS, new AQLDataMultiReference()).convertFromString(cashlet_names);
 }
 
 /*!
@@ -1463,49 +1463,49 @@ LAPriceCashFlowGenerator::createCashlets(LAObject& leg) const
 	@return	pointer of object that represents index information
 
 */
-LAObject*
-LAPriceCashFlowGenerator::createRangeAccrueInfo(const LAString name, const LAObject& rangeinfo, const LADate& startdate, 
-											 const LADate& enddate, const bool is_arrear, const int cf_pos, 
+AQLObject*
+LAPriceCashFlowGenerator::createRangeAccrueInfo(const AQLString name, const AQLObject& rangeinfo, const AQLDate& startdate, 
+											 const AQLDate& enddate, const bool is_arrear, const int cf_pos, 
 											 const DateVector& payment_dates, const DateVector& payment_dates_unadj) const
 {
-	const LADataHolder *dh;
-	LAObject *prangeinfo = rangeinfo.clone();
-	LAObjectHolder objHolder;
+	const AQLDataHolder *dh;
+	AQLObject *prangeinfo = rangeinfo.clone();
+	AQLObjectHolder objHolder;
 	objHolder.setEntity(prangeinfo, true);
-	LAObjectPool& objPool = rangeinfo.getDataInstance()->getObjectPool();
+	AQLObjectPool& objPool = rangeinfo.getDataInstance()->getObjectPool();
 
 	// name
-	LADataHolder *ahNm = &(prangeinfo->getData(CALIBRATION_DATA_NAME, NOCHECK));
+	AQLDataHolder *ahNm = &(prangeinfo->getData(CALIBRATION_DATA_NAME, NOCHECK));
 	if (!ahNm->isDefined())
 	{
-		ahNm = &(prangeinfo->add(CALIBRATION_DATA_NAME, new LADataString()));
+		ahNm = &(prangeinfo->add(CALIBRATION_DATA_NAME, new AQLDataString()));
 	}
     ahNm->convertFromString(name);
 
     // range accrue indexinfos
     dh = &(rangeinfo.getData(PRICING_DATA_RANGEACCRUEINDEXINFOS, ISNOTNULL));
-    const LADataMultiReference& raindexinfos = dynamic_cast<const LADataMultiReference&>(dh->get());
-    LAString raindexinfo_str;
+    const AQLDataMultiReference& raindexinfos = dynamic_cast<const AQLDataMultiReference&>(dh->get());
+    AQLString raindexinfo_str;
     for (unsigned int j = 0; j < raindexinfos.getSize(); j++)
     {
         if (j != 0) raindexinfo_str += ":";
 
-        LAString raindexinfo_name = name + "_" + RANGEACCUREINDEXINFO + LADataInt(j + 1).convertToString();
+        AQLString raindexinfo_name = name + "_" + RANGEACCUREINDEXINFO + AQLDataInt(j + 1).convertToString();
 
-        LAObjectHolder eholder;
+        AQLObjectHolder eholder;
 
         // observation offset
         dh = &(rangeinfo.getData(PRICING_DATA_RANGEACCRUEOBSERVATIONOFFSET, NOCHECK));
-        LADate obsSDate = startdate;
-        LADate obsEDate = enddate;
+        AQLDate obsSDate = startdate;
+        AQLDate obsEDate = enddate;
         if(dh->isDefined() && !dh->isNull())
         {
-            int offset = dynamic_cast<const LADataInt&>(dh->get()).get();
-            LAString offset_str = LAString(offset) + LAString("d");
-            const LAPriceDataSlidingRule& srl
-                = dynamic_cast<const LAPriceDataSlidingRule& >(rangeinfo.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
-            const LAPriceDataCalendar& cal 
-                = dynamic_cast<const LAPriceDataCalendar& >(rangeinfo.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+            int offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();
+            AQLString offset_str = AQLString(offset) + AQLString("d");
+            const AQLPriceDataSlidingRule& srl
+                = dynamic_cast<const AQLPriceDataSlidingRule& >(rangeinfo.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+            const AQLPriceDataCalendar& cal 
+                = dynamic_cast<const AQLPriceDataCalendar& >(rangeinfo.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
             // range observation start date
             obsSDate = LAMathDateCalculations::getDate(startdate, offset_str, srl, &cal, false);
             // range observation end date
@@ -1521,38 +1521,38 @@ LAPriceCashFlowGenerator::createRangeAccrueInfo(const LAString name, const LAObj
         raindexinfo_str += raindexinfo_name;
     }
 	prangeinfo->remove(PRICING_DATA_RANGEACCRUEINDEXINFOS);
-    LADataHolder* ahIdx = &prangeinfo->add(PRICING_DATA_RANGEACCRUEINDEXINFOS, new LADataMultiReference());
+    AQLDataHolder* ahIdx = &prangeinfo->add(PRICING_DATA_RANGEACCRUEINDEXINFOS, new AQLDataMultiReference());
     ahIdx->convertFromString(raindexinfo_str);
 
     // boundary index infos
     dh = &(rangeinfo.getData(PRICING_DATA_RANGEACCRUEBOUNDARYINDEXINFOS, NOCHECK));
     if(dh->isDefined() && !dh->isNull())
     {
-        const LADataMultiReference& boundaryIndexInfos 
-            = dynamic_cast<const LADataMultiReference&>(dh->get());
+        const AQLDataMultiReference& boundaryIndexInfos 
+            = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 
-        LAString boundaryIndexInfo_str;
+        AQLString boundaryIndexInfo_str;
         for (unsigned int j = 0; j < boundaryIndexInfos.getSize(); j++)
         {
             if (j != 0) boundaryIndexInfo_str += ":";
 
-            LAString indexinfo_name 
-                = name + "_" + RANGEACCUREBOUNDARYINDEXINFO + LADataInt(j + 1).convertToString();
+            AQLString indexinfo_name 
+                = name + "_" + RANGEACCUREBOUNDARYINDEXINFO + AQLDataInt(j + 1).convertToString();
 
-            LADate advancepaymentdate;
+            AQLDate advancepaymentdate;
             if (!is_arrear) advancepaymentdate = payment_dates[cf_pos];
             else if (cf_pos > 0) advancepaymentdate = payment_dates[cf_pos - 1];
             else
             {
                 dh = &(rangeinfo.getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-                const LADate& temp_startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+                const AQLDate& temp_startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 
                 advancepaymentdate = LAPriceCFGenUtility::getDate(temp_startdate, *prangeinfo, 
                     CALIBRATION_DATA_SLIDINGRULE, CALIBRATION_DATA_CALENDAR);
             }
 
             DateVector tmpdates;
-            LAObjectHolder eholder;
+            AQLObjectHolder eholder;
             eholder.setEntity(this->createIndexInfo(indexinfo_name, 
                                                       advancepaymentdate, 
                                                       payment_dates[cf_pos], 
@@ -1571,7 +1571,7 @@ LAPriceCashFlowGenerator::createRangeAccrueInfo(const LAString name, const LAObj
             boundaryIndexInfo_str += indexinfo_name;
         }
 		prangeinfo->remove(PRICING_DATA_RANGEACCRUEBOUNDARYINDEXINFOS);
-        ahIdx = &prangeinfo->add(PRICING_DATA_RANGEACCRUEBOUNDARYINDEXINFOS, new LADataMultiReference());
+        ahIdx = &prangeinfo->add(PRICING_DATA_RANGEACCRUEBOUNDARYINDEXINFOS, new AQLDataMultiReference());
         ahIdx->convertFromString(boundaryIndexInfo_str);
     }
 	objHolder.setDeleteFlag(false);
@@ -1589,24 +1589,24 @@ LAPriceCashFlowGenerator::createRangeAccrueInfo(const LAString name, const LAObj
 	@param[in] string of frequency if empty, frequency is called from frequency data. 
 */
 void
-LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg, 
+LAPriceCashFlowGenerator::calcPaymentDates(AQLObject& leg, 
 										DateVector& paymentdates,
 										DateVector& paymentdates_unadjust,
 										DateVector& startdates,
 										DateVector& startdates_unadjust,
 										DateVector& enddates,
 										DateVector& enddates_unadjust,
-                                        const LADate& start_date,
-                                        const LADate& end_date,
-										const LAString& freq,
-                                        const LADate* first_odd_date,
-                                        const LADate* last_odd_date) const
+                                        const AQLDate& start_date,
+                                        const AQLDate& end_date,
+										const AQLString& freq,
+                                        const AQLDate* first_odd_date,
+                                        const AQLDate* last_odd_date) const
 {
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	
 	//isArrear
 	dh = &(leg.getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL));
-	const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+	const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 	bool isarrear = LAPriceCFGenUtility::isArrear(timing);
 
 	//coupon day
@@ -1615,47 +1615,47 @@ LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg,
 	dh = &(leg.getData(PRICING_DATA_COUPONDAY, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		day = dynamic_cast<const LADataInt&>(dh->get()).get();
+		day = dynamic_cast<const AQLDataInt&>(dh->get()).get();
 		pday = &day;
 	}
 
 	//roll convention
-	const LAString* pRollConv = NULL;
+	const AQLString* pRollConv = NULL;
 	dh = &(leg.getData(PRICING_DATA_ROLLCONVENTION, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		pRollConv = &dynamic_cast<const LADataString&>(dh->get()).get();
+		pRollConv = &dynamic_cast<const AQLDataString&>(dh->get()).get();
 	}
 
 
 
 	// isNotionalChangeAtStat
-    const bool isnotionalchangestart = (dh=&leg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATSTART))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get();
-    const bool isnotionalchangeend = (dh=&leg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get();
+    const bool isnotionalchangestart = (dh=&leg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATSTART))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get();
+    const bool isnotionalchangeend = (dh=&leg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get();
 
 
 	//isforwardroll
 	bool isforwardroll = true;
 	dh = &(leg.getData(PRICING_DATA_ISFORWARDROLL, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		isforwardroll = dynamic_cast<const LADataBool&>(dh->get()).get();
+		isforwardroll = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 
 	
 	///////////////////////////////////////
 	//payment dates before holiday adjust//
 	///////////////////////////////////////
 	DateVector tmp_paymentdates_unadjust;
-	const LAPriceDataSlidingRule* pSldRule = NULL;
-	const LAPriceDataCalendar* pCal = NULL;
+	const AQLPriceDataSlidingRule* pSldRule = NULL;
+	const AQLPriceDataCalendar* pCal = NULL;
 
 	if(freq == BUSINESS_DAYS || freq == DAILY)
 	{
 		dh = &(leg.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL));
-		pSldRule = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+		pSldRule = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 
 		dh = &(leg.getData(CALIBRATION_DATA_CALENDAR, NOCHECK));
 		if(dh->isDefined() && !dh->isNull()){
-			pCal = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+			pCal = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 		}
 		
 		isforwardroll = true;
@@ -1687,12 +1687,12 @@ LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg,
 	paymentdates = paymentdates_unadjust;
 	//sliding rule
 	dh = &(leg.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL));
-	const LAPriceDataSlidingRule& srule = dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+	const AQLPriceDataSlidingRule& srule = dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 	if (srule.getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 	{
 		//calendar
 		dh = &(leg.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-		const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+		const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 		for (unsigned int i = 0; i < paymentdates_unadjust.size(); i++)		
 			paymentdates[i] = srule.getDate(paymentdates_unadjust[i], cal);
 	}
@@ -1729,21 +1729,21 @@ LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg,
 	startdates_unadjust = startdates;
 	enddates_unadjust = enddates;
 
-	const LAPriceDataSlidingRule* psrule = &srule;
-	const LAPriceDataCalendar* pcal = NULL;
+	const AQLPriceDataSlidingRule* psrule = &srule;
+	const AQLPriceDataCalendar* pcal = NULL;
 	//sliding rule
 	dh = &(leg.getData(PRICING_DATA_CASHFLOWSLIDINGRULE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		psrule = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+		psrule = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 	if (psrule->getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 	{
 		dh = &(leg.getData(PRICING_DATA_CASHFLOWCALENDAR, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())	
-			pcal = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+			pcal = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 		else
 		{
             dh = &(leg.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-			pcal = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+			pcal = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 		}
 	}
 
@@ -1769,19 +1769,19 @@ LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg,
 
 */
 void
-LAPriceCashFlowGenerator::calcNotionalArray(const LAObject& leg,
+LAPriceCashFlowGenerator::calcNotionalArray(const AQLObject& leg,
 										const unsigned int cfsize,
 										DoubleArray& notional_array) const
 {
 	notional_array.clear();
 	
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	// notional
 	dh = &(leg.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL));
-	double notional = dynamic_cast<const LADataDouble&>(dh->get()).get();
+	double notional = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 
 	// isamortize
-	const bool isamortize = (dh = &leg.getData(PRICING_DATA_ISAMORTIZE))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get();
+	const bool isamortize = (dh = &leg.getData(PRICING_DATA_ISAMORTIZE))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	
 
 	if (!isamortize)
@@ -1792,24 +1792,24 @@ LAPriceCashFlowGenerator::calcNotionalArray(const LAObject& leg,
 
 	// isArrear payment
 	dh = &(leg.getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL));
-	const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+	const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 	bool isarrear = LAPriceCFGenUtility::isArrear(timing);
 	
 	// isNotionalChangeAtStat/End
-    const bool isnotionalchangestart = (dh = &leg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATSTART))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get();
-    const bool isnotionalchangeend = (dh = &leg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get();
+    const bool isnotionalchangestart = (dh = &leg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATSTART))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get();
+    const bool isnotionalchangeend = (dh = &leg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get();
 
 	unsigned int couponcfsize = cfsize;
 	if (isnotionalchangestart && isnotionalchangeend) couponcfsize -= 1;
 
 	// IsFirstFraction
 	dh = &(leg.getData(PRICING_DATA_ISAMORTIZE1STFRACTION, ISNOTNULL));
-	bool isfirstfraction = dynamic_cast<const LADataBool&>(dh->get()).get();
+	bool isfirstfraction = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 
 
 	// AmortizeType
 	dh = &(leg.getData(PRICING_DATA_AMORTIZETYPE, ISNOTNULL));
-	LAString amortize_type = dynamic_cast<const LADataString&>(dh->get()).get();
+	AQLString amortize_type = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	amortize_type.toUpper();
 	double amount;
 	if (amortize_type == EQUALIZATION)
@@ -1817,22 +1817,22 @@ LAPriceCashFlowGenerator::calcNotionalArray(const LAObject& leg,
 		// notional payment of one time
 		amount = notional / couponcfsize;
 		dh = &(leg.getData(PRICING_DATA_AMORTIZEROUNDFUNCTION, ISNOTNULL));
-		const LAString& roundfunction = dynamic_cast<const LADataString&>(dh->get()).get();
+		const AQLString& roundfunction = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		dh = &(leg.getData(PRICING_DATA_AMORTIZEROUNDDIGIT, ISNOTNULL));
-		int rounddigit = dynamic_cast<const LADataInt&>(dh->get()).get();
+		int rounddigit = dynamic_cast<const AQLDataInt&>(dh->get()).get();
 		amount = LAPriceCFGenUtility::round(amount, roundfunction, rounddigit);		
 	}
 	else if (amortize_type == AMOUNTSETTING)
 	{
 		dh = &(leg.getData(PRICING_DATA_AMORTIZEAMOUNT, ISNOTNULL));
-		amount = dynamic_cast<const LADataDouble&>(dh->get()).get();
+		amount = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 	}
 	else
 	{
 		//error
-		LAString msg = "AmortizeType : " + amortize_type;
+		AQLString msg = "AmortizeType : " + amortize_type;
 		msg += " is not support";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	//fraction
@@ -1858,12 +1858,12 @@ LAPriceCashFlowGenerator::calcNotionalArray(const LAObject& leg,
 	@param[in, out] leg leg object  
 */
 void
-LAPriceCashFlowGenerator::clearCashlets(LAObject& leg) const
+LAPriceCashFlowGenerator::clearCashlets(AQLObject& leg) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	// object pool
-	LAObjectPool& objPool = leg.getDataInstance()->getObjectPool();
+	AQLObjectPool& objPool = leg.getDataInstance()->getObjectPool();
 
 	// reference to cachlets 
 	dh = &(leg.getData(PRICING_DATA_CASHLETS, NOCHECK));
@@ -1873,27 +1873,27 @@ LAPriceCashFlowGenerator::clearCashlets(LAObject& leg) const
 	//////////////////////////////////////////
 	// if there exist cashlets, delete them //
 	//////////////////////////////////////////
-	LADataMultiReference& cashlets
-		= dynamic_cast<LADataMultiReference&>(dh->get());
+	AQLDataMultiReference& cashlets
+		= dynamic_cast<AQLDataMultiReference&>(dh->get());
 	
 	while (cashlets.getSize() > 0)
 	{
-		LAObjectHolder& objHolder = cashlets.get(0);
+		AQLObjectHolder& objHolder = cashlets.get(0);
 		// coupon infos
 		dh = &(objHolder.getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			LADataMultiReference& couponinfos
-				= dynamic_cast<LADataMultiReference&>(dh->get());
+			AQLDataMultiReference& couponinfos
+				= dynamic_cast<AQLDataMultiReference&>(dh->get());
 
 			while (couponinfos.getSize() > 0)
 			{		
-				LAObjectHolder& eh2 = couponinfos.get(0);
-				LAString couponinfo_name = eh2.getName();
+				AQLObjectHolder& eh2 = couponinfos.get(0);
+				AQLString couponinfo_name = eh2.getName();
 				// index infos
 				dh = &(eh2.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
-				LADataMultiReference& indexinfos
-					= dynamic_cast<LADataMultiReference&>(dh->get());
+				AQLDataMultiReference& indexinfos
+					= dynamic_cast<AQLDataMultiReference&>(dh->get());
 			
 				// remove this couponinfo
 				couponinfos.remove(couponinfo_name);
@@ -1901,7 +1901,7 @@ LAPriceCashFlowGenerator::clearCashlets(LAObject& leg) const
 				// remove indexinfos from object pool;
 				while (indexinfos.getSize() > 0)
 				{
-					LAString indexinfo_name = indexinfos.get(0).getName();
+					AQLString indexinfo_name = indexinfos.get(0).getName();
 					indexinfos.remove(indexinfo_name);
 					objPool.remove(indexinfo_name);
 				}
@@ -1909,7 +1909,7 @@ LAPriceCashFlowGenerator::clearCashlets(LAObject& leg) const
 				objPool.remove(couponinfo_name);
 			}
 		}
-		LAString cashlet_name = objHolder.getName();
+		AQLString cashlet_name = objHolder.getName();
 		// remove this cashlets
 		cashlets.remove(cashlet_name);
 		// remove cashlet from object pool
@@ -1936,36 +1936,36 @@ LAPriceCashFlowGenerator::clearCashlets(LAObject& leg) const
 	@return	pointer of object that represents coupon information
 */
 
-LAObject*
-LAPriceCashFlowGenerator::createCouponInfo(const LAString name,
-										const LADate& advancepaymentdate,
-										const LADate& paymentdate,
-										const LADate& paymentdate_unadjust, 
-										const LADate& startdate,
-										const LADate& enddate,
-										const LAObject& couponinfo,
-										const LAObject& leg,
+AQLObject*
+LAPriceCashFlowGenerator::createCouponInfo(const AQLString name,
+										const AQLDate& advancepaymentdate,
+										const AQLDate& paymentdate,
+										const AQLDate& paymentdate_unadjust, 
+										const AQLDate& startdate,
+										const AQLDate& enddate,
+										const AQLObject& couponinfo,
+										const AQLObject& leg,
 										const DateVector& rolldates,
 										const DateVector& rollstartdates,
 										const DateVector& rollenddates,
-										LAString stubindextype,
+										AQLString stubindextype,
 										const double fixedrate,
 										const bool is_digital
 										) const
 {
-	LADataHolder* dh;
-	LAObjectHolder eholder;
-    LAObject* pcouponinfo = couponinfo.clone();
+	AQLDataHolder* dh;
+	AQLObjectHolder eholder;
+    AQLObject* pcouponinfo = couponinfo.clone();
 	eholder.setEntity(pcouponinfo, true);
 	
 	// name
 	dh = &(pcouponinfo->getData(CALIBRATION_DATA_NAME, NOCHECK));
 	if (!dh->isDefined())
-		dh = &(pcouponinfo->add(CALIBRATION_DATA_NAME, new LADataString()));
+		dh = &(pcouponinfo->add(CALIBRATION_DATA_NAME, new AQLDataString()));
     dh->convertFromString(name);
 	
 	// object pool
-	LAObjectPool& objPool = couponinfo.getDataInstance()->getObjectPool();
+	AQLObjectPool& objPool = couponinfo.getDataInstance()->getObjectPool();
 	
 	// for fixed rate
 	if (is_digital && fixedrate > static_cast<double>(DEFAULT_SMALL_FIXEDRATE))
@@ -1974,27 +1974,27 @@ LAPriceCashFlowGenerator::createCouponInfo(const LAString name,
 		coeffs.push_back(1.0);
 		coeffs.push_back(0.0);
 		pcouponinfo->remove(PRICING_DATA_COEFFICIENT);
-		pcouponinfo->add(PRICING_DATA_COEFFICIENT, new LADataDoubles(coeffs));
+		pcouponinfo->add(PRICING_DATA_COEFFICIENT, new AQLDataDoubles(coeffs));
 	}
 
 	// index infos
-	const LADataHolder* cah = &(couponinfo.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
-	const LADataMultiReference& indexinfos
-		= dynamic_cast<const LADataMultiReference&>(cah->get());
+	const AQLDataHolder* cah = &(couponinfo.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
+	const AQLDataMultiReference& indexinfos
+		= dynamic_cast<const AQLDataMultiReference&>(cah->get());
 
-    const LADataHolder* ch;
-    const bool compounding_all_days = (ch=&leg.getData(PRICING_DATA_COMPOUND_ON_ALL_DAYS))->isDefined() && !ch->isNull() && dynamic_cast<const LADataBool&>(ch->get()).get();
+    const AQLDataHolder* ch;
+    const bool compounding_all_days = (ch=&leg.getData(PRICING_DATA_COMPOUND_ON_ALL_DAYS))->isDefined() && !ch->isNull() && dynamic_cast<const AQLDataBool&>(ch->get()).get();
 
-	LAString indexinfo_str;
-	LAObjectHolder objHolder;
+	AQLString indexinfo_str;
+	AQLObjectHolder objHolder;
 	for (unsigned int i = 0; i < indexinfos.getSize(); i++)
 	{
 		if (i != 0) indexinfo_str += ":";
 			
-		LAString indexinfo_name = name + "_" + INDEXINFO + LADataInt(i + 1).convertToString();
+		AQLString indexinfo_name = name + "_" + INDEXINFO + AQLDataInt(i + 1).convertToString();
 
         indexinfos.get(i).remove(PRICING_DATA_COMPOUND_ON_ALL_DAYS);
-        indexinfos.get(i).add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new LADataBool(compounding_all_days));
+        indexinfos.get(i).add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new AQLDataBool(compounding_all_days));
 		objHolder.setEntity(createIndexInfo(indexinfo_name, 
                                      advancepaymentdate,
 			                         paymentdate, 
@@ -2021,10 +2021,10 @@ LAPriceCashFlowGenerator::createCouponInfo(const LAString name,
 	dh = &(pcouponinfo->getData(PRICING_DATA_OBSERVATIONENDTERM, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAString& endstr = dynamic_cast<const LADataString&>(dh->get()).get();
+		const AQLString& endstr = dynamic_cast<const AQLDataString&>(dh->get()).get();
 
-		const LAPriceDataSlidingRule* psrule;
-		const LAPriceDataCalendar* pcal;
+		const AQLPriceDataSlidingRule* psrule;
+		const AQLPriceDataCalendar* pcal;
 		LAPriceCFGenUtility::getBusDayRuleAndCalendar(*pcouponinfo, 
 													PRICING_DATA_OBSERVATIONSLIDINGRULE,
 													PRICING_DATA_OBSERVATIONCALENDAR,
@@ -2034,37 +2034,37 @@ LAPriceCashFlowGenerator::createCouponInfo(const LAString name,
 													psrule,
 													pcal);		
 
-		const LADate& edate
+		const AQLDate& edate
 			= LAMathDateCalculations::getDate(paymentdate_unadjust, endstr, *psrule, pcal, false);	
 
-		pcouponinfo->add(PRICING_DATA_OBSERVATIONENDDATE, new LADataDate(edate));
+		pcouponinfo->add(PRICING_DATA_OBSERVATIONENDDATE, new AQLDataDate(edate));
 		pcouponinfo->remove(PRICING_DATA_OBSERVATIONENDTERM);	
 
 
 		//observation startdate
-		LADate sdate;
+		AQLDate sdate;
 		dh = &(pcouponinfo->getData(PRICING_DATA_OBSERVATIONSTARTDATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			sdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+			sdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 			if (psrule->getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 				sdate = psrule->getDate(sdate, *pcal);
 		}
 		else
 		{
 			dh = &(pcouponinfo->getData(PRICING_DATA_OBSERVATIONSTARTTERM, ISNOTNULL));
-			const LAString& startstr = dynamic_cast<const LADataString&>(dh->get()).get();
+			const AQLString& startstr = dynamic_cast<const AQLDataString&>(dh->get()).get();
 			sdate = LAMathDateCalculations::getDate(paymentdate_unadjust, startstr, *psrule, pcal, false);	
 			
-			pcouponinfo->add(PRICING_DATA_OBSERVATIONSTARTDATE, new LADataDate(sdate));
+			pcouponinfo->add(PRICING_DATA_OBSERVATIONSTARTDATE, new AQLDataDate(sdate));
 			pcouponinfo->remove(PRICING_DATA_OBSERVATIONSTARTTERM);	
 		}
 	
 		if (edate < sdate)
 		{
 			//error
-			LAString msg = "ObservationEndDate is before ObservationStartDate";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+			AQLString msg = "ObservationEndDate is before ObservationStartDate";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 		}
 	}
 	
@@ -2073,19 +2073,19 @@ LAPriceCashFlowGenerator::createCouponInfo(const LAString name,
 	{
 
 		// index infos
-		//const LADataHolder* stubcah = &(couponinfo.getData(PRICING_DATA_ODDINDEXINFOS, ISNOTNULL));
-		const LADataHolder* stubcah = &(couponinfo.getData(PRICING_DATA_ODDINDEXINFOS));
+		//const AQLDataHolder* stubcah = &(couponinfo.getData(PRICING_DATA_ODDINDEXINFOS, ISNOTNULL));
+		const AQLDataHolder* stubcah = &(couponinfo.getData(PRICING_DATA_ODDINDEXINFOS));
 		if (stubcah->isDefined() && !stubcah->isNull())
 		{
-			const LADataMultiReference& stubindexinfos
-				= dynamic_cast<const LADataMultiReference&>(stubcah->get());
+			const AQLDataMultiReference& stubindexinfos
+				= dynamic_cast<const AQLDataMultiReference&>(stubcah->get());
 
-			LAString stubindexinfo_str;
+			AQLString stubindexinfo_str;
 			for (unsigned int i = 0; i < stubindexinfos.getSize(); i++)
 			{
 				if (i != 0) stubindexinfo_str += ":";
 					
-				LAString stubindexinfo_name = name + "_" + ODDINDEXINFO + LADataInt(i + 1).convertToString();
+				AQLString stubindexinfo_name = name + "_" + ODDINDEXINFO + AQLDataInt(i + 1).convertToString();
 					
 				objHolder.setEntity(createIndexInfo(stubindexinfo_name, 
                                              advancepaymentdate,
@@ -2108,7 +2108,7 @@ LAPriceCashFlowGenerator::createCouponInfo(const LAString name,
 			}
 
 			//reset indexinfo
-			LAString mdyindexinfo = indexinfo_str;
+			AQLString mdyindexinfo = indexinfo_str;
 			if (stubindexinfo_str != "")
 				mdyindexinfo += ":" + stubindexinfo_str;
 			
@@ -2118,36 +2118,36 @@ LAPriceCashFlowGenerator::createCouponInfo(const LAString name,
 			//check operator
 			unsigned int mdyindexsize = mdyindexinfo.toToken(':').size();
 			dh = &(pcouponinfo->getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-			LAPriceDataFunction& couponope = dynamic_cast<LAPriceDataFunction &>(dh->get());
+			AQLPriceDataFunction& couponope = dynamic_cast<AQLPriceDataFunction &>(dh->get());
 			//if (!couponope.isTypeOf(FN_LINEAR) && !couponope.isTypeOf(FN_CONSTANT))
-			//	throw LACoreInvalidData("OddOperatorError",__FILE__,__LINE__);
+			//	throw AQLCoreInvalidData("OddOperatorError",__FILE__,__LINE__);
 			//reset coefficient
 			dh = &(pcouponinfo->getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-			DoubleVector orgcoeffs = dynamic_cast<LADataDoubles &>(dh->get()).get();
+			DoubleVector orgcoeffs = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 
 			unsigned int addsize = stubindexinfos.getSize();
 			//DoubleVector oddcoeffs(orgcoeffs.size() + addsize, -9999.0);
 			DoubleVector oddcoeffs(orgcoeffs.size() + addsize, orgcoeffs.front());
 			oddcoeffs.back() = orgcoeffs.back();
-			dynamic_cast<LADataDoubles &>(dh->get()).set(oddcoeffs);
+			dynamic_cast<AQLDataDoubles &>(dh->get()).set(oddcoeffs);
 		}
 		else //in case of no odd indexinfo but must change coefficient into -9999 (corresponding to STARTENDDATEMETHOD)
 		{
 			//reset coefficient
 			dh = &(pcouponinfo->getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-			DoubleVector orgcoeffs = dynamic_cast<LADataDoubles &>(dh->get()).get();
+			DoubleVector orgcoeffs = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 			
 			//DoubleVector oddcoeffs(orgcoeffs.size(), -9999.0);
 			DoubleVector oddcoeffs(orgcoeffs.size(), orgcoeffs.front());
 			oddcoeffs.back() = orgcoeffs.back();
-			dynamic_cast<LADataDoubles &>(dh->get()).set(oddcoeffs);
+			dynamic_cast<AQLDataDoubles &>(dh->get()).set(oddcoeffs);
 		}
 		
-		pcouponinfo->add(PRICING_DATA_ODDINDEXTYPE, new LADataString(stubindextype));
+		pcouponinfo->add(PRICING_DATA_ODDINDEXTYPE, new AQLDataString(stubindextype));
 	}
 
     //if(rolldates.size() > 0){
-    //    pcouponinfo->add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new LADataBool(true));
+    //    pcouponinfo->add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new AQLDataBool(true));
     //}
 	
 	eholder.setDeleteFlag(false);
@@ -2167,31 +2167,31 @@ LAPriceCashFlowGenerator::createCouponInfo(const LAString name,
 	@return	pointer of object that represents index information
 
 */
-LAObject*
-LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
-										const LADate& advancepaymentdate,
-										const LADate& paymentdate,
-										const LADate& paymentdate_unadjust, 
-										const LADate& startdate,
-										const LADate& enddate,
-										const LAObject& indexinfo,
-                                        const LAObject& leg,
+AQLObject*
+LAPriceCashFlowGenerator::createIndexInfo(const AQLString name,
+										const AQLDate& advancepaymentdate,
+										const AQLDate& paymentdate,
+										const AQLDate& paymentdate_unadjust, 
+										const AQLDate& startdate,
+										const AQLDate& enddate,
+										const AQLObject& indexinfo,
+                                        const AQLObject& leg,
 										const DateVector& rolldates,
 										const DateVector& rollstartdates,
 										const DateVector& rollenddates,
 										const double fixedrate
 										) const
 {
-	LADataHolder* dh;
-	LAObject* pindex = indexinfo.clone();
-	LAObjectHolder objHolder;
+	AQLDataHolder* dh;
+	AQLObject* pindex = indexinfo.clone();
+	AQLObjectHolder objHolder;
 	objHolder.setEntity(pindex, true);
 
 	
 	// name
 	dh = &(pindex->getData(CALIBRATION_DATA_NAME, NOCHECK));
 	if (!dh->isDefined())
-		dh = &(pindex->add(CALIBRATION_DATA_NAME, new LADataString()));
+		dh = &(pindex->add(CALIBRATION_DATA_NAME, new AQLDataString()));
     dh->convertFromString(name);
 
 	// for fixed rate
@@ -2201,16 +2201,16 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 		pindex->remove(PRICING_DATA_INDEXTYPE);
 		pindex->remove(PRICING_DATA_FIXEDRATE);
 		pindex->remove(PRICING_DATA_FIXINGDATE);
-		pindex->add(PRICING_DATA_INDEXNAME, new LADataString(PRICING_DATA_FIXEDRATE));
-		pindex->add(PRICING_DATA_INDEXTYPE, new LADataString(PRICING_DATA_FIXEDRATE));
-		pindex->add(PRICING_DATA_FIXEDRATE, new LADataDouble(fixedrate));
-		LADate date;
-		const LADataHolder& dah = leg.getData(CALIBRATION_DATA_TRADEDATE, NOCHECK);
+		pindex->add(PRICING_DATA_INDEXNAME, new AQLDataString(PRICING_DATA_FIXEDRATE));
+		pindex->add(PRICING_DATA_INDEXTYPE, new AQLDataString(PRICING_DATA_FIXEDRATE));
+		pindex->add(PRICING_DATA_FIXEDRATE, new AQLDataDouble(fixedrate));
+		AQLDate date;
+		const AQLDataHolder& dah = leg.getData(CALIBRATION_DATA_TRADEDATE, NOCHECK);
 		if (dah.isDefined() && !dah.isNull())
-			date = dynamic_cast<const LADataDate&>(dah.get()).get();
+			date = dynamic_cast<const AQLDataDate&>(dah.get()).get();
 		else
-			date = dynamic_cast<const LADataDate&>(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
-		pindex->add(PRICING_DATA_FIXINGDATE, new LADataDate(date));
+			date = dynamic_cast<const AQLDataDate&>(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
+		pindex->add(PRICING_DATA_FIXINGDATE, new AQLDataDate(date));
 
 		pindex->remove(IR_MODEL_DATA_ACCESSORY);
 		pindex->remove(CALIBRATION_DATA_CALENDAR);
@@ -2231,7 +2231,7 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 
 	//index type
 	dh = &(pindex->getData(PRICING_DATA_INDEXTYPE, ISNOTNULL));
-	LAString indextype = dynamic_cast<const LADataString&>(dh->get());
+	AQLString indextype = dynamic_cast<const AQLDataString&>(dh->get());
 	indextype.toUpper();
 	if (indextype == FIXED_RATE) 
 	{
@@ -2239,17 +2239,17 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 		return pindex;
 	}
 
-	LADate fixingdate;
+	AQLDate fixingdate;
 
 	// observation enddate
 	dh = &(pindex->getData(PRICING_DATA_OBSERVATIONENDTERM, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
 
-		const LAString& endstr = dynamic_cast<const LADataString&>(dh->get()).get();
+		const AQLString& endstr = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	
-		const LAPriceDataSlidingRule* psrule;
-		const LAPriceDataCalendar* pcal;
+		const AQLPriceDataSlidingRule* psrule;
+		const AQLPriceDataCalendar* pcal;
 		LAPriceCFGenUtility::getBusDayRuleAndCalendar(*pindex, 
 													PRICING_DATA_OBSERVATIONSLIDINGRULE,
 													PRICING_DATA_OBSERVATIONCALENDAR,
@@ -2258,34 +2258,34 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 													CALIBRATION_DATA_CALENDAR,		
 													psrule,
 													pcal);		
-		const LADate& edate
+		const AQLDate& edate
 			= LAMathDateCalculations::getDate(paymentdate_unadjust, endstr, 
 										*psrule,
 										pcal,
 										false);	
 		
-		pindex->add(PRICING_DATA_OBSERVATIONENDDATE, new LADataDate(edate));
+		pindex->add(PRICING_DATA_OBSERVATIONENDDATE, new AQLDataDate(edate));
 		pindex->remove(PRICING_DATA_OBSERVATIONENDTERM);		
 
 		// observation startdate
-		LADate sdate;
+		AQLDate sdate;
 		dh = &(pindex->getData(PRICING_DATA_OBSERVATIONSTARTDATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			sdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+			sdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 			if (psrule->getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 				sdate = psrule->getDate(sdate, *pcal);		
 		}
 		else
 		{
 			dh = &(pindex->getData(PRICING_DATA_OBSERVATIONSTARTTERM, ISNOTNULL));
-			const LAString& startstr = dynamic_cast<const LADataString&>(dh->get()).get();
+			const AQLString& startstr = dynamic_cast<const AQLDataString&>(dh->get()).get();
 			sdate = LAMathDateCalculations::getDate(paymentdate_unadjust, startstr, 
 										*psrule,
 										pcal,
 										false);
 			
-			pindex->add(PRICING_DATA_OBSERVATIONSTARTDATE, new LADataDate(sdate));
+			pindex->add(PRICING_DATA_OBSERVATIONSTARTDATE, new AQLDataDate(sdate));
 			pindex->remove(PRICING_DATA_OBSERVATIONSTARTTERM);	
 
 		}
@@ -2294,15 +2294,15 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 		if (edate < sdate)
 		{
 			//error
-			LAString msg = "ObservationEndDate is before ObservationStartDate";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+			AQLString msg = "ObservationEndDate is before ObservationStartDate";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 		}
 	
 		// fixing date
         dh = &(pindex->getData(PRICING_DATA_FIXINGDATE, NOCHECK));
 		if (!dh->isDefined())
-			dh = &pindex->add(PRICING_DATA_FIXINGDATE, new LADataDate());
-		dynamic_cast<LADataDate&>(dh->get()).set(fixingdate); 
+			dh = &pindex->add(PRICING_DATA_FIXINGDATE, new AQLDataDate());
+		dynamic_cast<AQLDataDate&>(dh->get()).set(fixingdate); 
 		
 	}
 	else if (rolldates.size() > 0)
@@ -2312,18 +2312,18 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 		// isArrear
 		dh = &pindex->getData(PRICING_DATA_FIXINGTIMING);
         if(!dh->isDefined() || dh->isNull()){
-            const LADataHolder* temp_ah = &leg.getData(PRICING_DATA_FIXINGTIMING, ISNOTNULL);
-            dh = &pindex->add(PRICING_DATA_FIXINGTIMING, new LADataString());
+            const AQLDataHolder* temp_ah = &leg.getData(PRICING_DATA_FIXINGTIMING, ISNOTNULL);
+            dh = &pindex->add(PRICING_DATA_FIXINGTIMING, new AQLDataString());
             dh->convertFromString(temp_ah->convertToString());
         }
-		const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+		const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 		bool isarrear = LAPriceCFGenUtility::isArrear(timing);
 		
 
 		bool isfixingpaybase = true;
 		dh = &(pindex->getData(PRICING_DATA_ISFIXINGPAYMENTDATEBASE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			isfixingpaybase = dynamic_cast<const LADataBool &>(dh->get());
+			isfixingpaybase = dynamic_cast<const AQLDataBool &>(dh->get());
 
 		DateVector fixingbasedates(rolldates.size());
 		DateVector fixingdates(rolldates.size());
@@ -2341,22 +2341,22 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 			dh = &(pindex->getData(PRICING_DATA_OFFSET, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				int offset = dynamic_cast<const LADataInt&>(dh->get()).get();		
+				int offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();		
 				if (offset == 0) 
 					fixingdates[i] = fixingbasedates[i];
 				else
 				{
 					//calendar
-					LAPriceDataCalendar cal;
+					AQLPriceDataCalendar cal;
 					dh = &(pindex->getData(PRICING_DATA_FIXINGCALENDAR, NOCHECK));
 					if (dh->isDefined() && !dh->isNull())
 					{
-						cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+						cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 					}
 					else
 					{
 						dh = &(pindex->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-						cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+						cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 					}
 					fixingdates[i] = cal.getBusinessDay(fixingbasedates[i], -offset);
 				}
@@ -2364,20 +2364,20 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 			else // case of fixing special date
 			{
 				dh = &(pindex->getData(PRICING_DATA_FIXINGSPECIALOFFSET, ISNOTNULL));
-				LAString offset = dynamic_cast<const LADataString&>(dh->get()).get();		
+				AQLString offset = dynamic_cast<const AQLDataString&>(dh->get()).get();		
 				
 				
 				dh = &(pindex->getData(PRICING_DATA_FIXINGSPECIALDAY, ISNOTNULL));
-				IntArray specialday = dynamic_cast<const LADataInts&>(dh->get()).get();	
+				IntArray specialday = dynamic_cast<const AQLDataInts&>(dh->get()).get();	
 				if (specialday.size() != 12)
 				{
 					//error
-					LAString msg = "fixing special day size must be 12";
-							throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+					AQLString msg = "fixing special day size must be 12";
+							throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 				}
 				
-				const LAPriceDataSlidingRule* psrule = NULL;
-				const LAPriceDataCalendar* pcal = NULL;
+				const AQLPriceDataSlidingRule* psrule = NULL;
+				const AQLPriceDataCalendar* pcal = NULL;
 			
 				LAPriceCFGenUtility::getBusDayRuleAndCalendar(*pindex, 
 															PRICING_DATA_FIXINGSLIDINGRULE,
@@ -2402,10 +2402,10 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 		pindex->remove(PRICING_DATA_CFCALCSTARTDATES);
 		pindex->remove(PRICING_DATA_CFCALCENDDATES);
 		pindex->remove(PRICING_DATA_ISCOMPOUNDINGCOUPON);
-		pindex->add(PRICING_DATA_FIXINGDATES, new LADataDates(fixingdates));
-		pindex->add(PRICING_DATA_CFCALCSTARTDATES, new LADataDates(rollstartdates));
-		pindex->add(PRICING_DATA_CFCALCENDDATES, new LADataDates(rollenddates));
-        pindex->add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new LADataBool(true));
+		pindex->add(PRICING_DATA_FIXINGDATES, new AQLDataDates(fixingdates));
+		pindex->add(PRICING_DATA_CFCALCSTARTDATES, new AQLDataDates(rollstartdates));
+		pindex->add(PRICING_DATA_CFCALCENDDATES, new AQLDataDates(rollenddates));
+        pindex->add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new AQLDataBool(true));
 
 		// conpounding daycount
 		dh = &(pindex->getData(PRICING_DATA_COMPOUNDINGDAYCOUNT, NOCHECK));
@@ -2423,17 +2423,17 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 			if (!dh->isDefined() || dh->isNull())
 			{
 				pindex->remove(PRICING_DATA_OBSERVATIONFREQUENCY);
-				pindex->add(PRICING_DATA_OBSERVATIONFREQUENCY, new LADataString(BUSINESS_DAYS));
+				pindex->add(PRICING_DATA_OBSERVATIONFREQUENCY, new AQLDataString(BUSINESS_DAYS));
 			}
 			// obserbation start
 			dh = &(pindex->getData(PRICING_DATA_OBSERVATIONSTARTDATE, NOCHECK));
 			if (!dh->isDefined() || dh->isNull())
 			{
 				pindex->remove(PRICING_DATA_OBSERVATIONSTARTDATE);
-				pindex->add(PRICING_DATA_OBSERVATIONSTARTDATE, new LADataDate(startdate));
+				pindex->add(PRICING_DATA_OBSERVATIONSTARTDATE, new AQLDataDate(startdate));
 			}
-			const LAPriceDataSlidingRule* psrule = NULL;
-			const LAPriceDataCalendar* pcal = NULL;
+			const AQLPriceDataSlidingRule* psrule = NULL;
+			const AQLPriceDataCalendar* pcal = NULL;
 	
 			LAPriceCFGenUtility::getBusDayRuleAndCalendar(*pindex, 
 													   PRICING_DATA_FIXINGSLIDINGRULE,
@@ -2444,19 +2444,19 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 													   psrule, pcal);
 			if (!pcal)
 			{
-				throw LACoreInvalidData("Calendar is not set", __FILE__, __LINE__);	
+				throw AQLCoreInvalidData("Calendar is not set", __FILE__, __LINE__);	
 			}
 			// obserbation end
 			dh = &(pindex->getData(PRICING_DATA_OBSERVATIONENDDATE, NOCHECK));
 			if (!dh->isDefined() || dh->isNull())
 			{
-				LADate ob_enddate = pcal->getBusinessDay(enddate, -1);
+				AQLDate ob_enddate = pcal->getBusinessDay(enddate, -1);
 				if (ob_enddate < startdate)
 				{
 					ob_enddate = startdate;
 				}
 				pindex->remove(PRICING_DATA_OBSERVATIONENDDATE);
-				pindex->add(PRICING_DATA_OBSERVATIONENDDATE, new LADataDate(ob_enddate));
+				pindex->add(PRICING_DATA_OBSERVATIONENDDATE, new AQLDataDate(ob_enddate));
 			}
 
 			// conpounding daycount
@@ -2472,20 +2472,20 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 	}
 	else
 	{
-		LADate fixingbasedate;
+		AQLDate fixingbasedate;
 		// isArrear
 		dh = &(pindex->getData(PRICING_DATA_FIXINGTIMING, ISNOTNULL));
-		const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+		const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 		bool isarrear = LAPriceCFGenUtility::isArrear(timing);
 		if (isarrear && advancepaymentdate == paymentdate)//index fixing timing is arrear but payment timing is advance
 		{
 			//error
-			LAString msg = "Index fixing timing is arrear but payment timing is advance";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+			AQLString msg = "Index fixing timing is arrear but payment timing is advance";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 		}
 		dh = &(pindex->getData(PRICING_DATA_ISFIXINGPAYMENTDATEBASE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull()
-			&& dynamic_cast<const LADataBool&>(dh->get()).get() == true)
+			&& dynamic_cast<const AQLDataBool&>(dh->get()).get() == true)
 			fixingbasedate = isarrear ? paymentdate : advancepaymentdate;
 		else
 			fixingbasedate = isarrear ? enddate : startdate;
@@ -2494,24 +2494,24 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 		dh = &(pindex->getData(PRICING_DATA_OFFSET, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			int offset = dynamic_cast<const LADataInt&>(dh->get()).get();		
+			int offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();		
 			pindex->remove(PRICING_DATA_OFFSET);
 			if (offset == 0) 
 				fixingdate = fixingbasedate;
 			else
 			{
 				//calendar
-				LAPriceDataCalendar cal;
+				AQLPriceDataCalendar cal;
 				dh = &(pindex->getData(PRICING_DATA_FIXINGCALENDAR, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+					cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 					pindex->remove(PRICING_DATA_FIXINGCALENDAR);
 				}
 				else
 				{
 					dh = &(pindex->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-					cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+					cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 				}
 				fixingdate = cal.getBusinessDay(fixingbasedate, -offset);
 			}
@@ -2519,21 +2519,21 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 		else // case of fixing special date
 		{
 			dh = &(pindex->getData(PRICING_DATA_FIXINGSPECIALOFFSET, ISNOTNULL));
-			LAString offset = dynamic_cast<const LADataString&>(dh->get()).get();		
+			AQLString offset = dynamic_cast<const AQLDataString&>(dh->get()).get();		
 			pindex->remove(PRICING_DATA_FIXINGSPECIALOFFSET);
 			
 			dh = &(pindex->getData(PRICING_DATA_FIXINGSPECIALDAY, ISNOTNULL));
-			IntArray specialday = dynamic_cast<const LADataInts&>(dh->get()).get();	
+			IntArray specialday = dynamic_cast<const AQLDataInts&>(dh->get()).get();	
 			if (specialday.size() != 12)
 			{
 				//error
-				LAString msg = "fixing special day size must be 12";
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+				AQLString msg = "fixing special day size must be 12";
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 			}
 			pindex->remove(PRICING_DATA_FIXINGSPECIALDAY);
 			
-			const LAPriceDataSlidingRule* psrule = NULL;
-			const LAPriceDataCalendar* pcal = NULL;
+			const AQLPriceDataSlidingRule* psrule = NULL;
+			const AQLPriceDataCalendar* pcal = NULL;
 		
 			LAPriceCFGenUtility::getBusDayRuleAndCalendar(*pindex, 
 														PRICING_DATA_FIXINGSLIDINGRULE,
@@ -2549,21 +2549,21 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 			pindex->remove(PRICING_DATA_FIXINGCALENDAR);
 		}
 
-		pindex->add(PRICING_DATA_FIXINGDATE, new LADataDate(fixingdate));
+		pindex->add(PRICING_DATA_FIXINGDATE, new AQLDataDate(fixingdate));
 	}
 	
 	//fixedrate
 	dh = &(pindex->getData(PRICING_DATA_FIXEDDATES, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const DateVector& fixeddates = dynamic_cast<const LADataDates&>(dh->get()).get();
+		const DateVector& fixeddates = dynamic_cast<const AQLDataDates&>(dh->get()).get();
 		dh = &(pindex->getData(PRICING_DATA_FIXEDRATES, ISNOTNULL));
-		const DoubleArray& fixedrates = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+		const DoubleArray& fixedrates = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 
 		unsigned int pos;
-		if (LAAlgorithm::find<DateVector, LADate>(fixeddates, fixingdate, 0, fixeddates.size() - 1, pos))
+		if (AQLAlgorithm::find<DateVector, AQLDate>(fixeddates, fixingdate, 0, fixeddates.size() - 1, pos))
 		{
-			pindex->add(PRICING_DATA_FIXEDRATE, new LADataDouble(fixedrates.at(pos)));
+			pindex->add(PRICING_DATA_FIXEDRATE, new AQLDataDouble(fixedrates.at(pos)));
 		}
 	
 		pindex->remove(PRICING_DATA_FIXEDDATES);
@@ -2573,12 +2573,12 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 	dh = &(pindex->getData(PRICING_DATA_FIRSTFIXINGRATE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		double firstfixingrate = dynamic_cast<LADataDouble &>(dh->get());
+		double firstfixingrate = dynamic_cast<AQLDataDouble &>(dh->get());
 		dh = &(pindex->getData(PRICING_DATA_FIRSTFIXINGBASEDATE, ISDEFINED));
-		LADate basedate = dynamic_cast<LADataDate &>(dh->get()).get();
+		AQLDate basedate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 		if (fixingdate <= basedate)
 		{
-			pindex->add(PRICING_DATA_FIXEDRATE, new LADataDouble(firstfixingrate));
+			pindex->add(PRICING_DATA_FIXEDRATE, new AQLDataDouble(firstfixingrate));
 		}
 
 		pindex->remove(PRICING_DATA_FIRSTFIXINGRATE);
@@ -2598,11 +2598,11 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 	dh = &(pindex->getData(PRICING_DATA_INDEXGENERATEMETHOD, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		LAString indexmethod = dynamic_cast<LADataString &>(dh->get());
+		AQLString indexmethod = dynamic_cast<AQLDataString &>(dh->get());
 		dh = &(pindex->getData(PRICING_DATA_FIXINGTIMING, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+			const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 			bool isarrear = LAPriceCFGenUtility::isArrear(timing);
 			if (!isarrear && indexmethod.toUpper() == FRN && indextype == LIBOR)
 			{
@@ -2610,7 +2610,7 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 				dates[0] = startdate;
 				dates[1] = enddate;
 				pindex->remove(PRICING_DATA_DATESFORINDEXGENERATE);
-				pindex->add(PRICING_DATA_DATESFORINDEXGENERATE, new LADataDates(dates));
+				pindex->add(PRICING_DATA_DATESFORINDEXGENERATE, new AQLDataDates(dates));
 			}
 		}
 		pindex->remove(PRICING_DATA_INDEXGENERATEMETHOD);
@@ -2629,40 +2629,40 @@ LAPriceCashFlowGenerator::createIndexInfo(const LAString name,
 
 */
 DateVector
-LAPriceCashFlowGenerator::getFixedDates(const LAObject& leg) const
+LAPriceCashFlowGenerator::getFixedDates(const AQLObject& leg) const
 {
-	const LAStringVector fixedTerms = dynamic_cast<const LADataStrings&>(leg.getData(PRICING_DATA_FIXEDTERMS, ISNOTNULL).get()).get();
-	const LADate& sDate     = dynamic_cast<const LADataDate&>(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
-	const LAPriceDataSlidingRule* pSrule = &dynamic_cast<const LAPriceDataSlidingRule&>(leg.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
-	const LAPriceDataCalendar* pCal = NULL;
+	const AQLStringVector fixedTerms = dynamic_cast<const AQLDataStrings&>(leg.getData(PRICING_DATA_FIXEDTERMS, ISNOTNULL).get()).get();
+	const AQLDate& sDate     = dynamic_cast<const AQLDataDate&>(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
+	const AQLPriceDataSlidingRule* pSrule = &dynamic_cast<const AQLPriceDataSlidingRule&>(leg.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+	const AQLPriceDataCalendar* pCal = NULL;
 	//sliding rule
-	const LADataHolder* dh = &(leg.getData(PRICING_DATA_CASHFLOWSLIDINGRULE, NOCHECK));
+	const AQLDataHolder* dh = &(leg.getData(PRICING_DATA_CASHFLOWSLIDINGRULE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		pSrule = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+		pSrule = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 	if (pSrule->getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 	{
 		//calendar
 		dh = &(leg.getData(PRICING_DATA_CASHFLOWCALENDAR, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())	
-			pCal = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+			pCal = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 		else
 		{
 			dh = &(leg.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-			pCal = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+			pCal = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 		}
 	}
 	//roll convention
-	const LAString* pRollConv = NULL;
+	const AQLString* pRollConv = NULL;
 	dh = &(leg.getData(PRICING_DATA_ROLLCONVENTION, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		pRollConv = &dynamic_cast<const LADataString&>(dh->get()).get();
+		pRollConv = &dynamic_cast<const AQLDataString&>(dh->get()).get();
 	}
 
 	DateVector ret;
 	for (int i = 0; i < fixedTerms.size(); ++i)
 	{
-		const LADate date = LAMathDateCalculations::getDate(sDate, fixedTerms[i], *pSrule, pCal, true, pRollConv);
+		const AQLDate date = LAMathDateCalculations::getDate(sDate, fixedTerms[i], *pSrule, pCal, true, pRollConv);
 		ret.push_back(date);
 	}
 	return ret;
@@ -2677,22 +2677,22 @@ LAPriceCashFlowGenerator::getFixedDates(const LAObject& leg) const
 	@return	pointer of object that represents index information
 
 */
-LAObject*
-LAPriceCashFlowGenerator::createRangeAccrueIndexInfo(const LAString name,
-												  const LADate& startdate,
-												  const LADate& enddate,
-												  const LAObject& indexinfo) const
+AQLObject*
+LAPriceCashFlowGenerator::createRangeAccrueIndexInfo(const AQLString name,
+												  const AQLDate& startdate,
+												  const AQLDate& enddate,
+												  const AQLObject& indexinfo) const
 {
-	LADataHolder *dh;
-	LAObject *pindex = indexinfo.clone();
-	LAObjectHolder objHolder;
+	AQLDataHolder *dh;
+	AQLObject *pindex = indexinfo.clone();
+	AQLObjectHolder objHolder;
 	objHolder.setEntity(pindex, true);
 
 	// name
 	dh = &(pindex->getData(CALIBRATION_DATA_NAME, NOCHECK));
 	if (!dh->isDefined())
 	{
-		dh = &(pindex->add(CALIBRATION_DATA_NAME, new LADataString()));
+		dh = &(pindex->add(CALIBRATION_DATA_NAME, new AQLDataString()));
 	}
     dh->convertFromString(name);
 	// observation calendar
@@ -2713,16 +2713,16 @@ LAPriceCashFlowGenerator::createRangeAccrueIndexInfo(const LAString name,
 	}
 	// observation start date
 	pindex->remove(PRICING_DATA_OBSERVATIONSTARTDATE);
-	pindex->add(PRICING_DATA_OBSERVATIONSTARTDATE, new LADataDate(startdate));
+	pindex->add(PRICING_DATA_OBSERVATIONSTARTDATE, new AQLDataDate(startdate));
 	// observation end date
 	pindex->remove(PRICING_DATA_OBSERVATIONENDDATE);
-	pindex->add(PRICING_DATA_OBSERVATIONENDDATE, new LADataDate(enddate));
+	pindex->add(PRICING_DATA_OBSERVATIONENDDATE, new AQLDataDate(enddate));
 	// observation frequency(business day)
 	pindex->remove(PRICING_DATA_OBSERVATIONFREQUENCY);
-	pindex->add(PRICING_DATA_OBSERVATIONFREQUENCY, new LADataString(BUSINESS_DAYS));	
+	pindex->add(PRICING_DATA_OBSERVATIONFREQUENCY, new AQLDataString(BUSINESS_DAYS));	
 	// observation operator
 	pindex->remove(PRICING_DATA_OBSERVATIONOPERATOR);
-	LAPriceDataFunction *pfunc = new LAPriceDataFunction(new LAConstant(0.0), FN_CONSTANT_STR);
+	AQLPriceDataFunction *pfunc = new AQLPriceDataFunction(new AQLConstant(0.0), FN_CONSTANT_STR);
 	pindex->add(PRICING_DATA_OBSERVATIONOPERATOR, pfunc);
 
 	// observation dates and rates
@@ -2731,12 +2731,12 @@ LAPriceCashFlowGenerator::createRangeAccrueIndexInfo(const LAString name,
 	dh = &(pindex->getData(PRICING_DATA_FIXEDDATES, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const DateVector &dates = dynamic_cast<const LADataDates &>(dh->get()).get();
+		const DateVector &dates = dynamic_cast<const AQLDataDates &>(dh->get()).get();
 		dh = &(pindex->getData(PRICING_DATA_FIXEDRATES, ISNOTNULL));
-		const DoubleVector &rates = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+		const DoubleVector &rates = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 		if (dates.size() != rates.size())
 		{
-			throw LACoreInvalidData("FixedDates size and FixedRates size is not same.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("FixedDates size and FixedRates size is not same.", __FILE__, __LINE__);
 		}
 		DateVector observationDates;
 		DoubleArray observationRates;
@@ -2756,9 +2756,9 @@ LAPriceCashFlowGenerator::createRangeAccrueIndexInfo(const LAString name,
 		if (!observationDates.empty())
 		{
 			// observation dates
-			pindex->add(PRICING_DATA_OBSERVATIONDATES, new LADataDates(observationDates));
+			pindex->add(PRICING_DATA_OBSERVATIONDATES, new AQLDataDates(observationDates));
 			// observation rates
-			pindex->add(PRICING_DATA_OBSERVATIONRATES, new LADataDoubles(observationRates));
+			pindex->add(PRICING_DATA_OBSERVATIONRATES, new AQLDataDoubles(observationRates));
 		}
 		pindex->remove(PRICING_DATA_FIXEDRATES);
 		pindex->remove(PRICING_DATA_FIXEDDATES);
@@ -2775,12 +2775,12 @@ LAPriceCashFlowGenerator::createRangeAccrueIndexInfo(const LAString name,
 
 */
 void
-LAPriceCashFlowGenerator::setUpLegMaturity(LAObject& trade) const
+LAPriceCashFlowGenerator::setUpLegMaturity(AQLObject& trade) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	//leg object
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	LADataMultiReference& legs = dynamic_cast<LADataMultiReference&>(dh->get());
+	AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference&>(dh->get());
 
 	for (unsigned int i = 0; i < legs.getSize(); i++)
 	{
@@ -2790,16 +2790,16 @@ LAPriceCashFlowGenerator::setUpLegMaturity(LAObject& trade) const
 		//set end date
 		dh = &(legs.get(i).getData(PRICING_DATA_ENDTERM, ISNOTNULL));
 		//term
-		const LAString& termstr = dynamic_cast<const LADataString&>(dh->get()).get();
+		const AQLString& termstr = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		//start date
 		dh = &(legs.get(i).getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-		const LADate& startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+		const AQLDate& startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 		//end date
-		const LADate& enddate = LAMathDateCalculations::getDate(startdate, termstr, true);
+		const AQLDate& enddate = LAMathDateCalculations::getDate(startdate, termstr, true);
 		dh = &(legs.get(i).getData(PRICING_DATA_ENDDATE, NOCHECK));
 		if (!dh->isDefined())
-			dh = &(legs.get(i).add(PRICING_DATA_ENDDATE, new LADataDate()));
-		dynamic_cast<LADataDate&>(dh->get()).set(enddate);
+			dh = &(legs.get(i).add(PRICING_DATA_ENDDATE, new AQLDataDate()));
+		dynamic_cast<AQLDataDate&>(dh->get()).set(enddate);
 		
 	}
 }
@@ -2810,19 +2810,19 @@ LAPriceCashFlowGenerator::setUpLegMaturity(LAObject& trade) const
 
 */
 void
-LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
+LAPriceCashFlowGenerator::setUpCallSchedule(AQLObject& trade) const
 {
-	const LADataHolder* dh;
-	LADataHolder* ah_;
+	const AQLDataHolder* dh;
+	AQLDataHolder* ah_;
 	//call info 
 	ah_ = &(trade.getData(PRICING_DATA_CALLINFO, NOCHECK));
 	if (!ah_->isDefined() || ah_->isNull()) return;	//no call information( = not callable trade) 
 
-	LAObjectHolder& callinfo = dynamic_cast<LADataReference&>(ah_->get()).get();
+	AQLObjectHolder& callinfo = dynamic_cast<AQLDataReference&>(ah_->get()).get();
 	
 	// call schedule type
 	dh = &(callinfo.getData(PRICING_DATA_INPUTTYPE, ISNOTNULL));
-	LAString schtype = dynamic_cast<const LADataString&>(dh->get()).get();
+	AQLString schtype = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	schtype.toUpper();
 
 	if (schtype == MANUAL) return;	//manual input 
@@ -2831,13 +2831,13 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 	DateVector calldates, dates_unadjust, fixingdates, fixingbasedates;
 	//leg object
 	ah_ = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	LADataMultiReference& legs = dynamic_cast<LADataMultiReference&>(ah_->get());
-	LAObjectHolder& leg = legs.get(0);
+	AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference&>(ah_->get());
+	AQLObjectHolder& leg = legs.get(0);
 
-	const LAPriceDataSlidingRule* pSrule = NULL;
-	const LAPriceDataCalendar*	pCal = NULL;
-	const LAPriceDataSlidingRule* pSrule_fixing = NULL;
-	const LAPriceDataCalendar*	pCal_fixing = NULL;
+	const AQLPriceDataSlidingRule* pSrule = NULL;
+	const AQLPriceDataCalendar*	pCal = NULL;
+	const AQLPriceDataSlidingRule* pSrule_fixing = NULL;
+	const AQLPriceDataCalendar*	pCal_fixing = NULL;
 	///////////////////////////
 	// calc call action dates//
 	///////////////////////////
@@ -2850,14 +2850,14 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 			for (unsigned int i = 0; i < legs.getSize(); i++)
 			{
 				dh = &(legs.get(i).getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-				const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference&>(dh->get());
+				const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 				tmp[i].resize(cashlets.getSize());
 				for (unsigned int j = 0; j < cashlets.getSize(); j++)
 				{
 					dh = &(cashlets.get(j).getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 					if (!dh->isDefined() || dh->isNull()) continue;//not coupon payment			
 					dh = &(cashlets.get(j).getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-					tmp[i][j] = dynamic_cast<const LADataDate&>(dh->get()).get();
+					tmp[i][j] = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 				}			
 			}
 			for (unsigned int i = 1; i < tmp.size(); i++)
@@ -2865,30 +2865,30 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 				if (tmp[0].size() != tmp[i].size())
 				{
 					//error
-					LAString msg = "Payment Dates are not same between both legs";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+					AQLString msg = "Payment Dates are not same between both legs";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 				}
 				for (unsigned int j = 0; j < tmp[0].size(); j++)
 				{
 					if (tmp[0][j] != tmp[i][j])
 					{
 						//error
-						LAString msg = "Payment Dates are not same between both legs";
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+						AQLString msg = "Payment Dates are not same between both legs";
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 					}
 				}
 			}		
 		}
 		
 		dh = &(callinfo.getData(PRICING_DATA_FIXINGTIMING, ISNOTNULL));
-		const LAString& fixingtiming = dynamic_cast<const LADataString&>(dh->get()).get(); 
+		const AQLString& fixingtiming = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 		bool isfixingarrear = LAPriceCFGenUtility::isArrear(fixingtiming);
 		bool isactionarrear = true;
 
 		//get PaymentDate
 		//cashlet
 		dh = &(leg.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-		const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference&>(dh->get());
+		const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 		
 		bool flag = true;
 		for (unsigned int i = 0; i < cashlets.getSize(); i++)
@@ -2899,19 +2899,19 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 			if (flag)
 			{
 				dh = &(cashlets.get(i).getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL));
-				const LAString& actiontiming = dynamic_cast<const LADataString&>(dh->get()).get(); 
+				const AQLString& actiontiming = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 				isactionarrear = LAPriceCFGenUtility::isArrear(actiontiming);
 				if (isfixingarrear == true && isactionarrear == false)
 				{
 					//error
-					LAString msg = "call fixing timing is arrear but action timing is advance";
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+					AQLString msg = "call fixing timing is arrear but action timing is advance";
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 				}
 				flag = false;
 			}
 
 			dh = &(cashlets.get(i).getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-			calldates.push_back(dynamic_cast<const LADataDate&>(dh->get()).get());
+			calldates.push_back(dynamic_cast<const AQLDataDate&>(dh->get()).get());
 		}
 
 		fixingbasedates = calldates;
@@ -2926,13 +2926,13 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 				if (!isSameStartDates(legs))
 				{
 					//error
-					LAString msg = "StartDate must be same in each leg";
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+					AQLString msg = "StartDate must be same in each leg";
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 				}
 				
 				//startDate of trade
 				dh = &(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-				const LADate& startdate_trade = dynamic_cast<const LADataDate&>(dh->get()).get();
+				const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 				
 				fixingbasedates.pop_back();	
 				fixingbasedates.insert(fixingbasedates.begin(), 
@@ -2958,59 +2958,59 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 													pSrule, pCal);
 
 		dh = &(callinfo.getData(PRICING_DATA_FIXINGTIMING, ISNOTNULL));
-		const LAString& fixingtiming = dynamic_cast<const LADataString&>(dh->get()).get(); 
+		const AQLString& fixingtiming = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 		bool isfixingarrear = LAPriceCFGenUtility::isArrear(fixingtiming);
 		dh = &(callinfo.getData(PRICING_DATA_ACTIONTIMING, ISNOTNULL));
-		const LAString& actiontiming = dynamic_cast<const LADataString&>(dh->get()).get(); 
+		const AQLString& actiontiming = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 		bool isactionarrear = LAPriceCFGenUtility::isArrear(actiontiming);
 		if (isfixingarrear == true && isactionarrear == false)
 		{
 			//error
-			LAString msg = "call fixing timing is arrear but action timing is advance";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+			AQLString msg = "call fixing timing is arrear but action timing is advance";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 		}			
 		
 		//startDate
-		LADate startdate;
+		AQLDate startdate;
 		dh = &(callinfo.getData(PRICING_DATA_STARTDATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+			startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 		else
 		{
 			if (!isSameStartDates(legs))
 			{
 				//error
-				LAString msg = "StartDate must be same in each leg";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+				AQLString msg = "StartDate must be same in each leg";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 			}
 			//startterm
 			dh = &(callinfo.getData(PRICING_DATA_STARTTERM, ISNOTNULL));
-			const LAString& term = dynamic_cast<const LADataString&>(dh->get()).get();
+			const AQLString& term = dynamic_cast<const AQLDataString&>(dh->get()).get();
 			//startDate of trade
 			dh = &(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-			const LADate& startdate_trade = dynamic_cast<const LADataDate&>(dh->get()).get();
+			const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 			startdate = LAMathDateCalculations::getDate(startdate_trade, term, true);
 		}
 
 		//endDate
-		LADate enddate;
+		AQLDate enddate;
 		dh = &(callinfo.getData(PRICING_DATA_ENDDATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			enddate = dynamic_cast<const LADataDate&>(dh->get()).get();
+			enddate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 		else
 		{
 			if (!isSameEndDates(legs))
 			{
 				//error
-				LAString msg = "EndDate must be same in each leg";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+				AQLString msg = "EndDate must be same in each leg";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 			}			
 			//endterm
 			dh = &(callinfo.getData(PRICING_DATA_ENDTERM, ISNOTNULL));
-			const LAString& term = dynamic_cast<const LADataString&>(dh->get()).get();
+			const AQLString& term = dynamic_cast<const AQLDataString&>(dh->get()).get();
 			//endDate of trade
 			dh = &(leg.getData(PRICING_DATA_ENDDATE, ISNOTNULL));
-			const LADate& startdate_trade = dynamic_cast<const LADataDate&>(dh->get()).get();
+			const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 			enddate = LAMathDateCalculations::getDate(startdate_trade, term, false);
 		}
 	
@@ -3042,10 +3042,10 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 	else
 	{
 		//error
-		LAString msg = PRICING_DATA_INPUTTYPE;
+		AQLString msg = PRICING_DATA_INPUTTYPE;
 		msg += ": " + schtype;
 		msg += " is not support";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 	}
 	
 	/////////////////////
@@ -3055,7 +3055,7 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 	dh = &(callinfo.getData(PRICING_DATA_OFFSET, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		int offset = dynamic_cast<const LADataInt&>(dh->get()).get();		
+		int offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();		
 		if (offset == 0)
 			fixingdates = fixingbasedates;
 		else
@@ -3063,16 +3063,16 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 			//get fixing calendar	
 			dh = &(callinfo.getData(PRICING_DATA_FIXINGCALENDAR, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
-				pCal_fixing = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+				pCal_fixing = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 			else
 			{
 				dh = &(callinfo.getData(PRICING_DATA_OBSERVATIONCALENDAR, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
-					pCal_fixing = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+					pCal_fixing = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 				else
 				{
 					dh = &(leg.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-					pCal_fixing = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+					pCal_fixing = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 				}
 			}
 			
@@ -3085,18 +3085,18 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 		// calendar and sliding rule for fixing date//
 		dh = &(callinfo.getData(PRICING_DATA_FIXINGSLIDINGRULE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			pSrule_fixing = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+			pSrule_fixing = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 		else if (schtype == DETAIL)
 			pSrule_fixing = pSrule;
 		else
 		{
 			dh = &(callinfo.getData(PRICING_DATA_OBSERVATIONSLIDINGRULE, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
-				pSrule_fixing = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+				pSrule_fixing = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 			else
 			{
 				dh = &(leg.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL));
-				pSrule_fixing = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+				pSrule_fixing = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 			}
 		}
 		
@@ -3104,30 +3104,30 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 		{
 			dh = &(callinfo.getData(PRICING_DATA_FIXINGCALENDAR, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
-				pCal_fixing = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+				pCal_fixing = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 			else
 			{
 				dh = &(callinfo.getData(PRICING_DATA_OBSERVATIONCALENDAR, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
-					pCal_fixing = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+					pCal_fixing = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 				else
 				{
 					dh = &(leg.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-					pCal_fixing = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+					pCal_fixing = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 				}
 			}
 		}
 			
 		dh = &(callinfo.getData(PRICING_DATA_FIXINGSPECIALOFFSET, ISNOTNULL));
-		LAString offset = dynamic_cast<const LADataString&>(dh->get()).get();		
+		AQLString offset = dynamic_cast<const AQLDataString&>(dh->get()).get();		
 			
 		dh = &(callinfo.getData(PRICING_DATA_FIXINGSPECIALDAY, ISNOTNULL));
-		const IntArray& specialday = dynamic_cast<const LADataInts&>(dh->get()).get();	
+		const IntArray& specialday = dynamic_cast<const AQLDataInts&>(dh->get()).get();	
 		if (specialday.size() != 12)
 		{
 			//error
-			LAString msg = "fixing special day size must be 12";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+			AQLString msg = "fixing special day size must be 12";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 		}				
 		for (unsigned int i = 0; i < calldates.size(); i++)
 			fixingdates[i] = LAPriceCFGenUtility::getDate(fixingbasedates[i], offset, specialday, *pSrule_fixing, pCal_fixing);	
@@ -3138,29 +3138,29 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 	///////////////////
 	ah_ = &(callinfo.getData(PRICING_DATA_ACTIONDATES, NOCHECK));
 	if (!ah_->isDefined())
-		ah_ = &callinfo.add(PRICING_DATA_ACTIONDATES, new LADataDates());
-	dynamic_cast<LADataDates&>(ah_->get()).set(calldates);	
+		ah_ = &callinfo.add(PRICING_DATA_ACTIONDATES, new AQLDataDates());
+	dynamic_cast<AQLDataDates&>(ah_->get()).set(calldates);	
 	/////////////////////
 	// set fixing dates//
 	/////////////////////
 	ah_ = &(callinfo.getData(PRICING_DATA_EXPIRYDATES, NOCHECK));
 	if (!ah_->isDefined())
-		ah_ = &callinfo.add(PRICING_DATA_EXPIRYDATES, new LADataDates());
-	dynamic_cast<LADataDates&>(ah_->get()).set(fixingdates);	
+		ah_ = &callinfo.add(PRICING_DATA_EXPIRYDATES, new AQLDataDates());
+	dynamic_cast<AQLDataDates&>(ah_->get()).set(fixingdates);	
 	/////////////
 	// extra cf//
 	/////////////
 /*	dh = &(callinfo.getData(PRICING_DATA_EXTRACF, NOCHECK));
 	if (!dh->isDefined() || dh->isNull()) return; //no extra cf
 
-	double extracf = dynamic_cast<const LADataDouble&>(dh->get()).get();
+	double extracf = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 	
 	// set extracf
 	DoubleArray extracf_array(1, extracf);
 	ah_ = &(callinfo.getData(PRICING_DATA_EXTRACFS, NOCHECK));
 	if (!ah_->isDefined())
-		ah_ = &callinfo.add(PRICING_DATA_EXTRACFS, new LADataDoubles());
-	dynamic_cast<LADataDoubles&>(ah_->get()).set(extracf_array);	
+		ah_ = &callinfo.add(PRICING_DATA_EXTRACFS, new AQLDataDoubles());
+	dynamic_cast<AQLDataDoubles&>(ah_->get()).set(extracf_array);	
 */	
 	dh = &(callinfo.getData(PRICING_DATA_EXTRACFFUNC, NOCHECK));
 	if (!dh->isDefined() || dh->isNull()) return; 
@@ -3171,7 +3171,7 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 	{
 		callinfo.remove(PRICING_DATA_EXTRACFDATES);
 
-		int offset_extracf = dynamic_cast<const LADataInt&>(dh->get()).get();
+		int offset_extracf = dynamic_cast<const AQLDataInt&>(dh->get()).get();
 
 		if (offset_extracf == 0) return;
 
@@ -3179,11 +3179,11 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 		{
 			dh = &(callinfo.getData(PRICING_DATA_OBSERVATIONCALENDAR, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
-				pCal = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+				pCal = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 			else
 			{
 				dh = &(leg.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-				pCal = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+				pCal = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 			}
 		}
 
@@ -3193,8 +3193,8 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 
 
 		// set extracf dates
-		ah_ = &callinfo.add(PRICING_DATA_EXTRACFDATES, new LADataDates());
-		dynamic_cast<LADataDates&>(ah_->get()).set(extracfdates);	
+		ah_ = &callinfo.add(PRICING_DATA_EXTRACFDATES, new AQLDataDates());
+		dynamic_cast<AQLDataDates&>(ah_->get()).set(extracfdates);	
 	}
 
 }
@@ -3205,25 +3205,25 @@ LAPriceCashFlowGenerator::setUpCallSchedule(LAObject& trade) const
 
 */
 void
-LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
+LAPriceCashFlowGenerator::setUpTriggerSchedule(AQLObject& trade) const
 {
-	const LADataHolder* dh;
-	LADataHolder* ah_;
+	const AQLDataHolder* dh;
+	AQLDataHolder* ah_;
 	
 	//leg object
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+	const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 	
 	//trigger info 
 	ah_ = &(trade.getData(PRICING_DATA_TRIGGERINFOS, NOCHECK));
 	if (!ah_->isDefined() || ah_->isNull()) return;	//no trigger information
-	LADataMultiReference& triggers = dynamic_cast<LADataMultiReference&>(ah_->get());
+	AQLDataMultiReference& triggers = dynamic_cast<AQLDataMultiReference&>(ah_->get());
 	
 	for (unsigned int i = 0; i < triggers.getSize(); i++)
 	{
 		// trigger schedule type
 		dh = &(triggers.get(i).getData(PRICING_DATA_INPUTTYPE, ISNOTNULL));
-		LAString schtype = dynamic_cast<const LADataString&>(dh->get()).get();
+		AQLString schtype = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		schtype.toUpper();
 		if (schtype == MANUAL)
 		{
@@ -3233,17 +3233,17 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 		else if (schtype != DETAIL)
 		{
 			//error
-			LAString msg = PRICING_DATA_INPUTTYPE;
+			AQLString msg = PRICING_DATA_INPUTTYPE;
 			msg += ": " + schtype;
 			msg += " is not support";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 		}
 
 		// target leg
 		dh = &(triggers.get(i).getData(PRICING_DATA_TARGETLEG, ISNOTNULL));
-		LAString target = dynamic_cast<const LADataString&>(dh->get()).get();
+		AQLString target = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		target.toUpper();
-		LAObjectHolder* pleg;
+		AQLObjectHolder* pleg;
 		unsigned int legNo = 0;
 		if (target == BOTH) pleg = &legs.get(0);
 		else
@@ -3253,62 +3253,62 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 				|| legs.getSize() < legNo)
 			{
 				//error
-				LAString msg = PRICING_DATA_TARGETLEG;
+				AQLString msg = PRICING_DATA_TARGETLEG;
 				msg += ": " + target;
 				msg += " is a wrong input";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 			}
 			pleg = &legs.get(legNo - 1);
 		}
 
 
 		//startDate of trigger
-		LADate startdate;
+		AQLDate startdate;
 		dh = &(triggers.get(i).getData(PRICING_DATA_STARTDATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())		
-			startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+			startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 		else
 		{
 			if (target == BOTH && !isSameStartDates(legs))
 			{
 				//error
-				LAString msg = "StartDate must be same in each leg";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+				AQLString msg = "StartDate must be same in each leg";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 			}			
 			dh = &(triggers.get(i).getData(PRICING_DATA_STARTTERM, ISNOTNULL));
 			//startterm
-			const LAString& term = dynamic_cast<const LADataString&>(dh->get()).get();
+			const AQLString& term = dynamic_cast<const AQLDataString&>(dh->get()).get();
 			//startDate of trade
 			dh = &(pleg->getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-			const LADate& startdate_trade = dynamic_cast<const LADataDate&>(dh->get()).get();
+			const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 			startdate = LAMathDateCalculations::getDate(startdate_trade, term, true);
 		}
 		
 		//endDate of trigger
-		LADate enddate;
+		AQLDate enddate;
 		dh = &(triggers.get(i).getData(PRICING_DATA_ENDDATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())		
-			enddate = dynamic_cast<const LADataDate&>(dh->get()).get();
+			enddate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 		else
 		{
 			if (target == BOTH && !isSameEndDates(legs))
 			{
 				//error
-				LAString msg = "EndDate must be same in each leg";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+				AQLString msg = "EndDate must be same in each leg";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 			}					
 			dh = &(triggers.get(i).getData(PRICING_DATA_ENDTERM, ISNOTNULL));
 			//endtermstr
-			const LAString& term = dynamic_cast<const LADataString&>(dh->get()).get();
+			const AQLString& term = dynamic_cast<const AQLDataString&>(dh->get()).get();
 			//endDate of trade
 			dh = &(pleg->getData(PRICING_DATA_ENDDATE, ISNOTNULL));
-			const LADate& startdate_trade = dynamic_cast<const LADataDate&>(dh->get()).get();
+			const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 			enddate = LAMathDateCalculations::getDate(startdate_trade, term, false);
 		}
 		
 		//BY IKEDA 20061226
-		LADate startdate_cmp = startdate;
-		LADate enddate_cmp = enddate;
+		AQLDate startdate_cmp = startdate;
+		AQLDate enddate_cmp = enddate;
 	
 		////////////////////
 		//trigger schedule//
@@ -3320,10 +3320,10 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 		////////////////////////////////////////////////
 		// calendar and sliding rule for schedule calc//
 		////////////////////////////////////////////////
-		const LAPriceDataSlidingRule* pSrule = NULL;
-		const LAPriceDataCalendar*	pCal = NULL;
-		const LAPriceDataSlidingRule* pSrule_fixing = NULL;
-		const LAPriceDataCalendar*	pCal_fixing = NULL;
+		const AQLPriceDataSlidingRule* pSrule = NULL;
+		const AQLPriceDataCalendar*	pCal = NULL;
+		const AQLPriceDataSlidingRule* pSrule_fixing = NULL;
+		const AQLPriceDataCalendar*	pCal_fixing = NULL;
 		
 		LAPriceCFGenUtility::getBusDayRuleAndCalendar(triggers.get(i).get(), 
 													PRICING_DATA_OBSERVATIONSLIDINGRULE,
@@ -3353,7 +3353,7 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 		dh = &(triggers.get(i).getData(PRICING_DATA_OFFSET, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			int offset = dynamic_cast<const LADataInt&>(dh->get()).get();
+			int offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();
 			if (offset == 0)
 				fixingdates = triggerdates;
 			else
@@ -3361,7 +3361,7 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 				//get fixing calendar	
 				dh = &(triggers.get(i).getData(PRICING_DATA_FIXINGCALENDAR, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
-					pCal_fixing = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+					pCal_fixing = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 				else
 					pCal_fixing = pCal;
 			
@@ -3374,29 +3374,29 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 			// calendar and sliding rule for fixing date//
 			dh = &(triggers.get(i).getData(PRICING_DATA_FIXINGSLIDINGRULE, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
-				pSrule_fixing = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+				pSrule_fixing = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 			else 
 				pSrule_fixing = pSrule;
 			if (pSrule_fixing->getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 			{
 				dh = &(triggers.get(i).getData(PRICING_DATA_FIXINGCALENDAR, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
-					pCal_fixing = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+					pCal_fixing = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 				else
 					pCal_fixing = pCal;
 			}
 
 	
 			dh = &(triggers.get(i).getData(PRICING_DATA_FIXINGSPECIALOFFSET, ISNOTNULL));
-			LAString offset = dynamic_cast<const LADataString&>(dh->get()).get();		
+			AQLString offset = dynamic_cast<const AQLDataString&>(dh->get()).get();		
 				
 			dh = &(triggers.get(i).getData(PRICING_DATA_FIXINGSPECIALDAY, ISNOTNULL));
-			const IntArray& specialday = dynamic_cast<const LADataInts&>(dh->get()).get();	
+			const IntArray& specialday = dynamic_cast<const AQLDataInts&>(dh->get()).get();	
 			if (specialday.size() != 12)
 			{
 				//error
-				LAString msg = "fixing special day size must be 12";
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+				AQLString msg = "fixing special day size must be 12";
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 			}		
 			for (unsigned int j = 0; j < triggerdates.size(); j++)
 				fixingdates[j] = LAPriceCFGenUtility::getDate(triggerdates[j], offset, specialday, *pSrule_fixing, pCal_fixing);	
@@ -3406,37 +3406,37 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 		//action schedule//
 		///////////////////
 		dh = &(triggers.get(i).getData(PRICING_DATA_ISACTIONDETAIL, ISNOTNULL));
-		bool isdetail = dynamic_cast<const LADataBool&>(dh->get()).get();	
+		bool isdetail = dynamic_cast<const AQLDataBool&>(dh->get()).get();	
 		if (isdetail)
 		{
 	
 			//startDate of trigger action
 			dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONSTARTDATE, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
-				startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+				startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 			else
 			{
 				dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONSTARTTERM, ISNOTNULL));
 				//starttermstr
-				const LAString& term = dynamic_cast<const LADataString&>(dh->get()).get();
+				const AQLString& term = dynamic_cast<const AQLDataString&>(dh->get()).get();
 				//startDate of trade
 				dh = &(pleg->getData(PRICING_DATA_STARTDATE, ISNOTNULL));		//PRICING_DATA_ACTIONSTARTDATE, ISNOTNULL));
-				const LADate& startdate_trade = dynamic_cast<const LADataDate&>(dh->get()).get();
+				const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 				startdate = LAMathDateCalculations::getDate(startdate_trade, term, true);
 			}
 	
 			//endDate of trigger action
 			dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONENDDATE, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
-				enddate = dynamic_cast<const LADataDate&>(dh->get()).get();
+				enddate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 			else
 			{
 				dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONENDTERM, NOCHECK));
 				//endtermstr
-				const LAString& term = dynamic_cast<const LADataString&>(dh->get()).get();
+				const AQLString& term = dynamic_cast<const AQLDataString&>(dh->get()).get();
 				//endDate of trade
 				dh = &(pleg->getData(PRICING_DATA_ENDDATE, ISNOTNULL));			//PRICING_DATA_ACTIONENDDATE, ISNOTNULL));
-				const LADate& startdate_trade = dynamic_cast<const LADataDate&>(dh->get()).get();
+				const AQLDate& startdate_trade = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 				enddate = LAMathDateCalculations::getDate(startdate_trade, term, false);
 			}
 			
@@ -3444,8 +3444,8 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 			if (startdate_cmp > startdate) //(startdate_cmp > startdate) || (enddate_cmp > enddate))
 			{
 				//error
-				LAString msg = "Date of trigger action is not fitted Date of trigger";
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+				AQLString msg = "Date of trigger action is not fitted Date of trigger";
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 			}
 			
 			////////////////////////////////////////////////
@@ -3479,7 +3479,7 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 			dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONOFFSET, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				int offset = dynamic_cast<const LADataInt&>(dh->get()).get();
+				int offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();
 				if (offset == 0)
 					tmpdates = actiondates;
 				else
@@ -3487,7 +3487,7 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 					//get fixing calendar	
 					dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONFIXINGCALENDAR, NOCHECK));
 					if (dh->isDefined() && !dh->isNull())
-						pCal_fixing = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+						pCal_fixing = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 					else
 						pCal_fixing = pCal;
 				
@@ -3500,28 +3500,28 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 				// calendar and sliding rule for fixing date//
 				dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONFIXINGSLIDINGRULE, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
-					pSrule_fixing = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+					pSrule_fixing = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 				else 
 					pSrule_fixing = pSrule;
 				if (pSrule_fixing->getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 				{
 					dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONFIXINGCALENDAR, NOCHECK));
 					if (dh->isDefined() && !dh->isNull())
-						pCal_fixing = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());	
+						pCal_fixing = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());	
 					else
 						pCal_fixing = pCal;
 				}				
 					
 				dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONFIXINGSPECIALOFFSET, ISNOTNULL));
-				LAString offset = dynamic_cast<const LADataString&>(dh->get()).get();		
+				AQLString offset = dynamic_cast<const AQLDataString&>(dh->get()).get();		
 					
 				dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONFIXINGSPECIALDAY, ISNOTNULL));
-				const IntArray& specialday = dynamic_cast<const LADataInts&>(dh->get()).get();	
+				const IntArray& specialday = dynamic_cast<const AQLDataInts&>(dh->get()).get();	
 				if (specialday.size() != 12)
 				{
 					//error
-					LAString msg = "fixing special day size must be 12";
-							throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+					AQLString msg = "fixing special day size must be 12";
+							throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 				}				
 
 				for (unsigned int j = 0; j < triggerdates.size(); j++)
@@ -3536,13 +3536,13 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 				unsigned int pos;
 				for (unsigned int j = 0; j < actionfixingdates.size(); j++)
 				{
-					LAAlgorithm::locate<DateVector, LADate>(tmpdates, fixingdates[j], tmpdates.size(), pos);
+					AQLAlgorithm::locate<DateVector, AQLDate>(tmpdates, fixingdates[j], tmpdates.size(), pos);
 					if (pos == tmpdates.size())
 					{
 						//error
-						LAString msg = "Trigger fixing date:" + LADataDate(fixingdates[j]).convertToString();
+						AQLString msg = "Trigger fixing date:" + AQLDataDate(fixingdates[j]).convertToString();
 						msg += " corresponds to no trigger action date.";
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 					}
 					actionfixingdates[j] = tmpdates.at(pos);
 				}
@@ -3551,16 +3551,16 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 		else
 		{
 			dh = &(triggers.get(i).getData(PRICING_DATA_FIXINGTIMING, ISNOTNULL));
-			const LAString& fixingtiming = dynamic_cast<const LADataString&>(dh->get()).get(); 
+			const AQLString& fixingtiming = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 			bool isfixingarrear = LAPriceCFGenUtility::isArrear(fixingtiming);
 			dh = &(triggers.get(i).getData(PRICING_DATA_ACTIONTIMING, ISNOTNULL));
-			const LAString& actiontiming = dynamic_cast<const LADataString&>(dh->get()).get(); 
+			const AQLString& actiontiming = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 			bool isactionarrear = LAPriceCFGenUtility::isArrear(actiontiming);
 			if (isfixingarrear == true && isactionarrear == false)
 			{
 				//error
-				LAString msg = "trigger fixing timing is arrear but action timing is advance";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+				AQLString msg = "trigger fixing timing is arrear but action timing is advance";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 			}
 
 			//action schedule
@@ -3583,15 +3583,15 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 		/////////////////////
 		ah_ = &(triggers.get(i).getData(PRICING_DATA_ACTIONDATES, NOCHECK));
 		if (!ah_->isDefined())
-			ah_ = &triggers.get(i).add(PRICING_DATA_ACTIONDATES, new LADataDates());
-		dynamic_cast<LADataDates&>(ah_->get()).set(actionfixingdates);	
+			ah_ = &triggers.get(i).add(PRICING_DATA_ACTIONDATES, new AQLDataDates());
+		dynamic_cast<AQLDataDates&>(ah_->get()).set(actionfixingdates);	
 		/////////////////////
 		// set fixing dates//
 		/////////////////////
 		ah_ = &(triggers.get(i).getData(PRICING_DATA_EXPIRYDATES, NOCHECK));
 		if (!ah_->isDefined())
-			ah_ = &triggers.get(i).add(PRICING_DATA_EXPIRYDATES, new LADataDates());
-		dynamic_cast<LADataDates&>(ah_->get()).set(fixingdates);		
+			ah_ = &triggers.get(i).add(PRICING_DATA_EXPIRYDATES, new AQLDataDates());
+		dynamic_cast<AQLDataDates&>(ah_->get()).set(fixingdates);		
 
 
 		/////////////////////////////////
@@ -3609,26 +3609,26 @@ LAPriceCashFlowGenerator::setUpTriggerSchedule(LAObject& trade) const
 
 */
 void
-LAPriceCashFlowGenerator::setUpTriggerCpnChange(LAObject& trade, LAObject& trigger) const
+LAPriceCashFlowGenerator::setUpTriggerCpnChange(AQLObject& trade, AQLObject& trigger) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	//cpn change info
 	dh = &(trigger.getData(PRICING_DATA_COUPONCHANGEINFO, NOCHECK));	
 	if (!dh->isDefined() || dh->isNull()) return;
-	const LADataReference& cpninfo = dynamic_cast<const LADataReference&>(dh->get());
+	const AQLDataReference& cpninfo = dynamic_cast<const AQLDataReference&>(dh->get());
 	// name of this trigger info
 	dh = &(trigger.getData(CALIBRATION_DATA_NAME, ISNOTNULL));
-	const LAString& trigger_name = dynamic_cast<const LADataString&>(dh->get()).get(); 
-	LAObjectPool& objPool = trade.getDataInstance()->getObjectPool();
+	const AQLString& trigger_name = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
+	AQLObjectPool& objPool = trade.getDataInstance()->getObjectPool();
 
 	//leg object
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+	const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 
 	// target leg
 	dh = &(trigger.getData(PRICING_DATA_TARGETLEG, ISNOTNULL));
-	LAString target = dynamic_cast<const LADataString&>(dh->get()).get();
+	AQLString target = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	target.toUpper();
 	unsigned int legNo = 0;
 	if (target != BOTH)
@@ -3638,16 +3638,16 @@ LAPriceCashFlowGenerator::setUpTriggerCpnChange(LAObject& trade, LAObject& trigg
 			|| legs.getSize() < legNo)
 		{
 			//error
-			LAString msg = PRICING_DATA_TARGETLEG;
+			AQLString msg = PRICING_DATA_TARGETLEG;
 			msg += ": " + target;
 			msg += " is a wrong input";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 		}
 
 	}
 
 	dh = &(trigger.getData(PRICING_DATA_ACTIONDATES, ISNOTNULL));
-	const DateVector& actiondates = dynamic_cast<LADataDates&>(dh->get()).get();	
+	const DateVector& actiondates = dynamic_cast<AQLDataDates&>(dh->get()).get();	
 
 
 
@@ -3657,42 +3657,42 @@ LAPriceCashFlowGenerator::setUpTriggerCpnChange(LAObject& trade, LAObject& trigg
 
 		//input type
 		dh = &(legs.get(i).getData(PRICING_DATA_INPUTTYPE, ISNOTNULL));
-		LAString schtype = dynamic_cast<const LADataString&>(dh->get()).get();
+		AQLString schtype = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		schtype.toUpper();
 		if (schtype == MANUAL) //manual input
 		{
-			trigger.getData(PRICING_DATA_COUPONINFOS + LADataInt(i + 1).convertToString(), ISNOTNULL); 
+			trigger.getData(PRICING_DATA_COUPONINFOS + AQLDataInt(i + 1).convertToString(), ISNOTNULL); 
 			continue;
 		}
 		
 		// Calculete payment dates and interest calculation dates
 		DateVector paymentdates, paymentdates_unadjust, startdates, enddates;
-        const LAString& freq = dynamic_cast<const LADataString&>(legs.get(i).getData(PRICING_DATA_FREQUENCY, ISNOTNULL).get()).get();
-        const LADate* first_odd_date = (dh=&legs.get(i).getData(PRICING_DATA_FIRSTODDDATE))->isDefined() && ! dh->isNull() ? &dynamic_cast<const LADataDate&>(dh->get()).get() : NULL;
-        const LADate* last_odd_date = (dh=&legs.get(i).getData(PRICING_DATA_LASTODDDATE))->isDefined() && ! dh->isNull() ? &dynamic_cast<const LADataDate&>(dh->get()).get() : NULL;
-        const LADate& start_date = dynamic_cast<const LADataDate&>(legs.get(i).getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
-        const LADate& end_date = dynamic_cast<const LADataDate&>(legs.get(i).getData(PRICING_DATA_ENDDATE, ISNOTNULL).get()).get();
+        const AQLString& freq = dynamic_cast<const AQLDataString&>(legs.get(i).getData(PRICING_DATA_FREQUENCY, ISNOTNULL).get()).get();
+        const AQLDate* first_odd_date = (dh=&legs.get(i).getData(PRICING_DATA_FIRSTODDDATE))->isDefined() && ! dh->isNull() ? &dynamic_cast<const AQLDataDate&>(dh->get()).get() : NULL;
+        const AQLDate* last_odd_date = (dh=&legs.get(i).getData(PRICING_DATA_LASTODDDATE))->isDefined() && ! dh->isNull() ? &dynamic_cast<const AQLDataDate&>(dh->get()).get() : NULL;
+        const AQLDate& start_date = dynamic_cast<const AQLDataDate&>(legs.get(i).getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
+        const AQLDate& end_date = dynamic_cast<const AQLDataDate&>(legs.get(i).getData(PRICING_DATA_ENDDATE, ISNOTNULL).get()).get();
 		DateVector startdates_unadjust, enddates_unadjust;
 		calcPaymentDates(legs.get(i).get(), paymentdates, paymentdates_unadjust, startdates, startdates_unadjust, enddates, 
 			enddates_unadjust, start_date, end_date, freq, first_odd_date, last_odd_date);
 		
 		// isArrear payment
 		dh = &(legs.get(i).getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL));
-		const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+		const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 		bool isarrear = LAPriceCFGenUtility::isArrear(timing);
 		// isNotionalChangeAtStat
 		dh = &(legs.get(i).getData(PRICING_DATA_ISNOTIONALEXCHANGEATSTART, ISNOTNULL));
-		bool isnotionalchangestart = dynamic_cast<const LADataBool&>(dh->get()).get();
+		bool isnotionalchangestart = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 		// isNotionalChangeAtEnd
 		dh = &(legs.get(i).getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND, ISNOTNULL));
-		bool isnotionalchangeend = dynamic_cast<const LADataBool&>(dh->get()).get();		
+		bool isnotionalchangeend = dynamic_cast<const AQLDataBool&>(dh->get()).get();		
 
-		dh = &(trigger.getData(PRICING_DATA_COUPONINFOS + LADataInt(i + 1).convertToString(), NOCHECK));
-		if (dh->isDefined()) trigger.remove(PRICING_DATA_COUPONINFOS + LADataInt(i + 1).convertToString());
+		dh = &(trigger.getData(PRICING_DATA_COUPONINFOS + AQLDataInt(i + 1).convertToString(), NOCHECK));
+		if (dh->isDefined()) trigger.remove(PRICING_DATA_COUPONINFOS + AQLDataInt(i + 1).convertToString());
 		
 		
-		LAString couponinfo_str;
-		LAObjectHolder objHolder;
+		AQLString couponinfo_str;
+		AQLObjectHolder objHolder;
 		unsigned int k = 0;//counter of coupon payment
 		for (unsigned int j = 0; j < paymentdates.size(); j++)
 		{
@@ -3703,16 +3703,16 @@ LAPriceCashFlowGenerator::setUpTriggerCpnChange(LAObject& trade, LAObject& trigg
 			if (isarrear && actiondates.at(0) >= paymentdates[j]) {k++; continue;}
 			if (!isarrear && actiondates.at(0) > paymentdates[j]) {k++; continue;}
 
-			LAString couponinfo_name = trigger_name + "_" + LEG_S + LADataInt(i + 1).convertToString()
-					+ "_" + COUPONINFO + LADataInt(j + 1).convertToString();
+			AQLString couponinfo_name = trigger_name + "_" + LEG_S + AQLDataInt(i + 1).convertToString()
+					+ "_" + COUPONINFO + AQLDataInt(j + 1).convertToString();
 						
-			LADate advancepaymentdate;
+			AQLDate advancepaymentdate;
 			if (!isarrear) advancepaymentdate = paymentdates[j];
 			else if (j > 0) advancepaymentdate = paymentdates[j - 1];
 			else
 			{
 				dh = &(legs.get(j).getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-				const LADate& startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+				const AQLDate& startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 				
 				advancepaymentdate = LAPriceCFGenUtility::getDate(startdate, legs.get(i).get(), 
 									CALIBRATION_DATA_SLIDINGRULE, CALIBRATION_DATA_CALENDAR);
@@ -3733,7 +3733,7 @@ LAPriceCashFlowGenerator::setUpTriggerCpnChange(LAObject& trade, LAObject& trigg
 			k++;
 		}
 
-		dh = &trigger.add(PRICING_DATA_COUPONINFOS + LADataInt(i + 1).convertToString(), new LADataMultiReference());
+		dh = &trigger.add(PRICING_DATA_COUPONINFOS + AQLDataInt(i + 1).convertToString(), new AQLDataMultiReference());
 		dh->convertFromString(couponinfo_str);		
 	}
 }
@@ -3747,14 +3747,14 @@ LAPriceCashFlowGenerator::setUpTriggerCpnChange(LAObject& trade, LAObject& trigg
 
 */
 bool
-LAPriceCashFlowGenerator::isSameStartDates(const LADataMultiReference& legs) const
+LAPriceCashFlowGenerator::isSameStartDates(const AQLDataMultiReference& legs) const
 {
-	const LADataHolder* dh = &(legs.get(0).getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-	const LADate& startdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+	const AQLDataHolder* dh = &(legs.get(0).getData(PRICING_DATA_STARTDATE, ISNOTNULL));
+	const AQLDate& startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 	for (unsigned int i = 1; i < legs.getSize(); i++)
 	{
 		dh = &(legs.get(i).getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-		if (startdate != dynamic_cast<const LADataDate&>(dh->get()).get()) return false;		
+		if (startdate != dynamic_cast<const AQLDataDate&>(dh->get()).get()) return false;		
 	}
 	return true;
 }
@@ -3766,14 +3766,14 @@ LAPriceCashFlowGenerator::isSameStartDates(const LADataMultiReference& legs) con
 
 */
 bool
-LAPriceCashFlowGenerator::isSameEndDates(const LADataMultiReference& legs) const
+LAPriceCashFlowGenerator::isSameEndDates(const AQLDataMultiReference& legs) const
 {
-	const LADataHolder* dh = &(legs.get(0).getData(PRICING_DATA_ENDDATE, ISNOTNULL));
-	const LADate& enddate = dynamic_cast<const LADataDate&>(dh->get()).get();
+	const AQLDataHolder* dh = &(legs.get(0).getData(PRICING_DATA_ENDDATE, ISNOTNULL));
+	const AQLDate& enddate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 	for (unsigned int i = 1; i < legs.getSize(); i++)
 	{
 		dh = &(legs.get(i).getData(PRICING_DATA_ENDDATE, ISNOTNULL));
-		if (enddate != dynamic_cast<const LADataDate&>(dh->get()).get()) return false;		
+		if (enddate != dynamic_cast<const AQLDataDate&>(dh->get()).get()) return false;		
 	}
 	return true;
 }
@@ -3785,29 +3785,29 @@ LAPriceCashFlowGenerator::isSameEndDates(const LADataMultiReference& legs) const
 
 */
 void
-LAPriceCashFlowGenerator::setUpFundingChange(LAObject& trade) const
+LAPriceCashFlowGenerator::setUpFundingChange(AQLObject& trade) const
 {
 	// get funding change info 
-	LADataHolder* dh = &(trade.getData(PRICING_DATA_FUNDINGCHANGEINFO, NOCHECK));
+	AQLDataHolder* dh = &(trade.getData(PRICING_DATA_FUNDINGCHANGEINFO, NOCHECK));
 	if (!dh->isDefined() || dh->isNull())
 	{
 		return;
 	}
-	LAObject& fginfo = dynamic_cast<LADataReference &>(dh->get()).get().get();
+	AQLObject& fginfo = dynamic_cast<AQLDataReference &>(dh->get()).get().get();
 
 	// get leg entities
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	LADataMultiReference& legs = dynamic_cast<LADataMultiReference&>(dh->get());
+	AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference&>(dh->get());
 	if (legs.getSize() != 2)
-		throw LACoreInvalidData("The number of legs must be 2",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("The number of legs must be 2",__FILE__,__LINE__);
 
 	// get funding target leg (default setting is LEG2)
-	LAObject& strleg = legs.get(0).get();
-	LAObject& fdleg = legs.get(1).get();
+	AQLObject& strleg = legs.get(0).get();
+	AQLObject& fdleg = legs.get(1).get();
 	dh = &(fginfo.getData(PRICING_DATA_FUNDINGTARGETLEG, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		LAString fdlegstr = dynamic_cast<LADataString &>(dh->get()).get();
+		AQLString fdlegstr = dynamic_cast<AQLDataString &>(dh->get()).get();
 		if (fdlegstr.toUpper() == "LEG1")
 		{
 			strleg = legs.get(1).get();
@@ -3815,7 +3815,7 @@ LAPriceCashFlowGenerator::setUpFundingChange(LAObject& trade) const
 		}
 		else if(!(fdlegstr.toUpper() == "LEG2"))
 		{
-			throw LACoreInvalidData("FundingTargetLeg must be LEG1 or LEG2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("FundingTargetLeg must be LEG1 or LEG2", __FILE__, __LINE__);
 		}
 	}
 	
@@ -3824,7 +3824,7 @@ LAPriceCashFlowGenerator::setUpFundingChange(LAObject& trade) const
 	bool ischgattribute = false;
 	if (dh->isDefined() && !dh->isNull())
 	{
-		ischgattribute = dynamic_cast<LADataBool &>(dh->get()).get();
+		ischgattribute = dynamic_cast<AQLDataBool &>(dh->get()).get();
 	}
 	if (!ischgattribute)
 	{
@@ -3832,7 +3832,7 @@ LAPriceCashFlowGenerator::setUpFundingChange(LAObject& trade) const
 	}
 
 	// cashlets of the funding leg
-	LADataMultiReference& cashlets = dynamic_cast<LADataMultiReference&>((&(fdleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL)))->get());
+	AQLDataMultiReference& cashlets = dynamic_cast<AQLDataMultiReference&>((&(fdleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL)))->get());
 	unsigned int cashSize = cashlets.getSize();
 	DoubleVector tmpvec(2, 0.0);
 	DoubleMatrix tmpspread(cashSize, tmpvec);
@@ -3845,25 +3845,25 @@ LAPriceCashFlowGenerator::setUpFundingChange(LAObject& trade) const
 	}
 
 	// get modified notional, currency, daycount conventions, calendar, sliding rule
-	DoubleVector mdfynotionals = dynamic_cast<LADataDoubles &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGNOTIONALS, ISNOTNULL)))->get()).get();
-	const LAString mdycur = ((LAString)(dynamic_cast<LADataString &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGCURRENCY, ISNOTNULL)))->get()).get())).toUpper();
-	const LAString mdydc = (&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGDAYCOUNT, ISNOTNULL)))->get().convertToString();
-	const LAString mdyindexdc = (&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGINDEXDAYCOUNT, ISNOTNULL)))->get().convertToString();
-	const LAString mdycal = (&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGCALENDAR, ISNOTNULL)))->get().convertToString();
-	const LAString mdysrule = (&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGSLIDINGRULE, ISNOTNULL)))->get().convertToString();
-	DoubleVector mdyadjustratios = dynamic_cast<LADataDoubles &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGSETTLEMENTADJUSTRATIOS, ISNOTNULL)))->get()).get();
+	DoubleVector mdfynotionals = dynamic_cast<AQLDataDoubles &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGNOTIONALS, ISNOTNULL)))->get()).get();
+	const AQLString mdycur = ((AQLString)(dynamic_cast<AQLDataString &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGCURRENCY, ISNOTNULL)))->get()).get())).toUpper();
+	const AQLString mdydc = (&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGDAYCOUNT, ISNOTNULL)))->get().convertToString();
+	const AQLString mdyindexdc = (&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGINDEXDAYCOUNT, ISNOTNULL)))->get().convertToString();
+	const AQLString mdycal = (&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGCALENDAR, ISNOTNULL)))->get().convertToString();
+	const AQLString mdysrule = (&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGSLIDINGRULE, ISNOTNULL)))->get().convertToString();
+	DoubleVector mdyadjustratios = dynamic_cast<AQLDataDoubles &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGSETTLEMENTADJUSTRATIOS, ISNOTNULL)))->get()).get();
 
 	// get modified forecast curve name
-	LAString strcurvefname(STD);
+	AQLString strcurvefname(STD);
 	dh = &(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGFORECASTCURVE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		strcurvefname = dynamic_cast<LADataString &>(dh->get()).get();
+		strcurvefname = dynamic_cast<AQLDataString &>(dh->get()).get();
 
 	for (unsigned int i = 0; i < cashSize; i++)
 	{
 		// change cashlet dataValues
-		LAObject& fdcash = cashlets.get(i).get();
-		dynamic_cast<LADataDouble &>((&(fdcash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL)))->get()).set(mdfynotionals[i]);
+		AQLObject& fdcash = cashlets.get(i).get();
+		dynamic_cast<AQLDataDouble &>((&(fdcash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL)))->get()).set(mdfynotionals[i]);
 		(&(fdcash.getData(PRICING_DATA_CURRENCY, ISNOTNULL)))->get().convertFromString(mdycur);
 		dh = &(fdcash.getData(PRICING_DATA_DAYCOUNT, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
@@ -3871,11 +3871,11 @@ LAPriceCashFlowGenerator::setUpFundingChange(LAObject& trade) const
 			dh->get().convertFromString(mdydc);
 		}
 		fdcash.remove(PRICING_DATA_ISMODIFIEDBYFUNDING);
-		fdcash.add(PRICING_DATA_ISMODIFIEDBYFUNDING, new LADataBool(true));
+		fdcash.add(PRICING_DATA_ISMODIFIEDBYFUNDING, new AQLDataBool(true));
 
 		// change settlement adjust ratio
 		fdcash.remove(PRICING_DATA_SETTLEMENTADJUSTRATIO);
-		fdcash.add(PRICING_DATA_SETTLEMENTADJUSTRATIO, new LADataDouble(mdyadjustratios[i]));
+		fdcash.add(PRICING_DATA_SETTLEMENTADJUSTRATIO, new AQLDataDouble(mdyadjustratios[i]));
 
 		// get funding coupon
 		dh = &(fdcash.getData(PRICING_DATA_COUPONINFOS,NOCHECK));
@@ -3883,39 +3883,39 @@ LAPriceCashFlowGenerator::setUpFundingChange(LAObject& trade) const
 		{
 			continue;
 		}
-		LADataMultiReference& coupons = dynamic_cast<LADataMultiReference &>(dh->get());
+		AQLDataMultiReference& coupons = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		if (coupons.getSize() != 1)
 		{
-			throw LACoreInvalidData("Funding Coupon Size must be 1", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Funding Coupon Size must be 1", __FILE__, __LINE__);
 		}
-		LAObject& fdcoupon = coupons.get(0).get();
+		AQLObject& fdcoupon = coupons.get(0).get();
 		
 		// change coupon attribues
 		(&(fdcoupon.getData(PRICING_DATA_CURRENCY, ISNOTNULL)))->get().convertFromString(mdycur);
 		fdcoupon.remove(PRICING_DATA_ISMODIFIEDBYFUNDING);
-		fdcoupon.add(PRICING_DATA_ISMODIFIEDBYFUNDING, new LADataBool(true));
+		fdcoupon.add(PRICING_DATA_ISMODIFIEDBYFUNDING, new AQLDataBool(true));
 
 		// get coupon index 
-		LADataMultiReference& indexs = dynamic_cast<LADataMultiReference &>((dh = &(fdcoupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL)))->get());
+		AQLDataMultiReference& indexs = dynamic_cast<AQLDataMultiReference &>((dh = &(fdcoupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL)))->get());
 		if (indexs.getSize() != 1)
 		{
-			throw LACoreInvalidData("Funding Index Size must be 1", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Funding Index Size must be 1", __FILE__, __LINE__);
 		}
-		LAObject& fdindex = indexs.get(0).get();
+		AQLObject& fdindex = indexs.get(0).get();
 
 		// change coupon coefficients
-		dynamic_cast<LADataDoubles &>((&(fdcoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL)))->get()).set(tmpspread[i]);
+		dynamic_cast<AQLDataDoubles &>((&(fdcoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL)))->get()).set(tmpspread[i]);
 
 		// check indextype
-		LAString indextype = ((LAString)(dynamic_cast<LADataString &>((&(fdindex.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL)))->get()).get())).toUpper();
+		AQLString indextype = ((AQLString)(dynamic_cast<AQLDataString &>((&(fdindex.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL)))->get()).get())).toUpper();
 		if (indextype == FIXEDRATE)
 		{
 			dh = &(fdindex.getData(PRICING_DATA_FIXEDRATE, ISNOTNULL));
-			dynamic_cast<LADataDouble &>(dh->get()).set(tmpfixedrate[i]);
+			dynamic_cast<AQLDataDouble &>(dh->get()).set(tmpfixedrate[i]);
 			continue;
 		}
 		else if(indextype != LIBOR)
-			throw LACoreInvalidData("Funding Index must be FixedRate or Libor",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Funding Index must be FixedRate or Libor",__FILE__,__LINE__);
 
 		// change index attribues
 		(&(fdindex.getData(PRICING_DATA_CURRENCY, ISNOTNULL)))->get().convertFromString(mdycur);
@@ -3928,27 +3928,27 @@ LAPriceCashFlowGenerator::setUpFundingChange(LAObject& trade) const
 			dh->get().convertFromString(strcurvefname);
 		}
 		fdindex.remove(PRICING_DATA_ISMODIFIEDBYFUNDING);
-		fdindex.add(PRICING_DATA_ISMODIFIEDBYFUNDING, new LADataBool(true));
+		fdindex.add(PRICING_DATA_ISMODIFIEDBYFUNDING, new AQLDataBool(true));
 	}
 
 	// change index of call info
 	dh = &(trade.getData(PRICING_DATA_CALLINFO, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		LADataReference& calls = dynamic_cast<LADataReference &>(dh->get());
-		LADataMultiReference& callindexs = dynamic_cast<LADataMultiReference &>((&(calls.get().getData(PRICING_DATA_INDEXINFOS, ISNOTNULL)))->get());
+		AQLDataReference& calls = dynamic_cast<AQLDataReference &>(dh->get());
+		AQLDataMultiReference& callindexs = dynamic_cast<AQLDataMultiReference &>((&(calls.get().getData(PRICING_DATA_INDEXINFOS, ISNOTNULL)))->get());
 		for (unsigned int i = 0; i < callindexs.getSize(); i++)
 		{
-			LAObject& indexcall = callindexs.get(i).get();
-			const LAString indextype = ((LAString)dynamic_cast<LADataString &>((&(indexcall.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL)))->get()).get()).toUpper();
+			AQLObject& indexcall = callindexs.get(i).get();
+			const AQLString indextype = ((AQLString)dynamic_cast<AQLDataString &>((&(indexcall.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL)))->get()).get()).toUpper();
 			dh = &(indexcall.getData(PRICING_DATA_CURRENCY, NOCHECK));
-			const LAString cur = (dh->isDefined() && !dh->isNull()) ? dynamic_cast<LADataString &>(dh->get()).get() : LAString("");
+			const AQLString cur = (dh->isDefined() && !dh->isNull()) ? dynamic_cast<AQLDataString &>(dh->get()).get() : AQLString("");
 			
 			if (cur == mdycur || cur == "")
 				continue;
 
 			if (indextype != LIBOR)
-				throw LACoreInvalidData("Call index type not supported by FundingChange", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Call index type not supported by FundingChange", __FILE__, __LINE__);
 
 			// change call index dataValues
 			(&(indexcall.getData(PRICING_DATA_CURRENCY, NOCHECK)))->get().convertFromString(mdycur);
@@ -3979,7 +3979,7 @@ LAPriceCashFlowGenerator::setUpFundingChange(LAObject& trade) const
 			}
 
 			indexcall.remove(PRICING_DATA_ISMODIFIEDBYFUNDING);
-			indexcall.add(PRICING_DATA_ISMODIFIEDBYFUNDING, new LADataBool(true));
+			indexcall.add(PRICING_DATA_ISMODIFIEDBYFUNDING, new AQLDataBool(true));
 		}
 	}
 }
@@ -3993,19 +3993,19 @@ LAPriceCashFlowGenerator::setUpFundingChange(LAObject& trade) const
 
 */
 void
-LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVector &fixedrates, LAObject& trade, LAObject& fundingleg, LAObject& strleg, LAObject& fginfo) const
+LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVector &fixedrates, AQLObject& trade, AQLObject& fundingleg, AQLObject& strleg, AQLObject& fginfo) const
 {
 	// declare variables
-	LAString paytiming("ARREAR");
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-	std::vector< std::vector<LAString> > indextypes;
-	std::vector<LAPriceDataDayCount> cfdcs;
+	AQLString paytiming("ARREAR");
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+	std::vector< std::vector<AQLString> > indextypes;
+	std::vector<AQLPriceDataDayCount> cfdcs;
 
 	// get path object
-	LADataReference& pathref = dynamic_cast<LADataReference &>((&(trade.getData(IR_MODEL_DATA_PATHENTITY, ISNOTNULL)))->get());
+	AQLDataReference& pathref = dynamic_cast<AQLDataReference &>((&(trade.getData(IR_MODEL_DATA_PATHENTITY, ISNOTNULL)))->get());
 	if (pathref.get().get().isTypeOf(ENTITY_PLAINVANILLA))
 	{
-		const LADataValuation& valuemehod = dynamic_cast<const LADataValuation &>(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
+		const AQLDataValuation& valuemehod = dynamic_cast<const AQLDataValuation &>(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
 		/*if (!valuemehod.isTypeOf(FN_IR_NDSSWAPTIONVALUE))
 		{
 			return;
@@ -4013,54 +4013,54 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 	}
 	else if (!pathref.get().get().isTypeOf(ENTITY_PATH))
 	{
-		throw LACoreInvalidData("Error createFundingSpread: invalid path type", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Error createFundingSpread: invalid path type", __FILE__, __LINE__);
 	}
 
 	// get asofdate, settle date
-	const LADate settle = dynamic_cast<LADataDate &>((&(trade.getData(PRICING_DATA_SETTLEDATE, ISNOTNULL)))->get()).get();
-	const LADate issuedate = dynamic_cast<LADataDate &>((&(fginfo.getData(PRICING_DATA_ISSUEDATE, ISNOTNULL)))->get()).get();
-	const LADate firstfixingdate = dynamic_cast<LADataDate &>((&(fginfo.getData(PRICING_DATA_FIRSTFIXINGDATE, ISNOTNULL)))->get()).get();
-	const DateVector fixingdates = dynamic_cast<LADataDates &>((&(fginfo.getData(PRICING_DATA_FIXINGDATES, ISNOTNULL)))->get()).get();
-	const DateVector paydates = dynamic_cast<LADataDates &>((&(fginfo.getData(PRICING_DATA_PAYMENTDATES, ISNOTNULL)))->get()).get();
-	const DateVector cfstartdates = dynamic_cast<LADataDates &>((&(fginfo.getData(PRICING_DATA_CFCALCSTARTDATES, ISNOTNULL)))->get()).get();
-	const DateVector cfenddates = dynamic_cast<LADataDates &>((&(fginfo.getData(PRICING_DATA_CFCALCENDDATES, ISNOTNULL)))->get()).get();
+	const AQLDate settle = dynamic_cast<AQLDataDate &>((&(trade.getData(PRICING_DATA_SETTLEDATE, ISNOTNULL)))->get()).get();
+	const AQLDate issuedate = dynamic_cast<AQLDataDate &>((&(fginfo.getData(PRICING_DATA_ISSUEDATE, ISNOTNULL)))->get()).get();
+	const AQLDate firstfixingdate = dynamic_cast<AQLDataDate &>((&(fginfo.getData(PRICING_DATA_FIRSTFIXINGDATE, ISNOTNULL)))->get()).get();
+	const DateVector fixingdates = dynamic_cast<AQLDataDates &>((&(fginfo.getData(PRICING_DATA_FIXINGDATES, ISNOTNULL)))->get()).get();
+	const DateVector paydates = dynamic_cast<AQLDataDates &>((&(fginfo.getData(PRICING_DATA_PAYMENTDATES, ISNOTNULL)))->get()).get();
+	const DateVector cfstartdates = dynamic_cast<AQLDataDates &>((&(fginfo.getData(PRICING_DATA_CFCALCSTARTDATES, ISNOTNULL)))->get()).get();
+	const DateVector cfenddates = dynamic_cast<AQLDataDates &>((&(fginfo.getData(PRICING_DATA_CFCALCENDDATES, ISNOTNULL)))->get()).get();
 
 	// get base attrubues
-	const DoubleVector basenotionals = dynamic_cast<LADataDoubles &>((&(fginfo.getData(PRICING_DATA_BASEFUNDINGNOTIONALS, ISNOTNULL)))->get()).get();
-	const LAString basecur = ((LAString)(dynamic_cast<LADataString &>((&(fginfo.getData(PRICING_DATA_BASEFUNDINGCURRENCY, ISNOTNULL)))->get()).get())).toUpper();
-	const LAPriceDataDayCount basedc = dynamic_cast<LAPriceDataDayCount &>(fginfo.getData(PRICING_DATA_BASEFUNDINGDAYCOUNT, ISNOTNULL).get());
-	const LAPriceDataDayCount baseindexdc = dynamic_cast<LAPriceDataDayCount &>(fginfo.getData(PRICING_DATA_BASEFUNDINGINDEXDAYCOUNT, ISNOTNULL).get());
-	const LAPriceDataCalendar basecal = dynamic_cast<LAPriceDataCalendar&>(fginfo.getData(PRICING_DATA_BASEFUNDINGCALENDAR, ISNOTNULL).get());
-	const LAPriceDataSlidingRule basesld = dynamic_cast<LAPriceDataSlidingRule&>(fginfo.getData(PRICING_DATA_BASEFUNDINGSLIDINGRULE, ISNOTNULL).get());
-	const DoubleVector baseadjustratios = dynamic_cast<LADataDoubles &>((&(fginfo.getData(PRICING_DATA_BASEFUNDINGSETTLEMENTADJUSTRATIOS, ISNOTNULL)))->get()).get();
+	const DoubleVector basenotionals = dynamic_cast<AQLDataDoubles &>((&(fginfo.getData(PRICING_DATA_BASEFUNDINGNOTIONALS, ISNOTNULL)))->get()).get();
+	const AQLString basecur = ((AQLString)(dynamic_cast<AQLDataString &>((&(fginfo.getData(PRICING_DATA_BASEFUNDINGCURRENCY, ISNOTNULL)))->get()).get())).toUpper();
+	const AQLPriceDataDayCount basedc = dynamic_cast<AQLPriceDataDayCount &>(fginfo.getData(PRICING_DATA_BASEFUNDINGDAYCOUNT, ISNOTNULL).get());
+	const AQLPriceDataDayCount baseindexdc = dynamic_cast<AQLPriceDataDayCount &>(fginfo.getData(PRICING_DATA_BASEFUNDINGINDEXDAYCOUNT, ISNOTNULL).get());
+	const AQLPriceDataCalendar basecal = dynamic_cast<AQLPriceDataCalendar&>(fginfo.getData(PRICING_DATA_BASEFUNDINGCALENDAR, ISNOTNULL).get());
+	const AQLPriceDataSlidingRule basesld = dynamic_cast<AQLPriceDataSlidingRule&>(fginfo.getData(PRICING_DATA_BASEFUNDINGSLIDINGRULE, ISNOTNULL).get());
+	const DoubleVector baseadjustratios = dynamic_cast<AQLDataDoubles &>((&(fginfo.getData(PRICING_DATA_BASEFUNDINGSETTLEMENTADJUSTRATIOS, ISNOTNULL)))->get()).get();
 
 	// get modified dataValues
-	const DoubleVector mdfynotionals = dynamic_cast<LADataDoubles &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGNOTIONALS, ISNOTNULL)))->get()).get();
-	const LAString mdycur = ((LAString)(dynamic_cast<LADataString &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGCURRENCY, ISNOTNULL)))->get()).get())).toUpper();
-	const LAPriceDataDayCount mdydc = dynamic_cast<LAPriceDataDayCount &>(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGDAYCOUNT, ISNOTNULL).get());
-	const LAPriceDataDayCount mdyindexdc = dynamic_cast<LAPriceDataDayCount &>(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGINDEXDAYCOUNT, ISNOTNULL).get());
-	const LAPriceDataCalendar mdycal = dynamic_cast<LAPriceDataCalendar&>(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGCALENDAR, ISNOTNULL).get());
-	const LAPriceDataSlidingRule mdysld = dynamic_cast<LAPriceDataSlidingRule&>(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGSLIDINGRULE, ISNOTNULL).get());
-	const DoubleVector mdyadjustratios = dynamic_cast<LADataDoubles &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGSETTLEMENTADJUSTRATIOS, ISNOTNULL)))->get()).get();
+	const DoubleVector mdfynotionals = dynamic_cast<AQLDataDoubles &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGNOTIONALS, ISNOTNULL)))->get()).get();
+	const AQLString mdycur = ((AQLString)(dynamic_cast<AQLDataString &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGCURRENCY, ISNOTNULL)))->get()).get())).toUpper();
+	const AQLPriceDataDayCount mdydc = dynamic_cast<AQLPriceDataDayCount &>(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGDAYCOUNT, ISNOTNULL).get());
+	const AQLPriceDataDayCount mdyindexdc = dynamic_cast<AQLPriceDataDayCount &>(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGINDEXDAYCOUNT, ISNOTNULL).get());
+	const AQLPriceDataCalendar mdycal = dynamic_cast<AQLPriceDataCalendar&>(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGCALENDAR, ISNOTNULL).get());
+	const AQLPriceDataSlidingRule mdysld = dynamic_cast<AQLPriceDataSlidingRule&>(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGSLIDINGRULE, ISNOTNULL).get());
+	const DoubleVector mdyadjustratios = dynamic_cast<AQLDataDoubles &>((&(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGSETTLEMENTADJUSTRATIOS, ISNOTNULL)))->get()).get();
 
 	// get fx object and yield object
-	LADate asof;
+	AQLDate asof;
 	LAMathFXEntity* pfx = 0;
 	LAMathYieldCurve* pbasecurve = 0;
 	LAMathYieldCurve* pmdycurve = 0;
 	if (pathref.get().get().isTypeOf(ENTITY_PATH))
 	{
 		LAMathPathEntity* ppath = &(dynamic_cast<LAMathPathEntity&>(pathref.get().get()));
-		asof = dynamic_cast<LADataDate &>((&ppath->getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL))->get()).get();
-		LADataMultiReference& initialrefs = ppath->getInitialValues();
-		const LADataStrings& sdenames = ppath->getSDEAttrNames();
+		asof = dynamic_cast<AQLDataDate &>((&ppath->getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL))->get()).get();
+		AQLDataMultiReference& initialrefs = ppath->getInitialValues();
+		const AQLDataStrings& sdenames = ppath->getSDEAttrNames();
 		for (unsigned int i = 0; i < initialrefs.getSize(); i++)
 		{
 			const LAMathAttrSDE &sde = dynamic_cast<const LAMathAttrSDE &>(ppath->getData(sdenames[i]).get());
 
 			if (sde.getSDEPathType() == IR)
 			{
-				const LAString &ccy = sde.getCurrency();
+				const AQLString &ccy = sde.getCurrency();
 
 				if (ccy == basecur)
 					pbasecurve = dynamic_cast<LAMathYieldCurve *>(&initialrefs.get(i).get());
@@ -4089,14 +4089,14 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 	const double fxspot = pfx->getRate(basecur, mdycur, 0.0);
 
 	// get base curve names and interpolation
-	LAString fundingcurvefname, strcurvefname;
-	LADataHolder* dh = &(fginfo.getData(PRICING_DATA_BASEFUNDINGFORECASTCURVE, NOCHECK));
+	AQLString fundingcurvefname, strcurvefname;
+	AQLDataHolder* dh = &(fginfo.getData(PRICING_DATA_BASEFUNDINGFORECASTCURVE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		fundingcurvefname = dynamic_cast<LADataString &>(dh->get()).get();
+		fundingcurvefname = dynamic_cast<AQLDataString &>(dh->get()).get();
 	}
-	const LAInterpolationBase* pInterbase = 0;
-	LAString bfbasecurvename = pbasecurve->getCurveType();
+	const AQLInterpolationBase* pInterbase = 0;
+	AQLString bfbasecurvename = pbasecurve->getCurveType();
 	if (fundingcurvefname.size() > 0 && bfbasecurvename != fundingcurvefname)
 		pInterbase = &(pbasecurve->getDFInterpolation(&fundingcurvefname));
 	else
@@ -4106,10 +4106,10 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 	dh = &(fginfo.getData(PRICING_DATA_MODIFIEDFUNDINGFORECASTCURVE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		strcurvefname = dynamic_cast<LADataString &>(dh->get()).get();
+		strcurvefname = dynamic_cast<AQLDataString &>(dh->get()).get();
 	}
-	const LAInterpolationBase* pIntermdfy = 0;
-	LAString bfmdycurvename = pmdycurve->getCurveType();
+	const AQLInterpolationBase* pIntermdfy = 0;
+	AQLString bfmdycurvename = pmdycurve->getCurveType();
 	if (strcurvefname.size() > 0 && bfmdycurvename != strcurvefname)
 		pIntermdfy = &(pmdycurve->getDFInterpolation(&strcurvefname));
 	else
@@ -4117,18 +4117,18 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 
 	// cashlets of the funding leg
 	dh = &(fundingleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	LADataMultiReference& cashlets = dynamic_cast<LADataMultiReference &>(dh->get());
+	AQLDataMultiReference& cashlets = dynamic_cast<AQLDataMultiReference &>(dh->get());
 
 	unsigned int insertpos = numeric_limits<unsigned int>::max();
 	unsigned int cashSize = cashlets.getSize();
 	for (unsigned int i = 0; i < cashSize; i++)
 	{
 		// get cashlet
-		LAObject& fdcash = cashlets.get(i).get();
+		AQLObject& fdcash = cashlets.get(i).get();
 
 		// continue if paymentdate <= asofdate
 		dh = &(fdcash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-		const LADate paymentdate = dynamic_cast<LADataDate &>(dh->get()).get();
+		const AQLDate paymentdate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 		if (asof >= paymentdate)
 			continue;
 
@@ -4137,24 +4137,24 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 		{
 			continue;
 		}
-		LADataMultiReference& coupons = dynamic_cast<LADataMultiReference &>(dh->get());
+		AQLDataMultiReference& coupons = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		if (coupons.getSize() != 1)
-			throw LACoreInvalidData("Funding Coupon size must be 1",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Funding Coupon size must be 1",__FILE__,__LINE__);
 
 		// update insert position 
 		insertpos = (i < insertpos) ? i : insertpos;
 
 		// coupon object
-		LAObject& fdcoupon = coupons.get(0).get();
+		AQLObject& fdcoupon = coupons.get(0).get();
 		dh = &(fdcoupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
-		LADataMultiReference& indexs = dynamic_cast<LADataMultiReference &>(dh->get());
+		AQLDataMultiReference& indexs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		if (indexs.getSize() != 1)
-			throw LACoreInvalidData("Funding Index size must be 1",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Funding Index size must be 1",__FILE__,__LINE__);
 
 		#pragma region PreparationFromCashlets 
 		
 		// original cashflow daycount
-		LAPriceDataDayCount cfdc = dynamic_cast<LAPriceDataDayCount &>((&(fdcash.getData(PRICING_DATA_BASEFUNDINGDAYCOUNT, ISNOTNULL)))->get());
+		AQLPriceDataDayCount cfdc = dynamic_cast<AQLPriceDataDayCount &>((&(fdcash.getData(PRICING_DATA_BASEFUNDINGDAYCOUNT, ISNOTNULL)))->get());
 		cfdcs.push_back(cfdc);
 
 		#pragma endregion PreparationFromCashlets 
@@ -4162,19 +4162,19 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 		#pragma region PreparationFromIndexes
 
 		// index object
-		LAObject& fdindex = indexs.get(0).get();
+		AQLObject& fdindex = indexs.get(0).get();
 
 		// index type
-		std::vector<LAString> indextype(2);
+		std::vector<AQLString> indextype(2);
 		dh = &(fdindex.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL));
-		indextype[0] = dynamic_cast<LADataString &>(dh->get()).get();
+		indextype[0] = dynamic_cast<AQLDataString &>(dh->get()).get();
 		indextype[0].toUpper();
 
 		// index accesory
 		dh = &(fdindex.getData(PRICING_DATA_ACCESSORY, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			indextype[1] = dynamic_cast<LADataString &>(dh->get()).get();
+			indextype[1] = dynamic_cast<AQLDataString &>(dh->get()).get();
 			indextype[1].toUpper();
 		}
 		
@@ -4185,15 +4185,15 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 
 	// get end date of the funding leg
 	dh = &(cashlets.get(cashSize - 1).get().getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-	LADate finalExDate(dynamic_cast<LADataDate &>(dh->get()).get());
+	AQLDate finalExDate(dynamic_cast<AQLDataDate &>(dh->get()).get());
 
 	// get PaymentTerm 
 	unsigned int vecSize = paydates.size();
 	DoubleVector payterms(vecSize), baseDFs(vecSize), mdyDFs(vecSize), baseLibors(vecSize), mdyLibors(vecSize),
 				cfstartterms(vecSize), cfendterms(vecSize), basetaus(vecSize), mdytaus(vecSize), retspread(vecSize);
 
-	LAString bStrname = pbasecurve->getCurveType();
-	LAString fStrname = pmdycurve->getCurveType();
+	AQLString bStrname = pbasecurve->getCurveType();
+	AQLString fStrname = pmdycurve->getCurveType();
 	pbasecurve->setCurveType("STD");
 	pmdycurve->setCurveType("STD");
 
@@ -4214,19 +4214,19 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 
 	// get spreads
 	dh = &(fginfo.getData(PRICING_DATA_BASEFUNDINGSPREADS, ISNOTNULL));
-	DoubleVector basespreads = dynamic_cast<LADataDoubles &>(dh->get()).get();
+	DoubleVector basespreads = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 	if (basespreads.size() != vecSize)
-		throw LACoreInvalidData("baseSpread size must be the same as vecSize",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("baseSpread size must be the same as vecSize",__FILE__,__LINE__);
 
 	// get fixed rates
 	dh = &(fginfo.getData(PRICING_DATA_BASEFUNDINGRATES, ISNOTNULL));
-	DoubleVector basefixedrates = dynamic_cast<LADataDoubles &>(dh->get()).get();
+	DoubleVector basefixedrates = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 	if (basefixedrates.size() != vecSize)
-		throw LACoreInvalidData("baseFixedRate size must be the same as vecSize",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("baseFixedRate size must be the same as vecSize",__FILE__,__LINE__);
 
 	// find insert position
 	if (spreadmat.size() < vecSize)
-		throw LACoreInvalidData("Error Pos",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Error Pos",__FILE__,__LINE__);
 
 	// calculate funding spreads
 	for (unsigned int i = 0; i < vecSize; i++)
@@ -4235,35 +4235,35 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 		basetaus[i] = cfdcs[i].getTerm(cfstartdates[i], cfenddates[i]);
 		mdytaus[i] = mdydc.getTerm(cfstartdates[i], cfenddates[i]);
 		if(basetaus[i] == 0. || mdytaus[i] == 0.)
-			throw LACoreInvalidData("Invalid Cashflow: CF start date is same as end date.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Invalid Cashflow: CF start date is same as end date.",__FILE__,__LINE__);
 
 		// Libor (L(T_{i-1},T_i), paied at T_i) Calculation
 		// These calculation logic for Libor accrual is based on following implementation:
-		// Start date: LAPricePayOff::SetUpEntityOfIndex(LADate&, MBentity&, LAObject&, DateVector*, bool)
+		// Start date: LAPricePayOff::SetUpEntityOfIndex(AQLDate&, MBentity&, AQLObject&, DateVector*, bool)
 		// End date: LAMathIndexEntity::setUpForIR(void)
 		// And variable SPOTLAG must be consistent with definition in LAMathIndexEntity.cpp
 		if (indextypes[i][0] == LIBOR)
 		{
-			LADate baseIdxAccDate_s = (fixingdates[i] < asof) ? asof :  basecal.getBusinessDay(fixingdates[i], SPOTLAG);
-			LADate mdyIdxAccDate_s = (fixingdates[i] < asof) ? asof : mdycal.getBusinessDay(fixingdates[i], SPOTLAG);
+			AQLDate baseIdxAccDate_s = (fixingdates[i] < asof) ? asof :  basecal.getBusinessDay(fixingdates[i], SPOTLAG);
+			AQLDate mdyIdxAccDate_s = (fixingdates[i] < asof) ? asof : mdycal.getBusinessDay(fixingdates[i], SPOTLAG);
 
-			LADate baseIdxAccDate_e = LAMathDateCalculations::getDate(baseIdxAccDate_s, indextypes[i][1], basesld, &basecal, true);
-			LADate mdyIdxAccDate_e = LAMathDateCalculations::getDate(mdyIdxAccDate_s, indextypes[i][1], mdysld, &mdycal, true);
+			AQLDate baseIdxAccDate_e = LAMathDateCalculations::getDate(baseIdxAccDate_s, indextypes[i][1], basesld, &basecal, true);
+			AQLDate mdyIdxAccDate_e = LAMathDateCalculations::getDate(mdyIdxAccDate_s, indextypes[i][1], mdysld, &mdycal, true);
 
 			double indexTerm_s, indexTerm_e, indexAccrualTerm;
 			
 			indexTerm_s = dc_act365.getTerm(asof, baseIdxAccDate_s);
 			indexTerm_e = dc_act365.getTerm(asof, baseIdxAccDate_e);
 			indexAccrualTerm = baseindexdc.getTerm(baseIdxAccDate_s, baseIdxAccDate_e, false);
-			if (!(LAMath::abs(indexAccrualTerm) > 0.))
-				throw LACoreInvalidData("Libor accrual term was evaluated to 0.",__FILE__,__LINE__);
+			if (!(AQLMath::abs(indexAccrualTerm) > 0.))
+				throw AQLCoreInvalidData("Libor accrual term was evaluated to 0.",__FILE__,__LINE__);
 			baseLibors[i] = 1.0/indexAccrualTerm*(pInterbase->value(indexTerm_s)/pInterbase->value(indexTerm_e) - 1.0);
 
 			indexTerm_s = dc_act365.getTerm(asof, mdyIdxAccDate_s);
 			indexTerm_e = dc_act365.getTerm(asof, mdyIdxAccDate_e);
 			indexAccrualTerm = mdyindexdc.getTerm(mdyIdxAccDate_s, mdyIdxAccDate_e, false);
-			if (!(LAMath::abs(indexAccrualTerm) > 0.))
-				throw LACoreInvalidData("Libor accrual term was evaluated to 0.",__FILE__,__LINE__);
+			if (!(AQLMath::abs(indexAccrualTerm) > 0.))
+				throw AQLCoreInvalidData("Libor accrual term was evaluated to 0.",__FILE__,__LINE__);
 			mdyLibors[i] = 1.0/indexAccrualTerm*(pIntermdfy->value(indexTerm_s)/pIntermdfy->value(indexTerm_e) - 1.0);
 		}
 		else if (indextypes[i][0] == FIXEDRATE)
@@ -4272,7 +4272,7 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 			mdyLibors[i] = 0.;
 		}
 		else
-			throw LACoreInvalidData("IndexType error: IndexType must be Libor or FixedRate for funding change",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("IndexType error: IndexType must be Libor or FixedRate for funding change",__FILE__,__LINE__);
 
 		// calculation of par spread
 		double exTerm = (i < vecSize - 1) ? payterms[i] : dc_act365.getTerm(asof, finalExDate);
@@ -4322,7 +4322,7 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 
 	//add atribute
 	fginfo.remove(PRICING_DATA_MODIFIEDFUNDINGSPREADS);
-	fginfo.add(PRICING_DATA_MODIFIEDFUNDINGSPREADS, new LADataDoubles(retspread));
+	fginfo.add(PRICING_DATA_MODIFIEDFUNDINGSPREADS, new AQLDataDoubles(retspread));
 
 	return;
 }
@@ -4336,15 +4336,15 @@ LAPriceCashFlowGenerator::createFundingSpread(DoubleMatrix &spreadmat, DoubleVec
 
 */
 void
-LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject& fundingleg, LAObject& strleg, LAObject& fginfo) const
+LAPriceCashFlowGenerator::createFundingChangeAttribute(AQLObject& trade, AQLObject& fundingleg, AQLObject& strleg, AQLObject& fginfo) const
 {
 	// get path object
-	LADataHolder* dh = &(trade.getData(IR_MODEL_DATA_PATHENTITY, ISNOTNULL));
-	LADataReference& pathref = dynamic_cast<LADataReference &>(dh->get());
-	LADate asofDate;
+	AQLDataHolder* dh = &(trade.getData(IR_MODEL_DATA_PATHENTITY, ISNOTNULL));
+	AQLDataReference& pathref = dynamic_cast<AQLDataReference &>(dh->get());
+	AQLDate asofDate;
 	if (pathref.get().get().isTypeOf(ENTITY_PLAINVANILLA))
 	{
-		const LADataValuation& valuemehod = dynamic_cast<const LADataValuation &>(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
+		const AQLDataValuation& valuemehod = dynamic_cast<const AQLDataValuation &>(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
 		//if (valuemehod.isTypeOf(FN_IR_NDSSWAPTIONVALUE))
 		//{
 		//	const LAMathPlainVanillaEntity& path = dynamic_cast<const LAMathPlainVanillaEntity&>(pathref.get().get());
@@ -4357,7 +4357,7 @@ LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject
 	}
 	else if (!pathref.get().get().isTypeOf(ENTITY_PATH))
 	{
-		throw LACoreInvalidData("Error createFundingChangeAttribute: invalid path type", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Error createFundingChangeAttribute: invalid path type", __FILE__, __LINE__);
 	}
 	else
 	{
@@ -4367,45 +4367,45 @@ LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject
 
 	// set IsNotionalExchange from TRUE to FALSE
 	dh = &(fundingleg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATSTART, ISNOTNULL));
-	if (!dynamic_cast<LADataBool &>(dh->get()).get())
-		throw LACoreInvalidData("Initial exchange must be true when Funding Change",__FILE__,__LINE__);
-	dynamic_cast<LADataBool &>(dh->get()).set(false);
+	if (!dynamic_cast<AQLDataBool &>(dh->get()).get())
+		throw AQLCoreInvalidData("Initial exchange must be true when Funding Change",__FILE__,__LINE__);
+	dynamic_cast<AQLDataBool &>(dh->get()).set(false);
 	
 	dh = &(fundingleg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND, ISNOTNULL));
-	if (!dynamic_cast<LADataBool &>(dh->get()).get())
-		throw LACoreInvalidData("Final exchange must be true when Funding Change",__FILE__,__LINE__);
-	dynamic_cast<LADataBool &>(dh->get()).set(false);
+	if (!dynamic_cast<AQLDataBool &>(dh->get()).get())
+		throw AQLCoreInvalidData("Final exchange must be true when Funding Change",__FILE__,__LINE__);
+	dynamic_cast<AQLDataBool &>(dh->get()).set(false);
 	
 	dh = &(strleg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATSTART, ISNOTNULL));
-	if (!dynamic_cast<LADataBool &>(dh->get()).get())
-		throw LACoreInvalidData("Initial exchange must be true when Funding Change",__FILE__,__LINE__);
-	dynamic_cast<LADataBool &>(dh->get()).set(false);
+	if (!dynamic_cast<AQLDataBool &>(dh->get()).get())
+		throw AQLCoreInvalidData("Initial exchange must be true when Funding Change",__FILE__,__LINE__);
+	dynamic_cast<AQLDataBool &>(dh->get()).set(false);
 	
 	dh = &(strleg.getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND, ISNOTNULL));
-	if (!dynamic_cast<LADataBool &>(dh->get()).get())
-		throw LACoreInvalidData("Final exchange must be true when Funding Change",__FILE__,__LINE__);
-	dynamic_cast<LADataBool &>(dh->get()).set(false);
+	if (!dynamic_cast<AQLDataBool &>(dh->get()).get())
+		throw AQLCoreInvalidData("Final exchange must be true when Funding Change",__FILE__,__LINE__);
+	dynamic_cast<AQLDataBool &>(dh->get()).set(false);
 
 	// get first funding cashlet
-	LADataMultiReference& fdcashlets = dynamic_cast<LADataMultiReference &>((&(fundingleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL)))->get());
-	LAObject& fdcash = fdcashlets.get(0).get();
+	AQLDataMultiReference& fdcashlets = dynamic_cast<AQLDataMultiReference &>((&(fundingleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL)))->get());
+	AQLObject& fdcash = fdcashlets.get(0).get();
 
 	// set base currency
-	const LAString basecur = ((LAString)dynamic_cast<LADataString &>((&(fdcash.getData(PRICING_DATA_CURRENCY, ISNOTNULL)))->get()).get()).toUpper();
+	const AQLString basecur = ((AQLString)dynamic_cast<AQLDataString &>((&(fdcash.getData(PRICING_DATA_CURRENCY, ISNOTNULL)))->get()).get()).toUpper();
 	fginfo.remove(PRICING_DATA_BASEFUNDINGCURRENCY);
-	fginfo.add(PRICING_DATA_BASEFUNDINGCURRENCY, new LADataString()).convertFromString(basecur);
+	fginfo.add(PRICING_DATA_BASEFUNDINGCURRENCY, new AQLDataString()).convertFromString(basecur);
 
 	// set IsChangedByFunding true
 	bool IsChangedByFunding = false;
 	dh = &(trade.getData(PRICING_DATA_ISCHANGEDBYFUNDING, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		IsChangedByFunding = dynamic_cast<LADataBool &>(dh->get()).get();
+		IsChangedByFunding = dynamic_cast<AQLDataBool &>(dh->get()).get();
 	}
 
 	// 
-	LADate issuedate("99991231");
-	LADate firstfixingdate("99991231");
+	AQLDate issuedate("99991231");
+	AQLDate firstfixingdate("99991231");
 	DoubleVector spreads;
 	DoubleVector fixedrates;
 	DateVector paymentdates;
@@ -4417,12 +4417,12 @@ LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject
 	for (unsigned int i = 0; i < fdcashlets.getSize(); i++)
 	{
 		// get cashlet
-		LAObject& fdcash = fdcashlets.get(i).get();
+		AQLObject& fdcash = fdcashlets.get(i).get();
 
 		// save original notional amounts
 		if (!IsChangedByFunding)
 		{
-			const double notional = LAMath::abs(dynamic_cast<LADataDouble &>((&(fdcash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL)))->get()).get());
+			const double notional = AQLMath::abs(dynamic_cast<AQLDataDouble &>((&(fdcash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL)))->get()).get());
 			basenotionals.push_back(notional);
 		}
 
@@ -4435,12 +4435,12 @@ LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject
 		dh = &(fdcash.getData(PRICING_DATA_CFCALCSTARTDATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			LADate startdate = dynamic_cast<LADataDate &>(dh->get()).get();
+			AQLDate startdate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 			issuedate = (startdate < issuedate) ? startdate : issuedate;
 		}
 
 		// continue if paymentdate <= asofdate
-		const LADate paymentdate = dynamic_cast<LADataDate &>((&(fdcash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL)))->get()).get();
+		const AQLDate paymentdate = dynamic_cast<AQLDataDate &>((&(fdcash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL)))->get()).get();
 		issuedate = (paymentdate < issuedate) ? paymentdate : issuedate;
 		if (asofDate >= paymentdate)
 			continue;
@@ -4451,47 +4451,47 @@ LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject
 			continue;
 
 		// throw an error if the payment timing is not ARREAR
-		LAString paytiming = ((LAString)dynamic_cast<LADataString &>((&(fdcash.getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL)))->get()).get()).toUpper();
+		AQLString paytiming = ((AQLString)dynamic_cast<AQLDataString &>((&(fdcash.getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL)))->get()).get()).toUpper();
 		if (paytiming != "ARREAR")
-			throw LACoreInvalidData("Invalid payment timing: only ARREAR is supported", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Invalid payment timing: only ARREAR is supported", __FILE__, __LINE__);
 
 		// save original daycount conventions for calculating funding spreads later
 		if (!IsChangedByFunding)
 		{
-			const LAPriceDataDayCount& daycount = dynamic_cast<LAPriceDataDayCount &>((&(fdcash.getData(PRICING_DATA_DAYCOUNT, ISNOTNULL)))->get());
+			const AQLPriceDataDayCount& daycount = dynamic_cast<AQLPriceDataDayCount &>((&(fdcash.getData(PRICING_DATA_DAYCOUNT, ISNOTNULL)))->get());
 			fdcash.remove(PRICING_DATA_BASEFUNDINGDAYCOUNT);
-			fdcash.add(PRICING_DATA_BASEFUNDINGDAYCOUNT, new LAPriceDataDayCount(daycount));
+			fdcash.add(PRICING_DATA_BASEFUNDINGDAYCOUNT, new AQLPriceDataDayCount(daycount));
 		}
 
 		// get coupon object
-		LADataMultiReference& fdcoupons = dynamic_cast<LADataMultiReference &>((&(fdcash.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL)))->get());
+		AQLDataMultiReference& fdcoupons = dynamic_cast<AQLDataMultiReference &>((&(fdcash.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL)))->get());
 		if (fdcoupons.getSize() != 1)
 		{
-			throw LACoreInvalidData("Funding Coupon size must be 1", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Funding Coupon size must be 1", __FILE__, __LINE__);
 		}
-		LAObject& fdcoupon = fdcoupons.get(0).get();
+		AQLObject& fdcoupon = fdcoupons.get(0).get();
 
 		// get index object and index type
-		LADataMultiReference& fdindexs = dynamic_cast<LADataMultiReference &>((&(fdcoupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL)))->get());
+		AQLDataMultiReference& fdindexs = dynamic_cast<AQLDataMultiReference &>((&(fdcoupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL)))->get());
 		if (fdindexs.getSize() != 1)
 		{
-			throw LACoreInvalidData("Funding Index size must be 1", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Funding Index size must be 1", __FILE__, __LINE__);
 		}
-		LAObject& fdindex = fdindexs.get(0).get();
-		const LAString indextype = ((LAString)dynamic_cast<LADataString &>((&(fdindex.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL)))->get()).get()).toUpper();
+		AQLObject& fdindex = fdindexs.get(0).get();
+		const AQLString indextype = ((AQLString)dynamic_cast<AQLDataString &>((&(fdindex.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL)))->get()).get()).toUpper();
 
 		// get base spread
-		DoubleVector coeff = dynamic_cast<LADataDoubles &>((&(fdcoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL)))->get()).get();
+		DoubleVector coeff = dynamic_cast<AQLDataDoubles &>((&(fdcoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL)))->get()).get();
 		if (coeff.size() != 2 || coeff[0] != 1.0)
 		{
-			throw LACoreInvalidData("Wrong Funding Spread Set", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Wrong Funding Spread Set", __FILE__, __LINE__);
 		}
 		spreads.push_back(coeff[1]);
 
 		// get fixed rates
 		if (indextype == FIXEDRATE)
 		{
-			const double rate = dynamic_cast<LADataDouble &>((&(fdindex.getData(PRICING_DATA_FIXEDRATE, ISNOTNULL)))->get()).get();
+			const double rate = dynamic_cast<AQLDataDouble &>((&(fdindex.getData(PRICING_DATA_FIXEDRATE, ISNOTNULL)))->get()).get();
 			fixedrates.push_back(rate);
 		}
 		else if(indextype == LIBOR)
@@ -4503,7 +4503,7 @@ LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject
 		dh = &(fdindex.getData(PRICING_DATA_FIXINGDATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			LADate fixingdate = dynamic_cast<LADataDate &>(dh->get()).get();
+			AQLDate fixingdate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 			fixingdates.push_back(fixingdate);
 			firstfixingdate = (fixingdate <= firstfixingdate) ? fixingdate : firstfixingdate;
 		}
@@ -4511,71 +4511,71 @@ LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject
 		{
 			if (indextype != FIXEDRATE)
 			{
-				LAString msg = LAString("Data [") + PRICING_DATA_FIXINGDATE + "] is necessary for the calculation of index.";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = AQLString("Data [") + PRICING_DATA_FIXINGDATE + "] is necessary for the calculation of index.";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
-			fixingdates.push_back(LADate());
+			fixingdates.push_back(AQLDate());
 		}
 
 		paymentdates.push_back(paymentdate);
-		const LADate startdate = dynamic_cast<LADataDate &>((&(fdcash.getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL)))->get()).get();
+		const AQLDate startdate = dynamic_cast<AQLDataDate &>((&(fdcash.getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL)))->get()).get();
 		startdates.push_back(startdate);
-		const LADate enddate = dynamic_cast<LADataDate &>((&(fdcash.getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL)))->get()).get();
+		const AQLDate enddate = dynamic_cast<AQLDataDate &>((&(fdcash.getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL)))->get()).get();
 		enddates.push_back(enddate);
 	}
 
 	// set base spreads and fixed rates
 	fginfo.remove(PRICING_DATA_BASEFUNDINGSPREADS);
-	fginfo.add(PRICING_DATA_BASEFUNDINGSPREADS, new LADataDoubles(spreads));
+	fginfo.add(PRICING_DATA_BASEFUNDINGSPREADS, new AQLDataDoubles(spreads));
 	fginfo.remove(PRICING_DATA_BASEFUNDINGRATES);
-	fginfo.add(PRICING_DATA_BASEFUNDINGRATES, new LADataDoubles(fixedrates));
+	fginfo.add(PRICING_DATA_BASEFUNDINGRATES, new AQLDataDoubles(fixedrates));
 	fginfo.remove(PRICING_DATA_ISSUEDATE);
-	fginfo.add(PRICING_DATA_ISSUEDATE, new LADataDate(issuedate));
+	fginfo.add(PRICING_DATA_ISSUEDATE, new AQLDataDate(issuedate));
 	fginfo.remove(PRICING_DATA_FIRSTFIXINGDATE);
-	fginfo.add(PRICING_DATA_FIRSTFIXINGDATE, new LADataDate(firstfixingdate));
+	fginfo.add(PRICING_DATA_FIRSTFIXINGDATE, new AQLDataDate(firstfixingdate));
 	fginfo.remove(PRICING_DATA_FIXINGDATES);
-	fginfo.add(PRICING_DATA_FIXINGDATES, new LADataDates(fixingdates));
+	fginfo.add(PRICING_DATA_FIXINGDATES, new AQLDataDates(fixingdates));
 	fginfo.remove(PRICING_DATA_PAYMENTDATES);
-	fginfo.add(PRICING_DATA_PAYMENTDATES, new LADataDates(paymentdates));
+	fginfo.add(PRICING_DATA_PAYMENTDATES, new AQLDataDates(paymentdates));
 	fginfo.remove(PRICING_DATA_CFCALCSTARTDATES);
-	fginfo.add(PRICING_DATA_CFCALCSTARTDATES, new LADataDates(startdates));
+	fginfo.add(PRICING_DATA_CFCALCSTARTDATES, new AQLDataDates(startdates));
 	fginfo.remove(PRICING_DATA_CFCALCENDDATES);
-	fginfo.add(PRICING_DATA_CFCALCENDDATES, new LADataDates(enddates));
+	fginfo.add(PRICING_DATA_CFCALCENDDATES, new AQLDataDates(enddates));
 	fginfo.remove(PRICING_DATA_BASEFUNDINGNOTIONALS);
-	fginfo.add(PRICING_DATA_BASEFUNDINGNOTIONALS, new LADataDoubles(basenotionals));
+	fginfo.add(PRICING_DATA_BASEFUNDINGNOTIONALS, new AQLDataDoubles(basenotionals));
 
 	// set structure cashlet
-	LADataMultiReference& strcashlets = dynamic_cast<LADataMultiReference &>((&(strleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL)))->get());
-	LAObject& strcash = strcashlets.get(0).get();
+	AQLDataMultiReference& strcashlets = dynamic_cast<AQLDataMultiReference &>((&(strleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL)))->get());
+	AQLObject& strcash = strcashlets.get(0).get();
 
 	// set modified currency
-	const LAString mdycur = ((LAString)dynamic_cast<LADataString &>((&(strcash.getData(PRICING_DATA_CURRENCY, ISNOTNULL)))->get()).get()).toUpper();
+	const AQLString mdycur = ((AQLString)dynamic_cast<AQLDataString &>((&(strcash.getData(PRICING_DATA_CURRENCY, ISNOTNULL)))->get()).get()).toUpper();
 	fginfo.remove(PRICING_DATA_MODIFIEDFUNDINGCURRENCY);
-	fginfo.add(PRICING_DATA_MODIFIEDFUNDINGCURRENCY, new LADataString()).convertFromString(mdycur);
+	fginfo.add(PRICING_DATA_MODIFIEDFUNDINGCURRENCY, new AQLDataString()).convertFromString(mdycur);
 
 	// get adjust ratios, which represents FX(fix)/FX(pay), only relevant to non-deliverable exotic products
 	DoubleVector base_adjust_ratios;
 	DoubleVector mdy_adjust_ratios;
 	for (unsigned int i = 0; i < fdcashlets.getSize(); ++i)
 	{
-		LAObject& fdcash = fdcashlets.get(i).get();
+		AQLObject& fdcash = fdcashlets.get(i).get();
 		dh = &(fdcash.getData(PRICING_DATA_SETTLEMENTADJUSTRATIO, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			base_adjust_ratios.push_back(dynamic_cast<LADataDouble &>(dh->get()).get());
+			base_adjust_ratios.push_back(dynamic_cast<AQLDataDouble &>(dh->get()).get());
 		else
 			base_adjust_ratios.push_back(1.0);
 
-		const LADate fdpaydate = dynamic_cast<LADataDate &>((&(fdcash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL)))->get()).get();
+		const AQLDate fdpaydate = dynamic_cast<AQLDataDate &>((&(fdcash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL)))->get()).get();
 		double mdy_adjust_ratio = 1.0;
 		for (unsigned int j = 0; j < strcashlets.getSize(); ++j)
 		{
-			LAObject& strcash = strcashlets.get(j).get();
-			const LADate strpaydate = dynamic_cast<LADataDate &>((&(strcash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL)))->get()).get();
+			AQLObject& strcash = strcashlets.get(j).get();
+			const AQLDate strpaydate = dynamic_cast<AQLDataDate &>((&(strcash.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL)))->get()).get();
 			if (fdpaydate == strpaydate)
 			{
 				dh = &(strcash.getData(PRICING_DATA_SETTLEMENTADJUSTRATIO, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
-					mdy_adjust_ratio = dynamic_cast<LADataDouble &>(dh->get()).get();
+					mdy_adjust_ratio = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 
 				break;
 			}
@@ -4583,25 +4583,25 @@ LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject
 		mdy_adjust_ratios.push_back(mdy_adjust_ratio);
 	}
 	fginfo.remove(PRICING_DATA_BASEFUNDINGSETTLEMENTADJUSTRATIOS);
-	fginfo.add(PRICING_DATA_BASEFUNDINGSETTLEMENTADJUSTRATIOS, new LADataDoubles(base_adjust_ratios));
+	fginfo.add(PRICING_DATA_BASEFUNDINGSETTLEMENTADJUSTRATIOS, new AQLDataDoubles(base_adjust_ratios));
 	fginfo.remove(PRICING_DATA_MODIFIEDFUNDINGSETTLEMENTADJUSTRATIOS);
-	fginfo.add(PRICING_DATA_MODIFIEDFUNDINGSETTLEMENTADJUSTRATIOS, new LADataDoubles(mdy_adjust_ratios));
+	fginfo.add(PRICING_DATA_MODIFIEDFUNDINGSETTLEMENTADJUSTRATIOS, new AQLDataDoubles(mdy_adjust_ratios));
 
 	// set modified notional amounts
 	DoubleVector mdynotionals;
-	const double mdynotional_at_start = LAMath::abs(dynamic_cast<LADataDouble &>((&(strcash.getData(PRICING_CALIBRATION_DATAOTIONALCF, ISNOTNULL)))->get()).get());
+	const double mdynotional_at_start = AQLMath::abs(dynamic_cast<AQLDataDouble &>((&(strcash.getData(PRICING_CALIBRATION_DATAOTIONALCF, ISNOTNULL)))->get()).get());
 	for (unsigned int i = 0; i < fdcashlets.getSize(); ++i)
 	{
 		const double mdynotional = mdynotional_at_start * (basenotionals[i] / basenotionals[0]);
 		mdynotionals.push_back(mdynotional);
 	}
 	fginfo.remove(PRICING_DATA_MODIFIEDFUNDINGNOTIONALS);
-	fginfo.add(PRICING_DATA_MODIFIEDFUNDINGNOTIONALS, new LADataDoubles(mdynotionals));
+	fginfo.add(PRICING_DATA_MODIFIEDFUNDINGNOTIONALS, new AQLDataDoubles(mdynotionals));
 
 	// remove notional cashflow
 	for (unsigned int i = 0; i < strcashlets.getSize(); i++)
 	{
-		LAObject& strcash = strcashlets.get(i).get();
+		AQLObject& strcash = strcashlets.get(i).get();
 		dh = &(strcash.getData(PRICING_CALIBRATION_DATAOTIONALCF, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 			strcash.remove(PRICING_CALIBRATION_DATAOTIONALCF);
@@ -4609,24 +4609,24 @@ LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject
 
 	// set flag
 	trade.remove(PRICING_DATA_ISCHANGEDBYFUNDING);
-	trade.add(PRICING_DATA_ISCHANGEDBYFUNDING, new LADataBool(true));
+	trade.add(PRICING_DATA_ISCHANGEDBYFUNDING, new AQLDataBool(true));
 
 	// for bond funding leg
 	bool is_bond = false;
 	dh = &(fundingleg.getData(PRICING_DATA_ISBONDFUNDINGLEG, NOCHECK));
 	if(dh->isDefined() && !dh->isNull())
 	{
-		is_bond = dynamic_cast<LADataBool&>(dh->get()).get();
+		is_bond = dynamic_cast<AQLDataBool&>(dh->get()).get();
 	}
 	if (!is_bond)
 	{
 		dh = &(fundingleg.getData(PRICING_DATA_CURRENCY, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			LAString chkcur = dynamic_cast<LADataString &>(dh->get()).get();
+			AQLString chkcur = dynamic_cast<AQLDataString &>(dh->get()).get();
 			if (chkcur == mdycur)
-				throw LACoreInvalidData("Currency Convert Error",__FILE__,__LINE__);
-			dynamic_cast<LADataString &>(dh->get()).set(mdycur);
+				throw AQLCoreInvalidData("Currency Convert Error",__FILE__,__LINE__);
+			dynamic_cast<AQLDataString &>(dh->get()).set(mdycur);
 		}
 	}
 
@@ -4638,28 +4638,28 @@ LAPriceCashFlowGenerator::createFundingChangeAttribute(LAObject& trade, LAObject
 	@param[in] trade trade object
 */
 void
-LAPriceCashFlowGenerator::setUpRenotional(LAObject& trade) const
+LAPriceCashFlowGenerator::setUpRenotional(AQLObject& trade) const
 {
 	
 	// ! Check whether renotional is needed
 
-	LADataHolder* dh =  &( trade.getData( CALIBRATION_DATA_UNDERLYINGS, NOCHECK ) );
+	AQLDataHolder* dh =  &( trade.getData( CALIBRATION_DATA_UNDERLYINGS, NOCHECK ) );
 	
 	if ( !dh->isDefined() || dh->isNull() )
 	{
 		return;
 	}
 	
-	LADataMultiReference* mr = dynamic_cast< LADataMultiReference* >( &( dh->get() ) );
+	AQLDataMultiReference* mr = dynamic_cast< AQLDataMultiReference* >( &( dh->get() ) );
 	
 	for ( size_t i = 0; i < mr->getSize(); i++ )
 	{
 		dh = &(mr->get(i).getData(PRICING_DATA_INPUTTYPE, ISNOTNULL));
-		LAString inputtype = dynamic_cast<const LADataString &>(dh->get());
+		AQLString inputtype = dynamic_cast<const AQLDataString &>(dh->get());
 		if (DETAIL == inputtype.toUpper())
 			continue;
 
-		LADataHolder * ahRenotional = &( mr->get( i ).getData( PRICING_DATA_ISRENOTIONAL, NOCHECK ) );
+		AQLDataHolder * ahRenotional = &( mr->get( i ).getData( PRICING_DATA_ISRENOTIONAL, NOCHECK ) );
 
 		if ( !ahRenotional->isDefined() || ahRenotional->isNull() )
 		{
@@ -4667,13 +4667,13 @@ LAPriceCashFlowGenerator::setUpRenotional(LAObject& trade) const
 		}
 		else
 		{
-			bool isRenotional = dynamic_cast< LADataBool& >( ahRenotional->get() ).get();
+			bool isRenotional = dynamic_cast< AQLDataBool& >( ahRenotional->get() ).get();
 			if ( isRenotional )
 			{
 				// ! Renotional 
 				trade.remove(CALIBRATION_DATA_ISRENOTIONALSETUPFINISHED);
 				createRenotional( trade, mr->get( i ).get() );
-				trade.add(CALIBRATION_DATA_ISRENOTIONALSETUPFINISHED, new LADataBool(true));
+				trade.add(CALIBRATION_DATA_ISRENOTIONALSETUPFINISHED, new AQLDataBool(true));
 			}
 			else
 			{
@@ -4697,13 +4697,13 @@ LAPriceCashFlowGenerator::setUpRenotional(LAObject& trade) const
 */
 
 void
-LAPriceCashFlowGenerator::createRenotional( LAObject& trade, LAObject& leg ) const
+LAPriceCashFlowGenerator::createRenotional( AQLObject& trade, AQLObject& leg ) const
 {
 	// ! Get PathEntity
-	LADataHolder* dh = &( trade.getData( PRICING_DATA_PATHENTITY, ISNOTNULL ) );
-	LADataReference& arPath = dynamic_cast< LADataReference& >( dh->get() );
+	AQLDataHolder* dh = &( trade.getData( PRICING_DATA_PATHENTITY, ISNOTNULL ) );
+	AQLDataReference& arPath = dynamic_cast< AQLDataReference& >( dh->get() );
 	
-	LAObject* pathEntity = NULL;
+	AQLObject* pathEntity = NULL;
 
 	if ( arPath.get().get().isTypeOf( ENTITY_PATH ) )
 	{
@@ -4716,29 +4716,29 @@ LAPriceCashFlowGenerator::createRenotional( LAObject& trade, LAObject& leg ) con
 	}
 	else
 	{
-		LAString msg = "pathEntity type is wrong! LAPriceCashFlowGenerator::createRenotional";
-		throw LACoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
+		AQLString msg = "pathEntity type is wrong! LAPriceCashFlowGenerator::createRenotional";
+		throw AQLCoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
 	}
 
 	// ! Get asofDate
 	dh = &( pathEntity->getData( CALIBRATION_DATA_ASOFDATE, ISNOTNULL ) );
-	LADate asofDate = dynamic_cast< LADataDate& >( dh->get() ).get();
+	AQLDate asofDate = dynamic_cast< AQLDataDate& >( dh->get() ).get();
 
 	// ! Get leg currency
 	dh = &( leg.getData( PRICING_DATA_CURRENCY, ISNOTNULL ) );
-	LAString targetCcy = dynamic_cast< LADataString& >( dh->get() ).get();
+	AQLString targetCcy = dynamic_cast< AQLDataString& >( dh->get() ).get();
 
 	// ! Get base currency and base notional
-	LAString baseCcy = "";
+	AQLString baseCcy = "";
 	double baseNotional;
 
 	dh = &( trade.getData( CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL ) );
-	const LADataMultiReference& mr = dynamic_cast< LADataMultiReference& >( dh->get() );
+	const AQLDataMultiReference& mr = dynamic_cast< AQLDataMultiReference& >( dh->get() );
 	
 	for (size_t i = 0; i < mr.getSize(); i++  )
 	{
 		dh = & ( mr.get( i ).getData( PRICING_DATA_CURRENCY, ISNOTNULL ) );
-		LAString tmpCcy = dynamic_cast< LADataString& >( dh->get() ).get();
+		AQLString tmpCcy = dynamic_cast< AQLDataString& >( dh->get() ).get();
 		if ( tmpCcy != targetCcy )
 		{
 			// ! Get base currency
@@ -4746,7 +4746,7 @@ LAPriceCashFlowGenerator::createRenotional( LAObject& trade, LAObject& leg ) con
 			
 			// ! Get base notional
 			dh = &( mr.get( i ).getData( PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL ) );
-			baseNotional = dynamic_cast< LADataDouble& >( dh->get() ).get();
+			baseNotional = dynamic_cast< AQLDataDouble& >( dh->get() ).get();
 
 			break;
 		}
@@ -4756,35 +4756,35 @@ LAPriceCashFlowGenerator::createRenotional( LAObject& trade, LAObject& leg ) con
 		}	
 	}
 	
-	if (baseCcy == LAString(""))
-		throw LACoreInvalidData("Base currency does not exist in renotinal.",__FILE__,__LINE__);
+	if (baseCcy == AQLString(""))
+		throw AQLCoreInvalidData("Base currency does not exist in renotinal.",__FILE__,__LINE__);
 
 	// ! Get cashlets 
 	dh = &( leg.getData( PRICING_DATA_CASHLETS, ISNOTNULL ) );
-	const LADataMultiReference& mrCashlets = dynamic_cast< LADataMultiReference& >( dh->get() );
+	const AQLDataMultiReference& mrCashlets = dynamic_cast< AQLDataMultiReference& >( dh->get() );
     
     for(unsigned int i = 0; i < mrCashlets.getSize(); i++){
         dh = &mrCashlets.get(i).getData(PRICING_CALIBRATION_DATAOTIONALCFISFIXED);
         if(dh->isDefined() && !dh->isNull()) continue;
         dh = &mrCashlets.get(i).getData(PRICING_CALIBRATION_DATAOTIONALCF);
         const bool is_fixed = dh->isDefined() && !dh->isNull();
-        mrCashlets.get(i).add(PRICING_CALIBRATION_DATAOTIONALCFISFIXED, new LADataBool(is_fixed));
+        mrCashlets.get(i).add(PRICING_CALIBRATION_DATAOTIONALCFISFIXED, new AQLDataBool(is_fixed));
     }
 
 	//calc adjust value
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-	LAInterpolationBase* pInter_adjust = NULL;
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLInterpolationBase* pInter_adjust = NULL;
 	if (pathEntity->isTypeOf(ENTITY_PLAINVANILLA))
 	{
 		LAMathYieldCurve& yc_base = dynamic_cast< LAMathPlainVanillaEntity *>(pathEntity)->getIRCurve(baseCcy);
 		//xccybasis adjust
-		const LADataHolder* ah_const = &(yc_base.getYieldData().get().get().getData(IR_CALIBRATION_DATA_ADJUSTVALUETERM, NOCHECK));
+		const AQLDataHolder* ah_const = &(yc_base.getYieldData().get().get().getData(IR_CALIBRATION_DATA_ADJUSTVALUETERM, NOCHECK));
 		if (ah_const->isDefined() && !ah_const->isNull())
 		{
-			const DoubleArray& adjustValue_term = dynamic_cast<const LADataDoubles&> (ah_const->get()).get();
-			const DoubleArray& adjustValue = dynamic_cast<const LADataDoubles&> 
+			const DoubleArray& adjustValue_term = dynamic_cast<const AQLDataDoubles&> (ah_const->get()).get();
+			const DoubleArray& adjustValue = dynamic_cast<const AQLDataDoubles&> 
 				((yc_base.getYieldData().get().get().getData(IR_CALIBRATION_DATA_ADJUSTVALUE, ISNOTNULL)).get()).get();
-			pInter_adjust = dynamic_cast<LAInterpolationBase*> ((dynamic_cast<const LAPriceDataInterpolation&> 
+			pInter_adjust = dynamic_cast<AQLInterpolationBase*> ((dynamic_cast<const AQLPriceDataInterpolation&> 
 				(yc_base.getYieldData().get().get().getData(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, ISNOTNULL).get())).getMethod().clone());
 			pInter_adjust->set(adjustValue_term,adjustValue);
 		}
@@ -4792,27 +4792,27 @@ LAPriceCashFlowGenerator::createRenotional( LAObject& trade, LAObject& leg ) con
 
 	// ! Get forward fx
 	dh = &( pathEntity->getData( IR_MODEL_DATA_FXRATE, ISNOTNULL ) );
-	LADataReference* ar = dynamic_cast< LADataReference* >( &( dh->get() ) );
+	AQLDataReference* ar = dynamic_cast< AQLDataReference* >( &( dh->get() ) );
 	LAMathFXEntity* fxEntity = dynamic_cast< LAMathFXEntity* >( &( ar->get().get() ) );
 
 	//FX Calendar
-	const LAPriceDataCalendar* cal = 0;
+	const AQLPriceDataCalendar* cal = 0;
 	dh = &(leg.getData(PRICING_DATA_RENOTIONALCALENDAR, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		cal = &(dynamic_cast<const LAPriceDataCalendar&>(dh->get()));
+		cal = &(dynamic_cast<const AQLPriceDataCalendar&>(dh->get()));
 	//FX spot lag
 	int offset = -1;
 	dh = &(leg.getData(PRICING_DATA_RENOTIONALOFFSET, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		offset = dynamic_cast<const LADataInt&>(dh->get()).get();
+		offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();
 
 	bool isforwardbase = true;
-	LADate spotDate;
+	AQLDate spotDate;
 	if (pathEntity->isTypeOf(ENTITY_PLAINVANILLA))
 	{	
 		dh = &(leg.getData(IR_CALIBRATION_DATA_ISRENOTIONALADJUST, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			isforwardbase = dynamic_cast<const LADataBool &>(dh->get()).get();
+			isforwardbase = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 
 		if (cal != 0 && !cal->isNull() && offset >= 0)
 			spotDate = cal->getBusinessDay(asofDate, offset);
@@ -4821,19 +4821,19 @@ LAPriceCashFlowGenerator::createRenotional( LAObject& trade, LAObject& leg ) con
 	}	
 	
 	size_t cashSize = mrCashlets.getSize();	
-    const LADataHolder *cah; dh = NULL;
+    const AQLDataHolder *cah; dh = NULL;
 	for ( size_t i = 1; i < cashSize; i++ )
 	{
-		LAObject& current_cashlet = mrCashlets.get(i).get();
-		LAObject& last_cashlet = mrCashlets.get(i-1).get();
+		AQLObject& current_cashlet = mrCashlets.get(i).get();
+		AQLObject& last_cashlet = mrCashlets.get(i-1).get();
 
-		const bool last_is_fixed = dynamic_cast<const LADataBool&>(last_cashlet.getData(PRICING_CALIBRATION_DATAOTIONALCFISFIXED, ISNOTNULL).get()).get();
+		const bool last_is_fixed = dynamic_cast<const AQLDataBool&>(last_cashlet.getData(PRICING_CALIBRATION_DATAOTIONALCFISFIXED, ISNOTNULL).get()).get();
 		if(last_is_fixed) continue;
 
-		const LADate last_fixing = dynamic_cast<const LADataDate&>(last_cashlet.getData(PRICING_DATA_RENOTIONALFIXINGDATE, ISNOTNULL).get()).get();
+		const AQLDate last_fixing = dynamic_cast<const AQLDataDate&>(last_cashlet.getData(PRICING_DATA_RENOTIONALFIXINGDATE, ISNOTNULL).get()).get();
 		double forward = 0.0;
 		double adjustValue = 1.;
-		LADate paymentDate;
+		AQLDate paymentDate;
 		if (cal != 0 && !cal->isNull() && offset >= 0)
 			paymentDate= cal->getBusinessDay(last_fixing, offset);
 		else
@@ -4850,18 +4850,18 @@ LAPriceCashFlowGenerator::createRenotional( LAObject& trade, LAObject& leg ) con
 			forward = fxEntity->getForwardRate( targetCcy, baseCcy, spotDate, spotDate );
         }
 
-        const double last_notional    = dynamic_cast<const LADataDouble&>(last_cashlet.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
+        const double last_notional    = dynamic_cast<const AQLDataDouble&>(last_cashlet.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
         const double current_notional = baseNotional / forward * adjustValue;
         const double last_notional_cf = last_notional - current_notional;
 
         last_cashlet.remove(PRICING_CALIBRATION_DATAOTIONALCF);
-        last_cashlet.LAObject::add(PRICING_CALIBRATION_DATAOTIONALCF, new LADataDouble(last_notional_cf));
-        dynamic_cast<LADataDouble&>(current_cashlet.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).set(current_notional);
+        last_cashlet.AQLObject::add(PRICING_CALIBRATION_DATAOTIONALCF, new AQLDataDouble(last_notional_cf));
+        dynamic_cast<AQLDataDouble&>(current_cashlet.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).set(current_notional);
 	}
-    LAObject& final_cashlet = mrCashlets.get(cashSize-1).get();
-    const double final_notional = dynamic_cast<LADataDouble&>(final_cashlet.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
+    AQLObject& final_cashlet = mrCashlets.get(cashSize-1).get();
+    const double final_notional = dynamic_cast<AQLDataDouble&>(final_cashlet.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
     final_cashlet.remove(PRICING_CALIBRATION_DATAOTIONALCF);
-    final_cashlet.LAObject::add(PRICING_CALIBRATION_DATAOTIONALCF, new LADataDouble(final_notional));
+    final_cashlet.AQLObject::add(PRICING_CALIBRATION_DATAOTIONALCF, new AQLDataDouble(final_notional));
 
 	if (pInter_adjust) delete pInter_adjust;
 }
@@ -4874,29 +4874,29 @@ LAPriceCashFlowGenerator::createRenotional( LAObject& trade, LAObject& leg ) con
 
 */
 void
-LAPriceCashFlowGenerator::createOddTradeEntity(LAObject& trade) const
+LAPriceCashFlowGenerator::createOddTradeEntity(AQLObject& trade) const
 {
 
 	//leg object
-	//LADataHolder* dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	//LADataMultiReference& legs = dynamic_cast<LADataMultiReference&>(dh->get());
+	//AQLDataHolder* dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
+	//AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference&>(dh->get());
 	////check stub indextype
-	//LAString oddindextype;
+	//AQLString oddindextype;
 	////bool isoddtrade =false;
 	//for (unsigned int i = 0; i < legs.getSize(); i++)
 	//{
-	//	LAObject& eleg = legs.get(i).get();
+	//	AQLObject& eleg = legs.get(i).get();
 	//	dh = &(eleg.getData(PRICING_DATA_FIRSTODDDATE,NOCHECK));
 	//	if (dh->isDefined() && !dh->isNull())
 	//	{
 	//		dh = &(eleg.getData(PRICING_DATA_FIRSTODDINDEXTYPE, NOCHECK));
 	//		if (dh->isDefined() && !dh->isNull())
-	//			oddindextype = dynamic_cast<LADataString &>(dh->get());
+	//			oddindextype = dynamic_cast<AQLDataString &>(dh->get());
 	//		if (oddindextype.size() > 0 && oddindextype != CURRENTINDEX)
 	//		{
 	//			//isoddtrade = true;
 	//			trade.remove(PRICING_DATA_ISODDTRADE);
-	//			trade.add(PRICING_DATA_ISODDTRADE, new LADataBool(true));
+	//			trade.add(PRICING_DATA_ISODDTRADE, new AQLDataBool(true));
 	//		}
 	//	}
 
@@ -4905,19 +4905,19 @@ LAPriceCashFlowGenerator::createOddTradeEntity(LAObject& trade) const
 	//	{
 	//		dh = &(eleg.getData(PRICING_DATA_LASTODDINDEXTYPE, NOCHECK));
 	//		if (dh->isDefined() && !dh->isNull())
-	//			oddindextype = dynamic_cast<LADataString &>(dh->get());
+	//			oddindextype = dynamic_cast<AQLDataString &>(dh->get());
 	//		if (oddindextype.size() > 0 && oddindextype != CURRENTINDEX)
 	//		{
 	//			//isoddtrade = true;
 	//			trade.remove(PRICING_DATA_ISODDTRADE);
-	//			trade.add(PRICING_DATA_ISODDTRADE, new LADataBool(true));
+	//			trade.add(PRICING_DATA_ISODDTRADE, new AQLDataBool(true));
 	//		}
 	//	}
 	//}
 
 	//for stub modify
 	trade.remove(PRICING_DATA_ISODDTRADE);
-	trade.add(PRICING_DATA_ISODDTRADE, new LADataBool(true));
+	trade.add(PRICING_DATA_ISODDTRADE, new AQLDataBool(true));
 
 	
 }
@@ -4928,9 +4928,9 @@ LAPriceCashFlowGenerator::createOddTradeEntity(LAObject& trade) const
 	@param[in, out] trade object
 */
 void
-LAPriceCashFlowGenerator::setUpEquivalentStrike(LAObject& trade) const
+LAPriceCashFlowGenerator::setUpEquivalentStrike(AQLObject& trade) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	
 	//this function is called when input type is detail
 	//&& ( this function is called when function is swaption
@@ -4940,7 +4940,7 @@ LAPriceCashFlowGenerator::setUpEquivalentStrike(LAObject& trade) const
 	dh = &(trade.getData(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		if (dynamic_cast<const LADataBool &>(dh->get()).get())
+		if (dynamic_cast<const AQLDataBool &>(dh->get()).get())
 			return;
 	}
 
@@ -4949,14 +4949,14 @@ LAPriceCashFlowGenerator::setUpEquivalentStrike(LAObject& trade) const
 	if (!dh->isDefined() || dh->isNull())
 		return;
 
-	const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference &>(dh->get());
+	const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 	for (unsigned int i = 0; i < legs.getSize();i++)
 	{
 		dh = &(legs.get(i).getData(PRICING_DATA_INPUTTYPE, NOCHECK));
 		if (!dh->isDefined() || dh->isNull())
 			return;
 		
-		LAString schtype = dynamic_cast<const LADataString&>(dh->get()).get();
+		AQLString schtype = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		schtype.toUpper();
 		if (schtype == MANUAL) return;//manual input
 	}
@@ -4965,13 +4965,13 @@ LAPriceCashFlowGenerator::setUpEquivalentStrike(LAObject& trade) const
 	if (!dh->isDefined() || dh->isNull())
 		return;
 
-	const LADataValuation& val = dynamic_cast<const LADataValuation &>(dh->get());
+	const AQLDataValuation& val = dynamic_cast<const AQLDataValuation &>(dh->get());
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 	if (val.isTypeOf(FN_IR_SWAPTIONVALUEFROMCASHFLOW))
 	{
 
 		trade.remove(PRICING_DATA_ISCALCEQUIVALENTSTRIKE);
-		trade.add(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, new LADataBool(true));
+		trade.add(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, new AQLDataBool(true));
 		return;
 	}
 #else
@@ -4986,18 +4986,18 @@ LAPriceCashFlowGenerator::setUpEquivalentStrike(LAObject& trade) const
 		if (!dh->isDefined() || dh->isNull())
 			return;
 
-		const LADataValuation& subval = dynamic_cast<const LADataValuation &>(dh->get());
+		const AQLDataValuation& subval = dynamic_cast<const AQLDataValuation &>(dh->get());
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 		if (subval.isTypeOf(FN_IR_SWAPTIONVALUEFROMCASHFLOW))
 		{
 			trade.remove(PRICING_DATA_ISCALCEQUIVALENTSTRIKE);
-			trade.add(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, new LADataBool(true));
+			trade.add(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, new AQLDataBool(true));
 			return;
 		}
 #endif
 	}
 
-	//const LADataValuation& val = dynamic_cast<const LADataValuation &>(dh->get());
+	//const AQLDataValuation& val = dynamic_cast<const AQLDataValuation &>(dh->get());
 	////this function includes also fn_ir_convergencevalue
 	////if (!val.isTypeOf(FN_IR_SWAPTIONVALUEFROMCASHFLOW))
 	////	return;
@@ -5012,51 +5012,51 @@ LAPriceCashFlowGenerator::setUpEquivalentStrike(LAObject& trade) const
 	//if (!dh->isDefined() || dh->isNull())
 	//	return;
 
-	//const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference &>(dh->get());
+	//const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 	//for (unsigned int i = 0; i < legs.getSize();i++)
 	//{
 	//	dh = &(legs.get(i).getData(PRICING_DATA_INPUTTYPE, NOCHECK));
 	//	if (!dh->isDefined() || dh->isNull())
 	//		return;
 	//	
-	//	LAString schtype = dynamic_cast<const LADataString&>(dh->get()).get();
+	//	AQLString schtype = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	//	schtype.toUpper();
 	//	if (schtype == MANUAL) return;//manual input
 
 	//	dh = &(legs.get(i).getData(PRICING_DATA_ISAMORTIZE, ISNOTNULL));
-	//	bool isamortize = dynamic_cast<const LADataBool &>(dh->get());
+	//	bool isamortize = dynamic_cast<const AQLDataBool &>(dh->get());
 	//	if (isamortize)
 	//	{
-	//		trade.add(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, new LADataBool(true));
+	//		trade.add(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, new AQLDataBool(true));
 	//		return;
 	//	}
 
 	//	dh = &(legs.get(i).getData(PRICING_DATA_COUPONINFOS, ISNOTNULL));
-	//	const LADataMultiReference& coupons = dynamic_cast<const LADataMultiReference &>(dh->get());
+	//	const AQLDataMultiReference& coupons = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 	//	if (coupons.getSize() != 1)
-	//		throw LACoreInvalidData("Coupon of SwaptionValueFromCashFlow must be 1",__FILE__,__LINE__);
+	//		throw AQLCoreInvalidData("Coupon of SwaptionValueFromCashFlow must be 1",__FILE__,__LINE__);
 
 	//	dh = &(coupons.get(0).getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-	//	const LAPriceDataFunction& couponope = dynamic_cast<const LAPriceDataFunction &>(dh->get());
+	//	const AQLPriceDataFunction& couponope = dynamic_cast<const AQLPriceDataFunction &>(dh->get());
 	//	if (!couponope.isTypeOf(FN_LINEAR))
-	//		throw LACoreInvalidData("Operator of SwaptionValueFromCashFlow must be fn_linear",__FILE__,__LINE__);
+	//		throw AQLCoreInvalidData("Operator of SwaptionValueFromCashFlow must be fn_linear",__FILE__,__LINE__);
 
 	//	dh = &(coupons.get(0).getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-	//	const DoubleVector& coeffs = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	//	const DoubleVector& coeffs = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	//	if(coeffs.back() != 0.0)
 	//	{
 	//		dh = &(coupons.get(0).getData(PRICING_DATA_INDEXINFOS, NOCHECK));
 	//		if (dh->isDefined() && !dh->isNull())
 	//		{
-	//			const LADataMultiReference &indexs = dynamic_cast<const LADataMultiReference &>(dh->get());
+	//			const AQLDataMultiReference &indexs = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 	//			dh = &(indexs.get(0).getData(PRICING_DATA_INDEXTYPE, NOCHECK));
 	//			if (dh->isDefined() && !dh->isNull())
 	//			{
-	//				LAString indextype = dynamic_cast<const LADataString &>(dh->get());
+	//				AQLString indextype = dynamic_cast<const AQLDataString &>(dh->get());
 	//				if (indextype.toUpper() != FIXED_RATE)
 	//				{
 	//					trade.remove(PRICING_DATA_ISCALCEQUIVALENTSTRIKE);
-	//					trade.add(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, new LADataBool(true));
+	//					trade.add(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, new AQLDataBool(true));
 	//					return;
 	//				}
 	//			}
@@ -5066,69 +5066,69 @@ LAPriceCashFlowGenerator::setUpEquivalentStrike(LAObject& trade) const
 
 	////if not return, then false
 	//trade.remove(PRICING_DATA_ISCALCEQUIVALENTSTRIKE);
-	//trade.add(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, new LADataBool(false));
+	//trade.add(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, new AQLDataBool(false));
 	//return;
 }
 
 void
-LAPriceCashFlowGenerator::createRenotionalInfo(const LADate& advancepaymentdate,
-										const LADate& paymentdate,
-										const LADate& paymentdate_unadjust, 
-										const LADate& startdate,
-										const LADate& enddate,
-										LAObject& cashlet, LAObject& leg) const
+LAPriceCashFlowGenerator::createRenotionalInfo(const AQLDate& advancepaymentdate,
+										const AQLDate& paymentdate,
+										const AQLDate& paymentdate_unadjust, 
+										const AQLDate& startdate,
+										const AQLDate& enddate,
+										AQLObject& cashlet, AQLObject& leg) const
 {
-	LADataHolder* dh;
-	LADate fixingbasedate;
-	LADate fixingdate;
+	AQLDataHolder* dh;
+	AQLDate fixingbasedate;
+	AQLDate fixingdate;
 
 	// isArrear
 	dh = &(leg.getData(PRICING_DATA_RENOTIONALTIMING, ISNOTNULL));
-	const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+	const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 	bool isarrear = LAPriceCFGenUtility::isArrear(timing);
 	if (isarrear)
 	{
-		LAString msg = "arrear is not supported in renotional timing.";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+		AQLString msg = "arrear is not supported in renotional timing.";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 	}
 	//if (isarrear && advancepaymentdate == paymentdate)//index fixing timing is arrear but payment timing is advance
 	//{
 	//	//error
-	//	LAString msg = "Index fixing timing is arrear but payment timing is advance";
-	//		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+	//	AQLString msg = "Index fixing timing is arrear but payment timing is advance";
+	//		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 	//}
 	dh = &(leg.getData(PRICING_DATA_ISFIXINGPAYMENTDATEBASE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull()
-		&& dynamic_cast<const LADataBool&>(dh->get()).get() == true)
+		&& dynamic_cast<const AQLDataBool&>(dh->get()).get() == true)
 		fixingbasedate = paymentdate;
 	else
 		fixingbasedate = enddate;
 	
 
 	dh = &(leg.getData(PRICING_DATA_RENOTIONALOFFSET, ISNOTNULL));
-	int offset = dynamic_cast<const LADataInt&>(dh->get()).get();		
+	int offset = dynamic_cast<const AQLDataInt&>(dh->get()).get();		
 	//leg.remove(PRICING_DATA_RENOTIONALOFFSET);
 	if (offset == 0) 
 		fixingdate = fixingbasedate;
 	else
 	{
 		//calendar
-		LAPriceDataCalendar cal;
+		AQLPriceDataCalendar cal;
 		dh = &(leg.getData(PRICING_DATA_RENOTIONALCALENDAR, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+			cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 		}
 		else
 		{
 			dh = &(leg.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-			cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+			cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 		}
 		fixingdate = cal.getBusinessDay(fixingbasedate, -offset);
 	}
 	
 	cashlet.remove(PRICING_DATA_RENOTIONALFIXINGDATE);
-	cashlet.add(PRICING_DATA_RENOTIONALFIXINGDATE, new LADataDate(fixingdate));
+	cashlet.add(PRICING_DATA_RENOTIONALFIXINGDATE, new AQLDataDate(fixingdate));
 	
 	
 	return;
@@ -5137,7 +5137,7 @@ LAPriceCashFlowGenerator::createRenotionalInfo(const LADate& advancepaymentdate,
 
 // consistency check for frquency
 bool
-LAPriceCashFlowGenerator::isConsistentFrequencyPair(const LAString& rollfreq, const LAString& payfreq) const
+LAPriceCashFlowGenerator::isConsistentFrequencyPair(const AQLString& rollfreq, const AQLString& payfreq) const
 {
 	bool ret = false;
 	if (rollfreq == BUSINESS_DAYS || rollfreq == DAILY)
@@ -5186,16 +5186,16 @@ LAPriceCashFlowGenerator::isConsistentFrequencyPair(const LAString& rollfreq, co
 }
 
 void
-LAPriceCashFlowGenerator::modifyLegInfo(LAObject& leg) const
+LAPriceCashFlowGenerator::modifyLegInfo(AQLObject& leg) const
 {
-    LADataHolder* dh;
+    AQLDataHolder* dh;
     dh = &leg.getData(PRICING_DATA_COUPONINFOS);
     if(!dh->isDefined() || dh->isNull()) return;
-    LAObject& coupon = dynamic_cast<LADataMultiReference&>(dh->get()).get(0).get();
+    AQLObject& coupon = dynamic_cast<AQLDataMultiReference&>(dh->get()).get(0).get();
     dh = &coupon.getData(PRICING_DATA_INDEXINFOS);
     if(!dh->isDefined() || dh->isNull()) return;
-    LAObject& index = dynamic_cast<LADataMultiReference&>(dh->get()).get(0).get();
-    LAString index_type = dynamic_cast<const LADataString&>(index.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
+    AQLObject& index = dynamic_cast<AQLDataMultiReference&>(dh->get()).get(0).get();
+    AQLString index_type = dynamic_cast<const AQLDataString&>(index.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
     index_type.toUpper();
 
     if(index_type!="OIS") return;
@@ -5203,24 +5203,24 @@ LAPriceCashFlowGenerator::modifyLegInfo(LAObject& leg) const
 
     dh = &leg.getData(PRICING_DATA_INDEXNAME);
     if(!dh->isDefined() || dh->isNull()) return;
-    LAString index_name = dynamic_cast<const LADataString&>(dh->get()).get();
+    AQLString index_name = dynamic_cast<const AQLDataString&>(dh->get()).get();
     index_name.toUpper();
 
 
 
     if(!(dh=&leg.getData(PRICING_DATA_ISCOMPOUNDINGCOUPON))->isDefined() || dh->isNull()){
-        leg.add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new LADataBool(true));
+        leg.add(PRICING_DATA_ISCOMPOUNDINGCOUPON, new AQLDataBool(true));
     }
     if(index_name == "USD_FF"){
         if(!(dh=&leg.getData(PRICING_DATA_COMPOUND_ON_ALL_DAYS))->isDefined() || dh->isNull()){
-            leg.add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new LADataBool(true));
+            leg.add(PRICING_DATA_COMPOUND_ON_ALL_DAYS, new AQLDataBool(true));
         }
     }
     if(!(dh=&leg.getData(PRICING_DATA_ROLLFREQUENCY))->isDefined() || dh->isNull()){
-        leg.add(PRICING_DATA_ROLLFREQUENCY, new LADataString(BUSINESS_DAYS));
+        leg.add(PRICING_DATA_ROLLFREQUENCY, new AQLDataString(BUSINESS_DAYS));
     }
     if(!(dh=&leg.getData(PRICING_DATA_COMPOUNDING_FUNCTION))->isDefined() || dh->isNull()){
-        dh = &leg.add(PRICING_DATA_COMPOUNDING_FUNCTION, new LAPriceDataFunction());
+        dh = &leg.add(PRICING_DATA_COMPOUNDING_FUNCTION, new AQLPriceDataFunction());
         if(index_name == "USD_FF"){
             dh->convertFromString(FN_COMPOUNDING10_STR);
         }
@@ -5231,7 +5231,7 @@ LAPriceCashFlowGenerator::modifyLegInfo(LAObject& leg) const
 }
 
 void 
-LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg,
+LAPriceCashFlowGenerator::calcPaymentDates(AQLObject& leg,
                                         DateVector& payment_dates,
                                         DateVector& payment_dates_unadjust,
                                         DateVector& payment_start_dates,
@@ -5243,14 +5243,14 @@ LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg,
 										bool& is_first_stub,
 										bool& is_last_stub) const
 {
-    LADataHolder* dh;
-    const bool is_comp = (dh=&leg.getData(PRICING_DATA_ISCOMPOUNDINGCOUPON))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get();
+    AQLDataHolder* dh;
+    const bool is_comp = (dh=&leg.getData(PRICING_DATA_ISCOMPOUNDINGCOUPON))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get();
     
-    const LAString& freq         = dynamic_cast<const LADataString&>(leg.getData(PRICING_DATA_FREQUENCY, ISNOTNULL).get()).get();
-    const LADate* first_odd_date = (dh=&leg.getData(PRICING_DATA_FIRSTODDDATE))->isDefined() && ! dh->isNull() ? &dynamic_cast<const LADataDate&>(dh->get()).get() : NULL;
-    const LADate* last_odd_date  = (dh=&leg.getData(PRICING_DATA_LASTODDDATE))->isDefined() && ! dh->isNull() ? &dynamic_cast<const LADataDate&>(dh->get()).get() : NULL;
-    const LADate& start_date     = dynamic_cast<const LADataDate&>(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
-    const LADate& end_date       = dynamic_cast<const LADataDate&>(leg.getData(PRICING_DATA_ENDDATE, ISNOTNULL).get()).get();
+    const AQLString& freq         = dynamic_cast<const AQLDataString&>(leg.getData(PRICING_DATA_FREQUENCY, ISNOTNULL).get()).get();
+    const AQLDate* first_odd_date = (dh=&leg.getData(PRICING_DATA_FIRSTODDDATE))->isDefined() && ! dh->isNull() ? &dynamic_cast<const AQLDataDate&>(dh->get()).get() : NULL;
+    const AQLDate* last_odd_date  = (dh=&leg.getData(PRICING_DATA_LASTODDDATE))->isDefined() && ! dh->isNull() ? &dynamic_cast<const AQLDataDate&>(dh->get()).get() : NULL;
+    const AQLDate& start_date     = dynamic_cast<const AQLDataDate&>(leg.getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
+    const AQLDate& end_date       = dynamic_cast<const AQLDataDate&>(leg.getData(PRICING_DATA_ENDDATE, ISNOTNULL).get()).get();
 
 
 
@@ -5278,7 +5278,7 @@ LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg,
 		bool isforwardroll = true;
 		dh = &(leg.getData(PRICING_DATA_ISFORWARDROLL, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			isforwardroll = dynamic_cast<const LADataBool&>(dh->get()).get();
+			isforwardroll = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 
 		detectStubCoupon(is_first_stub,
 						 is_last_stub,
@@ -5295,30 +5295,30 @@ LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg,
 
 
 
-    const LAString& roll_freq = dynamic_cast<const LADataString&>(leg.getData(PRICING_DATA_ROLLFREQUENCY, ISNOTNULL).get()).get();
+    const AQLString& roll_freq = dynamic_cast<const AQLDataString&>(leg.getData(PRICING_DATA_ROLLFREQUENCY, ISNOTNULL).get()).get();
     if(!isConsistentFrequencyPair(roll_freq, freq)){
-        LAString msg;
+        AQLString msg;
         msg += "Roll frequency is not payment frequency(";
         msg += freq + ", " + roll_freq + ").";
-        throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
 
 
 
 
-    const bool is_forward_roll_orig = (dh=&leg.getData(PRICING_DATA_ISFORWARDROLL))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get();
+    const bool is_forward_roll_orig = (dh=&leg.getData(PRICING_DATA_ISFORWARDROLL))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get();
     leg.remove(PRICING_DATA_ISFORWARDROLL);
-    leg.add(PRICING_DATA_ISFORWARDROLL, new LADataBool(is_forward_roll_orig));
+    leg.add(PRICING_DATA_ISFORWARDROLL, new AQLDataBool(is_forward_roll_orig));
 
     for(size_t i = 0; i < payment_start_dates.size(); i++){
         const bool is_forward_roll = 
             i==0 ? false : 
             (i== payment_start_dates.size()-1 ? true : is_forward_roll_orig);
-        dynamic_cast<LADataBool&>(leg.getData(PRICING_DATA_ISFORWARDROLL).get()).set(is_forward_roll);
+        dynamic_cast<AQLDataBool&>(leg.getData(PRICING_DATA_ISFORWARDROLL).get()).set(is_forward_roll);
 
 
 
-		LADate temp_start, temp_end;
+		AQLDate temp_start, temp_end;
 		if (roll_freq == BUSINESS_DAYS || roll_freq == DAILY)
 		{
 			temp_start = payment_start_dates[i];
@@ -5328,8 +5328,8 @@ LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg,
 			temp_start = payment_start_dates_unadjust[i];
 			temp_end   = payment_end_dates_unadjust[i];
 		}
-        const LADate* temp_fodd = NULL;
-        const LADate* temp_lodd = NULL;
+        const AQLDate* temp_fodd = NULL;
+        const AQLDate* temp_lodd = NULL;
         DateVector temp_dates, temp_dates_unadjust, 
                    temp_start_dates, temp_end_dates, 
                    temp_start_dates_unadjust, temp_end_dates_unadjust;
@@ -5373,16 +5373,16 @@ LAPriceCashFlowGenerator::calcPaymentDates(LAObject& leg,
 }
 
 
-LAObject*
-LAPriceCashFlowGenerator::createCouponInfo(const LAString name,
-                 const LADate& advancepaymentdate,
-                 const LADate& paymentdate,
-                 const LADate& paymentdate_unadjust,
-                 const LADate& startdate,
-                 const LADate& enddate,
-                 const LAObject& couponinfo,
-                 const LAObject& leg,
-                 LAString stubindextype,
+AQLObject*
+LAPriceCashFlowGenerator::createCouponInfo(const AQLString name,
+                 const AQLDate& advancepaymentdate,
+                 const AQLDate& paymentdate,
+                 const AQLDate& paymentdate_unadjust,
+                 const AQLDate& startdate,
+                 const AQLDate& enddate,
+                 const AQLObject& couponinfo,
+                 const AQLObject& leg,
+                 AQLString stubindextype,
 				 const double fixedrate,
 				 const bool is_digital
 				 ) const
@@ -5410,11 +5410,11 @@ LAPriceCashFlowGenerator::createCouponInfo(const LAString name,
 void
 LAPriceCashFlowGenerator::detectStubCoupon(bool& is_first_stub,
                                         bool& is_last_stub,
-	                                    const LAString& freq,
-										const LADate& start_date,
-										const LADate& end_date,
-										const LADate* first_odd_date,
-										const LADate* last_odd_date,
+	                                    const AQLString& freq,
+										const AQLDate& start_date,
+										const AQLDate& end_date,
+										const AQLDate* first_odd_date,
+										const AQLDate* last_odd_date,
 										const bool isforwardroll,
 										const DateVector& payment_dates_unadjust) const
 {
@@ -5429,7 +5429,7 @@ LAPriceCashFlowGenerator::detectStubCoupon(bool& is_first_stub,
 	}
 
 	//convert frequency to term string
-	LAString term;
+	AQLString term;
 	if (freq == NONE)
 	{
 		term = NONE;
@@ -5444,7 +5444,7 @@ LAPriceCashFlowGenerator::detectStubCoupon(bool& is_first_stub,
 	}
 	else
 	{
-		term = LAString(LAMathDateCalculations::getPeriodFrequencyInMonths(freq)) + "M";
+		term = AQLString(LAMathDateCalculations::getPeriodFrequencyInMonths(freq)) + "M";
 	}
 
 	//detect stub payment date 
@@ -5460,9 +5460,9 @@ LAPriceCashFlowGenerator::detectStubCoupon(bool& is_first_stub,
 			DateVector::const_iterator it = upper_bound(rollDates.cbegin(), rollDates.cend(), start_date);
 			if (it == rollDates.cend())
 			{
-				throw LACoreInvalidData("Faild to find the first payment date", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Faild to find the first payment date", __FILE__, __LINE__);
 			}
-			LADate nonStubFirstPaymentDate = LAMathDateCalculations::getDate(*it, term, LAPriceDataSlidingRule(), 0, false);
+			AQLDate nonStubFirstPaymentDate = LAMathDateCalculations::getDate(*it, term, AQLPriceDataSlidingRule(), 0, false);
 			is_first_stub = (nonStubFirstPaymentDate != start_date);
 		}
 	}
@@ -5479,9 +5479,9 @@ LAPriceCashFlowGenerator::detectStubCoupon(bool& is_first_stub,
 			DateVector::const_iterator it = lower_bound(rollDates.cbegin(), rollDates.cend(), end_date);
 			if (it == rollDates.cbegin() || it == rollDates.cend())
 			{
-				throw LACoreInvalidData("Faild to find the last payment date", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Faild to find the last payment date", __FILE__, __LINE__);
 			}
-			LADate nonStubLastPaymentDate = LAMathDateCalculations::getDate(*(it - 1), term, LAPriceDataSlidingRule(), 0, true);
+			AQLDate nonStubLastPaymentDate = LAMathDateCalculations::getDate(*(it - 1), term, AQLPriceDataSlidingRule(), 0, true);
 			is_last_stub = (nonStubLastPaymentDate != end_date);
 		}
 	}
@@ -5489,13 +5489,13 @@ LAPriceCashFlowGenerator::detectStubCoupon(bool& is_first_stub,
 
 
 void
-LAPriceCashFlowGenerator::setUpBondFundingLeg(LAObject& trade) const
+LAPriceCashFlowGenerator::setUpBondFundingLeg(AQLObject& trade) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	// ! Get Leg Info
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	LADataMultiReference& legs = dynamic_cast<LADataMultiReference&>(dh->get());
+	AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference&>(dh->get());
 
 	vector<unsigned int> bond_funding_leg_pos;
 	for (unsigned int i = 0; i < legs.getSize(); ++i)
@@ -5511,16 +5511,16 @@ LAPriceCashFlowGenerator::setUpBondFundingLeg(LAObject& trade) const
 		return;
 
 	if (legs.getSize() != 2 || bond_funding_leg_pos.size() > 1)
-		throw LACoreInvalidData("size of leg is inappropreate as structured bond.",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("size of leg is inappropreate as structured bond.",__FILE__,__LINE__);
 
 
-	LAObjectPool& objPool = trade.getDataInstance()->getObjectPool();
+	AQLObjectPool& objPool = trade.getDataInstance()->getObjectPool();
 
 	// ! Get PathEntity
 	dh = &( trade.getData( PRICING_DATA_PATHENTITY, ISNOTNULL ) );
-	LADataReference& arPath = dynamic_cast< LADataReference& >( dh->get() );
+	AQLDataReference& arPath = dynamic_cast< AQLDataReference& >( dh->get() );
 	
-	LAObject* pathEntity = NULL;
+	AQLObject* pathEntity = NULL;
 
 	if ( arPath.get().get().isTypeOf( ENTITY_PATH ) )
 	{
@@ -5533,33 +5533,33 @@ LAPriceCashFlowGenerator::setUpBondFundingLeg(LAObject& trade) const
 	}
 	else
 	{
-		LAString msg = "pathEntity type is wrong! LAPriceCashFlowGenerator::createRenotional";
-		throw LACoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
+		AQLString msg = "pathEntity type is wrong! LAPriceCashFlowGenerator::createRenotional";
+		throw AQLCoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
 	}
 
 	// ! Get asofDate
 	dh = &( pathEntity->getData( CALIBRATION_DATA_ASOFDATE, ISNOTNULL ) );
-	LADate asofDate = dynamic_cast< LADataDate& >( dh->get() ).get();
+	AQLDate asofDate = dynamic_cast< AQLDataDate& >( dh->get() ).get();
 
 
 	// Coupon CF FX rate value
-	LADate start_date = dynamic_cast<const LADataDate&>(legs.get(bond_funding_leg_pos[0]).getData(PRICING_DATA_STARTDATE, ISNOTNULL).get());
-	LAString base_ccy = dynamic_cast<const LADataString&>(legs.get(bond_funding_leg_pos[0]).getData(PRICING_DATA_CURRENCY, ISNOTNULL).get());
+	AQLDate start_date = dynamic_cast<const AQLDataDate&>(legs.get(bond_funding_leg_pos[0]).getData(PRICING_DATA_STARTDATE, ISNOTNULL).get());
+	AQLString base_ccy = dynamic_cast<const AQLDataString&>(legs.get(bond_funding_leg_pos[0]).getData(PRICING_DATA_CURRENCY, ISNOTNULL).get());
 	base_ccy.toUpper();
-	LAString for_ccy = dynamic_cast<const LADataString&>(legs.get(bond_funding_leg_pos[0]).getData(PRICING_DATA_BONDFUNDINGCURRENCY, ISNOTNULL).get());
+	AQLString for_ccy = dynamic_cast<const AQLDataString&>(legs.get(bond_funding_leg_pos[0]).getData(PRICING_DATA_BONDFUNDINGCURRENCY, ISNOTNULL).get());
 	for_ccy.toUpper();
 
 	const LAMathFXEntity* pFwd = nullptr;
 	if (pathEntity->isTypeOf(ENTITY_PATH))
 	{
 		LAMathPathEntity& path = *(dynamic_cast<LAMathPathEntity *>(pathEntity));
-		LADataMultiReference& initialrefs = path.getInitialValues();
-		const LADataStrings& sdenames = path.getSDEAttrNames();
+		AQLDataMultiReference& initialrefs = path.getInitialValues();
+		const AQLDataStrings& sdenames = path.getSDEAttrNames();
 		unsigned int initSize = sdenames.getSize();
 		for (unsigned int i = 0; i < initSize; i++)
 		{
 			const LAMathAttrSDE &sde = dynamic_cast<const LAMathAttrSDE &>(path.getData(sdenames[i]).get());
-			LAString ccy_sde = sde.getCurrency();
+			AQLString ccy_sde = sde.getCurrency();
 			ccy_sde.toUpper();
 
 			if (-1 == ccy_sde.findString('/'))
@@ -5581,49 +5581,49 @@ LAPriceCashFlowGenerator::setUpBondFundingLeg(LAObject& trade) const
 	}
 	
 	if (pFwd == nullptr && base_ccy != for_ccy)
-		throw LACoreInvalidData("Error setUpBondFunding",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Error setUpBondFunding",__FILE__,__LINE__);
 
 		
 	double fxRate = base_ccy != for_ccy ? pFwd->getForwardRate(base_ccy, for_ccy, asofDate, max(start_date, asofDate)) : 1.0;
-	double notional = dynamic_cast<const LADataDouble&>(legs.get(bond_funding_leg_pos[0]).getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get());
+	double notional = dynamic_cast<const AQLDataDouble&>(legs.get(bond_funding_leg_pos[0]).getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get());
 	notional *= fxRate;
 
 	// Update Notional
-	LADataMultiReference& cashs = dynamic_cast<LADataMultiReference &>((legs.get(bond_funding_leg_pos[0]).get()).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
+	AQLDataMultiReference& cashs = dynamic_cast<AQLDataMultiReference &>((legs.get(bond_funding_leg_pos[0]).get()).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
 	for(unsigned int i = 0; i < cashs.getSize(); ++i)
 	{
-		LAObject& targetcash = cashs.get(i).get();
-		dynamic_cast<LADataString&>(targetcash.getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).set(for_ccy);
-		dynamic_cast<LADataDouble&>(targetcash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).set(notional);
+		AQLObject& targetcash = cashs.get(i).get();
+		dynamic_cast<AQLDataString&>(targetcash.getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).set(for_ccy);
+		dynamic_cast<AQLDataDouble&>(targetcash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).set(notional);
 		dh = &targetcash.getData(PRICING_CALIBRATION_DATAOTIONALCF, NOCHECK);
 		if(dh->isDefined() && !dh->isNull())
 		{
-			dynamic_cast<LADataDouble&>(dh->get()).set(notional);
+			dynamic_cast<AQLDataDouble&>(dh->get()).set(notional);
 		}
 	}
 
 	dh = &legs.get(bond_funding_leg_pos[0]).getData(PRICING_DATA_ISNOTIONALEXCHANGEATSTART, ISNOTNULL);
-	if(dynamic_cast<LADataBool&>(dh->get()).get())
+	if(dynamic_cast<AQLDataBool&>(dh->get()).get())
 	{
-		LAObject& targetcash = cashs.get(0).get();
-		dynamic_cast<LADataDouble&>(targetcash.getData(PRICING_CALIBRATION_DATAOTIONALCF, ISNOTNULL).get()).set(-notional);
+		AQLObject& targetcash = cashs.get(0).get();
+		dynamic_cast<AQLDataDouble&>(targetcash.getData(PRICING_CALIBRATION_DATAOTIONALCF, ISNOTNULL).get()).set(-notional);
 	}
 
 	dh = &legs.get(bond_funding_leg_pos[0]).getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND, ISNOTNULL);
-	if(dynamic_cast<LADataBool&>(dh->get()).get())
+	if(dynamic_cast<AQLDataBool&>(dh->get()).get())
 	{
-		LAObject& targetcash = cashs.get(cashs.getSize() - 1).get();
-		dynamic_cast<LADataDouble&>(targetcash.getData(PRICING_CALIBRATION_DATAOTIONALCF, ISNOTNULL).get()).set(notional);
+		AQLObject& targetcash = cashs.get(cashs.getSize() - 1).get();
+		dynamic_cast<AQLDataDouble&>(targetcash.getData(PRICING_CALIBRATION_DATAOTIONALCF, ISNOTNULL).get()).set(notional);
 	}
 
 	dh = &(trade.getData(PRICING_DATA_FUNDINGCHANGEINFO, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		LAObject& fginfo = dynamic_cast<LADataReference &>(dh->get()).get().get();
+		AQLObject& fginfo = dynamic_cast<AQLDataReference &>(dh->get()).get().get();
 		dh = &fginfo.getData(PRICING_DATA_BASEFUNDINGNOTIONAL, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			dynamic_cast<LADataDouble&>(dh->get()).set(notional);
+			dynamic_cast<AQLDataDouble&>(dh->get()).set(notional);
 		}
 	}
 
@@ -5635,11 +5635,11 @@ LAPriceCashFlowGenerator::setUpBondFundingLeg(LAObject& trade) const
 	vector<bool> is_exsit_final_notionalcf(2, false);
 	for (unsigned int i = 0; i < 2; ++i)
 	{
-		LADataMultiReference& cashs = dynamic_cast<LADataMultiReference &>((legs.get(i).get()).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
-		LAObject& cash_last = cashs.get(cashs.getSize() - 1).get();
+		AQLDataMultiReference& cashs = dynamic_cast<AQLDataMultiReference &>((legs.get(i).get()).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
+		AQLObject& cash_last = cashs.get(cashs.getSize() - 1).get();
 
 		dh = &(cash_last.getData(PRICING_DATA_ISREDEMPTION, NOCHECK));
-		bool cond1 = (dh->isDefined() && !dh->isNull()) ? dynamic_cast<const LADataBool&>(dh->get()).get() : false;
+		bool cond1 = (dh->isDefined() && !dh->isNull()) ? dynamic_cast<const AQLDataBool&>(dh->get()).get() : false;
 		dh = &(cash_last.getData(PRICING_CALIBRATION_DATAOTIONALCF, NOCHECK));
 		bool cond2 = (dh->isDefined() && !dh->isNull());
 		dh = &(cash_last.getData(PRICING_CALIBRATION_DATAOTIONALCFS, NOCHECK));
@@ -5656,7 +5656,7 @@ LAPriceCashFlowGenerator::setUpBondFundingLeg(LAObject& trade) const
 		for (unsigned int i = 0; i < 2; ++i)
 		{
 			dh = &legs.get(i).getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND, ISNOTNULL);
-			is_need_inserted[i] = dynamic_cast<LADataBool&>(dh->get()).get();
+			is_need_inserted[i] = dynamic_cast<AQLDataBool&>(dh->get()).get();
 		}
 	}
 	else
@@ -5672,13 +5672,13 @@ LAPriceCashFlowGenerator::setUpBondFundingLeg(LAObject& trade) const
 		if(!is_need_inserted[i])
 			continue;
 
-		LADataMultiReference& cashs = dynamic_cast<LADataMultiReference &>((legs.get(i).get()).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
-		LAObject& cash_last = cashs.get(cashs.getSize() - 1).get();
+		AQLDataMultiReference& cashs = dynamic_cast<AQLDataMultiReference &>((legs.get(i).get()).getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
+		AQLObject& cash_last = cashs.get(cashs.getSize() - 1).get();
 
 		dh = &(cash_last.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL));
-		double notional_mod = dynamic_cast<const LADataDouble&>(dh->get());
+		double notional_mod = dynamic_cast<const AQLDataDouble&>(dh->get());
 		cash_last.remove(PRICING_CALIBRATION_DATAOTIONALCF);
-		cash_last.add(PRICING_CALIBRATION_DATAOTIONALCF, new LADataDouble(notional_mod));
+		cash_last.add(PRICING_CALIBRATION_DATAOTIONALCF, new AQLDataDouble(notional_mod));
 	}
 
 }
@@ -5692,17 +5692,17 @@ LAPriceCashFlowGenerator::setUpBondFundingLeg(LAObject& trade) const
 
 */
 void
-LAPriceCashFlowGenerator::setUpNonDeliverable(LAObject& trade) const
+LAPriceCashFlowGenerator::setUpNonDeliverable(AQLObject& trade) const
 {
-	LADataHolder* dh = &(trade.getData(PRICING_DATA_PATHENTITY, NOCHECK));
+	AQLDataHolder* dh = &(trade.getData(PRICING_DATA_PATHENTITY, NOCHECK));
 	if (!dh->isDefined() || dh->isNull())
 	{
 		return;
 	}
-	LADataReference& attrPath = dynamic_cast<LADataReference&>(dh->get());
+	AQLDataReference& attrPath = dynamic_cast<AQLDataReference&>(dh->get());
 	LAMathFXEntity* pFX = 0;
-	LADate asofdate;
-	LAString simccy;
+	AQLDate asofdate;
+	AQLString simccy;
 	if (attrPath.get().get().isTypeOf(ENTITY_PLAINVANILLA)) // vanilla
 	{
 		LAMathPlainVanillaEntity* pPath = &(dynamic_cast< LAMathPlainVanillaEntity&>(attrPath.get().get()));
@@ -5711,13 +5711,13 @@ LAPriceCashFlowGenerator::setUpNonDeliverable(LAObject& trade) const
 			return;
 		}
 		pFX = dynamic_cast<LAMathFXEntity *>(&pPath->getFXEntity().get().get());
-		asofdate = dynamic_cast<LADataDate &>((&(pPath->getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)))->get()).get();
+		asofdate = dynamic_cast<AQLDataDate &>((&(pPath->getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)))->get()).get();
 	}
 	else if (attrPath.get().get().isTypeOf(ENTITY_PATH)) // exo
 	{
 		LAMathPathEntity* pPath = &dynamic_cast<LAMathPathEntity&>(attrPath.get().get());
-		const LAStringVector sdenames = pPath->getSDEAttrNames().get();
-		const LAStringVector simsdenames = pPath->getSimulationSDEAttrNames().get();
+		const AQLStringVector sdenames = pPath->getSDEAttrNames().get();
+		const AQLStringVector simsdenames = pPath->getSimulationSDEAttrNames().get();
 		if (simsdenames.size() != 1)
 		{
 			return;
@@ -5730,7 +5730,7 @@ LAPriceCashFlowGenerator::setUpNonDeliverable(LAObject& trade) const
 		dh = &pPath->getData(simsdenames[0], ISNOTNULL);
 		simccy = dynamic_cast<LAMathAttrSDE&>(dh->get()).getCurrency();
 
-		const LADataMultiReference& initialrefs = pPath->getInitialValues();
+		const AQLDataMultiReference& initialrefs = pPath->getInitialValues();
 		for (unsigned int i = 0; i < sdenames.size(); ++i)
 		{
 			const LAMathAttrSDE& sde = dynamic_cast<const LAMathAttrSDE&>(pPath->getData(sdenames[i], ISNOTNULL).get());
@@ -5739,22 +5739,22 @@ LAPriceCashFlowGenerator::setUpNonDeliverable(LAObject& trade) const
 				pFX = dynamic_cast<LAMathFXEntity *>(&initialrefs.get(i).get());
 			}
 		}
-		asofdate = dynamic_cast<LADataDate &>((&(pPath->getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)))->get()).get();
+		asofdate = dynamic_cast<AQLDataDate &>((&(pPath->getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)))->get()).get();
 	}
 	else
 	{
-		throw LACoreInvalidData("Invalid path type.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Invalid path type.", __FILE__, __LINE__);
 	}
 
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	LADataMultiReference& legs = dynamic_cast<LADataMultiReference&>(dh->get());
+	AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference&>(dh->get());
 	for (unsigned int i = 0; i < legs.getSize(); ++i)
 	{
 		dh = &(legs.get(i).get().getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-		LADataMultiReference& cashlets = dynamic_cast<LADataMultiReference&>(dh->get());
+		AQLDataMultiReference& cashlets = dynamic_cast<AQLDataMultiReference&>(dh->get());
 		for (unsigned int j = 0; j < cashlets.getSize(); ++j)
 		{
-			LAObject& cashlet = cashlets.get(j).get();
+			AQLObject& cashlet = cashlets.get(j).get();
 
 			// only for exo
 			if (attrPath.get().get().isTypeOf(ENTITY_PATH))
@@ -5763,23 +5763,23 @@ LAPriceCashFlowGenerator::setUpNonDeliverable(LAObject& trade) const
 				dh = &cashlet.getData(PRICING_DATA_EXTRACF, NOCHECK);
 				if (dh->isDefined() && !dh->isNull())
 				{
-					const double original_extracf = dynamic_cast<LADataDouble &>(dh->get()).get();
+					const double original_extracf = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 					dh = &cashlet.getData(PRICING_DATA_EXTRACFCURRENCY, NOCHECK);
 					if (!dh->isDefined() || dh->isNull())
 						dh = &cashlet.getData(PRICING_DATA_CURRENCY, ISNOTNULL);
-					const LAString original_ccy = dh->convertToString().exchange("\"", "");
+					const AQLString original_ccy = dh->convertToString().exchange("\"", "");
 
 					if (original_ccy == simccy)
 						continue;
 
 					dh = &(cashlet.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-					const LADate paymentdate = dynamic_cast<LADataDate &>(dh->get()).get();
+					const AQLDate paymentdate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 
 					const double fwdfx = pFX->getRate(original_ccy, simccy, paymentdate);
 					const double modified_extracf = original_extracf * fwdfx;
 
 					dh = &cashlet.getData(PRICING_DATA_EXTRACF, NOCHECK);
-					dynamic_cast<LADataDouble &>(dh->get()).set(modified_extracf);
+					dynamic_cast<AQLDataDouble &>(dh->get()).set(modified_extracf);
 
 					dh = &cashlet.getData(PRICING_DATA_EXTRACFCURRENCY, ISNOTNULL);
 					dh->get().convertFromString(simccy);
@@ -5790,48 +5790,48 @@ LAPriceCashFlowGenerator::setUpNonDeliverable(LAObject& trade) const
 			dh = &cashlet.getData(PRICING_DATA_SETTLEMENTCURRENCY, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				const LAString settle_ccy = dynamic_cast<LADataString &>(dh->get()).get();
-				const LAString original_ccy = dynamic_cast<LADataString &>((&cashlet.getData(PRICING_DATA_CURRENCY, ISNOTNULL))->get()).get();
+				const AQLString settle_ccy = dynamic_cast<AQLDataString &>(dh->get()).get();
+				const AQLString original_ccy = dynamic_cast<AQLDataString &>((&cashlet.getData(PRICING_DATA_CURRENCY, ISNOTNULL))->get()).get();
 
-				const LADate paydate = dynamic_cast<LADataDate &>((&(cashlet.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL)))->get()).get();
+				const AQLDate paydate = dynamic_cast<AQLDataDate &>((&(cashlet.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL)))->get()).get();
 				const double fwdfx_pay = pFX->getRate(original_ccy, settle_ccy, paydate < asofdate ? asofdate : paydate);
 
 				dh = &cashlet.getData(PRICING_DATA_SETTLEMENTFIXINGDATE, NOCHECK);
-				const LADate fixdate = (dh->isDefined() && !dh->isNull()) ? 
-					dynamic_cast<LADataDate &>(dh->get()).get() : 
-					LAMathDateCalculations::getDate(paydate, "-5D", SLIDING_RULE_FOLLOWING, &LAPriceDataCalendar(pFX->getCalendarNames().get()), true);
-				const LADate spotdate = pFX->getSpotDate(original_ccy, settle_ccy, fixdate);
+				const AQLDate fixdate = (dh->isDefined() && !dh->isNull()) ? 
+					dynamic_cast<AQLDataDate &>(dh->get()).get() : 
+					LAMathDateCalculations::getDate(paydate, "-5D", SLIDING_RULE_FOLLOWING, &AQLPriceDataCalendar(pFX->getCalendarNames().get()), true);
+				const AQLDate spotdate = pFX->getSpotDate(original_ccy, settle_ccy, fixdate);
 				const double fwdfx_fix = pFX->getRate(original_ccy, settle_ccy, spotdate < asofdate ? asofdate : spotdate);
 
 				const double adjust_ratio = fwdfx_fix / fwdfx_pay;
 				cashlet.remove(PRICING_DATA_SETTLEMENTADJUSTRATIO);
-				cashlet.add(PRICING_DATA_SETTLEMENTADJUSTRATIO, new LADataDouble(adjust_ratio));
+				cashlet.add(PRICING_DATA_SETTLEMENTADJUSTRATIO, new AQLDataDouble(adjust_ratio));
 			}
 		}
 
 		dh = &(trade.getData(PRICING_DATA_CALLINFO, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			LAObjectHolder& callinfo = dynamic_cast<LADataReference&>(dh->get()).get();
+			AQLObjectHolder& callinfo = dynamic_cast<AQLDataReference&>(dh->get()).get();
 			dh = &(callinfo.getData(PRICING_DATA_SETTLEMENTCURRENCY, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				const LAString settle_ccy = dynamic_cast<LADataString &>((&callinfo.getData(PRICING_DATA_SETTLEMENTCURRENCY, ISNOTNULL))->get()).get();
-				const LAString original_ccy = dynamic_cast<LADataString &>((&callinfo.getData(PRICING_DATA_EXTRACFCURRENCY, ISNOTNULL))->get()).get();
+				const AQLString settle_ccy = dynamic_cast<AQLDataString &>((&callinfo.getData(PRICING_DATA_SETTLEMENTCURRENCY, ISNOTNULL))->get()).get();
+				const AQLString original_ccy = dynamic_cast<AQLDataString &>((&callinfo.getData(PRICING_DATA_EXTRACFCURRENCY, ISNOTNULL))->get()).get();
 
-				const DateVector fixdates = dynamic_cast<LADataDates&>((&(callinfo.getData(PRICING_DATA_SETTLEMENTFIXINGDATES, ISNOTNULL)))->get()).get();
-				const DateVector paydates = dynamic_cast<LADataDates&>((&(callinfo.getData(PRICING_DATA_ACTIONDATES, ISNOTNULL)))->get()).get();
+				const DateVector fixdates = dynamic_cast<AQLDataDates&>((&(callinfo.getData(PRICING_DATA_SETTLEMENTFIXINGDATES, ISNOTNULL)))->get()).get();
+				const DateVector paydates = dynamic_cast<AQLDataDates&>((&(callinfo.getData(PRICING_DATA_ACTIONDATES, ISNOTNULL)))->get()).get();
 
 				DoubleVector adjust_ratios;
 				for (unsigned int k = 0; k < fixdates.size(); ++k)
 				{
-					const LADate spotdate = pFX->getSpotDate(original_ccy, settle_ccy, fixdates[k]);
+					const AQLDate spotdate = pFX->getSpotDate(original_ccy, settle_ccy, fixdates[k]);
 					const double fwdfx_pay = pFX->getRate(original_ccy, settle_ccy, paydates[k] < asofdate ? asofdate : paydates[k]);
 					const double fwdfx_fix = pFX->getRate(original_ccy, settle_ccy, spotdate < asofdate ? asofdate : spotdate);
 					adjust_ratios.push_back(fwdfx_fix / fwdfx_pay);
 				}
 				callinfo.remove(PRICING_DATA_SETTLEMENTADJUSTRATIOS);
-				callinfo.add(PRICING_DATA_SETTLEMENTADJUSTRATIOS, new LADataDoubles(adjust_ratios));
+				callinfo.add(PRICING_DATA_SETTLEMENTADJUSTRATIOS, new AQLDataDoubles(adjust_ratios));
 			}
 		}
 	}

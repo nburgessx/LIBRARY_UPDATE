@@ -53,7 +53,7 @@ int MALoggerImpl::logLevel = 0;
 	@param[in] mode
 
 */
-MALoggerImpl::MALoggerImpl(const LAString &file, ios_base::openmode mode)
+MALoggerImpl::MALoggerImpl(const AQLString &file, ios_base::openmode mode)
 : MALogger(), mFilename(file), mFilestream(new ofstream(file.getCString(),mode)), mFilemode(mode)
 {
 
@@ -82,7 +82,7 @@ MALoggerImpl::~MALoggerImpl(void)
  
 */
 void 
-MALoggerImpl::debug(const LAString &msg, const char *file, unsigned int line)
+MALoggerImpl::debug(const AQLString &msg, const char *file, unsigned int line)
 {
 	debug(msg.getCString(), file, line);
 }
@@ -100,7 +100,7 @@ MALoggerImpl::debug(const LAString &msg, const char *file, unsigned int line)
  
 */
 void 
-MALoggerImpl::info(const LAString &msg, const char *file, unsigned int line)
+MALoggerImpl::info(const AQLString &msg, const char *file, unsigned int line)
 {
 	info(msg.getCString(), file, line);
 }
@@ -118,7 +118,7 @@ MALoggerImpl::info(const LAString &msg, const char *file, unsigned int line)
  
 */
 void 
-MALoggerImpl::error(const LAString &msg, const char *file, unsigned int line)
+MALoggerImpl::error(const AQLString &msg, const char *file, unsigned int line)
 {
 	error(msg.getCString(), file, line);
 }
@@ -273,15 +273,15 @@ MALoggerImpl::open()
 	}
 	catch (bad_alloc &e)
 	{
-		LAString msg = LAString(e.what()) + " Cannnot open log file.. File : " + mFilename;
-		throw LACoreSystemError(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString(e.what()) + " Cannnot open log file.. File : " + mFilename;
+		throw AQLCoreSystemError(msg.getCString(), __FILE__, __LINE__);
 	}
 	
 	// check
 	if (!*mFilestream)
 	{
-		LAString msg = "Cannnot open log file.. File : " + mFilename ; 
-		throw LACoreSystemError(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Cannnot open log file.. File : " + mFilename ; 
+		throw AQLCoreSystemError(msg.getCString(), __FILE__, __LINE__);
 	}
 
 }

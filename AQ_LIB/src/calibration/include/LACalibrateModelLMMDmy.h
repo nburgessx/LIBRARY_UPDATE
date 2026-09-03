@@ -20,8 +20,8 @@
 #include "LACalibrateModelLMM.h"
 
 
-class LADataInstance;
-class LAString;
+class AQLDataInstance;
+class AQLString;
 class LARatesCurveLogLinearInterpolation;
 
 //===================== Class Declare LACalibrateModelLMMDmy ==================================
@@ -35,7 +35,7 @@ class LACalibrateModelLMMDmy : public LACalibrateModelLMM
 
 public:
 	// constructor
-	explicit LACalibrateModelLMMDmy(const LAString &baseCurrency);
+	explicit LACalibrateModelLMMDmy(const AQLString &baseCurrency);
 	// destructor
 	virtual ~LACalibrateModelLMMDmy(void);
 	// copy constructor
@@ -44,7 +44,7 @@ public:
 protected:
 	//==============================================
 	// create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const LAString &currency, LADataInstance &dataInstance) const;
+	virtual LARatesSDEBase *createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// create log linear interpolation
 	virtual  LARatesCurveLogLinearInterpolation *createCurveLogLinearInterpolation() const;

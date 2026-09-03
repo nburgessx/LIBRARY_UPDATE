@@ -54,15 +54,15 @@ namespace google_test
     //    try
     //    {
     //        // Actual Result from Replay the OIS Curve
-    //        const LAString actualResult = tryMirReplay( EUROisCurveInputs );
+    //        const AQLString actualResult = tryMirReplay( EUROisCurveInputs );
     //
     //        // Load the Input Curve and Read the curveID and marketName
     //        const ReadDataFile::Load inputFile( EUROisCurveInputs );
-    //        const LAString curveID = inputFile["curveID"];
-    //        const LAString marketName = inputFile["marketName"];
+    //        const AQLString curveID = inputFile["curveID"];
+    //        const AQLString marketName = inputFile["marketName"];
 
     //        // Expected Result
-    //        const LAString expectedResult = curveID + " " + marketName + " Curve has been set";
+    //        const AQLString expectedResult = curveID + " " + marketName + " Curve has been set";
     //
     //        // Compare
     //        EXPECT_EQ( actualResult, expectedResult );
@@ -72,7 +72,7 @@ namespace google_test
     //        std::cout << "#Error: Unable to Load Test File";
     //        ASSERT_FALSE( true );
     // }
-    //    catch( const LACoreError & m )
+    //    catch( const AQLCoreError & m )
     //    {
     //        std::cout <<  m.getMsg();
     //        ASSERT_FALSE( true );
@@ -89,16 +89,16 @@ namespace google_test
         try
         {
             // Actual Result from Replay the OIS Curve
-            const LAString oisResult = tryMirReplay( EUROisCurveInputs );
-            const LAString actualResult = tryMirReplay( EURStdCurveInputs );
+            const AQLString oisResult = tryMirReplay( EUROisCurveInputs );
+            const AQLString actualResult = tryMirReplay( EURStdCurveInputs );
 
             // Load the Input Curve and Read the curveID and marketName
             const ReadDataFile::Load inputFile( EURStdCurveInputs );
-            const LAString curveID = inputFile["curveID"];
-            const LAString marketName = inputFile["marketName"];
+            const AQLString curveID = inputFile["curveID"];
+            const AQLString marketName = inputFile["marketName"];
 
             // Expected Result
-            const LAString expectedResult = curveID + " " + marketName + " Curve has been set";
+            const AQLString expectedResult = curveID + " " + marketName + " Curve has been set";
 
             // Compare
             EXPECT_EQ( actualResult, expectedResult );
@@ -108,7 +108,7 @@ namespace google_test
             std::cout << "#Error: Unable to Load Test File";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -126,17 +126,17 @@ namespace google_test
     //    try
     //    {
     //        // Actual Result from Replay the OIS Curve
-    //        const LAString oisResult = tryMirReplay( EUROisCurveInputs );
-    //        const LAString stdResult = tryMirReplay( EURStdCurveInputs );
-    //        const LAString actualResult = tryMirReplay( EURTenorBasisCurveInputs );
+    //        const AQLString oisResult = tryMirReplay( EUROisCurveInputs );
+    //        const AQLString stdResult = tryMirReplay( EURStdCurveInputs );
+    //        const AQLString actualResult = tryMirReplay( EURTenorBasisCurveInputs );
     //
     //        // Load the Input Curve and Read the curveID and marketName
     //        const ReadDataFile::Load inputFile( EURTenorBasisCurveInputs );
-    //        const LAString curveID = inputFile["curveID"];
-    //        const LAString marketName = inputFile["marketName"];
+    //        const AQLString curveID = inputFile["curveID"];
+    //        const AQLString marketName = inputFile["marketName"];
 
     //        // Expected Result
-    //        const LAString expectedResult = curveID + " " + marketName + " Curve has been set";
+    //        const AQLString expectedResult = curveID + " " + marketName + " Curve has been set";
     //
     //        // Compare
     //        EXPECT_EQ( actualResult, expectedResult );
@@ -146,7 +146,7 @@ namespace google_test
     //        std::cout << "#Error: Unable to Load Test File";
     //        ASSERT_FALSE( true );
     // }
-    //    catch( const LACoreError & m )
+    //    catch( const AQLCoreError & m )
     //    {
     //        std::cout <<  m.getMsg();
     //        ASSERT_FALSE( true );
@@ -164,22 +164,22 @@ namespace google_test
     //    try
     //    {
     //        // Actual Result from Replay the OIS Curve
-    //        const LAString usdOisResult         = tryMirReplay( USDOisCurveInputs );
-    //        const LAString usdStdResult         = tryMirReplay( USDStdCurveInputs );
+    //        const AQLString usdOisResult         = tryMirReplay( USDOisCurveInputs );
+    //        const AQLString usdStdResult         = tryMirReplay( USDStdCurveInputs );
 
-    //        const LAString eurOisResult         = tryMirReplay( EUROisCurveInputs );
-    //        const LAString eurStdResult         = tryMirReplay( EURStdCurveInputs );
-    //        const LAString eurTenorBasisResult  = tryMirReplay( EURTenorBasisCurveInputs );
+    //        const AQLString eurOisResult         = tryMirReplay( EUROisCurveInputs );
+    //        const AQLString eurStdResult         = tryMirReplay( EURStdCurveInputs );
+    //        const AQLString eurTenorBasisResult  = tryMirReplay( EURTenorBasisCurveInputs );
     //
-    //        const LAString actualResult         = tryMirReplay( EURXccyBasisCurveInputs );
+    //        const AQLString actualResult         = tryMirReplay( EURXccyBasisCurveInputs );
     //
     //        // Load the Input Curve and Read the curveID and marketName
     //        const ReadDataFile::Load inputFile( EURXccyBasisCurveInputs );
-    //        const LAString curveID = inputFile["curveID"];
-    //        const LAString marketName = inputFile["marketName"];
+    //        const AQLString curveID = inputFile["curveID"];
+    //        const AQLString marketName = inputFile["marketName"];
 
     //        // Expected Result
-    //        const LAString expectedResult = curveID + " " + marketName + " Curve has been set";
+    //        const AQLString expectedResult = curveID + " " + marketName + " Curve has been set";
     //
     //        // Compare
     //        EXPECT_EQ( actualResult, expectedResult );
@@ -189,7 +189,7 @@ namespace google_test
     //        std::cout << "#Error: Unable to Load Test File";
     //        ASSERT_FALSE( true );
     // }
-    //    catch( const LACoreError & m )
+    //    catch( const AQLCoreError & m )
     //    {
     //        std::cout <<  m.getMsg();
     //        ASSERT_FALSE( true );
@@ -207,28 +207,28 @@ namespace google_test
     //    try
     //    {
     //        // Actual Result from Replay the OIS Curve
-    //        const LAString usdOisResult         = tryMirReplay( USDOisCurveInputs );
-    //        const LAString usdStdResult         = tryMirReplay( USDStdCurveInputs );
+    //        const AQLString usdOisResult         = tryMirReplay( USDOisCurveInputs );
+    //        const AQLString usdStdResult         = tryMirReplay( USDStdCurveInputs );
 
-    //        const LAString gbpOisResult         = tryMirReplay( GBPOisCurveInputs );
-    //        const LAString gbpStdResult         = tryMirReplay( GBPStdCurveInputs );
-    //        const LAString gbpTenorBasisResult  = tryMirReplay( GBPTenorBasisCurveInputs );
-    //        const LAString gbpXccyBasisResult   = tryMirReplay( GBPXccyBasisCurveInputs );
+    //        const AQLString gbpOisResult         = tryMirReplay( GBPOisCurveInputs );
+    //        const AQLString gbpStdResult         = tryMirReplay( GBPStdCurveInputs );
+    //        const AQLString gbpTenorBasisResult  = tryMirReplay( GBPTenorBasisCurveInputs );
+    //        const AQLString gbpXccyBasisResult   = tryMirReplay( GBPXccyBasisCurveInputs );
 
-    //        const LAString eurOisResult         = tryMirReplay( EUROisCurveInputs );
-    //        const LAString eurStdResult         = tryMirReplay( EURStdCurveInputs );
-    //        const LAString eurTenorBasisResult  = tryMirReplay( EURTenorBasisCurveInputs );
-    //        const LAString eurXccyBasisResult   = tryMirReplay( EURXccyBasisCurveInputs );
+    //        const AQLString eurOisResult         = tryMirReplay( EUROisCurveInputs );
+    //        const AQLString eurStdResult         = tryMirReplay( EURStdCurveInputs );
+    //        const AQLString eurTenorBasisResult  = tryMirReplay( EURTenorBasisCurveInputs );
+    //        const AQLString eurXccyBasisResult   = tryMirReplay( EURXccyBasisCurveInputs );
     //
-    //        const LAString actualResult         = tryMirReplay( EURFXFwdGbpCurveInputs );
+    //        const AQLString actualResult         = tryMirReplay( EURFXFwdGbpCurveInputs );
 
     //        // Load the Input Curve and Read the curveID and marketName
     //        const ReadDataFile::Load inputFile( EURFXFwdGbpCurveInputs );
-    //        const LAString curveID = inputFile["curveID"];
-    //        const LAString marketName = inputFile["marketName"];
+    //        const AQLString curveID = inputFile["curveID"];
+    //        const AQLString marketName = inputFile["marketName"];
 
     //        // Expected Result
-    //        const LAString expectedResult = curveID + " " + marketName + " Curve has been set";
+    //        const AQLString expectedResult = curveID + " " + marketName + " Curve has been set";
     //
     //        // Compare
     //        EXPECT_EQ( actualResult, expectedResult );
@@ -238,7 +238,7 @@ namespace google_test
     //        std::cout << "#Error: Unable to Load Test File";
     //        ASSERT_FALSE( true );
     // }
-    //    catch( const LACoreError & m )
+    //    catch( const AQLCoreError & m )
     //    {
     //        std::cout <<  m.getMsg();
     //        ASSERT_FALSE( true );

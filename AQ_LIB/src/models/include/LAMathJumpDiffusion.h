@@ -7,7 +7,7 @@
 #define __LAMATHJUMPDIFFUSION_H__
 
 
-#include <LACoreTemplateType.h>
+#include <AQLCoreTemplateType.h>
 
 //Heston Param
 struct HestonParams

@@ -14,9 +14,9 @@ namespace validation
 {
 
 
-    LAString getCurrentPrefix( LAStringVector& keyPrefixes )
+    AQLString getCurrentPrefix( AQLStringVector& keyPrefixes )
     {
-        LAString prefix = LAString();
+        AQLString prefix = AQLString();
         if ( keyPrefixes.size() != 0 )
         {
             prefix = keyPrefixes.front();
@@ -29,9 +29,9 @@ namespace validation
     *  @param [in]		keys			A list of keys from user input
     *  @param [in]		values			A list of values from user input
     *  @param [in]		keyPrefix		Prefix added to for keys
-    *  @return			a LAStringMatrix representing LabelValueBlock, i.e. first columns are keys, second columns are values
+    *  @return			a AQLStringMatrix representing LabelValueBlock, i.e. first columns are keys, second columns are values
     */
-    LAStringMatrix tryMeUtilityLVBFromKeysValues( const LAStringVector& keys, const LAStringVector& values, const LAString& keyPrefix )
+    AQLStringMatrix tryMeUtilityLVBFromKeysValues( const AQLStringVector& keys, const AQLStringVector& values, const AQLString& keyPrefix )
     {
         VALID_EXCEPTION_START
 
@@ -48,7 +48,7 @@ namespace validation
 
         LabelValueBlock lvb = etrading::populateLabelValueBlock( keys, values, keyPrefix );
 
-        LAStringMatrix ret = etrading::fromLabelValueBlockToStringMatrix( lvb );
+        AQLStringMatrix ret = etrading::fromLabelValueBlockToStringMatrix( lvb );
 
         //if (CreateDataFile::recordEnabled())
         //{
@@ -62,12 +62,12 @@ namespace validation
     }
 
     /* @brief			validation interface for meUtilityLVB method
-    *  @param [in]		sMatrix			A input LAStringMatrix with common key column/row and mutltiple value columns/rows
+    *  @param [in]		sMatrix			A input AQLStringMatrix with common key column/row and mutltiple value columns/rows
     *  @param [in]		keyPrefix		Prefix added to for keys
     *  @param [in]		verticalKeys	True if the keys are vertical
-    *  @return			a LAStringMatrix representing a LabelValueBlock, i.e. first columns are keys, second columns are values
+    *  @return			a AQLStringMatrix representing a LabelValueBlock, i.e. first columns are keys, second columns are values
     */
-    LAStringMatrix tryMeUtilityLVB( const LAStringMatrix& sMatrix, LAStringVector& keyPrefixes, bool verticalKeys )
+    AQLStringMatrix tryMeUtilityLVB( const AQLStringMatrix& sMatrix, AQLStringVector& keyPrefixes, bool verticalKeys )
     {
         VALID_EXCEPTION_START
 
@@ -84,12 +84,12 @@ namespace validation
 
         if ( sMatrix.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: the Matrix size is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: the Matrix size is zero.", __FILE__, __LINE__ );
         }
 
         if ( sMatrix[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: the Matrix needs to have more than one column.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: the Matrix needs to have more than one column.", __FILE__, __LINE__ );
         }
 
 
@@ -102,15 +102,15 @@ namespace validation
             // first column contains keys
             for ( size_t j = 1; j < columnSize; ++j )
             {
-                LAStringVector keys;
-                LAStringVector values;
+                AQLStringVector keys;
+                AQLStringVector values;
                 for ( size_t i = 0; i < rowSize; ++i )
                 {
                     keys.push_back( sMatrix[i][0] );
                     values.push_back( sMatrix[i][j] );
                 }
 
-                LAString prefix = getCurrentPrefix( keyPrefixes );
+                AQLString prefix = getCurrentPrefix( keyPrefixes );
                 LabelValueBlock lvb = etrading::populateLabelValueBlock( keys, values, prefix );
 
                 lvbs.push_back( lvb );
@@ -121,24 +121,24 @@ namespace validation
             // first row contains keys
             for ( size_t i = 1; i < rowSize; ++i )
             {
-                LAStringVector keys;
-                LAStringVector values;
+                AQLStringVector keys;
+                AQLStringVector values;
                 for ( size_t j = 0; j < columnSize; ++j )
                 {
                     keys.push_back( sMatrix[0][j] );
                     values.push_back( sMatrix[i][j] );
                 }
-                LAString prefix = getCurrentPrefix( keyPrefixes );
+                AQLString prefix = getCurrentPrefix( keyPrefixes );
                 LabelValueBlock lvb = etrading::populateLabelValueBlock( keys, values, prefix );
                 lvbs.push_back( lvb );
             }
         }
 
-        //transform to LAStringMatrix format
-        LAStringMatrix ret;
+        //transform to AQLStringMatrix format
+        AQLStringMatrix ret;
         for ( size_t i = 0; i < lvbs.size(); ++i )
         {
-            LAStringMatrix temp = etrading::fromLabelValueBlockToStringMatrix( lvbs[i] );
+            AQLStringMatrix temp = etrading::fromLabelValueBlockToStringMatrix( lvbs[i] );
             etrading::appendToMatrix( ret, temp );
         }
 
@@ -156,10 +156,10 @@ namespace validation
 
 
     /* @brief			validation interface for meUtilityLVBGroup method
-    *  @param [in]		lvbs	A list of LAStringMatrix objects representing label value blocks
-    *  @return			A LAStringMatrix representing the concatenated LabelValueBlock
+    *  @param [in]		lvbs	A list of AQLStringMatrix objects representing label value blocks
+    *  @return			A AQLStringMatrix representing the concatenated LabelValueBlock
     */
-    LAStringMatrix tryMeUtilityLVBGroup( const std::vector<LAStringMatrix>& lvbs )
+    AQLStringMatrix tryMeUtilityLVBGroup( const std::vector<AQLStringMatrix>& lvbs )
     {
         VALID_EXCEPTION_START
 
@@ -175,7 +175,7 @@ namespace validation
         //	}
         //}
 
-        LAStringMatrix ret;
+        AQLStringMatrix ret;
         for ( size_t i = 0; i < lvbs.size(); ++i )
         {
             etrading::validateLVBStringMatrix( lvbs[i] );
@@ -196,10 +196,10 @@ namespace validation
     /* @brief			validation interface for meUtilityLVBFromMultipleKeysValues method
     *  @param [in]		keys			Multiple lists of keys from user input
     *  @param [in]		values			Multiple lists of values from user input
-    *  @return			a LAStringMatrix representing LabelValueBlock, i.e. first columns are keys, second columns are values
+    *  @return			a AQLStringMatrix representing LabelValueBlock, i.e. first columns are keys, second columns are values
     */
-    LAStringMatrix tryMeUtilityLVBFromMultipleKeysValues( const std::vector<LAStringVector>& keys,
-            const std::vector<LAStringVector>& values )
+    AQLStringMatrix tryMeUtilityLVBFromMultipleKeysValues( const std::vector<AQLStringVector>& keys,
+            const std::vector<AQLStringVector>& values )
     {
         VALID_EXCEPTION_START
 
@@ -221,14 +221,14 @@ namespace validation
 
         if ( keys.size() != values.size() )
         {
-            throw LACoreInvalidData( "#Error: Keys and Values are not the same size.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Keys and Values are not the same size.", __FILE__, __LINE__ );
         }
 
-        LAStringMatrix ret;
+        AQLStringMatrix ret;
         for ( size_t i = 0; i < keys.size(); ++i )
         {
             LabelValueBlock lvb = etrading::populateLabelValueBlock( keys[i], values[i] );
-            LAStringMatrix temp = etrading::fromLabelValueBlockToStringMatrix( lvb );
+            AQLStringMatrix temp = etrading::fromLabelValueBlockToStringMatrix( lvb );
             etrading::appendToMatrix( ret, temp );
         }
 
@@ -247,17 +247,17 @@ namespace validation
     /* @brief			validation interface for meUtilityLVBFromKeysAndMultipleValues method
     *  @param [in]		commonKeys		A lists of keys from user input
     *  @param [in]		multiValues		Multiple lists of values from user input
-    *  @return			a vertial LAStringMatrix with a key column and multiple values columns
+    *  @return			a vertial AQLStringMatrix with a key column and multiple values columns
     */
-    LAStringMatrix tryMeUtilityLVBFromKeysAndMultipleValues( const LAStringVector& commonKeys, const std::vector<LAStringVector>& multiValues)
+    AQLStringMatrix tryMeUtilityLVBFromKeysAndMultipleValues( const AQLStringVector& commonKeys, const std::vector<AQLStringVector>& multiValues)
     {
         VALID_EXCEPTION_START
 
-        LAStringMatrix result;
+        AQLStringMatrix result;
         size_t keysSize = commonKeys.size();
         for ( size_t i = 0; i < keysSize; ++i )
         {
-            LAStringVector tempVec;
+            AQLStringVector tempVec;
             auto key = commonKeys[i];
             tempVec.push_back(key);
             for ( size_t j = 0; j < multiValues.size(); ++j )
@@ -265,7 +265,7 @@ namespace validation
                 auto values = multiValues[j];
                 if ( keysSize != values.size())
                 {
-                    throw LACoreInvalidData( "#Error: Keys and Values are not the same size.", __FILE__, __LINE__ );
+                    throw AQLCoreInvalidData( "#Error: Keys and Values are not the same size.", __FILE__, __LINE__ );
                 }
                 auto value = values[i];
                 tempVec.push_back(value);

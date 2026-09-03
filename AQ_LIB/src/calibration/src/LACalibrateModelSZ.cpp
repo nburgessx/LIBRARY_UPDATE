@@ -5,10 +5,10 @@
 #endif
 
 #include "LACalibrateModelSZ.h"
-#include "LAFunctionBase.h"
-#include "LAFunctionManager.h"
+#include "AQLFunctionBase.h"
+#include "AQLFunctionManager.h"
 #include "LAMathVolFuncBase.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "LAPriceDriftLMMSpot.h"
 #include "LAPriceDriftFX.h"
 #include "LARatesSpotSDE.h"
@@ -24,14 +24,14 @@
 #include "LACalibrateVolatilitySZ.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
-#include "LAConstant.h"
+#include "AQLConstant.h"
 #include "LAPriceFXVolatility.h"
 #include "LAPriceSZDDIntegralMelstein.h"
 #include "LAPriceDriftSZDDVolFactor.h"
 #include "LARatesScalarLinearInterpolation.h"
 #include "LAMathVolFuncSZDD.h"
 #include "LAMathVolFuncSZDDVolFactor.h"
-#include "LAStepInterpolation.h"
+#include "AQLStepInterpolation.h"
 #include "LARatesHWIntegral.h"
 #include "LACalibrationParametersSZ.h"
 #include "LACalibrationFunc.h"
@@ -64,7 +64,7 @@ LACalibrateModelSZ::~LACalibrateModelSZ(void)
 	@param[in] dataInstance
 */
 LARatesSDEBase *
-LACalibrateModelSZ::createSDEInstance(const LAString &fx, LADataInstance &dataInstance) const
+LACalibrateModelSZ::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	dataInstance;
 	SDE_TYPE type = getSDEType(fx);
@@ -79,11 +79,11 @@ LACalibrateModelSZ::createSDEInstance(const LAString &fx, LADataInstance &dataIn
 
 */
 SDE_TYPE
-LACalibrateModelSZ::getSDEType(const LAString &fx) const
+LACalibrateModelSZ::getSDEType(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString type = mpStaticData->getStaticData(key_fx + FX_KEY_SZ_TYPE);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString type = mpStaticData->getStaticData(key_fx + FX_KEY_SZ_TYPE);
 	type.toUpper();
 	if (type == "DX/X")
 	{
@@ -95,8 +95,8 @@ LACalibrateModelSZ::getSDEType(const LAString &fx) const
 	}
 	else
 	{
-		LAString msg = LAString("Sde type is not support. type = ") + type;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("Sde type is not support. type = ") + type;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
@@ -107,11 +107,11 @@ LACalibrateModelSZ::getSDEType(const LAString &fx) const
 
 */
 bool 
-LACalibrateModelSZ::isLJ(const LAString &fx) const
+LACalibrateModelSZ::isLJ(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString type = mpStaticData->getStaticData(key_fx + FX_KEY_SZ_INTEGRAL_STEP);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString type = mpStaticData->getStaticData(key_fx + FX_KEY_SZ_INTEGRAL_STEP);
 	type.toUpper();
 	if (type == "LONGJUMP")
 	{
@@ -131,13 +131,13 @@ LACalibrateModelSZ::isLJ(const LAString &fx) const
 	@param[out] sde
 */
 void
-LACalibrateModelSZ::setVolatility(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelSZ::setVolatility(const AQLString &fx, LARatesSDEBase &sde) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
 
-	vector<vector<LAFunctionBase *> > volMtx(1);
+	vector<vector<AQLFunctionBase *> > volMtx(1);
 	volMtx[0].push_back(new LAMathVolFuncBase(sdeName, 0, 0, true));
 	sde.setVolatility(volMtx);
 }
@@ -152,15 +152,15 @@ LACalibrateModelSZ::setVolatility(const LAString &fx, LARatesSDEBase &sde) const
 
 */
 void
-LACalibrateModelSZ::setDrift(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelSZ::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
 {
-	LAStringVector ccys;
+	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
 
-	LAString sdeName_d = mpStaticData->getStaticData(ccys[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
-	LAString sdeName_f = mpStaticData->getStaticData(ccys[1].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLString sdeName_d = mpStaticData->getStaticData(ccys[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLString sdeName_f = mpStaticData->getStaticData(ccys[1].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 	
-	vector<LAFunctionBase*> drift(1,  new LAPriceDriftFX(sdeName_d, sdeName_f));
+	vector<AQLFunctionBase*> drift(1,  new LAPriceDriftFX(sdeName_d, sdeName_f));
 	sde.setDrift(drift);
 }
 
@@ -174,15 +174,15 @@ LACalibrateModelSZ::setDrift(const LAString &fx, LARatesSDEBase &sde) const
 
 */
 void
-LACalibrateModelSZ::setIntegralFunction(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelSZ::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde) const
 {
-	LAString sdeName = getSDEAttrName(fx);
+	AQLString sdeName = getSDEAttrName(fx);
 
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
 
-	LAString volsdeName = mpStaticData->getStaticData(key_fx + ".volatility" + STATIC_DATA_FX_KEY_SDE_NAME);
-	LAString integralType = mpStaticData->getStaticData(key_fx + FX_KEY_SZ_INTEGRAL_TYPE);
+	AQLString volsdeName = mpStaticData->getStaticData(key_fx + ".volatility" + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLString integralType = mpStaticData->getStaticData(key_fx + FX_KEY_SZ_INTEGRAL_TYPE);
 	integralType.toUpper();
 	if (integralType == "MELSTEIN")
 	{
@@ -190,8 +190,8 @@ LACalibrateModelSZ::setIntegralFunction(const LAString &fx, LARatesSDEBase &sde)
 	}
 	else
 	{
-		LAString msg = LAString("Integraltype is not support integraltype = ") +integralType;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("Integraltype is not support integraltype = ") +integralType;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
@@ -200,10 +200,10 @@ LACalibrateModelSZ::setIntegralFunction(const LAString &fx, LARatesSDEBase &sde)
 
 	@param[in] fx
 */
-LAString 
-LACalibrateModelSZ::getFunctionMasterResistName(const LAString &fx) const
+AQLString 
+LACalibrateModelSZ::getFunctionMasterResistName(const AQLString &fx) const
 {
-	LAString tmpFX = fx;
+	AQLString tmpFX = fx;
 	return mpStaticData->getStaticData(tmpFX.toLower() + FX_KEY_SZ_FUNCTION_NAME);
 }
 
@@ -213,11 +213,11 @@ LACalibrateModelSZ::getFunctionMasterResistName(const LAString &fx) const
 
 	@param[in]  fx 
 */
-LAString
-LACalibrateModelSZ::getVolType(const LAString &fx) const
+AQLString
+LACalibrateModelSZ::getVolType(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpStaticData->getStaticData(key_fx + FX_KEY_SZ_VOLATILITY_TYPE);
 }
 
@@ -230,14 +230,14 @@ LACalibrateModelSZ::getVolType(const LAString &fx) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelSZ::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelSZ::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	setUpVolEntity(fx,vol);
-	LAStringVector ccys;
+	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
 
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAStringVector fileVec(2);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector fileVec(2);
 	fileVec[0] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_fx + FX_KEY_SZ_VOLATILITY_CALIB_FILE));
 	fileVec[1] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_fx + ".volatility" + STATIC_DATA_FX_KEY_SDE_INITIALVALUE_FILE));
 	
@@ -245,14 +245,14 @@ LACalibrateModelSZ::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, LADa
 	param.calcType = KEY_PV;
 	// set fx
 	param.ccy = fx;
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
 	param.isCalib = isCalibTarget(fx);
 	if (param.isCalib)
 	{
 		// create calib info
 		LACalibrationParametersSZ *pCInfo = createCalibInfoCreator();
-		LAString cInfoName = pCInfo->createCalibrationInfo(dataInstance.getObjectPool(), fx);
+		AQLString cInfoName = pCInfo->createCalibrationInfo(dataInstance.getObjectPool(), fx);
 		delete pCInfo;
 		// first element set calib info
 		param.refName.push_back(cInfoName);
@@ -279,11 +279,11 @@ LACalibrateModelSZ::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, LADa
 	
 	// create function
 	LACalibrateVolatilitySZ volCreator;
-	LAFunctionBase *method = volCreator.createVolatility(fileVec, &param, &objPool);
+	AQLFunctionBase *method = volCreator.createVolatility(fileVec, &param, &objPool);
 	
 	if (isLJ(fx))
 	{
-		LAPriceFXVolatility *fxVolatility = new LAPriceFXVolatility(method, new LAConstant(1.0), dynamic_cast<LAMathVolFuncFX *>(method)->getTimeGrid());
+		LAPriceFXVolatility *fxVolatility = new LAPriceFXVolatility(method, new AQLConstant(1.0), dynamic_cast<LAMathVolFuncFX *>(method)->getTimeGrid());
 		vol.setVolatility(fxVolatility);
 	}
 	else
@@ -318,7 +318,7 @@ LACalibrateModelSZ::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, LADa
 	@param[out] dataInstance
 */
 void
-LACalibrateModelSZ::setUpVolData(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelSZ::setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	fx;
 	vol;
@@ -334,12 +334,12 @@ LACalibrateModelSZ::setUpVolData(const LAString &fx, LAMathVolatility &vol, LADa
 
 */
 void
-LACalibrateModelSZ::setUpVolEntity(const LAString &fx, LAMathVolatility &vol) const
+LACalibrateModelSZ::setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const
 {
 	// set interpolation
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString interp = mpStaticData->getStaticData(key_fx.toLower() + FX_KEY_SZ_VOLATILITY_INTERPOLATION);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString interp = mpStaticData->getStaticData(key_fx.toLower() + FX_KEY_SZ_VOLATILITY_INTERPOLATION);
 	vol.getInterpolation().convertFromString(interp);
 }
 
@@ -371,10 +371,10 @@ LACalibrateModelSZ::VF::~VF(void)
 
 */
 SDE_TYPE
-LACalibrateModelSZ::VF::getSDEType(const LAString &currency) const
+LACalibrateModelSZ::VF::getSDEType(const AQLString &currency) const
 {
-	LAString key_ccy(getSpotIndex(currency));
-	LAString type = mpStaticData->getStaticData(key_ccy.toLower() + ".volatility" + FX_KEY_SZ_TYPE);
+	AQLString key_ccy(getSpotIndex(currency));
+	AQLString type = mpStaticData->getStaticData(key_ccy.toLower() + ".volatility" + FX_KEY_SZ_TYPE);
 	type.toUpper();
 	if (type == "DX/X")
 	{
@@ -386,8 +386,8 @@ LACalibrateModelSZ::VF::getSDEType(const LAString &currency) const
 	}
 	else
 	{
-		LAString msg = LAString("sde type is not support. type = ") + type;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("sde type is not support. type = ") + type;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
@@ -398,11 +398,11 @@ LACalibrateModelSZ::VF::getSDEType(const LAString &currency) const
 
 */
 bool 
-LACalibrateModelSZ::VF::isLJ(const LAString &currency) const
+LACalibrateModelSZ::VF::isLJ(const AQLString &currency) const
 {
-	LAString key_ccy(getSpotIndex(currency));
+	AQLString key_ccy(getSpotIndex(currency));
 	
-	LAString type = mpStaticData->getStaticData(key_ccy.toLower() + ".volatility" + FX_KEY_SZ_INTEGRAL_STEP);
+	AQLString type = mpStaticData->getStaticData(key_ccy.toLower() + ".volatility" + FX_KEY_SZ_INTEGRAL_STEP);
 	type.toUpper();
 	if (type == "LONGJUMP")
 	{
@@ -423,12 +423,12 @@ LACalibrateModelSZ::VF::isLJ(const LAString &currency) const
 	@param[out] sde
 */
 void
-LACalibrateModelSZ::VF::setVolatility(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelSZ::VF::setVolatility(const AQLString &currency, LARatesSDEBase &sde) const
 {
-	LAString sdeName = getSDEAttrName(currency);
+	AQLString sdeName = getSDEAttrName(currency);
 
-	vector<vector<LAFunctionBase *> > volMtx(1);
-	volMtx[0] = vector<LAFunctionBase *>(1, new LAMathVolFuncBase(sdeName, 0, 0, true));
+	vector<vector<AQLFunctionBase *> > volMtx(1);
+	volMtx[0] = vector<AQLFunctionBase *>(1, new LAMathVolFuncBase(sdeName, 0, 0, true));
 	sde.setVolatility(volMtx);
 }
 
@@ -440,11 +440,11 @@ LACalibrateModelSZ::VF::setVolatility(const LAString &currency, LARatesSDEBase &
 
 */
 void
-LACalibrateModelSZ::VF::setDrift(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelSZ::VF::setDrift(const AQLString &currency, LARatesSDEBase &sde) const
 {
-	LAString sdeName = getSDEAttrName(currency);
+	AQLString sdeName = getSDEAttrName(currency);
 
-	vector<LAFunctionBase *> driftVec(1);
+	vector<AQLFunctionBase *> driftVec(1);
 	driftVec[0] = new LAPriceDriftSZDDVolFactor(sdeName);
 	sde.setDrift(driftVec);
 }
@@ -457,9 +457,9 @@ LACalibrateModelSZ::VF::setDrift(const LAString &currency, LARatesSDEBase &sde) 
 
 */
 void
-LACalibrateModelSZ::VF::setIntegralFunction(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelSZ::VF::setIntegralFunction(const AQLString &currency, LARatesSDEBase &sde) const
 {
-	LAString sdeName = getSDEAttrName(currency);
+	AQLString sdeName = getSDEAttrName(currency);
 	sde.setIntegralFunction(new LARatesHWIntegral(LOG_INTEGRAL, sdeName));
 }
 
@@ -468,10 +468,10 @@ LACalibrateModelSZ::VF::setIntegralFunction(const LAString &currency, LARatesSDE
 
 	@param[in] currency
 */
-LAString 
-LACalibrateModelSZ::VF::getFunctionMasterResistName(const LAString &currency) const
+AQLString 
+LACalibrateModelSZ::VF::getFunctionMasterResistName(const AQLString &currency) const
 {
-	LAString tmpCurrency(getSpotIndex(currency));
+	AQLString tmpCurrency(getSpotIndex(currency));
 	return mpStaticData->getStaticData(tmpCurrency.toLower() + ".volatility" + FX_KEY_SZ_FUNCTION_NAME);
 }
 
@@ -481,10 +481,10 @@ LACalibrateModelSZ::VF::getFunctionMasterResistName(const LAString &currency) co
 
 	@param[in]  currency 
 */
-LAString
-LACalibrateModelSZ::VF::getVolType(const LAString &currency) const
+AQLString
+LACalibrateModelSZ::VF::getVolType(const AQLString &currency) const
 {
-	LAString key_ccy(getSpotIndex(currency));
+	AQLString key_ccy(getSpotIndex(currency));
 	return mpStaticData->getStaticData(key_ccy.toLower() + ".volatility" + FX_KEY_SZ_VOLATILITY_TYPE);
 }
 
@@ -497,15 +497,15 @@ LACalibrateModelSZ::VF::getVolType(const LAString &currency) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelSZ::VF::setUpVolFunc(const LAString &currency, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelSZ::VF::setUpVolFunc(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	// get spot volatility function
-	LAString fxkey(getSpotIndex(currency));
+	AQLString fxkey(getSpotIndex(currency));
 
 	LACalibrateModelSZ* pSpotGenerator = new LACalibrateModelSZ();
-	LAString sdeSpotName = pSpotGenerator->getSDEAttrName(fxkey);
+	AQLString sdeSpotName = pSpotGenerator->getSDEAttrName(fxkey);
 	delete pSpotGenerator;
-	LAString volSpotName = PREFIX_VOL + sdeSpotName;
+	AQLString volSpotName = PREFIX_VOL + sdeSpotName;
 	const LAMathVolatility *volSpotEntity = &dynamic_cast<const LAMathVolatility &>(dataInstance.getObjectPool().getObject(volSpotName, ENCHKTYPE_ISDEFINED).get());
 	const LAMathVolFuncSZDD *volFunc;
 	if (isCalibTarget(fxkey))
@@ -519,8 +519,8 @@ LACalibrateModelSZ::VF::setUpVolFunc(const LAString &currency, LAMathVolatility 
 	}
 	if (volSpotEntity == 0)
 	{
-		LAString msg = LAString("Cast error on spot volatility.");
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("Cast error on spot volatility.");
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	DoubleVector volterm = volFunc->getTimeGrid();
@@ -529,18 +529,18 @@ LACalibrateModelSZ::VF::setUpVolFunc(const LAString &currency, LAMathVolatility 
 	DoubleVector epsilon = volFunc->getEpsilon().getParam();
 
 	if(kappa.empty())
-		throw LACoreInvalidData("Error Mean Reversion is empty",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Error Mean Reversion is empty",__FILE__,__LINE__);
 	
-	LAMathHWFuncMRTMDPT* pafunc = new LAMathHWFuncMRTMDPT(volterm,kappa,*(new LAStepInterpolation()));
+	LAMathHWFuncMRTMDPT* pafunc = new LAMathHWFuncMRTMDPT(volterm,kappa,*(new AQLStepInterpolation()));
 	
-	LAMathHWFuncSigmaTMDPT* psfunc = new LAMathHWFuncSigmaTMDPT(volterm,epsilon,*(new LAStepInterpolation()));
+	LAMathHWFuncSigmaTMDPT* psfunc = new LAMathHWFuncSigmaTMDPT(volterm,epsilon,*(new AQLStepInterpolation()));
 
-	LA1DDataSet* pthetafunc = new LA1DDataSet();
-	LAStepInterpolation inter;
+	AQL1DDataSet* pthetafunc = new AQL1DDataSet();
+	AQLStepInterpolation inter;
 	pthetafunc->setInterpolation(inter);
 	pthetafunc->set(volterm,theta);
 
-	vector<LAFunctionBase *> funcVec(1);
+	vector<AQLFunctionBase *> funcVec(1);
 	funcVec[0] = new LAMathVolFuncSZDDVolFactor(*pafunc,*psfunc,*pthetafunc);	
 	vol.setVolatility(funcVec);
 
@@ -555,14 +555,14 @@ LACalibrateModelSZ::VF::setUpVolFunc(const LAString &currency, LAMathVolatility 
 	@param[out] dataInstance
 */
 void
-LACalibrateModelSZ::VF::setUpVolData(const LAString &currency, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelSZ::VF::setUpVolData(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	(void)currency;
 	(void)vol;
 	(void)dataInstance;
 
-	LAString msg = LAString("Volatility matrix is not support.");
-	throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+	AQLString msg = AQLString("Volatility matrix is not support.");
+	throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 }
 // 
 /*!

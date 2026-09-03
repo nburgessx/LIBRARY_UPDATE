@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -14,10 +14,10 @@ namespace validation
     *  @param [in]		slidingRule		Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The IMM date on the given month
     */
-    LAString tryMirGetIMMDate1( int year,
+    AQLString tryMirGetIMMDate1( int year,
                                 int month,
-                                const LAString& calendar,
-                                const LAString& slidingRule );
+                                const AQLString& calendar,
+                                const AQLString& slidingRule );
 
 
     /* @brief			validation interface for mirGetIMMDate2
@@ -27,10 +27,10 @@ namespace validation
     *  @param [in]		slidingRule		Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The nth IMM date of the year
     */
-    LAString tryMirGetIMMDate2( int year,
+    AQLString tryMirGetIMMDate2( int year,
                                 int number,
-                                const LAString& calendar,
-                                const LAString& slidingRule );
+                                const AQLString& calendar,
+                                const AQLString& slidingRule );
 
 
     /* @brief			validation interface for mirGetIMMDate3
@@ -40,10 +40,10 @@ namespace validation
     *  @param [in]		slidingRule		Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The nth IMM date from the base date, starting from the one closest to the base date
     */
-    LAString tryMirGetIMMDate3( const LADate& baseDate,
+    AQLString tryMirGetIMMDate3( const AQLDate& baseDate,
                                 int number,
-                                const LAString& calendar,
-                                const LAString& slidingRule );
+                                const AQLString& calendar,
+                                const AQLString& slidingRule );
 
 
 }

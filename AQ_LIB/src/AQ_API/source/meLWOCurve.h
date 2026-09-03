@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "SwigTypes.h"	// For SWIG_STRINGMATRIX which manages the LAStringMatrix idiosyncrasies type for R API
+#include "SwigTypes.h"	// For SWIG_STRINGMATRIX which manages the AQLStringMatrix idiosyncrasies type for R API
 
 /* @brief			swig interface for meLWOCurveDisplay
 *  @param [in]		curveHandle		    LWO curve handle or object name

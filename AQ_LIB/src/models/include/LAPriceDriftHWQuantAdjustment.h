@@ -5,8 +5,8 @@
 #endif
 
 #include "LAMathDriftFuncBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LAPriceDriftHW.h"
 
 
@@ -35,7 +35,7 @@ public:
 									LAPriceDriftHW* pDriftIR, const DoubleArray& cor,
 									double fx_criteria = 0.01);
 	// constructor
-	LAPriceDriftHWQuantAdjustment(const LAString& sdeAttrNameIR_D, const LAString& sdeAttrNameIR_F, const LAString& sdeAttrNameFX, LAPriceDriftHW* driftIR, double fx_criteria = 0.01);	
+	LAPriceDriftHWQuantAdjustment(const AQLString& sdeAttrNameIR_D, const AQLString& sdeAttrNameIR_F, const AQLString& sdeAttrNameFX, LAPriceDriftHW* driftIR, double fx_criteria = 0.01);	
 	//	Copy constructor
 	LAPriceDriftHWQuantAdjustment(const LAPriceDriftHWQuantAdjustment& v);
 	// Destructor
@@ -47,7 +47,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -56,7 +56,7 @@ public:
 	virtual double				operator()(const DoubleArray& x) const;
 								//==========================================
 								// return string representaion
-    virtual LAString			convertToString(void) const;
+    virtual AQLString			convertToString(void) const;
 								//==========================================
 								// return drift function
 	LAPriceDriftHW*				getDrift() {return mpDriftIR;}
@@ -64,7 +64,7 @@ public:
 //	OPERATION
 								//==========================================
 								// transform from string representaion
-     virtual void				convertFromString(const LAString& str);
+     virtual void				convertFromString(const AQLString& str);
 
 								//======================================
 								// set up this class
@@ -75,12 +75,12 @@ protected:
 	void						setUp() const;
 
 
-class MMHWQAdjInnerFunc1 : public LAFunctionBase
+class MMHWQAdjInnerFunc1 : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
 	// constructor
-	MMHWQAdjInnerFunc1(const LAMathHWFuncMR& mr, const LAFunctionBase& irvol, const LAFunctionBase& fxvol)
+	MMHWQAdjInnerFunc1(const LAMathHWFuncMR& mr, const AQLFunctionBase& irvol, const AQLFunctionBase& fxvol)
 		:mpMR(&mr), mpIRVol(&irvol), mpFxVol(&fxvol) {;}
 	// destructor
 	virtual ~MMHWQAdjInnerFunc1() {;}
@@ -90,7 +90,7 @@ public:
 
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*     clone() const {return new MMHWQAdjInnerFunc1(*this);}
+	virtual AQLCoreFunctionBase*     clone() const {return new MMHWQAdjInnerFunc1(*this);}
 	                            //==========================================
 	                            // return function value
 	virtual double				operator()(const DoubleArray& x) const {return operator()(x[0]);}
@@ -100,20 +100,20 @@ public:
 
 	virtual double				operator()(double x) const
 								{
-									return LAMath::exp(mpMR->integrate(0.0, x)) * (*mpIRVol)(x) * (*mpFxVol)(x);	
+									return AQLMath::exp(mpMR->integrate(0.0, x)) * (*mpIRVol)(x) * (*mpFxVol)(x);	
 								}
 private:
 	const LAMathHWFuncMR*	mpMR;
-	const LAFunctionBase* mpIRVol;
-	const LAFunctionBase* mpFxVol;
+	const AQLFunctionBase* mpIRVol;
+	const AQLFunctionBase* mpFxVol;
 };
 
-class MMHWQAdjInnerFunc2 : public LAFunctionBase
+class MMHWQAdjInnerFunc2 : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
 	// constructor
-	MMHWQAdjInnerFunc2(const LAMathHWFuncMR& mr, const LAFunctionBase& irvol, const LAFunctionBase& fxvol, const LAFunctionBase& s)
+	MMHWQAdjInnerFunc2(const LAMathHWFuncMR& mr, const AQLFunctionBase& irvol, const AQLFunctionBase& fxvol, const AQLFunctionBase& s)
 		:mpMR(&mr), mpIRVol(&irvol), mpFxVol(&fxvol), mpS(&s) {;}
 	// destructor
 	virtual ~MMHWQAdjInnerFunc2() {;}
@@ -123,7 +123,7 @@ public:
 
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*     clone() const {return new MMHWQAdjInnerFunc2(*this);}
+	virtual AQLCoreFunctionBase*     clone() const {return new MMHWQAdjInnerFunc2(*this);}
 	                            //==========================================
 	                            // return function value
 	virtual double				operator()(const DoubleArray& x) const {return operator()(x[0]);}
@@ -133,21 +133,21 @@ public:
 
 	virtual double				operator()(double x) const
 								{
-									return LAMath::exp(mpMR->integrate(0.0, x)) * (*mpIRVol)(x) * (*mpFxVol)(x) * (*mpS)(x);	
+									return AQLMath::exp(mpMR->integrate(0.0, x)) * (*mpIRVol)(x) * (*mpFxVol)(x) * (*mpS)(x);	
 								}
 private:
 	const LAMathHWFuncMR*	mpMR;
-	const LAFunctionBase* mpIRVol;
-	const LAFunctionBase* mpFxVol;
-	const LAFunctionBase* mpS;
+	const AQLFunctionBase* mpIRVol;
+	const AQLFunctionBase* mpFxVol;
+	const AQLFunctionBase* mpS;
 };
 
-class MMHWQAdjInnerFunc3 : public LAFunctionBase
+class MMHWQAdjInnerFunc3 : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
 	// constructor
-	MMHWQAdjInnerFunc3(const LAMathHWFuncMR& mr, const LAFunctionBase& irvol, const LAFunctionBase& fxvol, const LAFunctionBase& s)
+	MMHWQAdjInnerFunc3(const LAMathHWFuncMR& mr, const AQLFunctionBase& irvol, const AQLFunctionBase& fxvol, const AQLFunctionBase& s)
 		:mpMR(&mr), mpIRVol(&irvol), mpFxVol(&fxvol), mpS(&s) {;}
 	// destructor
 	virtual ~MMHWQAdjInnerFunc3() {;}
@@ -157,7 +157,7 @@ public:
 
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*     clone() const {return new MMHWQAdjInnerFunc3(*this);}
+	virtual AQLCoreFunctionBase*     clone() const {return new MMHWQAdjInnerFunc3(*this);}
 	                            //==========================================
 	                            // return function value
 	virtual double				operator()(const DoubleArray& x) const {return operator()(x[0]);}
@@ -167,13 +167,13 @@ public:
 
 	virtual double				operator()(double x) const
 								{
-									return LAMath::exp(mpMR->integrate(0.0, x)) * (*mpIRVol)(x) * (*mpFxVol)(x) * (*mpS)(x) * x;	
+									return AQLMath::exp(mpMR->integrate(0.0, x)) * (*mpIRVol)(x) * (*mpFxVol)(x) * (*mpS)(x) * x;	
 								}
 private:
 	const LAMathHWFuncMR*	mpMR;
-	const LAFunctionBase* mpIRVol;
-	const LAFunctionBase* mpFxVol;
-	const LAFunctionBase* mpS;
+	const AQLFunctionBase* mpIRVol;
+	const AQLFunctionBase* mpFxVol;
+	const AQLFunctionBase* mpS;
 };
 
 //protected:
@@ -183,9 +183,9 @@ private:
 	LAPriceDriftHW*				mpDriftIR;		// drift function of foregin ir without quant adjust
 	DoubleArray					mCorrelation;	// correlation data
 	mutable DoubleArray			mMinFx;			// minimum fx for avoid zero divide
-	LAString					mSDEAttrNameIR_D;	// data name of ir(domestic currency) sde
-	LAString					mSDEAttrNameIR_F;	// data name of ir(foreign currency) sde
-	LAString					mSDEAttrNameFX;	// data name of fx sde
+	AQLString					mSDEAttrNameIR_D;	// data name of ir(domestic currency) sde
+	AQLString					mSDEAttrNameIR_F;	// data name of ir(foreign currency) sde
+	AQLString					mSDEAttrNameFX;	// data name of fx sde
 	mutable	bool				mIsSetUped;		// setuped or not
 	mutable	unsigned int		mPos_old;		// last cache position
 	mutable DoubleArray			mCache1;		// cache

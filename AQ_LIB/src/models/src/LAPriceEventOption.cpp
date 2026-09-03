@@ -16,15 +16,15 @@
 
 #include "LAPriceEventOption.h"
 
-#include "LADataHolder.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObject.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObject.h"
+#include "AQLObjectHolder.h"
 
-#include "LAMathDefine.h"
-#include "LAMathValuableEntity.h"
+#include "AQLMathDefine.h"
+#include "AQLMathValuableEntity.h"
 
 #include "LAPricePayOff.h"
 
@@ -53,7 +53,7 @@ LAPriceEventOption::~LAPriceEventOption()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceEventOption::clone() const    
 {
     try 
@@ -62,7 +62,7 @@ LAPriceEventOption::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -98,7 +98,7 @@ LAPriceEventOption::getType() const
 	@param[in,out] iter position of nearest payoff from this action expiry date
 */	
 void
-LAPriceEventOption::doAction(const LADate& actiondate,
+LAPriceEventOption::doAction(const AQLDate& actiondate,
 								  double actiontime,
 								  vector<PayOffToolHolderVector>& payoff,
 									 vector<PayOffToolHolderVector>& extrapayoff,
@@ -128,20 +128,20 @@ LAPriceEventOption::doAction(const LADate& actiondate,
     @param[in] isCall call flag(true:call,false:trigger)
 */
 void
-LAPriceEventOption::setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+LAPriceEventOption::setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall)
 {
 	LAPriceEventBase::setUp(basedate, trade, triggerinfo, payoff, isCall);
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	//option 
 	dh = &(triggerinfo.getData(PRICING_DATA_OPTION, ISNOTNULL));
-	LADataReference& ref = dynamic_cast<LADataReference&>(dh->get());
-	mOption = &dynamic_cast<LAMathObjectValue&>(ref.get().get());
+	AQLDataReference& ref = dynamic_cast<AQLDataReference&>(dh->get());
+	mOption = &dynamic_cast<AQLMathObjectValue&>(ref.get().get());
 
 }
 

@@ -56,7 +56,7 @@ double LAPriceCMSSpreadCallPricer::Price(double rho) const
     double sigma = sqrt(mZeroCorrV - 2.0 * rho * mCrossV);
     return BachelierPrice(mK, true, mFwd, sigma);
     //double d = mPayoff / sigma;
-    //double term1 = d * LADist::normsdist(d);
+    //double term1 = d * AQLDist::normsdist(d);
     //double term2 = exp(-0.5 * pow(d, 2)) / Maths.Constant.C_SQRT2PI;
     //return sigma * (term1 + term2);
 }

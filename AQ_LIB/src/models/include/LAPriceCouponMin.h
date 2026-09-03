@@ -5,15 +5,15 @@
 #endif
 
 #include "LAPriceCouponBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAObject.h"
-#include "LAObjectHolder.h"
-#include "LADataBasics.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLObject.h"
+#include "AQLObjectHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathPathEntity.h"
 #include "LAMathFXEntity.h"
 
@@ -25,7 +25,7 @@
 
 
 class LAMathFXEntity;
-class LAPriceDataManager;
+class AQLPriceDataManager;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief declaration of class of rainbow type coupon select operator.
@@ -45,7 +45,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class type
 	virtual double				operator()(const DoubleArray& x) const ;
@@ -53,8 +53,8 @@ public:
 	// select coupon
 	virtual	double				selectCoupon(const DoubleArray& x, unsigned int& pos) const;
 
-	virtual void				setUp(const LADate& basedate, const LAObject& trade,
-										unsigned int legNo, const LAObject& cashlet){};
+	virtual void				setUp(const AQLDate& basedate, const AQLObject& trade,
+										unsigned int legNo, const AQLObject& cashlet){};
 
 
 };

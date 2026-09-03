@@ -23,14 +23,14 @@
 #include "LAMarketData.h"
 #include "LADealUtils.h"
 #include "LAScenarioConfiguration.h"
-#include "LADate.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLDate.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathFXUtility.h"
 #include "LAMathVolFuncFX.h"
 #include "LAMathVolFuncFXDD.h"
 #include "LAPriceFXVolatility.h"
-#include "LAConstant.h"
-#include "LABasic.h"
+#include "AQLConstant.h"
+#include "AQLBasic.h"
 #include "LACalibrationFunc.h"
 #include "LACalibratePtberg.h"
 #include "LACalibratePtberg3F.h"
@@ -73,10 +73,10 @@ LACalibrateVolatilityPtberg::~LACalibrateVolatilityPtberg(void)
 
 */
 void 
-LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_t, vector<DoubleMatrix> &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_t, vector<DoubleMatrix> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)grid_t, (void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 /*!
@@ -89,10 +89,10 @@ LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_t, vector<Double
 
 */
 void 
-LACalibrateVolatilityPtberg::createVolatility(vector<vector<LAFunctionBase *> > &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityPtberg::createVolatility(vector<vector<AQLFunctionBase *> > &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 
@@ -107,10 +107,10 @@ LACalibrateVolatilityPtberg::createVolatility(vector<vector<LAFunctionBase *> > 
 
 */
 void 
-LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_T, vector<LAFunctionBase *> &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_T, vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)grid_T, (void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 
@@ -125,10 +125,10 @@ LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_T, vector<LAFunc
 
 */
 void 
-LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)grid_t, (void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 
@@ -142,11 +142,11 @@ LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_t, DoubleMatrix 
 
 */
 void 
-LACalibrateVolatilityPtberg::createVolatility(vector<LAFunctionBase *> &vol, const LAStringVector &filePath, 
-											const MAScenarioParam *param, LAObjectPool *objPool, int gridPos) const
+LACalibrateVolatilityPtberg::createVolatility(vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, 
+											const MAScenarioParam *param, AQLObjectPool *objPool, int gridPos) const
 {
 	(void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 
 }
 
@@ -162,10 +162,10 @@ LACalibrateVolatilityPtberg::createVolatility(vector<LAFunctionBase *> &vol, con
 
 */
 void 
-LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_T, LAFunctionBase *vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_T, AQLFunctionBase *vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)grid_T, (void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 
@@ -180,10 +180,10 @@ LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_T, LAFunctionBas
 
 */
 void 
-LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_t, DoubleArray &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_t, DoubleArray &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	(void)grid_t, (void)vol, (void)filePath, (void)param, (void)objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 /*!
@@ -195,18 +195,18 @@ LACalibrateVolatilityPtberg::createVolatility(DoubleArray &grid_t, DoubleArray &
 	@param[return]  vol		Volatility as function 
 
 */
-LAFunctionBase * 
-LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool, int gridPos) const
+AQLFunctionBase * 
+LACalibrateVolatilityPtberg::createVolatility(const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool, int gridPos) const
 {
 	// null check
 	if (!param || !objPool)
 	{
-		throw LACoreInvalidData("Param or entitypool is null .", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Param or entitypool is null .", __FILE__, __LINE__);
 	}
 	// refrence check
 	if (param->refName.size() < 2)
 	{
-		throw LACoreInvalidData("Reference object size must be more than 2.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Reference object size must be more than 2.", __FILE__, __LINE__);
 	}
 
 	if (param->isCalib)
@@ -243,7 +243,7 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 	else
 	{
 		MAFileAccessor file(filePath[0]);
-		LAStringMatrix paramMtx;
+		AQLStringMatrix paramMtx;
 		file.readAllData(MARKET_DATA_DELIMITER, paramMtx);
 		file.close();
 
@@ -251,12 +251,12 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 		// calc timegrid
 		DoubleArray timeGrid;
 		int maxTerm = LACoreDataService::getContext(CONTEXT_KEY_MAXTERM).getIntValue();
-		LAString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
-		LAPriceDataDayCount dayCount;
+		AQLString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
+		AQLPriceDataDayCount dayCount;
 		dayCount.convertFromString(dayCountStr);
-		LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+		AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 		// create tenor SA
-	    //LAString cFreq = LACoreDataService::getContext(ARG_KEY_CANONICALFREQ);
+	    //AQLString cFreq = LACoreDataService::getContext(ARG_KEY_CANONICALFREQ);
        	//LACoreDataService::setContext(ARG_KEY_CANONICALFREQ, "SA");
 		LAMarketDataHW::getCanonicalGrid(timeGrid, asOfDate, dayCount, maxTerm);
 	    //LACoreDataService::setContext(ARG_KEY_CANONICALFREQ, cFreq);
@@ -271,16 +271,16 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 		if (paramSize < 3 || 
 			paramMtx[0].size() < size_t || paramMtx[1].size() < size_t || paramMtx[2].size() < size_t)
 		{
-			throw LACoreInvalidData("FX volatility file format is wrong..", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("FX volatility file format is wrong..", __FILE__, __LINE__);
 		}
 		const double INFINITESIMAL = 1E-7;
 
 ////////////////////////////////////////////////////////////////////////////////////// for XLL Plus
-		LAString propKey = param->ccy;
+		AQLString propKey = param->ccy;
 		propKey.toLower();
 
-		LAString includeFX = LACoreDataService::getStaticDataManager().getStaticData().getStaticData(propKey+FX_KEY_PTBERG_VOLATILITY_CALIB_FILE_FORWORDGRIDS_ISINCLUDE);
-		LADataBool isIncludeFx;
+		AQLString includeFX = LACoreDataService::getStaticDataManager().getStaticData().getStaticData(propKey+FX_KEY_PTBERG_VOLATILITY_CALIB_FILE_FORWORDGRIDS_ISINCLUDE);
+		AQLDataBool isIncludeFx;
 		if (includeFX==AQ_NO_DATA)
 		{
 			isIncludeFx.set(false);
@@ -303,10 +303,10 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 			// check timegrid;
 			for (int i =0; i <size_t; ++i)
 			{
-				if (LAMath::abs(timeGrid[i] - fTimeGrid[i]) > INFINITESIMAL)
+				if (AQLMath::abs(timeGrid[i] - fTimeGrid[i]) > INFINITESIMAL)
 				{
-					LAString msg = "CanonicTimeGrid = " + LAString(timeGrid[i]) + ", FileTimeGrid = " + LAString(fTimeGrid[i]);
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "CanonicTimeGrid = " + AQLString(timeGrid[i]) + ", FileTimeGrid = " + AQLString(fTimeGrid[i]);
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 			}
 
@@ -324,7 +324,7 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 			// Long Jump check
 			if (param->isLJ)
 			{
-				return new LAPriceFXVolatility(funcFX, new LAConstant(1.0), timeGrid);
+				return new LAPriceFXVolatility(funcFX, new AQLConstant(1.0), timeGrid);
 			}
 			else
 			{
@@ -344,10 +344,10 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 		// check timegrid;
 		for (int i =0; i <size_t; ++i)
 		{
-			if (LAMath::abs(timeGrid[i] - fTimeGrid[i]) > INFINITESIMAL)
+			if (AQLMath::abs(timeGrid[i] - fTimeGrid[i]) > INFINITESIMAL)
 			{
-				LAString msg = "CanonicTimeGrid = " + LAString(timeGrid[i]) + ", FileTimeGrid = " + LAString(fTimeGrid[i]);
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "CanonicTimeGrid = " + AQLString(timeGrid[i]) + ", FileTimeGrid = " + AQLString(fTimeGrid[i]);
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 		}
 
@@ -357,7 +357,7 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 		LAMathFXEntity fx_tmp = *LAMarketData::getFXEntity(*objPool, "USEMODEL");
 		fx_tmp.getFXType() = "FIXEDRATE";
 
-		LAStringVector ccys;
+		AQLStringVector ccys;
 		LAMarketData::convertToCurrency(param->ccy, ccys);
 		// get spot rate
 		double spotRate = fx_tmp.getRate(ccys[1], ccys[0], 0.0);
@@ -369,20 +369,20 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 			// shiftval check
 			if (param->extraParam.size() != 1)
 			{
-				throw LACoreInvalidData("Extra param size must be 1 .", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Extra param size must be 1 .", __FILE__, __LINE__);
 			}
 			double shiftVal = param->extraParam[0];
-			LAString shiftType = param->shiftType;
+			AQLString shiftType = param->shiftType;
 			shiftType.toUpper();
 			if (shiftType == RISK_SHIFTTYPE_RATIO)
 			{
 				shiftVal = spotRate * shiftVal;
 			}
 			// add shift val
-			spotRate = LAMath::max(spotRate + shiftVal, 0.0);
+			spotRate = AQLMath::max(spotRate + shiftVal, 0.0);
 		}
-		LADate asofDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
-		LADate spotDate = fx_tmp.getSpotDate(ccys[0], ccys[1], asofDate);
+		AQLDate asofDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+		AQLDate spotDate = fx_tmp.getSpotDate(ccys[0], ccys[1], asofDate);
 		spotRate *= dYield.getBasisDF(asofDate, spotDate) / fYield.getBasisDF(asofDate, spotDate);
 		DoubleArray fFx(size_t);
 		// calc forward fx
@@ -405,7 +405,7 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 		// Long Jump check
 		if (param->isLJ)
 		{
-			return new LAPriceFXVolatility(funcFX, new LAConstant(1.0), timeGrid);
+			return new LAPriceFXVolatility(funcFX, new AQLConstant(1.0), timeGrid);
 		}
 		else
 		{
@@ -424,10 +424,10 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 
 */
 void 
-LACalibrateVolatilityPtberg::createVolatility(double &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityPtberg::createVolatility(double &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in ptberg.", __FILE__, __LINE__);
 }
 
 /*!
@@ -437,7 +437,7 @@ LACalibrateVolatilityPtberg::createVolatility(double &vol, const LAStringVector 
 	@param[in] filepath
 */
 void 
-LACalibrateVolatilityPtberg::getGrid_T(DoubleArray &grid_T, const LAStringVector &filePath) const
+LACalibrateVolatilityPtberg::getGrid_T(DoubleArray &grid_T, const AQLStringVector &filePath) const
 {
 	filePath;
 	// Ptberg(FX) has no grid_T

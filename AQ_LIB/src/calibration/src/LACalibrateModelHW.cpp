@@ -8,24 +8,24 @@
 
 #include <math.h>
 #include "LACalibrateModelHW.h"
-#include "LAFunctionBase.h"
-#include "LADataVector.h"
-#include "LADataProcedure.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataReference.h"
-#include "LAAlgorithm.h"
+#include "AQLFunctionBase.h"
+#include "AQLDataVector.h"
+#include "AQLDataProcedure.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataReference.h"
+#include "AQLAlgorithm.h"
 #include "LAMathVolFuncBase.h"
 #include "LAMathCorrelation.h"
 #include "LAMathYieldCurve.h"
 #include "LAPriceYieldGenerator.h"
 #include "LAMathVolatility.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
 #include "LARatesNumeraireBankAccount.h"
 #include "LARatesNumeraireDiscountBond.h"
 #include "LAModelDynamicsHW1FCurve.h"
@@ -59,7 +59,7 @@ using namespace std;
 	@param[in] baseCurrency
 
 */
-LACalibrateModelHW::LACalibrateModelHW(const LAString &baseCurrency)
+LACalibrateModelHW::LACalibrateModelHW(const AQLString &baseCurrency)
 : LACalibrateModelIR(baseCurrency)
 {
 }
@@ -80,10 +80,10 @@ LACalibrateModelHW::~LACalibrateModelHW(void)
 
 */
 SDE_TYPE
-LACalibrateModelHW::getSDEType(const LAString &currency) const
+LACalibrateModelHW::getSDEType(const AQLString &currency) const
 {
-	LAString key_ccy = currency;
-	LAString type = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_HW_TYPE);
+	AQLString key_ccy = currency;
+	AQLString type = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_HW_TYPE);
 	type.toUpper();
 	if (type == "DX/X")
 	{
@@ -95,8 +95,8 @@ LACalibrateModelHW::getSDEType(const LAString &currency) const
 	}
 	else
 	{
-		LAString msg = LAString("sde type is not support. type = ") + type;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("sde type is not support. type = ") + type;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
@@ -107,11 +107,11 @@ LACalibrateModelHW::getSDEType(const LAString &currency) const
 
 */
 bool 
-LACalibrateModelHW::isLJ(const LAString &currency) const
+LACalibrateModelHW::isLJ(const AQLString &currency) const
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	
-	LAString type = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_HW_INTEGRAL_STEP);
+	AQLString type = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_HW_INTEGRAL_STEP);
 	type.toUpper();
 	if (type == "LONGJUMP")
 	{
@@ -132,7 +132,7 @@ LACalibrateModelHW::isLJ(const LAString &currency) const
 	@param[in]  dataInstance
 */
 LARatesSDEBase *
-LACalibrateModelHW::createSDEInstance(const LAString &currency, LADataInstance &dataInstance) const
+LACalibrateModelHW::createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	SDE_TYPE type = getSDEType(currency);
@@ -158,13 +158,13 @@ LACalibrateModelHW::createSDEInstance(const LAString &currency, LADataInstance &
 	@param[out] sde
 */
 void
-LACalibrateModelHW::setVolatility(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setVolatility(const AQLString &currency, LARatesSDEBase &sde) const
 {
-	LAString key_ccy = currency;
-	LAString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLString key_ccy = currency;
+	AQLString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 
-	vector<vector<LAFunctionBase *> > volMtx(1);
-	volMtx[0] = vector<LAFunctionBase *>(1, new LAMathVolFuncBase(sdeName, 0, 0, true));
+	vector<vector<AQLFunctionBase *> > volMtx(1);
+	volMtx[0] = vector<AQLFunctionBase *>(1, new LAMathVolFuncBase(sdeName, 0, 0, true));
 	sde.setVolatility(volMtx);
 }
 
@@ -176,13 +176,13 @@ LACalibrateModelHW::setVolatility(const LAString &currency, LARatesSDEBase &sde)
 
 */
 void
-LACalibrateModelHW::setDrift(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setDrift(const AQLString &currency, LARatesSDEBase &sde) const
 {
-	LAString key_ccy = currency;
-	LAString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLString key_ccy = currency;
+	AQLString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 
-	vector<LAFunctionBase *> driftVec(1);
-	LAString tmp_baseccy = mBaseCurrency;
+	vector<AQLFunctionBase *> driftVec(1);
+	AQLString tmp_baseccy = mBaseCurrency;
 	tmp_baseccy.toLower();
 
 	if (MADealUtils::getSDECurrencys().size() != 1)
@@ -191,17 +191,17 @@ LACalibrateModelHW::setDrift(const LAString &currency, LARatesSDEBase &sde) cons
 		if (key_ccy != tmp_baseccy && !isZeroVol(key_ccy) && !isSZModel(currency))
 		{
 			// avoiding the error in getFXKey
-			LAString bccy = MADealUtils::getSDECurrencys()[0];
+			AQLString bccy = MADealUtils::getSDECurrencys()[0];
 			if (bccy.toLower() != tmp_baseccy && bccy != key_ccy)
 				tmp_baseccy = bccy;
 			
 			// get domestic(base) ir sde name
-			LAString sdeBase = mpStaticData->getStaticData(tmp_baseccy + STATIC_DATA_FX_KEY_SDE_NAME);
+			AQLString sdeBase = mpStaticData->getStaticData(tmp_baseccy + STATIC_DATA_FX_KEY_SDE_NAME);
 
 			// forein drift
 			// get fx sde name
-			LAString key_fx = LAMarketData::getFXKey(tmp_baseccy, key_ccy);
-			LAString fx_sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
+			AQLString key_fx = LAMarketData::getFXKey(tmp_baseccy, key_ccy);
+			AQLString fx_sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
 			driftVec[0] = createForeinDrift(key_fx, sdeBase, sdeName, fx_sdeName);
 		}
 		else
@@ -215,7 +215,7 @@ LACalibrateModelHW::setDrift(const LAString &currency, LARatesSDEBase &sde) cons
 		// check only one ccy
 		if (key_ccy != tmp_baseccy)
 		{
-			throw LACoreInvalidData("Sigle currency support only one currency", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Sigle currency support only one currency", __FILE__, __LINE__);
 		}
 
 		driftVec[0] = new LAPriceDriftHW(sdeName);
@@ -232,7 +232,7 @@ LACalibrateModelHW::setDrift(const LAString &currency, LARatesSDEBase &sde) cons
 
 */
 void
-LACalibrateModelHW::setNumeraire(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setNumeraire(const AQLString &currency, LARatesSDEBase &sde) const
 {
 	(void)currency;
 	sde.setNumeraire(new LARatesNumeraireBankAccountHW());
@@ -250,7 +250,7 @@ LACalibrateModelHW::setNumeraire(const LAString &currency, LARatesSDEBase &sde) 
 
 */
 void
-LACalibrateModelHW::setOutputTemplate(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setOutputTemplate(const AQLString &currency, LARatesSDEBase &sde) const
 {
 	(void)currency;
 	sde.setOutputTemplate(new LARatesPathElementHW1FCurveTMDPT(0.0));
@@ -264,9 +264,9 @@ LACalibrateModelHW::setOutputTemplate(const LAString &currency, LARatesSDEBase &
 
 */
 void
-LACalibrateModelHW::setIntegralFunction(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setIntegralFunction(const AQLString &currency, LARatesSDEBase &sde) const
 {
-	LAString sdeName = getSDEAttrName(currency);
+	AQLString sdeName = getSDEAttrName(currency);
 	sde.setIntegralFunction(new LARatesHWIntegral(LOG_INTEGRAL, sdeName));
 }
 
@@ -275,10 +275,10 @@ LACalibrateModelHW::setIntegralFunction(const LAString &currency, LARatesSDEBase
 
 	@param[in] currency
 */
-LAString 
-LACalibrateModelHW::getFunctionMasterResistName(const LAString &currency) const
+AQLString 
+LACalibrateModelHW::getFunctionMasterResistName(const AQLString &currency) const
 {
-	LAString tmpCurrency = currency;
+	AQLString tmpCurrency = currency;
 	return mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_HW_FUNCTION_NAME);
 }
 
@@ -290,7 +290,7 @@ LACalibrateModelHW::getFunctionMasterResistName(const LAString &currency) const
 	@param[out] sde
 */
 void
-LACalibrateModelHW::setInterpolationMethod(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setInterpolationMethod(const AQLString &currency, LARatesSDEBase &sde) const
 {
 	currency;
 	sde.setInterpolationMethod(new LARatesCurveHWInterpolation());
@@ -303,10 +303,10 @@ LACalibrateModelHW::setInterpolationMethod(const LAString &currency, LARatesSDEB
 
 	@param[in] currency 
 */
-LAString
-LACalibrateModelHW::getCorTye(const LAString &currency) const
+AQLString
+LACalibrateModelHW::getCorTye(const AQLString &currency) const
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	return mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_HW_CORRELATION_TYPE);
 }
 
@@ -320,7 +320,7 @@ LACalibrateModelHW::getCorTye(const LAString &currency) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelHW::setUpCorFactor(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const
+LACalibrateModelHW::setUpCorFactor(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)currency;
 	(void)cor;
@@ -337,7 +337,7 @@ LACalibrateModelHW::setUpCorFactor(const LAString &currency, LAMathCorrelation &
 	@param[out] dataInstance
 */
 void
-LACalibrateModelHW::setUpCorData(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const
+LACalibrateModelHW::setUpCorData(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)currency;
 	(void)cor;
@@ -355,7 +355,7 @@ LACalibrateModelHW::setUpCorData(const LAString &currency, LAMathCorrelation &co
 	@param[out] dataInstance
 */
 void
-LACalibrateModelHW::setUpCorFunc(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const
+LACalibrateModelHW::setUpCorFunc(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)currency;
 	(void)cor;
@@ -368,10 +368,10 @@ LACalibrateModelHW::setUpCorFunc(const LAString &currency, LAMathCorrelation &co
 
 	@param[in]  currency 
 */
-LAString
-LACalibrateModelHW::getVolType(const LAString &currency) const
+AQLString
+LACalibrateModelHW::getVolType(const AQLString &currency) const
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	return mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_HW_VOLATILITY_TYPE);
 }
 
@@ -384,19 +384,19 @@ LACalibrateModelHW::getVolType(const LAString &currency) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelHW::setUpVolFunc(const LAString &currency, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelHW::setUpVolFunc(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
-	LAStringVector fileVec(1);
+	AQLStringVector fileVec(1);
 	// filePath
 	fileVec[0] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_HW_PARAMETER_FILE));
 	LACalibrateVolatilityHW volCreator;
 	// create method vec
-	vector<LAFunctionBase *> funcVec;
+	vector<AQLFunctionBase *> funcVec;
 
 	MAScenarioParam param;
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	param.isCalib = isCalibTarget(currency);
 	param.calcType = KEY_PV;
 	param.isZeroVol = isZeroVol(currency);
@@ -404,7 +404,7 @@ LACalibrateModelHW::setUpVolFunc(const LAString &currency, LAMathVolatility &vol
 	{
 		// create calib info
 		LACalibrationParametersHW cInfo;
-		LAString cInfoName = cInfo.createCalibrationInfo(objPool, currency);
+		AQLString cInfoName = cInfo.createCalibrationInfo(objPool, currency);
 		// first element set calib info
 		param.refName.push_back(cInfoName);
 
@@ -432,14 +432,14 @@ LACalibrateModelHW::setUpVolFunc(const LAString &currency, LAMathVolatility &vol
 	@param[out] dataInstance
 */
 void
-LACalibrateModelHW::setUpVolData(const LAString &currency, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelHW::setUpVolData(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	(void)currency;
 	(void)vol;
 	(void)dataInstance;
 
-	LAString msg = LAString("Volatility matrix is not support.");
-	throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+	AQLString msg = AQLString("Volatility matrix is not support.");
+	throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 }
 
 
@@ -454,8 +454,8 @@ LACalibrateModelHW::setUpVolData(const LAString &currency, LAMathVolatility &vol
 
 	@return drift pointer
 */
-LAFunctionBase *
-LACalibrateModelHW::createForeinDrift(const LAString &fx, const LAString &sdeBase, const LAString &sdeName, const LAString &fx_sdeName) const
+AQLFunctionBase *
+LACalibrateModelHW::createForeinDrift(const AQLString &fx, const AQLString &sdeBase, const AQLString &sdeName, const AQLString &fx_sdeName) const
 {
 	return new LAPriceDriftHWQuantAdjustment(sdeBase, sdeName, fx_sdeName, new LAPriceDriftHW(sdeName));
 }
@@ -470,11 +470,11 @@ LACalibrateModelHW::createForeinDrift(const LAString &fx, const LAString &sdeBas
 	@return isZeroVol
 */
 bool
-LACalibrateModelHW::isZeroVol(const LAString &currency) const
+LACalibrateModelHW::isZeroVol(const AQLString &currency) const
 {
-	LAString key_ccy(currency);
-	LADataBool* pIsZeroVol = new LADataBool(false);
-	LAString isZeroVolStr = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_HW_ISZEROVOL);
+	AQLString key_ccy(currency);
+	AQLDataBool* pIsZeroVol = new AQLDataBool(false);
+	AQLString isZeroVolStr = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_HW_ISZEROVOL);
 	if (isZeroVolStr != AQ_NO_DATA)
 		pIsZeroVol->convertFromString(isZeroVolStr);
 	bool ret = pIsZeroVol->get();
@@ -491,14 +491,14 @@ LACalibrateModelHW::isZeroVol(const LAString &currency) const
 @return isSZModel 
 */
 bool 
-LACalibrateModelHW::isSZModel(const LAString &currency) const
+LACalibrateModelHW::isSZModel(const AQLString &currency) const
 {
-	LAString tmp_baseccy = mBaseCurrency;
+	AQLString tmp_baseccy = mBaseCurrency;
 	tmp_baseccy.toLower();
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
-	LAString key_fx = LAMarketData::getFXKey(tmp_baseccy, key_ccy);
-	const LAString model_fx = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_CROSS_MODEL).toUpper();
+	AQLString key_fx = LAMarketData::getFXKey(tmp_baseccy, key_ccy);
+	const AQLString model_fx = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_CROSS_MODEL).toUpper();
 	if (model_fx == MODEL_SZ)
 	{
 		return true;

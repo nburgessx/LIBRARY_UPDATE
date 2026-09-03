@@ -12,8 +12,8 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( const etrading::VariantMatrix& results,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
                                              double tolerance,
                                              int index )
     {
@@ -21,8 +21,8 @@ namespace google_test
         {
             // Record outputs and rebase test outputs
             etrading::CreateDataFile::setOutputFolder( testPath, false );
-            LAStringVector v = LAString( resultFileWithPath ).toToken( '/' );
-            LAString resultFileName = v.back();
+            AQLStringVector v = AQLString( resultFileWithPath ).toToken( '/' );
+            AQLString resultFileName = v.back();
 
             etrading::CreateDataFile file( etrading::CreateDataFile::makeFilename( resultFileName, index ) );
             file.write( "output", results );
@@ -52,8 +52,8 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( const DoubleMatrix& results,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
                                              double tolerance,
                                              int index )
     {
@@ -61,8 +61,8 @@ namespace google_test
         {
             // Record outputs and rebase test outputs
             etrading::CreateDataFile::setOutputFolder( testPath, false );
-            LAStringVector v = LAString( resultFileWithPath ).toToken( '/' );
-            LAString resultFileName = v.back();
+            AQLStringVector v = AQLString( resultFileWithPath ).toToken( '/' );
+            AQLString resultFileName = v.back();
 
             etrading::CreateDataFile file( etrading::CreateDataFile::makeFilename( resultFileName, index ) );
             file.write( "output", results );
@@ -92,8 +92,8 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( const DoubleArray& results,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
                                              double tolerance,
                                              int index )
     {
@@ -101,8 +101,8 @@ namespace google_test
         {
             // Record outputs and rebase test outputs
             etrading::CreateDataFile::setOutputFolder( testPath, false );
-            LAStringVector v = LAString( resultFileWithPath ).toToken( '/' );
-            LAString resultFileName = v.back();
+            AQLStringVector v = AQLString( resultFileWithPath ).toToken( '/' );
+            AQLString resultFileName = v.back();
 
             etrading::CreateDataFile file( etrading::CreateDataFile::makeFilename( resultFileName, index ) );
             file.write( "output", results );
@@ -129,9 +129,9 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( const DoubleArray& results,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
-                                             const LAString& fileSuffix,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
+                                             const AQLString& fileSuffix,
                                              double tolerance,
                                              int index )
     {
@@ -139,8 +139,8 @@ namespace google_test
         {
             // Record outputs and rebase test outputs
             etrading::CreateDataFile::setOutputFolder( testPath, false );
-            LAStringVector v = LAString( resultFileWithPath ).toToken( '/' );
-            LAString resultFileName = v.back();
+            AQLStringVector v = AQLString( resultFileWithPath ).toToken( '/' );
+            AQLString resultFileName = v.back();
 
             etrading::CreateDataFile file( etrading::CreateDataFile::makeFilename( resultFileName, fileSuffix, index ) );
             file.write( "output", results );
@@ -168,10 +168,10 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( const DoubleArray& results,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
-                                             const LAString& filePrefix,
-                                             const LAString& fileSuffix,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
+                                             const AQLString& filePrefix,
+                                             const AQLString& fileSuffix,
                                              double tolerance,
                                              int index )
     {
@@ -179,8 +179,8 @@ namespace google_test
         {
             // Record outputs and rebase test outputs
             etrading::CreateDataFile::setOutputFolder( testPath, false );
-            LAStringVector v = LAString( resultFileWithPath ).toToken( '/' );
-            LAString resultFileName = v.back();
+            AQLStringVector v = AQLString( resultFileWithPath ).toToken( '/' );
+            AQLString resultFileName = v.back();
 
             etrading::CreateDataFile file( etrading::CreateDataFile::makeFilename( resultFileName, filePrefix, fileSuffix, index ) );
             file.write( "output", results );
@@ -206,8 +206,8 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( double result,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
                                              double tolerance,
                                              int index )
     {
@@ -215,8 +215,8 @@ namespace google_test
         {
             // Record outputs and rebase test outputs
             etrading::CreateDataFile::setOutputFolder( testPath, false );
-            LAStringVector v = LAString( resultFileWithPath ).toToken( '/' );
-            LAString resultFileName = v.back();
+            AQLStringVector v = AQLString( resultFileWithPath ).toToken( '/' );
+            AQLString resultFileName = v.back();
 
             etrading::CreateDataFile file( etrading::CreateDataFile::makeFilename( resultFileName, index ) );
             file.write( "output", result );
@@ -239,9 +239,9 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( double result,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
-                                             const LAString& fileSuffix,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
+                                             const AQLString& fileSuffix,
                                              double tolerance,
                                              int index )
     {
@@ -249,8 +249,8 @@ namespace google_test
         {
             // Record outputs and rebase test outputs
             etrading::CreateDataFile::setOutputFolder( testPath, false );
-            LAStringVector v = LAString( resultFileWithPath ).toToken( '/' );
-            LAString resultFileName = v.back();
+            AQLStringVector v = AQLString( resultFileWithPath ).toToken( '/' );
+            AQLString resultFileName = v.back();
 
             etrading::CreateDataFile file( etrading::CreateDataFile::makeFilename( resultFileName, fileSuffix, index ) );
             file.write( "output", result );
@@ -274,10 +274,10 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( double result,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
-                                             const LAString& filePrefix,
-                                             const LAString& fileSuffix,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
+                                             const AQLString& filePrefix,
+                                             const AQLString& fileSuffix,
                                              double tolerance,
                                              int index )
     {
@@ -285,8 +285,8 @@ namespace google_test
         {
             // Record outputs and rebase test outputs
             etrading::CreateDataFile::setOutputFolder( testPath, false );
-            LAStringVector v = LAString( resultFileWithPath ).toToken( '/' );
-            LAString resultFileName = v.back();
+            AQLStringVector v = AQLString( resultFileWithPath ).toToken( '/' );
+            AQLString resultFileName = v.back();
 
             etrading::CreateDataFile file( etrading::CreateDataFile::makeFilename( resultFileName, filePrefix, fileSuffix, index ) );
             file.write( "output", result );
@@ -309,15 +309,15 @@ namespace google_test
 	*  @param [in]		output_32	        Full reesult file name for 32bit result
 	*  @param [in]		output_64	        Full reesult file name for 32bit result
 	*/
-	void verifyDeltaBucketAmounts(const LAStringVector& pillarNames, const LAStringVector& headers, const DoubleMatrix& deltas, double tolerance, const LAString& baseDir, const LAString& output_32, const LAString& output_64)
+	void verifyDeltaBucketAmounts(const AQLStringVector& pillarNames, const AQLStringVector& headers, const DoubleMatrix& deltas, double tolerance, const AQLString& baseDir, const AQLString& output_32, const AQLString& output_64)
 	{
 		// Verify delta bucket amounts
 		if (etrading::CreateDataFile::rebaseResultsEnabled())
 		{
 #ifdef GTEST32
-			LAString outputFileName = output_32;
+			AQLString outputFileName = output_32;
 #else
-			LAString outputFileName = output_64;
+			AQLString outputFileName = output_64;
 #endif
 
 			// Record outputs and rebase test outputs
@@ -336,11 +336,11 @@ namespace google_test
 		{
 			// Carry out actual test and peform result comparison
 #ifdef GTEST32
-			LAString resultDir = baseDir;
+			AQLString resultDir = baseDir;
 			resultDir += output_32;
 			const etrading::ReadDataFile::Load resultFile(resultDir);
 #else
-			LAString resultDir = baseDir;
+			AQLString resultDir = baseDir;
 			resultDir += output_64;
 			const etrading::ReadDataFile::Load resultFile(resultDir);
 #endif
@@ -350,7 +350,7 @@ namespace google_test
 				FAIL() << "Reference baseline does not contain delta column headers" << std::endl;
 			}
 
-			LAStringVector refHeaders = resultFile["headers"];
+			AQLStringVector refHeaders = resultFile["headers"];
 			if (headers.size() != refHeaders.size())
 			{
 				FAIL() << "Calculated delta has different number of column headers compared to reference baseline : " << headers.size() << " vs " << refHeaders.size() << std::endl;
@@ -362,7 +362,7 @@ namespace google_test
 
 			for (size_t i = 0; i < pillarNames.size(); ++i)
 			{
-				LAString key = pillarNames[i];
+				AQLString key = pillarNames[i];
 
 				if (!resultFile.hasItem(key))
 				{

@@ -2,7 +2,7 @@
 
 #include "InitializeAQGoogleTest.h"
 #include "CurveAccessors.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "ReadDataFile.h"
 
 namespace google_test
@@ -13,7 +13,7 @@ namespace google_test
         , public CurveAccessors
     {
     public:
-        CurveStd( const LAString& inputFile );
+        CurveStd( const AQLString& inputFile );
 
         // return input swap rates as an ReadTestData table
         virtual const etrading::ReadDataFile& swapRates() const
@@ -26,5 +26,5 @@ namespace google_test
 	*  @brief			Set up STD swap curve
 	*  @param [in]		inputFile	File representation of the curve
     */
-	void setUpSTDCurve(const LAString& stdInputFile);
+	void setUpSTDCurve(const AQLString& stdInputFile);
 }

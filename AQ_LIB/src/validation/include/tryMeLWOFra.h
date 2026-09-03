@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "Swap.h"
 
@@ -31,7 +31,7 @@ namespace validation
 	*  @param [in]		FraObjectName		Fra object name
 	*  @return			Fra display of the input parameters
 	*/
-	LAStringMatrix tryMeLWOFraDisplay(const std::string& FraObjectName);
+	AQLStringMatrix tryMeLWOFraDisplay(const std::string& FraObjectName);
 
    	/* @brief			validation interface for the meLWOFraDisplayCashflows method 
 	*  @param [in]		FraObjectName		Fra object name

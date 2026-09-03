@@ -110,12 +110,12 @@ namespace
 	
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 
-	/* @brief			A helper function which converts a LAStringMatrix into a VariantMatrix
-	*                   If the input LAStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns 
-	*  @param [in]		stringMatrix		The input LAStringMatrix
+	/* @brief			A helper function which converts a AQLStringMatrix into a VariantMatrix
+	*                   If the input AQLStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns 
+	*  @param [in]		stringMatrix		The input AQLStringMatrix
 	*  @returns			The corresponding VariantMatrix
 	*/
-	etrading::VariantMatrix convertStringMatrixToVariantMatrix( LAStringMatrix stringMatrix )
+	etrading::VariantMatrix convertStringMatrixToVariantMatrix( AQLStringMatrix stringMatrix )
 	{
 		etrading::VariantMatrix variantMatrix;
 
@@ -137,7 +137,7 @@ namespace
 		}
 		else
 		{
-			// The input LAStringMatrix is empty.
+			// The input AQLStringMatrix is empty.
 			// Create a default variantMatrix with 2 columns of dummy data.
 			// This simulates an empty block in Excel.
 			etrading::VariantVector dummyVector ( 1, "" );
@@ -148,11 +148,11 @@ namespace
 		return variantMatrix;
 	}
 	
-	/* @brief			Builds a "TableInfo" tuple from a LAStringMatrix of marketdata
+	/* @brief			Builds a "TableInfo" tuple from a AQLStringMatrix of marketdata
 	*                   This tuple consists of columnNames, columnTypes and the actual data values.
-	*  @param [in]		marketDataBlock		A LAStringMatrix containing key/value market data values
+	*  @param [in]		marketDataBlock		A AQLStringMatrix containing key/value market data values
 	*/
-	TableInfo getTableInfoFromStringMatrix( const LAStringMatrix& marketDataBlock )
+	TableInfo getTableInfoFromStringMatrix( const AQLStringMatrix& marketDataBlock )
 	{
 		etrading::VariantMatrix dataValues =  convertStringMatrixToVariantMatrix( marketDataBlock );
 		size_t numColumns = dataValues.size();
@@ -180,7 +180,7 @@ namespace
 		const ReadDataFile::Load createBondInputFile( inputFile.c_str() );
         std::string bondObjectName     = createBondInputFile["bondObjectName"];
         std::string bondGeneratorName  = createBondInputFile["bondGeneratorName"];
-        LAStringMatrix bondExpressionLVB = createBondInputFile["expressionLVB"];
+        AQLStringMatrix bondExpressionLVB = createBondInputFile["expressionLVB"];
         bool validateKeys              = createBondInputFile["validateKeys"];
         
 		std::string objectName = validation::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
@@ -195,8 +195,8 @@ namespace
 	{
 		etrading::ReadDataFile::Load bondCurveFileObj = etrading::ReadDataFile::Load( bondCurveFileName.c_str() );
 		const std::string bondCurveName		= bondCurveFileObj[ "objectName" ];
-		const LAStringMatrix modelProperties	= bondCurveFileObj[ "BONDCURVE_PROPERTIES" ];
-		const LAStringMatrix bondMarketData	= bondCurveFileObj[ "BONDCURVE_MARKETDATA" ];
+		const AQLStringMatrix modelProperties	= bondCurveFileObj[ "BONDCURVE_PROPERTIES" ];
+		const AQLStringMatrix bondMarketData	= bondCurveFileObj[ "BONDCURVE_MARKETDATA" ];
 
 		std::vector<std::string> propertyNames;
 		propertyNames.push_back( "BONDCURVE_PROPERTIES" );
@@ -218,7 +218,7 @@ namespace
 	{
 		etrading::ReadDataFile::Load bondCurveFileObj = etrading::ReadDataFile::Load( bondCurveFileName.c_str() );
 		const std::string bondspreadCurveName	= bondCurveFileObj[ "objectName" ];
-		const LAStringMatrix modelProperties		= bondCurveFileObj[ "BONDSPREADCURVE_PROPERTIES" ]; // Contains spread and benchmarkBondCurve 
+		const AQLStringMatrix modelProperties		= bondCurveFileObj[ "BONDSPREADCURVE_PROPERTIES" ]; // Contains spread and benchmarkBondCurve 
 
 		std::vector<std::string> propertyNames;
 		propertyNames.push_back( "BONDSPREADCURVE_PROPERTIES" );
@@ -242,15 +242,15 @@ namespace
 		if ( etrading::CreateDataFile::rebaseResultsEnabled() )
 		{
 			etrading::CreateDataFile::setOutputFolder( TEST_DIR, false );
-			LAStringVector v = LAString( expectedCalibrationResultsFileName.c_str() ).toToken( '/' );
-            LAString resultFileName = v.back();
+			AQLStringVector v = AQLString( expectedCalibrationResultsFileName.c_str() ).toToken( '/' );
+            AQLString resultFileName = v.back();
 			etrading::CreateDataFile file( etrading::CreateDataFile::makeFilename( resultFileName ) );
             file.write( "output", actualResultsMatrix );
 		}
 		else
 		{
 			etrading::ReadDataFile::Load expectedBondCurveCalibrationFileObj = etrading::ReadDataFile::Load( expectedCalibrationResultsFileName.c_str() );		
-			LAStringMatrix expectedResults = expectedBondCurveCalibrationFileObj[ "output" ];
+			AQLStringMatrix expectedResults = expectedBondCurveCalibrationFileObj[ "output" ];
 			ASSERT_EQ( nRows, expectedResults.size() ) << "#Error: Expected number of rows differ";
 			ASSERT_EQ( nCols, expectedResults[0].size() ) << "#Error: Expected number of columns differ";
 
@@ -272,7 +272,7 @@ namespace
 						calculatedValueAsDouble = boost::get<double>( anyValue );
 					}
 				
-					LAString expectedValue = expectedResults[row][col];
+					AQLString expectedValue = expectedResults[row][col];
 					double expectedValueAsDouble = expectedValue.getDoubleValue();
 
 					EXPECT_NEAR( calculatedValueAsDouble, expectedValueAsDouble, tolerance ) << "Difference in calibration parameters at " << row << ", " << col ;
@@ -349,9 +349,9 @@ namespace google_test
 
 #ifdef GTEST32
 		const double tolerance = 1.e-9;
-        LAString outputFileName = nelsonSiegelCalibrate_outputs_32.c_str();
+        AQLString outputFileName = nelsonSiegelCalibrate_outputs_32.c_str();
 #else
-        LAString outputFileName = nelsonSiegelCalibrate_outputs_64.c_str();
+        AQLString outputFileName = nelsonSiegelCalibrate_outputs_64.c_str();
 		const double tolerance = 1.e-5; // Reduce tolerance for 64bit. Build server gives slightly different result compared to local PC.
 #endif
         CheckTestResultsAndRebaseOnRequest( actualCalibration, TEST_DIR, outputFileName, tolerance );
@@ -405,10 +405,10 @@ namespace google_test
 
 		#ifdef GTEST32
 		const double tolerance = 1.e-9;
-        LAString outputFileName = svenssonCalibrate_outputs_32.c_str();
+        AQLString outputFileName = svenssonCalibrate_outputs_32.c_str();
 #else
 		const double tolerance = 1.e-4; // Reduce tolerance for 64bit. Build server gives slightly different result compared to local PC.
-        LAString outputFileName = svenssonCalibrate_outputs_64.c_str();
+        AQLString outputFileName = svenssonCalibrate_outputs_64.c_str();
 #endif
 
         CheckTestResultsAndRebaseOnRequest( actualCalibration, TEST_DIR, outputFileName, tolerance );
@@ -445,9 +445,9 @@ namespace google_test
 
 #ifdef GTEST32
 		const double tolerance = 1.e-9;
-        LAString outputFileName = polynomialCalibrate_outputs_32.c_str();
+        AQLString outputFileName = polynomialCalibrate_outputs_32.c_str();
 #else
-        LAString outputFileName = polynomialCalibrate_outputs_64.c_str();
+        AQLString outputFileName = polynomialCalibrate_outputs_64.c_str();
 		const double tolerance = 1.e-4; // Reduce tolerance for 64bit. Build server gives slightly different result compared to local PC.
 #endif
         CheckTestResultsAndRebaseOnRequest( actualCoefficients, TEST_DIR, outputFileName, tolerance );
@@ -473,7 +473,7 @@ namespace google_test
         // Compare Results
         const double tolerance = 0.000000001;
 
-        CheckTestResultsAndRebaseOnRequest( calculatedYields, TEST_DIR, LAString( nelsonSiegelBondYield_outputs.c_str() ), tolerance );
+        CheckTestResultsAndRebaseOnRequest( calculatedYields, TEST_DIR, AQLString( nelsonSiegelBondYield_outputs.c_str() ), tolerance );
 
     }
 
@@ -498,7 +498,7 @@ namespace google_test
         // Compare Results
         const double tolerance = 0.000000001;
 
-        CheckTestResultsAndRebaseOnRequest( calculatedYields, TEST_DIR, LAString( svenssonBondYield_outputs.c_str() ), tolerance );
+        CheckTestResultsAndRebaseOnRequest( calculatedYields, TEST_DIR, AQLString( svenssonBondYield_outputs.c_str() ), tolerance );
 
     }
 
@@ -518,7 +518,7 @@ namespace google_test
         // Compare Results
         const double tolerance = 0.000000001;
 
-        CheckTestResultsAndRebaseOnRequest( calculatedYields, TEST_DIR, LAString( polynomialBondYield_outputs.c_str() ), tolerance );
+        CheckTestResultsAndRebaseOnRequest( calculatedYields, TEST_DIR, AQLString( polynomialBondYield_outputs.c_str() ), tolerance );
     }
 
 	// Build a bond-curve from individual bond quotes and check the calibrated yields agree with a recorded snapshot.
@@ -556,7 +556,7 @@ namespace google_test
 			const ReadDataFile::Load priceFromYieldFile( inputFileName.c_str() );
 
 			const std::string bondObjectName          = priceFromYieldFile[ "bondObjectName" ];
-			const std::vector<LADate> settlementDates = priceFromYieldFile[ "settlementDates" ];
+			const std::vector<AQLDate> settlementDates = priceFromYieldFile[ "settlementDates" ];
 			const std::vector<double> yields          = priceFromYieldFile[ "yields" ];
 			const DoubleVector priceFromYields = validation::tryMeLWOBondPrice( bondObjectName, settlementDates, yields );
 			const double priceFromYield = priceFromYields[0];
@@ -568,7 +568,7 @@ namespace google_test
 			const ReadDataFile::Load priceFromBondCurveFile( fullFileNameWithPath.c_str() );
 
 			// Calculate bond price from bond curve
-			const LADate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
+			const AQLDate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
 			const std::string bondCurveName = priceFromBondCurveFile[ "bondCurveName" ];
 			const double priceFromBondCurve = validation::tryMeLWOBondPriceFromBondCurve( bondObjectName, settlementDate, bondCurveName );
 
@@ -598,7 +598,7 @@ namespace google_test
 			const ReadDataFile::Load priceFromYieldFile( inputFileName.c_str() );
 
 			const std::string bondObjectName          = priceFromYieldFile[ "bondObjectName" ];
-			const std::vector<LADate> settlementDates = priceFromYieldFile[ "settlementDates" ];
+			const std::vector<AQLDate> settlementDates = priceFromYieldFile[ "settlementDates" ];
 			const std::vector<double> yields          = priceFromYieldFile[ "yields" ];
 			const double bondYTM = yields[0];
 
@@ -609,7 +609,7 @@ namespace google_test
 			const ReadDataFile::Load priceFromBondCurveFile( fullFileNameWithPath.c_str() );
 
 			// Calculate bond price from bond curve
-			const LADate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
+			const AQLDate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
 			const std::string bondCurveName = priceFromBondCurveFile[ "bondCurveName" ];
 
 			// Calculate the YIELD from bond curve
@@ -644,7 +644,7 @@ namespace google_test
 			const ReadDataFile::Load priceFromYieldFile( inputFileName.c_str() );
 
 			const std::string bondObjectName          = priceFromYieldFile[ "bondObjectName" ];
-			const std::vector<LADate> settlementDates = priceFromYieldFile[ "settlementDates" ];
+			const std::vector<AQLDate> settlementDates = priceFromYieldFile[ "settlementDates" ];
 			const std::vector<double> yields          = priceFromYieldFile[ "yields" ];
 			const DoubleVector priceFromYields = validation::tryMeLWOBondPrice( bondObjectName, settlementDates, yields );
 			const double priceFromYield = priceFromYields[0];
@@ -656,7 +656,7 @@ namespace google_test
 			const ReadDataFile::Load priceFromBondCurveFile( fullFileNameWithPath.c_str() );
 
 			// Calculate bond price from bond SPREAD curve
-			const LADate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
+			const AQLDate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
 			const double priceFromBondCurve = validation::tryMeLWOBondPriceFromBondCurve( bondObjectName, settlementDate, bondSpreadCurveName );
 
 			// Compare the two prices for consistency:

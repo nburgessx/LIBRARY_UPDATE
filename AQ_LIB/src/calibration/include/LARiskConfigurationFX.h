@@ -40,102 +40,102 @@ public:
 protected:
 	//==============================================
 	// get target names 
-	virtual  LAString getTargetNames(const LAString &fx, LADataInstance &dataInstance)  const;
+	virtual  AQLString getTargetNames(const AQLString &fx, AQLDataInstance &dataInstance)  const;
 	//==============================================
 	// create scenario1 object 
-	virtual  std::vector<LAObject *> createScenario1Entity(const LAString &fx, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario1Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create scenario2 object
-	virtual  std::vector<LAObject *> createScenario2Entity(const LAString &fx, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario2Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// get extra target names1
-	virtual  LAStringVector getExtraTargetNames1(const LAString &fx, LADataInstance &dataInstance) const;
+	virtual  AQLStringVector getExtraTargetNames1(const AQLString &fx, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// get extra target names2
-	virtual  LAStringVector getExtraTargetNames2(const LAString &fx, LADataInstance &dataInstance) const { return getExtraTargetNames1(fx, dataInstance); };
+	virtual  AQLStringVector getExtraTargetNames2(const AQLString &fx, AQLDataInstance &dataInstance) const { return getExtraTargetNames1(fx, dataInstance); };
 	//==============================================
 	// create extraScenario1 object 
-	virtual  std::vector<std::vector<LAObject *> > createExtraScenario1Entity(const LAString &fx, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<std::vector<AQLObject *> > createExtraScenario1Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create extraScenario2 object 
-	virtual  std::vector<std::vector<LAObject *> > createExtraScenario2Entity(const LAString &fx, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<std::vector<AQLObject *> > createExtraScenario2Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create scenario fx object
-	virtual std::vector<LAObject *> createFXEntity(const LAString &fx, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+	virtual std::vector<AQLObject *> createFXEntity(const AQLString &fx, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 	//==============================================
 	// create fx volatility scenario object 
-	virtual  std::vector<LAObject *> createFXVolEntity(const LAString &fx, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+	virtual  std::vector<AQLObject *> createFXVolEntity(const AQLString &fx, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 	//==============================================
 	// isgridsensitivity
-	virtual  bool  isGridSensitivity(const LAString &fx) const;
+	virtual  bool  isGridSensitivity(const AQLString &fx) const;
 	//==============================================
 	// isparallelshift
-	virtual  bool isParallelShift(const LAString &fx) const;
+	virtual  bool isParallelShift(const AQLString &fx) const;
 	//==============================================
 	// getRiksCurrencys 
-	virtual LAStringVector getRiskCurrencys(LAObjectPool& objPool) const;
+	virtual AQLStringVector getRiskCurrencys(AQLObjectPool& objPool) const;
 
 	//==============================================
 	// LARiskConfiguration
 	//==============================================
 	// get operator1
-	virtual  LAString  getOperator1(void) const {return AQ_NO_DATA; };
+	virtual  AQLString  getOperator1(void) const {return AQ_NO_DATA; };
 	//==============================================
 	// get coefficient1
-	virtual  LAString  getCoefficient1(const LAString &fx) const {return AQ_NO_DATA; };
+	virtual  AQLString  getCoefficient1(const AQLString &fx) const {return AQ_NO_DATA; };
 	//==============================================
 	// get grid term
-	virtual std::vector<LAString> getGridTerm(const LAString &fx) const;
+	virtual std::vector<AQLString> getGridTerm(const AQLString &fx) const;
 	//==============================================
 	// get bucket grid term
-	virtual std::vector<LAString> getBucketGridTerm(const LAString &fx) const;
+	virtual std::vector<AQLString> getBucketGridTerm(const AQLString &fx) const;
 
 	//==============================================
 	// LARiskConfigurationYield
 	//==============================================
 	// create scenario yield object
-	virtual std::vector<LAObject *> createYieldEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const {return std::vector<LAObject *>(0); };
+	virtual std::vector<AQLObject *> createYieldEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const {return std::vector<AQLObject *>(0); };
 	//==============================================
 	// get grid calc buffer
 	virtual  int getGridCalcBuffer()  const {return 0; };
 	//==============================================
 	// get scenario1 parallel shift
-	virtual double getScenario1ParallelShift(const LAString &ccy) const {return 0.0; };
+	virtual double getScenario1ParallelShift(const AQLString &ccy) const {return 0.0; };
 	//==============================================
 	// get scenario2 parallel shift
-	virtual double getScenario2ParallelShift(const LAString &ccy) const {return 0.0; };
+	virtual double getScenario2ParallelShift(const AQLString &ccy) const {return 0.0; };
 	//==============================================
 	// get scenario1 grid shift
-	virtual DoubleArray getScenario1GridShift(const LAString &ccy) const {return LARiskConfiguration::getScenario1GridShift(ccy); };
+	virtual DoubleArray getScenario1GridShift(const AQLString &ccy) const {return LARiskConfiguration::getScenario1GridShift(ccy); };
 	//==============================================
 	// get scenario2 grid shift
-	virtual DoubleArray getScenario2GridShift(const LAString &ccy) const {return LARiskConfiguration::getScenario1GridShift(ccy); };
+	virtual DoubleArray getScenario2GridShift(const AQLString &ccy) const {return LARiskConfiguration::getScenario1GridShift(ccy); };
 	//==============================================
 	// create extraScenario object 
-	virtual  std::vector<std::vector<LAObject *> > createExtraScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+	virtual  std::vector<std::vector<AQLObject *> > createExtraScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 	//==============================================
 	// create extra yield object
-	virtual std::vector<LAObject *> createExtraYieldEntity(const LAString &fx, const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index, const bool isFirst = true) const;
+	virtual std::vector<AQLObject *> createExtraYieldEntity(const AQLString &fx, const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index, const bool isFirst = true) const;
 	//==============================================
 	// create extra ir vol object for risk scenario
-	virtual std::vector<LAObject *> createExtraIRVolEntity(const LAString &fx, const LAString& ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+	virtual std::vector<AQLObject *> createExtraIRVolEntity(const AQLString &fx, const AQLString& ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 	//==============================================
 	// create extra ir vol object for base scenario
-	virtual std::vector<LAObject *> createExtraIRVolEntityBase(const LAString &fx, const LAString& ccy, LADataInstance &dataInstance, int index) const;
+	virtual std::vector<AQLObject *> createExtraIRVolEntityBase(const AQLString &fx, const AQLString& ccy, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create extra collateral yield object
-	virtual std::vector<LAObject *> createCollateralYieldEntity(const LAString &fx, const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+	virtual std::vector<AQLObject *> createCollateralYieldEntity(const AQLString &fx, const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 	//==============================================
 	// create extra fx volatility object 
-	virtual  std::vector<LAObject *> createExtraFXVolEntity(const LAString &fx, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+	virtual  std::vector<AQLObject *> createExtraFXVolEntity(const AQLString &fx, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 
-	virtual std::vector<LAObject *> createBaseScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, int index) const;
+	virtual std::vector<AQLObject *> createBaseScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const;
 
-    virtual LAString getBaseOutPutName(const LAString &ccy , int index) const;
+    virtual AQLString getBaseOutPutName(const AQLString &ccy , int index) const;
         
-	virtual double getBaseSpotVal(const LAString &ccy, int index) const;
+	virtual double getBaseSpotVal(const AQLString &ccy, int index) const;
 
-	virtual bool omitNotionalExposure(const LAString &ccy) const;
+	virtual bool omitNotionalExposure(const AQLString &ccy) const;
 
 };
 #endif

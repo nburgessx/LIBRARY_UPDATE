@@ -81,13 +81,13 @@ namespace google_test
             for ( i = 0; ; ++i )
             {
                 // 1. Create the Input File Names and Append the TestCase Index + ".csv"
-                LAString xccyInputsFilename     = CreateDataFile::makeFilename( xccySwapInputs, i );
-                LAString priceInputsFilename    = CreateDataFile::makeFilename( priceInputs, i );
+                AQLString xccyInputsFilename     = CreateDataFile::makeFilename( xccySwapInputs, i );
+                AQLString priceInputsFilename    = CreateDataFile::makeFilename( priceInputs, i );
                 
 #if defined(GTEST32)
-                LAString priceOutputsFilename   = CreateDataFile::makeFilename( priceOutputs, i );
+                AQLString priceOutputsFilename   = CreateDataFile::makeFilename( priceOutputs, i );
 #else
-                LAString priceOutputsFilename   = CreateDataFile::makeFilename( priceOutputs64, i );
+                AQLString priceOutputsFilename   = CreateDataFile::makeFilename( priceOutputs64, i );
 #endif
 
                 // 2. Load the Input Files
@@ -97,8 +97,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -106,9 +106,9 @@ namespace google_test
                 
                 // 4. Get the Price Inputs & Price the Swap
                 std::string swapName            = priceInputFile["swapName"];
-                LAStringMatrix curveCollectionLVB = priceInputFile["curveCollections"];
-                LAString legName                = priceInputFile.getOptional("legName", LAString() );
-                LAStringMatrix fixingTableLVB     = priceInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = priceInputFile["curveCollections"];
+                AQLString legName                = priceInputFile.getOptional("legName", AQLString() );
+                AQLStringMatrix fixingTableLVB     = priceInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
                 double actualSwapPrice          = validation::tryMeLWOSwapPV( swapName, curveCollectionLVB, legName, fixingTableLVB );
                 
@@ -120,7 +120,7 @@ namespace google_test
         {
             EXPECT_GT( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -140,13 +140,13 @@ namespace google_test
             for ( i = 0; ; ++i )
             {
                 // 1. Create the Input File Names and Append the TestCase Index + ".csv"
-                LAString xccyInputsFilename     = CreateDataFile::makeFilename( xccySwapInputs, i );
-                LAString parSpreadInputsFilename    = CreateDataFile::makeFilename( parSpreadInputs, i );
+                AQLString xccyInputsFilename     = CreateDataFile::makeFilename( xccySwapInputs, i );
+                AQLString parSpreadInputsFilename    = CreateDataFile::makeFilename( parSpreadInputs, i );
                 
 #if defined(GTEST32)
-                LAString parSpreadOutputsFilename   = CreateDataFile::makeFilename( parSpreadOutputs, i );
+                AQLString parSpreadOutputsFilename   = CreateDataFile::makeFilename( parSpreadOutputs, i );
 #else
-                LAString parSpreadOutputsFilename   = CreateDataFile::makeFilename( parSpreadOutputs64, i );
+                AQLString parSpreadOutputsFilename   = CreateDataFile::makeFilename( parSpreadOutputs64, i );
 #endif
 
                 // 2. Load the Input Files
@@ -156,8 +156,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -165,8 +165,8 @@ namespace google_test
                 
                 // 4. Get the Par Spread Inputs & the Basis Spreads
                 std::string swapName            = priceInputFile["swapName"];
-                LAStringMatrix curveCollectionLVB = priceInputFile["curveCollections"];
-                LAStringMatrix fixingTableLVB     = priceInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = priceInputFile["curveCollections"];
+                AQLStringMatrix fixingTableLVB     = priceInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
                 double actualBasisSpread        = validation::tryMeLWOSwapParSpread( swapName, curveCollectionLVB, fixingTableLVB );
                 
@@ -178,7 +178,7 @@ namespace google_test
         {
             EXPECT_GT( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

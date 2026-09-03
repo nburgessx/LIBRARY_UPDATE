@@ -22,8 +22,8 @@ namespace validation
     *  @param [in]		factorNum		The number of PCA factors to show results for
     *  @return			A string that identifies the current PCA analysis
     */
-    const LAString tryMirSetupPCA( LADataInstance* dataInstance,
-                                   const LAString& id,
+    const AQLString tryMirSetupPCA( AQLDataInstance* dataInstance,
+                                   const AQLString& id,
                                    const DoubleMatrix& data,
                                    bool isScale,
                                    int factorNum )
@@ -76,7 +76,7 @@ namespace validation
         etrading::LAUpdateStaticDataManager::SetUpPCA( dataInstance, corr, factorNum, id );
 
         ++num_call_pca[id.getCString()];
-        LAString msg = id + ":" + LAString( static_cast<int > ( num_call_pca[id.getCString()] ) );
+        AQLString msg = id + ":" + AQLString( static_cast<int > ( num_call_pca[id.getCString()] ) );
 
         if ( CreateDataFile::recordEnabled() )
         {

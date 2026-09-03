@@ -17,7 +17,7 @@ namespace etrading
     public:
 		
         // Constructors
-		SwaptionPricer( const std::shared_ptr<SwaptionTrade>& swaption, const LAStringMatrix& valuationSettingsLVB );
+		SwaptionPricer( const std::shared_ptr<SwaptionTrade>& swaption, const AQLStringMatrix& valuationSettingsLVB );
         SwaptionPricer( const SwaptionPricer& rhs );
 		virtual ~SwaptionPricer() {}
 
@@ -52,7 +52,7 @@ namespace etrading
 		// Helper methods
 		BlackScholesParameters calcualateBlackScholesParameters() const;
         double calculateAnnuityWithNotional( const SwapPtr& underlyingSwap, const double parRate ) const;
-        double discountFactor( const LADate& valuationDate ) const;
+        double discountFactor( const AQLDate& valuationDate ) const;
         double calculateFeePV() const;
         double calculateFeeDelta() const;
         double calculateFeeGamma() const;
@@ -64,7 +64,7 @@ namespace etrading
 		std::shared_ptr<SwaptionTrade> swaptionTrade_;
         std::string curveCollection_;
         std::shared_ptr<Volatility> volProvider_;
-		LAStringMatrix valuationSettingsLVB_;
+		AQLStringMatrix valuationSettingsLVB_;
 
 	};
 

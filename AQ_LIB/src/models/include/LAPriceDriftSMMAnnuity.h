@@ -26,7 +26,7 @@ public:
 	// Default constructor
 	explicit LAPriceDriftSMMAnnuity(double s);
 	// constructor
-	LAPriceDriftSMMAnnuity(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double s);	
+	LAPriceDriftSMMAnnuity(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double s);	
 	//	Copy constructor
 	LAPriceDriftSMMAnnuity(const LAPriceDriftSMMAnnuity& v);
 	// Destructor
@@ -38,7 +38,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;

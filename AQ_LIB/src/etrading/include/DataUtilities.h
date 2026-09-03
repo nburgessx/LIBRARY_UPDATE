@@ -141,14 +141,14 @@ namespace etrading
 	*/
 	VariantMatrix getVariantMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool throwIfMissing = true );
 
-	/* @brief Returns a LAStringMatrix containing the configuration information for the specified propertyKey
+	/* @brief Returns a AQLStringMatrix containing the configuration information for the specified propertyKey
 	*  @param [in]	freeObject		The object containing blocks of data indexed by propertyKey
 	*  @param [in]  propertyKey		The property data block to be retrieved from the freeObject
 	*  @param [in]  trimBlankRows	Whether to trim blank rows at the end of the block. Default behaviour is to trim
 	*  @param [in]  throwIfMissing	Whether to throw an exception if the specified propertyKey is missing. Default behaviour is to throw.
 	*  @returns		A VariantMatrix containing the data specified by propertyKey
 	*/
-	LAStringMatrix getLAStringMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool trimBlankRows = true, const bool throwIfMissing = true);
+	AQLStringMatrix getLAStringMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool trimBlankRows = true, const bool throwIfMissing = true);
     
     /* @brief Returns a StandardStringMatrix containing the configuration information for the specified propertyKey
 	*  @param [in]	freeObject		The object containing blocks of data indexed by propertyKey
@@ -159,19 +159,19 @@ namespace etrading
     StandardStringMatrix getStandardStringMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool trimBlankRows = true );
 
 	// Function to trim a LA String Vector and remove blanks
-	LAStringVector trimLAStringVector(const LAStringVector & inputVector);
+	AQLStringVector trimLAStringVector(const AQLStringVector & inputVector);
 	
 	// Function to trim a Standard String Vector and remove blanks
 	StandardStringVector trimStandardStringVector(const StandardStringVector & inputVector);
 
     // Function to trim a LA String Matrix and remove blanks
-	LAStringMatrix trimLAStringMatrix(const LAStringMatrix & inputMatrix);
+	AQLStringMatrix trimLAStringMatrix(const AQLStringMatrix & inputMatrix);
 	
 	// Function to trim a Standard String Matrix and remove blanks
 	StandardStringMatrix trimStandardStringMatrix(const StandardStringMatrix & inputMatrix);
 
-	// Function to convert a LAStringMatrix to a VariantMatrix
-	etrading::VariantMatrix convertLAStringMatrixToVariantMatrix( LAStringMatrix stringMatrix );
+	// Function to convert a AQLStringMatrix to a VariantMatrix
+	etrading::VariantMatrix convertLAStringMatrixToVariantMatrix( AQLStringMatrix stringMatrix );
 
 	// Function to convert a Standard StringMatrix to a VariantMatrix
 	etrading::VariantMatrix convertStandardStringMatrixToVariantMatrix( StandardStringMatrix stringMatrix );

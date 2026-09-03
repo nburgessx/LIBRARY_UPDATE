@@ -6,18 +6,18 @@
 
 #include <math.h>
 #include "LAMarketDataLMM.h"
-#include "LADataInstance.h"
-#include "LAFunctionManager.h"
-#include "LACoreTemplateType.h"
-#include "LAAlgorithm.h"
-#include "LADataBasics.h"
-#include "LABasic.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLDataInstance.h"
+#include "AQLFunctionManager.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLAlgorithm.h"
+#include "AQLDataBasics.h"
+#include "AQLBasic.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataCalendar.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathPathEntity.h"
 #include "LAMathVolatility.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLPriceDataDayCount.h"
 #include "LADefinitions.h"
 #include "LADefinitionsLMM.h"
 #include "LACoreDataService.h"
@@ -64,24 +64,24 @@ LAMarketDataLMM::~LAMarketDataLMM(void)
 void
 LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor, 
 					    DoubleArray &deltatenor, BoolVector &extraflag, 
-						const LADate &asOfDate, const LAPriceDataDayCount &dayCount,
-						const LAString &freq, int max, LAStringVector &exTenor, const bool isDataOut) 
+						const AQLDate &asOfDate, const AQLPriceDataDayCount &dayCount,
+						const AQLString &freq, int max, AQLStringVector &exTenor, const bool isDataOut) 
 {
 	tenor.clear();
 	tenor_30_360.clear();
 	deltatenor.clear();
 	extraflag.clear();
 
-	LAString str_tenor = LACoreDataService::getContext(CONTEXT_KEY_LMM_TENOR);
-	LAString str_tenor_30_360 = LACoreDataService::getContext(CONTEXT_KEY_LMM_30_360_TENOR);
-	LAString str_deltatenor = LACoreDataService::getContext(CONTEXT_KEY_LMM_DELTATENOR);
+	AQLString str_tenor = LACoreDataService::getContext(CONTEXT_KEY_LMM_TENOR);
+	AQLString str_tenor_30_360 = LACoreDataService::getContext(CONTEXT_KEY_LMM_30_360_TENOR);
+	AQLString str_deltatenor = LACoreDataService::getContext(CONTEXT_KEY_LMM_DELTATENOR);
 	if (str_tenor != AQ_NO_DATA && str_tenor_30_360 != AQ_NO_DATA && str_deltatenor != AQ_NO_DATA)
 	{
-		LADataDoubles data_tenor;
+		AQLDataDoubles data_tenor;
 		data_tenor.convertFromString(str_tenor);
-		LADataDoubles data_tenor_30_360;
+		AQLDataDoubles data_tenor_30_360;
 		data_tenor_30_360.convertFromString(str_tenor_30_360);
-		LADataDoubles data_deltatenor;
+		AQLDataDoubles data_deltatenor;
 		data_deltatenor.convertFromString(str_deltatenor);
 
 		tenor = data_tenor.get();
@@ -92,24 +92,24 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 		return;
 	}
 
-	LAString tmp_freq = freq;
+	AQLString tmp_freq = freq;
 	tmp_freq.toUpper();
 	if (tmp_freq != FREQ_SEMI_ANNUAL && tmp_freq != FREQ_QUARTERLY)
 	{
-		LAString msg = "Frequency = " + tmp_freq + " is not supported !";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Frequency = " + tmp_freq + " is not supported !";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
-	LADate start = asOfDate;
-	LADate end = asOfDate;
+	AQLDate start = asOfDate;
+	AQLDate end = asOfDate;
 	end.addYears(max);
 
 	// sliding
-	LAPriceDataSlidingRule sliding;
+	AQLPriceDataSlidingRule sliding;
 	sliding.convertFromString(SLIDING_MOD_FOLLOWING);
 
 	// calendar
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(CITY_LnB);
 
 	DateVector dates;
@@ -123,7 +123,7 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 		for (unsigned int i = 0; i < exTSize; ++i)
 		{
 			// sliding
-			LAPriceDataSlidingRule sld_nochange;
+			AQLPriceDataSlidingRule sld_nochange;
 			sld_nochange.convertFromString(SLIDING_NO_CHANGE);
 			exDates[i] = LAMathDateCalculations::getDate(asOfDate, exTenor[i], sld_nochange, NULL, true);
 		}
@@ -144,8 +144,8 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 	{
 		if (exDates[i] > dates[0])
 		{
-			LAString msg = "Extra dates must be below normal first date, exDate = " + exDates[i].stringWithFormat();
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "Extra dates must be below normal first date, exDate = " + exDates[i].stringWithFormat();
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 	unsigned int counter = 0;
@@ -163,8 +163,8 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 		extraflag.push_back(false);
 	}
 
-	LAPriceDataDayCount dayCount_ACT_360(ACT_360);
-	LAPriceDataDayCount dayCount_30_360(N30_360);
+	AQLPriceDataDayCount dayCount_ACT_360(ACT_360);
+	AQLPriceDataDayCount dayCount_30_360(N30_360);
 
 	unsigned int size = dates_.size();
 	tenor.resize(size + 1, 0.0);
@@ -184,11 +184,11 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 
 	if (isDataOut)
     {
- 		const LAString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM) + "_" + freq;
-		const LAString dirName = LACoreDataService::getOutputDirectory(); 
-		const LAString tenorFileName = dirName + "tenor" + fileSuffix + ".csv";
-		const LAString tenor30_360FileName = dirName + "tenor30_360" + fileSuffix + ".csv";
-		const LAString deltaFileName = dirName + "deltatenor" + fileSuffix + ".csv";
+ 		const AQLString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM) + "_" + freq;
+		const AQLString dirName = LACoreDataService::getOutputDirectory(); 
+		const AQLString tenorFileName = dirName + "tenor" + fileSuffix + ".csv";
+		const AQLString tenor30_360FileName = dirName + "tenor30_360" + fileSuffix + ".csv";
+		const AQLString deltaFileName = dirName + "deltatenor" + fileSuffix + ".csv";
 		ifstream fin;
 		ofstream fout;
 		// tenor file
@@ -199,7 +199,7 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 			const int size = tenor.size();
 			for (int i = 0; i < size; ++i)
 			{
-				LAString outStr = LAString(tenor[i]);
+				AQLString outStr = AQLString(tenor[i]);
 				fout << outStr.getCString() << "," << std::endl;
 			}
 			fout.close();
@@ -213,7 +213,7 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 			while (getline(fin, line))
 			{
 				const char *c_line = line.c_str();
-				tenor.push_back(LAString(c_line).toToken(MARKET_DATA_DELIMITER)[0].trimLeft().trimRight().getDoubleValue());
+				tenor.push_back(AQLString(c_line).toToken(MARKET_DATA_DELIMITER)[0].trimLeft().trimRight().getDoubleValue());
 			}
 			fin.close();
 			fin.clear();
@@ -226,7 +226,7 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 			const int size = tenor_30_360.size();
 			for (int i = 0; i < size; ++i)
 			{
-				LAString outStr = LAString(tenor_30_360[i]);
+				AQLString outStr = AQLString(tenor_30_360[i]);
 				fout << outStr.getCString() << "," << std::endl;
 			}
 			fout.close();
@@ -240,7 +240,7 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 			while (getline(fin, line))
 			{
 				const char *c_line = line.c_str();
-				tenor_30_360.push_back(LAString(c_line).toToken(MARKET_DATA_DELIMITER)[0].trimLeft().trimRight().getDoubleValue());
+				tenor_30_360.push_back(AQLString(c_line).toToken(MARKET_DATA_DELIMITER)[0].trimLeft().trimRight().getDoubleValue());
 			}
 			fin.close();
 			fin.clear();
@@ -254,7 +254,7 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 			const int size = deltatenor.size();
 			for (int i = 0; i < size; ++i)
 			{
-				LAString outStr = LAString(deltatenor[i]);
+				AQLString outStr = AQLString(deltatenor[i]);
 				fout << outStr.getCString() << "," << std::endl;
 			}
 			fout.close();
@@ -268,7 +268,7 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 			while (getline(fin, line))
 			{
 				const char *c_line = line.c_str();
-				deltatenor.push_back(LAString(c_line).toToken(MARKET_DATA_DELIMITER)[0].trimLeft().trimRight().getDoubleValue());
+				deltatenor.push_back(AQLString(c_line).toToken(MARKET_DATA_DELIMITER)[0].trimLeft().trimRight().getDoubleValue());
 			}
 			fin.close();
 			fin.clear();
@@ -285,14 +285,14 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 	@return skew
 */
 double
-LAMarketDataLMM::getSkew(const LAString &currency)
+LAMarketDataLMM::getSkew(const AQLString &currency)
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
 
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	// read skew
-	LAString skew_fPath = staticData.getStaticData(key_ccy + STATIC_DATA_KEY_LMM_SKEW_CROSS_FILE);
+	AQLString skew_fPath = staticData.getStaticData(key_ccy + STATIC_DATA_KEY_LMM_SKEW_CROSS_FILE);
 
 	if (MADealUtils::getSDECurrencys().size() == 1)
 	{
@@ -300,15 +300,15 @@ LAMarketDataLMM::getSkew(const LAString &currency)
 	}
 
 	MAFileAccessor file(LAMarketData::getNumFileName(skew_fPath));
-	LAStringMatrix skewData;
+	AQLStringMatrix skewData;
 	file.readAllData(MARKET_DATA_DELIMITER, skewData);
 	file.close();
 
 	// data format check
 	if (skewData.size() != 1 || skewData[0].size() != 1)
 	{
-		LAString msg = "LMM skew file, format is wrong. file = " + LAMarketData::getNumFileName(skew_fPath);
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "LMM skew file, format is wrong. file = " + LAMarketData::getNumFileName(skew_fPath);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	return  skewData[0][0].getDoubleValue();
 }
@@ -322,14 +322,14 @@ LAMarketDataLMM::getSkew(const LAString &currency)
 	@return skew
 */
 double
-LAMarketDataLMM::getConstShift(const LAString &currency)
+LAMarketDataLMM::getConstShift(const AQLString &currency)
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
 
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	// read constShift
-	LAString constShift_fPath = staticData.getStaticData(key_ccy + STATIC_DATA_KEY_LMM_CONSTSHIFT_CROSS_FILE);
+	AQLString constShift_fPath = staticData.getStaticData(key_ccy + STATIC_DATA_KEY_LMM_CONSTSHIFT_CROSS_FILE);
 
 	if (MADealUtils::getSDECurrencys().size() == 1)
 	{
@@ -337,15 +337,15 @@ LAMarketDataLMM::getConstShift(const LAString &currency)
 	}
 
 	MAFileAccessor file(LAMarketData::getNumFileName(constShift_fPath));
-	LAStringMatrix constShiftData;
+	AQLStringMatrix constShiftData;
 	file.readAllData(MARKET_DATA_DELIMITER, constShiftData);
 	file.close();
 
 	// data format check
 	if (constShiftData.size() != 1 || constShiftData[0].size() != 1)
 	{
-		LAString msg = "LMM con file, format is wrong. file = " + LAMarketData::getNumFileName(constShift_fPath);
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "LMM con file, format is wrong. file = " + LAMarketData::getNumFileName(constShift_fPath);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	return  constShiftData[0][0].getDoubleValue();
 }
@@ -359,25 +359,25 @@ LAMarketDataLMM::getConstShift(const LAString &currency)
 	@return maxterm
 */
 double
-LAMarketDataLMM::getMaxTerm(const LAString &currency)
+LAMarketDataLMM::getMaxTerm(const AQLString &currency)
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
 
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	// read maxTerm
-	LAString maxterm_fPath = staticData.getStaticData(key_ccy + STATIC_DATA_KEY_LMM_MAXTERM_FILE);
+	AQLString maxterm_fPath = staticData.getStaticData(key_ccy + STATIC_DATA_KEY_LMM_MAXTERM_FILE);
 
 	MAFileAccessor file(LAMarketData::getNumFileName(maxterm_fPath));
-	LAStringMatrix maxtermData;
+	AQLStringMatrix maxtermData;
 	file.readAllData(MARKET_DATA_DELIMITER, maxtermData);
 	file.close();
 
 	// data format check
 	if (maxtermData.size() != 1 || maxtermData[0].size() != 1)
 	{
-		LAString msg = "LMM max term file, format is wrong. file = " + LAMarketData::getNumFileName(maxterm_fPath);
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "LMM max term file, format is wrong. file = " + LAMarketData::getNumFileName(maxterm_fPath);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	return  maxtermData[0][0].getDoubleValue();
 }
@@ -388,34 +388,34 @@ LAMarketDataLMM::getMaxTerm(const LAString &currency)
 
 	@return ExTenor
 */
-LAStringVector
+AQLStringVector
 LAMarketDataLMM::getGridExTenor()
 {
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
-	LAString isExTenorStr = staticData.getStaticData(KEY_LMM_GRID_ISEXTRATENORUSE);
+	AQLString isExTenorStr = staticData.getStaticData(KEY_LMM_GRID_ISEXTRATENORUSE);
 	if (isExTenorStr == AQ_NO_DATA)
 	{
 		isExTenorStr = "FALSE";
 	}
-	LADataBool tmp;
+	AQLDataBool tmp;
 	tmp.convertFromString(isExTenorStr);
 
-	LAStringVector ret(0);
+	AQLStringVector ret(0);
 	if(tmp.get())
 	{
-		LAString exTenorStr = staticData.getStaticData(KEY_LMM_GRID_EXTRATENOR);
+		AQLString exTenorStr = staticData.getStaticData(KEY_LMM_GRID_EXTRATENOR);
 		if (exTenorStr == AQ_NO_DATA)
 		{
-			LAString msg = LAString(KEY_LMM_GRID_EXTRATENOR) + " must be set ";
-			msg += LAString("when ") + KEY_LMM_GRID_ISEXTRATENORUSE + " = TRUE in property file!";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = AQLString(KEY_LMM_GRID_EXTRATENOR) + " must be set ";
+			msg += AQLString("when ") + KEY_LMM_GRID_ISEXTRATENORUSE + " = TRUE in property file!";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		exTenorStr.toUpper();
 		ret = exTenorStr.toToken(MULTI_STATIC_DATA_DELIMITER);
 	}
 
 	//check if all of extra tenor for canonical grid are contained in return variable
-	LAStringVector exTenorForCanonicalGrid = LAMarketDataLMM::getCanonicalGridExTenor();
+	AQLStringVector exTenorForCanonicalGrid = LAMarketDataLMM::getCanonicalGridExTenor();
 	for (unsigned int i = 0; i < exTenorForCanonicalGrid.size(); ++i)
 	{
 		if(std::find(ret.begin(), ret.end(), exTenorForCanonicalGrid[i]) == ret.end())
@@ -425,8 +425,8 @@ LAMarketDataLMM::getGridExTenor()
 			{
 				continue;
 			}
-			LAString msg = LAString(KEY_LMM_GRID_EXTRATENOR) + " must contain " + exTenorForCanonicalGrid[i] + "!";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = AQLString(KEY_LMM_GRID_EXTRATENOR) + " must contain " + exTenorForCanonicalGrid[i] + "!";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 
@@ -439,27 +439,27 @@ LAMarketDataLMM::getGridExTenor()
 
 	@return ExTenor
 */
-LAStringVector
+AQLStringVector
 LAMarketDataLMM::getCanonicalGridExTenor()
 {
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
-	LAString isExTenorStr = staticData.getStaticData(KEY_LMM_CANONICALGRID_ISEXTRATENORUSE);
+	AQLString isExTenorStr = staticData.getStaticData(KEY_LMM_CANONICALGRID_ISEXTRATENORUSE);
 	if (isExTenorStr == AQ_NO_DATA)
 	{
 		isExTenorStr = "FALSE";
 	}
-	LADataBool tmp;
+	AQLDataBool tmp;
 	tmp.convertFromString(isExTenorStr);
 	
-	LAStringVector ret(0);
+	AQLStringVector ret(0);
 	if(tmp.get())
 	{
-		LAString exTenorStr = staticData.getStaticData(KEY_LMM_CANONICALGRID_EXTRATENOR);
+		AQLString exTenorStr = staticData.getStaticData(KEY_LMM_CANONICALGRID_EXTRATENOR);
 		if (exTenorStr == AQ_NO_DATA)
 		{
-			LAString msg = LAString(KEY_LMM_CANONICALGRID_EXTRATENOR) + " must be set ";
-			msg += LAString("when ") + KEY_LMM_CANONICALGRID_ISEXTRATENORUSE + " = TRUE in property file!";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = AQLString(KEY_LMM_CANONICALGRID_EXTRATENOR) + " must be set ";
+			msg += AQLString("when ") + KEY_LMM_CANONICALGRID_ISEXTRATENORUSE + " = TRUE in property file!";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		exTenorStr.toUpper();
 		ret = exTenorStr.toToken(MULTI_STATIC_DATA_DELIMITER);

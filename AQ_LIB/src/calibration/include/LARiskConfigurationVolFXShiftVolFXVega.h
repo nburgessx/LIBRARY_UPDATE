@@ -21,8 +21,8 @@
 
 
 
-class LAString;
-class LADataInstance;
+class AQLString;
+class AQLDataInstance;
 class LARiskConfigurationVolCreatorLMM;
 //===================== Class Declare LARiskConfigurationVolFXShiftVolFXVega==================================
 /*! 
@@ -45,70 +45,70 @@ protected:
 friend class LARiskConfigurationVolCreatorLMM;
 	//==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &fx) const;
+	virtual  AQLString  getOutPutName1(const AQLString &fx) const;
 	//==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &ccy, int index) const;
+	virtual  AQLString  getOutPutName1(const AQLString &ccy, int index) const;
 	//==============================================
 	// get shift type
-	virtual  LAString  getShiftType(const LAString &fx) const;
+	virtual  AQLString  getShiftType(const AQLString &fx) const;
 	//==============================================
 	// get bump direction
-	virtual  LAString  getBumpDirection(const LAString &fx) const;
+	virtual  AQLString  getBumpDirection(const AQLString &fx) const;
 	//==============================================
 	// get risk name
-	virtual  LAString getRiskName(void) const;
+	virtual  AQLString getRiskName(void) const;
 	//==============================================
 	// check target currencies
-	virtual  LAString getTargetCurrencies() const;
+	virtual  AQLString getTargetCurrencies() const;
 	//==============================================
 	// isgridsensitivity
-	virtual  bool  isGridSensitivity(const LAString &fx) const;
+	virtual  bool  isGridSensitivity(const AQLString &fx) const;
 	//==============================================
 	// isparallelshift
-	virtual  bool isParallelShift(const LAString &fx) const;
+	virtual  bool isParallelShift(const AQLString &fx) const;
 	//==============================================
 	// get deltatype
-	virtual LAString getDeltaType(const LAString &ccy) const;
+	virtual AQLString getDeltaType(const AQLString &ccy) const;
 	//==============================================
 	// get grid term
-	virtual std::vector<LAString> getGridTerm(const LAString &fx) const;
+	virtual std::vector<AQLString> getGridTerm(const AQLString &fx) const;
 	//==============================================
 	// get bucket grid term
-	virtual std::vector<LAString> getBucketGridTerm(const LAString &fx) const;
+	virtual std::vector<AQLString> getBucketGridTerm(const AQLString &fx) const;
 	//==============================================
 	// get property bucket grid term
-	virtual LAString getPropertyBucketGridTerm(const LAString &fx) const;
+	virtual AQLString getPropertyBucketGridTerm(const AQLString &fx) const;
 	//==============================================
 	// get divunit
-	virtual double getDivUnit(const LAString &fx) const;
+	virtual double getDivUnit(const AQLString &fx) const;
 	//==============================================
 	// get is wave
-	virtual  bool  isWave(const LAString &fx) const;
+	virtual  bool  isWave(const AQLString &fx) const;
 	//==============================================
 	// get scenario1 shift
-	virtual double getScenario1ShiftValue(const LAString &fx) const;
+	virtual double getScenario1ShiftValue(const AQLString &fx) const;
 	//==============================================
 	// get get shift vals
-	virtual  DoubleArray  getBaseShiftVals(const LAString &ccy) const;
+	virtual  DoubleArray  getBaseShiftVals(const AQLString &ccy) const;
 	//==============================================
 	// get base shift val
-	virtual  double getBaseVolVal(const LAString &ccy, int index) const;
+	virtual  double getBaseVolVal(const AQLString &ccy, int index) const;
 	//==============================================
 	// get baseoperator
-	virtual  LAString  getBaseOperator(void) const;	
+	virtual  AQLString  getBaseOperator(void) const;	
 	//==============================================
 	// get basecoefficient
-	virtual  LAString  getBaseCoefficient(const LAString &ccy) const;
+	virtual  AQLString  getBaseCoefficient(const AQLString &ccy) const;
 	//==============================================
 	// get baseoutputname
-	virtual  LAString  getBaseOutPutName(const LAString &ccy, int index) const;
+	virtual  AQLString  getBaseOutPutName(const AQLString &ccy, int index) const;
 	//==============================================
 	// create basescenario object
-	virtual std::vector<LAObject *> createBaseScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, int index) const;
+	virtual std::vector<AQLObject *> createBaseScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// isRiskCurrencyMode
-	virtual bool isRiskCurrencyMode(const LAString& fx) const;
+	virtual bool isRiskCurrencyMode(const AQLString& fx) const;
 	
 
 

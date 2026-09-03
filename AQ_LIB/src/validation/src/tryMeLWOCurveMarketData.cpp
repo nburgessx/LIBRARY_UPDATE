@@ -53,7 +53,7 @@ namespace validation
 			for( unsigned int i = 0; i < marketDataKeys.size(); i++ )
 			{
 			    // TODO: JSONInfoBlocks should not be here move below the valiation_api
-                const LAString marketDataType( marketDataKeys[i].c_str() );
+                const AQLString marketDataType( marketDataKeys[i].c_str() );
 				const etrading::VariantMatrix& marketData = std::get<2>( cleansedInfoBlocks[ i ] );
 				file.write( marketDataType, transpose(marketData) );
 			}

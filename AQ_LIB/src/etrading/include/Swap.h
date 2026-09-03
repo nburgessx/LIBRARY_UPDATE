@@ -37,12 +37,12 @@ namespace etrading
 
 		virtual double getFxAsOfDateRate(const LabelValueBlock& valuationSettingsLVB);
 
-        virtual double pv(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName = "");
+        virtual double pv(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const AQLString& legName = "");
         virtual double pv01(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames);         // Swap pv01 = dPV/dParRate
-        virtual double annuity(const LabelValueBlock& valuationSettingsLVB, const LAString& legName, const bool & includeSign = false);
+        virtual double annuity(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName, const bool & includeSign = false);
         virtual double parRate(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames);
-        virtual double spread(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread, const LAString& spreadLegName="");
-		double accruedInterest(const LabelValueBlock& valuationSettingsLVB, const LAString& legName, const LabelValueBlock& fixingTableNames);
+        virtual double spread(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread, const AQLString& spreadLegName="");
+		double accruedInterest(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName, const LabelValueBlock& fixingTableNames);
         
         // Method to check if the swap is a single currency swap
         bool isSingleCurrency();
@@ -57,7 +57,7 @@ namespace etrading
 		*
 		*  Returns a vector of Header-Body matrix pairs
 		*/ 
-        virtual std::vector<AnyTypeMatrix> view(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName="", bool showColumnHeaders=true, const std::unordered_set<CashflowHeaderEnum, EnumClassHash>& columnList=std::unordered_set<CashflowHeaderEnum, EnumClassHash>());
+        virtual std::vector<AnyTypeMatrix> view(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const AQLString& legName="", bool showColumnHeaders=true, const std::unordered_set<CashflowHeaderEnum, EnumClassHash>& columnList=std::unordered_set<CashflowHeaderEnum, EnumClassHash>());
 
         // return a pair of Header matrix and Body matrix
         std::vector<std::pair<AnyTypeMatrix, AnyTypeMatrix>> viewInputParameters() const;
@@ -115,7 +115,7 @@ namespace etrading
 
 		SwapTypeEnum swapType_;
 
-        virtual void validateCollectionSize(const LabelValueBlock& valuationSettingsLVB, const LAString& legName="") const;
+        virtual void validateCollectionSize(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName="") const;
 
         void validateLegs(const LegPtr& leg1, const LegPtr& leg2) const;
 

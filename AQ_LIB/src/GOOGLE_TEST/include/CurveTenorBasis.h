@@ -2,7 +2,7 @@
 
 #include "InitializeAQGoogleTest.h"
 #include "CurveAccessors.h"
-#include "LAString.h"
+#include "AQLString.h"
 
 namespace google_test
 {
@@ -12,14 +12,14 @@ namespace google_test
         , public CurveAccessors
     {
     public:
-        CurveTenorBasis( const LAString& inputFile );
+        CurveTenorBasis( const AQLString& inputFile );
     };
 
 	/* 
 	*  @brief			Set up tenor basis curve
 	*  @param [in]		inputFile	File representation of the curve
     */
-	void setUpTenorBasisCurve(const LAString& inputFile);
+	void setUpTenorBasisCurve(const AQLString& inputFile);
 }
 
 

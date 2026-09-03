@@ -3,7 +3,7 @@
 #include <vector>
 #include "LAMathCorrelationLMM.h"
 #include "LAMathCorrelationFuncLMM.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 using namespace std;
 

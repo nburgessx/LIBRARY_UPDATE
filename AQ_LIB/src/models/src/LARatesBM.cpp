@@ -14,7 +14,7 @@
 
 
 #include "LARatesBM.h"
-#include "LARandBase.h"
+#include "AQLRandBase.h"
 
 using namespace std;
 
@@ -28,16 +28,16 @@ using namespace std;
 	@param[in] rand rand generator
 	@param[in] factor_num number of factor
 */
-LARatesBM::LARatesBM(const DoubleArray& timegrid, const LARandBase& rand, unsigned int factor_num)
+LARatesBM::LARatesBM(const DoubleArray& timegrid, const AQLRandBase& rand, unsigned int factor_num)
 : mType(GENERATOR), mID(0), mRefCount(0), mpRand(0), mTimeGrid(timegrid),
    mIsAntithetic(false), mIsOdd(true), mDeleteFlag(false) 
 {
 	if (rand.getDim()[0] != factor_num * (timegrid.size() - 1))
 	{
 		//error
-		throw LACoreInvalidData("rand generator dimension is not valid", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("rand generator dimension is not valid", __FILE__, __LINE__);
 	}
-	mpRand = dynamic_cast<LARandBase*>(rand.clone());
+	mpRand = dynamic_cast<AQLRandBase*>(rand.clone());
 	
 	mBuff.resize(rand.getDim()[0]);
 	mData.resize(timegrid.size() - 1);
@@ -46,7 +46,7 @@ LARatesBM::LARatesBM(const DoubleArray& timegrid, const LARandBase& rand, unsign
 	
 	mDataInstanceDt.resize(timegrid.size() - 1);
 	for (unsigned int i = 0; i < mDataInstanceDt.size(); i++)
-		mDataInstanceDt[i] = LAMath::sqrt(timegrid[i + 1] - timegrid[i]);
+		mDataInstanceDt[i] = AQLMath::sqrt(timegrid[i + 1] - timegrid[i]);
 	
 	mLoading.resize(factor_num);
 	for (unsigned int i = 0; i < mLoading.size(); i++)
@@ -76,17 +76,17 @@ LARatesBM::LARatesBM(const DoubleArray& timegrid, const LARandBase& rand, unsign
 	@param[in] rand rand generator
 	@param[in] loading factor loading(i * j * time)
 */
-LARatesBM::LARatesBM(const DoubleArray& timegrid, const LARandBase& rand, const std::vector<DoubleMatrix>& loading)
+LARatesBM::LARatesBM(const DoubleArray& timegrid, const AQLRandBase& rand, const std::vector<DoubleMatrix>& loading)
 : mType(GENERATOR), mID(0), mRefCount(0), mpRand(0), mLoading(loading), mTimeGrid(timegrid),
    mIsAntithetic(false), mIsOdd(true), mDeleteFlag(false)
 {
 	if (rand.getDim()[0] != loading.at(0).size() * (timegrid.size() - 1))
 	{
 		//error
-		throw LACoreInvalidData("rand generator dimension is not valid", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("rand generator dimension is not valid", __FILE__, __LINE__);
 	}
 
-	mpRand = dynamic_cast<LARandBase*>(rand.clone());	
+	mpRand = dynamic_cast<AQLRandBase*>(rand.clone());	
 	
 	mBuff.resize(rand.getDim()[0]);
 	mData.resize(timegrid.size() - 1);
@@ -104,7 +104,7 @@ LARatesBM::LARatesBM(const DoubleArray& timegrid, const LARandBase& rand, const 
 	
 	mDataInstanceDt.resize(timegrid.size() - 1);
 	for (unsigned int i = 0; i < mDataInstanceDt.size(); i++)
-		mDataInstanceDt[i] = LAMath::sqrt(timegrid[i + 1] - timegrid[i]);
+		mDataInstanceDt[i] = AQLMath::sqrt(timegrid[i + 1] - timegrid[i]);
 
 }
 
@@ -129,14 +129,14 @@ LARatesBM::LARatesBM(vector<pair<LARatesBM*, unsigned int> >& bm,
 			if (size != mBM[i].first->getTimeGrid().size())
 			{
 				//error
-				throw LACoreInvalidData("time grid is not consistent", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("time grid is not consistent", __FILE__, __LINE__);
 			}
 			for (unsigned int j = 0; j < size ; j++)
 			{
 				if (mBM[0].first->getTimeGrid()[j] != mBM[i].first->getTimeGrid()[j])
 				{
 					//error
-					throw LACoreInvalidData("time grid is not consistent", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("time grid is not consistent", __FILE__, __LINE__);
 				}
 
 			}
@@ -167,7 +167,7 @@ LARatesBM::LARatesBM(const LARatesBM& v)
 , mTimeGrid(v.mTimeGrid), mBuff(v.mBuff), mAntiData(v.mAntiData), mDeleteFlag(v.mDeleteFlag)  
 
 {
-	if (mType == GENERATOR) mpRand = dynamic_cast<LARandBase*>(v.mpRand->clone());
+	if (mType == GENERATOR) mpRand = dynamic_cast<AQLRandBase*>(v.mpRand->clone());
 	else if (mDeleteFlag)
 	{
 		for (unsigned int i = 0; i < mBM.size(); i++) 
@@ -188,7 +188,7 @@ LARatesBM::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -372,7 +372,7 @@ LARatesBM::getSeed() const
 	if (mType == GENERATOR)
 		return mpRand->getSeed();
 	else
-		throw LACoreInvalidData("this method can be available GENERATOR type of BM", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("this method can be available GENERATOR type of BM", __FILE__, __LINE__);
 
 }
 /*!
@@ -385,7 +385,7 @@ LARatesBM::getDim() const
 	if (mType == GENERATOR)
 		return mpRand->getDim();
 	else
-		throw LACoreInvalidData("this method can be available GENERATOR type of BM", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("this method can be available GENERATOR type of BM", __FILE__, __LINE__);
 }
 
 
@@ -399,7 +399,7 @@ LARatesBM::setSeed(const UlongArray& seedValue)
 	if (mType == GENERATOR)
 		mpRand->setSeed(seedValue);
 	else
-		throw LACoreInvalidData("this method can be available GENERATOR type of BM", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("this method can be available GENERATOR type of BM", __FILE__, __LINE__);
 
 }
 /*!
@@ -412,7 +412,7 @@ LARatesBM::setDim(const UintArray& dimValue)
 	if (mType == GENERATOR)
 		mpRand->setDim(dimValue);
 	else
-		throw LACoreInvalidData("this method can be available GENERATOR type of BM", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("this method can be available GENERATOR type of BM", __FILE__, __LINE__);
 }*/
 /*!
 	@brief calculate correlation between this BM and other BM
@@ -427,7 +427,7 @@ LARatesBM::calcCorrelation(const LARatesBM& bm, unsigned int pos_other, unsigned
 	if (getTimeGrid().size() != bm.getTimeGrid().size())
 	{
 		//error
-		throw LACoreInvalidData("time grid size of this BM and input BM are not same", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("time grid size of this BM and input BM are not same", __FILE__, __LINE__);
 	}	
 	
 	DoubleArray ret(getTimeGrid().size(), 0);
@@ -454,7 +454,7 @@ LARatesBM::calcCorrelation(const LARatesBM& bm, unsigned int pos_other, unsigned
 				//	tmp2 += mLoading[i][pos_this][j] * mLoading[i][pos_this][j];
 				//	tmp3 += mLoading[i][pos_other][j] * mLoading[i][pos_other][j];
 				}
-				ret[i] = tmp1;// / LAMath::sqrt(tmp2 * tmp3);
+				ret[i] = tmp1;// / AQLMath::sqrt(tmp2 * tmp3);
 			}
 			ret[i] = ret[i - 1];
 		}
@@ -475,7 +475,7 @@ LARatesBM::calcCorrelation(const LARatesBM& bm, unsigned int pos_other, unsigned
 			}
 		}
 		for (i = 0; i < ret.size() - 1; i++)
-			ret[i] = tmp1[i]/* / LAMath::sqrt(tmp2[i])*/;
+			ret[i] = tmp1[i]/* / AQLMath::sqrt(tmp2[i])*/;
 		ret[i] = ret[i - 1];		
 	}
 	else 

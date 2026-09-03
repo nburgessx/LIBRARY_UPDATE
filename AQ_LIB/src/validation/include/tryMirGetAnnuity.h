@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -20,19 +20,19 @@ namespace validation
     *  @param [in]		curveName		Name of the curve set
     *  @return			Annuity
     */
-    double tryMirGetAnnuity1( LADataInstance* dataInstance,
-                              const LADate& fromDate,
-                              const LADate& toDate,
-                              const LAString& curveId,
-                              const LAString& frequency,
-                              const LAString& slidingRule,
-                              const LAString& calendar,
-                              const LAString& firstOddDate,
-                              const LAString& lastOddDate,
-                              const LAString& paymentDay,
-                              const LAString& dayCount,
-                              const LAString& interpolation,
-                              const LAString& curveName );
+    double tryMirGetAnnuity1( AQLDataInstance* dataInstance,
+                              const AQLDate& fromDate,
+                              const AQLDate& toDate,
+                              const AQLString& curveId,
+                              const AQLString& frequency,
+                              const AQLString& slidingRule,
+                              const AQLString& calendar,
+                              const AQLString& firstOddDate,
+                              const AQLString& lastOddDate,
+                              const AQLString& paymentDay,
+                              const AQLString& dayCount,
+                              const AQLString& interpolation,
+                              const AQLString& curveName );
 
     /* @brief			validation interface for the mirGetAnnuity2 method
     *  @param [in]		dataInstance			Pointer to the object pool
@@ -43,11 +43,11 @@ namespace validation
     *  @param [in]		curveName		Name of the curve set
     *  @return			Annuity
     */
-    double tryMirGetAnnuity2( LADataInstance* dataInstance,
-                              const LAString& curveId,
+    double tryMirGetAnnuity2( AQLDataInstance* dataInstance,
+                              const AQLString& curveId,
                               const DateVector& dates,
-                              const LAString& dayCount,
-                              const LAString& interpolation,
-                              const LAString& curveName );
+                              const AQLString& dayCount,
+                              const AQLString& interpolation,
+                              const AQLString& curveName );
 
 }

@@ -71,7 +71,7 @@ namespace validation
 			// Write out each propertyName and corresponding block of property config data
 			for (unsigned int i = 0; i < dataBlockNames.size(); i++)
 			{
-				const LAString dataBlockName(dataBlockNames[i].c_str());
+				const AQLString dataBlockName(dataBlockNames[i].c_str());
 				const etrading::VariantMatrix& configData = std::get<2>(infoBlocks[i]);
 				file.write(dataBlockName, transpose(configData));
 			}
@@ -129,7 +129,7 @@ namespace validation
 			// Write out each propertyName and corresponding block of property config data
 			for (unsigned int i = 0; i < dataBlockNames.size(); i++)
 			{
-				const LAString dataBlockName(dataBlockNames[i].c_str());
+				const AQLString dataBlockName(dataBlockNames[i].c_str());
 				const etrading::VariantMatrix& configData = std::get<2>(infoBlocks[i]);
 				file.write(dataBlockName, transpose(configData));
 			}

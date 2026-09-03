@@ -5,103 +5,103 @@
 #endif
 
 #include "LAMathCashFlowSchedules.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathDateUtilities.h"
 
 //================ Single Flow ===================================
-CashFlowTiming LAMathScheduleUtility::CashFlowSchedule(LADate valDate, LAString mtyTerm, LAStringMatrix legScheduler, LAStringMatrix indexScheduler)
+CashFlowTiming LAMathScheduleUtility::CashFlowSchedule(AQLDate valDate, AQLString mtyTerm, AQLStringMatrix legScheduler, AQLStringMatrix indexScheduler)
 {
     ////// Input properties ////
-    LAString spotLag = LAFunctionUtilities::findElement(legScheduler, "SpotLag");
-    LAString payCalendar_ = LAFunctionUtilities::findElement(legScheduler, "PaymentCalendar");
-    LAString paySlidingRule_ = LAFunctionUtilities::findElement(legScheduler, "PaymentSlidingRule");
-    //LAString payDelay = LAFunctionUtilities::findElement(legScheduler, "PaymentDelay");
-    LAString fixingTiming = LAFunctionUtilities::findElement(legScheduler, "FixingTiming");
-    LAString fixingLag = LAFunctionUtilities::findElement(legScheduler, "FixingLag");
-    LAString fixingCalendar = LAFunctionUtilities::findElement(legScheduler, "FixingCalendar");
-    LAString daycountConvention = LAFunctionUtilities::findElement(legScheduler, "Daycount");
+    AQLString spotLag = AQLFunctionUtilities::findElement(legScheduler, "SpotLag");
+    AQLString payCalendar_ = AQLFunctionUtilities::findElement(legScheduler, "PaymentCalendar");
+    AQLString paySlidingRule_ = AQLFunctionUtilities::findElement(legScheduler, "PaymentSlidingRule");
+    //AQLString payDelay = AQLFunctionUtilities::findElement(legScheduler, "PaymentDelay");
+    AQLString fixingTiming = AQLFunctionUtilities::findElement(legScheduler, "FixingTiming");
+    AQLString fixingLag = AQLFunctionUtilities::findElement(legScheduler, "FixingLag");
+    AQLString fixingCalendar = AQLFunctionUtilities::findElement(legScheduler, "FixingCalendar");
+    AQLString daycountConvention = AQLFunctionUtilities::findElement(legScheduler, "Daycount");
     upper(fixingTiming);
     bool isAdvance = (fixingTiming == "ADVANCE");
     bool overrideToArrear = true;
     if (overrideToArrear)
         isAdvance = false;
-    LAString indexFixingLag = LAFunctionUtilities::findElement(indexScheduler, "FixingLag");
-    LAString indexFixingCalendar = LAFunctionUtilities::findElement(indexScheduler, "FixingCalendar");
+    AQLString indexFixingLag = AQLFunctionUtilities::findElement(indexScheduler, "FixingLag");
+    AQLString indexFixingCalendar = AQLFunctionUtilities::findElement(indexScheduler, "FixingCalendar");
 
     // Conversions
-    LAPriceDataSlidingRule paySlidingRule;
+    AQLPriceDataSlidingRule paySlidingRule;
     paySlidingRule.convertFromString(paySlidingRule_);
-    LAPriceDataCalendar payCalendar;
+    AQLPriceDataCalendar payCalendar;
     upper(payCalendar_);
     payCalendar.convertFromString(payCalendar_);
 
     // No change
-    LAPriceDataSlidingRule noChangeSlidingRule;
+    AQLPriceDataSlidingRule noChangeSlidingRule;
     noChangeSlidingRule.convertFromString("no_change");
-    LAPriceDataCalendar noChangeCalendar;
+    AQLPriceDataCalendar noChangeCalendar;
     noChangeCalendar.convertFromString("");
 
     //// Calculation ////
-    //LADate startDate = CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
-    LADate swapStartDate = CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
-    LADate endDate = CalendarAdvance(swapStartDate, mtyTerm, noChangeSlidingRule, noChangeCalendar);
-    LADate payDate = endDate;
-    LADate startDate = endDate;
-    //LADate payDate = CalendarAdvance(endDate, payDelay, paySlidingRule, payCalendar);
+    //AQLDate startDate = CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
+    AQLDate swapStartDate = CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
+    AQLDate endDate = CalendarAdvance(swapStartDate, mtyTerm, noChangeSlidingRule, noChangeCalendar);
+    AQLDate payDate = endDate;
+    AQLDate startDate = endDate;
+    //AQLDate payDate = CalendarAdvance(endDate, payDelay, paySlidingRule, payCalendar);
     // Fixing Date
-    LADate refDate = (isAdvance ? startDate : payDate);
-    LAPriceDataSlidingRule fixingSr;
+    AQLDate refDate = (isAdvance ? startDate : payDate);
+    AQLPriceDataSlidingRule fixingSr;
     fixingSr.convertFromString("Preceding");
-    LAPriceDataCalendar fixingCdr;
+    AQLPriceDataCalendar fixingCdr;
     fixingCdr.convertFromString(fixingCalendar);
-    LADate fixingDate = CalendarAdvance(refDate, "-" + fixingLag, fixingSr, fixingCdr);
+    AQLDate fixingDate = CalendarAdvance(refDate, "-" + fixingLag, fixingSr, fixingCdr);
     // Index settlement
-    LAPriceDataSlidingRule idxSr;
+    AQLPriceDataSlidingRule idxSr;
     idxSr.convertFromString("Following");
-    LAPriceDataCalendar idxFixingCdr;
+    AQLPriceDataCalendar idxFixingCdr;
     idxFixingCdr.convertFromString(indexFixingCalendar);
-    LADate idxSettlDate = CalendarAdvance(fixingDate, indexFixingLag, idxSr, idxFixingCdr);
+    AQLDate idxSettlDate = CalendarAdvance(fixingDate, indexFixingLag, idxSr, idxFixingCdr);
     // Accrual
-    LAPriceDataDayCount daycount = Daycount(daycountConvention);
+    AQLPriceDataDayCount daycount = Daycount(daycountConvention);
     double accrual = YearFraction(daycount, startDate, endDate);
 
     return CashFlowTiming { fixingDate, startDate, endDate, payDate, idxSettlDate, accrual };
 }
 
 //================ Multiple Flows ===================================
-vector<CashFlowTiming> LAMathScheduleUtility::LegSchedule(LADate valDate, LAString mtyTerm, LAStringMatrix legScheduler, LAStringMatrix indexScheduler)
+vector<CashFlowTiming> LAMathScheduleUtility::LegSchedule(AQLDate valDate, AQLString mtyTerm, AQLStringMatrix legScheduler, AQLStringMatrix indexScheduler)
 {
     // Find input properties
-    LAString spotLag = LAFunctionUtilities::findElement(legScheduler, "SpotLag");
-    LAString frequency = LAFunctionUtilities::findElement(legScheduler, "Frequency");
-    LAString accCalendar = LAFunctionUtilities::findElement(legScheduler, "AccrualCalendar");
-    LAString accSlidingRule = LAFunctionUtilities::findElement(legScheduler, "AccrualSlidingRule");
-    LAString payDelay = LAFunctionUtilities::findElement(legScheduler, "PaymentDelay");
-    LAString payCalendar_ = LAFunctionUtilities::findElement(legScheduler, "PaymentCalendar");
-    LAString paySlidingRule_ = LAFunctionUtilities::findElement(legScheduler, "PaymentSlidingRule");
-    LAString fixingLag = LAFunctionUtilities::findElement(legScheduler, "FixingLag");
-    LAString fixingCalendar = LAFunctionUtilities::findElement(legScheduler, "FixingCalendar");
-    LAString fixingTiming = LAFunctionUtilities::findElement(legScheduler, "FixingTiming");
-    LAString daycountConvention = LAFunctionUtilities::findElement(legScheduler, "Daycount");
+    AQLString spotLag = AQLFunctionUtilities::findElement(legScheduler, "SpotLag");
+    AQLString frequency = AQLFunctionUtilities::findElement(legScheduler, "Frequency");
+    AQLString accCalendar = AQLFunctionUtilities::findElement(legScheduler, "AccrualCalendar");
+    AQLString accSlidingRule = AQLFunctionUtilities::findElement(legScheduler, "AccrualSlidingRule");
+    AQLString payDelay = AQLFunctionUtilities::findElement(legScheduler, "PaymentDelay");
+    AQLString payCalendar_ = AQLFunctionUtilities::findElement(legScheduler, "PaymentCalendar");
+    AQLString paySlidingRule_ = AQLFunctionUtilities::findElement(legScheduler, "PaymentSlidingRule");
+    AQLString fixingLag = AQLFunctionUtilities::findElement(legScheduler, "FixingLag");
+    AQLString fixingCalendar = AQLFunctionUtilities::findElement(legScheduler, "FixingCalendar");
+    AQLString fixingTiming = AQLFunctionUtilities::findElement(legScheduler, "FixingTiming");
+    AQLString daycountConvention = AQLFunctionUtilities::findElement(legScheduler, "Daycount");
     upper(fixingTiming);
     bool isAdvance = (fixingTiming == "ADVANCE");
-    LAString indexFixingLag = LAFunctionUtilities::findElement(indexScheduler, "FixingLag");
-    LAString indexFixingCalendar = LAFunctionUtilities::findElement(indexScheduler, "FixingCalendar");
+    AQLString indexFixingLag = AQLFunctionUtilities::findElement(indexScheduler, "FixingLag");
+    AQLString indexFixingCalendar = AQLFunctionUtilities::findElement(indexScheduler, "FixingCalendar");
 
     // Conversions
-    LAPriceDataSlidingRule paySlidingRule;
+    AQLPriceDataSlidingRule paySlidingRule;
     paySlidingRule.convertFromString(paySlidingRule_);
-    LAPriceDataCalendar payCalendar;
+    AQLPriceDataCalendar payCalendar;
     upper(payCalendar_);
     payCalendar.convertFromString(payCalendar_);
-    LAPriceDataSlidingRule noChangeSlidingRule;
+    AQLPriceDataSlidingRule noChangeSlidingRule;
     noChangeSlidingRule.convertFromString("no_change");
-    LAPriceDataCalendar noChangeCalendar;
+    AQLPriceDataCalendar noChangeCalendar;
     noChangeCalendar.convertFromString("");
 
     // Preliminary
-    LADate startDate = CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
-    LADate endDate = CalendarAdvance(startDate, mtyTerm, noChangeSlidingRule, noChangeCalendar);
+    AQLDate startDate = CalendarAdvance(valDate, spotLag, paySlidingRule, payCalendar);
+    AQLDate endDate = CalendarAdvance(startDate, mtyTerm, noChangeSlidingRule, noChangeCalendar);
     int day = endDate.dayOfMonth();
 
     // Calculate schedule
@@ -111,7 +111,7 @@ vector<CashFlowTiming> LAMathScheduleUtility::LegSchedule(LADate valDate, LAStri
     DateVector payDates = PayDates(endDates, payDelay, paySlidingRule, payCalendar);
     DateVector fixingDates = FixingDates(startDates, payDates, isAdvance, fixingLag, fixingCalendar);
     DateVector idxSettlDates = IndexSettlementDates(fixingDates, indexFixingLag, indexFixingCalendar);
-    LAPriceDataDayCount daycount = Daycount(daycountConvention);
+    AQLPriceDataDayCount daycount = Daycount(daycountConvention);
     vector<double> accruals = Accruals(daycount, startDates, endDates);
 
     size_t n = payDates.size();
@@ -122,8 +122,8 @@ vector<CashFlowTiming> LAMathScheduleUtility::LegSchedule(LADate valDate, LAStri
     return schedule;
 }
 
-DateVector LAMathScheduleUtility::BaseDates(LAString frequency, LAString calendar, LAString slidingRule,
-                     LADate startDate, LADate endDate, int* day)
+DateVector LAMathScheduleUtility::BaseDates(AQLString frequency, AQLString calendar, AQLString slidingRule,
+                     AQLDate startDate, AQLDate endDate, int* day)
 {
     return LAMathDateUtilities::generateSchedule(startDate, endDate, frequency, slidingRule, calendar, 0, 0, day, true, 0);
 }
@@ -148,7 +148,7 @@ DateVector LAMathScheduleUtility::EndDates(DateVector baseDates)
     return endDates;
 }
 
-DateVector LAMathScheduleUtility::PayDates(DateVector endDates, LAString term, LAPriceDataSlidingRule slidingRule, LAPriceDataCalendar calendar)
+DateVector LAMathScheduleUtility::PayDates(DateVector endDates, AQLString term, AQLPriceDataSlidingRule slidingRule, AQLPriceDataCalendar calendar)
 {
     size_t n = endDates.size();
     DateVector payDates(n);
@@ -158,14 +158,14 @@ DateVector LAMathScheduleUtility::PayDates(DateVector endDates, LAString term, L
     return payDates;
 }
 
-DateVector LAMathScheduleUtility::FixingDates(DateVector startDates, DateVector payDates, bool isAdvance, LAString fixingLag, LAString calendar)
+DateVector LAMathScheduleUtility::FixingDates(DateVector startDates, DateVector payDates, bool isAdvance, AQLString fixingLag, AQLString calendar)
 {
     DateVector refDates = (isAdvance ? startDates : payDates);
     size_t n = refDates.size();
     DateVector fixingDates(n);
-    LAPriceDataSlidingRule slidingRule;
+    AQLPriceDataSlidingRule slidingRule;
     slidingRule.convertFromString("Preceding");
-    LAPriceDataCalendar cdr;
+    AQLPriceDataCalendar cdr;
     cdr.convertFromString(calendar);
     for (size_t i = 0; i < n; i++)
         fixingDates[i] = CalendarAdvance(refDates[i], "-" + fixingLag, slidingRule, cdr);
@@ -173,13 +173,13 @@ DateVector LAMathScheduleUtility::FixingDates(DateVector startDates, DateVector 
     return fixingDates;
 }
 
-DateVector LAMathScheduleUtility::IndexSettlementDates(DateVector fixingDates, LAString settlLag, LAString calendar)
+DateVector LAMathScheduleUtility::IndexSettlementDates(DateVector fixingDates, AQLString settlLag, AQLString calendar)
 {
     size_t n = fixingDates.size();
     DateVector idxSettlDates(n);
-    LAPriceDataSlidingRule slidingRule;
+    AQLPriceDataSlidingRule slidingRule;
     slidingRule.convertFromString("Following");
-    LAPriceDataCalendar cdr;
+    AQLPriceDataCalendar cdr;
     cdr.convertFromString(calendar);
     for (size_t i = 0; i < n; i++)
         idxSettlDates[i] = CalendarAdvance(fixingDates[i], settlLag, slidingRule, cdr);
@@ -187,7 +187,7 @@ DateVector LAMathScheduleUtility::IndexSettlementDates(DateVector fixingDates, L
     return idxSettlDates;
 }
 
-DoubleVector LAMathScheduleUtility::Accruals(LAPriceDataDayCount daycount, DateVector startDates, DateVector endDates)
+DoubleVector LAMathScheduleUtility::Accruals(AQLPriceDataDayCount daycount, DateVector startDates, DateVector endDates)
 {
     size_t n = startDates.size();
     DoubleVector acc(n);
@@ -197,16 +197,16 @@ DoubleVector LAMathScheduleUtility::Accruals(LAPriceDataDayCount daycount, DateV
     return acc;
 }
 
-LAPriceDataSlidingRule LAMathScheduleUtility::ModelSlidingRule()
+AQLPriceDataSlidingRule LAMathScheduleUtility::ModelSlidingRule()
 {
-    LAPriceDataSlidingRule slidingRule;
+    AQLPriceDataSlidingRule slidingRule;
     slidingRule.convertFromString("MOD_FOLLOWING");
     return slidingRule;
 }
 
-LAPriceDataCalendar LAMathScheduleUtility::ModelCalendar()
+AQLPriceDataCalendar LAMathScheduleUtility::ModelCalendar()
 {
-    LAPriceDataCalendar calendar;
+    AQLPriceDataCalendar calendar;
     calendar.convertFromString("TKB:LNB");
     return calendar;
 }

@@ -19,10 +19,10 @@
 
 
 #include "LACalibrateModelPtberg.h"
-#include "LAFunctionBase.h"
-#include "LAFunctionManager.h"
+#include "AQLFunctionBase.h"
+#include "AQLFunctionManager.h"
 #include "LAMathVolFuncBase.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "LAPriceDriftLMMSpot.h"
 #include "LAPriceDriftFX.h"
 #include "LARatesSpotSDE.h"
@@ -38,7 +38,7 @@
 #include "LACalibrateVolatilityPtberg.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
-#include "LAConstant.h"
+#include "AQLConstant.h"
 #include "LAPriceFXVolatility.h"
 #include "LAPriceFXDDIntegral.h"
 #include "LAPriceFXDDIntegralMelstein.h"
@@ -72,7 +72,7 @@ LACalibrateModelPtberg::~LACalibrateModelPtberg(void)
 	@param[in] dataInstance
 */
 LARatesSDEBase *
-LACalibrateModelPtberg::createSDEInstance(const LAString &fx, LADataInstance &dataInstance) const
+LACalibrateModelPtberg::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	dataInstance;
 	SDE_TYPE type = getSDEType(fx);
@@ -95,11 +95,11 @@ LACalibrateModelPtberg::createSDEInstance(const LAString &fx, LADataInstance &da
 
 */
 SDE_TYPE
-LACalibrateModelPtberg::getSDEType(const LAString &fx) const
+LACalibrateModelPtberg::getSDEType(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString type = mpStaticData->getStaticData(key_fx + FX_KEY_PTBERG_TYPE);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString type = mpStaticData->getStaticData(key_fx + FX_KEY_PTBERG_TYPE);
 	type.toUpper();
 	if (type == "DX/X")
 	{
@@ -111,8 +111,8 @@ LACalibrateModelPtberg::getSDEType(const LAString &fx) const
 	}
 	else
 	{
-		LAString msg = LAString("Sde type is not support. type = ") + type;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("Sde type is not support. type = ") + type;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
@@ -123,11 +123,11 @@ LACalibrateModelPtberg::getSDEType(const LAString &fx) const
 
 */
 bool 
-LACalibrateModelPtberg::isLJ(const LAString &fx) const
+LACalibrateModelPtberg::isLJ(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString type = mpStaticData->getStaticData(key_fx + FX_KEY_PTBERG_INTEGRAL_STEP);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString type = mpStaticData->getStaticData(key_fx + FX_KEY_PTBERG_INTEGRAL_STEP);
 	type.toUpper();
 	if (type == "LONGJUMP")
 	{
@@ -147,13 +147,13 @@ LACalibrateModelPtberg::isLJ(const LAString &fx) const
 	@param[out] sde
 */
 void
-LACalibrateModelPtberg::setVolatility(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelPtberg::setVolatility(const AQLString &fx, LARatesSDEBase &sde) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
 
-	vector<vector<LAFunctionBase *> > volMtx(1);
+	vector<vector<AQLFunctionBase *> > volMtx(1);
 	volMtx[0].push_back(new LAMathVolFuncBase(sdeName, 0, 0, true));
 	sde.setVolatility(volMtx);
 }
@@ -168,15 +168,15 @@ LACalibrateModelPtberg::setVolatility(const LAString &fx, LARatesSDEBase &sde) c
 
 */
 void
-LACalibrateModelPtberg::setDrift(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelPtberg::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
 {
-	LAStringVector ccys;
+	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
 
-	LAString sdeName_d = mpStaticData->getStaticData(ccys[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
-	LAString sdeName_f = mpStaticData->getStaticData(ccys[1].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLString sdeName_d = mpStaticData->getStaticData(ccys[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLString sdeName_f = mpStaticData->getStaticData(ccys[1].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 	
-	vector<LAFunctionBase*> drift(1,  new LAPriceDriftFX(sdeName_d, sdeName_f));
+	vector<AQLFunctionBase*> drift(1,  new LAPriceDriftFX(sdeName_d, sdeName_f));
 	sde.setDrift(drift);
 }
 
@@ -190,17 +190,17 @@ LACalibrateModelPtberg::setDrift(const LAString &fx, LARatesSDEBase &sde) const
 
 */
 void
-LACalibrateModelPtberg::setIntegralFunction(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelPtberg::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
 
-	LADataBool tmp;
+	AQLDataBool tmp;
 	tmp.convertFromString(mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_ISDD));
 	bool isDDL = tmp.get();
 	if (isDDL)
 	{
-		LAString integralType = mpStaticData->getStaticData(key_fx + FX_KEY_PTBERG_DD_INTEGRAL_TYPE);
+		AQLString integralType = mpStaticData->getStaticData(key_fx + FX_KEY_PTBERG_DD_INTEGRAL_TYPE);
 		integralType.toUpper();
 		if (integralType == "MELSTEIN")
 		{
@@ -212,13 +212,13 @@ LACalibrateModelPtberg::setIntegralFunction(const LAString &fx, LARatesSDEBase &
 		}
 		else
 		{
-			LAString msg = LAString("Integraltype is not support integraltype = ") +integralType;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = AQLString("Integraltype is not support integraltype = ") +integralType;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 	else
 	{
-		LAString integralType = mpStaticData->getStaticData(key_fx + FX_KEY_PTBERG_INTEGRAL_TYPE);
+		AQLString integralType = mpStaticData->getStaticData(key_fx + FX_KEY_PTBERG_INTEGRAL_TYPE);
 		integralType.toUpper();
 		if (integralType == "LOG_INTEGRAL")
 		{
@@ -234,8 +234,8 @@ LACalibrateModelPtberg::setIntegralFunction(const LAString &fx, LARatesSDEBase &
 		}
 		else
 		{
-			LAString msg = LAString("Integraltype is not support integraltype = ") +integralType;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = AQLString("Integraltype is not support integraltype = ") +integralType;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 }
@@ -245,10 +245,10 @@ LACalibrateModelPtberg::setIntegralFunction(const LAString &fx, LARatesSDEBase &
 
 	@param[in] fx
 */
-LAString 
-LACalibrateModelPtberg::getFunctionMasterResistName(const LAString &fx) const
+AQLString 
+LACalibrateModelPtberg::getFunctionMasterResistName(const AQLString &fx) const
 {
-	LAString tmpFX = fx;
+	AQLString tmpFX = fx;
 	return mpStaticData->getStaticData(tmpFX.toLower() + FX_KEY_PTBERG_FUNCTION_NAME);
 }
 
@@ -258,11 +258,11 @@ LACalibrateModelPtberg::getFunctionMasterResistName(const LAString &fx) const
 
 	@param[in]  fx 
 */
-LAString
-LACalibrateModelPtberg::getVolType(const LAString &fx) const
+AQLString
+LACalibrateModelPtberg::getVolType(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpStaticData->getStaticData(key_fx + FX_KEY_PTBERG_VOLATILITY_TYPE);
 }
 
@@ -275,14 +275,14 @@ LACalibrateModelPtberg::getVolType(const LAString &fx) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelPtberg::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelPtberg::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	setUpVolEntity(fx,vol);
-	LAStringVector ccys;
+	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
 
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAStringVector fileVec(1);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector fileVec(1);
 	fileVec[0] = LAMarketData::getNumFileName(mpStaticData->getStaticData(key_fx + FX_KEY_PTBERG_VOLATILITY_CALIB_FILE));
 	
 	MAScenarioParam param;
@@ -292,17 +292,17 @@ LACalibrateModelPtberg::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, 
 	// set LJ
 	param.isLJ = isLJ(fx);
 	// set DDL
-	LADataBool tmp;
+	AQLDataBool tmp;
 	tmp.convertFromString(mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_ISDD));
 	param.isDDL = tmp.get();
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
 	param.isCalib = isCalibTarget(fx);
 	if (param.isCalib)
 	{
 		// create calib info
 		LACalibrationParametersPtberg *pCInfo = createCalibInfoCreator();
-		LAString cInfoName = pCInfo->createCalibrationInfo(dataInstance.getObjectPool(), fx);
+		AQLString cInfoName = pCInfo->createCalibrationInfo(dataInstance.getObjectPool(), fx);
 		delete pCInfo;
 		// first element set calib info
 		param.refName.push_back(cInfoName);
@@ -329,11 +329,11 @@ LACalibrateModelPtberg::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, 
 	
 	// create function
 	LACalibrateVolatilityPtberg volCreator;
-	LAFunctionBase *method = volCreator.createVolatility(fileVec, &param, &objPool);
+	AQLFunctionBase *method = volCreator.createVolatility(fileVec, &param, &objPool);
 	
 	if (isLJ(fx))
 	{
-		LAPriceFXVolatility *fxVolatility = new LAPriceFXVolatility(method, new LAConstant(1.0), dynamic_cast<LAMathVolFuncFX *>(method)->getTimeGrid());
+		LAPriceFXVolatility *fxVolatility = new LAPriceFXVolatility(method, new AQLConstant(1.0), dynamic_cast<LAMathVolFuncFX *>(method)->getTimeGrid());
 		vol.setVolatility(fxVolatility);
 	}
 	else
@@ -342,16 +342,16 @@ LACalibrateModelPtberg::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, 
 	}
 
 	// regist function master
-	//const LAString &volName = vol.getName().get();
+	//const AQLString &volName = vol.getName().get();
 	//if (isLJ(fx))
 	//{
-	//	LAPriceFXVolatility *fxVolatility = new LAPriceFXVolatility(method, new LAConstant(1.0), dynamic_cast<LAMathVolFuncFX *>(method)->getTimeGrid());
-	//	dataInstance.getFunctionMaster().setFunction(fxVolatility->clone(), volName + LAString("_0_0"));
+	//	LAPriceFXVolatility *fxVolatility = new LAPriceFXVolatility(method, new AQLConstant(1.0), dynamic_cast<LAMathVolFuncFX *>(method)->getTimeGrid());
+	//	dataInstance.getFunctionMaster().setFunction(fxVolatility->clone(), volName + AQLString("_0_0"));
 	//	vol.setVolatility(fxVolatility);
 	//}
 	//else
 	//{
-	//	dataInstance.getFunctionMaster().setFunction(method->clone(), volName + LAString("_0_0"));
+	//	dataInstance.getFunctionMaster().setFunction(method->clone(), volName + AQLString("_0_0"));
 	//	vol.setVolatility(method);
 	//}
 
@@ -369,7 +369,7 @@ LACalibrateModelPtberg::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, 
 	@param[out] dataInstance
 */
 void
-LACalibrateModelPtberg::setUpVolData(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelPtberg::setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	fx;
 	vol;
@@ -385,12 +385,12 @@ LACalibrateModelPtberg::setUpVolData(const LAString &fx, LAMathVolatility &vol, 
 
 */
 void
-LACalibrateModelPtberg::setUpVolEntity(const LAString &fx, LAMathVolatility &vol) const
+LACalibrateModelPtberg::setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const
 {
 	// set interpolation
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString interp = mpStaticData->getStaticData(key_fx.toLower() + FX_KEY_PTBERG_VOLATILITY_INTERPOLATION);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString interp = mpStaticData->getStaticData(key_fx.toLower() + FX_KEY_PTBERG_VOLATILITY_INTERPOLATION);
 	vol.getInterpolation().convertFromString(interp);
 }
 

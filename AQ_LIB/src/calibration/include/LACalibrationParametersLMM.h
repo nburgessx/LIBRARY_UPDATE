@@ -16,7 +16,7 @@
 
 
 #include "LACalibrationParameters.h"
-#include "LAString.h"
+#include "AQLString.h"
 
 
 
@@ -26,9 +26,9 @@ struct MACalibCorrelationParam
 	double			funcParam_x;
 	double			funcParam_y;
 	double          maxTerm;
-	LAString		corFuncType;
+	AQLString		corFuncType;
 	unsigned int	factorNum;
-	LAString		optCorType;
+	AQLString		optCorType;
 	double			boundaryMax;
 	double			boundaryMin;
 	size_t			maxIteration;
@@ -36,7 +36,7 @@ struct MACalibCorrelationParam
 	double			rootEpsilon;
 	double			functionEpsilon;
 	double			gradientNormEpsilon;
-	LAString		optCorMethodType;
+	AQLString		optCorMethodType;
 	bool            isExtraTenorCalib;
 };
 
@@ -57,14 +57,14 @@ public:
 
 	//==============================================
 	// create  calibration info object
-	virtual LAString createCalibrationInfo(LAObjectPool &objPool, const LAString &ccy); 
+	virtual AQLString createCalibrationInfo(AQLObjectPool &objPool, const AQLString &ccy); 
 	//==============================================
 	// get parameters for calibration of correlation
-	void getCalibCorParam(const LAString &ccy, MACalibCorrelationParam &param);
+	void getCalibCorParam(const AQLString &ccy, MACalibCorrelationParam &param);
 private:
 	//==============================================
 	// create  calibration  property value
-	LAString getCalibStaticDataValue(const LAString &key, const LAString &grid);
+	AQLString getCalibStaticDataValue(const AQLString &key, const AQLString &grid);
 };
 
 

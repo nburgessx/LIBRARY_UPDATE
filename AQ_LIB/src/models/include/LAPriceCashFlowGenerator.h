@@ -4,10 +4,10 @@
 #pragma interface
 #endif
 
-#include "LACoreProcedure.h"
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreProcedure.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 // Function ID for LAPriceCashFlowGenerator
@@ -610,18 +610,18 @@
 #endif
 
 
-class LAObject;
-class LADataProcedure;
-class LAPriceDataManager;
-class LADataMultiReference;
-class LAObjectPool;
-class LADataHolder;
+class AQLObject;
+class AQLDataProcedure;
+class AQLPriceDataManager;
+class AQLDataMultiReference;
+class AQLObjectPool;
+class AQLDataHolder;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief Generate Cashlets and trigger/call schedule
 
 */
-class LAPriceCashFlowGenerator : public LACoreProcedure
+class LAPriceCashFlowGenerator : public AQLCoreProcedure
 {
 public:
     class CashletCreator;
@@ -634,34 +634,34 @@ public:
     // Check this class ID is the same or not	
 	virtual bool                isTypeOf(function_t id) const;
     // Copy this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
     // Return class type
 	virtual function_t			getType() const;
     // Generate cashlets and trigger/call schedule
-	virtual void	            calibrateModel(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const;
+	virtual void	            calibrateModel(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const;
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
 	// create funding change data
-	void						createFundingChangeAttribute(LAObject& trade, LAObject& fundingleg, LAObject& strleg, LAObject& fginfo) const;
+	void						createFundingChangeAttribute(AQLObject& trade, AQLObject& fundingleg, AQLObject& strleg, AQLObject& fginfo) const;
 
 	// clear cashlets
-	void						clearCashlets(LAObject& leg) const;
+	void						clearCashlets(AQLObject& leg) const;
 
     // calc payment dates
-	void						calcPaymentDates(LAObject& leg, 
+	void						calcPaymentDates(AQLObject& leg, 
 												 DateVector& paymentdates,
 												 DateVector& paymentdates_unadjust,
 												 DateVector& startdates,
 												 DateVector& startdates_unadjust,
 												 DateVector& enddates,
 												 DateVector& enddates_unadjust,
-                                                 const LADate& start_date,
-                                                 const LADate& end_date,
-												 const LAString& freq,
-                                                 const LADate* first_odd_date,
-                                                 const LADate* last_odd_date) const;
+                                                 const AQLDate& start_date,
+                                                 const AQLDate& end_date,
+												 const AQLString& freq,
+                                                 const AQLDate* first_odd_date,
+                                                 const AQLDate* last_odd_date) const;
 
 protected:
     // copy constructor
@@ -669,7 +669,7 @@ protected:
 
 
 	// Calculete payment dates and interest calculation dates
-    void                        calcPaymentDates(LAObject& leg, 
+    void                        calcPaymentDates(AQLObject& leg, 
 												 DateVector& payment_dates,
 												 DateVector& payment_dates_unadjust,
 												 DateVector& payment_start_dates,
@@ -682,55 +682,55 @@ protected:
 												 bool& is_last_stub) const;
 
 private:
-    void                        modifyLegInfo(LAObject& leg) const;
+    void                        modifyLegInfo(AQLObject& leg) const;
 	// Create cashlets
-	void						createCashlets(LAObject& leg) const;  
+	void						createCashlets(AQLObject& leg) const;  
 
 	
 	
 	// Calculete notional correspond to each payment date
-	void						calcNotionalArray(const LAObject& leg,
+	void						calcNotionalArray(const AQLObject& leg,
 												const unsigned int cfsize,
 												DoubleArray& notional_array) const;
 
 	// create coupon info object
-	LAObject*					createCouponInfo(const LAString name,
-												const LADate& advancepaymentdate,
-												const LADate& paymentdate,
-												const LADate& paymentdate_unadjust,
-												const LADate& startdate,
-												const LADate& enddate,
-												const LAObject& couponinfo,
-												const LAObject& leg,
+	AQLObject*					createCouponInfo(const AQLString name,
+												const AQLDate& advancepaymentdate,
+												const AQLDate& paymentdate,
+												const AQLDate& paymentdate_unadjust,
+												const AQLDate& startdate,
+												const AQLDate& enddate,
+												const AQLObject& couponinfo,
+												const AQLObject& leg,
 												const DateVector& rolldates,
 												const DateVector& rollstartdates,
 												const DateVector& rollenddates,
-												LAString stubindextype = "",
+												AQLString stubindextype = "",
 												const double fixedrate = static_cast<double>(DEFAULT_SMALL_FIXEDRATE),
 												const bool is_digital = false
 												) const;
-	LAObject*					createCouponInfo(const LAString name,
-												const LADate& advancepaymentdate,
-												const LADate& paymentdate,
-												const LADate& paymentdate_unadjust,
-												const LADate& startdate,
-												const LADate& enddate,
-												const LAObject& couponinfo,
-												const LAObject& leg,
-												LAString stubindextype = "",
+	AQLObject*					createCouponInfo(const AQLString name,
+												const AQLDate& advancepaymentdate,
+												const AQLDate& paymentdate,
+												const AQLDate& paymentdate_unadjust,
+												const AQLDate& startdate,
+												const AQLDate& enddate,
+												const AQLObject& couponinfo,
+												const AQLObject& leg,
+												AQLString stubindextype = "",
 												const double fixedrate = static_cast<double>(DEFAULT_SMALL_FIXEDRATE),
 												const bool is_digital = false
 												) const;
 
 	// create index info object
-	LAObject*					createIndexInfo(const LAString name,
-												const LADate& advancepaymentdate,
-												const LADate& paymentdate,
-												const LADate& paymentdate_unadjust,
-												const LADate& startdate,
-												const LADate& enddate,
-												const LAObject& indexinfo,
-                                                const LAObject& leg,
+	AQLObject*					createIndexInfo(const AQLString name,
+												const AQLDate& advancepaymentdate,
+												const AQLDate& paymentdate,
+												const AQLDate& paymentdate_unadjust,
+												const AQLDate& startdate,
+												const AQLDate& enddate,
+												const AQLObject& indexinfo,
+                                                const AQLObject& leg,
 												const DateVector& rolldates,
 												const DateVector& rollstartdates,
 												const DateVector& rollenddates,
@@ -738,73 +738,73 @@ private:
 												) const;
 
 	// create range accrue index info object
-	LAObject*					createRangeAccrueIndexInfo(const LAString name,
-												const LADate& startdate,
-												const LADate& enddate,
-												const LAObject& indexinfo) const;
+	AQLObject*					createRangeAccrueIndexInfo(const AQLString name,
+												const AQLDate& startdate,
+												const AQLDate& enddate,
+												const AQLObject& indexinfo) const;
 	// create range accrue info object
-	LAObject*					createRangeAccrueInfo(const LAString name, const LAObject& rangeinfo, const LADate& startdate, 
-											 const LADate& enddate, const bool is_arrear, const int cf_pos, 
+	AQLObject*					createRangeAccrueInfo(const AQLString name, const AQLObject& rangeinfo, const AQLDate& startdate, 
+											 const AQLDate& enddate, const bool is_arrear, const int cf_pos, 
 											 const DateVector& payment_dates, const DateVector& payment_dates_unadj) const;
 
 	// setup leg maturity
-	void						setUpLegMaturity(LAObject& trade) const;
+	void						setUpLegMaturity(AQLObject& trade) const;
 	// setup call schedule
-	void						setUpCallSchedule(LAObject& trade) const;
+	void						setUpCallSchedule(AQLObject& trade) const;
 	// setup trigger schedule
-	void						setUpTriggerSchedule(LAObject& trade) const;
+	void						setUpTriggerSchedule(AQLObject& trade) const;
 	// setup trigger coupon change type
-	void						setUpTriggerCpnChange(LAObject& trade, LAObject& trigger) const;
+	void						setUpTriggerCpnChange(AQLObject& trade, AQLObject& trigger) const;
 	// check start dates are same between both legs
-	bool						isSameStartDates(const LADataMultiReference& legs) const;
+	bool						isSameStartDates(const AQLDataMultiReference& legs) const;
 	// check end dates are same between both legs
-	bool						isSameEndDates(const LADataMultiReference& legs) const;
+	bool						isSameEndDates(const AQLDataMultiReference& legs) const;
 	// setup funding change
-	void						setUpFundingChange(LAObject& trade) const;
+	void						setUpFundingChange(AQLObject& trade) const;
 	// create funding spread
 	void						createFundingSpread(DoubleMatrix &spreadmat, DoubleVector &fixedrates, 
-														LAObject& trade, LAObject& fundingleg, LAObject& strleg, LAObject& fginfo) const;
+														AQLObject& trade, AQLObject& fundingleg, AQLObject& strleg, AQLObject& fginfo) const;
 	// ! setup renotional
-	void						setUpRenotional( LAObject& trade ) const;
+	void						setUpRenotional( AQLObject& trade ) const;
 	// ! create renotional
-	void						createRenotional( LAObject& trade, LAObject& leg ) const;
+	void						createRenotional( AQLObject& trade, AQLObject& leg ) const;
 
 	// ! create oddtrade object
-	void						createOddTradeEntity(LAObject& trade) const;
+	void						createOddTradeEntity(AQLObject& trade) const;
 
 	// ! setup equivalent strike
-	void						setUpEquivalentStrike(LAObject& trade) const;
+	void						setUpEquivalentStrike(AQLObject& trade) const;
 
 	// ! setup renotional info
-	void						createRenotionalInfo(const LADate& advancepaymentdate,
-										const LADate& paymentdate,
-										const LADate& paymentdate_unadjust, 
-										const LADate& startdate,
-										const LADate& enddate,
-										LAObject& cashlet, LAObject& leg) const;
+	void						createRenotionalInfo(const AQLDate& advancepaymentdate,
+										const AQLDate& paymentdate,
+										const AQLDate& paymentdate_unadjust, 
+										const AQLDate& startdate,
+										const AQLDate& enddate,
+										AQLObject& cashlet, AQLObject& leg) const;
 
 	// consistency check for frquency
-	bool						isConsistentFrequencyPair(const LAString& rollfreq, const LAString& payfreq) const;
+	bool						isConsistentFrequencyPair(const AQLString& rollfreq, const AQLString& payfreq) const;
 
 	// get fixed dates from leg
-	DateVector					getFixedDates(const LAObject& leg) const;
+	DateVector					getFixedDates(const AQLObject& leg) const;
 
 	// detect existance of stub coupon
 	void						detectStubCoupon(bool& is_first_stub,
                                         bool& is_last_stub,
-	                                    const LAString& freq,
-										const LADate& start_date,
-										const LADate& end_date,
-										const LADate* first_odd_date,
-										const LADate* last_odd_date,
+	                                    const AQLString& freq,
+										const AQLDate& start_date,
+										const AQLDate& end_date,
+										const AQLDate* first_odd_date,
+										const AQLDate* last_odd_date,
 										const bool isforwardroll,
 										const DateVector& payment_dates_unadjust) const;
 
 	// ! setup funding leg of strctured bonds
-	void						setUpBondFundingLeg(LAObject& trade) const;
+	void						setUpBondFundingLeg(AQLObject& trade) const;
 
 	// setup for products with non-deliverable currencies
-	void						setUpNonDeliverable(LAObject& trade) const;
+	void						setUpNonDeliverable(AQLObject& trade) const;
 };
 
 
@@ -812,7 +812,7 @@ class LAPriceCashFlowGenerator::CashletCreator
 {
 public:
     CashletCreator(const LAPriceCashFlowGenerator* cf_gen_,
-                   LAObject* leg_);
+                   AQLObject* leg_);
     void setCfSize(const unsigned int s) { cf_size = s; }
     void setPyamentDates(const DateVector& p, const DateVector& pu){ payment_dates = p; payment_dates_unadj = pu; }
     void setStubType(const bool is_fstub, const bool is_lstub){ is_first_stub = is_fstub; is_last_stub = is_lstub; }
@@ -821,39 +821,39 @@ public:
     bool getIsNotionalExchangeEnd() const { return is_notional_exchange_end; }
     bool getIsCompRoll() const { return is_comp_roll; }
     bool getIsArrear() const { return is_arrear; }
-    LAObject* createCashlet(const size_t cf_pos,
-                            const LAString& name,
-                            const LADate& start_date,
-                            const LADate& end_date,
+    AQLObject* createCashlet(const size_t cf_pos,
+                            const AQLString& name,
+                            const AQLDate& start_date,
+                            const AQLDate& end_date,
                             const DateVector& roll_payment_dates,
                             const DateVector& roll_start_dates,
                             const DateVector& roll_end_dates,
 							const double fixed_rate = static_cast<double>(DEFAULT_SMALL_FIXEDRATE),
 							const bool is_digital = false,
 							const size_t cf_pos2 = 0,
-							const LAString* p_basename = 0);
-    LAObject* createNotionalCashlet(const size_t cf_pos,
-                                    const LAString& name);
+							const AQLString* p_basename = 0);
+    AQLObject* createNotionalCashlet(const size_t cf_pos,
+                                    const AQLString& name);
 
 protected:
     const LAPriceCashFlowGenerator* cf_gen;
-    LAObject* leg;
-    LAObjectPool* objectPool;
+    AQLObject* leg;
+    AQLObjectPool* objectPool;
 
     bool is_comp_roll;
     size_t cf_size;
     DoubleArray notional_array;
-    LAString timing;
+    AQLString timing;
     bool is_arrear;
     bool is_notional_exchange_start, is_notional_exchange_end;
 	bool is_first_stub, is_last_stub;
-    LAString name;
-    const LADataMultiReference* coupon_infos;
+    AQLString name;
+    const AQLDataMultiReference* coupon_infos;
     bool is_renotional;
-    LAString first_odd_idx_type, last_odd_idx_type;
-    LADataHolder* currency, *fx_rate;
+    AQLString first_odd_idx_type, last_odd_idx_type;
+    AQLDataHolder* currency, *fx_rate;
     DateVector payment_dates, payment_dates_unadj;
 	bool is_notionalcfcoupon;
-    const LADataMultiReference* notionalcfcoupon_infos;
+    const AQLDataMultiReference* notionalcfcoupon_infos;
 };
 

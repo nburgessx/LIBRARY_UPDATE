@@ -2,7 +2,7 @@
 
 // Includes: This Library
 #include "LAMathCentralBank.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 
 // Include: Google Test Library
 #include <gTest/gTest.h>
@@ -12,19 +12,19 @@ namespace google_test
 
     TEST( TestDatesCentralBank, UNIT_ErrorHandling )
     {
-        EXPECT_THROW( LAMathCentralBank::meetingSchedule( "XXX" ), LACoreAppError );
+        EXPECT_THROW( LAMathCentralBank::meetingSchedule( "XXX" ), AQLCoreAppError );
     }
 
     TEST( TestDatesCentralBank, UNIT_AccessECBSchedule )
     {
         const DateVector& ecbDates = LAMathCentralBank::meetingSchedule( "eCb" );
 
-        EXPECT_EQ( ecbDates[0], LADate( "20150122" ) );
-        EXPECT_EQ( ecbDates[1], LADate( "20150305" ) );
-        EXPECT_EQ( ecbDates[7], LADate( "20151203" ) );
-        EXPECT_EQ( ecbDates[8], LADate( "20160121" ) );
-        EXPECT_EQ( ecbDates[9], LADate( "20160310" ) );
-        EXPECT_EQ( ecbDates[15], LADate( "20161208" ) );
+        EXPECT_EQ( ecbDates[0], AQLDate( "20150122" ) );
+        EXPECT_EQ( ecbDates[1], AQLDate( "20150305" ) );
+        EXPECT_EQ( ecbDates[7], AQLDate( "20151203" ) );
+        EXPECT_EQ( ecbDates[8], AQLDate( "20160121" ) );
+        EXPECT_EQ( ecbDates[9], AQLDate( "20160310" ) );
+        EXPECT_EQ( ecbDates[15], AQLDate( "20161208" ) );
     }
 
     TEST( TestDatesCentralBank, UNIT_AccessBoeSchedule )
@@ -45,10 +45,10 @@ namespace google_test
     {
         const DateVector& ecbDates = LAMathCentralBank::meetingSchedule( "ECB" );
 
-        LADate today;
+        AQLDate today;
         today.setSystemDate();
 
-        const LADate last = ecbDates.back();
+        const AQLDate last = ecbDates.back();
 
         int yearsToLast = 0;
         int monthsToLast = 0;

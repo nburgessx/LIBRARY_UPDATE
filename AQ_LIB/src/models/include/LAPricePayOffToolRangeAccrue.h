@@ -4,16 +4,16 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LAPricePayOffTool.h"
 
 
-class LAObject;
-class LADate;
+class AQLObject;
+class AQLDate;
 class LAPricePayOff;
 class LAPriceIndexTool;
 class LAPriceIndexToolBase;
-class LAFunctionBase;
+class AQLFunctionBase;
 
 
 
@@ -35,16 +35,16 @@ public:
 	// calculate payoff
 	virtual double				calcPayOff(void) const;
 	// set up this class
-	virtual	void				setUp(const LADate& basedate, const LAObject& trade,
-									unsigned int legNo, const LAObject& cashlet, 
+	virtual	void				setUp(const AQLDate& basedate, const AQLObject& trade,
+									unsigned int legNo, const AQLObject& cashlet, 
 									const LAPricePayOff& payoff,
 									unsigned int currentpos);
 
 protected:
-	void setUpCalcDays(const LADate &start, const LADate &end, const DateVector &observationDates, unsigned int &calcDays);
+	void setUpCalcDays(const AQLDate &start, const AQLDate &end, const DateVector &observationDates, unsigned int &calcDays);
 	unsigned int mCalcDays;                  // range accrue calculation days
-	LADate mRAObservationStart;
-	LADate mRAObservationEnd;
+	AQLDate mRAObservationStart;
+	AQLDate mRAObservationEnd;
 
 	class LAPricePayOffToolRangeAccrueImpl
 	{
@@ -58,8 +58,8 @@ protected:
 		// clone
 		virtual LAPricePayOffToolRangeAccrueImpl* clone(void) const;
 		// set up this class
-		virtual	void setUp(const LADate& basedate, const LAObject& trade, const LAPricePayOff& payoff, 
-						const LAObject& info, const LADate& start, const LADate& end, const LADate& payment,
+		virtual	void setUp(const AQLDate& basedate, const AQLObject& trade, const LAPricePayOff& payoff, 
+						const AQLObject& info, const AQLDate& start, const AQLDate& end, const AQLDate& payment,
 						const DateVector* pobservationDates = 0);
 		// calc index
 		virtual void calcIndex(void);
@@ -67,14 +67,14 @@ protected:
 		virtual bool isHit(unsigned int index);
 
 	protected:
-		LAFunctionBase *mpRAFunc;                // range accrue index method
+		AQLFunctionBase *mpRAFunc;                // range accrue index method
 		std::vector<LAPriceIndexTool *> mpRAIndexs; // range accrue index
 		mutable double mRAMax;                   // range accrue max
 		mutable double mRAMin;                   // range accrue min
 		std::vector<std::map<unsigned int, unsigned int> > mRABusDayMap; // range accrue businessday index
 		std::vector<LAPriceIndexToolBase *> mpRABIndexs;	// range accrue boundary index
-		LAFunctionBase*	mpRAMaxBFunc;			// range accrue boundary max
-		LAFunctionBase*	mpRAMinBFunc;			// range accrue boundary min
+		AQLFunctionBase*	mpRAMaxBFunc;			// range accrue boundary max
+		AQLFunctionBase*	mpRAMinBFunc;			// range accrue boundary min
 		
 	};
 
@@ -83,12 +83,12 @@ protected:
 	mutable bool mIsExcludeAndCondition;	// range accrue include and condition flag
 	mutable bool mIsNotCondition;	// range accrue not condition
 
-	LAFunctionBase* mpHitRateOperator;	// hit rate operator 
+	AQLFunctionBase* mpHitRateOperator;	// hit rate operator 
 	mutable bool mIsHitRateCap;// hit rate cap flag
 	mutable bool mIsHitRateFloor;// hit rate floor flag
 	mutable double mHitRateCap;// hit rate cap
 	mutable double mHitRateFloor;// hit rate floor
-	LAFunctionBase* mpOperator;	// final coupon operator 
+	AQLFunctionBase* mpOperator;	// final coupon operator 
 	mutable bool mIsRAStrike;// range accrue strike flag
 	mutable double mRAStrike;	// range accrue strike
 };

@@ -1,15 +1,15 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace etrading
 {
 	//Store inputDate info
 	struct InputDateInfo
 	{
-		LADate tDate; 
-		LADate TDate;
+		AQLDate tDate; 
+		AQLDate TDate;
 		double t; // yearFraction from asOfDate to tDate
 		double tao; // T-t, yearFraction from tDate to TDate
 		double T; // yearFraction of from asOfDate to TDate, derived from (t + tao)
@@ -35,7 +35,7 @@ namespace etrading
 	*  @param [in]		P_t_Ts				Discount factors P(t,T)s
 	*  @return			True to indicate it's future curve (i.e. valuationDate > asOfDate), false to indicate it's today's curve (i.e. valuationDate == asOfDate)
 	*/
-	bool isFutureValuation(const LADate& curveAsOfDate, const LADate& valuationDate);
+	bool isFutureValuation(const AQLDate& curveAsOfDate, const AQLDate& valuationDate);
 
 	/* @brief			Get the default short rate at asOfDate if its not provided 
 	*  @param [in]		curveAsOfDate	    curveAsOfDate
@@ -44,6 +44,6 @@ namespace etrading
     *  @param [in]		futureValuation		False to indicate it's valuated at asOfDate, True to indicate it's valuated at a later date
 	*  @return			default short rate at asOfDate if its not provided
 	*/
-	double getDefaultShortRate(const LADate& curveAsOfDate, const std::string& curveCollection, const std::string& curveIndex, const double& rt, const bool& futureValuation);
+	double getDefaultShortRate(const AQLDate& curveAsOfDate, const std::string& curveCollection, const std::string& curveIndex, const double& rt, const bool& futureValuation);
 
 }

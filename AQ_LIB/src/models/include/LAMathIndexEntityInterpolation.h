@@ -27,18 +27,18 @@ public:
 
 // LIFECYCLE
     // default constructor
-	LAMathIndexEntityInterpolation(LADataInstance* dataInstance);
+	LAMathIndexEntityInterpolation(AQLDataInstance* dataInstance);
     // copy constructor
 	LAMathIndexEntityInterpolation(const LAMathIndexEntityInterpolation& irse);
     // destructor
 	virtual ~LAMathIndexEntityInterpolation();
 
 	// get index 
-	LAObject*			clone() const;// %%% COVARIANT RETURN %%%
+	AQLObject*			clone() const;// %%% COVARIANT RETURN %%%
 
 protected:
 	// copy index object	 
-	virtual LAObject&	copy(const LAObject& e);
+	virtual AQLObject&	copy(const AQLObject& e);
 	// calculate index
 	virtual	void		calcIndex();	
 	// set up this class for index calculation

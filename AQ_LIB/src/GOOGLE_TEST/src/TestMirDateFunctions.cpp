@@ -2,7 +2,7 @@
 
 // Includes: This Library
 #include "LADateScheduleHelpers.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 
 // Include: Google Test Library
 #include <gTest/gTest.h>
@@ -17,12 +17,12 @@ namespace google_test
     TEST( TestMirDateFunctions, UNIT_checkDateFromTerm_ACT_365_ISDA )
     {
 		// Test adding a year fraction onto a date
-		LADate baseDate("20160914");
+		AQLDate baseDate("20160914");
 		double inputTerm = 0.122950819672131;
-		LAString dayCount("ACT/365_ISDA");
-		LADate dateFromTerm1 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, inputTerm, dayCount);
+		AQLString dayCount("ACT/365_ISDA");
+		AQLDate dateFromTerm1 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, inputTerm, dayCount);
 
-		EXPECT_EQ( LADate( "20161029" ), dateFromTerm1 );
+		EXPECT_EQ( AQLDate( "20161029" ), dateFromTerm1 );
 
 		// Test calculating the year fraction between two dates. This should match the input year fraction
 		double impliedTerm = etrading::LADateScheduleHelpers::getTerm(baseDate, dateFromTerm1, dayCount);
@@ -31,20 +31,20 @@ namespace google_test
 		EXPECT_NEAR( inputTerm, impliedTerm, tolerance );
 
 		// Verify that the date from impliedTerm again reproduces the expected date
-		LADate dateFromTerm2 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, impliedTerm, dayCount);
+		AQLDate dateFromTerm2 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, impliedTerm, dayCount);
 
-		EXPECT_EQ( LADate( "20161029" ), dateFromTerm2 );
+		EXPECT_EQ( AQLDate( "20161029" ), dateFromTerm2 );
     }
 
 	TEST( TestMirDateFunctions, UNIT_checkDateFromTerm_ACT_360 )
     {
 		// Test adding a year fraction on to a date
-		LADate baseDate("20160914");
+		AQLDate baseDate("20160914");
 		double inputTerm = 0.122950819672131;
-		LAString dayCount("ACT/360");
-		LADate dateFromTerm1 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, inputTerm, dayCount);
+		AQLString dayCount("ACT/360");
+		AQLDate dateFromTerm1 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, inputTerm, dayCount);
 
-		EXPECT_EQ( LADate( "20161028" ), dateFromTerm1 );
+		EXPECT_EQ( AQLDate( "20161028" ), dateFromTerm1 );
 
 		// NOTE: The impliedTerm is different from the inputTerm because the impliedTerm is a full-day term.
 		// The difference is expected.
@@ -54,7 +54,7 @@ namespace google_test
 		EXPECT_NEAR( 0.122222222, impliedTerm, tolerance );
 
 		// Most importantly, we reproduce the end date calculated in the first step
-		LADate dateFromTerm2 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, impliedTerm, dayCount);
+		AQLDate dateFromTerm2 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, impliedTerm, dayCount);
 
 		EXPECT_EQ( dateFromTerm1, dateFromTerm2 );
     }
@@ -62,12 +62,12 @@ namespace google_test
 	TEST( TestMirDateFunctions, UNIT_checkDateFromTerm_ACT_ACT )
     {
 		// Test adding a year fraction onto a date
-		LADate baseDate("20160914");
+		AQLDate baseDate("20160914");
 		double inputTerm = 0.122950819672131;    
-		LAString dayCount("ACT/ACT");
-		LADate dateFromTerm1 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, inputTerm, dayCount);
+		AQLString dayCount("ACT/ACT");
+		AQLDate dateFromTerm1 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, inputTerm, dayCount);
 
-		EXPECT_EQ( LADate( "20161029" ), dateFromTerm1 );
+		EXPECT_EQ( AQLDate( "20161029" ), dateFromTerm1 );
 
 		// Test calculating the year fraction between two dates. This should match the input year fraction
 		double impliedTerm = etrading::LADateScheduleHelpers::getTerm(baseDate, dateFromTerm1, dayCount);
@@ -76,9 +76,9 @@ namespace google_test
 		EXPECT_NEAR( inputTerm, impliedTerm, tolerance );
 
 		// Verify that the date from impliedTerm reproduces the expected date
-		LADate dateFromTerm2 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, impliedTerm, dayCount);
+		AQLDate dateFromTerm2 = etrading::LADateScheduleHelpers::getDateFromTerm(baseDate, impliedTerm, dayCount);
 
-		EXPECT_EQ( LADate( "20161029" ), dateFromTerm2 );
+		EXPECT_EQ( AQLDate( "20161029" ), dateFromTerm2 );
 	}
 
 }

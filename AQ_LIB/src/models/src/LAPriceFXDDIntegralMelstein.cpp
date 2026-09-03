@@ -24,7 +24,7 @@
 
 
 #include "LAPriceFXDDIntegralMelstein.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAPriceDriftFX.h"
 #include "LAPriceDriftFXLogNumeraire.h"
 #include "LAMathVolFuncBase.h"
@@ -66,7 +66,7 @@ LAPriceFXDDIntegralMelstein::~LAPriceFXDDIntegralMelstein()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceFXDDIntegralMelstein::clone() const	
 {
     try 
@@ -75,7 +75,7 @@ LAPriceFXDDIntegralMelstein::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -112,8 +112,8 @@ LAPriceFXDDIntegralMelstein::getType() const
 */
 void
 LAPriceFXDDIntegralMelstein::integral(double ts, double te, 
-							vector<LAFunctionBase*>::const_iterator drift,										
-							vector<vector<LAFunctionBase*> >::const_iterator vol,
+							vector<AQLFunctionBase*>::const_iterator drift,										
+							vector<vector<AQLFunctionBase*> >::const_iterator vol,
 							DoubleArray::const_iterator	bm,
 							SCALARARRAY::iterator	x_in_out,
 							unsigned int varnum
@@ -123,10 +123,10 @@ LAPriceFXDDIntegralMelstein::integral(double ts, double te,
 	if (!(*drift)->isTypeOf(FN_DRIFTFX))
 	{	
 		//error
-		throw LACoreInvalidData("drift class must be LAPriceDriftFX!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("drift class must be LAPriceDriftFX!", __FILE__, __LINE__);
 	}	
 	
-	const LAFunctionBase* volfunc;
+	const AQLFunctionBase* volfunc;
 	if ((*vol)[0]->isTypeOf(FN_VOLFUNCBASE))
 	{
 		volfunc = dynamic_cast<LAMathVolFuncBase*>((*vol)[0])->getVolatility();
@@ -138,7 +138,7 @@ LAPriceFXDDIntegralMelstein::integral(double ts, double te,
 	if (!volfunc->isTypeOf(FN_VOLFUNCFXDD))
 	{
 		//error
-		throw LACoreInvalidData("volatility class must be LAMathVolFuncFXDD!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("volatility class must be LAMathVolFuncFXDD!", __FILE__, __LINE__);
 	}
 	const LAMathVolFuncFXDD* volfuncdd =dynamic_cast<const LAMathVolFuncFXDD*>(volfunc);
 
@@ -168,7 +168,7 @@ LAPriceFXDDIntegralMelstein::integral(double ts, double te,
 	else if (mSdeType == dX)
 	{
 		double int_drift = (*drift)->operator ()(mVar) * (te - ts);
-		const double sigma_vol = volfuncdd->getIntegralofSigma(ts, te) / LAMath::sqrt(te - ts);
+		const double sigma_vol = volfuncdd->getIntegralofSigma(ts, te) / AQLMath::sqrt(te - ts);
 		const double alpha = volfuncdd->getAlpha()(ts);
 		const double beta = volfuncdd->getBeta(ts);
 		const double fx_ = *x_in_out;

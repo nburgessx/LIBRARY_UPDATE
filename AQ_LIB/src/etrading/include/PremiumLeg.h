@@ -43,7 +43,7 @@ namespace etrading
 		* @param[in]	toDate			The date to which we wish to calculate the year fraction
 		* @returns: The year fraction
 		*/
-		double accruedYearFraction( const CreditModel& creditModel, const LADate& toDate );
+		double accruedYearFraction( const CreditModel& creditModel, const AQLDate& toDate );
 
 		/* @brief[in]	Computes the accrued interest from the previous coupon date to the specified date
 		*				i.e. this corresponds to the amount of premium coupon that is accrued
@@ -52,7 +52,7 @@ namespace etrading
 		* @param[in]	toDate			The date to which we wish to calculate the accrued interest for
 		* @returns: The accrued interest
 		*/
-		double accruedInterest( const CreditModel& creditModel, const LADate& toDate );
+		double accruedInterest( const CreditModel& creditModel, const AQLDate& toDate );
 
 		static std::vector<std::string> legLVBWithoutScheduleKeys()
 		{
@@ -78,7 +78,7 @@ namespace etrading
 		*				When set to TRUE (pay on next coupon date ), the PV should match the analytic formula.
 		*  @returns	The calculated PV value
 		*/
-		virtual double riskFreePVtoStoppingDate( DataProvider& dataProvider, const CreditModel& creditModel, const LADate& stoppingDate, const double discountFactorAtStoppingDate = std::numeric_limits<double>::quiet_NaN(), const bool payDefaultCashflowsOnNextCouponDate = false );
+		virtual double riskFreePVtoStoppingDate( DataProvider& dataProvider, const CreditModel& creditModel, const AQLDate& stoppingDate, const double discountFactorAtStoppingDate = std::numeric_limits<double>::quiet_NaN(), const bool payDefaultCashflowsOnNextCouponDate = false );
 
 		std::unordered_set<CashflowHeaderEnum,EnumClassHash> allowedColumns() const;
 
@@ -94,14 +94,14 @@ namespace etrading
 		* @param[in]	recoveryRate			The estimated amount of capital recovered after default
 		* @param[in]	includeAccruedInterest	Specifies whether cashflows should include the accruedInterest
 		*/
-		void setSurvivalProbabilitiesUsingHazardRate( const LADate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest  );
+		void setSurvivalProbabilitiesUsingHazardRate( const AQLDate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest  );
 
 		/* @brief Updates the cashflow survival / default probabilities using the provided credit model.
 		*
 		* @param[in]	asOfDate				The valuation date of the leg
 		* @param[in]	creditModel				The calibrated credit model
 		*/
-		void setSurvivalProbabilitiesUsingCreditModel( const LADate& asOfDate, const CreditModel& creditModel );
+		void setSurvivalProbabilitiesUsingCreditModel( const AQLDate& asOfDate, const CreditModel& creditModel );
 
 		/*
 		* @brief	Helper method which initializes the survival probability for all leg cashflows to 1.0.

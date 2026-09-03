@@ -10,7 +10,7 @@ namespace google_test
         , public TryMeCurveAccessors
     {
     public:
-        TryMeCurveStd( const LAString& inputFile );
+        TryMeCurveStd( const AQLString& inputFile );
         // return input swap rates as an ReadTestData table
         virtual const etrading::ReadDataFile& swapRates() const
         {
@@ -22,5 +22,5 @@ namespace google_test
 	*  @brief			Set up STD swap curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeSTDCurve(const LAString& stdInputFile);
+	void setUpMeSTDCurve(const AQLString& stdInputFile);
 }

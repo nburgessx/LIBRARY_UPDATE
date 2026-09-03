@@ -21,8 +21,8 @@
 
 
 
-class LAString;
-class LADataInstance;
+class AQLString;
+class AQLDataInstance;
 class LARiskConfigurationVolCreatorLMM;
 //===================== Class Declare LARiskConfigurationIRVega==================================
 /*! 
@@ -45,64 +45,64 @@ protected:
 friend class LARiskConfigurationVolCreatorLMM;
 	//==============================================
 	// get  target names 
-	virtual  LAString getTargetNames(const LAString &ccy, LADataInstance &dataInstance)  const;	
+	virtual  AQLString getTargetNames(const AQLString &ccy, AQLDataInstance &dataInstance)  const;	
 	//==============================================
 	// create scenario volatility object
-	virtual std::vector<LAObject *> createVolatilityEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const;
+	virtual std::vector<AQLObject *> createVolatilityEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const;
 	//==============================================
 	// get operator1
-	virtual  LAString  getOperator1(void) const;	
+	virtual  AQLString  getOperator1(void) const;	
 	//==============================================
 	// get coefficient1
-	virtual  LAString  getCoefficient1(const LAString &ccy) const;
+	virtual  AQLString  getCoefficient1(const AQLString &ccy) const;
 	//==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &ccy) const;
+	virtual  AQLString  getOutPutName1(const AQLString &ccy) const;
 	//==============================================
 	// get operator2
-	virtual  LAString  getOperator2(void) const;	
+	virtual  AQLString  getOperator2(void) const;	
 	//==============================================
 	// get coefficient2
-	virtual  LAString  getCoefficient2(const LAString &ccy) const;	
+	virtual  AQLString  getCoefficient2(const AQLString &ccy) const;	
 	//==============================================
 	// get outputname2
-	virtual  LAString  getOutPutName2(const LAString &ccy) const;
+	virtual  AQLString  getOutPutName2(const AQLString &ccy) const;
 	//==============================================
 	// get shift type
-	virtual  LAString  getShiftType(const LAString &ccy) const;
+	virtual  AQLString  getShiftType(const AQLString &ccy) const;
 	//==============================================
 	// get bump direction
-	virtual  LAString  getBumpDirection(const LAString &ccy) const;
+	virtual  AQLString  getBumpDirection(const AQLString &ccy) const;
 	//==============================================
 	// get risk name
-	virtual  LAString getRiskName(void) const;
+	virtual  AQLString getRiskName(void) const;
 	//==============================================
 	// check target currencies
-	virtual  LAString getTargetCurrencies() const;
+	virtual  AQLString getTargetCurrencies() const;
 	//==============================================
 	// isgridsensitivity
-	virtual  bool  isGridSensitivity(const LAString &ccy) const;
+	virtual  bool  isGridSensitivity(const AQLString &ccy) const;
 	//==============================================
 	// isparallelshift
-	virtual  bool isParallelShift(const LAString &ccy) const;
+	virtual  bool isParallelShift(const AQLString &ccy) const;
 	//==============================================
 	// get grid term
-	virtual std::vector<LAString> getGridTerm(const LAString &ccy) const;
+	virtual std::vector<AQLString> getGridTerm(const AQLString &ccy) const;
 	//==============================================
 	// isfileuse
-	virtual  bool isShiftValFileUse(const LAString &ccy) const;
+	virtual  bool isShiftValFileUse(const AQLString &ccy) const;
 	//==============================================
 	// get scenario1 shift
-	virtual double getScenario1ShiftValue(const LAString &ccy) const;
+	virtual double getScenario1ShiftValue(const AQLString &ccy) const;
 	//==============================================
 	// get scenario2 shift
-	virtual double getScenario2ShiftValue(const LAString &ccy) const;
+	virtual double getScenario2ShiftValue(const AQLString &ccy) const;
 	//==============================================
 	// get divunit
-	virtual double getDivUnit(const LAString &ccy) const;
+	virtual double getDivUnit(const AQLString &ccy) const;
 	//==============================================
 	// get double matrix
-	virtual DoubleMatrix getCoordinatesMatrix(const LAString &ccy) const;
+	virtual DoubleMatrix getCoordinatesMatrix(const AQLString &ccy) const;
 
 };
 

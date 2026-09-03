@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Variant.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -12,6 +12,6 @@ namespace validation
     *  @param [in]		curveIndex		Index of the curve set
     *  @return			Array of terms and corresponding discount factors from the yield curve
     */
-    DoubleArray tryMeCurveDisplay( const LAString& curveCollection, const LAString& curveIndex );
+    DoubleArray tryMeCurveDisplay( const AQLString& curveCollection, const AQLString& curveIndex );
 
 }

@@ -5,9 +5,9 @@
 #endif
 
 #include "LARiskConfigurationYield.h"
-#include "LADataInstance.h"
-#include "LAObjectPool.h"
-#include "LADataReference.h"
+#include "AQLDataInstance.h"
+#include "AQLObjectPool.h"
+#include "AQLDataReference.h"
 #include "LAPricePortfolioValue.h"
 #include "LAMathYieldCurve.h"
 #include "LAMathYieldCurvePro.h"
@@ -49,10 +49,10 @@ LARiskConfigurationYield::~LARiskConfigurationYield(void)
 	@param[in] ccy
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationYield::createScenario1Entity(const LAString &ccy, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationYield::createScenario1Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index)  const
 {
 	return createYieldEntity(ccy, dataInstance, SCENARIO_1, index);
 }
@@ -63,10 +63,10 @@ LARiskConfigurationYield::createScenario1Entity(const LAString &ccy, LADataInsta
 	@param[in] ccy
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *> 
+	@return vector<AQLObject *> 
 */
-vector<LAObject *> 
-LARiskConfigurationYield::createScenario2Entity(const LAString &ccy, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationYield::createScenario2Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index)  const
 {
 	return createYieldEntity(ccy, dataInstance, SCENARIO_2, index);
 }
@@ -76,15 +76,15 @@ LARiskConfigurationYield::createScenario2Entity(const LAString &ccy, LADataInsta
     @brief get targetNames
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYield::getTargetNames(const LAString &ccy, LADataInstance &dataInstance) const
+AQLString
+LARiskConfigurationYield::getTargetNames(const AQLString &ccy, AQLDataInstance &dataInstance) const
 {
 	unsigned int gridIndex = getMaxGridIndex(ccy);
-	const LAString yieldName = LAMarketData::getBaseYieldName(ccy);
+	const AQLString yieldName = LAMarketData::getBaseYieldName(ccy);
 
-	LAString ret;
+	AQLString ret;
 	if (isParallelShift(ccy))
 	{
 		ret += yieldName + ":";
@@ -92,7 +92,7 @@ LARiskConfigurationYield::getTargetNames(const LAString &ccy, LADataInstance &da
 
 	if (isGridSensitivity(ccy))
 	{
-		LAStringVector bucketterm = getBucketGridTerm(ccy);
+		AQLStringVector bucketterm = getBucketGridTerm(ccy);
 		if (bucketterm[0] != AQ_NO_DATA)
 			gridIndex = bucketterm.size() - 1;
 		for (unsigned int i = 0; i <= gridIndex; ++i)
@@ -103,7 +103,7 @@ LARiskConfigurationYield::getTargetNames(const LAString &ccy, LADataInstance &da
 
 	if (ret.size() < 2)
 	{
-		throw LACoreInvalidData("Grid nor parallel is not set. can not create targetnames!!", __FILE__, __LINE__); 
+		throw AQLCoreInvalidData("Grid nor parallel is not set. can not create targetnames!!", __FILE__, __LINE__); 
 	}
 	return ret.subString(0, ret.size() - 2);
 }
@@ -117,18 +117,18 @@ LARiskConfigurationYield::getTargetNames(const LAString &ccy, LADataInstance &da
 	@return int
 */
 int 
-LARiskConfigurationYield::getMaxGridIndex(const LAString &ccy) const
+LARiskConfigurationYield::getMaxGridIndex(const AQLString &ccy) const
 {
 	const int dealMax = LACoreDataService::getContext(CONTEXT_KEY_DEAL_MAXTERM).getIntValue();
 
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
-	LAPriceDataDayCount dayCount(ACT_365_ISDA);
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLPriceDataDayCount dayCount(ACT_365_ISDA);
 
-	LAStringVector grids = getShiftGridTerm(ccy);
+	AQLStringVector grids = getShiftGridTerm(ccy);
 	const unsigned int gSize = grids.size();
 	if (gSize < 1)
 	{
-		throw LACoreInvalidData("Grid size must be more than zero.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Grid size must be more than zero.", __FILE__, __LINE__);
 	}
 	int ret = gSize - 1;
 	for (unsigned int i = 0; i < gSize; ++i)
@@ -142,7 +142,7 @@ LARiskConfigurationYield::getMaxGridIndex(const LAString &ccy) const
 		}
 		if (grids[i].findString("ED") != -1) 
 		{
-			LADate date = LAMathDateCalculations::getIMMDateFromTerm(asOfDate, grids[i]);
+			AQLDate date = LAMathDateCalculations::getIMMDateFromTerm(asOfDate, grids[i]);
 			date.addMonths(3);
 			
 			int term = asOfDate.intervalYears(date);
@@ -161,7 +161,7 @@ LARiskConfigurationYield::getMaxGridIndex(const LAString &ccy) const
 			grids[i].findString("M") > 0  || 
 			grids[i].findString("Y") > 0)
 		{
-			LADate date = LAMathDateCalculations::getDate(asOfDate, grids[i], true);
+			AQLDate date = LAMathDateCalculations::getDate(asOfDate, grids[i], true);
 			int term = asOfDate.intervalYears(date);
 
 			if (term > dealMax)
@@ -188,26 +188,26 @@ LARiskConfigurationYield::getMaxGridIndex(const LAString &ccy) const
 	@param[in] ccy
 	@return DoubleArray
 */
-LAStringVector
-LARiskConfigurationYield::getExtraTargetNames1(const LAString &ccy, LADataInstance &dataInstance) const
+AQLStringVector
+LARiskConfigurationYield::getExtraTargetNames1(const AQLString &ccy, AQLDataInstance &dataInstance) const
 {
 	if (isZeroBump(ccy))
 	{
 		return LARiskConfiguration::getExtraTargetNames1(ccy, dataInstance);
 	}
-	LAStringVector ret(0);
-	LAStringVector targetNames = getTargetNames(ccy, dataInstance).toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector ret(0);
+	AQLStringVector targetNames = getTargetNames(ccy, dataInstance).toToken(MULTI_STATIC_DATA_DELIMITER);
 	unsigned int size = targetNames.size();
 
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 
 	// get affecting ccys
-	const LAStringVector &fCurveCcys = ycPro.getAffectingCcy();
+	const AQLStringVector &fCurveCcys = ycPro.getAffectingCcy();
 	// get col affecting ccys
 	StringSet cCurveCcys;
-	LAStringVector tmpCcys = ycPro.getColAffectingCcy();
+	AQLStringVector tmpCcys = ycPro.getColAffectingCcy();
 	cCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
 	for (int i = 0; i < fCurveCcys.size(); ++i)
 	{
@@ -235,8 +235,8 @@ LARiskConfigurationYield::getExtraTargetNames1(const LAString &ccy, LADataInstan
 
 	for (StringSet::const_iterator it = curveCcys.begin(); it != curveCcys.end(); ++it)
 	{
-		const LAString yieldName = LAMarketData::getBaseYieldName(*it);
-		LAString ccy_fYldTargetNames;
+		const AQLString yieldName = LAMarketData::getBaseYieldName(*it);
+		AQLString ccy_fYldTargetNames;
 		for (unsigned int j = 0; j < size; ++j)
 		{
 			ccy_fYldTargetNames += yieldName + ":";
@@ -248,15 +248,15 @@ LARiskConfigurationYield::getExtraTargetNames1(const LAString &ccy, LADataInstan
 		// check calibration target
 		if (isCalibTarget(*it))
 		{
-			LAString ccy_fTargetName;
-			LAString ccy_fBVolName = LAMarketData::getBaseVolatilityName(*it);
+			AQLString ccy_fTargetName;
+			AQLString ccy_fBVolName = LAMarketData::getBaseVolatilityName(*it);
 			for (unsigned int j = 0; j < size; ++j)
 			{
 				ccy_fTargetName += ccy_fBVolName + ":";
 			}
 			if (ccy_fTargetName.size() < 2)
 			{
-				throw LACoreInvalidData("Extra targetname1 can not set !!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Extra targetname1 can not set !!", __FILE__, __LINE__);
 			}
 			ret.push_back(ccy_fTargetName.subString(0, ccy_fTargetName.size() - 2));
 		}
@@ -264,8 +264,8 @@ LARiskConfigurationYield::getExtraTargetNames1(const LAString &ccy, LADataInstan
 	// check calibration target
 	if (isCalibTarget(ccy))
 	{
-		LAString ccy_targetNames1;
-		LAString ccy_bVolName = LAMarketData::getBaseVolatilityName(ccy);
+		AQLString ccy_targetNames1;
+		AQLString ccy_bVolName = LAMarketData::getBaseVolatilityName(ccy);
 		for (unsigned int i = 0; i < size; ++i)
 		{
 			ccy_targetNames1 += ccy_bVolName + ":";
@@ -273,19 +273,19 @@ LARiskConfigurationYield::getExtraTargetNames1(const LAString &ccy, LADataInstan
 
 		if (ccy_targetNames1.size() < 2)
 		{
-			throw LACoreInvalidData("Extra targetname1 can not set !!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Extra targetname1 can not set !!", __FILE__, __LINE__);
 		}
 		ret.push_back(ccy_targetNames1.subString(0, ccy_targetNames1.size() - 2));
 	}
-	LAStringVector targetFXVec = getCalibTargetFX(ccy, dataInstance);
+	AQLStringVector targetFXVec = getCalibTargetFX(ccy, dataInstance);
 	unsigned int fxSize = targetFXVec.size();
 	for (unsigned int i = 0; i < fxSize; ++i)
 	{
 		// if cross check fx is target
-		LAStringVector ccys = targetFXVec[i].toToken(FX_DELIMITER);
-		LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-		LAString fx_targetNames1;
-		LAString fx_bVolName = LAMarketData::getBaseVolatilityName(key_fx);
+		AQLStringVector ccys = targetFXVec[i].toToken(FX_DELIMITER);
+		AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+		AQLString fx_targetNames1;
+		AQLString fx_bVolName = LAMarketData::getBaseVolatilityName(key_fx);
 		for (unsigned int i = 0; i < size; ++i)
 		{
 			fx_targetNames1 += fx_bVolName + ":";
@@ -293,7 +293,7 @@ LARiskConfigurationYield::getExtraTargetNames1(const LAString &ccy, LADataInstan
 
 		if (fx_targetNames1.size() < 2)
 		{
-			throw LACoreInvalidData("Extra targetname1 can not set !!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Extra targetname1 can not set !!", __FILE__, __LINE__);
 		}
 		ret.push_back(fx_targetNames1.subString(0, fx_targetNames1.size() - 2));
 	}
@@ -306,10 +306,10 @@ LARiskConfigurationYield::getExtraTargetNames1(const LAString &ccy, LADataInstan
 	@param[in] ccy
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<vector<LAObject *> > 
+	@return vector<vector<AQLObject *> > 
 */
-vector<vector<LAObject *> > 
-LARiskConfigurationYield::createExtraScenario1Entity(const LAString &ccy, LADataInstance &dataInstance, int index)  const
+vector<vector<AQLObject *> > 
+LARiskConfigurationYield::createExtraScenario1Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index)  const
 {
 	if (isZeroBump(ccy))
 	{
@@ -331,19 +331,19 @@ LARiskConfigurationYield::createExtraScenario1Entity(const LAString &ccy, LAData
 	@param[in] ccy
 	@return DoubleArray
 */
-LAStringVector
-LARiskConfigurationYield::getExtraTargetNames2(const LAString &ccy, LADataInstance &dataInstance) const
+AQLStringVector
+LARiskConfigurationYield::getExtraTargetNames2(const AQLString &ccy, AQLDataInstance &dataInstance) const
 {
 	if (isZeroBump(ccy))
 	{
 		return LARiskConfiguration::getExtraTargetNames2(ccy, dataInstance);
 	}
-	LAString bumpDirection = getBumpDirection(ccy);
+	AQLString bumpDirection = getBumpDirection(ccy);
 	bumpDirection.toUpper();
 	// if scenario2 only updownshift
 	if (bumpDirection != RISK_BUMPDIRECTION_UPDOWNSHIFT)
 	{
-		return LAStringVector(0);
+		return AQLStringVector(0);
 	}
 
 	return getExtraTargetNames1(ccy, dataInstance);
@@ -355,21 +355,21 @@ LARiskConfigurationYield::getExtraTargetNames2(const LAString &ccy, LADataInstan
 	@param[in] ccy
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<vector<LAObject *> > 
+	@return vector<vector<AQLObject *> > 
 */
-vector<vector<LAObject *> > 
-LARiskConfigurationYield::createExtraScenario2Entity(const LAString &ccy, LADataInstance &dataInstance, int index)  const
+vector<vector<AQLObject *> > 
+LARiskConfigurationYield::createExtraScenario2Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index)  const
 {
 	if (isZeroBump(ccy))
 	{
 		return LARiskConfiguration::createExtraScenario2Entity(ccy, dataInstance, index);
 	}
-	LAString bumpDirection = getBumpDirection(ccy);
+	AQLString bumpDirection = getBumpDirection(ccy);
 	bumpDirection.toUpper();
 	// if scenario2 only updownshift
 	if (bumpDirection != RISK_BUMPDIRECTION_UPDOWNSHIFT)
 	{
-		return vector<vector<LAObject *> >(0);
+		return vector<vector<AQLObject *> >(0);
 	}
 
 	if (isRealCalib())
@@ -390,27 +390,27 @@ LARiskConfigurationYield::createExtraScenario2Entity(const LAString &ccy, LAData
 	@param[in,out] dataInstance
 	@param[in] scenario
 	@param[in] index
-	@return vector<vector<LAObject *> > 
+	@return vector<vector<AQLObject *> > 
 */
-vector<vector<LAObject *> > 
-LARiskConfigurationYield::createExtraScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
+vector<vector<AQLObject *> > 
+LARiskConfigurationYield::createExtraScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
-	vector<vector<LAObject *> > ret(0);
+	vector<vector<AQLObject *> > ret(0);
 
 	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 
-	map<LAString, vector<LAObject *> > scemap;
-	vector<LAObject *> sce;
+	map<AQLString, vector<AQLObject *> > scemap;
+	vector<AQLObject *> sce;
 
 	// get affecting ccys
-	const LAStringVector& fCurveCcys = ycPro.getAffectingCcy();
+	const AQLStringVector& fCurveCcys = ycPro.getAffectingCcy();
 	// get col affecting ccys
 	StringSet cCurveCcys;
 	StringSet cfCurveCcys;
-	LAStringVector tmpCcys = ycPro.getColAffectingCcy();
+	AQLStringVector tmpCcys = ycPro.getColAffectingCcy();
 	cCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
 	for (int unsigned i = 0; i < fCurveCcys.size(); ++i)
 	{
@@ -439,7 +439,7 @@ LARiskConfigurationYield::createExtraScenarioEntity(const LAString &ccy, LADataI
 		cfCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
 	}
 	cfCurveCcys.erase(ccy);
-	const LAString usd = "USD";
+	const AQLString usd = "USD";
 	if (cfCurveCcys.find(usd) != cfCurveCcys.end())
 	{
 		// calc usd curves first
@@ -464,23 +464,23 @@ LARiskConfigurationYield::createExtraScenarioEntity(const LAString &ccy, LADataI
 	curveCcys.erase(ccy);
 
 	// set in object pool
-	for (map<LAString, vector<LAObject *> >::const_iterator it = scemap.begin(); it != scemap.end(); ++it)
+	for (map<AQLString, vector<AQLObject *> >::const_iterator it = scemap.begin(); it != scemap.end(); ++it)
 	{
 		sce = it->second;
 		ret.push_back(sce);
 		for (int unsigned j = 0; j < sce.size(); ++j)
 		{
-			const LAString &name = dynamic_cast<const LADataString &>(sce[j]->getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+			const AQLString &name = dynamic_cast<const AQLDataString &>(sce[j]->getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 			sce[j]->remove(AP_CALIBRATION_DATA_ISRISKENTITY);
-			sce[j]->add(AP_CALIBRATION_DATA_ISRISKENTITY, new LADataBool(true));
-			LAObjectHolder objHolder = objPool.getObject(name,  ENCHKTYPE_NOCHECK);
+			sce[j]->add(AP_CALIBRATION_DATA_ISRISKENTITY, new AQLDataBool(true));
+			AQLObjectHolder objHolder = objPool.getObject(name,  ENCHKTYPE_NOCHECK);
 			if (!objHolder.isDefined())
 				objPool.set(name, sce[j]);
 		}
 	}
 	scemap.clear();
 
-	for (set<LAString>::const_iterator it = curveCcys.begin(); it != curveCcys.end(); ++it)
+	for (set<AQLString>::const_iterator it = curveCcys.begin(); it != curveCcys.end(); ++it)
 	{
 		if (isCalibTarget(*it))
 		{
@@ -495,12 +495,12 @@ LARiskConfigurationYield::createExtraScenarioEntity(const LAString &ccy, LADataI
 	}
 
 	// set parameter for fx vol shift
-	LAStringVector targetFXVec = getCalibTargetFX(ccy, dataInstance);
+	AQLStringVector targetFXVec = getCalibTargetFX(ccy, dataInstance);
 	unsigned int fxSize = targetFXVec.size();
 	// scenario check
 	if (fxSize > 0 && mSce1Names.empty() && mSce2Names.empty())
 	{
-		throw LACoreInvalidData("Scenario entities have not been created yet", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Scenario entities have not been created yet", __FILE__, __LINE__);
 	}
 	for (unsigned int i = 0; i < fxSize; ++i)
 	{
@@ -517,18 +517,18 @@ LARiskConfigurationYield::createExtraScenarioEntity(const LAString &ccy, LADataI
 	@param[in,out] dataInstance
 	@param[in] scenario
 	@param[in] index
-	@return vector<vector<LAObject *> > 
+	@return vector<vector<AQLObject *> > 
 */
-vector<vector<LAObject *> > 
-LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
+vector<vector<AQLObject *> > 
+LARiskConfigurationYield::createExtraScenarioEntityOld(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
 {
-	vector<vector<LAObject *> > ret(0);
+	vector<vector<AQLObject *> > ret(0);
 
-	const LAString model = LAMarketData::getModelName(ccy);
-	const LAString riskName = getRiskName();
+	const AQLString model = LAMarketData::getModelName(ccy);
+	const AQLString riskName = getRiskName();
 
-	LAString riskNameSuffix;
-	LAStringVector sceNames;
+	AQLString riskNameSuffix;
+	AQLStringVector sceNames;
 	if (scenarioNum == SCENARIO_1)
 	{
 		riskNameSuffix = "ExtraScenario1";
@@ -540,13 +540,13 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 		sceNames = mSce2Names;
 	}
 
-	LAString bShiftStr = getBaseShiftStr(ccy, index); // base shirt value(string)
+	AQLString bShiftStr = getBaseShiftStr(ccy, index); // base shirt value(string)
 	if (isCalibTarget(ccy))
 	{
 		// set up param for volatility shift
 		MAScenarioParam param;
 		param.ccy = ccy;
-		param.calcType = ccy + "_" + riskName + "_" + riskNameSuffix + "_1_" + LAString(index);
+		param.calcType = ccy + "_" + riskName + "_" + riskNameSuffix + "_1_" + AQLString(index);
 		param.model = model;
 		param.inputType = LAMarketData::getVolInputType(model, ccy, riskName);
 		param.targetName = LAMarketData::getBaseVolatilityName(ccy);
@@ -563,13 +563,13 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 		if (isGridSensitivity(ccy))
 		{
 			param.isGrid = true;
-			LAStringVector gridTerm = getGridTerm(ccy);   //M-Lib type grid
-			LAStringVector marketGridTerm = getShiftGridTerm(ccy); // market(file set) grid
+			AQLStringVector gridTerm = getGridTerm(ccy);   //M-Lib type grid
+			AQLStringVector marketGridTerm = getShiftGridTerm(ccy); // market(file set) grid
 			unsigned int gridSize = gridTerm.size();
 			const unsigned int maxIndex = getMaxGridIndex(ccy);
 			unsigned int refAddIndex = 0;
 
-			LAStringVector BucketTerm = getBucketGridTerm(ccy);
+			AQLStringVector BucketTerm = getBucketGridTerm(ccy);
 			if (BucketTerm[0] != AQ_NO_DATA)
 			{
 				gridSize = BucketTerm.size();
@@ -595,11 +595,11 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 				unsigned int m_pos;
 				if (!LAMarketData::searchMarketGridPos(marketGridTerm, gridTerm[i], m_pos))
 				{
-					LAString msg = "Market grid is not contain " + gridTerm[i];
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "Market grid is not contain " + gridTerm[i];
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 
-				LAStringVector filePath;
+				AQLStringVector filePath;
 				LAMarketData::getVolFuncFilePath(model, ccy, ccy, riskName, scenarioNum, filePath, true, &marketGridTerm[m_pos], &bShiftStr);
 				param.gridFile.push_back(filePath);
 				param.refName.push_back(sceNames[i + refAddIndex]);
@@ -610,21 +610,21 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 		LAScenarioConfiguration *sceCreator = 
 			LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL);
 
-		vector<LAObject *> sce = sceCreator->createScenario(dataInstance, param);
+		vector<AQLObject *> sce = sceCreator->createScenario(dataInstance, param);
 		delete sceCreator;
 
 		ret.push_back(sce);
 
 	}
 	// set parameter for fx vol shift
-	LAStringVector targetFXVec = getCalibTargetFX(ccy, dataInstance);
+	AQLStringVector targetFXVec = getCalibTargetFX(ccy, dataInstance);
 	unsigned int fxSize = targetFXVec.size();
 	for (unsigned int i = 0; i < fxSize; ++i)
 	{
-		vector<LAObject *> sce_fx;
-		LAStringVector ccys = targetFXVec[i].toToken(FX_DELIMITER);
-		LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-		const LAString model_fx = LAMarketData::getModelName(key_fx);
+		vector<AQLObject *> sce_fx;
+		AQLStringVector ccys = targetFXVec[i].toToken(FX_DELIMITER);
+		AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+		const AQLString model_fx = LAMarketData::getModelName(key_fx);
 		// set up param
 		MAScenarioParam param;
 		param.ccy = key_fx;
@@ -639,16 +639,16 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 		// scenario check
 		if (sceNames.empty())
 		{
-			throw LACoreInvalidData("Scenario object is not created yet", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Scenario object is not created yet", __FILE__, __LINE__);
 		}
 
 		ccys[0].toUpper();
-		LAString tmpCurrency = ccy;
+		AQLString tmpCurrency = ccy;
 		tmpCurrency.toUpper();
 		bool isParallel = isParallelShift(ccy);
 		if (isParallel)
 		{
-			param.calcType = ccy + "_" + key_fx + "_" + riskName + "_" + riskNameSuffix + "_2_" + LAString(index) + "_Parallel";
+			param.calcType = ccy + "_" + key_fx + "_" + riskName + "_" + riskNameSuffix + "_2_" + AQLString(index) + "_Parallel";
 			param.isParallel = true;
 			LAMarketData::getVolFuncFilePath(model_fx, ccy, key_fx, riskName, scenarioNum, param.paraFile, false, 0, &bShiftStr);
 			param.refName.resize(2);
@@ -668,10 +668,10 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 				param.refName[1] = sceNames[0];
 			}
 				
-			vector<LAObject *> sce_tmp = sceCreator->createScenario(dataInstance, param);
+			vector<AQLObject *> sce_tmp = sceCreator->createScenario(dataInstance, param);
 			if (sce_tmp.size() != 1)
 			{
-				throw LACoreInvalidData("Parallel shift scenaro size must be one", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Parallel shift scenaro size must be one", __FILE__, __LINE__);
 			}
 			sce_fx.push_back(sce_tmp[0]);
 		}
@@ -680,8 +680,8 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 			// create as parallel shift
 			param.isParallel = true;
 			param.refName.resize(2);
-			LAStringVector gridTerm = getGridTerm(ccy);
-			LAStringVector marketGridTerm = getShiftGridTerm(ccy);
+			AQLStringVector gridTerm = getGridTerm(ccy);
+			AQLStringVector marketGridTerm = getShiftGridTerm(ccy);
 			const unsigned int gridSize = gridTerm.size();
 			const unsigned int maxIndex = getMaxGridIndex(ccy);
 			unsigned int addIndex = 0;
@@ -691,7 +691,7 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 			}
 			for (unsigned int i = 0; i < gridSize; ++i)
 			{
-				param.calcType = ccy + "_" + key_fx + "_" + riskName + "_" + riskNameSuffix + "_2_" + LAString(index) + "_Grid_" + LAString(static_cast<int>(i));
+				param.calcType = ccy + "_" + key_fx + "_" + riskName + "_" + riskNameSuffix + "_2_" + AQLString(index) + "_Grid_" + AQLString(static_cast<int>(i));
 				if (i > maxIndex)
 				{
 					break;
@@ -705,8 +705,8 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 				unsigned int m_pos;
 				if (!LAMarketData::searchMarketGridPos(marketGridTerm, gridTerm[i], m_pos))
 				{
-					LAString msg = "Market grid is not contain " + gridTerm[i];
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "Market grid is not contain " + gridTerm[i];
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 
 				// set reference
@@ -726,10 +726,10 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 				}
 
 				LAMarketData::getVolFuncFilePath(model_fx, ccy, key_fx, riskName, scenarioNum, param.paraFile, true, &marketGridTerm[m_pos], &bShiftStr);
-				vector<LAObject *> sce_tmp = sceCreator->createScenario(dataInstance, param);
+				vector<AQLObject *> sce_tmp = sceCreator->createScenario(dataInstance, param);
 				if (sce_tmp.size() != 1)
 				{
-					throw LACoreInvalidData("Parallel shift scenaro size must be one", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Parallel shift scenaro size must be one", __FILE__, __LINE__);
 				}
 				sce_fx.push_back(sce_tmp[0]);
 			}
@@ -746,14 +746,14 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
     @brief create ir vol scenarilo object
 
 	@param[in] ccy
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationYield::createIRVolEntity(const LAString& ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
+vector<AQLObject *> 
+LARiskConfigurationYield::createIRVolEntity(const AQLString& ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
-	const LAString model = LAMarketData::getModelName(ccy);
-	const LAString riskName = getRiskName();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
+	const AQLString model = LAMarketData::getModelName(ccy);
+	const AQLString riskName = getRiskName();
 
 	// set up param for volatility shift
 	MAScenarioParam param;
@@ -776,12 +776,12 @@ LARiskConfigurationYield::createIRVolEntity(const LAString& ccy, LADataInstance 
 	}
 
 	LACalibrationParameters *calibInfoCreator = LACalibrationParametersManager::getInstance()->createCalibInfoCreator(param.model);
-	LAString infoName = calibInfoCreator->createCalibrationInfo(objPool, ccy);
+	AQLString infoName = calibInfoCreator->createCalibrationInfo(objPool, ccy);
 	delete calibInfoCreator;
 
 	param.refName.push_back(infoName);
 
-	LAStringVector sceNames;
+	AQLStringVector sceNames;
 	sceNames = scenarioNum == SCENARIO_1 ? mSce1Names : mSce2Names;
 
 	bool isParallel = false;
@@ -795,11 +795,11 @@ LARiskConfigurationYield::createIRVolEntity(const LAString& ccy, LADataInstance 
 	if (isGridSensitivity(ccy))
 	{
 		param.isGrid = true;
-		LAStringVector marketGridTerm = getShiftGridTerm(ccy); // market(file set) grid
+		AQLStringVector marketGridTerm = getShiftGridTerm(ccy); // market(file set) grid
 		const unsigned int maxIndex = getMaxGridIndex(ccy);
 		unsigned int gridSize = marketGridTerm.size();
 
-		LAStringVector BucketTerm = getBucketGridTerm(ccy);
+		AQLStringVector BucketTerm = getBucketGridTerm(ccy);
 		if (BucketTerm[0] != AQ_NO_DATA)
 		{
 			gridSize = BucketTerm.size();
@@ -818,7 +818,7 @@ LARiskConfigurationYield::createIRVolEntity(const LAString& ccy, LADataInstance 
 				break;
 			}
 			// set dmy
-			param.gridFile.push_back(LAStringVector());
+			param.gridFile.push_back(AQLStringVector());
 			param.refName.push_back(sceNames[i + refAddIndex]);
 		}
 	}
@@ -826,7 +826,7 @@ LARiskConfigurationYield::createIRVolEntity(const LAString& ccy, LADataInstance 
 	// create scenario
 	LAScenarioConfiguration *sceCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL);
-	vector<LAObject *> sce = sceCreator->createScenario(dataInstance, param);
+	vector<AQLObject *> sce = sceCreator->createScenario(dataInstance, param);
 	delete sceCreator;
 
 	return sce;
@@ -837,14 +837,14 @@ LARiskConfigurationYield::createIRVolEntity(const LAString& ccy, LADataInstance 
 
 	@param[in] ccy
 	@param[in] fCcy
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationYield::createForeignIRVolEntity(const LAString& ccy, const LAString& fCcy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
+vector<AQLObject *> 
+LARiskConfigurationYield::createForeignIRVolEntity(const AQLString& ccy, const AQLString& fCcy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
-	const LAString model = LAMarketData::getModelName(fCcy);
-	const LAString riskName = getRiskName();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
+	const AQLString model = LAMarketData::getModelName(fCcy);
+	const AQLString riskName = getRiskName();
 
 	// set up param for volatility shift
 	MAScenarioParam param;
@@ -867,14 +867,14 @@ LARiskConfigurationYield::createForeignIRVolEntity(const LAString& ccy, const LA
 	}
 
 	LACalibrationParameters *calibInfoCreator = LACalibrationParametersManager::getInstance()->createCalibInfoCreator(param.model);
-	LAString infoName = calibInfoCreator->createCalibrationInfo(objPool, fCcy);
+	AQLString infoName = calibInfoCreator->createCalibrationInfo(objPool, fCcy);
 	delete calibInfoCreator;
 
 	param.refName.push_back(infoName);
 
 	bool isParallel = false;
-	LAString forYieldName;
-	const LAString& baseForYieldName = LAMarketData::getBaseYieldName(fCcy);
+	AQLString forYieldName;
+	const AQLString& baseForYieldName = LAMarketData::getBaseYieldName(fCcy);
 	if (isParallelShift(ccy))
 	{
 		param.isParallel = true;
@@ -886,11 +886,11 @@ LARiskConfigurationYield::createForeignIRVolEntity(const LAString& ccy, const LA
 	if (isGridSensitivity(ccy))
 	{
 		param.isGrid = true;
-		LAStringVector marketGridTerm = getShiftGridTerm(ccy); // market(file set) grid
+		AQLStringVector marketGridTerm = getShiftGridTerm(ccy); // market(file set) grid
 		const unsigned int maxIndex = getMaxGridIndex(ccy);
 		unsigned int gridSize = marketGridTerm.size();
 
-		LAStringVector BucketTerm = getBucketGridTerm(ccy);
+		AQLStringVector BucketTerm = getBucketGridTerm(ccy);
 		if (BucketTerm[0] != AQ_NO_DATA)
 		{
 			gridSize = BucketTerm.size();
@@ -909,8 +909,8 @@ LARiskConfigurationYield::createForeignIRVolEntity(const LAString& ccy, const LA
 				break;
 			}
 			// set dmy
-			param.gridFile.push_back(LAStringVector());
-			forYieldName =  baseForYieldName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" +  LAString(static_cast<int>(counter++));
+			param.gridFile.push_back(AQLStringVector());
+			forYieldName =  baseForYieldName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" +  AQLString(static_cast<int>(counter++));
 			param.refName.push_back(forYieldName);
 		}
 	}
@@ -918,7 +918,7 @@ LARiskConfigurationYield::createForeignIRVolEntity(const LAString& ccy, const LA
 	// create scenario
 	LAScenarioConfiguration *sceCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL);
-	vector<LAObject *> sce = sceCreator->createScenario(dataInstance, param);
+	vector<AQLObject *> sce = sceCreator->createScenario(dataInstance, param);
 	delete sceCreator;
 
 	return sce;
@@ -932,19 +932,19 @@ LARiskConfigurationYield::createForeignIRVolEntity(const LAString& ccy, const LA
 	@param[in,out] dataInstance
 	@param[in] scenario
 	@param[in] index
-	@return vector<LAObject *> 
+	@return vector<AQLObject *> 
 */
-vector<LAObject *> 
-LARiskConfigurationYield::createForeignYieldEntity(const LAString &ccy, const LAString &fCcy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index, const bool isFirst)  const
+vector<AQLObject *> 
+LARiskConfigurationYield::createForeignYieldEntity(const AQLString &ccy, const AQLString &fCcy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index, const bool isFirst)  const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
-	LAString bumpDirection = getBumpDirection(ccy);
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
+	AQLString bumpDirection = getBumpDirection(ccy);
 	bumpDirection.toUpper();
 
 	// if scenario2 only updownshift
 	if (scenarioNum == SCENARIO_2 && bumpDirection != RISK_BUMPDIRECTION_UPDOWNSHIFT)
 	{
-		return vector<LAObject *>(0);
+		return vector<AQLObject *>(0);
 	}
 
 	// set up param
@@ -962,15 +962,15 @@ LARiskConfigurationYield::createForeignYieldEntity(const LAString &ccy, const LA
 	//get domestic yield data name and calcType
 	LAMathYieldCurvePro &ycPro_fCcy = dynamic_cast<LAMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(fCcy), ENCHKTYPE_ISDEFINED).get());
-	const LAString& affectedCcy = ycPro_fCcy.getAffectedCcy();
-	const LAString& baseYieldDataName_baseccy = LAMarketData::getYieldDataName(objPool, LAMarketData::getBaseYieldName(affectedCcy));
+	const AQLString& affectedCcy = ycPro_fCcy.getAffectedCcy();
+	const AQLString& baseYieldDataName_baseccy = LAMarketData::getYieldDataName(objPool, LAMarketData::getBaseYieldName(affectedCcy));
 
-	LAString calcType = param.calcType;
+	AQLString calcType = param.calcType;
 	if (affectedCcy == ccy)
 		calcType = getCalcType(ccy, scenarioNum, index);
 
 	bool isParallel = false;
-	LAString yieldDataName_baseccy;
+	AQLString yieldDataName_baseccy;
 	if (isParallelShift(ccy))
 	{
 		param.isParallel = true;
@@ -982,11 +982,11 @@ LARiskConfigurationYield::createForeignYieldEntity(const LAString &ccy, const LA
 	if (isGridSensitivity(ccy))
 	{
 		param.isGrid = true;
-		LAStringVector marketGridTerm = getShiftGridTerm(ccy); // market(file set) grid
+		AQLStringVector marketGridTerm = getShiftGridTerm(ccy); // market(file set) grid
 		const unsigned int maxIndex = getMaxGridIndex(ccy);
 		unsigned int gridSize = marketGridTerm.size();
 
-		LAStringVector BucketTerm = getBucketGridTerm(ccy);
+		AQLStringVector BucketTerm = getBucketGridTerm(ccy);
 		if (BucketTerm[0] != AQ_NO_DATA)
 		{
 			gridSize = BucketTerm.size();
@@ -1005,7 +1005,7 @@ LARiskConfigurationYield::createForeignYieldEntity(const LAString &ccy, const LA
 				break;
 			}
 			yieldDataName_baseccy =  baseYieldDataName_baseccy + "_" + calcType + "_" + param.targetCurveType 
-								+ "_Grid_" +  LAString(static_cast<int>(counter++));
+								+ "_Grid_" +  AQLString(static_cast<int>(counter++));
 			param.refName.push_back(yieldDataName_baseccy);
 		}
 	}
@@ -1014,7 +1014,7 @@ LARiskConfigurationYield::createForeignYieldEntity(const LAString &ccy, const LA
 	LAScenarioConfiguration *sceCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_YIELD);
 
-	vector<LAObject *> ret = sceCreator->createScenario(dataInstance, param);
+	vector<AQLObject *> ret = sceCreator->createScenario(dataInstance, param);
 	delete sceCreator;
 	return ret;
 }
@@ -1027,19 +1027,19 @@ LARiskConfigurationYield::createForeignYieldEntity(const LAString &ccy, const LA
 	@param[in,out] dataInstance
 	@param[in] scenario
 	@param[in] index
-	@return vector<LAObject *> 
+	@return vector<AQLObject *> 
 */
-vector<LAObject *> 
-LARiskConfigurationYield::createCollateralYieldEntity(const LAString &ccy, const LAString &colCcy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationYield::createCollateralYieldEntity(const AQLString &ccy, const AQLString &colCcy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
-	LAString bumpDirection = getBumpDirection(ccy);
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
+	AQLString bumpDirection = getBumpDirection(ccy);
 	bumpDirection.toUpper();
 
 	// if scenario2 only updownshift
 	if (scenarioNum == SCENARIO_2 && bumpDirection != RISK_BUMPDIRECTION_UPDOWNSHIFT)
 	{
-		return vector<LAObject *>(0);
+		return vector<AQLObject *>(0);
 	}
 
 	// set up param
@@ -1059,17 +1059,17 @@ LARiskConfigurationYield::createCollateralYieldEntity(const LAString &ccy, const
 	//get domestic yield data name and calcType
 	LAMathYieldCurvePro &ycPro_colCcy = dynamic_cast<LAMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(colCcy), ENCHKTYPE_ISDEFINED).get());
-	const LAString& affectedCcy = ycPro_colCcy.getColAffectedCcy();
-	const LAString& baseYieldDataName_baseccy = LAMarketData::getYieldDataName(objPool, LAMarketData::getBaseYieldName(affectedCcy));
+	const AQLString& affectedCcy = ycPro_colCcy.getColAffectedCcy();
+	const AQLString& baseYieldDataName_baseccy = LAMarketData::getYieldDataName(objPool, LAMarketData::getBaseYieldName(affectedCcy));
 
-	LAString calcType;
+	AQLString calcType;
 	if (affectedCcy == ccy) 
 		calcType = getCalcType(ccy, scenarioNum, index);
 	else
 		calcType = getExtraCalcType(ccy, scenarioNum, index);
 
 	bool isParallel = false;
-	LAString yieldDataName_baseccy;
+	AQLString yieldDataName_baseccy;
 	if (isParallelShift(ccy))
 	{
 		param.isParallel = true;
@@ -1081,11 +1081,11 @@ LARiskConfigurationYield::createCollateralYieldEntity(const LAString &ccy, const
 	if (isGridSensitivity(ccy))
 	{
 		param.isGrid = true;
-		LAStringVector marketGridTerm = getShiftGridTerm(ccy); // market(file set) grid
+		AQLStringVector marketGridTerm = getShiftGridTerm(ccy); // market(file set) grid
 		const unsigned int maxIndex = getMaxGridIndex(ccy);
 		unsigned int gridSize = marketGridTerm.size();
 
-		LAStringVector BucketTerm = getBucketGridTerm(ccy);
+		AQLStringVector BucketTerm = getBucketGridTerm(ccy);
 		if (BucketTerm[0] != AQ_NO_DATA)
 		{
 			gridSize = BucketTerm.size();
@@ -1104,7 +1104,7 @@ LARiskConfigurationYield::createCollateralYieldEntity(const LAString &ccy, const
 				break;
 			}
 			yieldDataName_baseccy =  baseYieldDataName_baseccy + "_" + calcType + "_" + param.targetCurveType 
-								+ "_Grid_" +  LAString(static_cast<int>(counter++));
+								+ "_Grid_" +  AQLString(static_cast<int>(counter++));
 			param.refName.push_back(yieldDataName_baseccy);
 		}
 	}
@@ -1113,7 +1113,7 @@ LARiskConfigurationYield::createCollateralYieldEntity(const LAString &ccy, const
 	LAScenarioConfiguration *sceCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_YIELD);
 
-	vector<LAObject *> ret = sceCreator->createScenario(dataInstance, param);
+	vector<AQLObject *> ret = sceCreator->createScenario(dataInstance, param);
 	delete sceCreator;
 	return ret;
 }
@@ -1122,12 +1122,12 @@ LARiskConfigurationYield::createCollateralYieldEntity(const LAString &ccy, const
     @brief create fx vol scenarilo object
 
 	@param[in] ccy
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationYield::createFXVolEntity(const LAString& ccy, const LAString& fx, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
+vector<AQLObject *> 
+LARiskConfigurationYield::createFXVolEntity(const AQLString& ccy, const AQLString& fx, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
 {
-	LAStringVector ccys;
+	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
 
 	// set up param
@@ -1135,13 +1135,13 @@ LARiskConfigurationYield::createFXVolEntity(const LAString& ccy, const LAString&
 	setFXVolEntityParams(ccy, fx, dataInstance, scenarioNum, index, param, true);
 
 	//get affecting ccys
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 
-	const LAStringVector affectingCcy = ycPro.getAffectingCcy();
-	const LAStringVector colAffectingCcy = ycPro.getColAffectingCcy();
-	LAStringVector tmp = affectingCcy;
+	const AQLStringVector affectingCcy = ycPro.getAffectingCcy();
+	const AQLStringVector colAffectingCcy = ycPro.getColAffectingCcy();
+	AQLStringVector tmp = affectingCcy;
 	for (unsigned int i = 0; i < colAffectingCcy.size(); ++i)
 	{
 		if (tmp.end() != std::find(tmp.begin(), tmp.end(), colAffectingCcy[i]))
@@ -1149,15 +1149,15 @@ LARiskConfigurationYield::createFXVolEntity(const LAString& ccy, const LAString&
 
 		tmp.push_back(colAffectingCcy[i]);
 	}
-	const LAStringVector& fCurveCcys = tmp;
+	const AQLStringVector& fCurveCcys = tmp;
 
 	// get scenario names
-	const LAString suffix = "_" + param.calcType + "_" + param.targetCurveType;
-	LAStringVector sceNames;
+	const AQLString suffix = "_" + param.calcType + "_" + param.targetCurveType;
+	AQLStringVector sceNames;
 	sceNames = scenarioNum == SCENARIO_1 ? mSce1Names : mSce2Names;
 
 	// set references
-	LAString tmpCcy = ccy; tmpCcy.toUpper();
+	AQLString tmpCcy = ccy; tmpCcy.toUpper();
 	if (param.isParallel)
 	{
 		// set dmy
@@ -1167,11 +1167,11 @@ LARiskConfigurationYield::createFXVolEntity(const LAString& ccy, const LAString&
 	}
 	if (param.isGrid)
 	{
-		LAStringVector gridTerm = getGridTerm(ccy);
-		LAStringVector marketGridTerm = getShiftGridTerm(ccy);
+		AQLStringVector gridTerm = getGridTerm(ccy);
+		AQLStringVector marketGridTerm = getShiftGridTerm(ccy);
 		unsigned int gridSize = gridTerm.size();
 
-		LAStringVector bucketGridTerm = getBucketGridTerm(ccy);
+		AQLStringVector bucketGridTerm = getBucketGridTerm(ccy);
 		if (bucketGridTerm[0] != AQ_NO_DATA)
 		{
 			gridSize = bucketGridTerm.size();
@@ -1198,20 +1198,20 @@ LARiskConfigurationYield::createFXVolEntity(const LAString& ccy, const LAString&
 			unsigned int m_pos;
 			if (!LAMarketData::searchMarketGridPos(marketGridTerm, gridTerm[i], m_pos))
 			{
-				LAString msg = "Market grid is not contain " + gridTerm[i];
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "Market grid is not contain " + gridTerm[i];
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 
 			// set reference
-			setScenarioParamReferences(tmpCcy, ccys, fCurveCcys, objPool, param.refName, sceNames[i + refAddIndex], param.calcType/*, 0*/, suffix + "_Grid_" +  LAString(static_cast<int>(counter++)), i);
-			param.gridFile.push_back(LAStringVector());
+			setScenarioParamReferences(tmpCcy, ccys, fCurveCcys, objPool, param.refName, sceNames[i + refAddIndex], param.calcType/*, 0*/, suffix + "_Grid_" +  AQLString(static_cast<int>(counter++)), i);
+			param.gridFile.push_back(AQLStringVector());
 		}
 	}
 	// create scenario
 	LAScenarioConfiguration *sceCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL);
 
-	vector<LAObject *> sce_fx = sceCreator->createScenario(dataInstance, param);
+	vector<AQLObject *> sce_fx = sceCreator->createScenario(dataInstance, param);
 	delete sceCreator;
 	return sce_fx;
 }

@@ -4,11 +4,11 @@
 #pragma warning(disable:4786)
 #endif
 
-#include <LACoreTemplateType.h>
+#include <AQLCoreTemplateType.h>
 #include "LAMathBaseFuncUtility.h"
 #include "LAMathInterpolationUtilities.h"
-#include "LABasic.h"
-#include "LADist.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
 #include "LAMathSABR.h"
 #include "LAMathSwaptionSABR.h"
 
@@ -21,7 +21,7 @@ LAMathSwaptionMatrix::~LAMathSwaptionMatrix(){}
 double
 LAMathSwaptionMatrix::lookUpMatrix( double expiry, double tenor )
 {
-	if(expiry<0. || tenor<0.) throw LACoreInvalidData("expiry or tenor is negative!",__FILE__,__LINE__);
+	if(expiry<0. || tenor<0.) throw AQLCoreInvalidData("expiry or tenor is negative!",__FILE__,__LINE__);
 
     size_t size_te = tenorVec.size();
     size_t size_ex = expiryVec.size();
@@ -78,7 +78,7 @@ LAMathSwaptionMatrix::lookUpMatrix( double expiry, double tenor )
 //{
 //    for(size_t i=0; i<mat.size(); i++)
 //        for(size_t j=0; j<mat[0].size(); j++)
-//            if(mat[i][j]<-0.00001) throw LACoreInvalidData("alpha is negative.",__FILE__,__LINE__);
+//            if(mat[i][j]<-0.00001) throw AQLCoreInvalidData("alpha is negative.",__FILE__,__LINE__);
 //}
 //LAMathSABRAlphaMatrix::~LAMathSABRAlphaMatrix(){}
 //
@@ -89,7 +89,7 @@ LAMathSwaptionMatrix::lookUpMatrix( double expiry, double tenor )
 //    for(size_t i=0; i<mat.size(); i++)
 //        for(size_t j=0; j<mat[0].size(); j++)
 //            if(mat[i][j]<-0.0000001 || mat[i][j]>1.0000001) 
-//                throw LACoreInvalidData("beta is in [0:1].",__FILE__,__LINE__);
+//                throw AQLCoreInvalidData("beta is in [0:1].",__FILE__,__LINE__);
 //}
 //LAMathSABRBetaMatrix::~LAMathSABRBetaMatrix(){}
 //
@@ -99,7 +99,7 @@ LAMathSwaptionMatrix::lookUpMatrix( double expiry, double tenor )
 //{
 //    for(size_t i=0; i<mat.size(); i++)
 //        for(size_t j=0; j<mat[0].size(); j++)
-//            if(mat[i][j]<-0.0000001 ) throw LACoreInvalidData("gamma is negative.",__FILE__,__LINE__);
+//            if(mat[i][j]<-0.0000001 ) throw AQLCoreInvalidData("gamma is negative.",__FILE__,__LINE__);
 //}
 //LAMathSABRNuMatrix::~LAMathSABRNuMatrix(){}
 //
@@ -110,6 +110,6 @@ LAMathSwaptionMatrix::lookUpMatrix( double expiry, double tenor )
 //    for(size_t i=0; i<mat.size(); i++)
 //        for(size_t j=0; j<mat[0].size(); j++)
 //            if(mat[i][j]<-1.0000001 || mat[i][j]>1.0000001) 
-//                throw LACoreInvalidData("beta is in [^-1:1].",__FILE__,__LINE__);
+//                throw AQLCoreInvalidData("beta is in [^-1:1].",__FILE__,__LINE__);
 //}
 //LAMathSABRRhoMatrix::~LAMathSABRRhoMatrix(){}

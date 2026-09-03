@@ -6,7 +6,7 @@
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>   // For boost::to_upper and boost:iequals i.e. case insensitve string comparison
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "ETradingException.h"
 
 namespace etrading
@@ -115,7 +115,7 @@ namespace etrading
                     s << ", '" + labelValueBlockName + "'.";
                 }
 
-                throw LACoreInvalidData( s.str().c_str(), __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( s.str().c_str(), __FILE__, __LINE__ );
             }
 
             T ret = iter->second;

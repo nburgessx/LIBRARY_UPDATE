@@ -5,26 +5,26 @@
 #endif
 
 #include "LAMathDateUtilities.h"
-#include "LAFunctionUtilities.h"
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLFunctionUtilities.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAPriceCFGenUtility.h"
 #include "LAMathDateCalculations.h"
-#include "LADataReference.h"
+#include "AQLDataReference.h"
 #include "LAAnalyticFormula.h"
 #include "LABlackScholesCalc.h"
-#include "LADataProcedure.h"
-#include "LACoreComponentManager.h"
-#include "LAPriceDataConvention.h"
-#include "LADataMultiReference.h"
+#include "AQLDataProcedure.h"
+#include "AQLCoreComponentManager.h"
+#include "AQLPriceDataConvention.h"
+#include "AQLDataMultiReference.h"
 #include "ExceptionMacros.h"
 
 #include <cmath>
@@ -35,44 +35,44 @@ using namespace std;
 
 
 //////////////////////////Date method//////////////////////////////////////////////////////////
-//change excel date into LADate
-LADate 
+//change excel date into AQLDate
+AQLDate 
 LAMathDateUtilities::getLADate( const int excel_date )
 {
-	LADate    ret_date( "19900101" );
+	AQLDate    ret_date( "19900101" );
 	const int excel_base = 32874;
 	ret_date.addDays( excel_date - excel_base );
 	return ret_date;
 }
-//change excel date into LADate
-LADate 
-LAMathDateUtilities::getLADate(const LAString& excel_date_str)
+//change excel date into AQLDate
+AQLDate 
+LAMathDateUtilities::getLADate(const AQLString& excel_date_str)
 {
-	LADate    ret_date( "19900101" );
+	AQLDate    ret_date( "19900101" );
 	const int excel_base = 32874;
 	ret_date.addDays( excel_date_str.getIntValue() - excel_base );
 	return ret_date;
 }
-//change excel date into LAString
-LAString 
+//change excel date into AQLString
+AQLString 
 LAMathDateUtilities::getLAStringDate( const int excel_date )
 {
-	LAString  ret_str  = getLADate(excel_date).stringWithFormat("YYYYMMDD");
+	AQLString  ret_str  = getLADate(excel_date).stringWithFormat("YYYYMMDD");
 	return ret_str;
 }
 
 //change MDate into excel date
 int 
-LAMathDateUtilities::getExcelDate( const LADate & date )
+LAMathDateUtilities::getExcelDate( const AQLDate & date )
 {
-	LADate    base( "19900101" );
+	AQLDate    base( "19900101" );
 	const int excel_base = 32874;
 	return excel_base + base.intervalDays( date );
 }
 
 // Get Front Stub Date
 // Note: To be able to calculate to roll dates correctly, we must provide the unadjusted start and end dates
-StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjustedStartDate, const LADate & unadjustedEndDate, LAString & term, const LAPriceDataSlidingRule & busDayAdj, const LAPriceDataCalendar & calendar, const LAString* rollConvention, const etrading::StubTypeEnum & stubType )
+StubDateAndType LAMathDateUtilities::getStubDateAndType( const AQLDate & unadjustedStartDate, const AQLDate & unadjustedEndDate, AQLString & term, const AQLPriceDataSlidingRule & busDayAdj, const AQLPriceDataCalendar & calendar, const AQLString* rollConvention, const etrading::StubTypeEnum & stubType )
 {
 	// Validation
 	upper( term );
@@ -141,9 +141,9 @@ StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjust
 
 	if ( stubInfo.isFrontStub_ )
 	{ 
-		LADate previousStubDate = unadjustedEndDate;
-		LADate thisStubDate		= unadjustedEndDate;
-		LADate nextStubDate		= unadjustedEndDate;
+		AQLDate previousStubDate = unadjustedEndDate;
+		AQLDate thisStubDate		= unadjustedEndDate;
+		AQLDate nextStubDate		= unadjustedEndDate;
 
 		// Initialize Coupon Schedule
 		stubInfo.unadjustedSchedule_.push_back(unadjustedEndDate);
@@ -152,7 +152,7 @@ StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjust
 		while ( thisStubDate > unadjustedStartDate )
 		{
 			// Exit Condition
-			nextStubDate = LAMathDateCalculations::getDate( thisStubDate, term, LAPriceDataSlidingRule(), &LAPriceDataCalendar(), false, rollConvention ); // rollForwards = false
+			nextStubDate = LAMathDateCalculations::getDate( thisStubDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), false, rollConvention ); // rollForwards = false
 			if( nextStubDate <= unadjustedStartDate )
 			{
 				break;
@@ -213,7 +213,7 @@ StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjust
 
 		// Check if Regular Schedule
 		// Note: Don't apply roll convention twice, since boundary start and end dates must not have roll convention applied to them
-		LADate adjustedStartDate = LAMathDateCalculations::getDate( unadjustedStartDate, "0D", busDayAdj, &calendar, false, NULL ); // rollForwards = false
+		AQLDate adjustedStartDate = LAMathDateCalculations::getDate( unadjustedStartDate, "0D", busDayAdj, &calendar, false, NULL ); // rollForwards = false
 		stubInfo.isRegularSchedule_ = false;
 		if ( nextStubDate == adjustedStartDate )
 		{
@@ -225,9 +225,9 @@ StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjust
 	//		******************************************
 	else
 	{
-		LADate previousStubDate = unadjustedStartDate;
-		LADate thisStubDate		= unadjustedStartDate;
-		LADate nextStubDate		= unadjustedStartDate;
+		AQLDate previousStubDate = unadjustedStartDate;
+		AQLDate thisStubDate		= unadjustedStartDate;
+		AQLDate nextStubDate		= unadjustedStartDate;
 
 		// Initialize Coupon Schedule
 		stubInfo.unadjustedSchedule_.push_back(unadjustedStartDate);
@@ -236,7 +236,7 @@ StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjust
 		while ( thisStubDate < unadjustedEndDate )
 		{
 			// Exit Condition
-			nextStubDate = LAMathDateCalculations::getDate( thisStubDate, term, LAPriceDataSlidingRule(), &LAPriceDataCalendar(), true, rollConvention ); // IsAfter = true i.e. roll forwards;
+			nextStubDate = LAMathDateCalculations::getDate( thisStubDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), true, rollConvention ); // IsAfter = true i.e. roll forwards;
 			if( nextStubDate >= unadjustedEndDate )
 			{
 				break;
@@ -282,7 +282,7 @@ StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjust
 
 		// Check if Regular Schedule
 		// Note: Don't apply roll convention twice, since boundary start and end dates must not have roll convention applied to them
-		LADate adjustedEndDate = LAMathDateCalculations::getDate( unadjustedEndDate, "0D", busDayAdj, &calendar, false, NULL ); // rollForwards = false
+		AQLDate adjustedEndDate = LAMathDateCalculations::getDate( unadjustedEndDate, "0D", busDayAdj, &calendar, false, NULL ); // rollForwards = false
 		stubInfo.isRegularSchedule_ = false;
 		if ( nextStubDate == adjustedEndDate )
 		{
@@ -294,12 +294,12 @@ StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjust
 
 }
 
-LADate LAMathDateUtilities::firstStubDateFromStubType( const LADate & startDate, const LADate & endDate, LAString & term )
+AQLDate LAMathDateUtilities::firstStubDateFromStubType( const AQLDate & startDate, const AQLDate & endDate, AQLString & term )
 {
     upper( term );
     bool isAfter    = false; // This tells getDate to calculate dates backwards from the End Date
     
-    LADate result = LAMathDateCalculations::getDate( endDate, term, LAPriceDataSlidingRule(), &LAPriceDataCalendar(), isAfter, NULL );
+    AQLDate result = LAMathDateCalculations::getDate( endDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL );
     
     // Ensure the first stub is not before the start date
     if ( result < startDate )
@@ -309,8 +309,8 @@ LADate LAMathDateUtilities::firstStubDateFromStubType( const LADate & startDate,
     int counter     = 0;
     
     // Update the Stub Dates
-    LADate longStubDate = result;
-    LADate shortStubDate = result; 
+    AQLDate longStubDate = result;
+    AQLDate shortStubDate = result; 
 
     // We are rolling backwards in time
     while ( shortStubDate > startDate )
@@ -319,7 +319,7 @@ LADate LAMathDateUtilities::firstStubDateFromStubType( const LADate & startDate,
         longStubDate = shortStubDate;
 
         // Update the Short Stub Date
-        shortStubDate = LAMathDateCalculations::getDate( shortStubDate, term, LAPriceDataSlidingRule(), &LAPriceDataCalendar(), isAfter, NULL );
+        shortStubDate = LAMathDateCalculations::getDate( shortStubDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL );
 
         // Update the result if the first stub is not before the start date else break out of the while loop
         if( shortStubDate > startDate )
@@ -339,19 +339,19 @@ LADate LAMathDateUtilities::firstStubDateFromStubType( const LADate & startDate,
         counter++;
 
         if ( counter >= maxCount )
-            throw LACoreInvalidData("#Error: Unable to find the stub date for the stub type provided.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: Unable to find the stub date for the stub type provided.",__FILE__,__LINE__);
     }
 
     return result;
 }
 
-LADate
-LAMathDateUtilities::lastStubDateFromStubType( const LADate & startDate, const LADate & endDate, LAString & term)
+AQLDate
+LAMathDateUtilities::lastStubDateFromStubType( const AQLDate & startDate, const AQLDate & endDate, AQLString & term)
 {
     upper( term );
     bool isAfter                    = true; // This tells getDate to calculate dates forwards from the Start Date
 
-    LADate result = LAMathDateCalculations::getDate( startDate, term, LAPriceDataSlidingRule(), &LAPriceDataCalendar(), isAfter, NULL );
+    AQLDate result = LAMathDateCalculations::getDate( startDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL );
 
     // Ensure the last stub is not after the end date
     if ( result > endDate )
@@ -361,8 +361,8 @@ LAMathDateUtilities::lastStubDateFromStubType( const LADate & startDate, const L
     int counter = 0;
     
     // Update the Stub Dates
-    LADate longStubDate = result;
-    LADate shortStubDate = result; 
+    AQLDate longStubDate = result;
+    AQLDate shortStubDate = result; 
 
     // We are rolling forwards in time
     while ( shortStubDate < endDate )
@@ -371,7 +371,7 @@ LAMathDateUtilities::lastStubDateFromStubType( const LADate & startDate, const L
         longStubDate = shortStubDate;
 
         // Update the Short Stub Date
-        shortStubDate = LAMathDateCalculations::getDate( shortStubDate, term, LAPriceDataSlidingRule(), &LAPriceDataCalendar(), isAfter, NULL );
+        shortStubDate = LAMathDateCalculations::getDate( shortStubDate, term, AQLPriceDataSlidingRule(), &AQLPriceDataCalendar(), isAfter, NULL );
         
         // Update the result if the last stub is not after the end date else break out of the while loop
         if( shortStubDate < endDate ) 
@@ -391,7 +391,7 @@ LAMathDateUtilities::lastStubDateFromStubType( const LADate & startDate, const L
         counter++;
 
         if ( counter >= maxCount )
-            throw LACoreInvalidData("#Error: Unable to find the stub date for the stub type provided.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: Unable to find the stub date for the stub type provided.",__FILE__,__LINE__);
     }
 
     return result;
@@ -399,11 +399,11 @@ LAMathDateUtilities::lastStubDateFromStubType( const LADate & startDate, const L
 
 DateVector
 LAMathDateUtilities::calcDatesWithLag( const DateVector &           dates,
-                                       const LAString &             term,
-                                       const LAPriceDataSlidingRule &    slidingRule,
-                                       const LAPriceDataCalendar *       pCalendar,
+                                       const AQLString &             term,
+                                       const AQLPriceDataSlidingRule &    slidingRule,
+                                       const AQLPriceDataCalendar *       pCalendar,
                                        const bool &                 isAfter,
-                                       const LAString *             rollConvention )
+                                       const AQLString *             rollConvention )
 {
     DateVector results;
 
@@ -418,27 +418,27 @@ LAMathDateUtilities::calcDatesWithLag( const DateVector &           dates,
 // Generate a Date Schedule with appropriate use of stubs
 // Note that there is a duplicate method LADateScheduleHelpers::generateSchedule
 // Default Short/Long Start is determined by LAMathDateUtilities::getStubDateAndType
-DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
-												 const LADate& unadjustedEnd,
-												 LAString& data_frequency,
-												 LAString& slidingRuleString,
-												 LAString& calendarString,
-												 const LADate* firstStubDate,
-												 const LADate* lastStubDate,
+DateVector LAMathDateUtilities::generateSchedule(const AQLDate& unadjustedStart,
+												 const AQLDate& unadjustedEnd,
+												 AQLString& data_frequency,
+												 AQLString& slidingRuleString,
+												 AQLString& calendarString,
+												 const AQLDate* firstStubDate,
+												 const AQLDate* lastStubDate,
 												 const int* rollDay,
 												 const bool is_start_roll,
-												 const LAString* rollConvention,
-												 const LAString* stubType)
+												 const AQLString* rollConvention,
+												 const AQLString* stubType)
 {
     //change nospace & upper
     upper(data_frequency);
     upper(slidingRuleString);
     upper(calendarString);
 
-    LAPriceDataSlidingRule slidingRule;
+    AQLPriceDataSlidingRule slidingRule;
     slidingRule.convertFromString(slidingRuleString);
         
-    LAPriceDataCalendar calendar;
+    AQLPriceDataCalendar calendar;
     calendar.convertFromString(calendarString);
         
 	DateVector results;
@@ -452,11 +452,11 @@ DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
     // Added to resolve const keyword issues
     bool isStartRoll = is_start_roll;
 
-    LADate thisFirstStubDate;
-    LADate thisLastStubDate;
+    AQLDate thisFirstStubDate;
+    AQLDate thisLastStubDate;
 
-    LADate* pFirstStubDate = NULL;
-    LADate* pLastStubDate = NULL;
+    AQLDate* pFirstStubDate = NULL;
+    AQLDate* pLastStubDate = NULL;
 
     if (firstStubDate != NULL)
     {
@@ -471,7 +471,7 @@ DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
     }
 
     // Get the equivalent term from data_frequency
-    LAString term;
+    AQLString term;
     if (data_frequency == "ANNUAL")
         term = "1Y";
     else if (data_frequency == "SEMI-ANNUAL")
@@ -486,7 +486,7 @@ DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
         term = "1D";
     else if ((data_frequency == "NONE" || data_frequency == "LUNAR") && stubType == NULL);
     else
-        throw LACoreInvalidData("#Error: Frequency, must be Annual, Semi-Annual, Quarterly, Monthly, Weekly or Daily.", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("#Error: Frequency, must be Annual, Semi-Annual, Quarterly, Monthly, Weekly or Daily.", __FILE__, __LINE__);
 
 	// Initialize StubDateAndType Struct
 	StubDateAndType stubInfo;
@@ -505,7 +505,7 @@ DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
     // Override the stubs dates to generate the correct stub types
     if (stubType != NULL)
     {
-		LAString stubTypeString = *stubType;
+		AQLString stubTypeString = *stubType;
         upper(stubTypeString);
 
         if (stubTypeString == "NONE")
@@ -598,7 +598,7 @@ DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
 
 */
 bool
-LAMathDateUtilities::isValidDate( const LADate & dateToValidate )
+LAMathDateUtilities::isValidDate( const AQLDate & dateToValidate )
 {
     const unsigned short  mDay    = dateToValidate.dayOfMonth();
     const unsigned short  mMonth  = dateToValidate.monthOfYear();
@@ -629,72 +629,72 @@ LAMathDateUtilities::isValidDate( const LADate & dateToValidate )
     return true;
 }
 
-LADate
-LAMathDateUtilities::getDateFromTerm(const LADate& fromdate, const double termy, const LAPriceDataDayCount& daycount, bool includelast)
+AQLDate
+LAMathDateUtilities::getDateFromTerm(const AQLDate& fromdate, const double termy, const AQLPriceDataDayCount& daycount, bool includelast)
 {
-	LAPriceDataConvention convention( daycount.getDayCount(), CONT ); // Continous compounding rate convention
+	AQLPriceDataConvention convention( daycount.getDayCount(), CONT ); // Continous compounding rate convention
 
-	LADate ret = fromdate;
+	AQLDate ret = fromdate;
 	double fullDay = LAPriceCFGenUtility::round( convention.getDayTerm( ret, termy ), RoundFunction::ROUND, 0 );
 	ret.addDays( fullDay );
 	
 	return ret;
 }
 
-LADate 
-LAMathDateUtilities::getDateFromTerm(LADate& fromdate, double termy, LAString& dayCountString, bool includelast)
+AQLDate 
+LAMathDateUtilities::getDateFromTerm(AQLDate& fromdate, double termy, AQLString& dayCountString, bool includelast)
 {
 	includelast;
 	//change nospace & upper
 	upper(dayCountString);
 
-	LAPriceDataDayCount daycount;
-	daycount.setDayCount( LACoreComponentManager::getDayCount( dayCountString ) );
-	LADate ret = getDateFromTerm( fromdate, termy, daycount );
+	AQLPriceDataDayCount daycount;
+	daycount.setDayCount( AQLCoreComponentManager::getDayCount( dayCountString ) );
+	AQLDate ret = getDateFromTerm( fromdate, termy, daycount );
 	return ret;
 }
 
 double 
-LAMathDateUtilities::getDayFromTerm(LADate& fromdate, double termy, LAString& daycount, bool includelast)
+LAMathDateUtilities::getDayFromTerm(AQLDate& fromdate, double termy, AQLString& daycount, bool includelast)
 {
 	//change nospace & upper
 	upper(daycount);
 
-	LAPriceDataDayCount dc;
-	dc.setDayCount(LACoreComponentManager::getDayCount(daycount));
-	LAPriceDataConvention conv(dc.getDayCount(),CONT);
+	AQLPriceDataDayCount dc;
+	dc.setDayCount(AQLCoreComponentManager::getDayCount(daycount));
+	AQLPriceDataConvention conv(dc.getDayCount(),CONT);
 	
 	//false means not includelast
 	double ret = dc.getDayTerm(fromdate,termy,includelast);
 	return ret;
 }
 double 
-LAMathDateUtilities::getTermFromDay(LADate& fromdate, double termd, LAString& daycount, bool includelast)
+LAMathDateUtilities::getTermFromDay(AQLDate& fromdate, double termd, AQLString& daycount, bool includelast)
 {
 	//change nospace & upper
 	upper(daycount);
 
-	LAPriceDataDayCount dc;
-	dc.setDayCount(LACoreComponentManager::getDayCount(daycount));
-	LAPriceDataConvention conv(dc.getDayCount(),CONT);
+	AQLPriceDataDayCount dc;
+	dc.setDayCount(AQLCoreComponentManager::getDayCount(daycount));
+	AQLPriceDataConvention conv(dc.getDayCount(),CONT);
 	
 	//false means not includelast
 	double ret = dc.getTerm(fromdate,termd,includelast);
 	return ret;
 }
 double 
-LAMathDateUtilities::getTerm(const LADate& fromdate, const LADate& todate, LAString& daycount, bool includelast, 
-							 const LAString* frequency,
-							 const LAString* Calendar,
-							 const LAString* SlidingRule,
-							 const std::vector<LADate>* startdates,
-							 const std::vector<LADate>* enddates)
+LAMathDateUtilities::getTerm(const AQLDate& fromdate, const AQLDate& todate, AQLString& daycount, bool includelast, 
+							 const AQLString* frequency,
+							 const AQLString* Calendar,
+							 const AQLString* SlidingRule,
+							 const std::vector<AQLDate>* startdates,
+							 const std::vector<AQLDate>* enddates)
 {
 	//change nospace & upper
 	upper(daycount);
 
-	LAPriceDataDayCount dc;
-	dc.setDayCount(LACoreComponentManager::getDayCount(daycount));
+	AQLPriceDataDayCount dc;
+	dc.setDayCount(AQLCoreComponentManager::getDayCount(daycount));
 
 	if(dc.getDayCount() == ACT_ACT_ICMA)
 	{
@@ -704,51 +704,51 @@ LAMathDateUtilities::getTerm(const LADate& fromdate, const LADate& todate, LAStr
 		dc.setCouponEndDates(regular_startenddates[1]);
 	}
 
-	LAPriceDataConvention conv(dc.getDayCount(),CONT);
+	AQLPriceDataConvention conv(dc.getDayCount(),CONT);
 	//false means not includelast
 	double ret = dc.getTerm(fromdate,todate,includelast);
 	return ret;
 }
 
-LADate
-LAMathDateUtilities::getDate(const LADate& basedate, const LAString& term, const LAString& slidingrule, const LAString& calendar)
+AQLDate
+LAMathDateUtilities::getDate(const AQLDate& basedate, const AQLString& term, const AQLString& slidingrule, const AQLString& calendar)
 {
 	//calendar
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(calendar);
 	
     //sliding rule
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(slidingrule);
 	
-	LADate ret = LAMathDateCalculations::getDate(basedate,term,sr,&cal,true); 
+	AQLDate ret = LAMathDateCalculations::getDate(basedate,term,sr,&cal,true); 
 	return ret;
 }
 
-LADate
-LAMathDateUtilities::getDateWithRollConv(const LADate& basedate, const LAString& term, const LAString& slidingRule, const LAString& calendar, const LAString* roll_conv)
+AQLDate
+LAMathDateUtilities::getDateWithRollConv(const AQLDate& basedate, const AQLString& term, const AQLString& slidingRule, const AQLString& calendar, const AQLString* roll_conv)
 {
     //calendar
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(calendar);
 	
     //sliding rule
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(slidingRule);
 
-    LADate ret = LAMathDateCalculations::getDate(basedate, term, sr, &cal, true, roll_conv);
+    AQLDate ret = LAMathDateCalculations::getDate(basedate, term, sr, &cal, true, roll_conv);
 	
     return ret;
 }
 
 DateVector
-LAMathDateUtilities::getMultiDate(const DateVector& basedate, const LAString& term, const LAString& slidingrule, const LAString& calendar, const LAString* roll_conv)
+LAMathDateUtilities::getMultiDate(const DateVector& basedate, const AQLString& term, const AQLString& slidingrule, const AQLString& calendar, const AQLString* roll_conv)
 {
 	//calendar
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(calendar);
 	//sliding rule
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(slidingrule);
 	
 	DateVector ret;
@@ -759,18 +759,18 @@ LAMathDateUtilities::getMultiDate(const DateVector& basedate, const LAString& te
 	return ret;
 }
 
-LADate
-LAMathDateUtilities::getDateWithRoll(LADate& basedate, LAString& term, LAString& slidingrule, LAString& calendar, int roll)
+AQLDate
+LAMathDateUtilities::getDateWithRoll(AQLDate& basedate, AQLString& term, AQLString& slidingrule, AQLString& calendar, int roll)
 {
 	//change nospace & upper
 	upper(term);
 	upper(slidingrule);
 	upper(calendar);
 	//sliding rule
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(slidingrule);
 	//calendar
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(calendar);
 
 	int y,m,d,w;
@@ -778,62 +778,62 @@ LAMathDateUtilities::getDateWithRoll(LADate& basedate, LAString& term, LAString&
 	y*=roll;
 	m*=roll;
 	d*=roll;
-	LAString multiterm = LAString(y)+"y"+LAString(m)+"m"+LAString(d)+"d";
+	AQLString multiterm = AQLString(y)+"y"+AQLString(m)+"m"+AQLString(d)+"d";
 
-	LADate ret = LAMathDateCalculations::getDate(basedate,multiterm,sr,&cal,true);
+	AQLDate ret = LAMathDateCalculations::getDate(basedate,multiterm,sr,&cal,true);
 	return ret;
 }
 
-LADate
-LAMathDateUtilities::getIMMDate1(const int& year, const int& month, LAString& calendar, LAString& slidingRule)
+AQLDate
+LAMathDateUtilities::getIMMDate1(const int& year, const int& month, AQLString& calendar, AQLString& slidingRule)
 {
 	upper(slidingRule);
 	upper(calendar);
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(slidingRule);
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(calendar);
 
-	LADate date = LAMathDateCalculations::getIMMDate(year, month);
+	AQLDate date = LAMathDateCalculations::getIMMDate(year, month);
 	return sr.getDate(date, cal);
 }
 
-LADate
-LAMathDateUtilities::getIMMDate2(const int& year, const int& number, LAString& calendar, LAString& slidingRule)
+AQLDate
+LAMathDateUtilities::getIMMDate2(const int& year, const int& number, AQLString& calendar, AQLString& slidingRule)
 {
-	if (number < 0 || number > 5) throw LACoreInvalidData("IMM Dates in a year are 4 days.", __FILE__, __LINE__);
+	if (number < 0 || number > 5) throw AQLCoreInvalidData("IMM Dates in a year are 4 days.", __FILE__, __LINE__);
 
 	upper(slidingRule);
 	upper(calendar);
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(slidingRule);
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(calendar);
 
-	LADate date = LAMathDateCalculations::getIMMDate(year, number * 3);
+	AQLDate date = LAMathDateCalculations::getIMMDate(year, number * 3);
 	return sr.getDate(date, cal);
 }
 
-LADate
-LAMathDateUtilities::getIMMDate3(const LADate& basedate, const int& number, LAString& calendar, LAString& slidingRule)
+AQLDate
+LAMathDateUtilities::getIMMDate3(const AQLDate& basedate, const int& number, AQLString& calendar, AQLString& slidingRule)
 {
 	upper(slidingRule);
 	upper(calendar);
-	LAPriceDataSlidingRule sr;
+	AQLPriceDataSlidingRule sr;
 	sr.convertFromString(slidingRule);
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(calendar);
 
 	int y_baseDate = basedate.yearOfEra();
 	int m_baseDate = basedate.monthOfYear();
 
-	LADate nextIMMDate; 
+	AQLDate nextIMMDate; 
 	nextIMMDate.setYear(y_baseDate); 
 	nextIMMDate.setMonth(m_baseDate);
 
 	if (m_baseDate % 3 == 0)
 	{
-		LADate IMMDate_baseDateMonth = LAMathDateCalculations::getIMMDate(y_baseDate, m_baseDate);
+		AQLDate IMMDate_baseDateMonth = LAMathDateCalculations::getIMMDate(y_baseDate, m_baseDate);
 		IMMDate_baseDateMonth = sr.getDate(IMMDate_baseDateMonth, cal);
 		if (IMMDate_baseDateMonth <= basedate) nextIMMDate.addMonths(3);
 	}
@@ -852,17 +852,17 @@ LAMathDateUtilities::getIMMDate3(const LADate& basedate, const int& number, LASt
 
 // calc regular (non-stub) payment dates for daycount ACT/ACT.ICMA
 DateMatrix
-LAMathDateUtilities::calcRegularDates(const LAString& frequency,
-									  const LAString& Calendar,
-									  const LAString& SlidingRule,
-								      const std::vector<LADate>& startdates,
-								      const std::vector<LADate>& enddates)
+LAMathDateUtilities::calcRegularDates(const AQLString& frequency,
+									  const AQLString& Calendar,
+									  const AQLString& SlidingRule,
+								      const std::vector<AQLDate>& startdates,
+								      const std::vector<AQLDate>& enddates)
 {
-	LAPriceDataCalendar calendar;
+	AQLPriceDataCalendar calendar;
 	calendar.convertFromString(Calendar);
-	LAPriceDataSlidingRule slidingrule;
+	AQLPriceDataSlidingRule slidingrule;
 	slidingrule.convertFromString(SlidingRule);
-	LAString term = (LAString)(LAMathDateCalculations::getPeriodFrequencyInMonths(frequency)) + "M";
+	AQLString term = (AQLString)(LAMathDateCalculations::getPeriodFrequencyInMonths(frequency)) + "M";
 
 	bool is_sorted_Start = true;
 	bool is_sorted_End = true;
@@ -886,28 +886,28 @@ LAMathDateUtilities::calcRegularDates(const LAString& frequency,
 	   !is_sorted_Start ||
 	   !is_sorted_End)
 	{
-		LAString msg = "Illegal StartDates and/or EndDates.";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Illegal StartDates and/or EndDates.";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	// merge StartDates and EndDates as a single date vector
-	std::vector<LADate> startenddates;
+	std::vector<AQLDate> startenddates;
 	std::set_union(startdates.begin(), startdates.end(), 
 					enddates.begin(), enddates.end(),
 					std::inserter(startenddates, startenddates.end()));
 
 	if(startenddates.size() != startdates.size() + 1) // case when Start[i+1] does not coincide with End[i]
 	{
-		LAString msg = "Illegal StartDates and/or EndDates.";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Illegal StartDates and/or EndDates.";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
-	std::vector<LADate> regular_startdates;
-	std::vector<LADate> regular_enddates;
+	std::vector<AQLDate> regular_startdates;
+	std::vector<AQLDate> regular_enddates;
 	for(unsigned int i = 0; i < startdates.size(); ++i)
 	{
-		LADate startdate = startdates[i];
-		LADate enddate = enddates[i];
+		AQLDate startdate = startdates[i];
+		AQLDate enddate = enddates[i];
 
 		if(i == 0)
 		{
@@ -944,13 +944,13 @@ LAMathDateUtilities::calcRegularDates(const LAString& frequency,
 	return ret;
 }
 
-bool is_last_business_day_temp(const LADate& d, const LAString& cal)
+bool is_last_business_day_temp(const AQLDate& d, const AQLString& cal)
 {
-	const LADate next_day = LAMathDateUtilities::getDate(d, "1d", "FOLLOWING", cal);
+	const AQLDate next_day = LAMathDateUtilities::getDate(d, "1d", "FOLLOWING", cal);
 	return next_day.monthOfYear() != d.monthOfYear();
 }
 
-int StringToMonthInteger(LAString mstr)
+int StringToMonthInteger(AQLString mstr)
 {
     int m;
     if (mstr == "Jan") m = 1;
@@ -965,14 +965,14 @@ int StringToMonthInteger(LAString mstr)
     else if (mstr == "Oct") m = 10;
     else if (mstr == "Nov") m = 11;
     else if (mstr == "Dec") m = 12;
-    else throw LACoreAppError("invalid month", __FILE__, __LINE__);
+    else throw AQLCoreAppError("invalid month", __FILE__, __LINE__);
 
     return m;
 }
 
-LAString FrequencyToTerm(LAString frequency)
+AQLString FrequencyToTerm(AQLString frequency)
 {
-	LAString frequency_(frequency);
+	AQLString frequency_(frequency);
 	frequency_.toUpper();
 	if (frequency_ == BUSINESS_DAYS || frequency_ == DAILY)
 		return "1D";
@@ -989,24 +989,24 @@ LAString FrequencyToTerm(LAString frequency)
 	else if (frequency_ == ANNUAL)
 		return "12M";
 	else
-		throw LACoreInvalidData("Unknown frequency in conversion to Term", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Unknown frequency in conversion to Term", __FILE__, __LINE__);
 }
 
-LAPriceDataDayCount ModelDaycount()
+AQLPriceDataDayCount ModelDaycount()
 {
-	LAString daycountConvention = LAString("ACT/365_ISDA");
+	AQLString daycountConvention = AQLString("ACT/365_ISDA");
 	return Daycount(daycountConvention);
 }
 
-double ModelTime(LADate valDate, LADate targetDate)
+double ModelTime(AQLDate valDate, AQLDate targetDate)
 {
-	LAPriceDataDayCount dayCount = ModelDaycount();
+	AQLPriceDataDayCount dayCount = ModelDaycount();
 	return YearFraction(dayCount, valDate, targetDate);
 }
 
-LADate LAStringToDate(LAString date)
+AQLDate LAStringToDate(AQLString date)
 {
-	LADate ret;
+	AQLDate ret;
 	int slushCheck = date.findString("/");
 	if (slushCheck == -1)
 	{
@@ -1015,7 +1015,7 @@ LADate LAStringToDate(LAString date)
 	else
 	{
 		if (slushCheck == 4) date.remove(4, 1);
-		else throw LACoreInvalidData("Input error", __FILE__, __LINE__);
+		else throw AQLCoreInvalidData("Input error", __FILE__, __LINE__);
 
 		slushCheck = date.findString("/");
 		if (slushCheck == 6) { date.remove(6, 1); }
@@ -1024,61 +1024,61 @@ LADate LAStringToDate(LAString date)
 			date.remove(5, 1);
 			date.insert(4, "0");
 		}
-		else throw LACoreInvalidData("Input error", __FILE__, __LINE__);
+		else throw AQLCoreInvalidData("Input error", __FILE__, __LINE__);
 
 		if (date.size() == 7)
 		{
 			date.insert(6, "0");
 		}
-		else if (date.size() != 8) throw LACoreInvalidData("Input error", __FILE__, __LINE__);
-		LADate ret_(date.getCString()); ret = ret_;
+		else if (date.size() != 8) throw AQLCoreInvalidData("Input error", __FILE__, __LINE__);
+		AQLDate ret_(date.getCString()); ret = ret_;
 	}
 
 	return ret;
 }
 
-double YearFraction(LAPriceDataDayCount daycount, LADate valDate, LADate date)
+double YearFraction(AQLPriceDataDayCount daycount, AQLDate valDate, AQLDate date)
 {
 	return daycount.getTerm(valDate, date, false);
 }
 
-LAPriceDataDayCount Daycount(LAString daycountConvention)
+AQLPriceDataDayCount Daycount(AQLString daycountConvention)
 {
-	LAFunctionUtilities::upperdelspace(daycountConvention);
-	LAPriceDataDayCount dc;
-	dc.setDayCount(LACoreComponentManager::getDayCount(daycountConvention));
+	AQLFunctionUtilities::upperdelspace(daycountConvention);
+	AQLPriceDataDayCount dc;
+	dc.setDayCount(AQLCoreComponentManager::getDayCount(daycountConvention));
 	return dc;
 }
 
-double TermToYearLength(LAString term)
+double TermToYearLength(AQLString term)
 {
     size_t termSize = term.size();
-    LAString unit = term.subString(termSize - 1, termSize - 1);
+    AQLString unit = term.subString(termSize - 1, termSize - 1);
     double length = term.subString(0, termSize - 2).getDoubleValue();
     if (unit == "Y")
         return length;
     else if (unit == "M")
         return length / 12.0;
     else
-        throw LACoreInvalidData("Invalid term in conversion to year length", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Invalid term in conversion to year length", __FILE__, __LINE__);
 }
 
-int TermToMonthLength(LAString term)
+int TermToMonthLength(AQLString term)
 {
     size_t termSize = term.size();
-    LAString unit = term.subString(termSize - 1, termSize - 1);
+    AQLString unit = term.subString(termSize - 1, termSize - 1);
     int length = term.subString(0, termSize - 2).getIntValue();
     if (unit == "M")
         return length;
     else if (unit == "Y")
         return 12 * length;
     else
-        throw LACoreInvalidData("Invalid term in conversion to month length", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Invalid term in conversion to month length", __FILE__, __LINE__);
 }
 
 
-LADate CalendarAdvance(LADate baseDate, LAString term, LAPriceDataSlidingRule slidingRule, LAPriceDataCalendar calendar)
+AQLDate CalendarAdvance(AQLDate baseDate, AQLString term, AQLPriceDataSlidingRule slidingRule, AQLPriceDataCalendar calendar)
 {
-    LAString* roll_conv = 0;
+    AQLString* roll_conv = 0;
     return LAMathDateCalculations::getDate(baseDate, term, slidingRule, &calendar, true, roll_conv);
 }

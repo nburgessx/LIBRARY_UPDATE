@@ -22,17 +22,17 @@
 #include <algorithm>
 #include "ConstantDeclarations.h"
 #include "LARiskConfigurationYieldBasisDelta.h"
-#include "LADataInstance.h"
-#include "LABasic.h"
-#include "LAObjectPool.h"
-#include "LADataReference.h"
-#include "LADataProcedure.h"
+#include "AQLDataInstance.h"
+#include "AQLBasic.h"
+#include "AQLObjectPool.h"
+#include "AQLDataReference.h"
+#include "AQLDataProcedure.h"
 #include "LADefinitionsRisk.h"
 #include "LAScenarioConfiguration.h"
 #include "LAScenarioConfigurationManager.h"
 #include "LAFileAccessor.h"
 #include "LAMarketData.h"
-#include "LALinearFunc.h"
+#include "AQLLinearFunc.h"
 #include "LAStaticData.h"
 #include "LADealUtils.h"
 
@@ -62,10 +62,10 @@ LARiskConfigurationYieldBasisDelta::~LARiskConfigurationYieldBasisDelta(void)
 	@param[in,out] dataInstance
 	@param[in] scenario
 	@param[in] index
-	@return vector<LAObject *> 
+	@return vector<AQLObject *> 
 */
-vector<LAObject *> 
-LARiskConfigurationYieldBasisDelta::createYieldEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationYieldBasisDelta::createYieldEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
 {
 	if (isZeroBump(ccy))
 	{
@@ -85,38 +85,38 @@ LARiskConfigurationYieldBasisDelta::createYieldEntity(const LAString &ccy, LADat
 	@param[in,out] dataInstance
 	@param[in] scenario
 	@param[in] index
-	@return vector<LAObject *> 
+	@return vector<AQLObject *> 
 */
-vector<LAObject *> 
-LARiskConfigurationYieldBasisDelta::createZeroBumpYieldEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationYieldBasisDelta::createZeroBumpYieldEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
 {
-	const LAString model = LAMarketData::getModelName(ccy);
-	const LAString riskName = getRiskName();
-	LAString bumpDirection = getBumpDirection(ccy);
+	const AQLString model = LAMarketData::getModelName(ccy);
+	const AQLString riskName = getRiskName();
+	AQLString bumpDirection = getBumpDirection(ccy);
 	bumpDirection.toUpper();
 
 	// if scenario2 only updownshift
 	if (scenarioNum == SCENARIO_2 && bumpDirection != RISK_BUMPDIRECTION_UPDOWNSHIFT)
 	{
-		return vector<LAObject *>(0);
+		return vector<AQLObject *>(0);
 	}
 	// check
 	// bucket term
-	LAStringVector bucketTerm = getBucketGridTerm(ccy);
+	AQLStringVector bucketTerm = getBucketGridTerm(ccy);
 	if (!bucketTerm.empty() && bucketTerm[0] != AQ_NO_DATA)
 	{
-		throw  LACoreInvalidData("Basis delta fail. Zero rate bump does not support bucket.", __FILE__, __LINE__);
+		throw  AQLCoreInvalidData("Basis delta fail. Zero rate bump does not support bucket.", __FILE__, __LINE__);
 	}
 	// shift type
-	LAString shiftType = getShiftType(ccy);
+	AQLString shiftType = getShiftType(ccy);
 	shiftType.toUpper();
 	if (shiftType != RISK_SHIFTTYPE_DIFF)
 	{
-		throw  LACoreInvalidData("Basis delta fail. Zero rate bump supports diff only.", __FILE__, __LINE__);
+		throw  AQLCoreInvalidData("Basis delta fail. Zero rate bump supports diff only.", __FILE__, __LINE__);
 	}
 
 	// get grid and shift val
-	const LAStringVector grid = getShiftGridTerm(ccy);
+	const AQLStringVector grid = getShiftGridTerm(ccy);
 	// get shift value
 	DoubleArray paraShiftVec;
 	DoubleArray gridShiftVec;	
@@ -141,19 +141,19 @@ LARiskConfigurationYieldBasisDelta::createZeroBumpYieldEntity(const LAString &cc
 	// set up param
 	MAScenarioParam param;
 	param.ccy = ccy;
-	param.calcType= ccy + "_" + riskName + "_" + LAString(scenarioNum) + "_" + LAString(index);
+	param.calcType= ccy + "_" + riskName + "_" + AQLString(scenarioNum) + "_" + AQLString(index);
 	param.model = model;
 	param.shiftType = shiftType;
 	param.bumpDirection = bumpDirection;
 	param.targetName = LAMarketData::getBaseYieldName(ccy);
 	param.targetCurveType = getCurveType(ccy);
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	tmpCurrency.toLower();
-	LAString recalc = mpRiskStaticData->getStaticData(
+	AQLString recalc = mpRiskStaticData->getStaticData(
 		tmpCurrency + STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_RECALCBASISDFSONZERORATEBUMP + getCurveSuffix(ccy));
 	if (recalc != AQ_NO_DATA)
 	{
-		LADataBool attrBool;
+		AQLDataBool attrBool;
 		attrBool.convertFromString(recalc);
 		param.recalcBasisDFsOnZeroRateBump = attrBool.get();
 	}
@@ -174,7 +174,7 @@ LARiskConfigurationYieldBasisDelta::createZeroBumpYieldEntity(const LAString &cc
 		// check
 		if (grid.size() !=  gridShiftVec.size())
 		{
-			throw LACoreInvalidData("Grid size and grid shift size is not same !!", __FILE__, __LINE__); 
+			throw AQLCoreInvalidData("Grid size and grid shift size is not same !!", __FILE__, __LINE__); 
 		}
 
 		param.isGrid = true;
@@ -189,17 +189,17 @@ LARiskConfigurationYieldBasisDelta::createZeroBumpYieldEntity(const LAString &cc
 		// When zero rate bump -> IMM forward rate bump conversion is required,
 		// curve types are specified as market names (for instance, 3M6MBASIS instead of AUD6MLFORECAST);
 		// so we shall convert them into asigned curve names to make the scenario creator of zero rates work
-		LAStringVector targets = param.targetCurveType.toToken('/');
-		LAString lowerSTD = STD;
+		AQLStringVector targets = param.targetCurveType.toToken('/');
+		AQLString lowerSTD = STD;
 		lowerSTD.toLower();
 		StringSet names;
 		for (size_t i = 0, ie = targets.size(); i < ie; ++i)
 		{
-			LAString target = targets[i];
+			AQLString target = targets[i];
 			target.toLower();
-			LAString postfix = (target == lowerSTD) ? "" : "." + target;
-			const LAStringVector assigned = mpStaticData->getStaticData(
-				LAString(ccy).toLower() + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + postfix).toUpper().toToken(MULTI_STATIC_DATA_DELIMITER);
+			AQLString postfix = (target == lowerSTD) ? "" : "." + target;
+			const AQLStringVector assigned = mpStaticData->getStaticData(
+				AQLString(ccy).toLower() + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + postfix).toUpper().toToken(MULTI_STATIC_DATA_DELIMITER);
 			names.insert(assigned.begin(), assigned.end());
 			if (target == lowerSTD)
 			{
@@ -222,7 +222,7 @@ LARiskConfigurationYieldBasisDelta::createZeroBumpYieldEntity(const LAString &cc
 	LAScenarioConfiguration *sceCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_YIELDZEROBASIS);
 
-	vector<LAObject *> ret = sceCreator->createScenario(dataInstance, param);
+	vector<AQLObject *> ret = sceCreator->createScenario(dataInstance, param);
 	delete sceCreator;
 	return ret;
 }
@@ -234,41 +234,41 @@ LARiskConfigurationYieldBasisDelta::createZeroBumpYieldEntity(const LAString &cc
 	@param[in,out] dataInstance
 	@param[in] scenario
 	@param[in] index
-	@return vector<LAObject *> 
+	@return vector<AQLObject *> 
 */
-vector<LAObject *> 
-LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index)  const
 {
-	const LAString model = LAMarketData::getModelName(ccy);
-	const LAString riskName = getRiskName();
-	LAString bumpDirection = getBumpDirection(ccy);
+	const AQLString model = LAMarketData::getModelName(ccy);
+	const AQLString riskName = getRiskName();
+	AQLString bumpDirection = getBumpDirection(ccy);
 	bumpDirection.toUpper();
-	LAStringVector grid = getShiftGridTerm(ccy);
-	LAStringVector BucketTerm = getBucketGridTerm(ccy);
+	AQLStringVector grid = getShiftGridTerm(ccy);
+	AQLStringVector BucketTerm = getBucketGridTerm(ccy);
 
 	// if scenario2 only updownshift
 	if (scenarioNum == SCENARIO_2 && bumpDirection != RISK_BUMPDIRECTION_UPDOWNSHIFT)
 	{
-		return vector<LAObject *>(0);
+		return vector<AQLObject *>(0);
 	}	
 	//check bucket grid
 	if (BucketTerm[0] != AQ_NO_DATA)
 	{
-		LAStringVector::iterator it;
+		AQLStringVector::iterator it;
 		for (unsigned int i = 0;i < BucketTerm.size();++i)
 		{
 			it = find(grid.begin(),grid.end(),BucketTerm[i]);
 			if (it == grid.end())
-				throw LACoreInvalidData("Basis delta fail. Risk property bucketterm grid isn't registrate.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Basis delta fail. Risk property bucketterm grid isn't registrate.", __FILE__, __LINE__);
 
 			if (i != 0)
 			{
-				LAStringVector::const_iterator it_now,it_before;
+				AQLStringVector::const_iterator it_now,it_before;
 				it_now = find(grid.begin(),grid.end(),BucketTerm[i]);
 				it_before = find(grid.begin(),grid.end(),BucketTerm[i-1]);
 				if (it_before >= it_now)
 				{
-					throw LACoreInvalidData("Basis delta fail. The order of bucket term is inconsistent!", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Basis delta fail. The order of bucket term is inconsistent!", __FILE__, __LINE__);
 				}
 			}
 		}				
@@ -296,7 +296,7 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &
 
 
 	unsigned int gridSize = grid.size();
-	LAStringVector paramGrid(gridSize);
+	AQLStringVector paramGrid(gridSize);
 	IntArray gridGroupID(gridSize);
 	unsigned int j = 0;
 	for (unsigned int i = 0; i < gridSize; ++i)
@@ -330,27 +330,27 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &
 	param.isFwdFXZeroRateBump = isFwdFXZeroRateBump(ccy);
 	param.isFwdPointBump = isFwdPointBump(ccy);
 
-	LAString mktSuffix = "." + param.targetCurveType;
+	AQLString mktSuffix = "." + param.targetCurveType;
 	mktSuffix.toLower();
-	LAString tmpCcy = ccy;
+	AQLString tmpCcy = ccy;
 	tmpCcy.toLower();
-	LAString fwdFXPipsizeFactorString = mpStaticData->getStaticData(tmpCcy + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_DENOMINATOR + mktSuffix,
+	AQLString fwdFXPipsizeFactorString = mpStaticData->getStaticData(tmpCcy + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_DENOMINATOR + mktSuffix,
 																	tmpCcy + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_PIPSIZE + mktSuffix); // Alias Method: First Parameter Takes Priority
 	if (fwdFXPipsizeFactorString != AQ_NO_DATA)
 		param.fwdfxDenominator = fwdFXPipsizeFactorString.getDoubleValue();
 
 	// set targetCurveType for col-xccybasis delta
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	const LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
-	LAStringVector fCurveCcys = ycPro.getAffectingCcy();
+	AQLStringVector fCurveCcys = ycPro.getAffectingCcy();
 	for (int unsigned i = 0; i < fCurveCcys.size(); ++i)
 	{
-		LAStringVector tmpMarkets = mpStaticData->getStaticData(fCurveCcys[i].toLower() + STATIC_DATA_KEY_YIELD_USEMAKETS).toToken(':');
+		AQLStringVector tmpMarkets = mpStaticData->getStaticData(fCurveCcys[i].toLower() + STATIC_DATA_KEY_YIELD_USEMAKETS).toToken(':');
 		if (tmpMarkets[0] == AQ_NO_DATA) continue;
 		for (int i = 0; i < tmpMarkets.size(); ++i)
 		{
-			const LAStringVector tmpMarket = tmpMarkets[i].toUpper().toToken('_');
+			const AQLStringVector tmpMarket = tmpMarkets[i].toUpper().toToken('_');
 			if (tmpMarket.size() == 2)
 			{
 				if (tmpMarket[0] == ccy && tmpMarket[1] == param.targetCurveType)
@@ -367,7 +367,7 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &
 		// check
 		if (paramGrid.size() !=  paraShiftVec.size())
 		{
-			throw LACoreInvalidData("Grid size and parallel shift size is not same !!", __FILE__, __LINE__); 
+			throw AQLCoreInvalidData("Grid size and parallel shift size is not same !!", __FILE__, __LINE__); 
 		}
 		param.isParallel = true;
 		param.paraTerm = paramGrid;
@@ -379,7 +379,7 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &
 		// check
 		if (paramGrid.size() !=  gridShiftVec.size())
 		{
-			throw LACoreInvalidData("Grid size and grid shift size is not same !!", __FILE__, __LINE__); 
+			throw AQLCoreInvalidData("Grid size and grid shift size is not same !!", __FILE__, __LINE__); 
 		}
 
 		param.isGrid = true;
@@ -395,7 +395,7 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &
 	LAScenarioConfiguration *sceCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_YIELDBASIS);
 
-	vector<LAObject *> ret = sceCreator->createScenario(dataInstance, param);
+	vector<AQLObject *> ret = sceCreator->createScenario(dataInstance, param);
 	delete sceCreator;
 	return ret;
 }
@@ -406,12 +406,12 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &
     @brief return outputname1
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldBasisDelta::getOutPutName1(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldBasisDelta::getOutPutName1(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_OUTPUTNAME + getCurveSuffix(ccy));
 }
@@ -423,9 +423,9 @@ LARiskConfigurationYieldBasisDelta::getOutPutName1(const LAString &ccy) const
 	@return bool
 */
 bool
-LARiskConfigurationYieldBasisDelta::isGridSensitivity(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::isGridSensitivity(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
 												STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISGRIDSENSITIVITY + getCurveSuffix(ccy)));
 }
@@ -438,26 +438,26 @@ LARiskConfigurationYieldBasisDelta::isGridSensitivity(const LAString &ccy) const
             2 if market zero rate bump risk -> IMM forward risk conversion is applied
 */
 int
-LARiskConfigurationYieldBasisDelta::getIMMFwdRiskMode(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::getIMMFwdRiskMode(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString isIMMProp = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
+	AQLString tmpCurrency = ccy;
+	AQLString isIMMProp = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
 											STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISIMMFWDRATEBUMP + getCurveSuffix(ccy));
 	if ((isIMMProp == AQ_NO_DATA) || !convertBoolFromStr(isIMMProp))
 	{
 		return 0;
 	}
-	LAString isZeroRateBump = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
+	AQLString isZeroRateBump = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
 											STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISZERORATEBUMP + getCurveSuffix(ccy));
 	return convertBoolFromStr(isZeroRateBump) ? 2 : 1;
 }
 
 std::vector<int>
-LARiskConfigurationYieldBasisDelta::getIMMTerm(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::getIMMTerm(const AQLString &ccy) const
 {
 	if (getIMMFwdRiskMode(ccy))
 	{
-		LADataInts immTerm;
+		AQLDataInts immTerm;
 		immTerm.convertFromString(mpRiskStaticData->getStaticData(
 			(ccy + STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_IMMFWDRATETERM).toLower() + getCurveSuffix(ccy)));
 		return immTerm.get();
@@ -478,49 +478,49 @@ LARiskConfigurationYieldBasisDelta::getIMMTerm(const LAString &ccy) const
             LAMathYieldCurvePro::setCurveType (for example, "JPYOIS") to deduce the forward rate changes
             against the market rate bumps
 */
-LAStringVector
-LARiskConfigurationYieldBasisDelta::getIMMRiskYieldCurveName(const LAString &ccy) const
+AQLStringVector
+LARiskConfigurationYieldBasisDelta::getIMMRiskYieldCurveName(const AQLString &ccy) const
 {
 	if (!getIMMFwdRiskMode(ccy))
 	{
-		std::vector<LAString> v;
+		std::vector<AQLString> v;
 		v.push_back("");
 		return v;
 	}
 
-	LAString ccyL = ccy;
+	AQLString ccyL = ccy;
 	ccyL.toLower();
-	LAString curveSuffix = getCurveSuffix(ccy);
+	AQLString curveSuffix = getCurveSuffix(ccy);
 
-	LAString assignedCurvePropName = ccyL + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + curveSuffix;
+	AQLString assignedCurvePropName = ccyL + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + curveSuffix;
 
-	LAString assignedCurve = mpStaticData->getStaticData(assignedCurvePropName).toToken(MULTI_STATIC_DATA_DELIMITER).front().toUpper();
+	AQLString assignedCurve = mpStaticData->getStaticData(assignedCurvePropName).toToken(MULTI_STATIC_DATA_DELIMITER).front().toUpper();
 	bool hasAssignedCurve = assignedCurve != AQ_NO_DATA;
-	LAString curveTypeL = getCurveType(ccy).toLower();
-	LAString curveTypeU = curveTypeL;
+	AQLString curveTypeL = getCurveType(ccy).toLower();
+	AQLString curveTypeU = curveTypeL;
 	curveTypeU.toUpper();
 
-	LADataBool isSwapTenorAdjustAttr;
+	AQLDataBool isSwapTenorAdjustAttr;
 	isSwapTenorAdjustAttr.convertFromString(mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_GENERATOR_ISSWAPTENORADJUST));
 	if (isSwapTenorAdjustAttr.get())
 	{
-		LAString tenorSwapName = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_GENERATOR_TENORSWAPNAME).toLower();
+		AQLString tenorSwapName = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_GENERATOR_TENORSWAPNAME).toLower();
 		if (tenorSwapName == curveTypeL)
 		{
-			LAStringVector useGrid = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_SWAP_USEGRID).toUpper().toToken(MULTI_STATIC_DATA_DELIMITER);
+			AQLStringVector useGrid = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_SWAP_USEGRID).toUpper().toToken(MULTI_STATIC_DATA_DELIMITER);
 			StringSet useGridSet(useGrid.begin(), useGrid.end());
-			LAString baseFrequencyFloat = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_SWAP_BASEFREQUENCYFLOAT).toLower();
-			LAString frequencyFloat = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCYFLOAT).toLower();
-			LAStringVector useMarkets = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_USEMAKETS).toLower().toToken(MULTI_STATIC_DATA_DELIMITER);
+			AQLString baseFrequencyFloat = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_SWAP_BASEFREQUENCYFLOAT).toLower();
+			AQLString frequencyFloat = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCYFLOAT).toLower();
+			AQLStringVector useMarkets = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_USEMAKETS).toLower().toToken(MULTI_STATIC_DATA_DELIMITER);
 			bool inUseMarkets = std::find(useMarkets.begin(), useMarkets.end(), curveTypeL) != useMarkets.end();
 
-			LAStringVector terms = mpRiskStaticData->getStaticData(ccyL + STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_GRID_TERM + curveSuffix).toUpper().toToken(MULTI_STATIC_DATA_DELIMITER);
-			LAStringVector riskYieldCurveNames(terms.size());
-			for (LAStringVector::size_type i = 0; i < terms.size(); ++i)
+			AQLStringVector terms = mpRiskStaticData->getStaticData(ccyL + STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_GRID_TERM + curveSuffix).toUpper().toToken(MULTI_STATIC_DATA_DELIMITER);
+			AQLStringVector riskYieldCurveNames(terms.size());
+			for (AQLStringVector::size_type i = 0; i < terms.size(); ++i)
 			{
 				if (useGridSet.find(terms[i]) != useGridSet.end())
 				{
-					LAString frequencyFloatTerm = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCYFLOAT + '.' + terms[i].toLower());
+					AQLString frequencyFloatTerm = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCYFLOAT + '.' + terms[i].toLower());
 					if (frequencyFloatTerm != AQ_NO_DATA)
 					{
 						if (baseFrequencyFloat != frequencyFloatTerm.toLower())
@@ -558,10 +558,10 @@ LARiskConfigurationYieldBasisDelta::getIMMRiskYieldCurveName(const LAString &ccy
 cout << "Property " << assignedCurvePropName.getCString() << " is not set but "
      << (ccy + STATIC_DATA_KEY_RISK_FRONT_YIELD_IRDELTA_ISIMMFWDRATEBUMP).toLower() << getCurveSuffix(ccy).getCString() << " is set to TRUE" << endl;
 #endif
-		return std::vector<LAString>();
+		return std::vector<AQLString>();
 	}
 
-	std::vector<LAString> riskYieldCurveNames;
+	std::vector<AQLString> riskYieldCurveNames;
 	riskYieldCurveNames.push_back(assignedCurve);
 	return riskYieldCurveNames;
 }
@@ -574,24 +574,24 @@ cout << "Property " << assignedCurvePropName.getCString() << " is not set but "
     @arapm objPool [in] the object pool
     @return An empty string if there is no such risk floor term, a appropriate term string otherwise
 */
-LAString
-LARiskConfigurationYieldBasisDelta::getIMMRiskFloorTerm(const LAString &ccy, LAObjectPool &objPool) const
+AQLString
+LARiskConfigurationYieldBasisDelta::getIMMRiskFloorTerm(const AQLString &ccy, AQLObjectPool &objPool) const
 {
 	if (getIMMFwdRiskMode(ccy))
 	{
-		LAString proName = LAMarketData::getBaseYieldProName(ccy);
+		AQLString proName = LAMarketData::getBaseYieldProName(ccy);
 		const LAMathYieldCurvePro &pro = dynamic_cast<const LAMathYieldCurvePro&>(objPool.getObject(proName).get());
 
 		// For example, "USDOIS" -> "OISCURVE"
-		LAString originalCurveName = pro.getMarketForCurve(getIMMRiskYieldCurveName(ccy).front()).toUpper();
+		AQLString originalCurveName = pro.getMarketForCurve(getIMMRiskYieldCurveName(ccy).front()).toUpper();
 		if (originalCurveName == OISCURVE)
 		{
 			if ((mpStaticData->getStaticData((ccy + STATIC_DATA_KEY_YIELD_OIS_LONGTERMCONVENTION + '.' + OISCURVE).toLower()).toUpper() == LOBASIS)
 			 && (mpStaticData->getStaticData((ccy + STATIC_DATA_KEY_YIELD_OIS_LOBASISNAME + '.' + OISCURVE).toLower()).toUpper() == getCurveType(ccy).toUpper()))
 			{
-				LAStringVector useGrid = mpStaticData->getStaticData((ccy + STATIC_DATA_KEY_YIELD_OIS_USEGRID + '.' + OISCURVE).toLower()).toToken(MULTI_STATIC_DATA_DELIMITER);
-				LAString longTerm = mpStaticData->getStaticData((ccy + STATIC_DATA_KEY_YIELD_OIS_LONGTERM + '.' + OISCURVE).toLower());
-				LAStringVector::const_iterator i = std::find(useGrid.begin(), useGrid.end(), longTerm);
+				AQLStringVector useGrid = mpStaticData->getStaticData((ccy + STATIC_DATA_KEY_YIELD_OIS_USEGRID + '.' + OISCURVE).toLower()).toToken(MULTI_STATIC_DATA_DELIMITER);
+				AQLString longTerm = mpStaticData->getStaticData((ccy + STATIC_DATA_KEY_YIELD_OIS_LONGTERM + '.' + OISCURVE).toLower());
+				AQLStringVector::const_iterator i = std::find(useGrid.begin(), useGrid.end(), longTerm);
 				if ((i != useGrid.end()) && (i != useGrid.begin()))
 				{
 					--i;
@@ -610,9 +610,9 @@ LARiskConfigurationYieldBasisDelta::getIMMRiskFloorTerm(const LAString &ccy, LAO
 	@return bool 
 */
 bool
-LARiskConfigurationYieldBasisDelta::isParallelShift(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::isParallelShift(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISPARALLEL + getCurveSuffix(ccy)));
 }
@@ -621,9 +621,9 @@ LARiskConfigurationYieldBasisDelta::isParallelShift(const LAString &ccy) const
 /*!
     @brief return riskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationYieldBasisDelta::getRiskName(void) const
 {
 	return RISK_FRONT_YIELD_BASISDELTA;
@@ -633,13 +633,13 @@ LARiskConfigurationYieldBasisDelta::getRiskName(void) const
     @brief return grid term
 
 	@param[in] ccy
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-vector<LAString>
-LARiskConfigurationYieldBasisDelta::getShiftGridTerm(const LAString &ccy) const
+vector<AQLString>
+LARiskConfigurationYieldBasisDelta::getShiftGridTerm(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString strGrid = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString strGrid = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 									STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_GRID_TERM + getCurveSuffix(ccy));
 
 	return strGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
@@ -649,13 +649,13 @@ LARiskConfigurationYieldBasisDelta::getShiftGridTerm(const LAString &ccy) const
     @brief return grid term
 
 	@param[in] ccy
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-vector<LAString>
-LARiskConfigurationYieldBasisDelta::getGridTerm(const LAString &ccy) const
+vector<AQLString>
+LARiskConfigurationYieldBasisDelta::getGridTerm(const AQLString &ccy) const
 {
-	LAStringVector ret;
-	const LAString curveType = getCurveType(ccy) + "_";
+	AQLStringVector ret;
+	const AQLString curveType = getCurveType(ccy) + "_";
 	if (isZeroBump(ccy))
 	{
 		ret = getShiftGridTerm(ccy);
@@ -666,12 +666,12 @@ LARiskConfigurationYieldBasisDelta::getGridTerm(const LAString &ccy) const
 	}
 	else
 	{
-		LAString tmpCurrency = ccy;
+		AQLString tmpCurrency = ccy;
 		tmpCurrency.toLower();
 
 		// read fwdfx file
-		LAStringMatrix fwdfxDataMtx;
-		LAString fwdfxFileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + getCurveSuffix(ccy));
+		AQLStringMatrix fwdfxDataMtx;
+		AQLString fwdfxFileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + getCurveSuffix(ccy));
 		if (fwdfxFileName != AQ_NO_DATA)
 		{
 			MAFileAccessor fwdfxFile(LAMarketData::getNumFileName(fwdfxFileName));
@@ -679,8 +679,8 @@ LARiskConfigurationYieldBasisDelta::getGridTerm(const LAString &ccy) const
 			fwdfxFile.close();
 		}
 		// read basis file
-		LAStringMatrix basisDataMtx;
-		LAString basisFileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + getCurveSuffix(ccy));
+		AQLStringMatrix basisDataMtx;
+		AQLString basisFileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + getCurveSuffix(ccy));
 		if (basisFileName != AQ_NO_DATA)
 		{
 			MAFileAccessor basisFile(LAMarketData::getNumFileName(basisFileName));
@@ -691,8 +691,8 @@ LARiskConfigurationYieldBasisDelta::getGridTerm(const LAString &ccy) const
 		// get terms
 		const unsigned int fwdfxSize = fwdfxDataMtx.size();
 		const unsigned int basisSize = basisDataMtx.size();
-		LAStringVector fwdfx(fwdfxSize);
-		LAStringVector basis(basisSize);
+		AQLStringVector fwdfx(fwdfxSize);
+		AQLStringVector basis(basisSize);
 		for (unsigned int i = 0; i < fwdfxSize; ++i)
 		{
 			fwdfx[i] = fwdfxDataMtx[i][0].toUpper();
@@ -721,17 +721,17 @@ LARiskConfigurationYieldBasisDelta::getGridTerm(const LAString &ccy) const
     @brief return bucket grid term
 
 	@param[in] ccy
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-vector<LAString>
-LARiskConfigurationYieldBasisDelta::getBucketGridTerm(const LAString &ccy) const
+vector<AQLString>
+LARiskConfigurationYieldBasisDelta::getBucketGridTerm(const AQLString &ccy) const
 {
-	LAStringVector ret = getGridRangeTerm(ccy);
+	AQLStringVector ret = getGridRangeTerm(ccy);
 	if (!ret.empty()) return ret;
-	LAString tmpccy = ccy;
-	LAString strBucketGrid = mpRiskStaticData->getStaticData(tmpccy.toLower() + 
+	AQLString tmpccy = ccy;
+	AQLString strBucketGrid = mpRiskStaticData->getStaticData(tmpccy.toLower() + 
 									STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_BUCKET_GRID_TERM + getCurveSuffix(ccy));
-	LAStringVector BucketTerm = strBucketGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector BucketTerm = strBucketGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
 	BucketTerm[0].toUpper();
 	if (BucketTerm[0] == "NONE" ||BucketTerm[0] == AQ_NO_DATA)
 	{
@@ -741,12 +741,12 @@ LARiskConfigurationYieldBasisDelta::getBucketGridTerm(const LAString &ccy) const
 	else
 	{
 		unsigned int gridMax = getMaxGridIndex(ccy);
-		LAStringVector tmpgridTerm = getShiftGridTerm(ccy);
+		AQLStringVector tmpgridTerm = getShiftGridTerm(ccy);
 	
 		for (unsigned int i = 0;i < BucketTerm.size();++i)
 		{
-			LAStringVector::iterator it;
-			LAString strgrid = BucketTerm[i].toUpper();
+			AQLStringVector::iterator it;
+			AQLString strgrid = BucketTerm[i].toUpper();
 			it = find(tmpgridTerm.begin(),tmpgridTerm.end(),strgrid);
 			unsigned int pos = static_cast<unsigned int>(it - tmpgridTerm.begin());
 			if (pos >= gridMax)
@@ -769,12 +769,12 @@ LARiskConfigurationYieldBasisDelta::getBucketGridTerm(const LAString &ccy) const
     @brief return property bucket grid term
 
 	@param[in] ccy
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-LAString
-LARiskConfigurationYieldBasisDelta::getPropertyBucketGridTerm(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldBasisDelta::getPropertyBucketGridTerm(const AQLString &ccy) const
 {
-	LAString tmpccy = ccy;
+	AQLString tmpccy = ccy;
 	return mpRiskStaticData->getStaticData(tmpccy.toLower() + 
 									STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_BUCKET_GRID_TERM + getCurveSuffix(ccy));
 }
@@ -786,15 +786,15 @@ LARiskConfigurationYieldBasisDelta::getPropertyBucketGridTerm(const LAString &cc
 	@param[in] vals
 */
 void
-LARiskConfigurationYieldBasisDelta::getScenario1ParallelShift(const LAString &ccy, DoubleArray &vals) const
+LARiskConfigurationYieldBasisDelta::getScenario1ParallelShift(const AQLString &ccy, DoubleArray &vals) const
 {
 	vals.clear();
-	LAString tmpCurrency = ccy;
-	LAString strShift = getScenario1ParallelShiftStr(ccy);
+	AQLString tmpCurrency = ccy;
+	AQLString strShift = getScenario1ParallelShiftStr(ccy);
 
 	vals =  convertToRateValues(strShift.toToken(MULTI_STATIC_DATA_DELIMITER));
 
-	LAString shiftType = getShiftType(ccy);
+	AQLString shiftType = getShiftType(ccy);
 	shiftType.toUpper();
 
 	if (shiftType == RISK_SHIFTTYPE_RATIO)
@@ -808,12 +808,12 @@ LARiskConfigurationYieldBasisDelta::getScenario1ParallelShift(const LAString &cc
     @brief return scenario1 parallel shift value(string)
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString 
-LARiskConfigurationYieldBasisDelta::getScenario1ParallelShiftStr(const LAString &ccy) const
+AQLString 
+LARiskConfigurationYieldBasisDelta::getScenario1ParallelShiftStr(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_PARALLEL_SHIFTVAL + getCurveSuffix(ccy));
 }
@@ -825,7 +825,7 @@ LARiskConfigurationYieldBasisDelta::getScenario1ParallelShiftStr(const LAString 
 	@return double
 */
 void
-LARiskConfigurationYieldBasisDelta::getScenario2ParallelShift(const LAString &ccy, DoubleArray &vals) const
+LARiskConfigurationYieldBasisDelta::getScenario2ParallelShift(const AQLString &ccy, DoubleArray &vals) const
 {
 	getScenario1ParallelShift(ccy, vals);
 }
@@ -837,7 +837,7 @@ LARiskConfigurationYieldBasisDelta::getScenario2ParallelShift(const LAString &cc
 	@return double
 */
 double
-LARiskConfigurationYieldBasisDelta::getScenario1ParallelShift(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::getScenario1ParallelShift(const AQLString &ccy) const
 {
 	DoubleArray tmp;
 	getScenario1ParallelShift(ccy, tmp);
@@ -851,7 +851,7 @@ LARiskConfigurationYieldBasisDelta::getScenario1ParallelShift(const LAString &cc
 	@return double
 */
 double
-LARiskConfigurationYieldBasisDelta::getScenario2ParallelShift(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::getScenario2ParallelShift(const AQLString &ccy) const
 {
 	return getScenario1ParallelShift(ccy);
 }
@@ -863,14 +863,14 @@ LARiskConfigurationYieldBasisDelta::getScenario2ParallelShift(const LAString &cc
 	@return DoubleArray
 */
 DoubleArray
-LARiskConfigurationYieldBasisDelta::getScenario1GridShift(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::getScenario1GridShift(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString strShift = getScenario1GridShiftStr(ccy);
+	AQLString tmpCurrency = ccy;
+	AQLString strShift = getScenario1GridShiftStr(ccy);
 
 	DoubleArray ret =  convertToRateValues(strShift.toToken(MULTI_STATIC_DATA_DELIMITER));
 
-	LAString shiftType = getShiftType(ccy);
+	AQLString shiftType = getShiftType(ccy);
 	shiftType.toUpper();
 
 	if (shiftType == RISK_SHIFTTYPE_DIFF)
@@ -890,12 +890,12 @@ LARiskConfigurationYieldBasisDelta::getScenario1GridShift(const LAString &ccy) c
     @brief return scenario1 grid shift values(string)
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldBasisDelta::getScenario1GridShiftStr(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldBasisDelta::getScenario1GridShiftStr(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 	    						STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_GRID_SHIFTVAL + getCurveSuffix(ccy));
 
@@ -909,7 +909,7 @@ LARiskConfigurationYieldBasisDelta::getScenario1GridShiftStr(const LAString &ccy
 	@return DoubleArray
 */
 DoubleArray
-LARiskConfigurationYieldBasisDelta::getScenario2GridShift(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::getScenario2GridShift(const AQLString &ccy) const
 {
 	return getScenario1GridShift(ccy);
 }
@@ -918,12 +918,12 @@ LARiskConfigurationYieldBasisDelta::getScenario2GridShift(const LAString &ccy) c
     @brief return bump direction
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldBasisDelta::getBumpDirection(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldBasisDelta::getBumpDirection(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return  mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_BUMPDIRECTION + getCurveSuffix(ccy));
 
@@ -937,10 +937,10 @@ LARiskConfigurationYieldBasisDelta::getBumpDirection(const LAString &ccy) const
 	@return bool
 */
 bool
-LARiskConfigurationYieldBasisDelta::isFwdFXZeroRateBump(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::isFwdFXZeroRateBump(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString tmpIsFwdFXZeroRateBump = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
+	AQLString tmpCurrency = ccy;
+	AQLString tmpIsFwdFXZeroRateBump = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
 		STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISFWDFXZERORATEBUMP + getCurveSuffix(ccy));
 	if (tmpIsFwdFXZeroRateBump == AQ_NO_DATA) return false;
 	return convertBoolFromStr(tmpIsFwdFXZeroRateBump);
@@ -953,10 +953,10 @@ LARiskConfigurationYieldBasisDelta::isFwdFXZeroRateBump(const LAString &ccy) con
 	@return bool
 */
 bool
-LARiskConfigurationYieldBasisDelta::isFwdPointBump(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::isFwdPointBump(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString tmpIsFwdPointBump = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
+	AQLString tmpCurrency = ccy;
+	AQLString tmpIsFwdPointBump = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
 		STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISFWDPOINTBUMP + getCurveSuffix(ccy));
 	if (tmpIsFwdPointBump == AQ_NO_DATA) return true;
 	return convertBoolFromStr(tmpIsFwdPointBump);
@@ -969,9 +969,9 @@ LARiskConfigurationYieldBasisDelta::isFwdPointBump(const LAString &ccy) const
 	@return bool
 */
 bool
-LARiskConfigurationYieldBasisDelta::isWave(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::isWave(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISWAVE + getCurveSuffix(ccy)));
 }
@@ -980,12 +980,12 @@ LARiskConfigurationYieldBasisDelta::isWave(const LAString &ccy) const
     @brief return shift type
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldBasisDelta::getShiftType(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldBasisDelta::getShiftType(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return  mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_SHIFTTYPE + getCurveSuffix(ccy));
 
@@ -995,12 +995,12 @@ LARiskConfigurationYieldBasisDelta::getShiftType(const LAString &ccy) const
     @brief return basis type
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldBasisDelta::getBasisType(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldBasisDelta::getBasisType(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return  mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_BASISTYPE + getCurveSuffix(ccy));
 
@@ -1010,9 +1010,9 @@ LARiskConfigurationYieldBasisDelta::getBasisType(const LAString &ccy) const
 /*!
     @brief return target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationYieldBasisDelta::getTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(RISK_FRONT_YIELD_BASISDELTA_TARGET_CURRENCY);
@@ -1021,9 +1021,9 @@ LARiskConfigurationYieldBasisDelta::getTargetCurrencies() const
 /*!
     @brief return calibration target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationYieldBasisDelta::getCalibTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(RISK_FRONT_YIELD_BASISDELTA_CALIBRATION_TARGET_CURRENCY);
@@ -1037,10 +1037,10 @@ LARiskConfigurationYieldBasisDelta::getCalibTargetCurrencies() const
 	@return double
 */
 double
-LARiskConfigurationYieldBasisDelta::getDivUnit(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::getDivUnit(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString strDivUnit = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString strDivUnit = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_DIVUNIT + getCurveSuffix(ccy));
 
 	return  strDivUnit.getDoubleValue();
@@ -1064,10 +1064,10 @@ LARiskConfigurationYieldBasisDelta::getGridCalcBuffer() const
 	@return bool 
 */
 bool
-LARiskConfigurationYieldBasisDelta::isTarget(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::isTarget(const AQLString &ccy) const
 {
-	LAString basisCurrency = mpStaticData->getStaticData(KEY_SDE_BASIS_BASE_CURRENCY);
-	LAString tmpCurrency = ccy;
+	AQLString basisCurrency = mpStaticData->getStaticData(KEY_SDE_BASIS_BASE_CURRENCY);
+	AQLString tmpCurrency = ccy;
 	tmpCurrency.toUpper();
 
 	if (basisCurrency != AQ_NO_DATA)
@@ -1078,7 +1078,7 @@ LARiskConfigurationYieldBasisDelta::isTarget(const LAString &ccy) const
 		}
 	}
 
-	LAString targetccys = getTargetCurrencies();
+	AQLString targetccys = getTargetCurrencies();
 	targetccys.toUpper();
 
 	if (targetccys == "ALL")
@@ -1087,7 +1087,7 @@ LARiskConfigurationYieldBasisDelta::isTarget(const LAString &ccy) const
 	}
 	else
 	{
-		LAStringVector targetVec = targetccys.toToken(MULTI_STATIC_DATA_DELIMITER);
+		AQLStringVector targetVec = targetccys.toToken(MULTI_STATIC_DATA_DELIMITER);
 		if (targetVec.end() != find(targetVec.begin(), targetVec.end(), tmpCurrency))
 		{
 			return true;
@@ -1106,10 +1106,10 @@ LARiskConfigurationYieldBasisDelta::isTarget(const LAString &ccy) const
 	@return bool
 */
 bool
-LARiskConfigurationYieldBasisDelta::isRiskCurrencyMode(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::isRiskCurrencyMode(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISRISKCURRENCYMODE);
 	if (proprslt == AQ_NO_DATA)
 		return false;
@@ -1126,10 +1126,10 @@ LARiskConfigurationYieldBasisDelta::isRiskCurrencyMode(const LAString &ccy) cons
 	@return bool
 */
 bool
-LARiskConfigurationYieldBasisDelta::isZeroBump(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::isZeroBump(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISZERORATEBUMP + getCurveSuffix(ccy));
 	if (proprslt == AQ_NO_DATA)
 		return false;
@@ -1145,8 +1145,8 @@ LARiskConfigurationYieldBasisDelta::isZeroBump(const LAString &ccy) const
 	@param[in] dataInstance
 	@param[in] index
 */
-vector<LAObject *>
-LARiskConfigurationYieldBasisDelta::createBaseScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, int index) const
+vector<AQLObject *>
+LARiskConfigurationYieldBasisDelta::createBaseScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const
 {
 	if (omitNotionalExposure(ccy))
 	{
@@ -1154,7 +1154,7 @@ LARiskConfigurationYieldBasisDelta::createBaseScenarioEntity(const LAString &ccy
 	}
 	else
 	{
-		return std::vector<LAObject*>(0);
+		return std::vector<AQLObject*>(0);
 	}
 }
 
@@ -1163,17 +1163,17 @@ LARiskConfigurationYieldBasisDelta::createBaseScenarioEntity(const LAString &ccy
 
 	@param[in] ccy
 	@param[in] index
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldBasisDelta::getBaseOutPutName(const LAString &ccy , int index) const
+AQLString
+LARiskConfigurationYieldBasisDelta::getBaseOutPutName(const AQLString &ccy , int index) const
 {
 	if (omitNotionalExposure(ccy))
 	{
-		LAString tmpCcy = ccy;
+		AQLString tmpCcy = ccy;
 		tmpCcy.toLower();
-		LAString ret = mpRiskStaticData->getStaticData(tmpCcy + STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_OUTPUTNAME + getCurveSuffix(ccy));
-		ret += LAString("_BasePV");
+		AQLString ret = mpRiskStaticData->getStaticData(tmpCcy + STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_OUTPUTNAME + getCurveSuffix(ccy));
+		ret += AQLString("_BasePV");
 		return ret;
 	}
 	else
@@ -1186,14 +1186,14 @@ LARiskConfigurationYieldBasisDelta::getBaseOutPutName(const LAString &ccy , int 
     @brief return shift type
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
 bool
-LARiskConfigurationYieldBasisDelta::omitNotionalExposure(const LAString &ccy) const
+LARiskConfigurationYieldBasisDelta::omitNotionalExposure(const AQLString &ccy) const
 {
-	LAString tmpCcy = ccy;
+	AQLString tmpCcy = ccy;
 	tmpCcy.toLower();
-	LAString omitNotionalExposure = mpRiskStaticData->getStaticData(tmpCcy + STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_OMITNOTIONALEXPOSURE + getCurveSuffix(ccy));
+	AQLString omitNotionalExposure = mpRiskStaticData->getStaticData(tmpCcy + STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_OMITNOTIONALEXPOSURE + getCurveSuffix(ccy));
 	if (omitNotionalExposure == AQ_NO_DATA)
 	{
 		return false;

@@ -10,7 +10,7 @@
  */
 
 #include "CreateFixedBond.h"
-#include "LAString.h"
+#include "AQLString.h"
 
 namespace google_test
 {
@@ -21,12 +21,12 @@ namespace google_test
             try
             {
                 // Load the Google Test Input File
-                LAString inputFileString            = LAString( inputFile.c_str() );
+                AQLString inputFileString            = AQLString( inputFile.c_str() );
                 inputFile_                          = etrading::ReadDataFile::Load( inputFileString );
                 
                 std::string bondObjectName          = inputFile_["bondObjectName"];
-                LAStringMatrix bondLVB                = inputFile_["bondLVB"];
-                LAStringMatrix scheduleLVB            = inputFile_["scheduleLVB"];
+                AQLStringMatrix bondLVB                = inputFile_["bondLVB"];
+                AQLStringMatrix scheduleLVB            = inputFile_["scheduleLVB"];
                 bool validateKeys                   = inputFile_["validateKeys"];
 
                 // Build the Bond Object
@@ -34,7 +34,7 @@ namespace google_test
                
                return result;
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }
@@ -53,11 +53,11 @@ namespace google_test
 			try
 			{
 				// Load the Google Test Input File
-				LAString inputFileString = LAString(inputFile.c_str());
+				AQLString inputFileString = AQLString(inputFile.c_str());
 				inputFile_ = etrading::ReadDataFile::Load(inputFileString);
 
 				std::string bondObjectName = inputFile_["bondObjectName"];
-				LAStringMatrix bondLVB = inputFile_["bondLVB"];
+				AQLStringMatrix bondLVB = inputFile_["bondLVB"];
 				bool validateKeys = inputFile_["validateKeys"];
 
 				// Build the Bond Object
@@ -65,7 +65,7 @@ namespace google_test
 
 				return result;
 			}
-			catch (const LACoreError& m)
+			catch (const AQLCoreError& m)
 			{
 				std::cout << m.getMsg();
 			}

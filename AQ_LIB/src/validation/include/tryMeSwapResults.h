@@ -11,7 +11,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "LADate.h"
+#include "AQLDate.h"
 #include "Variant.h"            // Includes DateVector, DoubleVector, VariantVector, VariantMatrix et al.
 #include "CoreEnumerations.h"
 
@@ -25,19 +25,19 @@ namespace validation
 
 	// Function to update swap discount and forward rate risk
     std::string tryMeSwapResultsRiskUpdate( const std::string & swapHandle,
-											const LADate & asOfDate,
-											const LAStringMatrix & discountRiskLVB,		// discountRiskLVB = Table of Payment Dates and Coupons
-											const LAStringMatrix & forwardRiskLVB );	// forwardRiskLVB = Table of Fixing Dates and Annuities
+											const AQLDate & asOfDate,
+											const AQLStringMatrix & discountRiskLVB,		// discountRiskLVB = Table of Payment Dates and Coupons
+											const AQLStringMatrix & forwardRiskLVB );	// forwardRiskLVB = Table of Fixing Dates and Annuities
 
     // Function to update swap discount risk
     std::string tryMeSwapResultsDiscountRiskUpdate( const std::string & swapHandle,
-													const LADate & asOfDate,
-													const LAStringMatrix & discountRiskLVB ); // discountRiskLVB = Table of Payment Dates and Coupons
+													const AQLDate & asOfDate,
+													const AQLStringMatrix & discountRiskLVB ); // discountRiskLVB = Table of Payment Dates and Coupons
 
 	// Function to update swap forward rate risk
     std::string tryMeSwapResultsForwardRiskUpdate( const std::string & swapHandle,
-												   const LADate & asOfDate,
-												   const LAStringMatrix & forwardRiskLVB ); // forwardRiskLVB = Table of Fixing Dates and Annuities
+												   const AQLDate & asOfDate,
+												   const AQLStringMatrix & forwardRiskLVB ); // forwardRiskLVB = Table of Fixing Dates and Annuities
 
 	// Function to delete a swap results object
     std::string tryMeSwapResultsDelete( const std::string & swapHandle  );

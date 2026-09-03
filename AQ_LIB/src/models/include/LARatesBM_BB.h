@@ -9,15 +9,15 @@
 #endif
 
 
-#include "LACoreAppError.h"
-#include "LACoreSystemError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreSystemError.h"
+#include "AQLCoreTemplateType.h"
 
 #include <vector>
 #include "LARatesBM.h"
 
 
-class LARandBase;
+class AQLRandBase;
 
 using namespace std;
 
@@ -33,12 +33,12 @@ public:
 								//======================================
                             	// constructor
 	LARatesBM_BB(const DoubleArray& timegrid,
-              const LARandBase& rand,
+              const AQLRandBase& rand,
               unsigned int factor_num = 1
               );
 	
     LARatesBM_BB(const DoubleArray& timegrid,
-              const LARandBase& rand,
+              const AQLRandBase& rand,
               const std::vector<DoubleMatrix>& loading
               );
 

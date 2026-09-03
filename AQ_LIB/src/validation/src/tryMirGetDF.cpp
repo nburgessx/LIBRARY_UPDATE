@@ -20,26 +20,26 @@ namespace
     *  @param [inout]	curve			Name of curve from which we read DFs
     *  @param [in]		isBasisFlag		Is reading DFs from basis curve? A deprecated flag
     */
-    void defaultingAndValidation1( LAString& interp, LAString& daycount, LAString& curve, bool isBasisFlag )
+    void defaultingAndValidation1( AQLString& interp, AQLString& daycount, AQLString& curve, bool isBasisFlag )
     {
-        if( interp == LAString( "" ) )
+        if( interp == AQLString( "" ) )
         {
-            interp = LAString( "SPLINE" );
+            interp = AQLString( "SPLINE" );
         }
 
-        if( daycount == LAString( "" ) )
+        if( daycount == AQLString( "" ) )
         {
-            daycount = LAString( "ACT/365" );
+            daycount = AQLString( "ACT/365" );
         }
 
-        if( curve == LAString( "" ) )
+        if( curve == AQLString( "" ) )
         {
-            curve = LAString( "OIS" );
+            curve = AQLString( "OIS" );
         }
 
         if ( isBasisFlag )
         {
-            throw LACoreInvalidData( "#Error: 'IsBasisFlag' is a deprecated input and it should be set to FALSE", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'IsBasisFlag' is a deprecated input and it should be set to FALSE", __FILE__, __LINE__ );
         }
     }
 
@@ -51,18 +51,18 @@ namespace
     *  @param [inout]	calendar		Calendar
     *  @param [in]		isBasisFlag		Is reading DFs from basis curve? A deprecated flag
     */
-    void defaultingAndValidation2( LAString& interp, LAString& daycount, LAString& curve, LAString& slidingRule, LAString& calendar, bool isBasisFlag )
+    void defaultingAndValidation2( AQLString& interp, AQLString& daycount, AQLString& curve, AQLString& slidingRule, AQLString& calendar, bool isBasisFlag )
     {
         defaultingAndValidation1( interp, daycount, curve, isBasisFlag );
 
-        if( calendar == LAString( "" ) )
+        if( calendar == AQLString( "" ) )
         {
-            calendar = LAString( "TKB:LNB" );
+            calendar = AQLString( "TKB:LNB" );
         }
 
-        if( slidingRule == LAString( "" ) )
+        if( slidingRule == AQLString( "" ) )
         {
-            slidingRule = LAString( "NO_CHANGE" );
+            slidingRule = AQLString( "NO_CHANGE" );
         }
     }
 }
@@ -79,13 +79,13 @@ namespace validation
     *  @param [in]		curveName		Name of the curve where DFs are read off
     *  @return			An array of discount factor
     */
-    DoubleVector tryMirGetDF1( LADataInstance* dataInstance,
+    DoubleVector tryMirGetDF1( AQLDataInstance* dataInstance,
                                const DoubleVector& terms,
-                               const LAString& curveID,
-                               const LAString& dayCount,
-                               const LAString& interpolation,
+                               const AQLString& curveID,
+                               const AQLString& dayCount,
+                               const AQLString& interpolation,
                                bool isBasisFlag,
-                               const LAString& curveName )
+                               const AQLString& curveName )
     {
         VALID_EXCEPTION_START
 
@@ -105,12 +105,12 @@ namespace validation
         // Input validations
         if( terms.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Size of input 'terms' is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Size of input 'terms' is zero.", __FILE__, __LINE__ );
         }
 
-        LAString interp( interpolation );
-        LAString daycount( dayCount );
-        LAString curveNm( curveName );
+        AQLString interp( interpolation );
+        AQLString daycount( dayCount );
+        AQLString curveNm( curveName );
         defaultingAndValidation1( interp, daycount, curveNm, isBasisFlag );
 
         // Get DF
@@ -118,7 +118,7 @@ namespace validation
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -145,15 +145,15 @@ namespace validation
     *  @param [in]		curveName		Name of the curve where DFs are read off
     *  @return			An array of discount factor
     */
-    DoubleVector tryMirGetDF2( LADataInstance* dataInstance,
-                               const LAStringVector& terms,
-                               const LAString& curveID,
-                               const LAString& dayCount,
-                               const LAString& slidingRule,
-                               const LAString& calendar,
-                               const LAString& interpolation,
+    DoubleVector tryMirGetDF2( AQLDataInstance* dataInstance,
+                               const AQLStringVector& terms,
+                               const AQLString& curveID,
+                               const AQLString& dayCount,
+                               const AQLString& slidingRule,
+                               const AQLString& calendar,
+                               const AQLString& interpolation,
                                bool isBasisFlag,
-                               const LAString& curveName )
+                               const AQLString& curveName )
     {
         VALID_EXCEPTION_START
 
@@ -175,21 +175,21 @@ namespace validation
         // Input validations
         if( terms.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Size of input 'terms' is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Size of input 'terms' is zero.", __FILE__, __LINE__ );
         }
 
-        LAString interp( interpolation );
-        LAString daycount( dayCount );
-        LAString curveNm( curveName );
-        LAString slideRule( slidingRule );
-        LAString cal( calendar );
+        AQLString interp( interpolation );
+        AQLString daycount( dayCount );
+        AQLString curveNm( curveName );
+        AQLString slideRule( slidingRule );
+        AQLString cal( calendar );
         defaultingAndValidation2( interp, daycount, curveNm, slideRule, cal, isBasisFlag );
 
         DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( terms, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -216,16 +216,16 @@ namespace validation
     *  @param [in]		curveName		Name of the curve where DFs are read off. Default to 'STD'
     *  @return			A array of discount factors
     */
-    DoubleVector tryMirGetDF3( LADataInstance* dataInstance,
+    DoubleVector tryMirGetDF3( AQLDataInstance* dataInstance,
                                const DateVector& fromDates,
                                const DateVector& toDates,
-                               const LAString& curveID,
-                               const LAString& dayCount,
-                               const LAString& slidingRule,
-                               const LAString& calendar,
-                               const LAString& interpolation,
+                               const AQLString& curveID,
+                               const AQLString& dayCount,
+                               const AQLString& slidingRule,
+                               const AQLString& calendar,
+                               const AQLString& interpolation,
                                bool isBasisFlag,
-                               const LAString& curveName )
+                               const AQLString& curveName )
     {
         VALID_EXCEPTION_START
 
@@ -249,12 +249,12 @@ namespace validation
         size_t N = toDates.size();
         if( M != N && M != 1 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
         }
 
         if( N == 0 || M == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
         }
 
         // Create pairs of fromDate and toDate even when there is only one fromDate
@@ -276,18 +276,18 @@ namespace validation
         }
 
         // Other validations
-        LAString interp( interpolation );
-        LAString daycount( dayCount );
-        LAString curveNm( curveName );
-        LAString slideRule( slidingRule );
-        LAString cal( calendar );
+        AQLString interp( interpolation );
+        AQLString daycount( dayCount );
+        AQLString curveNm( curveName );
+        AQLString slideRule( slidingRule );
+        AQLString cal( calendar );
         defaultingAndValidation2( interp, daycount, curveNm, slideRule, cal, isBasisFlag );
 
         DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( fromDateVec, toDates, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -314,16 +314,16 @@ namespace validation
     *  @param [in]		curveName		Name of the curve where DFs are read off. Default to 'STD'
     *  @return			A array of discount factors
     */
-    DoubleVector tryMirGetDF4( LADataInstance* dataInstance,
+    DoubleVector tryMirGetDF4( AQLDataInstance* dataInstance,
                                const DateVector& fromDates,
                                const DoubleVector& terms,
-                               const LAString& curveID,
-                               const LAString& dayCount,
-                               const LAString& slidingRule,
-                               const LAString& calendar,
-                               const LAString& interpolation,
+                               const AQLString& curveID,
+                               const AQLString& dayCount,
+                               const AQLString& slidingRule,
+                               const AQLString& calendar,
+                               const AQLString& interpolation,
                                bool isBasisFlag,
-                               const LAString& curveName )
+                               const AQLString& curveName )
 
     {
         VALID_EXCEPTION_START
@@ -348,27 +348,27 @@ namespace validation
         size_t N = terms.size();
         if( M != N )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' and 'terms' must be of equal size'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'terms' must be of equal size'", __FILE__, __LINE__ );
         }
 
         if( N == 0 || M == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' and 'terms' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'terms' must not be empty", __FILE__, __LINE__ );
         }
 
         // Other validations
-        LAString interp( interpolation );
-        LAString daycount( dayCount );
-        LAString curveNm( curveName );
-        LAString slideRule( slidingRule );
-        LAString cal( calendar );
+        AQLString interp( interpolation );
+        AQLString daycount( dayCount );
+        AQLString curveNm( curveName );
+        AQLString slideRule( slidingRule );
+        AQLString cal( calendar );
         defaultingAndValidation2( interp, daycount, curveNm, slideRule, cal, isBasisFlag );
 
         DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( fromDates, terms, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -394,16 +394,16 @@ namespace validation
     *  @param [in]		curveName		Name of the curve where DFs are read off. Default to 'STD'
     *  @return			A array of discount factors
     */
-    DoubleVector tryMirGetDF5( LADataInstance* dataInstance,
+    DoubleVector tryMirGetDF5( AQLDataInstance* dataInstance,
                                const DateVector& fromDates,
-                               const LAString& term,
-                               const LAString& curveID,
-                               const LAString& dayCount,
-                               const LAString& slidingRule,
-                               const LAString& calendar,
-                               const LAString& interpolation,
+                               const AQLString& term,
+                               const AQLString& curveID,
+                               const AQLString& dayCount,
+                               const AQLString& slidingRule,
+                               const AQLString& calendar,
+                               const AQLString& interpolation,
                                bool isBasisFlag,
-                               const LAString& curveName )
+                               const AQLString& curveName )
     {
         VALID_EXCEPTION_START
 
@@ -426,22 +426,22 @@ namespace validation
         size_t M = fromDates.size();
         if( M == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
         }
 
         // Other validations
-        LAString interp( interpolation );
-        LAString daycount( dayCount );
-        LAString curveNm( curveName );
-        LAString slideRule( slidingRule );
-        LAString cal( calendar );
+        AQLString interp( interpolation );
+        AQLString daycount( dayCount );
+        AQLString curveNm( curveName );
+        AQLString slideRule( slidingRule );
+        AQLString cal( calendar );
         defaultingAndValidation2( interp, daycount, curveNm, slideRule, cal, isBasisFlag );
 
         DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( fromDates, term, dataInstance, curveID, daycount, slideRule, cal, interp, isBasisFlag, curveNm );
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )

@@ -69,9 +69,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString pvOutputFileName   = pvOutputs; 
+                    AQLString pvOutputFileName   = pvOutputs; 
                 #else
-                    LAString pvOutputFileName   = pvOutputs64; 
+                    AQLString pvOutputFileName   = pvOutputs64; 
                 #endif
 
                 // 2. Load the Input Files
@@ -81,22 +81,22 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
                 std::string createSwap          = validation::tryMeLWOSwapCreate( swapName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
-                LAStringMatrix curveCollectionLVB = pvInputFile["curveCollections"];
-                LAStringMatrix fixingTableLVB     = pvInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                AQLStringMatrix curveCollectionLVB = pvInputFile["curveCollections"];
+                AQLStringMatrix fixingTableLVB     = pvInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
                 double actualPV = validation::tryMeLWOSwapPV( swapName, curveCollectionLVB, "", fixingTableLVB);
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualPV, TEST_DIR, pvOutputFileName, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

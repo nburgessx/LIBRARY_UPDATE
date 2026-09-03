@@ -38,24 +38,24 @@ namespace google_test
 	TEST_F( TestRiskUtilities, UNIT_isCurveList )
 	{
 		// Test Not a Curve List
-		const LAString curveName = "USD3ML";
+		const AQLString curveName = "USD3ML";
 		EXPECT_EQ( false, etrading::isCurveList( curveName ) );
 
 		// Test for a Curve List
-		const LAString curveList = "USD3ML:USD6ML";
+		const AQLString curveList = "USD3ML:USD6ML";
 		EXPECT_EQ( true, etrading::isCurveList( curveList ) );
 
 		// Another test for a Curve List
-		const LAString curveList1 = "USD3ML:USD6ML:USD1ML:USD12ML";
+		const AQLString curveList1 = "USD3ML:USD6ML:USD1ML:USD12ML";
 		EXPECT_EQ( true, etrading::isCurveList( curveList1 ) );
 	}
 
 	TEST_F( TestRiskUtilities, UNIT_generateCurveList )
 	{
 		// Test Single Curve Name
-		const LAString curveName = "USD3ML";
-		const std::vector<LAString> actualCurveList = etrading::generateCurveList( curveName );
-		const std::vector<LAString> expectedCurveList = { "USD3ML" };
+		const AQLString curveName = "USD3ML";
+		const std::vector<AQLString> actualCurveList = etrading::generateCurveList( curveName );
+		const std::vector<AQLString> expectedCurveList = { "USD3ML" };
 
 		ASSERT_EQ( actualCurveList.size(), expectedCurveList.size() );
 		for( size_t i = 0; i< actualCurveList.size(); ++i)
@@ -64,9 +64,9 @@ namespace google_test
 		}
 
 		// Test Multiple Curve Names
-		const LAString curveList = "USD1ML:USD3ML:USD6ML:USD12ML";
-		const std::vector<LAString> actualCurveList1 = etrading::generateCurveList( curveList );
-		const std::vector<LAString> expectedCurveList1 = { "USD1ML", "USD3ML", "USD6ML", "USD12ML" };
+		const AQLString curveList = "USD1ML:USD3ML:USD6ML:USD12ML";
+		const std::vector<AQLString> actualCurveList1 = etrading::generateCurveList( curveList );
+		const std::vector<AQLString> expectedCurveList1 = { "USD1ML", "USD3ML", "USD6ML", "USD12ML" };
 
 		ASSERT_EQ( actualCurveList1.size(), expectedCurveList1.size() );
 		for( size_t i = 0; i < actualCurveList1.size(); ++i )
@@ -80,13 +80,13 @@ namespace google_test
 	{
 		// Load Curves
 		loadUSDCurves();
-		const LAString curveCollection = "USDYC";
+		const AQLString curveCollection = "USDYC";
 	
 
 		// Test Single Curve Name
-		const LAString curveName = "USDOIS";
-		const std::vector<LAString> actualStaticDataList = etrading::generateStaticDataList( curveCollection, curveName );
-		const std::vector<LAString> expectedStaticDataList = { "OIS" };
+		const AQLString curveName = "USDOIS";
+		const std::vector<AQLString> actualStaticDataList = etrading::generateStaticDataList( curveCollection, curveName );
+		const std::vector<AQLString> expectedStaticDataList = { "OIS" };
 
 		ASSERT_EQ( actualStaticDataList.size(), expectedStaticDataList.size() );
 		for( size_t i = 0; i < actualStaticDataList.size(); ++i )
@@ -95,9 +95,9 @@ namespace google_test
 		}
 
 		// Test Multiple Curve Names
-		const LAString curveList = "USDOIS:USD1ML:USD3ML:USD6ML:USD12ML";
-		const std::vector<LAString> actualStaticDataList1 = etrading::generateStaticDataList( curveCollection, curveList );
-		const std::vector<LAString> expectedStaticDataList1 = { "OIS", "1M3MBASIS", "STD", "3M6MBASIS", "3M12MBASIS" };
+		const AQLString curveList = "USDOIS:USD1ML:USD3ML:USD6ML:USD12ML";
+		const std::vector<AQLString> actualStaticDataList1 = etrading::generateStaticDataList( curveCollection, curveList );
+		const std::vector<AQLString> expectedStaticDataList1 = { "OIS", "1M3MBASIS", "STD", "3M6MBASIS", "3M12MBASIS" };
 
 		ASSERT_EQ( actualStaticDataList1.size(), expectedStaticDataList1.size() );
 		for( size_t i = 0; i < actualStaticDataList1.size(); ++i )
@@ -110,19 +110,19 @@ namespace google_test
 	{
 		// Load Curves
 		loadUSDCurves();
-		const LAString curveCollection = "USDYC";
+		const AQLString curveCollection = "USDYC";
 
 
 		// Test Single Curve Name
-		const LAString curveName = "USDOIS";
-		const LAString actualStaticDataList = etrading::generateStaticDataListAsString( curveCollection, curveName );
-		const LAString expectedStaticDataList = "OIS";
+		const AQLString curveName = "USDOIS";
+		const AQLString actualStaticDataList = etrading::generateStaticDataListAsString( curveCollection, curveName );
+		const AQLString expectedStaticDataList = "OIS";
 		EXPECT_EQ( expectedStaticDataList, actualStaticDataList );
 
 		// Test Multiple Curve Names
-		const LAString curveList = "USDOIS:USD1ML:USD3ML:USD6ML:USD12ML";
-		const LAString actualStaticDataList1 = etrading::generateStaticDataListAsString( curveCollection, curveList );
-		const LAString expectedStaticDataList1 = "OIS:1M3MBASIS:STD:3M6MBASIS:3M12MBASIS";
+		const AQLString curveList = "USDOIS:USD1ML:USD3ML:USD6ML:USD12ML";
+		const AQLString actualStaticDataList1 = etrading::generateStaticDataListAsString( curveCollection, curveList );
+		const AQLString expectedStaticDataList1 = "OIS:1M3MBASIS:STD:3M6MBASIS:3M12MBASIS";
 		EXPECT_EQ( expectedStaticDataList1, actualStaticDataList1 );
 	}
 

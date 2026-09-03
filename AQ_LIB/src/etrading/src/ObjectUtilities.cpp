@@ -67,7 +67,7 @@ namespace etrading
 	                if( numberOfRowsHere  != numberOfRows )
 	                {
 	                    // +1 because this display is not zero-indexed
-	                    throw LACoreInvalidData( ( boost::format( "#Error: Number of data points in data range is not equal for every column. For column %i there are %i data points, but for column %i there are %i data points" )
+	                    throw AQLCoreInvalidData( ( boost::format( "#Error: Number of data points in data range is not equal for every column. For column %i there are %i data points, but for column %i there are %i data points" )
 	                                                            % ( colCounter + 1 )
 	                                                            % numberOfRowsHere
 	                                                            %  colCounter
@@ -713,7 +713,7 @@ namespace etrading
 				std::pair<std::string, CachedObjectEnum> result = env.deSerializeJSONDoc( nestedJSONDocs[counter] );
 				if ( result.second != CURVE_GENERATOR && result.second != CURVE_MARKETDATA )
 				{
-					throw LACoreInvalidData( ( boost::format( "#Error: Unexpected nested object when deserializing Curve Object. Expecting CURVE_GENERATOR or CURVE_MARKETDATA, but found object handle `%s` of type `%s` " )
+					throw AQLCoreInvalidData( ( boost::format( "#Error: Unexpected nested object when deserializing Curve Object. Expecting CURVE_GENERATOR or CURVE_MARKETDATA, but found object handle `%s` of type `%s` " )
 												% result.first
 												% toString( result.second ) ).str().c_str(), __FILE__, __LINE__ );
 				}
@@ -749,7 +749,7 @@ namespace etrading
 				std::pair<std::string, CachedObjectEnum> result = env.deSerializeJSONDoc(nestedJSONDocs[counter]);
 				if (result.second != CURVE_GENERATOR && result.second != CURVE_MARKETDATA)
 				{
-					throw LACoreInvalidData((boost::format("#Error: Unexpected nested object when deserializing Curve Object. Expecting CURVE_GENERATOR or CURVE_MARKETDATA, but found object handle `%s` of type `%s` ")
+					throw AQLCoreInvalidData((boost::format("#Error: Unexpected nested object when deserializing Curve Object. Expecting CURVE_GENERATOR or CURVE_MARKETDATA, but found object handle `%s` of type `%s` ")
 						% result.first
 						% toString(result.second)).str().c_str(), __FILE__, __LINE__);
 				}

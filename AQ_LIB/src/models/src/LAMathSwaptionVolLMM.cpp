@@ -75,15 +75,15 @@ mVolType(volType_),
 mCloned(false)
 {
     size_t n = mT_fix_L.size();
-    if( n != mT_pay_L.size() ) throw LACoreInvalidData("mT_fix_L.size != mT_pay_L.size",__FILE__,__LINE__);
-    if( n != mTau_L.size() ) throw LACoreInvalidData("mT_fix_L.size != mTau_L.size",__FILE__,__LINE__);
+    if( n != mT_pay_L.size() ) throw AQLCoreInvalidData("mT_fix_L.size != mT_pay_L.size",__FILE__,__LINE__);
+    if( n != mTau_L.size() ) throw AQLCoreInvalidData("mT_fix_L.size != mTau_L.size",__FILE__,__LINE__);
     size_t m = mT_pay.size();
-    if( m != mTau.size() ) throw LACoreInvalidData("mT_pay.size != mTau.size",__FILE__,__LINE__);
+    if( m != mTau.size() ) throw AQLCoreInvalidData("mT_pay.size != mTau.size",__FILE__,__LINE__);
 	mL2SNum = n / m;
 
     if(mT_Expire <= mT_OptMat)
 	{
-        throw LACoreInvalidData("mT_Expire <= mT_OptMat",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("mT_Expire <= mT_OptMat",__FILE__,__LINE__);
 	}
 
     //T itr for Libor
@@ -236,45 +236,45 @@ double LAMathSwaptionVolLMM::getForwardLIBOR( const LARatesPathElementCurve* cur
 {
     if( T_pay < T_fix )
     {
-        LAString msg("T_pay < T_fix");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);        
+        AQLString msg("T_pay < T_fix");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);        
     }
     if( T_fix < mCurve0_F->get_t() )
     {
-        LAString msg("T_fix < mCurve0_F->get_t()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);        
+        AQLString msg("T_fix < mCurve0_F->get_t()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);        
     }
     if ( tau < 0.0 )
     {
-        LAString msg("term_rate < 0.0");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
+        AQLString msg("term_rate < 0.0");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
     }
     if ( T_fix < 0.0 )
     {
-        LAString msg("T_fix < 0.0");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
+        AQLString msg("T_fix < 0.0");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
     }
     if ( T_pay < 0.0 )
     {
-        LAString msg("T_pay < 0.0");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
+        AQLString msg("T_pay < 0.0");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
     }
     if ( LAModelUtilities::eq(tau, 0.0, eps_1d) && LAModelUtilities::eq(T_fix, T_pay, eps_1d) )
     {
-        LAString msg("eq(term_rate, 0.0, eps_1d) && eq(T_fix, T_pay, eps_1d)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
+        AQLString msg("eq(term_rate, 0.0, eps_1d) && eq(T_fix, T_pay, eps_1d)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
     }
     if (( LAModelUtilities::eq(tau, 0.0, eps_1d) && !LAModelUtilities::eq(T_fix, T_pay, eps_1d) ) ||
 		   	( !LAModelUtilities::eq(tau, 0.0, eps_1d) && LAModelUtilities::eq(T_fix, T_pay, eps_1d) ))
     {
-        LAString msg("( eq(term_rate, 0.0, eps_1d) && !eq(T_fix, T_pay, eps_1d) ) || ( !eq(term_rate, 0.0, eps_1d) && eq(T_fix, T_pay, eps_1d) )");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
+        AQLString msg("( eq(term_rate, 0.0, eps_1d) && !eq(T_fix, T_pay, eps_1d) ) || ( !eq(term_rate, 0.0, eps_1d) && eq(T_fix, T_pay, eps_1d) )");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
     }
 
 	double rate = ( (curve->getP(T_fix) / curve->getP(T_pay)) - 1.0 ) / tau;
 
 //#ifdef ZEROFLOOR
-	//rate = LAMath::max(rate, MIN_RATE);
+	//rate = AQLMath::max(rate, MIN_RATE);
 //#endif
 	//if ( MIN_RATE_LMMCALIB >= rate && rate >= 0. )
 	//{
@@ -296,18 +296,18 @@ double LAMathSwaptionVolLMM::getForwardRateValue( const LARatesPathElementCurve*
 {
     if ( T_fix < 0.0 )
     {
-        LAString msg("T_fix < 0.0");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
+        AQLString msg("T_fix < 0.0");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
     }
     if ( T_pay < 0.0 )
     {
-        LAString msg("T_pay < 0.0");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
+        AQLString msg("T_pay < 0.0");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);   
     }
     if( T_pay < T_fix )
     {
-        LAString msg("T_pay < T_fix");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);        
+        AQLString msg("T_pay < T_fix");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);        
     }
 
     if ( T_fix < curve->get_t() ) return 0.0;
@@ -336,16 +336,16 @@ double LAMathSwaptionVolLMM::getAnnuity( const DoubleVector& T_pay, const Double
 {
     if ( T_pay.front() < mCurve0_D->get_t() )
     {
-        LAString msg("T_pay.front() < mCurve0_D->get_t()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__); 
+        AQLString msg("T_pay.front() < mCurve0_D->get_t()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__); 
     }
 
     size_t n = T_pay.size();
 
     if ( tau.size() != n )
     {
-        LAString msg("term_acc.size() != n");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__); 
+        AQLString msg("term_acc.size() != n");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__); 
     }
 
     double temp_Anuity = 0.0;
@@ -353,13 +353,13 @@ double LAMathSwaptionVolLMM::getAnnuity( const DoubleVector& T_pay, const Double
     {
         if ( tau[i] < 0.0 )
         {
-            LAString msg("term_acc[i] < 0.0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__); 
+            AQLString msg("term_acc[i] < 0.0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__); 
         }
         if ( T_pay[i] < 0.0 )
         {
-            LAString msg("T_pay[i] < 0.0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__); 
+            AQLString msg("T_pay[i] < 0.0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__); 
         }
 	    temp_Anuity += tau[i] * mCurve0_D->getP( T_pay[i] );
     }
@@ -378,8 +378,8 @@ double LAMathSwaptionVolLMM::getSwapFloat( const DoubleVector& T_fix_L, const Do
     size_t n = T_fix_L.size();
     if ( T_pay_L.size() != n )
     {
-        LAString msg("T_pay_L.size() != T_fix_L.size()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);  
+        AQLString msg("T_pay_L.size() != T_fix_L.size()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);  
     }
 
     double swap_Float = 0.0;
@@ -387,18 +387,18 @@ double LAMathSwaptionVolLMM::getSwapFloat( const DoubleVector& T_fix_L, const Do
     {
         if ( T_fix_L[i] < 0.0 )
         {
-            LAString msg("T_fix_L[i] < 0.0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);  
+            AQLString msg("T_fix_L[i] < 0.0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);  
         }
         if ( T_pay_L[i] < 0.0 )
         {
-            LAString msg("T_pay_L[i] < 0.0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);  
+            AQLString msg("T_pay_L[i] < 0.0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);  
         }
         if ( T_pay_L[i] < T_fix_L[i]  )
         {
-            LAString msg("T_pay_L[i] < T_fix_L[i] ");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);  
+            AQLString msg("T_pay_L[i] < T_fix_L[i] ");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);  
         }
         swap_Float += getForwardRateValue( mCurve0_F, T_fix_L[i], T_pay_L[i] ) * mCurve0_D->getP(T_pay_L[i]) / mCurve0_F->getP(T_pay_L[i]);
     }
@@ -430,22 +430,22 @@ double LAMathSwaptionVolLMM::getSwapRate( const DoubleVector& T_fix_L, const Dou
 {
     if( T_fix_L[0] < mCurve0_F->get_t() )
     {
-        LAString msg("T_fix_L < mCurve0_F->get_t()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);        
+        AQLString msg("T_fix_L < mCurve0_F->get_t()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);        
     }
 
     size_t n = T_fix_L.size();
     if ( T_pay_L.size() != n )
     {
-        LAString msg("T_pay_L.size() != T_fix_L.size()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);        
+        AQLString msg("T_pay_L.size() != T_fix_L.size()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);        
     }
 
     double annuity = getAnnuity( T_pay, tau );
     if ( annuity < 0.0 || LAModelUtilities::eq(annuity,0.0) )
     {
-        LAString msg("annuity < 0.0 || eq(annuity,0.0)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);  
+        AQLString msg("annuity < 0.0 || eq(annuity,0.0)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);  
     }
 
 	double rate = getSwapFloat( T_fix_L, T_pay_L ) / annuity;
@@ -460,7 +460,7 @@ double LAMathSwaptionVolLMM::getSwapRate( const DoubleVector& T_fix_L, const Dou
 */
 double LAMathSwaptionVolLMM::getSwaptionBlackPrem( double vol, double forwardShift ) const
 {
-	return mAnnuity * local::BlackFormulaDD( mS0 + forwardShift, vol * LAMath::sqrt(mT_OptMat), mS0 + forwardShift, 1, 1 );
+	return mAnnuity * local::BlackFormulaDD( mS0 + forwardShift, vol * AQLMath::sqrt(mT_OptMat), mS0 + forwardShift, 1, 1 );
 }
 
 /*!
@@ -469,7 +469,7 @@ double LAMathSwaptionVolLMM::getSwaptionBlackPrem( double vol, double forwardShi
 */
 double LAMathSwaptionVolLMM::getSwaptionNormalPrem( double vol ) const
 {
-	return mAnnuity * local::BlackFormulaDD( mS0, vol * LAMath::sqrt(mT_OptMat), mS0, 1, 0 );
+	return mAnnuity * local::BlackFormulaDD( mS0, vol * AQLMath::sqrt(mT_OptMat), mS0, 1, 0 );
 }
 
 //
@@ -618,8 +618,8 @@ double LAMathSwaptionVolLMMDiscModel::getVar()
 {
 	if( mVolType != Black )
 	{
-		LAString msg = "Only black vol is supported! : LAMathSwaptionVolLMMDiscModel_DD::getVar";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "Only black vol is supported! : LAMathSwaptionVolLMMDiscModel_DD::getVar";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
 	double tmp = 0.0;
@@ -639,8 +639,8 @@ double LAMathSwaptionVolLMMDiscModel::getVar()
 // Get premium of SR(Maturity, Expire)
 double LAMathSwaptionVolLMMDiscModel::getSwaptionPrem()
 {
-	LAString msg = "TODO Implementation! : LAMathSwaptionVolLMMDiscModel::getSwaptionPrem";
-	throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+	AQLString msg = "TODO Implementation! : LAMathSwaptionVolLMMDiscModel::getSwaptionPrem";
+	throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 }
 
 /*!
@@ -847,8 +847,8 @@ double LAMathSwaptionVolLMMDiscModel_DD::getVar()
 {
 	if( mVolType != Black )
 	{
-		LAString msg = "Only black vol is supported! : LAMathSwaptionVolLMMDiscModel_DD::getVar";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "Only black vol is supported! : LAMathSwaptionVolLMMDiscModel_DD::getVar";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
 	double log2_Q = log(mQ) / log(2.);
@@ -879,8 +879,8 @@ double LAMathSwaptionVolLMMDiscModel_DD::getVar()
 // Get premium of SR(Maturity, Expire)
 double LAMathSwaptionVolLMMDiscModel_DD::getSwaptionPrem()
 {
-	LAString msg = "TODO Implementation! : LAMathSwaptionVolLMMDiscModel_DD::getSwaptionPrem";
-	throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+	AQLString msg = "TODO Implementation! : LAMathSwaptionVolLMMDiscModel_DD::getSwaptionPrem";
+	throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 }
 
 //
@@ -934,8 +934,8 @@ double LAMathSwaptionPremLMMDiscModel_ShiftedDD::getVar()
 	}
 	else
 	{
-		LAString msg = "Only Black and Normal are supported in volType! : LAMathSwaptionPremLMMDiscModel_ShiftedDD::getVar()";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "Only Black and Normal are supported in volType! : LAMathSwaptionPremLMMDiscModel_ShiftedDD::getVar()";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
 	return stdDev * stdDev;
@@ -972,12 +972,12 @@ double LAMathSwaptionPremLMMDiscModel_ShiftedDD::getSwaptionPrem()
 
 	if ( S0_shift >0. )
 	{
-		return mAnnuity * local::BlackFormulaDD( S0_shift, LAMath::sqrt(var), S0_shift, 1, 1. );
+		return mAnnuity * local::BlackFormulaDD( S0_shift, AQLMath::sqrt(var), S0_shift, 1, 1. );
 	}
 	else
 	{
-		LAString msg = "Shifted swap rate must be positive! : LAMathSwaptionPremLMMDiscModel_ShiftedDD::getSwaptionPrem";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "Shifted swap rate must be positive! : LAMathSwaptionPremLMMDiscModel_ShiftedDD::getSwaptionPrem";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 }
 

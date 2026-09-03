@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent FX volatility function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 //  2011, AlgoQuantHub.
@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       LAMathVolFuncFXVannaVolga
 //  DESCRIPTION :       Source code of class  to represent volatility of FX
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -24,14 +24,14 @@
 
 
 #include "LAMathVolFuncFXVannaVolga.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include "LAMathFXVolatilitySurfaceGenerate.h"
 #include "LAAnalyticFormula.h"
 #include "LAMathYieldCurve.h"
-#include "LADataReference.h"
+#include "AQLDataReference.h"
 #include "LABlackScholesCalc.h"
-#include "LACoreComponentManager.h"
-#include "LAMatrix.h"
+#include "AQLCoreComponentManager.h"
+#include "AQLMatrix.h"
 #include "LALinearRatesOptionValueDataProvider.h"
 #include "LAMathFXEntity.h"
 
@@ -42,11 +42,11 @@ using namespace std;
 	@brief constructor
 
 */
-LAMathVolFuncFXVannaVolga::LAMathVolFuncFXVannaVolga(LADataInstance* dataInstance, const ATMInterpolationMethod &atmMethod,
+LAMathVolFuncFXVannaVolga::LAMathVolFuncFXVannaVolga(AQLDataInstance* dataInstance, const ATMInterpolationMethod &atmMethod,
 							const std::vector<FXOptionData> &opdata, const std::vector<SmileData> &smiledata,
-							const DoubleVector& matuterms365, const LAString& dYieldDataName, const LAString& fYieldDataName,
+							const DoubleVector& matuterms365, const AQLString& dYieldDataName, const AQLString& fYieldDataName,
 							double spotrate)
-:LAFunctionBase(),mpDataInstance(dataInstance), mAtmMethod(atmMethod), mOpData(opdata),mSmileData(smiledata), 
+:AQLFunctionBase(),mpDataInstance(dataInstance), mAtmMethod(atmMethod), mOpData(opdata),mSmileData(smiledata), 
 mMatuTerms365(matuterms365), mdYieldDataName(dYieldDataName),
 mfYieldDataName(fYieldDataName),mSpotRate(spotrate)
 {
@@ -73,7 +73,7 @@ mfYieldDataName(rhs.mfYieldDataName), mSpotRate(rhs.mSpotRate), mOmegaMap(rhs.mO
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathVolFuncFXVannaVolga::clone() const
 {
     try 
@@ -83,7 +83,7 @@ LAMathVolFuncFXVannaVolga::clone() const
 	}
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -95,7 +95,7 @@ LAMathVolFuncFXVannaVolga::clone() const
 bool
 LAMathVolFuncFXVannaVolga::isTypeOf(function_t id) const
 {
-	return (id == FN_VOLFUNCFXVANNAVOLGA ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_VOLFUNCFXVANNAVOLGA ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -123,7 +123,7 @@ LAMathVolFuncFXVannaVolga::operator()(const DoubleArray& x) const
 }
 
 void
-LAMathVolFuncFXVannaVolga::setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, LADataProvider* dp) const
+LAMathVolFuncFXVannaVolga::setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, AQLDataProvider* dp) const
 {
 	LAPriceFXOptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceFXOptionValueDataProvider*>(dp);
 
@@ -138,11 +138,11 @@ LAMathVolFuncFXVannaVolga::setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, LADat
 	
 	//search nearest pos
 	unsigned int nearestpos = 0;
-	LAAlgorithm::locate<DoubleArray,double>(mMatuTerms365, termpoint, mMatuTerms365.size(), nearestpos);
+	AQLAlgorithm::locate<DoubleArray,double>(mMatuTerms365, termpoint, mMatuTerms365.size(), nearestpos);
 	FXOptionData tmpData(mOpData[nearestpos]);
 	
 	//set df
-	LAString daycount(AC_365I);
+	AQLString daycount(AC_365I);
     //DOMESTICCURVEID
 	LAMathYieldCurve dcurve(mpDataInstance);
 	dcurve.getYieldData().convertFromString(mdYieldDataName);	
@@ -161,13 +161,13 @@ LAMathVolFuncFXVannaVolga::setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, LADat
 	//this Td is temporary, we have to modify it
 	LAMathFXEntity& fxe = dynamic_cast<LAMathFXEntity &>(dataProvider->mpvanilla->getFXEntity().get().get());
 	unsigned int spotlag = fxe.getSpotLag(dataProvider->mfxcur);
-	LAString spotlagday = LAString(static_cast<int>(spotlag)) + "D";
+	AQLString spotlagday = AQLString(static_cast<int>(spotlag)) + "D";
 	//fxe.getCalendarNames().get();
-	LADate deliverydate = fxe.getSpotDate(dataProvider->mdomcur,dataProvider->mforcur,dataProvider->mMaturityDate);
-	LAPriceDataDayCount act365ISDA(ACT_365_ISDA);
+	AQLDate deliverydate = fxe.getSpotDate(dataProvider->mdomcur,dataProvider->mforcur,dataProvider->mMaturityDate);
+	AQLPriceDataDayCount act365ISDA(ACT_365_ISDA);
 	double Td = act365ISDA.getTerm(dataProvider->mAsofDate,deliverydate,true); 
 	if (Td <= 0.0)
-		throw LACoreInvalidData("DeliveryTerm Error for VannaVolga",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("DeliveryTerm Error for VannaVolga",__FILE__,__LINE__);
 	tmpData.Pd = dcurve.getBasisDF(Td);
     tmpData.Pf = fcurve.getBasisDF(Td);
     tmpData.F = mSpotRate * tmpData.Pf / tmpData.Pd;
@@ -178,16 +178,16 @@ LAMathVolFuncFXVannaVolga::setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, LADat
 	double atmvol = LAMathFXVolatilitySurfaceGenerate::GetVolatilityFromMaturityInterp(termpoint,mAtmMethod,mOpData,mSmileData, 1);
 	double highvol = LAMathFXVolatilitySurfaceGenerate::GetVolatilityFromMaturityInterp(termpoint,mAtmMethod,mOpData,mSmileData, 2);
 	
-	double lowstrike = LAMath::exp(LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(-0.25, lowvol, -1, tmpData ) ) * tmpData.F;
+	double lowstrike = AQLMath::exp(LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(-0.25, lowvol, -1, tmpData ) ) * tmpData.F;
 	//hishida 
-	//double atmstrikeTemporary = LAMath::exp(LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(0.50, atmvol, 1, tmpData ) ) * tmpData.F;
+	//double atmstrikeTemporary = AQLMath::exp(LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(0.50, atmvol, 1, tmpData ) ) * tmpData.F;
 	//double atmstrikeWatchDiff = LAMathFXVolatilitySurfaceGenerate::GetATMStrike(atmvol,tmpData);
-	double atmstrike = tmpData.F * LAMath::exp(-0.5*atmvol*atmvol*tmpData.T);
+	double atmstrike = tmpData.F * AQLMath::exp(-0.5*atmvol*atmvol*tmpData.T);
 
-	double highstrike = LAMath::exp(LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(0.25, highvol, 1, tmpData ) ) * tmpData.F;
+	double highstrike = AQLMath::exp(LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(0.25, highvol, 1, tmpData ) ) * tmpData.F;
 	
-	double rd = -LAMath::log(tmpData.Pd) / Td;
-	double rf = -LAMath::log(tmpData.Pf) / Td;
+	double rd = -AQLMath::log(tmpData.Pd) / Td;
+	double rf = -AQLMath::log(tmpData.Pf) / Td;
 
 	AnalyticGKParam* gkBase = dynamic_cast<AnalyticGKParam* >(gkParam->clone());
 	gkBase->rd = rd;
@@ -198,17 +198,17 @@ LAMathVolFuncFXVannaVolga::setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, LADat
 	gkBase->S = mSpotRate;
 
 	
-	LAString premcall = LAString(GK) + LAString(PREM) + LAString(CALL);
-	LAString premput = LAString(GK) + LAString(PREM) + LAString(PUT);
-	LAString vegacall = LAString(GK) + LAString(VEGA) + LAString(CALL);
-	LAString vegaput = LAString(GK) + LAString(VEGA) + LAString(PUT);
-	LAString vannacall = LAString(GK) + LAString(VANNA) + LAString(CALL);
-	LAString vannaput = LAString(GK) + LAString(VANNA) + LAString(PUT);
-	LAString volgacall = LAString(GK) + LAString(VOLGA) + LAString(CALL);
-	LAString volgaput = LAString(GK) + LAString(VOLGA) + LAString(PUT);
+	AQLString premcall = AQLString(GK) + AQLString(PREM) + AQLString(CALL);
+	AQLString premput = AQLString(GK) + AQLString(PREM) + AQLString(PUT);
+	AQLString vegacall = AQLString(GK) + AQLString(VEGA) + AQLString(CALL);
+	AQLString vegaput = AQLString(GK) + AQLString(VEGA) + AQLString(PUT);
+	AQLString vannacall = AQLString(GK) + AQLString(VANNA) + AQLString(CALL);
+	AQLString vannaput = AQLString(GK) + AQLString(VANNA) + AQLString(PUT);
+	AQLString volgacall = AQLString(GK) + AQLString(VOLGA) + AQLString(CALL);
+	AQLString volgaput = AQLString(GK) + AQLString(VOLGA) + AQLString(PUT);
 
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*>::iterator itcalc = var.begin();
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*>::iterator itcalc = var.begin();
 	
 	itcalc = var.find(premcall);
 	LABlackScholesBase* panalytic;
@@ -280,10 +280,10 @@ LAMathVolFuncFXVannaVolga::setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, LADat
 	I[1] =  (highprem - lowprem) - (highBSprem - lowBSprem);
 	I[2] = (0.5 * (highprem + lowprem) - atmprem) - (0.5 * (highBSprem + lowBSprem) - atmprem);
 
-	LAMatrix matAT(AT);
-	const LAMatrix& invmat = matAT.inverseMatrix();
-	LAMatrix matI(I);
-	const LAMatrix& Omega = invmat * matI;
+	AQLMatrix matAT(AT);
+	const AQLMatrix& invmat = matAT.inverseMatrix();
+	AQLMatrix matI(I);
+	const AQLMatrix& Omega = invmat * matI;
 	DoubleVector ret;
 	for (unsigned int i = 0; i < AT.size(); i++)
 		ret.push_back(Omega.getValue(i,0));
@@ -322,7 +322,7 @@ LAMathVolFuncFXVannaVolga::getMarketPriceVec(double maturityTerm365) const
 	std::map<double, DoubleVector>::iterator itMarketPrice = mOmegaMap.find(maturityTerm365);
 
 	if (itMarketPrice == mOmegaMap.end())
-		throw LACoreInvalidData("Term is not consistente with VannaVolgaMatrix",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Term is not consistente with VannaVolgaMatrix",__FILE__,__LINE__);
 
 	return itMarketPrice->second;
 }
@@ -333,7 +333,7 @@ LAMathVolFuncFXVannaVolga::getStrikeVec(double maturityTerm365) const
 	std::map<double, DoubleVector>::iterator itStrikeMap = mStrikeMap.find(maturityTerm365);
 
 	if (itStrikeMap == mStrikeMap.end())
-		throw LACoreInvalidData("Term is not consistente with VannaVolgaStikes",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Term is not consistente with VannaVolgaStikes",__FILE__,__LINE__);
 
 	return itStrikeMap->second;
 }

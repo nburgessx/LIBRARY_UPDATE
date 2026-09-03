@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -26,22 +26,22 @@ namespace validation
     *  @param [in]		lastOddDate		Start date of the end stub period
     *  @return			interest rates calculated based on the startDates, endDates, and compound type
     */
-    DoubleVector tryMirCompound3( LADataInstance* dataInstance,
+    DoubleVector tryMirCompound3( AQLDataInstance* dataInstance,
                                   const DateVector& startDates,
                                   const DateVector& endDates,
-                                  const LAString& curveId,
-                                  const LAString& forecastCurve,
-                                  const LAString& frequency,
+                                  const AQLString& curveId,
+                                  const AQLString& forecastCurve,
+                                  const AQLString& frequency,
                                   double spread,
                                   bool isStartRoll,
-                                  const LAString& rollConvention,
-                                  const LAString& calendar,
-                                  const LAString& slidingRule,
-                                  const LAString& dayCount,
-                                  const LAString& interpolation,
-                                  const LAString& compoundType,
-                                  const LAString& firstOddDate,
-                                  const LAString& lastOddDate );
+                                  const AQLString& rollConvention,
+                                  const AQLString& calendar,
+                                  const AQLString& slidingRule,
+                                  const AQLString& dayCount,
+                                  const AQLString& interpolation,
+                                  const AQLString& compoundType,
+                                  const AQLString& firstOddDate,
+                                  const AQLString& lastOddDate );
 
 
     /* @brief			validation interface for the mirCompound3 method
@@ -63,21 +63,21 @@ namespace validation
     *  @param [in]		lastOddDate		Start date of the end stub period
     *  @return			compounding rate calculated based on the startDate, endDate, and compound type
     */
-    double tryMirCompound3( LADataInstance* dataInstance,
-                            const LADate& startDate,
-                            const LADate& endDate,
-                            const LAString& curveId,
-                            const LAString& forecastCurve,
-                            const LAString& frequency,
+    double tryMirCompound3( AQLDataInstance* dataInstance,
+                            const AQLDate& startDate,
+                            const AQLDate& endDate,
+                            const AQLString& curveId,
+                            const AQLString& forecastCurve,
+                            const AQLString& frequency,
                             double spread,
                             bool isStartRoll,
-                            const LAString& rollConvention,
-                            const LAString& calendar,
-                            const LAString& slidingRule,
-                            const LAString& dayCount,
-                            const LAString& interpolation,
-                            const LAString& compoundType,
-                            const LAString& firstOddDate,
-                            const LAString& lastOddDate );
+                            const AQLString& rollConvention,
+                            const AQLString& calendar,
+                            const AQLString& slidingRule,
+                            const AQLString& dayCount,
+                            const AQLString& interpolation,
+                            const AQLString& compoundType,
+                            const AQLString& firstOddDate,
+                            const AQLString& lastOddDate );
 }
 

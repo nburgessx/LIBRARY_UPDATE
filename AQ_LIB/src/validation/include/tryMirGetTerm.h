@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LADate.h"
+#include "AQLDate.h"
 
 namespace validation
 {
@@ -12,9 +12,9 @@ namespace validation
     *  @param[in]		includelast		True(default):include the last day and not include start day; False:include start day and not include last day
     *  @return			Term between fromDate and toDate
     */
-    double tryMirGetTerm( const LADate& fromDate,
-                          const LADate& toDate,
-                          const LAString& dayCount,
+    double tryMirGetTerm( const AQLDate& fromDate,
+                          const AQLDate& toDate,
+                          const AQLString& dayCount,
                           bool includeLast );
 
 

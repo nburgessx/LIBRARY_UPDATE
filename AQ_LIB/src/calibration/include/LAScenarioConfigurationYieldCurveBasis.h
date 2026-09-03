@@ -38,12 +38,12 @@ public:
 
 	//==============================================
 	// create risk scenario
-	virtual std::vector<LAObject *> createScenario(LADataInstance &dataInstance, const MAScenarioParam &param) const;
+	virtual std::vector<AQLObject *> createScenario(AQLDataInstance &dataInstance, const MAScenarioParam &param) const;
 protected:
 private:
-	void createBumpedRate(LAObjectHolder& basis, const LAString& shiftType, const double baseRate, const double shiftVal) const;
-	void restoreBumpedRate(std::vector<LAObjectHolder>& basisVec, const DoubleArray& baseRates) const;
-	void copyBumpedDataForForeignYield(const std::vector<LAObjectHolder>& basisVec, const LAString& suffix, LAObjectPool& objPool, LAObject& yieldData, const LAString& attrSuffix) const;
+	void createBumpedRate(AQLObjectHolder& basis, const AQLString& shiftType, const double baseRate, const double shiftVal) const;
+	void restoreBumpedRate(std::vector<AQLObjectHolder>& basisVec, const DoubleArray& baseRates) const;
+	void copyBumpedDataForForeignYield(const std::vector<AQLObjectHolder>& basisVec, const AQLString& suffix, AQLObjectPool& objPool, AQLObject& yieldData, const AQLString& attrSuffix) const;
 
 };
 

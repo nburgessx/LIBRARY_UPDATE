@@ -4,15 +4,15 @@
 #pragma interface
 #endif
 
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAString.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLString.h"
 #include "ConstantDeclarations.h"
 #include "LATime.h"
-#include "LAInterpolationBase.h"
-#include "LAParabolicInterpolation.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
+#include "AQLInterpolationBase.h"
+#include "AQLParabolicInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
 #include <memory>
 #include "CoreEnumerations.h"
 
@@ -26,7 +26,7 @@ public:
 	static std::vector<double> interpolate(const DoubleArray& xValues, const DoubleArray& yValues, const std::vector<double> & xPoints, const StandardString& interpolation, const double & joinXValue = 0.0);
 	static std::vector<double> interpolate(const DoubleArray& xValues, const DoubleArray& yValues, const std::vector<double> & xPoints, const etrading::InterpolationEnum& interpolationEnum, const double & joinXValue = 0.0);
 
-	static std::shared_ptr<LAInterpolationBase> buildInterpolator(const DoubleArray& xValues, const DoubleArray& yValues, const etrading::InterpolationEnum& interpolationEnum, const double & joinXValue = 0.0 );
+	static std::shared_ptr<AQLInterpolationBase> buildInterpolator(const DoubleArray& xValues, const DoubleArray& yValues, const etrading::InterpolationEnum& interpolationEnum, const double & joinXValue = 0.0 );
 
 	// Instantaneous Differentiation at a single xPoint
 	static double differentiate(const DoubleArray& xValues, const DoubleArray& yValues, const double & xPoint, const StandardString& interpolation, const double & joinXValue = 0.0);
@@ -68,7 +68,7 @@ public:
 	static double step(DoubleArray& xValues, DoubleArray& yValues, double xPoint);
 	static double getLinearInterpolation(double x1, double x2, double y1, double y2, double xPoint);
     static unsigned int searchIndex(const DoubleArray& X, double xPoint);
-	static std::shared_ptr<LAInterpolationBase> createInterpolation(const LAString &method);
+	static std::shared_ptr<AQLInterpolationBase> createInterpolation(const AQLString &method);
 
 	// max-min methods
 	static double gmax(double a, double b){return a > b ? a : b;}

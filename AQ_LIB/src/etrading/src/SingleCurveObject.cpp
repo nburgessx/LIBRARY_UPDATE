@@ -79,7 +79,7 @@ namespace etrading
 
 		if ( variantMatrix.size() != 2)
 		{
-			throw LACoreInvalidData( ( boost::format( "#Error: Invalid number of columns in deserialised data. Expecting 2 columns, found '%d'. " ) % variantMatrix.size() ).str().c_str() , __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( ( boost::format( "#Error: Invalid number of columns in deserialised data. Expecting 2 columns, found '%d'. " ) % variantMatrix.size() ).str().c_str() , __FILE__, __LINE__ );
 		}
 
 		const VariantVector& attributeNames  = variantMatrix[0];
@@ -110,7 +110,7 @@ namespace etrading
 			}
 			else
 			{
-				throw LACoreInvalidData( ( boost::format( "#Error: Unsupported Data Name: %s ." )  
+				throw AQLCoreInvalidData( ( boost::format( "#Error: Unsupported Data Name: %s ." )  
 						% attributeNames[i] ).str().c_str(), __FILE__, __LINE__ );
 			}
 		}
@@ -192,7 +192,7 @@ namespace etrading
                 break;
 			}
 			default:
-				throw LACoreInvalidData( ( boost::format( "#Error: Unsupported CurveType: %s ." ) % configCurveType ).str().c_str(), __FILE__, __LINE__ );
+				throw AQLCoreInvalidData( ( boost::format( "#Error: Unsupported CurveType: %s ." ) % configCurveType ).str().c_str(), __FILE__, __LINE__ );
 		}
 
 		// Throw exception if the curve has not been built.
@@ -248,7 +248,7 @@ namespace etrading
 
 		if ( tmpObjectName != objectName )
 		{
-			throw LACoreInvalidData( ( boost::format( "#Error: Inconsistent data when deserializing curve: Object handle name is '%s' while CurveData contains '%s' ." )  
+			throw AQLCoreInvalidData( ( boost::format( "#Error: Inconsistent data when deserializing curve: Object handle name is '%s' while CurveData contains '%s' ." )  
 						% objectName % tmpObjectName ).str().c_str(), __FILE__, __LINE__ );	
 		}
 		
@@ -369,19 +369,19 @@ namespace etrading
 
 		if ( configCurrency != marketDataCurrency )
 		{
-			throw LACoreInvalidData( ( boost::format("#Error: CurveGenerator currency \"%s\" does not match MarketData Currency \"%s\"" )
+			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator currency \"%s\" does not match MarketData Currency \"%s\"" )
                                    % configCurrency % marketDataCurrency ).str().c_str(), __FILE__, __LINE__ );
 		}
 
 		if ( configCurveType != marketDataCurveType )
 		{
-			throw LACoreInvalidData( ( boost::format("#Error: CurveGenerator CurveType \"%s\" does not match MarketData CurveType \"%s\"" )
+			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator CurveType \"%s\" does not match MarketData CurveType \"%s\"" )
                                    % configCurveType % marketDataCurveType ).str().c_str(), __FILE__, __LINE__ );
 		}
 
 		if ( configFrequency != marketDataFrequency )
 		{
-			throw LACoreInvalidData( ( boost::format("#Error: CurveGenerator Frequency \"%s\" does not match MarketData Frequency \"%s\"" )
+			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator Frequency \"%s\" does not match MarketData Frequency \"%s\"" )
                                    % configFrequency % marketDataFrequency ).str().c_str(), __FILE__, __LINE__ );
 		}
 

@@ -26,9 +26,9 @@
 #include "LARatesNumeraireBankAccountHW.h"
 #include "LAModelDynamicsCurve.h"
 #include "LARatesSDEBase.h"
-#include "LAAlgorithm.h"
-#include "LABasic.h"
-#include "LALinearInterpolation.h"
+#include "AQLAlgorithm.h"
+#include "AQLBasic.h"
+#include "AQLLinearInterpolation.h"
 #include <algorithm>
 
 using namespace std;
@@ -50,7 +50,7 @@ LARatesNumeraireBankAccountHW::LARatesNumeraireBankAccountHW()
 	@param[in] timeGrid timeGrid for basis value
 	@param[in] basis vector of basis value
 */
-LARatesNumeraireBankAccountHW::LARatesNumeraireBankAccountHW(const LAString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis)
+LARatesNumeraireBankAccountHW::LARatesNumeraireBankAccountHW(const AQLString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis)
 : LARatesNumeraireBase(basisName, timeGrid, basis, true), mUpdateAdjValFlag(true), mCalcStartTime(0.0)
 {
 	mpCurveWithBasis = getCurveWithBasis();
@@ -76,7 +76,7 @@ LARatesNumeraireBankAccountHW::~LARatesNumeraireBankAccountHW()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesNumeraireBankAccountHW::clone() const
 {
     try 
@@ -85,7 +85,7 @@ LARatesNumeraireBankAccountHW::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -124,11 +124,11 @@ LARatesNumeraireBankAccountHW::operator()(double t) const
 	if (t > mTimeGrid.back() + INFINITESIMAL || t < 0.0)
 	{
 		//error
-        throw LACoreInvalidData("input t is before 0 or after Terminal", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("input t is before 0 or after Terminal", __FILE__, __LINE__);
 	}
 
 	unsigned int pos;
-	LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, t, mTimeGrid.size(), pos);
+	AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, t, mTimeGrid.size(), pos);
 	
 	if (pos == mTimeGrid.size())
 		return mNumeraireArray.back();
@@ -138,7 +138,7 @@ LARatesNumeraireBankAccountHW::operator()(double t) const
         {
         	
 		return mNumeraireArray[pos - 1] *
-				LAMath::exp(
+				AQLMath::exp(
 				mSpotArray[pos - 1] * (t - mTimeGrid[pos - 1])
 				+ 0.5 * (mSpotArray[pos] - mSpotArray[pos - 1]) * (t - mTimeGrid[pos - 1]) *  (t - mTimeGrid[pos - 1])  / (mTimeGrid[pos] - mTimeGrid[pos - 1])
 				- (mInitialSpotArray[pos - 1] * (t - mTimeGrid[pos - 1])
@@ -152,7 +152,7 @@ LARatesNumeraireBankAccountHW::operator()(double t) const
 	/*{
 		const LARatesPathElementCurve& curve = getCurve(mTimeGrid[pos - 1]);		
 		return mNumeraireArray[pos - 1] *
-			LAMath::exp(-LAMath::log(curve.getP(t)) + (mSpotArray[pos] - curve.getF(mTimeGrid[pos])) * 0.5 *  (t - mTimeGrid[pos - 1]) *  (t - mTimeGrid[pos - 1]) / (mTimeGrid[pos] - mTimeGrid[pos - 1]));
+			AQLMath::exp(-AQLMath::log(curve.getP(t)) + (mSpotArray[pos] - curve.getF(mTimeGrid[pos])) * 0.5 *  (t - mTimeGrid[pos - 1]) *  (t - mTimeGrid[pos - 1]) / (mTimeGrid[pos] - mTimeGrid[pos - 1]));
 	}*/
 }
 
@@ -235,12 +235,12 @@ LARatesNumeraireBankAccountHW::calcNumeraire(void) const
 			if (mUpdateAdjValFlag)
 			{
 				mNumeraireArray[i] = mNumeraireArray[i - 1] * 				
-					LAMath::exp((mSpotArray[i - 1] + mSpotArray[i]) * 0.5 * (mTimeGrid[i] - mTimeGrid[i - 1]));
+					AQLMath::exp((mSpotArray[i - 1] + mSpotArray[i]) * 0.5 * (mTimeGrid[i] - mTimeGrid[i - 1]));
 			}
 			else
 			{
 				mNumeraireArray[i] = mNumeraireArray[i - 1] * 				
-					LAMath::exp((mSpotArray[i - 1] + mSpotArray[i]) * 0.5 * (mTimeGrid[i] - mTimeGrid[i - 1]) + mAdjVal[i - 1]);
+					AQLMath::exp((mSpotArray[i - 1] + mSpotArray[i]) * 0.5 * (mTimeGrid[i] - mTimeGrid[i - 1]) + mAdjVal[i - 1]);
 			}
 		}
 		pCurve = it->second;
@@ -281,7 +281,7 @@ LARatesNumeraireBankAccountHW::getCurveWithBasis() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -294,7 +294,7 @@ LARatesNumeraireBankAccountHW::LARatesCurveWithBasisHW::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -314,15 +314,15 @@ LARatesNumeraireBankAccountHW::setAdjVal() const
 	//for (unsigned int i = 1; i < size; i++)
 	for (unsigned int i = 1; i <= size_a; i++)
 	{
-		adj *= LAMath::exp(mAdjVal[i - 1]);
+		adj *= AQLMath::exp(mAdjVal[i - 1]);
 		mNumeraireArray[i] *= adj;
 	}
 	for (unsigned int i = size_a + 1; i < size; i++)
 	{
 		mInitialSpotArray[i] = mpInitialCurve->getF(mTimeGrid[i]);
-		mAdjVal[i - 1] = LAMath::log(mpInitialCurve->getP(mTimeGrid[i - 1]) / mpInitialCurve->getP(mTimeGrid[i]))
+		mAdjVal[i - 1] = AQLMath::log(mpInitialCurve->getP(mTimeGrid[i - 1]) / mpInitialCurve->getP(mTimeGrid[i]))
 			- (mInitialSpotArray[i - 1] + mInitialSpotArray[i]) * 0.5 * (mTimeGrid[i] - mTimeGrid[i - 1]);
-		adj *= LAMath::exp(mAdjVal[i - 1]);
+		adj *= AQLMath::exp(mAdjVal[i - 1]);
 		mNumeraireArray[i] *= adj;
 	}
 	mUpdateAdjValFlag = false;
@@ -353,7 +353,7 @@ LARatesNumeraireBankAccountHW::LARatesCurveWithBasisHW::setBasisForwardCurve(con
 			data[i] = 2.0 / deltat * ((*mpBasisCurve)(timeGrid[i]) * timeGrid[i] - (*mpBasisCurve)(timeGrid[i - 1]) * timeGrid[i - 1] ) - data[i - 1];
 	}
 	mBasisForwardCurve.set(timeGrid, data);
-	LALinearInterpolation inter;
+	AQLLinearInterpolation inter;
 	mBasisForwardCurve.setInterpolation(inter);
 }
 
@@ -365,7 +365,7 @@ LARatesNumeraireBankAccountHW::LARatesCurveWithBasisHW::setBasisForwardCurve(con
 
 */	
 void
-LARatesNumeraireBankAccountHW::setBasisSpread(const LAString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis)
+LARatesNumeraireBankAccountHW::setBasisSpread(const AQLString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis)
 {
 	LARatesNumeraireBase::setBasisSpread(basisName, timeGrid, basis);
 	if (mpCurveWithBasis && mpSDE)
@@ -390,7 +390,7 @@ LARatesNumeraireBankAccountHW::setBasisSpread(const LAString& basisName, const D
 
 */	
 void
-LARatesNumeraireBankAccountHW::setBasisName(const LAString& basisName)
+LARatesNumeraireBankAccountHW::setBasisName(const AQLString& basisName)
 {
 	if (basisName != mBasisName)
 	{

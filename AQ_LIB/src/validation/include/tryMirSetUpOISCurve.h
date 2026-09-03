@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -21,18 +21,18 @@ namespace validation
     *  @param [in]		swapRates		Libor swap market rates
     *  @param [in]		swapConv		Libor swap conventions
     */
-    const LAString tryMirSetUpOISCurve( LADataInstance* dataInstance,
-                                        const LAString& curveID,
-                                        const LAString& marketName,
-                                        const LAStringMatrix& generalProps,
-                                        const LAStringMatrix& oisRates,
-                                        const LAStringMatrix& oisConv,
-                                        const LAString& curveNames,
-                                        const LAStringMatrix& oisHistRates,
-                                        const LAStringMatrix& loBasisRates,
-                                        const LAStringMatrix& loBasisConv,
-                                        const LAStringMatrix& swapRates,
-                                        const LAStringMatrix& swapConv );
+    const AQLString tryMirSetUpOISCurve( AQLDataInstance* dataInstance,
+                                        const AQLString& curveID,
+                                        const AQLString& marketName,
+                                        const AQLStringMatrix& generalProps,
+                                        const AQLStringMatrix& oisRates,
+                                        const AQLStringMatrix& oisConv,
+                                        const AQLString& curveNames,
+                                        const AQLStringMatrix& oisHistRates,
+                                        const AQLStringMatrix& loBasisRates,
+                                        const AQLStringMatrix& loBasisConv,
+                                        const AQLStringMatrix& swapRates,
+                                        const AQLStringMatrix& swapConv );
 
 }
 

@@ -50,12 +50,12 @@ namespace
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 
-	/* @brief			A helper function which converts a LAStringMatrix into a VariantMatrix
-	*                   If the input LAStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns
-	*  @param [in]		stringMatrix		The input LAStringMatrix
+	/* @brief			A helper function which converts a AQLStringMatrix into a VariantMatrix
+	*                   If the input AQLStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns
+	*  @param [in]		stringMatrix		The input AQLStringMatrix
 	*  @returns			The corresponding VariantMatrix
 	*/
-	etrading::VariantMatrix convertStringMatrixToVariantMatrix(LAStringMatrix stringMatrix)
+	etrading::VariantMatrix convertStringMatrixToVariantMatrix(AQLStringMatrix stringMatrix)
 	{
 		etrading::VariantMatrix variantMatrix;
 
@@ -77,7 +77,7 @@ namespace
 		}
 		else
 		{
-			// The input LAStringMatrix is empty.
+			// The input AQLStringMatrix is empty.
 			// Create a default variantMatrix with 2 columns of dummy data.
 			// This simulates an empty block in Excel.
 			etrading::VariantVector dummyVector(1, "");
@@ -88,11 +88,11 @@ namespace
 		return variantMatrix;
 	}
 
-	/* @brief			Builds a "TableInfo" tuple from a LAStringMatrix of marketdata
+	/* @brief			Builds a "TableInfo" tuple from a AQLStringMatrix of marketdata
 	*                   This tuple consists of columnNames, columnTypes and the actual data values.
-	*  @param [in]		marketDataBlock		A LAStringMatrix containing key/value market data values
+	*  @param [in]		marketDataBlock		A AQLStringMatrix containing key/value market data values
 	*/
-	TableInfo getTableInfoFromMarketDataBlock(const LAStringMatrix& marketDataBlock)
+	TableInfo getTableInfoFromMarketDataBlock(const AQLStringMatrix& marketDataBlock)
 	{
 		etrading::VariantMatrix dataValues = convertStringMatrixToVariantMatrix(marketDataBlock);
 		size_t numColumns = dataValues.size();
@@ -116,7 +116,7 @@ namespace
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*  @return			Handle to the market data object
 	*/
-	std::string createLWOMarketDataObjectFromFileName(const LAString& marketDataFileName)
+	std::string createLWOMarketDataObjectFromFileName(const AQLString& marketDataFileName)
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load(marketDataFileName);
 
@@ -138,7 +138,7 @@ namespace
 
 				// We obtained the enum, so this is a marketData key we are interested in
 				marketDataKeys.push_back(key);
-				LAStringMatrix marketDataBlock = marketDataFileObj[*it];
+				AQLStringMatrix marketDataBlock = marketDataFileObj[*it];
 				infoBlocks.push_back(getTableInfoFromMarketDataBlock(marketDataBlock));
 			}
 			catch (...)
@@ -153,12 +153,12 @@ namespace
 
 	
 
-	std::string buildMarketDataObjectHandle(unsigned int testIndex, const LAString& ccy, const LAString& marketDataObj)
+	std::string buildMarketDataObjectHandle(unsigned int testIndex, const AQLString& ccy, const AQLString& marketDataObj)
 	{
 		// Market data object
-		LAString marketDataDir = TEST_DIR;
-		LAString prefix = ccy + LAString("_") + LAString(static_cast<int>(testIndex)) + LAString("_");
-		marketDataDir += prefix + marketDataObj + LAString("_MARKETDATA");
+		AQLString marketDataDir = TEST_DIR;
+		AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(testIndex)) + AQLString("_");
+		marketDataDir += prefix + marketDataObj + AQLString("_MARKETDATA");
 		std::string curveMarketObjectHandle = createLWOMarketDataObjectFromFileName(marketDataDir);
 		return curveMarketObjectHandle;
 	}
@@ -168,12 +168,12 @@ namespace google_test
 {
 	DECLARE_TEST_FIXTURE(TestCurveEngineCalibrate);
 	
-	void testEngineCurveForwardRates(const LAString& curveName, const LAString& ccy, unsigned int testIndex)
+	void testEngineCurveForwardRates(const AQLString& curveName, const AQLString& ccy, unsigned int testIndex)
 	{
-		LAString prefix = ccy + LAString("_") + LAString(static_cast<int>(testIndex));
+		AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(testIndex));
 
-		LAString oisForwardRateInputFile = TEST_DIR;
-		oisForwardRateInputFile += prefix + LAString("_") + curveName + LAString("_") + FORWARD_RATES_INPUTS;
+		AQLString oisForwardRateInputFile = TEST_DIR;
+		oisForwardRateInputFile += prefix + AQLString("_") + curveName + AQLString("_") + FORWARD_RATES_INPUTS;
 
 		const ReadDataFile::Load inputFile(oisForwardRateInputFile);
 		DateVector fromDateVector = inputFile["fromDates"];
@@ -198,12 +198,12 @@ namespace google_test
 			<< "Results size should match the number of forward rates requested" << std::endl;
 
 #if defined(GTEST32)
-		LAString outputFile = TEST_DIR;
-		outputFile += prefix + LAString("_") + curveName + LAString("_") + FORWARD_RATES_OUTPUTS_32bit;
+		AQLString outputFile = TEST_DIR;
+		outputFile += prefix + AQLString("_") + curveName + AQLString("_") + FORWARD_RATES_OUTPUTS_32bit;
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, outputFile, tolerance);
 #else
-		LAString outputFile = TEST_DIR;
-		outputFile += prefix + LAString("_") + curveName + LAString("_") + FORWARD_RATES_OUTPUTS_64bit;
+		AQLString outputFile = TEST_DIR;
+		outputFile += prefix + AQLString("_") + curveName + AQLString("_") + FORWARD_RATES_OUTPUTS_64bit;
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, outputFile, tolerance);
 #endif
 	}
@@ -212,7 +212,7 @@ namespace google_test
 	// {
 	// 	unsigned int testCount = USD_TEST_COUNT;
 	// 	std::string curveCollection = "USDYC2";
-	// 	LAString ccy = "USD";
+	// 	AQLString ccy = "USD";
     // 
 	// 	std::vector<std::string> curveGenerators;
 	// 	std::vector<std::string> marketDataHandles;
@@ -254,7 +254,7 @@ namespace google_test
     // 
 	// 		validation::tryMeLWOCurveEngineCalibrate("",				// engine name
 	// 			                                         curveCollection,	// curve collection name
-	// 			                                         LAStringMatrix(),	// Engine params
+	// 			                                         AQLStringMatrix(),	// Engine params
 	// 			                                         curveGenerators,
 	// 			                                         marketDataHandles);
     // 
@@ -275,7 +275,7 @@ namespace google_test
 	//{
 	//	unsigned int testCount = EUR_TEST_COUNT;
 	//	std::string curveCollection = "EURYC";
-	//	LAString ccy = "EUR";
+	//	AQLString ccy = "EUR";
 
 	//	std::vector<std::string> curveGenerators;
 	//	std::vector<std::string> marketDataHandles;
@@ -304,7 +304,7 @@ namespace google_test
 
 	//		validation::tryMeLWOCurveEngineCalibrate("",				// engine name
 	//			curveCollection,	// curve collection name
-	//			LAStringMatrix(),		// Engine params
+	//			AQLStringMatrix(),		// Engine params
 	//			curveGenerators,
 	//			marketDataHandles);
 

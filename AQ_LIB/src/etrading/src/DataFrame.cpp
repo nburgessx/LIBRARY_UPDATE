@@ -222,17 +222,17 @@ namespace etrading
 		addColumn( columnNameWithPrefix, variantVector );
 	}
 
-	// Extend the dataframe by adding an additional column of type  LADate
-	// This is a specialization which checks if the LADate is valid.
+	// Extend the dataframe by adding an additional column of type  AQLDate
+	// This is a specialization which checks if the AQLDate is valid.
 	// This version accepts a prefix which is attached to the column name.
-	void DataFrame::addColumnWithPrefix( const std::string& prefix, const std::string& columnName, const std::vector<LADate>& values )
+	void DataFrame::addColumnWithPrefix( const std::string& prefix, const std::string& columnName, const std::vector<AQLDate>& values )
 	{
 		const size_t nValues = values.size();
 
 		VariantVector variantVector( nValues );
 		for (size_t i = 0; i < nValues; i++)
 		{
-			LADate dateValue = values[i];
+			AQLDate dateValue = values[i];
 			if ( LADateScheduleHelpers::isValidDate( dateValue ) )
 			{
 				variantVector[i] = values[i];
@@ -377,7 +377,7 @@ namespace etrading
 	void DataFrame::addColumn<std::string>( const std::string& columnName, const std::vector<std::string>& values );
 
 	template
-	void DataFrame::addColumn<LADate>( const std::string& columnName, const std::vector<LADate>& values );
+	void DataFrame::addColumn<AQLDate>( const std::string& columnName, const std::vector<AQLDate>& values );
 
 	template
 	void DataFrame::addColumnWithPrefix<int>( const std::string& prefix, const std::string& columnName, const std::vector<int>& values );

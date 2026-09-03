@@ -8,8 +8,8 @@
 #endif
 
 
-#include "LACoreAppError.h"
-#include "LACoreSystemError.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreSystemError.h"
 #include <vector>
 
 

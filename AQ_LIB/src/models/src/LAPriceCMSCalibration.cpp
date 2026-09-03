@@ -6,70 +6,70 @@
 
 #include "LAPriceCMSCalibration.h"
 #include "LAMathDateUtilities.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathInterpolationUtilities.h"
-#include "LAOptimumBrent.h"
+#include "AQLOptimumBrent.h"
 #include "LAMathParameterUtility.h"
 #include "LAMathSwaptionVolUtility.h"
 
 //================ Calibration Procedure ===================================
-LAString LAPriceCMSCalibration::Calibrate(LADataInstance* dataInstance, LAStringMatrix calibrationConfig,
-                                     LAStringMatrix structLegScheduler, LAStringMatrix cmsScheduler,
-                                     LAStringMatrix fundLegScheduler, LAStringMatrix liborScheduler,
-                                     const LAStringVector& tenors, const LAStringVector& expiryTerms,
+AQLString LAPriceCMSCalibration::Calibrate(AQLDataInstance* dataInstance, AQLStringMatrix calibrationConfig,
+                                     AQLStringMatrix structLegScheduler, AQLStringMatrix cmsScheduler,
+                                     AQLStringMatrix fundLegScheduler, AQLStringMatrix liborScheduler,
+                                     const AQLStringVector& tenors, const AQLStringVector& expiryTerms,
                                      const DoubleMatrix& quotes)
 {
     // Calibration config
-    LADate valDate = LAStringToDate(LAFunctionUtilities::findElement(calibrationConfig, "AsOfDate"));
-    LAString ccy = LAFunctionUtilities::findElement(calibrationConfig, "Currency");
-    LAString colCcy = ccy;
-    LAString convID = LAFunctionUtilities::findElement(calibrationConfig, "ConventionID");
-    double lwBound = LAFunctionUtilities::findElement(calibrationConfig, "LowerBound").getDoubleValue();
-    double upBound = LAFunctionUtilities::findElement(calibrationConfig, "UpperBound").getDoubleValue();
-    double init = LAFunctionUtilities::findElement(calibrationConfig, "InitialPoint").getDoubleValue();
-    double defaultTail1 = LAFunctionUtilities::findElement(calibrationConfig, "DefaultTail1").getDoubleValue();
-    double defaultTail3 = LAFunctionUtilities::findElement(calibrationConfig, "DefaultTail3").getDoubleValue();
-    double defaultTail4 = LAFunctionUtilities::findElement(calibrationConfig, "DefaultTail4").getDoubleValue();
-    int maxIter = LAFunctionUtilities::findElement(calibrationConfig, "MaxIterations").getIntValue();
-    double tol = LAFunctionUtilities::findElement(calibrationConfig, "Tolerance").getDoubleValue();
+    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(calibrationConfig, "AsOfDate"));
+    AQLString ccy = AQLFunctionUtilities::findElement(calibrationConfig, "Currency");
+    AQLString colCcy = ccy;
+    AQLString convID = AQLFunctionUtilities::findElement(calibrationConfig, "ConventionID");
+    double lwBound = AQLFunctionUtilities::findElement(calibrationConfig, "LowerBound").getDoubleValue();
+    double upBound = AQLFunctionUtilities::findElement(calibrationConfig, "UpperBound").getDoubleValue();
+    double init = AQLFunctionUtilities::findElement(calibrationConfig, "InitialPoint").getDoubleValue();
+    double defaultTail1 = AQLFunctionUtilities::findElement(calibrationConfig, "DefaultTail1").getDoubleValue();
+    double defaultTail3 = AQLFunctionUtilities::findElement(calibrationConfig, "DefaultTail3").getDoubleValue();
+    double defaultTail4 = AQLFunctionUtilities::findElement(calibrationConfig, "DefaultTail4").getDoubleValue();
+    int maxIter = AQLFunctionUtilities::findElement(calibrationConfig, "MaxIterations").getIntValue();
+    double tol = AQLFunctionUtilities::findElement(calibrationConfig, "Tolerance").getDoubleValue();
 
     // Curve info
     CurveInfo discCurveInfo = LAPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
-    LAString fundingFreq = LAFunctionUtilities::findElement(fundLegScheduler, "Frequency");
+    AQLString fundingFreq = AQLFunctionUtilities::findElement(fundLegScheduler, "Frequency");
     CurveInfo fundLiborCurveInfo = LAPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, FrequencyToTerm(fundingFreq));
-    LAString cmsFloatFreq = LAFunctionUtilities::findElement(cmsScheduler, "FloatLegFrequency");
+    AQLString cmsFloatFreq = AQLFunctionUtilities::findElement(cmsScheduler, "FloatLegFrequency");
     CurveInfo cmsCurveInfo = LAPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, FrequencyToTerm(cmsFloatFreq));
 
     // Model info
     ReplicationConfig repConfig = GetReplicationConfig(calibrationConfig);
-    double shift = LAFunctionUtilities::findElement(calibrationConfig, "Shift").getDoubleValue();
+    double shift = AQLFunctionUtilities::findElement(calibrationConfig, "Shift").getDoubleValue();
 
     //// Calibrate ////
     // Check sizes
     size_t nTenors = tenors.size();
     size_t nExpiries = expiryTerms.size();
     if (quotes.size() != nTenors)
-        throw LACoreInvalidData("Incompatible number of tenors and quotes", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Incompatible number of tenors and quotes", __FILE__, __LINE__);
     if (quotes[0].size() != nExpiries)
-        throw LACoreInvalidData("Incompatible number of expiries and quotes", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Incompatible number of expiries and quotes", __FILE__, __LINE__);
 
     // Cache data that does not need optimization, create parameter grid
     DoubleVector tGrid(nExpiries), expGrid(nExpiries);
     vector<vector<LAPriceCMSCalibrationTarget> > targets(nTenors, vector<LAPriceCMSCalibrationTarget>(nExpiries));
-    LAPriceDataSlidingRule modelSlidingRule = LAMathScheduleUtility::ModelSlidingRule();
-    LAPriceDataCalendar modelCalendar = LAMathScheduleUtility::ModelCalendar();
+    AQLPriceDataSlidingRule modelSlidingRule = LAMathScheduleUtility::ModelSlidingRule();
+    AQLPriceDataCalendar modelCalendar = LAMathScheduleUtility::ModelCalendar();
     vector<SwapRateInfo*> rateInfos(nTenors);
-    LAStringVector sabrIDs(AQ_SABR_NAMES.size());
+    AQLStringVector sabrIDs(AQ_SABR_NAMES.size());
     for (size_t k = 0; k < AQ_SABR_NAMES.size(); k++)
         sabrIDs[k] = LAPriceCMSObject::MatrixID("_" + AQ_SABR_NAMES[k] + "_", ccy);
     for (size_t j = 0; j < nTenors; j++)
     {
-        LAString tenor = tenors[j];
+        AQLString tenor = tenors[j];
         // Get SABR matrix for this index
         rateInfos[j] = new SwapRateInfo(dataInstance, ccy, tenor, discCurveInfo, cmsCurveInfo, cmsScheduler, repConfig, shift);
         for (size_t i = 0; i < nExpiries; i++)
         {
-            LAString expiryTerm = expiryTerms[i];
+            AQLString expiryTerm = expiryTerms[i];
             double quote = quotes[j][i];
             targets[j][i] = LAPriceCMSCalibrationTarget(valDate, tenor, expiryTerm, structLegScheduler, cmsScheduler,
                                                    fundLegScheduler, liborScheduler, discCurveInfo, fundLiborCurveInfo,
@@ -78,14 +78,14 @@ LAString LAPriceCMSCalibration::Calibrate(LADataInstance* dataInstance, LAString
             if (j == 0)
             {
                 tGrid[i] = targets[0][i].LastFixing();
-                LADate expDate = CalendarAdvance(valDate, expiryTerm, modelSlidingRule, modelCalendar);
+                AQLDate expDate = CalendarAdvance(valDate, expiryTerm, modelSlidingRule, modelCalendar);
                 expGrid[i] = ModelTime(valDate, expDate);
             }
         }
     }
 
     // Set optimizer
-    LAOptimumBrent minimizer(init, lwBound, upBound, maxIter, tol);
+    AQLOptimumBrent minimizer(init, lwBound, upBound, maxIter, tol);
 
     // Optimize
     DoubleMatrix parameters(nExpiries, DoubleVector(nTenors)), objectives(nExpiries, DoubleVector(nTenors));
@@ -113,13 +113,13 @@ LAString LAPriceCMSCalibration::Calibrate(LADataInstance* dataInstance, LAString
     }
 
     // Load results in memory
-    LAString paramsID = AQ_TAIL2_OUT;
-    LAString targetsID = AQ_CMS_TGT_OUT;
-    LAStringVector outTerms(nExpiries);
+    AQLString paramsID = AQ_TAIL2_OUT;
+    AQLString targetsID = AQ_CMS_TGT_OUT;
+    AQLStringVector outTerms(nExpiries);
     for (size_t i = 0; i < nExpiries; i++)
         outTerms[i] = expiryTerms[i];
 
-    LAStringMatrix paramsOut, targetsOut;
+    AQLStringMatrix paramsOut, targetsOut;
     LAMathParameterObject::SetMatrixAxis(paramsID, outTerms, tenors, paramsOut);
     LAMathParameterObject::SetMatrixAxis(targetsID, outTerms, tenors, targetsOut);
     LAMathParameterObject::SetMatrixData(parameters, paramsOut);
@@ -135,12 +135,12 @@ LAString LAPriceCMSCalibration::Calibrate(LADataInstance* dataInstance, LAString
 }
 
 //================ CMSCalibrationTarget ===================================
-LAPriceCMSCalibrationTarget::LAPriceCMSCalibrationTarget(LADate valDate, LAString tenor, LAString maturity,
-                                               LAStringMatrix structLegScheduler, LAStringMatrix cmsScheduler,
-                                               LAStringMatrix fundLegScheduler, LAStringMatrix liborScheduler,
+LAPriceCMSCalibrationTarget::LAPriceCMSCalibrationTarget(AQLDate valDate, AQLString tenor, AQLString maturity,
+                                               AQLStringMatrix structLegScheduler, AQLStringMatrix cmsScheduler,
+                                               AQLStringMatrix fundLegScheduler, AQLStringMatrix liborScheduler,
                                                CurveInfo discCurveInfo, CurveInfo fundLiborCurveInfo,
                                                CurveInfo cmsCurveInfo, SwapRateInfo* rateInfo, double quote,
-                                               size_t parameterIdx, LADataInstance* dataInstance, const LAStringVector& paramIDs,
+                                               size_t parameterIdx, AQLDataInstance* dataInstance, const AQLStringVector& paramIDs,
                                                double defaultTail1, double defaultTail3, double defaultTail4)
 {
     mStructLegSchedule = LAMathScheduleUtility::LegSchedule(valDate, maturity, structLegScheduler, cmsScheduler);

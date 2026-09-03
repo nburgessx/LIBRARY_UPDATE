@@ -5,7 +5,7 @@
 #endif
 
 #include "LAPriceDriftLMMForward.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include <float.h>
 
 // ID for LAPriceDriftLogLMMForward
@@ -15,7 +15,7 @@
 
 
 
-static const double MAXIMUM_2206 = LAMath::log(DBL_MAX) - 1.0;//
+static const double MAXIMUM_2206 = AQLMath::log(DBL_MAX) - 1.0;//
 
 ///////////////////////////////////////////////////////////////////////
 /*! 
@@ -29,7 +29,7 @@ public:
 	// Default constructor
 	explicit LAPriceDriftLogLMMForward(unsigned int point, double Q = 1.0);
 	// constructor
-	LAPriceDriftLogLMMForward(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, unsigned int point, double Q = 1.0);	
+	LAPriceDriftLogLMMForward(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, unsigned int point, double Q = 1.0);	
 	//	Copy constructor
 //	LAPriceDriftLogLMMForward(const LAPriceDriftLogLMMForward& v);
 	// Destructor
@@ -41,7 +41,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -51,7 +51,7 @@ protected:
 	virtual inline	double		getLpart(double x, double delta) const
 								{
 									if (x > MAXIMUM_2206) return 1.0;
-									double deltaL = delta * LAMath::exp(x);
+									double deltaL = delta * AQLMath::exp(x);
 									return deltaL / (1.0 + deltaL - mSpread * delta);	
 								}
 

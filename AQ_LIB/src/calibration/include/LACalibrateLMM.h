@@ -5,11 +5,11 @@
 #endif
 
 #include <vector>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LACalibrate.h"
 
-class LAObject;
-class LAFunctionBase;
+class AQLObject;
+class AQLFunctionBase;
 
 class LACalibrateLMM : public LACalibrate
 {
@@ -22,7 +22,7 @@ public :
 
 	//=============================================
 	//  setup
-    virtual void	setUp(LAObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
+    virtual void	setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
 	//=============================================
 	//  calibration method
     virtual void    doCalibrate();

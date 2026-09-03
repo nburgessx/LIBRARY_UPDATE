@@ -14,11 +14,11 @@ namespace google_test
 {
 	TEST(ECB_Calendars, UNIT_ECB_Calendar_Expiry_Test)
 	{
-		const LADate currentDate = etrading::getCurrentMLibDate();
-		LADate thirdMeetingDate;
-		LADate forthMeetingDate;
-		LADate fifthMeetingDate;
-		LADate sixthMeetingDate;
+		const AQLDate currentDate = etrading::getCurrentMLibDate();
+		AQLDate thirdMeetingDate;
+		AQLDate forthMeetingDate;
+		AQLDate fifthMeetingDate;
+		AQLDate sixthMeetingDate;
 
 		//
 		// 3RD ECB MEETING DATE
@@ -78,35 +78,35 @@ namespace google_test
 
 	TEST(TestDatesECB, UNIT_NEXT_MeetingDate)
 	{
-		const LADate expectedECBMeetingDate1 = LADate("20190725");
-		const LADate expectedECBMeetingDate2 = LADate("20190912");
-		const LADate actualECBMeetingDate2 = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate1);
+		const AQLDate expectedECBMeetingDate1 = AQLDate("20190725");
+		const AQLDate expectedECBMeetingDate2 = AQLDate("20190912");
+		const AQLDate actualECBMeetingDate2 = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate1);
 
 		EXPECT_EQ(expectedECBMeetingDate2, actualECBMeetingDate2);
 	}
 
 	TEST(TestECBDateChain, UNIT_MeetingDates)
 	{
-		const LADate expectedECBMeetingDate1  = LADate("20190725");
-		const LADate expectedECBMeetingDate2  = LADate("20190912");
-		const LADate expectedECBMeetingDate3  = LADate("20191024");
-		const LADate expectedECBMeetingDate4  = LADate("20191212");
-		const LADate expectedECBMeetingDate5  = LADate("20200121");
-		const LADate expectedECBMeetingDate6  = LADate("20200320");
-		const LADate expectedECBMeetingDate7  = LADate("20200430");
-		const LADate expectedECBMeetingDate8  = LADate("20200604");
-		const LADate expectedECBMeetingDate9  = LADate("20200716");
-		const LADate expectedECBMeetingDate10 = LADate("20200910");
+		const AQLDate expectedECBMeetingDate1  = AQLDate("20190725");
+		const AQLDate expectedECBMeetingDate2  = AQLDate("20190912");
+		const AQLDate expectedECBMeetingDate3  = AQLDate("20191024");
+		const AQLDate expectedECBMeetingDate4  = AQLDate("20191212");
+		const AQLDate expectedECBMeetingDate5  = AQLDate("20200121");
+		const AQLDate expectedECBMeetingDate6  = AQLDate("20200320");
+		const AQLDate expectedECBMeetingDate7  = AQLDate("20200430");
+		const AQLDate expectedECBMeetingDate8  = AQLDate("20200604");
+		const AQLDate expectedECBMeetingDate9  = AQLDate("20200716");
+		const AQLDate expectedECBMeetingDate10 = AQLDate("20200910");
 
-		const LADate actualECBMeetingDate2  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate1);
-		const LADate actualECBMeetingDate3  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate2);
-		const LADate actualECBMeetingDate4  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate3);
-		const LADate actualECBMeetingDate5  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate4);
-		const LADate actualECBMeetingDate6  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate5);
-		const LADate actualECBMeetingDate7  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate6);
-		const LADate actualECBMeetingDate8  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate7);
-		const LADate actualECBMeetingDate9  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate8);
-		const LADate actualECBMeetingDate10 = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate9);
+		const AQLDate actualECBMeetingDate2  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate1);
+		const AQLDate actualECBMeetingDate3  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate2);
+		const AQLDate actualECBMeetingDate4  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate3);
+		const AQLDate actualECBMeetingDate5  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate4);
+		const AQLDate actualECBMeetingDate6  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate5);
+		const AQLDate actualECBMeetingDate7  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate6);
+		const AQLDate actualECBMeetingDate8  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate7);
+		const AQLDate actualECBMeetingDate9  = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate8);
+		const AQLDate actualECBMeetingDate10 = validation::tryMeDateNextECBMeetingDate(expectedECBMeetingDate9);
 
 		EXPECT_EQ(expectedECBMeetingDate2,  actualECBMeetingDate2);
 		EXPECT_EQ(expectedECBMeetingDate3,  actualECBMeetingDate3);
@@ -121,29 +121,29 @@ namespace google_test
 
 	TEST(TestDatesECB, UNIT_NTH_MeetingDate)
 	{
-		const LADate asOfDate = LADate("20190610");
+		const AQLDate asOfDate = AQLDate("20190610");
 
-		const LADate expectedECBMeetingDate1	= LADate("20190725");
-		const LADate expectedECBMeetingDate2	= LADate("20190912");
-		const LADate expectedECBMeetingDate3	= LADate("20191024");
-		const LADate expectedECBMeetingDate4	= LADate("20191212");
-		const LADate expectedECBMeetingDate5	= LADate("20200121");
-		const LADate expectedECBMeetingDate6	= LADate("20200320");
-		const LADate expectedECBMeetingDate7	= LADate("20200430");
-		const LADate expectedECBMeetingDate8	= LADate("20200604");
-		const LADate expectedECBMeetingDate9	= LADate("20200716");
-		const LADate expectedECBMeetingDate10   = LADate("20200910");
+		const AQLDate expectedECBMeetingDate1	= AQLDate("20190725");
+		const AQLDate expectedECBMeetingDate2	= AQLDate("20190912");
+		const AQLDate expectedECBMeetingDate3	= AQLDate("20191024");
+		const AQLDate expectedECBMeetingDate4	= AQLDate("20191212");
+		const AQLDate expectedECBMeetingDate5	= AQLDate("20200121");
+		const AQLDate expectedECBMeetingDate6	= AQLDate("20200320");
+		const AQLDate expectedECBMeetingDate7	= AQLDate("20200430");
+		const AQLDate expectedECBMeetingDate8	= AQLDate("20200604");
+		const AQLDate expectedECBMeetingDate9	= AQLDate("20200716");
+		const AQLDate expectedECBMeetingDate10   = AQLDate("20200910");
 
-		const LADate actualECBMeetingDate1  = validation::tryMeDateNthECBMeetingDate(asOfDate, 1);
-		const LADate actualECBMeetingDate2  = validation::tryMeDateNthECBMeetingDate(asOfDate, 2);
-		const LADate actualECBMeetingDate3  = validation::tryMeDateNthECBMeetingDate(asOfDate, 3);
-		const LADate actualECBMeetingDate4  = validation::tryMeDateNthECBMeetingDate(asOfDate, 4);
-		const LADate actualECBMeetingDate5  = validation::tryMeDateNthECBMeetingDate(asOfDate, 5);
-		const LADate actualECBMeetingDate6  = validation::tryMeDateNthECBMeetingDate(asOfDate, 6);
-		const LADate actualECBMeetingDate7  = validation::tryMeDateNthECBMeetingDate(asOfDate, 7);
-		const LADate actualECBMeetingDate8  = validation::tryMeDateNthECBMeetingDate(asOfDate, 8);
-		const LADate actualECBMeetingDate9  = validation::tryMeDateNthECBMeetingDate(asOfDate, 9);
-		const LADate actualECBMeetingDate10 = validation::tryMeDateNthECBMeetingDate(asOfDate, 10);
+		const AQLDate actualECBMeetingDate1  = validation::tryMeDateNthECBMeetingDate(asOfDate, 1);
+		const AQLDate actualECBMeetingDate2  = validation::tryMeDateNthECBMeetingDate(asOfDate, 2);
+		const AQLDate actualECBMeetingDate3  = validation::tryMeDateNthECBMeetingDate(asOfDate, 3);
+		const AQLDate actualECBMeetingDate4  = validation::tryMeDateNthECBMeetingDate(asOfDate, 4);
+		const AQLDate actualECBMeetingDate5  = validation::tryMeDateNthECBMeetingDate(asOfDate, 5);
+		const AQLDate actualECBMeetingDate6  = validation::tryMeDateNthECBMeetingDate(asOfDate, 6);
+		const AQLDate actualECBMeetingDate7  = validation::tryMeDateNthECBMeetingDate(asOfDate, 7);
+		const AQLDate actualECBMeetingDate8  = validation::tryMeDateNthECBMeetingDate(asOfDate, 8);
+		const AQLDate actualECBMeetingDate9  = validation::tryMeDateNthECBMeetingDate(asOfDate, 9);
+		const AQLDate actualECBMeetingDate10 = validation::tryMeDateNthECBMeetingDate(asOfDate, 10);
 
 		EXPECT_EQ(expectedECBMeetingDate1,  actualECBMeetingDate1);
 		EXPECT_EQ(expectedECBMeetingDate2,  actualECBMeetingDate2);
@@ -159,35 +159,35 @@ namespace google_test
 
 	TEST(TestDatesECB, UNIT_NEXT_SwapStartDate)
 	{
-		const LADate expectedECBSwapStartDate1 = LADate("20190731");
-		const LADate expectedECBSwapStartDate2 = LADate("20190918");
-		const LADate actualECBSwapStartDate2 = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate1);
+		const AQLDate expectedECBSwapStartDate1 = AQLDate("20190731");
+		const AQLDate expectedECBSwapStartDate2 = AQLDate("20190918");
+		const AQLDate actualECBSwapStartDate2 = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate1);
 
 		EXPECT_EQ(expectedECBSwapStartDate2, actualECBSwapStartDate2);
 	}
 
 	TEST(TestECBDateChain, UNIT_SwapStartDates)
 	{
-		const LADate expectedECBSwapStartDate1  = LADate("20190731");
-		const LADate expectedECBSwapStartDate2  = LADate("20190918");
-		const LADate expectedECBSwapStartDate3  = LADate("20191030");
-		const LADate expectedECBSwapStartDate4  = LADate("20191218");
-		const LADate expectedECBSwapStartDate5  = LADate("20200122");
-		const LADate expectedECBSwapStartDate6  = LADate("20200325");
-		const LADate expectedECBSwapStartDate7  = LADate("20200506");
-		const LADate expectedECBSwapStartDate8  = LADate("20200610");
-		const LADate expectedECBSwapStartDate9  = LADate("20200722");
-		const LADate expectedECBSwapStartDate10 = LADate("20200916");
+		const AQLDate expectedECBSwapStartDate1  = AQLDate("20190731");
+		const AQLDate expectedECBSwapStartDate2  = AQLDate("20190918");
+		const AQLDate expectedECBSwapStartDate3  = AQLDate("20191030");
+		const AQLDate expectedECBSwapStartDate4  = AQLDate("20191218");
+		const AQLDate expectedECBSwapStartDate5  = AQLDate("20200122");
+		const AQLDate expectedECBSwapStartDate6  = AQLDate("20200325");
+		const AQLDate expectedECBSwapStartDate7  = AQLDate("20200506");
+		const AQLDate expectedECBSwapStartDate8  = AQLDate("20200610");
+		const AQLDate expectedECBSwapStartDate9  = AQLDate("20200722");
+		const AQLDate expectedECBSwapStartDate10 = AQLDate("20200916");
 
-		const LADate actualECBSwapStartDate2  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate1);
-		const LADate actualECBSwapStartDate3  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate2);
-		const LADate actualECBSwapStartDate4  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate3);
-		const LADate actualECBSwapStartDate5  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate4);
-		const LADate actualECBSwapStartDate6  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate5);
-		const LADate actualECBSwapStartDate7  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate6);
-		const LADate actualECBSwapStartDate8  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate7);
-		const LADate actualECBSwapStartDate9  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate8);
-		const LADate actualECBSwapStartDate10 = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate9);
+		const AQLDate actualECBSwapStartDate2  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate1);
+		const AQLDate actualECBSwapStartDate3  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate2);
+		const AQLDate actualECBSwapStartDate4  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate3);
+		const AQLDate actualECBSwapStartDate5  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate4);
+		const AQLDate actualECBSwapStartDate6  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate5);
+		const AQLDate actualECBSwapStartDate7  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate6);
+		const AQLDate actualECBSwapStartDate8  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate7);
+		const AQLDate actualECBSwapStartDate9  = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate8);
+		const AQLDate actualECBSwapStartDate10 = validation::tryMeDateNextECBSwapStartDate(expectedECBSwapStartDate9);
 
 		EXPECT_EQ(expectedECBSwapStartDate2,  actualECBSwapStartDate2);
 		EXPECT_EQ(expectedECBSwapStartDate3,  actualECBSwapStartDate3);
@@ -202,29 +202,29 @@ namespace google_test
 
 	TEST(TestDatesECB, UNIT_NTH_SwapStartDate)
 	{
-		const LADate asOfDate = LADate("20190610");
+		const AQLDate asOfDate = AQLDate("20190610");
 
-		const LADate expectedECBSwapStartDate1  = LADate("20190731");
-		const LADate expectedECBSwapStartDate2  = LADate("20190918");
-		const LADate expectedECBSwapStartDate3  = LADate("20191030");
-		const LADate expectedECBSwapStartDate4  = LADate("20191218");
-		const LADate expectedECBSwapStartDate5  = LADate("20200122");
-		const LADate expectedECBSwapStartDate6  = LADate("20200325");
-		const LADate expectedECBSwapStartDate7  = LADate("20200506");
-		const LADate expectedECBSwapStartDate8  = LADate("20200610");
-		const LADate expectedECBSwapStartDate9  = LADate("20200722");
-		const LADate expectedECBSwapStartDate10 = LADate("20200916");
+		const AQLDate expectedECBSwapStartDate1  = AQLDate("20190731");
+		const AQLDate expectedECBSwapStartDate2  = AQLDate("20190918");
+		const AQLDate expectedECBSwapStartDate3  = AQLDate("20191030");
+		const AQLDate expectedECBSwapStartDate4  = AQLDate("20191218");
+		const AQLDate expectedECBSwapStartDate5  = AQLDate("20200122");
+		const AQLDate expectedECBSwapStartDate6  = AQLDate("20200325");
+		const AQLDate expectedECBSwapStartDate7  = AQLDate("20200506");
+		const AQLDate expectedECBSwapStartDate8  = AQLDate("20200610");
+		const AQLDate expectedECBSwapStartDate9  = AQLDate("20200722");
+		const AQLDate expectedECBSwapStartDate10 = AQLDate("20200916");
 
-		const LADate actualECBSwapStartDate1  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 1);
-		const LADate actualECBSwapStartDate2  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 2);
-		const LADate actualECBSwapStartDate3  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 3);
-		const LADate actualECBSwapStartDate4  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 4);
-		const LADate actualECBSwapStartDate5  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 5);
-		const LADate actualECBSwapStartDate6  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 6);
-		const LADate actualECBSwapStartDate7  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 7);
-		const LADate actualECBSwapStartDate8  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 8);
-		const LADate actualECBSwapStartDate9  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 9);
-		const LADate actualECBSwapStartDate10 = validation::tryMeDateNthECBSwapStartDate(asOfDate, 10);
+		const AQLDate actualECBSwapStartDate1  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 1);
+		const AQLDate actualECBSwapStartDate2  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 2);
+		const AQLDate actualECBSwapStartDate3  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 3);
+		const AQLDate actualECBSwapStartDate4  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 4);
+		const AQLDate actualECBSwapStartDate5  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 5);
+		const AQLDate actualECBSwapStartDate6  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 6);
+		const AQLDate actualECBSwapStartDate7  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 7);
+		const AQLDate actualECBSwapStartDate8  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 8);
+		const AQLDate actualECBSwapStartDate9  = validation::tryMeDateNthECBSwapStartDate(asOfDate, 9);
+		const AQLDate actualECBSwapStartDate10 = validation::tryMeDateNthECBSwapStartDate(asOfDate, 10);
 
 		EXPECT_EQ(expectedECBSwapStartDate1,  actualECBSwapStartDate1);
 		EXPECT_EQ(expectedECBSwapStartDate2,  actualECBSwapStartDate2);
@@ -240,35 +240,35 @@ namespace google_test
 
 	TEST(TestDatesECB, UNIT_NEXT_SwapEndDate)
 	{
-		const LADate expectedECBSwapEndDate1 = LADate("20190917");
-		const LADate expectedECBSwapEndDate2 = LADate("20191029");
-		const LADate actualECBSwapEndDate2 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate1);
+		const AQLDate expectedECBSwapEndDate1 = AQLDate("20190917");
+		const AQLDate expectedECBSwapEndDate2 = AQLDate("20191029");
+		const AQLDate actualECBSwapEndDate2 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate1);
 
 		EXPECT_EQ(expectedECBSwapEndDate2, actualECBSwapEndDate2);
 	}
 
 	TEST(TestECBDateChain, UNIT_SwapEndDates)
 	{
-		const LADate expectedECBSwapEndDate1 = LADate("20190917");
-		const LADate expectedECBSwapEndDate2 = LADate("20191029");
-		const LADate expectedECBSwapEndDate3 = LADate("20191217");
-		const LADate expectedECBSwapEndDate4 = LADate("20200121");
-		const LADate expectedECBSwapEndDate5 = LADate("20200324");
-		const LADate expectedECBSwapEndDate6 = LADate("20200505");
-		const LADate expectedECBSwapEndDate7 = LADate("20200609");
-		const LADate expectedECBSwapEndDate8 = LADate("20200721");
-		const LADate expectedECBSwapEndDate9 = LADate("20200915");
-		const LADate expectedECBSwapEndDate10 = LADate("20201103");
+		const AQLDate expectedECBSwapEndDate1 = AQLDate("20190917");
+		const AQLDate expectedECBSwapEndDate2 = AQLDate("20191029");
+		const AQLDate expectedECBSwapEndDate3 = AQLDate("20191217");
+		const AQLDate expectedECBSwapEndDate4 = AQLDate("20200121");
+		const AQLDate expectedECBSwapEndDate5 = AQLDate("20200324");
+		const AQLDate expectedECBSwapEndDate6 = AQLDate("20200505");
+		const AQLDate expectedECBSwapEndDate7 = AQLDate("20200609");
+		const AQLDate expectedECBSwapEndDate8 = AQLDate("20200721");
+		const AQLDate expectedECBSwapEndDate9 = AQLDate("20200915");
+		const AQLDate expectedECBSwapEndDate10 = AQLDate("20201103");
 
-		const LADate actualECBSwapEndDate2 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate1);
-		const LADate actualECBSwapEndDate3 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate2);
-		const LADate actualECBSwapEndDate4 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate3);
-		const LADate actualECBSwapEndDate5 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate4);
-		const LADate actualECBSwapEndDate6 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate5);
-		const LADate actualECBSwapEndDate7 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate6);
-		const LADate actualECBSwapEndDate8 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate7);
-		const LADate actualECBSwapEndDate9 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate8);
-		const LADate actualECBSwapEndDate10 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate9);
+		const AQLDate actualECBSwapEndDate2 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate1);
+		const AQLDate actualECBSwapEndDate3 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate2);
+		const AQLDate actualECBSwapEndDate4 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate3);
+		const AQLDate actualECBSwapEndDate5 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate4);
+		const AQLDate actualECBSwapEndDate6 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate5);
+		const AQLDate actualECBSwapEndDate7 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate6);
+		const AQLDate actualECBSwapEndDate8 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate7);
+		const AQLDate actualECBSwapEndDate9 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate8);
+		const AQLDate actualECBSwapEndDate10 = validation::tryMeDateNextECBSwapEndDate(expectedECBSwapEndDate9);
 
 		EXPECT_EQ(expectedECBSwapEndDate2, actualECBSwapEndDate2);
 		EXPECT_EQ(expectedECBSwapEndDate3, actualECBSwapEndDate3);
@@ -283,29 +283,29 @@ namespace google_test
 
 	TEST(TestDatesECB, UNIT_NTH_SwapEndDate)
 	{
-		const LADate asOfDate = LADate("20190610");
+		const AQLDate asOfDate = AQLDate("20190610");
 
-		const LADate expectedECBSwapEndDate1  = LADate("20190917");
-		const LADate expectedECBSwapEndDate2  = LADate("20191029");
-		const LADate expectedECBSwapEndDate3  = LADate("20191217");
-		const LADate expectedECBSwapEndDate4  = LADate("20200121");
-		const LADate expectedECBSwapEndDate5  = LADate("20200324");
-		const LADate expectedECBSwapEndDate6  = LADate("20200505");
-		const LADate expectedECBSwapEndDate7  = LADate("20200609");
-		const LADate expectedECBSwapEndDate8  = LADate("20200721");
-		const LADate expectedECBSwapEndDate9  = LADate("20200915");
-		const LADate expectedECBSwapEndDate10 = LADate("20201103");
+		const AQLDate expectedECBSwapEndDate1  = AQLDate("20190917");
+		const AQLDate expectedECBSwapEndDate2  = AQLDate("20191029");
+		const AQLDate expectedECBSwapEndDate3  = AQLDate("20191217");
+		const AQLDate expectedECBSwapEndDate4  = AQLDate("20200121");
+		const AQLDate expectedECBSwapEndDate5  = AQLDate("20200324");
+		const AQLDate expectedECBSwapEndDate6  = AQLDate("20200505");
+		const AQLDate expectedECBSwapEndDate7  = AQLDate("20200609");
+		const AQLDate expectedECBSwapEndDate8  = AQLDate("20200721");
+		const AQLDate expectedECBSwapEndDate9  = AQLDate("20200915");
+		const AQLDate expectedECBSwapEndDate10 = AQLDate("20201103");
 
-		const LADate actualECBSwapEndDate1  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 1);
-		const LADate actualECBSwapEndDate2  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 2);
-		const LADate actualECBSwapEndDate3  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 3);
-		const LADate actualECBSwapEndDate4  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 4);
-		const LADate actualECBSwapEndDate5  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 5);
-		const LADate actualECBSwapEndDate6  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 6);
-		const LADate actualECBSwapEndDate7  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 7);
-		const LADate actualECBSwapEndDate8  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 8);
-		const LADate actualECBSwapEndDate9  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 9);
-		const LADate actualECBSwapEndDate10 = validation::tryMeDateNthECBSwapEndDate(asOfDate, 10);
+		const AQLDate actualECBSwapEndDate1  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 1);
+		const AQLDate actualECBSwapEndDate2  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 2);
+		const AQLDate actualECBSwapEndDate3  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 3);
+		const AQLDate actualECBSwapEndDate4  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 4);
+		const AQLDate actualECBSwapEndDate5  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 5);
+		const AQLDate actualECBSwapEndDate6  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 6);
+		const AQLDate actualECBSwapEndDate7  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 7);
+		const AQLDate actualECBSwapEndDate8  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 8);
+		const AQLDate actualECBSwapEndDate9  = validation::tryMeDateNthECBSwapEndDate(asOfDate, 9);
+		const AQLDate actualECBSwapEndDate10 = validation::tryMeDateNthECBSwapEndDate(asOfDate, 10);
 
 		EXPECT_EQ(expectedECBSwapEndDate1,  actualECBSwapEndDate1);
 		EXPECT_EQ(expectedECBSwapEndDate2,  actualECBSwapEndDate2);

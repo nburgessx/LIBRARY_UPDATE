@@ -2,8 +2,8 @@
 
 #include "ResultsProcessor.h"
 #include "ReadDataFile.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 #include <gTest/gTest.h>
 
@@ -57,11 +57,11 @@ namespace google_test
         public:
             CleanUpTempFiles( const path& p = path() ) : path( p ) {}
 
-            void adopt( const LAString& p )
+            void adopt( const AQLString& p )
             {
                 path::operator=( path( p.getCString() ) );
             }
-            LAString fullpath() const
+            AQLString fullpath() const
             {
                 return string().c_str();
             }
@@ -70,8 +70,8 @@ namespace google_test
             {
                 if ( !empty() && !remove( *this ) )
                 {
-                    const LAString hdr( "error removing temporary file: " );
-                    const LAString msg = hdr + string().c_str();
+                    const AQLString hdr( "error removing temporary file: " );
+                    const AQLString msg = hdr + string().c_str();
                     std::cerr << "exception: " << msg << std::endl;
                     // throw CreateDataFile::Exception(msg + string().c_str());
                 }
@@ -113,12 +113,12 @@ namespace google_test
 
     TEST_F( TestDataFilesCreate, UNIT_ErrorHandling )
     {
-        const LAString absent = "/this/folder/does/not/exist";
+        const AQLString absent = "/this/folder/does/not/exist";
 
         EXPECT_THROW( CreateDataFile p0( absent ), CreateDataFile::OutputError );
         EXPECT_THROW( CreateDataFile p1( absent ), CreateDataFile::Exception );
-        EXPECT_THROW( CreateDataFile p2( absent ), LACoreAppError );
-        EXPECT_THROW( CreateDataFile p3( absent ), LACoreError );  // On Windows LACoreError inherits from std::exception; however on Linux it does not.
+        EXPECT_THROW( CreateDataFile p2( absent ), AQLCoreAppError );
+        EXPECT_THROW( CreateDataFile p3( absent ), AQLCoreError );  // On Windows AQLCoreError inherits from std::exception; however on Linux it does not.
 
         EXPECT_THROW( CreateDataFile::beginTestCount( -1 ), CreateDataFile::Exception );
 
@@ -126,7 +126,7 @@ namespace google_test
         {
             CreateDataFile p4( absent );
         }
-        catch ( const LACoreError& x )  // On Windows LACoreError inherits from std::exception; however on Linux it does not.
+        catch ( const AQLCoreError& x )  // On Windows AQLCoreError inherits from std::exception; however on Linux it does not.
         {
             std::cerr << "x.what(): " << x.what() << std::endl;
         }
@@ -166,19 +166,19 @@ namespace google_test
 
     TEST_F( TestDataFilesCreate, UNIT_PrintLAString )
     {
-        const LAString name( "TestString" );
-        const LAString value( "just a test string" );
+        const AQLString name( "TestString" );
+        const AQLString value( "just a test string" );
 
-        const LAString empty( "EmptyString" );
-        const LAString blank;
+        const AQLString empty( "EmptyString" );
+        const AQLString blank;
 
         //
         // aside:
         //
         {
             // empty string different from default constructed string!
-            const LAString b0;
-            const LAString b1( "" );
+            const AQLString b0;
+            const AQLString b1( "" );
             EXPECT_NE( b0, b1 );
 
             // contrast with std::string:
@@ -200,22 +200,22 @@ namespace google_test
 
         EXPECT_EQ( value, x[name]() );
 
-        LAString e = x[empty];
+        AQLString e = x[empty];
         EXPECT_EQ( blank, e );
     }
 
     TEST_F( TestDataFilesCreate, UNIT_PrintStringVector )
     {
-        const LAString name( "TestVector" );
-        const LAString v0( "v0" );
-        const LAString v1( "v1" );
+        const AQLString name( "TestVector" );
+        const AQLString v0( "v0" );
+        const AQLString v1( "v1" );
 
-        LAStringVector value;
+        AQLStringVector value;
         value.push_back( v0 );
         value.push_back( v1 );
 
-        const LAString empty( "EmptyVector" );
-        LAStringVector novals;
+        const AQLString empty( "EmptyVector" );
+        AQLStringVector novals;
 
         CleanUpTempFiles clean;
         if ( true )
@@ -228,32 +228,32 @@ namespace google_test
 
         ReadDataFile::Load x( clean.fullpath() );
 
-        const LAStringVector s = x[name];
+        const AQLStringVector s = x[name];
         for ( std::size_t i = 0; i != value.size(); ++i )
         {
             EXPECT_EQ( value[i], s[i] );
         }
 
-        const LAStringVector e = x[empty];
+        const AQLStringVector e = x[empty];
         EXPECT_EQ( 0, e.size() );
     }
 
     TEST_F( TestDataFilesCreate, UNIT_PrintStringMatrix )
     {
-        const LAString name( "TestMatrix" );
-        const LAString v00( "v00" );
-        const LAString v01( "v01" );
-        const LAString v10( "v10" );
-        const LAString v11( "v11" );
+        const AQLString name( "TestMatrix" );
+        const AQLString v00( "v00" );
+        const AQLString v01( "v01" );
+        const AQLString v10( "v10" );
+        const AQLString v11( "v11" );
 
-        LAStringVector r0;
+        AQLStringVector r0;
         r0.push_back( v00 );
         r0.push_back( v01 );
-        LAStringVector r1;
+        AQLStringVector r1;
         r1.push_back( v10 );
         r1.push_back( v11 );
 
-        LAStringMatrix value;
+        AQLStringMatrix value;
         value.push_back( r0 );
         value.push_back( r1 );
 
@@ -267,13 +267,13 @@ namespace google_test
 
         ReadDataFile::Load x( clean.fullpath() );
 
-        const LAStringMatrix m = x[name];
+        const AQLStringMatrix m = x[name];
         for ( std::size_t i = 0; i != value.size(); ++i )
         {
             for ( std::size_t j = 0; j != value[i].size(); ++j )
             {
-				LAString str1 = value[i][j];
-				LAString str2 = m[i][j];
+				AQLString str1 = value[i][j];
+				AQLString str2 = m[i][j];
 				if (j == 0)
 				{
 					// First columm holds keys that are all upper case
@@ -286,7 +286,7 @@ namespace google_test
 
     TEST_F( TestDataFilesCreate, UNIT_PrintDoubleVector )
     {
-        const LAString name( "TestVector" );
+        const AQLString name( "TestVector" );
         const double v0 = 1.234;
         const double v1 = 5.678;
 
@@ -294,7 +294,7 @@ namespace google_test
         value.push_back( v0 );
         value.push_back( v1 );
 
-        const LAString empty( "EmptyVector" );
+        const AQLString empty( "EmptyVector" );
         std::vector<double> novals;
         CleanUpTempFiles clean;
         if ( true )
@@ -319,16 +319,16 @@ namespace google_test
 
     TEST_F( TestDataFilesCreate, UNIT_PrintDateVector )
     {
-        const LAString name( "TestVector" );
-        const LADate v0( "20151026" );
-        const LADate v1( "20151027" );
+        const AQLString name( "TestVector" );
+        const AQLDate v0( "20151026" );
+        const AQLDate v1( "20151027" );
 
-        std::vector<LADate> value;
+        std::vector<AQLDate> value;
         value.push_back( v0 );
         value.push_back( v1 );
 
-        const LAString empty( "EmptyVector" );
-        std::vector<LADate> novals;
+        const AQLString empty( "EmptyVector" );
+        std::vector<AQLDate> novals;
         CleanUpTempFiles clean;
         if ( true )
         {
@@ -340,7 +340,7 @@ namespace google_test
 
         ReadDataFile::Load x( clean.fullpath() );
 
-        const std::vector<LADate> s = x[name];
+        const std::vector<AQLDate> s = x[name];
         for ( std::size_t i = 0; i != value.size(); ++i )
         {
             EXPECT_EQ( value[i], s[i] );
@@ -373,57 +373,57 @@ namespace google_test
     {
         using etrading::decorateCurvename;
 
-        const LAString f0 = "mycurve_inputs";
-        const LAString c0 = "mycurveid";
-        const LAString m0 = "mymarketname";
+        const AQLString f0 = "mycurve_inputs";
+        const AQLString c0 = "mycurveid";
+        const AQLString m0 = "mymarketname";
 
         EXPECT_EQ( c0 + "_" + m0 + "_" + f0, decorateCurvename( f0, c0, m0 ) );
 
-        const LAString f1 = "setUpOISCurve_inputs";
-        const LAString c1 = c0;
-        const LAString m1 = m0;
+        const AQLString f1 = "setUpOISCurve_inputs";
+        const AQLString c1 = c0;
+        const AQLString m1 = m0;
 
         EXPECT_EQ( c1 + "_" + m1, decorateCurvename( f1, c1, m1 ) );
 
-        const LAString f2 = "setUpSwapCurve_inputs";
-        const LAString c2 = c1;
-        const LAString m2 = m1;
+        const AQLString f2 = "setUpSwapCurve_inputs";
+        const AQLString c2 = c1;
+        const AQLString m2 = m1;
 
         EXPECT_EQ( c2 + "_" + m2, decorateCurvename( f2, c2, m2 ) );
 
-        const LAString f3 = "setUpBasisCurve_inputs";
-        const LAString c3 = c2;
-        const LAString m3 = m2;
+        const AQLString f3 = "setUpBasisCurve_inputs";
+        const AQLString c3 = c2;
+        const AQLString m3 = m2;
 
         EXPECT_EQ( c3 + "_" + m3, decorateCurvename( f3, c3, m3 ) );
 
-        const LAString f4 = "setUpFwdFXConstantCurve_inputs";
-        const LAString c4 = c3;
-        const LAString m4 = m3;
+        const AQLString f4 = "setUpFwdFXConstantCurve_inputs";
+        const AQLString c4 = c3;
+        const AQLString m4 = m3;
 
         EXPECT_EQ( c4 + "_" + m4, decorateCurvename( f4, c4, m4 ) );
 
-        const LAString f5 = "setUpBasisCurve_inputs";
-        const LAString c5 = c4;
-        const LAString m5 = "xyzwBasis";
+        const AQLString f5 = "setUpBasisCurve_inputs";
+        const AQLString c5 = c4;
+        const AQLString m5 = "xyzwBasis";
 
         EXPECT_EQ( c5 + "_" + "xyzw", decorateCurvename( f5, c5, m5 ) );
 
-        const LAString f6 = "setUpBasisCurve_inputs";
-        const LAString c6 = c5;
-        const LAString m6 = "XccyBasis";
+        const AQLString f6 = "setUpBasisCurve_inputs";
+        const AQLString c6 = c5;
+        const AQLString m6 = "XccyBasis";
 
         EXPECT_EQ( c6 + "_" + "XCCY", decorateCurvename( f6, c6, m6 ) );
 
-        const LAString f7 = "setUpFwdFXConstantCurve_inputs";
-        const LAString c7 = c6;
-        const LAString m7 = "FwdFXConstJPY";
+        const AQLString f7 = "setUpFwdFXConstantCurve_inputs";
+        const AQLString c7 = c6;
+        const AQLString m7 = "FwdFXConstJPY";
 
         EXPECT_EQ( c7 + "_" + "FWDJPY", decorateCurvename( f7, c7, m7 ) );
 
-        const LAString f8 = "xxxx_outputs.csv";
-        const LAString c8 = c7;
-        const LAString m8 = "";
+        const AQLString f8 = "xxxx_outputs.csv";
+        const AQLString c8 = c7;
+        const AQLString m8 = "";
 
         EXPECT_EQ( c8 + "_" + f8, decorateCurvename( f8, c8, m8 ) );
     }
@@ -432,8 +432,8 @@ namespace google_test
     {
         using etrading::decorateFilename;
 
-        const LAString f = "filename";
-        const LAString p = "prefix";
+        const AQLString f = "filename";
+        const AQLString p = "prefix";
 
         EXPECT_EQ( p + "_" + f, decorateFilename( f, p ) );
     }
@@ -442,9 +442,9 @@ namespace google_test
     {
         using etrading::decorateFilename;
 
-        const LAString f    = "filename";
-        const LAString p    = "prefix";
-        const LAString s    = "suffix";
+        const AQLString f    = "filename";
+        const AQLString p    = "prefix";
+        const AQLString s    = "suffix";
 
         // Suffix & Prefix Supplied
         EXPECT_EQ( p + "_" + f + "_" + s, decorateFilename( f, p, s ) );

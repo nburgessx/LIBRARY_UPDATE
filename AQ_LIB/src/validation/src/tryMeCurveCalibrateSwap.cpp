@@ -30,22 +30,22 @@ namespace validation
     *  @param [in]		tenorBasisConv	    Tenor Basis market conventions
     *  @param [in]		tenorBasisRates 	Tenor Basis market data
     */
-    const LAString tryMeCurveCalibrateSwap( const LAString& curveCollection,
-                                            const LAString& staticDataTable,
-                                            const LAString& curveIndexInput,
-                                            const LAStringMatrix& curveConv,
-                                            const LAStringMatrix& moneyMarketConv,
-                                            const LAStringMatrix& liborConv,
-                                            const LAStringMatrix& liborRates,
-                                            const LAStringMatrix& swapConv,
-                                            const LAStringMatrix& swapRates,
-                                            const LAStringMatrix& fraConv,
-                                            const LAStringMatrix& fra3mRates,
-                                            const LAStringMatrix& fra6mRates,
-                                            const LAStringMatrix& futureConv,
-                                            const LAStringMatrix& futureRates,
-                                            const LAStringMatrix& tenorBasisConv,
-                                            const LAStringMatrix& tenorBasisRates )
+    const AQLString tryMeCurveCalibrateSwap( const AQLString& curveCollection,
+                                            const AQLString& staticDataTable,
+                                            const AQLString& curveIndexInput,
+                                            const AQLStringMatrix& curveConv,
+                                            const AQLStringMatrix& moneyMarketConv,
+                                            const AQLStringMatrix& liborConv,
+                                            const AQLStringMatrix& liborRates,
+                                            const AQLStringMatrix& swapConv,
+                                            const AQLStringMatrix& swapRates,
+                                            const AQLStringMatrix& fraConv,
+                                            const AQLStringMatrix& fra3mRates,
+                                            const AQLStringMatrix& fra6mRates,
+                                            const AQLStringMatrix& futureConv,
+                                            const AQLStringMatrix& futureRates,
+                                            const AQLStringMatrix& tenorBasisConv,
+                                            const AQLStringMatrix& tenorBasisRates )
     {
         VALID_EXCEPTION_START
         
@@ -55,7 +55,7 @@ namespace validation
         // Prefix the staticDataTable onto the curveIndex Name Set, using the ':' delimiter by default
         std::string curveIndexStdStr =  curveIndexInput.getCString();
         curveIndexStdStr = etrading::addPrefixStringAndCheckForDuplicates( curveIndexStdStr, std::string(staticDataTable.getCString()) );
-        LAString curveIndex  = curveIndexStdStr.c_str();
+        AQLString curveIndex  = curveIndexStdStr.c_str();
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -82,67 +82,67 @@ namespace validation
 
         if ( !curveConv.empty() && curveConv[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Curve Conventions column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Curve Conventions column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !moneyMarketConv.empty() && moneyMarketConv[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Money Market Conventions column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Money Market Conventions column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !liborConv.empty() && liborConv[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Libor Conventions column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Libor Conventions column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !liborRates.empty() && liborRates[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Libor Rates column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Libor Rates column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !swapConv.empty() && swapConv[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Swap Conventions column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Swap Conventions column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !swapRates.empty() && swapRates[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Swap Rates column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Swap Rates column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !fraConv.empty() && fraConv[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: FRA Conventions column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: FRA Conventions column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !fra3mRates.empty() && fra3mRates[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: FRA 3M Rates column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: FRA 3M Rates column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !fra6mRates.empty() && fra6mRates[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: FRA 6M Rates column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: FRA 6M Rates column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !futureConv.empty() && futureConv[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Futures Conventions column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Futures Conventions column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !futureRates.empty() && futureRates[0].size() < 3 )
         {
-            throw LACoreInvalidData( "#Error: Futures Rates column size must be greater or equal to 3", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Futures Rates column size must be greater or equal to 3", __FILE__, __LINE__ );
         }
 
         if ( !tenorBasisConv.empty() && tenorBasisConv[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Tenor Basis Adjustment Conventions column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Tenor Basis Adjustment Conventions column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !tenorBasisRates.empty() && tenorBasisRates[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Tenor Basis Adjustment Rates column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Tenor Basis Adjustment Rates column size must be 2", __FILE__, __LINE__ );
         }
 
         etrading::LAUpdateStaticDataManager::setUpSwapCurve( etrading::getDataInstance(),
@@ -162,18 +162,18 @@ namespace validation
                                                                   tenorBasisConv,
                                                                   tenorBasisRates,
                                                                   curveIndex,
-                                                                  LAString( "" ) );
+                                                                  AQLString( "" ) );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
 
         // note that curveIndexCopy is actually the staticDataTable ...
-        LAString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "STD" ) );
+        AQLString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "STD" ) );
         
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndexCopy );
 
-        LAString ret( curveCollection + " " + staticDataTable + " Curve has been set" );
+        AQLString ret( curveCollection + " " + staticDataTable + " Curve has been set" );
 
         if ( CreateDataFile::recordEnabled() )
         {

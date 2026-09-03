@@ -10,7 +10,7 @@
  */
 
 #include "meLWOSwapPrice.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "tryMeLWOSwapPricing.h"
 #include "APISetUp.h"					// AQ_API_START and AQ_API_END Macros
@@ -30,12 +30,12 @@ double meLWOSwapPV( const std::string& swapName,
     AQ_API_START
     
     // Marshall Inputs
-    LAString legNameAsLAString( legName.c_str() );
+    AQLString legNameAsLAString( legName.c_str() );
     
-    LAStringMatrix valuationSettingsAsStringMatrix;
+    AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
 
-    LAStringMatrix fixingTableAsStringMatrix;
+    AQLStringMatrix fixingTableAsStringMatrix;
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
@@ -62,10 +62,10 @@ double meLWOSwapPV01( const std::string& swapName,
     AQ_API_START
     
     // Marshall Inputs
-    LAStringMatrix valuationSettingsAsStringMatrix;
+    AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
 
-    LAStringMatrix fixingTableAsStringMatrix;
+    AQLStringMatrix fixingTableAsStringMatrix;
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
@@ -90,10 +90,10 @@ double meLWOSwapParRate( const std::string& swapName,
     AQ_API_START    	
     
     // Marshall Inputs
-    LAStringMatrix valuationSettingsAsStringMatrix;
+    AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
 
-    LAStringMatrix fixingTableAsStringMatrix;
+    AQLStringMatrix fixingTableAsStringMatrix;
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
@@ -119,10 +119,10 @@ double meLWOSwapParRate( const std::string& swapName,
     AQ_API_START    	
     
     // Marshall Inputs
-    LAStringMatrix valuationSettingsAsStringMatrix;
+    AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
 
-    LAStringMatrix fixingTableAsStringMatrix;
+    AQLStringMatrix fixingTableAsStringMatrix;
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
@@ -146,9 +146,9 @@ double meLWOSwapAnnuity( const std::string& swapName,
     AQ_API_START
     
     // Marshall Inputs
-    LAString legNameAsLAString( legName.c_str() );
+    AQLString legNameAsLAString( legName.c_str() );
     
-    LAStringMatrix valuationSettingsAsStringMatrix;
+    AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
 
     // Call Function and Return Result
@@ -174,12 +174,12 @@ double meLWOSwapParSpread( const std::string& swapName,
     AQ_API_START
     
     // Marshall Inputs
-    LAString spreadLegNameAsLAString( spreadLegName.c_str() );
+    AQLString spreadLegNameAsLAString( spreadLegName.c_str() );
     
-    LAStringMatrix valuationSettingsAsStringMatrix;
+    AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
 
-    LAStringMatrix fixingTableAsStringMatrix;
+    AQLStringMatrix fixingTableAsStringMatrix;
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
@@ -207,12 +207,12 @@ double meLWOSwapSpread( const std::string& swapName,
     AQ_API_START
     
     // Marshall Inputs
-    LAString spreadLegNameAsLAString( spreadLegName.c_str() );
+    AQLString spreadLegNameAsLAString( spreadLegName.c_str() );
     
-    LAStringMatrix valuationSettingsAsStringMatrix;
+    AQLStringMatrix valuationSettingsAsStringMatrix;
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
 
-    LAStringMatrix fixingTableAsStringMatrix;
+    AQLStringMatrix fixingTableAsStringMatrix;
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
@@ -242,12 +242,12 @@ SWIG_STRINGMATRIX meLWOSwapDisplayCashflows( const std::string& swapName,
 	AQ_API_START
 
 	// Marshall Inputs
-	LAString legNameAsLAString( legName.c_str() );
+	AQLString legNameAsLAString( legName.c_str() );
 
-	LAStringMatrix valuationSettingsAsStringMatrix;
+	AQLStringMatrix valuationSettingsAsStringMatrix;
 	swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
 
-	LAStringMatrix fixingTableAsStringMatrix;
+	AQLStringMatrix fixingTableAsStringMatrix;
 	swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
 	// Call Function and Return Result

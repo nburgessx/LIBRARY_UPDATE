@@ -4,14 +4,14 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LABasic.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLBasic.h"
 #include "LAMathVolFuncFX.h"
 #include "LAMathPathEntity.h"
 #include "LARatesNumeraireBase.h"
-#include "LADataVector.h"
+#include "AQLDataVector.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 
@@ -22,7 +22,7 @@
 #define FN_FXADJUSTER_STR	"fn_fxadjuster"
 
 
-class LAMathFXAdjuster : public LAFunctionBase
+class LAMathFXAdjuster : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
@@ -38,7 +38,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;

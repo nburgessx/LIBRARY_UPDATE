@@ -23,27 +23,27 @@ namespace etrading
         LegStaticData(const LegStaticData& rhs);
         virtual ~LegStaticData() {};
 
-        virtual void validateCurveInput(const LAString& curveCollection);
+        virtual void validateCurveInput(const AQLString& curveCollection);
         virtual std::shared_ptr<LegStaticData> clone();
 
-        LAString getLegName() const;
+        AQLString getLegName() const;
 		
-        LAString getDiscountCurve() const;
+        AQLString getDiscountCurve() const;
         CCY getCurrency() const;
         CCY getValuationCurrency() const;
 		void setValuationCurrency(const CCY& valuationCurrency);
-        LAString getDiscountCurveMarketName() const;
+        AQLString getDiscountCurveMarketName() const;
         bool isCurveDataLoaded() const;
         void setCurveDataLoaded(bool isCurveDataLoaded);
         CompoundingMethodEnum getCouponCompoundMethod() const;
 
         //dummy methods, just to avoid downcasting
-        virtual LAString getForecastCurve() const;
-        virtual LAString getForecastCurveMarketName() const;
+        virtual AQLString getForecastCurve() const;
+        virtual AQLString getForecastCurveMarketName() const;
         virtual double getFirstFixing() const;
         virtual double getLastFixing() const;
-        virtual LAString getFirstStubCurveIndex() const;
-        virtual LAString getLastStubCurveIndex() const;
+        virtual AQLString getFirstStubCurveIndex() const;
+        virtual AQLString getLastStubCurveIndex() const;
         virtual BooleanEnum getFwdInter() const;
         virtual void setFwdInter(const BooleanEnum& fwdInter);
 
@@ -81,15 +81,15 @@ namespace etrading
 
     protected:
 
-    	LAString legName_;
+    	AQLString legName_;
 
-        LAString discountCurve_;
+        AQLString discountCurve_;
         CCY currency_;
         CCY valuationCurrency_;
         CompoundingMethodEnum couponCompoundMethod_;
 
         //useful dataValues:
-        LAString discountCurveMarketName_;
+        AQLString discountCurveMarketName_;
         bool isCurveDataLoaded_;
 
    		LabelValueBlock inputParameters_;

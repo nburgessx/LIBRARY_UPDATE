@@ -1,8 +1,8 @@
 #pragma once
 
-#include "LAString.h"
-#include "LADate.h"
-#include "LACoreTemplateType.h"
+#include "AQLString.h"
+#include "AQLDate.h"
+#include "AQLCoreTemplateType.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/lexical_cast.hpp>
@@ -16,13 +16,13 @@
 namespace boost
 {
     // parse boolean flag
-    template<> bool lexical_cast<bool>( const LAString& s );
+    template<> bool lexical_cast<bool>( const AQLString& s );
 
     // convert boolean flag to string
-    template<> LAString lexical_cast<LAString>( const bool& s );
+    template<> AQLString lexical_cast<AQLString>( const bool& s );
 
-    // shortcut for LAString -> LAString conversions
-    template<> inline LAString lexical_cast<LAString>( const LAString& s )
+    // shortcut for AQLString -> AQLString conversions
+    template<> inline AQLString lexical_cast<AQLString>( const AQLString& s )
     {
         return s;
     }
@@ -43,15 +43,15 @@ namespace etrading
     //    using etrading::ReadTestData;
     //
     //    ReadDataFile::Load inputFile("YieldCurve\\OISCurveUSD.csv");
-    //    LAString dayCount = inputFile["dayCount"];
+    //    AQLString dayCount = inputFile["dayCount"];
     //    DoubleArray terms = inputFile["terms"];
-    //    std::vector<LADate> mydates = inputFile["mydates"];
-    //	  LAStringMatrix oisRates = inputFile["OISRates"];
+    //    std::vector<AQLDate> mydates = inputFile["mydates"];
+    //	  AQLStringMatrix oisRates = inputFile["OISRates"];
     //
     //    const double d = inputFile.getOptional("optionalDoubleItem", 0);
     //    if (d != 0) std::cout << "d was set to " << d << std::endl;
     //
-    //    const LAStringMatrix m = inputFile.getopt("optionalMatrixItem");
+    //    const AQLStringMatrix m = inputFile.getopt("optionalMatrixItem");
     //    if (m.rows() != 0) std::cout << "m was set" << std::endl;
     //
     //    std::cout << "OIS Conventions: " << inputFile["OISConventions"] << std::endl;
@@ -70,10 +70,10 @@ namespace etrading
         enum Type {Scalar, Vector, AssociativeArray, Table};
 
         // generic exception class
-        class Exception : public LACoreAppError, public virtual std::exception
+        class Exception : public AQLCoreAppError, public virtual std::exception
         {
         public:
-            Exception( const LAString& msg, const char* file = nullptr, unsigned int line = 0 );
+            Exception( const AQLString& msg, const char* file = nullptr, unsigned int line = 0 );
             /* virtual */ const char* what() const throw();
         };
 
@@ -81,10 +81,10 @@ namespace etrading
         class LoadError : public Exception
         {
         public:
-            LoadError( const LAString& fileName );
+            LoadError( const AQLString& fileName );
             /* virtual */ const char* what() const throw();
         private:
-            static LAString makeMessage( const LAString& fileName );
+            static AQLString makeMessage( const AQLString& fileName );
         };
 
         // load / read test data
@@ -93,51 +93,51 @@ namespace etrading
         public:
             // load csv file
             Load() {}
-            Load( const LAString& fileName );
+            Load( const AQLString& fileName );
             Load& operator=( const Load& rhs );
             Load( const Load& );
 
             // return true iff there is an item of the given name
-            bool hasItem( const LAString& ) const;
+            bool hasItem( const AQLString& ) const;
 
             // access data item by name, throw an exception if none found
-            const ReadDataFile& operator[]( const LAString& ) const;
+            const ReadDataFile& operator[]( const AQLString& ) const;
 
 			// returns the data keys from the Load
-			std::vector<LAString> getKeys() const;
+			std::vector<AQLString> getKeys() const;
 
             // convert optional item of given name to an arbitrary type,
             // returning the passed default value if none found;
             // throw an exception if type conversion fails
             template<typename T>
-            T getOptional( const LAString& name, const T& defaultValue ) const;
+            T getOptional( const AQLString& name, const T& defaultValue ) const;
 
-            // specialisation for LAStringMatrix, the most frequent use-case
-            LAStringMatrix getOptional( const LAString& name ) const;
+            // specialisation for AQLStringMatrix, the most frequent use-case
+            AQLStringMatrix getOptional( const AQLString& name ) const;
 
         private:
 
-            typedef std::map<LAString, ReadDataFile> Index;
+            typedef std::map<AQLString, ReadDataFile> Index;
 
             // open input file and call doReadCSV
-            static Index readCSV( const LAString& fileName );
+            static Index readCSV( const AQLString& fileName );
 
             // parse input
             static Index doReadCSV( std::istream& );
 
             // attempt to read header of next section, return false if none found
-            static bool getSectionHeader( std::istream&, LAStringVector& header );
+            static bool getSectionHeader( std::istream&, AQLStringVector& header );
 
             // get type of current named section, which is either an associative array
             // or a table
-            static Type getType( std::istream&, LAStringVector& cols );
+            static Type getType( std::istream&, AQLStringVector& cols );
 
             // return true iff the line (given by vector of fields) is blank
-            static bool isBlank( const LAStringVector& line );
+            static bool isBlank( const AQLStringVector& line );
 
             // read line into string vector;
             // if nFields > 0, throw if the number of fields read is different from n;
-            static LAStringVector getFields( std::istream&, std::size_t nFields, bool gobbleEmptyLines );
+            static AQLStringVector getFields( std::istream&, std::size_t nFields, bool gobbleEmptyLines );
 
             Index index_;
         };
@@ -147,13 +147,13 @@ namespace etrading
         //
 
         // construct scalar
-        ReadDataFile( const LAString& value = LAString() );
+        ReadDataFile( const AQLString& value = AQLString() );
         // construct 1D vector
-        ReadDataFile( const LAStringVector& );
+        ReadDataFile( const AQLStringVector& );
         // construct associative array
-        ReadDataFile( const LAStringMatrix& keyValuePairs );
+        ReadDataFile( const AQLStringMatrix& keyValuePairs );
         // construct table
-        ReadDataFile( const LAStringVector& cols, const LAStringMatrix& rows );
+        ReadDataFile( const AQLStringVector& cols, const AQLStringMatrix& rows );
 
         // compiler-generated copy constructor, assignment operator are OK (shallow copy);
         // compiler-generated destructor is ok
@@ -183,35 +183,35 @@ namespace etrading
         // a null item will be converted to an empty vector
         template<typename T> operator std::vector<std::vector<T> >() const;
 
-        // convert to matrix of LAString;
+        // convert to matrix of AQLString;
         // a null item will be converted to an empty matrix
-        operator const LAStringMatrix& () const;
+        operator const AQLStringMatrix& () const;
 
         //
         // low-level interface
         //
 
         // scalar interface
-        const LAString& operator()() const;
+        const AQLString& operator()() const;
 
         // vector interface
-        const LAString& operator[]( std::size_t i ) const;
+        const AQLString& operator[]( std::size_t i ) const;
 
         // associative array interface
-        const LAString& operator[]( const LAString& key ) const;
+        const AQLString& operator[]( const AQLString& key ) const;
 
         // table interface
-        const LAString& operator()( const LAString& key, const LAString& col ) const;
+        const AQLString& operator()( const AQLString& key, const AQLString& col ) const;
 
         // mixed interface, matrix interface
-		const LAString& operator()( std::size_t i, const LAString& col ) const;
-        const LAString& operator()( const LAString& key, std::size_t j ) const;
+		const AQLString& operator()( std::size_t i, const AQLString& col ) const;
+        const AQLString& operator()( const AQLString& key, std::size_t j ) const;
 
         // matrix interface
-        const LAString& operator()( std::size_t i, std::size_t j ) const;
+        const AQLString& operator()( std::size_t i, std::size_t j ) const;
 
 		// Return keys
-		const std::set<LAString>& getKeys() const;
+		const std::set<AQLString>& getKeys() const;
 
         // pimpl class
         class DataInstance;
@@ -220,9 +220,9 @@ namespace etrading
         std::ostream& print( std::ostream& os ) const;
 
     private:
-        // replace lexical_cast for LAString
+        // replace lexical_cast for AQLString
         template<typename T>
-        static LAString toLAString( const T& t );
+        static AQLString toLAString( const T& t );
 
         // pimpl pointer
         std::shared_ptr<DataInstance> data_;
@@ -251,14 +251,14 @@ namespace etrading
 // inline & template implementations
 //
 
-inline LAStringMatrix
-etrading::ReadDataFile::Load::getOptional( const LAString& name ) const
+inline AQLStringMatrix
+etrading::ReadDataFile::Load::getOptional( const AQLString& name ) const
 {
-    return getOptional( name, LAStringMatrix() );
+    return getOptional( name, AQLStringMatrix() );
 }
 
 template<typename T>
-inline T etrading::ReadDataFile::Load::getOptional( const LAString& name, const T& defaultItem ) const
+inline T etrading::ReadDataFile::Load::getOptional( const AQLString& name, const T& defaultItem ) const
 {
     const Index::const_iterator it = index_.find( name );
     if ( it != index_.end() )
@@ -290,7 +290,7 @@ etrading::ReadDataFile::operator std::vector<T>() const
     for ( std::size_t i = 0; i < size(); ++i )
     {
 		// Use [] Operator to read and parse Vector data
-        const LAString source = ( *this )[i];
+        const AQLString source = ( *this )[i];
         res[i] = boost::lexical_cast<T>( source );
     }
     return res;
@@ -310,7 +310,7 @@ etrading::ReadDataFile::operator std::vector<std::vector<T> >() const
 		for ( std::size_t j = 0; j < cols(); ++j )
 		{
 			// Use () Operator to read and parse Vector data
-			const LAString source = ( *this )( i, j );
+			const AQLString source = ( *this )( i, j );
 			thisRow[j] = boost::lexical_cast<T>( source );
 		}
 		
@@ -320,10 +320,10 @@ etrading::ReadDataFile::operator std::vector<std::vector<T> >() const
 }
 
 template<class T>
-inline LAString etrading::ReadDataFile::toLAString( const T& t )
+inline AQLString etrading::ReadDataFile::toLAString( const T& t )
 {
     const std::string s = boost::lexical_cast<std::string>( t );
-    return LAString( s.c_str() );
+    return AQLString( s.c_str() );
 }
 
 template<typename T>

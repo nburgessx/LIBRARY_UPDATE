@@ -1,6 +1,6 @@
 #include "InitializeAQETrading.h"
 #include "mirGetPCAResults.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "tryMirGetPCAResults.h"
 #include "TypeUtilities.h"
 
@@ -15,14 +15,14 @@ SWIG_STRINGMATRIX mirGetPCAResults(const std::string& ID, int update)
 	try 
 	{
 		// Input marshalling
-		LAString id(ID.c_str());
+		AQLString id(ID.c_str());
 
-		LAStringMatrix temp = validation::tryMirGetPCAResults(etrading::InitializeAQETrading::instance().dataInstance(), id, update);
+		AQLStringMatrix temp = validation::tryMirGetPCAResults(etrading::InitializeAQETrading::instance().dataInstance(), id, update);
 
 		ret = swig::fromStringMatrixToMatrixOfString(temp);
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

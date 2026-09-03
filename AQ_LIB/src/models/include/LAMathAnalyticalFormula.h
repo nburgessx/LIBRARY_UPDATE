@@ -13,9 +13,9 @@
 
 #include <cmath>
 #include <vector>
-#include "LAFunction.h"
-#include "LADist.h"
-#include "LABasic.h"
+#include "AQLFunction.h"
+#include "AQLDist.h"
+#include "AQLBasic.h"
 #include "LAAnalyticFormula.h"
 
 class LAMathAnalyticalFormula
@@ -52,26 +52,26 @@ public:
 		//error check
 		if ( sgn != -1 && sgn != 1 )
 		{
-			LAString msg("Sign must be -1 or 1. (Last argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Sign must be -1 or 1. (Last argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
 		if ( mean_LN < 0 )
 		{
-			LAString msg("Mean negative! (1st argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Mean negative! (1st argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 	    
 		if ( margin == lower && lower < 0 )
 		{
-			LAString msg("Margin negative! (3rd argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Margin negative! (3rd argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
 		if ( lower < 0 )
 		{
-			LAString msg("Lower bound negative! (4th argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Lower bound negative! (4th argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
 		//
@@ -81,7 +81,7 @@ public:
 		double d1 = 0.000000001 < var_LN ? (tmp + 0.5 * var_LN) / stdDev_LN : 0 < tmp ? 10000000 : -10000000;
 		double d2 = d1 - stdDev_LN;
 
-		return sgn * ( mean_LN * LADist::normsdist( sgn * d1 ) - margin * LADist::normsdist( sgn * d2 ) );
+		return sgn * ( mean_LN * AQLDist::normsdist( sgn * d1 ) - margin * AQLDist::normsdist( sgn * d2 ) );
 	};
 
 	//
@@ -111,15 +111,15 @@ public:
 
 		if ( sgn != -1 && sgn != 1 )
 		{
-			LAString msg("Sign must be -1 or 1. (Last argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Sign must be -1 or 1. (Last argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
 		//hirayake
 		//if ( stdDev_LN == 0. || mean_LN <= 0 || margin <= 0 )
 		if ( stdDev_LN == 0.0 || (mean_LN <= 0.0 && margin >= 0.0) || (mean_LN >= 0.0 && margin <= 0.0))
 		{
-			return LAMath::max( sgn * (mean_LN - margin), 0.0 );
+			return AQLMath::max( sgn * (mean_LN - margin), 0.0 );
 		}
 
 		double tmp = log( static_cast<double>(mean_LN) / static_cast<double>(margin) );
@@ -128,7 +128,7 @@ public:
 		double d1 = (tmp + 0.5 * var_LN) / stdDev_LN;
 		double d2 = d1 - stdDev_LN;
 
-		return sgn * ( mean_LN * LADist::normsdist( sgn * d1 ) - margin * LADist::normsdist( sgn * d2 ) );
+		return sgn * ( mean_LN * AQLDist::normsdist( sgn * d1 ) - margin * AQLDist::normsdist( sgn * d2 ) );
 	};
 
 
@@ -159,7 +159,7 @@ public:
 		{
 			double s = fabs(stdDev_LN);
 			double tmp = (mean_LN - margin) / s;
-			return s * (AnalyticFormulae::diffNormdist(tmp) + sgn * tmp * LADist::normsdist(sgn * tmp));
+			return s * (AnalyticFormulae::diffNormdist(tmp) + sgn * tmp * AQLDist::normsdist(sgn * tmp));
 		}
 
 		double s = mean_LN * (1. - beta) / static_cast<double>(beta);
@@ -173,7 +173,7 @@ public:
 	//-----
 	//  Black Implied Vol
 	template <typename T1, typename T2, typename T3>
-	class Sub_func_BlackImplVol : public LAFunction
+	class Sub_func_BlackImplVol : public AQLFunction
 	{
 	public:
 		Sub_func_BlackImplVol( T1 prem_, T2 mean_LN_, T3 margin_, int sgn_ )
@@ -213,7 +213,7 @@ public:
 	//-----
 	// Black Implied Vol in the Displaced Diffusion model
 	template <typename T1, typename T2, typename T3, typename T4>
-	class Sub_func_BlackImplVolDD : public LAFunction
+	class Sub_func_BlackImplVolDD : public AQLFunction
 	{
 	public:
 		Sub_func_BlackImplVolDD( T1 prem_, T2 mean_LN_, T3 margin_, int sgn_, T4 beta_ )
@@ -281,26 +281,26 @@ public:
 		//error check
 		if ( mean_LN < 0 )
 		{
-			LAString msg("mean_LN negative! (1st argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("mean_LN negative! (1st argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
 		if ( sigma < 0 )
 		{
-			LAString msg("sigma! (2nd argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("sigma! (2nd argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
 		if ( T < 0 )
 		{
-			LAString msg("T negative! (3rd argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("T negative! (3rd argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
 		if ( margin < 0 )
 		{
-			LAString msg("margin negative! (4th argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("margin negative! (4th argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
 		double tmp = log( static_cast<double>(mean_LN) / static_cast<double>(margin) );
@@ -333,45 +333,45 @@ public:
 	{
 		if ( sgn != -1 && sgn != 1 ) 
 		{   
-			LAString msg("Sign must be -1 or 1. (Last argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Sign must be -1 or 1. (Last argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 	    
 		size_t n = P0.size();
 		if( n != L0.size() )
 		{
-			LAString msg("Error : P0.size() != L0.size()");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Error : P0.size() != L0.size()");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}    
 		if( n != stdDev.size() )
 		{
-			LAString msg("Error : P0.size() != stdDev_LN.size()");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Error : P0.size() != stdDev_LN.size()");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 		if( n != margin.size() )
 		{
-			LAString msg("Error : P0.size() != margin.size()");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Error : P0.size() != margin.size()");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
 		for(size_t i = 0; i < n; ++i)
 		{
 			if( L0[i] < 0 )
 			{
-				LAString msg("Error : L0[i] < 0");
-				throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+				AQLString msg("Error : L0[i] < 0");
+				throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 			}
 	        
 			if( P0[i] < 0 )
 			{
-				LAString msg("Error : L0[i] < 0");
-				throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+				AQLString msg("Error : L0[i] < 0");
+				throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 			}
 
 			if( stdDev[i] < 0 )
 			{
-				LAString msg("Error : stdDev[i] < 0");
-				throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+				AQLString msg("Error : stdDev[i] < 0");
+				throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 			}
 		}
 
@@ -409,45 +409,45 @@ public:
 	{
 		if ( sgn != -1 && sgn != 1 )
 		{   
-			LAString msg("Sign must be -1 or 1. (Last argument)");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Sign must be -1 or 1. (Last argument)");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 	    
 		size_t n = P0.size();
 		if( n != L0.size() )
 		{
-			LAString msg("Error : P0.size() != L0.size()");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Error : P0.size() != L0.size()");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}    
 		if( n != stdDev.size() )
 		{
-			LAString msg("Error : P0.size() != stdDev_LN.size()");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Error : P0.size() != stdDev_LN.size()");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 		if( n != margin.size() )
 		{
-			LAString msg("Error : P0.size() != margin.size()");
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg("Error : P0.size() != margin.size()");
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 
 		for(size_t i = 0; i < n; ++i)
 		{
 			if( L0[i] < 0 )
 			{
-				LAString msg("Error : L0[i] < 0");
-				throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+				AQLString msg("Error : L0[i] < 0");
+				throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 			}
 	        
 			if( P0[i] < 0 )
 			{
-				LAString msg("Error : L0[i] < 0");
-				throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+				AQLString msg("Error : L0[i] < 0");
+				throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 			}
 
 			if( stdDev[i] < 0 )
 			{
-				LAString msg("Error : stdDev[i] < 0");
-				throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+				AQLString msg("Error : stdDev[i] < 0");
+				throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 			}
 		}
 
@@ -465,7 +465,7 @@ public:
 	// Cap/Floor Implied Vol
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-	class Sub_func_CapFloorImplVol : public LAFunction
+	class Sub_func_CapFloorImplVol : public AQLFunction
 	{
 	public:
 		Sub_func_CapFloorImplVol( T1 prem_,
@@ -526,7 +526,7 @@ public:
 	//--------------------------------------------------
 	// Cap/Floor Implied Vol in the Displaced Diffusion model
 	template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
-	class Sub_func_CapFloorImplVolDD : public LAFunction
+	class Sub_func_CapFloorImplVolDD : public AQLFunction
 	{
 	public:
 		Sub_func_CapFloorImplVolDD( T1 prem_,

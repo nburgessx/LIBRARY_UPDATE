@@ -140,14 +140,14 @@ namespace etrading
 
 	private:
 
-		LAString getValueFromGenerator(const SwapGeneratorPtr& swapGenerator, const std::string& lvbKey) const;
+		AQLString getValueFromGenerator(const SwapGeneratorPtr& swapGenerator, const std::string& lvbKey) const;
 
 		/* @brief Populates a default swap expression label value block
 		*
 		* @param [in]   effectiveDate	Swap effective date
 		* @param [in]   maturityTenor	Swap maturity tenor
 		*/
-		LabelValueBlock setupSwapExpressionLVBforCalibration(const LADate& effectiveDate, const std::string& maturityTenor) const;
+		LabelValueBlock setupSwapExpressionLVBforCalibration(const AQLDate& effectiveDate, const std::string& maturityTenor) const;
 
 		bool doesKeyExists(const std::string& propertyKey);
 
@@ -177,7 +177,7 @@ namespace etrading
 		bool isLognormal_;
 
 		//use in diff methods
-		LADate asOfDate_;
+		AQLDate asOfDate_;
 		std::string businessDayAdjustment_;
 		std::string calendar_;
 		DayCountEnum dayCount_;

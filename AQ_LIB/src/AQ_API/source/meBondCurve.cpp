@@ -224,7 +224,7 @@ SWIG_STRINGMATRIX meLWOBondDisplayCashflows( const std::string& bondObjectName, 
     AQ_API_START
 
     // Marshall Inputs
-    LADate settlementDate_( etrading::stringToDate( settlementDate ) );
+    AQLDate settlementDate_( etrading::stringToDate( settlementDate ) );
     
     // Call the Function
     AnyTypeMatrix cashflows = validation::tryMeLWOBondDisplayCashflows( bondObjectName, settlementDate_, yield, yieldCalculationType, showColumnHeaders, columnList );

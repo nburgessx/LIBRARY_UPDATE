@@ -145,7 +145,7 @@ namespace etrading
 	}
 
 	//Used by Swap,  legName is used in searching curveCollection, and the DEFAULT valuationDate is the found curveCollection's asOfDate
-	ValuationSettings::ValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName, const bool& includeAccruedInterest )
+	ValuationSettings::ValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const AQLString& legName, const bool& includeAccruedInterest )
 	{
 		// Initialize Default Member Data
 		initialize();
@@ -176,9 +176,9 @@ namespace etrading
 
 		valuationDate_ = getValuationDateFromValuationSettings(valuationSettingsLVB, false);
 
-		const LADate curveAsOfDate = getCurveAsOfDate(curveCollection_.c_str());
+		const AQLDate curveAsOfDate = getCurveAsOfDate(curveCollection_.c_str());
 
-		if (valuationDate_ == LADate())
+		if (valuationDate_ == AQLDate())
 		{
 			//Backward compatibility, if valuationDate is NOT specified in valuationSettingsLVB, use Curve's AsOfDate
 			valuationDate_ = curveAsOfDate;
@@ -198,7 +198,7 @@ namespace etrading
 
 	// *** TODO to use settlementDate for bonds
 	//Used by Bond
-	ValuationSettings::ValuationSettings(const LADate& valuationDate, const std::string& curveCollection )
+	ValuationSettings::ValuationSettings(const AQLDate& valuationDate, const std::string& curveCollection )
 	{
 		// Initialize Default Member Data
 		initialize();
@@ -250,15 +250,15 @@ namespace etrading
 
 	}
 
-	LADate ValuationSettings::getSettlementDate() const
+	AQLDate ValuationSettings::getSettlementDate() const
 	{
 		// Return the override value, if present. For backwards compatibility.
-		if ( settlementDate_ != LADate() )
+		if ( settlementDate_ != AQLDate() )
 		{
 			return settlementDate_;
 		}
 	
-		const LADate settlementDate = getSettlementDateFromValuationSettings( valuationSettingsLVB_, true ); // throw if missing
+		const AQLDate settlementDate = getSettlementDateFromValuationSettings( valuationSettingsLVB_, true ); // throw if missing
 		return settlementDate;
 
 	}
@@ -349,8 +349,8 @@ namespace etrading
 		creditModelName_				= "";
 		volatilityModelName_			= "";
 		
-		valuationDate_					= LADate();
-		settlementDate_					= LADate();		// spot date, used for bonds
+		valuationDate_					= AQLDate();
+		settlementDate_					= AQLDate();		// spot date, used for bonds
 		
 		includeAccruedInterest_			= true;			// default as true
 		fxSpot_					        = std::numeric_limits<double>::quiet_NaN();
@@ -377,7 +377,7 @@ namespace etrading
 		valuationSettingsLVB_ =  valuationSettingsLVB;
 
 		// 4) Set the Valuation Date
-		valuationDate_ = LADate();
+		valuationDate_ = AQLDate();
 		if ( doesCurveExist( curveCollection_.c_str() ))
 		{ 
 			valuationDate_ = getCurveAsOfDate( curveCollection_.c_str() );

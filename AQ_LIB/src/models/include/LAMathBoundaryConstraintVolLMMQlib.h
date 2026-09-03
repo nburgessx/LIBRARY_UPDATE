@@ -26,7 +26,7 @@ private:
         
         bool test(const QuantLib::Array& params) const
         {
-            if( params.size() != 4) throw LACoreInvalidData("size out of range : Object::get_ID",__FILE__,__LINE__);
+            if( params.size() != 4) throw AQLCoreInvalidData("size out of range : Object::get_ID",__FILE__,__LINE__);
 
             if(params[0] + params[3] < low_) return false;
             if(params[3] < low_ ) return false;
@@ -70,7 +70,7 @@ private:
         
         bool test(const QuantLib::Array& params) const
         {
-            if( params.size() != 8) throw LACoreInvalidData("size out of range : Object::get_ID",__FILE__,__LINE__);
+            if( params.size() != 8) throw AQLCoreInvalidData("size out of range : Object::get_ID",__FILE__,__LINE__);
 
             if(params[0] < low_ ) return false;
             if(params[1] < low_ ) return false;
@@ -127,7 +127,7 @@ private:
         
         bool test(const QuantLib::Array& params) const
         {
-            if( params.size() != G_size ) throw LACoreInvalidData("size is not correct! : Object::get_ID",__FILE__,__LINE__);
+            if( params.size() != G_size ) throw AQLCoreInvalidData("size is not correct! : Object::get_ID",__FILE__,__LINE__);
 
            if( params[0] < low_ ) return false;
            if( params[0] > high_ ) return false;

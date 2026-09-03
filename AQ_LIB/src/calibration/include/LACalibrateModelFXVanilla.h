@@ -17,11 +17,11 @@
 #pragma interface
 #endif
 
-#include "LAString.h"
+#include "AQLString.h"
 #include "LACalibrateModelFX.h"
 
 
-class LADataInstance;
+class AQLDataInstance;
 class LAMathVolatility;
 
 //===================== Class Declare LACalibrateModelFXStrangleSolver==================================
@@ -44,45 +44,45 @@ public:
 	LACalibrateModelFXVanilla &operator=(const LACalibrateModelFXVanilla &rhs);
 protected:
 	// create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const LAString &fx, LADataInstance &dataInstance) const;
+	virtual LARatesSDEBase *createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// get sde Type
-	virtual  SDE_TYPE getSDEType(const LAString &fx) const;
+	virtual  SDE_TYPE getSDEType(const AQLString &fx) const;
 	//==============================================
 	// check LJ
-	virtual bool isLJ(const LAString &fx) const;
+	virtual bool isLJ(const AQLString &fx) const;
 	//==============================================
 	// set volatility 
-	virtual  void setVolatility(const LAString &fx, LARatesSDEBase &sde)  const;	
+	virtual  void setVolatility(const AQLString &fx, LARatesSDEBase &sde)  const;	
 	//==============================================
 	// set drift 
-	virtual  void setDrift(const LAString &fx, LARatesSDEBase &sde)  const;
+	virtual  void setDrift(const AQLString &fx, LARatesSDEBase &sde)  const;
 	//==============================================
 	// set integralfunction 
-	virtual  void setIntegralFunction(const LAString &fx, LARatesSDEBase &sde)  const;
+	virtual  void setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde)  const;
 	//==============================================
-	virtual  void setOutputTemplate(const LAString &fx, LARatesSDEBase &sde)  const;
+	virtual  void setOutputTemplate(const AQLString &fx, LARatesSDEBase &sde)  const;
 	//==============================================
 	// set interpolation method 
-	virtual  void setInterpolationMethod(const LAString &fx, LARatesSDEBase &sde) const;
+	virtual  void setInterpolationMethod(const AQLString &fx, LARatesSDEBase &sde) const;
 	//==============================================
 	// get function master regist name 
-	virtual LAString getFunctionMasterResistName(const LAString &fx) const;
+	virtual AQLString getFunctionMasterResistName(const AQLString &fx) const;
 
 	//==============================================
 	// get vol type
-	virtual LAString getVolType(const LAString &fx) const;
+	virtual AQLString getVolType(const AQLString &fx) const;
 	//==============================================
 	// setup vol data
-	virtual void setUpVolData(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const;
+	virtual void setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup vol method
-	virtual void setUpVolFunc(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const;
+	virtual void setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const;
 
 private:
 	//==============================================
 	// set volatility object
-	void setUpVolEntity(const LAString &fx, LAMathVolatility &vol) const;
+	void setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const;
 
 };
 #endif

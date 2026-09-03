@@ -22,7 +22,7 @@ using namespace std;
     @brief constructor
 */
 LAPriceCouponBase::LAPriceCouponBase()
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -42,7 +42,7 @@ LAPriceCouponBase::~LAPriceCouponBase()
 bool
 LAPriceCouponBase::isTypeOf(function_t id) const
 {
-	return (id == FN_CPNSLTOPERATORBASE ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CPNSLTOPERATORBASE ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!

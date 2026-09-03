@@ -24,31 +24,31 @@
 #include "LACalibrationFunc.h"
 #include "LADefinitionsCalibration.h"
 #include "LAMarketData.h"
-#include "LACoreAppError.h"
-#include "LAObjectPool.h"
-#include "LACoreReferencePool.h"
-#include "LADataReference.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LADataProcedure.h"
-#include "LAStepInterpolation.h"
-#include "LAConstant.h"
+#include "AQLCoreAppError.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreReferencePool.h"
+#include "AQLDataReference.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataProcedure.h"
+#include "AQLStepInterpolation.h"
+#include "AQLConstant.h"
 #include "LAScenarioConfiguration.h"
 #include "LACoreDataService.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
 #include "LAMathDateUtilities.h"
 #include "LAMathCurveFuncUtility.h"
 #include "LAMathIRVanillaFuncUtility.h"
-#include "LAMathValuableEntity.h"
+#include "AQLMathValuableEntity.h"
 #include "LAMathVolFuncFXStrangleSolver.h"
 #include "LAPriceFXVolatility.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathFXVanillaFuncUtility.h"
 #include "LACoreDataService.h"
 #include <sstream>
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 using namespace std;
 // constructor
@@ -74,12 +74,12 @@ LACalibrateFXStrangleSolver::~LACalibrateFXStrangleSolver()
     @brief setup
 */
 void
-LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos)
+LACalibrateFXStrangleSolver::setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos)
 {
 	cout << static_cast<int>(LACoreThread::getThreadID()) << " LACalibrateFXStrangleSolver set up called" << endl;
 
-	const LAString &calibInfoName = param.refName[0];
-	const LAObject &calibInfo = objPool.getObject(calibInfoName, ENCHKTYPE_ISDEFINED).get();
+	const AQLString &calibInfoName = param.refName[0];
+	const AQLObject &calibInfo = objPool.getObject(calibInfoName, ENCHKTYPE_ISDEFINED).get();
 
 	//first set dataInstance
 	mpDataInstance = calibInfo.getDataInstance();
@@ -95,35 +95,35 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 		}
 	}
 	// get domestic curve
-	const LAString dYieldName = param.refName[curPos];
+	const AQLString dYieldName = param.refName[curPos];
 	if (!objPool.getObject(dYieldName).isDefined())
 	{
-		LAString msg = dYieldName + " is not registered in EntityPool";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = dYieldName + " is not registered in EntityPool";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	const LAMathYieldCurve &dYield = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(dYieldName, ENCHKTYPE_ISDEFINED).get());
-	const LAString &dYieldDataName = dYield.getYieldData().get().getName();
+	const AQLString &dYieldDataName = dYield.getYieldData().get().getName();
 
 	// get foreign curve
-	const LAString fYieldName = param.refName[curPos + 2];
+	const AQLString fYieldName = param.refName[curPos + 2];
 	if (!objPool.getObject(fYieldName).isDefined())
 	{
-		LAString msg = fYieldName + " is not registered in EntityPool";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = fYieldName + " is not registered in EntityPool";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	const LAMathYieldCurve &fYield = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(fYieldName, ENCHKTYPE_ISDEFINED).get());
-	const LAString &fYieldDataName = fYield.getYieldData().get().getName();
+	const AQLString &fYieldDataName = fYield.getYieldData().get().getName();
 
 
 	
 	// spot fx
     LAMathFXEntity* forward_fx = LAMarketData::getFXEntity(objPool, "FORWARDRATE");
     if(forward_fx == NULL){
-        throw LACoreInvalidData("fx object is not registered.", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("fx object is not registered.", __FILE__, __LINE__);
     }
 	LAMathFXEntity fx_tmp = *forward_fx;
 	fx_tmp.getFXType() = "FIXEDRATE";
-	LAStringVector ccys;
+	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(param.ccy, ccys);
 	// set spot rate
 	mSpotRate = fx_tmp.getRate(ccys[1], ccys[0], 0.0);
@@ -132,7 +132,7 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 	//
 	//LAMathPlainVanillaEntity& eplain = *(LAMarketData::getPlainVanillaEntity(objPool));
 	//LAMathFXEntity& efx = dynamic_cast<LAMathFXEntity &>(eplain.getFXEntity().get().get());
-	//LAStringVector ccys;
+	//AQLStringVector ccys;
 	//LAMarketData::convertToCurrency(param.ccy, ccys);
 	//// set spot rate
 	//mSpotRate = efx.getRate(ccys[1], ccys[0], 0.0);
@@ -144,38 +144,38 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 		// shiftval check
 		if (param.extraParam.size() != 1)
 		{
-			throw LACoreInvalidData("Parallel shift val size must be 1 .", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Parallel shift val size must be 1 .", __FILE__, __LINE__);
 		}
 		double shiftVal = param.extraParam[0];
-		LAString shiftType = param.shiftType;
+		AQLString shiftType = param.shiftType;
 		if (shiftType.toUpper() == RISK_SHIFTTYPE_RATIO)
 		{
 			shiftVal = mSpotRate * shiftVal;
 		}
 		// add shift val
-		mSpotRate = LAMath::max(mSpotRate + shiftVal, 0.0);
+		mSpotRate = AQLMath::max(mSpotRate + shiftVal, 0.0);
 	}
 	// asofdate
-	LADate asofDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
-	LADate spotDate = fx_tmp.getSpotDate(ccys[0], ccys[1], asofDate);
+	AQLDate asofDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate spotDate = fx_tmp.getSpotDate(ccys[0], ccys[1], asofDate);
 	mSpotRate *= dYield.getBasisDF(asofDate, spotDate) / fYield.getBasisDF(asofDate, spotDate);
 	
 	// optionmaturity
 
-	const LAStringVector &optionMatVec = dynamic_cast<const LADataStrings &>(calibInfo.getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL).get()).get();
+	const AQLStringVector &optionMatVec = dynamic_cast<const AQLDataStrings &>(calibInfo.getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL).get()).get();
 	unsigned int vecSize = optionMatVec.size();
-	const DateVector &optionMatDates = dynamic_cast<const LADataDates &>(calibInfo.getData("MaturityDates", ISNOTNULL).get()).get();
-	const DateVector &optionDelDates = dynamic_cast<const LADataDates &>(calibInfo.getData("DeliveryDates", ISNOTNULL).get()).get();
+	const DateVector &optionMatDates = dynamic_cast<const AQLDataDates &>(calibInfo.getData("MaturityDates", ISNOTNULL).get()).get();
+	const DateVector &optionDelDates = dynamic_cast<const AQLDataDates &>(calibInfo.getData("DeliveryDates", ISNOTNULL).get()).get();
 	// vol 10Delta Low
-	DoubleVector vol10DLVec = dynamic_cast<const LADataDoubles &>(calibInfo.getData(PRICING_DATA_FXVOL10DL, ISNOTNULL).get()).get();
+	DoubleVector vol10DLVec = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(PRICING_DATA_FXVOL10DL, ISNOTNULL).get()).get();
 	// vol 25Delta Low
-	DoubleVector vol25DLVec = dynamic_cast<const LADataDoubles &>(calibInfo.getData(PRICING_DATA_FXVOL25DL, ISNOTNULL).get()).get();
+	DoubleVector vol25DLVec = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(PRICING_DATA_FXVOL25DL, ISNOTNULL).get()).get();
 	// vol ATM
-	DoubleVector volATMVec = dynamic_cast<const LADataDoubles &>(calibInfo.getData(PRICING_DATA_FXVOLATM, ISNOTNULL).get()).get();
+	DoubleVector volATMVec = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(PRICING_DATA_FXVOLATM, ISNOTNULL).get()).get();
 	// vol 25Delta High
-	DoubleVector vol25DHVec = dynamic_cast<const LADataDoubles &>(calibInfo.getData(PRICING_DATA_FXVOL25DH, ISNOTNULL).get()).get();
+	DoubleVector vol25DHVec = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(PRICING_DATA_FXVOL25DH, ISNOTNULL).get()).get();
 	// vol 10Delta Hight
-	DoubleVector vol10DHVec = dynamic_cast<const LADataDoubles &>(calibInfo.getData(PRICING_DATA_FXVOL10DH, ISNOTNULL).get()).get();
+	DoubleVector vol10DHVec = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(PRICING_DATA_FXVOL10DH, ISNOTNULL).get()).get();
 
 
 	double basevol = param.extraBaseVolParam;
@@ -203,7 +203,7 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 			LAMarketData::convFXVolCalib2Market(volATMVec, vol25DHVec, vol10DHVec, vol25DLVec, vol10DLVec,
 												vol25BFVec, vol10BFVec, vol25RRVec, vol10RRVec);
 
-			LAString shiftType = param.shiftType;
+			AQLString shiftType = param.shiftType;
 			shiftType.toUpper();
 			if (param.paraShiftVec.size() == 1)
 			{
@@ -224,7 +224,7 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 				unsigned int size = vol10DLVec.size();
 				for (unsigned int i = 0; i < size; ++i)
 				{
-					volATMVec[i] = LAMath::max(volATMVec[i], 0.0);
+					volATMVec[i] = AQLMath::max(volATMVec[i], 0.0);
 				}
 			}
 			else
@@ -232,24 +232,24 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 				unsigned int paraSize = param.paraTerm.size();
 				if (paraSize != param.paraTerm.size())
 				{
-					throw LACoreInvalidData("Parallel shift val and value is not same ", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Parallel shift val and value is not same ", __FILE__, __LINE__);
 				}
 
 				for (unsigned int i = 0; i < paraSize; ++i)
 				{
-					LAString term = param.paraTerm[i];
+					AQLString term = param.paraTerm[i];
 					term.toUpper();
-					LAStringVector termVec = term.toToken('_');
+					AQLStringVector termVec = term.toToken('_');
 					if (termVec.size() != 2)
 					{
-						LAString msg = "Term format is is wrong, term = " + term;
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+						AQLString msg = "Term format is is wrong, term = " + term;
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 					}
-					LAStringVector::const_iterator it = find(optionMatVec.begin(), optionMatVec.end(), termVec[1]);
+					AQLStringVector::const_iterator it = find(optionMatVec.begin(), optionMatVec.end(), termVec[1]);
 					if (it == optionMatVec.end())
 					{
-						LAString msg = "Term is not in volatility file, term = " + termVec[1];
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+						AQLString msg = "Term is not in volatility file, term = " + termVec[1];
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 					}
 					unsigned int indx = static_cast<unsigned int>(it - optionMatVec.begin());
 					// set shift val
@@ -276,8 +276,8 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 					}
 					else
 					{
-						LAString msg = "This FXVol grid is not support = " + termVec[0];
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+						AQLString msg = "This FXVol grid is not support = " + termVec[0];
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 					}
 
 					// shift val
@@ -288,7 +288,7 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 					}
 					// add shift val
 					if (termVec[0] == FXVOL_ATM)
-						(*pTargetVol)[indx] = LAMath::max((*pTargetVol)[indx] + shiftVal, 0.0);
+						(*pTargetVol)[indx] = AQLMath::max((*pTargetVol)[indx] + shiftVal, 0.0);
 					else
 						(*pTargetVol)[indx] = (*pTargetVol)[indx] + shiftVal;
 					
@@ -309,8 +309,8 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 			if (param.gridTerm.size() - 1 < static_cast<unsigned int>(gridPos) || 
 					param.gridShiftVec.size() - 1 < static_cast<unsigned int>(gridPos))
 			{
-				LAString msg = "Grid shift param is not exist, grid num = " + LAString(gridPos);
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "Grid shift param is not exist, grid num = " + AQLString(gridPos);
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 
 			DoubleVector vol25BFVec; // 25ButterFly
@@ -321,21 +321,21 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 			LAMarketData::convFXVolCalib2Market(volATMVec, vol25DHVec, vol10DHVec, vol25DLVec, vol10DLVec,
 												vol25BFVec, vol10BFVec, vol25RRVec, vol10RRVec);
 
-			LAString term = param.gridTerm[gridPos];
+			AQLString term = param.gridTerm[gridPos];
 			term.toUpper();
 			
-			LAStringVector termVec = term.toToken('_');
+			AQLStringVector termVec = term.toToken('_');
 			if (termVec.size() != 2)
 			{
-				LAString msg = "Term format is is wrong, term = " + term;
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "Term format is is wrong, term = " + term;
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 			
-			LAStringVector::const_iterator it = find(optionMatVec.begin(), optionMatVec.end(), termVec[1]);
+			AQLStringVector::const_iterator it = find(optionMatVec.begin(), optionMatVec.end(), termVec[1]);
 			if (it == optionMatVec.end())
 			{
-				LAString msg = "Term is not in volatility file, term = " + termVec[1];
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "Term is not in volatility file, term = " + termVec[1];
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 			
 			unsigned int indx = static_cast<unsigned int>(it - optionMatVec.begin());
@@ -363,8 +363,8 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 			}
 			else
 			{
-				LAString msg = "This FXVol grid is not support = " + termVec[0];
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "This FXVol grid is not support = " + termVec[0];
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 
 			// shift val
@@ -397,7 +397,7 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 					{
 						// shift val
 						double shiftVal = param.gridShiftVec[gridPosfrom + k];
-						LAString shiftType = param.shiftType;
+						AQLString shiftType = param.shiftType;
 						if (shiftType.toUpper() == RISK_SHIFTTYPE_RATIO)
 						{
 							shiftVal = (*pTargetVol)[gridPosfrom + k] * shiftVal;
@@ -406,7 +406,7 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 						if (termVec[0] == FXVOL_ATM)
 						{
 							// add shift val
-							(*pTargetVol)[gridPosfrom + k] = LAMath::max((*pTargetVol)[gridPosfrom + k] + shiftVal, 0.0);
+							(*pTargetVol)[gridPosfrom + k] = AQLMath::max((*pTargetVol)[gridPosfrom + k] + shiftVal, 0.0);
 						}
 						else
 						{
@@ -419,14 +419,14 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 				{
 					// shift val
 					double shiftVal = param.gridShiftVec[gridPos];
-					LAString shiftType = param.shiftType;
+					AQLString shiftType = param.shiftType;
 					if (shiftType.toUpper() == RISK_SHIFTTYPE_RATIO)
 					{
 						shiftVal = (*pTargetVol)[indx] * shiftVal;
 					}
 					// add shift val
 					if (termVec[0] == FXVOL_ATM)
-						(*pTargetVol)[indx] = LAMath::max((*pTargetVol)[indx] + shiftVal, 0.0);
+						(*pTargetVol)[indx] = AQLMath::max((*pTargetVol)[indx] + shiftVal, 0.0);
 					else
 						(*pTargetVol)[indx] = (*pTargetVol)[indx] + shiftVal;
 			
@@ -438,24 +438,24 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 				{
 					// shift val
 					double shiftVal = param.gridShiftVec[k];
-					LAString term = param.gridTerm[k];
+					AQLString term = param.gridTerm[k];
 					term.toUpper();
 			
-					LAStringVector termVec = term.toToken('_');
+					AQLStringVector termVec = term.toToken('_');
 					if (termVec.size() != 2)
 					{
-						LAString msg = "Term format is is wrong, term = " + term;
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+						AQLString msg = "Term format is is wrong, term = " + term;
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 					}
-					LAStringVector::const_iterator it = find(optionMatVec.begin(), optionMatVec.end(), termVec[1]);
+					AQLStringVector::const_iterator it = find(optionMatVec.begin(), optionMatVec.end(), termVec[1]);
 					if (it == optionMatVec.end())
 					{
-						LAString msg = "Term is not in volatility file, term = " + termVec[1];
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+						AQLString msg = "Term is not in volatility file, term = " + termVec[1];
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 					}
 					unsigned int tmpindx = static_cast<unsigned int>(it - optionMatVec.begin());
 
-					LAString shiftType = param.shiftType;
+					AQLString shiftType = param.shiftType;
 					if (shiftType.toUpper() == RISK_SHIFTTYPE_RATIO)
 					{
 						shiftVal = (*pTargetVol)[tmpindx] * shiftVal;
@@ -463,7 +463,7 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 					
 					// add shift val
 					if (termVec[0] == FXVOL_ATM)
-						(*pTargetVol)[tmpindx] = LAMath::max((*pTargetVol)[tmpindx] + shiftVal, 0.0);
+						(*pTargetVol)[tmpindx] = AQLMath::max((*pTargetVol)[tmpindx] + shiftVal, 0.0);
 					else
 						(*pTargetVol)[tmpindx] = (*pTargetVol)[tmpindx] + shiftVal;
 				
@@ -484,42 +484,42 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 	
 	
 	////approximation flag
-	//LAString strisaproxm = mpCalibStaticData->getStaticData(keyFX + FX_KEY_CALIB_STRGLSLV_ISAPPROXIMATION);
-	//info->add("IsApptoximation", new LADataBool()).convertFromString(strisaproxm);
+	//AQLString strisaproxm = mpCalibStaticData->getStaticData(keyFX + FX_KEY_CALIB_STRGLSLV_ISAPPROXIMATION);
+	//info->add("IsApptoximation", new AQLDataBool()).convertFromString(strisaproxm);
 	//
 	////interpolationmethod
-	//LAString strinterp = mpCalibStaticData->getStaticData(keyFX + FX_KEY_CALIB_STRGLSLV_INTERPOLATIONMETHOD);
-	//info->add("InterpolationMethod", new LADataString()).convertFromString(strinterp);
+	//AQLString strinterp = mpCalibStaticData->getStaticData(keyFX + FX_KEY_CALIB_STRGLSLV_INTERPOLATIONMETHOD);
+	//info->add("InterpolationMethod", new AQLDataString()).convertFromString(strinterp);
 
-	//LAString strdeltastrike = mpCalibStaticData->getStaticData(keyFX + FX_KEY_CALIB_STRGLSLV_DELTAORSTRIKE);
-	//info->add("DeltaOrStrike", new LADataString()).convertFromString(strdeltastrike);
+	//AQLString strdeltastrike = mpCalibStaticData->getStaticData(keyFX + FX_KEY_CALIB_STRGLSLV_DELTAORSTRIKE);
+	//info->add("DeltaOrStrike", new AQLDataString()).convertFromString(strdeltastrike);
 	//
 
-	const LAStringVector& deltaTypes = dynamic_cast<const LADataStrings &>(calibInfo.getData("DeltaTypes", ISNOTNULL).get()).get();
-	const LAStringVector& atmTypes = dynamic_cast<const LADataStrings &>(calibInfo.getData("ATMTypes", ISNOTNULL).get()).get();
-	mWingFactor = dynamic_cast<const LADataDoubles &>(calibInfo.getData("WingFactors", ISNOTNULL).get()).get();
+	const AQLStringVector& deltaTypes = dynamic_cast<const AQLDataStrings &>(calibInfo.getData("DeltaTypes", ISNOTNULL).get()).get();
+	const AQLStringVector& atmTypes = dynamic_cast<const AQLDataStrings &>(calibInfo.getData("ATMTypes", ISNOTNULL).get()).get();
+	mWingFactor = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData("WingFactors", ISNOTNULL).get()).get();
 
-	LAString interpMethod = dynamic_cast<const LADataString &>(calibInfo.getData("InterpolationMethod", ISNOTNULL).get()).get();
+	AQLString interpMethod = dynamic_cast<const AQLDataString &>(calibInfo.getData("InterpolationMethod", ISNOTNULL).get()).get();
 	LAMathFXVolatilitySurfaceGenerate::SetInterpolationMethod(interpMethod, mMethod );
 
-	LAString target = dynamic_cast<const LADataString &>(calibInfo.getData("DeltaOrStrike", ISNOTNULL).get()).get();
+	AQLString target = dynamic_cast<const AQLDataString &>(calibInfo.getData("DeltaOrStrike", ISNOTNULL).get()).get();
 	LAMathFXVolatilitySurfaceGenerate::SetInterpolationTarget( target, mTarget );
 
-	LAString variable = dynamic_cast<const LADataString &>(calibInfo.getData("Variable", ISNOTNULL).get()).get();
+	AQLString variable = dynamic_cast<const AQLDataString &>(calibInfo.getData("Variable", ISNOTNULL).get()).get();
 	LAMathFXVolatilitySurfaceGenerate::SetInterpolationVariable( variable, mVariable );
 	if (mVariable != VariableLogStrike)
-		throw LACoreInvalidData("Only LogStrike is supported", __FILE__,__LINE__);
+		throw AQLCoreInvalidData("Only LogStrike is supported", __FILE__,__LINE__);
 
-	LAString matumethod = dynamic_cast<const LADataString &>(calibInfo.getData("MaturityMethod", ISNOTNULL).get()).get();
+	AQLString matumethod = dynamic_cast<const AQLDataString &>(calibInfo.getData("MaturityMethod", ISNOTNULL).get()).get();
 	LAMathFXVolatilitySurfaceGenerate::SetATMInterpolationMethod( matumethod, mAtmMethod );
 
-	mIsApproximation  = dynamic_cast<const LADataBool &>(calibInfo.getData("IsApptoximation", ISNOTNULL).get()).get();
+	mIsApproximation  = dynamic_cast<const AQLDataBool &>(calibInfo.getData("IsApptoximation", ISNOTNULL).get()).get();
 	//is wing
-	mIsWing = dynamic_cast<const LADataBool &>(calibInfo.getData("IsWing", ISNOTNULL).get()).get();
+	mIsWing = dynamic_cast<const AQLDataBool &>(calibInfo.getData("IsWing", ISNOTNULL).get()).get();
 
 	//Spot Calneder
-	LAString calStr = dynamic_cast<const LADataString &>(calibInfo.getData("SpotCalender",ISNOTNULL).get()).get();
-	LAPriceDataCalendar cal;
+	AQLString calStr = dynamic_cast<const AQLDataString &>(calibInfo.getData("SpotCalender",ISNOTNULL).get()).get();
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(calStr);
 	
 	mFxParams.resize(vecSize);
@@ -531,8 +531,8 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 		/*mFxParams[i] = LAMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*mpDataInstance,dYieldDataName,fYieldDataName,optionMatDates[i],
                 mSpotRate,deltaTypes[i],atmTypes[i]);*/
 
-		//LAString cal;
-//		LAPriceDataCalendar cal;
+		//AQLString cal;
+//		AQLPriceDataCalendar cal;
 		mFxParams[i] = LAMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*mpDataInstance,dYieldDataName,fYieldDataName,optionMatDates[i],
 			optionDelDates[i],mSpotRate,deltaTypes[i],atmTypes[i],cal);
 	
@@ -550,14 +550,14 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
         {
 		   
             //smile param adjust
-			if( LAMath::abs(mSmileParams[i].lowBF)<=EPS_Vol1 )
+			if( AQLMath::abs(mSmileParams[i].lowBF)<=EPS_Vol1 )
             {
-                mSmileParams[i].lowBF = LAMath::sign(EPS_Vol1, mSmileParams[i].lowBF);
+                mSmileParams[i].lowBF = AQLMath::sign(EPS_Vol1, mSmileParams[i].lowBF);
             }
 
-            if( LAMath::abs(mSmileParams[i].highBF)<=EPS_Vol1 )
+            if( AQLMath::abs(mSmileParams[i].highBF)<=EPS_Vol1 )
             {
-                mSmileParams[i].highBF = LAMath::sign(EPS_Vol1, mSmileParams[i].highBF);
+                mSmileParams[i].highBF = AQLMath::sign(EPS_Vol1, mSmileParams[i].highBF);
             }
 
             if( mSmileParams[i].lowBF>0.0 && mSmileParams[i].highBF<0.0 && mSmileParams[i].lowBF>=-mSmileParams[i].highBF )
@@ -578,14 +578,14 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
             }
 
             //smile param adjust
-			if( LAMath::abs(mSmileParams[i].lowRR)<=EPS_Vol1 )
+			if( AQLMath::abs(mSmileParams[i].lowRR)<=EPS_Vol1 )
             {
-                mSmileParams[i].lowRR = LAMath::sign(EPS_Vol1, mSmileParams[i].lowRR);
+                mSmileParams[i].lowRR = AQLMath::sign(EPS_Vol1, mSmileParams[i].lowRR);
             }
 
-            if( LAMath::abs(mSmileParams[i].highRR)<=EPS_Vol1 )
+            if( AQLMath::abs(mSmileParams[i].highRR)<=EPS_Vol1 )
             {
-                mSmileParams[i].highRR = LAMath::sign(EPS_Vol1, mSmileParams[i].highRR);
+                mSmileParams[i].highRR = AQLMath::sign(EPS_Vol1, mSmileParams[i].highRR);
             }
 
             if( mSmileParams[i].lowRR>0.0 && mSmileParams[i].highRR<0.0 && mSmileParams[i].lowRR>=-mSmileParams[i].highRR )
@@ -622,7 +622,7 @@ LACalibrateFXStrangleSolver::setUp(LAObjectPool &objPool,  const MAScenarioParam
 	// set gridPos
 	mGridPos = gridPos;
 	
-	mCalibIDName = param.calcType + "_FXCalibInfoEntity_"  + dYieldDataName + "_" + fYieldDataName + "_" + LAString(gridPos);
+	mCalibIDName = param.calcType + "_FXCalibInfoEntity_"  + dYieldDataName + "_" + fYieldDataName + "_" + AQLString(gridPos);
 	
 	
 	// set method
@@ -643,10 +643,10 @@ LACalibrateFXStrangleSolver::doCalibrate()
 	
 	if (!mpDataInstance)
 	{
-		throw LACoreInvalidData("DataInstance member is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("DataInstance member is NULL", __FILE__, __LINE__);
 	}
 
-	LAObjectPool &objPool = mpDataInstance->getObjectPool();
+	AQLObjectPool &objPool = mpDataInstance->getObjectPool();
 
 	//calibration engine
 	unsigned int vecSize = mFxParams.size();
@@ -655,7 +655,7 @@ LACalibrateFXStrangleSolver::doCalibrate()
 		
 		if (mIsApproximation)
 		{
-			LAString msg;
+			AQLString msg;
 			mSmileData[i] = LAMathFXVolatilitySurfaceGenerate::BuildSmile(mSmileParams[i], mFxParams[i], mIsWing, mWingFactor[i],msg);
 		}
 		else 

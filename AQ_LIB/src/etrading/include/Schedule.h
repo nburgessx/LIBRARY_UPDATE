@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CommonConstants.h"
 #include "CoreEnumerations.h"
 #include "BondEnumerations.h"
@@ -31,15 +31,15 @@ namespace etrading
         virtual std::shared_ptr<Schedule> clone();
 
         // For Swaps: Update the Cashflow Discount Factors and Forward Rates
-        virtual void initializeDataProviderWithCurveData( DataProvider& dataProvider, const LAString& discountCurve, const std::vector< FloatRateData >& floatRates = std::vector< FloatRateData >() ) const;
+        virtual void initializeDataProviderWithCurveData( DataProvider& dataProvider, const AQLString& discountCurve, const std::vector< FloatRateData >& floatRates = std::vector< FloatRateData >() ) const;
 
 		//This is required when the Swap is back dated, user can choose if the accrued interest is included in the PV or not.
-		bool hasAccruedInterest(const LADate& settleDate) const;
+		bool hasAccruedInterest(const AQLDate& settleDate) const;
 		virtual double calculateAccruedInterest( const DataProvider& dataProvider, bool nativeCurrencyPV ) const;
 
-        LADate getEffectiveDate() const;
-        virtual LADate getMaturityDate() const;
-		LADate getUnadjustedMaturityDate() const;
+        AQLDate getEffectiveDate() const;
+        virtual AQLDate getMaturityDate() const;
+		AQLDate getUnadjustedMaturityDate() const;
 
 		bool isBespoke() const;
 
@@ -77,7 +77,7 @@ namespace etrading
         std::pair<AnyTypeMatrix, AnyTypeMatrix> view(bool showBespokeProperties=false, bool showColumnHeaders=true, const std::unordered_set<CashflowHeaderEnum, EnumClassHash>& columnList=std::unordered_set<CashflowHeaderEnum, EnumClassHash>(), const bool convertDatesToExcelFormat=true) const;
 
         //this method is only for backward compatibility with me methods (none LWO)	
-		LAStringMatrix display(bool showColumnHeaders=true, const std::unordered_set<CashflowHeaderEnum, EnumClassHash>& columnList=std::unordered_set<CashflowHeaderEnum, EnumClassHash>(), const bool convertDatesToExcelFormat=true) const;
+		AQLStringMatrix display(bool showColumnHeaders=true, const std::unordered_set<CashflowHeaderEnum, EnumClassHash>& columnList=std::unordered_set<CashflowHeaderEnum, EnumClassHash>(), const bool convertDatesToExcelFormat=true) const;
 
 		//Schedule input parameters
 		void setInputParameters(const LabelValueBlock& inputParameters);
@@ -93,21 +93,21 @@ namespace etrading
 		ScheduleTypeEnum getScheduleType() const;
 		BespokeScheduleTypeEnum getBespokeScheduleType() const;
 
-		LAString getRollDayInput() const;			
-		LAString getAccrualCalendar() const;		
-		LAString getFxFixingCalendar() const;
+		AQLString getRollDayInput() const;			
+		AQLString getAccrualCalendar() const;		
+		AQLString getFxFixingCalendar() const;
 		BusinessDayAdjustmentEnum getAccrualbusinessDayAdj() const;
 		BusinessDayAdjustmentEnum getFxFixingBusinessDayAdj() const;
 		DayCountEnum getAccrualDaycount() const;
         FrequencyEnum getAccrualFrequency() const;	
         FrequencyEnum getPaymentFrequency() const;	
         StubTypeEnum getStubType() const;
-		LAString getFixingCalendar() const;		
-		LAString getFixLag() const;
+		AQLString getFixingCalendar() const;		
+		AQLString getFixLag() const;
 		BusinessDayAdjustmentEnum getFixingBusinessDayAdj() const;
 		FixingTypeEnum getFixingAdvanceOrArrears() const;
-		LAString getFirstStub() const;
-		LAString getLastStub() const;		
+		AQLString getFirstStub() const;
+		AQLString getLastStub() const;		
         bool isAccrualFreqLessThanPaymentFreq() const;
 
         FrequencyEnum getPaymentFreqEnum() const;
@@ -123,7 +123,7 @@ namespace etrading
 		DateVector		getAccrualEndDates() const;
 		DoubleVector	getAccrualYearFractions() const;
 		IntVector		getAccrualDays() const;
-		LADate			getFixingDate(size_t i) const;
+		AQLDate			getFixingDate(size_t i) const;
 
 		CashflowPtr getCashflow(size_t i) const;
 		size_t getCashflowSize() const;
@@ -206,7 +206,7 @@ namespace etrading
 				break;
 			}
 			default:
-				throw LACoreInvalidData("#Error: bespokeScheduleType can only be either 'BESPOKE_SCHEDULE_WITH_PROPERTIES' or 'BESPOKE_SCHEDULE'", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: bespokeScheduleType can only be either 'BESPOKE_SCHEDULE_WITH_PROPERTIES' or 'BESPOKE_SCHEDULE'", __FILE__, __LINE__);
 				break;
 			}
 		};
@@ -307,28 +307,28 @@ namespace etrading
 
 		double leverage_;
 		double couponMultiplier_;
-		LAString accrualStartDate_;			
-        LAString accrualEndDateOrTenor_;		
+		AQLString accrualStartDate_;			
+        AQLString accrualEndDateOrTenor_;		
 		BusinessDayAdjustmentEnum accrualbusinessDayAdj_;		
-        LAString accrualCalendar_;			
+        AQLString accrualCalendar_;			
         FrequencyEnum accrualFrequency_;			
         DayCountEnum accrualDaycount_;			
 		BusinessDayAdjustmentEnum paymentbusinessDayAdj_;		
-        LAString paymentCalendar_;			
+        AQLString paymentCalendar_;			
     	FrequencyEnum paymentFrequency_;			
-		LAString payLag_;						
-		LAString rollDayInput_;				
+		AQLString payLag_;						
+		AQLString rollDayInput_;				
 		StubTypeEnum stubType_;
-	    LAString firstStub_;					
-        LAString lastStub_;					
-        LAString fixingAdvanceOrArrears_;
+	    AQLString firstStub_;					
+        AQLString lastStub_;					
+        AQLString fixingAdvanceOrArrears_;
 		BusinessDayAdjustmentEnum fixingbusinessDayAdj_;		
-        LAString fixingCalendar_;			
-        LAString fixLag_;	
-        LAString firstFixLag_;	
-        LAString fxFixingLag_;	
+        AQLString fixingCalendar_;			
+        AQLString fixLag_;	
+        AQLString firstFixLag_;	
+        AQLString fxFixingLag_;	
         BusinessDayAdjustmentEnum fxFixingbusinessDayAdj_;	
-        LAString fxFixingCalendar_;	
+        AQLString fxFixingCalendar_;	
 
         //Schedule outputs
 		DateVector		fixingDates_; //Fixing start dates
@@ -339,8 +339,8 @@ namespace etrading
 		DoubleVector	accrualYearFractions_;
 		IntVector		accrualDays_;
 
-		LADate			effectiveDate_;
-		LADate			unadjustedMaturityDate_;
+		AQLDate			effectiveDate_;
+		AQLDate			unadjustedMaturityDate_;
 
 		std::vector<CashflowPtr> cashflows_;
         //the first cashflow when the notional exchange is type START or START_END    
@@ -354,7 +354,7 @@ namespace etrading
 		
 		virtual void calculateScheduleDates();
 
-        virtual void createUpfrontCashflow(const LADate& paymentDate, double leverage);
+        virtual void createUpfrontCashflow(const AQLDate& paymentDate, double leverage);
         virtual void createCashflows();
         virtual void createBespokeCashflows(const std::vector<LabelValueBlock>& cashflowLVBs); 
 		

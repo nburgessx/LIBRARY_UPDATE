@@ -26,7 +26,7 @@ namespace etrading
 		* @param[in]	legName					Optionally calculate the PV of the specified leg only.
 		* @returns	The calculated PV value
 		*/
-		double pvUsingConvexityAdjustment( const LabelValueBlock& valuationSettingsLVB, const double convexityAdjustment, const LabelValueBlock& fixingTableNames, const LAString& legName="") const;
+		double pvUsingConvexityAdjustment( const LabelValueBlock& valuationSettingsLVB, const double convexityAdjustment, const LabelValueBlock& fixingTableNames, const AQLString& legName="") const;
 
 		/* @brief Calculates the Constant Maturity Swap Par Rate
 		*

@@ -11,12 +11,12 @@
 
 
 #include "LAObjectPoolBase.h"
-#include "LAString.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataBasics.h"
-#include "LADataReference.h"
+#include "AQLString.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataBasics.h"
+#include "AQLDataReference.h"
 #include "LARatesSDEBase.h"
 #include "LADefinitions.h"
 #include "LACoreDataService.h"
@@ -54,7 +54,7 @@ LAObjectPoolBase::~LAObjectPoolBase(void)
 	@param[in]   isFirst first execute flag
 */
 void
-LAObjectPoolBase::generateSDE(const LAString &key, LADataInstance &dataInstance, bool isMarketCreate, bool isFirst) const
+LAObjectPoolBase::generateSDE(const AQLString &key, AQLDataInstance &dataInstance, bool isMarketCreate, bool isFirst) const
 {
 	if (isFirst)
 	{
@@ -73,7 +73,7 @@ LAObjectPoolBase::generateSDE(const LAString &key, LADataInstance &dataInstance,
 		setInterpolationMethod(key, *psde);
 
 		// set function master
-		LAString name = getFunctionMasterResistName(key);
+		AQLString name = getFunctionMasterResistName(key);
 		dataInstance.getFunctionMaster().setFunction(psde, name);
 	}
 
@@ -108,10 +108,10 @@ LAObjectPoolBase::generateSDE(const LAString &key, LADataInstance &dataInstance,
 	@param[out]   is fwdfx constant curve or not
 */
 bool
-LAObjectPoolBase::isFwdFXConst(const LAString& ccy) const
+LAObjectPoolBase::isFwdFXConst(const AQLString& ccy) const
 {
-	LAString tmpCcy = ccy;
-	LAString str = mpStaticData->getStaticData(tmpCcy.toLower() + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST);
+	AQLString tmpCcy = ccy;
+	AQLString str = mpStaticData->getStaticData(tmpCcy.toLower() + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST);
 	return str.toUpper() == "TRUE";
 }
 
@@ -123,10 +123,10 @@ LAObjectPoolBase::isFwdFXConst(const LAString& ccy) const
 	@param[out]   is collateral ccy or not
 */
 bool
-LAObjectPoolBase::isCollateral(const LAString& ccy) const
+LAObjectPoolBase::isCollateral(const AQLString& ccy) const
 {
-	LAString tmpCcy = ccy;
-	LAString str = mpStaticData->getStaticData(KEY_YIELD_COLLATERAL_CCY);
+	AQLString tmpCcy = ccy;
+	AQLString str = mpStaticData->getStaticData(KEY_YIELD_COLLATERAL_CCY);
 	return str.toUpper() == tmpCcy.toUpper();
 }
 
@@ -138,14 +138,14 @@ LAObjectPoolBase::isCollateral(const LAString& ccy) const
 	@param[in]  dataInstance
 */
 void
-LAObjectPoolBase::loadVolatilityDataAndCalibrate(const LAString &key, LADataInstance &dataInstance) const
+LAObjectPoolBase::loadVolatilityDataAndCalibrate(const AQLString &key, AQLDataInstance &dataInstance) const
 {
-	LAString sdeName = getSDEAttrName(key);
-	LAString volType = getVolType(key);
+	AQLString sdeName = getSDEAttrName(key);
+	AQLString volType = getVolType(key);
 	volType.toUpper();
 
-	LAString volName = PREFIX_VOL + sdeName;
-	LAObjectHolder objHolder = dataInstance.getObjectPool().getObject(volName);
+	AQLString volName = PREFIX_VOL + sdeName;
+	AQLObjectHolder objHolder = dataInstance.getObjectPool().getObject(volName);
 	LAMathVolatility *volEntity = 0;
 	if (!objHolder.isDefined())
 	{
@@ -159,7 +159,7 @@ LAObjectPoolBase::loadVolatilityDataAndCalibrate(const LAString &key, LADataInst
 		volEntity->reset();
 	}
 	//LAMathVolatility *volEntity = new LAMathVolatility(&dataInstance);
-	LADataString &volAttrName = volEntity->getName();
+	AQLDataString &volAttrName = volEntity->getName();
 	volAttrName.set(volName);
 
 	if (!isCancelForFunding(key))
@@ -175,7 +175,7 @@ LAObjectPoolBase::loadVolatilityDataAndCalibrate(const LAString &key, LADataInst
 		}
 		else
 		{
-			throw LACoreInvalidData("Volatility input type. only function or data is support", __FILE__, __LINE__); 
+			throw AQLCoreInvalidData("Volatility input type. only function or data is support", __FILE__, __LINE__); 
 		}
 	}
 
@@ -198,23 +198,23 @@ LAObjectPoolBase::loadVolatilityDataAndCalibrate(const LAString &key, LADataInst
 	@return bool 
 */
 bool
-LAObjectPoolBase::isCalibTarget(const LAString &ccy) const
+LAObjectPoolBase::isCalibTarget(const AQLString &ccy) const
 {
 	if (!LAMarketData::isCalibrateModel(LAMarketData::getModelName(ccy)))
 	{
 		return false;
 	}
 
-	LAString targetccys = mpStaticData->getStaticData(KEY_SDE_PV_CALIB_TARGET_CURRENCY).toUpper();
+	AQLString targetccys = mpStaticData->getStaticData(KEY_SDE_PV_CALIB_TARGET_CURRENCY).toUpper();
 	if (targetccys == "ALL")
 	{
 		return true;
 	}
 	else
 	{
-		LAString tmpCurrency = ccy;
+		AQLString tmpCurrency = ccy;
 		tmpCurrency.toUpper();
-		LAStringVector targetVec = targetccys.toToken(MULTI_STATIC_DATA_DELIMITER);
+		AQLStringVector targetVec = targetccys.toToken(MULTI_STATIC_DATA_DELIMITER);
 		if (targetVec.end() != find(targetVec.begin(), targetVec.end(), tmpCurrency))
 		{
 			return true;
@@ -233,10 +233,10 @@ LAObjectPoolBase::isCalibTarget(const LAString &ccy) const
 	@return bool 
 */
 bool
-LAObjectPoolBase::isCancelForFunding(const LAString &ccy) const
+LAObjectPoolBase::isCancelForFunding(const AQLString &ccy) const
 {
 
-	LAStringVector simCur = MADealUtils::getSimulationSDECurrencys();
+	AQLStringVector simCur = MADealUtils::getSimulationSDECurrencys();
 	if (simCur.size() == 0)
 		return false;
 

@@ -24,53 +24,53 @@ private:
 protected:
 	//==============================================
 	// create risk object
-	virtual std::vector<std::pair<LAString, std::vector<LAObject *> > > createRiskEntity(LAObjectPool &objPool) const;
+	virtual std::vector<std::pair<AQLString, std::vector<AQLObject *> > > createRiskEntity(AQLObjectPool &objPool) const;
 	// isRiskCurrencyMode
-	virtual bool isRiskCurrencyMode(const LAString& key) const;
+	virtual bool isRiskCurrencyMode(const AQLString& key) const;
 	// setup
-	virtual  void setUpRiskOutputCurrency(const LAString &ccy, LAObject &e) const;
+	virtual  void setUpRiskOutputCurrency(const AQLString &ccy, AQLObject &e) const;
 	//==============================================
 	// create scenario1 object 
-	virtual  std::vector<LAObject *> createScenario1Entity(const LAString &key, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario1Entity(const AQLString &key, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create scenario2 object
-	virtual  std::vector<LAObject *> createScenario2Entity(const LAString &key, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario2Entity(const AQLString &key, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// get target names 
-	virtual  LAString getTargetNames(const LAString &key, LADataInstance &dataInstance)  const;
+	virtual  AQLString getTargetNames(const AQLString &key, AQLDataInstance &dataInstance)  const;
 	//==============================================
 	// get extra target names1
-	virtual  LAStringVector getExtraTargetNames1(const LAString &key, LADataInstance &dataInstance) const;
+	virtual  AQLStringVector getExtraTargetNames1(const AQLString &key, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// create extraScenario1 object 
-	virtual  std::vector<std::vector<LAObject *> > createExtraScenario1Entity(const LAString &key, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<std::vector<AQLObject *> > createExtraScenario1Entity(const AQLString &key, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &key) const;
+	virtual  AQLString  getOutPutName1(const AQLString &key) const;
 	//==============================================
 	// isgridsensitivity
-	virtual  bool isGridSensitivity(const LAString &key) const;
+	virtual  bool isGridSensitivity(const AQLString &key) const;
 	//==============================================
 	// isparallelshift
-	virtual  bool isParallelShift(const LAString &key) const;
+	virtual  bool isParallelShift(const AQLString &key) const;
 	//==============================================
 	// return risk name
-	virtual  LAString  getRiskName(void) const;
+	virtual  AQLString  getRiskName(void) const;
 	//==============================================
 	// get grid term
-	virtual std::vector<LAString> getGridTerm(const LAString &key) const;
+	virtual std::vector<AQLString> getGridTerm(const AQLString &key) const;
 	//==============================================
 	// get bucket grid term
-	virtual std::vector<LAString> getBucketGridTerm(const LAString &key) const;
+	virtual std::vector<AQLString> getBucketGridTerm(const AQLString &key) const;
 	//==============================================
 	// get bump direction
-	virtual  LAString getBumpDirection(const LAString &key) const;
+	virtual  AQLString getBumpDirection(const AQLString &key) const;
 	//==============================================
 	// get divid one unit
-	virtual  double getDivUnit(const LAString &ccy) const;
+	virtual  double getDivUnit(const AQLString &ccy) const;
 	//==============================================
 	// get shift value
-	virtual double getShiftVal(const LAString &key, SCENARIONUM scenarioNum) const;
+	virtual double getShiftVal(const AQLString &key, SCENARIONUM scenarioNum) const;
 
 private:
 	//==============================================
@@ -78,7 +78,7 @@ private:
 	//                into mBumpedCors
 	//  @param key [in] The key like "JPY-USD" or "AUD-USD/JPY"
 	//  @param objPool [in] The object pool
-	void putBumpedCor(const LAString &key, LAObjectPool &objPool) const;
+	void putBumpedCor(const AQLString &key, AQLObjectPool &objPool) const;
 
 	//==============================================
 	// @Description: A struct whose object represents a bumped correlation matrix
@@ -98,7 +98,7 @@ private:
 	//==============================================
 	// @Description: A associative aaray which maps a key (like "JPY-USD") to
 	//                its corresponding bumped correlation matrix
-	mutable std::map<LAString, BumpedCor> mBumpedCors;
+	mutable std::map<AQLString, BumpedCor> mBumpedCors;
 };
 
 #endif

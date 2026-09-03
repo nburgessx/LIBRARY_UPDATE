@@ -178,7 +178,7 @@ namespace etrading
 		void initialize( size_t nPeriods );
 
 		std::vector<int> period;
-		std::vector<LADate> periodDate;
+		std::vector<AQLDate> periodDate;
 		std::vector<double> balanceStart;
 		std::vector<double> balanceEnd;
 		std::vector<double> principalComponent;

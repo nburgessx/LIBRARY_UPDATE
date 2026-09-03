@@ -45,7 +45,7 @@ mCloned(false)
     
     if(mProcessHelper.size() != n)
     {
-        throw LACoreInvalidData("mProcessHelper.size() != mpT2f->mX.size(): LAMathLeastSquareHybridHWLVProcessQlib::LAMathLeastSquareHybridHWLVProcessQlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mProcessHelper.size() != mpT2f->mX.size(): LAMathLeastSquareHybridHWLVProcessQlib::LAMathLeastSquareHybridHWLVProcessQlib", __FILE__, __LINE__);
     }
 
     //
@@ -335,17 +335,17 @@ mCloned(false)
 {
     if(mpT2f2->mX.size() != mpT2f->mX.size())
     {
-        throw LACoreInvalidData("vol2fit->mX.size() != skew2fit->mX.size() : LAMathLeastSquareHybridHWDDProcess1Qlib::LAMathLeastSquareHybridHWDDProcess1Qlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("vol2fit->mX.size() != skew2fit->mX.size() : LAMathLeastSquareHybridHWDDProcess1Qlib::LAMathLeastSquareHybridHWDDProcess1Qlib", __FILE__, __LINE__);
     }
 
     if(mpT2f2->mTarget2fit.size() != 1)
     {
-        throw LACoreInvalidData("mpT2f2->mTarget2fit.size() != 1 : LAMathLeastSquareHybridHWDDProcess1Qlib::LAMathLeastSquareHybridHWDDProcess1Qlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mpT2f2->mTarget2fit.size() != 1 : LAMathLeastSquareHybridHWDDProcess1Qlib::LAMathLeastSquareHybridHWDDProcess1Qlib", __FILE__, __LINE__);
     }
 
     if(mWeightVolSkew.size() != 2)
     {
-        throw LACoreInvalidData("mWeightVolSkew.size() != 2 : LAMathLeastSquareHybridHWDDProcess1Qlib::LAMathLeastSquareHybridHWDDProcess1Qlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mWeightVolSkew.size() != 2 : LAMathLeastSquareHybridHWDDProcess1Qlib::LAMathLeastSquareHybridHWDDProcess1Qlib", __FILE__, __LINE__);
     }
 
 }
@@ -419,7 +419,7 @@ void LAMathLeastSquareHybridHWDDProcess1Qlib::getFct2fit(const Array& x) const
     // Error check
     if( 2 * n != x.size() )
     {
-        throw LACoreInvalidData("mpT2f->x_.size() != x.size() : LAMathLeastSquareHybridHWDDProcessQlib::Get_fct2fit_SkewAndPrice", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mpT2f->x_.size() != x.size() : LAMathLeastSquareHybridHWDDProcessQlib::Get_fct2fit_SkewAndPrice", __FILE__, __LINE__);
     }
 
     // Set sigma and beta
@@ -546,7 +546,7 @@ mCloned(false)
 {
     if(mpT2f->mTarget2fit.size() != 1)
     {
-        throw LACoreInvalidData("mpT2f2->mTarget2fit.size() != 1 : LAMathLeastSquareHybridHWDDProcess1Qlib::LAMathLeastSquareHybridHWDDProcess1Qlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mpT2f2->mTarget2fit.size() != 1 : LAMathLeastSquareHybridHWDDProcess1Qlib::LAMathLeastSquareHybridHWDDProcess1Qlib", __FILE__, __LINE__);
     }
 
 }
@@ -598,7 +598,7 @@ void LAMathLeastSquareHybridHWDDProcess2Qlib::getFct2fit(const Array& x) const
     // Error check
     if( n != x.size() )
     {
-        throw LACoreInvalidData("mpT2f->x_.size() != x.size() : LAMathLeastSquareHybridHWDDProcess2Qlib::Get_fct2fit_SkewAndPrice", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mpT2f->x_.size() != x.size() : LAMathLeastSquareHybridHWDDProcess2Qlib::Get_fct2fit_SkewAndPrice", __FILE__, __LINE__);
     }
 
     // Set sigma and beta
@@ -663,7 +663,7 @@ mCloned(false)
 {
     if(mpT2f->mTarget2fit.size() != 1)
     {
-        throw LACoreInvalidData("mpT2f2->mTarget2fit.size() != 1 : LAMathLeastSquareHybridHWDDProcess1Qlib::LAMathLeastSquareHybridHWDDProcess1Qlib", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mpT2f2->mTarget2fit.size() != 1 : LAMathLeastSquareHybridHWDDProcess1Qlib::LAMathLeastSquareHybridHWDDProcess1Qlib", __FILE__, __LINE__);
     }
 }
 
@@ -715,7 +715,7 @@ void LAMathLeastSquareHybridHWDDProcess3Qlib::getFct2fit(const Array& x) const
     // Error check
     if( n != x.size() )
     {
-        throw LACoreInvalidData("mpT2f->x_.size() != x.size() : LAMathLeastSquareHybridHWDDProcess3Qlib::Get_fct2fit_SkewAndPrice", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("mpT2f->x_.size() != x.size() : LAMathLeastSquareHybridHWDDProcess3Qlib::Get_fct2fit_SkewAndPrice", __FILE__, __LINE__);
     }
 
     // Set sigma and beta

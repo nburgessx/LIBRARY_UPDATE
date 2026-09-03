@@ -21,8 +21,8 @@
 
 
 
-class LAString;
-class LADataInstance;
+class AQLString;
+class AQLDataInstance;
 class LARiskConfigurationVolCreatorLMM;
 //===================== Class Declare LARiskConfigurationVolFXVega==================================
 /*! 
@@ -45,64 +45,64 @@ protected:
 friend class LARiskConfigurationVolCreatorLMM;
 	//==============================================
 	// get  target names 
-	virtual  LAString getTargetNames(const LAString &fx, LADataInstance &dataInstance)  const;	
+	virtual  AQLString getTargetNames(const AQLString &fx, AQLDataInstance &dataInstance)  const;	
 	//==============================================
 	// create scenario volatility object
-	virtual std::vector<LAObject *> createVolatilityEntity(const LAString &fx, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const;
+	virtual std::vector<AQLObject *> createVolatilityEntity(const AQLString &fx, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const;
 		//==============================================
 	// create scenario volatility object
-	virtual std::vector<LAObject *> createVolatilityEntityOld(const LAString &fx, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
+	virtual std::vector<AQLObject *> createVolatilityEntityOld(const AQLString &fx, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
 	//==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &fx) const;
+	virtual  AQLString  getOutPutName1(const AQLString &fx) const;
 	//==============================================
 	// get shift type
-	virtual  LAString  getShiftType(const LAString &fx) const;
+	virtual  AQLString  getShiftType(const AQLString &fx) const;
 	//==============================================
 	// get bump direction
-	virtual  LAString  getBumpDirection(const LAString &fx) const;
+	virtual  AQLString  getBumpDirection(const AQLString &fx) const;
 	//==============================================
 	// get risk name
-	virtual  LAString getRiskName(void) const;
+	virtual  AQLString getRiskName(void) const;
 	//==============================================
 	// check target currencies
-	virtual  LAString getTargetCurrencies() const;
+	virtual  AQLString getTargetCurrencies() const;
 	//==============================================
 	// isgridsensitivity
-	virtual  bool  isGridSensitivity(const LAString &fx) const;
+	virtual  bool  isGridSensitivity(const AQLString &fx) const;
 	//==============================================
 	// isparallelshift
-	virtual  bool isParallelShift(const LAString &fx) const;
+	virtual  bool isParallelShift(const AQLString &fx) const;
 	//==============================================
 	// get deltatype
-	virtual LAString getDeltaType(const LAString &ccy) const;
+	virtual AQLString getDeltaType(const AQLString &ccy) const;
 	//==============================================
 	// get grid term
-	virtual std::vector<LAString> getGridTerm(const LAString &fx) const;
+	virtual std::vector<AQLString> getGridTerm(const AQLString &fx) const;
 	//==============================================
 	// get bucket grid term
-	virtual std::vector<LAString> getBucketGridTerm(const LAString &fx) const;
+	virtual std::vector<AQLString> getBucketGridTerm(const AQLString &fx) const;
 	//==============================================
 	// get property bucket grid term
-	virtual LAString getPropertyBucketGridTerm(const LAString &fx) const;
+	virtual AQLString getPropertyBucketGridTerm(const AQLString &fx) const;
 	//==============================================
 	// get divunit
-	virtual double getDivUnit(const LAString &fx) const;
+	virtual double getDivUnit(const AQLString &fx) const;
 	//==============================================
 	// get is wave
-	virtual  bool  isWave(const LAString &fx) const;
+	virtual  bool  isWave(const AQLString &fx) const;
 	//==============================================
 	// get scenario1 shift
-	virtual double getScenario1ShiftValue(const LAString &fx) const;
+	virtual double getScenario1ShiftValue(const AQLString &fx) const;
 	//==============================================
 	// get scenario2 shift
-	virtual double getScenario2ShiftValue(const LAString &fx) const;
+	virtual double getScenario2ShiftValue(const AQLString &fx) const;
 	//==============================================
 	// isRiskCurrencyMode
-	virtual bool isRiskCurrencyMode(const LAString& fx) const;
+	virtual bool isRiskCurrencyMode(const AQLString& fx) const;
 	//==============================================
 	// store forward FX and vol for risk print value
-	virtual void storeFXAdditionalInfo(LAObjectPool &objPool, const MAScenarioParam& param) const;
+	virtual void storeFXAdditionalInfo(AQLObjectPool &objPool, const MAScenarioParam& param) const;
 };
 
 

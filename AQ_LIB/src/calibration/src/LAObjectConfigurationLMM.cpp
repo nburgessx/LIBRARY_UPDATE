@@ -19,9 +19,9 @@
 
 
 #include "LAObjectConfigurationLMM.h"
-#include "LAString.h"
-#include "LADataBasics.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLString.h"
+#include "AQLDataBasics.h"
+#include "AQLPriceDataDayCount.h"
 #include "LACoreDataService.h"
 #include "LAMarketDataLMM.h"
 
@@ -57,18 +57,18 @@ LAObjectConfigurationLMM::getSDETimeGrid(DoubleArray &timeGrid) const
 	DoubleArray tmp2;
 	BoolVector tmp3;
 	int maxTerm = LACoreDataService::getContext(CONTEXT_KEY_MAXTERM).getIntValue();
-	LAString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
-	LAPriceDataDayCount dayCount;
+	AQLString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
+	AQLPriceDataDayCount dayCount;
 	dayCount.convertFromString(dayCountStr);
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 
 	// create tenor 
-	LAString freq = FREQ_SEMI_ANNUAL;
+	AQLString freq = FREQ_SEMI_ANNUAL;
 	if (LACoreDataService::getContext(ARG_KEY_CANONICALFREQ) == "QA")
 	{
 		freq = FREQ_QUARTERLY;
 	}
-	LAStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
+	AQLStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
 	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA);
  	LAMarketDataLMM::getCanonicalGrid(tmp1, timeGrid, tmp2, tmp3, asOfDate, dayCount, freq, maxTerm, exTenor, isDataOut);
 
@@ -89,18 +89,18 @@ LAObjectConfigurationLMM::getSDEIntegralTimeGrid(DoubleArray &timeGrid) const
 	DoubleArray tmp2;
 	BoolVector tmp3;
 	int maxTerm = LACoreDataService::getContext(CONTEXT_KEY_MAXTERM).getIntValue();
-	LAString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
-	LAPriceDataDayCount dayCount;
+	AQLString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
+	AQLPriceDataDayCount dayCount;
 	dayCount.convertFromString(dayCountStr);
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 
 	// create integral time step 
-	LAString freq = FREQ_SEMI_ANNUAL;
+	AQLString freq = FREQ_SEMI_ANNUAL;
 	if (LACoreDataService::getContext(ARG_KEY_SIMFREQ) == "QA" || LACoreDataService::getContext(ARG_KEY_CANONICALFREQ) == "QA")
 	{
 		freq = FREQ_QUARTERLY;
 	}
-	LAStringVector exTenor = LAMarketDataLMM::getGridExTenor();
+	AQLStringVector exTenor = LAMarketDataLMM::getGridExTenor();
 	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA);
  	LAMarketDataLMM::getCanonicalGrid(tmp1, timeGrid, tmp2, tmp3, asOfDate, dayCount, freq, maxTerm, exTenor, isDataOut);
 	timeGrid.pop_back();

@@ -33,7 +33,7 @@ using namespace std;
 	@brief default constructor
 */
 LAMathDriftFuncBase::LAMathDriftFuncBase()
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -41,7 +41,7 @@ LAMathDriftFuncBase::LAMathDriftFuncBase()
 	@brief copy constructor
 */
 /*LAMathDriftFuncBase::LAMathDriftFuncBase(const LAMathDriftFuncBase& v) 
-: LACoreFunctionBase(v)
+: AQLCoreFunctionBase(v)
 {
 
 }*/
@@ -62,7 +62,7 @@ LAMathDriftFuncBase::~LAMathDriftFuncBase()
 bool
 LAMathDriftFuncBase::isTypeOf(function_t id) const
 {
-	return (id==FN_DRIFTFUNCBASE ? true : LAFunctionBase::isTypeOf(id));
+	return (id==FN_DRIFTFUNCBASE ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!

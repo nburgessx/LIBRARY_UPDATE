@@ -5,10 +5,10 @@
 #endif
 
 #include "LAPriceReplication.h"
-#include "LAGaussLegendre.h"
+#include "AQLGaussLegendre.h"
 #include "LAAnalyticFormula.h"
 #include "LAMathOptionTools.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 
 double MVReplication::mvReplicationThreshold = 0.00001;
 //================ MVReplication ===================================
@@ -70,7 +70,7 @@ double MVReplication::ForwardAdjustment(double T, double deltaT, double S0)
     else if (mDistributionType == "Generic")
         return ReplicationForwardAdjustment(T, deltaT, S0);
     else
-        throw LACoreInvalidData("Unknown distribution type in replication",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("Unknown distribution type in replication",__FILE__,__LINE__);
 }
 
 double MVReplication::OptionAdjustment(double T, double deltaT, double K, bool isCall, double S0)
@@ -82,7 +82,7 @@ double MVReplication::OptionAdjustment(double T, double deltaT, double K, bool i
     else if (mDistributionType == "Generic")
         return ReplicationOptionAdjustment(T, deltaT, K, isCall, S0);
     else
-        throw LACoreInvalidData("Unknown distribution type in replication",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("Unknown distribution type in replication",__FILE__,__LINE__);
 }
 
 double MVReplication::NormalForwardAdjustment(double T, double deltaT, double S0)
@@ -130,7 +130,7 @@ double MVReplication::ReplicationForwardAdjustment(double T, double deltaT, doub
     }
 
     //// Calculate adjustment ////
-    LAGaussLegendre GQ(mNPoints);
+    AQLGaussLegendre GQ(mNPoints);
     double integral = GQ.IntegrateBySampling(integrand, integrationGrid);
     //double integral = GQ.integrate(integrand, lowBound, upBound);
     return S0 * S0 * (2.0 * integral / (S0 * S0) - 1.0);
@@ -142,8 +142,8 @@ double MVReplication::NormalOptionAdjustment(double T, double deltaT, double K, 
     double vol = BachelierImpliedVolatility(optionPrice, T, K, isCall, S0);
     double stDev = vol * sqrt(T);
     double w = (isCall ? 1.0 : -1.0);
-    return w * stDev * stDev * LADist::normsdist(w * (S0 - K) / stDev);
-    //return Theta(S0, tau, deltaT, nCashFlows) / S0 * w * stDev * stDev * LADist::normsdist(w * (S0 - K) / stDev);
+    return w * stDev * stDev * AQLDist::normsdist(w * (S0 - K) / stDev);
+    //return Theta(S0, tau, deltaT, nCashFlows) / S0 * w * stDev * stDev * AQLDist::normsdist(w * (S0 - K) / stDev);
 }
 
 double MVReplication::LogNormalOptionAdjustment(double T, double deltaT, double K, bool isCall, double S0)
@@ -156,9 +156,9 @@ double MVReplication::LogNormalOptionAdjustment(double T, double deltaT, double 
     double d12 = d0 + 0.5 * stDev;
     double dm12 = d0 - 0.5 * stDev;
     double w = (isCall ? 1.0 : -1.0);
-    double t1 = S0 * exp(stDev * stDev) * LADist::normsdist(w * d32);
-    double t2 = (S0 + K) * LADist::normsdist(w * d12);
-    double t3 = K * LADist::normsdist(w * dm12);
+    double t1 = S0 * exp(stDev * stDev) * AQLDist::normsdist(w * d32);
+    double t2 = (S0 + K) * AQLDist::normsdist(w * d12);
+    double t3 = K * AQLDist::normsdist(w * dm12);
     return w * S0 * (t1 - t2 + t3);
     //return Theta(S0, tau, deltaT, nCashFlows) * w * (t1 - t2 + t3);
 }
@@ -214,7 +214,7 @@ double MVReplication::ReplicationOptionAdjustment(double T, double deltaT, doubl
     double integralTerm = 0.0;
     if (calculateIntegral)
     {
-        LAGaussLegendre GQ(mNPoints);
+        AQLGaussLegendre GQ(mNPoints);
         integralTerm = GQ.IntegrateBySampling(integrand, integrationGrid);
         //integralTerm = GQ.integrate(integrand, lowBound, upBound);
     }
@@ -296,16 +296,16 @@ MVReplication* GetReplicationMethod(string type, LAPriceSwaptionCalculator* swpn
     else if (type == "Mercurio")
         replication = new MVReplication(swpnCalculator, shift, annuity, dfPay, tau, nCashFlows, "Generic", true, confidence, nPoints);
     else
-        throw LACoreInvalidData(("Unknown replication model type: " + type).c_str(),__FILE__,__LINE__);
+        throw AQLCoreInvalidData(("Unknown replication model type: " + type).c_str(),__FILE__,__LINE__);
 
     return replication;
 }
 
-ReplicationConfig GetReplicationConfig(const LAStringMatrix& calibrationConfig)
+ReplicationConfig GetReplicationConfig(const AQLStringMatrix& calibrationConfig)
 {
-    string swpnModel = LAFunctionUtilities::findElement(calibrationConfig, "SwaptionModel").getCString();
-    string repModel = LAFunctionUtilities::findElement(calibrationConfig, "ReplicationModel").getCString();
-    double confidence = LAFunctionUtilities::findElement(calibrationConfig, "Confidence").getDoubleValue();
-    int nPoints = LAFunctionUtilities::findElement(calibrationConfig, "IntegrationPoints").getIntValue();
+    string swpnModel = AQLFunctionUtilities::findElement(calibrationConfig, "SwaptionModel").getCString();
+    string repModel = AQLFunctionUtilities::findElement(calibrationConfig, "ReplicationModel").getCString();
+    double confidence = AQLFunctionUtilities::findElement(calibrationConfig, "Confidence").getDoubleValue();
+    int nPoints = AQLFunctionUtilities::findElement(calibrationConfig, "IntegrationPoints").getIntValue();
     return ReplicationConfig{ swpnModel, repModel, confidence, nPoints };
 }

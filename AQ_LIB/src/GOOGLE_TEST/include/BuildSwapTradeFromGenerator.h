@@ -10,12 +10,12 @@
  */
 
 #pragma once
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace google_test
 {
-    // Function to Build a Swap Expression Label Value Block / LAStringMatrix
-    LAStringMatrix buildSwapExpression( const std::string & effectiveDate,
+    // Function to Build a Swap Expression Label Value Block / AQLStringMatrix
+    AQLStringMatrix buildSwapExpression( const std::string & effectiveDate,
                                       const std::string & maturityDateOrTenor,
                                       const std::string & payReceive       =  "PAY",           // Default PAY
                                       const std::string & notional         = "1000000",        // Default 1,000,000

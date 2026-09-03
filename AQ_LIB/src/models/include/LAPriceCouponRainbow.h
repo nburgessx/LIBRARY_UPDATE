@@ -5,8 +5,8 @@
 #endif
 
 #include "LAPriceCouponBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 // LAPriceCouponRainbow's function id
@@ -34,7 +34,7 @@
 
 
 class LAMathFXEntity;
-class LAPriceDataManager;
+class AQLPriceDataManager;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief declaration of class of rainbow type coupon select operator.
@@ -54,7 +54,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -63,16 +63,16 @@ public:
 	// select coupon
 	virtual double				selectCoupon(const DoubleArray& x, unsigned int& pos) const;
 	// set up this class
-	virtual void				setUp(const LADate& basedate, const LAObject& trade,
-									unsigned int legNo, const LAObject& cashlet);
+	virtual void				setUp(const AQLDate& basedate, const AQLObject& trade,
+									unsigned int legNo, const AQLObject& cashlet);
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
 
 protected:
 	double	mPaymentTime;// payment time
 	const LAMathFXEntity*					mpFX_for_Notional;// fx rate for notional
 	std::vector<const LAMathFXEntity*>	mpFX_for_Coupons;// fx rate for coupon
-	LAString	mNotionalCur;// notional currency
-	LAStringVector mCouponsCur;// coupon currency
+	AQLString	mNotionalCur;// notional currency
+	AQLStringVector mCouponsCur;// coupon currency
 
 };

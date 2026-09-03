@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 // ID for LAPriceQuantAdjustmentFuncBase
@@ -19,7 +19,7 @@ class LAMathPathEntity;
     @brief Declaration of abstract base class of quanto adjustment function class
 
 */
-class LAPriceQuantAdjustmentFuncBase : public LAFunctionBase
+class LAPriceQuantAdjustmentFuncBase : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE

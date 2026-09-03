@@ -1,8 +1,8 @@
 #include "InitializeAQETrading.h"
 #include "mirGetParRate.h"
-#include "LADate.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLDate.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "tryMirGetParRate.h"
 
@@ -77,31 +77,31 @@ double mirGetParRate4(const std::string& EffDt,
 	try 
 	{
 		// marshall all inputs		
-		LAString effectiveDate	(EffDt.c_str());
-		LAString maturity		(Mat.c_str());
-		LAString curveID		(CrvID.c_str());
-		LAString xFreq			(XFreq.c_str());
-		LAString xDayCount		(XDayCt.c_str());
-		LAString xRollConv		(XRollCnv.c_str());
-		LAString xCalendar		(XCal.c_str());
-		LAString xFirstStub		(XFirstStub.c_str());
-		LAString xLastStub		(XLastStub.c_str());
-		LAString xPayLag		(XPayLag.c_str());
-		LAString xStub			(XStub.c_str());
-		LAString tFreq			(TFreq.c_str());
-		LAString tDayCount		(TDayCt.c_str());
-		LAString tRollConv		(TRollCnv.c_str());
-		LAString tCalendar		(TCal.c_str());
-		LAString tFirstStub		(TFirstStub.c_str());
-		LAString tLastStub		(TLastStub.c_str());
-		LAString tFixLag		(TFixLag.c_str());
-		LAString tPayLag		(TPayLag.c_str());
-		LAString tStub			(TStub.c_str());
-		LAString interpolation	(Interp.c_str());
-		LAString forecastCurve	(Fcrv.c_str());
-		LAString discountCurve	(Dcrv.c_str());
-		LAString tRollDay		(TRollDay.c_str());
-		LAString xRollDay		(XRollDay.c_str());
+		AQLString effectiveDate	(EffDt.c_str());
+		AQLString maturity		(Mat.c_str());
+		AQLString curveID		(CrvID.c_str());
+		AQLString xFreq			(XFreq.c_str());
+		AQLString xDayCount		(XDayCt.c_str());
+		AQLString xRollConv		(XRollCnv.c_str());
+		AQLString xCalendar		(XCal.c_str());
+		AQLString xFirstStub		(XFirstStub.c_str());
+		AQLString xLastStub		(XLastStub.c_str());
+		AQLString xPayLag		(XPayLag.c_str());
+		AQLString xStub			(XStub.c_str());
+		AQLString tFreq			(TFreq.c_str());
+		AQLString tDayCount		(TDayCt.c_str());
+		AQLString tRollConv		(TRollCnv.c_str());
+		AQLString tCalendar		(TCal.c_str());
+		AQLString tFirstStub		(TFirstStub.c_str());
+		AQLString tLastStub		(TLastStub.c_str());
+		AQLString tFixLag		(TFixLag.c_str());
+		AQLString tPayLag		(TPayLag.c_str());
+		AQLString tStub			(TStub.c_str());
+		AQLString interpolation	(Interp.c_str());
+		AQLString forecastCurve	(Fcrv.c_str());
+		AQLString discountCurve	(Dcrv.c_str());
+		AQLString tRollDay		(TRollDay.c_str());
+		AQLString xRollDay		(XRollDay.c_str());
 		
 		ret = validation::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
 												effectiveDate, 
@@ -136,7 +136,7 @@ double mirGetParRate4(const std::string& EffDt,
 												TSpd,
 												UseFwdData );
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -217,32 +217,32 @@ double mirGetParRate5(const std::string& EffDt,
 	try 
 	{
 		// marshall all inputs		
-		LAString effectiveDate	(EffDt.c_str());
-		LAString maturity		(Mat.c_str());
-		LAString curveID		(CrvID.c_str());
-		LAString xFreq			(XFreq.c_str());
-		LAString xDayCount		(XDayCt.c_str());
-		LAString xRollConv		(XRollCnv.c_str());
-		LAString xCalendar		(XCal.c_str());
-		LAString xFirstStub		(XFirstStub.c_str());
-		LAString xLastStub		(XLastStub.c_str());
-		LAString xPayLag		(XPayLag.c_str());
-		LAString xStub			(XStub.c_str());
-		LAString tFreq			(TFreq.c_str());
-		LAString tDayCount		(TDayCt.c_str());
-		LAString tRollConv		(TRollCnv.c_str());
-		LAString tCalendar		(TCal.c_str());
-		LAString tFirstStub		(TFirstStub.c_str());
-		LAString tLastStub		(TLastStub.c_str());
-		LAString tFixLag		(TFixLag.c_str());
-		LAString tPayLag		(TPayLag.c_str());
-		LAString tStub			(TStub.c_str());
-		LAString interpolation	(Interp.c_str());
-		LAString forecastCurve	(Fcrv.c_str());
-		LAString discountCurve	(Dcrv.c_str());
-		LAString tRollDay		(TRollDay.c_str());
-		LAString xRollDay		(XRollDay.c_str());
-		LAString tFixCalc		(TFixCalc.c_str());
+		AQLString effectiveDate	(EffDt.c_str());
+		AQLString maturity		(Mat.c_str());
+		AQLString curveID		(CrvID.c_str());
+		AQLString xFreq			(XFreq.c_str());
+		AQLString xDayCount		(XDayCt.c_str());
+		AQLString xRollConv		(XRollCnv.c_str());
+		AQLString xCalendar		(XCal.c_str());
+		AQLString xFirstStub		(XFirstStub.c_str());
+		AQLString xLastStub		(XLastStub.c_str());
+		AQLString xPayLag		(XPayLag.c_str());
+		AQLString xStub			(XStub.c_str());
+		AQLString tFreq			(TFreq.c_str());
+		AQLString tDayCount		(TDayCt.c_str());
+		AQLString tRollConv		(TRollCnv.c_str());
+		AQLString tCalendar		(TCal.c_str());
+		AQLString tFirstStub		(TFirstStub.c_str());
+		AQLString tLastStub		(TLastStub.c_str());
+		AQLString tFixLag		(TFixLag.c_str());
+		AQLString tPayLag		(TPayLag.c_str());
+		AQLString tStub			(TStub.c_str());
+		AQLString interpolation	(Interp.c_str());
+		AQLString forecastCurve	(Fcrv.c_str());
+		AQLString discountCurve	(Dcrv.c_str());
+		AQLString tRollDay		(TRollDay.c_str());
+		AQLString xRollDay		(XRollDay.c_str());
+		AQLString tFixCalc		(TFixCalc.c_str());
 		
 		ret = validation::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
 												effectiveDate, 
@@ -278,7 +278,7 @@ double mirGetParRate5(const std::string& EffDt,
 												UseFwdData,
 												tFixCalc);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -328,19 +328,19 @@ double mirGetParRate3(const std::string& fromDate,
 	try 
 	{
 		// marshall all inputs		
-		LAString fromDt			(fromDate.c_str());
-		LAString toDt			(toDate.c_str());
-		LAString curId			(curveId.c_str());
-		LAString freq			(frequency.c_str());
-		LAString dayC			(dayCount.c_str());
-		LAString sRule			(slidingRule.c_str());
-		LAString cal			(calendar.c_str());
-		LAString interp			(interpolation.c_str());
-		LAString firstOddDt		(firstOddDate.c_str());
-		LAString lastOddDt		(lastOddDate.c_str());
-		LAString paymentDy	    (paymentDay.c_str());
-		LAString foreCurName	(foreCurveName.c_str());
-		LAString dfCurName		(dfCurveName.c_str());
+		AQLString fromDt			(fromDate.c_str());
+		AQLString toDt			(toDate.c_str());
+		AQLString curId			(curveId.c_str());
+		AQLString freq			(frequency.c_str());
+		AQLString dayC			(dayCount.c_str());
+		AQLString sRule			(slidingRule.c_str());
+		AQLString cal			(calendar.c_str());
+		AQLString interp			(interpolation.c_str());
+		AQLString firstOddDt		(firstOddDate.c_str());
+		AQLString lastOddDt		(lastOddDate.c_str());
+		AQLString paymentDy	    (paymentDay.c_str());
+		AQLString foreCurName	(foreCurveName.c_str());
+		AQLString dfCurName		(dfCurveName.c_str());
 		
 		ret = validation::tryMirGetParRate3(etrading::InitializeAQETrading::instance().dataInstance(),
 												fromDt, 
@@ -360,7 +360,7 @@ double mirGetParRate3(const std::string& fromDate,
 												eomRoll);
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -19,17 +19,17 @@ namespace validation
 	*  @param [in]		shift			shift size of the Shifted SABR
 	*  @param [in]		volType			volType of the SABR, default to lognormal
 	*/
-	double tryMeSABRGetPrem(const LAString& expPoint, 
-							const LAString& tenorPoint, 
+	double tryMeSABRGetPrem(const AQLString& expPoint, 
+							const AQLString& tenorPoint, 
 							double strike, 
 							int sign, 
-							const LAString& fowardID, 
-							const LAString& numeraireID,
-							const LAString& alphaID, 
-							const LAString& betaID, 
-							const LAString& nuID, 
-							const LAString& rhoID, 
-							const LAString& approxMethod,
+							const AQLString& fowardID, 
+							const AQLString& numeraireID,
+							const AQLString& alphaID, 
+							const AQLString& betaID, 
+							const AQLString& nuID, 
+							const AQLString& rhoID, 
+							const AQLString& approxMethod,
 							const double shift = 0.0,
 							const std::string& volType = "");
 

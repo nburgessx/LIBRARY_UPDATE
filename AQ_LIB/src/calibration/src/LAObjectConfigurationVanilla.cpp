@@ -19,9 +19,9 @@
 
 
 #include "LAObjectConfigurationVanilla.h"
-#include "LAString.h"
-#include "LADataBasics.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLString.h"
+#include "AQLDataBasics.h"
+#include "AQLPriceDataDayCount.h"
 #include "LACoreDataService.h"
 #include "LAMarketDataHW.h"
 #include "LADefinitions.h"
@@ -30,20 +30,20 @@
 #include "LAMarketData.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
-#include "LADataReference.h"
-#include "LADataValuation.h"
+#include "AQLDataReference.h"
+#include "AQLDataValuation.h"
 #include "LAPricePortfolioValue.h"
-#include "LAMathValuableEntity.h"
+#include "AQLMathValuableEntity.h"
 #include "LALinearRatesOptionValue.h"
 #include "LALinearRatesOptionValueDataProvider.h"
 #include "LAPriceTradeValue.h"
 #include "LALinearRatesSwapTradeValue.h"
-#include "LALinearFunc.h"
-#include "LAPriceDataFunction.h"
+#include "AQLLinearFunc.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathIndexEntity.h"
 #include "LAMathYieldCurvePro.h"
 #include "LAPriceArbFreeGenerator.h"
-#include "LALinearInterpolation.h"
+#include "AQLLinearInterpolation.h"
 #include "LAPriceConvergenceValue.h"
 #include "LAMathIRVanillaFuncUtility.h"
 //#include "LAPriceNDSSwaptionValue.h"
@@ -77,7 +77,7 @@ LAObjectConfigurationVanilla::LAObjectConfigurationVanilla()
 */
 LAObjectConfigurationVanilla::~LAObjectConfigurationVanilla(void)
 {
-	std::map<LAString, LAInterpolationBase *>::iterator it = mLiborRateMap.begin();
+	std::map<AQLString, AQLInterpolationBase *>::iterator it = mLiborRateMap.begin();
 	while (it != mLiborRateMap.end())
 	{
 		delete it->second;
@@ -89,21 +89,21 @@ LAObjectConfigurationVanilla::~LAObjectConfigurationVanilla(void)
 
 // Setup ValuableEntity
 void
-LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
+LAObjectConfigurationVanilla::setUpValuableEntity( AQLObjectPool& objPool ) const
 {
-	LAString mTradeName = LACoreDataService::getContext(ARG_KEY_MAINTRADE);
-	LAObjectHolder objHolder = objPool.getObject(mTradeName, ENCHKTYPE_ISDEFINED);
+	AQLString mTradeName = LACoreDataService::getContext(ARG_KEY_MAINTRADE);
+	AQLObjectHolder objHolder = objPool.getObject(mTradeName, ENCHKTYPE_ISDEFINED);
 
-	LAString IsAddFwdPremPV = mpStaticData->getStaticData(KEY_SDE_PV_ADDITION_FWDPREMIUM);
+	AQLString IsAddFwdPremPV = mpStaticData->getStaticData(KEY_SDE_PV_ADDITION_FWDPREMIUM);
  
-    LAString zeroCalc = LACoreDataService::getContext(ARG_KEY_ZEROCALC);
+    AQLString zeroCalc = LACoreDataService::getContext(ARG_KEY_ZEROCALC);
     if (zeroCalc == AQ_NO_DATA) {
         zeroCalc = "FALSE";
     }
 
-	const LAString riskENames_str = LACoreDataService::getContext(CONTEXT_KEY_RISKENTITY_NAMES);
-	const LAStringVector riskENames = riskENames_str.toToken(':');
-	vector<const LAObject *> riskEVec;
+	const AQLString riskENames_str = LACoreDataService::getContext(CONTEXT_KEY_RISKENTITY_NAMES);
+	const AQLStringVector riskENames = riskENames_str.toToken(':');
+	vector<const AQLObject *> riskEVec;
 	for (unsigned int i = 0; i < riskENames.size(); ++i)
 	{
 		if (riskENames[i] != AQ_NO_DATA)
@@ -112,51 +112,51 @@ LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
 		}
 	}
 
-	if (dynamic_cast<const LADataValuation &>
+	if (dynamic_cast<const AQLDataValuation &>
 		(objHolder.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get()).getType() == FN_IR_PORTFOLIOVALUE)
 
 	{
 		//for risk currency mode
-		LAString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
+		AQLString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
 		if (fxName != AQ_NO_DATA)
 		{
 			objHolder.get().remove(PRICING_DATA_FXRATE);
-			objHolder.get().add(PRICING_DATA_FXRATE, new LADataReference()).convertFromString(fxName);
+			objHolder.get().add(PRICING_DATA_FXRATE, new AQLDataReference()).convertFromString(fxName);
 		}
 
 
-		const LADataMultiReference &unders = dynamic_cast<const LADataMultiReference &>
+		const AQLDataMultiReference &unders = dynamic_cast<const AQLDataMultiReference &>
 											(objHolder.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
 
 		const unsigned int size = unders.getSize();
 		for (unsigned int i = 0; i < size; ++i)
 		{
-			LAObjectHolder &trade = unders.get(i);
+			AQLObjectHolder &trade = unders.get(i);
 			
 			// ! Set isResultOut
 			if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) != AQ_NO_DATA )
 			{
 				trade.remove( PRICING_DATA_ISRESULTOUTPUT );
-				trade.add( PRICING_DATA_ISRESULTOUTPUT, new LADataBool( true ) );
+				trade.add( PRICING_DATA_ISRESULTOUTPUT, new AQLDataBool( true ) );
 			}
 
 			if(LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != AQ_NO_DATA)
 			{
 				trade.remove(PRICING_DATA_COMPOUNDED_RATE_OUT);
-				trade.add(PRICING_DATA_COMPOUNDED_RATE_OUT, new LADataBool(true));
+				trade.add(PRICING_DATA_COMPOUNDED_RATE_OUT, new AQLDataBool(true));
 			}
 		
 
             // set zero calculation
             trade.remove(PRICING_DATA_ZEROCALC);
-            trade.add(PRICING_DATA_ZEROCALC, new LADataBool()).convertFromString(zeroCalc);
+            trade.add(PRICING_DATA_ZEROCALC, new AQLDataBool()).convertFromString(zeroCalc);
 		
 			//for past libor auto fixing
 			trade.remove(PRICING_DATA_ISSAVEPASTFIXING);
-			trade.add(PRICING_DATA_ISSAVEPASTFIXING, new LADataBool(true));
+			trade.add(PRICING_DATA_ISSAVEPASTFIXING, new AQLDataBool(true));
 
 			// set Compounding fixed rates
-			LADate asOfDate = LAMarketData::getAsofDate(objPool);
+			AQLDate asOfDate = LAMarketData::getAsofDate(objPool);
 			setUpCompoundingFixedRates(asOfDate, trade);
 
 			setUpRiskInfo(riskEVec, trade.get());
@@ -165,17 +165,17 @@ LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
 			if (IsAddFwdPremPV != AQ_NO_DATA)
 			{	
 				trade.remove(PRICING_DATA_ISADDFWDPREMPV);
-				trade.add(PRICING_DATA_ISADDFWDPREMPV, new LADataBool()).convertFromString(IsAddFwdPremPV);
+				trade.add(PRICING_DATA_ISADDFWDPREMPV, new AQLDataBool()).convertFromString(IsAddFwdPremPV);
 			}
 		}
 		
 		if (!riskEVec.empty())
 		{
 			objHolder.remove(PRICING_DATA_RISKCALCINFOS);
-			objHolder.add(PRICING_DATA_RISKCALCINFOS, new LADataMultiReference()).convertFromString(riskENames_str);
+			objHolder.add(PRICING_DATA_RISKCALCINFOS, new AQLDataMultiReference()).convertFromString(riskENames_str);
 		}
 		
-		LADataInstance *dataInstance = objHolder.getDataInstance();
+		AQLDataInstance *dataInstance = objHolder.getDataInstance();
 		dataInstance->getReferencePool().completeDependency();
 
 	}
@@ -186,25 +186,25 @@ LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
 		if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) != AQ_NO_DATA )
 		{
 			objHolder.remove( PRICING_DATA_ISRESULTOUTPUT );
-			objHolder.add( PRICING_DATA_ISRESULTOUTPUT, new LADataBool( true ) );
+			objHolder.add( PRICING_DATA_ISRESULTOUTPUT, new AQLDataBool( true ) );
 		}
 
         if(LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != AQ_NO_DATA)
         {
             objHolder.remove(PRICING_DATA_COMPOUNDED_RATE_OUT);
-            objHolder.add(PRICING_DATA_COMPOUNDED_RATE_OUT, new LADataBool(true));
+            objHolder.add(PRICING_DATA_COMPOUNDED_RATE_OUT, new AQLDataBool(true));
         }
 
         // set zero calculation
         objHolder.remove(PRICING_DATA_ZEROCALC);
-        objHolder.add(PRICING_DATA_ZEROCALC, new LADataBool()).convertFromString(zeroCalc);
+        objHolder.add(PRICING_DATA_ZEROCALC, new AQLDataBool()).convertFromString(zeroCalc);
 
 		//for past libor auto fixing
 		objHolder.remove(PRICING_DATA_ISSAVEPASTFIXING);
-		objHolder.add(PRICING_DATA_ISSAVEPASTFIXING, new LADataBool(true));
+		objHolder.add(PRICING_DATA_ISSAVEPASTFIXING, new AQLDataBool(true));
 
 		// set Compounding fixed rates
-		LADate asOfDate = LAMarketData::getAsofDate(objPool);
+		AQLDate asOfDate = LAMarketData::getAsofDate(objPool);
 		setUpCompoundingFixedRates(asOfDate, objHolder);
 
 		setUpRiskInfo(riskEVec, objHolder.get());
@@ -216,26 +216,26 @@ LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
 
 // setup  pathentity
 void 
-LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAString *pPathName) const
+LAObjectConfigurationVanilla::setUpPathEntity(AQLObjectPool &objPool, const AQLString *pPathName) const
 {
 	LAMathPlainVanillaEntity *pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
 	if (!pvanilla)
 	{
-		throw LACoreInvalidData("Plain Vanilla object is not set in entitiy pool", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Plain Vanilla object is not set in entitiy pool", __FILE__, __LINE__);
 	}	
 	// set sdenames and models
-	LAStringVector ccys = MADealUtils::getSDECurrencys();
-	LAStringVector simCurs = MADealUtils::getSimulationSDECurrencys();
+	AQLStringVector ccys = MADealUtils::getSDECurrencys();
+	AQLStringVector simCurs = MADealUtils::getSimulationSDECurrencys();
 	//if (simCurs.size() != 0)
 	//{
 	//	ccys = simCurs;
 	//}
 	const unsigned int ccySize = ccys.size();
 
-	LAStringVector ircurs,irsimcurs,fxcurs;
+	AQLStringVector ircurs,irsimcurs,fxcurs;
 	for (unsigned int i = 0; i < ccySize; i++)
 	{
-		LAString cur = ccys[i];
+		AQLString cur = ccys[i];
 		if (-1 == cur.findString('/'))
 		{
 			ircurs.push_back(cur.toUpper());
@@ -248,7 +248,7 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 
 	for (unsigned int i = 0; i < simCurs.size(); i++)
 	{
-		LAString cur = simCurs[i];
+		AQLString cur = simCurs[i];
 		if (-1 == cur.findString('/'))
 		{
 			irsimcurs.push_back(cur.toUpper());
@@ -259,10 +259,10 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 	// first ccy 
 	pvanilla->getIRCurrencys().set(ircurs);
 	pvanilla->getIRSimCurrencys().set(irsimcurs);
-	LAString sdeName = mpStaticData->getStaticData(ircurs[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
-	LAString initialValue =  PREFIX_YIELD + sdeName;
+	AQLString sdeName = mpStaticData->getStaticData(ircurs[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+	AQLString initialValue =  PREFIX_YIELD + sdeName;
 	// set main path curve
-	LAString pathCurve = mpStaticData->getStaticData(ircurs[0] + STATIC_DATA_KEY_YIELD_PATHCURVE);
+	AQLString pathCurve = mpStaticData->getStaticData(ircurs[0] + STATIC_DATA_KEY_YIELD_PATHCURVE);
 	if (pathCurve == AQ_NO_DATA)
 	{
 		pvanilla->getIRCurveTypes().push_back(STD);
@@ -271,15 +271,15 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 	{
 		pvanilla->getIRCurveTypes().push_back(pathCurve);
 	}
-	LAString irvols = PREFIX_VOL + sdeName;
-	LAString model = LAMarketData::getModelName(ircurs[0]);
+	AQLString irvols = PREFIX_VOL + sdeName;
+	AQLString model = LAMarketData::getModelName(ircurs[0]);
 
 	//set curveproname
-	LAString initialPro = LAMarketData::getBaseYieldProName(ircurs[0]);
+	AQLString initialPro = LAMarketData::getBaseYieldProName(ircurs[0]);
 	for (unsigned int i = 1; i < ircurs.size(); ++i)
 	{
-		LAString sdeName = mpStaticData->getStaticData(ircurs[i].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
-		initialValue += LAString(":") + PREFIX_YIELD + sdeName;
+		AQLString sdeName = mpStaticData->getStaticData(ircurs[i].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+		initialValue += AQLString(":") + PREFIX_YIELD + sdeName;
 		// set main path curve
 		pathCurve = mpStaticData->getStaticData(ircurs[i] + STATIC_DATA_KEY_YIELD_PATHCURVE);
 		if (pathCurve == AQ_NO_DATA)
@@ -292,11 +292,11 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 		}
 		if (model != LAMarketData::getModelName(ircurs[i]))
 		{
-			throw LACoreInvalidData("Model is not same with main currency.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Model is not same with main currency.", __FILE__, __LINE__);
 		}
-		irvols += LAString(":") + PREFIX_VOL + sdeName;
+		irvols += AQLString(":") + PREFIX_VOL + sdeName;
 
-		initialPro += LAString(":") + LAMarketData::getBaseYieldProName(ircurs[i]);
+		initialPro += AQLString(":") + LAMarketData::getBaseYieldProName(ircurs[i]);
 	}
 	// set curve
 	pvanilla->getIRCurves().convertFromString(initialValue);
@@ -308,7 +308,7 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 	{
 		for (unsigned int i =0; i < ircurs.size(); ++i)
 		{
-			LAString ccy = ircurs[i];
+			AQLString ccy = ircurs[i];
 			pvanilla->getIRCurvePro(ccy.toUpper()).setCurveDependencyMap();
 		}
 	}*/
@@ -316,7 +316,7 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 	//{
 	//	for (unsigned int i =0; i < ircurs.size(); ++i)
 	//	{
-	//		LAString ccy = ircurs[i];
+	//		AQLString ccy = ircurs[i];
 	//		pvanilla->getIRCurvePro(ccy.toUpper()).setCurveDependencyMap();
 	//	}
 	//}
@@ -332,16 +332,16 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 	if (!fxcurs.empty())
 	{
 		pvanilla->getFXCurrencys().set(fxcurs);
-		LAString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
+		AQLString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
 		if (fxName == AQ_NO_DATA)
 		{
-			throw LACoreInvalidData("Forward FX Object is not set.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Forward FX Object is not set.", __FILE__, __LINE__);
 		}
 		pvanilla->getFXEntity().convertFromString(fxName);
-		LAString fxvols = PREFIX_VOL + mpStaticData->getStaticData(fxcurs[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+		AQLString fxvols = PREFIX_VOL + mpStaticData->getStaticData(fxcurs[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 		for (unsigned int i = 1; i < fxcurs.size(); i++)
 		{
-			LAString tmp = PREFIX_VOL + mpStaticData->getStaticData(fxcurs[i].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+			AQLString tmp = PREFIX_VOL + mpStaticData->getStaticData(fxcurs[i].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 			fxvols += ":" + tmp;
 		}
 		pvanilla->getFXVolatilitys().convertFromString(fxvols);
@@ -357,111 +357,111 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 	@param[out] object pool
 */
 void
-LAObjectConfigurationVanilla::setUpExtraEntity(LAObjectPool &objPool) const
+LAObjectConfigurationVanilla::setUpExtraEntity(AQLObjectPool &objPool) const
 {
 	
 	/////////////////////////////
 	// setup extra object
 	/////////////////////////////
 	setUpFwdInterpolation(objPool);
-	LAString mainTradeName = LACoreDataService::getContext(ARG_KEY_MAINTRADE);
-	LAObjectHolder objHolder = objPool.getObject(mainTradeName, ENCHKTYPE_ISDEFINED);
+	AQLString mainTradeName = LACoreDataService::getContext(ARG_KEY_MAINTRADE);
+	AQLObjectHolder objHolder = objPool.getObject(mainTradeName, ENCHKTYPE_ISDEFINED);
 
-	LAString calcpayoffstr = mpStaticData->getStaticData(KEY_DEAL_ISCALCPAYOFFAFTERMATURITY).toUpper();
+	AQLString calcpayoffstr = mpStaticData->getStaticData(KEY_DEAL_ISCALCPAYOFFAFTERMATURITY).toUpper();
 	bool iscalcpayoffaftermatu = (calcpayoffstr == "TRUE");
 
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
-	LAString temp = staticData.getStaticData(KEY_SIMULATION_FUNDING_CHANGED);
+	AQLString temp = staticData.getStaticData(KEY_SIMULATION_FUNDING_CHANGED);
       
 	//set mLibor map for stub swap
 	//setUpLiborRateMap(objPool);
 	
-	if (dynamic_cast<const LADataValuation &>
+	if (dynamic_cast<const AQLDataValuation &>
 		(objHolder.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get()).getType() == FN_IR_PORTFOLIOVALUE)
 	{
 		// for portfolio
-		const LADataMultiReference &unders = dynamic_cast<const LADataMultiReference &>
+		const AQLDataMultiReference &unders = dynamic_cast<const AQLDataMultiReference &>
 											(objHolder.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
 		const unsigned int tradeSize = unders.getSize();
 		for (unsigned int i = 0; i < tradeSize; ++i)
 		{
 			//set up asofdate for trade object
-			setUpAsOfDateForTradeEntity(objPool,dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+			setUpAsOfDateForTradeEntity(objPool,dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
 
-			setUpCallSpreadForFXDigitalOption(dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
-			setUpCallSpreadForIRDigitalOption(dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+			setUpCallSpreadForFXDigitalOption(dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
+			setUpCallSpreadForIRDigitalOption(dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
 			//for stub swap
-			//setUpStubCoefficient(objPool,dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+			//setUpStubCoefficient(objPool,dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
 
 			if (iscalcpayoffaftermatu)
 			{
 				unders.get(i).get().remove(PRICING_DATA_ISCALCPAYOFFAFTERMATURITY);
-				unders.get(i).get().add(PRICING_DATA_ISCALCPAYOFFAFTERMATURITY, new LADataBool(iscalcpayoffaftermatu));
+				unders.get(i).get().add(PRICING_DATA_ISCALCPAYOFFAFTERMATURITY, new AQLDataBool(iscalcpayoffaftermatu));
 				
 			}
 
 			if (temp==AQ_NO_DATA)
 			{
-				setUpRecalcTrade(objPool, dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+				setUpRecalcTrade(objPool, dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
             }
 
-			setUpRenotionalFXInfo(objPool, dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+			setUpRenotionalFXInfo(objPool, dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
 
-			setUpConvexityAdjustInfo(objPool, dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+			setUpConvexityAdjustInfo(objPool, dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
 			
-			setUpDirtyPrice(objPool,dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));	
+			setUpDirtyPrice(objPool,dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));	
 			// setUpPastIndexRate
-			setUpPastIndexRate(objPool,dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+			setUpPastIndexRate(objPool,dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
 			//set FundingSpread 
-			setUpFundingSpread(objPool,dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+			setUpFundingSpread(objPool,dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
 
-			setUpSpotRateRatioMethod(objPool, dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+			setUpSpotRateRatioMethod(objPool, dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
 
-			const bool isMarkov = setUpMarkovFunctionalParameter(objPool, dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+			const bool isMarkov = setUpMarkovFunctionalParameter(objPool, dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
 
 			if (isMarkov) {
-				setUpExtraLibor(objPool, dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
+				setUpExtraLibor(objPool, dynamic_cast<AQLMathObjectValue &>(unders.get(i).get()));
 			}
 		}
 	}
 	else
 	{
-		setUpCallSpreadForFXDigitalOption(dynamic_cast<LAMathObjectValue &>(objHolder.get()));
-		setUpCallSpreadForIRDigitalOption(dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+		setUpCallSpreadForFXDigitalOption(dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
+		setUpCallSpreadForIRDigitalOption(dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
 
 		//for stub swap
-		//setUpStubCoefficient(objPool,dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+		//setUpStubCoefficient(objPool,dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
 
 		//set up asofdate for trade object
-		setUpAsOfDateForTradeEntity(objPool,dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+		setUpAsOfDateForTradeEntity(objPool,dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
 
 		if (iscalcpayoffaftermatu)
 		{
 			objHolder.get().remove(PRICING_DATA_ISCALCPAYOFFAFTERMATURITY);
-			objHolder.get().add(PRICING_DATA_ISCALCPAYOFFAFTERMATURITY, new LADataBool(iscalcpayoffaftermatu));
+			objHolder.get().add(PRICING_DATA_ISCALCPAYOFFAFTERMATURITY, new AQLDataBool(iscalcpayoffaftermatu));
 		}
 
 		if (temp==AQ_NO_DATA)
 		{
-			setUpRecalcTrade(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+			setUpRecalcTrade(objPool, dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
         }
 
-		setUpRenotionalFXInfo(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+		setUpRenotionalFXInfo(objPool, dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
 
-		setUpConvexityAdjustInfo(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+		setUpConvexityAdjustInfo(objPool, dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
 		
-		setUpDirtyPrice(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));		
+		setUpDirtyPrice(objPool, dynamic_cast<AQLMathObjectValue &>(objHolder.get()));		
 		// setUpPastIndexRate
-		setUpPastIndexRate(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+		setUpPastIndexRate(objPool, dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
 		//set FundingSpread 
-		setUpFundingSpread(objPool,dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+		setUpFundingSpread(objPool,dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
 
-		setUpSpotRateRatioMethod(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+		setUpSpotRateRatioMethod(objPool, dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
 
-		const bool isMarkov = setUpMarkovFunctionalParameter(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+		const bool isMarkov = setUpMarkovFunctionalParameter(objPool, dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
 
 		if (isMarkov) {
-			setUpExtraLibor(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));
+			setUpExtraLibor(objPool, dynamic_cast<AQLMathObjectValue &>(objHolder.get()));
 		}
 	}
 }
@@ -476,9 +476,9 @@ LAObjectConfigurationVanilla::setUpExtraEntity(LAObjectPool &objPool) const
 	@param[out] trade object
 */
 void
-LAObjectConfigurationVanilla::setUpCallSpreadForFXDigitalOption(LAMathObjectValue &trade) const
+LAObjectConfigurationVanilla::setUpCallSpreadForFXDigitalOption(AQLMathObjectValue &trade) const
 {
-	const LADataValuation& valueMethod = dynamic_cast<const LADataValuation &>
+	const AQLDataValuation& valueMethod = dynamic_cast<const AQLDataValuation &>
 			(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
 
 	if (!valueMethod.isTypeOf(FN_FXDIGITALOPTIONVALUE) && 
@@ -486,7 +486,7 @@ LAObjectConfigurationVanilla::setUpCallSpreadForFXDigitalOption(LAMathObjectValu
 		!valueMethod.isTypeOf(FN_FXDIGITALCALLSPREADSINGLEBARRIEROPTIONVALUE))
 		return;
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	//excel calculation mode
 	dh = &(trade.getData(PRICING_DATA_DIGITALSPREAD,NOCHECK));
@@ -494,28 +494,28 @@ LAObjectConfigurationVanilla::setUpCallSpreadForFXDigitalOption(LAMathObjectValu
 		return;
 	
 	dh = &(trade.getData(PRICING_DATA_DOMESTICCURRENCY, ISNOTNULL));
-	LAString domcur = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString domcur = dynamic_cast<AQLDataString &>(dh->get()).get();
 
 	dh = &(trade.getData(PRICING_DATA_FOREIGNCURRENCY, ISNOTNULL));
-	LAString forcur = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString forcur = dynamic_cast<AQLDataString &>(dh->get()).get();
 
-	LAString cur = domcur.toLower() + '/' + forcur.toLower();
+	AQLString cur = domcur.toLower() + '/' + forcur.toLower();
 	
 	
-	LAString iscallspread = mpStaticData->getStaticData(cur + STATIC_DATA_KEY_DEAL_DIGITALOPTION_ISCALLSPREAD).toUpper();
+	AQLString iscallspread = mpStaticData->getStaticData(cur + STATIC_DATA_KEY_DEAL_DIGITALOPTION_ISCALLSPREAD).toUpper();
 	if (iscallspread == "TRUE")
 	{
 		if (valueMethod.isTypeOf(FN_FXDIGITALOPTIONVALUE))
 			trade.getData(CALIBRATION_DATA_VALUE).convertFromString(FN_FXDIGITALCALLSPREADOPTIONVALUE_STR);
 		//spreadval
-		LAString spreadval =  mpStaticData->getStaticData(cur + STATIC_DATA_KEY_DEAL_DIGITALOPTION_CALLSPREADVALUE);
+		AQLString spreadval =  mpStaticData->getStaticData(cur + STATIC_DATA_KEY_DEAL_DIGITALOPTION_CALLSPREADVALUE);
 		trade.remove(PRICING_DATA_DIGITALSPREAD);
-		trade.LAObject::add(PRICING_DATA_DIGITALSPREAD, new LADataDouble()).convertFromString(spreadval);
+		trade.AQLObject::add(PRICING_DATA_DIGITALSPREAD, new AQLDataDouble()).convertFromString(spreadval);
 
 		//buyselldistinguishflag
-		LAString buysellflag =  mpStaticData->getStaticData(cur + STATIC_DATA_KEY_DEAL_DIGITALOPTION_BUYSELLDISTINGUISH);
+		AQLString buysellflag =  mpStaticData->getStaticData(cur + STATIC_DATA_KEY_DEAL_DIGITALOPTION_BUYSELLDISTINGUISH);
 		trade.remove(PRICING_DATA_BUYSELLDISTINGUISH);
-		trade.LAObject::add(PRICING_DATA_BUYSELLDISTINGUISH, new LADataBool()).convertFromString(buysellflag);
+		trade.AQLObject::add(PRICING_DATA_BUYSELLDISTINGUISH, new AQLDataBool()).convertFromString(buysellflag);
 
 
 
@@ -523,7 +523,7 @@ LAObjectConfigurationVanilla::setUpCallSpreadForFXDigitalOption(LAMathObjectValu
 	else if (iscallspread == "FALSE" && valueMethod.isTypeOf(FN_FXDIGITALCALLSPREADOPTIONVALUE))
 		trade.getData(CALIBRATION_DATA_VALUE).convertFromString(FN_FXDIGITALOPTIONVALUE_STR);
 	else
-		throw LACoreInvalidData("Call spread property error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Call spread property error",__FILE__,__LINE__);
 
 	return;
 }
@@ -538,15 +538,15 @@ set digitalspread from property file
 @param[out] trade object
 */
 void
-LAObjectConfigurationVanilla::setUpCallSpreadForIRDigitalOption(LAMathObjectValue &trade) const
+LAObjectConfigurationVanilla::setUpCallSpreadForIRDigitalOption(AQLMathObjectValue &trade) const
 {
-	const LADataValuation& valueMethod = dynamic_cast<const LADataValuation &>
+	const AQLDataValuation& valueMethod = dynamic_cast<const AQLDataValuation &>
 		(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
 
 	if (!valueMethod.isTypeOf(FN_IR_CAPFLOOROPTIONVALUE))
 		return;
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	//excel calculation mode
 	dh = &(trade.getData(PRICING_DATA_DIGITALSPREAD, NOCHECK));
@@ -554,16 +554,16 @@ LAObjectConfigurationVanilla::setUpCallSpreadForIRDigitalOption(LAMathObjectValu
 		return;
 
 	dh = &trade.getData(PRICING_DATA_PREMIUMCURRENCY, ISNOTNULL);
-	LAString cur = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString cur = dynamic_cast<AQLDataString &>(dh->get()).get();
 	cur.toLower();
 
-	LAString iscallspread = mpStaticData->getStaticData(cur + STATIC_DATA_KEY_DEAL_DIGITALOPTION_ISCALLSPREAD).toUpper();
+	AQLString iscallspread = mpStaticData->getStaticData(cur + STATIC_DATA_KEY_DEAL_DIGITALOPTION_ISCALLSPREAD).toUpper();
 	if (iscallspread == "TRUE")
 	{
 		//spreadval
-		LAString spreadval = mpStaticData->getStaticData(cur + STATIC_DATA_KEY_DEAL_DIGITALOPTION_CALLSPREADVALUE);
+		AQLString spreadval = mpStaticData->getStaticData(cur + STATIC_DATA_KEY_DEAL_DIGITALOPTION_CALLSPREADVALUE);
 		trade.remove(PRICING_DATA_DIGITALSPREAD);
-		trade.LAObject::add(PRICING_DATA_DIGITALSPREAD, new LADataDouble()).convertFromString(spreadval);
+		trade.AQLObject::add(PRICING_DATA_DIGITALSPREAD, new AQLDataDouble()).convertFromString(spreadval);
 	}
 
 	return;
@@ -579,29 +579,29 @@ LAObjectConfigurationVanilla::setUpCallSpreadForIRDigitalOption(LAMathObjectValu
 	
 */
 void 
-LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
+LAObjectConfigurationVanilla::setUpLiborRateMap(AQLObjectPool &objPool) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAMathPlainVanillaEntity *pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
 	if (!pvanilla)
 	{
-		throw LACoreInvalidData("Plain Vanilla object is not set in entitiy pool", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Plain Vanilla object is not set in entitiy pool", __FILE__, __LINE__);
 	}
-	LADate asOf = pvanilla->getAsOfDate().get();
-	LAPriceDataDayCount dc(ACT_365_ISDA);
+	AQLDate asOf = pvanilla->getAsOfDate().get();
+	AQLPriceDataDayCount dc(ACT_365_ISDA);
 
 
-	const LAStringVector &ircurs = pvanilla->getIRCurrencys().get();
+	const AQLStringVector &ircurs = pvanilla->getIRCurrencys().get();
 	for (unsigned int i = 0; i < ircurs.size(); i++)
 	{
-		LAString ccy = ircurs[i];
+		AQLString ccy = ircurs[i];
 		ccy.toLower();
 
-		LAString yldproname =  LAMarketData::getBaseYieldProName(ccy);
+		AQLString yldproname =  LAMarketData::getBaseYieldProName(ccy);
 		LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
 						(objPool.getObject(yldproname, ENCHKTYPE_ISDEFINED).get());
 
-		const LADataMultiReference &refMarketDatas = bYieldPro.getMarketData();
+		const AQLDataMultiReference &refMarketDatas = bYieldPro.getMarketData();
 
 		const unsigned int dataSize =refMarketDatas.getSize();
 		if (dataSize == 0)
@@ -611,25 +611,25 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
 		DoubleVector termvec,ratevec;
 		for (unsigned int j = 0; j < dataSize; ++j)
 		{
-			LAObject *data = &refMarketDatas.get(j).get();
-			LAString type = dynamic_cast<const LADataString&> ((data->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+			AQLObject *data = &refMarketDatas.get(j).get();
+			AQLString type = dynamic_cast<const AQLDataString&> ((data->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 			type.toUpper();
 			if (type !=  YIELD_TYPE_ZERO)
 				continue;
 
-			double rate  = dynamic_cast<LADataDouble &>(data->getData(CALIBRATION_DATA_RATE, ISNOTNULL).get()).get();
-			const LAString termStr = dynamic_cast<const LADataString &>(data->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get()).get();
-			const LADate& spotdate = dynamic_cast<const LADataDate&> ((data->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
-			const LAPriceDataCalendar& cal  = dynamic_cast<const LAPriceDataCalendar&> ((data->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-			const LAPriceDataSlidingRule& sld  = dynamic_cast<const LAPriceDataSlidingRule&> ((data->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-			const LAString freq = dynamic_cast<const LADataString &>(data->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL).get()).get();
-			const LADataBool& eom  = dynamic_cast<const LADataBool&> ((data->getData(IR_CALIBRATION_DATA_ISEOMROLL, ISNOTNULL)).get());
-			LAString roll_conv("");
+			double rate  = dynamic_cast<AQLDataDouble &>(data->getData(CALIBRATION_DATA_RATE, ISNOTNULL).get()).get();
+			const AQLString termStr = dynamic_cast<const AQLDataString &>(data->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get()).get();
+			const AQLDate& spotdate = dynamic_cast<const AQLDataDate&> ((data->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+			const AQLPriceDataCalendar& cal  = dynamic_cast<const AQLPriceDataCalendar&> ((data->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+			const AQLPriceDataSlidingRule& sld  = dynamic_cast<const AQLPriceDataSlidingRule&> ((data->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+			const AQLString freq = dynamic_cast<const AQLDataString &>(data->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL).get()).get();
+			const AQLDataBool& eom  = dynamic_cast<const AQLDataBool&> ((data->getData(IR_CALIBRATION_DATA_ISEOMROLL, ISNOTNULL)).get());
+			AQLString roll_conv("");
 			if (freq == "LUNAR") roll_conv = "LUNAR";
 			else if (eom) roll_conv = "EOM";
 			else roll_conv = "NORMAL";
 
-			LADate enddate = LAMathDateCalculations::getDate(spotdate, termStr, sld, &cal, true, &roll_conv);
+			AQLDate enddate = LAMathDateCalculations::getDate(spotdate, termStr, sld, &cal, true, &roll_conv);
 		
 			double term = dc.getTerm(spotdate,enddate,false);
 
@@ -639,14 +639,14 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
 		if (termvec.size() < 1)
 		{
 			bool isFwdFX = false;
-			const LADataHolder& dh = bYieldPro.getYieldData().get().getData(IR_CALIBRATION_DATA_ISFWDFX);
+			const AQLDataHolder& dh = bYieldPro.getYieldData().get().getData(IR_CALIBRATION_DATA_ISFWDFX);
 			if (dh.isDefined() && !dh.isNull()) 
-				isFwdFX = dynamic_cast<const LADataBool&>(dh.get()).get();
+				isFwdFX = dynamic_cast<const AQLDataBool&>(dh.get()).get();
 			if (!isFwdFX)
-				throw LACoreInvalidData("Libor Rate Map Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("Libor Rate Map Error",__FILE__,__LINE__);
 		}
 		
-		LALinearInterpolation* pInter = new LALinearInterpolation();
+		AQLLinearInterpolation* pInter = new AQLLinearInterpolation();
 		pInter->set(termvec, ratevec);
 
 		mLiborRateMap.insert(std::make_pair(ircurs[i], pInter));
@@ -664,22 +664,22 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
 //	@param[out] trade object
 //*/
 //void
-//LAObjectConfigurationVanilla::setUpStubCoefficient(LAObjectPool &objPool,  LAMathObjectValue &trade) const
+//LAObjectConfigurationVanilla::setUpStubCoefficient(AQLObjectPool &objPool,  AQLMathObjectValue &trade) const
 //{
 //	
-//	const LADataValuation& valuemehod = dynamic_cast<const LADataValuation &>
+//	const AQLDataValuation& valuemehod = dynamic_cast<const AQLDataValuation &>
 //			(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
 //	if (!valuemehod.isTypeOf(FN_IR_PLAINVANILLASWAPTRADEVALUE) 
 //		&& !valuemehod.isTypeOf(FN_IR_SWAPTIONVALUEFROMCASHFLOW))
 //		return;
 //	
-//	LADataHolder* dh;
+//	AQLDataHolder* dh;
 //
 //	//check stub or not
 //	bool isoddtrade = false;
 //	dh = &(trade.getData(PRICING_DATA_ISODDTRADE, NOCHECK));
 //	if (dh->isDefined() && !dh->isNull())
-//		isoddtrade =  dynamic_cast<const LADataBool &>(dh->get()).get();
+//		isoddtrade =  dynamic_cast<const AQLDataBool &>(dh->get()).get();
 //	if (!isoddtrade)
 //		return;
 //	
@@ -687,51 +687,51 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
 //	//if (!dh->isDefined() || dh->isNull())
 //	//	return;
 //
-//	LAPriceDataDayCount dc(ACT_365_ISDA);
+//	AQLPriceDataDayCount dc(ACT_365_ISDA);
 //	LAMathPlainVanillaEntity *pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
 //	if (!pvanilla)
 //	{
-//		throw LACoreInvalidData("Plain Vanilla object is not set in entitiy pool", __FILE__, __LINE__);
+//		throw AQLCoreInvalidData("Plain Vanilla object is not set in entitiy pool", __FILE__, __LINE__);
 //	}
-//	LADate asOf = pvanilla->getAsOfDate().get();
+//	AQLDate asOf = pvanilla->getAsOfDate().get();
 //
 //	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-//	LADataMultiReference &legs = dynamic_cast<LADataMultiReference &>(dh->get());
+//	AQLDataMultiReference &legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 //	unsigned int legSize = legs.getSize();
 //
 //	for (unsigned int i = 0; i < legSize; i++)
 //	{
-//		LAObject &eleg = legs.get(i).get();
+//		AQLObject &eleg = legs.get(i).get();
 //		//get cashlet
 //		dh = &(eleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-//		LADataMultiReference &cashlets = dynamic_cast<LADataMultiReference &>(dh->get());
+//		AQLDataMultiReference &cashlets = dynamic_cast<AQLDataMultiReference &>(dh->get());
 //		unsigned int cashletSize = cashlets.getSize();
 //		for (unsigned int j = 0; j < cashletSize; j++)
 //		{
-//			LAObject &ecashlet = cashlets.get(j).get();
+//			AQLObject &ecashlet = cashlets.get(j).get();
 //			//get firstcoupon
 //			dh = &(ecashlet.getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 //			if (!dh->isDefined() || dh->isNull())
 //				continue;
 //
-//			LADataMultiReference &coupons = dynamic_cast<LADataMultiReference &>(dh->get());
-//			LAObject &firstcoupon = coupons.get(0).get();
+//			AQLDataMultiReference &coupons = dynamic_cast<AQLDataMultiReference &>(dh->get());
+//			AQLObject &firstcoupon = coupons.get(0).get();
 //
 //			//check whether firstcoupon is stubperiod or not
 //			
 //			//check fn_linear or not
 //			dh = &(firstcoupon.getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-//			LAPriceDataFunction &method = dynamic_cast<LAPriceDataFunction &>(dh->get());
+//			AQLPriceDataFunction &method = dynamic_cast<AQLPriceDataFunction &>(dh->get());
 //			if (!method.isTypeOf(FN_LINEAR))
 //				continue;
 //		
 //			//check coefficient is -9999 or not
 //			dh = &(firstcoupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
-//			LADataMultiReference &indexs = dynamic_cast<LADataMultiReference &>(dh->get());
+//			AQLDataMultiReference &indexs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 //			unsigned int indexSize = indexs.getSize();
 //
 //			dh = &(firstcoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-//			LADataDoubles &coeffs = dynamic_cast<LADataDoubles &>(dh->get());
+//			AQLDataDoubles &coeffs = dynamic_cast<AQLDataDoubles &>(dh->get());
 //			DoubleVector coefvec = coeffs.get();
 //
 //			// in case of stub setting but index is 1 
@@ -763,7 +763,7 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
 //					coefvec[k] = 0.0;
 //
 //				dh = &(firstcoupon.getData(PRICING_DATA_ODDINDEXTYPE, ISNOTNULL));
-//				LAString stubtype =  dynamic_cast<LADataString &>(dh->get()).get();
+//				AQLString stubtype =  dynamic_cast<AQLDataString &>(dh->get()).get();
 //				stubtype.toUpper();
 //				
 //				if (stubtype == CURRENTINDEX)
@@ -779,21 +779,21 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
 //					//first index is main index
 //					DateVector datevec(2);
 //					dh = &(ecashlet.getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL));
-//					datevec[0] = dynamic_cast<LADataDate &>(dh->get()).get();
+//					datevec[0] = dynamic_cast<AQLDataDate &>(dh->get()).get();
 //					dh = &(ecashlet.getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL));
-//					datevec[1] = dynamic_cast<LADataDate &>(dh->get()).get();
+//					datevec[1] = dynamic_cast<AQLDataDate &>(dh->get()).get();
 //
 //
-//					LAObject &eindex = indexs.get(0).get();
+//					AQLObject &eindex = indexs.get(0).get();
 //					dh = &(eindex.getData(PRICING_DATA_DATESFORINDEXGENERATE, NOCHECK));
 //					
 //					if (dh->isDefined() && !dh->isNull())
 //					{
-//						dynamic_cast<LADataDates &>(dh->get()).set(datevec);
+//						dynamic_cast<AQLDataDates &>(dh->get()).set(datevec);
 //					}
 //					else
 //					{
-//						eindex.add(PRICING_DATA_DATESFORINDEXGENERATE, new LADataDates(datevec));
+//						eindex.add(PRICING_DATA_DATESFORINDEXGENERATE, new AQLDataDates(datevec));
 //					}
 //
 //					coefvec[0] = 1.0;
@@ -803,41 +803,41 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
 //				
 //				//get currency
 //				dh = &(firstcoupon.getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL));
-//				LAString ccy = dynamic_cast<LADataString &>(dh->get()).get();
+//				AQLString ccy = dynamic_cast<AQLDataString &>(dh->get()).get();
 //				//exchange stubcoupon
 //				dh = &(ecashlet.getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL));
-//				const LADate &startdate = dynamic_cast<LADataDate &>(dh->get()).get();
+//				const AQLDate &startdate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 //				dh = &(ecashlet.getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL));
-//				const LADate &enddate = dynamic_cast<LADataDate &>(dh->get()).get();
+//				const AQLDate &enddate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 //				double term = dc.getTerm(startdate,enddate,false);
 //				if (stubtype == SPOTRATERATIOMETHOD)
 //				{
-//					std::map<LAString, LAInterpolationBase*>::iterator it = mLiborRateMap.find(ccy);
+//					std::map<AQLString, AQLInterpolationBase*>::iterator it = mLiborRateMap.find(ccy);
 //					if (it == mLiborRateMap.end())
-//						throw LACoreInvalidData("Odd Coefficient Error",__FILE__,__LINE__);
+//						throw AQLCoreInvalidData("Odd Coefficient Error",__FILE__,__LINE__);
 //
-//					LALinearInterpolation* inter = dynamic_cast<LALinearInterpolation* >(it->second);
+//					AQLLinearInterpolation* inter = dynamic_cast<AQLLinearInterpolation* >(it->second);
 //					double targetrate = inter->value(term);
 //
 //					//change ratio
 //					map<double, unsigned int> mapRatePos;
 //					for (unsigned l = 0 ; l < indexSize; l++)
 //					{
-//						LAObject &eindex = indexs.get(l).get();
+//						AQLObject &eindex = indexs.get(l).get();
 //						dh = &(eindex.getData(PRICING_DATA_ACCESSORY, ISNOTNULL));
-//						LAString termStr = dynamic_cast<LADataString &>(dh->get()).get();
+//						AQLString termStr = dynamic_cast<AQLDataString &>(dh->get()).get();
 //
 //						dh = &(eindex.getData(PRICING_DATA_SPOTLAG, ISNOTNULL));
-//						int spotlag = dynamic_cast<LADataInt &>(dh->get()).get();
+//						int spotlag = dynamic_cast<AQLDataInt &>(dh->get()).get();
 //
 //						dh = &(eindex.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL));
-//						LAPriceDataSlidingRule &sld = dynamic_cast<LAPriceDataSlidingRule &>(dh->get());
+//						AQLPriceDataSlidingRule &sld = dynamic_cast<AQLPriceDataSlidingRule &>(dh->get());
 //
 //						dh = &(eindex.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-//						LAPriceDataCalendar &cal = dynamic_cast<LAPriceDataCalendar &>(dh->get());
+//						AQLPriceDataCalendar &cal = dynamic_cast<AQLPriceDataCalendar &>(dh->get());
 //						
-//						LADate spotdate = cal.getBusinessDay(asOf,spotlag);
-//						LADate enddate = LAMathDateCalculations::getDate(spotdate, termStr, true);
+//						AQLDate spotdate = cal.getBusinessDay(asOf,spotlag);
+//						AQLDate enddate = LAMathDateCalculations::getDate(spotdate, termStr, true);
 //						enddate = (!sld.isNull() && !cal.isNull()) ? sld.getDate(enddate, cal) : enddate;
 //						
 //						double term = dc.getTerm(spotdate,enddate,false);
@@ -879,9 +879,9 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
 //				else
 //				{
 //					double targetterm = 0.0;
-//					std::map<LAString, DoubleVector>::iterator itvec = mLiborGridTermMap.find(ccy);
+//					std::map<AQLString, DoubleVector>::iterator itvec = mLiborGridTermMap.find(ccy);
 //					if (itvec == mLiborGridTermMap.end())
-//						throw LACoreInvalidData("Odd Coefficient Error",__FILE__,__LINE__);
+//						throw AQLCoreInvalidData("Odd Coefficient Error",__FILE__,__LINE__);
 //					DoubleVector termvec = itvec->second;
 //					DoubleVector::iterator itTargetTerm = std::upper_bound(termvec.begin(),termvec.end(),term);
 //					if (itTargetTerm == termvec.end())
@@ -915,27 +915,27 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
 //						targetterm = term;
 //					}
 //					else
-//						throw LACoreInvalidData("Stub Type Error",__FILE__,__LINE__);
+//						throw AQLCoreInvalidData("Stub Type Error",__FILE__,__LINE__);
 //					
 //					//change ratio
 //					map<double, unsigned int> mapTermPos;
 //					for (unsigned l = 0 ; l < indexSize; l++)
 //					{
-//						LAObject &eindex = indexs.get(l).get();
+//						AQLObject &eindex = indexs.get(l).get();
 //						dh = &(eindex.getData(PRICING_DATA_ACCESSORY, ISNOTNULL));
-//						LAString termStr = dynamic_cast<LADataString &>(dh->get()).get();
+//						AQLString termStr = dynamic_cast<AQLDataString &>(dh->get()).get();
 //
 //						dh = &(eindex.getData(PRICING_DATA_SPOTLAG, ISNOTNULL));
-//						int spotlag = dynamic_cast<LADataInt &>(dh->get()).get();
+//						int spotlag = dynamic_cast<AQLDataInt &>(dh->get()).get();
 //
 //						dh = &(eindex.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL));
-//						LAPriceDataSlidingRule &sld = dynamic_cast<LAPriceDataSlidingRule &>(dh->get());
+//						AQLPriceDataSlidingRule &sld = dynamic_cast<AQLPriceDataSlidingRule &>(dh->get());
 //
 //						dh = &(eindex.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-//						LAPriceDataCalendar &cal = dynamic_cast<LAPriceDataCalendar &>(dh->get());
+//						AQLPriceDataCalendar &cal = dynamic_cast<AQLPriceDataCalendar &>(dh->get());
 //						
-//						LADate spotdate = cal.getBusinessDay(asOf,spotlag);
-//						LADate enddate = LAMathDateCalculations::getDate(spotdate, termStr, true);
+//						AQLDate spotdate = cal.getBusinessDay(asOf,spotlag);
+//						AQLDate enddate = LAMathDateCalculations::getDate(spotdate, termStr, true);
 //						enddate = (!sld.isNull() && !cal.isNull()) ? sld.getDate(enddate, cal) : enddate;
 //						
 //						double term = dc.getTerm(spotdate,enddate,false);
@@ -981,13 +981,13 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(LAObjectPool &objPool) const
 
 
 void
-LAObjectConfigurationVanilla::setUpRenotionalFXInfo(LAObjectPool &objPool, LAMathObjectValue &trade) const
+LAObjectConfigurationVanilla::setUpRenotionalFXInfo(AQLObjectPool &objPool, AQLMathObjectValue &trade) const
 {
-	const LADataValuation& attrval = dynamic_cast<const LADataValuation& >(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
-	const LACoreValuation* pVal = &attrval.getMethod();
+	const AQLDataValuation& attrval = dynamic_cast<const AQLDataValuation& >(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
+	const AQLCoreValuation* pVal = &attrval.getMethod();
 	if (pVal->isTypeOf(FN_IR_CONVERGENCEVALUE))
 	{
-		const LADataValuation& attrval = dynamic_cast<const LADataValuation& >(trade.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
+		const AQLDataValuation& attrval = dynamic_cast<const AQLDataValuation& >(trade.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
 		pVal = &attrval.getMethod();
 	}
 
@@ -999,41 +999,41 @@ LAObjectConfigurationVanilla::setUpRenotionalFXInfo(LAObjectPool &objPool, LAMat
 	//get ir properties
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	//get leg object
-	LADataMultiReference &legs = dynamic_cast<LADataMultiReference &>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
+	AQLDataMultiReference &legs = dynamic_cast<AQLDataMultiReference &>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
 	unsigned int legSize = legs.getSize();
 	for (unsigned int i = 0; i < legSize; i++)
 	{
-		LAObject &leg = legs.get(i).get();
+		AQLObject &leg = legs.get(i).get();
 		//get currency
-		LAString ccy = dynamic_cast<LADataString &>(leg.getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL).get()).get();
+		AQLString ccy = dynamic_cast<AQLDataString &>(leg.getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL).get()).get();
 		ccy.toLower();
 		//get renotional FX information
 		bool isRenAdj = false;
-		LAString tmpRenAdj_str = staticData.getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_ISRENOTIONALADJUST).toUpper();
+		AQLString tmpRenAdj_str = staticData.getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_ISRENOTIONALADJUST).toUpper();
 		if (tmpRenAdj_str != AQ_NO_DATA)
 		{
-			LADataBool tmpAttrB;
+			AQLDataBool tmpAttrB;
 			tmpAttrB.convertFromString(tmpRenAdj_str);
 			isRenAdj = tmpAttrB.get();
 		}
 
 		leg.remove(IR_CALIBRATION_DATA_ISRENOTIONALADJUST);
-		leg.add(IR_CALIBRATION_DATA_ISRENOTIONALADJUST, new LADataBool(isRenAdj));
+		leg.add(IR_CALIBRATION_DATA_ISRENOTIONALADJUST, new AQLDataBool(isRenAdj));
 		leg.remove(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET);
-		leg.add(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET, new LADataBool(isRenAdj));
+		leg.add(IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET, new AQLDataBool(isRenAdj));
 	}
 	
 	return;
 }
 
 void
-LAObjectConfigurationVanilla::setUpConvexityAdjustInfo(LAObjectPool &objPool, LAMathObjectValue &trade) const
+LAObjectConfigurationVanilla::setUpConvexityAdjustInfo(AQLObjectPool &objPool, AQLMathObjectValue &trade) const
 {
-	//const LADataValuation& attrval = dynamic_cast<const LADataValuation& >(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
-	//const LACoreValuation* pVal = &attrval.getMethod();
+	//const AQLDataValuation& attrval = dynamic_cast<const AQLDataValuation& >(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
+	//const AQLCoreValuation* pVal = &attrval.getMethod();
 	//if (pVal->isTypeOf(FN_IR_CONVERGENCEVALUE))
 	//{
-	//	const LADataValuation& attrval = dynamic_cast<const LADataValuation& >(trade.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
+	//	const AQLDataValuation& attrval = dynamic_cast<const AQLDataValuation& >(trade.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
 	//	pVal = &attrval.getMethod();
 	//}
 
@@ -1045,42 +1045,42 @@ LAObjectConfigurationVanilla::setUpConvexityAdjustInfo(LAObjectPool &objPool, LA
 	//get ir properties
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	// trade
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	dh = &trade.getData(CALIBRATION_DATA_UNDERLYINGS, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		LADataMultiReference &legs = dynamic_cast<LADataMultiReference &>(dh->get());
+		AQLDataMultiReference &legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		for (unsigned int i = 0; i < legs.getSize(); ++i)
 		{
 			// leg
 			dh = &legs.get(i).getData(PRICING_DATA_CASHLETS, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				const LADataMultiReference &cashlets = dynamic_cast<const LADataMultiReference &>(dh->get());
+				const AQLDataMultiReference &cashlets = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 				for (unsigned int j = 0; j < cashlets.getSize(); ++j)
 				{
 					dh = &(cashlets.get(j).getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 					if (dh->isDefined() && !dh->isNull())
 					{
-						LADataMultiReference &couponinfos = dynamic_cast<LADataMultiReference &>(dh->get());	
+						AQLDataMultiReference &couponinfos = dynamic_cast<AQLDataMultiReference &>(dh->get());	
 						for (unsigned int k = 0; k < couponinfos.getSize(); ++k)
 						{
 							// coupon
 							dh = &(couponinfos.get(k).getData(PRICING_DATA_INDEXINFOS, NOCHECK));
 							if (dh->isDefined() && !dh->isNull())
 							{
-								LADataMultiReference &indexInfos = dynamic_cast<LADataMultiReference &>(dh->get());	
+								AQLDataMultiReference &indexInfos = dynamic_cast<AQLDataMultiReference &>(dh->get());	
 								for (unsigned int l = 0; l < indexInfos.getSize(); ++l)
 								{
 									// indexinfos
-									LAString indexType = dynamic_cast<const LADataString &>(indexInfos.get(l).getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
+									AQLString indexType = dynamic_cast<const AQLDataString &>(indexInfos.get(l).getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
 									indexType.toUpper();
 
 									if (indexType == LIBOR)
 									{
 										// get value method
-										const LADataValuation& attrval = dynamic_cast<const LADataValuation&>(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
-										const LACoreValuation* pVal = &attrval.getMethod();
+										const AQLDataValuation& attrval = dynamic_cast<const AQLDataValuation&>(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
+										const AQLCoreValuation* pVal = &attrval.getMethod();
 
 										bool isDelayedSwapConvexityAdjusted = false;
 										if (pVal->isTypeOf(FN_IR_PLAINVANILLASWAPTRADEVALUE))
@@ -1089,63 +1089,63 @@ LAObjectConfigurationVanilla::setUpConvexityAdjustInfo(LAObjectPool &objPool, LA
 											dh = &(indexInfos.get(l).getData(PRICING_DATA_CONVEXITYADJUSTMENT, NOCHECK));
 											if (dh->isDefined() && !dh->isNull())
 											{
-												LAString caModel = dynamic_cast<LADataString&>(dh->get()).get();
+												AQLString caModel = dynamic_cast<AQLDataString&>(dh->get()).get();
 												caModel.toUpper();
-												indexInfos.get(l).add(PRICING_DATA_CAMODEL, new LADataString()).convertFromString(caModel);
+												indexInfos.get(l).add(PRICING_DATA_CAMODEL, new AQLDataString()).convertFromString(caModel);
 												isDelayedSwapConvexityAdjusted = LAMathIndexEntity::isDelayedConvexityAdjustModel(caModel);
 											}
 										}
 										if (isDelayedSwapConvexityAdjusted || pVal->isTypeOf(FN_IR_CAPFLOOROPTIONVALUE))
 										{
 											//get currency
-											LAString ccy = dynamic_cast<LADataString &>(indexInfos.get(l).getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL).get()).get();
+											AQLString ccy = dynamic_cast<AQLDataString &>(indexInfos.get(l).getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL).get()).get();
 											ccy.toLower();
-											LAString tmp_prop;
+											AQLString tmp_prop;
 											// threshold
 											tmp_prop = staticData.getStaticData(ccy + STATIC_DATA_KEY_YIELD_CONVEXITYADJUST_THRESHOLD).toUpper();
-											indexInfos.get(l).add(PRICING_DATA_CATHRESHOLD, new LADataDouble()).convertFromString(tmp_prop);
+											indexInfos.get(l).add(PRICING_DATA_CATHRESHOLD, new AQLDataDouble()).convertFromString(tmp_prop);
 										}
 									}
 									else if (indexType == CMS)
 									{
 										//CFCalcStartEndDate
-										std::vector<LADate> cfcalc_startDate;
-										std::vector<LADate> cfcalc_endDate;
+										std::vector<AQLDate> cfcalc_startDate;
+										std::vector<AQLDate> cfcalc_endDate;
 										for (unsigned int m = 0; m < cashlets.getSize(); ++m)
 										{
 											dh = &(cashlets.get(m).getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 											if (dh->isDefined() && !dh->isNull())
 											{
 												// cashlets
-												cfcalc_startDate.push_back(dynamic_cast<const LADataDate &>(cashlets.get(m).get().getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL).get()).get());
-												cfcalc_endDate.push_back(dynamic_cast<const LADataDate &>(cashlets.get(m).get().getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL).get()).get());
+												cfcalc_startDate.push_back(dynamic_cast<const AQLDataDate &>(cashlets.get(m).get().getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL).get()).get());
+												cfcalc_endDate.push_back(dynamic_cast<const AQLDataDate &>(cashlets.get(m).get().getData(PRICING_DATA_CFCALCENDDATE, ISNOTNULL).get()).get());
 											}
 										}
 										// get value method
-										const LADataValuation& attrval = dynamic_cast<const LADataValuation& >(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
-										const LACoreValuation* pVal = &attrval.getMethod();
+										const AQLDataValuation& attrval = dynamic_cast<const AQLDataValuation& >(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
+										const AQLCoreValuation* pVal = &attrval.getMethod();
 										if (pVal->isTypeOf(FN_IR_CONVERGENCEVALUE))
 										{
-											const LADataValuation& attrval = dynamic_cast<const LADataValuation& >(trade.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
+											const AQLDataValuation& attrval = dynamic_cast<const AQLDataValuation& >(trade.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
 											pVal = &attrval.getMethod();
 										}
 										// convexity adjust is 0 in case of capfloor
 										if (pVal->isTypeOf(FN_IR_CAPFLOOROPTIONVALUE))
 										{
-											indexInfos.get(l).add(PRICING_DATA_CAMODEL, new LADataString()).convertFromString(CMS_CA_ZERO);
+											indexInfos.get(l).add(PRICING_DATA_CAMODEL, new AQLDataString()).convertFromString(CMS_CA_ZERO);
 										}
 										else
 										{
 											//get currency
-											LAString ccy = dynamic_cast<LADataString &>(indexInfos.get(l).getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL).get()).get();
+											AQLString ccy = dynamic_cast<AQLDataString &>(indexInfos.get(l).getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL).get()).get();
 											ccy.toLower();
-											LAString tmp_prop;
+											AQLString tmp_prop;
 											// model
 											tmp_prop = staticData.getStaticData(ccy + STATIC_DATA_KEY_YIELD_CONVEXITYADJUST_MODEL).toUpper();
-											indexInfos.get(l).add(PRICING_DATA_CAMODEL, new LADataString()).convertFromString(tmp_prop);
+											indexInfos.get(l).add(PRICING_DATA_CAMODEL, new AQLDataString()).convertFromString(tmp_prop);
 											// threshold
 											tmp_prop = staticData.getStaticData(ccy + STATIC_DATA_KEY_YIELD_CONVEXITYADJUST_THRESHOLD).toUpper();
-											indexInfos.get(l).add(PRICING_DATA_CATHRESHOLD, new LADataDouble()).convertFromString(tmp_prop);
+											indexInfos.get(l).add(PRICING_DATA_CATHRESHOLD, new AQLDataDouble()).convertFromString(tmp_prop);
 											// integral condition
 											DoubleArray intCondi;
 											tmp_prop = staticData.getStaticData(ccy + STATIC_DATA_KEY_YIELD_CONVEXITYADJUST_INTEGRALUPPERBOUND).toUpper();
@@ -1154,16 +1154,16 @@ LAObjectConfigurationVanilla::setUpConvexityAdjustInfo(LAObjectPool &objPool, LA
 											intCondi.push_back(tmp_prop.getDoubleValue());
 											tmp_prop = staticData.getStaticData(ccy + STATIC_DATA_KEY_YIELD_CONVEXITYADJUST_INTEGRALSTEPS).toUpper();
 											intCondi.push_back(tmp_prop.getDoubleValue());
-											indexInfos.get(l).add(PRICING_DATA_CAINTEGRALCONDITION, new LADataDoubles(intCondi));
+											indexInfos.get(l).add(PRICING_DATA_CAINTEGRALCONDITION, new AQLDataDoubles(intCondi));
 											// CFStartdate CFEnddate
-											indexInfos.get(l).add(PRICING_DATA_CFCALCSTARTDATES, new LADataDates(cfcalc_startDate));
-											indexInfos.get(l).add(PRICING_DATA_CFCALCENDDATES, new LADataDates(cfcalc_endDate));
+											indexInfos.get(l).add(PRICING_DATA_CFCALCSTARTDATES, new AQLDataDates(cfcalc_startDate));
+											indexInfos.get(l).add(PRICING_DATA_CFCALCENDDATES, new AQLDataDates(cfcalc_endDate));
 											// swaption premium integral step
 											tmp_prop = staticData.getStaticData(ccy + STATIC_DATA_KEY_YIELD_CONVEXITYADJUST_PREMIUMINTEGRALSTEPS).toUpper(); 
 											if (tmp_prop != AQ_NO_DATA)
 											{
 												int integralStep = tmp_prop.getIntValue();
-												indexInfos.get(l).add(PRICING_DATA_CAPREMIUMINTEGRALSTEP, new LADataInt(integralStep));
+												indexInfos.get(l).add(PRICING_DATA_CAPREMIUMINTEGRALSTEP, new AQLDataInt(integralStep));
 											}
 										}
 									}
@@ -1180,40 +1180,40 @@ LAObjectConfigurationVanilla::setUpConvexityAdjustInfo(LAObjectPool &objPool, LA
 }
 
 void
-LAObjectConfigurationVanilla::setUpSpotRateRatioMethod(LAObjectPool &objPool, LAMathObjectValue &trade) const
+LAObjectConfigurationVanilla::setUpSpotRateRatioMethod(AQLObjectPool &objPool, AQLMathObjectValue &trade) const
 {
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	dh = &trade.getData(CALIBRATION_DATA_UNDERLYINGS, NOCHECK);
 	if (!dh->isDefined() || dh->isNull())
 		return;
 
-	LADataMultiReference &legs = dynamic_cast<LADataMultiReference &>(dh->get());
+	AQLDataMultiReference &legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 	for (unsigned int i = 0; i < legs.getSize(); ++i)
 	{
 		dh = &legs.get(i).getData(PRICING_DATA_CASHLETS, NOCHECK);
 		if(!dh->isDefined() || dh->isNull())
 			continue;
 
-		const LADataMultiReference &cashlets = dynamic_cast<const LADataMultiReference &>(dh->get());
+		const AQLDataMultiReference &cashlets = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 		for (unsigned int j = 0; j < cashlets.getSize(); ++j)
 		{
 			dh = &(cashlets.get(j).getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 			if(!dh->isDefined() || dh->isNull())
 				continue;
 
-			LADataMultiReference &couponinfos = dynamic_cast<LADataMultiReference &>(dh->get());	
+			AQLDataMultiReference &couponinfos = dynamic_cast<AQLDataMultiReference &>(dh->get());	
 			for (unsigned int k = 0; k < couponinfos.getSize(); ++k)
 			{
 				dh = &(couponinfos.get(k).getData(PRICING_DATA_ODDINDEXTYPE, NOCHECK));
 				if(!dh->isDefined() || dh->isNull())
 					continue;
 
-				LAString currency = dynamic_cast<const LADataString &>(couponinfos.get(k).getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
-				LAString tolerance = staticData.getStaticData(currency.toLower() + STATIC_DATA_KEY_YIELD_SPOTRATERATIOMETHOD_TOLERANCE);
+				AQLString currency = dynamic_cast<const AQLDataString &>(couponinfos.get(k).getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
+				AQLString tolerance = staticData.getStaticData(currency.toLower() + STATIC_DATA_KEY_YIELD_SPOTRATERATIOMETHOD_TOLERANCE);
 				if(tolerance != AQ_NO_DATA)
-					couponinfos.get(k).add(PRICING_DATA_TOLERANCEFORSPOTRATERATIOMETHOD, new LADataDouble()).convertFromString(tolerance);
+					couponinfos.get(k).add(PRICING_DATA_TOLERANCEFORSPOTRATERATIOMETHOD, new AQLDataDouble()).convertFromString(tolerance);
 			}
 		}
 	}
@@ -1221,39 +1221,39 @@ LAObjectConfigurationVanilla::setUpSpotRateRatioMethod(LAObjectPool &objPool, LA
 	return; 
 }
 
-bool LAObjectConfigurationVanilla::setUpMarkovFunctionalParameter(LAObjectPool &objPool, LAMathObjectValue &trade) const
+bool LAObjectConfigurationVanilla::setUpMarkovFunctionalParameter(AQLObjectPool &objPool, AQLMathObjectValue &trade) const
 {
-	const LADataValuation& valuemehod = dynamic_cast<const LADataValuation &>
+	const AQLDataValuation& valuemehod = dynamic_cast<const AQLDataValuation &>
 		(trade.getData(CALIBRATION_DATA_VALUE, ISNOTNULL).get());
 
 	//if (!valuemehod.isTypeOf(FN_IR_NDSSWAPTIONVALUE))
 	//	return false;
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	//excel calculation mode
-	LAString cur;
+	AQLString cur;
 	dh = &(trade.getData(PRICING_DATA_CURRENCY, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		cur = dynamic_cast<LADataString &>(dh->get()).get();
+		cur = dynamic_cast<AQLDataString &>(dh->get()).get();
 	}
 	else
 	{
 		dh = &(trade.getData(PRICING_DATA_PREMIUMCURRENCY, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			cur = dynamic_cast<LADataString &>(dh->get()).get();
+			cur = dynamic_cast<AQLDataString &>(dh->get()).get();
 		}
 		else
 		{
 			dh = &(trade.getData(PRICING_DATA_CURRENCY, ISNOTNULL)); // throw
 		}
 	}
-	LAString markovMeanReversion = mpStaticData->getStaticData(cur.toLower() + STATIC_DATA_KEY_DEAL_MARKOVFUNCTIONAL_MEANREVERSION).toUpper();
+	AQLString markovMeanReversion = mpStaticData->getStaticData(cur.toLower() + STATIC_DATA_KEY_DEAL_MARKOVFUNCTIONAL_MEANREVERSION).toUpper();
 
 	//trade.remove(PRICING_DATA_MARKOVFUNCTIONAL_MEANREVERSION);
-	//trade.LAObject::add(PRICING_DATA_MARKOVFUNCTIONAL_MEANREVERSION, new LADataDouble()).convertFromString(markovMeanReversion);
+	//trade.AQLObject::add(PRICING_DATA_MARKOVFUNCTIONAL_MEANREVERSION, new AQLDataDouble()).convertFromString(markovMeanReversion);
 
 	return true;
 }

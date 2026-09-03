@@ -40,48 +40,48 @@ public:
 protected:
 	//==============================================
 	// create risk object
-	virtual  std::vector<std::pair<LAString, std::vector<LAObject *> > > createRiskEntity(LAObjectPool &objPool) const;
+	virtual  std::vector<std::pair<AQLString, std::vector<AQLObject *> > > createRiskEntity(AQLObjectPool &objPool) const;
 	//==============================================
 	// setup target names 
-	virtual  void setUpTargetNames(const LAString &ccy, LAObject &e, LADataInstance &dataInstance) const;
+	virtual  void setUpTargetNames(const AQLString &ccy, AQLObject &e, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// create scenario1 object 
-	virtual  std::vector<LAObject *> createScenario1Entity(const LAString &ccy, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario1Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create scenario2 object
-	virtual  std::vector<LAObject *> createScenario2Entity(const LAString &ccy, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario2Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create scenario yield object
-	virtual std::vector<LAObject *> createCreditSpreadDeltaEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+	virtual std::vector<AQLObject *> createCreditSpreadDeltaEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 	//==============================================
 	// return risk name
-	virtual  LAString  getRiskName(void) const;
+	virtual  AQLString  getRiskName(void) const;
 	//==============================================
 	// get bump direction
-	virtual  LAString getBumpDirection(const LAString &ccy) const;
+	virtual  AQLString getBumpDirection(const AQLString &ccy) const;
 	//==============================================
 	// get shift value
-	virtual double getShiftVal(const LAString &ccy, SCENARIONUM scenarioNum) const;
+	virtual double getShiftVal(const AQLString &ccy, SCENARIONUM scenarioNum) const;
 	//==============================================
 	// get divunit
-	virtual double getDivUnit(const LAString &fx) const;
+	virtual double getDivUnit(const AQLString &fx) const;
 	//==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &ccy) const;
+	virtual  AQLString  getOutPutName1(const AQLString &ccy) const;
 	//==============================================
 	// get target names 
-	virtual  LAString getTargetNames(const LAString &ccy, LADataInstance &dataInstance)  const {ccy; return AQ_NO_DATA;};
+	virtual  AQLString getTargetNames(const AQLString &ccy, AQLDataInstance &dataInstance)  const {ccy; return AQ_NO_DATA;};
 	//==============================================
 	// isgridsensitivity
-	virtual  bool isGridSensitivity(const LAString &ccy) const  {ccy; return false;};
+	virtual  bool isGridSensitivity(const AQLString &ccy) const  {ccy; return false;};
 	//==============================================
 	// isparallelshift
-	virtual  bool isParallelShift(const LAString &ccy) const {ccy; return false;};
+	virtual  bool isParallelShift(const AQLString &ccy) const {ccy; return false;};
 	//==============================================
 	// get grid term
-	virtual std::vector<LAString> getGridTerm(const LAString &ccy) const { ccy;  std::vector<LAString> ret; return ret; };
+	virtual std::vector<AQLString> getGridTerm(const AQLString &ccy) const { ccy;  std::vector<AQLString> ret; return ret; };
 	//==============================================
 	// get bucket grid term
-	virtual std::vector<LAString> getBucketGridTerm(const LAString &ccy) const { ccy; std::vector<LAString> ret; ret.push_back(AQ_NO_DATA); return ret; };
+	virtual std::vector<AQLString> getBucketGridTerm(const AQLString &ccy) const { ccy; std::vector<AQLString> ret; ret.push_back(AQ_NO_DATA); return ret; };
 };
 #endif

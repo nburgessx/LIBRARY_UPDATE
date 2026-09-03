@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LABlackScholesCalc.h"
 #include "LAAnalyticFormula.h"
 
@@ -25,10 +25,10 @@
 /*! 
     @brief Class declaration to represent linear function.
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
-class LABlackScholesBaseMethod : public LAFunctionBase
+class LABlackScholesBaseMethod : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
@@ -47,7 +47,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -59,26 +59,26 @@ public:
 								// return function value
 	virtual double				operator()(double x) const
 								{
-									return LAFunctionBase::operator()(x);								
+									return AQLFunctionBase::operator()(x);								
 								}
 
 
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								};
 
-	virtual std::vector<LABlackScholesBase* > getAnalyticMethod(LAString risktype);
+	virtual std::vector<LABlackScholesBase* > getAnalyticMethod(AQLString risktype);
 
-	virtual std::vector<LABlackScholesBase* > getPayoffMethod(LAString risktype);
+	virtual std::vector<LABlackScholesBase* > getPayoffMethod(AQLString risktype);
 
 	virtual std::vector<AnalyticParam* > getAnalyticParam(void) { return std::vector<AnalyticParam* >(0);};
 
-	virtual LAStringVector getOptionTypeVector(){return LAStringVector();};
+	virtual AQLStringVector getOptionTypeVector(){return AQLStringVector();};
 
-	virtual LAStringVector getBSComponentVector(LAString risktype) const {return LAStringVector();};
+	virtual AQLStringVector getBSComponentVector(AQLString risktype) const {return AQLStringVector();};
 
-	virtual LAStringVector getBSPayoffComponentVector(LAString risktype) const {return LAStringVector();};
+	virtual AQLStringVector getBSPayoffComponentVector(AQLString risktype) const {return AQLStringVector();};
 
 	virtual void setOptionTerm(double Te) {};
 	
@@ -94,7 +94,7 @@ public:
 
 	void setForwardShiftValue(double forwardshiftvalue);
 
-	std::vector<LAString > mOptionType;
+	std::vector<AQLString > mOptionType;
 
 	std::vector<LABlackScholesBase* > mBSAnalyticMethod;
 	std::vector<LABlackScholesBase* > mBSPayoffMethod;

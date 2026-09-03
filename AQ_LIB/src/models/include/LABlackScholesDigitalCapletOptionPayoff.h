@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       LABlackScholesBaseMethod
 //  DESCRIPTION :       Class declaration to represent linear function
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -19,9 +19,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LABlackScholesCapletOptionPayoff.h"
 
 
@@ -60,7 +60,7 @@ public:
     virtual bool                isTypeOf(function_t id) const override;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*     clone() const override;
+	virtual AQLCoreFunctionBase*     clone() const override;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const override ;
@@ -69,11 +69,11 @@ public:
 								// return function value
 	virtual double				operator()(const DoubleArray& x) const override;
 
-	virtual LAStringVector getOptionTypeVector() override;
+	virtual AQLStringVector getOptionTypeVector() override;
 
-	virtual LAStringVector getBSComponentVector(LAString risktype) const override;
+	virtual AQLStringVector getBSComponentVector(AQLString risktype) const override;
 
-	virtual LAStringVector getBSPayoffComponentVector(LAString risktype) const override;
+	virtual AQLStringVector getBSPayoffComponentVector(AQLString risktype) const override;
 
 	virtual std::vector<AnalyticParam* > getAnalyticParam(void) override;
 

@@ -2,7 +2,7 @@
 
 #pragma once
 #include <string>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CoreEnumerations.h"
 
 namespace etrading

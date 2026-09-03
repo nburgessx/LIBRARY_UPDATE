@@ -14,8 +14,8 @@ namespace validation
     *  @param [in]		update		A number that tracks the nth calculation of the same PCA analysis
     *  @return			PCA results
     */
-    LAStringMatrix tryMirGetPCAResults( LADataInstance* dataInstance,
-                                      const LAString& id,
+    AQLStringMatrix tryMirGetPCAResults( AQLDataInstance* dataInstance,
+                                      const AQLString& id,
                                       int update )
     {
         VALID_EXCEPTION_START
@@ -31,12 +31,12 @@ namespace validation
 
         // Get Eigen vector results
         DoubleMatrix tmp;
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, LAString( "EIGEN_VECTORS" ), id );
+        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VECTORS" ), id );
         size_t num_factor = tmp.size();
         size_t dim_data = tmp[0].size();
 
         // Initialise output matrix
-        LAStringMatrix ret;
+        AQLStringMatrix ret;
         ret.resize( dim_data + 3 );
         for( size_t i = 0; i < dim_data + 3; ++i )
         {
@@ -47,37 +47,37 @@ namespace validation
         ret[0][0] = "";
         for( size_t i = 0; i < num_factor; i++ )
         {
-            LAString tmp_str = LAString( "PC" ) + LAString( static_cast<double>( i + 1 ), 0 );
+            AQLString tmp_str = AQLString( "PC" ) + AQLString( static_cast<double>( i + 1 ), 0 );
             ret[0][i + 1] = tmp_str.getCString();
         }
 
         // Data
         for ( size_t j = 0; j < dim_data; j++ )
         {
-            LAString tmp_str = LAString( "Series" ) + LAString( static_cast<double>( j + 1 ), 0 );
+            AQLString tmp_str = AQLString( "Series" ) + AQLString( static_cast<double>( j + 1 ), 0 );
             ret[j + 1][0] = tmp_str.getCString();
 
             for( unsigned int i = 0; i < num_factor; i++ )
             {
-                ret[j + 1][i + 1] = LAString( tmp[i][j] );
+                ret[j + 1][i + 1] = AQLString( tmp[i][j] );
             }
         }
 
         // Get POV results
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, LAString( "POV" ), id );
+        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "POV" ), id );
 
         ret[dim_data + 1][0] = "POV";
         for( unsigned int i = 0; i < num_factor; i++ )
         {
-            ret[dim_data + 1][i + 1] = LAString( tmp[0][i] );
+            ret[dim_data + 1][i + 1] = AQLString( tmp[0][i] );
         }
 
         // Get Eigen value results
-        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, LAString( "EIGEN_VALUES" ), id );
+        tmp = etrading::LAUpdateStaticDataManager::GetPCAResult( dataInstance, AQLString( "EIGEN_VALUES" ), id );
         ret[dim_data + 2][0] = "Eigen Values";
         for( unsigned int i = 0; i < num_factor; i++ )
         {
-            ret[dim_data + 2][i + 1] = LAString( tmp[0][i] );
+            ret[dim_data + 2][i + 1] = AQLString( tmp[0][i] );
         }
 
         if ( CreateDataFile::recordEnabled() )

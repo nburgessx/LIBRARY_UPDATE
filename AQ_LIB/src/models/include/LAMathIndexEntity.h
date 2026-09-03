@@ -5,8 +5,8 @@
 #endif
 
 
-#include "LAObject.h"
-#include "LACoreAutoPtr.h"
+#include "AQLObject.h"
+#include "AQLCoreAutoPtr.h"
 #include "LAMathAttrSDE.h"
 
 //// DEFINES ////
@@ -84,32 +84,32 @@
 
 
 
-class LADataInstance;
-class LADate;
-class LADataBool;
-class LADataString;
-class LADataStrings;
-class LADataReference;
-class LAPriceDataCalendar;
-class LAPriceDataSlidingRule;
-class LAPriceDataDayCount;
-class LAPriceDataInterpolation;
+class AQLDataInstance;
+class AQLDate;
+class AQLDataBool;
+class AQLDataString;
+class AQLDataStrings;
+class AQLDataReference;
+class AQLPriceDataCalendar;
+class AQLPriceDataSlidingRule;
+class AQLPriceDataDayCount;
+class AQLPriceDataInterpolation;
 class LAMathFXEntity;
 class LAMathPathEntity;
 class LAMathPlainVanillaEntity;
-class LA1DDataSet;
-class LAObjectPool;
+class AQL1DDataSet;
+class AQLObjectPool;
 class LAMathYieldCurve;
 class LAMathYieldCurvePro;
 /*! 
     @brief Class to represent index.
 */
-class LAMathIndexEntity : public LAObject
+class LAMathIndexEntity : public AQLObject
 {
 public:
 // LIFECYCLE
     // default constructor
-	LAMathIndexEntity(LADataInstance* dataInstance);
+	LAMathIndexEntity(AQLDataInstance* dataInstance);
     // copy constructor
 	LAMathIndexEntity(const LAMathIndexEntity& irse);
     // destructor
@@ -121,86 +121,86 @@ public:
     // Check function for this class type
 	virtual bool		isTypeOf(object_t id) const;
 	// get this index name
-	const LADataString&	getName() const;
+	const AQLDataString&	getName() const;
 	// get this index name
-	LADataString&		getName();
+	AQLDataString&		getName();
 	// get index type
-	const LADataString&	getIndexType() const;
+	const AQLDataString&	getIndexType() const;
 	// get index type
-	LADataString&		getIndexType();	
+	AQLDataString&		getIndexType();	
 	// get index accessory
-	const LADataString&	getAccessory() const;
+	const AQLDataString&	getAccessory() const;
 	// get index accessory
-	LADataString&		getAccessory();	
+	AQLDataString&		getAccessory();	
 	// get index currency
-	const LADataString&	getCurrency() const;
+	const AQLDataString&	getCurrency() const;
 	// get index currency
-	LADataString&		getCurrency();
+	AQLDataString&		getCurrency();
 	// get index daycount
-	const LAPriceDataDayCount&	getDayCount() const;
+	const AQLPriceDataDayCount&	getDayCount() const;
 	// get index daycount
-	LAPriceDataDayCount&		getDayCount();
+	AQLPriceDataDayCount&		getDayCount();
 	// get index frequency
-	const LADataString&	getFrequency() const;
+	const AQLDataString&	getFrequency() const;
 	// get index frequency
-	LADataString&		getFrequency();	
+	AQLDataString&		getFrequency();	
 	// get index calendar
-	const LAPriceDataCalendar&
+	const AQLPriceDataCalendar&
 						getCalendar() const;
 	// get index calendar
-	LAPriceDataCalendar&		getCalendar();		
+	AQLPriceDataCalendar&		getCalendar();		
 	// get index sliding rule
-	const LAPriceDataSlidingRule&
+	const AQLPriceDataSlidingRule&
 						getSlidingRule() const;
 	// get index sliding rule
-	LAPriceDataSlidingRule&	getSlidingRule();		
+	AQLPriceDataSlidingRule&	getSlidingRule();		
 	// get path object
-	const LADataReference&
+	const AQLDataReference&
 						getPathEntity() const;
 	// get path object
-	LADataReference&
+	AQLDataReference&
 						getPathEntity();
 	// get fx object
-	const LADataReference&
+	const AQLDataReference&
 						getFXEntity() const;
 	// get fx object
-	LADataReference&
+	AQLDataReference&
 						getFXEntity();
 	// get basis
-	const LADataString&
+	const AQLDataString&
 						getBasis() const;
 	// get basis
-	LADataString&
+	AQLDataString&
 						getBasis();
 	// get discount curve
-	const LADataString&
+	const AQLDataString&
 						getDiscountCurve() const;
 	// get discount curve
-	LADataString&
+	AQLDataString&
 						getDiscountCurve();
 	// get basis interpolation
-	const LAPriceDataInterpolation&
+	const AQLPriceDataInterpolation&
 						getBasisInterpolation() const;
 	// get basis interpolation
-	LAPriceDataInterpolation&
+	AQLPriceDataInterpolation&
 						getBasisInterpolation();
 	// get isfwdinter
-	const LADataBool&
+	const AQLDataBool&
 						getIsFWDInterpolation() const;
 	// get isfwdinter
-	LADataBool&
+	AQLDataBool&
 						getIsFWDInterpolation();
 	// get fwd interpolation
-	const LAPriceDataInterpolation&
+	const AQLPriceDataInterpolation&
 						getFWDInterpolation() const;
 	// get fwd interpolation
-	LAPriceDataInterpolation&
+	AQLPriceDataInterpolation&
 						getFWDInterpolation();
 	// get volatility underlying
-	const LADataString&
+	const AQLDataString&
 						getVolUnderlying() const;
 	// get volatility underlying
-	LADataString&
+	AQLDataString&
 						getVolUnderlying();
 
 	// get time grid
@@ -231,17 +231,17 @@ public:
 	// set cache size
 	void				setCacheSize(unsigned int size);	
 	// add to time grid
-	void				addGrid(const LADate& date);
+	void				addGrid(const AQLDate& date);
 	// add to time grids used for calculation of convexity adjustment
-	void				addConvexityGrids(const LADate& fixingdate, const LADate& paymentdate, const LADate& enddate);
+	void				addConvexityGrids(const AQLDate& fixingdate, const AQLDate& paymentdate, const AQLDate& enddate);
 	// clear grid
 	void				clearGrid(void);
 	//	make copy(clone) of this index object object.
-	LAObject*			clone() const;// %%% COVARIANT RETURN %%%
+	AQLObject*			clone() const;// %%% COVARIANT RETURN %%%
 
 //  OPERATION 
 	// remove specified Data.If there is not Data to remove, do nothing.If member variable is specified to remove, do not remove it.
-	virtual void        remove(const LAString& dataName);
+	virtual void        remove(const AQLString& dataName);
 	// Initialize this Object.
 	virtual void		reset(void);
 	// set up index for MC calculaion
@@ -251,9 +251,9 @@ public:
 	// set up this class for index calculation
 	virtual	void		setUpforPlainVanilla(void);
 	// get spot lag
-	void setSpotLag(const LAString &ccy, unsigned int lag);
+	void setSpotLag(const AQLString &ccy, unsigned int lag);
 	// set dates for indexgenerate
-	void setDatesForIndexGenerates(const std::map<LADate, DateVector>& datesmap);
+	void setDatesForIndexGenerates(const std::map<AQLDate, DateVector>& datesmap);
 	// get convexity adjust 
 	const DoubleArray& getConvexityAdjust() const {return mConvexityAdjust;};
 	// get convexity adjust vol
@@ -265,11 +265,11 @@ public:
 	bool				isDelayedConvexityAdjusted() const;
 
 	// is caModel the word that means convexity adjustment model for delayed libor
-	static bool			isDelayedConvexityAdjustModel(const LAString& caModel);
+	static bool			isDelayedConvexityAdjustModel(const AQLString& caModel);
 
 protected:
 	// copy index object	 
-	virtual LAObject&	copy(const LAObject& e);
+	virtual AQLObject&	copy(const AQLObject& e);
 	// calculate index
 	virtual	void		calcIndex();	
 	// set up this class for index calculation
@@ -290,27 +290,27 @@ protected:
 	// clear cash data
 	void						clearCache(void);
 	// set Data specified by the name.
-	LADataHolder&				add(const LAString& name);
+	AQLDataHolder&				add(const AQLString& name);
 	// calc SpreadMat
 	void						calcSpreadMat(const LAMathYieldCurve &curve, const DoubleMatrix &gridMat);
 
-	LADataHolder*				mpName;     // name (DATA_STRING)
-	LADataHolder*				mpIndexType;// index type (DATA_STRING)
-	LADataHolder*				mpAccessory;// index accessory (DATA_STRING)
-	LADataHolder*				mpCurrency;	// currency (DATA_STRING)
-	LADataHolder*				mpDC;		// daycount (DATA_DAYCOUNT)
-	LADataHolder*				mpFrequency;// daycount (DATA_STRING)
-	LADataHolder*				mpCalendar;	// calendar (DATA_CALENDAR)
-	LADataHolder*				mpSlidingRule;// slidingrule (DATA_SLIDINGRULE)
-	LADataHolder*				mpPathEntity;// path object(DATA_REFERENCE)
-	LADataHolder*				mpFXEntity;// fx object(DATA_REFERENCE)
-	LADataHolder*				mpCacheSize;// cache size
-	LADataHolder*				mpDiscountCurve;    // discount curve (DATA_STRINGS)
-	LADataHolder*				mpBasis;    // basis (DATA_STRINGS)
-	LADataHolder*				mpBasisInter; // basis (DATA_INTERPOLATION)
-	LADataHolder*				mpIsFWDInter;    // basis (DATA_BOOL)
-	LADataHolder*				mpFWDInter; // basis (DATA_INTERPOLATION)
-	LADataHolder*				mpVolUnderlying; // volatility underlying (DATA_STRING)
+	AQLDataHolder*				mpName;     // name (DATA_STRING)
+	AQLDataHolder*				mpIndexType;// index type (DATA_STRING)
+	AQLDataHolder*				mpAccessory;// index accessory (DATA_STRING)
+	AQLDataHolder*				mpCurrency;	// currency (DATA_STRING)
+	AQLDataHolder*				mpDC;		// daycount (DATA_DAYCOUNT)
+	AQLDataHolder*				mpFrequency;// daycount (DATA_STRING)
+	AQLDataHolder*				mpCalendar;	// calendar (DATA_CALENDAR)
+	AQLDataHolder*				mpSlidingRule;// slidingrule (DATA_SLIDINGRULE)
+	AQLDataHolder*				mpPathEntity;// path object(DATA_REFERENCE)
+	AQLDataHolder*				mpFXEntity;// fx object(DATA_REFERENCE)
+	AQLDataHolder*				mpCacheSize;// cache size
+	AQLDataHolder*				mpDiscountCurve;    // discount curve (DATA_STRINGS)
+	AQLDataHolder*				mpBasis;    // basis (DATA_STRINGS)
+	AQLDataHolder*				mpBasisInter; // basis (DATA_INTERPOLATION)
+	AQLDataHolder*				mpIsFWDInter;    // basis (DATA_BOOL)
+	AQLDataHolder*				mpFWDInter; // basis (DATA_INTERPOLATION)
+	AQLDataHolder*				mpVolUnderlying; // volatility underlying (DATA_STRING)
 
 
 //	int							mCacheSize;	// cash size 
@@ -347,25 +347,25 @@ protected:
 	DoubleArray					mTimingTerm;// timing term
 	bool                        mIsSameFwds; // forward rate same accessary
 	bool                        mIsDaycountAdj; // flag for determining whether forward rate is adjusted by daycount
-	LAString					mCurveType;
+	AQLString					mCurveType;
 
 	//for analytic
 	DoubleMatrix				mDFMat;// DF grid of each index observation date which can be used when analytic risk
 	// for fx
 	DoubleArray					mForwardTimes;// forward times
-	LAString					mFromCurrency;// currency (from)
-	LAString					mToCurrency;// currency (to)
+	AQLString					mFromCurrency;// currency (from)
+	AQLString					mToCurrency;// currency (to)
 
 	DateVector					mDateGrid_old;// date grid (last use) 
 	LAMathPlainVanillaEntity*		mpVanilla; // pointer to plain vanilla object
-	std::map<LAString, unsigned int> mSpotLag;// spot lag
-	std::map<LADate, DateVector> mDatesForGenerate;// dates for indexgenerate
+	std::map<AQLString, unsigned int> mSpotLag;// spot lag
+	std::map<AQLDate, DateVector> mDatesForGenerate;// dates for indexgenerate
 
 	double	getLIBORConvexityAdjust(double forward, double fixingterm, double timingterm, double dfEnd, double dfPayment, unsigned int curpos);
 	double	getConvexityAdjust(double forward, double optionterm, unsigned int curpos);
 	DoubleArray					mConvexityAdjust; // convexity adjust 
 	DoubleArray					mConvexityAdjustVol; // convexity adjust volatility
-	LAString					mConvexityAdjustModel; // convexity adjust model
+	AQLString					mConvexityAdjustModel; // convexity adjust model
 	double						mConvexityAdjustThreshold; // convexity adjust thresholds
 	DoubleArray					mCouponTerm; // calculation period of coupon
 	DoubleArray					mConvexityAdjustIC; // integral conditons: (lower bound ofintegral range, upper bound ofintegral range, integral steps)

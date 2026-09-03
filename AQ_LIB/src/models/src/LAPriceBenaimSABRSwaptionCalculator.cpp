@@ -5,8 +5,8 @@
 #endif
 
 #include "LAPriceBenaimSABRSwaptionCalculator.h"
-#include "LADist.h"
-#include "LACoreUtil.h"
+#include "AQLDist.h"
+#include "AQLCoreUtil.h"
 #include "LAMathOptionTools.h"
 
 // Benaim SABR option model to use for CMS replication. The price tails are replaced by parametric functions with smooth junction.
@@ -15,7 +15,7 @@ MVBenaimSABRSwaptionCalculator::MVBenaimSABRSwaptionCalculator(double S0_, const
 : MVSABRSwaptionCalculator(S0_, sabrParameters_)
 {
     if (extraParameters_.size() < 4)
-        LACoreInvalidData("Invalid parameter size in Benaim SABR swaption calculator",__FILE__,__LINE__);
+        AQLCoreInvalidData("Invalid parameter size in Benaim SABR swaption calculator",__FILE__,__LINE__);
 
     mLeftTail = extraParameters_[0];
     mRightTail = extraParameters_[1];
@@ -35,7 +35,7 @@ void MVBenaimSABRSwaptionCalculator::CheckCache(double t)
         double stDev = atmVol * sqrt(t);
 
         // Left tail
-        double confLeft = LADist::invNormdist(mLeftCutOff);
+        double confLeft = AQLDist::invNormdist(mLeftCutOff);
         mKm = mS0 * exp(-0.5 * stDev * stDev - confLeft * stDev);
         if (mUseLeft)
         {
@@ -60,7 +60,7 @@ void MVBenaimSABRSwaptionCalculator::CheckCache(double t)
         }
 
         // Right tail
-        double confRight = LADist::invNormdist(mRightCutOff);
+        double confRight = AQLDist::invNormdist(mRightCutOff);
         mKp = mS0 * exp(-0.5 * stDev * stDev + confRight * stDev);
         double prr = SABRPrice(t, mKp, true);
         double hr = 0.0001;

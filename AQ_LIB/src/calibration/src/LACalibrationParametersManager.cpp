@@ -18,7 +18,7 @@
 #endif
 
 
-#include "LADataBasics.h"
+#include "AQLDataBasics.h"
 #include "LACalibrationParametersManager.h"
 #include "LACalibrationParametersHW.h"
 #include "LACalibrationParametersPtberg.h"
@@ -80,9 +80,9 @@ LACalibrationParametersManager::getInstance()
 	@return  LACalibrationParameters *
 */
 LACalibrationParameters *
-LACalibrationParametersManager::createCalibInfoCreator(const LAString &model) const
+LACalibrationParametersManager::createCalibInfoCreator(const AQLString &model) const
 {
-	LAString tmpModel = model;
+	AQLString tmpModel = model;
 	tmpModel.toUpper();
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	if (tmpModel == MODEL_HW)

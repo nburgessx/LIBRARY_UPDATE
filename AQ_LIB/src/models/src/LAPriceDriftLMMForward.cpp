@@ -26,16 +26,16 @@
 #include "LAPriceDriftLMMForward.h"
 
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAMathCorrelation.h"
 #include "LAMathVolFuncBase.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 using namespace std;
 
@@ -61,14 +61,14 @@ LAPriceDriftLMMForward::LAPriceDriftLMMForward(unsigned int point, double Q)
 	@param[in] point forward measure point(DiscountBond who's maturity is  mPoint-th forward libor cf time(mTenor[mPoint + 1]) is numerarire)  
 	@param[in] Q val for displaced diffusion case
 */
-LAPriceDriftLMMForward::LAPriceDriftLMMForward(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, unsigned int point, double Q)
+LAPriceDriftLMMForward::LAPriceDriftLMMForward(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, unsigned int point, double Q)
 : LAPriceDriftLMMBase(sdeAttrName, i, tenor, delta_tenor, Q), mPoint(point)
 {
 	if (tenor.at(0) == 0.0)
 	{
 		if (mPoint == 0)
 		{
-			throw LACoreInvalidData("if tenor[0] = 0.0, point must be more than zero", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("if tenor[0] = 0.0, point must be more than zero", __FILE__, __LINE__);
 		}
 		mPoint--;
 	}
@@ -96,7 +96,7 @@ LAPriceDriftLMMForward::~LAPriceDriftLMMForward()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftLMMForward::clone() const	
 {
     try 
@@ -105,7 +105,7 @@ LAPriceDriftLMMForward::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -153,7 +153,7 @@ LAPriceDriftLMMForward::operator()(const DoubleArray& x) const
 		if (x[0] == 0.0) pos = 0;
 		else if (x[0] == (*mpTimes)[mPos_old]) pos = mPos_old;
 		else if (mPos_old + 1 < mpTimes->size() && x[0] == (*mpTimes)[mPos_old + 1]) pos = mPos_old + 1;
-		else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0], 0, mpTimes->size() - 1, pos))
+		else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0], 0, mpTimes->size() - 1, pos))
 		{
 			pos = 0;
 			mPos_old = 0;
@@ -253,14 +253,14 @@ LAPriceDriftLMMForward::operator()(const DoubleArray& x) const
     @param[in] string representaion  (sde attr name : suffix : tenor : deltatenor)
 */
 void
-LAPriceDriftLMMForward::convertFromString(const LAString& str)
+LAPriceDriftLMMForward::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() < 5 || tmp.getSize() % 2 == 0)
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	}
 
 	mSDEAttrName = tmp.get()[0];
@@ -280,7 +280,7 @@ LAPriceDriftLMMForward::convertFromString(const LAString& str)
 		mDeltaTenor.erase(mDeltaTenor.begin());
 		if (mPoint == 0)
 		{
-			throw LACoreInvalidData("if tenor[0] = 0.0, point must be more than zero", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("if tenor[0] = 0.0, point must be more than zero", __FILE__, __LINE__);
 		}		
 		mPoint--;
 	}
@@ -300,7 +300,7 @@ LAPriceDriftLMMForward::setTenor(const DoubleArray& tenor, const DoubleArray& de
 	{
 		if (mPoint == 0)
 		{
-			throw LACoreInvalidData("if tenor[0] = 0.0, point must be more than zero", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("if tenor[0] = 0.0, point must be more than zero", __FILE__, __LINE__);
 		}		
 		mPoint--;
 	}
@@ -310,7 +310,7 @@ LAPriceDriftLMMForward::setTenor(const DoubleArray& tenor, const DoubleArray& de
 	if (mPoint + 1 >= mTenor.size())
 	{
 		//error
-		throw LACoreInvalidData("point + 1 must be less than tenor size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("point + 1 must be less than tenor size", __FILE__, __LINE__);
 	}
 }
 
@@ -334,7 +334,7 @@ LAPriceDriftLMMForward::integral(const std::vector<std::pair<double,double> >& x
 		unsigned int pos_e;
 		if (mPos_old + 1 < (*mpTimes).size() && x[0].second == (*mpTimes)[mPos_old + 1])
 			pos_e = mPos_old + 1;
-		else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].second, 0, mpTimes->size() - 1, pos_e))
+		else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].second, 0, mpTimes->size() - 1, pos_e))
 			pos_e = 0;
 		mPos_old = pos_e; 		
 
@@ -399,7 +399,7 @@ LAPriceDriftLMMForward::integral(const std::vector<std::pair<double,double> >& x
 	{
 		if (mPos_old + 1 < (*mpTimes).size() && x[0].second == (*mpTimes)[mPos_old + 1])
 			pos_e = mPos_old + 1;
-		else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].second, 0, mpTimes->size() - 1, pos_e))
+		else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].second, 0, mpTimes->size() - 1, pos_e))
 			pos_e = 0;
 		mPos_old = pos_e; 					
 	
@@ -407,7 +407,7 @@ LAPriceDriftLMMForward::integral(const std::vector<std::pair<double,double> >& x
 		{
 			if (x[0].first == (*mpTimes)[mPos_old - 1])
 				pos_s = mPos_old - 1;
-			else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].first, 0, mpTimes->size() - 1, pos_s))
+			else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].first, 0, mpTimes->size() - 1, pos_s))
 				pos_s = 0;
 		}
 	}
@@ -476,7 +476,7 @@ LAPriceDriftLMMForward::setUp(LAMathPathEntity& path)
 	if (mPoint + 1 >= mTenor.size())
 	{
 		//error
-		throw LACoreInvalidData("point + 1 must be less than tenor size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("point + 1 must be less than tenor size", __FILE__, __LINE__);
 	}
 
 	LAPriceDriftLMMBase::setUp(path);

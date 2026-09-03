@@ -8,7 +8,7 @@ namespace google_test
 	*  @brief			Set up CTD curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeCTDCurve(const LAString& inputFile)
+	void setUpMeCTDCurve(const AQLString& inputFile)
 	{
 		if ( inputFile.size() != 0 )
         {
@@ -22,7 +22,7 @@ namespace google_test
                                                         inputFileObj["curveConv"],
                                                         inputFileObj["collateralCurves"]);
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }

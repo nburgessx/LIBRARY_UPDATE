@@ -21,8 +21,8 @@
 
 
 
-class LAString;
-class LADataInstance;
+class AQLString;
+class AQLDataInstance;
 class LARiskConfigurationVolCreatorLMM;
 //===================== Class Declare LARiskConfigurationVolIRVega==================================
 /*! 
@@ -48,112 +48,112 @@ friend class LARiskConfigurationVolCreatorLMM;
 	//                overridden to provide them with additional dataValues required to perform the vega conversion
 	//  @param objPool [in] The object pool
 	//  @return A vector of pairs each entry of which is a pair of the currency and the risk object
-	virtual std::vector<std::pair<LAString, std::vector<LAObject *> > > createRiskEntity(LAObjectPool &objPool) const;
+	virtual std::vector<std::pair<AQLString, std::vector<AQLObject *> > > createRiskEntity(AQLObjectPool &objPool) const;
 	//==============================================
 	// get  target names 
-	virtual  LAString getTargetNames(const LAString &ccy, LADataInstance &dataInstance)  const;	
+	virtual  AQLString getTargetNames(const AQLString &ccy, AQLDataInstance &dataInstance)  const;	
 	//==============================================
 	// create scenario volatility object
-	virtual std::vector<LAObject *> createVolatilityEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const;
+	virtual std::vector<AQLObject *> createVolatilityEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const;
 	//==============================================
 	// create scenario volatility object
-	virtual std::vector<LAObject *> createVolatilityEntityOld(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
+	virtual std::vector<AQLObject *> createVolatilityEntityOld(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
 	//==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &ccy) const;
+	virtual  AQLString  getOutPutName1(const AQLString &ccy) const;
 	//==============================================
 	// get shift type
-	virtual  LAString  getShiftType(const LAString &ccy) const;
+	virtual  AQLString  getShiftType(const AQLString &ccy) const;
 	//==============================================
 	// get bump direction
-	virtual  LAString  getBumpDirection(const LAString &ccy) const;
+	virtual  AQLString  getBumpDirection(const AQLString &ccy) const;
 	//==============================================
 	// get risk name
-	virtual  LAString getRiskName(void) const;
+	virtual  AQLString getRiskName(void) const;
 	//==============================================
 	// check target currencies
-	virtual  LAString getTargetCurrencies() const;
+	virtual  AQLString getTargetCurrencies() const;
 	//==============================================
 	// get calibration target currencies
-	virtual  LAString getCalibTargetCurrencies() const;
+	virtual  AQLString getCalibTargetCurrencies() const;
 	//==============================================
 	// isgridsensitivity
-	virtual  bool  isGridSensitivity(const LAString &ccy) const;
+	virtual  bool  isGridSensitivity(const AQLString &ccy) const;
 	//==============================================
 	// isparallelshift
-	virtual  bool isParallelShift(const LAString &ccy) const;
+	virtual  bool isParallelShift(const AQLString &ccy) const;
 	//==============================================
 	// get grid term
-	virtual std::vector<LAString> getGridTerm(const LAString &ccy) const;
+	virtual std::vector<AQLString> getGridTerm(const AQLString &ccy) const;
 	//==============================================
 	// get grid term
-	virtual std::vector<LAString> getMarketTerm(const LAString &ccy) const;
+	virtual std::vector<AQLString> getMarketTerm(const AQLString &ccy) const;
 	//==============================================
 	// get bucket grid term
-	virtual std::vector<LAString> getBucketGridTerm(const LAString &ccy) const;
+	virtual std::vector<AQLString> getBucketGridTerm(const AQLString &ccy) const;
 	//==============================================
 	// isfileuse
-	virtual  bool isShiftValFileUse(const LAString &ccy) const;
+	virtual  bool isShiftValFileUse(const AQLString &ccy) const;
 	//==============================================
 	// get scenario1 shift
-	virtual double getScenario1ShiftValue(const LAString &ccy) const;
+	virtual double getScenario1ShiftValue(const AQLString &ccy) const;
 	//==============================================
 	// get scenario2 shift
-	virtual double getScenario2ShiftValue(const LAString &ccy) const;
+	virtual double getScenario2ShiftValue(const AQLString &ccy) const;
 	//==============================================
 	// get divunit
-	virtual double getDivUnit(const LAString &ccy) const;
+	virtual double getDivUnit(const AQLString &ccy) const;
 	//==============================================
 	// get double matrix
-	virtual DoubleMatrix getCoordinatesMatrix(const LAString &ccy) const;
+	virtual DoubleMatrix getCoordinatesMatrix(const AQLString &ccy) const;
 	//==============================================
 	// get fileval matrix
-	virtual DoubleMatrix getFileValMatrix(const LAString &ccy) const;
+	virtual DoubleMatrix getFileValMatrix(const AQLString &ccy) const;
 	//==============================================
 	// get extra target names1
-	virtual  LAStringVector getExtraTargetNames1(const LAString &ccy, LADataInstance &dataInstance) const;
+	virtual  AQLStringVector getExtraTargetNames1(const AQLString &ccy, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// create extraScenario1 object 
-	virtual  std::vector<std::vector<LAObject *> > createExtraScenario1Entity(const LAString &ccy, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<std::vector<AQLObject *> > createExtraScenario1Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// get extra target names2
-	virtual  LAStringVector getExtraTargetNames2(const LAString &ccy, LADataInstance &dataInstance) const;
+	virtual  AQLStringVector getExtraTargetNames2(const AQLString &ccy, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// create extraScenario2 object 
-	virtual  std::vector<std::vector<LAObject *> > createExtraScenario2Entity(const LAString &ccy, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<std::vector<AQLObject *> > createExtraScenario2Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create extraScenario object 
-	virtual  std::vector<std::vector<LAObject *> > createExtraFXScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+	virtual  std::vector<std::vector<AQLObject *> > createExtraFXScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 	//==============================================
 	// create extraScenario object 
-	virtual  std::vector<std::vector<LAObject *> > createExtraFXScenarioEntityOld(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+	virtual  std::vector<std::vector<AQLObject *> > createExtraFXScenarioEntityOld(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 	//==============================================
 	// get bump type
-	virtual  LAString getBumpType(const LAString &ccy) const;
+	virtual  AQLString getBumpType(const AQLString &ccy) const;
 	//==============================================
 	// get grid type
-	virtual  LAString getGridType(const LAString &ccy) const;
+	virtual  AQLString getGridType(const AQLString &ccy) const;
 	//==============================================
 	// get grid term
-	virtual std::vector<LAString> getCoordinates(const LAString &ccy) const;
+	virtual std::vector<AQLString> getCoordinates(const AQLString &ccy) const;
 	//==============================================
 	// get is wave
-	virtual  bool  isWave(const LAString &ccy) const;
+	virtual  bool  isWave(const AQLString &ccy) const;
 	//==============================================
 	// isRiskCurrencyMode
-	virtual bool isRiskCurrencyMode(const LAString& ccy) const;
+	virtual bool isRiskCurrencyMode(const AQLString& ccy) const;
 	//==============================================
 	// check calibration target
-	virtual  LAStringVector getCalibTargetFX(const LAString &ccy, LADataInstance &dataInstance) const;
+	virtual  AQLStringVector getCalibTargetFX(const AQLString &ccy, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// reduce market grids in SABR model
-	virtual  LAStringVector reduceTargetGrids(const LAString &ccy, const LAStringVector &mktGrids) const;
+	virtual  AQLStringVector reduceTargetGrids(const AQLString &ccy, const AQLStringVector &mktGrids) const;
 	//==============================================
 	// get vega type
-	virtual LAString getVegaType(const LAString &ccy) const;
+	virtual AQLString getVegaType(const AQLString &ccy) const;
 	//==============================================
 	// store Swap Rate and Vol for risk print value
-	virtual void storeIRAdditionalInfo(LADataInstance &dataInstance, const MAScenarioParam& param) const;
+	virtual void storeIRAdditionalInfo(AQLDataInstance &dataInstance, const MAScenarioParam& param) const;
 };
 
 

@@ -5,23 +5,23 @@
 #endif
 
 #include "LAMathInterpolationUtilities.h"
-#include "LABasic.h"
-#include "LAMonotoneConvexInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAParabolicInterpolation.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
-#include "LAConstrainedSplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LALinearInterpolation.h"
-#include "LAInterpolationBase.h"
+#include "AQLBasic.h"
+#include "AQLMonotoneConvexInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLParabolicInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
+#include "AQLConstrainedSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLInterpolationBase.h"
 #include "LAAnalyticFormula.h"
 #include "LABlackScholesCalc.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include <cmath>
 #include <map>
-#include "LACoreComponentManager.h"
-#include "LAFunctionUtilities.h"
+#include "AQLCoreComponentManager.h"
+#include "AQLFunctionUtilities.h"
 using namespace std;
 
 
@@ -46,7 +46,7 @@ std::vector<double> LAMathInterpolationUtilities::interpolate( const DoubleArray
 	AQ_REQUIRE( nPoints != 0 , "Unable to Interpolate: No interpolation search points were requested, Interpolation xPoints parameter is empty" )
 	
 	// Build the interpolator object	
-	std::shared_ptr<LAInterpolationBase> interpolator = buildInterpolator( xValues, yValues, interpolationEnum, joinXValue );
+	std::shared_ptr<AQLInterpolationBase> interpolator = buildInterpolator( xValues, yValues, interpolationEnum, joinXValue );
 	
 	// Get the interpolated values
 	std::vector<double> results( nPoints, 0.0 );
@@ -58,7 +58,7 @@ std::vector<double> LAMathInterpolationUtilities::interpolate( const DoubleArray
 	return results;
 }
 
-std::shared_ptr<LAInterpolationBase> LAMathInterpolationUtilities::buildInterpolator( const DoubleArray& xValues, const DoubleArray& yValues, const etrading::InterpolationEnum& interpolationEnum, const double & joinXValue )
+std::shared_ptr<AQLInterpolationBase> LAMathInterpolationUtilities::buildInterpolator( const DoubleArray& xValues, const DoubleArray& yValues, const etrading::InterpolationEnum& interpolationEnum, const double & joinXValue )
 {
 	const size_t nPoints = xValues.size();
 	AQ_REQUIRE( nPoints != 0 , "Unable to Interpolate: No interpolation data provided" )
@@ -69,100 +69,100 @@ std::shared_ptr<LAInterpolationBase> LAMathInterpolationUtilities::buildInterpol
 	{
 		case etrading::MONOTONE_CONVEX_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LAMonotoneConvexInterpolation() );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLMonotoneConvexInterpolation() );
 			interpolator->set(xValues,yValues);
 			return interpolator;
 		}
 		case etrading::SPLINE_INTERPOLATION:
 		{
 			// The Spline Default Method is a Natural Spline
-			std::shared_ptr<LAInterpolationBase> interpolator( new LASplineInterpolation() );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLSplineInterpolation() );
 			interpolator->set(xValues,yValues);
 			return interpolator;
 		}
 		case etrading::MONOTONESPLINE_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LAMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND) );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND) );
 			interpolator->set(xValues,yValues);
 			return interpolator;
 		}
 		case etrading::MONOTONEPARABOLIC_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LAMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC) );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC) );
 			interpolator->set(xValues,yValues);
 			return interpolator;
 		}
 		case etrading::NATURAL_SPLINE_INTERPOLATION:
 		{
 			// True = Use Natural Spline ( Default )
-			std::shared_ptr<LAInterpolationBase> interpolator( new LASplineInterpolation(true) );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLSplineInterpolation(true) );
 			interpolator->set(xValues,yValues);
 			return interpolator;
 		}
 		case etrading::CLAMPED_SPLINE_INTERPOLATION:
 		{	
 			// False = Use Clamped Spline
-			std::shared_ptr<LAInterpolationBase> interpolator( new LASplineInterpolation(false) );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLSplineInterpolation(false) );
 			interpolator->set(xValues,yValues);
 			return interpolator;
 		}
 		case etrading::PARABOLIC_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LAParabolicInterpolation() );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLParabolicInterpolation() );
 			interpolator->set(xValues,yValues);
 			return interpolator;
 		}
 		case etrading::CONSTRAINED_SPLINE_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LAConstrainedSplineInterpolation() );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLConstrainedSplineInterpolation() );
 			interpolator->set(xValues,yValues);
 			return interpolator;
 		}
 		case etrading::LINEAR_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LALinearInterpolation() );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLLinearInterpolation() );
 			interpolator->set(xValues,yValues);
 			return interpolator;
 		}
 		case etrading::LINEAR_WITH_FLAT_EXTRAPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LALinearInterpolation(ExtrapolationType::FLAT_EXTRAPOLATION_TYPE) );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLLinearInterpolation(ExtrapolationType::FLAT_EXTRAPOLATION_TYPE) );
 			interpolator->set(xValues, yValues);
 			return interpolator;
 		}
 		case etrading::RIGHT_CONTINUOUS_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LAStepInterpolation(StepType::RIGHT_CONTINUOUS) );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLStepInterpolation(StepType::RIGHT_CONTINUOUS) );
 			interpolator->set(xValues, yValues);
 			return interpolator;
 		}
 		case etrading::LEFT_CONTINUOUS_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LAStepInterpolation(StepType::LEFT_CONTINUOUS) );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLStepInterpolation(StepType::LEFT_CONTINUOUS) );
 			interpolator->set(xValues, yValues);
 			return interpolator;
 		}
 		case etrading::STEP_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LAStepInterpolation() );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLStepInterpolation() );
 			interpolator->set(xValues,yValues);
 			return interpolator;
 		}
 		case etrading::LINEARSPLINE_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LALinearSplineInterpolation() );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLLinearSplineInterpolation() );
 			interpolator->set(xValues,yValues,joinXValue);
 			return interpolator;
 		}
 		case etrading::LINEARMONOTONESPLINE_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LALinearMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND) );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLLinearMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND) );
 			interpolator->set(xValues,yValues,joinXValue);
 			return interpolator;
 		}
 		case etrading::LINEARMONOTONEPARABOLIC_INTERPOLATION:
 		{
-			std::shared_ptr<LAInterpolationBase> interpolator( new LALinearMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC) );
+			std::shared_ptr<AQLInterpolationBase> interpolator( new AQLLinearMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC) );
 			interpolator->set(xValues,yValues,joinXValue);
 			return interpolator;
 		}
@@ -205,7 +205,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 	{
 		case etrading::MONOTONE_CONVEX_INTERPOLATION:
 		{
-			LAMonotoneConvexInterpolation interpolator;
+			AQLMonotoneConvexInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -215,7 +215,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::SPLINE_INTERPOLATION:
 		{
-			LASplineInterpolation interpolator; // The Spline Default Method is a Natural Spline
+			AQLSplineInterpolation interpolator; // The Spline Default Method is a Natural Spline
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -225,7 +225,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::MONOTONESPLINE_INTERPOLATION:
 		{
-			LAMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+			AQLMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -235,7 +235,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::MONOTONEPARABOLIC_INTERPOLATION:
 		{
-			LAMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+			AQLMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -245,7 +245,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::NATURAL_SPLINE_INTERPOLATION:
 		{
-			LASplineInterpolation interpolator(true); // True = Use Natural Spline ( Default )
+			AQLSplineInterpolation interpolator(true); // True = Use Natural Spline ( Default )
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -255,7 +255,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::CLAMPED_SPLINE_INTERPOLATION:
 		{
-			LASplineInterpolation interpolator(false); // False = Use Clamped Spline
+			AQLSplineInterpolation interpolator(false); // False = Use Clamped Spline
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -265,7 +265,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::PARABOLIC_INTERPOLATION:
 		{
-			LAParabolicInterpolation interpolator;
+			AQLParabolicInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -275,7 +275,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::CONSTRAINED_SPLINE_INTERPOLATION:
 		{
-			LAConstrainedSplineInterpolation interpolator;
+			AQLConstrainedSplineInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -285,7 +285,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LINEAR_INTERPOLATION:
 		{
-			LALinearInterpolation interpolator;
+			AQLLinearInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -295,7 +295,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LINEAR_WITH_FLAT_EXTRAPOLATION:
 		{
-			LALinearInterpolation interpolator(ExtrapolationType::FLAT_EXTRAPOLATION_TYPE);
+			AQLLinearInterpolation interpolator(ExtrapolationType::FLAT_EXTRAPOLATION_TYPE);
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -305,7 +305,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::RIGHT_CONTINUOUS_INTERPOLATION:
 		{
-			LAStepInterpolation interpolator(StepType::RIGHT_CONTINUOUS);
+			AQLStepInterpolation interpolator(StepType::RIGHT_CONTINUOUS);
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -315,7 +315,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LEFT_CONTINUOUS_INTERPOLATION:
 		{
-			LAStepInterpolation interpolator(StepType::LEFT_CONTINUOUS);
+			AQLStepInterpolation interpolator(StepType::LEFT_CONTINUOUS);
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -325,7 +325,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::STEP_INTERPOLATION:
 		{
-			LAStepInterpolation interpolator;
+			AQLStepInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -335,7 +335,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LINEARSPLINE_INTERPOLATION:
 		{
-			LALinearSplineInterpolation interpolator;
+			AQLLinearSplineInterpolation interpolator;
 			interpolator.setJoinDateAsDouble(joinXValue);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
@@ -346,7 +346,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LINEARMONOTONESPLINE_INTERPOLATION:
 		{
-			LALinearMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+			AQLLinearMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
 			interpolator.setJoinDateAsDouble(joinXValue);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
@@ -357,7 +357,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LINEARMONOTONEPARABOLIC_INTERPOLATION:
 		{
-			LALinearMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+			AQLLinearMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
 			interpolator.setJoinDateAsDouble(joinXValue);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
@@ -406,7 +406,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 	{
 		case etrading::MONOTONE_CONVEX_INTERPOLATION:
 		{
-			LAMonotoneConvexInterpolation interpolator;
+			AQLMonotoneConvexInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -416,7 +416,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::SPLINE_INTERPOLATION:
 		{
-			LASplineInterpolation interpolator; // The Spline Default Method is a Natural Spline
+			AQLSplineInterpolation interpolator; // The Spline Default Method is a Natural Spline
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -426,7 +426,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::MONOTONESPLINE_INTERPOLATION:
 		{
-			LAMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+			AQLMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -436,7 +436,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::MONOTONEPARABOLIC_INTERPOLATION:
 		{
-			LAMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+			AQLMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -446,7 +446,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::NATURAL_SPLINE_INTERPOLATION:
 		{
-			LASplineInterpolation interpolator(true); // True = Use Natural Spline ( Default )
+			AQLSplineInterpolation interpolator(true); // True = Use Natural Spline ( Default )
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -456,7 +456,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::CLAMPED_SPLINE_INTERPOLATION:
 		{
-			LASplineInterpolation interpolator(false); // False = Use Clamped Spline
+			AQLSplineInterpolation interpolator(false); // False = Use Clamped Spline
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -466,7 +466,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::PARABOLIC_INTERPOLATION:
 		{
-			LAParabolicInterpolation interpolator;
+			AQLParabolicInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -476,7 +476,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::CONSTRAINED_SPLINE_INTERPOLATION:
 		{
-			LAConstrainedSplineInterpolation interpolator;
+			AQLConstrainedSplineInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -486,7 +486,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LINEAR_INTERPOLATION:
 		{
-			LALinearInterpolation interpolator;
+			AQLLinearInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -496,7 +496,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LINEAR_WITH_FLAT_EXTRAPOLATION:
 		{
-			LALinearInterpolation interpolator(ExtrapolationType::FLAT_EXTRAPOLATION_TYPE);
+			AQLLinearInterpolation interpolator(ExtrapolationType::FLAT_EXTRAPOLATION_TYPE);
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -506,7 +506,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::RIGHT_CONTINUOUS_INTERPOLATION:
 		{
-			LAStepInterpolation interpolator(StepType::RIGHT_CONTINUOUS);
+			AQLStepInterpolation interpolator(StepType::RIGHT_CONTINUOUS);
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -516,7 +516,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LEFT_CONTINUOUS_INTERPOLATION:
 		{
-			LAStepInterpolation interpolator(StepType::LEFT_CONTINUOUS);
+			AQLStepInterpolation interpolator(StepType::LEFT_CONTINUOUS);
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -526,7 +526,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::STEP_INTERPOLATION:
 		{
-			LAStepInterpolation interpolator;
+			AQLStepInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
 			{
@@ -536,7 +536,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LINEARSPLINE_INTERPOLATION:
 		{
-			LALinearSplineInterpolation interpolator;
+			AQLLinearSplineInterpolation interpolator;
 			interpolator.setJoinDateAsDouble(joinXValue);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
@@ -547,7 +547,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LINEARMONOTONESPLINE_INTERPOLATION:
 		{
-			LALinearMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+			AQLLinearMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
 			interpolator.setJoinDateAsDouble(joinXValue);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
@@ -558,7 +558,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		case etrading::LINEARMONOTONEPARABOLIC_INTERPOLATION:
 		{
-			LALinearMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+			AQLLinearMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
 			interpolator.setJoinDateAsDouble(joinXValue);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nPoints; ++i )
@@ -608,7 +608,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 	{
 		case etrading::MONOTONE_CONVEX_INTERPOLATION:
 		{
-			LAMonotoneConvexInterpolation interpolator;
+			AQLMonotoneConvexInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -626,7 +626,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::SPLINE_INTERPOLATION:
 		{
-			LASplineInterpolation interpolator; // The Spline Default Method is a Natural Spline
+			AQLSplineInterpolation interpolator; // The Spline Default Method is a Natural Spline
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -644,7 +644,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::MONOTONESPLINE_INTERPOLATION:
 		{
-			LAMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+			AQLMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -662,7 +662,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::MONOTONEPARABOLIC_INTERPOLATION:
 		{
-			LAMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+			AQLMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -680,7 +680,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::NATURAL_SPLINE_INTERPOLATION:
 		{
-			LASplineInterpolation interpolator(true); // True = Use Natural Spline ( Default )
+			AQLSplineInterpolation interpolator(true); // True = Use Natural Spline ( Default )
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -698,7 +698,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::CLAMPED_SPLINE_INTERPOLATION:
 		{
-			LASplineInterpolation interpolator(false); // False = Use Clamped Spline
+			AQLSplineInterpolation interpolator(false); // False = Use Clamped Spline
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -716,7 +716,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::PARABOLIC_INTERPOLATION:
 		{
-			LAParabolicInterpolation interpolator;
+			AQLParabolicInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -734,7 +734,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::CONSTRAINED_SPLINE_INTERPOLATION:
 		{
-			LAConstrainedSplineInterpolation interpolator;
+			AQLConstrainedSplineInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -752,7 +752,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::LINEAR_INTERPOLATION:
 		{
-			LALinearInterpolation interpolator;
+			AQLLinearInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -770,7 +770,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::LINEAR_WITH_FLAT_EXTRAPOLATION:
 		{
-			LALinearInterpolation interpolator(ExtrapolationType::FLAT_EXTRAPOLATION_TYPE);
+			AQLLinearInterpolation interpolator(ExtrapolationType::FLAT_EXTRAPOLATION_TYPE);
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -788,7 +788,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::RIGHT_CONTINUOUS_INTERPOLATION:
 		{
-			LAStepInterpolation interpolator(StepType::RIGHT_CONTINUOUS);
+			AQLStepInterpolation interpolator(StepType::RIGHT_CONTINUOUS);
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -806,7 +806,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::LEFT_CONTINUOUS_INTERPOLATION:
 		{
-			LAStepInterpolation interpolator(StepType::LEFT_CONTINUOUS);
+			AQLStepInterpolation interpolator(StepType::LEFT_CONTINUOUS);
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -824,7 +824,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::STEP_INTERPOLATION:
 		{
-			LAStepInterpolation interpolator;
+			AQLStepInterpolation interpolator;
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
@@ -842,7 +842,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::LINEARSPLINE_INTERPOLATION:
 		{
-			LALinearSplineInterpolation interpolator;
+			AQLLinearSplineInterpolation interpolator;
 			interpolator.setJoinDateAsDouble(joinXValue);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
@@ -861,7 +861,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::LINEARMONOTONESPLINE_INTERPOLATION:
 		{
-			LALinearMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+			AQLLinearMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
 			interpolator.setJoinDateAsDouble(joinXValue);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
@@ -880,7 +880,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		case etrading::LINEARMONOTONEPARABOLIC_INTERPOLATION:
 		{
-			LALinearMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+			AQLLinearMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
 			interpolator.setJoinDateAsDouble(joinXValue);
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
@@ -908,7 +908,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 
 double LAMathInterpolationUtilities::monotoneconvex(DoubleVector& xValues, DoubleVector& yValues, double xPoint, double lambda, bool isAllowedNegative, int inputMode, int outputMode)
 {
-    LAMonotoneConvexInterpolation interpolator(lambda,isAllowedNegative,inputMode,outputMode);
+    AQLMonotoneConvexInterpolation interpolator(lambda,isAllowedNegative,inputMode,outputMode);
     interpolator.set(xValues,yValues);
     return interpolator.value(xPoint);
 }
@@ -918,13 +918,13 @@ double LAMathInterpolationUtilities::linear(DoubleVector& xValues, DoubleVector&
     double result;
     if(isExtraConstFlag==true)
     {	
-        LALinearInterpolation interpolator;
+        AQLLinearInterpolation interpolator;
         interpolator.set(xValues,yValues);
 	    result = interpolator.value(xPoint);
     }
     else if(isExtraConstFlag==false)
     {	
-        LALinearInterpolation interpolator(LINEAR_EXTRAPOLATION_TYPE);
+        AQLLinearInterpolation interpolator(LINEAR_EXTRAPOLATION_TYPE);
         interpolator.set(xValues,yValues);
 	    result = interpolator.value(xPoint);
     }
@@ -945,13 +945,13 @@ LAMathInterpolationUtilities::linearReverse(DoubleVector& xValues, DoubleVector&
 	double result;
     if(isExtraConstFlag==true)
     {	
-        LALinearInterpolation interpolator;
+        AQLLinearInterpolation interpolator;
         interpolator.set(array1_,array2_);
 	    result = interpolator.value(xPoint);
     }
     else if(isExtraConstFlag==false)
     {	
-        LALinearInterpolation interpolator(LINEAR_EXTRAPOLATION_TYPE);
+        AQLLinearInterpolation interpolator(LINEAR_EXTRAPOLATION_TYPE);
         interpolator.set(array1_,array2_);
 	    result = interpolator.value(xPoint);
     }
@@ -961,7 +961,7 @@ LAMathInterpolationUtilities::linearReverse(DoubleVector& xValues, DoubleVector&
 double 
 LAMathInterpolationUtilities::spline(DoubleArray& xValues, DoubleArray& yValues, double xPoint)
 {
-	LASplineInterpolation interpolator;
+	AQLSplineInterpolation interpolator;
 	interpolator.set(xValues,yValues);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -978,7 +978,7 @@ LAMathInterpolationUtilities::splineReverse(DoubleArray& xValues, DoubleArray& y
         array2_[i]=yValues[n-1-i];
     }
 
-	LASplineInterpolation interpolator;
+	AQLSplineInterpolation interpolator;
 	interpolator.set(array1_,array2_);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -987,7 +987,7 @@ LAMathInterpolationUtilities::splineReverse(DoubleArray& xValues, DoubleArray& y
 double 
 LAMathInterpolationUtilities::monotoneSpline(DoubleArray& xValues, DoubleArray& yValues, double xPoint)
 {
-	LAMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+	AQLMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
 	interpolator.set(xValues,yValues);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -1004,7 +1004,7 @@ LAMathInterpolationUtilities::monotoneSplineReverse(DoubleArray& xValues, Double
         array2_[i]=yValues[n-1-i];
     }
 
-	LAMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+	AQLMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
 	interpolator.set(array1_,array2_);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -1013,7 +1013,7 @@ LAMathInterpolationUtilities::monotoneSplineReverse(DoubleArray& xValues, Double
 double 
 LAMathInterpolationUtilities::monotoneParabolic(DoubleArray& xValues, DoubleArray& yValues, double xPoint)
 {
-	LAMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+	AQLMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
 	interpolator.set(xValues,yValues);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -1030,7 +1030,7 @@ LAMathInterpolationUtilities::monotoneParabolicReverse(DoubleArray& xValues, Dou
         array2_[i]=yValues[n-1-i];
     }
 
-	LAMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+	AQLMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
 	interpolator.set(array1_,array2_);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -1039,7 +1039,7 @@ LAMathInterpolationUtilities::monotoneParabolicReverse(DoubleArray& xValues, Dou
 double 
 LAMathInterpolationUtilities::parabolic(DoubleArray& xValues, DoubleArray& yValues, double xPoint)
 {
-    LAParabolicInterpolation interpolator;
+    AQLParabolicInterpolation interpolator;
 	interpolator.set(xValues,yValues);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -1056,7 +1056,7 @@ LAMathInterpolationUtilities::parabolicReverse(DoubleArray& xValues, DoubleArray
         array2_[i]=yValues[n-1-i];
     }
 
-	LAParabolicInterpolation interpolator;
+	AQLParabolicInterpolation interpolator;
 	interpolator.set(array1_,array2_);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -1065,7 +1065,7 @@ LAMathInterpolationUtilities::parabolicReverse(DoubleArray& xValues, DoubleArray
 double 
 LAMathInterpolationUtilities::linearSpline(DoubleArray& xValues, DoubleArray& yValues, double xPoint, double joinDateAsDouble)
 {
-    LALinearSplineInterpolation interpolator;
+    AQLLinearSplineInterpolation interpolator;
     interpolator.setJoinDateAsDouble(joinDateAsDouble);
     interpolator.set(xValues,yValues);
     double result = interpolator.value(xPoint);
@@ -1083,7 +1083,7 @@ LAMathInterpolationUtilities::linearSplineReverse(DoubleArray& xValues, DoubleAr
         array2_[i]=yValues[n-1-i];
     }
 
-	LALinearSplineInterpolation interpolator;
+	AQLLinearSplineInterpolation interpolator;
 	interpolator.setJoinDateAsDouble(joinDateAsDouble);
     interpolator.set(array1_,array2_);
     double result = interpolator.value(xPoint);
@@ -1093,7 +1093,7 @@ LAMathInterpolationUtilities::linearSplineReverse(DoubleArray& xValues, DoubleAr
 double 
 LAMathInterpolationUtilities::linearMonotoneSpline(DoubleArray& xValues, DoubleArray& yValues, double xPoint, double joinDateAsDouble)
 {
-    LALinearMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+    AQLLinearMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
     interpolator.setJoinDateAsDouble(joinDateAsDouble);
     interpolator.set(xValues,yValues);
     double result = interpolator.value(xPoint);
@@ -1111,7 +1111,7 @@ LAMathInterpolationUtilities::linearMonotoneSplineReverse(DoubleArray& xValues, 
         array2_[i]=yValues[n-1-i];
     }
 
-	LALinearMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+	AQLLinearMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
 	interpolator.setJoinDateAsDouble(joinDateAsDouble);
     interpolator.set(array1_,array2_);
     double result = interpolator.value(xPoint);
@@ -1121,7 +1121,7 @@ LAMathInterpolationUtilities::linearMonotoneSplineReverse(DoubleArray& xValues, 
 double 
 LAMathInterpolationUtilities::linearMonotoneParabolic(DoubleArray& xValues, DoubleArray& yValues, double xPoint, double joinDateAsDouble)
 {
-    LALinearMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+    AQLLinearMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
     interpolator.setJoinDateAsDouble(joinDateAsDouble);
     interpolator.set(xValues,yValues);
     double result = interpolator.value(xPoint);
@@ -1139,7 +1139,7 @@ LAMathInterpolationUtilities::linearMonotoneParabolicReverse(DoubleArray& xValue
         array2_[i]=yValues[n-1-i];
     }
 
-	LALinearMonotoneSplineInterpolation interpolator(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+	AQLLinearMonotoneSplineInterpolation interpolator(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
 	interpolator.setJoinDateAsDouble(joinDateAsDouble);
     interpolator.set(array1_,array2_);
     double result = interpolator.value(xPoint);
@@ -1149,7 +1149,7 @@ LAMathInterpolationUtilities::linearMonotoneParabolicReverse(DoubleArray& xValue
 double 
 LAMathInterpolationUtilities::constrainedSpline(DoubleArray& xValues, DoubleArray& yValues, double xPoint)
 {
-	LAConstrainedSplineInterpolation interpolator;
+	AQLConstrainedSplineInterpolation interpolator;
 	interpolator.set(xValues,yValues);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -1166,7 +1166,7 @@ LAMathInterpolationUtilities::constrainedSplineReverse(DoubleArray& xValues, Dou
         array2_[i]=yValues[n-1-i];
     }
 
-	LAConstrainedSplineInterpolation interpolator;
+	AQLConstrainedSplineInterpolation interpolator;
 	interpolator.set(array1_,array2_);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -1175,7 +1175,7 @@ LAMathInterpolationUtilities::constrainedSplineReverse(DoubleArray& xValues, Dou
 double 
 LAMathInterpolationUtilities::step(DoubleArray& xValues, DoubleArray& yValues, double xPoint)
 {
-	LAStepInterpolation interpolator;
+	AQLStepInterpolation interpolator;
 	interpolator.set(xValues,yValues);
 	double result = interpolator.value(xPoint);
 	return result;
@@ -1185,10 +1185,10 @@ unsigned int
 LAMathInterpolationUtilities::searchIndex(const DoubleArray& X, double xPoint)
 {
     size_t size = X.size();
-    if(size<=1) throw LACoreInvalidData("size of vector is 1!",__FILE__,__LINE__);
+    if(size<=1) throw AQLCoreInvalidData("size of vector is 1!",__FILE__,__LINE__);
     if(X[0] - 0.0000001 > xPoint || X[size-1] + 0.0000001 < xPoint)
     {
-        throw LACoreInvalidData("xPoint is out of range!",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("xPoint is out of range!",__FILE__,__LINE__);
     }
     unsigned int index=0;
     for (index=0;index<size;index++) if(X[index]>=xPoint) break;
@@ -1218,29 +1218,29 @@ LAMathInterpolationUtilities::solve_cubic_equation(double a1, double a2, double 
 	double R = (2.0*a1*a1*a1 - 9.0*a1*a2 + 27.0*a3)/54.0;
 	double Q3R2 =  Q*Q*Q - R*R;
 
-	//if(LAMath::abs(Q3R2) > DBL_EPSILON)
+	//if(AQLMath::abs(Q3R2) > DBL_EPSILON)
 	//{
 	if (Q3R2 >= 0.0)
 	{
-		double theta = acos(R/LAMath::sqrt(Q*Q*Q));
+		double theta = acos(R/AQLMath::sqrt(Q*Q*Q));
 		result.resize(3);
-		result[0] = -2.0*LAMath::sqrt(Q)*cos(theta/3.0)-a1/3.0;
-		result[1] = -2.0*LAMath::sqrt(Q)*cos((theta-2.0*LAMath::pi())/3.0)-a1/3.0;
-		result[2] = -2.0*LAMath::sqrt(Q)*cos((theta-4.0*LAMath::pi())/3.0)-a1/3.0;
+		result[0] = -2.0*AQLMath::sqrt(Q)*cos(theta/3.0)-a1/3.0;
+		result[1] = -2.0*AQLMath::sqrt(Q)*cos((theta-2.0*AQLMath::pi())/3.0)-a1/3.0;
+		result[2] = -2.0*AQLMath::sqrt(Q)*cos((theta-4.0*AQLMath::pi())/3.0)-a1/3.0;
 	}
 	else
 	{
 		result.resize(1);
-		double temp = LAMath::pow(LAMath::sqrt(-Q3R2) + fabs(R), 1.0/3.0);
-		result[0] = - LAMath::sign(1,R)*(temp + Q/temp) - a1/3.0;
+		double temp = AQLMath::pow(AQLMath::sqrt(-Q3R2) + fabs(R), 1.0/3.0);
+		result[0] = - AQLMath::sign(1,R)*(temp + Q/temp) - a1/3.0;
 	}
 	//}
 	//else
 	//{
 	//	// zero case
 	//	result.resize(2);
-	//	result[0] = -2.0*LAMath::sqrt(Q)-a1/3.0;
-	//	result[1] = -2.0*LAMath::sqrt(Q)*cos(2.0*LAMath::pi()/3.0)-a1/3.0;
+	//	result[0] = -2.0*AQLMath::sqrt(Q)-a1/3.0;
+	//	result[1] = -2.0*AQLMath::sqrt(Q)*cos(2.0*AQLMath::pi()/3.0)-a1/3.0;
 	//}
 
 	return result;
@@ -1259,8 +1259,8 @@ LAMathInterpolationUtilities::solve_quadratic_equation(double a1, double a2)
 	else if(det > 0.)
 	{
 		result.resize(2);
-		result[0] = (- a1 + LAMath::sqrt(det)) / 2.;
-		result[1] = (- a1 - LAMath::sqrt(det)) / 2.;
+		result[0] = (- a1 + AQLMath::sqrt(det)) / 2.;
+		result[1] = (- a1 - AQLMath::sqrt(det)) / 2.;
 	}
 	return result;
 }
@@ -1269,75 +1269,75 @@ LAMathInterpolationUtilities::solve_quadratic_equation(double a1, double a2)
 		@brief create interpolation
 
 		@param[in] key
-		@return LAInterpolationBase
+		@return AQLInterpolationBase
 
 */
-std::shared_ptr<LAInterpolationBase>
-LAMathInterpolationUtilities::createInterpolation(const LAString &str)
+std::shared_ptr<AQLInterpolationBase>
+LAMathInterpolationUtilities::createInterpolation(const AQLString &str)
 {
 	if (str == FN_STEPINTERPOLATION_STR || str == STEP_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LAStepInterpolation());
+		return std::shared_ptr<AQLInterpolationBase>(new AQLStepInterpolation());
 	}
 	else if (str == FN_RIGHTCONTINUOUS_INTERPOLATION_STR || str == RIGHT_CONTINUOUS_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LAStepInterpolation(StepType::RIGHT_CONTINUOUS));
+		return std::shared_ptr<AQLInterpolationBase>(new AQLStepInterpolation(StepType::RIGHT_CONTINUOUS));
 	}
 	else if (str == FN_LEFTCONTINUOUS_INTERPOLATION_STR || str == LEFT_CONTINUOUS_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LAStepInterpolation(StepType::LEFT_CONTINUOUS));
+		return std::shared_ptr<AQLInterpolationBase>(new AQLStepInterpolation(StepType::LEFT_CONTINUOUS));
 	}
 	else if (str == FN_LINEARINTERPOLATION_STR || str == LINEAR_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LALinearInterpolation());
+		return std::shared_ptr<AQLInterpolationBase>(new AQLLinearInterpolation());
 	}
 	else if (str == FN_SPLINEINTERPOLATION_STR || str == SPLINE_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LASplineInterpolation());
+		return std::shared_ptr<AQLInterpolationBase>(new AQLSplineInterpolation());
 	}
 	else if (str == FN_MONOTONESPLINEINTERPOLATION_STR || str == MONOTONE_SPLINE_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LAMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND));
+		return std::shared_ptr<AQLInterpolationBase>(new AQLMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND));
 	}
 	else if (str == FN_MONOTONEPARABOLICINTERPOLATION_STR || str == MONOTONE_PARABOLIC_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LAMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC));
+		return std::shared_ptr<AQLInterpolationBase>(new AQLMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC));
 	}
     else if (str == FN_NATURALSPLINEINTERPOLATION_STR || str == NATURAL_SPLINE_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LASplineInterpolation(true)); // UseNaturalSpline = true (default)
+		return std::shared_ptr<AQLInterpolationBase>(new AQLSplineInterpolation(true)); // UseNaturalSpline = true (default)
 	}
     else if (str == FN_CLAMPEDSPLINEINTERPOLATION_STR || str == CLAMPED_SPLINE_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LASplineInterpolation(false)); // UseNaturalSpline = false => Clamped Spline
+		return std::shared_ptr<AQLInterpolationBase>(new AQLSplineInterpolation(false)); // UseNaturalSpline = false => Clamped Spline
 	}
     else if (str == FN_PARABOLICINTERPOLATION_STR || str == PARABOLIC_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LAParabolicInterpolation());
+		return std::shared_ptr<AQLInterpolationBase>(new AQLParabolicInterpolation());
 	}
     else if (str == FN_LINEARSPLINEINTERPOLATION_STR || str == LINEAR_SPLINE_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>( new LALinearSplineInterpolation() );
+		return std::shared_ptr<AQLInterpolationBase>( new AQLLinearSplineInterpolation() );
 	}
 	else if (str == FN_LINEARMONOTONESPLINEINTERPOLATION_STR || str == LINEAR_MONOTONE_SPLINE_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>( new LALinearMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND) );
+		return std::shared_ptr<AQLInterpolationBase>( new AQLLinearMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND) );
 	}
 	else if (str == FN_LINEARMONOTONEPARABOLICINTERPOLATION_STR || str == LINEAR_MONOTONE_PARABOLIC_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>( new LALinearMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC) );
+		return std::shared_ptr<AQLInterpolationBase>( new AQLLinearMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC) );
 	}
 	else if (str == FN_CONSTRAINEDSPLINEINTERPOLATION_STR || str == CONSTRAINED_SPLINE_INTERP)
 	{
-		return std::shared_ptr<LAInterpolationBase>(new LAConstrainedSplineInterpolation());
+		return std::shared_ptr<AQLInterpolationBase>(new AQLConstrainedSplineInterpolation());
 	}
 	else if (str == FN_MONOTONECONVEXINTERPOLATION_STR || str == MONOTONE_CONVEX_INTERP)
 	{
-        return std::shared_ptr<LAInterpolationBase>(new LAMonotoneConvexInterpolation());
+        return std::shared_ptr<AQLInterpolationBase>(new AQLMonotoneConvexInterpolation());
 	}
 	else
 	{
-		LAString msg = "This interpolation method is not supported . interpolation = " + str;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "This interpolation method is not supported . interpolation = " + str;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }

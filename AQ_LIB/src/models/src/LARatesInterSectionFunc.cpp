@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent RangeCount function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //   2007,AlgoQuantHub.
@@ -32,7 +32,7 @@ using namespace std;
 	@brief default constructor
 */
 LARatesInterSectionFunc::LARatesInterSectionFunc() 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -48,7 +48,7 @@ LARatesInterSectionFunc::~LARatesInterSectionFunc()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesInterSectionFunc::clone() const
 {
     try 
@@ -57,7 +57,7 @@ LARatesInterSectionFunc::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -69,7 +69,7 @@ LARatesInterSectionFunc::clone() const
 bool
 LARatesInterSectionFunc::isTypeOf(function_t id) const
 {
-	return (id == FN_INTERSECTIONFUNC ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_INTERSECTIONFUNC ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -92,8 +92,8 @@ LARatesInterSectionFunc::operator()(const DoubleArray& x) const
 {
 	if (mParam.size()!= x.size()*4)
 	{
-		LAString msg = "parameter size must be index * 4:lower[1],upper[1],,,,inequalityflag[1],inequalityflag[1],...";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "parameter size must be index * 4:lower[1],upper[1],,,,inequalityflag[1],inequalityflag[1],...";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	double ret = 1.0;
 	int N = mParam.size()/2;
@@ -101,7 +101,7 @@ LARatesInterSectionFunc::operator()(const DoubleArray& x) const
 	for( unsigned int i = 0; i<x.size();i++)
 	{
 		if(mParam[2*i]>mParam[2*i+1])
-			throw LACoreInvalidData("wrong input lower > upper",__FILE__,__LINE__); 
+			throw AQLCoreInvalidData("wrong input lower > upper",__FILE__,__LINE__); 
 		
 		if(!(mParam[2*i]<=x[i] && x[i]<=mParam[2*i+1]))
 		{	

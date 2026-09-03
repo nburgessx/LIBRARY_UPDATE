@@ -12,11 +12,11 @@
 
 #include <vector>
 
-#include <LADataInstance.h>
-#include <LACoreTemplateType.h>
-#include <LAString.h>
-#include <LAPriceDataSlidingRule.h>
-#include <LAPriceDataCalendar.h>
+#include <AQLDataInstance.h>
+#include <AQLCoreTemplateType.h>
+#include <AQLString.h>
+#include <AQLPriceDataSlidingRule.h>
+#include <AQLPriceDataCalendar.h>
 #include "LAMathSABR.h"
 
 using namespace std;
@@ -25,22 +25,22 @@ class LAMathCapFloorConvention
 {
 public:
     // constructor
-    LAMathCapFloorConvention( const LAString& freq_, const LAString& spotLag_, 
-                            const LAString& daycount_, const LAString& paySlr_, const LAString& payCal_, 
-                            const LAString& fixCal_ );
+    LAMathCapFloorConvention( const AQLString& freq_, const AQLString& spotLag_, 
+                            const AQLString& daycount_, const AQLString& paySlr_, const AQLString& payCal_, 
+                            const AQLString& fixCal_ );
     // constructor
-    LAMathCapFloorConvention( const LAString& freq_, const LAString& spotLag_, 
-                            const LAString& daycount_, const LAPriceDataSlidingRule& paySlr_, 
-                            const LAPriceDataCalendar& payCal_, const LAPriceDataCalendar& fixCal_ );
+    LAMathCapFloorConvention( const AQLString& freq_, const AQLString& spotLag_, 
+                            const AQLString& daycount_, const AQLPriceDataSlidingRule& paySlr_, 
+                            const AQLPriceDataCalendar& payCal_, const AQLPriceDataCalendar& fixCal_ );
     // destructor
     virtual ~LAMathCapFloorConvention();
 
-    LAString freq;
-    LAString spotLag;
-    LAString daycount;
-    LAPriceDataSlidingRule paySlr;
-    LAPriceDataCalendar payCal;
-    LAPriceDataCalendar fixCal;
+    AQLString freq;
+    AQLString spotLag;
+    AQLString daycount;
+    AQLPriceDataSlidingRule paySlr;
+    AQLPriceDataCalendar payCal;
+    AQLPriceDataCalendar fixCal;
 };
 
 class LAMathCapFloorSABR
@@ -48,29 +48,29 @@ class LAMathCapFloorSABR
 public:
     // constructor
     // maturity is represented by numbers of months
-    LAMathCapFloorSABR( const IntVector& expiDate, const vector<LAMathSABR_Hagan>& sabr_, LAInterpolationBase* pInter_, 
-					  const LAMathCapFloorConvention& conv_, const LAString& curveID, 
-					  LAString foreCurveName = STD, LAString dfCurveName = STD);
+    LAMathCapFloorSABR( const IntVector& expiDate, const vector<LAMathSABR_Hagan>& sabr_, AQLInterpolationBase* pInter_, 
+					  const LAMathCapFloorConvention& conv_, const AQLString& curveID, 
+					  AQLString foreCurveName = STD, AQLString dfCurveName = STD);
     // destructor
     virtual ~LAMathCapFloorSABR();
 
     LAMathSABR_Hagan getSABRParam(unsigned int pos);
 
-    double getVol( LADataInstance* dataInstance, double fixingTerm, double strike );
+    double getVol( AQLDataInstance* dataInstance, double fixingTerm, double strike );
 
-    void calibrateToCapVol( LADataInstance* dataInstance, LAMathSABRLimiter sabrLimiter, 
+    void calibrateToCapVol( AQLDataInstance* dataInstance, LAMathSABRLimiter sabrLimiter, 
                             const DoubleMatrix& capVol_mk, const DoubleVector& strikeVec,
                             const IntVector& capTerm_mon, const DoubleVector& weight, 
-                            const LAString& target, DoubleMatrix& capletVol, DoubleMatrix& capVol );
+                            const AQLString& target, DoubleMatrix& capletVol, DoubleMatrix& capVol );
 
-    void getCapletVolMat( LADataInstance* dataInstance, const DoubleMatrix& capVol_mk, const DoubleVector& strikeVec, 
+    void getCapletVolMat( AQLDataInstance* dataInstance, const DoubleMatrix& capVol_mk, const DoubleVector& strikeVec, 
                           const IntVector& capTerm_mon, DoubleMatrix& capletVol, DoubleMatrix& capVol );
 
-    void getCapletVolMat2( LADataInstance* dataInstance, const DoubleMatrix& capVol_mk, const DoubleVector& strikeVec, 
+    void getCapletVolMat2( AQLDataInstance* dataInstance, const DoubleMatrix& capVol_mk, const DoubleVector& strikeVec, 
                            const IntVector& capTerm_mon, DoubleMatrix& capletVol, DoubleMatrix& capVol );
 private:
     //functions for calibration
-    void setCalibrationStack(LADataInstance* dataInstance);
+    void setCalibrationStack(AQLDataInstance* dataInstance);
 
     double getCapFloorPrem( unsigned int expiPos, double strike, double aveVol );
 
@@ -82,23 +82,23 @@ private:
 
     IntVector expiDate;
     vector<LAMathSABR_Hagan> sabr;
-    LAInterpolationBase* pInter;
+    AQLInterpolationBase* pInter;
     LAMathCapFloorConvention conv;
-	LAString curveID;
-	LAString foreCurveName;
-	LAString dfCurveName;
+	AQLString curveID;
+	AQLString foreCurveName;
+	AQLString dfCurveName;
     //stack member for calibration
     DoubleArray Nu;
     DoubleArray F;
     DoubleArray Te;
 };
 
-class LAMathCapVolCalibrator : public LAFunctionVector
+class LAMathCapVolCalibrator : public AQLFunctionVector
 {
 public:
     // constructor
     LAMathCapVolCalibrator( const DoubleArray& capletVol_, const DoubleArray& Te_, const DoubleArray& F_, 
-                          const DoubleArray& Nu_, double strike_, double aveVol_, LAInterpolationBase* pInter_ );
+                          const DoubleArray& Nu_, double strike_, double aveVol_, AQLInterpolationBase* pInter_ );
     // destructor
     virtual ~LAMathCapVolCalibrator(){}
 
@@ -121,7 +121,7 @@ private:
     DoubleArray Nu;
     double strike;
     double aveVol;
-    LAInterpolationBase* pInter;
+    AQLInterpolationBase* pInter;
     size_t volNum;
 
     double premSum;

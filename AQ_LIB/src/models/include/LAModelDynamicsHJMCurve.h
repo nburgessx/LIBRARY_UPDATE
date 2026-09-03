@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LAModelDynamicsCurve.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 
 
 
@@ -68,7 +68,7 @@ public:
 
 	// set start time of this curve
 	virtual void				set_t (double t); 
-	void						setInterpolationMethod(LAInterpolationBase* pinter); 
+	void						setInterpolationMethod(AQLInterpolationBase* pinter); 
 
 private:
 	// set start time of this curve
@@ -84,5 +84,5 @@ protected:
 	DoubleArray*				mpDeltaTenor;	// delta tenor
 	SCALARARRAY*				mpInitialData_L;// initial libor
 	const LARatesPathElementCurve*	mpInitialCurve;	// initial curve
-	LAInterpolationBase*		mpInter;	// pointer to interpolation function
+	AQLInterpolationBase*		mpInter;	// pointer to interpolation function
 };

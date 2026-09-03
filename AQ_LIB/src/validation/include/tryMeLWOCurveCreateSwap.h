@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include <stdarg.h>
 
 namespace validation
@@ -24,21 +24,21 @@ namespace validation
     *  @param [in]		convexityAdjConv	Convexity adjustment market conventions
     *  @param [in]		convexityAdjRates	Convexity adjustment market data
     */
-    const LAString tryMeLWOCurveCreateSwap( const std::string& lwoCurveName,
-                                            const LAString& curveCollectionInput,
-                                            const LAString& staticDataTableInput,
-                                            const LAString& curveIndexInput,
-                                            const LAStringMatrix& curveConv,
-                                            const LAStringMatrix& moneyMarketConv,
-                                            const LAStringMatrix& liborConv,
-                                            const LAStringMatrix& liborRates,
-                                            const LAStringMatrix& swapConv,
-                                            const LAStringMatrix& swapRates,
-                                            const LAStringMatrix& fraConv,
-                                            const LAStringMatrix& fra3mRates,
-                                            const LAStringMatrix& fra6mRates,
-                                            const LAStringMatrix& futureConv,
-                                            const LAStringMatrix& futureRates,
-                                            const LAStringMatrix& convexityAdjConv,
-                                            const LAStringMatrix& convexityAdjRates );
+    const AQLString tryMeLWOCurveCreateSwap( const std::string& lwoCurveName,
+                                            const AQLString& curveCollectionInput,
+                                            const AQLString& staticDataTableInput,
+                                            const AQLString& curveIndexInput,
+                                            const AQLStringMatrix& curveConv,
+                                            const AQLStringMatrix& moneyMarketConv,
+                                            const AQLStringMatrix& liborConv,
+                                            const AQLStringMatrix& liborRates,
+                                            const AQLStringMatrix& swapConv,
+                                            const AQLStringMatrix& swapRates,
+                                            const AQLStringMatrix& fraConv,
+                                            const AQLStringMatrix& fra3mRates,
+                                            const AQLStringMatrix& fra6mRates,
+                                            const AQLStringMatrix& futureConv,
+                                            const AQLStringMatrix& futureRates,
+                                            const AQLStringMatrix& convexityAdjConv,
+                                            const AQLStringMatrix& convexityAdjRates );
 }

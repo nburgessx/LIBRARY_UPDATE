@@ -24,9 +24,9 @@
 
 
 #include "LARatesPCIntegral.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAPriceDriftFX.h"
-#include "LAFunctionBase.h"
+#include "AQLFunctionBase.h"
 
 using namespace std;
 //================ LARatesPCIntegral ===================================
@@ -62,7 +62,7 @@ LARatesPCIntegral::~LARatesPCIntegral()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesPCIntegral::clone() const
 {
     try 
@@ -71,7 +71,7 @@ LARatesPCIntegral::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -108,8 +108,8 @@ LARatesPCIntegral::getType() const
 */
 void
 LARatesPCIntegral::integral(double ts, double te, 
-							vector<LAFunctionBase*>::const_iterator drift,										
-							vector<vector<LAFunctionBase*> >::const_iterator vol,
+							vector<AQLFunctionBase*>::const_iterator drift,										
+							vector<vector<AQLFunctionBase*> >::const_iterator vol,
 							DoubleArray::const_iterator	bm,
 							SCALARARRAY::iterator	x_in_out,
 							unsigned int varnum
@@ -119,7 +119,7 @@ LARatesPCIntegral::integral(double ts, double te,
 		&& vol->size() > 1)
 	{
 		//error
-		throw LACoreInvalidData("Multi volatility is not support when SDE IntegralType is LOG", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Multi volatility is not support when SDE IntegralType is LOG", __FILE__, __LINE__);
 	}
 
 	// setup
@@ -128,8 +128,8 @@ LARatesPCIntegral::integral(double ts, double te,
 	mVar.resize(varnum + 1); mVar[0] = ts;
 	//vector<double> Var2(varnum + 1); Var2[0] = ts;
 
-	vector<LAFunctionBase*> drift_(varnum);
-	vector<vector<LAFunctionBase*> > vol_(varnum);
+	vector<AQLFunctionBase*> drift_(varnum);
+	vector<vector<AQLFunctionBase*> > vol_(varnum);
 	vector<double> bm_(varnum);
 
 	for (unsigned int i = 0 ; i < varnum; i++)
@@ -202,8 +202,8 @@ LARatesPCIntegral::integral(double ts, double te,
 double
 LARatesPCIntegral::IntegralDrift(double ts,
 							  double te,
-							  std::vector<LAFunctionBase*>& drift_,
-							  std::vector<std::vector<LAFunctionBase*> >& vol_,
+							  std::vector<AQLFunctionBase*>& drift_,
+							  std::vector<std::vector<AQLFunctionBase*> >& vol_,
 							  const DoubleArray& mVar_,
 							  size_t i) const
 {
@@ -219,8 +219,8 @@ LARatesPCIntegral::IntegralDrift(double ts,
 		}
 		else if (mSdeType == dX && mIntegralType == LOG_INTEGRAL_LOG_OUTPUT)
 		{
-			double v = vol_[i][0]->operator()(mVar_) / LAMath::exp(mVar_[i + 1]);
-			tmp += (drift_[i]->operator()(mVar_) / LAMath::exp(mVar_[i + 1]) - 0.5 * v * v) * (te - ts);		
+			double v = vol_[i][0]->operator()(mVar_) / AQLMath::exp(mVar_[i + 1]);
+			tmp += (drift_[i]->operator()(mVar_) / AQLMath::exp(mVar_[i + 1]) - 0.5 * v * v) * (te - ts);		
 		}
 		else if (mSdeType == DIVIDEdXbyX && (mIntegralType == LOG_INTEGRAL || mIntegralType == LOG_INTEGRAL_LOG_OUTPUT))
 		{
@@ -237,8 +237,8 @@ LARatesPCIntegral::IntegralDrift(double ts,
 double
 LARatesPCIntegral::IntegralVol(double ts,
 							double te,
-							std::vector<LAFunctionBase*>& drift_,
-							std::vector<std::vector<LAFunctionBase*> >& vol_,
+							std::vector<AQLFunctionBase*>& drift_,
+							std::vector<std::vector<AQLFunctionBase*> >& vol_,
 							const DoubleArray& bm_,
 							const DoubleArray& mVar_,
 							size_t i) const
@@ -253,7 +253,7 @@ LARatesPCIntegral::IntegralVol(double ts,
 			else if (mSdeType == dX && mIntegralType == LOG_INTEGRAL)
 				tmp += vol_[i][0]->operator()(mVar_) / mVar_[i + 1] * bm_[i];
 			else if (mSdeType == dX && mIntegralType == LOG_INTEGRAL_LOG_OUTPUT)
-				tmp += vol_[i][0]->operator()(mVar_) / LAMath::exp(mVar_[i + 1]) * bm_[i];
+				tmp += vol_[i][0]->operator()(mVar_) / AQLMath::exp(mVar_[i + 1]) * bm_[i];
 			else if (mSdeType == DIVIDEdXbyX && (mIntegralType == LOG_INTEGRAL || mIntegralType == LOG_INTEGRAL_LOG_OUTPUT))
 				tmp += vol_[i][0]->operator()(mVar_) * bm_[i];	
 		}

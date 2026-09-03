@@ -2,7 +2,7 @@
 
 #include "InitializeAQGoogleTest.h"
 #include "CurveAccessors.h"
-#include "LAString.h"
+#include "AQLString.h"
 
 namespace google_test
 {
@@ -12,13 +12,13 @@ namespace google_test
         , public CurveAccessors
     {
     public:
-        CurveOis( const LAString& inputFile );
+        CurveOis( const AQLString& inputFile );
     };
 
 	/* 
 	*  @brief			Set up OIS curve
 	*  @param [in]		inputFile	File representation of the curve
     */
-	void setUpOISCurve(const LAString& inputFile);
+	void setUpOISCurve(const AQLString& inputFile);
 }
 

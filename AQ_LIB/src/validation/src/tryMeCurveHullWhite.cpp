@@ -29,7 +29,7 @@ namespace validation
     * @param [out]		Returns forward rates from on the Vasicek model
     */
 	DoubleVector tryMeCurveHullWhiteForwardRates(const DateVector& fixingDates, const std::string& curveCollection, const std::string& curveIndex,
-											   const double& sigma, const double& alpha, const double& rt , const LADate& valuationDate)
+											   const double& sigma, const double& alpha, const double& rt , const AQLDate& valuationDate)
 	{
         VALID_EXCEPTION_START
 
@@ -38,7 +38,7 @@ namespace validation
 
 		etrading::HullWhiteModel hwModel(alpha, sigma);
 
-		const LADate curveAsOfDate = etrading::getCurveAsOfDate( curveCollection.c_str() );
+		const AQLDate curveAsOfDate = etrading::getCurveAsOfDate( curveCollection.c_str() );
 		const bool futureValuation = etrading::isFutureValuation(curveAsOfDate, valuationDate);
 		const double shortRate = etrading::getDefaultShortRate(curveAsOfDate, curveCollection, curveIndex, rt, futureValuation);
 

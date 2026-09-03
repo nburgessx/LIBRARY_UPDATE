@@ -39,67 +39,67 @@ public:
 protected:
 	//==============================================
 	// get base outputname
-	virtual LAString getBaseOutPutName(const LAString &ccy , int index) const;
+	virtual AQLString getBaseOutPutName(const AQLString &ccy , int index) const;
 	//==============================================
 	// get base operator
-	virtual  LAString getBaseOperator() const;
+	virtual  AQLString getBaseOperator() const;
 	//==============================================
 	// create basecoefficient
-	virtual  LAString getBaseCoefficient(const LAString &ccy) const;
+	virtual  AQLString getBaseCoefficient(const AQLString &ccy) const;
 	//==============================================
 	// get get FX shift vals
-	virtual  DoubleArray  getBaseShiftVals(const LAString &ccy) const;
+	virtual  DoubleArray  getBaseShiftVals(const AQLString &ccy) const;
 	//==============================================
 	// get shift vals
-	virtual double getBaseSpotVal(const LAString &ccy, int index) const;
+	virtual double getBaseSpotVal(const AQLString &ccy, int index) const;
 	//==============================================
 	// create basescenario object
-	virtual std::vector<LAObject *> createBaseScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, int index) const; 
+	virtual std::vector<AQLObject *> createBaseScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const; 
 	//==============================================
 	// get base target names 
-	virtual  LAString getBaseTargetNames(const LAString &ccy, LADataInstance &dataInstance)  const;	
+	virtual  AQLString getBaseTargetNames(const AQLString &ccy, AQLDataInstance &dataInstance)  const;	
 	////==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &fx) const;
+	virtual  AQLString  getOutPutName1(const AQLString &fx) const;
 	////==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &ccy, int index) const;
+	virtual  AQLString  getOutPutName1(const AQLString &ccy, int index) const;
 	////==============================================
 	// get risk name
-	virtual  LAString getRiskName(void) const;
+	virtual  AQLString getRiskName(void) const;
 	//==============================================
 	// get bump direction
-	virtual  LAString getBumpDirection(const LAString &fx) const;
+	virtual  AQLString getBumpDirection(const AQLString &fx) const;
 	//==============================================
 	// get shift type
-	virtual  LAString getShiftType(const LAString &fx) const;
+	virtual  AQLString getShiftType(const AQLString &fx) const;
 	//==============================================
 	// get target currencies
-	virtual  LAString getTargetCurrencies() const;
+	virtual  AQLString getTargetCurrencies() const;
 	////==============================================
 	// get calibration target currencies
-	virtual  LAString getCalibTargetCurrencies() const;
+	virtual  AQLString getCalibTargetCurrencies() const;
 	//==============================================
 	// get divid one unit
-	virtual  double getDivUnit(const LAString &fx) const;
+	virtual  double getDivUnit(const AQLString &fx) const;
 	//==============================================
 	// get shift value
-	virtual double getShiftVal(const LAString &fx, SCENARIONUM scenarioNum) const;
+	virtual double getShiftVal(const AQLString &fx, SCENARIONUM scenarioNum) const;
 	//==============================================
 	// isRiskCurrencyMode
-	virtual bool isRiskCurrencyMode(const LAString& fx) const;
+	virtual bool isRiskCurrencyMode(const AQLString& fx) const;
 	//==============================================
 	// create extra scenario object for base scenario 
-	virtual std::vector<LAObject *> createBaseExtraScenarioEntity(const LAString &fx, LADataInstance &dataInstance, int index) const;
+	virtual std::vector<AQLObject *> createBaseExtraScenarioEntity(const AQLString &fx, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// get extra target names for base scenario
-	virtual  LAStringVector getBaseExtraTargetNames(const LAString &fx, LADataInstance &dataInstance) const;
+	virtual  AQLStringVector getBaseExtraTargetNames(const AQLString &fx, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// create extra yield object for base scenario 
-	virtual std::vector<LAObject *> createBaseExtraYieldEntity(const LAString &fx, const LAString &ccy, LADataInstance &dataInstance, int index, const bool isFirst = true)  const;
+	virtual std::vector<AQLObject *> createBaseExtraYieldEntity(const AQLString &fx, const AQLString &ccy, AQLDataInstance &dataInstance, int index, const bool isFirst = true)  const;
 	//==============================================
 	// create extra collateral yield object for base scenario 
-	virtual std::vector<LAObject *> createBaseCollateralYieldEntity(const LAString &fx, const LAString &ccy, LADataInstance &dataInstance, int index)  const;
+	virtual std::vector<AQLObject *> createBaseCollateralYieldEntity(const AQLString &fx, const AQLString &ccy, AQLDataInstance &dataInstance, int index)  const;
 };
 
 

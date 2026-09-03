@@ -74,7 +74,7 @@ namespace etrading
 	* @param[out]	dataProvider	The dataProvider to initialize
 	* @param[in]	discountCurve	The discount curve name
 	*/
-	void FixedBond::initializeDataProviderWithCurveData( DataProvider& dataProvider, const LAString& discountCurve ) const
+	void FixedBond::initializeDataProviderWithCurveData( DataProvider& dataProvider, const AQLString& discountCurve ) const
 	{
 		const double dummyYield = 0.0;
 		const std::string dummyYieldCalcType("");
@@ -106,7 +106,7 @@ namespace etrading
     }
 
     //Helper function to avoid duplication
-    double FixedBond::getYearFractionFromSettleToMaturityDtForSimpleYieldCalType(const LADate& settlementDate) const
+    double FixedBond::getYearFractionFromSettleToMaturityDtForSimpleYieldCalType(const AQLDate& settlementDate) const
     {
         auto maturityDate = schedule_->getMaturityDate();
 
@@ -121,7 +121,7 @@ namespace etrading
 
     }
 
-    double FixedBond::getCleanPriceFromSimpleYield(const LADate& settlementDate, double simpleYield) const
+    double FixedBond::getCleanPriceFromSimpleYield(const AQLDate& settlementDate, double simpleYield) const
     {
         //The input yield is the SIMPLE yield
         // Simple yield and clean price relation formula: simpleYieldInPercent = [couponRateInPercent + (100 - cleanPrice)/tao]/cleanPrice*100, where tao is the number of days from settle to maturity divided by 365
@@ -139,7 +139,7 @@ namespace etrading
         return cleanPrice;
     }
 
-    double FixedBond::getSimpleYieldFromCleanPrice(const LADate& settlementDate, double cleanPrice) const
+    double FixedBond::getSimpleYieldFromCleanPrice(const AQLDate& settlementDate, double cleanPrice) const
     {
         // Simple yield and clean price relation formula: simpleYieldInPercent = [couponRateInPercent + (100 - cleanPrice)/tao]/cleanPrice*100, where tao is the number of days from settle to maturity divided by 365
 
@@ -155,7 +155,7 @@ namespace etrading
         return yield;
     }
 
-    double FixedBond::yield( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const
+    double FixedBond::yield( const AQLDate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const
     {
         double yield = 0.0;
 
@@ -202,7 +202,7 @@ namespace etrading
 	double FixedBond::yield( const DataProvider& dataProvider, const double price, const YieldCalculationTypeEnum& yieldCalcType ) const
 	{
 		// Check the settlement Date is Valid
-		LADate settlementDate = dataProvider.getValuationSettings().getSettlementDate();
+		AQLDate settlementDate = dataProvider.getValuationSettings().getSettlementDate();
         Bond::checkSettlementDateValid( settlementDate );
 
 		const double impliedYield = yield( settlementDate, price, yieldCalcType );
@@ -210,7 +210,7 @@ namespace etrading
 	}
 
     //The price can be either dirtyPrice or cleanPrice
-    double FixedBond::compoundYield( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const
+    double FixedBond::compoundYield( const AQLDate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const
     {
 		// Check the settlement date is valid
 		Bond::checkSettlementDateValid(settlementDate);
@@ -257,7 +257,7 @@ namespace etrading
 		return yield;
     }
 
-    double FixedBond::cleanPriceJGBApproximation(const LADate& settlementDate, const double& inputYield) const
+    double FixedBond::cleanPriceJGBApproximation(const AQLDate& settlementDate, const double& inputYield) const
     {
         // ***JGB Approximation ComppoundYield formula: cleanPrice = coupon*100/y * (1- factor) + 100 * factor, 
         // where factor=(1+y/200))^(-2T), and T is the time from settle to maturity using JGB day count 
@@ -276,7 +276,7 @@ namespace etrading
         return cleanPrice;
     }
 
-    double FixedBond::compoundYieldJGBApproximation( const LADate& settlementDate, const double& price) const
+    double FixedBond::compoundYieldJGBApproximation( const AQLDate& settlementDate, const double& price) const
     {
         //get the dirty price from clean price
         double targetCleanPrice = price;
@@ -306,7 +306,7 @@ namespace etrading
 		return yield;
     }
 
-    double FixedBond::compoundYieldFromQuotedYield( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
+    double FixedBond::compoundYieldFromQuotedYield( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
     {
 
         double compoundYd = 0.0;
@@ -324,7 +324,7 @@ namespace etrading
         return compoundYd;
     }
 
-    double FixedBond::compoundYieldFromQuotedPrice( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType ) const
+    double FixedBond::compoundYieldFromQuotedPrice( const AQLDate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType ) const
     {
         double compoundYd = 0.0;
 
@@ -350,7 +350,7 @@ namespace etrading
         return compoundYd;
     }
 
-    double FixedBond::dirtyPrice( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool isCompoundYield, const std::shared_ptr<BondActiveCouponDates>& activeCouponDatesPtr) const
+    double FixedBond::dirtyPrice( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool isCompoundYield, const std::shared_ptr<BondActiveCouponDates>& activeCouponDatesPtr) const
     {
         double compoundYield = isCompoundYield ? yield : compoundYieldFromQuotedYield(settlementDate, yield, yieldCalcType);
 
@@ -400,7 +400,7 @@ namespace etrading
     }
  
 
-    double FixedBond::cleanPrice( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
+    double FixedBond::cleanPrice( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
     {
         
         checkSettlementDateValid(settlementDate );
@@ -427,7 +427,7 @@ namespace etrading
     double FixedBond::accruedInterest( const DataProvider& dataProvider ) const
     {
         // Check the settlement Date is Valid
-		LADate settlementDate = dataProvider.getValuationSettings().getSettlementDate();
+		AQLDate settlementDate = dataProvider.getValuationSettings().getSettlementDate();
         Bond::checkSettlementDateValid( settlementDate );
 
         double accruedInterest = schedule_->calculateBondAccruedInterest(settlementDate, bondYieldParameters_);
@@ -435,7 +435,7 @@ namespace etrading
         return accruedInterest;
     }
     
-    unsigned int FixedBond::accruedInterestDays( const LADate& settlementDate ) const
+    unsigned int FixedBond::accruedInterestDays( const AQLDate& settlementDate ) const
     {
         const unsigned int accruedInterestDays = schedule_->calculateBondAccruedInterestDays(settlementDate, bondYieldParameters_);
         return accruedInterestDays;
@@ -461,7 +461,7 @@ namespace etrading
         return FIXED_SCHEDULE_TYPE;
     }
 
-	double FixedBond::dv01( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool isCompoundYield ) const
+	double FixedBond::dv01( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool isCompoundYield ) const
 	{
 
 		double compoundYield = isCompoundYield ? yield : compoundYieldFromQuotedYield(settlementDate, yield, yieldCalcType);
@@ -476,7 +476,7 @@ namespace etrading
 		AQ_REQUIRE( ! cashflows.empty(), "Unable to calculate the dv01. The bond has no cashflows." );
 		
 		auto activeCouponDates = schedule_->getBondFirstActiveCouponDates(settlementDate, true);
-		LADate firstActivePaymentDate = activeCouponDates.firstActiveCouponDate_;
+		AQLDate firstActivePaymentDate = activeCouponDates.firstActiveCouponDate_;
 
 		DayCountEnum dayCount                = schedule_->getAccrualDaycount();
 		FrequencyEnum accrualFrequency         = schedule_->getAccrualFrequency();
@@ -494,7 +494,7 @@ namespace etrading
 			auto cf = cashflows[i];
 			CashflowData cashflowData = dataProvider.getCashflowDataExcludingUpfront( i );
 
-			LADate paymentDate = cf->getPaymentDate();
+			AQLDate paymentDate = cf->getPaymentDate();
 			if ( paymentDate > settlementDate )
 			{
 				unsigned int nthCoupon = getBondRelativeCashflowIndex( firstActivePaymentIndex, paymentDate, bondPaymentDates );
@@ -510,7 +510,7 @@ namespace etrading
 		return dv01;
 	}
 
-	double FixedBond::modifiedDuration( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield ) const
+	double FixedBond::modifiedDuration( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield ) const
 	{
 		double price            = dirtyPrice( settlementDate, yield, yieldCalcType );
 		double dv01sensitivity  = dv01( settlementDate, yield, yieldCalcType );
@@ -524,7 +524,7 @@ namespace etrading
 	* @param[in]	bondCurve		A calibrated BondCurve
 	* @returns		The bond dirty price.
 	*/
-	double FixedBond::dirtyPriceFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
+	double FixedBond::dirtyPriceFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const
 	{
 		// Update Cashflows checks for a valid settlement date i.e. not before bond start and not after bond maturity
         // No need to repeat that check here i.e. don't need to check for a valid settlement date here
@@ -544,7 +544,7 @@ namespace etrading
  		for( size_t i = 0; i < cashflows.size(); i++ )
 		{			
 			auto cf = cashflows[i];
-			const LADate paymentDate = cf->getPaymentDate();
+			const AQLDate paymentDate = cf->getPaymentDate();
 			if ( paymentDate > settlementDate )
 			{
 				const CashflowData& cashflowData = dataProvider.getCashflowDataExcludingUpfront( i );
@@ -565,7 +565,7 @@ namespace etrading
 	* @param[in]	bondCurve		A calibrated BondCurve
 	* @returns		The bond clean price.
 	*/
-	double FixedBond::cleanPriceFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
+	double FixedBond::cleanPriceFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const
 	{
         const double dirtyPrice  = FixedBond::dirtyPriceFromBondCurve( settlementDate, bondCurve );
         const double cleanPrice  = priceFromDirtyToClean( dirtyPrice, settlementDate );
@@ -577,7 +577,7 @@ namespace etrading
 	* @param[in]	bondCurve		A calibrated BondCurve
 	* @returns		The discount factor at maturity.
 	*/
-	double FixedBond::discountFactorAtMaturityFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
+	double FixedBond::discountFactorAtMaturityFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const
 	{
 		DataProvider dataProvider(settlementDate);
 		initializeDataProviderWithBondCurve( dataProvider, bondCurve );
@@ -602,10 +602,10 @@ namespace etrading
 	*									NOTE: the bondCurve is UPDATED to include the yield point for this bond.
 	*  @returns		The bond yield to maturity
 	*/
-	double FixedBond::yieldFromPriceAndBondCurve( const LADate& settlementDate, const double& price, BondCurve& bondCurve ) const
+	double FixedBond::yieldFromPriceAndBondCurve( const AQLDate& settlementDate, const double& price, BondCurve& bondCurve ) const
 	{
 		Bond::checkSettlementDateValid( settlementDate );
-		const LADate& maturityDate = getSchedule()->getMaturityDate();
+		const AQLDate& maturityDate = getSchedule()->getMaturityDate();
 		
 		double yield = std::numeric_limits<double>::quiet_NaN();
 
@@ -650,7 +650,7 @@ namespace etrading
 	*  @param[in]	bondCurve		A bondCurve used for discounting coupons
 	*  @returns		The bond yield to maturity
 	*/
-	double FixedBond::yieldFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
+	double FixedBond::yieldFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const
 	{
 		/* The function works as follows:
 		   a) calculate the bond price from the bond curve
@@ -667,7 +667,7 @@ namespace etrading
 	*  @param[in]	creditModel		The calibrated credit model
 	*  @returns		The bond accrued interest, scaled by the probability of survival to the next coupon.
 	*/
-	double FixedBond::accruedInterestPercentFromCreditModel( const LADate& settlementDate, const CreditModel& creditModel ) const
+	double FixedBond::accruedInterestPercentFromCreditModel( const AQLDate& settlementDate, const CreditModel& creditModel ) const
 	{
 		ValuationSettings valuationSettings;
 		valuationSettings.setSettlementDate( settlementDate );
@@ -681,7 +681,7 @@ namespace etrading
 		{
 			const bool isPriorDtWithFullCouponPeriod = false;
 			const BondActiveCouponDates activeCouponDates = schedule_->getBondFirstActiveCouponDates( settlementDate, isPriorDtWithFullCouponPeriod );
-			const LADate& nextCouponDate = activeCouponDates.firstActiveCouponDate_;
+			const AQLDate& nextCouponDate = activeCouponDates.firstActiveCouponDate_;
 
 			const double survivalProbability = creditModel.getSurvivalProbability( nextCouponDate );
 			riskyAccruedInterest = accruedInterest * survivalProbability;
@@ -696,13 +696,13 @@ namespace etrading
 	* @param[in]	creditModel		The calibrated credit model
 	* @returns		The bond dirty price.
 	*/
-	double FixedBond::dirtyPriceFromCreditModel( const LADate& settlementDate, const CreditModel& creditModel ) const
+	double FixedBond::dirtyPriceFromCreditModel( const AQLDate& settlementDate, const CreditModel& creditModel ) const
 	{
 		Bond::checkSettlementDateValid( settlementDate );
 		const std::string curveCollection = creditModel.getBondCurveCollection();
 		const ValuationSettings valuationSettings( settlementDate, curveCollection );
 		DataProvider dataProvider( valuationSettings );
-		const LAString& discountCurve = creditModel.getBondDiscountCurve().c_str();
+		const AQLString& discountCurve = creditModel.getBondDiscountCurve().c_str();
 		initializeDataProviderWithCurveData( dataProvider, discountCurve );
 
 		// Get all the bond cashflows excluding the upfrontCashflow
@@ -718,7 +718,7 @@ namespace etrading
  		for( size_t i = 0; i < cashflows.size(); i++ )
 		{			
 			auto cf = cashflows[i];
-			const LADate paymentDate = cf->getPaymentDate();
+			const AQLDate paymentDate = cf->getPaymentDate();
 			if ( paymentDate > settlementDate )
 			{
 				const double survivalProbability = creditModel.getSurvivalProbability( paymentDate );
@@ -747,7 +747,7 @@ namespace etrading
 	* @param[in]	creditModel		The calibrated credit model
 	* @returns		The bond clean price.
 	*/
-	double FixedBond::cleanPriceFromCreditModel( const LADate& settlementDate, const CreditModel& creditModel ) const
+	double FixedBond::cleanPriceFromCreditModel( const AQLDate& settlementDate, const CreditModel& creditModel ) const
     {
         const double dirtyPrice  = FixedBond::dirtyPriceFromCreditModel( settlementDate, creditModel );
         const double cleanPrice  = priceFromDirtyToClean( dirtyPrice, settlementDate );
@@ -763,10 +763,10 @@ namespace etrading
 	* @param[in]	useHullApproximation	Whether to use simple approximation: HazardRate = ( Yield - RiskFreeRate ) / (1-RecoveryRate), to to use a solver
 	* @returns		The implied hazard rate
 	*/
-	double FixedBond::hazardRateFromPrice( const LADate& settlementDate, const double price, CreditModel& creditModel, const bool useHullApproximation ) const
+	double FixedBond::hazardRateFromPrice( const AQLDate& settlementDate, const double price, CreditModel& creditModel, const bool useHullApproximation ) const
 	{
 		Bond::checkSettlementDateValid( settlementDate );
-		const LADate& maturityDate = getSchedule()->getMaturityDate();
+		const AQLDate& maturityDate = getSchedule()->getMaturityDate();
 		
 		double hazardRate = std::numeric_limits<double>::quiet_NaN();
 
@@ -776,7 +776,7 @@ namespace etrading
 			const std::string& curveCollection = creditModel.getBondCurveCollection();
 			ValuationSettings valuationSettings( settlementDate, curveCollection );
 			DataProvider dataProvider( valuationSettings );
-			const LAString& discountCurve   = creditModel.getBondDiscountCurve().c_str();
+			const AQLString& discountCurve   = creditModel.getBondDiscountCurve().c_str();
 			initializeDataProviderWithCurveData( dataProvider, discountCurve );
 
 			auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
@@ -784,7 +784,7 @@ namespace etrading
 			const CashflowData& cashflowDataAtMaturity = dataProvider.getCashflowDataExcludingUpfront( nCashflows - 1 );
 			const double discountFactorAtMaturity = cashflowDataAtMaturity.discountFactor;
 
-			const LADate maturityDate = getSchedule()->getMaturityDate();
+			const AQLDate maturityDate = getSchedule()->getMaturityDate();
 			const double yearFraction = getYearFraction( settlementDate, maturityDate, getSchedule()->getAccrualDaycount() );
 			const double discountRate = -1.0 * log( discountFactorAtMaturity ) / yearFraction;
 
@@ -828,7 +828,7 @@ namespace etrading
 	*  @param[in]	creditModel				The credit model used to obtain survival probabilities and discount curve.
 	*  @returns		The bond dirty price on the forward settle date
 	*/
-	double FixedBond::forwardDirtyPriceFromCreditModel( const LADate& forwardSettleDate, const CreditModel& creditModel ) const
+	double FixedBond::forwardDirtyPriceFromCreditModel( const AQLDate& forwardSettleDate, const CreditModel& creditModel ) const
 	{
 		Bond::checkSettlementDateValid( forwardSettleDate );
 		const std::string curveCollection = creditModel.getBondCurveCollection();
@@ -836,7 +836,7 @@ namespace etrading
 		// Calculate forward discount factors as of forwardSettleDate
 		const ValuationSettings valuationSettings( forwardSettleDate, curveCollection );
 		DataProvider dataProvider( valuationSettings );
-		const LAString& discountCurve = creditModel.getBondDiscountCurve().c_str();
+		const AQLString& discountCurve = creditModel.getBondDiscountCurve().c_str();
 		initializeDataProviderWithCurveData( dataProvider, discountCurve );
 
 		// Get all the bond cashflows excluding the upfrontCashflow
@@ -852,7 +852,7 @@ namespace etrading
  		for( size_t i = 0; i < cashflows.size(); i++ )
 		{			
 			auto cf = cashflows[i];
-			const LADate paymentDate = cf->getPaymentDate();
+			const AQLDate paymentDate = cf->getPaymentDate();
 			if ( paymentDate > forwardSettleDate )
 			{
 				// This is the survival probability calculated from the creditModel asOfDate to paymentDate
@@ -888,7 +888,7 @@ namespace etrading
 	*  @param[in]	discountCurve			The curve used to discount future coupons
 	*  @returns		The bond dirty price on the forward settle date
 	*/
-	double FixedBond::forwardDirtyPriceFromDiscountCurve( const LADate& forwardSettleDate, const std::string& curveCollection, const std::string& discountCurve ) const
+	double FixedBond::forwardDirtyPriceFromDiscountCurve( const AQLDate& forwardSettleDate, const std::string& curveCollection, const std::string& discountCurve ) const
 	{
 		Bond::checkSettlementDateValid( forwardSettleDate );
 
@@ -905,7 +905,7 @@ namespace etrading
  		for( size_t i = 0; i < cashflows.size(); i++ )
 		{			
 			auto cf = cashflows[i];
-			const LADate paymentDate = cf->getPaymentDate();
+			const AQLDate paymentDate = cf->getPaymentDate();
 			if ( paymentDate > forwardSettleDate )
 			{
 				const CashflowData& cashflowData = dataProvider.getCashflowDataExcludingUpfront( i );

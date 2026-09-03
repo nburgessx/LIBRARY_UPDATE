@@ -16,10 +16,10 @@
 //  STATUS      :       
 ////X///////////////////X///////////////////////////////X///////////////////
 
-#include <LACoreUtil.h>
+#include <AQLCoreUtil.h>
 #include <vector>
 #include <map>
-#include "LAFunction.h"
+#include "AQLFunction.h"
 #include <limits>
 
 #include <ql/qldefines.hpp>
@@ -69,12 +69,12 @@ public:
         size_t n = mX.size();
         size_t m = mY[0].size();
     
-        if(n != mY.size()) throw LACoreInvalidData("x.size() != y.size() : LAMathTarget2fit2::LAMathTarget2fit2", __FILE__, __LINE__);
-        if(n != mTarget2fit.size()) throw LACoreInvalidData("x.size() != target2fit.size() : LAMathTarget2fit2::LAMathTarget2fit2", __FILE__, __LINE__);
-        if(n != mWeight.size()) throw LACoreInvalidData("x.size() != weight.size() : LAMathTarget2fit2::LAMathTarget2fit2", __FILE__, __LINE__);
+        if(n != mY.size()) throw AQLCoreInvalidData("x.size() != y.size() : LAMathTarget2fit2::LAMathTarget2fit2", __FILE__, __LINE__);
+        if(n != mTarget2fit.size()) throw AQLCoreInvalidData("x.size() != target2fit.size() : LAMathTarget2fit2::LAMathTarget2fit2", __FILE__, __LINE__);
+        if(n != mWeight.size()) throw AQLCoreInvalidData("x.size() != weight.size() : LAMathTarget2fit2::LAMathTarget2fit2", __FILE__, __LINE__);
     
-        if(m != mTarget2fit[0].size()) throw LACoreInvalidData("y[0].size() != target2fit[0].size() : LAMathTarget2fit2::LAMathTarget2fit2", __FILE__, __LINE__);
-        if(m != mWeight[0].size()) throw LACoreInvalidData("y[0].size() != weight[0].size() : Target2fit2::Target2fit2", __FILE__, __LINE__);
+        if(m != mTarget2fit[0].size()) throw AQLCoreInvalidData("y[0].size() != target2fit[0].size() : LAMathTarget2fit2::LAMathTarget2fit2", __FILE__, __LINE__);
+        if(m != mWeight[0].size()) throw AQLCoreInvalidData("y[0].size() != weight[0].size() : Target2fit2::Target2fit2", __FILE__, __LINE__);
     }
 
     DoubleArray mX;
@@ -370,8 +370,8 @@ private:
         
         bool test(const QuantLib::Array& params) const
         {
-            if( params.size() != mN) throw LACoreInvalidData("params.size() != n : BoundaryConstraint_MktSkewVol::Impl::test", __FILE__, __LINE__);            
-            if( mN % 2 != 0 ) throw LACoreInvalidData(" n % 2 != 0 : BoundaryConstraint_MktSkewVol::Impl::test", __FILE__, __LINE__);
+            if( params.size() != mN) throw AQLCoreInvalidData("params.size() != n : BoundaryConstraint_MktSkewVol::Impl::test", __FILE__, __LINE__);            
+            if( mN % 2 != 0 ) throw AQLCoreInvalidData(" n % 2 != 0 : BoundaryConstraint_MktSkewVol::Impl::test", __FILE__, __LINE__);
 
             for(size_t i = 0; i < static_cast<size_t>(mN / 2); ++i)
             {

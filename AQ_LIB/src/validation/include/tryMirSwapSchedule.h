@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -26,23 +26,23 @@ namespace validation
     *  @param[in]		showColumnHeaders				True to show column headers.
     *  @return			a matrix of floading leg/fixing leg schedules
     */
-    LAStringMatrix tryMirSwapSchedule( const LAString& accrualStartDate,
-                                     const LAString& accrualEndDateOrTenor,
-                                     const LAString& accrualDaycount,
-                                     const LAString& accrualFrequency,
-                                     const LAString& accrualSlidingRule,
-                                     const LAString& accrualCalendar,
-                                     const LAString& paymentFrequency,
-                                     const LAString& paymentSlidingRule,
-                                     const LAString& paymentCalendar,
-                                     const LAString& paymentLag,
-                                     const LAString& fixingSlidingRule,
-                                     const LAString& fixingCalendar,
-                                     const LAString& fixingLag,
-                                     const LAString& fixingAdvanceOrArrears,
-                                     const LAString& firstStub,
-                                     const LAString& lastStub,
-                                     const LAString& paymentRollDay,
+    AQLStringMatrix tryMirSwapSchedule( const AQLString& accrualStartDate,
+                                     const AQLString& accrualEndDateOrTenor,
+                                     const AQLString& accrualDaycount,
+                                     const AQLString& accrualFrequency,
+                                     const AQLString& accrualSlidingRule,
+                                     const AQLString& accrualCalendar,
+                                     const AQLString& paymentFrequency,
+                                     const AQLString& paymentSlidingRule,
+                                     const AQLString& paymentCalendar,
+                                     const AQLString& paymentLag,
+                                     const AQLString& fixingSlidingRule,
+                                     const AQLString& fixingCalendar,
+                                     const AQLString& fixingLag,
+                                     const AQLString& fixingAdvanceOrArrears,
+                                     const AQLString& firstStub,
+                                     const AQLString& lastStub,
+                                     const AQLString& paymentRollDay,
                                      bool showColumnHeaders = true );
 
 

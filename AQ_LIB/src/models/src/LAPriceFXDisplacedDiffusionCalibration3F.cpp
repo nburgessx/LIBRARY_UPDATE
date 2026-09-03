@@ -6,30 +6,30 @@
 #endif
 
 #include "LAPriceFXDisplacedDiffusionCalibration3F.h"
-#include "LAObject.h"
-#include "LADataProcedure.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLObject.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "LAMathDateCalculations.h"
 #include "LAPriceCFGenUtility.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LADataMatrix.h"
-#include "LAMathValuableEntity.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLDataMatrix.h"
+#include "AQLMathValuableEntity.h"
 #include "LAMathLeastSquareBlackDD.h"
 #include "LAQuantLibEndCriteria.h"
 #include "LAQuantLibProblem.h"
@@ -42,10 +42,10 @@
 #include "LAMathHybridHWLVUtil.h"
 #include "LAMathLeastSquareHybridHWLVProcess.h"
 
-#include "LAPriceTargetFunction.h"
-#include "LAPriceLSTargetFunction.h"
+#include "AQLPriceTargetFunction.h"
+#include "AQLPriceLSTargetFunction.h"
 #include "LAPriceCashFlowGenerator.h"
-#include "LAOptimumBFGS.h"
+#include "AQLOptimumBFGS.h"
 #include <algorithm>
 #include <float.h>
 
@@ -86,14 +86,14 @@ bool
 LAPriceFXDisplacedDiffusionCalibration3F::isTypeOf(function_t id) const
 {
 	return (id == FN_IR_FXDISPLACEDDIFFUSIONCALIBRATION3F ? true :
-						LACoreProcedure::isTypeOf(id));
+						AQLCoreProcedure::isTypeOf(id));
 }
 /*!
     @brief  Copy this class
 
 	@return pointer to copied object
 */
-LACoreFunctionBase*		
+AQLCoreFunctionBase*		
 LAPriceFXDisplacedDiffusionCalibration3F::clone() const
 {
     try 
@@ -102,7 +102,7 @@ LAPriceFXDisplacedDiffusionCalibration3F::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -123,7 +123,7 @@ LAPriceFXDisplacedDiffusionCalibration3F::getType() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceFXDisplacedDiffusionCalibration3F::registerData(LAPriceDataManager& dm) const
+LAPriceFXDisplacedDiffusionCalibration3F::registerData(AQLPriceDataManager& dm) const
 {
 	LAPriceFXDisplacedDiffusionCalibration::registerData(dm);
 	dm.setData(PRICING_DATA_SKEWVOLCALIBINFO,			DATA_REFERENCE);
@@ -159,75 +159,75 @@ LAPriceFXDisplacedDiffusionCalibration3F::registerData(LAPriceDataManager& dm) c
 	@note basedate is not used in estimation
 */
 void	            
-LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const
+LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const
 {
 	calibMarketSkewVol(basedate, object, att);
 	calibHybridHWDDProcess(basedate, object, att);
 	//(void)basedate; (void)att;
 
-	//const LAObject &calibinfo_sigmabeta = dynamic_cast<LADataReference &>(object.getData(PRICING_DATA_SIGMABETACALIBINFO, ISNOTNULL).get()).get().get();
-	//LAObject& vole = dynamic_cast<LADataReference &>(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL).get()).get().get();
+	//const AQLObject &calibinfo_sigmabeta = dynamic_cast<AQLDataReference &>(object.getData(PRICING_DATA_SIGMABETACALIBINFO, ISNOTNULL).get()).get().get();
+	//AQLObject& vole = dynamic_cast<AQLDataReference &>(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL).get()).get().get();
 	//// calib flag
-	//const bool optSBFlag = dynamic_cast<const LADataBool &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_OPT_SIGMABETA_FLAG, ISNOTNULL).get()).get();
+	//const bool optSBFlag = dynamic_cast<const AQLDataBool &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_OPT_SIGMABETA_FLAG, ISNOTNULL).get()).get();
 	//if (!optSBFlag)
 	//{
 	//	// check param exist
-	//	LADataHolder *dh = &vole.getData(PRICING_DATA_FXVOLGRIDS, NOCHECK);
+	//	AQLDataHolder *dh = &vole.getData(PRICING_DATA_FXVOLGRIDS, NOCHECK);
 	//	if (!dh->isDefined() || dh->isNull())
 	//	{
-	//		throw LACoreInvalidData("FXVolGrid does not exist.", __FILE__, __LINE__);
+	//		throw AQLCoreInvalidData("FXVolGrid does not exist.", __FILE__, __LINE__);
 	//	}
 	//	dh = &vole.getData(PRICING_DATA_FXBETAGRIDS, NOCHECK);
 	//	if (!dh->isDefined() || dh->isNull())
 	//	{
-	//		throw LACoreInvalidData("FXBetaGrid does not exist.", __FILE__, __LINE__);
+	//		throw AQLCoreInvalidData("FXBetaGrid does not exist.", __FILE__, __LINE__);
 	//	}
 	//	return;
 	//}
 
-	//const LAObject &calibinfo_skewvol = dynamic_cast<LADataReference &>(object.getData(PRICING_DATA_SKEWVOLCALIBINFO, ISNOTNULL).get()).get().get();
+	//const AQLObject &calibinfo_skewvol = dynamic_cast<AQLDataReference &>(object.getData(PRICING_DATA_SKEWVOLCALIBINFO, ISNOTNULL).get()).get().get();
 	//// set up skew vol boundary
-	//const double boundaryMaxSkew = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MAX_SKEW, ISNOTNULL).get()).get();
-	//const double boundaryMinSkew = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MIN_SKEW, ISNOTNULL).get()).get();
-	//const double boundaryMaxVol = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MAX_VOL, ISNOTNULL).get()).get();
-	//const double boundaryMinVol = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MIN_VOL, ISNOTNULL).get()).get();
+	//const double boundaryMaxSkew = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MAX_SKEW, ISNOTNULL).get()).get();
+	//const double boundaryMinSkew = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MIN_SKEW, ISNOTNULL).get()).get();
+	//const double boundaryMaxVol = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MAX_VOL, ISNOTNULL).get()).get();
+	//const double boundaryMinVol = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MIN_VOL, ISNOTNULL).get()).get();
 	//// set up end criteria
- //   const int maxIteration_skewvol = dynamic_cast<const LADataInt &>(calibinfo_skewvol.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
- //   const int maxStationaryStateIteration_skewvol = dynamic_cast<const LADataInt &>(calibinfo_skewvol.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
- //   const double rootEpsilon_skewvol = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
- //   const double functionEpsilon_skewvol = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
- //   const double gradientNormEpsilon_skewvol = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
+ //   const int maxIteration_skewvol = dynamic_cast<const AQLDataInt &>(calibinfo_skewvol.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
+ //   const int maxStationaryStateIteration_skewvol = dynamic_cast<const AQLDataInt &>(calibinfo_skewvol.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
+ //   const double rootEpsilon_skewvol = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
+ //   const double functionEpsilon_skewvol = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
+ //   const double gradientNormEpsilon_skewvol = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
 
-	//LADataInstance* pDataInstance = object.getDataInstance();
+	//AQLDataInstance* pDataInstance = object.getDataInstance();
 	//// create domestic curve
-	//const LAObject &yldentity_d = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_DOMESTICCURVE, ISNOTNULL).get()).get().get();
-	//const LAString &yldname_d = dynamic_cast<const LADataString &>(yldentity_d.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-	//const LAString &curveType_d = dynamic_cast<const LADataString &>(object.getData(PRICING_DATA_DOMESTICCURVETYPE, ISNOTNULL).get()).get();
+	//const AQLObject &yldentity_d = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_DOMESTICCURVE, ISNOTNULL).get()).get().get();
+	//const AQLString &yldname_d = dynamic_cast<const AQLDataString &>(yldentity_d.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	//const AQLString &curveType_d = dynamic_cast<const AQLDataString &>(object.getData(PRICING_DATA_DOMESTICCURVETYPE, ISNOTNULL).get()).get();
 	//LAMathYieldCurve yc_d(pDataInstance);	
 	//yc_d.getData(IR_CALIBRATION_DATA_YIELDDATA,ISDEFINED).convertFromString(yldname_d);
 	//yc_d.setCurveType(curveType_d);
 	//yc_d.setInterpolation(FN_SPLINEINTERPOLATION_STR);
 	//LAMathPathYieldCurve curve0_d(&yc_d, 0.0, ACT_365_ISDA);
 	//// create foreign curve
-	//const LAObject &yldentity_f = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_FOREIGNCURVE, ISNOTNULL).get()).get().get();
-	//const LAString &yldname_f = dynamic_cast<const LADataString &>(yldentity_f.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-	//const LAString &curveType_f = dynamic_cast<const LADataString &>(object.getData(PRICING_DATA_FOREIGNCURVETYPE, ISNOTNULL).get()).get();
+	//const AQLObject &yldentity_f = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_FOREIGNCURVE, ISNOTNULL).get()).get().get();
+	//const AQLString &yldname_f = dynamic_cast<const AQLDataString &>(yldentity_f.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	//const AQLString &curveType_f = dynamic_cast<const AQLDataString &>(object.getData(PRICING_DATA_FOREIGNCURVETYPE, ISNOTNULL).get()).get();
 	//LAMathYieldCurve yc_f(pDataInstance);
 	//yc_f.getData(IR_CALIBRATION_DATA_YIELDDATA,ISDEFINED).convertFromString(yldname_f);
 	//yc_f.setCurveType(curveType_f);
 	//yc_f.setInterpolation(FN_SPLINEINTERPOLATION_STR);
 	//LAMathPathYieldCurve curve0_f(&yc_f, 0.0, ACT_365_ISDA);
 	//// spot fx
-	//const double spotFX = dynamic_cast<const LADataDouble &>(object.getData(PRICING_DATA_SPOTFX, ISNOTNULL).get()).get();
+	//const double spotFX = dynamic_cast<const AQLDataDouble &>(object.getData(PRICING_DATA_SPOTFX, ISNOTNULL).get()).get();
 	//// opt type
-	//LAString optMethodType_skewvol = dynamic_cast<const LADataString &>(calibinfo_skewvol.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
+	//AQLString optMethodType_skewvol = dynamic_cast<const AQLDataString &>(calibinfo_skewvol.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
 	//optMethodType_skewvol.toUpper();
 
 	//LAQuantLibEndCriteria endCriteria_skewvol(maxIteration_skewvol, maxStationaryStateIteration_skewvol, rootEpsilon_skewvol, functionEpsilon_skewvol, gradientNormEpsilon_skewvol);
 
-	//const LADataMultiReference &refData = dynamic_cast<LADataMultiReference &>(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL).get());
+	//const AQLDataMultiReference &refData = dynamic_cast<AQLDataMultiReference &>(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL).get());
 	//unsigned int gridSize = refData.getSize();
 
 	//DoubleVector calculatedMktVolDD(gridSize);
@@ -235,12 +235,12 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const LADate& basedate,
 	//DoubleVector timegrid(gridSize);
 	//for (unsigned int i = 0; i < gridSize; ++i)
 	//{
-	//	timegrid[i] = dynamic_cast<const LADataDouble &>(refData.get(i).getData(PRICING_DATA_FXTERM, ISNOTNULL).get()).get();
+	//	timegrid[i] = dynamic_cast<const AQLDataDouble &>(refData.get(i).getData(PRICING_DATA_FXTERM, ISNOTNULL).get()).get();
 	//	const DoubleVector tVec(1, timegrid[i]);
-	//	const DoubleMatrix premMat(1, dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_OPTIONPREMIUMS, ISNOTNULL).get()).get());
-	//	const DoubleMatrix strikeMat(1, dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_STRIKES, ISNOTNULL).get()).get());
-	//	const DoubleMatrix weightMat(1, dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_WEIGHTS, ISNOTNULL).get()).get());
-	//	const BoolVector &cpFlag = dynamic_cast<const LADataBools &>(refData.get(i).getData(PRICING_DATA_ISCALLS, ISNOTNULL).get()).get();
+	//	const DoubleMatrix premMat(1, dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_OPTIONPREMIUMS, ISNOTNULL).get()).get());
+	//	const DoubleMatrix strikeMat(1, dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_STRIKES, ISNOTNULL).get()).get());
+	//	const DoubleMatrix weightMat(1, dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_WEIGHTS, ISNOTNULL).get()).get());
+	//	const BoolVector &cpFlag = dynamic_cast<const AQLDataBools &>(refData.get(i).getData(PRICING_DATA_ISCALLS, ISNOTNULL).get()).get();
 	//	IntVector int_cpFlag(cpFlag.size(), -1);
 	//	for (unsigned int j = 0; j < int_cpFlag.size(); ++j)
 	//	{
@@ -254,10 +254,10 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const LADate& basedate,
 	//	LAMathLeastSquareBlackDD blackDD(spotFX, curve0_d, curve0_f, tVec, strikeMat, premMat, weightMat, cpFlagMat); 
 	//	LAMathBoundaryConstraintMktSkewVol bcSkewVol(boundaryMaxSkew, boundaryMinSkew, boundaryMaxVol, boundaryMinVol);
 	//
-	//	const DoubleArray &initialVals = dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_INITIALVALUE, ISNOTNULL).get()).get();
+	//	const DoubleArray &initialVals = dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_INITIALVALUE, ISNOTNULL).get()).get();
 	//	if (initialVals.size() != 2)
 	//	{
-	//		LACoreInvalidData("initialVals.size must be 2!", __FILE__, __LINE__);
+	//		AQLCoreInvalidData("initialVals.size must be 2!", __FILE__, __LINE__);
 	//	}
 	//	LAQuantLibArray x(initialVals.size());
 	//	for (unsigned int j = 0; j < initialVals.size(); ++j)
@@ -290,8 +290,8 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const LADate& basedate,
 	//	}
 	//	else
 	//	{
-	//		LAString msg = "Bad optMethod , " + optMethodType_skewvol;
-	//		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+	//		AQLString msg = "Bad optMethod , " + optMethodType_skewvol;
+	//		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	//	}
 
 	//	LAQuantLibEndCriteria::Type endCriteriaResult = pOptMethod->minimize(problem, endCriteria_skewvol);
@@ -302,27 +302,27 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const LADate& basedate,
 	//	calculatedMktSkewDD[i] = value[1];
 	//}
 	////getDomestic HW parameter
-	//const LADataReference &hw_d = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_DOMESTICIRMODEL, ISNOTNULL).get());
-	//const DoubleVector &timegrid_canonic = dynamic_cast<const LADataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
-	//const DoubleVector &hw_vol_d = dynamic_cast<const LADataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBVOL_T, ISNOTNULL).get()).get();
-	//const DoubleVector &hw_meanrev_d = dynamic_cast<const LADataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBMEANREV_T, ISNOTNULL).get()).get();
+	//const AQLDataReference &hw_d = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_DOMESTICIRMODEL, ISNOTNULL).get());
+	//const DoubleVector &timegrid_canonic = dynamic_cast<const AQLDataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
+	//const DoubleVector &hw_vol_d = dynamic_cast<const AQLDataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBVOL_T, ISNOTNULL).get()).get();
+	//const DoubleVector &hw_meanrev_d = dynamic_cast<const AQLDataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBMEANREV_T, ISNOTNULL).get()).get();
 	//LAMathHullWhiteParams hwParams_d(timegrid_canonic, hw_meanrev_d, hw_vol_d);
 
 	////getForeign HW parameter
-	//const LADataReference &hw_f = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_FOREIGNIRMODEL, ISNOTNULL).get());
-	//const DoubleVector &timegrid_canonic_f = dynamic_cast<const LADataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
+	//const AQLDataReference &hw_f = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_FOREIGNIRMODEL, ISNOTNULL).get());
+	//const DoubleVector &timegrid_canonic_f = dynamic_cast<const AQLDataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
 	//if (timegrid_canonic != timegrid_canonic_f)
 	//{
-	//	throw LACoreInvalidData("Invalid hw canonical terms.", __FILE__, __LINE__);
+	//	throw AQLCoreInvalidData("Invalid hw canonical terms.", __FILE__, __LINE__);
 	//}
-	//const DoubleVector &hw_vol_f = dynamic_cast<const LADataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBVOL_T, ISNOTNULL).get()).get();
-	//const DoubleVector &hw_meanrev_f = dynamic_cast<const LADataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBMEANREV_T, ISNOTNULL).get()).get();
+	//const DoubleVector &hw_vol_f = dynamic_cast<const AQLDataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBVOL_T, ISNOTNULL).get()).get();
+	//const DoubleVector &hw_meanrev_f = dynamic_cast<const AQLDataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBMEANREV_T, ISNOTNULL).get()).get();
 	//LAMathHullWhiteParams hwParams_f(timegrid_canonic, hw_meanrev_f, hw_vol_f);
 
-	//const DoubleVector &corVec = dynamic_cast<const LADataDoubles &>(object.getData(PRICING_DATA_SDECORRELATIONS, ISNOTNULL).get()).get();
+	//const DoubleVector &corVec = dynamic_cast<const AQLDataDoubles &>(object.getData(PRICING_DATA_SDECORRELATIONS, ISNOTNULL).get()).get();
 	//if (corVec.size() != 3)
 	//{
-	//	throw LACoreInvalidData("SDE Correlation format is wrong.", __FILE__, __LINE__);
+	//	throw AQLCoreInvalidData("SDE Correlation format is wrong.", __FILE__, __LINE__);
 	//}
 	//DoubleMatrix corMatrix(corVec.size());
 	//corMatrix[0] = DoubleVector(3, 1.0);
@@ -342,30 +342,30 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const LADate& basedate,
 	//	fx0[i] = spotFX * curve0_f.getP(timegrid[i]) / curve0_d.getP(timegrid[i]);
 	//}
 	//// set up sigma beta boundary
-	//const double boundaryMaxSigma = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MAX_SIGMA, ISNOTNULL).get()).get();
-	//const double boundaryMinSigma = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MIN_SIGMA, ISNOTNULL).get()).get();
-	//const double boundaryMaxBeta = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MAX_BETA, ISNOTNULL).get()).get();
-	//const double boundaryMinBeta = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MIN_BETA, ISNOTNULL).get()).get();
+	//const double boundaryMaxSigma = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MAX_SIGMA, ISNOTNULL).get()).get();
+	//const double boundaryMinSigma = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MIN_SIGMA, ISNOTNULL).get()).get();
+	//const double boundaryMaxBeta = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MAX_BETA, ISNOTNULL).get()).get();
+	//const double boundaryMinBeta = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MIN_BETA, ISNOTNULL).get()).get();
 
 	//// set up end criteria
- //   const int maxIteration_sigmabeta = dynamic_cast<const LADataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
- //   const int maxStationaryStateIteration_sigmabeta = dynamic_cast<const LADataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
- //   const double rootEpsilon_sigmabeta = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
- //   const double functionEpsilon_sigmabeta = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
- //   const double gradientNormEpsilon_sigmabeta = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
+ //   const int maxIteration_sigmabeta = dynamic_cast<const AQLDataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
+ //   const int maxStationaryStateIteration_sigmabeta = dynamic_cast<const AQLDataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
+ //   const double rootEpsilon_sigmabeta = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
+ //   const double functionEpsilon_sigmabeta = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
+ //   const double gradientNormEpsilon_sigmabeta = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
 
 	//// sigma and beta
-	//const DoubleVector &timegrid_fx = dynamic_cast<const LADataDoubles &>(vole.getData(PRICING_DATA_FXTIMEGRIDS, ISNOTNULL).get()).get();
+	//const DoubleVector &timegrid_fx = dynamic_cast<const AQLDataDoubles &>(vole.getData(PRICING_DATA_FXTIMEGRIDS, ISNOTNULL).get()).get();
 	////DoubleVector sigma(timegrid_fx.size(), 0.1);
 	////DoubleVector beta(timegrid_fx.size(), 1.0);
-	//const DoubleVector &sigma = dynamic_cast<const LADataDoubles &>(vole.getData(PRICING_DATA_FXVOLGRIDS, ISNOTNULL).get()).get();
-	//const DoubleVector &beta = dynamic_cast<const LADataDoubles &>(vole.getData(PRICING_DATA_FXBETAGRIDS, ISNOTNULL).get()).get();
+	//const DoubleVector &sigma = dynamic_cast<const AQLDataDoubles &>(vole.getData(PRICING_DATA_FXVOLGRIDS, ISNOTNULL).get()).get();
+	//const DoubleVector &beta = dynamic_cast<const AQLDataDoubles &>(vole.getData(PRICING_DATA_FXBETAGRIDS, ISNOTNULL).get()).get();
 
 	//LAMathDisplacedDiffusionParams ddParams(timegrid_fx, sigma, beta);
-	//const int smallSteps = dynamic_cast<const LADataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_SMALL_STEPS, ISNOTNULL).get()).get();
+	//const int smallSteps = dynamic_cast<const AQLDataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_SMALL_STEPS, ISNOTNULL).get()).get();
 
 	//// opt type
-	//LAString optMethodType_sigmabeta = dynamic_cast<const LADataString &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
+	//AQLString optMethodType_sigmabeta = dynamic_cast<const AQLDataString &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
 	//optMethodType_sigmabeta.toUpper();
 
 	//LAQuantLibEndCriteria endCriteria_sigmabeta(maxIteration_sigmabeta, maxStationaryStateIteration_sigmabeta, rootEpsilon_sigmabeta, functionEpsilon_sigmabeta, gradientNormEpsilon_sigmabeta);
@@ -430,8 +430,8 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const LADate& basedate,
 	//	}
 	//	else
 	//	{
-	//		LAString msg = "Bad optMethod , " + optMethodType_sigmabeta;
-	//		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+	//		AQLString msg = "Bad optMethod , " + optMethodType_sigmabeta;
+	//		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	//	}
 
 	//	LAQuantLibEndCriteria::Type endCriteriaResultSigma = pOptMethodSigma->minimize(problemSigma, endCriteria_sigmabeta);
@@ -441,7 +441,7 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const LADate& basedate,
 	//	skew_ave[i] = processHelperVec[0]->calcSkew();
 	//}
 	//unsigned int pos;
-	//LAAlgorithm::locate<DoubleArray, double>(ddParams.mT, timegrid.back(), ddParams.mT.size(), pos);
+	//AQLAlgorithm::locate<DoubleArray, double>(ddParams.mT, timegrid.back(), ddParams.mT.size(), pos);
 	//if (pos < ddParams.mT.size())
 	//{
 	//	if (timegrid.back() < ddParams.mT[pos])
@@ -458,9 +458,9 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const LADate& basedate,
 	//}
 	//// set calibrated param
 	//vole.remove(PRICING_DATA_FXVOLGRIDS);
-	//vole.add(PRICING_DATA_FXVOLGRIDS, new LADataDoubles(ddParams.mSigma));
+	//vole.add(PRICING_DATA_FXVOLGRIDS, new AQLDataDoubles(ddParams.mSigma));
 	//vole.remove(PRICING_DATA_FXBETAGRIDS);
-	//vole.add(PRICING_DATA_FXBETAGRIDS, new LADataDoubles(ddParams.mBeta));
+	//vole.add(PRICING_DATA_FXBETAGRIDS, new AQLDataDoubles(ddParams.mBeta));
 }
 
 
@@ -476,53 +476,53 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibrateModel(const LADate& basedate,
 	@note basedate is not used in estimation
 */
 void	            
-LAPriceFXDisplacedDiffusionCalibration3F::calibMarketSkewVol(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const
+LAPriceFXDisplacedDiffusionCalibration3F::calibMarketSkewVol(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const
 {
 	(void)basedate; (void)att;
 
-	const LAObject &calibinfo_skewvol = dynamic_cast<LADataReference &>(object.getData(PRICING_DATA_SKEWVOLCALIBINFO, ISNOTNULL).get()).get().get();
+	const AQLObject &calibinfo_skewvol = dynamic_cast<AQLDataReference &>(object.getData(PRICING_DATA_SKEWVOLCALIBINFO, ISNOTNULL).get()).get().get();
 	// set up skew vol boundary
-	const double boundaryMaxSkew = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MAX_SKEW, ISNOTNULL).get()).get();
-	const double boundaryMinSkew = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MIN_SKEW, ISNOTNULL).get()).get();
-	const double boundaryMaxVol = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MAX_VOL, ISNOTNULL).get()).get();
-	const double boundaryMinVol = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MIN_VOL, ISNOTNULL).get()).get();
+	const double boundaryMaxSkew = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MAX_SKEW, ISNOTNULL).get()).get();
+	const double boundaryMinSkew = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MIN_SKEW, ISNOTNULL).get()).get();
+	const double boundaryMaxVol = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MAX_VOL, ISNOTNULL).get()).get();
+	const double boundaryMinVol = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_BOUNDARY_MIN_VOL, ISNOTNULL).get()).get();
 	// set up end criteria
-    const int maxIteration_skewvol = dynamic_cast<const LADataInt &>(calibinfo_skewvol.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
-    const int maxStationaryStateIteration_skewvol = dynamic_cast<const LADataInt &>(calibinfo_skewvol.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
-    const double rootEpsilon_skewvol = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
-    const double functionEpsilon_skewvol = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
-    const double gradientNormEpsilon_skewvol = dynamic_cast<const LADataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
+    const int maxIteration_skewvol = dynamic_cast<const AQLDataInt &>(calibinfo_skewvol.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
+    const int maxStationaryStateIteration_skewvol = dynamic_cast<const AQLDataInt &>(calibinfo_skewvol.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
+    const double rootEpsilon_skewvol = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
+    const double functionEpsilon_skewvol = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
+    const double gradientNormEpsilon_skewvol = dynamic_cast<const AQLDataDouble &>(calibinfo_skewvol.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
 
-	LADataInstance* pDataInstance = object.getDataInstance();
+	AQLDataInstance* pDataInstance = object.getDataInstance();
 	// create domestic curve
-	const LAObject &yldentity_d = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_DOMESTICCURVE, ISNOTNULL).get()).get().get();
-	const LAString &yldname_d = dynamic_cast<const LADataString &>(yldentity_d.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-	const LAString &curveType_d = dynamic_cast<const LADataString &>(object.getData(PRICING_DATA_DOMESTICCURVETYPE, ISNOTNULL).get()).get();
+	const AQLObject &yldentity_d = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_DOMESTICCURVE, ISNOTNULL).get()).get().get();
+	const AQLString &yldname_d = dynamic_cast<const AQLDataString &>(yldentity_d.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	const AQLString &curveType_d = dynamic_cast<const AQLDataString &>(object.getData(PRICING_DATA_DOMESTICCURVETYPE, ISNOTNULL).get()).get();
 	LAMathYieldCurve yc_d(pDataInstance);	
 	yc_d.getData(IR_CALIBRATION_DATA_YIELDDATA,ISDEFINED).convertFromString(yldname_d);
 	yc_d.setCurveType(curveType_d);
 	yc_d.setInterpolation(FN_SPLINEINTERPOLATION_STR);
 	LAMathPathYieldCurve curve0_d(&yc_d, 0.0, ACT_365_ISDA);
 	// create foreign curve
-	const LAObject &yldentity_f = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_FOREIGNCURVE, ISNOTNULL).get()).get().get();
-	const LAString &yldname_f = dynamic_cast<const LADataString &>(yldentity_f.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-	const LAString &curveType_f = dynamic_cast<const LADataString &>(object.getData(PRICING_DATA_FOREIGNCURVETYPE, ISNOTNULL).get()).get();
+	const AQLObject &yldentity_f = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_FOREIGNCURVE, ISNOTNULL).get()).get().get();
+	const AQLString &yldname_f = dynamic_cast<const AQLDataString &>(yldentity_f.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	const AQLString &curveType_f = dynamic_cast<const AQLDataString &>(object.getData(PRICING_DATA_FOREIGNCURVETYPE, ISNOTNULL).get()).get();
 	LAMathYieldCurve yc_f(pDataInstance);
 	yc_f.getData(IR_CALIBRATION_DATA_YIELDDATA,ISDEFINED).convertFromString(yldname_f);
 	yc_f.setCurveType(curveType_f);
 	yc_f.setInterpolation(FN_SPLINEINTERPOLATION_STR);
 	LAMathPathYieldCurve curve0_f(&yc_f, 0.0, ACT_365_ISDA);
 	// spot fx
-	const double spotFX = dynamic_cast<const LADataDouble &>(object.getData(PRICING_DATA_SPOTFX, ISNOTNULL).get()).get();
+	const double spotFX = dynamic_cast<const AQLDataDouble &>(object.getData(PRICING_DATA_SPOTFX, ISNOTNULL).get()).get();
 	// opt type
-	LAString optMethodType_skewvol = dynamic_cast<const LADataString &>(calibinfo_skewvol.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
+	AQLString optMethodType_skewvol = dynamic_cast<const AQLDataString &>(calibinfo_skewvol.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
 	optMethodType_skewvol.toUpper();
 
 	LAQuantLibEndCriteria endCriteria_skewvol(maxIteration_skewvol, maxStationaryStateIteration_skewvol, rootEpsilon_skewvol, functionEpsilon_skewvol, gradientNormEpsilon_skewvol);
 
-	const LADataMultiReference &refData = dynamic_cast<LADataMultiReference &>(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL).get());
+	const AQLDataMultiReference &refData = dynamic_cast<AQLDataMultiReference &>(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL).get());
 	unsigned int gridSize = refData.getSize();
 
 	DoubleVector mktVolDD(gridSize);
@@ -530,12 +530,12 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibMarketSkewVol(const LADate& based
 	DoubleVector timegrid(gridSize);
 	for (unsigned int i = 0; i < gridSize; ++i)
 	{
-		timegrid[i] = dynamic_cast<const LADataDouble &>(refData.get(i).getData(PRICING_DATA_FXTERM, ISNOTNULL).get()).get();
+		timegrid[i] = dynamic_cast<const AQLDataDouble &>(refData.get(i).getData(PRICING_DATA_FXTERM, ISNOTNULL).get()).get();
 		const DoubleVector tVec(1, timegrid[i]);
-		const DoubleMatrix premMat(1, dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_OPTIONPREMIUMS, ISNOTNULL).get()).get());
-		const DoubleMatrix strikeMat(1, dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_STRIKES, ISNOTNULL).get()).get());
-		const DoubleMatrix weightMat(1, dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_WEIGHTS, ISNOTNULL).get()).get());
-		const BoolVector &cpFlag = dynamic_cast<const LADataBools &>(refData.get(i).getData(PRICING_DATA_ISCALLS, ISNOTNULL).get()).get();
+		const DoubleMatrix premMat(1, dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_OPTIONPREMIUMS, ISNOTNULL).get()).get());
+		const DoubleMatrix strikeMat(1, dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_STRIKES, ISNOTNULL).get()).get());
+		const DoubleMatrix weightMat(1, dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_WEIGHTS, ISNOTNULL).get()).get());
+		const BoolVector &cpFlag = dynamic_cast<const AQLDataBools &>(refData.get(i).getData(PRICING_DATA_ISCALLS, ISNOTNULL).get()).get();
 		IntVector int_cpFlag(cpFlag.size(), -1);
 		for (unsigned int j = 0; j < int_cpFlag.size(); ++j)
 		{
@@ -549,10 +549,10 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibMarketSkewVol(const LADate& based
 		LAMathLeastSquareBlackDD blackDD(spotFX, curve0_d, curve0_f, tVec, strikeMat, premMat, weightMat, cpFlagMat); 
 		LAMathBoundaryConstraintMktSkewVol bcSkewVol(boundaryMaxSkew, boundaryMinSkew, boundaryMaxVol, boundaryMinVol);
 	
-		const DoubleVector &initialVals = dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_INITIALVALUE, ISNOTNULL).get()).get();
+		const DoubleVector &initialVals = dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_INITIALVALUE, ISNOTNULL).get()).get();
 		if (initialVals.size() != 2)
 		{
-			LACoreInvalidData("initialVals.size must be 2!", __FILE__, __LINE__);
+			AQLCoreInvalidData("initialVals.size must be 2!", __FILE__, __LINE__);
 		}
 		LAQuantLibArray x(initialVals.size());
 		for (unsigned int j = 0; j < initialVals.size(); ++j)
@@ -585,8 +585,8 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibMarketSkewVol(const LADate& based
 		}
 		else
 		{
-			LAString msg = "Bad optMethod , " + optMethodType_skewvol;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "Bad optMethod , " + optMethodType_skewvol;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
 		LAQuantLibEndCriteria::Type endCriteriaResult = pOptMethod->minimize(problem, endCriteria_skewvol);
@@ -596,14 +596,14 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibMarketSkewVol(const LADate& based
 		mktVolDD[i] = value[0];
 		mktSkewDD[i] = value[1];
 	}
-	LAObject& vole = dynamic_cast<LADataReference &>(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL).get()).get().get();
+	AQLObject& vole = dynamic_cast<AQLDataReference &>(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL).get()).get().get();
 	// set calibrated param
 	vole.remove(PRICING_DATA_MARKETTERMS);
-	vole.add(PRICING_DATA_MARKETTERMS, new LADataDoubles(timegrid));
+	vole.add(PRICING_DATA_MARKETTERMS, new AQLDataDoubles(timegrid));
 	vole.remove(PRICING_DATA_MARKETVOLDD);
-	vole.add(PRICING_DATA_MARKETVOLDD, new LADataDoubles(mktVolDD));
+	vole.add(PRICING_DATA_MARKETVOLDD, new AQLDataDoubles(mktVolDD));
 	vole.remove(PRICING_DATA_MARKETSKEWDD);
-	vole.add(PRICING_DATA_MARKETSKEWDD, new LADataDoubles(mktSkewDD));
+	vole.add(PRICING_DATA_MARKETSKEWDD, new AQLDataDoubles(mktSkewDD));
 }
 
 /*!
@@ -616,55 +616,55 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibMarketSkewVol(const LADate& based
 	@note basedate is not used in estimation
 */
 void	            
-LAPriceFXDisplacedDiffusionCalibration3F::calibHybridHWDDProcess(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const
+LAPriceFXDisplacedDiffusionCalibration3F::calibHybridHWDDProcess(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const
 {
-	const LAObject &calibinfo_sigmabeta = dynamic_cast<LADataReference &>(object.getData(PRICING_DATA_SIGMABETACALIBINFO, ISNOTNULL).get()).get().get();
-	LAObject& vole = dynamic_cast<LADataReference &>(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL).get()).get().get();
+	const AQLObject &calibinfo_sigmabeta = dynamic_cast<AQLDataReference &>(object.getData(PRICING_DATA_SIGMABETACALIBINFO, ISNOTNULL).get()).get().get();
+	AQLObject& vole = dynamic_cast<AQLDataReference &>(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL).get()).get().get();
 	// calib flag
-	const bool optSBFlag = dynamic_cast<const LADataBool &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_OPT_SIGMABETA_FLAG, ISNOTNULL).get()).get();
+	const bool optSBFlag = dynamic_cast<const AQLDataBool &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_OPT_SIGMABETA_FLAG, ISNOTNULL).get()).get();
 	//if (!optSBFlag)
 	//{
 	//	// check param exist
-	//	LADataHolder *dh = &vole.getData(PRICING_DATA_FXVOLGRIDS, NOCHECK);
+	//	AQLDataHolder *dh = &vole.getData(PRICING_DATA_FXVOLGRIDS, NOCHECK);
 	//	if (!dh->isDefined() || dh->isNull())
 	//	{
-	//		throw LACoreInvalidData("FXVolGrid does not exist.", __FILE__, __LINE__);
+	//		throw AQLCoreInvalidData("FXVolGrid does not exist.", __FILE__, __LINE__);
 	//	}
 	//	dh = &vole.getData(PRICING_DATA_FXBETAGRIDS, NOCHECK);
 	//	if (!dh->isDefined() || dh->isNull())
 	//	{
-	//		throw LACoreInvalidData("FXBetaGrid does not exist.", __FILE__, __LINE__);
+	//		throw AQLCoreInvalidData("FXBetaGrid does not exist.", __FILE__, __LINE__);
 	//	}
 	//	return;
 	//}
-	const LADataMultiReference &refData = dynamic_cast<LADataMultiReference &>(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL).get());
+	const AQLDataMultiReference &refData = dynamic_cast<AQLDataMultiReference &>(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL).get());
 	unsigned int gridSize = refData.getSize();
 
 	//get domestic hw parameter
-	const LADataReference &hw_d = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_DOMESTICIRMODEL, ISNOTNULL).get());
-	const DoubleVector &timegrid_canonic = dynamic_cast<const LADataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
-	const DoubleVector &hw_vol_d = dynamic_cast<const LADataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBVOL_T, ISNOTNULL).get()).get();
-	const DoubleVector &hw_meanrev_d = dynamic_cast<const LADataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBMEANREV_T, ISNOTNULL).get()).get();
+	const AQLDataReference &hw_d = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_DOMESTICIRMODEL, ISNOTNULL).get());
+	const DoubleVector &timegrid_canonic = dynamic_cast<const AQLDataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
+	const DoubleVector &hw_vol_d = dynamic_cast<const AQLDataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBVOL_T, ISNOTNULL).get()).get();
+	const DoubleVector &hw_meanrev_d = dynamic_cast<const AQLDataDoubles &>(hw_d.get().getData(PRICING_DATA_CALIBMEANREV_T, ISNOTNULL).get()).get();
 	LAMathHullWhiteParams hwParams_d(timegrid_canonic, hw_meanrev_d, hw_vol_d);
 
 	//get foreign hw parameter
-	const LADataReference &hw_f = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_FOREIGNIRMODEL, ISNOTNULL).get());
-	const DoubleVector &timegrid_canonic_f = dynamic_cast<const LADataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
+	const AQLDataReference &hw_f = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_FOREIGNIRMODEL, ISNOTNULL).get());
+	const DoubleVector &timegrid_canonic_f = dynamic_cast<const AQLDataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
 	//if (timegrid_canonic != timegrid_canonic_f)
 	//{
-	//	throw LACoreInvalidData("Invalid hw canonical terms.", __FILE__, __LINE__);
+	//	throw AQLCoreInvalidData("Invalid hw canonical terms.", __FILE__, __LINE__);
 	//}
-	const DoubleVector &hw_vol_f = dynamic_cast<const LADataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBVOL_T, ISNOTNULL).get()).get();
-	const DoubleVector &hw_meanrev_f = dynamic_cast<const LADataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBMEANREV_T, ISNOTNULL).get()).get();
+	const DoubleVector &hw_vol_f = dynamic_cast<const AQLDataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBVOL_T, ISNOTNULL).get()).get();
+	const DoubleVector &hw_meanrev_f = dynamic_cast<const AQLDataDoubles &>(hw_f.get().getData(PRICING_DATA_CALIBMEANREV_T, ISNOTNULL).get()).get();
 	//LAMathHullWhiteParams hwParams_f(timegrid_canonic, hw_meanrev_f, hw_vol_f);
 	LAMathHullWhiteParams hwParams_f(timegrid_canonic_f, hw_meanrev_f, hw_vol_f);
 
-	const DoubleVector &corVec = dynamic_cast<const LADataDoubles &>(object.getData(PRICING_DATA_SDECORRELATIONS, ISNOTNULL).get()).get();
+	const DoubleVector &corVec = dynamic_cast<const AQLDataDoubles &>(object.getData(PRICING_DATA_SDECORRELATIONS, ISNOTNULL).get()).get();
 	if (corVec.size() != 3)
 	{
-		throw LACoreInvalidData("SDE Correlation format is wrong.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("SDE Correlation format is wrong.", __FILE__, __LINE__);
 	}
 	DoubleMatrix corMatrix(corVec.size());
 	corMatrix[0] = DoubleVector(3, 1.0);
@@ -677,62 +677,62 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibHybridHWDDProcess(const LADate& b
 	vector<DoubleMatrix> corParamSet(timegrid_canonic.size(), corMatrix);
 	LAMathCorrelationParams corParams(timegrid_canonic, corParamSet); 
 
-	LADataInstance* pDataInstance = object.getDataInstance();
+	AQLDataInstance* pDataInstance = object.getDataInstance();
 	// create domestic curve
-	const LAObject &yldentity_d = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_DOMESTICCURVE, ISNOTNULL).get()).get().get();
-	const LAString &yldname_d = dynamic_cast<const LADataString &>(yldentity_d.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-	const LAString &curveType_d = dynamic_cast<const LADataString &>(object.getData(PRICING_DATA_DOMESTICCURVETYPE, ISNOTNULL).get()).get();
+	const AQLObject &yldentity_d = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_DOMESTICCURVE, ISNOTNULL).get()).get().get();
+	const AQLString &yldname_d = dynamic_cast<const AQLDataString &>(yldentity_d.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	const AQLString &curveType_d = dynamic_cast<const AQLDataString &>(object.getData(PRICING_DATA_DOMESTICCURVETYPE, ISNOTNULL).get()).get();
 	LAMathYieldCurve yc_d(pDataInstance);	
 	yc_d.getData(IR_CALIBRATION_DATA_YIELDDATA,ISDEFINED).convertFromString(yldname_d);
 	yc_d.setCurveType(curveType_d);
 	yc_d.setInterpolation(FN_SPLINEINTERPOLATION_STR);
 	LAMathPathYieldCurve curve0_d(&yc_d, 0.0, ACT_365_ISDA);
 	// create foreign curve
-	const LAObject &yldentity_f = dynamic_cast<const LADataReference &>(object.getData(PRICING_DATA_FOREIGNCURVE, ISNOTNULL).get()).get().get();
-	const LAString &yldname_f = dynamic_cast<const LADataString &>(yldentity_f.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-	const LAString &curveType_f = dynamic_cast<const LADataString &>(object.getData(PRICING_DATA_FOREIGNCURVETYPE, ISNOTNULL).get()).get();
+	const AQLObject &yldentity_f = dynamic_cast<const AQLDataReference &>(object.getData(PRICING_DATA_FOREIGNCURVE, ISNOTNULL).get()).get().get();
+	const AQLString &yldname_f = dynamic_cast<const AQLDataString &>(yldentity_f.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	const AQLString &curveType_f = dynamic_cast<const AQLDataString &>(object.getData(PRICING_DATA_FOREIGNCURVETYPE, ISNOTNULL).get()).get();
 	LAMathYieldCurve yc_f(pDataInstance);
 	yc_f.getData(IR_CALIBRATION_DATA_YIELDDATA,ISDEFINED).convertFromString(yldname_f);
 	yc_f.setCurveType(curveType_f);
 	yc_f.setInterpolation(FN_SPLINEINTERPOLATION_STR);
 	LAMathPathYieldCurve curve0_f(&yc_f, 0.0, ACT_365_ISDA);
 	// spot fx
-	const double spotFX = dynamic_cast<const LADataDouble &>(object.getData(PRICING_DATA_SPOTFX, ISNOTNULL).get()).get();
+	const double spotFX = dynamic_cast<const AQLDataDouble &>(object.getData(PRICING_DATA_SPOTFX, ISNOTNULL).get()).get();
 	DoubleVector fx0(gridSize);
-	const DoubleVector &mktTimeGrid = dynamic_cast<const LADataDoubles &>(vole.getData(PRICING_DATA_MARKETTERMS, ISNOTNULL).get()).get();
+	const DoubleVector &mktTimeGrid = dynamic_cast<const AQLDataDoubles &>(vole.getData(PRICING_DATA_MARKETTERMS, ISNOTNULL).get()).get();
 	if (mktTimeGrid.size() != gridSize)
 	{
-		throw LACoreInvalidData("markte grid size is wrong.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("markte grid size is wrong.", __FILE__, __LINE__);
 	}
 	for (unsigned int i = 0; i < fx0.size(); ++i)
 	{
 		fx0[i] = spotFX * curve0_f.getP(mktTimeGrid[i]) / curve0_d.getP(mktTimeGrid[i]);
 	}
 	// set up sigma beta boundary
-	const double boundaryMaxSigma = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MAX_SIGMA, ISNOTNULL).get()).get();
-	const double boundaryMinSigma = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MIN_SIGMA, ISNOTNULL).get()).get();
-	const double boundaryMaxBeta = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MAX_BETA, ISNOTNULL).get()).get();
-	const double boundaryMinBeta = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MIN_BETA, ISNOTNULL).get()).get();
+	const double boundaryMaxSigma = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MAX_SIGMA, ISNOTNULL).get()).get();
+	const double boundaryMinSigma = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MIN_SIGMA, ISNOTNULL).get()).get();
+	const double boundaryMaxBeta = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MAX_BETA, ISNOTNULL).get()).get();
+	const double boundaryMinBeta = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_BOUNDARY_MIN_BETA, ISNOTNULL).get()).get();
 
 	// set up end criteria
-    const int maxIteration_sigmabeta = dynamic_cast<const LADataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
-    const int maxStationaryStateIteration_sigmabeta = dynamic_cast<const LADataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
-    const double rootEpsilon_sigmabeta = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
-    const double functionEpsilon_sigmabeta = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
-    const double gradientNormEpsilon_sigmabeta = dynamic_cast<const LADataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
+    const int maxIteration_sigmabeta = dynamic_cast<const AQLDataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_MAX_ITERATION, ISNOTNULL).get()).get();
+    const int maxStationaryStateIteration_sigmabeta = dynamic_cast<const AQLDataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, ISNOTNULL).get()).get();
+    const double rootEpsilon_sigmabeta = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_ROOT_EPSILON, ISNOTNULL).get()).get();
+    const double functionEpsilon_sigmabeta = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_FUNCTION_EPSILON, ISNOTNULL).get()).get();
+    const double gradientNormEpsilon_sigmabeta = dynamic_cast<const AQLDataDouble &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, ISNOTNULL).get()).get();
 
 	// sigma and beta
-	const DoubleVector &timegrid_fx = dynamic_cast<const LADataDoubles &>(vole.getData(PRICING_DATA_FXTIMEGRIDS, ISNOTNULL).get()).get();
+	const DoubleVector &timegrid_fx = dynamic_cast<const AQLDataDoubles &>(vole.getData(PRICING_DATA_FXTIMEGRIDS, ISNOTNULL).get()).get();
 	//DoubleVector sigma(timegrid_fx.size(), 0.1);
 	//DoubleVector beta(timegrid_fx.size(), 1.0);
-	const DoubleVector &sigma = dynamic_cast<const LADataDoubles &>(vole.getData(PRICING_DATA_FXVOLGRIDS, ISNOTNULL).get()).get();
-	const DoubleVector &beta = dynamic_cast<const LADataDoubles &>(vole.getData(PRICING_DATA_FXBETAGRIDS, ISNOTNULL).get()).get();
+	const DoubleVector &sigma = dynamic_cast<const AQLDataDoubles &>(vole.getData(PRICING_DATA_FXVOLGRIDS, ISNOTNULL).get()).get();
+	const DoubleVector &beta = dynamic_cast<const AQLDataDoubles &>(vole.getData(PRICING_DATA_FXBETAGRIDS, ISNOTNULL).get()).get();
 
 	LAMathDisplacedDiffusionParams ddParams(timegrid_fx, sigma, beta);
-	const int smallSteps = dynamic_cast<const LADataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_SMALL_STEPS, ISNOTNULL).get()).get();
+	const int smallSteps = dynamic_cast<const AQLDataInt &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_SMALL_STEPS, ISNOTNULL).get()).get();
 
 	// opt type
-	LAString optMethodType_sigmabeta = dynamic_cast<const LADataString &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
+	AQLString optMethodType_sigmabeta = dynamic_cast<const AQLDataString &>(calibinfo_sigmabeta.getData(CALIBRATION_DATA_OPT_METHOD_TYPE, ISNOTNULL).get()).get();
 	optMethodType_sigmabeta.toUpper();
 
 	LAQuantLibEndCriteria endCriteria_sigmabeta(maxIteration_sigmabeta, maxStationaryStateIteration_sigmabeta, rootEpsilon_sigmabeta, functionEpsilon_sigmabeta, gradientNormEpsilon_sigmabeta);
@@ -740,15 +740,15 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibHybridHWDDProcess(const LADate& b
 	DoubleVector sigma_ave(gridSize);
 	DoubleVector skew_ave(gridSize);
 	DoubleMatrix modelVolDD(gridSize);
-	const DoubleVector &mktVolDD = dynamic_cast<const LADataDoubles &>(vole.getData(PRICING_DATA_MARKETVOLDD, ISNOTNULL).get()).get();
+	const DoubleVector &mktVolDD = dynamic_cast<const AQLDataDoubles &>(vole.getData(PRICING_DATA_MARKETVOLDD, ISNOTNULL).get()).get();
 	if (mktVolDD.size() != gridSize)
 	{
-		throw LACoreInvalidData("markte volatility dd size is wrong.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("markte volatility dd size is wrong.", __FILE__, __LINE__);
 	}
-	const DoubleVector &mktSkewDD = dynamic_cast<const LADataDoubles &>(vole.getData(PRICING_DATA_MARKETSKEWDD, ISNOTNULL).get()).get();
+	const DoubleVector &mktSkewDD = dynamic_cast<const AQLDataDoubles &>(vole.getData(PRICING_DATA_MARKETSKEWDD, ISNOTNULL).get()).get();
 	if (mktSkewDD.size() != gridSize)
 	{
-		throw LACoreInvalidData("markte skew dd size is wrong.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("markte skew dd size is wrong.", __FILE__, __LINE__);
 	}
 	for (unsigned int i = 0; i < gridSize; ++i)
 	{
@@ -808,8 +808,8 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibHybridHWDDProcess(const LADate& b
 		}
 		else
 		{
-			LAString msg = "Bad optMethod , " + optMethodType_sigmabeta;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "Bad optMethod , " + optMethodType_sigmabeta;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
 		if (optSBFlag)
@@ -825,10 +825,10 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibHybridHWDDProcess(const LADate& b
 		DoubleArray value(2); 
 		value[0] = sigma_ave[i]; 
 		value[1] = skew_ave[i];
-		const DoubleMatrix premMat(1, dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_OPTIONPREMIUMS, ISNOTNULL).get()).get());
-		const DoubleMatrix strikeMat_modelVol(1, dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_STRIKES, ISNOTNULL).get()).get());
-		const DoubleMatrix weightMat_modelVol(1, dynamic_cast<const LADataDoubles &>(refData.get(i).getData(PRICING_DATA_WEIGHTS, ISNOTNULL).get()).get());
-		const BoolVector &cpFlag = dynamic_cast<const LADataBools &>(refData.get(i).getData(PRICING_DATA_ISCALLS, ISNOTNULL).get()).get();
+		const DoubleMatrix premMat(1, dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_OPTIONPREMIUMS, ISNOTNULL).get()).get());
+		const DoubleMatrix strikeMat_modelVol(1, dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_STRIKES, ISNOTNULL).get()).get());
+		const DoubleMatrix weightMat_modelVol(1, dynamic_cast<const AQLDataDoubles &>(refData.get(i).getData(PRICING_DATA_WEIGHTS, ISNOTNULL).get()).get());
+		const BoolVector &cpFlag = dynamic_cast<const AQLDataBools &>(refData.get(i).getData(PRICING_DATA_ISCALLS, ISNOTNULL).get()).get();
 		IntVector int_cpFlag(cpFlag.size(), -1);
 		for (unsigned int j = 0; j < int_cpFlag.size(); ++j)
 		{
@@ -843,7 +843,7 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibHybridHWDDProcess(const LADate& b
 		{
 			modelVolDD[i] = blackDD.getBlackVol(value);
 		}
-		catch (LACoreNumericalError e) 
+		catch (AQLCoreNumericalError e) 
 		{
 			modelVolDD[i] = DoubleArray(premMat.size()*premMat[0].size(), DBL_MAX);
 			//The calculation of the model implied volatility was failed, 
@@ -851,7 +851,7 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibHybridHWDDProcess(const LADate& b
 		}
 	}
 	//unsigned int pos;
-	//LAAlgorithm::locate<DoubleVector, double>(ddParams.mT, mktTimeGrid.back(), ddParams.mT.size(), pos);
+	//AQLAlgorithm::locate<DoubleVector, double>(ddParams.mT, mktTimeGrid.back(), ddParams.mT.size(), pos);
 	unsigned int pos = lower_bound(ddParams.mT.begin(), ddParams.mT.end(), mktTimeGrid.back()) - ddParams.mT.begin();
 	if (pos > 1)
 	{
@@ -866,14 +866,14 @@ LAPriceFXDisplacedDiffusionCalibration3F::calibHybridHWDDProcess(const LADate& b
 	}
 	// set calibrated param
 	vole.remove(PRICING_DATA_AVERAGEMARKETVOLDD);
-	vole.add(PRICING_DATA_AVERAGEMARKETVOLDD, new LADataDoubles(sigma_ave));
+	vole.add(PRICING_DATA_AVERAGEMARKETVOLDD, new AQLDataDoubles(sigma_ave));
 	vole.remove(PRICING_DATA_AVERAGEMARKETSKEWDD);
-	vole.add(PRICING_DATA_AVERAGEMARKETSKEWDD, new LADataDoubles(skew_ave));
+	vole.add(PRICING_DATA_AVERAGEMARKETSKEWDD, new AQLDataDoubles(skew_ave));
 	vole.remove(PRICING_DATA_MODELVOLDD);
-	vole.add(PRICING_DATA_MODELVOLDD, new LADataDoubleMatrix(modelVolDD));
+	vole.add(PRICING_DATA_MODELVOLDD, new AQLDataDoubleMatrix(modelVolDD));
 
 	vole.remove(PRICING_DATA_FXVOLGRIDS);
-	vole.add(PRICING_DATA_FXVOLGRIDS, new LADataDoubles(ddParams.mSigma));
+	vole.add(PRICING_DATA_FXVOLGRIDS, new AQLDataDoubles(ddParams.mSigma));
 	vole.remove(PRICING_DATA_FXBETAGRIDS);
-	vole.add(PRICING_DATA_FXBETAGRIDS, new LADataDoubles(ddParams.mBeta));
+	vole.add(PRICING_DATA_FXBETAGRIDS, new AQLDataDoubles(ddParams.mBeta));
 }

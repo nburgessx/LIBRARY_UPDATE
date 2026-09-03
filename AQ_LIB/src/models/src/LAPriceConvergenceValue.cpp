@@ -10,15 +10,15 @@
 #endif
 
 #include "LAPriceConvergenceValue.h"
-#include "LAMathDefine.h"
-#include "LADataHolder.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LAPriceDataFunction.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectHolder.h"
-#include "LABasic.h"
+#include "AQLMathDefine.h"
+#include "AQLDataHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectHolder.h"
+#include "AQLBasic.h"
 #include "LAPricePayOff.h"
 #include "LAPriceTradeValue.h"
 #include "LALinearRatesSwapTradeValue.h"
@@ -32,7 +32,7 @@
 #include "LABlackScholesStraddleOptionPayoff.h"
 #include "LABlackScholesStrangleOptionPayoff.h"
 #endif
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 #include "LACompoundingFunc.h"
 
 
@@ -78,14 +78,14 @@ LAPriceConvergenceValue::~LAPriceConvergenceValue()
 bool
 LAPriceConvergenceValue::isTypeOf(function_t id) const
 {
-	return (id == FN_IR_CONVERGENCEVALUE ? true : LACoreValuation::isTypeOf(id));
+	return (id == FN_IR_CONVERGENCEVALUE ? true : AQLCoreValuation::isTypeOf(id));
 }
 /*!
     @brief  Make copy(clone) of this class
 
 	@return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceConvergenceValue::clone() const
 {
     try 
@@ -94,7 +94,7 @@ LAPriceConvergenceValue::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -114,7 +114,7 @@ LAPriceConvergenceValue::getType() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceConvergenceValue::registerData(LAPriceDataManager& dm) const
+LAPriceConvergenceValue::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(PRICING_DATA_CONVERGENCETARGET, DATA_STRING);
 	dm.setData(PRICING_DATA_CONVERGENCEVALUE, DATA_DOUBLE);
@@ -125,20 +125,20 @@ LAPriceConvergenceValue::registerData(LAPriceDataManager& dm) const
 	@brief value trade
 
 	@param[in] basedate evaluate day
-	@param[in,out] object trade object object(reference to LAMathObjectValue class) 
+	@param[in,out] object trade object object(reference to AQLMathObjectValue class) 
 	@param[in] att Data to hold evaluation procedure class
 
 	@return clean price
 	
 */
 double
-LAPriceConvergenceValue::value(const LADate& basedate, LAObject& object,
-					const LADataValuation& att) const
+LAPriceConvergenceValue::value(const AQLDate& basedate, AQLObject& object,
+					const AQLDataValuation& att) const
 {
 	att;
-	LADataHolder *dh;
+	AQLDataHolder *dh;
 	dh = &(object.getData(PRICING_DATA_DIRTYPRICE, ISNOTNULL));
-	const double targetPV = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	const double targetPV = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 
 	const double EPS_PV = 1.0E-7;
 	const double MAX_RATE = 3.0; // 300 % 
@@ -146,12 +146,12 @@ LAPriceConvergenceValue::value(const LADate& basedate, LAObject& object,
 	const int MAX_LOOP = 100;
 	double rate0 = getInitialValue(object);
 	double initialRate = rate0;
-	if (LAMath::abs(initialRate) > MAX_RATE)
+	if (AQLMath::abs(initialRate) > MAX_RATE)
 	{
 		// set 1.0%
 		rate0 = 0.01;
 	}
-	LADataValuation &value = dynamic_cast<LADataValuation &>(object.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
+	AQLDataValuation &value = dynamic_cast<AQLDataValuation &>(object.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
 	double val0 = targetPV - value.value(basedate);
 
 	double rate1 = rate0 + 0.01;
@@ -164,7 +164,7 @@ LAPriceConvergenceValue::value(const LADate& basedate, LAObject& object,
 	{
 		while (loopNum--)
 		{
-			if (LAMath::abs(val0 - val1) < EPS_PV)
+			if (AQLMath::abs(val0 - val1) < EPS_PV)
 			{
 				break;
 			}
@@ -177,57 +177,57 @@ LAPriceConvergenceValue::value(const LADate& basedate, LAObject& object,
 			val1 = targetPV - value.value(basedate);
 		}
 	}
-	catch (LACoreError &e)
+	catch (AQLCoreError &e)
 	{
-		LAString msg = "Convergence error in Rate calc (Newton Raphson). M-Lib error message is below\n";
+		AQLString msg = "Convergence error in Rate calc (Newton Raphson). M-Lib error message is below\n";
 		msg += e.getMsg();
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 
-	if (loopNum < 0 && LAMath::abs(val1) >= 1.0)
+	if (loopNum < 0 && AQLMath::abs(val1) >= 1.0)
 	{
-		throw LACoreInvalidData("Convergence error in Rate calc (Newton Raphson)", __FILE__, __LINE__); 
+		throw AQLCoreInvalidData("Convergence error in Rate calc (Newton Raphson)", __FILE__, __LINE__); 
 	}
 
 	dh = &(object.getData(PRICING_DATA_CONVERGENCETARGET, ISNOTNULL));
-	LAString calcTarget = dynamic_cast<const LADataString &>(dh->get()).get();
+	AQLString calcTarget = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	calcTarget.toUpper();
 
 	object.remove(PRICING_DATA_CONVERGENCEVALUE);
-	object.add(PRICING_DATA_CONVERGENCEVALUE, new LADataDouble(rate1));
+	object.add(PRICING_DATA_CONVERGENCEVALUE, new AQLDataDouble(rate1));
 	// Initialize FixedRate for Risk
 	setUpCalcTarget(object, initialRate);
 
 	dh = &(object.getData(PRICING_DATA_DIRTYPRICE, ISNOTNULL));
-	const double dirtyprice = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	const double dirtyprice = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	return dirtyprice;
 }
 
 /*!
 	@brief setup calc target
 
-	@param[in,out] object trade object object(reference to LAMathObjectValue class) 
+	@param[in,out] object trade object object(reference to AQLMathObjectValue class) 
 	@param[in] att Data to hold evaluation procedure class
 	
 */
 void 
-LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
+LAPriceConvergenceValue::setUpCalcTarget(AQLObject& object, double value) const
 {
-	LADataHolder *dh;
+	AQLDataHolder *dh;
 	dh = &(object.getData(PRICING_DATA_CONVERGENCETARGET, ISNOTNULL));
-	LAString calcTarget = dynamic_cast<const LADataString &>(dh->get()).get();
+	AQLString calcTarget = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	calcTarget.toUpper();
 
-	LADataValuation &attrValue = dynamic_cast<LADataValuation &>(object.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
+	AQLDataValuation &attrValue = dynamic_cast<AQLDataValuation &>(object.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
 	if (attrValue.getType() == FN_IR_PLAINVANILLASWAPTRADEVALUE)
 	{
 		//swap
 		dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-		const LADataMultiReference &legs = dynamic_cast<LADataMultiReference &>(dh->get());
+		const AQLDataMultiReference &legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		if (legs.getSize() < 2)
 		{
-			throw LACoreInvalidData("Leg size need 2.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Leg size need 2.", __FILE__, __LINE__);
 		}
 		int legSide = 0;
 		dh = &(object.getData(PRICING_DATA_CONVERGENCETARGET, ISNOTNULL));
@@ -241,7 +241,7 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 		}
 		else
 		{
-			throw LACoreInvalidData("CalcTarget must be only 4 types. LEG1FIXEDRATE, LEG2FIXEDRATE, LEG1SPREAD, LEG2SPREAD", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("CalcTarget must be only 4 types. LEG1FIXEDRATE, LEG2FIXEDRATE, LEG1SPREAD, LEG2SPREAD", __FILE__, __LINE__);
 		}
 
 		// NDS or not
@@ -252,7 +252,7 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 
 		//cashlets
 		dh = &(legs.get(legSide).getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-		LADataMultiReference &cashlets = dynamic_cast<LADataMultiReference &>(dh->get());
+		AQLDataMultiReference &cashlets = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		for (unsigned int i = 0; i < cashlets.getSize(); i++)
 		{
 			//is first period
@@ -260,7 +260,7 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 			dh = &(cashlets.get(i).getData(PRICING_DATA_ISFIXEDTERM, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				isFirstPeriod = dynamic_cast<const LADataBool &>(dh->get()).get();
+				isFirstPeriod = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 			}
 			if (isFirstPeriod) continue;
 
@@ -268,7 +268,7 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 			dh = &(cashlets.get(i).getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-			LADataMultiReference &couponinfos = dynamic_cast<LADataMultiReference &>(dh->get());
+			AQLDataMultiReference &couponinfos = dynamic_cast<AQLDataMultiReference &>(dh->get());
 			// fixed coupon rates for NDS are mapped onto first values of the coupon coefficients
 			if(isNDS && (calcTarget == LEG1FIXEDRATE || calcTarget == LEG2FIXEDRATE))
 			{
@@ -277,9 +277,9 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 					continue;
 
 				dh = &(couponinfos.get(0).getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-				DoubleArray coeff = dynamic_cast<LADataDoubles &>(dh->get()).get();
+				DoubleArray coeff = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 				coeff.front() = value;
-				dynamic_cast<LADataDoubles &>(dh->get()).set(coeff);
+				dynamic_cast<AQLDataDoubles &>(dh->get()).set(coeff);
 				continue;
 			}
 			else if (calcTarget == LEG1SPREAD || calcTarget == LEG2SPREAD)
@@ -292,14 +292,14 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 				
 				if (couponinfos.getSize() > 2)
 				{
-					throw LACoreInvalidData("CouponInfo size must be 2 or less.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("CouponInfo size must be 2 or less.", __FILE__, __LINE__);
 				}
 				for (unsigned int i = 0; i < couponinfos.getSize(); i++)  // the second couponinfo is used for stub coupon
 				{
 					dh = &(couponinfos.get(i).getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-					DoubleArray coeff = dynamic_cast<LADataDoubles &>(dh->get()).get();
+					DoubleArray coeff = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 					coeff.back() = value;
-					dynamic_cast<LADataDoubles &>(dh->get()).set(coeff);
+					dynamic_cast<AQLDataDoubles &>(dh->get()).set(coeff);
 				}
 				continue;
 		
@@ -307,14 +307,14 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 			//index info
 			dh = &(couponinfos.get(0).getData(PRICING_DATA_INDEXINFOS, NOCHECK));
 			if (!dh->isDefined() || dh->isNull()) continue;
-			LADataMultiReference &indexinfos = dynamic_cast<LADataMultiReference &>(dh->get());
+			AQLDataMultiReference &indexinfos = dynamic_cast<AQLDataMultiReference &>(dh->get());
 			if (indexinfos.getSize() != 1)
 			{
-				throw LACoreInvalidData("Index size must be 1.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Index size must be 1.", __FILE__, __LINE__);
 			}
 
 			dh = &(indexinfos.get(0).getData(PRICING_DATA_FIXEDRATE, ISNOTNULL));
-			dynamic_cast<LADataDouble &>(dh->get()).set(value);
+			dynamic_cast<AQLDataDouble &>(dh->get()).set(value);
 
 			}
 		}
@@ -325,37 +325,37 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 		//swaption
 		if (calcTarget != STRIKE)
 		{
-			throw LACoreInvalidData("CalcTarget must be STRIKE", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("CalcTarget must be STRIKE", __FILE__, __LINE__);
 		}
 		dh = &(object.getData(PRICING_DATA_STRIKE, ISNOTNULL));
-		dynamic_cast<LADataDouble &>(dh->get()).set(value);
+		dynamic_cast<AQLDataDouble &>(dh->get()).set(value);
 
 	}
 	else if (attrValue.getType() == FN_IR_SWAPTIONVALUEFROMCASHFLOW)
 	{
-		LAObjectPool& objPool = object.getDataInstance()->getObjectPool();
+		AQLObjectPool& objPool = object.getDataInstance()->getObjectPool();
 		//swaption
 		if (calcTarget != STRIKE)
 		{
-			throw LACoreInvalidData("CalcTarget must be STRIKE", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("CalcTarget must be STRIKE", __FILE__, __LINE__);
 		}
 		dh = &(object.getData(PRICING_DATA_STRIKE, ISNOTNULL));
-		dynamic_cast<LADataDouble &>(dh->get()).set(value);
+		dynamic_cast<AQLDataDouble &>(dh->get()).set(value);
 
 		dh = &(object.getData(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, NOCHECK));
 		if (!dh->isDefined() || dh->isNull())
 			return;
 
-		bool isequivalentmode = dynamic_cast<const LADataBool&>(dh->get()).get();
+		bool isequivalentmode = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 		if (!isequivalentmode)
 			return;
 
 		//get legside from "ChangeToSwap"
-		LAString nb = dynamic_cast<const LADataString &>(object.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-		LAString chgname = "ChangeToSwap" + nb;
+		AQLString nb = dynamic_cast<const AQLDataString &>(object.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+		AQLString chgname = "ChangeToSwap" + nb;
 		int legSide = 0;
 		dh = &(objPool.getObject(chgname, ENCHKTYPE_ISDEFINED).get().getData(PRICING_DATA_CONVERGENCETARGET, ISNOTNULL));
-		LAString swaplegstr = dynamic_cast<const LADataString &>(dh->get()).get();
+		AQLString swaplegstr = dynamic_cast<const AQLDataString &>(dh->get()).get();
 		swaplegstr.toUpper();
 		if (swaplegstr == LEG1FIXEDRATE)
 		{
@@ -367,46 +367,46 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 		}
 		else
 		{
-			throw LACoreInvalidData("ChangeToSwap target must be only 2 types. LEG1FIXEDRATE, LEG2FIXEDRATE", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("ChangeToSwap target must be only 2 types. LEG1FIXEDRATE, LEG2FIXEDRATE", __FILE__, __LINE__);
 		}
 
 		//update strike info
-		LAString targetname = "ChangeToOriginalSwap" + nb;
-		LAObject& orgentity =  objPool.getObject(targetname, ENCHKTYPE_ISDEFINED).get();
+		AQLString targetname = "ChangeToOriginalSwap" + nb;
+		AQLObject& orgentity =  objPool.getObject(targetname, ENCHKTYPE_ISDEFINED).get();
 
 		dh = &(orgentity.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-		const LADataMultiReference &legs = dynamic_cast<LADataMultiReference &>(dh->get());
+		const AQLDataMultiReference &legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		if (legs.getSize() < 2)
 		{
-			throw LACoreInvalidData("Leg size need 2.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Leg size need 2.", __FILE__, __LINE__);
 		}
 
 		//cashlets
 		dh = &(legs.get(legSide).getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-		LADataMultiReference &cashlets = dynamic_cast<LADataMultiReference &>(dh->get());
+		AQLDataMultiReference &cashlets = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		for (unsigned int i = 0; i < cashlets.getSize(); i++)
 		{
 			//coupon info
 			dh = &(cashlets.get(i).getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				LADataMultiReference &couponinfos = dynamic_cast<LADataMultiReference &>(dh->get());
+				AQLDataMultiReference &couponinfos = dynamic_cast<AQLDataMultiReference &>(dh->get());
 				if (couponinfos.getSize() != 1)
 				{
-					throw LACoreInvalidData("Coupon size must be 1.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Coupon size must be 1.", __FILE__, __LINE__);
 				}
 
 				//index info
 				dh = &(couponinfos.get(0).getData(PRICING_DATA_INDEXINFOS, NOCHECK));
 				if (!dh->isDefined() || dh->isNull()) continue;
-				LADataMultiReference &indexinfos = dynamic_cast<LADataMultiReference &>(dh->get());
+				AQLDataMultiReference &indexinfos = dynamic_cast<AQLDataMultiReference &>(dh->get());
 				if (indexinfos.getSize() != 1)
 				{
-					throw LACoreInvalidData("Index size must be 1.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Index size must be 1.", __FILE__, __LINE__);
 				}
 
 				dh = &(indexinfos.get(0).getData(PRICING_DATA_FIXEDRATE, ISNOTNULL));
-				dynamic_cast<LADataDouble &>(dh->get()).set(value);	
+				dynamic_cast<AQLDataDouble &>(dh->get()).set(value);	
 				
 			}
 		}
@@ -415,49 +415,49 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 	{
 		//capfloor
 		dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-		const LADataMultiReference &legs = dynamic_cast<LADataMultiReference &>(dh->get());
+		const AQLDataMultiReference &legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		if (legs.getSize() != 1)
 		{
-			throw LACoreInvalidData("CapFloor Leg size must be 1.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("CapFloor Leg size must be 1.", __FILE__, __LINE__);
 		}
 		//cashlets
 		dh = &(legs.get(0).getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-		LADataMultiReference &cashlets = dynamic_cast<LADataMultiReference &>(dh->get());
+		AQLDataMultiReference &cashlets = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		for (unsigned int i = 0; i < cashlets.getSize(); i++)
 		{
 			//coupon info
 			dh = &(cashlets.get(i).getData(PRICING_DATA_COUPONINFOS, ISNOTNULL));
-			LADataMultiReference &couponinfos = dynamic_cast<LADataMultiReference &>(dh->get());
+			AQLDataMultiReference &couponinfos = dynamic_cast<AQLDataMultiReference &>(dh->get());
 			if (couponinfos.getSize() != 1)
 			{
-				throw LACoreInvalidData("Coupon size must be 1.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Coupon size must be 1.", __FILE__, __LINE__);
 			}
 
 			dh = &(couponinfos.get(0).getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-			const LAFunctionBase &method = dynamic_cast<const LAPriceDataFunction &>(dh->get()).getFunction();
+			const AQLFunctionBase &method = dynamic_cast<const AQLPriceDataFunction &>(dh->get()).getFunction();
 			int funcType = method.getType();
 			if (funcType == FN_IR_CAPLETOPTIONFUNC || funcType == FN_IR_FLOORLETOPTIONFUNC || funcType == FN_IR_STRADDLEOPTIONFUNC)
 			{
 				if (calcTarget != STRIKE)
 				{
-					throw LACoreInvalidData("CalcTarget must be STRIKE", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("CalcTarget must be STRIKE", __FILE__, __LINE__);
 				}
 			dh = &(couponinfos.get(0).getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-			DoubleArray coeff = dynamic_cast<LADataDoubles &>(dh->get()).get();
+			DoubleArray coeff = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 			if (coeff.size() != 2)
 			{
-				throw LACoreInvalidData("Coefficient size must be 2.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Coefficient size must be 2.", __FILE__, __LINE__);
 			}
 			coeff[1] = value;
-			dynamic_cast<LADataDoubles &>(dh->get()).set(coeff);
+			dynamic_cast<AQLDataDoubles &>(dh->get()).set(coeff);
 			}
 			else if (funcType == FN_IR_COLLAROPTIONFUNC || funcType == FN_IR_STRANGLEOPTIONFUNC)
 			{
 				dh = &(couponinfos.get(0).getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-				DoubleArray coeff = dynamic_cast<LADataDoubles &>(dh->get()).get();
+				DoubleArray coeff = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 				if (coeff.size() != 3)
 				{
-					throw LACoreInvalidData("Coefficient size must be 3.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Coefficient size must be 3.", __FILE__, __LINE__);
 				}
 				if (calcTarget == CAPSTRIKE)
 				{
@@ -469,23 +469,23 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 				}
 				else
 				{
-					throw LACoreInvalidData("CalcTarget must be FLOORSTRIKE nor CAPSTRIKE", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("CalcTarget must be FLOORSTRIKE nor CAPSTRIKE", __FILE__, __LINE__);
 				}
-				dynamic_cast<LADataDoubles &>(dh->get()).set(coeff);
+				dynamic_cast<AQLDataDoubles &>(dh->get()).set(coeff);
 			}
 			else
 			{
-				LAString msg = "This function is not supported. function name = " + dh->convertToString();
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "This function is not supported. function name = " + dh->convertToString();
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 		}
 	}
 #endif
 	else
 	{
-		LAString valueStr = attrValue.convertToString();
-		LAString msg = "This SubValue is not supported. SubValue = " + valueStr;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString valueStr = attrValue.convertToString();
+		AQLString msg = "This SubValue is not supported. SubValue = " + valueStr;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 }
@@ -495,26 +495,26 @@ LAPriceConvergenceValue::setUpCalcTarget(LAObject& object, double value) const
 /*!
 	@brief get initial value
 
-	@param[in,out] object trade object object(reference to LAMathObjectValue class) 
+	@param[in,out] object trade object object(reference to AQLMathObjectValue class) 
 	
 */
 double 
-LAPriceConvergenceValue::getInitialValue(LAObject& object) const
+LAPriceConvergenceValue::getInitialValue(AQLObject& object) const
 {
-	LADataHolder *dh;
+	AQLDataHolder *dh;
 	dh = &(object.getData(PRICING_DATA_CONVERGENCETARGET, ISNOTNULL));
-	LAString calcTarget = dynamic_cast<const LADataString &>(dh->get()).get();
+	AQLString calcTarget = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	calcTarget.toUpper();
 
-	LADataValuation &attrValue = dynamic_cast<LADataValuation &>(object.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
+	AQLDataValuation &attrValue = dynamic_cast<AQLDataValuation &>(object.getData(PRICING_DATA_SUBVALUE, ISNOTNULL).get());
 	if (attrValue.getType() == FN_IR_PLAINVANILLASWAPTRADEVALUE)
 	{
 		//swap
 		dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-		const LADataMultiReference &legs = dynamic_cast<LADataMultiReference &>(dh->get());
+		const AQLDataMultiReference &legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		if (legs.getSize() < 2)
 		{
-			throw LACoreInvalidData("Leg size need 2.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Leg size need 2.", __FILE__, __LINE__);
 		}
 		int legSide = 0;
 		dh = &(object.getData(PRICING_DATA_CONVERGENCETARGET, ISNOTNULL));
@@ -528,7 +528,7 @@ LAPriceConvergenceValue::getInitialValue(LAObject& object) const
 		}
 		else
 		{
-			throw LACoreInvalidData("CalcTarget must be only 4 types. LEG1FIXEDRATE, LEG2FIXEDRATE, LEG1SPREAD, LEG2SPREAD", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("CalcTarget must be only 4 types. LEG1FIXEDRATE, LEG2FIXEDRATE, LEG1SPREAD, LEG2SPREAD", __FILE__, __LINE__);
 		}
 
 		// NDS or not
@@ -539,14 +539,14 @@ LAPriceConvergenceValue::getInitialValue(LAObject& object) const
 
 		//cashlets
 		dh = &(legs.get(legSide).getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-		LADataMultiReference &cashlets = dynamic_cast<LADataMultiReference &>(dh->get());		
+		AQLDataMultiReference &cashlets = dynamic_cast<AQLDataMultiReference &>(dh->get());		
 		for (unsigned int i = 0; i < cashlets.getSize(); i++)
 		{
 			//coupon info
 			dh = &(cashlets.get(i).getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				LADataMultiReference &couponinfos = dynamic_cast<LADataMultiReference &>(dh->get());
+				AQLDataMultiReference &couponinfos = dynamic_cast<AQLDataMultiReference &>(dh->get());
 				// fixed coupon rates for NDS are mapped onto first values of the coupon coefficients
 				if(isNDS && (calcTarget == LEG1FIXEDRATE || calcTarget == LEG2FIXEDRATE))
 				{
@@ -555,7 +555,7 @@ LAPriceConvergenceValue::getInitialValue(LAObject& object) const
 						continue;
 
 					dh = &(couponinfos.get(0).getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-					const DoubleArray &coeff = dynamic_cast<LADataDoubles &>(dh->get()).get();
+					const DoubleArray &coeff = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 					return coeff.front();
 				}
 				else if (calcTarget == LEG1SPREAD || calcTarget == LEG2SPREAD)
@@ -567,24 +567,24 @@ LAPriceConvergenceValue::getInitialValue(LAObject& object) const
 					if (!dh->isDefined() || dh->isNull()) continue;
 					
 					dh = &(couponinfos.get(0).getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-					const DoubleArray &coeff = dynamic_cast<LADataDoubles &>(dh->get()).get();
+					const DoubleArray &coeff = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 					//for stub
 					return coeff.back();
 				}
 				//index info
 				dh = &(couponinfos.get(0).getData(PRICING_DATA_INDEXINFOS, NOCHECK));
 				if (!dh->isDefined() || dh->isNull()) continue;
-				LADataMultiReference &indexinfos = dynamic_cast<LADataMultiReference &>(dh->get());
+				AQLDataMultiReference &indexinfos = dynamic_cast<AQLDataMultiReference &>(dh->get());
 				if (indexinfos.getSize() != 1)
 				{
-					throw LACoreInvalidData("Index size must be 1.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Index size must be 1.", __FILE__, __LINE__);
 				}
 
 				dh = &(indexinfos.get(0).getData(PRICING_DATA_FIXEDRATE, ISNOTNULL));
-				return dynamic_cast<LADataDouble &>(dh->get()).get();
+				return dynamic_cast<AQLDataDouble &>(dh->get()).get();
 			}
 		}
-		throw LACoreInvalidData("Cashlet or Coupon Info is not exist.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Cashlet or Coupon Info is not exist.", __FILE__, __LINE__);
 	}
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 	else if (attrValue.getType() == FN_IR_SWAPTIONVALUE|| attrValue.getType() == FN_IR_SWAPTIONVALUEFROMCASHFLOW)
@@ -592,58 +592,58 @@ LAPriceConvergenceValue::getInitialValue(LAObject& object) const
 		//swaption
 		if (calcTarget != STRIKE)
 		{
-			throw LACoreInvalidData("CalcTarget must be STRIKE", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("CalcTarget must be STRIKE", __FILE__, __LINE__);
 		}
 		dh = &(object.getData(PRICING_DATA_STRIKE, ISNOTNULL));
-		return dynamic_cast<LADataDouble &>(dh->get()).get();
+		return dynamic_cast<AQLDataDouble &>(dh->get()).get();
 
 	}
 	else if (attrValue.getType() == FN_IR_CAPFLOOROPTIONVALUE)
 	{
 		//capfloor
 		dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-		const LADataMultiReference &legs = dynamic_cast<LADataMultiReference &>(dh->get());
+		const AQLDataMultiReference &legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 		if (legs.getSize() != 1)
 		{
-			throw LACoreInvalidData("CapFloor Leg size must be 1.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("CapFloor Leg size must be 1.", __FILE__, __LINE__);
 		}
 		//cashlets
 		dh = &(legs.get(0).getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-		LADataMultiReference &cashlets = dynamic_cast<LADataMultiReference &>(dh->get());	
+		AQLDataMultiReference &cashlets = dynamic_cast<AQLDataMultiReference &>(dh->get());	
 		for (unsigned int i = 0; i < cashlets.getSize(); i++)
 		{
 			//coupon info
 			dh = &(cashlets.get(i).getData(PRICING_DATA_COUPONINFOS, ISNOTNULL));
-			LADataMultiReference &couponinfos = dynamic_cast<LADataMultiReference &>(dh->get());
+			AQLDataMultiReference &couponinfos = dynamic_cast<AQLDataMultiReference &>(dh->get());
 			if (couponinfos.getSize() != 1)
 			{
-				throw LACoreInvalidData("Coupon size must be 1.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Coupon size must be 1.", __FILE__, __LINE__);
 			}
 
 			dh = &(couponinfos.get(0).getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-			const LAFunctionBase &method = dynamic_cast<const LAPriceDataFunction &>(dh->get()).getFunction();
+			const AQLFunctionBase &method = dynamic_cast<const AQLPriceDataFunction &>(dh->get()).getFunction();
 			int funcType = method.getType();
 			if (funcType == FN_IR_CAPLETOPTIONFUNC || funcType == FN_IR_FLOORLETOPTIONFUNC || funcType == FN_IR_STRADDLEOPTIONFUNC)
 			{
 				if (calcTarget != STRIKE)
 				{
-					throw LACoreInvalidData("CalcTarget must be STRIKE", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("CalcTarget must be STRIKE", __FILE__, __LINE__);
 				}
 				dh = &(couponinfos.get(0).getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-				const DoubleArray &coeff = dynamic_cast<LADataDoubles &>(dh->get()).get();
+				const DoubleArray &coeff = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 				if (coeff.size() != 2)
 				{
-					throw LACoreInvalidData("Coefficient size must be 2.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Coefficient size must be 2.", __FILE__, __LINE__);
 				}
 				return coeff[1];
 			}
 			else if (funcType == FN_IR_COLLAROPTIONFUNC || funcType == FN_IR_STRANGLEOPTIONFUNC)
 			{
 				dh = &(couponinfos.get(0).getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-				const DoubleArray &coeff = dynamic_cast<LADataDoubles &>(dh->get()).get();
+				const DoubleArray &coeff = dynamic_cast<AQLDataDoubles &>(dh->get()).get();
 				if (coeff.size() != 3)
 				{
-					throw LACoreInvalidData("Coefficient size must be 3.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Coefficient size must be 3.", __FILE__, __LINE__);
 				}
 				if (calcTarget == CAPSTRIKE)
 				{
@@ -655,23 +655,23 @@ LAPriceConvergenceValue::getInitialValue(LAObject& object) const
 				}
 				else
 				{
-					throw LACoreInvalidData("CalcTarget must be FLOORSTRIKE nor CAPSTRIKE", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("CalcTarget must be FLOORSTRIKE nor CAPSTRIKE", __FILE__, __LINE__);
 				}
 			}
 			else
 			{
-				LAString msg = "This function is not supported. function name = " + dh->convertToString();
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "This function is not supported. function name = " + dh->convertToString();
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 		}
-		throw LACoreInvalidData("Cashlet or Coupon Info is not exist.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Cashlet or Coupon Info is not exist.", __FILE__, __LINE__);
 	}
 #endif
 	else
 	{
-		LAString valueStr = attrValue.convertToString();
-		LAString msg = "This SubValue is not supported. SubValue = " + valueStr;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString valueStr = attrValue.convertToString();
+		AQLString msg = "This SubValue is not supported. SubValue = " + valueStr;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 }

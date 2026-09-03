@@ -17,24 +17,24 @@ namespace validation
 
     /* @brief	validation interface for the meSABRCalibrate method
     */
-    const LAString tryMeSABRCalibrate(const LAString& approxMethod,
-											const LAStringVector& calibFlag,
-											const LAString& calibMethod, 
-											const LAString& curveSetID, 
-											const LAString& alphaID, 
-											const LAString& betaID,
-											const LAString& nuID, 
-											const LAString& rhoID, 
-											const LAString& convID,
-											const LAString& capConvID, 
-											const LAStringVector& swapVolID, 
-											const LAString& target, 
+    const AQLString tryMeSABRCalibrate(const AQLString& approxMethod,
+											const AQLStringVector& calibFlag,
+											const AQLString& calibMethod, 
+											const AQLString& curveSetID, 
+											const AQLString& alphaID, 
+											const AQLString& betaID,
+											const AQLString& nuID, 
+											const AQLString& rhoID, 
+											const AQLString& convID,
+											const AQLString& capConvID, 
+											const AQLStringVector& swapVolID, 
+											const AQLString& target, 
 											const DoubleVector& weight, 
 											const IntVector& sign,
-											const LAString& forwardID, 
+											const AQLString& forwardID, 
 											const double forwardShiftValue,
-											const LAString& numeraireID, 
-											const LAStringMatrix& curveMat,
+											const AQLString& numeraireID, 
+											const AQLStringMatrix& curveMat,
 											const std::string& volType )
     {
 		VALID_EXCEPTION_START
@@ -66,18 +66,18 @@ namespace validation
 		std::vector<bool> calibFlag_bool;
 		for (const auto& b : calibFlag)
 		{	
-			calibFlag_bool.push_back(LAString(b).toUpper() == "TRUE" ? true : false);
+			calibFlag_bool.push_back(AQLString(b).toUpper() == "TRUE" ? true : false);
 		}
 
-		if (forwardID != LAString("") && convID != LAString(""))
+		if (forwardID != AQLString("") && convID != AQLString(""))
 		{
 			AQ_THROW("Do not input ForwardID and Convention ID at the same time")
 		}
 
-		LADataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+		AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
 
-		LAString curveID("");
-		if (forwardID == LAString(""))
+		AQLString curveID("");
+		if (forwardID == AQLString(""))
 		{
 			if (curveMat.size() == 0)
 			{
@@ -85,7 +85,7 @@ namespace validation
 			}
 			else
 			{
-				LAStringMatrix temp(curveMat);
+				AQLStringMatrix temp(curveMat);
 				curveID = searchbyrow(temp, "CurveID", 1, true);
 				LAMathSwaptionVolUtility::setCurveID2(dataInstance, curveID, temp);
 			}
@@ -93,7 +93,7 @@ namespace validation
 
 		bool isLognormal = (etrading::toVolatilityTypeEnum(volType) != etrading::NORMAL_VOLATILITY);
 
-		LAString msg;
+		AQLString msg;
 		LAMathSwaptionVolUtility::calibrateSABRMatrix(dataInstance,
 													approxMethod,
 													calibFlag_bool,
@@ -116,7 +116,7 @@ namespace validation
 													0, //Use the default value
 													isLognormal);
 
-		if (msg == LAString(""))
+		if (msg == AQLString(""))
 		{
 			msg = "Successfully calibrate SABR Matrix";
 		}

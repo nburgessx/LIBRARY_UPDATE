@@ -74,15 +74,15 @@ namespace google_test
             std::stringstream ss;
             ss << i;
             std::string name = "dealInfo_" + ss.str();
-            LAStringMatrix m = inputFile[name.c_str()];
+            AQLStringMatrix m = inputFile[name.c_str()];
             LabelValueBlock oneDeal( m );
             dealInfo.push_back( oneDeal );
         }
 
-        LAStringVector forecastCurveSet = inputFile["forecastCurveSet"];
-        LAString curveCollection = inputFile["curveCollection"];
-        LAStringVector pillarNames;
-        LAStringVector headers;
+        AQLStringVector forecastCurveSet = inputFile["forecastCurveSet"];
+        AQLString curveCollection = inputFile["curveCollection"];
+        AQLStringVector pillarNames;
+        AQLStringVector headers;
         DoubleMatrix deltas;
 
         // Dummy Xccy FX Spot Rates
@@ -103,9 +103,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_outputs_32;
+            AQLString outputFileName = raw_outputs_32;
 #else
-            LAString outputFileName = raw_outputs_64;
+            AQLString outputFileName = raw_outputs_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -128,7 +128,7 @@ namespace google_test
 
             for ( size_t i = 0; i < pillarNames.size(); ++i )
             {
-                LAString key	= pillarNames[i];
+                AQLString key	= pillarNames[i];
 
                 DoubleVector delta	= deltas[i];
                 DoubleVector ref = resultFile[key];

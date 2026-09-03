@@ -12,9 +12,9 @@
 #include <vector>
 #include <memory>
 
-#include "LADate.h"
+#include "AQLDate.h"
 #include "CoreEnumerations.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 #include "Variant.h"
 
 // Swap Result Components
@@ -28,9 +28,9 @@ namespace etrading
     {
         // Typedefs
         typedef std::vector<double> VectorDouble;
-        typedef std::vector<LADate> VectorDate;
+        typedef std::vector<AQLDate> VectorDate;
         typedef std::vector<double> DoubleVector;   // For Backwards compatibility
-        typedef std::vector<LADate> DateVector;     // For Backwards compatibility
+        typedef std::vector<AQLDate> DateVector;     // For Backwards compatibility
     }
 
     // ================================= SWAP RESULTS CLASS ================================================================

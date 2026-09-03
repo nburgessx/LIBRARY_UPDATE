@@ -39,19 +39,19 @@ namespace etrading
 
         if ( forecastCurve_.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Forecast curve has not been specified for PV", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Forecast curve has not been specified for PV", __FILE__, __LINE__ );
         }
 
         if ( discountCurve_.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Discount curve has not been specified for PV", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Discount curve has not been specified for PV", __FILE__, __LINE__ );
         }
     }
 
     /* @brief		Set interpolation for pricing
     *  @param [in]	interpolation	Yield curve interpolation
     */
-    void TradeCollection::setInterpolation( const LAString& interpolation )
+    void TradeCollection::setInterpolation( const AQLString& interpolation )
     {
         interpolation_ = interpolation;
         interpolation_.toUpper();

@@ -50,12 +50,12 @@ namespace
 	extern const char PORTFOLIO_DELTA_LADDER_OUTPUTS_32BIT[] = "PortfolioDeltaLadder_outputs_32bits";
 	extern const char PORTFOLIO_DELTA_LADDER_OUTPUTS_64BIT[] = "PortfolioDeltaLadder_outputs_64bits";
 	
-	void buildDualBootstrapCurves(const LAString& ccy, const LAString& prefix, const std::string& stdGenerator, const std::string& oisGenerator, const std::string& curveCollection)
+	void buildDualBootstrapCurves(const AQLString& ccy, const AQLString& prefix, const std::string& stdGenerator, const std::string& oisGenerator, const std::string& curveCollection)
 	{
-		LAString oisCurveMarketDataFile = TEST_DIR;
-		oisCurveMarketDataFile += prefix + LAString("OIS_MARKETDATA");
-		LAString stdCurveMarketDataFile = TEST_DIR;
-		stdCurveMarketDataFile += prefix + LAString("STD_MARKETDATA");
+		AQLString oisCurveMarketDataFile = TEST_DIR;
+		oisCurveMarketDataFile += prefix + AQLString("OIS_MARKETDATA");
+		AQLString stdCurveMarketDataFile = TEST_DIR;
+		stdCurveMarketDataFile += prefix + AQLString("STD_MARKETDATA");
 
 		std::string oisCurveMarketObjectHandle = google_test::createLWOMarketDataObjectFromFileName(oisCurveMarketDataFile);
 		std::string stdCurveMarketObjectHandle = google_test::createLWOMarketDataObjectFromFileName(stdCurveMarketDataFile);
@@ -78,32 +78,32 @@ namespace google_test
 		createSwapFromDataFile(EUR_FIXEDFLOATSWAP_2);
 		createSwapFromDataFile(EUR_FIXEDFLOATSWAP_3);
 
-		LAString ccy = "EUR";
+		AQLString ccy = "EUR";
 
 		for (unsigned int i = 0; i < EUR_TEST_COUNT; ++i)
 		{
 			//------------------------------------------------
 			// 1. Build curves
-			LAString prefix = ccy + LAString("_") + LAString(static_cast<int>(i + 1)) + LAString("_");
+			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildDualBootstrapCurves(ccy, prefix, "EUR_SWAP_3M", "EUR_OIS", "EURYC");
 
 			// Load inputs to meLWOSwapDDeltaLadder
-			LAString deltaLadderInputDir = TEST_DIR;
+			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
 
 			//------------------------------------------------
 			// 2. Calculate deltas
-			LAStringVector headers;
-			LAStringVector pillarNames;
+			AQLStringVector headers;
+			AQLStringVector pillarNames;
 			DoubleMatrix deltas;
 
-			LAStringVector swapNames				= deltaLadderInputs["swapNames"];
-			LAStringMatrix curveCollectionNames	= deltaLadderInputs["curveCollectionNames"];
-			LAStringMatrix fixingTableNames		= deltaLadderInputs["fixingTableNames"];
+			AQLStringVector swapNames				= deltaLadderInputs["swapNames"];
+			AQLStringMatrix curveCollectionNames	= deltaLadderInputs["curveCollectionNames"];
+			AQLStringMatrix fixingTableNames		= deltaLadderInputs["fixingTableNames"];
 			bool bumpSpreadInstruments			= deltaLadderInputs["bumpSpreadInstruments"];
 			double bumpSize						= deltaLadderInputs["bumpSize"];
-			LAString bumpMode					= deltaLadderInputs["bumpMode"];
+			AQLString bumpMode					= deltaLadderInputs["bumpMode"];
 			bool aggregateRisks					= deltaLadderInputs["aggregateRisks"];
 			bool reportInLegCCY					= deltaLadderInputs["reportInLegCCY"];
 			std::string riskCutOffTenor			= deltaLadderInputs["riskCutOffTenor"];
@@ -127,8 +127,8 @@ namespace google_test
 
 			//------------------------------------------------
 			// 3. Check risk results
-			LAString outputFile_32bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_32BIT;
-			LAString outputFile_64bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_64BIT;
+			AQLString outputFile_32bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_32BIT;
+			AQLString outputFile_64bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_64BIT;
 			verifyDeltaBucketAmounts(pillarNames, headers, deltas, tolerance, TEST_DIR, outputFile_32bit, outputFile_64bit);
 
 			//------------------------------------------------
@@ -145,32 +145,32 @@ namespace google_test
 		createSwapFromDataFile(USD_FIXEDFLOATSWAP_2);
 		createSwapFromDataFile(USD_FIXEDFLOATSWAP_3);
 
-		LAString ccy = "USD";
+		AQLString ccy = "USD";
 
 		for (unsigned int i = 0; i < USD_TEST_COUNT; ++i)
 		{
 			//------------------------------------------------
 			// 1. Build curves
-			LAString prefix = ccy + LAString("_") + LAString(static_cast<int>(i + 1)) + LAString("_");
+			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildDualBootstrapCurves(ccy, prefix, "USD_SWAP_3M", "USD_OIS", "USDYC");
 
 			// Load inputs to meLWOSwapDDeltaLadder
-			LAString deltaLadderInputDir = TEST_DIR;
+			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
 
 			//------------------------------------------------
 			// 2. Calculate deltas
-			LAStringVector headers;
-			LAStringVector pillarNames;
+			AQLStringVector headers;
+			AQLStringVector pillarNames;
 			DoubleMatrix deltas;
 
-			LAStringVector swapNames              = deltaLadderInputs["swapNames"];
-			LAStringMatrix curveCollectionNames   = deltaLadderInputs["curveCollectionNames"];
-			LAStringMatrix fixingTableNames       = deltaLadderInputs["fixingTableNames"];
+			AQLStringVector swapNames              = deltaLadderInputs["swapNames"];
+			AQLStringMatrix curveCollectionNames   = deltaLadderInputs["curveCollectionNames"];
+			AQLStringMatrix fixingTableNames       = deltaLadderInputs["fixingTableNames"];
 			bool bumpSpreadInstruments          = deltaLadderInputs["bumpSpreadInstruments"];
 			double bumpSize                     = deltaLadderInputs["bumpSize"];
-			LAString bumpMode                   = deltaLadderInputs["bumpMode"];
+			AQLString bumpMode                   = deltaLadderInputs["bumpMode"];
 			bool aggregateRisks                 = deltaLadderInputs["aggregateRisks"];
 			bool reportInLegCCY                 = deltaLadderInputs["reportInLegCCY"];
 			std::string riskCutOffTenor         = deltaLadderInputs["riskCutOffTenor"];
@@ -194,8 +194,8 @@ namespace google_test
 
 			//------------------------------------------------
 			// 3. Check risk results
-			LAString outputFile_32bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_32BIT;
-			LAString outputFile_64bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_64BIT;
+			AQLString outputFile_32bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_32BIT;
+			AQLString outputFile_64bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_64BIT;
 			verifyDeltaBucketAmounts(pillarNames, headers, deltas, tolerance, TEST_DIR, outputFile_32bit, outputFile_64bit);
 
 			//------------------------------------------------

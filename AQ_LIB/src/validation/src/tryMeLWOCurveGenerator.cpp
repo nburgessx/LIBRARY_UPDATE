@@ -53,7 +53,7 @@ namespace validation
 			for( unsigned int i = 0; i < propertyNames.size(); i++ )
 			{
 				// TODO: JSONInfoBlocks should not be here move below the valiation_api
-				const LAString propertyName( propertyNames[i].c_str() );
+				const AQLString propertyName( propertyNames[i].c_str() );
                 const etrading::VariantMatrix& configData = std::get<2>( cleansedInfoBlocks[ i ] );
 				file.write( propertyName, transpose(configData) );
 			}

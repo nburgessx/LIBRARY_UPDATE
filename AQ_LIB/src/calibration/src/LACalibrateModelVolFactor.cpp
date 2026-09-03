@@ -20,8 +20,8 @@
 
 
 #include "LACalibrateModelVolFactor.h"
-#include "LADataInstance.h"
-#include "LAFunctionManager.h"
+#include "AQLDataInstance.h"
+#include "AQLFunctionManager.h"
 #include "LARatesSpotSDE.h"
 #include "LARatesLJSpotSDE.h"
 #include "LARatesScalarLinearInterpolation.h"
@@ -58,7 +58,7 @@ LACalibrateModelVolFactor::~LACalibrateModelVolFactor(void)
 	@param[in] dataInstance
 */
 LARatesSDEBase *
-LACalibrateModelVolFactor::createSDEInstance(const LAString &vola, LADataInstance &dataInstance) const
+LACalibrateModelVolFactor::createSDEInstance(const AQLString &vola, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	SDE_TYPE type = getSDEType(vola);
@@ -83,7 +83,7 @@ LACalibrateModelVolFactor::createSDEInstance(const LAString &vola, LADataInstanc
 
 */
 void
-LACalibrateModelVolFactor::setNumeraire(const LAString &vola, LARatesSDEBase &sde) const
+LACalibrateModelVolFactor::setNumeraire(const AQLString &vola, LARatesSDEBase &sde) const
 {
 	(void)vola;
 	(void)sde;
@@ -97,7 +97,7 @@ LACalibrateModelVolFactor::setNumeraire(const LAString &vola, LARatesSDEBase &sd
 	@param[out] sde
 */
 void
-LACalibrateModelVolFactor::setOutputTemplate(const LAString &vola, LARatesSDEBase &sde) const
+LACalibrateModelVolFactor::setOutputTemplate(const AQLString &vola, LARatesSDEBase &sde) const
 {
 	(void)vola;
 	sde.setOutputTemplate(new LARatesPathElementScalar());
@@ -111,7 +111,7 @@ LACalibrateModelVolFactor::setOutputTemplate(const LAString &vola, LARatesSDEBas
 	@param[out] sde
 */
 void
-LACalibrateModelVolFactor::setInterpolationMethod(const LAString &vola, LARatesSDEBase &sde) const
+LACalibrateModelVolFactor::setInterpolationMethod(const AQLString &vola, LARatesSDEBase &sde) const
 {
 	(void)vola;
 	sde.setInterpolationMethod(new LARatesScalarLinearInterpolation());
@@ -127,11 +127,11 @@ LACalibrateModelVolFactor::setInterpolationMethod(const LAString &vola, LARatesS
 	@param[in] dataInstance
 */
 void
-LACalibrateModelVolFactor::loadModelDataAndCalibrate(const LAString &vola, LADataInstance &dataInstance, const bool isCurve, const bool isModel, const LAString & curveID, const LAString & marketName ) const
+LACalibrateModelVolFactor::loadModelDataAndCalibrate(const AQLString &vola, AQLDataInstance &dataInstance, const bool isCurve, const bool isModel, const AQLString & curveID, const AQLString & marketName ) const
 {
 	if (isModel)
 	{
-		LAString spot = getSpotIndex(vola);
+		AQLString spot = getSpotIndex(vola);
 	// generate only volatility
 cout << "[ Currency = " << spot << " ]" << endl;
 cout << "LACalibrateModelVolFactor generate volatility called.." << endl;
@@ -151,10 +151,10 @@ cout << "-> time = " << time << endl;
 
 	@param[in] vola 
 */
-LAString
-LACalibrateModelVolFactor::getSDEAttrName(const LAString &vola) const
+AQLString
+LACalibrateModelVolFactor::getSDEAttrName(const AQLString &vola) const
 {
-	LAString spotKey = getSpotIndex(vola).toLower();
+	AQLString spotKey = getSpotIndex(vola).toLower();
 	return mpStaticData->getStaticData(spotKey + ".volatility" + STATIC_DATA_FX_KEY_SDE_NAME);
 }
 
@@ -166,9 +166,9 @@ LACalibrateModelVolFactor::getSDEAttrName(const LAString &vola) const
 //	@return bool 
 //*/
 //bool
-//LACalibrateModelVolFactor::isCancelForFunding(const LAString &vola) const
+//LACalibrateModelVolFactor::isCancelForFunding(const AQLString &vola) const
 //{
-//	LAString ccy(getSpotIndex(vola));
+//	AQLString ccy(getSpotIndex(vola));
 //	return LACalibrateModel::isCancelForFunding(ccy);
 //}
 //
@@ -178,14 +178,14 @@ LACalibrateModelVolFactor::getSDEAttrName(const LAString &vola) const
 
 	@param[in] vola
 */
-LAString
-LACalibrateModelVolFactor::getSpotIndex(const LAString &vola) const
+AQLString
+LACalibrateModelVolFactor::getSpotIndex(const AQLString &vola) const
 {
-	LAString spot(vola);
+	AQLString spot(vola);
 	int pos = vola.findString(POSTFIX_VOL);
 	if (pos > 0)
 	{
-		spot.remove(pos, LAString(POSTFIX_VOL).size());
+		spot.remove(pos, AQLString(POSTFIX_VOL).size());
 	}
 	return spot;
 }

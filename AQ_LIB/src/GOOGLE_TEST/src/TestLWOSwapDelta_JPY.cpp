@@ -89,8 +89,8 @@ namespace google_test
 		const ReadDataFile::Load swapInputFile( swapInputsName.c_str() );
 		std::string swapName			= swapInputFile[ "swapName" ];
 		std::string swapGeneratorName	= swapInputFile[ "swapGeneratorName" ];
-		LAStringMatrix expressionLVB		= swapInputFile[ "expressionLVB" ];
-		LAStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
+		AQLStringMatrix expressionLVB		= swapInputFile[ "expressionLVB" ];
+		AQLStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
 		return validation::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
@@ -99,20 +99,20 @@ namespace google_test
 	void calcDV01AndCompareToReference()
 	{
 		const ReadDataFile::Load flatShiftDelta( swapDV01Inputs );
-		LAStringVector swapNames					= flatShiftDelta[ "swapNames" ];
-		LAStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
+		AQLStringVector swapNames					= flatShiftDelta[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
 		bool bumpSpreadInstruments				= flatShiftDelta[ "bumpSpreadInstruments" ];
 		double bumpSize							= flatShiftDelta[ "bumpSize" ];
-		LAString bumpMode						= flatShiftDelta[ "bumpMode" ];
-		LAString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
+		AQLString bumpMode						= flatShiftDelta[ "bumpMode" ];
+		AQLString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
 		bool aggregateRisks						= flatShiftDelta[ "aggregateRisks" ];
 		bool reportInLegCCY						= flatShiftDelta[ "reportInLegCCY" ];
 
         // Dummy Xccy FX Spot Rates
         DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 
-		LAStringVector positionIDs;
+		AQLStringVector positionIDs;
 		DoubleVector deltas;
 		// The DV01 is actually calculated by the tryMeLWOSwapDelta function
 		validation::tryMeLWOSwapDelta( positionIDs,
@@ -131,9 +131,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_dv01_outputs_32;
+            AQLString outputFileName = raw_dv01_outputs_32;
 #else
-            LAString outputFileName = raw_dv01_outputs_64;
+            AQLString outputFileName = raw_dv01_outputs_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -149,16 +149,16 @@ namespace google_test
         {
             // Carry out actual test and peform result comparison
 #ifdef GTEST32
-			LAString refFileName = dv01_outputs_32;
+			AQLString refFileName = dv01_outputs_32;
             const ReadDataFile::Load resultFile( refFileName );
 #else
-			LAString refFileName = dv01_outputs_64;
+			AQLString refFileName = dv01_outputs_64;
             const ReadDataFile::Load resultFile( refFileName );
 #endif
 
             for ( size_t i = 0; i < positionIDs.size(); ++i )
             {
-                LAString key	= positionIDs[i];
+                AQLString key	= positionIDs[i];
 
                 double delta	= deltas[i];
                 double ref		= resultFile[key];
@@ -179,7 +179,7 @@ namespace google_test
 		// We attempt to provoke a bug that previously existed in LAUpdateCurveObject::setUpGenerateConfig() when setting  isSwapTenorAdjust:
 		// ( bug fixed in revision 8069 ).
 		// If the curves are built a 2nd time such that this curve data is reset, the code in LAUpdateCurveObject would incorrectly set the flag to true
-		// ( by casting an LADataBool object pointer to bool ).
+		// ( by casting an AQLDataBool object pointer to bool ).
 		// This test is to make sure that we detect this type of coding error in future.
 		buildCurves_JPY();
 

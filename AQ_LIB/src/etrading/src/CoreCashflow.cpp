@@ -3,10 +3,10 @@
 namespace etrading
 {
 
-	CoreCashflow::CoreCashflow(const LADate& fixingDate, 
-		const LADate& accrualStartDate, 
-		const LADate& accrualEndDate, 
-		const LADate& paymentDate, 
+	CoreCashflow::CoreCashflow(const AQLDate& fixingDate, 
+		const AQLDate& accrualStartDate, 
+		const AQLDate& accrualEndDate, 
+		const AQLDate& paymentDate, 
 		const double& accrualYearFraction,
 		const double& notional,
 		const double& leverage,

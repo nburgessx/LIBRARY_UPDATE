@@ -69,7 +69,7 @@ namespace etrading
 		{
 			if ( premiumLeg != nullptr )
 			{
-				const LADate& asOfDate = dataProviderPremiumLeg.getValuationSettings().getValuationDate();
+				const AQLDate& asOfDate = dataProviderPremiumLeg.getValuationSettings().getValuationDate();
 				premiumLeg->setSurvivalProbabilitiesUsingCreditModel( asOfDate, creditModel ); // Update survival probabilities, accrued interest flag
 				premiumLeg->initializeDataProvider( dataProviderPremiumLeg );
 				curveCollection = dataProviderPremiumLeg.getValuationSettings().getCurveCollection();
@@ -78,7 +78,7 @@ namespace etrading
 
 			if ( protectionLeg != nullptr )
 			{
-				const LADate& asOfDate = dataProviderProtectionLeg.getValuationSettings().getValuationDate();
+				const AQLDate& asOfDate = dataProviderProtectionLeg.getValuationSettings().getValuationDate();
 				protectionLeg->setSurvivalProbabilitiesUsingCreditModel( asOfDate, creditModel ); // Update survival probabilities, accrued interest flag
 				protectionLeg->initializeDataProvider( dataProviderProtectionLeg );
 				curveCollection = dataProviderProtectionLeg.getValuationSettings().getCurveCollection();
@@ -99,7 +99,7 @@ namespace etrading
 		*													if false, any cashflows are paid on the stopping date
 		* @param[in]	runInParallel			Whether to iterate over loops in parallel
 		*/
-		void calculateStoppingDatesAndDiscountFactorsFromSurvivalProbabilties(  std::vector<LADate>& stoppingDates,
+		void calculateStoppingDatesAndDiscountFactorsFromSurvivalProbabilties(  std::vector<AQLDate>& stoppingDates,
 																				DoubleVector& discountFactors,
 																				const DoubleVector& survivalProbabilities,
 																				const CreditModel& creditModel,
@@ -117,7 +117,7 @@ namespace etrading
 				#pragma omp parallel for num_threads( omp_get_max_threads() )
 				for (int i=0; i<(int) numPaths; i++)
 				{
-					const LADate stoppingDate = creditModel.getImpliedSurvivalDate( survivalProbabilities[i] );
+					const AQLDate stoppingDate = creditModel.getImpliedSurvivalDate( survivalProbabilities[i] );
 					stoppingDates[i] = stoppingDate;
 				}
 			}
@@ -125,7 +125,7 @@ namespace etrading
 			{
 				for (size_t i=0; i<numPaths; i++)
 				{
-					const LADate stoppingDate = creditModel.getImpliedSurvivalDate( survivalProbabilities[i] );
+					const AQLDate stoppingDate = creditModel.getImpliedSurvivalDate( survivalProbabilities[i] );
 					stoppingDates[i] = stoppingDate;
 				}
 			}
@@ -145,7 +145,7 @@ namespace etrading
 	*  @param[out]	premiumLeg		On output, initialized to the premiumLeg, if found
 	*  @param[out]  protectionLeg	On output, initialized to the protectionLeg, if found
 	*/
-	void CreditDefaultSwap::identifyCdsLegsUsingLegNameifProvided( const LAString& legName, std::shared_ptr<CDSLeg>& premiumLeg, std::shared_ptr<CDSLeg>& protectionLeg ) const
+	void CreditDefaultSwap::identifyCdsLegsUsingLegNameifProvided( const AQLString& legName, std::shared_ptr<CDSLeg>& premiumLeg, std::shared_ptr<CDSLeg>& protectionLeg ) const
 	{
 		if ( legName.size() == 0 )
 		{
@@ -237,7 +237,7 @@ namespace etrading
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the PV
 	* @returns	The calculated PV value
 	*/
-	double CreditDefaultSwap::pvFromHazardRate( const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const LAString& legName, const bool includeAccruedInterest ) const
+	double CreditDefaultSwap::pvFromHazardRate( const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& legName, const bool includeAccruedInterest ) const
 	{
 		double pv = 0.0;
 
@@ -290,7 +290,7 @@ namespace etrading
 	* @param[in]	legName					Optionally calculate the PV of the specified leg only.
 	* @returns	The calculated PV value
 	*/
-	double CreditDefaultSwap::pv( const CreditModel& creditModel, const LAString& legName ) const
+	double CreditDefaultSwap::pv( const CreditModel& creditModel, const AQLString& legName ) const
 	{
 		validateCreditModel( creditModel );
 		const std::string curveCollection = creditModel.getCDSCurveCollection();
@@ -373,7 +373,7 @@ namespace etrading
 	*													TRUE means wait to the next coupon date. This flag is used to match the PV by integration to the analytic PV formula.
 	* @returns	The calculated PV value
 	*/
-	double CreditDefaultSwap::pvByIntegration( const CreditModel& creditModel, const LAString& legName, const size_t numberOfIntegrationPoints, const bool evaluateInParallel, const bool payDefaultCashflowsOnNextCouponDate ) const
+	double CreditDefaultSwap::pvByIntegration( const CreditModel& creditModel, const AQLString& legName, const size_t numberOfIntegrationPoints, const bool evaluateInParallel, const bool payDefaultCashflowsOnNextCouponDate ) const
 	{ 
 		std::shared_ptr<CDSLeg> premiumLeg;
 		std::shared_ptr<CDSLeg> protectionLeg;
@@ -386,8 +386,8 @@ namespace etrading
 		DataProvider dataProviderProtectionLeg( ValuationSettings(creditModel, {}) );
 		initializeDataProvidersAndLegs( creditModel, premiumLeg, protectionLeg, dataProviderPremiumLeg, dataProviderProtectionLeg, curveCollection, discountCurve );
 
-		const LADate effectiveDate = premiumLeg == nullptr ? protectionLeg->getSchedule()->getEffectiveDate() : premiumLeg->getSchedule()->getEffectiveDate();
-		const LADate maturityDate  = premiumLeg == nullptr ? protectionLeg->getSchedule()->getMaturityDate() : premiumLeg->getSchedule()->getMaturityDate();
+		const AQLDate effectiveDate = premiumLeg == nullptr ? protectionLeg->getSchedule()->getEffectiveDate() : premiumLeg->getSchedule()->getEffectiveDate();
+		const AQLDate maturityDate  = premiumLeg == nullptr ? protectionLeg->getSchedule()->getMaturityDate() : premiumLeg->getSchedule()->getMaturityDate();
 		
 		const double maxSurvivalProb      = creditModel.getSurvivalProbability( effectiveDate );
 		const double maturitySurvivalProb = creditModel.getSurvivalProbability( maturityDate );
@@ -407,7 +407,7 @@ namespace etrading
 		// Pre-calculate the stopping dates implied by the simulated survival probabilities
 		// Note numPaths may not be equal to numSamples if we are using antithetic sampling
 		const size_t numPaths = survivalProbabilities.size();
-		std::vector<LADate> stoppingDates( numPaths );
+		std::vector<AQLDate> stoppingDates( numPaths );
 		DoubleVector discountFactorsAtStoppingDates( numPaths, std::numeric_limits<double>::quiet_NaN() );
 		calculateStoppingDatesAndDiscountFactorsFromSurvivalProbabilties( stoppingDates,
 																		  discountFactorsAtStoppingDates,
@@ -422,7 +422,7 @@ namespace etrading
 		// X axis is survival probability, y axis is CDS PV
 		for ( size_t i=0; i<numberOfIntegrationPoints; i++ )
 		{
-			const LADate& stoppingDate = stoppingDates[i];
+			const AQLDate& stoppingDate = stoppingDates[i];
 			const double discountFactorAtStoppingDate = discountFactorsAtStoppingDates[i];
 			const double pvPremiumLeg    = premiumLeg == nullptr ? 0.0 : premiumLeg->riskFreePVtoStoppingDate( dataProviderPremiumLeg, creditModel, stoppingDate, discountFactorAtStoppingDate, payDefaultCashflowsOnNextCouponDate );
 			const double pvProtectionLeg = protectionLeg == nullptr ? 0.0 : protectionLeg->riskFreePVtoStoppingDate( dataProviderProtectionLeg, creditModel, stoppingDate, discountFactorAtStoppingDate, payDefaultCashflowsOnNextCouponDate );
@@ -467,7 +467,7 @@ namespace etrading
 	*
 	* @returns	The calculated PV value
 	*/
-	double CreditDefaultSwap::pvByMonteCarlo( const CreditModel& creditModel, const LAString& legName, const LabelValueBlock& mcParametersLVB, const bool payDefaultCashflowsOnNextCouponDate, double& standardError ) const
+	double CreditDefaultSwap::pvByMonteCarlo( const CreditModel& creditModel, const AQLString& legName, const LabelValueBlock& mcParametersLVB, const bool payDefaultCashflowsOnNextCouponDate, double& standardError ) const
 	{		
 		std::shared_ptr<CDSLeg> premiumLeg;
 		std::shared_ptr<CDSLeg> protectionLeg;
@@ -480,8 +480,8 @@ namespace etrading
 		DataProvider dataProviderProtectionLeg( ValuationSettings(creditModel, {}) );
 		initializeDataProvidersAndLegs( creditModel, premiumLeg, protectionLeg, dataProviderPremiumLeg, dataProviderProtectionLeg, curveCollection, discountCurve );
 
-		const LADate effectiveDate = premiumLeg == nullptr ? protectionLeg->getSchedule()->getEffectiveDate() : premiumLeg->getSchedule()->getEffectiveDate();
-		const LADate maturityDate  = premiumLeg == nullptr ? protectionLeg->getSchedule()->getMaturityDate() : premiumLeg->getSchedule()->getMaturityDate();
+		const AQLDate effectiveDate = premiumLeg == nullptr ? protectionLeg->getSchedule()->getEffectiveDate() : premiumLeg->getSchedule()->getEffectiveDate();
+		const AQLDate maturityDate  = premiumLeg == nullptr ? protectionLeg->getSchedule()->getMaturityDate() : premiumLeg->getSchedule()->getMaturityDate();
 		const double pvToMaturityPremiumLegOnly = premiumLeg == nullptr ? 0.0 : premiumLeg->riskFreePVtoStoppingDate( dataProviderPremiumLeg, creditModel, maturityDate );
 
 		const double maxSurvivalProb      = creditModel.getSurvivalProbability( effectiveDate );
@@ -509,7 +509,7 @@ namespace etrading
 		// Pre-calculate the stopping dates implied by the simulated survival probabilities
 		// Note numPaths may not be equal to numSamples if we are using antithetic sampling
 		const size_t numPaths = survivalProbabilities.size();
-		std::vector<LADate> stoppingDates( numPaths );
+		std::vector<AQLDate> stoppingDates( numPaths );
 		DoubleVector discountFactorsAtStoppingDates( numPaths, std::numeric_limits<double>::quiet_NaN() );
 		calculateStoppingDatesAndDiscountFactorsFromSurvivalProbabilties( stoppingDates,
 																		  discountFactorsAtStoppingDates,
@@ -524,7 +524,7 @@ namespace etrading
 		for (size_t i=0; i<numPaths; i++)
 		{
 			const double survivalProbability = survivalProbabilities[i];
-			const LADate stoppingDate = stoppingDates[i];
+			const AQLDate stoppingDate = stoppingDates[i];
 			const double discountFactorAtStoppingDate = discountFactorsAtStoppingDates[i];
 			paths[i] =  SurvivalPath( survivalProbability, stoppingDate, discountFactorAtStoppingDate );
 		}
@@ -537,7 +537,7 @@ namespace etrading
 		auto payoffFunction = [&] ( const SurvivalPath& path ) -> double
 		{
 			// Calculate the PV of premium and protection coupons assuming default occurs on the stopping date
-			const LADate stoppingDate = path.getStoppingDate();
+			const AQLDate stoppingDate = path.getStoppingDate();
 			const double discountFactorAtStoppingDate = path.getDiscountFactorAtStoppingDate();
 
 			const double pvPremiumLeg = premiumLeg == nullptr ? 0.0 : premiumLeg->riskFreePVtoStoppingDate( dataProviderPremiumLeg, creditModel, stoppingDate, discountFactorAtStoppingDate, payDefaultCashflowsOnNextCouponDate );
@@ -576,7 +576,7 @@ namespace etrading
 	*/
 	double CreditDefaultSwap::pvFromSpread( const CreditModel& creditModel, const double parSpread, const double fixedCoupon, const bool assumeFlatCurve ) const
 	{
-		const LAString premiumLegName = getLeg(0)->getLegName();
+		const AQLString premiumLegName = getLeg(0)->getLegName();
 
 		double calculatedRiskyAnnuity = 0.0;
 		if ( assumeFlatCurve )
@@ -686,11 +686,11 @@ namespace etrading
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 	* @returns	The risky annuity
 	*/
-	double CreditDefaultSwap::riskyAnnuityFromHazardRate( const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const LAString& legName, const bool includeAccruedInterest ) const
+	double CreditDefaultSwap::riskyAnnuityFromHazardRate( const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& legName, const bool includeAccruedInterest ) const
 	{
 		double riskyAnnuity = 0.0;
 
-		LAString validatedPremiumLegName = validateLegName( legName, PREMIUM_SCHEDULE_TYPE, legs_ );
+		AQLString validatedPremiumLegName = validateLegName( legName, PREMIUM_SCHEDULE_TYPE, legs_ );
 
 		auto leg = legs_.findLegByName( validatedPremiumLegName );
 
@@ -714,13 +714,13 @@ namespace etrading
 	* @param[in]	legName					The Premium leg to use when calculating the risky annuity. A mandatory parameter.
 	* @returns	The risky annuity
 	*/
-	double CreditDefaultSwap::riskyAnnuity( const CreditModel& creditModel, const LAString& legName ) const
+	double CreditDefaultSwap::riskyAnnuity( const CreditModel& creditModel, const AQLString& legName ) const
 	{
 		validateCreditModel( creditModel );
 
 		double riskyAnnuity = 0.0;
 
-		LAString validatedPremiumLegName = validateLegName( legName, PREMIUM_SCHEDULE_TYPE, legs_ );
+		AQLString validatedPremiumLegName = validateLegName( legName, PREMIUM_SCHEDULE_TYPE, legs_ );
 
 		auto leg = legs_.findLegByName( validatedPremiumLegName );
 
@@ -744,13 +744,13 @@ namespace etrading
 	* @param[in]	legName			The Premium leg name
 	* @returns: The year fraction
 	*/
-	double CreditDefaultSwap::accruedYearFraction( const CreditModel& creditModel, const LADate& toDate, const LAString& legName ) const
+	double CreditDefaultSwap::accruedYearFraction( const CreditModel& creditModel, const AQLDate& toDate, const AQLString& legName ) const
 	{
 		validateCreditModel(creditModel);
 
 		double accruedYearFraction = 0.0;
 
-		LAString validatedPremiumLegName = validateLegName(legName, PREMIUM_SCHEDULE_TYPE, legs_);
+		AQLString validatedPremiumLegName = validateLegName(legName, PREMIUM_SCHEDULE_TYPE, legs_);
 
 		auto leg = legs_.findLegByName(validatedPremiumLegName);
 
@@ -774,13 +774,13 @@ namespace etrading
 	* @param[in]	legName			The Premium leg name
 	* @returns: The accrued interest
 	*/
-	double CreditDefaultSwap::accruedInterest( const CreditModel& creditModel, const LADate& toDate, const LAString& legName ) const
+	double CreditDefaultSwap::accruedInterest( const CreditModel& creditModel, const AQLDate& toDate, const AQLString& legName ) const
 	{
 		validateCreditModel(creditModel);
 
 		double accruedInterest = 0.0;
 
-		LAString validatedPremiumLegName = validateLegName(legName, PREMIUM_SCHEDULE_TYPE, legs_);
+		AQLString validatedPremiumLegName = validateLegName(legName, PREMIUM_SCHEDULE_TYPE, legs_);
 
 		auto leg = legs_.findLegByName(validatedPremiumLegName);
 
@@ -808,7 +808,7 @@ namespace etrading
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 	* @returns	The CDS par spread
 	*/
-	double CreditDefaultSwap::parSpreadFromHazardRate_impl( const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const LAString& premiumLegName, const LAString& protectionLegName, const bool includeAccruedInterest ) const
+	double CreditDefaultSwap::parSpreadFromHazardRate_impl( const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest ) const
 	{
 		const double protectionLegPV = pvFromHazardRate( valuationSettingsLVB, hazardRate, recoveryRate, protectionLegName, includeAccruedInterest );
 
@@ -828,10 +828,10 @@ namespace etrading
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 	* @returns	The CDS par spread
 	*/
-	double CreditDefaultSwap::parSpreadFromHazardRate( const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const LAString& premiumLegName, const LAString& protectionLegName, const bool includeAccruedInterest ) const
+	double CreditDefaultSwap::parSpreadFromHazardRate( const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest ) const
 	{
-		LAString validatedPremiumLegName    = validateLegName( premiumLegName, PREMIUM_SCHEDULE_TYPE, legs_ );
-		LAString validatedProtectionLegName = validateLegName( protectionLegName, PROTECTION_SCHEDULE_TYPE, legs_ );
+		AQLString validatedPremiumLegName    = validateLegName( premiumLegName, PREMIUM_SCHEDULE_TYPE, legs_ );
+		AQLString validatedProtectionLegName = validateLegName( protectionLegName, PROTECTION_SCHEDULE_TYPE, legs_ );
 
 		const double parSpread = parSpreadFromHazardRate_impl( valuationSettingsLVB, hazardRate, recoveryRate, validatedPremiumLegName, validatedProtectionLegName, includeAccruedInterest );
 		return parSpread;
@@ -844,12 +844,12 @@ namespace etrading
 	* @param[in]	protectionLegName		The Protection leg name of the CDS
 	* @returns	The CDS par spread
 	*/
-	double CreditDefaultSwap::parSpread( const CreditModel& creditModel, const LAString& premiumLegName, const LAString& protectionLegName ) const
+	double CreditDefaultSwap::parSpread( const CreditModel& creditModel, const AQLString& premiumLegName, const AQLString& protectionLegName ) const
 	{
 		validateCreditModel( creditModel );
 
-		LAString validatedPremiumLegName    = validateLegName( premiumLegName, PREMIUM_SCHEDULE_TYPE, legs_ );
-		LAString validatedProtectionLegName = validateLegName( protectionLegName, PROTECTION_SCHEDULE_TYPE, legs_ );
+		AQLString validatedPremiumLegName    = validateLegName( premiumLegName, PREMIUM_SCHEDULE_TYPE, legs_ );
+		AQLString validatedProtectionLegName = validateLegName( protectionLegName, PROTECTION_SCHEDULE_TYPE, legs_ );
 
 		std::string curveCollection = creditModel.getCDSCurveCollection();
 		const double parSpread = parSpread_impl( curveCollection.c_str(), creditModel, validatedPremiumLegName, validatedProtectionLegName );
@@ -864,7 +864,7 @@ namespace etrading
 	* @param[in]	protectionLegName		The Protection leg name of the CDS
 	* @returns	The CDS par spread
 	*/
-	double CreditDefaultSwap::parSpread_impl( const LAString& curveCollection, const CreditModel& creditModel, const LAString& premiumLegName, const LAString& protectionLegName ) const
+	double CreditDefaultSwap::parSpread_impl( const AQLString& curveCollection, const CreditModel& creditModel, const AQLString& premiumLegName, const AQLString& protectionLegName ) const
 	{
 		const double protectionLegPV = pv( creditModel, protectionLegName );
 
@@ -884,10 +884,10 @@ namespace etrading
 	* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 	* @returns	The CDS hazard rate
 	*/
-	double CreditDefaultSwap::hazardRateFromParSpread( const LabelValueBlock& valuationSettingsLVB, const double targetCdsSpread, const double recoveryRate, const LAString& premiumLegName, const LAString& protectionLegName, const bool includeAccruedInterest ) const
+	double CreditDefaultSwap::hazardRateFromParSpread( const LabelValueBlock& valuationSettingsLVB, const double targetCdsSpread, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest ) const
 	{
-		LAString validatedPremiumLegName    = validateLegName( premiumLegName, PREMIUM_SCHEDULE_TYPE, legs_ );
-		LAString validatedProtectionLegName = validateLegName( protectionLegName, PROTECTION_SCHEDULE_TYPE, legs_ );
+		AQLString validatedPremiumLegName    = validateLegName( premiumLegName, PREMIUM_SCHEDULE_TYPE, legs_ );
+		AQLString validatedProtectionLegName = validateLegName( protectionLegName, PROTECTION_SCHEDULE_TYPE, legs_ );
 
 		// Newton-Raphson Solver Settings
         const double initialGuessForHazardRate = targetCdsSpread / ( 1 - recoveryRate );
@@ -918,12 +918,12 @@ namespace etrading
 	* @param[in]	protectionLegName		The Protection leg name of the CDS
 	* @returns	The CDS hazard rate
 	*/
-	double CreditDefaultSwap::hazardRateFromParSpread( const double targetCdsSpread, CreditModel& creditModel, const LAString& premiumLegName, const LAString& protectionLegName ) const
+	double CreditDefaultSwap::hazardRateFromParSpread( const double targetCdsSpread, CreditModel& creditModel, const AQLString& premiumLegName, const AQLString& protectionLegName ) const
 	{
 		validateCreditModel( creditModel );
 
-		LAString validatedPremiumLegName    = validateLegName( premiumLegName, PREMIUM_SCHEDULE_TYPE, legs_ );
-		LAString validatedProtectionLegName = validateLegName( protectionLegName, PROTECTION_SCHEDULE_TYPE, legs_ );
+		AQLString validatedPremiumLegName    = validateLegName( premiumLegName, PREMIUM_SCHEDULE_TYPE, legs_ );
+		AQLString validatedProtectionLegName = validateLegName( protectionLegName, PROTECTION_SCHEDULE_TYPE, legs_ );
 
 		const double recoveryRate = creditModel.getRecoveryRate();
 		// const bool includeAccruedInterest = creditModel.getIncludeAccruedInterest(); <--- Unused Variable
@@ -937,7 +937,7 @@ namespace etrading
 
 		// Get the final payment date from Leg1
 		const DateVector& paymentDates = this->getLeg(0)->getSchedule()->getPaymentDates();
-		const LADate finalPaymentDate = paymentDates.back();
+		const AQLDate finalPaymentDate = paymentDates.back();
 
 		// One-dimensional objective function used by the solver:
 		// This lambda function captures the valuationSettingsLVB and recoveryRate as fixed parameters.

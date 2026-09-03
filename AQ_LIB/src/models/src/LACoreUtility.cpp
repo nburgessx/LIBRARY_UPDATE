@@ -17,21 +17,21 @@
 
 using namespace std;
 
-LAStringVector 
-LACoreUtility::findVector(LAStringMatrix& mat, const LAString& input,bool ischangeroworcol, bool isemptyerror)
+AQLStringVector 
+LACoreUtility::findVector(AQLStringMatrix& mat, const AQLString& input,bool ischangeroworcol, bool isemptyerror)
 {
 	//#define chrcol this source is almost similar to LAMathCurveGenerateFuncUtility	
-	LAStringVector ret;
+	AQLStringVector ret;
 	if(ischangeroworcol)
 	{	
 		const int tmprow= LACoreUtility::findRowsNumber(mat,input);
 		if(tmprow < 0)
 		{
-			LAStringVector empty(1,"");
+			AQLStringVector empty(1,"");
 			if(isemptyerror)
 			{
-				LAString msg = input + "is not registerd in XLLPLUSINPUT.h";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = input + "is not registerd in XLLPLUSINPUT.h";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 			else
 				return empty;
@@ -43,11 +43,11 @@ LACoreUtility::findVector(LAStringMatrix& mat, const LAString& input,bool ischan
 		const int tmpcol= LACoreUtility::findColsNumber(mat,input);
 		if(tmpcol <0)
 		{
-			LAStringVector empty(1,"");
+			AQLStringVector empty(1,"");
 			if(isemptyerror)
 			{
-				LAString msg = input + "is not registerd in XLLPLUSINPUT.h";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = input + "is not registerd in XLLPLUSINPUT.h";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 			else
 				return empty;
@@ -61,26 +61,26 @@ LACoreUtility::findVector(LAStringMatrix& mat, const LAString& input,bool ischan
 	return ret;
 }
 
-LAString 
-LACoreUtility::findElement(LAStringMatrix& mat, const LAString& input, const int row, const int col, bool ischangeroworcol, bool isemptyerror)
+AQLString 
+LACoreUtility::findElement(AQLStringMatrix& mat, const AQLString& input, const int row, const int col, bool ischangeroworcol, bool isemptyerror)
 {
-	LAString ret;
+	AQLString ret;
 	if(ischangeroworcol)
 	{	
 		const int tmprow= LACoreUtility::findRowsNumber(mat,input);
 		if(tmprow < 0)
 		{
-			LAString empty("");
+			AQLString empty("");
 			if(isemptyerror)
 			{
-				LAString msg = input + "is not registerd in XLLPLUSINPUT.h";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = input + "is not registerd in XLLPLUSINPUT.h";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 			else
 				return empty;
 		}
 		if(mat[0].size()<=static_cast<unsigned int>(col))
-			throw LACoreInvalidData("Column Size is wrong",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Column Size is wrong",__FILE__,__LINE__);
 		ret = mat[tmprow][col];
 	}
 	else	
@@ -88,24 +88,24 @@ LACoreUtility::findElement(LAStringMatrix& mat, const LAString& input, const int
 		const int tmpcol= LACoreUtility::findColsNumber(mat,input);
 		if(tmpcol <0)
 		{
-			LAString empty("");
+			AQLString empty("");
 			if(isemptyerror)
 			{
-				LAString msg = input + "is not registerd in XLLPLUSINPUT.h";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = input + "is not registerd in XLLPLUSINPUT.h";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 			else
 				return empty;
 		}
 		if(mat.size()<= static_cast<unsigned int>(row))
-			throw LACoreInvalidData("Row Size is wrong",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Row Size is wrong",__FILE__,__LINE__);
 		ret = mat[row][tmpcol];
 	}
 	return ret;
 }
 
 const int  
-LACoreUtility::findRowsNumber(LAStringMatrix& defmat, const LAString& input)
+LACoreUtility::findRowsNumber(AQLStringMatrix& defmat, const AQLString& input)
 {
 	int i=0;
 	int N = defmat.size();
@@ -122,11 +122,11 @@ LACoreUtility::findRowsNumber(LAStringMatrix& defmat, const LAString& input)
 }
 
 const int  
-LACoreUtility::findColsNumber(LAStringMatrix& defmat, const LAString& input)
+LACoreUtility::findColsNumber(AQLStringMatrix& defmat, const AQLString& input)
 {
 	int j=0;
 	if(0==defmat.size())
-		throw LACoreInvalidData("Matrix is NULL",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Matrix is NULL",__FILE__,__LINE__);
 	//change
 	int M = defmat[0].size();
 	for(; j<M;j++)
@@ -142,7 +142,7 @@ LACoreUtility::findColsNumber(LAStringMatrix& defmat, const LAString& input)
 }
 
 void 
-LACoreUtility::removeQuotation2(LAString &input)
+LACoreUtility::removeQuotation2(AQLString &input)
 {
 	while(input.findString('"')!=-1)
 	{
@@ -152,89 +152,89 @@ LACoreUtility::removeQuotation2(LAString &input)
 	return;
 }
 		
-LAString
-LACoreUtility::removeQuotation(const LAString & input)
+AQLString
+LACoreUtility::removeQuotation(const AQLString & input)
 {
-	LAString ret;		
-	std::vector<LAString> tmpvec = input.toToken('"');
+	AQLString ret;		
+	std::vector<AQLString> tmpvec = input.toToken('"');
 	for(unsigned int c=0;c < tmpvec.size(); c++)
 		ret += tmpvec[c];
 	return ret;
 }
 
-LAStringVector
-LACoreUtility::removeQuotation(const LAStringVector& inputvec)
+AQLStringVector
+LACoreUtility::removeQuotation(const AQLStringVector& inputvec)
 {
 	int N=inputvec.size();
 	if(0==N)
-		throw LACoreInvalidData("stringvector size =0",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("stringvector size =0",__FILE__,__LINE__);
 	
-	LAStringVector ret(N);
+	AQLStringVector ret(N);
 	for(int i=0;i<N;i++)
 		ret.at(i) = removeQuotation(inputvec.at(i));
 	return ret;
 }
 
 void 
-LACoreUtility::removeQuotation(LAStringVector& inputvec)
+LACoreUtility::removeQuotation(AQLStringVector& inputvec)
 {
 	int N=inputvec.size();
 	if(0==N)
-		throw LACoreInvalidData("stringvector size =0",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("stringvector size =0",__FILE__,__LINE__);
 
 	for(int i=0;i<N;i++)
 		inputvec.at(i) = removeQuotation(inputvec.at(i));
 }
 
 void 
-LACoreUtility::xlDumpMemory(LADataInstance* dataInstance, const LAString& file)
+LACoreUtility::xlDumpMemory(AQLDataInstance* dataInstance, const AQLString& file)
 {	
-		LAObjectPool   & objPool = dataInstance->getObjectPool();
+		AQLObjectPool   & objPool = dataInstance->getObjectPool();
 		for ( EntityConstIter it = objPool.begin(); it != objPool.end(); it++ )
 		{
 			it->second.print( file.getCString() );
 		}
 }
 
-std::vector<const LAObject*> 
-LACoreUtility::findEntity(LADataInstance* dataInstance, const LAString& keyname)
+std::vector<const AQLObject*> 
+LACoreUtility::findEntity(AQLDataInstance* dataInstance, const AQLString& keyname)
 {
-	std::vector<const LAObject*> ret;
-	const LAObjectPool& objPool = dataInstance->getObjectPool();
+	std::vector<const AQLObject*> ret;
+	const AQLObjectPool& objPool = dataInstance->getObjectPool();
 	EntityConstIter it;
 	for(it = objPool.begin();it!=objPool.end();++it)
 	{
-		LAString tmp = it->first;
+		AQLString tmp = it->first;
 		if(tmp.findString(keyname) != -1)
 		{
 			ret.push_back(&it->second.get());
 		}
 	}
 	if(0==ret.size())
-		throw LACoreInvalidData("Cashlet does not exsist",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Cashlet does not exsist",__FILE__,__LINE__);
 
 	return ret;
 }
 
 void 
-LACoreUtility::dataLoad(const LAString& fname, LADataInstance &dataInstance, bool isolddataclear, bool iscompletedependency)
+LACoreUtility::dataLoad(const AQLString& fname, AQLDataInstance &dataInstance, bool isolddataclear, bool iscompletedependency)
 {
 	MDCSVFileLoader fileLoader;
 	fileLoader.setDataInstance(&dataInstance);
 
-	LAObject* e = new LAObject;
-	LAStringVector sv(1);
+	AQLObject* e = new AQLObject;
+	AQLStringVector sv(1);
 	sv[0] = fname;
 
-	e->add(CALIBRATION_DATA_MD_FILEPATHS,new LADataStrings(sv));
-	Records_var ret = fileLoader.get(LAObjectHolder(e,true));
+	e->add(CALIBRATION_DATA_MD_FILEPATHS,new AQLDataStrings(sv));
+	Records_var ret = fileLoader.get(AQLObjectHolder(e,true));
 
-	LAObjectPool&	objPool = dataInstance.getObjectPool();
+	AQLObjectPool&	objPool = dataInstance.getObjectPool();
 	// clear old data
 	if(isolddataclear)
 		objPool.clear();
 	
-	std::vector<LAObjectHolder>::iterator it;
+	std::vector<AQLObjectHolder>::iterator it;
 	for (it = ret->begin(); it != ret->end(); ++it)
 	{
 		objPool.set(it->getName(), &(it->get()));
@@ -247,7 +247,7 @@ LACoreUtility::dataLoad(const LAString& fname, LADataInstance &dataInstance, boo
 };
 
 DoubleArray 
-LACoreUtility::changeDoubleFromString(const LAStringVector& strvec)
+LACoreUtility::changeDoubleFromString(const AQLStringVector& strvec)
 {
 	DoubleArray ret(strvec.size());
 	for(unsigned int i=0;i<ret.size();i++)
@@ -256,7 +256,7 @@ LACoreUtility::changeDoubleFromString(const LAStringVector& strvec)
 };
 
 DoubleMatrix 
-LACoreUtility::changeDoubleFromString(const LAStringMatrix& strMat)
+LACoreUtility::changeDoubleFromString(const AQLStringMatrix& strMat)
 {
     DoubleMatrix ret(strMat.size(), DoubleVector(strMat[0].size()));
     for(size_t i=0; i<strMat.size(); i++)
@@ -271,7 +271,7 @@ LACoreUtility::changeDoubleFromString(const LAStringMatrix& strMat)
 };
 
 DateVector 
-LACoreUtility::changeDateFromString(const LAStringVector& strvec)
+LACoreUtility::changeDateFromString(const AQLStringVector& strvec)
 {
 	DateVector ret(strvec.size());
 	for(unsigned int i=0;i<ret.size();i++)

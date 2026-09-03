@@ -7,17 +7,17 @@
 
 namespace etrading
 {
-    std::pair<LegCollection, LegPtr> getBasisRefSpreadLegPair(const LegCollection& legs, const LAString& spreadLegName);
+    std::pair<LegCollection, LegPtr> getBasisRefSpreadLegPair(const LegCollection& legs, const AQLString& spreadLegName);
 
-    std::pair<LegCollection, LegPtr> getXccyBasisRefSpreadLegPair(const LegCollection& legs, const LAString& notionalResetLegName, const LAString& spreadLegName);
+    std::pair<LegCollection, LegPtr> getXccyBasisRefSpreadLegPair(const LegCollection& legs, const AQLString& notionalResetLegName, const AQLString& spreadLegName);
 
 	std::pair<bool, double> solveSpread( DataProvider& dataProviderSpreadLeg, double pv, double pvRefLeg, double deltaPV, double spread, double epsilonForPV, const LegPtr& spreadLeg );
 
     double calculateSwapSpread(const LegCollection& refLegs, const LegPtr& spreadLeg, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread);
     
-    double calculateXccySwapSpread(const LegCollection& legs, const LAString& spreadLegName, const LAString& notionalResetLegName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread);
+    double calculateXccySwapSpread(const LegCollection& legs, const AQLString& spreadLegName, const AQLString& notionalResetLegName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread);
 
-    double calculateBasisSwapSpread(const LegCollection& legs, const LAString& spreadLegName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread);
+    double calculateBasisSwapSpread(const LegCollection& legs, const AQLString& spreadLegName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread);
 
 	/* @brief Calculate AsOfDateFxRate
 	*
@@ -29,7 +29,7 @@ namespace etrading
 	*/
 	double calculateAsOfDateFxRate(const LabelValueBlock& valuationSettingsLVB, const CCY& valuationCurrency, const LegPtr& leg1, const LegPtr& leg2);
 
-    void updateMTMXccyNotionalResetByFxLeg(const LabelValueBlock& valuationSettingsLVB, const LegPtr& leg1, const LegPtr& leg2, const LAString& notionalResetLegName, bool isMTM, const LAString& legName);
+    void updateMTMXccyNotionalResetByFxLeg(const LabelValueBlock& valuationSettingsLVB, const LegPtr& leg1, const LegPtr& leg2, const AQLString& notionalResetLegName, bool isMTM, const AQLString& legName);
 
     double calculateParRate(const LabelValueBlock& valuationSettingsLVB, const LegCollection& legs, const LabelValueBlock& fixingTableNames);
 

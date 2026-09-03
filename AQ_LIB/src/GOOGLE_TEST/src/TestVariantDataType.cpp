@@ -11,7 +11,7 @@ namespace google_test
     
     TEST( TestVariantDataType, UNIT_toVariantMatrixFromLAStringMatrix_NoTranspose )
     {
-        const LAStringMatrix laStringMatrix =
+        const AQLStringMatrix laStringMatrix =
         {
             { "A", "B", "C" },
             { "D", "E", "F" },
@@ -42,7 +42,7 @@ namespace google_test
 
     TEST( TestVariantDataType, UNIT_toVariantMatrixFromLAStringMatrix_WithTranspose )
     {
-        const LAStringMatrix laStringMatrix =
+        const AQLStringMatrix laStringMatrix =
         {
             { "A", "B", "C" },
             { "D", "E", "F" },
@@ -143,14 +143,14 @@ namespace google_test
             { "D", "E", "F" },
         };
 
-        const LAStringMatrix expectedMatrix =
+        const AQLStringMatrix expectedMatrix =
         {
             { "A", "B", "C" },
             { "D", "E", "F" },
         };
 
         // Call Underlying Function without transposing
-        const LAStringMatrix actualMatrix = etrading::toLAStringMatrixFromVariantMatrix( variantMatrix, false ); // false = don't transpose
+        const AQLStringMatrix actualMatrix = etrading::toLAStringMatrixFromVariantMatrix( variantMatrix, false ); // false = don't transpose
 
         // Dimension Check - Assume Rectangular Matrix i.e. not jagged
         ASSERT_EQ( actualMatrix.size(), expectedMatrix.size() );
@@ -174,7 +174,7 @@ namespace google_test
             { "D", "E", "F" },
         };
 
-        const LAStringMatrix expectedMatrix =
+        const AQLStringMatrix expectedMatrix =
         {
             { "A", "D" },
             { "B", "E" },
@@ -182,7 +182,7 @@ namespace google_test
         };
 
         // Call Underlying Function applying transpose
-        const LAStringMatrix actualMatrix = etrading::toLAStringMatrixFromVariantMatrix( variantMatrix, true ); // true = apply transpose
+        const AQLStringMatrix actualMatrix = etrading::toLAStringMatrixFromVariantMatrix( variantMatrix, true ); // true = apply transpose
 
         // Dimension Check - Assume Rectangular Matrix i.e. not jagged
         ASSERT_EQ( actualMatrix.size(), expectedMatrix.size() );

@@ -4,7 +4,7 @@
 #include <ql/math/optimization/costfunction.hpp>
 //furuya
 //#include <function.h>
-#include "LAFunction.h"
+#include "AQLFunction.h"
 
 #include <vector>
 

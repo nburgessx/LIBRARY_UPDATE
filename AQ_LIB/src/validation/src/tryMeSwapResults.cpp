@@ -13,10 +13,10 @@
 #include "RecordMacros.h"                   // Record Macros
 #include "CreateDataFile.h"                 // Record File Creation
 #include "StructuredExceptionHandler.h"     // Validation Start and End Macros for Structured Exception Management
-#include "DateUtilities.h"                  // Date helper methods and LAStringMatrix to Date and Value vector helper
+#include "DateUtilities.h"                  // Date helper methods and AQLStringMatrix to Date and Value vector helper
 #include "tryMeUtilityClean.h"              // trimming utility methods
 #include "LADateScheduleHelpers.h"          // Convert Strings to Dates and vice versa
-#include "LabelValueBlock.h"                // String Matrix Conversion Helpers to/from LAStringMatrix
+#include "LabelValueBlock.h"                // String Matrix Conversion Helpers to/from AQLStringMatrix
 #include "CoreEnumerations.h"
 
 #include <boost/algorithm/string.hpp>		// boost::to_upper
@@ -78,9 +78,9 @@ namespace validation
 
 	// Function to update swap discount and forward rate risk
 	std::string tryMeSwapResultsRiskUpdate( const std::string & swapHandle,
-											const LADate & asOfDate,
-								 			const LAStringMatrix & discountRiskLVB,		// discountRiskLVB = Table of Payment Dates and Coupons
-								 			const LAStringMatrix & forwardRiskLVB )		// forwardRiskLVB = Table of Fixing Dates and Annuities
+											const AQLDate & asOfDate,
+								 			const AQLStringMatrix & discountRiskLVB,		// discountRiskLVB = Table of Payment Dates and Coupons
+								 			const AQLStringMatrix & forwardRiskLVB )		// forwardRiskLVB = Table of Fixing Dates and Annuities
 	{
 		VALID_EXCEPTION_START
 
@@ -89,8 +89,8 @@ namespace validation
 		boost::to_upper( swapHandleUpperCase );
 
         // Trim Discount Factor Risk LVB
-        const LAStringMatrix trimmedDiscountRisk = validation::trimLAStringMatrix( discountRiskLVB );
-		const LAStringMatrix trimmedForwardRisk = validation::trimLAStringMatrix( forwardRiskLVB );
+        const AQLStringMatrix trimmedDiscountRisk = validation::trimLAStringMatrix( discountRiskLVB );
+		const AQLStringMatrix trimmedForwardRisk = validation::trimLAStringMatrix( forwardRiskLVB );
 
 		// Record Inputs
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk, trimmedForwardRisk )
@@ -128,8 +128,8 @@ namespace validation
 
 	// Function to update swap discount risk
 	std::string tryMeSwapResultsDiscountRiskUpdate( const std::string & swapHandle,
-													const LADate & asOfDate,
-													const LAStringMatrix & discountRiskLVB ) // discountRiskLVB = Table of Payment Dates and Coupons
+													const AQLDate & asOfDate,
+													const AQLStringMatrix & discountRiskLVB ) // discountRiskLVB = Table of Payment Dates and Coupons
 	{
 		VALID_EXCEPTION_START
 	
@@ -138,7 +138,7 @@ namespace validation
 		boost::to_upper( swapHandleUpperCase );
 
         // Trim Discount Factor Risk LVB
-        const LAStringMatrix trimmedDiscountRisk = validation::trimLAStringMatrix( discountRiskLVB );
+        const AQLStringMatrix trimmedDiscountRisk = validation::trimLAStringMatrix( discountRiskLVB );
 
 		// Record Inputs
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk )
@@ -171,8 +171,8 @@ namespace validation
 
 	// Function to update swap forward rate risk
     std::string tryMeSwapResultsForwardRiskUpdate( const std::string & swapHandle,
-												   const LADate & asOfDate,
-												   const LAStringMatrix & forwardRiskLVB ) // forwardRiskLVB = Table of Fixing Dates and Annuities
+												   const AQLDate & asOfDate,
+												   const AQLStringMatrix & forwardRiskLVB ) // forwardRiskLVB = Table of Fixing Dates and Annuities
 	{
 		VALID_EXCEPTION_START
 	
@@ -181,7 +181,7 @@ namespace validation
 		boost::to_upper( swapHandleUpperCase );
 
         // Trim Forward Rate Risk LVB
-        const LAStringMatrix trimmedForwardRisk = validation::trimLAStringMatrix( forwardRiskLVB );
+        const AQLStringMatrix trimmedForwardRisk = validation::trimLAStringMatrix( forwardRiskLVB );
 
 		// Record Inputs
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedForwardRisk )

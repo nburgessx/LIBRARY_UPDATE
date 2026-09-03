@@ -24,7 +24,7 @@ namespace etrading
 {
 	// Helper Method to check if any curves were built using the curve engine
 	// If any curve was built from global curve engine, set useGlobalCurveEngine_ to true
-	bool wereCurvesBuiltUsingCurveEngine( const LAString & curveCollection, const LAString & forecastCurve, const LAString & discountCurve )
+	bool wereCurvesBuiltUsingCurveEngine( const AQLString & curveCollection, const AQLString & forecastCurve, const AQLString & discountCurve )
 	{
 		bool builtUsingCurveEngine = false;
 
@@ -32,8 +32,8 @@ namespace etrading
 		// have multiple float indices per trade leg
 		bool isDiscountCurveFromEngine = etrading::isCurveBuiltFromCurveEngine( curveCollection, discountCurve );
 
-		std::vector<LAString> forecastCurveList = generateCurveList( forecastCurve );
-		for( LAString thisForecastCurve : forecastCurveList )
+		std::vector<AQLString> forecastCurveList = generateCurveList( forecastCurve );
+		for( AQLString thisForecastCurve : forecastCurveList )
 		{
 			bool isForecastCurveFromEngine = etrading::isCurveBuiltFromCurveEngine( curveCollection, thisForecastCurve );
 			
@@ -65,10 +65,10 @@ namespace etrading
     *  Note2:   We must disable the CurveResults Object otherwise Products will price outside the object pool and not incorporate curve bumps and shift results
     */
     MultiCurveDeltaGenerator::MultiCurveDeltaGenerator( const std::vector<LabelValueBlock>& dealsInfo,
-														const LAString curveCollection,
+														const AQLString curveCollection,
 														const bool bumpSpreadInstruments,
 														const double bumpSize,
-														const LAString& bumpMode,
+														const AQLString& bumpMode,
 														const bool aggregateRisks,
 														const std::string& riskCutOffTenor )
 															:
@@ -85,14 +85,14 @@ namespace etrading
         {
             LabelValueBlock deal = dealsInfo[i];
 
-            LAString tradeType = deal.getCompulsoryValueAsLAString( IRS_KEY::TRADE_TYPE );
-            LAString tradeID = deal.getCompulsoryValueAsLAString( IRS_KEY::TRADE_ID );
-            LAString forecastCurve = deal.getCompulsoryValueAsLAString( MARKET_KEY::FORECAST_CURVE, tradeID.getCString(), false );
-            LAString discountCurve = deal.getCompulsoryValueAsLAString( MARKET_KEY::DISCOUNT_CURVE, tradeID.getCString(), false );
+            AQLString tradeType = deal.getCompulsoryValueAsLAString( IRS_KEY::TRADE_TYPE );
+            AQLString tradeID = deal.getCompulsoryValueAsLAString( IRS_KEY::TRADE_ID );
+            AQLString forecastCurve = deal.getCompulsoryValueAsLAString( MARKET_KEY::FORECAST_CURVE, tradeID.getCString(), false );
+            AQLString discountCurve = deal.getCompulsoryValueAsLAString( MARKET_KEY::DISCOUNT_CURVE, tradeID.getCString(), false );
 
             //Throw exception if the curve has not been built and return the Market Names i.e. PropertyFileName /  StaticDataTable
-            LAString forecastCurveMarketName = etrading::getCurveStaticDataTableName( curveCollection, forecastCurve, false ); // false = don't convert marketName to Uppercase
-            LAString discountCurveMarketName = etrading::getCurveStaticDataTableName( curveCollection, discountCurve, false ); // false = don't convert marketName to Uppercase
+            AQLString forecastCurveMarketName = etrading::getCurveStaticDataTableName( curveCollection, forecastCurve, false ); // false = don't convert marketName to Uppercase
+            AQLString discountCurveMarketName = etrading::getCurveStaticDataTableName( curveCollection, discountCurve, false ); // false = don't convert marketName to Uppercase
 
             // Record the trade object pointer
             BaseInstrumentPtr trade;
@@ -106,7 +106,7 @@ namespace etrading
             }
             else
             {
-                throw LACoreInvalidData( "#Error: TradeType key is either not specified or carries invalid value", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: TradeType key is either not specified or carries invalid value", __FILE__, __LINE__ );
             }
 
             portfolio_.push_back( trade );
@@ -119,13 +119,13 @@ namespace etrading
 	/* @brief	Constructor for LWO Swaps
     *  Note1:   We must disable the CurveResults Object otherwise Products will price outside the object pool and not incorporate curve bumps and shift results
 	*/
-	MultiCurveDeltaGenerator::MultiCurveDeltaGenerator( const LAStringVector& swapNames,
-														const LAStringMatrix& curveCollectionNames,
-														const LAStringMatrix& fixingTableNames,
+	MultiCurveDeltaGenerator::MultiCurveDeltaGenerator( const AQLStringVector& swapNames,
+														const AQLStringMatrix& curveCollectionNames,
+														const AQLStringMatrix& fixingTableNames,
                                                         const DoubleVector& xccyFXSpotRates,
 														const bool bumpSpreadInstruments,
 														const double bumpSize,
-														const LAString& bumpMode,
+														const AQLString& bumpMode,
 														const bool aggregateRisks,
 														const bool reportInLegCCY,
 														const std::string& riskCutOffTenor )
@@ -164,7 +164,7 @@ namespace etrading
 		for (size_t i=0; i<swapNames.size(); i++)
 		{
 			// Gracefully handle the case where one or more swapNames is missing from the range
-			const LAString& swapName = swapNames[i];
+			const AQLString& swapName = swapNames[i];
 			if ( ! swapName.isDefined() || swapName == "" )
 				continue;
 
@@ -199,7 +199,7 @@ namespace etrading
 			 */
 			LabelValueBlock curveCollectionsLVB;
             
-			LAStringVector curveCollectionsForTrade = curveCollectionNames[i];
+			AQLStringVector curveCollectionsForTrade = curveCollectionNames[i];
 			size_t collectionCount = 0;
 
             for (size_t j=0; j<curveCollectionsForTrade.size(); j++)
@@ -218,8 +218,8 @@ namespace etrading
 			if ( collectionCount > 1 )
 			{
                 const size_t numLegs = swap->getLegSize();
-				LAStringVector legNames( numLegs );
-                LAStringVector curveNames( numLegs );
+				AQLStringVector legNames( numLegs );
+                AQLStringVector curveNames( numLegs );
 
                 // Two or more curve collections have been given
 				for (size_t j = 0; j<collectionCount; j++)
@@ -238,7 +238,7 @@ namespace etrading
 			else
 			{
 				// A single curve collection has been given
-				curveCollectionsLVB = LabelValueBlock( curveCollectionsForTrade[0], LAString("") );
+				curveCollectionsLVB = LabelValueBlock( curveCollectionsForTrade[0], AQLString("") );
 			}
             
             curveCollections_.push_back( curveCollectionsLVB );
@@ -249,8 +249,8 @@ namespace etrading
             // Copy Curve Collection Data and Append Extra Valuation Data as Needed
             valuationSettingsLVB_ = curveCollections_;
 
-            LAString fxSpotKey;
-            LAString fxSpotValue;
+            AQLString fxSpotKey;
+            AQLString fxSpotValue;
 
             // Xccy Swap Check: Xccy Swaps Require > 1 Curve Collection
             // --------------------------------------------------------
@@ -289,7 +289,7 @@ namespace etrading
             
 			if ( usingFixingTables )
 			{
-				LAStringVector fixingTablesForTrade = fixingTableNames[i];
+				AQLStringVector fixingTablesForTrade = fixingTableNames[i];
 				size_t fixingTableCount = 0;
 
 				for (size_t j=0; j<fixingTablesForTrade.size(); j++)
@@ -308,8 +308,8 @@ namespace etrading
 				if ( fixingTableCount > 1 )
 				{
 					const size_t numLegs = swap->getLegSize();
-					LAStringVector legNames( numLegs );
-					LAStringVector fixingNames( numLegs );
+					AQLStringVector legNames( numLegs );
+					AQLStringVector fixingNames( numLegs );
 
 					// Two or more fixing tables have been given
 					for (size_t j = 0; j<fixingTableCount; j++)
@@ -328,7 +328,7 @@ namespace etrading
 				else
 				{
 					// A single fixing table has been given
-					fixingTablesLVB = LabelValueBlock( fixingTablesForTrade[0], LAString("") );
+					fixingTablesLVB = LabelValueBlock( fixingTablesForTrade[0], AQLString("") );
 				}
             }
 			fixingTableNames_.push_back( fixingTablesLVB );
@@ -339,7 +339,7 @@ namespace etrading
 			// This serves two purposes:
 			// 1. Validate all the input data and fail early if there is a problem
 			// 2. Setup of the swaps (in the case of MTM XCCY, which adjusts notional exchanges).
-			LAString legName = "";
+			AQLString legName = "";
 			swap->pv(valulationSettingsLVB, fixingTablesLVB, legName);
 
 			if (swap->getSwapType() == CROSS_CURRENCY_SWAP || swap->getSwapType() == XCCY_ZERO_COUPON_SWAP)
@@ -379,16 +379,16 @@ namespace etrading
     *  @param [in]		curveCollectionID		Name or handle of the curve set
     *  @param [in]		curves					A collection of yield curves
     */
-    void MultiCurveDeltaGenerator::setCurves( const LAString& curveCollectionID, const LAStringVector& curves )
+    void MultiCurveDeltaGenerator::setCurves( const AQLString& curveCollectionID, const AQLStringVector& curves )
     {
         curveCollectionID_ = curveCollectionID;
         allYieldCurves_.clear();
         for ( size_t i = 0; i < curves.size(); ++i )
         {
-            LAString curve = curves[i];
+            AQLString curve = curves[i];
 
             // Check curve exists and get Curve Market Name
-            LAString curveMarketName = etrading::getCurveStaticDataTableName( curveCollectionID, curve, false ); // false = don't convert marketName to Uppercase
+            AQLString curveMarketName = etrading::getCurveStaticDataTableName( curveCollectionID, curve, false ); // false = don't convert marketName to Uppercase
 
             allYieldCurves_.push_back( curveMarketName.toLower() );
         }
@@ -421,10 +421,10 @@ namespace etrading
 	void MultiCurveDeltaGenerator::groupLWOTradesByCurveDependencies(const SwapPtr& lwoTrade,
 																	const LabelValueBlock& curveCollectionForTrade,
 																	const LabelValueBlock& fixingTableForTrade,
-																	LAStringVector& allTradeIDs,
-																	LAStringVector& allTradeCcys,
+																	AQLStringVector& allTradeIDs,
+																	AQLStringVector& allTradeCcys,
 																	std::map< CurveDependencies, std::vector< SwapPtr > >& lwoSwapByCurves,
-																	std::map< CurveDependencies, std::vector< LAString > >& lwoTradeIDsByCurves,
+																	std::map< CurveDependencies, std::vector< AQLString > >& lwoTradeIDsByCurves,
 																	std::map< CurveDependencies, std::vector< LabelValueBlock > >& fixingTableNamesByCurves)
 	{
 		auto swapID = lwoTrade->getRefToName().c_str();
@@ -437,15 +437,15 @@ namespace etrading
 
 			if (leg->getType() == FLOAT_SCHEDULE_TYPE)
 			{
-				LAString curveCollectionID = getLWOCurveCollectionFromValuationSettings(curveCollectionForTrade, leg->getLegName());
-				LAString discountCurveIndex = leg->getStaticData()->getDiscountCurve();
-				LAString discountCurve = getCurveStaticDataTableName(curveCollectionID, discountCurveIndex, false);
+				AQLString curveCollectionID = getLWOCurveCollectionFromValuationSettings(curveCollectionForTrade, leg->getLegName());
+				AQLString discountCurveIndex = leg->getStaticData()->getDiscountCurve();
+				AQLString discountCurve = getCurveStaticDataTableName(curveCollectionID, discountCurveIndex, false);
 
 				auto forecastCurveIndex = leg->getStaticData()->getForecastCurve();
 				
 				// Convert the curveIndex to the static table name
 				// Note: The forecast curve may be a list of curves, e.g. when pricing a VNS trade with multiple curve indices per trade leg
-				LAString forecastCurveAsStaticDataList = generateStaticDataListAsString( curveCollectionID, forecastCurveIndex );
+				AQLString forecastCurveAsStaticDataList = generateStaticDataListAsString( curveCollectionID, forecastCurveIndex );
 				
 				// If any curve was built from global curve engine, set useGlobalCurveEngine_ to true
 				if (!useGlobalCurveEngine_)
@@ -468,7 +468,7 @@ namespace etrading
                 // TODO - Is the fixing table needed to check curve dependencies ??? Should xccyFXSpotRates be here also ???
 				std::vector< LabelValueBlock >& lwoFixingTables = fixingTableNamesByCurves[key];
 				lwoFixingTables.push_back(fixingTableForTrade);
-				std::vector<LAString>& tradeIDs = lwoTradeIDsByCurves[key];
+				std::vector<AQLString>& tradeIDs = lwoTradeIDsByCurves[key];
 				tradeIDs.push_back(swapID);
 
 				const CCY legCCY = leg->getStaticData()->getCurrency();
@@ -490,11 +490,11 @@ namespace etrading
 	void MultiCurveDeltaGenerator::groupLWOTradeLegsByCurveDependencies( const std::shared_ptr<Swap>& lwoTrade,
 																	 const LabelValueBlock& curveCollectionForTrade,
 																	 const LabelValueBlock& fixingTableForTrade,
-																	 LAStringVector& allLegIDs,
-																	 LAStringVector& allLegCCYs,
+																	 AQLStringVector& allLegIDs,
+																	 AQLStringVector& allLegCCYs,
 																	 std::map< CurveDependencies, std::vector< std::shared_ptr<Leg> > >& lwoSwapLegsByCurves,
-																	 std::map< CurveDependencies, std::vector< LAString > >& lwoTradeIDsByCurves,
-																	 std::map< CurveDependencies, std::vector< LAString > >& lwoLegIDsByCurves,
+																	 std::map< CurveDependencies, std::vector< AQLString > >& lwoTradeIDsByCurves,
+																	 std::map< CurveDependencies, std::vector< AQLString > >& lwoLegIDsByCurves,
 																	 std::map< CurveDependencies, std::vector< LabelValueBlock > >& fixingTableNamesByCurves)
 	{
 		auto swapID = lwoTrade->getRefToName().c_str();
@@ -503,7 +503,7 @@ namespace etrading
 		for (size_t j=0; j<lwoTrade->getLegSize(); j++)
 		{
 			const LegPtr& leg = lwoTrade->getLeg(j);
-			auto legID = swapID + LAString("_") + leg->getLegName();
+			auto legID = swapID + AQLString("_") + leg->getLegName();
 			allLegIDs.push_back( legID );
 
 			// Get the currency that the risk will be reported in
@@ -532,17 +532,17 @@ namespace etrading
 			}
 			if ( reportingCCY == NO_CCY)
 			{
-				throw LACoreInvalidData( ( boost::format( "#Error: Could not determine the currency for swap leg: %s" )
+				throw AQLCoreInvalidData( ( boost::format( "#Error: Could not determine the currency for swap leg: %s" )
 										% legID.getCString() ).str().c_str() , __FILE__, __LINE__ );
 			}
 			allLegCCYs.push_back( toString( reportingCCY ).c_str() );
 
-			LAString curveCollectionID = getLWOCurveCollectionFromValuationSettings( curveCollectionForTrade, leg->getLegName() );
-			LAString discountCurveIndex = leg->getStaticData()->getDiscountCurve();
-			LAString discountCurve = getCurveStaticDataTableName( curveCollectionID, discountCurveIndex, false );
+			AQLString curveCollectionID = getLWOCurveCollectionFromValuationSettings( curveCollectionForTrade, leg->getLegName() );
+			AQLString discountCurveIndex = leg->getStaticData()->getDiscountCurve();
+			AQLString discountCurve = getCurveStaticDataTableName( curveCollectionID, discountCurveIndex, false );
 				
-			LAString forecastCurveIndex;
-			LAString forecastCurve;
+			AQLString forecastCurveIndex;
+			AQLString forecastCurve;
 			if (leg->getType() == FLOAT_SCHEDULE_TYPE)
 			{
 				forecastCurveIndex = leg->getStaticData()->getForecastCurve();
@@ -578,10 +578,10 @@ namespace etrading
             // TODO - Is the fixing table needed to check curve dependencies ??? Should xccyFXSpotRates be here also ???
 			std::vector< LabelValueBlock >& lwoFixingTables = fixingTableNamesByCurves[key];
 			lwoFixingTables.push_back(fixingTableForTrade);
-			std::vector<LAString>& tradeIDs = lwoTradeIDsByCurves[key];
+			std::vector<AQLString>& tradeIDs = lwoTradeIDsByCurves[key];
 			tradeIDs.push_back( swapID );
 
-			std::vector<LAString>& legIDs = lwoLegIDsByCurves[key];
+			std::vector<AQLString>& legIDs = lwoLegIDsByCurves[key];
 			legIDs.push_back( legID );
 		}
 	}
@@ -591,7 +591,7 @@ namespace etrading
     *  @param [out]		headers			Headers of the delta matrix
     *  @param [out]		deltas			All the deltas
     */
-    void MultiCurveDeltaGenerator::deltaLadder( LAStringVector& pillarNames, LAStringVector& headers, LAStringVector& deltaCCYs, DoubleMatrix& deltas )
+    void MultiCurveDeltaGenerator::deltaLadder( AQLStringVector& pillarNames, AQLStringVector& headers, AQLStringVector& deltaCCYs, DoubleMatrix& deltas )
     {
         pillarNames.clear();
         deltas.clear();
@@ -609,20 +609,20 @@ namespace etrading
 		// These maps store dependency information for portfolios of LWO SwapLegs
 		std::map< CurveDependencies, std::vector< LegPtr > > lwoSwapLegsByCurves;
 		std::map< CurveDependencies, std::vector< SwapPtr > > lwoSwapsByCurves;
-		std::map< CurveDependencies, std::vector< LAString > > lwoTradeIDsByCurves;
-		std::map< CurveDependencies, std::vector< LAString > > lwoLegIDsByCurves;
+		std::map< CurveDependencies, std::vector< AQLString > > lwoTradeIDsByCurves;
+		std::map< CurveDependencies, std::vector< AQLString > > lwoLegIDsByCurves;
 		std::map< CurveDependencies, std::vector< LabelValueBlock > > fixingTableNamesByCurves;
 
 		// These maps store dependency information for portfolios of BaseInstrument
         std::map< CurveDependencies, std::vector<BaseInstrumentPtr> > instrumentsByCurves;
-        std::map< CurveDependencies, LAString > interpolations;
-		std::map< CurveDependencies, std::vector< LAString > > tradeIDsByCurves;
+        std::map< CurveDependencies, AQLString > interpolations;
+		std::map< CurveDependencies, std::vector< AQLString > > tradeIDsByCurves;
 
-        LAStringVector allTradeIDs;
+        AQLStringVector allTradeIDs;
         for ( size_t i = 0; i < getPortfolioSize(); ++i )
         {
-			LAString forecastCurve;
-			LAString discountCurve;
+			AQLString forecastCurve;
+			AQLString discountCurve;
 
 			if ( usingLWO_ )
 			{
@@ -642,7 +642,7 @@ namespace etrading
 			else
 			{
 				BaseInstrumentPtr trade = portfolio_[i];
-				LAString tradeID = trade->getTradeID();
+				AQLString tradeID = trade->getTradeID();
 				allTradeIDs.push_back( tradeID );
 				forecastCurve = forecastAndDiscountCurves_[i].forecastCurve_;
 				discountCurve = forecastAndDiscountCurves_[i].discountCurve_;
@@ -651,30 +651,30 @@ namespace etrading
 				// Use the curveCullectionID_ as a reasonable placeholder.
 				deltaCCYs.push_back( curveCollectionID_ );
 
-				LAString forecastCurveLower = forecastCurve;
+				AQLString forecastCurveLower = forecastCurve;
 				forecastCurveLower.toLower();
 				auto pos = std::find( allYieldCurves_.begin(), allYieldCurves_.end(), forecastCurveLower );
 				if ( pos == allYieldCurves_.end() )
 				{
-					LAString err = "#Error: Forecast curve for instrument '" + tradeID + "' is not found in the given group of yield curves";
-					throw LACoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+					AQLString err = "#Error: Forecast curve for instrument '" + tradeID + "' is not found in the given group of yield curves";
+					throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
 				}
 
-				LAString discountCurveLower = discountCurve;
+				AQLString discountCurveLower = discountCurve;
 				discountCurveLower.toLower();
 				pos = std::find( allYieldCurves_.begin(), allYieldCurves_.end(), discountCurveLower );
 				if ( pos == allYieldCurves_.end() )
 				{
-					LAString err = "#Error: Discount curve for instrument '" + tradeID + "' is not found in the given group of yield curves";
-					throw LACoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+					AQLString err = "#Error: Discount curve for instrument '" + tradeID + "' is not found in the given group of yield curves";
+					throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
 				}
 
 				// Validate the forecast and discounting curves
 				etrading::validateStringEmptiness( forecastCurve, "#Error: The Swap 'forecast Curve' must be specified." );
 
-				if( discountCurve == LAString( "" ) )
+				if( discountCurve == AQLString( "" ) )
 				{
-					throw LACoreInvalidData( "#Error: The Swap 'discount Curve' must be specified.", __FILE__, __LINE__ );
+					throw AQLCoreInvalidData( "#Error: The Swap 'discount Curve' must be specified.", __FILE__, __LINE__ );
 				}
 
 				// Put this trade in a map that is indexed by the pairing of its forecast curve and discount curve
@@ -682,11 +682,11 @@ namespace etrading
 				std::vector<BaseInstrumentPtr>& trades = instrumentsByCurves[key];
 				trades.push_back( trade );
 
-				std::vector<LAString>& tradeIDs = tradeIDsByCurves[key];
+				std::vector<AQLString>& tradeIDs = tradeIDsByCurves[key];
 				tradeIDs.push_back( tradeID );
 
 				// Interpolations
-				LAString interp = etrading::getCurveInterpolation( curveCollectionID_, forecastCurve );
+				AQLString interp = etrading::getCurveInterpolation( curveCollectionID_, forecastCurve );
 				interpolations[key] = interp;
 			}
         }
@@ -695,12 +695,12 @@ namespace etrading
         // Iterate over each mini portfolio and calculate their respective delta ladder
         // Each mini portfolio contain trades that use the same forecast and discounting curves
 
-        std::vector<LAString> pillarNamesFromAllCurves;
-        std::set<LAString> uniquePillarNamesInSet;
+        std::vector<AQLString> pillarNamesFromAllCurves;
+        std::set<AQLString> uniquePillarNamesInSet;
 
         // Each element in 'deltaMap' is indexed by the combination of a pillar name and a trade ID.
         // This works similar to a coordinate system where the pillar names form the y axis and the trade IDs form the x axis
-        std::map< std::pair<LAString, LAString>, double> deltaMap;
+        std::map< std::pair<AQLString, AQLString>, double> deltaMap;
 
 		if (usingLWO_)
 		{
@@ -711,11 +711,11 @@ namespace etrading
 					const CurveDependencies& key = iter->first;
 					std::vector<std::shared_ptr<Leg> >& miniPortfolio = iter->second;
 
-					std::vector<LAString>& legIDs = lwoLegIDsByCurves[key];
+					std::vector<AQLString>& legIDs = lwoLegIDsByCurves[key];
 					std::vector< LabelValueBlock >& fixingTableNames = fixingTableNamesByCurves[key];
                     
                     // TODO: Check and Ensure tradeIDs and legIDs are consistent and unique by key
-                    std::vector<LAString>& tradeIDs = lwoTradeIDsByCurves[key];
+                    std::vector<AQLString>& tradeIDs = lwoTradeIDsByCurves[key];
                     const std::vector<double> xccyFXAsOfDateRates = getXccyFXAsOfDateRatesByTradeIDs( tradeIDs );
 
 					// Run the delta ladder on a mini portfolio where trades share the same forecast and discount curves
@@ -732,7 +732,7 @@ namespace etrading
 					const CurveDependencies& key = iter->first;
 					std::vector<SwapPtr >& miniPortfolio = iter->second;
 
-					std::vector<LAString>& tradeIDs = lwoTradeIDsByCurves[key];
+					std::vector<AQLString>& tradeIDs = lwoTradeIDsByCurves[key];
 					std::vector< LabelValueBlock >& fixingTableNames = fixingTableNamesByCurves[key];
                     
 					const std::vector<double> xccyFXAsOfDateRates = getXccyFXAsOfDateRatesByTradeIDs(tradeIDs);
@@ -752,7 +752,7 @@ namespace etrading
 				CurveDependencies key = iter->first;
 				const std::vector<BaseInstrumentPtr>& miniPortfolio = iter->second;
 
-				std::vector<LAString>& tradeIDs = tradeIDsByCurves[key];
+				std::vector<AQLString>& tradeIDs = tradeIDsByCurves[key];
 				
 				// Run the delta ladder on a mini portfolio where trades share the same forecast and discount curves
 				// Note: Non-LWO Base Case does not support Xccy Swaps - No need for Xccy FX Spot Rates here
@@ -769,7 +769,7 @@ namespace etrading
         // Form the final un-sorted list of pillar names using pillar names from all curves
         for ( size_t i = 0; i < pillarNamesFromAllCurves.size(); ++i )
         {
-            LAString pillarName = pillarNamesFromAllCurves[i];
+            AQLString pillarName = pillarNamesFromAllCurves[i];
             auto pos = uniquePillarNamesInSet.find( pillarName );
             if ( pos != uniquePillarNamesInSet.end() )
             {
@@ -782,16 +782,16 @@ namespace etrading
         // Build the final delta matrix for output for all the trades in the original portfolio
         for ( size_t i = 0; i < pillarNames.size(); ++i )
         {
-            LAString pillarName = pillarNames[i];
+            AQLString pillarName = pillarNames[i];
 
             DoubleVector allDeltasUnderSinglePillarName;
 
             for ( size_t j = 0; j < allTradeIDs.size(); ++j )
             {
-                LAString tradeID = allTradeIDs[j];
+                AQLString tradeID = allTradeIDs[j];
 
                 // Build a delta matrix on a coordinate system defined by pillar name and trade ID
-                std::pair<LAString, LAString> deltaKey = std::make_pair( pillarName, tradeID );
+                std::pair<AQLString, AQLString> deltaKey = std::make_pair( pillarName, tradeID );
                 auto iter = deltaMap.find( deltaKey );
                 double delta( 0.0 );
                 if ( iter != deltaMap.end() )
@@ -820,12 +820,12 @@ namespace etrading
 	 * @param [out]	uniquePillarNamesInSet		An output containing the unique instrument names across all curves that were bumped
 	*/
 	void MultiCurveDeltaGenerator::calculateDeltaLadderAndProcessResults( DeltaGenerator& riskGen,
-																		  const std::vector<LAString>& miniPortfolioTradeIDs,
-																		  std::map< std::pair<LAString, LAString>, double>& deltaMap,
-																		  std::vector<LAString>& pillarNamesFromAllCurves,
-																		  std::set<LAString>& uniquePillarNamesInSet )
+																		  const std::vector<AQLString>& miniPortfolioTradeIDs,
+																		  std::map< std::pair<AQLString, AQLString>, double>& deltaMap,
+																		  std::vector<AQLString>& pillarNamesFromAllCurves,
+																		  std::set<AQLString>& uniquePillarNamesInSet )
 	{
-		LAStringVector pillarNamesForTwoCurves;
+		AQLStringVector pillarNamesForTwoCurves;
 		DoubleMatrix deltasForTwoCurves;
 		riskGen.deltaLadder( pillarNamesForTwoCurves, deltasForTwoCurves );
 
@@ -833,13 +833,13 @@ namespace etrading
 		// the combination of the pillar name and trade ID
 		for ( size_t i = 0; i < pillarNamesForTwoCurves.size(); ++i )
 		{
-			LAString pillarName = pillarNamesForTwoCurves[i];
+			AQLString pillarName = pillarNamesForTwoCurves[i];
 
 			for ( size_t j = 0; j < miniPortfolioTradeIDs.size(); j ++ )
 			{
-				const LAString& tradeID = miniPortfolioTradeIDs[j];
+				const AQLString& tradeID = miniPortfolioTradeIDs[j];
 
-				std::pair<LAString, LAString> deltaKey = std::make_pair( pillarName, tradeID );
+				std::pair<AQLString, AQLString> deltaKey = std::make_pair( pillarName, tradeID );
 				deltaMap[deltaKey] = deltasForTwoCurves[i][j];
 			}
 		}
@@ -855,14 +855,14 @@ namespace etrading
     *  @param [out]		positionIDs		Name of each SwapID / LegID for which the delta is calculated
     *  @param [out]		deltas			The flat-shift delta of each swap leg.
     */
-	void MultiCurveDeltaGenerator::flatShiftDelta( LAStringVector& positionIDs, DoubleVector& deltas, const LAString& groupRiskBy)
+	void MultiCurveDeltaGenerator::flatShiftDelta( AQLStringVector& positionIDs, DoubleVector& deltas, const AQLString& groupRiskBy)
 	{
 		positionIDs.clear();
         deltas.clear();
 
 		if (! usingLWO_ )
 		{
-			throw LACoreInvalidData( "#Error: flatShiftDelta is only supported for Light Weight Object Swaps.", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: flatShiftDelta is only supported for Light Weight Object Swaps.", __FILE__, __LINE__ );
 		}
 
         // Exit if no trades are provided
@@ -876,17 +876,17 @@ namespace etrading
 		// These maps store dependency information for portfolios of LWO SwapLegs
 		std::map< CurveDependencies, std::vector< LegPtr > > lwoSwapLegsByCurves;
 		std::map < CurveDependencies, std::vector< SwapPtr > > lwoSwapsByCurves;
-		std::map< CurveDependencies, std::vector< LAString > > lwoTradeIDsByCurves;
-		std::map< CurveDependencies, std::vector< LAString > > lwoLegIDsByCurves;
+		std::map< CurveDependencies, std::vector< AQLString > > lwoTradeIDsByCurves;
+		std::map< CurveDependencies, std::vector< AQLString > > lwoLegIDsByCurves;
 		std::map< CurveDependencies, std::vector< LabelValueBlock> > fixingTableNamesByCurves;
 
-		LAStringVector allLegIDs;
-		LAStringVector allTradeIDs;
-		LAStringVector deltaCCYs;
+		AQLStringVector allLegIDs;
+		AQLStringVector allTradeIDs;
+		AQLStringVector deltaCCYs;
         for ( size_t i = 0; i < getPortfolioSize(); ++i )
         {
-			LAString forecastCurve;
-			LAString discountCurve;
+			AQLString forecastCurve;
+			AQLString discountCurve;
 
 			auto lwoTrade = lwoPortfolio_[i];
 			auto curveCollectionForTrade = curveCollections_[i];
@@ -903,8 +903,8 @@ namespace etrading
 		}
 
 		// Calculate the flat delta for each group of trades with the same curve dependencies
-		LAStringVector tradeIDs;
-		LAStringVector legIDs;
+		AQLStringVector tradeIDs;
+		AQLStringVector legIDs;
 		DoubleVector deltaPerLeg;
 		DoubleVector deltaPerTrade;
 		if (isCalcDeltaByLeg_ || groupRiskBy == "LEG")
@@ -914,8 +914,8 @@ namespace etrading
 				const CurveDependencies& key = iter->first;
 				std::vector<std::shared_ptr<Leg> >& miniPortfolio = iter->second;
 
-				std::vector<LAString>& tradeIDsForPortfolio = lwoTradeIDsByCurves[key];
-				std::vector<LAString>& legIDsForPortfolio = lwoLegIDsByCurves[key];
+				std::vector<AQLString>& tradeIDsForPortfolio = lwoTradeIDsByCurves[key];
+				std::vector<AQLString>& legIDsForPortfolio = lwoLegIDsByCurves[key];
 				std::vector< LabelValueBlock >& fixingTableNames = fixingTableNamesByCurves[key];
                 
 				const std::vector<double> xccyFXAsOfDateRates = getXccyFXAsOfDateRatesByTradeIDs(tradeIDsForPortfolio);
@@ -938,7 +938,7 @@ namespace etrading
 				const CurveDependencies& key = iter->first;
 				std::vector< SwapPtr >& miniPortfolio = iter->second;
 
-				std::vector<LAString>& tradeIDsForPortfolio = lwoTradeIDsByCurves[key];
+				std::vector<AQLString>& tradeIDsForPortfolio = lwoTradeIDsByCurves[key];
 				std::vector<LabelValueBlock>& fixingTableNames = fixingTableNamesByCurves[key];
                 
 				const std::vector<double> xccyFXAsOfDateRates = getXccyFXAsOfDateRatesByTradeIDs(tradeIDsForPortfolio);
@@ -957,7 +957,7 @@ namespace etrading
 		// Finally aggregate the results 
 		if ( groupRiskBy == "SWAP" )
 		{
-			std::map<LAString, double> deltaByTradeID;
+			std::map<AQLString, double> deltaByTradeID;
 			// 1. Populate a map of delta by TradeID, and accumulate the delta from each leg
 			if (isCalcDeltaByLeg_)
 			{
@@ -979,7 +979,7 @@ namespace etrading
 			// 2. Now iterate through the trades in the order they were given to us, and populate the result vectors
 			for (size_t i = 0; i < lwoSwapNames_.size(); ++i)
 			{
-				LAString& swapName = lwoSwapNames_[i];
+				AQLString& swapName = lwoSwapNames_[i];
 				if (!swapName.isDefined() || swapName == "")
 				{
 					// The swapname was blank / missing in the input
@@ -989,7 +989,7 @@ namespace etrading
 				}
 				else if (deltaByTradeID.find(swapName) == deltaByTradeID.end())
 				{
-					throw LACoreInvalidData((boost::format("#Error: Missing risk for swap: %s")
+					throw AQLCoreInvalidData((boost::format("#Error: Missing risk for swap: %s")
 						% swapName.getCString()).str().c_str(), __FILE__, __LINE__);
 				}
 				else
@@ -1024,10 +1024,10 @@ namespace etrading
 		}
 		else
 		{
-			LAString errMsg( "#Error: Invalid value for groupRiskBy parameter: " );
+			AQLString errMsg( "#Error: Invalid value for groupRiskBy parameter: " );
 			errMsg += groupRiskBy;
 			errMsg += ". Valid values: LEG, SWAP, TOTAL";
-			throw LACoreInvalidData( errMsg.getCString(), __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( errMsg.getCString(), __FILE__, __LINE__ );
 		}
 	}
 

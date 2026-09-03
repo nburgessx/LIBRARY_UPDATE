@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-#include "SwigTypes.h"	// For SWIG_STRINGMATRIX which manages the LAStringMatrix idiosyncrasies type for R API
+#include "SwigTypes.h"	// For SWIG_STRINGMATRIX which manages the AQLStringMatrix idiosyncrasies type for R API
 
 typedef std::vector<std::string> STDStringVector;
 typedef std::vector<std::vector<std::string> > STDStringMatrix;

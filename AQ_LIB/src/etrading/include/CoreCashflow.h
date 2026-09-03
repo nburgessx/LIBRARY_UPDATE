@@ -12,10 +12,10 @@ namespace etrading
     class CoreCashflow
     {
     public:
-		CoreCashflow(const LADate& fixingDate, 
-					const LADate& accrualStartDate, 
-					const LADate& accrualEndDate, 
-					const LADate& paymentDate, 
+		CoreCashflow(const AQLDate& fixingDate, 
+					const AQLDate& accrualStartDate, 
+					const AQLDate& accrualEndDate, 
+					const AQLDate& paymentDate, 
 					const double& accrualYearFraction,
 					const double& notional,
 					const double& leverage,
@@ -29,10 +29,10 @@ namespace etrading
 		std::shared_ptr<CoreCashflow> clone();
 
 		// Getter
-		const LADate& fixingDate() const { return fixingDate_; };
-		const LADate& accrualStartDate() const { return accrualStartDate_; };
-		const LADate& accrualEndDate() const { return accrualEndDate_; };
-		const LADate& paymentDate() const { return paymentDate_; };
+		const AQLDate& fixingDate() const { return fixingDate_; };
+		const AQLDate& accrualStartDate() const { return accrualStartDate_; };
+		const AQLDate& accrualEndDate() const { return accrualEndDate_; };
+		const AQLDate& paymentDate() const { return paymentDate_; };
 		const double accrualYearFraction() const { return accrualYearFraction_; };
 
 		const double notional() const { return notional_; };
@@ -42,10 +42,10 @@ namespace etrading
 
 	private:
 
-		LADate fixingDate_;
-		LADate accrualStartDate_;
-		LADate accrualEndDate_;
-		LADate paymentDate_;
+		AQLDate fixingDate_;
+		AQLDate accrualStartDate_;
+		AQLDate accrualEndDate_;
+		AQLDate paymentDate_;
 		double accrualYearFraction_;
 
 		double notional_;

@@ -39,7 +39,7 @@ LARatesPEInterpolationBase::LARatesPEInterpolationBase()
 	@brief copy constructor
 */
 LARatesPEInterpolationBase::LARatesPEInterpolationBase(const LARatesPEInterpolationBase& v) 
-: LACoreFunctionBase(v)
+: AQLCoreFunctionBase(v)
 {
 
 }
@@ -60,7 +60,7 @@ LARatesPEInterpolationBase::~LARatesPEInterpolationBase()
 bool
 LARatesPEInterpolationBase::isTypeOf(function_t id) const
 {
-	return (id==FN_PEINTERPOLATIONBASE ? true : LACoreFunctionBase::isTypeOf(id));
+	return (id==FN_PEINTERPOLATIONBASE ? true : AQLCoreFunctionBase::isTypeOf(id));
 }
 
 /*!

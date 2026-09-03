@@ -93,8 +93,8 @@ namespace
 	{
 		const ReadDataFile::Load swapInputFile( swapInputs );
 		std::string swapName		= swapInputFile[ "swapName" ];
-		LAStringMatrix swapLvb		= swapInputFile[ "swapLVB" ];
-		LAStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
+		AQLStringMatrix swapLvb		= swapInputFile[ "swapLVB" ];
+		AQLStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
 		return validation::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
@@ -184,19 +184,19 @@ namespace google_test
 
 	void calcDV01AndCompareToReference( const char* csaSuffix )
 	{
-		const ReadDataFile::Load flatShiftDelta( swapDV01Inputs + LAString( csaSuffix ) );
-		LAStringVector swapNames					= flatShiftDelta[ "swapNames" ];
-		LAStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
+		const ReadDataFile::Load flatShiftDelta( swapDV01Inputs + AQLString( csaSuffix ) );
+		AQLStringVector swapNames					= flatShiftDelta[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames		= flatShiftDelta[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames			= flatShiftDelta[ "fixingTableNames" ];
 		bool bumpSpreadInstruments				= flatShiftDelta[ "bumpSpreadInstruments" ];
 		double bumpSize							= flatShiftDelta[ "bumpSize" ];
-		LAString bumpMode						= flatShiftDelta[ "bumpMode" ];
-		LAString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
+		AQLString bumpMode						= flatShiftDelta[ "bumpMode" ];
+		AQLString groupRiskBy					= flatShiftDelta[ "groupRiskBy" ];
 		bool aggregateRisks						= flatShiftDelta[ "aggregateRisks" ];
 		bool reportInLegCCY						= flatShiftDelta[ "reportInLegCCY" ];
         const DoubleVector xccyFXSpotRates   	= flatShiftDelta[ "xccyFXSpotRates" ];
 
-		LAStringVector positionIDs;
+		AQLStringVector positionIDs;
 		DoubleVector deltas;
 		// The DV01 is actually calculated by the tryMeLWOSwapDelta function
 		validation::tryMeLWOSwapDelta( positionIDs,
@@ -215,9 +215,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_dv01_outputs_32 + LAString( csaSuffix );
+            AQLString outputFileName = raw_dv01_outputs_32 + AQLString( csaSuffix );
 #else
-            LAString outputFileName = raw_dv01_outputs_64 + LAString( csaSuffix );
+            AQLString outputFileName = raw_dv01_outputs_64 + AQLString( csaSuffix );
 #endif
 
             // Record outputs and rebase test outputs
@@ -233,16 +233,16 @@ namespace google_test
         {
             // Carry out actual test and peform result comparison
 #ifdef GTEST32
-			LAString refFileName = dv01_outputs_32 + LAString( csaSuffix );
+			AQLString refFileName = dv01_outputs_32 + AQLString( csaSuffix );
             const ReadDataFile::Load resultFile( refFileName );
 #else
-			LAString refFileName = dv01_outputs_64 + LAString( csaSuffix );
+			AQLString refFileName = dv01_outputs_64 + AQLString( csaSuffix );
             const ReadDataFile::Load resultFile( refFileName );
 #endif
 
             for ( size_t i = 0; i < positionIDs.size(); ++i )
             {
-                LAString key	= positionIDs[i];
+                AQLString key	= positionIDs[i];
 
                 double delta	= deltas[i];
                 double ref		= resultFile[key];
@@ -256,20 +256,20 @@ namespace google_test
 
 	void calcDeltaLadderAndCompareToReference( const char* csaSuffix )
 	{
-		const ReadDataFile::Load deltaLadder ( deltaLadderInputs + LAString( csaSuffix ) );
-		LAStringVector swapNames			    = deltaLadder[ "swapNames" ];
-		LAStringMatrix curveCollectionNames   = deltaLadder[ "curveCollectionNames" ];
-		LAStringMatrix fixingTableNames	    = deltaLadder[ "fixingTableNames" ];
+		const ReadDataFile::Load deltaLadder ( deltaLadderInputs + AQLString( csaSuffix ) );
+		AQLStringVector swapNames			    = deltaLadder[ "swapNames" ];
+		AQLStringMatrix curveCollectionNames   = deltaLadder[ "curveCollectionNames" ];
+		AQLStringMatrix fixingTableNames	    = deltaLadder[ "fixingTableNames" ];
 		bool bumpSpreadInstruments		    = deltaLadder[ "bumpSpreadInstruments" ];
 		double bumpSize					    = deltaLadder[ "bumpSize" ];
-		LAString bumpMode				    = deltaLadder[ "bumpMode" ];
+		AQLString bumpMode				    = deltaLadder[ "bumpMode" ];
 		bool aggregateRisks				    = deltaLadder[ "aggregateRisks" ];
 		bool reportInLegCCY				    = deltaLadder[ "reportInLegCCY" ];
         const DoubleVector xccyFXSpotRates      = deltaLadder[ "xccyFXSpotRates" ];
 		std::string riskCutOffTenor         = "";
 
-		LAStringVector pillarNames;
-		LAStringVector headers;
+		AQLStringVector pillarNames;
+		AQLStringVector headers;
 		DoubleMatrix deltas;
 		validation::tryMeLWOSwapDeltaLadder(headers,
 												pillarNames,
@@ -288,9 +288,9 @@ namespace google_test
         if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = raw_delta_ladder_outputs_32 + LAString( csaSuffix );;
+            AQLString outputFileName = raw_delta_ladder_outputs_32 + AQLString( csaSuffix );;
 #else
-            LAString outputFileName = raw_delta_ladder_outputs_64 + LAString( csaSuffix );;
+            AQLString outputFileName = raw_delta_ladder_outputs_64 + AQLString( csaSuffix );;
 #endif
 
             // Record outputs and rebase test outputs
@@ -309,10 +309,10 @@ namespace google_test
         {
             // Carry out actual test and peform result comparison
 #ifdef GTEST32
-			LAString refFileName = delta_ladder_outputs_32 + LAString( csaSuffix );
+			AQLString refFileName = delta_ladder_outputs_32 + AQLString( csaSuffix );
             const ReadDataFile::Load resultFile( refFileName );
 #else
-			LAString refFileName = delta_ladder_outputs_64 + LAString( csaSuffix );
+			AQLString refFileName = delta_ladder_outputs_64 + AQLString( csaSuffix );
             const ReadDataFile::Load resultFile( refFileName );
 #endif
 
@@ -321,7 +321,7 @@ namespace google_test
 				FAIL() << "Reference baseline does not contain delta column headers" << std::endl;
 			}
 
-			LAStringVector refHeaders = resultFile["headers"];
+			AQLStringVector refHeaders = resultFile["headers"];
 			if ( headers.size() != refHeaders.size() )
 			{
 				FAIL() << "Calculated delta has different number of column headers compared to reference baseline : " << headers.size() << " vs " << refHeaders.size() << std::endl;
@@ -333,7 +333,7 @@ namespace google_test
 
             for ( size_t i = 0; i < pillarNames.size(); ++i )
             {
-                LAString key	= pillarNames[i];
+                AQLString key	= pillarNames[i];
 
 				if ( ! resultFile.hasItem(key) )
 				{

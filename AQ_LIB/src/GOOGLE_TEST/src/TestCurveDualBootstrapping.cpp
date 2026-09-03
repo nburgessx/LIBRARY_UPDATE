@@ -53,10 +53,10 @@ namespace google_test
 {
 	DECLARE_TEST_FIXTURE(TestCurveDualBootstrapping);
 		
-	void testForwardRates(const LAString& curveName, const LAString& prefix)
+	void testForwardRates(const AQLString& curveName, const AQLString& prefix)
 	{
-		LAString oisForwardRateInputFile = TEST_DIR;
-		oisForwardRateInputFile += prefix + LAString("_") + curveName + LAString("_") + FORWARD_RATES_INPUTS;
+		AQLString oisForwardRateInputFile = TEST_DIR;
+		oisForwardRateInputFile += prefix + AQLString("_") + curveName + AQLString("_") + FORWARD_RATES_INPUTS;
 
 		const ReadDataFile::Load inputFile(oisForwardRateInputFile);
 		const DateVector fromDateVector = inputFile["fromDates"];
@@ -72,29 +72,29 @@ namespace google_test
 			<< "Results size should match the number of forward rates requested" << std::endl;
 
 #if defined(GTEST32)
-		LAString outputFile = TEST_DIR;
-		outputFile += prefix + LAString("_") + curveName + LAString("_") + FORWARD_RATES_OUTPUTS_32bit;
+		AQLString outputFile = TEST_DIR;
+		outputFile += prefix + AQLString("_") + curveName + AQLString("_") + FORWARD_RATES_OUTPUTS_32bit;
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, outputFile, tolerance);
 #else
-		LAString outputFile = TEST_DIR;
-		outputFile += prefix + LAString("_") + curveName + LAString("_") + FORWARD_RATES_OUTPUTS_64bit;
+		AQLString outputFile = TEST_DIR;
+		outputFile += prefix + AQLString("_") + curveName + AQLString("_") + FORWARD_RATES_OUTPUTS_64bit;
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, outputFile, tolerance);
 #endif
 	}
 
-	void testForwardRatesFromDualBootstrappedCurves(const LAString& ccy, const std::string& stdGenerator, const std::string& oisGenerator, const std::string& curveCollection, unsigned int testCount)
+	void testForwardRatesFromDualBootstrappedCurves(const AQLString& ccy, const std::string& stdGenerator, const std::string& oisGenerator, const std::string& curveCollection, unsigned int testCount)
 	{
 		for (size_t i = 0; i < testCount; ++i)
 		{
 			//----------------------------------------------------------------------------------------
 			// Build yield curves of the current test case
 
-			LAString prefix = ccy + LAString("_") + LAString(static_cast<int>(i + 1));
+			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1));
 
-			LAString oisCurveMarketDataFile = TEST_DIR;
-			oisCurveMarketDataFile += prefix + LAString("_OIS_MARKETDATA");
-			LAString stdCurveMarketDataFile = TEST_DIR;
-			stdCurveMarketDataFile += prefix + LAString("_STD_MARKETDATA");
+			AQLString oisCurveMarketDataFile = TEST_DIR;
+			oisCurveMarketDataFile += prefix + AQLString("_OIS_MARKETDATA");
+			AQLString stdCurveMarketDataFile = TEST_DIR;
+			stdCurveMarketDataFile += prefix + AQLString("_STD_MARKETDATA");
 
 			std::string oisCurveMarketObjectHandle = google_test::createLWOMarketDataObjectFromFileName(oisCurveMarketDataFile);
 			std::string stdCurveMarketObjectHandle = google_test::createLWOMarketDataObjectFromFileName(stdCurveMarketDataFile);

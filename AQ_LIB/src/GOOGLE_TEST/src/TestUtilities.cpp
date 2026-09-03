@@ -25,7 +25,7 @@
 #include "ObjectUtilities.h"
 #include "EnvironmentPool.h"
 #include "DataUtilities.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "TestHelperUtilities.h"    // GTEST_WARNING
 #include "OMPThreadManager.h"       // OMP THREAD MACROS
 
@@ -34,9 +34,9 @@ using namespace etrading;
 namespace google_test
 {
     // Function to copy string using copy constructor, passsing by value
-    size_t sizeLAString( LAString s )
+    size_t sizeLAString( AQLString s )
     {
-        LAString newString(s);
+        AQLString newString(s);
         return newString.size();
     }
 
@@ -45,7 +45,7 @@ namespace google_test
         try
         {
             // Bert is Ian Castleton's Alter-Ego and a very scary man!
-            LAString myString("BERT");
+            AQLString myString("BERT");
             size_t totalStringSize = 0;
         
             // OMP loop counters must be of type int and not size_t
@@ -58,20 +58,20 @@ namespace google_test
             }
 
             // If we reach here our test has passed.
-            std::cout << "Congratulations! LAString is Thread Safe! - Test Result: Total Test String Size: " << totalStringSize << std::endl;
+            std::cout << "Congratulations! AQLString is Thread Safe! - Test Result: Total Test String Size: " << totalStringSize << std::endl;
         }
         catch(...)
         {
-            GTEST_WARNING("LAString Type is not thread safe")
+            GTEST_WARNING("AQLString Type is not thread safe")
         }
     }
 
     TEST( TestLAString, UNIT_Test_StandardString_Constructor )
     {
-        LAString expectedString("BERT");
+        AQLString expectedString("BERT");
 
         std::string standardString("BERT");
-        LAString actualString( standardString );
+        AQLString actualString( standardString );
         
         EXPECT_EQ( expectedString, actualString);
     }
@@ -82,7 +82,7 @@ namespace google_test
         const char* charArrayFromStandardString = myStandardString.c_str();
         const std::string expectedString = charArrayFromStandardString;
 
-        LAString myLAString("BERT");
+        AQLString myLAString("BERT");
         const char* charArrayFromLAString = myLAString.c_str();
         const std::string actualString = charArrayFromLAString;
 
@@ -91,20 +91,20 @@ namespace google_test
 
     TEST( TestLAString, UNIT_Test_LAString_StandardString_Operators )
     {
-        // Comparator: LAString vs StandardString
-        LAString myLAString1("BERT");
+        // Comparator: AQLString vs StandardString
+        AQLString myLAString1("BERT");
         std::string myStandardString1("BERT");
         bool comparator = ( myLAString1 == myStandardString1 );
         EXPECT_EQ( true, comparator );
 
-        // Assignment: LAString assigned from StandardString
+        // Assignment: AQLString assigned from StandardString
         std::string myStandardString2("ERNIE");
-        LAString myLAString2 = myStandardString2;
+        AQLString myLAString2 = myStandardString2;
         EXPECT_EQ( myLAString2, myStandardString2 );
 
-        // Addition / Concatination of Mixed String Types i.e. LAString + StandardString
-        LAString expectedLAString2("BERTERNIE");
-        LAString actualLAString2 = myLAString1 + myStandardString2;
+        // Addition / Concatination of Mixed String Types i.e. AQLString + StandardString
+        AQLString expectedLAString2("BERTERNIE");
+        AQLString actualLAString2 = myLAString1 + myStandardString2;
         EXPECT_EQ( expectedLAString2, actualLAString2 );
     }
 

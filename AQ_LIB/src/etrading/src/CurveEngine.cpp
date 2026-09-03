@@ -13,7 +13,7 @@
 #include "ParameterValidation.h"            // etrading::getDataInstance()
 #include "CurveValidation.h"                // Get Curve Information e.g. AsOfDate, Interpolation et al.
 #include "CurveUtilities.h"                 // Curve Interpolation Join Date
-#include "LADataVector.h"                   // Needed to get Terms and Discount Factors for curve from Object Pool "LADataDoubles" object class
+#include "AQLDataVector.h"                   // Needed to get Terms and Discount Factors for curve from Object Pool "AQLDataDoubles" object class
 #include "CurveResultsContainer.h"          // CurveResultsContainer - Singleton object for storage of curve results
 #include <boost/algorithm/string.hpp>       // boost::iequals
 #include "JacobianResults.h"                // JacobianResults Helper Methods
@@ -139,7 +139,7 @@ namespace etrading
 		curveResults_ = std::make_shared<CurveResults>( curveDescription );
 
 		// 3. Persist curveResults in Singleton Curve Results Container for the Index and any alias Indices
-		const LAStringVector curveIndexAliasList = etrading::curveIndexAliasList( curveCollection.c_str(), objectPoolLookupTable.c_str() );
+		const AQLStringVector curveIndexAliasList = etrading::curveIndexAliasList( curveCollection.c_str(), objectPoolLookupTable.c_str() );
 		for( auto curveIndex : curveIndexAliasList )
 		{
 			CurveResultsContainer::getInstance().addCurveResults( curveCollection, curveIndex.getCString(), curveResults_ );
@@ -1762,7 +1762,7 @@ namespace etrading
         AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
 
         // Persist curveResults in Singleton Curve Results Container for the Index and any alias Indices
-        const LAStringVector curveIndexAliasList = etrading::curveIndexAliasList( curveDescription_->curveCollection().c_str(),
+        const AQLStringVector curveIndexAliasList = etrading::curveIndexAliasList( curveDescription_->curveCollection().c_str(),
                                                                                   curveDescription_->objectPoolLookupTable().c_str() );
         for( auto curveIndex : curveIndexAliasList )
         {
@@ -1908,7 +1908,7 @@ namespace etrading
         AQ_REQUIRE( discountFactorResults != nullptr, "Discount Factor Results Data is Missing" )
         
         // Flat-Shift Risk Parameters
-        const LADate asOfDate                       = discountFactorResults->asOfDate();
+        const AQLDate asOfDate                       = discountFactorResults->asOfDate();
         const DateVector riskDateVector             = jacobianData->paymentDates();
 		
 		DoubleVector flatShiftJacobian;
@@ -1952,7 +1952,7 @@ namespace etrading
         AQ_REQUIRE( discountFactorResults != nullptr, "Discount Factor Results Data is Missing" )
         
         // Perturbed Risk Parameters
-        const LADate asOfDate									= discountFactorResults->asOfDate();
+        const AQLDate asOfDate									= discountFactorResults->asOfDate();
         const DateVector riskDateVector							= jacobianData->paymentDates();
 		const StandardStringVector perturbedInstrumentList		= jacobianData->perturbedInstrumentList();
 		const std::vector<bool> perturbedInstrumentIsOutright	= jacobianData->perturbedInstrumperturbedInstrumentIsOutright();
@@ -2098,16 +2098,16 @@ namespace etrading
 																								const StandardStringMatrix & forwardAdjustments ) const
     {
         // Extract results from Object Pool
-        const LAObject& entityPoolYieldCurve                    = getDataInstance()->getObjectPool().getObject( curveCollection.c_str(), ENCHKTYPE_ISDEFINED ).get();
+        const AQLObject& entityPoolYieldCurve                    = getDataInstance()->getObjectPool().getObject( curveCollection.c_str(), ENCHKTYPE_ISDEFINED ).get();
         const std::string entityPoolCurveSuffix                 = ( objectPoolLookupTable == STD ) ? "" : "_" + objectPoolLookupTable;
         
         std::string TERMS_ENTITY_POOL_SEARCH_KEY                = OBJECT_POOL_KEYS::TERMS + entityPoolCurveSuffix;                  // CALIBRATION_DATA_TERMS = "Terms"
         std::string DISCOUNT_FACTORS_ENTITY_POOL_SEARCH_KEY     = OBJECT_POOL_KEYS::DISCOUNT_FACTORS + entityPoolCurveSuffix;       // IR_CALIBRATION_DATA_DFS = DiscountFactors"
         
-        const VectorDouble paymentDatesInTermsFormat            = dynamic_cast<const LADataDoubles&>(entityPoolYieldCurve.getData(TERMS_ENTITY_POOL_SEARCH_KEY.c_str(), ISDEFINED).get()).get();
-        const VectorDouble discountFactors                      = dynamic_cast<const LADataDoubles& >(entityPoolYieldCurve.getData(DISCOUNT_FACTORS_ENTITY_POOL_SEARCH_KEY.c_str(), ISDEFINED).get()).get();
+        const VectorDouble paymentDatesInTermsFormat            = dynamic_cast<const AQLDataDoubles&>(entityPoolYieldCurve.getData(TERMS_ENTITY_POOL_SEARCH_KEY.c_str(), ISDEFINED).get()).get();
+        const VectorDouble discountFactors                      = dynamic_cast<const AQLDataDoubles& >(entityPoolYieldCurve.getData(DISCOUNT_FACTORS_ENTITY_POOL_SEARCH_KEY.c_str(), ISDEFINED).get()).get();
         
-        const LADate asOfDate                                   = getCurveAsOfDate( curveCollection.c_str() );
+        const AQLDate asOfDate                                   = getCurveAsOfDate( curveCollection.c_str() );
         const InterpolationEnum interpolationEnum               = toInterpolationEnum( getCurveInterpolation( curveCollection.c_str(), objectPoolLookupTable.c_str() ).getCString() );
         
 		// IMPORTANT NOTE: We need the daycount to imply forwards rates from discount factors. In the case of Xccy and FXForwardConstant curves we do not need to 

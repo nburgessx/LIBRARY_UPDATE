@@ -16,9 +16,9 @@ namespace etrading
 	{
 		PayerReceiverSwaptionEnum payerReceiverSwaptionEnum_;
 		double strike_;
-		LADate optionExpiryDate_;
-		LADate cdsStartDate_;
-		LADate cdsMaturityDate_;
+		AQLDate optionExpiryDate_;
+		AQLDate cdsStartDate_;
+		AQLDate cdsMaturityDate_;
 		double cdsCoupon_;
 		double volatility_;
 		double forwardSpread_;
@@ -52,7 +52,7 @@ namespace etrading
 	};
 
 	// @brief Holds a map of all calibration points, sorted by date
-	typedef std::map<LADate, CreditMarketData > MarketDataMap;
+	typedef std::map<AQLDate, CreditMarketData > MarketDataMap;
 
    class CreditModel : public IsLWOObject
     {
@@ -104,7 +104,7 @@ namespace etrading
 		// ------- Accessor methods --------
 
 		// Calculates the hazardRate for the specified payment date
-		double getHazardRate( const LADate& paymentDate ) const;
+		double getHazardRate( const AQLDate& paymentDate ) const;
 
 		bool getIncludeAccruedInterest() const;
 
@@ -137,7 +137,7 @@ namespace etrading
 
 		CCY getCurrency() const;
 
-		LADate getAsOfDate() const;
+		AQLDate getAsOfDate() const;
 
 		// Returns a matrix containing payment dates and hazard rates calibrated from the input market data
 		AnyTypeMatrix getCalibrationParameters() const;
@@ -146,7 +146,7 @@ namespace etrading
 		*  @param[in]	toDate	The future date to use in the calculation. Must occur after the model as-of date.
 		*  @returns	The survival probability
 		*/
-		double getSurvivalProbability( const LADate& toDate ) const;
+		double getSurvivalProbability( const AQLDate& toDate ) const;
 
 		/* @brief	Calculate the probability of survival to "toDate", given the contract has already survived up to "fromDate".
 		*  @param[in]	toDate	The future end date to use in the calculation. Must occur after the model as-of date.
@@ -154,7 +154,7 @@ namespace etrading
 		*							This parameter is allowed to be an empty date i.e. an optional paramweter.
 		*  @returns	The survival probability
 		*/
-		double getSurvivalProbability( const LADate& toDate, const LADate& fromDate ) const;
+		double getSurvivalProbability( const AQLDate& toDate, const AQLDate& fromDate ) const;
 
 		/* @brief	Calculate the probability of default in the time period defined by "fromDate" and "toDate".
 		*  @param[in]	toDate	The future end date to use in the calculation. Must occur after the model as-of date.
@@ -162,21 +162,21 @@ namespace etrading
 		*
 		*  @returns	The survival probability
 		*/
-		double getDefaultProbability( const LADate& toDate, const LADate& fromDate ) const;
+		double getDefaultProbability( const AQLDate& toDate, const AQLDate& fromDate ) const;
 
 		/* @brief	Given a survival probability, calculate the implied survival date
 		*			i.e. this function is the inverse of getSurvivalProbability().
 		*  @param[in]	survivalProbability	The input survivalProbability	
 		*  @returns		The survival date corresponding to the input survivalProbability.
 		*/ 
-		LADate getImpliedSurvivalDate( const double survivalProbability ) const;
+		AQLDate getImpliedSurvivalDate( const double survivalProbability ) const;
 
 		/* @brief	Given a maturity date, calculates the CDS par-spread and risky annuity implied by the credit model
 		*  @param[in]	maturityDate	The maturity date of a CDS
 		*  @param[out]	parSpread		The par spread implied by the credit model
 		*  @param[out]	riskyAnnuity	The risky annuity implied by the credit model
 		*/
-		void getParSpreadAndRiskyAnnuityForDate( const LADate& maturityDate, double& parSpread, double& riskyAnnuity ) const;
+		void getParSpreadAndRiskyAnnuityForDate( const AQLDate& maturityDate, double& parSpread, double& riskyAnnuity ) const;
 
 		/* @brief	Given a start and end date, calculates the forward spread implied by the credit model.
 		*			See article "Credit Derivatives Handbook" by JPM p20-21.
@@ -185,7 +185,7 @@ namespace etrading
 		*  @param[in]	endDate		The date when credit protection ends
 		*  @returns		The credit spread
 		*/
-		double getForwardSpread( const LADate& startDate, const LADate& endDate ) const;
+		double getForwardSpread( const AQLDate& startDate, const AQLDate& endDate ) const;
 
 		/* @brief	Given a start and end date, calculates the forward spread of a credit index, implied by the credit model.
 		*			This calculation follows the Bloomberg approach for a Credit Index.
@@ -197,7 +197,7 @@ namespace etrading
 		*  @param[in]	endDate		The date when credit protection ends
 		*  @returns		The forward credit spread
 		*/
-		double getIndexForwardSpread( const LADate& startDate, const LADate& endDate ) const;
+		double getIndexForwardSpread( const AQLDate& startDate, const AQLDate& endDate ) const;
 
 		/* @brief Calculates the value of a credit option i.e. option on a CDS instrument
 		*  See article "The Valuation of Credit Default Swap Options" by Hull and White
@@ -210,7 +210,7 @@ namespace etrading
 		* @param[in]	volatility					The volatility of the underlying CDS spread
 		* @returns	The calculated option price
 		*/
-		double getSingleNameKnockoutOptionValue( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const LADate& optionExpiryDate, const LADate& cdsMaturityDate, const double volatility ) const;
+		double getSingleNameKnockoutOptionValue( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsMaturityDate, const double volatility ) const;
 		
 		/* @brief Calculates the value of a credit option i.e. option on a CDS instrument
 		*  See article "The Valuation of Credit Default Swap Options" by Hull and White
@@ -225,7 +225,7 @@ namespace etrading
 		* @param[in]	forwardSpread				The forward spread at the option expiry date
 		* @returns	The calculated option price
 		*/
-		double getOptionValueFromForward( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const LADate& optionExpiryDate, const LADate& cdsStartDate, const LADate& cdsMaturityDate, const double volatility, const double forwardSpread ) const;
+		double getOptionValueFromForward( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsStartDate, const AQLDate& cdsMaturityDate, const double volatility, const double forwardSpread ) const;
 
 		/* @brief Calculates the value of a credit index option i.e. option on a credit index.
 		*  See Bloomberg Whitepaper "Pricing Credit Index Options", March 1st, 2012
@@ -283,7 +283,7 @@ namespace etrading
 		* @param[in]	targetOptionValue			Calculate the implied vol for this target option value
 		* @returns	The implied volatility
 		*/
-		double getImpliedVol( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const LADate& optionExpiryDate, const LADate& cdsMaturityDate, const double targetOptionValue ) const;
+		double getImpliedVol( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsMaturityDate, const double targetOptionValue ) const;
 
 		/* @brief Calculates the implied vol of a credit option, given a target CDS option quote and CDS forward at option expiry
 		*  See article "The Valuation of Credit Default Swap Options" by Hull and White
@@ -298,7 +298,7 @@ namespace etrading
 		* @param[in]	forwardSpread				The forward CDS spread at option expiry
 		* @returns	The implied volatility
 		*/
-		double getImpliedVolFromForward( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const LADate& optionExpiryDate, const LADate& cdsStartDate, const LADate& cdsMaturityDate, const double targetOptionValue, const double forwardSpread ) const;
+		double getImpliedVolFromForward( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsStartDate, const AQLDate& cdsMaturityDate, const double targetOptionValue, const double forwardSpread ) const;
 
 
 		/* @brief Updates the hazard rate calibration stored in the model by adding a hazard rate point defined for the specified paymentDate
@@ -307,7 +307,7 @@ namespace etrading
 		 * @param [in]   paymentDate	The payment date corresponding to this hazard rate
 		 * @param [in]   hazardRate		The estimate of the hazard rate for this payment date
 		 */
-		void setCalibrationPoint( const LADate& paymentDate, const double hazardRate );
+		void setCalibrationPoint( const AQLDate& paymentDate, const double hazardRate );
 
 		static std::vector<std::string> model_properties_lvbKeys()
 		{
@@ -346,7 +346,7 @@ namespace etrading
 		*  @param[in]	cdsMaturityDate	Create a CDS with this maturity date
 		*  @returns		A CreditDefaultSwap object
 		*/
-		std::shared_ptr<CreditDefaultSwap> createCalibrationCDSWithSpecifiedMaturity( const LADate& cdsStartDate, const LADate& cdsMaturityDate ) const;
+		std::shared_ptr<CreditDefaultSwap> createCalibrationCDSWithSpecifiedMaturity( const AQLDate& cdsStartDate, const AQLDate& cdsMaturityDate ) const;
 
 		/* @brief	Given a start and end date, calculates the forward spread and risky annuity implied by the credit model.
 		*			See article "Credit Derivatives Handbook" by JPM  p20-21.
@@ -355,7 +355,7 @@ namespace etrading
 		*  @param[in]	endDate		The end date of the forward contract
 		*  @returns		The forward spread
 		*/
-		void getForwardSpreadAndRiskyAnnuity( const LADate& startDate, const LADate& endDate, double& forwardSpread, double& riskyAnnuity ) const;
+		void getForwardSpreadAndRiskyAnnuity( const AQLDate& startDate, const AQLDate& endDate, double& forwardSpread, double& riskyAnnuity ) const;
 
 		/* @brief	Calculates the index option payoff, assuming a lognormal process for credit spread
 		*			See Bloomberg whitepaper "Pricing Credit Index Options".
@@ -411,7 +411,7 @@ namespace etrading
 		 * @param [in]   marketDataEnum		The type of marketDate used for calibration
 		 * @returns The MarketDataMap
 		 */
-		MarketDataMap loadMarketDataMap( const LADate& referenceDate, const CreditModelEnum marketDataEnum );
+		MarketDataMap loadMarketDataMap( const AQLDate& referenceDate, const CreditModelEnum marketDataEnum );
 
 		// @brief	Called by constructors to calibrate hazard rates from the provided market data
 		void calibrate();
@@ -424,7 +424,7 @@ namespace etrading
 		 * @param [in]  cdsMarketDataMap	A map from cds maturity dates to CDS spreads
 		 * @param [in]  cdsSpreadBump		A parallel shift to be applied to all credit spreads
 		 */
-		void calibrateToCDS( const LADate& asOfDate, const MarketDataMap& cdsMarketDataMap, const double cdsSpreadBump );
+		void calibrateToCDS( const AQLDate& asOfDate, const MarketDataMap& cdsMarketDataMap, const double cdsSpreadBump );
 
 		/* @brief Internal helper: calibrate the credit model to cdsInstrument market data
 		 * @param [in]  bondMarketDataMap	A map from bond maturity dates to bond instrument names and prices
@@ -447,7 +447,7 @@ namespace etrading
 		 * @param [in]	toDate		The initial date for survival probability calculations
 		 * @param [in]	fromDate	The final date for survival probability calculations
 		 */
-		void validateDates( const LADate& toDate, const LADate& fromDate ) const;
+		void validateDates( const AQLDate& toDate, const AQLDate& fromDate ) const;
 
 		/*
 		*  @brief  Utility method which validates the property keys of this CreditModel, to verify that all are recognized key names.
@@ -459,12 +459,12 @@ namespace etrading
 		FreeObject freeObject_;
 
 		// Parameters populated during calibration step
-		LADate asOfDate_;
+		AQLDate asOfDate_;
 		std::string spotLag_;
 		std::string spotBusinessDayAdjustment_;
 		std::string spotCalendar_;
-		LADate accrualStartDate_;
-		LADate immReferenceDate_;
+		AQLDate accrualStartDate_;
+		AQLDate immReferenceDate_;
 		bool includeAccruedInterest_;
 		double recoveryRate_;
 		DayCountEnum accrualDayCount_;
@@ -482,7 +482,7 @@ namespace etrading
 		std::string extrapolationMethod_;
 
 		// The output from Calibration: A map of payment dates and corresponding hazardRates
-		std::map<LADate, double> hazardRates_; // This allows fast lookup of hazardRate by date.
+		std::map<AQLDate, double> hazardRates_; // This allows fast lookup of hazardRate by date.
 	};
 
 	typedef std::shared_ptr< CreditModel > CreditModelPtr;

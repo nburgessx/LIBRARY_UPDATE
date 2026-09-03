@@ -24,7 +24,7 @@
 
 
 #include "LAMathCorrelationFuncLMMFnC.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 using namespace std;
 
@@ -60,7 +60,7 @@ LAMathCorrelationFuncLMMFnC::LAMathCorrelationFuncLMMFnC(const LAMathCorrelation
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathCorrelationFuncLMMFnC::clone() const
 {
     try 
@@ -69,7 +69,7 @@ LAMathCorrelationFuncLMMFnC::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -81,7 +81,7 @@ LAMathCorrelationFuncLMMFnC::clone() const
 bool
 LAMathCorrelationFuncLMMFnC::isTypeOf(function_t id) const
 {
-	return (id == FN_CORRELATIONFUNCLMMFNC ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CORRELATIONFUNCLMMFNC ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -120,7 +120,7 @@ LAMathCorrelationFuncLMMFnC::operator()(double t) const
 	(void)t;
 	if (mX.size() < 3)
 	{
-		throw LACoreInvalidData("default argument mX's size must be >=  3 !", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("default argument mX's size must be >=  3 !", __FILE__, __LINE__);
 	}
 	return get(t, mX[1], mX[2]);
 }

@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent base structure volatility function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 //  2007, AlgoQuantHub.
@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       LAMathVolFuncStructureBase
 //  DESCRIPTION :       Class declaration to represent base structure volatility function
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -24,7 +24,7 @@
 
 
 #include "LAMathVolFuncStructureBase.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 using namespace std;
 
@@ -38,7 +38,7 @@ using namespace std;
 */
 
 LAMathVolFuncStructureBase::LAMathVolFuncStructureBase(double a, double b, double c, double d)
-: LAFunctionBase(), ma(a), mb(b), mc(c), md(d)
+: AQLFunctionBase(), ma(a), mb(b), mc(c), md(d)
 {
 }
 
@@ -55,7 +55,7 @@ LAMathVolFuncStructureBase::~LAMathVolFuncStructureBase(void)
 	@brief copy constructor
 */
 LAMathVolFuncStructureBase::LAMathVolFuncStructureBase(const LAMathVolFuncStructureBase &rhs) 
-: LAFunctionBase(), ma(rhs.ma), mb(rhs.mb), mc(rhs.mc), md(rhs.md)
+: AQLFunctionBase(), ma(rhs.ma), mb(rhs.mb), mc(rhs.mc), md(rhs.md)
 {
 
 }
@@ -64,7 +64,7 @@ LAMathVolFuncStructureBase::LAMathVolFuncStructureBase(const LAMathVolFuncStruct
     @brief make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathVolFuncStructureBase::clone() const
 {
     try 
@@ -73,7 +73,7 @@ LAMathVolFuncStructureBase::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -85,7 +85,7 @@ LAMathVolFuncStructureBase::clone() const
 bool
 LAMathVolFuncStructureBase::isTypeOf(function_t id) const
 {
-	return (id == FN_VOLFUNCSTRUCTUREBASE ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_VOLFUNCSTRUCTUREBASE ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -109,7 +109,7 @@ LAMathVolFuncStructureBase::operator()(const DoubleArray& x) const
 {
 	if (static_cast<int>(x.size()) < 1)
 	{
-		throw LACoreInvalidData("The argument DoubleArray's size must be more than zero !", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("The argument DoubleArray's size must be more than zero !", __FILE__, __LINE__);
 	}
 
 	return operator()(x[0]);
@@ -124,5 +124,5 @@ LAMathVolFuncStructureBase::operator()(const DoubleArray& x) const
 double
 LAMathVolFuncStructureBase::operator()(double t) const
 {
-	return ((ma + mb * t) * LAMath::exp(-mc * t) + md);
+	return ((ma + mb * t) * AQLMath::exp(-mc * t) + md);
 }

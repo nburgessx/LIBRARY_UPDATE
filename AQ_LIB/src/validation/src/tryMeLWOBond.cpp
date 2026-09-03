@@ -133,7 +133,7 @@ namespace validation
 	*  @param [in]  	columnList              Column header names to show specified columns. Default to empty list showing all columns.
 	*  @return			Bond Cashflows
 	*/
-	AnyTypeMatrix tryMeLWOBondDisplayCashflows( const std::string& bondObjectName, const LADate& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders, const std::vector<std::string>& columnList )
+	AnyTypeMatrix tryMeLWOBondDisplayCashflows( const std::string& bondObjectName, const AQLDate& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders, const std::vector<std::string>& columnList )
 	{
 		VALID_EXCEPTION_START
 
@@ -160,7 +160,7 @@ namespace validation
     *  @param [in]		yieldCalculationType	yield calculation type	        
     *  @return			Bond Dirty Price(s)
 	*/
-	std::vector< double > tryMeLWOBondDirtyPrice( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
+	std::vector< double > tryMeLWOBondDirtyPrice( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
 	{
 		VALID_EXCEPTION_START
 
@@ -169,7 +169,7 @@ namespace validation
 
         if ( settlementDates.size() != yields.size() )
         {
-            throw LACoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
         }
 
         auto bond                           = etrading::getBond( bondObjectName );
@@ -179,7 +179,7 @@ namespace validation
         std::vector< double > dirtyPrices;
         for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
             const double yield              = yields[i];
             double dirtyPrice         = bond->dirtyPrice( settlementDate, yield, yieldCalcType );
 
@@ -197,7 +197,7 @@ namespace validation
     *  @param [in]		settlementDates		settlement dates
     *  @return			Bond Accrual Day(s)
 	*/
-	std::vector< int > tryMeLWOBondAccruedInterestDays( const std::string& bondObjectName, const std::vector< LADate >& settlementDates )
+	std::vector< int > tryMeLWOBondAccruedInterestDays( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates )
     {
         VALID_EXCEPTION_START
 
@@ -209,7 +209,7 @@ namespace validation
         std::vector< int > results;
         for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate             = settlementDates[i];
+            const AQLDate settlementDate             = settlementDates[i];
             const int accruedInterestDays           = bond->accruedInterestDays( settlementDate );
             
             results.push_back( accruedInterestDays );
@@ -226,7 +226,7 @@ namespace validation
     *  @param [in]		settlementDates		settlement dates
     *  @return			Bond Dirty Price(s)
 	*/
-	std::vector< double > tryMeLWOBondAccruedInterest( const std::string& bondObjectName, const std::vector< LADate >& settlementDates )
+	std::vector< double > tryMeLWOBondAccruedInterest( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates )
     {
         VALID_EXCEPTION_START
 
@@ -241,7 +241,7 @@ namespace validation
 
         for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
 			valuationSettings.setSettlementDate( settlementDate );
 			etrading::DataProvider dataProvider(valuationSettings);
 
@@ -293,7 +293,7 @@ namespace validation
     *  @param [in]		yieldCalculationType	yield calculation type	        
     *  @return			Bond Dirty Price(s)
 	*/
-	std::vector< double > tryMeLWOBondCleanPrice( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
+	std::vector< double > tryMeLWOBondCleanPrice( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
     {
         VALID_EXCEPTION_START
 
@@ -302,12 +302,12 @@ namespace validation
 
         if ( yields.size() == 0 )
         {
-            throw LACoreInvalidData("#Error: No Yield data provided.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: No Yield data provided.", __FILE__, __LINE__ );
         }
 
         if ( settlementDates.size() != yields.size() )
         {
-            throw LACoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
         }
 
         auto bond                           = etrading::getBond( bondObjectName );
@@ -316,7 +316,7 @@ namespace validation
         std::vector< double > cleanPrices;
         for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
             const double yield              = yields[i];
             double cleanPrice                = bond->cleanPrice( settlementDate, yield, yieldCalcType );
             
@@ -338,7 +338,7 @@ namespace validation
     *  @param [in]		yieldCalculationType	yield calculation type	        
     *  @return			Bond Dirty Price(s)
 	*/
-	std::vector< double > tryMeLWOBondPrice( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
+	std::vector< double > tryMeLWOBondPrice( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
     {
         VALID_EXCEPTION_START
 
@@ -347,7 +347,7 @@ namespace validation
 
         if ( settlementDates.size() != yields.size() )
         {
-            throw LACoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
         }
 
         auto bond                           = etrading::getBond( bondObjectName );
@@ -356,7 +356,7 @@ namespace validation
         std::vector< double > prices;
         for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
             const double yield              = yields[i];
             double price         = bond->price( settlementDate, yield, yieldCalcType );
             
@@ -377,7 +377,7 @@ namespace validation
     *  @param [in]		yieldCalculationType	yield calculation type	        
     *  @return			Bond Dirty Price(s)
 	*/
-	std::vector< double > tryMeLWOBondQuote( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
+	std::vector< double > tryMeLWOBondQuote( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
     {
         VALID_EXCEPTION_START
 
@@ -386,7 +386,7 @@ namespace validation
 
         if ( settlementDates.size() != yields.size() )
         {
-            throw LACoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
         }
 
         auto bond                           = etrading::getBond( bondObjectName );
@@ -396,7 +396,7 @@ namespace validation
         std::vector< double > prices;
         for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
             const double yield              = yields[i];
             double price                    = bond->price( settlementDate, yield, yieldCalcType );
             
@@ -423,7 +423,7 @@ namespace validation
     *  @param [in]		yieldCalculationType	yield calculation type	        
     *  @return			Bond Yield
 	*/
-    double tryMeLWOBondYieldFromObject( const etrading::BondPtr bondObject, const LADate & settlementDate, const double & price, const std::string& yieldCalculationType )
+    double tryMeLWOBondYieldFromObject( const etrading::BondPtr bondObject, const AQLDate & settlementDate, const double & price, const std::string& yieldCalculationType )
     {
 
         auto yieldCalcType = bondObject->getYieldCalulationType(yieldCalculationType);        
@@ -441,7 +441,7 @@ namespace validation
     *  @param [in]		yieldCalculationType	yield calculation type	        
     *  @return			Bond Yield(s)
 	*/
-    std::vector< double > tryMeLWOBondYieldOptimized( const etrading::BondPtr bondObject, const std::vector< LADate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType  )
+    std::vector< double > tryMeLWOBondYieldOptimized( const etrading::BondPtr bondObject, const std::vector< AQLDate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType  )
     {
 
 		// Find the maximum number of hardware threads (independent cores) on this machine
@@ -478,7 +478,7 @@ namespace validation
     *  @param [in]      optimizePerformance     Use multi-threading to optimize performance, defaults to FALSE
     *  @return			Bond Yield(s)
 	*/
-	std::vector< double > tryMeLWOBondYield( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType , const bool & optimizePerformance )
+	std::vector< double > tryMeLWOBondYield( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType , const bool & optimizePerformance )
     {
         VALID_EXCEPTION_START
 
@@ -487,7 +487,7 @@ namespace validation
 
         if( settlementDates.size() != prices.size() )
         {
-            throw LACoreInvalidData("#Error: Inconsistent number of dates and prices.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Inconsistent number of dates and prices.", __FILE__, __LINE__ );
         }
 
         auto bondObject = etrading::getBond( bondObjectName );
@@ -516,7 +516,7 @@ namespace validation
 
             for ( unsigned int i = 0; i < settlementDates.size(); ++i )
             {
-                const LADate settlementDate     = settlementDates[i];
+                const AQLDate settlementDate     = settlementDates[i];
                 const double price              = prices[i];
                 const double yield              = bondObject->yield( settlementDate, price, yieldCalcType );
                 
@@ -597,7 +597,7 @@ namespace validation
     *  @param [in]		yieldCalculationType	yield calculation type	        
     *  @return			Compound Yields used as bond discount factors
 	*/
-    std::vector< double > tryMeLWOBondCompoundYields( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType )
+    std::vector< double > tryMeLWOBondCompoundYields( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& prices, const std::string& yieldCalculationType )
     {
       	VALID_EXCEPTION_START
 
@@ -606,7 +606,7 @@ namespace validation
 
         if ( settlementDates.size() != prices.size() )
         {
-            throw LACoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
         }
 
         auto bond                           = etrading::getBond( bondObjectName );
@@ -616,7 +616,7 @@ namespace validation
         std::vector< double > compoundYields;
         for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
             const double price              = prices[i];
             double compoundYield         = bond->compoundYieldFromQuotedPrice( settlementDate, price, yieldCalcType );
 
@@ -641,7 +641,7 @@ namespace validation
     *  @param [in]		yieldCalculationType	yield calculation type	        
     *  @return			Bond DV01(s)
 	*/
-	std::vector< double > tryMeLWOBondDV01Numerical( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const double bumpSize, const LAString& bumpMode, const std::string& yieldCalculationType )
+	std::vector< double > tryMeLWOBondDV01Numerical( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const double bumpSize, const AQLString& bumpMode, const std::string& yieldCalculationType )
 	{
 
 	    VALID_EXCEPTION_START
@@ -650,11 +650,11 @@ namespace validation
 		RECORD_DECORATED_INPUTS(bondObjectName, std::string(), bondObjectName, settlementDates, yields, yieldCalculationType  );
 
 		double bumpAmount = ( bumpSize == 0.0 ) ? 0.01 : bumpSize;
-		LAString bumpType = ( bumpMode == "" )  ? "UP" : bumpMode;
+		AQLString bumpType = ( bumpMode == "" )  ? "UP" : bumpMode;
 
         if ( settlementDates.size() != yields.size() )
         {
-            throw LACoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
         }
 
         auto bond                           = etrading::getBond( bondObjectName );
@@ -663,7 +663,7 @@ namespace validation
         std::vector< double > dv01s;
         for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
             const double yield              = yields[i];
 			double dv01                     = bond->dv01Numerical( settlementDate, yield, yieldCalcType, bumpAmount, bumpType );
                         
@@ -685,7 +685,7 @@ namespace validation
 	*  @param [in]		bumpMode			How to calculate the delta: Up, Down or Central difference
     *  @return			Bond DV01(s)
 	*/
-	std::vector< double > tryMeLWOBondDV01( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
+	std::vector< double > tryMeLWOBondDV01( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
 	{
 
 	    VALID_EXCEPTION_START
@@ -695,7 +695,7 @@ namespace validation
 
         if ( settlementDates.size() != yields.size() )
         {
-            throw LACoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
         }
 
         auto bond                           = etrading::getBond( bondObjectName );
@@ -704,7 +704,7 @@ namespace validation
         std::vector< double > dv01s;
         for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
             const double yield              = yields[i];
 			double dv01                     = bond->dv01( settlementDate, yield, yieldCalcType );
                         
@@ -726,7 +726,7 @@ namespace validation
 	*  @param [in]		bumpMode			How to calculate the delta: Up, Down or Central difference
     *  @return			Bond Duration(s)
 	*/
-	std::vector< double > tryMeLWOBondModifiedDuration( const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
+	std::vector< double > tryMeLWOBondModifiedDuration( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields, const std::string& yieldCalculationType )
 	{
 
 	    VALID_EXCEPTION_START
@@ -736,7 +736,7 @@ namespace validation
 
         if ( settlementDates.size() != yields.size() )
         {
-            throw LACoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
         }
 
         auto bond                           = etrading::getBond( bondObjectName );
@@ -745,7 +745,7 @@ namespace validation
         std::vector< double > durations;
         for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
             const double yield              = yields[i];
 			double duration                 = bond->modifiedDuration( settlementDate, yield, yieldCalcType );
                         
@@ -766,21 +766,21 @@ namespace validation
     *  @param [in]		bondYields		    Bond yields
     *  @return			A vector of O-Spreads
 	*/
-    std::vector< double > tryMeLWOBondOisSpread( const std::string& bondObjectName, const std::string& marketObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& yields )
+    std::vector< double > tryMeLWOBondOisSpread( const std::string& bondObjectName, const std::string& marketObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& yields )
 	{
 
 		size_t settleDatesSize = settlementDates.size();
 
 	    if ( settleDatesSize != yields.size() )
         {
-            throw LACoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData("#Error: Invalid Yield Input and/or Inconsistent number of dates and yields.", __FILE__, __LINE__ );
         }
 
         std::vector< double > spreads(settleDatesSize);
 
 		for ( unsigned int i = 0; i < settleDatesSize; ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
             const double yield              = yields[i];
 			double spread                   = tryMeLWOBondOisSpread( bondObjectName, marketObjectName, settlementDate, yield );
                         
@@ -800,7 +800,7 @@ namespace validation
     *  @param [in]		bondYield		    Bond yield
     *  @return			Bond Yield and OIS ParRate Spread
 	*/
-    double tryMeLWOBondOisSpread( const std::string& bondObjectName, const std::string& marketObjectName, const LADate& settleDate, const double& bondYield)
+    double tryMeLWOBondOisSpread( const std::string& bondObjectName, const std::string& marketObjectName, const AQLDate& settleDate, const double& bondYield)
     {
 	    VALID_EXCEPTION_START
 
@@ -811,7 +811,7 @@ namespace validation
 
         auto settleDates = boost::assign::list_of(settleDate);
 
-        LAStringMatrix oisParRateMatrix = marketObject->toLAStringMatrix( toString(etrading::OIS_MARKETDATA) );
+        AQLStringMatrix oisParRateMatrix = marketObject->toLAStringMatrix( toString(etrading::OIS_MARKETDATA) );
 
         auto bond = etrading::getBond( bondObjectName );
 
@@ -824,7 +824,7 @@ namespace validation
 
         auto dayCount = bond->getSchedule()->getAccrualDaycount();
 
-		const LAString businessDayAdj = "NO_CHANGE"; // swap maturity is always unadjsted when using swap tenor string as input.
+		const AQLString businessDayAdj = "NO_CHANGE"; // swap maturity is always unadjsted when using swap tenor string as input.
 
         size_t parRateSize = oisParRateMatrix.size();
         std::map<int, double> oisRates;
@@ -836,14 +836,14 @@ namespace validation
 
             if (curRow.size() < 2)
             {
-              throw LACoreInvalidData( "#Error: OIS par rate matrix must have at least 2 columns: Tenor, Rate" , __FILE__, __LINE__ );
+              throw AQLCoreInvalidData( "#Error: OIS par rate matrix must have at least 2 columns: Tenor, Rate" , __FILE__, __LINE__ );
             }
 
 			//Tenor
-			LAString tenor = curRow[0];
+			AQLString tenor = curRow[0];
 
 			//OIS Rate
-			LADate maturityDate;
+			AQLDate maturityDate;
 
 			if (   tenor.findString("BOJ") != -1       // Bank of Japan
                 || tenor.findString("EUSF") != -1      // European Central Bank (Bloomberg Ticker)
@@ -854,11 +854,11 @@ namespace validation
 			{
 				if (curRow.size() < 4)
 				{
-					throw LACoreInvalidData("#Error: OIS par rate matrix short term needs StartDate and EndDate",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("#Error: OIS par rate matrix short term needs StartDate and EndDate",__FILE__,__LINE__);
 				}
 
-				const LADate& startDate = etrading::stringToDate( curRow[2], "#Error: Invalid 'startDate'." ); 
-				const LADate& endDate = etrading::stringToDate( curRow[3], "#Error: Invalid 'endDate'." ); 
+				const AQLDate& startDate = etrading::stringToDate( curRow[2], "#Error: Invalid 'startDate'." ); 
+				const AQLDate& endDate = etrading::stringToDate( curRow[3], "#Error: Invalid 'endDate'." ); 
 				double yearFraction = etrading::getYearFraction(startDate, endDate, dayCount);
 
 				maturityDate = etrading::getDateFromYearFraction(settleDate, yearFraction, dayCount);
@@ -871,7 +871,7 @@ namespace validation
 
 		   int	maturityDateInteger = (int)etrading::fromLADateToDouble(maturityDate);
 	
-		   LAString rawRate = curRow[1];
+		   AQLString rawRate = curRow[1];
 		   double rate = 0.0;
 		   if (rawRate.size() != 0)
 			{
@@ -887,7 +887,7 @@ namespace validation
 
 		if (oisRates.size() == 0)
 		{
-	        throw LACoreInvalidData( "#Error: OIS par rate matrix has no par rate." , __FILE__, __LINE__ );
+	        throw AQLCoreInvalidData( "#Error: OIS par rate matrix has no par rate." , __FILE__, __LINE__ );
 		}
 
 		// Retrieve all keys
@@ -943,7 +943,7 @@ namespace validation
     *  @param [in]		settlementDates		Bond's Settlement Dates 
     *  @return			The bond's last coupon date.
 	*/
-    std::vector< double > tryMeLWOBondLastCouponDate( const std::string& bondObjectName, const std::vector< LADate >& settlementDates)
+    std::vector< double > tryMeLWOBondLastCouponDate( const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates)
     {
 	    VALID_EXCEPTION_START
 
@@ -956,9 +956,9 @@ namespace validation
 	
 		for ( unsigned int i = 0; i < settlementDates.size(); ++i )
         {
-            const LADate settlementDate     = settlementDates[i];
+            const AQLDate settlementDate     = settlementDates[i];
 
-			LADate lastCouponDate = bond->getBondLastCouponDate(settlementDate);
+			AQLDate lastCouponDate = bond->getBondLastCouponDate(settlementDate);
 
 			lastCouponDates[i] = etrading::fromLADateToDouble(lastCouponDate);
         }
@@ -1026,7 +1026,7 @@ namespace validation
     *  @param [in]		creditModelName		Credit model name
     *  @return			The calculated Bond price
 	*/
-	double tryMeLWOBondPriceFromCreditModel( const std::string& bondObjectName, const LADate& settlementDate, const std::string& creditModelName )
+	double tryMeLWOBondPriceFromCreditModel( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string& creditModelName )
 	{
 		VALID_EXCEPTION_START
 	
@@ -1060,12 +1060,12 @@ namespace validation
 		// Perform initial basic sanity checks
         if ( infoBlocks.size() == 0 )
         {
-			throw LACoreInvalidData( "#Error: No Property grid data provided to tryMeLWOBondGeneratorCreate", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: No Property grid data provided to tryMeLWOBondGeneratorCreate", __FILE__, __LINE__ );
         }
 
         if ( propertyNames.size() != infoBlocks.size() )
         {
-			throw LACoreInvalidData( ( boost::format( "#Error: Number of Property Names (%i) does not match number of grid data ranges (%i)." )
+			throw AQLCoreInvalidData( ( boost::format( "#Error: Number of Property Names (%i) does not match number of grid data ranges (%i)." )
                                    % propertyNames.size()
                                    % infoBlocks.size() ).str().c_str(), __FILE__, __LINE__ );
         }
@@ -1080,7 +1080,7 @@ namespace validation
 			// Write out each propertyName and corresponding block of property config data
 			for ( unsigned int i = 0; i < propertyNames.size(); i++ )
 			{
-				const LAString propertyName( propertyNames[i].c_str() );
+				const AQLString propertyName( propertyNames[i].c_str() );
 				const etrading::VariantMatrix& configData = std::get<2>( infoBlocks[ i ] );
 				file.write( propertyName, transpose(configData) );
 			}
@@ -1096,7 +1096,7 @@ namespace validation
 
         if ( hasAnEmptyName )
         {
-			throw LACoreInvalidData( ( boost::format( "#Error: One of the individual Property Names is empty or invalid (%s)" )
+			throw AQLCoreInvalidData( ( boost::format( "#Error: One of the individual Property Names is empty or invalid (%s)" )
                                    % etrading::containerAsString( propertyNames ).c_str() ).str().c_str(), __FILE__, __LINE__ );
         }
 
@@ -1186,7 +1186,7 @@ namespace validation
 	*  @param [in]		continuouslyCompounding	        True to calculate z-spread using continouslyCompounding
 	*  @return			Z Spread
 	*/
-	double tryMeLWOBondZSpread(const std::string& bondObjectName, const LADate& settlementDate, const double& bondPrice, const std::string& curveCollection, const std::string& forecastCurve, const bool& continuouslyCompounding)
+	double tryMeLWOBondZSpread(const std::string& bondObjectName, const AQLDate& settlementDate, const double& bondPrice, const std::string& curveCollection, const std::string& forecastCurve, const bool& continuouslyCompounding)
 	{
 		VALID_EXCEPTION_START
 
@@ -1218,14 +1218,14 @@ namespace validation
 	*  @param [in]		continuouslyCompounding	        True to calculate z-spread using continouslyCompounding
 	*  @return			Z Spreads
 	*/
-	DoubleVector tryMeLWOBondZSpreads(const std::string& bondObjectName, const std::vector< LADate >& settlementDates, const std::vector< double >& bondPrices, const std::vector< std::string >& curveCollections, const std::vector< std::string >& forecastCurves, const bool& continuouslyCompounding)
+	DoubleVector tryMeLWOBondZSpreads(const std::string& bondObjectName, const std::vector< AQLDate >& settlementDates, const std::vector< double >& bondPrices, const std::vector< std::string >& curveCollections, const std::vector< std::string >& forecastCurves, const bool& continuouslyCompounding)
 	{
 
 		size_t settleDatesSize = settlementDates.size();
 
 		if (settleDatesSize != bondPrices.size() || settleDatesSize != curveCollections.size() || settleDatesSize != forecastCurves.size())
 		{
-			throw LACoreInvalidData("#Error: Inconsistent number of settlement dates, bondPrices, curveCollections, and forecastCurves.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Inconsistent number of settlement dates, bondPrices, curveCollections, and forecastCurves.", __FILE__, __LINE__);
 		}
 
 		std::vector< double > zSpreads(settleDatesSize);
@@ -1249,7 +1249,7 @@ namespace validation
 	*  @param [in]		continuouslyCompounding	        True to calculate z-spread using continouslyCompounding
 	*  @return			Z Spread
 	*/
-	double tryMeLWOBondZSpreadFromRates(const std::string& bondObjectName, const LADate& settlementDate, const double& bondPrice, const DoubleVector& zeroRates, const bool& continuouslyCompounding)
+	double tryMeLWOBondZSpreadFromRates(const std::string& bondObjectName, const AQLDate& settlementDate, const double& bondPrice, const DoubleVector& zeroRates, const bool& continuouslyCompounding)
 	{
 		VALID_EXCEPTION_START
 
@@ -1281,7 +1281,7 @@ namespace validation
 	*  @param [in]		repoDayCount		Day count for repo year fraction
 	*  @return			Bond forward price
 	*/
-	double tryMeLWOBondForwardPrice(const std::string& bondObjectName, const LADate& settleDate, const LADate& forwardSettleDate, const double& price, const double& repoRate, const std::string& repoDayCount)
+	double tryMeLWOBondForwardPrice(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const double& price, const double& repoRate, const std::string& repoDayCount)
 	{
 		VALID_EXCEPTION_START
 
@@ -1307,7 +1307,7 @@ namespace validation
 	*  @param [in]		repoDayCount		Day count for repo year fraction
 	*  @return			Bond's recieved coupon value at forward settle date
 	*/
-	double tryMeLWOBondForwardReinvestedCoupon(const std::string& bondObjectName, const LADate& settleDate, const LADate& forwardSettleDate, const double& price, const double& repoRate, const std::string& repoDayCount)
+	double tryMeLWOBondForwardReinvestedCoupon(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const double& price, const double& repoRate, const std::string& repoDayCount)
 	{
 		VALID_EXCEPTION_START
 
@@ -1333,7 +1333,7 @@ namespace validation
 	*  @param [in]		repoDayCount		Day count for repo year fraction
 	*  @return			Bond implied repo rate
 	*/
-	double tryMeLWOBondRepoRate(const std::string& bondObjectName, const LADate& settleDate, const LADate& forwardSettleDate, const double& price, const double& forwardPrice, const std::string& repoDayCount)
+	double tryMeLWOBondRepoRate(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const double& price, const double& forwardPrice, const std::string& repoDayCount)
 	{
 		VALID_EXCEPTION_START
 
@@ -1360,7 +1360,7 @@ namespace validation
 	*  @param [in]		repoDayCount		Day count for repo year fraction
 	*  @return			Bond implied repo rate
 	*/
-	double tryMeLWOBondRepoRateFromFuture(const std::string& bondObjectName, const LADate& settleDate, const LADate& deliveryDate, const double& price, const double& futurePrice, const double& conversionFactor, const std::string& repoDayCount)
+	double tryMeLWOBondRepoRateFromFuture(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& deliveryDate, const double& price, const double& futurePrice, const double& conversionFactor, const std::string& repoDayCount)
 	{
 		VALID_EXCEPTION_START
 
@@ -1387,7 +1387,7 @@ namespace validation
 	*  @param [in]		conversionFactor	Bond's conversion factor
 	*  @return			Bond Future price
 	*/
-	double tryMeLWOBondFuturePrice(const std::string& bondObjectName, const LADate& settleDate, const LADate& deliveryDate, const double& bondPrice, const double& repoRate, const std::string& repoDayCount, const double& conversionFactor)
+	double tryMeLWOBondFuturePrice(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& deliveryDate, const double& bondPrice, const double& repoRate, const std::string& repoDayCount, const double& conversionFactor)
 	{
 		VALID_EXCEPTION_START
 
@@ -1410,7 +1410,7 @@ namespace validation
 	*  @param [in]		notionalBondCouponRate	Bond future notionalBondCouponRate
 	*  @return			Bond conversionFactor against the future contract
 	*/
-	double tryMeLWOBondConversionFactor(const std::string& bondObjectName, const LADate& firstFutureSettleDate, const double& notionalBondCouponRate)
+	double tryMeLWOBondConversionFactor(const std::string& bondObjectName, const AQLDate& firstFutureSettleDate, const double& notionalBondCouponRate)
 	{
 		VALID_EXCEPTION_START
 
@@ -1435,7 +1435,7 @@ namespace validation
 	*  @param [in]		conversionFactor	Conversion factor
 	*  @return			Bond Gross Basis
 	*/
-	double tryMeLWOBondGrossBasis(const std::string& bondObjectName, const LADate& settleDate, const double& price, const double& futurePrice, const double& conversionFactor)
+	double tryMeLWOBondGrossBasis(const std::string& bondObjectName, const AQLDate& settleDate, const double& price, const double& futurePrice, const double& conversionFactor)
 	{
 
 		VALID_EXCEPTION_START
@@ -1462,7 +1462,7 @@ namespace validation
 	*  @param [in]		conversionFactor	Conversion factor
 	*  @return			Bond Gross Basis
 	*/
-	double tryMeLWOBondNetBasis(const std::string& bondObjectName, const LADate& settleDate, const LADate& deliveryDate, const double& bondPrice, const double& actualRepoRate, const std::string& repoDayCount, const double& futurePrice, const double& conversionFactor)
+	double tryMeLWOBondNetBasis(const std::string& bondObjectName, const AQLDate& settleDate, const AQLDate& deliveryDate, const double& bondPrice, const double& actualRepoRate, const std::string& repoDayCount, const double& futurePrice, const double& conversionFactor)
 	{
 
 		VALID_EXCEPTION_START
@@ -1492,7 +1492,7 @@ namespace validation
 	*  @param [in]		conversionFactors	A list of conversion factors
 	*  @return			The Cheapest to deliver (CTD) bond's name
 	*/
-	std::string tryMeLWOBondCheapestToDeliver(const double& futurePrice, const LADate& settleDate, const LADate& deliveryDate, const std::string& repoDayCount, const std::vector<std::string>& bondObjectNames, const std::vector<double>& bondPrices, const std::vector<double>& conversionFactors)
+	std::string tryMeLWOBondCheapestToDeliver(const double& futurePrice, const AQLDate& settleDate, const AQLDate& deliveryDate, const std::string& repoDayCount, const std::vector<std::string>& bondObjectNames, const std::vector<double>& bondPrices, const std::vector<double>& conversionFactors)
 	{
 		VALID_EXCEPTION_START
 
@@ -1549,7 +1549,7 @@ namespace validation
 	*  @param [in]		actualRepoRates		Actual repo rates
 	*  @return			The Cheapest to deliver (CTD) bond's name
 	*/
-	std::string tryMeLWOBondCheapestToDeliverByNetBasis(const double& futurePrice, const LADate& settleDate, const LADate& deliveryDate, const std::string& repoDayCount, const std::vector<std::string>& bondObjectNames, const std::vector<double>& bondPrices, const std::vector<double>& conversionFactors, const std::vector<double>& actualRepoRates)
+	std::string tryMeLWOBondCheapestToDeliverByNetBasis(const double& futurePrice, const AQLDate& settleDate, const AQLDate& deliveryDate, const std::string& repoDayCount, const std::vector<std::string>& bondObjectNames, const std::vector<double>& bondPrices, const std::vector<double>& conversionFactors, const std::vector<double>& actualRepoRates)
 	{
 		VALID_EXCEPTION_START
 
@@ -1610,7 +1610,7 @@ namespace validation
 	*  @param [in]		bondQuoteConv		Bond quote convention, default to blank
 	*  @return			bondName
 	*/
-	std::string tryMeLWOBondCreateAUDNotionalBond(const std::string& bondObjectName, const LADate& settleDate, const std::string& maturityDate, const std::string& couponRate, const std::string& payReceive, const std::string& calendar, const std::string& frequency, const std::string& dayCount, const std::string& bondQuoteConv)
+	std::string tryMeLWOBondCreateAUDNotionalBond(const std::string& bondObjectName, const AQLDate& settleDate, const std::string& maturityDate, const std::string& couponRate, const std::string& payReceive, const std::string& calendar, const std::string& frequency, const std::string& dayCount, const std::string& bondQuoteConv)
 	{
 		VALID_EXCEPTION_START
 
@@ -1725,7 +1725,7 @@ namespace validation
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The clean / dirty floating bond price	
 	*/
-	double tryMeLWOBondFRNPriceFromDiscountMargin( const std::string& bondObjectName, const LADate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate )
+	double tryMeLWOBondFRNPriceFromDiscountMargin( const std::string& bondObjectName, const AQLDate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate )
 	{
 		VALID_EXCEPTION_START
 
@@ -1760,7 +1760,7 @@ namespace validation
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The clean / dirty floating bond price	
 	*/
-	double tryMeLWOBondFRNPriceFromYield( const std::string& bondObjectName, const LADate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate )
+	double tryMeLWOBondFRNPriceFromYield( const std::string& bondObjectName, const AQLDate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate )
 	{
 		VALID_EXCEPTION_START
 
@@ -1795,7 +1795,7 @@ namespace validation
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The bond yield	
 	*/
-	double tryMeLWOBondFRNYieldFromPrice( const std::string& bondObjectName, const LADate& settlementDate, const double& price, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate )
+	double tryMeLWOBondFRNYieldFromPrice( const std::string& bondObjectName, const AQLDate& settlementDate, const double& price, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate )
 	{
 		VALID_EXCEPTION_START
 
@@ -1830,7 +1830,7 @@ namespace validation
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The bond discount margin
 	*/
-	double tryMeLWOBondFRNDiscountMarginFromPrice( const std::string& bondObjectName, const LADate& settlementDate, const double& price, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate )
+	double tryMeLWOBondFRNDiscountMarginFromPrice( const std::string& bondObjectName, const AQLDate& settlementDate, const double& price, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate )
 	{
 		VALID_EXCEPTION_START
 

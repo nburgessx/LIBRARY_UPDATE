@@ -26,7 +26,7 @@
 #include "LARatesSDEBase.h"
 #include "LARatesSDEIntegralBase.h"
 #include "LAModelDynamicsCurve.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 using namespace std;
 //================ LARatesSDEBase ===================================
@@ -46,7 +46,7 @@ LARatesSDEBase::LARatesSDEBase(SDE_TYPE type)
 	@param[in] v copy source
 */
 LARatesSDEBase::LARatesSDEBase(const LARatesSDEBase& v) 
-: LACoreFunctionBase(v), mType(v.mType), mID(v.mID), mpNumeraire(0), mpBM(0),
+: AQLCoreFunctionBase(v), mType(v.mType), mID(v.mID), mpNumeraire(0), mpBM(0),
    mpInter(0), mTimeGrid(v.mTimeGrid), mpIntegral(0), mpInitial(0), mpTemplate(0), mPos(v.mPos)
 /*, mpPathElement(0)*//*, mIsCalcAll(v.mIsCalcAll)*/
 {
@@ -70,14 +70,14 @@ LARatesSDEBase::LARatesSDEBase(const LARatesSDEBase& v)
 	
 	mDrift.resize(v.mDrift.size());
 	for (unsigned int i = 0; i < mDrift.size(); i++)
-		mDrift[i] = dynamic_cast<LAFunctionBase*>(v.mDrift[i]->clone());
+		mDrift[i] = dynamic_cast<AQLFunctionBase*>(v.mDrift[i]->clone());
 
 	mVolatility.resize(v.mVolatility.size());
 	for (unsigned int i = 0; i < mVolatility.size(); i++)
 	{
 		mVolatility[i].resize(v.mVolatility[i].size());
 		for (unsigned int j = 0; j < mVolatility[i].size(); j++)
-			mVolatility[i][j] = dynamic_cast<LAFunctionBase*>(v.mVolatility[i][j]->clone());
+			mVolatility[i][j] = dynamic_cast<AQLFunctionBase*>(v.mVolatility[i][j]->clone());
 	}
 
     try 
@@ -86,7 +86,7 @@ LARatesSDEBase::LARatesSDEBase(const LARatesSDEBase& v)
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 
 }
@@ -131,7 +131,7 @@ LARatesSDEBase::~LARatesSDEBase()
 bool
 LARatesSDEBase::isTypeOf(function_t id) const
 {
-	return (id==FN_SDEBASE ? true : LACoreFunctionBase::isTypeOf(id));
+	return (id==FN_SDEBASE ? true : AQLCoreFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -181,7 +181,7 @@ LARatesSDEBase::getPathElement(unsigned int pos)
 	const DoubleArray& timegrid = mpBM->getTimeGrid();
 	if (pos > timegrid.size() - 1)
 	{
-		throw LACoreInvalidData("pos is over size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("pos is over size", __FILE__, __LINE__);
 	}
 
 	if (mpBM->getCurrentID() == mID && pos == mPos)
@@ -235,7 +235,7 @@ LARatesSDEBase::setNumeraire(LARatesNumeraireBase* pnumeraire)
 	@note this class becomes pointer owner of the input drift function 
 */								
 void
-LARatesSDEBase::setDrift(std::vector<LAFunctionBase*>& drift) 
+LARatesSDEBase::setDrift(std::vector<AQLFunctionBase*>& drift) 
 {
 	for (unsigned int i = 0; i < mDrift.size(); i++)
 		delete mDrift[i];
@@ -248,7 +248,7 @@ LARatesSDEBase::setDrift(std::vector<LAFunctionBase*>& drift)
 	@note this class becomes pointer owner of the volatility function 
 */												
 void
-LARatesSDEBase::setVolatility(std::vector<std::vector<LAFunctionBase*> >& volatility)
+LARatesSDEBase::setVolatility(std::vector<std::vector<AQLFunctionBase*> >& volatility)
 {	
 	for (unsigned int i = 0; i < mVolatility.size(); i++)
 	{
@@ -312,7 +312,7 @@ LARatesSDEBase::setUp()
 	if (!check())
 	{
 		//error
-		throw LACoreInvalidData("SDE check status is false", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("SDE check status is false", __FILE__, __LINE__);
 	}
 	mID = 0;
 	mPos = 0;
@@ -351,7 +351,7 @@ LARatesSDEBase::setUp()
 	if (mpIntegral->getIntegralType() == LOG_INTEGRAL && mVolatility.at(0).size() > 1)
 	{
 		//error
-		throw LACoreInvalidData("Multi volatility is not support when SDE IntegralType is LOG", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Multi volatility is not support when SDE IntegralType is LOG", __FILE__, __LINE__);
 	}
 		
 }
@@ -359,7 +359,7 @@ LARatesSDEBase::setUp()
     @brief return string representaion
 	@return  string representaion
 */
-/*LAString
+/*AQLString
 LARatesSDEBase::convertToString(void) const
 {
 	return "";
@@ -370,7 +370,7 @@ LARatesSDEBase::convertToString(void) const
 	@param[in]	string representaion
 */
 /*void
-LARatesSDEBase::convertFromString(const LAString& str)
+LARatesSDEBase::convertFromString(const AQLString& str)
 {
 
 }*/

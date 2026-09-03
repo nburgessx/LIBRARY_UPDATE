@@ -4,7 +4,7 @@
 #include "CommonConstants.h"
 #include <boost/shared_array.hpp>
 
-class LADate;
+class AQLDate;
 
 namespace etrading
 {
@@ -35,19 +35,19 @@ namespace etrading
         /* @brief		Set interpolation for pricing
         *  @param [in]	interpolation	Yield curve interpolation
         */
-        virtual void setInterpolation( const LAString& interpolation ) = 0;
+        virtual void setInterpolation( const AQLString& interpolation ) = 0;
 
         /* @brief		Method that returns trade ID
         *  @return		Trade ID
         */
-        LAString getTradeID() const
+        AQLString getTradeID() const
         {
             return tradeID_;
         }
 
     private:
 
-        LAString	tradeID_;
+        AQLString	tradeID_;
     };
 
     typedef boost::shared_ptr<BaseInstrument> BaseInstrumentPtr;

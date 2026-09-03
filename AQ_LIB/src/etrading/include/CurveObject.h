@@ -66,8 +66,8 @@ namespace etrading
         
         virtual etrading::CurveTypeEnum getCurveType() { return NONE_CURVETYPE;  }
 
-		LAString curveName_;
-		LAString curveIndex_;
+		AQLString curveName_;
+		AQLString curveIndex_;
 
         // Label Value Block Conventions for Lookups
 		LabelValueBlock curveConvLVB_;
@@ -112,10 +112,10 @@ namespace etrading
         LabelValueBlock swapConvLVB_;
 
         // String Matrix Data
-		LAStringMatrix oisRates_;
-		LAStringMatrix histRates_;
-		LAStringMatrix loBasisRates_;
-		LAStringMatrix swapRates_;
+		AQLStringMatrix oisRates_;
+		AQLStringMatrix histRates_;
+		AQLStringMatrix loBasisRates_;
+		AQLStringMatrix swapRates_;
 		StandardStringMatrix forwardAdjustments_;
 
         // Function to apply a flat-shift to outright instruments only
@@ -152,10 +152,10 @@ namespace etrading
         LabelValueBlock swapConvLVB_;
 
         // String Matrix Data
-		LAStringMatrix oisRates_;
-		LAStringMatrix histRates_;
-		LAStringMatrix loBasisRates_;
-		LAStringMatrix swapRates_;
+		AQLStringMatrix oisRates_;
+		AQLStringMatrix histRates_;
+		AQLStringMatrix loBasisRates_;
+		AQLStringMatrix swapRates_;
 		StandardStringMatrix forwardAdjustments_;
 
         // Function to apply a flat-shift to outright instruments only
@@ -195,13 +195,13 @@ namespace etrading
         LabelValueBlock basisAdjConvLVB_;
 
         // String Matrix Data
-        LAStringMatrix liborRates_;
-		LAStringMatrix swapRates_;
-		LAStringMatrix fraRates_;
-		LAStringMatrix fra3mRates_;
-		LAStringMatrix fra6mRates_;
-		LAStringMatrix futureRates_;
-		LAStringMatrix basisAdjRates_;
+        AQLStringMatrix liborRates_;
+		AQLStringMatrix swapRates_;
+		AQLStringMatrix fraRates_;
+		AQLStringMatrix fra3mRates_;
+		AQLStringMatrix fra6mRates_;
+		AQLStringMatrix futureRates_;
+		AQLStringMatrix basisAdjRates_;
 		StandardStringMatrix forwardAdjustments_;
 
         // Function to apply a flat-shift to outright instruments only
@@ -240,11 +240,11 @@ namespace etrading
         LabelValueBlock moneyMarketConvLVB_;
 
         // String Matrix Data
-		LAStringMatrix basisRates_;
-		LAStringMatrix fxFwdRates_;
-		LAStringMatrix spotFxRates_;
-		LAStringMatrix fraRates_;
-		LAStringMatrix liborRates_;
+		AQLStringMatrix basisRates_;
+		AQLStringMatrix fxFwdRates_;
+		AQLStringMatrix spotFxRates_;
+		AQLStringMatrix fraRates_;
+		AQLStringMatrix liborRates_;
 		StandardStringMatrix forwardAdjustments_;
 
         // Function to apply a flat-shift to outright instruments only
@@ -282,10 +282,10 @@ namespace etrading
         LabelValueBlock fraConvLVB_;
 
         // String Matrix Data
-		LAStringMatrix basisRates_;
-		LAStringMatrix fxFwdRates_;
-		LAStringMatrix spotFxRates_;
-		LAStringMatrix fraRates_;
+		AQLStringMatrix basisRates_;
+		AQLStringMatrix fxFwdRates_;
+		AQLStringMatrix spotFxRates_;
+		AQLStringMatrix fraRates_;
 		StandardStringMatrix forwardAdjustments_;
 
         // Function to apply a flat-shift to outright instruments only

@@ -41,7 +41,7 @@ LAPriceCouponForDigital::~LAPriceCouponForDigital()
 bool
 LAPriceCouponForDigital::isTypeOf(function_t id) const
 {
-	return (id == FN_CPNSLTOPERATORFORDIGITAL ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CPNSLTOPERATORFORDIGITAL ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -61,7 +61,7 @@ LAPriceCouponForDigital::operator()(const DoubleArray& x) const
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceCouponForDigital::clone() const
 {
     try 
@@ -70,7 +70,7 @@ LAPriceCouponForDigital::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -95,10 +95,10 @@ double
 LAPriceCouponForDigital::selectCoupon(const DoubleArray& x, unsigned int& pos) const
 {
 	if(x.size() != mParam.size())
-		throw LACoreInvalidData("cpn size should be the digital trigger size",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("cpn size should be the digital trigger size",__FILE__,__LINE__);
 
 	if(x.size() < 2)
-		throw LACoreInvalidData("cpn and digital size should be more than 2",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("cpn and digital size should be more than 2",__FILE__,__LINE__);
 
 	//check input if  x[1] < x[2] < ... < x[n] or not
 	if(x.size() > 2)
@@ -106,7 +106,7 @@ LAPriceCouponForDigital::selectCoupon(const DoubleArray& x, unsigned int& pos) c
 		for(unsigned int i =2; i<x.size();i++)
 		{
 			if(x[i-1] > x[i])
-				throw LACoreInvalidData("digital trigge should be in order",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("digital trigge should be in order",__FILE__,__LINE__);
 		}
 	}
 	

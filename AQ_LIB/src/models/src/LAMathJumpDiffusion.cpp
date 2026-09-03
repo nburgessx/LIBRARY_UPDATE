@@ -5,20 +5,20 @@
 #endif
 
 
-#include <LACoreTemplateType.h>
+#include <AQLCoreTemplateType.h>
 #include <complex>
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAMathJumpDiffusion.h"
-#include "LAGaussLegendre.h"
-#include "LAGaussLaguerre.h"
+#include "AQLGaussLegendre.h"
+#include "AQLGaussLaguerre.h"
 
 void LAMathJumpDiffusion::SetHestonParams(HestonParams& params, const DoubleMatrix& inputdatas)
 {
     //error check
-    if( inputdatas.empty() ) {	throw LACoreInvalidData("data size is not supported",__FILE__, __LINE__);}
+    if( inputdatas.empty() ) {	throw AQLCoreInvalidData("data size is not supported",__FILE__, __LINE__);}
     for(size_t i=0;i<6;i++)
     {
-        if( inputdatas[i].size() < 1 ) {	throw LACoreInvalidData("data size is not supported",__FILE__, __LINE__);}
+        if( inputdatas[i].size() < 1 ) {	throw AQLCoreInvalidData("data size is not supported",__FILE__, __LINE__);}
     }
 
 	params.T_ = inputdatas[0];
@@ -32,10 +32,10 @@ void LAMathJumpDiffusion::SetHestonParams(HestonParams& params, const DoubleMatr
 void LAMathJumpDiffusion::SetHestonParams(HestonParams& params, const DoubleVector& inputdatas, double term )
 {
     //error check
-    if( inputdatas.empty() ) {	throw LACoreInvalidData("data size is not supported",__FILE__, __LINE__);}
+    if( inputdatas.empty() ) {	throw AQLCoreInvalidData("data size is not supported",__FILE__, __LINE__);}
     for(size_t i=0;i<6;i++)
     {
-        if( inputdatas.size() < 1 ) {	throw LACoreInvalidData("data size is not supported",__FILE__, __LINE__);}
+        if( inputdatas.size() < 1 ) {	throw AQLCoreInvalidData("data size is not supported",__FILE__, __LINE__);}
     }
 
 	params.T_.resize(1);
@@ -119,7 +119,7 @@ DoubleComplex LAMathJumpDiffusion::Lambda_LE(DoubleComplex phi, LEParams le_para
 {
 	if (le_params.P_ < -1 && le_params.P_ > 1)
 	{
-		throw LACoreInvalidData("-1<= p_ <= 1",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("-1<= p_ <= 1",__FILE__, __LINE__);
 	}
     
     DoubleComplex one = DoubleComplex(1, 0);  
@@ -171,7 +171,7 @@ DoubleComplex LAMathJumpDiffusion::D(DoubleComplex Lambda,
 				                   double kappa_lambda_
                                    )
 {
-	double tmp = (1 - LAMath::exp(-kappa_lambda_ * tau_)) / kappa_lambda_;
+	double tmp = (1 - AQLMath::exp(-kappa_lambda_ * tau_)) / kappa_lambda_;
   
     return DoubleComplex(tmp, 0.0) * Lambda;
 };
@@ -184,7 +184,7 @@ DoubleComplex LAMathJumpDiffusion::C(DoubleComplex Lambda,
 {
 	double tmp;
 	tmp = kappa_lambda_ * tau_;
-	tmp = tmp + LAMath::exp(-tmp) - 1;
+	tmp = tmp + AQLMath::exp(-tmp) - 1;
 	tmp *= theta_lambda_ / kappa_lambda_ ;
 
     return DoubleComplex(tmp, 0.0) * Lambda;
@@ -290,7 +290,7 @@ DoubleComplex LAMathJumpDiffusion::G(DoubleComplex phi,
 	}
 	else
 	{
-		throw LACoreInvalidData("TypeOfJump is not supported",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("TypeOfJump is not supported",__FILE__, __LINE__);
 	}
 
     //Setup HestonParams
@@ -320,7 +320,7 @@ DoubleComplex LAMathJumpDiffusion::G(DoubleComplex phi,
     DoubleComplex D_ = LAMathJumpDiffusion::D(Lambda_, T, kappa_lambda_);
         
     //
-    DoubleComplex LN_FX0_ = DoubleComplex(LAMath::log(FX0), 0.0);
+    DoubleComplex LN_FX0_ = DoubleComplex(AQLMath::log(FX0), 0.0);
     DoubleComplex tmp =  A_ + B_ * v0 + C_+ D_ * lambda0 + LN_FX0_ * phi;
 
 	DoubleComplex ret = exp(tmp);
@@ -340,7 +340,7 @@ double LAMathJumpDiffusion::F_Integral(double z,
 {
 	DoubleComplex phi = DoubleComplex(0.5, -z);
 	DoubleComplex G_ = LAMathJumpDiffusion::G(phi, T, FX0, type_of_jump, heston_params, intensity_arams, jump_params);
-	DoubleComplex Ln_K = DoubleComplex(LAMath::log(K),0.0);
+	DoubleComplex Ln_K = DoubleComplex(AQLMath::log(K),0.0);
 
 	double ret = real( exp(-Ln_K * phi) * G_ ) / (z * z + 0.25);
 
@@ -361,13 +361,13 @@ double LAMathJumpDiffusion::Get_F(double T,
 {
 	if(sgn != 1 &&  sgn != -1)
 	{
-		throw LACoreInvalidData("sgn is 1 or -1",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("sgn is 1 or -1",__FILE__, __LINE__);
 	}
 
 	DoubleVector x(GL_Number);
 	DoubleVector weight(GL_Number);
-	//LAGaussLegendre gauss_legendre(GL_Number);
-    LAGaussLaguerre gauss_laguerre(GL_Number);
+	//AQLGaussLegendre gauss_legendre(GL_Number);
+    AQLGaussLaguerre gauss_laguerre(GL_Number);
 	double tmp = 0.0;
     gauss_laguerre.get(x, weight);
 	for(size_t i=0;i<GL_Number;i++)
@@ -387,10 +387,10 @@ double LAMathJumpDiffusion::Get_F(double T,
 			tmp += integral * weight[i];
 		}
 
-		if(LAMath::abs( integral ) < 1.0e-12 ) break;
+		if(AQLMath::abs( integral ) < 1.0e-12 ) break;
 	}	*/
 
-	return tmp * K / LAMath::pi() ;
+	return tmp * K / AQLMath::pi() ;
 };
 
 double LAMathJumpDiffusion::BS_Heston_Jump(double T,
@@ -406,7 +406,7 @@ double LAMathJumpDiffusion::BS_Heston_Jump(double T,
 {
 	if(sgn != 1 &&  sgn != -1)
 	{
-		throw LACoreInvalidData("sgn is 1 or -1",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("sgn is 1 or -1",__FILE__, __LINE__);
 	}
 
 	double F = LAMathJumpDiffusion::Get_F(T, FX0, K, sgn, type_of_jump, heston_params, intensity_arams, jump_params, 144, 1.);

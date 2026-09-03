@@ -1,8 +1,8 @@
 #pragma once
 
-#include "LABasic.h"
-#include "LADist.h"
-#include "LACoreAppError.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
+#include "AQLCoreAppError.h"
 #include <cmath>
 #include "LAAnalyticFormula.h"
 

@@ -20,7 +20,7 @@ namespace etrading
         LabelValueBlock getInputParameters() const;
 		double pv( DataProvider& dataProvider, bool nativeCurrencyPV=false, bool updateCurveData=true);
 
-		//double dv01(const LAString& curveCollection);
+		//double dv01(const AQLString& curveCollection);
         ScheduleTypeEnum getType() const;
 
 		/*	@brief	Initialise the DataProvider object from the supplied curveCollection and fixngtable

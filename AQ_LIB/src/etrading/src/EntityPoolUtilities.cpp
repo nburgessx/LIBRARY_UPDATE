@@ -3,7 +3,7 @@
 #include "ParameterValidation.h"
 #include "LACurveForwardRateHelpers.h"
 #include "CurveCalibrationData.h"
-#include "LADataVector.h"
+#include "AQLDataVector.h"
 #include "LADefinitions.h"
 #include "TypeHelpers.h"
 #include "ParameterValidation.h"
@@ -16,12 +16,12 @@ namespace etrading
     *  @param [in]		curveCollection		Name of curve collection
     *  @return	A message showing the output of the action
     */
-	const bool isCurveRegistered(const LAString& curveCollection)
+	const bool isCurveRegistered(const AQLString& curveCollection)
 	{
-		LADataInstance* dataInstance = getDataInstance();
-        LAObjectPool& en = dataInstance->getObjectPool();
-        LAString name = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
-		LAObjectHolder ehycpro = en.getObject(name);
+		AQLDataInstance* dataInstance = getDataInstance();
+        AQLObjectPool& en = dataInstance->getObjectPool();
+        AQLString name = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
+		AQLObjectHolder ehycpro = en.getObject(name);
 		return ehycpro.isDefined();
     };
 
@@ -31,21 +31,21 @@ namespace etrading
     *  @param [in]		curveIndex			Name of the curve to be removed from object pool
     *  @return	A message showing the output of the action
     */
-	LAString removeCurveFromEntityPool(const LAString& curveCollection, const LAString& curveIndex)
+	AQLString removeCurveFromEntityPool(const AQLString& curveCollection, const AQLString& curveIndex)
 	{
-		LADataInstance* dataInstance = getDataInstance();
-        LAObjectPool& en = dataInstance->getObjectPool();
+		AQLDataInstance* dataInstance = getDataInstance();
+        AQLObjectPool& en = dataInstance->getObjectPool();
 
 		// Get CurveCalibrationData object
-		LAString name = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
-		LAObjectHolder ehycpro = en.getObject(name);
+		AQLString name = etrading::LACurveForwardRateHelpers::YIELD_CURVE_PRO_NAME_PREFIX + curveCollection;
+		AQLObjectHolder ehycpro = en.getObject(name);
 		if (!ehycpro.isDefined())
 		{
-			LAString msg = LAString("#Error - Curve '") + curveIndex + LAString("' does not exist in collection '") + curveCollection + LAString("'");
-            throw LACoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
+			AQLString msg = AQLString("#Error - Curve '") + curveIndex + AQLString("' does not exist in collection '") + curveCollection + AQLString("'");
+            throw AQLCoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
 		}
 		CurveCalibrationData *curveCalibrationData = &dynamic_cast<CurveCalibrationData &>(ehycpro.get());
-		LAString curveName = curveIndex;
+		AQLString curveName = curveIndex;
 
 		//------------------------------------------------------------------------
 		// 1. Remove properties from the property manager singleton object
@@ -65,29 +65,29 @@ namespace etrading
 		LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance, curveCollection);
 		yc.deleteCurveDataByCurveName(curveName);
 
-		// Remove DFs, terms, FwdRates, Fwd Term Matrix from CurveCollection LAObject. 
-		LAObjectHolder objHolder = en.getObject(curveCollection, ENCHKTYPE_NOCHECK);
+		// Remove DFs, terms, FwdRates, Fwd Term Matrix from CurveCollection AQLObject. 
+		AQLObjectHolder objHolder = en.getObject(curveCollection, ENCHKTYPE_NOCHECK);
 		if(objHolder.isDefined())
 		{
-			objHolder.remove(CALIBRATION_DATA_TERMS			+ LAString("_") + curveName);
-			objHolder.remove(IR_CALIBRATION_DATA_DFS			+ LAString("_") + curveName);
-			objHolder.remove(IR_CALIBRATION_DATA_DFS2		+ LAString("_") + curveName);
-			objHolder.remove(CALIBRATION_DATA_FWDTERMSMATRIX + LAString("_") + curveName);
-			objHolder.remove(IR_CALIBRATION_DATA_FORWARDRATES + LAString("_") + curveName);
+			objHolder.remove(CALIBRATION_DATA_TERMS			+ AQLString("_") + curveName);
+			objHolder.remove(IR_CALIBRATION_DATA_DFS			+ AQLString("_") + curveName);
+			objHolder.remove(IR_CALIBRATION_DATA_DFS2		+ AQLString("_") + curveName);
+			objHolder.remove(CALIBRATION_DATA_FWDTERMSMATRIX + AQLString("_") + curveName);
+			objHolder.remove(IR_CALIBRATION_DATA_FORWARDRATES + AQLString("_") + curveName);
 		}
 
 		// Remove DFs, terms, FwdRates, Fwd Term Matrix for all other index names related to the curve being removed
 
 		// getAssignedCurveMktMap() returns a map whose keys are the index names associated with the current curve.
 		// These index names CAN be in lower meanting they are case sensitive.
-		std::map<LAString, LAString> assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
+		std::map<AQLString, AQLString> assignedCurveMktMap = curveCalibrationData->getAssignedCurveMktMap();
 
 		// This block only works with STD and OIS curves
-		LADataHolder *dh = &curveCalibrationData->getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK);
+		AQLDataHolder *dh = &curveCalibrationData->getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{					
 			// Look through all the curves. These strings are all case sensitive.
-			LAStringVector gDFs = dynamic_cast<const LADataStrings &>(dh->get()).get();
+			AQLStringVector gDFs = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 			for (unsigned int i = 0; i < gDFs.size(); ++i)
 			{
 				if (curveName != gDFs[i])
@@ -95,16 +95,16 @@ namespace etrading
 					continue;
 				}
 
-				for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+				for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 				{
-					LAString currentMkt = it->second;
-					LAString dfCurve = gDFs[i];
-					LAString mktForCurve = curveCalibrationData->getMarketForCurve(dfCurve);
+					AQLString currentMkt = it->second;
+					AQLString dfCurve = gDFs[i];
+					AQLString mktForCurve = curveCalibrationData->getMarketForCurve(dfCurve);
 					if (currentMkt == mktForCurve)
 					{
 						// Find an index name that would offer the same DFs and FwdRates etc as 'curveName' does. Remove them.
 						// 'suffix_curve' is case sensitive.
-						LAString suffix_curve = "";
+						AQLString suffix_curve = "";
 						suffix_curve = "_" + it->first;
 
 						objHolder.remove(CALIBRATION_DATA_TERMS			+ suffix_curve);
@@ -121,13 +121,13 @@ namespace etrading
 		}
 
 		// This block is needed to work with basis curves
-		for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+		for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 		{
 			if (it->second == assignedCurveMktMap[curveName])
 			{
 				// Find an index name that would offer the same DFs and FwdRates etc as 'staticDataTable' does. Remove them.
 				// 'suffix_curve' is case sensitive.
-				LAString suffix_curve = "";
+				AQLString suffix_curve = "";
 				suffix_curve = "_" + it->first;
 
 				objHolder.remove(CALIBRATION_DATA_TERMS			+ suffix_curve);
@@ -148,8 +148,8 @@ namespace etrading
 		try
 		{
 			// suffix        
-			LAString suffix = "";
-			if (LAString(curveName).toUpper() != STD)
+			AQLString suffix = "";
+			if (AQLString(curveName).toUpper() != STD)
 			{
 				suffix = curveName;
 			}
@@ -161,19 +161,19 @@ namespace etrading
 
 			// Remove MarketData data specific to staticDataTable from the CurveCalibrationData object 
 			// This step **MUST** happen before the removal of instituent instrument dataValues.
-			//curveCalibrationData->LAObject::remove(CALIBRATION_DATA_MARKETDATA + (suffix.size() == 0 ? suffix : LAString("_") + suffix));
+			//curveCalibrationData->AQLObject::remove(CALIBRATION_DATA_MARKETDATA + (suffix.size() == 0 ? suffix : AQLString("_") + suffix));
 			curveCalibrationData->reset();
 
 			// Remove all curve constituent instruments by name
-			LAStringVector attributeNames = en.getNames();
+			AQLStringVector attributeNames = en.getNames();
 			for (size_t i = 0; i < attributeNames.size(); ++i)
 			{
 				name = attributeNames[i];
-				LAStringVector tokens = name.toToken('_');
+				AQLStringVector tokens = name.toToken('_');
 				
 				if (tokens.size() > 0)
 				{
-					if (LAString(curveName).toUpper() == STD)
+					if (AQLString(curveName).toUpper() == STD)
 					{
 						if (tokens[0] == curveCollection)
 						{
@@ -197,16 +197,16 @@ namespace etrading
 				}
 			}
 		}
-		catch(const LACoreError& e)	
+		catch(const AQLCoreError& e)	
 		{						
-			return LAString("#Error - Failed to remove '") + name + ("' from Object Pool. ") + e.getMsg();			
+			return AQLString("#Error - Failed to remove '") + name + ("' from Object Pool. ") + e.getMsg();			
 		}
 		
 		if (!curveDeleted)
 		{
-			LAString msg = LAString("#Error - Curve '") + curveIndex + LAString("' does not exist in collection '") + curveCollection + LAString("'");	
+			AQLString msg = AQLString("#Error - Curve '") + curveIndex + AQLString("' does not exist in collection '") + curveCollection + AQLString("'");	
 		}
 
-		return LAString("#Success - Curve '") + curveIndex + LAString("' in curve collection '") + curveCollection + LAString("' has been removed from the Object Pool");
+		return AQLString("#Success - Curve '") + curveIndex + AQLString("' in curve collection '") + curveCollection + AQLString("' has been removed from the Object Pool");
 	}
 }

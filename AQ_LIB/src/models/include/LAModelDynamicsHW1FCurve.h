@@ -5,12 +5,12 @@
 #endif
 
 //+++++ INCLUDE +++++
-//#include "LACoreTemplateType.h"
+//#include "AQLCoreTemplateType.h"
 #include "LAMathHWFuncMR.h"
 #include "LAMathHWFuncTool.h"
 #include "LAModelDynamicsAFFCurve.h"
 #include "LAMathHWFuncSigma.h"
-#include "LAGaussLegendre.h"
+#include "AQLGaussLegendre.h"
 #include <map>
 
 
@@ -159,7 +159,7 @@ protected:
     
 
 private:
-	LAGaussLegendre mGL;
+	AQLGaussLegendre mGL;
 	bool is_cloned;
     double varp( double T )  const;
 

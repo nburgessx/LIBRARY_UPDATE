@@ -3,8 +3,8 @@
 #include <vector>
 
 #include "LAModelDynamicsCurve.h"
-#include "LAFunction.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunction.h"
+#include "AQLCoreTemplateType.h"
 #include "LAModelUtilities.h"
 
 using namespace std;
@@ -91,8 +91,8 @@ protected:
 private:
 
 // Followings are integration related members.
-    LAMathFunction<LAMathVolatilityLMMCont> mIntegrate;
-    LAMathFunction<LAMathVolatilityLMMCont> mIntegrateSQ;
+    AQLMathFunction<LAMathVolatilityLMMCont> mIntegrate;
+    AQLMathFunction<LAMathVolatilityLMMCont> mIntegrateSQ;
     double get(double t);
     double getSQ(double t);
     size_t mn;

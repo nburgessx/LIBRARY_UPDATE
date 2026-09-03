@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 
@@ -51,10 +51,10 @@
 /*! 
     @brief Class declaration to represent linear function.
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
-class LACompoundMethod : public LAFunctionBase
+class LACompoundMethod : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
@@ -73,7 +73,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -85,14 +85,14 @@ public:
 								// return function value
 	virtual double				operator()(double x) const
 								{
-									return LAFunctionBase::operator()(x);								
+									return AQLFunctionBase::operator()(x);								
 								}
 
 
 	// 20060929 override virtual function of base class
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								};
 private:
 
@@ -117,7 +117,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -142,7 +142,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -167,7 +167,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -192,7 +192,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -217,7 +217,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -242,7 +242,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -268,7 +268,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -280,12 +280,12 @@ public:
 								// return function value
 	virtual double				operator()(double x) const
 								{
-									return LAFunctionBase::operator()(x);								
+									return AQLFunctionBase::operator()(x);								
 								}
 
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								};
 protected:
 };
@@ -307,7 +307,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -319,12 +319,12 @@ public:
 								// return function value
 	virtual double				operator()(double x) const
 								{
-									return LAFunctionBase::operator()(x);								
+									return AQLFunctionBase::operator()(x);								
 								}
 
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								};
 protected:
 };
@@ -345,7 +345,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -357,12 +357,12 @@ public:
 								// return function value
 	virtual double				operator()(double x) const
 								{
-									return LAFunctionBase::operator()(x);								
+									return AQLFunctionBase::operator()(x);								
 								}
 
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								};
 protected:
 };
@@ -375,11 +375,11 @@ public:
 	LACompoundMethod10& operator=(const LACompoundMethod10&) { return *this; }
 
 	virtual bool isTypeOf(function_t id) const;
-	virtual LACoreFunctionBase* clone() const;
+	virtual AQLCoreFunctionBase* clone() const;
 	virtual function_t getType() const;
 	virtual double operator()(const DoubleArray& x) const;
-	virtual double operator()(double x) const { return LAFunctionBase::operator ()(x); }
-	virtual LAFunctionBase& operator()(unsigned int pos, const DoubleArray& x) { return LAFunctionBase::operator ()(pos, x); }
+	virtual double operator()(double x) const { return AQLFunctionBase::operator ()(x); }
+	virtual AQLFunctionBase& operator()(unsigned int pos, const DoubleArray& x) { return AQLFunctionBase::operator ()(pos, x); }
 };
 
 class LACompoundMethod11 : public LACompoundMethod
@@ -390,10 +390,10 @@ public:
 	LACompoundMethod11& operator=(const LACompoundMethod11&) { return *this; }
 
 	virtual bool isTypeOf(function_t id) const;
-	virtual LACoreFunctionBase* clone() const;
+	virtual AQLCoreFunctionBase* clone() const;
 	virtual function_t getType() const;
 	virtual double operator()(const DoubleArray& x) const;
-	virtual double operator()(double x) const { return LAFunctionBase::operator ()(x); }
-	virtual LAFunctionBase& operator()(unsigned int pos, const DoubleArray& x) { return LAFunctionBase::operator ()(pos, x); }
+	virtual double operator()(double x) const { return AQLFunctionBase::operator ()(x); }
+	virtual AQLFunctionBase& operator()(unsigned int pos, const DoubleArray& x) { return AQLFunctionBase::operator ()(pos, x); }
 };
 

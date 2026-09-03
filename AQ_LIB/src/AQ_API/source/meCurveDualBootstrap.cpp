@@ -1,6 +1,6 @@
 #include "meCurveDualBootstrap.h"
 #include "TypeUtilities.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "tryMeCurveDualBootstrap.h"
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
@@ -63,77 +63,77 @@ const std::string meCurveDualBootstrap(const std::string& curveCollection,
 										const SWIG_STRINGMATRIX & tenorBasisRates_swap)
 {
     AQ_API_START
-	LAString ret;
+	AQLString ret;
 	
 	// marshall all inputs
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveName_db(curveName_db.c_str());
-	LAString tmp_curveName_OIS(curveName_OIS.c_str());
-	LAString tmp_curveName_swap(curveName_swap.c_str());
-	LAString tmp_curveIndex_OIS(curveIndex_OIS.c_str());
-	LAString tmp_curveIndex_swap(curveIndex_swap.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveName_db(curveName_db.c_str());
+	AQLString tmp_curveName_OIS(curveName_OIS.c_str());
+	AQLString tmp_curveName_swap(curveName_swap.c_str());
+	AQLString tmp_curveIndex_OIS(curveIndex_OIS.c_str());
+	AQLString tmp_curveIndex_swap(curveIndex_swap.c_str());
 
-	LAStringMatrix tmp_commonParams;
+	AQLStringMatrix tmp_commonParams;
 	swig::buildStringMatrix(tmp_commonParams, commonParams);
 
-	LAStringMatrix tmp_generateProp_OIS;
+	AQLStringMatrix tmp_generateProp_OIS;
 	swig::buildStringMatrix(tmp_generateProp_OIS, generateProp_OIS);
 
-	LAStringMatrix tmp_oisRates_OIS;
+	AQLStringMatrix tmp_oisRates_OIS;
 	swig::buildStringMatrix(tmp_oisRates_OIS, oisRates_OIS);
 
-	LAStringMatrix tmp_oisConv_OIS;
+	AQLStringMatrix tmp_oisConv_OIS;
 	swig::buildStringMatrix(tmp_oisConv_OIS, oisConv_OIS);
 
-	LAStringMatrix tmp_histRates_OIS;
+	AQLStringMatrix tmp_histRates_OIS;
 	swig::buildStringMatrix(tmp_histRates_OIS, histRates_OIS);
 
-	LAStringMatrix tmp_lobasisRates_OIS;
+	AQLStringMatrix tmp_lobasisRates_OIS;
 	swig::buildStringMatrix(tmp_lobasisRates_OIS, lobasisRates_OIS);
 
-	LAStringMatrix tmp_lobasisConv_OIS;
+	AQLStringMatrix tmp_lobasisConv_OIS;
 	swig::buildStringMatrix(tmp_lobasisConv_OIS, lobasisConv_OIS);
 
-	LAStringMatrix tmp_swapConv_OIS;
+	AQLStringMatrix tmp_swapConv_OIS;
 	swig::buildStringMatrix(tmp_swapConv_OIS, swapConv_OIS);
 
-	LAStringMatrix tmp_generateProp_swap;
+	AQLStringMatrix tmp_generateProp_swap;
 	swig::buildStringMatrix(tmp_generateProp_swap, generateProp_swap);
 
-	LAStringMatrix tmp_moneyConv_swap;
+	AQLStringMatrix tmp_moneyConv_swap;
 	swig::buildStringMatrix(tmp_moneyConv_swap, moneyConv_swap);
 
-	LAStringMatrix tmp_liborRates_swap;
+	AQLStringMatrix tmp_liborRates_swap;
 	swig::buildStringMatrix(tmp_liborRates_swap, liborRates_swap);
 
-	LAStringMatrix tmp_liborConv_swap;
+	AQLStringMatrix tmp_liborConv_swap;
 	swig::buildStringMatrix(tmp_liborConv_swap, liborConv_swap);
 
-	LAStringMatrix tmp_swapRates_swap;
+	AQLStringMatrix tmp_swapRates_swap;
 	swig::buildStringMatrix(tmp_swapRates_swap, swapRates_swap);
 
-	LAStringMatrix tmp_swapConv_swap;
+	AQLStringMatrix tmp_swapConv_swap;
 	swig::buildStringMatrix(tmp_swapConv_swap, swapConv_swap);
 		
-	LAStringMatrix tmp_fra3mRates_swap;
+	AQLStringMatrix tmp_fra3mRates_swap;
 	swig::buildStringMatrix(tmp_fra3mRates_swap, fra3mRates_swap);
 
-	LAStringMatrix tmp_fra6mRates_swap;
+	AQLStringMatrix tmp_fra6mRates_swap;
 	swig::buildStringMatrix(tmp_fra6mRates_swap, fra6mRates_swap);
 
-	LAStringMatrix tmp_fraConv_swap;
+	AQLStringMatrix tmp_fraConv_swap;
 	swig::buildStringMatrix(tmp_fraConv_swap, fraConv_swap);
 
-	LAStringMatrix tmp_futureRates_swap;
+	AQLStringMatrix tmp_futureRates_swap;
 	swig::buildStringMatrix(tmp_futureRates_swap, futureRates_swap);
 
-	LAStringMatrix tmp_futureConv_swap;
+	AQLStringMatrix tmp_futureConv_swap;
 	swig::buildStringMatrix(tmp_futureConv_swap, futureConv_swap);
 
-	LAStringMatrix tmp_tenorBasisConv_swap;
+	AQLStringMatrix tmp_tenorBasisConv_swap;
 	swig::buildStringMatrix(tmp_tenorBasisConv_swap, tenorBasisConv_swap);
 
-	LAStringMatrix tmp_tenorBasisRates_swap;
+	AQLStringMatrix tmp_tenorBasisRates_swap;
 	swig::buildStringMatrix(tmp_tenorBasisRates_swap, tenorBasisRates_swap);
 
 	ret = validation::tryMeCurveDualBootstrap(tmp_curveCollection,

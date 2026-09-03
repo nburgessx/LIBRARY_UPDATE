@@ -83,14 +83,14 @@
 #endif
 
 
-#include "LACoreProcedure.h"
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAOptimumBrent.h"
+#include "AQLCoreProcedure.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLOptimumBrent.h"
 #include "LAModelDynamicsBase.h"
-#include "LADataBasics.h"
-#include "LAObject.h"
+#include "AQLDataBasics.h"
+#include "AQLObject.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathYieldCurvePro.h"
 #include "LAMathAntonovFXOption.h"
@@ -103,10 +103,10 @@
 #define FN_IR_FXDISPLACEDDIFFUSIONCALIBRATION3F_STR	"fn_ir_fxdisplaceddiffusioncalibration3f"
 
 
-class LAObject;
-class LADataProcedure;
-class LAPriceDataManager;
-class LADataMultiReference;
+class AQLObject;
+class AQLDataProcedure;
+class AQLPriceDataManager;
+class AQLDataMultiReference;
 class LARatesPathElementCurve;
 class LAMathYieldCurve;
 ///////////////////////////////////////////////////////////////////////
@@ -126,23 +126,23 @@ public:
     // Check this class ID is the same or not	
 	virtual bool                isTypeOf(function_t id) const;
     // Copy this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
     // Return class type
 	virtual function_t			getType() const;
     // Generate cashlets and trigger/call schedule
-	virtual void	            calibrateModel(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const;
+	virtual void	            calibrateModel(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const;
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
     // calibrate market skew vol
-	virtual void	            calibMarketSkewVol(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const;
+	virtual void	            calibMarketSkewVol(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const;
     // calibrate hw dd parameter
-	virtual void	            calibHybridHWDDProcess(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const;
+	virtual void	            calibHybridHWDDProcess(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const;
 
 
 

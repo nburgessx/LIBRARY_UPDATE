@@ -1,4 +1,4 @@
-#include <LACoreAppError.h>
+#include <AQLCoreAppError.h>
 #include <LAMathConstraintSZ.h>
 
 
@@ -66,7 +66,7 @@ bool LAMathConstraintSZ::Impl::test(const Array& p) const
  	//double m = p.size();
 
 	//if(m != 4) throw invalid_argument("p.size() != 4 : Constraint_SZ::Impl::test");
-	//if(m != 3) throw LACoreInvalidData("p.size() != 4 : Constraint_SZ::Impl::test", __FILE__, __LINE__);
+	//if(m != 3) throw AQLCoreInvalidData("p.size() != 4 : Constraint_SZ::Impl::test", __FILE__, __LINE__);
 
 	size_t counter = 0;
 	for (size_t i = 0; i < 4; ++i)

@@ -20,7 +20,7 @@ namespace google_test
 {
     TEST( TestLVBHelpers, UNIT_LVB_ConvertToLAStringMatrix )
     {
-        LAStringMatrix laStringMatrix 
+        AQLStringMatrix laStringMatrix 
         {
             {"A", "B", "C"},
             {"D", "E", "F"},
@@ -34,7 +34,7 @@ namespace google_test
             {"G", "H", "I"}
         };
 
-        LAStringMatrix actualStringMatrix = etrading::convertToLAStringMatrix( standardStringMatrix );
+        AQLStringMatrix actualStringMatrix = etrading::convertToLAStringMatrix( standardStringMatrix );
         
         ASSERT_EQ( actualStringMatrix.size(), laStringMatrix.size() );
         for ( size_t i = 0; i < actualStringMatrix.size(); ++i )
@@ -49,7 +49,7 @@ namespace google_test
 
     TEST( TestLVBHelpers, UNIT_LVB_ConvertToStandardStringMatrix )
     {
-        LAStringMatrix laStringMatrix 
+        AQLStringMatrix laStringMatrix 
         {
             {"A", "B", "C"},
             {"D", "E", "F"},
@@ -122,7 +122,7 @@ namespace google_test
 
     TEST( TestLVBMethod, UNIT_LVB_toLAStringMatrix )
     {
-        LAStringMatrix laStringMatrix 
+        AQLStringMatrix laStringMatrix 
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"},
@@ -132,7 +132,7 @@ namespace google_test
         LabelValueBlock LVB( laStringMatrix );
 
         // *** The LVB is an unordered map so the string matrix from the LVB may be in a different order to the original string matrix ***
-        LAStringMatrix actualStringMatrix = LVB.toLAStringMatrix();
+        AQLStringMatrix actualStringMatrix = LVB.toLAStringMatrix();
 
         // String Matrix Dimensions must be the same
         ASSERT_EQ( actualStringMatrix.size(), laStringMatrix.size() );
@@ -143,9 +143,9 @@ namespace google_test
             // String Matrix must have 2 columns
             ASSERT_EQ( actualStringMatrix[i].size(), 2 );
             
-            LAString thisKey         = actualStringMatrix[i][0]; // Column 1
-            LAString actualValue     = actualStringMatrix[i][1]; // Column 2
-            LAString expectedValue   = LVB.getCompulsoryValueAsLAString( thisKey.c_str() );
+            AQLString thisKey         = actualStringMatrix[i][0]; // Column 1
+            AQLString actualValue     = actualStringMatrix[i][1]; // Column 2
+            AQLString expectedValue   = LVB.getCompulsoryValueAsLAString( thisKey.c_str() );
         
             EXPECT_EQ( expectedValue, actualValue );
         }
@@ -156,9 +156,9 @@ namespace google_test
             // String Matrix must have 2 columns
             ASSERT_EQ( laStringMatrix[i].size(), 2 );
             
-            LAString thisKey         = laStringMatrix[i][0]; // Column 1
-            LAString actualValue     = laStringMatrix[i][1]; // Column 2
-            LAString expectedValue   = LVB.getCompulsoryValueAsLAString( thisKey.c_str() );
+            AQLString thisKey         = laStringMatrix[i][0]; // Column 1
+            AQLString actualValue     = laStringMatrix[i][1]; // Column 2
+            AQLString expectedValue   = LVB.getCompulsoryValueAsLAString( thisKey.c_str() );
         
             EXPECT_EQ( expectedValue, actualValue );
         }
@@ -166,21 +166,21 @@ namespace google_test
 
     TEST( TestLVBMethod, UNIT_LVB_combineLAStringMatrices )
     {
-        LAStringMatrix matrix1
+        AQLStringMatrix matrix1
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"},
             {"KEY3", "VALUE3"}
         };
 
-        LAStringMatrix matrix2
+        AQLStringMatrix matrix2
         {
             {"KEY4", "VALUE4"},
             {"KEY5", "VALUE5"},
             {"KEY6", "VALUE6"}
         };
 
-        LAStringMatrix expectedMatrix
+        AQLStringMatrix expectedMatrix
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"},
@@ -190,7 +190,7 @@ namespace google_test
             {"KEY6", "VALUE6"}
         };
 
-        LAStringMatrix actualMatrix = etrading::combineLAStringMatrices( matrix1, matrix2 );
+        AQLStringMatrix actualMatrix = etrading::combineLAStringMatrices( matrix1, matrix2 );
 
         ASSERT_GT( actualMatrix.size(), size_t(0) );
         ASSERT_EQ( expectedMatrix.size(), actualMatrix.size() );
@@ -248,7 +248,7 @@ namespace google_test
 
     TEST( TestLVBMethod, UNIT_LVB_searchLAStringMatrix )
     {
-        LAStringMatrix searchMatrix 
+        AQLStringMatrix searchMatrix 
         {
             {"KEY1",  "VALUE1"},
             {"KEY2",  "VALUE2"},
@@ -262,8 +262,8 @@ namespace google_test
             {"KEY10", "VALUE10"}
         };
 
-        LAString actualValue;
-        LAString expectedValue;
+        AQLString actualValue;
+        AQLString expectedValue;
 
         actualValue     = etrading::searchLAStringMatrix( "KEY1", searchMatrix );
         expectedValue   = "VALUE1";
@@ -280,7 +280,7 @@ namespace google_test
 
     TEST( TestLVBMethod, UNIT_LVB_searchLAStringMatrix_ViaLVBLookupMethods )
     {
-        LAStringMatrix searchMatrix 
+        AQLStringMatrix searchMatrix 
         {
             {"KEY1",  "VALUE1"},
             {"KEY2",  "VALUE2"},
@@ -296,8 +296,8 @@ namespace google_test
 
         LabelValueBlock LVB( searchMatrix );
 
-        LAString actualValue;
-        LAString expectedValue;
+        AQLString actualValue;
+        AQLString expectedValue;
 
         actualValue     = LVB.getCompulsoryValueAsLAString( "KEY1", "SEARCH MATRIX" );
         expectedValue   = "VALUE1";
@@ -362,8 +362,8 @@ namespace google_test
 
         LabelValueBlock LVB( searchMatrix );
 
-        LAString actualValue;
-        LAString expectedValue;
+        AQLString actualValue;
+        AQLString expectedValue;
 
         actualValue     = LVB.getCompulsoryValueAsLAString( "KEY1", "SEARCH MATRIX" );
         expectedValue   = "VALUE1";
@@ -380,19 +380,19 @@ namespace google_test
 
     TEST( TestLVBConstructors, UNIT_LVB_AppendLVB )
     {
-        LAStringMatrix laStringMatrix1
+        AQLStringMatrix laStringMatrix1
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"}
         };
 
-        LAStringMatrix laStringMatrix2
+        AQLStringMatrix laStringMatrix2
         {
             {"KEY3", "VALUE3"},
             {"KEY4", "VALUE4"}
         };
 
-        LAStringMatrix expectedStringMatrix
+        AQLStringMatrix expectedStringMatrix
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"},
@@ -415,28 +415,28 @@ namespace google_test
 
         for ( size_t i = 0; i < expectedLVB.size(); ++i )
         {
-            LAString key            = expectedStringMatrix[i][0];
-            LAString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
-            LAString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
+            AQLString key            = expectedStringMatrix[i][0];
+            AQLString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
+            AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
             EXPECT_EQ( expectedValue, actualValue );
         }
     }
 
     TEST( TestLVBConstructors, UNIT_LVB_AppendLVB_CamelCaseKeys )
     {
-        LAStringMatrix laStringMatrix1
+        AQLStringMatrix laStringMatrix1
         {
             {"CamelCaseKey1", "Value1"},
             {"CamelCaseKey2", "Value2"}
         };
 
-        LAStringMatrix laStringMatrix2
+        AQLStringMatrix laStringMatrix2
         {
             {"CamelCaseKey3", "Value3"},
             {"CamelCaseKey4", "Value4"}
         };
 
-        LAStringMatrix expectedStringMatrix
+        AQLStringMatrix expectedStringMatrix
         {
             {"CamelCaseKey1", "Value1"},
             {"CamelCaseKey2", "Value2"},
@@ -459,19 +459,19 @@ namespace google_test
 
         for ( size_t i = 0; i < expectedLVB.size(); ++i )
         {
-            LAString key            = expectedStringMatrix[i][0];
-            LAString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
-            LAString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
+            AQLString key            = expectedStringMatrix[i][0];
+            AQLString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
+            AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
             EXPECT_EQ( expectedValue, actualValue );
         }
     }
 
     TEST( TestLVBConstructors, UNIT_CreateLVB_SingleKeyValue_UsingLAString )
     {
-        LAString key    = "KEY1";
-        LAString value  = "VALUE1";
+        AQLString key    = "KEY1";
+        AQLString value  = "VALUE1";
 
-        LAStringMatrix expectedStringMatrix
+        AQLStringMatrix expectedStringMatrix
         {
             {"KEY1", "VALUE1"}
         };
@@ -486,17 +486,17 @@ namespace google_test
         // Check expected LVB size same as it's matrix size
         EXPECT_EQ( expectedLVB.size(), expectedStringMatrix.size() );
 
-        LAString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
-        LAString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
+        AQLString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
+        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
         EXPECT_EQ( expectedValue, actualValue );
     }
 
     TEST( TestLVBConstructors, UNIT_CreateLVB_SingleKeyValue_UsingLAString_CamelCaseKey )
     {
-        LAString key    = "CamelCaseKey1";
-        LAString value  = "Value1";
+        AQLString key    = "CamelCaseKey1";
+        AQLString value  = "Value1";
 
-        LAStringMatrix expectedStringMatrix
+        AQLStringMatrix expectedStringMatrix
         {
             {"CamelCaseKey1", "Value1"}
         };
@@ -511,8 +511,8 @@ namespace google_test
         // Check expected LVB size same as it's matrix size
         EXPECT_EQ( expectedLVB.size(), expectedStringMatrix.size() );
 
-        LAString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
-        LAString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
+        AQLString actualValue    = actualLVB.getCompulsoryValueAsLAString( key.c_str(), "Actual LVB" );
+        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key.c_str(), "Expected LVB" );
         EXPECT_EQ( expectedValue, actualValue );
     }
 
@@ -536,8 +536,8 @@ namespace google_test
         // Check expected LVB size same as it's matrix size
         EXPECT_EQ( expectedLVB.size(), expectedStringMatrix.size() );
 
-        LAString actualValue    = actualLVB.getCompulsoryValueAsString( key, "Actual LVB" );
-        LAString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key, "Expected LVB" );
+        AQLString actualValue    = actualLVB.getCompulsoryValueAsString( key, "Actual LVB" );
+        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key, "Expected LVB" );
         EXPECT_EQ( expectedValue, actualValue );
     }
 
@@ -561,17 +561,17 @@ namespace google_test
         // Check expected LVB size same as it's matrix size
         EXPECT_EQ( expectedLVB.size(), expectedStringMatrix.size() );
 
-        LAString actualValue    = actualLVB.getCompulsoryValueAsString( key, "Actual LVB" );
-        LAString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key, "Expected LVB" );
+        AQLString actualValue    = actualLVB.getCompulsoryValueAsString( key, "Actual LVB" );
+        AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( key, "Expected LVB" );
         EXPECT_EQ( expectedValue, actualValue );
     }
 
     TEST( TestLVBConstructors, UNIT_CreateLVB_MultipleKeysValues_UsingLAString )
     {
-        LAStringVector keys    = { "KEY1", "KEY2" };
-        LAStringVector values  = { "VALUE1", "VALUE2" };
+        AQLStringVector keys    = { "KEY1", "KEY2" };
+        AQLStringVector values  = { "VALUE1", "VALUE2" };
 
-        LAStringMatrix expectedStringMatrix
+        AQLStringMatrix expectedStringMatrix
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"}
@@ -589,8 +589,8 @@ namespace google_test
 
         for( size_t i = 0; i < actualLVB.size(); ++i )
         {
-            LAString actualValue    = actualLVB.getCompulsoryValueAsLAString( keys[i].c_str(), "Actual LVB" );
-            LAString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( keys[i].c_str(), "Expected LVB" );
+            AQLString actualValue    = actualLVB.getCompulsoryValueAsLAString( keys[i].c_str(), "Actual LVB" );
+            AQLString expectedValue  = expectedLVB.getCompulsoryValueAsLAString( keys[i].c_str(), "Expected LVB" );
             EXPECT_EQ( expectedValue, actualValue );
         }
     }
@@ -618,15 +618,15 @@ namespace google_test
 
         for( size_t i = 0; i < actualLVB.size(); ++i )
         {
-            LAString actualValue    = actualLVB.getCompulsoryValueAsString( keys[i], "Actual LVB" );
-            LAString expectedValue  = expectedLVB.getCompulsoryValueAsString( keys[i], "Expected LVB" );
+            AQLString actualValue    = actualLVB.getCompulsoryValueAsString( keys[i], "Actual LVB" );
+            AQLString expectedValue  = expectedLVB.getCompulsoryValueAsString( keys[i], "Expected LVB" );
             EXPECT_EQ( expectedValue, actualValue );
         }
     }
 
     TEST( TestLVBConstructors, UNIT_CreateLVB_fromLAStringMatrix )
     {
-        LAStringMatrix expectedMatrix
+        AQLStringMatrix expectedMatrix
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"}
@@ -634,7 +634,7 @@ namespace google_test
 
         // Test LVB Constructor
         LabelValueBlock LVB( expectedMatrix );
-        LAStringMatrix actualMatrix = LVB.toLAStringMatrix();
+        AQLStringMatrix actualMatrix = LVB.toLAStringMatrix();
 
         ASSERT_GT( actualMatrix.size(), size_t(0) );
         ASSERT_EQ( expectedMatrix.size(), actualMatrix.size() );
@@ -642,8 +642,8 @@ namespace google_test
 
         for ( size_t i = 0; i < expectedMatrix.size(); ++i )
         {
-            LAString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
-            LAString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
+            AQLString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
+            AQLString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
             EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsLAString( expectedKey.c_str() ) );
         }
     }
@@ -674,17 +674,17 @@ namespace google_test
     
     TEST( TestLVBConstructors, UNIT_CreateLVB_fromLAStringKeyValue )
     {
-        LAStringMatrix expectedMatrix
+        AQLStringMatrix expectedMatrix
         {
             {"KEY1", "VALUE1"}
         };
 
-        LAString key    = "KEY1";
-        LAString value  = "VALUE1";
+        AQLString key    = "KEY1";
+        AQLString value  = "VALUE1";
         
         // Test LVB Constructor
         LabelValueBlock LVB( key, value );
-        LAStringMatrix actualMatrix = LVB.toLAStringMatrix();
+        AQLStringMatrix actualMatrix = LVB.toLAStringMatrix();
 
         ASSERT_GT( actualMatrix.size(), size_t(0) );
         ASSERT_EQ( expectedMatrix.size(), actualMatrix.size() );
@@ -692,8 +692,8 @@ namespace google_test
 
         for ( size_t i = 0; i < expectedMatrix.size(); ++i )
         {
-            LAString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
-            LAString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
+            AQLString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
+            AQLString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
             EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsLAString( expectedKey.c_str() ) );
         }
     }
@@ -726,18 +726,18 @@ namespace google_test
     
     TEST( TestLVBConstructors, UNIT_CreateLVB_fromLAStringMatrixKeysValues )
     {
-        LAStringMatrix expectedMatrix
+        AQLStringMatrix expectedMatrix
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"}
         };
 
-        LAStringVector keys     = { "KEY1", "KEY2" };
-        LAStringVector values   = { "VALUE1", "VALUE2" };
+        AQLStringVector keys     = { "KEY1", "KEY2" };
+        AQLStringVector values   = { "VALUE1", "VALUE2" };
         
         // Test LVB Constructor
         LabelValueBlock LVB( keys, values );
-        LAStringMatrix actualMatrix = LVB.toLAStringMatrix();
+        AQLStringMatrix actualMatrix = LVB.toLAStringMatrix();
 
         ASSERT_GT( actualMatrix.size(), size_t(0) );
         ASSERT_EQ( expectedMatrix.size(), actualMatrix.size() );
@@ -745,8 +745,8 @@ namespace google_test
 
         for ( size_t i = 0; i < expectedMatrix.size(); ++i )
         {
-            LAString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
-            LAString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
+            AQLString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
+            AQLString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
             EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsLAString( expectedKey.c_str() ) );
         }
     }
@@ -818,16 +818,16 @@ namespace google_test
     
     TEST( TestLVBConstructors, UNIT_CreateLVB_OriginalMatrix_AppendLAStringKeyValue )
     {
-        LAStringMatrix originalMatrix
+        AQLStringMatrix originalMatrix
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"}
         };
 
-        LAString appendKey    = "KEY3";
-        LAString appendValue  = "VALUE3";
+        AQLString appendKey    = "KEY3";
+        AQLString appendValue  = "VALUE3";
 
-        LAStringMatrix expectedMatrix
+        AQLStringMatrix expectedMatrix
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"},
@@ -842,24 +842,24 @@ namespace google_test
 
         for ( size_t i = 0; i < expectedMatrix.size(); ++i )
         {
-            LAString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
-            LAString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
+            AQLString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
+            AQLString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
             EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsLAString( expectedKey.c_str() ) );
         }
     }
     
     TEST( TestLVBConstructors, UNIT_CreateLVB_OriginalMatrix_AppendLAStringKeysValues )
     {
-        LAStringMatrix originalMatrix
+        AQLStringMatrix originalMatrix
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"}
         };
 
-        LAStringVector appendKeys    = { "KEY3", "KEY4" };
-        LAStringVector appendValues  = { "VALUE3", "VALUE4" };
+        AQLStringVector appendKeys    = { "KEY3", "KEY4" };
+        AQLStringVector appendValues  = { "VALUE3", "VALUE4" };
 
-        LAStringMatrix expectedMatrix
+        AQLStringMatrix expectedMatrix
         {
             {"KEY1", "VALUE1"},
             {"KEY2", "VALUE2"},
@@ -875,8 +875,8 @@ namespace google_test
 
         for ( size_t i = 0; i < expectedMatrix.size(); ++i )
         {
-            LAString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
-            LAString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
+            AQLString expectedKey    = expectedMatrix[i][0]; // Column 1 Key
+            AQLString expectedValue  = expectedMatrix[i][1]; // Column 2 Value
             EXPECT_EQ( expectedValue, LVB.getCompulsoryValueAsLAString( expectedKey.c_str() ) );
         }
     }

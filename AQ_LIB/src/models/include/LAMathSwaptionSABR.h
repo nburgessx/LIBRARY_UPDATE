@@ -10,8 +10,8 @@
 #pragma interface
 #endif
 
-#include <LACoreTemplateType.h>
-#include "LAInterpolationBase.h"
+#include <AQLCoreTemplateType.h>
+#include "AQLInterpolationBase.h"
 
 class LAMathSwaptionMatrix
 {

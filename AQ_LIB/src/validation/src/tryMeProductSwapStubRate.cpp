@@ -23,78 +23,78 @@ using etrading::decorateFilename;
 namespace
 {
 	StubRateAndFixingDate getStubRateAndFixingDate( const LabelValueBlock& swapLVB,
-													const LAStringVector& curveIndices,
-													const LAStringVector& curveTenors,
+													const AQLStringVector& curveIndices,
+													const AQLStringVector& curveTenors,
 													const DoubleVector& tenorCurveFixings,
 													bool validateKeys )
 	{
 		etrading::validateKeysForLVB( validation::tryMeProductSwapStubRateLVBKeys(), swapLVB.getKeys(), validateKeys );
         
         const std::string inputLVB              = "SwapLVB";
-        LAString curveCollection                = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection                = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
 
         // Get and Validate Label Value Block Inputs
         // --------------------------------------------------------------------------------------------------------
-        LADate effectiveDate	                = swapLVB.getCompulsoryValueAsDate( etrading::IRS_KEY::EFFECTIVE_DATE, inputLVB );
-        LAString maturityDateString             = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::MATURITY_DATE, inputLVB );
+        AQLDate effectiveDate	                = swapLVB.getCompulsoryValueAsDate( etrading::IRS_KEY::EFFECTIVE_DATE, inputLVB );
+        AQLString maturityDateString             = swapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::MATURITY_DATE, inputLVB );
 
-        LAString floatLegFreq			        = swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_FREQUENCY, etrading::IRS_KEY::FREQUENCY, inputLVB );
-        LAString floatLegDayCount			    = swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_DAYCOUNT, etrading::IRS_KEY::DAYCOUNT, inputLVB );
+        AQLString floatLegFreq			        = swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_FREQUENCY, etrading::IRS_KEY::FREQUENCY, inputLVB );
+        AQLString floatLegDayCount			    = swapLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_DAYCOUNT, etrading::IRS_KEY::DAYCOUNT, inputLVB );
 
-        LAString floatCalendar                  = swapLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(etrading::IRS_KEY::CALENDAR)
+        AQLString floatCalendar                  = swapLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(etrading::IRS_KEY::CALENDAR)
                                                                                                                            (etrading::IRS_KEY::ACCRUALCALENDAR)
                                                                                                                            (etrading::IRS_KEY::FLOAT_CALENDAR)
                                                                                                                            (etrading::IRS_KEY::FLOAT_ACCRUALCALENDAR) );
 
-        LAString floatBusinessDayAdjustment     = swapLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(etrading::IRS_KEY::BUSINESSDAYADJUSTMENT)
+        AQLString floatBusinessDayAdjustment     = swapLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(etrading::IRS_KEY::BUSINESSDAYADJUSTMENT)
                                                                                                                            (etrading::IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT)
                                                                                                                            (etrading::IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT)
                                                                                                                            (etrading::IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT) );
 
-        LAString floatLegFixLag			        = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_FIXINGLAG, "0D" );
-        LAString firstStubDate		            = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_FIRSTSTUBDATE, etrading::IRS_KEY::FIRSTSTUBDATE );
-        LAString lastStubDate		            = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_LASTSTUBDATE, etrading::IRS_KEY::LASTSTUBDATE );
-        LAString stubType			            = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_STUBTYPE, etrading::IRS_KEY::STUBTYPE );
-        LAString floatLegRollDayString		    = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_ROLLDAY, etrading::IRS_KEY::ROLLDAY );
+        AQLString floatLegFixLag			        = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_FIXINGLAG, "0D" );
+        AQLString firstStubDate		            = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_FIRSTSTUBDATE, etrading::IRS_KEY::FIRSTSTUBDATE );
+        AQLString lastStubDate		            = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_LASTSTUBDATE, etrading::IRS_KEY::LASTSTUBDATE );
+        AQLString stubType			            = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_STUBTYPE, etrading::IRS_KEY::STUBTYPE );
+        AQLString floatLegRollDayString		    = swapLVB.getOptionalValueAsLAStringFromKeys( etrading::IRS_KEY::FLOAT_ROLLDAY, etrading::IRS_KEY::ROLLDAY );
 
-        LAString interpolation                  = swapLVB.getOptionalValueAsLAString( etrading::PRICING_PARAMS::INTERPOLATION, "SPLINE" );
-        LAString useCurveIndex		            = swapLVB.getOptionalValueAsLAString( etrading::SWAP_STUB::USE_CURVE_INDEX );
-        LAString toleranceTenor		            = swapLVB.getOptionalValueAsLAString( etrading::SWAP_STUB::STUB_TOLERANCE, "0D" );
+        AQLString interpolation                  = swapLVB.getOptionalValueAsLAString( etrading::PRICING_PARAMS::INTERPOLATION, "SPLINE" );
+        AQLString useCurveIndex		            = swapLVB.getOptionalValueAsLAString( etrading::SWAP_STUB::USE_CURVE_INDEX );
+        AQLString toleranceTenor		            = swapLVB.getOptionalValueAsLAString( etrading::SWAP_STUB::STUB_TOLERANCE, "0D" );
 		// --------------------------------------------------------------------------------------------------------
 
-        LADate maturityDate	                    = etrading::validateMaturityDate( effectiveDate, maturityDateString);
+        AQLDate maturityDate	                    = etrading::validateMaturityDate( effectiveDate, maturityDateString);
 
         if ( maturityDate < effectiveDate )
         {
-            throw LACoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
         }
         //----------------------------------------
         
-        LAString stubTypeTmp( stubType );
-        LAString* stubTypePtr = NULL;
+        AQLString stubTypeTmp( stubType );
+        AQLString* stubTypePtr = NULL;
         if( stubType.size() != 0  )
         {
-            stubTypePtr = const_cast<LAString*>( &stubTypeTmp );
+            stubTypePtr = const_cast<AQLString*>( &stubTypeTmp );
         }
 
         // Set-Up First and Last Stub Parameters
-        LADate* firstOddDate    = NULL;
-        LADate* lastOddDate     = NULL;
-        LADate tempFirst;
-        LADate tempLast;
+        AQLDate* firstOddDate    = NULL;
+        AQLDate* lastOddDate     = NULL;
+        AQLDate tempFirst;
+        AQLDate tempLast;
 
         if( firstStubDate.size() != 0 && lastStubDate.size() != 0 )
         {
-            throw LACoreInvalidData( "#Error: Don't support setting FirstStub and LastStub at the same time. Function won't know which stubType period to calculate stubType rate for.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Don't support setting FirstStub and LastStub at the same time. Function won't know which stubType period to calculate stubType rate for.", __FILE__, __LINE__ );
         }
 
         if( firstStubDate.size() != 0 )
         {
             // Client should not specify both the stubType type and the first- and lastStubDates
-            if( stubType.size() != 0 && ( LAString( stubType ).toUpper() ) != "NONE" )
+            if( stubType.size() != 0 && ( AQLString( stubType ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             tempFirst       = etrading::stringToDate( firstStubDate, "#Error: Invalid 'FirstStubDate'." );
@@ -104,9 +104,9 @@ namespace
         else if( lastStubDate.size() != 0 )
         {
             // Client should not specify both the stubType type and the first- and lastStubDates
-            if( stubType.size() != 0 && ( LAString( stubType ).toUpper() ) != "NONE" )
+            if( stubType.size() != 0 && ( AQLString( stubType ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             tempLast        = etrading::stringToDate( lastStubDate, "#Error: Invalid 'LastStubDate'." );
@@ -127,14 +127,14 @@ namespace
         }
 
         int* floatLegRollDayPtr             = nullptr;
-        LAString* floatLegRollConventionPtr = nullptr;
+        AQLString* floatLegRollConventionPtr = nullptr;
         int floatLegRollDay                 = 0;
-        LAString floatLegRollConvention     = LAString( "" );
+        AQLString floatLegRollConvention     = AQLString( "" );
         bool floatLegIsEOMRoll              = false;
         bool floatLegIsStartRoll            = false;
 
-        // Note: We check for RollDayString = LAString("0") for backwards compatibility
-        if ( floatLegRollDayString != LAString( "0" ) && floatLegRollDayString.size() != 0 )
+        // Note: We check for RollDayString = AQLString("0") for backwards compatibility
+        if ( floatLegRollDayString != AQLString( "0" ) && floatLegRollDayString.size() != 0 )
         {
             //// Generate Fixed Leg Coupon Roll Conventions if the rollDayString populated
             floatLegRollDayPtr              = & floatLegRollDay;
@@ -150,7 +150,7 @@ namespace
                                                                 floatLegFreq,
                                                                 floatBusinessDayAdjustment,
                                                                 floatCalendar,
-                                                                LAString( "PRECEDING" ),      // fixingbusinessDayAdj
+                                                                AQLString( "PRECEDING" ),      // fixingbusinessDayAdj
                                                                 floatCalendar,
                                                                 floatLegFixLag,
                                                                 stubTypePtr,
@@ -189,7 +189,7 @@ namespace
 		}
 
 		bool isRegularSwapSchedule = false;
-		LAString rollConv("");
+		AQLString rollConv("");
 		if (isStubDateSpecified)
 		{
 			isRegularSwapSchedule = false;
@@ -275,8 +275,8 @@ namespace validation
     *  @return			Swap stub rate
     */
     double tryMeProductSwapStubRate( const LabelValueBlock& swapLVB,
-									 const LAStringVector& curveIndices,
-									 const LAStringVector& curveTenors,
+									 const AQLStringVector& curveIndices,
+									 const AQLStringVector& curveTenors,
 									 const DoubleVector& tenorCurveFixings,
                                      bool validateKeys )
     {
@@ -300,9 +300,9 @@ namespace validation
     *  @param [in]		validateKeys		True to validate the all keys provided are valid. Default to True
     *  @return			Swap stub rate
     */
-    LADate tryMeProductSwapStubFixingDate( const LabelValueBlock& swapLVB,
-									       const LAStringVector& curveIndices,
-									       const LAStringVector& curveTenors,
+    AQLDate tryMeProductSwapStubFixingDate( const LabelValueBlock& swapLVB,
+									       const AQLStringVector& curveIndices,
+									       const AQLStringVector& curveTenors,
 									       const DoubleVector& tenorCurveFixings,
                                            bool validateKeys )
     {
@@ -310,7 +310,7 @@ namespace validation
         
         RECORD_INPUTS( swapLVB, validateKeys );
 
-        const LADate stubFixingDate = getStubRateAndFixingDate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, validateKeys ).fixingDate_;
+        const AQLDate stubFixingDate = getStubRateAndFixingDate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, validateKeys ).fixingDate_;
 
         // Record Outputs AND Return the Result for logs, tests and playback
         RECORD_OUTPUTS_AND_RETURN_RESULT( stubFixingDate );

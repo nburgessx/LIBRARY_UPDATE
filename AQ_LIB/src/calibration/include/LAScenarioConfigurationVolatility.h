@@ -20,9 +20,9 @@
 #include "LAScenarioConfiguration.h"
 
 
-class LAObject;
+class AQLObject;
 class LAMathVolatility;
-class LAObjectPool;
+class AQLObjectPool;
 
 //===================== Class Declare LAScenarioConfigurationVolatility==================================
 /*! 
@@ -43,15 +43,15 @@ public:
 
 	//==============================================
 	// create risk scenario
-	virtual std::vector<LAObject *> createScenario(LADataInstance &dataInstance, const MAScenarioParam &param) const;
+	virtual std::vector<AQLObject *> createScenario(AQLDataInstance &dataInstance, const MAScenarioParam &param) const;
 
 private:
 	//==============================================
 	// create parallel shift vol
-	std::vector<LAObject *> createParallelShiftVol(LADataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const;
+	std::vector<AQLObject *> createParallelShiftVol(AQLDataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const;
 	//==============================================
 	// create grid shift vol
-	std::vector<LAObject *> createGridShiftVol(LADataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const;
+	std::vector<AQLObject *> createGridShiftVol(AQLDataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const;
 	//==============================================
 	// seartch coordinates matrix
 	void searchCoordinatesMatrix(const DoubleArray &grid_t, const DoubleArray &grid_T, const DoubleArray &area,
@@ -59,7 +59,7 @@ private:
 													 unsigned int &pos_T_s, unsigned int &pos_T_e) const;
 	//==============================================
 	// get double matrix
-	void getCoordinatesMatrix(const LAStringVector &term, DoubleMatrix &matrix) const;
+	void getCoordinatesMatrix(const AQLStringVector &term, DoubleMatrix &matrix) const;
 
 };
 

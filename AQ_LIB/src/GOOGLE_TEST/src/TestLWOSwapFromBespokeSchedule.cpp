@@ -97,8 +97,8 @@ namespace
 		const ReadDataFile::Load inputFile(fileName.c_str());
 
 		std::string scheduleName = inputFile["scheduleName"];
-		LAStringMatrix bespokeScheduleProperties = inputFile["bespokeScheduleProperties"];
-		LAStringMatrix bespokeScheduleLVB = inputFile["bespokeScheduleLVB"];
+		AQLStringMatrix bespokeScheduleProperties = inputFile["bespokeScheduleProperties"];
+		AQLStringMatrix bespokeScheduleLVB = inputFile["bespokeScheduleLVB"];
 
 		validation::tryMeLWOScheduleCreateBespoke(scheduleName, bespokeScheduleProperties, bespokeScheduleLVB);
 
@@ -111,7 +111,7 @@ namespace
 
 		std::string legObjectName = inputFile["legObjectName"];
 		std::string scheduleName = inputFile["scheduleName"];
-		LAStringMatrix legLVB = inputFile["legLVB"];
+		AQLStringMatrix legLVB = inputFile["legLVB"];
 
 		validation::tryMeLWOLegCreateFromSchedule(legObjectName, scheduleName, legLVB);
 
@@ -124,7 +124,7 @@ namespace
 
 		std::string swapName = inputFile["swapName"];
 		std::vector<std::string> legObjectNames = inputFile["legObjectNames"];
-		LAStringMatrix swapPropertiesLVB = inputFile["swapPropertiesLVB"];
+		AQLStringMatrix swapPropertiesLVB = inputFile["swapPropertiesLVB"];
 		bool isXccySwap = inputFile["isXccySwap"];
 
 		validation::tryMeLWOSwapCreateFromLegs(swapName, legObjectNames, swapPropertiesLVB, isXccySwap);
@@ -155,8 +155,8 @@ namespace
 		const ReadDataFile::Load inputFile(fileName.c_str());
 
 		std::string legObjectName = inputFile["legObjectName"];
-		LAStringMatrix feeProperties = inputFile["feeProperties"];
-		LAStringMatrix feeScheduleLVB = inputFile["feeScheduleLVB"];
+		AQLStringMatrix feeProperties = inputFile["feeProperties"];
+		AQLStringMatrix feeScheduleLVB = inputFile["feeScheduleLVB"];
 
 		validation::tryMeLWOFeeLegCreate(legObjectName, feeProperties, feeScheduleLVB);
 
@@ -189,7 +189,7 @@ namespace google_test
 
 		const ReadDataFile::Load inputFile(pvInput.c_str());
 		std::string swapName = inputFile["swapName"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
 		double actualValue = validation::tryMeLWOSwapPV(swapName, valuationSettingsLVB);
 
@@ -203,7 +203,7 @@ namespace google_test
 
 		const ReadDataFile::Load inputFile(parRateInput.c_str());
 		std::string swapName = inputFile["swapName"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
 		double actualValue = validation::tryMeLWOSwapParRate(swapName, valuationSettingsLVB);
 
@@ -217,7 +217,7 @@ namespace google_test
 
 		const ReadDataFile::Load inputFile(pv01Input.c_str());
 		std::string swapName = inputFile["swapName"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
 		double actualValue = validation::tryMeLWOSwapPV01(swapName, valuationSettingsLVB);
 
@@ -232,19 +232,19 @@ namespace google_test
 
 		const ReadDataFile::Load inputFile(dv01Input.c_str());
 
-		LAStringVector swapNames = inputFile["swapNames"];
-		LAStringMatrix curveCollectionNames = inputFile["curveCollectionNames"];
-		LAStringMatrix fixingTableNames = inputFile["fixingTableNames"];
+		AQLStringVector swapNames = inputFile["swapNames"];
+		AQLStringMatrix curveCollectionNames = inputFile["curveCollectionNames"];
+		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 		bool bumpSpreadInstruments = inputFile["bumpSpreadInstruments"];
 		double bumpSize = inputFile["bumpSize"];
-		LAString bumpMode = inputFile["bumpMode"];
-		LAString groupRiskBy = inputFile["groupRiskBy"];
+		AQLString bumpMode = inputFile["bumpMode"];
+		AQLString groupRiskBy = inputFile["groupRiskBy"];
 		bool aggregateRisks = inputFile["aggregateRisks"];
 		bool reportInLegCCY = inputFile["reportInLegCCY"];
 		DoubleVector xccyFXSpotRates = inputFile["xccyFXSpotRates"];
 
 		DoubleVector deltas;
-		LAStringVector tempStrVector;
+		AQLStringVector tempStrVector;
 		validation::tryMeLWOSwapDelta(tempStrVector, deltas, swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates);
 
 		const ReadDataFile::Load outputFile(dv01Output.c_str());
@@ -262,7 +262,7 @@ namespace google_test
 
 		const ReadDataFile::Load inputFile(pvInput_withFee.c_str());
 		std::string swapName = inputFile["swapName"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
 		double actualValue = validation::tryMeLWOSwapPV(swapName, valuationSettingsLVB);
 
@@ -276,7 +276,7 @@ namespace google_test
 
 		const ReadDataFile::Load inputFile(parRateInput_withFee.c_str());
 		std::string swapName = inputFile["swapName"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
 		double actualValue = validation::tryMeLWOSwapParRate(swapName, valuationSettingsLVB);
 
@@ -290,7 +290,7 @@ namespace google_test
 
 		const ReadDataFile::Load inputFile(pv01Input_withFee.c_str());
 		std::string swapName = inputFile["swapName"];
-		LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
 		double actualValue = validation::tryMeLWOSwapPV01(swapName, valuationSettingsLVB);
 
@@ -305,19 +305,19 @@ namespace google_test
 
 		const ReadDataFile::Load inputFile(dv01Input_withFee.c_str());
 
-		LAStringVector swapNames = inputFile["swapNames"];
-		LAStringMatrix curveCollectionNames = inputFile["curveCollectionNames"];
-		LAStringMatrix fixingTableNames = inputFile["fixingTableNames"];
+		AQLStringVector swapNames = inputFile["swapNames"];
+		AQLStringMatrix curveCollectionNames = inputFile["curveCollectionNames"];
+		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 		bool bumpSpreadInstruments = inputFile["bumpSpreadInstruments"];
 		double bumpSize = inputFile["bumpSize"];
-		LAString bumpMode = inputFile["bumpMode"];
-		LAString groupRiskBy = inputFile["groupRiskBy"];
+		AQLString bumpMode = inputFile["bumpMode"];
+		AQLString groupRiskBy = inputFile["groupRiskBy"];
 		bool aggregateRisks = inputFile["aggregateRisks"];
 		bool reportInLegCCY = inputFile["reportInLegCCY"];
 		DoubleVector xccyFXSpotRates = inputFile["xccyFXSpotRates"];
 
 		DoubleVector deltas;
-		LAStringVector tempStrVector;
+		AQLStringVector tempStrVector;
 		validation::tryMeLWOSwapDelta(tempStrVector, deltas, swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates);
 
 		const ReadDataFile::Load outputFile(dv01Output_withFee.c_str());

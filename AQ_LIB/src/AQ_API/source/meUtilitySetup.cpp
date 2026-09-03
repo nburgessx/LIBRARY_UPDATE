@@ -32,7 +32,7 @@ std::string meUtilityClearLWOCache()
 std::string meUtilityLoadCalendarFile(const std::string& filepath)
 {
 	AQ_API_START
-	LAString tmp_filepath(filepath.c_str());
+	AQLString tmp_filepath(filepath.c_str());
 	const std::string ret = validation::tryMeUtilityLoadCalendarFile(tmp_filepath).getCString();
     return ret;
 	AQ_API_END
@@ -45,7 +45,7 @@ std::string meUtilityLoadCalendarFile(const std::string& filepath)
 std::string meUtilityLoadStaticData(const std::string& filepath)
 {
 	AQ_API_START
-	LAString tmp_filepath(filepath.c_str());
+	AQLString tmp_filepath(filepath.c_str());
 	const std::string ret = validation::tryMeUtilityLoadStaticData(tmp_filepath).getCString();
     return ret;
 	AQ_API_END

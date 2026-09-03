@@ -89,9 +89,9 @@ namespace google_test
                 << "Results size should match terms test size" << std::endl;
 
 #ifdef GTEST32
-        LAString outputFileName = getDF_outputs_32bit_1;
+        AQLString outputFileName = getDF_outputs_32bit_1;
 #else
-        LAString outputFileName = getDF_outputs_64bit_1;
+        AQLString outputFileName = getDF_outputs_64bit_1;
 #endif
         CheckTestResultsAndRebaseOnRequest( results, TEST_DIR, outputFileName, tolerance );
     }
@@ -118,9 +118,9 @@ namespace google_test
                 << "Results size should match terms test size" << std::endl;
 
 #ifdef GTEST32
-        LAString outputFileName = getDF_outputs_32bit_2;
+        AQLString outputFileName = getDF_outputs_32bit_2;
 #else
-        LAString outputFileName = getDF_outputs_64bit_2;
+        AQLString outputFileName = getDF_outputs_64bit_2;
 #endif
         CheckTestResultsAndRebaseOnRequest( results, TEST_DIR, outputFileName, tolerance );
     }
@@ -147,9 +147,9 @@ namespace google_test
                 << "Results size should match terms test size" << std::endl;
 
 #ifdef GTEST32
-        LAString outputFileName = getDF_outputs_32bit_3;
+        AQLString outputFileName = getDF_outputs_32bit_3;
 #else
-        LAString outputFileName = getDF_outputs_64bit_3;
+        AQLString outputFileName = getDF_outputs_64bit_3;
 #endif
         CheckTestResultsAndRebaseOnRequest( results, TEST_DIR, outputFileName, tolerance );
     }
@@ -176,9 +176,9 @@ namespace google_test
                 << "Results size should match terms test size" << std::endl;
 
 #ifdef GTEST32
-        LAString outputFileName = getDF_outputs_32bit_4;
+        AQLString outputFileName = getDF_outputs_32bit_4;
 #else
-        LAString outputFileName = getDF_outputs_64bit_4;
+        AQLString outputFileName = getDF_outputs_64bit_4;
 #endif
         CheckTestResultsAndRebaseOnRequest( results, TEST_DIR, outputFileName, tolerance );
     }
@@ -205,9 +205,9 @@ namespace google_test
                 << "Results size should match terms test size" << std::endl;
 
 #ifdef GTEST32
-        LAString outputFileName = getDF_outputs_32bit_5;
+        AQLString outputFileName = getDF_outputs_32bit_5;
 #else
-        LAString outputFileName = getDF_outputs_64bit_5;
+        AQLString outputFileName = getDF_outputs_64bit_5;
 #endif
         CheckTestResultsAndRebaseOnRequest( results, TEST_DIR, outputFileName, tolerance );
     }
@@ -234,9 +234,9 @@ namespace google_test
                 << "Results size should match terms test size" << std::endl;
 
 #ifdef GTEST32
-        LAString outputFileName = getDF_outputs_32bit_6;
+        AQLString outputFileName = getDF_outputs_32bit_6;
 #else
-        LAString outputFileName = getDF_outputs_64bit_6;
+        AQLString outputFileName = getDF_outputs_64bit_6;
 #endif
         CheckTestResultsAndRebaseOnRequest( results, TEST_DIR, outputFileName, tolerance );
     }
@@ -263,9 +263,9 @@ namespace google_test
                 << "Results size should match terms test size" << std::endl;
 
 #ifdef GTEST32
-        LAString outputFileName = getDF_outputs_32bit_7;
+        AQLString outputFileName = getDF_outputs_32bit_7;
 #else
-        LAString outputFileName = getDF_outputs_64bit_7;
+        AQLString outputFileName = getDF_outputs_64bit_7;
 #endif
         CheckTestResultsAndRebaseOnRequest( results, TEST_DIR, outputFileName, tolerance );
     }

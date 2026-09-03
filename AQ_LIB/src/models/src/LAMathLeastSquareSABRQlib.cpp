@@ -5,14 +5,14 @@
 #endif
 
 
-#include <LACoreTemplateType.h>
-#include <LAString.h>
-#include "LABasic.h"
-#include "LADist.h"
+#include <AQLCoreTemplateType.h>
+#include <AQLString.h>
+#include "AQLBasic.h"
+#include "AQLDist.h"
 
 #include "LAMathBaseFuncUtility.h"
 #include "LAMathInterpolationUtilities.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAAnalyticFormula.h"
 #include "LAMathIRVanillaFuncUtility.h"
 #include "LAMathLeastSquareSABRQlib.h"
@@ -40,7 +40,7 @@ LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib( LAMathSABR
 														  const vector<double>& param0_,
 														  const vector<bool>& flg_,
 														  const vector<double>& target2fit_,
-														  const LAString& target_
+														  const AQLString& target_
 														)
 :
 CostFunction(),
@@ -61,24 +61,24 @@ cloned(false)
 {
 	if(weight.size() != n)
 	{
-		throw LACoreInvalidData(" strike.size() != weight.size() : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
+		throw AQLCoreInvalidData(" strike.size() != weight.size() : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
 	}
 	
 	if(param0.size() != 4)
 	{
-		throw LACoreInvalidData("param0.size() != 4 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("param0.size() != 4 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
 	}
 
 	if(flg.size() != 4)
 	{
-		throw LACoreInvalidData("flg.size() != 4 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("flg.size() != 4 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
 	}
 
 	for(size_t i = 0; i < n; ++i)
 	{
 		if(sgn[i] != 1 && sgn[i] != -1)
 		{
-			throw LACoreInvalidData("sgn must -1 or 1 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("sgn must -1 or 1 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
 		}
 	}
 
@@ -127,7 +127,7 @@ QuantLib::Real LAMathLeastSquareSABRCostFuncQlib::value(const QuantLib::Array& x
 	size_t m = x.size();
 	
 	if(m == 0 || m > 4)
-		throw LACoreInvalidData("m == 0 || m > 4 : LAMathLeastSquareSABRCostFuncQlib::value", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("m == 0 || m > 4 : LAMathLeastSquareSABRCostFuncQlib::value", __FILE__, __LINE__);
 
 	set_params(x);
 	sabr->setSABRParam(alpha,beta,nu,rho); 
@@ -167,7 +167,7 @@ QuantLib::Array LAMathLeastSquareSABRCostFuncQlib::values(const QuantLib::Array&
 	size_t m = x.size();
 	
 	if(m == 0 || m > 4)
-		throw LACoreInvalidData("m == 0 || m > 4 : LAMathLeastSquareSABRCostFuncQlib::value", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("m == 0 || m > 4 : LAMathLeastSquareSABRCostFuncQlib::value", __FILE__, __LINE__);
 
 	set_params(x);    
 	sabr->setSABRParam(alpha,beta,nu,rho); 
@@ -212,7 +212,7 @@ void LAMathLeastSquareSABRCostFuncQlib::set_params(const QuantLib::Array& x) con
 			{
 				if(!flg[3])
 				{
-					throw LACoreInvalidData("All element of flg is false : LAMathLeastSquareSABRCostFuncQlib::set_params", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("All element of flg is false : LAMathLeastSquareSABRCostFuncQlib::set_params", __FILE__, __LINE__);
 				}
 				else rho = x[0];
 			}
@@ -350,7 +350,7 @@ void LAMathLeastSquareSABRConstraintQlib::Impl::set_params(const QuantLib::Array
 			{
 				if(!flg[3])
 				{
-					throw LACoreInvalidData("All element of flg is false : LAMathLeastSquareSABRCostFuncQlib::set_params", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("All element of flg is false : LAMathLeastSquareSABRCostFuncQlib::set_params", __FILE__, __LINE__);
 				}
 				else rho = x[0];
 			}
@@ -494,7 +494,7 @@ void LAMathLeastSquareSABRConstraint_AntonovQlib::Impl::set_params(const QuantLi
 			{
 				if(!flg[3])
 				{
-					throw LACoreInvalidData("All element of flg is false : LAMathLeastSquareSABRCostFuncQlib::set_params", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("All element of flg is false : LAMathLeastSquareSABRCostFuncQlib::set_params", __FILE__, __LINE__);
 				}
 				else rho = x[0];
 			}
@@ -557,8 +557,8 @@ LAMathLeastSquareSABRCapFloorCostFuncQlib::LAMathLeastSquareSABRCapFloorCostFunc
 	DoubleMatrix numat_,
 	DoubleMatrix rhomat_,
 	const std::vector<int>& param_pos_,
-	const LAString& approxmethod_,
-	const LAString& tenor_point_str_,
+	const AQLString& approxmethod_,
+	const AQLString& tenor_point_str_,
 	const vector<double>& expiry_capfloor_,
 	const vector<double>& expiry_capfloorlet_,
 	const vector<double>& tenor_,
@@ -570,7 +570,7 @@ LAMathLeastSquareSABRCapFloorCostFuncQlib::LAMathLeastSquareSABRCapFloorCostFunc
 	const vector<double>& param0_,
 	const vector<bool>& flg_,
 	const vector<double>& target2fit_,
-	const LAString& target_,
+	const AQLString& target_,
 	const size_t& num_capfloorlet_,
 	const size_t& num_diffterm_
 )
@@ -602,24 +602,24 @@ LAMathLeastSquareSABRCapFloorCostFuncQlib::LAMathLeastSquareSABRCapFloorCostFunc
 {
 	if (weight.size() != n)
 	{
-		throw LACoreInvalidData(" strike.size() != weight.size() : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
+		throw AQLCoreInvalidData(" strike.size() != weight.size() : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
 	}
 
 	if (param0.size() != 4)
 	{
-		throw LACoreInvalidData("param0.size() != 4 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("param0.size() != 4 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
 	}
 
 	if (flg.size() != 4)
 	{
-		throw LACoreInvalidData("flg.size() != 4 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("flg.size() != 4 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
 	}
 
 	for (size_t i = 0; i < n; ++i)
 	{
 		if (sgn[i] != 1 && sgn[i] != -1)
 		{
-			throw LACoreInvalidData("sgn must -1 or 1 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("sgn must -1 or 1 : LAMathLeastSquareSABRCostFuncQlib::LAMathLeastSquareSABRCostFuncQlib", __FILE__, __LINE__);
 		}
 	}
 
@@ -675,7 +675,7 @@ QuantLib::Real LAMathLeastSquareSABRCapFloorCostFuncQlib::value(const QuantLib::
 	size_t m = x.size();
 
 	if (m == 0 || m > 4)
-		throw LACoreInvalidData("m == 0 || m > 4 : LAMathLeastSquareSABRCapFloorCostFuncQlib::value", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("m == 0 || m > 4 : LAMathLeastSquareSABRCapFloorCostFuncQlib::value", __FILE__, __LINE__);
 
 	set_params(x);
 	
@@ -736,15 +736,15 @@ QuantLib::Real LAMathLeastSquareSABRCapFloorCostFuncQlib::value(const QuantLib::
 				}
 				else
 				{
-					LAString msg = "Do not input target premium.";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "Do not input target premium.";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 				tmp2 = sqrt(weight[i]) * (target2fit[i] - SABRCapFloorPrem);
 			}
 			else if (target == CALIB_TARGET_VOLATILITY)
 			{
-				LAString msg = "Only premium is allowed for the calibration target.";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "Only premium is allowed for the calibration target.";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 
 			tmp += tmp2 * tmp2;
@@ -759,7 +759,7 @@ QuantLib::Array LAMathLeastSquareSABRCapFloorCostFuncQlib::values(const QuantLib
 	size_t m = x.size();
 
 	if (m == 0 || m > 4)
-		throw LACoreInvalidData("m == 0 || m > 4 : LAMathLeastSquareSABRCapFloorCostFuncQlib::values", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("m == 0 || m > 4 : LAMathLeastSquareSABRCapFloorCostFuncQlib::values", __FILE__, __LINE__);
 
 	set_params(x);
 	
@@ -820,15 +820,15 @@ QuantLib::Array LAMathLeastSquareSABRCapFloorCostFuncQlib::values(const QuantLib
 				}
 				else
 				{
-					LAString msg = "Do not input target premium.";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "Do not input target premium.";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 				diff_SQs[i] = sqrt(weight[i]) * (SABRCapFloorPrem - target2fit[i]);
 			}
 			else if (target == CALIB_TARGET_VOLATILITY)
 			{
-				LAString msg = "Only premium is allowed for the calibration target.";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "Only premium is allowed for the calibration target.";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 		}
 	}
@@ -847,7 +847,7 @@ void LAMathLeastSquareSABRCapFloorCostFuncQlib::set_params(const QuantLib::Array
 			{
 				if (!flg[3])
 				{
-					throw LACoreInvalidData("All element of flg is false : LAMathLeastSquareSABRCapFloorCostFuncQlib::set_params", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("All element of flg is false : LAMathLeastSquareSABRCapFloorCostFuncQlib::set_params", __FILE__, __LINE__);
 				}
 				else rho = x[0];
 			}

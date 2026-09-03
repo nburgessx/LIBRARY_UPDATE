@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -175,7 +175,7 @@ namespace validation
 	*	@param [in]	termDiscountCurveIndex	termDiscountCurveIndex
 	*	@return		FxRate on curve as of date
 	*/
-	double tryMeLWOFXSpotToAsOfDate(const double fxSpot, const LADate& fxSpotDate, const std::string& baseCurveCollection, const std::string& baseDiscountCurveIndex, const std::string& termCurveCollection, const std::string& termDiscountCurveIndex);
+	double tryMeLWOFXSpotToAsOfDate(const double fxSpot, const AQLDate& fxSpotDate, const std::string& baseCurveCollection, const std::string& baseDiscountCurveIndex, const std::string& termCurveCollection, const std::string& termDiscountCurveIndex);
 
 	/*	@brief		validation interface for the meLWOFXAsofDateToSpot method
 	*	@param [in]	fxAsOfDateRate			FX rate on As of Date
@@ -186,7 +186,7 @@ namespace validation
 	*	@param [in]	termDiscountCurveIndex	termDiscountCurveIndex
 	*	@return		FxRate on curve as of date
 	*/
-	double tryMeLWOFXAsOfDateToSpot(const double fxAsOfDateRate, const LADate& fxSpotDate, const std::string& baseCurveCollection, const std::string& baseDiscountCurveIndex, const std::string& termCurveCollection, const std::string& termDiscountCurveIndex);
+	double tryMeLWOFXAsOfDateToSpot(const double fxAsOfDateRate, const AQLDate& fxSpotDate, const std::string& baseCurveCollection, const std::string& baseDiscountCurveIndex, const std::string& termCurveCollection, const std::string& termDiscountCurveIndex);
 
 
 

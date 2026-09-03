@@ -32,7 +32,7 @@ namespace validation
 	*  @param [in]		validateKeys		            True to validate the all keys provided are valid for the bespokeScheduleProperties. Default to True
     *  @return			The schedule name
     */
-	std::string tryMeLWOScheduleCreateBespoke(const std::string& scheduleName, const LabelValueBlock& bespokeScheduleProperties, const LAStringMatrix& bespokeScheduleLVB, bool validateKeys = true);
+	std::string tryMeLWOScheduleCreateBespoke(const std::string& scheduleName, const LabelValueBlock& bespokeScheduleProperties, const AQLStringMatrix& bespokeScheduleLVB, bool validateKeys = true);
 
 	/* @brief			validation interface for the meLWOScheduleCreateBespokeFromCashflows method
 	*  @param [in]		scheduleObjectName				Bespoke schedule name
@@ -41,7 +41,7 @@ namespace validation
 	*  @param [in]		validateKeys		            True to validate the all keys provided are valid for the bespokeScheduleProperties. Default to True
 	*  @return			The schedule name
 	*/
-	std::string tryMeLWOScheduleCreateBespokeFromCashflows(const std::string& scheduleObjectName, const LabelValueBlock& bespokeScheduleProperties, const LAStringMatrix& bespokeCashflowsLVB, bool validateKeys = true);
+	std::string tryMeLWOScheduleCreateBespokeFromCashflows(const std::string& scheduleObjectName, const LabelValueBlock& bespokeScheduleProperties, const AQLStringMatrix& bespokeCashflowsLVB, bool validateKeys = true);
 
    	/* @brief			validation interface for the meLWOFeeScheduleCreate method
 	*  @param [in]		scheduleName				Fee schedule name
@@ -49,7 +49,7 @@ namespace validation
 	*  @param [in]		validateKeys		True to validate the all keys provided are valid. Default to True
     *  @return			The schedule name
     */
-	std::string tryMeLWOFeeScheduleCreate(const std::string& scheduleName, const LAStringMatrix& feeScheduleLVB, bool validateKeys);
+	std::string tryMeLWOFeeScheduleCreate(const std::string& scheduleName, const AQLStringMatrix& feeScheduleLVB, bool validateKeys);
 
 	/* @brief			validation interface for the meUtilitySwapScheduleTemplate method
 	*  @param [in]		swapScheduleLVB		A label value block defining the swap schedule

@@ -5,8 +5,8 @@
 #endif
 
 #include "LAMathDriftFuncBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LARatesSDEBase.h"
 #include "LAPriceDriftFX.h"
 
@@ -34,7 +34,7 @@ public:
 	// Default constructor
 	LAPriceDriftFXLogNumeraire(const double s = 0.0, SDE_TYPE type = DIVIDEdXbyX);
 	// constructor
-	LAPriceDriftFXLogNumeraire(const LAString& sdeAttrNameD, const LAString& sdeAttrNameF, const double s = 0.0, SDE_TYPE type = DIVIDEdXbyX);
+	LAPriceDriftFXLogNumeraire(const AQLString& sdeAttrNameD, const AQLString& sdeAttrNameF, const double s = 0.0, SDE_TYPE type = DIVIDEdXbyX);
 	//	Copy constructor
 //	LAPriceDriftFXLogNumeraire(const LAPriceDriftFXLogNumeraire& v);
 	// Destructor
@@ -46,7 +46,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;

@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of calibration function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 //  2008, AlgoQuantHub.
@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       MACalibrationFunc
 //  DESCRIPTION :       Source code of calibration function
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -25,7 +25,7 @@
 
 #include <algorithm>
 #include "LACalibrationFunc.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 #include "LAMathVolFuncFXStrangleSolver.h"
 #ifdef __HAS_MIC__
 
@@ -39,7 +39,7 @@ using namespace std;
 */
 
 MACalibrationFunc::MACalibrationFunc(void)
-: LAFunctionBase(), mpRealFunc(0), mIsReady(false)
+: AQLFunctionBase(), mpRealFunc(0), mIsReady(false)
 {
 }
 
@@ -59,11 +59,11 @@ MACalibrationFunc::~MACalibrationFunc(void)
 	@brief copy constructor
 */
 MACalibrationFunc::MACalibrationFunc(const MACalibrationFunc &rhs) 
-: LAFunctionBase(),  mpRealFunc(0), mIsReady(rhs.mIsReady)
+: AQLFunctionBase(),  mpRealFunc(0), mIsReady(rhs.mIsReady)
 {
 	if (rhs.mpRealFunc)
 	{
-		mpRealFunc = dynamic_cast<const LAFunctionBase *>(rhs.mpRealFunc->clone());
+		mpRealFunc = dynamic_cast<const AQLFunctionBase *>(rhs.mpRealFunc->clone());
 	}
 }
 
@@ -71,7 +71,7 @@ MACalibrationFunc::MACalibrationFunc(const MACalibrationFunc &rhs)
     @brief Make copy(clone) of this class realfunction
     @return Deep copy of real function
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 MACalibrationFunc::clone() const
 {
 	try 
@@ -104,7 +104,7 @@ MACalibrationFunc::clone() const
 #ifdef __HAS_MIC__
 		mMutex.unlock();
 #endif
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 }
 
@@ -116,7 +116,7 @@ MACalibrationFunc::clone() const
 bool
 MACalibrationFunc::isTypeOf(function_t id) const
 {
-	return (id == FN_CALIBRATIONFUNC ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CALIBRATIONFUNC ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -140,7 +140,7 @@ MACalibrationFunc::operator()(const DoubleArray& x) const
 {
 	if (!mIsReady || !mpRealFunc)
 	{
-		throw LACoreInvalidData("This method is not ready. Real method may be NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("This method is not ready. Real method may be NULL", __FILE__, __LINE__);
 	}
 	return mpRealFunc->operator ()(x);
 }
@@ -156,7 +156,7 @@ MACalibrationFunc::operator()(double t) const
 {
 	if (!mIsReady || !mpRealFunc)
 	{
-		throw LACoreInvalidData("This method is not ready. Real method may be NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("This method is not ready. Real method may be NULL", __FILE__, __LINE__);
 	}
 	return mpRealFunc->operator ()(t);
 }
@@ -166,7 +166,7 @@ MACalibrationFunc::operator()(double t) const
 	@param[in] method
 */
 void
-MACalibrationFunc::setRealFunction(const LAFunctionBase &method)
+MACalibrationFunc::setRealFunction(const AQLFunctionBase &method)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::Mutex> lock(mMutex);
@@ -176,7 +176,7 @@ MACalibrationFunc::setRealFunction(const LAFunctionBase &method)
 		delete mpRealFunc;
 	}
 	
-	mpRealFunc = dynamic_cast<const LAFunctionBase *>(method.clone());
+	mpRealFunc = dynamic_cast<const AQLFunctionBase *>(method.clone());
 }
 
 /*!
@@ -192,7 +192,7 @@ MACalibrationFunc::setOn()
 	
 	if (!mpRealFunc)
 	{
-		throw LACoreInvalidData("real function is not set yet.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("real function is not set yet.", __FILE__, __LINE__);
 	}
 	mIsReady = true;
 	mEvent.notifyAll();

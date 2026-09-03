@@ -20,11 +20,11 @@
 
 #include "LAObjectConfiguration.h"
 #include "LADefinitions.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 #include <map>
 
 
-class LAObjectPool;
+class AQLObjectPool;
 class LAStaticData;
 //===================== Class Declare LAObjectConfigurationVanilla==================================
 /*! 
@@ -44,18 +44,18 @@ public:
 	LAObjectConfigurationVanilla(const LAObjectConfigurationVanilla &rhs);
 	LAObjectConfigurationVanilla &operator=(const LAObjectConfigurationVanilla &rhs);
 	// setup  pathentity
-	virtual void setUpPathEntity(LAObjectPool &objPool, const LAString *pPathName = 0) const;
+	virtual void setUpPathEntity(AQLObjectPool &objPool, const AQLString *pPathName = 0) const;
 
 protected:
 	//==============================================
 	// setup  valuable object
-	virtual void setUpValuableEntity(LAObjectPool &objPool) const; //{return;};
+	virtual void setUpValuableEntity(AQLObjectPool &objPool) const; //{return;};
 	////==============================================
 	// setup  extra object
-	virtual void setUpExtraEntity(LAObjectPool &objPool) const ;
+	virtual void setUpExtraEntity(AQLObjectPool &objPool) const ;
 	//==============================================
 	// get model name
-	virtual LAString getModelName() const { return MODEL_IRVANILLA; }
+	virtual AQLString getModelName() const { return MODEL_IRVANILLA; }
 	//==============================================
 	// get sde timegrid
 	virtual void getSDETimeGrid(DoubleArray &timeGrid) const {timeGrid; return;};
@@ -63,25 +63,25 @@ protected:
 	// get sde timegrid
 	virtual void getSDEIntegralTimeGrid(DoubleArray &timeGrid) const {timeGrid; return;};
 	// setUpCallSpreadForFXDigitalOption
-	void setUpCallSpreadForFXDigitalOption(LAMathObjectValue &trade) const;
+	void setUpCallSpreadForFXDigitalOption(AQLMathObjectValue &trade) const;
 	// setUpCallSpreadForDigitalOption
-	void setUpCallSpreadForIRDigitalOption(LAMathObjectValue &trade) const;
+	void setUpCallSpreadForIRDigitalOption(AQLMathObjectValue &trade) const;
 	// setUpStubCoefficient
-	//void setUpStubCoefficient(LAObjectPool &objPool,  LAMathObjectValue &trade) const;
+	//void setUpStubCoefficient(AQLObjectPool &objPool,  AQLMathObjectValue &trade) const;
 	// setUpRenotionalFXInfo
-	void setUpRenotionalFXInfo(LAObjectPool &objPool,  LAMathObjectValue &trade) const;
+	void setUpRenotionalFXInfo(AQLObjectPool &objPool,  AQLMathObjectValue &trade) const;
 	// setUpConvexityAdjustInfo
-	void setUpConvexityAdjustInfo(LAObjectPool &objPool,  LAMathObjectValue &trade) const;
+	void setUpConvexityAdjustInfo(AQLObjectPool &objPool,  AQLMathObjectValue &trade) const;
 
 	// setUpLiborRateMap
-	void setUpLiborRateMap(LAObjectPool &objPool) const;
+	void setUpLiborRateMap(AQLObjectPool &objPool) const;
 
 	// set up properties of SpotRateRatioMethod for stub rates calculation
-	void setUpSpotRateRatioMethod(LAObjectPool &objPool,  LAMathObjectValue &trade) const;
+	void setUpSpotRateRatioMethod(AQLObjectPool &objPool,  AQLMathObjectValue &trade) const;
 
-	bool setUpMarkovFunctionalParameter(LAObjectPool &objPool, LAMathObjectValue &trade) const;
+	bool setUpMarkovFunctionalParameter(AQLObjectPool &objPool, AQLMathObjectValue &trade) const;
 	
-	mutable std::map<LAString, LAInterpolationBase*> mLiborRateMap;
-	mutable std::map<LAString, DoubleVector> mLiborGridTermMap;
+	mutable std::map<AQLString, AQLInterpolationBase*> mLiborRateMap;
+	mutable std::map<AQLString, DoubleVector> mLiborGridTermMap;
 };
 #endif

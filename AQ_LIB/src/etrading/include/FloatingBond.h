@@ -17,7 +17,7 @@ namespace etrading
         
         BondPtr clone() const;
         
-        double yield( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType ) const;
+        double yield( const AQLDate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType ) const;
 		
 		/* @brief	Calculates the bond yield. This API takes in a dataProvider object
 		*  @param[in]	dataProvider	Contains the bond settlement date, plus other market data required to calculate the FRN yield
@@ -27,22 +27,22 @@ namespace etrading
 		*/
 		double yield( const DataProvider& dataProvider, const double price, const YieldCalculationTypeEnum& yieldCalcType ) const;
 
-		double dirtyPrice( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield=false, const std::shared_ptr<BondActiveCouponDates>& activeCouponDatesPtr={} ) const;
-        double cleanPrice( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType  ) const;
+		double dirtyPrice( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield=false, const std::shared_ptr<BondActiveCouponDates>& activeCouponDatesPtr={} ) const;
+        double cleanPrice( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType  ) const;
 
 		/* @brief Calculates the dirty price of a bond using a BondCurve to discount the coupons.
 		* @param[in]	settlementDate	The bond settlement date
 		* @param[in]	bondCurve		A calibrated BondCurve
 		* @returns		The bond dirty price.
 		*/
-		double dirtyPriceFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const;
+		double dirtyPriceFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const;
 
 		/* @brief Calculates the clean price of a bond using a BondCurve to discount the coupons.
 		* @param[in]	settlementDate	The bond settlement date
 		* @param[in]	bondCurve		A calibrated BondCurve
 		* @returns		The bond clean price.
 		*/
-		double cleanPriceFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const;
+		double cleanPriceFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const;
 		
 		/* @brief	calculate the bond yield from the price quote and a bondCurve for discounting coupons
 		*			NOTE: Used when CALIBRATING the bondCurve. A node point is added to the bondCurve
@@ -54,28 +54,28 @@ namespace etrading
 		*									NOTE: the bondCurve is UPDATED to include the yield point for this bond.
 		*  @returns		The bond yield to maturity
 		*/
-		double yieldFromPriceAndBondCurve( const LADate& settlementDate,  const double& price, BondCurve& bondCurve ) const;
+		double yieldFromPriceAndBondCurve( const AQLDate& settlementDate,  const double& price, BondCurve& bondCurve ) const;
 
 		/* @brief	Calculates the bond yield-to-maturity from a bund curve
 		*  @param[in]	settlementDate	The bond settlement date
 		*  @param[in]	bondCurve		A bondCurve used for discounting coupons
 		*  @returns		The bond yield to maturity
 		*/
-		double yieldFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const;
+		double yieldFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const;
 
 		/* @brief: Calculates the dirty price of a defaultable bond using a CreditModel to compute survival probabilities.
 		* @param[in]	settlementDate	The bond settlement date
 		* @param[in]	creditModel		The calibrated credit model
 		* @returns		The bond dirty price.
 		*/
-		double dirtyPriceFromCreditModel( const LADate& settlementDate, const CreditModel& creditModel ) const;
+		double dirtyPriceFromCreditModel( const AQLDate& settlementDate, const CreditModel& creditModel ) const;
 
 		/* @brief: Calculates the clean price of a defaultable bond using a CreditModel to compute survival probabilities.
 		* @param[in]	settlementDate	The bond settlement date
 		* @param[in]	creditModel		The calibrated credit model
 		* @returns		The bond clean price.
 		*/
-		double cleanPriceFromCreditModel( const LADate& settlementDate, const CreditModel& creditModel ) const;
+		double cleanPriceFromCreditModel( const AQLDate& settlementDate, const CreditModel& creditModel ) const;
 
 		/* @brief: Solves for the hazard rate implied by the price of a defaultable bond.
 		*		   Note: This modifies the hazard rate in the credit model. Used in CreditModel calibration.
@@ -86,14 +86,14 @@ namespace etrading
 		* @param[in]	useHullApproximation	Whether to use simple approximation: HazardRate = ( Yield - RiskFreeRate ) / (1-RecoveryRate), to to use a solver
 		* @returns		The implied hazard rate
 		*/
-		double hazardRateFromPrice( const LADate& settlementDate, const double price, CreditModel& creditModel, const bool useHullApproximation = false ) const;
+		double hazardRateFromPrice( const AQLDate& settlementDate, const double price, CreditModel& creditModel, const bool useHullApproximation = false ) const;
 
 		/* @brief	Credit Risky forward dirty price calculated from a credit model and underlying discount curve
 		*  @param[in]	forwardSettlementDate	The forward date on which to calculate the bond dirty price.
 		*  @param[in]	creditModel				The credit model used to obtain survival probabilities and discount curve.
 		*  @returns		The bond dirty price on the forward settle date
 		*/
-		double forwardDirtyPriceFromCreditModel( const LADate& forwardSettleDate, const CreditModel& creditModel ) const;
+		double forwardDirtyPriceFromCreditModel( const AQLDate& forwardSettleDate, const CreditModel& creditModel ) const;
 
 		/* @brief	Risk-free forward dirty price calculated from a discount curve
 		*  @param[in]	forwardSettlementDate	The forward date on which to calculate the bond dirty price.
@@ -101,7 +101,7 @@ namespace etrading
 		*  @param[in]	discountCurve			The curve used to discount future coupons
 		*  @returns		The bond dirty price on the forward settle date
 		*/
-		double forwardDirtyPriceFromDiscountCurve( const LADate& forwardSettleDate, const std::string& curveCollection, const std::string& discountCurve ) const;
+		double forwardDirtyPriceFromDiscountCurve( const AQLDate& forwardSettleDate, const std::string& curveCollection, const std::string& discountCurve ) const;
 
 		/* @brief Calculates the bond accrued interest. This API takes in a dataProvider object.
 		*  @param[in]	dataProvider	Contains the bond settlement date, plus other market data required to calculate the FRN accrued interest
@@ -109,20 +109,20 @@ namespace etrading
 		*/
         double accruedInterest( const DataProvider& dataProvider ) const;
  
-		unsigned int accruedInterestDays( const LADate& settlementDate ) const;
+		unsigned int accruedInterestDays( const AQLDate& settlementDate ) const;
 
-        double compoundYieldFromQuotedYield( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const;
+        double compoundYieldFromQuotedYield( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const;
 
         //Solve compound yield either 1) based on the cashflow calculation, or 2) use JGB Approximation
-        double compoundYieldFromQuotedPrice( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType ) const;
+        double compoundYieldFromQuotedPrice( const AQLDate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType ) const;
 
         ScheduleTypeEnum getScheduleType() const;
 
         double annuity( const double& yield, const YieldCalculationTypeEnum& yieldCalcType  ) const;
 		double annuityWithNotional( const double& yield, const YieldCalculationTypeEnum& yieldCalcType  ) const;
         double pv01( const double& yield, const YieldCalculationTypeEnum& yieldCalcType  ) const;
-        double dv01( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield=false ) const;
-		double modifiedDuration( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield=false ) const;
+        double dv01( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield=false ) const;
+		double modifiedDuration( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield=false ) const;
 
 		static std::vector<std::string> lvbKeys()
 		{
@@ -146,7 +146,7 @@ namespace etrading
 
 		* @returns	The clean / dirty floating bond price	
 		*/
-		double priceFromDiscountMargin( const LADate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const;
+		double priceFromDiscountMargin( const AQLDate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const;
 
 		/* @brief	Computes the price of a floating rate bond from yield, without requiring discount and forecast curves.
 		*			The price is found given the following assumed values:  the assumedIndex, indexToNextCoupon, annualizedNextCouponRate.
@@ -161,7 +161,7 @@ namespace etrading
 		* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 		* @returns	The clean / dirty floating bond price	
 		*/
-		double priceFromYield( const LADate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const;
+		double priceFromYield( const AQLDate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const;
 
 		/* @brief	Computes the yield of a floating rate bond from quoted price, without requiring discount and forecast curves.
 		*			The yield is found given the following assumed values:  the assumedIndex, indexToNextCoupon, annualizedNextCouponRate.
@@ -176,7 +176,7 @@ namespace etrading
 		* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 		* @returns	The bond yield	
 		*/
-		double yieldFromPrice( const LADate& settlementDate, const double& targetPrice, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const;
+		double yieldFromPrice( const AQLDate& settlementDate, const double& targetPrice, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const;
 
 		/* @brief	Computes the discount margin of a floating rate bond from quoted price, without requiring discount and forecast curves.
 		*			The discount margin is found given the following assumed values:  the assumedIndex, indexToNextCoupon, annualizedNextCouponRate.
@@ -191,7 +191,7 @@ namespace etrading
 		* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 		* @returns	The bond discount margin
 		*/
-		double discountMarginFromPrice( const LADate& settlementDate, const double& targetPrice, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const;
+		double discountMarginFromPrice( const AQLDate& settlementDate, const double& targetPrice, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const;
 
 		/* @brief	Computes the discount margin of a floating rate bond from quoted yield.
 		*			The discount margin is found given the following assumed values:  the assumedIndex, indexToNextCoupon.
@@ -204,7 +204,7 @@ namespace etrading
 		* @param[in]	indexToNextCoupon			The index discount rate for the next coupon period. i.e. the Libor rate from settlement date to next coupon
 		* @returns	The bond discount margin
 		*/
-		double discountMarginFromYield( const LADate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon ) const;
+		double discountMarginFromYield( const AQLDate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon ) const;
 
 		/* @brief	Computes the yield to maturity of a floating rate bond from quoted discount margin.
 		*			The yield is found given the following assumed values:  the assumedIndex, indexToNextCoupon.
@@ -217,7 +217,7 @@ namespace etrading
 		* @param[in]	indexToNextCoupon			The index discount rate for the next coupon period. i.e. the Libor rate from settlement date to next coupon
 		* @returns	The bond yield to maturity
 		*/
-		double yieldFromDiscountMargin( const LADate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon ) const;
+		double yieldFromDiscountMargin( const AQLDate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon ) const;
 
 		// @returns The bond coupon spread / quoted margin over the reference index (in BPS).
 		double getQuotedMargin() const;
@@ -240,7 +240,7 @@ namespace etrading
 		 *
 		 * @returns	The accrued interest
 		*/
-		double accruedInterestFromAnnualizedCouponRate( const LADate& settlementDate, const BondActiveCouponDates& activeCouponDates,  const double& annualizedNextCouponRate ) const;
+		double accruedInterestFromAnnualizedCouponRate( const AQLDate& settlementDate, const BondActiveCouponDates& activeCouponDates,  const double& annualizedNextCouponRate ) const;
 		
 		/* @brief Calculates the bond accrued interest percent. This API takes in a dataProvider object.
 		*  @param[in]	dataProvider	Contains the bond settlementDate, plus other market data required for the FRN.
@@ -249,7 +249,7 @@ namespace etrading
 		double accruedInterestPercent( const DataProvider& dataProvider ) const;
 
 		//Solve compound yield based on the cashflow calculation
-        double compoundYield( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const;
+        double compoundYield( const AQLDate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const;
 
 	private:
 		void initializeBondDescriptionLVB(const LabelValueBlock& bondLVB);

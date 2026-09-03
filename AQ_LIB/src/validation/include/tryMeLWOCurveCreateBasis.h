@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -16,14 +16,14 @@ namespace validation
     *  @param [in]		fxFwdRates			Forward FX rates
     *  @param [in]		spotFxRates			Spot FX rates
     */
-    const LAString tryMeLWOCurveCreateBasis( const std::string& lwoCurveName,
-            const LAString& curveCollectionInput,
-            const LAString& staticDataTableInput,
-            const LAString& curveIndexInput,
-            const LAStringMatrix& curveConv,
-            const LAStringMatrix& basisConv,
-            const LAStringMatrix& basisRates,
-            const LAStringMatrix& fxFwdConv,
-            const LAStringMatrix& fxFwdRates,
-            const LAStringMatrix& spotFxRates );
+    const AQLString tryMeLWOCurveCreateBasis( const std::string& lwoCurveName,
+            const AQLString& curveCollectionInput,
+            const AQLString& staticDataTableInput,
+            const AQLString& curveIndexInput,
+            const AQLStringMatrix& curveConv,
+            const AQLStringMatrix& basisConv,
+            const AQLStringMatrix& basisRates,
+            const AQLStringMatrix& fxFwdConv,
+            const AQLStringMatrix& fxFwdRates,
+            const AQLStringMatrix& spotFxRates );
 }

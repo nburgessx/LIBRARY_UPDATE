@@ -19,10 +19,10 @@
 
 
 #include "LACalibrateModelFXVannaVolga.h"
-#include "LAFunctionBase.h"
-#include "LAFunctionManager.h"
+#include "AQLFunctionBase.h"
+#include "AQLFunctionManager.h"
 #include "LAMathVolFuncBase.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "LAPriceDriftFX.h"
 #include "LARatesSpotSDE.h"
 #include "LACalibrateModelFX.h"
@@ -34,7 +34,7 @@
 #include "LACalibrateVolatilityFXVannaVolga.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
-#include "LAConstant.h"
+#include "AQLConstant.h"
 #include "LAPriceFXVolatility.h"
 #include "LACalibrationParametersFXVannaVolga.h"
 #include "LACalibrateFXVannaVolga.h"
@@ -68,7 +68,7 @@ LACalibrateModelFXVannaVolga::~LACalibrateModelFXVannaVolga(void)
 	@param[in] dataInstance
 */
 LARatesSDEBase *
-LACalibrateModelFXVannaVolga::createSDEInstance(const LAString &fx, LADataInstance &dataInstance) const
+LACalibrateModelFXVannaVolga::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	return 0;
 }
@@ -81,7 +81,7 @@ LACalibrateModelFXVannaVolga::createSDEInstance(const LAString &fx, LADataInstan
 
 */
 SDE_TYPE
-LACalibrateModelFXVannaVolga::getSDEType(const LAString &fx) const
+LACalibrateModelFXVannaVolga::getSDEType(const AQLString &fx) const
 {
 	SDE_TYPE a;
 	return a;
@@ -94,7 +94,7 @@ LACalibrateModelFXVannaVolga::getSDEType(const LAString &fx) const
 
 */
 bool 
-LACalibrateModelFXVannaVolga::isLJ(const LAString &fx) const
+LACalibrateModelFXVannaVolga::isLJ(const AQLString &fx) const
 {
 	return false;
 }
@@ -106,7 +106,7 @@ LACalibrateModelFXVannaVolga::isLJ(const LAString &fx) const
 	@param[out] sde
 */
 void
-LACalibrateModelFXVannaVolga::setVolatility(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVannaVolga::setVolatility(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -122,7 +122,7 @@ LACalibrateModelFXVannaVolga::setVolatility(const LAString &fx, LARatesSDEBase &
 
 */
 void
-LACalibrateModelFXVannaVolga::setDrift(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVannaVolga::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -138,7 +138,7 @@ LACalibrateModelFXVannaVolga::setDrift(const LAString &fx, LARatesSDEBase &sde) 
 
 */
 void
-LACalibrateModelFXVannaVolga::setIntegralFunction(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVannaVolga::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -152,7 +152,7 @@ LACalibrateModelFXVannaVolga::setIntegralFunction(const LAString &fx, LARatesSDE
 	@param[out] sde
 */
 void
-LACalibrateModelFXVannaVolga::setOutputTemplate(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVannaVolga::setOutputTemplate(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -166,7 +166,7 @@ LACalibrateModelFXVannaVolga::setOutputTemplate(const LAString &fx, LARatesSDEBa
 	@param[out] sde
 */
 void
-LACalibrateModelFXVannaVolga::setInterpolationMethod(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVannaVolga::setInterpolationMethod(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -179,10 +179,10 @@ LACalibrateModelFXVannaVolga::setInterpolationMethod(const LAString &fx, LARates
 
 	@param[in] fx
 */
-LAString 
-LACalibrateModelFXVannaVolga::getFunctionMasterResistName(const LAString &fx) const
+AQLString 
+LACalibrateModelFXVannaVolga::getFunctionMasterResistName(const AQLString &fx) const
 {
-	LAString tmpFX = fx;
+	AQLString tmpFX = fx;
 	return fx;
 	
 }
@@ -193,8 +193,8 @@ LACalibrateModelFXVannaVolga::getFunctionMasterResistName(const LAString &fx) co
 
 	@param[in]  fx 
 */
-LAString
-LACalibrateModelFXVannaVolga::getVolType(const LAString &fx) const
+AQLString
+LACalibrateModelFXVannaVolga::getVolType(const AQLString &fx) const
 {
 	return INPUT_FUNC;
 }
@@ -208,28 +208,28 @@ LACalibrateModelFXVannaVolga::getVolType(const LAString &fx) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelFXVannaVolga::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelFXVannaVolga::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	setUpVolEntity(fx,vol);
-	LAStringVector ccys;
+	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
 
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAStringVector fileVec(1);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector fileVec(1);
 	
 	MAScenarioParam param;
 	param.calcType = KEY_PV;
 	// set fx
 	param.ccy = fx;
 	
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	
 	param.isCalib = isCalibTarget(fx);
 	if (param.isCalib)
 	{
 		// create calib info
 		LACalibrationParametersFXVannaVolga cInfo;
-		LAString cInfoName = cInfo.createCalibrationInfo(dataInstance.getObjectPool(), fx);
+		AQLString cInfoName = cInfo.createCalibrationInfo(dataInstance.getObjectPool(), fx);
 		// first element set calib info
 		param.refName.push_back(cInfoName);
 
@@ -249,12 +249,12 @@ LACalibrateModelFXVannaVolga::setUpVolFunc(const LAString &fx, LAMathVolatility 
 	}
 	else
 	{
-		throw LACoreInvalidData("Only Calibration supports",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Only Calibration supports",__FILE__,__LINE__);
 	}
 	
 	// create function
 	LACalibrateVolatilityFXVannaVolga volCreator;
-	LAFunctionBase *method = volCreator.createVolatility(fileVec, &param, &objPool);
+	AQLFunctionBase *method = volCreator.createVolatility(fileVec, &param, &objPool);
 	vol.setVolatility(method);
 }
 
@@ -268,7 +268,7 @@ LACalibrateModelFXVannaVolga::setUpVolFunc(const LAString &fx, LAMathVolatility 
 	@param[out] dataInstance
 */
 void
-LACalibrateModelFXVannaVolga::setUpVolData(const LAString &fx, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelFXVannaVolga::setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	fx;
 	vol;
@@ -284,12 +284,12 @@ LACalibrateModelFXVannaVolga::setUpVolData(const LAString &fx, LAMathVolatility 
 
 */
 void
-LACalibrateModelFXVannaVolga::setUpVolEntity(const LAString &fx, LAMathVolatility &vol) const
+LACalibrateModelFXVannaVolga::setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const
 {
 	// set interpolation
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString interp = "fn_linearinterpolation";
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString interp = "fn_linearinterpolation";
 	vol.getInterpolation().convertFromString(interp);
 }
 

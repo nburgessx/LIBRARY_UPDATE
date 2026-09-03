@@ -48,7 +48,7 @@ LABlackShcolesDigitalFloorletOption::LABlackShcolesDigitalFloorletOption()
 @brief Make copy(clone) of this class
 @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LABlackShcolesDigitalFloorletOption::clone() const
 {
 	try
@@ -57,7 +57,7 @@ LABlackShcolesDigitalFloorletOption::clone() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 }
 

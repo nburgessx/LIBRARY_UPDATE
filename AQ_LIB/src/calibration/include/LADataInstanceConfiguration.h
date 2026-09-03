@@ -19,7 +19,7 @@
 
 
 
-class LADataInstance;
+class AQLDataInstance;
 //===================== Class Declare LADataInstanceConfiguration==================================
 /*! 
     @brief DataInstance setup class
@@ -40,40 +40,40 @@ public:
 
 	//==============================================
 	// setup dataInstance
-	virtual void setUpDataInstance(LADataInstance &dataInstance) const;
+	virtual void setUpDataInstance(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup this instance
 	virtual void setUp(void) = 0;
 	//==============================================
 	// setup master object
-	virtual void setUpMasters(LADataInstance &dataInstance) const = 0;
+	virtual void setUpMasters(AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// setup sde
-	virtual void setUpSDE(LADataInstance &dataInstance) const = 0;
+	virtual void setUpSDE(AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// load entities
-	virtual void loadEntities(LADataInstance &dataInstance) const = 0;
+	virtual void loadEntities(AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// setup  entities
-	virtual void setUpEntityes(LADataInstance &dataInstance) const = 0;
+	virtual void setUpEntityes(AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// setup  risk entities
-	virtual void setUpRiskEntityes(LADataInstance &dataInstance) const = 0;
+	virtual void setUpRiskEntityes(AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// create path object
-	virtual void createPathEntity(LADataInstance &dataInstance) const = 0;
+	virtual void createPathEntity(AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// create fx object
-	virtual void createFXEntity(LADataInstance &dataInstance) const = 0;
+	virtual void createFXEntity(AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// setup path object
-	virtual void setUpPathEntity(LADataInstance &dataInstance) const = 0;
+	virtual void setUpPathEntity(AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// setup fx object
-	virtual void setUpFXEntity(LADataInstance &dataInstance) const = 0;
+	virtual void setUpFXEntity(AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// setup risk info 
-	virtual void setUpRiskInfo(LADataInstance &dataInstance) const = 0;
+	virtual void setUpRiskInfo(AQLDataInstance &dataInstance) const = 0;
 
 protected:
 

@@ -38,12 +38,12 @@ namespace etrading
             
 			const std::string inputLVB = "cashflowLVB";
             
-			LADate paymentDate = lvb.getOptionalValueAsDate( CASHFLOW_KEY::PAYMENT_DATE);
+			AQLDate paymentDate = lvb.getOptionalValueAsDate( CASHFLOW_KEY::PAYMENT_DATE);
 			double amount = lvb.getOptionalValueAsDouble( FEE_KEY::AMOUNT);
 			PayReceiveEnum payReceive = toPayReceiveEnum(lvb.getOptionalValueAsLAString( IRS_KEY::PAY_RECEIVE).getCString());
 
             //Ignore the blank line
-            if (paymentDate != LADate())
+            if (paymentDate != AQLDate())
             {
 			    CashflowPtr cf = CashflowPtr(new FeeCashflow(payReceive, paymentDate, amount));
 			    cashflows_.push_back(cf);

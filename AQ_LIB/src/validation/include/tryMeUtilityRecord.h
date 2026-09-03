@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -12,5 +12,5 @@ namespace validation
     *  @param [in]		maxIndex	Max index for repeated tests
     *  @return			A notification string
     */
-    LAString tryMeUtilityRecord( bool enable, const LAString& folder, bool repeat = false, int startIndex = 0, int maxIndex = 0 );
+    AQLString tryMeUtilityRecord( bool enable, const AQLString& folder, bool repeat = false, int startIndex = 0, int maxIndex = 0 );
 }

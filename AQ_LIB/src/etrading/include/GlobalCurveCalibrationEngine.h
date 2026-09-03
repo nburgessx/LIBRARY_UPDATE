@@ -1,9 +1,9 @@
 #pragma once
 
 #include "GlobalCalibrationComponentCurve.h"
-#include "LADataReference.h"
-#include "LADataMatrix.h"
-#include "LAMatrix.h"
+#include "AQLDataReference.h"
+#include "AQLDataMatrix.h"
+#include "AQLMatrix.h"
 #include <vector>
 #include <map>
 
@@ -15,7 +15,7 @@ class GlobalCurveCalibrationEngine
 public:
 		
 	// constructor
-	GlobalCurveCalibrationEngine(const CurveCalibrationData& curveCalibrationData, const LAString& engineName);
+	GlobalCurveCalibrationEngine(const CurveCalibrationData& curveCalibrationData, const AQLString& engineName);
 
 	// destructor
 	~GlobalCurveCalibrationEngine() {}
@@ -27,7 +27,7 @@ public:
 	void calibrate();
 
 	// Post-process results
-	void postProcessing(LAObject& yieldCurveProEntity);
+	void postProcessing(AQLObject& yieldCurveProEntity);
 	
 private:
 
@@ -42,10 +42,10 @@ private:
 		
 	SolverParams solverParams_;
 
-	LADataReference yieldDataRef_;
+	AQLDataReference yieldDataRef_;
 
-	LAString engineName_;
-	LAString engineSuffix_;
+	AQLString engineName_;
+	AQLString engineSuffix_;
 
 	// Solver params
 	double eps_;
@@ -56,10 +56,10 @@ private:
 
 	DoubleMatrix previousInverseJacobian_;
 	bool previousJacobianAvailable_;
-	LAMatrix inverseJacobian_;
-	LAMatrix jacobian_;
+	AQLMatrix inverseJacobian_;
+	AQLMatrix jacobian_;
 
-	LADataStringMatrix jacobianLabels_;
+	AQLDataStringMatrix jacobianLabels_;
 
 	bool jacobianLabelsCreated_;
 

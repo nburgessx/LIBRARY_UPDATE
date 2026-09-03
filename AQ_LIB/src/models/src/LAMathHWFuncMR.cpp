@@ -13,7 +13,7 @@ using namespace std;
 //
 
 LAMathHWFuncMR::LAMathHWFuncMR()
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -30,7 +30,7 @@ LAMathHWFuncMR::~LAMathHWFuncMR(void)
 	@brief copy constructor
 */
 LAMathHWFuncMR::LAMathHWFuncMR(const LAMathHWFuncMR &rhs) 
-: LAFunctionBase(rhs), mMR(rhs.mMR)
+: AQLFunctionBase(rhs), mMR(rhs.mMR)
 {
 }
 
@@ -38,7 +38,7 @@ LAMathHWFuncMR::LAMathHWFuncMR(const LAMathHWFuncMR &rhs)
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathHWFuncMR::clone() const
 {
     try 
@@ -47,7 +47,7 @@ LAMathHWFuncMR::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -59,7 +59,7 @@ LAMathHWFuncMR::clone() const
 bool
 LAMathHWFuncMR::isTypeOf(function_t id) const
 {
-	return (id == FN_HWFUNCMR ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_HWFUNCMR ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -78,7 +78,7 @@ LAMathHWFuncMR::getType() const
 
 LAMathHWFuncMRTMDPT::LAMathHWFuncMRTMDPT( const DoubleArray&    T_grid_,
                             const DoubleArray&    a_grid_,
-							LAInterpolationBase&        interpolation_)
+							AQLInterpolationBase&        interpolation_)
 :
 LAMathHWFuncMR(a_grid_[0]),
 a_grid(a_grid_),
@@ -95,7 +95,7 @@ LAMathHWFuncMRTMDPT::LAMathHWFuncMRTMDPT(const LAMathHWFuncMRTMDPT& rhs)
 LAMathHWFuncMR( rhs ),
 a_grid( rhs.a_grid ),
 T_grid( rhs.T_grid ),
-mpInter( rhs.mpInter != 0 ? dynamic_cast<LAInterpolationBase* >(rhs.mpInter->clone()) : 0 ),
+mpInter( rhs.mpInter != 0 ? dynamic_cast<AQLInterpolationBase* >(rhs.mpInter->clone()) : 0 ),
 is_cloned( true ),
 mGL(HWGAUSSLEGENDRENUM)
 {
@@ -115,7 +115,7 @@ LAMathHWFuncMRTMDPT::~LAMathHWFuncMRTMDPT()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathHWFuncMRTMDPT::clone() const
 {
     try 
@@ -124,7 +124,7 @@ LAMathHWFuncMRTMDPT::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -157,7 +157,7 @@ LAMathHWFuncMRTMDPT::getType() const
 //
 //    T_grid = rhs.T_grid;
 //    a_grid = rhs.a_grid;
-//    mpInter = rhs.mpInter != 0 ? dynamic_cast<LAInterpolationBase* >(rhs.mpInter->clone()) : 0;
+//    mpInter = rhs.mpInter != 0 ? dynamic_cast<AQLInterpolationBase* >(rhs.mpInter->clone()) : 0;
 //    is_cloned = true;
 //    mGL = rhs.mGL;
 //    return *this;        

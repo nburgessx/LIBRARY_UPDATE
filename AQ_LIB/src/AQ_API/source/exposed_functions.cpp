@@ -11,9 +11,9 @@
 #include <functional>
 
 
-#include "LACoreTemplateType.h"  
-#include "LADate.h"
-#include "LAString.h"
+#include "AQLCoreTemplateType.h"  
+#include "AQLDate.h"
+#include "AQLString.h"
 #include "LAAnalyticFormula.h"
 #include "LACoreDataService.h"
 #include "LAUpdateStaticDataManager.h"
@@ -22,7 +22,7 @@
 #include "LibSetUpETrading.h"
 #include "EnvironmentUtilities.h"
 #include "tryMeUtilitySetup.h"
-#include "LACoreLockControl.h"
+#include "AQLCoreLockControl.h"
 #include "OMPThreadManager.h"
 
 //
@@ -55,7 +55,7 @@ std::string setUpMLIB(const std::string& irPropsFullFilePath, const std::string&
 	{
 		statusMsg = validation::trySetupMLIB( irPropsFullFilePath, calendarFullFilePath );
 	}
-	catch (LACoreError e)
+	catch (AQLCoreError e)
 	{
 		statusMsg = "#Error: Unable to load configuration. Did you set the AlgoQuantLib environment variable? Error is: ";
 		statusMsg += e.what();

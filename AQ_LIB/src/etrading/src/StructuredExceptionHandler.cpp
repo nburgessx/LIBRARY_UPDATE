@@ -1,5 +1,5 @@
 #include "StructuredExceptionHandler.h"
-#include "LACoreError.h"
+#include "AQLCoreError.h"
 #include <stdlib.h>
 
 // The ThreadGuard instance count used by the validation layer to guarantee single threaded access.
@@ -100,14 +100,14 @@ namespace etrading
     */
     void StructuredExceptionHandler::TerminateHandler()
     {
-        throw LACoreError( "Terminator Handler hit. Please exit the current session and reload the DLL.", __FILE__, __LINE__ );
+        throw AQLCoreError( "Terminator Handler hit. Please exit the current session and reload the DLL.", __FILE__, __LINE__ );
     }
 
     /* @brief		Custom unexpected handler
     */
     void StructuredExceptionHandler::UnexpectedHandler()
     {
-        throw LACoreError( "Unexpected Exception Handler hit. Please exit the current session and reload the DLL.", __FILE__, __LINE__ );
+        throw AQLCoreError( "Unexpected Exception Handler hit. Please exit the current session and reload the DLL.", __FILE__, __LINE__ );
     }
 
     /* @brief	Custom signal handler
@@ -116,7 +116,7 @@ namespace etrading
     {
         // cleanup and close up stuff here
         // terminate program
-        throw LACoreError( "Program interruption signals encountered. Please exit the current session and reload the DLL.", __FILE__, __LINE__ );
+        throw AQLCoreError( "Program interruption signals encountered. Please exit the current session and reload the DLL.", __FILE__, __LINE__ );
     }
 
     /* @brief		Custom handler for Structured Exception.
@@ -139,7 +139,7 @@ namespace etrading
         }
 
         // Translate structured exception to standard C++ exception
-        throw LACoreError( msg.c_str(), __FILE__, __LINE__ );
+        throw AQLCoreError( msg.c_str(), __FILE__, __LINE__ );
     }
 
 

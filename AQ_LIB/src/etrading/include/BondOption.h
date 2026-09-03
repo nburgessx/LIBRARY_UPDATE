@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CommonConstants.h"
 #include "CoreEnumerations.h"
 #include "LabelValueBlock.h"
@@ -30,8 +30,8 @@ namespace etrading
 		CallOrPutEnum getCallPut() const { return callPut_; };
 		LongShortPositionEnum getLongShort() const { return longShort_; };
 		double getStrike() const { return strike_; };
-		LADate getExpiryDate() const { return expiryDate_; };
-		LADate getUnderlyingDeliveryDate() const { return underlyingDeliveryDate_; };
+		AQLDate getExpiryDate() const { return expiryDate_; };
+		AQLDate getUnderlyingDeliveryDate() const { return underlyingDeliveryDate_; };
 		BondPtr getUnderlying() const { return underlying_; };
 
 		CCY getCurrency() const { return currency_; };
@@ -49,8 +49,8 @@ namespace etrading
 		LongShortPositionEnum longShort_;			    // Long / Short
 
 		double strike_;
-		LADate expiryDate_;
-		LADate underlyingDeliveryDate_;
+		AQLDate expiryDate_;
+		AQLDate underlyingDeliveryDate_;
 
 		BondPtr underlying_;
 

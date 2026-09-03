@@ -10,7 +10,7 @@
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
 #include "LACurveForwardRateHelpers.h"
-#include "LACoreError.h"
+#include "AQLCoreError.h"
 
 #include <gTest/gTest.h>
 
@@ -90,7 +90,7 @@ namespace google_test
                 // Load the input file
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getParRateInputs, i ) );
 
-                LAStringMatrix swapLVB = inputFile["swapLVB"];
+                AQLStringMatrix swapLVB = inputFile["swapLVB"];
                 double parRate = validation::tryMeProductSwapParRate( swapLVB, true );
 
                 CheckTestResultsAndRebaseOnRequest( parRate, TEST_DIR, getParRateResults, tolerance, i );
@@ -100,7 +100,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -125,7 +125,7 @@ namespace google_test
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getPVInputs, i ) );
 
                 // Read the input file into the getParRate and swapPV functions
-                LAStringMatrix swapLVB = inputFile["swapLVB"];
+                AQLStringMatrix swapLVB = inputFile["swapLVB"];
                 double pv = validation::tryMeProductSwapPV( swapLVB, true );
 
                 CheckTestResultsAndRebaseOnRequest( pv, TEST_DIR, getPVResults, tolerancePV, i );
@@ -135,7 +135,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

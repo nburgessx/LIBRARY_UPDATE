@@ -20,17 +20,17 @@
 #include <cassert>
 #include <boost/algorithm/string.hpp>   // boost::iequals
 
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathFXUtility.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "ExceptionMacros.h"
 
 using namespace std;
@@ -72,9 +72,9 @@ using namespace std;
 
 namespace
 {
-	const RollConventionEnum toRollConventionEnum( const LAString& enumString )
+	const RollConventionEnum toRollConventionEnum( const AQLString& enumString )
 	{
-		LAString uCaseString("");
+		AQLString uCaseString("");
 		if (enumString != NULL) uCaseString = enumString;
 		uCaseString.toUpper();
 
@@ -113,7 +113,7 @@ namespace
 	}
 }
 
-const LAString toString( const RollConventionEnum enumValue )
+const AQLString toString( const RollConventionEnum enumValue )
 {
     switch( enumValue )
     {
@@ -154,7 +154,7 @@ const LAString toString( const RollConventionEnum enumValue )
 }
 
 // each leap year and not, day of month and day from head of this year to head of this month (from 0)
-// (copied by LADate.cpp) 
+// (copied by AQLDate.cpp) 
 static const unsigned short LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[2][2][12] =
     {{{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
       { 0, 31, 59, 90,120,151,181,212,243,273,304,334}},
@@ -165,9 +165,9 @@ static const unsigned short LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[2][2]
 /*!
 	@brief get holiday adjust date
 */
-LADate
-LAMathDateCalculations::getAdjDate(const LAPriceDataSlidingRule* pbusdayrule,
-								const LAPriceDataCalendar* pcal, const LADate &date)
+AQLDate
+LAMathDateCalculations::getAdjDate(const AQLPriceDataSlidingRule* pbusdayrule,
+								const AQLPriceDataCalendar* pcal, const AQLDate &date)
 {
 	if (pbusdayrule != NULL && pcal != NULL)
 	{
@@ -181,7 +181,7 @@ LAMathDateCalculations::getAdjDate(const LAPriceDataSlidingRule* pbusdayrule,
 
 
 void
-LAMathDateCalculations::setDate(const int* pday, LADate &date, const RollConventionEnum rollConventionEnum)
+LAMathDateCalculations::setDate(const int* pday, AQLDate &date, const RollConventionEnum rollConventionEnum)
 {
 	if ( rollConventionEnum == ROLLCONV_ENUM_NONE ||
 		 rollConventionEnum == ROLLCONV_ENUM_NORMAL ||
@@ -226,21 +226,21 @@ LAMathDateCalculations::setDate(const int* pday, LADate &date, const RollConvent
 */
 
 DateVector
-LAMathDateCalculations::generateRegularSchedule(const LADate& start, 
-									 const LADate& end,
-									 const LAString& data_frequency,
+LAMathDateCalculations::generateRegularSchedule(const AQLDate& start, 
+									 const AQLDate& end,
+									 const AQLString& data_frequency,
 									 const bool isarrear,
 									 const int* pday,
-									 const LAPriceDataSlidingRule* pbusdayrule,
-									 const LAPriceDataCalendar* pcal,
+									 const AQLPriceDataSlidingRule* pbusdayrule,
+									 const AQLPriceDataCalendar* pcal,
 									 const bool isstartroll,
-									 const LAString* roll_convention)
+									 const AQLString* roll_convention)
 {
 
-	std::deque<LADate> dates;
+	std::deque<AQLDate> dates;
 
-	LADate tempDate;
-	LADate sldDate;
+	AQLDate tempDate;
+	AQLDate sldDate;
 
 	RollConventionEnum rollConventionEnum = roll_convention == NULL ? ROLLCONV_ENUM_NONE : toRollConventionEnum( *roll_convention );
 
@@ -356,7 +356,7 @@ LAMathDateCalculations::generateRegularSchedule(const LADate& start,
 	}
 	else
 	{
-		LADate tempDate = end;
+		AQLDate tempDate = end;
 		if (data_frequency == BUSINESS_DAYS || data_frequency == DAILY)
 		{
 			tempDate.addDays(-1);
@@ -490,22 +490,22 @@ LAMathDateCalculations::generateRegularSchedule(const LADate& start,
 	@param[in] pbusdayrule		pointer of SlidingRule
 	@param[in] pcal				pointer of Calender
 */
-void LAMathDateCalculations::generateSchedule( const LADate& start,
-											   const LADate& end,
-											   const LAString& data_frequency,
+void LAMathDateCalculations::generateSchedule( const AQLDate& start,
+											   const AQLDate& end,
+											   const AQLString& data_frequency,
 											   const bool isarrear,
-											   const LADate* firstStubDate,
-											   const LADate* lastStubDate,
+											   const AQLDate* firstStubDate,
+											   const AQLDate* lastStubDate,
 											   const int* pday,
 											   DateVector& out,
-											   const LAPriceDataSlidingRule* pbusdayrule,
-											   const LAPriceDataCalendar* pcal,
+											   const AQLPriceDataSlidingRule* pbusdayrule,
+											   const AQLPriceDataCalendar* pcal,
 											   const bool isstartroll,
-											   const LAString* roll_convention)
+											   const AQLString* roll_convention)
 {
 	out.clear();
-	LADate sldDate; 
-	LAString freq_str = data_frequency;
+	AQLDate sldDate; 
+	AQLString freq_str = data_frequency;
 	freq_str.toUpper();
 
 	if (start > end)
@@ -528,8 +528,8 @@ void LAMathDateCalculations::generateSchedule( const LADate& start,
 		return;
 	}
 	
-	const LADate& fodd = firstStubDate == NULL && lastStubDate != NULL ? start : *firstStubDate; 
-	const LADate& lodd = firstStubDate != NULL && lastStubDate == NULL ? end   : *lastStubDate;
+	const AQLDate& fodd = firstStubDate == NULL && lastStubDate != NULL ? start : *firstStubDate; 
+	const AQLDate& lodd = firstStubDate != NULL && lastStubDate == NULL ? end   : *lastStubDate;
 	
 	//check timing of oddday
 	if ( (firstStubDate != NULL || lastStubDate != NULL) && (start > fodd || fodd > lodd || lodd > end) )
@@ -583,13 +583,13 @@ void LAMathDateCalculations::generateSchedule( const LADate& start,
 */
 
 void
-LAMathDateCalculations::termStrtoYMDW(const LAString& term, int& y, int& m, int& d, int& w)
+LAMathDateCalculations::termStrtoYMDW(const AQLString& term, int& y, int& m, int& d, int& w)
 {
 	// place of year, month, day, week
     int pl_y, pl_m, pl_d, pl_w;		
     pl_y = pl_m = pl_d = pl_w = -1;
 
-    LAString str = term;
+    AQLString str = term;
     str.toUpper();
 
 	if ( boost::iequals( str.getCString(), "ON" ) )
@@ -689,15 +689,15 @@ LAMathDateCalculations::termStrtoYMDW(const LAString& term, int& y, int& m, int&
 	@param[in] roll_conv		roll convention
 	
 */
-LADate
-LAMathDateCalculations::getDate(const LADate& basedate, 
-                             const LAString& term, 
+AQLDate
+LAMathDateCalculations::getDate(const AQLDate& basedate, 
+                             const AQLString& term, 
                              bool rollForwards, 
-                             const LAString* roll_conv)
+                             const AQLString* roll_conv)
 {
 	int y, m, d, w;
 	LAMathDateCalculations::termStrtoYMDW(term, y, m, d, w);
-	LADate date = basedate;
+	AQLDate date = basedate;
 	if (!rollForwards)
 	{
 		y = -y;
@@ -706,7 +706,7 @@ LAMathDateCalculations::getDate(const LADate& basedate,
 		w = -w;
 	}
 
-	LAString temp("");
+	AQLString temp("");
 	if (roll_conv) temp = *roll_conv;
     temp.toUpper();
 	if (temp == ROLLCONV_LUNAR) // lunar case
@@ -737,13 +737,13 @@ LAMathDateCalculations::getDate(const LADate& basedate,
 	@param[in] rollForwards		true = roll forwards, false = roll backwards
 	@param[in] roll_conv		roll convention
 */
-LADate
-LAMathDateCalculations::getDate(const LADate& basedate, 
-                                const LAString& term, 
-                                const LAPriceDataSlidingRule& busdayrule,
-                                const LAPriceDataCalendar* pCal,
+AQLDate
+LAMathDateCalculations::getDate(const AQLDate& basedate, 
+                                const AQLString& term, 
+                                const AQLPriceDataSlidingRule& busdayrule,
+                                const AQLPriceDataCalendar* pCal,
                                 bool rollForwards,
-							    const LAString* roll_conv)
+							    const AQLString* roll_conv)
 {
 	int y, m, d,w;
 	LAMathDateCalculations::termStrtoYMDW(term, y, m, d, w);
@@ -754,7 +754,7 @@ LAMathDateCalculations::getDate(const LADate& basedate,
 		d = -d;
 		w = -w;
 	}
-	LADate date = basedate;
+	AQLDate date = basedate;
 	
     // set W only
 	if (w != 0) // cannot use W with other terms
@@ -815,8 +815,8 @@ LAMathDateCalculations::getDate(const LADate& basedate,
 	@param[in] pCal		pointer of Calendar
 	@return				date
 */
-LADate 
-LAMathDateCalculations::slideDate(const LADate& date, const LAPriceDataSlidingRule& srule, const LAPriceDataCalendar* pCal)
+AQLDate 
+LAMathDateCalculations::slideDate(const AQLDate& date, const AQLPriceDataSlidingRule& srule, const AQLPriceDataCalendar* pCal)
 {
 	if (srule.getSlidingRule() != SLIDING_RULE_NO_CHANGE) 
 	{
@@ -836,10 +836,10 @@ LAMathDateCalculations::slideDate(const LADate& date, const LAPriceDataSlidingRu
 	@param[in] roll		roll convention
 	@return				date
 */
-LADate 
-LAMathDateCalculations::rollDate(const LADate& basedate, const LAString* roll)
+AQLDate 
+LAMathDateCalculations::rollDate(const AQLDate& basedate, const AQLString* roll)
 {
-	LADate date = basedate;
+	AQLDate date = basedate;
 	const int day = date.dayOfMonth();
 
 	const RollConventionEnum rollConventionEnum = roll == NULL ? ROLLCONV_ENUM_NONE : toRollConventionEnum( *roll );
@@ -854,7 +854,7 @@ LAMathDateCalculations::rollDate(const LADate& basedate, const LAString* roll)
 	@param[in] y				year
 	@param[in] m				month	
 */
-LADate
+AQLDate
 LAMathDateCalculations::getIMMDate(const int& y, const int& m, bool isOddMonth)
 {
 	if ((m%3 && !isOddMonth) || m <= 0 || m>=13) 
@@ -862,9 +862,9 @@ LAMathDateCalculations::getIMMDate(const int& y, const int& m, bool isOddMonth)
 		AQ_THROW("Invalid IMM month. The IMM month must be 3, 6, 9, or 12.")
 	}
 
-	LADate date;
+	AQLDate date;
 	date.setYear(y); date.setMonth(m); date.setDay(1);
-	LADayOfWeekEnum weekly = date.dayOfWeek();
+	AQLDayOfWeekEnum weekly = date.dayOfWeek();
 
 	if (weekly == SUN)
     {
@@ -911,14 +911,14 @@ LAMathDateCalculations::getIMMDate(const int& y, const int& m, bool isOddMonth)
 	@param[in] strTerm		    stirng of term
 	@param[in] lag				lag
 */
-LADate 
-LAMathDateCalculations::getImmEndDate(const LADate& startDate, const LAString& strTerm, int lag)
+AQLDate 
+LAMathDateCalculations::getImmEndDate(const AQLDate& startDate, const AQLString& strTerm, int lag)
 {
-	LADate	endDate = getDate(startDate, strTerm, true);
+	AQLDate	endDate = getDate(startDate, strTerm, true);
 
 	// set year YYYY
-	LADate	s1(endDate);
-	LADate	e1(endDate), e2(endDate), e3(endDate), e4(endDate);
+	AQLDate	s1(endDate);
+	AQLDate	e1(endDate), e2(endDate), e3(endDate), e4(endDate);
 
 	// s1 : YYYY/1/1
 	s1.setMonth(1);
@@ -972,7 +972,7 @@ LAMathDateCalculations::getImmEndDate(const LADate& startDate, const LAString& s
 	@param[in]      year    futures contract year
     @param[out]     returns the futures contract start date
 */
-LADate
+AQLDate
 LAMathDateCalculations::getFuturesContractStartDate(const unsigned int& month, const unsigned int& year )
 {
 	if ( month > 12 ) 
@@ -980,12 +980,12 @@ LAMathDateCalculations::getFuturesContractStartDate(const unsigned int& month, c
         AQ_THROW( "Invalid Date: Invalid month provided" )
     }
 	
-	LADate date;
+	AQLDate date;
 	date.setYear( year );
     date.setMonth( month );
     date.setDay( 1 );
 	
-    LADayOfWeekEnum weekly = date.dayOfWeek();
+    AQLDayOfWeekEnum weekly = date.dayOfWeek();
 	if (weekly == SUN)
     {
         date.addDays(3);
@@ -1030,8 +1030,8 @@ LAMathDateCalculations::getFuturesContractStartDate(const unsigned int& month, c
 	@param[in] baseDate				asOfdate of market rate
 	@param[in] futureTerm			term of future market(ex. EDV1,EDV2)
 */
-LADate
-LAMathDateCalculations::getIMMDateFromTerm(const LADate& baseDate, const LAString& futureTerm)
+AQLDate
+LAMathDateCalculations::getIMMDateFromTerm(const AQLDate& baseDate, const AQLString& futureTerm)
 {
 	AQ_THROW_IF(futureTerm.size() != 4, "Invalid Futures Contract Tenor: Futures contracts must be 4 letters" )
 	
@@ -1054,20 +1054,20 @@ LAMathDateCalculations::getIMMDateFromTerm(const LADate& baseDate, const LAStrin
 	@param[in] futureTerm			term of future market(ex. EDV1,EDV2)
 */
 DateVector
-LAMathDateCalculations::getFFDatesFromTerm(const LADate& baseDate, const LAString& fedfundTerm)
+LAMathDateCalculations::getFFDatesFromTerm(const AQLDate& baseDate, const AQLString& fedfundTerm)
 {
 	AQ_THROW_IF(fedfundTerm.size() != 4, "Invalid FED Fund Tenor Contract: FED Fund Futures contracts must be 4 letters");
 	
     unsigned int month = changeFutureMonthFormat(fedfundTerm.subString(2, 2));
-	LAString yearStr_basedate = LAString(baseDate.yearOfEra());
-	LAString yearStr = yearStr_basedate.subString(0, 2) + fedfundTerm.subString(3, 3);
+	AQLString yearStr_basedate = AQLString(baseDate.yearOfEra());
+	AQLString yearStr = yearStr_basedate.subString(0, 2) + fedfundTerm.subString(3, 3);
 
-	LADate startdate;
+	AQLDate startdate;
 	startdate.setYear(yearStr.getIntValue());
 	startdate.setMonth(month);
 	startdate.setDay(1);
 
-	LADate enddate = startdate;
+	AQLDate enddate = startdate;
 	enddate.addMonths(1);
 	enddate.addDays(-1);
 
@@ -1088,32 +1088,32 @@ LAMathDateCalculations::getFFDatesFromTerm(const LADate& baseDate, const LAStrin
 	@param[in] calStr				city of calendar in String (ex. "TkB:LnB")
 	@param[in] rollForwards				true:after, false:before(bool)
 */
-LADate
-LAMathDateCalculations::getFXSpotDate(const LAString& keyFX,
-								   const LADate& basedate,
-								   const LAString& calStr,
+AQLDate
+LAMathDateCalculations::getFXSpotDate(const AQLString& keyFX,
+								   const AQLDate& basedate,
+								   const AQLString& calStr,
 								   int spotlag,
 								   bool rollForwards)
 {
-	LADate ret;
-	LAString tempStr = calStr;
+	AQLDate ret;
+	AQLString tempStr = calStr;
 	tempStr.toUpper();
 
 	int nybpos = tempStr.findString("NYB");
 	if (nybpos < 0) {
 		SlidingRuleType sruleType;
 		sruleType = (spotlag >= 0) ? SLIDING_RULE_FOLLOWING : SLIDING_RULE_PRECEDING;
-		LAPriceDataSlidingRule busdayrule(sruleType);
+		AQLPriceDataSlidingRule busdayrule(sruleType);
 
-		LAPriceDataCalendar Cal;
+		AQLPriceDataCalendar Cal;
 		Cal.convertFromString(calStr);
 
-		ret = getDate(basedate, LAString(spotlag) + "D", busdayrule, &Cal, rollForwards);
+		ret = getDate(basedate, AQLString(spotlag) + "D", busdayrule, &Cal, rollForwards);
 	} else {
 		// Remove NYB Calendar
-		LAStringVector tempStrs(tempStr.toToken(':'));
+		AQLStringVector tempStrs(tempStr.toToken(':'));
 		tempStr = "";
-		for(LAStringVector::iterator it = tempStrs.begin(); it != tempStrs.end(); it++)
+		for(AQLStringVector::iterator it = tempStrs.begin(); it != tempStrs.end(); it++)
 			if(*it != "NYB")
 				tempStr += *it + ":";
 
@@ -1121,9 +1121,9 @@ LAMathDateCalculations::getFXSpotDate(const LAString& keyFX,
 		if(tempStr.size() > 0)
 			tempStr.remove(tempStr.size() - 1, 1);
 	
-		LAString tempStr2 = keyFX;
+		AQLString tempStr2 = keyFX;
 		tempStr2.toUpper();
-		LAStringVector curs(tempStr2.toToken('/'));
+		AQLStringVector curs(tempStr2.toToken('/'));
 
 		if(curs[0] == "USD")
 			ret = LAMathFXUtility::getSpotDate_IncludedUSD(curs[0],basedate,tempStr,"NyB",spotlag);
@@ -1138,17 +1138,17 @@ LAMathDateCalculations::getFXSpotDate(const LAString& keyFX,
 
 /* static */ bool
 LAMathDateCalculations::haveNextCBDate(
-	const LAString& cb, const LADate& baseDate, bool strictlyAfter)
+	const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter)
 {
-	LADate ignore;
+	AQLDate ignore;
 	return getIfExistsNextCBDate(cb, baseDate, strictlyAfter, ignore);
 }
 
-/* static */ LADate
+/* static */ AQLDate
 LAMathDateCalculations::getNextCBDate(
-	const LAString& cb, const LADate& baseDate, bool strictlyAfter)
+	const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter)
 {
-	LADate result;
+	AQLDate result;
 	const bool exists = getIfExistsNextCBDate(cb, baseDate, strictlyAfter, result);
 
 	if (!exists)
@@ -1168,9 +1168,9 @@ LAMathDateCalculations::getNextCBDate(
 
 /* static */ bool
 LAMathDateCalculations::getIfExistsNextCBDate(
-	const LAString& cb, const LADate& baseDate, bool strictlyAfter, LADate& result)
+	const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter, AQLDate& result)
 {
-	typedef vector<LADate> Schedule;
+	typedef vector<AQLDate> Schedule;
 	typedef Schedule::const_iterator cIter;
 
 	const Schedule& cbDates = LAMathCentralBank::meetingSchedule(cb);
@@ -1205,7 +1205,7 @@ LAMathDateCalculations::getIfExistsNextCBDate(
 	@param[in] futureMonth			string of future market format(ex. V,Z,K)
 */
 unsigned int
-LAMathDateCalculations::changeFutureMonthFormat(const LAString& futureMonth)
+LAMathDateCalculations::changeFutureMonthFormat(const AQLString& futureMonth)
 {
     if (futureMonth == F_FUTURE_MONTH)
     {
@@ -1271,17 +1271,17 @@ LAMathDateCalculations::changeFutureMonthFormat(const LAString& futureMonth)
 	
 */
 void
-LAMathDateCalculations::convertToDateGrid(const LADate &asofDate, const DoubleArray &terms, DateVector &dates)
+LAMathDateCalculations::convertToDateGrid(const AQLDate &asofDate, const DoubleArray &terms, DateVector &dates)
 {
 	dates.clear();
 	
-	const LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	const AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	for (unsigned int i = 0; i < terms.size(); ++i)
 	{
 		const double term = terms[i];
 
-		LADate date = LAMathDateUtilities::getDateFromTerm( asofDate, term, dc_act365 );
+		AQLDate date = LAMathDateUtilities::getDateFromTerm( asofDate, term, dc_act365 );
 
 		dates.push_back(date);
 	}
@@ -1294,11 +1294,11 @@ LAMathDateCalculations::convertToDateGrid(const LADate &asofDate, const DoubleAr
 
 // Return the frequency in months for comparing two frequencies, not for accurate calculations
 // *** Duplicate method in LADateHelpers.cpp ***
-double LAMathDateCalculations::getPeriodFrequencyInMonths(const LAString& freq)
+double LAMathDateCalculations::getPeriodFrequencyInMonths(const AQLString& freq)
 {
 	double frequencyInMonths;
 
-	LAString freq_capital = freq;
+	AQLString freq_capital = freq;
 	freq_capital.toUpper();
 
 	if (freq_capital == ANNUAL)											frequencyInMonths = 12.0;
@@ -1324,7 +1324,7 @@ double LAMathDateCalculations::getPeriodFrequencyInMonths(const LAString& freq)
 	@return compounding times
 */
 int
-LAMathDateCalculations::calcCompoundingTimes(const LAString& freq_rst, const LAString& freq_pay)
+LAMathDateCalculations::calcCompoundingTimes(const AQLString& freq_rst, const AQLString& freq_pay)
 {
 	int resetFrequency = getPeriodFrequencyInMonths(freq_rst);
 	int	paymentFrequency = getPeriodFrequencyInMonths(freq_pay); 
@@ -1337,10 +1337,10 @@ LAMathDateCalculations::calcCompoundingTimes(const LAString& freq_rst, const LAS
 }
 
 /* static */
-LADate LAMathDateCalculations::getNextWeekdayDate(
-	LADayOfWeekEnum weekday, const LADate& baseDate, bool strictlyAfter)
+AQLDate LAMathDateCalculations::getNextWeekdayDate(
+	AQLDayOfWeekEnum weekday, const AQLDate& baseDate, bool strictlyAfter)
 {
-	LADate res(baseDate);
+	AQLDate res(baseDate);
 
 	const unsigned int cur = static_cast<unsigned int>( baseDate.dayOfWeek() );
 	assert(cur < 7);

@@ -25,7 +25,7 @@
 
 #include "LARatesSpotSDE.h"
 #include "LARatesSDEIntegralBase.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include "LARatesHWIntegral.h"
 #include "LAMathVolFuncBase.h"
 #include "LAMathVolFuncHW.h"
@@ -39,14 +39,14 @@ using namespace std;
 	@param[in] pInvTransformer inverse of transformation fcuntion X = f^{-1}(t,X')
 	@param[in] pAdjuster adjustment function
 */
-LARatesSpotSDE::LARatesSpotSDE(SDE_TYPE type, LAFunctionBase* pTransformer, LAFunctionBase* pInvTransformer, LAFunctionBase* pAdjuster)
+LARatesSpotSDE::LARatesSpotSDE(SDE_TYPE type, AQLFunctionBase* pTransformer, AQLFunctionBase* pInvTransformer, AQLFunctionBase* pAdjuster)
 : LARatesSDEBase(type), mpPathElement(0), mpTransformer(pTransformer), mpInvTransformer(pInvTransformer), mpAdjuster(pAdjuster)
 {
 	if ((pTransformer == 0 && pInvTransformer != 0)
 		|| (pTransformer != 0 && pInvTransformer == 0))
 	{
 		//error
-		throw LACoreInvalidData("One of Transformer and InvTransformer is Null, but the other is not NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("One of Transformer and InvTransformer is Null, but the other is not NULL", __FILE__, __LINE__);
 	}
 }
 /*!
@@ -59,11 +59,11 @@ LARatesSpotSDE::LARatesSpotSDE(const LARatesSpotSDE& v)
 	if (v.mpPathElement != 0)
 		mpPathElement = dynamic_cast<LARatesPathElementBase*>(v.mpPathElement->clone());
 	if (v.mpTransformer != 0)
-		mpTransformer = dynamic_cast<LAFunctionBase*>(v.mpTransformer->clone());
+		mpTransformer = dynamic_cast<AQLFunctionBase*>(v.mpTransformer->clone());
 	if (v.mpInvTransformer != 0)
-		mpInvTransformer = dynamic_cast<LAFunctionBase*>(v.mpInvTransformer->clone());
+		mpInvTransformer = dynamic_cast<AQLFunctionBase*>(v.mpInvTransformer->clone());
 	if (v.mpAdjuster != 0)
-		mpAdjuster = dynamic_cast<LAFunctionBase*>(v.mpAdjuster->clone());
+		mpAdjuster = dynamic_cast<AQLFunctionBase*>(v.mpAdjuster->clone());
 
 	mVar = v.mVar;
 }
@@ -84,7 +84,7 @@ LARatesSpotSDE::~LARatesSpotSDE()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesSpotSDE::clone() const
 {
     try 
@@ -93,7 +93,7 @@ LARatesSpotSDE::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -139,7 +139,7 @@ LARatesSpotSDE::getPathElement(unsigned int pos)
 	const DoubleArray& timegrid = mpBM->getTimeGrid();
 	if (pos > timegrid.size() - 1)
 	{
-		throw LACoreInvalidData("pos is over size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("pos is over size", __FILE__, __LINE__);
 	}
 
 	if (mpBM->getCurrentID() == mID && pos == mPos)
@@ -197,13 +197,13 @@ LARatesSpotSDE::calcPath(unsigned int pos)
 	else if (pos < mPos)
 	{
 		unsigned int _pos_s;
-		LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), _pos_s);
+		AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), _pos_s);
 		if (grid[pos] != mTimeGrid[_pos_s])
 		{
 			if (_pos_s == 0)
 			{
 				//error
-				throw LACoreInvalidData("grid is something wrong", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("grid is something wrong", __FILE__, __LINE__);
 			}
 			_pos_s--;
 		}
@@ -220,9 +220,9 @@ LARatesSpotSDE::calcPath(unsigned int pos)
 			mVar[0] = (*mpTransformer)(var);
 #endif
 		}		
-		if (!LAAlgorithm::find<DoubleArray, double>(grid, mTimeGrid[_pos_s], 0, grid.size() - 1, pos_s))
+		if (!AQLAlgorithm::find<DoubleArray, double>(grid, mTimeGrid[_pos_s], 0, grid.size() - 1, pos_s))
 		{
-			throw LACoreInvalidData("TimeGrid is inconsistent with BM grid", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("TimeGrid is inconsistent with BM grid", __FILE__, __LINE__);
 		}	
 	}
 	else 
@@ -243,7 +243,7 @@ LARatesSpotSDE::calcPath(unsigned int pos)
 	}
 		
 	unsigned int j;
-	LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos_s], mTimeGrid.size(), j);
+	AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos_s], mTimeGrid.size(), j);
 	if (grid[pos_s] == mTimeGrid[j]) j++;
 	
 	const DoubleMatrix& bm = mpBM->getBM();
@@ -403,7 +403,7 @@ LARatesSpotSDE::setUp()
 	//			mpvolHW = dynamic_cast<LAMathVolFuncHW*>(mVolatility[0][0]);
 	//		else
 	//		{
-	//			const LAFunctionBase* pbase = dynamic_cast<LAMathVolFuncBase*>(mVolatility[0][0])->getVolatility();
+	//			const AQLFunctionBase* pbase = dynamic_cast<LAMathVolFuncBase*>(mVolatility[0][0])->getVolatility();
 	//			mpvolHW = dynamic_cast<const LAMathVolFuncHW*>(pbase);
 	//		}
 

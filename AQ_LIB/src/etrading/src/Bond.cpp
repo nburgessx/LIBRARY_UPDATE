@@ -4,7 +4,7 @@
 #include <iomanip>
 #include "StaticStructureStore.h"
 #include "Variant.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include <boost/format.hpp>
 #include <FixedBondCashflow.h>
 
@@ -73,7 +73,7 @@ namespace etrading
         return schedule_;
 	}
 
-	double Bond::price( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
+	double Bond::price( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
     {
         double price = 0.0;
         if (isCleanPrice_)
@@ -93,7 +93,7 @@ namespace etrading
 	* @param[in]	bondCurve		A calibrated bond curve
 	* @returns		The bond price. This is clean or dirty, depending on the convention used by the bond
 	*/
-	double Bond::priceFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
+	double Bond::priceFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const
 	{
 		double price = 0.0;
 		if (isCleanPrice_)
@@ -113,7 +113,7 @@ namespace etrading
 	* @param[in]	creditModel		The calibrated credit model
 	* @returns		The bond price. This is clean or dirty, depending on the convention used by the bond
 	*/
-	double Bond::priceFromCreditModel( const LADate& settlementDate, const CreditModel& creditModel ) const
+	double Bond::priceFromCreditModel( const AQLDate& settlementDate, const CreditModel& creditModel ) const
 	{
 		double price = 0.0;
 		if (isCleanPrice_)
@@ -189,7 +189,7 @@ namespace etrading
 
 	}
 
-	AnyTypeMatrix Bond::view( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool showColumnHeaders, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList ) const
+	AnyTypeMatrix Bond::view( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool showColumnHeaders, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList ) const
 	{
 
         double compoundYield = compoundYieldFromQuotedYield(settlementDate, yield, yieldCalcType);
@@ -230,7 +230,7 @@ namespace etrading
 
 		if ( cashflowMatrix.size() == 0 )
 		{
-			throw LACoreInvalidData( "#Error: Unable to display cashflows. There are no cashflows to display.", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: Unable to display cashflows. There are no cashflows to display.", __FILE__, __LINE__ );
 		}
 		
 		return cashflowMatrix;
@@ -291,24 +291,24 @@ namespace etrading
     }
 
     // Check that the given settlement date is valid i.e. not before bond start date and not after bond maturity
-    void Bond::checkSettlementDateValid( const LADate & settlementDate ) const
+    void Bond::checkSettlementDateValid( const AQLDate & settlementDate ) const
     {
         const unsigned int cashflowSize = schedule_->getCashflowSize();
         if ( cashflowSize == 0 )
 		{
-			throw LACoreInvalidData("#Error: Unable to evaluate the Bond Cashflows. The bond has no cashflows.", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: Unable to evaluate the Bond Cashflows. The bond has no cashflows.", __FILE__, __LINE__ );
 		}
 
-        LADate bondStartDate = schedule_->getEffectiveDate();
+        AQLDate bondStartDate = schedule_->getEffectiveDate();
         if ( settlementDate < bondStartDate )
         {
-            throw LACoreInvalidData( ( boost::format( "#Error: Invalid Settlement Date: SettlementDate '%s'is before the Bond Start Date. " ) % settlementDate.convertDateToString().getCString() ).str().c_str() , __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( ( boost::format( "#Error: Invalid Settlement Date: SettlementDate '%s'is before the Bond Start Date. " ) % settlementDate.convertDateToString().getCString() ).str().c_str() , __FILE__, __LINE__ );
         }
 
-        LADate bondMaturityDate = schedule_->getUnadjustedMaturityDate();
+        AQLDate bondMaturityDate = schedule_->getUnadjustedMaturityDate();
         if ( settlementDate >= bondMaturityDate )
         {
-            throw LACoreInvalidData( ( boost::format( "#Error: Invalid Settlement Date: SettlementDate  '%s' should be before Bond Maturity Date. " ) % settlementDate.convertDateToString().getCString() ).str().c_str() , __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( ( boost::format( "#Error: Invalid Settlement Date: SettlementDate  '%s' should be before Bond Maturity Date. " ) % settlementDate.convertDateToString().getCString() ).str().c_str() , __FILE__, __LINE__ );
         }
         
         return;
@@ -344,12 +344,12 @@ namespace etrading
 		populateBondYieldParameters(bondYieldParameters_, schedule_->getPaymentFrequency(), schedule_->getYieldFrequency(), schedule_->getBondCalculationType(), schedule_->getAccrualDaycount(), schedule_->getAccrualCalendar().getCString(), schedule_->getExDividendTenor());
 	}
 
-	double Bond::dv01Numerical( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, const double bumpSize, const LAString& bumpMode ) const
+	double Bond::dv01Numerical( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, const double bumpSize, const AQLString& bumpMode ) const
 	{
 		double dv01            = 0.0;
 		const double yieldBump = bumpSize * 0.0001;
 
-		LAString uppercaseBumpMode( bumpMode );
+		AQLString uppercaseBumpMode( bumpMode );
 		uppercaseBumpMode.toUpper();
 		if ( uppercaseBumpMode == "UP" )
 		{
@@ -375,7 +375,7 @@ namespace etrading
 		}
 		else
 		{
-			throw LACoreInvalidData( "#Error: BumpMode must be either 'UP, or 'DOWN', or 'CENTRAL'", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: BumpMode must be either 'UP, or 'DOWN', or 'CENTRAL'", __FILE__, __LINE__ );
 		}
 
 		// Undo bond price() scaling
@@ -427,7 +427,7 @@ namespace etrading
 	 * @param[in]	settlementDate	The settlement date used for the valuation
 	 * @returns		The converted price.
 	 */
-	double Bond::priceFromDirtyToClean( const double dirtyPrice, const LADate& settlementDate ) const
+	double Bond::priceFromDirtyToClean( const double dirtyPrice, const AQLDate& settlementDate ) const
 	{
 		ValuationSettings valuationSettings;
 		valuationSettings.setSettlementDate( settlementDate );
@@ -442,7 +442,7 @@ namespace etrading
 	 * @param[in]	settlementDate	The settlement date used for the valuation
 	 * @returns		The converted price.
 	 */
-    double Bond::priceFromCleanToDirty( const double cleanPrice, const LADate& settlementDate ) const
+    double Bond::priceFromCleanToDirty( const double cleanPrice, const AQLDate& settlementDate ) const
 	{
 		ValuationSettings valuationSettings;
 		valuationSettings.setSettlementDate( settlementDate );
@@ -452,16 +452,16 @@ namespace etrading
 	}
 
 
-    LADate Bond::getBondLastCouponDate(const LADate& settlementDate) const
+    AQLDate Bond::getBondLastCouponDate(const AQLDate& settlementDate) const
     {
 		auto activeCouponDates = schedule_->getBondFirstActiveCouponDates(settlementDate, false);
-		LADate lastCouponDate = activeCouponDates.priorFirstActiveCouponDate_;
+		AQLDate lastCouponDate = activeCouponDates.priorFirstActiveCouponDate_;
 
 		return lastCouponDate;
     }
 
 	//Utility function to get the reinvest coupons between settleDate and forwardSettleDate
-	std::vector< BondFwdReinvestedCoupon > Bond::getBondFwdReinvestedCoupons(const double& price, const LADate& settleDate, const LADate& forwardSettleDate, const DayCountEnum& repoDayCount, const double& repoRate) const
+	std::vector< BondFwdReinvestedCoupon > Bond::getBondFwdReinvestedCoupons(const double& price, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const DayCountEnum& repoDayCount, const double& repoRate) const
 	{
 
 		// Data provider is based on settleDate
@@ -570,7 +570,7 @@ namespace etrading
 
 
 	//the reinvest coupons' value between settleDate and forwardSettleDate for bond forward
-	double Bond::forwardReinvestedCouponValue(const double& price, const LADate& settleDate, const LADate& forwardSettleDate, const DayCountEnum& repoDayCount, const double& repoRate) const
+	double Bond::forwardReinvestedCouponValue(const double& price, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const DayCountEnum& repoDayCount, const double& repoRate) const
 	{
 		// coupons between settleDate and forwardSettleDate
 		auto sumOfReceivedCoupons = calculateReinvestedCouponsFwdValue(getBondFwdReinvestedCoupons(price, settleDate, forwardSettleDate, repoDayCount, repoRate));
@@ -582,7 +582,7 @@ namespace etrading
 	//forward price from the given repo rate
 	// 1) If the Actual repo rate is used, the result is the fairFwdPrice, where fairFwdPrice * ConversionFactor = Fair Future Price
 	// 2) If the Implied repo rate is used, the result is the actualFwdPrice, where actualFwdPrice * ConversionFactor = Actual Future Price
-	double Bond::forwardPrice(const double& price, const LADate& settleDate, const LADate& forwardSettleDate, const double& repoRate, const DayCountEnum& repoDayCount) const
+	double Bond::forwardPrice(const double& price, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const double& repoRate, const DayCountEnum& repoDayCount) const
 	{
 		double dirtyPrice = price;
 		if (isCleanPrice_)
@@ -605,7 +605,7 @@ namespace etrading
 	}
 
 	// implied/breakeven repo rate from forward price
-	double Bond::impliedRepoRate(const double& price, const LADate& settleDate, const LADate& forwardSettleDate, const double& forwardPrice, const DayCountEnum& repoDayCount) const
+	double Bond::impliedRepoRate(const double& price, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const double& forwardPrice, const DayCountEnum& repoDayCount) const
 	{
 		double dirtyPrice = price;
 		double fwdDirtyPrice = forwardPrice;
@@ -626,14 +626,14 @@ namespace etrading
 	// implied/breakeven repo rate from future price
 	// If the Actual/Quoted future price is used, the result is implied repo rate (This is the meaning of implied repo rate in papers/BB)
 	// If the Fair future price is used, the result  is actual repo rate
-	double Bond::impliedRepoRateFromFuture(const double& price, const LADate& settleDate, const LADate& futureSettleDate, const double& futurePrice, const double& conversionFactor, const DayCountEnum& repoDayCount) const
+	double Bond::impliedRepoRateFromFuture(const double& price, const AQLDate& settleDate, const AQLDate& futureSettleDate, const double& futurePrice, const double& conversionFactor, const DayCountEnum& repoDayCount) const
 	{
 		// The future contract is traded on exchange and the underlying bond is 'standardized' (theoretical). The real bonds that can be delivered into the contract are translated into units of the standardized bond through conversion factors.
 
 		// Aussie future is special, there is no CTD bond
 		if (bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS)
 		{
-			throw LACoreInvalidData("#Error: Implied repo rate is not supported for Australian Bond Future.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Implied repo rate is not supported for Australian Bond Future.", __FILE__, __LINE__);
 		}
 
 		// *** Note that FUTURE is a theoretical bond, so the forward price from the future price is always CLEAN price
@@ -659,12 +659,12 @@ namespace etrading
 	// Future price from repo rate
 	// 1) If the Actual repo rate is used, the result is the Fair future price
 	// 2) If the Implied repo rate is used, the result is the Actual/Quoted Future price
-	double Bond::futurePrice(const double& bondPrice, const LADate& settleDate, const LADate& futureSettleDate, const double& repoRate, const DayCountEnum& repoDayCount, const double& conversionFactor) const
+	double Bond::futurePrice(const double& bondPrice, const AQLDate& settleDate, const AQLDate& futureSettleDate, const double& repoRate, const DayCountEnum& repoDayCount, const double& conversionFactor) const
 	{
 		// Aussie future is special, there is no CTD bond
 		if (bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS)
 		{
-			throw LACoreInvalidData("#Error: This function is not supported for Australian Bond Future.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: This function is not supported for Australian Bond Future.", __FILE__, __LINE__);
 		}
 
 		const double fwdPrice = forwardPrice(bondPrice, settleDate, futureSettleDate, repoRate, repoDayCount);
@@ -685,7 +685,7 @@ namespace etrading
 	}
 
 	// conversion factor of the bond against the future's first delivery date and notional coupon rate
-	double Bond::conversionFactor(const LADate& firstFutureSettleDate, const double& notionalBondCouponRate) const
+	double Bond::conversionFactor(const AQLDate& firstFutureSettleDate, const double& notionalBondCouponRate) const
 	{
 		double convfactor = 1.0;
 		// Special Calcuation for AUD future: there is no CTD bond, so conversionFactor is always 1.
@@ -719,10 +719,10 @@ namespace etrading
 			// --- 1) n Calculation ---
 
 			//Delivery Date to use: First day of the delivery Month, i.e. 01 Dec 2008
-			LADate futureDateToUse = firstFutureSettleDate;
+			AQLDate futureDateToUse = firstFutureSettleDate;
 			futureDateToUse.setDay(1);
 
-			const LADate bondMaturityDate = schedule_->getMaturityDate();
+			const AQLDate bondMaturityDate = schedule_->getMaturityDate();
 			const DayCountEnum dayCount = schedule_->getAccrualDaycount();
 
 			const double years = getYearFraction(futureDateToUse, bondMaturityDate, dayCount);
@@ -819,11 +819,11 @@ namespace etrading
 			const double a = schedule_->getFixedRate() * 100.0;
 
 			//Delivery Date to use: First day of the delivery Month, i.e. 01 Dec 2008
-			LADate futureDateToUse = firstFutureSettleDate;
+			AQLDate futureDateToUse = firstFutureSettleDate;
 			futureDateToUse.setDay(1);
 			
 			const auto couponDates = schedule_->getPaymentDates();
-			const LADate bondMaturityDate = schedule_->getMaturityDate();
+			const AQLDate bondMaturityDate = schedule_->getMaturityDate();
 
 			// 2) b: number of coupons from delivery date to maturity
 			auto activeCouponDates = schedule_->getBondFirstActiveCouponDates(futureDateToUse, true);
@@ -840,7 +840,7 @@ namespace etrading
 			// 4) d: number of months from delivery date to next coupon date
 			// LOWER_BOND: Find First Element in GREATER THAN OR EQUAL to the futureDateToUse
 			auto it = std::lower_bound(couponDates.begin(), couponDates.end(), futureDateToUse);
-			const LADate nextCouponDate = (*it);
+			const AQLDate nextCouponDate = (*it);
 			const double yearsToNextCoupon = getYearFraction(futureDateToUse, nextCouponDate, dayCount);
 
 			const int d = floor(yearsToNextCoupon * 12.0);
@@ -865,7 +865,7 @@ namespace etrading
 			// ConversionFactor: the clean price of a deliveryable bond to yield the coupon rate on the notional bond by the first futures delviery date,
 			// i.e. using notionalBondCouponRate as the yield to price the bond at firstFutureSettleDate
 
-			LADate futureDateToUse = firstFutureSettleDate;
+			AQLDate futureDateToUse = firstFutureSettleDate;
 
 			if (bondYieldParameters_.calculationType_ == TYPE26_UK_GILT)
 			{
@@ -887,12 +887,12 @@ namespace etrading
 
 
 	// Gross basis: currentCleanPrice - futurePrice * conversionFactor
-	double Bond::grossBasis(const double& price, const LADate& settleDate, const double& futurePrice, const double& conversionFactor) const
+	double Bond::grossBasis(const double& price, const AQLDate& settleDate, const double& futurePrice, const double& conversionFactor) const
 	{
 		// Aussie future is special, there is no CTD bond
 		if (bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS)
 		{
-			throw LACoreInvalidData("#Error: This function is not supported for Australian Bond Future.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: This function is not supported for Australian Bond Future.", __FILE__, __LINE__);
 		}
 
 		// Gross basis = currentCleanPrice - futurePrice * conversionFactor
@@ -908,12 +908,12 @@ namespace etrading
 	}
 
 	// Net basis: bondForwardCleanPrice - futurePrice * conversionFactor
-	double Bond::netBasis(const double& bondForwardPrice, const LADate& forwardSettleDate, const double& futurePrice, const double& conversionFactor) const
+	double Bond::netBasis(const double& bondForwardPrice, const AQLDate& forwardSettleDate, const double& futurePrice, const double& conversionFactor) const
 	{
 		// Aussie future is special, there is no CTD bond
 		if (bondYieldParameters_.calculationType_ == TYPE23_AUSTRALIAN_GOVERNMENT_BONDS)
 		{
-			throw LACoreInvalidData("#Error: This function is not supported for Australian Bond Future.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: This function is not supported for Australian Bond Future.", __FILE__, __LINE__);
 		}
 
 		// Formula derivation:
@@ -939,13 +939,13 @@ namespace etrading
 
 		return netBas;
 	}
-    double Bond::cleanPriceJGBApproximation(const LADate& settlementDate, const double& inputYield) const
+    double Bond::cleanPriceJGBApproximation(const AQLDate& settlementDate, const double& inputYield) const
     {
 		AQ_THROW("cleanPriceJGBApproximation() is not supported for this bond type");
 	}
 
 
-    double Bond::compoundYieldJGBApproximation( const LADate& settlementDate, const double& price) const
+    double Bond::compoundYieldJGBApproximation( const AQLDate& settlementDate, const double& price) const
     {
 		AQ_THROW("compoundYieldJGBApproximation() is not supported for this bond type");
 	}

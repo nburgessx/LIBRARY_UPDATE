@@ -6,9 +6,9 @@
 #endif
 
 
-#include "LAPriceDataConvention.h"
-#include "LAFunctionBase.h"
-#include "LASplineInterpolation.h"
+#include "AQLPriceDataConvention.h"
+#include "AQLFunctionBase.h"
+#include "AQLSplineInterpolation.h"
  
 //// DEFINES ////
 #ifndef IR_CALIBRATION_DATA_DAYCOUNT_FIX
@@ -25,7 +25,7 @@
 #endif
 
 
-class LADataInstance;
+class AQLDataInstance;
 
 using namespace std;
 
@@ -37,25 +37,25 @@ class LAMathArbitrageFreeCurve
 {
 public:
 	// constructor
-	LAMathArbitrageFreeCurve(LADataInstance* dataInstance,const LAString& curveName);
+	LAMathArbitrageFreeCurve(AQLDataInstance* dataInstance,const AQLString& curveName);
 	// copy constructor
 	LAMathArbitrageFreeCurve(const LAMathArbitrageFreeCurve& curve);
 	// destructor
 	virtual ~LAMathArbitrageFreeCurve();
 
-    virtual void		setForecastCurve(LADataInstance* dataInstance, const LAString& curveName);
+    virtual void		setForecastCurve(AQLDataInstance* dataInstance, const AQLString& curveName);
 
     double getDF(double term);
 
-    double getRate(double term, const LAString curveName);
+    double getRate(double term, const AQLString curveName);
 
     double getBasisLegValue(double valueTerm, const DoubleArray& fixTerms, const DoubleArray& payTerms, const DoubleArray& accruTerms,
-                             const LAString& forecastID, double basis, bool isPrincipal, double amount, double firstFixingRate);
+                             const AQLString& forecastID, double basis, bool isPrincipal, double amount, double firstFixingRate);
 		
 private:
-	LAString mName;
-    LADate mAsOfDate;
-	LASplineInterpolation mDFData;
-    map<LAString, LASplineInterpolation > mForecastDataMap;
+	AQLString mName;
+    AQLDate mAsOfDate;
+	AQLSplineInterpolation mDFData;
+    map<AQLString, AQLSplineInterpolation > mForecastDataMap;
 };
 #endif

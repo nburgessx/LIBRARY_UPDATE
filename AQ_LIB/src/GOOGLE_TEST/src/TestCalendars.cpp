@@ -29,7 +29,7 @@ namespace google_test
 
 			if ( environmentVariablePath == nullptr )
 			{
-				throw LACoreInvalidData("#Error: The 'AQ' environment variable has not been set.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: The 'AQ' environment variable has not been set.", __FILE__, __LINE__);
 			}
 
 			boost::filesystem::path resultPath = boost::filesystem::path(environmentVariablePath) / "resources" / "config";
@@ -48,7 +48,7 @@ namespace google_test
 			return p.string();
 		}
 
-		LADate loadCalendarConfig( const std::string& calendarConfigFile )
+		AQLDate loadCalendarConfig( const std::string& calendarConfigFile )
 		{
 			std::string resolvedfilename = resolveFilename(calendarConfigFile);
 
@@ -94,7 +94,7 @@ namespace google_test
 
 				std::string key = tokens[0];
 				std::string dateString = tokens[1];
-				LADate lastCalendarUpdate = LADate( dateString.c_str() );
+				AQLDate lastCalendarUpdate = AQLDate( dateString.c_str() );
 				fin.close();
 				return lastCalendarUpdate;
 				break;
@@ -108,9 +108,9 @@ namespace google_test
 
 	TEST(Calendars, UNIT_Expiry_Test)
 	{
-		const LADate currentDate = etrading::getCurrentMLibDate();
+		const AQLDate currentDate = etrading::getCurrentMLibDate();
 		
-		const LADate lastCalendarUpdate = loadCalendarConfig( fileName_MLIB_CalendarConfig );
+		const AQLDate lastCalendarUpdate = loadCalendarConfig( fileName_MLIB_CalendarConfig );
 
 		const std::string resolvedCalendarFile     = resolveFilename(fileName_MLIB_Calendar);
 		const std::string resolvedCalendarConfFile = resolveFilename(fileName_MLIB_CalendarConfig);
@@ -119,7 +119,7 @@ namespace google_test
 		const std::string dummyBusinessDayAdjust;
 		const std::string dummyCalendar;
 		const std::string dummyRollConvention;
-		const LADate errorCutoffDate = validation::tryMeDateFromTenor( lastCalendarUpdate, errorTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention );
+		const AQLDate errorCutoffDate = validation::tryMeDateFromTenor( lastCalendarUpdate, errorTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention );
 
 		if ( currentDate > errorCutoffDate )
 		{
@@ -129,7 +129,7 @@ namespace google_test
 						" old, Please regenerate it using the tool CDWCalendarUpdate.bat." );
 		}
 
-		const LADate warningCutoffDate = validation::tryMeDateFromTenor(lastCalendarUpdate, warningTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention);
+		const AQLDate warningCutoffDate = validation::tryMeDateFromTenor(lastCalendarUpdate, warningTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention);
 
 		if ( currentDate > warningCutoffDate )
 		{

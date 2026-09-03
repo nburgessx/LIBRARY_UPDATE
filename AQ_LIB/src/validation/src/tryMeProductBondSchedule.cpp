@@ -25,7 +25,7 @@ namespace validation
 	*  @param [in]		showColumnHeaders	True to include the column headers in the output. Default to True
     *  @return			A matrix of floating leg/fixing leg schedules
     */
-    LAStringMatrix tryMeProductBondSchedule( const LabelValueBlock& bondScheduleLVB, bool validateKeys, bool showColumnHeaders, const std::vector<std::string>& columnList )
+    AQLStringMatrix tryMeProductBondSchedule( const LabelValueBlock& bondScheduleLVB, bool validateKeys, bool showColumnHeaders, const std::vector<std::string>& columnList )
     {
         VALID_EXCEPTION_START
 
@@ -38,7 +38,7 @@ namespace validation
 
        	Schedule schedule(bondScheduleLVB,"schedule");
 		
-		LAStringMatrix result = schedule.display(showColumnHeaders, etrading::toCashflowHeaderEnumSet(columnList));
+		AQLStringMatrix result = schedule.display(showColumnHeaders, etrading::toCashflowHeaderEnumSet(columnList));
 
         // Record Outputs AND Return the Result for logs, tests and playback
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );

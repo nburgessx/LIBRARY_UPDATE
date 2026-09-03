@@ -20,15 +20,15 @@
 
 #include <algorithm>
 #include "LARiskConfigurationYieldIRShiftVolIRVega.h"
-#include "LAString.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LADataReference.h"
-#include "LAPriceDataFunction.h"
+#include "AQLString.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataFunction.h"
 #include "LAPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
@@ -37,7 +37,7 @@
 #include "LAScenarioConfigurationManager.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
-#include "LALinearFunc.h"
+#include "AQLLinearFunc.h"
 #include "LADefinitionsCalibration.h"
 #include "LACalibrationParameters.h"
 #include "LACalibrationParametersManager.h"
@@ -68,26 +68,26 @@ LARiskConfigurationYieldIRShiftVolIRVega::~LARiskConfigurationYieldIRShiftVolIRV
 	@return DoubleMatrix
 */
 DoubleMatrix
-LARiskConfigurationYieldIRShiftVolIRVega::getCoordinatesMatrix(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::getCoordinatesMatrix(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAStringVector grid = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLStringVector grid = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 		STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_GRID_COORDINATES + getCurveSuffix(ccy)).toToken(MULTI_STATIC_DATA_DELIMITER);
 	// day count
-	LAPriceDataDayCount dayCount;
+	AQLPriceDataDayCount dayCount;
 	dayCount.convertFromString(LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT));
 	// asOfDate
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 
 	const unsigned int COORDINATESNUM = 4;
 	const unsigned int size = grid.size();
 	DoubleMatrix ret(size);
 	for (unsigned int i = 0; i < size; ++i)
 	{
-		LAStringVector cdns = grid[i].toToken('_');
+		AQLStringVector cdns = grid[i].toToken('_');
 		if (cdns.size() != COORDINATESNUM)
 		{
-			throw LACoreInvalidData(" IR vega coordinate grid format is wrong .", __FILE__, __LINE__);
+			throw AQLCoreInvalidData(" IR vega coordinate grid format is wrong .", __FILE__, __LINE__);
 		}
 		ret[i].resize(COORDINATESNUM);
 		for (unsigned  int j = 0; j < COORDINATESNUM; ++j)
@@ -107,14 +107,14 @@ LARiskConfigurationYieldIRShiftVolIRVega::getCoordinatesMatrix(const LAString &c
 	@return DoubleMatrix
 */
 DoubleMatrix
-LARiskConfigurationYieldIRShiftVolIRVega::getFileValMatrix(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::getFileValMatrix(const AQLString &ccy) const
 {
 	
-	LAString tmpCurrency = ccy;
-	LAString strMatrixFile = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString strMatrixFile = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 									STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_SHIFTVAL_FILE + getCurveSuffix(ccy));
 	MAFileAccessor matrixFile(LAMarketData::getNumFileName(strMatrixFile));
-	LAStringMatrix f_dataMatrix;
+	AQLStringMatrix f_dataMatrix;
 	matrixFile.readAllData(MARKET_DATA_DELIMITER, f_dataMatrix);
 	matrixFile.close();
 
@@ -138,12 +138,12 @@ LARiskConfigurationYieldIRShiftVolIRVega::getFileValMatrix(const LAString &ccy) 
     @brief return grid term
 
 	@param[in] ccy
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-vector<LAString>
-LARiskConfigurationYieldIRShiftVolIRVega::getCoordinates(const LAString &ccy) const
+vector<AQLString>
+LARiskConfigurationYieldIRShiftVolIRVega::getCoordinates(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return  mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 		STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_GRID_COORDINATES + getCurveSuffix(ccy)).toToken(MULTI_STATIC_DATA_DELIMITER);
 
@@ -155,11 +155,11 @@ LARiskConfigurationYieldIRShiftVolIRVega::getCoordinates(const LAString &ccy) co
 	@param[in] ccy
 	@return string
 */
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getBumpType(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getBumpType(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString gridType = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_GRID_TYPE + getCurveSuffix(ccy));
+	AQLString tmpCurrency = ccy;
+	AQLString gridType = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_GRID_TYPE + getCurveSuffix(ccy));
 	gridType.toUpper();
 
 	if (gridType == RISK_GRID_MARKET)
@@ -172,8 +172,8 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBumpType(const LAString &ccy) const
 	}
 	else
 	{
-		LAString msg = "This grid type is not supported by bumpType. grid type = " + gridType;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "This grid type is not supported by bumpType. grid type = " + gridType;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
@@ -184,10 +184,10 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBumpType(const LAString &ccy) const
 	@param[in] ccy
 	@return string
 */
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getGridType(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getGridType(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return  mpRiskStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_GRID_TYPE + getCurveSuffix(ccy));
 }
 
@@ -196,13 +196,13 @@ LARiskConfigurationYieldIRShiftVolIRVega::getGridType(const LAString &ccy) const
     @brief return bucket grid term
 
 	@param[in] ccy
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-LAStringVector
-LARiskConfigurationYieldIRShiftVolIRVega::getBucketGridTerm(const LAString &ccy) const
+AQLStringVector
+LARiskConfigurationYieldIRShiftVolIRVega::getBucketGridTerm(const AQLString &ccy) const
 {
 	ccy;
-	vector<LAString> ret;
+	vector<AQLString> ret;
 	ret.push_back(AQ_NO_DATA);
 	return ret;
 	
@@ -212,13 +212,13 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBucketGridTerm(const LAString &ccy)
     @brief return market  term
 
 	@param[in] ccy
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-LAStringVector
-LARiskConfigurationYieldIRShiftVolIRVega::getMarketTerm(const LAString &ccy) const
+AQLStringVector
+LARiskConfigurationYieldIRShiftVolIRVega::getMarketTerm(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAStringVector mktTems_prop = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLStringVector mktTems_prop = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 			STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_GRID_MARKET + getCurveSuffix(ccy)).toToken(':');
 
 	return reduceTargetGrids(ccy, mktTems_prop);
@@ -229,12 +229,12 @@ LARiskConfigurationYieldIRShiftVolIRVega::getMarketTerm(const LAString &ccy) con
     @brief return outputname1
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getOutPutName1(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getOutPutName1(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_OUTPUTNAME + getCurveSuffix(ccy));
 }
@@ -242,9 +242,9 @@ LARiskConfigurationYieldIRShiftVolIRVega::getOutPutName1(const LAString &ccy) co
 /*!
     @brief return riskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationYieldIRShiftVolIRVega::getRiskName(void) const
 {
 	return RISK_FRONT_VOL_IRSHIFTIRVEGA;
@@ -257,9 +257,9 @@ LARiskConfigurationYieldIRShiftVolIRVega::getRiskName(void) const
 	@return bool
 */
 bool
-LARiskConfigurationYieldIRShiftVolIRVega::isGridSensitivity(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::isGridSensitivity(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
 												STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_ISGRIDSENSITIVITY + getCurveSuffix(ccy)));
 }
@@ -271,9 +271,9 @@ LARiskConfigurationYieldIRShiftVolIRVega::isGridSensitivity(const LAString &ccy)
 	@return bool 
 */
 bool
-LARiskConfigurationYieldIRShiftVolIRVega::isParallelShift(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::isParallelShift(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_ISPARALLEL + getCurveSuffix(ccy)));
 }
@@ -285,9 +285,9 @@ LARiskConfigurationYieldIRShiftVolIRVega::isParallelShift(const LAString &ccy) c
 	@return bool 
 */
 bool
-LARiskConfigurationYieldIRShiftVolIRVega::isShiftValFileUse(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::isShiftValFileUse(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_ISFILEUSE + getCurveSuffix(ccy)));
 }
@@ -299,9 +299,9 @@ LARiskConfigurationYieldIRShiftVolIRVega::isShiftValFileUse(const LAString &ccy)
 	@return double
 */
 double
-LARiskConfigurationYieldIRShiftVolIRVega::getDivUnit(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::getDivUnit(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_DIVUNIT + getCurveSuffix(ccy)).getDoubleValue();
 }
@@ -314,9 +314,9 @@ LARiskConfigurationYieldIRShiftVolIRVega::getDivUnit(const LAString &ccy) const
 	@return double
 */
 double
-LARiskConfigurationYieldIRShiftVolIRVega::getScenario1ShiftValue(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::getScenario1ShiftValue(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	double shiftVal = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 						STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_SHIFTVAL + getCurveSuffix(ccy)).getDoubleValue();
 
@@ -331,7 +331,7 @@ LARiskConfigurationYieldIRShiftVolIRVega::getScenario1ShiftValue(const LAString 
 	@return double
 */
 double
-LARiskConfigurationYieldIRShiftVolIRVega::getScenario2ShiftValue(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::getScenario2ShiftValue(const AQLString &ccy) const
 {
 	return getScenario1ShiftValue(ccy);
 }
@@ -340,12 +340,12 @@ LARiskConfigurationYieldIRShiftVolIRVega::getScenario2ShiftValue(const LAString 
     @brief return shift type
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getShiftType(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getShiftType(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return  mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_SHIFTTYPE + getCurveSuffix(ccy));
 
@@ -355,12 +355,12 @@ LARiskConfigurationYieldIRShiftVolIRVega::getShiftType(const LAString &ccy) cons
     @brief return bump direction
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getBumpDirection(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getBumpDirection(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return  mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_BUMPDIRECTION + getCurveSuffix(ccy));
 
@@ -373,9 +373,9 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBumpDirection(const LAString &ccy) 
 	@return bool
 */
 bool
-LARiskConfigurationYieldIRShiftVolIRVega::isWave(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::isWave(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_ISWAVE + getCurveSuffix(ccy)));
 }
@@ -383,9 +383,9 @@ LARiskConfigurationYieldIRShiftVolIRVega::isWave(const LAString &ccy) const
 /*!
     @brief  return target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationYieldIRShiftVolIRVega::getTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(RISK_FRONT_VOL_IRSHIFTIRVEGA_TARGET_CURRENCY);
@@ -395,18 +395,18 @@ LARiskConfigurationYieldIRShiftVolIRVega::getTargetCurrencies() const
 /*!
     @brief return calibration target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationYieldIRShiftVolIRVega::getCalibTargetCurrencies() const
 {
-	LAString targetFX = mpRiskStaticData->getStaticData(RISK_FRONT_VOL_IRSHIFTIRVEGA_CALIBRATION_TARGET_FX).toUpper();
+	AQLString targetFX = mpRiskStaticData->getStaticData(RISK_FRONT_VOL_IRSHIFTIRVEGA_CALIBRATION_TARGET_FX).toUpper();
 	if (targetFX == "ALL")
 	{
 		return "ALL";
 	}
-	LAString ret;
-	LAStringVector ccys = MADealUtils::getSDECurrencys();
+	AQLString ret;
+	AQLStringVector ccys = MADealUtils::getSDECurrencys();
 	unsigned int ccySize = ccys.size();
 	for (unsigned int i = 0; i < ccySize; ++i)
 	{
@@ -418,7 +418,7 @@ LARiskConfigurationYieldIRShiftVolIRVega::getCalibTargetCurrencies() const
 	}
 	if (ret.size() <= 0)
 	{
-		throw LACoreInvalidData("SDE currency is does not exist", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("SDE currency is does not exist", __FILE__, __LINE__);
 	}
 	ret += targetFX;
 	return ret;
@@ -431,10 +431,10 @@ LARiskConfigurationYieldIRShiftVolIRVega::getCalibTargetCurrencies() const
 	@return bool
 */
 bool
-LARiskConfigurationYieldIRShiftVolIRVega::isRiskCurrencyMode(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::isRiskCurrencyMode(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_ISRISKCURRENCYMODE + getCurveSuffix(ccy));
 	if (proprslt == AQ_NO_DATA)
 		return false;
@@ -451,13 +451,13 @@ LARiskConfigurationYieldIRShiftVolIRVega::isRiskCurrencyMode(const LAString &ccy
 	@return double
 */
 double
-LARiskConfigurationYieldIRShiftVolIRVega::getBaseYieldVal(const LAString &ccy, int index) const
+LARiskConfigurationYieldIRShiftVolIRVega::getBaseYieldVal(const AQLString &ccy, int index) const
 {
 	DoubleArray shiftVals = getBaseShiftVals(ccy);
 	const unsigned int shiftSize = shiftVals.size();
 	if (index < 0 || index >= static_cast<int>(shiftSize))
 	{
-		throw LACoreInvalidData("LARiskConfigurationYieldIRShiftVolFXVega::getBaseShifts index is less than zero or over shift grid.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("LARiskConfigurationYieldIRShiftVolFXVega::getBaseShifts index is less than zero or over shift grid.", __FILE__, __LINE__);
 	}
 	return shiftVals[index];
 }
@@ -468,10 +468,10 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBaseYieldVal(const LAString &ccy, i
 	@return shiftvals
 */
 DoubleArray  
-LARiskConfigurationYieldIRShiftVolIRVega::getBaseShiftVals(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::getBaseShiftVals(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString strVals = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString strVals = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_BASESHIFTVAL + getCurveSuffix(ccy));
 
 	return convertToRateValues(strVals.toToken(MULTI_STATIC_DATA_DELIMITER));
@@ -486,8 +486,8 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBaseShiftVals(const LAString &ccy) 
 	@param[in] dataInstance
 	@param[in] index
 */
-vector<LAObject *>
-LARiskConfigurationYieldIRShiftVolIRVega::createBaseScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, int index) const
+vector<AQLObject *>
+LARiskConfigurationYieldIRShiftVolIRVega::createBaseScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const
 {
 	return createIRBaseScenarioEntity(ccy,dataInstance,index);
 }
@@ -497,10 +497,10 @@ LARiskConfigurationYieldIRShiftVolIRVega::createBaseScenarioEntity(const LAStrin
     @brief return Base extra target names
 
 	@param[in] ccy
-	@return LAStringVector
+	@return AQLStringVector
 */
-vector<LAObject *>
-LARiskConfigurationYieldIRShiftVolIRVega::createBaseExtraScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, int index) const
+vector<AQLObject *>
+LARiskConfigurationYieldIRShiftVolIRVega::createBaseExtraScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const
 {
 	return createIRBaseExtraScenarioEntity(ccy,dataInstance,index);
 }
@@ -509,10 +509,10 @@ LARiskConfigurationYieldIRShiftVolIRVega::createBaseExtraScenarioEntity(const LA
     @brief return Base extra target names
 
 	@param[in] ccy
-	@return LAStringVector
+	@return AQLStringVector
 */
-LAStringVector
-LARiskConfigurationYieldIRShiftVolIRVega::getBaseExtraTargetNames(const LAString &ccy, LADataInstance &dataInstance) const
+AQLStringVector
+LARiskConfigurationYieldIRShiftVolIRVega::getBaseExtraTargetNames(const AQLString &ccy, AQLDataInstance &dataInstance) const
 {
 	return getIRBaseExtraTargetNames(ccy, dataInstance);
 }
@@ -521,26 +521,26 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBaseExtraTargetNames(const LAString
     @brief return grid term
 
 	@param[in] ccy
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-vector<LAString>
-LARiskConfigurationYieldIRShiftVolIRVega::getShiftGridTerm(const LAString &ccy) const
+vector<AQLString>
+LARiskConfigurationYieldIRShiftVolIRVega::getShiftGridTerm(const AQLString &ccy) const
 {
 	
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 
-	LAString strGrid = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString strGrid = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 									STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_GRID_TERM +getCurveSuffix(ccy));
 
 	return strGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
 }
 
 // getScenarioBaseYieldName
-LAString 
-LARiskConfigurationYieldIRShiftVolIRVega::getScenarioBaseYieldName(const LAString& ccy) const
+AQLString 
+LARiskConfigurationYieldIRShiftVolIRVega::getScenarioBaseYieldName(const AQLString& ccy) const
 {
 	if (mBaseSceNames.size() != 1)
-		throw LACoreInvalidData("Base scenario size Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Base scenario size Error",__FILE__,__LINE__);
 	return mBaseSceNames[0];
 }
 
@@ -549,39 +549,39 @@ LARiskConfigurationYieldIRShiftVolIRVega::getScenarioBaseYieldName(const LAStrin
 
 	@param[in] ccy
 	@param[in] index
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getBaseOutPutName(const LAString &ccy , int index) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getBaseOutPutName(const AQLString &ccy , int index) const
 {
 	DoubleArray irShiftVals = getBaseShiftVals(ccy);
 	const unsigned int shiftSize = irShiftVals.size();
 	if (index < 0 || index >= static_cast<int>(shiftSize))
 	{
-		throw LACoreInvalidData("LARiskConfigurationYieldIRShiftVolIRVega::getOutPutName1 index is less than zero or over shift grid.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("LARiskConfigurationYieldIRShiftVolIRVega::getOutPutName1 index is less than zero or over shift grid.", __FILE__, __LINE__);
 	}
 		
-	LAString curve = "";
-	LAString curveType = getBaseShiftCurveType(ccy);
+	AQLString curve = "";
+	AQLString curveType = getBaseShiftCurveType(ccy);
 	if (curveType != STD)
 	{
 		curve = curveType;
 	}
 	
-	return LAString(ccy) + LAString("_") + curve + LAString(irShiftVals[index] * 10000.0, 3) + LAString("BP_DirtyPrice");
+	return AQLString(ccy) + AQLString("_") + curve + AQLString(irShiftVals[index] * 10000.0, 3) + AQLString("BP_DirtyPrice");
 }
 
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getOutPutName1(const LAString &ccy , int index) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getOutPutName1(const AQLString &ccy , int index) const
 {
-	LAString outName = getOutPutName1(ccy);
+	AQLString outName = getOutPutName1(ccy);
 	DoubleArray irShiftVals = getBaseShiftVals(ccy);
 	const unsigned int shiftSize = irShiftVals.size();
 	if (index < 0 || index >= static_cast<int>(shiftSize))
 	{
-		throw LACoreInvalidData("LARiskConfigurationYieldIRShiftVolIRVega::getOutPutName1 index is less than zero or over shift grid.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("LARiskConfigurationYieldIRShiftVolIRVega::getOutPutName1 index is less than zero or over shift grid.", __FILE__, __LINE__);
 	}	
-	return outName + LAString("_") + LAString(irShiftVals[index] * 10000.0, 3);
+	return outName + AQLString("_") + AQLString(irShiftVals[index] * 10000.0, 3);
 	
 }
 
@@ -589,9 +589,9 @@ LARiskConfigurationYieldIRShiftVolIRVega::getOutPutName1(const LAString &ccy , i
 /*!
     @brief return base operateor
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationYieldIRShiftVolIRVega::getBaseOperator() const
 {
 	return FN_LINEAR_STR;
@@ -600,25 +600,25 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBaseOperator() const
 /*!
     @brief return base operateor
 
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getBaseCoefficient(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getBaseCoefficient(const AQLString &ccy) const
 {
 	ccy;
-	return LAString("0.0:1.0:0.0");
+	return AQLString("0.0:1.0:0.0");
 }
 
 /*!
     @brief get base targetNames
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getBaseTargetNames(const LAString &ccy, LADataInstance &dataInstance) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getBaseTargetNames(const AQLString &ccy, AQLDataInstance &dataInstance) const
 {
-	LAString ret = LAMarketData::getBaseYieldName(ccy);
+	AQLString ret = LAMarketData::getBaseYieldName(ccy);
 	return ret;
 }
 
@@ -630,7 +630,7 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBaseTargetNames(const LAString &ccy
 	@return DoubleArray
 */
 DoubleArray
-LARiskConfigurationYieldIRShiftVolIRVega::getBaseShifts(const LAString &ccy, int index) const
+LARiskConfigurationYieldIRShiftVolIRVega::getBaseShifts(const AQLString &ccy, int index) const
 {
 	return getIRBaseShifts(ccy, index);
 }
@@ -642,7 +642,7 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBaseShifts(const LAString &ccy, int
 	@return DoubleArray
 */
 DoubleArray
-LARiskConfigurationYieldIRShiftVolIRVega::getIRShiftVals(const LAString &ccy) const
+LARiskConfigurationYieldIRShiftVolIRVega::getIRShiftVals(const AQLString &ccy) const
 {
 	return getBaseShiftVals(ccy);
 }
@@ -652,11 +652,11 @@ LARiskConfigurationYieldIRShiftVolIRVega::getIRShiftVals(const LAString &ccy) co
 
 	@param[in] curveType
 */
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getBaseShiftCurveType(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getBaseShiftCurveType(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString ret = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString ret = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_BASESHIFTCURVETYPE + getCurveSuffix(ccy));
 	if (ret != AQ_NO_DATA)
 	{
@@ -673,10 +673,10 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBaseShiftCurveType(const LAString &
 
 	@param[in] curveType
 */
-LAString
-LARiskConfigurationYieldIRShiftVolIRVega::getBaseShiftCurveSuffix(const LAString &ccy) const
+AQLString
+LARiskConfigurationYieldIRShiftVolIRVega::getBaseShiftCurveSuffix(const AQLString &ccy) const
 {
-	LAString curveType = getBaseShiftCurveType(ccy);
+	AQLString curveType = getBaseShiftCurveType(ccy);
 	if (curveType != STD)
 	{
 		return "." + curveType.toLower();

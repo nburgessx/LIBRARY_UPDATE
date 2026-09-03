@@ -24,10 +24,10 @@
 
 
 #include "LABlackScholesFloorletSpreadOptionPayoff.h"
-#include "LABasic.h"
-#include "LADist.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
 #include "LAAnalyticFormula.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 
 using namespace std;
 //================ LABlackScholesFloorletSpreadOption ===================================
@@ -51,7 +51,7 @@ LABlackScholesFloorletSpreadOption::~LABlackScholesFloorletSpreadOption()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LABlackScholesFloorletSpreadOption::clone() const
 {
     try 
@@ -60,7 +60,7 @@ LABlackScholesFloorletSpreadOption::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -86,34 +86,34 @@ LABlackScholesFloorletSpreadOption::getType() const
 }
 
 
-LAStringVector 
+AQLStringVector 
 LABlackScholesFloorletSpreadOption::getOptionTypeVector()
 {
-	LAStringVector ret(2);
-	ret[0] = LAString(PUT);
-	ret[1] = LAString(PUT);
+	AQLStringVector ret(2);
+	ret[0] = AQLString(PUT);
+	ret[1] = AQLString(PUT);
 
 	return ret;
 }
 
 
-LAStringVector 
-LABlackScholesFloorletSpreadOption::getBSComponentVector(LAString risktype) const
+AQLStringVector 
+LABlackScholesFloorletSpreadOption::getBSComponentVector(AQLString risktype) const
 {
-	LAStringVector ret(2);
-	ret[0] = LAString(BK) + risktype + LAString(PUT);
-	ret[1] = LAString(BK) + risktype + LAString(PUT);
+	AQLStringVector ret(2);
+	ret[0] = AQLString(BK) + risktype + AQLString(PUT);
+	ret[1] = AQLString(BK) + risktype + AQLString(PUT);
 
 	return ret;
 }
 
 
-LAStringVector 
-LABlackScholesFloorletSpreadOption::getBSPayoffComponentVector(LAString risktype) const
+AQLStringVector 
+LABlackScholesFloorletSpreadOption::getBSPayoffComponentVector(AQLString risktype) const
 {
-	LAStringVector ret(2);
-	ret[0] = LAString(BKPAYOFF) + risktype + LAString(PUT);
-	ret[1] = LAString(BKPAYOFF) + risktype + LAString(PUT);
+	AQLStringVector ret(2);
+	ret[0] = AQLString(BKPAYOFF) + risktype + AQLString(PUT);
+	ret[1] = AQLString(BKPAYOFF) + risktype + AQLString(PUT);
 	return ret;
 }
 

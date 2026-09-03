@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 #include <boost/lexical_cast.hpp>
 #include "LabelValueBlock.h"
 #include "CoreEnumerations.h"
@@ -24,14 +24,14 @@ namespace etrading
     */
     bool isDateTenor( const std::string& dateString );
 
-    /* @brief			Validate a date string and convert it to LADate. Note as a market convention, maturity dates are NOT adjusted for holiday, so businessAdjustment and calendar are not required.
+    /* @brief			Validate a date string and convert it to AQLDate. Note as a market convention, maturity dates are NOT adjusted for holiday, so businessAdjustment and calendar are not required.
     * @param [in]		asOfDate		        The start date
     * @param [in]		dateString	            Date in string format, can be a date or tenor
     * @param [in]		businessDayAdjustment	The business day adjustment, will default to NO_CHANGE i.e. unadjusted
     * @param [in]		calendar	            Calendar string for business day adjustments, defaults to blank
-    * @output			Date in LADate format
+    * @output			Date in AQLDate format
     */
-    LADate validateDateOrTenor( const LADate& asOfDate, const LAString& dateOrTenor, const LAString businessDayAdjustment = LAString(), const LAString calendar = LAString() );
+    AQLDate validateDateOrTenor( const AQLDate& asOfDate, const AQLString& dateOrTenor, const AQLString businessDayAdjustment = AQLString(), const AQLString calendar = AQLString() );
 
     /* @brief			helper method that validates swap cash flow related params and generate actual cash flows
     *  @param [in]		swapLVB			    A label value block of the swap label value block
@@ -50,7 +50,7 @@ namespace etrading
                                            DateVector&				floatFixingDates,
                                            DateVector&				floatAccrualDates,
                                            DateVector&				floatPaymentDates,
-                                           const LAString&			fixingAdvanceOrArrears = LAString( "advance" ),
+                                           const AQLString&			fixingAdvanceOrArrears = AQLString( "advance" ),
                                            const bool&              isAssetSwap = false );
 
 
@@ -100,40 +100,40 @@ namespace etrading
                                            DateVector&          floatFixingDates,
                                            DateVector&          floatAccrualDates,
                                            DateVector&          floatPaymentDates,
-                                           const LAString&      effectiveDateString,
-                                           const LAString&      maturityDateString,
-                                           const LAString&      fixedLegFreq,
-                                           const LAString&      fixedLegDayCount,
-                                           const LAString&      fixedLegAccrualBusinessDayAdjustment,
-                                           const LAString&      fixedLegAccrualCalendar,
-                                           const LAString&      fixedLegPaymentBusinessDayAdjustment,
-                                           const LAString&      fixedLegPaymentCalendar,
-                                           const LAString&      fixedLegFirstStubDate,
-                                           const LAString&      fixedLegLastStubDate,
-                                           const LAString&      fixedLegRollDayString,
-                                           const LAString&      fixedLegPayLag,
-                                           const LAString&      fixedLegStubType,
-                                           const LAString&      floatLegFreq,
-                                           const LAString&      floatLegDayCount,
-                                           const LAString&      floatLegFixingBusinessDayAdjustment,
-                                           const LAString&      floatLegFixingCalendar,
-                                           const LAString&      floatLegAccrualBusinessDayAdjustment,
-                                           const LAString&      floatLegAccrualCalendar,
-                                           const LAString&      floatLegPaymentBusinessDayAdjustment,
-                                           const LAString&      floatLegPaymentCalendar,
-                                           const LAString&      floatLegFirstStubDate,
-                                           const LAString&      floatLegLastStubDate,
-                                           const LAString&      floatLegRollDayString,
-                                           const LAString&      floatLegFixLag,
+                                           const AQLString&      effectiveDateString,
+                                           const AQLString&      maturityDateString,
+                                           const AQLString&      fixedLegFreq,
+                                           const AQLString&      fixedLegDayCount,
+                                           const AQLString&      fixedLegAccrualBusinessDayAdjustment,
+                                           const AQLString&      fixedLegAccrualCalendar,
+                                           const AQLString&      fixedLegPaymentBusinessDayAdjustment,
+                                           const AQLString&      fixedLegPaymentCalendar,
+                                           const AQLString&      fixedLegFirstStubDate,
+                                           const AQLString&      fixedLegLastStubDate,
+                                           const AQLString&      fixedLegRollDayString,
+                                           const AQLString&      fixedLegPayLag,
+                                           const AQLString&      fixedLegStubType,
+                                           const AQLString&      floatLegFreq,
+                                           const AQLString&      floatLegDayCount,
+                                           const AQLString&      floatLegFixingBusinessDayAdjustment,
+                                           const AQLString&      floatLegFixingCalendar,
+                                           const AQLString&      floatLegAccrualBusinessDayAdjustment,
+                                           const AQLString&      floatLegAccrualCalendar,
+                                           const AQLString&      floatLegPaymentBusinessDayAdjustment,
+                                           const AQLString&      floatLegPaymentCalendar,
+                                           const AQLString&      floatLegFirstStubDate,
+                                           const AQLString&      floatLegLastStubDate,
+                                           const AQLString&      floatLegRollDayString,
+                                           const AQLString&      floatLegFixLag,
                                            double               floatLegFirstFix,
                                            double               floatlegLastFix,
-                                           const LAString&      floatLegPayLag,
-                                           const LAString&      floatLegStubType,
-                                           const LAString&		fixedLegPaymentFreq = LAString(),
-                                           const LAString&		floatLegPaymentFreq = LAString(),
-                                           const LAString&		fixingAdvanceOrArrears = LAString( "advance" ),
+                                           const AQLString&      floatLegPayLag,
+                                           const AQLString&      floatLegStubType,
+                                           const AQLString&		fixedLegPaymentFreq = AQLString(),
+                                           const AQLString&		floatLegPaymentFreq = AQLString(),
+                                           const AQLString&		fixingAdvanceOrArrears = AQLString( "advance" ),
                                            const bool           isAssetSwap = false,
-                                           LADate               issueDate = LADate() );
+                                           AQLDate               issueDate = AQLDate() );
 
     /* @brief			helper method that validates fixed leg cash flow related params and generate actual cash flows
     *  @param [out]		fixedAccrualDates		                        Accrual dates schedule on fixed leg
@@ -157,22 +157,22 @@ namespace etrading
     */
     void validateAndGenerateFixedLegCashflows( DateVector&          fixedAccrualDates,
             DateVector&          fixedPaymentDates,
-            const LAString&      effectiveDateString,
-            const LAString&      maturityDateString,
-            const LAString&      fixedLegFreq,
-            const LAString&      fixedLegDayCount,
-            const LAString&      fixedLegAccrualBusinessDayAdjustment,
-            const LAString&      fixedLegAccrualCalendar,
-            const LAString&      fixedLegPaymentBusinessDayAdjustment,
-            const LAString&      fixedLegPaymentCalendar,
-            const LAString&      fixedLegFirstStubDate,
-            const LAString&      fixedLegLastStubDate,
-            const LAString&      fixedLegRollDayString,
-            const LAString&      fixedLegPayLag,
-            const LAString&      fixedLegStubType,
-            const LAString&      fixedLegPaymentFreq,
+            const AQLString&      effectiveDateString,
+            const AQLString&      maturityDateString,
+            const AQLString&      fixedLegFreq,
+            const AQLString&      fixedLegDayCount,
+            const AQLString&      fixedLegAccrualBusinessDayAdjustment,
+            const AQLString&      fixedLegAccrualCalendar,
+            const AQLString&      fixedLegPaymentBusinessDayAdjustment,
+            const AQLString&      fixedLegPaymentCalendar,
+            const AQLString&      fixedLegFirstStubDate,
+            const AQLString&      fixedLegLastStubDate,
+            const AQLString&      fixedLegRollDayString,
+            const AQLString&      fixedLegPayLag,
+            const AQLString&      fixedLegStubType,
+            const AQLString&      fixedLegPaymentFreq,
             const bool           isAssetSwap = false,
-            LADate               issueDate = LADate() );
+            AQLDate               issueDate = AQLDate() );
 
     /* @brief			helper method that validates float leg cash flow related params and generate actual cash flows
     *  @param [out]		floatFixingDates		                        Fixing dates schedule on floating leg
@@ -203,26 +203,26 @@ namespace etrading
     void validateAndGenerateFloatLegCashflows( DateVector&          floatFixingDates,
             DateVector&          floatAccrualDates,
             DateVector&          floatPaymentDates,
-            const LAString&      effectiveDateString,
-            const LAString&      maturityDateString,
-            const LAString&      floatLegFreq,
-            const LAString&      floatLegDayCount,
-            const LAString&      floatLegFixingBusinessDayAdjustment,
-            const LAString&      floatLegFixingCalendar,
-            const LAString&      floatLegAccrualBusinessDayAdjustment,
-            const LAString&      floatLegAccrualCalendar,
-            const LAString&      floatLegPaymentBusinessDayAdjustment,
-            const LAString&      floatLegPaymentCalendar,
-            const LAString&      floatLegFirstStubDate,
-            const LAString&      floatLegLastStubDate,
-            const LAString&      floatLegRollDayString,
-            const LAString&      floatLegFixLag,
+            const AQLString&      effectiveDateString,
+            const AQLString&      maturityDateString,
+            const AQLString&      floatLegFreq,
+            const AQLString&      floatLegDayCount,
+            const AQLString&      floatLegFixingBusinessDayAdjustment,
+            const AQLString&      floatLegFixingCalendar,
+            const AQLString&      floatLegAccrualBusinessDayAdjustment,
+            const AQLString&      floatLegAccrualCalendar,
+            const AQLString&      floatLegPaymentBusinessDayAdjustment,
+            const AQLString&      floatLegPaymentCalendar,
+            const AQLString&      floatLegFirstStubDate,
+            const AQLString&      floatLegLastStubDate,
+            const AQLString&      floatLegRollDayString,
+            const AQLString&      floatLegFixLag,
             double               floatLegFirstFix,
             double               floatlegLastFix,
-            const LAString&      floatLegPayLag,
-            const LAString&      floatLegStubType,
-            const LAString&		floatLegPaymentFreq = LAString(),
-            const LAString&		floatLegFixingAdvanceOrArrears = LAString( "advance" ),
+            const AQLString&      floatLegPayLag,
+            const AQLString&      floatLegStubType,
+            const AQLString&		floatLegPaymentFreq = AQLString(),
+            const AQLString&		floatLegFixingAdvanceOrArrears = AQLString( "advance" ),
             bool				    removeExtraDay = false );
 
     /* @brief			helper method that validates and generates accrual start and end dates from a single combined vector of accrual dates
@@ -244,18 +244,18 @@ namespace etrading
     * @output			isStartRoll		True when it's ShortEnd (SE) or LongEnd (LE), otherwise False
     */
     bool isStartRollAndPopulateStubDatesFromStubType( const StubTypeEnum& stubType,
-            const LADate* firstStubDtPtr,
-            const LADate* lastStubDtPtr,
-            const LADate& startDate,
-            const LADate& endDate,
-            const LAString& frequency );
+            const AQLDate* firstStubDtPtr,
+            const AQLDate* lastStubDtPtr,
+            const AQLDate& startDate,
+            const AQLDate& endDate,
+            const AQLString& frequency );
 
     /* @brief			Check the input dates are in ascending order
     *  @param [in]		dates	                   Input dates
     *  @param [in]		allowEqual		           True to allow equal
     *  @param [in]		dateName                   Input date names, for error message
     */
-    void checkDatesInAscendingOrder( const DateVector& dates, bool allowEqual, const LAString& dateName );
+    void checkDatesInAscendingOrder( const DateVector& dates, bool allowEqual, const AQLString& dateName );
 
 
 	/* @brief			Helper method that generates accrual dates and payment dates
@@ -279,20 +279,20 @@ namespace etrading
 	
 	void validateAndGenerateAccrualAndPaymentSchedules( DateVector&          accrualDates,
 														DateVector&          paymentDates,
-														const LADate&        effectiveDate,
-														const LADate&        maturityDate,
-														const LAString&      accrualFreq,
-														const LAString&      accrualBusinessDayAdjustment,
-														const LAString&      accrualCalendar,
-														const LAString&      paymentFreq,
-														const LAString&      paymentBusinessDayAdjustment,
-														const LAString&      paymentCalendar,
-														const LAString&      paymentLag,
-														const LAString&      stubType,
-														const LAString&      firstStubDate,
-														const LAString&      lastStubDate,
-														const LAString&      rollDayString,
-														const LAString&		 fixingAdvanceOrArrears );
+														const AQLDate&        effectiveDate,
+														const AQLDate&        maturityDate,
+														const AQLString&      accrualFreq,
+														const AQLString&      accrualBusinessDayAdjustment,
+														const AQLString&      accrualCalendar,
+														const AQLString&      paymentFreq,
+														const AQLString&      paymentBusinessDayAdjustment,
+														const AQLString&      paymentCalendar,
+														const AQLString&      paymentLag,
+														const AQLString&      stubType,
+														const AQLString&      firstStubDate,
+														const AQLString&      lastStubDate,
+														const AQLString&      rollDayString,
+														const AQLString&		 fixingAdvanceOrArrears );
 														
 
     	/* @brief			Helper method that generates accrual dates and payment dates
@@ -315,20 +315,20 @@ namespace etrading
         */
     void validateAndGenerateAccrualAndPaymentSchedules( DateVector&          accrualDates,
                                                         DateVector&          paymentDates,
-                                                        const LAString&      effectiveDateString,
-                                                        const LAString&      maturityDateString,
-                                                        const LAString&      accrualFreq,
-                                                        const LAString&      accrualBusinessDayAdjustment,
-                                                        const LAString&      accrualCalendar,
-                                                        const LAString&      paymentFreq,
-                                                        const LAString&      paymentBusinessDayAdjustment,
-                                                        const LAString&      paymentCalendar,
-                                                        const LAString&      paymentLag,
-                                                        const LAString&      stubType,
-                                                        const LAString&      firstStubDate,
-                                                        const LAString&      lastStubDate,
-                                                        const LAString&      rollDayString,
-                                                        const LAString&		 fixingAdvanceOrArrears );
+                                                        const AQLString&      effectiveDateString,
+                                                        const AQLString&      maturityDateString,
+                                                        const AQLString&      accrualFreq,
+                                                        const AQLString&      accrualBusinessDayAdjustment,
+                                                        const AQLString&      accrualCalendar,
+                                                        const AQLString&      paymentFreq,
+                                                        const AQLString&      paymentBusinessDayAdjustment,
+                                                        const AQLString&      paymentCalendar,
+                                                        const AQLString&      paymentLag,
+                                                        const AQLString&      stubType,
+                                                        const AQLString&      firstStubDate,
+                                                        const AQLString&      lastStubDate,
+                                                        const AQLString&      rollDayString,
+                                                        const AQLString&		 fixingAdvanceOrArrears );
 
 
     /* @brief		Validates and genertate fixing schedule
@@ -340,10 +340,10 @@ namespace etrading
     * @return the fixing dates
     */
     DateVector validateAndGenerateFixingSchedule( const DateVector&    accrualDates,
-            const LAString&      fixingBusinessDayAdjustment,
-            const LAString&      fixingCalendar,
-            const LAString&      fixingLag,
-            const LAString&		 fixingAdvanceOrArrears,
+            const AQLString&      fixingBusinessDayAdjustment,
+            const AQLString&      fixingCalendar,
+            const AQLString&      fixingLag,
+            const AQLString&		 fixingAdvanceOrArrears,
 			const bool			 includeLastExtraFixingDate = false);
 
     /* @brief			Transform the accrual start and end dates to a single combined vector of accrual dates
@@ -351,24 +351,24 @@ namespace etrading
     *  @param [in]		accrualEndDates		        Accrual End Dates
     *  @return 		combinedAccrualDates        Combined Accrual Dates
     */
-    std::vector<LADate> combineAccrualStartAndEndDates( const std::vector<LADate>& accrualStartDates, const std::vector<LADate>& accrualEndDates );
+    std::vector<AQLDate> combineAccrualStartAndEndDates( const std::vector<AQLDate>& accrualStartDates, const std::vector<AQLDate>& accrualEndDates );
 
-    /* @brief Transform dates from LADate format to double format
-    *  @param [in] dateVec dates in LADate format
+    /* @brief Transform dates from AQLDate format to double format
+    *  @param [in] dateVec dates in AQLDate format
     *  @Return     dates in double format
     */
     DoubleVector fromDateToDoubleVector(const DateVector& dateVec );
 
-    /* @brief Transform dates from LADate format to double format
+    /* @brief Transform dates from AQLDate format to double format
     * 
-    *  @param [in] date date in LADate format
+    *  @param [in] date date in AQLDate format
     *  @Return     date in double format
     */
-	double fromLADateToDouble(const LADate& date);
+	double fromLADateToDouble(const AQLDate& date);
 
-    /* @brief Transform dates from double format to LADate format
+    /* @brief Transform dates from double format to AQLDate format
     *  @param [in] doubleVec dates in double format
-    *  @Return     dates in LADate format
+    *  @Return     dates in AQLDate format
     */
     DateVector fromDoubleToDateVector(const DoubleVector& doubleVec );
 
@@ -384,7 +384,7 @@ namespace etrading
     *  @param [in] accrualEnd		Accrual end date
     *  @Return     days
     */
-	int getDays(const LADate& accrualStart, const LADate& accrualEnd);
+	int getDays(const AQLDate& accrualStart, const AQLDate& accrualEnd);
 
 	/* @brief			Number of long Feb (feb29) between fromDate and toDate
 	*  @param [in]		fromDate	    From Date
@@ -392,7 +392,7 @@ namespace etrading
 	*  @param[in]		includelast		True(default):include the last day and not include start day; False:include start day and not include last day
 	*  @return			Number of long Feb (feb29)
 	*/
-	int numberOfLongFeb(const LADate& fromDate, const LADate& toDate, bool includeLast);
+	int numberOfLongFeb(const AQLDate& fromDate, const AQLDate& toDate, bool includeLast);
 
     /* @brief			Year fraction between fromDate and toDate
     *  @param [in]		fromDate	    From Date
@@ -401,7 +401,7 @@ namespace etrading
     *  @param[in]		includelast		True(default):include the last day and not include start day; False:include start day and not include last day
     *  @return			Year fraction between fromDate and toDate
     */
-    double getYearFraction( const LADate& fromDate, const LADate& toDate, const DayCountEnum& dayCount, bool includeLast = false);
+    double getYearFraction( const AQLDate& fromDate, const AQLDate& toDate, const DayCountEnum& dayCount, bool includeLast = false);
 
 	/* @brief Transpose a matrix of elements
     *  @param [in] input                The input matrix
@@ -423,14 +423,14 @@ namespace etrading
     *  @param [in]		endDate                    end Date
     *  @param [in]		rollDayString              Rolling date (This can be an integer for the day of the month or a string for IMM, EOM, Start or End roll conventions)
     */
-    LAString getRollConvection(const LADate& startDate,
-                               const LADate& endDate,
-                               const LAString& rollDayString);
+    AQLString getRollConvection(const AQLDate& startDate,
+                               const AQLDate& endDate,
+                               const AQLString& rollDayString);
 
 	/* @brief			Helper method to get the RollConvenction string from rollDayString
 	*  @param [in]		rollDayString              Rolling date (This can be an integer for the day of the month or a string for IMM, EOM, Start or End roll conventions)
 	*/
-	LAString getRollConvection(const LAString& rollDayString);
+	AQLString getRollConvection(const AQLString& rollDayString);
 
 
     /* @brief			Calculate an unadjusted date from a tenor
@@ -439,9 +439,9 @@ namespace etrading
 	* @param [in]		rollConvention		    Swap roll convention e.g. IMM, EOM
     * @output			Returns the adjusted date
 	*/
-    LADate getUnadjustedDateFromTenor( const LADate& startDate,
-                                       const LAString& tenorAdjustment,
-                                       const LAString& rollConvention );
+    AQLDate getUnadjustedDateFromTenor( const AQLDate& startDate,
+                                       const AQLString& tenorAdjustment,
+                                       const AQLString& rollConvention );
 
     /* @brief			Calculate an unadjusted date from a tenor
 	* @param [in]		startDate		        start date
@@ -450,9 +450,9 @@ namespace etrading
     * @param [in]		useRollConvention	    boolean to toggle if the roll convention should be used
 	* @output			Returns the adjusted date
 	*/
-    LADate getUnadjustedDateFromTenor( const LADate& startDate,
-                                       const LAString& tenorAdjustment,
-                                       const LAString& rollConvention,
+    AQLDate getUnadjustedDateFromTenor( const AQLDate& startDate,
+                                       const AQLString& tenorAdjustment,
+                                       const AQLString& rollConvention,
                                        const bool useRollConvention );
 
     /* @brief			Calculate an adjusted date from an unadjusted date
@@ -463,11 +463,11 @@ namespace etrading
 	* @param [in]		rollConvention		    Swap roll convention e.g. IMM, EOM
 	* @output			Returns the adjusted date
 	*/
-    LADate getAdjustedDate( const LADate& unadjustedDate,
-                            const LAString& tenorAdjustment,
-                            const LAString& busDayAdj,
-                            const LAString& calendar,
-                            const LAString& rollConvention );
+    AQLDate getAdjustedDate( const AQLDate& unadjustedDate,
+                            const AQLString& tenorAdjustment,
+                            const AQLString& busDayAdj,
+                            const AQLString& calendar,
+                            const AQLString& rollConvention );
 
     /* @brief			Calculate an adjusted date from an unadjusted date
 	* @param [in]		unadjustedDate		    Unadjusted date
@@ -478,11 +478,11 @@ namespace etrading
     * @param [in]		useRollConvention	    boolean to toggle if the roll convention should be used
 	* @output			Returns the adjusted date
 	*/
-    LADate getAdjustedDate( const LADate& unadjustedDate,
-                            const LAString& tenorAdjustment,
-                            const LAString& busDayAdj,
-                            const LAString& calendar,
-                            const LAString& rollConvention,
+    AQLDate getAdjustedDate( const AQLDate& unadjustedDate,
+                            const AQLString& tenorAdjustment,
+                            const AQLString& busDayAdj,
+                            const AQLString& calendar,
+                            const AQLString& rollConvention,
                             const bool useRollConvention );
 
 	/* @brief			Validate if swap has regular date schedule without stub coupons.
@@ -496,14 +496,14 @@ namespace etrading
 	* @param [in]		rollConvention		    Swap roll convention e.g. IMM, EOM
 	* @output			Returns TRUE if the swap schedule is regular (with no stub) and FALSE otherwise
 	*/
-	bool isRegularSwapSchedule( const LADate& swapStart,
-		                        const LADate& swapMaturity,
+	bool isRegularSwapSchedule( const AQLDate& swapStart,
+		                        const AQLDate& swapMaturity,
 		                        bool isMaturityAdjusted, // Explicit dates are unadjusted for holidays, whereas Tenors are adjusted
-		                        const LAString& frequency,
-		                        const LAString& busDayAdj,
-		                        const LAString& calendar,
+		                        const AQLString& frequency,
+		                        const AQLString& busDayAdj,
+		                        const AQLString& calendar,
 		                        int rollDay,
-		                        const LAString& rollConvention = "" );
+		                        const AQLString& rollConvention = "" );
 
 	
 	/* @brief			Populate schedule outputs based on the schedule input

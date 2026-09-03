@@ -27,7 +27,7 @@ public:
 	// Default constructor
 	LAPriceVolLMMDisplacedDiffusion(bool isMultiVariables = false);
 	// constructor
-	LAPriceVolLMMDisplacedDiffusion(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double beta, bool isMultiVariables = false);
+	LAPriceVolLMMDisplacedDiffusion(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double beta, bool isMultiVariables = false);
 	//	Copy constructor
 //	LAPriceVolLMMDisplacedDiffusion(const LAPriceVolLMMDisplacedDiffusion& v);
 	// Destructor
@@ -39,7 +39,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -48,12 +48,12 @@ public:
 	virtual double				operator()(const DoubleArray& x) const;
 								//==========================================
 								// return string representaion
-    virtual LAString			convertToString(void) const;
+    virtual AQLString			convertToString(void) const;
 
 //	OPERATION
 								//==========================================
 								// transform from string representaion
-     virtual void				convertFromString(const LAString& str);
+     virtual void				convertFromString(const AQLString& str);
 								//======================================
 								// set up this class
 								/*!

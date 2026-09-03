@@ -3,13 +3,13 @@
 #include "Swap.h"
 #include "LabelValueBlock.h"
 #include <boost/shared_array.hpp>
-#include "LAString.h"
+#include "AQLString.h"
 #include <boost/shared_array.hpp>
 
 class CurveCalibrationData;
-class LADataMultiReference;
-class LADataDouble;
-class LADataProcedure;
+class AQLDataMultiReference;
+class AQLDataDouble;
+class AQLDataProcedure;
 
 namespace etrading
 {
@@ -25,22 +25,22 @@ namespace etrading
         *  Note:    Non-LWO Base Case does not support Xccy Swaps
 		*/
         DeltaGenerator( const std::vector<BaseInstrumentPtr>& trades,
-						const std::vector<LAString>& tradeIDs,
+						const std::vector<AQLString>& tradeIDs,
 						const bool bumpSpreadInstruments,
                         const double bumpSize,
-                        const LAString& bumpMode,
+                        const AQLString& bumpMode,
                         const bool aggregateRisks,
 						const std::string& riskCutOffTenor );
 
 		/* @brief	Constructor for LWO Swap Legs
 		*/
 		DeltaGenerator( const std::vector<std::shared_ptr<Leg> >& swapLegs,
-						const std::vector<LAString>& legIDs,
+						const std::vector<AQLString>& legIDs,
 						const std::vector<LabelValueBlock >& fixingTableNames,
                         const std::vector<double>& xccyFXSpotRates,
 						const bool bumpSpreadInstruments,
                         const double bumpSize,
-						const LAString& bumpMode,
+						const AQLString& bumpMode,
                         const bool aggregateRisks,
 						const bool reportInLegCCY,
 						const std::string& riskCutOffTenor,
@@ -49,12 +49,12 @@ namespace etrading
 		/* @brief	Constructor for LWO Swaps
 		*/
 		DeltaGenerator(const std::vector<SwapPtr >& lwoSwaps,
-						const std::vector<LAString>& swapIDs,
+						const std::vector<AQLString>& swapIDs,
 						const std::vector<LabelValueBlock>& fixingTableNames,
                         const std::vector<double>& xccyFXSpotRates,
 						const bool bumpSpreadInstruments,
 						const double bumpSize,
-						const LAString& bumpMode,
+						const AQLString& bumpMode,
 						const bool aggregateRisks,
 						const std::string& riskCutOffTenor,
 						const bool useGlobalCurveEngine);
@@ -66,7 +66,7 @@ namespace etrading
         *  @param [in]		forecastCurve	Name or handle of the forecast curve
         *  @param [in]		discountCurve	Name or handle of the discount curve
         */
-        void setCurves( const LAString& curveSetID, const LAString& forecastCurve, const LAString& discountCurve );
+        void setCurves( const AQLString& curveSetID, const AQLString& forecastCurve, const AQLString& discountCurve );
 
         /* @brief			Method that set a variety of pricing parameters
         *  @param [in]		params		A collection of pricing parameters
@@ -79,7 +79,7 @@ namespace etrading
 		*  @param[in]	curveCollectionID	The curve collection
 		*  @returns		The name of the swap curve, if found. If no swap curve, returns an empty string
 		*/
-		LAString getSwapCurveNameViaGlobalEngine( const LAString& curveCollectionID );
+		AQLString getSwapCurveNameViaGlobalEngine( const AQLString& curveCollectionID );
 
 		/* @brief	Examines the list of curves which depend on the specified curveName
 		*			(i.e. the list of curves which must be rebuild when the specified curveName is bumped).
@@ -89,7 +89,7 @@ namespace etrading
 		*  @param[in]	curveName			The curveName used when finding dependent curves
 		*  @returns		The name of the swap curve, if found. If no swap curve, returns an empty string
 		*/
-		LAString getSwapCurveNameViaDependentCurves( const LAString& curveCollectionID, const LAString& curveName );
+		AQLString getSwapCurveNameViaDependentCurves( const AQLString& curveCollectionID, const AQLString& curveName );
 
         /* @brief		Calculate flat shift delta risk
         *  @return		Delta risk numbers through curve flat shifting for all the trades
@@ -100,10 +100,10 @@ namespace etrading
         *  @param [out]		pillarNames		Name of pillar points
         *  @param [out]		deltas			All the deltas
         */
-        void deltaLadder( LAStringVector& pillarNames, DoubleMatrix& deltas );
+        void deltaLadder( AQLStringVector& pillarNames, DoubleMatrix& deltas );
 
-		LAString getCurveDependencyTreeAsString() const;
-		LAString getAllCurvesToBumpAsString() const;
+		AQLString getCurveDependencyTreeAsString() const;
+		AQLString getAllCurvesToBumpAsString() const;
 
     private:
 
@@ -122,7 +122,7 @@ namespace etrading
             *  @param [in]	bucketNameWithoutCurvePrefix	Name of the current pillar
             *  @param [in]	deltas							Pillar delta for all the trades
             */
-            void addBucketRisk( const LAString& curveName, const LAString& curveCollectionID, const LAString& bucketName, DoubleVector deltas );
+            void addBucketRisk( const AQLString& curveName, const AQLString& curveCollectionID, const AQLString& bucketName, DoubleVector deltas );
 
             /* @brief		Set the flag that controls risk aggregation
             *  @param [in]	aggregateRisk	Do we aggregate risk or not
@@ -133,7 +133,7 @@ namespace etrading
             *  @param [out]		pillarNames		Name of pillar points
             *  @param [out]		deltas			All the deltas
             */
-            void outputDeltaLadder( LAStringVector& pillarNames, DoubleMatrix& deltas ) const;
+            void outputDeltaLadder( AQLStringVector& pillarNames, DoubleMatrix& deltas ) const;
 
             /* @brief		Build contral delta ladder through up deltas and down deltas
             *  @param [in]	doubleLadderData_up		A delta ladder generated through bumping up
@@ -149,19 +149,19 @@ namespace etrading
         private:
 
             // A map of bucket deltas (of each trade) to the corresponding bucket name.
-            std::map<LAString, DoubleVector> deltaLadderInMap_;
+            std::map<AQLString, DoubleVector> deltaLadderInMap_;
 
             // The value for each key is the curve name that is going to be prefixed to the
             // short label name to build the final bucket label for output
-            std::map<LAString, LAString> bucketNamePrefix_;
+            std::map<AQLString, AQLString> bucketNamePrefix_;
 
             // A vector keeping the order of the output buckets
             // whose risks are not aggregated
-            std::vector<LAString> bucketNames_NonAggregated_;
+            std::vector<AQLString> bucketNames_NonAggregated_;
 
             // A vector keeping the order of the output buckets
             // whose risks are aggregated
-            std::vector<LAString> bucketNames_Aggregated_;
+            std::vector<AQLString> bucketNames_Aggregated_;
 
             bool isRiskAggregated_;
         };
@@ -184,7 +184,7 @@ namespace etrading
             *  @param [in]		discountCurveName	Discount curve
 			*  @param [in]		isUsingGlobalCurveEngine	Are curves calibrated by the global curve engine?
             */
-            void addCurve( const LAString& curveName, const LAString& curveCollectionID, const LAString& discountCurveName = "", bool isUsingGlobalCurveEngine = false);
+            void addCurve( const AQLString& curveName, const AQLString& curveCollectionID, const AQLString& discountCurveName = "", bool isUsingGlobalCurveEngine = false);
 
 			/* @brief	Follows the chain of dependencies and determines whether there is a dependency path
 			*           from: startCurveCollectionID:startCurveName
@@ -195,15 +195,15 @@ namespace etrading
 			*  @param [in]		endCurveName			The CurveName of the end point
 			*  @param [out]     Returns true if a path exists
 			*/
-			bool findDependencyPath( const LAString& startCurveCollectionID, const LAString& startCurveName,
-									 const LAString& endCurveCollectionID, const LAString& endCurveName );
+			bool findDependencyPath( const AQLString& startCurveCollectionID, const AQLString& startCurveName,
+									 const AQLString& endCurveCollectionID, const AQLString& endCurveName );
 
-            std::map<LAString, LAString> curveTypes_;
-            std::map<LAString, std::set<LAString> > dependentCurve_;
+            std::map<AQLString, AQLString> curveTypes_;
+            std::map<AQLString, std::set<AQLString> > dependentCurve_;
 
             // 'allCurvesInEachCollection_' is a collection of curves that will definitely be bumped
             // under each curve collecction in the process of delta ladder calculation
-            std::map<LAString, std::set<LAString> > allCurvesInEachCollection_;
+            std::map<AQLString, std::set<AQLString> > allCurvesInEachCollection_;
         };
 
         //-------------------------------------------------------------------------------------
@@ -224,28 +224,28 @@ namespace etrading
         std::vector<BaseInstrumentPtr> myTrades_;
 		std::vector<LegPtr > myLWOSwapLegs_;
 		std::vector<SwapPtr > myLWOSwaps_;
-		std::vector<LAString> myInstrumentIDs_;
+		std::vector<AQLString> myInstrumentIDs_;
 		std::vector<LabelValueBlock > myLWOFixingTables_;
         std::vector<double> myLWOXccyFXAsOfDateRates_;
 
         // Delta parameters
 		bool bumpSpreadInstruments_;
         double bumpSize_;
-        LAString bumpMode_;
+        AQLString bumpMode_;
 
         // Curves
         BumpCurvesCollection bumpCurvesCollection_;
-        LAString interpolation_;
+        AQLString interpolation_;
         LabelValueBlock marketDataCollection_;
 
         // This is the original market data before bumping
         // First key indexes curve; second key indexes constituent market instrument
-        std::map<LAString, std::map<LAString, double> > originalCurveMarketData_;
+        std::map<AQLString, std::map<AQLString, double> > originalCurveMarketData_;
 
 		// This stores the instrument IR_CALIBRATION_DATA_GRIDUSEFLAG state before bumping.
 		// This data controls whether that instrument is included in the curve build
 		// Map from curve collection -> InstrumentName -> include flag
-		std::map<LAString, std::map<LAString, bool> > originalIncludeInstrumentInCurve_;
+		std::map<AQLString, std::map<AQLString, bool> > originalIncludeInstrumentInCurve_;
 
 
         // Aggregate risks against the same market instruments that come from different curves
@@ -272,7 +272,7 @@ namespace etrading
         *  @param [in]		direction		Curve shifting direction
         *  @param [in]		bumpSize		The size of bumps in basis point
         */
-        void flatShiftYieldCurve( const LAString& direction = "UP", double bumpSize = 0.01 );
+        void flatShiftYieldCurve( const AQLString& direction = "UP", double bumpSize = 0.01 );
 
         /* @brief			Find the delta ladder of a particular curve
         *  @param [inout]	deltaLadderData		Delta ladder data wrapper object
@@ -282,7 +282,7 @@ namespace etrading
         */
         void deltaLadderPerCurve( DeltaLadderData& deltaLadderData,
                                   DoubleVector oldPVs,
-                                  const LAString& direction,
+                                  const AQLString& direction,
                                   double bumpSize );
 
         /* @brief			Calculate the delta risk for a pillar point
@@ -302,25 +302,25 @@ namespace etrading
         *  @return									The name and delta of a curve pillar point
         */
         void pillarDelta( DeltaLadderData& deltaLadderData,
-                          LADataDouble& attrRate,
+                          AQLDataDouble& attrRate,
                           CurveCalibrationData* curveCalibrationData,
-                          const LAObjectHolder& objHolder,
-                          const LADate& asofdate,
+                          const AQLObjectHolder& objHolder,
+                          const AQLDate& asofdate,
                           double bumpSize,
                           DoubleVector oldPVs,
-                          const LAString& curveName,
-                          const LAString& curveCollectionID,
-                          const LAString& pillarType,
+                          const AQLString& curveName,
+                          const AQLString& curveCollectionID,
+                          const AQLString& pillarType,
                           bool isBasisCurve,
                           double directionFactor,
-                          LADataDouble* attr2ndRate = NULL );
+                          AQLDataDouble* attr2ndRate = NULL );
 
         //-------------------------------------------------------------------------------------
         // Utility methods
 
         /* @brief			Restore yield curve back to pre-bump state
         */
-		void restoreCurveMarketData(const LAString& curveCollectionID, const LAString& curveName);
+		void restoreCurveMarketData(const AQLString& curveCollectionID, const AQLString& curveName);
 
 		/* @brief			Restore all bumped yield curves back to pre-bump state
         */
@@ -336,13 +336,13 @@ namespace etrading
         *  @param [in]		isBasisCurve	Is this a basis curve?
         *  @return			output pillar name
         */
-        LAString buildOutputPillarName( const LAObjectHolder& objHolder, const LAString& pillarType, bool isBasisCurve );
+        AQLString buildOutputPillarName( const AQLObjectHolder& objHolder, const AQLString& pillarType, bool isBasisCurve );
 
         /* @brief			Check if the current pillar point is built out of spread + swap
         *  @param [in]		objHolder				The pillar point object
         *  @return			TRUE means being built from spread + swap
         */
-        bool isBuiltFromBasisSpread( const LAObjectHolder& objHolder );
+        bool isBuiltFromBasisSpread( const AQLObjectHolder& objHolder );
 
         /* @brief			Check if the given curve is a basis curve
         *  @param [inout]	curveCalibrationData						Pointer to the yield curve pro object
@@ -351,7 +351,7 @@ namespace etrading
         *  @param [in]		curveName				Current curve
         *  @return			boolean that tells if curve is a basis curve
         */
-        bool checkIsBasisCurve( CurveCalibrationData* curveCalibrationData, const LAString& attrSuffix, const BumpCurvesCollection& bumpCurvesCollection, const LAString& curveName );
+        bool checkIsBasisCurve( CurveCalibrationData* curveCalibrationData, const AQLString& attrSuffix, const BumpCurvesCollection& bumpCurvesCollection, const AQLString& curveName );
 
         /* @brief			Recalibrate the specified curve only.
         *  @param [inout]	curveCalibrationData					Pointer to the yield curve pro object
@@ -359,7 +359,7 @@ namespace etrading
         *  @param [in]		curveCollectionID	Collection name where the current curve is in
         *  @param [in]		isBasisCurve		Is the current curve a basis curve?
         */
-        void recalibrateSingleCurve( CurveCalibrationData* curveCalibrationData, const LAString& curveName, const LAString& curveCollectionID, bool isBasisCurve );
+        void recalibrateSingleCurve( CurveCalibrationData* curveCalibrationData, const AQLString& curveName, const AQLString& curveCollectionID, bool isBasisCurve );
 
         /* @brief			Recalibrate the specified curve and all dependent curves
         *  @param [inout]	curveCalibrationData					Pointer to the yield curve pro object
@@ -367,7 +367,7 @@ namespace etrading
         *  @param [in]		curveCollectionID	Collection name where the current curve is in
         *  @param [in]		isBasisCurve		Is the current curve a basis curve?
         */
-        void recalibrateCurveAndAllDependentCurves( CurveCalibrationData* curveCalibrationData, const LAString& curveName, const LAString& curveCollectionID, bool isBasisCurve );
+        void recalibrateCurveAndAllDependentCurves( CurveCalibrationData* curveCalibrationData, const AQLString& curveName, const AQLString& curveCollectionID, bool isBasisCurve );
 
 		/* @brief			Recalibrate all curves used by this DeltaRiskGenerator
 		 *					The curves are rebuilt by curveType in the following sequence: OIS, STD, TenorBasis, XccyBasis, FwdFXConst.

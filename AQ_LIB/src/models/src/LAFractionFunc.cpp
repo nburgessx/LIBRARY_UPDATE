@@ -16,7 +16,7 @@
 
 
 #include "LAFractionFunc.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include <algorithm>
 
 using namespace std;
@@ -25,7 +25,7 @@ using namespace std;
 @brief default constructor
 */
 LAFractionMethod::LAFractionMethod()
-	: LAFunctionBase()
+	: AQLFunctionBase()
 {
 
 }
@@ -41,7 +41,7 @@ LAFractionMethod::~LAFractionMethod()
 @brief Make copy(clone) of this class
 @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAFractionMethod::clone() const
 {
 	try
@@ -50,7 +50,7 @@ LAFractionMethod::clone() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 }
 
@@ -62,7 +62,7 @@ LAFractionMethod::clone() const
 bool
 LAFractionMethod::isTypeOf(function_t id) const
 {
-	return (id == FN_FRACTION ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_FRACTION ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -84,15 +84,15 @@ double
 LAFractionMethod::operator()(const DoubleArray& x) const
 {
 	if (mParam.size() != 7 || x.size() != 2)
-		throw LACoreInvalidData("parameter size should be equal to 7 and index size should be 2.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("parameter size should be equal to 7 and index size should be 2.", __FILE__, __LINE__);
 
 	double threshold = 1E-5;
 
 	double ret = mParam[0] * x[0] + mParam[1] * x[1] + mParam[2] +
-		mParam[3] / (LAMath::abs(x[0]) < threshold ? threshold * LAMath::sign(1., x[0]) : x[0]) +
-		mParam[4] / (LAMath::abs(x[1]) < threshold ? threshold * LAMath::sign(1., x[1]) : x[1]) +
-		mParam[5] * x[1] / (LAMath::abs(x[0]) < threshold ? threshold * LAMath::sign(1., x[0]) : x[0]) +
-		mParam[6] * x[0] / (LAMath::abs(x[1]) < threshold ? threshold * LAMath::sign(1., x[1]) : x[1]);
+		mParam[3] / (AQLMath::abs(x[0]) < threshold ? threshold * AQLMath::sign(1., x[0]) : x[0]) +
+		mParam[4] / (AQLMath::abs(x[1]) < threshold ? threshold * AQLMath::sign(1., x[1]) : x[1]) +
+		mParam[5] * x[1] / (AQLMath::abs(x[0]) < threshold ? threshold * AQLMath::sign(1., x[0]) : x[0]) +
+		mParam[6] * x[0] / (AQLMath::abs(x[1]) < threshold ? threshold * AQLMath::sign(1., x[1]) : x[1]);
 
 	return ret;
 }

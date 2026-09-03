@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 
 using etrading::LabelValueBlock;
@@ -22,8 +22,8 @@ namespace validation
     *  @return			Swap stub rate
     */
     double tryMeProductSwapStubRate( const LabelValueBlock& swapLVB,
-									 const LAStringVector& curveIndices = LAStringVector(),
-									 const LAStringVector& curveTenors = LAStringVector(),
+									 const AQLStringVector& curveIndices = AQLStringVector(),
+									 const AQLStringVector& curveTenors = AQLStringVector(),
                                      const DoubleVector& tenorCurveFixings = DoubleVector(),
                                      bool validateKeys = true );
 
@@ -35,9 +35,9 @@ namespace validation
     *  @param [in]		validateKeys		True to validate the all keys provided are valid. Default to True
     *  @return			Swap stub rate
     */
-    LADate tryMeProductSwapStubFixingDate(  const LabelValueBlock& swapLVB,
-											const LAStringVector& curveIndices = LAStringVector(),
-											const LAStringVector& curveTenors = LAStringVector(),
+    AQLDate tryMeProductSwapStubFixingDate(  const LabelValueBlock& swapLVB,
+											const AQLStringVector& curveIndices = AQLStringVector(),
+											const AQLStringVector& curveTenors = AQLStringVector(),
 											const DoubleVector& tenorCurveFixings = DoubleVector(),
 											bool validateKeys = true );
 

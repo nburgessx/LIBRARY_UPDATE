@@ -14,8 +14,8 @@
 #include "LADateHelpers.h"
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataInterpolation.h"
 
 #include <cctype>
 #include <utility>
@@ -35,7 +35,7 @@ namespace etrading
         {
             auto result = stringToDate( dateString.c_str(), "#Error: Invalid Date String" );
         }
-        catch ( LACoreInvalidData& )
+        catch ( AQLCoreInvalidData& )
         {
             isDateFormat = false;
         }
@@ -49,7 +49,7 @@ namespace etrading
     */
     bool isDateTenor( const std::string& dateString )
     {
-        // This is a primative test: We only check that date string can't be a date by checking string size against the minimum size of LADate.
+        // This is a primative test: We only check that date string can't be a date by checking string size against the minimum size of AQLDate.
         // We also check if the final character of the string is consistent with a tenor string ending with (D)ay, (W)eek, (M)onth, (Y)ear.
 
         const unsigned int dateStringSize = dateString.size();
@@ -69,23 +69,23 @@ namespace etrading
         return isTenorFormat;
     }
 
-    /* @brief			Validate a date string and convert it to LADate. Note as a market convention, maturity dates are NOT adjusted for holiday, so businessAdjustment and calendar are not required.
+    /* @brief			Validate a date string and convert it to AQLDate. Note as a market convention, maturity dates are NOT adjusted for holiday, so businessAdjustment and calendar are not required.
     * @param [in]		asOfDate		        The start date
     * @param [in]		dateOrTenor	            Date in string format, can be a date or tenor
     * @param [in]		businessDayAdjustment	The business day adjustment, will default to NO_CHANGE i.e. unadjusted
     * @param [in]		calendar	            Calendar string for business day adjustments, defaults to blank
-    * @output			Date in LADate format
+    * @output			Date in AQLDate format
     */
-    LADate validateDateOrTenor( const LADate& asOfDate, const LAString& dateOrTenor, const LAString businessDayAdjustment, const LAString calendar )
+    AQLDate validateDateOrTenor( const AQLDate& asOfDate, const AQLString& dateOrTenor, const AQLString businessDayAdjustment, const AQLString calendar )
     {
-        LADate resultDate;
+        AQLDate resultDate;
         bool isInDateFormat = true;
 
         try
         {
             resultDate = stringToDate( dateOrTenor, "#Error: Invalid Date String" );
         }
-        catch ( LACoreInvalidData& )
+        catch ( AQLCoreInvalidData& )
         {
             isInDateFormat = false;
         }
@@ -119,10 +119,10 @@ namespace etrading
                                            DateVector&				floatFixingDates,
                                            DateVector&				floatAccrualDates,
                                            DateVector&				floatPaymentDates,
-										   const LAString&			fixingAdvanceOrArrears,
+										   const AQLString&			fixingAdvanceOrArrears,
                                            const bool&              isAssetSwap )
     {
-        LADate issueDate = LADate();
+        AQLDate issueDate = AQLDate();
         if ( isAssetSwap )
         {
             issueDate = swapLVB.getCompulsoryValueAsDate( ASSET_SWAP_KEY::ISSUE_DATE, inputLVB );
@@ -131,54 +131,54 @@ namespace etrading
         /////////////////////////////////////////////////////////////////////////////////////
         // Fixed Leg Parameters
         /////////////////////////////////////////////////////////////////////////////////////
-        LAString fixedLegFreq							= swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FIXED_FREQUENCY,                       inputLVB                     );
-        LAString fixedDayCount			                = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FIXED_DAYCOUNT,                        inputLVB                     );
-        LAString fixedBusinessDayAdjustment             = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT                                         );
-        LAString fixedCalendar	                        = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_CALENDAR                                                      );
-        LAString fixedLegAccrualBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment   );
-        LAString fixedLegAccrualCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_ACCRUALCALENDAR,                 fixedCalendar                );
-        LAString fixedLegPaymentBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment   );
-        LAString fixedLegPaymentCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTCALENDAR,                 fixedCalendar                );
-        LAString fixedLegPaymentFreq					= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTFREQUENCY,                fixedLegFreq                 );
-        LAString fixedLegFirstStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_FIRSTSTUBDATE                                                 );
-        LAString fixedLegLastStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_LASTSTUBDATE                                                  );
-        LAString fixedLegRollDayString		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_ROLLDAY                                                       );
-        LAString fixedLegPayLag							= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTLAG,                      "0D"                         );
-        LAString fixedLegStubType			            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_STUBTYPE                                                      );
+        AQLString fixedLegFreq							= swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FIXED_FREQUENCY,                       inputLVB                     );
+        AQLString fixedDayCount			                = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FIXED_DAYCOUNT,                        inputLVB                     );
+        AQLString fixedBusinessDayAdjustment             = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT                                         );
+        AQLString fixedCalendar	                        = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_CALENDAR                                                      );
+        AQLString fixedLegAccrualBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment   );
+        AQLString fixedLegAccrualCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_ACCRUALCALENDAR,                 fixedCalendar                );
+        AQLString fixedLegPaymentBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTBUSINESSDAYADJUSTMENT,    fixedBusinessDayAdjustment   );
+        AQLString fixedLegPaymentCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTCALENDAR,                 fixedCalendar                );
+        AQLString fixedLegPaymentFreq					= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTFREQUENCY,                fixedLegFreq                 );
+        AQLString fixedLegFirstStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_FIRSTSTUBDATE                                                 );
+        AQLString fixedLegLastStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_LASTSTUBDATE                                                  );
+        AQLString fixedLegRollDayString		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_ROLLDAY                                                       );
+        AQLString fixedLegPayLag							= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_PAYMENTLAG,                      "0D"                         );
+        AQLString fixedLegStubType			            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FIXED_STUBTYPE                                                      );
 
         validateStringEmptiness( fixedLegAccrualBusinessDayAdjustment,  "#Error: Fixed leg 'Accrual Business Day Adjustment' must be specified." );
         validateStringEmptiness( fixedLegPaymentBusinessDayAdjustment, "#Error: Fixed leg 'Payment Business Day Adjustment' must be specified." );
         validateStringEmptiness( fixedLegAccrualCalendar,               "#Error: Fixed leg 'Accrual Calendar' must be specified." );
         validateStringEmptiness( fixedLegPaymentCalendar,               "#Error: Fixed leg 'Payment Calendar' must be specified." );
 
-        LADate effectiveDate	         = swapLVB.getCompulsoryValueAsDate( IRS_KEY::EFFECTIVE_DATE, inputLVB );
-        LAString maturityDateString      = swapLVB.getCompulsoryValueAsLAString( IRS_KEY::MATURITY_DATE, inputLVB );
-        LADate maturityDate	             = validateMaturityDate( effectiveDate, maturityDateString);
+        AQLDate effectiveDate	         = swapLVB.getCompulsoryValueAsDate( IRS_KEY::EFFECTIVE_DATE, inputLVB );
+        AQLString maturityDateString      = swapLVB.getCompulsoryValueAsLAString( IRS_KEY::MATURITY_DATE, inputLVB );
+        AQLDate maturityDate	             = validateMaturityDate( effectiveDate, maturityDateString);
 
         if ( maturityDate < effectiveDate )
         {
-            throw LACoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
         }
 
 
-        LAString fixedPayLag( fixedLegPayLag );
+        AQLString fixedPayLag( fixedLegPayLag );
         if ( fixedPayLag.size() == 0 )
         {
-            fixedPayLag = LAString( "0D" );
+            fixedPayLag = AQLString( "0D" );
         }
 
         // Set-Up First and Last Stub Parameters
-        LADate* fixedAccrualFirstOddDate    = NULL;
-        LADate* fixedAccrualLastOddDate     = NULL;
-        LADate  fixedAccrualTempFirst;
-        LADate  fixedAccrualTempLast;
+        AQLDate* fixedAccrualFirstOddDate    = NULL;
+        AQLDate* fixedAccrualLastOddDate     = NULL;
+        AQLDate  fixedAccrualTempFirst;
+        AQLDate  fixedAccrualTempLast;
 
         if( fixedLegFirstStubDate.size() != 0 && fixedLegFirstStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( fixedLegStubType.size() != 0 && LAString( fixedLegStubType ).toUpper() != "NONE" )
+            if( fixedLegStubType.size() != 0 && AQLString( fixedLegStubType ).toUpper() != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             fixedAccrualTempFirst = stringToDate( fixedLegFirstStubDate, "#Error: Invalid fixed leg 'FirstStubDate'." );
@@ -188,9 +188,9 @@ namespace etrading
         if( fixedLegLastStubDate.size() != 0 && fixedLegLastStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( fixedLegStubType.size() != 0 && ( LAString( fixedLegStubType ).toUpper() ) != "NONE" )
+            if( fixedLegStubType.size() != 0 && ( AQLString( fixedLegStubType ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             fixedAccrualTempLast = stringToDate( fixedLegLastStubDate, "#Error: Invalid fixed leg 'LastStubDate'." );
@@ -198,26 +198,26 @@ namespace etrading
         }
 
         // Get the fixed leg stub type i.e. ShortStart, LongStart, Short End or Long End
-        LAString* fixedStubType = NULL;
+        AQLString* fixedStubType = NULL;
         if( fixedLegStubType.size() != 0 )
         {
-            fixedStubType = const_cast<LAString*>( &fixedLegStubType );
+            fixedStubType = const_cast<AQLString*>( &fixedLegStubType );
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
         // Float Leg Parameters
         /////////////////////////////////////////////////////////////////////////////////////
-        LAString floatLegFreq			                = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FLOAT_FREQUENCY,                       inputLVB                     );
-        LAString floatLegDayCount			            = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FLOAT_DAYCOUNT,                        inputLVB                     );
-        LAString floatBusinessDayAdjustment             = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT                                         );
-        LAString floatCalendar	                        = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_CALENDAR                                                      );
-        LAString floatLegFixingBusinessDayAdjustment    = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIXINGBUSINESSDAYADJUSTMENT,     floatBusinessDayAdjustment   );
-        LAString floatLegFixingCalendar	                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIXINGCALENDAR,                  floatCalendar                );
-        LAString floatLegAccrualBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment   );
-        LAString floatLegAccrualCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_ACCRUALCALENDAR,                 floatCalendar                );
-        LAString floatLegPaymentBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment   );
-        LAString floatLegPaymentCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTCALENDAR,                 floatCalendar                );
-        LAString floatLegPaymentFreq					= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTFREQUENCY,                floatLegFreq                 );
+        AQLString floatLegFreq			                = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FLOAT_FREQUENCY,                       inputLVB                     );
+        AQLString floatLegDayCount			            = swapLVB.getCompulsoryValueAsLAString(    IRS_KEY::FLOAT_DAYCOUNT,                        inputLVB                     );
+        AQLString floatBusinessDayAdjustment             = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT                                         );
+        AQLString floatCalendar	                        = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_CALENDAR                                                      );
+        AQLString floatLegFixingBusinessDayAdjustment    = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIXINGBUSINESSDAYADJUSTMENT,     floatBusinessDayAdjustment   );
+        AQLString floatLegFixingCalendar	                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIXINGCALENDAR,                  floatCalendar                );
+        AQLString floatLegAccrualBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment   );
+        AQLString floatLegAccrualCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_ACCRUALCALENDAR,                 floatCalendar                );
+        AQLString floatLegPaymentBusinessDayAdjustment   = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment   );
+        AQLString floatLegPaymentCalendar	            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTCALENDAR,                 floatCalendar                );
+        AQLString floatLegPaymentFreq					= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTFREQUENCY,                floatLegFreq                 );
  
 
         validateStringEmptiness( floatLegFixingBusinessDayAdjustment,	"#Error: Float leg 'Fixing Business Day Adjustment' must be specified." );
@@ -227,26 +227,26 @@ namespace etrading
         validateStringEmptiness( floatLegAccrualCalendar,               "#Error: Float leg 'Accrual Calendar' must be specified." );
         validateStringEmptiness( floatLegPaymentCalendar,               "#Error: Float leg 'Payment Calendar' must be specified." );
 
-        LAString floatLegFirstStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIRSTSTUBDATE                                                );
-        LAString floatLegLastStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_LASTSTUBDATE                                                 );
-        LAString floatLegRollDayString		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_ROLLDAY                                                      );
-        LAString floatLegFixLag			                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIXINGLAG,                       "0D"                        );
-        LAString floatLegPayLag							= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTLAG,                      "0D"                        );
-        LAString floatLegStubType			            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_STUBTYPE                                                     );
+        AQLString floatLegFirstStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIRSTSTUBDATE                                                );
+        AQLString floatLegLastStubDate		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_LASTSTUBDATE                                                 );
+        AQLString floatLegRollDayString		            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_ROLLDAY                                                      );
+        AQLString floatLegFixLag			                = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_FIXINGLAG,                       "0D"                        );
+        AQLString floatLegPayLag							= swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_PAYMENTLAG,                      "0D"                        );
+        AQLString floatLegStubType			            = swapLVB.getOptionalValueAsLAString(      IRS_KEY::FLOAT_STUBTYPE                                                     );
 
         // Set-Up First and Last Stub Parameters
-        LADate* floatAccrualFirstOddDate    = NULL;
-        LADate* floatAccrualLastOddDate     = NULL;
+        AQLDate* floatAccrualFirstOddDate    = NULL;
+        AQLDate* floatAccrualLastOddDate     = NULL;
 
-        LADate floatAccrualTempFirst;
-        LADate floatAccrualTempLast;
+        AQLDate floatAccrualTempFirst;
+        AQLDate floatAccrualTempLast;
 
         if( floatLegFirstStubDate.size() != 0 && floatLegFirstStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( floatLegStubType.size() != 0 && ( LAString( floatLegStubType ).toUpper() ) != "NONE" )
+            if( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             floatAccrualTempFirst = stringToDate( floatLegFirstStubDate, "#Error: Invalid floating leg 'FirstStubDate'." );
@@ -256,9 +256,9 @@ namespace etrading
         if( floatLegLastStubDate.size() != 0 && floatLegLastStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( floatLegStubType.size() != 0 && ( LAString( floatLegStubType ).toUpper() ) != "NONE" )
+            if( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             floatAccrualTempLast = stringToDate( floatLegLastStubDate, "#Error: Invalid floating leg 'LastStubDate'." );
@@ -266,10 +266,10 @@ namespace etrading
         }
 
         // Get the float leg stub type i.e. ShortStart, LongStart, Short End or Long End
-        LAString* floatStubType = NULL;
+        AQLString* floatStubType = NULL;
         if( floatLegStubType.size() != 0  )
         {
-            floatStubType = const_cast<LAString*>( &floatLegStubType );
+            floatStubType = const_cast<AQLString*>( &floatLegStubType );
         }
 
         //
@@ -280,15 +280,15 @@ namespace etrading
         // Fixed Leg Coupon Roll Conventions
         // ---------------------------------
         int* fixedLegRollDayPtr             = nullptr;
-        LAString* fixedLegRollConventionPtr = nullptr;
+        AQLString* fixedLegRollConventionPtr = nullptr;
 
         int fixedLegRollDay                 = 0;
-        LAString fixedLegRollConvention     = LAString( "" );
+        AQLString fixedLegRollConvention     = AQLString( "" );
         bool fixedLegIsEOMRoll              = false;
         bool fixedLegIsStartRoll            = false;
 
-        // Note: We check for RollDayString = LAString("0") for backwards compatibility
-        if ( fixedLegRollDayString != LAString( "0" )  && fixedLegRollDayString.size() != 0 )
+        // Note: We check for RollDayString = AQLString("0") for backwards compatibility
+        if ( fixedLegRollDayString != AQLString( "0" )  && fixedLegRollDayString.size() != 0 )
         {
             //// Generate Fixed Leg Coupon Roll Conventions if the rollDayString populated
             fixedLegRollDayPtr              = & fixedLegRollDay;
@@ -308,15 +308,15 @@ namespace etrading
         // Float Leg Coupon Roll Conventions
         // ---------------------------------
         int* floatLegRollDayPtr             = nullptr;
-        LAString* floatLegRollConventionPtr = nullptr;
+        AQLString* floatLegRollConventionPtr = nullptr;
 
         int floatLegRollDay                 = 0;
-        LAString floatLegRollConvention     = LAString( "" );
+        AQLString floatLegRollConvention     = AQLString( "" );
         bool floatLegIsEOMRoll              = false;
         bool floatLegIsStartRoll            = false;
 
-        // Note: We check for RollDayString = LAString("0") for backwards compatibility
-        if ( floatLegRollDayString != LAString( "0" ) && floatLegRollDayString.size() != 0 )
+        // Note: We check for RollDayString = AQLString("0") for backwards compatibility
+        if ( floatLegRollDayString != AQLString( "0" ) && floatLegRollDayString.size() != 0 )
         {
             //// Generate Fixed Leg Coupon Roll Conventions if the rollDayString populated
             floatLegRollDayPtr              = & floatLegRollDay;
@@ -421,44 +421,44 @@ namespace etrading
                                            DateVector&          floatFixingDates,
                                            DateVector&          floatAccrualDates,
                                            DateVector&          floatPaymentDates,
-                                           const LAString&      effectiveDateString,
-                                           const LAString&      maturityDateString,
-                                           const LAString&      fixedLegFreq,
-                                           const LAString&      fixedLegDayCount,
-                                           const LAString&      fixedLegAccrualBusinessDayAdjustment,
-                                           const LAString&      fixedLegAccrualCalendar,
-                                           const LAString&      fixedLegPaymentBusinessDayAdjustment,
-                                           const LAString&      fixedLegPaymentCalendar,
-                                           const LAString&      fixedLegFirstStubDate,
-                                           const LAString&      fixedLegLastStubDate,
-                                           const LAString&      fixedLegRollDayString,
-                                           const LAString&      fixedLegPayLag,
-                                           const LAString&      fixedLegStubType,
-                                           const LAString&      floatLegFreq,
-                                           const LAString&      floatLegDayCount,
-                                           const LAString&      floatLegFixingBusinessDayAdjustment,
-                                           const LAString&      floatLegFixingCalendar,
-                                           const LAString&      floatLegAccrualBusinessDayAdjustment,
-                                           const LAString&      floatLegAccrualCalendar,
-                                           const LAString&      floatLegPaymentBusinessDayAdjustment,
-                                           const LAString&      floatLegPaymentCalendar,
-                                           const LAString&      floatLegFirstStubDate,
-                                           const LAString&      floatLegLastStubDate,
-                                           const LAString&      floatLegRollDayString,
-                                           const LAString&      floatLegFixLag,
+                                           const AQLString&      effectiveDateString,
+                                           const AQLString&      maturityDateString,
+                                           const AQLString&      fixedLegFreq,
+                                           const AQLString&      fixedLegDayCount,
+                                           const AQLString&      fixedLegAccrualBusinessDayAdjustment,
+                                           const AQLString&      fixedLegAccrualCalendar,
+                                           const AQLString&      fixedLegPaymentBusinessDayAdjustment,
+                                           const AQLString&      fixedLegPaymentCalendar,
+                                           const AQLString&      fixedLegFirstStubDate,
+                                           const AQLString&      fixedLegLastStubDate,
+                                           const AQLString&      fixedLegRollDayString,
+                                           const AQLString&      fixedLegPayLag,
+                                           const AQLString&      fixedLegStubType,
+                                           const AQLString&      floatLegFreq,
+                                           const AQLString&      floatLegDayCount,
+                                           const AQLString&      floatLegFixingBusinessDayAdjustment,
+                                           const AQLString&      floatLegFixingCalendar,
+                                           const AQLString&      floatLegAccrualBusinessDayAdjustment,
+                                           const AQLString&      floatLegAccrualCalendar,
+                                           const AQLString&      floatLegPaymentBusinessDayAdjustment,
+                                           const AQLString&      floatLegPaymentCalendar,
+                                           const AQLString&      floatLegFirstStubDate,
+                                           const AQLString&      floatLegLastStubDate,
+                                           const AQLString&      floatLegRollDayString,
+                                           const AQLString&      floatLegFixLag,
                                            double               floatLegFirstFix,
                                            double               floatlegLastFix,
-                                           const LAString&      floatLegPayLag,
-                                           const LAString&      floatLegStubType,
-										   const LAString&		fixedLegPaymentFreq,
-										   const LAString&		floatLegPaymentFreq,
-										   const LAString&		floatLegFixingAdvanceOrArrears,
+                                           const AQLString&      floatLegPayLag,
+                                           const AQLString&      floatLegStubType,
+										   const AQLString&		fixedLegPaymentFreq,
+										   const AQLString&		floatLegPaymentFreq,
+										   const AQLString&		floatLegFixingAdvanceOrArrears,
                                            const bool           isAssetSwap,
-                                           LADate               issueDate )
+                                           AQLDate               issueDate )
     {
 
         // Set the Asset Swap Issue Date to the effective date if not populated
-        if ( issueDate == LADate() )
+        if ( issueDate == AQLDate() )
         {
             issueDate = stringToDate( effectiveDateString, "#Error: Invalid 'EffectiveDate'" );
         }
@@ -527,22 +527,22 @@ namespace etrading
     */
     void validateAndGenerateFixedLegCashflows( DateVector&          fixedAccrualDates,
                                                DateVector&          fixedPaymentDates,
-                                               const LAString&      effectiveDateString,
-                                               const LAString&      maturityDateString,
-                                               const LAString&      fixedLegFreq,
-                                               const LAString&      fixedLegDayCount,
-                                               const LAString&      fixedLegAccrualBusinessDayAdjustment,
-                                               const LAString&      fixedLegAccrualCalendar,
-                                               const LAString&      fixedLegPaymentBusinessDayAdjustment,
-                                               const LAString&      fixedLegPaymentCalendar,
-                                               const LAString&      fixedLegFirstStubDate,
-                                               const LAString&      fixedLegLastStubDate,
-                                               const LAString&      fixedLegRollDayString,
-                                               const LAString&      fixedLegPayLag,
-                                               const LAString&      fixedLegStubType,
-			                                   const LAString&      fixedLegPaymentFreq,
+                                               const AQLString&      effectiveDateString,
+                                               const AQLString&      maturityDateString,
+                                               const AQLString&      fixedLegFreq,
+                                               const AQLString&      fixedLegDayCount,
+                                               const AQLString&      fixedLegAccrualBusinessDayAdjustment,
+                                               const AQLString&      fixedLegAccrualCalendar,
+                                               const AQLString&      fixedLegPaymentBusinessDayAdjustment,
+                                               const AQLString&      fixedLegPaymentCalendar,
+                                               const AQLString&      fixedLegFirstStubDate,
+                                               const AQLString&      fixedLegLastStubDate,
+                                               const AQLString&      fixedLegRollDayString,
+                                               const AQLString&      fixedLegPayLag,
+                                               const AQLString&      fixedLegStubType,
+			                                   const AQLString&      fixedLegPaymentFreq,
                                                const bool           isAssetSwap,
-                                               LADate               issueDate )
+                                               AQLDate               issueDate )
     {
         /////////////////////////////////////////////////////////////////////////////////////
         // Fixed Leg Parameters
@@ -556,24 +556,24 @@ namespace etrading
         validateStringEmptiness(    fixedLegPaymentCalendar,	            "#Error: Fixed leg 'Payment Calendar' must be specified." );
 
 
-        LAString fixedPayLag( fixedLegPayLag );
+        AQLString fixedPayLag( fixedLegPayLag );
         if ( fixedPayLag.size() == 0 )
         {
-            fixedPayLag = LAString( "0D" );
+            fixedPayLag = AQLString( "0D" );
         }
 
         // Set-Up First and Last Stub Parameters
-        LADate* fixedAccrualFirstOddDate    = nullptr;
-        LADate* fixedAccrualLastOddDate     = nullptr;
-        LADate  fixedAccrualTempFirst;
-        LADate  fixedAccrualTempLast;
+        AQLDate* fixedAccrualFirstOddDate    = nullptr;
+        AQLDate* fixedAccrualLastOddDate     = nullptr;
+        AQLDate  fixedAccrualTempFirst;
+        AQLDate  fixedAccrualTempLast;
 
         if( fixedLegFirstStubDate.size() != 0 && fixedLegFirstStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( fixedLegStubType.size() != 0 && LAString( fixedLegStubType ).toUpper() != "NONE" )
+            if( fixedLegStubType.size() != 0 && AQLString( fixedLegStubType ).toUpper() != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             fixedAccrualTempFirst = stringToDate( fixedLegFirstStubDate, "#Error: Invalid fixed leg 'FirstStubDate'." );
@@ -583,9 +583,9 @@ namespace etrading
         if( fixedLegLastStubDate.size() != 0 && fixedLegLastStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( fixedLegStubType.size() != 0 && ( LAString( fixedLegStubType ).toUpper() ) != "NONE" )
+            if( fixedLegStubType.size() != 0 && ( AQLString( fixedLegStubType ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Fixed Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             fixedAccrualTempLast = stringToDate( fixedLegLastStubDate, "#Error: Invalid fixed leg 'LastStubDate'." );
@@ -593,26 +593,26 @@ namespace etrading
         }
 
         // Get the fixed leg stub type i.e. ShortStart, LongStart, Short End or Long End
-        LAString* fixedStubType = nullptr;
+        AQLString* fixedStubType = nullptr;
         if( fixedLegStubType.size() != 0 )
         {
-            fixedStubType = const_cast<LAString*>( &fixedLegStubType );
+            fixedStubType = const_cast<AQLString*>( &fixedLegStubType );
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
         // Generic Parameters
         /////////////////////////////////////////////////////////////////////////////////////
 
-        LADate effectiveDate    = stringToDate( effectiveDateString, "#Error: Invalid 'EffectiveDate'" );
-        LADate maturityDate	    = validateMaturityDate( effectiveDate, maturityDateString);
+        AQLDate effectiveDate    = stringToDate( effectiveDateString, "#Error: Invalid 'EffectiveDate'" );
+        AQLDate maturityDate	    = validateMaturityDate( effectiveDate, maturityDateString);
 
         if ( maturityDate < effectiveDate )
         {
-            throw LACoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
         }
 
         // For Asset Swaps if the issue Date is not provided use the effectiveDate
-        if ( isAssetSwap && issueDate == LADate() )
+        if ( isAssetSwap && issueDate == AQLDate() )
         {
             issueDate = effectiveDate;
         }
@@ -625,15 +625,15 @@ namespace etrading
         // Fixed Leg Coupon Roll Conventions
         // ---------------------------------
         int* fixedLegRollDayPtr             = nullptr;
-        LAString* fixedLegRollConventionPtr = nullptr;
+        AQLString* fixedLegRollConventionPtr = nullptr;
 
         int fixedLegRollDay                 = 0;
-        LAString fixedLegRollConvention     = LAString( "" );
+        AQLString fixedLegRollConvention     = AQLString( "" );
         bool fixedLegIsEOMRoll              = false;
         bool fixedLegIsStartRoll            = false;
 
-        // Note: We check for RollDayString = LAString("0") for backwards compatibility
-        if ( fixedLegRollDayString != LAString( "0" )  && fixedLegRollDayString.size() != 0 )
+        // Note: We check for RollDayString = AQLString("0") for backwards compatibility
+        if ( fixedLegRollDayString != AQLString( "0" )  && fixedLegRollDayString.size() != 0 )
         {
             //// Generate Fixed Leg Coupon Roll Conventions if the rollDayString populated
             fixedLegRollDayPtr              = & fixedLegRollDay;
@@ -673,7 +673,7 @@ namespace etrading
         {
             if( fixedAccrualDates[i - 1] >= fixedAccrualDates[i] )
             {
-                throw LACoreInvalidData( "#Error: Invalid Dates Generated. Fixed Leg Accrual Dates must be in ascending order.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Invalid Dates Generated. Fixed Leg Accrual Dates must be in ascending order.", __FILE__, __LINE__ );
             }
         }
 
@@ -682,7 +682,7 @@ namespace etrading
         {
             if( fixedPaymentDates[i - 1] > fixedPaymentDates[i] )
             {
-                throw LACoreInvalidData( "#Error: Invalid Dates Generated. Fixed Leg Payment Dates must be in ascending order.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Invalid Dates Generated. Fixed Leg Payment Dates must be in ascending order.", __FILE__, __LINE__ );
             }
         }
     }
@@ -708,26 +708,26 @@ namespace etrading
     void validateAndGenerateFloatLegCashflows( DateVector&          floatFixingDates,
             DateVector&          floatAccrualDates,
             DateVector&          floatPaymentDates,
-            const LAString&      effectiveDateString,
-            const LAString&      maturityDateString,
-            const LAString&      floatLegFreq,
-            const LAString&      floatLegDayCount,
-            const LAString&      floatLegFixingBusinessDayAdjustment,
-            const LAString&      floatLegFixingCalendar,
-            const LAString&      floatLegAccrualBusinessDayAdjustment,
-            const LAString&      floatLegAccrualCalendar,
-            const LAString&      floatLegPaymentBusinessDayAdjustment,
-            const LAString&      floatLegPaymentCalendar,
-            const LAString&      floatLegFirstStubDate,
-            const LAString&      floatLegLastStubDate,
-            const LAString&      floatLegRollDayString,
-            const LAString&      floatLegFixLag,
+            const AQLString&      effectiveDateString,
+            const AQLString&      maturityDateString,
+            const AQLString&      floatLegFreq,
+            const AQLString&      floatLegDayCount,
+            const AQLString&      floatLegFixingBusinessDayAdjustment,
+            const AQLString&      floatLegFixingCalendar,
+            const AQLString&      floatLegAccrualBusinessDayAdjustment,
+            const AQLString&      floatLegAccrualCalendar,
+            const AQLString&      floatLegPaymentBusinessDayAdjustment,
+            const AQLString&      floatLegPaymentCalendar,
+            const AQLString&      floatLegFirstStubDate,
+            const AQLString&      floatLegLastStubDate,
+            const AQLString&      floatLegRollDayString,
+            const AQLString&      floatLegFixLag,
             double               floatLegFirstFix,
             double               floatlegLastFix,
-            const LAString&      floatLegPayLag,
-            const LAString&      floatLegStubType,
-			const LAString&		 floatLegPaymentFreq,
-			const LAString&		 floatLegFixingAdvanceOrArrears,
+            const AQLString&      floatLegPayLag,
+            const AQLString&      floatLegStubType,
+			const AQLString&		 floatLegPaymentFreq,
+			const AQLString&		 floatLegFixingAdvanceOrArrears,
 			bool				 removeExtraDay)
     {
         /////////////////////////////////////////////////////////////////////////////////////
@@ -743,33 +743,33 @@ namespace etrading
         validateStringEmptiness( floatLegPaymentBusinessDayAdjustment,	"#Error: Float leg 'Payment Business Day Adjustment' must be specified." );
         validateStringEmptiness( floatLegPaymentCalendar,               "#Error: Float leg 'Payment Calendar' must be specified." );
 
-        // Convert FixingLag to LAString
-        LAString floatFixingLag( floatLegFixLag );
+        // Convert FixingLag to AQLString
+        AQLString floatFixingLag( floatLegFixLag );
         if( floatLegFixLag.size() == 0 )
         {
-            floatFixingLag = LAString( "0D" );
+            floatFixingLag = AQLString( "0D" );
         }
 
-        // Convert Floating Pay Lag to LAString
-        LAString floatPayLag( floatLegPayLag );
+        // Convert Floating Pay Lag to AQLString
+        AQLString floatPayLag( floatLegPayLag );
         if( floatLegPayLag.size() == 0 )
         {
-            floatPayLag = LAString( "0D" );
+            floatPayLag = AQLString( "0D" );
         }
 
         // Set-Up First and Last Stub Parameters
-        LADate* floatAccrualFirstOddDate    = nullptr;
-        LADate* floatAccrualLastOddDate     = nullptr;
+        AQLDate* floatAccrualFirstOddDate    = nullptr;
+        AQLDate* floatAccrualLastOddDate     = nullptr;
 
-        LADate floatAccrualTempFirst;
-        LADate floatAccrualTempLast;
+        AQLDate floatAccrualTempFirst;
+        AQLDate floatAccrualTempLast;
 
         if( floatLegFirstStubDate.size() != 0 && floatLegFirstStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( floatLegStubType.size() != 0 && ( LAString( floatLegStubType ).toUpper() ) != "NONE" )
+            if( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             floatAccrualTempFirst = stringToDate( floatLegFirstStubDate, "#Error: Invalid floating leg 'FirstStubDate'." );
@@ -779,9 +779,9 @@ namespace etrading
         if( floatLegLastStubDate.size() != 0 && floatLegLastStubDate != "0")
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( floatLegStubType.size() != 0 && ( LAString( floatLegStubType ).toUpper() ) != "NONE" )
+            if( floatLegStubType.size() != 0 && ( AQLString( floatLegStubType ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Float Leg cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             floatAccrualTempLast = stringToDate( floatLegLastStubDate, "#Error: Invalid floating leg 'LastStubDate'." );
@@ -789,22 +789,22 @@ namespace etrading
         }
 
         // Get the float leg stub type i.e. ShortStart, LongStart, Short End or Long End
-        LAString* floatStubType = nullptr;
+        AQLString* floatStubType = nullptr;
         if( floatLegStubType.size() != 0  )
         {
-            floatStubType = const_cast<LAString*>( &floatLegStubType );
+            floatStubType = const_cast<AQLString*>( &floatLegStubType );
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
         // Generic Parameters
         /////////////////////////////////////////////////////////////////////////////////////
 
-        LADate effectiveDate    = stringToDate( effectiveDateString, "#Error: Invalid 'EffectiveDate'" );
-        LADate maturityDate	    = validateMaturityDate( effectiveDate, maturityDateString);
+        AQLDate effectiveDate    = stringToDate( effectiveDateString, "#Error: Invalid 'EffectiveDate'" );
+        AQLDate maturityDate	    = validateMaturityDate( effectiveDate, maturityDateString);
 
         if ( maturityDate < effectiveDate )
         {
-            throw LACoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
         }
 
         //
@@ -815,15 +815,15 @@ namespace etrading
         // Float Leg Coupon Roll Conventions
         // ---------------------------------
         int* floatLegRollDayPtr             = nullptr;
-        LAString* floatLegRollConventionPtr = nullptr;
+        AQLString* floatLegRollConventionPtr = nullptr;
 
         int floatLegRollDay                 = 0;
-        LAString floatLegRollConvention     = LAString( "" );
+        AQLString floatLegRollConvention     = AQLString( "" );
         bool floatLegIsEOMRoll              = false;
         bool floatLegIsStartRoll            = false;
 
-        // Note: We check for RollDayString = LAString("0") for backwards compatibility
-        if ( floatLegRollDayString != LAString( "0" ) && floatLegRollDayString.size() != 0 )
+        // Note: We check for RollDayString = AQLString("0") for backwards compatibility
+        if ( floatLegRollDayString != AQLString( "0" ) && floatLegRollDayString.size() != 0 )
         {
             //// Generate Fixed Leg Coupon Roll Conventions if the rollDayString populated
             floatLegRollDayPtr              = & floatLegRollDay;
@@ -869,7 +869,7 @@ namespace etrading
         {
             if( floatAccrualDates[i - 1] >= floatAccrualDates[i] )
             {
-                throw LACoreInvalidData( "#Error: Invalid Dates Generated. Floating Leg Accrual Dates must be in ascending order", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Invalid Dates Generated. Floating Leg Accrual Dates must be in ascending order", __FILE__, __LINE__ );
             }
         }
 
@@ -878,7 +878,7 @@ namespace etrading
         {
             if( floatFixingDates[i - 1] > floatFixingDates[i] )
             {
-                throw LACoreInvalidData( "#Error: Invalid Dates Generated. Floating Leg Fixing Dates must be in ascending order", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Invalid Dates Generated. Floating Leg Fixing Dates must be in ascending order", __FILE__, __LINE__ );
             }
         }
 
@@ -887,7 +887,7 @@ namespace etrading
         {
             if( floatPaymentDates[i - 1] > floatPaymentDates[i] )
             {
-                throw LACoreInvalidData( "#Error: Invalid Dates Generated. Floating Leg Payment Dates must be in ascending order", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Invalid Dates Generated. Floating Leg Payment Dates must be in ascending order", __FILE__, __LINE__ );
             }
         }
     }
@@ -905,7 +905,7 @@ namespace etrading
 
 		if (accrualStartDates.size() != accrualEndDates.size())
 		{
-			throw LACoreInvalidData("#Error: Invalid Input, the accrualStartDates and accrualEndDates must have the same size.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Invalid Input, the accrualStartDates and accrualEndDates must have the same size.", __FILE__, __LINE__);
 		}
 
     }
@@ -921,11 +921,11 @@ namespace etrading
     * @output			isStartRoll		True when it's ShortEnd (SE) or LongEnd (LE), otherwise False
     */
     bool isStartRollAndPopulateStubDatesFromStubType( const StubTypeEnum& stubType,
-            const LADate* firstStubDtPtr,
-            const LADate* lastStubDtPtr,
-            const LADate& startDate,
-            const LADate& endDate,
-            const LAString& frequency )
+            const AQLDate* firstStubDtPtr,
+            const AQLDate* lastStubDtPtr,
+            const AQLDate& startDate,
+            const AQLDate& endDate,
+            const AQLString& frequency )
     {
 
         bool isStartRoll = false; // default to false, the same as ShortStart
@@ -933,11 +933,11 @@ namespace etrading
         if (stubType != NONE_STUBTYPE )
         {
 
-            LAString term = etrading::fromFrequencyToTerm( frequency );
+            AQLString term = etrading::fromFrequencyToTerm( frequency );
 
             if( firstStubDtPtr != nullptr || lastStubDtPtr != nullptr )
             {
-                throw LACoreInvalidData( "#Error: Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'.", __FILE__, __LINE__ );
             }
 
             if ( stubType == SHORT_START_STUBTYPE )
@@ -949,7 +949,7 @@ namespace etrading
             else if ( stubType == LONG_START_STUBTYPE )
             {
                 isStartRoll = false;
-                LADate pfoddTemp = LADateScheduleHelpers::firstStubDateFromStubType( startDate, endDate, term );
+                AQLDate pfoddTemp = LADateScheduleHelpers::firstStubDateFromStubType( startDate, endDate, term );
                 firstStubDtPtr = &pfoddTemp;
                 lastStubDtPtr = nullptr;
             }
@@ -962,13 +962,13 @@ namespace etrading
             else if ( stubType == LONG_END_STUBTYPE )
             {
                 isStartRoll = true;
-                LADate pfoddTemp = LADateScheduleHelpers::lastStubDateFromStubType( startDate, endDate, term );
+                AQLDate pfoddTemp = LADateScheduleHelpers::lastStubDateFromStubType( startDate, endDate, term );
                 firstStubDtPtr = nullptr;
                 lastStubDtPtr = &pfoddTemp;
             }
             else
             {
-                throw LACoreInvalidData( "#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__ );
             }
         }
 
@@ -981,7 +981,7 @@ namespace etrading
     *  @param [in]		allowEqual		           True to allow equal
     *  @param [in]		dateName                   Input date names, for error message
     */
-	void checkDatesInAscendingOrder(const DateVector& dates, bool allowEqual, const LAString& dateName)
+	void checkDatesInAscendingOrder(const DateVector& dates, bool allowEqual, const AQLString& dateName)
 	{
  	   int nDates = dates.size() - 1;
 	   for( int i = 1; i < nDates; i++ )
@@ -990,7 +990,7 @@ namespace etrading
 			if (dates[i - 1] > dates[i] || (!allowEqual && dates[i - 1] == dates[i] ))
             {
 				ss << "#Error: Invalid " << dateName << " Generated. Dates must be in ascending order.";
-				throw LACoreInvalidData( ss.str().c_str(), __FILE__, __LINE__ );
+				throw AQLCoreInvalidData( ss.str().c_str(), __FILE__, __LINE__ );
 			}
         }
 	}
@@ -1015,20 +1015,20 @@ namespace etrading
     */
     void validateAndGenerateAccrualAndPaymentSchedules( DateVector &                        accrualDates,
 													    DateVector &                        paymentDates,
-														const LADate&        				effectiveDate,
-														const LADate&        				maturityDate,
-													    const LAString &                    accrualFreq,
-													    const LAString &                    accrualBusinessDayAdjustment,
-													    const LAString &                    accrualCalendar,
-													    const LAString &                    paymentFreq,
-													    const LAString &                    paymentBusinessDayAdjustment,
-													    const LAString &                    paymentCalendar,
-													    const LAString &                    paymentLag,
-													    const LAString &                    stubType,
-													    const LAString &                    firstStubDate,
-													    const LAString &                    lastStubDate,
-													    const LAString &                    rollDayString,
-													    const LAString &		            fixingAdvanceOrArrears )
+														const AQLDate&        				effectiveDate,
+														const AQLDate&        				maturityDate,
+													    const AQLString &                    accrualFreq,
+													    const AQLString &                    accrualBusinessDayAdjustment,
+													    const AQLString &                    accrualCalendar,
+													    const AQLString &                    paymentFreq,
+													    const AQLString &                    paymentBusinessDayAdjustment,
+													    const AQLString &                    paymentCalendar,
+													    const AQLString &                    paymentLag,
+													    const AQLString &                    stubType,
+													    const AQLString &                    firstStubDate,
+													    const AQLString &                    lastStubDate,
+													    const AQLString &                    rollDayString,
+													    const AQLString &		            fixingAdvanceOrArrears )
     {
         /////////////////////////////////////////////////////////////////////////////////////
         //  Leg Parameters
@@ -1044,27 +1044,27 @@ namespace etrading
 
         if ( maturityDate < effectiveDate )
         {
-            throw LACoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The swap maturity date cannot be before the swap start date", __FILE__, __LINE__ );
         }
 
-        LAString payLag(paymentLag);
+        AQLString payLag(paymentLag);
         if ( payLag.size() == 0 )
         {
-            payLag = LAString( "0D" );
+            payLag = AQLString( "0D" );
         }
 
         // Set-Up First and Last Stub Parameters
-        LADate* accrualFirstOddDate    = nullptr;
-        LADate* accrualLastOddDate     = nullptr;
-        LADate  accrualTempFirst;
-        LADate  accrualTempLast;
+        AQLDate* accrualFirstOddDate    = nullptr;
+        AQLDate* accrualLastOddDate     = nullptr;
+        AQLDate  accrualTempFirst;
+        AQLDate  accrualTempLast;
 
         if( firstStubDate.size() != 0 )
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( stubType.size() != 0 && LAString( stubType ).toUpper() != "NONE" )
+            if( stubType.size() != 0 && AQLString( stubType ).toUpper() != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             accrualTempFirst = stringToDate( firstStubDate, "#Error: Invalid 'FirstStubDate'." );
@@ -1074,9 +1074,9 @@ namespace etrading
         if( lastStubDate.size() != 0 )
         {
             // Client should not specify both the stub type and the first- and lastStubDates
-            if( stubType.size() != 0 && ( LAString( stubType ).toUpper() ) != "NONE" )
+            if( stubType.size() != 0 && ( AQLString( stubType ).toUpper() ) != "NONE" )
             {
-                throw LACoreInvalidData( "#Error: Cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Cannot have both the StubType and First- or LastStubDate specified.", __FILE__, __LINE__ );
             }
 
             accrualTempLast = stringToDate( lastStubDate, "#Error: Invalid 'LastStubDate'." );
@@ -1084,10 +1084,10 @@ namespace etrading
         }
 
         // Get the  leg stub type i.e. ShortStart, LongStart, Short End or Long End
-        LAString* stubT = nullptr;
+        AQLString* stubT = nullptr;
         if( stubType.size() != 0 )
         {
-            stubT = const_cast<LAString*>( &stubType );
+            stubT = const_cast<AQLString*>( &stubType );
         }
 
         //
@@ -1098,15 +1098,15 @@ namespace etrading
         //  Coupon Roll Conventions
         // ---------------------------------
         int* rollDayPtr             = nullptr;
-        LAString* rollConventionPtr = nullptr;
+        AQLString* rollConventionPtr = nullptr;
 
         int rollDay                 = 0;
-        LAString rollConvention     = LAString( "" );
+        AQLString rollConvention     = AQLString( "" );
         bool isEOMRoll              = false;
         bool isStartRoll            = false;
 
-        // Note: We check for RollDayString = LAString("0") for backwards compatibility
-        if ( rollDayString != LAString( "0" )  && rollDayString.size() != 0 )
+        // Note: We check for RollDayString = AQLString("0") for backwards compatibility
+        if ( rollDayString != AQLString( "0" )  && rollDayString.size() != 0 )
         {
             //// Generate  Leg Coupon Roll Conventions if the rollDayString populated
             rollDayPtr              = & rollDay;
@@ -1166,23 +1166,23 @@ namespace etrading
     */
     void validateAndGenerateAccrualAndPaymentSchedules( DateVector &                        accrualDates,
 													    DateVector &                        paymentDates,
-													    const LAString &                    effectiveDateString,
-													    const LAString &                    maturityDateString,
-													    const LAString &                    accrualFreq,
-													    const LAString &                    accrualBusinessDayAdjustment,
-													    const LAString &                    accrualCalendar,
-													    const LAString &                    paymentFreq,
-													    const LAString &                    paymentBusinessDayAdjustment,
-													    const LAString &                    paymentCalendar,
-													    const LAString &                    paymentLag,
-													    const LAString &                    stubType,
-													    const LAString &                    firstStubDate,
-													    const LAString &                    lastStubDate,
-													    const LAString &                    rollDayString,
-													    const LAString &		            fixingAdvanceOrArrears )
+													    const AQLString &                    effectiveDateString,
+													    const AQLString &                    maturityDateString,
+													    const AQLString &                    accrualFreq,
+													    const AQLString &                    accrualBusinessDayAdjustment,
+													    const AQLString &                    accrualCalendar,
+													    const AQLString &                    paymentFreq,
+													    const AQLString &                    paymentBusinessDayAdjustment,
+													    const AQLString &                    paymentCalendar,
+													    const AQLString &                    paymentLag,
+													    const AQLString &                    stubType,
+													    const AQLString &                    firstStubDate,
+													    const AQLString &                    lastStubDate,
+													    const AQLString &                    rollDayString,
+													    const AQLString &		            fixingAdvanceOrArrears )
     {
-		LADate effectiveDate = stringToDate(effectiveDateString, "#Error: Invalid 'EffectiveDate'");
-		LADate maturityDate = validateMaturityDate(effectiveDate, maturityDateString);
+		AQLDate effectiveDate = stringToDate(effectiveDateString, "#Error: Invalid 'EffectiveDate'");
+		AQLDate maturityDate = validateMaturityDate(effectiveDate, maturityDateString);
 
 		validateAndGenerateAccrualAndPaymentSchedules(  accrualDates,
 														paymentDates,
@@ -1214,20 +1214,20 @@ namespace etrading
     * @return the fixing dates 
     */
     DateVector validateAndGenerateFixingSchedule(const DateVector&  accrualDates,
-											    const LAString&     fixingBusinessDayAdjustment,
-											    const LAString&     fixingCalendar,
-											    const LAString&     fixingLag,
-											    const LAString&		fixingAdvanceOrArrears,
+											    const AQLString&     fixingBusinessDayAdjustment,
+											    const AQLString&     fixingCalendar,
+											    const AQLString&     fixingLag,
+											    const AQLString&		fixingAdvanceOrArrears,
 												const bool          includeLastExtraFixingDate)
     {
   
         validateStringEmptiness( fixingBusinessDayAdjustment,	"#Error: 'Fixing Business Day Adjustment' must be specified." );
         validateStringEmptiness( fixingCalendar,	"#Error: 'Fixing Calendar' must be specified." );
     
-        LAString fixLag( fixingLag );
+        AQLString fixLag( fixingLag );
         if( fixLag.size() == 0 )
         {
-            fixLag = LAString( "0D" );
+            fixLag = AQLString( "0D" );
         }
 
         //
@@ -1250,20 +1250,20 @@ namespace etrading
 	*  @param [in]		accrualEndDates		        Accrual End Dates
 	*  @return 		combinedAccrualDates        Combined Accrual Dates
 	*/
-	std::vector<LADate> combineAccrualStartAndEndDates(const std::vector<LADate>& accrualStartDates, const std::vector<LADate>& accrualEndDates)
+	std::vector<AQLDate> combineAccrualStartAndEndDates(const std::vector<AQLDate>& accrualStartDates, const std::vector<AQLDate>& accrualEndDates)
 	{
 		if (accrualStartDates.size() == 0 || accrualEndDates.size() == 0)
 		{
-		   throw LACoreInvalidData( "#Error: Accrual Start Dates and End Dates cannot be empty", __FILE__, __LINE__ );
+		   throw AQLCoreInvalidData( "#Error: Accrual Start Dates and End Dates cannot be empty", __FILE__, __LINE__ );
 		}
-		std::vector<LADate> accrualDates(accrualStartDates);
+		std::vector<AQLDate> accrualDates(accrualStartDates);
 		accrualDates.push_back(accrualEndDates.back());
 		return accrualDates;
 	}
 
-	/* @brief Transform dates from LADate format to double format
+	/* @brief Transform dates from AQLDate format to double format
     * 
-    *  @param [in] dateVec dates in LADate format
+    *  @param [in] dateVec dates in AQLDate format
     *  @Return     date in double format
     */
 	DoubleVector fromDateToDoubleVector(const DateVector& dateVec)
@@ -1276,23 +1276,23 @@ namespace etrading
 		return dVec;
 	}
 
-    /* @brief Transform dates from LADate format to double format, if date is NaN, return NaN
+    /* @brief Transform dates from AQLDate format to double format, if date is NaN, return NaN
     * 
-    *  @param [in] date date in LADate format
+    *  @param [in] date date in AQLDate format
     *  @Return     date in double format
     */
-	double fromLADateToDouble(const LADate& date)
+	double fromLADateToDouble(const AQLDate& date)
 	{
-		if (date == LADate())
+		if (date == AQLDate())
 		{
 			return std::numeric_limits<double>::quiet_NaN();
 		}
         return ((double)(LADateScheduleHelpers::getExcelDate(date)));
 	}
 
-    /* @brief Transform dates from double format to LADate format
+    /* @brief Transform dates from double format to AQLDate format
     *  @param [in] doubleVec dates in double format
-    *  @Return     dates in LADate format
+    *  @Return     dates in AQLDate format
     */
 	DateVector fromDoubleToDateVector(const DoubleVector& doubleVec)
 	{
@@ -1313,7 +1313,7 @@ namespace etrading
 		size_t rowSize = input.size();
         if ( rowSize == 0)
 		{
-	        throw LACoreInvalidData( "#Error: Data Validation - input matrix is empty.", __FILE__, __LINE__ );
+	        throw AQLCoreInvalidData( "#Error: Data Validation - input matrix is empty.", __FILE__, __LINE__ );
 		}
 
         // Only allow Rectangular Matrices, we do not support jagged matrices here
@@ -1342,7 +1342,7 @@ namespace etrading
     *  @param [in] accrualEnd		Accrual end date
     *  @Return     days
     */
-	int getDays(const LADate& accrualStart, const LADate& accrualEnd)
+	int getDays(const AQLDate& accrualStart, const AQLDate& accrualEnd)
 	{
         int days = accrualStart.intervalDays(accrualEnd);
         return days;
@@ -1354,18 +1354,18 @@ namespace etrading
 	*  @param[in]		includelast		True(default):include the last day and not include start day; False:include start day and not include last day
 	*  @return			Number of long Feb (feb29)
 	*/
-	int numberOfLongFeb(const LADate& fromDate, const LADate& toDate, bool includeLast)
+	int numberOfLongFeb(const AQLDate& fromDate, const AQLDate& toDate, bool includeLast)
 	{
 
 		int years = toDate.yearOfEra() - fromDate.yearOfEra();
 
-		LADate curYearFeb29 = fromDate;
+		AQLDate curYearFeb29 = fromDate;
 		curYearFeb29.setMonth(2);
 
 		//Count how many date is 29thFeb between fromDate and toDate
 		int numOfLongFeb = 0;
 
-		LADate curDate = fromDate;
+		AQLDate curDate = fromDate;
 
 		for (int i = 0; i <= years; i++)
 		{
@@ -1403,7 +1403,7 @@ namespace etrading
     *  @param[in]		includelast		True(default):include the last day and not include start day; False:include start day and not include last day
     *  @return			Year fraction between fromDate and toDate
     */
-    double getYearFraction( const LADate& fromDate, const LADate& toDate, const DayCountEnum& dayCount, bool includeLast )
+    double getYearFraction( const AQLDate& fromDate, const AQLDate& toDate, const DayCountEnum& dayCount, bool includeLast )
     {
         double tao = 0.0;
 
@@ -1457,7 +1457,7 @@ namespace etrading
 		}
         else
         {
-			LAString dayCountStr( toString( dayCount ).c_str() );
+			AQLString dayCountStr( toString( dayCount ).c_str() );
             tao = LADateScheduleHelpers::getTerm( fromDate, toDate, dayCountStr, includeLast );
         }
         return tao;
@@ -1473,7 +1473,7 @@ namespace etrading
 		size_t rowSize = input.size();
         if ( rowSize == 0 )
 		{
-	        throw LACoreInvalidData( "#Error: Data Validation - input matrix is empty.", __FILE__, __LINE__ );
+	        throw AQLCoreInvalidData( "#Error: Data Validation - input matrix is empty.", __FILE__, __LINE__ );
 		}
         
         // Only allow Rectangular Matrices, we do not support jagged matrices here
@@ -1506,7 +1506,7 @@ namespace etrading
 		size_t rowSize = input.size();
 		if (rowSize == 0)
 		{
-			throw LACoreInvalidData("#Error: Data Validation - input matrix is empty.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Data Validation - input matrix is empty.", __FILE__, __LINE__);
 		}
 
 		// Determine the number of columns in each row
@@ -1525,7 +1525,7 @@ namespace etrading
 				}
 				else
 				{
-					throw LACoreInvalidData("#Error: Data Validation - only rectangular matrices supported. Data rows and columns must be of the same size.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("#Error: Data Validation - only rectangular matrices supported. Data rows and columns must be of the same size.", __FILE__, __LINE__);
 				}
 			}
 		}
@@ -1547,7 +1547,7 @@ namespace etrading
 	};
 
 
-	template LAStringMatrix transpose<LAString>( const LAStringMatrix& );
+	template AQLStringMatrix transpose<AQLString>( const AQLStringMatrix& );
 	template std::vector<std::vector<std::string>> transpose<std::string>( const std::vector<std::vector<std::string>>& );
 	template std::vector<std::vector<double>> transpose<double>( const std::vector<std::vector<double>>& );
 	template std::vector<std::vector<Variant>> transpose<Variant>( const std::vector<std::vector<Variant>>& );
@@ -1558,20 +1558,20 @@ namespace etrading
     *  @param [in]		endDate                    end Date
     *  @param [in]		rollDayString              Rolling date (This can be an integer for the day of the month or a string for IMM, EOM, Start or End roll conventions)
     */
-    LAString getRollConvection(const LADate& startDate,
-                               const LADate& endDate,
-                               const LAString& rollDayString)
+    AQLString getRollConvection(const AQLDate& startDate,
+                               const AQLDate& endDate,
+                               const AQLString& rollDayString)
     {
         int* rollDayPtr             = nullptr;
-        LAString* rollConventionPtr = nullptr;
+        AQLString* rollConventionPtr = nullptr;
 
         int rollDay                 = 0;
-        LAString rollConvention     = LAString( "" );
+        AQLString rollConvention     = AQLString( "" );
         bool isEOMRoll              = false;
         bool isStartRoll            = false;
 
-        // Note: We check for RollDayString = LAString("0") for backwards compatibility
-        if ( rollDayString != LAString( "0" )  && rollDayString.size() != 0 )
+        // Note: We check for RollDayString = AQLString("0") for backwards compatibility
+        if ( rollDayString != AQLString( "0" )  && rollDayString.size() != 0 )
         {
             //// Generate  Leg Coupon Roll Conventions if the rollDayString populated
             rollDayPtr              = & rollDay;
@@ -1580,7 +1580,7 @@ namespace etrading
             validateAndPopulateRollDayConventions( rollDayString, startDate, endDate, &rollDayPtr, &rollConventionPtr, isEOMRoll, isStartRoll );
         }
 
-        LAString rollConv = (rollConventionPtr == nullptr) ? "" : *rollConventionPtr;
+        AQLString rollConv = (rollConventionPtr == nullptr) ? "" : *rollConventionPtr;
 
         return rollConv;
 
@@ -1589,28 +1589,28 @@ namespace etrading
 	/* @brief			Helper method to get the RollConvenction string from rollDayString
 	*  @param [in]		rollDayString              Rolling date (This can be an integer for the day of the month or a string for IMM, EOM, Start or End roll conventions)
 	*/
-	LAString getRollConvection(const LAString& rollDayString)
+	AQLString getRollConvection(const AQLString& rollDayString)
 	{
 		int* rollDayPtr = nullptr;
-		LAString* rollConventionPtr = nullptr;
+		AQLString* rollConventionPtr = nullptr;
 
 		int rollDay = 0;
-		LAString rollConvention = LAString("");
+		AQLString rollConvention = AQLString("");
 		bool isEOMRoll = false;
 		bool isStartRoll = false;
 
-		// Note: We check for RollDayString = LAString("0") for backwards compatibility
-		if (rollDayString != LAString("0") && rollDayString.size() != 0)
+		// Note: We check for RollDayString = AQLString("0") for backwards compatibility
+		if (rollDayString != AQLString("0") && rollDayString.size() != 0)
 		{
 			//// Generate  Leg Coupon Roll Conventions if the rollDayString populated
 			rollDayPtr = &rollDay;
 			rollConventionPtr = &rollConvention;
 
 			// The StartDate/EndDate are actually not used in the method, pass in dummy for backward compatibility
-			validateAndPopulateRollDayConventions(rollDayString, LADate(), LADate(), &rollDayPtr, &rollConventionPtr, isEOMRoll, isStartRoll);
+			validateAndPopulateRollDayConventions(rollDayString, AQLDate(), AQLDate(), &rollDayPtr, &rollConventionPtr, isEOMRoll, isStartRoll);
 		}
 
-		LAString rollConv = (rollConventionPtr == nullptr) ? "" : *rollConventionPtr;
+		AQLString rollConv = (rollConventionPtr == nullptr) ? "" : *rollConventionPtr;
 
 		return rollConv;
 
@@ -1622,11 +1622,11 @@ namespace etrading
 	* @param [in]		rollConvention		    Swap roll convention e.g. IMM, EOM
 	* @output			Returns the adjusted date
 	*/
-    LADate getUnadjustedDateFromTenor( const LADate& startDate,
-                                       const LAString& tenorAdjustment,
-                                       const LAString& busDayAdj,
-                                       const LAString& calendar,
-                                       const LAString& rollConvention )
+    AQLDate getUnadjustedDateFromTenor( const AQLDate& startDate,
+                                       const AQLString& tenorAdjustment,
+                                       const AQLString& busDayAdj,
+                                       const AQLString& calendar,
+                                       const AQLString& rollConvention )
     {
         return getAdjustedDate( startDate, tenorAdjustment, "NO_CHANGE", "", rollConvention ); // "" = NO CALENDAR
     }
@@ -1638,9 +1638,9 @@ namespace etrading
     * @param [in]		useRollConvention	    boolean to toggle if the roll convention should be used
 	* @output			Returns the adjusted date
 	*/
-    LADate getUnadjustedDateFromTenor( const LADate& startDate,
-                                       const LAString& tenorAdjustment,
-                                       const LAString& rollConvention,
+    AQLDate getUnadjustedDateFromTenor( const AQLDate& startDate,
+                                       const AQLString& tenorAdjustment,
+                                       const AQLString& rollConvention,
                                        const bool useRollConvention )
     {
         return getAdjustedDate( startDate, tenorAdjustment, "NO_CHANGE", "", rollConvention, useRollConvention ); // "" = NO CALENDAR
@@ -1654,14 +1654,14 @@ namespace etrading
 	* @param [in]		rollConvention		    Swap roll convention e.g. IMM, EOM
 	* @output			Returns the adjusted date
 	*/
-    LADate getAdjustedDate( const LADate& unadjustedDate,
-                            const LAString& tenorAdjustment,
-                            const LAString& busDayAdj,
-                            const LAString& calendar,
-                            const LAString& rollConvention )
+    AQLDate getAdjustedDate( const AQLDate& unadjustedDate,
+                            const AQLString& tenorAdjustment,
+                            const AQLString& busDayAdj,
+                            const AQLString& calendar,
+                            const AQLString& rollConvention )
     {
         bool useRollConvention = true;
-        if (  rollConvention.size() == 0 || rollConvention == LAString("0") || rollConvention == LAString("NORMAL") )
+        if (  rollConvention.size() == 0 || rollConvention == AQLString("0") || rollConvention == AQLString("NORMAL") )
         {
             useRollConvention = false;
         }
@@ -1678,16 +1678,16 @@ namespace etrading
     * @param [in]		useRollConvention	    boolean to toggle if the roll convention should be used
 	* @output			Returns the adjusted date
 	*/
-    LADate getAdjustedDate( const LADate& unadjustedDate,
-                            const LAString& tenorAdjustment,
-                            const LAString& busDayAdj,
-                            const LAString& calendar,
-                            const LAString& rollConvention,
+    AQLDate getAdjustedDate( const AQLDate& unadjustedDate,
+                            const AQLString& tenorAdjustment,
+                            const AQLString& busDayAdj,
+                            const AQLString& calendar,
+                            const AQLString& rollConvention,
                             const bool useRollConvention )
     {
         if ( !useRollConvention )
 		{
-			LADate adjustedDate = LADateScheduleHelpers::getDate(unadjustedDate, tenorAdjustment, busDayAdj, calendar);
+			AQLDate adjustedDate = LADateScheduleHelpers::getDate(unadjustedDate, tenorAdjustment, busDayAdj, calendar);
             return adjustedDate;
 		}
 		else
@@ -1695,7 +1695,7 @@ namespace etrading
             DateVector inputs, outputs;
 		    inputs.push_back(unadjustedDate);
             outputs = LADateScheduleHelpers::getMultiDate( inputs, tenorAdjustment, busDayAdj, calendar, &rollConvention );
-            LADate adjustedDate = outputs[0];
+            AQLDate adjustedDate = outputs[0];
             return adjustedDate;
         }
     }
@@ -1712,25 +1712,25 @@ namespace etrading
 	* @param [in]		rollConvention		    Swap roll convention e.g. IMM, EOM
 	* @output			Returns TRUE if the swap schedule is regular (with no stub) and FALSE otherwise
 	*/
-	bool isRegularSwapSchedule( const LADate& swapStart,
-		                        const LADate& swapMaturity,
+	bool isRegularSwapSchedule( const AQLDate& swapStart,
+		                        const AQLDate& swapMaturity,
 		                        bool isMaturityAdjusted,
-		                        const LAString& frequency,
-		                        const LAString& busDayAdj,
-		                        const LAString& calendar,
+		                        const AQLString& frequency,
+		                        const AQLString& busDayAdj,
+		                        const AQLString& calendar,
 		                        int rollDay,
-		                        const LAString& rollConvention )
+		                        const AQLString& rollConvention )
 	{
-        LADate unAdjustedSwapStartDate      = swapStart;
-        LADate unAdjustedSwapEndDate        = swapStart;
-		LADate adjustedSwapEndInput         = swapMaturity;
+        AQLDate unAdjustedSwapStartDate      = swapStart;
+        AQLDate unAdjustedSwapEndDate        = swapStart;
+		AQLDate adjustedSwapEndInput         = swapMaturity;
 
-        LAString NO_CHANGE("NO_CHANGE");
-        LAString NO_CALENDAR("");
-        LAString NO_ROLLCONVENTION("");
+        AQLString NO_CHANGE("NO_CHANGE");
+        AQLString NO_CALENDAR("");
+        AQLString NO_ROLLCONVENTION("");
 		
-		const LAString liborTenor = etrading::fromFrequencyToTerm(frequency);
-		AQ_THROW_IF( liborTenor == LAString(), "Invalid Stub Rate or Unknown Libor Tenor in Float Schedule" )
+		const AQLString liborTenor = etrading::fromFrequencyToTerm(frequency);
+		AQ_THROW_IF( liborTenor == AQLString(), "Invalid Stub Rate or Unknown Libor Tenor in Float Schedule" )
 
 		// If Libor Tenor is 1D or 1W then such a rate is a stub rate, since we don't build 1D or 1W curves
 		// Note: OIS rates are Annualized Compounded 1D rates not 1D
@@ -1740,7 +1740,7 @@ namespace etrading
 		}
 
         bool useRollConvention = true;
-        if ( rollConvention.size() == 0 || rollConvention == LAString("0") || rollConvention == LAString("NORMAL") )
+        if ( rollConvention.size() == 0 || rollConvention == AQLString("0") || rollConvention == AQLString("NORMAL") )
         {
             useRollConvention = false;
         }
@@ -1759,7 +1759,7 @@ namespace etrading
 
 		// Firstly, test if the maturity lands on the spot Libor tenor.
 		// Important note: When maturity is equal to or shorter than the Libor tenor, rollConvention is NOT applied. This means 'IMM' is not used in that case.
-		LADate liborEndDate = getAdjustedDate( swapStart, liborTenor, busDayAdj, calendar, rollConvention, useRollConvention );
+		AQLDate liborEndDate = getAdjustedDate( swapStart, liborTenor, busDayAdj, calendar, rollConvention, useRollConvention );
         
         // Swap end date shorter than Libor tenor date so definitely a stub swap
         if ( adjustedSwapEndInput < liborEndDate)
@@ -1781,7 +1781,7 @@ namespace etrading
 		{
 			// Start Dates should always be quoted as adjusted dates
 			// Check the Start Date falls on the correct adjusted start date - the roll convention is needed for IMM and EOM checking
-			LADate swapStart_RollConv = getAdjustedDate( swapStart, "0D", busDayAdj, calendar, rollConvention, useRollConvention );
+			AQLDate swapStart_RollConv = getAdjustedDate( swapStart, "0D", busDayAdj, calendar, rollConvention, useRollConvention );
             
 			if ( swapStart_RollConv != swapStart )
 			{
@@ -1795,8 +1795,8 @@ namespace etrading
 
 		// Secondly, Iterate over each coupon date until we reach a standard maturity tenor that is equal to or longer than actual swap mmaturity date
 		// The front stub check above ensures that swap start is adjusted
-        LADate regularSwapEndWithNoStub = swapStart;
-        LADate rollDate = swapStart;
+        AQLDate regularSwapEndWithNoStub = swapStart;
+        AQLDate rollDate = swapStart;
 		size_t maxInterations = 40000; // While loop guard - max for 100Y of daily coupons
         size_t thisIteration = 0;
 		while ( regularSwapEndWithNoStub < adjustedSwapEndInput && thisIteration < maxInterations )
@@ -1874,8 +1874,8 @@ namespace etrading
 
 		for (size_t i = 0; i < expectedSize; ++i)
 		{
-			LADate accrualStart = accrualStartDates[i];
-			LADate accrualEnd = accrualEndDates[i];
+			AQLDate accrualStart = accrualStartDates[i];
+			AQLDate accrualEnd = accrualEndDates[i];
 
 			// Important Note: If compound interest is being applied then we accrue interest to the
 			// payment date ( with no payment lag ) and not the accrual end date.
@@ -1982,11 +1982,11 @@ namespace etrading
 		}
 
 		//When checking stub, the swap start date should be un-adjusted effective date (i.e. input accrualStartDate_).
-		LADate swapStart = etrading::stringToDate(schParams.accrualStartDate().c_str(), "#Error: Invalid 'EffectiveDate'.");
+		AQLDate swapStart = etrading::stringToDate(schParams.accrualStartDate().c_str(), "#Error: Invalid 'EffectiveDate'.");
 
-		LADate unadjustSwapEnd = validateMaturityDate(swapStart, schParams.accrualEndDateOrTenor().c_str());	//getUnadjustedMaturityDate();
+		AQLDate unadjustSwapEnd = validateMaturityDate(swapStart, schParams.accrualEndDateOrTenor().c_str());	//getUnadjustedMaturityDate();
 
-		LAString frequency = getFrequencyString(getFrequencyTenor(schParams.accrualFrequency()));
+		AQLString frequency = getFrequencyString(getFrequencyTenor(schParams.accrualFrequency()));
 
 		// is maturity date given as a tenor?
 		bool isMaturityDateTenor = etrading::isMaturityDateTenor(schParams.accrualEndDateOrTenor().c_str());
@@ -1994,8 +1994,8 @@ namespace etrading
 		// get rollDay
 		int* rollDayPtr = nullptr;
 		int  rollDay = 0;
-		LAString* rollConventionPtr = nullptr;
-		LAString rollConvention = LAString("");
+		AQLString* rollConventionPtr = nullptr;
+		AQLString rollConvention = AQLString("");
 		if (same(schParams.rollDayInput(), "0") && schParams.rollDayInput().size() != 0)
 		{
 			// Generate Fixed Leg Coupon Roll Conventions if the rollDayString is not empty or set to zero
@@ -2007,7 +2007,7 @@ namespace etrading
 		}
 
 		// is it regular schedule?
-		LAString rollConv = getRollConvection(swapStart, unadjustSwapEnd, schParams.rollDayInput().c_str());
+		AQLString rollConv = getRollConvection(swapStart, unadjustSwapEnd, schParams.rollDayInput().c_str());
 		if (rollDayPtr != nullptr)
 		{
 			rollDay = *rollDayPtr;
@@ -2050,7 +2050,7 @@ namespace etrading
 		}
 		else
 		{
-			throw LACoreInvalidData("#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__);
 		}
 	}
 
@@ -2064,7 +2064,7 @@ namespace etrading
 
 		if (!etrading::LACurveForwardRateHelpers::isFixingInAdvance(fixingAdvanceOrArrears.c_str()))
 		{
-			throw LACoreInvalidData("#Error: For OIS Swap, fixing in arrears is not supported.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: For OIS Swap, fixing in arrears is not supported.", __FILE__, __LINE__);
 		}
 
 		fixingEndDates = validateAndGenerateFixingSchedule(accrualDates,

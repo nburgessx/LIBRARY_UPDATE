@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 #include <stdarg.h>
 
 namespace validation
@@ -27,23 +27,23 @@ namespace validation
     *  @param [in]		curveNames			Equivalent names of the curve being built
     *  @param [in]		curveName_DF2		Trade discount curve
     */
-    const LAString tryMirSetUpSwapCurve( LADataInstance* dataInstance,
-                                         const LAString& curveID,
-                                         const LAString& marketName,
-                                         const LAStringMatrix& generateProp,
-                                         const LAStringMatrix& moneyConv,
-                                         const LAStringMatrix& liborRates,
-                                         const LAStringMatrix& liborConv,
-                                         const LAStringMatrix& swapRates,
-                                         const LAStringMatrix& swapConv,
-                                         const LAStringMatrix& fra3mRates,
-                                         const LAStringMatrix& fra6mRates,
-                                         const LAStringMatrix& fraConv,
-                                         const LAStringMatrix& futureRates,
-                                         const LAStringMatrix& futureConv,
-                                         const LAStringMatrix& adjustSwapConv,
-                                         const LAStringMatrix& adjustSwapRates,
-                                         const LAString& curveNames,
-                                         const LAString& curveName_DF2 );
+    const AQLString tryMirSetUpSwapCurve( AQLDataInstance* dataInstance,
+                                         const AQLString& curveID,
+                                         const AQLString& marketName,
+                                         const AQLStringMatrix& generateProp,
+                                         const AQLStringMatrix& moneyConv,
+                                         const AQLStringMatrix& liborRates,
+                                         const AQLStringMatrix& liborConv,
+                                         const AQLStringMatrix& swapRates,
+                                         const AQLStringMatrix& swapConv,
+                                         const AQLStringMatrix& fra3mRates,
+                                         const AQLStringMatrix& fra6mRates,
+                                         const AQLStringMatrix& fraConv,
+                                         const AQLStringMatrix& futureRates,
+                                         const AQLStringMatrix& futureConv,
+                                         const AQLStringMatrix& adjustSwapConv,
+                                         const AQLStringMatrix& adjustSwapRates,
+                                         const AQLString& curveNames,
+                                         const AQLString& curveName_DF2 );
 
 }

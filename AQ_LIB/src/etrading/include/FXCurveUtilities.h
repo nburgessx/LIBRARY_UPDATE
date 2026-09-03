@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CoreEnumerations.h"
 #include "LabelValueBlock.h"
 #include "SingleCurveObject.h"
@@ -36,8 +36,8 @@ namespace etrading
 
 	struct CurveFxFwdDataProvider
 	{
-		LADate asOfDate;
-		LADate spotDate;
+		AQLDate asOfDate;
+		AQLDate spotDate;
 
 		//base - first ccy in the currencyPair, term - second ccy in the currencyPair
 		std::string baseCurveCollection;
@@ -95,12 +95,12 @@ namespace etrading
 	AnyTypeMatrix outputFxPrice(const std::vector<std::vector<FxFwd>>& fxFwd, bool includeHeader, const std::unordered_set<FXPriceEnum, EnumClassHash>& columnList);
 
 
-	LADate getDateFromTenorWithFxConvention(const LADate& fromDate, const std::string& tenor, const std::string& calendar, const std::string& businessDayAdjustment, const std::string& rollDayInput);
+	AQLDate getDateFromTenorWithFxConvention(const AQLDate& fromDate, const std::string& tenor, const std::string& calendar, const std::string& businessDayAdjustment, const std::string& rollDayInput);
 
-	LADate fromSettleDateOrTenorToDate(const std::string& settlementDateOrTenor, const LADate& asOfDate, const LADate& spotDate, const std::string& calendar, const std::string& businessDayAdjustment, const std::string& rollDayInput);
+	AQLDate fromSettleDateOrTenorToDate(const std::string& settlementDateOrTenor, const AQLDate& asOfDate, const AQLDate& spotDate, const std::string& calendar, const std::string& businessDayAdjustment, const std::string& rollDayInput);
 
 	//This is to control the sign of the calculation of fx forward points/ rates
-   bool isSettleEarlierThanSpotDate(const std::string& settleDateOrTenor, const LADate& settleDate, const LADate& spotDate);
+   bool isSettleEarlierThanSpotDate(const std::string& settleDateOrTenor, const AQLDate& settleDate, const AQLDate& spotDate);
 
    // Return a matrix of fxForwardRates where each vector include: bidSwapPoints, askSwapPoints, bidOutright, askOutright
    std::vector<std::vector<FxFwd>> calculateFxForwardsFromDiscountCurves(const std::vector<std::string>& settlementDatesOrTenors, const CurveFxFwdDataProvider& curveFxFwdDataProvider, const double xccySwapRateBumpSize = 0.0);
@@ -129,10 +129,10 @@ namespace etrading
 																   bool outputFarLeg);
 
    //BaseCcy is the first ccy in the currecy pair, TermCcy is the 2nd ccy in the currency pair
-   double fxRateFromSpotToAsOfDate(const double spotFXRate, const LADate& spotFXDate, const LAString& baseCurveCollection, const LAString& baseDiscountCurveIndex, const LAString& termCurveCollection, const LAString& termDiscountCurveIndex);
+   double fxRateFromSpotToAsOfDate(const double spotFXRate, const AQLDate& spotFXDate, const AQLString& baseCurveCollection, const AQLString& baseDiscountCurveIndex, const AQLString& termCurveCollection, const AQLString& termDiscountCurveIndex);
 
    //BaseCcy is the first ccy in the currecy pair, TermCcy is the 2nd ccy in the currency pair
-   double fxRateFromAsOfDateToSpot(const double asOfDateFXRate, const LADate& spotFXDate, const LAString& baseCurveCollection, const LAString& baseDiscountCurveIndex, const LAString& termCurveCollection, const LAString& termDiscountCurveIndex);
+   double fxRateFromAsOfDateToSpot(const double asOfDateFXRate, const AQLDate& spotFXDate, const AQLString& baseCurveCollection, const AQLString& baseDiscountCurveIndex, const AQLString& termCurveCollection, const AQLString& termDiscountCurveIndex);
 
 }
 

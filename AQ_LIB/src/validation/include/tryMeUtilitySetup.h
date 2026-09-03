@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -17,30 +17,30 @@ namespace validation
     /* @brief	Clear the object pool
      *  @return	A notification string
      */
-    LAString tryMeUtilityClearEntityPool();
+    AQLString tryMeUtilityClearEntityPool();
 
     /* @brief	Clear the object pool and the LWO Cache
      *  @return	A notification string
      */
-    LAString tryMeUtilityClearLWOCache();
+    AQLString tryMeUtilityClearLWOCache();
 
 
     /* @brief			validation interface for the meUtilityLoadCalendarFile function
     *  @param [in]		filepath		The full name of the calendar file
     *  @return	A notification string
     */
-    LAString tryMeUtilityLoadCalendarFile( const LAString& filepath );
+    AQLString tryMeUtilityLoadCalendarFile( const AQLString& filepath );
 
     /* @brief			validation interface for the meUtilityLoadStaticData function
     *  @param [in]		filepath The full name of the static data file
     *  @return			A notification string
     */
-    LAString tryMeUtilityLoadStaticData( const LAString& filepath );
+    AQLString tryMeUtilityLoadStaticData( const AQLString& filepath );
 	
     /* @brief			validation interface for loading the optional LWO configuration files
     *  @return			A notification string
     */
-	LAString tryMeUtilityLoadConfigurationFiles();
+	AQLString tryMeUtilityLoadConfigurationFiles();
 
     /* @brief			validation interface for the meUtilityVersion function
     *  @param [in]		expiryMonth			An integer representing license expiry month

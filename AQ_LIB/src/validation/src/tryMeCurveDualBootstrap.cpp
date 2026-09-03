@@ -41,33 +41,33 @@ namespace validation
 	*  @param [in]		adjustSwapConv_swap 	Tenor Basis market data
 	*  @param [in]		adjustSwapRates_swap 	Tenor Basis convention
     */
-    const LAString tryMeCurveDualBootstrap(const LAString& curveCollection,
-											const LAString& curveName_db,
-											const LAString& curveName_OIS,
-											const LAString& curveName_swap,
-											const LAString& curveIndex_OIS,
-											const LAString& curveIndex_swap,
-											const LAStringMatrix& commonParams,
-											const LAStringMatrix& generateProp_OIS,
-											const LAStringMatrix& oisRates_OIS,
-											const LAStringMatrix& oisConv_OIS,
-											const LAStringMatrix& histRates_OIS,
-											const LAStringMatrix& lobasisRates_OIS,
-											const LAStringMatrix& lobasisConv_OIS,
-											const LAStringMatrix& swapConv_OIS,
-											const LAStringMatrix& generateProp_swap,
-											const LAStringMatrix& moneyConv_swap,
-											const LAStringMatrix& liborRates_swap,
-											const LAStringMatrix& liborConv_swap,
-											const LAStringMatrix& swapRates_swap,
-											const LAStringMatrix& swapConv_swap,
-											const LAStringMatrix& fra3mRates_swap,
-											const LAStringMatrix& fra6mRates_swap,
-											const LAStringMatrix& fraConv_swap,
-											const LAStringMatrix& futureRates_swap,
-											const LAStringMatrix& futureConv_swap,
-											const LAStringMatrix& tenorBasisConv_swap,
-											const LAStringMatrix& tenorBasisRates_swap)
+    const AQLString tryMeCurveDualBootstrap(const AQLString& curveCollection,
+											const AQLString& curveName_db,
+											const AQLString& curveName_OIS,
+											const AQLString& curveName_swap,
+											const AQLString& curveIndex_OIS,
+											const AQLString& curveIndex_swap,
+											const AQLStringMatrix& commonParams,
+											const AQLStringMatrix& generateProp_OIS,
+											const AQLStringMatrix& oisRates_OIS,
+											const AQLStringMatrix& oisConv_OIS,
+											const AQLStringMatrix& histRates_OIS,
+											const AQLStringMatrix& lobasisRates_OIS,
+											const AQLStringMatrix& lobasisConv_OIS,
+											const AQLStringMatrix& swapConv_OIS,
+											const AQLStringMatrix& generateProp_swap,
+											const AQLStringMatrix& moneyConv_swap,
+											const AQLStringMatrix& liborRates_swap,
+											const AQLStringMatrix& liborConv_swap,
+											const AQLStringMatrix& swapRates_swap,
+											const AQLStringMatrix& swapConv_swap,
+											const AQLStringMatrix& fra3mRates_swap,
+											const AQLStringMatrix& fra6mRates_swap,
+											const AQLStringMatrix& fraConv_swap,
+											const AQLStringMatrix& futureRates_swap,
+											const AQLStringMatrix& futureConv_swap,
+											const AQLStringMatrix& tenorBasisConv_swap,
+											const AQLStringMatrix& tenorBasisRates_swap)
     {
         VALID_EXCEPTION_START
         
@@ -117,92 +117,92 @@ namespace validation
 
         if ( !oisRates_OIS.empty() && oisRates_OIS[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: OIS Rates column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: OIS Rates column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !oisConv_OIS.empty() && oisConv_OIS[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: OIS Convention column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: OIS Convention column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !histRates_OIS.empty() && histRates_OIS[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: OIS Historical Rates column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: OIS Historical Rates column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !lobasisRates_OIS.empty() && lobasisRates_OIS[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Libor-OIS Basis Rates column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Libor-OIS Basis Rates column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !lobasisConv_OIS.empty() && lobasisConv_OIS[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Libor-OIS Basis Conventions column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Libor-OIS Basis Conventions column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !swapConv_OIS.empty() && swapConv_OIS[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: OIS curve's Swap Convention column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: OIS curve's Swap Convention column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !moneyConv_swap.empty() && moneyConv_swap[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Swap curve Money Market Conventions column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Swap curve Money Market Conventions column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !liborRates_swap.empty() && liborRates_swap[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Swap curve Libor Rates column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Swap curve Libor Rates column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !liborConv_swap.empty() && liborConv_swap[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Swap curve Libor Convention column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Swap curve Libor Convention column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !swapRates_swap.empty() && swapRates_swap[0].size() < 2 )
         {
-            throw LACoreInvalidData( "#Error: Swap Rates column size must be 2", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Swap Rates column size must be 2", __FILE__, __LINE__ );
         }
 
         if ( !swapConv_swap.empty() && swapConv_swap[0].size() < 3 )
         {
-            throw LACoreInvalidData( "#Error: Swap curve Swap Convention column size must be greater or equal to 3", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Swap curve Swap Convention column size must be greater or equal to 3", __FILE__, __LINE__ );
         }
         
 		if (!fra3mRates_swap.empty() && fra3mRates_swap[0].size() < 2)
 		{
-			throw LACoreInvalidData("#Error: 3M FRA Rates column size must be 2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: 3M FRA Rates column size must be 2", __FILE__, __LINE__);
 		}
 
 		if (!fra6mRates_swap.empty() && fra6mRates_swap[0].size() < 2)
 		{
-			throw LACoreInvalidData("#Error: 6M FRA Rates column size must be 2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: 6M FRA Rates column size must be 2", __FILE__, __LINE__);
 		}
 
 		if (!fraConv_swap.empty() && fraConv_swap[0].size() < 2)
 		{
-			throw LACoreInvalidData("#Error: FRA Conventions column size must be 2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: FRA Conventions column size must be 2", __FILE__, __LINE__);
 		}
 
 		if (!futureRates_swap.empty() && futureRates_swap[0].size() < 2)
 		{
-			throw LACoreInvalidData("#Error: Future Rates column size must be 2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Future Rates column size must be 2", __FILE__, __LINE__);
 		}
 
 		if (!futureConv_swap.empty() && futureConv_swap[0].size() < 2)
 		{
-			throw LACoreInvalidData("#Error: Future Convention column size must be 2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Future Convention column size must be 2", __FILE__, __LINE__);
 		}
 
 		if (!tenorBasisConv_swap.empty() && tenorBasisConv_swap[0].size() < 2)
 		{
-			throw LACoreInvalidData("#Error: Tenor Basis Adjustment Conventions column size must be 2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Tenor Basis Adjustment Conventions column size must be 2", __FILE__, __LINE__);
 		}
 
 		if (!tenorBasisRates_swap.empty() && tenorBasisRates_swap[0].size() < 2)
 		{
-			throw LACoreInvalidData("#Error: Tenor Basis Adjustment Rates column size must be 2", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Tenor Basis Adjustment Rates column size must be 2", __FILE__, __LINE__);
 		}
 
 		etrading::LAUpdateStaticDataManager::setUpDualBootstrapCurve(etrading::getDataInstance(),
@@ -238,7 +238,7 @@ namespace validation
         etrading::getCurveStaticDataTableName( curveCollection, curveName_swap);
 		etrading::getCurveStaticDataTableName(curveCollection, curveName_OIS);
 		
-        LAString ret( curveCollection + ": Curves" + curveName_swap + " and " + curveName_OIS + " have been set" );
+        AQLString ret( curveCollection + ": Curves" + curveName_swap + " and " + curveName_OIS + " have been set" );
 
         if ( CreateDataFile::recordEnabled() )
         {

@@ -47,7 +47,7 @@ namespace etrading
         // Option Premium and Fees
         // =======================================================================
         fee_                    = dealLVB.getOptionalValueAsDouble( SWAPTION_KEYS::FEE, 0.0 );
-        feeDate_                = dealLVB.getOptionalValueAsDate( SWAPTION_KEYS::FEE_DATE, LADate() );
+        feeDate_                = dealLVB.getOptionalValueAsDate( SWAPTION_KEYS::FEE_DATE, AQLDate() );
         feePayReceive_          = toPayReceiveEnum( dealLVB.getOptionalValueAsString( SWAPTION_KEYS::FEE_PAY_RECEIVE, toString( etrading::NONE_PAYRECEIVE_ENUM ) ) );
         feePayReceiveIndicator_ = 0.0;
 
@@ -55,7 +55,7 @@ namespace etrading
     
         if ( !AQ_IS_EQUAL_ZERO( fee_ ) ) 
         {
-            AQ_REQUIRE( feeDate_ != LADate(), "Fee Date required - Must provide a feeDate when specifying fee payments")
+            AQ_REQUIRE( feeDate_ != AQLDate(), "Fee Date required - Must provide a feeDate when specifying fee payments")
 
             if ( feePayReceive_ == etrading::PAY_PAYRECEIVE_ENUM )
             {
@@ -121,7 +121,7 @@ namespace etrading
             // The notification tenor string should be negative, add the -ve prefix
             AQ_REQUIRE( isDateTenor( notificationDays_ ), "Invalid Notification Days: Must specify a tenorString e.g. 2D" )
             
-            LAString notificationTenorString = LAString("-") + LAString( notificationDays_.c_str() );
+            AQLString notificationTenorString = AQLString("-") + AQLString( notificationDays_.c_str() );
             adjustedOptionExpiryDate_        = validateDateOrTenor( adjustedOptionExpiryDate_, notificationTenorString, toString( busDayAdj_ ).c_str(), calendar_.c_str()  );
         }
 
@@ -206,20 +206,20 @@ namespace etrading
     * @param [in]   swapStartDate   The Swap Start date. We explicitly provide the date, because the underlying swap cannot imply the start date if provided as a tenor, since it is the base / reference date.
     * @param [in]   deaLVB	        The deal LVB used for building the Swap
 	*/
-	LabelValueBlock SwaptionTrade::setupSwapExpressionLVBforSwaption( const LADate& swapStartDate, const LabelValueBlock& dealLVB ) const
+	LabelValueBlock SwaptionTrade::setupSwapExpressionLVBforSwaption( const AQLDate& swapStartDate, const LabelValueBlock& dealLVB ) const
 	{
 		// Set up the Swap Expression LVB used for repricing swap calibration instruments
-		LAStringVector keys; 
-		LAStringVector values;
+		AQLStringVector keys; 
+		AQLStringVector values;
 		const std::string inputLVB = "dealLVB";
 
 		// Standardized trade keys because we are only interested in calculating par rate and annuity 
-	    keys.push_back( IRS_KEY::PAY_RECEIVE.c_str() );					values.push_back( LAString( "PAY" ) );
+	    keys.push_back( IRS_KEY::PAY_RECEIVE.c_str() );					values.push_back( AQLString( "PAY" ) );
         keys.push_back( IRS_KEY::NOTIONAL.c_str() );					values.push_back( dealLVB.getCompulsoryValueAsLAString(IRS_KEY::NOTIONAL ) );
 		keys.push_back( IRS_KEY::EFFECTIVE_DATE.c_str() );				values.push_back( swapStartDate.stringWithFormat() );
         keys.push_back( IRS_KEY::MATURITY_DATE.c_str() );				values.push_back( dealLVB.getCompulsoryValueAsLAString( SWAPTION_KEYS::SWAP_END, inputLVB ) );
-		keys.push_back( SWAP_EXPRESSION_KEY::RATE_OR_SPREAD1.c_str() );	values.push_back( LAString( "0.0" ) );
-		keys.push_back( SWAP_EXPRESSION_KEY::RATE_OR_SPREAD2.c_str() );	values.push_back( LAString( "0.0" ) );
+		keys.push_back( SWAP_EXPRESSION_KEY::RATE_OR_SPREAD1.c_str() );	values.push_back( AQLString( "0.0" ) );
+		keys.push_back( SWAP_EXPRESSION_KEY::RATE_OR_SPREAD2.c_str() );	values.push_back( AQLString( "0.0" ) );
 
 		LabelValueBlock swapExpressionLVB = etrading::populateLabelValueBlock( keys, values );
         return swapExpressionLVB;			

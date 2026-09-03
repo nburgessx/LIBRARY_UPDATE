@@ -1,13 +1,13 @@
 #pragma once
 
 #include "GlobalCalibrationComponentCurve.h"
-#include "LAObject.h"
-#include "LADataReference.h"
+#include "AQLObject.h"
+#include "AQLDataReference.h"
 #include "CurveCalibrationData.h"
 #include "CoreEnumerations.h"
 
-class LAInterpolationBase;
-class LADate;
+class AQLInterpolationBase;
+class AQLDate;
 
 /*! 
     @brief Class of OISComponentCurve
@@ -17,7 +17,7 @@ class OISComponentCurve : public GlobalCalibrationComponentCurve
 public:
 	
 	// constructor
-	OISComponentCurve(const LAString& curveName, const CurveCalibrationData& curveCalibrationData, const LADate& baseDate, const bool& fastRebuildRequested = false);
+	OISComponentCurve(const AQLString& curveName, const CurveCalibrationData& curveCalibrationData, const AQLDate& baseDate, const bool& fastRebuildRequested = false);
 
 	// destructor
 	virtual ~OISComponentCurve() {}
@@ -29,10 +29,10 @@ public:
 	virtual void priceCalibrationInstruments(DoubleVector& allPVs);
 
 	// Post processing results once instruments have been consumed in calibration steps
-	virtual void postProcessing(LAObject& yieldCurveProEntity);
+	virtual void postProcessing(AQLObject& yieldCurveProEntity);
 
 	// Set the internal Libor rate interpolator
-	void setLiborInterp(const std::shared_ptr<LAInterpolationBase>& pInter_Libor);		
+	void setLiborInterp(const std::shared_ptr<AQLInterpolationBase>& pInter_Libor);		
 
 private:
 
@@ -58,27 +58,27 @@ private:
 							     const DateVector& fixingEndDates, 
 							     const etrading::OISCompoundingEnum& swapCompoundingMethodEnum,
                                  const etrading::OISLongTermInstrumentsEnum& longTermConveEnum,
-                                 const LAString& longTermGen,
-							     const LAPriceDataDayCount* dateCount,
-                                 const LAPriceDataCalendar* cal,
+                                 const AQLString& longTermGen,
+							     const AQLPriceDataDayCount* dateCount,
+                                 const AQLPriceDataCalendar* cal,
 							     DoubleMatrix& startterms,
                                  DoubleMatrix& endterms,
 							     bool isIRSParRateKnown = true,
                                  const DateVector& fixingStartDates_libor = DateVector(),
 							     const DateVector& fixingEndDates_libor = DateVector(),
                                  const DoubleVector& fixingTaus_libor = DoubleVector(),
-							     LAInterpolationBase *libor_inter = nullptr ) const;
+							     AQLInterpolationBase *libor_inter = nullptr ) const;
 	
-	LADate spotDate_;
+	AQLDate spotDate_;
 	double spotterm_;
 	
 	/////////////////////////////////////////
 
 	
-	std::shared_ptr<LAInterpolationBase> pInter_yg_;
-	std::shared_ptr<LAInterpolationBase> pInter_Libor_;	
+	std::shared_ptr<AQLInterpolationBase> pInter_yg_;
+	std::shared_ptr<AQLInterpolationBase> pInter_Libor_;	
 
-	LAString interpolationYGStr_;
+	AQLString interpolationYGStr_;
 
 	/////////////////////////////////////////
 	
@@ -100,24 +100,24 @@ private:
 	std::vector<DoubleVector> fixingTaus_libor_;
 	std::vector<bool> isIRSParRateGiven_;
 
-	std::vector<LAString> term_strs_;
+	std::vector<AQLString> term_strs_;
 	std::vector<etrading::OISCompoundingEnum> swapCompoundingMethodEnums_;
 	std::vector<etrading::OISLongTermInstrumentsEnum> longTermConvEnums_;
-	std::vector<LAString> longTermGens_;
+	std::vector<AQLString> longTermGens_;
 	std::vector<bool> bLiborSwapCalcReset_;
 	std::vector<bool> bOISSwapCalcReset_;
 	std::vector<bool> bFullSigmaReset_;
-	std::vector<const LAPriceDataCalendar*> cals_;
-	std::vector<const LAPriceDataDayCount*> dateCounts_;
+	std::vector<const AQLPriceDataCalendar*> cals_;
+	std::vector<const AQLPriceDataDayCount*> dateCounts_;
 
 	std::vector<DoubleMatrix> dailyTerms_Start_;
 	std::vector<DoubleMatrix> dailyTerms_End_;
 
-	std::vector<LAObject*> data_on_;
-	std::vector<LAObject*> data_tn_;
-	std::vector<LAObject*> data_;
+	std::vector<AQLObject*> data_on_;
+	std::vector<AQLObject*> data_tn_;
+	std::vector<AQLObject*> data_;
 
-	LADataReference yieldDataRef_;	
+	AQLDataReference yieldDataRef_;	
 	
 	/////////////////////////////////////////
 

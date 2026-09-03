@@ -19,13 +19,13 @@ double mirGetTerm(const std::string& fromDate,
 	try 
 	{
 		// Input marshalling
-		LADate fromDt(fromDate.c_str(), "YYYYMMDD");
-		LADate toDt(toDate.c_str(), "YYYYMMDD");
-		LAString dayC(dayCount.c_str());
+		AQLDate fromDt(fromDate.c_str(), "YYYYMMDD");
+		AQLDate toDt(toDate.c_str(), "YYYYMMDD");
+		AQLString dayC(dayCount.c_str());
 
 		ret = validation::tryMirGetTerm(fromDt, toDt, dayC, includeLast);		
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

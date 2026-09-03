@@ -17,12 +17,12 @@
 #include "LAPriceEventNotionalChange.h"
 #include "LAPriceEventNotExCurChange.h"
 
-#include "LADataHolder.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LAObjectHolder.h"
-#include "LAMathDefine.h"
+#include "AQLDataHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObjectHolder.h"
+#include "AQLMathDefine.h"
 
 using namespace std;
 
@@ -50,7 +50,7 @@ LAPriceEventNotionalChange::~LAPriceEventNotionalChange()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceEventNotionalChange::clone() const    
 {
     try 
@@ -59,7 +59,7 @@ LAPriceEventNotionalChange::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -95,7 +95,7 @@ LAPriceEventNotionalChange::getType() const
 	@param[in,out] iter position of nearest payoff from this action expiry date
 */	
 void
-LAPriceEventNotionalChange::doAction(const LADate& actiondate,
+LAPriceEventNotionalChange::doAction(const AQLDate& actiondate,
 										double actiontime,
 										vector<PayOffToolHolderVector>& payoff,
 										vector<PayOffToolHolderVector>& extrapayoff,
@@ -117,7 +117,7 @@ LAPriceEventNotionalChange::doAction(const LADate& actiondate,
 		}			
 		
 		LAPriceEventBase* _action = NULL;
-		LADate _date;
+		AQLDate _date;
 		double _time = 0.0;
 		if (mIsNotionalExchangeAtEnd[i])
 		{
@@ -289,9 +289,9 @@ LAPriceEventNotionalChange::doAction(const LADate& actiondate,
     @param[in] isCall call flag(true:call,false:trigger)
 */
 void
-LAPriceEventNotionalChange::setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+LAPriceEventNotionalChange::setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall)
 {
@@ -307,14 +307,14 @@ LAPriceEventNotionalChange::setUp(const LADate& basedate,
 			mPayOff[i][j].setPayOff(new LAPricePayOffTool(vec[j].getPayOff()));
 	}*/
 	
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	// changeRatio
 	dh = &(triggerinfo.getData(PRICING_CALIBRATION_DATAOTIONALCHANGERATIO, ISNOTNULL));
-	mChangeRatio = dynamic_cast<const LADataDouble&>(dh->get()).get();
+	mChangeRatio = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 
 	//leg
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+	const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 
 	mIsArrearPayment.clear();
 	mIsNotionalExchangeAtEnd.clear();
@@ -328,26 +328,26 @@ LAPriceEventNotionalChange::setUp(const LADate& basedate,
 	{
 		// isArrear
 		dh = &(legs.get(mTargetLegNo[i]).getData(PRICING_DATA_PAYMENTTIMING, ISNOTNULL));
-		const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get(); 
+		const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get(); 
 		mIsArrearPayment.push_back(LAPriceCFGenUtility::isArrear(timing));
 
 		// isNotionalExchangeAtEnd
 		dh = &(legs.get(mTargetLegNo[i]).getData(PRICING_DATA_ISNOTIONALEXCHANGEATEND, ISNOTNULL));
-		mIsNotionalExchangeAtEnd.push_back(dynamic_cast<const LADataBool&>(dh->get()).get());
+		mIsNotionalExchangeAtEnd.push_back(dynamic_cast<const AQLDataBool&>(dh->get()).get());
 		
 		// isAmortize
 		dh = &(legs.get(mTargetLegNo[i]).getData(PRICING_DATA_ISAMORTIZE, ISNOTNULL));
-		mIsAmortize.push_back(dynamic_cast<const LADataBool&>(dh->get()).get());
+		mIsAmortize.push_back(dynamic_cast<const AQLDataBool&>(dh->get()).get());
 	
 		if (!mIsAmortize.back()) continue;
 
 		// IsFirstFraction
 		dh = &(legs.get(mTargetLegNo[i]).getData(PRICING_DATA_ISAMORTIZE1STFRACTION, ISNOTNULL));		
-		mAmortize1stFraction.push_back(dynamic_cast<const LADataBool&>(dh->get()).get());
+		mAmortize1stFraction.push_back(dynamic_cast<const AQLDataBool&>(dh->get()).get());
 
 		// AmortizeType
 		dh = &(legs.get(mTargetLegNo[i]).getData(PRICING_DATA_AMORTIZETYPE, ISNOTNULL));
-		LAString amortize_type = dynamic_cast<const LADataString&>(dh->get()).get();
+		AQLString amortize_type = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		amortize_type.toUpper();
 		if (amortize_type == EQUALIZATION)
 		{
@@ -355,25 +355,25 @@ LAPriceEventNotionalChange::setUp(const LADate& basedate,
 			mAmortizeAmount.push_back(0);//dummy
 			
 			dh = &(legs.get(mTargetLegNo[i]).getData(PRICING_DATA_AMORTIZEROUNDFUNCTION, ISNOTNULL));
-			mAmortizeRoundFunction.push_back(dynamic_cast<const LADataString&>(dh->get()).get());
+			mAmortizeRoundFunction.push_back(dynamic_cast<const AQLDataString&>(dh->get()).get());
 			dh = &(legs.get(mTargetLegNo[i]).getData(PRICING_DATA_AMORTIZEROUNDDIGIT, ISNOTNULL));
-			mAmortizeRoundDigit.push_back(dynamic_cast<const LADataInt&>(dh->get()).get());			
+			mAmortizeRoundDigit.push_back(dynamic_cast<const AQLDataInt&>(dh->get()).get());			
 
 		}
 		else if (amortize_type == AMOUNTSETTING)
 		{
 			mIsAmortizeAmountSetting.push_back(true);
 			dh = &(legs.get(mTargetLegNo[i]).getData(PRICING_DATA_AMORTIZEAMOUNT, ISNOTNULL));
-			mAmortizeAmount.push_back(dynamic_cast<const LADataDouble&>(dh->get()).get());
+			mAmortizeAmount.push_back(dynamic_cast<const AQLDataDouble&>(dh->get()).get());
 			mAmortizeRoundFunction.push_back("");//dummmy
 			mAmortizeRoundDigit.push_back(0);//dummy
 		}
 		else
 		{
 			//error
-			LAString msg = "AmortizeType : " + amortize_type;
+			AQLString msg = "AmortizeType : " + amortize_type;
 			msg += " is not support";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}	
 
 	}
@@ -396,12 +396,12 @@ LAPriceEventNotionalChange::setUp(const LADate& basedate,
     @param[in] amount one time amount (amortize amotunsetting case, no use for amortize equalization case)
 */
 DoubleArray
-LAPriceEventNotionalChange::getNotionalArray(const LADate& actiondate, 
+LAPriceEventNotionalChange::getNotionalArray(const AQLDate& actiondate, 
 												 const PayOffToolHolderVector& payoff, 
 												 const PayOffToolHolderIter& iter,
 												 bool isarrear,
 												 double changeratio,
-												 const LAString& roundfunction,
+												 const AQLString& roundfunction,
 												 int rounddigit,
 												 bool is1stfraction,
 												 bool isamountsetting,

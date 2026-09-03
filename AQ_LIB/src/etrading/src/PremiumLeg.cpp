@@ -48,7 +48,7 @@ namespace etrading
 	* @param[in]	recoveryRate			The estimated amount of capital recovered after default
 	* @param[in]	includeAccruedInterest	Specifies whether cashflows should include the accruedInterest
 	*/
-	void PremiumLeg::setSurvivalProbabilitiesUsingHazardRate( const LADate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest  )
+	void PremiumLeg::setSurvivalProbabilitiesUsingHazardRate( const AQLDate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest  )
 	{
 		// OK to use static_pointer_cast here because we know the schedule type for sure (the PremiumLeg created it).
 		std::shared_ptr<PremiumSchedule> premiumSchedule = std::static_pointer_cast<PremiumSchedule> ( schedule_ );
@@ -78,7 +78,7 @@ namespace etrading
 	* @param[in]	asOfDate				The valuation date of the leg
 	* @param[in]	creditModel				The calibrated credit model
 	*/
-	void PremiumLeg::setSurvivalProbabilitiesUsingCreditModel( const LADate& asOfDate, const CreditModel& creditModel  )
+	void PremiumLeg::setSurvivalProbabilitiesUsingCreditModel( const AQLDate& asOfDate, const CreditModel& creditModel  )
 	{
 		// OK to use static_pointer_cast here because we know the schedule type for sure (the PremiumLeg created it).
 		std::shared_ptr<PremiumSchedule> premiumSchedule = std::static_pointer_cast<PremiumSchedule> ( schedule_ );
@@ -116,14 +116,14 @@ namespace etrading
 		initializeDataProvider( dataProvider);
 
 		// Calculate Survival Probabilities
-		const LADate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
 		setSurvivalProbabilitiesUsingHazardRate( asOfDate, hazardRate, recoveryRate, includeAccruedInterest );
 
         //get all the cashflows including upfront cashflow
         auto cashflows = schedule_->getAllCashflows();
         if (cashflows.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
 		}
 
         double riskyAnnuity = 0;
@@ -149,14 +149,14 @@ namespace etrading
 		initializeDataProvider( dataProvider);
 
 		// Calculate Survival Probabilities
-		const LADate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
 		setSurvivalProbabilitiesUsingCreditModel( asOfDate, creditModel );
 
         //get all the cashflows including upfront cashflow
         auto cashflows = schedule_->getAllCashflows();
         if (cashflows.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
 		}
 
         double riskyAnnuity = 0;
@@ -178,14 +178,14 @@ namespace etrading
 	* @param[in]	toDate			The date to which we wish to calculate the year fraction
 	* @returns: The year fraction
 	*/
-	double PremiumLeg::accruedYearFraction( const CreditModel& creditModel, const LADate& toDate )
+	double PremiumLeg::accruedYearFraction( const CreditModel& creditModel, const AQLDate& toDate )
 	{
 		// Calculate Discount Factors
 		DataProvider dataProvider(ValuationSettings(creditModel, {}));
 		initializeDataProvider(dataProvider);
 
 		// Calculate Survival Probabilities
-		const LADate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
 		setSurvivalProbabilitiesUsingCreditModel(asOfDate, creditModel);
 
 		//get all the cashflows including upfront cashflow
@@ -227,7 +227,7 @@ namespace etrading
 	* @param[in]	toDate			The date to which we wish to calculate the accrued interest for
 	* @returns: The accrued interest
 	*/
-	double PremiumLeg::accruedInterest( const CreditModel& creditModel, const LADate& toDate )
+	double PremiumLeg::accruedInterest( const CreditModel& creditModel, const AQLDate& toDate )
 	{
 		const double accruedInterestYearFraction = accruedYearFraction( creditModel, toDate );
 
@@ -252,14 +252,14 @@ namespace etrading
 	*				When set to TRUE (pay on next coupon date ), the PV should match the analytic formula.
 	*  @returns	The calculated PV value
 	*/
-	double PremiumLeg::riskFreePVtoStoppingDate( DataProvider& dataProvider, const CreditModel& creditModel, const LADate& stoppingDate, const double discountFactorAtStoppingDate, const bool payDefaultCashflowsOnNextCouponDate )
+	double PremiumLeg::riskFreePVtoStoppingDate( DataProvider& dataProvider, const CreditModel& creditModel, const AQLDate& stoppingDate, const double discountFactorAtStoppingDate, const bool payDefaultCashflowsOnNextCouponDate )
 	{
 
         //get all the cashflows including the upfrontCashflow
         auto cashflows = schedule_->getAllCashflows();
         if (cashflows.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
 		}
 
         double pv = 0.0;
@@ -280,7 +280,7 @@ namespace etrading
 					const double notional = premiumSchedule->getNotional();
 					const double cdsSpread = premiumSchedule->getCDSSpread();
 				
-					const LADate fromDate = premiumCashflow->getAccrualStartDate();
+					const AQLDate fromDate = premiumCashflow->getAccrualStartDate();
 					const double accrualYearFraction = getYearFraction( fromDate, stoppingDate, schedule_->getAccrualDaycount() );
 					const double accruedCoupon = notional * cdsSpread * accrualYearFraction;
 					

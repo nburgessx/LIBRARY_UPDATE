@@ -12,16 +12,16 @@
 #include <vector>
 #include <memory>
 
-#include "LADate.h"
+#include "AQLDate.h"
 #include "Variant.h"
 
 namespace etrading
 {
 	// Typedefs
     typedef std::vector<double> VectorDouble;
-    typedef std::vector<LADate> VectorDate;
+    typedef std::vector<AQLDate> VectorDate;
     typedef std::vector<double> DoubleVector;   // For Backwards compatibility
-	typedef std::vector<LADate> DateVector;     // For Backwards compatibility
+	typedef std::vector<AQLDate> DateVector;     // For Backwards compatibility
 
 	// =============================== HELPER DATA CLASSES ==================================================================
 	
@@ -56,13 +56,13 @@ namespace etrading
 		// =======================================================
 
 		// Discount Risk Constructor
-        SwapRiskResults( const LADate & asOfDate, const SwapDiscountRiskData & swapDiscountRiskData );
+        SwapRiskResults( const AQLDate & asOfDate, const SwapDiscountRiskData & swapDiscountRiskData );
 		
 		// Forward Risk Constructor
-		SwapRiskResults( const LADate & asOfDate, const SwapForwardRiskData & swapForwardRiskData );
+		SwapRiskResults( const AQLDate & asOfDate, const SwapForwardRiskData & swapForwardRiskData );
 		
 		// Discount & Forward Risk Constuctor
-		SwapRiskResults( const LADate & asOfDate, const SwapDiscountRiskData & swapDiscountRiskData, const SwapForwardRiskData & swapForwardRiskData );
+		SwapRiskResults( const AQLDate & asOfDate, const SwapDiscountRiskData & swapDiscountRiskData, const SwapForwardRiskData & swapForwardRiskData );
 		
 		// =======================================================
 
@@ -78,7 +78,7 @@ namespace etrading
         // Accessors
 		// =======================================================
 
-        LADate asOfDate() const				{ return asOfDate_;		}
+        AQLDate asOfDate() const				{ return asOfDate_;		}
         DateVector paymentDates() const		{ return paymentDates_;	}
 		DoubleVector coupons() const		{ return coupons_;		}
         DateVector fixingDates() const		{ return fixingDates_;	}
@@ -86,7 +86,7 @@ namespace etrading
         
     private:
         
-        LADate                  asOfDate_;
+        AQLDate                  asOfDate_;
 		DateVector				paymentDates_;
         DoubleVector            coupons_;
 		DateVector				fixingDates_;

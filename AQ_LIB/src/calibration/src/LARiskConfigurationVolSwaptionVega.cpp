@@ -19,13 +19,13 @@
 
 
 #include "LARiskConfigurationVolSwaptionVega.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LAObjectPool.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObjectPool.h"
+#include "AQLPriceDataFunction.h"
 #include "LAPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
@@ -65,10 +65,10 @@ LARiskConfigurationVolSwaptionVega::~LARiskConfigurationVolSwaptionVega(void)
 	@param[in] ccy
 	@param[out] dataInstance
 	@param[in] scenario
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *>
-LARiskConfigurationVolSwaptionVega::createVolatilityEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
+vector<AQLObject *>
+LARiskConfigurationVolSwaptionVega::createVolatilityEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
 {
 	if (scenarioNum == SCENARIO_1)
 	{
@@ -76,7 +76,7 @@ LARiskConfigurationVolSwaptionVega::createVolatilityEntity(const LAString &ccy, 
 	}
 	else
 	{
-		return vector<LAObject *>(0); 
+		return vector<AQLObject *>(0); 
 	}
 }
 
@@ -86,10 +86,10 @@ LARiskConfigurationVolSwaptionVega::createVolatilityEntity(const LAString &ccy, 
 	@param[in] ccy
 	@param[out] dataInstance
 	@param[in] scenario
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *>
-LARiskConfigurationVolSwaptionVega::createVolatilityEntityOld(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum) const
+vector<AQLObject *>
+LARiskConfigurationVolSwaptionVega::createVolatilityEntityOld(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum) const
 {
 	if (scenarioNum == SCENARIO_1)
 	{
@@ -97,7 +97,7 @@ LARiskConfigurationVolSwaptionVega::createVolatilityEntityOld(const LAString &cc
 	}
 	else
 	{
-		return vector<LAObject *>(0); 
+		return vector<AQLObject *>(0); 
 	}
 }
 
@@ -108,30 +108,30 @@ LARiskConfigurationVolSwaptionVega::createVolatilityEntityOld(const LAString &cc
 	@param[in] ccy
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<vector<LAObject *> > 
+	@return vector<vector<AQLObject *> > 
 */
-vector<vector<LAObject *> > 
-LARiskConfigurationVolSwaptionVega::createExtraScenario1Entity(const LAString &ccy, LADataInstance &dataInstance, int index)  const
+vector<vector<AQLObject *> > 
+LARiskConfigurationVolSwaptionVega::createExtraScenario1Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index)  const
 {
 	if (isRealCalib())
 	{
-		vector<vector<LAObject *> > ret(0);
+		vector<vector<AQLObject *> > ret(0);
 
-		LAString tmpCurrency = ccy;
+		AQLString tmpCurrency = ccy;
 		tmpCurrency.toUpper();
- 		const LAString riskName = getRiskName();
-		const LAString irCalcType = ccy + "_" + riskName + "_" + LAString(SCENARIO_1);
-		LAObjectPool &objPool = dataInstance.getObjectPool();
+ 		const AQLString riskName = getRiskName();
+		const AQLString irCalcType = ccy + "_" + riskName + "_" + AQLString(SCENARIO_1);
+		AQLObjectPool &objPool = dataInstance.getObjectPool();
 		
-		LAStringVector targetFXVec = getCalibTargetFX(ccy, dataInstance);
+		AQLStringVector targetFXVec = getCalibTargetFX(ccy, dataInstance);
 		unsigned int fxSize = targetFXVec.size();
 		for (unsigned int i = 0; i < fxSize; ++i)
 		{
 			if (isCalibTarget(targetFXVec[i]))
 			{
-				LAString key_fx = targetFXVec[i].toLower();
-				const LAString model = LAMarketData::getModelName(key_fx);
-				LAString inputType = LAMarketData::getVolInputType(model, key_fx, riskName);
+				AQLString key_fx = targetFXVec[i].toLower();
+				const AQLString model = LAMarketData::getModelName(key_fx);
+				AQLString inputType = LAMarketData::getVolInputType(model, key_fx, riskName);
 				inputType.toUpper();
 
 				MAScenarioParam param;
@@ -158,18 +158,18 @@ LARiskConfigurationVolSwaptionVega::createExtraScenario1Entity(const LAString &c
 					param.isOutPut = false;
 				}
 				LACalibrationParameters *calibInfoCreator = LACalibrationParametersManager::getInstance()->createCalibInfoCreator(param.model);
-				LAString infoName = calibInfoCreator->createCalibrationInfo(objPool, key_fx);
+				AQLString infoName = calibInfoCreator->createCalibrationInfo(objPool, key_fx);
 				delete calibInfoCreator;
 				
 				param.refName.push_back(infoName);
 
-				LAStringVector ccys = key_fx.toToken(FX_DELIMITER);
+				AQLStringVector ccys = key_fx.toToken(FX_DELIMITER);
 				ccys[0].toUpper();
 				ccys[1].toUpper();
-				LAString dBaseYieldName = LAMarketData::getBaseYieldName(ccys[0]);
-				LAString dBaseCalibDataName = LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, dBaseYieldName));
-				LAString fBaseYieldName = LAMarketData::getBaseYieldName(ccys[1]);
-				LAString fBaseCalibDataName = LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, fBaseYieldName));
+				AQLString dBaseYieldName = LAMarketData::getBaseYieldName(ccys[0]);
+				AQLString dBaseCalibDataName = LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, dBaseYieldName));
+				AQLString fBaseYieldName = LAMarketData::getBaseYieldName(ccys[1]);
+				AQLString fBaseCalibDataName = LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, fBaseYieldName));
 				// set reference
 				if (ccys[0] == tmpCurrency)
 				{
@@ -193,7 +193,7 @@ LARiskConfigurationVolSwaptionVega::createExtraScenario1Entity(const LAString &c
 				LAScenarioConfiguration *sceCreator = 
 					LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL);
 
-				vector<LAObject *> sce_fx = sceCreator->createScenario(dataInstance, param);
+				vector<AQLObject *> sce_fx = sceCreator->createScenario(dataInstance, param);
 				delete sceCreator;
 
 				ret.push_back(sce_fx);
@@ -203,7 +203,7 @@ LARiskConfigurationVolSwaptionVega::createExtraScenario1Entity(const LAString &c
 	}
 	else
 	{
-		return vector<vector<LAObject *> >(0);
+		return vector<vector<AQLObject *> >(0);
 	}
 }
 
@@ -214,21 +214,21 @@ LARiskConfigurationVolSwaptionVega::createExtraScenario1Entity(const LAString &c
 	@param[in] ccy
 	@return DoubleArray
 */
-LAStringVector
-LARiskConfigurationVolSwaptionVega::getExtraTargetNames1(const LAString &ccy, LADataInstance &dataInstance) const
+AQLStringVector
+LARiskConfigurationVolSwaptionVega::getExtraTargetNames1(const AQLString &ccy, AQLDataInstance &dataInstance) const
 {
 	if (isRealCalib())
 	{
-		LAStringVector ret(0);
-		LAStringVector targetNames = getTargetNames(ccy, dataInstance).toToken(MULTI_STATIC_DATA_DELIMITER);
+		AQLStringVector ret(0);
+		AQLStringVector targetNames = getTargetNames(ccy, dataInstance).toToken(MULTI_STATIC_DATA_DELIMITER);
 		unsigned int targetSize = targetNames.size();
 
-		LAStringVector targetFXVec = getCalibTargetFX(ccy, dataInstance);
+		AQLStringVector targetFXVec = getCalibTargetFX(ccy, dataInstance);
 		unsigned int fxSize = targetFXVec.size();
 		for (unsigned int i = 0; i < fxSize; ++i)
 		{
-			LAString fx_targetNames1;
-			LAString fx_bVolName = LAMarketData::getBaseVolatilityName(targetFXVec[i]);
+			AQLString fx_targetNames1;
+			AQLString fx_bVolName = LAMarketData::getBaseVolatilityName(targetFXVec[i]);
 			for (unsigned int j = 0; j < targetSize; ++j)
 			{
 				fx_targetNames1 += fx_bVolName + ":";
@@ -236,7 +236,7 @@ LARiskConfigurationVolSwaptionVega::getExtraTargetNames1(const LAString &ccy, LA
 
 			if (fx_targetNames1.size() < 2)
 			{
-				throw LACoreInvalidData("Extra targetname1 can not set !!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Extra targetname1 can not set !!", __FILE__, __LINE__);
 			}
 			ret.push_back(fx_targetNames1.subString(0, fx_targetNames1.size() - 2));
 		}
@@ -245,7 +245,7 @@ LARiskConfigurationVolSwaptionVega::getExtraTargetNames1(const LAString &ccy, LA
 	}
 	else
 	{
-		return LAStringVector(0);
+		return AQLStringVector(0);
 	}
 
 }
@@ -254,9 +254,9 @@ LARiskConfigurationVolSwaptionVega::getExtraTargetNames1(const LAString &ccy, LA
 /*!
     @brief return operator1
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationVolSwaptionVega::getOperator1(void) const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_VOL_SWAPTIONVEGA_OPERATOR);
@@ -267,12 +267,12 @@ LARiskConfigurationVolSwaptionVega::getOperator1(void) const
     @brief return coefficient1
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolSwaptionVega::getCoefficient1(const LAString &ccy) const
+AQLString
+LARiskConfigurationVolSwaptionVega::getCoefficient1(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_VOL_SWAPTIONVEGA_COEFFICIENT + getCurveSuffix(ccy));
 }
@@ -282,12 +282,12 @@ LARiskConfigurationVolSwaptionVega::getCoefficient1(const LAString &ccy) const
     @brief return outputname1
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolSwaptionVega::getOutPutName1(const LAString &ccy) const
+AQLString
+LARiskConfigurationVolSwaptionVega::getOutPutName1(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	return mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_OFFICIAL_VOL_SWAPTIONVEGA_OUTPUT + getCurveSuffix(ccy));
 }
@@ -296,9 +296,9 @@ LARiskConfigurationVolSwaptionVega::getOutPutName1(const LAString &ccy) const
 /*!
     @brief return riskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationVolSwaptionVega::getRiskName(void) const
 {
 	return RISK_OFFICIAL_VOL_SWAPTIONVEGA;
@@ -307,9 +307,9 @@ LARiskConfigurationVolSwaptionVega::getRiskName(void) const
 /*!
     @brief return target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationVolSwaptionVega::getTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_VOL_SWAPTIONVEGA_TARGET_CURRENCY);
@@ -318,9 +318,9 @@ LARiskConfigurationVolSwaptionVega::getTargetCurrencies() const
 /*!
     @brief return calibration target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationVolSwaptionVega::getCalibTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_VOL_SWAPTIONVEGA_CALIBRATION_TARGET_CURRENCY);
@@ -332,13 +332,13 @@ LARiskConfigurationVolSwaptionVega::getCalibTargetCurrencies() const
 	@return double 
 */
 double
-LARiskConfigurationVolSwaptionVega::getParallelShiftVal(const LAString &ccy) const
+LARiskConfigurationVolSwaptionVega::getParallelShiftVal(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	if (LAMarketData::getModelName(ccy).toUpper() == MODEL_HW)
 	{
 		LAStaticData &calibPropAccessor = LACoreDataService::getStaticDataManager().getCalibStaticData();
-		LAString strIsZeroVol = calibPropAccessor.getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_CALIB_HW_ISZEROVOL);
+		AQLString strIsZeroVol = calibPropAccessor.getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_CALIB_HW_ISZEROVOL);
 		if (strIsZeroVol != AQ_NO_DATA && convertBoolFromStr(strIsZeroVol))
 		{
 			return 0.0;
@@ -349,11 +349,11 @@ LARiskConfigurationVolSwaptionVega::getParallelShiftVal(const LAString &ccy) con
 }
 
 bool
-LARiskConfigurationVolSwaptionVega::isRiskCurrencyMode(const LAString &ccy) const
+LARiskConfigurationVolSwaptionVega::isRiskCurrencyMode(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	//if MA_NODATA return false;
-	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_OFFICIAL_VOL_SWAPTIONVEGA_ISRISKCURRENCYMODE);
 	if (proprslt == AQ_NO_DATA)
 		return false;

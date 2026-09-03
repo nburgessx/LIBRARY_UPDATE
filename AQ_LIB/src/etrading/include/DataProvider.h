@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreEnumerations.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "CreditModel.h"
 #include "ValuationSettings.h"

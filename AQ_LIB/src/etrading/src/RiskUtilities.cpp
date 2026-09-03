@@ -5,7 +5,7 @@
 namespace etrading
 {
 	// Helper Method to check if the Curve is a Curve List i.e. not a Single curve
-	bool isCurveList( const LAString& curveIndex, const LAString& delimiter)
+	bool isCurveList( const AQLString& curveIndex, const AQLString& delimiter)
 	{
 		// If we find the delimiter in the string then we have a curve list
 		std::string curveIndexString = curveIndex.c_str();
@@ -13,15 +13,15 @@ namespace etrading
 	}
 
 	// Helper Method to generate a vector of curve names given a list of curve indices as a single concatenated string
-	std::vector<LAString> generateCurveList( const LAString& curveIndex, const LAString& delimiter )
+	std::vector<AQLString> generateCurveList( const AQLString& curveIndex, const AQLString& delimiter )
 	{
-		std::vector<LAString> curveList;
+		std::vector<AQLString> curveList;
 		std::string curveIndexString = curveIndex.c_str();
 		std::string delimiterString = delimiter.c_str();
 
 		size_t i = 0;
 		size_t loopGuard = 100;
-		LAString thisCurveIndex;
+		AQLString thisCurveIndex;
 
 		// Split the input curve index string by delimiter and update the curve list
 		while( curveIndexString.size() > 0 && i < loopGuard )
@@ -48,9 +48,9 @@ namespace etrading
 	}
 
 	// Helper Method to generate a vector of static data names given a list of curve indices as a single concatenated string
-	std::vector<LAString> generateStaticDataList( const LAString& curveCollection, const LAString& curveIndex, const LAString& delimiter )
+	std::vector<AQLString> generateStaticDataList( const AQLString& curveCollection, const AQLString& curveIndex, const AQLString& delimiter )
 	{
-		std::vector<LAString> curveIndexResults = generateCurveList( curveIndex, delimiter );
+		std::vector<AQLString> curveIndexResults = generateCurveList( curveIndex, delimiter );
 		for( size_t i = 0; i < curveIndexResults.size(); ++i )
 		{
 			curveIndexResults[i] = getCurveStaticDataTableName( curveCollection, curveIndexResults[i], false /* uppercase */ );
@@ -59,12 +59,12 @@ namespace etrading
 	}
 
 	// Helper Method to generate a single string of concatenated static data table names given a list of curve indices as a single concatenated string
-	LAString generateStaticDataListAsString( const LAString& curveCollection, const LAString& curveIndex, const LAString& delimiter )
+	AQLString generateStaticDataListAsString( const AQLString& curveCollection, const AQLString& curveIndex, const AQLString& delimiter )
 	{
-		LAString staticDataString;
-		const LAString objectPoolDelimiter = ":";
+		AQLString staticDataString;
+		const AQLString objectPoolDelimiter = ":";
 
-		std::vector<LAString> staticDataNamesForCurves = generateStaticDataList( curveCollection, curveIndex, delimiter );
+		std::vector<AQLString> staticDataNamesForCurves = generateStaticDataList( curveCollection, curveIndex, delimiter );
 		
 		for( size_t i = 0; i < staticDataNamesForCurves.size(); ++i )
 		{

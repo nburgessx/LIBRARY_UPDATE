@@ -26,16 +26,16 @@
 #include "LAPriceDriftSMMAnnuity.h"
 
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAMathCorrelation.h"
 #include "LAMathVolFuncBase.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 #include "LAPriceDriftQuantAdjustment.h"
 
@@ -60,7 +60,7 @@ LAPriceDriftSMMAnnuity::LAPriceDriftSMMAnnuity(double s)
 	@param[in] deltatenor delta of tenor
 	
 */
-LAPriceDriftSMMAnnuity::LAPriceDriftSMMAnnuity(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double s)
+LAPriceDriftSMMAnnuity::LAPriceDriftSMMAnnuity(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double s)
 : LAPriceDriftSMMBase(sdeAttrName, i, tenor, delta_tenor, s)
 {
 }
@@ -84,7 +84,7 @@ LAPriceDriftSMMAnnuity::~LAPriceDriftSMMAnnuity()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftSMMAnnuity::clone() const	
 {
     try 
@@ -93,7 +93,7 @@ LAPriceDriftSMMAnnuity::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -141,7 +141,7 @@ LAPriceDriftSMMAnnuity::operator()(const DoubleArray& x) const
 		if (x[0] == 0.0) pos = 0;
 		else if (x[0] == (*mpTimes)[mPos_old]) pos = mPos_old;
 		else if (mPos_old + 1 < mpTimes->size() && x[0] == (*mpTimes)[mPos_old + 1]) pos = mPos_old + 1;
-		else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0], 0, mpTimes->size() - 1, pos))
+		else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0], 0, mpTimes->size() - 1, pos))
 		{
 			pos = 0;
 			mPos_old = 0;

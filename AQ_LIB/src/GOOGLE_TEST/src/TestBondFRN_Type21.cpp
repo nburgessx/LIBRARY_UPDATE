@@ -96,7 +96,7 @@ namespace
 		const ReadDataFile::Load createBondInputFile( inputFile.c_str() );
         std::string bondObjectName     = createBondInputFile["bondObjectName"];
         std::string bondGeneratorName  = createBondInputFile["bondGeneratorName"];
-        LAStringMatrix bondExpressionLVB = createBondInputFile["expressionLVB"];
+        AQLStringMatrix bondExpressionLVB = createBondInputFile["expressionLVB"];
         bool validateKeys              = createBondInputFile["validateKeys"];
         
 		std::string objectName = validation::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
@@ -130,7 +130,7 @@ namespace google_test
 			std::string priceFromDiscountMarginInputFileName = TEST_DIR + bondObjectName + frnPriceFromDiscountMarginInputFileSuffix;
 	        const ReadDataFile::Load priceInputFile( priceFromDiscountMarginInputFileName.c_str() );
 
-			const LADate settlementDate = priceInputFile[ "settlementDate" ];
+			const AQLDate settlementDate = priceInputFile[ "settlementDate" ];
 			const double discountMargin = priceInputFile[ "discountMargin" ];
 			const double assumedRate    = priceInputFile[ "assumedRate" ];
 			const double indexToNextCoupon = priceInputFile[ "indexToNextCoupon" ];
@@ -141,7 +141,7 @@ namespace google_test
 			
 			// Compare the calculatedPrice against snaptshot results
 			std::string priceOutputFilename = TEST_DIR + bondObjectName + frnPriceFromDiscountMarginOutputFileSuffix;
-			CheckTestResultsAndRebaseOnRequest( calculatedPrice, TEST_DIR, LAString( priceOutputFilename.c_str() ), tolerance );
+			CheckTestResultsAndRebaseOnRequest( calculatedPrice, TEST_DIR, AQLString( priceOutputFilename.c_str() ), tolerance );
 		}
 	}
 
@@ -164,7 +164,7 @@ namespace google_test
 			std::string priceFromYieldInputFileName = TEST_DIR + bondObjectName + frnPriceFromYieldInputFileSuffix;
 	        const ReadDataFile::Load priceInputFile( priceFromYieldInputFileName.c_str() );
 
-			const LADate settlementDate = priceInputFile[ "settlementDate" ];
+			const AQLDate settlementDate = priceInputFile[ "settlementDate" ];
 			const double yield          = priceInputFile[ "yield" ];
 			const double assumedRate    = priceInputFile[ "assumedRate" ];
 			const double indexToNextCoupon = priceInputFile[ "indexToNextCoupon" ];
@@ -176,7 +176,7 @@ namespace google_test
 			// Compare the calculatedPrice against snaptshot results
 			// Re-use the PriceFromDiscountMargin output file, since the priceFromYield should match exactly.
 			std::string priceOutputFilename = TEST_DIR + bondObjectName + frnPriceFromDiscountMarginOutputFileSuffix;
-			CheckTestResultsAndRebaseOnRequest( calculatedPrice, TEST_DIR, LAString( priceOutputFilename.c_str() ), tolerance );
+			CheckTestResultsAndRebaseOnRequest( calculatedPrice, TEST_DIR, AQLString( priceOutputFilename.c_str() ), tolerance );
 		}
 
 	}
@@ -199,7 +199,7 @@ namespace google_test
 			std::string priceFromYieldInputFileName = TEST_DIR + bondObjectName + frnPriceFromYieldInputFileSuffix;
 	        const ReadDataFile::Load priceInputFile( priceFromYieldInputFileName.c_str() );
 
-			const LADate settlementDate = priceInputFile[ "settlementDate" ];
+			const AQLDate settlementDate = priceInputFile[ "settlementDate" ];
 			const double yield          = priceInputFile[ "yield" ];
 			const double assumedRate    = priceInputFile[ "assumedRate" ];
 			const double indexToNextCoupon = priceInputFile[ "indexToNextCoupon" ];
@@ -235,7 +235,7 @@ namespace google_test
 			std::string priceFromDiscountMarginInputFileName = TEST_DIR + bondObjectName + frnPriceFromDiscountMarginInputFileSuffix;
 	        const ReadDataFile::Load priceInputFile( priceFromDiscountMarginInputFileName.c_str() );
 
-			const LADate settlementDate = priceInputFile[ "settlementDate" ];
+			const AQLDate settlementDate = priceInputFile[ "settlementDate" ];
 			const double discountMargin = priceInputFile[ "discountMargin" ];
 			const double assumedRate    = priceInputFile[ "assumedRate" ];
 			const double indexToNextCoupon = priceInputFile[ "indexToNextCoupon" ];

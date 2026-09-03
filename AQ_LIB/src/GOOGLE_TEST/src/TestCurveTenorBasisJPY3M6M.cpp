@@ -89,11 +89,11 @@ namespace google_test
         //
         // disambiguate accessors
         //
-        virtual LAString getCurveID() const
+        virtual AQLString getCurveID() const
         {
             return CurveTenorBasis::getCurveID();
         }
-        virtual LAString getMarketName() const
+        virtual AQLString getMarketName() const
         {
             return CurveTenorBasis::getMarketName();
         }
@@ -144,7 +144,7 @@ namespace google_test
     {
         const ReadDataFile::Load inputFile( CheckForwardRatesInputs );
 
-        const std::vector<LADate> fromDateVector = inputFile["fromDateVec"];
+        const std::vector<AQLDate> fromDateVector = inputFile["fromDateVec"];
 
         const DoubleArray results
             = validation::tryMirGetForwardRate1(

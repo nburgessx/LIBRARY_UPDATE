@@ -5,9 +5,9 @@
 #endif
 
 #include "LAPriceEventBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LADate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDate.h"
 #include "LAPricePayOffTool.h"
 
 
@@ -37,13 +37,13 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
 
     // execute trigger action
-	virtual void	            doAction(const LADate& actiondate,
+	virtual void	            doAction(const AQLDate& actiondate,
 										 double actiontime,
 										 std::vector<PayOffToolHolderVector>& payoff,
 										 std::vector<PayOffToolHolderVector>& extrapayoff,
@@ -52,20 +52,20 @@ public:
 										 std::vector<PayOffToolHolderIter>& iter);
 
 	// set up this class
-	virtual	void				setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+	virtual	void				setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall = false);
 								
 protected:
 	// get notional array (after change)
-	DoubleArray					getNotionalArray(const LADate& actiondate, 
+	DoubleArray					getNotionalArray(const AQLDate& actiondate, 
 												 const PayOffToolHolderVector& payoff, 
 												 const PayOffToolHolderIter& iter,
 												 bool isarrear,
 												 double changeratio,
-												 const LAString& roundfunction,
+												 const AQLString& roundfunction,
 												 int rounddigit,
 												 bool is1stfraction,
 												 bool isamountsetting,
@@ -79,7 +79,7 @@ protected:
 	BoolVector mIsAmortize;// amoritize or not
 	BoolVector mIsAmortizeAmountSetting;// amortize type flag(amortize amount setting or not)
 	DoubleArray mAmortizeAmount;// amortize amount(amortize amount setting type)
-	LAStringVector mAmortizeRoundFunction;// round function for amortize notional calculation
+	AQLStringVector mAmortizeRoundFunction;// round function for amortize notional calculation
 	IntArray	mAmortizeRoundDigit;// round digit for amortize notional calculation
 	BoolVector mAmortize1stFraction;// amortize fraction flag
 

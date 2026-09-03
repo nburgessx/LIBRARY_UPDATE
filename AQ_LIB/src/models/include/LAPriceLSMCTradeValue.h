@@ -12,7 +12,7 @@
 #endif
 
 #include "LAPriceTradeValue.h"
-#include "LAFunctionBase.h"
+#include "AQLFunctionBase.h"
 
 
 // LAPriceLSMCTradeValue's function id
@@ -37,15 +37,15 @@ public:
 	// Check function for this class ID	
 	virtual bool                isTypeOf(function_t id) const;
     // Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
     // Return this class type
 	virtual function_t			getType() const;
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
     // evaluation function
-	virtual double              value(const LADate& basedate, 
-										LAObject& object,
-									const LADataValuation& att) const;
+	virtual double              value(const AQLDate& basedate, 
+										AQLObject& object,
+									const AQLDataValuation& att) const;
 
 	//Remove warning:C4512
 	LAPriceLSMCTradeValue & operator=( const LAPriceLSMCTradeValue & ) { return *this; }
@@ -61,7 +61,7 @@ protected:
 											const DoubleMatrix& numeraire_expirytime,
 											const std::vector<DoubleMatrix>& explanatory,
 											const DoubleArray& numeraire_base,
-											const LADataProvider* dataProvider,
+											const AQLDataProvider* dataProvider,
 											DoubleMatrix& coefficient,
 											DoubleMatrix& coefficient_rebate,
 											BoolVector &isconvert_xy,
@@ -88,8 +88,8 @@ protected:
 											const BoolVector &isconvert_xy_rebate, const std::vector<DoubleArray>& standardization_y_rebate, const std::vector<DoubleMatrix>& standardization_x_rebate) const;
 
 	// set up dataProvider
-//	LADataProvider*								setUpDataProvider(const LADate& basedate, LAObject& object, 
-//												const LADataValuation& att) const;	
+//	AQLDataProvider*								setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+//												const AQLDataValuation& att) const;	
 
 	/*!
 		@brief cache class for performance up
@@ -101,15 +101,15 @@ protected:
 		DoubleArray						expirytimes;	// call expiry times 
 		DoubleArray						actiontimes;	// call action times
 		LAPolynomialBase*				poly;			// polynomial function
-		LADataDoubleMatrix*				coefficient;	// coefficient
+		AQLDataDoubleMatrix*				coefficient;	// coefficient
 	};
 */
-	class LAPriceLSMCOperator : public LAFunctionBase
+	class LAPriceLSMCOperator : public AQLFunctionBase
 	{
 	public:
 									//======================================
 									// Make copy(clone) of this class
-		virtual LACoreFunctionBase*     clone() const;// %%% COVARIANT RETURN %%%
+		virtual AQLCoreFunctionBase*     clone() const;// %%% COVARIANT RETURN %%%
 									//==========================================
 									// return function value
 		virtual double				operator()(const DoubleArray& x) const;		
@@ -122,7 +122,7 @@ protected:
 
 private:
 	// create new cache class
-//	virtual	LADataProvider*				createNewDataProvider() const;
+//	virtual	AQLDataProvider*				createNewDataProvider() const;
 
 };
 #endif

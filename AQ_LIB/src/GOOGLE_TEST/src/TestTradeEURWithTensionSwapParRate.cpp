@@ -7,7 +7,7 @@
 #include "Dependency.h"
 #include "CurveTenorBasis.h"
 #include "LACurveForwardRateHelpers.h"
-#include "LACoreError.h"
+#include "AQLCoreError.h"
 
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
@@ -85,7 +85,7 @@ namespace google_test
         {
             EXPECT_GE( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -120,7 +120,7 @@ namespace google_test
         {
             EXPECT_GE( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

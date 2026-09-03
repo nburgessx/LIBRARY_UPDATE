@@ -5,8 +5,8 @@
 #endif
 
 #include "LAMathDriftFuncBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 // ID for LAPriceDriftQuantAdjustment
@@ -28,9 +28,9 @@ class LAPriceDriftQuantAdjustment : public LAMathDriftFuncBase
 public:
 //  LIFECYCLE
 	// Default constructor
-	explicit LAPriceDriftQuantAdjustment(LAFunctionBase* driftIR);
+	explicit LAPriceDriftQuantAdjustment(AQLFunctionBase* driftIR);
 	// constructor
-	LAPriceDriftQuantAdjustment(const LAString& sdeAttrNameIR, const LAString& sdeAttrNameFX, unsigned int i, LAFunctionBase* driftIR);	
+	LAPriceDriftQuantAdjustment(const AQLString& sdeAttrNameIR, const AQLString& sdeAttrNameFX, unsigned int i, AQLFunctionBase* driftIR);	
 	//	Copy constructor
 	LAPriceDriftQuantAdjustment(const LAPriceDriftQuantAdjustment& v);
 	// Destructor
@@ -42,7 +42,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -51,17 +51,17 @@ public:
 	virtual double				operator()(const DoubleArray& x) const;
 								//==========================================
 								// return string representaion
-    virtual LAString			convertToString(void) const;
+    virtual AQLString			convertToString(void) const;
 								//==========================================
 								// return drift function
-	LAFunctionBase*				getDrift() {return mpDriftIR;}
+	AQLFunctionBase*				getDrift() {return mpDriftIR;}
 	                            //==========================================
 	                            // Return integral result
 	virtual double				integral(const std::vector<std::pair<double,double> >& x) const;
 //	OPERATION
 								//==========================================
 								// transform from string representaion
-     virtual void				convertFromString(const LAString& str);
+     virtual void				convertFromString(const AQLString& str);
 
 								//======================================
 								// set up this class
@@ -71,7 +71,7 @@ public:
 								/*!
 									@param[in] pvol volatility
 								*/
-    void						setIRVolaility(const LAFunctionBase* pvol) 
+    void						setIRVolaility(const AQLFunctionBase* pvol) 
 								{mpVolatility = pvol;}
 								//======================================
 								// set correlation between fx and ir of foreign currency
@@ -93,17 +93,17 @@ public:
 private:
 	                            //==========================================
 	                            // Return integral result
-	double						integral(unsigned int pos_s, LA1DIntegral* pIntegral) const;
+	double						integral(unsigned int pos_s, AQL1DIntegral* pIntegral) const;
 	
 protected:
-	const LAFunctionBase*						mpVolatility;	// ir(foreign currency) volatility  
+	const AQLFunctionBase*						mpVolatility;	// ir(foreign currency) volatility  
 	DoubleArray									mCorrelation;	// correlation between fx and ir of foreign currency
 	LARatesSpotSDE*								mpSDEFX;		// fx sde 
-	const LAFunctionBase*						mpFxVolatility;	// fx volatility
+	const AQLFunctionBase*						mpFxVolatility;	// fx volatility
 	unsigned int								m_i;			// suffix	
-	LAString									mSDEAttrNameIR;	// data name of ir(foreign currency) sde
-	LAString									mSDEAttrNameFX;	// data name of fx sde
-	LAFunctionBase*								mpDriftIR;		// drift function of ir without quant adjust
+	AQLString									mSDEAttrNameIR;	// data name of ir(foreign currency) sde
+	AQLString									mSDEAttrNameFX;	// data name of fx sde
+	AQLFunctionBase*								mpDriftIR;		// drift function of ir without quant adjust
 	mutable DoubleArray							mIntegratedData;// integral of t part data
 	mutable	unsigned int						mPos_old;		// tempolary variable	
 	mutable double								mInitialFxVol;	// Initail value of fx and t part of fx vol

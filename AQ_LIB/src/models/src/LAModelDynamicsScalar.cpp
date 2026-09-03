@@ -14,7 +14,7 @@
 
 
 #include "LAModelDynamicsScalar.h"
-#include "LAString.h"
+#include "AQLString.h"
 
 
 using namespace std;
@@ -81,7 +81,7 @@ LARatesPathElementScalar::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -110,9 +110,9 @@ LARatesPathElementScalar::set(const LARatesPathElementBase& a)
 	{	
 		// 
 		// 
-		LAString err = "set error for LARatesPathElementScalar : from ";
-		err += LAString(a.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "set error for LARatesPathElementScalar : from ";
+		err += AQLString(a.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	// 
 	mValue = dynamic_cast<const LARatesPathElementScalar&>(a).mValue;
@@ -129,6 +129,6 @@ LARatesPathElementScalar::set(const SCALARARRAY& a)
 		 mValue[0] = a[0];
 	else
 	{
-		throw LACoreInvalidData("input size must be one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("input size must be one", __FILE__, __LINE__);
 	}
 }

@@ -8,14 +8,14 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 
 
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 #include "Variant.h"
 #include "Environment.h"
 #include "FileUtilities.h"
 #include "CoreEnumerations.h"
 #include "UserUtilities.h"
 #include "tryMeLWOGrid.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CoreEnumerations.h"
 #include "Environment.h"
 #include "SerializationUtilities.h"

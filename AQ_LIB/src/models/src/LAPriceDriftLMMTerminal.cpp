@@ -26,16 +26,16 @@
 #include "LAPriceDriftLMMTerminal.h"
 
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAMathCorrelation.h"
 #include "LAMathVolFuncBase.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 using namespace std;
 
@@ -60,13 +60,13 @@ LAPriceDriftLMMTerminal::LAPriceDriftLMMTerminal(double Q)
 	@param[in] delta_tenor delta of tenor
 	@param[in] Q val for displaced diffusion case
 */
-LAPriceDriftLMMTerminal::LAPriceDriftLMMTerminal(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double Q)
+LAPriceDriftLMMTerminal::LAPriceDriftLMMTerminal(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double Q)
 : LAPriceDriftLMMBase(sdeAttrName, i , tenor, delta_tenor, Q)
 {
 	if (tenor.size() != delta_tenor.size() + 1)
 	{
 		//error
-		throw LACoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
 	}
 	if (mTenor.at(0) == 0.0)
 	{	
@@ -89,8 +89,8 @@ LAPriceDriftLMMTerminal::LAPriceDriftLMMTerminal(const LAPriceDriftLMMTerminal& 
 		mCorrelation[i].resize(v.mCorrelation[i].size());
 		for (unsigned int j = 0; j < mCorrelation[i].size(); j++)
 		{
-			if (m_i == 0) mCorrelation[i][j] = dynamic_cast<LAFunctionBase*>(v.mCorrelation[i][j]->clone());
-			else mCorrelation[i][j] = dynamic_cast<LAFunctionBase*>(v.mCorrelation[i][j]);
+			if (m_i == 0) mCorrelation[i][j] = dynamic_cast<AQLFunctionBase*>(v.mCorrelation[i][j]->clone());
+			else mCorrelation[i][j] = dynamic_cast<AQLFunctionBase*>(v.mCorrelation[i][j]);
 		}
 	}*/
 /*	if (m_i == 0 && v.mpCache != 0)
@@ -118,7 +118,7 @@ LAPriceDriftLMMTerminal::~LAPriceDriftLMMTerminal()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftLMMTerminal::clone() const	
 {
     try 
@@ -127,7 +127,7 @@ LAPriceDriftLMMTerminal::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -175,7 +175,7 @@ LAPriceDriftLMMTerminal::operator()(const DoubleArray& x) const
 		if (x[0] == 0.0) pos = 0;
 		else if (x[0] == (*mpTimes)[mPos_old]) pos = mPos_old;
 		else if (mPos_old + 1 < mpTimes->size() && x[0] == (*mpTimes)[mPos_old + 1]) pos = mPos_old + 1;
-		else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0], 0, mpTimes->size() - 1, pos))
+		else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0], 0, mpTimes->size() - 1, pos))
 		{
 			pos = 0;
 			mPos_old = 0;
@@ -253,7 +253,7 @@ LAPriceDriftLMMTerminal::integral(const std::vector<std::pair<double,double> >& 
 		unsigned int pos_e;
 		if (mPos_old + 1 < (*mpTimes).size() && x[0].second == (*mpTimes)[mPos_old + 1])
 			pos_e = mPos_old + 1;
-		else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].second, 0, mpTimes->size() - 1, pos_e))
+		else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].second, 0, mpTimes->size() - 1, pos_e))
 			pos_e = 0;
 		mPos_old = pos_e; 		
 		
@@ -293,7 +293,7 @@ LAPriceDriftLMMTerminal::integral(const std::vector<std::pair<double,double> >& 
 	{
 		if (mPos_old + 1 < (*mpTimes).size() && x[0].second == (*mpTimes)[mPos_old + 1])
 			pos_e = mPos_old + 1;
-		else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].second, 0, mpTimes->size() - 1, pos_e))
+		else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].second, 0, mpTimes->size() - 1, pos_e))
 			pos_e = 0;
 		mPos_old = pos_e; 					
 	
@@ -301,7 +301,7 @@ LAPriceDriftLMMTerminal::integral(const std::vector<std::pair<double,double> >& 
 		{
 			if (x[0].first == (*mpTimes)[mPos_old - 1])
 				pos_s = mPos_old - 1;
-			else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].first, 0, mpTimes->size() - 1, pos_s))
+			else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].first, 0, mpTimes->size() - 1, pos_s))
 				pos_s = 0;
 		}
 	}

@@ -11,7 +11,7 @@
 #endif
 
 
-#include <LACoreTemplateType.h>
+#include <AQLCoreTemplateType.h>
 #include <complex>
 #include "LAMathJumpDiffusion.h"
 #include "LAMathFXVolatilitySurfaceGenerate.h"

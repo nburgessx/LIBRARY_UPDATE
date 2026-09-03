@@ -50,16 +50,16 @@ namespace etrading
 
 	}
 
-	void FixedBondLegSchedule::createUpfrontCashflow(const LADate& paymentDate, double leverage)
+	void FixedBondLegSchedule::createUpfrontCashflow(const AQLDate& paymentDate, double leverage)
 	{
 		if (notionalExchangeEnum_ == START_NE || notionalExchangeEnum_ == START_AND_END_NE)
 		{
 			auto nanDoubleValue = std::numeric_limits<double>::quiet_NaN();
 
 			// Use paymentDate as exDividendDate for upfront cashflow, so that the cashflow can distinguish whether to show exDividendDate column in display function
-			auto exDividendDate = exDividendTenor_.empty() ? LADate() : paymentDate;
+			auto exDividendDate = exDividendTenor_.empty() ? AQLDate() : paymentDate;
 
-			upfrontCashflow_ = CashflowPtr(new FixedBondCashflow(payerReceiver_, nanDoubleValue, LADate(), LADate(), 0, nanDoubleValue, paymentDate, nanDoubleValue, leverage, paymentFreqEnum_, FIRST_NOTIONAL_EXCHANGE_CASHFLOW_TYPE, nanDoubleValue, exDividendDate));
+			upfrontCashflow_ = CashflowPtr(new FixedBondCashflow(payerReceiver_, nanDoubleValue, AQLDate(), AQLDate(), 0, nanDoubleValue, paymentDate, nanDoubleValue, leverage, paymentFreqEnum_, FIRST_NOTIONAL_EXCHANGE_CASHFLOW_TYPE, nanDoubleValue, exDividendDate));
 
 			upfrontCashflow_->setFwdFxRate(nanDoubleValue);
 		}

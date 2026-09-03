@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "Swap.h"
 
@@ -24,7 +24,7 @@ namespace validation
 	*  @param [in]		validateKeys	        True to validate the all keys provided are valid. Default to True
 	*  @return			legObjectName
 	*/
-	std::string tryMeLWOFeeLegCreate(const std::string& legObjectName, const LabelValueBlock& feeProperties, const LAStringMatrix& feeScheduleLVB, bool validateKeys=true);
+	std::string tryMeLWOFeeLegCreate(const std::string& legObjectName, const LabelValueBlock& feeProperties, const AQLStringMatrix& feeScheduleLVB, bool validateKeys=true);
 
 
     /* @brief			validation interface for the meLWOLegCreateFromSchedule method
@@ -49,7 +49,7 @@ namespace validation
 	*  @param [in]		legObjectName		Leg object name
 	*  @return			Leg display of the input parameters
 	*/
-	LAStringMatrix tryMeLWOLegDisplay(const std::string& legObjectName);
+	AQLStringMatrix tryMeLWOLegDisplay(const std::string& legObjectName);
 
    	/* @brief			validation interface for the meLWOLegDisplayCashflows method 
 	*  @param [in]		legObjectName		Leg object name

@@ -78,7 +78,7 @@ namespace etrading
 		auto mat = getLAStringMatrixFromFreeObject(freeObject_, toString(SABR_MKTDATA));
 
 		DoubleVector tenorVec, expiryVec;
-		LAStringVector tenorStr, expiryStr;
+		AQLStringVector tenorStr, expiryStr;
 		DateVector expiDateVec;
 		for (size_t i = 1; i < mat.size(); i++)
 		{
@@ -166,13 +166,13 @@ namespace etrading
 
 	/* @brief Returns a LabelValueBlock containing the marketData information for the specified marketDataKey
 	 * @param [in]   marketDataKey   The property to be displayed
-	 * @param [in]   trimBlankRows   Whether to remove blank rows from the end of the LAStringMatrix
-	 * @param [out]  A LAStringMatrix containing the LabelValue block
+	 * @param [in]   trimBlankRows   Whether to remove blank rows from the end of the AQLStringMatrix
+	 * @param [out]  A AQLStringMatrix containing the LabelValue block
 	 */
 	LabelValueBlock SabrMarketData::toLabelValueBlock( const std::string& marketDataKey, const bool trimBlankRows ) const
     {
         // Reuse the above toLAStringMtrix() method
-        const LAStringMatrix laStringMatrix = getLAStringMatrixFromFreeObject(freeObject_, marketDataKey, trimBlankRows); 
+        const AQLStringMatrix laStringMatrix = getLAStringMatrixFromFreeObject(freeObject_, marketDataKey, trimBlankRows); 
         const LabelValueBlock LVB( laStringMatrix );
 		return LVB;
     }

@@ -22,7 +22,7 @@ using namespace std;
     @brief constructor
 */
 LARatesAccruedCouponFuncBase::LARatesAccruedCouponFuncBase()
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -42,7 +42,7 @@ LARatesAccruedCouponFuncBase::~LARatesAccruedCouponFuncBase()
 bool
 LARatesAccruedCouponFuncBase::isTypeOf(function_t id) const
 {
-	return (id == FN_ACCRUEDCOUPONFUNCBASE ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_ACCRUEDCOUPONFUNCBASE ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!

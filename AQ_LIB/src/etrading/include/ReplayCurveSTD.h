@@ -5,5 +5,5 @@
 
 namespace etrading
 {
-    const LAString replayCurveSTD( const ReadDataFile::Load& inputFile );
+    const AQLString replayCurveSTD( const ReadDataFile::Load& inputFile );
 }

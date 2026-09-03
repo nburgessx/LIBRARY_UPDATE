@@ -10,11 +10,11 @@
 #pragma interface
 #endif
 
-#include "LACoreValuation.h"
-//#include "LADataValuation.h"
-//#include "LACoreAppError.h"
-//#include "LAString.h"
-//#include "LACoreTemplateType.h"
+#include "AQLCoreValuation.h"
+//#include "AQLDataValuation.h"
+//#include "AQLCoreAppError.h"
+//#include "AQLString.h"
+//#include "AQLCoreTemplateType.h"
 //#include "LAPricePayOff.h"
 //#include "LAPriceTradeValue.h"
 //#include "LALinearRatesSwapTradeValue.h"
@@ -43,25 +43,25 @@
 
 //#define __ITM_CHECK__ 
 //// FROTOTYPE ////
-class LADate;
-class LAObject;
-class LAPriceDataManager;
+class AQLDate;
+class AQLObject;
+class AQLPriceDataManager;
 class LAMathFXEntity;
 class LAMathIndexEntity;
 class LAMathPathEntity;
 class LARatesNumeraireBase;
 class LAPriceAccruedInterest;
 class LAPolynomialBase;
-class LADataDoubleMatrix;
+class AQLDataDoubleMatrix;
 class LAMathPlainVanillaEntity;
 class LAMathYieldCurve;
-class LACoreFunctionBase;
+class AQLCoreFunctionBase;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief class that evaluates trade
 
 */
-class LAPriceConvergenceValue : public LACoreValuation
+class LAPriceConvergenceValue : public AQLCoreValuation
 {
 public:
 	explicit LAPriceConvergenceValue(void);
@@ -70,15 +70,15 @@ public:
 	// Check function for this class ID	
 	virtual bool                isTypeOf(function_t id) const;
     // Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const; // %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const; // %%% COVARIANT RETURN %%%
     // Return this class type
 	virtual function_t			getType() const;
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
     // evaluation function
-	virtual double              value(const LADate& basedate, 
-										LAObject& object,
-									const LADataValuation& att) const;
+	virtual double              value(const AQLDate& basedate, 
+										AQLObject& object,
+									const AQLDataValuation& att) const;
 
 
 	//Remove warning:C4512
@@ -90,9 +90,9 @@ protected:
     // copy constructor
     LAPriceConvergenceValue(const LAPriceConvergenceValue& v);	
 private:
-	void setUpCalcTarget(LAObject& object, double value) const;
+	void setUpCalcTarget(AQLObject& object, double value) const;
 
-	double getInitialValue(LAObject& object) const;
+	double getInitialValue(AQLObject& object) const;
 
 };
 #endif

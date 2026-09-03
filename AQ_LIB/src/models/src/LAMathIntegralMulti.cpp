@@ -24,19 +24,19 @@ steps_integral_3D_0(0)
 }
 
 // int_1D_0
-void LAMathIntegralMulti::Set_func_integral_1D_0(LAFunction* method, int step) const
+void LAMathIntegralMulti::Set_func_integral_1D_0(AQLFunction* method, int step) const
 {
 	func_integral_1D_0 = method;
 	step_integral_1D_0 = step;
 }
 
-void LAMathIntegralMulti::Set_func_integral_1D_0_(LAFunction* method, int step) const
+void LAMathIntegralMulti::Set_func_integral_1D_0_(AQLFunction* method, int step) const
 {
 	func_integral_1D_0_ = method;
 	step_integral_1D_0_ = step;
 }
 
-void LAMathIntegralMulti::Set_func_integral_1D_0__(LAFunction* method, int step) const
+void LAMathIntegralMulti::Set_func_integral_1D_0__(AQLFunction* method, int step) const
 {
 	func_integral_1D_0__ = method;
 	step_integral_1D_0__ = step;
@@ -81,7 +81,7 @@ double LAMathIntegralMulti::integral_1D_0__(double ts, double te) const
 }
 
 // int_2D_0
-void LAMathIntegralMulti::Set_func_integral_2D_0(const vector<LAFunction*>& method, const vector<int>& steps) const
+void LAMathIntegralMulti::Set_func_integral_2D_0(const vector<AQLFunction*>& method, const vector<int>& steps) const
 {
 	func_integral_2D_0 = method;
 	steps_integral_2D_0 = steps;
@@ -110,7 +110,7 @@ double LAMathIntegralMulti::integral_2D_0_helper (double t) const
 }
 
 // int_2D_1
-void LAMathIntegralMulti::Set_func_integral_2D_1(const vector<LAFunction*>& method, const vector<int>& steps) const
+void LAMathIntegralMulti::Set_func_integral_2D_1(const vector<AQLFunction*>& method, const vector<int>& steps) const
 {
 	func_integral_2D_1 = method;
 	steps_integral_2D_1 = steps;
@@ -141,7 +141,7 @@ double LAMathIntegralMulti::integral_2D_1_helper(double t) const
 }
 
 // int_2D_2
-void LAMathIntegralMulti::Set_func_integral_2D_2(const vector<LAFunction*>& method, const vector<int>& steps) const
+void LAMathIntegralMulti::Set_func_integral_2D_2(const vector<AQLFunction*>& method, const vector<int>& steps) const
 {
 	func_integral_2D_2 = method;
 	steps_integral_2D_2 = steps;
@@ -172,7 +172,7 @@ double LAMathIntegralMulti::integral_2D_2_helper(double t) const
 }
 
 // int_3D_0
-void LAMathIntegralMulti::Set_func_integral_3D_0(const vector<LAFunction*>& method, const vector<int>& steps) const
+void LAMathIntegralMulti::Set_func_integral_3D_0(const vector<AQLFunction*>& method, const vector<int>& steps) const
 {
 	func_integral_3D_0 = method;
 	steps_integral_3D_0 = steps;
@@ -181,7 +181,7 @@ void LAMathIntegralMulti::Set_func_integral_3D_0(const vector<LAFunction*>& meth
 //
 double LAMathIntegralMulti::integral_3D_0 (double t) const
 {
-	vector<LAFunction*> tmp1(func_integral_3D_0.begin()+1, func_integral_3D_0.end());
+	vector<AQLFunction*> tmp1(func_integral_3D_0.begin()+1, func_integral_3D_0.end());
 	vector<int> tmp2(steps_integral_3D_0.begin()+1, steps_integral_3D_0.end());
 	Set_func_integral_2D_0(tmp1, tmp2);
 
@@ -192,7 +192,7 @@ double LAMathIntegralMulti::integral_3D_0 (double t) const
 //
 double LAMathIntegralMulti::integral_3D_0 (double ts, double te) const
 {
-	vector<LAFunction*> tmp1(func_integral_3D_0.begin()+1, func_integral_3D_0.end());
+	vector<AQLFunction*> tmp1(func_integral_3D_0.begin()+1, func_integral_3D_0.end());
 	vector<int> tmp2(steps_integral_3D_0.begin()+1, steps_integral_3D_0.end());
 	Set_func_integral_2D_0(tmp1, tmp2);
 

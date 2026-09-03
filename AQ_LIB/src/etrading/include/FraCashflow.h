@@ -8,8 +8,8 @@ namespace etrading
     {
     public:
         FraCashflow();
-        FraCashflow(const PayReceiveEnum& payReceive, double strikeRate, const LADate& fixingDate, const LADate& accrualStartDate, const LADate& accrualEndDate, 
-					int accrualDays, double accrualYearFraction, const LADate& paymentDate, double notional, double leverage);
+        FraCashflow(const PayReceiveEnum& payReceive, double strikeRate, const AQLDate& fixingDate, const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, 
+					int accrualDays, double accrualYearFraction, const AQLDate& paymentDate, double notional, double leverage);
 		virtual ~FraCashflow() {}
 
         CashflowPtr clone();

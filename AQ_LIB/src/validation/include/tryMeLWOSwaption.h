@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "RateProviderExternal.h"
 
@@ -29,7 +29,7 @@ namespace validation
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption PV
 	*/
-	double tryMeLWOSwaptionPV(const std::string& objectName, const LAStringMatrix& valuationSettingsLVB );
+	double tryMeLWOSwaptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB );
 
     /* @brief			validation interface for the meLWOSwaptionImplivedVol method
 	*  @param [in]		objectName			Swaption object name
@@ -37,34 +37,34 @@ namespace validation
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption implied vol
 	*/
-	double tryMeLWOSwaptionImpliedVol(const std::string& objectName, const double & price, const LAStringMatrix& valuationSettingsLVB );
+	double tryMeLWOSwaptionImpliedVol(const std::string& objectName, const double & price, const AQLStringMatrix& valuationSettingsLVB );
 
     /* @brief			validation interface for the meLWOSwaptionDelta
 	*  @param [in]		objectName			Swaption object name
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Delta
 	*/
-	double tryMeLWOSwaptionDelta(const std::string& objectName, const LAStringMatrix& valuationSettingsLVB );
+	double tryMeLWOSwaptionDelta(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB );
 
     /* @brief			validation interface for the meLWOSwaptionGamma
 	*  @param [in]		objectName			Swaption object name
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Gamma
 	*/
-	double tryMeLWOSwaptionGamma(const std::string& objectName, const LAStringMatrix& valuationSettingsLVB );
+	double tryMeLWOSwaptionGamma(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB );
 
     /* @brief			validation interface for the meLWOSwaptionVega
 	*  @param [in]		objectName			Swaption object name
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Vega
 	*/
-	double tryMeLWOSwaptionVega(const std::string& objectName, const LAStringMatrix& valuationSettingsLVB );
+	double tryMeLWOSwaptionVega(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB );
 
     /* @brief			validation interface for the meLWOSwaptionTheta
 	*  @param [in]		objectName			Swaption object name
 	*  @param [in]		valuationSettingsLVB	A LabelValueBlock containing valuation settings such as curveCollection, volatilityModel ...
 	*  @return			The swaption Theta
 	*/
-	double tryMeLWOSwaptionTheta(const std::string& objectName, const LAStringMatrix& valuationSettingsLVB );
+	double tryMeLWOSwaptionTheta(const std::string& objectName, const AQLStringMatrix& valuationSettingsLVB );
 }
 

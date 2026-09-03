@@ -2,7 +2,7 @@
 
 #include "Dependency.h"
 #include "ReadDataFile.h"
-#include "LACoreError.h"
+#include "AQLCoreError.h"
 #include "InitializeAQETrading.h"
 #include "tryMeLWOSwapCreation.h"
 
@@ -31,8 +31,8 @@ namespace google_test
         // Read Inputs
         std::string swapName                                = inputFile["swapName"];
         std::string swapGeneratorName                       = inputFile["swapGeneratorName"];
-        LAStringMatrix expressionLVB                          = inputFile["expressionLVB"];
-        LAStringMatrix swapPropertiesLVB                      = inputFile["swapPropertiesLVB"];
+        AQLStringMatrix expressionLVB                          = inputFile["expressionLVB"];
+        AQLStringMatrix swapPropertiesLVB                      = inputFile["swapPropertiesLVB"];
         bool isXccySwap                                     = inputFile["isXccySwap"];
         bool validateKeys                                   = inputFile["validateKeys"];
         
@@ -58,8 +58,8 @@ namespace google_test
         // Read Inputs
         std::string swapName                                = inputFile["swapName"];
         std::string swapGeneratorName                       = inputFile["swapGeneratorName"];
-        LAStringMatrix expressionLVB                          = inputFile["expressionLVB"];
-        LAStringMatrix swapPropertiesLVB                      = inputFile["swapPropertiesLVB"];
+        AQLStringMatrix expressionLVB                          = inputFile["expressionLVB"];
+        AQLStringMatrix swapPropertiesLVB                      = inputFile["swapPropertiesLVB"];
         bool isXccySwap                                     = inputFile["isXccySwap"];
         bool validateKeys                                   = inputFile["validateKeys"];
         
@@ -142,7 +142,7 @@ namespace google_test
             std::cout <<  "Test Error: TestLWOSwapGenerator.UNIT_CreateSwapUsingGenerator. Unable to read test input/output file(s).";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -214,7 +214,7 @@ namespace google_test
             std::cout <<  "Test Error: TestLWOSwapGenerator.UNIT_CreateSwapUsingGenerator_Repeat2. Unable to read test input/output file(s).";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -285,7 +285,7 @@ namespace google_test
             std::cout <<  "Test Error: TestLWOSwapGenerator.UNIT_CreateSwapUsingGeneratorWithMaturityAsTenorString. Unable to read test input/output file(s).";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -357,7 +357,7 @@ namespace google_test
             std::cout <<  "Test Error: TestLWOSwapGenerator.UNIT_CreateSwapUsingGeneratorWithMaturityAsTenorString_Repeat2. Unable to read test input/output file(s).";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

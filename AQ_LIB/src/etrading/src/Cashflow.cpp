@@ -6,30 +6,30 @@ namespace etrading
 
     Cashflow::Cashflow() :
         payReceive_(NONE_PAYRECEIVE_ENUM),  
-        fixingDate_(LADate()), 
-        accrualStartDate_(LADate()), 
-        accrualEndDate_(LADate()), 
+        fixingDate_(AQLDate()), 
+        accrualStartDate_(AQLDate()), 
+        accrualEndDate_(AQLDate()), 
         accrualDays_(0), 
         accrualYearFraction_(0), 
-        paymentDate_(LADate()), 
+        paymentDate_(AQLDate()), 
         notional_(0), 
         leverage_(1), 
 		couponMultiplier_(1),
         notionalExchange_(0), 
         fwdFxRate_(1),
-        fxFixingDate_(LADate()),
-        fixingEndDate_(LADate()),
+        fxFixingDate_(AQLDate()),
+        fixingEndDate_(AQLDate()),
         paymentFreqEnum_(NONE_FREQUENCY),
 		cashflowType_(NORMAL_CASHFLOW_TYPE),
         previousCashFlowsInfo_(std::vector<CashFlowInfo>()),
 		bespokeInfo_(CashFlowBespokeInfo())
     {}
 
-    Cashflow::Cashflow(const PayReceiveEnum& payReceive, const LADate& fixingDate, const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, 
-					double accrualYearFraction, const LADate& paymentDate, double notional, double leverage, double couponMultiplier, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType, const CashFlowBespokeInfo& bespokeInfo)
+    Cashflow::Cashflow(const PayReceiveEnum& payReceive, const AQLDate& fixingDate, const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, 
+					double accrualYearFraction, const AQLDate& paymentDate, double notional, double leverage, double couponMultiplier, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType, const CashFlowBespokeInfo& bespokeInfo)
 					: payReceive_(payReceive), fixingDate_(fixingDate), accrualStartDate_(accrualStartDate), accrualEndDate_(accrualEndDate), accrualDays_(accrualDays), 
 					accrualYearFraction_(accrualYearFraction), paymentDate_(paymentDate), leverage_(leverage), couponMultiplier_(couponMultiplier), fwdFxRate_(1), notionalExchange_(0),
-                    fxFixingDate_(LADate()), fixingEndDate_(LADate()), paymentFreqEnum_(zeroCouponSwapPaymentFreq), cashflowType_(cashflowType), previousCashFlowsInfo_(std::vector<CashFlowInfo>()), bespokeInfo_(bespokeInfo)
+                    fxFixingDate_(AQLDate()), fixingEndDate_(AQLDate()), paymentFreqEnum_(zeroCouponSwapPaymentFreq), cashflowType_(cashflowType), previousCashFlowsInfo_(std::vector<CashFlowInfo>()), bespokeInfo_(bespokeInfo)
 	{
         notional_ = notional;
         //set the PayRec sign to the Notional
@@ -101,7 +101,7 @@ namespace etrading
 
     double Cashflow::getCompoundRate( const CashflowData& cashflowData ) const
 	{
-    	throw LACoreInvalidData( "#Error: getCompoundRate not supported", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: getCompoundRate not supported", __FILE__, __LINE__ );
 	}
 
     double Cashflow::calculateCompounding(double cp, const CashflowData& cashflowData ) const 
@@ -263,27 +263,27 @@ namespace etrading
 		return accrualYearFraction_;
 	}
 
-	const LADate& Cashflow::getAccrualStartDate() const
+	const AQLDate& Cashflow::getAccrualStartDate() const
 	{
 		return accrualStartDate_;
 	}
 
-	const LADate& Cashflow::getAccrualEndDate() const
+	const AQLDate& Cashflow::getAccrualEndDate() const
 	{
 		return accrualEndDate_;
 	}
 
-	const LADate& Cashflow::getFixingDate() const
+	const AQLDate& Cashflow::getFixingDate() const
 	{
 		return fixingDate_;
 	}
 
-    void Cashflow::setFixingEndDate(const LADate& fixingEndDate) 
+    void Cashflow::setFixingEndDate(const AQLDate& fixingEndDate) 
 	{
 		fixingEndDate_ = fixingEndDate;
 	}
 
-    const LADate& Cashflow::getFixingEndDate() const
+    const AQLDate& Cashflow::getFixingEndDate() const
 	{
 		return fixingEndDate_;
 	}
@@ -304,17 +304,17 @@ namespace etrading
 		cashflowType_ = NORMAL_LAST_CASHFLOW_TYPE;
 	}
 
-	const LADate& Cashflow::getPaymentDate() const
+	const AQLDate& Cashflow::getPaymentDate() const
 	{
 		return paymentDate_;
 	}
 
-    void Cashflow::setPaymentDate(const LADate& paymentDate)
+    void Cashflow::setPaymentDate(const AQLDate& paymentDate)
     {
         paymentDate_ = paymentDate;
     }
 
-    void Cashflow::setFxFixingDate(const LADate& fxFixingDate)
+    void Cashflow::setFxFixingDate(const AQLDate& fxFixingDate)
     {
         fxFixingDate_ = fxFixingDate;
     }

@@ -2,7 +2,7 @@
 
 
 #include <ql/math/array.hpp>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LAQuantLibDisposable.h"
 
 

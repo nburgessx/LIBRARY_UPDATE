@@ -5,13 +5,13 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
-#include "LAMathDefine.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLMathDefine.h"
 #include "LAMathDateCalculations.h"
 #include "LAPricePayOff.h"
 #include "LAMathCurveFuncUtility.h"
@@ -20,11 +20,11 @@
 #include "LALinearRatesOptionValueDataProvider.h"
 #include "LAPriceCashFlowGenerator.h"
 #include "LALinearRatesSwapTradeValue.h"
-#include "LASplineInterpolation.h"
+#include "AQLSplineInterpolation.h"
 #include "LAMathIRVanillaFuncUtility.h"
 #include "LAMathIndexEntity.h"
 #include "LAMathVolFuncIRSABR.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 
 #define STD "STD"
 
@@ -68,7 +68,7 @@ LAPriceIRSwaptionValue::isTypeOf(function_t id) const
     @brief get option method name
      @return option method name
 */
-LAString 
+AQLString 
 LAPriceIRSwaptionValue::getOptionPayoffName() const
 {
 	return FN_IR_SWAPTIONVALUE_STR;
@@ -81,7 +81,7 @@ LAPriceIRSwaptionValue::getOptionPayoffName() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceIRSwaptionValue::registerData(LAPriceDataManager& dm) const
+LAPriceIRSwaptionValue::registerData(AQLPriceDataManager& dm) const
 {
 	LALinearRatesOptionValue::registerData(dm);
 	dm.setData(DATA_M_MV_IR_TENOR, DATA_STRING);
@@ -98,7 +98,7 @@ LAPriceIRSwaptionValue::registerData(LAPriceDataManager& dm) const
 	dm.setData(PRICING_DATA_CASHSETTLEMENTPAYMENTDATE, DATA_DATE);
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceIRSwaptionValue::clone() const
 {
     try 
@@ -107,7 +107,7 @@ LAPriceIRSwaptionValue::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -115,30 +115,30 @@ LAPriceIRSwaptionValue::clone() const
 
 // calc payoff after maturity
 double				
-LAPriceIRSwaptionValue::calcPayOffAterMaturity(const LADataValuation& att, LADataProvider* dp, LAObject& e) const
+LAPriceIRSwaptionValue::calcPayOffAterMaturity(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& e) const
 {
 	//dataProvider;
 	LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dp);
 	
-	LADataHolder* dh = &(e.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
-	LAString optiontype = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLDataHolder* dh = &(e.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
+	AQLString optiontype = dynamic_cast<AQLDataString &>(dh->get()).get();
 	optiontype.toUpper();
 
 	dh = &(e.getData(PRICING_DATA_PAYOUT, ISNOTNULL));
-	LAString payout = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString payout = dynamic_cast<AQLDataString &>(dh->get()).get();
 	payout.toUpper();
 	
 	AnalyticBKParam* bkparam = dynamic_cast<AnalyticBKParam* >(dataProvider->mParam[0][0]);
 	double val1 = 0.0;
 	double val2 = 0.0;
-	if (LAString("STANDARD") == payout)
+	if (AQLString("STANDARD") == payout)
 	{
 		
-		if( LAString("PAYERS") == optiontype && bkparam->F > bkparam->K )
+		if( AQLString("PAYERS") == optiontype && bkparam->F > bkparam->K )
 		{
 			val1 = bkparam->F - bkparam->K;
 		}
-		else if(LAString("RECEIVERS") == optiontype && bkparam->K > bkparam->F)
+		else if(AQLString("RECEIVERS") == optiontype && bkparam->K > bkparam->F)
 		{
 			val1 = bkparam->K - bkparam->F;
 		}
@@ -146,7 +146,7 @@ LAPriceIRSwaptionValue::calcPayOffAterMaturity(const LADataValuation& att, LADat
 			val1 = 0.0;
 	
 	}
-	else if (LAString("STRADDLE") == payout)
+	else if (AQLString("STRADDLE") == payout)
 	{
 		// in case of straddle first call, next put
 		if (bkparam->F > bkparam->K)
@@ -176,47 +176,47 @@ LAPriceIRSwaptionValue::calcPayOffAterMaturity(const LADataValuation& att, LADat
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*					
-LAPriceIRSwaptionValue::setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const
+AQLDataProvider*					
+LAPriceIRSwaptionValue::setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const
 {
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceIROptionValueDataProvider* dataProvider = NULL;
 	dataProvider = dynamic_cast<LAPriceIROptionValueDataProvider *>(LALinearRatesOptionValue::setUpDataProvider(basedate,object,att));
 
 	//unit
 	dh = &(object.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL));
-	dataProvider->unit = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	dataProvider->unit = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 
 	dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	LADataMultiReference& refs = dynamic_cast<LADataMultiReference &>(dh->get());
+	AQLDataMultiReference& refs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 	if (refs.getSize() != 1)
-		throw LACoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
-	LAObject& un = refs.get(0).get();
+		throw AQLCoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
+	AQLObject& un = refs.get(0).get();
 
 	//check detail
 	dh = &(un.getData(PRICING_DATA_INPUTTYPE, ISNOTNULL));
-	LAString inputtype = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString inputtype = dynamic_cast<AQLDataString &>(dh->get()).get();
 	if (inputtype.toUpper() != "DETAIL")
-		throw LACoreInvalidData("Swaption InputType error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Swaption InputType error",__FILE__,__LINE__);
 
 	// get DiscountCurve
 	dataProvider->mDCurveType = STD;
 	dh = &(un.getData(PRICING_DATA_DISCOUNTCURVE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dataProvider->mDCurveType = dynamic_cast<const LADataString &>(dh->get()).get();
+		dataProvider->mDCurveType = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
 	dh = &(un.getData(PRICING_DATA_INDEXGENERATOR, ISNOTNULL));
-	LADataReference& genref = dynamic_cast<LADataReference &>(dh->get());
-	LAObject& gen = genref.get().get();
+	AQLDataReference& genref = dynamic_cast<AQLDataReference &>(dh->get());
+	AQLObject& gen = genref.get().get();
 
 
 	dataProvider->mUnFrequency = getFrequencyFromIndexGenerator(gen,dataProvider);
@@ -225,31 +225,31 @@ LAPriceIRSwaptionValue::setUpDataProvider(const LADate& basedate, LAObject& obje
 	dataProvider->mUnTenor[0] = getNearestTenorString(un, dataProvider->mUnFrequency);
 
 	dh = &(un.getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-	dataProvider->mUnStartDate = dynamic_cast<LADataDate &>(dh->get()).get();
+	dataProvider->mUnStartDate = dynamic_cast<AQLDataDate &>(dh->get()).get();
 
 	
 	dh = &(gen.getData(PRICING_DATA_DAYCOUNT, ISNOTNULL));
-	dataProvider->mpUnDayCount = &(dynamic_cast<LAPriceDataDayCount &>(dh->get()));
+	dataProvider->mpUnDayCount = &(dynamic_cast<AQLPriceDataDayCount &>(dh->get()));
 	dh = &(un.getData(PRICING_DATA_FIXEDLEGDAYCOUNT, ISNOTNULL));
-	dataProvider->mpUnDayCountOfFixedLeg = &(dynamic_cast<LAPriceDataDayCount &>(dh->get()));
+	dataProvider->mpUnDayCountOfFixedLeg = &(dynamic_cast<AQLPriceDataDayCount &>(dh->get()));
 
 	dh = &(gen.getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL));
-	dataProvider->mpUnSlidingRule = &(dynamic_cast<LAPriceDataSlidingRule &>(dh->get()));
+	dataProvider->mpUnSlidingRule = &(dynamic_cast<AQLPriceDataSlidingRule &>(dh->get()));
 
 	dh = &(gen.getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL));
-	dataProvider->mpUnCalendar = &(dynamic_cast<LAPriceDataCalendar &>(dh->get()));
+	dataProvider->mpUnCalendar = &(dynamic_cast<AQLPriceDataCalendar &>(dh->get()));
 	dh = &(un.getData(PRICING_DATA_FIXEDLEGCALENDAR, ISNOTNULL));
-	dataProvider->mpUnCalendarOfFixedLeg = &(dynamic_cast<LAPriceDataCalendar &>(dh->get()));
+	dataProvider->mpUnCalendarOfFixedLeg = &(dynamic_cast<AQLPriceDataCalendar &>(dh->get()));
 
 	dh = &(gen.getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-	dataProvider->mUnCurrency = dynamic_cast<LADataString &>(dh->get()).get();
+	dataProvider->mUnCurrency = dynamic_cast<AQLDataString &>(dh->get()).get();
 
 	//get ForecastCurve(BasisCurve)
 	dataProvider->mFCurveType = STD;
 	dh = &(gen.getData(PRICING_DATA_BASISCURVE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dataProvider->mFCurveType = dynamic_cast<const LADataString &>(dh->get()).get();
+		dataProvider->mFCurveType = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
 	dataProvider->mFCurveTypes.resize(1);
@@ -257,31 +257,31 @@ LAPriceIRSwaptionValue::setUpDataProvider(const LADate& basedate, LAObject& obje
 	dh = &(gen.getData(PRICING_DATA_BASISCURVE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dataProvider->mFCurveTypes[0] = dynamic_cast<const LADataString &>(dh->get()).get();
+		dataProvider->mFCurveTypes[0] = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
 
 	//strike
 	dh = &(object.getData(PRICING_DATA_STRIKE, ISNOTNULL));
-	double strike = dynamic_cast<LADataDouble &>(dh->get()).get();
+	double strike = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	std::vector<AnalyticBKParam *> bkparam(dataProvider->mParam[0].size());
 
 	//in case of swaption strike = strike - margin;
 	double margin = 0.0;
 	dh = &(object.getData(PRICING_DATA_MARGIN, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		margin = dynamic_cast<LADataDouble &>(dh->get()).get();
+		margin = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 
 	double adjterm = 1.0;
 	if (margin != 0.0)
 	{
 		//this ajust term is temporary
-		LAString strMonth = getFrequencyFromIndexGenerator(gen,dataProvider,true);
-		LADate todate = LAMathDateCalculations::getDate(dataProvider->mAsofDate,strMonth,true);
+		AQLString strMonth = getFrequencyFromIndexGenerator(gen,dataProvider,true);
+		AQLDate todate = LAMathDateCalculations::getDate(dataProvider->mAsofDate,strMonth,true);
 		double t1 = dataProvider->mpUnDayCountOfFixedLeg->getTerm(dataProvider->mAsofDate, todate);
 		double t2 = dataProvider->mpUnDayCount->getTerm(dataProvider->mAsofDate, todate);
 		if (0.0 == t1)
-			throw LACoreInvalidData("DayCount Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("DayCount Error",__FILE__,__LINE__);
 		
 		adjterm = t2/t1;
 	}
@@ -295,13 +295,13 @@ LAPriceIRSwaptionValue::setUpDataProvider(const LADate& basedate, LAObject& obje
 }
 
 std::vector< std::vector<AnalyticParam*> >
-LAPriceIRSwaptionValue::createAnalyticParam(LAObject& object, LADataProvider* dp) const
+LAPriceIRSwaptionValue::createAnalyticParam(AQLObject& object, AQLDataProvider* dp) const
 {
 	(void)object;
 	(void)dp;
 	std::vector< std::vector<AnalyticParam*> > ret(1);
-	const LADataHolder* dh = &(object.getData(PRICING_DATA_PAYOUT, ISNOTNULL));
-	LAString payout = dynamic_cast<const LADataString &>(dh->get()).get();
+	const AQLDataHolder* dh = &(object.getData(PRICING_DATA_PAYOUT, ISNOTNULL));
+	AQLString payout = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	payout.toUpper();
 	if (payout == "STRADDLE")
 	{
@@ -318,22 +318,22 @@ LAPriceIRSwaptionValue::createAnalyticParam(LAObject& object, LADataProvider* dp
 }
 
 void
-LAPriceIRSwaptionValue::setUpAnalyticParam(LAObject& object, LADataProvider* dp) const
+LAPriceIRSwaptionValue::setUpAnalyticParam(AQLObject& object, AQLDataProvider* dp) const
 {
 	LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dp);
 	if (dataProvider->mAsofDate >= dataProvider->mMaturityDate)
 	{
 		return;
 	}
-	LADataInstance* dataInstance = object.getDataInstance(); 
-	LADataHolder*dh;
+	AQLDataInstance* dataInstance = object.getDataInstance(); 
+	AQLDataHolder*dh;
 
-	LADate mdymatudate = (dataProvider->mAsofDate < dataProvider->mMaturityDate) ? dataProvider->mMaturityDate : dataProvider->mAsofDate;
+	AQLDate mdymatudate = (dataProvider->mAsofDate < dataProvider->mMaturityDate) ? dataProvider->mMaturityDate : dataProvider->mAsofDate;
 	
 	//LAMathYieldCurve
 	const LAMathYieldCurve& baseyc = dataProvider->mpvanilla->getIRCurve(dataProvider->mUnCurrency);
-	const LAObject& ylddata = baseyc.getYieldData().get().get();
-	LAString curveid = dynamic_cast<const LADataString &>(ylddata.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	const AQLObject& ylddata = baseyc.getYieldData().get().get();
+	AQLString curveid = dynamic_cast<const AQLDataString &>(ylddata.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 	
 	//get yc
 	LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveid);
@@ -342,12 +342,12 @@ LAPriceIRSwaptionValue::setUpAnalyticParam(LAObject& object, LADataProvider* dp)
 	yc.getDayCount().setDayCount(dataProvider->mpUnDayCountOfFixedLeg->getDayCount());
 	yc.getSlidingRule().convertFromString(dataProvider->mpUnSlidingRule->convertToString());
 	
-	//LAString calstr = dataProvider->mpUnCalendar->convertToString();
-	LAString calstr = dataProvider->mpUnCalendarOfFixedLeg->convertToString();
+	//AQLString calstr = dataProvider->mpUnCalendar->convertToString();
+	AQLString calstr = dataProvider->mpUnCalendarOfFixedLeg->convertToString();
 	LAMathCurveFuncUtility::setCalendarForCurveID(yc,calstr);
 	yc.getFrequency().convertFromString(dataProvider->mUnFrequency);
 
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 	//double
 	yc.setCurveType(dataProvider->mDCurveType);
 	double nu = LAMathIRVanillaFuncUtility::getAnnuity(dataProvider->mUnStartDate,dataProvider->mUnTenor[0],yc);
@@ -358,7 +358,7 @@ LAPriceIRSwaptionValue::setUpAnalyticParam(LAObject& object, LADataProvider* dp)
 	LAMathCurveFuncUtility::setUpForwardDayCount(dataInstance, curveid, dataProvider->mFCurveTypes[0], yc);
 	double forward = yc.getParRate(dataProvider->mUnStartDate,dataProvider->mUnTenor[0],NULL,NULL,NULL,dataProvider->mFCurveTypes[0],dataProvider->mDCurveType);
 //#ifdef ZEROFLOOR
-//	forward = LAMath::max(forward, MIN_RATE);
+//	forward = AQLMath::max(forward, MIN_RATE);
 //#endif	
 	std::vector <AnalyticBKParam *> bkparam(dataProvider->mParam[0].size());
 	for (unsigned int i = 0; i < dataProvider->mParam[0].size(); i++)
@@ -375,55 +375,55 @@ LAPriceIRSwaptionValue::setUpAnalyticParam(LAObject& object, LADataProvider* dp)
 	return;
 }
 
-const LADate&
-LAPriceIRSwaptionValue::getDeliveryDate(const LAObject& object, LADataProvider* dp) const
+const AQLDate&
+LAPriceIRSwaptionValue::getDeliveryDate(const AQLObject& object, AQLDataProvider* dp) const
 {
 	(void) dp;
-	const LADataHolder* dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& refs = dynamic_cast<const LADataMultiReference &>(dh->get());
+	const AQLDataHolder* dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
+	const AQLDataMultiReference& refs = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 	if (refs.getSize() > 2)
-		throw LACoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
-	LAObject& un = refs.get(0).get();
+		throw AQLCoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
+	AQLObject& un = refs.get(0).get();
 
 	dh = &(un.getData(PRICING_DATA_ENDDATE, ISNOTNULL));
-	const LADate& edate = dynamic_cast<const LADataDate &>(dh->get()).get();
+	const AQLDate& edate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 	return edate;	
 }
 
 
-LAString 
-LAPriceIRSwaptionValue::getNearestTenorString(const LAObject& object, const LAString& freq) const
+AQLString 
+LAPriceIRSwaptionValue::getNearestTenorString(const AQLObject& object, const AQLString& freq) const
 {
 	//LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dataProvider);
 
-	LAString ret;
-	const LADataHolder* dh = &(object.getData(DATA_M_MV_IR_TENOR, NOCHECK));
+	AQLString ret;
+	const AQLDataHolder* dh = &(object.getData(DATA_M_MV_IR_TENOR, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		ret = dynamic_cast<const LADataString &>(dh->get()).get();
+		ret = dynamic_cast<const AQLDataString &>(dh->get()).get();
 		ret.toUpper();
 		return ret;
 	}
 
 	dh = &(object.getData(PRICING_DATA_STARTDATE, ISNOTNULL));
-	LADate sdate = dynamic_cast<const LADataDate &>(dh->get()).get();
+	AQLDate sdate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 
 	dh = &(object.getData(PRICING_DATA_ENDDATE, ISNOTNULL));
-	LADate edate = dynamic_cast<const LADataDate &>(dh->get()).get();
+	AQLDate edate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 
 	int y = sdate.intervalYears(edate);
 	int m = 12*y + sdate.intervalMonths(edate);
 	
-	//LAString freq = dataProvider->mUnFrequency;
+	//AQLString freq = dataProvider->mUnFrequency;
 	if (freq == MONTHLY)
 	{
-		ret = LAString(m) + LAString("M");
+		ret = AQLString(m) + AQLString("M");
 	}
 	else if (freq == QUARTERLY)
 	{
 		/*if (m % 3 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
 		}*/
 		double val = static_cast<double>(m)/3;
 		val = (ceil(val) - val > val - floor(val)) ? floor(val) : ceil(val);
@@ -432,7 +432,7 @@ LAPriceIRSwaptionValue::getNearestTenorString(const LAObject& object, const LASt
 		if (0 == adjustm)
 			adjustm = 3;
 
-		ret = LAString(adjustm) + LAString("M");
+		ret = AQLString(adjustm) + AQLString("M");
 		
 	}
 	else if (freq == SEMI_ANNUAL)
@@ -443,7 +443,7 @@ LAPriceIRSwaptionValue::getNearestTenorString(const LAObject& object, const LASt
 		adjustm *= 6;
 		if (0 == adjustm)
 			adjustm = 6;
-		ret = LAString(adjustm) + LAString("M");
+		ret = AQLString(adjustm) + AQLString("M");
 
 	}
 	else if (freq == ANNUAL)
@@ -454,16 +454,16 @@ LAPriceIRSwaptionValue::getNearestTenorString(const LAObject& object, const LASt
 		adjustm *= 12;
 		if (0 == adjustm)
 			adjustm = 12;
-		ret = LAString(adjustm) + LAString("M");
+		ret = AQLString(adjustm) + AQLString("M");
 		
 	}
 	else
 	{
 		//error
-		LAString err = "Frequency: ";
+		AQLString err = "Frequency: ";
 		err += freq;
 		err += " is not support";
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	ret.toUpper();
@@ -471,18 +471,18 @@ LAPriceIRSwaptionValue::getNearestTenorString(const LAObject& object, const LASt
 
 }
 
-LAString 
-LAPriceIRSwaptionValue::getFrequencyFromIndexGenerator(const LAObject& object, LADataProvider* dp, bool isMonthString) const
+AQLString 
+LAPriceIRSwaptionValue::getFrequencyFromIndexGenerator(const AQLObject& object, AQLDataProvider* dp, bool isMonthString) const
 {
 	//check index type it must be LIBOR
-	const LADataHolder* dh = &(object.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL));
-	LAString indextype = dynamic_cast<const LADataString &>(dh->get()).get();
+	const AQLDataHolder* dh = &(object.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL));
+	AQLString indextype = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	if (indextype.toUpper() != LIBOR)
-		throw LACoreInvalidData("IndexGenerator must be Libor index",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("IndexGenerator must be Libor index",__FILE__,__LINE__);
 
 	//accessory
 	dh = &(object.getData(PRICING_DATA_ACCESSORY, ISNOTNULL));
-	LAString libormonth = dynamic_cast<const LADataString &>(dh->get()).get();
+	AQLString libormonth = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	int y, m, d, w;
 	LAMathDateCalculations::termStrtoYMDW(libormonth, y, m, d, w);
 	m = 12*y + m;
@@ -497,7 +497,7 @@ LAPriceIRSwaptionValue::getFrequencyFromIndexGenerator(const LAObject& object, L
 		else if (1 == m)
 			return MONTHLY;
 		else
-			throw LACoreInvalidData("Accessory Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Accessory Error",__FILE__,__LINE__);
 	}
 	else
 	{
@@ -510,7 +510,7 @@ LAPriceIRSwaptionValue::getFrequencyFromIndexGenerator(const LAObject& object, L
 		else if (1 == m)
 			return "1M";
 		else
-			throw LACoreInvalidData("Accessory Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Accessory Error",__FILE__,__LINE__);
 	}
 
 	
@@ -521,7 +521,7 @@ LAPriceIRSwaptionValue::getFrequencyFromIndexGenerator(const LAObject& object, L
 	@brief create new cache class
 	@return cache class
 */
-LADataProvider*
+AQLDataProvider*
 LAPriceIRSwaptionValue::createNewDataProvider() const
 {
 	LAPriceIROptionValueDataProvider* dataProvider = NULL;
@@ -531,20 +531,20 @@ LAPriceIRSwaptionValue::createNewDataProvider() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 	return dataProvider;
 }
 
 void
-LAPriceIRSwaptionValue::getAnalyticParamResult( const LAObject& object,
-											 LADataProvider* dp,
-											 LAStringVector& names,
+LAPriceIRSwaptionValue::getAnalyticParamResult( const AQLObject& object,
+											 AQLDataProvider* dp,
+											 AQLStringVector& names,
 											 DoubleVector& params 
 										   ) const
 {
-	const LADataHolder* dh = &object.getData(PRICING_DATA_PAYOUT, ISNOTNULL);
-	LAString payout = dynamic_cast<const LADataString&>(dh->get()).get();
+	const AQLDataHolder* dh = &object.getData(PRICING_DATA_PAYOUT, ISNOTNULL);
+	AQLString payout = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	payout.toUpper();
 
 	double ret = 0.0;
@@ -603,17 +603,17 @@ LAPriceIRSwaptionValue::getAnalyticParamResult( const LAObject& object,
 }
 
 void 
-LAPriceIRSwaptionValue::setUpNumeraireCurrency(const LAObject& trade, LALinearRatesOptionValueDataProvider* dataProvider) const
+LAPriceIRSwaptionValue::setUpNumeraireCurrency(const AQLObject& trade, LALinearRatesOptionValueDataProvider* dataProvider) const
 {
-    const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
-    const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference&>(legs.get(0).get().getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
-    const LAString& ccy = dynamic_cast<const LADataString&>(cashlets.get(0).get().getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
+    const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
+    const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference&>(legs.get(0).get().getData(PRICING_DATA_CASHLETS, ISNOTNULL).get());
+    const AQLString& ccy = dynamic_cast<const AQLDataString&>(cashlets.get(0).get().getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
     dataProvider->mnumerairecur = ccy;
     dataProvider->mnumerairecur.toUpper();
 }
 
 double
-LAPriceIRSwaptionValue::value(const LADate& basedate, LAObject& inst, const LADataValuation& att) const
+LAPriceIRSwaptionValue::value(const AQLDate& basedate, AQLObject& inst, const AQLDataValuation& att) const
 {
     if(hasCashflow(inst)){
         return LALinearRatesOptionValue::value(basedate, inst, att);
@@ -621,21 +621,21 @@ LAPriceIRSwaptionValue::value(const LADate& basedate, LAObject& inst, const LADa
     else{
         const double pv = 0;
         inst.remove(PRICING_DATA_DIRTYPRICE);
-        inst.add(PRICING_DATA_DIRTYPRICE, new LADataDouble(pv));
+        inst.add(PRICING_DATA_DIRTYPRICE, new AQLDataDouble(pv));
         inst.remove(PRICING_DATA_CLEANPRICE);
-        inst.add(PRICING_DATA_CLEANPRICE, new LADataDouble(pv));
+        inst.add(PRICING_DATA_CLEANPRICE, new AQLDataDouble(pv));
 		return pv;
     }
 }
 
 bool 
-LAPriceIRSwaptionValue::hasCashflow(const LAObject& trade) const
+LAPriceIRSwaptionValue::hasCashflow(const AQLObject& trade) const
 {
-    const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
-    const LAObjectHolder& leg1 = legs.get(0);
-    const LAObjectHolder& leg2 = legs.get(0);
+    const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
+    const AQLObjectHolder& leg1 = legs.get(0);
+    const AQLObjectHolder& leg2 = legs.get(0);
     
-    const LADataHolder* dh;
+    const AQLDataHolder* dh;
     dh = &leg1.getData(PRICING_DATA_CASHLETS);
     const bool leg1_has_cashlets = dh->isDefined() && !dh->isNull();
     dh = &leg2.getData(PRICING_DATA_CASHLETS);
@@ -645,22 +645,22 @@ LAPriceIRSwaptionValue::hasCashflow(const LAObject& trade) const
 }
 
 std::vector< std::vector<LABlackScholesBase* > > 
-LAPriceIRSwaptionValue::getAnalyticMethod(LAObject& object, LADataProvider* dp) const
+LAPriceIRSwaptionValue::getAnalyticMethod(AQLObject& object, AQLDataProvider* dp) const
 {
 	(void)dp;
 
-	const LAStringMatrix bscomponentmat = getBSComponentMat(object, BK);
+	const AQLStringMatrix bscomponentmat = getBSComponentMat(object, BK);
 
 	std::vector< std::vector<LABlackScholesBase* > > ret;
 	ret.resize(1, std::vector<LABlackScholesBase*>(bscomponentmat[0].size()));
 
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
 	for (unsigned int i = 0; i < ret[0].size(); ++i)
 	{
-		std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponentmat[0][i]);
+		std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponentmat[0][i]);
 		if (it == var.end())
 		{
-			throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 		}
 			
 		ret[0][i] = it->second;
@@ -670,22 +670,22 @@ LAPriceIRSwaptionValue::getAnalyticMethod(LAObject& object, LADataProvider* dp) 
 }
 
 std::vector< std::vector<LABlackScholesBase* > > 
-LAPriceIRSwaptionValue::getPayoffMethod(LAObject& object, LADataProvider* dp) const
+LAPriceIRSwaptionValue::getPayoffMethod(AQLObject& object, AQLDataProvider* dp) const
 {
 	(void)dp;
 
-	const LAStringMatrix bscomponentmat = getBSComponentMat(object, BKPAYOFF);
+	const AQLStringMatrix bscomponentmat = getBSComponentMat(object, BKPAYOFF);
 
 	std::vector< std::vector<LABlackScholesBase* > > ret;
 	ret.resize(1, std::vector<LABlackScholesBase*>(bscomponentmat[0].size()));
 
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
 	for (unsigned int i = 0; i < ret[0].size(); ++i)
 	{
-		std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponentmat[0][i]);
+		std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponentmat[0][i]);
 		if (it == var.end())
 		{
-			throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 		}
 			
 		ret[0][i] = it->second;
@@ -694,52 +694,52 @@ LAPriceIRSwaptionValue::getPayoffMethod(LAObject& object, LADataProvider* dp) co
 
 }
 
-LAStringMatrix 
-LAPriceIRSwaptionValue::getBSComponentMat(LAObject& trade, const LAString& BKFuncType) const
+AQLStringMatrix 
+LAPriceIRSwaptionValue::getBSComponentMat(AQLObject& trade, const AQLString& BKFuncType) const
 {
-	LADataHolder* dh;
-	LAStringMatrix ret;
+	AQLDataHolder* dh;
+	AQLStringMatrix ret;
 
 	dh = &(trade.getData(PRICING_DATA_PAYOUT, ISNOTNULL));
-	LAString payout = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString payout = dynamic_cast<AQLDataString &>(dh->get()).get();
 	payout.toUpper();
 
 	if (payout == "STRADDLE")
 	{
-		ret.resize(1, LAStringVector(2));
+		ret.resize(1, AQLStringVector(2));
 			
 		//call up in
-		LAString bscomponent = BKFuncType + LAString(PREM) + LAString(CALL);
+		AQLString bscomponent = BKFuncType + AQLString(PREM) + AQLString(CALL);
 		ret[0][0] = bscomponent;
 			
 		//call up out 
-		bscomponent = BKFuncType + LAString(PREM) + LAString(PUT);
+		bscomponent = BKFuncType + AQLString(PREM) + AQLString(PUT);
 		ret[0][1] = bscomponent;
 		return ret;
 		
 	}
 	else if (payout == "STANDARD")
 	{
-		ret.resize(1, LAStringVector(1));
+		ret.resize(1, AQLStringVector(1));
 			
 		dh = &(trade.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
-		LAString optiontype = dynamic_cast<LADataString &>(dh->get()).get();
+		AQLString optiontype = dynamic_cast<AQLDataString &>(dh->get()).get();
 		optiontype.toUpper();
-		LAString key;
+		AQLString key;
 		if (optiontype == "PAYERS")
 			key = "CALL";
 		else if (optiontype == "RECEIVERS")
 			key = "PUT";
 		else 
-			throw LACoreInvalidData("Option Type error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Option Type error",__FILE__,__LINE__);
 
-		LAString bscomponent = BKFuncType + LAString(PREM) + key;			
+		AQLString bscomponent = BKFuncType + AQLString(PREM) + key;			
 		ret[0][0] = bscomponent;
 		return ret;
 	}
 	else
 	{
-		throw LACoreInvalidData("PayOut error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("PayOut error",__FILE__,__LINE__);
 	}
 
 }

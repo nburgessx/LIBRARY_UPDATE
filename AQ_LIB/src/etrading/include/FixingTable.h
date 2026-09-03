@@ -108,7 +108,7 @@ namespace etrading
 		void populateFixingTableDatesValues(std::vector<Variant>& fixingDates, std::vector<Variant>& fixingRates) const;
 
 		// Helper function to get a matrix of fixingDates & fixingValues
-		LAStringMatrix getFixingTableDateValueMatrix() const;
+		AQLStringMatrix getFixingTableDateValueMatrix() const;
 
         // Populate the FixingTable Schema Object
         virtual const SchemaObject toSchemaObject() const;

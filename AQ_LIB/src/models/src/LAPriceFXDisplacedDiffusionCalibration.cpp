@@ -6,35 +6,35 @@
 #endif
 
 #include "LAPriceFXDisplacedDiffusionCalibration.h"
-#include "LAObject.h"
-#include "LADataProcedure.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLObject.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "LAMathDateCalculations.h"
 #include "LAPriceCFGenUtility.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LADataMatrix.h"
-#include "LAMathValuableEntity.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLDataMatrix.h"
+#include "AQLMathValuableEntity.h"
 
-#include "LAPriceTargetFunction.h"
-#include "LAPriceLSTargetFunction.h"
+#include "AQLPriceTargetFunction.h"
+#include "AQLPriceLSTargetFunction.h"
 #include "LAPriceCashFlowGenerator.h"
-#include "LAOptimumBFGS.h"
+#include "AQLOptimumBFGS.h"
 #include <algorithm>
 #include <float.h>
 
@@ -49,7 +49,7 @@ class FXDDCalibLSTool
 {
 public:
 	// constructor
-	explicit FXDDCalibLSTool(LADataDoubles* pAttr) : mpAttr(pAttr) {;}
+	explicit FXDDCalibLSTool(AQLDataDoubles* pAttr) : mpAttr(pAttr) {;}
 	/*!
 		@brief set up parameter for function pointed by a member variable
 	*/
@@ -61,7 +61,7 @@ public:
     {
         mpAttr->set(param, 0);
     };
-	LADataDoubles* mpAttr; // pointer to LADataDoubles 
+	AQLDataDoubles* mpAttr; // pointer to AQLDataDoubles 
 };
 
 
@@ -71,7 +71,7 @@ public:
     @brief default constructor
 */
 LAPriceFXDisplacedDiffusionCalibration::LAPriceFXDisplacedDiffusionCalibration()
-: LACoreProcedure()
+: AQLCoreProcedure()
 {
 }
 
@@ -79,7 +79,7 @@ LAPriceFXDisplacedDiffusionCalibration::LAPriceFXDisplacedDiffusionCalibration()
     @brief copy constructor
 */
 LAPriceFXDisplacedDiffusionCalibration::LAPriceFXDisplacedDiffusionCalibration(const LAPriceFXDisplacedDiffusionCalibration& p)
-: LACoreProcedure(p)
+: AQLCoreProcedure(p)
 {
 
 }
@@ -101,14 +101,14 @@ bool
 LAPriceFXDisplacedDiffusionCalibration::isTypeOf(function_t id) const
 {
 	return (id == FN_IR_FXDISPLACEDDIFFUSIONCALIBRATION ? true :
-						LACoreProcedure::isTypeOf(id));
+						AQLCoreProcedure::isTypeOf(id));
 }
 /*!
     @brief  Copy this class
 
 	@return pointer to copied object
 */
-LACoreFunctionBase*		
+AQLCoreFunctionBase*		
 LAPriceFXDisplacedDiffusionCalibration::clone() const
 {
     try 
@@ -117,7 +117,7 @@ LAPriceFXDisplacedDiffusionCalibration::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -138,7 +138,7 @@ LAPriceFXDisplacedDiffusionCalibration::getType() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceFXDisplacedDiffusionCalibration::registerData(LAPriceDataManager& dm) const
+LAPriceFXDisplacedDiffusionCalibration::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(PRICING_DATA_CALIBRATORENGINE,		DATA_PROCEDURE);
 	dm.setData(CALIBRATION_DATA_CALIBRATIONDATA,				DATA_MULTIREFERENCE);
@@ -170,35 +170,35 @@ LAPriceFXDisplacedDiffusionCalibration::registerData(LAPriceDataManager& dm) con
 	@note basedate is not used in estimation
 */
 void	            
-LAPriceFXDisplacedDiffusionCalibration::calibrateModel(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const
+LAPriceFXDisplacedDiffusionCalibration::calibrateModel(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const
 {
 	
 	(void)basedate; (void)att; 
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	dh = &(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL));
-	const LADataMultiReference& attrdata = dynamic_cast<LADataMultiReference&>(dh->get());
-	std::vector<LAObject*> data;
+	const AQLDataMultiReference& attrdata = dynamic_cast<AQLDataMultiReference&>(dh->get());
+	std::vector<AQLObject*> data;
 	for(unsigned int i=0;i<attrdata.getSize();i++)
 		data.push_back(&attrdata.get(i).get());
-	std::vector<LAObject*>::iterator it = data.begin();
+	std::vector<AQLObject*>::iterator it = data.begin();
 	////asof 
 	dh = &(object.getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL));
-	LADate asof = dynamic_cast<LADataDate &>(dh->get()).get();
+	AQLDate asof = dynamic_cast<AQLDataDate &>(dh->get()).get();
 	//vole object
 	dh = &(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL));
-	LAObject& vole = dynamic_cast<LADataReference&>(dh->get()).get().get();
+	AQLObject& vole = dynamic_cast<AQLDataReference&>(dh->get()).get().get();
 	//get betacap and betafloor
 	double bcap = DBL_MAX;
 	double bfloor = DBL_MIN;
 	dh = &(object.getData(PRICING_DATA_BETACAP,NOCHECK));
 	if(dh->isDefined())
-		bcap = dynamic_cast<LADataDouble &>(dh->get()).get();
+		bcap = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	dh = &(object.getData(PRICING_DATA_BETAFLOOR,NOCHECK));
 	if(dh->isDefined())
-		bfloor = dynamic_cast<LADataDouble &>(dh->get()).get();
+		bfloor = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	//making data for for grid calibration
 	makeAttributeForGridEntity(basedate,object,att);
 
@@ -207,32 +207,32 @@ LAPriceFXDisplacedDiffusionCalibration::calibrateModel(const LADate& basedate,
 	DoubleVector converg(calibSize,0.0),resultvol(calibSize,0.0),resultbeta(calibSize,0.0),
 					resultvolTm(calibSize,0.0),resultbetaTm(calibSize,0.0);
 	DoubleMatrix marketprem(5,DoubleVector(calibSize,0.0));
-	LAStringVector resultmatu(calibSize);
+	AQLStringVector resultmatu(calibSize);
 	for(unsigned int i=0;i<calibSize;i++)
 	{
 		// Least Square Function
-		LAPriceLSTargetFunction<FXDDCalibLSTool> method;
+		AQLPriceLSTargetFunction<FXDDCalibLSTool> method;
 		method.setBaseDate(asof);
 		// Target variable - calibvariables
 		dh = &(vole.getData(PRICING_DATA_CALIBVARIABLES,ISNOTNULL));
-		FXDDCalibLSTool tool(&dynamic_cast<LADataDoubles &>(dh->get()));
+		FXDDCalibLSTool tool(&dynamic_cast<AQLDataDoubles &>(dh->get()));
 		method.setVariable(tool);
 
 		unsigned int LSsize = 1;
-		LAMathObjectValue    temp_entity(object.getDataInstance() );
-        vector< pair<LAMathObjectValue*, LAMathObjectValue*> > target(LSsize);
+		AQLMathObjectValue    temp_entity(object.getDataInstance() );
+        vector< pair<AQLMathObjectValue*, AQLMathObjectValue*> > target(LSsize);
 		
 		//set startpos
 		data[i]->remove(PRICING_DATA_STARTPOSITION);
-		data[i]->add(PRICING_DATA_STARTPOSITION,new LADataInt(startpos));
+		data[i]->add(PRICING_DATA_STARTPOSITION,new AQLDataInt(startpos));
 		//set target
-		target[0].first = dynamic_cast<LAMathObjectValue*>(data[i]);
+		target[0].first = dynamic_cast<AQLMathObjectValue*>(data[i]);
 		target[0].second = &temp_entity;
 		method.set(target);
 		
 		//set optimum condition
-		LAOptimumBFGS bfgs;
-		LAOptimumOption& opt = bfgs.getOption();
+		AQLOptimumBFGS bfgs;
+		AQLOptimumOption& opt = bfgs.getOption();
 		opt.mPrecision = BFGSPRECISION;
 		opt.mIterMax = BFGSMAXNUM;
 		opt.mException = false;
@@ -248,9 +248,9 @@ LAPriceFXDisplacedDiffusionCalibration::calibrateModel(const LADate& basedate,
 
 		//initialval
 		dh = &(data[i]->getData(PRICING_DATA_VOLATILITYS,ISNOTNULL));
-		double atm = dynamic_cast<const LADataDoubles &>(dh->get()).get()[0];
+		double atm = dynamic_cast<const AQLDataDoubles &>(dh->get()).get()[0];
 		dh = &(data[i]->getData(PRICING_DATA_TERMBETA,ISNOTNULL));
-		double termbeta = dynamic_cast<LADataDouble &>(dh->get()).get();
+		double termbeta = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 		DoubleVector x(2); x[0] = atm; x[1] = termbeta;
 		double eps = 1E-3;
 		if(termbeta < bfloor)
@@ -264,37 +264,37 @@ LAPriceFXDisplacedDiffusionCalibration::calibrateModel(const LADate& basedate,
 		{
 			error = bfgs.findMinimum(method,x);
 		}
-		catch(LACoreError &err)
+		catch(AQLCoreError &err)
 		{
 			
-			LAString attr = "FX Calibration, findMinimum error in BFGS. Calib num = " + LAString(static_cast<int>(i)) + ". [" + LAString(__FILE__) + ":" + LAString(__LINE__) + "]";
-			LAString add = "\n";
+			AQLString attr = "FX Calibration, findMinimum error in BFGS. Calib num = " + AQLString(static_cast<int>(i)) + ". [" + AQLString(__FILE__) + ":" + AQLString(__LINE__) + "]";
+			AQLString add = "\n";
 			for (unsigned int i = 0;i < err.getSize();++i)
 			{
 				add += "<---";
-				LAString tmp = LAString(err.getMsg(i)) + "[" + LAString(err.getFile(i)) + ":" + LAString(err.getLine(i)) + "]";
+				AQLString tmp = AQLString(err.getMsg(i)) + "[" + AQLString(err.getFile(i)) + ":" + AQLString(err.getLine(i)) + "]";
 				attr += add + tmp;
 			}
 			//regist 
-			LADataHolder &dh = object.getData(CALIBRATION_DATA_ERRORMESSAGES, NOCHECK);
+			AQLDataHolder &dh = object.getData(CALIBRATION_DATA_ERRORMESSAGES, NOCHECK);
 			if (dh.isDefined() && !dh.isNull())
 			{
-				dynamic_cast<LADataStrings &>(dh.get()).push_back(attr);
+				dynamic_cast<AQLDataStrings &>(dh.get()).push_back(attr);
 			}
 			else
 			{
-				LAStringVector msgs(1, attr);
-				object.add(CALIBRATION_DATA_ERRORMESSAGES, new LADataStrings(msgs));
+				AQLStringVector msgs(1, attr);
+				object.add(CALIBRATION_DATA_ERRORMESSAGES, new AQLDataStrings(msgs));
 			}
 		}
 
 		dh = &(data[i]->getData(CALIBRATION_DATA_VALUE,ISNOTNULL));
-		LADataValuation& attrval = dynamic_cast<LADataValuation&>(dh->get());
-		const LACoreValuation& valuation = attrval.getMethod();
+		AQLDataValuation& attrval = dynamic_cast<AQLDataValuation&>(dh->get());
+		const AQLCoreValuation& valuation = attrval.getMethod();
 		//set next startpos and endpos
 		startpos = dynamic_cast<const LAMathAntonovFXOption &>(valuation).getNextPos(attrval);
 		data[i]->remove(PRICING_DATA_ENDPOSITION);
-		data[i]->add(PRICING_DATA_ENDPOSITION,new LADataInt(startpos));
+		data[i]->add(PRICING_DATA_ENDPOSITION,new AQLDataInt(startpos));
 		//set next volresult
 		DoubleVector volresult = dynamic_cast<const LAMathAntonovFXOption &>(valuation).getVolatilityResult(attrval);
 		//set nextt begagrids
@@ -310,35 +310,35 @@ LAPriceFXDisplacedDiffusionCalibration::calibrateModel(const LADate& basedate,
 			betaresult.erase(betaresult.begin()+startpos,betaresult.end());
 			betaresult.insert(betaresult.begin()+startpos,size,betalast);
 		}
-		dynamic_cast<LADataDoubles&>(vole.getData(PRICING_DATA_FXVOLGRIDS,ISNOTNULL).get()).set(volresult);
-		dynamic_cast<LADataDoubles&>(vole.getData(PRICING_DATA_FXBETAGRIDS,ISNOTNULL).get()).set(betaresult);
+		dynamic_cast<AQLDataDoubles&>(vole.getData(PRICING_DATA_FXVOLGRIDS,ISNOTNULL).get()).set(volresult);
+		dynamic_cast<AQLDataDoubles&>(vole.getData(PRICING_DATA_FXBETAGRIDS,ISNOTNULL).get()).set(betaresult);
 	
 		double btm = dynamic_cast<const LAMathAntonovFXOption &>(valuation).getBetaTM(attrval);
 		btm += (btm==0.0) ? 1E-7 : 0.0;
 		double vtm = dynamic_cast<const LAMathAntonovFXOption &>(valuation).getVTM(attrval);
 		double tm = dynamic_cast<const LAMathAntonovFXOption &>(valuation).getTM(attrval);
 		if(tm==0.0)
-			throw LACoreInvalidData("OptionMaturity 0.0 is prohibited",__FILE__,__LINE__); 
+			throw AQLCoreInvalidData("OptionMaturity 0.0 is prohibited",__FILE__,__LINE__); 
 		//get volTm and betaTm 
-		resultvolTm[i] = LAMath::sqrt(vtm/btm/btm/tm);
+		resultvolTm[i] = AQLMath::sqrt(vtm/btm/btm/tm);
 		resultbetaTm[i] = btm;
 		//errorvalu
 		converg[i] = error;
 		//tenor
 		dh = &(data[i]->getData(IR_CALIBRATION_DATA_OPTIONMATURITY,ISNOTNULL));
-		resultmatu[i] = dynamic_cast<LADataString &>(dh->get()).get();
+		resultmatu[i] = dynamic_cast<AQLDataString &>(dh->get()).get();
 
 		dh = &(data[i]->getData(PRICING_DATA_STRIKES,ISNOTNULL));
-		const DoubleVector& strikes = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+		const DoubleVector& strikes = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 		dh = &(data[i]->getData(PRICING_DATA_STRIKESTRINGS,ISNOTNULL));
-		const LAStringVector& deltastrs = dynamic_cast<const LADataStrings &>(dh->get()).get();
+		const AQLStringVector& deltastrs = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 		unsigned int opSize = deltastrs.size();
 		//check opaSize;
 		if(marketprem.size() != opSize)
-			throw LACoreInvalidData("Number of strikes should be the same in FXDisplacedDiffusionCalibration",__FILE__,__LINE__); 
+			throw AQLCoreInvalidData("Number of strikes should be the same in FXDisplacedDiffusionCalibration",__FILE__,__LINE__); 
 
 		dh = &(data[i]->getData(PRICING_DATA_ISCALLS,ISNOTNULL));
-		const BoolVector& iscalls = dynamic_cast<LADataBools &>(dh->get()).get();
+		const BoolVector& iscalls = dynamic_cast<AQLDataBools &>(dh->get()).get();
 
 		double FxTm= dynamic_cast<const LAMathAntonovFXOption &>(valuation).getFxTM(attrval);
 		double PdTm = dynamic_cast<const LAMathAntonovFXOption &>(valuation).getPTM(attrval);
@@ -356,76 +356,76 @@ LAPriceFXDisplacedDiffusionCalibration::calibrateModel(const LADate& basedate,
 
 	//make result object;
 	vole.remove("ResultVolatility");
-	vole.add("ResultVolatility",new LADataDoubles(resultvolTm));
+	vole.add("ResultVolatility",new AQLDataDoubles(resultvolTm));
 
 	vole.remove("ResultBeta");
-	vole.add("ResultBeta",new LADataDoubles(resultbetaTm));
+	vole.add("ResultBeta",new AQLDataDoubles(resultbetaTm));
 
 	vole.remove("ResultConvergenceValue");
-	vole.add("ResultConvergenceValue", new LADataDoubles(converg));
+	vole.add("ResultConvergenceValue", new AQLDataDoubles(converg));
 
 	vole.remove("ResultMaturity");
-	vole.add("ResultMaturity",new LADataStrings(resultmatu));
+	vole.add("ResultMaturity",new AQLDataStrings(resultmatu));
 	
 	//this is representive 
 	dh = &(data[0]->getData(PRICING_DATA_STRIKESTRINGS,ISNOTNULL));
-	const LAStringVector& deltastrs = dynamic_cast<const LADataStrings &>(dh->get()).get();
+	const AQLStringVector& deltastrs = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 	for(unsigned int j=0;j<deltastrs.size();j++)
 	{
-		LAString key = deltastrs[j];
+		AQLString key = deltastrs[j];
 		key+="Strike";
 		vole.remove(key);
-		vole.add(key,new LADataDoubles(marketprem[j]));
+		vole.add(key,new AQLDataDoubles(marketprem[j]));
 	}
 
 }
 
 void
-LAPriceFXDisplacedDiffusionCalibration::makeAttributeForGridEntity(const LADate& basedate,
-															LAObject& object,
-															const LADataProcedure& att) const
+LAPriceFXDisplacedDiffusionCalibration::makeAttributeForGridEntity(const AQLDate& basedate,
+															AQLObject& object,
+															const AQLDataProcedure& att) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	dh = &(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL));
-	LAObject& vole = dynamic_cast<LADataReference&>(dh->get()).get().get();
+	AQLObject& vole = dynamic_cast<AQLDataReference&>(dh->get()).get().get();
 
 	dh = &(vole.getData(PRICING_DATA_FXTIMEGRIDS,ISNOTNULL));
-	const DoubleVector& timegrids = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const DoubleVector& timegrids = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	
 	unsigned int M = timegrids.size();
 
 	//get ForwardFXVector
 	dh = &(object.getData(PRICING_DATA_DOMESTICCURVE,ISNOTNULL));
-	LAObject& dcurve = dynamic_cast<LADataReference &>(dh->get()).get().get();
+	AQLObject& dcurve = dynamic_cast<AQLDataReference &>(dh->get()).get().get();
 	dh = &(object.getData(PRICING_DATA_ISUSEDF2FORDOMESTIC,ISNOTNULL));
-	bool isdf2dom = dynamic_cast<LADataBool &>(dh->get()).get();
+	bool isdf2dom = dynamic_cast<AQLDataBool &>(dh->get()).get();
 	dh = &(dcurve.getData(CALIBRATION_DATA_TERMS,ISNOTNULL));
-	const DoubleVector& dcterm = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const DoubleVector& dcterm = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	if(isdf2dom)
 		dh = &(dcurve.getData(IR_CALIBRATION_DATA_DFS2,ISNOTNULL));
 	else
 		dh = &(dcurve.getData(IR_CALIBRATION_DATA_DFS,ISNOTNULL));
-	const  DoubleVector& dcp = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const  DoubleVector& dcp = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	
-	LASplineInterpolation dcinter;
+	AQLSplineInterpolation dcinter;
 	dcinter.set(dcterm,dcp);
 	DoubleVector Pd(M,0.0);
 	for(unsigned int i=0;i<M;i++)
 		Pd[i] = dcinter.value(timegrids[i]);
 	
 	dh = &(object.getData(PRICING_DATA_FOREIGNCURVE,ISNOTNULL));
-	LAObject& fcurve = dynamic_cast<LADataReference &>(dh->get()).get().get();
+	AQLObject& fcurve = dynamic_cast<AQLDataReference &>(dh->get()).get().get();
 	dh = &(object.getData(PRICING_DATA_ISUSEDF2FORFOREIGN,ISNOTNULL));
-	bool isdf2for = dynamic_cast<LADataBool &>(dh->get()).get();
+	bool isdf2for = dynamic_cast<AQLDataBool &>(dh->get()).get();
 	dh = &(fcurve.getData(CALIBRATION_DATA_TERMS,ISNOTNULL));
-	const DoubleVector& dfterm = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const DoubleVector& dfterm = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	if(isdf2for)
 		dh = &(fcurve.getData(IR_CALIBRATION_DATA_DFS2,ISNOTNULL));
 	else
 		dh = &(fcurve.getData(IR_CALIBRATION_DATA_DFS,ISNOTNULL));
-	const DoubleVector& dcf = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const DoubleVector& dcf = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	
-	LASplineInterpolation dfinter;
+	AQLSplineInterpolation dfinter;
 	dfinter.set(dfterm,dcf);
 	DoubleVector Pf(M,0.0);
 	for(unsigned int i=0;i<M;i++)
@@ -433,24 +433,24 @@ LAPriceFXDisplacedDiffusionCalibration::makeAttributeForGridEntity(const LADate&
 
 	DoubleVector fx(M,0.0);
 	dh = &(object.getData(PRICING_DATA_SPOTFX,ISNOTNULL));
-	double spotfx = dynamic_cast<LADataDouble &>(dh->get()).get();
+	double spotfx = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	for(unsigned int i=0;i<M;i++)
-		fx[i] = spotfx*Pf[i]/LAMath::max(Pd[i],1E-10);
+		fx[i] = spotfx*Pf[i]/AQLMath::max(Pd[i],1E-10);
 
 	//getDomestic HW P Volatiliy
 	dh = &(object.getData(PRICING_DATA_DOMESTICIRMODEL,ISNOTNULL));
-	LAObject& hwd = dynamic_cast<LADataReference &>(dh->get()).get().get();
+	AQLObject& hwd = dynamic_cast<AQLDataReference &>(dh->get()).get().get();
 	dh = &(hwd.getData(PRICING_DATA_CALIBCANONICAL_T,ISNOTNULL));
-	const DoubleVector& hwtermd = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const DoubleVector& hwtermd = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	dh = &(hwd.getData(PRICING_DATA_CALIBVOL_T,ISNOTNULL));
-	const DoubleVector& hwvold = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const DoubleVector& hwvold = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	dh = &(hwd.getData(PRICING_DATA_CALIBMEANREV_T,ISNOTNULL));
-	double ad0 = dynamic_cast<LADataDoubles &>(dh->get()).get()[0];
+	double ad0 = dynamic_cast<AQLDataDoubles &>(dh->get()).get()[0];
 	if(ad0<=0.0)
-		throw LACoreInvalidData("Domestic mean reversion should be positive",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Domestic mean reversion should be positive",__FILE__,__LINE__);
 	
 	DoubleVector irdv(M,0.0); DoubleMatrix Pdvolmat(M,irdv);
-	LAStepInterpolation inter;
+	AQLStepInterpolation inter;
 	inter.set(hwtermd,hwvold);
 	for(unsigned int i=0;i<M;i++)
 		irdv[i] = inter.value(timegrids[i]);
@@ -464,24 +464,24 @@ LAPriceFXDisplacedDiffusionCalibration::makeAttributeForGridEntity(const LADate&
 			if(i>j)
 				continue;
 			double T = timegrids[j];
-			Pdvolmat[i][j] = -(1.0-LAMath::exp(-ad0*(T-t)))/ad0*vol;
+			Pdvolmat[i][j] = -(1.0-AQLMath::exp(-ad0*(T-t)))/ad0*vol;
 		}
 	}
 
 	//getForeign HW P Volatiliy
 	dh = &(object.getData(PRICING_DATA_FOREIGNIRMODEL,ISNOTNULL));
-	LAObject& hwf = dynamic_cast<LADataReference &>(dh->get()).get().get();
+	AQLObject& hwf = dynamic_cast<AQLDataReference &>(dh->get()).get().get();
 	dh = &(hwf.getData(PRICING_DATA_CALIBCANONICAL_T,ISNOTNULL));
-	const DoubleVector& hwtermf = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const DoubleVector& hwtermf = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	dh = &(hwf.getData(PRICING_DATA_CALIBVOL_T,ISNOTNULL));
-	const DoubleVector& hwvolf = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const DoubleVector& hwvolf = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	dh = &(hwf.getData(PRICING_DATA_CALIBMEANREV_T,ISNOTNULL));
-	double af0 = dynamic_cast<LADataDoubles &>(dh->get()).get()[0];
+	double af0 = dynamic_cast<AQLDataDoubles &>(dh->get()).get()[0];
 	if(af0<=0.0)
-		throw LACoreInvalidData("Foreign mean reversion should be positive",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Foreign mean reversion should be positive",__FILE__,__LINE__);
 
 	DoubleVector irfv(M,0.0); DoubleMatrix Pfvolmat(M,irdv);
-	LAStepInterpolation interf;
+	AQLStepInterpolation interf;
 	interf.set(hwtermf,hwvolf);
 	for(unsigned int i=0;i<M;i++)
 		irfv[i] = interf.value(timegrids[i]);
@@ -495,7 +495,7 @@ LAPriceFXDisplacedDiffusionCalibration::makeAttributeForGridEntity(const LADate&
 			if(i>j)
 				continue;
 			double T = timegrids[j];
-			Pfvolmat[i][j] = -(1.0-LAMath::exp(-af0*(T-t)))/af0*vol;
+			Pfvolmat[i][j] = -(1.0-AQLMath::exp(-af0*(T-t)))/af0*vol;
 		}
 	}
 
@@ -503,7 +503,7 @@ LAPriceFXDisplacedDiffusionCalibration::makeAttributeForGridEntity(const LADate&
 	DoubleMatrix bMat(M,DoubleVector(M,0.0));
 
 	dh = &(object.getData(PRICING_DATA_SDECORRELATIONS,ISNOTNULL));
-	const DoubleVector& cor = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+	const DoubleVector& cor = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 	double covdf = cor[0]; double covdfx = cor[1]; double covffx = cor[2];
 	for(unsigned int i=0;i<M;i++)
 	{
@@ -534,56 +534,56 @@ LAPriceFXDisplacedDiffusionCalibration::makeAttributeForGridEntity(const LADate&
 	//set Fx
 	dh = &(vole.getData(PRICING_DATA_FXFORWARDGRIDS,NOCHECK));
 	if(dh->isDefined())
-		dynamic_cast<LADataDoubles &>(dh->get()).set(fx);
+		dynamic_cast<AQLDataDoubles &>(dh->get()).set(fx);
 	else
-		vole.add(PRICING_DATA_FXFORWARDGRIDS,new LADataDoubles(fx));
+		vole.add(PRICING_DATA_FXFORWARDGRIDS,new AQLDataDoubles(fx));
 	
 	//set Pvolatility d
 	dh = &(vole.getData(PRICING_DATA_IRDOMESTICBONDVOLATILITY,NOCHECK));
 	if(dh->isDefined())
-		dynamic_cast<LADataDoubleMatrix &>(dh->get()).set(Pdvolmat);
+		dynamic_cast<AQLDataDoubleMatrix &>(dh->get()).set(Pdvolmat);
 	else
-		vole.add(PRICING_DATA_IRDOMESTICBONDVOLATILITY,new LADataDoubleMatrix(Pdvolmat));
+		vole.add(PRICING_DATA_IRDOMESTICBONDVOLATILITY,new AQLDataDoubleMatrix(Pdvolmat));
 
 	//set Pvolatility f
 	dh = &(vole.getData(PRICING_DATA_IRFOREIGNBONDVOLATILITY,NOCHECK));
 	if(dh->isDefined())
-		dynamic_cast<LADataDoubleMatrix &>(dh->get()).set(Pfvolmat);
+		dynamic_cast<AQLDataDoubleMatrix &>(dh->get()).set(Pfvolmat);
 	else
-		vole.add(PRICING_DATA_IRFOREIGNBONDVOLATILITY,new LADataDoubleMatrix(Pfvolmat));
+		vole.add(PRICING_DATA_IRFOREIGNBONDVOLATILITY,new AQLDataDoubleMatrix(Pfvolmat));
 
 	//set bMatrix
 	dh = &(vole.getData(PRICING_DATA_BMATRIX,NOCHECK));
 	if(dh->isDefined())
-		dynamic_cast<LADataDoubleMatrix &>(dh->get()).set(bMat);
+		dynamic_cast<AQLDataDoubleMatrix &>(dh->get()).set(bMat);
 	else
-		vole.add(PRICING_DATA_BMATRIX,new LADataDoubleMatrix(bMat));
+		vole.add(PRICING_DATA_BMATRIX,new AQLDataDoubleMatrix(bMat));
 
 	//set aMatrix
 	dh = &(vole.getData(PRICING_DATA_AMATRIX,NOCHECK));
 	if(dh->isDefined())
-		dynamic_cast<LADataDoubleMatrix &>(dh->get()).set(aMat);
+		dynamic_cast<AQLDataDoubleMatrix &>(dh->get()).set(aMat);
 	else
-		vole.add(PRICING_DATA_AMATRIX,new LADataDoubleMatrix(aMat));
+		vole.add(PRICING_DATA_AMATRIX,new AQLDataDoubleMatrix(aMat));
 
 	//set SDECorrelations
 	dh = &(vole.getData(PRICING_DATA_SDECORRELATIONS,NOCHECK));
 	if(dh->isDefined())
-		dynamic_cast<LADataDoubles &>(dh->get()).set(cor);
+		dynamic_cast<AQLDataDoubles &>(dh->get()).set(cor);
 	else
-		vole.add(PRICING_DATA_SDECORRELATIONS,new LADataDoubles(cor));
+		vole.add(PRICING_DATA_SDECORRELATIONS,new AQLDataDoubles(cor));
 
 	//set domestic DiscountFactor
 	dh = &(vole.getData(PRICING_DATA_DOMESTICDFS,NOCHECK));
 	if(dh->isDefined())
-		dynamic_cast<LADataDoubles &>(dh->get()).set(Pd);
+		dynamic_cast<AQLDataDoubles &>(dh->get()).set(Pd);
 	else
-		vole.add(PRICING_DATA_DOMESTICDFS,new LADataDoubles(Pd));
+		vole.add(PRICING_DATA_DOMESTICDFS,new AQLDataDoubles(Pd));
 
 	//set Foreign DiscountFactor
 	dh = &(vole.getData(PRICING_DATA_FOREIGNDFS,NOCHECK));
 	if(dh->isDefined())
-		dynamic_cast<LADataDoubles &>(dh->get()).set(Pf);
+		dynamic_cast<AQLDataDoubles &>(dh->get()).set(Pf);
 	else
-		vole.add(PRICING_DATA_FOREIGNDFS,new LADataDoubles(Pf));
+		vole.add(PRICING_DATA_FOREIGNDFS,new AQLDataDoubles(Pf));
 }

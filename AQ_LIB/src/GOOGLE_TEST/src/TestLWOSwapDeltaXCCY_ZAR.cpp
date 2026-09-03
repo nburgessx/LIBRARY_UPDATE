@@ -79,18 +79,18 @@ namespace
 
 	// Helper function
 
-	void checkDV01ResultsAndRebaseIfRequired(const LAStringVector& positionIDs,
+	void checkDV01ResultsAndRebaseIfRequired(const AQLStringVector& positionIDs,
 											 const DoubleVector& deltas,
-											 const LAString& baseline_output_32,
-											 const LAString& baseline_output_64)
+											 const AQLString& baseline_output_32,
+											 const AQLString& baseline_output_64)
 	{
 
 		if (etrading::CreateDataFile::rebaseResultsEnabled())
 		{
 #ifdef GTEST32
-			LAString outputFileName = baseline_output_32;
+			AQLString outputFileName = baseline_output_32;
 #else
-			LAString outputFileName = baseline_output_64;
+			AQLString outputFileName = baseline_output_64;
 #endif
 
 			// Record outputs and rebase test outputs
@@ -113,7 +113,7 @@ namespace
 
 			for (size_t i = 0; i < positionIDs.size(); ++i)
 			{
-				LAString key = positionIDs[i];
+				AQLString key = positionIDs[i];
 
 				double delta = deltas[i];
 				double ref = resultFile[key];
@@ -168,8 +168,8 @@ namespace google_test
 		{
 			const ReadDataFile::Load parRateInputs( fileName_ZAR_IRS_parRate  + swapTenor + "_inputs" );
 			const std::string swapName				= parRateInputs[ "swapName" ];
-			LAStringMatrix valuationSettingsLVB		= parRateInputs[ "valuationSettingsLVB" ];
-			LAStringMatrix fixingTableNames			= parRateInputs[ "fixingTableNames" ];
+			AQLStringMatrix valuationSettingsLVB		= parRateInputs[ "valuationSettingsLVB" ];
+			AQLStringMatrix fixingTableNames			= parRateInputs[ "fixingTableNames" ];
 
 			const double actualResult	= validation::tryMeLWOSwapParRate( swapName, valuationSettingsLVB, fixingTableNames );
 			const double expectedResult	= zarStdParRates[ i ];
@@ -189,18 +189,18 @@ namespace google_test
 		// Risk delta ladder config
 		const ReadDataFile::Load dv01Inputs( fileName_IRS_DV01_Inputs );
 
-		LAStringVector swapNames			= dv01Inputs["swapNames"];
-		LAStringMatrix curveCollectionNames	= dv01Inputs["curveCollectionNames"];
-		LAStringMatrix fixingTableNames		= dv01Inputs["fixingTableNames"];
+		AQLStringVector swapNames			= dv01Inputs["swapNames"];
+		AQLStringMatrix curveCollectionNames	= dv01Inputs["curveCollectionNames"];
+		AQLStringMatrix fixingTableNames		= dv01Inputs["fixingTableNames"];
 		bool bumpSpreadInstruments			= dv01Inputs["bumpSpreadInstruments"];
 		double bumpSize						= dv01Inputs["bumpSize"];
-		LAString bumpMode					= dv01Inputs["bumpMode"];
-		LAString groupRiskBy				= dv01Inputs["groupRiskBy"];
+		AQLString bumpMode					= dv01Inputs["bumpMode"];
+		AQLString groupRiskBy				= dv01Inputs["groupRiskBy"];
 		bool aggregateRisks					= dv01Inputs["aggregateRisks"];
 		bool reportInLegCCY					= dv01Inputs["reportInLegCCY"];
 		DoubleVector xccyFXSpotRates		= dv01Inputs["xccyFXSpotRates"];
 
-		LAStringVector positionIDs;
+		AQLStringVector positionIDs;
 		DoubleVector deltas;
 		validation::tryMeLWOSwapDelta( positionIDs,
 											deltas,
@@ -235,18 +235,18 @@ namespace google_test
 		// Risk delta ladder config
 		const ReadDataFile::Load dv01Inputs(fileName_XCCY_DV01_Inputs);
 
-		LAStringVector swapNames			= dv01Inputs["swapNames"];
-		LAStringMatrix curveCollectionNames = dv01Inputs["curveCollectionNames"];
-		LAStringMatrix fixingTableNames		= dv01Inputs["fixingTableNames"];
+		AQLStringVector swapNames			= dv01Inputs["swapNames"];
+		AQLStringMatrix curveCollectionNames = dv01Inputs["curveCollectionNames"];
+		AQLStringMatrix fixingTableNames		= dv01Inputs["fixingTableNames"];
 		bool bumpSpreadInstruments			= dv01Inputs["bumpSpreadInstruments"];
 		double bumpSize						= dv01Inputs["bumpSize"];
-		LAString bumpMode					= dv01Inputs["bumpMode"];
-		LAString groupRiskBy				= dv01Inputs["groupRiskBy"];
+		AQLString bumpMode					= dv01Inputs["bumpMode"];
+		AQLString groupRiskBy				= dv01Inputs["groupRiskBy"];
 		bool aggregateRisks					= dv01Inputs["aggregateRisks"];
 		bool reportInLegCCY					= dv01Inputs["reportInLegCCY"];
 		DoubleVector xccyFXSpotRates		= dv01Inputs["xccyFXSpotRates"];
 
-		LAStringVector positionIDs;
+		AQLStringVector positionIDs;
 		DoubleVector deltas;
 		validation::tryMeLWOSwapDelta(  positionIDs,
 											deltas,

@@ -26,12 +26,12 @@
 //
 
 //+++++ INCLUDE +++++
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAInterpolationBase.h"
-#include "LAAlgorithm.h"
-#include "LAFunctionBase.h"
-#include "LACoreSystemError.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLInterpolationBase.h"
+#include "AQLAlgorithm.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreSystemError.h"
 
 
 //+++++ DEFINE +++++
@@ -40,7 +40,7 @@
 // Function Name of LAMathHWFuncSigma
 #define FN_HWFUNCSIGMA_STR	"fn_hwfuncsigma"
 
-class LAMathHWFuncSigma : public LAFunctionBase
+class LAMathHWFuncSigma : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
@@ -61,7 +61,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*    clone() const;
+    virtual AQLCoreFunctionBase*    clone() const;
 								//======================================
 	virtual double				operator()(const DoubleArray& x) const
 								{
@@ -102,7 +102,7 @@ public :
                                 //======================================
 	                            // constructor
 	explicit 
-   	LAMathHWFuncSigmaTMDPT(const DoubleArray& T_Grid_, const DoubleArray& s_grid_, LAInterpolationBase& interpolation);
+   	LAMathHWFuncSigmaTMDPT(const DoubleArray& T_Grid_, const DoubleArray& s_grid_, AQLInterpolationBase& interpolation);
                                 //======================================	
                                 // destructor
 	virtual ~LAMathHWFuncSigmaTMDPT(void);
@@ -116,7 +116,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*   clone() const;
+    virtual AQLCoreFunctionBase*   clone() const;
 								//======================================
                             	// equal operator
                                 /*!
@@ -148,7 +148,7 @@ private :
     
     DoubleArray T_grid;				// time grid      
 	DoubleArray s_grid;				// sigma grid	     
-	LAInterpolationBase* mpInter;	// mpInter method
+	AQLInterpolationBase* mpInter;	// mpInter method
     bool                        is_cloned;
 	
 };

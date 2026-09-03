@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -20,18 +20,18 @@ namespace validation
     *  @param [in]		swapConv			Libor swap conventions
     *  @param [in]		swapRates			Libor swap market rates
     */
-    const LAString tryMeLWOCurveCreateOIS( const std::string& lwoCurveName,
-                                           const LAString& curveCollectionInput,
-                                           const LAString& staticDataTableInput,
-                                           const LAString& curveIndexInput,
-                                           const LAStringMatrix& curveConv,
-                                           const LAStringMatrix& oisConv,
-                                           const LAStringMatrix& oisRates,
-                                           const LAStringMatrix& oisHistoricalRates,
-                                           const LAStringMatrix& liborOisBasisConv,
-                                           const LAStringMatrix& liborOisBasisRates,
-                                           const LAStringMatrix& swapConv,
-                                           const LAStringMatrix& swapRates );
+    const AQLString tryMeLWOCurveCreateOIS( const std::string& lwoCurveName,
+                                           const AQLString& curveCollectionInput,
+                                           const AQLString& staticDataTableInput,
+                                           const AQLString& curveIndexInput,
+                                           const AQLStringMatrix& curveConv,
+                                           const AQLStringMatrix& oisConv,
+                                           const AQLStringMatrix& oisRates,
+                                           const AQLStringMatrix& oisHistoricalRates,
+                                           const AQLStringMatrix& liborOisBasisConv,
+                                           const AQLStringMatrix& liborOisBasisRates,
+                                           const AQLStringMatrix& swapConv,
+                                           const AQLStringMatrix& swapRates );
 
 }
 

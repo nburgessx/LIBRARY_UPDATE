@@ -1,5 +1,5 @@
 #include "TypeUtilities.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "meCurveCalibrateOIS.h"
 #include "tryMeCurveCalibrateOIS.h"
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
@@ -30,35 +30,35 @@ const std::string meCurveCalibrateOIS(const std::string& curveCollection,
 								const SWIG_STRINGMATRIX & swapRates) 
 {
 	AQ_API_START
-    LAString ret;
+    AQLString ret;
 	
 	// marshall all inputs
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_staticDataTable(staticDataTable.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_staticDataTable(staticDataTable.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
 
-	LAStringMatrix tmp_curveConv;
+	AQLStringMatrix tmp_curveConv;
 	swig::buildStringMatrix(tmp_curveConv, curveConv);
 
-	LAStringMatrix tmp_oisConv;
+	AQLStringMatrix tmp_oisConv;
 	swig::buildStringMatrix(tmp_oisConv, oisConv);
 
-	LAStringMatrix tmp_oisRates;
+	AQLStringMatrix tmp_oisRates;
 	swig::buildStringMatrix(tmp_oisRates, oisRates);
 
-	LAStringMatrix tmp_oisHistoricalRates;
+	AQLStringMatrix tmp_oisHistoricalRates;
 	swig::buildStringMatrix(tmp_oisHistoricalRates, oisHistoricalRates);
 
-	LAStringMatrix tmp_liborOisBasisConv;
+	AQLStringMatrix tmp_liborOisBasisConv;
 	swig::buildStringMatrix(tmp_liborOisBasisConv, liborOisBasisConv);
 
-	LAStringMatrix tmp_liborOisBasisRates;
+	AQLStringMatrix tmp_liborOisBasisRates;
 	swig::buildStringMatrix(tmp_liborOisBasisRates, liborOisBasisRates);
 
-	LAStringMatrix tmp_swapConv;
+	AQLStringMatrix tmp_swapConv;
 	swig::buildStringMatrix(tmp_swapConv, swapConv);
 
-	LAStringMatrix tmp_swapRates;
+	AQLStringMatrix tmp_swapRates;
 	swig::buildStringMatrix(tmp_swapRates, swapRates);
 
 	ret = validation::tryMeCurveCalibrateOIS(

@@ -33,7 +33,7 @@ using namespace std;
 	@brief default constructor
 */
 LAPriceQuantAdjustmentFuncBase::LAPriceQuantAdjustmentFuncBase()
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -41,7 +41,7 @@ LAPriceQuantAdjustmentFuncBase::LAPriceQuantAdjustmentFuncBase()
 	@brief copy constructor
 */
 /*LAPriceQuantAdjustmentFuncBase::LAPriceQuantAdjustmentFuncBase(const LAPriceQuantAdjustmentFuncBase& v) 
-: LACoreFunctionBase(v)
+: AQLCoreFunctionBase(v)
 {
 
 }*/
@@ -62,7 +62,7 @@ LAPriceQuantAdjustmentFuncBase::~LAPriceQuantAdjustmentFuncBase()
 bool
 LAPriceQuantAdjustmentFuncBase::isTypeOf(function_t id) const
 {
-	return (id==FN_QUANTADJUSTMENTFUNCBASE ? true : LAFunctionBase::isTypeOf(id));
+	return (id==FN_QUANTADJUSTMENTFUNCBASE ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!

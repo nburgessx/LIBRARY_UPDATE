@@ -130,7 +130,7 @@ namespace google_test
 		const std::string swapObjectName = validation::tryMeLWOLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(Contiguous_SwapParRateInputs);
-		const LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
 		const double result = validation::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
 
@@ -146,7 +146,7 @@ namespace google_test
 		const std::string swapObjectName = validation::tryMeLWOLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(SerialRate_SwapParRateInputs);
-		const LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
 		const double result = validation::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
 
@@ -162,7 +162,7 @@ namespace google_test
 		const std::string swapObjectName = validation::tryMeLWOLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(SerialDF_SwapParRateInputs);
-		const LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
+		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
 		const double result = validation::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
 

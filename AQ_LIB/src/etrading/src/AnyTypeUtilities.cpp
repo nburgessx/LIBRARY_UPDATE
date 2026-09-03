@@ -47,9 +47,9 @@ namespace etrading
         {
     		return boost::get< std::string >(anyValue);
         }
-        else if( anyValue.type() == typeid(LAString) )
+        else if( anyValue.type() == typeid(AQLString) )
         {
-    		return boost::get<LAString>(anyValue).getCString();
+    		return boost::get<AQLString>(anyValue).getCString();
         }
         else if( anyValue.type() == typeid(const char*) )
         {
@@ -57,7 +57,7 @@ namespace etrading
         }
         else
         {
-            throw LACoreInvalidData( "#Error: Unable to display AnyTypeMatrix data.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Unable to display AnyTypeMatrix data.", __FILE__, __LINE__ );
         }
         return "";
     }

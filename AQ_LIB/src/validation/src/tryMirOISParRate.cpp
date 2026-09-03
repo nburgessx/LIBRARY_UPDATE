@@ -48,37 +48,37 @@ namespace validation
     *  @param [in]		floatSpread			            Floating leg spread
     *  @param [in]		oisCompoundingType		        Compounding method used in OIS pricing
     */
-    double tryMirOISParRate( LADataInstance* dataInstance,
-                             const LAString& effectDt,
-                             const LAString& maturity,
-                             const LAString& curveID,
-                             const LAString& fixedFrequency,
-                             const LAString& fixedDaycount,
-                             const LAString& fixedBusinessDayAdjustment,
-                             const LAString& fixedCalendar,
-                             const LAString& fixedFirstStub,
-                             const LAString& fixedLastStub,
-                             const LAString& fixedRollDay,
-                             const LAString& fixedPayLag,
-                             const LAString& fixedStubType,
-                             const LAString& floatFrequency,
-                             const LAString& floatDayCount,
-                             const LAString& floatBusinessDayAdjustment,
-                             const LAString& floatCalendar,
-                             const LAString& floatFirstStub,
-                             const LAString& floatLastStub,
-                             const LAString& floatRollDay,
-                             const LAString& floatFixingLag,
+    double tryMirOISParRate( AQLDataInstance* dataInstance,
+                             const AQLString& effectDt,
+                             const AQLString& maturity,
+                             const AQLString& curveID,
+                             const AQLString& fixedFrequency,
+                             const AQLString& fixedDaycount,
+                             const AQLString& fixedBusinessDayAdjustment,
+                             const AQLString& fixedCalendar,
+                             const AQLString& fixedFirstStub,
+                             const AQLString& fixedLastStub,
+                             const AQLString& fixedRollDay,
+                             const AQLString& fixedPayLag,
+                             const AQLString& fixedStubType,
+                             const AQLString& floatFrequency,
+                             const AQLString& floatDayCount,
+                             const AQLString& floatBusinessDayAdjustment,
+                             const AQLString& floatCalendar,
+                             const AQLString& floatFirstStub,
+                             const AQLString& floatLastStub,
+                             const AQLString& floatRollDay,
+                             const AQLString& floatFixingLag,
                              double floatFirstFixing,
                              double floatLastFixing,
-                             const LAString& floatPayLag,
-                             const LAString& floatStubType,
-                             const LAString& interpolation,
-                             const LAString& forecastCurve,
-                             const LAString& discountCurve,
+                             const AQLString& floatPayLag,
+                             const AQLString& floatStubType,
+                             const AQLString& interpolation,
+                             const AQLString& forecastCurve,
+                             const AQLString& discountCurve,
                              bool eomRoll,
                              double floatSpread,
-                             const LAString& oisCompoundingType )
+                             const AQLString& oisCompoundingType )
     {
         VALID_EXCEPTION_START
 
@@ -123,28 +123,28 @@ namespace validation
         //----------------------------------------------------------------------------------
         // Validate non-cash flow related parameters
 
-        if( forecastCurve == LAString( "" ) )
+        if( forecastCurve == AQLString( "" ) )
         {
-            throw LACoreInvalidData( "#Error: The Swap 'forecast Curve' must be specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The Swap 'forecast Curve' must be specified.", __FILE__, __LINE__ );
         }
 
-        if( discountCurve == LAString( "" ) )
+        if( discountCurve == AQLString( "" ) )
         {
-            throw LACoreInvalidData( "#Error: The Swap 'discount Curve' must be specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The Swap 'discount Curve' must be specified.", __FILE__, __LINE__ );
         }
 
-        LAString interp( interpolation );
-        if( interpolation == LAString( "" ) )
+        AQLString interp( interpolation );
+        if( interpolation == AQLString( "" ) )
         {
-            interp = LAString( "SPLINE" );
+            interp = AQLString( "SPLINE" );
         }
 
 
         //----------------------------------------------------------------------------------
         // Validate OIS specific parameters
 
-        LAString slidingRule( LAString( "NORMAL" ) );
-        LAString compoundingMethod( oisCompoundingType );
+        AQLString slidingRule( AQLString( "NORMAL" ) );
+        AQLString compoundingMethod( oisCompoundingType );
         etrading::validateOISParameters( slidingRule, compoundingMethod, eomRoll );
 
         //----------------------------------------------------------------------------------

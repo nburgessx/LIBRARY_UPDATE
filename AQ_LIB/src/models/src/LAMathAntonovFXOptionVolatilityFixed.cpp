@@ -6,33 +6,33 @@
 #endif
 
 #include "LAMathAntonovFXOptionVolatilityFixed.h"
-#include "LAObject.h"
-#include "LADataProcedure.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LADataReference.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLObject.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "LAMathDateCalculations.h"
 #include "LAPriceCFGenUtility.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LADataMatrix.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLDataMatrix.h"
 #include "LAModelDynamicsHW1FCurve.h"
 
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 
 using namespace std;
 
@@ -59,7 +59,7 @@ LAMathAntonovFXOptionVolatilityFixed::getType() const
 	return FN_ANTONOVFXOPTIOINVOLATILITYFIXED;
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAMathAntonovFXOptionVolatilityFixed::clone() const
 {
     try 
@@ -68,7 +68,7 @@ LAMathAntonovFXOptionVolatilityFixed::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -84,10 +84,10 @@ unsigned int size = dataProvider->mTimeGrids.size();
 	for(unsigned int i=0;i<size;i++)
 	{
 		if(0.0==dataProvider->mBetaGrids[i])
-			throw LACoreInvalidData("Beta 0.0 is not allowed",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Beta 0.0 is not allowed",__FILE__,__LINE__);
 		//this needs at getA (where is divided by fxgris[i];
 		if(0.0==dataProvider->mFxGrids[i])
-			throw LACoreInvalidData("Fx 0.0 is not allowed",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Fx 0.0 is not allowed",__FILE__,__LINE__);
 		
 		v[i] = dataProvider->mBetaGrids[i] * dataProvider->mVolGrids[i];
 		s[i] = (1.0 - dataProvider->mBetaGrids[i]) / dataProvider->mBetaGrids[i] * dataProvider->mFxGrids[i];

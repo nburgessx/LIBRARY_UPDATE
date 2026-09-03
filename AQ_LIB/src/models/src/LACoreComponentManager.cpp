@@ -11,48 +11,48 @@
 #include <stdio.h>
 
 #include "LAMathBaseFuncUtility.h"
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataInterpolation.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
-#include "LAObjectHolder.h"
-#include "LADataInstance.h"
-#include "LAObjectMaster.h"
-#include "LAPriceDataManager.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LAConstrainedSplineInterpolation.h"
-#include "LAMonotoneConvexInterpolation.h"
-#include "LAParabolicInterpolation.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
-#include "LAMonotoneSplineInterpolation.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLObjectHolder.h"
+#include "AQLDataInstance.h"
+#include "AQLObjectMaster.h"
+#include "AQLPriceDataManager.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLConstrainedSplineInterpolation.h"
+#include "AQLMonotoneConvexInterpolation.h"
+#include "AQLParabolicInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
+#include "AQLMonotoneSplineInterpolation.h"
 #include "LAMathYieldCurvePro.h"
 
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include <cmath>
 #include <float.h>
 
 using namespace std;
 //static-mem
-std::map<LAString, LAString> LACoreComponentManager::interpolationMap;
-std::map<LAString, LAString> LACoreComponentManager::dayCountMap;
-std::map<LAString, LAString> LACoreComponentManager::basisTypeMap;
-std::map<LAString, LAString> LACoreComponentManager::basisIndexMap;
-std::map<LAString, LABlackScholesBase* > LACoreComponentManager::blackComponentMap ;
-std::map<LAString, AnalyticParam* > LACoreComponentManager::blackParamComponentMap;
+std::map<AQLString, AQLString> AQLCoreComponentManager::interpolationMap;
+std::map<AQLString, AQLString> AQLCoreComponentManager::dayCountMap;
+std::map<AQLString, AQLString> AQLCoreComponentManager::basisTypeMap;
+std::map<AQLString, AQLString> AQLCoreComponentManager::basisIndexMap;
+std::map<AQLString, LABlackScholesBase* > AQLCoreComponentManager::blackComponentMap ;
+std::map<AQLString, AnalyticParam* > AQLCoreComponentManager::blackParamComponentMap;
 
 //static-method////////
 
-std::map<LAString, LAString>& 
-LACoreComponentManager::getInterpolationMap()
+std::map<AQLString, AQLString>& 
+AQLCoreComponentManager::getInterpolationMap()
 {
 	if(interpolationMap.empty())
 	{
@@ -81,8 +81,8 @@ LACoreComponentManager::getInterpolationMap()
 	return interpolationMap;
 }
 
-std::map<LAString, LAString>&
-LACoreComponentManager::getDayCountMap()
+std::map<AQLString, AQLString>&
+AQLCoreComponentManager::getDayCountMap()
 {
 	if(dayCountMap.empty())
 	{
@@ -101,8 +101,8 @@ LACoreComponentManager::getDayCountMap()
 	return dayCountMap;
 }
 
-std::map<LAString, LAString>&
-LACoreComponentManager::getBasisTypeMap()
+std::map<AQLString, AQLString>&
+AQLCoreComponentManager::getBasisTypeMap()
 {
 	if(basisTypeMap.empty())
 	{
@@ -111,8 +111,8 @@ LACoreComponentManager::getBasisTypeMap()
 	return basisTypeMap;
 }
 
-std::map<LAString, LAString>&
-LACoreComponentManager::getBasisIndexMap()
+std::map<AQLString, AQLString>&
+AQLCoreComponentManager::getBasisIndexMap()
 {
 	if(basisIndexMap.empty())
 	{
@@ -121,159 +121,159 @@ LACoreComponentManager::getBasisIndexMap()
 	return basisIndexMap;
 }
 
-std::map<LAString, LABlackScholesBase*>&
-LACoreComponentManager::getBlackComponentMap()
+std::map<AQLString, LABlackScholesBase*>&
+AQLCoreComponentManager::getBlackComponentMap()
 {
 	if(blackComponentMap.empty())
 	{	
 		//MMZeroForError
-		blackComponentMap.insert(std::make_pair(LAString("ERROR"),	new MMZeroForError()));
+		blackComponentMap.insert(std::make_pair(AQLString("ERROR"),	new MMZeroForError()));
 		//LABlack
-		blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(PREM) + LAString(CALL),	new LABlackpremCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(PREM) + LAString(PUT),	new LABlackpremPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(DELTA) + LAString(CALL), new LABlackdeltaCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(GAMMA) + LAString(CALL), new LABlackgammaCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(VEGA)  + LAString(CALL), new LABlackvegaCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(THETA) + LAString(CALL), new LABlackthetaCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(DELTA) + LAString(PUT),  new LABlackdeltaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(GAMMA) + LAString(PUT),  new LABlackgammaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(VEGA)  + LAString(PUT),  new LABlackvegaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(THETA) + LAString(PUT),  new LABlackthetaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(PREM) + AQLString(CALL),	new LABlackpremCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(PREM) + AQLString(PUT),	new LABlackpremPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(DELTA) + AQLString(CALL), new LABlackdeltaCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(GAMMA) + AQLString(CALL), new LABlackgammaCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(VEGA)  + AQLString(CALL), new LABlackvegaCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(THETA) + AQLString(CALL), new LABlackthetaCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(DELTA) + AQLString(PUT),  new LABlackdeltaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(GAMMA) + AQLString(PUT),  new LABlackgammaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(VEGA)  + AQLString(PUT),  new LABlackvegaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(THETA) + AQLString(PUT),  new LABlackthetaPut()	)	);
 		//LABlackPayOff
-		blackComponentMap.insert(std::make_pair(LAString(BKPAYOFF) + LAString(PREM) + LAString(CALL),	new LABlackPayOffpremCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(BKPAYOFF) + LAString(PREM) + LAString(PUT),	new LABlackPayOffpremPut()		)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BKPAYOFF) + AQLString(PREM) + AQLString(CALL),	new LABlackPayOffpremCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(BKPAYOFF) + AQLString(PREM) + AQLString(PUT),	new LABlackPayOffpremPut()		)	);
 		//LAGreek
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(PREM)	+ LAString(CALL), new LAGreekpremCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(DELTA)	+ LAString(CALL), new LAGreekdeltaCall() )	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(GAMMA)	+ LAString(CALL), new LAGreekgammaCall() )	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VEGA)	+ LAString(CALL), new LAGreekvegaCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(THETA)	+ LAString(CALL), new LAGreekthetaCall() )	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(RHO)	+ LAString(CALL), new LAGreekrhoCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(PHI)	+ LAString(CALL), new LAGreekphiCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VANNA)	+ LAString(CALL), new LAGreekvannaCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VOLGA)	+ LAString(CALL), new LAGreekvolgaCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(PREM)	+ LAString(PUT),	new LAGreekpremPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(DELTA)	+ LAString(PUT),	new LAGreekdeltaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(GAMMA)	+ LAString(PUT),	new LAGreekgammaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VEGA)	+ LAString(PUT),	new LAGreekvegaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(THETA)	+ LAString(PUT),	new LAGreekthetaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(RHO)	+ LAString(PUT),	new LAGreekrhoPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(PHI)	+ LAString(PUT),	new LAGreekphiPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VANNA)	+ LAString(PUT), new LAGreekvannaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VOLGA)	+ LAString(PUT), new LAGreekvolgaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PREM)	+ AQLString(CALL), new LAGreekpremCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(DELTA)	+ AQLString(CALL), new LAGreekdeltaCall() )	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(GAMMA)	+ AQLString(CALL), new LAGreekgammaCall() )	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VEGA)	+ AQLString(CALL), new LAGreekvegaCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(THETA)	+ AQLString(CALL), new LAGreekthetaCall() )	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(RHO)	+ AQLString(CALL), new LAGreekrhoCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PHI)	+ AQLString(CALL), new LAGreekphiCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VANNA)	+ AQLString(CALL), new LAGreekvannaCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VOLGA)	+ AQLString(CALL), new LAGreekvolgaCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PREM)	+ AQLString(PUT),	new LAGreekpremPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(DELTA)	+ AQLString(PUT),	new LAGreekdeltaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(GAMMA)	+ AQLString(PUT),	new LAGreekgammaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VEGA)	+ AQLString(PUT),	new LAGreekvegaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(THETA)	+ AQLString(PUT),	new LAGreekthetaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(RHO)	+ AQLString(PUT),	new LAGreekrhoPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PHI)	+ AQLString(PUT),	new LAGreekphiPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VANNA)	+ AQLString(PUT), new LAGreekvannaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VOLGA)	+ AQLString(PUT), new LAGreekvolgaPut()	)	);
         //MMCapFloor
-		blackComponentMap.insert(std::make_pair(LAString(CF) + LAString(PREM)	+ LAString(CALL), new MMCFpremCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(CF) + LAString(VEGA)	+ LAString(CALL), new MMCFvegaCall() )	);
-		blackComponentMap.insert(std::make_pair(LAString(CF) + LAString(PREM)	+ LAString(PUT), new MMCFpremPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(CF) + LAString(VEGA)	+ LAString(PUT), new MMCFvegaPut() )	);
+		blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(PREM)	+ AQLString(CALL), new MMCFpremCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(VEGA)	+ AQLString(CALL), new MMCFvegaCall() )	);
+		blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(PREM)	+ AQLString(PUT), new MMCFpremPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(VEGA)	+ AQLString(PUT), new MMCFvegaPut() )	);
 		//MMDG
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(PREM)	+ LAString(CALL), new MMDGpremCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(DELTA)	+ LAString(CALL), new MMDGdeltaCall() )	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(GAMMA)	+ LAString(CALL), new MMDGgammaCall() )	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(VEGA)	+ LAString(CALL), new MMDGvegaCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(THETA)	+ LAString(CALL), new MMDGthetaCall() )	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(RHO)	+ LAString(CALL), new MMDGrhoCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(PHI)	+ LAString(CALL), new MMDGphiCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(PREM)	+ LAString(PUT),	new MMDGpremPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(DELTA)	+ LAString(PUT),	new MMDGdeltaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(GAMMA)	+ LAString(PUT),	new MMDGgammaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(VEGA)	+ LAString(PUT),	new MMDGvegaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(THETA)	+ LAString(PUT),	new MMDGthetaPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(RHO)	+ LAString(PUT),	new MMDGrhoPut()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(PHI)	+ LAString(PUT),	new MMDGphiPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(PREM)	+ AQLString(CALL), new MMDGpremCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(DELTA)	+ AQLString(CALL), new MMDGdeltaCall() )	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(GAMMA)	+ AQLString(CALL), new MMDGgammaCall() )	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(VEGA)	+ AQLString(CALL), new MMDGvegaCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(THETA)	+ AQLString(CALL), new MMDGthetaCall() )	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(RHO)	+ AQLString(CALL), new MMDGrhoCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(PHI)	+ AQLString(CALL), new MMDGphiCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(PREM)	+ AQLString(PUT),	new MMDGpremPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(DELTA)	+ AQLString(PUT),	new MMDGdeltaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(GAMMA)	+ AQLString(PUT),	new MMDGgammaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(VEGA)	+ AQLString(PUT),	new MMDGvegaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(THETA)	+ AQLString(PUT),	new MMDGthetaPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(RHO)	+ AQLString(PUT),	new MMDGrhoPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(PHI)	+ AQLString(PUT),	new MMDGphiPut()	)	);
 		//MMSB
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBpremDIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBpremDIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBpremDOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBpremDOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBpremUIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBpremUIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBpremUOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBpremUOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBdeltaDIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBdeltaDIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBdeltaDOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBdeltaDOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBdeltaUIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBdeltaUIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBdeltaUOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBdeltaUOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBgammaDIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBgammaDIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBgammaDOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBgammaDOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBgammaUIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBgammaUIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBgammaUOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBgammaUOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBvegaDIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBvegaDIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBvegaDOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBvegaDOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBvegaUIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBvegaUIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBvegaUOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBvegaUOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBthetaDIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBthetaDIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBthetaDOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBthetaDOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBthetaUIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBthetaUIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBthetaUOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBthetaUOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBrhoDIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBrhoDIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBrhoDOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBrhoDOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBrhoUIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBrhoUIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBrhoUOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBrhoUOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBphiDIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBphiDIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBphiDOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBphiDOP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBphiUIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBphiUIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBphiUOC() ));
-		blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBphiUOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBpremDIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBpremDIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBpremDOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBpremDOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBpremUIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBpremUIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBpremUOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBpremUOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBdeltaDIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBdeltaDIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBdeltaDOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBdeltaDOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBdeltaUIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBdeltaUIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBdeltaUOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBdeltaUOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBgammaDIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBgammaDIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBgammaDOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBgammaDOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBgammaUIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBgammaUIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBgammaUOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBgammaUOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBvegaDIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBvegaDIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBvegaDOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBvegaDOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBvegaUIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBvegaUIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBvegaUOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBvegaUOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBthetaDIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBthetaDIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBthetaDOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBthetaDOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBthetaUIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBthetaUIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBthetaUOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBthetaUOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBrhoDIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBrhoDIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBrhoDOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBrhoDOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBrhoUIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBrhoUIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBrhoUOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBrhoUOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBphiDIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBphiDIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBphiDOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBphiDOP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBphiUIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBphiUIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBphiUOC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBphiUOP() ));
 
 		//MMDB
-		blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(PREM)	+ LAString(CALL) + LAString(DBIN)	+ LAString(DBIN)  , new MMDBpremKIC() ));
-		blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(PREM)	+ LAString(CALL) + LAString(DBOUT)	+ LAString(DBOUT) , new MMDBpremKOC()	));
-		blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(PREM)	+ LAString(PUT)  + LAString(DBIN)	+ LAString(DBIN)  , new MMDBpremKIP() ));
-		blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(PREM)	+ LAString(PUT)  + LAString(DBOUT)	+ LAString(DBOUT) , new MMDBpremKOP()	));
-		blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(REBATE)	+ LAString(RHIGH),	new MMDBpremRH()				));
-		blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(REBATE)	+ LAString(RLOW),		new MMDBpremRL()				));
-		blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(REBATE)	+ LAString(RIN),		new MMDBpremRI()				));
+		blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(DBIN)	+ AQLString(DBIN)  , new MMDBpremKIC() ));
+		blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(DBOUT)	+ AQLString(DBOUT) , new MMDBpremKOC()	));
+		blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(DBIN)	+ AQLString(DBIN)  , new MMDBpremKIP() ));
+		blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(DBOUT)	+ AQLString(DBOUT) , new MMDBpremKOP()	));
+		blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(REBATE)	+ AQLString(RHIGH),	new MMDBpremRH()				));
+		blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(REBATE)	+ AQLString(RLOW),		new MMDBpremRL()				));
+		blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(REBATE)	+ AQLString(RIN),		new MMDBpremRI()				));
 		
-		blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(DELTA)	+ LAString(CALL) + LAString(SPOT)  , new MMFDdeltaCallSpot() ));
-		blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(DELTA)	+ LAString(PUT) + LAString(SPOT)  , new MMFDdeltaPutSpot() ));
-		blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(FIRSTDIFF)	+ LAString(CALL) + LAString(SPOT)  , new MMFD1stDiffCallSpot() ));
-		blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(FIRSTDIFF)	+ LAString(PUT) + LAString(SPOT)  , new MMFD1stDiffPutSpot() ));
-		blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(DELTA)	+ LAString(CALL) + LAString(FORWARD)  , new MMFDdeltaCallFwd() ));
-		blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(DELTA)	+ LAString(PUT) + LAString(FORWARD)  , new MMFDdeltaPutFwd() ));
-		blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(FIRSTDIFF)	+ LAString(CALL) + LAString(FORWARD)  , new MMFD1stDiffCallFwd() ));
-		blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(FIRSTDIFF)	+ LAString(PUT) + LAString(FORWARD)  , new MMFD1stDiffPutFwd() ));
-		blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(SECONDDIFF)	+ LAString(CALL) + LAString(SPOT)  , new MMFD2ndDiffCallSpot() ));
-		blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(SECONDDIFF)	+ LAString(CALL) + LAString(FORWARD)  , new MMFD2ndDiffCallFwd() ));		
+		blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(SPOT)  , new MMFDdeltaCallSpot() ));
+		blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(DELTA)	+ AQLString(PUT) + AQLString(SPOT)  , new MMFDdeltaPutSpot() ));
+		blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(FIRSTDIFF)	+ AQLString(CALL) + AQLString(SPOT)  , new MMFD1stDiffCallSpot() ));
+		blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(FIRSTDIFF)	+ AQLString(PUT) + AQLString(SPOT)  , new MMFD1stDiffPutSpot() ));
+		blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(FORWARD)  , new MMFDdeltaCallFwd() ));
+		blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(DELTA)	+ AQLString(PUT) + AQLString(FORWARD)  , new MMFDdeltaPutFwd() ));
+		blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(FIRSTDIFF)	+ AQLString(CALL) + AQLString(FORWARD)  , new MMFD1stDiffCallFwd() ));
+		blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(FIRSTDIFF)	+ AQLString(PUT) + AQLString(FORWARD)  , new MMFD1stDiffPutFwd() ));
+		blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(SECONDDIFF)	+ AQLString(CALL) + AQLString(SPOT)  , new MMFD2ndDiffCallSpot() ));
+		blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(SECONDDIFF)	+ AQLString(CALL) + AQLString(FORWARD)  , new MMFD2ndDiffCallFwd() ));		
 		//MMAFF
-		blackComponentMap.insert(std::make_pair(LAString(AFF)	+ LAString(PREM) + LAString(CALL),	new MMAFFpremCall()	)	);
-		blackComponentMap.insert(std::make_pair(LAString(AFF)	+ LAString(PREM) + LAString(PUT),	new MMAFFpremPut()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(AFF)	+ AQLString(PREM) + AQLString(CALL),	new MMAFFpremCall()	)	);
+		blackComponentMap.insert(std::make_pair(AQLString(AFF)	+ AQLString(PREM) + AQLString(PUT),	new MMAFFpremPut()	)	);
 	}
 	return blackComponentMap;
 }
-std::map<LAString, AnalyticParam*>& 
-LACoreComponentManager::getBlackParamComponentMap()
+std::map<AQLString, AnalyticParam*>& 
+AQLCoreComponentManager::getBlackParamComponentMap()
 {
 	if(blackParamComponentMap.empty())
 	{
-		blackParamComponentMap.insert(std::make_pair(LAString(BK), new AnalyticBKParam() ));
-		blackParamComponentMap.insert(std::make_pair(LAString(GK), new AnalyticGKParam() ));
-		blackParamComponentMap.insert(std::make_pair(LAString(DG), new AnalyticDGParam() ));
-		blackParamComponentMap.insert(std::make_pair(LAString(SB), new AnalyticSBParam() ));
-		blackParamComponentMap.insert(std::make_pair(LAString(DB), new AnalyticDBParam() ));
+		blackParamComponentMap.insert(std::make_pair(AQLString(BK), new AnalyticBKParam() ));
+		blackParamComponentMap.insert(std::make_pair(AQLString(GK), new AnalyticGKParam() ));
+		blackParamComponentMap.insert(std::make_pair(AQLString(DG), new AnalyticDGParam() ));
+		blackParamComponentMap.insert(std::make_pair(AQLString(SB), new AnalyticSBParam() ));
+		blackParamComponentMap.insert(std::make_pair(AQLString(DB), new AnalyticDBParam() ));
 	}
 	return blackParamComponentMap;
 }
@@ -282,11 +282,11 @@ LACoreComponentManager::getBlackParamComponentMap()
 	@brief getIntetpolation
 
 	@param[in] key
-	@return LAString
+	@return AQLString
 
 */
-LAString
-LACoreComponentManager::getInterpolation(const LAString &key)
+AQLString
+AQLCoreComponentManager::getInterpolation(const AQLString &key)
 {
 	if (key == LINEAR)
 	{
@@ -358,8 +358,8 @@ LACoreComponentManager::getInterpolation(const LAString &key)
 	}
 	else
 	{
-		LAString msg = key + " is not registered in interpolation methods";
-		throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+		AQLString msg = key + " is not registered in interpolation methods";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__,__LINE__);
 	}
 
 }
@@ -368,11 +368,11 @@ LACoreComponentManager::getInterpolation(const LAString &key)
 	@brief getDayCount
 
 	@param[in] key
-	@return LAString
+	@return AQLString
 
 */
-LAString
-LACoreComponentManager::getDayCount(const LAString &key)
+AQLString
+AQLCoreComponentManager::getDayCount(const AQLString &key)
 {
 	if (key == AC_365I || key == AC_AC)
 	{
@@ -416,8 +416,8 @@ LACoreComponentManager::getDayCount(const LAString &key)
 	}
 	else
 	{
-		LAString msg = key + " is not registered in daycount conventions";
-		throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+		AQLString msg = key + " is not registered in daycount conventions";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__,__LINE__);
 	}
 
 }
@@ -426,11 +426,11 @@ LACoreComponentManager::getDayCount(const LAString &key)
 	@brief getBasisType
 
 	@param[in] key
-	@return LAString
+	@return AQLString
 
 */
-LAString
-LACoreComponentManager::getBasisType(const LAString &key)
+AQLString
+AQLCoreComponentManager::getBasisType(const AQLString &key)
 {
 	if (key == XCCYBASIS)
 	{
@@ -438,7 +438,7 @@ LACoreComponentManager::getBasisType(const LAString &key)
 	}
 	else
 	{
-		throw LACoreInvalidData("BasisType is not registered ", __FILE__,__LINE__);
+		throw AQLCoreInvalidData("BasisType is not registered ", __FILE__,__LINE__);
 	}
 }
 
@@ -447,7 +447,7 @@ LACoreComponentManager::getBasisType(const LAString &key)
 
 */
 void
-LACoreComponentManager::initialize()
+AQLCoreComponentManager::initialize()
 {
 	// interpolation map
 	interpolationMap.insert(std::make_pair(LINEAR,					"fn_linearinterpolation"));
@@ -489,156 +489,156 @@ LACoreComponentManager::initialize()
 	// black component map
 	
 	//MMZeroForError
-	blackComponentMap.insert(std::make_pair(LAString("ERROR"),	new MMZeroForError()));
+	blackComponentMap.insert(std::make_pair(AQLString("ERROR"),	new MMZeroForError()));
 	//LABlackPayOff
-	blackComponentMap.insert(std::make_pair(LAString(BKPAYOFF)	+ LAString(PREM) + LAString(CALL),	new LABlackPayOffpremCall())	);
-	blackComponentMap.insert(std::make_pair(LAString(BKPAYOFF)	+ LAString(PREM) + LAString(PUT),	new LABlackPayOffpremPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BKPAYOFF)	+ AQLString(PREM) + AQLString(CALL),	new LABlackPayOffpremCall())	);
+	blackComponentMap.insert(std::make_pair(AQLString(BKPAYOFF)	+ AQLString(PREM) + AQLString(PUT),	new LABlackPayOffpremPut()	)	);
 	
 	
 	
 	
 	//LABlack
-	blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(PREM) + LAString(CALL),	new LABlackpremCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(PREM) + LAString(PUT),	new LABlackpremPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(DELTA) + LAString(CALL), new LABlackdeltaCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(GAMMA) + LAString(CALL), new LABlackgammaCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(VEGA)  + LAString(CALL), new LABlackvegaCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(THETA) + LAString(CALL), new LABlackthetaCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(DELTA) + LAString(PUT),  new LABlackdeltaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(GAMMA) + LAString(PUT),  new LABlackgammaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(VEGA)  + LAString(PUT),  new LABlackvegaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(BK)	+ LAString(THETA) + LAString(PUT),  new LABlackthetaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(PREM) + AQLString(CALL),	new LABlackpremCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(PREM) + AQLString(PUT),	new LABlackpremPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(DELTA) + AQLString(CALL), new LABlackdeltaCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(GAMMA) + AQLString(CALL), new LABlackgammaCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(VEGA)  + AQLString(CALL), new LABlackvegaCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(THETA) + AQLString(CALL), new LABlackthetaCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(DELTA) + AQLString(PUT),  new LABlackdeltaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(GAMMA) + AQLString(PUT),  new LABlackgammaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(VEGA)  + AQLString(PUT),  new LABlackvegaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(BK)	+ AQLString(THETA) + AQLString(PUT),  new LABlackthetaPut()	)	);
 	//LAGreek
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(PREM)	+ LAString(CALL), new LAGreekpremCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(DELTA)	+ LAString(CALL), new LAGreekdeltaCall() )	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(GAMMA)	+ LAString(CALL), new LAGreekgammaCall() )	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VEGA)	+ LAString(CALL), new LAGreekvegaCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(THETA)	+ LAString(CALL), new LAGreekthetaCall() )	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(RHO)	+ LAString(CALL), new LAGreekrhoCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(PHI)	+ LAString(CALL), new LAGreekphiCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VANNA)	+ LAString(CALL), new LAGreekvannaCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VOLGA)	+ LAString(CALL), new LAGreekvolgaCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(PREM)	+ LAString(PUT),	new LAGreekpremPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(DELTA)	+ LAString(PUT),	new LAGreekdeltaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(GAMMA)	+ LAString(PUT),	new LAGreekgammaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VEGA)	+ LAString(PUT),	new LAGreekvegaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(THETA)	+ LAString(PUT),	new LAGreekthetaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(RHO)	+ LAString(PUT),	new LAGreekrhoPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(PHI)	+ LAString(PUT),	new LAGreekphiPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VANNA)	+ LAString(PUT), new LAGreekvannaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(GK) + LAString(VOLGA)	+ LAString(PUT), new LAGreekvolgaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PREM)	+ AQLString(CALL), new LAGreekpremCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(DELTA)	+ AQLString(CALL), new LAGreekdeltaCall() )	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(GAMMA)	+ AQLString(CALL), new LAGreekgammaCall() )	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VEGA)	+ AQLString(CALL), new LAGreekvegaCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(THETA)	+ AQLString(CALL), new LAGreekthetaCall() )	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(RHO)	+ AQLString(CALL), new LAGreekrhoCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PHI)	+ AQLString(CALL), new LAGreekphiCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VANNA)	+ AQLString(CALL), new LAGreekvannaCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VOLGA)	+ AQLString(CALL), new LAGreekvolgaCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PREM)	+ AQLString(PUT),	new LAGreekpremPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(DELTA)	+ AQLString(PUT),	new LAGreekdeltaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(GAMMA)	+ AQLString(PUT),	new LAGreekgammaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VEGA)	+ AQLString(PUT),	new LAGreekvegaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(THETA)	+ AQLString(PUT),	new LAGreekthetaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(RHO)	+ AQLString(PUT),	new LAGreekrhoPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(PHI)	+ AQLString(PUT),	new LAGreekphiPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VANNA)	+ AQLString(PUT), new LAGreekvannaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(GK) + AQLString(VOLGA)	+ AQLString(PUT), new LAGreekvolgaPut()	)	);
 	//MMCapFloor
-	blackComponentMap.insert(std::make_pair(LAString(CF) + LAString(PREM) + LAString(CALL), new MMCFpremCall()));
-	blackComponentMap.insert(std::make_pair(LAString(CF) + LAString(VEGA) + LAString(CALL), new MMCFvegaCall()));
-	blackComponentMap.insert(std::make_pair(LAString(CF) + LAString(PREM) + LAString(PUT), new MMCFpremPut()));
-	blackComponentMap.insert(std::make_pair(LAString(CF) + LAString(VEGA) + LAString(PUT), new MMCFvegaPut()));
+	blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(PREM) + AQLString(CALL), new MMCFpremCall()));
+	blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(VEGA) + AQLString(CALL), new MMCFvegaCall()));
+	blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(PREM) + AQLString(PUT), new MMCFpremPut()));
+	blackComponentMap.insert(std::make_pair(AQLString(CF) + AQLString(VEGA) + AQLString(PUT), new MMCFvegaPut()));
 	//MMDG
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(PREM)	+ LAString(CALL), new MMDGpremCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(DELTA)	+ LAString(CALL), new MMDGdeltaCall() )	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(GAMMA)	+ LAString(CALL), new MMDGgammaCall() )	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(VEGA)	+ LAString(CALL), new MMDGvegaCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(THETA)	+ LAString(CALL), new MMDGthetaCall() )	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(RHO)	+ LAString(CALL), new MMDGrhoCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(PHI)	+ LAString(CALL), new MMDGphiCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(PREM)	+ LAString(PUT),	new MMDGpremPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(DELTA)	+ LAString(PUT),	new MMDGdeltaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(GAMMA)	+ LAString(PUT),	new MMDGgammaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(VEGA)	+ LAString(PUT),	new MMDGvegaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(THETA)	+ LAString(PUT),	new MMDGthetaPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(RHO)	+ LAString(PUT),	new MMDGrhoPut()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(DG) + LAString(PHI)	+ LAString(PUT),	new MMDGphiPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(PREM)	+ AQLString(CALL), new MMDGpremCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(DELTA)	+ AQLString(CALL), new MMDGdeltaCall() )	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(GAMMA)	+ AQLString(CALL), new MMDGgammaCall() )	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(VEGA)	+ AQLString(CALL), new MMDGvegaCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(THETA)	+ AQLString(CALL), new MMDGthetaCall() )	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(RHO)	+ AQLString(CALL), new MMDGrhoCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(PHI)	+ AQLString(CALL), new MMDGphiCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(PREM)	+ AQLString(PUT),	new MMDGpremPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(DELTA)	+ AQLString(PUT),	new MMDGdeltaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(GAMMA)	+ AQLString(PUT),	new MMDGgammaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(VEGA)	+ AQLString(PUT),	new MMDGvegaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(THETA)	+ AQLString(PUT),	new MMDGthetaPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(RHO)	+ AQLString(PUT),	new MMDGrhoPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(DG) + AQLString(PHI)	+ AQLString(PUT),	new MMDGphiPut()	)	);
 	//hishida vannavolga
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PROB)	+ LAString(SBUP) + LAString(NOTOUCH), new MMSBprobUNT() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PROB)	+ LAString(SBDOWN) + LAString(NOTOUCH), new MMSBprobDNT() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PROB)	+ AQLString(SBUP) + AQLString(NOTOUCH), new MMSBprobUNT() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PROB)	+ AQLString(SBDOWN) + AQLString(NOTOUCH), new MMSBprobDNT() ));
 	//hishida vannavolga
 	//MMSB
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBpremDIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBpremDIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBpremDOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBpremDOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBpremUIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBpremUIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBpremUOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PREM)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBpremUOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBdeltaDIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBdeltaDIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBdeltaDOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBdeltaDOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBdeltaUIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBdeltaUIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBdeltaUOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(DELTA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBdeltaUOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBgammaDIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBgammaDIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBgammaDOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBgammaDOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBgammaUIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBgammaUIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBgammaUOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(GAMMA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBgammaUOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBvegaDIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBvegaDIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBvegaDOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBvegaDOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBvegaUIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBvegaUIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBvegaUOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(VEGA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBvegaUOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBthetaDIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBthetaDIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBthetaDOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBthetaDOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBthetaUIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBthetaUIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBthetaUOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(THETA)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBthetaUOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBrhoDIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBrhoDIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBrhoDOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBrhoDOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBrhoUIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBrhoUIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBrhoUOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(RHO)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBrhoUOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBphiDIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBIN)  , new MMSBphiDIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(CALL) + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBphiDOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(PUT)  + LAString(SBDOWN)	+ LAString(SBOUT) , new MMSBphiDOP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBIN)  , new MMSBphiUIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBIN)  , new MMSBphiUIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(CALL) + LAString(SBUP)	+ LAString(SBOUT) , new MMSBphiUOC() ));
-	blackComponentMap.insert(std::make_pair(LAString(SB) + LAString(PHI)	+ LAString(PUT)  + LAString(SBUP)	+ LAString(SBOUT) , new MMSBphiUOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBpremDIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBpremDIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBpremDOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBpremDOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBpremUIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBpremUIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBpremUOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBpremUOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBdeltaDIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBdeltaDIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBdeltaDOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBdeltaDOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBdeltaUIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBdeltaUIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBdeltaUOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(DELTA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBdeltaUOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBgammaDIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBgammaDIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBgammaDOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBgammaDOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBgammaUIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBgammaUIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBgammaUOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(GAMMA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBgammaUOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBvegaDIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBvegaDIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBvegaDOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBvegaDOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBvegaUIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBvegaUIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBvegaUOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(VEGA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBvegaUOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBthetaDIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBthetaDIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBthetaDOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBthetaDOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBthetaUIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBthetaUIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBthetaUOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(THETA)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBthetaUOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBrhoDIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBrhoDIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBrhoDOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBrhoDOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBrhoUIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBrhoUIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBrhoUOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(RHO)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBrhoUOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBphiDIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBIN)  , new MMSBphiDIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(CALL) + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBphiDOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(PUT)  + AQLString(SBDOWN)	+ AQLString(SBOUT) , new MMSBphiDOP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBphiUIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBIN)  , new MMSBphiUIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(CALL) + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBphiUOC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(SB) + AQLString(PHI)	+ AQLString(PUT)  + AQLString(SBUP)	+ AQLString(SBOUT) , new MMSBphiUOP() ));
 
 	//MMDB
-	blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(PREM)	+ LAString(CALL) + LAString(DBIN)	+ LAString(DBIN)  , new MMDBpremKIC() ));
-	blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(PREM)	+ LAString(CALL) + LAString(DBOUT)	+ LAString(DBOUT) , new MMDBpremKOC()	));
-	blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(PREM)	+ LAString(PUT)  + LAString(DBIN)	+ LAString(DBIN)  , new MMDBpremKIP() ));
-	blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(PREM)	+ LAString(PUT)  + LAString(DBOUT)	+ LAString(DBOUT) , new MMDBpremKOP()	));
-	blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(REBATE)	+ LAString(RHIGH),	new MMDBpremRH()				));
-	blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(REBATE)	+ LAString(RLOW),		new MMDBpremRL()				));
-	blackComponentMap.insert(std::make_pair(LAString(DB) + LAString(REBATE)	+ LAString(RIN),		new MMDBpremRI()				));
+	blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(DBIN)	+ AQLString(DBIN)  , new MMDBpremKIC() ));
+	blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(PREM)	+ AQLString(CALL) + AQLString(DBOUT)	+ AQLString(DBOUT) , new MMDBpremKOC()	));
+	blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(DBIN)	+ AQLString(DBIN)  , new MMDBpremKIP() ));
+	blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(PREM)	+ AQLString(PUT)  + AQLString(DBOUT)	+ AQLString(DBOUT) , new MMDBpremKOP()	));
+	blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(REBATE)	+ AQLString(RHIGH),	new MMDBpremRH()				));
+	blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(REBATE)	+ AQLString(RLOW),		new MMDBpremRL()				));
+	blackComponentMap.insert(std::make_pair(AQLString(DB) + AQLString(REBATE)	+ AQLString(RIN),		new MMDBpremRI()				));
 	
-	blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(DELTA)	+ LAString(CALL) + LAString(SPOT)  , new MMFDdeltaCallSpot() ));
-	blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(DELTA)	+ LAString(PUT) + LAString(SPOT)  , new MMFDdeltaPutSpot() ));
-	blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(FIRSTDIFF)	+ LAString(CALL) + LAString(SPOT)  , new MMFD1stDiffCallSpot() ));
-	blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(FIRSTDIFF)	+ LAString(PUT) + LAString(SPOT)  , new MMFD1stDiffPutSpot() ));
-	blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(DELTA)	+ LAString(CALL) + LAString(FORWARD)  , new MMFDdeltaCallFwd() ));
-	blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(DELTA)	+ LAString(PUT) + LAString(FORWARD)  , new MMFDdeltaPutFwd() ));
-	blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(FIRSTDIFF)	+ LAString(CALL) + LAString(FORWARD)  , new MMFD1stDiffCallFwd() ));
-	blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(FIRSTDIFF)	+ LAString(PUT) + LAString(FORWARD)  , new MMFD1stDiffPutFwd() ));
-	blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(SECONDDIFF)	+ LAString(CALL) + LAString(SPOT)  , new MMFD2ndDiffCallSpot() ));
-	blackComponentMap.insert(std::make_pair(LAString(FD) + LAString(SECONDDIFF)	+ LAString(CALL) + LAString(FORWARD)  , new MMFD2ndDiffCallFwd() ));
+	blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(SPOT)  , new MMFDdeltaCallSpot() ));
+	blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(DELTA)	+ AQLString(PUT) + AQLString(SPOT)  , new MMFDdeltaPutSpot() ));
+	blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(FIRSTDIFF)	+ AQLString(CALL) + AQLString(SPOT)  , new MMFD1stDiffCallSpot() ));
+	blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(FIRSTDIFF)	+ AQLString(PUT) + AQLString(SPOT)  , new MMFD1stDiffPutSpot() ));
+	blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(DELTA)	+ AQLString(CALL) + AQLString(FORWARD)  , new MMFDdeltaCallFwd() ));
+	blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(DELTA)	+ AQLString(PUT) + AQLString(FORWARD)  , new MMFDdeltaPutFwd() ));
+	blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(FIRSTDIFF)	+ AQLString(CALL) + AQLString(FORWARD)  , new MMFD1stDiffCallFwd() ));
+	blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(FIRSTDIFF)	+ AQLString(PUT) + AQLString(FORWARD)  , new MMFD1stDiffPutFwd() ));
+	blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(SECONDDIFF)	+ AQLString(CALL) + AQLString(SPOT)  , new MMFD2ndDiffCallSpot() ));
+	blackComponentMap.insert(std::make_pair(AQLString(FD) + AQLString(SECONDDIFF)	+ AQLString(CALL) + AQLString(FORWARD)  , new MMFD2ndDiffCallFwd() ));
 	//MMAFF
-	blackComponentMap.insert(std::make_pair(LAString(AFF)	+ LAString(PREM) + LAString(CALL),	new MMAFFpremCall()	)	);
-	blackComponentMap.insert(std::make_pair(LAString(AFF)	+ LAString(PREM) + LAString(PUT),	new MMAFFpremPut()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(AFF)	+ AQLString(PREM) + AQLString(CALL),	new MMAFFpremCall()	)	);
+	blackComponentMap.insert(std::make_pair(AQLString(AFF)	+ AQLString(PREM) + AQLString(PUT),	new MMAFFpremPut()	)	);
 
 
 	// black param component map
-	blackParamComponentMap.insert(std::make_pair(LAString(BK), new AnalyticBKParam() ));
-	blackParamComponentMap.insert(std::make_pair(LAString(GK), new AnalyticGKParam() ));
-	blackParamComponentMap.insert(std::make_pair(LAString(DG), new AnalyticDGParam() ));
-	blackParamComponentMap.insert(std::make_pair(LAString(SB), new AnalyticSBParam() ));
-	blackParamComponentMap.insert(std::make_pair(LAString(DB), new AnalyticDBParam() ));
+	blackParamComponentMap.insert(std::make_pair(AQLString(BK), new AnalyticBKParam() ));
+	blackParamComponentMap.insert(std::make_pair(AQLString(GK), new AnalyticGKParam() ));
+	blackParamComponentMap.insert(std::make_pair(AQLString(DG), new AnalyticDGParam() ));
+	blackParamComponentMap.insert(std::make_pair(AQLString(SB), new AnalyticSBParam() ));
+	blackParamComponentMap.insert(std::make_pair(AQLString(DB), new AnalyticDBParam() ));
 
 }
 
@@ -647,7 +647,7 @@ LACoreComponentManager::initialize()
 
 */
 void
-LACoreComponentManager::finalize()
+AQLCoreComponentManager::finalize()
 {
 	interpolationMap.clear();
 	dayCountMap.clear();
@@ -661,11 +661,11 @@ LACoreComponentManager::finalize()
 
 
 void 
-LACoreComponentManager::deleteBlackComponentMap()
+AQLCoreComponentManager::deleteBlackComponentMap()
 {
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
 	
-	std::map<LAString, LABlackScholesBase*>::iterator it = var.begin();
+	std::map<AQLString, LABlackScholesBase*>::iterator it = var.begin();
 	while (it != var.end())
 	{
 		delete it->second;
@@ -674,11 +674,11 @@ LACoreComponentManager::deleteBlackComponentMap()
 	var.clear();
 }
 void 
-LACoreComponentManager::deleteBlackParamComponentMap()
+AQLCoreComponentManager::deleteBlackParamComponentMap()
 {
-	std::map<LAString, AnalyticParam*> &var = LACoreComponentManager::getBlackParamComponentMap();
+	std::map<AQLString, AnalyticParam*> &var = AQLCoreComponentManager::getBlackParamComponentMap();
 	
-	std::map<LAString, AnalyticParam*>::iterator it = var.begin();
+	std::map<AQLString, AnalyticParam*>::iterator it = var.begin();
 	while (it != var.end())
 	{
 		delete it->second;

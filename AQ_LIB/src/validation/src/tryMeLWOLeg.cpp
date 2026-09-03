@@ -42,7 +42,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-        LAString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE);
+        AQLString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE);
         etrading::validateSwapLegLVBKeys(legName, legLVB.getKeys(), validateKeys);
 
 		auto myLeg = etrading::createLegByLVB(legLVB, legObjectName);
@@ -67,7 +67,7 @@ namespace validation
 	*  @param [in]		validateKeys	        True to validate the all keys provided are valid. Default to True
 	*  @return			legObjectName
 	*/
-	std::string tryMeLWOFeeLegCreate(const std::string& legObjectName, const LabelValueBlock& feeProperties, const LAStringMatrix& feeScheduleLVB, bool validateKeys)
+	std::string tryMeLWOFeeLegCreate(const std::string& legObjectName, const LabelValueBlock& feeProperties, const AQLStringMatrix& feeScheduleLVB, bool validateKeys)
 	{
 		VALID_EXCEPTION_START
 
@@ -84,7 +84,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-		LAString legName = feeProperties.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE);
+		AQLString legName = feeProperties.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE);
         std::vector<LabelValueBlock> cashflowLVBs = etrading::buildMultiLabelValueBlock(feeScheduleLVB);
         
         if (validateKeys)
@@ -137,7 +137,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-		LAString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE);
+		AQLString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE);
 		etrading::validateSwapLegLVBKeys(legName, legLVB.getKeys(), validateKeys, false);
 
 		std::shared_ptr<Schedule> schedule = etrading::getSchedule(scheduleName);
@@ -200,7 +200,7 @@ namespace validation
 	*  @param [in]		legObjectName		Leg object name
 	*  @return			Leg display of the input parameters
 	*/
-	LAStringMatrix tryMeLWOLegDisplay(const std::string& legObjectName)
+	AQLStringMatrix tryMeLWOLegDisplay(const std::string& legObjectName)
 	{
 		VALID_EXCEPTION_START
 

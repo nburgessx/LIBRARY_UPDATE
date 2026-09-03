@@ -11,10 +11,10 @@
 #include "LACurveForwardRateHelpers.h"
 #include "LACurvePricingObject.h"
 #include "CurveCalibrationData.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LADefinitions.h"
-#include "LADataReference.h"
-#include "LAMathDefine.h"
+#include "AQLDataReference.h"
+#include "AQLMathDefine.h"
 #include "DataUtilities.h"  // For AQ_TO_STRING macros
 
 namespace
@@ -28,18 +28,18 @@ namespace
 	 * param[out] businessDayAdjust	The businessDayAdjust / date sliding rule specified in the curve generator
 	 * param[out] calendar			The calendar(s) specified in the curve generator
 	 */
-	LADate getSwapEffectiveDateFromCurve( etrading::CurveGeneratorPtr curveGenerator, LADate asOfDate  )
+	AQLDate getSwapEffectiveDateFromCurve( etrading::CurveGeneratorPtr curveGenerator, AQLDate asOfDate  )
 	{
 		// Fetch the Swap Conventions block from the Curve Generator
-		LAStringMatrix swapConventions = curveGenerator->toLAStringMatrix(  etrading::GENERATOR_COMPONENTS::KEY_SWAPS );
+		AQLStringMatrix swapConventions = curveGenerator->toLAStringMatrix(  etrading::GENERATOR_COMPONENTS::KEY_SWAPS );
 
 		// Iterate through the Swap Conventions looking for specific keys of interest
-		LAString resetLag;
-		LAString businessDayAdjust;
-		LAString calendar;
+		AQLString resetLag;
+		AQLString businessDayAdjust;
+		AQLString calendar;
 		for (size_t i=0; i< swapConventions.size(); i++)
 		{
-			const LAStringVector& row = swapConventions[i];
+			const AQLStringVector& row = swapConventions[i];
 			std::string key( row[0].getCString() );
 			
 			if ( boost::iequals( key, etrading::CURVEGENERATOR_SWAPS_KEY::RESET_LAG ) )
@@ -62,7 +62,7 @@ namespace
 			resetLag += 'D';
 		}
 
-		LADate effectiveDate = etrading::LADateScheduleHelpers::getDate( asOfDate, resetLag, businessDayAdjust, calendar );
+		AQLDate effectiveDate = etrading::LADateScheduleHelpers::getDate( asOfDate, resetLag, businessDayAdjust, calendar );
 		return effectiveDate;
 	}
 }
@@ -89,17 +89,17 @@ namespace etrading
 											lwoHedgeSwapCurveMarketDataName_( lwoHedgeSwapCurveMarketDataName )
     {
 		// Set up the Swap Expression LVB used for repricing swap calibration instruments
-		LAStringVector keys; 
-		LAStringVector values;
+		AQLStringVector keys; 
+		AQLStringVector values;
 		bool validateKeys = true;
 
 		// We standardize these trade keys because we are only interested in par rate calculations 
-	    keys.push_back( etrading::IRS_KEY::PAY_RECEIVE.c_str() );					values.push_back( LAString( "PAY" ) );
-		keys.push_back( etrading::IRS_KEY::NOTIONAL.c_str() );						values.push_back( LAString( "1.0" ) );
-		keys.push_back( etrading::IRS_KEY::EFFECTIVE_DATE.c_str() );				values.push_back( LAString( "" ) );
-		keys.push_back( etrading::IRS_KEY::MATURITY_DATE.c_str() );					values.push_back( LAString( "" ) );
-		keys.push_back( etrading::SWAP_EXPRESSION_KEY::RATE_OR_SPREAD1.c_str() );	values.push_back( LAString( "0.0" ) );
-		keys.push_back( etrading::SWAP_EXPRESSION_KEY::RATE_OR_SPREAD2.c_str() );	values.push_back( LAString( "0.0" ) );
+	    keys.push_back( etrading::IRS_KEY::PAY_RECEIVE.c_str() );					values.push_back( AQLString( "PAY" ) );
+		keys.push_back( etrading::IRS_KEY::NOTIONAL.c_str() );						values.push_back( AQLString( "1.0" ) );
+		keys.push_back( etrading::IRS_KEY::EFFECTIVE_DATE.c_str() );				values.push_back( AQLString( "" ) );
+		keys.push_back( etrading::IRS_KEY::MATURITY_DATE.c_str() );					values.push_back( AQLString( "" ) );
+		keys.push_back( etrading::SWAP_EXPRESSION_KEY::RATE_OR_SPREAD1.c_str() );	values.push_back( AQLString( "0.0" ) );
+		keys.push_back( etrading::SWAP_EXPRESSION_KEY::RATE_OR_SPREAD2.c_str() );	values.push_back( AQLString( "0.0" ) );
 
 		repriceSwapExpressionLVB_ = etrading::populateLabelValueBlock( keys, values );
 	}
@@ -119,8 +119,8 @@ namespace etrading
 		const LabelValueBlock marketDataPropertiesLVB = lwoHedgeCurveMarketData->toLabelValueBlock( GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES );
 		const std::string marketDataAsOfDate          = marketDataPropertiesLVB.getCompulsoryValue( "AsOfDate" );
 
-		LADate asOfDate( LADateScheduleHelpers::getLADate( marketDataAsOfDate.c_str() ) );
-		LADate effectiveDate = getSwapEffectiveDateFromCurve( lwoHedgeCurveGenerator, asOfDate );
+		AQLDate asOfDate( LADateScheduleHelpers::getLADate( marketDataAsOfDate.c_str() ) );
+		AQLDate effectiveDate = getSwapEffectiveDateFromCurve( lwoHedgeCurveGenerator, asOfDate );
 
 		/* 
 		*  This next section Reprices all of the calibration swaps using the pricing curve
@@ -132,13 +132,13 @@ namespace etrading
 		LabelValueBlock curveCollections( pricingCurveCollection, StandardString("") );
 
 		// Get all of the calibration swap maturity dates
-		LAStringMatrix swapTenorsAndRates  = lwoHedgeCurveMarketData->toLAStringMatrix( GENERATOR_COMPONENTS::KEY_SWAPS );
+		AQLStringMatrix swapTenorsAndRates  = lwoHedgeCurveMarketData->toLAStringMatrix( GENERATOR_COMPONENTS::KEY_SWAPS );
 		const size_t numSwaps = swapTenorsAndRates.size();
 
 		// Iterate over all of the calibration swaps and calculate a par-rate for each swap using the pricing curve
 		for ( size_t i=0; i<numSwaps; i++)
 		{
-            LAString swapTenor = swapTenorsAndRates[i][0];
+            AQLString swapTenor = swapTenorsAndRates[i][0];
             
             StandardStringVector tradeDateKeys(2);
             tradeDateKeys[0] = IRS_KEY::EFFECTIVE_DATE;
@@ -154,7 +154,7 @@ namespace etrading
 			
 			double parRate = swapInstrument->parRate(curveCollections, fixingTables  );
 			// Now clear /delete the swap
-			swapTenorsAndRates[i][1] = LAString( parRate );
+			swapTenorsAndRates[i][1] = AQLString( parRate );
 		}
 
 		// Set the updated swap parRates back into the Swap MarketData Local Cache

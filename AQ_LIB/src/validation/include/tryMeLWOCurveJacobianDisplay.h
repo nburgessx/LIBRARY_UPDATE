@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -17,9 +17,9 @@ namespace validation
 	* @param [in] displayInverseMatrix				Display inverse Jacobian matrix or not
 	*/
 	void tryMeLWOCurveEngineJacobianDisplay(DoubleMatrix& matrix,
-											LAStringMatrix& labelMatrix,
-											const LAString& curveEngineObject,
-											const LAString& curveCollection,
+											AQLStringMatrix& labelMatrix,
+											const AQLString& curveEngineObject,
+											const AQLString& curveCollection,
 											bool displayLabels,
 											bool displayInverseMatrix);
 
@@ -30,7 +30,7 @@ namespace validation
 	* @param [in] displayInverseMatrix				Display inverse Jacobian matrix or not
 	*/
 	void tryMeLWOCurveJacobianDisplay(DoubleMatrix& matrix,
-											const LAString& curveCollection,
-											const LAString& curveName,
+											const AQLString& curveCollection,
+											const AQLString& curveName,
 											bool displayInverseMatrix);
 }

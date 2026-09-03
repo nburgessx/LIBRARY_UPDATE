@@ -24,9 +24,9 @@ namespace validation
 {
     /* @brief			return the day count used in the core library
     */
-    LAString getDayCount()
+    AQLString getDayCount()
     {
-        return LAString( "ACT/365" );
+        return AQLString( "ACT/365" );
     }
 
     bool isBasisFlag()
@@ -39,12 +39,12 @@ namespace validation
     *  @param [inout]	curveIndex		curve index
     *  @param [inout]	interpolation	interpolation
     */
-    void populateDiscountFactorConventions( const LAString& curveCollection, LAString& curveIndex, LAString& interpolation )
+    void populateDiscountFactorConventions( const AQLString& curveCollection, AQLString& curveIndex, AQLString& interpolation )
     {
         curveIndex = etrading::getDefaultValueForEmptyString( curveIndex, "OIS" );
 
         //Throw exception if the curve has not been built.
-        LAString staticDataTable = etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
+        AQLString staticDataTable = etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
         interpolation = etrading::getCurveInterpolation( curveCollection, staticDataTable );
     }
 
@@ -55,7 +55,7 @@ namespace validation
     *  @param [inout]	businessDayAdj	business day adjustment
     *  @param [inout]	calendar		calendar
     */
-    void populateDiscountFactorConventions( const LAString& curveCollection, LAString& curveIndex, LAString& interpolation, LAString& businessDayAdj, LAString& calendar )
+    void populateDiscountFactorConventions( const AQLString& curveCollection, AQLString& curveIndex, AQLString& interpolation, AQLString& businessDayAdj, AQLString& calendar )
     {
         populateDiscountFactorConventions( curveCollection, curveIndex, interpolation );
         businessDayAdj = etrading::getDefaultValueForEmptyString( businessDayAdj, "NO_CHANGE" );
@@ -70,9 +70,9 @@ namespace validation
     *  @return			An array of discount factor
     */
     DoubleVector tryMeCurveDiscountFactorsFromYearFractions( const DoubleVector& yearFractions,
-                                                             const LAString& dayCount,
-                                                             const LAString& curveCollection,
-                                                             const LAString& curveIndex )
+                                                             const AQLString& dayCount,
+                                                             const AQLString& curveCollection,
+                                                             const AQLString& curveIndex )
     {
         VALID_EXCEPTION_START
 
@@ -102,7 +102,7 @@ namespace validation
     }
 
     DoubleVector tryMeLWOCurveDiscountFactorsFromYearFractions( const DoubleVector& yearFractions,
-                                                                const LAString& dayCount,
+                                                                const AQLString& dayCount,
                                                                 const std::string& lwoCurveName )
     {
         VALID_EXCEPTION_START
@@ -120,7 +120,7 @@ namespace validation
         // Input validations
         if( yearFractions.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Size of input 'yearFractions' is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Size of input 'yearFractions' is zero.", __FILE__, __LINE__ );
         }
 
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
@@ -129,7 +129,7 @@ namespace validation
         auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
 
         // Convert Year Fractions to ACT/365 ones
-        LADate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
+        AQLDate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
         etrading::convertToYearFractionsACT365( curveAsOfDate, const_cast< DoubleVector& >( yearFractions ), dayCount );
 
         if( lwoCurve )
@@ -162,11 +162,11 @@ namespace validation
     *  @param [in]		curveIndex		Index of the curve set. Default to OIS
     *  @return			An array of discount factor
     */
-    DoubleVector tryMeCurveDiscountFactorsFromTenors( const LAStringVector& tenors,
-            const LAString& businessDayAdj,
-            const LAString& calendar,
-            const LAString& curveCollection,
-            const LAString& curveIndex )
+    DoubleVector tryMeCurveDiscountFactorsFromTenors( const AQLStringVector& tenors,
+            const AQLString& businessDayAdj,
+            const AQLString& calendar,
+            const AQLString& curveCollection,
+            const AQLString& curveIndex )
     {
         VALID_EXCEPTION_START
 
@@ -185,19 +185,19 @@ namespace validation
         // Input validations
         if( tenors.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Size of input 'tenors' is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Size of input 'tenors' is zero.", __FILE__, __LINE__ );
         }
 
-        LAString curIndex( curveIndex );
-        LAString interp;
-        LAString bdAdj( businessDayAdj );
-        LAString cal( calendar );
+        AQLString curIndex( curveIndex );
+        AQLString interp;
+        AQLString bdAdj( businessDayAdj );
+        AQLString cal( calendar );
         populateDiscountFactorConventions( curveCollection, curIndex, interp, bdAdj, cal );
 
         DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( tenors, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -240,7 +240,7 @@ namespace validation
         // Input validations
         if( tenors.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Size of input 'tenors' is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Size of input 'tenors' is zero.", __FILE__, __LINE__ );
         }
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( businessDayAdj );
@@ -259,7 +259,7 @@ namespace validation
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -285,8 +285,8 @@ namespace validation
     */
     DoubleVector tryMeCurveDiscountFactorsForwardStarting( const DateVector& fromDates,
             const DateVector& toDates,
-            const LAString& curveCollection,
-            const LAString& curveIndex )
+            const AQLString& curveCollection,
+            const AQLString& curveIndex )
     {
         VALID_EXCEPTION_START
 
@@ -305,12 +305,12 @@ namespace validation
         size_t N = toDates.size();
         if( M != N && M != 1 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
         }
 
         if( N == 0 || M == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
         }
 
         // Create pairs of fromDate and toDate even when there is only one fromDate
@@ -331,17 +331,17 @@ namespace validation
             }
         }
 
-        LAString curIndex( curveIndex );
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString curIndex( curveIndex );
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         populateDiscountFactorConventions( curveCollection, curIndex, interp, bdAdj, cal );
 
         DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( fromDateVec, toDates, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -379,11 +379,11 @@ namespace validation
         size_t N = toDates.size();
         if( M != N && M != 1 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
         }
         if( N == 0 || M == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
         }
 
         // Create pairs of fromDate and toDate even when there is only one fromDate
@@ -421,7 +421,7 @@ namespace validation
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -447,9 +447,9 @@ namespace validation
     */
     DoubleVector tryMeCurveDiscountFactorsForwardStartingFromYearFractions( const DateVector& fromDates,
                                                                             const DoubleVector& yearFractions,
-                                                                            const LAString& dayCount,
-                                                                            const LAString& curveCollection,
-                                                                            const LAString& curveIndex )
+                                                                            const AQLString& dayCount,
+                                                                            const AQLString& curveCollection,
+                                                                            const AQLString& curveIndex )
     {
         VALID_EXCEPTION_START
 
@@ -487,7 +487,7 @@ namespace validation
     */
     DoubleVector tryMeLWOCurveDiscountFactorsForwardStartingFromYearFractions( const std::vector<boost::gregorian::date>& fromDates,
             const DoubleVector& yearFractions,
-            const LAString& dayCount,
+            const AQLString& dayCount,
             const std::string& lwoCurveName )
     {
         VALID_EXCEPTION_START
@@ -507,12 +507,12 @@ namespace validation
         size_t N = yearFractions.size();
         if( M != N )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must be of equal size'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must be of equal size'", __FILE__, __LINE__ );
         }
 
         if( N == 0 || M == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must not be empty", __FILE__, __LINE__ );
         }
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( "NO_CHANGE" );
@@ -523,7 +523,7 @@ namespace validation
 
 
         // Convert Year Fractions to ACT/365 ones
-        LADate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
+        AQLDate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
         etrading::convertToYearFractionsACT365( curveAsOfDate, const_cast< DoubleVector& >( yearFractions ), dayCount );
 
         if( lwoCurve )
@@ -538,7 +538,7 @@ namespace validation
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -563,11 +563,11 @@ namespace validation
     *  @return			A array of discount factors
     */
     DoubleVector tryMeCurveDiscountFactorsForwardStartingFromTenor( const DateVector& fromDates,
-            const LAString& tenor,
-            const LAString& curveCollection,
-            const LAString& curveIndex,
-            const LAString& businessDayAdj,
-            const LAString& calendar )
+            const AQLString& tenor,
+            const AQLString& curveCollection,
+            const AQLString& curveIndex,
+            const AQLString& businessDayAdj,
+            const AQLString& calendar )
     {
         VALID_EXCEPTION_START
 
@@ -586,19 +586,19 @@ namespace validation
 
         if( fromDates.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
         }
 
-        LAString curIndex( curveIndex );
-        LAString interp;
-        LAString bdAdj( businessDayAdj );
-        LAString cal( calendar );
+        AQLString curIndex( curveIndex );
+        AQLString interp;
+        AQLString bdAdj( businessDayAdj );
+        AQLString cal( calendar );
         populateDiscountFactorConventions( curveCollection, curIndex, interp, bdAdj, cal );
 
         DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiDF( fromDates, tenor, etrading::getDataInstance(), curveCollection, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -643,13 +643,13 @@ namespace validation
 
         if( fromDates.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
         }
 
         if( fromDates.size() != tenors.size() )
         {
             std::string errString = ( boost::format( "Number of fromDates (%i) is not equal to the number of tenors (%i)" ) % fromDates.size() % tenors.size() ).str();
-            throw LACoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
         }
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( businessDayAdj );
@@ -668,7 +668,7 @@ namespace validation
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -690,13 +690,13 @@ namespace validation
     *  @return			A array of discount factors
     */
     DoubleVector tryMeCurveDiscountFactors( const DateVector& toDates,
-                                            const LAString& curveCollectionOrHandle,
-                                            const LAString& curveIndex )
+                                            const AQLString& curveCollectionOrHandle,
+                                            const AQLString& curveIndex )
     {
         VALID_EXCEPTION_START
 
 		// To Allow Support for Curve Objects or Curve Collections
-		LAString curveCollectionFromHandle = etrading::getCurveCollectionFromHandle( curveCollectionOrHandle.c_str() );
+		AQLString curveCollectionFromHandle = etrading::getCurveCollectionFromHandle( curveCollectionOrHandle.c_str() );
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -711,20 +711,20 @@ namespace validation
         size_t N = toDates.size();
         if( N == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'toDates' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'toDates' must not be empty", __FILE__, __LINE__ );
         }
 
-        LAString curIndex( curveIndex );
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString curIndex( curveIndex );
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         populateDiscountFactorConventions( curveCollectionFromHandle, curIndex, interp, bdAdj, cal );
 
         DoubleVector ret = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( toDates, etrading::getDataInstance(), curveCollectionFromHandle, getDayCount(), bdAdj, cal, interp, isBasisFlag(), curIndex );
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -745,8 +745,8 @@ namespace validation
 	*  @param [in]		forwardRates		        The new discount factors
     *  @param [in]		setCorrespondingForwards	Set the corresponding discount factors on STD curves, will set DFs = 1.0 on STD curves if false
 	*/
-    LAString tryMeCurveForwardRatesOverride( const LAString& curveCollection,
-                                             const LAString& curveIndex,
+    AQLString tryMeCurveForwardRatesOverride( const AQLString& curveCollection,
+                                             const AQLString& curveIndex,
                                              const DateVector& fixingDates,
                                              const DoubleVector& forwardRates,
                                              const bool setCorrespondingDiscountFactors )
@@ -761,7 +761,7 @@ namespace validation
         AQ_REQUIRE( fixingDates.size() == forwardRates.size(), "Unable to Override Forward Rates - Inconsistent number of fixing dates & forward rates" );
 
         // Override the Curve Forward Rates
-        LAString result = etrading::setCurveForwardRates( curveCollection, curveIndex, fixingDates, forwardRates, setCorrespondingDiscountFactors ); // setCorrespondingDiscountFactors for STD curves only
+        AQLString result = etrading::setCurveForwardRates( curveCollection, curveIndex, fixingDates, forwardRates, setCorrespondingDiscountFactors ); // setCorrespondingDiscountFactors for STD curves only
 
         // Record Outputs and Return the result
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );
@@ -776,8 +776,8 @@ namespace validation
 	*  @param [in]		discountFactors		The new discount factors
     *  @param [in]		setCorrespondingForwards	Set the corresponding forwards on STD curves, will set Forwards on STD curves to zero if false. *** Note *** When true this involves reverse calibration solving and can fail to solve / converge for extreme data sets.
 	*/
-    LAString tryMeCurveDiscountFactorsOverride( const LAString& curveCollection,
-                                                const LAString& curveIndex,
+    AQLString tryMeCurveDiscountFactorsOverride( const AQLString& curveCollection,
+                                                const AQLString& curveIndex,
                                                 const DateVector& paymentDates,
                                                 const DoubleVector& discountFactors,
                                                 const bool setCorrespondingForwards )
@@ -792,7 +792,7 @@ namespace validation
         AQ_REQUIRE( paymentDates.size() == discountFactors.size(), "Unable to Override Discount Factors - Inconsistent number of payment dates & discount factors" );
 
 		// Override the Curve Discount Factors
-        LAString result = etrading::setCurveDiscountFactors( curveCollection, curveIndex, paymentDates, discountFactors, setCorrespondingForwards ); // setCorrespondingForwards for STD curves only
+        AQLString result = etrading::setCurveDiscountFactors( curveCollection, curveIndex, paymentDates, discountFactors, setCorrespondingForwards ); // setCorrespondingForwards for STD curves only
 
         // Record Outputs and Return the result
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );
@@ -804,7 +804,7 @@ namespace validation
 	*  @param [in]		curveCollection		The curveCollection to use when accessing the curveIndices
 	*  @param [in]		curveIndex			The curveindex within the curve
 	*/
-    LAString tryMeCurveDiscountFactorsSetToOne( const LAString& curveCollection, const LAString& curveIndex )
+    AQLString tryMeCurveDiscountFactorsSetToOne( const AQLString& curveCollection, const AQLString& curveIndex )
     {
         VALID_EXCEPTION_START
 
@@ -815,7 +815,7 @@ namespace validation
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
 
         // Override the Curve Discount Factors
-        LAString result = etrading::setCurveDiscountFactorsToOne( curveCollection, curveIndex );
+        AQLString result = etrading::setCurveDiscountFactorsToOne( curveCollection, curveIndex );
 
         // Record Outputs and Return the result
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );
@@ -828,7 +828,7 @@ namespace validation
 	*  @param [in]		curveIndex			    The curveindex within the curve
 	*  @param [out]		DiscountFactorTable     A discount factor table structure that contains paymentDates_ and discountFactors_
     */
-    DiscountFactorTable tryMeCurveDiscountFactorsDisplay( const LAString& curveCollection, const LAString& curveIndex )
+    DiscountFactorTable tryMeCurveDiscountFactorsDisplay( const AQLString& curveCollection, const AQLString& curveIndex )
     {
         VALID_EXCEPTION_START
 
@@ -864,7 +864,7 @@ namespace validation
 	*  @param [in]		terms			        A vector of terms year fractions
 	*  @param [out]		paymentDates            A vector of corresponding payment dates
     */
-    DateVector tryMeCurveTermsToDates( const LAString& curveCollection, const DoubleVector terms )
+    DateVector tryMeCurveTermsToDates( const AQLString& curveCollection, const DoubleVector terms )
     {
         VALID_EXCEPTION_START
 
@@ -885,7 +885,7 @@ namespace validation
 	*  @param [in]		paymentDates			A vector of corresponding payment dates
 	*  @param [out]		terms                   A vector of corresponding terms year fractions
     */
-    DoubleVector tryMeCurveDatesToTerms( const LAString& curveCollection, const DateVector paymentDates )
+    DoubleVector tryMeCurveDatesToTerms( const AQLString& curveCollection, const DateVector paymentDates )
     {
         VALID_EXCEPTION_START
 

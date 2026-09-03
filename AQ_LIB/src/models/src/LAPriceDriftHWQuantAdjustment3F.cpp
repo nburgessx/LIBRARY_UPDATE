@@ -26,25 +26,25 @@
 #include "LAPriceDriftHWQuantAdjustment3F.h"
 #include "LAPriceFXVolatility.h"
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathVolFuncBase.h"
 #include "LARatesSpotSDE.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAModelDynamicsScalar.h"
 #include "LAModelDynamicsHW1FCurve.h"
-#include "LAAlgorithm.h"
-#include "LAConstant.h"
-#include "LA1DDataSet.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LAGaussLegendre.h"
-#include "LACombinationFunc.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLConstant.h"
+#include "AQL1DDataSet.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLGaussLegendre.h"
+#include "AQLCombinationFunc.h"
+#include "AQLBasic.h"
 #include "LAPriceDriftHW.h"
 #include "LAMathVolFuncFXDD.h"
 #include "LAPriceQuantAdjustmentHWFXDD.h"
@@ -78,9 +78,9 @@ LAPriceDriftHWQuantAdjustment3F::LAPriceDriftHWQuantAdjustment3F(const LARatesNu
 	@param[in] sdeAttrNameFX data name of fx model
 	@param[in] pDriftIR drift class before quant adjustment
 */
-LAPriceDriftHWQuantAdjustment3F::LAPriceDriftHWQuantAdjustment3F(const LAString& sdeAttrNameIR_D, 
-													   const LAString& sdeAttrNameIR_F, 
-													   const LAString& sdeAttrNameFX, 
+LAPriceDriftHWQuantAdjustment3F::LAPriceDriftHWQuantAdjustment3F(const AQLString& sdeAttrNameIR_D, 
+													   const AQLString& sdeAttrNameIR_F, 
+													   const AQLString& sdeAttrNameFX, 
 													   LAPriceDriftHW* pDriftIR,
 													   const double fx_criteria)
 : LAPriceDriftHWQuantAdjustment(sdeAttrNameIR_D, sdeAttrNameIR_F, sdeAttrNameFX, pDriftIR, fx_criteria)
@@ -88,7 +88,7 @@ LAPriceDriftHWQuantAdjustment3F::LAPriceDriftHWQuantAdjustment3F(const LAString&
 	if (pDriftIR == 0)
 	{
 		//error
-		throw LACoreInvalidData("input IR drift is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("input IR drift is NULL", __FILE__, __LINE__);
 	}
 }
 
@@ -113,7 +113,7 @@ LAPriceDriftHWQuantAdjustment3F::~LAPriceDriftHWQuantAdjustment3F()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftHWQuantAdjustment3F::clone() const	
 {
     try 
@@ -122,7 +122,7 @@ LAPriceDriftHWQuantAdjustment3F::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -170,17 +170,17 @@ LAPriceDriftHWQuantAdjustment3F::setUp(LAMathPathEntity& path)
 {
 	LAPriceDriftHWQuantAdjustment::setUp(path);
 	//foreign numeraire
-	LADataHolder* dh = &path.getData(mSDEAttrNameIR_F, ISNOTNULL);
+	AQLDataHolder* dh = &path.getData(mSDEAttrNameIR_F, ISNOTNULL);
 	LAMathAttrSDE &attrsde = dynamic_cast<LAMathAttrSDE &>(dh->get());
 	if (!attrsde.getSDE().isTypeOf(FN_SPOTSDEQUANTADJUSTMENT))
 	{
-		throw LACoreInvalidData("Foregin sde must be LARatesSpotSDEQuantAdjustment", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Foregin sde must be LARatesSpotSDEQuantAdjustment", __FILE__, __LINE__);
 	}
 	LAPriceQuantAdjustmentFuncBase &qa = dynamic_cast<LARatesSpotSDEQuantAdjustment &>(attrsde.getSDE()).getQuantAdjuster();
 
 	if (!qa.isTypeOf(FN_QUANTADJUSTMENTFXDD))
 	{
-		throw LACoreInvalidData("QuantAdjustmentFunc must be LAPriceQuantAdjustmentHWFXDD", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("QuantAdjustmentFunc must be LAPriceQuantAdjustmentHWFXDD", __FILE__, __LINE__);
 	}
 	mpQuantAdjuster = &dynamic_cast<LAPriceQuantAdjustmentHWFXDD &>(qa);
 	
@@ -194,7 +194,7 @@ LAPriceDriftHWQuantAdjustment3F::getQuantAdjuster() const
 {
 	if (!mpQuantAdjuster)
 	{
-		throw LACoreInvalidData("mpQuantAdjuster is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("mpQuantAdjuster is NULL", __FILE__, __LINE__);
 	}
 	return *mpQuantAdjuster;
 }

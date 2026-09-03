@@ -19,7 +19,7 @@
 
 #define AQ_API_END                                                \
     }                                                               \
-    catch(const LACoreError& e)	                                    \
+    catch(const AQLCoreError& e)	                                    \
     {						                                        \
         const char* cstr = e.getMsg();                              \
         const size_t msgSize = std::strlen( cstr );                 \

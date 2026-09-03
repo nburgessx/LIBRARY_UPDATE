@@ -57,7 +57,7 @@ namespace etrading
 		}
 		else
 		{
-            throw LACoreInvalidData( "#Error: Currency format should be either 'BaseCcy,TermCcy' or 'BaseCcyTermCcy', e.g. 'EUR,USD' or 'EURUSD'" , __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Currency format should be either 'BaseCcy,TermCcy' or 'BaseCcyTermCcy', e.g. 'EUR,USD' or 'EURUSD'" , __FILE__, __LINE__ );
 		}
 
         return std::make_pair(toCCYEnum(baseCurrency), toCCYEnum(termCurrency));
@@ -79,7 +79,7 @@ namespace etrading
    }
 
 
-   LADate FXCurve::getDate(const LADate& fromDate, const std::string& tenor) const 
+   AQLDate FXCurve::getDate(const AQLDate& fromDate, const std::string& tenor) const 
     {
 	   const LabelValueBlock curveFxConventionsLVB = curveGenerator_->toLabelValueBlock(toString(FXFWD_CONVENTIONS));
 
@@ -90,18 +90,18 @@ namespace etrading
 
     }
 
-	LADate FXCurve::getAsOfDate() const
+	AQLDate FXCurve::getAsOfDate() const
 	{
         const LabelValueBlock marketDataPropertiesLVB = curveMarketData_->toLabelValueBlock( toString(MARKETDATA_PROPERTIES) );
-		const LADate asOfDate = marketDataPropertiesLVB.getCompulsoryValueAsDate( "ASOFDATE" );
+		const AQLDate asOfDate = marketDataPropertiesLVB.getCompulsoryValueAsDate( "ASOFDATE" );
 		return asOfDate;
 	}
 
-    LADate FXCurve::getSpotDate() const
+    AQLDate FXCurve::getSpotDate() const
     {
    	    const LabelValueBlock curveFxConventionsLVB = curveGenerator_->toLabelValueBlock( toString(FXFWD_CONVENTIONS) );
   	    const std::string resetLag = curveFxConventionsLVB.getCompulsoryValue( CURVEGENERATOR_FXFWDS_KEY::RESET_LAG );
-  	    const LADate spotDate = getDate(getAsOfDate(), resetLag);
+  	    const AQLDate spotDate = getDate(getAsOfDate(), resetLag);
 
         return spotDate;
     }
@@ -145,7 +145,7 @@ namespace etrading
         const size_t bidDataColumn = useFXForwardBidAsk ? 0 : 2;
         const size_t askDataColumn = useFXForwardBidAsk ? 1 : 2;
 
-		LAStringMatrix spotFxRateMatrix = curveMarketData_->toLAStringMatrix( marketDataKey );
+		AQLStringMatrix spotFxRateMatrix = curveMarketData_->toLAStringMatrix( marketDataKey );
 		
         for (unsigned int i = 0; i < spotFxRateMatrix.size(); ++i)
 	    {
@@ -181,12 +181,12 @@ namespace etrading
         const size_t bidDataColumn = 1;
         const size_t askDataColumn = useFXForwardBidAsk ? 2 : 1;
 
-        LAStringMatrix fwdFxRateMatrix = curveMarketData_->toLAStringMatrix( marketDataKey );
+        AQLStringMatrix fwdFxRateMatrix = curveMarketData_->toLAStringMatrix( marketDataKey );
 
         std::map<std::string, std::vector<FxFwd>> fwdFxRateMap;
 
-		const LADate asOfDate = getAsOfDate();
-		const LADate spotDate = getSpotDate();
+		const AQLDate asOfDate = getAsOfDate();
+		const AQLDate spotDate = getSpotDate();
 
 		auto spotFxRates = getQuotedSpotFxRates();
 
@@ -235,7 +235,7 @@ namespace etrading
     }
 
 	//Get fxForwards for a given settleDate from the interpolated fxCurve
-	FxFwd FXCurve::interpolateFxForwardOutrightsFromFxCurve(const LADate& settlementDate, const std::map<LADate, std::vector<FxFwd>>& fwdFxRateMap, const std::string& interpolationMethod)
+	FxFwd FXCurve::interpolateFxForwardOutrightsFromFxCurve(const AQLDate& settlementDate, const std::map<AQLDate, std::vector<FxFwd>>& fwdFxRateMap, const std::string& interpolationMethod)
     {
         
         std::vector<double> settleDates;
@@ -319,14 +319,14 @@ namespace etrading
 
         double pipSize = getFxPipSize();
         
-		const LADate asOfDate = getAsOfDate();
-  		const LADate spotDate = getSpotDate();
+		const AQLDate asOfDate = getAsOfDate();
+  		const AQLDate spotDate = getSpotDate();
 
 		std::string calendar, businessDayAdjustment, rollDayInput;
 		populateFxFwdConventions(curveGenerator_->toLabelValueBlock(toString(FXFWD_CONVENTIONS)), calendar, businessDayAdjustment, rollDayInput);
 
 		// Populate quoteFxRateMap using date as the key
-        std::map<LADate, std::vector<FxFwd>> fwdFxRateMapWithDateAsKeys;
+        std::map<AQLDate, std::vector<FxFwd>> fwdFxRateMapWithDateAsKeys;
         for(auto it = fwdFxRateMap.begin(); it != fwdFxRateMap.end(); ++it) 
 		{
 			auto settleDate = fromSettleDateOrTenorToDate(it->first, asOfDate, spotDate, calendar, businessDayAdjustment, rollDayInput);
@@ -334,7 +334,7 @@ namespace etrading
         }
 
 		//Calculate FX Forwards
-		const LADate latestQuotedSettleDate  = fwdFxRateMapWithDateAsKeys.rbegin()->first;
+		const AQLDate latestQuotedSettleDate  = fwdFxRateMapWithDateAsKeys.rbegin()->first;
 
 		bool isSettleTenor = isMaturityDateTenor(settlementDatesOrTenors.at(0).c_str());
 
@@ -345,7 +345,7 @@ namespace etrading
         for (size_t i = 0; i < expectedSize; ++i)
         {        
 	        std::string settleOrTenor = settlementDatesOrTenors[i];
-			LADate settleDate = fromSettleDateOrTenorToDate(settleOrTenor, asOfDate, spotDate, calendar, businessDayAdjustment, rollDayInput);
+			AQLDate settleDate = fromSettleDateOrTenorToDate(settleOrTenor, asOfDate, spotDate, calendar, businessDayAdjustment, rollDayInput);
 
 			// When settle is tenor and the tenor is in the quoted fxfwd rates, return the fxfwd rates directly
 			if (isSettleTenor && fwdFxRateMap.find(settleOrTenor) != fwdFxRateMap.end())

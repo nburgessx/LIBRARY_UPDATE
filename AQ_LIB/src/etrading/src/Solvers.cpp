@@ -1,6 +1,6 @@
 #include "Solvers.h"
-#include "LACoreAppError.h"
-#include "LABasic.h"
+#include "AQLCoreAppError.h"
+#include "AQLBasic.h"
 #include "ExceptionMacros.h"
 
 #include <limits>
@@ -454,7 +454,7 @@ namespace etrading
 			    for (unsigned int i = 0; i < numPoints; ++i)
 			    {
 				    // A solution is considered acceptable only when all y values are within tolerance
-				    if ( LAMath::abs( y0[i] ) >= tolerance )
+				    if ( AQLMath::abs( y0[i] ) >= tolerance )
 				    {
 					    usePreviousSolution = false;
 					    break;
@@ -470,7 +470,7 @@ namespace etrading
 				results.numberOfIterations      = 0u;
 				results.inverseJacobian         = initialInverseJacobian;
 				// Jacobian Not Available - We could invert the Inverse Jacobian, but we choose not to for performance reasons
-				results.jacobian				= LAMatrix(); 
+				results.jacobian				= AQLMatrix(); 
 				results.epsilon                 = y0;
 
 				return results;
@@ -492,8 +492,8 @@ namespace etrading
 			std::vector<double> y1 = targetFunction( stateVariables );
 
 			// Stores the inverseJacobian matrix at each iteration
-			LAMatrix inverseJacobian( numPoints, numPoints );
-			LAMatrix jacobianMatrix;
+			AQLMatrix inverseJacobian( numPoints, numPoints );
+			AQLMatrix jacobianMatrix;
 
 			bool solutionFound = false;
 			unsigned int iterationCount;
@@ -525,7 +525,7 @@ namespace etrading
 					bool derivativeIsZero = true;
 					for ( unsigned int i = 0; i < numPoints; ++i )
 					{
-						if ( LAMath::abs( y0[i] - y1[i]) >= gradientTolerance )
+						if ( AQLMath::abs( y0[i] - y1[i]) >= gradientTolerance )
 						{
 							derivativeIsZero = false;
 							break;
@@ -561,10 +561,10 @@ namespace etrading
 				// X(n+1) = X(n) + J_inverse * f(X(n)),		where J_inverse = Inverse Jacobian = 1 / f'(X(n))
 				
 				//	a)		Newton-Raphson Term:	f(X(n))
-				LAMatrix functionValues( y1 );
+				AQLMatrix functionValues( y1 );
 
 				//	b)		Newton-Raphson Term:	J_inverse * f(X(n))
-				LAMatrix inverseJ_times_function = inverseJacobian * functionValues;
+				AQLMatrix inverseJ_times_function = inverseJacobian * functionValues;
 				
 				for (unsigned int i = 0; i < numPoints; ++i)
 				{
@@ -585,7 +585,7 @@ namespace etrading
 					for (unsigned int i = 0; i < numPoints; ++i)
 					{
 						// Exit as soon as ONE of the y values is within tolerance
-						if ( LAMath::abs( y1[i] ) < tolerance )
+						if ( AQLMath::abs( y1[i] ) < tolerance )
 						{
 							solutionFound = true;
 							break;
@@ -599,7 +599,7 @@ namespace etrading
 					for (unsigned int i = 0; i < numPoints; ++i)
 					{
 						// A solution is considered acceptable only when all y values are within tolerance
-						if ( LAMath::abs( y1[i] ) >= tolerance )
+						if ( AQLMath::abs( y1[i] ) >= tolerance )
 						{
 							solutionFound = false;
 							break;

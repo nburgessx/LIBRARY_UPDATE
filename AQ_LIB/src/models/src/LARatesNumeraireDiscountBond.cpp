@@ -61,7 +61,7 @@ LARatesNumeraireDiscountBond::~LARatesNumeraireDiscountBond()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesNumeraireDiscountBond::clone() const
 {
     try 
@@ -70,7 +70,7 @@ LARatesNumeraireDiscountBond::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -106,7 +106,7 @@ LARatesNumeraireDiscountBond::operator()(double t) const
 	if (t > mTerminal + INFINITESIMAL || t < 0.0)
 	{
 		//error
-        throw LACoreInvalidData("input t is before 0 or after Terminal", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("input t is before 0 or after Terminal", __FILE__, __LINE__);
 	}
 	if (t > mTerminal) return 1.0;
 	if (mIsStochastic) return getCurve(t).getP(mTerminal);

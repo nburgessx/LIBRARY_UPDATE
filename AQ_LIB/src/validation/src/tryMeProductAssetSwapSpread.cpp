@@ -43,10 +43,10 @@ namespace validation
     * @param [in]		frequency	Fixed/Float Frequencey
     * @param [in]		err			If err is not empty, throw it
     */
-    void validateAssetSwapFrequency( const LAString& frequency, const LAString& err )
+    void validateAssetSwapFrequency( const AQLString& frequency, const AQLString& err )
     {
-        LAString accruedInterestTerm = LAString();
-        LAString freq = LAString( frequency ).toUpper();
+        AQLString accruedInterestTerm = AQLString();
+        AQLString freq = AQLString( frequency ).toUpper();
 
         if ( freq == "ANNUAL" )
         {
@@ -70,7 +70,7 @@ namespace validation
         }
         else
         {
-            throw LACoreInvalidData( err.getCString(), __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( err.getCString(), __FILE__, __LINE__ );
         }
     }
 
@@ -87,7 +87,7 @@ namespace validation
         etrading::validateKeysForLVB( tryMeProductAssetSwapSpreadLVBKeys(), assetSwapLVB.getKeys(), validateKeys );
 
         const std::string inputLVB = "AssetSwapLVB";
-        LAString curveCollection = assetSwapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection = assetSwapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -101,15 +101,15 @@ namespace validation
 
         //----------------------------------------------------------------------------------
         // Validate non-cash flow related parameters
-        LAString forecastCurveIndex	= assetSwapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
-        LAString discountCurveIndex = assetSwapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        AQLString forecastCurveIndex	= assetSwapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
+        AQLString discountCurveIndex = assetSwapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, discountCurveIndex );
-        LAString forecastCurveStaticDataTable = etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
+        AQLString forecastCurveStaticDataTable = etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
 
         // Synchronize the Asset Swap pricing interpolation with that used within the Forecast Curve calibration routine
-        LAString interpolation = etrading::getCurveInterpolation( curveCollection, forecastCurveStaticDataTable );
+        AQLString interpolation = etrading::getCurveInterpolation( curveCollection, forecastCurveStaticDataTable );
 
         //----------------------------------------------------------------------------------
         // Validate cash flow related parameters and generate cash flows
@@ -119,25 +119,25 @@ namespace validation
         DateVector floatFixingDates;
         DateVector floatPaymentDates;
 
-        const LAString fixingInAdvance = "ADVANCE";
+        const AQLString fixingInAdvance = "ADVANCE";
         const bool isAssetSwap = true;
 
         etrading::validateAndGenerateSwapCashflows( assetSwapLVB, inputLVB, fixedAccrualDates, fixedPaymentDates, floatFixingDates, floatAccrualDates, floatPaymentDates, fixingInAdvance, isAssetSwap );
 
         if ( fixedAccrualDates.size() < 1 || floatAccrualDates.size() < 1 )
         {
-            throw LACoreInvalidData( "#Error: Swap schedule error. There must be at least 1 fixed and float coupon.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Swap schedule error. There must be at least 1 fixed and float coupon.", __FILE__, __LINE__ );
         }
 
-        LAString fixedFreq = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_FREQUENCY );
-        LAString floatFreq = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_FREQUENCY );
+        AQLString fixedFreq = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_FREQUENCY );
+        AQLString floatFreq = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_FREQUENCY );
         validateAssetSwapFrequency( fixedFreq, "#Error: Invalid 'FixedFrequency'. Available frequencies are Annual, Semi-Annual, Quarterly, Monthly and Weekly." );
         validateAssetSwapFrequency( floatFreq, "#Error: Invalid 'FloatFrequency'. Available frequencies are Annual, Semi-Annual, Quarterly, Monthly and Weekly." );
 
         double fixedRate = assetSwapLVB.getCompulsoryValueAsDouble( etrading::IRS_KEY::FIXED_RATE );
 
-        LAString fixedDayCount = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
-        LAString floatDayCount = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
+        AQLString fixedDayCount = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
+        AQLString floatDayCount = assetSwapLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
 
         double floatFirstFix = assetSwapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_FIRSTFIXING, std::numeric_limits<double>::quiet_NaN() );
         double floatLastFix	= assetSwapLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FLOAT_LASTFIXING, std::numeric_limits<double>::quiet_NaN() );
@@ -152,8 +152,8 @@ namespace validation
 
         // Asset Swap Parameters
         const bool isCleanPrice     = assetSwapLVB.getCompulsoryValueAsBool( etrading::ASSET_SWAP_KEY::IS_CLEAN_PRICE );
-        const LADate issueDate      = assetSwapLVB.getCompulsoryValueAsDate( etrading::ASSET_SWAP_KEY::ISSUE_DATE );
-        const LADate settlementDate = assetSwapLVB.getCompulsoryValueAsDate( etrading::IRS_KEY::EFFECTIVE_DATE );
+        const AQLDate issueDate      = assetSwapLVB.getCompulsoryValueAsDate( etrading::ASSET_SWAP_KEY::ISSUE_DATE );
+        const AQLDate settlementDate = assetSwapLVB.getCompulsoryValueAsDate( etrading::IRS_KEY::EFFECTIVE_DATE );
 
 
         double ret = CurveInstrumentPricing::getAssetSwapSpread( bondPrice,

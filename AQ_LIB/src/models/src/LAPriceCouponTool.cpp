@@ -13,23 +13,23 @@
 
 #include "LAPriceCouponTool.h"
 
-#include "LADataHolder.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAObject.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObject.h"
+#include "AQLObjectHolder.h"
 
 
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataFunction.h"
 
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 
-#include "LAMathDefine.h"
+#include "AQLMathDefine.h"
 #include "LAPriceCFGenUtility.h"
 #include "LACompoundingFunc.h"
 
@@ -93,7 +93,7 @@ LAPriceCouponTool::LAPriceCouponTool(const LAPriceCouponTool& v)
 		mpIndexs[i] = v.mpIndexs[i]->clone();
 	}
 	if (v.mpOperator != NULL) 
-		mpOperator = dynamic_cast<LAFunctionBase*>(v.mpOperator->clone());
+		mpOperator = dynamic_cast<AQLFunctionBase*>(v.mpOperator->clone());
 
 }
 /*!
@@ -106,14 +106,14 @@ LAPriceCouponTool::LAPriceCouponTool(const LAPriceCouponTool& v)
 	@param[in] current position of payoff that this coupon correspond to (first payoff position = 0)
 */
 void
-LAPriceCouponTool::setUp(const LADate& basedate,	
-                      const LAObject& trade,
+LAPriceCouponTool::setUp(const AQLDate& basedate,	
+                      const AQLObject& trade,
 					  unsigned int legNo,
-					  const LAObject& couponinfo,
+					  const AQLObject& couponinfo,
 					  const LAPricePayOff& payoff,
 					  unsigned int currentpos)
 {
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	
 	//initialize
 	mIsRound = false;
@@ -144,14 +144,14 @@ LAPriceCouponTool::setUp(const LADate& basedate,
 	if (dh->isDefined() && !dh->isNull())
 	{
 		mIsRound = true;
-		LAString roundfunction = dynamic_cast<const LADataString&>(dh->get()).get();
+		AQLString roundfunction = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		roundfunction.toUpper();
 		if (roundfunction == ROUND_STR) mRoundFunction = ROUND;
 		else if (roundfunction == ROUND_UP_STR) mRoundFunction = ROUND_UP;
 		else mRoundFunction = ROUND_DOWN;
 
 		dh = &(couponinfo.getData(PRICING_DATA_ROUNDDIGIT, ISNOTNULL));
-		mRoundDigit = dynamic_cast<const LADataInt&>(dh->get()).get();
+		mRoundDigit = dynamic_cast<const AQLDataInt&>(dh->get()).get();
 	}
 
 
@@ -160,25 +160,25 @@ LAPriceCouponTool::setUp(const LADate& basedate,
 	if (dh->isDefined() && !dh->isNull())
 	{
 		mIsCap = true;
-		const LAPriceDataFunction& capfunc= dynamic_cast<const LAPriceDataFunction&>(dh->get());
-	    mpCap = &dynamic_cast<const LAFunctionBase&>(capfunc.getFunction());
+		const AQLPriceDataFunction& capfunc= dynamic_cast<const AQLPriceDataFunction&>(dh->get());
+	    mpCap = &dynamic_cast<const AQLFunctionBase&>(capfunc.getFunction());
 	}
 	dh = &(couponinfo.getData(PRICING_DATA_MINCOUPON, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
 		mIsFloor = true;
-		const LAPriceDataFunction& floorfunc= dynamic_cast<const LAPriceDataFunction&>(dh->get());
-	    mpFloor = &dynamic_cast<const LAFunctionBase&>(floorfunc.getFunction());
+		const AQLPriceDataFunction& floorfunc= dynamic_cast<const AQLPriceDataFunction&>(dh->get());
+	    mpFloor = &dynamic_cast<const AQLFunctionBase&>(floorfunc.getFunction());
 	}
 
 
 
 	//index info
 	dh = &(couponinfo.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
-	const LADataMultiReference& indexinfos
-			= dynamic_cast<const LADataMultiReference&>(dh->get());
+	const AQLDataMultiReference& indexinfos
+			= dynamic_cast<const AQLDataMultiReference&>(dh->get());
 	mpIndexs.resize(indexinfos.getSize(), NULL);
-	const LADate& paydate = (mpPayOff->getPayOff())[mLegNo].at(currentpos).getPayOff().getPaymentDate();
+	const AQLDate& paydate = (mpPayOff->getPayOff())[mLegNo].at(currentpos).getPayOff().getPaymentDate();
 	for (unsigned int i = 0; i < indexinfos.getSize(); i++)
 	{	
 		mpIndexs[i] = createIndexTool(indexinfos.get(i).get(), basedate);
@@ -187,39 +187,39 @@ LAPriceCouponTool::setUp(const LADate& basedate,
 
 	//operator
 	dh = &(couponinfo.getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-	const LAFunctionBase& method = dynamic_cast<const LAPriceDataFunction&>(dh->get()).getFunction();
-    mpOperator = dynamic_cast<LAFunctionBase*>(method.clone());
+	const AQLFunctionBase& method = dynamic_cast<const AQLPriceDataFunction&>(dh->get()).getFunction();
+    mpOperator = dynamic_cast<AQLFunctionBase*>(method.clone());
 	
 	//coefficient
-	mpCoefficient = &dynamic_cast<const LADataDoubles &>(couponinfo.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get());
+	mpCoefficient = &dynamic_cast<const AQLDataDoubles &>(couponinfo.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get());
 	mpOperator->setParam(mpCoefficient->get());
 	//dh = &(couponinfo.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-	//const DoubleArray& coeff = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+	//const DoubleArray& coeff = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 
 	//mpOperator->setParam(coeff);
 
 	//leg object
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+	const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 
 
 	//ObservationStartDate
 	dh = &(couponinfo.getData(PRICING_DATA_OBSERVATIONSTARTDATE, NOCHECK));	 
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LADate& startdate = dynamic_cast<const LADataDate&>(dh->get()).get();	
+		const AQLDate& startdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();	
 		dh = &(couponinfo.getData(PRICING_DATA_OBSERVATIONENDDATE, ISNOTNULL));	 
-		const LADate& enddate = dynamic_cast<const LADataDate&>(dh->get()).get();	
+		const AQLDate& enddate = dynamic_cast<const AQLDataDate&>(dh->get()).get();	
 	
 		for (unsigned int i = 0; i < currentpos; i++)
 		{
-			const LADate& paymentdate = (mpPayOff->getPayOff())[mLegNo][i].getPayOff().getPaymentDate();
+			const AQLDate& paymentdate = (mpPayOff->getPayOff())[mLegNo][i].getPayOff().getPaymentDate();
 			if (paymentdate >=startdate && paymentdate <= enddate && 
 				(mpPayOff->getPayOff())[mLegNo][i].getPayOff().isCouponPayment())
 				mPayOffPos.push_back(i);
 		}
 		dh = &(couponinfo.getData(PRICING_DATA_OBSERVATIONOPERATOR, ISNOTNULL));	 
-		mpObservationOperator = &dynamic_cast<const LAPriceDataFunction&>(dh->get()).getFunction();
+		mpObservationOperator = &dynamic_cast<const AQLPriceDataFunction&>(dh->get()).getFunction();
 	
 		mIsObservationTerm = true;
 
@@ -228,13 +228,13 @@ LAPriceCouponTool::setUp(const LADate& basedate,
 		//get past paymentdate
 		DateVector needdates;
 		dh = &(legs.get(legNo).getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-		const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference&>(dh->get());
+		const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 		for (unsigned int i = 0; i < cashlets.getSize(); i++)
 		{
 			dh = &(cashlets.get(i).getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 			if (!dh->isDefined() || dh->isNull()) continue;//not coupon payment			
 			dh = &(cashlets.get(i).getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-			const LADate& paymentdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+			const AQLDate& paymentdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 			if (paymentdate < startdate) continue;
 			if (paymentdate > basedate || paymentdate > enddate) break;
 			needdates.push_back(paymentdate);
@@ -246,7 +246,7 @@ LAPriceCouponTool::setUp(const LADate& basedate,
 			dh = &(trade.getData(PRICING_DATA_ISSAVEPASTFIXING, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				isSavePastFixing = dynamic_cast<const LADataBool &>(dh->get()).get();
+				isSavePastFixing = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 			}
 			if (isSavePastFixing)
 			{
@@ -255,14 +255,14 @@ LAPriceCouponTool::setUp(const LADate& basedate,
 				dh = &(legs.get(legNo).getData(PRICING_DATA_PAYMENTDATES, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					paymentdates = dynamic_cast<const LADataDates&>(dh->get()).get();
+					paymentdates = dynamic_cast<const AQLDataDates&>(dh->get()).get();
 					dh = &(legs.get(legNo).getData(PRICING_DATA_COUPONS, ISNOTNULL)); 
-					coupons = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+					coupons = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 				}
 				for (unsigned int i = 0; i < needdates.size(); i++)
 				{
 					unsigned int pos;
-					if (!LAAlgorithm::find<DateVector, LADate>(paymentdates, needdates[i], 0, paymentdates.size() - 1, pos))
+					if (!AQLAlgorithm::find<DateVector, AQLDate>(paymentdates, needdates[i], 0, paymentdates.size() - 1, pos))
 					{
 						mFixedRates.push_back(0.0);
 					}
@@ -276,19 +276,19 @@ LAPriceCouponTool::setUp(const LADate& basedate,
 			{
 				// past coupon
 				dh = &(legs.get(legNo).getData(PRICING_DATA_PAYMENTDATES, ISNOTNULL)); 
-				const DateVector& paymentdates = dynamic_cast<const LADataDates&>(dh->get()).get();
+				const DateVector& paymentdates = dynamic_cast<const AQLDataDates&>(dh->get()).get();
 				dh = &(legs.get(legNo).getData(PRICING_DATA_COUPONS, ISNOTNULL)); 
-				const DoubleArray& coupons = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+				const DoubleArray& coupons = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 				for (unsigned int i = 0; i < needdates.size(); i++)
 				{
 					unsigned int pos;
-					if (!LAAlgorithm::find<DateVector, LADate>(paymentdates, needdates[i], 0, paymentdates.size() - 1, pos))
+					if (!AQLAlgorithm::find<DateVector, AQLDate>(paymentdates, needdates[i], 0, paymentdates.size() - 1, pos))
 					{
 						//error
-						LAString msg = "Past Coupon of ";
-						msg += LADataDate(needdates[i]).convertToString();
+						AQLString msg = "Past Coupon of ";
+						msg += AQLDataDate(needdates[i]).convertToString();
 						msg += " is needed.";
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 					}
 					mFixedRates.push_back(coupons.at(pos));
 				}					
@@ -304,7 +304,7 @@ LAPriceCouponTool::setUp(const LADate& basedate,
 		dh = &(legs.get(legNo).getData(PRICING_DATA_COUPONPAYOFFS, NOCHECK)); 
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const DoubleArray& couponpayoffs = dynamic_cast<const LADataDoubles&>(dh->get()).get();		
+			const DoubleArray& couponpayoffs = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();		
 			mX3 = couponpayoffs;
 			mX3.resize(couponpayoffs.size() + mCurrentPos + 1);
 		}
@@ -348,13 +348,13 @@ LAPriceCouponTool::getPastCouponPayoffs(DoubleArray& x) const
 	}
 }
 
-LAPriceIndexToolBase* LAPriceCouponTool::createIndexTool(const LAObject& indexInfo, const LADate& baseDate)
+LAPriceIndexToolBase* LAPriceCouponTool::createIndexTool(const AQLObject& indexInfo, const AQLDate& baseDate)
 {
 	std::unique_ptr<LAPriceIndexToolBase> ret;
 
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 
-	LAString indexType = dynamic_cast<const LADataString&>(indexInfo.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
+	AQLString indexType = dynamic_cast<const AQLDataString&>(indexInfo.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL).get()).get();
 	indexType.toUpper();
 
 	if(indexType == FIXED_RATE) ret.reset(new LAPriceIndexToolFixed());
@@ -365,7 +365,7 @@ LAPriceIndexToolBase* LAPriceCouponTool::createIndexTool(const LAObject& indexIn
 		if (dh->isDefined() && !dh->isNull()) ret.reset(new LAPriceIndexTool());
 		else{
 			dh = &indexInfo.getData(PRICING_DATA_FIXINGDATE, ISNOTNULL);
-			const LADate& fixingdate = dynamic_cast<const LADataDate&>(dh->get()).get();
+			const AQLDate& fixingdate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 			if (baseDate >= fixingdate){
 				dh = &indexInfo.getData(PRICING_DATA_FIXEDRATE);
 				if (dh->isDefined() && !dh->isNull()) ret.reset(new LAPriceIndexToolFixed());
@@ -389,10 +389,10 @@ void LAPriceCouponToolCompound::calcCoupons(DoubleVector& coupons, const size_t 
 {
     LAPriceIndexToolCompound* index = dynamic_cast<LAPriceIndexToolCompound*>(mpIndexs[0]);
     if(index==NULL){
-        LAString msg;
+        AQLString msg;
         msg += "CAST ERROR:";
         msg += "index tool cannot be casted to LAPriceIndexToolCompound";
-        throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
     index->calcIndices(coupons, start_pos, end_pos);
     for(size_t i = start_pos; i < end_pos; i++){
@@ -401,10 +401,10 @@ void LAPriceCouponToolCompound::calcCoupons(DoubleVector& coupons, const size_t 
     }
 }
 
-LAPriceIndexToolBase* LAPriceCouponToolCompound::createIndexTool(const LAObject& indexInfo, const LADate& baseDate)
+LAPriceIndexToolBase* LAPriceCouponToolCompound::createIndexTool(const AQLObject& indexInfo, const AQLDate& baseDate)
 {
-    const LADataHolder* dh;
-    if((dh=&indexInfo.getData(PRICING_DATA_ISCOMPOUNDINGCOUPON))->isDefined() && !dh->isNull() && dynamic_cast<const LADataBool&>(dh->get()).get()){
+    const AQLDataHolder* dh;
+    if((dh=&indexInfo.getData(PRICING_DATA_ISCOMPOUNDINGCOUPON))->isDefined() && !dh->isNull() && dynamic_cast<const AQLDataBool&>(dh->get()).get()){
         return new LAPriceIndexToolCompound();
     }
     else{
@@ -413,10 +413,10 @@ LAPriceIndexToolBase* LAPriceCouponToolCompound::createIndexTool(const LAObject&
 }
 
 void
-LAPriceCouponToolCompound::setUp(const LADate& basedate,	
-                              const LAObject& trade,
+LAPriceCouponToolCompound::setUp(const AQLDate& basedate,	
+                              const AQLObject& trade,
                               unsigned int legNo,
-                              const LAObject& couponinfo,
+                              const AQLObject& couponinfo,
                               const LAPricePayOff& payoff,
                               unsigned int currentpos)
 {
@@ -430,28 +430,28 @@ LAPriceCouponToolCompound::setUp(const LADate& basedate,
 }
 
 void 
-LAPriceCouponToolCompound::setFixingInfo(LADate& fixing_date, LAString& fixing_flag) const
+LAPriceCouponToolCompound::setFixingInfo(AQLDate& fixing_date, AQLString& fixing_flag) const
 {
     const LAPriceIndexToolCompound* index = dynamic_cast<const LAPriceIndexToolCompound*>(mpIndexs[0]);
     if(index==NULL){
-        LAString msg;
+        AQLString msg;
         msg += "CAST ERROR:";
         msg += "index tool cannot be casted to LAPriceIndexToolCompound";
-        throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
     index->setFixingInfo(fixing_date, fixing_flag);
     return;
 }
 
 void 
-LAPriceCouponToolCompound::setFixingInfo(DateVector& fixing_date, LAStringVector& fixing_flag) const
+LAPriceCouponToolCompound::setFixingInfo(DateVector& fixing_date, AQLStringVector& fixing_flag) const
 {
     const LAPriceIndexToolCompound* index = dynamic_cast<const LAPriceIndexToolCompound*>(mpIndexs[0]);
     if(index==NULL){
-        LAString msg;
+        AQLString msg;
         msg += "CAST ERROR:";
         msg += "index tool cannot be casted to LAPriceIndexToolCompound";
-        throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
     index->setFixingInfo(fixing_date, fixing_flag);
     return;

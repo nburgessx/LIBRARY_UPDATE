@@ -19,13 +19,13 @@
 
 
 #include "LARiskConfigurationVolParallel.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LADataReference.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataFunction.h"
 #include "LAPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
@@ -61,10 +61,10 @@ LARiskConfigurationVolParallel::~LARiskConfigurationVolParallel(void)
     @brief setUp targetNames
 
 	@param[in] ccy
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolParallel::getTargetNames(const LAString &ccy, LADataInstance &dataInstance) const
+AQLString
+LARiskConfigurationVolParallel::getTargetNames(const AQLString &ccy, AQLDataInstance &dataInstance) const
 {
 	return LAMarketData::getBaseVolatilityName(ccy);
 }
@@ -75,17 +75,17 @@ LARiskConfigurationVolParallel::getTargetNames(const LAString &ccy, LADataInstan
 	@param[in] ccy
 	@param[out] dataInstance
 	@param[in] scenario
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *>
-LARiskConfigurationVolParallel::createVolatilityEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
+vector<AQLObject *>
+LARiskConfigurationVolParallel::createVolatilityEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
 {
-	const LAString model = LAMarketData::getModelName(ccy);
-	const LAString riskName = getRiskName();
+	const AQLString model = LAMarketData::getModelName(ccy);
+	const AQLString riskName = getRiskName();
 	// scenario param
 	MAScenarioParam param;
 	param.ccy = ccy;
-	param.calcType= ccy + "_" + riskName + "_" + LAString(scenarioNum);
+	param.calcType= ccy + "_" + riskName + "_" + AQLString(scenarioNum);
 	param.model = model;
 	param.targetName = LAMarketData::getBaseVolatilityName(ccy);
 	param.inputType = LAMarketData::getVolInputType(model, ccy, riskName);
@@ -108,15 +108,15 @@ LARiskConfigurationVolParallel::createVolatilityEntity(const LAString &ccy, LADa
 		param.shiftType = RISK_SHIFTTYPE_DIFF;
 		param.bumpType = RISK_MARKET_BUMP;
 		param.paraShiftVec.push_back(getParallelShiftVal(ccy));
-		LAString paraShiftTerm = getParallelShiftTerm(ccy);
+		AQLString paraShiftTerm = getParallelShiftTerm(ccy);
 		if (paraShiftTerm != AQ_NO_DATA)
 		{ 
 			param.paraTerm.push_back(paraShiftTerm);
 		}
 
-		LAObjectPool &objPool = dataInstance.getObjectPool();
+		AQLObjectPool &objPool = dataInstance.getObjectPool();
 		LACalibrationParameters *calibInfoCreator = LACalibrationParametersManager::getInstance()->createCalibInfoCreator(param.model);
-		LAString infoName = calibInfoCreator->createCalibrationInfo(objPool, ccy);
+		AQLString infoName = calibInfoCreator->createCalibrationInfo(objPool, ccy);
 		delete calibInfoCreator;
 		param.refName.push_back(infoName);
 		param.refName.push_back(LAMarketData::getBaseYieldName(ccy));
@@ -132,7 +132,7 @@ LARiskConfigurationVolParallel::createVolatilityEntity(const LAString &ccy, LADa
 	LAScenarioConfiguration *sceCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL);
 
-	vector<LAObject *> ret = sceCreator->createScenario(dataInstance, param);
+	vector<AQLObject *> ret = sceCreator->createScenario(dataInstance, param);
 	delete sceCreator;
 
 	return ret;
@@ -145,13 +145,13 @@ LARiskConfigurationVolParallel::createVolatilityEntity(const LAString &ccy, LADa
 	@param[in] ccy
 	@param[out] dataInstance
 	@param[in] scenario
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *>
-LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum) const
+vector<AQLObject *>
+LARiskConfigurationVolParallel::createVolatilityEntityOld(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum) const
 {
-	const LAString model = LAMarketData::getModelName(ccy);
-	const LAString riskName = getRiskName();
+	const AQLString model = LAMarketData::getModelName(ccy);
+	const AQLString riskName = getRiskName();
 	// scenario param
 	MAScenarioParam param;
 	param.ccy = ccy;
@@ -169,7 +169,7 @@ LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, L
 	LAScenarioConfiguration *sceCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL);
 
-	vector<LAObject *> ret = sceCreator->createScenario(dataInstance, param);
+	vector<AQLObject *> ret = sceCreator->createScenario(dataInstance, param);
 	delete sceCreator;
 
 	return ret;
@@ -179,9 +179,9 @@ LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, L
 ///*!
 //    @brief return operator2
 //
-//	@return LAString
+//	@return AQLString
 //*/
-//LAString
+//AQLString
 //LARiskConfigurationVolParallel::getOperator2(void) const
 //{
 //	return AQ_NO_DATA;
@@ -192,10 +192,10 @@ LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, L
 //    @brief return coefficient2
 //
 //	@param[in] ccy
-//	@return LAString
+//	@return AQLString
 //*/
-//LAString
-//LARiskConfigurationVolParallel::getCoefficient2(const LAString &ccy) const
+//AQLString
+//LARiskConfigurationVolParallel::getCoefficient2(const AQLString &ccy) const
 //{
 //	ccy;
 //	return AQ_NO_DATA;
@@ -205,10 +205,10 @@ LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, L
 //    @brief return outputname2
 //
 //	@param[in] ccy
-//	@return LAString
+//	@return AQLString
 //*/
-//LAString
-//LARiskConfigurationVolParallel::getOutPutName2(const LAString &ccy) const
+//AQLString
+//LARiskConfigurationVolParallel::getOutPutName2(const AQLString &ccy) const
 //{
 //	ccy;
 //	return AQ_NO_DATA;
@@ -221,7 +221,7 @@ LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, L
 	@return bool
 */
 //bool
-//LARiskConfigurationVolParallel::isGridSensitivity(const LAString &ccy) const
+//LARiskConfigurationVolParallel::isGridSensitivity(const AQLString &ccy) const
 //{
 //	ccy;
 //	return false;
@@ -234,7 +234,7 @@ LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, L
 //	@return bool
 //*/
 //bool
-//LARiskConfigurationVolParallel::isParallelShift(const LAString &ccy) const
+//LARiskConfigurationVolParallel::isParallelShift(const AQLString &ccy) const
 //{
 //	ccy;
 //	return true;
@@ -244,11 +244,11 @@ LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, L
 //    @brief return grid term
 //
 //	@param[in] ccy
-//	@return vector<LAString>
+//	@return vector<AQLString>
 //*/
-//vector<LAString>
-//LARiskConfigurationVolParallel::getGridTerm(const LAString &ccy) const
+//vector<AQLString>
+//LARiskConfigurationVolParallel::getGridTerm(const AQLString &ccy) const
 //{
 //	ccy;
-//	return vector<LAString>();
+//	return vector<AQLString>();
 //}

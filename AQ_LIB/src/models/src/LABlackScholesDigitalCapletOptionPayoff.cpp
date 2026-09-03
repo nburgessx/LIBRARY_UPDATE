@@ -48,7 +48,7 @@ LABlackScholesDigitalCapletOption::LABlackScholesDigitalCapletOption()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LABlackScholesDigitalCapletOption::clone() const
 {
     try 
@@ -57,7 +57,7 @@ LABlackScholesDigitalCapletOption::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -134,27 +134,27 @@ LABlackScholesDigitalCapletOption::setDigitalCoupon(double digitalCoupon)
 }
 
 // returns option type (two call options for call spread eavaluation)
-LAStringVector
+AQLStringVector
 LABlackScholesDigitalCapletOption::getOptionTypeVector()
 {
-	LAStringVector ret(2, LAString(CALL));
+	AQLStringVector ret(2, AQLString(CALL));
 	mOptionType = ret;
 	return ret;
 }
 
 // return string representation of analytic method
-LAStringVector
-LABlackScholesDigitalCapletOption::getBSComponentVector(LAString risktype) const
+AQLStringVector
+LABlackScholesDigitalCapletOption::getBSComponentVector(AQLString risktype) const
 {
-	LAStringVector ret(2, LAString(BK) + risktype + LAString(CALL));
+	AQLStringVector ret(2, AQLString(BK) + risktype + AQLString(CALL));
 	return ret;
 }
 
 // returns string representation of payoff method
-LAStringVector
-LABlackScholesDigitalCapletOption::getBSPayoffComponentVector(LAString risktype) const
+AQLStringVector
+LABlackScholesDigitalCapletOption::getBSPayoffComponentVector(AQLString risktype) const
 {
-	LAStringVector ret(2, LAString(BKPAYOFF) + risktype + LAString(CALL));
+	AQLStringVector ret(2, AQLString(BKPAYOFF) + risktype + AQLString(CALL));
 	return ret;
 }
 

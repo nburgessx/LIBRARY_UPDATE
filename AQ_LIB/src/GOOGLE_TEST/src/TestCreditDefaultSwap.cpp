@@ -74,7 +74,7 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOCurveFromFileName( const LAString& curveCalibrationFileName )
+	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
@@ -92,20 +92,20 @@ namespace
 	*  @param [in]		marketDataFileName			The filename specifying generator curve data
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/
-	void setUpGeneratorCurve( const LAString& marketDataFileName, const LAString& curveCalibrationFileName )
+	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
 		google_test::createLWOMarketDataObjectFromFileName( marketDataFileName );
 		createLWOCurveFromFileName( curveCalibrationFileName );
 	}
 
-	void createLWOCreditDefaultSwapFromFileName( const LAString& cdsFileName )
+	void createLWOCreditDefaultSwapFromFileName( const AQLString& cdsFileName )
 	{
 		etrading::ReadDataFile::Load creditDefaultSwapFileObj = etrading::ReadDataFile::Load( cdsFileName );
 		
 		const std::string swapName				= creditDefaultSwapFileObj[ "swapName" ];
 		const std::string lwoswapGeneratorName	= creditDefaultSwapFileObj[ "swapGeneratorName" ];
-		const LAStringMatrix expressionLVB		= creditDefaultSwapFileObj[ "expressionLVB" ];
-		const LAStringMatrix swapPropertiesLVB	= creditDefaultSwapFileObj[ "swapPropertiesLVB" ];
+		const AQLStringMatrix expressionLVB		= creditDefaultSwapFileObj[ "expressionLVB" ];
+		const AQLStringMatrix swapPropertiesLVB	= creditDefaultSwapFileObj[ "swapPropertiesLVB" ];
 		const bool isXccySwap					= creditDefaultSwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= creditDefaultSwapFileObj[ "validateKeys" ];
 		
@@ -129,7 +129,7 @@ namespace google_test
 
 		etrading::ReadDataFile::Load PVFileObj = etrading::ReadDataFile::Load( CDS_CALCULATE_PV );
 		const std::string swapName			= PVFileObj[ "swapName" ];
-		LAStringMatrix curveCollections		= PVFileObj[ "curveCollections" ];
+		AQLStringMatrix curveCollections		= PVFileObj[ "curveCollections" ];
 		const double hazardRate				= PVFileObj[ "hazardRate" ];
 		const double recoveryRate			= PVFileObj[ "recoveryRate" ];
 		std::string legName					= PVFileObj[ "legName"];
@@ -175,7 +175,7 @@ namespace google_test
 
 		etrading::ReadDataFile::Load parSpreadFileObj = etrading::ReadDataFile::Load( CDS_CALCULATE_PAR_SPREAD );
 		const std::string swapName			= parSpreadFileObj[ "swapName" ];
-		LAStringMatrix curveCollections		= parSpreadFileObj[ "curveCollections" ];
+		AQLStringMatrix curveCollections		= parSpreadFileObj[ "curveCollections" ];
 		const double hazardRate				= parSpreadFileObj[ "hazardRate" ];
 		const double recoveryRate			= parSpreadFileObj[ "recoveryRate" ];
 		std::string premiumLegName			= parSpreadFileObj[ "premiumLegName"];
@@ -198,7 +198,7 @@ namespace google_test
 
 		etrading::ReadDataFile::Load hazardRateFileObj = etrading::ReadDataFile::Load( CDS_CALCULATE_HAZARD_RATE );
 		const std::string swapName			= hazardRateFileObj[ "swapName" ];
-		LAStringMatrix curveCollections		= hazardRateFileObj[ "curveCollections" ];
+		AQLStringMatrix curveCollections		= hazardRateFileObj[ "curveCollections" ];
 		const double parSpread				= hazardRateFileObj[ "parSpread" ];
 		const double recoveryRate			= hazardRateFileObj[ "recoveryRate" ];
 		std::string premiumLegName			= hazardRateFileObj[ "premiumLegName"];

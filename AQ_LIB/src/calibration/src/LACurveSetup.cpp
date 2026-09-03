@@ -18,14 +18,14 @@
 #pragma warning(disable:4786)
 #endif
 
-#include <LADataBasics.h>
-#include <LADataVector.h>
-#include <LADataMatrix.h>
-#include <LADataReference.h>
+#include <AQLDataBasics.h>
+#include <AQLDataVector.h>
+#include <AQLDataMatrix.h>
+#include <AQLDataReference.h>
 #include <LAMathYieldCurve.h>
 #include <LAMathYieldCurvePro.h>
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
 #include "LACurveSetup.h"
 #include "LACalibrateModelIRVanilla.h"
 #include "LADefinitions.h"
@@ -35,7 +35,7 @@
 #include "LACoreDataService.h"
 #include "LAMarketData.h"
 #include "LAStaticDataManager.h"
-#include <LAFunctionUtilities.h>
+#include <AQLFunctionUtilities.h>
 #include "LAMathDateUtilities.h"
 #include "LAMathCurveFuncUtility.h"
 #include "LAMathCorrelation.h"
@@ -43,12 +43,12 @@
 #include "LACurveProperties.h"
 #include "LAMathFXEntity.h"
 #include "LAMathYieldCurve.h"
-#include "LAPriceDataFunction.h"
-#include "LA1DIntegral.h"
-#include "LACombinationFunc.h"
-#include "LAFunction.h"
-#include "LAShiftFunc.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataFunction.h"
+#include "AQL1DIntegral.h"
+#include "AQLCombinationFunc.h"
+#include "AQLFunction.h"
+#include "AQLShiftFunc.h"
+#include "AQLPriceDataInterpolation.h"
 #include "LAPriceCashFlowGenerator.h"
 #include "LAPriceCFGenUtility.h"
 #include "LAPriceTradeValue.h"
@@ -57,7 +57,7 @@
 //#include "LAHazardRateCreator.h"
 //#include "LAMathCreditEntitySetUp.h"
 //#include "LAMathSingleCredit.h"
-#include "LA1DDataSet.h"
+#include "AQL1DDataSet.h"
 //#include "LAPriceAccruedIntFunc.h"
 //#include "LAPriceCDS.h"
 
@@ -90,46 +90,46 @@
 #define CURVENAME_DF "DF"
 #endif
 
-const LAString LF = "\n";
+const AQLString LF = "\n";
 
 void
 LACurveSetup::
 setUpBasisCurve
-(LADataInstance* dataInstance,
- const LAString& curveID, 
- const LAString& marketName, 
- const LAStringMatrix& basisRates, 
- const LAStringMatrix& basisConv,
- const LAStringMatrix& fwdFXs, 
- const LAStringMatrix& fwdConv,
- const LAStringMatrix& spotFXs, 
- const LAStringMatrix& generateProp,
- const LAStringMatrix& moneyConv,
- const LAString& curveNames)
+(AQLDataInstance* dataInstance,
+ const AQLString& curveID, 
+ const AQLString& marketName, 
+ const AQLStringMatrix& basisRates, 
+ const AQLStringMatrix& basisConv,
+ const AQLStringMatrix& fwdFXs, 
+ const AQLStringMatrix& fwdConv,
+ const AQLStringMatrix& spotFXs, 
+ const AQLStringMatrix& generateProp,
+ const AQLStringMatrix& moneyConv,
+ const AQLString& curveNames)
 {
 	LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
-	LAObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
 
-	LAStringMatrix tmpInfo = generateProp;
+	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	LADate asofdate = LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate = LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
     LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	LAString currency;
-	LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	AQLString currency;
+	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	if (objHolder.isDefined())
 	{
-		LAObject& yldEntity = objHolder.get();
-		const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		AQLObject& yldEntity = objHolder.get();
+		const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		if(dh->isDefined() && !dh->isNull())
 		{
-			currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		}
 		else
 		{
-			if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			{
-				currency = LAString("DUMMY");
+				currency = AQLString("DUMMY");
 			}
 			else
 			{
@@ -139,23 +139,23 @@ setUpBasisCurve
 	}
 	else
 	{
-		if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		{
-			currency = LAString("DUMMY");
+			currency = AQLString("DUMMY");
 		}
 		else
 		{
 			currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		} 	
 	}
-	LAString tmpCurrency = currency; tmpCurrency.toLower();
+	AQLString tmpCurrency = currency; tmpCurrency.toLower();
 	
 	//set market rate	
 	if (marketName == "" || marketName == STD) 
-		throw LACoreInvalidData("Do not use STD or blank for basis curve name!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Do not use STD or blank for basis curve name!",__FILE__,__LINE__);
 
-	LAString staticDataSuffix;
-	LAString suffix_data;
+	AQLString staticDataSuffix;
+	AQLString suffix_data;
 	staticDataSuffix = "." + marketName;
 	staticDataSuffix.toLower();
 	suffix_data = "_" + marketName;
@@ -163,14 +163,14 @@ setUpBasisCurve
 
 	irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ISARBFREE);
 
-	LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	if (useMarkets == AQ_NO_DATA) useMarkets = "";
-	LAString tmpCurveName = marketName; tmpCurveName.toUpper();
+	AQLString tmpCurveName = marketName; tmpCurveName.toUpper();
 	if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 	{
 		if (useMarkets == "") useMarkets = marketName;
-		else useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + marketName;
+		else useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + marketName;
 	}
 	irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS, useMarkets);
 
@@ -184,23 +184,23 @@ setUpBasisCurve
 	}
 	
 	//basis file
-	LAString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix);
+	AQLString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix);
 	if (basisfile == AQ_NO_DATA)
 	{
-		basisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + suffix_data + LAString(".csv");
+		basisfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap") + suffix_data + AQLString(".csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix, basisfile);
 	}
-	LAString basisstream;
-	LAString usegrid = "";
+	AQLString basisstream;
+	AQLString usegrid = "";
 	for (unsigned int i = 0; i < basisRates.size();i++)
 	{
 		basisstream += basisRates[i][0];
 		const double brate = basisRates[i][1].getDoubleValue() * 10000.0;
-		basisstream += "," + LAString(brate) + LF;
+		basisstream += "," + AQLString(brate) + LF;
 
 		if (basisRates[i].size() == 3)
 		{
-			LAString useGridFrag = basisRates[i][2]; upper(useGridFrag);
+			AQLString useGridFrag = basisRates[i][2]; upper(useGridFrag);
 			if (useGridFrag == "TRUE") usegrid += basisRates[i][0] + ":";
 			else usegrid += "NONE:";
 		}
@@ -209,18 +209,18 @@ setUpBasisCurve
 	LACoreDataService::setIStringStream(LAMarketData::getNumFileName(basisfile), pbasisstream);
 
 	//fwdfx file
-	LAString fwdfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + staticDataSuffix);
-	LAString fwdstream;
-	LAString fwdusegrid = "";
+	AQLString fwdfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + staticDataSuffix);
+	AQLString fwdstream;
+	AQLString fwdusegrid = "";
 	for (unsigned int i = 0; i < fwdFXs.size();i++)
 	{
 		fwdstream += fwdFXs[i][0];
 		const double fwdfx = fwdFXs[i][1].getDoubleValue();
-		fwdstream += "," + LAString(fwdfx) + LF;
+		fwdstream += "," + AQLString(fwdfx) + LF;
 
 		if (fwdFXs[i].size() == 3)
 		{
-			LAString useGridFrag = fwdFXs[i][2]; upper(useGridFrag);
+			AQLString useGridFrag = fwdFXs[i][2]; upper(useGridFrag);
 			if (useGridFrag == "TRUE") fwdusegrid += fwdFXs[i][0] + ":";
 			else fwdusegrid += "NONE:";
 		}
@@ -231,36 +231,36 @@ setUpBasisCurve
 	//basis info
 	for(size_t i=0; i<basisConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.basis." + basisConv[i][0] + staticDataSuffix;
+		AQLString key = tmpCurrency + ".sde.yield.basis." + basisConv[i][0] + staticDataSuffix;
 		key.toLower();
-		LAString data = basisConv[i][1];
+		AQLString data = basisConv[i][1];
 		if (key.findString("discount") == -1 && key.findString("forecast") == -1) data.toLower();
 		irStaticData.setStaticData(key,data);
 	}
 	//generator info
 	for(size_t i=0; i<generateProp.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
 		key.toLower();
-		LAString data = generateProp[i][1];
+		AQLString data = generateProp[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key,data);
 	}
 	//money info
 	for(size_t i=0; i<moneyConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0];
 		key.toLower();
-		LAString data = moneyConv[i][1];
+		AQLString data = moneyConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key,data);
 	}
 	//fwdfx info
 	for(size_t i=0; i<fwdConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.basis.fwdfx." + fwdConv[i][0] + staticDataSuffix;
+		AQLString key = tmpCurrency + ".sde.yield.basis.fwdfx." + fwdConv[i][0] + staticDataSuffix;
 		key.toLower();
-		LAString data = fwdConv[i][1];
+		AQLString data = fwdConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key,data);
 	}
@@ -287,7 +287,7 @@ setUpBasisCurve
 
 	//set fxentity
 	LAMathFXEntity* pFwd = NULL;
-	LAObjectHolder ehfx = objPool.getObject(FORWARDFX, ENCHKTYPE_NOCHECK);
+	AQLObjectHolder ehfx = objPool.getObject(FORWARDFX, ENCHKTYPE_NOCHECK);
 	if (!ehfx.isDefined())
 	{
 		pFwd = new LAMathFXEntity(dataInstance);
@@ -302,20 +302,20 @@ setUpBasisCurve
 	pFwd->getFXType().convertFromString("FORWARDRATE");
 	LACoreDataService::setContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD, FORWARDFX);
 	const int ccySize = spotFXs.size();
-	LAStringVector ccys(ccySize);
+	AQLStringVector ccys(ccySize);
 	DoubleVector spotrates(ccySize);
-	LAString unitccy = irStaticData.getStaticData(KEY_FXSPOTRATES_UNITCCY);
+	AQLString unitccy = irStaticData.getStaticData(KEY_FXSPOTRATES_UNITCCY);
 	unitccy.toUpper();
 	for(unsigned int i = 0; i < ccySize; ++i)
 	{
         if (spotFXs[i].size() < 3)
 		{
-			throw LACoreInvalidData("spotrate file size error", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("spotrate file size error", __FILE__, __LINE__);
 		}
-		LAString tmpccy = spotFXs[i][0];
+		AQLString tmpccy = spotFXs[i][0];
 		if (tmpccy.toUpper() != unitccy)
 		{
-			throw LACoreInvalidData("The first column of a spot rate file must be unit currency", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("The first column of a spot rate file must be unit currency", __FILE__, __LINE__);
 		}
 		ccys[i] = spotFXs[i][1];
 		ccys[i].toUpper();
@@ -332,13 +332,13 @@ setUpBasisCurve
 	delete generator;
 
 	//ylddata
-	LAString	CurveIDTool			= curveID + TOOL;
-	LAString	CurveIDManager		= curveID + marketName + MANAGER;
+	AQLString	CurveIDTool			= curveID + TOOL;
+	AQLString	CurveIDManager		= curveID + marketName + MANAGER;
 	//curve entities manager (curve, grids, curveinformation entities)
-	LAObject* mae = NULL;
+	AQLObject* mae = NULL;
 	if(!objPool.getObject(CurveIDManager).isDefined())
 	{	
-		mae = new LAObject;
+		mae = new AQLObject;
 		objPool.set(CurveIDManager,mae);
 	}
 	else
@@ -346,43 +346,43 @@ setUpBasisCurve
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new LADataString()			).convertFromString(LAString(LATime::now()));
-	mae->add(CALIBRATION_DATA_NAME,		new LADataString()			).convertFromString(CurveIDManager);
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 }
 
 void
 LACurveSetup::
 setUpFwdFXConstantCurve
-(LADataInstance* dataInstance,
- const LAString& curveID, 
- const LAString& marketName, 
- const LAStringMatrix& fwdfxconstConv,
- const LAStringMatrix& generateProp,
- const LAString& curveNames)
+(AQLDataInstance* dataInstance,
+ const AQLString& curveID, 
+ const AQLString& marketName, 
+ const AQLStringMatrix& fwdfxconstConv,
+ const AQLStringMatrix& generateProp,
+ const AQLString& curveNames)
 {
 	LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
-	LAObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
 
-	LAStringMatrix tmpInfo = generateProp;
+	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	LADate asofdate = LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate = LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
     LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	LAString currency;
-	LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	AQLString currency;
+	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	if (objHolder.isDefined())
 	{
-		LAObject& yldEntity = objHolder.get();
-		const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		AQLObject& yldEntity = objHolder.get();
+		const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		if(dh->isDefined() && !dh->isNull())
 		{
-			currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		}
 		else
 		{
-			if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			{
-				currency = LAString("DUMMY");
+				currency = AQLString("DUMMY");
 			}
 			else
 			{
@@ -392,30 +392,30 @@ setUpFwdFXConstantCurve
 	}
 	else
 	{
-		if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		{
-			currency = LAString("DUMMY");
+			currency = AQLString("DUMMY");
 		}
 		else
 		{
 			currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		} 	
 	}
-	LAString tmpCurrency = currency; tmpCurrency.toLower();
+	AQLString tmpCurrency = currency; tmpCurrency.toLower();
 	
 	//set market rate	
 	if (marketName == "" || marketName == STD) 
-		throw LACoreInvalidData("Do not use STD or blank for basis curve name!",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Do not use STD or blank for basis curve name!",__FILE__,__LINE__);
 
-	LAString staticDataSuffix;
-	LAString suffix_data;
+	AQLString staticDataSuffix;
+	AQLString suffix_data;
 	staticDataSuffix = "." + marketName;
 	staticDataSuffix.toLower();
 	suffix_data = "_" + marketName;
 	suffix_data.toLower();
 
-	LAString tmpCurveName = marketName; tmpCurveName.toUpper();
-	LAString isFwdFxCon = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST);
+	AQLString tmpCurveName = marketName; tmpCurveName.toUpper();
+	AQLString isFwdFxCon = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST);
 	irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST, "TRUE");
 	irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FWDFXCONST_USEMARKET, marketName);
 
@@ -431,17 +431,17 @@ setUpFwdFXConstantCurve
 	//basis info
 	for(size_t i=0; i<fwdfxconstConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.basis." + fwdfxconstConv[i][0] + staticDataSuffix;
+		AQLString key = tmpCurrency + ".sde.yield.basis." + fwdfxconstConv[i][0] + staticDataSuffix;
 		key.toLower();
-		LAString data = fwdfxconstConv[i][1];
+		AQLString data = fwdfxconstConv[i][1];
 		if (key.findString("discount") == -1 && key.findString("forecast") == -1) data.toLower();
 		irStaticData.setStaticData(key,data);
 	}
 	for(size_t i=0; i<generateProp.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
 		key.toLower();
-		LAString data = generateProp[i][1];
+		AQLString data = generateProp[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key,data);
 	}
@@ -456,13 +456,13 @@ setUpFwdFXConstantCurve
 	delete generator;
 
 	//ylddata
-	LAString	CurveIDTool			= curveID + TOOL;
-	LAString	CurveIDManager		= curveID + marketName + MANAGER;
+	AQLString	CurveIDTool			= curveID + TOOL;
+	AQLString	CurveIDManager		= curveID + marketName + MANAGER;
 	//curve entities manager (curve, grids, curveinformation entities)
-	LAObject* mae = NULL;
+	AQLObject* mae = NULL;
 	if(!objPool.getObject(CurveIDManager).isDefined())
 	{	
-		mae = new LAObject;
+		mae = new AQLObject;
 		objPool.set(CurveIDManager,mae);
 	}
 	else
@@ -470,8 +470,8 @@ setUpFwdFXConstantCurve
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new LADataString()			).convertFromString(LAString(LATime::now()));
-	mae->add(CALIBRATION_DATA_NAME,		new LADataString()			).convertFromString(CurveIDManager);
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 
 	irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST, isFwdFxCon);
 }
@@ -479,49 +479,49 @@ setUpFwdFXConstantCurve
 void 
 LACurveSetup::
 setUpSwapCurve
-(LADataInstance* dataInstance,
- const LAString& curveID,
- const LAString& marketName,
- const LAStringMatrix& generateProp, 
- const LAStringMatrix& moneyConv,
- const LAStringMatrix& liborRates, 
- const LAStringMatrix& liborConv,
- const LAStringMatrix& swapRates, 
- const LAStringMatrix& swapConv,
- const LAStringMatrix& fra3mRates,
- const LAStringMatrix& fra6mRates,
- const LAStringMatrix& fraConv,
- const LAStringMatrix& futureRates, 
- const LAStringMatrix& futureConv,
- const LAStringMatrix& adjustSwapConv,
- const LAStringMatrix& adjustSwapRates,
- const LAString& curveNames,
- const LAString& curveName_DF2)
+(AQLDataInstance* dataInstance,
+ const AQLString& curveID,
+ const AQLString& marketName,
+ const AQLStringMatrix& generateProp, 
+ const AQLStringMatrix& moneyConv,
+ const AQLStringMatrix& liborRates, 
+ const AQLStringMatrix& liborConv,
+ const AQLStringMatrix& swapRates, 
+ const AQLStringMatrix& swapConv,
+ const AQLStringMatrix& fra3mRates,
+ const AQLStringMatrix& fra6mRates,
+ const AQLStringMatrix& fraConv,
+ const AQLStringMatrix& futureRates, 
+ const AQLStringMatrix& futureConv,
+ const AQLStringMatrix& adjustSwapConv,
+ const AQLStringMatrix& adjustSwapRates,
+ const AQLString& curveNames,
+ const AQLString& curveName_DF2)
 {
 	LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-	LAObject* pyld = NULL;
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObject* pyld = NULL;
 
-	LAStringMatrix tmpInfo = generateProp;
+	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	LADate asofdate	= LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate	= LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	LAString currency;
-	LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	AQLString currency;
+	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	if (objHolder.isDefined())
 	{
-		LAObject& yldEntity = objHolder.get();
-		const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		AQLObject& yldEntity = objHolder.get();
+		const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		if(dh->isDefined() && !dh->isNull())
 		{
-			currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		}
 		else
 		{
-			if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			{
-				currency = LAString("DUMMY");
+				currency = AQLString("DUMMY");
 			}
 			else
 			{
@@ -531,32 +531,32 @@ setUpSwapCurve
 	}
 	else
 	{
-		if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		{
-			currency = LAString("DUMMY");
+			currency = AQLString("DUMMY");
 		}
 		else
 		{
 			currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		} 	
 	}
-	LAString tmpCurrency = currency; tmpCurrency.toLower();
+	AQLString tmpCurrency = currency; tmpCurrency.toLower();
 
-	LAString generateCurveName = (marketName == "") ? STD : marketName;
-	LAString staticDataSuffix;
-	LAString suffix_data;
-	LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLString generateCurveName = (marketName == "") ? STD : marketName;
+	AQLString staticDataSuffix;
+	AQLString suffix_data;
+	AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	if (useMarkets == AQ_NO_DATA) useMarkets = "";
 	if (generateCurveName != STD)
 	{
 		staticDataSuffix = "." + generateCurveName;
 		staticDataSuffix.toLower();
-		LAString tmpCurveName = generateCurveName; tmpCurveName.toUpper();
+		AQLString tmpCurveName = generateCurveName; tmpCurveName.toUpper();
 		if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 		{
 			if (useMarkets == "") useMarkets = generateCurveName;
-			else useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName;
+			else useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName;
 		}	
 	}
 	else
@@ -564,7 +564,7 @@ setUpSwapCurve
 		if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),SWAP)) 
 		{
 			if (useMarkets == "") useMarkets = SWAP;
-			else useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
+			else useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
 		}
 	}
 	
@@ -597,13 +597,13 @@ setUpSwapCurve
 	bool isswaptenoradjust = false;
 	for(size_t i=0; i<generateProp.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
 		key.toLower();
-		LAString data = generateProp[i][1];
+		AQLString data = generateProp[i][1];
 		if (key.findString("dfcurvename") == -1) data.toLower();
 		irStaticData.setStaticData(key, data);
 
-		LAString tmpProp = generateProp[i][0];
+		AQLString tmpProp = generateProp[i][0];
 		tmpProp.toLower();
 		if (tmpProp == "isswaptenoradjust")
 		{
@@ -614,45 +614,45 @@ setUpSwapCurve
 	
 	for(size_t i=0; i<moneyConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
+		AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
 		key.toLower(); 
-		LAString data = moneyConv[i][1];
+		AQLString data = moneyConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 	
 	for(size_t i=0; i<liborConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
+		AQLString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
 		key.toLower(); 
-		LAString data = liborConv[i][1];
+		AQLString data = liborConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 
 	for(size_t i=0; i<swapConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0] + staticDataSuffix;
+		AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0] + staticDataSuffix;
 		key.toLower(); 
-		LAString data = swapConv[i][1];
+		AQLString data = swapConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 
 	for(size_t i=0; i<fraConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
+		AQLString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
 		key.toLower(); 
-		LAString data = fraConv[i][1];
+		AQLString data = fraConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 
 	for(size_t i=0; i<futureConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.future." + futureConv[i][0] + staticDataSuffix;
+		AQLString key = tmpCurrency + ".sde.yield.future." + futureConv[i][0] + staticDataSuffix;
 		key.toLower(); 
-		LAString data = futureConv[i][1];
+		AQLString data = futureConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
@@ -660,12 +660,12 @@ setUpSwapCurve
 	//////////////////modify for aud curve///////////////////////////////////////////////
 
 	//swap adjust mode
-	LAString tmpBasisCurveName;
+	AQLString tmpBasisCurveName;
 	if (isswaptenoradjust)
 	{
 		tmpBasisCurveName = THREESIXBASIS;
-		LAString adjsuffix_prop;
-		LAString adjsuffix_data;
+		AQLString adjsuffix_prop;
+		AQLString adjsuffix_data;
 		if (tmpBasisCurveName != STD)
 		{
 			adjsuffix_prop = "." + tmpBasisCurveName;
@@ -676,34 +676,34 @@ setUpSwapCurve
 		
 		for(size_t i=0; i<adjustSwapConv.size(); i++)
 		{
-			LAString key = tmpCurrency + ".sde.yield.basis." + adjustSwapConv[i][0] + adjsuffix_prop;
+			AQLString key = tmpCurrency + ".sde.yield.basis." + adjustSwapConv[i][0] + adjsuffix_prop;
 			key.toLower(); 
-			LAString data = adjustSwapConv[i][1];
+			AQLString data = adjustSwapConv[i][1];
 			if (key.findString("discount") == -1 && key.findString("forecast") == -1) data.toLower();
 			irStaticData.setStaticData(key, data);
 		}
 	
 		tmpBasisCurveName.toLower();
-		LAString basisEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName;
+		AQLString basisEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName;
 
 		//swapfile
-		LAString adjfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
+		AQLString adjfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
 		if (adjfile == AQ_NO_DATA)
 		{
-			adjfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + adjsuffix_data + LAString(".csv");
+			adjfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap") + adjsuffix_data + AQLString(".csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + adjsuffix_prop, adjfile);
 		}
-		LAString adjstream;
-		LAString usegrid = "";
+		AQLString adjstream;
+		AQLString usegrid = "";
 		for(size_t i=0; i<adjustSwapRates.size(); i++)
 		{
 			adjstream += adjustSwapRates[i][0];
 			double adjrate = adjustSwapRates[i][1].getDoubleValue() * 10000.0;
-			adjstream += "," + LAString(adjrate) + LF;
+			adjstream += "," + AQLString(adjrate) + LF;
 
 			if (adjustSwapRates[i].size() == 3)
 			{
-				LAString useGridFrag = adjustSwapRates[i][2]; upper(useGridFrag);
+				AQLString useGridFrag = adjustSwapRates[i][2]; upper(useGridFrag);
 				if (useGridFrag == "TRUE") usegrid += adjustSwapRates[i][0] + ":";
 				else usegrid += "NONE:";
 			}
@@ -721,38 +721,38 @@ setUpSwapCurve
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_USEGRID + "." + tmpBasisCurveName, usegrid);
 		}
 
-		LAString tmpCurveName = tmpBasisCurveName; tmpCurveName.toUpper();
+		AQLString tmpCurveName = tmpBasisCurveName; tmpCurveName.toUpper();
 		tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 		if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 		{ 
-			useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + tmpBasisCurveName;
+			useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + tmpBasisCurveName;
 		}
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MARKETTYPE + "." + tmpBasisCurveName, MARKETTYPE_BASIS);
 
 		//////////////////modify for aud curve///////////////////////////////////////////////
 	}
 
-	LAString usegrid_libor = "",usegrid_swap = "",usegrid_fra3m = "",usegrid_fra6m = "",usegrid_future = "";
+	AQLString usegrid_libor = "",usegrid_swap = "",usegrid_fra3m = "",usegrid_fra6m = "",usegrid_future = "";
 
 	//set Libor Object;
-	LAString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
+	AQLString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
 
-	LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
+	AQLString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
 	if (liborfile == AQ_NO_DATA)
 	{
-		liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor") + suffix_data + LAString(".csv");
+		liborfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_libor") + suffix_data + AQLString(".csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
 	}
-	LAString liborstream;
+	AQLString liborstream;
 	for(size_t i=0; i<liborRates.size(); i++)
 	{
 		liborstream += liborRates[i][0];
 		double lrate = liborRates[i][1].getDoubleValue() * 100.0;
-		liborstream += "," + LAString(lrate) + LF;
+		liborstream += "," + AQLString(lrate) + LF;
 
 		if (liborRates[i].size() == 3)
 		{
-			LAString useGridFrag = liborRates[i][2]; upper(useGridFrag);
+			AQLString useGridFrag = liborRates[i][2]; upper(useGridFrag);
 			if (useGridFrag == "TRUE") usegrid_libor += liborRates[i][0] + ":";
 			else usegrid_libor += "NONE:";
 		}
@@ -761,22 +761,22 @@ setUpSwapCurve
 	LACoreDataService::setIStringStream(LAMarketData::getNumFileName(liborfile), pliborstream);
 
 	//set Swap Object;
-	LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
+	AQLString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
 	if (swapfile == AQ_NO_DATA)
 	{
-		swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap") + suffix_data + LAString(".csv");
+		swapfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_swap") + suffix_data + AQLString(".csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix, swapfile);
 	}
-	LAString swapstream;
+	AQLString swapstream;
 	for(size_t i=0; i<swapRates.size(); i++)
 	{
 		swapstream += swapRates[i][0];
 		double srate = swapRates[i][1].getDoubleValue() * 100.0;
-		swapstream += "," + LAString(srate) + LF;
+		swapstream += "," + AQLString(srate) + LF;
 
 		if (swapRates[i].size() == 3)
 		{
-			LAString useGridFrag = swapRates[i][2]; upper(useGridFrag);
+			AQLString useGridFrag = swapRates[i][2]; upper(useGridFrag);
 			if (useGridFrag == "TRUE") usegrid_swap += swapRates[i][0] + ":";
 			else usegrid_swap += "NONE:";
 		}
@@ -786,8 +786,8 @@ setUpSwapCurve
 
 	//set fra3m Object;
 	bool isFRAUse = false;
-	LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
-	LADataBool tmpAttrB;
+	AQLString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
+	AQLDataBool tmpAttrB;
 	if (isFRAUse_str != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(isFRAUse_str);
@@ -797,22 +797,22 @@ setUpSwapCurve
 	irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE + staticDataSuffix);
 	if (isFRAUse)
 	{
-		LAString fra3mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE + staticDataSuffix);
+		AQLString fra3mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE + staticDataSuffix);
 		if (fra3mfile == AQ_NO_DATA)
 		{
-			fra3mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_3mfra") + suffix_data + LAString(".csv");
+			fra3mfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_3mfra") + suffix_data + AQLString(".csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE + staticDataSuffix, fra3mfile);
 		}
-		LAString fra3mstream;
+		AQLString fra3mstream;
 		for(size_t i=0; i<fra3mRates.size(); i++)
 		{
 			fra3mstream += fra3mRates[i][0];
 			double frarate = fra3mRates[i][1].getDoubleValue() * 100.0;
-			fra3mstream += "," + LAString(frarate) + LF;
+			fra3mstream += "," + AQLString(frarate) + LF;
 
 			if (fra3mRates[i].size() == 3)
 			{
-				LAString useGridFrag = fra3mRates[i][2]; upper(useGridFrag);
+				AQLString useGridFrag = fra3mRates[i][2]; upper(useGridFrag);
 				if (useGridFrag == "TRUE") usegrid_fra3m += fra3mRates[i][0] + ":";
 				else usegrid_fra3m += "NONE:";
 			}
@@ -821,22 +821,22 @@ setUpSwapCurve
 		LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fra3mfile), pfra3mstream);		
 
 		//set fra6m Object;
-		LAString fra6mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE + staticDataSuffix);
+		AQLString fra6mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE + staticDataSuffix);
 		if (fra6mfile == AQ_NO_DATA)
 		{
-			fra6mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_6mfra") + suffix_data + LAString(".csv");
+			fra6mfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_6mfra") + suffix_data + AQLString(".csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE + staticDataSuffix, fra6mfile);
 		}
-		LAString fra6mstream;
+		AQLString fra6mstream;
 		for(size_t i=0; i<fra6mRates.size(); i++)
 		{
 			fra6mstream += fra6mRates[i][0];
 			double frarate = fra6mRates[i][1].getDoubleValue() * 100.0;
-			fra6mstream += "," + LAString(frarate) + LF;
+			fra6mstream += "," + AQLString(frarate) + LF;
 
 			if (fra6mRates[i].size() == 3)
 			{
-				LAString useGridFrag = fra6mRates[i][2]; upper(useGridFrag);
+				AQLString useGridFrag = fra6mRates[i][2]; upper(useGridFrag);
 				if (useGridFrag == "TRUE") usegrid_fra6m += fra6mRates[i][0] + ":";
 				else usegrid_fra6m += "NONE:";
 			}
@@ -847,20 +847,20 @@ setUpSwapCurve
 
 	//set future Object;
 	bool isFutureUse = false;
-	LAString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + staticDataSuffix);
+	AQLString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + staticDataSuffix);
 	if (tmpFutureStr != AQ_NO_DATA)
 	{
-		LADataBool tmpAttrB;
+		AQLDataBool tmpAttrB;
 		tmpAttrB.convertFromString(tmpFutureStr);
 		isFutureUse = tmpAttrB.get();
 	}
 	irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix);
 	if (isFutureUse)
 	{
-		LAString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix);
+		AQLString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix);
 		if (futureFile == AQ_NO_DATA)
 		{
-			futureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_future") + suffix_data + LAString(".csv");
+			futureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_future") + suffix_data + AQLString(".csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix, futureFile);
 		}
 		LACoreDataService::setIStringStream(LAMarketData::getNumFileName(futureFile), createFutureStream(futureRates, usegrid_future));
@@ -911,21 +911,21 @@ setUpSwapCurve
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_USEGRID + staticDataSuffix, usegrid_future);
 	}
 
-	LAString tmpCurveName = generateCurveName; tmpCurveName.toUpper();
+	AQLString tmpCurveName = generateCurveName; tmpCurveName.toUpper();
 	irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET, tmpCurveName);
 	irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS, useMarkets);
 	LACalibrateModel *generator = new LACalibrateModelIRVanilla(currency);
 	generator->loadModelDataAndCalibrate(currency, *dataInstance, true, false);
 
 	//resist generatetime
-	LAString CurveIDTool = curveID + TOOL;
-	LAString CurveIDManager	= curveID + marketName + MANAGER;
+	AQLString CurveIDTool = curveID + TOOL;
+	AQLString CurveIDManager	= curveID + marketName + MANAGER;
 
 	//curve entities manager (curve, grids, curveinformation entities)
-	LAObject* mae = NULL;
+	AQLObject* mae = NULL;
 	if(!objPool.getObject(CurveIDManager).isDefined())
 	{	
-		mae = new LAObject;
+		mae = new AQLObject;
 		objPool.set(CurveIDManager,mae);
 	}
 	else
@@ -933,8 +933,8 @@ setUpSwapCurve
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new LADataString()			).convertFromString(LAString(LATime::now()));
-	mae->add(CALIBRATION_DATA_NAME,		new LADataString()			).convertFromString(CurveIDManager);
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 
 	return;
 };
@@ -942,53 +942,53 @@ setUpSwapCurve
 void 
 LACurveSetup::
 SetUpArbFreeCurve
-(LADataInstance* dataInstance,
- const LAString& curveID,
- const LAStringMatrix& generateProp, 
- const LAStringMatrix& moneyConv,
- const LAStringMatrix& liborRates, 
- const LAStringMatrix& liborConv,
- const LAStringMatrix& swapRates, 
- const LAStringMatrix& swapConv,
- const LAStringMatrix& fra3mRates,
- const LAStringMatrix& fra6mRates,
- const LAStringMatrix& fraConv,
- const LAStringMatrix& xccyBasisRates, 
- const LAStringMatrix& xccyBasisConv,
- const LAStringMatrix& threeSixRates,
- const LAStringMatrix& threeSixConv,
- const LAStringMatrix& futureRates, 
- const LAStringMatrix& futureConv,
- const LAStringMatrix& adjustData,
- const LAString& curveNames_3ML,
- const LAString& curveNames_6ML,
- const LAString& curveNames_DF,
- const LAString& curveName_DF2)
+(AQLDataInstance* dataInstance,
+ const AQLString& curveID,
+ const AQLStringMatrix& generateProp, 
+ const AQLStringMatrix& moneyConv,
+ const AQLStringMatrix& liborRates, 
+ const AQLStringMatrix& liborConv,
+ const AQLStringMatrix& swapRates, 
+ const AQLStringMatrix& swapConv,
+ const AQLStringMatrix& fra3mRates,
+ const AQLStringMatrix& fra6mRates,
+ const AQLStringMatrix& fraConv,
+ const AQLStringMatrix& xccyBasisRates, 
+ const AQLStringMatrix& xccyBasisConv,
+ const AQLStringMatrix& threeSixRates,
+ const AQLStringMatrix& threeSixConv,
+ const AQLStringMatrix& futureRates, 
+ const AQLStringMatrix& futureConv,
+ const AQLStringMatrix& adjustData,
+ const AQLString& curveNames_3ML,
+ const AQLString& curveNames_6ML,
+ const AQLString& curveNames_DF,
+ const AQLString& curveName_DF2)
 {
 	LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-	LAObject* pyld = NULL;	
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObject* pyld = NULL;	
 	
-	LAStringMatrix tmpInfo = generateProp;
+	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	LADate asofdate	= LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate	= LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	LAString currency;
-	LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	AQLString currency;
+	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	if (objHolder.isDefined())
 	{
-		LAObject& yldEntity = objHolder.get();
-		const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		AQLObject& yldEntity = objHolder.get();
+		const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		if(dh->isDefined() && !dh->isNull())
 		{
-			currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		}
 		else
 		{
-			if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			{
-				currency = LAString("DUMMY");
+				currency = AQLString("DUMMY");
 			}
 			else
 			{
@@ -998,24 +998,24 @@ SetUpArbFreeCurve
 	}
 	else
 	{
-		if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		{
-			currency = LAString("DUMMY");
+			currency = AQLString("DUMMY");
 		}
 		else
 		{
 			currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		} 	
 	}
-	LAString tmpCurrency = currency; tmpCurrency.toLower();
+	AQLString tmpCurrency = currency; tmpCurrency.toLower();
 
-	LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	if (useMarkets == AQ_NO_DATA) useMarkets = "";
 	if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),SWAP)) 
 	{
 		if (useMarkets == "") useMarkets = SWAP;
-		else useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
+		else useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
 	}
 	irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE);
 	irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE);
@@ -1025,53 +1025,53 @@ SetUpArbFreeCurve
 
 	for(size_t i=0; i<generateProp.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
 		key.toLower();
-		LAString data = generateProp[i][1];
+		AQLString data = generateProp[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 	
 	for(size_t i=0; i<moneyConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0];
 		key.toLower(); 
-		LAString data = moneyConv[i][1];
+		AQLString data = moneyConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 	
 	for(size_t i=0; i<liborConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0];
 		key.toLower(); 
-		LAString data = liborConv[i][1];
+		AQLString data = liborConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 
 	for(size_t i=0; i<swapConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0];
 		key.toLower(); 
-		LAString data = swapConv[i][1];
+		AQLString data = swapConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 
 	for(size_t i=0; i<fraConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0];
 		key.toLower(); 
-		LAString data = fraConv[i][1];
+		AQLString data = fraConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 
 	for(size_t i=0; i<xccyBasisConv.size(); i++)
 	{
-		LAString key;
-		LAString data = xccyBasisConv[i][1];
+		AQLString key;
+		AQLString data = xccyBasisConv[i][1];
 		if (tmpCurrency == "usd")
 		{
 			key = tmpCurrency + ".sde.yield.basis." + xccyBasisConv[i][0];
@@ -1083,7 +1083,7 @@ SetUpArbFreeCurve
 			tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 			if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),XCCYBASIS)) 
 			{
-				useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + XCCYBASIS;
+				useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + XCCYBASIS;
 			}
 		}
 		key.toLower(); 
@@ -1093,9 +1093,9 @@ SetUpArbFreeCurve
 
 	for(size_t i=0; i<threeSixConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.basis." + threeSixConv[i][0] + ".3m6mbasis";
+		AQLString key = tmpCurrency + ".sde.yield.basis." + threeSixConv[i][0] + ".3m6mbasis";
 		key.toLower(); 
-		LAString data = threeSixConv[i][1];
+		AQLString data = threeSixConv[i][1];
 		if (key.findString("discount") == -1 && key.findString("forecast") == -1) data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
@@ -1103,33 +1103,33 @@ SetUpArbFreeCurve
 
 	for(size_t i=0; i<futureConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.future." + futureConv[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.future." + futureConv[i][0];
 		key.toLower(); 
-		LAString data = futureConv[i][1];
+		AQLString data = futureConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 
-	LAString usegrid_libor = "",usegrid_swap = "",usegrid_fra3m = "",usegrid_fra6m = "",usegrid_xccy = "",
+	AQLString usegrid_libor = "",usegrid_swap = "",usegrid_fra3m = "",usegrid_fra6m = "",usegrid_xccy = "",
 		usegrid_3m6m = "",usegrid_future = "";
 
 	//set Libor Object;
-	LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE);
+	AQLString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE);
 	if (liborfile == AQ_NO_DATA)
 	{
-		liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor.csv");
+		liborfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_libor.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE, liborfile);
 	}
-	LAString liborstream;
+	AQLString liborstream;
 	for(size_t i=0; i<liborRates.size(); i++)
 	{
 		liborstream += liborRates[i][0];
 		double lrate = liborRates[i][1].getDoubleValue() * 100.0;
-		liborstream += "," + LAString(lrate) + LF;
+		liborstream += "," + AQLString(lrate) + LF;
 
 		if (liborRates[i].size() == 3)
 		{
-			LAString useGridFrag = liborRates[i][2]; upper(useGridFrag);
+			AQLString useGridFrag = liborRates[i][2]; upper(useGridFrag);
 			if (useGridFrag == "TRUE") usegrid_libor += liborRates[i][0] + ":";
 			else usegrid_libor += "NONE:";
 		}
@@ -1138,22 +1138,22 @@ SetUpArbFreeCurve
 	LACoreDataService::setIStringStream(LAMarketData::getNumFileName(liborfile), pliborstream);
 
 	//set Swap Object;
-	LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE);
+	AQLString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE);
 	if (swapfile == AQ_NO_DATA)
 	{
-		swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap.csv");
+		swapfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_swap.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE, swapfile);
 	}
-	LAString swapstream;
+	AQLString swapstream;
 	for(size_t i=0; i<swapRates.size(); i++)
 	{
 		swapstream += swapRates[i][0];
 		double srate = swapRates[i][1].getDoubleValue() * 100.0;
-		swapstream += "," + LAString(srate) + LF;
+		swapstream += "," + AQLString(srate) + LF;
 
 		if (swapRates[i].size() == 3)
 		{
-			LAString useGridFrag = swapRates[i][2]; upper(useGridFrag);
+			AQLString useGridFrag = swapRates[i][2]; upper(useGridFrag);
 			if (useGridFrag == "TRUE") usegrid_swap += swapRates[i][0] + ":";
 			else usegrid_swap += "NONE:";
 		}
@@ -1163,8 +1163,8 @@ SetUpArbFreeCurve
 
 	//set fra3m Object;
 	bool isFRAUse = false;
-	LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE);
-	LADataBool tmpAttrB;
+	AQLString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE);
+	AQLDataBool tmpAttrB;
 	if (isFRAUse_str != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(isFRAUse_str);
@@ -1174,22 +1174,22 @@ SetUpArbFreeCurve
 	irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE);
 	if (isFRAUse)
 	{
-		LAString fra3mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE);
+		AQLString fra3mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE);
 		if (fra3mfile == AQ_NO_DATA)
 		{
-			fra3mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_3mfra.csv");
+			fra3mfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_3mfra.csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE, fra3mfile);
 		}
-		LAString fra3mstream;
+		AQLString fra3mstream;
 		for(size_t i=0; i<fra3mRates.size(); i++)
 		{
 			fra3mstream += fra3mRates[i][0];
 			double frarate = fra3mRates[i][1].getDoubleValue() * 100.0;
-			fra3mstream += "," + LAString(frarate) + LF;
+			fra3mstream += "," + AQLString(frarate) + LF;
 
 			if (fra3mRates[i].size() == 3)
 			{
-				LAString useGridFrag = fra3mRates[i][2]; upper(useGridFrag);
+				AQLString useGridFrag = fra3mRates[i][2]; upper(useGridFrag);
 				if (useGridFrag == "TRUE") usegrid_fra3m += fra3mRates[i][0] + ":";
 				else usegrid_fra3m += "NONE:";
 			}
@@ -1198,22 +1198,22 @@ SetUpArbFreeCurve
 		LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fra3mfile), pfra3mstream);		
 
 		//set fra6m Object;
-		LAString fra6mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE);
+		AQLString fra6mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE);
 		if (fra6mfile == AQ_NO_DATA)
 		{
-			fra6mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_6mfra.csv");
+			fra6mfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_6mfra.csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE, fra6mfile);
 		}
-		LAString fra6mstream;
+		AQLString fra6mstream;
 		for(size_t i=0; i<fra6mRates.size(); i++)
 		{
 			fra6mstream += fra6mRates[i][0];
 			double frarate = fra6mRates[i][1].getDoubleValue() * 100.0;
-			fra6mstream += "," + LAString(frarate) + LF;
+			fra6mstream += "," + AQLString(frarate) + LF;
 
 			if (fra6mRates[i].size() == 3)
 			{
-				LAString useGridFrag = fra6mRates[i][2]; upper(useGridFrag);
+				AQLString useGridFrag = fra6mRates[i][2]; upper(useGridFrag);
 				if (useGridFrag == "TRUE") usegrid_fra6m += fra6mRates[i][0] + ":";
 				else usegrid_fra6m += "NONE:";
 			}
@@ -1223,22 +1223,22 @@ SetUpArbFreeCurve
 	}
 
 	///Xccy Basis Rate
-	LAString xccyBasisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis");
+	AQLString xccyBasisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis");
 	if (xccyBasisFile == AQ_NO_DATA)
 	{
-		xccyBasisFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_xccybasis.csv");
+		xccyBasisFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap_xccybasis.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis", xccyBasisFile);
 	}
-	LAString xccyBasisStream;
+	AQLString xccyBasisStream;
 	for(size_t i=0; i<xccyBasisRates.size(); i++)
 	{
 		xccyBasisStream += xccyBasisRates[i][0];
 		double brate = xccyBasisRates[i][1].getDoubleValue() * 10000.0;
-		xccyBasisStream += "," + LAString(brate) + LF;
+		xccyBasisStream += "," + AQLString(brate) + LF;
 
 		if (xccyBasisRates[i].size() == 3)
 		{
-			LAString useGridFrag = xccyBasisRates[i][2]; upper(useGridFrag);
+			AQLString useGridFrag = xccyBasisRates[i][2]; upper(useGridFrag);
 			if (useGridFrag == "TRUE") usegrid_xccy += xccyBasisRates[i][0] + ":";
 			else usegrid_xccy += "NONE:";
 		}
@@ -1247,22 +1247,22 @@ SetUpArbFreeCurve
 	LACoreDataService::setIStringStream(LAMarketData::getNumFileName(xccyBasisFile), pXccyBasisStream);
 
 	///36 Basis Rate
-	LAString threeSixFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis");
+	AQLString threeSixFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis");
 	if (threeSixFile == AQ_NO_DATA)
 	{
-		threeSixFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_3m6mbasis.csv");
+		threeSixFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap_3m6mbasis.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis", threeSixFile);
 	}
-	LAString threeSixStream;
+	AQLString threeSixStream;
 	for(size_t i=0; i<threeSixRates.size(); i++)
 	{
 		threeSixStream += threeSixRates[i][0];
 		double brate = threeSixRates[i][1].getDoubleValue() * 10000.0;
-		threeSixStream += "," + LAString(brate) + LF;
+		threeSixStream += "," + AQLString(brate) + LF;
 
 		if (threeSixRates[i].size() == 3)
 		{
-			LAString useGridFrag = threeSixRates[i][2]; upper(useGridFrag);
+			AQLString useGridFrag = threeSixRates[i][2]; upper(useGridFrag);
 			if (useGridFrag == "TRUE") usegrid_3m6m += threeSixRates[i][0] + ":";
 			else usegrid_3m6m += "NONE:";
 		}
@@ -1272,12 +1272,12 @@ SetUpArbFreeCurve
 
 	if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),THREESIXBASIS) && threeSixRates.size())
 	{
-		useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + THREESIXBASIS;
+		useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + THREESIXBASIS;
 	}
 
 	//set future Object;
 	bool isFutureUse = false;
-	LAString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE);
+	AQLString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE);
 	if (tmpFutureStr != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(tmpFutureStr);
@@ -1286,23 +1286,23 @@ SetUpArbFreeCurve
 	irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE);
 	if (isFutureUse)
 	{
-		LAString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE);
+		AQLString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE);
 		if (futureFile == AQ_NO_DATA)
 		{
-			futureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_future") + LAString(".csv");
+			futureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_future") + AQLString(".csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE, futureFile);
 		}
 		LACoreDataService::setIStringStream(LAMarketData::getNumFileName(futureFile), createFutureStream(futureRates, usegrid_future));
 	}
 	
 	//set Adjust Data Object;
-	LAString adjustValueFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis");
+	AQLString adjustValueFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis");
 	if (adjustValueFile == AQ_NO_DATA)
 	{
-		adjustValueFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisadjust.csv");
+		adjustValueFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisadjust.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis", adjustValueFile);
 	}
-	LAString adjustValueStream;
+	AQLString adjustValueStream;
 	for(size_t i=0; i<adjustData.size(); i++)
 	{
 		adjustValueStream += adjustData[i][0];
@@ -1412,14 +1412,14 @@ SetUpArbFreeCurve
 	generator->loadModelDataAndCalibrate(currency, *dataInstance, true, false);
 
 	//resist generatetime
-	LAString	CurveIDTool			= curveID + TOOL;
-	LAString	CurveIDManager		= curveID + CURVETYPE_ARBFREE + MANAGER;
+	AQLString	CurveIDTool			= curveID + TOOL;
+	AQLString	CurveIDManager		= curveID + CURVETYPE_ARBFREE + MANAGER;
 
 	//curve entities manager (curve, grids, curveinformation entities)
-	LAObject* mae = NULL;
+	AQLObject* mae = NULL;
 	if(!objPool.getObject(CurveIDManager).isDefined())
 	{	
-		mae = new LAObject;
+		mae = new AQLObject;
 		objPool.set(CurveIDManager,mae);
 	}
 	else
@@ -1427,8 +1427,8 @@ SetUpArbFreeCurve
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new LADataString()			).convertFromString(LAString(LATime::now()));
-	mae->add(CALIBRATION_DATA_NAME,		new LADataString()			).convertFromString(CurveIDManager);
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 
 	return;
 };
@@ -1436,44 +1436,44 @@ SetUpArbFreeCurve
 void 
 LACurveSetup::
 setUpOISCurve
-(LADataInstance* dataInstance,
-const LAString& curveID,
-const LAString& marketName,
-const LAStringMatrix& generateProp, 
-const LAStringMatrix& oisRates, 
-const LAStringMatrix& oisConv,
-const LAString& curveNames,
-const LAStringMatrix& histRates,
-const LAStringMatrix& lobasisRates, 
-const LAStringMatrix& lobasisConv, 
-const LAStringMatrix& swapRates, 
-const LAStringMatrix& swapConv
+(AQLDataInstance* dataInstance,
+const AQLString& curveID,
+const AQLString& marketName,
+const AQLStringMatrix& generateProp, 
+const AQLStringMatrix& oisRates, 
+const AQLStringMatrix& oisConv,
+const AQLString& curveNames,
+const AQLStringMatrix& histRates,
+const AQLStringMatrix& lobasisRates, 
+const AQLStringMatrix& lobasisConv, 
+const AQLStringMatrix& swapRates, 
+const AQLStringMatrix& swapConv
 )
 {
 	LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-	LAObject* pyld = NULL;
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObject* pyld = NULL;
 	
-	LAStringMatrix tmpInfo = generateProp;
+	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	LADate asofdate	= LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate	= LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	LAString currency;
-	LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	AQLString currency;
+	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	if (objHolder.isDefined())
 	{
-		LAObject& yldEntity = objHolder.get();
-		const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		AQLObject& yldEntity = objHolder.get();
+		const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		if(dh->isDefined() && !dh->isNull())
 		{
-			currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		}
 		else
 		{
-			if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			{
-				currency = LAString("DUMMY");
+				currency = AQLString("DUMMY");
 			}
 			else
 			{
@@ -1483,31 +1483,31 @@ const LAStringMatrix& swapConv
 	}
 	else
 	{
-		if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		{
-			currency = LAString("DUMMY");
+			currency = AQLString("DUMMY");
 		}
 		else
 		{
 			currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		} 	
 	}
-	LAString tmpCurrency = currency; tmpCurrency.toLower();
+	AQLString tmpCurrency = currency; tmpCurrency.toLower();
 
 	if (marketName == "" || marketName == STD) 
-		throw LACoreInvalidData("Do not use STD or blank for ois curve name!",__FILE__,__LINE__);
-	LAString staticDataSuffix;
-	LAString suffix_data;
+		throw AQLCoreInvalidData("Do not use STD or blank for ois curve name!",__FILE__,__LINE__);
+	AQLString staticDataSuffix;
+	AQLString suffix_data;
 	staticDataSuffix = "." + marketName;
 	staticDataSuffix.toLower();
-	LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	if (useMarkets == AQ_NO_DATA) useMarkets = "";
-	LAString tmpCurveName = marketName; tmpCurveName.toUpper();
+	AQLString tmpCurveName = marketName; tmpCurveName.toUpper();
 	if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 	{
 		if (useMarkets == "") useMarkets = marketName;
-		else useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + marketName;
+		else useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + marketName;
 	}
 	irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS, useMarkets);
 	if (curveNames == "")
@@ -1527,47 +1527,47 @@ const LAStringMatrix& swapConv
 
 	for(size_t i=0; i<generateProp.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
 		key.toLower();
-		LAString data = generateProp[i][1];
+		AQLString data = generateProp[i][1];
 		if (key.findString("dfcurvename") == -1) data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
 	
 	for(size_t i=0; i<oisConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.ois." + oisConv[i][0] + staticDataSuffix;
+		AQLString key = tmpCurrency + ".sde.yield.ois." + oisConv[i][0] + staticDataSuffix;
 		key.toLower(); 
-		LAString data = oisConv[i][1];
+		AQLString data = oisConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}	
 
-	LAString oisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + staticDataSuffix);
+	AQLString oisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + staticDataSuffix);
 	if (oisFile == AQ_NO_DATA)
 	{
-		oisFile = LAString("data/in/") + tmpCurrency + LAString("_yield_ois_oiscurve.csv");
+		oisFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_ois_oiscurve.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + staticDataSuffix, oisFile);
 	}
 
-	LAString fedFundFutureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + staticDataSuffix);
+	AQLString fedFundFutureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + staticDataSuffix);
 	if (fedFundFutureFile == AQ_NO_DATA)
 	{
-		fedFundFutureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fffuture.csv");
+		fedFundFutureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_fffuture.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + staticDataSuffix, fedFundFutureFile);
 	}
 
-	LAString histFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + staticDataSuffix);
+	AQLString histFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + staticDataSuffix);
 	if (histFile == AQ_NO_DATA)
 	{
-		histFile = LAString("data/in/") + tmpCurrency + LAString("_yield_historical_ois_oiscurve.csv");
+		histFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_historical_ois_oiscurve.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + staticDataSuffix, histFile);
 	}
 
-	LAString oisStream;
-	LAString fedFundFutureStream;
-	LAString usegrid_ois = "";
-	LAString usegrid_fffuture = "";
+	AQLString oisStream;
+	AQLString fedFundFutureStream;
+	AQLString usegrid_ois = "";
+	AQLString usegrid_fffuture = "";
 	for(size_t i=0; i<oisRates.size(); i++)
 	{
 		if (oisRates[i][0].findString("FF") != -1)
@@ -1575,19 +1575,19 @@ const LAStringMatrix& swapConv
 			fedFundFutureStream += oisRates[i][0];
 
 			if (oisRates[i].size() != 3 && oisRates[i].size() != 5)
-				throw LACoreInvalidData("FF input size error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("FF input size error",__FILE__,__LINE__);
 
 			//in case of FF, quoted value is price
 			double oisRate = oisRates[i][1].getDoubleValue();
-			fedFundFutureStream += "," + LAString(oisRate);
+			fedFundFutureStream += "," + AQLString(oisRate);
 
 			if (oisRates[i].size() == 5)
 			{
-				const LADate& startdate = LAMathDateUtilities::getLADate(oisRates[i][2]);
-				LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				const AQLDate& startdate = LAMathDateUtilities::getLADate(oisRates[i][2]);
+				AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				fedFundFutureStream += "," + startdate_str;
-				const LADate& enddate = LAMathDateUtilities::getLADate(oisRates[i][3]);
-				LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				const AQLDate& enddate = LAMathDateUtilities::getLADate(oisRates[i][3]);
+				AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				fedFundFutureStream += "," + enddate_str;
 			}
 
@@ -1595,13 +1595,13 @@ const LAStringMatrix& swapConv
 			
 			if (oisRates[i].size() == 5)
 			{
-				LAString useGridFrag = oisRates[i][4]; upper(useGridFrag);
+				AQLString useGridFrag = oisRates[i][4]; upper(useGridFrag);
 				if (useGridFrag == "TRUE") usegrid_fffuture += oisRates[i][0] + ":";
 				else usegrid_fffuture += "NONE:";
 			}
 			else if (oisRates[i].size() == 3)
 			{
-				LAString useGridFrag = oisRates[i][2]; upper(useGridFrag);
+				AQLString useGridFrag = oisRates[i][2]; upper(useGridFrag);
 				if (useGridFrag == "TRUE") usegrid_fffuture += oisRates[i][0] + ":";
 				else usegrid_fffuture += "NONE:";
 			}
@@ -1612,35 +1612,35 @@ const LAStringMatrix& swapConv
 			if (oisRates[i][0].findString("BOJ") != -1 || oisRates[i][0].findString("EUSF") != -1)
 			{
 				if (oisRates[i].size() < 4)
-					throw LACoreInvalidData("short term market needs StartDate and EndDate",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("short term market needs StartDate and EndDate",__FILE__,__LINE__);
 
 				double oisRate = oisRates[i][1].getDoubleValue() * 100.0;
-				oisStream += "," + LAString(oisRate);
+				oisStream += "," + AQLString(oisRate);
 
-				const LADate& startdate = LAMathDateUtilities::getLADate(oisRates[i][2]);
-				LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				const AQLDate& startdate = LAMathDateUtilities::getLADate(oisRates[i][2]);
+				AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				oisStream += "," + startdate_str;
-				const LADate& enddate = LAMathDateUtilities::getLADate(oisRates[i][3]);
-				LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				const AQLDate& enddate = LAMathDateUtilities::getLADate(oisRates[i][3]);
+				AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				oisStream += "," + enddate_str;
 			}
 			else //normal case
 			{
 				double oisRate = oisRates[i][1].getDoubleValue() * 100.0;
-				oisStream += "," + LAString(oisRate);
+				oisStream += "," + AQLString(oisRate);
 			}
 			
 			oisStream += LF;
 			
 			if (oisRates[i].size() == 5)
 			{
-				LAString useGridFrag = oisRates[i][4]; upper(useGridFrag);
+				AQLString useGridFrag = oisRates[i][4]; upper(useGridFrag);
 				if (useGridFrag == "TRUE") usegrid_ois += oisRates[i][0] + ":";
 				else usegrid_ois += "NONE:";
 			}
 			else if (oisRates[i].size() == 3)
 			{
-				LAString useGridFrag = oisRates[i][2]; upper(useGridFrag);
+				AQLString useGridFrag = oisRates[i][2]; upper(useGridFrag);
 				if (useGridFrag == "TRUE") usegrid_ois += oisRates[i][0] + ":";
 				else usegrid_ois += "NONE:";
 			}
@@ -1672,76 +1672,76 @@ const LAStringMatrix& swapConv
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_USEGRID + staticDataSuffix, usegrid_fffuture);
 	}
 
-	LAString histStream;
+	AQLString histStream;
 	for(size_t i=0; i<histRates.size(); i++)
 	{
-		const LADate& histdate = LAMathDateUtilities::getLADate(histRates[i][0]);
-		LAString histdate_str = histdate.stringWithFormat("YYYYMMDD");
+		const AQLDate& histdate = LAMathDateUtilities::getLADate(histRates[i][0]);
+		AQLString histdate_str = histdate.stringWithFormat("YYYYMMDD");
 		histStream += histdate_str;
 		double histRate = histRates[i][1].getDoubleValue() * 100.0;
-		histStream += "," + LAString(histRate);
+		histStream += "," + AQLString(histRate);
 		histStream += LF;
 	}
 	std::istringstream *pHISTStream = new std::istringstream(histStream.getCString());
 	LACoreDataService::setIStringStream(LAMarketData::getNumFileName(histFile), pHISTStream);
 
-	LAString lobasisname = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_LOBASISNAME + staticDataSuffix);
+	AQLString lobasisname = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_LOBASISNAME + staticDataSuffix);
 	if (lobasisname == AQ_NO_DATA)
 	{
 		lobasisname = LOBASIS;
-		LAString key = LAString(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_LOBASISNAME + staticDataSuffix).toLower();
+		AQLString key = AQLString(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_LOBASISNAME + staticDataSuffix).toLower();
 		irStaticData.setStaticData(key, lobasisname);
 	}
-	LAString suffix_lob_prop("." + lobasisname);
-	LAString suffix_lob_data("_" + lobasisname);
+	AQLString suffix_lob_prop("." + lobasisname);
+	AQLString suffix_lob_data("_" + lobasisname);
 	for(size_t i=0; i<lobasisConv.size(); i++)
 	{
-		LAString key(tmpCurrency + ".sde.yield.basis." + lobasisConv[i][0] + suffix_lob_prop);
+		AQLString key(tmpCurrency + ".sde.yield.basis." + lobasisConv[i][0] + suffix_lob_prop);
 		key.toLower(); 
-		LAString data = lobasisConv[i][1];
+		AQLString data = lobasisConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}
-	LAString lobasisfile = irStaticData.getStaticData(LAString(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + suffix_lob_prop).toLower());
+	AQLString lobasisfile = irStaticData.getStaticData(AQLString(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + suffix_lob_prop).toLower());
 	if (lobasisfile == AQ_NO_DATA)
 	{
-		lobasisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + suffix_lob_data + LAString(".csv");
+		lobasisfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap") + suffix_lob_data + AQLString(".csv");
 		lobasisfile.toLower();
-		LAString key(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + suffix_lob_prop);
+		AQLString key(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + suffix_lob_prop);
 		key.toLower();
 		irStaticData.setStaticData(key, lobasisfile);
 	}
-	LAString lobasisstream;
+	AQLString lobasisstream;
 	for(size_t i=0; i<lobasisRates.size(); i++)
 	{
 		lobasisstream += lobasisRates[i][0];
 		const double lobrate = lobasisRates[i][1].getDoubleValue() * 10000.0;
-		lobasisstream += "," + LAString(lobrate) + LF;
+		lobasisstream += "," + AQLString(lobrate) + LF;
 	}
 	std::istringstream *plobasisstream = new std::istringstream(lobasisstream.getCString());
 	LACoreDataService::setIStringStream(LAMarketData::getNumFileName(lobasisfile), plobasisstream);
 
 	for(size_t i=0; i<swapConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0] + staticDataSuffix;
+		AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0] + staticDataSuffix;
 		key.toLower(); 
-		LAString data = swapConv[i][1];
+		AQLString data = swapConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key, data);
 	}	
-	LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
+	AQLString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
 	if (swapfile == AQ_NO_DATA)
 	{
-		swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap") + suffix_data + LAString(".csv");
+		swapfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_swap") + suffix_data + AQLString(".csv");
 		swapfile.toLower();
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix, swapfile);
 	}
-	LAString swapstream;
+	AQLString swapstream;
 	for(size_t i=0; i<swapRates.size(); i++)
 	{
 		swapstream += swapRates[i][0];
 		double srate = swapRates[i][1].getDoubleValue() * 100.0;
-		swapstream += "," + LAString(srate) + LF;
+		swapstream += "," + AQLString(srate) + LF;
 	}
 	std::istringstream *pswapstream = new std::istringstream(swapstream.getCString());
 	LACoreDataService::setIStringStream(LAMarketData::getNumFileName(swapfile), pswapstream);
@@ -1753,13 +1753,13 @@ const LAStringMatrix& swapConv
 	generator->loadModelDataAndCalibrate(currency, *dataInstance, true, false);
 
 	//resist generatetime
-	LAString	CurveIDTool			= curveID + TOOL;
-	LAString	CurveIDManager		= curveID + marketName + MANAGER;
+	AQLString	CurveIDTool			= curveID + TOOL;
+	AQLString	CurveIDManager		= curveID + marketName + MANAGER;
 	//curve entities manager (curve, grids, curveinformation entities)
-	LAObject* mae = NULL;
+	AQLObject* mae = NULL;
 	if(!objPool.getObject(CurveIDManager).isDefined())
 	{	
-		mae = new LAObject;
+		mae = new AQLObject;
 		objPool.set(CurveIDManager,mae);
 	}
 	else
@@ -1767,8 +1767,8 @@ const LAStringMatrix& swapConv
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new LADataString()			).convertFromString(LAString(LATime::now()));
-	mae->add(CALIBRATION_DATA_NAME,		new LADataString()			).convertFromString(CurveIDManager);
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 
 	return;
 };
@@ -1776,37 +1776,37 @@ const LAStringMatrix& swapConv
 void
 LACurveSetup::
 setUpFloater
-(LADataInstance* dataInstance,
- const LAString& curveID,
- const LAString& discountCurveName,
- const LAString& forecastCurveName,
- const LAStringMatrix& generateProp, 
- const LAStringMatrix& basisMkt, 
- const LAStringMatrix& basisConv,
- const LAStringMatrix& swapConv,
- const LAStringMatrix& adjustData)
+(AQLDataInstance* dataInstance,
+ const AQLString& curveID,
+ const AQLString& discountCurveName,
+ const AQLString& forecastCurveName,
+ const AQLStringMatrix& generateProp, 
+ const AQLStringMatrix& basisMkt, 
+ const AQLStringMatrix& basisConv,
+ const AQLStringMatrix& swapConv,
+ const AQLStringMatrix& adjustData)
 {
 	LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
-	LAObjectPool &objPool = dataInstance->getObjectPool();
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
 
-	LAStringMatrix tmpInfo = generateProp;
+	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	LAString currency;
-	LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	AQLString currency;
+	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	if (objHolder.isDefined())
 	{
-		LAObject& yldEntity = objHolder.get();
-		const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		AQLObject& yldEntity = objHolder.get();
+		const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		if(dh->isDefined() && !dh->isNull())
 		{
-			currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		}
 		else
 		{
-			if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			{
-				currency = LAString("DUMMY");
+				currency = AQLString("DUMMY");
 			}
 			else
 			{
@@ -1816,44 +1816,44 @@ setUpFloater
 	}
 	else
 	{
-		if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		{
-			currency = LAString("DUMMY");
+			currency = AQLString("DUMMY");
 		}
 		else
 		{
 			currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		} 	
 	}
-	LAString tmpCurrency = currency; tmpCurrency.toLower();
+	AQLString tmpCurrency = currency; tmpCurrency.toLower();
 	irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ISARBFREE);
 
 	//insert property
-	LAStringMatrix tmpProp(basisConv.size() + swapConv.size() + generateProp.size(), LAStringVector(2));
-	LAString tmpBasisCurveName = XCCYBASIS; tmpBasisCurveName.toLower();
+	AQLStringMatrix tmpProp(basisConv.size() + swapConv.size() + generateProp.size(), AQLStringVector(2));
+	AQLString tmpBasisCurveName = XCCYBASIS; tmpBasisCurveName.toLower();
 	for(size_t i=0; i<basisConv.size(); i++)
 	{		
-		LAString key = tmpCurrency + ".sde.yield.basis." + basisConv[i][0] + "." + tmpBasisCurveName;
+		AQLString key = tmpCurrency + ".sde.yield.basis." + basisConv[i][0] + "." + tmpBasisCurveName;
 		key.toLower();
-		LAString data = basisConv[i][1];
+		AQLString data = basisConv[i][1];
 		if (key.findString("discount") == -1 && key.findString("forecast") == -1) data.toLower();
 		irStaticData.setStaticData(key,data);
 	}
 
 	for(size_t i=0; i<swapConv.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0];
 		key.toLower(); 
-		LAString data = swapConv[i][1];
+		AQLString data = swapConv[i][1];
 		data.toLower();
 		irStaticData.setStaticData(key,data);
 	}
 
 	for(size_t i=0; i<generateProp.size(); i++)
 	{
-		LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
+		AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
 		key.toLower();
-		LAString data = generateProp[i][1];
+		AQLString data = generateProp[i][1];
 		data.toUpper();
 		irStaticData.setStaticData(key,data);
 	}
@@ -1866,36 +1866,36 @@ setUpFloater
 	{
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FLOATER_BASISNAME, XCCYBASIS);
 
-		LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-		LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+		AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+		AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 		if (useMarkets == AQ_NO_DATA) useMarkets = "";
 		if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),XCCYBASIS)) 
 		{
 			if (useMarkets == "") useMarkets = XCCYBASIS;
-			else useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + XCCYBASIS;
+			else useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + XCCYBASIS;
 		}
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS, useMarkets);
 		
-		LAString tmpBasisCurveName = XCCYBASIS;
+		AQLString tmpBasisCurveName = XCCYBASIS;
 		tmpBasisCurveName.toLower();
 
-		LAString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName);
+		AQLString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName);
 		if (basisfile == AQ_NO_DATA)
 		{
-			basisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_xccybasis.csv");
+			basisfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap_xccybasis.csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName, basisfile);
 		}
-		LAString basisstream;
-		LAString usegrid = "";
+		AQLString basisstream;
+		AQLString usegrid = "";
 		for(size_t i=0; i<basisMkt.size(); i++)
 		{
 			basisstream += basisMkt[i][0];
 			double brate = basisMkt[i][1].getDoubleValue() * 10000.0;
-			basisstream += "," + LAString(brate) + LF;
+			basisstream += "," + AQLString(brate) + LF;
 
 			if (basisMkt[i].size() == 3)
 			{
-				LAString useGridFrag = basisMkt[i][2]; upper(useGridFrag);
+				AQLString useGridFrag = basisMkt[i][2]; upper(useGridFrag);
 				if (useGridFrag == "TRUE") usegrid += basisMkt[i][0] + ":";
 				else usegrid += "NONE:";
 			}
@@ -1918,15 +1918,15 @@ setUpFloater
 		//set Adjust Data Object;
 		if (adjustData.size() > 0)
 		{
-			LAString adjustValueFile = irStaticData.getStaticData(tmpCurrency + 
+			AQLString adjustValueFile = irStaticData.getStaticData(tmpCurrency + 
 				STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + tmpBasisCurveName);
 			if (adjustValueFile == AQ_NO_DATA)
 			{
-				adjustValueFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisadjust.csv");
+				adjustValueFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisadjust.csv");
 				irStaticData.setStaticData(tmpCurrency + 
 					STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + tmpBasisCurveName, adjustValueFile);
 			}
-			LAString adjustValueStream;
+			AQLString adjustValueStream;
 			for(size_t i=0; i<adjustData.size(); i++)
 			{
 				adjustValueStream += adjustData[i][0];
@@ -1945,13 +1945,13 @@ setUpFloater
 	delete generator;
 
 	//ylddata
-	LAString	CurveIDTool			= curveID + TOOL;
-	LAString	CurveIDManager		= curveID + CURVETYPE_FLOATER+ MANAGER;
+	AQLString	CurveIDTool			= curveID + TOOL;
+	AQLString	CurveIDManager		= curveID + CURVETYPE_FLOATER+ MANAGER;
 	//curve entities manager (curve, grids, curveinformation entities)
-	LAObject* mae = NULL;
+	AQLObject* mae = NULL;
 	if(!objPool.getObject(CurveIDManager).isDefined())
 	{	
-		mae = new LAObject;
+		mae = new AQLObject;
 		objPool.set(CurveIDManager,mae);
 	}
 	else
@@ -1959,8 +1959,8 @@ setUpFloater
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new LADataString()			).convertFromString(LAString(LATime::now()));
-	mae->add(CALIBRATION_DATA_NAME,		new LADataString()			).convertFromString(CurveIDManager);
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 
 }
 
@@ -2022,7 +2022,7 @@ setUpForIRServer()
 	cprop.setStaticData(KEY_CALIB_SERIALIZE_STATUS, "normal");
 	
 	//testisadjusdf
-	LAString tmpstr = LAString("jpy"); 
+	AQLString tmpstr = AQLString("jpy"); 
 	staticData.setStaticData(tmpstr + STATIC_DATA_KEY_YIELD_GENERATOR_ISADJUSTDF,"false");
 	tmpstr = "usd";
 	staticData.setStaticData(tmpstr + STATIC_DATA_KEY_YIELD_GENERATOR_ISADJUSTDF,"false");
@@ -2034,28 +2034,28 @@ setUpForIRServer()
 	staticData.setStaticData(tmpstr + STATIC_DATA_KEY_YIELD_GENERATOR_ISADJUSTDF,"false");
 
 	//digitalcoupon set
-	LAString tmpfxstr = LAString("jpy/usd");
+	AQLString tmpfxstr = AQLString("jpy/usd");
 	staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_ISCALLSPREAD, "true");
 	staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_CALLSPREADVALUE, "0.01");
 
-	tmpfxstr = LAString("jpy/aud");
+	tmpfxstr = AQLString("jpy/aud");
 	staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_ISCALLSPREAD, "true");
 	staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_CALLSPREADVALUE, "0.01");
 
-	tmpfxstr = LAString("jpy/eur");
+	tmpfxstr = AQLString("jpy/eur");
 	staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_ISCALLSPREAD, "true");
 	staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_CALLSPREADVALUE, "0.01");
 
-	tmpfxstr = LAString("jpy/gbp");
+	tmpfxstr = AQLString("jpy/gbp");
 	staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_ISCALLSPREAD, "true");
 	staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_CALLSPREADVALUE, "0.01");
 }
 
 void 
 LACurveSetup::
-setUpDefaultIRStaticData(LADataInstance& dataInstance)
+setUpDefaultIRStaticData(AQLDataInstance& dataInstance)
 {
-	const LAString* filepath = LACurveProperties::ir_prop_path();
+	const AQLString* filepath = LACurveProperties::ir_prop_path();
     if(filepath==NULL) return;
 
 	std::ifstream fin;
@@ -2065,7 +2065,7 @@ setUpDefaultIRStaticData(LADataInstance& dataInstance)
 		sst << "cannot open ir properties file" << std::endl 
 			<< filepath
 			;
-		throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 	}
 
     LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
@@ -2074,8 +2074,8 @@ setUpDefaultIRStaticData(LADataInstance& dataInstance)
 	while (getline(fin, line)){
 		line_num++;
 		const char *c_line = line.c_str();
-		LAString tmpstr(c_line);
-		LAStringVector tmp = tmpstr.toToken('=');
+		AQLString tmpstr(c_line);
+		AQLStringVector tmp = tmpstr.toToken('=');
 		if (tmp.size() != 2){
 			std::stringstream sst;
 			sst << "ir proerties file format is invalid" << std::endl
@@ -2083,7 +2083,7 @@ setUpDefaultIRStaticData(LADataInstance& dataInstance)
 				<< "line : " << line_num << std::endl
 				<< "contents : " << line
 				;
-			throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 		}
 
 		irStaticData.setStaticData(tmp[0],tmp[1]);
@@ -2093,7 +2093,7 @@ setUpDefaultIRStaticData(LADataInstance& dataInstance)
 
 void 
 LACurveSetup::
-setUpDefaultIRStaticData(LADataInstance& dataInstance, LAString filepath)
+setUpDefaultIRStaticData(AQLDataInstance& dataInstance, AQLString filepath)
 {
     LACurveProperties::set_ir_prop_path(filepath);
     setUpDefaultIRStaticData(dataInstance);
@@ -2101,9 +2101,9 @@ setUpDefaultIRStaticData(LADataInstance& dataInstance, LAString filepath)
 
 void 
 LACurveSetup::
-setUpDefaultCalibStaticData(LADataInstance& dataInstance)
+setUpDefaultCalibStaticData(AQLDataInstance& dataInstance)
 {
-	const LAString* filepath = LACurveProperties::calib_prop_path();
+	const AQLString* filepath = LACurveProperties::calib_prop_path();
     if(filepath==NULL) return;
 
 	std::ifstream fin;
@@ -2113,7 +2113,7 @@ setUpDefaultCalibStaticData(LADataInstance& dataInstance)
 		sst << "cannot open calib properties file" << std::endl 
 			<< filepath
 			;
-		throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 	}
 
     LAStaticData &calibprop = LACoreDataService::getStaticDataManager().getCalibStaticData();
@@ -2122,8 +2122,8 @@ setUpDefaultCalibStaticData(LADataInstance& dataInstance)
 	while (getline(fin, line)){
 		line_num++;
 		const char *c_line = line.c_str();
-		LAString tmpstr(c_line);
-		LAStringVector tmp = tmpstr.toToken('=');
+		AQLString tmpstr(c_line);
+		AQLStringVector tmp = tmpstr.toToken('=');
 		if (tmp.size() != 2){
 			std::stringstream sst;
 			sst << "calib proerties file format is invalid" << std::endl
@@ -2131,7 +2131,7 @@ setUpDefaultCalibStaticData(LADataInstance& dataInstance)
 				<< "line : " << line_num << std::endl
 				<< "contents : " << line
 				;
-			throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 		}
 
 		calibprop.setStaticData(tmp[0],tmp[1]);
@@ -2141,7 +2141,7 @@ setUpDefaultCalibStaticData(LADataInstance& dataInstance)
 
 void 
 LACurveSetup::
-setUpDefaultCalibStaticData(LADataInstance& dataInstance, LAString filepath)
+setUpDefaultCalibStaticData(AQLDataInstance& dataInstance, AQLString filepath)
 {
     LACurveProperties::set_calib_prop_path(filepath);
     setUpDefaultCalibStaticData(dataInstance);
@@ -2160,9 +2160,9 @@ LACurveSetup
 	setUpForIRServer();
 }
 
-LAString
+AQLString
 LACurveSetup::
-getIRStaticData(const LAString& key)
+getIRStaticData(const AQLString& key)
 {
 	LACoreDataService::setContext(ARG_KEY_FILENUM, "");
 	LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
@@ -2170,45 +2170,45 @@ getIRStaticData(const LAString& key)
 }
 
 std::istringstream* 
-LACurveSetup::createFutureStream(const LAStringMatrix& future_rates, LAString& usegrid_future)
+LACurveSetup::createFutureStream(const AQLStringMatrix& future_rates, AQLString& usegrid_future)
 {
-    LAString futureStream;
+    AQLString futureStream;
     for(size_t i=0; i<future_rates.size(); i++)
     {
         if (future_rates[i].size() <= 4)
         {
             if (future_rates[i][0].size() < 3)
-                throw LACoreInvalidData("future size error",__FILE__,__LINE__);
+                throw AQLCoreInvalidData("future size error",__FILE__,__LINE__);
 
             futureStream += future_rates[i][0];
             double futureRate = future_rates[i][1].getDoubleValue();
-            futureStream += "," + LAString(futureRate);
+            futureStream += "," + AQLString(futureRate);
             double futureVol = future_rates[i][2].getDoubleValue();
-            futureStream += "," + LAString(futureVol) + LF;
+            futureStream += "," + AQLString(futureVol) + LF;
 
             if (future_rates[i].size() == 4)
             {
-                LAString useGridFrag = future_rates[i][3]; upper(useGridFrag);
+                AQLString useGridFrag = future_rates[i][3]; upper(useGridFrag);
                 if (useGridFrag == "TRUE") usegrid_future += future_rates[i][0] + ":";
             }
         }
         else if (future_rates[i].size() <= 6)
         {
             futureStream += future_rates[i][0];
-            const LADate& startdate = LAMathDateUtilities::getLADate(future_rates[i][1]);
-            LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+            const AQLDate& startdate = LAMathDateUtilities::getLADate(future_rates[i][1]);
+            AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
             futureStream += "," + startdate_str;
-            const LADate& enddate = LAMathDateUtilities::getLADate(future_rates[i][2]);
-            LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+            const AQLDate& enddate = LAMathDateUtilities::getLADate(future_rates[i][2]);
+            AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
             futureStream += "," + enddate_str;
             double futureRate = future_rates[i][3].getDoubleValue();
-            futureStream += "," + LAString(futureRate);
+            futureStream += "," + AQLString(futureRate);
             double futureVol = future_rates[i][4].getDoubleValue();
-            futureStream += "," + LAString(futureVol) + LF;
+            futureStream += "," + AQLString(futureVol) + LF;
 
             if (future_rates[i].size() == 6)
             {
-                LAString useGridFrag = future_rates[i][5]; upper(useGridFrag);
+                AQLString useGridFrag = future_rates[i][5]; upper(useGridFrag);
                 if (useGridFrag == "TRUE") usegrid_future += future_rates[i][0] + ":";
 				else usegrid_future += "NONE:";
             }
@@ -2218,30 +2218,30 @@ LACurveSetup::createFutureStream(const LAStringMatrix& future_rates, LAString& u
 }
 
 double
-LACurveSetup::compound(LADataInstance* dataInstance,
-                           const LAString& curveID,
-                           const LAString& forecastCurveName,
-                           const LADate& start_date,
-                           const LADate& end_date,
+LACurveSetup::compound(AQLDataInstance* dataInstance,
+                           const AQLString& curveID,
+                           const AQLString& forecastCurveName,
+                           const AQLDate& start_date,
+                           const AQLDate& end_date,
                            const double spread,
-                           const LAString& frequency_,
+                           const AQLString& frequency_,
                            const bool is_start_roll,
-                           const LAString& roll_convention_,
-                           const LAString& calendar_,
-                           const LAString& sliding_rule_,
-                           const LAString& day_count_,
-                           const LAString& interpolation_,
-                           const LAString& compound_type_,
-                           const LADate* first_odd,
-                           const LADate* last_odd)
+                           const AQLString& roll_convention_,
+                           const AQLString& calendar_,
+                           const AQLString& sliding_rule_,
+                           const AQLString& day_count_,
+                           const AQLString& interpolation_,
+                           const AQLString& compound_type_,
+                           const AQLDate* first_odd,
+                           const AQLDate* last_odd)
 {
-    LAString frequency = frequency_; frequency.toUpper();
-    LAString roll_convention = roll_convention_; roll_convention.toUpper();
-    LAString calendar = calendar_; calendar.toUpper();
-    LAString sliding_rule = sliding_rule_; sliding_rule.toUpper();
-    LAString day_count = day_count_; day_count.toUpper();
-    LAString interpolation = interpolation_; interpolation.toUpper();
-    LAString compound_type_str = compound_type_; compound_type_str.toUpper();
+    AQLString frequency = frequency_; frequency.toUpper();
+    AQLString roll_convention = roll_convention_; roll_convention.toUpper();
+    AQLString calendar = calendar_; calendar.toUpper();
+    AQLString sliding_rule = sliding_rule_; sliding_rule.toUpper();
+    AQLString day_count = day_count_; day_count.toUpper();
+    AQLString interpolation = interpolation_; interpolation.toUpper();
+    AQLString compound_type_str = compound_type_; compound_type_str.toUpper();
     
     LACurveSetup::COMPOUND_TYPE compound_type;
     if(compound_type_str=="NORMAL") compound_type = LACurveSetup::COMPOUND_NORMAL;
@@ -2249,17 +2249,17 @@ LACurveSetup::compound(LADataInstance* dataInstance,
     else if(compound_type_str=="SIMPLE") compound_type = LACurveSetup::COMPOUND_SIMPLE;
     else if(compound_type_str=="AVERAGE") compound_type = LACurveSetup::AVERAGE;
     else{
-        LAString msg;
+        AQLString msg;
         msg += "Unknown compound type:";
         msg += compound_type_;
-        throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
 
 
 
 
-    LAPriceDataCalendar data_cal; data_cal.convertFromString(calendar);
-    LAPriceDataSlidingRule data_sr; data_sr.convertFromString(sliding_rule);
+    AQLPriceDataCalendar data_cal; data_cal.convertFromString(calendar);
+    AQLPriceDataSlidingRule data_sr; data_sr.convertFromString(sliding_rule);
 
 
     DateVector payment_dates;
@@ -2290,16 +2290,16 @@ LACurveSetup::compound(LADataInstance* dataInstance,
 
 
 
-    const LAString freq = SIMPLE;
+    const AQLString freq = SIMPLE;
 
 	const LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveID);
-	const LAObject& yieldData = yc.getYieldData().get().get();
-	LAString suffix;
+	const AQLObject& yieldData = yc.getYieldData().get().get();
+	AQLString suffix;
 	if (forecastCurveName != STD)
 	{
 		suffix = "_" + forecastCurveName;
 	}
-	const LADataHolder* dh = &(yieldData.getData(CALIBRATION_DATA_FWDTERMSMATRIX + suffix, NOCHECK));
+	const AQLDataHolder* dh = &(yieldData.getData(CALIBRATION_DATA_FWDTERMSMATRIX + suffix, NOCHECK));
 	const bool is_fwd_inter = dh->isDefined() && !dh->isNull();
 
     DoubleArray rates = LAMathCurveFuncUtility::getMultiForwardRate(start_dates,
@@ -2315,7 +2315,7 @@ LACurveSetup::compound(LADataInstance* dataInstance,
 																  is_fwd_inter);
 
 
-    LAPriceDataDayCount dc; dc.convertFromString(day_count);
+    AQLPriceDataDayCount dc; dc.convertFromString(day_count);
     DoubleVector x(3*n);
     copy(rates.begin(), rates.end(), x.begin());
     for(size_t i = 0; i < n; i++){
@@ -2363,7 +2363,7 @@ LACurveSetup::compound(LADataInstance* dataInstance,
 
 */
 void
-LACurveSetup::setStaticDataValue(LAStaticData &staticData, const LAString &key, const LAString &val, const bool is_override)
+LACurveSetup::setStaticDataValue(LAStaticData &staticData, const AQLString &key, const AQLString &val, const bool is_override)
 {
 	if (is_override)
 	{
@@ -2371,7 +2371,7 @@ LACurveSetup::setStaticDataValue(LAStaticData &staticData, const LAString &key, 
 	}
 	else
 	{
-		const LAString orig = staticData.getStaticData(key);
+		const AQLString orig = staticData.getStaticData(key);
 		if (orig == AQ_NO_DATA)
 		{
 			staticData.setStaticData(key , val);
@@ -2380,17 +2380,17 @@ LACurveSetup::setStaticDataValue(LAStaticData &staticData, const LAString &key, 
 }
 
 void
-LACurveSetup::SetUpFundingSpread(LADataInstance* dataInstance, const LAStringMatrix &fundingSpread)
+LACurveSetup::SetUpFundingSpread(AQLDataInstance* dataInstance, const AQLStringMatrix &fundingSpread)
 {
 	// save in string stream
-	LAString stream;
+	AQLString stream;
 	for (unsigned int i = 0; i < fundingSpread.size(); ++i)
 	{
 		stream += fundingSpread[i][0];
 		stream += "," + fundingSpread[i][1] + LF;
 	}
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
-	LAString fdspdfile = staticData.getStaticData(KEY_FUNDINGSPREAD_FILE);
+	AQLString fdspdfile = staticData.getStaticData(KEY_FUNDINGSPREAD_FILE);
 	std::istringstream *pstream = new std::istringstream(stream.getCString());
 	LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fdspdfile), pstream);
 }
@@ -2434,12 +2434,12 @@ LACurveSetup::CalcMeanAndCovariance(const DoubleMatrix& data, DoubleArray& mean,
 }
 
 void
-LACurveSetup::SetUpPCA(LADataInstance* dataInstance, const DoubleMatrix& corr, const size_t no_factors, const LAString& id)
+LACurveSetup::SetUpPCA(AQLDataInstance* dataInstance, const DoubleMatrix& corr, const size_t no_factors, const AQLString& id)
 {
 
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 	LAMathCorrelation* cor_obj = NULL;
-	LAString name = PREFIX_COR + id;
+	AQLString name = PREFIX_COR + id;
 	if(!objPool.getObject(name).isDefined())
 	{
 		cor_obj = new LAMathCorrelation(dataInstance);
@@ -2452,7 +2452,7 @@ LACurveSetup::SetUpPCA(LADataInstance* dataInstance, const DoubleMatrix& corr, c
 	}
 
 	if (no_factors > corr.size())
-		throw LACoreInvalidData("factornumber is bigger than correlation size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("factornumber is bigger than correlation size", __FILE__, __LINE__);
 
 	DoubleArray dummy_tgrid(corr.size());
 	for(size_t i = 0; i < corr.size(); i++)
@@ -2463,33 +2463,33 @@ LACurveSetup::SetUpPCA(LADataInstance* dataInstance, const DoubleMatrix& corr, c
 
 	cor_obj->getIsMultiVol().set(false);
 
-	dynamic_cast<LADataInt&>(cor_obj->getData(IR_CALIBRATION_DATA_FACTORNUM_AFTER, ISDEFINED).get()).set(no_factors);
-	dynamic_cast<LADataBool&>(cor_obj->getData(IR_CALIBRATION_DATA_ISOPTIM, ISDEFINED).get()).set(false);
+	dynamic_cast<AQLDataInt&>(cor_obj->getData(IR_CALIBRATION_DATA_FACTORNUM_AFTER, ISDEFINED).get()).set(no_factors);
+	dynamic_cast<AQLDataBool&>(cor_obj->getData(IR_CALIBRATION_DATA_ISOPTIM, ISDEFINED).get()).set(false);
 
 	cor_obj->setCorrelation(corr);
 	cor_obj->calcFactorLoading();
 }
 
 DoubleMatrix
-LACurveSetup::GetPCAResult(LADataInstance* dataInstance, const LAString& type, const LAString& id)
+LACurveSetup::GetPCAResult(AQLDataInstance* dataInstance, const AQLString& type, const AQLString& id)
 {
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAString name = PREFIX_COR + id;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLString name = PREFIX_COR + id;
 	LAMathCorrelation cor_obj = dynamic_cast<LAMathCorrelation& >(objPool.getObject(name, ENCHKTYPE_ISDEFINED).get());
 
 	DoubleMatrix ret;
-	if(type == LAString("EIGEN_VECTORS"))
+	if(type == AQLString("EIGEN_VECTORS"))
 	{
-		ret = dynamic_cast<LADataDoubleMatrix& >(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVECTORS, ISNOTNULL).get()).get();
+		ret = dynamic_cast<AQLDataDoubleMatrix& >(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVECTORS, ISNOTNULL).get()).get();
 	}
-	else if(type == LAString("EIGEN_VALUES"))
+	else if(type == AQLString("EIGEN_VALUES"))
 	{
-		DoubleArray tmp = dynamic_cast<LADataDoubles&>(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVALUES, ISNOTNULL).get()).get();
+		DoubleArray tmp = dynamic_cast<AQLDataDoubles&>(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVALUES, ISNOTNULL).get()).get();
 		ret.push_back(tmp);
 	}
-	else if (type == LAString("POV"))
+	else if (type == AQLString("POV"))
 	{
-		DoubleArray tmp = dynamic_cast<LADataDoubles&>(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVALUES, ISNOTNULL).get()).get();
+		DoubleArray tmp = dynamic_cast<AQLDataDoubles&>(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVALUES, ISNOTNULL).get()).get();
 		double sum_tmp = 0.;
 		for(unsigned int i = 0; i < tmp.size(); i++)
 			sum_tmp += tmp[i];
@@ -2499,8 +2499,8 @@ LACurveSetup::GetPCAResult(LADataInstance* dataInstance, const LAString& type, c
 	}
 	else
 	{
-		LAString msg = LAString("Unknown result type: ") + type;
-        throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("Unknown result type: ") + type;
+        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	return ret;

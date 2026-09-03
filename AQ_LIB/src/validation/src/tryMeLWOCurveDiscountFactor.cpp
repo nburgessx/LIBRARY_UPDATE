@@ -29,7 +29,7 @@ namespace validation
     */
     DoubleVector tryMeLWOCurveDiscountFactorsFromYearFractions( const std::string& lwoCurveName,
             const DoubleVector& yearFractions,
-            const LAString& dayCount )
+            const AQLString& dayCount )
     {
         VALID_EXCEPTION_START
 
@@ -46,7 +46,7 @@ namespace validation
         // Input validations
         if( yearFractions.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Size of input 'yearFractions' is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Size of input 'yearFractions' is zero.", __FILE__, __LINE__ );
         }
 
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
@@ -55,7 +55,7 @@ namespace validation
         auto lwoCurve = env.accessObject<etrading::LWOCurve>( lwoCurveName ); // 			etrading::getLWOCurve(lwoCurveName);
 
         // Convert Year Fractions to ACT/365 ones
-        LADate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
+        AQLDate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
         etrading::convertToYearFractionsACT365( curveAsOfDate, const_cast< DoubleVector& >( yearFractions ), dayCount );
 
         if( lwoCurve )
@@ -108,7 +108,7 @@ namespace validation
         // Input validations
         if( tenors.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: Size of input 'tenors' is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Size of input 'tenors' is zero.", __FILE__, __LINE__ );
         }
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( businessDayAdj );
@@ -127,7 +127,7 @@ namespace validation
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -162,11 +162,11 @@ namespace validation
         size_t N = toDates.size();
         if( M != N && M != 1 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' either takes 1 date, or an array of dates in equal size of 'toDates'", __FILE__, __LINE__ );
         }
         if( N == 0 || M == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'toDates' must not be empty", __FILE__, __LINE__ );
         }
 
         // Create pairs of fromDate and toDate even when there is only one fromDate
@@ -203,7 +203,7 @@ namespace validation
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -228,7 +228,7 @@ namespace validation
     DoubleVector tryMeLWOCurveDiscountFactorsForwardStartingFromYearFractions( const std::string& lwoCurveName,
             const std::vector<boost::gregorian::date>& fromDates,
             const DoubleVector& yearFractions,
-            const LAString& dayCount )
+            const AQLString& dayCount )
     {
         VALID_EXCEPTION_START
 
@@ -247,12 +247,12 @@ namespace validation
         size_t N = yearFractions.size();
         if( M != N )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must be of equal size'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must be of equal size'", __FILE__, __LINE__ );
         }
 
         if( N == 0 || M == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' and 'yearFractions' must not be empty", __FILE__, __LINE__ );
         }
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( "NO_CHANGE" );
@@ -263,7 +263,7 @@ namespace validation
 
 
         // Convert Year Fractions to ACT/365 ones
-        LADate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
+        AQLDate curveAsOfDate = etrading::toLADateFromGregorianDate( lwoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
         etrading::convertToYearFractionsACT365( curveAsOfDate, const_cast< DoubleVector& >( yearFractions ), dayCount );
 
         if( lwoCurve )
@@ -278,7 +278,7 @@ namespace validation
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -323,13 +323,13 @@ namespace validation
 
         if( fromDates.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: 'fromDates' must not be empty", __FILE__, __LINE__ );
         }
 
         if( fromDates.size() != tenors.size() )
         {
             std::string errString = ( boost::format( "Number of fromDates (%i) is not equal to the number of tenors (%i)" ) % fromDates.size() % tenors.size() ).str();
-            throw LACoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
         }
 
         etrading::BusinessDayAdjustmentEnum busDayAdjust = etrading::toBusinessDayAdjustmentEnum( businessDayAdj );
@@ -348,7 +348,7 @@ namespace validation
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -398,7 +398,7 @@ namespace validation
 
         if ( ret.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: No DFs have been returned.", __FILE__, __LINE__ );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -427,14 +427,14 @@ namespace validation
 	*/
 	void tryMeLWOCurveDiscountFactorsTable( DateVector& paymentDates,
 											DoubleMatrix& discountFactors,
-											const LAString& curveCollection,
-											const LAStringVector& curveIndices,
-											const LAString& startDate,
-											const LAString& maturity,
-											const LAString& businessDayAdjust,
-											const LAString& calendar,
-											const LAString& rollConvention,
-											const LAString& frequency )
+											const AQLString& curveCollection,
+											const AQLStringVector& curveIndices,
+											const AQLString& startDate,
+											const AQLString& maturity,
+											const AQLString& businessDayAdjust,
+											const AQLString& calendar,
+											const AQLString& rollConvention,
+											const AQLString& frequency )
 	{
 		VALID_EXCEPTION_START
 
@@ -443,27 +443,27 @@ namespace validation
 
 		if ( curveCollection.size() == 0 )
 		{
-			throw LACoreInvalidData("#Error: No curve collection have been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No curve collection have been provided.",__FILE__,__LINE__);
 		}
 		if (curveIndices.empty() )
 		{
-			throw LACoreInvalidData("#Error: No curve indices have been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No curve indices have been provided.",__FILE__,__LINE__);
 		}
 		if ( maturity.size() == 0 )
 		{
-			throw LACoreInvalidData("#Error: No maturity tenor has been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No maturity tenor has been provided.",__FILE__,__LINE__);
 		}
 		if ( businessDayAdjust.size() == 0 )
 		{
-			throw LACoreInvalidData("#Error: No business day adjustment has been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No business day adjustment has been provided.",__FILE__,__LINE__);
 		}
 		if ( rollConvention.size() == 0 )
 		{
-			throw LACoreInvalidData("#Error: No roll convention has been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No roll convention has been provided.",__FILE__,__LINE__);
 		}
 		if ( frequency.size() == 0 )
 		{
-			throw LACoreInvalidData("#Error: No frequency has been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No frequency has been provided.",__FILE__,__LINE__);
 		}
 
 		// Calculate the discount factors

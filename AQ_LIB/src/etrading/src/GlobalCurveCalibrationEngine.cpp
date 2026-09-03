@@ -1,12 +1,12 @@
 #include "GlobalCurveCalibrationEngine.h"
-#include "LABasic.h"
-#include "LAObjectHolder.h"
+#include "AQLBasic.h"
+#include "AQLObjectHolder.h"
 
 
 /*!
 	@brief Default constructor
 */
-GlobalCurveCalibrationEngine::GlobalCurveCalibrationEngine(const CurveCalibrationData& curveCalibrationData, const LAString& engineName)
+GlobalCurveCalibrationEngine::GlobalCurveCalibrationEngine(const CurveCalibrationData& curveCalibrationData, const AQLString& engineName)
 	: totalCalibCount_(0), 
 	numComponentCurves_(0),
 	engineName_(engineName),
@@ -19,7 +19,7 @@ GlobalCurveCalibrationEngine::GlobalCurveCalibrationEngine(const CurveCalibratio
 
 	// Yield curve data as a reference
 	yieldDataRef_ = curveCalibrationData.getYieldData();
-	LAObjectHolder objHolder = yieldDataRef_.get();
+	AQLObjectHolder objHolder = yieldDataRef_.get();
 
 	calibSwapCounts_.clear();
 	componentCurves_.clear();
@@ -28,38 +28,38 @@ GlobalCurveCalibrationEngine::GlobalCurveCalibrationEngine(const CurveCalibratio
 	jacobianLabels_.clear();
 
 	eps_ = 1.0e-9;
-	const LADataHolder *dh = &objHolder.getData(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + engineSuffix_, NOCHECK);
+	const AQLDataHolder *dh = &objHolder.getData(IR_CALIBRATION_DATA_GLOBALENGINECURVES_EPSILON + engineSuffix_, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		eps_ = dynamic_cast<const LADataDouble &>(dh->get()).get();
+		eps_ = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 
 	grad_eps_ = 1.0e-15;
 	dh = &objHolder.getData(IR_CALIBRATION_DATA_GLOBALENGINECURVES_GRADIENTEPSILON + engineSuffix_, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		grad_eps_ = dynamic_cast<const LADataDouble &>(dh->get()).get();
+		grad_eps_ = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 
 	delta_ = 1.0e-10;
 	dh = &objHolder.getData(IR_CALIBRATION_DATA_GLOBALENGINECURVES_DELTA + engineSuffix_, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		delta_ = dynamic_cast<const LADataDouble &>(dh->get()).get();
+		delta_ = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 
 	max_loop_ = 1000;
 	dh = &objHolder.getData(IR_CALIBRATION_DATA_GLOBALENGINECURVES_MAXLOOP + engineSuffix_, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		max_loop_ = dynamic_cast<const LADataInt &>(dh->get()).get();
+		max_loop_ = dynamic_cast<const AQLDataInt &>(dh->get()).get();
 	}
 
 	fastRebuild_ = true;
 	dh = &objHolder.getData(IR_CALIBRATION_DATA_GLOBALENGINECURVES_FASTREBUILD + engineSuffix_, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		fastRebuild_ = dynamic_cast<const LADataBool &>(dh->get()).get();
+		fastRebuild_ = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 }
 
@@ -72,11 +72,11 @@ void GlobalCurveCalibrationEngine::calibrate()
 	if (fastRebuild_)
 	{
 		// Now attempt to fetch the jacobian (gradient matrix)
-		LAObjectHolder objHolder = yieldDataRef_.get();
-		const LADataHolder* ahJacobian = &(objHolder.getData(IR_CALIBRATION_DATA_INVERSE_ENGINE_JACOBIAN + engineSuffix_, NOCHECK));
+		AQLObjectHolder objHolder = yieldDataRef_.get();
+		const AQLDataHolder* ahJacobian = &(objHolder.getData(IR_CALIBRATION_DATA_INVERSE_ENGINE_JACOBIAN + engineSuffix_, NOCHECK));
 		if (ahJacobian->isDefined() && !ahJacobian->isNull())
 		{
-			previousInverseJacobian_ = dynamic_cast<const LADataDoubleMatrix &>(ahJacobian->get()).get();
+			previousInverseJacobian_ = dynamic_cast<const AQLDataDoubleMatrix &>(ahJacobian->get()).get();
 			// Sanity check: Verify the previous jacobian has the correct size
 			if ((previousInverseJacobian_.size() == totalCalibCount_) && (previousInverseJacobian_[0].size() == totalCalibCount_))
 			{
@@ -145,7 +145,7 @@ void GlobalCurveCalibrationEngine::calibrate()
 			// Check whether solving can no longer produce meaningful difference to the output. 
 			for (size_t i = 0; i < totalCalibCount_; ++i)
 			{
-				double diff = LAMath::abs(allPVs_new[i] - allPVs_old[i]);
+				double diff = AQLMath::abs(allPVs_new[i] - allPVs_old[i]);
 				if (diff >= grad_eps_)
 				{
 					isEnd = false;
@@ -170,14 +170,14 @@ void GlobalCurveCalibrationEngine::calibrate()
 			{
 				// Keep the unbumped values
 				DoubleArray unbumpedRates = componentCurves_[i]->getStateVariableRates();
-				const LAString curveName = componentCurves_[i]->getCurveName();
+				const AQLString curveName = componentCurves_[i]->getCurveName();
 				unsigned int preSwapSize = componentCurves_[i]->getPreSolvingInstrumentCount();
 				
 				// Calculate PV sensitivities of every instrument of every curve against the current curve's instruments 			
 				unsigned int calibIntCount = calibSwapCounts_[i];
 				for (size_t j = 0; j < calibIntCount; ++j)
 				{
-					LAString temp = "/d(rate_" + curveName + "_" + LAString(static_cast<int>(j)) + ")";
+					AQLString temp = "/d(rate_" + curveName + "_" + AQLString(static_cast<int>(j)) + ")";
 
 					// Update rate at the jth point of the ith component curve 
 					DoubleArray tempRates(unbumpedRates);
@@ -186,7 +186,7 @@ void GlobalCurveCalibrationEngine::calibrate()
 
 					// Reprice all the curves after rate adjustment
 					DoubleVector allPVs_bumped;
-					LAStringVector labels;
+					AQLStringVector labels;
 					for (size_t k = 0; k < numComponentCurves_; ++k)
 					{
 						DoubleArray allPVs;
@@ -196,10 +196,10 @@ void GlobalCurveCalibrationEngine::calibrate()
 						if (!jacobianLabelsCreated_)
 						{
 							// Set up one label for each matrix element
-							LAString curve = componentCurves_[k]->getCurveName();
+							AQLString curve = componentCurves_[k]->getCurveName();
 							for (size_t s = 0; s < allPVs.size(); ++s)
 							{
-								LAString elemetLabel = "d(PV(" + curve + "_" + LAString(static_cast<int>(s)) + "))" + temp;
+								AQLString elemetLabel = "d(PV(" + curve + "_" + AQLString(static_cast<int>(s)) + "))" + temp;
 								labels.push_back(elemetLabel);
 							}
 						}
@@ -213,7 +213,7 @@ void GlobalCurveCalibrationEngine::calibrate()
 						
 						if (!jacobianLabelsCreated_)
 						{
-							LAString label = labels[h];
+							AQLString label = labels[h];
 							jacobianLabels_.set(columnShift + j, h, label);
 						}
 					}
@@ -245,9 +245,9 @@ void GlobalCurveCalibrationEngine::calibrate()
 
 		// -----------------------------------------------------------------------
 		// Update x as in y = f(x) according to Newton Raphson
-		LAMatrix valMat(allPVs_new);
+		AQLMatrix valMat(allPVs_new);
 
-		LAMatrix deltaMat = inverseJacobian_ * valMat;
+		AQLMatrix deltaMat = inverseJacobian_ * valMat;
 
 		#ifdef _DEBUG
 		DoubleMatrix tempInverseJ;
@@ -299,7 +299,7 @@ void GlobalCurveCalibrationEngine::calibrate()
 		for (size_t i = 0; i < totalCalibCount_; ++i)		
 		{
 			// A solution is considered acceptable only when all calibration instruments reprice to zero
-			if ( LAMath::abs( allPVs_new[i] ) >= eps_ )
+			if ( AQLMath::abs( allPVs_new[i] ) >= eps_ )
 			{
 				solutionFound = false;
 				break;
@@ -314,7 +314,7 @@ void GlobalCurveCalibrationEngine::calibrate()
 
 	if (!solutionFound)
 	{
-		throw LACoreInvalidData("#Error: Global yield curve calibration engine can't converge in newton raphson method!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("#Error: Global yield curve calibration engine can't converge in newton raphson method!", __FILE__, __LINE__);
 	}
 
 }
@@ -340,7 +340,7 @@ void GlobalCurveCalibrationEngine::addComponentCurve(const GlobalCalibrationComp
 	@brief Post processing calibration results on each curve
 	@param[in] yieldCurveProEntity	Object object for CurveCalibrationData
 */
-void GlobalCurveCalibrationEngine::postProcessing(LAObject& yieldCurveProEntity)
+void GlobalCurveCalibrationEngine::postProcessing(AQLObject& yieldCurveProEntity)
 {
 	// Store inverse jacobian
 	DoubleMatrix inverseJacobianAtSolution;
@@ -358,20 +358,20 @@ void GlobalCurveCalibrationEngine::postProcessing(LAObject& yieldCurveProEntity)
 		jacobianAtSolution.push_back(dataVec);
 	}
 
-	LAObjectHolder objHolder = yieldDataRef_.get();
+	AQLObjectHolder objHolder = yieldDataRef_.get();
 	if (newJacobianAvailable_)
 	{
 		objHolder.remove(IR_CALIBRATION_DATA_INVERSE_ENGINE_JACOBIAN + engineSuffix_);
-		objHolder.add(IR_CALIBRATION_DATA_INVERSE_ENGINE_JACOBIAN + engineSuffix_, new LADataDoubleMatrix(inverseJacobianAtSolution));
+		objHolder.add(IR_CALIBRATION_DATA_INVERSE_ENGINE_JACOBIAN + engineSuffix_, new AQLDataDoubleMatrix(inverseJacobianAtSolution));
 
 		objHolder.remove(IR_CALIBRATION_DATA_ENGINE_JACOBIAN + engineSuffix_);
-		objHolder.add(IR_CALIBRATION_DATA_ENGINE_JACOBIAN + engineSuffix_, new LADataDoubleMatrix(jacobianAtSolution));
+		objHolder.add(IR_CALIBRATION_DATA_ENGINE_JACOBIAN + engineSuffix_, new AQLDataDoubleMatrix(jacobianAtSolution));
 	}
 
 	if (jacobianLabelsCreated_)
 	{
 		objHolder.remove(IR_CALIBRATION_DATA_ENGINE_JACOBIAN_LABEL + engineSuffix_);
-		objHolder.add(IR_CALIBRATION_DATA_ENGINE_JACOBIAN_LABEL + engineSuffix_, new LADataStringMatrix(jacobianLabels_));
+		objHolder.add(IR_CALIBRATION_DATA_ENGINE_JACOBIAN_LABEL + engineSuffix_, new AQLDataStringMatrix(jacobianLabels_));
 	}
 
 	// Loop through all component curves and delegate 

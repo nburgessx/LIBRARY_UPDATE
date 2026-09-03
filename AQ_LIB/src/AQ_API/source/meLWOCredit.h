@@ -12,7 +12,7 @@
 
 #pragma once
 #include "SwigTypes.h"
-#include "LACoreTemplateType.h"     // Data TypeDefs
+#include "AQLCoreTemplateType.h"     // Data TypeDefs
 #include <string>
 #include <vector>
 

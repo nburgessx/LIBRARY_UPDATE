@@ -1,8 +1,8 @@
 #pragma once
 
-#include "LADate.h"
+#include "AQLDate.h"
 #include "CoreEnumerations.h"
-#include "LACoreTemplateType.h"	// Include StandardString and LAString Typedefs
+#include "AQLCoreTemplateType.h"	// Include StandardString and AQLString Typedefs
 #include "LabelValueBlock.h"
 #include "CreditModel.h"
 
@@ -40,10 +40,10 @@ namespace etrading
 		ValuationSettings( const StandardStringMatrix & inputMatrix, const bool allowCurveCollections = true );
 
 		// Used by Swap,  legName is used in searching curveCollection, and the DEFAULT valuationDate is the found curveCollection's asOfDate
-		ValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName, const bool& includeAccruedInterest = true);
+		ValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const AQLString& legName, const bool& includeAccruedInterest = true);
 
 		// Used by Bond
-		ValuationSettings( const LADate& valuationDate, const std::string& curveCollection = std::string() );
+		ValuationSettings( const AQLDate& valuationDate, const std::string& curveCollection = std::string() );
 		ValuationSettings( const LabelValueBlock& valuationSettingsLVB );
 
 		// Used by credit model
@@ -56,8 +56,8 @@ namespace etrading
 		// Get Accessors
 		double getFXSpot() const							{ return fxSpot_; };
 		double getFXAsOfDateRate() const					{ return fxAsOfDateRate_; };
-		LADate getValuationDate() const						{ return valuationDate_; };
-		LADate getSettlementDate() const;
+		AQLDate getValuationDate() const						{ return valuationDate_; };
+		AQLDate getSettlementDate() const;
 		double getFloatBondCurrentCouponRate() const;
 		double getFloatBondAssumedRate() const;
 		double getFloatBondIndexToNextCoupon() const;
@@ -73,7 +73,7 @@ namespace etrading
 		std::string getFixingTableName(const std::string& legName, const ScheduleTypeEnum& legType) const;
 
 		// Set Accessors
-		void setSettlementDate( const LADate& settlementDate ) { settlementDate_ = settlementDate; };
+		void setSettlementDate( const AQLDate& settlementDate ) { settlementDate_ = settlementDate; };
 
 		// Static Method to replace all curve object names with curve collections
 		// inputData - An (N X 2) string matrix representing a raw valuation settings LVB
@@ -103,8 +103,8 @@ namespace etrading
 		std::string creditModelName_;
 		std::string volatilityModelName_;
 		
-		LADate valuationDate_;
-		LADate settlementDate_;			// spot date, used for bonds
+		AQLDate valuationDate_;
+		AQLDate settlementDate_;			// spot date, used for bonds
 		
 		bool includeAccruedInterest_;
 		double fxSpot_;					

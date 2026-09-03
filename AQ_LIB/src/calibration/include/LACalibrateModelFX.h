@@ -7,8 +7,8 @@
 #include "LACalibrateModel.h"
 
 
-class LADataInstance;
-class LAString;
+class AQLDataInstance;
+class AQLString;
 class LAStaticData;
 
 
@@ -31,25 +31,25 @@ public:
 	LACalibrateModelFX &operator=(const LACalibrateModelFX &rhs);
 	//==============================================
 	// generate SDE market data
-	virtual void loadModelDataAndCalibrate(const LAString &fx, LADataInstance &dataInstance, const bool isCurve = true, const bool isModel = true, const LAString & curveID = "", const LAString & marketName = "") const;
+	virtual void loadModelDataAndCalibrate(const AQLString &fx, AQLDataInstance &dataInstance, const bool isCurve = true, const bool isModel = true, const AQLString & curveID = "", const AQLString & marketName = "") const;
 	//==============================================
 	// generate sde initial value for fwdfx constant curve
-	virtual void loadFwdFXConstCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance, bool isCalcFwdBeforeFwdFXConsant = false) const {}
+	virtual void loadFwdFXConstCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance, bool isCalcFwdBeforeFwdFXConsant = false) const {}
 
 protected:
 	// set path 
-	virtual  void setOutputTemplate(const LAString &fx, LARatesSDEBase &sde)  const;
+	virtual  void setOutputTemplate(const AQLString &fx, LARatesSDEBase &sde)  const;
 	//==============================================
 	// set interpolation method 
-	virtual  void setInterpolationMethod(const LAString &fx, LARatesSDEBase &sde) const;
+	virtual  void setInterpolationMethod(const AQLString &fx, LARatesSDEBase &sde) const;
 	//==============================================
 	// set numeraire 
-	virtual  void setNumeraire(const LAString &fx, LARatesSDEBase &sde) const;
+	virtual  void setNumeraire(const AQLString &fx, LARatesSDEBase &sde) const;
 	//==============================================
 	// create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const LAString &fx, LADataInstance &dataInstance) const;
+	virtual LARatesSDEBase *createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// get SDE data name
-	virtual LAString getSDEAttrName(const LAString &fx) const;
+	virtual AQLString getSDEAttrName(const AQLString &fx) const;
 
 };

@@ -1,17 +1,17 @@
 #pragma once
 
 // Includes: This Library
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
-#include "LAString.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
+#include "AQLString.h"
 #include "ConstantDeclarations.h"
 #include "LATime.h"
 
 // Forward Declarations
-class LAPriceDataSlidingRule;
-class LAPriceDataCalendar;
+class AQLPriceDataSlidingRule;
+class AQLPriceDataCalendar;
 
 // Namespaces
 using namespace std;
@@ -26,22 +26,22 @@ namespace etrading
         virtual ~SwapSchedule() {};
 
         // Alternative Constructor
-        SwapSchedule( const LADate&       accrualStartDate,
-                      const LADate&       accrualEndDate,
-                      const LAString&     accrualDaycount,
-                      const LAString&     accrualFrequency,
-                      const LAString&     accrualRollConvention,            // aka Accrual Sliding Rule
-                      const LAString&     accrualCalendar,
-                      const LAString&     paymentFrequency,
-                      const LAString&     paymentRollConvention,           // aka Payment Sliding Rule
-                      const LAString&     paymentCalendar,
-                      const LAString&     paymentLag,
-                      const LAString&     fixingLag,
-                      const LAString&     fixingRollConvention,
-                      const LAString&     fixingCalendar,
-                      const LADate&       firstStub,                       // aka First Odd Date
-                      const LADate&       lastStub,                        // aka Last Odd Date
-                      const LAString&     rollDayOrConvention,             // Roll Day ( e.g. 9th of month ) or Roll Convention ( IMM, ECM, EOM, End of Month ... )
+        SwapSchedule( const AQLDate&       accrualStartDate,
+                      const AQLDate&       accrualEndDate,
+                      const AQLString&     accrualDaycount,
+                      const AQLString&     accrualFrequency,
+                      const AQLString&     accrualRollConvention,            // aka Accrual Sliding Rule
+                      const AQLString&     accrualCalendar,
+                      const AQLString&     paymentFrequency,
+                      const AQLString&     paymentRollConvention,           // aka Payment Sliding Rule
+                      const AQLString&     paymentCalendar,
+                      const AQLString&     paymentLag,
+                      const AQLString&     fixingLag,
+                      const AQLString&     fixingRollConvention,
+                      const AQLString&     fixingCalendar,
+                      const AQLDate&       firstStub,                       // aka First Odd Date
+                      const AQLDate&       lastStub,                        // aka Last Odd Date
+                      const AQLString&     rollDayOrConvention,             // Roll Day ( e.g. 9th of month ) or Roll Convention ( IMM, ECM, EOM, End of Month ... )
                       const bool&         isStartRoll = true,
                       const bool&         isFixingInAdvance = true );      // Fixing in Advance ( True ) or Arrears ( False )
 

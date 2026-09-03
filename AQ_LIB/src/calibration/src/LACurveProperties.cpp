@@ -1,77 +1,77 @@
 #include "LACurveProperties.h"
-#include "LACoreAppError.h"
-#include "LAString.h"
+#include "AQLCoreAppError.h"
+#include "AQLString.h"
 
 #include <fstream>
 #include <sstream>
 
-std::shared_ptr<LAString> LACurveProperties::ir_prop_path_;
-std::shared_ptr<LAString> LACurveProperties::calib_prop_path_;
-std::shared_ptr<LAString> LACurveProperties::calendar_path_;
+std::shared_ptr<AQLString> LACurveProperties::ir_prop_path_;
+std::shared_ptr<AQLString> LACurveProperties::calib_prop_path_;
+std::shared_ptr<AQLString> LACurveProperties::calendar_path_;
 
 
 namespace
 {
-    const LAString CONFIG_FILE_PATH(".\\config\\irsvr_excel.conf");
-    const LAString DEFAULT_CALENDAR_PATH(".\\config\\Calendar.csv");
-    const LAString DEFAULT_IRPROP_PATH(".\\config\\ir.properties");
-	const LAString DEFAULT_CALIBPROP_PATH(".\\config\\calib.properties");
+    const AQLString CONFIG_FILE_PATH(".\\config\\irsvr_excel.conf");
+    const AQLString DEFAULT_CALENDAR_PATH(".\\config\\Calendar.csv");
+    const AQLString DEFAULT_IRPROP_PATH(".\\config\\ir.properties");
+	const AQLString DEFAULT_CALIBPROP_PATH(".\\config\\calib.properties");
 }
 
 
-void LACurveProperties::set_calendar_path(const LAString& s)
+void LACurveProperties::set_calendar_path(const AQLString& s)
 {
-    calendar_path_.reset(new LAString(s));
+    calendar_path_.reset(new AQLString(s));
 }
 
-void LACurveProperties::set_ir_prop_path(const LAString& s)
+void LACurveProperties::set_ir_prop_path(const AQLString& s)
 {
-    ir_prop_path_.reset(new LAString(s));
+    ir_prop_path_.reset(new AQLString(s));
 }
 
-void LACurveProperties::set_calib_prop_path(const LAString& s)
+void LACurveProperties::set_calib_prop_path(const AQLString& s)
 {
-    calib_prop_path_.reset(new LAString(s));
+    calib_prop_path_.reset(new AQLString(s));
 }
 
 
-const LAString* LACurveProperties::ir_prop_path()
+const AQLString* LACurveProperties::ir_prop_path()
 {
     if(ir_prop_path_.get() != NULL && check_file_availability(*ir_prop_path_.get())) return ir_prop_path_.get();
     read_config_file("vnl.ir.properties", ir_prop_path_);
     if(ir_prop_path_.get() != NULL && check_file_availability(*ir_prop_path_.get())) return ir_prop_path_.get();
-	ir_prop_path_.reset(new LAString(LACurveProperties::toPath( "MLIBQ", "\\ir.properties" )));
+	ir_prop_path_.reset(new AQLString(LACurveProperties::toPath( "MLIBQ", "\\ir.properties" )));
 	if(ir_prop_path_.get() != NULL && check_file_availability(*ir_prop_path_.get())) return ir_prop_path_.get();
 
-    ir_prop_path_.reset(new LAString(DEFAULT_IRPROP_PATH));
+    ir_prop_path_.reset(new AQLString(DEFAULT_IRPROP_PATH));
     return check_file_availability(*ir_prop_path_.get()) ? ir_prop_path_.get() : NULL;
 }
 
-const LAString* LACurveProperties::calib_prop_path()
+const AQLString* LACurveProperties::calib_prop_path()
 {
     if(calib_prop_path_.get() != NULL && check_file_availability(*calib_prop_path_.get())) return calib_prop_path_.get();
     read_config_file("vnl.calib.properties", calib_prop_path_);
     if(calib_prop_path_.get() != NULL && check_file_availability(*calib_prop_path_.get())) return calib_prop_path_.get();
-	calib_prop_path_.reset(new LAString(LACurveProperties::toPath( "MLIBQ", "\\calib.properties" )));
+	calib_prop_path_.reset(new AQLString(LACurveProperties::toPath( "MLIBQ", "\\calib.properties" )));
 	if(calib_prop_path_.get() != NULL && check_file_availability(*calib_prop_path_.get())) return calib_prop_path_.get();
 
-    calib_prop_path_.reset(new LAString(DEFAULT_CALIBPROP_PATH));
+    calib_prop_path_.reset(new AQLString(DEFAULT_CALIBPROP_PATH));
     return check_file_availability(*calib_prop_path_.get()) ? calib_prop_path_.get() : NULL;
 }
 
-const LAString* LACurveProperties::calendar_path()
+const AQLString* LACurveProperties::calendar_path()
 {
     if(calendar_path_.get() != NULL && check_file_availability(*calendar_path_.get())) return calendar_path_.get();
     read_config_file("vnl.calendar", calendar_path_);
     if(calendar_path_.get() != NULL && check_file_availability(*calendar_path_.get())) return calendar_path_.get();
-	calendar_path_.reset(new LAString(LACurveProperties::toPath( "MLIBQ", "\\calendar.csv" )));
+	calendar_path_.reset(new AQLString(LACurveProperties::toPath( "MLIBQ", "\\calendar.csv" )));
 	if(calendar_path_.get() != NULL && check_file_availability(*calendar_path_.get())) return calendar_path_.get();
 
-    calendar_path_.reset(new LAString(DEFAULT_CALENDAR_PATH));
+    calendar_path_.reset(new AQLString(DEFAULT_CALENDAR_PATH));
     return check_file_availability(*calendar_path_.get()) ? calendar_path_.get() : NULL;
 }
 
-void LACurveProperties::read_config_file(const LAString& key, std::shared_ptr<LAString>& dest)
+void LACurveProperties::read_config_file(const AQLString& key, std::shared_ptr<AQLString>& dest)
 {
     std::ifstream ifs(CONFIG_FILE_PATH.getCString());
     if(!ifs) return;
@@ -85,24 +85,24 @@ void LACurveProperties::read_config_file(const LAString& key, std::shared_ptr<LA
 		sep_pos = line.find_first_of(sep);
 		cur_key = line.substr(0, sep_pos);
         if(cur_key == key_){
-            dest.reset(new LAString(line.substr(sep_pos + 1).c_str()));
+            dest.reset(new AQLString(line.substr(sep_pos + 1).c_str()));
             return;
         }
 	}
 }
 
-bool LACurveProperties::check_file_availability(const LAString& file_path)
+bool LACurveProperties::check_file_availability(const AQLString& file_path)
 {
     std::ifstream ifs(file_path.getCString());
     return ifs.is_open();
 }
 
 // Function to return the path stored by the an environment variable
-LAString LACurveProperties::toPath(const LAString&  environmentVariable, const LAString&  suffix)
+AQLString LACurveProperties::toPath(const AQLString&  environmentVariable, const AQLString&  suffix)
 {
 	char* prefix = getenv(environmentVariable.getCString());
 	if(prefix == NULL){
-		return LAString( "" );
+		return AQLString( "" );
 	}
-	return LAString((prefix + suffix ).getCString());
+	return AQLString((prefix + suffix ).getCString());
 }

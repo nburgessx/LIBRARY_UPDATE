@@ -19,15 +19,15 @@
 #endif
 
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 
 struct MAIndexData;
-class LAObjectHolder;
-class LAObjectPool;
-class LADataMultiReference;
-class LADate;
-class LADate;
+class AQLObjectHolder;
+class AQLObjectPool;
+class AQLDataMultiReference;
+class AQLDate;
+class AQLDate;
 
 //===================== Class Declare MADealUtils==================================
 /*! 
@@ -40,28 +40,28 @@ class MADealUtils
 public:
 	//==============================================================================
 	// get sde currencys
-	static LAStringVector getSDECurrencys(const bool isIncludeVol = false);
+	static AQLStringVector getSDECurrencys(const bool isIncludeVol = false);
 	//==============================================================================
 	// get simulation sde currencys
-	static LAStringVector getSimulationSDECurrencys(const bool isIncludeVol = false);
+	static AQLStringVector getSimulationSDECurrencys(const bool isIncludeVol = false);
 	//==============================================================================
 	// get  sde currencys all
-	static LAStringVector getSDECurrencysAll();
+	static AQLStringVector getSDECurrencysAll();
 	//==============================================================================
 	// get maxterm
-	static int getMaxTerm(LAObjectPool &objPool, const LADate &asOfDate, LAString tradetype = LAString("EXODERIVA"));
+	static int getMaxTerm(AQLObjectPool &objPool, const AQLDate &asOfDate, AQLString tradetype = AQLString("EXODERIVA"));
 	//==============================================================================
 	// get applied maturity
-	static LAString getAppMat();
+	static AQLString getAppMat();
 	//==============================================================================
 	// get all single cuccencys
-	static LAStringVector getAllSingleCurrencys();
+	static AQLStringVector getAllSingleCurrencys();
 	//==============================================================================
 	// get ir volatility grids which are used for calculation
-	static BoolMatrix getCalibTargetIRVolGrids(LAObjectPool& objPool, 
-											   const LADate& asOfDate,
-											   const LAString& ccy,
-											   const LAString& underlying,
+	static BoolMatrix getCalibTargetIRVolGrids(AQLObjectPool& objPool, 
+											   const AQLDate& asOfDate,
+											   const AQLString& ccy,
+											   const AQLString& underlying,
 											   const bool isPropSource = false);
 
 private:
@@ -73,12 +73,12 @@ private:
 	MADealUtils(const MADealUtils &rhs);
 	MADealUtils &operator=(const MADealUtils &rhs);
 
-	static int getCMSYears(const LADataMultiReference &ref, const LAString &indexAttr);
+	static int getCMSYears(const AQLDataMultiReference &ref, const AQLString &indexAttr);
 	
 	//==============================================================================
 	// get one trade maxterm
-	static int getMaxTerm(const LAObjectHolder &objHolder, const LADate &asOfDate);
-	static int getMaxTermFromPlainVanilla(const LAObjectHolder &objHolder, const LADate &asOfDate);
+	static int getMaxTerm(const AQLObjectHolder &objHolder, const AQLDate &asOfDate);
+	static int getMaxTermFromPlainVanilla(const AQLObjectHolder &objHolder, const AQLDate &asOfDate);
 
 	static void addCalibTargetFlag( BoolMatrix& calibTaretMat,
 									double expiry, 
@@ -86,7 +86,7 @@ private:
 									const DoubleVector& expiryVec,
 									const DoubleVector& tenorVec);
 
-	static void addStochasticVolIndex(LAStringVector& ccys);
+	static void addStochasticVolIndex(AQLStringVector& ccys);
 
 };
 

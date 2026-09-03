@@ -26,12 +26,12 @@
 #include "LAPriceDriftFX.h"
 
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 #include "LAModelDynamicsCurve.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 using namespace std;
 
@@ -51,7 +51,7 @@ LAPriceDriftFX::LAPriceDriftFX(const double s, SDE_TYPE type)
 	@param[in] sdeAttrNameD data name of foreign ir model
 	@param[in] s displaced diffusion parameter
 */
-LAPriceDriftFX::LAPriceDriftFX(const LAString& sdeAttrNameD, const LAString& sdeAttrNameF, const double s, SDE_TYPE type)
+LAPriceDriftFX::LAPriceDriftFX(const AQLString& sdeAttrNameD, const AQLString& sdeAttrNameF, const double s, SDE_TYPE type)
 : mpNumeraireD(NULL), mpNumeraireF(NULL), mSDEAttrNameD(sdeAttrNameD), mSDEAttrNameF(sdeAttrNameF), mS(s), mType(type) 
 {
 
@@ -62,7 +62,7 @@ LAPriceDriftFX::LAPriceDriftFX(const LAString& sdeAttrNameD, const LAString& sde
 	@brief copy constructor
 */
 /*LAPriceDriftFX::LAPriceDriftFX(const LAPriceDriftFX& v) 
-: LACoreFunctionBase(v)
+: AQLCoreFunctionBase(v)
 {
 
 }*/
@@ -78,7 +78,7 @@ LAPriceDriftFX::~LAPriceDriftFX()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftFX::clone() const	
 {
     try 
@@ -87,7 +87,7 @@ LAPriceDriftFX::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -128,7 +128,7 @@ LAPriceDriftFX::operator()(const DoubleArray& x) const
     double numeRatioD = mpNumeraireD->operator ()(te) / mpNumeraireD->operator ()(ts);
     double numeRatioF = mpNumeraireF->operator ()(te) / mpNumeraireF->operator ()(ts);
 
-	double ret = LAMath::log(numeRatioD / numeRatioF) / (te - ts);
+	double ret = AQLMath::log(numeRatioD / numeRatioF) / (te - ts);
 
 	return ret;
 }
@@ -156,7 +156,7 @@ LAPriceDriftFX::getDriftValue(const DoubleArray& x) const
 	//double cc = pInitialCurveF->getP(te);
 	//double dd = pInitialCurveF->getP(ts);
 
-	double ret = LAMath::log(numeRatioD / numeRatioF) / (te - ts);
+	double ret = AQLMath::log(numeRatioD / numeRatioF) / (te - ts);
 
 	return ret;
 }
@@ -165,10 +165,10 @@ LAPriceDriftFX::getDriftValue(const DoubleArray& x) const
     @brief return string representaion
     @return string representaion (domestic sde attr name ":" foregin sde attr name)
 */
-LAString
+AQLString
 LAPriceDriftFX::convertToString(void) const
 {
-	LAString ret(mSDEAttrNameD);
+	AQLString ret(mSDEAttrNameD);
 	ret += ":";
 	ret += mSDEAttrNameF;
 	return ret;
@@ -179,14 +179,14 @@ LAPriceDriftFX::convertToString(void) const
     @param[in] string representaion (domestic sde attr name ":" foregin sde attr name)
 */
 void
-LAPriceDriftFX::convertFromString(const LAString& str)
+LAPriceDriftFX::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() != 2)
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	}
 	mSDEAttrNameD = tmp.get()[0];
 	mSDEAttrNameF = tmp.get()[1];
@@ -200,7 +200,7 @@ LAPriceDriftFX::convertFromString(const LAString& str)
 void
 LAPriceDriftFX::setUp(LAMathPathEntity& path)
 {
-	LADataHolder* dh = &path.getData(mSDEAttrNameD, ISNOTNULL);
+	AQLDataHolder* dh = &path.getData(mSDEAttrNameD, ISNOTNULL);
 	LAMathAttrSDE* pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
 	mpNumeraireD = pattrsde->getSDE().LARatesSDEBase::getNumeraire();
 	const LARatesPathElementCurve* pInitialCurveD = dynamic_cast<const LARatesPathElementCurve*>(pattrsde->getSDE().getInitialValue());
@@ -217,9 +217,9 @@ LAPriceDriftFX::setUp(LAMathPathEntity& path)
 	for (unsigned int i = 1; i < size; i++)
 	{
 		cache_pos[time[i - 1]] = i;
-		double adj = LAMath::log(pInitialCurveD->getP(time[i - 1]) / pInitialCurveD->getP(time[i])) / (time[i] - time[i - 1])
+		double adj = AQLMath::log(pInitialCurveD->getP(time[i - 1]) / pInitialCurveD->getP(time[i])) / (time[i] - time[i - 1])
 					- 0.5 * (pInitialCurveD->getF(time[i - 1]) + pInitialCurveD->getF(time[i]))
-					- LAMath::log(pInitialCurveF->getP(time[i - 1]) / pInitialCurveF->getP(time[i])) / (time[i] - time[i - 1])
+					- AQLMath::log(pInitialCurveF->getP(time[i - 1]) / pInitialCurveF->getP(time[i])) / (time[i] - time[i - 1])
 					+ 0.5 * (pInitialCurveF->getF(time[i - 1]) + pInitialCurveF->getF(time[i]));
 		cache.push_back(adj);
 	}	
@@ -235,12 +235,12 @@ LAPriceDriftFX::integral(const vector<pair<double,double> >& x) const
 {
 	//if (mType == dX)
 	//	return  (0.5 * (x[1].first + x[1].second) - mS) * 
-	//		(-LAMath::log(mpNumeraireD->getCurve(x[0].first).getP(x[0].second))
-	//			+ LAMath::log(mpNumeraireF->getCurve(x[0].first).getP(x[0].second)));
+	//		(-AQLMath::log(mpNumeraireD->getCurve(x[0].first).getP(x[0].second))
+	//			+ AQLMath::log(mpNumeraireF->getCurve(x[0].first).getP(x[0].second)));
 	//else
 	//	return  0.5 * ((1.0 - mS / x[1].first) + (1.0 - mS / x[1].second)) * 
-	//		(-LAMath::log(mpNumeraireD->getCurve(x[0].first).getP(x[0].second))
-	//			+ LAMath::log(mpNumeraireF->getCurve(x[0].first).getP(x[0].second)));
+	//		(-AQLMath::log(mpNumeraireD->getCurve(x[0].first).getP(x[0].second))
+	//			+ AQLMath::log(mpNumeraireF->getCurve(x[0].first).getP(x[0].second)));
 
 	/*return 0.5 * (mpNumeraireD->getCurve(x[0].first).getF(x[0].first) 
 				- mpNumeraireF->getCurve(x[0].first).getF(x[0].first)
@@ -263,9 +263,9 @@ LAPriceDriftFX::integral(const vector<pair<double,double> >& x) const
 
 		const LARatesPathElementCurve* pInitialCurveF = &mpNumeraireF->getInitialCurve();
 
-		adj = LAMath::log(pInitialCurveD->getP(x[0].first) / pInitialCurveD->getP(x[0].second)) / (x[0].second - x[0].first)
+		adj = AQLMath::log(pInitialCurveD->getP(x[0].first) / pInitialCurveD->getP(x[0].second)) / (x[0].second - x[0].first)
 					- 0.5 * (pInitialCurveD->getF(x[0].first) + pInitialCurveD->getF(x[0].second))
-					- LAMath::log(pInitialCurveF->getP(x[0].first) / pInitialCurveF->getP(x[0].second)) / (x[0].second - x[0].first)
+					- AQLMath::log(pInitialCurveF->getP(x[0].first) / pInitialCurveF->getP(x[0].second)) / (x[0].second - x[0].first)
 					+ 0.5 * (pInitialCurveF->getF(x[0].first) + pInitialCurveF->getF(x[0].second));
 
 	}

@@ -15,14 +15,14 @@ std::string mirGetNextECBDate(const std::string& baseDate,
 	try 
 	{
 		// Input marshalling
-		LADate baseDt(baseDate.c_str(),"YYYYMMDD");
+		AQLDate baseDt(baseDate.c_str(),"YYYYMMDD");
 
-		LADate date = validation::tryMirGetNextECBDate(baseDt, strictlyAfter);
+		AQLDate date = validation::tryMirGetNextECBDate(baseDt, strictlyAfter);
 		
 		ret = date.stringWithFormat("YYYYMMDD").getCString();
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

@@ -13,15 +13,15 @@
 #include "InterpolationParameters.h"
 #include "LACurveForwardRateHelpers.h"
 #include "LACurveCalibrationHelpers.h"
-#include "LAInterpolationBase.h"
-#include "LASplineInterpolation.h"
-#include "LAConstrainedSplineInterpolation.h"
-#include "LAMonotoneConvexInterpolation.h"
-#include "LALinearInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LACoreComponentManager.h"
+#include "AQLInterpolationBase.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLConstrainedSplineInterpolation.h"
+#include "AQLMonotoneConvexInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLCoreComponentManager.h"
 #include "LACurvePricingObject.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "EntityPoolUtilities.h"
 
 
@@ -50,16 +50,16 @@ namespace validation
     *  @param [in]		fxFwdRates			Forward FX rates
     *  @param [in]		spotFxRates			Spot FX rates
     */
-    const LAString tryMeLWOCurveCreateBasis( const std::string& lwoCurveName,
-                                             const LAString& curveCollectionInput,
-                                             const LAString& staticDataTableInput,
-                                             const LAString& curveIndexInput,
-                                             const LAStringMatrix& curveConv,
-                                             const LAStringMatrix& basisConv,
-                                             const LAStringMatrix& basisRates,
-                                             const LAStringMatrix& fxFwdConv,
-                                             const LAStringMatrix& fxFwdRates,
-                                             const LAStringMatrix& spotFxRates )
+    const AQLString tryMeLWOCurveCreateBasis( const std::string& lwoCurveName,
+                                             const AQLString& curveCollectionInput,
+                                             const AQLString& staticDataTableInput,
+                                             const AQLString& curveIndexInput,
+                                             const AQLStringMatrix& curveConv,
+                                             const AQLStringMatrix& basisConv,
+                                             const AQLStringMatrix& basisRates,
+                                             const AQLStringMatrix& fxFwdConv,
+                                             const AQLStringMatrix& fxFwdRates,
+                                             const AQLStringMatrix& spotFxRates )
     {
         VALID_EXCEPTION_START
         
@@ -69,14 +69,14 @@ namespace validation
         // Ensure Curve Name Data is in uppercase
         // --------------------------------------
 
-        LAString curveCollection  = curveCollectionInput;
+        AQLString curveCollection  = curveCollectionInput;
         curveCollection.toUpper();
         
-        LAString staticDataTable  = staticDataTableInput;
+        AQLString staticDataTable  = staticDataTableInput;
         staticDataTable.toUpper();
 
         // Append the staticDataTable to the curveIndex Name Set, ensuring to use the ':' delimiter
-        LAString curveIndex       = curveIndexInput + ":" + staticDataTable;
+        AQLString curveIndex       = curveIndexInput + ":" + staticDataTable;
         curveIndex.toUpper();
 
         // --------------------------------------
@@ -100,7 +100,7 @@ namespace validation
 
         if( ( fxFwdRates.empty() && basisRates.empty() ) || basisConv.empty() || curveConv.empty() )
         {
-            throw LACoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
         }
 
         if( ( fxFwdRates.empty() && 2 > basisRates[0].size() ) || 2 > basisConv[0].size() || 2 > curveConv[0].size() )
@@ -123,7 +123,7 @@ namespace validation
             AQ_THROW("Invalid Data: Input matix data must have column size 3")
         }
 
-        LAStringMatrix moneyConv = LAStringMatrix( 0 );
+        AQLStringMatrix moneyConv = AQLStringMatrix( 0 );
 
 
         // Remove the Curve from the Object Pool Curve Engine if it is registered
@@ -159,7 +159,7 @@ namespace validation
         // The 'curveIndexCopy' variable is used to search for a curve for discount factors and forward rates. Unfortunately the object pool sometimes searches for
         // curves by 'staticDataTable' (aka MarketDataName) and sometimes by 'curveIndex'. To mitigate this problem we ensure that 'staticDataTable' name is always
         // included in the 'curveIndex' name list.
-        LAString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "3M6MBASIS" ) );
+        AQLString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "3M6MBASIS" ) );
         
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndexCopy );
@@ -167,13 +167,13 @@ namespace validation
         // ------------------------------------------
 
         
-        LAString interpolation = etrading::trim_to_upper( etrading::getCurveInterpolation( curveCollection, staticDataTable ).getCString() ).c_str();
+        AQLString interpolation = etrading::trim_to_upper( etrading::getCurveInterpolation( curveCollection, staticDataTable ).getCString() ).c_str();
         auto& env = etrading::Environment::defaultEnv();
 
         // AsOfDate and Calendar to get the start of the year fractions (and whether date is a holiday -> not in AlgoQuantLib) +
         // CurveBuildProperties because it creates the AlgoQuantLib Calendar
         LabelValueBlock curveConvLVB( curveConv );
-        LADate  effectiveDate = curveConvLVB.getCompulsoryValueAsDate( "ASOFDATE" );
+        AQLDate  effectiveDate = curveConvLVB.getCompulsoryValueAsDate( "ASOFDATE" );
         const etrading::CCY ccy = etrading::toCCYEnum( curveConvLVB.getCompulsoryValue( "CURRENCY" ) );
 
         const boost::gregorian::date asOfDate( effectiveDate.yearOfEra(), effectiveDate.monthOfYear(), effectiveDate.dayOfMonth() );
@@ -227,7 +227,7 @@ namespace validation
         auto massiveDFVector = etrading::LACurveForwardRateHelpers::getMultiDF( massiveYearFractionVector,
                                                                            etrading::getDataInstance(),
                                                                            curveCollection,
-                                                                           LAString( "ACT/365" ),
+                                                                           AQLString( "ACT/365" ),
                                                                            interpolation.toUpper(),
                                                                            false,
                                                                            staticDataTable );
@@ -254,7 +254,7 @@ namespace validation
         auto& default_env = etrading::getObjectStore<etrading::LWOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( default_env.has( newCurveName ) )
         {
-            LAString ret = newCurveName.c_str();
+            AQLString ret = newCurveName.c_str();
             if ( CreateDataFile::recordEnabled() )
             {
                 CreateDataFile file( decorateCurvename( "tryMeLWOCurveCalibrateSwap_outputs", curveCollection, staticDataTable ) );

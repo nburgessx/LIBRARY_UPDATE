@@ -2,22 +2,22 @@
     @brief Source code for class to represent correlation.
 
 			Following dataValues are registered automatically to data master<BR>
-			1.CALIBRATION_DATA_NAME(LADataString)<BR>
-			2.CALIBRATION_DATA_ASOFDATE(LADataDate)<BR>
-        	3.IR_CALIBRATION_DATA_ISCORINPUT(LADataBool)<BR>
-			4.CALIBRATION_DATA_INTERPOLATION(LAPriceDataInterpolation)<BR>
+			1.CALIBRATION_DATA_NAME(AQLDataString)<BR>
+			2.CALIBRATION_DATA_ASOFDATE(AQLDataDate)<BR>
+        	3.IR_CALIBRATION_DATA_ISCORINPUT(AQLDataBool)<BR>
+			4.CALIBRATION_DATA_INTERPOLATION(AQLPriceDataInterpolation)<BR>
 			5.IR_CALIBRATION_DATA_FACTORNUM_AFTER(LAPriceInt)<BR>
 			6.IR_CALIBRATION_DATA_FACTORNUM_BEFORE(LAPriceInt)<BR>
-			7.IR_CALIBRATION_DATA_ISOPTIM(LADataBool)<BR>
-			8.IR_CALIBRATION_DATA_ISMULTIVOL(LADataBool)<BR>
-			9.IR_CALIBRATION_DATA_GRID_LARGE_T(LADataDoubles)<BR>
-			10.IR_CALIBRATION_DATA_GRID_SMALL_T(LADataDoubles)<BR>
-			11.IR_CALIBRATION_DATA_ISDATAINPUT(LADataBool)<BR>
-			12.IR_CALIBRATION_DATA_CORRELATIONDATA(LADataDoubleMatrix)<BR>
-			13.IR_CALIBRATION_DATA_FACTORLOADINGDATA(LADataDoubleMatrix)<BR>
+			7.IR_CALIBRATION_DATA_ISOPTIM(AQLDataBool)<BR>
+			8.IR_CALIBRATION_DATA_ISMULTIVOL(AQLDataBool)<BR>
+			9.IR_CALIBRATION_DATA_GRID_LARGE_T(AQLDataDoubles)<BR>
+			10.IR_CALIBRATION_DATA_GRID_SMALL_T(AQLDataDoubles)<BR>
+			11.IR_CALIBRATION_DATA_ISDATAINPUT(AQLDataBool)<BR>
+			12.IR_CALIBRATION_DATA_CORRELATIONDATA(AQLDataDoubleMatrix)<BR>
+			13.IR_CALIBRATION_DATA_FACTORLOADINGDATA(AQLDataDoubleMatrix)<BR>
 			14.IR_CALIBRATION_DATA_FUNCTIONS(LADataFunctions)<BR>
-			15.IR_CALIBRATION_DATA_OPTWEIGHT(LADataDoubleMatrix)<BR>
-			16.IR_CALIBRATION_DATA_CORFACTORDATA(LADataDoubleMatrix)<BR>
+			15.IR_CALIBRATION_DATA_OPTWEIGHT(AQLDataDoubleMatrix)<BR>
+			16.IR_CALIBRATION_DATA_CORFACTORDATA(AQLDataDoubleMatrix)<BR>
 
 */
 //  2007, AlgoQuantHub..
@@ -30,25 +30,25 @@
 #endif
 
 #include "LAMathCorrelation.h"
-#include "LAMathDefine.h"
+#include "AQLMathDefine.h"
 
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LAPriceDataManager.h"
-#include "LADataProcedure.h"
-#include "LADataInstance.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataInstance.h"
 
-#include "LAPriceDataFunctions.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataFunctions.h"
+#include "AQLPriceDataInterpolation.h"
 
-#include "LABasic.h"
-#include "LAConstant.h"
-#include "LA1DDataSet.h"
-#include "LACombinationFunc.h"
-#include "LAMatrix.h"
-#include "LAOptimumBFGS.h"
-#include "LACholeskyDecompSC.h"
+#include "AQLBasic.h"
+#include "AQLConstant.h"
+#include "AQL1DDataSet.h"
+#include "AQLCombinationFunc.h"
+#include "AQLMatrix.h"
+#include "AQLOptimumBFGS.h"
+#include "AQLCholeskyDecompSC.h"
 
 #include <functional>
 #include <cmath>
@@ -62,14 +62,14 @@ const double INFINITESIMAL = 1E-7;
 /*!
     @brief default constructor
 
-	@param[in] dataInstance pointer of LADataInstance object
+	@param[in] dataInstance pointer of AQLDataInstance object
 
 */
-LAMathCorrelation::LAMathCorrelation(LADataInstance* dataInstance) : 
-				LAObject()
+LAMathCorrelation::LAMathCorrelation(AQLDataInstance* dataInstance) : 
+				AQLObject()
 {
 	setDataInstance(dataInstance);
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 
 	dm.setData(CALIBRATION_DATA_NAME, DATA_STRING);
 	dm.setData(CALIBRATION_DATA_ASOFDATE, DATA_DATE);
@@ -119,7 +119,7 @@ LAMathCorrelation::LAMathCorrelation(LADataInstance* dataInstance) :
 */
 LAMathCorrelation::LAMathCorrelation(
 	const LAMathCorrelation& cor) : 
-	LAObject(cor)
+	AQLObject(cor)
 {
 
 	mpName			  = &getData(CALIBRATION_DATA_NAME);
@@ -170,7 +170,7 @@ LAMathCorrelation::getType(void) const
 bool
 LAMathCorrelation::isTypeOf(object_t id) const
 {
-	return (id == ENTITY_IR_CORRELATION ? true : LAObject::isTypeOf(id));
+	return (id == ENTITY_IR_CORRELATION ? true : AQLObject::isTypeOf(id));
 }
 
 
@@ -178,78 +178,78 @@ LAMathCorrelation::isTypeOf(object_t id) const
     @brief get this Correlation Object-name.
 	@return name
 */
-const LADataString&	
+const AQLDataString&	
 LAMathCorrelation::getName() const	
 {
-	return dynamic_cast<const LADataString&>(mpName->get());
+	return dynamic_cast<const AQLDataString&>(mpName->get());
 }
 /*!
     @brief get this Correlation Object-name.The setting of name is also possible.
 	@return name
 */
-LADataString&	
+AQLDataString&	
 LAMathCorrelation::getName()
 {
-	return dynamic_cast<LADataString&>(mpName->get());
+	return dynamic_cast<AQLDataString&>(mpName->get());
 }
 
 /*!
     @brief get interpolation method
 	@return interpolation method
 */
-const LAPriceDataInterpolation&
+const AQLPriceDataInterpolation&
 LAMathCorrelation::getInterpolation() const
 {
-	return dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get());
+	return dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get());
 }
 
 /*!
     @brief get interpolation method. The setting of interpolation method is also possible. 
 	@return interpolation method
 */
-LAPriceDataInterpolation&
+AQLPriceDataInterpolation&
 LAMathCorrelation::getInterpolation()
 {
-	return dynamic_cast<LAPriceDataInterpolation&>(mpInter->get());
+	return dynamic_cast<AQLPriceDataInterpolation&>(mpInter->get());
 }
 
 /*!
     @brief get multi volatility flag
 	@return multi volatility flag
 */
-const LADataBool&
+const AQLDataBool&
 LAMathCorrelation::getIsMultiVol() const
 {
-	return dynamic_cast<const LADataBool&>(mpIsMultiVol->get());
+	return dynamic_cast<const AQLDataBool&>(mpIsMultiVol->get());
 }
 
 /*!
     @brief get multi volatility or not. The setting of multi volatility flag is also possible. 
 	@return multi volatility flag
 */
-LADataBool&
+AQLDataBool&
 LAMathCorrelation::getIsMultiVol()
 {
-	return dynamic_cast<LADataBool&>(mpIsMultiVol->get());
+	return dynamic_cast<AQLDataBool&>(mpIsMultiVol->get());
 }
 
 /*!
     @brief get T (rate reset time) grid
 	@return T (rate reset time) grid
 */
-const LADataDoubles&
+const AQLDataDoubles&
 LAMathCorrelation::getTGrid() const
 {
-	return dynamic_cast<const LADataDoubles&>(mpGrid_T->get());
+	return dynamic_cast<const AQLDataDoubles&>(mpGrid_T->get());
 }
 /*!
     @brief get T (rate reset time) grid. The setting of T grid is also possible. 
 	@return T (rate reset time) grid
 */
-LADataDoubles&
+AQLDataDoubles&
 LAMathCorrelation::getTGrid()
 {
-	return dynamic_cast<LADataDoubles&>(mpGrid_T->get());
+	return dynamic_cast<AQLDataDoubles&>(mpGrid_T->get());
 }
 
 /*!
@@ -257,20 +257,20 @@ LAMathCorrelation::getTGrid()
 
 	@return Optimize Weight
 */
-const LADataDoubleMatrix&	
+const AQLDataDoubleMatrix&	
 LAMathCorrelation::getOptWeight() const	
 {
-	return dynamic_cast<const LADataDoubleMatrix&>(mpOptWeight->get());
+	return dynamic_cast<const AQLDataDoubleMatrix&>(mpOptWeight->get());
 }
 /*!
     @brief get Optimize Weight.
 
 	@return Optimize Weight
 */
-LADataDoubleMatrix&	
+AQLDataDoubleMatrix&	
 LAMathCorrelation::getOptWeight()
 {
-	return dynamic_cast<LADataDoubleMatrix&>(mpOptWeight->get());
+	return dynamic_cast<AQLDataDoubleMatrix&>(mpOptWeight->get());
 }
 
 /*!
@@ -278,10 +278,10 @@ LAMathCorrelation::getOptWeight()
 
     @return cor_factors as double matrix
 */
-const LADataDoubleMatrix&
+const AQLDataDoubleMatrix&
 LAMathCorrelation::getCorFactors() const
 {
-    return dynamic_cast<LADataDoubleMatrix&>(mpCorFactors->get());
+    return dynamic_cast<AQLDataDoubleMatrix&>(mpCorFactors->get());
 }
 
 /*!
@@ -289,10 +289,10 @@ LAMathCorrelation::getCorFactors() const
 
     @return cor_factors as double matrix
 */
-LADataDoubleMatrix&
+AQLDataDoubleMatrix&
 LAMathCorrelation::getCorFactors()
 {
-    return dynamic_cast<LADataDoubleMatrix&>(mpCorFactors->get());
+    return dynamic_cast<AQLDataDoubleMatrix&>(mpCorFactors->get());
 }
 
 /*!
@@ -300,10 +300,10 @@ LAMathCorrelation::getCorFactors()
 
 @return extra grid_T flag as bool vector
 */
-const LADataBools&
+const AQLDataBools&
 LAMathCorrelation::getIsExtraTGrid() const
 {
-	return dynamic_cast<LADataBools&>(mpIsExtraGrid_T->get());
+	return dynamic_cast<AQLDataBools&>(mpIsExtraGrid_T->get());
 }
 
 /*!
@@ -311,10 +311,10 @@ LAMathCorrelation::getIsExtraTGrid() const
 
 @return extra grid_T flag as bool vector
 */
-LADataBools&
+AQLDataBools&
 LAMathCorrelation::getIsExtraTGrid()
 {
-	return dynamic_cast<LADataBools&>(mpIsExtraGrid_T->get());
+	return dynamic_cast<AQLDataBools&>(mpIsExtraGrid_T->get());
 }
 
 /*!
@@ -323,18 +323,18 @@ LAMathCorrelation::getIsExtraTGrid()
     @return correlation as function matrix
 */
 
-vector<vector<LAFunctionBase*> >
+vector<vector<AQLFunctionBase*> >
 LAMathCorrelation::getCorrelationFunc() const
 {
-	bool isCorInput = dynamic_cast<LADataBool&>(mpIsCorInput->get()).get();	
+	bool isCorInput = dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).get();	
 	if (!isCorInput)//Factor Loading input
 		return calcCorrelationFromFactorLoading();
 	else
 	{
-		unsigned int bi = dynamic_cast<LADataInt&>(mpFactorNum_before->get()).get();
+		unsigned int bi = dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).get();
 		if (mpFactorNum_after->isDefined() && !mpFactorNum_after->isNull())
 		{
-			unsigned int ai = dynamic_cast<LADataInt&>(mpFactorNum_after->get()).get();
+			unsigned int ai = dynamic_cast<AQLDataInt&>(mpFactorNum_after->get()).get();
 			if (ai != bi)//factor reduction
 				return calcCorrelationFromFactorLoading();
 		}
@@ -353,24 +353,24 @@ LAMathCorrelation::getCorrelationFunc() const
 vector<DoubleMatrix>
 LAMathCorrelation::getFactorLoading(const DoubleArray& grid_t) const
 {
-	bool isCorInput = dynamic_cast<LADataBool&>(mpIsCorInput->get()).get();	
-	bool isMultiVol = dynamic_cast<const LADataBool&>(mpIsMultiVol->get()).get();	
+	bool isCorInput = dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).get();	
+	bool isMultiVol = dynamic_cast<const AQLDataBool&>(mpIsMultiVol->get()).get();	
 
-	unsigned int ai = dynamic_cast<LADataInt&>(mpFactorNum_after->get()).get();
-	unsigned int bi = dynamic_cast<LADataInt&>(mpFactorNum_before->get()).get();
+	unsigned int ai = dynamic_cast<AQLDataInt&>(mpFactorNum_after->get()).get();
+	unsigned int bi = dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).get();
 
 	
 
 	UintArray size_array(bi, grid_t.size());
 	if (!isMultiVol)
 	{
-		DoubleArray grid_T = dynamic_cast<const LADataDoubles&>(mpGrid_T->get()).get();	
+		DoubleArray grid_T = dynamic_cast<const AQLDataDoubles&>(mpGrid_T->get()).get();	
 		if (grid_T.at(0) == 0.0) grid_T.erase(grid_T.begin());
 		
 		if (grid_T.size() != bi)
 		{
 			//error
-			throw LACoreInvalidData("Grid_T size must be same as FactorNumBeforeReduction", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Grid_T size must be same as FactorNumBeforeReduction", __FILE__, __LINE__);
 		}
 		
 		for (unsigned int i = 0; i < bi; i++)
@@ -398,20 +398,20 @@ LAMathCorrelation::getFactorLoading(const DoubleArray& grid_t) const
 		if (mpFactorLoading->isNull())
 		{
 			//error
-			throw LACoreInvalidData("Factor Loading is not calculated yet", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Factor Loading is not calculated yet", __FILE__, __LINE__);
 		}
 		
-		const DoubleMatrix& mat = dynamic_cast<const LADataDoubleMatrix&>(mpFactorLoading->get()).get();
-		LA1DDataSet method;
-		const LAInterpolationBase& inter = dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).getMethod();
+		const DoubleMatrix& mat = dynamic_cast<const AQLDataDoubleMatrix&>(mpFactorLoading->get()).get();
+		AQL1DDataSet method;
+		const AQLInterpolationBase& inter = dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).getMethod();
 		method.setInterpolation(inter);
 
 		DoubleArray timegrid;
 		if (!mpGrid_t->isNull())
-			timegrid = dynamic_cast<const LADataDoubles&>(mpGrid_t->get()).get();	
+			timegrid = dynamic_cast<const AQLDataDoubles&>(mpGrid_t->get()).get();	
 		else
 		{
-			timegrid = dynamic_cast<const LADataDoubles&>(mpGrid_T->get()).get();
+			timegrid = dynamic_cast<const AQLDataDoubles&>(mpGrid_T->get()).get();
 			if (timegrid[0] != 0.0) timegrid.insert(timegrid.begin(), 0.0);
 		}
 		for (unsigned int i = 0; i < bi; i++)
@@ -431,7 +431,7 @@ LAMathCorrelation::getFactorLoading(const DoubleArray& grid_t) const
 	//factor loading input case
 	if (!mpFactorLoading->isNull())//data case
 	{
-		const DoubleMatrix& mat = dynamic_cast<const LADataDoubleMatrix&>(mpFactorLoading->get()).get();
+		const DoubleMatrix& mat = dynamic_cast<const AQLDataDoubleMatrix&>(mpFactorLoading->get()).get();
 		if (mat.back().size() == 1)
 		{
 			for (unsigned int i = 0; i < bi; i++)
@@ -441,15 +441,15 @@ LAMathCorrelation::getFactorLoading(const DoubleArray& grid_t) const
 		}
 		else
 		{
-			LA1DDataSet method;
-			const LAInterpolationBase& inter = dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).getMethod();
+			AQL1DDataSet method;
+			const AQLInterpolationBase& inter = dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).getMethod();
 			method.setInterpolation(inter);
 			DoubleArray data_grid_t;	
 			if (!mpGrid_t->isNull())
-				data_grid_t = dynamic_cast<const LADataDoubles&>(mpGrid_t->get()).get();	
+				data_grid_t = dynamic_cast<const AQLDataDoubles&>(mpGrid_t->get()).get();	
 			else
 			{
-				data_grid_t = dynamic_cast<const LADataDoubles&>(mpGrid_T->get()).get();
+				data_grid_t = dynamic_cast<const AQLDataDoubles&>(mpGrid_T->get()).get();
 				if (data_grid_t[0] != 0.0) data_grid_t.insert(data_grid_t.begin(), 0.0);
 			}			
 			for (unsigned int i = 0; i < bi; i++)
@@ -465,11 +465,11 @@ LAMathCorrelation::getFactorLoading(const DoubleArray& grid_t) const
 	}
 	else
 	{
-		const LAPriceDataFunctions& attr = dynamic_cast<const LAPriceDataFunctions&>(mpFunctions->get());
+		const AQLPriceDataFunctions& attr = dynamic_cast<const AQLPriceDataFunctions&>(mpFunctions->get());
 		for (unsigned int i = 0; i < bi; i++)
 			for (unsigned int j = 0; j < ai; j++)
 			{
-				const LAFunctionBase& method = attr[i * ai + j];
+				const AQLFunctionBase& method = attr[i * ai + j];
 				
 				for (unsigned int k = 0; k < size_array[i]; k++)
 					ret[i][j][k] = method(grid_t[k]);
@@ -491,17 +491,17 @@ LAMathCorrelation::getFactorLoading(const DoubleArray& grid_t) const
 void
 LAMathCorrelation::setFactorLoading(const DoubleArray& grid_t, const vector<DoubleMatrix>& loading)
 {
-	dynamic_cast<LADataBool&>(mpIsCorInput->get()).set(false);
-	dynamic_cast<LADataBool&>(mpIsDataInput->get()).set(true);
-	dynamic_cast<LADataInt&>(mpFactorNum_before->get()).set(loading.size());
-	dynamic_cast<LADataInt&>(mpFactorNum_after->get()).set(loading[0].size());
-	dynamic_cast<LADataDoubles&>(mpGrid_t->get()).set(grid_t);
+	dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).set(false);
+	dynamic_cast<AQLDataBool&>(mpIsDataInput->get()).set(true);
+	dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).set(loading.size());
+	dynamic_cast<AQLDataInt&>(mpFactorNum_after->get()).set(loading[0].size());
+	dynamic_cast<AQLDataDoubles&>(mpGrid_t->get()).set(grid_t);
 	
 	DoubleMatrix mat(loading.size() * loading[0].size());
 	for (unsigned int i = 0; i < loading.size(); i++)
 		for (unsigned int j = 0; j < loading[i].size(); j++)
 			mat[i * loading[0].size() + j] = loading[i][j];		
-	dynamic_cast<LADataDoubleMatrix&>(mpFactorLoading->get()).set(mat);
+	dynamic_cast<AQLDataDoubleMatrix&>(mpFactorLoading->get()).set(mat);
 	
 	mpFunctions->convertFromString(NULL_STR);
 }
@@ -514,14 +514,14 @@ LAMathCorrelation::setFactorLoading(const DoubleArray& grid_t, const vector<Doub
 void
 LAMathCorrelation::setFactorLoading(const DoubleMatrix& loading)
 {
-	dynamic_cast<LADataBool&>(mpIsCorInput->get()).set(false);
-	dynamic_cast<LADataBool&>(mpIsDataInput->get()).set(true);
-	dynamic_cast<LADataInt&>(mpFactorNum_before->get()).set(loading.size());
-	dynamic_cast<LADataInt&>(mpFactorNum_after->get()).set(loading[0].size());
-	dynamic_cast<LADataDoubleMatrix&>(mpCorFactors->get()).set(loading);
+	dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).set(false);
+	dynamic_cast<AQLDataBool&>(mpIsDataInput->get()).set(true);
+	dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).set(loading.size());
+	dynamic_cast<AQLDataInt&>(mpFactorNum_after->get()).set(loading[0].size());
+	dynamic_cast<AQLDataDoubleMatrix&>(mpCorFactors->get()).set(loading);
 	
 	DoubleMatrix mat(loading.size() * loading[0].size());
-	bool isMultiVol = dynamic_cast<const LADataBool&>(mpIsMultiVol->get()).get();	
+	bool isMultiVol = dynamic_cast<const AQLDataBool&>(mpIsMultiVol->get()).get();	
 	if (isMultiVol)
 	{
 		for (unsigned int i = 0; i < loading.size(); i++)
@@ -541,7 +541,7 @@ LAMathCorrelation::setFactorLoading(const DoubleMatrix& loading)
 		}
 		mpGrid_t->convertFromString(NULL_STR);
 	}
-	dynamic_cast<LADataDoubleMatrix&>(mpFactorLoading->get()).set(mat);
+	dynamic_cast<AQLDataDoubleMatrix&>(mpFactorLoading->get()).set(mat);
 	
 	mpFunctions->convertFromString(NULL_STR);
 }
@@ -552,23 +552,23 @@ LAMathCorrelation::setFactorLoading(const DoubleMatrix& loading)
 
 */
 void
-LAMathCorrelation::setFactorLoading(const vector<vector<LAFunctionBase*> >& loading)
+LAMathCorrelation::setFactorLoading(const vector<vector<AQLFunctionBase*> >& loading)
 {
-	dynamic_cast<LADataBool&>(mpIsCorInput->get()).set(false);
-	dynamic_cast<LADataBool&>(mpIsDataInput->get()).set(false);
-	dynamic_cast<LADataInt&>(mpFactorNum_before->get()).set(loading.size());
-	dynamic_cast<LADataInt&>(mpFactorNum_after->get()).set(loading[0].size());
+	dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).set(false);
+	dynamic_cast<AQLDataBool&>(mpIsDataInput->get()).set(false);
+	dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).set(loading.size());
+	dynamic_cast<AQLDataInt&>(mpFactorNum_after->get()).set(loading[0].size());
 	
-	LAPriceDataFunctions& attr = dynamic_cast<LAPriceDataFunctions&>(mpFunctions->get());
+	AQLPriceDataFunctions& attr = dynamic_cast<AQLPriceDataFunctions&>(mpFunctions->get());
 	attr.clear();
 	for (unsigned int i = 0; i < loading.size(); i++)
 		for (unsigned int j = 0; j < loading[i].size(); j++)
 		{
-			LAString name = getName().get();
+			AQLString name = getName().get();
 			name += "_";
-			name += LADataInt(i).convertToString();
+			name += AQLDataInt(i).convertToString();
 			name += "_";
-			name += LADataInt(j).convertToString();
+			name += AQLDataInt(j).convertToString();
 			attr.push_back(loading[i][j], name);
 		}
 
@@ -585,16 +585,16 @@ LAMathCorrelation::setFactorLoading(const vector<vector<LAFunctionBase*> >& load
 void
 LAMathCorrelation::setCorrelation(const DoubleArray& grid_t, const vector<DoubleMatrix>& cor)
 {
-	dynamic_cast<LADataBool&>(mpIsCorInput->get()).set(true);
-	dynamic_cast<LADataBool&>(mpIsDataInput->get()).set(true);
-	dynamic_cast<LADataInt&>(mpFactorNum_before->get()).set(cor.size());
-	dynamic_cast<LADataDoubles&>(mpGrid_t->get()).set(grid_t);
+	dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).set(true);
+	dynamic_cast<AQLDataBool&>(mpIsDataInput->get()).set(true);
+	dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).set(cor.size());
+	dynamic_cast<AQLDataDoubles&>(mpGrid_t->get()).set(grid_t);
 
 	DoubleMatrix mat(cor.size() * cor.size());
 	for (unsigned int i = 0; i < cor.size(); i++)
 		for (unsigned int j = 0; j < cor[i].size(); j++)
 			mat[i * cor.size() + j] = cor[i][j];		
-	dynamic_cast<LADataDoubleMatrix&>(mpCorrelation->get()).set(mat);
+	dynamic_cast<AQLDataDoubleMatrix&>(mpCorrelation->get()).set(mat);
 
 	mpFunctions->convertFromString(NULL_STR);
 	mpFactorLoading->convertFromString(NULL_STR);
@@ -609,15 +609,15 @@ LAMathCorrelation::setCorrelation(const DoubleArray& grid_t, const vector<Double
 void
 LAMathCorrelation::setCorrelation(const DoubleMatrix& cor)
 {
-	dynamic_cast<LADataBool&>(mpIsCorInput->get()).set(true);
-	dynamic_cast<LADataBool&>(mpIsDataInput->get()).set(true);
-	dynamic_cast<LADataInt&>(mpFactorNum_before->get()).set(cor.size());
+	dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).set(true);
+	dynamic_cast<AQLDataBool&>(mpIsDataInput->get()).set(true);
+	dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).set(cor.size());
 
 	DoubleMatrix mat(cor.size() * cor.size());
 	for (unsigned int i = 0; i < cor.size(); i++)
 		for (unsigned int j = 0; j < cor[i].size(); j++)
 			mat[i * cor.size() + j].push_back(cor[i][j]);
-	dynamic_cast<LADataDoubleMatrix&>(mpCorrelation->get()).set(mat);
+	dynamic_cast<AQLDataDoubleMatrix&>(mpCorrelation->get()).set(mat);
 
 	mpGrid_t->convertFromString(NULL_STR);
 	mpFunctions->convertFromString(NULL_STR);
@@ -632,22 +632,22 @@ LAMathCorrelation::setCorrelation(const DoubleMatrix& cor)
 
 */
 void
-LAMathCorrelation::setCorrelation(const vector<vector<LAFunctionBase*> >& cor)
+LAMathCorrelation::setCorrelation(const vector<vector<AQLFunctionBase*> >& cor)
 {
-	dynamic_cast<LADataBool&>(mpIsCorInput->get()).set(true);
-	dynamic_cast<LADataBool&>(mpIsDataInput->get()).set(false);
-	dynamic_cast<LADataInt&>(mpFactorNum_before->get()).set(cor.size());
+	dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).set(true);
+	dynamic_cast<AQLDataBool&>(mpIsDataInput->get()).set(false);
+	dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).set(cor.size());
 
-	LAPriceDataFunctions& attr = dynamic_cast<LAPriceDataFunctions&>(mpFunctions->get());
+	AQLPriceDataFunctions& attr = dynamic_cast<AQLPriceDataFunctions&>(mpFunctions->get());
 	attr.clear();
 	for (unsigned int i = 0; i < cor.size(); i++)
 		for (unsigned int j = 0; j < cor[i].size(); j++)
 		{
-			LAString name = getName().get();
+			AQLString name = getName().get();
 			name += "_";
-			name += LADataInt(i).convertToString();
+			name += AQLDataInt(i).convertToString();
 			name += "_";
-			name += LADataInt(j).convertToString();
+			name += AQLDataInt(j).convertToString();
 			attr.push_back(cor[i][j], name);
 		}
 
@@ -662,14 +662,14 @@ LAMathCorrelation::setCorrelation(const vector<vector<LAFunctionBase*> >& cor)
 
 */
 void
-LAMathCorrelation::setCorrelation(LAFunctionBase* cor)
+LAMathCorrelation::setCorrelation(AQLFunctionBase* cor)
 {
-	dynamic_cast<LADataBool&>(mpIsCorInput->get()).set(true);
-	dynamic_cast<LADataBool&>(mpIsDataInput->get()).set(false);
+	dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).set(true);
+	dynamic_cast<AQLDataBool&>(mpIsDataInput->get()).set(false);
 
-	LAPriceDataFunctions& attr = dynamic_cast<LAPriceDataFunctions&>(mpFunctions->get());
+	AQLPriceDataFunctions& attr = dynamic_cast<AQLPriceDataFunctions&>(mpFunctions->get());
 	attr.clear();
-	LAString name = getName().get();
+	AQLString name = getName().get();
 	name += "_0_0";		
 	attr.push_back(cor, name);
 
@@ -687,15 +687,15 @@ LAMathCorrelation::setCorrelation(LAFunctionBase* cor)
 void
 LAMathCorrelation::setCorrelation(unsigned int factornum)
 {
-	dynamic_cast<LADataBool&>(mpIsCorInput->get()).set(true);
-	dynamic_cast<LADataBool&>(mpIsDataInput->get()).set(true);
-	dynamic_cast<LADataInt&>(mpFactorNum_before->get()).set(factornum);
+	dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).set(true);
+	dynamic_cast<AQLDataBool&>(mpIsDataInput->get()).set(true);
+	dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).set(factornum);
 	
 
 	DoubleMatrix mat(factornum * factornum);
 	for (unsigned int i = 0; i < mat.size(); i++)
 		mat[i].push_back(1.0);
-	dynamic_cast<LADataDoubleMatrix&>(mpCorrelation->get()).set(mat);
+	dynamic_cast<AQLDataDoubleMatrix&>(mpCorrelation->get()).set(mat);
 
 	mpFunctions->convertFromString(NULL_STR);
 	mpFactorLoading->convertFromString(NULL_STR);
@@ -709,25 +709,25 @@ LAMathCorrelation::setCorrelation(unsigned int factornum)
 void
 LAMathCorrelation::calcFactorLoading() const
 {
-	bool isCorInput = dynamic_cast<LADataBool&>(mpIsCorInput->get()).get();	
+	bool isCorInput = dynamic_cast<AQLDataBool&>(mpIsCorInput->get()).get();	
 	if (!isCorInput) return;
 
-	bool isMultiVol = dynamic_cast<const LADataBool&>(mpIsMultiVol->get()).get();	
-	bool isOptim = dynamic_cast<const LADataBool&>(mpIsOptim->get()).get();	
+	bool isMultiVol = dynamic_cast<const AQLDataBool&>(mpIsMultiVol->get()).get();	
+	bool isOptim = dynamic_cast<const AQLDataBool&>(mpIsOptim->get()).get();	
 	
-	unsigned int ai = dynamic_cast<LADataInt&>(mpFactorNum_after->get()).get();
-	unsigned int bi = dynamic_cast<LADataInt&>(mpFactorNum_before->get()).get();
+	unsigned int ai = dynamic_cast<AQLDataInt&>(mpFactorNum_after->get()).get();
+	unsigned int bi = dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).get();
 
 	DoubleArray timegrid;
 	if (!mpGrid_t->isNull())
-		timegrid = dynamic_cast<const LADataDoubles&>(mpGrid_t->get()).get();	
+		timegrid = dynamic_cast<const AQLDataDoubles&>(mpGrid_t->get()).get();	
 	else
 	{
-		timegrid = dynamic_cast<const LADataDoubles&>(mpGrid_T->get()).get();
+		timegrid = dynamic_cast<const AQLDataDoubles&>(mpGrid_T->get()).get();
 		if (timegrid[0] != 0.0) timegrid.insert(timegrid.begin(), 0.0);
 	}
 
-	DoubleArray grid_T = dynamic_cast<const LADataDoubles&>(mpGrid_T->get()).get();	
+	DoubleArray grid_T = dynamic_cast<const AQLDataDoubles&>(mpGrid_T->get()).get();	
 	if (grid_T[0] == 0.0) grid_T.erase(grid_T.begin());		
 	UintArray size_array(bi, timegrid.size());
 	if (!isMultiVol)
@@ -735,7 +735,7 @@ LAMathCorrelation::calcFactorLoading() const
 		if (grid_T.size() != bi)
 		{
 			//error
-			throw LACoreInvalidData("Grid_T size must be same as FactorNumBeforeReduction", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Grid_T size must be same as FactorNumBeforeReduction", __FILE__, __LINE__);
 		}
 
 		unsigned j = 0;
@@ -753,7 +753,7 @@ LAMathCorrelation::calcFactorLoading() const
 	
 	if (!mpCorrelation->isNull())//data case
 	{
-		const DoubleMatrix& mat = dynamic_cast<const LADataDoubleMatrix&>(mpCorrelation->get()).get();
+		const DoubleMatrix& mat = dynamic_cast<const AQLDataDoubleMatrix&>(mpCorrelation->get()).get();
 		if (mat.back().size() == 1) // 2dim input
 		{
 			DoubleMatrix cor(bi);
@@ -788,15 +788,15 @@ LAMathCorrelation::calcFactorLoading() const
 					}
 				}
 			}
-			dynamic_cast<LADataDoubleMatrix&>(mpFactorLoading->get()).set(ret);
+			dynamic_cast<AQLDataDoubleMatrix&>(mpFactorLoading->get()).set(ret);
 			return;
 		}
 	}
 
 	
-	const vector<vector<LAFunctionBase*> >& corfunc = calcCorrelationFromCorrelation();
+	const vector<vector<AQLFunctionBase*> >& corfunc = calcCorrelationFromCorrelation();
 	// for delete memory of corfunc out of scope of this method
-	vector<vector<LACoreFunctionHolder> >  holder(corfunc.size());
+	vector<vector<AQLCoreFunctionHolder> >  holder(corfunc.size());
 	for (unsigned int i = 0; i < corfunc.size(); i++)
 	{
 		holder[i].resize(corfunc[i].size());
@@ -836,7 +836,7 @@ LAMathCorrelation::calcFactorLoading() const
 			for (unsigned int k = 0; k < ai; k++)
 				ret[j * ai + k][i] = loading[j - bi + size][k];
 	}
-	dynamic_cast<LADataDoubleMatrix&>(mpFactorLoading->get()).set(ret);
+	dynamic_cast<AQLDataDoubleMatrix&>(mpFactorLoading->get()).set(ret);
 
 }
 
@@ -847,7 +847,7 @@ LAMathCorrelation::calcFactorLoading() const
 DoubleMatrix
 LAMathCorrelation::calcFactorLoading(const DoubleMatrix& corrMat, const DoubleMatrix& initialValue) const
 {	
-	unsigned int factorNum = dynamic_cast<LADataInt&>(mpFactorNum_after->get()).get();
+	unsigned int factorNum = dynamic_cast<AQLDataInt&>(mpFactorNum_after->get()).get();
 
 	LAMathFactorLoadingFunction method;
 	DoubleMatrix weightMat(corrMat.size(), DoubleArray(corrMat.size(), 1.));
@@ -872,7 +872,7 @@ LAMathCorrelation::calcFactorLoading(const DoubleMatrix& corrMat, const DoubleMa
 		}
 	}
 
-	LAOptimumBFGS bfgs;
+	AQLOptimumBFGS bfgs;
 	bfgs.findMinimum(method, x);
 
 	return LAMathFactorLoadingFunction::fromthitaTob(x, corrMat.size(), factorNum);
@@ -884,55 +884,55 @@ LAMathCorrelation::calcFactorLoading(const DoubleMatrix& corrMat, const DoubleMa
     @return Correlation of function matrix
 */
 
-vector<vector<LAFunctionBase*> >
+vector<vector<AQLFunctionBase*> >
 LAMathCorrelation::calcCorrelationFromFactorLoading() const
 {
-	unsigned int ai = dynamic_cast<LADataInt&>(mpFactorNum_after->get()).get();
-	unsigned int bi = dynamic_cast<LADataInt&>(mpFactorNum_before->get()).get();
-	vector<vector<LAFunctionBase*> > ret(bi);
+	unsigned int ai = dynamic_cast<AQLDataInt&>(mpFactorNum_after->get()).get();
+	unsigned int bi = dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).get();
+	vector<vector<AQLFunctionBase*> > ret(bi);
 	for (unsigned int i = 0; i < bi; i++)
 		ret[i].resize(bi);
 
-	LAConstant con1(1);
+	AQLConstant con1(1);
 	if (!mpFactorLoading->isNull())
 	{
 		
-		const DoubleMatrix& mat = dynamic_cast<const LADataDoubleMatrix&>(mpFactorLoading->get()).get();
+		const DoubleMatrix& mat = dynamic_cast<const AQLDataDoubleMatrix&>(mpFactorLoading->get()).get();
 		if (mat.back().size() == 1)
 		{
 			for (unsigned int i = 0; i < bi; i++)
 			{
-				ret[i][i] = dynamic_cast<LAFunctionBase*>(con1.clone());
+				ret[i][i] = dynamic_cast<AQLFunctionBase*>(con1.clone());
 				for (unsigned int j = 0; j < i; j++)
 				{
 					double cor = 0.0;
 					for (unsigned int k = 0; k < ai; k++)
 						cor+= mat[i * ai + k][0] * mat[j * ai + k][0];												
-					LAConstant method(cor);
-					ret[i][j] = dynamic_cast<LAFunctionBase*>(method.clone());
-					ret[j][i] = dynamic_cast<LAFunctionBase*>(method.clone());
+					AQLConstant method(cor);
+					ret[i][j] = dynamic_cast<AQLFunctionBase*>(method.clone());
+					ret[j][i] = dynamic_cast<AQLFunctionBase*>(method.clone());
 				}
 			}
 		}
 		else
 		{		
-			LA1DDataSet method;
+			AQL1DDataSet method;
 			//interpolation
-			const LAInterpolationBase& inter = dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).getMethod();
+			const AQLInterpolationBase& inter = dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).getMethod();
 			method.setInterpolation(inter);		
 			
 			DoubleArray timegrid;
 			if (!mpGrid_t->isNull())
-				timegrid = dynamic_cast<const LADataDoubles&>(mpGrid_t->get()).get();	
+				timegrid = dynamic_cast<const AQLDataDoubles&>(mpGrid_t->get()).get();	
 			else
 			{
-				timegrid = dynamic_cast<const LADataDoubles&>(mpGrid_T->get()).get();
+				timegrid = dynamic_cast<const AQLDataDoubles&>(mpGrid_T->get()).get();
 				if (timegrid[0] != 0.0) timegrid.insert(timegrid.begin(), 0.0);
 			}
 
 			for (unsigned int i = 0; i < bi; i++)
 			{
-				ret[i][i] = dynamic_cast<LAFunctionBase*>(con1.clone());
+				ret[i][i] = dynamic_cast<AQLFunctionBase*>(con1.clone());
 				for (unsigned int j = 0; j < i; j++)
 				{		
 					DoubleArray cor(mat[j * ai].size(), 0);
@@ -946,25 +946,25 @@ LAMathCorrelation::calcCorrelationFromFactorLoading() const
 					DoubleArray _timegrid = timegrid;
 					_timegrid.resize(cor.size());
 					method.set(_timegrid, cor);
-					ret[i][j] = dynamic_cast<LAFunctionBase*>(method.clone());
-					ret[j][i] = dynamic_cast<LAFunctionBase*>(method.clone());
+					ret[i][j] = dynamic_cast<AQLFunctionBase*>(method.clone());
+					ret[j][i] = dynamic_cast<AQLFunctionBase*>(method.clone());
 				}
 			}
 		}
 	}
 	else
 	{
-		const LAPriceDataFunctions& attr = dynamic_cast<const LAPriceDataFunctions&>(mpFunctions->get());
+		const AQLPriceDataFunctions& attr = dynamic_cast<const AQLPriceDataFunctions&>(mpFunctions->get());
 		for (unsigned int i = 0; i < bi; i++)
 		{
-			ret[i][i] = dynamic_cast<LAFunctionBase*>(con1.clone());
+			ret[i][i] = dynamic_cast<AQLFunctionBase*>(con1.clone());
 			for (unsigned int j = 0; j < i; j++)
 			{		
-				LACombinationMethod method;
+				AQLCombinationMethod method;
 				for (unsigned int k = 0; k < ai; k++)
 					method = method + attr[i * ai + k] * attr[j * ai + k];
-				ret[i][j] = dynamic_cast<LAFunctionBase*>(method.clone());
-				ret[j][i] = dynamic_cast<LAFunctionBase*>(method.clone());
+				ret[i][j] = dynamic_cast<AQLFunctionBase*>(method.clone());
+				ret[j][i] = dynamic_cast<AQLFunctionBase*>(method.clone());
 			}
 		}						
 
@@ -979,58 +979,58 @@ LAMathCorrelation::calcCorrelationFromFactorLoading() const
     @return Correlation of function matrix
 	
 */
-vector<vector<LAFunctionBase*> >
+vector<vector<AQLFunctionBase*> >
 LAMathCorrelation::calcCorrelationFromCorrelation() const
 {
-	unsigned int bi = dynamic_cast<LADataInt&>(mpFactorNum_before->get()).get();
-	vector<vector<LAFunctionBase*> > ret(bi);
+	unsigned int bi = dynamic_cast<AQLDataInt&>(mpFactorNum_before->get()).get();
+	vector<vector<AQLFunctionBase*> > ret(bi);
 	for (unsigned int i = 0; i < ret.size(); i++)
 		ret[i].resize(bi);
 	
-	LAConstant con1(1);
+	AQLConstant con1(1);
 	if (!mpCorrelation->isNull())//data case
 	{
-		const DoubleMatrix& mat = dynamic_cast<const LADataDoubleMatrix&>(mpCorrelation->get()).get();
+		const DoubleMatrix& mat = dynamic_cast<const AQLDataDoubleMatrix&>(mpCorrelation->get()).get();
 		if (mat.back().size() == 1) // correlation does not depend t
 		{
-			bool isMultiVol = dynamic_cast<const LADataBool&>(mpIsMultiVol->get()).get();	
+			bool isMultiVol = dynamic_cast<const AQLDataBool&>(mpIsMultiVol->get()).get();	
 			if (isMultiVol)
 			{
-				LAConstant method;
+				AQLConstant method;
 				for (unsigned int i = 0; i < ret.size(); i++)
 				{
-					ret[i][i] = dynamic_cast<LAFunctionBase*>(con1.clone());
+					ret[i][i] = dynamic_cast<AQLFunctionBase*>(con1.clone());
 					for (unsigned int j = 0; j < i; j++)
 					{
 						method.set(mat[i * bi + j][0]);
-						ret[i][j] = dynamic_cast<LAFunctionBase*>(method.clone()); 
-						ret[j][i] = dynamic_cast<LAFunctionBase*>(method.clone()); 
+						ret[i][j] = dynamic_cast<AQLFunctionBase*>(method.clone()); 
+						ret[j][i] = dynamic_cast<AQLFunctionBase*>(method.clone()); 
 					}
 				}
 			}
 			else
 			{
-				LAConstant con_func;
-				LA1DDataSet method;
+				AQLConstant con_func;
+				AQL1DDataSet method;
 				//interpolation
-				const LAInterpolationBase& inter = dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).getMethod();
+				const AQLInterpolationBase& inter = dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).getMethod();
 				method.setInterpolation(inter);
 				
 				//time grid
 				DoubleArray time;
-				time = dynamic_cast<const LADataDoubles&>(mpGrid_T->get()).get();
+				time = dynamic_cast<const AQLDataDoubles&>(mpGrid_T->get()).get();
 				if (time[0] != 0.0) time.insert(time.begin(), 0.0);
 							
 				for (unsigned int i = 0; i < ret.size(); i++)
 				{
-					ret[i][i] = dynamic_cast<LAFunctionBase*>(con1.clone());
+					ret[i][i] = dynamic_cast<AQLFunctionBase*>(con1.clone());
 					for (unsigned int j = 0; j < i; j++)
 					{
 						if (j == 0)
 						{
 							con_func.set(mat[i * bi + j][0]);
-							ret[i][j] = dynamic_cast<LAFunctionBase*>(con_func.clone()); 
-							ret[j][i] = dynamic_cast<LAFunctionBase*>(con_func.clone()); 
+							ret[i][j] = dynamic_cast<AQLFunctionBase*>(con_func.clone()); 
+							ret[j][i] = dynamic_cast<AQLFunctionBase*>(con_func.clone()); 
 							continue;
 						}
 						
@@ -1043,8 +1043,8 @@ LAMathCorrelation::calcCorrelationFromCorrelation() const
 						method.set(_time, data);
 											
 						
-						ret[i][j] = dynamic_cast<LAFunctionBase*>(method.clone()); 
-						ret[j][i] = dynamic_cast<LAFunctionBase*>(method.clone()); 
+						ret[i][j] = dynamic_cast<AQLFunctionBase*>(method.clone()); 
+						ret[j][i] = dynamic_cast<AQLFunctionBase*>(method.clone()); 
 					}
 				}					
 			
@@ -1052,24 +1052,24 @@ LAMathCorrelation::calcCorrelationFromCorrelation() const
 		}
 		else
 		{
-			LA1DDataSet method;
+			AQL1DDataSet method;
             //interpolation
-			const LAInterpolationBase& inter = dynamic_cast<const LAPriceDataInterpolation&>(mpInter->get()).getMethod();
+			const AQLInterpolationBase& inter = dynamic_cast<const AQLPriceDataInterpolation&>(mpInter->get()).getMethod();
 			method.setInterpolation(inter);
 			
 			//time grid
 			DoubleArray time;
 			if (!mpGrid_t->isNull())
-				time = dynamic_cast<const LADataDoubles&>(mpGrid_t->get()).get();	
+				time = dynamic_cast<const AQLDataDoubles&>(mpGrid_t->get()).get();	
 			else
 			{
-				time = dynamic_cast<const LADataDoubles&>(mpGrid_T->get()).get();
+				time = dynamic_cast<const AQLDataDoubles&>(mpGrid_T->get()).get();
 				if (time[0] != 0.0) time.insert(time.begin(), 0.0);
 			}			
 			
 			for (unsigned int i = 0; i < ret.size(); i++)
 			{
-				ret[i][i] = dynamic_cast<LAFunctionBase*>(con1.clone());
+				ret[i][i] = dynamic_cast<AQLFunctionBase*>(con1.clone());
 				for (unsigned int j = 0; j < i; j++)
 				{
 					if (mat[i * bi + j].size() < time.size())
@@ -1081,8 +1081,8 @@ LAMathCorrelation::calcCorrelationFromCorrelation() const
 					else
 						method.set(time, mat[i * bi + j]);
 					
-					ret[i][j] = dynamic_cast<LAFunctionBase*>(method.clone()); 
-					ret[j][i] = dynamic_cast<LAFunctionBase*>(method.clone()); 
+					ret[i][j] = dynamic_cast<AQLFunctionBase*>(method.clone()); 
+					ret[j][i] = dynamic_cast<AQLFunctionBase*>(method.clone()); 
 				}
 			}
 
@@ -1091,28 +1091,28 @@ LAMathCorrelation::calcCorrelationFromCorrelation() const
 	}
 	else//function case
 	{
-		const LAPriceDataFunctions& attr = dynamic_cast<const LAPriceDataFunctions&>(mpFunctions->get());
+		const AQLPriceDataFunctions& attr = dynamic_cast<const AQLPriceDataFunctions&>(mpFunctions->get());
 		if (attr.getSize() == 1)//f(t,T1,T2) case
 		{
-			DoubleArray grid_T = dynamic_cast<const LADataDoubles&>(mpGrid_T->get()).get();	
+			DoubleArray grid_T = dynamic_cast<const AQLDataDoubles&>(mpGrid_T->get()).get();	
 			if (grid_T[0] == 0.0) grid_T.erase(grid_T.begin());
 			if (grid_T.size() != bi)
 			{
 				//error
-				throw LACoreInvalidData("Grid_T is something wrong", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Grid_T is something wrong", __FILE__, __LINE__);
 			}
 			DoubleArray tmp(3);
 			for (unsigned int i = 0; i < bi; i++)
 			{
-				ret[i][i] = dynamic_cast<LAFunctionBase*>(con1.clone());
+				ret[i][i] = dynamic_cast<AQLFunctionBase*>(con1.clone());
 				for (unsigned int j = 0; j < i; j++)
 				{
 					tmp[1] = grid_T[i];
 					tmp[2] = grid_T[j];
-					LAFunctionBase& method = *dynamic_cast<LAFunctionBase*>(attr[0].clone());
+					AQLFunctionBase& method = *dynamic_cast<AQLFunctionBase*>(attr[0].clone());
 					method(0, tmp);
 					ret[i][j] = &method;
-					ret[j][i] = dynamic_cast<LAFunctionBase*>(method.clone());
+					ret[j][i] = dynamic_cast<AQLFunctionBase*>(method.clone());
 				}			
 			}
 		
@@ -1122,11 +1122,11 @@ LAMathCorrelation::calcCorrelationFromCorrelation() const
 			if (attr.getSize() != bi * bi)
 			{
 				//error
-				throw LACoreInvalidData("functions element size is not right", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("functions element size is not right", __FILE__, __LINE__);
 			}
 			for (unsigned int i = 0; i < bi; i++)
 				for (unsigned int j = 0; j < bi; j++)
-					ret[i][j] = dynamic_cast<LAFunctionBase*>(attr[i * bi + j].clone());
+					ret[i][j] = dynamic_cast<AQLFunctionBase*>(attr[i * bi + j].clone());
 		}
 	}
 
@@ -1146,7 +1146,7 @@ LAMathCorrelation::calcCorrelationFromCorrelation() const
 void
 LAMathCorrelation::calcPCA(const DoubleMatrix& cor, DoubleMatrix& vec, DoubleArray& val, unsigned int factornum) const
 {
-	LAMatrix mat(cor), mvec, mval;
+	AQLMatrix mat(cor), mvec, mval;
     DoubleMatrix tempvec; 
 	DoubleArray tempval;
 
@@ -1165,7 +1165,7 @@ LAMathCorrelation::calcPCA(const DoubleMatrix& cor, DoubleMatrix& vec, DoubleArr
 	}
 	
 	if (factornum > cor.size())
-		throw LACoreInvalidData("factornumber is bigger than correlation size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("factornumber is bigger than correlation size", __FILE__, __LINE__);
 
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 	UintArray num(factornum);
@@ -1220,8 +1220,8 @@ LAMathCorrelation::calcFactorLoading(const DoubleMatrix& cor, DoubleMatrix& load
 	loading.clear();
 	if(factornum > cor.size())
 	{
-		LAMatrix mcor(cor), mat;
-		mat = LACholeskyDecompSC::choleskyDecompositionSC(mcor);
+		AQLMatrix mcor(cor), mat;
+		mat = AQLCholeskyDecompSC::choleskyDecompositionSC(mcor);
 		loading.resize(cor.size());
 		for (i = 0; i < cor.size(); i++)
 		{
@@ -1237,9 +1237,9 @@ LAMathCorrelation::calcFactorLoading(const DoubleMatrix& cor, DoubleMatrix& load
 		DoubleArray val;
 		calcPCA(cor, vec, val, factornum);
 
-		LADataDoubles& attrEVal = dynamic_cast<LADataDoubles&>(mpEigenValues->get()); 
+		AQLDataDoubles& attrEVal = dynamic_cast<AQLDataDoubles&>(mpEigenValues->get()); 
 		attrEVal.set(val);
-		LADataDoubleMatrix& attrEVec = dynamic_cast<LADataDoubleMatrix&>(mpEigenVectors->get()); 
+		AQLDataDoubleMatrix& attrEVec = dynamic_cast<AQLDataDoubleMatrix&>(mpEigenVectors->get()); 
 		attrEVec.set(vec);
 
 		i = val.size();
@@ -1266,7 +1266,7 @@ LAMathCorrelation::calcFactorLoading(const DoubleMatrix& cor, DoubleMatrix& load
 					y[j] = 1.0;
 					wmat[i] = y;
 				}
-			LADataDoubleMatrix& attrDM = dynamic_cast<LADataDoubleMatrix&>(mpOptWeight->get()); 
+			AQLDataDoubleMatrix& attrDM = dynamic_cast<AQLDataDoubleMatrix&>(mpOptWeight->get()); 
 			attrDM.set(wmat);
 		}
 
@@ -1279,7 +1279,7 @@ LAMathCorrelation::calcFactorLoading(const DoubleMatrix& cor, DoubleMatrix& load
 		x[0] = 1.0;
 		for (i = 1; i < x.size(); i++) x[i] = x[i - 1] + 1.0; 
 
-		LAOptimumBFGS bfgs;
+		AQLOptimumBFGS bfgs;
 		bfgs.findMinimum(method, x);
 
 		DoubleMatrix b = LAMathFactorLoadingFunction::fromthitaTob(x, cor.size(), factornum);
@@ -1302,7 +1302,7 @@ LAMathCorrelation::calcFactorLoading(const DoubleMatrix& cor, DoubleMatrix& load
     @brief Make copy(clone) of this FX Object object.
     @return pointer of this FX Object object.
 */
-LAObject* 
+AQLObject* 
 LAMathCorrelation::clone() const
 {
     try 
@@ -1312,7 +1312,7 @@ LAMathCorrelation::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -1323,7 +1323,7 @@ LAMathCorrelation::clone() const
 */
 void                
 LAMathCorrelation::remove(
-	const LAString& dataName)
+	const AQLString& dataName)
 {
 	if (dataName == CALIBRATION_DATA_NAME
 		|| dataName == CALIBRATION_DATA_ASOFDATE
@@ -1345,7 +1345,7 @@ LAMathCorrelation::remove(
 	{
 		return; 
 	}
-	LAObject::remove(dataName);
+	AQLObject::remove(dataName);
 }
 
 /*!
@@ -1382,18 +1382,18 @@ LAMathCorrelation::reset(void)
 	@param[in] e copy source
 	@return reference to this object
 */
-LAObject&
+AQLObject&
 LAMathCorrelation::copy(
-	const LAObject& e)
+	const AQLObject& e)
 {
 	if (this == &e) return *this;
 
-	LAObject::copy(e);
+	AQLObject::copy(e);
 	if (!e.isTypeOf(ENTITY_IR_CORRELATION))
 	{
-		LAString err = "Assignement error for LAMathCorrelation : from ";
-		err += LAString(e.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignement error for LAMathCorrelation : from ";
+		err += AQLString(e.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	mpName			  = &getData(CALIBRATION_DATA_NAME);
@@ -1422,13 +1422,13 @@ LAMathCorrelation::copy(
 	@param[in] name name of certain data
 	@return reference to holder class 
 */
-LADataHolder&
-LAMathCorrelation::add(const LAString& name)
+AQLDataHolder&
+LAMathCorrelation::add(const AQLString& name)
 {
-	LADataInstance* dataInstance = getDataInstance();
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
-	const LADataHolder& dh = dm.getData(name);
-	return LAObject::add(name, dh);
+	AQLDataInstance* dataInstance = getDataInstance();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
+	const AQLDataHolder& dh = dm.getData(name);
+	return AQLObject::add(name, dh);
 }
 
 
@@ -1451,7 +1451,7 @@ LAMathCorrelation::LAMathFactorLoadingFunction::~LAMathFactorLoadingFunction()
     @brief Make copy(clone) of this class
 */
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAMathCorrelation::LAMathFactorLoadingFunction::clone() const
 {
     try 
@@ -1460,7 +1460,7 @@ LAMathCorrelation::LAMathFactorLoadingFunction::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -1472,17 +1472,17 @@ double
 LAMathCorrelation::LAMathFactorLoadingFunction::operator()(const DoubleArray& x) const
 {
 	if (x.size() != mCorr.size() * (mFactornum - 1))
-		throw LACoreInvalidData("parameter size must be Correlation Size * Factor number", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("parameter size must be Correlation Size * Factor number", __FILE__, __LINE__);
 	
 	DoubleArray y(mFactornum);
 	unsigned int i, j;
 	DoubleMatrix dmat = fromthitaTob(x, mCorr.size(), mFactornum);
-	LAMatrix mat(dmat);
+	AQLMatrix mat(dmat);
 	mat = mat * mat.transpose();
 	
 	double ret = 0.0;
     for (i = 0; i < mCorr.size(); i++)
-		for (j = 0; j < mCorr.size(); j++) ret += mWeight[i][j] * LAMath::sqr((mCorr[i][j] - mat[i][j]));;
+		for (j = 0; j < mCorr.size(); j++) ret += mWeight[i][j] * AQLMath::sqr((mCorr[i][j] - mat[i][j]));;
 	
 	return ret;
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LADate.h"
+#include "AQLDate.h"
 
 namespace validation
 {
@@ -9,6 +9,6 @@ namespace validation
     *  @param [in]		ecbDate ECB(European Central Bank) date
     *  @return			The start date of an ECB Swap base on the ecb date
     */
-    LADate tryMirGetECBStartDate( const LADate& ecbDate );
+    AQLDate tryMirGetECBStartDate( const AQLDate& ecbDate );
 
 }

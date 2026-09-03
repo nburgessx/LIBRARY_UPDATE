@@ -16,15 +16,15 @@
 
 #include "LAPriceEventNotExCurChange.h"
 
-#include "LADataHolder.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataFunction.h"
+#include "AQLDataHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathFXEntity.h"
 #include "LAMathDateCalculations.h"
 
@@ -52,7 +52,7 @@ LAPriceEventNotExCurChange::~LAPriceEventNotExCurChange()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceEventNotExCurChange::clone() const    
 {
     try 
@@ -61,7 +61,7 @@ LAPriceEventNotExCurChange::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -97,7 +97,7 @@ LAPriceEventNotExCurChange::getType() const
 	@param[in,out] iter position of nearest payoff from this action expiry date
 */	
 void
-LAPriceEventNotExCurChange::doAction(const LADate& actiondate,
+LAPriceEventNotExCurChange::doAction(const AQLDate& actiondate,
 										double actiontime,
 										vector<PayOffToolHolderVector>& payoff,
 										vector<PayOffToolHolderVector>& extrapayoff,
@@ -107,7 +107,7 @@ LAPriceEventNotExCurChange::doAction(const LADate& actiondate,
 {
 	(void)actiontime; (void)pastaction; (void)futureaction; //20070411--Nagase--gcc
 	PayOffToolHolderIter it;
-	LADate fixingdate;
+	AQLDate fixingdate;
 	if (mIsFixingDate)
 		fixingdate = mFixingDate;
 	else
@@ -154,31 +154,31 @@ LAPriceEventNotExCurChange::doAction(const LADate& actiondate,
     @param[in] isCall call flag(true:call,false:trigger)
 */
 void
-LAPriceEventNotExCurChange::setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+LAPriceEventNotExCurChange::setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall)
 {
 	LAPriceEventBase::setUp(basedate, trade, triggerinfo, payoff, isCall);
 	
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	// notional exchange currency
 	dh = &(triggerinfo.getData(PRICING_CALIBRATION_DATAOTIONALEXCHANGECURRENCY, ISNOTNULL));
-	mCurrency = dynamic_cast<const LADataString&>(dh->get()).get();
+	mCurrency = dynamic_cast<const AQLDataString&>(dh->get()).get();
 
 	// fx
 	dh = &(triggerinfo.getData(PRICING_CALIBRATION_DATAOTIONALEXCHANGEFXRATE, ISNOTNULL));
-	const LADataReference& ref = dynamic_cast<const LADataReference&>(dh->get());
+	const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(dh->get());
 	mpFX = &dynamic_cast<const LAMathFXEntity&>(ref.get().get());	
 
 	// sliding rule and calendar
 	dh = &(triggerinfo.getData(PRICING_DATA_FXRATEFIXINGSLIDINGRULE, ISNOTNULL));
-	mpSlidingRule = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());	
+	mpSlidingRule = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());	
 	if (mpSlidingRule->getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 	{
 		dh = &(triggerinfo.getData(PRICING_DATA_FXRATEFIXINGCALENDAR, ISNOTNULL));
-		mpCalendar = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());		
+		mpCalendar = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());		
 	}
 	else
 		mpCalendar = NULL;
@@ -187,7 +187,7 @@ LAPriceEventNotExCurChange::setUp(const LADate& basedate,
 	dh = &(triggerinfo.getData(PRICING_DATA_FXRATEFIXINGDATE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LADate& date = dynamic_cast<const LADataDate&>(dh->get()).get();
+		const AQLDate& date = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 		if (mpSlidingRule->getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 		mFixingDate = mpSlidingRule->getDate(date, *mpCalendar);
 		mIsFixingDate = true;
@@ -195,13 +195,13 @@ LAPriceEventNotExCurChange::setUp(const LADate& basedate,
 	else
 	{
 		dh = &(triggerinfo.getData(PRICING_DATA_FXRATEFIXINGTERM, ISNOTNULL));
-		mFixingTerm = dynamic_cast<const LADataString&>(dh->get()).get();
+		mFixingTerm = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		mIsFixingDate = false;	
 	}
 
 	// fx rate structure function
-	LADataHolder* _ah = &(triggerinfo.getData(PRICING_DATA_FXRATESTRUCTUREFUNC, ISNOTNULL));
-	mpStructureFunc = &dynamic_cast<LAPriceDataFunction&>(_ah->get()).getFunction();
+	AQLDataHolder* _ah = &(triggerinfo.getData(PRICING_DATA_FXRATESTRUCTUREFUNC, ISNOTNULL));
+	mpStructureFunc = &dynamic_cast<AQLPriceDataFunction&>(_ah->get()).getFunction();
 	
 
 }

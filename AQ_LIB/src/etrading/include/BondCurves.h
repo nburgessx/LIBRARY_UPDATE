@@ -7,7 +7,7 @@
 #include "LabelValueBlock.h"
 #include "CommonConstants.h"
 #include "BondEnumerations.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace etrading
 {
@@ -95,7 +95,7 @@ namespace etrading
 		* @param[in]	couponDate	The date for which the yield is required
 		* @returns		The interpolated yield
 		*/
-		double getYield( const LADate& couponDate ) const;
+		double getYield( const AQLDate& couponDate ) const;
 
 		/* @brief Updates the yield calibration stored in the curve by adding a yield point for the specified pillarDate.
 		*        This method intended to be used by the calibration process when fitting the curve to input bond quotes.
@@ -103,7 +103,7 @@ namespace etrading
 		* @param [in]   bondMaturityDate	The date corresponding to this coupon yield
 		* @param [in]   yield				The estimate of the yield for this curve pillar date
 		*/
-		void setCalibrationPoint( const LADate& bondMaturityDate, const double& yield );
+		void setCalibrationPoint( const AQLDate& bondMaturityDate, const double& yield );
 
 		/* @brief Updates the calibration stored in the curve by adding a discountFactor point for the specified pillar date.
 		*         This method intended to be used by the calibration process when fitting the curve to input bond quotes.
@@ -111,7 +111,7 @@ namespace etrading
 		* @param [in]   bondMaturityDate	The date corresponding to this coupon yield
 		* @param [in]   discountFactor		The discountFactor at the bond curve pillar date
 		*/
-		void setDiscountFactorAtCalibrationPoint(const LADate& bondMaturityDate, const double& discountFactor);
+		void setDiscountFactorAtCalibrationPoint(const AQLDate& bondMaturityDate, const double& discountFactor);
 
 		/* @brief	Returns the bond curve calibration as a matrix.
 		*			Column 0 contains curve pillar dates
@@ -120,7 +120,7 @@ namespace etrading
 		AnyTypeMatrix displayBondCurve() const;
 
 		// Simple data getters
-		LADate getSettlementDate() const;
+		AQLDate getSettlementDate() const;
 
 		YieldCalculationTypeEnum getYieldCalculationTypeEnum() const;
 
@@ -153,7 +153,7 @@ namespace etrading
 		FreeObject freeObject_;
 
 		// The settlementDate to use for bond valuation
-		LADate settlementDate_;
+		AQLDate settlementDate_;
 
 		// The yield Calculation Type ( see BondEnumerations )
 		YieldCalculationTypeEnum yieldCalculationTypeEnum_;
@@ -170,9 +170,9 @@ namespace etrading
 		double spread_;
 
 		// The output from calibration: A map of payment dates and corresponding yields
-		std::map<LADate, double> calibratedYields_;
+		std::map<AQLDate, double> calibratedYields_;
 
-		std::map<LADate, double> calibratedDiscountFactors_;
+		std::map<AQLDate, double> calibratedDiscountFactors_;
 
 		static std::vector<std::string> bond_curve_properties_lvbKeys()
 		{

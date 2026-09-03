@@ -1,7 +1,7 @@
 #pragma once
 
 #include "LAMathVolatilityLMM.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include <memory>
 
 //
@@ -14,7 +14,7 @@ public:
 							   const DoubleVector& paramF,
 							   const DoubleVector& tenorG,
 							   const DoubleVector& G,
-							   std::shared_ptr<LAInterpolationBase> interG,
+							   std::shared_ptr<AQLInterpolationBase> interG,
 							   const DoubleVector& T_fix_special,
 							   const DoubleVector& T_fix,
 							   size_t num_small_step_ = 1
@@ -58,7 +58,7 @@ private:
     DoubleVector mParamF;
     DoubleVector mG;
     DoubleVector mTenorG;
-	std::shared_ptr<LAInterpolationBase> mpInterG;
+	std::shared_ptr<AQLInterpolationBase> mpInterG;
 	
 
     void createCacheVolMatrix( size_t i );

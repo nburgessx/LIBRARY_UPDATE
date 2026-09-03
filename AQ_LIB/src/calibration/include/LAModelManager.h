@@ -21,7 +21,7 @@
 
 
 class LACoreDataService;
-class LAString;
+class AQLString;
 
 //===================== Class Declare MAMasterRegistManager==================================
 /*! 
@@ -37,7 +37,7 @@ public:
 	static MAMasterRegistManager *getInstance(void);
 	//==============================================
 	// create LAModelSetup
-	LAModelSetupBase *createRegister(const LAString &model);
+	LAModelSetupBase *createRegister(const AQLString &model);
 
 private:
 friend class LACoreDataService;

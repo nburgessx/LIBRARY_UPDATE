@@ -162,11 +162,11 @@ namespace etrading
 		std::string accrualDayCount;
 
 		// Fetch the Swap Conventions block from the CDS Swap Generator
-		LAStringMatrix swapConventions = cdsGenerator->viewInputParameters( );
+		AQLStringMatrix swapConventions = cdsGenerator->viewInputParameters( );
 
 		for (size_t i=0; i< swapConventions.size(); i++)
 		{
-			const LAStringVector& row = swapConventions[i];
+			const AQLStringVector& row = swapConventions[i];
 			std::string key( row[0].getCString() );
 			if ( boost::iequals(key, etrading::IRS_KEY::ACCRUALDAYCOUNT ) )
 			{
@@ -185,8 +185,8 @@ namespace etrading
 	LabelValueBlock CreditModel::setupSwapExpressionLVBforCalibration( ) const
 	{
 		// Set up the Swap Expression LVB used for repricing swap calibration instruments
-		LAStringVector keys; 
-		LAStringVector values;
+		AQLStringVector keys; 
+		AQLStringVector values;
 
         keys.reserve(6);
         values.reserve(6);
@@ -212,7 +212,7 @@ namespace etrading
 	* @param [in]   marketDataEnum		The type of marketDate used for calibration
 	* @returns The MarketDataMap
 	*/
-	MarketDataMap CreditModel::loadMarketDataMap( const LADate& referenceDate, const CreditModelEnum marketDataEnum )
+	MarketDataMap CreditModel::loadMarketDataMap( const AQLDate& referenceDate, const CreditModelEnum marketDataEnum )
 	{
 		// Read the market data and perform sanity checks
 		const bool throwIfKeyMissing = false;
@@ -237,7 +237,7 @@ namespace etrading
 		for (size_t i=0; i<numMarketDataRows; i++)
 		{
 			std::string instrumentID;
-			LADate instrumentMaturityDate;
+			AQLDate instrumentMaturityDate;
 
 			// Only process the row if the data in column 0 is non-blank. i.e. trim blank rows
 			std::string dataInColumnZero = marketData[0][i];
@@ -308,17 +308,17 @@ namespace etrading
 	 * @param [in]  cdsMarketDataMap	A map from cds maturity dates to CDS spreads
 	 * @param [in]  cdsSpreadBump		A parallel shift to be applied to all credit spreads
 	 */
-	void CreditModel::calibrateToCDS( const LADate& asOfDate, const MarketDataMap& cdsMarketDataMap, const double cdsSpreadBump )
+	void CreditModel::calibrateToCDS( const AQLDate& asOfDate, const MarketDataMap& cdsMarketDataMap, const double cdsSpreadBump )
 	{
 	
 		// Additional parameters for creating CDS instruments
 		const bool isXccySwap = false;
 		LabelValueBlock swapPropertiesLVB;
-		LAString premiumLegName;
-		LAString protectionLegName;
+		AQLString premiumLegName;
+		AQLString protectionLegName;
 
 		// Calculate the effective date for CDS calibration instruments
-		const LADate effectiveDate = LADateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
+		const AQLDate effectiveDate = LADateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
 		LabelValueBlock swapExpressionLVB( setupSwapExpressionLVBforCalibration(),
                                            IRS_KEY::EFFECTIVE_DATE,
 		                                   std::to_string( static_cast<long long>( LADateScheduleHelpers::getExcelDate(effectiveDate) ) ) );
@@ -332,7 +332,7 @@ namespace etrading
 		// Calibrate to CDSs
 		for ( auto it = cdsMarketDataMap.begin(); it != cdsMarketDataMap.end(); ++it )
 		{
-			const LADate& maturityDate = it->first;
+			const AQLDate& maturityDate = it->first;
 			const CreditMarketData& creditMarketData = it->second;
 
 			AQ_REQUIRE( accrualStartDate_ <= maturityDate, "Invalid Accrual Start Date: The Accrual Start Date cannot be greater than the CDS maturity date" )
@@ -349,7 +349,7 @@ namespace etrading
 			{
 				// This occurs if two CDs maturities are in close proximity with inconsistent prices.
 				// In order to match the CDS price the survival probability is required to increase between maturities, which is impossible.
-				const LADate& cdsMaturity = cdsInstrument->getLeg(0)->getSchedule()->getMaturityDate();
+				const AQLDate& cdsMaturity = cdsInstrument->getLeg(0)->getSchedule()->getMaturityDate();
 				AQ_THROW( "Detected two CDS instruments with clashing maturities and prices. Consider removing the CDS with maturity '"
 							+ std::string( cdsMaturity.stringWithFormat( "DD-MM-YYYY" ).getCString() )
 							+ "' or the earlier CDS." );
@@ -368,10 +368,10 @@ namespace etrading
 			AQ_REQUIRE( bondCurveCollection_.size() > 0, "Please Specify a BondCurveCollection when calibrating to Bond Instruments." );
 		}
 
-		const LADate& settlementDate = asOfDate_;
+		const AQLDate& settlementDate = asOfDate_;
 		for ( auto it = bondMarketDataMap.begin(); it != bondMarketDataMap.end(); ++it )
 		{
-			const LADate& maturityDate = it->first;
+			const AQLDate& maturityDate = it->first;
 			const CreditMarketData& bondMarketData = it->second;
 
 			auto bondInstrument = getBond( bondMarketData.instrumentID );
@@ -420,7 +420,7 @@ namespace etrading
 		bondDiscountCurve_			= modelProperties.getOptionalValueAsString( CREDITMODEL_MODEL_PROPERTIES_KEY::BOND_DISCOUNT_CURVE, "OIS" );
 		bondHasRiskyAccruedInterest_= modelProperties.getOptionalValueAsBool( CREDITMODEL_MODEL_PROPERTIES_KEY::BOND_HAS_RISKY_ACCRUED_INTEREST, true );
 
-        AQ_REQUIRE( accrualStartDate_ != LADate() || immReferenceDate_ != LADate(), "Accrual Start Date Required: We must specify either the AccrualStartDate or the active IMMReferenceDate" )
+        AQ_REQUIRE( accrualStartDate_ != AQLDate() || immReferenceDate_ != AQLDate(), "Accrual Start Date Required: We must specify either the AccrualStartDate or the active IMMReferenceDate" )
 
 		if ( ! boost::iequals( interpolationMethod_, "PiecewiseConstant" ))
 		{
@@ -441,7 +441,7 @@ namespace etrading
 				AQ_THROW( "CDSCurveCollection currency does not match Credit Model currency: '" + curveCurrency + "' vs '" + toString( currency_ ) + "." );
 			}
 
-			const LADate curveAsOfDate = getCurveAsOfDate( cdsCurveCollection_.c_str() );
+			const AQLDate curveAsOfDate = getCurveAsOfDate( cdsCurveCollection_.c_str() );
 			if ( curveAsOfDate != asOfDate_ )
 			{
 				AQ_THROW( "CDSCurveCollection as-of date does not match Credit Model as-of date: '" + curveAsOfDate.stringWithFormat() + "' vs '" + asOfDate_.stringWithFormat() + "." );
@@ -450,7 +450,7 @@ namespace etrading
 
 		if ( bondCurveCollection_.size() > 0 )
 		{
-			const LADate bondCurveAsOfDate = getCurveAsOfDate( bondCurveCollection_.c_str() );
+			const AQLDate bondCurveAsOfDate = getCurveAsOfDate( bondCurveCollection_.c_str() );
 			if ( bondCurveAsOfDate != asOfDate_ )
 			{
 				AQ_THROW( "BondCurveCollection as-of date does not match Credit Model as-of date: '" + bondCurveAsOfDate.stringWithFormat() + "' vs '" + asOfDate_.stringWithFormat() + "." );
@@ -465,9 +465,9 @@ namespace etrading
 	{
 		// Calculate a referenceDate for CDS calibration instruments.
 		// If an accrualStartDate is provided then use this. Otherwise default to the model asOfDate
-		const LADate asOfDate = accrualStartDate_ == LADate() ? asOfDate_ : accrualStartDate_;
+		const AQLDate asOfDate = accrualStartDate_ == AQLDate() ? asOfDate_ : accrualStartDate_;
 		// Use the immReferenceDate data if provided, otherwise use the asOfDate calculated earlier.
-		const LADate referenceDate = immReferenceDate_ == LADate() ? asOfDate : immReferenceDate_;
+		const AQLDate referenceDate = immReferenceDate_ == AQLDate() ? asOfDate : immReferenceDate_;
 
 		// Read the market data, sort maturities in chronological order and perform sanity checks
 		const MarketDataMap cdsMarketDataMap = loadMarketDataMap( referenceDate, CDS_MARKETDATA );
@@ -501,7 +501,7 @@ namespace etrading
 		survivalProbabilitiesOnCalibrationDates_.clear();
 		hazardRatesVector_.clear();
 
-		LADate periodEndDate   = asOfDate_;
+		AQLDate periodEndDate   = asOfDate_;
 		calibrationDates_.push_back( periodEndDate );
 
 		double survivalProbability = 1.0;
@@ -630,14 +630,14 @@ namespace etrading
 	*/
 	LabelValueBlock CreditModel::toLabelValueBlock( const std::string& propertyKey ) const
 	{
-		LAStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
+		AQLStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
 		LabelValueBlock lvb( stringMatrix );
 
 		return lvb;
 	}
 
 	// Calculates the hazardRate for the specified payment date
-	double CreditModel::getHazardRate( const LADate& paymentDate ) const
+	double CreditModel::getHazardRate( const AQLDate& paymentDate ) const
 	{
 		if ( hazardRates_.empty() )
 		{
@@ -685,7 +685,7 @@ namespace etrading
 	* @param [in]   paymentDate	The payment date corresponding to this hazard rate
 	* @param [in]   hazardRate		The estimate of the hazard rate for this payment date
 	*/
-	void CreditModel::setCalibrationPoint( const LADate& paymentDate, const double hazardRate )
+	void CreditModel::setCalibrationPoint( const AQLDate& paymentDate, const double hazardRate )
 	{
 		hazardRates_[ paymentDate ] = hazardRate;
 	}
@@ -698,7 +698,7 @@ namespace etrading
 		for ( auto it = hazardRates_.begin(); it != hazardRates_.end(); ++it)
 		{
 			AnyTypeVector row;
-			const LADate maturityDate = it->first;
+			const AQLDate maturityDate = it->first;
 			const double hazardRate = it->second;
 
 			const int dateAsInt = static_cast<long long> (LADateScheduleHelpers::getExcelDate( maturityDate ));
@@ -722,10 +722,10 @@ namespace etrading
 	 * @param [in]	toDate		The initial date for survival probability calculations
 	 * @param [in]	fromDate	The final date for survival probability calculations
 	 */
-	void CreditModel::validateDates( const LADate& toDate, const LADate& fromDate ) const
+	void CreditModel::validateDates( const AQLDate& toDate, const AQLDate& fromDate ) const
 	{
 		// If fromDate is specified, perform sanity checks
-		if ( fromDate != LADate() )
+		if ( fromDate != AQLDate() )
 		{
 			if ( fromDate  < asOfDate_ )
 			{
@@ -745,14 +745,14 @@ namespace etrading
 	*							This parameter is allowed to be an empty date i.e. an optional paramweter.
 	*  @returns	The survival probability
 	*/
-	double CreditModel::getSurvivalProbability( const LADate& toDate, const LADate& fromDate ) const
+	double CreditModel::getSurvivalProbability( const AQLDate& toDate, const AQLDate& fromDate ) const
 	{
 		validateDates( toDate, fromDate );
 
 		double survivalProbability = getSurvivalProbability( toDate );
 
 		// fromDate is optional: it is OK for it to contain a default empty date
-		if ( fromDate != LADate() )
+		if ( fromDate != AQLDate() )
 		{
 			const double survivalFrom = getSurvivalProbability( fromDate );
 			survivalProbability /= survivalFrom;
@@ -764,7 +764,7 @@ namespace etrading
 	*  @param[in]	toDate	The future date to use in the calculation. Must occur after the model as-of date.
 	*  @returns	The survival probability
 	*/
-	double CreditModel::getSurvivalProbability( const LADate& toDate ) const
+	double CreditModel::getSurvivalProbability( const AQLDate& toDate ) const
 	{
 		if ( hazardRates_.empty() )
 		{
@@ -781,8 +781,8 @@ namespace etrading
 
 		double survivalProbability = 1.0;
 
-		LADate periodBeginDate = asOfDate_;
-		LADate periodEndDate   = asOfDate_;
+		AQLDate periodBeginDate = asOfDate_;
+		AQLDate periodEndDate   = asOfDate_;
 		double hazardRate = std::numeric_limits<double>::quiet_NaN();
 		for (auto it = hazardRates_.begin(); it != hazardRates_.end(); ++it )
 		{
@@ -829,12 +829,12 @@ namespace etrading
 	*
 	*  @returns	The survival probability
 	*/
-	double CreditModel::getDefaultProbability( const LADate& toDate, const LADate& fromDate ) const
+	double CreditModel::getDefaultProbability( const AQLDate& toDate, const AQLDate& fromDate ) const
 	{
 		validateDates( toDate, fromDate );
 
 		// We allow a missing value for 'fromDate'. In this case we default to 'asOfDate'.
-		LADate fromDt = ( fromDate == LADate() ) ? asOfDate_ : fromDate;
+		AQLDate fromDt = ( fromDate == AQLDate() ) ? asOfDate_ : fromDate;
 
 		double defaultProbability = getSurvivalProbability( fromDate ) - getSurvivalProbability( toDate );
 		return defaultProbability;
@@ -846,7 +846,7 @@ namespace etrading
 	*
 	*  @returns		The survival date corresponding to the input survivalProbability.
 	*/
-	LADate CreditModel::getImpliedSurvivalDate( const double targetSurvivalProbability ) const
+	AQLDate CreditModel::getImpliedSurvivalDate( const double targetSurvivalProbability ) const
 	{
 		if ( targetSurvivalProbability == 1.0 )
 		{
@@ -865,14 +865,14 @@ namespace etrading
 
 		const size_t distanceFromFinalCalibrationPoint = std::distance( survivalProbabilitiesOnCalibrationDates_.rbegin(), it );
 		const size_t index = hazardRates_.size() - distanceFromFinalCalibrationPoint;
-		const LADate dateAtBeginningOfPeriod = calibrationDates_[ index ];
+		const AQLDate dateAtBeginningOfPeriod = calibrationDates_[ index ];
 		const double survivalProbabilityAtBeginningOfPeriod = survivalProbabilitiesOnCalibrationDates_[ index ];
 		const double survivalFactor = targetSurvivalProbability / survivalProbabilityAtBeginningOfPeriod;
 		
 		// TODO: Check for extrapolation
 		const double hazardRateForPeriod = ( index  < hazardRatesVector_.size() ) ? hazardRatesVector_[ index ] : hazardRatesVector_[ hazardRatesVector_.size() - 1 ];
 		const double yearFractionForPeriod = - log( survivalFactor ) / hazardRateForPeriod;
-		const LADate impliedSurvivalDate = getDateFromYearFraction( dateAtBeginningOfPeriod, yearFractionForPeriod, accrualDayCount_ );
+		const AQLDate impliedSurvivalDate = getDateFromYearFraction( dateAtBeginningOfPeriod, yearFractionForPeriod, accrualDayCount_ );
 
 		return impliedSurvivalDate;
 	}
@@ -882,12 +882,12 @@ namespace etrading
 	*  @param[out]	parSpread		The par spread implied by the credit model
 	*  @param[out]	riskyAnnuity	The risky annuity implied by the credit model
 	*/
-	void CreditModel::getParSpreadAndRiskyAnnuityForDate( const LADate& maturityDate, double& parSpread, double& riskyAnnuity ) const
+	void CreditModel::getParSpreadAndRiskyAnnuityForDate( const AQLDate& maturityDate, double& parSpread, double& riskyAnnuity ) const
 	{
 		// If an accrualStartDate is provided then use this. Otherwise default to the model asOfDate
-		const LADate asOfDate = accrualStartDate_ == LADate() ? asOfDate_ : accrualStartDate_;
+		const AQLDate asOfDate = accrualStartDate_ == AQLDate() ? asOfDate_ : accrualStartDate_;
 
-		const LADate effectiveDate = LADateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
+		const AQLDate effectiveDate = LADateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), spotBusinessDayAdjustment_.c_str(), spotCalendar_.c_str() );
 
 		// Check if the maturityDate has already passed
 		if (maturityDate <= effectiveDate )
@@ -899,8 +899,8 @@ namespace etrading
 
 		auto cdsInstrument = createCalibrationCDSWithSpecifiedMaturity( effectiveDate, maturityDate );
 
-		LAString premiumLegName		= cdsInstrument->getLeg(0)->getLegName();
-		LAString protectionLegName	= cdsInstrument->getLeg(1)->getLegName();
+		AQLString premiumLegName		= cdsInstrument->getLeg(0)->getLegName();
+		AQLString protectionLegName	= cdsInstrument->getLeg(1)->getLegName();
 
 		parSpread		= cdsInstrument->parSpread( *this, premiumLegName, protectionLegName );
 		riskyAnnuity	= cdsInstrument->riskyAnnuity( *this, premiumLegName );
@@ -914,7 +914,7 @@ namespace etrading
 	*  @param[in]	endDate		The end date of the forward contract
 	*  @returns		The forward spread
 	*/
-	void CreditModel::getForwardSpreadAndRiskyAnnuity( const LADate& startDate, const LADate& endDate, double& forwardSpread, double& riskyAnnuity ) const
+	void CreditModel::getForwardSpreadAndRiskyAnnuity( const AQLDate& startDate, const AQLDate& endDate, double& forwardSpread, double& riskyAnnuity ) const
 	{
 		double parRateStart;
 		double riskyAnnuityStart;
@@ -936,7 +936,7 @@ namespace etrading
 	*  @param[in]	endDate		The date when credit protection ends
 	*  @returns		The credit spread
 	*/
-	double CreditModel::getForwardSpread( const LADate& startDate, const LADate& endDate ) const
+	double CreditModel::getForwardSpread( const AQLDate& startDate, const AQLDate& endDate ) const
 	{
 		AQ_REQUIRE( endDate > startDate, "End Date of forward calculation must occur after Start Date");
 
@@ -957,15 +957,15 @@ namespace etrading
 	*  @param[in]	endDate		The date when credit protection ends
 	*  @returns		The forward credit spread
 	*/
-	double CreditModel::getIndexForwardSpread( const LADate& startDate, const LADate& endDate ) const
+	double CreditModel::getIndexForwardSpread( const AQLDate& startDate, const AQLDate& endDate ) const
 	{
 		// If an accrualStartDate is provided then use this. Otherwise default to the model asOfDate
-		const LADate asOfDate = accrualStartDate_ == LADate() ? asOfDate_ : accrualStartDate_;
+		const AQLDate asOfDate = accrualStartDate_ == AQLDate() ? asOfDate_ : accrualStartDate_;
 
 		// To match BBG, do not make businessDayAdjustment or calendar adjustment
 		const std::string businessDayAdjustment("");
 		const std::string calendar("");
-		const LADate effectiveDate = LADateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), businessDayAdjustment.c_str(), calendar.c_str() );
+		const AQLDate effectiveDate = LADateScheduleHelpers::getDate( asOfDate, spotLag_.c_str(), businessDayAdjustment.c_str(), calendar.c_str() );
 
 		auto cdsIndexStartingImmediately	= createCalibrationCDSWithSpecifiedMaturity( effectiveDate, endDate );
 		auto cdsIndexStartingAtOptionExpiry	= createCalibrationCDSWithSpecifiedMaturity( startDate, endDate );
@@ -999,7 +999,7 @@ namespace etrading
 	* @param[in]	volatility					The volatility of the underlying CDS spread
 	* @returns	The calculated option price
 	*/
-	double CreditModel::getSingleNameKnockoutOptionValue( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const LADate& optionExpiryDate, const LADate& cdsMaturityDate, const double volatility ) const
+	double CreditModel::getSingleNameKnockoutOptionValue( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsMaturityDate, const double volatility ) const
 	{
 		double forwardSpread;
 		double riskyAnnuity;
@@ -1029,7 +1029,7 @@ namespace etrading
 	* @param[in]	forwardSpread				The forward spread at the option expiry date
 	* @returns	The calculated option price
 	*/
-	double CreditModel::getOptionValueFromForward( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const LADate& optionExpiryDate, const LADate& cdsStartDate, const LADate& cdsMaturityDate, const double volatility, const double forwardSpread ) const
+	double CreditModel::getOptionValueFromForward( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsStartDate, const AQLDate& cdsMaturityDate, const double volatility, const double forwardSpread ) const
 	{
 
 		double forward;
@@ -1075,8 +1075,8 @@ namespace etrading
 
 		// 1. Construct underlying CDS Index instrument
 		auto cdsIndex				= createCalibrationCDSWithSpecifiedMaturity( params.cdsStartDate_, params.cdsMaturityDate_ );
-		LAString premiumLegName		= cdsIndex->getLeg(0)->getLegName();
-		LAString protectionLegName	= cdsIndex->getLeg(1)->getLegName();
+		AQLString premiumLegName		= cdsIndex->getLeg(0)->getLegName();
+		AQLString protectionLegName	= cdsIndex->getLeg(1)->getLegName();
 
 		// 2. Calculate Risky Annuity at Strike
 		AQ_REQUIRE ( (recoveryRate_ >=0 && recoveryRate_ < 1.0), "Require the recovery rate to be positive and strictly less than 1.0" );
@@ -1111,8 +1111,8 @@ namespace etrading
 		if ( realizedDefaults.defaultSettlementAmount_ != 0.0 )
 		{
 			// Calculate the discount factor at option expiry
-			const LAString discountCurve = cdsIndex->getLeg(0)->getStaticData()->getDiscountCurve();
-			std::vector<LADate> paymentDates = { params.optionExpiryDate_ };
+			const AQLString discountCurve = cdsIndex->getLeg(0)->getStaticData()->getDiscountCurve();
+			std::vector<AQLDate> paymentDates = { params.optionExpiryDate_ };
 			std::vector<double> discountFactors = getCurveDiscountFactors( getAsOfDate(), paymentDates, getCDSCurveCollection(), discountCurve );
 			const double discountFactorAtOptionExpiry = discountFactors[ 0 ];
 			realizedDefaults.defaultSettlementAmountPV_ = realizedDefaults.defaultSettlementAmount_ * discountFactorAtOptionExpiry;
@@ -1134,7 +1134,7 @@ namespace etrading
 		double optionPayoffVolatilityTime = volatilityTime;
 		if ( applyThetaBump )
 		{
-			LADate thetaBumpDate = asOfDate_;
+			AQLDate thetaBumpDate = asOfDate_;
 			thetaBumpDate.addDays( 1 ); // 1 calendar day
 			const double bumpedTimeToOptionExpiry = getYearFraction( thetaBumpDate, params.optionExpiryDate_, accrualDayCount_, false );
 			
@@ -1312,7 +1312,7 @@ namespace etrading
 	*  @param[in]	cdsMaturityDate	Create a CDS with this maturity date
 	*  @returns		A CreditDefaultSwap object
 	*/
-	std::shared_ptr<CreditDefaultSwap> CreditModel::createCalibrationCDSWithSpecifiedMaturity( const LADate& cdsStartDate, const LADate& cdsMaturityDate ) const
+	std::shared_ptr<CreditDefaultSwap> CreditModel::createCalibrationCDSWithSpecifiedMaturity( const AQLDate& cdsStartDate, const AQLDate& cdsMaturityDate ) const
 	{
 		LabelValueBlock swapExpressionLVB(  setupSwapExpressionLVBforCalibration(),
 											IRS_KEY::EFFECTIVE_DATE,
@@ -1342,7 +1342,7 @@ namespace etrading
 	* @param[in]	targetOptionValue			Calculate the implied vol for this target option value
 	* @returns	The implied volatility
 	*/
-	double CreditModel::getImpliedVol( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const LADate& optionExpiryDate, const LADate& cdsMaturityDate, const double targetOptionValue ) const
+	double CreditModel::getImpliedVol( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsMaturityDate, const double targetOptionValue ) const
 	{
 		double forwardSpread;
 		double riskyAnnuity;
@@ -1372,7 +1372,7 @@ namespace etrading
 	* @param[in]	forwardSpread				The forward CDS spread at option expiry
 	* @returns	The implied volatility
 	*/
-	double CreditModel::getImpliedVolFromForward( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const LADate& optionExpiryDate, const LADate& cdsStartDate, const LADate& cdsMaturityDate, const double targetOptionValue, const double forwardSpread ) const
+	double CreditModel::getImpliedVolFromForward( const PayerReceiverSwaptionEnum payerReceiverSwaptionEnum, const double strike, const AQLDate& optionExpiryDate, const AQLDate& cdsStartDate, const AQLDate& cdsMaturityDate, const double targetOptionValue, const double forwardSpread ) const
 	{
 		// Newton-Raphson Solver Settings
 
@@ -1434,7 +1434,7 @@ namespace etrading
 		return creditIndex_;
 	}
 
-	LADate CreditModel::getAsOfDate() const
+	AQLDate CreditModel::getAsOfDate() const
 	{
 		return asOfDate_;
 	}

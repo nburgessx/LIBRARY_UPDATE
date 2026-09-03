@@ -19,12 +19,12 @@
 
 
 #include "LARiskConfigurationVolFXATMParallelVega.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataFunction.h"
 #include "LAPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
@@ -65,16 +65,16 @@ LARiskConfigurationVolFXATMParallelVega::~LARiskConfigurationVolFXATMParallelVeg
 	@param[in] fx
 	@param[out] dataInstance
 	@param[in] scenario
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *>
-LARiskConfigurationVolFXATMParallelVega::createVolatilityEntity(const LAString &fx, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
+vector<AQLObject *>
+LARiskConfigurationVolFXATMParallelVega::createVolatilityEntity(const AQLString &fx, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
 {
 	if (scenarioNum == SCENARIO_1)
 	{
-		const LAString model = LAMarketData::getModelName(fx);
-		const LAString riskName = getRiskName();
-		LAStringVector ccys;
+		const AQLString model = LAMarketData::getModelName(fx);
+		const AQLString riskName = getRiskName();
+		AQLStringVector ccys;
 		LAMarketData::convertToCurrency(fx, ccys);
 		// scenario param
 		MAScenarioParam param;
@@ -88,10 +88,10 @@ LARiskConfigurationVolFXATMParallelVega::createVolatilityEntity(const LAString &
 		param.isGrid = false;
 		param.shiftType = RISK_SHIFTTYPE_DIFF;
 
-		LAObjectPool &objPool = dataInstance.getObjectPool();
+		AQLObjectPool &objPool = dataInstance.getObjectPool();
 		// set reference
 		LACalibrationParameters *calibInfoCreator = LACalibrationParametersManager::getInstance()->createCalibInfoCreator(param.model);
-		LAString infoName = calibInfoCreator->createCalibrationInfo(objPool, fx);
+		AQLString infoName = calibInfoCreator->createCalibrationInfo(objPool, fx);
 		delete calibInfoCreator;
 		param.refName.push_back(infoName);
 
@@ -102,13 +102,13 @@ LARiskConfigurationVolFXATMParallelVega::createVolatilityEntity(const LAString &
 		param.refName.push_back(LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, param.refName.back())));
 
 		// get term
-		const LAStringVector &terms = dynamic_cast<const LADataStrings &>(objPool.getObject(infoName, ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL).get()).get();
+		const AQLStringVector &terms = dynamic_cast<const AQLDataStrings &>(objPool.getObject(infoName, ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_OPTIONMATURITY, ISNOTNULL).get()).get();
 		// create ATM grid
 		const unsigned int termSize = terms.size();
 		param.paraTerm.resize(termSize);
 		for (unsigned int i = 0; i < termSize; ++i)
 		{
-			param.paraTerm[i] = LAString(FXVOL_ATM) + LAString("_") + terms[i];
+			param.paraTerm[i] = AQLString(FXVOL_ATM) + AQLString("_") + terms[i];
 		}
 
 		// dataout
@@ -126,20 +126,20 @@ LARiskConfigurationVolFXATMParallelVega::createVolatilityEntity(const LAString &
 		// set dmy file
 		param.paraFile.push_back(CALIB_DMY_FILE);
 		// set DDL
-		LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+		AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 		param.isDDL = convertBoolFromStr(mpStaticData->getStaticData(fxKey + STATIC_DATA_FX_KEY_SDE_ISDD));
 
 		// create scenario
 		LAScenarioConfiguration *sceCreator = 
 			LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL);
 
-		vector<LAObject *> ret = sceCreator->createScenario(dataInstance, param);
+		vector<AQLObject *> ret = sceCreator->createScenario(dataInstance, param);
 		delete sceCreator;
 		return ret;
 	}
 	else
 	{
-		return vector<LAObject *>(0); 
+		return vector<AQLObject *>(0); 
 	}
 }
 
@@ -149,15 +149,15 @@ LARiskConfigurationVolFXATMParallelVega::createVolatilityEntity(const LAString &
 	@param[in] fx
 	@param[out] dataInstance
 	@param[in] scenario
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *>
-LARiskConfigurationVolFXATMParallelVega::createVolatilityEntityOld(const LAString &fx, LADataInstance &dataInstance, SCENARIONUM scenarioNum) const
+vector<AQLObject *>
+LARiskConfigurationVolFXATMParallelVega::createVolatilityEntityOld(const AQLString &fx, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum) const
 {
 	if (scenarioNum == SCENARIO_1)
 	{
-		const LAString model = LAMarketData::getModelName(fx);
-		const LAString riskName = getRiskName();
+		const AQLString model = LAMarketData::getModelName(fx);
+		const AQLString riskName = getRiskName();
 		// scenario param
 		MAScenarioParam param;
 		param.ccy = fx;
@@ -168,12 +168,12 @@ LARiskConfigurationVolFXATMParallelVega::createVolatilityEntityOld(const LAStrin
 		param.isParallel = true;
 		param.isGrid = false;
 		// set reference
-		LAStringVector ccys;
+		AQLStringVector ccys;
 		LAMarketData::convertToCurrency(fx, ccys);
 		param.refName.push_back(LAMarketData::getBaseYieldName(ccys[0]));
 		param.refName.push_back(LAMarketData::getBaseYieldName(ccys[1]));
 		// set DDL
-		LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+		AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 		param.isDDL = convertBoolFromStr(mpStaticData->getStaticData(fxKey + STATIC_DATA_FX_KEY_SDE_ISDD));
 		// set file path
 		LAMarketData::getVolFuncFilePath(model, fx, fx, riskName, scenarioNum, param.paraFile, false);
@@ -181,13 +181,13 @@ LARiskConfigurationVolFXATMParallelVega::createVolatilityEntityOld(const LAStrin
 		LAScenarioConfiguration *sceCreator = 
 			LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL);
 
-		vector<LAObject *> ret = sceCreator->createScenario(dataInstance, param);
+		vector<AQLObject *> ret = sceCreator->createScenario(dataInstance, param);
 		delete sceCreator;
 		return ret;
 	}
 	else
 	{
-		return vector<LAObject *>(0); 
+		return vector<AQLObject *>(0); 
 	}
 }
 
@@ -195,9 +195,9 @@ LARiskConfigurationVolFXATMParallelVega::createVolatilityEntityOld(const LAStrin
 /*!
     @brief return operator1
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationVolFXATMParallelVega::getOperator1(void) const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_VOL_ATMPARALLELVEGA_OPERATOR);
@@ -208,13 +208,13 @@ LARiskConfigurationVolFXATMParallelVega::getOperator1(void) const
     @brief return coefficient1
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolFXATMParallelVega::getCoefficient1(const LAString &fx) const
+AQLString
+LARiskConfigurationVolFXATMParallelVega::getCoefficient1(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey.toLower() + 
 								FX_KEY_RISK_OFFICIAL_VOL_ATMPARALLELVEGA_COEFFICIENT);
 }
@@ -224,13 +224,13 @@ LARiskConfigurationVolFXATMParallelVega::getCoefficient1(const LAString &fx) con
     @brief return outputname1
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolFXATMParallelVega::getOutPutName1(const LAString &fx) const
+AQLString
+LARiskConfigurationVolFXATMParallelVega::getOutPutName1(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey.toLower() + 
 								FX_KEY_RISK_OFFICIAL_VOL_ATMPARALLELVEGA_OUTPUT);
 }
@@ -239,9 +239,9 @@ LARiskConfigurationVolFXATMParallelVega::getOutPutName1(const LAString &fx) cons
 /*!
     @brief return riskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationVolFXATMParallelVega::getRiskName(void) const
 {
 	return RISK_OFFICIAL_VOL_FXATMPARALLELVEGA;
@@ -253,10 +253,10 @@ LARiskConfigurationVolFXATMParallelVega::getRiskName(void) const
 	@return double 
 */
 double
-LARiskConfigurationVolFXATMParallelVega::getParallelShiftVal(const LAString &fx) const
+LARiskConfigurationVolFXATMParallelVega::getParallelShiftVal(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey.toLower() + 
 							FX_KEY_RISK_OFFICIAL_VOL_ATMPARALLELVEGA_SHIFTVAL).getDoubleValue() / 100;
 }
@@ -268,11 +268,11 @@ LARiskConfigurationVolFXATMParallelVega::getParallelShiftVal(const LAString &fx)
 	@return bool
 */
 bool
-LARiskConfigurationVolFXATMParallelVega::isRiskCurrencyMode(const LAString &fx) const
+LARiskConfigurationVolFXATMParallelVega::isRiskCurrencyMode(const AQLString &fx) const
 {
-	LAString tmpCurrency = fx;
+	AQLString tmpCurrency = fx;
 	//if MA_NODATA return false;
-	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													FX_KEY_RISK_OFFICIAL_VOL_ATMPARALLELVEGA_ISRISKCURRENCYMODE);
 	if (proprslt == AQ_NO_DATA)
 		return false;

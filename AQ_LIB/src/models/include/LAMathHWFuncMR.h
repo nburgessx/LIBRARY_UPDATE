@@ -19,13 +19,13 @@
 #endif
 
 //+++++ INCLUDE +++++
-#include "LACoreTemplateType.h"
-#include "LAFunctionBase.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLFunctionBase.h"
 #include "LAModelDynamicsAFFCurve.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 #include <map>
-#include "LAGaussLegendre.h"
-#include "LACoreSystemError.h"
+#include "AQLGaussLegendre.h"
+#include "AQLCoreSystemError.h"
 
 
 const int  HWGAUSSLEGENDRENUM = 20;
@@ -44,7 +44,7 @@ const int  HWINTEGRATEDNUM = 2;
 // Function Name of LAMathHWFuncMR
 #define FN_HWFUNCMR_STR	"fn_hwfuncmr"
 
-class LAMathHWFuncMR : public LAFunctionBase
+class LAMathHWFuncMR : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
@@ -66,13 +66,13 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*    clone() const;
+    virtual AQLCoreFunctionBase*    clone() const;
 								//======================================
 								// return function value
 	virtual double				operator()(const DoubleArray& x) const
 								{
 									return mMR;
-									//throw LACoreInvalidData("this operator is not supported",__FILE__,__LINE__);
+									//throw AQLCoreInvalidData("this operator is not supported",__FILE__,__LINE__);
 								};
 								// return this class type
     virtual function_t          getType() const;
@@ -113,7 +113,7 @@ public :
                 );*/
 	 LAMathHWFuncMRTMDPT( const DoubleArray&    T_grid_,
                   const DoubleArray&    a_grid_,
-				  LAInterpolationBase&	interpolation_);
+				  AQLInterpolationBase&	interpolation_);
                                 //======================================
                             	// copy constructor
 	LAMathHWFuncMRTMDPT(const LAMathHWFuncMRTMDPT &rhs);
@@ -127,7 +127,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*   clone() const;
+    virtual AQLCoreFunctionBase*   clone() const;
 								//======================================
                             	// equal operator
                                 /*!
@@ -160,9 +160,9 @@ private:
     
     DoubleArray a_grid;		// a grid
 	DoubleArray T_grid;		 // time grid    
-	LAInterpolationBase* mpInter;
+	AQLInterpolationBase* mpInter;
     bool is_cloned;
-   	LAGaussLegendre mGL;
+   	AQLGaussLegendre mGL;
 	
 	
 };

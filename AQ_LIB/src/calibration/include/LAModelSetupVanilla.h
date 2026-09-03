@@ -35,18 +35,18 @@ public:
 	virtual ~LAModelSetupVanilla(void);
 								//======================================
 								// regist extra data
-	virtual void                registAttrMasterEx(LAPriceDataManager &dm);
+	virtual void                registAttrMasterEx(AQLPriceDataManager &dm);
 								//======================================
 								// regist extra object 
-	virtual void                 registEntityMasterEx(LADataInstance &dataInstance);
+	virtual void                 registEntityMasterEx(AQLDataInstance &dataInstance);
 								//======================================
 								// regist extra function 
-	virtual void                registFunctionMasterEx(LADataInstance &dataInstance);
+	virtual void                registFunctionMasterEx(AQLDataInstance &dataInstance);
 
 protected:
 								//======================================
 								// regist function 
-	virtual void                registFunctionMaster(LADataInstance &dataInstance);
+	virtual void                registFunctionMaster(AQLDataInstance &dataInstance);
 };
 
 

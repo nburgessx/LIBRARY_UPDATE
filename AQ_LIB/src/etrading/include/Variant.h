@@ -26,8 +26,8 @@
 #include "DateUtilities.h"
 #include "CoreEnumerations.h"
 #include "TypeName.h"
-#include "LADate.h"
-#include "LAString.h"
+#include "AQLDate.h"
+#include "AQLString.h"
 #include "ExceptionMacros.h"
 
 
@@ -47,14 +47,14 @@ namespace etrading
 	// Transpose a Variant Matrix
 	VariantMatrix transpose( const VariantMatrix & input);
 
-    // Converts an LAStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
-    VariantMatrix toVariantMatrixFromLAStringMatrix( const LAStringMatrix & laStringMatrix, const bool & transpose = true );
+    // Converts an AQLStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
+    VariantMatrix toVariantMatrixFromLAStringMatrix( const AQLStringMatrix & laStringMatrix, const bool & transpose = true );
 
     // Converts a StandardStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
     VariantMatrix toVariantMatrixFromStandardStringMatrix( const StandardStringMatrix & standardStringMatrix, const bool & transpose = true );
 
-    // Converts a VariantMatrix to LAStringMatrix, note transposes by default to match the default JSON schema convention
-    LAStringMatrix toLAStringMatrixFromVariantMatrix( const VariantMatrix & variantMatrix, const bool & transpose = true );
+    // Converts a VariantMatrix to AQLStringMatrix, note transposes by default to match the default JSON schema convention
+    AQLStringMatrix toLAStringMatrixFromVariantMatrix( const VariantMatrix & variantMatrix, const bool & transpose = true );
 
     // Converts a VariantMatrix to StandardStringMatrix, note transposes by default to match the default JSON schema convention
     StandardStringMatrix toStandardStringMatrixFromVariantMatrix( const VariantMatrix & variantMatrix, const bool & transpose = true );
@@ -63,7 +63,7 @@ namespace etrading
 	bool canStringConvertToNumber( const StandardString & str );
 	
 	// Test if a string can be a number
-	bool canStringConvertToNumber( const LAString & str );
+	bool canStringConvertToNumber( const AQLString & str );
 	
 	// Test if a string can be a number
 	bool canStringConvertToNumber( const char * str );
@@ -133,8 +133,8 @@ namespace etrading
         operator int() const;
         operator std::string() const;
         operator boost::gregorian::date() const;
-        operator LADate() const;
-        operator LAString() const;
+        operator AQLDate() const;
+        operator AQLString() const;
 
 
         // ------------------------------------------------------------------
@@ -308,10 +308,10 @@ namespace etrading
 	// ------------------------
 
 	template <>
-    Variant::Variant( const LADate& inputValue );
+    Variant::Variant( const AQLDate& inputValue );
 		
 	template <>
-    Variant::Variant( const LAString& inputValue );
+    Variant::Variant( const AQLString& inputValue );
 
 
     // Check if type 'int' is convertible to contained type g

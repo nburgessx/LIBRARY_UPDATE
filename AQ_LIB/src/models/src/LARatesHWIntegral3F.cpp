@@ -26,7 +26,7 @@
 #include "LARatesHWIntegral3F.h"
 #include "LAPriceDriftHWQuantAdjustment3F.h"
 #include "LAPriceDriftHW.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAPriceQuantAdjustmentHWFXDD.h"
 
 using namespace std;
@@ -48,7 +48,7 @@ LARatesHWIntegral(type)
 	@param[in] type sde integral type
 
 */
-LARatesHWIntegral3F::LARatesHWIntegral3F(SDEINTEGRAL_TYPE type, const LAString& sdeAttrName)
+LARatesHWIntegral3F::LARatesHWIntegral3F(SDEINTEGRAL_TYPE type, const AQLString& sdeAttrName)
 : 
 LARatesHWIntegral(type, sdeAttrName)
 {
@@ -73,7 +73,7 @@ LARatesHWIntegral3F::~LARatesHWIntegral3F()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesHWIntegral3F::clone() const
 {
     try 
@@ -82,7 +82,7 @@ LARatesHWIntegral3F::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -128,8 +128,8 @@ LARatesHWIntegral3F::setUpInitialVal(const SCALARARRAY& rate0)
 */
 void
 LARatesHWIntegral3F::integral(double ts, double te, 
-							vector<LAFunctionBase*>::const_iterator drift,										
-							vector<vector<LAFunctionBase*> >::const_iterator vol,
+							vector<AQLFunctionBase*>::const_iterator drift,										
+							vector<vector<AQLFunctionBase*> >::const_iterator vol,
 							DoubleArray::const_iterator	bm,
 							SCALARARRAY::iterator	x_in_out,
 							unsigned int varnum
@@ -137,7 +137,7 @@ LARatesHWIntegral3F::integral(double ts, double te,
 {
     if ( te < ts )
     {
-        throw LACoreInvalidData("ts < te", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("ts < te", __FILE__, __LINE__);
     }
 
     mVar.resize(varnum + 2);
@@ -160,7 +160,7 @@ LARatesHWIntegral3F::integral(double ts, double te,
 	}
 	else
 	{
-		throw LACoreInvalidData("Drift calss must be LAPriceDriftHW or LAPriceDriftHWQuantAdjustment", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Drift calss must be LAPriceDriftHW or LAPriceDriftHWQuantAdjustment", __FILE__, __LINE__);
 	}
 	const double alpha = pIRDrift->getAlpha(te);
 	(*x_in_out) = mCumulatedVal / E(te) + alpha;

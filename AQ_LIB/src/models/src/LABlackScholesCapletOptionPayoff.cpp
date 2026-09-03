@@ -24,10 +24,10 @@
 
 
 #include "LABlackScholesCapletOptionPayoff.h"
-#include "LABasic.h"
-#include "LADist.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
 #include "LAAnalyticFormula.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 
 using namespace std;
 //================ LABlackScholesCapletOption ===================================
@@ -51,7 +51,7 @@ LABlackScholesCapletOption::~LABlackScholesCapletOption()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LABlackScholesCapletOption::clone() const
 {
     try 
@@ -60,7 +60,7 @@ LABlackScholesCapletOption::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -107,10 +107,10 @@ double
 LABlackScholesCapletOption::operator()(const DoubleArray& x, size_t calcIndex) const
 {
 	if (x.size() + 1 != mParam.size() || mParam.size() < 2)
-		throw LACoreInvalidData("BSOption size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("BSOption size error",__FILE__,__LINE__);
 
 	//if (mParam[0] <= 0.)
-	//	throw LACoreInvalidData("BSOption coefficient error",__FILE__,__LINE__);
+	//	throw AQLCoreInvalidData("BSOption coefficient error",__FILE__,__LINE__);
 	
 	//calc gearing
 	double gearing = 0.;
@@ -120,7 +120,7 @@ LABlackScholesCapletOption::operator()(const DoubleArray& x, size_t calcIndex) c
 	}
 
 	if (gearing == 0.)
-		throw LACoreInvalidData("BSOption coefficient error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("BSOption coefficient error",__FILE__,__LINE__);
 
 	AnalyticBKParam* param = dynamic_cast<AnalyticBKParam*>(mBSInputParam[calcIndex]);
 	unsigned int i = 0; 
@@ -130,7 +130,7 @@ LABlackScholesCapletOption::operator()(const DoubleArray& x, size_t calcIndex) c
 		rate += mParam[i] * x[i] / gearing;
 	}
 //#ifdef ZEROFLOOR
-//	rate = LAMath::max(rate, MIN_RATE);
+//	rate = AQLMath::max(rate, MIN_RATE);
 //#endif
 	param->F = rate;
 	param->K = mParam[i] / gearing;
@@ -140,12 +140,12 @@ LABlackScholesCapletOption::operator()(const DoubleArray& x, size_t calcIndex) c
 	double ret(0.);
 	if (slideParam->F > MIN_RATE && slideParam->K > MIN_RATE && !mFixedPayOffs[calcIndex])
 	{
-		ret = mBSAnalyticMethod[calcIndex]->calc(*(slideParam)) * LAMath::abs(gearing);
-		ret += calcConvexityAdjustment(*slideParam, ret / LAMath::abs(gearing)) * LAMath::abs(gearing);
+		ret = mBSAnalyticMethod[calcIndex]->calc(*(slideParam)) * AQLMath::abs(gearing);
+		ret += calcConvexityAdjustment(*slideParam, ret / AQLMath::abs(gearing)) * AQLMath::abs(gearing);
 	}
 	else
 	{
-		ret = mBSPayoffMethod[calcIndex]->calc(*(slideParam)) * LAMath::abs(gearing);
+		ret = mBSPayoffMethod[calcIndex]->calc(*(slideParam)) * AQLMath::abs(gearing);
 	}
 
 	// if gearing is negative, option value should be the value converted through put-call parity condition.
@@ -157,9 +157,9 @@ LABlackScholesCapletOption::operator()(const DoubleArray& x, size_t calcIndex) c
 		else if (mOptionType[calcIndex] == PUT)
 			sgn = -1.;
 		else
-			throw LACoreInvalidData("Option type error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Option type error",__FILE__,__LINE__);
 
-		ret = ret - sgn * slideParam->Nu * (slideParam->F - slideParam->K) * LAMath::abs(gearing);
+		ret = ret - sgn * slideParam->Nu * (slideParam->F - slideParam->K) * AQLMath::abs(gearing);
 	}
 	
 	delete slideParam;
@@ -167,28 +167,28 @@ LABlackScholesCapletOption::operator()(const DoubleArray& x, size_t calcIndex) c
 	return ret;
 }
 
-LAStringVector
+AQLStringVector
 LABlackScholesCapletOption::getOptionTypeVector()
 {
-	LAStringVector ret(1);
-	ret[0] = LAString(CALL);
+	AQLStringVector ret(1);
+	ret[0] = AQLString(CALL);
 	mOptionType = ret;
 	return ret;
 }
 
-LAStringVector 
-LABlackScholesCapletOption::getBSComponentVector(LAString risktype) const
+AQLStringVector 
+LABlackScholesCapletOption::getBSComponentVector(AQLString risktype) const
 {
-	LAStringVector ret(1);
-	ret[0] = LAString(BK) + risktype + LAString(CALL);
+	AQLStringVector ret(1);
+	ret[0] = AQLString(BK) + risktype + AQLString(CALL);
 	return ret;
 }
 
-LAStringVector 
-LABlackScholesCapletOption::getBSPayoffComponentVector(LAString risktype) const
+AQLStringVector 
+LABlackScholesCapletOption::getBSPayoffComponentVector(AQLString risktype) const
 {
-	LAStringVector ret(1);
-	ret[0] = LAString(BKPAYOFF) + risktype + LAString(CALL);
+	AQLStringVector ret(1);
+	ret[0] = AQLString(BKPAYOFF) + risktype + AQLString(CALL);
 	return ret;
 }
 
@@ -250,7 +250,7 @@ LABlackScholesCapletOption::setOptionStrike(void)
 		for (unsigned int i = 0; i < paraSize; i++)
 		{
 			if (coeffsize-1-i < 0 || mParam[0] == 0.)
-				throw LACoreInvalidData("Coefficient Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("Coefficient Error",__FILE__,__LINE__);
 
 			AnalyticBKParam* param = dynamic_cast<AnalyticBKParam*>(mBSInputParam[paraSize-1-i]);
 			param->K = mParam[coeffsize-1-i] / mParam[0];

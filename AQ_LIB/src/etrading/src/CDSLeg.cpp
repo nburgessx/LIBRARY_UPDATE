@@ -29,7 +29,7 @@ namespace etrading
 		initializeDataProvider( dataProvider, updateCurveData );
 
 		// Calculate Survival Probabilities
-		const LADate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
 		setSurvivalProbabilitiesUsingCreditModel( asOfDate, *creditModelPtr );	
 	}
 
@@ -65,14 +65,14 @@ namespace etrading
 		initializeDataProvider( dataProvider, updateCurveData );
 
 		// Calculate Survival Probabilities
-		const LADate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
 		setSurvivalProbabilitiesUsingHazardRate( asOfDate, hazardRate, recoveryRate, includeAccruedInterest );
 
         //get all the cashflows including the upfrontCashflow
         auto cashflows = schedule_->getAllCashflows();
         if (cashflows.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
 		}
 
         double pv = 0;
@@ -98,14 +98,14 @@ namespace etrading
 		initializeDataProvider( dataProvider, updateCurveData );
 
 		// Calculate Survival Probabilities
-		const LADate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate& asOfDate = dataProvider.getValuationSettings().getValuationDate();
 		setSurvivalProbabilitiesUsingCreditModel( asOfDate, creditModel );
 
         //get all the cashflows including the upfrontCashflow
         auto cashflows = schedule_->getAllCashflows();
         if (cashflows.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
 		}
 
         double pv = 0;

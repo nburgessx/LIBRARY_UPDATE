@@ -36,7 +36,7 @@ LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc(const DoubleMatrix&	corr_mat_
     {
         if (T_fix.size() != corr_mat_.size())
         {
-            throw LACoreInvalidData("full-length corr_mat is incompatible with T_fix : LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("full-length corr_mat is incompatible with T_fix : LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc", __FILE__, __LINE__);
         }
         LAModelUtilities::takeColRow(corr_mat_, mCorrMat, -static_cast<int>(T_fix.size()) + 1, -static_cast<int>(T_fix.size()) + 1 );
 		mFactorLoading = LAEigenSystems::corre2factorloading( mCorrMat, no_factors);
@@ -53,7 +53,7 @@ LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc(const DoubleMatrix&	corr_mat_
     {
         if (T_fix.size() != corr_mat_.size() + 1)
         {
-            throw LACoreInvalidData("reduced-length corr_mat is incompatible with T_fix : LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("reduced-length corr_mat is incompatible with T_fix : LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc", __FILE__, __LINE__);
         }
         mFactorLoading = LAEigenSystems::corre2factorloading( corr_mat_, no_factors );
         mCorrMat = LAEigenSystems::factorloading2corre( mFactorLoading );
@@ -79,7 +79,7 @@ mFactorLoading( factor_loading_ )
     {
         if (T_fix.size() != mFactorLoading.size())
         {
-            throw LACoreInvalidData("full-length factor loading is incompatible with T_fix : LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("full-length factor loading is incompatible with T_fix : LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc", __FILE__, __LINE__);
         } 
         DoubleMatrix factor_loading_temp( mFactorLoading.begin() + 1, mFactorLoading.end() );
         mCorrMat = LAEigenSystems::factorloading2corre( factor_loading_temp );
@@ -94,7 +94,7 @@ mFactorLoading( factor_loading_ )
     {
         if (T_fix.size() != mFactorLoading.size() + 1)
         {
-            throw LACoreInvalidData("reduced-length factors loading is incompatible with T_fix : LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("reduced-length factors loading is incompatible with T_fix : LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc", __FILE__, __LINE__);
         }
         mCorrMat = LAEigenSystems::factorloading2corre( mFactorLoading );
         for (size_t i = 0; i < mCorrMat.size(); i++ )
@@ -116,7 +116,7 @@ mFactorLoading( factor_loading_ )
 {
     if (T_fix.size() != mFactorLoading.size())
     {
-        throw LACoreInvalidData("full-length factor loading is incompatible with T_fix : LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("full-length factor loading is incompatible with T_fix : LAMathCorrelationLMMDisc::LAMathCorrelationLMMDisc", __FILE__, __LINE__);
     } 
     mCorrMat = LAEigenSystems::factorloading2corre( mFactorLoading );
 }
@@ -152,11 +152,11 @@ double LAMathCorrelationLMMDisc::get(size_t s, size_t p, size_t q)
 
     if( p < s )
     {
-        throw LACoreInvalidData("p < s : LAMathCorrelationLMMDisc::get", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("p < s : LAMathCorrelationLMMDisc::get", __FILE__, __LINE__);
     }
     if( q < s )
     {
-        throw LACoreInvalidData("q < s : LAMathCorrelationLMMDisc::get", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("q < s : LAMathCorrelationLMMDisc::get", __FILE__, __LINE__);
     }
     return mCorrMat[p - s][q - s];
 }
@@ -167,8 +167,8 @@ DoubleVector LAMathCorrelationLMMDisc::getFactors(size_t s, size_t p)
     if ( mNoFactors == 1 ) return mUnity;
     if( p < s )
     {
-		LAString msg = "p < s : ( p = " + LAString(LAModelUtilities::n2s(p).c_str()) + ", s = " + LAString(LAModelUtilities::n2s(s).c_str()) + " ) : LAMathCorrelationLMMDisc::getFactors";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "p < s : ( p = " + AQLString(LAModelUtilities::n2s(p).c_str()) + ", s = " + AQLString(LAModelUtilities::n2s(s).c_str()) + " ) : LAMathCorrelationLMMDisc::getFactors";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
     }
     return mFactorLoading[p - s];
 }

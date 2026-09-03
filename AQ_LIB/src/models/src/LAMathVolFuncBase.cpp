@@ -27,20 +27,20 @@
 #include "LAMathVolatility.h"
 #include "LAMathPathEntity.h"
 
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LARatesSDEBase.h"
-#include "LAAlgorithm.h"
-#include "LAConstant.h"
-#include "LA1DDataSet.h"
-#include "LACombinationFunc.h"
-#include "LALinearInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LAGaussLegendre.h"
-#include "LACombinationFunc.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLConstant.h"
+#include "AQL1DDataSet.h"
+#include "AQLCombinationFunc.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLGaussLegendre.h"
+#include "AQLCombinationFunc.h"
+#include "AQLBasic.h"
 
 using namespace std;
 
@@ -53,7 +53,7 @@ using namespace std;
 	@param[in] isMultiVariables volatility function depends sde variables(L,FX,...) or not(only t depend)
 */
 LAMathVolFuncBase::LAMathVolFuncBase(bool isMultiVariables)
-: LAFunctionBase(), m_i(0), m_j(0), mpVolatility(NULL), mIsMultiVariables(isMultiVariables), mpTimes(0), mPos_old(0)
+: AQLFunctionBase(), m_i(0), m_j(0), mpVolatility(NULL), mIsMultiVariables(isMultiVariables), mpTimes(0), mPos_old(0)
 {
 
 }
@@ -61,8 +61,8 @@ LAMathVolFuncBase::LAMathVolFuncBase(bool isMultiVariables)
 	@brief constructor
 	@param[in] isMultiVariables volatility function depends sde variables(L,FX,...) or not(only t depend)
 */
-LAMathVolFuncBase::LAMathVolFuncBase(const LAString& sdeAttrName, unsigned int i, unsigned int j, bool isMultiVariables)
-: LAFunctionBase(), m_i(i), m_j(j), mpVolatility(NULL), mSDEAttrName(sdeAttrName), mIsMultiVariables(isMultiVariables)
+LAMathVolFuncBase::LAMathVolFuncBase(const AQLString& sdeAttrName, unsigned int i, unsigned int j, bool isMultiVariables)
+: AQLFunctionBase(), m_i(i), m_j(j), mpVolatility(NULL), mSDEAttrName(sdeAttrName), mIsMultiVariables(isMultiVariables)
 , mpTimes(0), mPos_old(0)
 {
 
@@ -72,11 +72,11 @@ LAMathVolFuncBase::LAMathVolFuncBase(const LAString& sdeAttrName, unsigned int i
 	@brief copy constructor
 */
 LAMathVolFuncBase::LAMathVolFuncBase(const LAMathVolFuncBase& v) 
-: LAFunctionBase(v), m_i(v.m_i), m_j(v.m_j), mpVolatility(NULL), mSDEAttrName(v.mSDEAttrName)
+: AQLFunctionBase(v), m_i(v.m_i), m_j(v.m_j), mpVolatility(NULL), mSDEAttrName(v.mSDEAttrName)
 , mIsMultiVariables(v.mIsMultiVariables), mpTimes(v.mpTimes), mVolData(v.mVolData), mPos_old(v.mPos_old)
 {
 	if (v.mpVolatility != NULL)
-		mpVolatility = dynamic_cast<LAFunctionBase*>(v.mpVolatility->clone());
+		mpVolatility = dynamic_cast<AQLFunctionBase*>(v.mpVolatility->clone());
 }
 
 /*!
@@ -90,7 +90,7 @@ LAMathVolFuncBase::~LAMathVolFuncBase()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathVolFuncBase::clone() const
 {
     try 
@@ -99,7 +99,7 @@ LAMathVolFuncBase::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -111,7 +111,7 @@ LAMathVolFuncBase::clone() const
 bool
 LAMathVolFuncBase::isTypeOf(function_t id) const
 {
-	return (id==FN_VOLFUNCBASE ? true : LAFunctionBase::isTypeOf(id));
+	return (id==FN_VOLFUNCBASE ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -140,7 +140,7 @@ LAMathVolFuncBase::operator()(const DoubleArray& x) const
 		if (x[0] == 0.0) pos = 0;
 		else if (x[0] == (*mpTimes)[mPos_old]) pos = mPos_old;
 		else if (mPos_old + 1 < mpTimes->size() && x[0] == (*mpTimes)[mPos_old + 1]) pos = mPos_old + 1;
-		else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0], 0, mpTimes->size() - 1, pos))
+		else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0], 0, mpTimes->size() - 1, pos))
 		{
 			pos = 0;
 			mPos_old = 0;
@@ -157,15 +157,15 @@ LAMathVolFuncBase::operator()(const DoubleArray& x) const
     @brief return string representaion
     @return string representaion (sde attr name : suffix )
 */
-LAString
+AQLString
 LAMathVolFuncBase::convertToString(void) const
 {
-	LAString ret;
+	AQLString ret;
 	ret += mSDEAttrName;
 	ret += ":";
-	ret += LADataInt(m_i).convertToString();
+	ret += AQLDataInt(m_i).convertToString();
 	ret += ":";
-	ret += LADataInt(m_j).convertToString();
+	ret += AQLDataInt(m_j).convertToString();
 	return ret;
 }
 
@@ -174,9 +174,9 @@ LAMathVolFuncBase::convertToString(void) const
     @param[in] string representaion sde attr name : suffix i : suffix j :  or sde attr name : suffix i or sde attr name 
 */
 void
-LAMathVolFuncBase::convertFromString(const LAString& str)
+LAMathVolFuncBase::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() == 1)
 	{
@@ -199,7 +199,7 @@ LAMathVolFuncBase::convertFromString(const LAString& str)
 	else
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	}
 
 }
@@ -212,11 +212,11 @@ LAMathVolFuncBase::convertFromString(const LAString& str)
 void
 LAMathVolFuncBase::setUp(LAMathPathEntity& path)
 {
-	LAString name = VOL;
+	AQLString name = VOL;
 	name += "_";
 	name += mSDEAttrName;
-	LADataHolder* dh = &path.getData(name, ISNOTNULL);
-	LADataReference* ref = &dynamic_cast<LADataReference&>(dh->get());
+	AQLDataHolder* dh = &path.getData(name, ISNOTNULL);
+	AQLDataReference* ref = &dynamic_cast<AQLDataReference&>(dh->get());
 	LAMathVolatility* vol = &dynamic_cast<LAMathVolatility&>(ref->get().get());
 	delete mpVolatility;
 	mpVolatility = vol->getVolatilityFunc(m_i, m_j);
@@ -233,7 +233,7 @@ LAMathVolFuncBase::setUp(LAMathPathEntity& path)
 		mIntegratedVolData.resize(size);
 		for (unsigned int i = 0; i < size; i++)
 			mVolData[i] = 	mpVolatility->operator ()((*mpTimes)[i]);	
-		LAGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
+		AQLGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
 		for (unsigned int i = 1; i < size; i++)
 			mIntegratedVolData[i] = mIntegratedVolData[i - 1] + integral((*mpTimes)[i - 1], (*mpTimes)[i], &gl);
 	}
@@ -244,18 +244,18 @@ LAMathVolFuncBase::setUp(LAMathPathEntity& path)
 	{	
 		// get target currnecy and fx
 		LAMathVolFuncFX *pFxVol  = dynamic_cast<LAMathVolFuncFX *>(mpVolatility);
-		LAString fx = pFxVol->getCurrency();
+		AQLString fx = pFxVol->getCurrency();
 		fx.toUpper();
-		LAStringVector curs = fx.toToken('/');
+		AQLStringVector curs = fx.toToken('/');
 
 		// get pos
-		const LADataMultiReference &initialValues = path.getInitialValues();
-		const LAStringVector &sdeNames = path.getSDEAttrNames().get();
+		const AQLDataMultiReference &initialValues = path.getInitialValues();
+		const AQLStringVector &sdeNames = path.getSDEAttrNames().get();
 		int pos_dIR = -1, pos_fIR = -1, pos_FX = -1;
 		for (unsigned int i = 0; i < sdeNames.size(); ++i)
 		{
 			const LAMathAttrSDE &sde = dynamic_cast<const LAMathAttrSDE &>(path.getData(sdeNames[i], ISNOTNULL).get());
-			LAString cur = sde.getCurrency();
+			AQLString cur = sde.getCurrency();
 			cur.toUpper();
 			if (curs[0] == cur && sde.getSDEPathType() == IR)
 			{
@@ -273,8 +273,8 @@ LAMathVolFuncBase::setUp(LAMathPathEntity& path)
 
 		if (pos_dIR < 0 || pos_fIR < 0 || pos_FX < 0)
 		{
-			LAString msg = "IR_SDE or FX_SDE Data is not registered in PathEntity, FX = " + fx;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "IR_SDE or FX_SDE Data is not registered in PathEntity, FX = " + fx;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		// get yield and fx object and calc forward fx
 		const LAMathYieldCurve &dYield = dynamic_cast<const LAMathYieldCurve &>(initialValues.get(pos_dIR).get());
@@ -312,34 +312,34 @@ LAMathVolFuncBase::integral(const std::vector<std::pair<double,double> >& x) con
 		return mpVolatility->integral(x);
 	else if (mpTimes == 0)
 	{
-		LAGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
-		return LAMath::sqrt(integral(x[0].first, x[0].second, &gl));	
+		AQLGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
+		return AQLMath::sqrt(integral(x[0].first, x[0].second, &gl));	
 	}
 
 	unsigned int pos_e;
 	if (x[0].second == (*mpTimes)[mPos_old]) pos_e = mPos_old;
 	else if (x[0].second == (*mpTimes)[mPos_old + 1]) pos_e = mPos_old + 1;
-	else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].second, 0, mpTimes->size() - 1, pos_e))
+	else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].second, 0, mpTimes->size() - 1, pos_e))
 	{
 		pos_e = 0;
 		mPos_old = 0;
-		LAGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
-		return LAMath::sqrt(integral(x[0].first, x[0].second, &gl));	
+		AQLGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
+		return AQLMath::sqrt(integral(x[0].first, x[0].second, &gl));	
 	}
 	mPos_old = pos_e; 
 	if (x[0].first == 0.0)
-		return LAMath::sqrt(mIntegratedVolData[pos_e]);	
+		return AQLMath::sqrt(mIntegratedVolData[pos_e]);	
 	
     
 	unsigned int pos_s;
 	if (x[0].first == (*mpTimes)[mPos_old - 1]) pos_s = mPos_old - 1;
-	else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].first, 0, mpTimes->size() - 1, pos_s))
+	else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x[0].first, 0, mpTimes->size() - 1, pos_s))
 	{
-		LAGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
-		return LAMath::sqrt(integral(x[0].first, x[0].second, &gl));	
+		AQLGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
+		return AQLMath::sqrt(integral(x[0].first, x[0].second, &gl));	
 	}
 	
-	return LAMath::sqrt(mIntegratedVolData[pos_e] - mIntegratedVolData[pos_s]);
+	return AQLMath::sqrt(mIntegratedVolData[pos_e] - mIntegratedVolData[pos_s]);
 }
 
 /*!
@@ -351,7 +351,7 @@ LAMathVolFuncBase::integral(const std::vector<std::pair<double,double> >& x) con
 	@return integral result
 */
 double
-LAMathVolFuncBase::integral(double t1, double t2, LA1DIntegral* pIntegral) const
+LAMathVolFuncBase::integral(double t1, double t2, AQL1DIntegral* pIntegral) const
 {
 	if (mpVolatility->isTypeOf(FN_CONSTANT))
 	{
@@ -359,12 +359,12 @@ LAMathVolFuncBase::integral(double t1, double t2, LA1DIntegral* pIntegral) const
 		return vol * vol * (t2 - t1);
 	}
 	else if (mpVolatility->isTypeOf(FN_1DDATASET) 
-		&& dynamic_cast<const LA1DDataSet*>(mpVolatility)->getInterpolationType() == FN_STEPINTERPOLATION)
+		&& dynamic_cast<const AQL1DDataSet*>(mpVolatility)->getInterpolationType() == FN_STEPINTERPOLATION)
 	{
-		const DoubleArray& grid = dynamic_cast<const LA1DDataSet*>(mpVolatility)->getGrids();
+		const DoubleArray& grid = dynamic_cast<const AQL1DDataSet*>(mpVolatility)->getGrids();
 		unsigned int pos1, pos2;
-		LAAlgorithm::locate<DoubleArray, double>(grid, t1, grid.size(), pos1);
-		LAAlgorithm::locate<DoubleArray, double>(grid, t2, grid.size(), pos2);
+		AQLAlgorithm::locate<DoubleArray, double>(grid, t1, grid.size(), pos1);
+		AQLAlgorithm::locate<DoubleArray, double>(grid, t2, grid.size(), pos2);
 
 		double sum = 0.0;
 		double xx1, xx2;

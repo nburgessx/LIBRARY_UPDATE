@@ -70,15 +70,15 @@ namespace google_test
             {
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getParRateInputs, i ) );
 
-                LAStringMatrix oisLVB = inputFile["oisLVB"];
+                AQLStringMatrix oisLVB = inputFile["oisLVB"];
                 double parRate = validation::tryMeProductOISParRate( oisLVB, true );
 
                 if ( etrading::CreateDataFile::rebaseResultsEnabled() )
                 {
                     // Record outputs and rebase test outputs
                     etrading::CreateDataFile::setOutputFolder( TEST_DIR, false );
-                    LAStringVector v = LAString( getParRateOutputs ).toToken( '/' );
-                    LAString outputFileName = v.back();
+                    AQLStringVector v = AQLString( getParRateOutputs ).toToken( '/' );
+                    AQLString outputFileName = v.back();
                     etrading::CreateDataFile file( CreateDataFile::makeFilename( outputFileName, i ) );
                     file.write( "output", parRate );
                 }
@@ -95,7 +95,7 @@ namespace google_test
         {
             EXPECT_GE( i, PARRATE_TEST_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -119,7 +119,7 @@ namespace google_test
             {
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getPVInputs, i ) );
 
-                LAStringMatrix oisLVB = inputFile["oisLVB"];
+                AQLStringMatrix oisLVB = inputFile["oisLVB"];
 
                 double pv = validation::tryMeProductOISPV( oisLVB, true );
 
@@ -130,7 +130,7 @@ namespace google_test
         {
             EXPECT_GE( i, PV_TEST_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

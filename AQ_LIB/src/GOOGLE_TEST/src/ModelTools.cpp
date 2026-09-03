@@ -1,10 +1,10 @@
 #include "ModelTools.h"
 
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
 #include "LADateScheduleHelpers.h"
-#include "LAMathDefine.h"
-#include "LADataBasics.h"
+#include "AQLMathDefine.h"
+#include "AQLDataBasics.h"
 #include "LAPriceCMSTools.h"
 #include "LAMathSwaptionVolUtility.h"
 #include "LAMathParameterUtility.h"
@@ -18,29 +18,29 @@
 namespace google_test
 {
 // Find AsOfDate stored in convention object
-LADate ModelUtility::AsOfDate(const LAString& convID)
+AQLDate ModelUtility::AsOfDate(const AQLString& convID)
 {
-    LADataInstance* dataInstance = etrading::getDataInstance();
-    LAObject conventions = dataInstance->getObjectPool().getObject(convID, ENCHKTYPE_ISDEFINED ).get();
-    return dynamic_cast<const LADataDate& >(conventions.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get()).get();
+    AQLDataInstance* dataInstance = etrading::getDataInstance();
+    AQLObject conventions = dataInstance->getObjectPool().getObject(convID, ENCHKTYPE_ISDEFINED ).get();
+    return dynamic_cast<const AQLDataDate& >(conventions.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get()).get();
 }
 
 /* Calendar shift of a date by a term with default conventions. This is used for simple estimates of shifted
    dates, not intended to be used for accurate pricing following well defined conventions. */
-LADate ModelUtility::ShiftDate(LADate valDate, const LAString& term)
+AQLDate ModelUtility::ShiftDate(AQLDate valDate, const AQLString& term)
 {
-    LAString calendar = LAString("TKB:LNB");
-    LAPriceDataCalendar cdr; cdr.convertFromString(calendar);
-    LAString slidingRule = LAString("NO_CHANGE");
-    LAPriceDataSlidingRule sdr; sdr.convertFromString(slidingRule);
+    AQLString calendar = AQLString("TKB:LNB");
+    AQLPriceDataCalendar cdr; cdr.convertFromString(calendar);
+    AQLString slidingRule = AQLString("NO_CHANGE");
+    AQLPriceDataSlidingRule sdr; sdr.convertFromString(slidingRule);
     return etrading::CalendarAdvance(valDate, term, sdr, cdr);
 }
 
 // Wrapper to set 1 forecast and 1 discount curve in object pool
-void ModelUtility::SetCurves(const LAString& directory, const LAString& fileNameForecast, const LAString& fileNameDiscount)
+void ModelUtility::SetCurves(const AQLString& directory, const AQLString& fileNameForecast, const AQLString& fileNameDiscount)
 {
-    LAString forecastFile = directory + fileNameForecast + LAString(".csv");
-    LAString discountFile = directory + fileNameDiscount + LAString(".csv");
+    AQLString forecastFile = directory + fileNameForecast + AQLString(".csv");
+    AQLString discountFile = directory + fileNameDiscount + AQLString(".csv");
     SET_UP_STD_CURVE(discountFile, forecastFile);
 }
 
@@ -56,28 +56,28 @@ void ModelUtility::SetCurves(const LAString& directory, const LAString& fileName
 
    When a parameter has expiries is indexed on the x-axis by a non-interpolat-able quantity, this function
    cannot be used. Use SetNonInterpolatedParameters() instead. */
-void ModelUtility::SetParameters(const LAString& directory, const LAString& paramFileName, const LAString& currency,
-                                 const LAStringVector& paramNames, LAStringVector& paramIDs, LADate& asOfDate)
+void ModelUtility::SetParameters(const AQLString& directory, const AQLString& paramFileName, const AQLString& currency,
+                                 const AQLStringVector& paramNames, AQLStringVector& paramIDs, AQLDate& asOfDate)
 {
-    LADataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+    AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
 
     // Set file object
-    LAString inputFile = directory + paramFileName + LAString(".csv");
+    AQLString inputFile = directory + paramFileName + AQLString(".csv");
     etrading::ReadDataFile::Load inputFileObj = etrading::ReadDataFile::Load(inputFile);
 
     // Create conventions
-    LAString convID = inputFileObj["ConventionID"]();
-    LAStringMatrix convMatrix = inputFileObj["Conventions"];
+    AQLString convID = inputFileObj["ConventionID"]();
+    AQLStringMatrix convMatrix = inputFileObj["Conventions"];
     LAMathSwaptionVolUtility::setUpConvention(dataInstance, convID, convMatrix);
 
     // Set-up parameter matrices
     size_t paramSize = paramNames.size();
-    paramIDs = LAStringVector(paramSize);
+    paramIDs = AQLStringVector(paramSize);
     for (size_t i = 0; i < paramSize; i++)
     {
-        LAString paramName = paramNames[i];
-        LAStringMatrix paramMatrix = inputFileObj[paramName];
-        LAString paramID = LAPriceCMSObject::MatrixID("_" + paramName + "_", currency);
+        AQLString paramName = paramNames[i];
+        AQLStringMatrix paramMatrix = inputFileObj[paramName];
+        AQLString paramID = LAPriceCMSObject::MatrixID("_" + paramName + "_", currency);
         LAMathSwaptionVolUtility::setUpSABRGrid(dataInstance, paramID, convID, paramMatrix);
         paramIDs[i] = paramID;
     }
@@ -89,28 +89,28 @@ void ModelUtility::SetParameters(const LAString& directory, const LAString& para
 /* Loads parameter matrices in object pool. The logic is very similar to SetParameters(). The difference is that
    the x-axis is not a tenor (more generally, it is a non-interpolat-able string). This is used for
    example for spread quotes which are indexed on the x-axis by tenor pairs of the form 30Y/2Y. */
-void ModelUtility::SetNonInterpolatedParameters(const LAString& directory, const LAString& paramFileName, const LAString& currency,
-                                                const LAStringVector& paramNames, LAStringVector& paramIDs, LADate& asOfDate)
+void ModelUtility::SetNonInterpolatedParameters(const AQLString& directory, const AQLString& paramFileName, const AQLString& currency,
+                                                const AQLStringVector& paramNames, AQLStringVector& paramIDs, AQLDate& asOfDate)
 {
-    LADataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+    AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
 
     // Set file object
-    LAString inputFile = directory + paramFileName + LAString(".csv");
+    AQLString inputFile = directory + paramFileName + AQLString(".csv");
     etrading::ReadDataFile::Load inputFileObj = etrading::ReadDataFile::Load(inputFile);
 
     // Create conventions
-    LAString convID = inputFileObj["ConventionID"]();
-    LAStringMatrix convMatrix = inputFileObj["Conventions"];
+    AQLString convID = inputFileObj["ConventionID"]();
+    AQLStringMatrix convMatrix = inputFileObj["Conventions"];
     LAMathSwaptionVolUtility::setUpConvention(dataInstance, convID, convMatrix);
 
     // Set-up parameter matrices
     size_t paramSize = paramNames.size();
-    paramIDs = LAStringVector(paramSize);
+    paramIDs = AQLStringVector(paramSize);
     for (size_t i = 0; i < paramSize; i++)
     {
-        LAString paramName = paramNames[i];
-        LAStringMatrix paramMatrix = inputFileObj[paramName];
-        LAString paramID = LAPriceCMSObject::MatrixID("_" + paramName + "_", currency);
+        AQLString paramName = paramNames[i];
+        AQLStringMatrix paramMatrix = inputFileObj[paramName];
+        AQLString paramID = LAPriceCMSObject::MatrixID("_" + paramName + "_", currency);
         LAMathParameterObject::SetParameterMatrix(dataInstance, paramID, convID, paramMatrix);
         paramIDs[i] = paramID;
     }

@@ -19,33 +19,33 @@
 
 
 #include "LAModelSetupVanilla.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataBasics.h"
-#include "LASobol.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataBasics.h"
+#include "AQLSobol.h"
 #include "LADefinitions.h"
 #include "LACoreDataService.h"
 #include "LAStaticDataManager.h"
 #include "LAStaticData.h"
 #include "LAMathYieldCurvePro.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAParabolicInterpolation.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
-#include "LAMonotoneConvexInterpolation.h"
-#include "LAMonotoneSplineInterpolation.h"
-#include "LAConstrainedSplineInterpolation.h"
-#include "LAStepInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLParabolicInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
+#include "AQLMonotoneConvexInterpolation.h"
+#include "AQLMonotoneSplineInterpolation.h"
+#include "AQLConstrainedSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
 #include "LAPricePortfolioValue.h"
 #include "LAPriceYieldGenerator.h"
-#include "LAConstant.h"
-#include "LALinearFunc.h"
-#include "LAQuadraticFunc.h"
-#include "LADivideFunc.h"
-#include "LAMaxFunc.h"
-#include "LAMinFunc.h"
+#include "AQLConstant.h"
+#include "AQLLinearFunc.h"
+#include "AQLQuadraticFunc.h"
+#include "AQLDivideFunc.h"
+#include "AQLMaxFunc.h"
+#include "AQLMinFunc.h"
 #include "LASumFunc.h"
 #include "LAFractionFunc.h"
 #include "LALinearRatesOptionValue.h"
@@ -117,85 +117,85 @@ LAModelSetupVanilla::~LAModelSetupVanilla(void)
 /*!
     @brief regist function data to functionmaster object
 
-	@param[in,out] dataInstance LADataInstance &
+	@param[in,out] dataInstance AQLDataInstance &
 	@return void 
 */
 void
-LAModelSetupVanilla::registFunctionMaster(LADataInstance &dataInstance)
+LAModelSetupVanilla::registFunctionMaster(AQLDataInstance &dataInstance)
 {
-	LAPriceDataManager &dm = dataInstance.getDataMaster();
-	LAFunctionManager &fm = dataInstance.getFunctionMaster();
+	AQLPriceDataManager &dm = dataInstance.getDataMaster();
+	AQLFunctionManager &fm = dataInstance.getFunctionMaster();
 
 	//base method
-	fm.setFunction(new LAConstant(),										FN_CONSTANT_STR);
-	fm.setFunction(new LALinearMethod(),									FN_LINEAR_STR);
-	fm.setFunction(new LAQuadraticMethod(),									FN_QUADRATIC_STR);
-	fm.setFunction(new LAMaxMethod(),										FN_MAX_STR);
-	fm.setFunction(new LAMinMethod(),										FN_MIN_STR);
+	fm.setFunction(new AQLConstant(),										FN_CONSTANT_STR);
+	fm.setFunction(new AQLLinearMethod(),									FN_LINEAR_STR);
+	fm.setFunction(new AQLQuadraticMethod(),									FN_QUADRATIC_STR);
+	fm.setFunction(new AQLMaxMethod(),										FN_MAX_STR);
+	fm.setFunction(new AQLMinMethod(),										FN_MIN_STR);
 	fm.setFunction(new LASumMethod(),										FN_SUM_STR);
-	fm.setFunction(new LADivideMethod(),									FN_DIVIDE_STR);
+	fm.setFunction(new AQLDivideMethod(),									FN_DIVIDE_STR);
 	fm.setFunction(new LAFractionMethod(),									FN_FRACTION_STR);
 	
 	// Interpolation Methods
-	fm.setFunction(new LALinearInterpolation(LINEAR_EXTRAPOLATION_TYPE),	FN_LINEARINTERPOLATION_STR);
-	fm.setFunction(new LASplineInterpolation(),								FN_SPLINEINTERPOLATION_STR);
-    fm.setFunction(new LASplineInterpolation(true),							FN_NATURALSPLINEINTERPOLATION_STR);     // UseNaturalSpline = true ( default )
-    fm.setFunction(new LASplineInterpolation(false),						FN_CLAMPEDSPLINEINTERPOLATION_STR);    // UseNaturalSpline = false => Clamped Spline
-	fm.setFunction(new LAMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND),		FN_MONOTONESPLINEINTERPOLATION_STR);
-	fm.setFunction(new LAMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC),	FN_MONOTONEPARABOLICINTERPOLATION_STR);
-    fm.setFunction(new LAMonotoneSplineInterpolation(),						FN_MONOTONESPLINEINTERPOLATION_STR);
-	fm.setFunction(new LAParabolicInterpolation(),							FN_PARABOLICINTERPOLATION_STR);
-    fm.setFunction(new LALinearSplineInterpolation(),						FN_LINEARSPLINEINTERPOLATION_STR);
-	fm.setFunction(new LALinearMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND),		FN_LINEARMONOTONESPLINEINTERPOLATION_STR);
-	fm.setFunction(new LALinearMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC),	FN_LINEARMONOTONEPARABOLICINTERPOLATION_STR);
-	fm.setFunction(new LAConstrainedSplineInterpolation(),					FN_CONSTRAINEDSPLINEINTERPOLATION_STR);
-	fm.setFunction(new LAStepInterpolation(),								FN_STEPINTERPOLATION_STR);
-	fm.setFunction(new LAStepInterpolation(StepType::RIGHT_CONTINUOUS),		FN_RIGHTCONTINUOUS_INTERPOLATION_STR);
-	fm.setFunction(new LAStepInterpolation(StepType::LEFT_CONTINUOUS),		FN_LEFTCONTINUOUS_INTERPOLATION_STR);
+	fm.setFunction(new AQLLinearInterpolation(LINEAR_EXTRAPOLATION_TYPE),	FN_LINEARINTERPOLATION_STR);
+	fm.setFunction(new AQLSplineInterpolation(),								FN_SPLINEINTERPOLATION_STR);
+    fm.setFunction(new AQLSplineInterpolation(true),							FN_NATURALSPLINEINTERPOLATION_STR);     // UseNaturalSpline = true ( default )
+    fm.setFunction(new AQLSplineInterpolation(false),						FN_CLAMPEDSPLINEINTERPOLATION_STR);    // UseNaturalSpline = false => Clamped Spline
+	fm.setFunction(new AQLMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND),		FN_MONOTONESPLINEINTERPOLATION_STR);
+	fm.setFunction(new AQLMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC),	FN_MONOTONEPARABOLICINTERPOLATION_STR);
+    fm.setFunction(new AQLMonotoneSplineInterpolation(),						FN_MONOTONESPLINEINTERPOLATION_STR);
+	fm.setFunction(new AQLParabolicInterpolation(),							FN_PARABOLICINTERPOLATION_STR);
+    fm.setFunction(new AQLLinearSplineInterpolation(),						FN_LINEARSPLINEINTERPOLATION_STR);
+	fm.setFunction(new AQLLinearMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND),		FN_LINEARMONOTONESPLINEINTERPOLATION_STR);
+	fm.setFunction(new AQLLinearMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC),	FN_LINEARMONOTONEPARABOLICINTERPOLATION_STR);
+	fm.setFunction(new AQLConstrainedSplineInterpolation(),					FN_CONSTRAINEDSPLINEINTERPOLATION_STR);
+	fm.setFunction(new AQLStepInterpolation(),								FN_STEPINTERPOLATION_STR);
+	fm.setFunction(new AQLStepInterpolation(StepType::RIGHT_CONTINUOUS),		FN_RIGHTCONTINUOUS_INTERPOLATION_STR);
+	fm.setFunction(new AQLStepInterpolation(StepType::LEFT_CONTINUOUS),		FN_LEFTCONTINUOUS_INTERPOLATION_STR);
 
 	// Interpolation Alias Names
-	fm.setFunction(new LALinearInterpolation(LINEAR_EXTRAPOLATION_TYPE),	LINEAR_INTERP);
-	fm.setFunction(new LASplineInterpolation(),								SPLINE_INTERP);
-    fm.setFunction(new LASplineInterpolation(true),							NATURAL_SPLINE_INTERP);     // UseNaturalSpline = true ( default )
-    fm.setFunction(new LASplineInterpolation(false),						CLAMPED_SPLINE_INTERP);    // UseNaturalSpline = false => Clamped Spline
-	fm.setFunction(new LAMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND),		MONOTONE_SPLINE_INTERP);
-	fm.setFunction(new LAMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC),	MONOTONE_PARABOLIC_INTERP);
-    fm.setFunction(new LAMonotoneSplineInterpolation(),						MONOTONE_SPLINE_INTERP);
-	fm.setFunction(new LAParabolicInterpolation(),							PARABOLIC_INTERP);
-    fm.setFunction(new LALinearSplineInterpolation(),						LINEAR_SPLINE_INTERP);
-	fm.setFunction(new LALinearMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND),		LINEAR_MONOTONE_SPLINE_INTERP);
-	fm.setFunction(new LALinearMonotoneSplineInterpolation(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC),	LINEAR_MONOTONE_PARABOLIC_INTERP);
-	fm.setFunction(new LAConstrainedSplineInterpolation(),					CONSTRAINED_SPLINE_INTERP);
-	fm.setFunction(new LAStepInterpolation(),								STEP_INTERP);
-	fm.setFunction(new LAStepInterpolation(StepType::RIGHT_CONTINUOUS),		RIGHT_CONTINUOUS_INTERP);
-	fm.setFunction(new LAStepInterpolation(StepType::LEFT_CONTINUOUS),		LEFT_CONTINUOUS_INTERP);
+	fm.setFunction(new AQLLinearInterpolation(LINEAR_EXTRAPOLATION_TYPE),	LINEAR_INTERP);
+	fm.setFunction(new AQLSplineInterpolation(),								SPLINE_INTERP);
+    fm.setFunction(new AQLSplineInterpolation(true),							NATURAL_SPLINE_INTERP);     // UseNaturalSpline = true ( default )
+    fm.setFunction(new AQLSplineInterpolation(false),						CLAMPED_SPLINE_INTERP);    // UseNaturalSpline = false => Clamped Spline
+	fm.setFunction(new AQLMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND),		MONOTONE_SPLINE_INTERP);
+	fm.setFunction(new AQLMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC),	MONOTONE_PARABOLIC_INTERP);
+    fm.setFunction(new AQLMonotoneSplineInterpolation(),						MONOTONE_SPLINE_INTERP);
+	fm.setFunction(new AQLParabolicInterpolation(),							PARABOLIC_INTERP);
+    fm.setFunction(new AQLLinearSplineInterpolation(),						LINEAR_SPLINE_INTERP);
+	fm.setFunction(new AQLLinearMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND),		LINEAR_MONOTONE_SPLINE_INTERP);
+	fm.setFunction(new AQLLinearMonotoneSplineInterpolation(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC),	LINEAR_MONOTONE_PARABOLIC_INTERP);
+	fm.setFunction(new AQLConstrainedSplineInterpolation(),					CONSTRAINED_SPLINE_INTERP);
+	fm.setFunction(new AQLStepInterpolation(),								STEP_INTERP);
+	fm.setFunction(new AQLStepInterpolation(StepType::RIGHT_CONTINUOUS),		RIGHT_CONTINUOUS_INTERP);
+	fm.setFunction(new AQLStepInterpolation(StepType::LEFT_CONTINUOUS),		LEFT_CONTINUOUS_INTERP);
 
 	// Monotone Convex Parameters
 	// -------------------------------------------------
 	const LAStaticData &staticData			= LACoreDataService::getStaticDataManager().getStaticData();
-	const LAString strLambda				= staticData.getStaticData(KEY_MONOTONECONVEX_LAMBDA);
-	const LAString strIsAllowedNegative		= staticData.getStaticData(KEY_MONOTONECONVEX_ISALLOWEDNEGATIVE);
+	const AQLString strLambda				= staticData.getStaticData(KEY_MONOTONECONVEX_LAMBDA);
+	const AQLString strIsAllowedNegative		= staticData.getStaticData(KEY_MONOTONECONVEX_ISALLOWEDNEGATIVE);
 
 	if (strLambda != AQ_NO_DATA && strIsAllowedNegative != AQ_NO_DATA)
 	{
-		LADataBool isAllowedNegative;
+		AQLDataBool isAllowedNegative;
 		isAllowedNegative.convertFromString(strIsAllowedNegative);
-		const LAString strInputMode = staticData.getStaticData(KEY_MONOTONECONVEX_INPUTMODE);
-		const LAString strOutputMode = staticData.getStaticData(KEY_MONOTONECONVEX_OUTPUTMODE);
+		const AQLString strInputMode = staticData.getStaticData(KEY_MONOTONECONVEX_INPUTMODE);
+		const AQLString strOutputMode = staticData.getStaticData(KEY_MONOTONECONVEX_OUTPUTMODE);
 		if (strInputMode != AQ_NO_DATA && strOutputMode != AQ_NO_DATA)
 		{
-			fm.setFunction(new LAMonotoneConvexInterpolation(strLambda.getDoubleValue(), isAllowedNegative.get(),
+			fm.setFunction(new AQLMonotoneConvexInterpolation(strLambda.getDoubleValue(), isAllowedNegative.get(),
 				strInputMode.getIntValue(), strOutputMode.getIntValue()), FN_MONOTONECONVEXINTERPOLATION_STR);
 		}
 		else
 		{
-			fm.setFunction(new LAMonotoneConvexInterpolation(strLambda.getDoubleValue(), isAllowedNegative.get()),
+			fm.setFunction(new AQLMonotoneConvexInterpolation(strLambda.getDoubleValue(), isAllowedNegative.get()),
 				FN_MONOTONECONVEXINTERPOLATION_STR);
 		}
 	}
 	else
 	{
-		fm.setFunction(new LAMonotoneConvexInterpolation(), FN_MONOTONECONVEXINTERPOLATION_STR);
+		fm.setFunction(new AQLMonotoneConvexInterpolation(), FN_MONOTONECONVEXINTERPOLATION_STR);
 	}
 	// -------------------------------------------------
 
@@ -357,11 +357,11 @@ LAModelSetupVanilla::registFunctionMaster(LADataInstance &dataInstance)
 /*!
     @brief regist extra data data to attributemaster object
 
-	@param[in,out] dm LAPriceDataManager &	
+	@param[in,out] dm AQLPriceDataManager &	
 	@return void 
 */
 void
-LAModelSetupVanilla::registAttrMasterEx(LAPriceDataManager &dm)
+LAModelSetupVanilla::registAttrMasterEx(AQLPriceDataManager &dm)
 {
 }
 
@@ -370,13 +370,13 @@ LAModelSetupVanilla::registAttrMasterEx(LAPriceDataManager &dm)
 /*!
     @brief regist extra object data to entitymaster object
 
-	@param[in,out] dataInstance LADataInstance &	
+	@param[in,out] dataInstance AQLDataInstance &	
 	@return void 
 */
 void
-LAModelSetupVanilla::registEntityMasterEx(LADataInstance &dataInstance)
+LAModelSetupVanilla::registEntityMasterEx(AQLDataInstance &dataInstance)
 {
-	LAObjectMaster &em = dataInstance.getObjectMaster();
+	AQLObjectMaster &em = dataInstance.getObjectMaster();
 	em.setEntity(new LAMathPlainVanillaEntity(&dataInstance));
 }
 
@@ -384,11 +384,11 @@ LAModelSetupVanilla::registEntityMasterEx(LADataInstance &dataInstance)
 /*!
     @brief regist extra function data to functionmaster object
 
-	@param[in,out] dataInstance LADataInstance &
+	@param[in,out] dataInstance AQLDataInstance &
 	@return void 
 */
 void
-LAModelSetupVanilla::registFunctionMasterEx(LADataInstance &dataInstance)
+LAModelSetupVanilla::registFunctionMasterEx(AQLDataInstance &dataInstance)
 {
 	dataInstance;
 }

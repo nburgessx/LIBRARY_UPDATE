@@ -20,21 +20,21 @@
 #endif
 
 
-#include "LADataInstance.h"
-#include "LACoreReferencePool.h"
-#include "LAObjectPool.h"
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataProcedure.h"
-#include "LADataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLCoreReferencePool.h"
+#include "AQLObjectPool.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataMultiReference.h"
 #include "LAMathYieldCurve.h"
 #include "LAMathYieldCurvePro.h"
 #include "LAPriceArbFreeGenerator.h"
 #include "LAScenarioConfigurationYieldCurveBasis.h"
 #include "LAMarketData.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAPriceYieldGenerator.h"
 
 using namespace std;
@@ -64,75 +64,75 @@ LAScenarioConfigurationYieldCurveBasis::~LAScenarioConfigurationYieldCurveBasis(
 	@param[in] param
 	@return vector<MBEnity *>
 */
-vector<LAObject *>
-LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInstance, const MAScenarioParam &param) const
+vector<AQLObject *>
+LAScenarioConfigurationYieldCurveBasis::createScenario(AQLDataInstance &dataInstance, const MAScenarioParam &param) const
 {
 	// get ArbFree Flag
-	const bool isArbFree = dynamic_cast<const LADataBool&>(dynamic_cast<LAMathYieldCurvePro &>
+	const bool isArbFree = dynamic_cast<const AQLDataBool&>(dynamic_cast<LAMathYieldCurvePro &>
 						(dataInstance.getObjectPool().getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get())
 						.getIsArbFree()).get();
 
-	vector<LAObject *> ret(0);
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	vector<AQLObject *> ret(0);
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
 	//////////////////////////////////////////////////
 	// get market data
 	//////////////////////////////////////////////////
 	// get yield
 
-	LAString bYieldName = param.targetName;
+	AQLString bYieldName = param.targetName;
 	
 	const LAMathYieldCurve &bYield = dynamic_cast<const LAMathYieldCurve &>
 					(objPool.getObject(bYieldName, ENCHKTYPE_ISDEFINED).get());
 
 	// get yield data
-	const LAObject &bYieldData = bYield.getYieldData().get().get();
-	const LAString bYieldDataName = dynamic_cast<const LADataString &>
+	const AQLObject &bYieldData = bYield.getYieldData().get().get();
+	const AQLString bYieldDataName = dynamic_cast<const AQLDataString &>
 						(bYieldData.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 
 	// get yield data pro
 	LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get());
 
-	const LADate asOfDate = LAMarketData::getAsofDate(objPool);
-	LAString shiftType = param.shiftType;
+	const AQLDate asOfDate = LAMarketData::getAsofDate(objPool);
+	AQLString shiftType = param.shiftType;
 	shiftType.toUpper();
 
 	LAMarketData::sortMarketData(bYieldPro);
 	dataInstance.getReferencePool().completeDependency();
 
-	const LADataHolder *dh = &bYieldPro.getData(IR_CALIBRATION_DATA_DFCURVENAME, NOCHECK);
+	const AQLDataHolder *dh = &bYieldPro.getData(IR_CALIBRATION_DATA_DFCURVENAME, NOCHECK);
 
-	LAString dfCurveName = ITSELF;
+	AQLString dfCurveName = ITSELF;
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dfCurveName = dynamic_cast<const LADataString &>(dh->get()).get();
+		dfCurveName = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
-	LAString marketName = bYieldPro.getMarketForCurve(dfCurveName);
+	AQLString marketName = bYieldPro.getMarketForCurve(dfCurveName);
 
 	// foreign curve refer or not
 	bool isForeignRefer = false;
-	LAString tmpTgtCurveType = param.targetCurveType;
+	AQLString tmpTgtCurveType = param.targetCurveType;
 	if (tmpTgtCurveType.toToken('_').size() == 2) 
 	{
 		isForeignRefer = true;
 		tmpTgtCurveType = tmpTgtCurveType.toToken('_').back();
 	}
 
-	LAString attrSuffix = "";
+	AQLString attrSuffix = "";
 	if (tmpTgtCurveType != STD)
 	{
 		attrSuffix = "_" + tmpTgtCurveType;
 	}
 
-    LADataMultiReference& refMarket = dynamic_cast<LADataMultiReference &>(bYieldPro.getData(CALIBRATION_DATA_MARKETDATA + attrSuffix, ISNOTNULL).get());
+    AQLDataMultiReference& refMarket = dynamic_cast<AQLDataMultiReference &>(bYieldPro.getData(CALIBRATION_DATA_MARKETDATA + attrSuffix, ISNOTNULL).get());
 	const unsigned int marketSize = refMarket.getSize();
-	vector<LAObjectHolder> basisVec;
-	vector<LAString> basisType; 
+	vector<AQLObjectHolder> basisVec;
+	vector<AQLString> basisType; 
 	for (unsigned int i = 0; i < marketSize; ++i)
 	{
-		LAString type = dynamic_cast<const LADataString &>
+		AQLString type = dynamic_cast<const AQLDataString &>
 							(refMarket.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL).get()).get();
 		type.toUpper();
 		if (type == YIELD_TYPE_BASIS || (type == YIELD_TYPE_FWDFX/* && param.isFwdFX*/))
@@ -145,7 +145,7 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 	const unsigned int basisSize = basisVec.size();
 	if (basisSize == 0)
 	{
-		throw LACoreInvalidData("Basis rate is not set.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Basis rate is not set.", __FILE__, __LINE__);
 	}
 
 	// flag to collateral curve
@@ -163,25 +163,25 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 
 	// get base rates and sort terms
 	DoubleArray baseRates(basisSize);   
-	LAStringVector marketTerms(basisSize);
+	AQLStringVector marketTerms(basisSize);
 	dataInstance.getReferencePool().completeDependency();
 	for (unsigned int i = 0; i < basisSize; ++i)
 	{
-		LAObjectHolder &objHolder = basisVec[i];
-		LADataDouble &attrRate = dynamic_cast<LADataDouble &>(objHolder.getData(CALIBRATION_DATA_RATE, ISNOTNULL).get());
+		AQLObjectHolder &objHolder = basisVec[i];
+		AQLDataDouble &attrRate = dynamic_cast<AQLDataDouble &>(objHolder.getData(CALIBRATION_DATA_RATE, ISNOTNULL).get());
 		baseRates[i] = attrRate.get();
-		marketTerms[i] = dynamic_cast<const LADataString &>(objHolder.getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get()).get();
+		marketTerms[i] = dynamic_cast<const AQLDataString &>(objHolder.getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get()).get();
 	}
 
 	// Swap Tenor Change
-	const bool isSwapTenorAdjust = dynamic_cast<const LADataBool&>(bYieldPro.getIsSwapTenorAdjust()).get();
+	const bool isSwapTenorAdjust = dynamic_cast<const AQLDataBool&>(bYieldPro.getIsSwapTenorAdjust()).get();
 
 	// Checkif wheather affect to base curve
 	dh = &bYieldPro.getData(IR_CALIBRATION_DATA_ISAFFECTINGBASECURVE + attrSuffix, NOCHECK);
 	bool isAffectBaseCurve = false;
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isAffectBaseCurve = dynamic_cast<const LADataBool&>(dh->get()).get();
+		isAffectBaseCurve = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	}
 	isAffectBaseCurve = isAffectBaseCurve || isSwapTenorAdjust || isArbFree;
 
@@ -190,18 +190,18 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 	{
 		if (param.paraShiftVec.empty() || param.paraShiftVec.size() != param.paraTerm.size() || param.paraShiftVec.size() != basisSize)
 		{
-			throw LACoreInvalidData("Parallel shift error. Term and shifval size or term and basis size is not consistent", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Parallel shift error. Term and shifval size or term and basis size is not consistent", __FILE__, __LINE__);
 		}
-		LAString suffix = "_" + param.calcType + "_" + tmpTgtCurveType + "_Parallel";
+		AQLString suffix = "_" + param.calcType + "_" + tmpTgtCurveType + "_Parallel";
 		// clone yield data and yield
-		const LAString cYieldDataName = bYieldDataName + suffix; 
-		LAObject *cYieldData = 0;
-		LAObjectHolder objHolder = objPool.getObject(cYieldDataName, ENCHKTYPE_NOCHECK);
+		const AQLString cYieldDataName = bYieldDataName + suffix; 
+		AQLObject *cYieldData = 0;
+		AQLObjectHolder objHolder = objPool.getObject(cYieldDataName, ENCHKTYPE_NOCHECK);
 		if (!objHolder.isDefined())
 		{
 			cYieldData = bYieldData.clone();
 			cYieldData->remove(CALIBRATION_DATA_NAME);
-			cYieldData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(cYieldDataName);
+			cYieldData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(cYieldDataName);
 			objPool.set(cYieldDataName, cYieldData);
 
 			//If the discount curve of the Currency is a FWDFXCONST market name generator, 
@@ -216,10 +216,10 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 				if (isAffectBaseCurve) bYieldPro.removeAllCuveData(*cYieldData);
 				bYieldPro.removeBasisCuveData(*cYieldData);
 				//bYieldPro.removeCuveData(*cYieldData, FWDFXCONST);
-				LADataHolder &ahFloater = bYieldPro.getData(IR_CALIBRATION_DATA_FLOATERDFS, NOCHECK);
+				AQLDataHolder &ahFloater = bYieldPro.getData(IR_CALIBRATION_DATA_FLOATERDFS, NOCHECK);
 				if (ahFloater.isDefined() && !ahFloater.isNull()) 
 				{
-					LAString floaterName = dynamic_cast<LADataString &>(ahFloater.get()).get();
+					AQLString floaterName = dynamic_cast<AQLDataString &>(ahFloater.get()).get();
 					bYieldPro.removeCuveData(*cYieldData, floaterName);
 				}
 			}
@@ -230,7 +230,7 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 		}
 
 		LAMathYieldCurve *cYield = 0;
-		const LAString cYieldName = bYieldName + suffix; 
+		const AQLString cYieldName = bYieldName + suffix; 
 		objHolder = objPool.getObject(cYieldName, ENCHKTYPE_NOCHECK);
 		if (!objHolder.isDefined())
 		{
@@ -250,13 +250,13 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 		const unsigned int size =  param.paraTerm.size();
 		for (unsigned int i = 0; i < size; ++i)
 		{
-			LAString paraTerm = param.paraTerm[i];
+			AQLString paraTerm = param.paraTerm[i];
 			paraTerm.toUpper();
 			marketTerms[i].toUpper();
 
 			if (paraTerm != marketTerms[i])
 			{
-				throw LACoreInvalidData("Parallel shift error. Param term and market term is not consistent.", __FILE__, __LINE__); 
+				throw AQLCoreInvalidData("Parallel shift error. Param term and market term is not consistent.", __FILE__, __LINE__); 
 			}
 
 			double shiftValue = param.paraShiftVec[i];
@@ -266,7 +266,7 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 				{
 					if (param.isFwdFXZeroRateBump)
 					{
-						throw LACoreInvalidData("FWD FX Basis Delta shift bump error. Both isFwdPointBump & isFwdFXZeroRateBump should not be TRUE.", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("FWD FX Basis Delta shift bump error. Both isFwdPointBump & isFwdFXZeroRateBump should not be TRUE.", __FILE__, __LINE__);
 					}
 					shiftValue *= 10000.;	//replication of initial input in BPs
 					shiftValue /= param.fwdfxDenominator;
@@ -288,30 +288,30 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 		if (isAffectBaseCurve) 
 		{
 			// generate yield data
-			LADataProcedure &modelDataObj = dynamic_cast<LADataProcedure &> (bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
+			AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &> (bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
 			dataInstance.getReferencePool().completeDependency();
 			modelDataObj.calibrateModel(asOfDate);
-			const LADataHolder* dh = &bYieldPro.getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK);
+			const AQLDataHolder* dh = &bYieldPro.getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK);
 			// generate swap curve	
 			if (isArbFree && dh->isDefined() && !dh->isNull())
 			{
-				const LAStringVector &swapCurves = dynamic_cast<const LADataStrings &>(dh->get()).get();
+				const AQLStringVector &swapCurves = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 				bYieldPro.clearGCurveGenerateMap();
 				bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, NOCHECK).convertFromString(FN_IRYIELDGENERATOR_STR);
 				for (size_t i=0; i<swapCurves.size(); i++)
 				{
-					bYieldPro.LAObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new LADataString(swapCurves[i]));
-					modelDataObj = dynamic_cast<LADataProcedure &> (bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
+					bYieldPro.AQLObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new AQLDataString(swapCurves[i]));
+					modelDataObj = dynamic_cast<AQLDataProcedure &> (bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
 					modelDataObj.calibrateModel(asOfDate);
-					bYieldPro.LAObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
+					bYieldPro.AQLObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
 				}
 				bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, NOCHECK).convertFromString(FN_IRARBFREEGENERATOR_STR);
 			}
 
 			if (param.isAdjustDF)
 			{
-				const std::map<LAString, LAString> &assignedCurveMktMap = bYieldPro.getAssignedCurveMktMap();
-				for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+				const std::map<AQLString, AQLString> &assignedCurveMktMap = bYieldPro.getAssignedCurveMktMap();
+				for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 				{
 					if (!bYieldPro.isBasisCurve(it->first))
 					{
@@ -326,7 +326,7 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 		if(marketName == "FWDFXCONST")
 		{
 		    //generate yield data
-			LADataProcedure &modelDataObj = dynamic_cast<LADataProcedure &>
+			AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &>
 								(bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
 			modelDataObj.calibrateModel(asOfDate);
 		}
@@ -352,10 +352,10 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 			bYieldPro.setBasisRates();
 		}
 		// set floater df
-		LADataHolder &ahFloater = bYieldPro.getData(IR_CALIBRATION_DATA_FLOATERDFS, NOCHECK);
+		AQLDataHolder &ahFloater = bYieldPro.getData(IR_CALIBRATION_DATA_FLOATERDFS, NOCHECK);
 		if (ahFloater.isDefined() && !ahFloater.isNull())
 		{
-			LAString floaterName = dynamic_cast<LADataString &>(ahFloater.get()).get();
+			AQLString floaterName = dynamic_cast<AQLDataString &>(ahFloater.get()).get();
 			bYieldPro.setFloater(floaterName);
 		}
 
@@ -376,25 +376,25 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 	{
 		if (param.gridShiftVec.empty() || param.gridShiftVec.size() != param.gridTerm.size() ||  param.gridShiftVec.size() != basisSize)
 		{
-			throw LACoreInvalidData("Grid shift error. Term and shifval size or term and basis size is not consistent", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Grid shift error. Term and shifval size or term and basis size is not consistent", __FILE__, __LINE__);
 		}
 
 		if (param.gridGroupID.empty() || param.gridGroupID.size() != param.gridTerm.size())
 		{
-			throw LACoreInvalidData("Grid group error. Term and group(shift group) size is not consistent", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Grid group error. Term and group(shift group) size is not consistent", __FILE__, __LINE__);
 		}
 
 		const unsigned int gridSize = param.gridTerm.size();
 		unsigned int counter = 0;
 		for (unsigned int i = 0; i < gridSize; ++i)
 		{
-			LAString gridTerm = param.gridTerm[i];
+			AQLString gridTerm = param.gridTerm[i];
 			gridTerm.toUpper();
 			marketTerms[i].toUpper();
 
 			if (gridTerm != marketTerms[i])
 			{
-				throw LACoreInvalidData("Grid shift error. Grid term and market term is not consistent.", __FILE__, __LINE__); 
+				throw AQLCoreInvalidData("Grid shift error. Grid term and market term is not consistent.", __FILE__, __LINE__); 
 			}
 
 			if (i != 0 && param.gridGroupID[i] != param.gridGroupID[i - 1] && i > param.maxIndex)
@@ -409,7 +409,7 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 				{
 					if (param.isFwdFXZeroRateBump)
 					{
-						throw LACoreInvalidData("FWD FX Basis Delta shift bump error. Both isFwdPointBump & isFwdFXZeroRateBump should not be TRUE.", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("FWD FX Basis Delta shift bump error. Both isFwdPointBump & isFwdFXZeroRateBump should not be TRUE.", __FILE__, __LINE__);
 					}
 					shiftValue *= 10000.;	//replication of initial input in BPs
 					shiftValue /= param.fwdfxDenominator;
@@ -433,16 +433,16 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 				continue;
 			}
 
-			LAString suffix = "_" + param.calcType + "_" + tmpTgtCurveType + "_Grid_" +  LAString(static_cast<int>(counter++));
+			AQLString suffix = "_" + param.calcType + "_" + tmpTgtCurveType + "_Grid_" +  AQLString(static_cast<int>(counter++));
 			// clone yield data and yield
-			const LAString cYieldDataName = bYieldDataName + suffix; 
-			LAObject *cYieldData = 0;
-			LAObjectHolder objHolder = objPool.getObject(cYieldDataName, ENCHKTYPE_NOCHECK);
+			const AQLString cYieldDataName = bYieldDataName + suffix; 
+			AQLObject *cYieldData = 0;
+			AQLObjectHolder objHolder = objPool.getObject(cYieldDataName, ENCHKTYPE_NOCHECK);
 			if (!objHolder.isDefined())
 			{
 				cYieldData = bYieldData.clone();
 				cYieldData->remove(CALIBRATION_DATA_NAME);
-				cYieldData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(cYieldDataName);
+				cYieldData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(cYieldDataName);
 				objPool.set(cYieldDataName, cYieldData);
 
 				if(marketName == "FWDFXCONST")
@@ -454,10 +454,10 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 				{
 					if (isAffectBaseCurve) bYieldPro.removeAllCuveData(*cYieldData);
 					bYieldPro.removeBasisCuveData(*cYieldData);
-					LADataHolder &ahFloater = bYieldPro.getData(IR_CALIBRATION_DATA_FLOATERDFS, NOCHECK);
+					AQLDataHolder &ahFloater = bYieldPro.getData(IR_CALIBRATION_DATA_FLOATERDFS, NOCHECK);
 					if (ahFloater.isDefined() && !ahFloater.isNull()) 
 					{
-						LAString floaterName = dynamic_cast<LADataString &>(ahFloater.get()).get();
+						AQLString floaterName = dynamic_cast<AQLDataString &>(ahFloater.get()).get();
 						bYieldPro.removeCuveData(*cYieldData, floaterName);
 					}
 				}
@@ -469,7 +469,7 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 			}
 
 			LAMathYieldCurve *cYield = 0;
-			const LAString cYieldName = bYieldName + suffix; 
+			const AQLString cYieldName = bYieldName + suffix; 
 			objHolder = objPool.getObject(cYieldName, ENCHKTYPE_NOCHECK);
 			if (!objHolder.isDefined())
 			{
@@ -488,7 +488,7 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 			if(marketName == "FWDFXCONST")
 			{
 				// generate yield data
-				LADataProcedure &modelDataObj = dynamic_cast<LADataProcedure &>
+				AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &>
 									(bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
 				modelDataObj.calibrateModel(asOfDate);
 			}
@@ -498,30 +498,30 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 			if (isAffectBaseCurve) 
 			{
 				// generate yield data
-				LADataProcedure &modelDataObj = dynamic_cast<LADataProcedure &> (bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
+				AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &> (bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
 				dataInstance.getReferencePool().completeDependency();
 				modelDataObj.calibrateModel(asOfDate);
-				const LADataHolder* dh = &bYieldPro.getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK);
+				const AQLDataHolder* dh = &bYieldPro.getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK);
 				// generate swap curve	
 				if (isArbFree && dh->isDefined() && !dh->isNull())
 				{
-					const LAStringVector &swapCurves = dynamic_cast<const LADataStrings &>(dh->get()).get();
+					const AQLStringVector &swapCurves = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 					bYieldPro.clearGCurveGenerateMap();
 					bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, NOCHECK).convertFromString(FN_IRYIELDGENERATOR_STR);
 					for (size_t i=0; i<swapCurves.size(); i++)
 					{
-						bYieldPro.LAObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new LADataString(swapCurves[i]));
-						modelDataObj = dynamic_cast<LADataProcedure &> (bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
+						bYieldPro.AQLObject::add(IR_CALIBRATION_DATA_GENTARGETDF, new AQLDataString(swapCurves[i]));
+						modelDataObj = dynamic_cast<AQLDataProcedure &> (bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, ISNOTNULL).get());
 						modelDataObj.calibrateModel(asOfDate);
-						bYieldPro.LAObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
+						bYieldPro.AQLObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
 					}
 					bYieldPro.getData(CALIBRATION_DATA_CURVEGENERATOR, NOCHECK).convertFromString(FN_IRARBFREEGENERATOR_STR);
 				}
 
 				if (param.isAdjustDF)
 				{
-					const std::map<LAString, LAString> &assignedCurveMktMap = bYieldPro.getAssignedCurveMktMap();
-					for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+					const std::map<AQLString, AQLString> &assignedCurveMktMap = bYieldPro.getAssignedCurveMktMap();
+					for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 					{
 						if (!bYieldPro.isBasisCurve(it->first))
 						{
@@ -551,10 +551,10 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 				bYieldPro.setBasisRates();
 			}
 			// set floater df
-			LADataHolder &ahFloater = bYieldPro.getData(IR_CALIBRATION_DATA_FLOATERDFS, NOCHECK);
+			AQLDataHolder &ahFloater = bYieldPro.getData(IR_CALIBRATION_DATA_FLOATERDFS, NOCHECK);
 			if (ahFloater.isDefined() && !ahFloater.isNull())
 			{
-				LAString floaterName = dynamic_cast<LADataString &>(ahFloater.get()).get();
+				AQLString floaterName = dynamic_cast<AQLDataString &>(ahFloater.get()).get();
 				bYieldPro.setFloater(floaterName);
 			}
 
@@ -571,7 +571,7 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 				for (unsigned int j = 0; j <= i; ++j)
 				{
 					// set base rate
-					dynamic_cast<LADataDouble &>(basisVec[j].getData(CALIBRATION_DATA_RATE, ISNOTNULL).get()).set(baseRates[j]);
+					dynamic_cast<AQLDataDouble &>(basisVec[j].getData(CALIBRATION_DATA_RATE, ISNOTNULL).get()).set(baseRates[j]);
 				}
 			}
 		}
@@ -584,38 +584,38 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataInstance.getReferencePool().completeDependency();
-		const LAString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);
+		const AQLString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);
 		const unsigned int yieldSize = ret.size();
 		ofstream fout;
 		for (unsigned int i = 0; i < yieldSize; ++i)
 		{
-			const LADataReference &yd = dynamic_cast<const LAMathYieldCurve *>(ret[i])->getYieldData();
-			LAString ydName = yd.convertToString();
+			const AQLDataReference &yd = dynamic_cast<const LAMathYieldCurve *>(ret[i])->getYieldData();
+			AQLString ydName = yd.convertToString();
 			ydName.exchange("\"","");
-			const LAObjectHolder ydHolder = objPool.getObject(ydName, ENCHKTYPE_ISDEFINED);
-			const LAString dirName = LACoreDataService::getOutputDirectory(); 
-			const LAString fileName  = dirName + ydName + fileSuffix + ".csv";
+			const AQLObjectHolder ydHolder = objPool.getObject(ydName, ENCHKTYPE_ISDEFINED);
+			const AQLString dirName = LACoreDataService::getOutputDirectory(); 
+			const AQLString fileName  = dirName + ydName + fileSuffix + ".csv";
 			const DoubleArray &terms = 
-				dynamic_cast<const LADataDoubles &>(ydHolder.getData(CALIBRATION_DATA_TERMS, ISNOTNULL).get()).get();
+				dynamic_cast<const AQLDataDoubles &>(ydHolder.getData(CALIBRATION_DATA_TERMS, ISNOTNULL).get()).get();
 			const DoubleArray &dfs = 
-				dynamic_cast<const LADataDoubles &>(ydHolder.getData(IR_CALIBRATION_DATA_DFS, ISNOTNULL).get()).get();
+				dynamic_cast<const AQLDataDoubles &>(ydHolder.getData(IR_CALIBRATION_DATA_DFS, ISNOTNULL).get()).get();
 
 			int size = terms.size();
 			if (size != static_cast<int>(dfs.size()))
 			{
-				throw LACoreInvalidData("Term size and df size must be same !!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Term size and df size must be same !!", __FILE__, __LINE__);
 			}
 			fout.open(fileName.getCString());
 
-			const LADataHolder &dfAttr2 = ydHolder.getData(IR_CALIBRATION_DATA_DFS2, NOCHECK);
+			const AQLDataHolder &dfAttr2 = ydHolder.getData(IR_CALIBRATION_DATA_DFS2, NOCHECK);
 			if (dfAttr2.isDefined() && !dfAttr2.isNull())
 			{
-				const DoubleArray &dfs2 = dynamic_cast<const LADataDoubles &>(dfAttr2.get()).get();
+				const DoubleArray &dfs2 = dynamic_cast<const AQLDataDoubles &>(dfAttr2.get()).get();
 				for (int i = 0; i < size; ++i)
 				{
-					LAString termOStr = LAString(terms[i]);
-					LAString dfOStr = LAString(dfs[i]);
-					LAString dfOStr2 = LAString(dfs2[i]);
+					AQLString termOStr = AQLString(terms[i]);
+					AQLString dfOStr = AQLString(dfs[i]);
+					AQLString dfOStr2 = AQLString(dfs2[i]);
 					fout << termOStr.getCString() << "," << dfOStr.getCString() << "," << dfOStr2.getCString() << std::endl;
 				}
 			}
@@ -623,8 +623,8 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 			{
 				for (int i = 0; i < size; ++i)
 				{
-					LAString termOStr = LAString(terms[i]);
-					LAString dfOStr = LAString(dfs[i]);
+					AQLString termOStr = AQLString(terms[i]);
+					AQLString dfOStr = AQLString(dfs[i]);
 					fout << termOStr.getCString() << "," << dfOStr.getCString() << std::endl;
 				}
 			}
@@ -645,9 +645,9 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 	@param[in] shiftVal
 */
 void 
-LAScenarioConfigurationYieldCurveBasis::createBumpedRate(LAObjectHolder& basis, const LAString& shiftType, const double baseRate, const double shiftVal) const
+LAScenarioConfigurationYieldCurveBasis::createBumpedRate(AQLObjectHolder& basis, const AQLString& shiftType, const double baseRate, const double shiftVal) const
 {
-	LADataDouble &attrRate = dynamic_cast<LADataDouble &>(basis.getData(CALIBRATION_DATA_RATE, ISNOTNULL).get());
+	AQLDataDouble &attrRate = dynamic_cast<AQLDataDouble &>(basis.getData(CALIBRATION_DATA_RATE, ISNOTNULL).get());
 	// rate case
 	double tmpShiftVal = shiftVal;
 	if (shiftType == RISK_SHIFTTYPE_RATIO)
@@ -665,12 +665,12 @@ LAScenarioConfigurationYieldCurveBasis::createBumpedRate(LAObjectHolder& basis, 
 	@param[in] baseRates
 */
 void 
-LAScenarioConfigurationYieldCurveBasis::restoreBumpedRate(vector<LAObjectHolder>& basisVec, const DoubleArray& baseRates) const
+LAScenarioConfigurationYieldCurveBasis::restoreBumpedRate(vector<AQLObjectHolder>& basisVec, const DoubleArray& baseRates) const
 {
 	for (unsigned int i = 0; i < basisVec.size(); ++i)
 	{
-		LAObjectHolder &objHolder = basisVec[i];
-		LADataDouble &attrRate = dynamic_cast<LADataDouble &>(objHolder.getData(CALIBRATION_DATA_RATE, ISNOTNULL).get());
+		AQLObjectHolder &objHolder = basisVec[i];
+		AQLDataDouble &attrRate = dynamic_cast<AQLDataDouble &>(objHolder.getData(CALIBRATION_DATA_RATE, ISNOTNULL).get());
 		attrRate.set(baseRates[i]);
 	}
 }
@@ -685,20 +685,20 @@ LAScenarioConfigurationYieldCurveBasis::restoreBumpedRate(vector<LAObjectHolder>
 	@param[in] attrSuffix
 */
 void 
-LAScenarioConfigurationYieldCurveBasis::copyBumpedDataForForeignYield(const vector<LAObjectHolder>& basisVec, const LAString& suffix, LAObjectPool& objPool, LAObject& yieldData, const LAString& attrSuffix) const
+LAScenarioConfigurationYieldCurveBasis::copyBumpedDataForForeignYield(const vector<AQLObjectHolder>& basisVec, const AQLString& suffix, AQLObjectPool& objPool, AQLObject& yieldData, const AQLString& attrSuffix) const
 {
-	LAString refData;
+	AQLString refData;
 	for (unsigned int i = 0; i < basisVec.size(); ++i)
 	{
-		const LAObjectHolder& ehOrg = basisVec[i];
-		const LAString cpyName = dynamic_cast<const LADataString &>(ehOrg.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get() + suffix;
-		LAObjectHolder ehCpy = objPool.getObject(cpyName, ENCHKTYPE_NOCHECK);
-		LAObject* cpyData;
+		const AQLObjectHolder& ehOrg = basisVec[i];
+		const AQLString cpyName = dynamic_cast<const AQLDataString &>(ehOrg.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get() + suffix;
+		AQLObjectHolder ehCpy = objPool.getObject(cpyName, ENCHKTYPE_NOCHECK);
+		AQLObject* cpyData;
 		if (!ehCpy.isDefined())
 		{
 			cpyData = ehOrg.clone();
 			cpyData->remove(CALIBRATION_DATA_NAME);
-			cpyData->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(cpyName);
+			cpyData->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(cpyName);
 			objPool.set(cpyName, cpyData);
 		}
 		else
@@ -709,5 +709,5 @@ LAScenarioConfigurationYieldCurveBasis::copyBumpedDataForForeignYield(const vect
 	}
 	refData = refData.subString(0, refData.size() - 2);
 	yieldData.remove(CALIBRATION_DATA_MARKETDATA + attrSuffix);
-	yieldData.add(CALIBRATION_DATA_MARKETDATA + attrSuffix, new LADataMultiReference()).convertFromString(refData);
+	yieldData.add(CALIBRATION_DATA_MARKETDATA + attrSuffix, new AQLDataMultiReference()).convertFromString(refData);
 }

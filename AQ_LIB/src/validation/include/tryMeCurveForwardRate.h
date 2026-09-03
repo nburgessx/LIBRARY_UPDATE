@@ -3,7 +3,7 @@
 #include <boost/date_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -20,9 +20,9 @@ namespace validation
     */
     DoubleVector tryMeCurveForwardRatesFromYearFraction( const DateVector& fromDates,
 														double yearFraction,
-														const LAString& dayCount,
-														const LAString& curveCollection,
-														const LAString& curveIndex, 
+														const AQLString& dayCount,
+														const AQLString& curveCollection,
+														const AQLString& curveIndex, 
 														const std::string& fwdInter="",
 														const std::string& businessDayAdjust="");
 
@@ -37,8 +37,8 @@ namespace validation
     */
     DoubleVector tryMeCurveForwardRatesFromForwardDates( const DateVector& fromDates,
 														const DateVector& toDates,
-														const LAString& curveCollection,
-														const LAString& curveIndex, 
+														const AQLString& curveCollection,
+														const AQLString& curveIndex, 
 														const std::string& fwdInter="",
 														const std::string& businessDayAdjust = "");
 
@@ -53,8 +53,8 @@ namespace validation
     */
     DoubleVector tryMeCurveForwardRatesFromForwardDatesFromObject( const DateVector& fromDates,
 																   const DateVector& toDates,
-																   const LAString& curveCollectionOrHandle,
-																   const LAString& curveIndex, 
+																   const AQLString& curveCollectionOrHandle,
+																   const AQLString& curveIndex, 
 																   const std::string& fwdInter="",
 																   const std::string& businessDayAdjust = "" );
 
@@ -67,8 +67,8 @@ namespace validation
 	*  @return			The forward rates based on fromDates and toDates
     */
     DoubleVector tryMeCurveForwardRates( const DateVector& fixingDates,
-                                         const LAString& curveCollectionOrHandle,
-                                         const LAString& curveIndex, 
+                                         const AQLString& curveCollectionOrHandle,
+                                         const AQLString& curveIndex, 
 										 const std::string& fwdInter="",
 										 const std::string& businessDayAdjust="");
 
@@ -88,13 +88,13 @@ namespace validation
 	*/
 	void tryMeLWOCurveForwardRatesTable( DateVector& fixingDates,
 										 DoubleMatrix& forwardRates,
-										 const LAString& curveCollection,
-										 const LAStringVector& curveIndices,
-										 const LAString& startDate,
-										 const LAString& maturity,
-										 const LAString& businessDayAdjust,
-										 const LAString& calendar,
-										 const LAString& rollConvention,
-										 const LAString& frequency, 
-										 const LAStringVector& fwdInterps=LAStringVector());
+										 const AQLString& curveCollection,
+										 const AQLStringVector& curveIndices,
+										 const AQLString& startDate,
+										 const AQLString& maturity,
+										 const AQLString& businessDayAdjust,
+										 const AQLString& calendar,
+										 const AQLString& rollConvention,
+										 const AQLString& frequency, 
+										 const AQLStringVector& fwdInterps=AQLStringVector());
  }

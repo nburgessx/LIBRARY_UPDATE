@@ -59,7 +59,7 @@ namespace validation
 	*  @param [in]	    columnList          Column header names to show specified columns. Default to empty list 
     *  @return			A matrix containing the swap schedule
     */
-    LAStringMatrix tryMeProductSwapSchedule( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys, const std::vector<std::string>& columnList, const bool& convertDatesToExcelFormat )
+    AQLStringMatrix tryMeProductSwapSchedule( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys, const std::vector<std::string>& columnList, const bool& convertDatesToExcelFormat )
     {
         VALID_EXCEPTION_START
 
@@ -68,13 +68,13 @@ namespace validation
 
         const std::string inputLVB = "SwapScheduleLVB";
 
-   		LAString scheduleType = swapScheduleLVB.getOptionalValueAsLAString( etrading::IRS_KEY::SCHEDULE_TYPE, "");
+   		AQLString scheduleType = swapScheduleLVB.getOptionalValueAsLAString( etrading::IRS_KEY::SCHEDULE_TYPE, "");
 		etrading::validateKeysForLVB(etrading::getScheduleLVBKeys(scheduleType), swapScheduleLVB.getKeys(), validateKeys );
 
         // TODO: Make the schedule pure virtual so that the cashflows can be pure virtual
 
         auto schedule = etrading::createSchedule("schedule", swapScheduleLVB);
-       	LAStringMatrix result = schedule->display(showColumnHeaders, etrading::toCashflowHeaderEnumSet(columnList), convertDatesToExcelFormat);
+       	AQLStringMatrix result = schedule->display(showColumnHeaders, etrading::toCashflowHeaderEnumSet(columnList), convertDatesToExcelFormat);
 
         // Record Outputs AND Return the Result for logs, tests and playback
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );
@@ -89,7 +89,7 @@ namespace validation
 	*  @param [in]	    columnList          Column header names to show specified columns. Default to empty list 
     *  @return			A matrix containing the swap schedule
     */
-    LAStringMatrix tryMeProductSwapScheduleFixed( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys, const std::vector<std::string>& columnList, const bool& convertDatesToExcelFormat )
+    AQLStringMatrix tryMeProductSwapScheduleFixed( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys, const std::vector<std::string>& columnList, const bool& convertDatesToExcelFormat )
 	{
 	    VALID_EXCEPTION_START
 
@@ -117,7 +117,7 @@ namespace validation
 		auto cashflowHeaderEnumSet = columnList.size() > 0 ? etrading::toCashflowHeaderEnumSet(columnList)
 															: getDefaultFixedScheduleColumnNames();
 
-       	LAStringMatrix result = schedule->display(showColumnHeaders, cashflowHeaderEnumSet, convertDatesToExcelFormat );
+       	AQLStringMatrix result = schedule->display(showColumnHeaders, cashflowHeaderEnumSet, convertDatesToExcelFormat );
 
         // Record Outputs AND Return the Result for logs, tests and playback
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );
@@ -132,7 +132,7 @@ namespace validation
 	*  @param [in]	    columnList          Column header names to show specified columns. Default to empty list 
     *  @return			A matrix containing the swap schedule
     */
-    LAStringMatrix tryMeProductSwapScheduleFloat( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys, const std::vector<std::string>& columnList, const bool& convertDatesToExcelFormat )
+    AQLStringMatrix tryMeProductSwapScheduleFloat( bool showColumnHeaders, const LabelValueBlock& swapScheduleLVB, bool validateKeys, const std::vector<std::string>& columnList, const bool& convertDatesToExcelFormat )
 	{
 	    VALID_EXCEPTION_START
 
@@ -156,7 +156,7 @@ namespace validation
 		auto cashflowHeaderEnumSet = columnList.size() > 0 ? etrading::toCashflowHeaderEnumSet(columnList)
 															: getDefaultFloatScheduleColumnNames();
 
-       	LAStringMatrix result = schedule->display(showColumnHeaders, cashflowHeaderEnumSet, convertDatesToExcelFormat );
+       	AQLStringMatrix result = schedule->display(showColumnHeaders, cashflowHeaderEnumSet, convertDatesToExcelFormat );
 		
         // Record Outputs AND Return the Result for logs, tests and playback
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );

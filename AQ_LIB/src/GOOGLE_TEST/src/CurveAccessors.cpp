@@ -4,7 +4,7 @@
 
 namespace google_test
 {
-    CurveAccessors::CurveAccessors( const LAString& inputFile )
+    CurveAccessors::CurveAccessors( const AQLString& inputFile )
         : fileLoaded_( false )
     {
         if ( inputFile.size() != 0 )

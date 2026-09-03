@@ -3,7 +3,7 @@
 
 namespace google_test
 {
-    TryMeCurveTenorBasis::TryMeCurveTenorBasis( const LAString& inputFile )
+    TryMeCurveTenorBasis::TryMeCurveTenorBasis( const AQLString& inputFile )
         : TryMeCurveAccessors( inputFile )
     {
         if ( fileLoaded_ )
@@ -25,7 +25,7 @@ namespace google_test
                     inputFile_.getOptional("liborConv"),
                     inputFile_.getOptional("liborRates") );
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }
@@ -40,7 +40,7 @@ namespace google_test
 	*  @brief			Set up tenor basis curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeTenorBasisCurve(const LAString& inputFile)
+	void setUpMeTenorBasisCurve(const AQLString& inputFile)
 	{
 		if ( inputFile.size() != 0 )
         {
@@ -63,7 +63,7 @@ namespace google_test
                     inputFileObj.getOptional("liborConv"),
                     inputFileObj.getOptional("liborRates") );
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }

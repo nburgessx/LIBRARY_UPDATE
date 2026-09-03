@@ -35,9 +35,9 @@ namespace etrading
 		std::shared_ptr<BondOption> bondOption_;
 		std::shared_ptr<Volatility> volProvider_;
 
-		LADate asOfDate_;
-		LADate valuationDate_; 
-		LADate bondSettlementDate_;
+		AQLDate asOfDate_;
+		AQLDate valuationDate_; 
+		AQLDate bondSettlementDate_;
 
 		double discountRate_;
 		DayCountEnum discountDayCount_;

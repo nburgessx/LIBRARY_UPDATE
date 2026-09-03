@@ -25,7 +25,7 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	LAString getLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName )
+	AQLString getLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
     {
         std::string curveCollection         = getOptionalCurveCollectionFromValuationSettings( valuationSettingsLVB, legName ).getCString();
         const std::string curveObjectName   = getCurveObjectFromValuationSettings( valuationSettingsLVB ).getCString();
@@ -64,13 +64,13 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	LAString getValidatedLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName )
+	AQLString getValidatedLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
     {
-        const LAString curveCollection  = getLWOCurveCollectionFromValuationSettings( valuationSettingsLVB, legName );
-        const LADate curveAsOfDate      = getCurveAsOfDate( curveCollection );
+        const AQLString curveCollection  = getLWOCurveCollectionFromValuationSettings( valuationSettingsLVB, legName );
+        const AQLDate curveAsOfDate      = getCurveAsOfDate( curveCollection );
                 
         // Check Curve AsOf Date Matches the ValuationDate Specified in the Valuation Settings
-        const LADate valuationDate = getValuationDateFromValuationSettings( valuationSettingsLVB );
+        const AQLDate valuationDate = getValuationDateFromValuationSettings( valuationSettingsLVB );
         AQ_REQUIRE( curveAsOfDate <= valuationDate, "Invalid Curve Build Date: Curve build date cannot be greater than the valuation date in validation settings" );
         
         // Return Result if the Curve AsOf Date is Consistent with the ValuationSettings ValuationDate
@@ -82,7 +82,7 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	LAString getOptionalCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName )
+	AQLString getOptionalCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
     {
         return getCurveCollectionFromValuationSettings( valuationSettingsLVB, legName, false ); // False = don't throw if curveCollection missing
     }
@@ -92,7 +92,7 @@ namespace etrading
     * @param [in]		legName	            legName, required if curve collection set id
     * @output			The matched curveCollection
     */
-    LAString getCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName, const bool throwIfMissing )
+    AQLString getCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName, const bool throwIfMissing )
     {
         AQ_REQUIRE( valuationSettingsLVB.size() > 0, "Invalid 'ValuationSettings' - The ValuationSettings Label Value Block is empty" )
 
@@ -134,7 +134,7 @@ namespace etrading
             AQ_REQUIRE( throwIfMissing && legName.size() != 0, "Invalid 'ValuationSettings' Specified - We must specify the trade LegName and corresponding CurveCollection" )
         }
 
-        LAString uppperLegName = legName;
+        AQLString uppperLegName = legName;
 		uppperLegName.toUpper();
         
         std::string result = valuationSettingsLVB.getOptionalValue(uppperLegName.getCString(), "");
@@ -154,13 +154,13 @@ namespace etrading
 	* @param [in]		throwIfMissing	    Boolean throw if curve collection is missing True or False
     * @output			The matched curveCollection
 	*/
-	LAString getValidatedCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName, const bool throwIfMissing )
+	AQLString getValidatedCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName, const bool throwIfMissing )
     {
-        const LAString curveCollection  = getCurveCollectionFromValuationSettings( valuationSettingsLVB, legName, throwIfMissing );
-        const LADate curveAsOfDate      = getCurveAsOfDate( curveCollection );
+        const AQLString curveCollection  = getCurveCollectionFromValuationSettings( valuationSettingsLVB, legName, throwIfMissing );
+        const AQLDate curveAsOfDate      = getCurveAsOfDate( curveCollection );
                 
         // Check Curve AsOf Date Matches the ValuationDate Specified in the Valuation Settings
-        const LADate valuationDate = getValuationDateFromValuationSettings( valuationSettingsLVB );
+        const AQLDate valuationDate = getValuationDateFromValuationSettings( valuationSettingsLVB );
         AQ_REQUIRE( curveAsOfDate <= valuationDate, "Invalid Curve Build Date: Curve build date cannot be greater than the valuation date in validation settings" );
         
         // Return Result if the Curve AsOf Date is Consistent with the ValuationSettings ValuationDate
@@ -172,7 +172,7 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The yield curve object
 	*/
-	LAString getCurveObjectFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName )
+	AQLString getCurveObjectFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
     {
         // Make Optional - Don't throw if key is mssing
         return getKeyFromValuationSettings( VALUATION_SETTING_KEYS::CURVE_OBJECT, valuationSettingsLVB, legName, false ); // false = Make Optional: don't throw if missing
@@ -184,7 +184,7 @@ namespace etrading
 	* @param [in]		throwIfMissing	    Boolean throw if curve collection is missing True or False
 	* @output			The volatility model
 	*/
-	LAString getVolatilityModelFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName, const bool throwIfMissing)
+	AQLString getVolatilityModelFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName, const bool throwIfMissing)
     {
         return getKeyFromValuationSettings( VALUATION_SETTING_KEYS::VOLATILITY_MODEL, valuationSettingsLVB, legName, throwIfMissing);
     }
@@ -194,9 +194,9 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The credit model
 	*/
-	LAString getCreditModelFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName )
+	AQLString getCreditModelFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
     {
-		LAString creditModelName = getKeyFromValuationSettings(VALUATION_SETTING_KEYS::CREDIT_MODEL, valuationSettingsLVB, "", false);
+		AQLString creditModelName = getKeyFromValuationSettings(VALUATION_SETTING_KEYS::CREDIT_MODEL, valuationSettingsLVB, "", false);
 
 		if (creditModelName.size() == 0)
 		{
@@ -271,11 +271,11 @@ namespace etrading
 	* @param [in]		throwIfMissing	    If TRUE throw an error if the key is missing, otherwise if FALSE return an empty string
 	* @output			The ValuationDate
 	*/
-	LADate getValuationDateFromValuationSettings(const LabelValueBlock& valuationSettingsLVB, const bool throwIfMissing)
+	AQLDate getValuationDateFromValuationSettings(const LabelValueBlock& valuationSettingsLVB, const bool throwIfMissing)
 	{
-		const LAString valuationDateStr = getKeyFromValuationSettings(VALUATION_SETTING_KEYS::VALUATION_DATE, valuationSettingsLVB, "", throwIfMissing);
+		const AQLString valuationDateStr = getKeyFromValuationSettings(VALUATION_SETTING_KEYS::VALUATION_DATE, valuationSettingsLVB, "", throwIfMissing);
 
-		const LADate valuationDate = (valuationDateStr.size() != 0) ? stringToDate(valuationDateStr, "") : LADate();
+		const AQLDate valuationDate = (valuationDateStr.size() != 0) ? stringToDate(valuationDateStr, "") : AQLDate();
 
 		return valuationDate;
 	}
@@ -286,7 +286,7 @@ namespace etrading
 	*  @param[in]	throwIfMissing			Whether to throw an exception if the specified key is missing
 	*  @returns		The settlementDate.
 	*/
-	LADate getSettlementDateFromValuationSettings(const LabelValueBlock& valuationSettingsLVB, const bool throwIfMissing)
+	AQLDate getSettlementDateFromValuationSettings(const LabelValueBlock& valuationSettingsLVB, const bool throwIfMissing)
 	{
 
 		// For backwards compatibility, where a single SettlementDate is given without key
@@ -303,14 +303,14 @@ namespace etrading
 				{
 					AQ_THROW( "Missing SettlementDate.");
 				}
-				const LADate settlementDate = stringToDate(settlementDateStr.c_str(), "Missing SettlementDate.");
+				const AQLDate settlementDate = stringToDate(settlementDateStr.c_str(), "Missing SettlementDate.");
 				return settlementDate;
 			}
 		}
 		
-		const LAString settlementDateStr = getKeyFromValuationSettings(VALUATION_SETTING_KEYS::SETTLEMENT_DATE, valuationSettingsLVB, "", throwIfMissing);
+		const AQLString settlementDateStr = getKeyFromValuationSettings(VALUATION_SETTING_KEYS::SETTLEMENT_DATE, valuationSettingsLVB, "", throwIfMissing);
 
-		const LADate settlementDate = (settlementDateStr.size() != 0) ? stringToDate(settlementDateStr, "") : LADate();
+		const AQLDate settlementDate = (settlementDateStr.size() != 0) ? stringToDate(settlementDateStr, "") : AQLDate();
 
 		return settlementDate;
 	}
@@ -407,7 +407,7 @@ namespace etrading
     * @param [in]		throwIfMissing	    If TRUE throw an error if the key is missing, otherwise if FALSE return an empty string
 	* @output			The value corresponding to the searchKey
 	*/
-	LAString getKeyFromValuationSettings( const std::string& searchKey, const LabelValueBlock& valuationSettingsLVB, const LAString legName, const bool throwIfMissing )
+	AQLString getKeyFromValuationSettings( const std::string& searchKey, const LabelValueBlock& valuationSettingsLVB, const AQLString legName, const bool throwIfMissing )
     {
         AQ_REQUIRE( valuationSettingsLVB.size() != 0, "Invalid 'ValuationSettings' - The ValuationSettings Label Value Block is empty" )
         AQ_REQUIRE( !searchKey.empty(), "Invalid ValuationSettings - Unable to search the ValuationSettings LVB as the searchKey is missing" )

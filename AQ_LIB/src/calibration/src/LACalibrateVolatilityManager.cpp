@@ -76,9 +76,9 @@ LACalibrateVolatilityManager::getInstance()
 	@return  LACalibrateVolatility *
 */
 LACalibrateVolatility *
-LACalibrateVolatilityManager::createVolCreator(const LAString &model) const
+LACalibrateVolatilityManager::createVolCreator(const AQLString &model) const
 {
-	LAString tmpModel = model;
+	AQLString tmpModel = model;
 	tmpModel.toUpper();
 	if (tmpModel == MODEL_LMM)
 	{

@@ -21,14 +21,14 @@ namespace validation
 	* @param [in]		rollConvention		    Swap roll convention e.g. IMM, EOM
 	* @output			Returns TRUE if the swap schedule is regular (with no stub) and FALSE otherwise
 	*/
-    bool tryMeDateIsRegularSwapSchedule( const LADate& swapStart,
-		                                 const LADate& swapMaturity,
+    bool tryMeDateIsRegularSwapSchedule( const AQLDate& swapStart,
+		                                 const AQLDate& swapMaturity,
 		                                 bool isMaturityAdjusted,
-		                                 const LAString& frequency,
-		                                 const LAString& busDayAdj,
-		                                 const LAString& calendar,
+		                                 const AQLString& frequency,
+		                                 const AQLString& busDayAdj,
+		                                 const AQLString& calendar,
 		                                 int rollDay,
-		                                 const LAString& rollConvention )
+		                                 const AQLString& rollConvention )
     {
         VALID_EXCEPTION_START
 

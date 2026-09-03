@@ -1,14 +1,14 @@
 //#pragma once
 
-class LADataInstance;
-class LAString;
+class AQLDataInstance;
+class AQLString;
 
 //namespace etrading
 //{
-	void libSetUpETrading( LADataInstance* dataInstance, const bool checkIfCalendarLoaded = false );
+	void libSetUpETrading( AQLDataInstance* dataInstance, const bool checkIfCalendarLoaded = false );
 
-	void setupCalendarETrading( const LAString* file_path = nullptr, const bool enableThrow = false );
+	void setupCalendarETrading( const AQLString* file_path = nullptr, const bool enableThrow = false );
 	
 	// load (reload) central bank schedule dates from given file
-	void setupCBScheduleETrading( const LAString* file_path = nullptr, const bool enableThrow = false );
+	void setupCBScheduleETrading( const AQLString* file_path = nullptr, const bool enableThrow = false );
 //}

@@ -11,27 +11,27 @@
 #endif
 
 
-#include <LACoreTemplateType.h>
+#include <AQLCoreTemplateType.h>
 #include <complex>
-#include "LABasic.h"
-#include "LAGaussLegendre.h"
-#include "LAGaussLaguerre.h"
+#include "AQLBasic.h"
+#include "AQLGaussLegendre.h"
+#include "AQLGaussLaguerre.h"
 #include "LAMathJumpDiffusion.h"
 #include "LAMathDisplacedHestonTDP.h"
 #include "LAMathDisplacedHeston.h"
-#include "LAFunctionVector.h"
+#include "AQLFunctionVector.h"
 #include "LAMathFXVolatilitySurfaceGenerate.h"
-#include "LANl2sol.h"
-#include "LAFunction.h"
+#include "AQLNl2sol.h"
+#include "AQLFunction.h"
 #include "LAMathAnalyticalFormula.h"
 
 void LAMathDisplacedHestonTDP::SetHestonParams_TDP(HestonParams_TDP& params, DoubleMatrix inputdatas)
 {
     //error check
-    if( inputdatas.empty() ) {	throw LACoreInvalidData("data size is not supported",__FILE__, __LINE__);}
+    if( inputdatas.empty() ) {	throw AQLCoreInvalidData("data size is not supported",__FILE__, __LINE__);}
     for(size_t i=0;i<6;i++)
     {
-        if( inputdatas[i].size() < 1 ) {	throw LACoreInvalidData("data size is not supported",__FILE__, __LINE__);}
+        if( inputdatas[i].size() < 1 ) {	throw AQLCoreInvalidData("data size is not supported",__FILE__, __LINE__);}
     }
 
 	params.T = inputdatas[0];
@@ -132,7 +132,7 @@ DoubleComplex LAMathDisplacedHestonTDP::G_DD_TDP(DoubleComplex phi,
     }
     
     //
-    DoubleComplex LN_FX0_ = DoubleComplex(LAMath::log(FX0), 0.0);
+    DoubleComplex LN_FX0_ = DoubleComplex(AQLMath::log(FX0), 0.0);
     DoubleComplex tmp =  A_ + B_ * v0 + LN_FX0_ * phi;
 
 	DoubleComplex ret = exp(tmp);
@@ -150,7 +150,7 @@ double LAMathDisplacedHestonTDP::F_Integral_DD_TDP(double z,
 {
 	DoubleComplex phi = DoubleComplex(0.5, -z);
 	DoubleComplex G_ = G_DD_TDP(phi, T, FX0, beta_, heston_params);
-	DoubleComplex Ln_K = DoubleComplex(LAMath::log(K),0.0);
+	DoubleComplex Ln_K = DoubleComplex(AQLMath::log(K),0.0);
 
 	double ret = real( exp(-Ln_K * phi) * G_ ) / (z * z + 0.25);
 
@@ -168,8 +168,8 @@ double LAMathDisplacedHestonTDP::Get_F_DD_TDP(double T,
 {
 	DoubleVector x(GL_Number);
 	DoubleVector weight(GL_Number);
-	//LAGaussLegendre gauss_legendre(GL_Number);
-    LAGaussLaguerre gauss_laguerre(GL_Number);
+	//AQLGaussLegendre gauss_legendre(GL_Number);
+    AQLGaussLaguerre gauss_laguerre(GL_Number);
 	double integral;
 
 	double tmp = 0.;
@@ -184,7 +184,7 @@ double LAMathDisplacedHestonTDP::Get_F_DD_TDP(double T,
 			tmp += integral * weight[i];
 		}
 
-		if(LAMath::abs( integral ) < 1.0e-12 ) break;
+		if(AQLMath::abs( integral ) < 1.0e-12 ) break;
 	}	*/
 
     gauss_laguerre.get(x, weight);
@@ -194,7 +194,7 @@ double LAMathDisplacedHestonTDP::Get_F_DD_TDP(double T,
 		tmp += integral * weight[i];
 	}
 
-	return tmp * K / LAMath::pi() ;
+	return tmp * K / AQLMath::pi() ;
 };
 
 double LAMathDisplacedHestonTDP::BS_DDHeston_TDP(double T,
@@ -209,7 +209,7 @@ double LAMathDisplacedHestonTDP::BS_DDHeston_TDP(double T,
 	//param check
 	if(sgn != 1 &&  sgn != -1)
 	{
-		throw LACoreInvalidData("sgn is 1 or -1",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("sgn is 1 or -1",__FILE__, __LINE__);
 	}
 
 	double K_ = beta_ * K + (1 - beta_) * FX0;
@@ -228,14 +228,14 @@ double LAMathDisplacedHestonTDP::BS_DDHestonImpVol_TDP(double T,
 					                                 )
 {
     double prem = BS_DDHeston_TDP(T,FX0,K,P0,sgn,beta_,heston_params);
-    double highPrem = LAMathAnalyticalFormula::BlackFormula( FX0, 10. * LAMath::sqrt(T), K, sgn) * P0;
-	double lowPrem = LAMathAnalyticalFormula::BlackFormula( FX0, 0.000001 * LAMath::sqrt(T), K, sgn) * P0;
+    double highPrem = LAMathAnalyticalFormula::BlackFormula( FX0, 10. * AQLMath::sqrt(T), K, sgn) * P0;
+	double lowPrem = LAMathAnalyticalFormula::BlackFormula( FX0, 0.000001 * AQLMath::sqrt(T), K, sgn) * P0;
 
     if( prem <= lowPrem ) return 0.000001;
     if( prem >= highPrem ) return 10.;
 
-	return LAMathAnalyticalFormula::BlackImplVol(prem/P0, FX0, K, sgn, 0.000001 * LAMath::sqrt(T), 10. * LAMath::sqrt(T)) 
-                                / LAMath::sqrt(T);
+	return LAMathAnalyticalFormula::BlackImplVol(prem/P0, FX0, K, sgn, 0.000001 * AQLMath::sqrt(T), 10. * AQLMath::sqrt(T)) 
+                                / AQLMath::sqrt(T);
 };
 
 DoubleMatrix LAMathDisplacedHestonTDP::CalibrationHelper( const std::vector<FXOptionData >& datas,
@@ -248,23 +248,23 @@ DoubleMatrix LAMathDisplacedHestonTDP::CalibrationHelper( const std::vector<FXOp
     if( strikes.size() != termSize || sgns.size() != termSize || hestonParam.T.size() != termSize
 		|| datas.size() != termSize)
     {
-            LAString msg("size is not supported!");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("size is not supported!");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     size_t strikeSize = strikes[0].size();
     if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
     {
-            LAString msg("size is not supported!");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("size is not supported!");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     size_t i,j,k;
 	for(i=0;i<termSize;i++)
     {
-        if( LAMath::abs(hestonParam.T[i] -  datas[i].T) > 0.000001)
+        if( AQLMath::abs(hestonParam.T[i] -  datas[i].T) > 0.000001)
         {
-            throw LACoreInvalidData("input term is incorrect",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("input term is incorrect",__FILE__,__LINE__);
         }
     }
 
@@ -284,7 +284,7 @@ DoubleMatrix LAMathDisplacedHestonTDP::CalibrationHelper( const std::vector<FXOp
     //Set GLParams
     DoubleVector x(GL_Size);
 	DoubleVector weight(GL_Size);
-    LAGaussLaguerre gauss_laguerre(GL_Size);
+    AQLGaussLaguerre gauss_laguerre(GL_Size);
     gauss_laguerre.get(x, weight);
 
     //Set A,B,B_tau
@@ -331,14 +331,14 @@ DoubleMatrix LAMathDisplacedHestonTDP::CalibrationHelper( const std::vector<FXOp
 			F = 0.;
             for(k=0;k<GL_Size;k++)
 			{
-                G = exp( A[i][k] + B[i][k] * v0 + LAMath::log(datas[i].F / strikes[i][j]) * phi[k] );
+                G = exp( A[i][k] + B[i][k] * v0 + AQLMath::log(datas[i].F / strikes[i][j]) * phi[k] );
                 F += real( G ) / (x[k] * x[k] + 0.25) * weight[k];
             }
-			F = F * strikes[i][j] / LAMath::pi();
+			F = F * strikes[i][j] / AQLMath::pi();
 			prem = datas[i].Pd * ( (1 + sgns[i][j]) / 2 * datas[i].F + (1 - sgns[i][j]) / 2 * strikes[i][j] - F);
-			highPrem = LAMathAnalyticalFormula::BlackFormula( datas[i].F, 10. * LAMath::sqrt(datas[i].T), 
+			highPrem = LAMathAnalyticalFormula::BlackFormula( datas[i].F, 10. * AQLMath::sqrt(datas[i].T), 
 												strikes[i][j], sgns[i][j]) * datas[i].Pd;
-			lowPrem = LAMathAnalyticalFormula::BlackFormula( datas[i].F, 0.000001 * LAMath::sqrt(datas[i].T), 
+			lowPrem = LAMathAnalyticalFormula::BlackFormula( datas[i].F, 0.000001 * AQLMath::sqrt(datas[i].T), 
 											strikes[i][j], sgns[i][j]) * datas[i].Pd;
 
 			if( prem <= lowPrem )  ret[i][j] = 0.000001;
@@ -346,8 +346,8 @@ DoubleMatrix LAMathDisplacedHestonTDP::CalibrationHelper( const std::vector<FXOp
             else
             {
 				ret[i][j] = LAMathAnalyticalFormula::BlackImplVol(prem/datas[i].Pd, datas[i].F, strikes[i][j], sgns[i][j],
-                                0.000001 * LAMath::sqrt(datas[i].T), 10. * LAMath::sqrt(datas[i].T) ) 
-                                / LAMath::sqrt(datas[i].T);
+                                0.000001 * AQLMath::sqrt(datas[i].T), 10. * AQLMath::sqrt(datas[i].T) ) 
+                                / AQLMath::sqrt(datas[i].T);
             }
         }
     }
@@ -362,20 +362,20 @@ DoubleMatrix LAMathDisplacedHestonTDP::CalibrationHelperGL( const std::vector<FX
 														  )
 {
     if(hestonParam.T.size() != 1) 
-        throw LACoreInvalidData("heston param is not glabal!",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("heston param is not glabal!",__FILE__,__LINE__);
 
 	size_t termSize = strikes.size();
     if( strikes.size() != termSize || sgns.size() != termSize || datas.size() != termSize)
     {
-            LAString msg("size is not supported!");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("size is not supported!");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     size_t strikeSize = strikes[0].size();
     if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
     {
-            LAString msg("size is not supported!");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("size is not supported!");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     size_t i,j,k;
@@ -393,7 +393,7 @@ DoubleMatrix LAMathDisplacedHestonTDP::CalibrationHelperGL( const std::vector<FX
     //Set GLParams
     DoubleVector x(GL_Size);
 	DoubleVector weight(GL_Size);
-    LAGaussLaguerre gauss_laguerre(GL_Size);
+    AQLGaussLaguerre gauss_laguerre(GL_Size);
     gauss_laguerre.get(x, weight);
 
     //Set A,B,B_tau
@@ -435,14 +435,14 @@ DoubleMatrix LAMathDisplacedHestonTDP::CalibrationHelperGL( const std::vector<FX
 			F = 0.;
             for(k=0;k<GL_Size;k++)
 			{
-                G = exp( A[i][k] + B[i][k] * v0 + LAMath::log(datas[i].F / strikes[i][j]) * phi[k] );
+                G = exp( A[i][k] + B[i][k] * v0 + AQLMath::log(datas[i].F / strikes[i][j]) * phi[k] );
                 F += real( G ) / (x[k] * x[k] + 0.25) * weight[k];
             }
-			F = F * strikes[i][j] / LAMath::pi();
+			F = F * strikes[i][j] / AQLMath::pi();
 			prem = datas[i].Pd * ( (1 + sgns[i][j]) / 2 * datas[i].F + (1 - sgns[i][j]) / 2 * strikes[i][j] - F);
-			highPrem = LAMathAnalyticalFormula::BlackFormula( datas[i].F, 10. * LAMath::sqrt(datas[i].T), 
+			highPrem = LAMathAnalyticalFormula::BlackFormula( datas[i].F, 10. * AQLMath::sqrt(datas[i].T), 
 												strikes[i][j], sgns[i][j]) * datas[i].Pd;
-			lowPrem = LAMathAnalyticalFormula::BlackFormula( datas[i].F, 0.000001 * LAMath::sqrt(datas[i].T), 
+			lowPrem = LAMathAnalyticalFormula::BlackFormula( datas[i].F, 0.000001 * AQLMath::sqrt(datas[i].T), 
 											strikes[i][j], sgns[i][j]) * datas[i].Pd;
 
 			if( prem <= lowPrem )  ret[i][j] = 0.000001 ;
@@ -450,8 +450,8 @@ DoubleMatrix LAMathDisplacedHestonTDP::CalibrationHelperGL( const std::vector<FX
             else
             {
 				ret[i][j] = LAMathAnalyticalFormula::BlackImplVol(prem/datas[i].Pd, datas[i].F, strikes[i][j], sgns[i][j],
-                                    0.000001 * LAMath::sqrt(datas[i].T), 10. * LAMath::sqrt(datas[i].T) ) 
-                                    / LAMath::sqrt(datas[i].T);
+                                    0.000001 * AQLMath::sqrt(datas[i].T), 10. * AQLMath::sqrt(datas[i].T) ) 
+                                    / AQLMath::sqrt(datas[i].T);
             }
         }
     }
@@ -480,15 +480,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorGlobal(){};
@@ -509,7 +509,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                ret += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                ret += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return ret;
@@ -531,7 +531,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                 y[i*strikeSize+j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                 y[i*strikeSize+j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -583,15 +583,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonGlobal( const std::vector<FXOp
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
      QuantLib::Array initialValues(5);
@@ -641,15 +641,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorGlobalV0Fix(){};
@@ -669,7 +669,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                ret += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                ret += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return ret;
@@ -690,7 +690,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                 y[i*strikeSize+j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                 y[i*strikeSize+j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -741,15 +741,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonGlobalV0Fix( const std::vector
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
      QuantLib::Array initialValues(4);
@@ -797,15 +797,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorGlobalKappaFix(){};
@@ -825,7 +825,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                ret += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                ret += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return ret;
@@ -846,7 +846,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                 y[i*strikeSize+j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                 y[i*strikeSize+j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -897,15 +897,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonGlobalKappaFix( const std::vec
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
      QuantLib::Array initialValues(4);
@@ -954,15 +954,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorGlobalThetaFix(){};
@@ -982,7 +982,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                ret += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                ret += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return ret;
@@ -1003,7 +1003,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                 y[i*strikeSize+j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                 y[i*strikeSize+j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -1054,15 +1054,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonGlobalThetaFix( const std::vec
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
      QuantLib::Array initialValues(4);
@@ -1111,15 +1111,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize || hestonParam.T.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorTDP(){};
@@ -1143,7 +1143,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                y += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                y += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -1169,7 +1169,7 @@ public:
         {
 			for(j=0;j<strikeSize;j++)
 			{
-				y[i * strikeSize + j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+				y[i * strikeSize + j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
 			}
 		}
         return y;
@@ -1224,15 +1224,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonTDP( const std::vector<FXOptio
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
      size_t i;
@@ -1278,15 +1278,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize || hestonParam.T.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorTDPV0Fix(){};
@@ -1309,7 +1309,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                y += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                y += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -1334,7 +1334,7 @@ public:
         {
 			for(j=0;j<strikeSize;j++)
 			{
-				y[i * strikeSize + j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+				y[i * strikeSize + j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
 			}
 		}
         return y;
@@ -1388,15 +1388,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonTDPV0Fix( const std::vector<FX
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
      size_t i;
@@ -1440,15 +1440,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize || hestonParam.T.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorTDPRhoFix(){};
@@ -1471,7 +1471,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                y += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                y += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -1495,7 +1495,7 @@ public:
         {
 			for(j=0;j<strikeSize;j++)
 			{
-				y[i * strikeSize + j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+				y[i * strikeSize + j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
 			}
 		}
         return y;
@@ -1549,15 +1549,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonTDPRhoFix( const std::vector<F
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
      QuantLib::Array initialValues(termSize * 3 + 1);
@@ -1601,15 +1601,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize || hestonParam.T.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorTDPKappaFix(){};
@@ -1632,7 +1632,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                y += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                y += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -1656,7 +1656,7 @@ public:
         {
 			for(j=0;j<strikeSize;j++)
 			{
-				y[i * strikeSize + j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+				y[i * strikeSize + j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
 			}
 		}
         return y;
@@ -1709,15 +1709,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonTDPKappaFix( const std::vector
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
 
@@ -1762,15 +1762,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize || hestonParam.T.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorTDPThetaFix(){};
@@ -1793,7 +1793,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                y += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                y += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -1817,7 +1817,7 @@ public:
         {
 			for(j=0;j<strikeSize;j++)
 			{
-				y[i * strikeSize + j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+				y[i * strikeSize + j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
 			}
 		}
         return y;
@@ -1870,15 +1870,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonTDPThetaFix( const std::vector
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
 
@@ -1924,21 +1924,21 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize || hestonParam.T.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         if( caliIndex_ >= termSize)
         {
-            LAString msg("calibNum is over termSize!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);    
+            AQLString msg("calibNum is over termSize!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);    
         }
     };
     virtual ~HestonCalibratorTDP_Boot(){};
@@ -1958,7 +1958,7 @@ public:
         {
             modelVol = LAMathDisplacedHestonTDP::BS_DDHestonImpVol_TDP(datas[caliIndex].T, datas[caliIndex].F, strikes[caliIndex][j], 
                             datas[caliIndex].Pd, sgns[caliIndex][j], 1., hestonParam );
-            y += LAMath::pow(modelVol - vols[caliIndex][j],2);
+            y += AQLMath::pow(modelVol - vols[caliIndex][j],2);
         }
         return y;
     };
@@ -1978,7 +1978,7 @@ public:
         {
             modelVol = LAMathDisplacedHestonTDP::BS_DDHestonImpVol_TDP(datas[caliIndex].T, datas[caliIndex].F, strikes[caliIndex][j], 
                             datas[caliIndex].Pd, sgns[caliIndex][j], 1., hestonParam );
-           y[j] = LAMath::pow(modelVol - vols[caliIndex][j],2);
+           y[j] = AQLMath::pow(modelVol - vols[caliIndex][j],2);
         }
         return y;
     };
@@ -2028,15 +2028,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonTDP_Boot( const std::vector<FX
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
      size_t i;
@@ -2081,15 +2081,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize || hestonParam.T.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorTDTheta(){};
@@ -2113,7 +2113,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                y += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                y += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -2138,7 +2138,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                y[i*strikeSize+j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                y[i*strikeSize+j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -2193,15 +2193,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonTDTheta( const std::vector<FXO
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
      size_t i;
@@ -2251,15 +2251,15 @@ public:
         termSize = vols_.size();
         if( strikes_.size() != termSize || sgns_.size() != termSize || hestonParam.T.size() != termSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         strikeSize = vols_[0].size();
         if( strikes_[0].size() != strikeSize || sgns_[0].size() != strikeSize )
         {
-             LAString msg("size is not supported!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+             AQLString msg("size is not supported!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     };
     virtual ~HestonCalibratorTDThetaFix(){};
@@ -2279,7 +2279,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                y += LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                y += AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -2300,7 +2300,7 @@ public:
         {
             for(j=0;j<strikeSize;j++)
             {
-                y[i*strikeSize+j] = LAMath::pow(modelVol[i][j] - vols[i][j],2);
+                y[i*strikeSize+j] = AQLMath::pow(modelVol[i][j] - vols[i][j],2);
             }
         }
         return y;
@@ -2350,15 +2350,15 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonTDThetaFix( const std::vector<
      size_t termSize = datas.size();
      if( vols.size() != termSize || strikes.size() != termSize || sgns.size() != termSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
       
      size_t strikeSize = vols[0].size();
      if( strikes[0].size() != strikeSize || sgns[0].size() != strikeSize )
      {
-         LAString msg("data sizes are not same!");
-	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+         AQLString msg("data sizes are not same!");
+	            throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
      }
 
      size_t i;
@@ -2384,7 +2384,7 @@ void LAMathDisplacedHestonTDP::FXCalibrationHestonTDThetaFix( const std::vector<
 
 #endif
 //find logStrike of -0.01 deltaPut 
-class FindLogStrikeFromHeston : public LAFunction
+class FindLogStrikeFromHeston : public AQLFunction
 {
 public:
     FindLogStrikeFromHeston( const FXOptionData& x_,
@@ -2393,8 +2393,8 @@ public:
     virtual ~FindLogStrikeFromHeston(){};
     double operator()(double z) const //z[0] is log strike
     { 
-        double modelPrem = LAMathDisplacedHestonTDP::BS_DDHeston_TDP( x.T, x.F, LAMath::exp(z)*x.F, x.Pd, -1, 1., y );
-		double impVol = LAMathAnalyticalFormula::BlackImplVol( modelPrem/x.Pd, x.F, LAMath::exp(z)*x.F, -1 ) / LAMath::sqrt(x.T);
+        double modelPrem = LAMathDisplacedHestonTDP::BS_DDHeston_TDP( x.T, x.F, AQLMath::exp(z)*x.F, x.Pd, -1, 1., y );
+		double impVol = LAMathAnalyticalFormula::BlackImplVol( modelPrem/x.Pd, x.F, AQLMath::exp(z)*x.F, -1 ) / AQLMath::sqrt(x.T);
         return LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( z, impVol, -1, x ) / (-0.01) - 1.0;
     };
 private:
@@ -2411,18 +2411,18 @@ double LAMathDisplacedHestonTDP::GetWingFactorFromHeston( const FXOptionData& x,
 {
     FindLogStrikeFromHeston sub_func( x, hestonParams );
     double solve = sub_func.SolveBR( lower, high, 10000, 1.0e-8 );
-    double modelPrem = LAMathDisplacedHestonTDP::BS_DDHeston_TDP( x.T, x.F, LAMath::exp(solve)*x.F, x.Pd, -1, 1., hestonParams );
-	double impVol = LAMathAnalyticalFormula::BlackImplVol( modelPrem/x.Pd, x.F, LAMath::exp(solve)*x.F, -1 ) / LAMath::sqrt(x.T);
+    double modelPrem = LAMathDisplacedHestonTDP::BS_DDHeston_TDP( x.T, x.F, AQLMath::exp(solve)*x.F, x.Pd, -1, 1., hestonParams );
+	double impVol = LAMathAnalyticalFormula::BlackImplVol( modelPrem/x.Pd, x.F, AQLMath::exp(solve)*x.F, -1 ) / AQLMath::sqrt(x.T);
 
     atmDelta *= -100.;
     double alpha, beta, RR, BF, tmp;
 
-    tmp = LAMath::abs( atmDelta - 25 ) / LAMath::abs( atmDelta - 10 );
+    tmp = AQLMath::abs( atmDelta - 25 ) / AQLMath::abs( atmDelta - 10 );
     alpha = log( smParams.highRR / smParams.lowRR ) / log( tmp );
-    RR = ( smParams.highRR ) / LAMath::pow( LAMath::abs( atmDelta - 25 ), alpha );
+    RR = ( smParams.highRR ) / AQLMath::pow( AQLMath::abs( atmDelta - 25 ), alpha );
     beta = log( smParams.highBF / smParams.lowBF ) / log( tmp );
-    BF = smParams.highBF / LAMath::pow( LAMath::abs( atmDelta - 25 ), beta );
+    BF = smParams.highBF / AQLMath::pow( AQLMath::abs( atmDelta - 25 ), beta );
 
-    return  ( impVol- smParams.atmVol + 0.5 * RR * LAMath::pow( LAMath::abs( atmDelta - 1. ), alpha ) ) / 
-            ( BF * LAMath::pow( LAMath::abs( atmDelta - 1. ), beta ) );
+    return  ( impVol- smParams.atmVol + 0.5 * RR * AQLMath::pow( AQLMath::abs( atmDelta - 1. ), alpha ) ) / 
+            ( BF * AQLMath::pow( AQLMath::abs( atmDelta - 1. ), beta ) );
 };

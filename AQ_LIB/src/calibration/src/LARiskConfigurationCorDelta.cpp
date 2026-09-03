@@ -1,9 +1,9 @@
 #include <functional>
 #include <memory>
 
-#include "LACoreTemplateType.h"
-#include "LADataMatrix.h"
-#include "LAObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataMatrix.h"
+#include "AQLObjectPool.h"
 
 #include "LAMathPathEntity.h"
 #include "LAMathVolatility.h"
@@ -26,17 +26,17 @@ namespace
 	    @param riskPropAccessor [in] A object that has an access to risk.properties
 	    @return The targets of cordelta like { "JPY", "JPY/EUR" } in upper case
 	*/
-	LAStringVector getTargets(const LAStaticData& riskPropAccessor)
+	AQLStringVector getTargets(const LAStaticData& riskPropAccessor)
 	{
-		const LAString raw = riskPropAccessor.getStaticData(RISK_FRONT_COR_CORDELTA_TARGET);
-		LAStringVector targets = raw.toToken('-');
+		const AQLString raw = riskPropAccessor.getStaticData(RISK_FRONT_COR_CORDELTA_TARGET);
+		AQLStringVector targets = raw.toToken('-');
 		if (targets.size() != 2)
 		{
-			throw LACoreInvalidData(
+			throw AQLCoreInvalidData(
 					(raw + " is not qualified for cordelta.target; it shall have two simulation SDE currencies").getCString(),
 					__FILE__, __LINE__);
 		}
-		std::for_each(targets.begin(), targets.end(), std::mem_fn(&LAString::toUpper));
+		std::for_each(targets.begin(), targets.end(), std::mem_fn(&AQLString::toUpper));
 		return targets;
 	}
 
@@ -51,10 +51,10 @@ namespace
 	             - one participant is a currency and another is an irrelevant FX (for example, "AUD" and "JPY/USD")
 	             - the resulted FX is not a simulation SDE currency
 	*/
-	LAString deduceFX(const LAString& participant1, const LAString& participant2)
+	AQLString deduceFX(const AQLString& participant1, const AQLString& participant2)
 	{
-		LAStringVector ccys1 = LAString(participant1).toUpper().toToken(FX_DELIMITER);
-		LAStringVector ccys2 = LAString(participant2).toUpper().toToken(FX_DELIMITER);
+		AQLStringVector ccys1 = AQLString(participant1).toUpper().toToken(FX_DELIMITER);
+		AQLStringVector ccys2 = AQLString(participant2).toUpper().toToken(FX_DELIMITER);
 		if (ccys1.size() > 1) {
 			// participant1 is FX
 			if (ccys2.size() > 1)
@@ -86,16 +86,16 @@ namespace
 		}
 
 		// We can deduce "JPY/EUR" or "EUR/JPY" from {"JPY", "EUR"}
-		LAString fx;
-		const LAStringVector simccys = MADealUtils::getSimulationSDECurrencys(true);
-		LAStringVector::const_iterator i = std::find(simccys.begin(), simccys.end(), LAMarketData::getFXKey(ccys1[0], ccys2[0]).toUpper());
+		AQLString fx;
+		const AQLStringVector simccys = MADealUtils::getSimulationSDECurrencys(true);
+		AQLStringVector::const_iterator i = std::find(simccys.begin(), simccys.end(), LAMarketData::getFXKey(ccys1[0], ccys2[0]).toUpper());
 		if (i != simccys.end())
 		{
 			fx = *i;
 		}
 		else
 		{
-			LAStringVector::const_iterator j = std::find(simccys.begin(), simccys.end(), LAMarketData::getFXKey(ccys2[0], ccys1[0]).toUpper());
+			AQLStringVector::const_iterator j = std::find(simccys.begin(), simccys.end(), LAMarketData::getFXKey(ccys2[0], ccys1[0]).toUpper());
 			if (j != simccys.end())
 			{
 				fx = *i;
@@ -106,7 +106,7 @@ namespace
 				return "";
 			}
 		}
-		LAStringVector ccys = fx.toToken(FX_DELIMITER);
+		AQLStringVector ccys = fx.toToken(FX_DELIMITER);
 		return LAMarketData::getFXKey(ccys[0], ccys[1]);
 	}
 
@@ -116,13 +116,13 @@ namespace
 	    @param riskPropAccessor [in] A object that has an access to risk.properties
 	    @return true if upshift, false otherwise
 	*/
-	bool getRawBumpDirection(const LAString &key, const LAStaticData& riskPropAccessor)
+	bool getRawBumpDirection(const AQLString &key, const LAStaticData& riskPropAccessor)
 	{
-		const LAString direction = riskPropAccessor.getStaticData(LAString(key).toLower() +
+		const AQLString direction = riskPropAccessor.getStaticData(AQLString(key).toLower() +
 			COR_KEY_RISK_FRONT_COR_CORDELTA_BUMPDIRECTION).toUpper();
 		if (direction == RISK_BUMPDIRECTION_UPDOWNSHIFT)
 		{
-			throw LACoreInvalidData("Correlation's shift must be up or down; updown is not supported",
+			throw AQLCoreInvalidData("Correlation's shift must be up or down; updown is not supported",
 				__FILE__, __LINE__);
 		}
 		else
@@ -138,12 +138,12 @@ namespace
 	    @param ccy2 [in] The second string, which may be not a currency name but a forex name (for example, "jpy/usd")
 	    @return A pair of the index of ccy1 and the index of ccy2 in the "simulation SDE currencies"
 	*/
-	std::pair<std::size_t, std::size_t> locateInSimulationSDECurrencys(const LAString& ccy1, const LAString& ccy2)
+	std::pair<std::size_t, std::size_t> locateInSimulationSDECurrencys(const AQLString& ccy1, const AQLString& ccy2)
 	{
-		LAStringVector simccys = MADealUtils::getSimulationSDECurrencys(true);
+		AQLStringVector simccys = MADealUtils::getSimulationSDECurrencys(true);
 		for (auto& s : simccys) s.toUpper();
-		const std::size_t i = std::find(simccys.begin(), simccys.end(), LAString(ccy1).toUpper()) - simccys.begin();
-		const std::size_t j = std::find(simccys.begin(), simccys.end(), LAString(ccy2).toUpper()) - simccys.begin();
+		const std::size_t i = std::find(simccys.begin(), simccys.end(), AQLString(ccy1).toUpper()) - simccys.begin();
+		const std::size_t j = std::find(simccys.begin(), simccys.end(), AQLString(ccy2).toUpper()) - simccys.begin();
 		assert(i != simccys.size());
 		assert(j != simccys.size());
 		return std::make_pair(i, j);
@@ -154,9 +154,9 @@ namespace
 	    @return A certain FX from the simulation SDE currencies, which is stable
 	            (that is, this function yields the identical value every time)
 	*/
-	LAString getAnySimulatedFX()
+	AQLString getAnySimulatedFX()
 	{
-		LAStringVector simccys = MADealUtils::getSimulationSDECurrencys(true);
+		AQLStringVector simccys = MADealUtils::getSimulationSDECurrencys(true);
 		for (std::size_t i = 0, ie = simccys.size(); i < ie; ++i)
 		{
 			if (simccys[i].findString(FX_DELIMITER) != -1)
@@ -164,7 +164,7 @@ namespace
 				return simccys[i];
 			}
 		}
-		throw LACoreInvalidData("No FX contained in the simulation SDE currencies", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("No FX contained in the simulation SDE currencies", __FILE__, __LINE__);
 	}
 
 } // end unnamed namespace
@@ -179,68 +179,68 @@ LARiskConfigurationCorDelta::~LARiskConfigurationCorDelta(void)
 {
 }
 
-std::vector<std::pair<LAString, std::vector<LAObject *> > >
-LARiskConfigurationCorDelta::createRiskEntity(LAObjectPool &objPool) const
+std::vector<std::pair<AQLString, std::vector<AQLObject *> > >
+LARiskConfigurationCorDelta::createRiskEntity(AQLObjectPool &objPool) const
 {
-	const LAStringVector targets = getTargets(*mpRiskStaticData);	// { "JPY", "JPY/EUR" }
+	const AQLStringVector targets = getTargets(*mpRiskStaticData);	// { "JPY", "JPY/EUR" }
 
 	{
-		LAStringVector simccys = MADealUtils::getSimulationSDECurrencys(true);
-		std::for_each(simccys.begin(), simccys.end(), std::mem_fn(&LAString::toUpper));
-		for (const LAString& target : targets)
+		AQLStringVector simccys = MADealUtils::getSimulationSDECurrencys(true);
+		std::for_each(simccys.begin(), simccys.end(), std::mem_fn(&AQLString::toUpper));
+		for (const AQLString& target : targets)
 		{
 			const std::size_t i = std::find(simccys.begin(), simccys.end(), target) - simccys.begin();
 			if (i == simccys.size())
 			{
-				throw LACoreInvalidData(
+				throw AQLCoreInvalidData(
 					(target + ", which is a target of correlation's risk, is not a simulation SDE currency").getCString(),
 					__FILE__, __LINE__);
 			}
 		}
 	}
 
-	LAString key = targets[0] + '-' + targets[1];
+	AQLString key = targets[0] + '-' + targets[1];
 
 	DoubleArray shiftVals = getBaseShiftVals(key);
 
-	std::vector<LAObject *> eVec(shiftVals.size());
+	std::vector<AQLObject *> eVec(shiftVals.size());
 	for (std::size_t k = 0, jend = shiftVals.size(); k < jend; ++k)
 	{
-		LAString name = key + "_" + getRiskName() + "_" + getCurveType(key) + "_Shift_" + LAString(shiftVals[k]);
-		LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
-		LAObject *e = 0;
+		AQLString name = key + "_" + getRiskName() + "_" + getCurveType(key) + "_Shift_" + AQLString(shiftVals[k]);
+		AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+		AQLObject *e = 0;
 		if (!objHolder.isDefined())
 		{
 			// create risk object
-			e = new LAObject();
+			e = new AQLObject();
 		}
 		else
 		{
 			e = &objHolder.get();
 			e->reset();
 		}
-		e->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(name);
+		e->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(name);
 
 		// These don't seem to have any points for correlations, but I leave them here
-		e->add(PRICING_DATA_RISKCURVETYPENAME, new LADataString()).convertFromString(getCurveType(key));
-		e->add(PRICING_DATA_RISKBASESHIFTCURVETYPENAME, new LADataString()).convertFromString(getBaseShiftCurveType(key));
-		e->add(PRICING_DATA_RISKCURVETYPECURRENCY, new LADataString()).convertFromString(key);
+		e->add(PRICING_DATA_RISKCURVETYPENAME, new AQLDataString()).convertFromString(getCurveType(key));
+		e->add(PRICING_DATA_RISKBASESHIFTCURVETYPENAME, new AQLDataString()).convertFromString(getBaseShiftCurveType(key));
+		e->add(PRICING_DATA_RISKCURVETYPECURRENCY, new AQLDataString()).convertFromString(key);
 
 		eVec[k] = e;
 	}
 
 	putBumpedCor(key, objPool);
 
-	std::vector<std::pair<LAString, std::vector<LAObject *>>> ret;
+	std::vector<std::pair<AQLString, std::vector<AQLObject *>>> ret;
 	ret.emplace_back(std::move(key), std::move(eVec));
 	return ret;
 }
 
 bool
-LARiskConfigurationCorDelta::isRiskCurrencyMode(const LAString& key) const
+LARiskConfigurationCorDelta::isRiskCurrencyMode(const AQLString& key) const
 {
 	//if MA_NODATA return false
-	LAString proprslt = mpRiskStaticData->getStaticData(LAString(key).toLower() +
+	AQLString proprslt = mpRiskStaticData->getStaticData(AQLString(key).toLower() +
 		COR_KEY_RISK_FRONT_COR_CORDELTA_ISRISKCURRENCYMODE);
 	if (proprslt == AQ_NO_DATA)
 	{
@@ -251,14 +251,14 @@ LARiskConfigurationCorDelta::isRiskCurrencyMode(const LAString& key) const
 }
 
 void
-LARiskConfigurationCorDelta::setUpRiskOutputCurrency(const LAString &key, LAObject &e) const
+LARiskConfigurationCorDelta::setUpRiskOutputCurrency(const AQLString &key, AQLObject &e) const
 {
 	if (isRiskCurrencyMode(key))
 	{
-		std::set<LAString> baseCurrencies;
+		std::set<AQLString> baseCurrencies;
 
-		LAStringVector participants = key.toToken('-');
-		LAString fx = deduceFX(participants[0], participants[1]);
+		AQLStringVector participants = key.toToken('-');
+		AQLString fx = deduceFX(participants[0], participants[1]);
 		if (fx == "")
 		{
 			if (participants[0].findString(FX_DELIMITER) != -1)
@@ -270,7 +270,7 @@ LARiskConfigurationCorDelta::setUpRiskOutputCurrency(const LAString &key, LAObje
 			else
 			{
 				// No FX is available
-				throw LACoreInvalidData(("Cannnot decide a risk output currency for " + key).getCString(), __FILE__, __LINE__);
+				throw AQLCoreInvalidData(("Cannnot decide a risk output currency for " + key).getCString(), __FILE__, __LINE__);
 			}
 		}
 		else
@@ -282,10 +282,10 @@ LARiskConfigurationCorDelta::setUpRiskOutputCurrency(const LAString &key, LAObje
 		{
 			std::stringstream m;
 			m << "Cannot decide a risk output currency due to ambiguity between";
-			std::set<LAString>::const_iterator ie = baseCurrencies.end();
-			std::set<LAString>::const_iterator j = baseCurrencies.end();
+			std::set<AQLString>::const_iterator ie = baseCurrencies.end();
+			std::set<AQLString>::const_iterator j = baseCurrencies.end();
 			--j;
-			for (std::set<LAString>::const_iterator i = baseCurrencies.begin(); i != ie; ++i)
+			for (std::set<AQLString>::const_iterator i = baseCurrencies.begin(); i != ie; ++i)
 			{
 				if (i == baseCurrencies.begin())
 				{
@@ -300,73 +300,73 @@ LARiskConfigurationCorDelta::setUpRiskOutputCurrency(const LAString &key, LAObje
 					m << ", " << *i;
 				}
 			}
-			throw LACoreInvalidData(m.str().c_str(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData(m.str().c_str(), __FILE__, __LINE__);
 		}
 
 		e.remove(PRICING_DATA_RISKOUTPUTCURRENCY);
-		e.add(PRICING_DATA_RISKOUTPUTCURRENCY, new LADataString(LAString(*baseCurrencies.begin()).toUpper()));
+		e.add(PRICING_DATA_RISKOUTPUTCURRENCY, new AQLDataString(AQLString(*baseCurrencies.begin()).toUpper()));
 	}
 
 	return;
 }
 
-std::vector<LAObject *>
-LARiskConfigurationCorDelta::createScenario1Entity(const LAString &key, LADataInstance &dataInstance, int index) const
+std::vector<AQLObject *>
+LARiskConfigurationCorDelta::createScenario1Entity(const AQLString &key, AQLDataInstance &dataInstance, int index) const
 {
 	// Scenario1 is an object which holds a bumped correlation matrix for the path object
 
-	std::unique_ptr<LAObject> scenario(new LAObject);
-	scenario->add(IR_MODEL_DATA_CORRELATIONMATRIX, new LADataDoubleMatrix(mBumpedCors[key].corMtxForPathEntity));
-	scenario->add(CALIBRATION_DATA_NAME, new LADataString(LAMarketData::getPathEnitty(dataInstance.getObjectPool())->getName().get() + '_' +
+	std::unique_ptr<AQLObject> scenario(new AQLObject);
+	scenario->add(IR_MODEL_DATA_CORRELATIONMATRIX, new AQLDataDoubleMatrix(mBumpedCors[key].corMtxForPathEntity));
+	scenario->add(CALIBRATION_DATA_NAME, new AQLDataString(LAMarketData::getPathEnitty(dataInstance.getObjectPool())->getName().get() + '_' +
 		IR_MODEL_DATA_CORRELATIONMATRIX + '_' + key + '_' + getRiskName() + '_' + PRICING_DATA_SCENARIO1 + "_" +
-		LAString(index) + "_" + getCurveType(key) + "_Parallel"));
+		AQLString(index) + "_" + getCurveType(key) + "_Parallel"));
 
-	return std::vector<LAObject *>(1, scenario.release());
+	return std::vector<AQLObject *>(1, scenario.release());
 }
 
-std::vector<LAObject *>
-LARiskConfigurationCorDelta::createScenario2Entity(const LAString &key, LADataInstance &dataInstance, int index) const
+std::vector<AQLObject *>
+LARiskConfigurationCorDelta::createScenario2Entity(const AQLString &key, AQLDataInstance &dataInstance, int index) const
 {
 	key; dataInstance; index;
-	return std::vector<LAObject *>();
+	return std::vector<AQLObject *>();
 }
 
-std::vector<std::vector<LAObject *> >
-LARiskConfigurationCorDelta::createExtraScenario1Entity(const LAString &key, LADataInstance &dataInstance, int index) const
+std::vector<std::vector<AQLObject *> >
+LARiskConfigurationCorDelta::createExtraScenario1Entity(const AQLString &key, AQLDataInstance &dataInstance, int index) const
 {
 	// ExtraScenario1 is FX vol, which is re-calibrated with a bumped correlation matrix
 
-	const LAStringVector ks = LAString(key).toUpper().toToken('-');
-	const LAString fx = deduceFX(ks[0], ks[1]);		// "jpy/eur"
+	const AQLStringVector ks = AQLString(key).toUpper().toToken('-');
+	const AQLString fx = deduceFX(ks[0], ks[1]);		// "jpy/eur"
 	if (fx == "")
 	{
 		// Both are FX or no fx is available; We don't need any calibration, so we can place the copy of any FX's vol
-		return std::vector<std::vector<LAObject *> >(1,
-			std::vector<LAObject *>(1,
+		return std::vector<std::vector<AQLObject *> >(1,
+			std::vector<AQLObject *>(1,
 				dataInstance.getObjectPool().getObject(LAMarketData::getBaseVolatilityName(getAnySimulatedFX())).get().clone()));
 	}
 
 	// Below we have at most one FX in key
 
 	const BumpedCor &cor = mBumpedCors[key];
-	const LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	const LAString model = LAMarketData::getModelName(fx);
-	const LAString riskName = getRiskName();
+	const AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	const AQLString model = LAMarketData::getModelName(fx);
+	const AQLString riskName = getRiskName();
 
 	// Re-calibrating is done in the same way as on fx vega
-	LAString inputType = LAMarketData::getVolInputType(model, fx, RISK_FRONT_VOL_FXVEGA).toUpper();
+	AQLString inputType = LAMarketData::getVolInputType(model, fx, RISK_FRONT_VOL_FXVEGA).toUpper();
 	if (inputType == INPUT_T_DATA_MATRIX)
 	{
-		throw LACoreInvalidData("Correlation delta does not support data type, now.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Correlation delta does not support data type, now.", __FILE__, __LINE__);
 	}
 
-	LAObjectPool& objPool = dataInstance.getObjectPool();
+	AQLObjectPool& objPool = dataInstance.getObjectPool();
 
 	MAScenarioParam param;
 	param.ccy = fx;
 	param.model = model;
 	param.isCalib = true;
-	param.calcType= getExtraCalcType(LAString(fx).toUpper(), SCENARIO_1, index);
+	param.calcType= getExtraCalcType(AQLString(fx).toUpper(), SCENARIO_1, index);
 	param.shiftType = RISK_SHIFTTYPE_DIFF;
 	param.bumpDirection = cor.upshift ? RISK_BUMPDIRECTION_UPSHIFT : RISK_BUMPDIRECTION_DOWNSHIFT;
 	param.targetName = LAMarketData::getBaseVolatilityName(fx);
@@ -382,10 +382,10 @@ LARiskConfigurationCorDelta::createExtraScenario1Entity(const LAString &key, LAD
 	param.refName.push_back(calibInfoCreator->createCalibrationInfo(objPool, fx));
 	calibInfoCreator.reset();
 	
-	LAString dYieldName = LAMarketData::getBaseYieldName(ccys[0]);
-	LAString dCalibDataName = LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, dYieldName));
-	LAString fYieldName = LAMarketData::getBaseYieldName(ccys[1]);
-	LAString fCalibDataName = LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, fYieldName));
+	AQLString dYieldName = LAMarketData::getBaseYieldName(ccys[0]);
+	AQLString dCalibDataName = LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, dYieldName));
+	AQLString fYieldName = LAMarketData::getBaseYieldName(ccys[1]);
+	AQLString fCalibDataName = LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, fYieldName));
 
 	param.isParallel = true;
 	param.paraShiftVec.resize(1, 0.0);
@@ -396,8 +396,8 @@ LARiskConfigurationCorDelta::createExtraScenario1Entity(const LAString &key, LAD
 	param.refName.push_back(fCalibDataName);
 
 	// Read the intact (that is, not shifted) correlation matrix into param.corMtx
-	LAStringVector calibccys = LAString(fx).toUpper().toToken(FX_DELIMITER);
-	calibccys.push_back(LAString(fx).toUpper());
+	AQLStringVector calibccys = AQLString(fx).toUpper().toToken(FX_DELIMITER);
+	calibccys.push_back(AQLString(fx).toUpper());
 	LAMarketData::getSDECorrelation(calibccys, param.corMtx);
 
 	// The correlation matrix for the vol re-calibration is a subset of the one
@@ -413,115 +413,115 @@ LARiskConfigurationCorDelta::createExtraScenario1Entity(const LAString &key, LAD
 	// Re-calibrate and create scenario entities
 	std::shared_ptr<LAScenarioConfiguration> sceCreator(
 			LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL));
-	std::vector<LAObject *> entities = sceCreator->createScenario(dataInstance, param);
+	std::vector<AQLObject *> entities = sceCreator->createScenario(dataInstance, param);
 
 	// Rename scenario entities;
 	// before: VOL_SDE_JPY/EUR_FX_<fx>_CORDELTA_ExtraScenario1_0_STD_Parallel
 	// after : VOL_SDE_JPY/EUR_FX_<key>_CORDELTA_ExtraScenario1_0_STD_Parallel
-	const LAString replacee = "_FX_" + LAString(fx).toUpper() + "_";
-	const LAString replacer = "_FX_" + LAString(key).toUpper() + "_";
+	const AQLString replacee = "_FX_" + AQLString(fx).toUpper() + "_";
+	const AQLString replacer = "_FX_" + AQLString(key).toUpper() + "_";
 	for (std::size_t i = 0, iend = entities.size(); i != iend; ++i)
 	{
 		LAMathVolatility &e = *dynamic_cast<LAMathVolatility*>(entities[i]);
-		const LAString n = e.getName().get();
+		const AQLString n = e.getName().get();
 		const int idx = n.findString(replacee);
-		const LAString prefix  = n.subString(0                    , idx - 1 );
-		const LAString postfix = n.subString(idx + replacee.size(), n.size());
-		const LAString nn = prefix + replacer + postfix;
-		e.getName() = LADataString(nn);
+		const AQLString prefix  = n.subString(0                    , idx - 1 );
+		const AQLString postfix = n.subString(idx + replacee.size(), n.size());
+		const AQLString nn = prefix + replacer + postfix;
+		e.getName() = AQLDataString(nn);
 	}
 
-	return std::vector<std::vector<LAObject *> >(1, entities);
+	return std::vector<std::vector<AQLObject *> >(1, entities);
 }
 
 // Get the name of the object overwritten by a Scenario
-LAString
-LARiskConfigurationCorDelta::getTargetNames(const LAString &key, LADataInstance &dataInstance) const
+AQLString
+LARiskConfigurationCorDelta::getTargetNames(const AQLString &key, AQLDataInstance &dataInstance) const
 {
 	return LAMarketData::getPathEnitty(dataInstance.getObjectPool())->getCorrelationMatrixEntityName();
 }
 
 // Get the name of the object overwritten by a ExtraScenario1
-LAStringVector
-LARiskConfigurationCorDelta::getExtraTargetNames1(const LAString &key, LADataInstance &/*dataInstance*/) const
+AQLStringVector
+LARiskConfigurationCorDelta::getExtraTargetNames1(const AQLString &key, AQLDataInstance &/*dataInstance*/) const
 {
-	const LAStringVector ks = key.toToken('-');
-	const LAString fx = deduceFX(ks[0], ks[1]);		// "jpy/eur"
+	const AQLStringVector ks = key.toToken('-');
+	const AQLString fx = deduceFX(ks[0], ks[1]);		// "jpy/eur"
 	if (fx == "")
 	{
 		// Both are FX or no FX is available
-		return LAStringVector(1, LAMarketData::getBaseVolatilityName(getAnySimulatedFX()));
+		return AQLStringVector(1, LAMarketData::getBaseVolatilityName(getAnySimulatedFX()));
 	}
 	else
 	{
-		return LAStringVector(1, LAMarketData::getBaseVolatilityName(fx));
+		return AQLStringVector(1, LAMarketData::getBaseVolatilityName(fx));
 	}
 }
 
-LAString
-LARiskConfigurationCorDelta::getOutPutName1(const LAString &key) const
+AQLString
+LARiskConfigurationCorDelta::getOutPutName1(const AQLString &key) const
 {
-	return mpRiskStaticData->getStaticData(LAString(key).toLower() +
+	return mpRiskStaticData->getStaticData(AQLString(key).toLower() +
 		COR_KEY_RISK_FRONT_COR_CORDELTA_OUTPUTNAME);
 }
 
 bool
-LARiskConfigurationCorDelta::isGridSensitivity(const LAString &key) const
+LARiskConfigurationCorDelta::isGridSensitivity(const AQLString &key) const
 {
 	return false;
 }
 
 bool
-LARiskConfigurationCorDelta::isParallelShift(const LAString &key) const
+LARiskConfigurationCorDelta::isParallelShift(const AQLString &key) const
 {
 	return true;
 }
 
-LAString
+AQLString
 LARiskConfigurationCorDelta::getRiskName(void) const
 {
 	return RISK_FRONT_COR_CORDELTA;
 }
 
-std::vector<LAString>
-LARiskConfigurationCorDelta::getGridTerm(const LAString &key) const
+std::vector<AQLString>
+LARiskConfigurationCorDelta::getGridTerm(const AQLString &key) const
 {
-	return std::vector<LAString>();
+	return std::vector<AQLString>();
 }
 
-std::vector<LAString>
-LARiskConfigurationCorDelta::getBucketGridTerm(const LAString &key) const
+std::vector<AQLString>
+LARiskConfigurationCorDelta::getBucketGridTerm(const AQLString &key) const
 {
-	return std::vector<LAString>();
+	return std::vector<AQLString>();
 }
 
-LAString
-LARiskConfigurationCorDelta::getBumpDirection(const LAString &key) const
+AQLString
+LARiskConfigurationCorDelta::getBumpDirection(const AQLString &key) const
 {
 	return mBumpedCors[key].upshift ? RISK_BUMPDIRECTION_UPSHIFT : RISK_BUMPDIRECTION_DOWNSHIFT;
 }
 
 double
-LARiskConfigurationCorDelta::getDivUnit(const LAString &key) const
+LARiskConfigurationCorDelta::getDivUnit(const AQLString &key) const
 {
-	return mpRiskStaticData->getStaticData(LAString(key).toLower() +
+	return mpRiskStaticData->getStaticData(AQLString(key).toLower() +
 		COR_KEY_RISK_FRONT_COR_CORDELTA_DIVUNIT).getDoubleValue();
 }
 
 double
-LARiskConfigurationCorDelta::getShiftVal(const LAString &key, SCENARIONUM scenarioNum) const
+LARiskConfigurationCorDelta::getShiftVal(const AQLString &key, SCENARIONUM scenarioNum) const
 {
 	scenarioNum;
-	const double shiftVal = mpRiskStaticData->getStaticData(LAString(key).toLower() +
+	const double shiftVal = mpRiskStaticData->getStaticData(AQLString(key).toLower() +
 		COR_KEY_RISK_FRONT_COR_CORDELTA_SHIFTVAL).getDoubleValue();
 	return shiftVal;
 }
 
 void
-LARiskConfigurationCorDelta::putBumpedCor(const LAString &key, LAObjectPool &objPool) const
+LARiskConfigurationCorDelta::putBumpedCor(const AQLString &key, AQLObjectPool &objPool) const
 {
 	// Split "JPY-JPY/EUR" into "JPY" and "JPY/EUR"
-	const LAStringVector ccys = LAString(key).toUpper().toToken('-');
+	const AQLStringVector ccys = AQLString(key).toUpper().toToken('-');
 
 	// Get the intact path object and the correlation matrix
 	const LAMathPathEntity& pathEntity = *LAMarketData::getPathEnitty(objPool);
@@ -541,14 +541,14 @@ LARiskConfigurationCorDelta::putBumpedCor(const LAString &key, LAObjectPool &obj
 	{
 		if (corij + shiftAmount > corMax)
 		{
-			throw LACoreInvalidData(
+			throw AQLCoreInvalidData(
 				(key + "'s correlation will exceed 1 after shifting").getCString(),
 				__FILE__, __LINE__);
 		}
 	}
 	else if (corij - shiftAmount < corMin)
 	{
-		throw LACoreInvalidData(
+		throw AQLCoreInvalidData(
 			(key + "'s correlation will fall behind -1 after shifting").getCString(),
 			__FILE__, __LINE__);
 	}

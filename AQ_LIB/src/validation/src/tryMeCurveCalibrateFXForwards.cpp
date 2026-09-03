@@ -21,11 +21,11 @@ namespace validation
     *  @param [in]		curveConv			General curve properties such as asofdate, ccy, interp, etc
     *  @param [in]		fxFwdConv			FX forward conventions
     */
-    LAString tryMeCurveCalibrateFXForwards( const LAString& curveCollection,
-                                            const LAString& staticDataTable,
-                                            const LAString& curveIndexInput,
-                                            const LAStringMatrix& curveConv,
-                                            const LAStringMatrix& fxFwdConv )
+    AQLString tryMeCurveCalibrateFXForwards( const AQLString& curveCollection,
+                                            const AQLString& staticDataTable,
+                                            const AQLString& curveIndexInput,
+                                            const AQLStringMatrix& curveConv,
+                                            const AQLStringMatrix& fxFwdConv )
     {
         VALID_EXCEPTION_START
         
@@ -35,7 +35,7 @@ namespace validation
         // Prefix the staticDataTable to the curveIndex Name Set, ensuring to use the ':' delimiter
         std::string curveIndexStdStr =  curveIndexInput.getCString();
         curveIndexStdStr = etrading::addPrefixStringAndCheckForDuplicates( curveIndexStdStr, std::string(staticDataTable.getCString()) );
-        LAString curveIndex  = curveIndexStdStr.c_str();
+        AQLString curveIndex  = curveIndexStdStr.c_str();
         
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -51,7 +51,7 @@ namespace validation
 
         if( fxFwdConv.empty() )
         {
-            throw LACoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
         }
 
         if( fxFwdConv[0].size() < 2 )
@@ -64,7 +64,7 @@ namespace validation
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
 
-        LAString ret( curveCollection + " " + staticDataTable + " Curve has been set" );
+        AQLString ret( curveCollection + " " + staticDataTable + " Curve has been set" );
 
         if ( CreateDataFile::recordEnabled() )
         {

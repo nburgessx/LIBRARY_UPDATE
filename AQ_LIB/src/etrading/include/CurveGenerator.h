@@ -80,23 +80,23 @@ namespace etrading
 		 */
 		VariantMatrix toVariantMatrix( const std::string& propertyKey ) const;
 
-		/* @brief Returns a LAStringMatrix containing the configuration information for the specified propertyKey
+		/* @brief Returns a AQLStringMatrix containing the configuration information for the specified propertyKey
 		 * @param [in]   propertyKey   The property to be displayed
-		 * @param [in]   trimBlankRows Whether to remove blank rows from the end of the LAStringMatrix
-	     * @param [out]  A LAStringMatrix containing the LabelValue block
+		 * @param [in]   trimBlankRows Whether to remove blank rows from the end of the AQLStringMatrix
+	     * @param [out]  A AQLStringMatrix containing the LabelValue block
 		 */
-		LAStringMatrix toLAStringMatrix( const std::string& propertyKey, const bool trimBlankRows = true ) const;
+		AQLStringMatrix toLAStringMatrix( const std::string& propertyKey, const bool trimBlankRows = true ) const;
 
         /* @brief Returns a StandardStringMatrix containing the configuration information for the specified propertyKey
 		 * @param [in]   propertyKey   The property to be displayed
-		 * @param [in]   trimBlankRows Whether to remove blank rows from the end of the LAStringMatrix
+		 * @param [in]   trimBlankRows Whether to remove blank rows from the end of the AQLStringMatrix
 	     * @param [out]  A StandardStringMatrix containing the LabelValue block
 		 */
 		StandardStringMatrix toStandardStringMatrix( const std::string& propertyKey, const bool trimBlankRows = true ) const;
 
         /* @brief Returns a LabelValueBlock containing the configuration information for the specified propertyKey
 		 * @param [in]   propertyKey   The property to be displayed
-		 * @param [in]   trimBlankRows Whether to remove blank rows from the end of the LAStringMatrix
+		 * @param [in]   trimBlankRows Whether to remove blank rows from the end of the AQLStringMatrix
 	     * @param [out]  A LabelValueBlock containing the LabelValue block
 		 */
 		LabelValueBlock toLabelValueBlock( const std::string& propertyKey, const bool trimBlankRows = true ) const;
@@ -462,7 +462,7 @@ namespace etrading
 
 		mutable std::map<std::string, VariantMatrix> variantMatrixByKey_;
 
-		mutable std::map<std::string, LAStringMatrix> stringMatrixByKey_;
+		mutable std::map<std::string, AQLStringMatrix> stringMatrixByKey_;
 	};
 
 	typedef std::shared_ptr< CurveGenerator > CurveGeneratorPtr;

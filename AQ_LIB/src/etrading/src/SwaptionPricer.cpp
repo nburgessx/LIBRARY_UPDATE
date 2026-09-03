@@ -12,7 +12,7 @@
 namespace etrading
 {
 
-    SwaptionPricer::SwaptionPricer(const std::shared_ptr<SwaptionTrade>& swaption, const LAStringMatrix& valuationSettingsLVB )
+    SwaptionPricer::SwaptionPricer(const std::shared_ptr<SwaptionTrade>& swaption, const AQLStringMatrix& valuationSettingsLVB )
 		: swaptionTrade_( swaption ), valuationSettingsLVB_( valuationSettingsLVB )
 	{
 		AQ_REQUIRE( swaptionTrade_ != nullptr, "Invalid swaption trade" );
@@ -25,7 +25,7 @@ namespace etrading
 
         // Set the Volatility Provider
         // =======================================================================================================
-        const LAString volObjectName = getVolatilityModelFromValuationSettings( valuationSettingsLVB );
+        const AQLString volObjectName = getVolatilityModelFromValuationSettings( valuationSettingsLVB );
         volProvider_ = getVolatility( volObjectName.getCString() ); // LWO Utility method to get the volatility object pointer from the LWO Cache
 
 
@@ -45,10 +45,10 @@ namespace etrading
 	{}
 
     // Helper Method to Calculate a Discount Factor
-    double SwaptionPricer::discountFactor( const LADate& paymentDate ) const
+    double SwaptionPricer::discountFactor( const AQLDate& paymentDate ) const
     {
         const std::string discountFactorCurveIndex = "OIS";
-        const std::vector<double> discountFactors = etrading::getCurveDiscountFactors( std::vector<LADate>(1, paymentDate), curveCollection_.c_str(), discountFactorCurveIndex.c_str() );
+        const std::vector<double> discountFactors = etrading::getCurveDiscountFactors( std::vector<AQLDate>(1, paymentDate), curveCollection_.c_str(), discountFactorCurveIndex.c_str() );
         AQ_REQUIRE( discountFactors.size() > 0, "Invalid Discount Factor(s) - Discount factor results are empty")
         return discountFactors[0];
     }
@@ -70,8 +70,8 @@ namespace etrading
         bs.annuityWithNotional_             = calculateAnnuityWithNotional( underlyingSwap, bs.parRate_ );
 
 		// Calculate time to expiry
-		const LADate valuationDate                  = volProvider_->asOfDate();
-		const LADate adjustedOptionExpiryDate       = swaptionTrade_->adjustedOptionExpiryDate(); // Option Expiry Adjusted for Notification Lag
+		const AQLDate valuationDate                  = volProvider_->asOfDate();
+		const AQLDate adjustedOptionExpiryDate       = swaptionTrade_->adjustedOptionExpiryDate(); // Option Expiry Adjusted for Notification Lag
         const std::string notificationLag           = swaptionTrade_->notificationDays();
         AQ_REQUIRE( adjustedOptionExpiryDate >= valuationDate, "The swaption has expired! - OptionExpiryDate: " + adjustedOptionExpiryDate.stringWithFormat("DD-MM-YYYY") + ", NotificationDays: " + notificationLag.c_str() )
 
@@ -247,7 +247,7 @@ namespace etrading
             case PHYSICAL_SETTLEMENT:
 			case CASH_PRICE_SETTLEMENT:
 			{
-				const LAString& fixedLegName = underlyingSwap->getLeg( fixedLegIdx )->getLegName();
+				const AQLString& fixedLegName = underlyingSwap->getLeg( fixedLegIdx )->getLegName();
 		
 				annuityWithNotional = underlyingSwap->annuity( valuationSettingsLVB_, fixedLegName );
 				break;
@@ -288,10 +288,10 @@ namespace etrading
         if ( !AQ_IS_EQUAL_ZERO( fee ) ) 
         {
             // Fees in the past have zero PV
-            const LADate feeDate        = swaptionTrade_->feeDate();
+            const AQLDate feeDate        = swaptionTrade_->feeDate();
             double feeDiscountFactor    = 0.0;
             
-            const LADate valuationDate  = volProvider_->asOfDate();
+            const AQLDate valuationDate  = volProvider_->asOfDate();
             if ( feeDate >= valuationDate )
             {
                 // Get Fee Discount Factor
@@ -315,8 +315,8 @@ namespace etrading
         if ( !AQ_IS_EQUAL_ZERO( fee ) )
         {
             // Calculate BlackScholes Parameters
-            const LADate valuationDate          = volProvider_->asOfDate();
-		    const LADate feeDate                = swaptionTrade_->feeDate();
+            const AQLDate valuationDate          = volProvider_->asOfDate();
+		    const AQLDate feeDate                = swaptionTrade_->feeDate();
             const DayCountEnum optionDayCount   = swaptionTrade_->optionDayCount();
             const double feeYearFraction        = getYearFraction( valuationDate, feeDate, optionDayCount, false );
 
@@ -343,8 +343,8 @@ namespace etrading
         if ( !AQ_IS_EQUAL_ZERO( fee ) )
         {
             // Calculate BlackScholes Parameters
-            const LADate valuationDate          = volProvider_->asOfDate();
-		    const LADate feeDate                = swaptionTrade_->feeDate();
+            const AQLDate valuationDate          = volProvider_->asOfDate();
+		    const AQLDate feeDate                = swaptionTrade_->feeDate();
             const DayCountEnum optionDayCount   = swaptionTrade_->optionDayCount();
             const double feeYearFraction        = getYearFraction( valuationDate, feeDate, optionDayCount, false );
 
@@ -371,16 +371,16 @@ namespace etrading
         if ( !AQ_IS_EQUAL_ZERO( fee ) ) 
         {
             // Fees in the past have zero PV
-            const LADate feeDate                = swaptionTrade_->feeDate();
+            const AQLDate feeDate                = swaptionTrade_->feeDate();
             
-            const LADate valuationDate          = volProvider_->asOfDate();
+            const AQLDate valuationDate          = volProvider_->asOfDate();
             if ( feeDate >= valuationDate )
             {
                 // Discount Factor on Valuation Date
                 double todayDiscountFactor       = discountFactor( feeDate );
                 
                 // Discount Factor on Valuation Date + 1
-                LADate todayPlusOne             = valuationDate;
+                AQLDate todayPlusOne             = valuationDate;
                 todayPlusOne.addDays(1);
                 
                 double oneDayDiscountFactor     = discountFactor( todayPlusOne );

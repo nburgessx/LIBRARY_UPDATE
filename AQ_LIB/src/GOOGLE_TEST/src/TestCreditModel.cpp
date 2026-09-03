@@ -95,12 +95,12 @@ namespace
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 
 
-	/* @brief			A helper function which converts a LAStringMatrix into a VariantMatrix
-	*                   If the input LAStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns 
-	*  @param [in]		stringMatrix		The input LAStringMatrix
+	/* @brief			A helper function which converts a AQLStringMatrix into a VariantMatrix
+	*                   If the input AQLStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns 
+	*  @param [in]		stringMatrix		The input AQLStringMatrix
 	*  @returns			The corresponding VariantMatrix
 	*/
-	etrading::VariantMatrix convertStringMatrixToVariantMatrix( LAStringMatrix stringMatrix )
+	etrading::VariantMatrix convertStringMatrixToVariantMatrix( AQLStringMatrix stringMatrix )
 	{
 		etrading::VariantMatrix variantMatrix;
 
@@ -122,7 +122,7 @@ namespace
 		}
 		else
 		{
-			// The input LAStringMatrix is empty.
+			// The input AQLStringMatrix is empty.
 			// Create a default variantMatrix with 2 columns of dummy data.
 			// This simulates an empty block in Excel.
 			etrading::VariantVector dummyVector ( 1, "" );
@@ -133,11 +133,11 @@ namespace
 		return variantMatrix;
 	}
 
-	/* @brief			Builds a "TableInfo" tuple from a LAStringMatrix of marketdata
+	/* @brief			Builds a "TableInfo" tuple from a AQLStringMatrix of marketdata
 	*                   This tuple consists of columnNames, columnTypes and the actual data values.
-	*  @param [in]		marketDataBlock		A LAStringMatrix containing key/value market data values
+	*  @param [in]		marketDataBlock		A AQLStringMatrix containing key/value market data values
 	*/
-	TableInfo getTableInfoFromStringMatrix( const LAStringMatrix& marketDataBlock )
+	TableInfo getTableInfoFromStringMatrix( const AQLStringMatrix& marketDataBlock )
 	{
 		etrading::VariantMatrix dataValues =  convertStringMatrixToVariantMatrix( marketDataBlock );
 		size_t numColumns = dataValues.size();
@@ -160,7 +160,7 @@ namespace
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOMarketDataObjectFromFileName( const LAString& marketDataFileName )
+	void createLWOMarketDataObjectFromFileName( const AQLString& marketDataFileName )
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load( marketDataFileName );
 
@@ -182,7 +182,7 @@ namespace
 
 				// We obtained the enum, so this is a marketData key we are interested in
 				marketDataKeys.push_back( key );
-				LAStringMatrix marketDataBlock = marketDataFileObj[ *it ];
+				AQLStringMatrix marketDataBlock = marketDataFileObj[ *it ];
 				infoBlocks.push_back ( getTableInfoFromStringMatrix( marketDataBlock ) );
 			}
 			catch( ... )
@@ -198,7 +198,7 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOCurveFromFileName( const LAString& curveCalibrationFileName )
+	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
@@ -216,18 +216,18 @@ namespace
 	*  @param [in]		marketDataFileName			The filename specifying generator curve data
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/
-	void setUpGeneratorCurve( const LAString& marketDataFileName, const LAString& curveCalibrationFileName )
+	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
 		createLWOMarketDataObjectFromFileName( marketDataFileName );
 		createLWOCurveFromFileName( curveCalibrationFileName );
 	}
 
-	std::string createLWOCreditModelFromFileName( const LAString& creditModelFileName )
+	std::string createLWOCreditModelFromFileName( const AQLString& creditModelFileName )
 	{
 		etrading::ReadDataFile::Load creditModelFileObj = etrading::ReadDataFile::Load( creditModelFileName );
 		const std::string creditModelName		= creditModelFileObj[ "objectName" ];
-		const LAStringMatrix modelProperties		= creditModelFileObj[ "MODEL_PROPERTIES" ];
-		const LAStringMatrix cdsMarketData		= creditModelFileObj[ "CDS_MARKETDATA" ];
+		const AQLStringMatrix modelProperties		= creditModelFileObj[ "MODEL_PROPERTIES" ];
+		const AQLStringMatrix cdsMarketData		= creditModelFileObj[ "CDS_MARKETDATA" ];
 
 		std::vector<std::string> propertyNames;
 		propertyNames.push_back( "MODEL_PROPERTIES" );
@@ -241,7 +241,7 @@ namespace
 		return objectName;
 	}
 
-	void checkLWOCreditModelCalibration( const LAString& viewCreditModelCalibrationFileName, const LAString& expectedCreditModelCalibrationFileName )
+	void checkLWOCreditModelCalibration( const AQLString& viewCreditModelCalibrationFileName, const AQLString& expectedCreditModelCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load viewCreditModelCalibrationFileObj = etrading::ReadDataFile::Load( viewCreditModelCalibrationFileName );
 		std::string creditModelName = viewCreditModelCalibrationFileObj[ "creditModelName" ];
@@ -256,15 +256,15 @@ namespace
 		if ( etrading::CreateDataFile::rebaseResultsEnabled() )
 		{
 			etrading::CreateDataFile::setOutputFolder( TEST_DIR, false );
-			LAStringVector v = LAString( expectedCreditModelCalibrationFileName ).toToken( '/' );
-            LAString resultFileName = v.back();
+			AQLStringVector v = AQLString( expectedCreditModelCalibrationFileName ).toToken( '/' );
+            AQLString resultFileName = v.back();
 			etrading::CreateDataFile file( etrading::CreateDataFile::makeFilename( resultFileName ) );
             file.write( "output", results );
 		}
 		else
 		{
 			etrading::ReadDataFile::Load expectedCreditModelCalibrationFileObj = etrading::ReadDataFile::Load( expectedCreditModelCalibrationFileName );		
-			LAStringMatrix expectedResults = expectedCreditModelCalibrationFileObj[ "output" ];
+			AQLStringMatrix expectedResults = expectedCreditModelCalibrationFileObj[ "output" ];
 			ASSERT_EQ( nRows, expectedResults.size() ) << "#Error: Expected number of rows differ";
 			ASSERT_EQ( nCols, expectedResults[0].size() ) << "#Error: Expected number of columns differ";
 
@@ -286,7 +286,7 @@ namespace
 						calculatedValueAsDouble = boost::get<double>( anyValue );
 					}
 				
-					LAString expectedValue = expectedResults[row][col];
+					AQLString expectedValue = expectedResults[row][col];
 					double expectedValueAsDouble = expectedValue.getDoubleValue();
 
 					EXPECT_NEAR( calculatedValueAsDouble, expectedValueAsDouble, tolerance ) << "Difference in calibration parameters at " << row << ", " << col ;
@@ -296,14 +296,14 @@ namespace
 		}
 	}
 
-	std::string createLWOCreditDefaultSwapFromFileName( const LAString& cdsFileName )
+	std::string createLWOCreditDefaultSwapFromFileName( const AQLString& cdsFileName )
 	{
 		etrading::ReadDataFile::Load creditDefaultSwapFileObj = etrading::ReadDataFile::Load( cdsFileName );
 		
 		const std::string swapName				= creditDefaultSwapFileObj[ "swapName" ];
 		const std::string lwoswapGeneratorName	= creditDefaultSwapFileObj[ "swapGeneratorName" ];
-		const LAStringMatrix expressionLVB		= creditDefaultSwapFileObj[ "expressionLVB" ];
-		const LAStringMatrix swapPropertiesLVB	= creditDefaultSwapFileObj[ "swapPropertiesLVB" ];
+		const AQLStringMatrix expressionLVB		= creditDefaultSwapFileObj[ "expressionLVB" ];
+		const AQLStringMatrix swapPropertiesLVB	= creditDefaultSwapFileObj[ "swapPropertiesLVB" ];
 		const bool isXccySwap					= creditDefaultSwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= creditDefaultSwapFileObj[ "validateKeys" ];
 		
@@ -311,7 +311,7 @@ namespace
 		return cdsName;
 	}
 
-	void checkLWOCreditModelConsistency( const LAString& viewCreditModelCalibrationFileName )
+	void checkLWOCreditModelConsistency( const AQLString& viewCreditModelCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load viewCreditModelCalibrationFileObj = etrading::ReadDataFile::Load( viewCreditModelCalibrationFileName );
 		std::string creditModelName = viewCreditModelCalibrationFileObj[ "creditModelName" ];
@@ -346,8 +346,8 @@ namespace
 			ASSERT_NEAR( defaultProbability, expectedDefaultProbability, tolerance ) << "#Error: Mismatch in default probability";
 
 			// 2. Check consistency between calibration hazard rate and API hazard rate
-			LADate fromDate;
-			LADate toDate = etrading::LADateScheduleHelpers::getLADate( maturityDateAsInt );
+			AQLDate fromDate;
+			AQLDate toDate = etrading::LADateScheduleHelpers::getLADate( maturityDateAsInt );
 			double apiHazardRate = validation::tryMeLWOCreditModelHazardRate( creditModelName, toDate );
 			ASSERT_NEAR( hazardRate, apiHazardRate, tolerance ) << "#Error: Mismatch in hazard rate";
 
@@ -371,7 +371,7 @@ namespace
 
 	}
 
-	void checkLWOCreditModelExtrapolation( const LAString& viewCreditModelCalibrationFileName )
+	void checkLWOCreditModelExtrapolation( const AQLString& viewCreditModelCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load viewCreditModelCalibrationFileObj = etrading::ReadDataFile::Load( viewCreditModelCalibrationFileName );
 		std::string creditModelName = viewCreditModelCalibrationFileObj[ "creditModelName" ];
@@ -395,8 +395,8 @@ namespace
 		double defaultProbability = boost::get<double>( anyDefaultProbability );
 
 		// Check consistency between calibration survival probability and API survival probability at the final calibration point
-		const LADate asOfDate = validation::tryMeLWOCreditModelAsOfDate( creditModelName );
-		LADate toDate = etrading::LADateScheduleHelpers::getLADate( maturityDateAsInt );
+		const AQLDate asOfDate = validation::tryMeLWOCreditModelAsOfDate( creditModelName );
+		AQLDate toDate = etrading::LADateScheduleHelpers::getLADate( maturityDateAsInt );
 		const double apiSurvivalProbability = validation::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate, asOfDate );
 		ASSERT_NEAR( survivalProbability, apiSurvivalProbability, tolerance ) << "#Error: Mismatch in survival probability";
 
@@ -410,10 +410,10 @@ namespace
 		// Extrapolate for 12 months
 		for (int i=0; i<12; i++)
 		{
-			const LAString tenor("1M");
-			const LAString businessDayAdj;
-			const LAString calendar;
-			const LAString rolLConvention;
+			const AQLString tenor("1M");
+			const AQLString businessDayAdj;
+			const AQLString calendar;
+			const AQLString rolLConvention;
 			toDate = validation::tryMeDateFromTenor( toDate, tenor, businessDayAdj, calendar, rolLConvention );
 
 			const double survivalProbability = validation::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate, asOfDate );
@@ -476,7 +476,7 @@ namespace
 		// Calculate the PV by monte-carlo simulation over survival probability / stopping time
 		// The default test setup uses Mersenne-Twister derived paths
 		double standardError = 0.0;
-		LAStringMatrix mcParameters		= PVFileObj[ "mcParametersLVB"];
+		AQLStringMatrix mcParameters		= PVFileObj[ "mcParametersLVB"];
 		const bool payDefaultCashflowsOnNextCouponDate= PVFileObj[ "payDefaultCashflowsOnNextCouponDate" ];
 		
 		const double pvByMersenneTwisterMC = validation::tryMeLWOCreditDefaultSwapPVByMonteCarlo( swapName, creditModelName, legName.c_str(), mcParameters, payDefaultCashflowsOnNextCouponDate, standardError );
@@ -491,7 +491,7 @@ namespace
 		
 		// Now re-run the test using Sobol sequence
         etrading::ReadDataFile::Load PVFileObjSOBOL = etrading::ReadDataFile::Load( CDS_CALCULATE_PV_BY_MONTE_CARLO_SOBOL );
-        LAStringMatrix mcParametersSobol		= PVFileObjSOBOL[ "mcParametersLVB"];
+        AQLStringMatrix mcParametersSobol		= PVFileObjSOBOL[ "mcParametersLVB"];
 		const double pvBySobolMC = validation::tryMeLWOCreditDefaultSwapPVByMonteCarlo( swapName, creditModelName, legName.c_str(), mcParametersSobol, payDefaultCashflowsOnNextCouponDate, standardError );
 
 		// Check PV against recorded Sobol baseline
@@ -608,7 +608,7 @@ namespace google_test
 		std::string creditModelName = createLWOCreditModelFromFileName( GEN_USD_CREDIT_MODEL );
 
 		etrading::ReadDataFile::Load creditModelFileObj = etrading::ReadDataFile::Load( GEN_USD_CREDIT_MODEL );
-		const LAStringMatrix cdsMarketData		= creditModelFileObj[ "CDS_MARKETDATA" ];
+		const AQLStringMatrix cdsMarketData		= creditModelFileObj[ "CDS_MARKETDATA" ];
 
 		const size_t nRows = cdsMarketData.size();
 		for (size_t row = 0; row < nRows; row++ )
@@ -616,8 +616,8 @@ namespace google_test
 			std::string filename = std::string( CDS_REPRICE_PREFIX )  + AQ_TO_STRING_FROM_SIZE_T(row) + ".csv";
 			std::string cdsName = createLWOCreditDefaultSwapFromFileName( filename.c_str() );
 
-			LAString premiumLegName;
-			LAString protectionLegName;
+			AQLString premiumLegName;
+			AQLString protectionLegName;
 			const double calculatedCDSSpread = validation::tryMeLWOCreditDefaultSwapParSpread( cdsName, creditModelName, premiumLegName, protectionLegName );
 
             char * pFirstNonNumber;
@@ -740,17 +740,17 @@ namespace google_test
         };
 
 
-		LADate toDate;
-		LADate fromDate(stoppingDates[0].c_str());
+		AQLDate toDate;
+		AQLDate fromDate(stoppingDates[0].c_str());
 
 		const size_t numDates = sizeof( stoppingDates ) / sizeof(stoppingDates[0]);
 
 		for (size_t i=1; i< numDates; i++)
 		{
-			LADate toDate(stoppingDates[i].c_str());
+			AQLDate toDate(stoppingDates[i].c_str());
 
 			const double survivalProbability = validation::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
-			const LADate impliedSurvivalDate = validation::tryMeLWOCreditModelImpliedSurvivalDate( creditModelName, survivalProbability );
+			const AQLDate impliedSurvivalDate = validation::tryMeLWOCreditModelImpliedSurvivalDate( creditModelName, survivalProbability );
 
 			EXPECT_EQ( toDate, impliedSurvivalDate );
 			if ( toDate != impliedSurvivalDate )

@@ -25,25 +25,25 @@
 #include "LAPriceDriftQuantAdjustment.h"
 #include "LAPriceFXVolatility.h"
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathVolFuncBase.h"
 #include "LARatesSpotSDE.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAModelDynamicsScalar.h"
-#include "LAAlgorithm.h"
-#include "LAConstant.h"
-#include "LA1DDataSet.h"
-#include "LACombinationFunc.h"
-#include "LALinearInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LAGaussLegendre.h"
-#include "LACombinationFunc.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLConstant.h"
+#include "AQL1DDataSet.h"
+#include "AQLCombinationFunc.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLGaussLegendre.h"
+#include "AQLCombinationFunc.h"
+#include "AQLBasic.h"
 
 
 using namespace std;
@@ -53,14 +53,14 @@ using namespace std;
 	@brief default constructor
 	@param[in] pDriftIR drift class before quant adjustment
 */
-LAPriceDriftQuantAdjustment::LAPriceDriftQuantAdjustment(LAFunctionBase* pDriftIR)
+LAPriceDriftQuantAdjustment::LAPriceDriftQuantAdjustment(AQLFunctionBase* pDriftIR)
 : mpVolatility(0), mpSDEFX(0), mpFxVolatility(0), m_i(0), mpDriftIR(pDriftIR), mPos_old(0), mInitialFxVol(0.0)
 , mpVar(0), mpVarPos(0), mpVar2(0), mpVarPos2(0)
 {
 	if (pDriftIR == 0)
 	{
 		//error
-		throw LACoreInvalidData("input IR drift is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("input IR drift is NULL", __FILE__, __LINE__);
 	}
 
 }
@@ -71,14 +71,14 @@ LAPriceDriftQuantAdjustment::LAPriceDriftQuantAdjustment(LAFunctionBase* pDriftI
 	@param[in] i suffix
 	@param[in] pDriftIR drift class before quant adjustment
 */
-LAPriceDriftQuantAdjustment::LAPriceDriftQuantAdjustment(const LAString& sdeAttrNameIR, const LAString& sdeAttrNameFX, unsigned int i, LAFunctionBase* pDriftIR)
+LAPriceDriftQuantAdjustment::LAPriceDriftQuantAdjustment(const AQLString& sdeAttrNameIR, const AQLString& sdeAttrNameFX, unsigned int i, AQLFunctionBase* pDriftIR)
 : mpVolatility(0), mpSDEFX(0), mpFxVolatility(0), m_i(i), mSDEAttrNameIR(sdeAttrNameIR), mSDEAttrNameFX(sdeAttrNameFX), mpDriftIR(pDriftIR), mPos_old(0), mInitialFxVol(0.0)
 , mpVar(0), mpVarPos(0), mpVar2(0), mpVarPos2(0)
 {
 	if (pDriftIR == 0)
 	{
 		//error
-		throw LACoreInvalidData("input IR drift is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("input IR drift is NULL", __FILE__, __LINE__);
 	}
 }
 
@@ -95,7 +95,7 @@ mpDriftIR(0), mPos_old(v.mPos_old), mInitialFxVol(v.mInitialFxVol)
 , mpVar(v.mpVar), mpVarPos(v.mpVarPos), mpVar2(v.mpVar2), mpVarPos2(v.mpVarPos2)
 {
 	if (v.mpDriftIR != 0)
-		mpDriftIR = dynamic_cast<LAFunctionBase*>(v.mpDriftIR->clone());
+		mpDriftIR = dynamic_cast<AQLFunctionBase*>(v.mpDriftIR->clone());
 }
 
 /*!
@@ -117,7 +117,7 @@ LAPriceDriftQuantAdjustment::~LAPriceDriftQuantAdjustment()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftQuantAdjustment::clone() const	
 {
     try 
@@ -126,7 +126,7 @@ LAPriceDriftQuantAdjustment::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -165,12 +165,12 @@ LAPriceDriftQuantAdjustment::operator()(const DoubleArray& x) const
 	if (x[0] == 0.0) pos = 0;
 	else if (x[0] == timegrid[mPos_old]) pos = mPos_old;
 	else if (x[0] == timegrid[mPos_old + 1]) pos = mPos_old + 1;
-	else if (!LAAlgorithm::find<DoubleArray, double>(timegrid, x[0], 0, timegrid.size() - 1, pos))
+	else if (!AQLAlgorithm::find<DoubleArray, double>(timegrid, x[0], 0, timegrid.size() - 1, pos))
 	{
 		//error
-		LAString msg = "Time =" + LADataDouble(x[0]).convertToString();
+		AQLString msg = "Time =" + AQLDataDouble(x[0]).convertToString();
 		msg += " is not in sde integral time grid";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	
 	double fxvol;
@@ -207,15 +207,15 @@ LAPriceDriftQuantAdjustment::operator()(const DoubleArray& x) const
     @brief return string representaion
     @return string representaion (ir sde attr name : fx sde attr name : suffix : mpDriftIR.convertToString())
 */
-LAString
+AQLString
 LAPriceDriftQuantAdjustment::convertToString(void) const
 {
-	LAString ret;
+	AQLString ret;
 	ret = mSDEAttrNameIR;
 	ret += ":";
 	ret += mSDEAttrNameFX;
 	ret += ":";
-	ret += LADataInt(m_i).convertToString();
+	ret += AQLDataInt(m_i).convertToString();
 	if (mpDriftIR != 0)
 	{
 		ret += ":";
@@ -230,14 +230,14 @@ LAPriceDriftQuantAdjustment::convertToString(void) const
     @param[in] string representaion (ir sde attr name : fx sde attr name : suffix)
 */
 void
-LAPriceDriftQuantAdjustment::convertFromString(const LAString& str)
+LAPriceDriftQuantAdjustment::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() < 3)
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	}
 
 	mSDEAttrNameIR = tmp.get()[0];
@@ -245,7 +245,7 @@ LAPriceDriftQuantAdjustment::convertFromString(const LAString& str)
 	m_i = tmp.get()[2].getIntValue();
 	
 	if (tmp.getSize() == 3 || mpDriftIR == 0) return;
-	LAString str2 = tmp.get()[3];
+	AQLString str2 = tmp.get()[3];
 	for (unsigned int i = 4; i < tmp.getSize(); i++)
 	{
 		str2 += ":";
@@ -276,7 +276,7 @@ LAPriceDriftQuantAdjustment::setFXSDE(LARatesSpotSDE* psde)
 void
 LAPriceDriftQuantAdjustment::setUp(LAMathPathEntity& path)
 {
-	LADataHolder* dh = &path.getData(mSDEAttrNameIR, ISNOTNULL);
+	AQLDataHolder* dh = &path.getData(mSDEAttrNameIR, ISNOTNULL);
 	LAMathAttrSDE* pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
 	mpVolatility = pattrsde->getSDE().getVolatility()[m_i][0];
 	LARatesBM* bm1 = pattrsde->getSDE().getBM();
@@ -294,11 +294,11 @@ LAPriceDriftQuantAdjustment::setUp(LAMathPathEntity& path)
 	}
 	else
 	{
-		LAFunctionBase* pfunc = pattrsde->getSDE().getDrift()[0];
+		AQLFunctionBase* pfunc = pattrsde->getSDE().getDrift()[0];
 		if (!pfunc->isTypeOf(FN_DRIFTQUANTADJ))
 		{
 			//error
-			throw LACoreInvalidData("dirft function is not LAPriceDriftQuantAdjustment", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("dirft function is not LAPriceDriftQuantAdjustment", __FILE__, __LINE__);
 		}
 		LAPriceDriftQuantAdjustment* pfunc2 = dynamic_cast<LAPriceDriftQuantAdjustment*>(pfunc);
 		mpVar = pfunc2->mpVar;
@@ -330,7 +330,7 @@ LAPriceDriftQuantAdjustment::setUp(LAMathPathEntity& path)
 	unsigned int size = timegrid.size();
 
 	mIntegratedData.resize(size);
-	LAGaussLegendre gl(20);
+	AQLGaussLegendre gl(20);
 	for (unsigned int i = 1; i < size; i++)
 		mIntegratedData[i] = mIntegratedData[i - 1] + integral(i - 1, &gl);
 }
@@ -344,7 +344,7 @@ double
 LAPriceDriftQuantAdjustment::integral(const std::vector<std::pair<double,double> >& x) const
 {
 	const LAPriceFXVolatility* pFxVol = dynamic_cast<const LAPriceFXVolatility*>(mpFxVolatility);
-	const LAFunctionBase* p_fx_and_t_part = pFxVol->get_fx_and_t_part();
+	const AQLFunctionBase* p_fx_and_t_part = pFxVol->get_fx_and_t_part();
 
 	const DoubleArray& timegrid = mpSDEFX->getBM()->getTimeGrid();
 	unsigned int size = timegrid.size();
@@ -353,23 +353,23 @@ LAPriceDriftQuantAdjustment::integral(const std::vector<std::pair<double,double>
 	if (x[0].second == timegrid[1]) pos_e = 1;
 	else if (x[0].second == timegrid[mPos_old + 1]) pos_e = mPos_old + 1;
 	else if (x[0].second == timegrid[mPos_old]) pos_e = mPos_old;
-	else if (!LAAlgorithm::find<DoubleArray, double>(timegrid, x[0].second, 0, size - 1, pos_e))
+	else if (!AQLAlgorithm::find<DoubleArray, double>(timegrid, x[0].second, 0, size - 1, pos_e))
 	{
 		//error
-		LAString msg = "Time =" + LADataDouble(x[0].second).convertToString();
+		AQLString msg = "Time =" + AQLDataDouble(x[0].second).convertToString();
 		msg += " is not in sde integral time grid";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	mPos_old = pos_e;
 
 	if (x[0].first == 0.0) pos_s = 0;
 	else if (x[0].first == timegrid[mPos_old - 1]) pos_s = mPos_old - 1;
-	else if (!LAAlgorithm::find<DoubleArray, double>(timegrid, x[0].first, 0, size - 1, pos_s))
+	else if (!AQLAlgorithm::find<DoubleArray, double>(timegrid, x[0].first, 0, size - 1, pos_s))
 	{
 		//error
-		LAString msg = "Time =" + LADataDouble(x[0].first).convertToString();
+		AQLString msg = "Time =" + AQLDataDouble(x[0].first).convertToString();
 		msg += " is not in sde integral time grid";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 	}
 	
 	double fx_and_t_part;
@@ -425,7 +425,7 @@ LAPriceDriftQuantAdjustment::integral(const std::vector<std::pair<double,double>
 	if (mIntegratedData.size() == 0)
 	{
 		mIntegratedData.resize(size);
-		LAGaussLegendre gl(20);
+		AQLGaussLegendre gl(20);
 		for (unsigned int i = 1; i < size; i++)
 			mIntegratedData[i] = mIntegratedData[i - 1] + integral(i - 1, &gl);
 	}
@@ -437,10 +437,10 @@ LAPriceDriftQuantAdjustment::integral(const std::vector<std::pair<double,double>
 }
 
 double
-LAPriceDriftQuantAdjustment::integral(unsigned int pos_s, LA1DIntegral* pIntegral) const
+LAPriceDriftQuantAdjustment::integral(unsigned int pos_s, AQL1DIntegral* pIntegral) const
 {
 	const LAPriceFXVolatility* pFxVol = dynamic_cast<const LAPriceFXVolatility*>(mpFxVolatility);
-	const LAFunctionBase* p_t_part = pFxVol->get_t_part();
+	const AQLFunctionBase* p_t_part = pFxVol->get_t_part();
 	const DoubleArray& timegrid = mpSDEFX->getBM()->getTimeGrid();
 	
 
@@ -453,8 +453,8 @@ LAPriceDriftQuantAdjustment::integral(unsigned int pos_s, LA1DIntegral* pIntegra
 					* (timegrid[pos_s + 1] - timegrid[pos_s]);
 
 		else if (mpVolatility->isTypeOf(FN_1DDATASET) 
-			&& (dynamic_cast<const LA1DDataSet*>(mpVolatility)->getInterpolationType() == FN_STEPINTERPOLATION
-			|| dynamic_cast<const LA1DDataSet*>(mpVolatility)->getInterpolationType() == FN_LINEARINTERPOLATION))
+			&& (dynamic_cast<const AQL1DDataSet*>(mpVolatility)->getInterpolationType() == FN_STEPINTERPOLATION
+			|| dynamic_cast<const AQL1DDataSet*>(mpVolatility)->getInterpolationType() == FN_LINEARINTERPOLATION))
 			return (*p_t_part)(timegrid[0])
 					* mpVolatility->integral(timegrid[pos_s], timegrid[pos_s + 1])
 					* mCorrelation[pos_s]
@@ -468,19 +468,19 @@ LAPriceDriftQuantAdjustment::integral(unsigned int pos_s, LA1DIntegral* pIntegra
 	else if (p_t_part->isTypeOf(FN_1DDATASET))
 	{
 		if (mpVolatility->isTypeOf(FN_CONSTANT) 
-			&& (dynamic_cast<const LA1DDataSet*>(p_t_part)->getInterpolationType() == FN_STEPINTERPOLATION
-			|| dynamic_cast<const LA1DDataSet*>(p_t_part)->getInterpolationType() == FN_LINEARINTERPOLATION))
+			&& (dynamic_cast<const AQL1DDataSet*>(p_t_part)->getInterpolationType() == FN_STEPINTERPOLATION
+			|| dynamic_cast<const AQL1DDataSet*>(p_t_part)->getInterpolationType() == FN_LINEARINTERPOLATION))
 			return (*mpVolatility)(timegrid[0])
 					* p_t_part->integral(timegrid[pos_s], timegrid[pos_s + 1])
 					* mCorrelation[pos_s]
 					* (timegrid[pos_s + 1] - timegrid[pos_s]);
 		else if (mpVolatility->isTypeOf(FN_1DDATASET) 
-			&& dynamic_cast<const LA1DDataSet*>(mpVolatility)->getInterpolationType() == FN_STEPINTERPOLATION
-			&& dynamic_cast<const LA1DDataSet*>(p_t_part)->getInterpolationType() == FN_STEPINTERPOLATION)
+			&& dynamic_cast<const AQL1DDataSet*>(mpVolatility)->getInterpolationType() == FN_STEPINTERPOLATION
+			&& dynamic_cast<const AQL1DDataSet*>(p_t_part)->getInterpolationType() == FN_STEPINTERPOLATION)
 		{
 			set<double> grid_set;
-			const DoubleArray& grid = dynamic_cast<const LA1DDataSet*>(mpVolatility)->getGrids();
-			const DoubleArray& grid2 = dynamic_cast<const LA1DDataSet*>(p_t_part)->getGrids();
+			const DoubleArray& grid = dynamic_cast<const AQL1DDataSet*>(mpVolatility)->getGrids();
+			const DoubleArray& grid2 = dynamic_cast<const AQL1DDataSet*>(p_t_part)->getGrids();
 			unsigned int grid_size = grid.size();
 			for (unsigned int j = 0; j < grid_size; j++)
 			{

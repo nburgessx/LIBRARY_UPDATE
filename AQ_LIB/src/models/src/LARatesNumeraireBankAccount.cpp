@@ -25,7 +25,7 @@
 
 #include "LARatesNumeraireBankAccount.h"
 #include "LAModelDynamicsCurve.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 //#ifdef _MSC_VER 	//20070409--Nagase--g++(g++stdext)
 //using namespace stdext;
@@ -65,7 +65,7 @@ LARatesNumeraireBankAccount::~LARatesNumeraireBankAccount()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesNumeraireBankAccount::clone() const
 {
     try 
@@ -74,7 +74,7 @@ LARatesNumeraireBankAccount::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -116,7 +116,7 @@ LARatesNumeraireBankAccount::operator()(double t) const
 	if (t > mTerminal + INFINITESIMAL || t < 0.0)
 	{
 		//error
-        throw LACoreInvalidData("input t is before 0 or after Terminal", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("input t is before 0 or after Terminal", __FILE__, __LINE__);
 	}
 	
 	if (mUpdateFlag) {
@@ -136,7 +136,7 @@ LARatesNumeraireBankAccount::operator()(double t) const
 	}
 
 	unsigned int pos;
-	LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, t, mTimeGrid.size(), pos);
+	AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, t, mTimeGrid.size(), pos);
 	
 	if (pos == mTimeGrid.size())
 		return mNumeraireArray.back();
@@ -198,7 +198,7 @@ LARatesNumeraireBankAccount::calcNumeraire(void) const
 {
 	if (mTimeGrid.size() != mCurves.size())
 	{
-		throw LACoreInvalidData("mTimeGrid and mCurve's t is not consistent", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("mTimeGrid and mCurve's t is not consistent", __FILE__, __LINE__);
 	}
 	mNumeraireArray.clear();
 	//mTimeGrid.clear();
@@ -219,7 +219,7 @@ LARatesNumeraireBankAccount::calcNumeraire(void) const
 		it2++;
 		if (mTimeGrid[i] != it2->first)
 		{
-			throw LACoreInvalidData("mTimeGrid and mCurve's t is not consistent", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("mTimeGrid and mCurve's t is not consistent", __FILE__, __LINE__);
 		} 
 		if (i == 0)
 			//mNumeraireArray[i] = 1.0 / it->second->getP(it2->first);
@@ -241,7 +241,7 @@ LARatesNumeraireBankAccount::calcNumeraire(void) const
 	}
 	if (mTimeGrid.back() != mTerminal)
 	{
-		throw LACoreInvalidData("mTimeGrid's last element is not mTerminal ", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("mTimeGrid's last element is not mTerminal ", __FILE__, __LINE__);
 	}
 	/*if (mIsLongJump)
 		mNumeraireArray[i] = 1.0 / getCurve(0).getP(it->first) / it->second->getP(mTerminal);
@@ -264,11 +264,11 @@ LARatesNumeraireBankAccount::setTimeGrid(const DoubleArray &timeGrid) const
 {
 	if (timeGrid.empty())
 	{
-		throw LACoreInvalidData("timeGrid is empty.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("timeGrid is empty.", __FILE__, __LINE__);
 	}
 	if (timeGrid[0] == 0.0)
 	{
-		throw LACoreInvalidData("timeGrid first element is zero.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("timeGrid first element is zero.", __FILE__, __LINE__);
 	}
 	mTimeGrid.clear();
 	mTimeGrid = timeGrid;
@@ -285,15 +285,15 @@ LARatesNumeraireBankAccount::setDFRatioForNumeraire() const
 {
 	if (mTimeGrid.empty())
 	{
-		throw LACoreInvalidData("mTimeGrid is empty.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("mTimeGrid is empty.", __FILE__, __LINE__);
 	}
 	mDFRatioNumeArray.resize(mTimeGrid.size(), 1.0);
 	if (mpBasisCurve)
 	{
-		mDFRatioNumeArray[0] = LAMath::exp(-(*mpBasisCurve)(mTimeGrid[0]) * mTimeGrid[0]);
+		mDFRatioNumeArray[0] = AQLMath::exp(-(*mpBasisCurve)(mTimeGrid[0]) * mTimeGrid[0]);
 		for (unsigned int i = 1; i < mDFRatioNumeArray.size(); ++i)
 		{
-			mDFRatioNumeArray[i] = LAMath::exp((*mpBasisCurve)(mTimeGrid[i - 1]) * mTimeGrid[i - 1] - (*mpBasisCurve)(mTimeGrid[i]) * mTimeGrid[i]);
+			mDFRatioNumeArray[i] = AQLMath::exp((*mpBasisCurve)(mTimeGrid[i - 1]) * mTimeGrid[i - 1] - (*mpBasisCurve)(mTimeGrid[i]) * mTimeGrid[i]);
 		}
 	}
 }
@@ -307,14 +307,14 @@ LARatesNumeraireBankAccount::setDFRatio(double t) const
 	{      
 		if (mTimeGrid.empty())
 		{
-			throw LACoreInvalidData("mTimeGrid is empty.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("mTimeGrid is empty.", __FILE__, __LINE__);
 		}
 		map<double, double>::const_iterator it = mDFRatio.find(t);
 		if (it == mDFRatio.end())
 		{
 			unsigned int pos;
-			LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, t, mTimeGrid.size(), pos);
-			mDFRatio[t] = LAMath::exp((*mpBasisCurve)(t) * t - (*mpBasisCurve)(mTimeGrid[pos]) * mTimeGrid[pos]);
+			AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, t, mTimeGrid.size(), pos);
+			mDFRatio[t] = AQLMath::exp((*mpBasisCurve)(t) * t - (*mpBasisCurve)(mTimeGrid[pos]) * mTimeGrid[pos]);
 		}
 	}
 }

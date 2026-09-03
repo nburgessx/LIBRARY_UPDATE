@@ -17,8 +17,8 @@ namespace etrading
 	*/
 	struct ForwardRateResults
 	{
-		LADate lowerBracketDate;	// The pillar date of the curve which defines the lower bracket of the period
-		LADate upperBracketDate;	// The pillar date of the curve which defines the upper bracket of the period
+		AQLDate lowerBracketDate;	// The pillar date of the curve which defines the lower bracket of the period
+		AQLDate upperBracketDate;	// The pillar date of the curve which defines the upper bracket of the period
 		double forwardRate;			// The forward rate for the period
 	};
 
@@ -32,7 +32,7 @@ namespace etrading
 	};
 
 	// @brief Holds a map of all calibration points, sorted by date
-	typedef std::map<LADate, ZCInflationSwapMarketData > InflationMarketDataMap;
+	typedef std::map<AQLDate, ZCInflationSwapMarketData > InflationMarketDataMap;
 
 	class InflationCurve : public IsLWOObject
 	{
@@ -59,7 +59,7 @@ namespace etrading
 		*/
 		std::string getCurveCollection() const;
 
-		LADate getAsOfDate() const;
+		AQLDate getAsOfDate() const;
 
 		CCY getCurrency() const;
 
@@ -80,13 +80,13 @@ namespace etrading
 		* @param[in]	fixLag					Adjust the specified date backwards by this lag tenor.
 		* @returns	The calculated CPI level
 		*/
-		double getInflationIndexForDate( const LADate& date, const InflationResetTypeEnum& inflationResetType, const std::string& fixLag ) const;
+		double getInflationIndexForDate( const AQLDate& date, const InflationResetTypeEnum& inflationResetType, const std::string& fixLag ) const;
 
 		/* @brief	Returns the inflation level for the specified date, no further lag adjustment.
 		*			The inflation level IS adjusted for seasonality
 		*			Note: This function is public to allow access from ZeroCouponInflationSwap during calibration.
 		*/
-		double getMonthlyInflationIndexForLaggedDate( const LADate& laggedDate ) const;
+		double getMonthlyInflationIndexForLaggedDate( const AQLDate& laggedDate ) const;
 
 		/* @brief	Returns a matrix of node points representing calibrated values
 		*			The format is: Date (including lag), IndexLevel
@@ -99,7 +99,7 @@ namespace etrading
 		 * @param [in]   date			The date of this calibration point
 		 * @param [in]   inflationIndex	The inflation index to set for the specified date
 		 */
-		void setCalibrationPoint( const LADate& date, const double inflationIndex );
+		void setCalibrationPoint( const AQLDate& date, const double inflationIndex );
 
 
 		static std::vector<std::string> inflation_curve_properties_lvbKeys()
@@ -144,25 +144,25 @@ namespace etrading
 		/* @brief	Returns the inflation level for the specified date, no further lag adjustment.
 		*			The inflation level is NOT adjusted for seasonality
 		*/
-		double getUnadjustedInflationIndexForDate( const LADate& laggedDate ) const;
+		double getUnadjustedInflationIndexForDate( const AQLDate& laggedDate ) const;
 
 		/* @brief	Get the the seasonality adjustment for the specified date, no further lag adjustment.
 		*			The calculation is performed using the exponential seasonal model from Kerkhof p30
 		*/
-		double getSeasonalityFactor( const LADate& laggedDate ) const;
+		double getSeasonalityFactor( const AQLDate& laggedDate ) const;
 
 		/* @brief	Returns the forward inflation rate for the specified date, no further lag adjustment.
 		*			The forward rate is calculated from the CPI level at the curve pillars which bracket the
 		*			specified date and is given as the log return of the CPI level. See Kerkhof p30
 		*/
-		ForwardRateResults getForwardRateForDate( const LADate& laggedDate ) const;
+		ForwardRateResults getForwardRateForDate( const AQLDate& laggedDate ) const;
 
 		/* @brief	Calculate a fixing date which is lagged back by the amount specified by fixLagTenor.
 		*  @param	inputDate		The date to be lagged
 		*  @param	@fixLagTenor	The lag amount, expressed as a tenor. A positive tenor "2M" lags the date backwards
 		*  @returns	A fixing date which is lagged back from the inputDate by the amount specified by fixLagTenor
 		*/
-		LADate applyFixingLagToDate( const LADate& inputDate, const std::string& fixLagTenor ) const;
+		AQLDate applyFixingLagToDate( const AQLDate& inputDate, const std::string& fixLagTenor ) const;
 
 		/* @brief Parses the market data and constructs a map from instrument maturity date to input market data point.
 		 *        The purpose is to ensure that all calibration points are accessed in the order of increasing maturity.
@@ -170,7 +170,7 @@ namespace etrading
 		 * @param [in]   referenceDate		A reference start date used to calculate maturity dates from tenors.
 		 * @returns The InflationMarketDataMap
 		 */
-		InflationMarketDataMap loadMarketDataMap( const LADate& referenceDate ) const;
+		InflationMarketDataMap loadMarketDataMap( const AQLDate& referenceDate ) const;
 
 		/* @brief	Allow the user to specify CPI fixing overrides in the first year, before the first swap instrument,
 		*			and where seasonality does not apply
@@ -191,7 +191,7 @@ namespace etrading
 		 * @param [in]  swapGeneratorName	The swap generator used to obtain conventions and to create calibration instruments
 		 * @param [in]  marketDataMap		Input market data, a map from maturity date to break-even par rate, 
 		 */
-		void calibrateToZCInflationSwaps( const LADate& asOfDate, const std::string& swapGeneratorName, const InflationMarketDataMap& marketDataMap );
+		void calibrateToZCInflationSwaps( const AQLDate& asOfDate, const std::string& swapGeneratorName, const InflationMarketDataMap& marketDataMap );
 
 		/* @brief	During calibration, retrieve convention parameters from calibration instrument
 		*/
@@ -208,8 +208,8 @@ namespace etrading
 		FreeObject freeObject_;
 
 		// Parameters populated during calibration step
-		LADate asOfDate_;
-		LADate asOfDateWithFixlag_;
+		AQLDate asOfDate_;
+		AQLDate asOfDateWithFixlag_;
 
 		std::string spotLag_;
 		std::string spotBusinessDayAdjustment_;
@@ -230,7 +230,7 @@ namespace etrading
 
 	
 		// The output from Calibration: A sorted map of maturity dates and corresponding inflation index values
-		std::map<LADate, double> calibratedInflationPoints_;		// This allows fast lookup of inflation index by date.
+		std::map<AQLDate, double> calibratedInflationPoints_;		// This allows fast lookup of inflation index by date.
 
 		/* In the long end of the curve node points may be spaced apart 10 or more years.
 		*  The interpolator is used to obtain further points with 1Y spacing.

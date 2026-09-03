@@ -51,7 +51,7 @@ DoubleMatrix LAEigenSystems::normalizeMat( DoubleMatrix& Mat )
 	size_t n = Mat.size();
 	size_t m = Mat[0].size();
 
-	if( n == 0 || m == 0 ) throw LACoreInvalidData("Mat.size() and 1 Mat[0].size() must bigger than 1!", __FILE__, __LINE__);
+	if( n == 0 || m == 0 ) throw AQLCoreInvalidData("Mat.size() and 1 Mat[0].size() must bigger than 1!", __FILE__, __LINE__);
 	
 	double tmp;
 	for(size_t i = 0; i < n; ++i)
@@ -78,7 +78,7 @@ void LAEigenSystems::eigensystem(const DoubleMatrix&	orig_mat,
     //check for symmetry and rank
     if (orig_mat.front().size() != mat_rank)
     {
-        throw LACoreInvalidData("The matrix is not square : eigensystem", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("The matrix is not square : eigensystem", __FILE__, __LINE__);
     }
 
     for (size_t i = 0; i < mat_rank; i++)
@@ -87,7 +87,7 @@ void LAEigenSystems::eigensystem(const DoubleMatrix&	orig_mat,
         {
             if ( !LAModelUtilities::eq(orig_mat[i][j],orig_mat[j][i]) )
             {
-                throw LACoreInvalidData("The matrix is not symmetric : eigensystem", __FILE__, __LINE__);
+                throw AQLCoreInvalidData("The matrix is not symmetric : eigensystem", __FILE__, __LINE__);
             }
         }
     }
@@ -238,7 +238,7 @@ void LAEigenSystems::tqli(DoubleVector &d, DoubleVector &e, DoubleMatrix &z)
             {
                 if (iter++ == 30)
                 {
-                    throw LACoreInvalidData("Too many iterations. No convergence in 30 iterations : tqli ", __FILE__, __LINE__);
+                    throw AQLCoreInvalidData("Too many iterations. No convergence in 30 iterations : tqli ", __FILE__, __LINE__);
                 }
                 //form shift
                 g = (d[l+1] - d[l]) / (2. * e[l]);

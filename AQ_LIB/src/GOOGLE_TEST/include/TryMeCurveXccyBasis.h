@@ -10,13 +10,13 @@ namespace google_test
         , public TryMeCurveAccessors
     {
     public:
-        TryMeCurveXccyBasis( const LAString& inputFile );
+        TryMeCurveXccyBasis( const AQLString& inputFile );
     };
 
 	/* 
 	*  @brief			Set up xccy basis curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeXccyBasisCurve(const LAString& inputFile);
+	void setUpMeXccyBasisCurve(const AQLString& inputFile);
 }
 

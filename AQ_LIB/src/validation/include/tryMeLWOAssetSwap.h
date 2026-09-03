@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "Swap.h"
 
@@ -18,7 +18,7 @@ namespace validation
 	*  @param [in]		fixingTableNames	Fixing table object names
 	*  @return			Par/Par Asset Swap Spreads
 	*/
-	std::vector< double > tryMeLWOAssetSwapSpreadFromPrice(	const std::vector< double >& bondPrices, const std::vector< LADate >& bondAccrualStartDates, const std::vector< bool >& isCleanPrices,
+	std::vector< double > tryMeLWOAssetSwapSpreadFromPrice(	const std::vector< double >& bondPrices, const std::vector< AQLDate >& bondAccrualStartDates, const std::vector< bool >& isCleanPrices,
 															const std::string& swapObjectName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames = LabelValueBlock());
   
 	/* @brief			Helper interface for the tryMeLWOAssetSwapSpreadFromPrice method. Calculate the Par/Par Asset Swap Spread.
@@ -30,7 +30,7 @@ namespace validation
 	*  @param [in]		fixingTableNames	Fixing table object names
 	*  @return			Par/Par Asset Swap Spread
 	*/
-	double tryMeLWOAssetSwapSpreadFromPrice(const double& bondPrice, const LADate& bondAccrualStartDate, const bool& isCleanPrice,
+	double tryMeLWOAssetSwapSpreadFromPrice(const double& bondPrice, const AQLDate& bondAccrualStartDate, const bool& isCleanPrice,
 											const std::string& swapObjectName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames = LabelValueBlock());
 
 	/* @brief			validation interface for the meLWOAssetSwapSpread method. Calculate the Par/Par Asset Swap Spreads.

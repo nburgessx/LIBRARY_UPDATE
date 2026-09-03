@@ -20,7 +20,7 @@ LAMathVolatilityLMMDiscModel::LAMathVolatilityLMMDiscModel(const DoubleVector& p
 													   const DoubleVector& paramF_,
 													   const DoubleVector& tenorG_,
 													   const DoubleVector& G_,
-													   std::shared_ptr<LAInterpolationBase> interG_,
+													   std::shared_ptr<AQLInterpolationBase> interG_,
 													   const DoubleVector& T_fix_special_,
 													   const DoubleVector& T_fix,
 													   size_t num_small_step_

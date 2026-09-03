@@ -40,28 +40,28 @@ public:
 protected:
 	//==============================================
 	// create scenario volatility object
-	virtual std::vector<LAObject *> createVolatilityEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const;
+	virtual std::vector<AQLObject *> createVolatilityEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const;
 		//==============================================
 	// create scenario volatility object
-	virtual std::vector<LAObject *> createVolatilityEntityOld(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
+	virtual std::vector<AQLObject *> createVolatilityEntityOld(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
 	//==============================================
 	// get operator1
-	virtual  LAString  getOperator1(void) const;	
+	virtual  AQLString  getOperator1(void) const;	
 	//==============================================
 	// get coefficient1
-	virtual  LAString  getCoefficient1(const LAString &ccy) const;
+	virtual  AQLString  getCoefficient1(const AQLString &ccy) const;
 	//==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &ccy) const;
+	virtual  AQLString  getOutPutName1(const AQLString &ccy) const;
 	//==============================================
 	// get risk name
-	virtual  LAString getRiskName(void) const;
+	virtual  AQLString getRiskName(void) const;
 	//==============================================
 	// get parallel shift
-	virtual double getParallelShiftVal(const LAString &ccy) const;
+	virtual double getParallelShiftVal(const AQLString &ccy) const;
 	//==============================================
 	// isRiskCurrencyMode
-	virtual bool isRiskCurrencyMode(const LAString& fx) const;
+	virtual bool isRiskCurrencyMode(const AQLString& fx) const;
 
 };
 

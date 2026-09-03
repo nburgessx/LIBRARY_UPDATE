@@ -79,7 +79,7 @@ namespace etrading
 														deltaBump, gammaBump, vegaBump, thetaBump); // shift = 0.0
 				break;
 			default:
-				throw LACoreInvalidData("#Error: Only Analytical or Numerical Greek is supported", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: Only Analytical or Numerical Greek is supported", __FILE__, __LINE__);
 				break;
 		}
 

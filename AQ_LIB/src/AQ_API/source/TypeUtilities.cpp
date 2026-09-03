@@ -6,13 +6,13 @@
 
 namespace swig
 {
-	/* @brief		build LAStringMatrix from a vector of string vectors
-	*  @param [out]		sMatrix					the LAStringMatrix object being built
+	/* @brief		build AQLStringMatrix from a vector of string vectors
+	*  @param [out]		sMatrix					the AQLStringMatrix object being built
 	*  @param [in]		inputData				A vector of string vectors
 	*  @param [in]		curveTypeEnum			The curveType which thw data block "rhs" comes from.
 	*  @param [in]		curveMarketDataEnum		The name of the curve data block contained in inputData.
 	*/
-	void buildStringMatrix( LAStringMatrix& sMatrix, const std::vector<std::vector<std::string> >& inputData,	
+	void buildStringMatrix( AQLStringMatrix& sMatrix, const std::vector<std::vector<std::string> >& inputData,	
 							const etrading::CurveTypeEnum& curveTypeEnum,
 							const etrading::CurveMarketDataEnum& curveMarketDataEnum )
 	{
@@ -20,11 +20,11 @@ namespace swig
 		
 		for(size_t i=0; i<inputData.size(); ++i)
 		{
-			std::vector<LAString> mbStr;
+			std::vector<AQLString> mbStr;
 			std::vector<std::string> vec = inputData[i];
 			for(size_t j=0; j<vec.size(); ++j)
 			{
-				mbStr.push_back(LAString(vec[j].c_str()));
+				mbStr.push_back(AQLString(vec[j].c_str()));
 			}
 
 			sMatrix.push_back(mbStr);
@@ -117,7 +117,7 @@ namespace swig
 		return matrixDimension;
 	}
 
-    /* @brief			Build LAStringMatrix from input type SWIG_STRINGMATRIX.
+    /* @brief			Build AQLStringMatrix from input type SWIG_STRINGMATRIX.
 	*                   In "R", the SWIG_STRINGMATRIX is defined as vector< string >.
 	*					In all other languages, SWIG_STRINGMATRIX is a vector of string vectors.
 	*					The curveTypeEnum and curveMarketDataEnum is used to figure out how many columns there should be in the final matrix.
@@ -127,7 +127,7 @@ namespace swig
 	*  @param [in]		curveTypeEnum			The curveType of the curve that is to be built.
 	*  @param [in]		curveMarketDataEnum		The name of the curve data block contained in inputData.
 	*/
-	void buildStringMatrix( LAStringMatrix& sMatrix, const SWIG_STRINGMATRIX & inputData,
+	void buildStringMatrix( AQLStringMatrix& sMatrix, const SWIG_STRINGMATRIX & inputData,
 							const etrading::CurveTypeEnum& curveTypeEnum,
 							const etrading::CurveMarketDataEnum& curveMarketDataEnum )
 	{
@@ -137,10 +137,10 @@ namespace swig
 
 		for(size_t i=0; i<matrixDimension.nRows; ++i)
 		{
-			std::vector<LAString> rowData;
+			std::vector<AQLString> rowData;
 			for (size_t j=0; j<matrixDimension.nCols; ++j )
 			{
-				rowData.push_back( LAString( inputData[matrixDimension.nRows * j + i ].c_str() ) );
+				rowData.push_back( AQLString( inputData[matrixDimension.nRows * j + i ].c_str() ) );
 			}
 			sMatrix.push_back( rowData );
 		}
@@ -159,7 +159,7 @@ namespace swig
 
 		for( size_t i = 0; i < fromStringVector.size(); ++i )
 		{
-			LADate laDate( etrading::stringToDate( fromStringVector[i] ) );
+			AQLDate laDate( etrading::stringToDate( fromStringVector[i] ) );
 			toDateVector.push_back(laDate);
 		}
 	}
@@ -191,44 +191,44 @@ namespace swig
 
 		for( size_t i = 0; i < fromDateVector.size(); ++i )
 		{
-			LAString dateString( etrading::toYYYYMMDDFromDate( fromDateVector[i] ) );
+			AQLString dateString( etrading::toYYYYMMDDFromDate( fromDateVector[i] ) );
 			toStringVector.push_back( dateString.c_str() );
 		}
 	}
 
-	/* @brief			build LAStringVector from a vector of strings 
-	*  @param [out]		sVector			A LAStringVector object
+	/* @brief			build AQLStringVector from a vector of strings 
+	*  @param [out]		sVector			A AQLStringVector object
 	*  @param [in]		rhs				a vector of strings
 	*/
-	void buildStringVector(LAStringVector& sVector, const std::vector<std::string>& rhs)
+	void buildStringVector(AQLStringVector& sVector, const std::vector<std::string>& rhs)
 	{
 		sVector.clear();
 
 		for(size_t i=0; i<rhs.size(); ++i)
 		{
-			LAString temp(rhs[i].c_str());
+			AQLString temp(rhs[i].c_str());
 			sVector.push_back(temp);
 		}
 	}
 
-    /* @brief			Build a LADate from a std::string type
+    /* @brief			Build a AQLDate from a std::string type
 	*  @param [in]		dateString		String Date
     *  @param [in]		dateFormat		Date Format, typically "YYYYMMDD"
-	*  @output			Date in LADate format
+	*  @output			Date in AQLDate format
 	*/
-    LADate fromStringToLADate(const std::string& dateString, const std::string& dateFormat )
+    AQLDate fromStringToLADate(const std::string& dateString, const std::string& dateFormat )
     {
-        const LADate result( dateString.c_str(), dateFormat.c_str() );
+        const AQLDate result( dateString.c_str(), dateFormat.c_str() );
         return result;
     }
 
 	/* @brief			build a vector of strings from a DoubleVector object
 	*  @param [in]		inVal	input value as a string
-	*  @output			output value as a LAString
+	*  @output			output value as a AQLString
 	*/
-	LAString fromStringToLAString(const std::string& inVal) 
+	AQLString fromStringToLAString(const std::string& inVal) 
 	{
-		LAString outVal(inVal.c_str()); 
+		AQLString outVal(inVal.c_str()); 
 		return outVal; 
 	}
 
@@ -266,11 +266,11 @@ namespace swig
 		return maxColumnSize;
 	}
 
-	/* @brief			build a matrix of strings from a LAStringMatrix object
-	*  @param [in]		LAStringMatrix	a LAStringMatrix object
+	/* @brief			build a matrix of strings from a AQLStringMatrix object
+	*  @param [in]		AQLStringMatrix	a AQLStringMatrix object
 	*  @output			output a matrix of strings
 	*/
-	SWIG_STRINGMATRIX fromStringMatrixToMatrixOfString( const LAStringMatrix& laStringMatrix )
+	SWIG_STRINGMATRIX fromStringMatrixToMatrixOfString( const AQLStringMatrix& laStringMatrix )
 	{
 		const bool checkForEmptyMatrix = true;
 		const size_t maxColumnSize = getMatrixMaxColumnDimension( laStringMatrix, checkForEmptyMatrix );
@@ -415,7 +415,7 @@ namespace swig
 
 		if( totalRowSize == 0 || maxColumnSize == 0 )
 		{
-			throw LACoreInvalidData( "#Error: There are no rows or columns to display.", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: There are no rows or columns to display.", __FILE__, __LINE__ );
 		}
 
 		// String Matrices Require Special Treatment for R API
@@ -545,11 +545,11 @@ namespace swig
 	LabelValueBlock buildSingleLabelValueBlock(const std::vector<std::vector <std::string> >& input)
 	{
 
-		LAStringMatrix temp;
+		AQLStringMatrix temp;
 		buildStringMatrix(temp, input);
 		if (temp.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: an empty Label Value Block object is given", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: an empty Label Value Block object is given", __FILE__, __LINE__ );
 		}
 
 		LabelValueBlock a(temp);
@@ -578,18 +578,18 @@ namespace swig
 			toMatrix.push_back( tempVariantVector );
 		}
     }
-	/* @brief			build Variant Matrix from an LAStringMatrix
+	/* @brief			build Variant Matrix from an AQLStringMatrix
 	*  @param [out]		toMatrix			the variant matrix object being built
 	*  @param [in]		fromMatrix  	    the string matrix input
 	*/
-	void buildVariantMatrix( etrading::VariantMatrix & toMatrix, const LAStringMatrix& fromMatrix )
+	void buildVariantMatrix( etrading::VariantMatrix & toMatrix, const AQLStringMatrix& fromMatrix )
 	{
 	    toMatrix.clear();
 
 		for( size_t i = 0; i < fromMatrix.size(); ++i )
 		{
 			etrading::VariantVector tempVariantVector;
-            LAStringVector tempStringVector = fromMatrix[i];
+            AQLStringVector tempStringVector = fromMatrix[i];
 
 			for( size_t j = 0; j < tempStringVector.size(); ++j )
 			{

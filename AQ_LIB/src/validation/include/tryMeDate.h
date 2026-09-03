@@ -1,11 +1,11 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
     // Function to get today's date using the system date
-    LADate tryMeDateToday();
+    AQLDate tryMeDateToday();
     
     /* @brief			validation method for meDateFromTenor
     *  @param [in]		startDate			The from date
@@ -15,11 +15,11 @@ namespace validation
     *  @param [in]		rollConvention		Roll conventions, ie, Normal, IMM, EOM, Lunar, etc
     *  @return			The end date
     */
-    LADate tryMeDateFromTenor( const LADate& startDate,
-                               const LAString& tenor,
-                               const LAString& businessDayAdj,
-                               const LAString& calendar,
-                               const LAString& rollConvention );
+    AQLDate tryMeDateFromTenor( const AQLDate& startDate,
+                               const AQLString& tenor,
+                               const AQLString& businessDayAdj,
+                               const AQLString& calendar,
+                               const AQLString& rollConvention );
 
 
     /* @brief			validation method for meDateFromTenor
@@ -31,10 +31,10 @@ namespace validation
     *  @return			A vector of end dates
     */
     DateVector tryMeDateFromTenor( const DateVector& startDates,
-                                   const LAString& tenor,
-                                   const LAString& businessDayAdj,
-                                   const LAString& calendar,
-                                   const LAString& rollConvention );
+                                   const AQLString& tenor,
+                                   const AQLString& businessDayAdj,
+                                   const AQLString& calendar,
+                                   const AQLString& rollConvention );
 
     /* @brief			Method to get the curve spot date by applying multiple date shifts
     *  @param [in]		asOfDate		        The curve asOfDate
@@ -46,13 +46,13 @@ namespace validation
     *  @param [in]		paymentBusDayAdj        Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The curve spot date
     */
-	LADate tryMeDateShiftedSpotDate( const LADate& asOfDate,
-						             const LAString& fixingLag,			    // TODO: Convert to StandardString
-						             const LAString& fixingCalendar,	    // TODO: Convert to StandardString
-                                     const LAString& fixingBusDayAdj,	    // TODO: Convert to StandardString
-                                     const LAString& paymentLag,		    // TODO: Convert to StandardString
-						             const LAString& paymentCalendar,	    // TODO: Convert to StandardString
-                                     const LAString& paymentBusDayAdj );    // TODO: Convert to StandardString
+	AQLDate tryMeDateShiftedSpotDate( const AQLDate& asOfDate,
+						             const AQLString& fixingLag,			    // TODO: Convert to StandardString
+						             const AQLString& fixingCalendar,	    // TODO: Convert to StandardString
+                                     const AQLString& fixingBusDayAdj,	    // TODO: Convert to StandardString
+                                     const AQLString& paymentLag,		    // TODO: Convert to StandardString
+						             const AQLString& paymentCalendar,	    // TODO: Convert to StandardString
+                                     const AQLString& paymentBusDayAdj );    // TODO: Convert to StandardString
 
 	/* @param [in]		curveAsOfDate		The curve asOfDate
     *  @param [in]		spotLag				Tenor added to the from date
@@ -62,12 +62,12 @@ namespace validation
     *  @param [in]		rollConvention		Roll conventions, ie, Normal, IMM, EOM, Lunar, etc
     *  @return			The curve spot date
     */
-	LADate tryMeCurveUSDSpotDate( const LADate& curveAsOfDate,
-							      const LAString& spotLag,               // TODO: Convert to StandardString
-							      const LAString& fixingCalendar,        // TODO: Convert to StandardString
-							      const LAString& paymentCalendar,       // TODO: Convert to StandardString
-							      const LAString& businessDayAdj,        // TODO: Convert to StandardString
-							      const LAString& rollConvention );      // TODO: Convert to StandardString
+	AQLDate tryMeCurveUSDSpotDate( const AQLDate& curveAsOfDate,
+							      const AQLString& spotLag,               // TODO: Convert to StandardString
+							      const AQLString& fixingCalendar,        // TODO: Convert to StandardString
+							      const AQLString& paymentCalendar,       // TODO: Convert to StandardString
+							      const AQLString& businessDayAdj,        // TODO: Convert to StandardString
+							      const AQLString& rollConvention );      // TODO: Convert to StandardString
 
     /* @brief			validation interface for meDateFromYearFraction
     *  @param [in]		startDate			Start date
@@ -75,9 +75,9 @@ namespace validation
     *  @param [in]		dayCount			Day count convention
     *  @return			The end date derived from the FromDate and given year fraction
     */
-    LADate tryMeDateFromYearFraction( const LADate& startDate,
+    AQLDate tryMeDateFromYearFraction( const AQLDate& startDate,
                                       double yearFraction,
-                                      const LAString& dayCount );
+                                      const AQLString& dayCount );
 
     /* @brief			validation interface for the meDateYearFraction method
     *  @param [in]		fromDate	    From Date
@@ -86,9 +86,9 @@ namespace validation
     *  @param[in]		includelast		True(default):include the last day and not include start day; False:include start day and not include last day
     *  @return			Year fraction between fromDate and toDate
     */
-    double tryMeDateYearFraction( const LADate& fromDate,
-                                  const LADate& toDate,
-                                  const LAString& dayCount,
+    double tryMeDateYearFraction( const AQLDate& fromDate,
+                                  const AQLDate& toDate,
+                                  const AQLString& dayCount,
                                   bool includeLast = true );
 
 
@@ -98,41 +98,41 @@ namespace validation
     *  @param [in]		calendar		Calendar
     *  @return			Number of business days between fromDate and toDate
     */
-    int tryMeDateBusinessDays( const LADate& fromDate,
-                               const LADate& toDate,
-                               const LAString& calendar );
+    int tryMeDateBusinessDays( const AQLDate& fromDate,
+                               const AQLDate& toDate,
+                               const AQLString& calendar );
 
     /* @brief			validation interface for the meDateIsWorkingDay method
     *  @param [in]		date	        date
     *  @param [in]		calendar		holidayCentre(s)
     *  @return			returns a boolean to indicate if the date specified is a working day
     */
-    bool tryMeDateIsWorkingDay( const LADate& date,
-                                const LAString& holidayCentre );
+    bool tryMeDateIsWorkingDay( const AQLDate& date,
+                                const AQLString& holidayCentre );
 
     /* @brief			validation interface for the meDateIsHoliday method
     *  @param [in]		date	        date
     *  @param [in]		calendar		holidayCentre(s)
     *  @return			returns a boolean to indicate if the date specified is a holday
     */
-    bool tryMeDateIsHoliday( const LADate& date,
-                             const LAString& holidayCentre );
+    bool tryMeDateIsHoliday( const AQLDate& date,
+                             const AQLString& holidayCentre );
 
     /* @brief			validation interface for the meDateIsWeekend method
     *  @param [in]		date	        date
     *  @return			returns a boolean to indicate if the date specified falls on a weekend
     */
-    bool tryMeDateIsWeekend( const LADate& date );
+    bool tryMeDateIsWeekend( const AQLDate& date );
 
     /* @brief			validation interface for the meDateIsWeekday method
     *  @param [in]		date	        date
     *  @return			returns a boolean to indicate if the date specified is a weekday
     */
-    bool tryMeDateIsWeekday( const LADate& date );
+    bool tryMeDateIsWeekday( const AQLDate& date );
 
     /* @brief			validation interface for the meDateFuturesContract method
-    *  @param [in]		LAString        future's ticker
+    *  @param [in]		AQLString        future's ticker
     *  @return			returns a date representing the future's start date
     */
-    LADate tryMeDateFuturesContract( const LAString& futuresTicker );
+    AQLDate tryMeDateFuturesContract( const AQLString& futuresTicker );
 }

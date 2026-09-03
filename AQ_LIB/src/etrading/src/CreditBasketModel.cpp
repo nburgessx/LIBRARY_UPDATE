@@ -94,7 +94,7 @@ namespace etrading
 			{
 				// Verify that the credit model actually exists
 				auto creditModel = getCreditModel( creditModelName );
-				LADate creditModelAsOfDate = creditModel->getAsOfDate();
+				AQLDate creditModelAsOfDate = creditModel->getAsOfDate();
 				AQ_REQUIRE( creditModelAsOfDate == asOfDate_, "Credit Model: " + creditModelName + " has different asOf date to credit basket" );
 				
 				// Extract the correlation beta
@@ -152,7 +152,7 @@ namespace etrading
 	*/
 	LabelValueBlock CreditBasketModel::toLabelValueBlock( const std::string& propertyKey ) const
 	{
-		LAStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
+		AQLStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
 		LabelValueBlock lvb( stringMatrix );
 
 		return lvb;
@@ -162,10 +162,10 @@ namespace etrading
 	 * @param [in]	toDate		The initial date for survival probability calculations
 	 * @param [in]	fromDate	The final date for survival probability calculations
 	 */
-	void CreditBasketModel::validateDates( const LADate& toDate, const LADate& fromDate ) const
+	void CreditBasketModel::validateDates( const AQLDate& toDate, const AQLDate& fromDate ) const
 	{
 		// If fromDate is specified, perform sanity checks
-		if ( fromDate != LADate() )
+		if ( fromDate != AQLDate() )
 		{
 			if ( fromDate  < asOfDate_ )
 			{
@@ -184,7 +184,7 @@ namespace etrading
 	* @param[in]	calibrationDate	The date used to compute survivial probabilities from which the defaultFrontier is derived.
 	* @returns		A vector of defaultFrontier values, one per credit in the basket.
 	*/
-	std::vector<double> CreditBasketModel::calibrateDefaultFrontier( const LADate& toDate ) const
+	std::vector<double> CreditBasketModel::calibrateDefaultFrontier( const AQLDate& toDate ) const
 	{
 		const size_t nCreditModels = creditModelNames_.size();
 		std::vector<double> defaultFrontier( nCreditModels);  // This represents C_i(T).
@@ -255,7 +255,7 @@ namespace etrading
 	*  @param[in]	toDate	The future date to use in the calculation. Must occur after the model as-of date.
 	*  @returns	The survival probability
 	*/
-	double CreditBasketModel::getFirstToDefaultHomogeneousBasketSurvivalProbability( const LADate& toDate ) const
+	double CreditBasketModel::getFirstToDefaultHomogeneousBasketSurvivalProbability( const AQLDate& toDate ) const
 	{
 		std::vector<double> defaultFrontier = calibrateDefaultFrontier( toDate );
 
@@ -300,14 +300,14 @@ namespace etrading
 	*							This parameter is allowed to be an empty date i.e. an optional paramweter.
 	*  @returns	The survival probability
 	*/
-	double CreditBasketModel::getFirstToDefaultHomogeneousBasketSurvivalProbability( const LADate& toDate, const LADate& fromDate ) const
+	double CreditBasketModel::getFirstToDefaultHomogeneousBasketSurvivalProbability( const AQLDate& toDate, const AQLDate& fromDate ) const
 	{
 		validateDates( toDate, fromDate );
 
 		double survivalProbability = getFirstToDefaultHomogeneousBasketSurvivalProbability( toDate );
 
 		// fromDate is optional: it is OK for it to contain a default empty date
-		if ( fromDate != LADate() )
+		if ( fromDate != AQLDate() )
 		{
 			const double survivalFrom = getFirstToDefaultHomogeneousBasketSurvivalProbability( fromDate );
 			survivalProbability /= survivalFrom;
@@ -322,12 +322,12 @@ namespace etrading
 	*
 	*  @returns	The survival probability
 	*/
-	double CreditBasketModel::getFirstToDefaultHomogeneousBasketDefaultProbability( const LADate& toDate, const LADate& fromDate ) const
+	double CreditBasketModel::getFirstToDefaultHomogeneousBasketDefaultProbability( const AQLDate& toDate, const AQLDate& fromDate ) const
 	{
 		validateDates( toDate, fromDate );
 
 		// We allow a missing value for 'fromDate'. In this case we default to 'asOfDate'.
-		LADate fromDt = ( fromDate == LADate() ) ? asOfDate_ : fromDate;
+		AQLDate fromDt = ( fromDate == AQLDate() ) ? asOfDate_ : fromDate;
 
 		double defaultProbability = getFirstToDefaultHomogeneousBasketSurvivalProbability( fromDate ) - getFirstToDefaultHomogeneousBasketSurvivalProbability( toDate );
 		return defaultProbability;

@@ -64,7 +64,7 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT1; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile1, i );
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile1, i );
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = createBondFromSingleLVB( bondInputFilename.getCString() );
@@ -73,11 +73,11 @@ namespace google_test
                 etrading::registerToCache< etrading::Bond >( myBondPtr );
 
                 // Get the Bond Price Inputs
-				LAString priceInputFilename = CreateDataFile::makeFilename(priceBondInputFile1, i);
+				AQLString priceInputFilename = CreateDataFile::makeFilename(priceBondInputFile1, i);
 				const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
 
 				//1) Check Price Matching
@@ -85,7 +85,7 @@ namespace google_test
 				CheckTestResultsAndRebaseOnRequest(actualPrices, TEST_DIR1, priceBondOutputFile1, priceTolerance, i );
 
 				//2) Check Yield Matching
-				LAString yieldInputFilename = CreateDataFile::makeFilename(yieldBondInputFile1, i);
+				AQLString yieldInputFilename = CreateDataFile::makeFilename(yieldBondInputFile1, i);
 				const ReadDataFile::Load yieldInputFile(yieldInputFilename);
 				std::vector< double > prices = yieldInputFile["prices"];
 
@@ -101,7 +101,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT1 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -121,7 +121,7 @@ namespace google_test
 			for (i = 0; i < TEST_COUNT2; ++i)
 			{
 				// Create the Bond and Price filenames
-				LAString bondInputFilename = CreateDataFile::makeFilename(createBondInputFile2, i + TEST_COUNT1);
+				AQLString bondInputFilename = CreateDataFile::makeFilename(createBondInputFile2, i + TEST_COUNT1);
 
 				// Create the Bond
 				etrading::BondPtr myBondPtr = createBondFromSingleLVB(bondInputFilename.getCString());
@@ -130,11 +130,11 @@ namespace google_test
 				etrading::registerToCache< etrading::Bond >(myBondPtr);
 
 				// Get the Bond Price Inputs
-				LAString priceInputFilename = CreateDataFile::makeFilename(priceBondInputFile2, i + TEST_COUNT1);
+				AQLString priceInputFilename = CreateDataFile::makeFilename(priceBondInputFile2, i + TEST_COUNT1);
 				const ReadDataFile::Load priceInputFile(priceInputFilename);
 				const std::string bondObjectName = priceInputFile["bondObjectName"];
 
-				std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+				std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
 				std::vector< double > yields = priceInputFile["yields"];
 
 				//1) Check Price Matching
@@ -142,7 +142,7 @@ namespace google_test
 				CheckTestResultsAndRebaseOnRequest(actualPrices, TEST_DIR2, priceBondOutputFile2, priceTolerance, i + TEST_COUNT1);
 
 				//2) Check Yield Matching
-				LAString yieldInputFilename = CreateDataFile::makeFilename(yieldBondInputFile2, i + TEST_COUNT1);
+				AQLString yieldInputFilename = CreateDataFile::makeFilename(yieldBondInputFile2, i + TEST_COUNT1);
 				const ReadDataFile::Load yieldInputFile(yieldInputFilename);
 				std::vector< double > prices = yieldInputFile["prices"];
 
@@ -158,7 +158,7 @@ namespace google_test
 		{
 			EXPECT_GE(i, TEST_COUNT2);
 		}
-		catch (const LACoreError& m)
+		catch (const AQLCoreError& m)
 		{
 			std::cout << m.getMsg();
 			ASSERT_FALSE(true);

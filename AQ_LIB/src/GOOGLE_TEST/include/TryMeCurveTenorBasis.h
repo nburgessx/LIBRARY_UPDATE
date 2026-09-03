@@ -10,14 +10,14 @@ namespace google_test
         , public TryMeCurveAccessors
     {
     public:
-        TryMeCurveTenorBasis( const LAString& inputFile );
+        TryMeCurveTenorBasis( const AQLString& inputFile );
     };
 
 	/* 
 	*  @brief			Set up tenor basis curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeTenorBasisCurve(const LAString& inputFile);
+	void setUpMeTenorBasisCurve(const AQLString& inputFile);
 }
 
 

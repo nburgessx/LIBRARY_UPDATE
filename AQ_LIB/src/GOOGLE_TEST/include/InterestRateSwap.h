@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LADataInstance.h"
-#include "LAString.h"
+#include "AQLDataInstance.h"
+#include "AQLString.h"
 #include "ReadDataFile.h"
 #include "CreateDataFile.h"
 
@@ -32,7 +32,7 @@ namespace google_test
         InterestRateSwap() {};
         virtual ~InterestRateSwap() {};
 
-        InterestRateSwap( LADataInstance* dataInstance, const ReadDataFile::Load& inputFile );
+        InterestRateSwap( AQLDataInstance* dataInstance, const ReadDataFile::Load& inputFile );
 
         virtual const double parRate();
         virtual const double pv();
@@ -41,59 +41,59 @@ namespace google_test
 
     protected:
 
-        LADataInstance*		dataInstance_;
+        AQLDataInstance*		dataInstance_;
 
-        LAString	effectDt_;
-        LAString	maturity_;
-        LAString	xFirstStub_;
-        LAString	xLastStub_;
-        LAString	xRollDay_;
-        LAString	tFirstStub_;
-        LAString	tLastStub_;
-        LAString	tRollDay_;
-        LAString	xFreq_;
-        LAString	tFreq_;
+        AQLString	effectDt_;
+        AQLString	maturity_;
+        AQLString	xFirstStub_;
+        AQLString	xLastStub_;
+        AQLString	xRollDay_;
+        AQLString	tFirstStub_;
+        AQLString	tLastStub_;
+        AQLString	tRollDay_;
+        AQLString	xFreq_;
+        AQLString	tFreq_;
         bool		eomRoll_;
-        LAString	xRollCnv_;
-        LAString	xCalendar_;
-        LAString	tRollCnv_;
-        LAString	tCalendar_;
-        LAString	xStub_;
-        LAString	tStub_;
-        LAString	xPayLag_;
-        LAString	tPayLag_;
-        LAString	tFixLag_;
+        AQLString	xRollCnv_;
+        AQLString	xCalendar_;
+        AQLString	tRollCnv_;
+        AQLString	tCalendar_;
+        AQLString	xStub_;
+        AQLString	tStub_;
+        AQLString	xPayLag_;
+        AQLString	tPayLag_;
+        AQLString	tFixLag_;
 
         // parRate Parameters: Mandatory
-        LAString	curveID_;
-        LAString	tDayCount_;
-        LAString	xDayCount_;
+        AQLString	curveID_;
+        AQLString	tDayCount_;
+        AQLString	xDayCount_;
         double		tFirstFix_;
         double		tLastFix_;
-        LAString	interpolation_;
-        LAString	forecastCurve_;
-        LAString	discountCurve_;
+        AQLString	interpolation_;
+        AQLString	forecastCurve_;
+        AQLString	discountCurve_;
         bool		interpFwds_;
 
         // parRate Parameters: Optional
         double      tSpd_;
         bool        useFwdData_;
         bool        isOIS_;
-        LAString    oisCompoundingType_;
-        LAString    calendar_;
-        LAString    rollConvention_;
-        LAString    slidingRule_;
+        AQLString    oisCompoundingType_;
+        AQLString    calendar_;
+        AQLString    rollConvention_;
+        AQLString    slidingRule_;
 
         // swapPV Parameters: Mandatory
-        LAString	payRec_;
+        AQLString	payRec_;
         double      notional_;
         double      fixedRate_;
 
         // swapPV Parameters: Optional
         double      floatSpreadInBasisPoints_;
-        LAString	compoundingMethod_;
-        LAString	floatCalendar_;
-        LAString	floatRollConv_;
+        AQLString	compoundingMethod_;
+        AQLString	floatCalendar_;
+        AQLString	floatRollConv_;
 
     };
 }

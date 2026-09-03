@@ -15,14 +15,14 @@
 //#include <ql/math/optimization/constraint.hpp>
 
 
-#include "LAFunctionVector.h"
-#include "LABasic.h"
+#include "AQLFunctionVector.h"
+#include "AQLBasic.h"
 #include <math.h>
-#include <LACoreTemplateType.h>
-#include "LAInterpolationBase.h"
+#include <AQLCoreTemplateType.h>
+#include "AQLInterpolationBase.h"
 #include "LACoreUtility.h"
 #include "LAMathBaseFuncUtility.h"
-#include "LAFunction.h"
+#include "AQLFunction.h"
 #include <vector>
 
 const double eps_SABR = 0.0000001; //0.001bp
@@ -76,28 +76,28 @@ using namespace std;
 //    { 
 //        double width = (alpha_high - alpha_low) / 2.;
 //        double center = (alpha_high + alpha_low) / 2.;
-//        alpha = isMap ? atan(alpha_) * 2. / LAMath::pi() * width  + center : alpha_;
+//        alpha = isMap ? atan(alpha_) * 2. / AQLMath::pi() * width  + center : alpha_;
 //    };
 //
 //    void set_beta(double beta_, bool isMap) 
 //    { 
 //        double width = (beta_high - beta_low) / 2.;
 //        double center = (beta_high + beta_low) / 2.;
-//        beta = isMap ? atan(beta_) * 2. / LAMath::pi() * width  + center : beta_;
+//        beta = isMap ? atan(beta_) * 2. / AQLMath::pi() * width  + center : beta_;
 //    };
 //
 //    void set_nu(double nu_, bool isMap)
 //    { 
 //        double width = (nu_high - nu_low) / 2.;
 //        double center = (nu_high + nu_low) / 2.;
-//        nu = isMap ? atan(nu_) * 2. / LAMath::pi() * width  + center : nu_;
+//        nu = isMap ? atan(nu_) * 2. / AQLMath::pi() * width  + center : nu_;
 //    };
 //
 //    void set_rho(double rho_,   bool isMap )
 //    { 
 //        double width = (rho_high - rho_low) / 2.;
 //        double center = (rho_high + rho_low) / 2.;
-//        rho = isMap ? atan(rho_) * 2. / LAMath::pi() * width  + center  : rho_;
+//        rho = isMap ? atan(rho_) * 2. / AQLMath::pi() * width  + center  : rho_;
 //    };
 //
 //    double getAlpha() { return alpha; }
@@ -244,7 +244,7 @@ public:
 
 private:
 
-	class swaption_prem_antonov : public LAFunction
+	class swaption_prem_antonov : public AQLFunction
 	{
 		public:
 			swaption_prem_antonov(int int_step_ = 20);
@@ -278,11 +278,11 @@ private:
 	
 			mutable bool flg_negative_nu;
 
-			LAMathFunction<swaption_prem_antonov> int_1_;
+			AQLMathFunction<swaption_prem_antonov> int_1_;
 			double int_1(double x) const;
 			double phi(double s) const;
 
-			LAMathFunction<swaption_prem_antonov> int_2_;
+			AQLMathFunction<swaption_prem_antonov> int_2_;
 			double int_2(double x) const;
 			double psi(double s) const;
 
@@ -351,7 +351,7 @@ private:
 };
 
 //
-class LAMathConvexityAdust_Antonov : public LAFunction
+class LAMathConvexityAdust_Antonov : public AQLFunction
 {
 public:
 	LAMathConvexityAdust_Antonov( double T_,
@@ -398,7 +398,7 @@ private:
 //				                const std::vector<double>& param0_,
 //								const std::vector<bool>& flg_,
 //				                const std::vector<double>& vol0_,
-//								const LAString& target2fit_
+//								const AQLString& target2fit_
 //				                );
 //
 //	LAMathLeastSquareSABRCostFunc() {}
@@ -447,7 +447,7 @@ private:
 //	mutable double nu;
 //	mutable double rho;
 //	
-//	LAString target;
+//	AQLString target;
 //
 //	bool cloned;
 //
@@ -600,7 +600,7 @@ public:
     // constructor
     LAMathSABRLimiter():paramNum(0) {};
 
-    LAMathSABRLimiter(LAStringMatrix paramFlag);
+    LAMathSABRLimiter(AQLStringMatrix paramFlag);
     
     // destructor
     virtual ~LAMathSABRLimiter(){};
@@ -630,13 +630,13 @@ private:
     size_t paramNum;
 };
 
-class LAMathSABRCalibrator : public LAFunctionVector
+class LAMathSABRCalibrator : public AQLFunctionVector
 {
 public:
     // constructor
     LAMathSABRCalibrator(const LAMathSABR_Hagan& sabr_, const DoubleArray& strike_, const DoubleArray& vol_, 
                        const DoubleArray& forward_, const DoubleArray& expiry_, const DoubleArray& numeraire_, 
-                       const DoubleArray& weight_, const LAString& target_, bool isMap_);
+                       const DoubleArray& weight_, const AQLString& target_, bool isMap_);
     // destructor
     virtual ~LAMathSABRCalibrator(){}
 
@@ -665,18 +665,18 @@ private:
     DoubleArray numeraire;
     DoubleArray weight;
     
-    LAString target;
+    AQLString target;
     bool isMap;
 };
 
-class LAMathSABRCalibratorATMFix : public LAFunctionVector
+class LAMathSABRCalibratorATMFix : public AQLFunctionVector
 {
 public:
     // constructor
     LAMathSABRCalibratorATMFix(
         const LAMathSABR_Hagan& sabr_, const DoubleArray& strike_, const DoubleArray& vol_, 
         double atmVol_, double forward_, double expiry_, 
-        double numeraire_, const DoubleArray& weight_, const LAString& target_, bool isMap_);
+        double numeraire_, const DoubleArray& weight_, const AQLString& target_, bool isMap_);
 
     // destructor
     virtual ~LAMathSABRCalibratorATMFix(){}
@@ -706,7 +706,7 @@ private:
     double numeraire;
     DoubleArray weight;
     
-    LAString target;
+    AQLString target;
     bool isMap;
 };
 

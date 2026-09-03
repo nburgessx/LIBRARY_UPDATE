@@ -64,8 +64,8 @@ namespace etrading
 		return output;
 	}
 
-    // Converts an LAStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
-    VariantMatrix toVariantMatrixFromLAStringMatrix( const LAStringMatrix & laStringMatrix, const bool & transpose )
+    // Converts an AQLStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
+    VariantMatrix toVariantMatrixFromLAStringMatrix( const AQLStringMatrix & laStringMatrix, const bool & transpose )
     {
         AQ_REQUIRE( !laStringMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
         AQ_REQUIRE( !laStringMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
@@ -136,18 +136,18 @@ namespace etrading
         }
     }
     
-    // Converts a VariantMatrix to LAStringMatrix, note transposes by default to match the default JSON schema convention
-    LAStringMatrix toLAStringMatrixFromVariantMatrix( const VariantMatrix & variantMatrix, const bool & transpose )
+    // Converts a VariantMatrix to AQLStringMatrix, note transposes by default to match the default JSON schema convention
+    AQLStringMatrix toLAStringMatrixFromVariantMatrix( const VariantMatrix & variantMatrix, const bool & transpose )
     {
         AQ_REQUIRE( !variantMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
         AQ_REQUIRE( !variantMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
        
         if ( transpose )
         {
-            LAStringMatrix laStringMatrix( variantMatrix[0].size() );
+            AQLStringMatrix laStringMatrix( variantMatrix[0].size() );
             for ( size_t col = 0; col < variantMatrix[0].size(); ++col )
             {
-                LAStringVector thisCol( variantMatrix.size() );
+                AQLStringVector thisCol( variantMatrix.size() );
                 for ( size_t row = 0; row < variantMatrix.size(); ++row )
                 {
                     thisCol[row] = variantMatrix[row][col].getValueAsString().c_str();
@@ -158,10 +158,10 @@ namespace etrading
         }
         else
         {
-            LAStringMatrix laStringMatrix( variantMatrix.size() );
+            AQLStringMatrix laStringMatrix( variantMatrix.size() );
             for ( size_t row = 0; row < variantMatrix.size(); ++row )
             {
-                LAStringVector thisRow( variantMatrix[row].size() );
+                AQLStringVector thisRow( variantMatrix[row].size() );
                 for ( size_t col = 0; col < variantMatrix[row].size(); ++col )
                 {
                     thisRow[col] = variantMatrix[row][col].getValueAsString().c_str();
@@ -220,7 +220,7 @@ namespace etrading
 	}
 
 	// Test if a string can be a number
-	bool canStringConvertToNumber( const LAString & str )
+	bool canStringConvertToNumber( const AQLString & str )
 	{
 		const StandardString s = str.c_str();
 		return canStringConvertToNumber( s );
@@ -291,13 +291,13 @@ namespace etrading
 
 	// Template specializations
 	template <>
-    Variant::Variant( const LADate& inputValue )
+    Variant::Variant( const AQLDate& inputValue )
     {
         setValue( toGregorianDateFromLADate(inputValue) );
     }
         
 	template <>
-    Variant::Variant( const LAString& inputValue )
+    Variant::Variant( const AQLString& inputValue )
     {
 		setValue(std::string(inputValue.getCString()));
     }
@@ -692,19 +692,19 @@ namespace etrading
         }
     };
 
-    Variant::operator LADate() const
+    Variant::operator AQLDate() const
     {
 		// Intel compiler requires help deciding which conversion to use.
 		// Convert via (const boost::gregorian::date &)
         auto gregorianDate = static_cast< boost::gregorian::date >( (const boost::gregorian::date &) *this );
-        LADate mlibDate = toLADateFromGregorianDate( gregorianDate );
+        AQLDate mlibDate = toLADateFromGregorianDate( gregorianDate );
         return mlibDate;
     }
 
-    Variant::operator LAString() const
+    Variant::operator AQLString() const
     {
         auto stdString = this->toString();
-        LAString mlibString = LAString( stdString.c_str() );
+        AQLString mlibString = AQLString( stdString.c_str() );
         return mlibString;
     }
    
@@ -730,7 +730,7 @@ namespace etrading
         {
             case DATE_VALUE:
             {
-                return LADate( this->getValueAsString().c_str() ) == LADate( rhs.getValueAsString().c_str() );
+                return AQLDate( this->getValueAsString().c_str() ) == AQLDate( rhs.getValueAsString().c_str() );
                 break;
             }
 
@@ -779,7 +779,7 @@ namespace etrading
         {
             case DATE_VALUE:
             {
-                return LADate( this->getValueAsString().c_str() ) < LADate( rhs.getValueAsString().c_str() );
+                return AQLDate( this->getValueAsString().c_str() ) < AQLDate( rhs.getValueAsString().c_str() );
                 break;
             }
             case INTEGER_VALUE:
@@ -827,7 +827,7 @@ namespace etrading
         {
             case DATE_VALUE:
             {
-                return LADate( this->getValueAsString().c_str() ) > LADate( rhs.getValueAsString().c_str() );
+                return AQLDate( this->getValueAsString().c_str() ) > AQLDate( rhs.getValueAsString().c_str() );
                 break;
             }
             case INTEGER_VALUE:
@@ -875,7 +875,7 @@ namespace etrading
         {
             case DATE_VALUE:
             {
-                return LADate( this->getValueAsString().c_str() ) <= LADate( rhs.getValueAsString().c_str() );
+                return AQLDate( this->getValueAsString().c_str() ) <= AQLDate( rhs.getValueAsString().c_str() );
                 break;
             }
             case INTEGER_VALUE:
@@ -923,7 +923,7 @@ namespace etrading
         {
             case DATE_VALUE:
             {
-                return LADate( this->getValueAsString().c_str() ) >= LADate( rhs.getValueAsString().c_str() );
+                return AQLDate( this->getValueAsString().c_str() ) >= AQLDate( rhs.getValueAsString().c_str() );
                 break;
             }
             case INTEGER_VALUE:

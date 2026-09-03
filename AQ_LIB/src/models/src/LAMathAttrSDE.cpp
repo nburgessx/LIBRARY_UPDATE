@@ -19,10 +19,10 @@
 
 
 #include "LAMathAttrSDE.h"
-#include "LAFunctionManager.h"
+#include "AQLFunctionManager.h"
 #include "LARatesSDEBase.h"
-#include "LAIntegralBase.h"
-#include "LADataInstance.h"
+#include "AQLIntegralBase.h"
+#include "AQLDataInstance.h"
 
 using namespace std;
 
@@ -42,7 +42,7 @@ static const char_t* gSDEPathType[SDEPATH_TYPE_SIZE] =
     @brief default constructor
 */
 LAMathAttrSDE::LAMathAttrSDE(void) : 
-    LAPriceDataType(DATA_SDE),
+    AQLPriceDataType(DATA_SDE),
     mpSDE(NULL), mFnHolder(), mName(""), mCurrency("")
 {
 }
@@ -50,7 +50,7 @@ LAMathAttrSDE::LAMathAttrSDE(void) :
     @brief copy constructor
 */
 LAMathAttrSDE::LAMathAttrSDE(const LAMathAttrSDE& attr) :
-    LAPriceDataType(attr),
+    AQLPriceDataType(attr),
     mpSDE(NULL), mFnHolder(attr.mFnHolder), mName(""), mCurrency(attr.mCurrency), mType(attr.mType)
 {
     if (attr.mName != "")
@@ -71,10 +71,10 @@ LAMathAttrSDE::LAMathAttrSDE(const LAMathAttrSDE& attr) :
     @param[in] type SDE type (IR or FX)
     @param[in] currency currency
 */
-LAMathAttrSDE::LAMathAttrSDE(const LACoreFunctionHolder& h, 
-                                         const LAString& name,
-										 SDEPATH_TYPE type, const LAString& currency) :
-    LAPriceDataType(DATA_SDE),
+LAMathAttrSDE::LAMathAttrSDE(const AQLCoreFunctionHolder& h, 
+                                         const AQLString& name,
+										 SDEPATH_TYPE type, const AQLString& currency) :
+    AQLPriceDataType(DATA_SDE),
     mpSDE(NULL), mFnHolder(h), mName(""), mCurrency(currency), mType(type)
 {
     if (mFnHolder.isDefined() && name.isDefined() && name != "")
@@ -94,9 +94,9 @@ LAMathAttrSDE::LAMathAttrSDE(const LACoreFunctionHolder& h,
     @param[in] name name of SDE object
 */
 LAMathAttrSDE::LAMathAttrSDE(LARatesSDEBase* b, 
-                                         const LAString& name,
-										 SDEPATH_TYPE type, const LAString& currency) :
-    LAPriceDataType(DATA_SDE),
+                                         const AQLString& name,
+										 SDEPATH_TYPE type, const AQLString& currency) :
+    AQLPriceDataType(DATA_SDE),
     mpSDE(NULL), mFnHolder(), mName("")
 {
     setSDE(b, name, type, currency);
@@ -114,7 +114,7 @@ LAMathAttrSDE::~LAMathAttrSDE(void)
     @brief copy(clone) this object
     @return pointer to object produced
 */
-LAPriceDataType*    
+AQLPriceDataType*    
 LAMathAttrSDE::clone() const
 {
     try {
@@ -122,22 +122,22 @@ LAMathAttrSDE::clone() const
         return pAttr;
     }
     catch (bad_alloc & e){
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
     @brief get string representation of sde which this object holds
     @return name of SDE
 */
-LAString      
+AQLString      
 LAMathAttrSDE::convertToString(void) const
 {
 	if (isNull()) return NULL_STR;
-/*	const LAString& param = mpSDE->convertToString();
+/*	const AQLString& param = mpSDE->convertToString();
 	if (param == "" || param == NULL_STR) return mName;
 	return mName + "(" + mpSDE->convertToString() + ")";
 */
-	LAString ret = gSDEPathType[mType];
+	AQLString ret = gSDEPathType[mType];
 	ret += ":";
 	ret += getCurrency();	
 	ret += ":";
@@ -174,7 +174,7 @@ LAMathAttrSDE::getSDE(void) const
 {
     if (isNull() || ! mFnHolder.isDefined())
     {
-        throw LACoreInvalidData("No Method sets", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("No Method sets", __FILE__, __LINE__);
     }
     return *mpSDE;
 }
@@ -188,7 +188,7 @@ LAMathAttrSDE::getSDE(void)
 {
     if (isNull() || ! mFnHolder.isDefined())
     {
-        throw LACoreInvalidData("No Method sets", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("No Method sets", __FILE__, __LINE__);
     }
 	update();
     return *mpSDE;
@@ -199,9 +199,9 @@ LAMathAttrSDE::getSDE(void)
     @param[in] str string representation of SDE
 */
 void          
-LAMathAttrSDE::convertFromString(const LAString& str)
+LAMathAttrSDE::convertFromString(const AQLString& str)
 {
-    LAString data;
+    AQLString data;
     bool ret = strToData(str, data);
     if (ret || data == "")
     {
@@ -211,13 +211,13 @@ LAMathAttrSDE::convertFromString(const LAString& str)
     }
     else
     {  
-		const LAStringVector& strs = data.toToken(':');
+		const AQLStringVector& strs = data.toToken(':');
 		if (strs.size() != 3)
 		{
 			//error
-			LAString msg = str;
+			AQLString msg = str;
 			msg += " is wrong format";
-	        throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+	        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 
 		}
         int i;
@@ -231,9 +231,9 @@ LAMathAttrSDE::convertFromString(const LAString& str)
         }
         if (i == SDEPATH_TYPE_SIZE)
         {
-            LAString msg("Invalid String for convertFromString : ");
+            AQLString msg("Invalid String for convertFromString : ");
             msg += strs[0];
-            throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+            throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
         }
 //		mCurrency = strs[1];
         setSDE(strs[2], mType, strs[1]);
@@ -246,7 +246,7 @@ LAMathAttrSDE::convertFromString(const LAString& str)
     @param[in] currency currency
 */
 void
-LAMathAttrSDE::setSDE(const LAString& name, SDEPATH_TYPE type, const LAString& currency)
+LAMathAttrSDE::setSDE(const AQLString& name, SDEPATH_TYPE type, const AQLString& currency)
 {
 	mType = type;
 	mCurrency = currency;
@@ -262,7 +262,7 @@ LAMathAttrSDE::setSDE(const LAString& name, SDEPATH_TYPE type, const LAString& c
     if(pos == (int)name.size() - 1 || pos == 0)
     {
         //
-        throw LACoreInvalidData(name.getCString(), __FILE__, __LINE__);      
+        throw AQLCoreInvalidData(name.getCString(), __FILE__, __LINE__);      
     }
 
     // 
@@ -280,7 +280,7 @@ LAMathAttrSDE::setSDE(const LAString& name, SDEPATH_TYPE type, const LAString& c
     else
     {
 		if (name.subString(name.size() - 1, name.size() - 1) != ")")
-			throw LACoreInvalidData(name.getCString(), __FILE__, __LINE__);      
+			throw AQLCoreInvalidData(name.getCString(), __FILE__, __LINE__);      
                                
         mName = name.subString(0, pos - 1);
 //		mParamStr = name.subString(pos + 1, name.size() - 2);
@@ -298,8 +298,8 @@ LAMathAttrSDE::setSDE(const LAString& name, SDEPATH_TYPE type, const LAString& c
 */
 void 
 LAMathAttrSDE::setSDE(LARatesSDEBase* b, 
-                                         const LAString& name
-										 , SDEPATH_TYPE type, const LAString& currency)
+                                         const AQLString& name
+										 , SDEPATH_TYPE type, const AQLString& currency)
 {
 	mType = type;
 	mCurrency = currency;
@@ -324,16 +324,16 @@ LAMathAttrSDE::setSDE(LARatesSDEBase* b,
     @param[in] a object to be referenced for initialization
     @return initialized object(this object)
 */
-LAPriceDataType& 
-LAMathAttrSDE::assignment(const LAPriceDataType& a)
+AQLPriceDataType& 
+LAMathAttrSDE::assignment(const AQLPriceDataType& a)
 {
     if (this == &a) return *this;
 
     if (a.getType() != DATA_SDE) 
     {
-        LAString err = "Assignement error for LAMathAttrSDE : from ";
-        err += LAString(a.getType());
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+        AQLString err = "Assignement error for LAMathAttrSDE : from ";
+        err += AQLString(a.getType());
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
     }
     const LAMathAttrSDE& in = dynamic_cast<const LAMathAttrSDE&>(a);
     setNull(a.isNull());
@@ -351,13 +351,13 @@ LAMathAttrSDE::assignment(const LAPriceDataType& a)
     @return 1 :equal, 0 :not-equal
 */
 int          
-LAMathAttrSDE::compare(const LAPriceDataType& a) const
+LAMathAttrSDE::compare(const AQLPriceDataType& a) const
 {
     if (a.getType() != DATA_SDE) 
     {
-        LAString err = "Compare error for LAMathAttrSDE : from ";
-        err += LAString(a.getType());
-        throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+        AQLString err = "Compare error for LAMathAttrSDE : from ";
+        err += AQLString(a.getType());
+        throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
     }
     const LAMathAttrSDE& in = dynamic_cast<const LAMathAttrSDE&>(a);
     if (isNull() && in.isNull()) return 0;
@@ -371,9 +371,9 @@ LAMathAttrSDE::compare(const LAPriceDataType& a) const
     @param[in] holder pointer to holder to be set
 */
 void                
-LAMathAttrSDE::setHolder(LADataHolder* holder)
+LAMathAttrSDE::setHolder(AQLDataHolder* holder)
 {
-    LAPriceDataType::setHolder(holder);
+    AQLPriceDataType::setHolder(holder);
 	if(mpSDE == NULL)//added by matsumura 20060112 
 	{
 		setSDE();
@@ -387,21 +387,21 @@ LAMathAttrSDE::setSDE(void)
 {
 	update();
 
-    LAObject* e = getObject();
+    AQLObject* e = getObject();
     if (e != NULL && ! isNull())
     {
-        LADataInstance* dataInstance = e->getDataInstance();
+        AQLDataInstance* dataInstance = e->getDataInstance();
         if (dataInstance != NULL)
         {
-            LAFunctionManager& em = dataInstance->getFunctionMaster();
-            const LACoreFunctionHolder& h = em.getFunction(mName);
+            AQLFunctionManager& em = dataInstance->getFunctionMaster();
+            const AQLCoreFunctionHolder& h = em.getFunction(mName);
             if (! h.isDefined() || ! h.isTypeOf(FN_SDEBASE)) 
             {
                 mpSDE = NULL;
-                LAString msg(mName);
+                AQLString msg(mName);
                 mName = "";
                 msg += " is not found in Function Master as LARatesSDEBase";
-                throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+                throw AQLCoreInvalidData(msg.getCString(), __FILE__,__LINE__);
             }
             
             mpSDE = dynamic_cast<LARatesSDEBase*>(h.get().clone());

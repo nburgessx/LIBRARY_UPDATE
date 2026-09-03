@@ -1,13 +1,13 @@
 #include <algorithm>
 
-#include "LADataBasics.h"
-#include "LADataReference.h"
-#include "LADataVector.h"
-#include "LAObjectPool.h"
-#include "LADataInstance.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAMathDefine.h"
+#include "AQLDataBasics.h"
+#include "AQLDataReference.h"
+#include "AQLDataVector.h"
+#include "AQLObjectPool.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLMathDefine.h"
 #include "LAMathCurveFuncUtility.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathJamshidianSwaption.h"
@@ -15,31 +15,31 @@
 #include "LAPriceIRVegaUnderlyingAsset.h"
 
 LAPriceOriginalIRSABRUnderlyingAsset::LAPriceOriginalIRSABRUnderlyingAsset(
-		const LADate& baseDate, const LAString& currency, const LAString& underlyingName, LADataInstance* dataInstance) :
+		const AQLDate& baseDate, const AQLString& currency, const AQLString& underlyingName, AQLDataInstance* dataInstance) :
 	mDataInstance(dataInstance), mBaseDate(baseDate)
 {
-	const LAString calibInfoName = LAString(currency).toUpper() + "_IRSABRCalibInfoEntity_" + underlyingName;
-	LAObject& calibInfo = dataInstance->getObjectPool().getObject(calibInfoName, ENCHKTYPE_ISDEFINED).get();
-	LAObject* convs[2];
-	convs[0] = &dynamic_cast<LADataReference&>(calibInfo.getData("CapConvID", ISNOTNULL).get()).get().get();
-	convs[1] = &dynamic_cast<LADataReference&>(calibInfo.getData("SwaptionConvID", ISNOTNULL).get()).get().get();
+	const AQLString calibInfoName = AQLString(currency).toUpper() + "_IRSABRCalibInfoEntity_" + underlyingName;
+	AQLObject& calibInfo = dataInstance->getObjectPool().getObject(calibInfoName, ENCHKTYPE_ISDEFINED).get();
+	AQLObject* convs[2];
+	convs[0] = &dynamic_cast<AQLDataReference&>(calibInfo.getData("CapConvID", ISNOTNULL).get()).get().get();
+	convs[1] = &dynamic_cast<AQLDataReference&>(calibInfo.getData("SwaptionConvID", ISNOTNULL).get()).get().get();
 	for (auto i : { 0, 1 })
 	{
-		mConvIDs[i] = dynamic_cast<const LADataString&>(convs[i]->getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+		mConvIDs[i] = dynamic_cast<const AQLDataString&>(convs[i]->getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 		mSlidingRules[i] =
-			&dynamic_cast<const LAPriceDataSlidingRule&>(convs[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+			&dynamic_cast<const AQLPriceDataSlidingRule&>(convs[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
 		mFixingCalendars[i] =
-			&dynamic_cast<const LAPriceDataCalendar&>(convs[i]->getData(PRICING_DATA_FIXINGCALENDAR, ISNOTNULL).get());
+			&dynamic_cast<const AQLPriceDataCalendar&>(convs[i]->getData(PRICING_DATA_FIXINGCALENDAR, ISNOTNULL).get());
 	}
 
-	const LAString curveSetID = calibInfoName + "_CurveSetID";
+	const AQLString curveSetID = calibInfoName + "_CurveSetID";
 	mCurveEntity = &dataInstance->getObjectPool().getObject(curveSetID, ENCHKTYPE_ISDEFINED).get();
-	mCurveID = dynamic_cast<const LADataString&>(mCurveEntity->getData(PRICING_DATA_CURVEID, ISDEFINED).get()).get();
-	mDFName = dynamic_cast<const LADataString&>(mCurveEntity->getData(CALIBRATION_DATA_DISCOUNTCURVENAME, ISDEFINED).get()).get();
+	mCurveID = dynamic_cast<const AQLDataString&>(mCurveEntity->getData(PRICING_DATA_CURVEID, ISDEFINED).get()).get();
+	mDFName = dynamic_cast<const AQLDataString&>(mCurveEntity->getData(CALIBRATION_DATA_DISCOUNTCURVENAME, ISDEFINED).get()).get();
 }
 
-std::pair<LAString, bool>
-LAPriceOriginalIRSABRUnderlyingAsset::getCurveName(const LAString& underlying) const
+std::pair<AQLString, bool>
+LAPriceOriginalIRSABRUnderlyingAsset::getCurveName(const AQLString& underlying) const
 {
 	int y, m, d, w;
 	LAMathDateCalculations::termStrtoYMDW(underlying, y, m, d, w);
@@ -47,24 +47,24 @@ LAPriceOriginalIRSABRUnderlyingAsset::getCurveName(const LAString& underlying) c
 	// According to LAMathSwaptionVolUtility::calibrateSABRATMFix,
 	// 1M, 3M, 6M vols are caplet vols
 	bool isCap;
-	LAString forName;
+	AQLString forName;
 	switch (y * 12 + m)
 	{
 	case 1:
 		isCap = true;
-		forName = dynamic_cast<const LADataString&>(mCurveEntity->getData(CALIBRATION_DATA_1MLCURVENAME, ISNOTNULL).get()).get();
+		forName = dynamic_cast<const AQLDataString&>(mCurveEntity->getData(CALIBRATION_DATA_1MLCURVENAME, ISNOTNULL).get()).get();
 		break;
 	case 3:
 		isCap = true;
-		forName = dynamic_cast<const LADataString&>(mCurveEntity->getData(CALIBRATION_DATA_3MLCURVENAME, ISNOTNULL).get()).get();
+		forName = dynamic_cast<const AQLDataString&>(mCurveEntity->getData(CALIBRATION_DATA_3MLCURVENAME, ISNOTNULL).get()).get();
 		break;
 	case 6:
 		isCap = true;
-		forName = dynamic_cast<const LADataString&>(mCurveEntity->getData(CALIBRATION_DATA_6MLCURVENAME, ISNOTNULL).get()).get();
+		forName = dynamic_cast<const AQLDataString&>(mCurveEntity->getData(CALIBRATION_DATA_6MLCURVENAME, ISNOTNULL).get()).get();
 		break;
 	default:
 		isCap = false;
-		forName = dynamic_cast<const LADataString&>(mCurveEntity->getData(CALIBRATION_DATA_SWAPRATELCURVENAME, ISNOTNULL).get()).get();
+		forName = dynamic_cast<const AQLDataString&>(mCurveEntity->getData(CALIBRATION_DATA_SWAPRATELCURVENAME, ISNOTNULL).get()).get();
 		break;
 	}
 
@@ -72,12 +72,12 @@ LAPriceOriginalIRSABRUnderlyingAsset::getCurveName(const LAString& underlying) c
 }
 
 std::pair<double, double>
-LAPriceOriginalIRSABRUnderlyingAsset::getTerms(const LAString& opt, const LAString& underlying, bool isCap) const
+LAPriceOriginalIRSABRUnderlyingAsset::getTerms(const AQLString& opt, const AQLString& underlying, bool isCap) const
 {
 	const std::size_t i = isCap ? 0 : 1;
 
-	const LAPriceDataDayCount dc_act(ACT_365_ISDA);
-	const LADate optDate = LAMathDateCalculations::getDate(
+	const AQLPriceDataDayCount dc_act(ACT_365_ISDA);
+	const AQLDate optDate = LAMathDateCalculations::getDate(
 		mBaseDate, opt, *mSlidingRules[i], mFixingCalendars[i], true);
 	const double optTerm = dc_act.getTerm(mBaseDate, optDate, true);
 
@@ -88,68 +88,68 @@ LAPriceOriginalIRSABRUnderlyingAsset::getTerms(const LAString& opt, const LAStri
 
 double
 LAPriceOriginalIRSABRUnderlyingAsset::getForward(
-	const LAString& opt, const LAString& underlying, const std::pair<LAString, bool>& curveName) const
+	const AQLString& opt, const AQLString& underlying, const std::pair<AQLString, bool>& curveName) const
 {
 	const std::size_t i = curveName.second ? 0 : 1;
 
-	const LAPriceDataDayCount dc_act(ACT_365_ISDA);
-	const LADate optDate = LAMathDateCalculations::getDate(
+	const AQLPriceDataDayCount dc_act(ACT_365_ISDA);
+	const AQLDate optDate = LAMathDateCalculations::getDate(
 		mBaseDate, opt, *mSlidingRules[i], mFixingCalendars[i], true);
 	return LAMathSwaptionVolUtility::getForward(
 		mDataInstance, optDate, underlying, mCurveID, mConvIDs[i], curveName.first, mDFName);
 }
 
-const LAString&
+const AQLString&
 LAPriceOriginalIRSABRUnderlyingAsset::getCurveID() const
 {
 	return mCurveID;
 }
 
-LAPriceAnotherUnderlyingAsset::LAPriceAnotherUnderlyingAsset(const LADate& baseDate, const LAString& curveID, LAObject& info) :
+LAPriceAnotherUnderlyingAsset::LAPriceAnotherUnderlyingAsset(const AQLDate& baseDate, const AQLString& curveID, AQLObject& info) :
 	mDataInstance(info.getDataInstance()), mCurveID(curveID), mBaseDate(baseDate),
-	mCurveTypeKeys(&dynamic_cast<const LADataStrings&>(
+	mCurveTypeKeys(&dynamic_cast<const AQLDataStrings&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDCURVETYPEKEYS).get()).get()),
-	mCurveTypes(&dynamic_cast<const LADataStrings&>(
+	mCurveTypes(&dynamic_cast<const AQLDataStrings&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDCURVETYPES).get()).get()),
-	mSwaptionFrequency(dynamic_cast<const LADataString&>(
+	mSwaptionFrequency(dynamic_cast<const AQLDataString&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDSWAPTIONFREQUENCY).get()).get())
 {
-	mSpotLags[0] = dynamic_cast<const LADataString&>(
+	mSpotLags[0] = dynamic_cast<const AQLDataString&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDCAPSPOTLAG).get()).get();
-	mSpotLags[1] = dynamic_cast<const LADataString&>(
+	mSpotLags[1] = dynamic_cast<const AQLDataString&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDSWAPTIONSPOTLAG).get()).get();
-	mDayCounts[0] = &dynamic_cast<const LAPriceDataDayCount&>(
+	mDayCounts[0] = &dynamic_cast<const AQLPriceDataDayCount&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDCAPDAYCOUNT).get());
-	mDayCounts[1] = &dynamic_cast<const LAPriceDataDayCount&>(
+	mDayCounts[1] = &dynamic_cast<const AQLPriceDataDayCount&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDSWAPTIONDAYCOUNT).get());
-	mSlidingRules[0] = &dynamic_cast<const LAPriceDataSlidingRule&>(
+	mSlidingRules[0] = &dynamic_cast<const AQLPriceDataSlidingRule&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDCAPSLIDINGRULE).get());
-	mSlidingRules[1] = &dynamic_cast<const LAPriceDataSlidingRule&>(
+	mSlidingRules[1] = &dynamic_cast<const AQLPriceDataSlidingRule&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDSWAPTIONSLIDINGRULE).get());
-	mFixingCalendars[0] = &dynamic_cast<const LAPriceDataCalendar&>(
+	mFixingCalendars[0] = &dynamic_cast<const AQLPriceDataCalendar&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDCAPFIXINGCALENDAR).get());
-	mFixingCalendars[1] = &dynamic_cast<const LAPriceDataCalendar&>(
+	mFixingCalendars[1] = &dynamic_cast<const AQLPriceDataCalendar&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDSWAPTIONFIXINGCALENDAR).get());
-	mPaymentCalendars[0] = &dynamic_cast<const LAPriceDataCalendar&>(
+	mPaymentCalendars[0] = &dynamic_cast<const AQLPriceDataCalendar&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDCAPPAYMENTCALENDAR).get());
-	mPaymentCalendars[1] = &dynamic_cast<const LAPriceDataCalendar&>(
+	mPaymentCalendars[1] = &dynamic_cast<const AQLPriceDataCalendar&>(
 		info.getData(PRICING_DATA_VEGACONVERTEDSWAPTIONPAYMENTCALENDAR).get());
 	mDFName = getDFName();
 }
 
 // Deduces ("JPY3MLFORECAST", true /*is_cap*/) from "3M"
-std::pair<LAString, bool>
-LAPriceAnotherUnderlyingAsset::getCurveName(const LAString& underlying) const
+std::pair<AQLString, bool>
+LAPriceAnotherUnderlyingAsset::getCurveName(const AQLString& underlying) const
 {
-	LAStringVector::const_iterator i;
+	AQLStringVector::const_iterator i;
 
 	// Caplet?
 	bool isCap = true;
-	LAString keyU = underlying;
+	AQLString keyU = underlying;
 	keyU.toUpper();
 	keyU += "LNAME";
 	i = std::find_if(mCurveTypeKeys->begin(), mCurveTypeKeys->end(),
-		[&keyU](LAString curveTypeKey) -> bool
+		[&keyU](AQLString curveTypeKey) -> bool
 		{
 			curveTypeKey.toUpper();
 			return curveTypeKey == keyU;
@@ -157,9 +157,9 @@ LAPriceAnotherUnderlyingAsset::getCurveName(const LAString& underlying) const
 	if (i == mCurveTypeKeys->end())
 	{
 		// Matches to "SwapRateName_1Y"?
-		const LAString keyU = "SWAPRATENAME_" + LAString(underlying).toUpper();
+		const AQLString keyU = "SWAPRATENAME_" + AQLString(underlying).toUpper();
 		i = std::find_if(mCurveTypeKeys->begin(), mCurveTypeKeys->end(),
-			[&keyU](LAString curveTypeKey) -> bool
+			[&keyU](AQLString curveTypeKey) -> bool
 			{
 				curveTypeKey.toUpper();
 				return curveTypeKey == keyU;
@@ -167,7 +167,7 @@ LAPriceAnotherUnderlyingAsset::getCurveName(const LAString& underlying) const
 		if (i == mCurveTypeKeys->end())
 		{
 			i = std::find_if(mCurveTypeKeys->begin(), mCurveTypeKeys->end(),
-				[](LAString curveTypeKey) -> bool
+				[](AQLString curveTypeKey) -> bool
 				{
 					curveTypeKey.toUpper();
 					return curveTypeKey == "SWAPRATENAME";
@@ -180,21 +180,21 @@ LAPriceAnotherUnderlyingAsset::getCurveName(const LAString& underlying) const
 
 double
 LAPriceAnotherUnderlyingAsset::getForward(
-	const LAString& opt, const LAString& underlying, const std::pair<LAString, bool>& curveName) const
+	const AQLString& opt, const AQLString& underlying, const std::pair<AQLString, bool>& curveName) const
 {
 	const std::size_t i = curveName.second ? 0 : 1;
 
-	const LADate optDate = LAMathDateCalculations::getDate(
+	const AQLDate optDate = LAMathDateCalculations::getDate(
 		mBaseDate, opt, *mSlidingRules[i], mFixingCalendars[i], true);
 
 	// This logic is based on the implementation of
 	// LAMathSwaptionVolUtility::getForward
 
-	LAPriceDataSlidingRule fol;
+	AQLPriceDataSlidingRule fol;
 	fol.convertFromString(FOL);
-	LADate tmpDate = LAMathDateCalculations::getDate(
+	AQLDate tmpDate = LAMathDateCalculations::getDate(
 		optDate, mSpotLags[i], fol, mFixingCalendars[i], true);
-	LADate endDate = LAMathDateCalculations::getDate(
+	AQLDate endDate = LAMathDateCalculations::getDate(
 		tmpDate, underlying, *mSlidingRules[i], mPaymentCalendars[i], true);
 	if (curveName.second)
 	{
@@ -215,11 +215,11 @@ LAPriceAnotherUnderlyingAsset::getForward(
 	}
 }
 
-const LAString&
+const AQLString&
 LAPriceAnotherUnderlyingAsset::getDFName() const
 {
 	const auto i = std::find_if(mCurveTypeKeys->begin(), mCurveTypeKeys->end(),
-		[](LAString curveTypeKey) -> bool
+		[](AQLString curveTypeKey) -> bool
 		{
 			curveTypeKey.toUpper();
 			return curveTypeKey == "DFNAME";

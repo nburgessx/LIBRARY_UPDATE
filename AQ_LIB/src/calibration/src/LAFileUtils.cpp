@@ -22,7 +22,7 @@
 #include "LAFileUtils.h"
 #include "LADefinitions.h"
 #include "LACoreDataService.h"
-#include "LAString.h"
+#include "AQLString.h"
 // constructor
 /*!
 
@@ -44,12 +44,12 @@ MAFileUtils::~MAFileUtils(void)
     @brief number attached fileName
 
 	@param fileName
-	@return LAString
+	@return AQLString
 */
-LAString
-MAFileUtils::getNumFileName(const LAString &fileName, FileID fileid)
+AQLString
+MAFileUtils::getNumFileName(const AQLString &fileName, FileID fileid)
 {
-	LAString num = AQ_NO_DATA;
+	AQLString num = AQ_NO_DATA;
 	if (fileid == MARKETID)
 	{
 		num = LACoreDataService::getContext(ARG_KEY_MARKETID);
@@ -74,8 +74,8 @@ MAFileUtils::getNumFileName(const LAString &fileName, FileID fileid)
 		unsigned int ex_pos = sFileName.find_last_of(".");
 		if (ex_pos != std::string::npos)
 		{
-			LAString extension = fileName.subString(ex_pos, fileName.size() - 1);
-			LAString fileName_no_ex = fileName.subString(0, ex_pos - 1);
+			AQLString extension = fileName.subString(ex_pos, fileName.size() - 1);
+			AQLString fileName_no_ex = fileName.subString(0, ex_pos - 1);
 			return fileName_no_ex + num + extension;
 		}
 		else

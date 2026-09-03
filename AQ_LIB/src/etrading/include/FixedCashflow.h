@@ -9,7 +9,7 @@ namespace etrading
     public:
         FixedCashflow();
         FixedCashflow(const PayReceiveEnum& payReceive, double fixedRate, 
-					const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, double accrualYearFraction, const LADate& paymentDate, 
+					const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, double accrualYearFraction, const AQLDate& paymentDate, 
                     double notional, double leverage, double couponMultiplier, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType, const CashFlowBespokeInfo& bespokeInfo);
 		virtual ~FixedCashflow() {}
 

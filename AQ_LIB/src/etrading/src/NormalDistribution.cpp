@@ -1,5 +1,5 @@
 #include "NormalDistribution.h"
-#include "LADist.h"
+#include "AQLDist.h"
 #include "ExceptionMacros.h"
 
  // AAD Library
@@ -127,7 +127,7 @@ namespace etrading
         }
             
 
-        const double result = LADist::invNormdist( phi );
+        const double result = AQLDist::invNormdist( phi );
         return result;
     }
     

@@ -58,8 +58,8 @@ namespace etrading
         fxFixingbusinessDayAdj_(NONE_BUSINESS_DAY_ADJ),
         fxFixingCalendar_(""),
         isIrregularStub_(false),
-		effectiveDate_(LADate()),
-		unadjustedMaturityDate_(LADate())
+		effectiveDate_(AQLDate()),
+		unadjustedMaturityDate_(AQLDate())
 	{}
 
 	Schedule::Schedule(const LabelValueBlock& scheduleLVB, const std::string& instanceName) : IsLWOObject(instanceName, SCHEDULE)
@@ -158,9 +158,9 @@ namespace etrading
 
 	}
 
-    void Schedule::createUpfrontCashflow(const LADate& paymentDate, double leverage)
+    void Schedule::createUpfrontCashflow(const AQLDate& paymentDate, double leverage)
     {
-    	throw LACoreInvalidData( "#Error: createUpfrontCashflow method not supported for this leg or product", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: createUpfrontCashflow method not supported for this leg or product", __FILE__, __LINE__ );
     }
 
     void Schedule::createCashflows() 
@@ -299,10 +299,10 @@ namespace etrading
     }
 
 	/*
-	 * Some subtlety in the Schedule copy constructor: We require the LAString member variables to deep copy (rather than shallow copy
+	 * Some subtlety in the Schedule copy constructor: We require the AQLString member variables to deep copy (rather than shallow copy
 	 * with an incremented reference count). We require this so that we can use the new Schedule instance on a different thread,
-	 * without risking concurrent access to the LAString reference count. Hence we copy the LAStrings by invoking getCString()
-	 * on the rhs instance, forcing the LAString to deep copy from a char*.
+	 * without risking concurrent access to the AQLString reference count. Hence we copy the LAStrings by invoking getCString()
+	 * on the rhs instance, forcing the AQLString to deep copy from a char*.
 	 */
 	Schedule::Schedule(const Schedule& rhs) : IsLWOObject(rhs.getRefToName().c_str(), SCHEDULE), 
 		scheduleType_(rhs.scheduleType_),
@@ -402,8 +402,8 @@ namespace etrading
 
         for (size_t i=0; i < expectedSize; ++i)
 		{
-			LADate accrualStart = accrualStartDates_[i];
-			LADate accrualEnd = accrualEndDates_[i];
+			AQLDate accrualStart = accrualStartDates_[i];
+			AQLDate accrualEnd = accrualEndDates_[i];
 
             double bondActualYearFraction = std::numeric_limits<double>::quiet_NaN();
 
@@ -507,7 +507,7 @@ namespace etrading
 
         if (!etrading::LACurveForwardRateHelpers::isFixingInAdvance(fixingAdvanceOrArrears_))
         {
-           throw LACoreInvalidData( "#Error: For OIS Swap, fixing in arrears is not supported.", __FILE__, __LINE__ );
+           throw AQLCoreInvalidData( "#Error: For OIS Swap, fixing in arrears is not supported.", __FILE__, __LINE__ );
         }
 
         fixingEndDates = validateAndGenerateFixingSchedule( accrualDates,
@@ -530,7 +530,7 @@ namespace etrading
 
 	void Schedule::createBespokeCashflows(const std::vector<LabelValueBlock>& cashflowLVBs) 
 	{
-    	throw LACoreInvalidData( "#Error: createBespokeCashflows method not supported for this leg or product", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: createBespokeCashflows method not supported for this leg or product", __FILE__, __LINE__ );
 	}
 
 	double Schedule::getFinalCashflowNotionalExchange(const double& notional) const
@@ -589,7 +589,7 @@ namespace etrading
 	
 
 	
-	void Schedule::initializeDataProviderWithCurveData( DataProvider& dataProvider, const LAString& discountCurve, const std::vector<FloatRateData>& floatRates ) const
+	void Schedule::initializeDataProviderWithCurveData( DataProvider& dataProvider, const AQLString& discountCurve, const std::vector<FloatRateData>& floatRates ) const
 	{
 		//Get DFs from the discount curve
 		auto paymentDates = getPaymentDates();
@@ -601,9 +601,9 @@ namespace etrading
 			paymentDates.insert(paymentDates.begin(), getUpfrontCashflow()->getPaymentDate());
 		}
 
-		const LADate valuationDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate valuationDate = dataProvider.getValuationSettings().getValuationDate();
 		size_t firstNonpastPaymentDateIndex = getFirstNonpastDateIndex(paymentDates, valuationDate);
-		const LAString curveCollection = dataProvider.getValuationSettings().getCurveCollection().c_str();
+		const AQLString curveCollection = dataProvider.getValuationSettings().getCurveCollection().c_str();
 		auto discountFactors = getCurveDiscountFactorsFromBaseDate(firstNonpastPaymentDateIndex, valuationDate, paymentDates, curveCollection, discountCurve);
 
 		//Handle upfront cashflow
@@ -624,14 +624,14 @@ namespace etrading
         size_t cashflowSize = getCashflowSize();
         if (cashflowSize != discountFactors.size())
 		{
-			throw LACoreInvalidData( "#Error: DiscountFactors and Cashflows should have the same size", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: DiscountFactors and Cashflows should have the same size", __FILE__, __LINE__ );
 		}
 
         bool hasFloatRates = (floatRates.size() != 0);
 
         if (hasFloatRates && cashflowSize != floatRates.size())
 		{
-			throw LACoreInvalidData( "#Error: FloatRates and Cashflows should have the same size", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: FloatRates and Cashflows should have the same size", __FILE__, __LINE__ );
 		}
 
 		dataProvider.setDiscountFactors( discountFactors );
@@ -641,7 +641,7 @@ namespace etrading
 		}
     }
 
-	bool Schedule::hasAccruedInterest(const LADate& valuationDate) const
+	bool Schedule::hasAccruedInterest(const AQLDate& valuationDate) const
 	{
 		// If settleDate is specified and later than effectiveDate, then accruedInterest is included
 		if (valuationDate > getEffectiveDate())
@@ -659,7 +659,7 @@ namespace etrading
     {
 		double accruedInterest = 0.0;
 
-		const LADate settleDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate settleDate = dataProvider.getValuationSettings().getValuationDate();
 
 		if (!hasAccruedInterest(settleDate)) 
 		{
@@ -724,13 +724,13 @@ namespace etrading
 	}
 
 
-    LADate Schedule::getEffectiveDate() const
+    AQLDate Schedule::getEffectiveDate() const
     {
 		// For bespoke schedule, the accrualStartDate_ is not provided
 		if (accrualStartDate_.size() == 0)
 		{
 			AQ_REQUIRE(cashflows_.size() > 0, "Must have at least one cashflow.");
-			LADate effectiveDt = cashflows_.front()->getAccrualStartDate();
+			AQLDate effectiveDt = cashflows_.front()->getAccrualStartDate();
 
 			return effectiveDt;
 		}
@@ -739,20 +739,20 @@ namespace etrading
     }
 
     
-	LADate Schedule::getMaturityDate() const
+	AQLDate Schedule::getMaturityDate() const
     {
-		LADate maturityDt = cashflows_.back()->getAccrualEndDate();
+		AQLDate maturityDt = cashflows_.back()->getAccrualEndDate();
 
 		return maturityDt;
     }
 
-	LADate Schedule::getUnadjustedMaturityDate() const
+	AQLDate Schedule::getUnadjustedMaturityDate() const
     {
 		// For bespoke schedule, the accrualEndDateOrTenor_ is not provided
 		if (accrualEndDateOrTenor_.size() == 0)
 		{
 			AQ_REQUIRE(cashflows_.size() > 0, "Must have at least one cashflow.");
-			const LADate maturityDt = cashflows_.back()->getAccrualEndDate();
+			const AQLDate maturityDt = cashflows_.back()->getAccrualEndDate();
 
 			return maturityDt;
 		}
@@ -765,16 +765,16 @@ namespace etrading
 		return (bespokeScheduleType_ != NONE_BESPOKE_SCHEDULE);
 	}
 
-	LADate Schedule::getFixingDate(size_t i) const
+	AQLDate Schedule::getFixingDate(size_t i) const
 	{
-		LADate fixingDate;
+		AQLDate fixingDate;
 		if (fixingDates_.size() > 0)
 		{
 			fixingDate = fixingDates_[i];
 		}
 		else
 		{
-			fixingDate = LADate();
+			fixingDate = AQLDate();
 		}
 		return fixingDate;
 	}
@@ -793,7 +793,7 @@ namespace etrading
 	{
 		if (cashflows_.size() == 0)
 		{
-			throw LACoreInvalidData( "#Error: Cashflow has not been populated", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: Cashflow has not been populated", __FILE__, __LINE__ );
 		}
 		return cashflows_[0]->getNotional();
 	}
@@ -853,7 +853,7 @@ namespace etrading
 	{
 		if (cashflows_.size() == 0)
 		{
-			throw LACoreInvalidData( "#Error: Cashflow has not been populated", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: Cashflow has not been populated", __FILE__, __LINE__ );
 		}
 		return cashflows_[0]->getLeverage();
 	}
@@ -862,7 +862,7 @@ namespace etrading
 	{
 		if (cashflows_.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: Cashflow has not been populated", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Cashflow has not been populated", __FILE__, __LINE__);
 		}
 		return cashflows_[0]->getCouponMultiplier();
 	}
@@ -877,17 +877,17 @@ namespace etrading
 		return bespokeScheduleType_;
 	}
 
-	LAString Schedule::getRollDayInput() const
+	AQLString Schedule::getRollDayInput() const
 	{
 		return rollDayInput_;
 	}	
 
-	LAString Schedule::getAccrualCalendar() const
+	AQLString Schedule::getAccrualCalendar() const
 	{
 		return accrualCalendar_;
 	}	
 
-	LAString Schedule::getFxFixingCalendar() const
+	AQLString Schedule::getFxFixingCalendar() const
 	{
 		return fxFixingCalendar_;
 	}
@@ -931,12 +931,12 @@ namespace etrading
 		return stubType;
 	}
 
-  	LAString Schedule::getFixingCalendar() const
+  	AQLString Schedule::getFixingCalendar() const
 	{
 		return fixingCalendar_;
 	}
 
-	LAString Schedule::getFixLag() const
+	AQLString Schedule::getFixLag() const
 	{
 		return fixLag_;
 	}
@@ -952,12 +952,12 @@ namespace etrading
 		return toFixingTypeEnum(fixingAdvanceOrArrears_.getCString());
 	}
 
-	LAString Schedule::getFirstStub() const
+	AQLString Schedule::getFirstStub() const
 	{
 		return firstStub_;
 	}	
 
-    LAString Schedule::getLastStub() const
+    AQLString Schedule::getLastStub() const
 	{
 		return lastStub_;
 	}	
@@ -1097,7 +1097,7 @@ namespace etrading
 	    }
 	    else
 	    {
-		    throw LACoreInvalidData("#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__ );
+		    throw AQLCoreInvalidData("#Error: Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).", __FILE__, __LINE__ );
 	    }
     }
 
@@ -1171,17 +1171,17 @@ namespace etrading
     //dummy methods, just to avoid downcasting
     double Schedule::getFixedRate() const
     {
-    	throw LACoreInvalidData( "#Error: getFixedRate not supported", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: getFixedRate not supported", __FILE__, __LINE__ );
     }
 
     double Schedule::getSpread() const
     {
-    	throw LACoreInvalidData( "#Error: getSpread not supported", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: getSpread not supported", __FILE__, __LINE__ );
     }
 
    	bool Schedule::isVariableSpread() const 
     {
-    	throw LACoreInvalidData( "#Error: isVariableSpread method for floating spreads not supported on a fixed leg", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: isVariableSpread method for floating spreads not supported on a fixed leg", __FILE__, __LINE__ );
     }
 
     //end of dummy methods
@@ -1390,14 +1390,14 @@ namespace etrading
 	} 
 
     //this method is only for backward compatibility with me methods (none LWO)	
-	LAStringMatrix Schedule::display(bool showColumnHeaders, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList, const bool convertDatesToExcelFormat) const
+	AQLStringMatrix Schedule::display(bool showColumnHeaders, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList, const bool convertDatesToExcelFormat) const
 	{
 		auto block = Schedule::view(false, showColumnHeaders, columnList, convertDatesToExcelFormat);
 	    auto headerBlock = block.first;
 	    auto bodyBlock = block.second;
 
-        LAStringMatrix ret;
-        LAStringVector row;
+        AQLStringMatrix ret;
+        AQLStringVector row;
 
         if(showColumnHeaders)
         {
@@ -1415,7 +1415,7 @@ namespace etrading
             }
 	    }
 
-        double defaultLADate = fromLADateToDouble(LADate());
+        double defaultLADate = fromLADateToDouble(AQLDate());
         auto nanValue = std::numeric_limits<double>::quiet_NaN();
 
         for( size_t i = 0; i < bodyBlock.size(); ++i )
@@ -1441,7 +1441,7 @@ namespace etrading
 
 					std::stringstream s;
 					//1) Handle NaN value, by setting the result to empty string
-					//2) Handle upfront cashflow, by setting LADate() value to empty string
+					//2) Handle upfront cashflow, by setting AQLDate() value to empty string
 					if (boost::math::isnan(value) || (isUpfrontCashflow && (value - defaultLADate == 0)))
 					{
 						s << std::string();
@@ -1493,7 +1493,7 @@ namespace etrading
 
     const DataSchema Schedule::generateCashflowSchema(const std::string& schemaName) const
     {
-    	throw LACoreInvalidData( "#Error: Bespoke cashflows not supported on base class Schedule", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: Bespoke cashflows not supported on base class Schedule", __FILE__, __LINE__ );
     }
 
     std::map<std::string, std::vector<std::string>> Schedule::getCashflowDataMap() const
@@ -1548,11 +1548,11 @@ namespace etrading
             return;
         }
 
-        LADate swapStart = getEffectiveDate();
+        AQLDate swapStart = getEffectiveDate();
 
-        LADate unadjustSwapEnd = getUnadjustedMaturityDate();
+        AQLDate unadjustSwapEnd = getUnadjustedMaturityDate();
 
-        LAString frequency = getFrequencyString( getFrequencyTenor( accrualFrequency_) );
+        AQLString frequency = getFrequencyString( getFrequencyTenor( accrualFrequency_) );
 
         // Maturities if quoted as a tenor are adjusted and when quoted as dates are unadjusted
         bool isMaturityDateAdjusted = etrading::isMaturityDateTenor(accrualEndDateOrTenor_);
@@ -1560,9 +1560,9 @@ namespace etrading
         // get rollDay
         int* rollDayPtr = nullptr;
         int  rollDay = 0;
-        LAString* rollConventionPtr = nullptr;
-        LAString rollConvention = LAString("");
-        if (rollDayInput_ != LAString("0") && rollDayInput_.size() != 0)
+        AQLString* rollConventionPtr = nullptr;
+        AQLString rollConvention = AQLString("");
+        if (rollDayInput_ != AQLString("0") && rollDayInput_.size() != 0)
         {
             // Generate Fixed Leg Coupon Roll Conventions if the rollDayString is not empty or set to zero
             rollDayPtr = &rollDay;
@@ -1573,7 +1573,7 @@ namespace etrading
         }
 
         // is it regular schedule?
-        LAString rollConv = getRollConvection(swapStart, unadjustSwapEnd, rollDayInput_);
+        AQLString rollConv = getRollConvection(swapStart, unadjustSwapEnd, rollDayInput_);
         if (rollDayPtr != nullptr)
         {
             rollDay = *rollDayPtr;

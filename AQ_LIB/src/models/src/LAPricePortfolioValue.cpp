@@ -11,27 +11,27 @@
 
 #include "LAPricePortfolioValue.h"
 #include "LAPriceTradeValue.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADate.h"
-#include "LADataValuation.h"
-#include "LADataProcedure.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectHolder.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataFunction.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAMathValuableEntity.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDate.h"
+#include "AQLDataValuation.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectHolder.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLMathValuableEntity.h"
 
-#include "LABasic.h"
-#include "LAFunctionBase.h"
+#include "AQLBasic.h"
+#include "AQLFunctionBase.h"
 #include "LAMathFXEntity.h"
 #include "LAMathDateUtilities.h"
 
-#include "LAMatrix.h"
+#include "AQLMatrix.h"
 #include "LAMathYieldCurvePro.h"
 #include "LAMathPlainVanillaEntity.h"
 #include "LAMathPathEntity.h"
@@ -41,7 +41,7 @@
 #include "LABlackScholesBaseFunc.h"
 #include "LAPriceIMMFwdRiskConversionMatrix.h"
 #include "LAPriceIRVegaUnderlyingAsset.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 
 #include <algorithm>
 #include <functional>
@@ -71,16 +71,16 @@ namespace
 	    @return A vector which contains all IMM dates, which does not contain the base date itself
 	*/
 	DateVector
-	deduceImmDates(const LAObject& info, const LADate& baseDate)
+	deduceImmDates(const AQLObject& info, const AQLDate& baseDate)
 	{
-		const LADataHolder* dh;
+		const AQLDataHolder* dh;
 
 		dh = &info.getData(PRICING_DATA_IMMFWDRATETERM, ISNOTNULL);
-		const IntVector& immIndices = dynamic_cast<const LADataInts&>(dh->get()).get();
+		const IntVector& immIndices = dynamic_cast<const AQLDataInts&>(dh->get()).get();
 
 		DateVector dates;
-		LAString sld = "NO_CHANGE";
-		LAString cal = "";
+		AQLString sld = "NO_CHANGE";
+		AQLString cal = "";
 
 		dates.resize(immIndices.size());
 		for (DateVector::size_type i = 0, iend = dates.size(); i < iend; ++i)
@@ -101,9 +101,9 @@ namespace
 	    @param yieldCurve [in] The yield curve
 	    @return A pair of the start date and the end date of the period
 	*/
-	std::pair<LADate, LADate>
-	getPeriod(const LAString& term, const LAObjectPool& objPool,
-		const LAString& baseYieldName, const LADate& baseDate, const LADate& spotDate, const LAMathYieldCurve* yieldCurve)
+	std::pair<AQLDate, AQLDate>
+	getPeriod(const AQLString& term, const AQLObjectPool& objPool,
+		const AQLString& baseYieldName, const AQLDate& baseDate, const AQLDate& spotDate, const LAMathYieldCurve* yieldCurve)
 	{
 		if (isdigit(static_cast<int>(term.getCString()[0])))
 		{
@@ -113,11 +113,11 @@ namespace
 			{
 				// Maybe FRA
 				const std::size_t ix = x - term.getCString();
-				LAString start = term.subString(0, ix - 1) + "M";
-				LAString end = term.subString(ix + 1, term.size() - 1) + "M";
-				const LADate startDate = LAMathDateCalculations::getDate(
+				AQLString start = term.subString(0, ix - 1) + "M";
+				AQLString end = term.subString(ix + 1, term.size() - 1) + "M";
+				const AQLDate startDate = LAMathDateCalculations::getDate(
 					spotDate, start, yieldCurve->getSlidingRule(), &yieldCurve->getCalendar(), true);
-				const LADate endDate = LAMathDateCalculations::getDate(
+				const AQLDate endDate = LAMathDateCalculations::getDate(
 					spotDate, end, yieldCurve->getSlidingRule(), &yieldCurve->getCalendar(), true);
 					startDate.dayOfWeek();
 				return std::make_pair(startDate, endDate);
@@ -129,21 +129,21 @@ namespace
 				{
 				case 'D':
 					{
-						LADataInt n;
+						AQLDataInt n;
 						n.convertFromString((term + "").subString(0, term.size() - 2));
-						LADate d = spotDate;
+						AQLDate d = spotDate;
 						d.addDays(n.get());
-						return std::make_pair(LADate(), yieldCurve->getSlidingRule().getDate(d, yieldCurve->getCalendar()));
+						return std::make_pair(AQLDate(), yieldCurve->getSlidingRule().getDate(d, yieldCurve->getCalendar()));
 					}
 				default:	// W, M or Y
-					return std::make_pair(LADate(), LAMathDateCalculations::getDate(
+					return std::make_pair(AQLDate(), LAMathDateCalculations::getDate(
 						spotDate, term, yieldCurve->getSlidingRule(), &yieldCurve->getCalendar(), true));
 				}
 			}
 		}
 		else if ((term == "ON") || (term == "TN"))
 		{
-			return std::make_pair(LADate(), LAMathDateCalculations::getDate(
+			return std::make_pair(AQLDate(), LAMathDateCalculations::getDate(
 				baseDate, term, yieldCurve->getSlidingRule(), &yieldCurve->getCalendar(), true));
 		}
 		else
@@ -151,22 +151,22 @@ namespace
 			// Maybe future
 			for (EntityConstIter j = objPool.begin(); j != objPool.end(); ++j)
 			{
-				LAString x = j->first.subString(baseYieldName.size(), baseYieldName.size() + 12);
+				AQLString x = j->first.subString(baseYieldName.size(), baseYieldName.size() + 12);
 				if ((j->first.subString(0, baseYieldName.size() - 1) == baseYieldName)
 					&& j->second.getData("Term").isDefined()
 					&& j->second.getData("StartDate").isDefined()
 					&& j->second.getData("EndDate").isDefined())
 				{
-					if (dynamic_cast<const LADataString&>(j->second.get().getData("Term").get()).get() == term)
+					if (dynamic_cast<const AQLDataString&>(j->second.get().getData("Term").get()).get() == term)
 					{
 						return std::make_pair(
-							dynamic_cast<const LADataDate&>(j->second.get().getData("StartDate").get()),
-							dynamic_cast<const LADataDate&>(j->second.get().getData("EndDate").get()));
+							dynamic_cast<const AQLDataDate&>(j->second.get().getData("StartDate").get()),
+							dynamic_cast<const AQLDataDate&>(j->second.get().getData("EndDate").get()));
 					}
 				}
 			}
 		}
-		return std::make_pair(LADate(), LADate());
+		return std::make_pair(AQLDate(), AQLDate());
 	}
 
 	/*!
@@ -175,24 +175,24 @@ namespace
 	    @param outputName [in] The output name, for example "jpy_delta"
 	    @return A vector which contains all risk grid string expressions
 	*/
-	LAStringVector
-	getRiskGrids(const LAObject& info, const LAString& outputName)
+	AQLStringVector
+	getRiskGrids(const AQLObject& info, const AQLString& outputName)
 	{
-		LAString outputNameU(outputName);
-		LAString outputNameL(outputName);
+		AQLString outputNameU(outputName);
+		AQLString outputNameL(outputName);
 		outputNameU.toUpper();
 		outputNameL.toLower();
 
-		const LADataHolder* dh;
+		const AQLDataHolder* dh;
 		dh = &info.getData(outputNameL + AP_CALIBRATION_DATA_RISK_GRID);
 		if (!dh->isDefined())
 		{
 			dh = &info.getData(outputNameU + AP_CALIBRATION_DATA_RISK_GRID, ISDEFINED);
 		}
-		LAStringVector riskGrids = dynamic_cast<const LADataStrings&>(dh->get()).get();
-		for (LAStringVector::size_type i = 0, iend = riskGrids.size(); i < iend; ++i)
+		AQLStringVector riskGrids = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
+		for (AQLStringVector::size_type i = 0, iend = riskGrids.size(); i < iend; ++i)
 		{
-			LAString& riskGrid = riskGrids[i];
+			AQLString& riskGrid = riskGrids[i];
 			size_t justAfterLastUnderscore = std::find(
 				std::reverse_iterator<const char*>(riskGrid.getCString() + riskGrid.size()),
 				std::reverse_iterator<const char*>(riskGrid.getCString()),
@@ -227,20 +227,20 @@ namespace
 	DoubleVector
 	calcFwdSimpleRates(const DateVector& dates, const LAMathYieldCurve& yieldCurve)
 	{
-		LADate date0 = dates.front();
+		AQLDate date0 = dates.front();
 		DateVector::const_iterator i = dates.begin();
 		++i;
 		DateVector::const_iterator iend = dates.end();
 		DoubleVector fwdRates;
 		while (i != iend)
 		{
-			const LADate date1 = *i;
+			const AQLDate date1 = *i;
 			const double d = date0.intervalDays(date1) / 365.0;
 			const double df = (date0.cmp(date1) < 0) ? yieldCurve.getDF(date0, date1) : yieldCurve.getDF(date1, date0);
 			fwdRates.push_back((1.0 / df - 1.0) / d);
 			if (_isnan(fwdRates.back()))
 			{
-				throw LACoreError(
+				throw AQLCoreError(
 					("NaN forward rate: " + yieldCurve.getName().get() +
 						" at (" + date0.convertDateToString().getCString() + ", "
 						+ date1.convertDateToString().getCString() + ")").getCString(),
@@ -261,38 +261,38 @@ namespace
 	            the second elements are the corresponding yield curves;
 	            Pairs are sorted in the same order as "terms" and have "Base" as the first element
 	*/
-	std::pair<std::vector<std::pair<LAString, LAMathYieldCurve*> >, LAString>
-	getUsedTerms(const LAObject& info, const LADataMultiReference& scenarios, const LAStringVector& terms)
+	std::pair<std::vector<std::pair<AQLString, LAMathYieldCurve*> >, AQLString>
+	getUsedTerms(const AQLObject& info, const AQLDataMultiReference& scenarios, const AQLStringVector& terms)
 	{
-		const LADataHolder* dh;
+		const AQLDataHolder* dh;
 
 		// For example, "YIELD_SDE_JPY_IR"
 		dh = &info.getData(PRICING_DATA_TARGETNAMES, ISDEFINED);
-		LAString targetName = dynamic_cast<const LADataStrings&>(dh->get()).get().front();
+		AQLString targetName = dynamic_cast<const AQLDataStrings&>(dh->get()).get().front();
 
 		// For example, "JPYOIS"
 		dh = &info.getData(PRICING_DATA_IMMRISKYIELDCURVENAME, ISDEFINED);
-		LAStringVector curveNames = dynamic_cast<const LADataStrings&>(dh->get()).get();
+		AQLStringVector curveNames = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
 		if (curveNames.size() == 1)
 		{
-			LAString curveName = curveNames.front();
+			AQLString curveName = curveNames.front();
 			curveNames.assign(terms.size(), curveName);
 		}
 		else if (curveNames.size() != terms.size())
 		{
-			throw LACoreInvalidData("Risk grids and risk curve names do not match in terms of their number of members", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Risk grids and risk curve names do not match in terms of their number of members", __FILE__, __LINE__);
 		}
 
 		dh = &info.getData(PRICING_DATA_ISWAVE, ISDEFINED);
-		bool isWave = dynamic_cast<const LADataBool&>(dh->get()).get();
+		bool isWave = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 
-		LADataInstance& dataInstance = *info.getDataInstance();
-		LAObjectPool& objPool = dataInstance.getObjectPool();
+		AQLDataInstance& dataInstance = *info.getDataInstance();
+		AQLObjectPool& objPool = dataInstance.getObjectPool();
 
 		// terms[i]'s corresponding post-bumping curves
 		std::vector<LAMathYieldCurve*> curves(terms.size());
 		int scenarioStart = (terms.size() == scenarios.getSize()) ? 0/* no parallel */ : 1/*with parallel*/; 
-		for (LAStringVector::size_type i = 0, iend = terms.size(); i < iend; ++i)
+		for (AQLStringVector::size_type i = 0, iend = terms.size(); i < iend; ++i)
 		{
 			curves[i] = &dynamic_cast<LAMathYieldCurve&>(scenarios.get(i + scenarioStart).get());
 		}
@@ -311,15 +311,15 @@ namespace
 			std::fill(preBumpCurves.begin(), preBumpCurves.end(), curveBase);
 		}
 
-		LAString possibleRiskFloorTerm = "";
+		AQLString possibleRiskFloorTerm = "";
 
 		// Whether used or not is judged by differences of DFs of bumped curves;
 		// take care the diffs must be investigated in accordance with bump modes (for example, "wave")
-		std::vector<std::pair<LAString, LAMathYieldCurve*> > usedTerms;
-		LAStringVector riskYieldNames;
+		std::vector<std::pair<AQLString, LAMathYieldCurve*> > usedTerms;
+		AQLStringVector riskYieldNames;
 		usedTerms.push_back(std::make_pair("Base", curveBase));
 		riskYieldNames.push_back(curveBase->getCurveType());
-		for (LAStringVector::size_type j = 0, jend = terms.size(); j < jend; ++j)
+		for (AQLStringVector::size_type j = 0, jend = terms.size(); j < jend; ++j)
 		{
 			if (curveNames[j] == "")
 			{
@@ -369,7 +369,7 @@ namespace
 		}
 
 		// Again set the curve type including curveBase
-		for (LAStringVector::size_type i = 0, iend = usedTerms.size(); i < iend; ++i)
+		for (AQLStringVector::size_type i = 0, iend = usedTerms.size(); i < iend; ++i)
 		{
 			usedTerms[i].second->setCurveType(riskYieldNames[i]);
 		}
@@ -383,39 +383,39 @@ namespace
 	    @param scenarios [in] A reference which points the scenario entities
 	*/
 	LAPriceIMMFwdRiskConversionMatrix
-	calcIMMFwdRiskConversionMatrix(const LAObject& info, const LADataMultiReference& scenarios)
+	calcIMMFwdRiskConversionMatrix(const AQLObject& info, const AQLDataMultiReference& scenarios)
 	{
-		const LADataHolder* dh;
+		const AQLDataHolder* dh;
 
 		// For example, "JPY_DELTA"
 		dh = &info.getData(PRICING_DATA_OUTPUTNAME, ISNOTNULL);
-		LAString outputName = dynamic_cast<const LADataString&>(dh->get()).get();
+		AQLString outputName = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		outputName.toUpper();
 
 		// For example, { "1M", "BOJ01", ... }
-		LAStringVector terms = getRiskGrids(info, outputName);
+		AQLStringVector terms = getRiskGrids(info, outputName);
 
 		// For example, "JPYOIS"
 		dh = &info.getData(PRICING_DATA_IMMRISKYIELDCURVENAME, ISDEFINED);
-		LAStringVector curveNames = dynamic_cast<const LADataStrings&>(dh->get()).get();
+		AQLStringVector curveNames = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
 		if (curveNames.empty())
 		{
 			dh = &info.getData(PRICING_DATA_IMMFWDRATETERM, ISNOTNULL);
-			const IntVector& immIndices = dynamic_cast<const LADataInts&>(dh->get()).get();
+			const IntVector& immIndices = dynamic_cast<const AQLDataInts&>(dh->get()).get();
 			return LAPriceIMMFwdRiskConversionMatrix(
-				LAStringVector(), DateVector(), DateVector(), DoubleMatrix(), DoubleMatrix(), DoubleMatrix(1, DoubleVector(immIndices.size())));
+				AQLStringVector(), DateVector(), DateVector(), DoubleMatrix(), DoubleMatrix(), DoubleMatrix(1, DoubleVector(immIndices.size())));
 		}
 		else if (curveNames.size() == 1)
 		{
-			LAString curveName = curveNames.front();
+			AQLString curveName = curveNames.front();
 			curveNames.assign(terms.size(), curveName);
 		}
 		else if (curveNames.size() != terms.size())
 		{
-			throw LACoreInvalidData("Risk grids and risk curve names do not match in terms of their number of members", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Risk grids and risk curve names do not match in terms of their number of members", __FILE__, __LINE__);
 		}
 
-		LAStringVector originalCurveTypes;
+		AQLStringVector originalCurveTypes;
 		for (unsigned int i = 0, iend = scenarios.getSize(); i < iend; ++i)
 		{
 			originalCurveTypes.push_back(dynamic_cast<LAMathYieldCurve&>(scenarios.get(i).get()).getCurveType());
@@ -423,28 +423,28 @@ namespace
 
 		// Pairs of used term names their corresponding yield curves,
 		// ordered in the same way as terms, and have "Base" in their front
-		std::pair<std::vector<std::pair<LAString, LAMathYieldCurve*> >, LAString> p
+		std::pair<std::vector<std::pair<AQLString, LAMathYieldCurve*> >, AQLString> p
 			= getUsedTerms(info, scenarios, terms);
-		std::vector<std::pair<LAString, LAMathYieldCurve*> >& usedTerms = p.first;
-		LAString& riskFloorTerm = p.second;
+		std::vector<std::pair<AQLString, LAMathYieldCurve*> >& usedTerms = p.first;
+		AQLString& riskFloorTerm = p.second;
 
 		// Deduce the spot date: there may be more direct-forward ways to get it
-		LADate baseDate = dynamic_cast<const LADataDate&>(usedTerms.front().second->getData(CALIBRATION_DATA_ASOFDATE).get());
+		AQLDate baseDate = dynamic_cast<const AQLDataDate&>(usedTerms.front().second->getData(CALIBRATION_DATA_ASOFDATE).get());
 		baseDate.dayOfWeek();
 
 		// For example, "YIELD_SDE_JPY_IR"
 		dh = &info.getData(PRICING_DATA_TARGETNAMES, ISNOTNULL);
-		LAString targetName = dynamic_cast<const LADataStrings&>(dh->get()).get().front();
-		const LAObjectPool& objPool = usedTerms.front().second->getDataInstance()->getObjectPool();
-		LADate spotDate;
+		AQLString targetName = dynamic_cast<const AQLDataStrings&>(dh->get()).get().front();
+		const AQLObjectPool& objPool = usedTerms.front().second->getDataInstance()->getObjectPool();
+		AQLDate spotDate;
 		for (EntityConstIter i = objPool.begin(), iend = objPool.end(); i != iend; ++i)
 		{
 			if (i->first.subString(0, targetName.size() + 4) == targetName + "_DATA")
 			{
-				const LADataHolder& a = i->second.getData("SpotDate");
+				const AQLDataHolder& a = i->second.getData("SpotDate");
 				if (a.isDefined())
 				{
-					spotDate = dynamic_cast<const LADataDate&>(a.get()).get();
+					spotDate = dynamic_cast<const AQLDataDate&>(a.get()).get();
 					break;
 				}
 			}
@@ -458,15 +458,15 @@ namespace
 		// Note that ON and TN are not included
 		DateVector gridDates;
 		gridDates.push_back(baseDate);
-		for (std::vector<std::pair<LAString, LAMathYieldCurve*> >::const_iterator
+		for (std::vector<std::pair<AQLString, LAMathYieldCurve*> >::const_iterator
 			i = usedTerms.begin() + 1, iend = usedTerms.end();	// begin() is for "base"
 			i != iend; ++i)
 		{
-			const LAString& term = i->first;
+			const AQLString& term = i->first;
 			if ((term != "ON") && (term != "TN"))
 			{
-				const std::pair<LADate, LADate> period = getPeriod(term, objPool, targetName, baseDate, spotDate, i->second);
-				if (period.second != LADate())
+				const std::pair<AQLDate, AQLDate> period = getPeriod(term, objPool, targetName, baseDate, spotDate, i->second);
+				if (period.second != AQLDate())
 				{
 					period.second.dayOfWeek();
 					gridDates.push_back(period.second);
@@ -477,12 +477,12 @@ namespace
 		dh = &info.getData(PRICING_DATA_IMMRISKFLOORTERM);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			riskFloorTerm = dynamic_cast<const LADataString&>(dh->get()).get();
+			riskFloorTerm = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		}
 		if (riskFloorTerm != "")
 		{
-			LAStringVector::size_type i = std::find(terms.begin(), terms.end(), riskFloorTerm) - terms.begin();
-			LADate riskFloor = getPeriod(riskFloorTerm, objPool, targetName, baseDate, spotDate, usedTerms.front().second).second;
+			AQLStringVector::size_type i = std::find(terms.begin(), terms.end(), riskFloorTerm) - terms.begin();
+			AQLDate riskFloor = getPeriod(riskFloorTerm, objPool, targetName, baseDate, spotDate, usedTerms.front().second).second;
 			if (riskFloor < gridDates[1])
 			{
 				riskFloor.dayOfWeek();
@@ -494,12 +494,12 @@ namespace
 		// fwdRateDeltaMatrix[i][j] is j-th fwd rate diff by i-th market bump
 		DoubleMatrix fwdRateDeltaMatrix;
 		dh = &info.getData(PRICING_DATA_ISWAVE, ISNOTNULL);
-		bool isWave = dynamic_cast<const LADataBool&>(dh->get()).get();
+		bool isWave = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 		dh = &info.getData(PRICING_DATA_IMMACTUALGRIDSHIFTVAL, ISNOTNULL);
-		DoubleVector shiftVals = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+		DoubleVector shiftVals = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 
 		DoubleVector::size_type j = 0;
-		for (std::vector<std::pair<LAString, LAMathYieldCurve*> >::size_type i = 1, iend = usedTerms.size(); i < iend; ++i)	// index 0 is for "Base"
+		for (std::vector<std::pair<AQLString, LAMathYieldCurve*> >::size_type i = 1, iend = usedTerms.size(); i < iend; ++i)	// index 0 is for "Base"
 		{
 			LAMathYieldCurve& prebumpCurve = *usedTerms[isWave ? (i - 1) : 0].second;
 			LAMathYieldCurve& bumpedCurve = *usedTerms[i].second;
@@ -527,7 +527,7 @@ namespace
 
 		// Hereafter we don't have any interests on Base, ON and TN
 		usedTerms.erase(usedTerms.begin());	// "Base"
-		for (std::vector<std::pair<LAString, LAMathYieldCurve*> >::size_type i = 0; i != usedTerms.size();)
+		for (std::vector<std::pair<AQLString, LAMathYieldCurve*> >::size_type i = 0; i != usedTerms.size();)
 		{
 			if ((usedTerms[i].first == "ON") || (usedTerms[i].first == "TN"))
 			{
@@ -549,8 +549,8 @@ namespace
 		immGridDates.insert(immGridDates.begin(), baseDate);
 		DoubleMatrix swapRateDeltaMatrixExpanded = LAPriceIMMFwdRiskConversionMatrix::expand(swapRateDeltaMatrix, gridDates, immGridDates);
 
-		LAStringVector gridTerms(usedTerms.size());
-		for (LAStringVector::size_type k = 0, kend = gridTerms.size(); k < kend; ++k)
+		AQLStringVector gridTerms(usedTerms.size());
+		for (AQLStringVector::size_type k = 0, kend = gridTerms.size(); k < kend; ++k)
 		{
 			gridTerms[k] = usedTerms[k].first;
 		}
@@ -572,22 +572,22 @@ namespace
 	    @param matrix [in] The conversion matrix object
 	*/
 	void
-	putIMMFwdRisksOnMarketRateBump(const LAObject& info, const LADataMultiReference &unders, const LAString& outputName, const LAPriceIMMFwdRiskConversionMatrix& matrix)
+	putIMMFwdRisksOnMarketRateBump(const AQLObject& info, const AQLDataMultiReference &unders, const AQLString& outputName, const LAPriceIMMFwdRiskConversionMatrix& matrix)
 	{
-		LAString outputNameU(outputName);
+		AQLString outputNameU(outputName);
 		outputNameU.toUpper();
 
-		LAStringVector riskGrids = getRiskGrids(info, outputName);
+		AQLStringVector riskGrids = getRiskGrids(info, outputName);
 
 		for (unsigned int i = 0, iend = unders.getSize(); i < iend; ++i)
 		{
-			LAObjectHolder& objHolder = unders.get(i);
+			AQLObjectHolder& objHolder = unders.get(i);
 
-			const LADataHolder* dh;
+			const AQLDataHolder* dh;
 			dh = &objHolder.get().getData((outputName + "").toLower());
-			const DoubleVector& riskValues = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+			const DoubleVector& riskValues = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 
-			LADataHolder aa(new LADataDoubles(matrix.apply(riskGrids, riskValues)));
+			AQLDataHolder aa(new AQLDataDoubles(matrix.apply(riskGrids, riskValues)));
 			objHolder.get().add(outputNameU + "IMMFwd", aa);
 		}
 	}
@@ -600,31 +600,31 @@ namespace
 	    @param outputName [in] The output name of the market rate bump risk values, for example "jpy_delta"
 	*/
 	void
-	putIMMFwdRisksOnZeroRateBump(const LAObject& info, const LADataMultiReference &unders, const LAString& outputName)
+	putIMMFwdRisksOnZeroRateBump(const AQLObject& info, const AQLDataMultiReference &unders, const AQLString& outputName)
 	{
-		LAObjectPool& objPool = info.getDataInstance()->getObjectPool();
+		AQLObjectPool& objPool = info.getDataInstance()->getObjectPool();
 
 		// For example, "YIELD_SDE_JPY_IR"
-		const LADataHolder* dh = &info.getData(PRICING_DATA_TARGETNAMES, ISDEFINED);
-		LAString targetName = dynamic_cast<const LADataStrings&>(dh->get()).get().front();
+		const AQLDataHolder* dh = &info.getData(PRICING_DATA_TARGETNAMES, ISDEFINED);
+		AQLString targetName = dynamic_cast<const AQLDataStrings&>(dh->get()).get().front();
 
 		// Get the intact yield curve
 		const LAMathYieldCurve* const yieldCurve = dynamic_cast<const LAMathYieldCurve*>(&objPool.getObject(targetName).get());
 
 		// Get the base date
-		LADate baseDate = dynamic_cast<const LADataDate&>(yieldCurve->getData(CALIBRATION_DATA_ASOFDATE).get()).get();
+		AQLDate baseDate = dynamic_cast<const AQLDataDate&>(yieldCurve->getData(CALIBRATION_DATA_ASOFDATE).get()).get();
 		baseDate.dayOfWeek();
 
 		// Get the spot date
-		LADate spotDate;
+		AQLDate spotDate;
 		for (EntityConstIter j = objPool.begin(), jend = objPool.end(); j != jend; ++j)
 		{
 			if (j->first.subString(0, targetName.size() + 4) == targetName + "_DATA")
 			{
-				const LADataHolder& a = j->second.getData("SpotDate");
+				const AQLDataHolder& a = j->second.getData("SpotDate");
 				if (a.isDefined())
 				{
-					spotDate = dynamic_cast<const LADataDate&>(a.get()).get();
+					spotDate = dynamic_cast<const AQLDataDate&>(a.get()).get();
 					break;
 				}
 			}
@@ -632,16 +632,16 @@ namespace
 		spotDate.dayOfWeek();
 
 		// Risk grids: hereafter we will call its length N
-		LAStringVector riskGrids = getRiskGrids(info, outputName);
+		AQLStringVector riskGrids = getRiskGrids(info, outputName);
 
 		// Dates of risk grids: its length is N+1 (the first element is the base date)
 		DateVector gridDates;
 		gridDates.push_back(baseDate);
 		for (std::size_t j = 0, je = riskGrids.size(); j < je; ++j)
 		{
-			const LAString& term = riskGrids[j];
-			const std::pair<LADate, LADate> period = getPeriod(term, objPool, targetName, baseDate, spotDate, yieldCurve);
-			if (period.second != LADate())
+			const AQLString& term = riskGrids[j];
+			const std::pair<AQLDate, AQLDate> period = getPeriod(term, objPool, targetName, baseDate, spotDate, yieldCurve);
+			if (period.second != AQLDate())
 			{
 				period.second.dayOfWeek();
 				gridDates.push_back(period.second);
@@ -654,11 +654,11 @@ namespace
 
 		for (unsigned int j = 0, iend = unders.getSize(); j < iend; ++j)
 		{
-			LAObjectHolder& objHolder = unders.get(j);
+			AQLObjectHolder& objHolder = unders.get(j);
 
 			// Zero rate bump risk values: its length is N (without parallel) or N+1 (with parallel)
-			dh = &objHolder.get().getData(LAString(outputName).toLower());
-			const DoubleVector& riskValues = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+			dh = &objHolder.get().getData(AQLString(outputName).toLower());
+			const DoubleVector& riskValues = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 
 			// Forward rate bump risk values: its length is unconditionally N+1
 			DoubleVector fwdRiskValues(riskGrids.size() + 1);
@@ -669,7 +669,7 @@ namespace
 
 			// The first element of the risk grid dates:
 			// we define this to exclude the base date
-			const LADate* ds = &gridDates[0] + 1;	// To exclude baseDate
+			const AQLDate* ds = &gridDates[0] + 1;	// To exclude baseDate
 
 			const std::size_t n = riskGrids.size();
 
@@ -686,8 +686,8 @@ namespace
 			const DoubleVector immFwdRiskValues = LAPriceIMMFwdRiskConversionMatrix::expand(fwdRiskValues, gridDates, immGridDates);
 
 			// Now we have done
-			LADataHolder aa(new LADataDoubles(immFwdRiskValues));
-			objHolder.get().add(LAString(outputName).toUpper() + "IMMFwd", aa);
+			AQLDataHolder aa(new AQLDataDoubles(immFwdRiskValues));
+			objHolder.get().add(AQLString(outputName).toUpper() + "IMMFwd", aa);
 		}
 	}
 
@@ -701,34 +701,34 @@ namespace
 	    @param outputName [in] The output name of the risk values, for example "jpy_vega"
 	*/
 	void
-	putConvertedVega(LAObject& info, const LADataMultiReference &unders, const LAString& outputName)
+	putConvertedVega(AQLObject& info, const AQLDataMultiReference &unders, const AQLString& outputName)
 	{
-		LADataInstance* dataInstance = info.getDataInstance();
-		LAObjectPool& objPool = dataInstance->getObjectPool();
+		AQLDataInstance* dataInstance = info.getDataInstance();
+		AQLObjectPool& objPool = dataInstance->getObjectPool();
 
 		// "JPY_VEGA" and "jpy_vega"
-		LAString outputNameU(outputName);
+		AQLString outputNameU(outputName);
 		outputNameU.toUpper();
-		LAString outputNameL(outputName);
+		AQLString outputNameL(outputName);
 		outputNameL.toLower();
 
 		// "JPY"
-		LAString currencyU = dynamic_cast<const LADataString&>(info.getData("Name").get()).get().subString(0, 2);
+		AQLString currencyU = dynamic_cast<const AQLDataString&>(info.getData("Name").get()).get().subString(0, 2);
 		currencyU.toUpper();
 
 		// AsOfDate
-		const LADate baseDate = dynamic_cast<const LADataDate&>(
+		const AQLDate baseDate = dynamic_cast<const AQLDataDate&>(
 			objPool.getObject("YIELD_SDE_" + currencyU + "_IR_DATA").get().getData(CALIBRATION_DATA_ASOFDATE).get()).get();
 
 		// "tibor"
-		const LAString underlyingNameL = LAString(dynamic_cast<const LADataString&>(
+		const AQLString underlyingNameL = AQLString(dynamic_cast<const AQLDataString&>(
 			info.getData(PRICING_DATA_RISKCURVETYPENAME, ISNOTNULL).get()).get()).toLower();
 
 		const LAMathVolFuncIRSABR* irVol;
 		double shift;
 		{
-			const LAString volNameBase =
-				dynamic_cast<const LADataStrings&>(info.getData("TargetNames").get()).get().front();
+			const AQLString volNameBase =
+				dynamic_cast<const AQLDataStrings&>(info.getData("TargetNames").get()).get().front();
 			const LAMathVolatility& scenarioBase =
 				dynamic_cast<const LAMathVolatility&>(info.getDataInstance()->getObjectPool().getObject(volNameBase).get());
 			irVol = dynamic_cast<const LAMathVolFuncIRSABR*>(scenarioBase.getVolatilityFunc());
@@ -736,22 +736,22 @@ namespace
 		}
 
 		// Collect info about converted-after vols
-		LADataHolder dh = info.getData(PRICING_DATA_VEGACONVERTEDSHIFTVAL);
+		AQLDataHolder dh = info.getData(PRICING_DATA_VEGACONVERTEDSHIFTVAL);
 		double shiftConverted;
 		if (dh.isDefined() && !dh.isNull())
 		{
-			shiftConverted = dynamic_cast<const LADataDouble&>(dh.get()).get();
+			shiftConverted = dynamic_cast<const AQLDataDouble&>(dh.get()).get();
 		}
 		else
 		{
 			shiftConverted = shift;
 		}
-		const auto getDataStringL = [&info](const LAString& name, const LAString& defaultValue) -> LAString
+		const auto getDataStringL = [&info](const AQLString& name, const AQLString& defaultValue) -> AQLString
 		{
-			LADataHolder ahu = info.getData(name);
+			AQLDataHolder ahu = info.getData(name);
 			if (ahu.isDefined() && !ahu.isNull())
 			{
-				return LAString(dynamic_cast<const LADataString&>(ahu.get()).get()).toLower();
+				return AQLString(dynamic_cast<const AQLDataString&>(ahu.get()).get()).toLower();
 			}
 			else
 			{
@@ -759,25 +759,25 @@ namespace
 			}
 		};
 		// "libor"
-		const LAString underlyingNameConvertedL = getDataStringL(PRICING_DATA_VEGACONVERTEDUNDERLYING, underlyingNameL);
+		const AQLString underlyingNameConvertedL = getDataStringL(PRICING_DATA_VEGACONVERTEDUNDERLYING, underlyingNameL);
 		// "6m"
-		const LAString capletTenorConvertedL = getDataStringL(PRICING_DATA_VEGACONVERTEDCAPLETTENOR, "");
+		const AQLString capletTenorConvertedL = getDataStringL(PRICING_DATA_VEGACONVERTEDCAPLETTENOR, "");
 
 		double ratioUpperBound = std::numeric_limits<double>::max();
 		{
-			LADataHolder ahu = info.getData(PRICING_DATA_VEGACONVERTEDRATIOUPPERBOUND);
+			AQLDataHolder ahu = info.getData(PRICING_DATA_VEGACONVERTEDRATIOUPPERBOUND);
 			if (ahu.isDefined() && !ahu.isNull())
 			{
-				ratioUpperBound = dynamic_cast<const LADataDouble&>(ahu.get()).get();
+				ratioUpperBound = dynamic_cast<const AQLDataDouble&>(ahu.get()).get();
 			}
 		};
 
-		const bool shiftsDiffer = LAMath::abs(shift - shiftConverted) > 0.0001;
+		const bool shiftsDiffer = AQLMath::abs(shift - shiftConverted) > 0.0001;
 
 		const LAPriceOriginalIRSABRUnderlyingAsset underlying(baseDate, currencyU, underlyingNameL, dataInstance);
 
 		// Black vega calcuration engine
-		LABlackScholesBase* const engine = LACoreComponentManager::getBlackComponentMap().find(BK VEGA CALL)->second;
+		LABlackScholesBase* const engine = AQLCoreComponentManager::getBlackComponentMap().find(BK VEGA CALL)->second;
 
 		std::shared_ptr<const LAPriceIRVegaUnderlyingAsset> underlyingConverted;
 		if (underlyingNameL != underlyingNameConvertedL)
@@ -790,14 +790,14 @@ namespace
 
 		for (unsigned int j = 0, iend = unders.getSize(); j < iend; ++j)
 		{
-			LAObjectHolder& objHolder = unders.get(j);
+			AQLObjectHolder& objHolder = unders.get(j);
 
-			LADataHolder* dh;
+			AQLDataHolder* dh;
 			dh = &objHolder.get().getData(outputNameL);
-			const DoubleVector& riskValues = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+			const DoubleVector& riskValues = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 
 			dh = &objHolder.get().getData(outputNameU + "RiskGrid");
-			const LAStringVector& riskGrids = dynamic_cast<const LADataStrings&>(dh->get()).get();
+			const AQLStringVector& riskGrids = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
 
 			std::size_t gridRiskOffset = 0;
 			if (riskValues.size() > riskGrids.size())
@@ -809,20 +809,20 @@ namespace
 			DoubleVector riskValuesConverted(riskValues.size() - gridRiskOffset);	// Each element is initialized with zero
 
 			std::deque<bool> isCaps(riskGrids.size());
-			LAStringVector opts(riskGrids.size());
-			LAStringVector underlyingLs(riskGrids.size());
+			AQLStringVector opts(riskGrids.size());
+			AQLStringVector underlyingLs(riskGrids.size());
 
 			// Grid vega
 			for (std::size_t i = 0, ie = riskGrids.size(); i < ie; ++i)
 			{
 				// "Swaption_1Y_7Y" -> ("1Y", "7Y")
 				const int firstDemiliter = riskGrids[i].findString('_');
-				const LAString gridSpec = riskGrids[i].subString(firstDemiliter + 1, riskGrids[i].size() - 1);
+				const AQLString gridSpec = riskGrids[i].subString(firstDemiliter + 1, riskGrids[i].size() - 1);
 				const int secondDemiliter = gridSpec.findString('_');
 				opts[i] = gridSpec.subString(0, secondDemiliter - 1);
 				underlyingLs[i] = gridSpec.subString(secondDemiliter + 1, gridSpec.size() - 1).toLower();
 
-				LAString forName;
+				AQLString forName;
 				std::tie(forName, isCaps[i]) = underlying.getCurveName(underlyingLs[i]);
 
 				if (riskValues[i + gridRiskOffset] == 0.0)
@@ -850,8 +850,8 @@ namespace
 					// Calculation engine of shift -> premium
 					auto shiftedVegaEngine = [&engine, &sabr, optTerm, forward](double shiftValue) -> double
 					{
-						const double shiftedForward = LAMath::max(forward + shiftValue, MIN_RATE);
-						const double shiftedStrike = LAMath::max(forward + shiftValue, MIN_RATE);		// at the money
+						const double shiftedForward = AQLMath::max(forward + shiftValue, MIN_RATE);
+						const double shiftedStrike = AQLMath::max(forward + shiftValue, MIN_RATE);		// at the money
 
 						const double vol = sabr.getSABRVol(optTerm, shiftedForward, shiftedStrike);
 						AnalyticBKParam param;
@@ -878,7 +878,7 @@ namespace
 					// If both TIBOR->LIBOR and 3M->6M is to take place,
 					// use the final target tenor curve for caplets
 					// so as not to prevent "JPY1MLFORECAST is not built" errors for TIBOR 1M vegas
-					const LAString underlyingL = (isCaps[i] && (capletTenorConvertedL.size() > 0)) ?
+					const AQLString underlyingL = (isCaps[i] && (capletTenorConvertedL.size() > 0)) ?
 						capletTenorConvertedL : underlyingLs[i];
 					const double forwardConverted = underlyingConverted->getForward(
 						opts[i], underlyingL, underlyingConverted->getCurveName(underlyingL));
@@ -903,11 +903,11 @@ namespace
 			// Collect caplet vegas into the specified tenor
 			if (capletTenorConvertedL.size() > 0)
 			{
-				std::map<LAString, double> riskMap;
-				LAStringVector riskGridsConverted;
+				std::map<AQLString, double> riskMap;
+				AQLStringVector riskGridsConverted;
 				for (std::size_t i = 0, ie = riskGrids.size(); i < ie; ++i)
 				{
-					LAString riskGridConverted = riskGrids[i];
+					AQLString riskGridConverted = riskGrids[i];
 					if (isCaps[i] && (underlyingLs[i] != capletTenorConvertedL))
 					{
 						for (int j = riskGridConverted.size() - 1; j >= 0; --j)
@@ -939,36 +939,36 @@ namespace
 
 				// Replace the risk grids in the object
 				objHolder.get().remove(outputNameU + "RiskGrid");
-				objHolder.get().add(outputNameU + "RiskGrid", new LADataStrings(std::move(riskGridsConverted)));
+				objHolder.get().add(outputNameU + "RiskGrid", new AQLDataStrings(std::move(riskGridsConverted)));
 			}
 
 			objHolder.get().remove(outputNameU + "isParallelShift");
-			objHolder.get().add(outputNameU + "isParallelShift", new LADataBool(false));
+			objHolder.get().add(outputNameU + "isParallelShift", new AQLDataBool(false));
 			objHolder.get().remove(outputNameL);
-			objHolder.get().add(outputNameL, new LADataDoubles(std::move(riskValuesConverted)));
+			objHolder.get().add(outputNameL, new AQLDataDoubles(std::move(riskValuesConverted)));
 		}
 
 		if (underlyingConverted)
 		{
 			info.remove(PRICING_DATA_RISKCURVETYPENAME);
-			info.add(PRICING_DATA_RISKCURVETYPENAME, new LADataString(LAString(underlyingNameConvertedL).toUpper()));
+			info.add(PRICING_DATA_RISKCURVETYPENAME, new AQLDataString(AQLString(underlyingNameConvertedL).toUpper()));
 			info.remove(PRICING_DATA_RISKBASESHIFTCURVETYPENAME);
-			info.add(PRICING_DATA_RISKBASESHIFTCURVETYPENAME, new LADataString(LAString(underlyingNameConvertedL).toUpper()));
+			info.add(PRICING_DATA_RISKBASESHIFTCURVETYPENAME, new AQLDataString(AQLString(underlyingNameConvertedL).toUpper()));
 		}
 	}
 
 } // end unnamed
 
 const double LAPricePortfolioValue::FAIL_VALUE = DBL_MAX;
-const LAString LAPricePortfolioValue::ERROR    = "_ERROR";
-const LAString LAPricePortfolioValue::PV_ERROR = "PV_ERROR";
+const AQLString LAPricePortfolioValue::ERROR    = "_ERROR";
+const AQLString LAPricePortfolioValue::PV_ERROR = "PV_ERROR";
 const unsigned int LAPricePortfolioValue::EXTRASCENARIO_MAX = 10;
 
 /*!
     @brief constructor
 */
 LAPricePortfolioValue::LAPricePortfolioValue() :
-LACoreValuation()
+AQLCoreValuation()
 {
 }
 /*!
@@ -987,14 +987,14 @@ LAPricePortfolioValue::~LAPricePortfolioValue()
 bool
 LAPricePortfolioValue::isTypeOf(function_t id) const
 {
-	return (id == FN_IR_PORTFOLIOVALUE ? true : LACoreValuation::isTypeOf(id));
+	return (id == FN_IR_PORTFOLIOVALUE ? true : AQLCoreValuation::isTypeOf(id));
 }
 /*!
     @brief  Make copy(clone) of this class
 
 	@return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPricePortfolioValue::clone() const
 {
     try 
@@ -1003,7 +1003,7 @@ LAPricePortfolioValue::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -1023,7 +1023,7 @@ LAPricePortfolioValue::getType() const
 	@param[in, out] dm data master 
 */
 void
-LAPricePortfolioValue::registerData(LAPriceDataManager& dm) const
+LAPricePortfolioValue::registerData(AQLPriceDataManager& dm) const
 {	
 	dm.setData(CALIBRATION_DATA_UNDERLYINGS, DATA_MULTIREFERENCE);
 	dm.setData(PRICING_DATA_RISKCALCINFOS, DATA_MULTIREFERENCE);
@@ -1066,45 +1066,45 @@ LAPricePortfolioValue::registerData(LAPriceDataManager& dm) const
 	@brief value portfolio
 
 	@param[in] basedate evaluate day
-	@param[in,out] object Portfolio object object(reference to LAMathObjectValue class) 
+	@param[in,out] object Portfolio object object(reference to AQLMathObjectValue class) 
 	@param[in] att Data to hold evaluation procedure class
 
 	@return sum of present values of each trades
 	
 */
 double
-LAPricePortfolioValue::value(const LADate& basedate, LAObject& object,
-					const LADataValuation& att) const
+LAPricePortfolioValue::value(const AQLDate& basedate, AQLObject& object,
+					const AQLDataValuation& att) const
 {
 	(void)att; //20061018--David--Fix warning:C4100 20070411--Nagase--gcc
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	//value type
-	LAString value_type = "";
+	AQLString value_type = "";
 	dh = &object.getData(PRICING_DATA_VALUETYPE, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		value_type = dynamic_cast<const LADataString&>(dh->get()).get();
+		value_type = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		value_type.toUpper();
 		if (value_type != PV && value_type != PVANDRISK && value_type != RISK)
 		{
 			//error
-			LAString msg = "ValueType=";
+			AQLString msg = "ValueType=";
 			msg += value_type;
 			msg += " is not supported";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 
 	
 	//object pool
-	LAObjectPool& objPool = object.getDataInstance()->getObjectPool();
+	AQLObjectPool& objPool = object.getDataInstance()->getObjectPool();
 	// reference pool
-	LACoreReferencePool& rpool = object.getDataInstance()->getReferencePool();
+	AQLCoreReferencePool& rpool = object.getDataInstance()->getReferencePool();
 	
 	// underlyings
 	dh = &object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL);
-	LADataMultiReference& unders = dynamic_cast<LADataMultiReference&>(dh->get());
+	AQLDataMultiReference& unders = dynamic_cast<AQLDataMultiReference&>(dh->get());
 	for (unsigned int i = 0; i < unders.getSize(); i++)
 		unders.get(i).remove(PRICING_DATA_ISCALCRISK);
 
@@ -1116,13 +1116,13 @@ LAPricePortfolioValue::value(const LADate& basedate, LAObject& object,
 		dh = &object.getData(PRICING_DATA_RISKCALCINFOS, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const LADataMultiReference& infos = dynamic_cast<const LADataMultiReference&>(dh->get());
+			const AQLDataMultiReference& infos = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 			for (unsigned int i = 0; i < infos.getSize(); i++)
 			{
 				//dh = &(infos.get(i).getData(PRICING_DATA_ISANALYTIC,NOCHECK));
 				dh = &(infos.get(i).getData(PRICING_DATA_ANALYTICCALCTYPE,NOCHECK));
-				//if (dh->isDefined () && !dh->isNull() && dynamic_cast<const LADataBool &>(dh->get()))
-				if (dh->isDefined () && !dh->isNull() && dynamic_cast<const LADataString &>(dh->get()).get() == ANALYTIC)
+				//if (dh->isDefined () && !dh->isNull() && dynamic_cast<const AQLDataBool &>(dh->get()))
+				if (dh->isDefined () && !dh->isNull() && dynamic_cast<const AQLDataString &>(dh->get()).get() == ANALYTIC)
 				{
 					isanalyticOnahead = true;
 					break;
@@ -1133,12 +1133,12 @@ LAPricePortfolioValue::value(const LADate& basedate, LAObject& object,
 	
 	
 	
-	vector<LAMathObjectValue*> trades(unders.getSize());
+	vector<AQLMathObjectValue*> trades(unders.getSize());
 	DoubleArray pv_base(unders.getSize());
 	double ret = 0.0;
 	for (unsigned int i = 0; i < unders.getSize(); i++)
 	{
-		trades[i] = &dynamic_cast<LAMathObjectValue&>(unders.get(i).get());
+		trades[i] = &dynamic_cast<AQLMathObjectValue&>(unders.get(i).get());
 		trades[i]->remove(PRICING_DATA_ERRORSTATUS);
 		trades[i]->add(PRICING_DATA_ERRORSTATUS);
 		try
@@ -1146,7 +1146,7 @@ LAPricePortfolioValue::value(const LADate& basedate, LAObject& object,
 			if (isanalyticOnahead)
 			{	
 				trades[i]->remove(PRICING_DATA_ISANALYTIC);
-				trades[i]->LAObject::add(PRICING_DATA_ISANALYTIC, new LADataBool(true));
+				trades[i]->AQLObject::add(PRICING_DATA_ISANALYTIC, new AQLDataBool(true));
 			}
 			
 cout << "LAPricePortfolioValue calc trade value called.." << endl;
@@ -1155,7 +1155,7 @@ clock_t cstart = clock();
 			if (value_type == RISK)
 			{
 				dh = &trades[i]->getData(PRICING_DATA_DIRTYPRICE, ISNOTNULL);
-				pv_base[i] = dynamic_cast<const LADataDouble&>(dh->get()).get();
+				pv_base[i] = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 			}
 			else
 			{
@@ -1170,10 +1170,10 @@ cout << "-> time = " << time << endl;
 		catch(...)
 		{
 			pv_base[i] = FAIL_VALUE;
-			dynamic_cast<LADataStrings &>(trades[i]->getData(PRICING_DATA_ERRORSTATUS, ISDEFINED).get()).push_back(PV_ERROR);
+			dynamic_cast<AQLDataStrings &>(trades[i]->getData(PRICING_DATA_ERRORSTATUS, ISDEFINED).get()).push_back(PV_ERROR);
 			if (value_type != RISK)
 			{
-				LAObject &e_trade = *trades[i];
+				AQLObject &e_trade = *trades[i];
 				// remove value data
 				e_trade.remove(PRICING_DATA_CLEANPRICE);
 				e_trade.remove(PRICING_DATA_DIRTYPRICE);
@@ -1185,37 +1185,37 @@ cout << "-> time = " << time << endl;
 				e_trade.remove(PRICING_DATA_PVCURRENCY);
 
 				// set value data FAILE VALUE  
-				e_trade.add(PRICING_DATA_CLEANPRICE, new LADataDouble(FAIL_VALUE));
-				e_trade.add(PRICING_DATA_DIRTYPRICE, new LADataDouble(FAIL_VALUE));
-				e_trade.add(PRICING_DATA_ACCRUEDINTEREST, new LADataDouble(FAIL_VALUE));
-				e_trade.add(PRICING_DATA_CLEANPRICESQUARE, new LADataDouble(FAIL_VALUE));
-				e_trade.add(PRICING_DATA_CLEANPRICEDEVIATION, new LADataDouble(FAIL_VALUE));
+				e_trade.add(PRICING_DATA_CLEANPRICE, new AQLDataDouble(FAIL_VALUE));
+				e_trade.add(PRICING_DATA_DIRTYPRICE, new AQLDataDouble(FAIL_VALUE));
+				e_trade.add(PRICING_DATA_ACCRUEDINTEREST, new AQLDataDouble(FAIL_VALUE));
+				e_trade.add(PRICING_DATA_CLEANPRICESQUARE, new AQLDataDouble(FAIL_VALUE));
+				e_trade.add(PRICING_DATA_CLEANPRICEDEVIATION, new AQLDataDouble(FAIL_VALUE));
 
 				//PV Currency
-				LAString pvCcy;
+				AQLString pvCcy;
 				dh = &(e_trade.getData(PRICING_DATA_CURRENCY, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					pvCcy = dynamic_cast<const LADataString&>(dh->get()).get();
+					pvCcy = dynamic_cast<const AQLDataString&>(dh->get()).get();
 					dh = &(e_trade.getData(PRICING_DATA_VALUATIONCURRENCY, NOCHECK));
 					if (dh->isDefined() && !dh->isNull())
-						pvCcy = dynamic_cast<const LADataString&>(dh->get()).get();
+						pvCcy = dynamic_cast<const AQLDataString&>(dh->get()).get();
 				}
 				else
 				{
 					dh = &(e_trade.getData(PRICING_DATA_PREMIUMCURRENCY, NOCHECK));
 					if (dh->isDefined() && !dh->isNull())
-						pvCcy = dynamic_cast<const LADataString&>(dh->get()).get();
+						pvCcy = dynamic_cast<const AQLDataString&>(dh->get()).get();
 				}
-				e_trade.add(PRICING_DATA_PVCURRENCY, new LADataString(pvCcy));
+				e_trade.add(PRICING_DATA_PVCURRENCY, new AQLDataString(pvCcy));
 
 				// check isdetailoutput
-				LADataHolder &detailOut = e_trade.getData(PRICING_DATA_ISDETAILOUTPUT);
+				AQLDataHolder &detailOut = e_trade.getData(PRICING_DATA_ISDETAILOUTPUT);
 				if (detailOut.isDefined() && !detailOut.isNull() 
-					&& dynamic_cast<LADataBool &>(detailOut.get()).get())
+					&& dynamic_cast<AQLDataBool &>(detailOut.get()).get())
 				{
-					e_trade.add(PRICING_DATA_CALLTRIGGERVALUE, new LADataDouble(FAIL_VALUE));
-					e_trade.add(PRICING_DATA_CLEANPRICEWITHOUTCALLTRIGGER, new LADataDouble(FAIL_VALUE));
+					e_trade.add(PRICING_DATA_CALLTRIGGERVALUE, new AQLDataDouble(FAIL_VALUE));
+					e_trade.add(PRICING_DATA_CLEANPRICEWITHOUTCALLTRIGGER, new AQLDataDouble(FAIL_VALUE));
 				}
 			}
 		}
@@ -1223,7 +1223,7 @@ cout << "-> time = " << time << endl;
 	}	
 
 	for (unsigned int i = 0; i < unders.getSize(); i++)
-		unders.get(i).add(PRICING_DATA_ISCALCRISK, new LADataBool(true));
+		unders.get(i).add(PRICING_DATA_ISCALCRISK, new AQLDataBool(true));
 
 	// risk info
 	dh = &object.getData(PRICING_DATA_RISKCALCINFOS, NOCHECK);
@@ -1232,7 +1232,7 @@ cout << "-> time = " << time << endl;
 		if (value_type != "" && value_type != PV)
 		{
 			//error
-			throw LACoreInvalidData("RiskCalcInfos is not exsist", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("RiskCalcInfos is not exsist", __FILE__, __LINE__);
 		}
         return ret;
 	}
@@ -1240,23 +1240,23 @@ cout << "-> time = " << time << endl;
 	if (value_type == PV) return ret;
 
 	DoubleArray pv_base_orig = pv_base;
-	LAStringVector pvCurrency_orig;
+	AQLStringVector pvCurrency_orig;
 	for (unsigned int j = 0; j < unders.getSize(); j++)
 	{
 		dh = &(unders.get(j).getData(PRICING_DATA_PREMIUMCURRENCY, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			pvCurrency_orig.push_back( dynamic_cast<const LADataString &>(dh->get()).get() );
+			pvCurrency_orig.push_back( dynamic_cast<const AQLDataString &>(dh->get()).get() );
 		}
 		else
 		{
 			dh = &(unders.get(j).getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-			pvCurrency_orig.push_back( dynamic_cast<const LADataString &>(dh->get()).get() );
+			pvCurrency_orig.push_back( dynamic_cast<const AQLDataString &>(dh->get()).get() );
 		}
 	}
 
 	dh = &object.getData(PRICING_DATA_RISKCALCINFOS, NOCHECK);
-	LADataMultiReference& infos = dynamic_cast<LADataMultiReference&>(dh->get());
+	AQLDataMultiReference& infos = dynamic_cast<AQLDataMultiReference&>(dh->get());
 	for (unsigned int i = 0; i < infos.getSize(); i++)
 	{
 		pv_base = pv_base_orig;
@@ -1265,55 +1265,55 @@ cout << "-> time = " << time << endl;
 		dh = &infos.get(i).getData(PRICING_DATA_ISSETUPPAYOFF, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			isSetUpPayOff = dynamic_cast<const LADataBool &>(dh->get()).get();
+			isSetUpPayOff = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 		for (unsigned int j = 0; j < unders.getSize(); j++)
 		{
 			unders.get(j).remove(PRICING_DATA_ISSETUPPAYOFF);
-			unders.get(j).add(PRICING_DATA_ISSETUPPAYOFF, new LADataBool(isSetUpPayOff));
+			unders.get(j).add(PRICING_DATA_ISSETUPPAYOFF, new AQLDataBool(isSetUpPayOff));
 		}
 		// omit notional exposure or not
 		bool omitNotionalExposure = false;
 		dh = &infos.get(i).getData(PRICING_DATA_OMITNOTIONALEXPOSURE, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			omitNotionalExposure = dynamic_cast<const LADataBool &>(dh->get()).get();
+			omitNotionalExposure = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 		for (unsigned int j = 0; j < unders.getSize(); j++)
 		{
 			unders.get(j).remove(PRICING_DATA_OMITNOTIONALEXPOSURE);
-			unders.get(j).add(PRICING_DATA_OMITNOTIONALEXPOSURE, new LADataBool(omitNotionalExposure));
+			unders.get(j).add(PRICING_DATA_OMITNOTIONALEXPOSURE, new AQLDataBool(omitNotionalExposure));
 		}
 
 		//analytic mode or not
 		//dh = &(infos.get(i).getData(PRICING_DATA_ISANALYTIC, ISNOTNULL));
 		dh = &(infos.get(i).getData(PRICING_DATA_ANALYTICCALCTYPE, ISNOTNULL));
-		LAString analytictype = dynamic_cast<const LADataString &>(dh->get());
-		/*bool isanalytic = dynamic_cast<LADataBool &>(dh->get());
+		AQLString analytictype = dynamic_cast<const AQLDataString &>(dh->get());
+		/*bool isanalytic = dynamic_cast<AQLDataBool &>(dh->get());
 		if (isanalytic)*/
 		if (analytictype.toUpper() == ANALYTIC)
 		{
-			throw LACoreInvalidData("Analytic risk is not supported now!",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Analytic risk is not supported now!",__FILE__,__LINE__);
 			//// we stopped to calculate the analytic risk on 2012/11/26 because of bad performance of the linepricer
 			//// output attr name
 			//dh = &infos.get(i).getData(PRICING_DATA_OUTPUTNAME, ISNOTNULL);
-			//const LAString& outputname = dynamic_cast<const LADataString&>(dh->get()).get();
+			//const AQLString& outputname = dynamic_cast<const AQLDataString&>(dh->get()).get();
 
 			//dh = &(infos.get(i).getData(CALIBRATION_DATA_NAME, ISNOTNULL));
-			//LAString keyname = dynamic_cast<LADataString &>(dh->get());
+			//AQLString keyname = dynamic_cast<AQLDataString &>(dh->get());
 
 			//dh = &(infos.get(i).getData(PRICING_DATA_SHIFTVALS_ANALYTIC, ISNOTNULL));
-			//DoubleVector shiftvals = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+			//DoubleVector shiftvals = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 			//
 			//dh = &(infos.get(i).getData(PRICING_DATA_DIVUNIT_ANALYTIC, ISNOTNULL));
-			//double divunit = dynamic_cast<const LADataDouble &>(dh->get()).get();
+			//double divunit = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 			//if (0.0 == divunit)
-			//	throw LACoreInvalidData("divuniti must not be 0",__FILE__,__LINE__);
+			//	throw AQLCoreInvalidData("divuniti must not be 0",__FILE__,__LINE__);
 
 			//DoubleVector multivec(shiftvals.size(), 1.0/divunit);
 			//
 			//dh = &(infos.get(i).getData(PRICING_DATA_SHIFTTYPE_ANALYTIC, ISNOTNULL));
-			//LAString shifttype = dynamic_cast<const LADataString &>(dh->get());
+			//AQLString shifttype = dynamic_cast<const AQLDataString &>(dh->get());
 			//if (shifttype.toUpper () == "DIFF")
 			//{
 			//	transform(shiftvals.begin(), shiftvals.end(), multivec.begin(), shiftvals.begin(), multiplies<double>());
@@ -1323,13 +1323,13 @@ cout << "-> time = " << time << endl;
 			//	transform(shiftvals.begin(), shiftvals.end(), multivec.begin(), shiftvals.begin(), multiplies<double>());
 
 			//	dh = &(infos.get(i).getData(PRICING_DATA_RISKCURVETYPENAME, ISNOTNULL));
-			//	LAString keycurve = dynamic_cast<const LADataString &>(dh->get());
+			//	AQLString keycurve = dynamic_cast<const AQLDataString &>(dh->get());
 
 			//	if (STD == keycurve)
 			//		keycurve = SWAP;
 
 			//	dh = &(infos.get(i).getData(PRICING_DATA_RISKCURVETYPECURRENCY, ISNOTNULL));
-			//	LAString keyccy = dynamic_cast<const LADataString &>(dh->get());
+			//	AQLString keyccy = dynamic_cast<const AQLDataString &>(dh->get());
 
 			//	//get asof
 			//	dh = &(unders.get(0).getData("PathEntity", NOCHECK));
@@ -1337,19 +1337,19 @@ cout << "-> time = " << time << endl;
 			//	{
 			//		dh = &(unders.get(0).getData("MarketParam", ISNOTNULL));
 			//	}
-			//	const LADataReference& pathref = dynamic_cast<const LADataReference &>(dh->get());
+			//	const AQLDataReference& pathref = dynamic_cast<const AQLDataReference &>(dh->get());
 			//	if (!pathref.get().get().isTypeOf(ENTITY_PLAINVANILLA))
 			//	{
 			//		//const LAMathPathEntity& path = dynamic_cast<const LAMathPathEntity&>(pathref.get().get());
-			//		throw LACoreInvalidData("SemiAnalyticError",__FILE__,__LINE__);
+			//		throw AQLCoreInvalidData("SemiAnalyticError",__FILE__,__LINE__);
 			//	}
 			//	
 			//	const LAMathPlainVanillaEntity& path = dynamic_cast<const LAMathPlainVanillaEntity&>(pathref.get().get());
 			//	const LAMathYieldCurvePro& yldPro = path.getIRCurvePro(keyccy);
 			//	DoubleVector underlyingrates;
 			//	IntVector omitposvec;
-			//	const std::map<LAString, LAString>& assignedCurveMktMap = yldPro.getAssignedCurveMktMap();
-			//	for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+			//	const std::map<AQLString, AQLString>& assignedCurveMktMap = yldPro.getAssignedCurveMktMap();
+			//	for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 			//	{
 			//		if (keycurve == it->second)
 			//		{
@@ -1360,7 +1360,7 @@ cout << "-> time = " << time << endl;
 			//		}
 			//	}
 			//	if (underlyingrates.size() + omitposvec.size() != shiftvals.size())
-			//		throw LACoreInvalidData("Analytic Grid Size Error",__FILE__,__LINE__);
+			//		throw AQLCoreInvalidData("Analytic Grid Size Error",__FILE__,__LINE__);
 
 			//	//imput tmprate;
 			//	for (unsigned int k = 0; k < omitposvec.size(); k++)
@@ -1373,7 +1373,7 @@ cout << "-> time = " << time << endl;
 			//	transform(shiftvals.begin(), shiftvals.end(), underlyingrates.begin(), shiftvals.begin(), multiplies<double>());
 			//}
 			//else
-			//	throw LACoreInvalidData("Analytic Shifttype Error",__FILE__,__LINE__);
+			//	throw AQLCoreInvalidData("Analytic Shifttype Error",__FILE__,__LINE__);
 
 			//for (unsigned int j = 0; j < trades.size(); j++)
 			//{
@@ -1381,45 +1381,45 @@ cout << "-> time = " << time << endl;
 			//	{
 			//		double tmpret = trades[j]->value(basedate);
 			//		/*dh = &(trades[j]->getData(keyname, ISNOTNULL));
-			//		DoubleVector out = dynamic_cast<const LADataDoubles &>(dh->get()).get();*/
+			//		DoubleVector out = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();*/
 			//		dh = &(infos.get(i).getData(PRICING_DATA_RISKCURVETYPECURRENCY, ISNOTNULL));
-			//		LAString keyccy = dynamic_cast<const LADataString &>(dh->get());
+			//		AQLString keyccy = dynamic_cast<const AQLDataString &>(dh->get());
 			//		//get yield curve pro
 			//		dh = &(unders.get(0).getData("PathEntity", NOCHECK));
 			//		if (!dh->isDefined() || dh->isNull())
 			//		{
 			//			dh = &(unders.get(0).getData("MarketParam", ISNOTNULL));
 			//		}
-			//		const LADataReference& pathref = dynamic_cast<const LADataReference &>(dh->get());
+			//		const AQLDataReference& pathref = dynamic_cast<const AQLDataReference &>(dh->get());
 			//		if (!pathref.get().get().isTypeOf(ENTITY_PLAINVANILLA))
 			//		{
-			//			throw LACoreInvalidData("SemiAnalyticError",__FILE__,__LINE__);
+			//			throw AQLCoreInvalidData("SemiAnalyticError",__FILE__,__LINE__);
 			//		}
 			//		
 			//		const LAMathPlainVanillaEntity& path = dynamic_cast<const LAMathPlainVanillaEntity&>(pathref.get().get());
 			//		const LAMathYieldCurvePro& yldPro = path.getIRCurvePro(keyccy);
-			//		const std::map<LAString, LAString>& assignedCurveMktMap = yldPro.getAssignedCurveMktMap();
+			//		const std::map<AQLString, AQLString>& assignedCurveMktMap = yldPro.getAssignedCurveMktMap();
 			//		dh = &(infos.get(i).getData(PRICING_DATA_RISKCURVETYPENAME, ISNOTNULL));
-			//		LAString keyMarket = dynamic_cast<const LADataString &>(dh->get());
+			//		AQLString keyMarket = dynamic_cast<const AQLDataString &>(dh->get());
 			//		if (keyMarket == STD) keyMarket = SWAP;
-			//		LAString tmpKeyname = keyname;
-			//		LAStringVector riskInfo = tmpKeyname.toToken('_');
+			//		AQLString tmpKeyname = keyname;
+			//		AQLStringVector riskInfo = tmpKeyname.toToken('_');
 			//		DoubleVector out;
-			//		for (std::map<LAString, LAString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
+			//		for (std::map<AQLString, AQLString>::const_iterator it = assignedCurveMktMap.begin(); it != assignedCurveMktMap.end(); it++)
 			//		{
 			//			if (keyMarket == it->second)
 			//			{
-			//				LAString keyCurve = riskInfo[0] + "_" + riskInfo[1] + "_" + it->first;
+			//				AQLString keyCurve = riskInfo[0] + "_" + riskInfo[1] + "_" + it->first;
 			//				dh = &(trades[j]->getData(keyCurve, ISNOTNULL));
 			//				if (out.size() == 0)
 			//				{
-			//					out = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+			//					out = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 			//				}
 			//				else
 			//				{
-			//					const DoubleVector& out_tmp = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+			//					const DoubleVector& out_tmp = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 			//					if (out_tmp.size() != out.size())
-			//						throw LACoreInvalidData("out put sizes are different in analytic risk!",__FILE__,__LINE__);
+			//						throw AQLCoreInvalidData("out put sizes are different in analytic risk!",__FILE__,__LINE__);
 			//					for (size_t k=0; k<out.size(); k++)
 			//					{
 			//						out[k] += out_tmp[k];
@@ -1427,33 +1427,33 @@ cout << "-> time = " << time << endl;
 			//				}
 			//			}
 			//		}
-			//		//LAString tmpRiskName = outputname;
+			//		//AQLString tmpRiskName = outputname;
 			//		if (out.size() != shiftvals.size())
-			//			throw LACoreInvalidData("Analytic Grid Size Error",__FILE__,__LINE__);
+			//			throw AQLCoreInvalidData("Analytic Grid Size Error",__FILE__,__LINE__);
 			//		
 			//		//multiple out
 			//		transform(out.begin(), out.end(), shiftvals.begin(), out.begin(), multiplies<double>());
 			//		double gridsum = std::accumulate(out.begin(), out.end(), 0.0);
 
 			//		dh = &(infos.get(i).getData(PRICING_DATA_ISGRIDSENSITIVITY_ANALYTIC, ISNOTNULL));
-			//		bool isgrid = dynamic_cast<const LADataBool &>(dh->get()).get();
+			//		bool isgrid = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 			//		if (isgrid)
 			//		{
 			//			out.insert(out.begin(), gridsum);
 			//			unders.get(j).remove(outputname);
-			//			unders.get(j).add(outputname, new LADataDoubles(out));
+			//			unders.get(j).add(outputname, new AQLDataDoubles(out));
 			//		}
 			//		else
 			//		{
 			//			unders.get(j).remove(outputname);
-			//			unders.get(j).add(outputname, new LADataDouble(gridsum));
+			//			unders.get(j).add(outputname, new AQLDataDouble(gridsum));
 			//		}
 			//	}
 			//	catch(...)
 			//	{
 			//		DoubleVector out(1,FAIL_VALUE);
 			//		unders.get(j).remove(outputname);
-			//		unders.get(j).add(outputname, new LADataDoubles(out));
+			//		unders.get(j).add(outputname, new AQLDataDoubles(out));
 			//	}
 			//	
 			//}
@@ -1469,15 +1469,15 @@ cout << "-> time = " << time << endl;
 		dh = &infos.get(i).getData(PRICING_DATA_RISKOUTPUTCURRENCY, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			LAString valcurrency = dynamic_cast<const LADataString &>(dh->get()).get();
-			//LAString pvcurrency;
+			AQLString valcurrency = dynamic_cast<const AQLDataString &>(dh->get()).get();
+			//AQLString pvcurrency;
 			double exchangerate = 1.0;
 
 			LAMathFXEntity* pfx = 0;
-			LAString b_outputname;
+			AQLString b_outputname;
 			dh = &infos.get(i).getData(PRICING_DATA_BASEOUTPUTNAME, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
-				b_outputname =  dynamic_cast<LADataString &>(dh->get()).get();
+				b_outputname =  dynamic_cast<AQLDataString &>(dh->get()).get();
 			
 			for (unsigned int j = 0; j < unders.getSize(); j++)
 			{
@@ -1486,7 +1486,7 @@ cout << "-> time = " << time << endl;
 				if (isspotcalc && pfx == 0)
 				{
 					dh = &(object.getData(PRICING_DATA_FXRATE, ISNOTNULL));
-					LAObject& e = dynamic_cast<LADataReference &>(dh->get()).get().get();
+					AQLObject& e = dynamic_cast<AQLDataReference &>(dh->get()).get().get();
 					pfx = &(dynamic_cast<LAMathFXEntity &>(e));
 				}
 
@@ -1494,17 +1494,17 @@ cout << "-> time = " << time << endl;
 				dh = &(unders.get(j).getData(PRICING_DATA_VALUEDATE, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					const LADate& valueDate = dynamic_cast<const LADataDate&>(dh->get()).get();
-					LADataReference pathref;
+					const AQLDate& valueDate = dynamic_cast<const AQLDataDate&>(dh->get()).get();
+					AQLDataReference pathref;
 					dh = &(unders.get(j).getData("PathEntity", NOCHECK));
 					if (!dh->isDefined() || dh->isNull())
 					{
 						dh = &(unders.get(j).getData("MarketParam", ISNOTNULL));
-						pathref = dynamic_cast<LADataReference &>(dh->get());	
+						pathref = dynamic_cast<AQLDataReference &>(dh->get());	
 					}
 					else
 					{
-						pathref = dynamic_cast<LADataReference &>(dh->get());
+						pathref = dynamic_cast<AQLDataReference &>(dh->get());
 					}
 					
 					if (!pathref.get().get().isTypeOf(ENTITY_PLAINVANILLA))
@@ -1525,37 +1525,37 @@ cout << "-> time = " << time << endl;
 					pv_base[j] *= exchangerate;
 				}
 				unders.get(j).remove(PRICING_DATA_VALUATIONCURRENCY);
-				unders.get(j).add(PRICING_DATA_VALUATIONCURRENCY, new LADataString(valcurrency));
+				unders.get(j).add(PRICING_DATA_VALUATIONCURRENCY, new AQLDataString(valcurrency));
 				unders.get(j).remove(PRICING_DATA_ISSETUPPAYOFF);
-				unders.get(j).add(PRICING_DATA_ISSETUPPAYOFF, new LADataBool(false));
+				unders.get(j).add(PRICING_DATA_ISSETUPPAYOFF, new AQLDataBool(false));
 
 				unders.get(j).remove(b_outputname + "_" + PRICING_DATA_RISKOUTPUTCURRENCY);
-				unders.get(j).add(b_outputname + "_" + PRICING_DATA_RISKOUTPUTCURRENCY, new LADataString(valcurrency));
+				unders.get(j).add(b_outputname + "_" + PRICING_DATA_RISKOUTPUTCURRENCY, new AQLDataString(valcurrency));
 			}
 		}
 
 		// operator
 		dh = &(infos.get(i).getData(PRICING_DATA_OPERATOR, ISNOTNULL));
-		LAFunctionBase& method = dynamic_cast<LAPriceDataFunction&>(dh->get()).getFunction();
+		AQLFunctionBase& method = dynamic_cast<AQLPriceDataFunction&>(dh->get()).getFunction();
 
 		// coefficient
 		dh = &(infos.get(i).getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-		const DoubleArray& coeff = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+		const DoubleArray& coeff = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 		method.setParam(coeff);		
 		
 		// grid sensitivity?
 		dh = &infos.get(i).getData(PRICING_DATA_ISGRIDSENSITIVITY, ISNOTNULL);
-		bool isgrid = dynamic_cast<const LADataBool&>(dh->get()).get();
+		bool isgrid = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 
 		// output attr name
 		dh = &infos.get(i).getData(PRICING_DATA_OUTPUTNAME, ISNOTNULL);
-		const LAString& outputname = dynamic_cast<const LADataString&>(dh->get()).get();
+		const AQLString& outputname = dynamic_cast<const AQLDataString&>(dh->get()).get();
 		for (unsigned int j = 0; j < unders.getSize(); j++)
 			unders.get(j).remove(outputname);
 
 		// target names
 		dh = &infos.get(i).getData(PRICING_DATA_TARGETNAMES, ISNOTNULL);
-		const LAStringVector& targets = dynamic_cast<const LADataStrings&>(dh->get()).get();
+		const AQLStringVector& targets = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
 
 		// scenario1
 		dh = &infos.get(i).getData(PRICING_DATA_SCENARIO1, NOCHECK);
@@ -1564,47 +1564,47 @@ cout << "-> time = " << time << endl;
 			infos.remove(infos.get(i).getName());
 			continue;
 		}
-		LADataMultiReference& scenario1 = dynamic_cast<LADataMultiReference&>(dh->get());
+		AQLDataMultiReference& scenario1 = dynamic_cast<AQLDataMultiReference&>(dh->get());
 		if (targets.size() != scenario1.getSize())
 		{
 			//error
-			throw LACoreInvalidData("target name size and scenario1 size are not same", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("target name size and scenario1 size are not same", __FILE__, __LINE__);
 		}
 
-		LADataMultiReference* pscenario2 = 0;
+		AQLDataMultiReference* pscenario2 = 0;
 		dh = &infos.get(i).getData(PRICING_DATA_SCENARIO2, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{			
-			pscenario2 = &dynamic_cast<LADataMultiReference&>(dh->get());
+			pscenario2 = &dynamic_cast<AQLDataMultiReference&>(dh->get());
 			if (targets.size() != pscenario2->getSize())
 			{
 				//error
-				throw LACoreInvalidData("target name size and scenario2 size are not same", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("target name size and scenario2 size are not same", __FILE__, __LINE__);
 			}		
 		}
 		
 		// extra target
-		vector<LAStringVector> ex_targets1;
-		vector<LAStringVector> ex_targets2;
+		vector<AQLStringVector> ex_targets1;
+		vector<AQLStringVector> ex_targets2;
 		// extra scenario
-		vector<LADataMultiReference*> ex_scenarios1;
-		vector<LADataMultiReference*> ex_scenarios2;
+		vector<AQLDataMultiReference*> ex_scenarios1;
+		vector<AQLDataMultiReference*> ex_scenarios2;
 
 		for (unsigned int j = 0; j < EXTRASCENARIO_MAX; ++j)
 		{
-			dh = &infos.get(i).getData(PRICING_DATA_EXTRATARGETNAMES1 + LAString("_") + LAString(static_cast<int>(j + 1)), NOCHECK);
+			dh = &infos.get(i).getData(PRICING_DATA_EXTRATARGETNAMES1 + AQLString("_") + AQLString(static_cast<int>(j + 1)), NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				const LAStringVector& target1 = dynamic_cast<const LADataStrings&>(dh->get()).get();
-				dh = &infos.get(i).getData(PRICING_DATA_EXTRASCENARIO1 + LAString("_") + LAString(static_cast<int>(j + 1)), ISNOTNULL);
-				LADataMultiReference& ex_scenario1 = dynamic_cast<LADataMultiReference&>(dh->get());
+				const AQLStringVector& target1 = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
+				dh = &infos.get(i).getData(PRICING_DATA_EXTRASCENARIO1 + AQLString("_") + AQLString(static_cast<int>(j + 1)), ISNOTNULL);
+				AQLDataMultiReference& ex_scenario1 = dynamic_cast<AQLDataMultiReference&>(dh->get());
 
 				if (isgrid)
 				{
 					if (target1.size() != targets.size() || ex_scenario1.getSize() != targets.size())
 					{
 						//error
-						throw LACoreInvalidData("grid risk. target name size and extra target1 size are not same", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("grid risk. target name size and extra target1 size are not same", __FILE__, __LINE__);
 					}
 				}
 				else
@@ -1612,7 +1612,7 @@ cout << "-> time = " << time << endl;
 					if (target1.size() != 1 || ex_scenario1.getSize() != 1)
 					{
 						//error
-						throw LACoreInvalidData("parallel risk. target name size and extra target1 size are not 1", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("parallel risk. target name size and extra target1 size are not 1", __FILE__, __LINE__);
 					}
 				}
 				ex_targets1.push_back(target1);
@@ -1626,19 +1626,19 @@ cout << "-> time = " << time << endl;
 			// for scenario 2
 			if (pscenario2)
 			{
-				dh = &infos.get(i).getData(PRICING_DATA_EXTRATARGETNAMES2 + LAString("_") + LAString(static_cast<int>(j + 1)), NOCHECK);
+				dh = &infos.get(i).getData(PRICING_DATA_EXTRATARGETNAMES2 + AQLString("_") + AQLString(static_cast<int>(j + 1)), NOCHECK);
 				if (dh->isDefined() && !dh->isNull())
 				{
-					const LAStringVector& target2 = dynamic_cast<const LADataStrings&>(dh->get()).get();
-					dh = &infos.get(i).getData(PRICING_DATA_EXTRASCENARIO2 + LAString("_") + LAString(static_cast<int>(j + 1)), ISNOTNULL);
-					LADataMultiReference& ex_scenario2 = dynamic_cast<LADataMultiReference&>(dh->get());
+					const AQLStringVector& target2 = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
+					dh = &infos.get(i).getData(PRICING_DATA_EXTRASCENARIO2 + AQLString("_") + AQLString(static_cast<int>(j + 1)), ISNOTNULL);
+					AQLDataMultiReference& ex_scenario2 = dynamic_cast<AQLDataMultiReference&>(dh->get());
 					
 					if (isgrid)
 					{
 						if (targets.size() != target2.size() || targets.size() != ex_scenario2.getSize())
 						{
 							//error
-							throw LACoreInvalidData("grid risk. target name size and extra target2 size are not same", __FILE__, __LINE__);
+							throw AQLCoreInvalidData("grid risk. target name size and extra target2 size are not same", __FILE__, __LINE__);
 						}
 					}
 					else
@@ -1646,7 +1646,7 @@ cout << "-> time = " << time << endl;
 						if (target2.size() != 1 || ex_scenario2.getSize() != 1)
 						{
 							//error
-							throw LACoreInvalidData("parallel risk. target name size and extra target1 size are not 1", __FILE__, __LINE__);
+							throw AQLCoreInvalidData("parallel risk. target name size and extra target1 size are not 1", __FILE__, __LINE__);
 						}
 					}
 					ex_targets2.push_back(target2);
@@ -1658,44 +1658,44 @@ cout << "-> time = " << time << endl;
 		DoubleMatrix pv_1, pv_2;
 		// base scenario
 		dh = &infos.get(i).getData(PRICING_DATA_BASESCENARIO, NOCHECK);
-		LAStringVector baseTargets,b_ex_targets;
+		AQLStringVector baseTargets,b_ex_targets;
 		if (dh->isDefined() && !dh->isNull())
 		{			
-			const LAStringVector& b_scenario = dynamic_cast<const LADataStrings&>(dh->get()).get();
+			const AQLStringVector& b_scenario = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
 
 			// get base target name
 			dh = &(infos.get(i).getData(PRICING_DATA_BASETARGETNAMES, ISNOTNULL));
-			baseTargets = dynamic_cast<const LADataStrings&>(dh->get()).get();
+			baseTargets = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
 
 			// baseoperator
 			dh = &(infos.get(i).getData(PRICING_DATA_BASEOPERATOR, ISNOTNULL));
-			LAFunctionBase& b_func = dynamic_cast<LAPriceDataFunction&>(dh->get()).getFunction();
+			AQLFunctionBase& b_func = dynamic_cast<AQLPriceDataFunction&>(dh->get()).getFunction();
 
 			// coefficient
 			dh = &(infos.get(i).getData(PRICING_DATA_BASECOEFFICIENT, ISNOTNULL));
-			const DoubleArray& b_coeff = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+			const DoubleArray& b_coeff = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 			b_func.setParam(b_coeff);
 
 			// output attr name
 			dh = &infos.get(i).getData(PRICING_DATA_BASEOUTPUTNAME, ISNOTNULL);
-			const LAString& b_outputname = dynamic_cast<const LADataString&>(dh->get()).get();
+			const AQLString& b_outputname = dynamic_cast<const AQLDataString&>(dh->get()).get();
 			for (unsigned int j = 0; j < unders.getSize(); j++)
 				unders.get(j).remove(b_outputname);
 
 			// extra scenario
-			LADataMultiReference b_ex_scenarios;
+			AQLDataMultiReference b_ex_scenarios;
 
 			dh = &infos.get(i).getData(PRICING_DATA_BASEEXTRATARGETNAMES, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				b_ex_targets = dynamic_cast<const LADataStrings&>(dh->get()).get();
+				b_ex_targets = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
 				dh = &infos.get(i).getData(PRICING_DATA_BASEEXTRASCENARIO, ISNOTNULL);
-				b_ex_scenarios = dynamic_cast<LADataMultiReference&>(dh->get());
+				b_ex_scenarios = dynamic_cast<AQLDataMultiReference&>(dh->get());
 
 				if (b_ex_scenarios.getSize() != b_ex_targets.size())
 				{
 					//error
-					throw LACoreInvalidData("grid risk. Extra scenario size and base extra target size are not same", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("grid risk. Extra scenario size and base extra target size are not same", __FILE__, __LINE__);
 				}
 			}
 
@@ -1744,7 +1744,7 @@ cout << "-> time = " << time << endl;
 				if (b_scenario.size() != 1 && targets.size() != b_scenario.size())
 				{
 					//error
-					throw LACoreInvalidData("target name size and baseScenario size are not same", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("target name size and baseScenario size are not same", __FILE__, __LINE__);
 				}
 
 				//for (unsigned int j = 0; j < targets.size(); j++)
@@ -1809,10 +1809,10 @@ cout << "-> time = " << time << endl;
 					out = FAIL_VALUE;
 					value_PL = FAIL_VALUE;
 				}
-				trades[j]->LAObject::remove(b_outputname);
-				trades[j]->LAObject::remove(b_outputname + "_PL");
-				trades[j]->LAObject::add(b_outputname, new LADataDouble(out));
-				trades[j]->LAObject::add(b_outputname + "_PL", new LADataDouble(value_PL));
+				trades[j]->AQLObject::remove(b_outputname);
+				trades[j]->AQLObject::remove(b_outputname + "_PL");
+				trades[j]->AQLObject::add(b_outputname, new AQLDataDouble(out));
+				trades[j]->AQLObject::add(b_outputname + "_PL", new AQLDataDouble(value_PL));
 			}
 
 			// set base pv scenario 
@@ -1850,7 +1850,7 @@ cout << "-> time = " << time << endl;
 		bool iswave = false;
 		dh = &infos.get(i).getData(PRICING_DATA_ISWAVE, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
-			iswave = dynamic_cast<const LADataBool&>(dh->get()).get();
+			iswave = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 
 		// IMM fwd risk conversion
 		dh = &(infos.get(i).getData(PRICING_DATA_IMMRISKYIELDCURVENAME, NOCHECK));
@@ -1867,7 +1867,7 @@ cout << "-> time = " << time << endl;
 			if (dh->isDefined())
 			{
 				// Zero rate bump -> IMM forward risk
-				immFwdRateTerm = &dynamic_cast<const LADataInts&>(dh->get()).get();
+				immFwdRateTerm = &dynamic_cast<const AQLDataInts&>(dh->get()).get();
 			}
 		}
 
@@ -1919,16 +1919,16 @@ cout << "-> time = " << time << endl;
 			dh = &(infos.get(i).getData(PRICING_DATA_OPERATOR2, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				LAFunctionBase& func2 = dynamic_cast<LAPriceDataFunction&>(dh->get()).getFunction();
+				AQLFunctionBase& func2 = dynamic_cast<AQLPriceDataFunction&>(dh->get()).getFunction();
 
 				// coefficient
 				dh = &(infos.get(i).getData(PRICING_DATA_COEFFICIENT2, ISNOTNULL));
-				const DoubleArray& coeff2 = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+				const DoubleArray& coeff2 = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 				func2.setParam(coeff2);		
 			
 				// output attr name
 				dh = &infos.get(i).getData(PRICING_DATA_OUTPUTNAME2, ISNOTNULL);
-				const LAString& outputname2 = dynamic_cast<const LADataString&>(dh->get()).get();
+				const AQLString& outputname2 = dynamic_cast<const AQLDataString&>(dh->get()).get();
 				for (unsigned int j = 0; j < unders.getSize(); j++)
 					unders.get(j).remove(outputname2);
 
@@ -1951,16 +1951,16 @@ cout << "-> time = " << time << endl;
 		{
 			// wave operator
 			dh = &(infos.get(i).getData(PRICING_DATA_WAVEOPERATOR, ISNOTNULL));
-			LAFunctionBase& funcW = dynamic_cast<LAPriceDataFunction&>(dh->get()).getFunction();
+			AQLFunctionBase& funcW = dynamic_cast<AQLPriceDataFunction&>(dh->get()).getFunction();
 
 			// wave coefficient
 			dh = &(infos.get(i).getData(PRICING_DATA_WAVECOEFFICIENT, ISNOTNULL));
-			const DoubleMatrix& coeffW = dynamic_cast<const LADataDoubleMatrix&>(dh->get()).get();
+			const DoubleMatrix& coeffW = dynamic_cast<const AQLDataDoubleMatrix&>(dh->get()).get();
 
 			// size check
 			if (scenario1.getSize() != coeffW.size())
 			{
-				throw LACoreInvalidData("wave coefficient size and scenario size is not same.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("wave coefficient size and scenario size is not same.", __FILE__, __LINE__);
 			}
 			// set risk value1
 			setWaveRiskValue(unders, scenario1, pscenario2, coeffW, funcW, method, outputname, pv_base, pv_1, pv_2);
@@ -1980,16 +1980,16 @@ cout << "-> time = " << time << endl;
 			dh = &(infos.get(i).getData(PRICING_DATA_OPERATOR2, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				LAFunctionBase& func2 = dynamic_cast<LAPriceDataFunction&>(dh->get()).getFunction();
+				AQLFunctionBase& func2 = dynamic_cast<AQLPriceDataFunction&>(dh->get()).getFunction();
 
 				// coefficient
 				dh = &(infos.get(i).getData(PRICING_DATA_COEFFICIENT2, ISNOTNULL));
-				const DoubleArray& coeff2 = dynamic_cast<const LADataDoubles&>(dh->get()).get();
+				const DoubleArray& coeff2 = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
 				func2.setParam(coeff2);		
 			
 				// output attr name
 				dh = &infos.get(i).getData(PRICING_DATA_OUTPUTNAME2, ISNOTNULL);
-				const LAString& outputname2 = dynamic_cast<const LADataString&>(dh->get()).get();
+				const AQLString& outputname2 = dynamic_cast<const AQLDataString&>(dh->get()).get();
 				for (unsigned int j = 0; j < unders.getSize(); j++)
 					unders.get(j).remove(outputname2);
 
@@ -2030,16 +2030,16 @@ cout << "-> time = " << time << endl;
 	
 */
 void
-LAPricePortfolioValue::calcPV(const LADate& basedate,
-						   std::vector<LAMathObjectValue*> trades,
-										const LAStringVector& targets,
-										LADataMultiReference& scenario, 
+LAPricePortfolioValue::calcPV(const AQLDate& basedate,
+						   std::vector<AQLMathObjectValue*> trades,
+										const AQLStringVector& targets,
+										AQLDataMultiReference& scenario, 
 										bool isgrid,
-										LAObjectPool& objPool, 
-										LACoreReferencePool& rpool,
+										AQLObjectPool& objPool, 
+										AQLCoreReferencePool& rpool,
 										DoubleMatrix& output,
-										vector<LAStringVector>* ex_targets,
-										vector<LADataMultiReference*>* ex_scenarios) const
+										vector<AQLStringVector>* ex_targets,
+										vector<AQLDataMultiReference*>* ex_scenarios) const
 {
 	if (isgrid)
 	{
@@ -2059,7 +2059,7 @@ LAPricePortfolioValue::calcPV(const LADate& basedate,
 
 			for (unsigned int j = 0; j < trades.size(); j++)
 			{
-				LADataStrings &errorStatus = dynamic_cast<LADataStrings &>(trades[j]->getData(PRICING_DATA_ERRORSTATUS, ISDEFINED).get());
+				AQLDataStrings &errorStatus = dynamic_cast<AQLDataStrings &>(trades[j]->getData(PRICING_DATA_ERRORSTATUS, ISDEFINED).get());
 				if (errorStatus.get().end() == std::find(errorStatus.begin(), errorStatus.end(), PV_ERROR))
 				{
 					try
@@ -2111,7 +2111,7 @@ cout << "-> time = " << time << endl;
 
 		for (unsigned int i = 0; i < trades.size(); i++)
 		{
-			LADataStrings &errorStatus = dynamic_cast<LADataStrings &>(trades[i]->getData(PRICING_DATA_ERRORSTATUS, ISDEFINED).get());
+			AQLDataStrings &errorStatus = dynamic_cast<AQLDataStrings &>(trades[i]->getData(PRICING_DATA_ERRORSTATUS, ISDEFINED).get());
 			if (errorStatus.end() == std::find(errorStatus.begin(), errorStatus.end(), PV_ERROR))
 			{
 				try
@@ -2165,16 +2165,16 @@ cout << "-> time = " << time << endl;
 	
 */
 void
-LAPricePortfolioValue::setRiskValue(const LADataMultiReference &unders,
-										const LADataMultiReference &scenario1, 
-												const LADataMultiReference *pscenario2,
-												const LAFunctionBase &method,
+LAPricePortfolioValue::setRiskValue(const AQLDataMultiReference &unders,
+										const AQLDataMultiReference &scenario1, 
+												const AQLDataMultiReference *pscenario2,
+												const AQLFunctionBase &method,
 												bool isgrid,
-												const LAString &outputname,
+												const AQLString &outputname,
 												const DoubleArray &pv_base, 
 												const DoubleMatrix &pv_1,
 												const DoubleMatrix &pv_2,
-												const LAObject& riskEntity) const
+												const AQLObject& riskEntity) const
 {
 	DoubleArray var;
 	if (!pscenario2) var.resize(2);
@@ -2182,8 +2182,8 @@ LAPricePortfolioValue::setRiskValue(const LADataMultiReference &unders,
 
 	for (unsigned int j = 0; j < unders.getSize(); j++)
 	{
-		LAObjectHolder &under = unders.get(j);
-		LADataStrings &errorStatus = dynamic_cast<LADataStrings &>
+		AQLObjectHolder &under = unders.get(j);
+		AQLDataStrings &errorStatus = dynamic_cast<AQLDataStrings &>
 				(under.getData(PRICING_DATA_ERRORSTATUS, ISDEFINED).get());
 
 		var[0] = pv_base[j];
@@ -2214,25 +2214,25 @@ LAPricePortfolioValue::setRiskValue(const LADataMultiReference &unders,
 				}
 
 				bool issemianalytic = false;
-				const LADataHolder* dh = &(riskEntity.getData(PRICING_DATA_ANALYTICCALCTYPE, NOCHECK));
+				const AQLDataHolder* dh = &(riskEntity.getData(PRICING_DATA_ANALYTICCALCTYPE, NOCHECK));
 				if (dh->isDefined() && !dh->isNull())
 				{
-					LAString analytictype = dynamic_cast<const LADataString &>(dh->get());
+					AQLString analytictype = dynamic_cast<const AQLDataString &>(dh->get());
 					issemianalytic = (analytictype.toUpper() == SEMIANALYTIC);
 				}
 				if (issemianalytic)
 				{
-					throw LACoreInvalidData("Analytic risk is not supported now!",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Analytic risk is not supported now!",__FILE__,__LINE__);
 					//// we stopped to calculate the analytic risk on 2012/11/26 because of bad performance of the linepricer
 					////#define AP_CALIBRATION_DATA_RISK_GRID   "RiskGrid"
 					////#define AP_CALIBRATION_DATA_ISPARALLELSHIFT   "isParallelShift"
 					//unsigned int mdfySize = out.size();
 					//
-					//const LADataHolder* dh = &(riskEntity.getData(PRICING_DATA_RISKCURVETYPENAME, ISNOTNULL));
-					//LAString keycurve = dynamic_cast<const LADataString &>(dh->get());
+					//const AQLDataHolder* dh = &(riskEntity.getData(PRICING_DATA_RISKCURVETYPENAME, ISNOTNULL));
+					//AQLString keycurve = dynamic_cast<const AQLDataString &>(dh->get());
 
 					//dh = &(riskEntity.getData(PRICING_DATA_RISKCURVETYPECURRENCY, ISNOTNULL));
-					//LAString keyccy = dynamic_cast<const LADataString &>(dh->get());
+					//AQLString keyccy = dynamic_cast<const AQLDataString &>(dh->get());
 
 					////get asof
 					//dh = &(under.getData("PathEntity", NOCHECK));
@@ -2240,26 +2240,26 @@ LAPricePortfolioValue::setRiskValue(const LADataMultiReference &unders,
 					//{
 					//	dh = &(under.getData("MarketParam", ISNOTNULL));
 					//}
-					//const LADataReference& pathref = dynamic_cast<const LADataReference &>(dh->get());
+					//const AQLDataReference& pathref = dynamic_cast<const AQLDataReference &>(dh->get());
 					//if (!pathref.get().get().isTypeOf(ENTITY_PLAINVANILLA))
 					//{
 					//	//const LAMathPathEntity& path = dynamic_cast<const LAMathPathEntity&>(pathref.get().get());
-					//	throw LACoreInvalidData("SemiAnalyticError",__FILE__,__LINE__);
+					//	throw AQLCoreInvalidData("SemiAnalyticError",__FILE__,__LINE__);
 					//}
 					//
 					//const LAMathPlainVanillaEntity& path = dynamic_cast<const LAMathPlainVanillaEntity&>(pathref.get().get());
 					//const LAMathYieldCurvePro& yldPro = path.getIRCurvePro(keyccy);
 
-					//LAString tmpRiskName = outputname;
+					//AQLString tmpRiskName = outputname;
 
-					//const LAStringVector &gridArray = dynamic_cast<const LADataStrings &>(under.getData(tmpRiskName.toUpper() + "RiskGrid", ISNOTNULL).get()).get();
-					//const DoubleArray &gridArrayVals = dynamic_cast<const  LADataDoubles &>(under.getData(tmpRiskName.toUpper() + "RiskGridActVals", ISNOTNULL).get()).get();
-					//const bool isParallel = dynamic_cast<const LADataBool &>(under.getData(tmpRiskName.toUpper() + "isParallelShift", ISNOTNULL).get()).get();
+					//const AQLStringVector &gridArray = dynamic_cast<const AQLDataStrings &>(under.getData(tmpRiskName.toUpper() + "RiskGrid", ISNOTNULL).get()).get();
+					//const DoubleArray &gridArrayVals = dynamic_cast<const  AQLDataDoubles &>(under.getData(tmpRiskName.toUpper() + "RiskGridActVals", ISNOTNULL).get()).get();
+					//const bool isParallel = dynamic_cast<const AQLDataBool &>(under.getData(tmpRiskName.toUpper() + "isParallelShift", ISNOTNULL).get()).get();
 
 					//if (isParallel)
 					//	out.erase(out.begin());
 
-					//LAStringVector marketgrids;
+					//AQLStringVector marketgrids;
 					//DoubleVector marketvals;
 					//
 					//out.resize(gridArrayVals.size());
@@ -2267,7 +2267,7 @@ LAPricePortfolioValue::setRiskValue(const LADataMultiReference &unders,
 
 
 					//under.remove(tmpRiskName.toUpper() + "RiskGrid");
-					//under.add(tmpRiskName.toUpper() + "RiskGrid", new LADataStrings(marketgrids));
+					//under.add(tmpRiskName.toUpper() + "RiskGrid", new AQLDataStrings(marketgrids));
 					//
 					////now alyways parallel case
 					//if (isParallel)
@@ -2275,12 +2275,12 @@ LAPricePortfolioValue::setRiskValue(const LADataMultiReference &unders,
 					//	double gridsum = std::accumulate(marketvals.begin(), marketvals.end(), 0.0);
 					//	marketvals.insert(marketvals.begin(), gridsum);
 					//}
-					//under.add(outputname, new LADataDoubles(marketvals));
+					//under.add(outputname, new AQLDataDoubles(marketvals));
 				
 				}
 				else
 				{
-					under.add(outputname, new LADataDoubles(out));
+					under.add(outputname, new AQLDataDoubles(out));
 				}
 			}
 			else
@@ -2299,7 +2299,7 @@ LAPricePortfolioValue::setRiskValue(const LADataMultiReference &unders,
 					out = FAIL_VALUE;
 					errorStatus.push_back(outputname + ERROR);
 				}	
-				under.add(outputname, new LADataDouble(out));
+				under.add(outputname, new AQLDataDouble(out));
 			}
 		}
 		else
@@ -2308,11 +2308,11 @@ LAPricePortfolioValue::setRiskValue(const LADataMultiReference &unders,
 			if (isgrid)
 			{
 				DoubleArray out(scenario1.getSize(), FAIL_VALUE);
-				under.add(outputname, new LADataDoubles(out));
+				under.add(outputname, new AQLDataDoubles(out));
 			}
 			else
 			{
-				under.add(outputname, new LADataDouble(FAIL_VALUE));
+				under.add(outputname, new AQLDataDouble(FAIL_VALUE));
 			}
 			errorStatus.push_back(outputname + ERROR);
 		}
@@ -2335,13 +2335,13 @@ LAPricePortfolioValue::setRiskValue(const LADataMultiReference &unders,
 	
 */
 void
-LAPricePortfolioValue::setWaveRiskValue(const LADataMultiReference &unders,
-										const LADataMultiReference &scenario1, 
-												const LADataMultiReference *pscenario2,
+LAPricePortfolioValue::setWaveRiskValue(const AQLDataMultiReference &unders,
+										const AQLDataMultiReference &scenario1, 
+												const AQLDataMultiReference *pscenario2,
 												const DoubleMatrix &coeffW,
-												LAFunctionBase &funcW,
-												const LAFunctionBase &method,
-												const LAString &outputname,
+												AQLFunctionBase &funcW,
+												const AQLFunctionBase &method,
+												const AQLString &outputname,
 												const DoubleArray &pv_base, 
 												const DoubleMatrix &pv_1,
 												const DoubleMatrix &pv_2) const
@@ -2352,8 +2352,8 @@ LAPricePortfolioValue::setWaveRiskValue(const LADataMultiReference &unders,
 
 	for (unsigned int j = 0; j < unders.getSize(); j++)
 	{
-		LAObjectHolder &under = unders.get(j);
-		LADataStrings &errorStatus = dynamic_cast<LADataStrings &>
+		AQLObjectHolder &under = unders.get(j);
+		AQLDataStrings &errorStatus = dynamic_cast<AQLDataStrings &>
 				(under.getData(PRICING_DATA_ERRORSTATUS, ISDEFINED).get());
 
 		var[0] = pv_base[j];
@@ -2388,13 +2388,13 @@ LAPricePortfolioValue::setWaveRiskValue(const LADataMultiReference &unders,
 				}
 				val_before = var_w[1];
 			}
-			under.add(outputname, new LADataDoubles(out));
+			under.add(outputname, new AQLDataDoubles(out));
 		}
 		else
 		{
 			// pv error case
 			DoubleArray out(scenario1.getSize(), FAIL_VALUE);
-			under.add(outputname, new LADataDoubles(out));
+			under.add(outputname, new AQLDataDoubles(out));
 		}
 
 	}
@@ -2409,11 +2409,11 @@ LAPricePortfolioValue::setWaveRiskValue(const LADataMultiReference &unders,
 	
 */
 void
-LAPricePortfolioValue::setScenario(const LAString& name, 
-								LAObject& scenario, 
-								LACoreReferencePool& rpool) const
+LAPricePortfolioValue::setScenario(const AQLString& name, 
+								AQLObject& scenario, 
+								AQLCoreReferencePool& rpool) const
 {
-	LAObjectHolder& h = rpool.getReference(name);
+	AQLObjectHolder& h = rpool.getReference(name);
 	if (!h.isDefined()) return;
 	scenario.update();
 	h.setEntity(&scenario, false);
@@ -2428,13 +2428,13 @@ LAPricePortfolioValue::setScenario(const LAString& name,
 	
 */
 void
-LAPricePortfolioValue::backToBase(const LAString& name, 
-								LAObjectPool& objPool, 
-								LACoreReferencePool& rpool) const
+LAPricePortfolioValue::backToBase(const AQLString& name, 
+								AQLObjectPool& objPool, 
+								AQLCoreReferencePool& rpool) const
 {
-	LAObjectHolder& h = rpool.getReference(name);
+	AQLObjectHolder& h = rpool.getReference(name);
 	if (!h.isDefined()) return;
-	LAObject* pe = &objPool.getObject(name).get();
+	AQLObject* pe = &objPool.getObject(name).get();
 	pe->update();
 	h.setEntity(pe, false);
 }

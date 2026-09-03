@@ -3,7 +3,7 @@
 
 namespace google_test
 {
-    TryMeCurveFwdFxConst::TryMeCurveFwdFxConst( const LAString& inputFile )
+    TryMeCurveFwdFxConst::TryMeCurveFwdFxConst( const AQLString& inputFile )
         : TryMeCurveAccessors( inputFile )
     {
         try
@@ -15,7 +15,7 @@ namespace google_test
                 inputFile_["curveConv"],
                 inputFile_["fxFwdConv"] );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
         }
@@ -29,7 +29,7 @@ namespace google_test
 	*  @brief			Set up fwdfxconst curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeFwdFxConstCurveCurve( const LAString& inputFile )
+	void setUpMeFwdFxConstCurveCurve( const AQLString& inputFile )
 	{
 		if ( inputFile.size() != 0 )
         {
@@ -44,7 +44,7 @@ namespace google_test
 					inputFileObj["curveConv"],
 					inputFileObj["fxFwdConv"] );
 			}
-			catch( const LACoreError& m )
+			catch( const AQLCoreError& m )
 			{
 				std::cout <<  m.getMsg();
 			}

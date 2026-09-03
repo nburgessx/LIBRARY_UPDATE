@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LADate.h"
-#include "LACoreTemplateType.h"
+#include "AQLDate.h"
+#include "AQLCoreTemplateType.h"
 #include <gTest/gTest.h>
 #include "InitializeAQGoogleTest.h"
 
@@ -18,15 +18,15 @@ namespace google_test
     {
     public:
         // Find AsOfDate stored in convention object
-        static LADate AsOfDate(const LAString& convID);
+        static AQLDate AsOfDate(const AQLString& convID);
 
         /* Calendar shift of a date by a term with default conventions. This is used for simple estimates of shifted
            dates, not intended to be used for accurate pricing following well defined conventions. */
-        static LADate ShiftDate(LADate valDate, const LAString& term);
+        static AQLDate ShiftDate(AQLDate valDate, const AQLString& term);
 
         // Wrapper to set 1 forecast and 1 discount curve in object pool
-        static void SetCurves(const LAString& directory, const LAString& fileNameForecast,
-                              const LAString& fileNameDiscount);
+        static void SetCurves(const AQLString& directory, const AQLString& fileNameForecast,
+                              const AQLString& fileNameDiscount);
 
         /* Loads parameter matrices in object pool. Originally this was used only for SABR but it has been extended
            and is also used for Benaim's tail parameters now. In fact it can be used for a generic number of parameters
@@ -40,13 +40,13 @@ namespace google_test
 
            When a parameter has expiries is indexed on the x-axis by a non-interpolat-able quantity, this function
            cannot be used. Use SetNonInterpolatedParameters() instead. */
-        static void SetParameters(const LAString& directory, const LAString& paramFileName, const LAString& currency,
-                                  const LAStringVector& paramNames, LAStringVector& paramIDs, LADate& asOfDate);
+        static void SetParameters(const AQLString& directory, const AQLString& paramFileName, const AQLString& currency,
+                                  const AQLStringVector& paramNames, AQLStringVector& paramIDs, AQLDate& asOfDate);
 
         /* Loads parameter matrices in object pool. The logic is very similar to SetParameters(). The difference is that
            the x-axis is not a tenor (more generally, it is a non-interpolat-able string). This is used for
            example for spread quotes which are indexed on the x-axis by tenor pairs of the form 30Y/2Y. */
-        static void SetNonInterpolatedParameters(const LAString& directory, const LAString& paramFileName, const LAString& currency,
-                                                 const LAStringVector& paramNames, LAStringVector& paramIDs, LADate& asOfDate);
+        static void SetNonInterpolatedParameters(const AQLString& directory, const AQLString& paramFileName, const AQLString& currency,
+                                                 const AQLStringVector& paramNames, AQLStringVector& paramIDs, AQLDate& asOfDate);
     };
 }

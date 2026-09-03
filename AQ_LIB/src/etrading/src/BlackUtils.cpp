@@ -250,7 +250,7 @@ namespace etrading
 					greeks = normalBlackGreeksAnalytical(callOrPut, fwd, strike, vol, time, annuityTerm, constantDF);
 					break;
 				default:
-					throw LACoreInvalidData("#Error: Only Lognormal or Normal Vol is supported", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("#Error: Only Lognormal or Normal Vol is supported", __FILE__, __LINE__);
 					break;
 			}
 			return greeks;

@@ -41,7 +41,7 @@ LAPriceCouponMax::~LAPriceCouponMax()
 bool
 LAPriceCouponMax::isTypeOf(function_t id) const
 {
-	return (id == FN_CPNSLTOPERATORMAX ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CPNSLTOPERATORMAX ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -61,7 +61,7 @@ LAPriceCouponMax::operator()(const DoubleArray& x) const
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceCouponMax::clone() const
 {
     try 
@@ -70,7 +70,7 @@ LAPriceCouponMax::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 

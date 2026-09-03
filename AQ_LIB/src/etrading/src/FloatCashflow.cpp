@@ -8,7 +8,7 @@ namespace etrading
     {}
     
     FloatCashflow::FloatCashflow(const PayReceiveEnum& payReceive, double spread, 
-				const LADate& fixingDate, const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, double accrualYearFraction, const LADate& paymentDate, 
+				const AQLDate& fixingDate, const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, double accrualYearFraction, const AQLDate& paymentDate, 
                 double notional, double leverage, double couponMultiplier, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType, const CashFlowBespokeInfo& bespokeInfo)
 				: spread_(spread), survivalProbability_( 1.0 ), marginalDefaultProbability_( 0.0 ),
                 Cashflow(payReceive, fixingDate, accrualStartDate, accrualEndDate, accrualDays, accrualYearFraction, paymentDate, notional, leverage, couponMultiplier, zeroCouponSwapPaymentFreq, cashflowType, bespokeInfo)
@@ -33,7 +33,7 @@ namespace etrading
 		const double floatRate = cashflowData.floatRateData.resetRate;
         if (boost::math::isnan(floatRate))
         {
-        	throw LACoreInvalidData( "#Error: floatRate is not set for the cashflow", __FILE__, __LINE__ );
+        	throw AQLCoreInvalidData( "#Error: floatRate is not set for the cashflow", __FILE__, __LINE__ );
         }
 
 		// If there is an overrided floatSpread, use it, otherwise use the floatSpread in the trade
@@ -190,7 +190,7 @@ namespace etrading
 			case NONE_COMPOUNDING_METHOD:
 				break;
 			default:
-                throw LACoreInvalidData("#Error: CompoundingMethod must be 'GEOMETRIC', 'ARITHMETIC', 'FLAT', 'SIMPLE', or 'NONE'." ,__FILE__,__LINE__);
+                throw AQLCoreInvalidData("#Error: CompoundingMethod must be 'GEOMETRIC', 'ARITHMETIC', 'FLAT', 'SIMPLE', or 'NONE'." ,__FILE__,__LINE__);
 				break;
 		}
 

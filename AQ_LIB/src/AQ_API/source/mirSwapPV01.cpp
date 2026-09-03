@@ -115,7 +115,7 @@ double mirSwapPV01(double notional,
 												eomRoll);
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

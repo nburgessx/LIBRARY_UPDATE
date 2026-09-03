@@ -5,8 +5,8 @@
 #endif
 
 #include "LAMathDriftFuncBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LAPriceDriftHW.h"
 #include "LAPriceDriftHWQuantAdjustment.h"
 
@@ -37,7 +37,7 @@ public:
 									LAPriceDriftHW* pDriftIR, const DoubleArray& cor,
 									const double fx_criteria = 0.01);
 	// constructor
-	LAPriceDriftHWQuantAdjustment3F(const LAString& sdeAttrNameIR_D, const LAString& sdeAttrNameIR_F, const LAString& sdeAttrNameFX, LAPriceDriftHW* driftIR, const double fx_criteria = 0.01);	
+	LAPriceDriftHWQuantAdjustment3F(const AQLString& sdeAttrNameIR_D, const AQLString& sdeAttrNameIR_F, const AQLString& sdeAttrNameFX, LAPriceDriftHW* driftIR, const double fx_criteria = 0.01);	
 	//	Copy constructor
 	LAPriceDriftHWQuantAdjustment3F(const LAPriceDriftHWQuantAdjustment3F& v);
 	// Destructor
@@ -49,7 +49,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;

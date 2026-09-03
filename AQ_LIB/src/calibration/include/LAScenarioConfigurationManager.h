@@ -17,7 +17,7 @@
 #pragma interface
 #endif
 
-#include "LAString.h"
+#include "AQLString.h"
 
 
 class LACoreDataService;
@@ -36,7 +36,7 @@ public:
 	static LAScenarioConfigurationManager     *getInstance();
 	//==============================================
 	// create  LAScenarioConfiguration
-	 LAScenarioConfiguration *createScenarioCreator(const LAString &type) const;
+	 LAScenarioConfiguration *createScenarioCreator(const AQLString &type) const;
 
 private:
 

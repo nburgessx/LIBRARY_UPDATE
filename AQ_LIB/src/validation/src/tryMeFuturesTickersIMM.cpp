@@ -23,7 +23,7 @@ namespace validation
     *  @param [in]		showYearWithTwoDigits - Show contacts with 2 year digits i.e. Z19 instead of the traditional Z9 format
     *  @return			The current IMM futures ticker, which may start in the past yet end in the future
     */
-    std::string tryMeFuturesTickerCurrent( const LADate & valuationDate, const bool includeToday, const bool showYearWithTwoDigits )
+    std::string tryMeFuturesTickerCurrent( const AQLDate & valuationDate, const bool includeToday, const bool showYearWithTwoDigits )
     {
         VALID_EXCEPTION_START
 
@@ -44,7 +44,7 @@ namespace validation
     *  @param [in]		showYearWithTwoDigits - Show contacts with 2 year digits i.e. Z19 instead of the traditional Z9 format
     *  @return			The next IMM futures ticker relative to the reference date
     */
-    std::string tryMeFuturesTickerNext( const LADate & referenceDate, const bool showYearWithTwoDigits )
+    std::string tryMeFuturesTickerNext( const AQLDate & referenceDate, const bool showYearWithTwoDigits )
     {
         VALID_EXCEPTION_START
 
@@ -65,7 +65,7 @@ namespace validation
     *  @param [in]		showYearWithTwoDigits - Show contacts with 2 year digits i.e. Z19 instead of the traditional Z9 format
     *  @return			The previous IMM futures ticker relative to the reference date
     */
-    std::string tryMeFuturesTickerPrevious( const LADate & referenceDate, const bool showYearWithTwoDigits )
+    std::string tryMeFuturesTickerPrevious( const AQLDate & referenceDate, const bool showYearWithTwoDigits )
     {
         VALID_EXCEPTION_START
 
@@ -88,7 +88,7 @@ namespace validation
     *  @param [in]		showYearWithTwoDigits - Show contacts with 2 year digits i.e. Z19 instead of the traditional Z9 format
     *  @return			The nth IMM futures ticker relative to the valuation date
     */
-    std::string tryMeFuturesTickerNth( const LADate & valuationDate, const int nthIMM, const bool includeToday, const bool showYearWithTwoDigits )
+    std::string tryMeFuturesTickerNth( const AQLDate & valuationDate, const int nthIMM, const bool includeToday, const bool showYearWithTwoDigits )
     {
         VALID_EXCEPTION_START
 

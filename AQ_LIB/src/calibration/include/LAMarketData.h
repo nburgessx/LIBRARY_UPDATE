@@ -12,19 +12,19 @@
 
 
 #include <algorithm>
-#include "LADataInstance.h"
-#include "LAMathCalendar.h"
-#include "LAMathCalendarSet.h"
-#include "LACoreTemplateType.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLDataInstance.h"
+#include "AQLMathCalendar.h"
+#include "AQLMathCalendarSet.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataCalendar.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathYieldCurvePro.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLPriceDataDayCount.h"
 #include "LADefinitions.h"
 #include "LADefinitionsRisk.h"
 #include "LACoreDataService.h"
@@ -64,57 +64,57 @@ class LAMarketData
 public:
 	//==============================================================================
 	// regist calender file
-	static void registCalendar(const LAString &fileName);
+	static void registCalendar(const AQLString &fileName);
 	//==============================================================================
 	// get key for fx
-	static LAString getFXKey(const LAString &ccy1, const LAString &ccy2);
+	static AQLString getFXKey(const AQLString &ccy1, const AQLString &ccy2);
 	//==============================================================================
 	// get model name
-	static LAString getModelName(const LAString &key);
+	static AQLString getModelName(const AQLString &key);
 	// get sde name
-	static LAString getSDEName(const LAString &key);
+	static AQLString getSDEName(const AQLString &key);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//=================================================
 	// get asofdate
-	static LADate getAsofDate(const LAObjectPool &objPool);
+	static AQLDate getAsofDate(const AQLObjectPool &objPool);
 	//=================================================
 	// get sde correlation 
-	static LAString getTimeGridDayCount(const LAObjectPool &objPool);
+	static AQLString getTimeGridDayCount(const AQLObjectPool &objPool);
 #endif
 	//=================================================
 	// get number attached file name
-	static LAString getNumFileName(const LAString &fileName, FileID fileid = MARKETID);
+	static AQLString getNumFileName(const AQLString &fileName, FileID fileid = MARKETID);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//=================================================
 	// get sde correlation 
-	static void getSDECorrelation(const LAStringVector &ccys, DoubleMatrix &corData);
+	static void getSDECorrelation(const AQLStringVector &ccys, DoubleMatrix &corData);
 #endif
 	//==============================================
 	// get sde vol correlation
-	static void getSDEVolCorrelation(const LAString &ccys, double &corData);
+	static void getSDEVolCorrelation(const AQLString &ccys, double &corData);
 	//==============================================
 	// get base volatility name
-	static LAString getBaseVolatilityName(const LAString &ccy);
+	static AQLString getBaseVolatilityName(const AQLString &ccy);
 	//==============================================
 	// get base correlation name
-	static LAString getBaseCorrelationName(const LAString &ccy);
+	static AQLString getBaseCorrelationName(const AQLString &ccy);
 	//==============================================
 	// get base yeild name
-	static LAString getBaseYieldName(const LAString &ccy);
+	static AQLString getBaseYieldName(const AQLString &ccy);
 	//==============================================
 	// get base yeildcurvepro name
-	static LAString getBaseYieldProName(const LAString &ccy);
+	static AQLString getBaseYieldProName(const AQLString &ccy);
 
 	//==============================================
 	// reset marketdata use libor
-	static void resetMarketDataUseL(LAMathYieldCurvePro &curve, const LAString &ccy, const LAString *pCurveType = 0);
+	static void resetMarketDataUseL(LAMathYieldCurvePro &curve, const AQLString &ccy, const AQLString *pCurveType = 0);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================
 	// get path object from object pool
-	static LAMathPathEntity *getPathEnitty(LAObjectPool &objPool);
+	static LAMathPathEntity *getPathEnitty(AQLObjectPool &objPool);
 	//==============================================
 	// get fx object from object pool
-	static LAMathFXEntity *getFXEntity(LAObjectPool &objPool, const LAString &type);
+	static LAMathFXEntity *getFXEntity(AQLObjectPool &objPool, const AQLString &type);
 	//==============================================
 	// get fx object from object pool
 	static void setUpMarket2FXEntity(LAMathFXEntity &fx);
@@ -125,41 +125,41 @@ public:
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================
 	// get volatility function file path
-	static void getVolFuncFilePath(const LAString &model, const LAString &ccy, const LAString &shift_ccy, const LAString &calcType, SCENARIONUM scenarioNum, LAStringVector &filePath, bool isGrid = false, const LAString *pGridTerm = 0, const LAString *pBaseShift = 0, bool isBase = false);
+	static void getVolFuncFilePath(const AQLString &model, const AQLString &ccy, const AQLString &shift_ccy, const AQLString &calcType, SCENARIONUM scenarioNum, AQLStringVector &filePath, bool isGrid = false, const AQLString *pGridTerm = 0, const AQLString *pBaseShift = 0, bool isBase = false);
 	//==============================================
 	// get volatility input type 
-	static LAString getVolInputType(const LAString &model, const LAString &ccy, const LAString &calcType);
+	static AQLString getVolInputType(const AQLString &model, const AQLString &ccy, const AQLString &calcType);
 #endif
 	//==============================================
 	// convert to currency(domain ccy and foregin ccy) 
-	static void convertToCurrency(const LAString &fx, LAStringVector &ccys);
+	static void convertToCurrency(const AQLString &fx, AQLStringVector &ccys);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================
 	// correlation use check
-	static bool isCorUse(const LAString &model);
+	static bool isCorUse(const AQLString &model);
 #endif
 	//==============================================
 	// convert to M-lib use term
-	static LAString convertToMLibTerm(const LAString &term);
+	static AQLString convertToMLibTerm(const AQLString &term);
 	//==============================================
 	// search market grid pos correspond to AlgoQuantLib term
-	static bool searchMarketGridPos(const LAStringVector &marketGrid, const LAString &term, unsigned int &pos);
+	static bool searchMarketGridPos(const AQLStringVector &marketGrid, const AQLString &term, unsigned int &pos);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================
 	// get volatility val
-	static double getVolatilityVal(const LAString &fileName, const LAString &termRow, const LAString &termCol, bool isInter = false);
+	static double getVolatilityVal(const AQLString &fileName, const AQLString &termRow, const AQLString &termCol, bool isInter = false);
 	//==============================================
 	// is calibrate model
-	static bool isCalibrateModel(const LAString &model);
+	static bool isCalibrateModel(const AQLString &model);
 	//==============================================
 	// get calibdata name
-	static LAString getCalibDataName(const LAString &calcType, const LAString &yieldName, int gridPos = -1);
+	static AQLString getCalibDataName(const AQLString &calcType, const AQLString &yieldName, int gridPos = -1);
 	//==============================================
 	// get yielddta name
-	static LAString getYieldDataName(LAObjectPool &objPool, const LAString &ycName);
+	static AQLString getYieldDataName(AQLObjectPool &objPool, const AQLString &ycName);
 	//==============================================
 	// check calibrate end
-	static bool isCalibrateEnd(const LAString &calibIDName, LAObjectPool &objPool);
+	static bool isCalibrateEnd(const AQLString &calibIDName, AQLObjectPool &objPool);
 #endif
 	//==============================================
 	// convert fx volatility calib format to market format
@@ -171,7 +171,7 @@ public:
 										DoubleVector &dh25, DoubleVector &dh10, DoubleVector &dl25, DoubleVector &dl10);
 	//==============================================
 	// adjust df if df increase for time t
-	static void adjustDiscountFactor(LAObject& yielddata, const LAString &curveType);
+	static void adjustDiscountFactor(AQLObject& yielddata, const AQLString &curveType);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================
 	// setup scenario
@@ -179,43 +179,43 @@ public:
 #endif
 	//==============================================
 	// restor swap rate 
-	static void restoreSwapRateFromL(LAMathYieldCurvePro &curve, const std::map<LAString, double> &sRateMap, const LAString &ccy, const LAString *pCurveType = 0);
+	static void restoreSwapRateFromL(LAMathYieldCurvePro &curve, const std::map<AQLString, double> &sRateMap, const AQLString &ccy, const AQLString *pCurveType = 0);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================
 	// get plainvanilla object from object pool
-	static LAMathPlainVanillaEntity *getPlainVanillaEntity(LAObjectPool &objPool);
+	static LAMathPlainVanillaEntity *getPlainVanillaEntity(AQLObjectPool &objPool);
 	//==============================================
 	// get maturity term from object pool
-	static double getMaturityTermFromPlainVanillaEntity(LAObject& trade, const LADate& asOfDate);
+	static double getMaturityTermFromPlainVanillaEntity(AQLObject& trade, const AQLDate& asOfDate);
 	//==============================================
 	//get getBaseCurrencyOfFXPair
-	static LAString getBaseCurrencyOfFXPair(const LAString& fx);
+	static AQLString getBaseCurrencyOfFXPair(const AQLString& fx);
 #endif
 	//==============================================
 	//get getCalendarTime
-	static double getCalendarTime(const LADate& asOfDate, LAString strTerm);
+	static double getCalendarTime(const AQLDate& asOfDate, AQLString strTerm);
 	//==============================================
 	//get getFutureVolFromSwaption
-	static double getFutureVolFromSwaption(const LAString &ccy, const LADate &expityDate);
+	static double getFutureVolFromSwaption(const AQLString &ccy, const AQLDate &expityDate);
 	//==============================================
 	//get propVal
-	static LAString getStaticDataValue(const LAStaticData &staticData, const LAString &ccy, const LAString &key, const bool is_include_key = true);
+	static AQLString getStaticDataValue(const LAStaticData &staticData, const AQLString &ccy, const AQLString &key, const bool is_include_key = true);
 	//==============================================
 	// getFrequency from accessory
-	static LAString getFrequency(const LAString &accessory);
+	static AQLString getFrequency(const AQLString &accessory);
 	//==============================================
 	// getFrequency from accessory
-	static void shiftGridMarketVol(const MAScenarioParam &param, int gridPos, const LAStringVector *capTermVec, const LAStringVector *capTenorVec, DoubleVector *capVol, const LAStringVector *swapOptionMatVec, const LAStringVector *swapTenorVec, DoubleMatrix *swaptionVolMtx);
+	static void shiftGridMarketVol(const MAScenarioParam &param, int gridPos, const AQLStringVector *capTermVec, const AQLStringVector *capTenorVec, DoubleVector *capVol, const AQLStringVector *swapOptionMatVec, const AQLStringVector *swapTenorVec, DoubleMatrix *swaptionVolMtx);
 	//==============================================
 	// get calibproperty
-	static LAString getCalibStaticDataValue(const LAStaticData* pCalibStaticData, const LAString &key, const LAString &grid);
+	static AQLString getCalibStaticDataValue(const LAStaticData* pCalibStaticData, const AQLString &key, const AQLString &grid);
 	//==============================================
 	// get swap calc convention
-	static MASwapConvention getSwapConvention(LAObjectPool &objPool, const LAString& optionMaturity, const LAString& tenor, const LAString& curveName, const MAScenarioParam& param);
+	static MASwapConvention getSwapConvention(AQLObjectPool &objPool, const AQLString& optionMaturity, const AQLString& tenor, const AQLString& curveName, const MAScenarioParam& param);
 	//==============================================
 	// get swaption volatility file name
-	LAString
-	static getVolFileName(const LAString& model, const LAString& currency, const LAString& underlying);
+	AQLString
+	static getVolFileName(const AQLString& model, const AQLString& currency, const AQLString& underlying);
 
 
 private:
@@ -228,11 +228,11 @@ friend class LACoreDataService;
 	LAMarketData(const LAMarketData &rhs);
 	LAMarketData &operator=(const LAMarketData &rhs);
 
-	static std::map<LAString, MAIndexData> mIndexMapLibor; // libor index map
-	static std::map<LAString, MAIndexData> mIndexMapSwap; // swap index map
-	static std::map<LAString, MAIndexData> mIndexMapBasis; // basis index map
-	static std::map<LAString, int> mCorrelationMap; // currency correlation map
-	static LAString mCalFileName; // calendar file name
+	static std::map<AQLString, MAIndexData> mIndexMapLibor; // libor index map
+	static std::map<AQLString, MAIndexData> mIndexMapSwap; // swap index map
+	static std::map<AQLString, MAIndexData> mIndexMapBasis; // basis index map
+	static std::map<AQLString, int> mCorrelationMap; // currency correlation map
+	static AQLString mCalFileName; // calendar file name
 
 #ifdef __HAS_MIC__
 	static common_lib::StaticMutex mMutex;
@@ -244,18 +244,18 @@ class MAComp_StrTerm
 public:
 	/*!
 		@brief compare term
-		@param[in] _Left one LAString
-		@param[in] _Right another LAString
+		@param[in] _Left one AQLString
+		@param[in] _Right another AQLString
 		@return true when right argument date > left argument date
 	*/
-	bool operator()(const LAString &lterm, const LAString &rterm) const
+	bool operator()(const AQLString &lterm, const AQLString &rterm) const
 	{
-		LADate ldate, rdate;
+		AQLDate ldate, rdate;
 
-		LADate asof;
+		AQLDate asof;
 		asof.setSystemDate();
-		LAString t_lterm = lterm;
-		LAString t_rterm = rterm;
+		AQLString t_lterm = lterm;
+		AQLString t_rterm = rterm;
 		t_lterm.toUpper();
 		t_rterm.toUpper();
 		
@@ -323,9 +323,9 @@ public:
 
 struct MASwapConvention
 {
-	LAString frequency, spotLag;
-	LAPriceDataDayCount daycount;
-	LAPriceDataSlidingRule slidingRule;
-	LAPriceDataCalendar paymentCalendar, fixingCalendar;
-	LAString curveID, forecastCurveName, discountCurveName;
+	AQLString frequency, spotLag;
+	AQLPriceDataDayCount daycount;
+	AQLPriceDataSlidingRule slidingRule;
+	AQLPriceDataCalendar paymentCalendar, fixingCalendar;
+	AQLString curveID, forecastCurveName, discountCurveName;
 };

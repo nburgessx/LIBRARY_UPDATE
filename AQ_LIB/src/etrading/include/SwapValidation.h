@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 
 using etrading::LabelValueBlock;
@@ -13,34 +13,34 @@ namespace etrading
     * @param [in]			eomRoll				Do we do EOM rolling?
     * @output				A boolean indicating the fixed leg direction
     */
-    void validateOISParameters( LAString& slidingRule, LAString& compoundingMethod, bool eomRoll );
+    void validateOISParameters( AQLString& slidingRule, AQLString& compoundingMethod, bool eomRoll );
 
-    /* @brief			Validate maturity string and convert it to LADate. As a market convention, maturity date is NOT adjusted for holiday, so businessAdjustment and calendar are not required.
+    /* @brief			Validate maturity string and convert it to AQLDate. As a market convention, maturity date is NOT adjusted for holiday, so businessAdjustment and calendar are not required.
     * @param [in]		effectiveDate		The start date
     * @param [in]		maturityDateStr		Maturity Date in string format, can be a date or tenor
-    * @output			maturity date in LADate format
+    * @output			maturity date in AQLDate format
     */
-    LADate validateMaturityDate( const LADate& effectiveDate, const LAString& maturityDateStr );		
+    AQLDate validateMaturityDate( const AQLDate& effectiveDate, const AQLString& maturityDateStr );		
 
-    /* @brief			Validate maturity string and convert it to LADate, given the effective date as a string
+    /* @brief			Validate maturity string and convert it to AQLDate, given the effective date as a string
     * @param [in]		effectiveDateStr	The start date as a string
     * @param [in]		maturityDateStr		Maturity Date in string format, can be a date or tenor
-    * @output			maturity date in LADate format
+    * @output			maturity date in AQLDate format
     */
-    LADate validateMaturityDate( const LAString& effectiveDateStr, const LAString& maturityDateStr );		
+    AQLDate validateMaturityDate( const AQLString& effectiveDateStr, const AQLString& maturityDateStr );		
 
-    /* @brief			Validate maturity string and convert it to LAString, given the effective date as a string
+    /* @brief			Validate maturity string and convert it to AQLString, given the effective date as a string
     * @param [in]		effectiveDateStr	The start date as a string
     * @param [in]		maturityDateStr		Maturity Date in string format, can be a date or tenor
-    * @output			maturity date in LAString format
+    * @output			maturity date in AQLString format
     */
-    LAString validateMaturityDateString( const LAString& effectiveDateStr, const LAString& maturityDateStr );
+    AQLString validateMaturityDateString( const AQLString& effectiveDateStr, const AQLString& maturityDateStr );
 
     /* @brief			validate the payRec flag for swap
     * @param [in]		payRec		A string representing the fixed leg direction
     * @output			A boolean indicating the fixed leg direction
     */
-    bool validateSwapPayRecFlag( const LAString& payRec );
+    bool validateSwapPayRecFlag( const AQLString& payRec );
 
 	/* @brief			Indicator for payer or receiver
     * @param [in]		payRec		A string representing the fixed leg direction
@@ -60,7 +60,7 @@ namespace etrading
     *  @param [out]     isEndOfMonthRoll    Are coupons rolling on the end of the month? True or False
     *  @param [out]     isStartRoll         Are we rolling forwards from the start? True = coupons roll from the start date i.e. ShortEnd stub, False = coupons roll from the end date i.e. ShortStart stub
     */
-    void validateAndPopulateRollDayConventions( const LAString& rollDayString, const LADate& startDate, const LADate& endDate, int** rollDay, LAString** rollConvention, bool& isEndOfMonthRoll, bool& isStartRoll );
+    void validateAndPopulateRollDayConventions( const AQLString& rollDayString, const AQLDate& startDate, const AQLDate& endDate, int** rollDay, AQLString** rollConvention, bool& isEndOfMonthRoll, bool& isStartRoll );
 
     /* @brief			Check if float fixing should be use
     *  @param [in]		floatFixing	 Float leg's first/last fixing
@@ -108,7 +108,7 @@ namespace etrading
     * @param [in]		maturtiyStr			Maturity in string format
     * @output			TRUE for tenor format
     */
-	bool isMaturityDateTenor(const LAString& maturityStr);
+	bool isMaturityDateTenor(const AQLString& maturityStr);
 }
 
 

@@ -21,14 +21,14 @@ namespace etrading
 		* @param[in]	recoveryRate			The estimated amount of capital recovered after default
 		* @param[in]	includeAccruedInterest	Specifies whether cashflows should include the accruedInterest
 		*/
-		void setSurvivalProbabilitiesUsingHazardRate( const LADate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest );
+		void setSurvivalProbabilitiesUsingHazardRate( const AQLDate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest );
 
 		/* @brief Updates the cashflow survival / default probabilities using the provided credit model.
 		*
 		* @param[in]	asOfDate				The valuation date of the leg
 		* @param[in]	creditModel				The calibrated credit model
 		*/
-		void setSurvivalProbabilitiesUsingCreditModel( const LADate& asOfDate, const CreditModel& creditModel );
+		void setSurvivalProbabilitiesUsingCreditModel( const AQLDate& asOfDate, const CreditModel& creditModel );
 
 		/* @brief	Get the Asset Performance calculation type
 		*			i.e. wether the underlying asset performance should be included in the cashflow payments
@@ -52,7 +52,7 @@ namespace etrading
    	protected:
 		void populateNotionalAndPaymentFreqEnum( const LabelValueBlock& scheduleLVB=LabelValueBlock() );
         virtual void createCashflows();
-		virtual void createUpfrontCashflow( const LADate& paymentDate, double leverage );
+		virtual void createUpfrontCashflow( const AQLDate& paymentDate, double leverage );
 
 	private:
         double cdsSpread_;

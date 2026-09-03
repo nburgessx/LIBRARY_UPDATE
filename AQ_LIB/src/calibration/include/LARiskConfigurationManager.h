@@ -35,7 +35,7 @@ public:
 	static LARiskConfigurationManager     *getInstance();
 	//==============================================
 	// create LARiskConfiguration
-	LARiskConfiguration *createRiskSetUpper(const LAString &risk, bool isOfficial = true) const;
+	LARiskConfiguration *createRiskSetUpper(const AQLString &risk, bool isOfficial = true) const;
 
 private:
 

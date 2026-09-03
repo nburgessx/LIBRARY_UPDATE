@@ -12,7 +12,7 @@
 // Include: Google Test Library
 #include <gTest/gTest.h>
 
-#include "LALinearSplineInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
 
 namespace google_test
 {
@@ -26,8 +26,8 @@ namespace google_test
          std::vector<double> values = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
          
 	 	// Interpolator2 uses natural spline
-	 	LALinearSplineInterpolation interp1( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, false ); /* useNaturalSpline = false */
-	 	LALinearSplineInterpolation interp2( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, true ); /* useNaturalSpline = true */
+	 	AQLLinearSplineInterpolation interp1( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, false ); /* useNaturalSpline = false */
+	 	AQLLinearSplineInterpolation interp2( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, true ); /* useNaturalSpline = true */
 	 
 	 	const double joinDateAsDouble = 3.0;
 	 	interp1.set( terms, values, joinDateAsDouble );
@@ -50,8 +50,8 @@ namespace google_test
          std::vector<double> values = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
          
 	 	// Interpolator2 uses natural spline
-	 	LALinearSplineInterpolation interp1( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, false ); /* useNaturalSpline = false */
-	 	LALinearSplineInterpolation interp2( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, true ); /* useNaturalSpline = true */
+	 	AQLLinearSplineInterpolation interp1( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, false ); /* useNaturalSpline = false */
+	 	AQLLinearSplineInterpolation interp2( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, true ); /* useNaturalSpline = true */
 	 
 	 	const double joinDateAsDouble = 3.0;
 	 	interp1.set( terms, values, joinDateAsDouble );
@@ -74,8 +74,8 @@ namespace google_test
 	 // 	std::vector<double> values = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	 // 
 	 // 	// Interpolator2 uses natural spline
-	 // 	LALinearSplineInterpolation interp1( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, false ); /* useNaturalSpline = false */
-	 // 	LALinearSplineInterpolation interp2( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, true ); /* useNaturalSpline = true */
+	 // 	AQLLinearSplineInterpolation interp1( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, false ); /* useNaturalSpline = false */
+	 // 	AQLLinearSplineInterpolation interp2( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, true ); /* useNaturalSpline = true */
 	 // 
 	 // 	const double joinDateAsDouble = 10.0;
 	 // 	interp1.set( terms, values, joinDateAsDouble );
@@ -98,8 +98,8 @@ namespace google_test
 	 	std::vector<double> values = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	 
 	 	// Interpolator2 uses natural spline
-	 	LALinearSplineInterpolation interp1( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, false ); /* useNaturalSpline = false */
-	 	LALinearSplineInterpolation interp2( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, true ); /* useNaturalSpline = true */
+	 	AQLLinearSplineInterpolation interp1( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, false ); /* useNaturalSpline = false */
+	 	AQLLinearSplineInterpolation interp2( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, true ); /* useNaturalSpline = true */
 	 
 	 	const double joinDateAsDouble = 3.0;
 	 	interp1.set( terms, values, joinDateAsDouble );
@@ -122,8 +122,8 @@ namespace google_test
 	 // 	std::vector<double> values = { 1, 3, 6, 7, 2, -6, -10, -7.2, -3.14, 0.1, 1.8 };
 	 // 
 	 // 	// Interpolator2 uses natural spline
-	 // 	LALinearSplineInterpolation interp1( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, false ); /* useNaturalSpline = false */
-	 // 	LALinearSplineInterpolation interp2( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, true ); /* useNaturalSpline = true */
+	 // 	AQLLinearSplineInterpolation interp1( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, false ); /* useNaturalSpline = false */
+	 // 	AQLLinearSplineInterpolation interp2( ExtrapolationType::LINEAR_EXTRAPOLATION_TYPE, true ); /* useNaturalSpline = true */
 	 // 
 	 // 	const double joinDateAsDouble = 3.0;
 	 // 	interp1.set( terms, values, joinDateAsDouble );

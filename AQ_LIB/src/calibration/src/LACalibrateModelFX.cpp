@@ -19,8 +19,8 @@
 
 
 #include "LACalibrateModelFX.h"
-#include "LADataInstance.h"
-#include "LAFunctionManager.h"
+#include "AQLDataInstance.h"
+#include "AQLFunctionManager.h"
 #include "LARatesSpotSDE.h"
 #include "LARatesLJSpotSDE.h"
 #include "LARatesScalarLinearInterpolation.h"
@@ -57,7 +57,7 @@ LACalibrateModelFX::~LACalibrateModelFX(void)
 	@param[in] dataInstance
 */
 LARatesSDEBase *
-LACalibrateModelFX::createSDEInstance(const LAString &fx, LADataInstance &dataInstance) const
+LACalibrateModelFX::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	SDE_TYPE type = getSDEType(fx);
@@ -82,7 +82,7 @@ LACalibrateModelFX::createSDEInstance(const LAString &fx, LADataInstance &dataIn
 
 */
 void
-LACalibrateModelFX::setNumeraire(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFX::setNumeraire(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	(void)fx;
 	(void)sde;
@@ -96,7 +96,7 @@ LACalibrateModelFX::setNumeraire(const LAString &fx, LARatesSDEBase &sde) const
 	@param[out] sde
 */
 void
-LACalibrateModelFX::setOutputTemplate(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFX::setOutputTemplate(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	(void)fx;
 	sde.setOutputTemplate(new LARatesPathElementScalar());
@@ -110,7 +110,7 @@ LACalibrateModelFX::setOutputTemplate(const LAString &fx, LARatesSDEBase &sde) c
 	@param[out] sde
 */
 void
-LACalibrateModelFX::setInterpolationMethod(const LAString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFX::setInterpolationMethod(const AQLString &fx, LARatesSDEBase &sde) const
 {
 	(void)fx;
 	sde.setInterpolationMethod(new LARatesScalarLinearInterpolation());
@@ -126,7 +126,7 @@ LACalibrateModelFX::setInterpolationMethod(const LAString &fx, LARatesSDEBase &s
 	@param[in] dataInstance
 */
 void
-LACalibrateModelFX::loadModelDataAndCalibrate(const LAString &fx, LADataInstance &dataInstance, const bool isCurve, const bool isModel, const LAString & curveID, const LAString & marketName) const
+LACalibrateModelFX::loadModelDataAndCalibrate(const AQLString &fx, AQLDataInstance &dataInstance, const bool isCurve, const bool isModel, const AQLString & curveID, const AQLString & marketName) const
 {
 	if (isModel)
 	{
@@ -149,11 +149,11 @@ cout << "-> time = " << time << endl;
 
 	@param[in] fx 
 */
-LAString
-LACalibrateModelFX::getSDEAttrName(const LAString &fx) const
+AQLString
+LACalibrateModelFX::getSDEAttrName(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
 }
 

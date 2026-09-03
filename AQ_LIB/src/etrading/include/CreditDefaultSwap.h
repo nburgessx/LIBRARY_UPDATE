@@ -30,7 +30,7 @@ namespace etrading
 		* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the PV
 		* @returns	The calculated PV value
 		*/
-		double pvFromHazardRate( const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const LAString& legName, const bool includeAccruedInterest ) const;
+		double pvFromHazardRate( const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& legName, const bool includeAccruedInterest ) const;
 
 		/* @brief Calculates the total PV of all of the Credit Default Swap legs.
 		*
@@ -38,7 +38,7 @@ namespace etrading
 		* @param[in]	legName					Optionally calculate the PV of the specified leg only.
 		* @returns	The calculated PV value
 		*/
-		double pv( const CreditModel& creditModel, const LAString& legName ) const;
+		double pv( const CreditModel& creditModel, const AQLString& legName ) const;
 
 		/* @brief	Calculates the total PV of all the Credit Default Swap Legs, by integrating the payoff over survivial probability.
 		*			The integration over survival probability is equivalent to an integration over survival time, with an appropriate change of variable.
@@ -53,7 +53,7 @@ namespace etrading
 		*													TRUE means wait to the next coupon date. This flag is used to match the PV by integration to the analytic PV formula.
 		* @returns	The calculated PV value
 		*/
-		double pvByIntegration( const CreditModel& creditModel, const LAString& legName, const size_t numberOfIntegrationPoints, const bool evaluateInParallel, const bool payDefaultCashflowsOnNextCouponDate ) const;
+		double pvByIntegration( const CreditModel& creditModel, const AQLString& legName, const size_t numberOfIntegrationPoints, const bool evaluateInParallel, const bool payDefaultCashflowsOnNextCouponDate ) const;
 
 
 		/* @brief	Calculates the total PV of all the Credit Default Swap Legs, by a monte-carlo simulation over survivial probability.
@@ -70,7 +70,7 @@ namespace etrading
 		*
 		* @returns	The calculated PV value
 		*/
-		double pvByMonteCarlo( const CreditModel& creditModel, const LAString& legName, const LabelValueBlock& mcParametersLVB, const bool payDefaultCashflowsOnNextCouponDate, double& standardError ) const;
+		double pvByMonteCarlo( const CreditModel& creditModel, const AQLString& legName, const LabelValueBlock& mcParametersLVB, const bool payDefaultCashflowsOnNextCouponDate, double& standardError ) const;
 
 
 		/* @brief Calculate the PV of a CDS instrument which pays the specified fixedCoupon
@@ -122,7 +122,7 @@ namespace etrading
 		* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 		* @returns	The risky annuity
 		*/
-		double riskyAnnuityFromHazardRate(const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const LAString& legName, const bool includeAccruedInterest ) const;
+		double riskyAnnuityFromHazardRate(const LabelValueBlock& valuationSettingsLVB, const double hazardRate, const double recoveryRate, const AQLString& legName, const bool includeAccruedInterest ) const;
 
 		/* @brief Calculates the risky annuity of the specified Credit Default Swap Premium leg.
 		*
@@ -130,7 +130,7 @@ namespace etrading
 		* @param[in]	legName					The Premium leg to use when calculating the risky annuity. A mandatory parameter.
 		* @returns	The risky annuity
 		*/
-		double riskyAnnuity( const CreditModel& creditModel, const LAString& legName ) const;
+		double riskyAnnuity( const CreditModel& creditModel, const AQLString& legName ) const;
 
 		/* @brief[in]	Computes the accrued year fraction from the previous coupon date to the specified date
 		*				Used in accrued interest calculations.
@@ -140,7 +140,7 @@ namespace etrading
 		* @param[in]	legName			The Premium leg name
 		* @returns: The year fraction
 		*/
-		double accruedYearFraction( const CreditModel& creditModel, const LADate& toDate, const LAString& legName ) const;
+		double accruedYearFraction( const CreditModel& creditModel, const AQLDate& toDate, const AQLString& legName ) const;
 
 		/* @brief[in]	Computes the accrued interest from the previous coupon date to the specified date
 		*				i.e. this corresponds to the amount of premium coupon that is accrued
@@ -150,7 +150,7 @@ namespace etrading
 		* @param[in]	legName			The Premium leg name
 		* @returns: The accrued interest
 		*/
-		double accruedInterest( const CreditModel& creditModel, const LADate& toDate, const LAString& legName ) const;
+		double accruedInterest( const CreditModel& creditModel, const AQLDate& toDate, const AQLString& legName ) const;
 
 		/* @brief Calculates the par spread of the specified Credit Default Swap.
 		*
@@ -162,7 +162,7 @@ namespace etrading
 		* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 		* @returns	The CDS par spread
 		*/
-		double parSpreadFromHazardRate( const LabelValueBlock& curveCollections, const double hazardRate, const double recoveryRate, const LAString& premiumLegName, const LAString& protectionLegName, const bool includeAccruedInterest ) const;
+		double parSpreadFromHazardRate( const LabelValueBlock& curveCollections, const double hazardRate, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest ) const;
 
 		/* @brief Calculates the par spread of the specified Credit Default Swap.
 		*
@@ -171,7 +171,7 @@ namespace etrading
 		* @param[in]	protectionLegName		The Protection leg name of the CDS
 		* @returns	The CDS par spread
 		*/
-		double parSpread( const CreditModel& creditModel, const LAString& premiumLegName, const LAString& protectionLegName ) const;
+		double parSpread( const CreditModel& creditModel, const AQLString& premiumLegName, const AQLString& protectionLegName ) const;
 
 		/* @brief Solves for the hazard rate, given the specified CDS par spread
 		*
@@ -183,7 +183,7 @@ namespace etrading
 		* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 		* @returns	The CDS hazard rate
 		*/
-		double hazardRateFromParSpread( const LabelValueBlock& curveCollections, const double parSpread, const double recoveryRate, const LAString& premiumLegName, const LAString& protectionLegName, const bool includeAccruedInterest ) const;
+		double hazardRateFromParSpread( const LabelValueBlock& curveCollections, const double parSpread, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest ) const;
 
 		/* @brief Solves for the hazard rate, given the specified CDS par spread.
 		*         NOTE: This modified the hazard rate in the credit model. Used in calibration
@@ -194,7 +194,7 @@ namespace etrading
 		* @param[in]	protectionLegName		The Protection leg name of the CDS
 		* @returns	The CDS hazard rate
 		*/
-		double hazardRateFromParSpread( const double parSpread, CreditModel& creditModel, const LAString& premiumLegName, const LAString& protectionLegName ) const;
+		double hazardRateFromParSpread( const double parSpread, CreditModel& creditModel, const AQLString& premiumLegName, const AQLString& protectionLegName ) const;
 
 	private:
 
@@ -205,7 +205,7 @@ namespace etrading
 		*  @param[out]	premiumLeg		On output, initialized to the premiumLeg, if found
 		*  @param[out]  protectionLeg	On output, initialized to the protectionLeg, if found
 		*/
-		void identifyCdsLegsUsingLegNameifProvided( const LAString& legName, std::shared_ptr<CDSLeg>& premiumLeg, std::shared_ptr<CDSLeg>& protectionLeg ) const;
+		void identifyCdsLegsUsingLegNameifProvided( const AQLString& legName, std::shared_ptr<CDSLeg>& premiumLeg, std::shared_ptr<CDSLeg>& protectionLeg ) const;
 
 		/* @brief Calculates the par spread of the specified Credit Default Swap. The internal implementation method
 		*
@@ -217,7 +217,7 @@ namespace etrading
 		* @param[in]	includeAccruedInterest	Specifies whether the accruedInterest should be included in the risky annuity
 		* @returns	The CDS par spread
 		*/
-		double parSpreadFromHazardRate_impl( const LabelValueBlock& curveCollections, const double hazardRate, const double recoveryRate, const LAString& premiumLegName, const LAString& protectionLegName, const bool includeAccruedInterest ) const;
+		double parSpreadFromHazardRate_impl( const LabelValueBlock& curveCollections, const double hazardRate, const double recoveryRate, const AQLString& premiumLegName, const AQLString& protectionLegName, const bool includeAccruedInterest ) const;
 
 		/* @brief Calculates the par spread of the specified Credit Default Swap using the Credit Model. The internal implementation method
 		*
@@ -227,7 +227,7 @@ namespace etrading
 		* @param[in]	protectionLegName		The Protection leg name of the CDS
 		* @returns	The CDS par spread
 		*/
-		double parSpread_impl( const LAString& curveCollection, const CreditModel& creditModel, const LAString& premiumLegName, const LAString& protectionLegName ) const;
+		double parSpread_impl( const AQLString& curveCollection, const CreditModel& creditModel, const AQLString& premiumLegName, const AQLString& protectionLegName ) const;
 
 		void validateCreditModel( const CreditModel& creditModel ) const;
 	};

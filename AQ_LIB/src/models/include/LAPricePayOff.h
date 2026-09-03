@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LACoreFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LAPricePayOffTool.h"
 
 
@@ -536,8 +536,8 @@
 
 
 
-class LAObject;
-class LAPriceDataManager;
+class AQLObject;
+class AQLPriceDataManager;
 class LAPriceEventTool;
 class LAPriceIndexToolBase;
 class LAPriceEventHolder;
@@ -545,7 +545,7 @@ class LAPriceEventHolder;
 /*! 
     @brief declaration of payoff calculator class for mc simulation.
 */
-class LAPricePayOff : public LACoreFunctionBase
+class LAPricePayOff : public AQLCoreFunctionBase
 {
 public:
 //  LIFECYCLE
@@ -560,25 +560,25 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
 
     // set up for payoff calculation 
-	virtual void	            setUp(const LADate& basedate, LAObject& trade);
+	virtual void	            setUp(const AQLDate& basedate, AQLObject& trade);
 
-	virtual void				setUpAccrued(const LADate& basedate, LAObject& trade, int number);
+	virtual void				setUpAccrued(const AQLDate& basedate, AQLObject& trade, int number);
 
 	// calculate payoff
 	virtual void				calcPayOff(DoubleMatrix& time, DoubleMatrix& payoff, bool trigger, 
-											std::vector<std::pair<unsigned int, LADate> >& triggerhit,
+											std::vector<std::pair<unsigned int, AQLDate> >& triggerhit,
 											/*bool includecall = true,*/
 											bool islsmc = false, DoubleArray* prebate = NULL, 
 											DoubleMatrix* pexplanatory = NULL, std::vector<UintArray>* extracfpos = NULL) const;
 
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
 	/*!
 		@brief set LSMC mode(regression coefficient calculation mode) or not
 		@param[in] flag true:LSMC mode, false:non LSMC mode
@@ -609,36 +609,36 @@ public:
 //	void						setLSMCCoefficient(const DoubleMatrix& coeff);
 	const std::vector<PayOffToolHolderVector>& getPayOffMaster(void) const { return mPayOffMaster; }
 	// cal derivation of libor
-	virtual void				calcDerivationOfLibor(std::map<LAString, std::map<double, double> >& delivationLiborMap, std::vector<const LAInterpolationBase*>& pNumeInterpVec, BoolVector& isRecVec) const;
+	virtual void				calcDerivationOfLibor(std::map<AQLString, std::map<double, double> >& delivationLiborMap, std::vector<const AQLInterpolationBase*>& pNumeInterpVec, BoolVector& isRecVec) const;
 
-	virtual void getCompoundedRateInfo(const size_t leg, DateVector& start, DateVector& end, DoubleVector& term, DateVector& fixing_date, LAStringVector& fixing_flag, DoubleVector& rate) const;
+	virtual void getCompoundedRateInfo(const size_t leg, DateVector& start, DateVector& end, DoubleVector& term, DateVector& fixing_date, AQLStringVector& fixing_flag, DoubleVector& rate) const;
 protected:
 
 private:
 	// clear time grid of index object 
-	void						clearIndexEntityGrid (LAObject& trade) const;
+	void						clearIndexEntityGrid (AQLObject& trade) const;
 	// setup index object 
-	void						setUpIndexEntity(const LADate& basedate, LAObject& trade) const;
+	void						setUpIndexEntity(const AQLDate& basedate, AQLObject& trade) const;
 	// setup index object for coupon calculation
-	void						setUpIndexEntityOfCashlet(const LADate& basedate, LAObject& cashlet, const LAObject& trade) const;
+	void						setUpIndexEntityOfCashlet(const AQLDate& basedate, AQLObject& cashlet, const AQLObject& trade) const;
 	// setup index object for call judge
-	void						setUpIndexEntityOfCall (const LADate& basedate, LAObject& callinfo, const LAObject& trade) const;
+	void						setUpIndexEntityOfCall (const AQLDate& basedate, AQLObject& callinfo, const AQLObject& trade) const;
 	// setup index object for trigger judge
-	void						setUpIndexEntityOfTrigger (const LADate& basedate, LAObject& triggerinfo, const LAObject& trade) const;
+	void						setUpIndexEntityOfTrigger (const AQLDate& basedate, AQLObject& triggerinfo, const AQLObject& trade) const;
 	// setup index object refered from index information object
-	void						setUpIndexEntityOfIndex (const LADate& basedate, LAObject& indexinfo, const LAObject& trade,
+	void						setUpIndexEntityOfIndex (const AQLDate& basedate, AQLObject& indexinfo, const AQLObject& trade,
 												const DateVector* pfixingdates = NULL, bool isInter = false) const;
 	// setup payoff
-	void						setUpPayOff(const LADate& basedate, LAObject& trade);
+	void						setUpPayOff(const AQLDate& basedate, AQLObject& trade);
 
-	void						setUpPayOffAccrued(const LADate& basedate, LAObject& trade, int number);
+	void						setUpPayOffAccrued(const AQLDate& basedate, AQLObject& trade, int number);
 
 	// setup trigger and call
-	void						setUpTrigger(const LADate& basedate, LAObject& trade);
+	void						setUpTrigger(const AQLDate& basedate, AQLObject& trade);
     // check range acccrue cashlet
-	bool                         isRangeAccrueCashlet(const LAObject &object) const;
+	bool                         isRangeAccrueCashlet(const AQLObject &object) const;
 
-    bool isCompoundingCashlet(const LAObject& object) const;
+    bool isCompoundingCashlet(const AQLObject& object) const;
 
 	bool								mIsLSMC;	// LSMC mode(regression coefficient calculation mode) flag
 	std::vector<PayOffToolHolderVector> mPayOffMaster;// payoff

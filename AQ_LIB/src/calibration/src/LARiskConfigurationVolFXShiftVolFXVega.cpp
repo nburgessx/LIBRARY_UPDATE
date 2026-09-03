@@ -20,14 +20,14 @@
 
 #include <algorithm>
 #include "LARiskConfigurationVolFXShiftVolFXVega.h"
-#include "LAString.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataFunction.h"
+#include "AQLString.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataFunction.h"
 #include "LAPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
@@ -36,7 +36,7 @@
 #include "LAScenarioConfigurationManager.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
-#include "LALinearFunc.h"
+#include "AQLLinearFunc.h"
 #include "LADefinitionsCalibration.h"
 #include "LACalibrationParameters.h"
 #include "LACalibrationParametersManager.h"
@@ -65,13 +65,13 @@ LARiskConfigurationVolFXShiftVolFXVega::~LARiskConfigurationVolFXShiftVolFXVega(
     @brief return deltatype
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolFXShiftVolFXVega::getDeltaType(const LAString &fx) const
+AQLString
+LARiskConfigurationVolFXShiftVolFXVega::getDeltaType(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_DELTATYPE);
 }
 
@@ -79,17 +79,17 @@ LARiskConfigurationVolFXShiftVolFXVega::getDeltaType(const LAString &fx) const
     @brief return grid term
 
 	@param[in] fx
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-LAStringVector
-LARiskConfigurationVolFXShiftVolFXVega::getGridTerm(const LAString &fx) const
+AQLStringVector
+LARiskConfigurationVolFXShiftVolFXVega::getGridTerm(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAString dtype = getDeltaType(fx);
-	LAStringVector grid = mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_GRID).toToken(':');
-	LAStringVector dtypes(grid.size(), dtype + '_');
-	transform(dtypes.begin(), dtypes.end(), grid.begin(), grid.begin(), plus<LAString>());
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString dtype = getDeltaType(fx);
+	AQLStringVector grid = mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_GRID).toToken(':');
+	AQLStringVector dtypes(grid.size(), dtype + '_');
+	transform(dtypes.begin(), dtypes.end(), grid.begin(), grid.begin(), plus<AQLString>());
 	return grid;
 }
 
@@ -97,16 +97,16 @@ LARiskConfigurationVolFXShiftVolFXVega::getGridTerm(const LAString &fx) const
     @brief return bucket grid term
 
 	@param[in] fx
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-LAStringVector
-LARiskConfigurationVolFXShiftVolFXVega::getBucketGridTerm(const LAString &fx) const
+AQLStringVector
+LARiskConfigurationVolFXShiftVolFXVega::getBucketGridTerm(const AQLString &fx) const
 {
-	LAStringVector ret;
-	LAString tmpfx = fx;
-	LAString strBucketGrid = mpRiskStaticData->getStaticData(tmpfx.toLower() + 
+	AQLStringVector ret;
+	AQLString tmpfx = fx;
+	AQLString strBucketGrid = mpRiskStaticData->getStaticData(tmpfx.toLower() + 
 								FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_BUCKET_GRID_TERM);
-	LAStringVector BucketTerm = strBucketGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector BucketTerm = strBucketGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
 	BucketTerm[0].toUpper();
 	if (BucketTerm[0] == "NONE" || BucketTerm[0] == AQ_NO_DATA)
 	{
@@ -115,16 +115,16 @@ LARiskConfigurationVolFXShiftVolFXVega::getBucketGridTerm(const LAString &fx) co
 	}
 	else
 	{
-		LAString dtype = getDeltaType(fx);
-		LAStringVector dtypes(BucketTerm.size(), dtype + '_');
-		transform(dtypes.begin(), dtypes.end(), BucketTerm.begin(), BucketTerm.begin(), plus<LAString>());
-		LAStringVector tmpgridTerm = getGridTerm(fx);
+		AQLString dtype = getDeltaType(fx);
+		AQLStringVector dtypes(BucketTerm.size(), dtype + '_');
+		transform(dtypes.begin(), dtypes.end(), BucketTerm.begin(), BucketTerm.begin(), plus<AQLString>());
+		AQLStringVector tmpgridTerm = getGridTerm(fx);
 		unsigned int gridMax = tmpgridTerm.size();
 		for (unsigned int i = 0;i < BucketTerm.size();++i)
 		{
 
-			LAStringVector::iterator it;
-			LAString strgrid = BucketTerm[i].toUpper();
+			AQLStringVector::iterator it;
+			AQLString strgrid = BucketTerm[i].toUpper();
 			it = find(tmpgridTerm.begin(),tmpgridTerm.end(),strgrid);
 			unsigned int pos = static_cast<unsigned int>(it - tmpgridTerm.begin());
 			if (pos >= gridMax)
@@ -147,12 +147,12 @@ LARiskConfigurationVolFXShiftVolFXVega::getBucketGridTerm(const LAString &fx) co
     @brief return propety bucket grid term
 
 	@param[in] fx
-	@return vector<LAString>
+	@return vector<AQLString>
 */
-LAString
-LARiskConfigurationVolFXShiftVolFXVega::getPropertyBucketGridTerm(const LAString &fx) const
+AQLString
+LARiskConfigurationVolFXShiftVolFXVega::getPropertyBucketGridTerm(const AQLString &fx) const
 {
-	LAString tmpfx = fx;
+	AQLString tmpfx = fx;
 	return mpRiskStaticData->getStaticData(tmpfx.toLower() + 
 									FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_BUCKET_GRID_TERM);
 }
@@ -162,13 +162,13 @@ LARiskConfigurationVolFXShiftVolFXVega::getPropertyBucketGridTerm(const LAString
     @brief return outputname1
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolFXShiftVolFXVega::getOutPutName1(const LAString &fx) const
+AQLString
+LARiskConfigurationVolFXShiftVolFXVega::getOutPutName1(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_OUTPUTNAME);
 }
 
@@ -177,22 +177,22 @@ LARiskConfigurationVolFXShiftVolFXVega::getOutPutName1(const LAString &fx) const
 
 	@param[in] ccy
 	@param[in] index
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolFXShiftVolFXVega::getOutPutName1(const LAString &ccy , int index) const
+AQLString
+LARiskConfigurationVolFXShiftVolFXVega::getOutPutName1(const AQLString &ccy , int index) const
 {
-	LAString outName = getOutPutName1(ccy);
+	AQLString outName = getOutPutName1(ccy);
 	double val = getBaseVolVal(ccy,index);
-	return outName + LAString("_") + LAString(val * 100.0 ,3);
+	return outName + AQLString("_") + AQLString(val * 100.0 ,3);
 }
 
 /*!
     @brief return riskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationVolFXShiftVolFXVega::getRiskName(void) const
 {
 	return RISK_FRONT_FXVOLSHIFT_VOL_FXVEGA;
@@ -205,10 +205,10 @@ LARiskConfigurationVolFXShiftVolFXVega::getRiskName(void) const
 	@return bool
 */
 bool
-LARiskConfigurationVolFXShiftVolFXVega::isGridSensitivity(const LAString &fx) const
+LARiskConfigurationVolFXShiftVolFXVega::isGridSensitivity(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_ISGRIDSENSITIVITY));
 }
 
@@ -219,10 +219,10 @@ LARiskConfigurationVolFXShiftVolFXVega::isGridSensitivity(const LAString &fx) co
 	@return bool 
 */
 bool
-LARiskConfigurationVolFXShiftVolFXVega::isParallelShift(const LAString &fx) const
+LARiskConfigurationVolFXShiftVolFXVega::isParallelShift(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_ISPARALLEL));
 }
 
@@ -233,10 +233,10 @@ LARiskConfigurationVolFXShiftVolFXVega::isParallelShift(const LAString &fx) cons
 	@return double
 */
 double
-LARiskConfigurationVolFXShiftVolFXVega::getDivUnit(const LAString &fx) const
+LARiskConfigurationVolFXShiftVolFXVega::getDivUnit(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey + 
 								FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_DIVUNIT).getDoubleValue();
 }
@@ -245,13 +245,13 @@ LARiskConfigurationVolFXShiftVolFXVega::getDivUnit(const LAString &fx) const
     @brief return shift type
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolFXShiftVolFXVega::getShiftType(const LAString &fx) const
+AQLString
+LARiskConfigurationVolFXShiftVolFXVega::getShiftType(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return  mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_SHIFTTYPE);
 
 }
@@ -260,13 +260,13 @@ LARiskConfigurationVolFXShiftVolFXVega::getShiftType(const LAString &fx) const
     @brief return bump direction
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolFXShiftVolFXVega::getBumpDirection(const LAString &fx) const
+AQLString
+LARiskConfigurationVolFXShiftVolFXVega::getBumpDirection(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return  mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_BUMPDIRECTION);
 }
 
@@ -277,10 +277,10 @@ LARiskConfigurationVolFXShiftVolFXVega::getBumpDirection(const LAString &fx) con
 	@return bool
 */
 bool
-LARiskConfigurationVolFXShiftVolFXVega::isWave(const LAString &fx) const
+LARiskConfigurationVolFXShiftVolFXVega::isWave(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return convertBoolFromStr(mpRiskStaticData->getStaticData(fxKey + 
 													FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_ISWAVE));
 }
@@ -288,9 +288,9 @@ LARiskConfigurationVolFXShiftVolFXVega::isWave(const LAString &fx) const
 /*!
     @brief  return target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationVolFXShiftVolFXVega::getTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_TARGET_FX);
@@ -303,10 +303,10 @@ LARiskConfigurationVolFXShiftVolFXVega::getTargetCurrencies() const
 	@return double
 */
 double
-LARiskConfigurationVolFXShiftVolFXVega::getScenario1ShiftValue(const LAString &fx) const
+LARiskConfigurationVolFXShiftVolFXVega::getScenario1ShiftValue(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString keyFX =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString keyFX =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	double shiftVal = mpRiskStaticData->getStaticData(keyFX + 
 								FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_SHIFTVAL).getDoubleValue();
 
@@ -319,12 +319,12 @@ LARiskConfigurationVolFXShiftVolFXVega::getScenario1ShiftValue(const LAString &f
 	@return shiftvals
 */
 DoubleArray  
-LARiskConfigurationVolFXShiftVolFXVega::getBaseShiftVals(const LAString &ccy) const
+LARiskConfigurationVolFXShiftVolFXVega::getBaseShiftVals(const AQLString &ccy) const
 {
-	LAString tmpCurrency = ccy;
-	LAString strVals = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = ccy;
+	AQLString strVals = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_BASESHIFTVOLVAL);
-	LADataDoubles dbs;
+	AQLDataDoubles dbs;
 	dbs.convertFromString(strVals);
 	DoubleVector ret = dbs.get();
 	for (unsigned int i = 0 ;i < ret.size();i++)
@@ -341,15 +341,15 @@ LARiskConfigurationVolFXShiftVolFXVega::getBaseShiftVals(const LAString &ccy) co
 	@return double
 */
 double
-LARiskConfigurationVolFXShiftVolFXVega::getBaseVolVal(const LAString &ccy, int index) const
+LARiskConfigurationVolFXShiftVolFXVega::getBaseVolVal(const AQLString &ccy, int index) const
 {
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	DoubleArray shiftVolVals = getBaseShiftVals(ccy);
 	
 	const unsigned int shiftSize = shiftVolVals.size();
 	if (index < 0 || index >= static_cast<int>(shiftSize))
 	{
-		throw LACoreInvalidData("LARiskConfigurationFXVOLShiftFXVega index is less than zero or over shift grid.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("LARiskConfigurationFXVOLShiftFXVega index is less than zero or over shift grid.", __FILE__, __LINE__);
 	}
 	return shiftVolVals[index];
 }
@@ -359,21 +359,21 @@ LARiskConfigurationVolFXShiftVolFXVega::getBaseVolVal(const LAString &ccy, int i
 
 	@param[in] ccy
 	@param[in] index
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolFXShiftVolFXVega::getBaseOutPutName(const LAString &ccy , int index) const
+AQLString
+LARiskConfigurationVolFXShiftVolFXVega::getBaseOutPutName(const AQLString &ccy , int index) const
 {
 	double val = getBaseVolVal(ccy,index);
-	return LAString(ccy) + LAString("_") + LAString(val*100,3) +  LAString("%") + LAString("SHIFT_DirtyPrice");
+	return AQLString(ccy) + AQLString("_") + AQLString(val*100,3) +  AQLString("%") + AQLString("SHIFT_DirtyPrice");
 }
 
 /*!
     @brief return base operateor
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationVolFXShiftVolFXVega::getBaseOperator() const
 {
 	return FN_LINEAR_STR;
@@ -382,13 +382,13 @@ LARiskConfigurationVolFXShiftVolFXVega::getBaseOperator() const
 /*!
     @brief return base operateor
 
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolFXShiftVolFXVega::getBaseCoefficient(const LAString &ccy) const
+AQLString
+LARiskConfigurationVolFXShiftVolFXVega::getBaseCoefficient(const AQLString &ccy) const
 {
 	ccy;
-	return LAString("0.0:1.0:0.0");
+	return AQLString("0.0:1.0:0.0");
 }
 
 /*!
@@ -399,26 +399,26 @@ LARiskConfigurationVolFXShiftVolFXVega::getBaseCoefficient(const LAString &ccy) 
 	@param[in] dataInstance
 	@param[in] index
 */
-vector<LAObject *>
-LARiskConfigurationVolFXShiftVolFXVega::createBaseScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, int index) const
+vector<AQLObject *>
+LARiskConfigurationVolFXShiftVolFXVega::createBaseScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const
 {
-	const LAString model = LAMarketData::getModelName(ccy);
-	const LAString riskName = getRiskName();
+	const AQLString model = LAMarketData::getModelName(ccy);
+	const AQLString riskName = getRiskName();
 	// get base shift and grid
-	LAString tmpCurrency = ccy;
+	AQLString tmpCurrency = ccy;
 	tmpCurrency.toLower();
 	// set target name
 	LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	// search shift target currency(foreign currency)
-	LAStringVector ccys;
+	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(ccy, ccys);
 
-	const LAStringVector &fx_ccys = targetFX->getCurrencys().get();
-	LAStringVector::const_iterator it = find(fx_ccys.begin(), fx_ccys.end(), ccys[1]);
+	const AQLStringVector &fx_ccys = targetFX->getCurrencys().get();
+	AQLStringVector::const_iterator it = find(fx_ccys.begin(), fx_ccys.end(), ccys[1]);
 	if (it == fx_ccys.end())
 	{
-		LAString msg = "FX object ccy is not registed  ccy = " + ccys[1].toUpper();
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "FX object ccy is not registed  ccy = " + ccys[1].toUpper();
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	
 	//create base volatility
@@ -426,17 +426,17 @@ LARiskConfigurationVolFXShiftVolFXVega::createBaseScenarioEntity(const LAString 
 	MAScenarioParam paramvol;
 	paramvol.ccy = ccy;
 	paramvol.isCalib = true;
-	paramvol.calcType= ccys[0] + "_" + ccys[1] + "_" + riskName + "_BaseShift_" + LAString(index);
+	paramvol.calcType= ccys[0] + "_" + ccys[1] + "_" + riskName + "_BaseShift_" + AQLString(index);
 	paramvol.model = model;
 	paramvol.targetName = LAMarketData::getBaseVolatilityName(ccy);
 	paramvol.inputType = LAMarketData::getVolInputType(model, ccy, riskName);
 	paramvol.isParallel = true;
 	paramvol.isGrid = false;
 
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	// set reference
 	LACalibrationParameters *calibInfoCreator = LACalibrationParametersManager::getInstance()->createCalibInfoCreator(paramvol.model);
-	LAString infoName = calibInfoCreator->createCalibrationInfo(objPool, ccy);
+	AQLString infoName = calibInfoCreator->createCalibrationInfo(objPool, ccy);
 	delete calibInfoCreator;
 	paramvol.refName.push_back(infoName);
 
@@ -457,7 +457,7 @@ LARiskConfigurationVolFXShiftVolFXVega::createBaseScenarioEntity(const LAString 
 	}
 
 	// set DDL
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	paramvol.isDDL = convertBoolFromStr(mpStaticData->getStaticData(fxKey + STATIC_DATA_FX_KEY_SDE_ISDD));
 	// set file path dmy
 	paramvol.paraFile.push_back(CALIB_DMY_FILE);
@@ -471,7 +471,7 @@ LARiskConfigurationVolFXShiftVolFXVega::createBaseScenarioEntity(const LAString 
 	LAScenarioConfiguration *sceVolCreator = 
 		LAScenarioConfigurationManager::getInstance()->createScenarioCreator(RISK_SCENARIO_VOL);
 
-	vector<LAObject *> ret = sceVolCreator->createScenario(dataInstance, paramvol);
+	vector<AQLObject *> ret = sceVolCreator->createScenario(dataInstance, paramvol);
 	delete sceVolCreator;
 
 	return ret;
@@ -484,13 +484,13 @@ LARiskConfigurationVolFXShiftVolFXVega::createBaseScenarioEntity(const LAString 
 	@return bool
 */
 bool
-LARiskConfigurationVolFXShiftVolFXVega::isRiskCurrencyMode(const LAString &fx) const
+LARiskConfigurationVolFXShiftVolFXVega::isRiskCurrencyMode(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 
 	//if MA_NODATA return false;
-	LAString proprslt = mpRiskStaticData->getStaticData(fxKey.toLower() + 
+	AQLString proprslt = mpRiskStaticData->getStaticData(fxKey.toLower() + 
 													FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_ISRISKCURRENCYMODE);
 	if (proprslt == AQ_NO_DATA)
 		return false;

@@ -242,9 +242,9 @@ namespace etrading
     CurveData CurveData::createFromValidationInput(
         const std::string& mdcName, 
         const etrading::CurveTenorEnum curveTenorEnum,
-        const LAStringMatrix& oisRates, 
-        const LAStringMatrix& liborOisBasisRates, 
-        const LAStringMatrix& swapRates)
+        const AQLStringMatrix& oisRates, 
+        const AQLStringMatrix& liborOisBasisRates, 
+        const AQLStringMatrix& swapRates)
     {
         etrading::CurveData mdcOIS(mdcName, curveTenorEnum);
 

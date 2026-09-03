@@ -6,7 +6,7 @@
 
 namespace google_test
 {
-    CurveOis::CurveOis( const LAString& inputFile )
+    CurveOis::CurveOis( const AQLString& inputFile )
         : CurveAccessors( inputFile )
     {
         if ( fileLoaded_ )
@@ -26,7 +26,7 @@ namespace google_test
                                                      inputFile_.getOptional( "swapRates" ),
                                                      inputFile_.getOptional( "swapConv" ) );
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }
@@ -41,14 +41,14 @@ namespace google_test
 	*  @brief			Set up OIS curve
 	*  @param [in]		inputFile	File representation of the curve
     */
-	void setUpOISCurve(const LAString& inputFile)
+	void setUpOISCurve(const AQLString& inputFile)
 	{
 		if ( inputFile.size() != 0 )
         {
             etrading::ReadDataFile::Load inputFileObj = etrading::ReadDataFile::Load( inputFile );
-            LAString curveID = etrading::getCurveID( inputFileObj );
-            LAString marketName = etrading::getMarketName( inputFileObj );
-            LAStringVector curveNames = etrading::getCurveNames( inputFileObj );
+            AQLString curveID = etrading::getCurveID( inputFileObj );
+            AQLString marketName = etrading::getMarketName( inputFileObj );
+            AQLStringVector curveNames = etrading::getCurveNames( inputFileObj );
 
 			try
             {
@@ -65,7 +65,7 @@ namespace google_test
                                                      inputFileObj.getOptional( "swapRates" ),
                                                      inputFileObj.getOptional( "swapConv" ) );
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }

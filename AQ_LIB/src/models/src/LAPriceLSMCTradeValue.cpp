@@ -13,20 +13,20 @@
 #include "LAPriceLSMCTradeValue.h"
 #include "LAPriceAccruedInterest.h"
 
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADate.h"
-#include "LADataValuation.h"
-#include "LADataProcedure.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectHolder.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataFunction.h"
-#include "LAMathValuableEntity.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDate.h"
+#include "AQLDataValuation.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectHolder.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLMathValuableEntity.h"
 #include "LAMathPathEntity.h"
 #include "LAMathAttrSDE.h"
 #include "LAMathIndexEntity.h"
@@ -37,7 +37,7 @@
 #include "LAPolyFitLS.h"
 
 #include "LAPricePayOff.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include <numeric>
 #include <algorithm>
 #include "LAMathFXEntity.h"
@@ -92,7 +92,7 @@ LAPriceLSMCTradeValue::isTypeOf(function_t id) const
 
 	@return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceLSMCTradeValue::clone() const
 {
     try 
@@ -101,7 +101,7 @@ LAPriceLSMCTradeValue::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -121,7 +121,7 @@ LAPriceLSMCTradeValue::getType() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceLSMCTradeValue::registerData(LAPriceDataManager& dm) const
+LAPriceLSMCTradeValue::registerData(AQLPriceDataManager& dm) const
 {
 	LAPriceTradeValue::registerData(dm);
 
@@ -138,25 +138,25 @@ LAPriceLSMCTradeValue::registerData(LAPriceDataManager& dm) const
 	@brief value trade
 
 	@param[in] basedate evaluate day
-	@param[in,out] object trade object object(reference to LAMathObjectValue class) 
+	@param[in,out] object trade object object(reference to AQLMathObjectValue class) 
 	@param[in] att Data to hold evaluation procedure class
 
 	@return clean price
 	
 */
 double
-LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
-					const LADataValuation& att) const
+LAPriceLSMCTradeValue::value(const AQLDate& basedate, AQLObject& object,
+					const AQLDataValuation& att) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	// call
 	bool iscall = false;
-	LAObject* pcallinfo = NULL;
+	AQLObject* pcallinfo = NULL;
 	dh = &(object.getData(PRICING_DATA_CALLINFO, NOCHECK));
 	if (dh->isDefined() && !dh->isNull()) 
 	{
 		iscall = true;
-		LADataReference& attr = dynamic_cast<LADataReference&>(dh->get());		
+		AQLDataReference& attr = dynamic_cast<AQLDataReference&>(dh->get());		
 		pcallinfo = &attr.get().get();
 	}	
 	else
@@ -166,14 +166,14 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 	//oeprator
 	dh = &(pcallinfo->getData(PRICING_DATA_OPERATOR, NOCHECK));
 	if (!dh->isDefined())
-		dh = &pcallinfo->add(PRICING_DATA_OPERATOR, new LAPriceDataFunction());
+		dh = &pcallinfo->add(PRICING_DATA_OPERATOR, new AQLPriceDataFunction());
 	if (dh->isNull())
 	{
-		dynamic_cast<LAPriceDataFunction&>(dh->get()).setFunction(new LAPriceLSMCOperator(), "lsmcoperator");
-		LAFunctionBase& method = dynamic_cast<LAPriceDataFunction&>(dh->get()).getFunction();
+		dynamic_cast<AQLPriceDataFunction&>(dh->get()).setFunction(new LAPriceLSMCOperator(), "lsmcoperator");
+		AQLFunctionBase& method = dynamic_cast<AQLPriceDataFunction&>(dh->get()).getFunction();
 
 		dh = &(pcallinfo->getData(PRICING_DATA_POLYNOMIAL, ISNOTNULL));
-		LAFunctionBase& poly = dynamic_cast<LAPriceDataFunction&>(dh->get()).getFunction();
+		AQLFunctionBase& poly = dynamic_cast<AQLPriceDataFunction&>(dh->get()).getFunction();
 
 		dynamic_cast<LAPriceLSMCOperator&>(method).mPoly = &dynamic_cast<LAPolynomialBase&>(poly);
 
@@ -183,7 +183,7 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 	bool iscalcrisk = false;
 	dh = &object.getData(PRICING_DATA_ISCALCRISK, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
-		iscalcrisk = dynamic_cast<const LADataBool&>(dh->get()).get();
+		iscalcrisk = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	att.setDataProvider(NULL);
 	
 
@@ -192,10 +192,10 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 	{
 		//original currency
 		dh = &(object.getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-		LAString currency_ori = dynamic_cast<LADataString &>(dh->get()).get();
+		AQLString currency_ori = dynamic_cast<AQLDataString &>(dh->get()).get();
 		dataProvider = dynamic_cast<LAPriceTradeValueDataProvider*>(setUpDataProvider(basedate, object, att));
 		//return original currency
-		dynamic_cast<LADataString&>(dh->get()).set(currency_ori);
+		dynamic_cast<AQLDataString&>(dh->get()).set(currency_ori);
 	}
 	else
 		dataProvider = &dynamic_cast<LAPriceTradeValueDataProvider&>(att.getDataProvider());
@@ -252,7 +252,7 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
                                                       );
 
 	//get sumulation curve name
-	const LAString& originalNumeraire = dataProvider->pNumeraire->getBasisName();
+	const AQLString& originalNumeraire = dataProvider->pNumeraire->getBasisName();
 	//set basis spread of numeraire
 	if (!dataProvider->basisgrid_payoff.empty())
 		dataProvider->pNumeraire->setBasisSpread(dataProvider->basisname_payoff, dataProvider->basisgrid_payoff, dataProvider->basisspread_payoff);
@@ -264,7 +264,7 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 		double accruedint_sum = 0.0;
 		double accruedint_tmp = 0.0;
 		DoubleMatrix time2, cf2;
-		vector<pair<unsigned int, LADate> > triggerhit;
+		vector<pair<unsigned int, AQLDate> > triggerhit;
 		
 //		if (dataProvider->isstartable) reverseRcvPaySide(object);		
 		//mc
@@ -383,12 +383,12 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 	// isdetail output
 	bool isdetailoutput = false;
 	dh = &(object.getData(PRICING_DATA_ISDETAILOUTPUT, ISNOTNULL));
-	isdetailoutput = dynamic_cast<const LADataBool&>(dh->get()).get();
+	isdetailoutput = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	// islsmcdetail output
 	bool islsmcdetailoutput = false;
 	dh = &(object.getData(PRICING_DATA_ISLSMCDETAILOUTPUT, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		islsmcdetailoutput = dynamic_cast<const LADataBool&>(dh->get()).get();
+		islsmcdetailoutput = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	if (dataProvider->actiontimes[0] <= dataProvider->settle || istrigger || dataProvider->lsmcnum < dataProvider->mcnum)
 		islsmcdetailoutput = false;
 	
@@ -404,11 +404,11 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 	double accruedint_sum2 = 0.0;	
 	DoubleArray accruedint(dataProvider->lsmcnum, 0);
 	DoubleMatrix time2, cf2;
-	vector<pair<unsigned int, LADate> > triggerhit;
-	vector<map<LADate, unsigned int> > counter_action(1);
+	vector<pair<unsigned int, AQLDate> > triggerhit;
+	vector<map<AQLDate, unsigned int> > counter_action(1);
 
 	dh = &(pcallinfo->getData(PRICING_DATA_ACTIONDATES, ISNOTNULL));
-	const DateVector& callactiondates = dynamic_cast<const LADataDates&>(dh->get()).get();
+	const DateVector& callactiondates = dynamic_cast<const AQLDataDates&>(dh->get()).get();
 	for (unsigned int i = 0; i < callactiondates.size(); i++)
 		counter_action[0][callactiondates[i]] = 0;
 
@@ -585,7 +585,7 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 		
 	}
 	
-	double pv1_deviation = LAMath::sqrt(LAMath::max((pv1_square - cleanprice1 * cleanprice1), 0.0) / dataProvider->lsmcnum);
+	double pv1_deviation = AQLMath::sqrt(AQLMath::max((pv1_square - cleanprice1 * cleanprice1), 0.0) / dataProvider->lsmcnum);
 
 	// check option holder
 	if (!dataProvider->isoptionholder)
@@ -612,28 +612,28 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 	object.remove(PRICING_DATA_PVCURRENCY);
 	object.remove(PRICING_DATA_FEE_EXCLUDED_PV);
 	
-	object.add(PRICING_DATA_CLEANPRICE, new LADataDouble(cleanprice1));
-	object.add(PRICING_DATA_DIRTYPRICE, new LADataDouble(dirtyprice1));
-	object.add(PRICING_DATA_ACCRUEDINTEREST, new LADataDouble(accruedint_sum / double(dataProvider->lsmcnum)));
-	object.add(PRICING_DATA_CLEANPRICESQUARE, new LADataDouble(pv1_square));
-	object.add(PRICING_DATA_CLEANPRICEDEVIATION, new LADataDouble(pv1_deviation));
-	object.add(PRICING_DATA_PVCURRENCY, new LADataString(dataProvider->basecur));
-	object.add(PRICING_DATA_FEE_EXCLUDED_PV, new LADataDouble(feeExcludedPV));
+	object.add(PRICING_DATA_CLEANPRICE, new AQLDataDouble(cleanprice1));
+	object.add(PRICING_DATA_DIRTYPRICE, new AQLDataDouble(dirtyprice1));
+	object.add(PRICING_DATA_ACCRUEDINTEREST, new AQLDataDouble(accruedint_sum / double(dataProvider->lsmcnum)));
+	object.add(PRICING_DATA_CLEANPRICESQUARE, new AQLDataDouble(pv1_square));
+	object.add(PRICING_DATA_CLEANPRICEDEVIATION, new AQLDataDouble(pv1_deviation));
+	object.add(PRICING_DATA_PVCURRENCY, new AQLDataString(dataProvider->basecur));
+	object.add(PRICING_DATA_FEE_EXCLUDED_PV, new AQLDataDouble(feeExcludedPV));
 
 	if (isdetailoutput)
 	{
-		object.add(PRICING_DATA_CALLTRIGGERVALUE, new LADataDouble(cleanprice1 - cleanprice2));
-		object.add(PRICING_DATA_CLEANPRICEWITHOUTCALLTRIGGER, new LADataDouble(cleanprice2));
+		object.add(PRICING_DATA_CALLTRIGGERVALUE, new AQLDataDouble(cleanprice1 - cleanprice2));
+		object.add(PRICING_DATA_CLEANPRICEWITHOUTCALLTRIGGER, new AQLDataDouble(cleanprice2));
 	}
 	//action probabilities
 	DoubleArray probs(counter_action[0].size());
-	map<LADate, unsigned int>::const_iterator it2;
+	map<AQLDate, unsigned int>::const_iterator it2;
 	unsigned int count = 0;
 	for (it2 = counter_action[0].begin(); it2 != counter_action[0].end(); it2++)
 		probs[count++] = (double)it2->second / (double)dataProvider->lsmcnum;
 		
 	pcallinfo->remove(PRICING_DATA_ACTIONPROBABILITIES);
-	pcallinfo->add(PRICING_DATA_ACTIONPROBABILITIES, new LADataDoubles(probs));
+	pcallinfo->add(PRICING_DATA_ACTIONPROBABILITIES, new AQLDataDoubles(probs));
 	//average life 
 	double aveLife = 0.;
 	double prob_sum = 0.;
@@ -661,7 +661,7 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 	double lastPaymentTerm = *max_element(tmpLastPayment.begin(), tmpLastPayment.end());
 	aveLife += lastPaymentTerm * (1. - prob_sum);
 	object.remove(PRICING_DATA_AVERAGELIFE);
-	object.add(PRICING_DATA_AVERAGELIFE, new LADataDouble(aveLife));
+	object.add(PRICING_DATA_AVERAGELIFE, new AQLDataDouble(aveLife));
 	//lsmc detail
 	pcallinfo->remove(PRICING_DATA_LSMCREGCOEFFICIENTS);
 	pcallinfo->remove(PRICING_DATA_LSMCEXPLANATORYVARIABLES);
@@ -672,8 +672,8 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 	pcallinfo->remove(PRICING_DATA_CALLREBATE);
 	if (islsmcdetailoutput)
 	{
-		pcallinfo->add(PRICING_DATA_LSMCREGCOEFFICIENTS, new LADataDoubleMatrix(lsmcparam));
-		pcallinfo->add(PRICING_DATA_LSMCREGCOEFFICIENTS2, new LADataDoubleMatrix(lsmcparam_rebate));
+		pcallinfo->add(PRICING_DATA_LSMCREGCOEFFICIENTS, new AQLDataDoubleMatrix(lsmcparam));
+		pcallinfo->add(PRICING_DATA_LSMCREGCOEFFICIENTS2, new AQLDataDoubleMatrix(lsmcparam_rebate));
 
 		const DoubleMatrix *p_explained = 0;
 		const vector<DoubleMatrix> *p_explanatory = 0;
@@ -712,11 +712,11 @@ LAPriceLSMCTradeValue::value(const LADate& basedate, LAObject& object,
 			for (unsigned int j = 0; j < size2; j++)
 				rebate_trans[i][j] = rebate[j][i];
 
-		pcallinfo->add(PRICING_DATA_LSMCEXPLANATORYVARIABLES, new LADataDoubleMatrix(exvar));
-		pcallinfo->add(PRICING_DATA_LSMCEXPLAINEDVARIABLES, new LADataDoubleMatrix(*p_explained));
-		pcallinfo->add(PRICING_DATA_LSMCCALLPOSTJUDGE, new LADataBools(postjudge));
-		pcallinfo->add(PRICING_DATA_LSMCCALLJUDGE, new LADataBools(judge));
-		pcallinfo->add(PRICING_DATA_CALLREBATE, new LADataDoubleMatrix(rebate_trans));
+		pcallinfo->add(PRICING_DATA_LSMCEXPLANATORYVARIABLES, new AQLDataDoubleMatrix(exvar));
+		pcallinfo->add(PRICING_DATA_LSMCEXPLAINEDVARIABLES, new AQLDataDoubleMatrix(*p_explained));
+		pcallinfo->add(PRICING_DATA_LSMCCALLPOSTJUDGE, new AQLDataBools(postjudge));
+		pcallinfo->add(PRICING_DATA_LSMCCALLJUDGE, new AQLDataBools(judge));
+		pcallinfo->add(PRICING_DATA_CALLREBATE, new AQLDataDoubleMatrix(rebate_trans));
 	}
 
 
@@ -761,7 +761,7 @@ LAPriceLSMCTradeValue::value_backward(const vector<DoubleMatrix>& time,
 									const DoubleMatrix& numeraire_expirytime,
 									const vector<DoubleMatrix>& explanatory,
 									const DoubleArray& numeraire_base,
-									const LADataProvider* dataProvider,
+									const AQLDataProvider* dataProvider,
 									DoubleMatrix& coefficient,
 									DoubleMatrix& coefficient_rebate,
 									BoolVector &isconvert_xy,
@@ -822,20 +822,20 @@ LAPriceLSMCTradeValue::value_backward(const vector<DoubleMatrix>& time,
 	const unsigned int pathnum = time.size();
 	if (isconvert_xy.size() != actionSize || isconvert_xy_rebate.size() != actionSize)
 	{
-		throw LACoreInvalidData("isconvert_xy vector size must be same as action size.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("isconvert_xy vector size must be same as action size.", __FILE__, __LINE__);
 	}
 
 	if (standardization_y.size() != 2 || standardization_x.size() != 2 ||
 		standardization_y_rebate.size() != 2 || standardization_x_rebate.size() != 2)
 	{
-		throw LACoreInvalidData("Standardization vector size must be 2. First element is shiftvalue. Seconde element is scalevalue.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Standardization vector size must be 2. First element is shiftvalue. Seconde element is scalevalue.", __FILE__, __LINE__);
 	}
 	if (standardization_y[0].size() != actionSize || standardization_y[1].size() != actionSize ||  
 		standardization_x[0].size() != actionSize || standardization_x[1].size() != actionSize ||
 		standardization_y_rebate[0].size() != actionSize || standardization_y_rebate[1].size() != actionSize ||
 		standardization_x_rebate[0].size() != actionSize || standardization_x_rebate[1].size() != actionSize)
 	{
-		throw LACoreInvalidData("Each standardization vector size must be same as action size.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Each standardization vector size must be same as action size.", __FILE__, __LINE__);
 	}
 
 	for (; i >= 0; i--)//i:action time suffix
@@ -1019,16 +1019,16 @@ LAPriceLSMCTradeValue::value_backward(const vector<DoubleMatrix>& time,
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cache class
 	
 */
-/*LADataProvider*
-LAPriceLSMCTradeValue::setUpDataProvider(const LADate& basedate, LAObject& object, 
-								const LADataValuation& att) const
+/*AQLDataProvider*
+LAPriceLSMCTradeValue::setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+								const AQLDataValuation& att) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	LAPriceTradeValue::setUpDataProvider(basedate, object, att);
 	LAPriceTradeValueDataProvider* dataProvider = &dynamic_cast<LAPriceTradeValueDataProvider&>(att.getDataProvider());
@@ -1041,18 +1041,18 @@ LAPriceLSMCTradeValue::setUpDataProvider(const LADate& basedate, LAObject& objec
 		return dataProvider;
 	}
 	
-	LADataReference& call = dynamic_cast<LADataReference&>(dh->get());
-	LAObjectHolder& objHolder = call.get();
+	AQLDataReference& call = dynamic_cast<AQLDataReference&>(dh->get());
+	AQLObjectHolder& objHolder = call.get();
 
 	//LSMC num
 	dh = &(object.getData(PRICING_DATA_LSMCNUM, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dataProvider->lsmcnum = dynamic_cast<const LADataInt&>(dh->get()).get();
+		dataProvider->lsmcnum = dynamic_cast<const AQLDataInt&>(dh->get()).get();
 		if (dataProvider->mcnum != 0 && dataProvider->lsmcnum > dataProvider->mcnum)
 		{
 			//error
-			throw LACoreInvalidData("LSMCNum must be same or less than MCNum", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("LSMCNum must be same or less than MCNum", __FILE__, __LINE__);	
 		}
 	}
 	else
@@ -1063,7 +1063,7 @@ LAPriceLSMCTradeValue::setUpDataProvider(const LADate& basedate, LAObject& objec
 	{
 		//coefficient
 		dh = &objHolder.getData(PRICING_DATA_COEFFICIENTS, ISNOTNULL);
-		dataProvider->coefficient = &dynamic_cast<LADataDoubleMatrix&>(dh->get());
+		dataProvider->coefficient = &dynamic_cast<AQLDataDoubleMatrix&>(dh->get());
 		dataProvider->payoff.setLSMCCoefficient(dataProvider->coefficient->get());
 		dataProvider->payoff.setLSMCMode(false);
 		return dataProvider;
@@ -1071,15 +1071,15 @@ LAPriceLSMCTradeValue::setUpDataProvider(const LADate& basedate, LAObject& objec
 
 	// today
 	dh = &(object.getData(PRICING_DATA_TODAY, ISNOTNULL));
-	const LADate& today = dynamic_cast<const LADataDate&>(dh->get()).get();
+	const AQLDate& today = dynamic_cast<const AQLDataDate&>(dh->get()).get();
 
 	
 	//expirytimes actiontimes;
 	dh = &(objHolder.getData(PRICING_DATA_EXPIRYDATES, ISNOTNULL));
-	const DateVector& expirydates = dynamic_cast<const LADataDates&>(dh->get()).get();
+	const DateVector& expirydates = dynamic_cast<const AQLDataDates&>(dh->get()).get();
 	
 	dh = &(objHolder.getData(PRICING_DATA_ACTIONDATES, ISNOTNULL));
-	const DateVector& actiondates = dynamic_cast<const LADataDates&>(dh->get()).get();
+	const DateVector& actiondates = dynamic_cast<const AQLDataDates&>(dh->get()).get();
 
 	for (unsigned int i = 0; i < expirydates.size(); i++)
 	{
@@ -1092,18 +1092,18 @@ LAPriceLSMCTradeValue::setUpDataProvider(const LADate& basedate, LAObject& objec
 
 	//polynomial
 	dh = &(objHolder.getData(PRICING_DATA_POLYNOMIAL, ISNOTNULL));
-	LAFunctionBase& poly = dynamic_cast<LAPriceDataFunction&>(dh->get()).getFunction();
+	AQLFunctionBase& poly = dynamic_cast<AQLPriceDataFunction&>(dh->get()).getFunction();
 	if (!poly.isTypeOf(FN_POLYNOMIALBASE))
 	{
 		//error
-		throw LACoreInvalidData("Not Polynomial function", __FILE__, __LINE__);	
+		throw AQLCoreInvalidData("Not Polynomial function", __FILE__, __LINE__);	
 	}
 	dataProvider->poly = &dynamic_cast<LAPolynomialBase&>(poly);
 
 	//coefficient
 	objHolder.remove(PRICING_DATA_COEFFICIENTS);
-	dh = &objHolder.add(PRICING_DATA_COEFFICIENTS, new LADataDoubleMatrix());
-	dataProvider->coefficient = &dynamic_cast<LADataDoubleMatrix&>(dh->get());
+	dh = &objHolder.add(PRICING_DATA_COEFFICIENTS, new AQLDataDoubleMatrix());
+	dataProvider->coefficient = &dynamic_cast<AQLDataDoubleMatrix&>(dh->get());
 	
 
 	return dataProvider;
@@ -1115,7 +1115,7 @@ LAPriceLSMCTradeValue::setUpDataProvider(const LADate& basedate, LAObject& objec
 	@brief create new cache class
 	@return cache class
 */
-/*LADataProvider*
+/*AQLDataProvider*
 LAPriceLSMCTradeValue::createNewDataProvider() const
 {
 	LAPriceTradeValueDataProvider* dataProvider = NULL;
@@ -1125,7 +1125,7 @@ LAPriceLSMCTradeValue::createNewDataProvider() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 	dataProvider->payoff.setLSMCMode(true);
     return dataProvider;
@@ -1135,7 +1135,7 @@ LAPriceLSMCTradeValue::createNewDataProvider() const
     @brief Make copy(clone) of this object.
     @return pointer of this object.
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceLSMCTradeValue::LAPriceLSMCOperator::clone() const
 {
     try 
@@ -1144,7 +1144,7 @@ LAPriceLSMCTradeValue::LAPriceLSMCOperator::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 
 }

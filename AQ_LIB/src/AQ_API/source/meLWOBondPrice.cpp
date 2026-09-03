@@ -10,7 +10,7 @@
  */
 
 #include "meLWOBondPrice.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "tryMeLWOBond.h"
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
@@ -139,8 +139,8 @@ double meLWOBondForwardPrice( const std::string& bondObjectName,
 	AQ_API_START
         
     // Marshall Inputs
-    LADate settleDate_          = swig::fromStringToLADate( settleDate );
-    LADate forwardSettleDate_   = swig::fromStringToLADate( forwardSettleDate );
+    AQLDate settleDate_          = swig::fromStringToLADate( settleDate );
+    AQLDate forwardSettleDate_   = swig::fromStringToLADate( forwardSettleDate );
         
     // Call validation method
     const double result = validation::tryMeLWOBondForwardPrice( bondObjectName, settleDate_, forwardSettleDate_, price, repoRate, repoDayCount );

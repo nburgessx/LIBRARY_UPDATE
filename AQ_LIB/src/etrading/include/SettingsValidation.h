@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "LADataInstance.h"
-#include "LACoreTemplateType.h"
+#include "AQLDataInstance.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "CoreEnumerations.h"
 
@@ -27,7 +27,7 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	LAString getLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName = "" );
+	AQLString getLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "" );
 
     /* @brief			Get CurveCollection from the valuationSettingsLVB map, by matching the legName 
     *                   *** Supports Curve Objects and the Older Non-Curve Object Types ***
@@ -36,14 +36,14 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	LAString getValidatedLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName = "" );
+	AQLString getValidatedLWOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "" );
 
     /* @brief			Get CurveCollection from the valuationSettingsLVB map, by matching the legName
 	* @param [in]		valuationSettingsLVB	ValuationSettings map
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	LAString getOptionalCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName = "" );
+	AQLString getOptionalCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "" );
 
 	/* @brief			Get CurveCollection from the valuationSettingsLVB map, by matching the legName
 	* @param [in]		valuationSettingsLVB	ValuationSettings map
@@ -51,7 +51,7 @@ namespace etrading
 	* @param [in]		throwIfMissing	    Boolean throw if curve collection is missing True or False
     * @output			The matched curveCollection
 	*/
-	LAString getCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName = "", const bool throwIfMissing = true );
+	AQLString getCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "", const bool throwIfMissing = true );
     
     /* @brief			Get CurveCollection from the valuationSettingsLVB map, by matching the legName and curve asOf date
 	* @param [in]		valuationSettingsLVB	ValuationSettings map
@@ -59,14 +59,14 @@ namespace etrading
 	* @param [in]		throwIfMissing	    Boolean throw if curve collection is missing True or False
     * @output			The matched curveCollection
 	*/
-	LAString getValidatedCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName = "", const bool throwIfMissing = true );
+	AQLString getValidatedCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "", const bool throwIfMissing = true );
 
     /* @brief			Get CurveObject from the valuationSettingsLVB map, by matching the legName
 	* @param [in]		valuationSettingsLVB	ValuationSettings map
 	* @param [in]		legName	            legName, required if curve collection set id
     * @output			The yield curve object
 	*/
-	LAString getCurveObjectFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName = "" );
+	AQLString getCurveObjectFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "" );
 
     /* @brief			Get VolatilityModel from the valuationSettingsLVB map, by matching the legName
 	* @param [in]		valuationSettingsLVB	ValuationSettings map
@@ -74,14 +74,14 @@ namespace etrading
 	* @param [in]		throwIfMissing	    Boolean throw if curve collection is missing True or False
 	* @output			The volatility model
 	*/
-	LAString getVolatilityModelFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName = "", const bool throwIfMissing = true);
+	AQLString getVolatilityModelFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "", const bool throwIfMissing = true);
 
     /* @brief			Get VolatilityModel from the valuationSettingsLVB map, by matching the legName
 	* @param [in]		valuationSettingsLVB	ValuationSettings map
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The credit model
 	*/
-	LAString getCreditModelFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName = "" );
+	AQLString getCreditModelFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName = "" );
 
     /* @brief			Get FXSot from Valuation Settings map
 	* @param [in]		valuationSettingsLVB	ValuationSettings map
@@ -104,13 +104,13 @@ namespace etrading
 	* @param [in]		valuationSettingsLVB	ValuationSettings map
 	* @output			The ValuationDate
 	*/
-	LADate getValuationDateFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const bool throwIfMissing = true);
+	AQLDate getValuationDateFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const bool throwIfMissing = true);
 
 	/* @brief			Get bond SettlementDate from the valuationSettingsLVB map
 	* @param [in]		valuationSettingsLVB	ValuationSettings map
 	* @output			The SettlementDate
 	*/
-	LADate getSettlementDateFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const bool throwIfMissing = false );
+	AQLDate getSettlementDateFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const bool throwIfMissing = false );
 
 	/* @brief			Get the Float-Bond Current CouponRate from the valuationSettingsLVB map. This is annualized coupon rate for
 	*					the very next coupon which has already fixed.
@@ -151,7 +151,7 @@ namespace etrading
     * @param [in]		throwIfMissing	        If TRUE throw an error if the key is missing, otherwise if FALSE return an empty string
 	* @output			The value corresponding to the searchKey
 	*/
-	LAString getKeyFromValuationSettings( const std::string& searchKey, const LabelValueBlock& valuationSettingsLVB, LAString legName = "", const bool throwIfMissing = true );
+	AQLString getKeyFromValuationSettings( const std::string& searchKey, const LabelValueBlock& valuationSettingsLVB, AQLString legName = "", const bool throwIfMissing = true );
 
 	/* @brief			get fixingtable name from the fixingTableNames map, by matching the legname
 	* @param [in]		fixingTableNames	fixing table LVB

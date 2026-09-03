@@ -17,7 +17,7 @@
 #include "BondCurves.h"
 #include "CoreEnumerations.h"
 #include "BondEnumerations.h"
-#include "LADate.h"
+#include "AQLDate.h"
 #include "LabelValueBlock.h"
 #include <vector>
 
@@ -36,15 +36,15 @@ namespace etrading
 	struct BondActiveCouponDates
 	{
 		unsigned int firstActiveCashflowIndex_; // index in the cashflows (excluding the upfront cashflow for notional exchange)
-		LADate firstActiveCouponDate_;
-		LADate adjustedFirstActiveCouponDate_; // The adjustedFirstActiveCouponDate has business day adjustment if the yield is TRUE yield, otherwise it is the same as firstActivePaymentDate.
-		LADate firstActiveCashflowExDividendDate_;
+		AQLDate firstActiveCouponDate_;
+		AQLDate adjustedFirstActiveCouponDate_; // The adjustedFirstActiveCouponDate has business day adjustment if the yield is TRUE yield, otherwise it is the same as firstActivePaymentDate.
+		AQLDate firstActiveCashflowExDividendDate_;
 		
 		bool isSettleDateExdividend_;
 
-		LADate priorFirstActiveCouponDate_;
-		LADate firstPriorVirtualCouponDate_;
-		LADate secondPriorVirtualCouponDate_;
+		AQLDate priorFirstActiveCouponDate_;
+		AQLDate firstPriorVirtualCouponDate_;
+		AQLDate secondPriorVirtualCouponDate_;
 
 	};
 
@@ -58,7 +58,7 @@ namespace etrading
     *  @param [in]		yieldCalcType                   Yield calculation type
     *  @return			Bond coupon accrual ratio of future days versus total days in coupon period in percent
     */
-	const double calculateBondActiveCouponFutureAccrualRatio( const LADate & settlementDate,
+	const double calculateBondActiveCouponFutureAccrualRatio( const AQLDate & settlementDate,
 															  const BondActiveCouponDates& activeCouponDates,
 															  const DayCountEnum & bondDaycount,
 															  const FrequencyEnum & bondCouponFrequency,
@@ -76,9 +76,9 @@ namespace etrading
     *  @param [in]		sumYearFractionsFrom2ndActiveToCurCashflow    Sum of Cashflows' YearFraction from second active cashflow to current cashflow, used for True Yield calculation type
     *  @return			Returns a single Bond Discount Factor
     */
-    const double calculateSingleDiscountFactorFromBondYield( const BondYieldParameters & bondYieldParameters, const LADate& settlementDate, 
-                                                            unsigned int& firstActivePaymentIndex, const LADate& couponPaymentDate, 
-                                                            const std::vector< LADate>& bondPaymentlDatesForIndexation, const double& yield, const double& accruedAdjustmentFactor, 
+    const double calculateSingleDiscountFactorFromBondYield( const BondYieldParameters & bondYieldParameters, const AQLDate& settlementDate, 
+                                                            unsigned int& firstActivePaymentIndex, const AQLDate& couponPaymentDate, 
+                                                            const std::vector< AQLDate>& bondPaymentlDatesForIndexation, const double& yield, const double& accruedAdjustmentFactor, 
                                                             const YieldCalculationTypeEnum& yieldCalcType, const double& sumYearFractionsFrom2ndActiveToCurCashflow=0);
 
     /* @brief			Caclulate a Bond Discount Factor from a Bond Yield. Observes the special conventions for
@@ -99,9 +99,9 @@ namespace etrading
 	*  @param [in]		isSettleDateInLastCashflow          Whether current cashflow is the final cashflow, and the settlementDate is in the final coupon period.
     *  @return			Returns a single Bond Discount Factor
     */
-	const double  calculateSingleDiscountFactorFromConventionsAndBondYield( const BondYieldParameters & bondYieldParameters, const LADate& settlementDate, 
-																			unsigned int& firstActivePaymentIndex, const LADate& currentPaymentDate, const LADate& previousPaymentDate,
-																			const std::vector< LADate>& paymentDates, const double& yield, const double& settleDateToFirstActivePaymentDateRatio, 
+	const double  calculateSingleDiscountFactorFromConventionsAndBondYield( const BondYieldParameters & bondYieldParameters, const AQLDate& settlementDate, 
+																			unsigned int& firstActivePaymentIndex, const AQLDate& currentPaymentDate, const AQLDate& previousPaymentDate,
+																			const std::vector< AQLDate>& paymentDates, const double& yield, const double& settleDateToFirstActivePaymentDateRatio, 
 																			const YieldCalculationTypeEnum& yieldCalcType, const double& sumYearFractionsFromSecondActivePaymentToCurrentCashflow,
 																			const double& simpleYearFraction, const DayCountEnum & bondDaycount, const bool& isLastCashflow, const bool& isSettleDateInLastCashflow );
 
@@ -117,8 +117,8 @@ namespace etrading
     *  @param [in]		trueYieldYearFractions              The accrual year fractions using dates with budiness day adjusted
     *  @return			Returns a vector of Bond Discount Factors
     */
-    const std::vector< double > calculateDiscountFactorsFromBondYield( const BondYieldParameters & bondYieldParameters, const LADate& settlementDate, const BondActiveCouponDates& activeCouponDates,
-																		const std::vector< LADate>& paymentDates, const double& yield, const DayCountEnum & bondDaycount, 
+    const std::vector< double > calculateDiscountFactorsFromBondYield( const BondYieldParameters & bondYieldParameters, const AQLDate& settlementDate, const BondActiveCouponDates& activeCouponDates,
+																		const std::vector< AQLDate>& paymentDates, const double& yield, const DayCountEnum & bondDaycount, 
 																		const YieldCalculationTypeEnum& yieldCalcType, const DoubleVector& trueYieldYearFractions=DoubleVector()); 
 
 	/* @brief			Caclulates Bond Discount Factors from a Bond Curve
@@ -131,8 +131,8 @@ namespace etrading
     *  @param [in]		trueYieldYearFractions              The accrual year fractions using dates with budiness day adjusted
     *  @return			Returns a vector of Bond Discount Factors
     */
-	const std::vector< double > calculateDiscountFactorsFromBondCurve( const BondYieldParameters & bondYieldParameters, const LADate& settlementDate, const BondActiveCouponDates& activeCouponDates,
-																		const std::vector< LADate>& paymentDates, const BondCurve& bondCurve, const DayCountEnum & bondDaycount, 
+	const std::vector< double > calculateDiscountFactorsFromBondCurve( const BondYieldParameters & bondYieldParameters, const AQLDate& settlementDate, const BondActiveCouponDates& activeCouponDates,
+																		const std::vector< AQLDate>& paymentDates, const BondCurve& bondCurve, const DayCountEnum & bondDaycount, 
 																		const DoubleVector& trueYieldYearFractions=DoubleVector() );
 
 

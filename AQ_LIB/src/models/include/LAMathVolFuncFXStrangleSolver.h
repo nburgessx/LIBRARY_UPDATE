@@ -5,11 +5,11 @@
 #endif
 
 #include "LAMathFXVolatilitySurfaceGenerate.h"
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAInterpolationBase.h"
-#include "LAAlgorithm.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLInterpolationBase.h"
+#include "AQLAlgorithm.h"
 
 
 
@@ -20,7 +20,7 @@
 
 
 
-class LAMathVolFuncFXStrangleSolver : public LAFunctionBase
+class LAMathVolFuncFXStrangleSolver : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
@@ -39,7 +39,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;

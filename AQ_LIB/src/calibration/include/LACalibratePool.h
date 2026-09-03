@@ -16,7 +16,7 @@
 
 
 #include <vector>
-#include "LAObjectPool.h"
+#include "AQLObjectPool.h"
 #include "LAEvent.h"
 #include "LACalibrate.h"
 #include "LAScenarioConfiguration.h"
@@ -66,7 +66,7 @@ private:
 		virtual ~LACalibrateTerminate(void){};
        	//=============================================
         //  setup
-    	virtual void  setUp(LAObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1) { (void)objPool, (void)param, (void)method, (void)gridPos;}
+    	virtual void  setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1) { (void)objPool, (void)param, (void)method, (void)gridPos;}
         //=============================================
         //  calibration method
     	virtual void    doCalibrate()

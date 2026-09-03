@@ -364,7 +364,7 @@ namespace etrading
 		}
 		catch (std::out_of_range&)
 		{
-			throw LACoreInvalidData( ( boost::format( "#Error: Could not find required property key '%s' in object with name '%s'." )  
+			throw AQLCoreInvalidData( ( boost::format( "#Error: Could not find required property key '%s' in object with name '%s'." )  
 						% skName % getRefToName() ).str().c_str(), __FILE__, __LINE__ );
 		}
         return columns;

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "ReadDataFile.h"
 
 namespace google_test
@@ -10,17 +10,17 @@ namespace google_test
     class CurveAccessors
     {
     public:
-        CurveAccessors( const LAString& inputFilename );
+        CurveAccessors( const AQLString& inputFilename );
 
-        virtual LAString getCurveID() const
+        virtual AQLString getCurveID() const
         {
             return curveID_;
         }
-        virtual LAString getMarketName() const
+        virtual AQLString getMarketName() const
         {
             return marketName_;
         }
-        virtual const LAStringVector& getCurveNames() const
+        virtual const AQLStringVector& getCurveNames() const
         {
             return curveNames_;
         }
@@ -29,9 +29,9 @@ namespace google_test
 
     protected:
         etrading::ReadDataFile::Load inputFile_;
-        LAString curveID_;
-        LAString marketName_;
-        LAStringVector curveNames_;
+        AQLString curveID_;
+        AQLString marketName_;
+        AQLStringVector curveNames_;
         bool fileLoaded_;
     };
 }

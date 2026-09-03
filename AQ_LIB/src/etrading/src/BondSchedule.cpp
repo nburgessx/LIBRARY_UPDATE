@@ -53,7 +53,7 @@ namespace etrading
 
 		if (boost::math::isnan(notional_))
 		{
-			throw LACoreInvalidData("#Error: Notional is a mandatory field for PremiumSchedule", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: Notional is a mandatory field for PremiumSchedule", __FILE__, __LINE__);
 		}
 	}
 
@@ -64,7 +64,7 @@ namespace etrading
 
 		for (size_t i = 0; i < expectedSize; ++i)
 		{
-			LADate exDividendDate = LADate();
+			AQLDate exDividendDate = AQLDate();
 			if (!exDividendTenor_.empty())
 			{
 				exDividendDate = getDateFromTenor(boost::assign::list_of(paymentDates_[i]), exDividendTenor_.c_str(), toString(exDividendBusinessDayAdj_).c_str(), accrualCalendar_, "")[0];
@@ -89,14 +89,14 @@ namespace etrading
 
 		for (size_t i = 0; i < expectedSize; ++i)
 		{
-			LADate accrualStart = accrualStartDates_[i];
-			LADate accrualEnd = accrualEndDates_[i];
+			AQLDate accrualStart = accrualStartDates_[i];
+			AQLDate accrualEnd = accrualEndDates_[i];
 
 			double bondActualYearFraction = std::numeric_limits<double>::quiet_NaN();
 
 			bool firstCashflow = (i == 0);
 			bool lastCashflow = (i == expectedSize - 1);
-			LADate paymentDate = paymentDates_[i];
+			AQLDate paymentDate = paymentDates_[i];
 			double tmpYearFraction = calculateBondCashflowYearFraction(firstCashflow, lastCashflow);
 
 			accrualYearFractions_.push_back(tmpYearFraction);
@@ -134,17 +134,17 @@ namespace etrading
 	// If it is not the first cashflow, the priorDate is the payment date before the first active coupon (payment) date
 	// If it is the first cashflow, 1) when isPriorDtWithFullCouponPeriod is true (used in bond yield calculation), then priorDate is the prior date with full coupon period from the first active payment date. 
 	//                              2) when isPriorDtWithFullCouponPeriod is false (used in bondAccruedInterest calculation), then priorDate is first accrualStartDate (effective date).
-	BondActiveCouponDates BondSchedule::getBondFirstActiveCouponDates(const LADate& settlementDate, bool isPriorDtWithFullCouponPeriod) const
+	BondActiveCouponDates BondSchedule::getBondFirstActiveCouponDates(const AQLDate& settlementDate, bool isPriorDtWithFullCouponPeriod) const
 	{
 		// Get the Active Coupon Date
 		auto paymentDates = getPaymentDates();
 		auto firstActivePaymentDateAndIndex = getActiveCashflowDateAndIndex(settlementDate, paymentDates, paymentDates);
-		const LADate firstActivePaymentDate = firstActivePaymentDateAndIndex.first;
+		const AQLDate firstActivePaymentDate = firstActivePaymentDateAndIndex.first;
 		size_t firstActivePaymentIndex = firstActivePaymentDateAndIndex.second;
 
 		bool isFirstCashflow = (firstActivePaymentIndex == 0);
 
-		LADate priorFirstActivePaymentDate = LADate();
+		AQLDate priorFirstActivePaymentDate = AQLDate();
 
 		if (isFirstCashflow)
 		{
@@ -173,8 +173,8 @@ namespace etrading
 
 		couponDates.adjustedFirstActiveCouponDate_ = accrualEndDates_[firstActivePaymentIndex];;
 
-		const LADate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstActivePaymentDate);
-		const LADate secondPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPriorVirtualPaymentDate);
+		const AQLDate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstActivePaymentDate);
+		const AQLDate secondPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPriorVirtualPaymentDate);
 
 		couponDates.firstPriorVirtualCouponDate_ = firstPriorVirtualPaymentDate;
 		couponDates.secondPriorVirtualCouponDate_ = secondPriorVirtualPaymentDate;
@@ -204,8 +204,8 @@ namespace etrading
 			else
 			{
 				auto firstPaymentDate = paymentDates_.front();
-				LADate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPaymentDate);
-				LADate secondPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPriorVirtualPaymentDate);
+				AQLDate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPaymentDate);
+				AQLDate secondPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPriorVirtualPaymentDate);
 
 				auto effectiveDate = getEffectiveDate();
 				if (effectiveDate > firstPriorVirtualPaymentDate)
@@ -247,7 +247,7 @@ namespace etrading
 
 				auto preultimatePaymentDate = paymentDates_[paymentDateSize - 2];
 				auto lastPaymentDate = paymentDates_.back();
-				LADate priorToLastPaymentDate = getBondPriorVirtualPaymentDate(lastPaymentDate);
+				AQLDate priorToLastPaymentDate = getBondPriorVirtualPaymentDate(lastPaymentDate);
 
 				if (preultimatePaymentDate > priorToLastPaymentDate)
 				{
@@ -268,7 +268,7 @@ namespace etrading
 
 	}
 
-	double BondSchedule::calculateBondAccruedInterest(const LADate& settlementDate, const BondYieldParameters& bondYieldParameters) const
+	double BondSchedule::calculateBondAccruedInterest(const AQLDate& settlementDate, const BondYieldParameters& bondYieldParameters) const
 	{
 
 		auto activeCouponDates = getBondFirstActiveCouponDates(settlementDate, false);
@@ -294,7 +294,7 @@ namespace etrading
 		return accruedInterest;
 	}
 
-	int BondSchedule::calculateBondAccruedInterestDays(const LADate& settlementDate, const BondYieldParameters& bondYieldParameters) const
+	int BondSchedule::calculateBondAccruedInterestDays(const AQLDate& settlementDate, const BondYieldParameters& bondYieldParameters) const
 	{
 		auto activeCouponDates = getBondFirstActiveCouponDates(settlementDate, false);
 
@@ -305,7 +305,7 @@ namespace etrading
 	}
 
 	// Virtual payment date with full coupon period before the given paymentDate
-	LADate BondSchedule::getBondPriorVirtualPaymentDate(const LADate& paymentDate) const
+	AQLDate BondSchedule::getBondPriorVirtualPaymentDate(const AQLDate& paymentDate) const
 	{
 		//Get tenor like '-1Y', '-
 		auto tenor = getFrequencyTenor(accrualFrequency_);
@@ -313,9 +313,9 @@ namespace etrading
 
 		std::stringstream ss;
 		ss << "-" << tenor;
-		LAString minusTenor = ss.str().c_str();
+		AQLString minusTenor = ss.str().c_str();
 
-		LADate priorVirtualCouponDate = getDateFromTenor(boost::assign::list_of(paymentDate),
+		AQLDate priorVirtualCouponDate = getDateFromTenor(boost::assign::list_of(paymentDate),
 			minusTenor,
 			toString(paymentbusinessDayAdj_).c_str(),
 			paymentCalendar_,
@@ -347,7 +347,7 @@ namespace etrading
 			{
 			case SHORT_START_STUBTYPE:
 			{
-				LADate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPaymentDate);
+				AQLDate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPaymentDate);
 
 				//fullCouponPeriodDays is the full coupon periods between 1stPriorVirtualDt and first payment date
 				auto fullCouponPeriodDays = getBondFullCouponPeriodDays(firstPriorVirtualPaymentDate, firstPaymentDate, dayCountEnum, accrualFrequency_);
@@ -381,8 +381,8 @@ namespace etrading
 			case LONG_START_STUBTYPE:
 			{
 
-				LADate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPaymentDate);
-				LADate secondPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPriorVirtualPaymentDate);
+				AQLDate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPaymentDate);
+				AQLDate secondPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPriorVirtualPaymentDate);
 
 				//1) shortYearFraction = (1stPriorVirtualDt - firstAccrualStartDt)/fullCouponPeriodDays1, where fullCouponPeriodDays1 is the full coupon period between 2stPriorVirtualDt and 1stPriorVirtualDt         
 				auto days1 = getBondActualCouponPeriodDays(firstAccrualStartDate, firstPriorVirtualPaymentDate, dayCountEnum);
@@ -420,7 +420,7 @@ namespace etrading
 			{
 			case SHORT_END_STUBTYPE:
 			{
-				LADate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(lastPaymentDate);
+				AQLDate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(lastPaymentDate);
 
 				auto days1 = getBondActualCouponPeriodDays(preultimatePaymentDate, lastPaymentDate, dayCountEnum);
 
@@ -436,8 +436,8 @@ namespace etrading
 			}
 			case LONG_END_STUBTYPE:
 			{
-				LADate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(lastPaymentDate);
-				LADate secondPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPriorVirtualPaymentDate);
+				AQLDate firstPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(lastPaymentDate);
+				AQLDate secondPriorVirtualPaymentDate = getBondPriorVirtualPaymentDate(firstPriorVirtualPaymentDate);
 
 				//1) shortYearFraction = (1stPriorVirtual-preultimatePaymentDate) / fullCouponPeriodDays1, where fullCouponPeriodDays1 is the full coupon period between 2stPriorVirtualDt and 1stPriorVirtualDt         
 				auto days1 = getBondActualCouponPeriodDays(preultimatePaymentDate, firstPriorVirtualPaymentDate, dayCountEnum);
@@ -463,11 +463,11 @@ namespace etrading
 	}
 
 	//This is used when the yield calculation type is chosen as TRUE_YIELD
-	double  BondSchedule::calculateBondTrueYieldYearFraction(size_t cashflowIndex, const LADate& accrualStart, const LADate& accrualEnd, const LADate& paymentDate) const
+	double  BondSchedule::calculateBondTrueYieldYearFraction(size_t cashflowIndex, const AQLDate& accrualStart, const AQLDate& accrualEnd, const AQLDate& paymentDate) const
 	{
 		double trueYieldYearFraction = 0.0;
 
-		LADate previousPaymentDate;
+		AQLDate previousPaymentDate;
 
 		if (cashflowIndex == 0)
 		{
@@ -519,14 +519,14 @@ namespace etrading
 		size_t cashflowSize = getCashflowSize();
 		if (cashflowSize != discountFactors.size())
 		{
-			throw LACoreInvalidData("#Error: DiscountFactors and Cashflows should have the same size", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: DiscountFactors and Cashflows should have the same size", __FILE__, __LINE__);
 		}
 
 		bool hasFloatRates = (floatRates.size() != 0);
 
 		if (hasFloatRates && cashflowSize != floatRates.size())
 		{
-			throw LACoreInvalidData("#Error: FloatRates and Cashflows should have the same size", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: FloatRates and Cashflows should have the same size", __FILE__, __LINE__);
 		}
 
 		dataProvider.setDiscountFactors(discountFactors);
@@ -544,7 +544,7 @@ namespace etrading
 	{
 
 		// These are the first active coupon dates
-		const LADate settlementDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate settlementDate = dataProvider.getValuationSettings().getValuationDate();
 
 		//activeCouponDatesPtr is populated when solving yields, as the activeCouponDate won't change
 		auto activeCouponDates = (activeCouponDatesPtr != nullptr) ? *(activeCouponDatesPtr.get()) : getBondFirstActiveCouponDates(settlementDate, true);
@@ -587,7 +587,7 @@ namespace etrading
 	void BondSchedule::initializeDataProviderWithBondCurve( DataProvider& dataProvider, const BondYieldParameters & bondYieldParameters, const BondCurve& bondCurve, const std::shared_ptr<BondActiveCouponDates>& activeCouponDatesPtr, const std::vector< FloatRateData >& floatRates ) const
 	{
 		// These are the first active coupon dates
-		const LADate settlementDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate settlementDate = dataProvider.getValuationSettings().getValuationDate();
 
 		//activeCouponDatesPtr is populated when solving yields, as the activeCouponDate won't change
 		auto activeCouponDates = (activeCouponDatesPtr != nullptr) ? *(activeCouponDatesPtr.get()) : getBondFirstActiveCouponDates(settlementDate, true);
@@ -618,7 +618,7 @@ namespace etrading
 	}
 
 
-	LADate BondSchedule::getMaturityDate() const
+	AQLDate BondSchedule::getMaturityDate() const
 	{
 		return getUnadjustedMaturityDate();
 	}
@@ -640,10 +640,10 @@ namespace etrading
 
 		accrualEndDateOrTenor_ = scheduleLVB.getCompulsoryValueAsLAString(IRS_KEY::MATURITY_DATE, inputLVB);
 
-		LAString fixedBusinessDayAdjustment = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT));
-		LAString fixedCalendar = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR));
-		LAString fixedLegFreq = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY));
-		LAString fixedDayCount = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT));
+		AQLString fixedBusinessDayAdjustment = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT));
+		AQLString fixedCalendar = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR));
+		AQLString fixedLegFreq = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY));
+		AQLString fixedDayCount = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys(boost::assign::list_of(IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT));
 
 		accrualbusinessDayAdj_ = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT, IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT, fixedBusinessDayAdjustment).getCString());
 		accrualCalendar_ = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALCALENDAR, IRS_KEY::ACCRUALCALENDAR, fixedCalendar);
@@ -739,7 +739,7 @@ namespace etrading
 
 
 	//Override
-	void BondSchedule::initializeDataProviderWithCurveData(DataProvider& dataProvider, const LAString& discountCurve, const std::vector< FloatRateData >& floatRates) const
+	void BondSchedule::initializeDataProviderWithCurveData(DataProvider& dataProvider, const AQLString& discountCurve, const std::vector< FloatRateData >& floatRates) const
 	{
 		Schedule::initializeDataProviderWithCurveData(dataProvider, discountCurve, floatRates);
 
@@ -757,7 +757,7 @@ namespace etrading
 
 		const size_t cashflowSize = cashflows_.size();
 
-		const LADate settleDate = dataProvider.getValuationSettings().getValuationDate();
+		const AQLDate settleDate = dataProvider.getValuationSettings().getValuationDate();
 
 		BoolVector includeCouponRates(cashflowSize, true);
 
@@ -769,7 +769,7 @@ namespace etrading
 
 	}
 
-	bool BondSchedule::getFirstActiveCashflowIncludeCouponRate(const CashflowPtr& firstActiveCashflow, const LADate& settleDate) const
+	bool BondSchedule::getFirstActiveCashflowIncludeCouponRate(const CashflowPtr& firstActiveCashflow, const AQLDate& settleDate) const
 	{
 		if (exDividendTenor_.empty())
 		{

@@ -42,15 +42,15 @@ namespace google_test
 
     TEST_F( Test_IsFwdInter, SNAPSHOT_CheckParRates)
 	{		        
-		std::vector<std::pair<LAString, double> > outputs;
+		std::vector<std::pair<AQLString, double> > outputs;
 
 		for (size_t i = 0; i < sizeof(STD_FILES) / sizeof(char*); ++i)
 		{
 			//----------------------------------------------------------------------------------------
 			// Build yield curves of the current test case
 			
-			LAString forecastFileDir = TEST_DIR + LAString(STD_FILES[i]);
-			LAString discountFileDir = TEST_DIR + LAString(OIS_CURVE_FILE);
+			AQLString forecastFileDir = TEST_DIR + AQLString(STD_FILES[i]);
+			AQLString discountFileDir = TEST_DIR + AQLString(OIS_CURVE_FILE);
 			SET_UP_STD_CURVE(discountFileDir, forecastFileDir);
 						
 			//----------------------------------------------------------------------------------------
@@ -68,14 +68,14 @@ namespace google_test
 			{
 				generateProp = inputFile_STD["generalProps"];			
 			}
-			const std::set<LAString>& generatePropkeys = generateProp.getKeys();
+			const std::set<AQLString>& generatePropkeys = generateProp.getKeys();
 
 			// swap convention block
 			etrading::ReadDataFile swapConv = inputFile_STD["swapConv"];			
-			const std::set<LAString>& swapConvkeys = swapConv.getKeys();
+			const std::set<AQLString>& swapConvkeys = swapConv.getKeys();
 
 			// Spot lag
-			LAString spotLag;
+			AQLString spotLag;
 			findValByKey(spotLag, swapConv, swapConvkeys, "ResetLag");
 			if (spotLag.findString("D") == -1)
 			{
@@ -83,49 +83,49 @@ namespace google_test
 			}
 
 			// Frequency fixed leg
-			LAString frequencyFixed;
+			AQLString frequencyFixed;
 			findValByKey(frequencyFixed, swapConv, swapConvkeys, "Frequency");
 
 			// Frequency float leg
-			LAString frequencyFloat;
+			AQLString frequencyFloat;
 			findValByKey(frequencyFloat, swapConv, swapConvkeys, "FrequencyFloat");
 
 			// Day count convention fixed leg
-			LAString dayCountFixed;
+			AQLString dayCountFixed;
 			findValByKey(dayCountFixed, swapConv, swapConvkeys, "DayCount");
 
 			// Day count convention float leg
-			LAString dayCountFloat;
+			AQLString dayCountFloat;
 			findValByKey(dayCountFloat, swapConv, swapConvkeys, "DayCountFloat");
 
 			// Roll convention
-			LAString rollConvention;
+			AQLString rollConvention;
 			findValByKey(rollConvention, swapConv, swapConvkeys, "SlidingRule");
 
 			// Calendar
-			LAString calendar;
+			AQLString calendar;
 			findValByKey(calendar, swapConv, swapConvkeys, "Calendar");
 
 			// Effective date
-			LAString asofDateStr;
+			AQLString asofDateStr;
 			findValByKey(asofDateStr, generateProp, generatePropkeys, "AsOfDate");
-			LADate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
-			LADate effectiveDate = etrading::LADateScheduleHelpers::getDate( asofDate, spotLag, rollConvention, calendar );
+			AQLDate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
+			AQLDate effectiveDate = etrading::LADateScheduleHelpers::getDate( asofDate, spotLag, rollConvention, calendar );
 
 			// Curve collection and forecast curve
-			LAString curveCollection = etrading::getCurveID( inputFile_STD );
-			LAString foreCurve	 = etrading::getMarketName( inputFile_STD );
+			AQLString curveCollection = etrading::getCurveID( inputFile_STD );
+			AQLString foreCurve	 = etrading::getMarketName( inputFile_STD );
 
 			// Discount curve
-			LAString dfCurve("OIS");
+			AQLString dfCurve("OIS");
 			findValByKey(dfCurve, generateProp, generatePropkeys, "dfcurvename");
 
 			// Fixing lag
-			LAString fixingLag("0D");
+			AQLString fixingLag("0D");
 			findValByKey(fixingLag, swapConv, swapConvkeys, "FixingLag", true);
 
 			// Is rolling at end of month?
-			LAString isEomRollStr;
+			AQLString isEomRollStr;
 			findValByKey(isEomRollStr, swapConv, swapConvkeys, "IsEomRoll");
 			isEomRollStr.toUpper();
 			
@@ -136,7 +136,7 @@ namespace google_test
 			}
 
 			// Interpolation
-			LAString interpolation;
+			AQLString interpolation;
 			findValByKey(interpolation, swapConv, swapConvkeys, "Interpolation");
 			interpolation = interpolationShortName(interpolation);
 
@@ -145,8 +145,8 @@ namespace google_test
 			
 			for (size_t j = 0; j < sizeof(TENORS) / sizeof(char*); ++j)
 			{
-				LAString maturityTenor = LAString(TENORS[j]);
-				LADate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
+				AQLString maturityTenor = AQLString(TENORS[j]);
+				AQLDate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 
 				// Case 1: IsFwdInter = FALSE, UseFwdData = FALSE
 				double parRate = validation::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
@@ -184,7 +184,7 @@ namespace google_test
 																   calendar	// fixing calendar
 																   );
 
-				LAString key = interpolation + "_" + maturityTenor + "_" + "IsFwdInter_FALSE_UseFwdData_FALSE";
+				AQLString key = interpolation + "_" + maturityTenor + "_" + "IsFwdInter_FALSE_UseFwdData_FALSE";
 				outputs.push_back(std::make_pair(key, parRate));
 
 				// Case 2: IsFwdInter = TRUE, UseFwdData = FALSE
@@ -277,9 +277,9 @@ namespace google_test
 		if ( etrading::CreateDataFile::rebaseResultsEnabled() )
         {
 #ifdef GTEST32
-            LAString outputFileName = outputsFile_32;
+            AQLString outputFileName = outputsFile_32;
 #else
-            LAString outputFileName = outputsFile_64;
+            AQLString outputFileName = outputsFile_64;
 #endif
 
             // Record outputs and rebase test outputs
@@ -295,14 +295,14 @@ namespace google_test
         {
             // Carry out actual test and peform result comparison
 #ifdef GTEST32
-            const ReadDataFile::Load resultFile( TEST_DIR + LAString(outputsFile_32) );
+            const ReadDataFile::Load resultFile( TEST_DIR + AQLString(outputsFile_32) );
 #else
-            const ReadDataFile::Load resultFile( TEST_DIR + LAString(outputsFile_64) );
+            const ReadDataFile::Load resultFile( TEST_DIR + AQLString(outputsFile_64) );
 #endif
 
             for ( size_t i = 0; i < outputs.size(); ++i )
             {
-                LAString key	= outputs[i].first;
+                AQLString key	= outputs[i].first;
 				double parRate	= outputs[i].second;
 
                 double ref = resultFile[key];

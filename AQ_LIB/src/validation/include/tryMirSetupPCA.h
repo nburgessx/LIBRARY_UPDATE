@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -14,8 +14,8 @@ namespace validation
     *  @param [in]		factorNum		The number of PCA factors to show results for
     *  @return			A string that identifies the current PCA analysis
     */
-    const LAString tryMirSetupPCA( LADataInstance* dataInstance,
-                                   const LAString& ID,
+    const AQLString tryMirSetupPCA( AQLDataInstance* dataInstance,
+                                   const AQLString& ID,
                                    const DoubleMatrix& data,
                                    bool isScale,
                                    int factorNum );

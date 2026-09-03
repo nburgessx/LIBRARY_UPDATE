@@ -17,13 +17,13 @@
 #pragma interface
 #endif
 
-//#include "LAString.h"
+//#include "AQLString.h"
 #include "LARatesSDEBase.h"
 
 
-class LAString;
+class AQLString;
 class LARatesSDEBase;
-class LADataInstance;
+class AQLDataInstance;
 class LARatesCurveLogLinearInterpolation;
 class LAMathCorrelation;
 class LAMathVolatility;
@@ -49,76 +49,76 @@ public:
 
 	//==============================================
 	// generate SDE
-	virtual void generateSDE(const LAString &key, LADataInstance &dataInstance,const bool isMarketCreate = true, const bool isFirst = true) const;
+	virtual void generateSDE(const AQLString &key, AQLDataInstance &dataInstance,const bool isMarketCreate = true, const bool isFirst = true) const;
 	//==============================================
 	// generate SDE market data
-	virtual void loadModelDataAndCalibrate(const LAString &key, LADataInstance &dataInstance, const bool isCurve = true, const bool isModel = true, const LAString & curveID = "", const LAString & marketName = "") const = 0;
+	virtual void loadModelDataAndCalibrate(const AQLString &key, AQLDataInstance &dataInstance, const bool isCurve = true, const bool isModel = true, const AQLString & curveID = "", const AQLString & marketName = "") const = 0;
 
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 	//==============================================
 	// generate sde volatility
-	virtual void loadVolatilityDataAndCalibrate(const LAString &key, LADataInstance &dataInstance) const;
+	virtual void loadVolatilityDataAndCalibrate(const AQLString &key, AQLDataInstance &dataInstance) const;
 #endif
 	//==============================================
 	// generate sde initial value for fwdfx constant curve
-	virtual void loadFwdFXConstCurveDataAndCalibrate(const LAString &currency, LADataInstance &dataInstance, bool isCalcFwdBeforeFwdFXConsant = false) const = 0;
+	virtual void loadFwdFXConstCurveDataAndCalibrate(const AQLString &currency, AQLDataInstance &dataInstance, bool isCalcFwdBeforeFwdFXConsant = false) const = 0;
 	//==============================================
 	// is fwdfx const curve
-	bool isFwdFXConst(const LAString& ccy) const;
+	bool isFwdFXConst(const AQLString& ccy) const;
 	//==============================================
 	// is collateral ccy
-	bool isCollateral(const LAString& ccy) const;
+	bool isCollateral(const AQLString& ccy) const;
 
 protected:
 	//==============================================
 	// get sde Type
-	virtual  SDE_TYPE getSDEType(const LAString &key) const = 0;
+	virtual  SDE_TYPE getSDEType(const AQLString &key) const = 0;
 	//==============================================
 	// check LJ
-	virtual bool isLJ(const LAString &key) const = 0;
+	virtual bool isLJ(const AQLString &key) const = 0;
 	//==============================================
 	// set volatility 
-	virtual  void setVolatility(const LAString &key, LARatesSDEBase &sde)  const = 0;	
+	virtual  void setVolatility(const AQLString &key, LARatesSDEBase &sde)  const = 0;	
 	//==============================================
 	// set drift 
-	virtual  void setDrift(const LAString &key, LARatesSDEBase &sde)  const = 0;
+	virtual  void setDrift(const AQLString &key, LARatesSDEBase &sde)  const = 0;
 	//==============================================
 	// set numeraire 
-	virtual  void setNumeraire(const LAString &key, LARatesSDEBase &sde)  const = 0;
+	virtual  void setNumeraire(const AQLString &key, LARatesSDEBase &sde)  const = 0;
 	//==============================================
 	// set path 
-	virtual  void setOutputTemplate(const LAString &key, LARatesSDEBase &sde)  const  = 0;
+	virtual  void setOutputTemplate(const AQLString &key, LARatesSDEBase &sde)  const  = 0;
 	//==============================================
 	// set integralfunction 
-	virtual  void setIntegralFunction(const LAString &key, LARatesSDEBase &sde)  const = 0;
+	virtual  void setIntegralFunction(const AQLString &key, LARatesSDEBase &sde)  const = 0;
 	//==============================================
 	// set interpolation method 
-	virtual  void setInterpolationMethod(const LAString &key, LARatesSDEBase &sde) const = 0;
+	virtual  void setInterpolationMethod(const AQLString &key, LARatesSDEBase &sde) const = 0;
 	//==============================================
 	// get function master regist name 
-	virtual LAString getFunctionMasterResistName(const LAString &key) const = 0;
+	virtual AQLString getFunctionMasterResistName(const AQLString &key) const = 0;
 	//==============================================
 	// get create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const LAString &key, LADataInstance &dataInstance) const = 0;
+	virtual LARatesSDEBase *createSDEInstance(const AQLString &key, AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// setup vol type
-	virtual LAString getVolType(const LAString &key) const = 0;
+	virtual AQLString getVolType(const AQLString &key) const = 0;
 	//==============================================
 	// setup vol data
-	virtual void setUpVolData(const LAString &key, LAMathVolatility &vol, LADataInstance &dataInstance) const = 0;
+	virtual void setUpVolData(const AQLString &key, LAMathVolatility &vol, AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// setup vol method
-	virtual void setUpVolFunc(const LAString &key,LAMathVolatility &vol, LADataInstance &dataInstance) const = 0;
+	virtual void setUpVolFunc(const AQLString &key,LAMathVolatility &vol, AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// get sde function name
-	virtual LAString getSDEAttrName(const LAString &key) const = 0;
+	virtual AQLString getSDEAttrName(const AQLString &key) const = 0;
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 	//==============================================
 	// check cancel target for funding change 
-	virtual  bool isCancelForFunding(const LAString &ccy) const;
+	virtual  bool isCancelForFunding(const AQLString &ccy) const;
 	//==============================================
 	// check calibrarion target currency or fx
-	virtual  bool isCalibTarget(const LAString &ccy) const;
+	virtual  bool isCalibTarget(const AQLString &ccy) const;
 #endif
 
 	

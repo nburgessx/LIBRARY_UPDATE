@@ -33,11 +33,11 @@ namespace validation
 		// Perform initial basic sanity checks
 		if ( lwoCurveGeneratorName.size() == 0 )
 		{
-				throw LACoreInvalidData(	( "#Error: Missing lwoCurveGenerator name" ), __FILE__, __LINE__ );
+				throw AQLCoreInvalidData(	( "#Error: Missing lwoCurveGenerator name" ), __FILE__, __LINE__ );
 		}
 		if ( lwoCurveMarketDataName.size() == 0 )
 		{
-				throw LACoreInvalidData(	( "#Error: Missing lwoCurveMarketData name" ), __FILE__, __LINE__ );
+				throw AQLCoreInvalidData(	( "#Error: Missing lwoCurveMarketData name" ), __FILE__, __LINE__ );
 		}
 
 		// Attempt to retrieve LWOCurveMarketData object from the LWO Cache
@@ -59,17 +59,17 @@ namespace validation
 
         if ( configCurrency != marketDataCurrency )
 		{
-			throw LACoreInvalidData( ( boost::format("#Error: CurveGenerator currency \"%s\" does not match MarketData Currency \"%s\"" )
+			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator currency \"%s\" does not match MarketData Currency \"%s\"" )
                                    % configCurrency % marketDataCurrency ).str().c_str(), __FILE__, __LINE__ );
 		}
 		if ( configCurveType != marketDataCurveType )
 		{
-			throw LACoreInvalidData( ( boost::format("#Error: CurveGenerator CurveType \"%s\" does not match MarketData CurveType \"%s\"" )
+			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator CurveType \"%s\" does not match MarketData CurveType \"%s\"" )
                                    % configCurveType % marketDataCurveType ).str().c_str(), __FILE__, __LINE__ );
 		}
 		if (curveTypeEnum != etrading::FX_CURVETYPE)
 		{
-			throw LACoreInvalidData( ( boost::format("#Error: CurveGenerator CurveType \"%s\" is not FX" )
+			throw AQLCoreInvalidData( ( boost::format("#Error: CurveGenerator CurveType \"%s\" is not FX" )
                                    % configCurveType ).str().c_str(), __FILE__, __LINE__ );
 		}
 
@@ -381,7 +381,7 @@ namespace validation
 	*	@param [in]	termDiscountCurveIndex	termDiscountCurveIndex
 	*	@return		FxRate on curve as of date
 	*/
-	double tryMeLWOFXSpotToAsOfDate(const double fxSpot, const LADate& fxSpotDate, const std::string& baseCurveCollection, const std::string& baseDiscountCurveIndex, const std::string& termCurveCollection, const std::string& termDiscountCurveIndex)
+	double tryMeLWOFXSpotToAsOfDate(const double fxSpot, const AQLDate& fxSpotDate, const std::string& baseCurveCollection, const std::string& baseDiscountCurveIndex, const std::string& termCurveCollection, const std::string& termDiscountCurveIndex)
 	{
 		VALID_EXCEPTION_START
 
@@ -405,7 +405,7 @@ namespace validation
 	*	@param [in]	termDiscountCurveIndex	termDiscountCurveIndex
 	*	@return		FxRate on curve as of date
 	*/
-	double tryMeLWOFXAsOfDateToSpot(const double fxAsOfDateRate, const LADate& fxSpotDate, const std::string& baseCurveCollection, const std::string& baseDiscountCurveIndex, const std::string& termCurveCollection, const std::string& termDiscountCurveIndex)
+	double tryMeLWOFXAsOfDateToSpot(const double fxAsOfDateRate, const AQLDate& fxSpotDate, const std::string& baseCurveCollection, const std::string& baseDiscountCurveIndex, const std::string& termCurveCollection, const std::string& termDiscountCurveIndex)
 	{
 		VALID_EXCEPTION_START
 

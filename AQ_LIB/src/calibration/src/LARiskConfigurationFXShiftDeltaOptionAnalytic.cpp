@@ -23,7 +23,7 @@
 #include "LAScenarioConfigurationManager.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
-#include "LALinearFunc.h"
+#include "AQLLinearFunc.h"
 
 using namespace std;
 
@@ -31,7 +31,7 @@ using namespace std;
 /*!
 
 */
-LARiskConfigurationFXShiftDeltaOptionAnalytic::LARiskConfigurationFXShiftDeltaOptionAnalytic(const LAString& risktype)
+LARiskConfigurationFXShiftDeltaOptionAnalytic::LARiskConfigurationFXShiftDeltaOptionAnalytic(const AQLString& risktype)
 : LARiskConfigurationFXShiftDelta()
 {
 	mAnalyticRiskType = risktype;
@@ -46,8 +46,8 @@ LARiskConfigurationFXShiftDeltaOptionAnalytic::~LARiskConfigurationFXShiftDeltaO
 }
 
 
-vector<pair<LAString, vector<LAObject *> > >
-LARiskConfigurationFXShiftDeltaOptionAnalytic::createRiskEntity(LAObjectPool &objPool) const
+vector<pair<AQLString, vector<AQLObject *> > >
+LARiskConfigurationFXShiftDeltaOptionAnalytic::createRiskEntity(AQLObjectPool &objPool) const
 {
 	return LARiskConfiguration::createOptionAnalyticRiskEntity(objPool);
 }
@@ -59,7 +59,7 @@ LARiskConfigurationFXShiftDeltaOptionAnalytic::createRiskEntity(LAObjectPool &ob
 	@param[out] e
 */
 void
-LARiskConfigurationFXShiftDeltaOptionAnalytic::setUpTargetNames(const LAString &ccy, LAObject &e, LADataInstance &dataInstance) const
+LARiskConfigurationFXShiftDeltaOptionAnalytic::setUpTargetNames(const AQLString &ccy, AQLObject &e, AQLDataInstance &dataInstance) const
 {
 	return LARiskConfiguration::setUpOptionAnalyticTargetNames(ccy,e);
 }
@@ -69,10 +69,10 @@ LARiskConfigurationFXShiftDeltaOptionAnalytic::setUpTargetNames(const LAString &
 	@param[in] fx
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationFXShiftDeltaOptionAnalytic::createScenario1Entity(const LAString &fx, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationFXShiftDeltaOptionAnalytic::createScenario1Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index)  const
 {
 	return LARiskConfiguration::createOptionAnalyticEntity(fx,dataInstance,index);
 }
@@ -84,49 +84,49 @@ LARiskConfigurationFXShiftDeltaOptionAnalytic::createScenario1Entity(const LAStr
 	@param[in] key fx
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationFXShiftDeltaOptionAnalytic::createScenario2Entity(const LAString &fx, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationFXShiftDeltaOptionAnalytic::createScenario2Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index)  const
 {	
 	(void)fx;(void)dataInstance;(void)index;
-	return vector<LAObject *>(0);
+	return vector<AQLObject *>(0);
 }
 
 /*!
     @brief return coefficient1
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXShiftDeltaOptionAnalytic::getCoefficient1(const LAString &fx) const
+AQLString
+LARiskConfigurationFXShiftDeltaOptionAnalytic::getCoefficient1(const AQLString &fx) const
 {
 	(void)fx;
-	return LAString("0.0:") + LAString("1.0") + LAString(":0.0");
+	return AQLString("0.0:") + AQLString("1.0") + AQLString(":0.0");
 }
 
 /*!
     @brief return riskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationFXShiftDeltaOptionAnalytic::getRiskName(void) const
 {
-	LAString ret = LARiskConfigurationFXShiftDelta::getRiskName();
-	ret += LAString("_") + RISK_FRONT_OPTIONANALYTIC;
+	AQLString ret = LARiskConfigurationFXShiftDelta::getRiskName();
+	ret += AQLString("_") + RISK_FRONT_OPTIONANALYTIC;
 	return ret;	
 }
 
 double 
-LARiskConfigurationFXShiftDeltaOptionAnalytic::getShiftValForOptionAnalytic(const LAString &fx) const
+LARiskConfigurationFXShiftDeltaOptionAnalytic::getShiftValForOptionAnalytic(const AQLString &fx) const
 {
 	double shiftval = getShiftVal(fx,SCENARIO_1);
 	const double divUnit = getDivUnit(fx);
 	if (divUnit == 0.0)
 	{	
-		throw LACoreInvalidData("Divid unit = 0 !!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Divid unit = 0 !!", __FILE__, __LINE__);
 	}
 	
 	shiftval /= divUnit;

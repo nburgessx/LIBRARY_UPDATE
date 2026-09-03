@@ -24,7 +24,7 @@
 
 
 #include "LARatesEulerMaruyama.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAPriceDriftFX.h"
 
 using namespace std;
@@ -61,7 +61,7 @@ LARatesEulerMaruyama::~LARatesEulerMaruyama()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesEulerMaruyama::clone() const
 {
     try 
@@ -70,7 +70,7 @@ LARatesEulerMaruyama::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -107,8 +107,8 @@ LARatesEulerMaruyama::getType() const
 */
 void
 LARatesEulerMaruyama::integral(double ts, double te, 
-							vector<LAFunctionBase*>::const_iterator drift,										
-							vector<vector<LAFunctionBase*> >::const_iterator vol,
+							vector<AQLFunctionBase*>::const_iterator drift,										
+							vector<vector<AQLFunctionBase*> >::const_iterator vol,
 							DoubleArray::const_iterator	bm,
 							SCALARARRAY::iterator	x_in_out,
 							unsigned int varnum
@@ -118,7 +118,7 @@ LARatesEulerMaruyama::integral(double ts, double te,
 		&& vol->size() > 1)
 	{
 		//error
-		throw LACoreInvalidData("Multi volatility is not support when SDE IntegralType is LOG", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Multi volatility is not support when SDE IntegralType is LOG", __FILE__, __LINE__);
 	}
 
 	SCALARARRAY::const_iterator it = x_in_out;
@@ -144,8 +144,8 @@ LARatesEulerMaruyama::integral(double ts, double te,
 		}
 		else if (mSdeType == dX && mIntegralType == LOG_INTEGRAL_LOG_OUTPUT)
 		{
-			double v = (*vol)[0]->operator()(mVar) / LAMath::exp(mVar[i + 1]);
-			del += ((*drift++)->operator()(mVar) / LAMath::exp(mVar[i + 1]) - 0.5 * v * v) * (te - ts);		
+			double v = (*vol)[0]->operator()(mVar) / AQLMath::exp(mVar[i + 1]);
+			del += ((*drift++)->operator()(mVar) / AQLMath::exp(mVar[i + 1]) - 0.5 * v * v) * (te - ts);		
 		}
 		else if (mSdeType == DIVIDEdXbyX && (mIntegralType == LOG_INTEGRAL || mIntegralType == LOG_INTEGRAL_LOG_OUTPUT))
 		{
@@ -162,7 +162,7 @@ LARatesEulerMaruyama::integral(double ts, double te,
 			else if (mSdeType == dX && mIntegralType == LOG_INTEGRAL)
 				del += (*vol)[0]->operator()(mVar) / mVar[i + 1] * (*bm++);
 			else if (mSdeType == dX && mIntegralType == LOG_INTEGRAL_LOG_OUTPUT)
-				del += (*vol)[0]->operator()(mVar) / LAMath::exp(mVar[i + 1]) * (*bm++);
+				del += (*vol)[0]->operator()(mVar) / AQLMath::exp(mVar[i + 1]) * (*bm++);
 			else if (mSdeType == DIVIDEdXbyX && (mIntegralType == LOG_INTEGRAL || mIntegralType == LOG_INTEGRAL_LOG_OUTPUT))
 				del += (*vol)[0]->operator()(mVar) * (*bm++);	
 		}
@@ -192,9 +192,9 @@ LARatesEulerMaruyama::integral(double ts, double te,
 		else
 		{
 #ifdef __SCALAR_FLOAT__
-			(*x_in_out) *= static_cast<SCALAR>(LAMath::exp(del));
+			(*x_in_out) *= static_cast<SCALAR>(AQLMath::exp(del));
 #else		
-			(*x_in_out) *= LAMath::exp(del);
+			(*x_in_out) *= AQLMath::exp(del);
 #endif
 		}
 		vol++;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -11,11 +11,11 @@ namespace validation
     *  @param [in]		curveConv			General curve properties such as asofdate, ccy, interp, etc
     *  @param [in]		fxFwdConv			FX forward conventions
     */
-    LAString tryMeLWOCurveCreateFXForwards( const std::string& lwoCurveName,
-                                            const LAString& curveCollectionInput,
-                                            const LAString& staticDataTableInput,
-                                            const LAString& curveIndexInput,
-                                            const LAStringMatrix& curveConv,
-                                            const LAStringMatrix& fxFwdConv );
+    AQLString tryMeLWOCurveCreateFXForwards( const std::string& lwoCurveName,
+                                            const AQLString& curveCollectionInput,
+                                            const AQLString& staticDataTableInput,
+                                            const AQLString& curveIndexInput,
+                                            const AQLStringMatrix& curveConv,
+                                            const AQLStringMatrix& fxFwdConv );
 }
 

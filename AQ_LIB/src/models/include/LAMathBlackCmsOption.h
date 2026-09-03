@@ -3,7 +3,7 @@
 #include <vector>
 
 //// Forward Declaration ////
-class LADist;
+class AQLDist;
 using namespace std;
 
 /*! 

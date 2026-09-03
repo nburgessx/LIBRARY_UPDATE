@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -15,6 +15,6 @@ namespace validation
     double tryMirInterpolation(	const DoubleVector& array1,
                                 const DoubleVector& array2,
                                 double point,
-                                const LAString& interpolation );
+                                const AQLString& interpolation );
 
 }

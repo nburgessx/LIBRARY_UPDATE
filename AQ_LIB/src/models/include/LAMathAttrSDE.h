@@ -5,10 +5,10 @@
 #endif
 
 // INCLUDE
-#include "LAString.h"
-#include "LAPriceDataType.h"
-#include "LACoreFunctionHolder.h"
-#include "LACoreTemplateType.h"
+#include "AQLString.h"
+#include "AQLPriceDataType.h"
+#include "AQLCoreFunctionHolder.h"
+#include "AQLCoreTemplateType.h"
 
 
 // LAMathAttrSDE's Data ID
@@ -27,13 +27,13 @@ enum SDEPATH_TYPE {
 
 
 class LARatesSDEBase;
-class LAIntegralBase;
+class AQLIntegralBase;
 
 //============== DECLARE LAMathAttrSDE ============================
 /*! 
     @brief Declaration of class representing a sde data
 */
-class LAMathAttrSDE : public LAPriceDataType
+class LAMathAttrSDE : public AQLPriceDataType
 {
 public:
 //  LIFECYCLE
@@ -44,19 +44,19 @@ public:
     LAMathAttrSDE(const LAMathAttrSDE& attr);
 
 	// constructor
-    LAMathAttrSDE(const LACoreFunctionHolder& h, const LAString& name, SDEPATH_TYPE type, const LAString& currency);
+    LAMathAttrSDE(const AQLCoreFunctionHolder& h, const AQLString& name, SDEPATH_TYPE type, const AQLString& currency);
 
     // constructor
-	LAMathAttrSDE(LARatesSDEBase* b, const LAString& name, SDEPATH_TYPE type, const LAString& currency);
+	LAMathAttrSDE(LARatesSDEBase* b, const AQLString& name, SDEPATH_TYPE type, const AQLString& currency);
 	// destructor
     virtual ~LAMathAttrSDE(void);
 
 //  QUERY
 	// copy this object
-    virtual LAPriceDataType*        clone() const;// %%% COVARIANT RETURN %%% 
+    virtual AQLPriceDataType*        clone() const;// %%% COVARIANT RETURN %%% 
 
 	// get string representation of SDE which this object holds
-    virtual LAString            convertToString(void) const;
+    virtual AQLString            convertToString(void) const;
 	
 	// check whether this class derives from base class with type id
     bool                        isTypeOf(function_t id) const;
@@ -72,7 +72,7 @@ public:
 	/*!
 		@return currency
 	*/
-	const LAString&				getCurrency(void) const {return mCurrency;}
+	const AQLString&				getCurrency(void) const {return mCurrency;}
 	// return sde path type
 	/*!
 		@return sde path type (IR, FX)
@@ -81,13 +81,13 @@ public:
 	
 	//  OPERATOR    
     // set SDE object with string repsentation "str"
-    virtual void                convertFromString(const LAString& str);
+    virtual void                convertFromString(const AQLString& str);
         
 	// set SDE object specified by "name"
-    void                        setSDE(const LAString& name, SDEPATH_TYPE type, const LAString& currency);
+    void                        setSDE(const AQLString& name, SDEPATH_TYPE type, const AQLString& currency);
 	// set SDE object with name "name"
     void                        setSDE(LARatesSDEBase* b, 
-                                            const LAString& name, SDEPATH_TYPE type, const LAString& currency);
+                                            const AQLString& name, SDEPATH_TYPE type, const AQLString& currency);
 
 //  VARIATION METHODS
 
@@ -97,12 +97,12 @@ public:
 
 protected:
 	// initialize this class with another
-    virtual LAPriceDataType&        assignment(const LAPriceDataType& a);
+    virtual AQLPriceDataType&        assignment(const AQLPriceDataType& a);
 	// compare this object with another
-    virtual int                 compare(const LAPriceDataType& a) const;
+    virtual int                 compare(const AQLPriceDataType& a) const;
 
 	//	set up the pointer to data holder
-    virtual void                setHolder(LADataHolder* holder);
+    virtual void                setHolder(AQLDataHolder* holder);
 
 private:
                                 //=========================================
@@ -110,9 +110,9 @@ private:
     void                        setSDE();
 
     LARatesSDEBase*				mpSDE;			// pointer to SDE object 
-	LACoreFunctionHolder            mFnHolder;		// pointer to function holder
-	LAString                    mName;			// SDE name
-	LAString					mCurrency;		// currency of sde path
+	AQLCoreFunctionHolder            mFnHolder;		// pointer to function holder
+	AQLString                    mName;			// SDE name
+	AQLString					mCurrency;		// currency of sde path
 	SDEPATH_TYPE				mType;			// type of path (IR, FX,...)
 
 };

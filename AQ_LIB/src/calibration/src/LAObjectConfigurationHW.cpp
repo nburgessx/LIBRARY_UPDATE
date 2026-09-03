@@ -19,9 +19,9 @@
 
 
 #include "LAObjectConfigurationHW.h"
-#include "LAString.h"
-#include "LADataBasics.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLString.h"
+#include "AQLDataBasics.h"
+#include "AQLPriceDataDayCount.h"
 #include "LACoreDataService.h"
 #include "LAMarketDataHW.h"
 #include "LADefinitions.h"
@@ -55,12 +55,12 @@ LAObjectConfigurationHW::getSDETimeGrid(DoubleArray &timeGrid) const
 {
 	timeGrid.clear();
 	int maxTerm = LACoreDataService::getContext(CONTEXT_KEY_MAXTERM).getIntValue();
-	LAString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
-	LAPriceDataDayCount dayCount;
+	AQLString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
+	AQLPriceDataDayCount dayCount;
 	dayCount.convertFromString(dayCountStr);
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 
-	const LAString canonicalFreq = LACoreDataService::getContext(ARG_KEY_CANONICALFREQ);
+	const AQLString canonicalFreq = LACoreDataService::getContext(ARG_KEY_CANONICALFREQ);
 	LAMarketDataHW::getCanonicalGrid(timeGrid, asOfDate, dayCount, maxTerm, false, &canonicalFreq);
 	timeGrid.pop_back();
 }

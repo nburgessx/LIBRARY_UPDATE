@@ -33,7 +33,7 @@ namespace etrading
 	// =============================== SWAP RISK RESULTS CLASS ==================================================================
     
     // Discount Risk Constructor
-    SwapRiskResults::SwapRiskResults( const LADate & asOfDate, const SwapDiscountRiskData & swapDiscountRiskData )
+    SwapRiskResults::SwapRiskResults( const AQLDate & asOfDate, const SwapDiscountRiskData & swapDiscountRiskData )
 		: asOfDate_( asOfDate ),
           paymentDates_(swapDiscountRiskData.paymentDates_),
 		  coupons_(swapDiscountRiskData.coupons_),
@@ -45,7 +45,7 @@ namespace etrading
     }
 
 	// Forward Risk Constructor
-	SwapRiskResults::SwapRiskResults( const LADate & asOfDate, const SwapForwardRiskData & swapForwardRiskData )
+	SwapRiskResults::SwapRiskResults( const AQLDate & asOfDate, const SwapForwardRiskData & swapForwardRiskData )
 		: asOfDate_( asOfDate ),
           paymentDates_(),
 		  coupons_(),
@@ -57,7 +57,7 @@ namespace etrading
     }
 	
 	// Discount & Forward Risk Constructor
-	SwapRiskResults::SwapRiskResults( const LADate & asOfDate, const SwapDiscountRiskData & swapDiscountRiskData, const SwapForwardRiskData & swapForwardRiskData )
+	SwapRiskResults::SwapRiskResults( const AQLDate & asOfDate, const SwapDiscountRiskData & swapDiscountRiskData, const SwapForwardRiskData & swapForwardRiskData )
 		: asOfDate_( asOfDate ),
           paymentDates_(swapDiscountRiskData.paymentDates_),
 		  coupons_(swapDiscountRiskData.coupons_),

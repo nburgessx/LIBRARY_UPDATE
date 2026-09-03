@@ -5,7 +5,7 @@
 
 // Includes
 #include "LAMathDateUtilities.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLPriceDataSlidingRule.h"
 
 // Namespaces
 using namespace etrading;
@@ -16,19 +16,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_11Days_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160611");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160611");
+		AQLString term = "1Y";
 		
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160613");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160613");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -45,19 +45,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_11Days_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160611");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160611");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160613");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160613");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -73,19 +73,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_11Days_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160611");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160611");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -101,19 +101,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_11Days_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160611");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160611");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -129,19 +129,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_11Days_DefaultShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160611");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160611");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = NONE_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160613");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160613");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -157,19 +157,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_7Days_DefaultShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = NONE_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160609");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160609");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -185,19 +185,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_6Days_DefaultLongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160608");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = NONE_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160608");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160608");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -213,19 +213,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With4DayStub_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170606");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170606");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160606");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160606");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -241,19 +241,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With4DayStub_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170606");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170606");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170606");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170606");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -269,19 +269,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With4DayStub_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170606");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170606");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -297,19 +297,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With4DayStub_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170606");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170606");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -325,19 +325,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With4DayStub_DefaultToLongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170606");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170606");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = NONE_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170606");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170606");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -353,19 +353,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With6DayStub_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170608");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160608");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160608");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -381,19 +381,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With6DayStub_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170608");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170608");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170608");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -409,19 +409,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With6DayStub_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170608");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -437,19 +437,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With6DayStub_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170608");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -465,19 +465,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With6DayStub_DefaultToLongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170608");
+		AQLString term = "1Y";
 		
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = NONE_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170608");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170608");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -493,19 +493,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With7DayStub_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160609");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160609");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -521,19 +521,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With7DayStub_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170609");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170609");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -549,19 +549,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With7DayStub_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -577,19 +577,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With7DayStub_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -605,19 +605,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With7DayStub_DefaultToShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170609");
+		AQLString term = "1Y";
 		
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = NONE_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160609");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160609");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -633,19 +633,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With8DayStub_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160610");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160610");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -661,19 +661,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With8DayStub_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170612");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170612");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -689,19 +689,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With8DayStub_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -717,19 +717,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With8DayStub_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -745,19 +745,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_With8DayStub_DefaultToShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = NONE_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160610");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160610");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -773,18 +773,18 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With6DayStub_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210608");
-		LAString term = "1Y";
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210608");
+		AQLString term = "1Y";
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160608");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160608");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -800,19 +800,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With6DayStub_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210608");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170608");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170608");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -828,19 +828,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With6DayStub_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210608");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20210602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20210602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -856,19 +856,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With6DayStub_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210608");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20200602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20200602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -884,19 +884,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With6DayStub_DefaultToLongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210608");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = NONE_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170608");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170608");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -912,18 +912,18 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With7DayStub_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210609");
-		LAString term = "1Y";
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210609");
+		AQLString term = "1Y";
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160609");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160609");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -939,19 +939,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With7DayStub_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210608");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210608");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170608");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170608");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -967,19 +967,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With7DayStub_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20210602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20210602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -995,19 +995,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With7DayStub_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20200602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20200602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1023,19 +1023,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With7DayStub_DefaultToShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = NONE_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160609");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160609");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1051,19 +1051,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With8DayStub_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160610");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160610");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1079,19 +1079,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With8DayStub_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20170612");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170612");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1107,19 +1107,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With8DayStub_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20210602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20210602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1135,19 +1135,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With8DayStub_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20200602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20200602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1163,19 +1163,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCoupons_With8DayStub_DefaultToShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = NONE_STUBTYPE;
-		const LAString* rollConvention = NULL;
+		const AQLString* rollConvention = NULL;
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, rollConvention, stubType );
 
-		LADate expectedDate("20160610");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160610");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1191,19 +1191,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_IMM_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160610");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160610");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1219,19 +1219,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_IMM_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160610");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160610");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1247,19 +1247,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_IMM_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1275,19 +1275,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_IMM_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1303,19 +1303,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCouponPlusStub_IMM_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160615");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160615");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1331,19 +1331,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCouponPlusStub_IMM_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20170612");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170612");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1359,19 +1359,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCouponPlusStub_IMM_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1387,19 +1387,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCouponPlusStub_IMM_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1415,19 +1415,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCouponsPlusStub_IMM_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160615");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160615");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1443,19 +1443,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCouponsPlusStub_IMM_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20170621");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170621");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1471,19 +1471,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCouponsPlusStub_IMM_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210711");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210711");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20210616");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20210616");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1499,19 +1499,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCouponsPlusStub_IMM_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210711");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210711");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString rollConvention = "IMM";
+		const AQLString rollConvention = "IMM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20200617");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20200617");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1527,19 +1527,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_EOM_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160610");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160610");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1555,19 +1555,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_EOM_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160610");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160610");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1583,19 +1583,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_EOM_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1611,19 +1611,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_EOM_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1639,19 +1639,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCouponPlusStub_EOM_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160630");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160630");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1667,19 +1667,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCouponPlusStub_EOM_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20170612");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170612");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1695,19 +1695,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCouponPlusStub_EOM_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1723,19 +1723,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCouponPlusStub_EOM_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170610");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170610");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1751,19 +1751,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCouponsPlusStub_EOM_ShortStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "EOm";
+		const AQLString rollConvention = "EOm";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160630");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160630");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1779,19 +1779,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCouponsPlusStub_EOM_LongStart )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210609");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210609");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20170630");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170630");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1807,19 +1807,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCouponsPlusStub_EOM_ShortEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210711");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210711");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20210630");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20210630");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1835,19 +1835,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MultipleCouponsPlusStub_EOM_LongEnd )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210711");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210711");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString rollConvention = "EOM";
+		const AQLString rollConvention = "EOM";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20200630");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20200630");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1863,19 +1863,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_StubOnly_IregularSchedule )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20160702");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20160702");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "NORMAL";
+		const AQLString rollConvention = "NORMAL";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160704");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160704");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1886,19 +1886,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCoupon_RegularSchedule )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170602");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170602");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "NORMAL";
+		const AQLString rollConvention = "NORMAL";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20170602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1909,19 +1909,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_SingleCouponWithStub_IrregularSchedule )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20170702");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20170702");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "NORMAL";
+		const AQLString rollConvention = "NORMAL";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160704");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160704");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1932,19 +1932,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MutlipleCoupons_RegularSchedule )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210602");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210602");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "NORMAL";
+		const AQLString rollConvention = "NORMAL";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20170602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1955,19 +1955,19 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MutlipleCoupons_IrregularSchedule )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210702");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210702");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "NORMAL";
+		const AQLString rollConvention = "NORMAL";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
-		LADate expectedDate("20160704");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160704");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
@@ -1978,32 +1978,32 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MutlipleCoupons_NoStub_DateSchedule )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210602");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210602");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "NORMAL";
+		const AQLString rollConvention = "NORMAL";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		// Adjusted
-		LADate expectedDate("20170602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
 
 		// Unadjusted Coupon Date Schedule
-		std::vector<LADate> actualSchedule = stubDateAndType.unadjustedSchedule_;
-		std::vector<LADate> expectedSchedule = { LADate("20160602"),
-												 LADate("20170602"),
-												 LADate("20180602"),
-												 LADate("20190602"),
-												 LADate("20200602"),
-												 LADate("20210602") };
+		std::vector<AQLDate> actualSchedule = stubDateAndType.unadjustedSchedule_;
+		std::vector<AQLDate> expectedSchedule = { AQLDate("20160602"),
+												 AQLDate("20170602"),
+												 AQLDate("20180602"),
+												 AQLDate("20190602"),
+												 AQLDate("20200602"),
+												 AQLDate("20210602") };
 		
 		ASSERT_EQ( expectedSchedule.size(), actualSchedule.size() );
 		for ( size_t i = 0; i < actualSchedule.size(); ++i )
@@ -2014,33 +2014,33 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MutlipleCoupons_ShortStart_DateSchedule )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210702");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210702");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_START_STUBTYPE;
-		const LAString rollConvention = "NORMAL";
+		const AQLString rollConvention = "NORMAL";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		// Adjusted
-		LADate expectedDate("20160704");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20160704");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
 
 		// Unadjusted Coupon Date Schedule
-		std::vector<LADate> actualSchedule = stubDateAndType.unadjustedSchedule_;
-		std::vector<LADate> expectedSchedule = { LADate("20160602"),
-												 LADate("20160702"),
-												 LADate("20170702"),
-												 LADate("20180702"),
-												 LADate("20190702"),
-												 LADate("20200702"),
-												 LADate("20210702") };
+		std::vector<AQLDate> actualSchedule = stubDateAndType.unadjustedSchedule_;
+		std::vector<AQLDate> expectedSchedule = { AQLDate("20160602"),
+												 AQLDate("20160702"),
+												 AQLDate("20170702"),
+												 AQLDate("20180702"),
+												 AQLDate("20190702"),
+												 AQLDate("20200702"),
+												 AQLDate("20210702") };
 		
 		ASSERT_EQ( expectedSchedule.size(), actualSchedule.size() );
 		for ( size_t i = 0; i < actualSchedule.size(); ++i )
@@ -2051,32 +2051,32 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MutlipleCoupons_LongStart_DateSchedule )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210702");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210702");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_START_STUBTYPE;
-		const LAString rollConvention = "NORMAL";
+		const AQLString rollConvention = "NORMAL";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		// Adjusted
-		LADate expectedDate("20170703");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20170703");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
 
 		// Unadjusted Coupon Date Schedule
-		std::vector<LADate> actualSchedule = stubDateAndType.unadjustedSchedule_;
-		std::vector<LADate> expectedSchedule = { LADate("20160602"),
-												 LADate("20170702"),
-												 LADate("20180702"),
-												 LADate("20190702"),
-												 LADate("20200702"),
-												 LADate("20210702") };
+		std::vector<AQLDate> actualSchedule = stubDateAndType.unadjustedSchedule_;
+		std::vector<AQLDate> expectedSchedule = { AQLDate("20160602"),
+												 AQLDate("20170702"),
+												 AQLDate("20180702"),
+												 AQLDate("20190702"),
+												 AQLDate("20200702"),
+												 AQLDate("20210702") };
 		
 		ASSERT_EQ( expectedSchedule.size(), actualSchedule.size() );
 		for ( size_t i = 0; i < actualSchedule.size(); ++i )
@@ -2087,33 +2087,33 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MutlipleCoupons_ShortEnd_DateSchedule )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210702");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210702");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = SHORT_END_STUBTYPE;
-		const LAString rollConvention = "NORMAL";
+		const AQLString rollConvention = "NORMAL";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		// Adjusted
-		LADate expectedDate("20210602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20210602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
 
 		// Unadjusted Coupon Date Schedule
-		std::vector<LADate> actualSchedule = stubDateAndType.unadjustedSchedule_;
-		std::vector<LADate> expectedSchedule = { LADate("20160602"),
-												 LADate("20170602"),
-												 LADate("20180602"),
-												 LADate("20190602"),
-												 LADate("20200602"),
-												 LADate("20210602"),
-												 LADate("20210702") };
+		std::vector<AQLDate> actualSchedule = stubDateAndType.unadjustedSchedule_;
+		std::vector<AQLDate> expectedSchedule = { AQLDate("20160602"),
+												 AQLDate("20170602"),
+												 AQLDate("20180602"),
+												 AQLDate("20190602"),
+												 AQLDate("20200602"),
+												 AQLDate("20210602"),
+												 AQLDate("20210702") };
 		
 		ASSERT_EQ( expectedSchedule.size(), actualSchedule.size() );
 		for ( size_t i = 0; i < actualSchedule.size(); ++i )
@@ -2124,32 +2124,32 @@ namespace google_test
 
 	TEST_F( TestStubDates, UNIT_MutlipleCoupons_LongEnd_DateSchedule )
     {
-		const LADate startDate("20160602");
-		const LADate endDate("20210702");
-		LAString term = "1Y";
+		const AQLDate startDate("20160602");
+		const AQLDate endDate("20210702");
+		AQLString term = "1Y";
 
-		const LAPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
-		const LAPriceDataCalendar calendar(LAStringVector(1,"TGT"));
+		const AQLPriceDataSlidingRule busDayAdj(SLIDING_RULE_MOD_FOLLOWING);
+		const AQLPriceDataCalendar calendar(AQLStringVector(1,"TGT"));
 		const StubTypeEnum stubType = LONG_END_STUBTYPE;
-		const LAString rollConvention = "NORMAL";
+		const AQLString rollConvention = "NORMAL";
 
 		StubDateAndType stubDateAndType = LAMathDateUtilities::getStubDateAndType( startDate, endDate, term, busDayAdj, calendar, &rollConvention, stubType );
 
 		// Adjusted
-		LADate expectedDate("20200602");
-		LADate actualDate = stubDateAndType.stubDate_;
+		AQLDate expectedDate("20200602");
+		AQLDate actualDate = stubDateAndType.stubDate_;
 
 		// Stub Date Check
 		EXPECT_EQ( expectedDate, actualDate );
 
 		// Unadjusted Coupon Date Schedule
-		std::vector<LADate> actualSchedule = stubDateAndType.unadjustedSchedule_;
-		std::vector<LADate> expectedSchedule = { LADate("20160602"),
-												 LADate("20170602"),
-												 LADate("20180602"),
-												 LADate("20190602"),
-												 LADate("20200602"),
-												 LADate("20210702") };
+		std::vector<AQLDate> actualSchedule = stubDateAndType.unadjustedSchedule_;
+		std::vector<AQLDate> expectedSchedule = { AQLDate("20160602"),
+												 AQLDate("20170602"),
+												 AQLDate("20180602"),
+												 AQLDate("20190602"),
+												 AQLDate("20200602"),
+												 AQLDate("20210702") };
 		
 		ASSERT_EQ( expectedSchedule.size(), actualSchedule.size() );
 		for ( size_t i = 0; i < actualSchedule.size(); ++i )

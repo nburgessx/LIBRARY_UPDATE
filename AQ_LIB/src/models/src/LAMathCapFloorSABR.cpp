@@ -4,14 +4,14 @@
 #pragma warning(disable:4786)
 #endif
 
-#include <LADataInstance.h>
-#include <LADataBasics.h>
-#include <LACoreTemplateType.h>
-#include "LAInterpolationBase.h"
-#include "LANl2sol.h"
+#include <AQLDataInstance.h>
+#include <AQLDataBasics.h>
+#include <AQLCoreTemplateType.h>
+#include "AQLInterpolationBase.h"
+#include "AQLNl2sol.h"
 #include <LAMathYieldCurve.h>
-#include "LASplineInterpolation.h"
-#include <LAMathDefine.h>
+#include "AQLSplineInterpolation.h"
+#include <AQLMathDefine.h>
 #include <LAMathDateCalculations.h>
 #include "ConstantDeclarations.h"
 #include "LAMathCapFloorSABR.h"
@@ -19,7 +19,7 @@
 #include "LAMathIRVanillaFuncUtility.h"
 #include "LAMathCurveFuncUtility.h"
 
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAAnalyticFormula.h"
 #include "LAMathSABR.h"
 
@@ -27,9 +27,9 @@
 	@brief Default constructor
 */
 LAMathCapFloorConvention::LAMathCapFloorConvention
-    ( const LAString& freq_,
-      const LAString& spotLag_, const LAString& daycount_, const LAString& paySlr_,
-      const LAString& payCal_, const LAString& fixCal_ )
+    ( const AQLString& freq_,
+      const AQLString& spotLag_, const AQLString& daycount_, const AQLString& paySlr_,
+      const AQLString& payCal_, const AQLString& fixCal_ )
 :freq(freq_), spotLag(spotLag_), daycount(daycount_)
 {
     paySlr.convertFromString(paySlr_);
@@ -40,9 +40,9 @@ LAMathCapFloorConvention::LAMathCapFloorConvention
 	@brief Default constructor
 */
 LAMathCapFloorConvention::LAMathCapFloorConvention
-    ( const LAString& freq_,
-      const LAString& spotLag_, const LAString& daycount_, const LAPriceDataSlidingRule& paySlr_,
-      const LAPriceDataCalendar& payCal_, const LAPriceDataCalendar& fixCal_ )
+    ( const AQLString& freq_,
+      const AQLString& spotLag_, const AQLString& daycount_, const AQLPriceDataSlidingRule& paySlr_,
+      const AQLPriceDataCalendar& payCal_, const AQLPriceDataCalendar& fixCal_ )
 :freq(freq_), spotLag(spotLag_), daycount(daycount_), paySlr(paySlr_), payCal(payCal_), fixCal(fixCal_) {}
 /*!
 	@brief Default destructor
@@ -54,14 +54,14 @@ LAMathCapFloorConvention::~LAMathCapFloorConvention(){}
 */
 LAMathCapFloorSABR::LAMathCapFloorSABR
     ( const IntVector& expiDate_, const vector<LAMathSABR_Hagan>& sabr_, 
-      LAInterpolationBase* pInter_, const LAMathCapFloorConvention& conv_, const LAString& curveID_,
-	  LAString foreCurveName_, LAString dfCurveName_)
+      AQLInterpolationBase* pInter_, const LAMathCapFloorConvention& conv_, const AQLString& curveID_,
+	  AQLString foreCurveName_, AQLString dfCurveName_)
 :expiDate(expiDate_), sabr(sabr_), pInter(pInter_), conv(conv_), curveID(curveID_), foreCurveName(foreCurveName_),
  dfCurveName(dfCurveName_)
 {
     if( expiDate_.size() != sabr_.size() )
     {
-        throw LACoreInvalidData("sizes are not same.",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("sizes are not same.",__FILE__,__LINE__);
     }
 }
                                    
@@ -70,17 +70,17 @@ LAMathCapFloorSABR::~LAMathCapFloorSABR(){}
 LAMathSABR_Hagan 
 LAMathCapFloorSABR::getSABRParam(unsigned int pos)
 {
-    if( pos >= sabr.size() ) throw LACoreInvalidData("position is over.",__FILE__,__LINE__);
+    if( pos >= sabr.size() ) throw AQLCoreInvalidData("position is over.",__FILE__,__LINE__);
 
     return sabr[pos];
 }
 
 void                                 
 LAMathCapFloorSABR::calibrateToCapVol
-    ( LADataInstance* dataInstance, LAMathSABRLimiter sabrLimiter, 
+    ( AQLDataInstance* dataInstance, LAMathSABRLimiter sabrLimiter, 
       const DoubleMatrix& capVol_mk, const DoubleVector& strikeVec, 
       const IntVector& capTerm_mon, const DoubleVector& weight, 
-      const LAString& target, DoubleMatrix& capletVol, DoubleMatrix& capVol )
+      const AQLString& target, DoubleMatrix& capletVol, DoubleMatrix& capVol )
 {
     capletVol.clear(); capVol.clear();
     const double eps = 0.000000001;
@@ -90,7 +90,7 @@ LAMathCapFloorSABR::calibrateToCapVol
 
     if( capVol_mk.size() != capTerm_mon.size() || capVol_mk[0].size() != strikeVec.size() )
     {
-        throw LACoreInvalidData("sizes are not same.",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("sizes are not same.",__FILE__,__LINE__);
     }
 
     size_t rowPos_mk,colPos;
@@ -200,7 +200,7 @@ LAMathCapFloorSABR::calibrateToCapVol
             {
                 double term = static_cast<double > (span*(row+1)) / 12;
                 double stdDev = pInter->value( term );
-                capVol[row][colPos] = LAMath::sqrt(stdDev / term);
+                capVol[row][colPos] = AQLMath::sqrt(stdDev / term);
             }
             x.clear();
             y.clear();
@@ -225,10 +225,10 @@ void
 LAMathCapFloorSABR::getCapletVol( unsigned int expiPos, unsigned int columPos, 
                                 DoubleMatrix& capletVols, double strike, double aveVol )
 {
-    if( expiPos>=capletVols.size() ) throw LACoreInvalidData("the number of caplet vol is shortage.",__FILE__,__LINE__);
-    if( expiPos>=expiDate.size() ) throw LACoreInvalidData("expity position is over.",__FILE__,__LINE__);
-    if( expiPos<0 ) throw LACoreInvalidData("expity position is too small.",__FILE__,__LINE__);
-    if( aveVol<=0. ) throw LACoreInvalidData("average vol is negative.",__FILE__,__LINE__);
+    if( expiPos>=capletVols.size() ) throw AQLCoreInvalidData("the number of caplet vol is shortage.",__FILE__,__LINE__);
+    if( expiPos>=expiDate.size() ) throw AQLCoreInvalidData("expity position is over.",__FILE__,__LINE__);
+    if( expiPos<0 ) throw AQLCoreInvalidData("expity position is too small.",__FILE__,__LINE__);
+    if( aveVol<=0. ) throw AQLCoreInvalidData("average vol is negative.",__FILE__,__LINE__);
 
     if( expiPos==0 ) 
     {
@@ -239,16 +239,16 @@ LAMathCapFloorSABR::getCapletVol( unsigned int expiPos, unsigned int columPos,
         double capPrem = getCapFloorPrem( expiPos, strike, aveVol );
         double capletPrem = capPrem;
 
-        map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-        LAString bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
-        map<LAString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
-	    if(it==var.end()) throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+        map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+        AQLString bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
+        map<AQLString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
+	    if(it==var.end()) throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	    LABlackScholesBase* p1 = it->second;
         AnalyticBKParam param; param.K = strike; 
         for(size_t i=0; i<expiPos; i++)
         {
             param.F = F[i]; param.Nu = Nu[i]; param.Te = Te[i]; param.Vol = capletVols[i][columPos];
-            if( param.Vol == 0. ) throw LACoreInvalidData("caplet vol is 0.",__FILE__,__LINE__); 
+            if( param.Vol == 0. ) throw AQLCoreInvalidData("caplet vol is 0.",__FILE__,__LINE__); 
             capletPrem -= p1->calc(param);
         }
         
@@ -260,8 +260,8 @@ LAMathCapFloorSABR::getCapletVol( unsigned int expiPos, unsigned int columPos,
 	    param.ErrorCheck();
 
 	    //Ready for p->calc method2
-	    bscomponent = LAString(BK) + LAString(VEGA)  + LAString(CALL) ;
-	    var = LACoreComponentManager::getBlackComponentMap();
+	    bscomponent = AQLString(BK) + AQLString(VEGA)  + AQLString(CALL) ;
+	    var = AQLCoreComponentManager::getBlackComponentMap();
 	    it = var.find(bscomponent);
 	    LABlackScholesBase* p2 = it->second;
 
@@ -269,14 +269,14 @@ LAMathCapFloorSABR::getCapletVol( unsigned int expiPos, unsigned int columPos,
         param.Vol = 10.; double highPrem = p1->calc(param);;
         if( lowPrem>capletPrem )
         {
-            LAString msg = "strike " + LAString(strike) + " term " + LAString(expiDate[expiPos]) + "M cap vol is too small.";
-            throw LACoreInvalidData( msg.getCString(),__FILE__,__LINE__);
+            AQLString msg = "strike " + AQLString(strike) + " term " + AQLString(expiDate[expiPos]) + "M cap vol is too small.";
+            throw AQLCoreInvalidData( msg.getCString(),__FILE__,__LINE__);
         }
 
         if( highPrem<capletPrem )
         {
-            LAString msg = "strike " + LAString(strike) + " term " + LAString(expiDate[expiPos]) + "M cap vol is too big.";
-            throw LACoreInvalidData( msg.getCString(),__FILE__,__LINE__);
+            AQLString msg = "strike " + AQLString(strike) + " term " + AQLString(expiDate[expiPos]) + "M cap vol is too big.";
+            throw AQLCoreInvalidData( msg.getCString(),__FILE__,__LINE__);
         }
 	    //Optimize
 	    capletVols[expiPos][columPos]  
@@ -288,9 +288,9 @@ double
 LAMathCapFloorSABR::getCapVol( unsigned int expiPos, unsigned int columPos, 
                              const DoubleMatrix& capletVols, double strike )
 {
-    if( expiPos>=capletVols.size() ) throw LACoreInvalidData("the number of caplet vol is shortage.",__FILE__,__LINE__);
-    if( expiPos>=expiDate.size() ) throw LACoreInvalidData("expity position is over.",__FILE__,__LINE__);
-    if( expiPos<0 ) throw LACoreInvalidData("expity position is too small.",__FILE__,__LINE__);
+    if( expiPos>=capletVols.size() ) throw AQLCoreInvalidData("the number of caplet vol is shortage.",__FILE__,__LINE__);
+    if( expiPos>=expiDate.size() ) throw AQLCoreInvalidData("expity position is over.",__FILE__,__LINE__);
+    if( expiPos<0 ) throw AQLCoreInvalidData("expity position is too small.",__FILE__,__LINE__);
 
     double ret;
     if( expiPos==0 ) 
@@ -301,26 +301,26 @@ LAMathCapFloorSABR::getCapVol( unsigned int expiPos, unsigned int columPos,
     {
         double capPrem = 0.;
 
-        map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-        LAString bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
-        map<LAString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
-	    if(it==var.end()) throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+        map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+        AQLString bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
+        map<AQLString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
+	    if(it==var.end()) throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	    LABlackScholesBase* p1 = it->second;
         AnalyticBKParam param; param.K = strike; 
         for(size_t i=0; i<=expiPos; i++)
         {
             param.F = F[i]; param.Nu = Nu[i]; param.Te = Te[i]; param.Vol = capletVols[i][columPos];
-            if( param.Vol == 0. ) throw LACoreInvalidData("caplet vol is 0.",__FILE__,__LINE__); 
+            if( param.Vol == 0. ) throw AQLCoreInvalidData("caplet vol is 0.",__FILE__,__LINE__); 
             capPrem += p1->calc(param);
         }
 
-        bscomponent = LAString(CF)+LAString(PREM)+LAString(CALL);
+        bscomponent = AQLString(CF)+AQLString(PREM)+AQLString(CALL);
         it = var.find(bscomponent); 
-	    if(it==var.end()) throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+	    if(it==var.end()) throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
         LABlackScholesBase* p2 = it->second;
-        bscomponent = LAString(CF)+LAString(VEGA)+LAString(CALL);
+        bscomponent = AQLString(CF)+AQLString(VEGA)+AQLString(CALL);
         it = var.find(bscomponent); 
-	    if(it==var.end()) throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+	    if(it==var.end()) throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
         LABlackScholesBase* p3 = it->second;
 
         AnalyticCFParam param2; 
@@ -339,14 +339,14 @@ LAMathCapFloorSABR::getCapVol( unsigned int expiPos, unsigned int columPos,
         param2.Vol = 10.; double highPrem = p2->calc(param2);
         if( lowPrem>capPrem )
         {
-            LAString msg = "strike " + LAString(strike) + " term " + LAString(expiDate[expiPos]) + "M cap vol is too small.";
-            throw LACoreInvalidData( msg.getCString(),__FILE__,__LINE__);
+            AQLString msg = "strike " + AQLString(strike) + " term " + AQLString(expiDate[expiPos]) + "M cap vol is too small.";
+            throw AQLCoreInvalidData( msg.getCString(),__FILE__,__LINE__);
         }
 
         if( highPrem<capPrem )
         {
-            LAString msg = "strike " + LAString(strike) + " term " + LAString(expiDate[expiPos]) + "M cap vol is too big.";
-            throw LACoreInvalidData( msg.getCString(),__FILE__,__LINE__);
+            AQLString msg = "strike " + AQLString(strike) + " term " + AQLString(expiDate[expiPos]) + "M cap vol is too big.";
+            throw AQLCoreInvalidData( msg.getCString(),__FILE__,__LINE__);
         }
 
         ret = LAMathIRVanillaFuncUtility::optimize(0.000001, 10., capPrem, param2, p2, p3);
@@ -356,22 +356,22 @@ LAMathCapFloorSABR::getCapVol( unsigned int expiPos, unsigned int columPos,
 }
 
 void
-LAMathCapFloorSABR::setCalibrationStack(LADataInstance* dataInstance)
+LAMathCapFloorSABR::setCalibrationStack(AQLDataInstance* dataInstance)
 {
     Nu.clear(); F.clear(); Te.clear();
 
     unsigned int span = LAMathYieldCurve::setSpanFromFrequency( conv.freq );
 
     for(size_t i=0; i<static_cast<int>(expiDate.back()/span); i++)
-        if( expiDate[i] != span * (i+1) ) throw LACoreInvalidData("frequency and expiry date are inconsistent.",__FILE__,__LINE__);
+        if( expiDate[i] != span * (i+1) ) throw AQLCoreInvalidData("frequency and expiry date are inconsistent.",__FILE__,__LINE__);
     
-    LAPriceDataSlidingRule slr_Pre; slr_Pre.convertFromString(PRE);
-    LAPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
-    const LADate asOfDate = dynamic_cast<const LADataDate& >(dataInstance->getObjectPool().getObject(curveID,ENCHKTYPE_ISDEFINED).
+    AQLPriceDataSlidingRule slr_Pre; slr_Pre.convertFromString(PRE);
+    AQLPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
+    const AQLDate asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(curveID,ENCHKTYPE_ISDEFINED).
                                 get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
-    const LADate spotDate = LAMathDateCalculations::getDate(asOfDate, conv.spotLag, slr_Fol, &conv.payCal, true);
-    const LAString maxDate = LAString( static_cast<int>(expiDate.back() + span) ) + LAString("M");
-    const LADate endDate = LAMathDateCalculations::getDate(spotDate, maxDate, conv.paySlr, &conv.payCal, true);
+    const AQLDate spotDate = LAMathDateCalculations::getDate(asOfDate, conv.spotLag, slr_Fol, &conv.payCal, true);
+    const AQLString maxDate = AQLString( static_cast<int>(expiDate.back() + span) ) + AQLString("M");
+    const AQLDate endDate = LAMathDateCalculations::getDate(spotDate, maxDate, conv.paySlr, &conv.payCal, true);
     DateVector payVec;
     LAMathDateCalculations::generateSchedule(spotDate, endDate, conv.freq,true,NULL,NULL,0,payVec,&conv.paySlr,&conv.payCal);
     DateVector fixVec(payVec.size());
@@ -384,8 +384,8 @@ LAMathCapFloorSABR::setCalibrationStack(LADataInstance* dataInstance)
     yc.getCalendar() = conv.payCal;
 	yc.getFrequency().convertFromString("SIMPLE");
 
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-    LAPriceDataDayCount daycount; daycount.convertFromString(conv.daycount);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLPriceDataDayCount daycount; daycount.convertFromString(conv.daycount);
     
 	LAMathYieldCurve* yc2 = dynamic_cast<LAMathYieldCurve* >(yc.clone());
 	yc.setCurveType(foreCurveName);
@@ -415,12 +415,12 @@ double
 LAMathCapFloorSABR::getCapFloorPrem( unsigned int expiPos, double strike, double aveVol )
 {
     //error check
-    if( expiPos >= F.size() || expiPos <= 0 ) throw LACoreInvalidData("expiry position is bad.",__FILE__,__LINE__);
+    if( expiPos >= F.size() || expiPos <= 0 ) throw AQLCoreInvalidData("expiry position is bad.",__FILE__,__LINE__);
 
-    map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	LAString bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
-    map<LAString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
-    if(it==var.end()) throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+    map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	AQLString bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
+    map<AQLString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
+    if(it==var.end()) throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p = it->second;
     
     double ret=0.;
@@ -435,7 +435,7 @@ LAMathCapFloorSABR::getCapFloorPrem( unsigned int expiPos, double strike, double
 
 void                                 
 LAMathCapFloorSABR::getCapletVolMat
-    ( LADataInstance* dataInstance, const DoubleMatrix& capVol_mk, const DoubleVector& strikeVec, 
+    ( AQLDataInstance* dataInstance, const DoubleMatrix& capVol_mk, const DoubleVector& strikeVec, 
       const IntVector& capTerm_mon, DoubleMatrix& capletVol, DoubleMatrix& capVol )
 {
     capletVol.clear(); capVol.clear();
@@ -446,14 +446,14 @@ LAMathCapFloorSABR::getCapletVolMat
 
     if( capVol_mk.size() != capTerm_mon.size() || capVol_mk[0].size() != strikeVec.size() )
     {
-        throw LACoreInvalidData("sizes are not same.",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("sizes are not same.",__FILE__,__LINE__);
     }
     for(size_t i=0; i<capVol_mk.size(); i++)
     {
         for(size_t j=0; j<strikeVec.size(); j++)
         {
             if(capVol_mk[i][j]<eps) 
-                throw LACoreInvalidData("market vol is too small .",__FILE__,__LINE__);
+                throw AQLCoreInvalidData("market vol is too small .",__FILE__,__LINE__);
         }
     }
 
@@ -494,7 +494,7 @@ LAMathCapFloorSABR::getCapletVolMat
             double term = static_cast<double > (span*(row+1)) / 12;
             //double term = static_cast<double > (span*row) / 12;
             double stdDev = pInter->value( term );
-            capVol[row][colPos] = LAMath::sqrt(stdDev / term);
+            capVol[row][colPos] = AQLMath::sqrt(stdDev / term);
         }
         x.clear();
         y.clear();
@@ -510,7 +510,7 @@ LAMathCapFloorSABR::getCapletVolMat
 }
 
 double
-LAMathCapFloorSABR::getVol( LADataInstance* dataInstance, double fixingTerm, double strike )
+LAMathCapFloorSABR::getVol( AQLDataInstance* dataInstance, double fixingTerm, double strike )
 {
     unsigned int span = LAMathYieldCurve::setSpanFromFrequency( conv.freq );
 
@@ -527,12 +527,12 @@ LAMathCapFloorSABR::getVol( LADataInstance* dataInstance, double fixingTerm, dou
     pInter->set(x,y);
     double stdDev =  pInter->value(fixingTerm);
 
-    return LAMath::sqrt( stdDev / fixingTerm );
+    return AQLMath::sqrt( stdDev / fixingTerm );
 }
 
 void                                 
 LAMathCapFloorSABR::getCapletVolMat2
-    ( LADataInstance* dataInstance, const DoubleMatrix& capVol_mk, const DoubleVector& strikeVec, 
+    ( AQLDataInstance* dataInstance, const DoubleMatrix& capVol_mk, const DoubleVector& strikeVec, 
       const IntVector& capTerm_mon, DoubleMatrix& capletVol, DoubleMatrix& capVol )
 {
     const double eps = 0.000000001;
@@ -542,16 +542,16 @@ LAMathCapFloorSABR::getCapletVolMat2
 
     if( capVol_mk.size() != capTerm_mon.size() || capVol_mk[0].size() != strikeVec.size() )
     {
-        throw LACoreInvalidData("sizes are not same.",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("sizes are not same.",__FILE__,__LINE__);
     }
     for(size_t i=0; i<capVol_mk.size(); i++)
         for(size_t j=0; j<strikeVec.size(); j++)
         {
             if(capVol_mk[i][j]<eps) 
-                throw LACoreInvalidData("market vol is too small .",__FILE__,__LINE__);
+                throw AQLCoreInvalidData("market vol is too small .",__FILE__,__LINE__);
         }
     if( capTerm_mon[0] != span * 2 )
-        throw LACoreInvalidData("first cap term is long.",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("first cap term is long.",__FILE__,__LINE__);
 
     DoubleMatrix capletVol_(strikeVec.size(), DoubleVector(1));
     for(size_t j=0; j<strikeVec.size(); j++)
@@ -595,21 +595,21 @@ LAMathCapFloorSABR::getCapletVolMat2
 
 LAMathCapVolCalibrator::LAMathCapVolCalibrator
 ( const DoubleArray& capletVol_, const DoubleArray& Te_, const DoubleArray& F_, 
-  const DoubleArray& Nu_, double strike_, double aveVol_, LAInterpolationBase* pInter_ )
+  const DoubleArray& Nu_, double strike_, double aveVol_, AQLInterpolationBase* pInter_ )
  : capletVol(capletVol_), Te(Te_), F(F_), Nu(Nu_), strike(strike_),
    aveVol(aveVol_), pInter(pInter_)
 {
     volNum = capletVol.size();
     size_t N = Te.size();
     if( volNum >= N ) 
-        throw LACoreInvalidData("caplet vol size is more than expiry size.",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("caplet vol size is more than expiry size.",__FILE__,__LINE__);
     if( N != Te.size() || N != F.size() || N != Nu.size() )
-        throw LACoreInvalidData("parameter sizes are not same.",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("parameter sizes are not same.",__FILE__,__LINE__);
 
-    map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	LAString bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
-    map<LAString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
-    if(it==var.end()) throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+    map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	AQLString bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
+    map<AQLString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
+    if(it==var.end()) throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p = it->second;
 
     AnalyticBKParam param; param.K = strike;
@@ -643,10 +643,10 @@ LAMathCapVolCalibrator::operator()(DoubleArray& f, const DoubleArray& x)
 {
     capletVol = getCapletVol(x);
     size_t N = Te.size();
-    map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	LAString bscomponent = LAString(BK)+LAString(PREM)+LAString(CALL);
-    map<LAString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
-    if(it==var.end()) throw LACoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
+    map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	AQLString bscomponent = AQLString(BK)+AQLString(PREM)+AQLString(CALL);
+    map<AQLString, LABlackScholesBase*>::iterator it = var.find(bscomponent);
+    if(it==var.end()) throw AQLCoreInvalidData("Product Type is not supported",__FILE__,__LINE__);
 	LABlackScholesBase* p = it->second;
     
     double prem=premSum;

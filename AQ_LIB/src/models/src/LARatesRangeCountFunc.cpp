@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent RangeCount function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //  2007, AlgoQuantHub..
@@ -32,7 +32,7 @@ using namespace std;
 	@brief default constructor
 */
 LARatesRangeCountFunc::LARatesRangeCountFunc() 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -48,7 +48,7 @@ LARatesRangeCountFunc::~LARatesRangeCountFunc()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesRangeCountFunc::clone() const
 {
     try 
@@ -57,7 +57,7 @@ LARatesRangeCountFunc::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -69,7 +69,7 @@ LARatesRangeCountFunc::clone() const
 bool
 LARatesRangeCountFunc::isTypeOf(function_t id) const
 {
-	return (id == FN_RANGECOUNT ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_RANGECOUNT ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -91,7 +91,7 @@ double
 LARatesRangeCountFunc::operator()(const DoubleArray& x) const
 {
 	if (mParam.size() != 3)
-		throw LACoreInvalidData("parameter size must be three", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("parameter size must be three", __FILE__, __LINE__);
 	
 	double ret = 0.0;
 	for (unsigned int i = 0; i < x.size() - 1; i++)
@@ -116,11 +116,11 @@ LARatesRangeCountFunc::partialDerivative(const DoubleArray& x, unsigned int pos,
 {
 	if (pos >= x.size())
 	{
-        throw LACoreInvalidData("pos is over x size", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("pos is over x size", __FILE__, __LINE__);
 	}
 	
 	if (calctype == NUMERICAL)
-		return LAFunctionBase::partialDerivative(x, pos, calctype, difftype, delta);
+		return AQLFunctionBase::partialDerivative(x, pos, calctype, difftype, delta);
 	else
 	{
 		return 1.0;
@@ -142,7 +142,7 @@ LARatesRangeCountFunc::partialDerivative2(const DoubleArray& x, unsigned int pos
 												CALC_TYPE calctype, double delta) const
 {
 	if (calctype == NUMERICAL)
-		return LAFunctionBase::partialDerivative2(x, 0, 0, calctype, delta);
+		return AQLFunctionBase::partialDerivative2(x, 0, 0, calctype, delta);
 	else
 	{
 		return 0;

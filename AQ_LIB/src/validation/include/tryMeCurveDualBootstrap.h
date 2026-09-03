@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include <stdarg.h>
 
 namespace validation
@@ -35,32 +35,32 @@ namespace validation
 	*  @param [in]		adjustSwapConv_swap 	Tenor Basis market data
 	*  @param [in]		adjustSwapRates_swap 	Tenor Basis convention
 	*/
-	const LAString tryMeCurveDualBootstrap(const LAString& curveCollection,
-											const LAString& curveName_db,
-											const LAString& curveName_OIS,
-											const LAString& curveName_swap,
-											const LAString& curveIndex_OIS,
-											const LAString& curveIndex_swap,
-											const LAStringMatrix& commonParams,
-											const LAStringMatrix& generateProp_OIS,
-											const LAStringMatrix& oisRates_OIS,
-											const LAStringMatrix& oisConv_OIS,
-											const LAStringMatrix& histRates_OIS,
-											const LAStringMatrix& lobasisRates_OIS,
-											const LAStringMatrix& lobasisConv_OIS,
-											const LAStringMatrix& swapConv_OIS,
-											const LAStringMatrix& generateProp_swap,
-											const LAStringMatrix& moneyConv_swap,
-											const LAStringMatrix& liborRates_swap,
-											const LAStringMatrix& liborConv_swap,
-											const LAStringMatrix& swapRates_swap,
-											const LAStringMatrix& swapConv_swap,
-											const LAStringMatrix& fra3mRates_swap,
-											const LAStringMatrix& fra6mRates_swap,
-											const LAStringMatrix& fraConv_swap,
-											const LAStringMatrix& futureRates_swap,
-											const LAStringMatrix& futureConv_swap,
-											const LAStringMatrix& tenorBasisConv_swap,
-											const LAStringMatrix& tenorBasisRates_swap);
+	const AQLString tryMeCurveDualBootstrap(const AQLString& curveCollection,
+											const AQLString& curveName_db,
+											const AQLString& curveName_OIS,
+											const AQLString& curveName_swap,
+											const AQLString& curveIndex_OIS,
+											const AQLString& curveIndex_swap,
+											const AQLStringMatrix& commonParams,
+											const AQLStringMatrix& generateProp_OIS,
+											const AQLStringMatrix& oisRates_OIS,
+											const AQLStringMatrix& oisConv_OIS,
+											const AQLStringMatrix& histRates_OIS,
+											const AQLStringMatrix& lobasisRates_OIS,
+											const AQLStringMatrix& lobasisConv_OIS,
+											const AQLStringMatrix& swapConv_OIS,
+											const AQLStringMatrix& generateProp_swap,
+											const AQLStringMatrix& moneyConv_swap,
+											const AQLStringMatrix& liborRates_swap,
+											const AQLStringMatrix& liborConv_swap,
+											const AQLStringMatrix& swapRates_swap,
+											const AQLStringMatrix& swapConv_swap,
+											const AQLStringMatrix& fra3mRates_swap,
+											const AQLStringMatrix& fra6mRates_swap,
+											const AQLStringMatrix& fraConv_swap,
+											const AQLStringMatrix& futureRates_swap,
+											const AQLStringMatrix& futureConv_swap,
+											const AQLStringMatrix& tenorBasisConv_swap,
+											const AQLStringMatrix& tenorBasisRates_swap);
     
 }

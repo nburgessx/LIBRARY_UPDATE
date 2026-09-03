@@ -20,8 +20,8 @@ TEST( TestUtilitiesData, UNIT_VariantCompartorTests )
     etrading::Variant empty2 = etrading::Variant();
 
     // DATE
-    etrading::Variant date1( LADate("20171002") );
-    etrading::Variant date2( LADate("20171003") );
+    etrading::Variant date1( AQLDate("20171002") );
+    etrading::Variant date2( AQLDate("20171003") );
 
     // INTEGER
     etrading::Variant integer1( 1 );
@@ -95,7 +95,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityAppendByRow )
     rowVector1.push_back( 1 );
     rowVector1.push_back( 2.2 );
     rowVector1.push_back( std::string("abc") );
-    rowVector1.push_back( LADate( "20170929") );
+    rowVector1.push_back( AQLDate( "20170929") );
 
     etrading::VariantMatrix matrix1;
     matrix1.push_back( rowVector1 );
@@ -106,7 +106,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityAppendByRow )
     rowVector2.push_back( 1 );
     rowVector2.push_back( 2.2 );
     rowVector2.push_back( std::string("abc") );
-    rowVector2.push_back( LADate( "20170929") );
+    rowVector2.push_back( AQLDate( "20170929") );
 
     etrading::VariantMatrix matrix2;
     matrix2.push_back( rowVector2 );
@@ -148,7 +148,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityAppendByColumn )
     rowVector1.push_back( 1 );
     rowVector1.push_back( 2.2 );
     rowVector1.push_back( std::string("abc") );
-    rowVector1.push_back( LADate("20170929") );
+    rowVector1.push_back( AQLDate("20170929") );
 
     etrading::VariantMatrix matrix1;
     matrix1.push_back( rowVector1 );
@@ -159,7 +159,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityAppendByColumn )
     rowVector2.push_back( 1 );
     rowVector2.push_back( 2.2 );
     rowVector2.push_back( std::string("abc") );
-    rowVector2.push_back( LADate("20170929") );
+    rowVector2.push_back( AQLDate("20170929") );
 
     etrading::VariantMatrix matrix2;
     matrix2.push_back( rowVector2 );
@@ -176,11 +176,11 @@ TEST( TestUtilitiesData, UNIT_meUtilityAppendByColumn )
     outputVector.push_back( 1 );
     outputVector.push_back( 2.2 );
     outputVector.push_back( std::string("abc") );
-    outputVector.push_back( LADate("20170929") );
+    outputVector.push_back( AQLDate("20170929") );
     outputVector.push_back( 1 );
     outputVector.push_back( 2.2 );
     outputVector.push_back( std::string("abc") );
-    outputVector.push_back( LADate("20170929") );
+    outputVector.push_back( AQLDate("20170929") );
 
     expected.push_back( outputVector );
 
@@ -214,8 +214,8 @@ TEST( TestUtilitiesData, UNIT_meUtilityDataFilterByRow )
     input.push_back( 2.2 );
     input.push_back( std::string("abc") );
     input.push_back( std::string("abc") );
-    input.push_back( LADate("20170929") );
-    input.push_back( LADate("20170929") );
+    input.push_back( AQLDate("20170929") );
+    input.push_back( AQLDate("20170929") );
 
     // Call the Data Filter function which removes duplicates
     etrading::VariantMatrix actual = validation::tryMeUtilityDataFilter( input, false ); // displayByRow = false
@@ -225,7 +225,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityDataFilterByRow )
     rowVector.push_back( 1 );
     rowVector.push_back( 2.2 );
     rowVector.push_back( std::string("abc") );
-    rowVector.push_back( LADate("20170929") );
+    rowVector.push_back( AQLDate("20170929") );
 
     etrading::VariantMatrix expected;
     expected.push_back( rowVector );
@@ -260,8 +260,8 @@ TEST( TestUtilitiesData, UNIT_meUtilityDataFilterByColumn )
     input.push_back( 2.2 );
     input.push_back( std::string("abc") );
     input.push_back( std::string("abc") );
-    input.push_back( LADate("20170929") );
-    input.push_back( LADate("20170929") );
+    input.push_back( AQLDate("20170929") );
+    input.push_back( AQLDate("20170929") );
 
     // Call the Data Filter function which removes duplicates
     etrading::VariantMatrix actual = validation::tryMeUtilityDataFilter( input, true ); // displayByRow = true
@@ -282,7 +282,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityDataFilterByColumn )
     rowVector3.push_back( std::string("abc") );
     expected.push_back( rowVector3 );
 
-    rowVector4.push_back( LADate("20170929") );
+    rowVector4.push_back( AQLDate("20170929") );
     expected.push_back( rowVector4 );
     
     // Check Matrix Sizes are not empty
@@ -321,8 +321,8 @@ TEST( TestUtilitiesData, UNIT_meUtilityCleanByRow )
     rowVector3.push_back( std::string("abc") );
 
     etrading::VariantVector rowVector4;
-    rowVector4.push_back( LADate("20170929") );
-    rowVector4.push_back( LADate("20170929") );
+    rowVector4.push_back( AQLDate("20170929") );
+    rowVector4.push_back( AQLDate("20170929") );
 
     etrading::VariantVector rowVector5;
     rowVector5.push_back( etrading::Variant() );     // Variant should be treated as blank input of type EMPTY
@@ -365,8 +365,8 @@ TEST( TestUtilitiesData, UNIT_meUtilityCleanByRow )
     outputVector3.push_back( std::string("abc") );
 
     etrading::VariantVector outputVector4;
-    outputVector4.push_back( LADate("20170929") );
-    outputVector4.push_back( LADate("20170929") );
+    outputVector4.push_back( AQLDate("20170929") );
+    outputVector4.push_back( AQLDate("20170929") );
 
 
     etrading::VariantMatrix expected;
@@ -402,7 +402,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityCleanByColumn )
     rowVector.push_back( 1 );
     rowVector.push_back( 2.2 );
     rowVector.push_back( std::string("abc") );
-    rowVector.push_back( LADate( "20170929") );
+    rowVector.push_back( AQLDate( "20170929") );
     rowVector.push_back( etrading::Variant() );     // Variant should be treated as blank input of type EMPTY
     rowVector.push_back( std::string("#Error") );   // '#' prefix should be treated as an error
     rowVector.push_back( std::string("[Error]") );  // '[' prefix should be treated as an error
@@ -420,7 +420,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityCleanByColumn )
     resultsVector.push_back( 1 );
     resultsVector.push_back( 2.2 );
     resultsVector.push_back( std::string("abc") );
-    resultsVector.push_back( LADate( "20170929") );
+    resultsVector.push_back( AQLDate( "20170929") );
 
     etrading::VariantMatrix expected;
     expected.push_back( resultsVector );
@@ -459,9 +459,9 @@ TEST(TestDataTrimmingMethods, UNIT_TrimStandardStringVector)
 
 TEST(TestDataTrimmingMethods, UNIT_TrimLAStringVector)
 {
-	LAStringVector dirtyString = { "", "1", "", "2", "", "3", "" };
-	LAStringVector expectedResults = { "1", "2", "3" };
-	LAStringVector actualResults = validation::trimLAStringVector(dirtyString);
+	AQLStringVector dirtyString = { "", "1", "", "2", "", "3", "" };
+	AQLStringVector expectedResults = { "1", "2", "3" };
+	AQLStringVector actualResults = validation::trimLAStringVector(dirtyString);
 	
 	ASSERT_EQ( actualResults.size(), expectedResults.size() );
 	for ( size_t i = 0; i < expectedResults.size(); ++i )
@@ -499,19 +499,19 @@ TEST(TestDataTrimmingMethods, UNIT_TrimStandardStringMatrix)
 
 TEST(TestDataTrimmingMethods, UNIT_TrimLAStringMatrix)
 {
-	LAStringMatrix dirtyString =
+	AQLStringMatrix dirtyString =
     {
         { "1", "2", "3" }, 
         { "", "", "" },
         { "4", "5", "6" },
         { "", "", "" }
     };
-	LAStringMatrix expectedResults =
+	AQLStringMatrix expectedResults =
     {
         { "1", "2", "3" }, 
         { "4", "5", "6" }
     };
-	LAStringMatrix actualResults = validation::trimLAStringMatrix( dirtyString );
+	AQLStringMatrix actualResults = validation::trimLAStringMatrix( dirtyString );
 	
 	ASSERT_EQ( actualResults.size(), expectedResults.size() );
 

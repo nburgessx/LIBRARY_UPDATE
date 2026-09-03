@@ -11,7 +11,7 @@
 
 #include "GetGoogleTestFolder.h"
 #include "FolderConfig.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 
 #include <iostream>
 
@@ -33,7 +33,7 @@ namespace etrading
 			std::string filePath = fileSystemPath.string().c_str() + std::string("/");
 			return filePath;
 		}
-		catch (const LACoreError& e)
+		catch (const AQLCoreError& e)
 		{
 			// It is a fatal error if this try block fails.
 			// We cannot allow this exception to escape since the getGoogleTestFolder() function is called in many test CPP files when the

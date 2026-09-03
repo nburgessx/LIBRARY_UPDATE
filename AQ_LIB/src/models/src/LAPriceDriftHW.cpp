@@ -25,21 +25,21 @@
 //+++++ INCLUDE +++++
 #include "LAPriceDriftHW.h"
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAMathCorrelation.h"
 #include "LAMathVolFuncBase.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include "LAModelDynamicsHW1FCurve.h"
 #include "LAMathHWFuncSigma.h"
 #include "LAMathYieldCurve.h"
 #include "LAPriceDriftQuantAdjustment.h"
-#include "LACombinationFunc.h"
+#include "AQLCombinationFunc.h"
 #include <algorithm>
 #include "LAMathVolFuncHW.h"
 
@@ -72,7 +72,7 @@ mpCache1(0),mpCache2(0),mpCache3(0),mpIntegrate_cache(0),mpTimeGrid(0)
 	@param[in] sdeAttrName
   
 */
-LAPriceDriftHW::LAPriceDriftHW( const LAString& sdeAttrName)
+LAPriceDriftHW::LAPriceDriftHW( const AQLString& sdeAttrName)
 :
 LAMathDriftFuncBase(),
 mSDEAttrName(sdeAttrName), 
@@ -133,7 +133,7 @@ LAPriceDriftHW::~LAPriceDriftHW()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftHW::clone() const
 {
     try 
@@ -142,7 +142,7 @@ LAPriceDriftHW::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -171,13 +171,13 @@ LAPriceDriftHW::getType() const
     @brief return string representaion
     @return string representaion (sde attr name : suffix : tenor : deltatenor)
 */
-LAString
+AQLString
 LAPriceDriftHW::convertToString(void) const
 {
-	LAString ret;
+	AQLString ret;
 	ret += mSDEAttrName;
 	ret += ":";
-	ret += LADataInt(1).convertToString();
+	ret += AQLDataInt(1).convertToString();
 	ret += ":";
 
     return ret;
@@ -188,14 +188,14 @@ LAPriceDriftHW::convertToString(void) const
     @param[in] string representaion  (sde attr name : suffix : tenor : deltatenor)
 */
 void
-LAPriceDriftHW::convertFromString(const LAString& str)
+LAPriceDriftHW::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() < 5 || tmp.getSize() % 2 == 0)
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	}
 
 	mSDEAttrName = tmp.get()[0];
@@ -208,9 +208,9 @@ LAPriceDriftHW::convertFromString(const LAString& str)
 void
 LAPriceDriftHW::setUp(LAMathPathEntity& path)
 {
-	LADataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
+	AQLDataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
 	LAMathAttrSDE* pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
-	const std::vector<std::vector<LAFunctionBase* > > mVolatility = pattrsde->getSDE().getVolatility();
+	const std::vector<std::vector<AQLFunctionBase* > > mVolatility = pattrsde->getSDE().getVolatility();
 
 	mpSimuTimeGrid = &(pattrsde->getSDE().getBM()->getTimeGrid());
 	const LAMathVolFuncHW* mpvolHW=0;
@@ -219,7 +219,7 @@ LAPriceDriftHW::setUp(LAMathPathEntity& path)
 		mpvolHW = dynamic_cast<LAMathVolFuncHW*>(mVolatility[0][0]);
 	else//otherwise
 	{
-		const LAFunctionBase* pbase = dynamic_cast<LAMathVolFuncBase*>(mVolatility[0][0])->getVolatility();
+		const AQLFunctionBase* pbase = dynamic_cast<LAMathVolFuncBase*>(mVolatility[0][0])->getVolatility();
 		mpvolHW = dynamic_cast<const LAMathVolFuncHW*>(pbase);
 	}
 	
@@ -299,13 +299,13 @@ LAPriceDriftHW::operator()(const DoubleArray& x) const
 {	
     if ( x.size() != 3 )
 	{
-        throw LACoreInvalidData(" x.size() != 3 : x[0] = ts, x[1] = te, x[1] = r ", __FILE__, __LINE__);
+        throw AQLCoreInvalidData(" x.size() != 3 : x[0] = ts, x[1] = te, x[1] = r ", __FILE__, __LINE__);
 	}
     
 	double te = x[1];
 
 	unsigned int pos = 0;
-	if (!LAAlgorithm::find<DoubleArray, double>(*mpTimeGrid, te, 0, mpTimeGrid->size() - 1, pos))
+	if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimeGrid, te, 0, mpTimeGrid->size() - 1, pos))
 	{
         double ts = x[0];
 		double x0 = mpHWtool->ExpIntegralMR(te);
@@ -319,7 +319,7 @@ LAPriceDriftHW::operator()(const DoubleArray& x) const
 		double e_cache2 = s_cache2 + mGL.integrate((*mpHWtool2), ts, te);
 		mpCache1->push_back(e_cache1);
 		mpCache2->push_back(e_cache2);
-		LACombinationMethod pi = (*mpHWtool).operator *(*mpHWtool3);
+		AQLCombinationMethod pi = (*mpHWtool).operator *(*mpHWtool3);
 		mpCache3->push_back(mGL.integrate(pi, ts, te));
 
 		double val = x0 * x1 - x2* x3 + e_cache2 * e_cache1 - 
@@ -386,7 +386,7 @@ LAPriceDriftHW::getExpInt_a_inv(const double t) const
 	{
 		if (!mpHWtool2)
 		{
-			throw LACoreInvalidData("mpHWTool2 is Null", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("mpHWTool2 is Null", __FILE__, __LINE__);
 		}
 		const double val = mpHWtool2->operator()(t);
 		mCacheFuncExpInt_a_inv.insert(make_pair(t, val));
@@ -409,7 +409,7 @@ LAPriceDriftHW::getExpInt_a_sigma_SQ(const double t) const
 	{
 		if (!mpHWtool)
 		{
-			throw LACoreInvalidData("mpHWTool is Null", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("mpHWTool is Null", __FILE__, __LINE__);
 		}
 		//const double val = mpHWtool->ExpIntegralMR(t) * mpHWtool->getHWSigma()->operator ()(t);
 		//return val * val;

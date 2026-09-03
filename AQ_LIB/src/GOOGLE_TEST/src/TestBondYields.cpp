@@ -50,35 +50,35 @@ namespace google_test
         etrading::registerToCache< etrading::Bond >( myBondPtr );
 
         const std::string bondObjectName        = myBondPtr->getBondObjectName(); 
-        const LADate settlementDate             = LADate("20170221");
+        const AQLDate settlementDate             = AQLDate("20170221");
         const double yield                      = 0.02433; // 0.24330%
 
-        const LADate activeAccrualStartDate     = LADate("20161115");
-        const LADate activeAccrualEndDate       = LADate("20170515");
+        const AQLDate activeAccrualStartDate     = AQLDate("20161115");
+        const AQLDate activeAccrualEndDate       = AQLDate("20170515");
 
-        std::vector< LADate > bondPaymentDatesForIndexation;        
+        std::vector< AQLDate > bondPaymentDatesForIndexation;        
 
-        bondPaymentDatesForIndexation.push_back( LADate("20161115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20170515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20171115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20180515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20181115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20190515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20191115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20200515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20201116") );
-        bondPaymentDatesForIndexation.push_back( LADate("20210517") );
-        bondPaymentDatesForIndexation.push_back( LADate("20211115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20220516") );
-        bondPaymentDatesForIndexation.push_back( LADate("20221115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20230515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20231115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20240515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20241115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20250515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20251117") );
-        bondPaymentDatesForIndexation.push_back( LADate("20260515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20261116") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20161115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20170515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20171115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20180515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20181115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20190515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20191115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20200515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20201116") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20210517") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20211115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20220516") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20221115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20230515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20231115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20240515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20241115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20250515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20251117") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20260515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20261116") );
 
 
         // Add Bond Input Parameters to the BondYield Struct, since cannot pass the abstract bond class by reference
@@ -97,7 +97,7 @@ namespace google_test
 																										etrading::ISMA_YIELD);
         
         // Test 1. Check First Coupon Discount Factor, Should be zero since it is in the past
-        const LADate couponPaymentDate1     = LADate("20161115");
+        const AQLDate couponPaymentDate1     = AQLDate("20161115");
         const double bondDiscountFactor1    = etrading::calculateSingleDiscountFactorFromBondYield( bondYieldParameters,
                                                                                                     settlementDate,
                                                                                                     activeCashflowIndex,
@@ -111,7 +111,7 @@ namespace google_test
 
 
         // Test 2. Check Second / Current Coupon Discount Factor
-        const LADate couponPaymentDate2     = LADate("20170515");
+        const AQLDate couponPaymentDate2     = AQLDate("20170515");
         const double bondDiscountFactor2    = etrading::calculateSingleDiscountFactorFromBondYield( bondYieldParameters,
                                                                                                     settlementDate,
                                                                                                     activeCashflowIndex,
@@ -125,7 +125,7 @@ namespace google_test
 
 
         // Test 3. Check Third Coupon Discount Factor
-        const LADate couponPaymentDate3     = LADate("20171115");
+        const AQLDate couponPaymentDate3     = AQLDate("20171115");
         const double bondDiscountFactor3    = etrading::calculateSingleDiscountFactorFromBondYield( bondYieldParameters,
                                                                                                     settlementDate,
                                                                                                     activeCashflowIndex,
@@ -148,35 +148,35 @@ namespace google_test
         etrading::registerToCache< etrading::Bond >( myBondPtr );
 
         const std::string bondObjectName        = myBondPtr->getBondObjectName(); 
-        const LADate settlementDate             = LADate("20170221");
+        const AQLDate settlementDate             = AQLDate("20170221");
         const double yield                      = 0.02433; // 0.24330%
 
-        const LADate activeAccrualStartDate     = LADate("20161115");
-        const LADate activeAccrualEndDate       = LADate("20170515");
+        const AQLDate activeAccrualStartDate     = AQLDate("20161115");
+        const AQLDate activeAccrualEndDate       = AQLDate("20170515");
 
-        std::vector< LADate > bondPaymentDatesForIndexation;        
+        std::vector< AQLDate > bondPaymentDatesForIndexation;        
 
-        bondPaymentDatesForIndexation.push_back( LADate("20161115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20170515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20171115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20180515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20181115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20190515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20191115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20200515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20201116") );
-        bondPaymentDatesForIndexation.push_back( LADate("20210517") );
-        bondPaymentDatesForIndexation.push_back( LADate("20211115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20220516") );
-        bondPaymentDatesForIndexation.push_back( LADate("20221115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20230515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20231115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20240515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20241115") );
-        bondPaymentDatesForIndexation.push_back( LADate("20250515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20251117") );
-        bondPaymentDatesForIndexation.push_back( LADate("20260515") );
-        bondPaymentDatesForIndexation.push_back( LADate("20261116") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20161115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20170515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20171115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20180515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20181115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20190515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20191115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20200515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20201116") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20210517") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20211115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20220516") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20221115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20230515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20231115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20240515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20241115") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20250515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20251117") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20260515") );
+        bondPaymentDatesForIndexation.push_back( AQLDate("20261116") );
 
 
         // Add Bond Input Parameters to the BondYield Struct, since cannot pass the abstract bond class by reference

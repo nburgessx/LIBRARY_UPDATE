@@ -7,8 +7,8 @@
 
 #include <string>
 #include <vector>
-#include "LABivariateCopula.h"
-#include "LAUnivariateDistribution.h"
+#include "AQLBivariateCopula.h"
+#include "AQLUnivariateDistribution.h"
 
 using namespace std;
 
@@ -33,17 +33,17 @@ public:
 private:
     /*! Option price knowing marginals */
     double Price(double alpha, double beta, double K, bool isCall,
-                 LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
+                 AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
                  string copulaType, const vector<double>& copulaPars);
 
     /*! Call price knowing marginals */
     double Call(double alpha, double beta, double K,
-                LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
+                AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
                 string copulaType, const vector<double>& copulaPars);
 
-    LABivariateCopula* Copula(string type, const vector<double>& parameters);
+    AQLBivariateCopula* Copula(string type, const vector<double>& parameters);
 
-    LAUnivariateDistribution* Calibrate(double t, double cmsFwd, double atmCall, string marginalType);
+    AQLUnivariateDistribution* Calibrate(double t, double cmsFwd, double atmCall, string marginalType);
 
     double mConfidence;
 };
@@ -52,40 +52,40 @@ class LAPriceCopulaSpreadUtility
 {
 public:
 
-    static double V1Right(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                          LABivariateCopula* copula, double alpha, double beta, double K);
+    static double V1Right(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                          AQLBivariateCopula* copula, double alpha, double beta, double K);
 
-    static double V1Left(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                         LABivariateCopula* copula, double alpha, double beta, double K);
+    static double V1Left(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                         AQLBivariateCopula* copula, double alpha, double beta, double K);
 
-    static double V2Right(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                          LABivariateCopula* copula, double alpha, double beta, double K);
+    static double V2Right(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                          AQLBivariateCopula* copula, double alpha, double beta, double K);
 
-    static double V2Left(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                         LABivariateCopula* copula, double alpha, double beta, double K);
+    static double V2Left(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                         AQLBivariateCopula* copula, double alpha, double beta, double K);
 
-    static double FirstDiff(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                            LABivariateCopula* copula, double alpha, double beta, double K);
+    static double FirstDiff(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                            AQLBivariateCopula* copula, double alpha, double beta, double K);
 
-    static double SecondDiff(double S, LAUnivariateDistribution* marginal1, LAUnivariateDistribution* marginal2,
-                             LABivariateCopula* copula, double alpha, double beta, double K);
+    static double SecondDiff(double S, AQLUnivariateDistribution* marginal1, AQLUnivariateDistribution* marginal2,
+                             AQLBivariateCopula* copula, double alpha, double beta, double K);
 };
 
 //================ VIntegrand ===================================
 enum VType { v1Right, v1Left, v2Right, v2Left };
 
-class MVVIntegrand : public LAFunction
+class MVVIntegrand : public AQLFunction
 {
 public:
-    MVVIntegrand(LAUnivariateDistribution* marginal1_, LAUnivariateDistribution* marginal2_,
-                 LABivariateCopula* copula_, double alpha_, double beta_, double K_, VType vType_);
+    MVVIntegrand(AQLUnivariateDistribution* marginal1_, AQLUnivariateDistribution* marginal2_,
+                 AQLBivariateCopula* copula_, double alpha_, double beta_, double K_, VType vType_);
 
     double operator()(double x) const;
 
 private:
-    LAUnivariateDistribution* mMarginal1;
-    LAUnivariateDistribution* mMarginal2;
-    LABivariateCopula* mCopula;
+    AQLUnivariateDistribution* mMarginal1;
+    AQLUnivariateDistribution* mMarginal2;
+    AQLBivariateCopula* mCopula;
     double mAlpha, mBeta, mK;
     VType mVType;
 };

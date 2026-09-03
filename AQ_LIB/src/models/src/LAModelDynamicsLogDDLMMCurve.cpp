@@ -15,8 +15,8 @@
 
 
 #include "LAModelDynamicsLogDDLMMCurve.h"
-#include "LAAlgorithm.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLBasic.h"
 #include <limits>
 
 using namespace std;
@@ -87,7 +87,7 @@ LARatesPathElementLogDDLMMCurve::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -115,11 +115,11 @@ LARatesPathElementLogDDLMMCurve::getP (double T) const
 {
 	if (m_t > T + INFINITESIMAL)
 	{
-		throw LACoreInvalidData("maturity is before start", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("maturity is before start", __FILE__, __LINE__);
 	}
 	else if (T > mpTenor->back() + INFINITESIMAL)
 	{
-		throw LACoreInvalidData("maturity is after last tenor", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("maturity is after last tenor", __FILE__, __LINE__);
 	}
 	else if (m_t >= T) return 1.0;
 	else if (m_t == 0.0) return mpInitialCurve->getP(T);
@@ -132,7 +132,7 @@ LARatesPathElementLogDDLMMCurve::getP (double T) const
 	unsigned int pos  = 0;
 	unsigned int tSize = mpTenor->size();
 	double _T = T > mpTenor->back() ? mpTenor->back() : T;
-	LAAlgorithm::locate<DoubleArray,double>(*mpTenor, _T, tSize, pos);
+	AQLAlgorithm::locate<DoubleArray,double>(*mpTenor, _T, tSize, pos);
 	if ((*mpTenor)[pos] == _T)
 		isOnTenor = true;
 
@@ -147,7 +147,7 @@ LARatesPathElementLogDDLMMCurve::getP (double T) const
 		{
 			double multiple = (end_t - (*mpTenor)[i]) * (*mpDeltaTenor)[i] / ((*mpTenor)[i + 1] - (*mpTenor)[i]);
 			
-			lt *= 1.0 + LAMath::exp(mValue[j] - mSpread) * multiple;
+			lt *= 1.0 + AQLMath::exp(mValue[j] - mSpread) * multiple;
 			
 			if (!isOnTenor)
 				lt_ *= 1.0 + (*mpInitialData_L)[i] * multiple;
@@ -198,7 +198,7 @@ LARatesPathElementLogDDLMMCurve::set(const LARatesPathElementBase& a)
 	unsigned int size = mValue.size();
 	for (unsigned int i = 0; i < size; i++)
 	{
-		if (mValue[i] + mSpread > 0.0) mValue[i] = LAMath::log(mValue[i] + mSpread);
+		if (mValue[i] + mSpread > 0.0) mValue[i] = AQLMath::log(mValue[i] + mSpread);
 		else mValue[i] = -std::numeric_limits<SCALAR>::max();
 	}
 }

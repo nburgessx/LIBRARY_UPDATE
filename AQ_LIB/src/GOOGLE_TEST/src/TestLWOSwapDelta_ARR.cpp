@@ -53,18 +53,18 @@ namespace
 
 	// Helper function
 
-	void checkDeltaResultsAndRebaseIfRequired(  const LAStringVector& pillarNames,
-												const LAStringVector& headers,
+	void checkDeltaResultsAndRebaseIfRequired(  const AQLStringVector& pillarNames,
+												const AQLStringVector& headers,
 												const DoubleMatrix& deltas,
-												const LAString& baseline_output_32,
-												const LAString& baseline_output_64 )
+												const AQLString& baseline_output_32,
+												const AQLString& baseline_output_64 )
 	{
 		if (etrading::CreateDataFile::rebaseResultsEnabled())
 		{
 #ifdef GTEST32
-			LAString outputFileName = baseline_output_32;
+			AQLString outputFileName = baseline_output_32;
 #else
-			LAString outputFileName = baseline_output_64;
+			AQLString outputFileName = baseline_output_64;
 #endif
 
 			// Record outputs and rebase test outputs
@@ -93,7 +93,7 @@ namespace
 				FAIL() << "Reference baseline does not contain delta column headers" << std::endl;
 			}
 
-			LAStringVector refHeaders = resultFile["headers"];
+			AQLStringVector refHeaders = resultFile["headers"];
 			if (headers.size() != refHeaders.size())
 			{
 				FAIL() << "Calculated delta has different number of column headers compared to reference baseline : " << headers.size() << " vs " << refHeaders.size() << std::endl;
@@ -105,7 +105,7 @@ namespace
 
 			for (size_t i = 0; i < pillarNames.size(); ++i)
 			{
-				LAString key = pillarNames[i];
+				AQLString key = pillarNames[i];
 
 				if (!resultFile.hasItem(key))
 				{
@@ -150,19 +150,19 @@ namespace google_test
 		// Risk delta ladder config
 		const ReadDataFile::Load deltaLadder( fileName_deltaLadder_SOFR_Inputs );
 
-		LAStringVector swapNames			= deltaLadder["swapNames"];
-		LAStringMatrix curveCollectionNames	= deltaLadder["curveCollectionNames"];
-		LAStringMatrix fixingTableNames		= deltaLadder["fixingTableNames"];
+		AQLStringVector swapNames			= deltaLadder["swapNames"];
+		AQLStringMatrix curveCollectionNames	= deltaLadder["curveCollectionNames"];
+		AQLStringMatrix fixingTableNames		= deltaLadder["fixingTableNames"];
 		bool bumpSpreadInstruments			= deltaLadder["bumpSpreadInstruments"];
 		double bumpSize						= deltaLadder["bumpSize"];
-		LAString bumpMode					= deltaLadder["bumpMode"];
+		AQLString bumpMode					= deltaLadder["bumpMode"];
 		bool aggregateRisks					= deltaLadder["aggregateRisks"];
 		bool reportInLegCCY					= deltaLadder["reportInLegCCY"];
 		std::string riskCutOffTenor			= deltaLadder["riskCutOffTenor"];
 		DoubleVector xccyFXSpotRates		= deltaLadder["xccyFXSpotRates"];
 
-		LAStringVector pillarNames;
-		LAStringVector headers;
+		AQLStringVector pillarNames;
+		AQLStringVector headers;
 		DoubleMatrix deltas;
 		validation::tryMeLWOSwapDeltaLadder(headers,
 												pillarNames,
@@ -197,19 +197,19 @@ namespace google_test
 		// Risk delta ladder config
 		const ReadDataFile::Load deltaLadder(fileName_deltaLadder_OIS_Inputs);
 
-		LAStringVector swapNames			= deltaLadder["swapNames"];
-		LAStringMatrix curveCollectionNames = deltaLadder["curveCollectionNames"];
-		LAStringMatrix fixingTableNames		= deltaLadder["fixingTableNames"];
+		AQLStringVector swapNames			= deltaLadder["swapNames"];
+		AQLStringMatrix curveCollectionNames = deltaLadder["curveCollectionNames"];
+		AQLStringMatrix fixingTableNames		= deltaLadder["fixingTableNames"];
 		bool bumpSpreadInstruments			= deltaLadder["bumpSpreadInstruments"];
 		double bumpSize						= deltaLadder["bumpSize"];
-		LAString bumpMode					= deltaLadder["bumpMode"];
+		AQLString bumpMode					= deltaLadder["bumpMode"];
 		bool aggregateRisks					= deltaLadder["aggregateRisks"];
 		bool reportInLegCCY					= deltaLadder["reportInLegCCY"];
 		std::string riskCutOffTenor			= deltaLadder["riskCutOffTenor"];
 		DoubleVector xccyFXSpotRates		= deltaLadder["xccyFXSpotRates"];
 
-		LAStringVector pillarNames;
-		LAStringVector headers;
+		AQLStringVector pillarNames;
+		AQLStringVector headers;
 		DoubleMatrix deltas;
 		validation::tryMeLWOSwapDeltaLadder(headers,
 												pillarNames,

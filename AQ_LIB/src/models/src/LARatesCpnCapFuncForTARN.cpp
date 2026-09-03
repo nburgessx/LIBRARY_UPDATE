@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent Coupon Cap function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //  2007, AlgoQuantHub..
@@ -32,7 +32,7 @@ using namespace std;
 	@brief default constructor
 */
 LARatesCpnCapFuncForTARN::LARatesCpnCapFuncForTARN() 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -41,7 +41,7 @@ LARatesCpnCapFuncForTARN::LARatesCpnCapFuncForTARN()
 	@brief default constructor
 */
 LARatesCpnCapFuncForTARN::LARatesCpnCapFuncForTARN(const DoubleArray& x) 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 	(void)x;
 }
@@ -57,7 +57,7 @@ LARatesCpnCapFuncForTARN::~LARatesCpnCapFuncForTARN()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesCpnCapFuncForTARN::clone() const
 {
     try 
@@ -66,7 +66,7 @@ LARatesCpnCapFuncForTARN::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -78,7 +78,7 @@ LARatesCpnCapFuncForTARN::clone() const
 bool
 LARatesCpnCapFuncForTARN::isTypeOf(function_t id) const
 {
-	return (id == FN_CPNCAPFORTARN ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CPNCAPFORTARN ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -100,7 +100,7 @@ double
 LARatesCpnCapFuncForTARN::operator()(const DoubleArray& x) const
 {
 	if (mParam.size() != x.size() + 3)
-		throw LACoreInvalidData("parameter size must be indexInfos + 3; FloorValue, CapValue, indexcoefficient(1),...,constant", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("parameter size must be indexInfos + 3; FloorValue, CapValue, indexcoefficient(1),...,constant", __FILE__, __LINE__);
 	
 	double ret = 0.0;
 	unsigned int N = x.size();
@@ -133,11 +133,11 @@ LARatesCpnCapFuncForTARN::partialDerivative(const DoubleArray& x, unsigned int p
 {
 	if (pos >= x.size())
 	{
-        throw LACoreInvalidData("pos is over x size", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("pos is over x size", __FILE__, __LINE__);
 	}
 	
 	if (calctype == NUMERICAL)
-		return LAFunctionBase::partialDerivative(x, pos, calctype, difftype, delta);
+		return AQLFunctionBase::partialDerivative(x, pos, calctype, difftype, delta);
 	else
 	{
 		return -1.0;
@@ -159,7 +159,7 @@ LARatesCpnCapFuncForTARN::partialDerivative2(const DoubleArray& x, unsigned int 
 												CALC_TYPE calctype, double delta) const
 {
 	if (calctype == NUMERICAL)
-		return LAFunctionBase::partialDerivative2(x, 0, 0, calctype, delta);
+		return AQLFunctionBase::partialDerivative2(x, 0, 0, calctype, delta);
 	else
 	{
 		return 0;

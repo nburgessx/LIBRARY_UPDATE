@@ -17,13 +17,13 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
-#include "LAString.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLString.h"
 #include "LACalibrateModelIR.h"
 
 
 
-class LADataInstance;
+class AQLDataInstance;
 class LARatesCurveLogLinearInterpolation;
 class LAMathCorrelation;
 class LAMathVolatility;
@@ -41,7 +41,7 @@ class LACalibrateModelHW : public LACalibrateModelIR
 
 public:
 	// constructor
-	explicit LACalibrateModelHW(const LAString &baseCurrency);
+	explicit LACalibrateModelHW(const AQLString &baseCurrency);
 	// destructor
 	virtual ~LACalibrateModelHW(void);
 	// copy constructor
@@ -50,64 +50,64 @@ public:
 protected:
 	//==============================================
 	// get sde Type
-	virtual  SDE_TYPE getSDEType(const LAString &currency) const;
+	virtual  SDE_TYPE getSDEType(const AQLString &currency) const;
 	//==============================================
 	// check LJ
-	virtual bool isLJ(const LAString &currency) const;
+	virtual bool isLJ(const AQLString &currency) const;
 	//==============================================
 	// create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const LAString &currency, LADataInstance &dataInstance) const;
+	virtual LARatesSDEBase *createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// set volatility 
-	virtual  void setVolatility(const LAString &currency, LARatesSDEBase &sde)  const;	
+	virtual  void setVolatility(const AQLString &currency, LARatesSDEBase &sde)  const;	
 	//==============================================
 	// set drift 
-	virtual  void setDrift(const LAString &currency, LARatesSDEBase &sde)  const;
+	virtual  void setDrift(const AQLString &currency, LARatesSDEBase &sde)  const;
 	//==============================================
 	// set numeraire 
-	virtual  void setNumeraire(const LAString &currency, LARatesSDEBase &sde)  const;
+	virtual  void setNumeraire(const AQLString &currency, LARatesSDEBase &sde)  const;
 	//==============================================
 	// set path 
-	virtual  void setOutputTemplate(const LAString &currency, LARatesSDEBase &sde)  const;
+	virtual  void setOutputTemplate(const AQLString &currency, LARatesSDEBase &sde)  const;
 	//==============================================
 	// set integralfunction 
-	virtual  void setIntegralFunction(const LAString &currency, LARatesSDEBase &sde)  const;
+	virtual  void setIntegralFunction(const AQLString &currency, LARatesSDEBase &sde)  const;
 	//==============================================
 	// get function master regist name 
-	virtual LAString getFunctionMasterResistName(const LAString &currency) const;
+	virtual AQLString getFunctionMasterResistName(const AQLString &currency) const;
 	//==============================================
 	// setup correlation input type
-	virtual LAString getCorTye(const LAString &currency) const;
+	virtual AQLString getCorTye(const AQLString &currency) const;
 	//==============================================
 	// set interpolation method 
-	virtual  void setInterpolationMethod(const LAString &currency, LARatesSDEBase &sde) const;
+	virtual  void setInterpolationMethod(const AQLString &currency, LARatesSDEBase &sde) const;
 	//==============================================
 	// setup correlation factor
-	virtual void setUpCorFactor(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const;
+	virtual void setUpCorFactor(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup correlation data
-	virtual void setUpCorData(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const;
+	virtual void setUpCorData(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup correlation method
-	virtual void setUpCorFunc(const LAString &currency, LAMathCorrelation &cor, LADataInstance &dataInstance) const;
+	virtual void setUpCorFunc(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// get vol type
-	virtual LAString getVolType(const LAString &currency) const;
+	virtual AQLString getVolType(const AQLString &currency) const;
 	//==============================================
 	// setup vol data
-	virtual void setUpVolData(const LAString &currency, LAMathVolatility &vol, LADataInstance &dataInstance) const;
+	virtual void setUpVolData(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup vol method
-	virtual void setUpVolFunc(const LAString &currency, LAMathVolatility &vol, LADataInstance &dataInstance) const;
+	virtual void setUpVolFunc(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// create foreign drift
-	virtual LAFunctionBase *createForeinDrift(const LAString &fx, const LAString &sdeBase, const LAString &sdeName, const LAString &fx_sdeName) const;
+	virtual AQLFunctionBase *createForeinDrift(const AQLString &fx, const AQLString &sdeBase, const AQLString &sdeName, const AQLString &fx_sdeName) const;
 	//==============================================
 	// get iszerovol
-	virtual bool isZeroVol(const LAString &currency) const;
+	virtual bool isZeroVol(const AQLString &currency) const;
 	//==============================================
 	// get isSZModel
-	virtual bool isSZModel(const LAString &currency) const;
+	virtual bool isSZModel(const AQLString &currency) const;
 
 private:
 

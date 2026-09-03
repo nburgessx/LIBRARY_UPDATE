@@ -2,7 +2,7 @@
 
 #include "Replay.h"
 #include "ReadDataFile.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 #include <sstream>
 
 // Replay Generator Functions
@@ -18,11 +18,11 @@ namespace etrading
     /* @brief			Function to load and replay a test file
     *  @param [in]		filepath		Full file path to the test csv file
     */
-    const LAString replay( const LAString& filepath )
+    const AQLString replay( const AQLString& filepath )
     {
         if ( filepath.size() == 0 || filepath.isDefined() == false )
         {
-            throw LACoreInvalidData( "#Error: Filepath must be Provided.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Filepath must be Provided.", __FILE__, __LINE__ );
         }
 
         try
@@ -31,38 +31,38 @@ namespace etrading
             ReadDataFile::Load inputFile( filepath );
 
             // 2. Identify the Generator function
-            const LAString generatorFunction = inputFile["generatorFunction"];
+            const AQLString generatorFunction = inputFile["generatorFunction"];
 
             // 3. Call the Correct Function
-            LAString result = "#Error: Unable to replay the test file provided";
+            AQLString result = "#Error: Unable to replay the test file provided";
 
             // 4. Use Function Pointer to Call the Desired Generator Function
 
             // Function Pointer Type Definition
-            typedef const LAString ( *functionPointer )( const ReadDataFile::Load & inputFile );
+            typedef const AQLString ( *functionPointer )( const ReadDataFile::Load & inputFile );
 
             // Create a Hash Map to lookup function pointers from a string
-            std::map< LAString, functionPointer > functionList;
+            std::map< AQLString, functionPointer > functionList;
 
             // List functions here
             // -------------------------------------------------------------------------
 
-            functionList[ LAString( "tryMirSetUpOISCurve" ) ]             = etrading::replayCurveOIS;
-            functionList[ LAString( "tryMirSetUpSwapCurve" ) ]            = etrading::replayCurveSTD;
-            functionList[ LAString( "tryMirSetUpBasisSwapCurve" ) ]       = etrading::replayCurveBasis;
-            functionList[ LAString( "tryMirSetUpFwdFXConstantCurve" ) ]   = etrading::replayCurveFwdFX;
+            functionList[ AQLString( "tryMirSetUpOISCurve" ) ]             = etrading::replayCurveOIS;
+            functionList[ AQLString( "tryMirSetUpSwapCurve" ) ]            = etrading::replayCurveSTD;
+            functionList[ AQLString( "tryMirSetUpBasisSwapCurve" ) ]       = etrading::replayCurveBasis;
+            functionList[ AQLString( "tryMirSetUpFwdFXConstantCurve" ) ]   = etrading::replayCurveFwdFX;
 
-            functionList[ LAString( "tryMeCurveCalibrateOIS" ) ]          = etrading::replayCurveOIS;
-            functionList[ LAString( "tryMeCurveCalibrateSwap" ) ]            = etrading::replayCurveSTD;
-            functionList[ LAString( "tryMeCurveCalibrateBasis" ) ]			= etrading::replayCurveBasis;
-            functionList[ LAString( "tryMeCurveCalibrateFXForwards" ) ]		= etrading::replayCurveFwdFX;
+            functionList[ AQLString( "tryMeCurveCalibrateOIS" ) ]          = etrading::replayCurveOIS;
+            functionList[ AQLString( "tryMeCurveCalibrateSwap" ) ]            = etrading::replayCurveSTD;
+            functionList[ AQLString( "tryMeCurveCalibrateBasis" ) ]			= etrading::replayCurveBasis;
+            functionList[ AQLString( "tryMeCurveCalibrateFXForwards" ) ]		= etrading::replayCurveFwdFX;
             // -------------------------------------------------------------------------
 
             // Throw an Error if the function is not found
             if ( functionList.find( generatorFunction ) == functionList.end() )
             {
-                LAString msg = "#Error: Unable to find the generator function " + generatorFunction;
-                throw LACoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
+                AQLString msg = "#Error: Unable to find the generator function " + generatorFunction;
+                throw AQLCoreInvalidData( msg.getCString(), __FILE__, __LINE__ );
             }
 
             // Point functionPointer to functionName
@@ -77,17 +77,17 @@ namespace etrading
         }
         catch( const ReadDataFile::LoadError& )
         {
-            throw LACoreInvalidData( "#Error: Unable to open the file specified", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Unable to open the file specified", __FILE__, __LINE__ );
         }
         catch( std::exception& e )
         {
             std::stringstream s;
             s << "#Error: " << e.what();
-            throw LACoreInvalidData( s.str().c_str() , __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( s.str().c_str() , __FILE__, __LINE__ );
         }
         catch( ... )
         {
-            throw LACoreInvalidData( "#Error: Unable to read the file specified", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Unable to read the file specified", __FILE__, __LINE__ );
         }
     }
 }

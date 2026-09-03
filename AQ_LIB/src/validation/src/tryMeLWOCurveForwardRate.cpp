@@ -45,23 +45,23 @@ namespace validation
             if( lwoCurve )
             {
                 // Get the Curve Collection and Curve Index names
-                LAString curveCollection    = LAString( lwoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
-                LAString curveIndex         = LAString( lwoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
+                AQLString curveCollection    = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
+                AQLString curveIndex         = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
 
                 // Cast the boost gregorian dates into LADates
-                std::vector< LADate > fromDatesFormatted = etrading::toLADatesFromGregorianDates( fromDates );
+                std::vector< AQLDate > fromDatesFormatted = etrading::toLADatesFromGregorianDates( fromDates );
         
                 // Calculate the forward rate
                 forwardRateResults = etrading::getCurveForwardRatesFromYearFraction( fromDatesFormatted,
                                                                                      yearFraction,
-                                                                                     LAString( dayCount.c_str() ),
+                                                                                     AQLString( dayCount.c_str() ),
                                                                                      curveCollection,
                                                                                      curveIndex );
             }
             else
             {
                 std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % lwoCurveName.c_str() ).str();
-                throw LACoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
             }
         }
 
@@ -104,12 +104,12 @@ namespace validation
             if( lwoCurve )
             {
                 // Get the Curve Collection and Curve Index names
-                LAString curveCollection    = LAString( lwoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
-                LAString curveIndex         = LAString( lwoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
+                AQLString curveCollection    = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
+                AQLString curveIndex         = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
 
                 // Cast the boost gregorian dates into LADates
-                std::vector< LADate > fromDatesFormatted    = etrading::toLADatesFromGregorianDates( fromDates );
-                std::vector< LADate > toDatesFormatted      = etrading::toLADatesFromGregorianDates( toDates );
+                std::vector< AQLDate > fromDatesFormatted    = etrading::toLADatesFromGregorianDates( fromDates );
+                std::vector< AQLDate > toDatesFormatted      = etrading::toLADatesFromGregorianDates( toDates );
         
                 // Calculate the forward rate
                 forwardRateResults = etrading::getCurveForwardRatesFromForwardDates( fromDatesFormatted,
@@ -120,7 +120,7 @@ namespace validation
             else
             {
                 std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % lwoCurveName.c_str() ).str();
-                throw LACoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
             }
         }
 
@@ -165,11 +165,11 @@ namespace validation
             if( lwoCurve )
             {
                 // Get the Curve Collection and Curve Index names
-                LAString curveCollection    = LAString( lwoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
-                LAString curveIndex         = LAString( lwoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
+                AQLString curveCollection    = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
+                AQLString curveIndex         = AQLString( lwoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
 
                 // Cast the boost gregorian dates into LADates
-                std::vector< LADate > fixingDatesFormatted    = etrading::toLADatesFromGregorianDates( fixingDates );
+                std::vector< AQLDate > fixingDatesFormatted    = etrading::toLADatesFromGregorianDates( fixingDates );
                 
                 // Calculate the forward rates
                 forwardRateResults = etrading::getCurveForwardRates( fixingDatesFormatted, curveCollection, curveIndex );
@@ -177,7 +177,7 @@ namespace validation
             else
             {
                 std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % lwoCurveName.c_str() ).str();
-                throw LACoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
             }
         }
 

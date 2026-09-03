@@ -7,32 +7,32 @@
 #endif
 
 #include "LAPriceHWCalibration.h"
-#include "LAObject.h"
-#include "LADataProcedure.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLObject.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "LAMathDateCalculations.h"
 #include "LAPriceCFGenUtility.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAMathValuableEntity.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLMathValuableEntity.h"
 
 #include "LAModelDynamicsHW1FCurve.h"
-#include "LAPriceTargetFunction.h"
-#include "LAPriceLSTargetFunction.h"
+#include "AQLPriceTargetFunction.h"
+#include "AQLPriceLSTargetFunction.h"
 #include "LAPriceCashFlowGenerator.h"
 #include <algorithm>
 
@@ -43,7 +43,7 @@ class IRCalibLSTool
 {
 public:
 	// constructor
-	explicit IRCalibLSTool(LADataDoubles* pAttr) : mpAttr(pAttr) {;}
+	explicit IRCalibLSTool(AQLDataDoubles* pAttr) : mpAttr(pAttr) {;}
 	/*!
 		@brief set up parameter for function pointed by a member variable
 	*/
@@ -55,7 +55,7 @@ public:
     {
         mpAttr->set(param, 0);
     };
-	LADataDoubles* mpAttr; // pointer to LADataDoubles 
+	AQLDataDoubles* mpAttr; // pointer to AQLDataDoubles 
 };
 
 
@@ -65,7 +65,7 @@ public:
     @brief default constructor
 */
 LAPriceHWCalibration::LAPriceHWCalibration()
-: LACoreProcedure()
+: AQLCoreProcedure()
 {
 }
 /*!
@@ -85,14 +85,14 @@ bool
 LAPriceHWCalibration::isTypeOf(function_t id) const
 {
 	return (id == FN_IR_HWCALIBRATION ? true :
-						LACoreProcedure::isTypeOf(id));
+						AQLCoreProcedure::isTypeOf(id));
 }
 /*!
     @brief  Copy this class
 
 	@return pointer to copied object
 */
-LACoreFunctionBase*		
+AQLCoreFunctionBase*		
 LAPriceHWCalibration::clone() const
 {
     try 
@@ -101,7 +101,7 @@ LAPriceHWCalibration::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -122,7 +122,7 @@ LAPriceHWCalibration::getType() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceHWCalibration::registerData(LAPriceDataManager& dm) const
+LAPriceHWCalibration::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(PRICING_DATA_CALIBRATORENGINE,		DATA_PROCEDURE);
 	dm.setData(CALIBRATION_DATA_CALIBRATIONDATA,				DATA_MULTIREFERENCE);
@@ -140,36 +140,36 @@ LAPriceHWCalibration::registerData(LAPriceDataManager& dm) const
 	@note basedate is not used in estimation
 */
 void	            
-LAPriceHWCalibration::calibrateModel(const LADate& basedate, 
-										LAObject& object, 
-										const LADataProcedure& att) const
+LAPriceHWCalibration::calibrateModel(const AQLDate& basedate, 
+										AQLObject& object, 
+										const AQLDataProcedure& att) const
 {
 	
 	(void)basedate; (void)att; 
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	dh = &(object.getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL));
-	const LADataMultiReference& attrdata = dynamic_cast<LADataMultiReference&>(dh->get());
-	std::vector<LAObject*> data;
+	const AQLDataMultiReference& attrdata = dynamic_cast<AQLDataMultiReference&>(dh->get());
+	std::vector<AQLObject*> data;
 	for(unsigned int i=0;i<attrdata.getSize();i++)
 		data.push_back(&attrdata.get(i).get());
-	std::vector<LAObject*>::iterator it = data.begin();
+	std::vector<AQLObject*>::iterator it = data.begin();
 	//sort about option maturity
 	sort(data.begin(), data.end(), Comp_term());
 
 	//set up calibration object matrix 
-	std::vector< std::vector<LAObject*> > datamat(data.size());
+	std::vector< std::vector<AQLObject*> > datamat(data.size());
 	dh = &(data[0]->getData(IR_CALIBRATION_DATA_OPTIONMATURITY,ISNOTNULL));
 	datamat[0].push_back(data[0]);
-	LAString tenorstr1 = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString tenorstr1 = dynamic_cast<AQLDataString &>(dh->get()).get();
 	tenorstr1.toUpper();
-	LAString tenorstr2;
-	LAStringVector resultmaturity(1,tenorstr1);
+	AQLString tenorstr2;
+	AQLStringVector resultmaturity(1,tenorstr1);
 	unsigned int j = 0;
 	for(unsigned int i=1; i< attrdata.getSize();i++)
 	{
 		dh = &(data[i]->getData(IR_CALIBRATION_DATA_OPTIONMATURITY,ISNOTNULL));
-		tenorstr2 = dynamic_cast<LADataString &>(dh->get()).get();
+		tenorstr2 = dynamic_cast<AQLDataString &>(dh->get()).get();
 		tenorstr2.toUpper();
 		if(tenorstr1 == tenorstr2)
 		{
@@ -193,10 +193,10 @@ LAPriceHWCalibration::calibrateModel(const LADate& basedate,
 
 	//asof 
 	dh = &(object.getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL));
-	LADate asof = dynamic_cast<LADataDate &>(dh->get()).get();
+	AQLDate asof = dynamic_cast<AQLDataDate &>(dh->get()).get();
 
 	dh = &(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL));
-	LAObject& vole = dynamic_cast<LADataReference&>(dh->get()).get().get();
+	AQLObject& vole = dynamic_cast<AQLDataReference&>(dh->get()).get().get();
 
 	double rstar=0.01;
 	unsigned int startpos = 0;
@@ -206,40 +206,40 @@ LAPriceHWCalibration::calibrateModel(const LADate& basedate,
 	for(unsigned int i=0;i<calibSize;i++)
 	{
 		// Least Square Function
-		LAPriceLSTargetFunction<IRCalibLSTool> method;
+		AQLPriceLSTargetFunction<IRCalibLSTool> method;
 		method.setBaseDate(asof);
 
 		// Target variable - calibvariables
 		dh = &(object.getData(PRICING_DATA_SDEINFO,ISNOTNULL));
-		LAObject& models = dynamic_cast<LADataReference&>(dh->get()).get().get();
+		AQLObject& models = dynamic_cast<AQLDataReference&>(dh->get()).get().get();
 		dh = &(models.getData(PRICING_DATA_CALIBVARIABLES,ISNOTNULL));
-		IRCalibLSTool tool(&dynamic_cast<LADataDoubles &>(dh->get()));
+		IRCalibLSTool tool(&dynamic_cast<AQLDataDoubles &>(dh->get()));
 		method.setVariable(tool);
 
 		unsigned int LSsize = datamat[i].size();
-		LAMathObjectValue    temp_entity(object.getDataInstance() );
-        vector< pair<LAMathObjectValue*, LAMathObjectValue*> > target(LSsize);
+		AQLMathObjectValue    temp_entity(object.getDataInstance() );
+        vector< pair<AQLMathObjectValue*, AQLMathObjectValue*> > target(LSsize);
 		//set target
 		for(unsigned j=0;j<LSsize;j++)
 		{
 			//set startpos
 			datamat[i][j]->remove(PRICING_DATA_STARTPOSITION);
-			datamat[i][j]->add(PRICING_DATA_STARTPOSITION,new LADataInt(startpos));
+			datamat[i][j]->add(PRICING_DATA_STARTPOSITION,new AQLDataInt(startpos));
 			datamat[i][j]->remove(PRICING_DATA_INITIALRSTAR);
-			datamat[i][j]->add(PRICING_DATA_INITIALRSTAR, new LADataDouble(rstar));
+			datamat[i][j]->add(PRICING_DATA_INITIALRSTAR, new AQLDataDouble(rstar));
 			//set target
-			target[j].first = dynamic_cast<LAMathObjectValue*>(datamat[i][j]);
+			target[j].first = dynamic_cast<AQLMathObjectValue*>(datamat[i][j]);
 			target[j].second = &temp_entity;
 		}
 		method.set(target);
 
-		LAOptimumBrent brent;
+		AQLOptimumBrent brent;
 		DoubleArray x(1,0.001);
 		double valconvergence = brent.findMinimum(method, x);
 
 		dh = &(datamat[i][0]->getData(CALIBRATION_DATA_VALUE,ISNOTNULL));
-		LADataValuation& attrval = dynamic_cast<LADataValuation&>(dh->get());
-		const LACoreValuation& valuation = attrval.getMethod();
+		AQLDataValuation& attrval = dynamic_cast<AQLDataValuation&>(dh->get());
+		const AQLCoreValuation& valuation = attrval.getMethod();
 		//set next startpos
 		startpos = dynamic_cast<const LAMathJamshidianSwaption &>(valuation).getNextPos(attrval);
 		//set next rstar
@@ -253,16 +253,16 @@ LAPriceHWCalibration::calibrateModel(const LADate& basedate,
 			volresult.erase(volresult.begin()+startpos,volresult.end());
 			volresult.insert(volresult.begin()+startpos,size,vollast);
 		}
-		dynamic_cast<LADataDoubles&>(vole.getData(PRICING_DATA_CALIBVOL_T,ISNOTNULL).get()).set(volresult);
+		dynamic_cast<AQLDataDoubles&>(vole.getData(PRICING_DATA_CALIBVOL_T,ISNOTNULL).get()).set(volresult);
 
 		for(unsigned int j=0;j<LSsize;j++)
 		{
 			dh = &(datamat[i][j]->getData(CALIBRATION_DATA_VALUE,ISNOTNULL));
-			LADataValuation& attrval2 = dynamic_cast<LADataValuation&>(dh->get());
-			const LACoreValuation& valuation2 = attrval2.getMethod();
+			AQLDataValuation& attrval2 = dynamic_cast<AQLDataValuation&>(dh->get());
+			const AQLCoreValuation& valuation2 = attrval2.getMethod();
 			datamat[i][j]->remove("OptionPremiumResult");
 			double simprem = dynamic_cast<const LAMathJamshidianSwaption &>(valuation2).getSimPrem(attrval2);
-			datamat[i][j]->add("OptionPremiumResult",new LADataDouble(simprem));
+			datamat[i][j]->add("OptionPremiumResult",new AQLDataDouble(simprem));
 
 		}
 		
@@ -272,11 +272,11 @@ LAPriceHWCalibration::calibrateModel(const LADate& basedate,
 
 	//make result object;
 	vole.remove("ResultVolatility");
-	vole.add("ResultVolatility",new LADataDoubles(resultvolvec));
+	vole.add("ResultVolatility",new AQLDataDoubles(resultvolvec));
 
 	vole.remove("ResultConvergenceValue");
-	vole.add("ResultConvergenceValue", new LADataDoubles(resultconvergvec));
+	vole.add("ResultConvergenceValue", new AQLDataDoubles(resultconvergvec));
 
 	vole.remove("ResultMaturity");
-	vole.add("ResultMaturity",new LADataStrings(resultmaturity));
+	vole.add("ResultMaturity",new AQLDataStrings(resultmaturity));
 }

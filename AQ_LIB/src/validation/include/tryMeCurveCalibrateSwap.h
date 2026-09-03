@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include <stdarg.h>
 
 namespace validation
@@ -24,21 +24,21 @@ namespace validation
     *  @param [in]		tenorBasisConv	    Tenor Basis market conventions
     *  @param [in]		tenorBasisRates	    Tenor Basis market data
     */
-    const LAString tryMeCurveCalibrateSwap( const LAString& curveCollection,
-                                            const LAString& staticDataTable,
-                                            const LAString& curveIndex,
-                                            const LAStringMatrix& curveConv,
-                                            const LAStringMatrix& moneyMarketConv,
-                                            const LAStringMatrix& liborConv,
-                                            const LAStringMatrix& liborRates,
-                                            const LAStringMatrix& swapConv,
-                                            const LAStringMatrix& swapRates,
-                                            const LAStringMatrix& fraConv,
-                                            const LAStringMatrix& fra3mRates,
-                                            const LAStringMatrix& fra6mRates,
-                                            const LAStringMatrix& futureConv,
-                                            const LAStringMatrix& futureRates,
-                                            const LAStringMatrix& tenorBasisConv,
-                                            const LAStringMatrix& tenorBasisRates );
+    const AQLString tryMeCurveCalibrateSwap( const AQLString& curveCollection,
+                                            const AQLString& staticDataTable,
+                                            const AQLString& curveIndex,
+                                            const AQLStringMatrix& curveConv,
+                                            const AQLStringMatrix& moneyMarketConv,
+                                            const AQLStringMatrix& liborConv,
+                                            const AQLStringMatrix& liborRates,
+                                            const AQLStringMatrix& swapConv,
+                                            const AQLStringMatrix& swapRates,
+                                            const AQLStringMatrix& fraConv,
+                                            const AQLStringMatrix& fra3mRates,
+                                            const AQLStringMatrix& fra6mRates,
+                                            const AQLStringMatrix& futureConv,
+                                            const AQLStringMatrix& futureRates,
+                                            const AQLStringMatrix& tenorBasisConv,
+                                            const AQLStringMatrix& tenorBasisRates );
     
 }

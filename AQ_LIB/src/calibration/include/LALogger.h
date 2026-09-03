@@ -9,8 +9,8 @@
 #include <ctime>
 #include <cstdio>
 
-#include "LACoreSystemError.h"
-#include "LAString.h"
+#include "AQLCoreSystemError.h"
+#include "AQLString.h"
 
 
 class MALogManager;
@@ -40,13 +40,13 @@ public:
 	virtual void             error(const char *msg, const char *file, unsigned int line) = 0;
 	                         //=============
 	                         // debug  
-	virtual void             debug(const LAString &msg, const char *file, unsigned int line) = 0;
+	virtual void             debug(const AQLString &msg, const char *file, unsigned int line) = 0;
 		                     //==============
 	                         // info  
-	virtual void             info(const LAString &msg, const char *file, unsigned int line) = 0;
+	virtual void             info(const AQLString &msg, const char *file, unsigned int line) = 0;
 		                     //==============
 	                         // error
-	virtual void              error(const LAString &msg, const char *file, unsigned int line) = 0;
+	virtual void              error(const AQLString &msg, const char *file, unsigned int line) = 0;
 	                         //==============
 	                         // ! log close method
 	virtual void              close() = 0;
@@ -89,13 +89,13 @@ public:
 	virtual void             error(const char *msg, const char *file, unsigned int line);
 	                         //=============
 	                         // debug  
-	virtual void             debug(const LAString &msg, const char *file, unsigned int line);
+	virtual void             debug(const AQLString &msg, const char *file, unsigned int line);
 		                     //==============
 	                         // info  
-	virtual void             info(const LAString &msg, const char *file, unsigned int line);
+	virtual void             info(const AQLString &msg, const char *file, unsigned int line);
 		                     //==============
 	                         // error
-	virtual void              error(const LAString &msg, const char *file, unsigned int line);
+	virtual void              error(const AQLString &msg, const char *file, unsigned int line);
 	                         //==============
 	                         // ! log close method
 	virtual void              close();
@@ -110,7 +110,7 @@ public:
 
 private:
 	// constructor
-	explicit MALoggerImpl(const LAString &file, std::ios_base::openmode mode = std::ios_base::app);
+	explicit MALoggerImpl(const AQLString &file, std::ios_base::openmode mode = std::ios_base::app);
 	// destructor
 	virtual ~MALoggerImpl(void);
 	// copy constructor
@@ -119,7 +119,7 @@ private:
 
 	void writeMsg(const char *header, const char *msg, const char *file, unsigned int line);
 	
-	const LAString mFilename;               // file name
+	const AQLString mFilename;               // file name
 	std::ofstream *mFilestream;             // file stream
 	const std::ios_base::openmode mFilemode; // open mode
 	static int logLevel;                  // log level

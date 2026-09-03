@@ -28,10 +28,10 @@ namespace etrading
 
         accrualEndDateOrTenor_                  = scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::MATURITY_DATE,  inputLVB );
 
-		LAString fixedBusinessDayAdjustment     = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of( IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT) );
-        LAString fixedCalendar	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of( IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR) );
-		LAString fixedLegFreq	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of( IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY) );
-        LAString fixedDayCount	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of( IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT) );
+		AQLString fixedBusinessDayAdjustment     = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of( IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT) );
+        AQLString fixedCalendar	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of( IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR) );
+		AQLString fixedLegFreq	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of( IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY) );
+        AQLString fixedDayCount	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of( IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT) );
 
         accrualbusinessDayAdj_	                = toBusinessDayAdjustmentEnum( scheduleLVB.getOptionalValueAsLAStringFromKeys( IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT, IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT, fixedBusinessDayAdjustment).getCString() );
         accrualCalendar_		                = scheduleLVB.getOptionalValueAsLAStringFromKeys( IRS_KEY::FIXED_ACCRUALCALENDAR, IRS_KEY::ACCRUALCALENDAR,	fixedCalendar);
@@ -91,10 +91,10 @@ namespace etrading
 		effectiveDate_			= etrading::stringToDate(accrualStartDate_, "#Error: Invalid 'EffectiveDate'.");
 		unadjustedMaturityDate_ = validateMaturityDate(getEffectiveDate(), accrualEndDateOrTenor_);
 
-		LADate accrualStart = effectiveDate_;
-		LADate accrualEnd	= unadjustedMaturityDate_;
+		AQLDate accrualStart = effectiveDate_;
+		AQLDate accrualEnd	= unadjustedMaturityDate_;
 
-		std::vector<LADate> accrualDates;
+		std::vector<AQLDate> accrualDates;
 		accrualDates.push_back( accrualStart );
 		accrualDates.push_back( accrualEnd );
 
@@ -123,7 +123,7 @@ namespace etrading
 		case INFLATION_RESET_TYPE_MONTHLY_INTERPOLATION:
 		{
 			// For monthly interpolation, follow the convention that the fixing day is the first of the month
-			for ( LADate& fixingDate : fixingDates_ )
+			for ( AQLDate& fixingDate : fixingDates_ )
 			{
 				fixingDate.setDay(1);
 			}
@@ -134,7 +134,7 @@ namespace etrading
 		}
 
 		// TODO: Should we apply payLag *after* businessDayAdjustment?
-		LADate paymentDate = LADateScheduleHelpers::getDate( accrualEnd, payLag_ , toString( paymentbusinessDayAdj_ ), paymentCalendar_ );
+		AQLDate paymentDate = LADateScheduleHelpers::getDate( accrualEnd, payLag_ , toString( paymentbusinessDayAdj_ ), paymentCalendar_ );
 		paymentDates_.push_back( paymentDate );
 
 	}
@@ -152,7 +152,7 @@ namespace etrading
 
 		if (boost::math::isnan(notional_))
         {
-        	throw LACoreInvalidData( "#Error: Notional is a mandatory field for InflationSchedule", __FILE__, __LINE__ );
+        	throw AQLCoreInvalidData( "#Error: Notional is a mandatory field for InflationSchedule", __FILE__, __LINE__ );
         }
 
     }

@@ -31,7 +31,7 @@ namespace google_test
     TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_THROW )
     {
         // AQ_THROW( Message )
-        EXPECT_THROW( AQ_THROW( "ErrorMessage" ), LACoreAppError );
+        EXPECT_THROW( AQ_THROW( "ErrorMessage" ), AQLCoreAppError );
     }
 
 
@@ -39,7 +39,7 @@ namespace google_test
     TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_REQUIRE )
     {
         // AQ_REQUIRE( Condition, Message ) - Will throw Message if Condition false
-        EXPECT_THROW( AQ_REQUIRE( false, "ErrorMessage" ), LACoreAppError );
+        EXPECT_THROW( AQ_REQUIRE( false, "ErrorMessage" ), AQLCoreAppError );
         EXPECT_NO_THROW( AQ_REQUIRE( true, "ErrorMessage") );
     }
 
@@ -47,7 +47,7 @@ namespace google_test
     TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_THROW_IF )
     {
         // AQ_THROW_IF( Condition, Message ) - Will throw Message if Condition true
-        EXPECT_THROW( AQ_THROW_IF( true, "ErrorMessage" ), LACoreAppError );
+        EXPECT_THROW( AQ_THROW_IF( true, "ErrorMessage" ), AQLCoreAppError );
         EXPECT_NO_THROW( AQ_THROW_IF( false, "ErrorMessage") );
     }
 
@@ -55,7 +55,7 @@ namespace google_test
     TEST( TestExceptionMacros, UNIT_TestMacro_MLIB_TRY )
     {
         // AQ_TRY( FunctionCall, Message ) - Will throw if function call fails
-        EXPECT_THROW( AQ_TRY( throwFunction( true, 1.0 ), "ErrorMessage" ), LACoreAppError );
+        EXPECT_THROW( AQ_TRY( throwFunction( true, 1.0 ), "ErrorMessage" ), AQLCoreAppError );
         EXPECT_NO_THROW( AQ_TRY( throwFunction( false, 1.0 ), "ErrorMessage" ) );
     }
 

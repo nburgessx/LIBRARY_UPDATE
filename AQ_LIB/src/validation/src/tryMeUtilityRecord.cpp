@@ -17,18 +17,18 @@ namespace validation
     *  @param [in]		maxIndex	Max index for repeated tests
     *  @return			A notification string
     */
-    LAString tryMeUtilityRecord( bool enable, const LAString& folder, bool repeat, int startIndex, int maxIndex )
+    AQLString tryMeUtilityRecord( bool enable, const AQLString& folder, bool repeat, int startIndex, int maxIndex )
     {
         VALID_EXCEPTION_START
 
         // Set the Record Flag and Output Folder
         const bool record = etrading::CreateDataFile::setRecordFlag( enable );
-        const LAString outputFolder = etrading::CreateDataFile::setOutputFolder( LAString( folder ) );
+        const AQLString outputFolder = etrading::CreateDataFile::setOutputFolder( AQLString( folder ) );
 
         // Ensure that test cases are not indexed with negative values
         if ( startIndex < 0 || maxIndex < 0 )
         {
-            throw LACoreInvalidData( "#Error: Start- and EndIndex cannot be negative", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Start- and EndIndex cannot be negative", __FILE__, __LINE__ );
         }
 
         std::string msg;
@@ -57,7 +57,7 @@ namespace validation
                   + std::string( outputFolder.getCString() );
         }
 
-        LAString ret( msg.c_str() );
+        AQLString ret( msg.c_str() );
 
         return ret;
 

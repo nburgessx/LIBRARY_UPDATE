@@ -45,11 +45,11 @@ namespace etrading
         isCurveDataLoaded_ = false;
     }
 
-    void LegStaticData::validateCurveInput(const LAString& curveCollection)
+    void LegStaticData::validateCurveInput(const AQLString& curveCollection)
     {
         if (curveCollection.size() == 0)
         {
-    	    throw LACoreInvalidData( "#Error: curveCollection must be provided", __FILE__, __LINE__ );
+    	    throw AQLCoreInvalidData( "#Error: curveCollection must be provided", __FILE__, __LINE__ );
         }
 
         //Throw exception if the curve has not been built.
@@ -94,12 +94,12 @@ namespace etrading
         return inputParameters_;
     }
 
-    LAString LegStaticData::getLegName() const
+    AQLString LegStaticData::getLegName() const
 	{
 		return legName_; 
 	}
 
-    LAString LegStaticData::getDiscountCurve() const
+    AQLString LegStaticData::getDiscountCurve() const
     {
         return discountCurve_;
     }
@@ -119,7 +119,7 @@ namespace etrading
         valuationCurrency_ = valuationCurrency;
     }
 
-    LAString LegStaticData::getDiscountCurveMarketName() const
+    AQLString LegStaticData::getDiscountCurveMarketName() const
     {
         return discountCurveMarketName_;
     }
@@ -140,44 +140,44 @@ namespace etrading
     }
 
     //dummy methods, just to avoid downcasting
-    LAString LegStaticData::getForecastCurve() const
+    AQLString LegStaticData::getForecastCurve() const
     {
-    	throw LACoreInvalidData( "#Error: getForecastCurve method not supported on a fixed leg", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: getForecastCurve method not supported on a fixed leg", __FILE__, __LINE__ );
     }
     
-    LAString LegStaticData::getForecastCurveMarketName() const
+    AQLString LegStaticData::getForecastCurveMarketName() const
     {
-    	throw LACoreInvalidData( "#Error: getForecastCurveMarketName method not supported for this product", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: getForecastCurveMarketName method not supported for this product", __FILE__, __LINE__ );
     }
 
     double LegStaticData::getFirstFixing() const
     {
-    	throw LACoreInvalidData( "#Error: getFirstFixing method not supported for this product", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: getFirstFixing method not supported for this product", __FILE__, __LINE__ );
     }
 
     double LegStaticData::getLastFixing() const
     {
-    	throw LACoreInvalidData( "#Error: getLastFixing method not supported for this product", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: getLastFixing method not supported for this product", __FILE__, __LINE__ );
     }
     
-    LAString LegStaticData::getFirstStubCurveIndex() const
+    AQLString LegStaticData::getFirstStubCurveIndex() const
     {
-    	throw LACoreInvalidData( "#Error: getFirstStubCurveIndex method not supported for this product", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: getFirstStubCurveIndex method not supported for this product", __FILE__, __LINE__ );
     }
 
-    LAString LegStaticData::getLastStubCurveIndex() const
+    AQLString LegStaticData::getLastStubCurveIndex() const
     {
-    	throw LACoreInvalidData( "#Error: getLastStubCurveIndex method not supported for this product", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: getLastStubCurveIndex method not supported for this product", __FILE__, __LINE__ );
     }
 
     BooleanEnum LegStaticData::getFwdInter() const
     {
-    	throw LACoreInvalidData( "#Error: getFwdInter method not supported for this product", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: getFwdInter method not supported for this product", __FILE__, __LINE__ );
     }
 
     void LegStaticData::setFwdInter(const BooleanEnum& fwdInter)
     {
-    	throw LACoreInvalidData( "#Error: setFwdInter method not supported for this product", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: setFwdInter method not supported for this product", __FILE__, __LINE__ );
     }
 
 

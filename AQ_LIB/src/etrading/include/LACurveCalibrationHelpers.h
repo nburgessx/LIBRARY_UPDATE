@@ -9,14 +9,14 @@
 #endif
 
 
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
-#include "LAString.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
+#include "AQLString.h"
 #include "LACurvePricingObject.h"
 #include "LATime.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLPriceDataDayCount.h"
 
 // TODO - Try to remove this file. It contains lots of #defines that clash with external binaries
 #include "ConstantDeclarations.h"
@@ -48,69 +48,69 @@ namespace etrading
 
         //curve
     public:
-        static LAString getCurveGenerateTime(LADataInstance* dataInstance, const LAString& curveid, const LAString& curvename);
+        static AQLString getCurveGenerateTime(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curvename);
 
-        static void  setUpCurveFromMarket(LADataInstance* dataInstance, const LAString& CurveID,
-            LAStringMatrix mgrid, LAStringMatrix lgrid,
-            LAStringMatrix fgrid, LAStringMatrix sgrid,
-            LAStringMatrix mdata, LAStringMatrix ldata,
-            LAStringMatrix fdata, LAStringMatrix sdata,
-            LAStringMatrix ylddata, bool isCheckDF = false, bool isAUDadjust = false);
+        static void  setUpCurveFromMarket(AQLDataInstance* dataInstance, const AQLString& CurveID,
+            AQLStringMatrix mgrid, AQLStringMatrix lgrid,
+            AQLStringMatrix fgrid, AQLStringMatrix sgrid,
+            AQLStringMatrix mdata, AQLStringMatrix ldata,
+            AQLStringMatrix fdata, AQLStringMatrix sdata,
+            AQLStringMatrix ylddata, bool isCheckDF = false, bool isAUDadjust = false);
 
-        static void setUpXccyBasisCurve(LADataInstance* dataInstance, const LAString& BCurveID, LAStringMatrix ylddata,
-            LAStringMatrix bgrid, LAStringMatrix bdata);
+        static void setUpXccyBasisCurve(AQLDataInstance* dataInstance, const AQLString& BCurveID, AQLStringMatrix ylddata,
+            AQLStringMatrix bgrid, AQLStringMatrix bdata);
 
-        static void setUpBasisCurve(LADataInstance* dataInstance,
-            const LAString& stdCurveID,
-            const LAString& basisCurveID,
-            LAStringMatrix ylddata,
-            LAStringMatrix bgrid,
-            LAStringMatrix bdata);
+        static void setUpBasisCurve(AQLDataInstance* dataInstance,
+            const AQLString& stdCurveID,
+            const AQLString& basisCurveID,
+            AQLStringMatrix ylddata,
+            AQLStringMatrix bgrid,
+            AQLStringMatrix bdata);
 
-        static void setUpBasisCurveFromMarket(LADataInstance* dataInstance, const LAString& CurveID,
-            LAStringMatrix mgrid, LAStringMatrix lgrid, LAStringMatrix fgrid,
-            LAStringMatrix sgrid, LAStringMatrix mdata, LAStringMatrix ldata,
-            LAStringMatrix fdata, LAStringMatrix sdata, LAStringMatrix ylddata,
-            LAStringMatrix bgrid, LAStringMatrix bdata, bool isCheckDF = false, bool isAUDadjust = false);
+        static void setUpBasisCurveFromMarket(AQLDataInstance* dataInstance, const AQLString& CurveID,
+            AQLStringMatrix mgrid, AQLStringMatrix lgrid, AQLStringMatrix fgrid,
+            AQLStringMatrix sgrid, AQLStringMatrix mdata, AQLStringMatrix ldata,
+            AQLStringMatrix fdata, AQLStringMatrix sdata, AQLStringMatrix ylddata,
+            AQLStringMatrix bgrid, AQLStringMatrix bdata, bool isCheckDF = false, bool isAUDadjust = false);
 
-        static void	setUpCurve2(LADataInstance* dataInstance, const LAString& curveid, const LADate& asofdate, const DoubleMatrix& mat,
-            const LAString& curveName);
+        static void	setUpCurve2(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate, const DoubleMatrix& mat,
+            const AQLString& curveName);
 
-        static void	setUpCurve(LADataInstance* dataInstance, const LAString& curveid, const LADate& asofdate, const DoubleMatrix& mat,
-            const LAString& curveName);
+        static void	setUpCurve(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate, const DoubleMatrix& mat,
+            const AQLString& curveName);
 
-        static void	setUpCurve3(LADataInstance* dataInstance, const LAString& curveid, const LADate& asofdate, const DoubleMatrix& mat, const LAStringMatrix& conv,
-            const LAString& curveName);
+        static void	setUpCurve3(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate, const DoubleMatrix& mat, const AQLStringMatrix& conv,
+            const AQLString& curveName);
 
-        static void setUpCurve(LADataInstance* dataInstance, const LAString& curveid, const LADate& asofdate,
-            DoubleArray& termarray, DoubleArray& dfarray, const LAString& curveName);
+        static void setUpCurve(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLDate& asofdate,
+            DoubleArray& termarray, DoubleArray& dfarray, const AQLString& curveName);
 
-        static void setUpArbFreeCurveFromMarket(LADataInstance* dataInstance, const LAString& CurveID,
-            LAStringMatrix monGrid, LAStringMatrix monConv, //money market
-            LAStringMatrix libGrid, LAStringMatrix libConv, //libor market
-            LAStringMatrix swapGrid, LAStringMatrix swapConv, //swap market
-            LAStringMatrix currGrid, LAStringMatrix currConv, //currency basis swap market
-            LAStringMatrix libBasisGrid, LAStringMatrix libBasisConv, //3M6M libor basis swap market
-            LAStringMatrix fraGrid3M, LAStringMatrix fraGrid6M, LAStringMatrix fraConv, //FRA market
-            LAStringMatrix yldData, LAString& warning);
+        static void setUpArbFreeCurveFromMarket(AQLDataInstance* dataInstance, const AQLString& CurveID,
+            AQLStringMatrix monGrid, AQLStringMatrix monConv, //money market
+            AQLStringMatrix libGrid, AQLStringMatrix libConv, //libor market
+            AQLStringMatrix swapGrid, AQLStringMatrix swapConv, //swap market
+            AQLStringMatrix currGrid, AQLStringMatrix currConv, //currency basis swap market
+            AQLStringMatrix libBasisGrid, AQLStringMatrix libBasisConv, //3M6M libor basis swap market
+            AQLStringMatrix fraGrid3M, AQLStringMatrix fraGrid6M, AQLStringMatrix fraConv, //FRA market
+            AQLStringMatrix yldData, AQLString& warning);
 
-        static void setUpForecastCurveFromMarket(LADataInstance* dataInstance,
-            const LAString& forecastCurveID,
-            LAStringMatrix bgrid,
-            LAStringMatrix bdata);
+        static void setUpForecastCurveFromMarket(AQLDataInstance* dataInstance,
+            const AQLString& forecastCurveID,
+            AQLStringMatrix bgrid,
+            AQLStringMatrix bdata);
 
-        static void setUpForecastCurve(LADataInstance* dataInstance,
-            const LAString& arbFreeCurveID,
-            const LAString& forecastCurveID,
-            const LADate& asofdate,
+        static void setUpForecastCurve(AQLDataInstance* dataInstance,
+            const AQLString& arbFreeCurveID,
+            const AQLString& forecastCurveID,
+            const AQLDate& asofdate,
             const DoubleMatrix& ratesArray);
 
-        static void setUpCdtDFCurve(LADataInstance* dataInstance, LAString curveID, LAStringMatrix data);
+        static void setUpCdtDFCurve(AQLDataInstance* dataInstance, AQLString curveID, AQLStringMatrix data);
 
-        static DoubleArray outPutCurveFromYieldData(LADataInstance* dataInstance, const LAString& curveid, const LAString& curveName = STD);
+        static DoubleArray outPutCurveFromYieldData(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curveName = STD);
 
-        static DoubleArray outPutCurveFromYieldData2(LADataInstance* dataInstance, const LAString& curveidID, const LAString& curveidID2,
-            const LAString& curveName = STD, const LAString& curveName2 = STD);
+        static DoubleArray outPutCurveFromYieldData2(AQLDataInstance* dataInstance, const AQLString& curveidID, const AQLString& curveidID2,
+            const AQLString& curveName = STD, const AQLString& curveName2 = STD);
 
         /* @brief			Function to get the discount factors from a curve returning a discountFactorTable structure containing dates, terms and discount factors
         *  @param [in]		dataInstance		            The object pool dataInstance std::map
@@ -118,7 +118,7 @@ namespace etrading
         *  @param [in]		curveName               The curveindex within the curve
         *  @param [out]     DiscountFactorTable     The discount factor table results
         */
-        static DiscountFactorTable getCurveDiscountFactorTable(LADataInstance* dataInstance, const LAString& curveid, const LAString& curveName);
+        static DiscountFactorTable getCurveDiscountFactorTable(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curveName);
 
         /* @brief			Function to set the discount factors on a curve
         *  @param [in]		dataInstance		            The object pool dataInstance std::map
@@ -126,7 +126,7 @@ namespace etrading
         *  @param [in]		curveNames              A vector of curveindex names to set within the curve
         *  @param [in]      discountFactorTable     The discount factor table inputs
         */
-        static void setCurveDiscountFactorTable(LADataInstance* dataInstance, const LAString& curveid, const std::vector<LAString>& curveNames, const DiscountFactorTable& discountFactorTable);
+        static void setCurveDiscountFactorTable(AQLDataInstance* dataInstance, const AQLString& curveid, const std::vector<AQLString>& curveNames, const DiscountFactorTable& discountFactorTable);
 
         /* @brief			Function to get the forward rates from a curve returning a forwardRateTable structure containing dates, terms and forward rates
         *  @param [in]		dataInstance		            The object pool dataInstance std::map
@@ -134,7 +134,7 @@ namespace etrading
         *  @param [in]		curveName               The curveindex within the curve
         *  @param [out]     ForwardRateTable        The forward rate table results
         */
-        static ForwardRateTable getCurveForwardRateTable(LADataInstance* dataInstance, const LAString& curveid, const LAString& curveName);
+        static ForwardRateTable getCurveForwardRateTable(AQLDataInstance* dataInstance, const AQLString& curveid, const AQLString& curveName);
 
         /* @brief			Function to set the forward rates on a curve
         *  @param [in]		dataInstance		            The object pool dataInstance std::map
@@ -142,12 +142,12 @@ namespace etrading
         *  @param [in]		curveNames              A vector of curveindex names to set within the curve
         *  @param [in]      ForwardRateTable        The forward rate table inputs
         */
-        static void setCurveForwardRateTable(LADataInstance* dataInstance, const LAString& curveid, const std::vector<LAString>& curveNames, const ForwardRateTable& forwardRateTable);
+        static void setCurveForwardRateTable(AQLDataInstance* dataInstance, const AQLString& curveid, const std::vector<AQLString>& curveNames, const ForwardRateTable& forwardRateTable);
 
         // reset marketdata use libor
-        static void resetMarketDataUseL(LAMathYieldCurvePro &curve, const LAString &ccy, LAStringMatrix ldata);
+        static void resetMarketDataUseL(LAMathYieldCurvePro &curve, const AQLString &ccy, AQLStringMatrix ldata);
         // restor swaprate froml
-        static void restoreSwapRateFromLibor(LAMathYieldCurvePro &curve, const LAString &ccy, const std::map<LAString, double> &sRateMap, LAStringMatrix sdata);
+        static void restoreSwapRateFromLibor(LAMathYieldCurvePro &curve, const AQLString &ccy, const std::map<AQLString, double> &sRateMap, AQLStringMatrix sdata);
 
     private:
         LACurveCalibrationHelpers(void);

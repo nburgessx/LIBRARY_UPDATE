@@ -95,7 +95,7 @@ double LAMathVolatilityLMMDisc::integrate0( double t, size_t i )
     double u = mDividedT_fix[ t_idx ];
     if ( t < u )
     {
-        throw LACoreInvalidData(" Wrong t_idx : LAMathVolatilityLMMDisc::Integrate0 ",__FILE__,__LINE__);
+        throw AQLCoreInvalidData(" Wrong t_idx : LAMathVolatilityLMMDisc::Integrate0 ",__FILE__,__LINE__);
     }
     // integration from 0 to the closest preceding canonical point
     double integral = integrate0( t_idx, i );
@@ -139,7 +139,7 @@ double LAMathVolatilityLMMDisc::integrateSQ0( double t, size_t i )
     double u = mDividedT_fix[ t_idx ];
     if ( t < u )
     {
-        throw LACoreInvalidData(" Wrong t_idx : LAMathVolatilityLMMDisc::Integrate_SQ ",__FILE__,__LINE__);
+        throw AQLCoreInvalidData(" Wrong t_idx : LAMathVolatilityLMMDisc::Integrate_SQ ",__FILE__,__LINE__);
     }
     // integration from 0 to the closest preceding canonical point
     double integral = integrateSQ0( t_idx, i );

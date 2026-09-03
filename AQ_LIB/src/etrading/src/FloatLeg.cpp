@@ -105,7 +105,7 @@ namespace etrading
             //Populate DFs and FloatRates for cashflows
 			if (isFloatRateRequired)
             {
-				const LAString curveCollection = dataProvider.getValuationSettings().getCurveCollection().c_str();
+				const AQLString curveCollection = dataProvider.getValuationSettings().getCurveCollection().c_str();
 				auto fixingTable = getFixingTable(dataProvider.getValuationSettings().getFixingTableName(getLegName().getCString(), getType()), false /* do not throw when missing*/);
 
 				// First validate that the fixing table (if provided) is consistent with the forecast curve
@@ -113,15 +113,15 @@ namespace etrading
 		        {
 
 
-				    const LAString& curveCurrency = getCurveCurrency( curveCollection );
-				    const LAString& curveFrequencyTenor = validateCurveAndGetCurveFrequency( curveCollection, legStaticData_->getForecastCurve() );
+				    const AQLString& curveCurrency = getCurveCurrency( curveCollection );
+				    const AQLString& curveFrequencyTenor = validateCurveAndGetCurveFrequency( curveCollection, legStaticData_->getForecastCurve() );
 				    if (fixingTable->getCurrency() != toCCYEnum( curveCurrency.getCString() ))
 				    {
-					    throw LACoreInvalidData("#Error: FixingTable currency does not match the forecast curve currency. ", __FILE__, __LINE__ );
+					    throw AQLCoreInvalidData("#Error: FixingTable currency does not match the forecast curve currency. ", __FILE__, __LINE__ );
 				    }
 				    if (fixingTable->getCurveTenor() != toCurveTenorEnum( curveFrequencyTenor.getCString() ))
 				    {
-					    throw LACoreInvalidData("#Error: FixingTable curve frequency tenor does not match the forecast curve frequency tenor ", __FILE__, __LINE__ );
+					    throw AQLCoreInvalidData("#Error: FixingTable curve frequency tenor does not match the forecast curve frequency tenor ", __FILE__, __LINE__ );
 				    }
 			    }
 
@@ -170,7 +170,7 @@ namespace etrading
 	{}
 
 
-	std::vector<FloatRateData> FloatLeg::calculateFloatRates(const LAString& curveCollection, const LADate& valuationDate, const std::shared_ptr<FixingTable>& fixingTable, const std::string& volatilityModelName, const ConvexityMethodEnum& convexityMethod) const
+	std::vector<FloatRateData> FloatLeg::calculateFloatRates(const AQLString& curveCollection, const AQLDate& valuationDate, const std::shared_ptr<FixingTable>& fixingTable, const std::string& volatilityModelName, const ConvexityMethodEnum& convexityMethod) const
 	{
 		DateVector fixingDates  = schedule_->getFixingDates();
 		DateVector fixingEndDates = schedule_->getFixingEndDates();
@@ -181,7 +181,7 @@ namespace etrading
 
         size_t firstNonpastFixingDateIndex = getFirstNonpastDateIndex(fixingDates, valuationDate);
 
-		const LAString forecastCurveMarketName = legStaticData_->getForecastCurveMarketName();
+		const AQLString forecastCurveMarketName = legStaticData_->getForecastCurveMarketName();
 
 		const CurveTypeEnum curveType = toCurveTypeEnum(getCurveType(curveCollection, forecastCurveMarketName).c_str());
 
@@ -217,11 +217,11 @@ namespace etrading
 			auto firstStubCurveIndex = legStaticData_->getFirstStubCurveIndex();
 			auto lastStubCurveIndex = legStaticData_->getLastStubCurveIndex();
 
-			LAString crvFreqTenor = validateCurveAndGetCurveFrequency(curveCollection, legStaticData_->getForecastCurve());
+			AQLString crvFreqTenor = validateCurveAndGetCurveFrequency(curveCollection, legStaticData_->getForecastCurve());
 
 			if (!isOISOrARR && getFrequencyOrTenorMonth(crvFreqTenor) != getFrequencyOrTenorMonth(toString(schedule_->getAccrualFrequency()).c_str()))
 			{
-				throw LACoreInvalidData("#Error: Accrual Frequency is not the same as Curve Frequency.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: Accrual Frequency is not the same as Curve Frequency.", __FILE__, __LINE__);
 			}
 
 			// *** Special treatment for OIS leg without compoundMethod: use leg's accrual freq instead of curve's freq to calculate Forward Rates
@@ -251,7 +251,7 @@ namespace etrading
 			bool isFwdInter = getfwdInterInfo( curveCollection, forecastCurveMarketName, legStaticData_->getFwdInter()).isFwdInter;
 			legStaticData_->setFwdInter(isFwdInter? TRUE_BOOL : FALSE_BOOL);
 
-            std::pair<LAStringVector, LAStringVector> curvesInfo = getStubRateCurveIndicesTenors(curveCollection);
+            std::pair<AQLStringVector, AQLStringVector> curvesInfo = getStubRateCurveIndicesTenors(curveCollection);
             auto curveIndices = curvesInfo.first;
             auto curveTenors = curvesInfo.second;
 
@@ -347,7 +347,7 @@ namespace etrading
                     // If a front stub exists, has fixed already, is the current fixing and has not yet been paid out then the firstFixingRate must be provided
                     if ( fixingDate < valuationDate && paymentDate >= valuationDate && !hasFirstFixing )
                     {
-                    	throw LACoreInvalidData("#Error: The float leg 'firstFixing' is required for the front stub rate.", __FILE__, __LINE__ );
+                    	throw AQLCoreInvalidData("#Error: The float leg 'firstFixing' is required for the front stub rate.", __FILE__, __LINE__ );
                     }
                     
                     auto stubRate = calculateStubRate(curveCollection, firstStubCurveIndex, curveIndices, curveTenors, crvFreqTenor);
@@ -369,7 +369,7 @@ namespace etrading
                     // If a back stub exists, has fixed already, is the current fixing and has not yet been paid out then the lastFixingRate must be provided
                     if ( fixingDate <= valuationDate && paymentDate >= valuationDate && !hasLastFixing && !hasFirstFixing )
                     {
-                    	throw LACoreInvalidData("#Error: The float leg 'lastFixing' is required for the back stub rate.", __FILE__, __LINE__ );
+                    	throw AQLCoreInvalidData("#Error: The float leg 'lastFixing' is required for the back stub rate.", __FILE__, __LINE__ );
                     }
                     
 					auto stubRate = calculateStubRate(curveCollection, lastStubCurveIndex, curveIndices, curveTenors, crvFreqTenor);
@@ -390,19 +390,19 @@ namespace etrading
 	}
 
 	// Porduce a compounding rate for each of the accrual periods
-	DoubleVector FloatLeg::calculateOisFloatRates(size_t firstNonpastFixingDateIndex, const LAString& curveCollection, const std::shared_ptr<FixingTable>& fixingTable) const
+	DoubleVector FloatLeg::calculateOisFloatRates(size_t firstNonpastFixingDateIndex, const AQLString& curveCollection, const std::shared_ptr<FixingTable>& fixingTable) const
 	{
 		// Get equivalent rates over accrual periods
         // Populate fixingEndDates
 		auto fixingEndDates = schedule_->calculateAndPopulateOISFixingEndDates();
 
-		const LAString interpolation = getCurveInterpolation( curveCollection, legStaticData_->getForecastCurveMarketName() );
+		const AQLString interpolation = getCurveInterpolation( curveCollection, legStaticData_->getForecastCurveMarketName() );
 
 		// Get the equivalent rate of each accrual period. 
 		// The equivalent rate is obtained either through daily compounding over this period or finding the arithmetic average.
 		if (schedule_->getAccrualbusinessDayAdj() == NONE_BUSINESS_DAY_ADJ || schedule_->getAccrualCalendar().size() == 0)
 		{
-			throw LACoreInvalidData( "#Error: OIS average rate cannot be calculated without AccrualbusinessDayAdj or AccrualCalendar, please update the float leg schedule", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: OIS average rate cannot be calculated without AccrualbusinessDayAdj or AccrualCalendar, please update the float leg schedule", __FILE__, __LINE__ );
 		}
 
 		size_t expectedSize = schedule_->getCashflowSize();
@@ -410,7 +410,7 @@ namespace etrading
 		//Get float rates using compounding method:
         DoubleVector floatRates( expectedSize );
 
-        LAString compoundFrequency = "Business_Days";
+        AQLString compoundFrequency = "Business_Days";
 		bool isStartRoll = false;
         
         auto internalCompoundMethodType = validateCompoundingMethod(toString(legStaticData_->getCouponCompoundMethod()));
@@ -502,7 +502,7 @@ namespace etrading
 		//get all the cashflows including the upfrontCashflow
 		auto cashflows = schedule_->getAllCashflows();
 
-		const LAString curveCollection = dataProvider.getValuationSettings().getCurveCollection().c_str();
+		const AQLString curveCollection = dataProvider.getValuationSettings().getCurveCollection().c_str();
 
 		const bool usingExternalCurve = (curveCollection.size() == 0);
 
@@ -522,14 +522,14 @@ namespace etrading
 			// Note: Past Historic Cashflows not supported i.e. negative terms or yearFractions will return an error message.
 		{
 			// Libor Discounting Scenario, do not include upfrontCashflow
-			LADate valuationDate = dataProvider.getValuationSettings().getValuationDate();
-			LADate floatAccrualStartDate = schedule_->getCashflow(0)->getAccrualStartDate();
-			LADate floatAccrualEndDate = schedule_->getCashflow(schedule_->getCashflowSize() - 1)->getAccrualEndDate();
+			AQLDate valuationDate = dataProvider.getValuationSettings().getValuationDate();
+			AQLDate floatAccrualStartDate = schedule_->getCashflow(0)->getAccrualStartDate();
+			AQLDate floatAccrualEndDate = schedule_->getCashflow(schedule_->getCashflowSize() - 1)->getAccrualEndDate();
 
 			/* Call CurveUtilities getCurveDiscountFactors() API method.
 			* This allows CurveResults to be used, if available.
 			*/
-			const LAString discountCurve = legStaticData_->getDiscountCurveMarketName();
+			const AQLString discountCurve = legStaticData_->getDiscountCurveMarketName();
 			const DateVector paymentDates = { floatAccrualStartDate, floatAccrualEndDate };
 			
 			const DoubleVector discountFactors = getCurveDiscountFactors( valuationDate, paymentDates, curveCollection, discountCurve );
@@ -585,13 +585,13 @@ namespace etrading
 		return removeKeyPrefix(inputParameters_, "FLOAT", unchangedKeys);
 	}
 
-    double FloatLeg::calculateStubRate(const LAString& curveCollection, const LAString& stubCurveIndex, const LAStringVector& curveIndices, const LAStringVector& curveTenors, const LAString& indexFrequency) const
+    double FloatLeg::calculateStubRate(const AQLString& curveCollection, const AQLString& stubCurveIndex, const AQLStringVector& curveIndices, const AQLStringVector& curveTenors, const AQLString& indexFrequency) const
     {
 
         // Choose the nearest curve when no explicit curve has been chosen to use 
         bool useNearestCurve = same(stubCurveIndex, "NATURAL" ) ? true : false;
 
-		const LAString interpolation = getCurveInterpolation( curveCollection, legStaticData_->getForecastCurveMarketName() );
+		const AQLString interpolation = getCurveInterpolation( curveCollection, legStaticData_->getForecastCurveMarketName() );
 
         auto useStubCurveIndex = stubCurveIndex;
         if (!useNearestCurve)
@@ -602,7 +602,7 @@ namespace etrading
 
         // Default the tolerance to 3D - Requested by Cam Gilbert AlgoQuantHub Euro Swaps Trader 31-Jan-2019
         // This is so that regular swaps with effective dates starting on weekends do not imply a stub rate
-        LAString toleranceTenor = "3D";
+        AQLString toleranceTenor = "3D";
 
 		//For stub rate, fwdInter always false
         FwdInterInfo info = etrading::getfwdInterInfo( "", "", etrading::FALSE_BOOL );
@@ -621,9 +621,9 @@ namespace etrading
 
         fixingDates.push_back(lastFixingEndDate);
 
-		LAString rollConv = getRollConvection(schedule_->getEffectiveDate(), schedule_->getUnadjustedMaturityDate(), schedule_->getRollDayInput());
+		AQLString rollConv = getRollConvection(schedule_->getEffectiveDate(), schedule_->getUnadjustedMaturityDate(), schedule_->getRollDayInput());
 
-		LAString indexFreqToUse = (indexFrequency.size() != 0) ? getFrequencyString(indexFrequency) : "";
+		AQLString indexFreqToUse = (indexFrequency.size() != 0) ? getFrequencyString(indexFrequency) : "";
 
         double stubRate = CurveInstrumentPricing::getStubRate( fixingDates,
 															   curveIndices,
@@ -646,8 +646,8 @@ namespace etrading
         return stubRate;
     }
 
-	double FloatLeg::calculateStubRateFromFixingStartEnd(const LADate& fixingDate, const LADate& fixingEndDate, const LAString& curveCollection, const LAString& stubCurveIndex, const LAStringVector& curveIndices, const LAStringVector& curveTenors, 
-														const DayCountEnum& accrualDayCount, const LAString& fixingCalendar, const BusinessDayAdjustmentEnum& fixingBusinessDayAdj) const
+	double FloatLeg::calculateStubRateFromFixingStartEnd(const AQLDate& fixingDate, const AQLDate& fixingEndDate, const AQLString& curveCollection, const AQLString& stubCurveIndex, const AQLStringVector& curveIndices, const AQLStringVector& curveTenors, 
+														const DayCountEnum& accrualDayCount, const AQLString& fixingCalendar, const BusinessDayAdjustmentEnum& fixingBusinessDayAdj) const
 	{
 
 		// Choose the nearest curve when no explicit curve has been chosen to use 
@@ -662,7 +662,7 @@ namespace etrading
 
 		// Default the tolerance to 3D - Requested by Cam Gilbert AlgoQuantHub Euro Swaps Trader 31-Jan-2019
 		// This is so that regular swaps with effective dates starting on weekends do not imply a stub rate
-		LAString toleranceTenor = "3D";
+		AQLString toleranceTenor = "3D";
 
 		//For stub rate, fwdInter always false
 		FwdInterInfo info = etrading::getfwdInterInfo("", "", etrading::FALSE_BOOL);
@@ -670,7 +670,7 @@ namespace etrading
 		bool useFwdData = info.useFwdData;
 
 		// Note that we use the interpolation of the higher curve. Is it right?
-		//const LAString interpolation = getCurveInterpolation(curveCollection, getCurveStaticDataTableName(curveCollection, curveIndices.back()));
+		//const AQLString interpolation = getCurveInterpolation(curveCollection, getCurveStaticDataTableName(curveCollection, curveIndices.back()));
 
 		double ret = CurveInstrumentPricing::getStubRateFromFixingStartEnd(fixingDate, 
 																	fixingEndDate,
@@ -695,11 +695,11 @@ namespace etrading
 	* @param[in]	asOfDate				The valuation date of the leg
 	* @param[in]	creditModel				The calibrated credit model
 	*/
-	void FloatLeg::setSurvivalProbabilitiesUsingCreditModel( const LADate& asOfDate, const CreditModel& creditModel  )
+	void FloatLeg::setSurvivalProbabilitiesUsingCreditModel( const AQLDate& asOfDate, const CreditModel& creditModel  )
 	{
 		double prevSurvivalProbability = 1.0;
 		double survivalProbability = 1.0;
-		LADate prevPaymentDate = asOfDate;
+		AQLDate prevPaymentDate = asOfDate;
 
 		auto paymentDates = schedule_->getAllPaymentDates();
 		auto cashflows = schedule_->getAllCashflows();
@@ -709,7 +709,7 @@ namespace etrading
 		{
 			CashflowPtr curCashflow = cashflows[i];
 
-			const LADate& paymentDate = paymentDates[i];
+			const AQLDate& paymentDate = paymentDates[i];
 			double paymentYearFraction = getYearFraction( prevPaymentDate, paymentDate, schedule_->getAccrualDaycount(), false );
 
 			double hazardRate = creditModel.getHazardRate( paymentDate );
@@ -758,14 +758,14 @@ namespace etrading
 	}
 
 	//floatRate from individual cashflows (bespoke cashflows)
-	std::vector<FloatRateData> FloatLeg::calculateFloatRatesFromCashflows(const LAString& curveCollection, const LADate& valuationDate, const std::shared_ptr<FixingTable>& fixingTable, const std::string& volatilityModelName, const ConvexityMethodEnum& convexityMethod) const
+	std::vector<FloatRateData> FloatLeg::calculateFloatRatesFromCashflows(const AQLString& curveCollection, const AQLDate& valuationDate, const std::shared_ptr<FixingTable>& fixingTable, const std::string& volatilityModelName, const ConvexityMethodEnum& convexityMethod) const
 	{
 
 		auto cashflowSize = schedule_->getCashflowSize();
 
 		std::vector<FloatRateData> floatRates(cashflowSize);
 
-		std::pair<LAStringVector, LAStringVector> curvesInfo = getStubRateCurveIndicesTenors(curveCollection);
+		std::pair<AQLStringVector, AQLStringVector> curvesInfo = getStubRateCurveIndicesTenors(curveCollection);
 		auto curveIndices = curvesInfo.first;
 		auto curveTenors = curvesInfo.second;
 
@@ -827,7 +827,7 @@ namespace etrading
 			if (irregularStub)
 			{
 				// For non-last cashflows 
-				LADate fixingEndDate;
+				AQLDate fixingEndDate;
 
 				// The forcaseCurve can be 'UNNATURAL', 'NATURAL', or a standar curveIndex. 
 				// *** Note the 'UNNATURAL' is only a flag to identify whether to use AccrualEnd or nextFixingDate ***
@@ -868,9 +868,9 @@ namespace etrading
 
 				AQ_REQUIRE( !(curveType == OIS_CURVETYPE || curveType == ARR_CURVETYPE), "VNS from cashflow does not support OIS, ARR as the ForecastCurve.")
 
-				LAString crvFreqTenor = validateCurveAndGetCurveFrequency(curveCollection, forecastCurve.c_str());
+				AQLString crvFreqTenor = validateCurveAndGetCurveFrequency(curveCollection, forecastCurve.c_str());
 
-				LADate fixingEndDate = LADateScheduleHelpers::getDate(fixingDate, crvFreqTenor, toString(fixingBusinessDayAdj).c_str(), fixingCalendar.c_str());
+				AQLDate fixingEndDate = LADateScheduleHelpers::getDate(fixingDate, crvFreqTenor, toString(fixingBusinessDayAdj).c_str(), fixingCalendar.c_str());
 
 				// get floatRate from the curve
 				const double unadjustedFwdRate = getCurveForwardRatesFromForwardDates(boost::assign::list_of(fixingDate), boost::assign::list_of(fixingEndDate), curveCollection, forecastCurve.c_str(), legStaticData_->getFwdInter(), fixingBusinessDayAdj)[0];

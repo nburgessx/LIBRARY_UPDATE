@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent HW volatility function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 
@@ -10,7 +10,7 @@
 //
 //  SYNOPSIS    :       LAMathVolFuncHW
 //  DESCRIPTION :       Source code of class  to represent volatility of FX
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -41,7 +41,7 @@ using namespace std;
 */
 LAMathVolFuncHW::LAMathVolFuncHW( LAMathHWFuncMR& HW_a_, LAMathHWFuncSigma& HW_s_)
 :
-LAFunctionBase(),
+AQLFunctionBase(),
 mGL(HWGAUSSLEGENDRENUM),
 is_cloned(false)
 {
@@ -68,7 +68,7 @@ LAMathVolFuncHW::~LAMathVolFuncHW(void)
 */
 LAMathVolFuncHW::LAMathVolFuncHW(const LAMathVolFuncHW &rhs) 
 :
-LAFunctionBase(),
+AQLFunctionBase(),
 mGL(rhs.mGL),
 mpforVar(rhs.mpforVar != 0 ? dynamic_cast<LAMathHWFuncToolForVar*>(rhs.mpforVar->clone()) : 0),
 is_cloned(true),
@@ -81,7 +81,7 @@ is_cache(rhs.is_cache)
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathVolFuncHW::clone() const
 {
     try 
@@ -90,7 +90,7 @@ LAMathVolFuncHW::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -102,7 +102,7 @@ LAMathVolFuncHW::clone() const
 bool
 LAMathVolFuncHW::isTypeOf(function_t id) const
 {
-	return (id == FN_VOLFUNCHW ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_VOLFUNCHW ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -129,7 +129,7 @@ LAMathVolFuncHW::operator()(const DoubleArray& x) const
 	if ( !is_cache[te] )
     {
 		double ts = x[0];
-		double val = LAMath::sqrt(mGL.integrate((*mpforVar),ts,te)/(te-ts));
+		double val = AQLMath::sqrt(mGL.integrate((*mpforVar),ts,te)/(te-ts));
 		is_cache[te] = true;
 		integrate_cache[te] = val;
     }

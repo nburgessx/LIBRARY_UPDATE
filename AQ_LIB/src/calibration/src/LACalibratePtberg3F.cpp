@@ -24,20 +24,20 @@
 #include "LACalibrationFunc.h"
 #include "LADefinitionsCalibration.h"
 #include "LAMarketData.h"
-#include "LACoreAppError.h"
-#include "LAObjectPool.h"
-#include "LACoreReferencePool.h"
-#include "LADataReference.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LADataProcedure.h"
-#include "LAStepInterpolation.h"
-#include "LAConstant.h"
+#include "AQLCoreAppError.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreReferencePool.h"
+#include "AQLDataReference.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataProcedure.h"
+#include "AQLStepInterpolation.h"
+#include "AQLConstant.h"
 #include "LAScenarioConfiguration.h"
 #include "LACoreDataService.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
 #include "LAMathJamshidianSwaption.h"
 #include "LAMathJamshidianSwaptionByImplyVol.h"
 #include "LAMathAntonovFXOption.h"
@@ -47,7 +47,7 @@
 #include "LAMathDateUtilities.h"
 #include "LAMathCurveFuncUtility.h"
 #include "LAMathIRVanillaFuncUtility.h"
-#include "LAMathValuableEntity.h"
+#include "AQLMathValuableEntity.h"
 #include "LAPriceHWCalibration.h"
 #include "LAMathAntonovFXOption.h"
 #include "LAMathVolFuncFX.h"
@@ -84,7 +84,7 @@ LACalibratePtberg3F::~LACalibratePtberg3F()
     @brief setup
 */
 void
-LACalibratePtberg3F::setUp(LAObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos)
+LACalibratePtberg3F::setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos)
 {
 	LACalibratePtberg::setUp(objPool, param, method, gridPos);
 	cout << static_cast<int>(LACoreThread::getThreadID()) << " LACalibratePtberg3F set up called" << endl;
@@ -96,22 +96,22 @@ LACalibratePtberg3F::setUp(LAObjectPool &objPool,  const MAScenarioParam &param,
 
 	if (!method)
 	{
-		throw LACoreInvalidData("Argument method is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Argument method is NULL", __FILE__, __LINE__);
 	}
 	if (param.refName.size() < 2)
 	{
-		throw LACoreInvalidData("Param refName is more than be two, reference curve and calibinfo needed.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Param refName is more than be two, reference curve and calibinfo needed.", __FILE__, __LINE__);
 	}
 	if (!mpCaibEngine)
 	{
-		throw LACoreInvalidData("mpCaibEngine is NULL.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("mpCaibEngine is NULL.", __FILE__, __LINE__);
 	}
 	// calibration engine
 	mpCaibEngine->remove(PRICING_DATA_CALIBRATORENGINE);
-	mpCaibEngine->add(PRICING_DATA_CALIBRATORENGINE, new LADataProcedure()).convertFromString(FN_IR_FXDISPLACEDDIFFUSIONCALIBRATION3F_STR);
+	mpCaibEngine->add(PRICING_DATA_CALIBRATORENGINE, new AQLDataProcedure()).convertFromString(FN_IR_FXDISPLACEDDIFFUSIONCALIBRATION3F_STR);
 
-	const LAString &calibInfoName = param.refName[0];
-	const LAObject &calibInfo = objPool.getObject(calibInfoName, ENCHKTYPE_ISDEFINED).get();
+	const AQLString &calibInfoName = param.refName[0];
+	const AQLObject &calibInfo = objPool.getObject(calibInfoName, ENCHKTYPE_ISDEFINED).get();
 
 	mpCaibEngine->remove(PRICING_DATA_DOMESTICCURVETYPE);
 	mpCaibEngine->add(PRICING_DATA_DOMESTICCURVETYPE, calibInfo.getData(PRICING_DATA_DOMESTICCURVETYPE, ISNOTNULL).get().clone());
@@ -119,15 +119,15 @@ LACalibratePtberg3F::setUp(LAObjectPool &objPool,  const MAScenarioParam &param,
 	mpCaibEngine->remove(PRICING_DATA_FOREIGNCURVETYPE);
 	mpCaibEngine->add(PRICING_DATA_FOREIGNCURVETYPE, calibInfo.getData(PRICING_DATA_FOREIGNCURVETYPE, ISNOTNULL).get().clone());
 
-	const LAString &calibEngineName = dynamic_cast<const LADataString &>(mpCaibEngine->getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	const AQLString &calibEngineName = dynamic_cast<const AQLDataString &>(mpCaibEngine->getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 	// set up skew & vol info
-	const LAString SKEWVOL = "_SKEWVOL";
-	const LAString infoName_skewvol = calibEngineName + SKEWVOL;
-	LAObject *pInfo_skewvol = 0;
-	LAObjectHolder tmpEh = objPool.getObject(infoName_skewvol, ENCHKTYPE_NOCHECK);
+	const AQLString SKEWVOL = "_SKEWVOL";
+	const AQLString infoName_skewvol = calibEngineName + SKEWVOL;
+	AQLObject *pInfo_skewvol = 0;
+	AQLObjectHolder tmpEh = objPool.getObject(infoName_skewvol, ENCHKTYPE_NOCHECK);
 	if (!tmpEh.isDefined())
 	{
-		pInfo_skewvol = new LAObject();
+		pInfo_skewvol = new AQLObject();
 		objPool.set(infoName_skewvol, pInfo_skewvol);
 	}
 	else
@@ -170,17 +170,17 @@ LACalibratePtberg3F::setUp(LAObjectPool &objPool,  const MAScenarioParam &param,
 
 	// set reference
 	mpCaibEngine->remove(PRICING_DATA_SKEWVOLCALIBINFO);
-	mpCaibEngine->add(PRICING_DATA_SKEWVOLCALIBINFO, new LADataReference()).convertFromString(infoName_skewvol);
+	mpCaibEngine->add(PRICING_DATA_SKEWVOLCALIBINFO, new AQLDataReference()).convertFromString(infoName_skewvol);
 
 
 	// set up sigma & beta info
-	const LAString SIGMABETA = "_SIGMABETA";
-	const LAString infoName_sigmabeta = calibEngineName + SIGMABETA;
-	LAObject *pInfo_sigmabeta = 0;
+	const AQLString SIGMABETA = "_SIGMABETA";
+	const AQLString infoName_sigmabeta = calibEngineName + SIGMABETA;
+	AQLObject *pInfo_sigmabeta = 0;
 	tmpEh = objPool.getObject(infoName_sigmabeta, ENCHKTYPE_NOCHECK);
 	if (!tmpEh.isDefined())
 	{
-		pInfo_sigmabeta = new LAObject();
+		pInfo_sigmabeta = new AQLObject();
 		objPool.set(infoName_sigmabeta, pInfo_sigmabeta);
 	}
 	else
@@ -235,65 +235,65 @@ LACalibratePtberg3F::setUp(LAObjectPool &objPool,  const MAScenarioParam &param,
 
 	// set reference
 	mpCaibEngine->remove(PRICING_DATA_SIGMABETACALIBINFO);
-	mpCaibEngine->add(PRICING_DATA_SIGMABETACALIBINFO, new LADataReference()).convertFromString(infoName_sigmabeta);
+	mpCaibEngine->add(PRICING_DATA_SIGMABETACALIBINFO, new AQLDataReference()).convertFromString(infoName_sigmabeta);
 
 	// asofdate
-	LADate asofDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asofDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 	const unsigned int MARKETNUM = 5;
 	// check calib input type
-	LAString calibInputType = dynamic_cast<const LADataString &>(calibInfo.getData(PRICING_DATA_CALIBINPUTPARAMTYPE, ISNOTNULL).get()).get();
+	AQLString calibInputType = dynamic_cast<const AQLDataString &>(calibInfo.getData(PRICING_DATA_CALIBINPUTPARAMTYPE, ISNOTNULL).get()).get();
 	calibInputType.toUpper();
 	if (calibInputType != CALIB_INPUTTYPE_ALL)
 	{
-		throw LACoreInvalidData("Calib input param type must be ALL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Calib input param type must be ALL", __FILE__, __LINE__);
 	}
 
-	LADataMultiReference &refData = dynamic_cast<LADataMultiReference &>(mpCaibEngine->getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL).get());
+	AQLDataMultiReference &refData = dynamic_cast<AQLDataMultiReference &>(mpCaibEngine->getData(CALIBRATION_DATA_CALIBRATIONDATA, ISNOTNULL).get());
 	for (unsigned int i = 0; i < refData.getSize(); ++i)
 	{
-		LAMathObjectValue &data = dynamic_cast<LAMathObjectValue &>(refData.get(i).get());
-		const double term = dynamic_cast<const LADataDouble &>(data.getData(PRICING_DATA_FXTERM, ISNOTNULL).get()).get();
+		AQLMathObjectValue &data = dynamic_cast<AQLMathObjectValue &>(refData.get(i).get());
+		const double term = dynamic_cast<const AQLDataDouble &>(data.getData(PRICING_DATA_FXTERM, ISNOTNULL).get()).get();
 		// set initial val
-		data.LAObject::remove(PRICING_DATA_INITIALVALUE);
-		data.LAObject::add(PRICING_DATA_INITIALVALUE, calibInfo.getData(PRICING_DATA_INITIALVALUE, ISNOTNULL).get().clone());
+		data.AQLObject::remove(PRICING_DATA_INITIALVALUE);
+		data.AQLObject::add(PRICING_DATA_INITIALVALUE, calibInfo.getData(PRICING_DATA_INITIALVALUE, ISNOTNULL).get().clone());
 
-		const double dDF = dynamic_cast<const LADataDouble &>(data.getData(PRICING_DATA_DOMESTICDF, ISNOTNULL).get()).get();
-		const double fDF = dynamic_cast<const LADataDouble &>(data.getData(PRICING_DATA_FOREIGNDF, ISNOTNULL).get()).get();
-		const double fwdFX = dynamic_cast<const LADataDouble &>(data.getData(PRICING_DATA_FORWARDFX, ISNOTNULL).get()).get();
-		const DoubleVector &volVec = dynamic_cast<const LADataDoubles &>(data.getData(PRICING_DATA_VOLATILITYS, ISNOTNULL).get()).get();
-		const DoubleVector &strikeVec = dynamic_cast<const LADataDoubles &>(data.getData(PRICING_DATA_STRIKES, ISNOTNULL).get()).get();
-		const BoolVector &isCallVec = dynamic_cast<const LADataBools &>(data.getData(PRICING_DATA_ISCALLS, ISNOTNULL).get()).get();
-		const DoubleVector &weightVec = dynamic_cast<const LADataDoubles &>(data.getData(PRICING_DATA_WEIGHTS, ISNOTNULL).get()).get();
+		const double dDF = dynamic_cast<const AQLDataDouble &>(data.getData(PRICING_DATA_DOMESTICDF, ISNOTNULL).get()).get();
+		const double fDF = dynamic_cast<const AQLDataDouble &>(data.getData(PRICING_DATA_FOREIGNDF, ISNOTNULL).get()).get();
+		const double fwdFX = dynamic_cast<const AQLDataDouble &>(data.getData(PRICING_DATA_FORWARDFX, ISNOTNULL).get()).get();
+		const DoubleVector &volVec = dynamic_cast<const AQLDataDoubles &>(data.getData(PRICING_DATA_VOLATILITYS, ISNOTNULL).get()).get();
+		const DoubleVector &strikeVec = dynamic_cast<const AQLDataDoubles &>(data.getData(PRICING_DATA_STRIKES, ISNOTNULL).get()).get();
+		const BoolVector &isCallVec = dynamic_cast<const AQLDataBools &>(data.getData(PRICING_DATA_ISCALLS, ISNOTNULL).get()).get();
+		const DoubleVector &weightVec = dynamic_cast<const AQLDataDoubles &>(data.getData(PRICING_DATA_WEIGHTS, ISNOTNULL).get()).get();
 
 		
 		if (volVec.size() != MARKETNUM)
 		{
-			LAString msg = "volVec size is wrong. size = " + LAString(static_cast<int>(volVec.size()));
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "volVec size is wrong. size = " + AQLString(static_cast<int>(volVec.size()));
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		if (strikeVec.size() != MARKETNUM)
 		{
-			LAString msg = "strikeVec size is wrong. size = " + LAString(static_cast<int>(strikeVec.size()));
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "strikeVec size is wrong. size = " + AQLString(static_cast<int>(strikeVec.size()));
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		if (isCallVec.size() != MARKETNUM)
 		{
-			LAString msg = "isCallVec size is wrong. size = " + LAString(static_cast<int>(isCallVec.size()));
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "isCallVec size is wrong. size = " + AQLString(static_cast<int>(isCallVec.size()));
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		// calc premium
 		DoubleArray premVec(MARKETNUM);
 		
 		// ATM
-		premVec[0] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[0] * LAMath::sqrt(term), strikeVec[0], isCallVec[0] ? 1 : -1) * dDF;
+		premVec[0] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[0] * AQLMath::sqrt(term), strikeVec[0], isCallVec[0] ? 1 : -1) * dDF;
 		// 25Delta High
-		premVec[1] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[1] * LAMath::sqrt(term), strikeVec[1], isCallVec[1] ? 1 : -1) * dDF;
+		premVec[1] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[1] * AQLMath::sqrt(term), strikeVec[1], isCallVec[1] ? 1 : -1) * dDF;
 		// 10Delta High
-		premVec[2] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[2] * LAMath::sqrt(term), strikeVec[2], isCallVec[2] ? 1 : -1) * dDF;
+		premVec[2] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[2] * AQLMath::sqrt(term), strikeVec[2], isCallVec[2] ? 1 : -1) * dDF;
 		// 25Delta Low
-		premVec[3] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[3] * LAMath::sqrt(term), strikeVec[3], isCallVec[3] ? 1 : -1) * dDF;
+		premVec[3] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[3] * AQLMath::sqrt(term), strikeVec[3], isCallVec[3] ? 1 : -1) * dDF;
 		// 10Delta Low 
-		premVec[4] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[4] * LAMath::sqrt(term), strikeVec[4], isCallVec[4] ? 1 : -1) * dDF;
+		premVec[4] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[4] * AQLMath::sqrt(term), strikeVec[4], isCallVec[4] ? 1 : -1) * dDF;
 		//set data for 3F
 		DoubleArray premVec_(MARKETNUM);
 		DoubleArray strikeVec_(MARKETNUM);
@@ -325,14 +325,14 @@ LACalibratePtberg3F::setUp(LAObjectPool &objPool,  const MAScenarioParam &param,
 		weightVec_[4] = weightVec[2];
 		isCallVec_[4] = isCallVec[2];
 		//set as data
-		data.LAObject::remove(PRICING_DATA_OPTIONPREMIUMS);
-		data.LAObject::add(PRICING_DATA_OPTIONPREMIUMS, new LADataDoubles(premVec_));
-		data.LAObject::remove(PRICING_DATA_STRIKES);
-		data.LAObject::add(PRICING_DATA_STRIKES, new LADataDoubles(strikeVec_));
-		data.LAObject::remove(PRICING_DATA_WEIGHTS);
-		data.LAObject::add(PRICING_DATA_WEIGHTS, new LADataDoubles(weightVec_));
-		data.LAObject::remove(PRICING_DATA_ISCALLS);
-		data.LAObject::add(PRICING_DATA_ISCALLS, new LADataBools(isCallVec_));
+		data.AQLObject::remove(PRICING_DATA_OPTIONPREMIUMS);
+		data.AQLObject::add(PRICING_DATA_OPTIONPREMIUMS, new AQLDataDoubles(premVec_));
+		data.AQLObject::remove(PRICING_DATA_STRIKES);
+		data.AQLObject::add(PRICING_DATA_STRIKES, new AQLDataDoubles(strikeVec_));
+		data.AQLObject::remove(PRICING_DATA_WEIGHTS);
+		data.AQLObject::add(PRICING_DATA_WEIGHTS, new AQLDataDoubles(weightVec_));
+		data.AQLObject::remove(PRICING_DATA_ISCALLS);
+		data.AQLObject::add(PRICING_DATA_ISCALLS, new AQLDataBools(isCallVec_));
 
 	}
 	cout << static_cast<int>(LACoreThread::getThreadID()) << " LACalibratePtberg3F set up end" << endl;

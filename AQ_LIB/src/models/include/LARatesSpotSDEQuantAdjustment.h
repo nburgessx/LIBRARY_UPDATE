@@ -27,8 +27,8 @@ class LARatesSpotSDEQuantAdjustment : public LARatesSpotSDE
 public:
 //  LIFECYCLE
 	// Default constructor
-	explicit LARatesSpotSDEQuantAdjustment(SDE_TYPE type, LAPriceQuantAdjustmentFuncBase* pQuantAduster = 0, LAFunctionBase* pTransformer = 0, LAFunctionBase* pInvTransformer = 0,
-										LAFunctionBase* pAdjuster = 0);
+	explicit LARatesSpotSDEQuantAdjustment(SDE_TYPE type, LAPriceQuantAdjustmentFuncBase* pQuantAduster = 0, AQLFunctionBase* pTransformer = 0, AQLFunctionBase* pInvTransformer = 0,
+										AQLFunctionBase* pAdjuster = 0);
 	//	Copy constructor
 	LARatesSpotSDEQuantAdjustment(const LARatesSpotSDEQuantAdjustment& v);
 	// Destructor
@@ -39,7 +39,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;

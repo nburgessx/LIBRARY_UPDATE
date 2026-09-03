@@ -82,7 +82,7 @@ namespace etrading
         return accruedInterestPercent;
     }
 
-    double FloatingBond::yield( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const
+    double FloatingBond::yield( const AQLDate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const
     {
 		AQ_THROW( "yield() is not yet supported for FloatingBonds." );
     }
@@ -97,7 +97,7 @@ namespace etrading
 	{
 		// Check the settlement Date is Valid
 		const ValuationSettings& valuationSettings = dataProvider.getValuationSettings();
-		LADate settlementDate = valuationSettings.getSettlementDate();
+		AQLDate settlementDate = valuationSettings.getSettlementDate();
         Bond::checkSettlementDateValid( settlementDate );
 
 		const double assumedRate = valuationSettings.getFloatBondAssumedRate();
@@ -109,17 +109,17 @@ namespace etrading
 	}
 
     //The price can be either dirtyPrice or cleanPrice
-    double FloatingBond::compoundYield( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const
+    double FloatingBond::compoundYield( const AQLDate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const
     {
 		AQ_THROW( "compoundYield() is not yet supported for FloatingBonds." );
     }
 
-    double FloatingBond::dirtyPrice( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool isCompoundYield, const std::shared_ptr<BondActiveCouponDates>& activeCouponDatesPtr ) const
+    double FloatingBond::dirtyPrice( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool isCompoundYield, const std::shared_ptr<BondActiveCouponDates>& activeCouponDatesPtr ) const
     {
 		AQ_THROW( "dirtyPrice() is not yet supported for FloatingBonds." );
     }
 
-    double FloatingBond::cleanPrice( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
+    double FloatingBond::cleanPrice( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
     {
          AQ_THROW( "cleanPrice() is not yet supported for FloatingBonds." );
     }
@@ -130,7 +130,7 @@ namespace etrading
 	*/
     double FloatingBond::accruedInterest( const DataProvider& dataProvider ) const
     {
-		LADate settlementDate = dataProvider.getValuationSettings().getSettlementDate();
+		AQLDate settlementDate = dataProvider.getValuationSettings().getSettlementDate();
         Bond::checkSettlementDateValid( settlementDate );	
 
 		const double annualizedNextCouponRate = dataProvider.getValuationSettings().getFloatBondCurrentCouponRate();
@@ -150,7 +150,7 @@ namespace etrading
 	* @param[in]	bondCurve		A calibrated BondCurve
 	* @returns		The bond dirty price.
 	*/
-	double FloatingBond::dirtyPriceFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
+	double FloatingBond::dirtyPriceFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const
 	{
 		AQ_THROW( "dirtyPriceFromBondCurve() is not yet supported for FloatingBonds." );
 	}
@@ -160,7 +160,7 @@ namespace etrading
 	* @param[in]	bondCurve		A calibrated BondCurve
 	* @returns		The bond clean price.
 	*/
-	double FloatingBond::cleanPriceFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
+	double FloatingBond::cleanPriceFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const
 	{
 		AQ_THROW( "cleanPriceFromBondCurve() is not yet supported for FloatingBonds." );
 	}
@@ -175,7 +175,7 @@ namespace etrading
 	*									NOTE: the bondCurve is UPDATED to include the yield point for this bond.
 	*  @returns		The bond yield to maturity
 	*/
-	double FloatingBond::yieldFromPriceAndBondCurve( const LADate& settlementDate, const double& price, BondCurve& bondCurve ) const
+	double FloatingBond::yieldFromPriceAndBondCurve( const AQLDate& settlementDate, const double& price, BondCurve& bondCurve ) const
 	{
 		AQ_THROW( "yieldFromPriceAndBondCurve() is not yet supported for FloatingBonds." );
 	}
@@ -185,22 +185,22 @@ namespace etrading
 	*  @param[in]	bondCurve		A bondCurve used for discounting coupons
 	*  @returns		The bond yield to maturity
 	*/
-	double FloatingBond::yieldFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
+	double FloatingBond::yieldFromBondCurve( const AQLDate& settlementDate, const BondCurve& bondCurve ) const
 	{
 		AQ_THROW( "yieldFromBondCurve() is not yet supported for FloatingBonds." );
 	}
 
-	double FloatingBond::dirtyPriceFromCreditModel( const LADate& settlementDate, const CreditModel& creditModel ) const
+	double FloatingBond::dirtyPriceFromCreditModel( const AQLDate& settlementDate, const CreditModel& creditModel ) const
 	{
 		AQ_THROW( "dirtyPriceFromCreditModel() is not yet supported for FloatingBonds." );
 	}
 
-	double FloatingBond::cleanPriceFromCreditModel( const LADate& settlementDate, const CreditModel& creditModel ) const
+	double FloatingBond::cleanPriceFromCreditModel( const AQLDate& settlementDate, const CreditModel& creditModel ) const
 	{
 		AQ_THROW( "cleanPriceFromCreditModel() is not yet supported for FloatingBonds." );
 	}
 
-	double FloatingBond::hazardRateFromPrice( const LADate& settlementDate, const double price, CreditModel& creditModel, const bool useHullApproximation ) const
+	double FloatingBond::hazardRateFromPrice( const AQLDate& settlementDate, const double price, CreditModel& creditModel, const bool useHullApproximation ) const
 	{
 		AQ_THROW( "hazardRateFromPrice() is not yet supported for FloatingBonds." );
 	}
@@ -210,7 +210,7 @@ namespace etrading
 	*  @param[in]	creditModel				The credit model used to obtain survival probabilities and discount curve.
 	*  @returns		The bond dirty price on the forward settle date
 	*/
-	double FloatingBond::forwardDirtyPriceFromCreditModel( const LADate& forwardSettleDate, const CreditModel& creditModel ) const
+	double FloatingBond::forwardDirtyPriceFromCreditModel( const AQLDate& forwardSettleDate, const CreditModel& creditModel ) const
 	{
 		AQ_THROW( "forwardDirtyPriceFromCreditModel() is not yet supported for FloatingBonds." );
 	}
@@ -221,12 +221,12 @@ namespace etrading
 	*  @param[in]	discountCurve			The curve used to discount future coupons
 	*  @returns		The bond dirty price on the forward settle date
 	*/
-	double FloatingBond::forwardDirtyPriceFromDiscountCurve( const LADate& forwardSettleDate, const std::string& curveCollection, const std::string& discountCurve ) const
+	double FloatingBond::forwardDirtyPriceFromDiscountCurve( const AQLDate& forwardSettleDate, const std::string& curveCollection, const std::string& discountCurve ) const
 	{
 		AQ_THROW( "forwardDirtyPriceFromDiscountCurve() is not yet supported for FloatingBonds." );
 	}
 
-    unsigned int FloatingBond::accruedInterestDays( const LADate& settlementDate ) const
+    unsigned int FloatingBond::accruedInterestDays( const AQLDate& settlementDate ) const
     {
         const unsigned int accruedInterestDays = schedule_->calculateBondAccruedInterestDays(settlementDate, bondYieldParameters_);
         return accruedInterestDays;
@@ -252,12 +252,12 @@ namespace etrading
         return FLOAT_SCHEDULE_TYPE;
     }
 
-	double FloatingBond::dv01( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool isCompoundYield ) const
+	double FloatingBond::dv01( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool isCompoundYield ) const
 	{
 		AQ_THROW( "dv01() is not yet supported for FloatingBonds.");
 	}
 
-	double FloatingBond::modifiedDuration( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield ) const
+	double FloatingBond::modifiedDuration( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield ) const
 	{
 		AQ_THROW( "modifiedDuration() is not yet supported for FloatingBonds.");
 	}
@@ -275,7 +275,7 @@ namespace etrading
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The clean / dirty floating bond price	
 	*/
-	double FloatingBond::priceFromDiscountMargin( const LADate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const
+	double FloatingBond::priceFromDiscountMargin( const AQLDate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const
 	{
 		Bond::checkSettlementDateValid(settlementDate);
 
@@ -385,7 +385,7 @@ namespace etrading
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The clean / dirty floating bond price	
 	*/
-	double FloatingBond::priceFromYield( const LADate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const
+	double FloatingBond::priceFromYield( const AQLDate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const
 	{
 		Bond::checkSettlementDateValid(settlementDate);
 
@@ -429,7 +429,7 @@ namespace etrading
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The bond yield	
 	*/
-	double FloatingBond::yieldFromPrice( const LADate& settlementDate, const double& targetPrice, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const
+	double FloatingBond::yieldFromPrice( const AQLDate& settlementDate, const double& targetPrice, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const
 	{
 		Bond::checkSettlementDateValid(settlementDate);
 		
@@ -483,7 +483,7 @@ namespace etrading
 	* @param[in]	annualizedNextCouponRate	The rate of the next coupon, already fixed.
 	* @returns	The bond discount margin
 	*/
-	double FloatingBond::discountMarginFromPrice( const LADate& settlementDate, const double& targetPrice, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const
+	double FloatingBond::discountMarginFromPrice( const AQLDate& settlementDate, const double& targetPrice, const double& assumedRate, const double& indexToNextCoupon, const double& annualizedNextCouponRate ) const
 	{
 
 		// Invoke Yield from Price, and then convert the Yield to Discount Margin
@@ -504,7 +504,7 @@ namespace etrading
 	* @param[in]	indexToNextCoupon			The index discount rate for the next coupon period. i.e. the Libor rate from settlement date to next coupon
 	* @returns	The bond discount margin
 	*/
-	double FloatingBond::discountMarginFromYield( const LADate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon ) const
+	double FloatingBond::discountMarginFromYield( const AQLDate& settlementDate, const double& yield, const double& assumedRate, const double& indexToNextCoupon ) const
 	{
 		auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
 		const size_t nCoupons = cashflows.size();
@@ -534,7 +534,7 @@ namespace etrading
 	* @param[in]	indexToNextCoupon			The index discount rate for the next coupon period. i.e. the Libor rate from settlement date to next coupon
 	* @returns	The bond yield to maturity
 	*/
-	double FloatingBond::yieldFromDiscountMargin( const LADate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon ) const
+	double FloatingBond::yieldFromDiscountMargin( const AQLDate& settlementDate, const double& discountMargin, const double& assumedRate, const double& indexToNextCoupon ) const
 	{
 		auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
 		const size_t nCoupons = cashflows.size();
@@ -582,7 +582,7 @@ namespace etrading
 	 *
 	 * @returns	The accrued interest
 	 */
-	double FloatingBond::accruedInterestFromAnnualizedCouponRate( const LADate& settlementDate, const BondActiveCouponDates& activeCouponDates,  const double& annualizedNextCouponRate ) const
+	double FloatingBond::accruedInterestFromAnnualizedCouponRate( const AQLDate& settlementDate, const BondActiveCouponDates& activeCouponDates,  const double& annualizedNextCouponRate ) const
 	{
 
 		const double accruedInterestYearFraction = calculateBondAccruedInterestYearFraction(settlementDate,	activeCouponDates, bondYieldParameters_ );
@@ -597,14 +597,14 @@ namespace etrading
 		return accruedInterestWithFloor;
 	}
 
-    double FloatingBond::compoundYieldFromQuotedYield( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
+    double FloatingBond::compoundYieldFromQuotedYield( const AQLDate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
 	{
 		double compoundYield = 0.;
 		return compoundYield;
 	}
 
     //Solve compound yield either 1) based on the cashflow calculation, or 2) use JGB Approximation
-    double FloatingBond::compoundYieldFromQuotedPrice( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType ) const
+    double FloatingBond::compoundYieldFromQuotedPrice( const AQLDate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType ) const
 	{
 		double compoundYield = 0.;
 		return compoundYield;

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LADataInstance.h"
-#include "LAString.h"
+#include "AQLDataInstance.h"
+#include "AQLString.h"
 #include <memory>
 
 // Forward Declaration
@@ -35,8 +35,8 @@ namespace etrading
 		~InitializeAQETrading();
 
 		// Accessors
-		LADataInstance* dataInstance()  { return dataInstance_.get(); }
-        CurveCalibrationData* ycStaticDataObject( const LAString& curveCollection, const bool throwIfCurveDoesNotExist = true );
+		AQLDataInstance* dataInstance()  { return dataInstance_.get(); }
+        CurveCalibrationData* ycStaticDataObject( const AQLString& curveCollection, const bool throwIfCurveDoesNotExist = true );
 
 	protected:
 		InitializeAQETrading(const bool checkStaticDataLoaded = false, const bool checkIfCalendarLoaded = false);  
@@ -48,7 +48,7 @@ namespace etrading
         InitializeAQETrading& operator=(const InitializeAQETrading& rhs) = delete;
 
         // Private Member Variables
-		std::unique_ptr<LADataInstance> dataInstance_;
+		std::unique_ptr<AQLDataInstance> dataInstance_;
         static InitializeAQETrading* instance_;
 	};
 }

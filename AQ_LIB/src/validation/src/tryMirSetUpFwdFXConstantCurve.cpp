@@ -24,12 +24,12 @@ namespace validation
     *  @param [in]		fwdFXConstantConv	FX forward conventions
     *  @param [in]		curveNames			Equivalent names of the curve being built
     */
-    LAString tryMirSetUpFwdFXConstantCurve( LADataInstance* dataInstance,
-                                            const LAString& curveID,
-                                            const LAString& marketName,
-                                            const LAStringMatrix& generalProps,
-                                            const LAStringMatrix& fwdFXConstantConv,
-                                            const LAString& curveNames )
+    AQLString tryMirSetUpFwdFXConstantCurve( AQLDataInstance* dataInstance,
+                                            const AQLString& curveID,
+                                            const AQLString& marketName,
+                                            const AQLStringMatrix& generalProps,
+                                            const AQLStringMatrix& fwdFXConstantConv,
+                                            const AQLString& curveNames )
     {
         VALID_EXCEPTION_START
         
@@ -50,7 +50,7 @@ namespace validation
 
         if( fwdFXConstantConv.empty() )
         {
-            throw LACoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
         }
 
         if( fwdFXConstantConv[0].size() < 2 )
@@ -63,7 +63,7 @@ namespace validation
         //Throw exception if the curve has not been built.
         etrading::checkIfCurveExists( dataInstance, curveID );
 
-        LAString ret( marketName + " Curve has been set" );
+        AQLString ret( marketName + " Curve has been set" );
 
         if ( CreateDataFile::recordEnabled() )
         {

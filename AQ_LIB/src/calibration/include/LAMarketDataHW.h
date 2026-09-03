@@ -5,7 +5,7 @@
 #endif
 
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 #if defined (WIN32) || defined (WIN64)
 #include <windows.h>
@@ -14,9 +14,9 @@
 #endif
 
 
-class LADate;
-class LAString;
-class LAPriceDataDayCount;
+class AQLDate;
+class AQLString;
+class AQLPriceDataDayCount;
 
 
 //===================== Class Declare LAMarketDataHW==================================
@@ -30,10 +30,10 @@ class LAMarketDataHW
 public:
 	//==============================================================================
 	// get canonincal libor grid
-	static void getCanonicalGrid(DoubleArray &tenor,const LADate &asOfDate, const LAPriceDataDayCount &dayCount, int max, bool isReflesh = false, const LAString *p_freq_str = 0);
+	static void getCanonicalGrid(DoubleArray &tenor,const AQLDate &asOfDate, const AQLPriceDataDayCount &dayCount, int max, bool isReflesh = false, const AQLString *p_freq_str = 0);
 	//==============================================================================
 	// get Hull-White parameter (alpha, sigma)
-	static void getHullWhiteParam(const LAString &fileName, DoubleArray &t_grid, DoubleArray &alph, DoubleArray &sigma);
+	static void getHullWhiteParam(const AQLString &fileName, DoubleArray &t_grid, DoubleArray &alph, DoubleArray &sigma);
 	//==============================================================================
 
 private:

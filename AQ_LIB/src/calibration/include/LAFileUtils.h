@@ -25,7 +25,7 @@
 #endif
 
 
-class LAString;
+class AQLString;
 enum FileID
 {
 	FILENUM,		   
@@ -45,7 +45,7 @@ class MAFileUtils
 public:
 	//=================================================
 	// get number attached file name
-	static LAString getNumFileName(const LAString &fileName, FileID fileid = MARKETID);
+	static AQLString getNumFileName(const AQLString &fileName, FileID fileid = MARKETID);
 
 private:
 friend class LACoreDataService;

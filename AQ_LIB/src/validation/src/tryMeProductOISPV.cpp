@@ -53,7 +53,7 @@ namespace validation
         etrading::validateKeysForLVB( tryMeProductOISPVLVBKeys(), oisLVB.getKeys(), validateKeys );
 
         const std::string inputLVB = "OISLVB";
-        LAString curveCollection = oisLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
+        AQLString curveCollection = oisLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -66,20 +66,20 @@ namespace validation
 
         //----------------------------------------------------------------------------------
         // Validate non-cash flow related parameters
-        LAString forecastCurveIndex	= oisLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
-        LAString discountCurveIndex = oisLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+        AQLString forecastCurveIndex	= oisLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::FORECAST_CURVE, inputLVB );
+        AQLString discountCurveIndex = oisLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::DISCOUNT_CURVE, inputLVB );
 
         //Throw exception if the curve has not been built.
-        LAString staticDataTable = etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
+        AQLString staticDataTable = etrading::getCurveStaticDataTableName( curveCollection, forecastCurveIndex );
 
         // Synchronize the OIS pricing interpolation with that used within the OIS Curve calibration routine
-        LAString interpolation = etrading::getCurveInterpolation( curveCollection, staticDataTable );
+        AQLString interpolation = etrading::getCurveInterpolation( curveCollection, staticDataTable );
 
         //----------------------------------------------------------------------------------
         // Validate swap trade specific parameters
 
         // Payer or Receiver Swap i.e. Pay or Receive Fixed Coupons
-        LAString payRec	= oisLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE , inputLVB );
+        AQLString payRec	= oisLVB.getCompulsoryValueAsLAStringFromKeys( etrading::IRS_KEY::PAYER_RECEIVER, etrading::IRS_KEY::PAY_RECEIVE , inputLVB );
         bool isFixedRatePayerSwap = etrading::validateSwapPayRecFlag( payRec );
 
         //----------------------------------------------------------------------------------
@@ -94,18 +94,18 @@ namespace validation
         //----------------------------------------------------------------------------------
         // Validate OIS specific parameters
 
-        LAString floatLegRollDayString      = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_ROLLDAY );
-        LAString compoundingMethod          = oisLVB.getOptionalValueAsLAString( etrading::PRICING_PARAMS::COMPOUND_METHOD );
+        AQLString floatLegRollDayString      = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_ROLLDAY );
+        AQLString compoundingMethod          = oisLVB.getOptionalValueAsLAString( etrading::PRICING_PARAMS::COMPOUND_METHOD );
         etrading::validateOISParameters( floatLegRollDayString, compoundingMethod, false );
 
-        LAString floatBusinessDayAdjustment = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT );
-        LAString floatCalendar              = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_CALENDAR );
-        LAString floatAccrualBusinessDayAdjustment   = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment );
-        LAString floatAccrualCalendar	            = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_ACCRUALCALENDAR,                 floatCalendar              );
-		LAString floatFrequency				= oisLVB.getOptionalValueAsLAString(etrading::IRS_KEY::FLOAT_FREQUENCY);
+        AQLString floatBusinessDayAdjustment = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_BUSINESSDAYADJUSTMENT );
+        AQLString floatCalendar              = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_CALENDAR );
+        AQLString floatAccrualBusinessDayAdjustment   = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_ACCRUALBUSINESSDAYADJUSTMENT,    floatBusinessDayAdjustment );
+        AQLString floatAccrualCalendar	            = oisLVB.getOptionalValueAsLAString( etrading::IRS_KEY::FLOAT_ACCRUALCALENDAR,                 floatCalendar              );
+		AQLString floatFrequency				= oisLVB.getOptionalValueAsLAString(etrading::IRS_KEY::FLOAT_FREQUENCY);
 
-        LAString fixedDayCount              = oisLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
-        LAString floatDayCount              = oisLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
+        AQLString fixedDayCount              = oisLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FIXED_DAYCOUNT );
+        AQLString floatDayCount              = oisLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::FLOAT_DAYCOUNT );
 
         double notional                     = oisLVB.getOptionalValueAsDouble( etrading::IRS_KEY::NOTIONAL );
         double fixedRate                    = oisLVB.getOptionalValueAsDouble( etrading::IRS_KEY::FIXED_RATE );

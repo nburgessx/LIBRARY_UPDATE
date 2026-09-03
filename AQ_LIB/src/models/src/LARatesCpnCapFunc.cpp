@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent Coupon Cap function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //  2007, AlgoQuantHub..
@@ -32,7 +32,7 @@ using namespace std;
 	@brief default constructor
 */
 LARatesCpnCapFunc::LARatesCpnCapFunc() 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -48,7 +48,7 @@ LARatesCpnCapFunc::~LARatesCpnCapFunc()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesCpnCapFunc::clone() const
 {
     try 
@@ -57,7 +57,7 @@ LARatesCpnCapFunc::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -69,7 +69,7 @@ LARatesCpnCapFunc::clone() const
 bool
 LARatesCpnCapFunc::isTypeOf(function_t id) const
 {
-	return (id == FN_CPNCAP ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CPNCAP ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -91,7 +91,7 @@ double
 LARatesCpnCapFunc::operator()(const DoubleArray& x) const
 {
 	if (mParam.size() != 1)
-		throw LACoreInvalidData("parameter size must be one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("parameter size must be one", __FILE__, __LINE__);
 	
 	double ret = 0.0;
 	for (unsigned int i = 0; i < x.size(); i++)
@@ -115,11 +115,11 @@ LARatesCpnCapFunc::partialDerivative(const DoubleArray& x, unsigned int pos,
 {
 	if (pos >= x.size())
 	{
-        throw LACoreInvalidData("pos is over x size", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("pos is over x size", __FILE__, __LINE__);
 	}
 	
 	if (calctype == NUMERICAL)
-		return LAFunctionBase::partialDerivative(x, pos, calctype, difftype, delta);
+		return AQLFunctionBase::partialDerivative(x, pos, calctype, difftype, delta);
 	else
 	{
 		return -1.0;
@@ -141,7 +141,7 @@ LARatesCpnCapFunc::partialDerivative2(const DoubleArray& x, unsigned int posi, u
 												CALC_TYPE calctype, double delta) const
 {
 	if (calctype == NUMERICAL)
-		return LAFunctionBase::partialDerivative2(x, 0, 0, calctype, delta);
+		return AQLFunctionBase::partialDerivative2(x, 0, 0, calctype, delta);
 	else
 	{
 		return 0;

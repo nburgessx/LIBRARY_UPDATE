@@ -5,10 +5,10 @@
 #endif
 
 #include "LAMathDriftFuncBase.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 #include "LARatesCovariance.h"
-#include "LACoreTemplateType.h"
-#include "LAFunction.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLFunction.h"
 
 #include "LAMathHWFuncMR.h"
 #include "LAModelDynamicsHW1FCurve.h"
@@ -43,7 +43,7 @@ public:
     explicit 
     LAPriceDriftHW();
 
-    LAPriceDriftHW( const LAString& sdeAttrName);
+    LAPriceDriftHW( const AQLString& sdeAttrName);
                                 //======================================
     	                        // copy constructor
 	LAPriceDriftHW(const LAPriceDriftHW& rhs);
@@ -57,13 +57,13 @@ public:
 	bool                        isTypeOf(function_t id) const;
 								//======================================
                                 //
-    LACoreFunctionBase*		        clone() const;// %%% COVARIANT RETURN %%%
+    AQLCoreFunctionBase*		        clone() const;// %%% COVARIANT RETURN %%%
                                 //======================================
                                 // Return this class ID
 	function_t			        getType() const;
 								//======================================
 								// return string representaion
-    LAString			        convertToString(void) const;
+    AQLString			        convertToString(void) const;
                                 //======================================
                                 // operator()
     virtual double              operator()(const DoubleArray& x) const;
@@ -77,7 +77,7 @@ public:
  // OPERATION
 								//======================================
 								// transform from string representaion
-    void				        convertFromString(const LAString& str);
+    void				        convertFromString(const AQLString& str);
 								//======================================
 								// set up this class
 	void				        setUp(LAMathPathEntity& path);
@@ -96,7 +96,7 @@ protected:
     double getExpInt_a_sigma_SQ_B(const double t) const;
 
 	// data name of ir sde
-    LAString    mSDEAttrName;	
+    AQLString    mSDEAttrName;	
     // tempolary variable
 	mutable	unsigned int    mPos_old;			
     // tempolary variable
@@ -108,7 +108,7 @@ protected:
 	LAMathHWFuncTool* mpHWtool;
 	LAMathHWFuncTool* mpHWtool2;
 	LAMathHWFuncTool* mpHWtool3;
-	LAGaussLegendre mGL;
+	AQLGaussLegendre mGL;
 
 	const DoubleVector *mpSimuTimeGrid;
 
@@ -125,8 +125,8 @@ protected:
 
 private:
 
-	LAMathFunction<LAPriceDriftHW> mFuncExpInt_a_inv;
-    LAMathFunction<LAPriceDriftHW> mFuncExpInt_a_sigma_SQ;
-    LAMathFunction<LAPriceDriftHW> mFuncExpInt_a_sigma_SQ_B;
+	AQLMathFunction<LAPriceDriftHW> mFuncExpInt_a_inv;
+    AQLMathFunction<LAPriceDriftHW> mFuncExpInt_a_sigma_SQ;
+    AQLMathFunction<LAPriceDriftHW> mFuncExpInt_a_sigma_SQ_B;
 
 };

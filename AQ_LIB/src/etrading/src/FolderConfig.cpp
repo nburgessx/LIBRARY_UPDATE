@@ -1,6 +1,6 @@
 #include "FolderConfig.h"
 #include "Environment.h"
-#include "LAString.h"
+#include "AQLString.h"
 
 #include <fstream>
 
@@ -14,11 +14,11 @@ namespace
     // ====================================================================================================================
 
 	// 	note that Path here is set to mean Path + File Name
-    const LAString CONFIG_FILE_PATH( ".\\config\\irsvr_excel.conf" );
-    const LAString DEFAULT_CBSCHEDULE_PATH( ".\\config\\CBSchedule.csv" );
-    const LAString DEFAULT_CALENDAR_PATH( ".\\config\\Calendar.csv" );
-    const LAString DEFAULT_IRPROP_PATH( ".\\config\\ir.properties" );
-    const LAString DEFAULT_CALIBPROP_PATH( ".\\config\\calib.properties" );
+    const AQLString CONFIG_FILE_PATH( ".\\config\\irsvr_excel.conf" );
+    const AQLString DEFAULT_CBSCHEDULE_PATH( ".\\config\\CBSchedule.csv" );
+    const AQLString DEFAULT_CALENDAR_PATH( ".\\config\\Calendar.csv" );
+    const AQLString DEFAULT_IRPROP_PATH( ".\\config\\ir.properties" );
+    const AQLString DEFAULT_CALIBPROP_PATH( ".\\config\\calib.properties" );
 
     // #2. Initialize the library for Quants - This is only required and done if item #1 is not successful
     // ====================================================================================================================
@@ -29,26 +29,26 @@ namespace
 	//
 	// NOTE: Use forward slash '/' as the directory separator, so that these paths work on Linux as well as Windows
 	//
-    const LAString CONFIG_FILE_PATH2 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/irsvr_excel.conf" );
-    const LAString DEFAULT_CBSCHEDULE_PATH2 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/CBSchedule.csv" );
-    const LAString DEFAULT_CALENDAR_PATH2 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/Calendar.csv" );
-    const LAString DEFAULT_CALIBPROP_PATH2 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/calib.properties" );
-    const LAString DEFAULT_IRPROP_PATH2 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/ir.properties" );
-    const LAString DEFAULT_IRPROP_PATH3 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/ir.properties" );
-	const LAString OPTIONAL_CONFIG_PATH = etrading::FolderConfig::toPath("MLIBQ", "/resource/config/startup.conf" );
+    const AQLString CONFIG_FILE_PATH2 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/irsvr_excel.conf" );
+    const AQLString DEFAULT_CBSCHEDULE_PATH2 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/CBSchedule.csv" );
+    const AQLString DEFAULT_CALENDAR_PATH2 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/Calendar.csv" );
+    const AQLString DEFAULT_CALIBPROP_PATH2 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/calib.properties" );
+    const AQLString DEFAULT_IRPROP_PATH2 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/ir.properties" );
+    const AQLString DEFAULT_IRPROP_PATH3 = etrading::FolderConfig::toPath( "MLIBQ", "/resource/config/ir.properties" );
+	const AQLString OPTIONAL_CONFIG_PATH = etrading::FolderConfig::toPath("MLIBQ", "/resource/config/startup.conf" );
 
 
     // #3. Initialize the library for Business Users - This is only required and done if item #1 and #2 not successful
     // ====================================================================================================================
 
     // Alternative File Path ( This is for Business Users and Excel )
-    const LAString CONFIG_FILE_NAME( "/config/irsvr_excel.conf" );
-    const LAString CBSCHEDULE_FILE_NAME( "/config/CBSchedule.csv" );
-    const LAString CALENDAR_FILE_NAME( "/config/Calendar.csv" );
-    const LAString CALIBPROP_FILE_NAME( "/config/calib.properties" );
-    const LAString IRPROP_FILE_NAME( "/config/ir.properties" );
-    const LAString IRPROP_FILE_NAME2( "/config/ir.properties" );
-	const LAString OPTIONAL_CONFIG_PATH2 =( "/config/startup.conf" );
+    const AQLString CONFIG_FILE_NAME( "/config/irsvr_excel.conf" );
+    const AQLString CBSCHEDULE_FILE_NAME( "/config/CBSchedule.csv" );
+    const AQLString CALENDAR_FILE_NAME( "/config/Calendar.csv" );
+    const AQLString CALIBPROP_FILE_NAME( "/config/calib.properties" );
+    const AQLString IRPROP_FILE_NAME( "/config/ir.properties" );
+    const AQLString IRPROP_FILE_NAME2( "/config/ir.properties" );
+	const AQLString OPTIONAL_CONFIG_PATH2 =( "/config/startup.conf" );
 
     // This is only for the Optional Config
 	const bool reportErrors = false;
@@ -56,11 +56,11 @@ namespace
 
 namespace etrading
 {
-	std::shared_ptr< LAString > FolderConfig::ir_prop_path_;
-	std::shared_ptr< LAString > FolderConfig::calib_prop_path_;
-	std::shared_ptr< LAString > FolderConfig::calendar_path_;
-	std::shared_ptr< LAString > FolderConfig::cbschedule_path_;
-	std::shared_ptr< LAString > FolderConfig::optional_config_path_;
+	std::shared_ptr< AQLString > FolderConfig::ir_prop_path_;
+	std::shared_ptr< AQLString > FolderConfig::calib_prop_path_;
+	std::shared_ptr< AQLString > FolderConfig::calendar_path_;
+	std::shared_ptr< AQLString > FolderConfig::cbschedule_path_;
+	std::shared_ptr< AQLString > FolderConfig::optional_config_path_;
 
 	/* @brief			Function to set and return the AlgoQuantLib Folder path to the Google Tests.
     *  @return			Returns Google Test Folder in the format of boost::filesystem::path 
@@ -73,7 +73,7 @@ namespace etrading
 
         if ( environmentVariablePath == nullptr )
         {
-            throw LACoreInvalidData("#Error: The 'AQ' environment variable has not been set.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: The 'AQ' environment variable has not been set.",__FILE__,__LINE__);
         }
 
         boost::filesystem::path resultPath = boost::filesystem::path( environmentVariablePath ) / "resources" / "test" / "inputs";
@@ -82,25 +82,25 @@ namespace etrading
 
 
 	// Function to return the path stored by the an environment variable
-	LAString FolderConfig::toPath( std::string environmentVariable, std::string suffix )
+	AQLString FolderConfig::toPath( std::string environmentVariable, std::string suffix )
 	{
 		char* prefix = getenv( environmentVariable.c_str() );
 		if ( prefix == NULL )
 		{
-			return LAString( "" );
+			return AQLString( "" );
 		}
-		return LAString( ( prefix + suffix ).c_str() );
+		return AQLString( ( prefix + suffix ).c_str() );
 	}
 
 	
 	//
 	// Function to return the folder that the Excel add-in Vanilla.xll is running from
 	//
-	const LAString FolderConfig::getCurrentFolder()
+	const AQLString FolderConfig::getCurrentFolder()
 	{
 		try
 		{
-			LAString result = LAString();
+			AQLString result = AQLString();
 
 // Only support this feature on Windows.
 // On Linux we return an empty path for now.
@@ -125,21 +125,21 @@ namespace etrading
 			std::string folder = path;
 			folder = folder.substr( 0, folder.rfind( '\\' ) ); // if not found returns string:::npos i.e. end of string
 
-			result = LAString( folder.c_str() );
+			result = AQLString( folder.c_str() );
 
 #endif
 			return result;
 		}
 		catch ( ... )
 		{
-			return LAString();
+			return AQLString();
 		}
 	}
 
-	const LAString FolderConfig::createFilePath( const LAString* folder, const LAString* fileName )
+	const AQLString FolderConfig::createFilePath( const AQLString* folder, const AQLString* fileName )
 	{
-		LAString result = LAString();
-		LAString usedFolder = LAString();
+		AQLString result = AQLString();
+		AQLString usedFolder = AQLString();
 
 		// Return null string if no fileName provided
 		if ( fileName == NULL )
@@ -152,117 +152,117 @@ namespace etrading
 			usedFolder = *folder;
 
 		// If cannot get the current folder return null string
-		if ( usedFolder == LAString() )
+		if ( usedFolder == AQLString() )
 			return result;
 
 		// Concatenate the folder and filepath
-		LAString filepath = LAString( usedFolder + "\\" + *fileName );
+		AQLString filepath = AQLString( usedFolder + "\\" + *fileName );
 		result = filepath;
 
 		return result;
 	}
 	
-	void FolderConfig::set_cbschedule_path( const LAString& s )
+	void FolderConfig::set_cbschedule_path( const AQLString& s )
 	{
-		cbschedule_path_.reset( new LAString( s ) );
+		cbschedule_path_.reset( new AQLString( s ) );
 	}
 
-	void FolderConfig::set_calendar_path( const LAString& s )
+	void FolderConfig::set_calendar_path( const AQLString& s )
 	{
-		calendar_path_.reset( new LAString( s ) );
+		calendar_path_.reset( new AQLString( s ) );
 	}
 
-	void FolderConfig::set_ir_prop_path( const LAString& s )
+	void FolderConfig::set_ir_prop_path( const AQLString& s )
 	{
-		ir_prop_path_.reset( new LAString( s ) );
+		ir_prop_path_.reset( new AQLString( s ) );
 	}
 
-	void FolderConfig::set_calib_prop_path( const LAString& s )
+	void FolderConfig::set_calib_prop_path( const AQLString& s )
 	{
-		calib_prop_path_.reset( new LAString( s ) );
+		calib_prop_path_.reset( new AQLString( s ) );
 	}
 
 
-	const LAString* FolderConfig::ir_prop_path()
+	const AQLString* FolderConfig::ir_prop_path()
 	{
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();		
 		read_config_file( "vnl.ir.properties", ir_prop_path_ );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
-		ir_prop_path_.reset( new LAString( DEFAULT_IRPROP_PATH ) );
+		ir_prop_path_.reset( new AQLString( DEFAULT_IRPROP_PATH ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
-		ir_prop_path_.reset( new LAString( createFilePath( NULL, &IRPROP_FILE_NAME ) ) );
+		ir_prop_path_.reset( new AQLString( createFilePath( NULL, &IRPROP_FILE_NAME ) ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
-		ir_prop_path_.reset( new LAString( createFilePath( NULL, &IRPROP_FILE_NAME2 ) ) );
+		ir_prop_path_.reset( new AQLString( createFilePath( NULL, &IRPROP_FILE_NAME2 ) ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
 
-		ir_prop_path_.reset( new LAString( DEFAULT_IRPROP_PATH2 ) );
+		ir_prop_path_.reset( new AQLString( DEFAULT_IRPROP_PATH2 ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
-		ir_prop_path_.reset( new LAString( DEFAULT_IRPROP_PATH3 ) );
+		ir_prop_path_.reset( new AQLString( DEFAULT_IRPROP_PATH3 ) );
 		if ( ir_prop_path_.get() != NULL && check_file_availability( *ir_prop_path_.get() ) ) return ir_prop_path_.get();
 
 		return NULL;
 	}
 
-	const LAString* FolderConfig::calib_prop_path()
+	const AQLString* FolderConfig::calib_prop_path()
 	{
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 		read_config_file( "vnl.calib.properties", calib_prop_path_ );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
-		calib_prop_path_.reset( new LAString( DEFAULT_CALIBPROP_PATH ) );
+		calib_prop_path_.reset( new AQLString( DEFAULT_CALIBPROP_PATH ) );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
-		calib_prop_path_.reset( new LAString( createFilePath( NULL, &CALIBPROP_FILE_NAME ) ) );
+		calib_prop_path_.reset( new AQLString( createFilePath( NULL, &CALIBPROP_FILE_NAME ) ) );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
-		calib_prop_path_.reset( new LAString( DEFAULT_CALIBPROP_PATH2 ) );
+		calib_prop_path_.reset( new AQLString( DEFAULT_CALIBPROP_PATH2 ) );
 		if ( calib_prop_path_.get() != NULL && check_file_availability( *calib_prop_path_.get() ) ) return calib_prop_path_.get();
 
 		return NULL;
 	}
 
-	const LAString* FolderConfig::calendar_path()
+	const AQLString* FolderConfig::calendar_path()
 	{
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 		read_config_file( "vnl.calendar", calendar_path_ );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
-		calendar_path_.reset( new LAString( DEFAULT_CALENDAR_PATH ) );
+		calendar_path_.reset( new AQLString( DEFAULT_CALENDAR_PATH ) );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
-		LAString s = createFilePath( NULL, &CALENDAR_FILE_NAME );
-		calendar_path_.reset( new LAString( createFilePath( NULL, &CALENDAR_FILE_NAME ) ) );
+		AQLString s = createFilePath( NULL, &CALENDAR_FILE_NAME );
+		calendar_path_.reset( new AQLString( createFilePath( NULL, &CALENDAR_FILE_NAME ) ) );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
-		calendar_path_.reset( new LAString( DEFAULT_CALENDAR_PATH2 ) );
+		calendar_path_.reset( new AQLString( DEFAULT_CALENDAR_PATH2 ) );
 		if ( calendar_path_.get() != NULL && check_file_availability( *calendar_path_.get() ) ) return calendar_path_.get();
 
 		return NULL;
 	}
 
-	const LAString* FolderConfig::cbschedule_path()
+	const AQLString* FolderConfig::cbschedule_path()
 	{
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 
-		cbschedule_path_.reset( new LAString( DEFAULT_CBSCHEDULE_PATH ) );
+		cbschedule_path_.reset( new AQLString( DEFAULT_CBSCHEDULE_PATH ) );
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 
-		LAString s = createFilePath( NULL, &CBSCHEDULE_FILE_NAME );
-		cbschedule_path_.reset( new LAString( createFilePath( NULL, &CBSCHEDULE_FILE_NAME ) ) );
+		AQLString s = createFilePath( NULL, &CBSCHEDULE_FILE_NAME );
+		cbschedule_path_.reset( new AQLString( createFilePath( NULL, &CBSCHEDULE_FILE_NAME ) ) );
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 
-		cbschedule_path_.reset( new LAString( DEFAULT_CBSCHEDULE_PATH2 ) );
+		cbschedule_path_.reset( new AQLString( DEFAULT_CBSCHEDULE_PATH2 ) );
 		if ( cbschedule_path_.get() != NULL && check_file_availability( *cbschedule_path_.get() ) ) return cbschedule_path_.get();
 
 		return NULL;
 	}
 
-	void FolderConfig::read_config_file( const LAString& key, std::shared_ptr< LAString >& dest )
+	void FolderConfig::read_config_file( const AQLString& key, std::shared_ptr< AQLString >& dest )
 	{
 		std::ifstream ifs( CONFIG_FILE_PATH.getCString() );
 		if ( !ifs.is_open() )
@@ -283,13 +283,13 @@ namespace etrading
 			cur_key = line.substr( 0, sep_pos );
 			if ( cur_key == key_ )
 			{
-				dest.reset( new LAString( line.substr( sep_pos + 1 ).c_str() ) );
+				dest.reset( new AQLString( line.substr( sep_pos + 1 ).c_str() ) );
 				return;
 			}
 		}
 	}
 
-	bool FolderConfig::check_file_availability( const LAString& file_path )
+	bool FolderConfig::check_file_availability( const AQLString& file_path )
 	{
 		std::ifstream ifs( file_path.getCString() );
 		return ifs.is_open();
@@ -303,9 +303,9 @@ namespace etrading
 	 * cachedObjectEnum should be a recognized CacheObjectEnum.
 	 * objectConfigFilePath should be a valid file containing a list of JSON files
 	 */
-	const LAString* FolderConfig::setupOptionalStartupConfig()
+	const AQLString* FolderConfig::setupOptionalStartupConfig()
 	{		
-		const LAString* filepath =getOptionalConfigPath();
+		const AQLString* filepath =getOptionalConfigPath();
 		if(filepath==NULL)
 		{
 			return NULL;	  // Optional Configuration not found. This is not considered an error
@@ -320,7 +320,7 @@ namespace etrading
 				std::stringstream sst;
                 sst << "#Error: Cannot open optional config file " << std::endl 
 					<< *filepath;
-				throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+				throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 			}
 			else
 			{
@@ -338,13 +338,13 @@ namespace etrading
 		{
 			line_num++;
 			const char *c_line = line.c_str();
-			LAString tmpstr(c_line);
+			AQLString tmpstr(c_line);
 			
 			// The format of each line in the optional configuration file is: CachedObjectEnum,configFile
 			char delimiter(',');
 			unsigned int configFileColumnSize = 2;
 			
-			LAStringVector configItems = tmpstr.toToken( delimiter );
+			AQLStringVector configItems = tmpstr.toToken( delimiter );
 			if ( configItems.size() !=  configFileColumnSize )
 			{
 				if (reportErrors)
@@ -355,7 +355,7 @@ namespace etrading
 						<< "line : " << line_num << std::endl
 						<< "contents : " << line
 						<< "Expected format: ObjectEnum,FilenamePath";
-					throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+					throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 				}
 				else
 				{
@@ -363,8 +363,8 @@ namespace etrading
 				}
 			}
 
-			LAString& cachedObjectEnumString = configItems[0];
-			LAString& configFile = configItems[1];
+			AQLString& cachedObjectEnumString = configItems[0];
+			AQLString& configFile = configItems[1];
 			CachedObjectEnum enumTypeToLoad;
 			try
 			{
@@ -380,7 +380,7 @@ namespace etrading
 						<< "file : " << *filepath << std::endl
 						<< "line : " << line_num << std::endl
 						<< "contents : " << line;
-					throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+					throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 				}
 				else
 				{
@@ -396,14 +396,14 @@ namespace etrading
 	/* @brief Search for the Optional Configuration file. 
 	 * @param [out] The configuration file path (if resolved), otherwise NULL.
 	 */
-	 const LAString* FolderConfig::getOptionalConfigPath()
+	 const AQLString* FolderConfig::getOptionalConfigPath()
 	{
         // First attempt: Load the config file using the %AlgoQuantLib% environment variable; this is for developers
-        optional_config_path_.reset( new LAString( OPTIONAL_CONFIG_PATH ) );
+        optional_config_path_.reset( new AQLString( OPTIONAL_CONFIG_PATH ) );
 		if (optional_config_path_.get() != NULL && check_file_availability( *optional_config_path_.get() ) ) return optional_config_path_.get();
 
         // Second attempt: Load the config file using the current Excel Addin folder
-		optional_config_path_.reset( new LAString( createFilePath( NULL, &OPTIONAL_CONFIG_PATH2 ) ) );
+		optional_config_path_.reset( new AQLString( createFilePath( NULL, &OPTIONAL_CONFIG_PATH2 ) ) );
 		if (optional_config_path_.get() != NULL && check_file_availability( *optional_config_path_.get() ) ) return optional_config_path_.get();
 
 		return NULL;
@@ -414,10 +414,10 @@ namespace etrading
 	 * @param [in] configDirectory   The Configuration folder containing the configFile and all JSON files
 	 * @param [in] configFile        A config file which contains a list of JSON filenames to deserialize
 	 */
-	void FolderConfig::deserializeObjectsForOptionalStartup(CachedObjectEnum requiredEnumType, const boost::filesystem::path& configDirectory, const LAString& configFile)
+	void FolderConfig::deserializeObjectsForOptionalStartup(CachedObjectEnum requiredEnumType, const boost::filesystem::path& configDirectory, const AQLString& configFile)
 	{
 		boost::filesystem::path configFilePath = configDirectory / configFile.getCString();
-		LAString configFileWithFolderPath(configFilePath.string().c_str());
+		AQLString configFileWithFolderPath(configFilePath.string().c_str());
 
 		std::ifstream fin;
 		fin.open(configFileWithFolderPath.getCString());
@@ -427,7 +427,7 @@ namespace etrading
 			{
 				std::stringstream sst;
 				sst << "In Optional Config, cannot open configuration file " << std::endl << configFileWithFolderPath;
-				throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+				throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 			}
 			else
 			{
@@ -461,7 +461,7 @@ namespace etrading
 						<< "line : " << line_num << std::endl
 						<< "contents : " << line << std::endl
 						<< "JSON file path : " << jsonFilePath.string();
-					throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+					throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 				}
 				else
 				{
@@ -476,7 +476,7 @@ namespace etrading
 					<< "Expected Type: " << toString(requiredEnumType) << std::endl
 					<< "Deserialised Type: " << toString(cacheInfoOnDeserialization.second) << std::endl
 					<< "JSON file path: " << jsonFilePath.string();
-				throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+				throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 			}
 		}
 		fin.close();

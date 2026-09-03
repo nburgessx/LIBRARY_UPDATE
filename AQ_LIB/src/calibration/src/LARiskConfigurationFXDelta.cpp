@@ -44,9 +44,9 @@ LARiskConfigurationFXDelta::~LARiskConfigurationFXDelta(void)
 /*!
     @brief return operator1
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationFXDelta::getOperator1(void) const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_FX_DELTA_OPERATOR1);
@@ -55,9 +55,9 @@ LARiskConfigurationFXDelta::getOperator1(void) const
 /*!
     @brief return operator2
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationFXDelta::getOperator2(void) const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_FX_DELTA_OPERATOR2);
@@ -67,13 +67,13 @@ LARiskConfigurationFXDelta::getOperator2(void) const
     @brief return coefficient1
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXDelta::getCoefficient1(const LAString &fx) const
+AQLString
+LARiskConfigurationFXDelta::getCoefficient1(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey.toLower() + 
 								FX_KEY_RISK_OFFICIAL_FX_DELTA_COEFFICIENT1);
 }
@@ -82,13 +82,13 @@ LARiskConfigurationFXDelta::getCoefficient1(const LAString &fx) const
     @brief return coefficient2
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXDelta::getCoefficient2(const LAString &fx) const
+AQLString
+LARiskConfigurationFXDelta::getCoefficient2(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey = LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey.toLower() + 
 								FX_KEY_RISK_OFFICIAL_FX_DELTA_COEFFICIENT2);
 }
@@ -97,13 +97,13 @@ LARiskConfigurationFXDelta::getCoefficient2(const LAString &fx) const
     @brief return outputname1
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXDelta::getOutPutName1(const LAString &fx) const
+AQLString
+LARiskConfigurationFXDelta::getOutPutName1(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey.toLower() + 
 							FX_KEY_RISK_OFFICIAL_FX_DELTA_OUTPUT1);	
 }
@@ -112,13 +112,13 @@ LARiskConfigurationFXDelta::getOutPutName1(const LAString &fx) const
     @brief return outputname2
 	
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXDelta::getOutPutName2(const LAString &fx) const
+AQLString
+LARiskConfigurationFXDelta::getOutPutName2(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return mpRiskStaticData->getStaticData(fxKey.toLower() + 
 							FX_KEY_RISK_OFFICIAL_FX_DELTA_OUTPUT2);	
 }
@@ -126,9 +126,9 @@ LARiskConfigurationFXDelta::getOutPutName2(const LAString &fx) const
 /*!
     @brief return riskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationFXDelta::getRiskName(void) const
 {
 	return RISK_OFFICIAL_FX_DELTA;
@@ -141,10 +141,10 @@ LARiskConfigurationFXDelta::getRiskName(void) const
 	@return double
 */
 double
-LARiskConfigurationFXDelta::getShiftVal(const LAString &fx, SCENARIONUM scenarioNum) const
+LARiskConfigurationFXDelta::getShiftVal(const AQLString &fx, SCENARIONUM scenarioNum) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey = LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey = LAMarketData::getFXKey(ccys[0], ccys[1]);
 
 	if (scenarioNum == SCENARIO_1)
 	{
@@ -159,9 +159,9 @@ LARiskConfigurationFXDelta::getShiftVal(const LAString &fx, SCENARIONUM scenario
 /*!
     @brief return target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationFXDelta::getTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_FX_DELTA_TARGET_FX);
@@ -170,9 +170,9 @@ LARiskConfigurationFXDelta::getTargetCurrencies() const
 /*!
     @brief return calibration target currencies
 
-	@return LAString 
+	@return AQLString 
 */
-LAString
+AQLString
 LARiskConfigurationFXDelta::getCalibTargetCurrencies() const
 {
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_FX_DELTA_CALIBRATION_TARGET_FX);
@@ -183,13 +183,13 @@ LARiskConfigurationFXDelta::getCalibTargetCurrencies() const
     @brief return shift type
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationFXDelta::getShiftType(const LAString &fx) const
+AQLString
+LARiskConfigurationFXDelta::getShiftType(const AQLString &fx) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	return  mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_OFFICIAL_FX_DELTA_SHIFTTYPE);
 
 }
@@ -201,12 +201,12 @@ LARiskConfigurationFXDelta::getShiftType(const LAString &fx) const
 	@return double
 */
 double
-LARiskConfigurationFXDelta::getCoefficientRatio1(const LAString &fx, LAObject& e, LADataInstance& dataInstance) const
+LARiskConfigurationFXDelta::getCoefficientRatio1(const AQLString &fx, AQLObject& e, AQLDataInstance& dataInstance) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	
-	LAString isadjstr = mpRiskStaticData->getStaticData(fxKey.toLower() + 
+	AQLString isadjstr = mpRiskStaticData->getStaticData(fxKey.toLower() + 
 													FX_KEY_RISK_OFFICIAL_FX_DELTA_ISCOEFFICIENTRATIO1);
 	if (isadjstr == AQ_NO_DATA)
 		return 1.0;
@@ -218,22 +218,22 @@ LARiskConfigurationFXDelta::getCoefficientRatio1(const LAString &fx, LAObject& e
 		LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 		
 		// search shift target currency(foreign currency)
-		LAStringVector ccys;
+		AQLStringVector ccys;
 		LAMarketData::convertToCurrency(fx, ccys);
-		const LAStringVector &fx_ccys = targetFX->getCurrencys().get();
-		LAStringVector::const_iterator it = find(fx_ccys.begin(), fx_ccys.end(), ccys[1]);
+		const AQLStringVector &fx_ccys = targetFX->getCurrencys().get();
+		AQLStringVector::const_iterator it = find(fx_ccys.begin(), fx_ccys.end(), ccys[1]);
 		if (it == fx_ccys.end())
 		{
-			LAString msg = "FX object ccy is not registed  ccy = " + ccys[1].toUpper();
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "FX object ccy is not registed  ccy = " + ccys[1].toUpper();
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		unsigned int pos = static_cast<unsigned int>(it - fx_ccys.begin());
 
 		double spot = targetFX->getRate(ccys[1], ccys[0], 0.0);
 		if (spot == 0.0)
-			throw LACoreInvalidData("Spot rate input error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Spot rate input error",__FILE__,__LINE__);
 
-		LAString shiftType = getShiftType(fx);
+		AQLString shiftType = getShiftType(fx);
 		shiftType.toUpper();
 
 		double shiftval = getShiftVal(fx, SCENARIO_1);
@@ -242,7 +242,7 @@ LARiskConfigurationFXDelta::getCoefficientRatio1(const LAString &fx, LAObject& e
 			shiftval /= 100.0;
 		}
 		if (shiftval == 0.0)
-			throw LACoreInvalidData("Shift Value input error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Shift Value input error",__FILE__,__LINE__);
 
 		return 1.0/spot/shiftval;
 	}
@@ -258,12 +258,12 @@ LARiskConfigurationFXDelta::getCoefficientRatio1(const LAString &fx, LAObject& e
 	@return double
 */
 double
-LARiskConfigurationFXDelta::getCoefficientRatio2(const LAString &fx, LAObject& e, LADataInstance& dataInstance) const
+LARiskConfigurationFXDelta::getCoefficientRatio2(const AQLString &fx, AQLObject& e, AQLDataInstance& dataInstance) const
 {
-	LAStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
+	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
+	AQLString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	
-	LAString isadjstr = mpRiskStaticData->getStaticData(fxKey.toLower() + 
+	AQLString isadjstr = mpRiskStaticData->getStaticData(fxKey.toLower() + 
 													FX_KEY_RISK_OFFICIAL_FX_DELTA_ISCOEFFICIENTRATIO2);
 	if (isadjstr == AQ_NO_DATA)
 		return 1.0;
@@ -274,10 +274,10 @@ LARiskConfigurationFXDelta::getCoefficientRatio2(const LAString &fx, LAObject& e
 		double val = getCoefficientRatio1(fx,e,dataInstance);
 		val *= val;
 		
-		LAString isspotadjustmodestr = mpRiskStaticData->getStaticData(fxKey.toLower() + 
+		AQLString isspotadjustmodestr = mpRiskStaticData->getStaticData(fxKey.toLower() + 
 													FX_KEY_RISK_OFFICIAL_FX_DELTA_ISSPOTADJUSTMODEFORGAMMA);
 		if (isspotadjustmodestr == AQ_NO_DATA)
-			throw LACoreInvalidData("No input of IsSpotAdjustMode", __FILE__,__LINE__);
+			throw AQLCoreInvalidData("No input of IsSpotAdjustMode", __FILE__,__LINE__);
 
 		bool isspotadj = convertBoolFromStr(isspotadjustmodestr);
 		if (!isspotadj)
@@ -288,14 +288,14 @@ LARiskConfigurationFXDelta::getCoefficientRatio2(const LAString &fx, LAObject& e
 			LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 			
 			// search shift target currency(foreign currency)
-			LAStringVector ccys;
+			AQLStringVector ccys;
 			LAMarketData::convertToCurrency(fx, ccys);
-			const LAStringVector &fx_ccys = targetFX->getCurrencys().get();
-			LAStringVector::const_iterator it = find(fx_ccys.begin(), fx_ccys.end(), ccys[1]);
+			const AQLStringVector &fx_ccys = targetFX->getCurrencys().get();
+			AQLStringVector::const_iterator it = find(fx_ccys.begin(), fx_ccys.end(), ccys[1]);
 			if (it == fx_ccys.end())
 			{
-				LAString msg = "FX object ccy is not registed  ccy = " + ccys[1].toUpper();
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "FX object ccy is not registed  ccy = " + ccys[1].toUpper();
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 			unsigned int pos = static_cast<unsigned int>(it - fx_ccys.begin());
 			double spot = targetFX->getRate(ccys[1],ccys[0],0.0);
@@ -314,10 +314,10 @@ LARiskConfigurationFXDelta::getCoefficientRatio2(const LAString &fx, LAObject& e
 	@return bool
 */
 bool
-LARiskConfigurationFXDelta::isRiskCurrencyMode(const LAString &fx) const
+LARiskConfigurationFXDelta::isRiskCurrencyMode(const AQLString &fx) const
 {
-	LAString tmpCurrency = fx;
-	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
+	AQLString tmpCurrency = fx;
+	AQLString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													FX_KEY_RISK_OFFICIAL_FX_DELTA_ISRISKCURRENCYMODE);
 	if (proprslt == AQ_NO_DATA)
 		return false;
@@ -332,15 +332,15 @@ LARiskConfigurationFXDelta::isRiskCurrencyMode(const LAString &fx) const
 	@param[in] key fx
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationFXDelta::createScenario2Entity(const LAString &fx, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationFXDelta::createScenario2Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index)  const
 {
-	vector<LAObject *> ret = createFXEntity(fx, dataInstance, SCENARIO_2,index);
+	vector<AQLObject *> ret = createFXEntity(fx, dataInstance, SCENARIO_2,index);
 	if (isCalibTarget(fx))
 	{
-		vector<LAObject *> volVec = createFXVolEntity(fx, dataInstance, SCENARIO_2, index);
+		vector<AQLObject *> volVec = createFXVolEntity(fx, dataInstance, SCENARIO_2, index);
 		ret.insert(ret.end(), volVec.begin(), volVec.end());
 	}
 	return ret;

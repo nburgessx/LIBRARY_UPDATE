@@ -7,9 +7,9 @@ namespace etrading
 	InflationCashflow::InflationCashflow() : baseIndex_( std::numeric_limits<double>::quiet_NaN() ), resetIndex_( std::numeric_limits<double>::quiet_NaN() ), Cashflow()
     {}
     
-    InflationCashflow::InflationCashflow( const PayReceiveEnum& payReceive, const LADate& fixingDate,
-											const LADate& accrualStartDate, const LADate& accrualEndDate, const int accrualDays, const double accrualYearFraction,
-											const LADate& paymentDate, const double notional, double leverage,
+    InflationCashflow::InflationCashflow( const PayReceiveEnum& payReceive, const AQLDate& fixingDate,
+											const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, const int accrualDays, const double accrualYearFraction,
+											const AQLDate& paymentDate, const double notional, double leverage,
 											const FrequencyEnum& paymentFrequency, const CashflowTypeEnum& cashflowType )
 
 		: baseIndex_(  std::numeric_limits<double>::quiet_NaN() ),

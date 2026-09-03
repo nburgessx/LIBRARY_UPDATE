@@ -66,8 +66,8 @@ double meLWOCreditModelSurvivalProbability( const std::string& creditModelName, 
     AQ_API_START
 
     // Marshall Input(s)
-    LADate toDate_( etrading::stringToDate( toDate ) );
-    LADate fromDate_( etrading::stringToDate( fromDate ) );
+    AQLDate toDate_( etrading::stringToDate( toDate ) );
+    AQLDate fromDate_( etrading::stringToDate( fromDate ) );
 
     // Call the Function
     double result = validation::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate_, fromDate_ );
@@ -84,8 +84,8 @@ double meLWOCreditModelDefaultProbability( const std::string& creditModelName, c
     AQ_API_START
 
     // Marshall Input(s)
-    LADate toDate_( etrading::stringToDate( toDate ) );
-    LADate fromDate_( etrading::stringToDate( fromDate ) );
+    AQLDate toDate_( etrading::stringToDate( toDate ) );
+    AQLDate fromDate_( etrading::stringToDate( fromDate ) );
 
     // Call the Function
     double result = validation::tryMeLWOCreditModelDefaultProbability( creditModelName, toDate_, fromDate_ );
@@ -102,7 +102,7 @@ double meLWOCreditModelHazardRate( const std::string& creditModelName, const std
     AQ_API_START
 
     // Marshall Input(s)
-    LADate paymentDate_( etrading::stringToDate( paymentDate ) );
+    AQLDate paymentDate_( etrading::stringToDate( paymentDate ) );
         
     // Call the Function
     double result = validation::tryMeLWOCreditModelHazardRate( creditModelName, paymentDate_ );
@@ -119,7 +119,7 @@ double meLWOCreditModelRiskyDiscountFactor( const std::string& creditModelName, 
     AQ_API_START
 
     // Marshall Input(s)
-    LADate paymentDate_( etrading::stringToDate( paymentDate ) );
+    AQLDate paymentDate_( etrading::stringToDate( paymentDate ) );
         
     // Call the Function
     DateVector paymentDateAsVector( 1, paymentDate_ );
@@ -258,7 +258,7 @@ double meLWOTotalReturnSwapPV( const std::string& swapName, const std::string& c
     AQ_API_START
 
     // Marshall Input(s)
-    LAStringMatrix fixingTableLVB;
+    AQLStringMatrix fixingTableLVB;
 	swig::buildStringMatrix( fixingTableLVB, fixingTableNames );
 
     // Call the Function
@@ -288,7 +288,7 @@ double meLWOTotalReturnSwapParRate( const std::string& swapName, const std::stri
     AQ_API_START
 
     // Marshall Input(s)
-    LAStringMatrix fixingTableLVB;
+    AQLStringMatrix fixingTableLVB;
 	swig::buildStringMatrix( fixingTableLVB, fixingTableNames );
 
     // Call the Function
@@ -318,7 +318,7 @@ double meLWOTotalReturnSwapParSpread( const std::string& swapName, const std::st
     AQ_API_START
 
     // Marshall Input(s)
-    LAStringMatrix fixingTableLVB;
+    AQLStringMatrix fixingTableLVB;
 	swig::buildStringMatrix( fixingTableLVB, fixingTableNames );
 
     // Call the Function

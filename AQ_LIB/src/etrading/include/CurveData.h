@@ -13,7 +13,7 @@
 #include "IsLWOObject.h"
 #include "HasVariantMatrixAccess.h"
 #include "SchemaObject.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 
 
@@ -41,9 +41,9 @@ namespace etrading
         static CurveData createFromValidationInput(
             const std::string& mdcName, 
             const etrading::CurveTenorEnum curveTenorEnum,
-            const LAStringMatrix& oisRates, 
-            const LAStringMatrix& liborOisBasisRates, 
-            const LAStringMatrix& swapRates);
+            const AQLStringMatrix& oisRates, 
+            const AQLStringMatrix& liborOisBasisRates, 
+            const AQLStringMatrix& swapRates);
     private:
 		const bool isCorrectTenor(const MarketQuote&) const;
         void addQuotesToSchemaObject(const std::shared_ptr<MarketQuote>&,SchemaObject&) const;

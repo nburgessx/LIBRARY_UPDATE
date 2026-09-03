@@ -1,7 +1,7 @@
 #pragma once
 
 // Includes: This Library
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 
 //
 // This class checks if start-up configuration files have been loaded using the Singleton Pattern.
@@ -39,7 +39,7 @@ inline bool checkIfStaticDataLoaded( const bool & throwIfNotLoaded = true )
     const bool isLoaded = LAStaticDataImport::getInstance().getIsStaticDataLoaded();
     if ( throwIfNotLoaded && ! isLoaded)
     {
-        throw LACoreInvalidData( "#Error: Start-up Calendar- and Static Data Configuration Files have not been Loaded.", __FILE__, __LINE__ );
+        throw AQLCoreInvalidData( "#Error: Start-up Calendar- and Static Data Configuration Files have not been Loaded.", __FILE__, __LINE__ );
     }
     return isLoaded;
 }

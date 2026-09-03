@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -25,5 +25,5 @@ namespace validation
 																	const std::string& oisCurveGeneratorName,
 																	const std::string& lwoSwapMarketObj,
 																	const std::string& lwoOISMarketObj,
-																	const LAStringMatrix& commonParams = LAStringMatrix());
+																	const AQLStringMatrix& commonParams = AQLStringMatrix());
 }

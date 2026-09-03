@@ -20,9 +20,9 @@ namespace validation
     *  @param [in]		curveName		Name of the curve set
     *  @return			Array of terms and corresponding discount factors from the yield curve
     */
-    DoubleArray tryMirOutputCurve( LADataInstance* dataInstance,
-                                   const LAString& curveID,
-                                   const LAString& curveName )
+    DoubleArray tryMirOutputCurve( AQLDataInstance* dataInstance,
+                                   const AQLString& curveID,
+                                   const AQLString& curveName )
 
     {
         VALID_EXCEPTION_START
@@ -37,7 +37,7 @@ namespace validation
             file.write( "curveName", curveName );
         }
 
-        LAString curName( etrading::getDefaultValueForEmptyString( curveName, LAString( "STD" ) ) );
+        AQLString curName( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
         DoubleArray ret = etrading::LACurveCalibrationHelpers::outPutCurveFromYieldData( dataInstance, curveID, curName );
 

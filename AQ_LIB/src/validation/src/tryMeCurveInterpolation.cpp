@@ -2,7 +2,7 @@
 #include "StructuredExceptionHandler.h"
 #include "CurveUtilities.h"
 #include "CreateDataFile.h"
-#include "LADate.h"
+#include "AQLDate.h"
 #include "RecordMacros.h"			// Record Macros
 #include "CoreEnumerations.h"		// isHybridInterpolation method
 
@@ -17,7 +17,7 @@ namespace validation
 	*  @param [in]		interpolation		Interpolation type
 	*  @return			Interpolation join date
     */
-    LADate tryMeCurveInterpolationJoinDate( const LAString& curveCollection, const LAString& curveIndex, const LAString& interpolation )
+    AQLDate tryMeCurveInterpolationJoinDate( const AQLString& curveCollection, const AQLString& curveIndex, const AQLString& interpolation )
     {
         VALID_EXCEPTION_START
 
@@ -25,7 +25,7 @@ namespace validation
 		
 		AQ_REQUIRE( etrading::isHybridInterpolation( interpolation.c_str() ), "Invalid Interpolation Method: '" + interpolation + "' is not a hybrid/mixed interpolation method" )
 		
-		const LADate joinDate = etrading::getLinearSplineJoinDate(curveCollection, curveIndex);
+		const AQLDate joinDate = etrading::getLinearSplineJoinDate(curveCollection, curveIndex);
 
 		RECORD_OUTPUTS_AND_RETURN_RESULT( joinDate )
 		

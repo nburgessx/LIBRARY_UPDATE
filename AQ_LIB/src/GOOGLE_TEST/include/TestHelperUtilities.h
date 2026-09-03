@@ -1,4 +1,4 @@
-#include "LAString.h"
+#include "AQLString.h"
 #include "ReadDataFile.h"
 #include <iostream>
 
@@ -11,13 +11,13 @@ namespace google_test
     * @param [in]		key				Key that gives value
 	* @param [in]		optional		Is optional key?
     */
-	void findValByKey(LAString& val, const etrading::ReadDataFile& collection, const std::set<LAString>& keys, const LAString& key, bool optional = false);
+	void findValByKey(AQLString& val, const etrading::ReadDataFile& collection, const std::set<AQLString>& keys, const AQLString& key, bool optional = false);
 
 	/* @brief			Return the short name of interpolation types
 	* @param [in]		interpolation	Interpolation in long name
     * @output			interpolation short name
     */
-	LAString interpolationShortName(const LAString& interpolation);
+	AQLString interpolationShortName(const AQLString& interpolation);
 
 	/* @brief			Return the Bond Spread tolerance
 	*/

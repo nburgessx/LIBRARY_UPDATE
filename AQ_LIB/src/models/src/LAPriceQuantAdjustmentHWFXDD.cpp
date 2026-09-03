@@ -29,8 +29,8 @@
 #include "LAMathVolFuncFXDD.h"
 #include "LAPriceDriftHW.h"
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
 #include "LARatesSpotSDE.h"
 
 
@@ -41,7 +41,7 @@ using namespace std;
 /*!
 	@brief default constructor
 */
-LAPriceQuantAdjustmentHWFXDD::LAPriceQuantAdjustmentHWFXDD(const LAString& sdeAttrNameIR_F, const LAString& sdeAttrNameFX, const bool isAdjustInPath, const double fxCriteria, const double quantoCriteria )
+LAPriceQuantAdjustmentHWFXDD::LAPriceQuantAdjustmentHWFXDD(const AQLString& sdeAttrNameIR_F, const AQLString& sdeAttrNameFX, const bool isAdjustInPath, const double fxCriteria, const double quantoCriteria )
 : LAPriceQuantAdjustmentFuncBase(), mSDEAttrNameIR_F(sdeAttrNameIR_F), mSDEAttrNameFX(sdeAttrNameFX), mIsAdjustInPath(isAdjustInPath), mFXCriteria(fxCriteria), mQuantoCriteria(quantoCriteria),
 mpDriftIR(0), mpNumeraireF(0), mpSDEFX(0), mpFxVolatility(0), mPos_old(0), mIsSetUped(false), mIRCache1(0.0), mIRCache2(0.0)
 {
@@ -73,7 +73,7 @@ mIRCache2(v.mIRCache2)
 	@brief copy constructor
 */
 /*LAPriceQuantAdjustmentHWFXDD::LAPriceQuantAdjustmentHWFXDD(const LAPriceQuantAdjustmentHWFXDD& v) 
-: LACoreFunctionBase(v)
+: AQLCoreFunctionBase(v)
 {
 
 }*/
@@ -90,7 +90,7 @@ LAPriceQuantAdjustmentHWFXDD::~LAPriceQuantAdjustmentHWFXDD()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceQuantAdjustmentHWFXDD::clone() const
 {
     try 
@@ -99,7 +99,7 @@ LAPriceQuantAdjustmentHWFXDD::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -131,13 +131,13 @@ void
 LAPriceQuantAdjustmentHWFXDD::setUp(LAMathPathEntity& path)
 {
 	//foreign numeraire
-	LADataHolder *dh = &path.getData(mSDEAttrNameIR_F, ISNOTNULL);
+	AQLDataHolder *dh = &path.getData(mSDEAttrNameIR_F, ISNOTNULL);
 	LAMathAttrSDE *pAttrsde = &dynamic_cast<LAMathAttrSDE &>(dh->get());
 	mpNumeraireF = pAttrsde->getSDE().getNumeraire();
-	const vector<LAFunctionBase *> &driftVec = pAttrsde->getSDE().getDrift();
+	const vector<AQLFunctionBase *> &driftVec = pAttrsde->getSDE().getDrift();
 	if (driftVec.empty() || driftVec[0]->isTypeOf(FN_DRIFTHWQUANTADJ))
 	{
-		throw LACoreInvalidData("Foreign ir drift class must be LAPriceDriftHWQuantAdjustment", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Foreign ir drift class must be LAPriceDriftHWQuantAdjustment", __FILE__, __LINE__);
 	}
 	mpDriftIR = dynamic_cast<LAPriceDriftHWQuantAdjustment *>(driftVec[0])->getDrift();
 	//drift ir setup
@@ -147,7 +147,7 @@ LAPriceQuantAdjustmentHWFXDD::setUp(LAMathPathEntity& path)
 	dh = &path.getData(mSDEAttrNameFX, ISNOTNULL);
 	pAttrsde = &dynamic_cast<LAMathAttrSDE &>(dh->get());
 	mpSDEFX = dynamic_cast<LARatesSpotSDE *>(&pAttrsde->getSDE());
-	const LAFunctionBase* pVol = mpSDEFX->getVolatility()[0][0];
+	const AQLFunctionBase* pVol = mpSDEFX->getVolatility()[0][0];
 	if (pVol->isTypeOf(FN_VOLFUNCBASE))
 	{
 		pVol = dynamic_cast<const LAMathVolFuncBase*>(pVol)->getVolatility();
@@ -159,7 +159,7 @@ LAPriceQuantAdjustmentHWFXDD::setUp(LAMathPathEntity& path)
 	else
 	{
 		//error
-		throw LACoreInvalidData("fx volatility function is not LAMathVolFuncFXDD", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("fx volatility function is not LAMathVolFuncFXDD", __FILE__, __LINE__);
 	}
 
 	//correlation 
@@ -207,7 +207,7 @@ LAPriceQuantAdjustmentHWFXDD::setUp() const
 		const double a = hwMR(tmp);
 		const double s = hwSigma(tmp);
 		const double tau = timegrid[i + 1] - timegrid[i];
-		const double exp = LAMath::exp(-a * tau);
+		const double exp = AQLMath::exp(-a * tau);
 		const double b = (a != 0.0) ? (1.0 - exp) / a : tau;
 		mECache[i] = exp;
 		mBCache[i] = b;
@@ -375,12 +375,12 @@ LAPriceQuantAdjustmentHWFXDD::searchTimeGridPos(const double t, unsigned int &po
 	if (t == 0.0) pos = 0;
 	else if (t == timegrid[mPos_old]) pos = mPos_old;
 	else if (mPos_old + 2 < timegrid.size() && t == timegrid[mPos_old + 1]) pos = mPos_old + 1;
-	else if (!LAAlgorithm::find<DoubleArray, double>(timegrid, t, 0, timegrid.size() - 1, pos))
+	else if (!AQLAlgorithm::find<DoubleArray, double>(timegrid, t, 0, timegrid.size() - 1, pos))
 	{
 		//error
-		LAString msg = "Time =" + LADataDouble(t).convertToString();
+		AQLString msg = "Time =" + AQLDataDouble(t).convertToString();
 		msg += " is not in sde integral time grid";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	mPos_old = pos;
 }

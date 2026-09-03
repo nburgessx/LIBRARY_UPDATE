@@ -12,8 +12,8 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( const etrading::VariantMatrix& results,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
                                              double tolerance,
                                              int index = -1 );
 
@@ -25,8 +25,8 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( const DoubleMatrix& results,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
                                              double tolerance,
                                              int index = -1 );
 
@@ -38,8 +38,8 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( const DoubleArray& results,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
                                              double tolerance,
                                              int index = -1 );
 
@@ -52,9 +52,9 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( const DoubleArray& results,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
-                                             const LAString& fileSuffix,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
+                                             const AQLString& fileSuffix,
                                              double tolerance,
                                              int index = -1 );
 
@@ -68,10 +68,10 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( const DoubleArray& results,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
-                                             const LAString& filePrefix,
-                                             const LAString& fileSuffix,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
+                                             const AQLString& filePrefix,
+                                             const AQLString& fileSuffix,
                                              double tolerance,
                                              int index = -1 );
 
@@ -83,8 +83,8 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( double result,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
                                              double tolerance,
                                              int index = -1 );
 
@@ -97,9 +97,9 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( double result,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
-                                             const LAString& fileSuffix,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
+                                             const AQLString& fileSuffix,
                                              double tolerance,
                                              int index = -1 );
 
@@ -113,10 +113,10 @@ namespace google_test
     *  @param [in]		index				Index number used to form part of the result file name
     */
     void CheckTestResultsAndRebaseOnRequest( double result,
-                                             const LAString& testPath,
-                                             const LAString& resultFileWithPath,
-                                             const LAString& filePrefix,
-                                             const LAString& fileSuffix,
+                                             const AQLString& testPath,
+                                             const AQLString& resultFileWithPath,
+                                             const AQLString& filePrefix,
+                                             const AQLString& fileSuffix,
                                              double tolerance,
                                              int index = -1 );
 
@@ -129,5 +129,5 @@ namespace google_test
 	*  @param [in]		output_32	        Full reesult file name for 32bit result
 	*  @param [in]		output_64	        Full reesult file name for 32bit result
 	*/
-	void verifyDeltaBucketAmounts(const LAStringVector& pillarNames, const LAStringVector& headers, const DoubleMatrix& deltas, double tolerance, const LAString& baseDir, const LAString& output_32, const LAString& output_64);
+	void verifyDeltaBucketAmounts(const AQLStringVector& pillarNames, const AQLStringVector& headers, const DoubleMatrix& deltas, double tolerance, const AQLString& baseDir, const AQLString& output_32, const AQLString& output_64);
 }

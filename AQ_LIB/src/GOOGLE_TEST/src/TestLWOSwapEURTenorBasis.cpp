@@ -76,18 +76,18 @@ namespace google_test
             for ( i = 1; ; ++i )
             {
                 // Load the input file
-                LAString inputFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                AQLString inputFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load inputFile( inputFilename );
 
                 // Read the input file into the tryMeLWOSwapCreateFromLegLVBs
                 std::string swapName            = inputFile["swapName"];
-                LAStringMatrix leg1LVB            = inputFile["leg1LVB"];
-                LAStringMatrix leg2LVB            = inputFile["leg2LVB"];
+                AQLStringMatrix leg1LVB            = inputFile["leg1LVB"];
+                AQLStringMatrix leg2LVB            = inputFile["leg2LVB"];
                 bool validateKeys               = inputFile["validateKeys"];
-	            std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, LAStringMatrix(), false, validateKeys );
+	            std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
 
                 // Load the output file and the result                   
-                LAString outputFilename = CreateDataFile::makeFilename( tenorBasisSwapOutputs, "_tryMeLWOSwapCreateFromLegLVBs_outputs", i ); // Append the Index and Suffix to test file name
+                AQLString outputFilename = CreateDataFile::makeFilename( tenorBasisSwapOutputs, "_tryMeLWOSwapCreateFromLegLVBs_outputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load outputFile( outputFilename );
                 
                 std::string outputFileResult = outputFile["output"];
@@ -100,7 +100,7 @@ namespace google_test
         {
             EXPECT_GT( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -121,18 +121,18 @@ namespace google_test
             for ( i = 1; ; ++i )
             {
                 // 1. Create the Swap
-                LAString createSwapFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                AQLString createSwapFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load createSwapFile( createSwapFilename );
 
                     // Read the input file into the tryMeLWOSwapCreateFromLegLVBs
                     std::string swapName            = createSwapFile["swapName"];
-                    LAStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
-                    LAStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
+                    AQLStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
+                    AQLStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
                     bool validateKeys               = createSwapFile["validateKeys"];
-	                std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, LAStringMatrix(), false, validateKeys );
+	                std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
                 
                 // 2. Price the Swap
-                 LAString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapPV_inputs", i ); // Append the Index and Suffix to test file name
+                 AQLString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapPV_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load swapPVFile( SwapPVFilename );
 
                     // Read the input file into the tryMeLWOSwapPV
@@ -154,7 +154,7 @@ namespace google_test
         {
             EXPECT_GT( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -175,18 +175,18 @@ namespace google_test
             for ( i = 1; ; ++i )
             {
                 // 1. Create the Swap
-                LAString createSwapFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                AQLString createSwapFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load createSwapFile( createSwapFilename );
 
                     // Read the input file into the tryMeLWOSwapCreateFromLegLVBs
                     std::string swapName            = createSwapFile["swapName"];
-                    LAStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
-                    LAStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
+                    AQLStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
+                    AQLStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
                     bool validateKeys               = createSwapFile["validateKeys"];
-	                std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, LAStringMatrix(), false, validateKeys );
+	                std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
                 
                 // 2. Price the Swap
-                 LAString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapSpread_inputs", i ); // Append the Index and Suffix to test file name
+                 AQLString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapSpread_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load swapPVFile( SwapPVFilename );
 
                     // Read the input file into the tryMeLWOSwapSpread
@@ -208,7 +208,7 @@ namespace google_test
         {
             EXPECT_GT( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

@@ -19,7 +19,7 @@ namespace etrading
 	*  @param [in]		continuouslyCompounding	        True to calculate z-spread using continouslyCompounding
 	*  @return			returns the Z-Spread
 	*/
-	double calculateBondZSpread(const double& bondDirtyPrice, const std::shared_ptr< Bond >& bond, const DoubleVector& zeroRates, const LADate& settleDate, const bool& continuouslyCompounding);
+	double calculateBondZSpread(const double& bondDirtyPrice, const std::shared_ptr< Bond >& bond, const DoubleVector& zeroRates, const AQLDate& settleDate, const bool& continuouslyCompounding);
 
 	/* @brief			function to calculate the Bond Z-Spread
 	*  @param [in]		bondDirtyPrice		Bond Dirty Price
@@ -30,7 +30,7 @@ namespace etrading
 	*  @param [in]		continuouslyCompounding	        True to calculate z-spread using continouslyCompounding
 	*  @return			returns the Z-Spread
 	*/
-	double calculateBondZSpread(const double& bondDirtyPrice, const std::shared_ptr< Bond >& bond, const std::string& curveCollection, const std::string& forecastCurve, const LADate& settleDate, const bool& continuouslyCompounding);
+	double calculateBondZSpread(const double& bondDirtyPrice, const std::shared_ptr< Bond >& bond, const std::string& curveCollection, const std::string& forecastCurve, const AQLDate& settleDate, const bool& continuouslyCompounding);
 
 	double calculateAssetSwapSpreadParParFromBondCleanPrice(const double& bondCleanPrice, const LegPtr& fixedLeg, const LegPtr& floatLeg, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames);
 

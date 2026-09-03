@@ -1,7 +1,7 @@
 #include "mirGetIMMDate.h"
 #include "TypeUtilities.h"
-#include "LADate.h"
-#include "LAString.h"
+#include "AQLDate.h"
+#include "AQLString.h"
 #include "tryMirGetIMMDate.h"
 
 
@@ -20,21 +20,21 @@ std::string mirGetIMMDate1(int Year,
 	std::string ret;
 	try 
 	{
-		LAString calendar(Calendar.c_str());
-		if( calendar == LAString("") ) 
+		AQLString calendar(Calendar.c_str());
+		if( calendar == AQLString("") ) 
 		{
-			calendar = LAString("TKB:LNB");
+			calendar = AQLString("TKB:LNB");
 		}
 
-		LAString slidingrule(SlidingRule.c_str());
-		if( slidingrule == LAString("") ) 
+		AQLString slidingrule(SlidingRule.c_str());
+		if( slidingrule == AQLString("") ) 
 		{
-			slidingrule=LAString("FOLLOWING");
+			slidingrule=AQLString("FOLLOWING");
 		}
 
 		ret = validation::tryMirGetIMMDate1(Year, Month, calendar, slidingrule).getCString();
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -58,21 +58,21 @@ std::string mirGetIMMDate2(int Year,
 	std::string ret;
 	try 
 	{
-		LAString calendar(Calendar.c_str());
-		if( calendar == LAString("") ) 
+		AQLString calendar(Calendar.c_str());
+		if( calendar == AQLString("") ) 
 		{
-			calendar = LAString("TKB:LNB");
+			calendar = AQLString("TKB:LNB");
 		}
 
-		LAString slidingrule(SlidingRule.c_str());
-		if( slidingrule == LAString("") ) 
+		AQLString slidingrule(SlidingRule.c_str());
+		if( slidingrule == AQLString("") ) 
 		{
-			slidingrule=LAString("FOLLOWING");
+			slidingrule=AQLString("FOLLOWING");
 		}
 
 		ret = validation::tryMirGetIMMDate2(Year, Number, calendar, slidingrule).getCString();
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -96,23 +96,23 @@ std::string mirGetIMMDate3(const std::string& BaseDate,
 	std::string ret;
 	try 
 	{
-		LADate baseDate(BaseDate.c_str(),"YYYYMMDD");
+		AQLDate baseDate(BaseDate.c_str(),"YYYYMMDD");
 
-		LAString calendar(Calendar.c_str());
-		if( calendar == LAString("") ) 
+		AQLString calendar(Calendar.c_str());
+		if( calendar == AQLString("") ) 
 		{
-			calendar = LAString("TKB:LNB");
+			calendar = AQLString("TKB:LNB");
 		}
 
-		LAString slidingrule(SlidingRule.c_str());
-		if( slidingrule == LAString("") ) 
+		AQLString slidingrule(SlidingRule.c_str());
+		if( slidingrule == AQLString("") ) 
 		{
-			slidingrule=LAString("FOLLOWING");
+			slidingrule=AQLString("FOLLOWING");
 		}
 
 		ret = validation::tryMirGetIMMDate3(baseDate, Number, calendar, slidingrule).getCString();
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

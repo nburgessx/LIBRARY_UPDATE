@@ -75,7 +75,7 @@ namespace validation
 			break;
 		}
 		default:
-			throw LACoreInvalidData("#Error: BondType - only Fixed or Floater is supported.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: BondType - only Fixed or Floater is supported.", __FILE__, __LINE__);
 			break;
 		};
 
@@ -104,7 +104,7 @@ namespace validation
 		if (!bond->isCleanPrice())
 		{
 			// *** TODO: Should this be settlementDate?
-			const LADate valuationDate = etrading::getValuationDateFromValuationSettings(valuationSettingsLVB);
+			const AQLDate valuationDate = etrading::getValuationDateFromValuationSettings(valuationSettingsLVB);
 
 			etrading::ValuationSettings valuationSettings( valuationSettingsLVB);
 			valuationSettings.setSettlementDate( valuationDate );
@@ -129,7 +129,7 @@ namespace validation
 			break;
 		}
 		default:
-			throw LACoreInvalidData("#Error: BondType - only Fixed or Floater is supported.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: BondType - only Fixed or Floater is supported.", __FILE__, __LINE__);
 			break;
 		};
 
@@ -145,7 +145,7 @@ namespace validation
 	*  @param [in]		fixingTableNames	Fixing table object names
 	*  @return			Par/Par Asset Swap Spreads
 	*/
-    std::vector< double > tryMeLWOAssetSwapSpreadFromPrice(const std::vector< double >& bondPrices, const std::vector< LADate >& bondAccrualStartDates, const std::vector< bool >& isCleanPrices,
+    std::vector< double > tryMeLWOAssetSwapSpreadFromPrice(const std::vector< double >& bondPrices, const std::vector< AQLDate >& bondAccrualStartDates, const std::vector< bool >& isCleanPrices,
 														const std::string& swapObjectName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames)
     {
 
@@ -165,14 +165,14 @@ namespace validation
 
         std::vector< double > spreads(expectedSize);
 
-		const LADate dummyDate = LADate();
+		const AQLDate dummyDate = AQLDate();
 
         for ( unsigned int i = 0; i < expectedSize; ++i )
         {
             const double bondPrice					= bondPrices[i];
 
 			// If it's not provided, use dummy value
-			const LADate bondAccrualStartDate		= emptyBondAccrualStartDate ? dummyDate : bondAccrualStartDates[i];
+			const AQLDate bondAccrualStartDate		= emptyBondAccrualStartDate ? dummyDate : bondAccrualStartDates[i];
 
 			// If it's not provided, then assume it's clean
 			const bool isCleanPrice					= isCleanPriceEmpty ? true : isCleanPrices[i]; 
@@ -195,7 +195,7 @@ namespace validation
 	*  @param [in]		fixingTableNames	Fixing table object names
 	*  @return			Par/Par Asset Swap Spread
 	*/
-	double tryMeLWOAssetSwapSpreadFromPrice(const double& bondPrice, const LADate& bondAccrualStartDate, const bool& isCleanPrice,
+	double tryMeLWOAssetSwapSpreadFromPrice(const double& bondPrice, const AQLDate& bondAccrualStartDate, const bool& isCleanPrice,
 											const std::string& swapObjectName, const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames)
     {
 	    VALID_EXCEPTION_START
@@ -219,7 +219,7 @@ namespace validation
 		{
 			//Create a dummy bond, so that clean price can be calculated from the dirty price
 
-			AQ_REQUIRE(bondAccrualStartDate != LADate(), "bondAccrualStartDate is required to calculate Bond's clean price from dirty price.");
+			AQ_REQUIRE(bondAccrualStartDate != AQLDate(), "bondAccrualStartDate is required to calculate Bond's clean price from dirty price.");
 
 			const std::string bondName = swapObjectName + "_Bond";
 
@@ -339,7 +339,7 @@ namespace validation
 		if (!bond->isCleanPrice())
 		{
 			// *** TODO: Shouldn't this use settlementDate?
-			const LADate valuationDate = etrading::getValuationDateFromValuationSettings(valuationSettingsLVB);
+			const AQLDate valuationDate = etrading::getValuationDateFromValuationSettings(valuationSettingsLVB);
 
 			etrading::ValuationSettings valuationSettings( valuationSettingsLVB );
 			valuationSettings.setSettlementDate( valuationDate );

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -14,11 +14,11 @@ namespace validation
     *  @param [in]		rollConvention		Roll conventions, ie, Normal, IMM, EOM, Lunar, etc
     *  @return			The end date
     */
-    LAString tryMirGetDate( const LADate& baseDate,
-                            const LAString& term,
-                            const LAString& slidingRule,
-                            const LAString& calendar,
-                            const LAString& rollConvention );
+    AQLString tryMirGetDate( const AQLDate& baseDate,
+                            const AQLString& term,
+                            const AQLString& slidingRule,
+                            const AQLString& calendar,
+                            const AQLString& rollConvention );
 
 
     /* @brief			validation method for mirGetDate
@@ -30,8 +30,8 @@ namespace validation
     *  @return			A vector of end dates
     */
     DateVector tryMirGetDate( const DateVector& baseDate,
-                              const LAString& term,
-                              const LAString& slidingRule,
-                              const LAString& calendar,
-                              const LAString& rollConvention );
+                              const AQLString& term,
+                              const AQLString& slidingRule,
+                              const AQLString& calendar,
+                              const AQLString& rollConvention );
 }

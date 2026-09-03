@@ -326,7 +326,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\src\models\include\LATime.h" />
-    <ClInclude Include="..\src\models\include\LACoreComponentManager.h" />
+    <ClInclude Include="..\src\models\include\AQLCoreComponentManager.h" />
     <ClInclude Include="..\src\models\include\ConstantDeclarations.h" />
     <ClInclude Include="..\src\models\include\LACoreUtility.h" />
     <ClInclude Include="..\src\models\include\LAMathDateCalculations.h" />
@@ -610,7 +610,7 @@
     <ClInclude Include="..\src\models\include\LAPriceThresholdSABRSwaptionCalculator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\models\src\LACoreComponentManager.cpp" />
+    <ClCompile Include="..\src\models\src\AQLCoreComponentManager.cpp" />
     <ClCompile Include="..\src\models\src\LACoreUtility.cpp" />
     <ClCompile Include="..\src\models\src\LAMathDateCalculations.cpp" />
     <ClCompile Include="..\src\models\src\LAMathDateUtilities.cpp" />

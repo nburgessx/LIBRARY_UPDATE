@@ -8,62 +8,62 @@ namespace google_test
 
     TEST( TestBondUtilities, UNIT_GetActiveCashflowDate )
     {
-        LADate settlementDateFront("20170221");
-        LADate settlementDateBack("20190101");
-        LADate settlementDateFarInFuture("20500101");
-        LADate settlementDateFarInPast("20010101");
+        AQLDate settlementDateFront("20170221");
+        AQLDate settlementDateBack("20190101");
+        AQLDate settlementDateFarInFuture("20500101");
+        AQLDate settlementDateFarInPast("20010101");
 
         // Populate Bond Payment Dates, which are used for Cashflow Indexation
-        std::vector< LADate >   bondPaymentlDatesForIndexation;
+        std::vector< AQLDate >   bondPaymentlDatesForIndexation;
         
-        bondPaymentlDatesForIndexation.push_back( LADate("20170515") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20171115") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20180515") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20181115") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20190515") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20170515") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20171115") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20180515") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20181115") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20190515") );
 
         // Populate Bond Accrual Dates
-        std::vector< LADate >   bondAccrualStartDates;
-        bondAccrualStartDates.push_back( LADate("20161115") );
-        bondAccrualStartDates.push_back( LADate("20170515") );
-        bondAccrualStartDates.push_back( LADate("20171115") );
-        bondAccrualStartDates.push_back( LADate("20180515") );
-        bondAccrualStartDates.push_back( LADate("20181115") );
+        std::vector< AQLDate >   bondAccrualStartDates;
+        bondAccrualStartDates.push_back( AQLDate("20161115") );
+        bondAccrualStartDates.push_back( AQLDate("20170515") );
+        bondAccrualStartDates.push_back( AQLDate("20171115") );
+        bondAccrualStartDates.push_back( AQLDate("20180515") );
+        bondAccrualStartDates.push_back( AQLDate("20181115") );
 
         // Test 1. Test front cashflow date
-        LADate activeAccrualStartDate1 = etrading::getActiveCashflowDateAndIndex( settlementDateFront, bondAccrualStartDates, bondPaymentlDatesForIndexation ).first;
-        EXPECT_EQ( LADate("20161115"), activeAccrualStartDate1 );
+        AQLDate activeAccrualStartDate1 = etrading::getActiveCashflowDateAndIndex( settlementDateFront, bondAccrualStartDates, bondPaymentlDatesForIndexation ).first;
+        EXPECT_EQ( AQLDate("20161115"), activeAccrualStartDate1 );
 
         // Test 2. Test for final cashflow date
-        LADate activeAccrualStartDate2 = etrading::getActiveCashflowDateAndIndex( settlementDateBack, bondAccrualStartDates, bondPaymentlDatesForIndexation ).first;
-        EXPECT_EQ( LADate("20181115"), activeAccrualStartDate2 );
+        AQLDate activeAccrualStartDate2 = etrading::getActiveCashflowDateAndIndex( settlementDateBack, bondAccrualStartDates, bondPaymentlDatesForIndexation ).first;
+        EXPECT_EQ( AQLDate("20181115"), activeAccrualStartDate2 );
 
         // Test 3. When all dates are in the past should return the final cashflow date
-        LADate activeAccrualStartDate3 = etrading::getActiveCashflowDateAndIndex( settlementDateFarInFuture, bondAccrualStartDates, bondPaymentlDatesForIndexation ).first;
-        EXPECT_EQ( LADate("20181115"), activeAccrualStartDate3 );
+        AQLDate activeAccrualStartDate3 = etrading::getActiveCashflowDateAndIndex( settlementDateFarInFuture, bondAccrualStartDates, bondPaymentlDatesForIndexation ).first;
+        EXPECT_EQ( AQLDate("20181115"), activeAccrualStartDate3 );
 
         // Test 4. When all coupon payment dates are in the future should return the front cashflow date
-        LADate activeAccrualStartDate4 = etrading::getActiveCashflowDateAndIndex( settlementDateFarInPast, bondAccrualStartDates, bondPaymentlDatesForIndexation ).first;
-        EXPECT_EQ( LADate("20161115"), activeAccrualStartDate4 );
+        AQLDate activeAccrualStartDate4 = etrading::getActiveCashflowDateAndIndex( settlementDateFarInPast, bondAccrualStartDates, bondPaymentlDatesForIndexation ).first;
+        EXPECT_EQ( AQLDate("20161115"), activeAccrualStartDate4 );
     }
 
 
 
     TEST( TestBondUtilities, UNIT_GetBondCashflowIndexFromSettlementDate )
     {
-        LADate settlementDateFront("20170221");
-        LADate settlementDateBack("20190101");
-        LADate settlementDateFarInFuture("20500101");
-        LADate settlementDateFarInPast("20010101");
+        AQLDate settlementDateFront("20170221");
+        AQLDate settlementDateBack("20190101");
+        AQLDate settlementDateFarInFuture("20500101");
+        AQLDate settlementDateFarInPast("20010101");
 
         // Populate Bond Payment Dates, which are used for Cashflow Indexation
-        std::vector< LADate >   bondPaymentlDatesForIndexation;
+        std::vector< AQLDate >   bondPaymentlDatesForIndexation;
         
-        bondPaymentlDatesForIndexation.push_back( LADate("20170515") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20171115") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20180515") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20181115") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20190515") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20170515") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20171115") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20180515") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20181115") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20190515") );
 
         // Test 1. Test front cashflow when settlement date front
         auto activeCashflowIndex1          = etrading::getBondActiveCashflowIndex( settlementDateFront, bondPaymentlDatesForIndexation );
@@ -145,19 +145,19 @@ namespace google_test
 
     TEST( TestBondUtilities, UNIT_GetBondActiveCashflowIndex )
     {
-        LADate settlementDateFront("20170221");
-        LADate settlementDateBack("20190101");
-        LADate settlementDateFarInFuture("20500101");
-        LADate settlementDateFarInPast("20010101");
+        AQLDate settlementDateFront("20170221");
+        AQLDate settlementDateBack("20190101");
+        AQLDate settlementDateFarInFuture("20500101");
+        AQLDate settlementDateFarInPast("20010101");
 
         // Populate Bond Payment Dates, which are used for Cashflow Indexation
-        std::vector< LADate >   bondPaymentlDatesForIndexation;
+        std::vector< AQLDate >   bondPaymentlDatesForIndexation;
         
-        bondPaymentlDatesForIndexation.push_back( LADate("20170515") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20171115") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20180515") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20181115") );
-        bondPaymentlDatesForIndexation.push_back( LADate("20190515") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20170515") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20171115") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20180515") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20181115") );
+        bondPaymentlDatesForIndexation.push_back( AQLDate("20190515") );
 
         // Test 1. Test front cashflow with Index number = 0
         unsigned int index1 = etrading::getBondActiveCashflowIndex( settlementDateFront, bondPaymentlDatesForIndexation );

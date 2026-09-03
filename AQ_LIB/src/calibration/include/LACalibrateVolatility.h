@@ -15,12 +15,12 @@
 ////X///////////////////X///////////////////////////////X///////////////////
 
 
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 
 
-class LAFunctionBase;
-class LAObjectPool;
+class AQLFunctionBase;
+class AQLObjectPool;
 struct MAScenarioParam;
 
 
@@ -44,43 +44,43 @@ public:
 
 	//==============================================
 	// create  Volatility from grid_t and Volatility of DoubleMatrix vector
-	virtual void createVolatility(DoubleArray &grid_t, std::vector<DoubleMatrix> &vol, const LAStringVector &filePath, 
-								const MAScenarioParam *param = 0, LAObjectPool *objPool = 0) const = 0;
+	virtual void createVolatility(DoubleArray &grid_t, std::vector<DoubleMatrix> &vol, const AQLStringVector &filePath, 
+								const MAScenarioParam *param = 0, AQLObjectPool *objPool = 0) const = 0;
 	//==============================================
 	// create Volatility as function matrix
-	virtual void createVolatility(std::vector< std::vector<LAFunctionBase *> > &vol, const LAStringVector &filePath, 
-								const MAScenarioParam *param = 0, LAObjectPool *objPool = 0) const = 0;
+	virtual void createVolatility(std::vector< std::vector<AQLFunctionBase *> > &vol, const AQLStringVector &filePath, 
+								const MAScenarioParam *param = 0, AQLObjectPool *objPool = 0) const = 0;
 	//==============================================
 	// create Volatility from grid_t and Volatility of Function vector
-	virtual void createVolatility(DoubleArray &grid_T, std::vector<LAFunctionBase *> &vol, const LAStringVector &filePath, 
-								const MAScenarioParam *param = 0, LAObjectPool *objPool = 0) const = 0;
+	virtual void createVolatility(DoubleArray &grid_T, std::vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, 
+								const MAScenarioParam *param = 0, AQLObjectPool *objPool = 0) const = 0;
 	//==============================================
 	// create Volatility from grid_t and Volatility of DoubleMatrix
-	virtual void createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const LAStringVector &filePath, 
-								const MAScenarioParam *param = 0, LAObjectPool *objPool = 0) const = 0;
+	virtual void createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const AQLStringVector &filePath, 
+								const MAScenarioParam *param = 0, AQLObjectPool *objPool = 0) const = 0;
 	//==============================================
 	// create Volatility as function vector
-	virtual void createVolatility(std::vector<LAFunctionBase *> &vol, const LAStringVector &filePath, 
-								const MAScenarioParam *param = 0, LAObjectPool *objPool = 0, int gridPos = -1) const = 0;
+	virtual void createVolatility(std::vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, 
+								const MAScenarioParam *param = 0, AQLObjectPool *objPool = 0, int gridPos = -1) const = 0;
 	//==============================================
 	// create Volatility from grid_t and Volatility of function
-	virtual void createVolatility(DoubleArray &grid_T, LAFunctionBase *vol, const LAStringVector &filePath, 
-								const MAScenarioParam *param = 0, LAObjectPool *objPool = 0) const = 0;
+	virtual void createVolatility(DoubleArray &grid_T, AQLFunctionBase *vol, const AQLStringVector &filePath, 
+								const MAScenarioParam *param = 0, AQLObjectPool *objPool = 0) const = 0;
 	//==============================================
 	// create Volatility from grid_t and Volatility of vector
-	virtual void createVolatility (DoubleArray &grid_t, DoubleArray &vol, const LAStringVector &filePath, 
-								const MAScenarioParam *param = 0, LAObjectPool *objPool = 0) const = 0;
+	virtual void createVolatility (DoubleArray &grid_t, DoubleArray &vol, const AQLStringVector &filePath, 
+								const MAScenarioParam *param = 0, AQLObjectPool *objPool = 0) const = 0;
 	//==============================================
 	// create Volatility as function for fx
-	virtual LAFunctionBase *createVolatility (const LAStringVector &filePath, 
-								const MAScenarioParam *param = 0, LAObjectPool *objPool = 0, int gridPos = -1) const = 0;
+	virtual AQLFunctionBase *createVolatility (const AQLStringVector &filePath, 
+								const MAScenarioParam *param = 0, AQLObjectPool *objPool = 0, int gridPos = -1) const = 0;
 	//==============================================
 	// create Volatility as double
-	virtual void createVolatility (double &vol, const LAStringVector &filePath, 
-								const MAScenarioParam *param = 0, LAObjectPool *objPool = 0) const = 0;
+	virtual void createVolatility (double &vol, const AQLStringVector &filePath, 
+								const MAScenarioParam *param = 0, AQLObjectPool *objPool = 0) const = 0;
 	//==============================================
 	// get grid_T
-	virtual void getGrid_T (DoubleArray &grid_T, const LAStringVector &filePath) const = 0;
+	virtual void getGrid_T (DoubleArray &grid_T, const AQLStringVector &filePath) const = 0;
 
 };
 

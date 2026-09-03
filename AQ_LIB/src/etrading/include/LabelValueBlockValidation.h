@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 #include <boost/lexical_cast.hpp>
 #include "LabelValueBlock.h"
 #include "Variant.h"
@@ -18,7 +18,7 @@ namespace etrading
     *  @param [in]		validateKeys	True to do the verification
     *  @param [in]		LVBname     	Optional name of the LVB
     */
-    void validateKeysForLVB( const std::vector<std::string>& expectedKeys, const LAStringVector& keys, bool validateKeys, const std::string& LVBname = "" );
+    void validateKeysForLVB( const std::vector<std::string>& expectedKeys, const AQLStringVector& keys, bool validateKeys, const std::string& LVBname = "" );
 
     /* @brief		Validate if the keys from the input are valid
     *  @param [in]		expectedKeys	A list of expected keys
@@ -34,60 +34,60 @@ namespace etrading
     *  @param [in]		keyPrefix		Prefix to the keys
     *  @return			LabelValueBlock
     */
-    LabelValueBlock populateLabelValueBlock( const LAStringVector& keys, const LAStringVector& values, const LAString& keyPrefix = LAString() );
+    LabelValueBlock populateLabelValueBlock( const AQLStringVector& keys, const AQLStringVector& values, const AQLString& keyPrefix = AQLString() );
 
     /* @brief			return a set of expected keys for swap common label value block
     *  @return			expected keys
     */
     std::vector<std::string>  getSwapCommonLVBKeys();
 
-    /* @brief			build a vector of strings from LAStringVector object
-    *  @param [out]		sVector			A LAStringVector object
+    /* @brief			build a vector of strings from AQLStringVector object
+    *  @param [out]		sVector			A AQLStringVector object
     *  @output			output a vector of strings
     */
-    std::vector<std::string> fromStringVectorToStdVector( const LAStringVector& sVector );
+    std::vector<std::string> fromStringVectorToStdVector( const AQLStringVector& sVector );
 
-    /* @brief			build a vector of strings from LAStringVector object
-    *  @param [out]		inVal			A LAStringVector object
+    /* @brief			build a vector of strings from AQLStringVector object
+    *  @param [out]		inVal			A AQLStringVector object
     *  @output			output a vector of strings
     */
-    LAStringVector fromStdVectorToStringVector( const std::vector<std::string>& inVal );
+    AQLStringVector fromStdVectorToStringVector( const std::vector<std::string>& inVal );
 
 
-    /* @brief			build a matrix of strings from a LAStringMatrix object
-    *  @param [in]		inVal	a LAStringMatrix object
+    /* @brief			build a matrix of strings from a AQLStringMatrix object
+    *  @param [in]		inVal	a AQLStringMatrix object
     *  @output			output a matrix of strings
     */
-    std::vector<std::vector<std::string>> fromStringMatrixToStdMatrix( const LAStringMatrix& inVal );
+    std::vector<std::vector<std::string>> fromStringMatrixToStdMatrix( const AQLStringMatrix& inVal );
 
-    /* @brief			build a matrix of strings from a LAStringMatrix object
-    *  @param [in]		inVal	a LAStringMatrix object
+    /* @brief			build a matrix of strings from a AQLStringMatrix object
+    *  @param [in]		inVal	a AQLStringMatrix object
     *  @output			output a matrix of strings
     */
-    LAStringMatrix fromStdMatrixToStringMatrix( const std::vector<std::vector<std::string>>& inVal );
+    AQLStringMatrix fromStdMatrixToStringMatrix( const std::vector<std::vector<std::string>>& inVal );
 
-    /* @brief			build a LAStringMatrix object from LabelValueBlock object
+    /* @brief			build a AQLStringMatrix object from LabelValueBlock object
     *  @param [in]		lvb	a LabelValueBlock object, where the first columns are keys and the second columns are values
-    *  @output			LAStringMatrix object
+    *  @output			AQLStringMatrix object
     */
-    LAStringMatrix fromLabelValueBlockToStringMatrix( const LabelValueBlock& lvb );
+    AQLStringMatrix fromLabelValueBlockToStringMatrix( const LabelValueBlock& lvb );
 
     /* @brief			Appends the rhs string matrix to the lhs Matrix
-    *  @param [in]		rhs	a LAStringMatrix object
-    *  @param [out]		lhs	a LAStringMatrix object to be assigned values from rhs
+    *  @param [in]		rhs	a AQLStringMatrix object
+    *  @param [out]		lhs	a AQLStringMatrix object to be assigned values from rhs
     */
-    void appendToMatrix( LAStringMatrix& lhs, const LAStringMatrix& rhs );
+    void appendToMatrix( AQLStringMatrix& lhs, const AQLStringMatrix& rhs );
 
-    /* @brief			check if a LAStringMatrix a label value block
-    *  @param [in]		lvb	a LAStringMatrix object
+    /* @brief			check if a AQLStringMatrix a label value block
+    *  @param [in]		lvb	a AQLStringMatrix object
     */
-    void validateLVBStringMatrix( const LAStringMatrix& lvb );
+    void validateLVBStringMatrix( const AQLStringMatrix& lvb );
 
     /* @brief			check if the date is the last business day of the month
     *  @param [in]		date Given date
     *  @param [in]		cal Calendar
     */
-    bool isLastDayOfMonth( const LADate& date, const LAString& cal );
+    bool isLastDayOfMonth( const AQLDate& date, const AQLString& cal );
 
 	/* @brief			remove prefix of the keys of label value block
     *  @param [in]		lvb				Label value block

@@ -6,14 +6,14 @@
 
 #include "LAPriceSwapRateCalculator.h"
 #include "LAMathDateUtilities.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathCurveFuncUtility.h"
 #include "LAPriceSwaptionCalculator.h"
 #include "LAMathAnalyticalFormula.h"
 #include "LAMathOptionTools.h"
 
-SwapRateInfo::SwapRateInfo(LADataInstance* dataInstance, const LAString& ccy, const LAString& tenor_, CurveInfo discCurveInfo_, CurveInfo cmsCurveInfo_,
-                           LAStringMatrix cmsScheduler, ReplicationConfig repConfig, double shift)
+SwapRateInfo::SwapRateInfo(AQLDataInstance* dataInstance, const AQLString& ccy, const AQLString& tenor_, CurveInfo discCurveInfo_, CurveInfo cmsCurveInfo_,
+                           AQLStringMatrix cmsScheduler, ReplicationConfig repConfig, double shift)
 {
     mDataInstance = dataInstance;
     mTenor = tenor_;
@@ -21,18 +21,18 @@ SwapRateInfo::SwapRateInfo(LADataInstance* dataInstance, const LAString& ccy, co
     mCmsCurveInfo = cmsCurveInfo_;
     mRepConfig = repConfig;
     mShift = shift;
-    mFixedLegFreq = LAFunctionUtilities::findElement(cmsScheduler, "FixedLegFrequency");
-    mIndexCalendar = LAFunctionUtilities::findElement(cmsScheduler, "IndexCalendar");
-    mIndexDaycount = LAFunctionUtilities::findElement(cmsScheduler, "IndexDaycount");
-    mIndexSlidingRule = LAFunctionUtilities::findElement(cmsScheduler, "IndexSlidingRule");
-    mPaySlidingRule.convertFromString(LAFunctionUtilities::findElement(cmsScheduler, "PaymentSlidingRule"));
-    mPayCalendar.convertFromString(LAFunctionUtilities::findElement(cmsScheduler, "PaymentCalendar"));
+    mFixedLegFreq = AQLFunctionUtilities::findElement(cmsScheduler, "FixedLegFrequency");
+    mIndexCalendar = AQLFunctionUtilities::findElement(cmsScheduler, "IndexCalendar");
+    mIndexDaycount = AQLFunctionUtilities::findElement(cmsScheduler, "IndexDaycount");
+    mIndexSlidingRule = AQLFunctionUtilities::findElement(cmsScheduler, "IndexSlidingRule");
+    mPaySlidingRule.convertFromString(AQLFunctionUtilities::findElement(cmsScheduler, "PaymentSlidingRule"));
+    mPayCalendar.convertFromString(AQLFunctionUtilities::findElement(cmsScheduler, "PaymentCalendar"));
 
     // Parameter vectors
-    mSabrIDs = LAStringVector(AQ_SABR_NAMES.size());
+    mSabrIDs = AQLStringVector(AQ_SABR_NAMES.size());
     for (size_t k = 0; k < AQ_SABR_NAMES.size(); k++)
         mSabrIDs[k] = LAPriceCMSObject::MatrixID("_" + AQ_SABR_NAMES[k] + "_", ccy);
-    mTailIDs = LAStringVector(AQ_TAIL_NAMES.size());
+    mTailIDs = AQLStringVector(AQ_TAIL_NAMES.size());
     for (size_t k = 0; k < AQ_TAIL_NAMES.size(); k++)
         mTailIDs[k] = LAPriceCMSObject::MatrixID("_" + AQ_TAIL_NAMES[k] + "_", ccy);
 
@@ -42,18 +42,18 @@ SwapRateInfo::SwapRateInfo(LADataInstance* dataInstance, const LAString& ccy, co
     mNCashFlows = cmsLength / mTau;
 }
 
-double SwapRateInfo::ForwardSwapRate(LADate settlDate)
+double SwapRateInfo::ForwardSwapRate(AQLDate settlDate)
 {
-    LAString swapTerm = mTenor;
+    AQLString swapTerm = mTenor;
     CurveInfo fwdCurveInfo = mCmsCurveInfo;
     CurveInfo discCurveInfo = mDiscCurveInfo;
-    LAString fixedLegFreq = mFixedLegFreq;
-    LAString indexDaycount = mIndexDaycount;
-    LAString indexSlidingRule = mIndexSlidingRule;
-    LAString indexCalendar = mIndexCalendar;
-    LAString ratetype = LAString("PAR");
-    LAString interpolation = LAString("SPLINE");
-    LAString roll_convention = LAString("EOM");
+    AQLString fixedLegFreq = mFixedLegFreq;
+    AQLString indexDaycount = mIndexDaycount;
+    AQLString indexSlidingRule = mIndexSlidingRule;
+    AQLString indexCalendar = mIndexCalendar;
+    AQLString ratetype = AQLString("PAR");
+    AQLString interpolation = AQLString("SPLINE");
+    AQLString roll_convention = AQLString("EOM");
     bool eomroll = true;
     return LAMathCurveFuncUtility::getRate(settlDate, swapTerm, fwdCurveInfo.dataInstance, fwdCurveInfo.curveID, ratetype,
                                          fixedLegFreq, indexDaycount, indexSlidingRule, indexCalendar, interpolation,
@@ -62,22 +62,22 @@ double SwapRateInfo::ForwardSwapRate(LADate settlDate)
                                          eomroll && is_last_business_day_temp(settlDate, indexCalendar) ? &roll_convention : NULL);
 }
 
-double SwapRateInfo::Annuity(LADate settlDate)
+double SwapRateInfo::Annuity(AQLDate settlDate)
 {
-    LAString swapTerm = mTenor;
+    AQLString swapTerm = mTenor;
     CurveInfo curveInfo = mDiscCurveInfo;
-    LAString fixedLegFreq = mFixedLegFreq;
-    LAString indexDaycount = mIndexDaycount;
-    LAString indexSlidingRule = mIndexSlidingRule;
-    LAString indexCalendar = mIndexCalendar;
-    LAPriceDataSlidingRule paySlidingRule = mPaySlidingRule;
-    LAPriceDataCalendar payCalendar = mPayCalendar;
+    AQLString fixedLegFreq = mFixedLegFreq;
+    AQLString indexDaycount = mIndexDaycount;
+    AQLString indexSlidingRule = mIndexSlidingRule;
+    AQLString indexCalendar = mIndexCalendar;
+    AQLPriceDataSlidingRule paySlidingRule = mPaySlidingRule;
+    AQLPriceDataCalendar payCalendar = mPayCalendar;
 
-    LADate mtyDate = CalendarAdvance(settlDate, swapTerm, paySlidingRule, payCalendar);
-    LADate* fodd = NULL;
-    LADate* lodd = NULL;
+    AQLDate mtyDate = CalendarAdvance(settlDate, swapTerm, paySlidingRule, payCalendar);
+    AQLDate* fodd = NULL;
+    AQLDate* lodd = NULL;
     int* day = NULL;
-    LAString interpolation = LAString("SPLINE");
+    AQLString interpolation = AQLString("SPLINE");
 
     return LAMathCurveFuncUtility::getAnnuity(settlDate, mtyDate, curveInfo.dataInstance, curveInfo.curveID, fixedLegFreq,
                                             indexSlidingRule, indexCalendar,
@@ -118,7 +118,7 @@ double SwapRateInfo::CMSForward(double fwd, double annuity, double T, double dfP
     return result;
 }
 
-double SwapRateInfo::CMSForward(LADate valDate, CashFlowTiming cf)
+double SwapRateInfo::CMSForward(AQLDate valDate, CashFlowTiming cf)
 {
     double fwd = ForwardSwapRate(cf.indexSettlement);
     double annuity = Annuity(cf.indexSettlement);
@@ -158,7 +158,7 @@ double SwapRateInfo::CMSForward(LADate valDate, CashFlowTiming cf)
     return cmsFwd;
 }
 
-void SwapRateInfo::CMSDistribution(LADate valDate, CashFlowTiming cf, double& cmsFwd, double& cmsVol)
+void SwapRateInfo::CMSDistribution(AQLDate valDate, CashFlowTiming cf, double& cmsFwd, double& cmsVol)
 {
     double fwd = ForwardSwapRate(cf.indexSettlement);
     double annuity = Annuity(cf.indexSettlement);
@@ -177,12 +177,12 @@ void SwapRateInfo::CMSDistribution(LADate valDate, CashFlowTiming cf, double& cm
         cmsFwd = fwd + correction;
         double atmStrike = cmsFwd;
         double swpnCap = BachelierPrice(expiry, atmStrike, true, fwd, vol);
-        double fwdATMCap = swpnCap + correction * LADist::normsdist((fwd - atmStrike) / stDev);
+        double fwdATMCap = swpnCap + correction * AQLDist::normsdist((fwd - atmStrike) / stDev);
         cmsVol = LAMathAnalyticalFormula::BlackImplVolDD(fwdATMCap, cmsFwd, atmStrike, 1.0, 0) / sqrt(expiry);
     }
     else if (mRepConfig.swaptionModel == "CMSMarketLogN")
     {
-        throw LACoreInvalidData("CMSMarketLogN not available for CMS spreads yet", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("CMSMarketLogN not available for CMS spreads yet", __FILE__, __LINE__);
     }
     else
     {

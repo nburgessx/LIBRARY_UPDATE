@@ -12,9 +12,9 @@
 #include <vector>
 #include <memory>
 
-#include "LADate.h"
+#include "AQLDate.h"
 #include "CoreEnumerations.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 #include "Variant.h"
 
 // Curve Result Components
@@ -31,9 +31,9 @@ namespace etrading
     {
         // Typedefs
         typedef std::vector<double> VectorDouble;
-        typedef std::vector<LADate> VectorDate;
+        typedef std::vector<AQLDate> VectorDate;
         typedef std::vector<double> DoubleVector;   // For Backwards compatibility
-        typedef std::vector<LADate> DateVector;     // For Backwards compatibility
+        typedef std::vector<AQLDate> DateVector;     // For Backwards compatibility
     }
 
     // ================================= HELPER METHOD(S) ===================================================================
@@ -46,9 +46,9 @@ namespace etrading
     };
 
     // Shared Helper Method to Create Discount Factor Results Object
-    CurveDescriptionAndDiscountFactorResults curveDescriptionAndDiscountFactorResults( const LAStringMatrix & curveLVB,
-																					   const LAStringMatrix & discFactorParameterLVB,
-																					   const LAStringMatrix & discountFactors,
+    CurveDescriptionAndDiscountFactorResults curveDescriptionAndDiscountFactorResults( const AQLStringMatrix & curveLVB,
+																					   const AQLStringMatrix & discFactorParameterLVB,
+																					   const AQLStringMatrix & discountFactors,
 																					   const StandardStringMatrix & forwardAdjustments = StandardStringMatrix() );
 
 

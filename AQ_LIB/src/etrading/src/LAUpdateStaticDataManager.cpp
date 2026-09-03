@@ -14,17 +14,17 @@
 #include "LACurveForwardRateHelpers.h"
 #include "LACurvePricingObject.h"
 
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADataReference.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDataReference.h"
 #include "LADefinitions.h"
 #include "LADefinitionsRisk.h"
 #include "LADefinitionsCalibration.h"
 #include "LAStaticData.h"
 #include "LACoreDataService.h"
 #include "LAStaticDataManager.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathCorrelation.h"
 #include "LACompoundingFunc.h"
 #include "LAMathFXEntity.h"
@@ -46,59 +46,59 @@ using namespace etrading;
 
 namespace
 {
-    const LAString LF = "\n";
+    const AQLString LF = "\n";
 }
 
 namespace etrading
 {
 	// ===================== LEGACY - ARBITRAGE FREE CURVE =====================================================================
-	void LAUpdateStaticDataManager::SetUpArbFreeCurve(LADataInstance* dataInstance,
-												      const LAString& curveID,
-												      const LAStringMatrix& generateProp, 
-												      const LAStringMatrix& moneyConv,
-												      const LAStringMatrix& liborRates, 
-												      const LAStringMatrix& liborConv,
-												      const LAStringMatrix& swapRates, 
-												      const LAStringMatrix& swapConv,
-												      const LAStringMatrix& fra3mRates,
-												      const LAStringMatrix& fra6mRates,
-												      const LAStringMatrix& fraConv,
-												      const LAStringMatrix& xccyBasisRates, 
-												      const LAStringMatrix& xccyBasisConv,
-												      const LAStringMatrix& threeSixRates,
-												      const LAStringMatrix& threeSixConv,
-												      const LAStringMatrix& futureRates, 
-												      const LAStringMatrix& futureConv,
-												      const LAStringMatrix& adjustData,
-												      const LAString& curveNames_3ML,
-												      const LAString& curveNames_6ML,
-												      const LAString& curveNames_DF,
-												      const LAString& curveName_DF2)
+	void LAUpdateStaticDataManager::SetUpArbFreeCurve(AQLDataInstance* dataInstance,
+												      const AQLString& curveID,
+												      const AQLStringMatrix& generateProp, 
+												      const AQLStringMatrix& moneyConv,
+												      const AQLStringMatrix& liborRates, 
+												      const AQLStringMatrix& liborConv,
+												      const AQLStringMatrix& swapRates, 
+												      const AQLStringMatrix& swapConv,
+												      const AQLStringMatrix& fra3mRates,
+												      const AQLStringMatrix& fra6mRates,
+												      const AQLStringMatrix& fraConv,
+												      const AQLStringMatrix& xccyBasisRates, 
+												      const AQLStringMatrix& xccyBasisConv,
+												      const AQLStringMatrix& threeSixRates,
+												      const AQLStringMatrix& threeSixConv,
+												      const AQLStringMatrix& futureRates, 
+												      const AQLStringMatrix& futureConv,
+												      const AQLStringMatrix& adjustData,
+												      const AQLString& curveNames_3ML,
+												      const AQLString& curveNames_6ML,
+												      const AQLString& curveNames_DF,
+												      const AQLString& curveName_DF2)
     {
 	    LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
-	    LAObjectPool &objPool = dataInstance->getObjectPool();
-	    LAObject* pyld = NULL;	
+	    AQLObjectPool &objPool = dataInstance->getObjectPool();
+	    AQLObject* pyld = NULL;	
 	
-	    LAStringMatrix tmpInfo = generateProp;
+	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
-	    LADate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	    AQLDate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	    LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	    LAString currency;
-	    LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	    AQLString currency;
+	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
 	    {
-		    LAObject& yldEntity = objHolder.get();
-		    const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		    AQLObject& yldEntity = objHolder.get();
+		    const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		    if(dh->isDefined() && !dh->isNull())
 		    {
-			    currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			    currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		    }
 		    else
 		    {
-			    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			    {
-				    currency = LAString("DUMMY");
+				    currency = AQLString("DUMMY");
 			    }
 			    else
 			    {
@@ -108,24 +108,24 @@ namespace etrading
 	    }
 	    else
 	    {
-		    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		    {
-			    currency = LAString("DUMMY");
+			    currency = AQLString("DUMMY");
 		    }
 		    else
 		    {
 			    currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		    } 	
 	    }
-	    LAString tmpCurrency = currency; tmpCurrency.toLower();
+	    AQLString tmpCurrency = currency; tmpCurrency.toLower();
 
-	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	    AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	    AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	    if (useMarkets == AQ_NO_DATA) useMarkets = "";
 	    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),SWAP)) 
 	    {
 		    if (useMarkets == "") useMarkets = SWAP;
-		    else useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
+		    else useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
 	    }
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE);
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE);
@@ -136,9 +136,9 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
+		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
 		    key.toLower();
-		    LAString data = generateProp[i][1];
+		    AQLString data = generateProp[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -146,9 +146,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )
         for(size_t i=0; i<moneyConv.size(); i++)
         {
-		    LAString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0];
+		    AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0];
 		    key.toLower(); 
-		    LAString data = moneyConv[i][1];
+		    AQLString data = moneyConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -156,9 +156,9 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( liborConv, "Invalid Libor Fixing and Reset Conventions" )
 	    for(size_t i=0; i<liborConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0];
+		    AQLString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0];
 		    key.toLower(); 
-		    LAString data = liborConv[i][1];
+		    AQLString data = liborConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -166,9 +166,9 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions" )
 	    for(size_t i=0; i<swapConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0];
+		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0];
 		    key.toLower(); 
-		    LAString data = swapConv[i][1];
+		    AQLString data = swapConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -176,9 +176,9 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
 	    for(size_t i=0; i<fraConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0];
+		    AQLString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0];
 		    key.toLower(); 
-		    LAString data = fraConv[i][1];
+		    AQLString data = fraConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -186,8 +186,8 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( xccyBasisConv, "Invalid Xccy Basis Conventions" )
 	    for(size_t i=0; i<xccyBasisConv.size(); i++)
 	    {
-		    LAString key;
-		    LAString data = xccyBasisConv[i][1];
+		    AQLString key;
+		    AQLString data = xccyBasisConv[i][1];
 		    if (tmpCurrency == "usd")
 		    {
 			    key = tmpCurrency + ".sde.yield.basis." + xccyBasisConv[i][0];
@@ -199,7 +199,7 @@ namespace etrading
 			    tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 			    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),XCCYBASIS)) 
 			    {
-				    useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + XCCYBASIS;
+				    useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + XCCYBASIS;
 			    }
 		    }
 		    key.toLower(); 
@@ -210,9 +210,9 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( threeSixConv, "Invalid 3X6 Tenor Basis Conventions" )
 	    for(size_t i=0; i<threeSixConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.basis." + threeSixConv[i][0] + ".3m6mbasis";
+		    AQLString key = tmpCurrency + ".sde.yield.basis." + threeSixConv[i][0] + ".3m6mbasis";
 		    key.toLower(); 
-		    LAString data = threeSixConv[i][1];
+		    AQLString data = threeSixConv[i][1];
 		    if (key.findString("discount") == -1 && key.findString("forecast") == -1) data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -221,34 +221,34 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( futureConv, "Invalid Futures Conventions" )
 		for(size_t i=0; i<futureConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.future." + futureConv[i][0];
+		    AQLString key = tmpCurrency + ".sde.yield.future." + futureConv[i][0];
 		    key.toLower(); 
-		    LAString data = futureConv[i][1];
+		    AQLString data = futureConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    LAString usegrid_libor = "",usegrid_swap = "",usegrid_fra3m = "",usegrid_fra6m = "",usegrid_xccy = "",
+	    AQLString usegrid_libor = "",usegrid_swap = "",usegrid_fra3m = "",usegrid_fra6m = "",usegrid_xccy = "",
 		    usegrid_3m6m = "",usegrid_future = "";
 
 	    //set Libor Object;
-	    LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE);
+	    AQLString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE);
 	    if (liborfile == AQ_NO_DATA)
 	    {
-		    liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor.csv");
+		    liborfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_libor.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE, liborfile);
 	    }
-	    LAString liborstream;
+	    AQLString liborstream;
         MLIB_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing Rate Conventions" )
 	    for(size_t i=0; i<liborRates.size(); i++)
 	    {
 		    liborstream += liborRates[i][0];
 		    double lrate = liborRates[i][1].getDoubleValue() * 100.0;
-		    liborstream += "," + LAString(lrate) + LF;
+		    liborstream += "," + AQLString(lrate) + LF;
 
 		    if (liborRates[i].size() == 3)
 		    {
-			    LAString useGridFrag = liborRates[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = liborRates[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE") usegrid_libor += liborRates[i][0] + ":";
 			    else usegrid_libor += "NONE:";
 		    }
@@ -257,23 +257,23 @@ namespace etrading
 	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(liborfile), pliborstream);
 
 	    //set Swap Object;
-	    LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE);
+	    AQLString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE);
 	    if (swapfile == AQ_NO_DATA)
 	    {
-		    swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap.csv");
+		    swapfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_swap.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE, swapfile);
 	    }
-	    LAString swapstream;
+	    AQLString swapstream;
         MLIB_2D_MATRIX_CHECK( swapRates, "Invalid Swap Rates" )
 	    for(size_t i=0; i<swapRates.size(); i++)
 	    {
 		    swapstream += swapRates[i][0];
 		    double srate = swapRates[i][1].getDoubleValue() * 100.0;
-		    swapstream += "," + LAString(srate) + LF;
+		    swapstream += "," + AQLString(srate) + LF;
 
 		    if (swapRates[i].size() == 3)
 		    {
-			    LAString useGridFrag = swapRates[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = swapRates[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE") usegrid_swap += swapRates[i][0] + ":";
 			    else usegrid_swap += "NONE:";
 		    }
@@ -283,8 +283,8 @@ namespace etrading
 
 	    //set fra3m Object;
 	    bool isFRAUse = false;
-	    LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE);
-	    LADataBool tmpAttrB;
+	    AQLString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE);
+	    AQLDataBool tmpAttrB;
 	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
@@ -297,23 +297,23 @@ namespace etrading
             AQ_REQUIRE( fraConv.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
             AQ_REQUIRE( fra3mRates.size() > 0 || fra6mRates.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
 
-		    LAString fra3mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE);
+		    AQLString fra3mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE);
 		    if (fra3mfile == AQ_NO_DATA)
 		    {
-			    fra3mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_3mfra.csv");
+			    fra3mfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_3mfra.csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE, fra3mfile);
 		    }
-		    LAString fra3mstream;
+		    AQLString fra3mstream;
             MLIB_2D_MATRIX_CHECK( fra3mRates, "Invalid 3M FRA Rates" )
 		    for(size_t i=0; i<fra3mRates.size(); i++)
 		    {
 			    fra3mstream += fra3mRates[i][0];
 			    double frarate = fra3mRates[i][1].getDoubleValue() * 100.0;
-			    fra3mstream += "," + LAString(frarate) + LF;
+			    fra3mstream += "," + AQLString(frarate) + LF;
 
 			    if (fra3mRates[i].size() == 3)
 			    {
-				    LAString useGridFrag = fra3mRates[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = fra3mRates[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_fra3m += fra3mRates[i][0] + ":";
 				    else usegrid_fra3m += "NONE:";
 			    }
@@ -322,23 +322,23 @@ namespace etrading
 		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fra3mfile), pfra3mstream);		
 
 		    //set fra6m Object;
-		    LAString fra6mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE);
+		    AQLString fra6mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE);
 		    if (fra6mfile == AQ_NO_DATA)
 		    {
-			    fra6mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_6mfra.csv");
+			    fra6mfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_6mfra.csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE, fra6mfile);
 		    }
-		    LAString fra6mstream;
+		    AQLString fra6mstream;
             MLIB_2D_MATRIX_CHECK( fra6mRates, "Invalid 6M FRA Rates" )
 		    for(size_t i=0; i<fra6mRates.size(); i++)
 		    {
 			    fra6mstream += fra6mRates[i][0];
 			    double frarate = fra6mRates[i][1].getDoubleValue() * 100.0;
-			    fra6mstream += "," + LAString(frarate) + LF;
+			    fra6mstream += "," + AQLString(frarate) + LF;
 
 			    if (fra6mRates[i].size() == 3)
 			    {
-				    LAString useGridFrag = fra6mRates[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = fra6mRates[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_fra6m += fra6mRates[i][0] + ":";
 				    else usegrid_fra6m += "NONE:";
 			    }
@@ -348,23 +348,23 @@ namespace etrading
 	    }
 
 	    ///Xccy Basis Rate
-	    LAString xccyBasisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis");
+	    AQLString xccyBasisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis");
 	    if (xccyBasisFile == AQ_NO_DATA)
 	    {
-		    xccyBasisFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_xccybasis.csv");
+		    xccyBasisFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap_xccybasis.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis", xccyBasisFile);
 	    }
-	    LAString xccyBasisStream;
+	    AQLString xccyBasisStream;
         MLIB_2D_MATRIX_CHECK( xccyBasisRates, "Invalid Xccy Basis Rates" )
 	    for(size_t i=0; i<xccyBasisRates.size(); i++)
 	    {
 		    xccyBasisStream += xccyBasisRates[i][0];
 		    double brate = xccyBasisRates[i][1].getDoubleValue() * 10000.0;
-		    xccyBasisStream += "," + LAString(brate) + LF;
+		    xccyBasisStream += "," + AQLString(brate) + LF;
 
 		    if (xccyBasisRates[i].size() == 3)
 		    {
-			    LAString useGridFrag = xccyBasisRates[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = xccyBasisRates[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE") usegrid_xccy += xccyBasisRates[i][0] + ":";
 			    else usegrid_xccy += "NONE:";
 		    }
@@ -373,23 +373,23 @@ namespace etrading
 	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(xccyBasisFile), pXccyBasisStream);
 
 	    ///36 Basis Rate
-	    LAString threeSixFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis");
+	    AQLString threeSixFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis");
 	    if (threeSixFile == AQ_NO_DATA)
 	    {
-		    threeSixFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_3m6mbasis.csv");
+		    threeSixFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap_3m6mbasis.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis", threeSixFile);
 	    }
-	    LAString threeSixStream;
+	    AQLString threeSixStream;
         MLIB_2D_MATRIX_CHECK( threeSixRates, "Invalid 3X6 Tenor Basis Rates" )
 	    for(size_t i=0; i<threeSixRates.size(); i++)
 	    {
 		    threeSixStream += threeSixRates[i][0];
 		    double brate = threeSixRates[i][1].getDoubleValue() * 10000.0;
-		    threeSixStream += "," + LAString(brate) + LF;
+		    threeSixStream += "," + AQLString(brate) + LF;
 
 		    if (threeSixRates[i].size() == 3)
 		    {
-			    LAString useGridFrag = threeSixRates[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = threeSixRates[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE") usegrid_3m6m += threeSixRates[i][0] + ":";
 			    else usegrid_3m6m += "NONE:";
 		    }
@@ -399,12 +399,12 @@ namespace etrading
 
 	    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),THREESIXBASIS) && threeSixRates.size())
 	    {
-		    useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + THREESIXBASIS;
+		    useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + THREESIXBASIS;
 	    }
 
 	    //set future Object;
 	    bool isFutureUse = false;
-	    LAString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE);
+	    AQLString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE);
 	    if (tmpFutureStr != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(tmpFutureStr);
@@ -416,23 +416,23 @@ namespace etrading
             AQ_REQUIRE( futureConv.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
             AQ_REQUIRE( futureRates.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
 
-		    LAString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE);
+		    AQLString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE);
 		    if (futureFile == AQ_NO_DATA)
 		    {
-			    futureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_future") + LAString(".csv");
+			    futureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_future") + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE, futureFile);
 		    }
 		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(futureFile), createFutureStream(futureRates, usegrid_future));
 	    }
 	
 	    //set Adjust Data Object;
-	    LAString adjustValueFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis");
+	    AQLString adjustValueFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis");
 	    if (adjustValueFile == AQ_NO_DATA)
 	    {
-		    adjustValueFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisadjust.csv");
+		    adjustValueFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisadjust.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis", adjustValueFile);
 	    }
-	    LAString adjustValueStream;
+	    AQLString adjustValueStream;
 	    MLIB_2D_MATRIX_CHECK( adjustData, "Invalid Basis Swap Adjustment or adjustData Rates")
 	    for(size_t i=0; i<adjustData.size(); i++)
 	    {
@@ -549,14 +549,14 @@ namespace etrading
 		// ============================== 3. CURVE OBJECT DATA ===========+=========================================
 
 		// Set Curve Build TimeStamp
-          LAString	CurveIDTool			= curveID + TOOL;
-	    LAString	CurveIDManager		= curveID + CURVETYPE_ARBFREE + MANAGER;
+          AQLString	CurveIDTool			= curveID + TOOL;
+	    AQLString	CurveIDManager		= curveID + CURVETYPE_ARBFREE + MANAGER;
 
 	    // Curve Object Manager (curve, grids, curve information)
-	    LAObject* laCurveObject = NULL;
+	    AQLObject* laCurveObject = NULL;
 	    if(!objPool.getObject(CurveIDManager).isDefined())
 	    {	
-		    laCurveObject = new LAObject;
+		    laCurveObject = new AQLObject;
 		    objPool.set(CurveIDManager,laCurveObject);
 	    }
 	    else
@@ -564,45 +564,45 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    laCurveObject = &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",			new LADataString()			).convertFromString(LAString(LATime::now()));
-	    laCurveObject->add(CALIBRATION_DATA_NAME,		new LADataString()			).convertFromString(CurveIDManager);
+	    laCurveObject->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	    laCurveObject->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
     };
 
 	
 	// ===================== LEGACY FLOATER CURVE ================================================================================================
-	void LAUpdateStaticDataManager::setUpFloater( LADataInstance* dataInstance,
-												  const LAString& curveID,
-												  const LAString& discountCurveName,
-												  const LAString& forecastCurveName,
-												  const LAStringMatrix& generateProp, 
-												  const LAStringMatrix& basisMkt, 
-												  const LAStringMatrix& basisConv,
-												  const LAStringMatrix& swapConv,
-												  const LAStringMatrix& adjustData )
+	void LAUpdateStaticDataManager::setUpFloater( AQLDataInstance* dataInstance,
+												  const AQLString& curveID,
+												  const AQLString& discountCurveName,
+												  const AQLString& forecastCurveName,
+												  const AQLStringMatrix& generateProp, 
+												  const AQLStringMatrix& basisMkt, 
+												  const AQLStringMatrix& basisConv,
+												  const AQLStringMatrix& swapConv,
+												  const AQLStringMatrix& adjustData )
     {
 		// ============================== 1. CURVE STATIC DATA =====================================================
 		
 		LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
-	    LAObjectPool &objPool = dataInstance->getObjectPool();
+	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 
-	    LAStringMatrix tmpInfo = generateProp;
+	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
-	    LAString currency;
-	    LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	    AQLString currency;
+	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
 	    {
-		    LAObject& yldEntity = objHolder.get();
-		    const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		    AQLObject& yldEntity = objHolder.get();
+		    const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		    if(dh->isDefined() && !dh->isNull())
 		    {
-			    currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			    currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		    }
 		    else
 		    {
-			    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			    {
-				    currency = LAString("DUMMY");
+				    currency = AQLString("DUMMY");
 			    }
 			    else
 			    {
@@ -612,27 +612,27 @@ namespace etrading
 	    }
 	    else
 	    {
-		    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		    {
-			    currency = LAString("DUMMY");
+			    currency = AQLString("DUMMY");
 		    }
 		    else
 		    {
 			    currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		    } 	
 	    }
-	    LAString tmpCurrency = currency; tmpCurrency.toLower();
+	    AQLString tmpCurrency = currency; tmpCurrency.toLower();
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ISARBFREE);
 
 	    //insert property
-	    LAStringMatrix tmpProp(basisConv.size() + swapConv.size() + generateProp.size(), LAStringVector(2));
-	    LAString tmpBasisCurveName = XCCYBASIS; tmpBasisCurveName.toLower();
+	    AQLStringMatrix tmpProp(basisConv.size() + swapConv.size() + generateProp.size(), AQLStringVector(2));
+	    AQLString tmpBasisCurveName = XCCYBASIS; tmpBasisCurveName.toLower();
 	    MLIB_2D_MATRIX_CHECK( basisConv, "Invalid Basis Swap Conventions" )
         for(size_t i=0; i<basisConv.size(); i++)
 	    {		
-		    LAString key = tmpCurrency + ".sde.yield.basis." + basisConv[i][0] + "." + tmpBasisCurveName;
+		    AQLString key = tmpCurrency + ".sde.yield.basis." + basisConv[i][0] + "." + tmpBasisCurveName;
 		    key.toLower();
-		    LAString data = basisConv[i][1];
+		    AQLString data = basisConv[i][1];
 		    if (key.findString("discount") == -1 && key.findString("forecast") == -1) data.toLower();
 		    irStaticData.setStaticData(key,data);
 	    }
@@ -640,9 +640,9 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions" )
 	    for(size_t i=0; i<swapConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0];
+		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0];
 		    key.toLower(); 
-		    LAString data = swapConv[i][1];
+		    AQLString data = swapConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key,data);
 	    }
@@ -650,9 +650,9 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
+		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
 		    key.toLower();
-		    LAString data = generateProp[i][1];
+		    AQLString data = generateProp[i][1];
 		    data.toUpper();
 		    irStaticData.setStaticData(key,data);
 	    }
@@ -665,38 +665,38 @@ namespace etrading
 	    {
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FLOATER_BASISNAME, XCCYBASIS);
 
-		    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-		    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+		    AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+		    AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 		    if (useMarkets == AQ_NO_DATA) useMarkets = "";
 		    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),XCCYBASIS)) 
 		    {
 			    if (useMarkets == "") useMarkets = XCCYBASIS;
-			    else useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + XCCYBASIS;
+			    else useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + XCCYBASIS;
 		    }
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS, useMarkets);
 		
-		    LAString tmpBasisCurveName = XCCYBASIS;
+		    AQLString tmpBasisCurveName = XCCYBASIS;
 		    tmpBasisCurveName.toLower();
 
-		    LAString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName);
+		    AQLString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName);
 		    if (basisfile == AQ_NO_DATA)
 		    {
-			    basisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_xccybasis.csv");
+			    basisfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap_xccybasis.csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName, basisfile);
 		    }
-		    LAString basisstream;
-		    LAString usegrid = "";
+		    AQLString basisstream;
+		    AQLString usegrid = "";
 
             MLIB_2D_MATRIX_CHECK( basisMkt, "Invalid Basis Market Rates" )
 		    for(size_t i=0; i<basisMkt.size(); i++)
 		    {
 			    basisstream += basisMkt[i][0];
 			    double brate = basisMkt[i][1].getDoubleValue() * 10000.0;
-			    basisstream += "," + LAString(brate) + LF;
+			    basisstream += "," + AQLString(brate) + LF;
 
 			    if (basisMkt[i].size() == 3)
 			    {
-				    LAString useGridFrag = basisMkt[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = basisMkt[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid += basisMkt[i][0] + ":";
 				    else usegrid += "NONE:";
 			    }
@@ -719,15 +719,15 @@ namespace etrading
 		    //set Adjust Data Object;
 		    if (adjustData.size() > 0)
 		    {
-			    LAString adjustValueFile = irStaticData.getStaticData(tmpCurrency + 
+			    AQLString adjustValueFile = irStaticData.getStaticData(tmpCurrency + 
 				    STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + tmpBasisCurveName);
 			    if (adjustValueFile == AQ_NO_DATA)
 			    {
-				    adjustValueFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisadjust.csv");
+				    adjustValueFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisadjust.csv");
 				    irStaticData.setStaticData(tmpCurrency + 
 					    STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + tmpBasisCurveName, adjustValueFile);
 			    }
-			    LAString adjustValueStream;
+			    AQLString adjustValueStream;
                 MLIB_2D_MATRIX_CHECK( adjustData, "Invalid Basis Swap Adjustment Data" )
 			    for(size_t i=0; i<adjustData.size(); i++)
 			    {
@@ -754,14 +754,14 @@ namespace etrading
 
 
 	    // Set the Curve Build TimeStamp
-	    LAString	CurveIDTool			= curveID + TOOL;
-	    LAString	CurveIDManager		= curveID + CURVETYPE_FLOATER+ MANAGER;
+	    AQLString	CurveIDTool			= curveID + TOOL;
+	    AQLString	CurveIDManager		= curveID + CURVETYPE_FLOATER+ MANAGER;
 	    
         // Curve Object Manager (curve, grids, curve information)
-	    LAObject* mae = NULL;
+	    AQLObject* mae = NULL;
 	    if(!objPool.getObject(CurveIDManager).isDefined())
 	    {	
-		    mae = new LAObject;
+		    mae = new AQLObject;
 		    objPool.set(CurveIDManager,mae);
 	    }
 	    else
@@ -769,51 +769,51 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    mae	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    mae->add("Time",			new LADataString()			).convertFromString(LAString(LATime::now()));
-	    mae->add(CALIBRATION_DATA_NAME,		new LADataString()			).convertFromString(CurveIDManager);
+	    mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	    mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
     }
 
 
 	// ========================== OIS CURVE ===========================================================================================
-	void LAUpdateStaticDataManager::loadStaticDataOISCurve( LADataInstance* dataInstance,
-															const LAString& curveID,
-															const LAString& marketName,
-															const LAStringMatrix& generateProp,
-															const LAStringMatrix& oisRates,
-															const LAStringMatrix& oisConv,
-															const LAString& curveNames,
-															const LAStringMatrix& histRates,
-															const LAStringMatrix& lobasisRates,
-															const LAStringMatrix& lobasisConv,
-															const LAStringMatrix& swapRates,
-															const LAStringMatrix& swapConv )
+	void LAUpdateStaticDataManager::loadStaticDataOISCurve( AQLDataInstance* dataInstance,
+															const AQLString& curveID,
+															const AQLString& marketName,
+															const AQLStringMatrix& generateProp,
+															const AQLStringMatrix& oisRates,
+															const AQLStringMatrix& oisConv,
+															const AQLString& curveNames,
+															const AQLStringMatrix& histRates,
+															const AQLStringMatrix& lobasisRates,
+															const AQLStringMatrix& lobasisConv,
+															const AQLStringMatrix& swapRates,
+															const AQLStringMatrix& swapConv )
 	{
 		LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 		
-	    LAObjectPool &objPool = dataInstance->getObjectPool();
-	    LAObject* pyld = NULL;
+	    AQLObjectPool &objPool = dataInstance->getObjectPool();
+	    AQLObject* pyld = NULL;
 	
-	    LAStringMatrix tmpInfo = generateProp;
+	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
-	    LADate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	    AQLDate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	    LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	    LAString currency;
-	    LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	    AQLString currency;
+	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 
 	    if (objHolder.isDefined())
 	    {
 
-		    LAObject& yldEntity = objHolder.get();
-		    const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		    AQLObject& yldEntity = objHolder.get();
+		    const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		    if(dh->isDefined() && !dh->isNull())
 		    {
-			    currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			    currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		    }
 		    else
 		    {
-			    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			    {
-				    currency = LAString("DUMMY");
+				    currency = AQLString("DUMMY");
 			    }
 			    else
 			    {
@@ -823,31 +823,31 @@ namespace etrading
 	    }
 	    else
 	    {
-		    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		    {
-			    currency = LAString("DUMMY");
+			    currency = AQLString("DUMMY");
 		    }
 		    else
 		    {
 			    currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		    } 	
 	    }
-	    LAString tmpCurrency = currency; tmpCurrency.toLower();
+	    AQLString tmpCurrency = currency; tmpCurrency.toLower();
 
 	    if (marketName == "" || marketName == STD) 
-		    throw LACoreInvalidData("Do not use STD or blank for ois curve name!",__FILE__,__LINE__);
-	    LAString staticDataSuffix;
-	    LAString suffix_data;
+		    throw AQLCoreInvalidData("Do not use STD or blank for ois curve name!",__FILE__,__LINE__);
+	    AQLString staticDataSuffix;
+	    AQLString suffix_data;
 	    staticDataSuffix = "." + marketName;
 	    staticDataSuffix.toLower();
-	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	    AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	    AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	    if (useMarkets == AQ_NO_DATA) useMarkets = "";
-	    LAString tmpCurveName = marketName; tmpCurveName.toUpper();
+	    AQLString tmpCurveName = marketName; tmpCurveName.toUpper();
 	    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 	    {
 		    if (useMarkets == "") useMarkets = marketName;
-		    else useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + marketName;
+		    else useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + marketName;
 	    }
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS, useMarkets);
 	    if (curveNames == "")
@@ -861,10 +861,10 @@ namespace etrading
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + staticDataSuffix, "DAILYCOMPOUNDING");
 
 	    // Set curve type
-		LAString curveType = CURVETYPE_OIS;
+		AQLString curveType = CURVETYPE_OIS;
 
 		// If CurveType is specified, get it from user
-		if (LAFunctionUtilities::findRowsNumber(tmpInfo, CURVEINPUT_CURVETYPE) >= 0)
+		if (AQLFunctionUtilities::findRowsNumber(tmpInfo, CURVEINPUT_CURVETYPE) >= 0)
 		{
 			curveType = chgrow(tmpInfo, CURVEINPUT_CURVETYPE, 1);
 			AQ_REQUIRE(curveType == CURVETYPE_OIS || curveType == CURVETYPE_ARR, "CurveType can only be OIS or ARR.");
@@ -879,9 +879,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions")
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = generateProp[i][1];
+		    AQLString data = generateProp[i][1];
 		    if (key.findString("dfcurvename") == -1) data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -902,12 +902,12 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( oisConv, "Invalid OIS Conventions")	
 	    for(size_t i=0; i<oisConv.size(); i++)
 	    {
-            LAString oisConventionKey = oisConv[i][0];
+            AQLString oisConventionKey = oisConv[i][0];
 
-            LAString key = tmpCurrency + ".sde.yield.ois." + oisConventionKey + staticDataSuffix;
+            AQLString key = tmpCurrency + ".sde.yield.ois." + oisConventionKey + staticDataSuffix;
 		    key.toLower(); 
 		    
-            LAString data = oisConv[i][1];
+            AQLString data = oisConv[i][1];
 		    data.toLower();
 		    
             irStaticData.setStaticData(key, data);
@@ -919,31 +919,31 @@ namespace etrading
             }
 	    }	
 
-	    LAString oisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + staticDataSuffix);
+	    AQLString oisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + staticDataSuffix);
 	    if (oisFile == AQ_NO_DATA)
 	    {
-		    oisFile = LAString("data/in/") + tmpCurrency + LAString("_yield_ois_oiscurve.csv");
+		    oisFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_ois_oiscurve.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + staticDataSuffix, oisFile);
 	    }
 
-	    LAString fedFundFutureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + staticDataSuffix);
+	    AQLString fedFundFutureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + staticDataSuffix);
 	    if (fedFundFutureFile == AQ_NO_DATA)
 	    {
-		    fedFundFutureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fffuture.csv");
+		    fedFundFutureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_fffuture.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + staticDataSuffix, fedFundFutureFile);
 	    }
 
-	    LAString histFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + staticDataSuffix);
+	    AQLString histFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + staticDataSuffix);
 	    if (histFile == AQ_NO_DATA)
 	    {
-		    histFile = LAString("data/in/") + tmpCurrency + LAString("_yield_historical_ois_oiscurve.csv");
+		    histFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_historical_ois_oiscurve.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + staticDataSuffix, histFile);
 	    }
 
-	    LAString oisStream;
-	    LAString fedFundFutureStream;
-	    LAString usegrid_ois = "";
-	    LAString usegrid_fffuture = "";
+	    AQLString oisStream;
+	    AQLString fedFundFutureStream;
+	    AQLString usegrid_ois = "";
+	    AQLString usegrid_fffuture = "";
         MLIB_2D_MATRIX_CHECK( oisRates, "Invalid OIS Swap Rates" )
 	    for(size_t i=0; i<oisRates.size(); i++)
 	    {
@@ -952,19 +952,19 @@ namespace etrading
 			    fedFundFutureStream += oisRates[i][0];
 
 			    if (oisRates[i].size() != 3 && oisRates[i].size() != 5)
-				    throw LACoreInvalidData("FF input size error",__FILE__,__LINE__);
+				    throw AQLCoreInvalidData("FF input size error",__FILE__,__LINE__);
 
 			    //in case of FF, quoted value is price
 			    double oisRate = oisRates[i][1].getDoubleValue();
-			    fedFundFutureStream += "," + LAString(oisRate);
+			    fedFundFutureStream += "," + AQLString(oisRate);
 
 			    if (oisRates[i].size() == 5)
 			    {
-				    const LADate& startdate = stringToDate(oisRates[i][2]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(oisRates[i][2]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    fedFundFutureStream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(oisRates[i][3]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(oisRates[i][3]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    fedFundFutureStream += "," + enddate_str;
 			    }
 
@@ -972,13 +972,13 @@ namespace etrading
 			
 			    if (oisRates[i].size() == 5)
 			    {
-				    LAString useGridFrag = oisRates[i][4]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates[i][4]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_fffuture += oisRates[i][0] + ":";
 				    else usegrid_fffuture += "NONE:";
 			    }
 			    else if (oisRates[i].size() == 3)
 			    {
-				    LAString useGridFrag = oisRates[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_fffuture += oisRates[i][0] + ":";
 				    else usegrid_fffuture += "NONE:";
 			    }
@@ -991,16 +991,16 @@ namespace etrading
                 if (isCentralBankSwap(oisRates[i][0]))     
 			    {
 				    if (oisRates[i].size() < 4)
-					    throw LACoreInvalidData("#Error: short term market needs StartDate and EndDate",__FILE__,__LINE__);
+					    throw AQLCoreInvalidData("#Error: short term market needs StartDate and EndDate",__FILE__,__LINE__);
 
 				    double oisRate = oisRates[i][1].getDoubleValue() * 100.0;
-				    oisStream += "," + LAString(oisRate);
+				    oisStream += "," + AQLString(oisRate);
 
-				    const LADate& startdate = stringToDate(oisRates[i][2]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(oisRates[i][2]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    oisStream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(oisRates[i][3]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(oisRates[i][3]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    oisStream += "," + enddate_str;
 			    }
 				// ARR curve's future part
@@ -1009,22 +1009,22 @@ namespace etrading
 					const int NUM_COLUMNS_FUTURE = 5; // Term, Rate, StartDate, EndDate, VolOrConvAdj
 					if (oisRates[i].size() < NUM_COLUMNS_FUTURE)
 					{
-						throw LACoreInvalidData("#Error: future part needs VolOrConvexAdj", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("#Error: future part needs VolOrConvexAdj", __FILE__, __LINE__);
 					}
 
 					double futurePrice = oisRates[i][1].getDoubleValue();
-					oisStream += "," + LAString(futurePrice);
+					oisStream += "," + AQLString(futurePrice);
 
-					const LADate& startdate = stringToDate(oisRates[i][2]);
-					LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+					const AQLDate& startdate = stringToDate(oisRates[i][2]);
+					AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 					oisStream += "," + startdate_str;
 
-					const LADate& enddate = stringToDate(oisRates[i][3]);
-					LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+					const AQLDate& enddate = stringToDate(oisRates[i][3]);
+					AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 					oisStream += "," + enddate_str;
 
 					double volOrConvAdj = oisRates[i][4].getDoubleValue();
-					oisStream += "," + LAString(volOrConvAdj);
+					oisStream += "," + AQLString(volOrConvAdj);
 
 				}
 			    else // Outright Swaps
@@ -1033,25 +1033,25 @@ namespace etrading
 					// Futures and MPC swaps need the term to be specified with a FUTURE or MPC prefix.
 					if( ( oisRates[i].size() > 3 ) && ( oisRates[i][2].size() > 0 || oisRates[i][3].size() > 0 ) )
 					{
-						LAString msg = "#Error: Invalid Term: Instrument " + LAString( int(i) + 1 ) + " must have FUTURE or MPC term prefix, since futures start- and/or end-date provided";
-						throw LACoreInvalidData( msg.c_str(), __FILE__, __LINE__ );
+						AQLString msg = "#Error: Invalid Term: Instrument " + AQLString( int(i) + 1 ) + " must have FUTURE or MPC term prefix, since futures start- and/or end-date provided";
+						throw AQLCoreInvalidData( msg.c_str(), __FILE__, __LINE__ );
 					}
 
 				    double oisRate = oisRates[i][1].getDoubleValue() * 100.0;
-				    oisStream += "," + LAString(oisRate);
+				    oisStream += "," + AQLString(oisRate);
 			    }
 			
 			    oisStream += LF;
 			
 			    if (oisRates[i].size() == 5)
 			    {
-				    LAString useGridFrag = oisRates[i][4]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates[i][4]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_ois += oisRates[i][0] + ":";
 				    else usegrid_ois += "NONE:";
 			    }
 			    else if (oisRates[i].size() == 3)
 			    {
-				    LAString useGridFrag = oisRates[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_ois += oisRates[i][0] + ":";
 				    else usegrid_ois += "NONE:";
 			    }
@@ -1083,15 +1083,15 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_USEGRID + staticDataSuffix, usegrid_fffuture);
 	    }
 
-	    LAString histStream;
+	    AQLString histStream;
 	    MLIB_2D_MATRIX_CHECK( histRates, "Invalid OIS Fixing and Reset Rates")
 	    for(size_t i=0; i<histRates.size(); i++)
 	    {
-		    const LADate& histdate = stringToDate(histRates[i][0]);
-		    LAString histdate_str = histdate.stringWithFormat("YYYYMMDD");
+		    const AQLDate& histdate = stringToDate(histRates[i][0]);
+		    AQLString histdate_str = histdate.stringWithFormat("YYYYMMDD");
 		    histStream += histdate_str;
 		    double histRate = histRates[i][1].getDoubleValue() * 100.0;
-		    histStream += "," + LAString(histRate);
+		    histStream += "," + AQLString(histRate);
 		    histStream += LF;
 	    }
 	    std::istringstream *pHISTStream = new std::istringstream(histStream.getCString());
@@ -1106,16 +1106,16 @@ namespace etrading
         MLIB_2D_MATRIX_CHECK( lobasisConv, "Invalid Libor-OIS Basis Conventions")
 	    for(size_t i=0; i<lobasisConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.basis." + lobasisConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.basis." + lobasisConv[i][0] + staticDataSuffix;
 		    key.toLower(); 
-		    LAString data = lobasisConv[i][1];
+		    AQLString data = lobasisConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }	
-	    LAString lobasisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + staticDataSuffix);
+	    AQLString lobasisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + staticDataSuffix);
 	    if (lobasisfile == AQ_NO_DATA)
 	    {
-		    lobasisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_lobasis") + staticDataSuffix + LAString(".csv");
+		    lobasisfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_lobasis") + staticDataSuffix + AQLString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + staticDataSuffix, lobasisfile);
 	    }
 
@@ -1125,7 +1125,7 @@ namespace etrading
             AQ_REQUIRE( lobasisRates.size() > 0, "Missing Market Data: Libor-OIS Basis Rates are Required when the OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
         }
 
-	    LAString lobasisstream;
+	    AQLString lobasisstream;
 	    MLIB_2D_MATRIX_CHECK( lobasisRates, "Invalid Libor-OIS Basis Rates")
 		const size_t lobasisColumnSize = ( lobasisRates.size() > 0 ) ? lobasisRates[0].size() : 0;
 
@@ -1134,19 +1134,19 @@ namespace etrading
 			// Libor-OIS Rates Columns: Term, Rate, LiborType (Optional), UseMarketData (Optional)
 			lobasisstream += lobasisRates[i][0];
 		    const double lobrate = lobasisRates[i][1].getDoubleValue() * 100.0;
-		    lobasisstream += "," + LAString(lobrate);
+		    lobasisstream += "," + AQLString(lobrate);
 			
 			// Optional Column 3: LiborType
 			if ( lobasisColumnSize > 2 )
 			{
-				const LAString liborType = lobasisRates[i][2];
+				const AQLString liborType = lobasisRates[i][2];
 				lobasisstream += "," + liborType;
 			}
 
 			// Optional Column 4: UseMarketData
 			if ( lobasisColumnSize > 3 )
 			{
-				const LAString useMarketData = lobasisRates[i][3];
+				const AQLString useMarketData = lobasisRates[i][3];
 				lobasisstream += "," + useMarketData;
 			}
 
@@ -1164,16 +1164,16 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions")
 	    for(size_t i=0; i<swapConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0] + staticDataSuffix;
 		    key.toLower(); 
-		    LAString data = swapConv[i][1];
+		    AQLString data = swapConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }	
-	    LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
+	    AQLString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
 	    if (swapfile == AQ_NO_DATA)
 	    {
-		    swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap") + staticDataSuffix + LAString(".csv");
+		    swapfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_swap") + staticDataSuffix + AQLString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix, swapfile);
 	    }
 
@@ -1183,7 +1183,7 @@ namespace etrading
             AQ_REQUIRE( swapRates.size() > 0, "Missing Market Data: Swap Rates are Required when OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
         }
 
-	    LAString swapstream;
+	    AQLString swapstream;
 	    MLIB_2D_MATRIX_CHECK( swapRates, "Invalid Swap Rates")
 	    for(size_t i=0; i<swapRates.size(); i++)
 	    {
@@ -1191,7 +1191,7 @@ namespace etrading
 			swapstream += swapRates[i][0];
 			//Swap Rate
 			double srate = swapRates[i][1].getDoubleValue() * 100.0;
-			swapstream += "," + LAString(srate);
+			swapstream += "," + AQLString(srate);
 
 			if (swapRates[i].size() > 2)
 			{
@@ -1211,16 +1211,16 @@ namespace etrading
 	}
 
 	// ========================== OIS CURVE ===========================================================================================
-	void LAUpdateStaticDataManager::calibrateOISCurve( LADataInstance* dataInstance,
-													   const LAString& curveID,
-													   const LAString& marketName,
-													   const LAStringMatrix& generateProp )
+	void LAUpdateStaticDataManager::calibrateOISCurve( AQLDataInstance* dataInstance,
+													   const AQLString& curveID,
+													   const AQLString& marketName,
+													   const AQLStringMatrix& generateProp )
 	{
 		// 1. CURVE CALIBRATION
 		// *********************
         
 		LabelValueBlock curvePropertiesLVB( generateProp );
-		const LAString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
+		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 		
 		std::unique_ptr<LAObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves( currency) );
 	    objectPoolManager->loadModelDataAndCalibrate( currency, *dataInstance, true, false, curveID, marketName );
@@ -1230,17 +1230,17 @@ namespace etrading
 		// ******************************
         		
 		// Object Pool
-		LAObjectPool &objPool = dataInstance->getObjectPool();
+		AQLObjectPool &objPool = dataInstance->getObjectPool();
 
 	    // Set the Curve Build Timestamp
-	    LAString	CurveIDTool			= curveID + TOOL;
-	    LAString	CurveIDManager		= curveID + marketName + MANAGER;
+	    AQLString	CurveIDTool			= curveID + TOOL;
+	    AQLString	CurveIDManager		= curveID + marketName + MANAGER;
 	    
         // LA Curve Object Build Manager
-	    LAObject* laCurveObject = NULL;
+	    AQLObject* laCurveObject = NULL;
 	    if( !objPool.getObject(CurveIDManager).isDefined() )
 	    {	
-		    laCurveObject = new LAObject;
+		    laCurveObject = new AQLObject;
 		    objPool.set( CurveIDManager, laCurveObject );
 	    }
 	    else
@@ -1248,24 +1248,24 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    laCurveObject = &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",			      new LADataString() ).convertFromString(LAString(LATime::now()));
-	    laCurveObject->add(CALIBRATION_DATA_NAME, new LADataString() ).convertFromString(CurveIDManager);
+	    laCurveObject->add("Time",			      new AQLDataString() ).convertFromString(AQLString(LATime::now()));
+	    laCurveObject->add(CALIBRATION_DATA_NAME, new AQLDataString() ).convertFromString(CurveIDManager);
 
 	}
 
 	// ========================== OIS CURVE ===========================================================================================
-	void LAUpdateStaticDataManager::setUpOISCurve( LADataInstance* dataInstance,
-												   const LAString& curveID,
-                                                   const LAString& marketName,
-                                                   const LAStringMatrix& generateProp, 
-                                                   const LAStringMatrix& oisRates, 
-                                                   const LAStringMatrix& oisConv,
-                                                   const LAString& curveNames,
-                                                   const LAStringMatrix& histRates,
-                                                   const LAStringMatrix& lobasisRates, 
-                                                   const LAStringMatrix& lobasisConv, 
-                                                   const LAStringMatrix& swapRates, 
-                                                   const LAStringMatrix& swapConv )
+	void LAUpdateStaticDataManager::setUpOISCurve( AQLDataInstance* dataInstance,
+												   const AQLString& curveID,
+                                                   const AQLString& marketName,
+                                                   const AQLStringMatrix& generateProp, 
+                                                   const AQLStringMatrix& oisRates, 
+                                                   const AQLStringMatrix& oisConv,
+                                                   const AQLString& curveNames,
+                                                   const AQLStringMatrix& histRates,
+                                                   const AQLStringMatrix& lobasisRates, 
+                                                   const AQLStringMatrix& lobasisConv, 
+                                                   const AQLStringMatrix& swapRates, 
+                                                   const AQLStringMatrix& swapConv )
     {
 		// 1. Curve Static Data
 		loadStaticDataOISCurve( dataInstance, curveID, marketName, generateProp, oisRates, oisConv,
@@ -1277,50 +1277,50 @@ namespace etrading
 
 
 	// ============================== SWAP CURVE =======================================================================================
-	void LAUpdateStaticDataManager::loadStaticDataSwapCurve( LADataInstance* dataInstance,
-															 const LAString& curveID,
-															 const LAString& marketName,
-															 const LAStringMatrix& generateProp,
-															 const LAStringMatrix& moneyConv,
-															 const LAStringMatrix& liborRates,
-															 const LAStringMatrix& liborConv,
-															 const LAStringMatrix& swapRates,
-															 const LAStringMatrix& swapConv,
-															 const LAStringMatrix& fra3mRates,
-															 const LAStringMatrix& fra6mRates,
-															 const LAStringMatrix& fraConv,
-															 const LAStringMatrix& futureRates,
-															 const LAStringMatrix& futureConv,
-															 const LAStringMatrix& adjustSwapConv,
-															 const LAStringMatrix& adjustSwapRates,
-															 const LAString& curveNames,
-															 const LAString& curveName_DF2 )
+	void LAUpdateStaticDataManager::loadStaticDataSwapCurve( AQLDataInstance* dataInstance,
+															 const AQLString& curveID,
+															 const AQLString& marketName,
+															 const AQLStringMatrix& generateProp,
+															 const AQLStringMatrix& moneyConv,
+															 const AQLStringMatrix& liborRates,
+															 const AQLStringMatrix& liborConv,
+															 const AQLStringMatrix& swapRates,
+															 const AQLStringMatrix& swapConv,
+															 const AQLStringMatrix& fra3mRates,
+															 const AQLStringMatrix& fra6mRates,
+															 const AQLStringMatrix& fraConv,
+															 const AQLStringMatrix& futureRates,
+															 const AQLStringMatrix& futureConv,
+															 const AQLStringMatrix& adjustSwapConv,
+															 const AQLStringMatrix& adjustSwapRates,
+															 const AQLString& curveNames,
+															 const AQLString& curveName_DF2 )
 	{
 		LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 		
-	    LAObjectPool &objPool = dataInstance->getObjectPool();
-	    LAObject* pyld = NULL;
+	    AQLObjectPool &objPool = dataInstance->getObjectPool();
+	    AQLObject* pyld = NULL;
 
-	    LAStringMatrix tmpInfo = generateProp;
+	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
-	    LADate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	    AQLDate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	    LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	    LAString currency;
-	    LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	    AQLString currency;
+	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
 	    {
 
-		    LAObject& yldEntity = objHolder.get();
-		    const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		    AQLObject& yldEntity = objHolder.get();
+		    const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		    if(dh->isDefined() && !dh->isNull())
 		    {
-			    currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			    currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		    }
 		    else
 		    {
-			    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			    {
-				    currency = LAString("DUMMY");
+				    currency = AQLString("DUMMY");
 			    }
 			    else
 			    {
@@ -1330,26 +1330,26 @@ namespace etrading
 	    }
 	    else
 	    {
-		    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		    {
-			    currency = LAString("DUMMY");
+			    currency = AQLString("DUMMY");
 		    }
 		    else
 		    {
 			    currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		    } 	
 	    }
-	    LAString tmpCurrency = currency; tmpCurrency.toLower();
+	    AQLString tmpCurrency = currency; tmpCurrency.toLower();
 
-	    LAString generateCurveName = (marketName == "") ? STD : marketName;
+	    AQLString generateCurveName = (marketName == "") ? STD : marketName;
 	    generateCurveName.toUpper();
-	    LAString staticDataSuffix;
-	    LAString suffix_data;
+	    AQLString staticDataSuffix;
+	    AQLString suffix_data;
 
 	    // The useMarkets string is a list of default market names for a particular currency in the form 
 	    // of '1M3MBasis:3M6MBasis:SWAP:XCCYBasis' for example. This is loaded directly from the ir.properties file
-	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	    AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	    AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	    if (useMarkets == AQ_NO_DATA) 
 	    {
 		    useMarkets = "";
@@ -1360,7 +1360,7 @@ namespace etrading
 	    {
 		    staticDataSuffix = "." + generateCurveName;
 		    staticDataSuffix.toLower();
-		    LAString tmpCurveName = generateCurveName; 
+		    AQLString tmpCurveName = generateCurveName; 
 		    tmpCurveName.toUpper();
 		    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 		    {
@@ -1370,7 +1370,7 @@ namespace etrading
 			    }
 			    else 
 			    {
-				    useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName;
+				    useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName;
 			    }
 		    }	
 	    }
@@ -1384,7 +1384,7 @@ namespace etrading
 			    }
 			    else 
 			    {
-				    useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
+				    useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
 			    }
 		    }
 	    }
@@ -1399,7 +1399,7 @@ namespace etrading
 	    }
 
 	    // Set curve type
-	    LAString curveType = CURVETYPE_SWAP;
+	    AQLString curveType = CURVETYPE_SWAP;
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + staticDataSuffix, curveType);
 
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_DF2);
@@ -1428,16 +1428,16 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( generateProp, "Invalid CurveProperties or generateProp Conventions" )
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = generateProp[i][1];
+		    AQLString data = generateProp[i][1];
 		    if (key.findString("dfcurvename") == -1) 
 		    {
 			    data.toLower();
 		    }
 		    irStaticData.setStaticData(key, data);
 
-		    LAString tmpProp = generateProp[i][0];
+		    AQLString tmpProp = generateProp[i][0];
 		    tmpProp.toLower();
 		    if (tmpProp == "isswaptenoradjust")
 		    {
@@ -1449,9 +1449,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )	
 	    for(size_t i=0; i<moneyConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
 		    key.toLower(); 
-		    LAString data = moneyConv[i][1];
+		    AQLString data = moneyConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -1459,9 +1459,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( liborConv, "Invalid Libor Fixing and Reset Conventions" )
 	    for(size_t i=0; i<liborConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
 		    key.toLower(); 
-		    LAString data = liborConv[i][1];
+		    AQLString data = liborConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -1469,9 +1469,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions" )
 	    for(size_t i=0; i<swapConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0] + staticDataSuffix;
 		    key.toLower(); 
-		    LAString data = swapConv[i][1];
+		    AQLString data = swapConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -1479,9 +1479,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
 	    for(size_t i=0; i<fraConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
 		    key.toLower(); 
-		    LAString data = fraConv[i][1];
+		    AQLString data = fraConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -1489,9 +1489,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( futureConv, "Invalid Future Conventions" )
 	    for(size_t i=0; i<futureConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.future." + futureConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.future." + futureConv[i][0] + staticDataSuffix;
 		    key.toLower(); 
-		    LAString data = futureConv[i][1];
+		    AQLString data = futureConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -1499,15 +1499,15 @@ namespace etrading
 	    //////////////////modify for aud curve///////////////////////////////////////////////
 
 	    //swap adjust mode
-	    LAString tmpBasisCurveName;
+	    AQLString tmpBasisCurveName;
 	    if (isswaptenoradjust)
 	    {
             AQ_REQUIRE( adjustSwapConv.size() > 0, "Adjustment Basis Swap Conventions Block Missing - Must provide Basis Swap convention settings when isSwapTenorAdjust = True" )
             AQ_REQUIRE( adjustSwapRates.size() > 0, "Adjustment Basis Swap Rates Block Missing - Must provide Basis Swap rates when isSwapTenorAdjust = True" )
         
 		    tmpBasisCurveName = THREESIXBASIS;
-		    LAString adjsuffix_prop;
-		    LAString adjsuffix_data;
+		    AQLString adjsuffix_prop;
+		    AQLString adjsuffix_data;
 		    if (tmpBasisCurveName != STD)
 		    {
 			    adjsuffix_prop = "." + tmpBasisCurveName;
@@ -1519,9 +1519,9 @@ namespace etrading
 		    MLIB_2D_MATRIX_CHECK( adjustSwapConv, "Invalid Basis Swap Adjustment or adjustSwapConv Conventions")
 		    for(size_t i=0; i<adjustSwapConv.size(); i++)
 		    {
-			    LAString key = tmpCurrency + ".sde.yield.basis." + adjustSwapConv[i][0] + adjsuffix_prop;
+			    AQLString key = tmpCurrency + ".sde.yield.basis." + adjustSwapConv[i][0] + adjsuffix_prop;
 			    key.toLower(); 
-			    LAString data = adjustSwapConv[i][1];
+			    AQLString data = adjustSwapConv[i][1];
 			    if (key.findString("discount") == -1 && key.findString("forecast") == -1) 
 			    {
 				    data.toLower();
@@ -1530,28 +1530,28 @@ namespace etrading
 		    }
 	
 		    tmpBasisCurveName.toLower();
-		    LAString basisEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName;
+		    AQLString basisEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName;
 
 		    //swapfile
-		    LAString adjfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
+		    AQLString adjfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
 		    if (adjfile == AQ_NO_DATA)
 		    {
-			    adjfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + adjsuffix_data + LAString(".csv");
+			    adjfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap") + adjsuffix_data + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + adjsuffix_prop, adjfile);
 		    }
 
-		    LAString adjstream;
-		    LAString usegrid = "";
+		    AQLString adjstream;
+		    AQLString usegrid = "";
             MLIB_2D_MATRIX_CHECK( adjustSwapRates, "Invalid Basis Swap Adjustment or adjustSwapRates Rates" )
 		    for(size_t i=0; i<adjustSwapRates.size(); i++)
 		    {
 			    adjstream += adjustSwapRates[i][0];
 			    double adjrate = adjustSwapRates[i][1].getDoubleValue() * 10000.0;
-			    adjstream += "," + LAString(adjrate) + LF;
+			    adjstream += "," + AQLString(adjrate) + LF;
 
 			    if (adjustSwapRates[i].size() == 3)
 			    {
-				    LAString useGridFrag = adjustSwapRates[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = adjustSwapRates[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid += adjustSwapRates[i][0] + ":";
 				    else usegrid += "NONE:";
 			    }
@@ -1569,39 +1569,39 @@ namespace etrading
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_USEGRID + "." + tmpBasisCurveName, usegrid);
 		    }
 
-		    LAString tmpCurveName = tmpBasisCurveName; tmpCurveName.toUpper();
+		    AQLString tmpCurveName = tmpBasisCurveName; tmpCurveName.toUpper();
 		    tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 		    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 		    { 
-			    useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + tmpBasisCurveName;
+			    useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + tmpBasisCurveName;
 		    }
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MARKETTYPE + "." + tmpBasisCurveName, MARKETTYPE_BASIS);
 
 		    //////////////////modify for aud curve///////////////////////////////////////////////
 	    }
 
-	    LAString usegrid_libor = "",usegrid_swap = "",usegrid_fra = "",usegrid_future = "";
+	    AQLString usegrid_libor = "",usegrid_swap = "",usegrid_fra = "",usegrid_future = "";
 
 	    //set Libor Object;
-	    LAString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
+	    AQLString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
 
-	    LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
+	    AQLString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
 	    if (liborfile == AQ_NO_DATA)
 	    {
-		    liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor") + suffix_data + LAString(".csv");
+		    liborfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_libor") + suffix_data + AQLString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
 	    }
-	    LAString liborstream;
+	    AQLString liborstream;
         MLIB_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing Rates" )
 	    for(size_t i=0; i<liborRates.size(); i++)
 	    {
 		    liborstream += liborRates[i][0];
 		    double lrate = liborRates[i][1].getDoubleValue() * 100.0;
-		    liborstream += "," + LAString(lrate) + LF;
+		    liborstream += "," + AQLString(lrate) + LF;
 
 		    if (liborRates[i].size() == 3)
 		    {
-			    LAString useGridFrag = liborRates[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = liborRates[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE") 
 			    {
 				    usegrid_libor += liborRates[i][0] + ":";
@@ -1617,8 +1617,8 @@ namespace etrading
 
 	    //set fwd swap
 	    bool areSwapsForwardStarting = false;
-	    LAString isFwdSwap_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
-	    LADataBool tmpAttrB;
+	    AQLString isFwdSwap_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
+	    AQLDataBool tmpAttrB;
 	    if (isFwdSwap_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFwdSwap_str);
@@ -1626,49 +1626,49 @@ namespace etrading
 	    }
 
 	    //set Swap Object;
-	    LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
+	    AQLString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
 	    if (swapfile == AQ_NO_DATA)
 	    {
-		    swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap") + suffix_data + LAString(".csv");
+		    swapfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_swap") + suffix_data + AQLString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix, swapfile);
 	    }
-	    LAString swapstream;
+	    AQLString swapstream;
         MLIB_2D_MATRIX_CHECK( swapRates, "Invalid Swap Rates" )
 	    for(size_t i=0; i<swapRates.size(); i++)
 	    {
 		    swapstream += swapRates[i][0];
 		    double srate = swapRates[i][1].getDoubleValue() * 100.0;
-		    swapstream += "," + LAString(srate);
+		    swapstream += "," + AQLString(srate);
 		    // for fwd swap
 		    if (areSwapsForwardStarting)
 		    {
 			    if (swapRates[i].size() < 5)
 			    {
-                    throw LACoreInvalidData("FwdSwap size error",__FILE__,__LINE__);
+                    throw AQLCoreInvalidData("FwdSwap size error",__FILE__,__LINE__);
 			    }
 
-			    LAString isDate_str = swapRates[i][2];
+			    AQLString isDate_str = swapRates[i][2];
 			    swapstream += "," + isDate_str.toUpper();
 			    if (isDate_str == "TRUE") 
 			    {
-				    const LADate& startdate = stringToDate(swapRates[i][3]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(swapRates[i][3]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    swapstream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(swapRates[i][4]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(swapRates[i][4]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    swapstream += "," + enddate_str;
 			    }
 			    else
 			    {
-				    LAString startterm_str = swapRates[i][3];
+				    AQLString startterm_str = swapRates[i][3];
 				    swapstream += "," + startterm_str.toUpper();
-				    LAString tenor_str = swapRates[i][4];
+				    AQLString tenor_str = swapRates[i][4];
 				    swapstream += "," + tenor_str.toUpper();
 			    }
 			    // set use grid
 			    if (swapRates[i].size() == 6)
 			    {
-				    LAString useGridFrag = swapRates[i][5]; upper(useGridFrag);
+				    AQLString useGridFrag = swapRates[i][5]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") 
 				    {
 					    usegrid_swap += swapRates[i][0] + ":";
@@ -1682,7 +1682,7 @@ namespace etrading
 		    // set use grid
 		    else if (swapRates[i].size() == 3)
 		    {
-			    LAString useGridFrag = swapRates[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = swapRates[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE") 
 			    {
 				    usegrid_swap += swapRates[i][0] + ":";
@@ -1699,7 +1699,7 @@ namespace etrading
 
 	    //set FRA Object;
 	    bool isFRAUse = false;
-	    LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
+	    AQLString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
 	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
@@ -1713,39 +1713,39 @@ namespace etrading
             AQ_REQUIRE( fraConv.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
             AQ_REQUIRE( fra3mRates.size() > 0 || fra6mRates.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
 
-		    LAString fraFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
+		    AQLString fraFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
 		    if (fraFile == AQ_NO_DATA)
 		    {
-			    fraFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fra") + suffix_data + LAString(".csv");
+			    fraFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_fra") + suffix_data + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix, fraFile);
 		    }
 
 		    if (fra3mRates.size() != 0)
 		    {
-			    LAString fra3mstream = etrading::buildFRAMarketDataFile(fraFile, fra3mRates, areSwapsForwardStarting, usegrid_fra);	
+			    AQLString fra3mstream = etrading::buildFRAMarketDataFile(fraFile, fra3mRates, areSwapsForwardStarting, usegrid_fra);	
 
 			    std::istringstream *pfra3mstream = new std::istringstream(fra3mstream.getCString());
 			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra3mstream);
 		    }
 		    else if (fra6mRates.size() != 0)
 		    {
-			    LAString fra6mstream = etrading::buildFRAMarketDataFile(fraFile, fra6mRates, areSwapsForwardStarting, usegrid_fra);
+			    AQLString fra6mstream = etrading::buildFRAMarketDataFile(fraFile, fra6mRates, areSwapsForwardStarting, usegrid_fra);
 
 			    std::istringstream *pfra6mstream = new std::istringstream(fra6mstream.getCString());
 			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra6mstream);
 		    }
 		    else
 		    {
-			    throw LACoreInvalidData("#Error - No FRA market data is provided",__FILE__,__LINE__);
+			    throw AQLCoreInvalidData("#Error - No FRA market data is provided",__FILE__,__LINE__);
 		    }
 	    }
 
 	    //set future Object;
 	    bool isFutureUse = false;
-	    LAString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + staticDataSuffix);
+	    AQLString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + staticDataSuffix);
 	    if (tmpFutureStr != AQ_NO_DATA)
 	    {
-		    LADataBool tmpAttrB;
+		    AQLDataBool tmpAttrB;
 		    tmpAttrB.convertFromString(tmpFutureStr);
 		    isFutureUse = tmpAttrB.get();
 	    }
@@ -1755,10 +1755,10 @@ namespace etrading
             AQ_REQUIRE( futureConv.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
             AQ_REQUIRE( futureRates.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
 
-		    LAString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix);
+		    AQLString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix);
 		    if (futureFile == AQ_NO_DATA)
 		    {
-			    futureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_future") + suffix_data + LAString(".csv");
+			    futureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_future") + suffix_data + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix, futureFile);
 		    }
 		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(futureFile), createFutureStream(futureRates, usegrid_future));
@@ -1830,22 +1830,22 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_USEGRID + staticDataSuffix, usegrid_future);
 	    }
 
-	    LAString tmpCurveName = generateCurveName; tmpCurveName.toUpper();
+	    AQLString tmpCurveName = generateCurveName; tmpCurveName.toUpper();
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET, tmpCurveName);
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS, useMarkets);
 	}
 
 	// ============================== SWAP CURVE =======================================================================================
-	void LAUpdateStaticDataManager::calibrateSwapCurve( LADataInstance* dataInstance,
-														const LAString& curveID,
-														const LAString& marketName,
-														const LAStringMatrix& generateProp )
+	void LAUpdateStaticDataManager::calibrateSwapCurve( AQLDataInstance* dataInstance,
+														const AQLString& curveID,
+														const AQLString& marketName,
+														const AQLStringMatrix& generateProp )
 	{
 		// 1. Calibrate Curve
 		// *********************
         
 		LabelValueBlock curvePropertiesLVB( generateProp );
-		const LAString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
+		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 		
 		std::unique_ptr<LAObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
 	    objectPoolManager->loadModelDataAndCalibrate(currency, *dataInstance, true, false, curveID, marketName);
@@ -1855,17 +1855,17 @@ namespace etrading
 		// *****************************
 
 		// Get the object pool
-		LAObjectPool &objPool = dataInstance->getObjectPool();
+		AQLObjectPool &objPool = dataInstance->getObjectPool();
 
 	    // Set Curve Build TimeStamp
-        LAString CurveIDTool = curveID + TOOL;
-	    LAString CurveIDManager	= curveID + marketName + MANAGER;
+        AQLString CurveIDTool = curveID + TOOL;
+	    AQLString CurveIDManager	= curveID + marketName + MANAGER;
 
 	    // Curve Object Manager (curve, grids, curve information)
-	    LAObject* laCurveObject = NULL;
+	    AQLObject* laCurveObject = NULL;
 	    if(!objPool.getObject(CurveIDManager).isDefined())
 	    {	
-		    laCurveObject = new LAObject;
+		    laCurveObject = new AQLObject;
 		    objPool.set(CurveIDManager,laCurveObject);
 	    }
 	    else
@@ -1873,30 +1873,30 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    laCurveObject	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",					new LADataString()	).convertFromString(LAString(LATime::now()));
-	    laCurveObject->add(CALIBRATION_DATA_NAME,	new LADataString()	).convertFromString(CurveIDManager);	
+	    laCurveObject->add("Time",					new AQLDataString()	).convertFromString(AQLString(LATime::now()));
+	    laCurveObject->add(CALIBRATION_DATA_NAME,	new AQLDataString()	).convertFromString(CurveIDManager);	
 	}
 
 
 	// ============================== SWAP CURVE =======================================================================================
-	void LAUpdateStaticDataManager::setUpSwapCurve(LADataInstance* dataInstance,
-											        const LAString& curveID,
-											        const LAString& marketName,
-											        const LAStringMatrix& generateProp, 
-											        const LAStringMatrix& moneyConv,
-											        const LAStringMatrix& liborRates, 
-											        const LAStringMatrix& liborConv,
-											        const LAStringMatrix& swapRates, 
-											        const LAStringMatrix& swapConv,
-											        const LAStringMatrix& fra3mRates,
-											        const LAStringMatrix& fra6mRates,
-											        const LAStringMatrix& fraConv,
-											        const LAStringMatrix& futureRates, 
-											        const LAStringMatrix& futureConv,
-											        const LAStringMatrix& adjustSwapConv,
-											        const LAStringMatrix& adjustSwapRates,
-											        const LAString& curveNames,
-											        const LAString& curveName_DF2)
+	void LAUpdateStaticDataManager::setUpSwapCurve(AQLDataInstance* dataInstance,
+											        const AQLString& curveID,
+											        const AQLString& marketName,
+											        const AQLStringMatrix& generateProp, 
+											        const AQLStringMatrix& moneyConv,
+											        const AQLStringMatrix& liborRates, 
+											        const AQLStringMatrix& liborConv,
+											        const AQLStringMatrix& swapRates, 
+											        const AQLStringMatrix& swapConv,
+											        const AQLStringMatrix& fra3mRates,
+											        const AQLStringMatrix& fra6mRates,
+											        const AQLStringMatrix& fraConv,
+											        const AQLStringMatrix& futureRates, 
+											        const AQLStringMatrix& futureConv,
+											        const AQLStringMatrix& adjustSwapConv,
+											        const AQLStringMatrix& adjustSwapRates,
+											        const AQLString& curveNames,
+											        const AQLString& curveName_DF2)
     {
 		// 1. Load Static Data
 		loadStaticDataSwapCurve( dataInstance, curveID, marketName, generateProp, moneyConv, liborRates, liborConv,
@@ -1910,46 +1910,46 @@ namespace etrading
 
 
 	// ============================== BASIS CURVE =======================================================================================
-	void LAUpdateStaticDataManager::loadStaticDataBasisCurve( LADataInstance* dataInstance,
-															  const LAString& curveID,
-															  const LAString& marketName,
-															  const LAStringMatrix& basisRates,
-															  const LAStringMatrix& basisConv,
-															  const LAStringMatrix& fwdFXs,
-															  const LAStringMatrix& fwdConv,
-															  const LAStringMatrix& spotFXs,
-															  const LAStringMatrix& generateProp,
-															  const LAStringMatrix& moneyConv,
-															  const LAString& curveNames,
-															  const LAStringMatrix& fraConv,
-															  const LAStringMatrix& fraRates,
-															  const LAStringMatrix& liborConv,
-															  const LAStringMatrix& liborRates )
+	void LAUpdateStaticDataManager::loadStaticDataBasisCurve( AQLDataInstance* dataInstance,
+															  const AQLString& curveID,
+															  const AQLString& marketName,
+															  const AQLStringMatrix& basisRates,
+															  const AQLStringMatrix& basisConv,
+															  const AQLStringMatrix& fwdFXs,
+															  const AQLStringMatrix& fwdConv,
+															  const AQLStringMatrix& spotFXs,
+															  const AQLStringMatrix& generateProp,
+															  const AQLStringMatrix& moneyConv,
+															  const AQLString& curveNames,
+															  const AQLStringMatrix& fraConv,
+															  const AQLStringMatrix& fraRates,
+															  const AQLStringMatrix& liborConv,
+															  const AQLStringMatrix& liborRates )
 	{
 		LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
-	    LAObjectPool &objPool = dataInstance->getObjectPool();
+	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 
-	    LAStringMatrix tmpInfo = generateProp;
+	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
-	    LADate asofdate = stringToDate( chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1) );
+	    AQLDate asofdate = stringToDate( chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1) );
         LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	    LAString currency;
-	    LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	    AQLString currency;
+	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
 	    {
 
-		    LAObject& yldEntity = objHolder.get();
-		    const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		    AQLObject& yldEntity = objHolder.get();
+		    const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		    if(dh->isDefined() && !dh->isNull())
 		    {
-			    currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			    currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		    }
 		    else
 		    {
-			    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			    {
-				    currency = LAString("DUMMY");
+				    currency = AQLString("DUMMY");
 			    }
 			    else
 			    {
@@ -1959,25 +1959,25 @@ namespace etrading
 	    }
 	    else
 	    {
-		    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		    {
-			    currency = LAString("DUMMY");
+			    currency = AQLString("DUMMY");
 		    }
 		    else
 		    {
 			    currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		    } 	
 	    }
-	    LAString tmpCurrency = currency; tmpCurrency.toLower();
+	    AQLString tmpCurrency = currency; tmpCurrency.toLower();
 	
 	    //set market rate	
 	    if (marketName == "" || marketName == STD) 
 	    {
-		    throw LACoreInvalidData("Do not use STD or blank for basis curve name!",__FILE__,__LINE__);
+		    throw AQLCoreInvalidData("Do not use STD or blank for basis curve name!",__FILE__,__LINE__);
 	    }
 
-	    LAString staticDataSuffix;
-	    LAString suffix_data;
+	    AQLString staticDataSuffix;
+	    AQLString suffix_data;
 	    staticDataSuffix = "." + marketName;
 	    staticDataSuffix.toLower();
 	    suffix_data = "_" + marketName;
@@ -1991,13 +1991,13 @@ namespace etrading
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_OPTIMIZEPERFORMANCE + staticDataSuffix);
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FASTREBUILD + staticDataSuffix);
 
-	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	    AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	    AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	    if (useMarkets == AQ_NO_DATA) 
 	    {
 		    useMarkets = "";
 	    }
-	    LAString tmpCurveName = marketName; 
+	    AQLString tmpCurveName = marketName; 
 	    tmpCurveName.toUpper();
 	
 	    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
@@ -2008,7 +2008,7 @@ namespace etrading
 		    }
 		    else 
 		    {
-			    useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + marketName;
+			    useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + marketName;
 		    }
 	    }
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS, useMarkets);
@@ -2022,16 +2022,16 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + staticDataSuffix, curveNames);
 	    }
 
-	    LAString curveType = CURVETYPE_BASIS;
+	    AQLString curveType = CURVETYPE_BASIS;
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + staticDataSuffix, curveType);
 	
 	    // By default, set the "isfwdinter" property using false.
 	    // If the user has specified the property in the basisConv info, allow the user setting to override
 	    // this default in the following "basis info" code block.
 	    {
-		    LAString key = tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISFWDINTER + staticDataSuffix;
+		    AQLString key = tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISFWDINTER + staticDataSuffix;
 		    key.toLower();
-		    LAString data = "false";
+		    AQLString data = "false";
 		    irStaticData.setStaticData( key, data );
 	    }
 
@@ -2039,9 +2039,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( basisConv, "Invalid Basis Conventions" )
         for(size_t i=0; i<basisConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.basis." + basisConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.basis." + basisConv[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = basisConv[i][1];
+		    AQLString data = basisConv[i][1];
 		    if (key.findString("discount") == -1 && key.findString("forecast") == -1)
 		    {
 			    data.toLower();
@@ -2052,9 +2052,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties" )
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = generateProp[i][1];
+		    AQLString data = generateProp[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key,data);
 	    }
@@ -2062,9 +2062,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )
 	    for(size_t i=0; i<moneyConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = moneyConv[i][1];
+		    AQLString data = moneyConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key,data);
 	    }
@@ -2072,9 +2072,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
 	    for(size_t i=0; i<fraConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
 		    key.toLower(); 
-		    LAString data = fraConv[i][1];
+		    AQLString data = fraConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -2082,9 +2082,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( fwdConv, "Invalid Forward FX Conventions" )
 	    for(size_t i=0; i<fwdConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.basis.fwdfx." + fwdConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.basis.fwdfx." + fwdConv[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = fwdConv[i][1];
+		    AQLString data = fwdConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key,data);
 	    }
@@ -2092,39 +2092,39 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( liborConv, "Invalid Libor Conventions" )
 	    for(size_t i=0; i<liborConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
 		    key.toLower(); 
-		    LAString data = liborConv[i][1];
+		    AQLString data = liborConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
 	
 	    //set Libor data file
-	    LAString liborUseGrid = "";
-	    LAString isLiborProvided_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FIXINGSOURCE + staticDataSuffix);
+	    AQLString liborUseGrid = "";
+	    AQLString isLiborProvided_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FIXINGSOURCE + staticDataSuffix);
 	    if (isLiborProvided_str != AQ_NO_DATA)
 	    {
 		    if (isLiborProvided_str.toUpper() == ITSELF)
 		    {
-			    LAString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
+			    AQLString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
 
-			    LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
+			    AQLString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
 			    if (liborfile == AQ_NO_DATA)
 			    {
-				    liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor") + suffix_data + LAString(".csv");
+				    liborfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_libor") + suffix_data + AQLString(".csv");
 				    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
 			    }
-			    LAString liborstream;
+			    AQLString liborstream;
                 MLIB_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing or Reset Rates" )
 			    for(size_t i=0; i<liborRates.size(); i++)
 			    {
 				    liborstream += liborRates[i][0];
 				    double lrate = liborRates[i][1].getDoubleValue() * 100.0;
-				    liborstream += "," + LAString(lrate) + LF;
+				    liborstream += "," + AQLString(lrate) + LF;
 
 				    if (liborRates[i].size() == 3)
 				    {
-					    LAString useGridFrag = liborRates[i][2]; upper(useGridFrag);
+					    AQLString useGridFrag = liborRates[i][2]; upper(useGridFrag);
 					    if (useGridFrag == "TRUE") 
 					    {
 						    liborUseGrid += liborRates[i][0] + ":";
@@ -2142,9 +2142,9 @@ namespace etrading
 
 	    //set FRA file
 	    bool isFRAUse = false;
-	    LAString fraUseGrid = "";
-	    LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
-	    LADataBool tmpAttrB;
+	    AQLString fraUseGrid = "";
+	    AQLString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
+	    AQLDataBool tmpAttrB;
 	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
@@ -2159,78 +2159,78 @@ namespace etrading
 
 		    //set fwd swap
 		    bool areSwapsForwardStarting = false;
-		    LAString isFwdSwap_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
+		    AQLString isFwdSwap_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
 		    if (isFwdSwap_str != AQ_NO_DATA)
 		    {
 			    tmpAttrB.convertFromString(isFwdSwap_str);
 			    areSwapsForwardStarting = tmpAttrB.get();
 		    }
 
-		    LAString fraFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
+		    AQLString fraFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
 		    if (fraFile == AQ_NO_DATA)
 		    {
-			    fraFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fra") + suffix_data + LAString(".csv");
+			    fraFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_fra") + suffix_data + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix, fraFile);
 		    }
 		
-		    LAString fraStream = etrading::buildFRAMarketDataFile(fraFile, fraRates, areSwapsForwardStarting, fraUseGrid);	
+		    AQLString fraStream = etrading::buildFRAMarketDataFile(fraFile, fraRates, areSwapsForwardStarting, fraUseGrid);	
 		    std::istringstream *pfraStream = new std::istringstream(fraStream.getCString());
 		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfraStream);
 	    }
 
 	    //set fwd basis
 	    bool isFwdBasis = false;
-	    LAString isFwdBasis_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDBASIS + staticDataSuffix);
+	    AQLString isFwdBasis_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDBASIS + staticDataSuffix);
 	    if (isFwdBasis_str.toUpper() == "TRUE")
 	    {
 		    isFwdBasis = true;
 	    }
 
 	    //basis file
-	    LAString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix);
+	    AQLString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix);
 	    if (basisfile == AQ_NO_DATA)
 	    {
-		    basisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + suffix_data + LAString(".csv");
+		    basisfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap") + suffix_data + AQLString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix, basisfile);
 	    }
-	    LAString basisstream;
-	    LAString usegrid = "";
+	    AQLString basisstream;
+	    AQLString usegrid = "";
 	    MLIB_2D_MATRIX_CHECK( basisRates, "Invalid Basis Rates" )
 	    for (unsigned int i = 0; i < basisRates.size();i++)
 	    {
 		    basisstream += basisRates[i][0];
 		    const double brate = basisRates[i][1].getDoubleValue() * 10000.0;
-		    basisstream += "," + LAString(brate);
+		    basisstream += "," + AQLString(brate);
 		    // for fwd basis
 		    if (isFwdBasis)
 		    {
 			    if (basisRates[i].size() < 5)
 			    {
-                    throw LACoreInvalidData("#Error: Invalid Tenor Basis market data, wrong number of columns. Market Data should consist of 5 columns specifiying forward dates when the 'isFwdBasis' flag is set to true.",__FILE__,__LINE__);
+                    throw AQLCoreInvalidData("#Error: Invalid Tenor Basis market data, wrong number of columns. Market Data should consist of 5 columns specifiying forward dates when the 'isFwdBasis' flag is set to true.",__FILE__,__LINE__);
 			    }
 
-			    LAString isDate_str = basisRates[i][2];
+			    AQLString isDate_str = basisRates[i][2];
 			    basisstream += "," + isDate_str.toUpper();
 			    if (isDate_str == "TRUE") 
 			    {
-				    const LADate& startdate = stringToDate(basisRates[i][3]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(basisRates[i][3]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    basisstream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(basisRates[i][4]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(basisRates[i][4]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    basisstream += "," + enddate_str;
 			    }
 			    else
 			    {
-				    LAString startterm_str = basisRates[i][3];
+				    AQLString startterm_str = basisRates[i][3];
 				    basisstream += "," + startterm_str.toUpper();
-				    LAString tenor_str = basisRates[i][4];
+				    AQLString tenor_str = basisRates[i][4];
 				    basisstream += "," + tenor_str.toUpper();
 			    }
 			    // set use grid
 			    if (basisRates[i].size() == 6)
 			    {
-				    LAString useGridFrag = basisRates[i][5]; upper(useGridFrag);
+				    AQLString useGridFrag = basisRates[i][5]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") 
 				    {
 					    usegrid += basisRates[i][0] + ":";
@@ -2243,7 +2243,7 @@ namespace etrading
 		    }
 		    else if (basisRates[i].size() == 3)
 		    {
-			    LAString useGridFrag = basisRates[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = basisRates[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE") 
 			    {
 				    usegrid += basisRates[i][0] + ":";
@@ -2259,19 +2259,19 @@ namespace etrading
 	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(basisfile), pbasisstream);
 
 	    //fwdfx file
-	    LAString fwdfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + staticDataSuffix);
-	    LAString fwdstream;
-	    LAString fwdusegrid = "";
+	    AQLString fwdfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + staticDataSuffix);
+	    AQLString fwdstream;
+	    AQLString fwdusegrid = "";
 	    MLIB_2D_MATRIX_CHECK( fwdFXs, "Invalid Forward FXs" )
 	    for (unsigned int i = 0; i < fwdFXs.size();i++)
 	    {
 		    fwdstream += fwdFXs[i][0];
 		    const double fwdfx = fwdFXs[i][1].getDoubleValue();
-		    fwdstream += "," + LAString(fwdfx) + LF;
+		    fwdstream += "," + AQLString(fwdfx) + LF;
 
 		    if (fwdFXs[i].size() == 3)
 		    {
-			    LAString useGridFrag = fwdFXs[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = fwdFXs[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE") 
 			    {
 				    fwdusegrid += fwdFXs[i][0] + ":";
@@ -2355,7 +2355,7 @@ namespace etrading
 
 	    //set fxentity
 	    LAMathFXEntity* pFwd = NULL;
-	    LAObjectHolder ehfx = objPool.getObject(FORWARDFX, ENCHKTYPE_NOCHECK);
+	    AQLObjectHolder ehfx = objPool.getObject(FORWARDFX, ENCHKTYPE_NOCHECK);
 	    if (!ehfx.isDefined())
 	    {
 		    pFwd = new LAMathFXEntity(dataInstance);
@@ -2370,20 +2370,20 @@ namespace etrading
 	    pFwd->getFXType().convertFromString("FORWARDRATE");
 	    LACoreDataService::setContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD, FORWARDFX);
 	    const int ccySize = spotFXs.size();
-	    LAStringVector ccys(ccySize);
+	    AQLStringVector ccys(ccySize);
 	    DoubleVector spotrates(ccySize);
-	    LAString unitccy = irStaticData.getStaticData(KEY_FXSPOTRATES_UNITCCY);
+	    AQLString unitccy = irStaticData.getStaticData(KEY_FXSPOTRATES_UNITCCY);
 	    unitccy.toUpper();
 	    for(unsigned int i = 0; i < (size_t)ccySize; ++i)
 	    {
             if (spotFXs[i].size() < 3)
 		    {
-			    throw LACoreInvalidData("spotrate file size error", __FILE__, __LINE__);
+			    throw AQLCoreInvalidData("spotrate file size error", __FILE__, __LINE__);
 		    }
-		    LAString tmpccy = spotFXs[i][0];
+		    AQLString tmpccy = spotFXs[i][0];
 		    /*if (tmpccy.toUpper() != unitccy)
 		    {
-			    throw LACoreInvalidData("The first column of a spot rate file must be unit currency", __FILE__, __LINE__);
+			    throw AQLCoreInvalidData("The first column of a spot rate file must be unit currency", __FILE__, __LINE__);
 		    }*/
 		    ccys[i] = spotFXs[i][1];
 		    ccys[i].toUpper();
@@ -2399,16 +2399,16 @@ namespace etrading
 	
 
 	// ============================== BASIS CURVE =======================================================================================
-	void LAUpdateStaticDataManager::calibrateBasisCurve( LADataInstance* dataInstance,
-														 const LAString& curveID,
-														 const LAString& marketName,
-														 const LAStringMatrix& generateProp )
+	void LAUpdateStaticDataManager::calibrateBasisCurve( AQLDataInstance* dataInstance,
+														 const AQLString& curveID,
+														 const AQLString& marketName,
+														 const AQLStringMatrix& generateProp )
 	{
 		// 1. Curve Calibration
 		// ***********************
 	    
 		LabelValueBlock curvePropertiesLVB( generateProp );
-		const LAString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
+		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 
 		std::unique_ptr<LAObjectPoolBase> objectPoolManager( new UpdateObjectPoolForSDEsAndCurves(currency) );
 	    objectPoolManager->loadModelDataAndCalibrate(currency, *dataInstance, true, false, curveID, marketName );
@@ -2418,17 +2418,17 @@ namespace etrading
 		// ****************************
 
 		// Get the object pool
-		LAObjectPool &objPool = dataInstance->getObjectPool();
+		AQLObjectPool &objPool = dataInstance->getObjectPool();
 
 		// Set Curve TimeStamp
-	    LAString	CurveIDTool			= curveID + TOOL;
-	    LAString	CurveIDManager		= curveID + marketName + MANAGER;
+	    AQLString	CurveIDTool			= curveID + TOOL;
+	    AQLString	CurveIDManager		= curveID + marketName + MANAGER;
 	    
         // Curve Object Build Manager (curve, grids, curve information)
-	    LAObject* laCurveObject = NULL;
+	    AQLObject* laCurveObject = NULL;
 	    if(!objPool.getObject(CurveIDManager).isDefined())
 	    {	
-		    laCurveObject = new LAObject;
+		    laCurveObject = new AQLObject;
 		    objPool.set(CurveIDManager,laCurveObject);
 	    }
 	    else
@@ -2436,28 +2436,28 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    laCurveObject = &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",					new LADataString()	).convertFromString(LAString(LATime::now()));
-	    laCurveObject->add(CALIBRATION_DATA_NAME,	new LADataString()	).convertFromString(CurveIDManager);
+	    laCurveObject->add("Time",					new AQLDataString()	).convertFromString(AQLString(LATime::now()));
+	    laCurveObject->add(CALIBRATION_DATA_NAME,	new AQLDataString()	).convertFromString(CurveIDManager);
 
 	}
 
 
 	// ============================== BASIS CURVE =======================================================================================
-	void LAUpdateStaticDataManager::setUpBasisCurve( LADataInstance* dataInstance,
-													 const LAString& curveID, 
-													 const LAString& marketName, 
-													 const LAStringMatrix& basisRates, 
-													 const LAStringMatrix& basisConv,
-													 const LAStringMatrix& fwdFXs, 
-													 const LAStringMatrix& fwdConv,
-													 const LAStringMatrix& spotFXs, 
-													 const LAStringMatrix& generateProp,
-													 const LAStringMatrix& moneyConv,
-													 const LAString& curveNames,
-													 const LAStringMatrix& fraConv,
-													 const LAStringMatrix& fraRates,
-													 const LAStringMatrix& liborConv,
-													 const LAStringMatrix& liborRates)
+	void LAUpdateStaticDataManager::setUpBasisCurve( AQLDataInstance* dataInstance,
+													 const AQLString& curveID, 
+													 const AQLString& marketName, 
+													 const AQLStringMatrix& basisRates, 
+													 const AQLStringMatrix& basisConv,
+													 const AQLStringMatrix& fwdFXs, 
+													 const AQLStringMatrix& fwdConv,
+													 const AQLStringMatrix& spotFXs, 
+													 const AQLStringMatrix& generateProp,
+													 const AQLStringMatrix& moneyConv,
+													 const AQLString& curveNames,
+													 const AQLStringMatrix& fraConv,
+													 const AQLStringMatrix& fraRates,
+													 const AQLStringMatrix& liborConv,
+													 const AQLStringMatrix& liborRates)
     {
 		// 1. Load Static Data
 		loadStaticDataBasisCurve( dataInstance, curveID, marketName, basisRates, basisConv, fwdFXs, fwdConv,
@@ -2470,37 +2470,37 @@ namespace etrading
 
 
 	// =============================== FX FORWARD CURVE ======================================================================================
-	void LAUpdateStaticDataManager::loadStaticDataFwdFXConstantCurve(LADataInstance* dataInstance,
-																	 const LAString& curveID,
-																	 const LAString& marketName,
-																	 const LAStringMatrix& fwdfxconstConv,
-																	 const LAStringMatrix& generateProp,
-																	 const LAString& curveNames)
+	void LAUpdateStaticDataManager::loadStaticDataFwdFXConstantCurve(AQLDataInstance* dataInstance,
+																	 const AQLString& curveID,
+																	 const AQLString& marketName,
+																	 const AQLStringMatrix& fwdfxconstConv,
+																	 const AQLStringMatrix& generateProp,
+																	 const AQLString& curveNames)
 	{
 		LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 		
-	    LAObjectPool &objPool = dataInstance->getObjectPool();
+	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 
-	    LAStringMatrix tmpInfo = generateProp;
+	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
-	    LADate asofdate = stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	    AQLDate asofdate = stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
         LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	    LAString currency;
-	    LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	    AQLString currency;
+	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
 	    {
 
-		    LAObject& yldEntity = objHolder.get();
-		    const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		    AQLObject& yldEntity = objHolder.get();
+		    const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		    if(dh->isDefined() && !dh->isNull())
 		    {
-			    currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			    currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		    }
 		    else
 		    {
-			    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			    {
-				    currency = LAString("DUMMY");
+				    currency = AQLString("DUMMY");
 			    }
 			    else
 			    {
@@ -2510,29 +2510,29 @@ namespace etrading
 	    }
 	    else
 	    {
-		    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		    {
-			    currency = LAString("DUMMY");
+			    currency = AQLString("DUMMY");
 		    }
 		    else
 		    {
 			    currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		    } 	
 	    }
-	    LAString tmpCurrency = currency; tmpCurrency.toLower();
+	    AQLString tmpCurrency = currency; tmpCurrency.toLower();
 	
 	    //set market rate	
 	    if (marketName == "" || marketName == STD) 
-		    throw LACoreInvalidData("Do not use STD or blank for basis curve name!",__FILE__,__LINE__);
+		    throw AQLCoreInvalidData("Do not use STD or blank for basis curve name!",__FILE__,__LINE__);
 
-	    LAString staticDataSuffix;
-	    LAString suffix_data;
+	    AQLString staticDataSuffix;
+	    AQLString suffix_data;
 	    staticDataSuffix = "." + marketName;
 	    staticDataSuffix.toLower();
 	    suffix_data = "_" + marketName;
 	    suffix_data.toLower();
 
-	    LAString tmpCurveName = marketName; tmpCurveName.toUpper();
+	    AQLString tmpCurveName = marketName; tmpCurveName.toUpper();
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST, "TRUE");
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST + staticDataSuffix, "TRUE");
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FWDFXCONST_USEMARKET, marketName);
@@ -2547,25 +2547,25 @@ namespace etrading
 	    }
 	
 	    // Set curve type
-	    LAString curveType = CURVETYPE_FWDFXCONST;
+	    AQLString curveType = CURVETYPE_FWDFXCONST;
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + staticDataSuffix, curveType);
 
 	    // By default, set the "isfwdinter" property using false.
 	    // If the user has specified the property in the fwdfxconstConv info, allow the user setting to override
 	    // this default in the following "basis info" code block.
 	    {
-		    LAString key = tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISFWDINTER + staticDataSuffix;
+		    AQLString key = tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ISFWDINTER + staticDataSuffix;
 		    key.toLower();
-		    LAString data = "false";
+		    AQLString data = "false";
 		    irStaticData.setStaticData( key, data );
 	    }
 	    //basis info
 	    MLIB_2D_MATRIX_CHECK( fwdfxconstConv, "Invalid Forward FX Const Conventions" )
 	    for(size_t i=0; i<fwdfxconstConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.basis." + fwdfxconstConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.basis." + fwdfxconstConv[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = fwdfxconstConv[i][1];
+		    AQLString data = fwdfxconstConv[i][1];
 		    if (key.findString("discount") == -1 && key.findString("forecast") == -1) data.toLower();
 		    irStaticData.setStaticData(key,data);
 	    }
@@ -2573,9 +2573,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = generateProp[i][1];
+		    AQLString data = generateProp[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key,data);
 	    }
@@ -2589,16 +2589,16 @@ namespace etrading
 
 	
 	// =============================== FX FORWARD CURVE ======================================================================================
-	void LAUpdateStaticDataManager::calibrateFwdFXConstantCurve( LADataInstance* dataInstance,
-														         const LAString& curveID,
-														         const LAString& marketName,
-														         const LAStringMatrix& generateProp )
+	void LAUpdateStaticDataManager::calibrateFwdFXConstantCurve( AQLDataInstance* dataInstance,
+														         const AQLString& curveID,
+														         const AQLString& marketName,
+														         const AQLStringMatrix& generateProp )
 	{
 		// 1. Curve Calibration
 		// ***********************
 
 		LabelValueBlock curvePropertiesLVB( generateProp );
-		const LAString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
+		const AQLString currency = curvePropertiesLVB.getCompulsoryValueAsLAString( IRS_KEY::CURRENCY, "CurvePropertiesLVB" );
 
 		LAUpdateCurveObject *entityPoolManager = new UpdateObjectPoolForSDEsAndCurves(currency);
 	    entityPoolManager->loadFwdFXConstCurveDataAndCalibrate(currency, *dataInstance, curveID, marketName);
@@ -2609,17 +2609,17 @@ namespace etrading
 		// *****************************
 	    
 		// Get the object pool
-		LAObjectPool &objPool = dataInstance->getObjectPool();
+		AQLObjectPool &objPool = dataInstance->getObjectPool();
 
 		//ylddata
-	    LAString	CurveIDTool			= curveID + TOOL;
-	    LAString	CurveIDManager		= curveID + marketName + MANAGER;
+	    AQLString	CurveIDTool			= curveID + TOOL;
+	    AQLString	CurveIDManager		= curveID + marketName + MANAGER;
 	    
 		//curve entities manager (curve, grids, curveinformation entities)
-	    LAObject* mae = NULL;
+	    AQLObject* mae = NULL;
 	    if(!objPool.getObject(CurveIDManager).isDefined())
 	    {	
-		    mae = new LAObject;
+		    mae = new AQLObject;
 		    objPool.set(CurveIDManager,mae);
 	    }
 	    else
@@ -2627,18 +2627,18 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    mae	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    mae->add("Time",				new LADataString()	).convertFromString(LAString(LATime::now()));
-	    mae->add(CALIBRATION_DATA_NAME,	new LADataString()	).convertFromString(CurveIDManager);
+	    mae->add("Time",				new AQLDataString()	).convertFromString(AQLString(LATime::now()));
+	    mae->add(CALIBRATION_DATA_NAME,	new AQLDataString()	).convertFromString(CurveIDManager);
 	}
 
 
 	// =============================== FX FORWARD CURVE ======================================================================================
-    void LAUpdateStaticDataManager::setUpFwdFXConstantCurve(LADataInstance* dataInstance,
-													        const LAString& curveID, 
-													        const LAString& marketName, 
-													        const LAStringMatrix& fwdfxconstConv,
-													        const LAStringMatrix& generateProp,
-													        const LAString& curveNames)
+    void LAUpdateStaticDataManager::setUpFwdFXConstantCurve(AQLDataInstance* dataInstance,
+													        const AQLString& curveID, 
+													        const AQLString& marketName, 
+													        const AQLStringMatrix& fwdfxconstConv,
+													        const AQLStringMatrix& generateProp,
+													        const AQLString& curveNames)
     {
 		// 1. Load Static Data
 		loadStaticDataFwdFXConstantCurve(dataInstance, curveID, marketName, fwdfxconstConv, generateProp, curveNames);
@@ -2649,32 +2649,32 @@ namespace etrading
 
 
     void LAUpdateStaticDataManager::populateStaticDataManagerForSwapCurve(LAStaticData &irStaticData,
-									    const LAString& useMarkets,
-									    const LAString& currency,
-									    const LAString& curveNames_swap,
-									    const LAString& marketName_swap,
-									    const LAString& generateCurveName_swap,
-									    const LAStringMatrix& generateProp_swap,
-									    const LAStringMatrix& moneyConv_swap,
-									    const LAStringMatrix& liborRates_swap,
-									    const LAStringMatrix& liborConv_swap,
-									    const LAStringMatrix& swapRates_swap,
-									    const LAStringMatrix& swapConv_swap,
-									    const LAStringMatrix& fra3mRates_swap,
-									    const LAStringMatrix& fra6mRates_swap,
-									    const LAStringMatrix& fraConv_swap,
-									    const LAStringMatrix& futureRates_swap,
-									    const LAStringMatrix& futureConv_swap,
-									    const LAStringMatrix& adjustSwapConv_swap,
-									    const LAStringMatrix& adjustSwapRates_swap)
+									    const AQLString& useMarkets,
+									    const AQLString& currency,
+									    const AQLString& curveNames_swap,
+									    const AQLString& marketName_swap,
+									    const AQLString& generateCurveName_swap,
+									    const AQLStringMatrix& generateProp_swap,
+									    const AQLStringMatrix& moneyConv_swap,
+									    const AQLStringMatrix& liborRates_swap,
+									    const AQLStringMatrix& liborConv_swap,
+									    const AQLStringMatrix& swapRates_swap,
+									    const AQLStringMatrix& swapConv_swap,
+									    const AQLStringMatrix& fra3mRates_swap,
+									    const AQLStringMatrix& fra6mRates_swap,
+									    const AQLStringMatrix& fraConv_swap,
+									    const AQLStringMatrix& futureRates_swap,
+									    const AQLStringMatrix& futureConv_swap,
+									    const AQLStringMatrix& adjustSwapConv_swap,
+									    const AQLStringMatrix& adjustSwapRates_swap)
     {
 
-	    LAString suffix_prop_swap("");
-	    LAString suffix_data_swap("");
+	    AQLString suffix_prop_swap("");
+	    AQLString suffix_data_swap("");
 
 	    // If the user-given market name is not STD, concatenate it to useMarkets 
-	    LAString useMarkets_swap = useMarkets;
-	    LAStringVector useMarkets_vector = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	    AQLString useMarkets_swap = useMarkets;
+	    AQLStringVector useMarkets_vector = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	    if (generateCurveName_swap != STD)
 	    {
 		    suffix_data_swap = "_" + generateCurveName_swap;
@@ -2682,7 +2682,7 @@ namespace etrading
 		    suffix_prop_swap = "." + generateCurveName_swap;
 		    suffix_prop_swap.toLower();
 
-		    LAString tmpCurveName = generateCurveName_swap;
+		    AQLString tmpCurveName = generateCurveName_swap;
 		    tmpCurveName.toUpper();
 		    if (useMarkets_vector.end() == std::find(useMarkets_vector.begin(), useMarkets_vector.end(), tmpCurveName))
 		    {
@@ -2692,7 +2692,7 @@ namespace etrading
 			    }
 			    else
 			    {
-				    useMarkets_swap += LAString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName_swap;
+				    useMarkets_swap += AQLString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName_swap;
 			    }
 		    }
 	    }
@@ -2706,7 +2706,7 @@ namespace etrading
 			    }
 			    else
 			    {
-				    useMarkets_swap += LAString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
+				    useMarkets_swap += AQLString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
 			    }
 		    }
 	    }
@@ -2718,17 +2718,17 @@ namespace etrading
 	    else
 	    {
 		    // New code for dual bootstrapping - ensure the implicit curve name is one of the curve index names
-		    LAString indexNames = curveNames_swap;
+		    AQLString indexNames = curveNames_swap;
 		    if (indexNames.findString(marketName_swap) == -1)
 		    {
-			    indexNames = marketName_swap + LAString(MULTI_STATIC_DATA_DELIMITER) + indexNames;
+			    indexNames = marketName_swap + AQLString(MULTI_STATIC_DATA_DELIMITER) + indexNames;
 		    }
 
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + suffix_prop_swap, indexNames);
 	    }
 
 	    // Set curve type
-	    LAString curveType = CURVETYPE_SWAP;
+	    AQLString curveType = CURVETYPE_SWAP;
 	    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffix_prop_swap, curveType);
 
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_ISARBFREE);
@@ -2747,16 +2747,16 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( generateProp_swap, "Invalid Curve Properties or GenerateProp Conventions" )
 	    for (size_t i = 0; i<generateProp_swap.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.generator." + generateProp_swap[i][0] + suffix_prop_swap;
+		    AQLString key = currency + ".sde.yield.generator." + generateProp_swap[i][0] + suffix_prop_swap;
 		    key.toLower();
-		    LAString data = generateProp_swap[i][1];
+		    AQLString data = generateProp_swap[i][1];
 		    if (key.findString("dfcurvename") == -1)
 		    {
 			    data.toLower();
 		    }
 		    irStaticData.setStaticData(key, data);
 
-		    LAString tmpProp = generateProp_swap[i][0];
+		    AQLString tmpProp = generateProp_swap[i][0];
 		    tmpProp.toLower();
 		    if (tmpProp == "isswaptenoradjust")
 		    {
@@ -2768,9 +2768,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( moneyConv_swap, "Invalid Money Market Conventions" )
 	    for (size_t i = 0; i<moneyConv_swap.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.moneymarket." + moneyConv_swap[i][0] + suffix_prop_swap;
+		    AQLString key = currency + ".sde.yield.moneymarket." + moneyConv_swap[i][0] + suffix_prop_swap;
 		    key.toLower();
-		    LAString data = moneyConv_swap[i][1];
+		    AQLString data = moneyConv_swap[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -2778,9 +2778,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( liborConv_swap, "Invalid Libor Fixing Conventions" )
 	    for (size_t i = 0; i<liborConv_swap.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.libor." + liborConv_swap[i][0] + suffix_prop_swap;
+		    AQLString key = currency + ".sde.yield.libor." + liborConv_swap[i][0] + suffix_prop_swap;
 		    key.toLower();
-		    LAString data = liborConv_swap[i][1];
+		    AQLString data = liborConv_swap[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -2788,9 +2788,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( swapConv_swap, "Invalid Swap Conventions" )
 	    for (size_t i = 0; i<swapConv_swap.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.swap." + swapConv_swap[i][0] + suffix_prop_swap;
+		    AQLString key = currency + ".sde.yield.swap." + swapConv_swap[i][0] + suffix_prop_swap;
 		    key.toLower();
-		    LAString data = swapConv_swap[i][1];
+		    AQLString data = swapConv_swap[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -2798,9 +2798,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( fraConv_swap, "Invalid FRA Conventions" )
 	    for (size_t i = 0; i<fraConv_swap.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.fra." + fraConv_swap[i][0] + suffix_prop_swap;
+		    AQLString key = currency + ".sde.yield.fra." + fraConv_swap[i][0] + suffix_prop_swap;
 		    key.toLower();
-		    LAString data = fraConv_swap[i][1];
+		    AQLString data = fraConv_swap[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -2808,23 +2808,23 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( futureConv_swap, "Invalid Future Conventions" )
 	    for (size_t i = 0; i<futureConv_swap.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.future." + futureConv_swap[i][0] + suffix_prop_swap;
+		    AQLString key = currency + ".sde.yield.future." + futureConv_swap[i][0] + suffix_prop_swap;
 		    key.toLower();
-		    LAString data = futureConv_swap[i][1];
+		    AQLString data = futureConv_swap[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
 
 	    //swap adjust mode
-	    LAString tmpBasisCurveName;
+	    AQLString tmpBasisCurveName;
 	    if (isswaptenoradjust)
 	    {
             AQ_REQUIRE( adjustSwapConv_swap.size() > 0, "Adjustment Basis Swap Conventions Block Missing - Must provide Basis Swap convention settings when isSwapTenorAdjust = True" )
             AQ_REQUIRE( adjustSwapRates_swap.size() > 0, "Adjustment Basis Swap Rates Block Missing - Must provide Basis Swap rates when isSwapTenorAdjust = True" )
 
 		    tmpBasisCurveName = THREESIXBASIS;
-		    LAString adjsuffix_prop;
-		    LAString adjsuffix_data;
+		    AQLString adjsuffix_prop;
+		    AQLString adjsuffix_data;
 		    if (tmpBasisCurveName != STD)
 		    {
 			    adjsuffix_prop = "." + tmpBasisCurveName;
@@ -2836,9 +2836,9 @@ namespace etrading
 		    MLIB_2D_MATRIX_CHECK( adjustSwapConv_swap, "Invalid Future Conventions" )
 		    for (size_t i = 0; i<adjustSwapConv_swap.size(); i++)
 		    {
-			    LAString key = currency + ".sde.yield.basis." + adjustSwapConv_swap[i][0] + adjsuffix_prop;
+			    AQLString key = currency + ".sde.yield.basis." + adjustSwapConv_swap[i][0] + adjsuffix_prop;
 			    key.toLower();
-			    LAString data = adjustSwapConv_swap[i][1];
+			    AQLString data = adjustSwapConv_swap[i][1];
 			    if (key.findString("discount") == -1 && key.findString("forecast") == -1)
 			    {
 				    data.toLower();
@@ -2847,28 +2847,28 @@ namespace etrading
 		    }
 
 		    tmpBasisCurveName.toLower();
-		    LAString basisEntityName = currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName;
+		    AQLString basisEntityName = currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName;
 
 		    //swapfile
-		    LAString adjfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
+		    AQLString adjfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
 		    if (adjfile == AQ_NO_DATA)
 		    {
-			    adjfile = LAString("data/in/") + currency + LAString("_yield_basisswap") + adjsuffix_data + LAString(".csv");
+			    adjfile = AQLString("data/in/") + currency + AQLString("_yield_basisswap") + adjsuffix_data + AQLString(".csv");
 			    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + adjsuffix_prop, adjfile);
 		    }
 
-		    LAString adjstream;
-		    LAString usegrid = "";
+		    AQLString adjstream;
+		    AQLString usegrid = "";
 		    MLIB_2D_MATRIX_CHECK( adjustSwapRates_swap, "Invalid Basis Swap Rates / AdjustSwapRates Conventions" )
 		    for (size_t i = 0; i<adjustSwapRates_swap.size(); i++)
 		    {
 			    adjstream += adjustSwapRates_swap[i][0];
 			    double adjrate = adjustSwapRates_swap[i][1].getDoubleValue() * 10000.0;
-			    adjstream += "," + LAString(adjrate) + LF;
+			    adjstream += "," + AQLString(adjrate) + LF;
 
 			    if (adjustSwapRates_swap[i].size() == 3)
 			    {
-				    LAString useGridFrag = adjustSwapRates_swap[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = adjustSwapRates_swap[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid += adjustSwapRates_swap[i][0] + ":";
 				    else usegrid += "NONE:";
 			    }
@@ -2886,37 +2886,37 @@ namespace etrading
 			    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_USEGRID + "." + tmpBasisCurveName, usegrid);
 		    }
 
-		    LAString tmpCurveName = tmpBasisCurveName; tmpCurveName.toUpper();
+		    AQLString tmpCurveName = tmpBasisCurveName; tmpCurveName.toUpper();
 		    useMarkets_vector = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 		    if (useMarkets_vector.end() == std::find(useMarkets_vector.begin(), useMarkets_vector.end(), tmpCurveName))
 		    {
-			    useMarkets_swap += LAString(MULTI_STATIC_DATA_DELIMITER) + tmpBasisCurveName;
+			    useMarkets_swap += AQLString(MULTI_STATIC_DATA_DELIMITER) + tmpBasisCurveName;
 		    }
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_MARKETTYPE + "." + tmpBasisCurveName, MARKETTYPE_BASIS);
 	    }
 
-	    LAString usegrid_libor = "", usegrid_swap = "", usegrid_fra = "", usegrid_future = "";
+	    AQLString usegrid_libor = "", usegrid_swap = "", usegrid_fra = "", usegrid_future = "";
 
 	    //set Libor Object;
-	    LAString liborEntityName = currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap;
+	    AQLString liborEntityName = currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap;
 
-	    LAString liborfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap);
+	    AQLString liborfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap);
 	    if (liborfile == AQ_NO_DATA)
 	    {
-		    liborfile = LAString("data/in/") + currency + LAString("_yield_libor") + suffix_data_swap + LAString(".csv");
+		    liborfile = AQLString("data/in/") + currency + AQLString("_yield_libor") + suffix_data_swap + AQLString(".csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap, liborfile);
 	    }
-	    LAString liborstream;
+	    AQLString liborstream;
 	    MLIB_2D_MATRIX_CHECK( liborRates_swap, "Invalid Libor Rates" )
 	    for (size_t i = 0; i<liborRates_swap.size(); i++)
 	    {
 		    liborstream += liborRates_swap[i][0];
 		    double lrate = liborRates_swap[i][1].getDoubleValue() * 100.0;
-		    liborstream += "," + LAString(lrate) + LF;
+		    liborstream += "," + AQLString(lrate) + LF;
 
 		    if (liborRates_swap[i].size() == 3)
 		    {
-			    LAString useGridFrag = liborRates_swap[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = liborRates_swap[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE")
 			    {
 				    usegrid_libor += liborRates_swap[i][0] + ":";
@@ -2932,8 +2932,8 @@ namespace etrading
 
 	    //set fwd swap
 	    bool areSwapsForwardStarting = false;
-	    LAString isFwdSwap_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + suffix_prop_swap);
-	    LADataBool tmpAttrB;
+	    AQLString isFwdSwap_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + suffix_prop_swap);
+	    AQLDataBool tmpAttrB;
 	    if (isFwdSwap_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFwdSwap_str);
@@ -2941,49 +2941,49 @@ namespace etrading
 	    }
 
 	    //set Swap Object;
-	    LAString swapfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap);
+	    AQLString swapfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap);
 	    if (swapfile == AQ_NO_DATA)
 	    {
-		    swapfile = LAString("data/in/") + currency + LAString("_yield_swap") + suffix_data_swap + LAString(".csv");
+		    swapfile = AQLString("data/in/") + currency + AQLString("_yield_swap") + suffix_data_swap + AQLString(".csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap, swapfile);
 	    }
-	    LAString swapstream;
+	    AQLString swapstream;
 	    MLIB_2D_MATRIX_CHECK( swapRates_swap, "Invalid Swap Rates" )
 	    for (size_t i = 0; i<swapRates_swap.size(); i++)
 	    {
 		    swapstream += swapRates_swap[i][0];
 		    double srate = swapRates_swap[i][1].getDoubleValue() * 100.0;
-		    swapstream += "," + LAString(srate);
+		    swapstream += "," + AQLString(srate);
 		    // for fwd swap
 		    if (areSwapsForwardStarting)
 		    {
 			    if (swapRates_swap[i].size() < 5)
 			    {
-				    throw LACoreInvalidData("FwdSwap size error", __FILE__, __LINE__);
+				    throw AQLCoreInvalidData("FwdSwap size error", __FILE__, __LINE__);
 			    }
 
-			    LAString isDate_str = swapRates_swap[i][2];
+			    AQLString isDate_str = swapRates_swap[i][2];
 			    swapstream += "," + isDate_str.toUpper();
 			    if (isDate_str == "TRUE")
 			    {
-				    const LADate& startdate = stringToDate(swapRates_swap[i][3]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(swapRates_swap[i][3]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    swapstream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(swapRates_swap[i][4]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(swapRates_swap[i][4]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    swapstream += "," + enddate_str;
 			    }
 			    else
 			    {
-				    LAString startterm_str = swapRates_swap[i][3];
+				    AQLString startterm_str = swapRates_swap[i][3];
 				    swapstream += "," + startterm_str.toUpper();
-				    LAString tenor_str = swapRates_swap[i][4];
+				    AQLString tenor_str = swapRates_swap[i][4];
 				    swapstream += "," + tenor_str.toUpper();
 			    }
 			    // set use grid
 			    if (swapRates_swap[i].size() == 6)
 			    {
-				    LAString useGridFrag = swapRates_swap[i][5]; upper(useGridFrag);
+				    AQLString useGridFrag = swapRates_swap[i][5]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE")
 				    {
 					    usegrid_swap += swapRates_swap[i][0] + ":";
@@ -2997,7 +2997,7 @@ namespace etrading
 		    // set use grid
 		    else if (swapRates_swap[i].size() == 3)
 		    {
-			    LAString useGridFrag = swapRates_swap[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = swapRates_swap[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE")
 			    {
 				    usegrid_swap += swapRates_swap[i][0] + ":";
@@ -3014,7 +3014,7 @@ namespace etrading
 
 	    //set FRA Object;
 	    bool isFRAUse = false;
-	    LAString isFRAUse_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + suffix_prop_swap);
+	    AQLString isFRAUse_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + suffix_prop_swap);
 	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
@@ -3028,39 +3028,39 @@ namespace etrading
             AQ_REQUIRE( fraConv_swap.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
             AQ_REQUIRE( fra3mRates_swap.size() > 0 || fra6mRates_swap.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
 
-		    LAString fraFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + suffix_prop_swap);
+		    AQLString fraFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + suffix_prop_swap);
 		    if (fraFile == AQ_NO_DATA)
 		    {
-			    fraFile = LAString("data/in/") + currency + LAString("_yield_fra") + suffix_data_swap + LAString(".csv");
+			    fraFile = AQLString("data/in/") + currency + AQLString("_yield_fra") + suffix_data_swap + AQLString(".csv");
 			    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + suffix_prop_swap, fraFile);
 		    }
 
 		    if (fra3mRates_swap.size() != 0)
 		    {
-			    LAString fra3mstream = etrading::buildFRAMarketDataFile(fraFile, fra3mRates_swap, areSwapsForwardStarting, usegrid_fra);
+			    AQLString fra3mstream = etrading::buildFRAMarketDataFile(fraFile, fra3mRates_swap, areSwapsForwardStarting, usegrid_fra);
 
 			    std::istringstream *pfra3mstream = new std::istringstream(fra3mstream.getCString());
 			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra3mstream);
 		    }
 		    else if (fra6mRates_swap.size() != 0)
 		    {
-			    LAString fra6mstream = etrading::buildFRAMarketDataFile(fraFile, fra6mRates_swap, areSwapsForwardStarting, usegrid_fra);
+			    AQLString fra6mstream = etrading::buildFRAMarketDataFile(fraFile, fra6mRates_swap, areSwapsForwardStarting, usegrid_fra);
 
 			    std::istringstream *pfra6mstream = new std::istringstream(fra6mstream.getCString());
 			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra6mstream);
 		    }
 		    else
 		    {
-			    throw LACoreInvalidData("#Error - No FRA market data is provided", __FILE__, __LINE__);
+			    throw AQLCoreInvalidData("#Error - No FRA market data is provided", __FILE__, __LINE__);
 		    }
 	    }
 
 	    //set future Object;
 	    bool isFutureUse = false;
-	    LAString tmpFutureStr = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + suffix_prop_swap);
+	    AQLString tmpFutureStr = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + suffix_prop_swap);
 	    if (tmpFutureStr != AQ_NO_DATA)
 	    {
-		    LADataBool tmpAttrB;
+		    AQLDataBool tmpAttrB;
 		    tmpAttrB.convertFromString(tmpFutureStr);
 		    isFutureUse = tmpAttrB.get();
 	    }
@@ -3070,10 +3070,10 @@ namespace etrading
             AQ_REQUIRE( futureConv_swap.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
             AQ_REQUIRE( futureRates_swap.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
 
-		    LAString futureFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap);
+		    AQLString futureFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap);
 		    if (futureFile == AQ_NO_DATA)
 		    {
-			    futureFile = LAString("data/in/") + currency + LAString("_yield_future") + suffix_data_swap + LAString(".csv");
+			    futureFile = AQLString("data/in/") + currency + AQLString("_yield_future") + suffix_data_swap + AQLString(".csv");
 			    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap, futureFile);
 		    }
 		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(futureFile), createFutureStream(futureRates_swap, usegrid_future));
@@ -3149,25 +3149,25 @@ namespace etrading
     }
 
     void LAUpdateStaticDataManager::populateStaticDataManagerForOISCurve(LAStaticData &irStaticData,
-													    const LAString& useMarkets,
-													    const LAString& currency,
-													    const LAString& curveNames_OIS,
-													    const LAString& marketName_OIS, 
-													    const LAString& generateCurveName_OIS,
-													    const LAStringMatrix& generateProp_OIS,
-													    const LAStringMatrix& oisRates_OIS,
-													    const LAStringMatrix& oisConv_OIS,
-													    const LAStringMatrix& histRates_OIS,
-													    const LAStringMatrix& lobasisRates_OIS,
-													    const LAStringMatrix& lobasisConv_OIS,
-													    const LAStringMatrix& swapConv_OIS)
+													    const AQLString& useMarkets,
+													    const AQLString& currency,
+													    const AQLString& curveNames_OIS,
+													    const AQLString& marketName_OIS, 
+													    const AQLString& generateCurveName_OIS,
+													    const AQLStringMatrix& generateProp_OIS,
+													    const AQLStringMatrix& oisRates_OIS,
+													    const AQLStringMatrix& oisConv_OIS,
+													    const AQLStringMatrix& histRates_OIS,
+													    const AQLStringMatrix& lobasisRates_OIS,
+													    const AQLStringMatrix& lobasisConv_OIS,
+													    const AQLStringMatrix& swapConv_OIS)
     {
-	    LAString suffix_prop_OIS("");
-	    LAString suffix_data_OIS("");
+	    AQLString suffix_prop_OIS("");
+	    AQLString suffix_data_OIS("");
 
 	    // If the user-given market name is not STD, concatenate it to useMarkets 
-	    LAString useMarkets_OIS = useMarkets;
-	    LAStringVector tmpUseMarkets = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	    AQLString useMarkets_OIS = useMarkets;
+	    AQLStringVector tmpUseMarkets = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	    if (generateCurveName_OIS != STD)
 	    {
 		    suffix_data_OIS = "_" + generateCurveName_OIS;
@@ -3175,7 +3175,7 @@ namespace etrading
 		    suffix_prop_OIS = "." + generateCurveName_OIS;
 		    suffix_prop_OIS.toLower();
 
-		    LAString tmpCurveName = generateCurveName_OIS;
+		    AQLString tmpCurveName = generateCurveName_OIS;
 		    tmpCurveName.toUpper();
 		    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(), tmpUseMarkets.end(), tmpCurveName))
 		    {
@@ -3185,7 +3185,7 @@ namespace etrading
 			    }
 			    else
 			    {
-				    useMarkets_OIS += LAString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName_OIS;
+				    useMarkets_OIS += AQLString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName_OIS;
 			    }
 		    }
 	    }
@@ -3199,7 +3199,7 @@ namespace etrading
 			    }
 			    else
 			    {
-				    useMarkets_OIS += LAString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
+				    useMarkets_OIS += AQLString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
 			    }
 		    }
 	    }
@@ -3211,10 +3211,10 @@ namespace etrading
 	    else
 	    {
 		    // New code for dual bootstrapping - ensure the implicit curve name is one of the curve index names
-		    LAString indexNames = curveNames_OIS;
+		    AQLString indexNames = curveNames_OIS;
 		    if (indexNames.findString(marketName_OIS) == -1)
 		    {
-			    indexNames = marketName_OIS + LAString(MULTI_STATIC_DATA_DELIMITER) + indexNames;
+			    indexNames = marketName_OIS + AQLString(MULTI_STATIC_DATA_DELIMITER) + indexNames;
 		    }
 
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + suffix_prop_OIS, indexNames);
@@ -3223,7 +3223,7 @@ namespace etrading
 	    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + suffix_prop_OIS, "DAILYCOMPOUNDING");
 
 	    // Set curve type
-	    //	LAString curveType = CURVETYPE_OIS;
+	    //	AQLString curveType = CURVETYPE_OIS;
 	    //	irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffix_prop_OIS, curveType);
 
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_DFCURVENAME + suffix_prop_OIS);
@@ -3231,9 +3231,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( generateProp_OIS, "Invalid OIS Curve Properties / GenerateProps" )
 	    for (size_t i = 0; i<generateProp_OIS.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.generator." + generateProp_OIS[i][0] + suffix_prop_OIS;
+		    AQLString key = currency + ".sde.yield.generator." + generateProp_OIS[i][0] + suffix_prop_OIS;
 		    key.toLower();
-		    LAString data = generateProp_OIS[i][1];
+		    AQLString data = generateProp_OIS[i][1];
 		    if (key.findString("dfcurvename") == -1) data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -3251,38 +3251,38 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( oisConv_OIS, "Invalid OIS Conventions" )
 	    for (size_t i = 0; i<oisConv_OIS.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.ois." + oisConv_OIS[i][0] + suffix_prop_OIS;
+		    AQLString key = currency + ".sde.yield.ois." + oisConv_OIS[i][0] + suffix_prop_OIS;
 		    key.toLower();
-		    LAString data = oisConv_OIS[i][1];
+		    AQLString data = oisConv_OIS[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    LAString oisFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffix_prop_OIS);
+	    AQLString oisFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffix_prop_OIS);
 	    if (oisFile == AQ_NO_DATA)
 	    {
-		    oisFile = LAString("data/in/") + currency + LAString("_yield_ois_oiscurve.csv");
+		    oisFile = AQLString("data/in/") + currency + AQLString("_yield_ois_oiscurve.csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffix_prop_OIS, oisFile);
 	    }
 
-	    LAString fedFundFutureFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffix_prop_OIS);
+	    AQLString fedFundFutureFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffix_prop_OIS);
 	    if (fedFundFutureFile == AQ_NO_DATA)
 	    {
-		    fedFundFutureFile = LAString("data/in/") + currency + LAString("_yield_fffuture.csv");
+		    fedFundFutureFile = AQLString("data/in/") + currency + AQLString("_yield_fffuture.csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffix_prop_OIS, fedFundFutureFile);
 	    }
 
-	    LAString histFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffix_prop_OIS);
+	    AQLString histFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffix_prop_OIS);
 	    if (histFile == AQ_NO_DATA)
 	    {
-		    histFile = LAString("data/in/") + currency + LAString("_yield_historical_ois_oiscurve.csv");
+		    histFile = AQLString("data/in/") + currency + AQLString("_yield_historical_ois_oiscurve.csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffix_prop_OIS, histFile);
 	    }
 
-	    LAString oisStream;
-	    LAString fedFundFutureStream;
-	    LAString usegrid_ois = "";
-	    LAString usegrid_fffuture = "";
+	    AQLString oisStream;
+	    AQLString fedFundFutureStream;
+	    AQLString usegrid_ois = "";
+	    AQLString usegrid_fffuture = "";
 	
 	    MLIB_2D_MATRIX_CHECK( oisRates_OIS, "Invalid OIS Rates" )
 	    for (size_t i = 0; i<oisRates_OIS.size(); i++)
@@ -3292,19 +3292,19 @@ namespace etrading
 			    fedFundFutureStream += oisRates_OIS[i][0];
 
 			    if (oisRates_OIS[i].size() != 3 && oisRates_OIS[i].size() != 5)
-				    throw LACoreInvalidData("FF input size error", __FILE__, __LINE__);
+				    throw AQLCoreInvalidData("FF input size error", __FILE__, __LINE__);
 
 			    //in case of FF, quoted value is price
 			    double oisRate = oisRates_OIS[i][1].getDoubleValue();
-			    fedFundFutureStream += "," + LAString(oisRate);
+			    fedFundFutureStream += "," + AQLString(oisRate);
 
 			    if (oisRates_OIS[i].size() == 5)
 			    {
-				    const LADate& startdate = stringToDate(oisRates_OIS[i][2]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(oisRates_OIS[i][2]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    fedFundFutureStream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(oisRates_OIS[i][3]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(oisRates_OIS[i][3]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    fedFundFutureStream += "," + enddate_str;
 			    }
 
@@ -3312,13 +3312,13 @@ namespace etrading
 
 			    if (oisRates_OIS[i].size() == 5)
 			    {
-				    LAString useGridFrag = oisRates_OIS[i][4]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates_OIS[i][4]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_fffuture += oisRates_OIS[i][0] + ":";
 				    else usegrid_fffuture += "NONE:";
 			    }
 			    else if (oisRates_OIS[i].size() == 3)
 			    {
-				    LAString useGridFrag = oisRates_OIS[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates_OIS[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_fffuture += oisRates_OIS[i][0] + ":";
 				    else usegrid_fffuture += "NONE:";
 			    }
@@ -3336,35 +3336,35 @@ namespace etrading
                     || oisRates_OIS[i][0].findString("MPC") != -1 )     // *** GENERIC *** Monetary Policy Committee Swaps
 			    {
 				    if (oisRates_OIS[i].size() < 4)
-					    throw LACoreInvalidData("short term market needs StartDate and EndDate", __FILE__, __LINE__);
+					    throw AQLCoreInvalidData("short term market needs StartDate and EndDate", __FILE__, __LINE__);
 
 				    double oisRate = oisRates_OIS[i][1].getDoubleValue() * 100.0;
-				    oisStream += "," + LAString(oisRate);
+				    oisStream += "," + AQLString(oisRate);
 
-				    const LADate& startdate = stringToDate(oisRates_OIS[i][2]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(oisRates_OIS[i][2]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    oisStream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(oisRates_OIS[i][3]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(oisRates_OIS[i][3]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    oisStream += "," + enddate_str;
 			    }
 			    else //normal case
 			    {
 				    double oisRate = oisRates_OIS[i][1].getDoubleValue() * 100.0;
-				    oisStream += "," + LAString(oisRate);
+				    oisStream += "," + AQLString(oisRate);
 			    }
 
 			    oisStream += LF;
 
 			    if (oisRates_OIS[i].size() == 5)
 			    {
-				    LAString useGridFrag = oisRates_OIS[i][4]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates_OIS[i][4]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_ois += oisRates_OIS[i][0] + ":";
 				    else usegrid_ois += "NONE:";
 			    }
 			    else if (oisRates_OIS[i].size() == 3)
 			    {
-				    LAString useGridFrag = oisRates_OIS[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates_OIS[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_ois += oisRates_OIS[i][0] + ":";
 				    else usegrid_ois += "NONE:";
 			    }
@@ -3393,15 +3393,15 @@ namespace etrading
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_USEGRID + suffix_prop_OIS, usegrid_fffuture);
 	    }
 
-	    LAString histStream;
+	    AQLString histStream;
 	    MLIB_2D_MATRIX_CHECK( histRates_OIS, "Invalid OIS Fixing and Reset Rates" )
 	    for (size_t i = 0; i<histRates_OIS.size(); i++)
 	    {
-		    const LADate& histdate = stringToDate(histRates_OIS[i][0]);
-		    LAString histdate_str = histdate.stringWithFormat("YYYYMMDD");
+		    const AQLDate& histdate = stringToDate(histRates_OIS[i][0]);
+		    AQLString histdate_str = histdate.stringWithFormat("YYYYMMDD");
 		    histStream += histdate_str;
 		    double histRate = histRates_OIS[i][1].getDoubleValue() * 100.0;
-		    histStream += "," + LAString(histRate);
+		    histStream += "," + AQLString(histRate);
 		    histStream += LF;
 	    }
 	    std::istringstream *pHISTStream = new std::istringstream(histStream.getCString());
@@ -3410,20 +3410,20 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( lobasisConv_OIS, "Invalid Libor-OIS Basis Conventions" )
 	    for (size_t i = 0; i<lobasisConv_OIS.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.basis." + lobasisConv_OIS[i][0] + suffix_prop_OIS;
+		    AQLString key = currency + ".sde.yield.basis." + lobasisConv_OIS[i][0] + suffix_prop_OIS;
 		    key.toLower();
-		    LAString data = lobasisConv_OIS[i][1];
+		    AQLString data = lobasisConv_OIS[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    LAString lobasisfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS);
+	    AQLString lobasisfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS);
 	    if (lobasisfile == AQ_NO_DATA)
 	    {
-		    lobasisfile = LAString("data/in/") + currency + LAString("_yield_lobasis") + suffix_prop_OIS + LAString(".csv");
+		    lobasisfile = AQLString("data/in/") + currency + AQLString("_yield_lobasis") + suffix_prop_OIS + AQLString(".csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS, lobasisfile);
 	    }
-	    LAString lobasisstream;
+	    AQLString lobasisstream;
 	    MLIB_2D_MATRIX_CHECK( lobasisRates_OIS, "Invalid Libor-OIS Basis Rates" )
 		const size_t lobasisColumnSize = ( lobasisRates_OIS.size() > 0 ) ? lobasisRates_OIS[0].size() : 0;
 
@@ -3432,19 +3432,19 @@ namespace etrading
 			// Libor-OIS Rates Columns: Term, Rate, LiborType (Optional), UseMarketData (Optional)
 		    lobasisstream += lobasisRates_OIS[i][0];
 		    const double lobrate = lobasisRates_OIS[i][1].getDoubleValue() * 100.0;
-		    lobasisstream += "," + LAString(lobrate);
+		    lobasisstream += "," + AQLString(lobrate);
 
 			// Optional Column 3: LiborType
 			if ( lobasisColumnSize > 2 )
 			{
-				const LAString liborType = lobasisRates_OIS[i][2];
+				const AQLString liborType = lobasisRates_OIS[i][2];
 				lobasisstream += "," + liborType;
 			}
 
 			// Optional Column 4: UseMarketData
 			if ( lobasisColumnSize > 3 )
 			{
-				const LAString useMarketData = lobasisRates_OIS[i][3];
+				const AQLString useMarketData = lobasisRates_OIS[i][3];
 				lobasisstream += "," + useMarketData;
 			}
 
@@ -3456,9 +3456,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( swapConv_OIS, "Invalid Swap Conventions" )
 	    for (size_t i = 0; i<swapConv_OIS.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.swap." + swapConv_OIS[i][0] + suffix_prop_OIS;
+		    AQLString key = currency + ".sde.yield.swap." + swapConv_OIS[i][0] + suffix_prop_OIS;
 		    key.toLower();
-		    LAString data = swapConv_OIS[i][1];
+		    AQLString data = swapConv_OIS[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -3466,7 +3466,7 @@ namespace etrading
 	    // Remove swap par rate market data from OIS curve
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_OIS);
 
-	    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_ISDUALBOOTSTRAPPING + suffix_prop_OIS, LAString("TRUE"));
+	    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_ISDUALBOOTSTRAPPING + suffix_prop_OIS, AQLString("TRUE"));
 
 	    // Record more curve info
 	    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffix_prop_OIS, CURVETYPE_OIS);
@@ -3476,23 +3476,23 @@ namespace etrading
 
 	// =====================================================================================================================
     void LAUpdateStaticDataManager::populateStaticDataManagerForTenorBasisCurve(LAStaticData &irStaticData, 
-																				const LAString& curveName,
-																				const LAString& curveNames,
-																				const LAString& currency,
-																				const LAStringMatrix& basisRates,
-																				const LAStringMatrix& basisConv,
-																				const LAStringMatrix& fwdFXs,
-																				const LAStringMatrix& fwdConv,
-																				const LAStringMatrix& spotFXs,
-																				const LAStringMatrix& generateProp,
-																				const LAStringMatrix& moneyConv,
-																				const LAStringMatrix& fraConv,
-																				const LAStringMatrix& fraRates,
-																				const LAStringMatrix& liborConv,
-																				const LAStringMatrix& liborRates)
+																				const AQLString& curveName,
+																				const AQLString& curveNames,
+																				const AQLString& currency,
+																				const AQLStringMatrix& basisRates,
+																				const AQLStringMatrix& basisConv,
+																				const AQLStringMatrix& fwdFXs,
+																				const AQLStringMatrix& fwdConv,
+																				const AQLStringMatrix& spotFXs,
+																				const AQLStringMatrix& generateProp,
+																				const AQLStringMatrix& moneyConv,
+																				const AQLStringMatrix& fraConv,
+																				const AQLStringMatrix& fraRates,
+																				const AQLStringMatrix& liborConv,
+																				const AQLStringMatrix& liborRates)
     {
-	    LAString staticDataSuffix;
-	    LAString suffix_data;
+	    AQLString staticDataSuffix;
+	    AQLString suffix_data;
 	    staticDataSuffix = "." + curveName;
 	    staticDataSuffix.toLower();
 	    suffix_data = "_" + curveName;
@@ -3506,13 +3506,13 @@ namespace etrading
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_OPTIMIZEPERFORMANCE + staticDataSuffix);
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_ISARBFREE);
 
-	    LAString useMarkets = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	    LAStringVector tmpUseMarkets = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	    AQLString useMarkets = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	    AQLStringVector tmpUseMarkets = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	    if (useMarkets == AQ_NO_DATA)
 	    {
 		    useMarkets = "";
 	    }
-	    LAString tmpCurveName = curveName;
+	    AQLString tmpCurveName = curveName;
 	    tmpCurveName.toUpper();
 
 	    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(), tmpUseMarkets.end(), tmpCurveName))
@@ -3523,7 +3523,7 @@ namespace etrading
 		    }
 		    else
 		    {
-			    useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + curveName;
+			    useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + curveName;
 		    }
 	    }
 	    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_USEMAKETS, useMarkets);
@@ -3537,16 +3537,16 @@ namespace etrading
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + staticDataSuffix, curveNames);
 	    }
 
-	    LAString curveType = CURVETYPE_BASIS;
+	    AQLString curveType = CURVETYPE_BASIS;
 	    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + staticDataSuffix, curveType);
 
 	    // By default, set the "isfwdinter" property using false.
 	    // If the user has specified the property in the basisConv info, allow the user setting to override
 	    // this default in the following "basis info" code block.
 	    {
-		    LAString key = currency + STATIC_DATA_KEY_YIELD_BASIS_ISFWDINTER + staticDataSuffix;
+		    AQLString key = currency + STATIC_DATA_KEY_YIELD_BASIS_ISFWDINTER + staticDataSuffix;
 		    key.toLower();
-		    LAString data = "false";
+		    AQLString data = "false";
 		    irStaticData.setStaticData(key, data);
 	    }
 
@@ -3554,9 +3554,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( basisConv, "Invalid Basis Conventions" )
 	    for (size_t i = 0; i<basisConv.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.basis." + basisConv[i][0] + staticDataSuffix;
+		    AQLString key = currency + ".sde.yield.basis." + basisConv[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = basisConv[i][1];
+		    AQLString data = basisConv[i][1];
 		    if (key.findString("discount") == -1 && key.findString("forecast") == -1)
 		    {
 			    data.toLower();
@@ -3567,9 +3567,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
 	    for (size_t i = 0; i<generateProp.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
+		    AQLString key = currency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = generateProp[i][1];
+		    AQLString data = generateProp[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -3577,9 +3577,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )
 	    for (size_t i = 0; i<moneyConv.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
+		    AQLString key = currency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = moneyConv[i][1];
+		    AQLString data = moneyConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -3587,9 +3587,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
 	    for (size_t i = 0; i<fraConv.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
+		    AQLString key = currency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = fraConv[i][1];
+		    AQLString data = fraConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -3597,9 +3597,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( fwdConv, "Invalid Forward FX Conventions" )
 	    for (size_t i = 0; i<fwdConv.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.basis.fwdfx." + fwdConv[i][0] + staticDataSuffix;
+		    AQLString key = currency + ".sde.yield.basis.fwdfx." + fwdConv[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = fwdConv[i][1];
+		    AQLString data = fwdConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -3607,39 +3607,39 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( liborConv, "Invalid Libor Fixings and Reset Conventions" )
 	    for (size_t i = 0; i<liborConv.size(); i++)
 	    {
-		    LAString key = currency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
+		    AQLString key = currency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = liborConv[i][1];
+		    AQLString data = liborConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
 
 	    //set Libor data file
-	    LAString liborUseGrid = "";
-	    LAString isLiborProvided_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_FIXINGSOURCE + staticDataSuffix);
+	    AQLString liborUseGrid = "";
+	    AQLString isLiborProvided_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_FIXINGSOURCE + staticDataSuffix);
 	    if (isLiborProvided_str != AQ_NO_DATA)
 	    {
 		    if (isLiborProvided_str.toUpper() == ITSELF)
 		    {
-			    LAString liborEntityName = currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
+			    AQLString liborEntityName = currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
 
-			    LAString liborfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
+			    AQLString liborfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
 			    if (liborfile == AQ_NO_DATA)
 			    {
-				    liborfile = LAString("data/in/") + currency + LAString("_yield_libor") + suffix_data + LAString(".csv");
+				    liborfile = AQLString("data/in/") + currency + AQLString("_yield_libor") + suffix_data + AQLString(".csv");
 				    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
 			    }
-			    LAString liborstream;
+			    AQLString liborstream;
 			    MLIB_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing and Reset Rates" )
 			    for (size_t i = 0; i<liborRates.size(); i++)
 			    {
 				    liborstream += liborRates[i][0];
 				    double lrate = liborRates[i][1].getDoubleValue() * 100.0;
-				    liborstream += "," + LAString(lrate) + LF;
+				    liborstream += "," + AQLString(lrate) + LF;
 
 				    if (liborRates[i].size() == 3)
 				    {
-					    LAString useGridFrag = liborRates[i][2]; upper(useGridFrag);
+					    AQLString useGridFrag = liborRates[i][2]; upper(useGridFrag);
 					    if (useGridFrag == "TRUE")
 					    {
 						    liborUseGrid += liborRates[i][0] + ":";
@@ -3657,9 +3657,9 @@ namespace etrading
 
 	    //set FRA file
 	    bool isFRAUse = false;
-	    LAString fraUseGrid = "";
-	    LAString isFRAUse_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
-	    LADataBool tmpAttrB;
+	    AQLString fraUseGrid = "";
+	    AQLString isFRAUse_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
+	    AQLDataBool tmpAttrB;
 	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
@@ -3674,78 +3674,78 @@ namespace etrading
 
 		    //set fwd swap
 		    bool areSwapsForwardStarting = false;
-		    LAString isFwdSwap_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
+		    AQLString isFwdSwap_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
 		    if (isFwdSwap_str != AQ_NO_DATA)
 		    {
 			    tmpAttrB.convertFromString(isFwdSwap_str);
 			    areSwapsForwardStarting = tmpAttrB.get();
 		    }
 
-		    LAString fraFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
+		    AQLString fraFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
 		    if (fraFile == AQ_NO_DATA)
 		    {
-			    fraFile = LAString("data/in/") + currency + LAString("_yield_fra") + suffix_data + LAString(".csv");
+			    fraFile = AQLString("data/in/") + currency + AQLString("_yield_fra") + suffix_data + AQLString(".csv");
 			    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix, fraFile);
 		    }
 
-		    LAString fraStream = etrading::buildFRAMarketDataFile(fraFile, fraRates, areSwapsForwardStarting, fraUseGrid);
+		    AQLString fraStream = etrading::buildFRAMarketDataFile(fraFile, fraRates, areSwapsForwardStarting, fraUseGrid);
 		    std::istringstream *pfraStream = new std::istringstream(fraStream.getCString());
 		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfraStream);
 	    }
 
 	    //set fwd basis
 	    bool isFwdBasis = false;
-	    LAString isFwdBasis_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDBASIS + staticDataSuffix);
+	    AQLString isFwdBasis_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDBASIS + staticDataSuffix);
 	    if (isFwdBasis_str.toUpper() == "TRUE")
 	    {
 		    isFwdBasis = true;
 	    }
 
 	    //basis file
-	    LAString basisfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix);
+	    AQLString basisfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix);
 	    if (basisfile == AQ_NO_DATA)
 	    {
-		    basisfile = LAString("data/in/") + currency + LAString("_yield_basisswap") + suffix_data + LAString(".csv");
+		    basisfile = AQLString("data/in/") + currency + AQLString("_yield_basisswap") + suffix_data + AQLString(".csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix, basisfile);
 	    }
-	    LAString basisstream;
-	    LAString usegrid = "";
+	    AQLString basisstream;
+	    AQLString usegrid = "";
 	    MLIB_2D_MATRIX_CHECK( basisRates, "Invalid Basis Rates" )
 	    for (unsigned int i = 0; i < basisRates.size(); i++)
 	    {
 		    basisstream += basisRates[i][0];
 		    const double brate = basisRates[i][1].getDoubleValue() * 10000.0;
-		    basisstream += "," + LAString(brate);
+		    basisstream += "," + AQLString(brate);
 		    // for fwd basis
 		    if (isFwdBasis)
 		    {
 			    if (basisRates[i].size() < 5)
 			    {
-				    throw LACoreInvalidData("#Error: Invalid Tenor Basis market data, wrong number of columns. Market Data should consist of 5 columns specifiying forward dates when the 'isFwdBasis' flag is set to true.", __FILE__, __LINE__);
+				    throw AQLCoreInvalidData("#Error: Invalid Tenor Basis market data, wrong number of columns. Market Data should consist of 5 columns specifiying forward dates when the 'isFwdBasis' flag is set to true.", __FILE__, __LINE__);
 			    }
 
-			    LAString isDate_str = basisRates[i][2];
+			    AQLString isDate_str = basisRates[i][2];
 			    basisstream += "," + isDate_str.toUpper();
 			    if (isDate_str == "TRUE")
 			    {
-				    const LADate& startdate = stringToDate(basisRates[i][3]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(basisRates[i][3]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    basisstream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(basisRates[i][4]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(basisRates[i][4]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    basisstream += "," + enddate_str;
 			    }
 			    else
 			    {
-				    LAString startterm_str = basisRates[i][3];
+				    AQLString startterm_str = basisRates[i][3];
 				    basisstream += "," + startterm_str.toUpper();
-				    LAString tenor_str = basisRates[i][4];
+				    AQLString tenor_str = basisRates[i][4];
 				    basisstream += "," + tenor_str.toUpper();
 			    }
 			    // set use grid
 			    if (basisRates[i].size() == 6)
 			    {
-				    LAString useGridFrag = basisRates[i][5]; upper(useGridFrag);
+				    AQLString useGridFrag = basisRates[i][5]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE")
 				    {
 					    usegrid += basisRates[i][0] + ":";
@@ -3758,7 +3758,7 @@ namespace etrading
 		    }
 		    else if (basisRates[i].size() == 3)
 		    {
-			    LAString useGridFrag = basisRates[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = basisRates[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE")
 			    {
 				    usegrid += basisRates[i][0] + ":";
@@ -3774,19 +3774,19 @@ namespace etrading
 	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(basisfile), pbasisstream);
 
 	    //fwdfx file
-	    LAString fwdfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + staticDataSuffix);
-	    LAString fwdstream;
-	    LAString fwdusegrid = "";
+	    AQLString fwdfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + staticDataSuffix);
+	    AQLString fwdstream;
+	    AQLString fwdusegrid = "";
 	    MLIB_2D_MATRIX_CHECK( fwdFXs, "Invalid Forward FX Rates" )
 	    for (unsigned int i = 0; i < fwdFXs.size(); i++)
 	    {
 		    fwdstream += fwdFXs[i][0];
 		    const double fwdfx = fwdFXs[i][1].getDoubleValue();
-		    fwdstream += "," + LAString(fwdfx) + LF;
+		    fwdstream += "," + AQLString(fwdfx) + LF;
 
 		    if (fwdFXs[i].size() == 3)
 		    {
-			    LAString useGridFrag = fwdFXs[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = fwdFXs[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE")
 			    {
 				    fwdusegrid += fwdFXs[i][0] + ":";
@@ -3880,36 +3880,36 @@ namespace etrading
     }
 
 
-    void LAUpdateStaticDataManager::setUpGlobalEngineCurves(LADataInstance* dataInstance,
-													        const LAString& engineName,
-													        const LAString& curveCollectionID,
-													        const LAStringMatrix& commonParams,
+    void LAUpdateStaticDataManager::setUpGlobalEngineCurves(AQLDataInstance* dataInstance,
+													        const AQLString& engineName,
+													        const AQLString& curveCollectionID,
+													        const AQLStringMatrix& commonParams,
 													        const std::vector<etrading::CurveObjectDataPtr>& curveDataCollection)
     {
 	    LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
-	    LAObjectPool &objPool = dataInstance->getObjectPool();
-	    LAObject* pyld = NULL;
+	    AQLObjectPool &objPool = dataInstance->getObjectPool();
+	    AQLObject* pyld = NULL;
 
 	    //======================================================
 	    // Get currency
         AQ_REQUIRE( curveDataCollection.size() > 0, "Unable to set-up Global Engine Curves - No Curve Data has been provided" )
-	    LAStringMatrix tmpInfo = curveDataCollection[0]->curveConvLVB_.toLAStringMatrix(); // Conventions are stored as LVBs
+	    AQLStringMatrix tmpInfo = curveDataCollection[0]->curveConvLVB_.toLAStringMatrix(); // Conventions are stored as LVBs
 	    upper(tmpInfo);
-	    LAString currency;
-	    LAObjectHolder objHolder = objPool.getObject(curveCollectionID, ENCHKTYPE_NOCHECK);
+	    AQLString currency;
+	    AQLObjectHolder objHolder = objPool.getObject(curveCollectionID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
 	    {
-		    LAObject& yldEntity = objHolder.get();
-		    const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		    AQLObject& yldEntity = objHolder.get();
+		    const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		    if (dh->isDefined() && !dh->isNull())
 		    {
-			    currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			    currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		    }
 		    else
 		    {
-			    if (LAFunctionUtilities::findRowsNumber(tmpInfo, CURVEINPUT_CURRENCY) < 0)
+			    if (AQLFunctionUtilities::findRowsNumber(tmpInfo, CURVEINPUT_CURRENCY) < 0)
 			    {
-				    currency = LAString("DUMMY");
+				    currency = AQLString("DUMMY");
 			    }
 			    else
 			    {
@@ -3919,24 +3919,24 @@ namespace etrading
 	    }
 	    else
 	    {
-		    if (LAFunctionUtilities::findRowsNumber(tmpInfo, CURVEINPUT_CURRENCY) < 0)
+		    if (AQLFunctionUtilities::findRowsNumber(tmpInfo, CURVEINPUT_CURRENCY) < 0)
 		    {
-			    currency = LAString("DUMMY");
+			    currency = AQLString("DUMMY");
 		    }
 		    else
 		    {
 			    currency = chgrow(tmpInfo, CURVEINPUT_CURRENCY, 1);
 		    }
 	    }
-	    LAString tmpCurrency = currency;
+	    AQLString tmpCurrency = currency;
 	    tmpCurrency.toLower();
 
 	    //======================================================
 	    // Miscallaneous
 
-	    LAString staticDataSuffix("");
-	    LAString suffix_data("");
-	    LAString generateCurveName = engineName;
+	    AQLString staticDataSuffix("");
+	    AQLString suffix_data("");
+	    AQLString generateCurveName = engineName;
 	    generateCurveName.toUpper();
 	    if (generateCurveName != STD)
 	    {
@@ -3947,8 +3947,8 @@ namespace etrading
 
 	    // The useMarkets string is a list of default market names for a particular currency in the form 
 	    // of '1M3MBasis:3M6MBasis:SWAP:XCCYBasis' for example. This is loaded directly from the ir.properties file
-	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	    LAStringVector useMarkets_vector = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	    AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	    AQLStringVector useMarkets_vector = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	    if (useMarkets == AQ_NO_DATA)
 	    {
 		    useMarkets = "";
@@ -3958,43 +3958,43 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( commonParams, "Invalid CommonParameters Data Block" )
 	    for (size_t i = 0; i<commonParams.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.globalenginecurves." + commonParams[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.globalenginecurves." + commonParams[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = commonParams[i][1];
+		    AQLString data = commonParams[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
 
 	    //======================================================
 	    // Loop through each curve's data
-	    LAString allCurveNames("");
-	    LAString allCurveTypes("");
+	    AQLString allCurveNames("");
+	    AQLString allCurveTypes("");
 	    for (unsigned int i = 0; i < curveDataCollection.size(); ++i)
 	    {
 		    etrading::CurveTypeEnum curveType = curveDataCollection[i]->getCurveType();
-		    LAStringMatrix curveConv = curveDataCollection[i]->curveConvLVB_.toLAStringMatrix(); // Conventions as LVBs;
-		    LAString curveName = curveDataCollection[i]->curveName_;
-		    LAString curveIndex = curveDataCollection[i]->curveIndex_;
+		    AQLStringMatrix curveConv = curveDataCollection[i]->curveConvLVB_.toLAStringMatrix(); // Conventions as LVBs;
+		    AQLString curveName = curveDataCollection[i]->curveName_;
+		    AQLString curveIndex = curveDataCollection[i]->curveIndex_;
 
-		    allCurveNames += (i == 0 ? "" : LAString(MULTI_STATIC_DATA_DELIMITER)) + curveName;
+		    allCurveNames += (i == 0 ? "" : AQLString(MULTI_STATIC_DATA_DELIMITER)) + curveName;
 
 		    if (curveType == etrading::OIS_CURVETYPE)
 		    {
 			    OISCurveObjectData curveData = *dynamic_cast<OISCurveObjectData*>(curveDataCollection[i].get());
 			
-			    LAString marketName = curveName;
+			    AQLString marketName = curveName;
 			    if (marketName.size() == 0)
 			    {
 				    marketName = engineName + "OIS";
 			    }
 
-			    LAString generateCurveName = marketName;
+			    AQLString generateCurveName = marketName;
 			    generateCurveName.toUpper();
 
 			    // Set as-of date from OIS curve
-			    LAStringMatrix tmpInfo = curveData.curveConvLVB_.toLAStringMatrix(); // Curve Conventions are LVBs
+			    AQLStringMatrix tmpInfo = curveData.curveConvLVB_.toLAStringMatrix(); // Curve Conventions are LVBs
 			    upper(tmpInfo);
-			    LADate asofdate = stringToDate(chgrow(tmpInfo, CURVEINPUT_ASOFDATE, 1));
+			    AQLDate asofdate = stringToDate(chgrow(tmpInfo, CURVEINPUT_ASOFDATE, 1));
 			    LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 			
 			    // Populate all relevant parameters and market data to property manager
@@ -4015,19 +4015,19 @@ namespace etrading
 			    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_OISCURVENAME + staticDataSuffix);
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_OISCURVENAME + staticDataSuffix, generateCurveName);
 
-			    allCurveTypes += (i == 0 ? "" : LAString(MULTI_STATIC_DATA_DELIMITER)) + "OIS";
+			    allCurveTypes += (i == 0 ? "" : AQLString(MULTI_STATIC_DATA_DELIMITER)) + "OIS";
 		    }
 		    else if (curveType == etrading::SWAP_CURVETYPE)
 		    {
 			    SwapCurveObjectData curveData = *dynamic_cast<SwapCurveObjectData*>(curveDataCollection[i].get());
 
-			    LAString marketName = curveName;
+			    AQLString marketName = curveName;
 			    if (marketName.size() == 0)
 			    {
 				    marketName = engineName + "STD";
 			    }
 
-			    LAString generateCurveName = marketName;
+			    AQLString generateCurveName = marketName;
 			    generateCurveName.toUpper();
 
 			    // Populate all relevant parameters and market data to property manager
@@ -4054,19 +4054,19 @@ namespace etrading
 			    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_SWAPCURVENAME + staticDataSuffix);
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_SWAPCURVENAME + staticDataSuffix, generateCurveName);
 
-			    allCurveTypes += (i == 0 ? "" : LAString(MULTI_STATIC_DATA_DELIMITER)) + "SWAP";
+			    allCurveTypes += (i == 0 ? "" : AQLString(MULTI_STATIC_DATA_DELIMITER)) + "SWAP";
 		    }
 		    else if (curveType == etrading::TENORBASIS_CURVETYPE)
 		    {
 			    TenorBasisCurveObjectData curveData = *dynamic_cast<TenorBasisCurveObjectData*>(curveDataCollection[i].get());
 
-			    LAString marketName = curveName;
+			    AQLString marketName = curveName;
 			    if (marketName.size() == 0)
 			    {
 				    marketName = engineName + "TENORBASIS";
 			    }
 
-			    LAString generateCurveName = marketName;
+			    AQLString generateCurveName = marketName;
 			    generateCurveName.toUpper();
 
 			    populateStaticDataManagerForTenorBasisCurve(irStaticData,
@@ -4088,7 +4088,7 @@ namespace etrading
 			    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_SWAPCURVENAME + staticDataSuffix);
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DUALBOOTSTRAP_SWAPCURVENAME + staticDataSuffix, generateCurveName);
 
-			    allCurveTypes += (i == 0 ? "" : LAString(MULTI_STATIC_DATA_DELIMITER)) + "TENORBASIS";
+			    allCurveTypes += (i == 0 ? "" : AQLString(MULTI_STATIC_DATA_DELIMITER)) + "TENORBASIS";
 		    }
 		    else
 		    {
@@ -4111,60 +4111,60 @@ namespace etrading
 
 
 	// ============================ DUAL-BOOTSTRAP CURVE ==============================================================================
-    void LAUpdateStaticDataManager::setUpDualBootstrapCurve(LADataInstance* dataInstance,									 
-									                        const LAString& curveID,
-									                        const LAString& curveName_db,
-									                        const LAString& curveName_OIS,
-									                        const LAString& curveName_swap,
-									                        const LAString& curveNames_OIS,
-									                        const LAString& curveNames_swap,	 
-									                        const LAStringMatrix& commonParams,
-									                        const LAStringMatrix& generateProp_OIS, 
-									                        const LAStringMatrix& oisRates_OIS, 
-									                        const LAStringMatrix& oisConv_OIS,
-									                        const LAStringMatrix& histRates_OIS,
-									                        const LAStringMatrix& lobasisRates_OIS, 
-									                        const LAStringMatrix& lobasisConv_OIS, 
-									                        const LAStringMatrix& swapConv_OIS,
-									                        const LAStringMatrix& generateProp_swap, 
-									                        const LAStringMatrix& moneyConv_swap,
-									                        const LAStringMatrix& liborRates_swap, 
-									                        const LAStringMatrix& liborConv_swap,
-									                        const LAStringMatrix& swapRates_swap, 
-									                        const LAStringMatrix& swapConv_swap,
-									                        const LAStringMatrix& fra3mRates_swap,
-									                        const LAStringMatrix& fra6mRates_swap,
-									                        const LAStringMatrix& fraConv_swap,
-									                        const LAStringMatrix& futureRates_swap, 
-									                        const LAStringMatrix& futureConv_swap,
-									                        const LAStringMatrix& adjustSwapConv_swap,
-									                        const LAStringMatrix& adjustSwapRates_swap )
+    void LAUpdateStaticDataManager::setUpDualBootstrapCurve(AQLDataInstance* dataInstance,									 
+									                        const AQLString& curveID,
+									                        const AQLString& curveName_db,
+									                        const AQLString& curveName_OIS,
+									                        const AQLString& curveName_swap,
+									                        const AQLString& curveNames_OIS,
+									                        const AQLString& curveNames_swap,	 
+									                        const AQLStringMatrix& commonParams,
+									                        const AQLStringMatrix& generateProp_OIS, 
+									                        const AQLStringMatrix& oisRates_OIS, 
+									                        const AQLStringMatrix& oisConv_OIS,
+									                        const AQLStringMatrix& histRates_OIS,
+									                        const AQLStringMatrix& lobasisRates_OIS, 
+									                        const AQLStringMatrix& lobasisConv_OIS, 
+									                        const AQLStringMatrix& swapConv_OIS,
+									                        const AQLStringMatrix& generateProp_swap, 
+									                        const AQLStringMatrix& moneyConv_swap,
+									                        const AQLStringMatrix& liborRates_swap, 
+									                        const AQLStringMatrix& liborConv_swap,
+									                        const AQLStringMatrix& swapRates_swap, 
+									                        const AQLStringMatrix& swapConv_swap,
+									                        const AQLStringMatrix& fra3mRates_swap,
+									                        const AQLStringMatrix& fra6mRates_swap,
+									                        const AQLStringMatrix& fraConv_swap,
+									                        const AQLStringMatrix& futureRates_swap, 
+									                        const AQLStringMatrix& futureConv_swap,
+									                        const AQLStringMatrix& adjustSwapConv_swap,
+									                        const AQLStringMatrix& adjustSwapRates_swap )
     {
 	    LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
 
 
-	    LAObjectPool &objPool = dataInstance->getObjectPool();
-	    LAObject* pyld = NULL;
+	    AQLObjectPool &objPool = dataInstance->getObjectPool();
+	    AQLObject* pyld = NULL;
 
-	    LAStringMatrix tmpInfo = generateProp_swap;
+	    AQLStringMatrix tmpInfo = generateProp_swap;
 	    upper(tmpInfo);
-	    LADate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	    AQLDate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	    LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
-	    LAString currency;
-	    LAObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
+	    AQLString currency;
+	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
 	    {
-		    LAObject& yldEntity = objHolder.get();
-		    const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		    AQLObject& yldEntity = objHolder.get();
+		    const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		    if(dh->isDefined() && !dh->isNull())
 		    {
-			    currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			    currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		    }
 		    else
 		    {
-			    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			    {
-				    currency = LAString("DUMMY");
+				    currency = AQLString("DUMMY");
 			    }
 			    else
 			    {
@@ -4174,39 +4174,39 @@ namespace etrading
 	    }
 	    else
 	    {
-		    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		    {
-			    currency = LAString("DUMMY");
+			    currency = AQLString("DUMMY");
 		    }
 		    else
 		    {
 			    currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		    } 	
 	    }
-	    LAString tmpCurrency = currency; 
+	    AQLString tmpCurrency = currency; 
 	    tmpCurrency.toLower();
 
-	    LAString marketName_swap = curveName_swap;
+	    AQLString marketName_swap = curveName_swap;
 	    if (marketName_swap.size() == 0)
 	    {
 		    marketName_swap	= curveName_db + "STD";
 	    }
 
-	    LAString generateCurveName_swap = marketName_swap;
+	    AQLString generateCurveName_swap = marketName_swap;
 	    generateCurveName_swap.toUpper();
 	
-	    LAString marketName_OIS = curveName_OIS;
+	    AQLString marketName_OIS = curveName_OIS;
 	    if (marketName_OIS.size() == 0)
 	    {
 		    marketName_OIS	= curveName_db + "OIS";
 	    }
 
-	    LAString generateCurveName_OIS = marketName_OIS;
+	    AQLString generateCurveName_OIS = marketName_OIS;
 	    generateCurveName_OIS.toUpper();
 
-	    LAString staticDataSuffix("");
-	    LAString suffix_data("");
-	    LAString generateCurveName = curveName_db;
+	    AQLString staticDataSuffix("");
+	    AQLString suffix_data("");
+	    AQLString generateCurveName = curveName_db;
 	    generateCurveName.toUpper();
 	    if (generateCurveName != STD)
 	    {
@@ -4217,8 +4217,8 @@ namespace etrading
 	
 	    // The useMarkets string is a list of default market names for a particular currency in the form 
 	    // of '1M3MBasis:3M6MBasis:SWAP:XCCYBasis' for example. This is loaded directly from the ir.properties file
-	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
-	    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
+	    AQLString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
+	    AQLStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 	    if (useMarkets == AQ_NO_DATA) 
 	    {
 		    useMarkets = "";
@@ -4228,9 +4228,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( commonParams, "Invalid CommonParameters Data Block" )
 	    for (size_t i = 0; i<commonParams.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.dualbootstrap." + commonParams[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.dualbootstrap." + commonParams[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = commonParams[i][1];
+		    AQLString data = commonParams[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -4240,11 +4240,11 @@ namespace etrading
 	    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Begin - SWAP >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-	    LAString suffix_prop_swap("");
-	    LAString suffix_data_swap("");
+	    AQLString suffix_prop_swap("");
+	    AQLString suffix_data_swap("");
 	
 	    // If the user-given market name is not STD, concatenate it to useMarkets 
-	    LAString useMarkets_swap = useMarkets;
+	    AQLString useMarkets_swap = useMarkets;
 	    if (generateCurveName_swap != STD)
 	    {
 		    suffix_data_swap = "_" + generateCurveName_swap;
@@ -4252,7 +4252,7 @@ namespace etrading
 		    suffix_prop_swap = "." + generateCurveName_swap;
 		    suffix_prop_swap.toLower();
 
-		    LAString tmpCurveName = generateCurveName_swap; 
+		    AQLString tmpCurveName = generateCurveName_swap; 
 		    tmpCurveName.toUpper();
 		    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 		    {
@@ -4262,7 +4262,7 @@ namespace etrading
 			    }
 			    else 
 			    {
-				    useMarkets_swap += LAString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName_swap;
+				    useMarkets_swap += AQLString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName_swap;
 			    }
 		    }	
 	    }
@@ -4276,7 +4276,7 @@ namespace etrading
 			    }
 			    else 
 			    {
-				    useMarkets_swap += LAString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
+				    useMarkets_swap += AQLString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
 			    }
 		    }
 	    }
@@ -4288,17 +4288,17 @@ namespace etrading
 	    else
 	    {
 		    // New code for dual bootstrapping - ensure the implicit curve name is one of the curve index names
-		    LAString indexNames = curveNames_swap;
+		    AQLString indexNames = curveNames_swap;
 		    if (indexNames.findString(marketName_swap) == -1)
 		    {
-			    indexNames = marketName_swap + LAString(MULTI_STATIC_DATA_DELIMITER) + indexNames;
+			    indexNames = marketName_swap + AQLString(MULTI_STATIC_DATA_DELIMITER) + indexNames;
 		    }
 
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + suffix_prop_swap, indexNames);
 	    }
 
 	    // Set curve type
-	    LAString curveType = CURVETYPE_SWAP;
+	    AQLString curveType = CURVETYPE_SWAP;
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffix_prop_swap, curveType);
 
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ISARBFREE);
@@ -4317,16 +4317,16 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( generateProp_swap, "Invalid CurveProperties or generatorProp Conventions" )
 	    for(size_t i=0; i<generateProp_swap.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.generator." + generateProp_swap[i][0] + suffix_prop_swap;
+		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp_swap[i][0] + suffix_prop_swap;
 		    key.toLower();
-		    LAString data = generateProp_swap[i][1];
+		    AQLString data = generateProp_swap[i][1];
 		    if (key.findString("dfcurvename") == -1) 
 		    {
 			    data.toLower();
 		    }
 		    irStaticData.setStaticData(key, data);
 
-		    LAString tmpProp = generateProp_swap[i][0];
+		    AQLString tmpProp = generateProp_swap[i][0];
 		    tmpProp.toLower();
 		    if (tmpProp == "isswaptenoradjust")
 		    {
@@ -4338,9 +4338,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( moneyConv_swap, "Invalid Money Market Conventions" )
 	    for(size_t i=0; i<moneyConv_swap.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv_swap[i][0] + suffix_prop_swap;
+		    AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv_swap[i][0] + suffix_prop_swap;
 		    key.toLower(); 
-		    LAString data = moneyConv_swap[i][1];
+		    AQLString data = moneyConv_swap[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -4348,9 +4348,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( liborConv_swap, "Invalid Libor Fixing and Reset Conventions" )
 	    for(size_t i=0; i<liborConv_swap.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.libor." + liborConv_swap[i][0] + suffix_prop_swap;
+		    AQLString key = tmpCurrency + ".sde.yield.libor." + liborConv_swap[i][0] + suffix_prop_swap;
 		    key.toLower(); 
-		    LAString data = liborConv_swap[i][1];
+		    AQLString data = liborConv_swap[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -4358,9 +4358,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( swapConv_swap, "Invalid Libor Fixing and Reset Conventions" )
 	    for(size_t i=0; i<swapConv_swap.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.swap." + swapConv_swap[i][0] + suffix_prop_swap;
+		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv_swap[i][0] + suffix_prop_swap;
 		    key.toLower(); 
-		    LAString data = swapConv_swap[i][1];
+		    AQLString data = swapConv_swap[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -4368,9 +4368,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( fraConv_swap, "Invalid FRA Conventions" )
 	    for(size_t i=0; i<fraConv_swap.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.fra." + fraConv_swap[i][0] + suffix_prop_swap;
+		    AQLString key = tmpCurrency + ".sde.yield.fra." + fraConv_swap[i][0] + suffix_prop_swap;
 		    key.toLower(); 
-		    LAString data = fraConv_swap[i][1];
+		    AQLString data = fraConv_swap[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -4378,23 +4378,23 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( futureConv_swap, "Invalid Futures Conventions" )
 	    for(size_t i=0; i<futureConv_swap.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.future." + futureConv_swap[i][0] + suffix_prop_swap;
+		    AQLString key = tmpCurrency + ".sde.yield.future." + futureConv_swap[i][0] + suffix_prop_swap;
 		    key.toLower(); 
-		    LAString data = futureConv_swap[i][1];
+		    AQLString data = futureConv_swap[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
 		
 	    //swap adjust mode
-	    LAString tmpBasisCurveName;
+	    AQLString tmpBasisCurveName;
 	    if (isswaptenoradjust)
 	    {
             AQ_REQUIRE( adjustSwapConv_swap.size() > 0, "Adjustment Basis Swap Conventions Block Missing - Must provide Basis Swap convention settings when isSwapTenorAdjust = True" )
             AQ_REQUIRE( adjustSwapRates_swap.size() > 0, "Adjustment Basis Swap Rates Block Missing - Must provide Basis Swap rates when isSwapTenorAdjust = True" )
 
 		    tmpBasisCurveName = THREESIXBASIS;
-		    LAString adjsuffix_prop;
-		    LAString adjsuffix_data;
+		    AQLString adjsuffix_prop;
+		    AQLString adjsuffix_data;
 		    if (tmpBasisCurveName != STD)
 		    {
 			    adjsuffix_prop = "." + tmpBasisCurveName;
@@ -4406,9 +4406,9 @@ namespace etrading
 		    MLIB_2D_MATRIX_CHECK( adjustSwapConv_swap, "Invalid Basis Swap or AdjustSwapConv Conventions" )
 		    for(size_t i=0; i<adjustSwapConv_swap.size(); i++)
 		    {
-			    LAString key = tmpCurrency + ".sde.yield.basis." + adjustSwapConv_swap[i][0] + adjsuffix_prop;
+			    AQLString key = tmpCurrency + ".sde.yield.basis." + adjustSwapConv_swap[i][0] + adjsuffix_prop;
 			    key.toLower(); 
-			    LAString data = adjustSwapConv_swap[i][1];
+			    AQLString data = adjustSwapConv_swap[i][1];
 			    if (key.findString("discount") == -1 && key.findString("forecast") == -1) 
 			    {
 				    data.toLower();
@@ -4417,28 +4417,28 @@ namespace etrading
 		    }
 	
 		    tmpBasisCurveName.toLower();
-		    LAString basisEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName;
+		    AQLString basisEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName;
 
 		    //swapfile
-		    LAString adjfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
+		    AQLString adjfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
 		    if (adjfile == AQ_NO_DATA)
 		    {
-			    adjfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + adjsuffix_data + LAString(".csv");
+			    adjfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_basisswap") + adjsuffix_data + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + adjsuffix_prop, adjfile);
 		    }
 
-		    LAString adjstream;
-		    LAString usegrid = "";
+		    AQLString adjstream;
+		    AQLString usegrid = "";
 		    MLIB_2D_MATRIX_CHECK( adjustSwapConv_swap, "Invalid Basis Swap Rates or AdjustSwapRates Rates" )
 		    for(size_t i=0; i<adjustSwapRates_swap.size(); i++)
 		    {
 			    adjstream += adjustSwapRates_swap[i][0];
 			    double adjrate = adjustSwapRates_swap[i][1].getDoubleValue() * 10000.0;
-			    adjstream += "," + LAString(adjrate) + LF;
+			    adjstream += "," + AQLString(adjrate) + LF;
 
 			    if (adjustSwapRates_swap[i].size() == 3)
 			    {
-				    LAString useGridFrag = adjustSwapRates_swap[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = adjustSwapRates_swap[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid += adjustSwapRates_swap[i][0] + ":";
 				    else usegrid += "NONE:";
 			    }
@@ -4456,37 +4456,37 @@ namespace etrading
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_USEGRID + "." + tmpBasisCurveName, usegrid);
 		    }
 
-		    LAString tmpCurveName = tmpBasisCurveName; tmpCurveName.toUpper();
+		    AQLString tmpCurveName = tmpBasisCurveName; tmpCurveName.toUpper();
 		    tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
 		    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 		    { 
-			    useMarkets += LAString(MULTI_STATIC_DATA_DELIMITER) + tmpBasisCurveName;
+			    useMarkets += AQLString(MULTI_STATIC_DATA_DELIMITER) + tmpBasisCurveName;
 		    }
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MARKETTYPE + "." + tmpBasisCurveName, MARKETTYPE_BASIS);
 	    }
 
-	    LAString usegrid_libor = "",usegrid_swap = "",usegrid_fra = "",usegrid_future = "";
+	    AQLString usegrid_libor = "",usegrid_swap = "",usegrid_fra = "",usegrid_future = "";
 
 	    //set Libor Object;
-	    LAString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap;
+	    AQLString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap;
 
-	    LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap);
+	    AQLString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap);
 	    if (liborfile == AQ_NO_DATA)
 	    {
-		    liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor") + suffix_data_swap + LAString(".csv");
+		    liborfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_libor") + suffix_data_swap + AQLString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap, liborfile);
 	    }
-	    LAString liborstream;
+	    AQLString liborstream;
 	    MLIB_2D_MATRIX_CHECK( liborRates_swap, "Invalid Libor Fixing and Reset Rates" )
 	    for(size_t i=0; i<liborRates_swap.size(); i++)
 	    {
 		    liborstream += liborRates_swap[i][0];
 		    double lrate = liborRates_swap[i][1].getDoubleValue() * 100.0;
-		    liborstream += "," + LAString(lrate) + LF;
+		    liborstream += "," + AQLString(lrate) + LF;
 
 		    if (liborRates_swap[i].size() == 3)
 		    {
-			    LAString useGridFrag = liborRates_swap[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = liborRates_swap[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE") 
 			    {
 				    usegrid_libor += liborRates_swap[i][0] + ":";
@@ -4502,8 +4502,8 @@ namespace etrading
 
 	    //set fwd swap
 	    bool areSwapsForwardStarting = false;
-	    LAString isFwdSwap_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + suffix_prop_swap);
-	    LADataBool tmpAttrB;
+	    AQLString isFwdSwap_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + suffix_prop_swap);
+	    AQLDataBool tmpAttrB;
 	    if (isFwdSwap_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFwdSwap_str);
@@ -4511,49 +4511,49 @@ namespace etrading
 	    }
 
 	    //set Swap Object;
-	    LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap);
+	    AQLString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap);
 	    if (swapfile == AQ_NO_DATA)
 	    {
-		    swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap") + suffix_data_swap + LAString(".csv");
+		    swapfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_swap") + suffix_data_swap + AQLString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap, swapfile);
 	    }
-	    LAString swapstream;
+	    AQLString swapstream;
 	    MLIB_2D_MATRIX_CHECK( swapRates_swap, "Invalid Swap Rates" )
 	    for(size_t i=0; i<swapRates_swap.size(); i++)
 	    {
 		    swapstream += swapRates_swap[i][0];
 		    double srate = swapRates_swap[i][1].getDoubleValue() * 100.0;
-		    swapstream += "," + LAString(srate);
+		    swapstream += "," + AQLString(srate);
 		    // for fwd swap
 		    if (areSwapsForwardStarting)
 		    {
 			    if (swapRates_swap[i].size() < 5)
 			    {
-                    throw LACoreInvalidData("FwdSwap size error",__FILE__,__LINE__);
+                    throw AQLCoreInvalidData("FwdSwap size error",__FILE__,__LINE__);
 			    }
 
-			    LAString isDate_str = swapRates_swap[i][2];
+			    AQLString isDate_str = swapRates_swap[i][2];
 			    swapstream += "," + isDate_str.toUpper();
 			    if (isDate_str == "TRUE") 
 			    {
-				    const LADate& startdate = stringToDate(swapRates_swap[i][3]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(swapRates_swap[i][3]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    swapstream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(swapRates_swap[i][4]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(swapRates_swap[i][4]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    swapstream += "," + enddate_str;
 			    }
 			    else
 			    {
-				    LAString startterm_str = swapRates_swap[i][3];
+				    AQLString startterm_str = swapRates_swap[i][3];
 				    swapstream += "," + startterm_str.toUpper();
-				    LAString tenor_str = swapRates_swap[i][4];
+				    AQLString tenor_str = swapRates_swap[i][4];
 				    swapstream += "," + tenor_str.toUpper();
 			    }
 			    // set use grid
 			    if (swapRates_swap[i].size() == 6)
 			    {
-				    LAString useGridFrag = swapRates_swap[i][5]; upper(useGridFrag);
+				    AQLString useGridFrag = swapRates_swap[i][5]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") 
 				    {
 					    usegrid_swap += swapRates_swap[i][0] + ":";
@@ -4567,7 +4567,7 @@ namespace etrading
 		    // set use grid
 		    else if (swapRates_swap[i].size() == 3)
 		    {
-			    LAString useGridFrag = swapRates_swap[i][2]; upper(useGridFrag);
+			    AQLString useGridFrag = swapRates_swap[i][2]; upper(useGridFrag);
 			    if (useGridFrag == "TRUE") 
 			    {
 				    usegrid_swap += swapRates_swap[i][0] + ":";
@@ -4584,7 +4584,7 @@ namespace etrading
 
 	    //set FRA Object;
 	    bool isFRAUse = false;
-	    LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + suffix_prop_swap);
+	    AQLString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + suffix_prop_swap);
 	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
@@ -4598,39 +4598,39 @@ namespace etrading
             AQ_REQUIRE( fraConv_swap.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
             AQ_REQUIRE( fra3mRates_swap.size() > 0 || fra6mRates_swap.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
 
-		    LAString fraFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + suffix_prop_swap);
+		    AQLString fraFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + suffix_prop_swap);
 		    if (fraFile == AQ_NO_DATA)
 		    {
-			    fraFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fra") + suffix_data_swap + LAString(".csv");
+			    fraFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_fra") + suffix_data_swap + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + suffix_prop_swap, fraFile);
 		    }
 
 		    if (fra3mRates_swap.size() != 0)
 		    {
-			    LAString fra3mstream = etrading::buildFRAMarketDataFile(fraFile, fra3mRates_swap, areSwapsForwardStarting, usegrid_fra);	
+			    AQLString fra3mstream = etrading::buildFRAMarketDataFile(fraFile, fra3mRates_swap, areSwapsForwardStarting, usegrid_fra);	
 
 			    std::istringstream *pfra3mstream = new std::istringstream(fra3mstream.getCString());
 			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra3mstream);
 		    }
 		    else if (fra6mRates_swap.size() != 0)
 		    {
-			    LAString fra6mstream = etrading::buildFRAMarketDataFile(fraFile, fra6mRates_swap, areSwapsForwardStarting, usegrid_fra);
+			    AQLString fra6mstream = etrading::buildFRAMarketDataFile(fraFile, fra6mRates_swap, areSwapsForwardStarting, usegrid_fra);
 
 			    std::istringstream *pfra6mstream = new std::istringstream(fra6mstream.getCString());
 			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra6mstream);
 		    }
 		    else
 		    {
-			    throw LACoreInvalidData("#Error - No FRA market data is provided",__FILE__,__LINE__);
+			    throw AQLCoreInvalidData("#Error - No FRA market data is provided",__FILE__,__LINE__);
 		    }
 	    }
 
 	    //set future Object;
 	    bool isFutureUse = false;
-	    LAString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + suffix_prop_swap);
+	    AQLString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + suffix_prop_swap);
 	    if (tmpFutureStr != AQ_NO_DATA)
 	    {
-		    LADataBool tmpAttrB;
+		    AQLDataBool tmpAttrB;
 		    tmpAttrB.convertFromString(tmpFutureStr);
 		    isFutureUse = tmpAttrB.get();
 	    }
@@ -4640,10 +4640,10 @@ namespace etrading
             AQ_REQUIRE( futureConv_swap.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
             AQ_REQUIRE( futureRates_swap.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
 
-		    LAString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap);
+		    AQLString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap);
 		    if (futureFile == AQ_NO_DATA)
 		    {
-			    futureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_future") + suffix_data_swap + LAString(".csv");
+			    futureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_future") + suffix_data_swap + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap, futureFile);
 		    }
 		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(futureFile), createFutureStream(futureRates_swap, usegrid_future));
@@ -4725,11 +4725,11 @@ namespace etrading
 	    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Begin - OIS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-	    LAString suffix_prop_OIS("");
-	    LAString suffix_data_OIS("");
+	    AQLString suffix_prop_OIS("");
+	    AQLString suffix_data_OIS("");
 
 	    // If the user-given market name is not STD, concatenate it to useMarkets 
-	    LAString useMarkets_OIS = useMarkets;
+	    AQLString useMarkets_OIS = useMarkets;
 	    if (generateCurveName_OIS != STD)
 	    {
 		    suffix_data_OIS = "_" + generateCurveName_OIS;
@@ -4737,7 +4737,7 @@ namespace etrading
 		    suffix_prop_OIS = "." + generateCurveName_OIS;
 		    suffix_prop_OIS.toLower();
 
-		    LAString tmpCurveName = generateCurveName_OIS; 
+		    AQLString tmpCurveName = generateCurveName_OIS; 
 		    tmpCurveName.toUpper();
 		    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 		    {
@@ -4747,7 +4747,7 @@ namespace etrading
 			    }
 			    else 
 			    {
-				    useMarkets_OIS += LAString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName_OIS;
+				    useMarkets_OIS += AQLString(MULTI_STATIC_DATA_DELIMITER) + generateCurveName_OIS;
 			    }
 		    }	
 	    }
@@ -4761,7 +4761,7 @@ namespace etrading
 			    }
 			    else 
 			    {
-				    useMarkets_OIS += LAString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
+				    useMarkets_OIS += AQLString(MULTI_STATIC_DATA_DELIMITER) + SWAP;
 			    }
 		    }
 	    }
@@ -4773,10 +4773,10 @@ namespace etrading
 	    else
 	    {
 		    // New code for dual bootstrapping - ensure the implicit curve name is one of the curve index names
-		    LAString indexNames = curveNames_OIS;
+		    AQLString indexNames = curveNames_OIS;
 		    if (indexNames.findString(marketName_OIS) == -1)
 		    {
-			    indexNames = marketName_OIS + LAString(MULTI_STATIC_DATA_DELIMITER) + indexNames;
+			    indexNames = marketName_OIS + AQLString(MULTI_STATIC_DATA_DELIMITER) + indexNames;
 		    }
 
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ASSIGNEDCURVE + suffix_prop_OIS, indexNames);
@@ -4785,7 +4785,7 @@ namespace etrading
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + suffix_prop_OIS, "DAILYCOMPOUNDING");
 
 	    // Set curve type
-    //	LAString curveType = CURVETYPE_OIS;
+    //	AQLString curveType = CURVETYPE_OIS;
     //	irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffix_prop_OIS, curveType);
 	
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DFCURVENAME + suffix_prop_OIS);
@@ -4793,9 +4793,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( generateProp_OIS, "Invalid CurveProperties or generateProp Conventions" )
 	    for(size_t i=0; i<generateProp_OIS.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.generator." + generateProp_OIS[i][0] + suffix_prop_OIS;
+		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp_OIS[i][0] + suffix_prop_OIS;
 		    key.toLower();
-		    LAString data = generateProp_OIS[i][1];
+		    AQLString data = generateProp_OIS[i][1];
 		    if (key.findString("dfcurvename") == -1) data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }
@@ -4813,38 +4813,38 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( oisConv_OIS, "Invalid OIS Swap Conventions" )	
 	    for(size_t i=0; i<oisConv_OIS.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.ois." + oisConv_OIS[i][0] + suffix_prop_OIS;
+		    AQLString key = tmpCurrency + ".sde.yield.ois." + oisConv_OIS[i][0] + suffix_prop_OIS;
 		    key.toLower(); 
-		    LAString data = oisConv_OIS[i][1];
+		    AQLString data = oisConv_OIS[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }	
     
-	    LAString oisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffix_prop_OIS);
+	    AQLString oisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffix_prop_OIS);
 	    if (oisFile == AQ_NO_DATA)
 	    {
-		    oisFile = LAString("data/in/") + tmpCurrency + LAString("_yield_ois_oiscurve.csv");
+		    oisFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_ois_oiscurve.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffix_prop_OIS, oisFile);
 	    }
 
-	    LAString fedFundFutureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffix_prop_OIS);
+	    AQLString fedFundFutureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffix_prop_OIS);
 	    if (fedFundFutureFile == AQ_NO_DATA)
 	    {
-		    fedFundFutureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fffuture.csv");
+		    fedFundFutureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_fffuture.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffix_prop_OIS, fedFundFutureFile);
 	    }
 
-	    LAString histFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffix_prop_OIS);
+	    AQLString histFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffix_prop_OIS);
 	    if (histFile == AQ_NO_DATA)
 	    {
-		    histFile = LAString("data/in/") + tmpCurrency + LAString("_yield_historical_ois_oiscurve.csv");
+		    histFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_historical_ois_oiscurve.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffix_prop_OIS, histFile);
 	    }
 
-	    LAString oisStream;
-	    LAString fedFundFutureStream;
-	    LAString usegrid_ois = "";
-	    LAString usegrid_fffuture = "";
+	    AQLString oisStream;
+	    AQLString fedFundFutureStream;
+	    AQLString usegrid_ois = "";
+	    AQLString usegrid_fffuture = "";
 
 	    MLIB_2D_MATRIX_CHECK( oisRates_OIS, "Invalid OIS Swap Rates" )	
 	    for(size_t i=0; i<oisRates_OIS.size(); i++)
@@ -4854,19 +4854,19 @@ namespace etrading
 			    fedFundFutureStream += oisRates_OIS[i][0];
 
 			    if (oisRates_OIS[i].size() != 3 && oisRates_OIS[i].size() != 5)
-				    throw LACoreInvalidData("FF input size error",__FILE__,__LINE__);
+				    throw AQLCoreInvalidData("FF input size error",__FILE__,__LINE__);
 
 			    //in case of FF, quoted value is price
 			    double oisRate = oisRates_OIS[i][1].getDoubleValue();
-			    fedFundFutureStream += "," + LAString(oisRate);
+			    fedFundFutureStream += "," + AQLString(oisRate);
 
 			    if (oisRates_OIS[i].size() == 5)
 			    {
-				    const LADate& startdate = stringToDate(oisRates_OIS[i][2]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(oisRates_OIS[i][2]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    fedFundFutureStream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(oisRates_OIS[i][3]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(oisRates_OIS[i][3]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    fedFundFutureStream += "," + enddate_str;
 			    }
 
@@ -4874,13 +4874,13 @@ namespace etrading
 			
 			    if (oisRates_OIS[i].size() == 5)
 			    {
-				    LAString useGridFrag = oisRates_OIS[i][4]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates_OIS[i][4]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_fffuture += oisRates_OIS[i][0] + ":";
 				    else usegrid_fffuture += "NONE:";
 			    }
 			    else if (oisRates_OIS[i].size() == 3)
 			    {
-				    LAString useGridFrag = oisRates_OIS[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates_OIS[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_fffuture += oisRates_OIS[i][0] + ":";
 				    else usegrid_fffuture += "NONE:";
 			    }
@@ -4898,35 +4898,35 @@ namespace etrading
                     || oisRates_OIS[i][0].findString("MPC") != -1)      // *** GENERIC *** Monetary Policy Committee Swaps
 			    {
 				    if (oisRates_OIS[i].size() < 4)
-					    throw LACoreInvalidData("short term market needs StartDate and EndDate",__FILE__,__LINE__);
+					    throw AQLCoreInvalidData("short term market needs StartDate and EndDate",__FILE__,__LINE__);
 
 				    double oisRate = oisRates_OIS[i][1].getDoubleValue() * 100.0;
-				    oisStream += "," + LAString(oisRate);
+				    oisStream += "," + AQLString(oisRate);
 
-				    const LADate& startdate = stringToDate(oisRates_OIS[i][2]);
-				    LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& startdate = stringToDate(oisRates_OIS[i][2]);
+				    AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				    oisStream += "," + startdate_str;
-				    const LADate& enddate = stringToDate(oisRates_OIS[i][3]);
-				    LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				    const AQLDate& enddate = stringToDate(oisRates_OIS[i][3]);
+				    AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				    oisStream += "," + enddate_str;
 			    }
 			    else //normal case
 			    {
 				    double oisRate = oisRates_OIS[i][1].getDoubleValue() * 100.0;
-				    oisStream += "," + LAString(oisRate);
+				    oisStream += "," + AQLString(oisRate);
 			    }
 			
 			    oisStream += LF;
 			
 			    if (oisRates_OIS[i].size() == 5)
 			    {
-				    LAString useGridFrag = oisRates_OIS[i][4]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates_OIS[i][4]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_ois += oisRates_OIS[i][0] + ":";
 				    else usegrid_ois += "NONE:";
 			    }
 			    else if (oisRates_OIS[i].size() == 3)
 			    {
-				    LAString useGridFrag = oisRates_OIS[i][2]; upper(useGridFrag);
+				    AQLString useGridFrag = oisRates_OIS[i][2]; upper(useGridFrag);
 				    if (useGridFrag == "TRUE") usegrid_ois += oisRates_OIS[i][0] + ":";
 				    else usegrid_ois += "NONE:";
 			    }
@@ -4957,15 +4957,15 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_USEGRID + suffix_prop_OIS, usegrid_fffuture);
 	    }
 
-	    LAString histStream;
+	    AQLString histStream;
 	    MLIB_2D_MATRIX_CHECK( histRates_OIS, "Invalid OIS Fixing and Reset Rates" )
 	    for(size_t i=0; i<histRates_OIS.size(); i++)
 	    {
-		    const LADate& histdate = stringToDate(histRates_OIS[i][0]);
-		    LAString histdate_str = histdate.stringWithFormat("YYYYMMDD");
+		    const AQLDate& histdate = stringToDate(histRates_OIS[i][0]);
+		    AQLString histdate_str = histdate.stringWithFormat("YYYYMMDD");
 		    histStream += histdate_str;
 		    double histRate = histRates_OIS[i][1].getDoubleValue() * 100.0;
-		    histStream += "," + LAString(histRate);
+		    histStream += "," + AQLString(histRate);
 		    histStream += LF;
 	    }
 	    std::istringstream *pHISTStream = new std::istringstream(histStream.getCString());
@@ -4974,20 +4974,20 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( lobasisConv_OIS, "Invalid Libor-OIS Basis Conventions" )
 	    for(size_t i=0; i<lobasisConv_OIS.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.basis." + lobasisConv_OIS[i][0] + suffix_prop_OIS;
+		    AQLString key = tmpCurrency + ".sde.yield.basis." + lobasisConv_OIS[i][0] + suffix_prop_OIS;
 		    key.toLower(); 
-		    LAString data = lobasisConv_OIS[i][1];
+		    AQLString data = lobasisConv_OIS[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }	
 	
-	    LAString lobasisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS);
+	    AQLString lobasisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS);
 	    if (lobasisfile == AQ_NO_DATA)
 	    {
-		    lobasisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_lobasis") + suffix_prop_OIS + LAString(".csv");
+		    lobasisfile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_lobasis") + suffix_prop_OIS + AQLString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS, lobasisfile);
 	    }
-	    LAString lobasisstream;
+	    AQLString lobasisstream;
 	    MLIB_2D_MATRIX_CHECK( lobasisRates_OIS, "Invalid Libor-OIS Basis Rates" )
 		const size_t lobasisColumnSize = ( lobasisRates_OIS.size() > 0 ) ? lobasisRates_OIS[0].size() : 0;
 
@@ -4996,19 +4996,19 @@ namespace etrading
 			// Libor-OIS Rates Columns: Term, Rate, LiborType (Optional), UseMarketData (Optional)
 		    lobasisstream += lobasisRates_OIS[i][0];
 		    const double lobrate = lobasisRates_OIS[i][1].getDoubleValue() * 100.0;
-		    lobasisstream += "," + LAString(lobrate);
+		    lobasisstream += "," + AQLString(lobrate);
 
 			// Optional Column 3: LiborType
 			if ( lobasisColumnSize > 2 )
 			{
-				const LAString liborType = lobasisRates_OIS[i][2];
+				const AQLString liborType = lobasisRates_OIS[i][2];
 				lobasisstream += "," + liborType;
 			}
 
 			// Optional Column 4: UseMarketData
 			if ( lobasisColumnSize > 3 )
 			{
-				const LAString useMarketData = lobasisRates_OIS[i][3];
+				const AQLString useMarketData = lobasisRates_OIS[i][3];
 				lobasisstream += "," + useMarketData;
 			}
 
@@ -5020,9 +5020,9 @@ namespace etrading
 	    MLIB_2D_MATRIX_CHECK( swapConv_OIS, "Invalid Swap Conventions" )
 	    for(size_t i=0; i<swapConv_OIS.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.swap." + swapConv_OIS[i][0] + suffix_prop_OIS;
+		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv_OIS[i][0] + suffix_prop_OIS;
 		    key.toLower(); 
-		    LAString data = swapConv_OIS[i][1];
+		    AQLString data = swapConv_OIS[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key, data);
 	    }	
@@ -5030,7 +5030,7 @@ namespace etrading
 	    // Remove swap par rate market data from OIS curve
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_OIS);
 	
-	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_ISDUALBOOTSTRAPPING + suffix_prop_OIS, LAString("TRUE"));
+	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_ISDUALBOOTSTRAPPING + suffix_prop_OIS, AQLString("TRUE"));
 
 	    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< End - OIS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -5106,7 +5106,7 @@ namespace etrading
 	    cprop.setStaticData(KEY_CALIB_SERIALIZE_STATUS, "normal");
 	
 	    //testisadjusdf
-	    LAString tmpstr = LAString("jpy"); 
+	    AQLString tmpstr = AQLString("jpy"); 
 	    staticData.setStaticData(tmpstr + STATIC_DATA_KEY_YIELD_GENERATOR_ISADJUSTDF,"false");
 	    tmpstr = "usd";
 	    staticData.setStaticData(tmpstr + STATIC_DATA_KEY_YIELD_GENERATOR_ISADJUSTDF,"false");
@@ -5118,28 +5118,28 @@ namespace etrading
 	    staticData.setStaticData(tmpstr + STATIC_DATA_KEY_YIELD_GENERATOR_ISADJUSTDF,"false");
 
 	    //digitalcoupon set
-	    LAString tmpfxstr = LAString("jpy/usd");
+	    AQLString tmpfxstr = AQLString("jpy/usd");
 	    staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_ISCALLSPREAD, "true");
 	    staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_CALLSPREADVALUE, "0.01");
 
-	    tmpfxstr = LAString("jpy/aud");
+	    tmpfxstr = AQLString("jpy/aud");
 	    staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_ISCALLSPREAD, "true");
 	    staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_CALLSPREADVALUE, "0.01");
 
-	    tmpfxstr = LAString("jpy/eur");
+	    tmpfxstr = AQLString("jpy/eur");
 	    staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_ISCALLSPREAD, "true");
 	    staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_CALLSPREADVALUE, "0.01");
 
-	    tmpfxstr = LAString("jpy/gbp");
+	    tmpfxstr = AQLString("jpy/gbp");
 	    staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_ISCALLSPREAD, "true");
 	    staticData.setStaticData(tmpfxstr + FX_KEY_DEAL_DIGITALCOUPON_CALLSPREADVALUE, "0.01");
     }
 
     void 
     LAUpdateStaticDataManager::
-    setUpDefaultIRStaticData(LADataInstance& dataInstance)
+    setUpDefaultIRStaticData(AQLDataInstance& dataInstance)
     {
-	    const LAString* filepath = etrading::FolderConfig::ir_prop_path();
+	    const AQLString* filepath = etrading::FolderConfig::ir_prop_path();
     
         // Track if Property Files have been loaded
         LAStaticDataImport::getInstance().setIsStaticDataLoaded( ( filepath != NULL ) ? true : false );
@@ -5153,7 +5153,7 @@ namespace etrading
             sst << "#Error: Cannot open ir properties configuration file" << std::endl 
 			    << filepath
 			    ;
-		    throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+		    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 	    }
 
         LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
@@ -5162,8 +5162,8 @@ namespace etrading
 	    while (getline(fin, line)){
 		    line_num++;
 		    const char *c_line = line.c_str();
-		    LAString tmpstr(c_line);
-		    LAStringVector tmp = tmpstr.toToken('=');
+		    AQLString tmpstr(c_line);
+		    AQLStringVector tmp = tmpstr.toToken('=');
 		    if (tmp.size() != 2){
 			    std::stringstream sst;
                 sst << "#Error: ir properties file format is invalid" << std::endl
@@ -5171,7 +5171,7 @@ namespace etrading
 				    << "line : " << line_num << std::endl
 				    << "contents : " << line
 				    ;
-			    throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+			    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 		    }
 
 		    irStaticData.setStaticData(tmp[0],tmp[1]);
@@ -5181,7 +5181,7 @@ namespace etrading
 
     void 
     LAUpdateStaticDataManager::
-    setUpDefaultIRStaticData(LADataInstance& dataInstance, const LAString& filepath)
+    setUpDefaultIRStaticData(AQLDataInstance& dataInstance, const AQLString& filepath)
     {
         etrading::FolderConfig::set_ir_prop_path(filepath);  // creates a copy so no need for a double copy
         setUpDefaultIRStaticData(dataInstance);
@@ -5189,9 +5189,9 @@ namespace etrading
 
     void 
     LAUpdateStaticDataManager::
-    setUpDefaultCalibStaticData(LADataInstance& dataInstance)
+    setUpDefaultCalibStaticData(AQLDataInstance& dataInstance)
     {
-	    const LAString* filepath = etrading::FolderConfig::calib_prop_path();
+	    const AQLString* filepath = etrading::FolderConfig::calib_prop_path();
     
         // Track if Property Files have been loaded
         LAStaticDataImport::getInstance().setIsStaticDataLoaded( ( filepath != NULL ) ? true : false );
@@ -5205,7 +5205,7 @@ namespace etrading
 		    sst << "cannot open calib properties file" << std::endl 
 			    << filepath
 			    ;
-		    throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+		    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 	    }
 
         LAStaticData &calibprop = LACoreDataService::getStaticDataManager().getCalibStaticData();
@@ -5214,8 +5214,8 @@ namespace etrading
 	    while (getline(fin, line)){
 		    line_num++;
 		    const char *c_line = line.c_str();
-		    LAString tmpstr(c_line);
-		    LAStringVector tmp = tmpstr.toToken('=');
+		    AQLString tmpstr(c_line);
+		    AQLStringVector tmp = tmpstr.toToken('=');
 		    if (tmp.size() != 2){
 			    std::stringstream sst;
 			    sst << "calib proerties file format is invalid" << std::endl
@@ -5223,7 +5223,7 @@ namespace etrading
 				    << "line : " << line_num << std::endl
 				    << "contents : " << line
 				    ;
-			    throw LACoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
+			    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 		    }
 
 		    calibprop.setStaticData(tmp[0],tmp[1]);
@@ -5233,7 +5233,7 @@ namespace etrading
 
     void 
     LAUpdateStaticDataManager::
-    setUpDefaultCalibStaticData(LADataInstance& dataInstance, LAString filepath)
+    setUpDefaultCalibStaticData(AQLDataInstance& dataInstance, AQLString filepath)
     {
         etrading::FolderConfig::set_calib_prop_path(filepath);
         setUpDefaultCalibStaticData(dataInstance);
@@ -5253,9 +5253,9 @@ namespace etrading
     }
 
     std::istringstream* 
-    LAUpdateStaticDataManager::createFutureStream(const LAStringMatrix& future_rates, LAString& usegrid_future)
+    LAUpdateStaticDataManager::createFutureStream(const AQLStringMatrix& future_rates, AQLString& usegrid_future)
     {
-        LAString futureStream;
+        AQLString futureStream;
         size_t adjustDataMinimumColumns = 3;
         AQ_MATRIX_CHECK( future_rates, adjustDataMinimumColumns, "Invalid Futures Data" )
         for(size_t i=0; i<future_rates.size(); i++)
@@ -5263,17 +5263,17 @@ namespace etrading
             if (future_rates[i].size() <= 4)
             {
                 if (future_rates[i][0].size() < 3)
-                    throw LACoreInvalidData("Invalid Futures Data: TICKER code should have 4 characters.",__FILE__,__LINE__);
+                    throw AQLCoreInvalidData("Invalid Futures Data: TICKER code should have 4 characters.",__FILE__,__LINE__);
 
                 futureStream += future_rates[i][0];
                 double futureRate = future_rates[i][1].getDoubleValue();
-                futureStream += "," + LAString(futureRate);
+                futureStream += "," + AQLString(futureRate);
                 double futureVol = future_rates[i][2].getDoubleValue();
-                futureStream += "," + LAString(futureVol) + LF;
+                futureStream += "," + AQLString(futureVol) + LF;
 
                 if (future_rates[i].size() == 4)
                 {
-                    LAString includeFuture = future_rates[i][3]; upper(includeFuture);
+                    AQLString includeFuture = future_rates[i][3]; upper(includeFuture);
 					if ( includeFuture == "TRUE" )
 					{
 						usegrid_future += future_rates[i][0] + ":";
@@ -5284,27 +5284,27 @@ namespace etrading
 					}
 					else
 					{
-						throw LACoreInvalidData("Invalid Futures Data: In 4-column format, expected a boolean flag in column 4. Expected format: TICKER  PRICE  VOL/CONV  USE", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("Invalid Futures Data: In 4-column format, expected a boolean flag in column 4. Expected format: TICKER  PRICE  VOL/CONV  USE", __FILE__, __LINE__);
 					}
                 }
             }
             else if (future_rates[i].size() <= 6)
             {
                 futureStream += future_rates[i][0];
-				const LADate& startdate = stringToDate(future_rates[i][1]);
-                LAString startdate_str = startdate.stringWithFormat("YYYYMMDD");
+				const AQLDate& startdate = stringToDate(future_rates[i][1]);
+                AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
                 futureStream += "," + startdate_str;
-				const LADate& enddate = stringToDate(future_rates[i][2]); 
-                LAString enddate_str = enddate.stringWithFormat("YYYYMMDD");
+				const AQLDate& enddate = stringToDate(future_rates[i][2]); 
+                AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
                 futureStream += "," + enddate_str;
                 double futureRate = future_rates[i][3].getDoubleValue();
-                futureStream += "," + LAString(futureRate);
+                futureStream += "," + AQLString(futureRate);
                 double futureVol = future_rates[i][4].getDoubleValue();
-                futureStream += "," + LAString(futureVol) + LF;
+                futureStream += "," + AQLString(futureVol) + LF;
 
                 if (future_rates[i].size() == 6)
                 {
-                    LAString includeFuture = future_rates[i][5]; upper(includeFuture);
+                    AQLString includeFuture = future_rates[i][5]; upper(includeFuture);
 					if ( includeFuture == "TRUE" )
 					{
 						usegrid_future += future_rates[i][0] + ":";
@@ -5315,7 +5315,7 @@ namespace etrading
 					}
 					else
 					{
-						throw LACoreInvalidData("Invalid Futures Data: In 6-column format, expected a boolean flag in column 6. Expected format: TICKER  STARTDATE  ENDDATE  PRICE  VOL/CONV  USE", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("Invalid Futures Data: In 6-column format, expected a boolean flag in column 6. Expected format: TICKER  STARTDATE  ENDDATE  PRICE  VOL/CONV  USE", __FILE__, __LINE__);
 					}
                 }
             }
@@ -5333,7 +5333,7 @@ namespace etrading
 
     */
     void
-    LAUpdateStaticDataManager::setStaticDataValue(LAStaticData &staticData, const LAString &key, const LAString &val, const bool is_override)
+    LAUpdateStaticDataManager::setStaticDataValue(LAStaticData &staticData, const AQLString &key, const AQLString &val, const bool is_override)
     {
 	    if (is_override)
 	    {
@@ -5341,7 +5341,7 @@ namespace etrading
 	    }
 	    else
 	    {
-		    const LAString orig = staticData.getStaticData(key);
+		    const AQLString orig = staticData.getStaticData(key);
 		    if (orig == AQ_NO_DATA)
 		    {
 			    staticData.setStaticData(key , val);
@@ -5350,10 +5350,10 @@ namespace etrading
     }
 
     void
-    LAUpdateStaticDataManager::SetUpFundingSpread(LADataInstance* dataInstance, const LAStringMatrix &fundingSpread)
+    LAUpdateStaticDataManager::SetUpFundingSpread(AQLDataInstance* dataInstance, const AQLStringMatrix &fundingSpread)
     {
 	    // save in string stream
-	    LAString stream;
+	    AQLString stream;
 	    MLIB_2D_MATRIX_CHECK( fundingSpread, "Invalid Funding Spreads")
 	    for (unsigned int i = 0; i < fundingSpread.size(); ++i)
 	    {
@@ -5361,7 +5361,7 @@ namespace etrading
 		    stream += "," + fundingSpread[i][1] + LF;
 	    }
 	    LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
-	    LAString fdspdfile = staticData.getStaticData(KEY_FUNDINGSPREAD_FILE);
+	    AQLString fdspdfile = staticData.getStaticData(KEY_FUNDINGSPREAD_FILE);
 	    std::istringstream *pstream = new std::istringstream(stream.getCString());
 	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fdspdfile), pstream);
     }
@@ -5405,12 +5405,12 @@ namespace etrading
     }
 
     void
-    LAUpdateStaticDataManager::SetUpPCA(LADataInstance* dataInstance, const DoubleMatrix& corr, const size_t no_factors, const LAString& id)
+    LAUpdateStaticDataManager::SetUpPCA(AQLDataInstance* dataInstance, const DoubleMatrix& corr, const size_t no_factors, const AQLString& id)
     {
 
-	    LAObjectPool& objPool = dataInstance->getObjectPool();
+	    AQLObjectPool& objPool = dataInstance->getObjectPool();
 	    LAMathCorrelation* cor_obj = NULL;
-	    LAString name = PREFIX_COR + id;
+	    AQLString name = PREFIX_COR + id;
 	    if(!objPool.getObject(name).isDefined())
 	    {
 		    cor_obj = new LAMathCorrelation(dataInstance);
@@ -5423,7 +5423,7 @@ namespace etrading
 	    }
 
 	    if (no_factors > corr.size())
-		    throw LACoreInvalidData("factornumber is bigger than correlation size", __FILE__, __LINE__);
+		    throw AQLCoreInvalidData("factornumber is bigger than correlation size", __FILE__, __LINE__);
 
 	    DoubleArray dummy_tgrid(corr.size());
 	    for(size_t i = 0; i < corr.size(); i++)
@@ -5434,33 +5434,33 @@ namespace etrading
 
 	    cor_obj->getIsMultiVol().set(false);
 
-	    dynamic_cast<LADataInt&>(cor_obj->getData(IR_CALIBRATION_DATA_FACTORNUM_AFTER, ISDEFINED).get()).set(no_factors);
-	    dynamic_cast<LADataBool&>(cor_obj->getData(IR_CALIBRATION_DATA_ISOPTIM, ISDEFINED).get()).set(false);
+	    dynamic_cast<AQLDataInt&>(cor_obj->getData(IR_CALIBRATION_DATA_FACTORNUM_AFTER, ISDEFINED).get()).set(no_factors);
+	    dynamic_cast<AQLDataBool&>(cor_obj->getData(IR_CALIBRATION_DATA_ISOPTIM, ISDEFINED).get()).set(false);
 
 	    cor_obj->setCorrelation(corr);
 	    cor_obj->calcFactorLoading();
     }
 
     DoubleMatrix
-    LAUpdateStaticDataManager::GetPCAResult(LADataInstance* dataInstance, const LAString& type, const LAString& id)
+    LAUpdateStaticDataManager::GetPCAResult(AQLDataInstance* dataInstance, const AQLString& type, const AQLString& id)
     {
-	    LAObjectPool& objPool = dataInstance->getObjectPool();
-	    LAString name = PREFIX_COR + id;
+	    AQLObjectPool& objPool = dataInstance->getObjectPool();
+	    AQLString name = PREFIX_COR + id;
 	    LAMathCorrelation cor_obj = dynamic_cast<LAMathCorrelation& >(objPool.getObject(name, ENCHKTYPE_ISDEFINED).get());
 
 	    DoubleMatrix ret;
-	    if(type == LAString("EIGEN_VECTORS"))
+	    if(type == AQLString("EIGEN_VECTORS"))
 	    {
-		    ret = dynamic_cast<LADataDoubleMatrix& >(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVECTORS, ISNOTNULL).get()).get();
+		    ret = dynamic_cast<AQLDataDoubleMatrix& >(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVECTORS, ISNOTNULL).get()).get();
 	    }
-	    else if(type == LAString("EIGEN_VALUES"))
+	    else if(type == AQLString("EIGEN_VALUES"))
 	    {
-		    DoubleArray tmp = dynamic_cast<LADataDoubles&>(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVALUES, ISNOTNULL).get()).get();
+		    DoubleArray tmp = dynamic_cast<AQLDataDoubles&>(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVALUES, ISNOTNULL).get()).get();
 		    ret.push_back(tmp);
 	    }
-	    else if (type == LAString("POV"))
+	    else if (type == AQLString("POV"))
 	    {
-		    DoubleArray tmp = dynamic_cast<LADataDoubles&>(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVALUES, ISNOTNULL).get()).get();
+		    DoubleArray tmp = dynamic_cast<AQLDataDoubles&>(cor_obj.getData(IR_CALIBRATION_DATA_EIGENVALUES, ISNOTNULL).get()).get();
 		    double sum_tmp = 0.;
 		    for(unsigned int i = 0; i < tmp.size(); i++)
 			    sum_tmp += tmp[i];
@@ -5470,8 +5470,8 @@ namespace etrading
 	    }
 	    else
 	    {
-		    LAString msg = LAString("Unknown result type: ") + type;
-            throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		    AQLString msg = AQLString("Unknown result type: ") + type;
+            throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	    }
 
 	    return ret;
@@ -5485,37 +5485,37 @@ namespace etrading
     *  @param [in]		curveConv			General curve properties such as asofdate, ccy, interp, etc
     *  @param [in]		collateralCurves	The group of collateral curves out of which the CTD curve is constructed
     */
-    void LAUpdateStaticDataManager::setUpCheapestToDeliverCurve(LADataInstance* dataInstance,
-												     const LAString& curveCollection, 
-												     const LAString& curveName, 
-												     const LAString& curveIndexes, 
-												     const LAStringMatrix& curveConv,
-												     const LAStringVector& collateralCurves)
+    void LAUpdateStaticDataManager::setUpCheapestToDeliverCurve(AQLDataInstance* dataInstance,
+												     const AQLString& curveCollection, 
+												     const AQLString& curveName, 
+												     const AQLString& curveIndexes, 
+												     const AQLStringMatrix& curveConv,
+												     const AQLStringVector& collateralCurves)
     {
 	    LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
-	    LAObjectPool &objPool = dataInstance->getObjectPool();
+	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 
-	    LAStringMatrix tmpInfo = curveConv;
+	    AQLStringMatrix tmpInfo = curveConv;
 	    upper(tmpInfo);
 
-	    LADate asofdate = stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	    AQLDate asofdate = stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
         LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	
-	    LAString currency;
-	    LAObjectHolder objHolder = objPool.getObject(curveCollection, ENCHKTYPE_NOCHECK);
+	    AQLString currency;
+	    AQLObjectHolder objHolder = objPool.getObject(curveCollection, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
 	    {
-		    LAObject& yldEntity = objHolder.get();
-		    const LADataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
+		    AQLObject& yldEntity = objHolder.get();
+		    const AQLDataHolder* dh = &(yldEntity.getData(IR_CALIBRATION_DATA_CURRENCY));
 		    if(dh->isDefined() && !dh->isNull())
 		    {
-			    currency = (dynamic_cast<const LADataString&> (dh->get())).get();
+			    currency = (dynamic_cast<const AQLDataString&> (dh->get())).get();
 		    }
 		    else
 		    {
-			    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+			    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 			    {
-				    currency = LAString("DUMMY");
+				    currency = AQLString("DUMMY");
 			    }
 			    else
 			    {
@@ -5525,25 +5525,25 @@ namespace etrading
 	    }
 	    else
 	    {
-		    if (LAFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
+		    if (AQLFunctionUtilities::findRowsNumber(tmpInfo,CURVEINPUT_CURRENCY) < 0)
 		    {
-			    currency = LAString("DUMMY");
+			    currency = AQLString("DUMMY");
 		    }
 		    else
 		    {
 			    currency = chgrow(tmpInfo,CURVEINPUT_CURRENCY,1);
 		    } 	
 	    }
-	    LAString tmpCurrency = currency; 
+	    AQLString tmpCurrency = currency; 
 	    tmpCurrency.toLower();
 	
 	    //set market rate	
 	    if (curveName == "" || curveName == STD) 
 	    {
-		    throw LACoreInvalidData("#Error: Do not use STD or blank for CTD curve name!",__FILE__,__LINE__);
+		    throw AQLCoreInvalidData("#Error: Do not use STD or blank for CTD curve name!",__FILE__,__LINE__);
 	    }
 
-	    LAString staticDataSuffix;	
+	    AQLString staticDataSuffix;	
 	    staticDataSuffix = "." + curveName;
 	    staticDataSuffix.toLower();
 		
@@ -5557,16 +5557,16 @@ namespace etrading
 	    }
 	
 	    // Set curve type
-	    LAString curveType = CURVETYPE_CHEAPESTTODELIVER;
+	    AQLString curveType = CURVETYPE_CHEAPESTTODELIVER;
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + staticDataSuffix, curveType);
 
 	    // general info
 	    MLIB_2D_MATRIX_CHECK( curveConv, "Invalid Curve Properties or Curve Conventions")
 	    for(size_t i=0; i<curveConv.size(); i++)
 	    {
-		    LAString key = tmpCurrency + ".sde.yield.generator." + curveConv[i][0] + staticDataSuffix;
+		    AQLString key = tmpCurrency + ".sde.yield.generator." + curveConv[i][0] + staticDataSuffix;
 		    key.toLower();
-		    LAString data = curveConv[i][1];
+		    AQLString data = curveConv[i][1];
 		    data.toLower();
 		    irStaticData.setStaticData(key,data);
 	    }
@@ -5576,20 +5576,20 @@ namespace etrading
 	    // set collateral curves
 	    if (collateralCurves.size() == 0)
 	    {
-		    throw LACoreInvalidData("#Error: Must provide at least one CSA curve",__FILE__,__LINE__);
+		    throw AQLCoreInvalidData("#Error: Must provide at least one CSA curve",__FILE__,__LINE__);
 	    }
 	    else
 	    {
-		    LAString collCurves;
+		    AQLString collCurves;
 		    for (unsigned int i = 0; i < collateralCurves.size(); ++i)
 		    {
-			    collCurves += (i == 0? LAString("") : LAString(MULTI_STATIC_DATA_DELIMITER)) + collateralCurves[i];
+			    collCurves += (i == 0? AQLString("") : AQLString(MULTI_STATIC_DATA_DELIMITER)) + collateralCurves[i];
 		    }
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_CTD_COLLATERALCURVES + staticDataSuffix, collCurves);
 	    }
 
 	    // store market name
-	    LAString tmpCurveName = curveName; 
+	    AQLString tmpCurveName = curveName; 
 	    tmpCurveName.toUpper();
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_TARGET, tmpCurveName);	
 	
@@ -5598,13 +5598,13 @@ namespace etrading
 	    delete entityPoolManager;
 
 	    //ylddata
-	    LAString	CurveIDTool			= curveCollection + TOOL;
-	    LAString	CurveIDManager		= curveCollection + curveName + MANAGER;
+	    AQLString	CurveIDTool			= curveCollection + TOOL;
+	    AQLString	CurveIDManager		= curveCollection + curveName + MANAGER;
 	    //curve entities manager (curve, grids, curveinformation entities)
-	    LAObject* mae = NULL;
+	    AQLObject* mae = NULL;
 	    if(!objPool.getObject(CurveIDManager).isDefined())
 	    {	
-		    mae = new LAObject;
+		    mae = new AQLObject;
 		    objPool.set(CurveIDManager,mae);
 	    }
 	    else
@@ -5612,8 +5612,8 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    mae	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    mae->add("Time",			new LADataString()			).convertFromString(LAString(LATime::now()));
-	    mae->add(CALIBRATION_DATA_NAME,		new LADataString()			).convertFromString(CurveIDManager);
+	    mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	    mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
     }
 
 }

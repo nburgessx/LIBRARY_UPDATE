@@ -10,8 +10,8 @@
 #include <sstream>
 
 
-#include "LACoreAppError.h"
-#include "LAString.h"
+#include "AQLCoreAppError.h"
+#include "AQLString.h"
 
 using namespace std;
 
@@ -94,7 +94,7 @@ class LAModelUtilities
 				vector<T>& out_vec1, vector<T>& out_vec2)
 		{
 			size_t n = in_vec1.size();
-			if ( in_vec2.size() != n ) throw LACoreInvalidData("size inconsistent", __FILE__, __LINE__);
+			if ( in_vec2.size() != n ) throw AQLCoreInvalidData("size inconsistent", __FILE__, __LINE__);
 			vector<vector<T*> > data(n, vector<T*>(2));
 			for ( size_t i = 0; i < n; i++ )
 			{
@@ -295,7 +295,7 @@ class LAModelUtilities
 		}
 
 		// Creates string from given stream. Especially useful to convert number to string.
-		//template<typename T> static const LAString n2s(const T x)
+		//template<typename T> static const AQLString n2s(const T x)
 		template<typename T> static const string n2s(const T x)
 		{
 			stringstream str_stream;

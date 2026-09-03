@@ -12,7 +12,7 @@ namespace etrading
         std::vector<double> xs = inXs;
         std::vector<double> ys = inYs;
 
-        // LASplineInterpolation.cpp:   void LASplineInterpolation::set(const DoubleArray& index, const DoubleArray& value)  - line 166
+        // AQLSplineInterpolation.cpp:   void AQLSplineInterpolation::set(const DoubleArray& index, const DoubleArray& value)  - line 166
         if ( xs.size() != ys.size() || ys.size() <= 1 || xs.size() == 0 )
         {
             throw ETradingException( ( boost::format( "SplineInterpolation: Illegal sizes => x-vector size (%i) and y-vector size (%i)" ) % xs.size() % ys.size() ).str() );

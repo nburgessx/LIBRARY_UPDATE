@@ -32,19 +32,19 @@ namespace validation
 
         if( rangeData.size() <= 0 )
         {
-            throw LACoreInvalidData( "Empty data table was supplied to tryMeLWOGridCreate", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Empty data table was supplied to tryMeLWOGridCreate", __FILE__, __LINE__ );
         }
 
         if( columnNames.size() != rangeData.size() )
         {
-            throw LACoreInvalidData( ( boost::format( "Number of Column Names (%i) does not match number of data columns (%i)." )
+            throw AQLCoreInvalidData( ( boost::format( "Number of Column Names (%i) does not match number of data columns (%i)." )
                                    % columnNames.size()
                                    % rangeData.size() ).str().c_str(), __FILE__, __LINE__ );
         }
 
         if( numberOfColumns != columnNames.size() )
         {
-            throw LACoreInvalidData( ( boost::format( "Number of Column Names (%i) does not match number of column types (%i)." )
+            throw AQLCoreInvalidData( ( boost::format( "Number of Column Names (%i) does not match number of column types (%i)." )
                                    % columnNames.size()
                                    % colTypes.size() ).str().c_str() , __FILE__, __LINE__ );
         }
@@ -76,12 +76,12 @@ namespace validation
             }
             else
             {
-				throw LACoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
+				throw AQLCoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
 										  % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
             }
         }
         else
-			throw LACoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
+			throw AQLCoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
                                       % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
     };
 
@@ -92,7 +92,7 @@ namespace validation
 
         if( !etrading::fileExists( filenameWithExtension ) )
         {
-            throw LACoreInvalidData(	( boost::format( "#Error: File %s does not exist" )  % filenameWithExtension.c_str() ).str().c_str(), __FILE__, __LINE__ );
+            throw AQLCoreInvalidData(	( boost::format( "#Error: File %s does not exist" )  % filenameWithExtension.c_str() ).str().c_str(), __FILE__, __LINE__ );
         }
 
         auto cacheInfoOnDeserialization = etrading::deSerializeFromJSON( etrading::serialize::FILE, filenameWithExtension );
@@ -115,7 +115,7 @@ namespace validation
                 objectWithData->serialize( etrading::serialize::JSON, etrading::serialize::FILE, filenameWithExtension );
                 if( !etrading::fileExists( filenameWithExtension ) )
                 {
-					throw LACoreAppError( ( boost::format( "#Error: Unable to write existing %s object to file %s (check permission, directory, etc.)" )
+					throw AQLCoreAppError( ( boost::format( "#Error: Unable to write existing %s object to file %s (check permission, directory, etc.)" )
                                         % objectName
                                         % filenameWithExtension ).str().c_str(), __FILE__, __LINE__ );
                 }
@@ -126,12 +126,12 @@ namespace validation
             }
             else
             {
-				throw LACoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
+				throw AQLCoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
                                           % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
             }
         }
         else
-			throw LACoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
+			throw AQLCoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
                                       % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
     };
 
@@ -154,7 +154,7 @@ namespace validation
         }
         else
         {
-			throw LACoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
+			throw AQLCoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
                                       % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
             return false;  // not hit
         }

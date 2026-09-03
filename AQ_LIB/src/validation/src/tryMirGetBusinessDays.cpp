@@ -1,5 +1,5 @@
 #include "tryMirGetBusinessDays.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLPriceDataCalendar.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 
@@ -15,9 +15,9 @@ namespace validation
     *  @param [in]		calendar		Calendar
     *  @return			Number of business days between fromDate and toDate
     */
-    int tryMirGetBusinessDays( const LADate& fromDate,
-                               const LADate& toDate,
-                               const LAString& calendar )
+    int tryMirGetBusinessDays( const AQLDate& fromDate,
+                               const AQLDate& toDate,
+                               const AQLString& calendar )
     {
         VALID_EXCEPTION_START
 
@@ -31,9 +31,9 @@ namespace validation
             file.write( "calendar", calendar );
         }
 
-        LAPriceDataCalendar cal;
+        AQLPriceDataCalendar cal;
         cal.convertFromString( calendar );
-        LADate tmpdate = fromDate;
+        AQLDate tmpdate = fromDate;
 
         int ret = 0;
         do

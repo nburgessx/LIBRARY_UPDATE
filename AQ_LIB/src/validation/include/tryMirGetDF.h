@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -15,13 +15,13 @@ namespace validation
     *  @param [in]		curveName		Name of the curve where DFs are read off
     *  @return			An array of discount factor
     */
-    DoubleVector tryMirGetDF1( LADataInstance* dataInstance,
+    DoubleVector tryMirGetDF1( AQLDataInstance* dataInstance,
                                const DoubleVector& terms,
-                               const LAString& curveID,
-                               const LAString& dayCount,
-                               const LAString& interpolation,
+                               const AQLString& curveID,
+                               const AQLString& dayCount,
+                               const AQLString& interpolation,
                                bool isBasisFlag,
-                               const LAString& curveName );
+                               const AQLString& curveName );
 
 
     /* @brief			validation method for mirGetDF2
@@ -36,15 +36,15 @@ namespace validation
     *  @param [in]		curveName		Name of the curve where DFs are read off
     *  @return			An array of discount factor
     */
-    DoubleVector tryMirGetDF2( LADataInstance* dataInstance,
-                               const LAStringVector& terms,
-                               const LAString& curveID,
-                               const LAString& dayCount,
-                               const LAString& slidingRule,
-                               const LAString& calendar,
-                               const LAString& interpolation,
+    DoubleVector tryMirGetDF2( AQLDataInstance* dataInstance,
+                               const AQLStringVector& terms,
+                               const AQLString& curveID,
+                               const AQLString& dayCount,
+                               const AQLString& slidingRule,
+                               const AQLString& calendar,
+                               const AQLString& interpolation,
                                bool isBasisFlag,
-                               const LAString& curveName );
+                               const AQLString& curveName );
 
 
     /* @brief			validation method for mirGetDF3
@@ -59,16 +59,16 @@ namespace validation
     *  @param [in]		curveName		Name of the curve where DFs are read off. Default to 'STD'
     *  @return			A array of discount factors
     */
-    DoubleVector tryMirGetDF3( LADataInstance* dataInstance,
+    DoubleVector tryMirGetDF3( AQLDataInstance* dataInstance,
                                const DateVector& fromDates,
                                const DateVector& toDates,
-                               const LAString& curveID,
-                               const LAString& dayCount,
-                               const LAString& slidingRule,
-                               const LAString& calendar,
-                               const LAString& interpolation,
+                               const AQLString& curveID,
+                               const AQLString& dayCount,
+                               const AQLString& slidingRule,
+                               const AQLString& calendar,
+                               const AQLString& interpolation,
                                bool isBasisFlag,
-                               const LAString& curveName );
+                               const AQLString& curveName );
 
 
     /* @brief			validation method for mirGetDF4
@@ -83,16 +83,16 @@ namespace validation
     *  @param [in]		curveName		Name of the curve where DFs are read off. Default to 'STD'
     *  @return			A array of discount factors
     */
-    DoubleVector tryMirGetDF4( LADataInstance* dataInstance,
+    DoubleVector tryMirGetDF4( AQLDataInstance* dataInstance,
                                const DateVector& fromDates,
                                const DoubleVector& terms,
-                               const LAString& curveID,
-                               const LAString& dayCount,
-                               const LAString& slidingRule,
-                               const LAString& calendar,
-                               const LAString& interpolation,
+                               const AQLString& curveID,
+                               const AQLString& dayCount,
+                               const AQLString& slidingRule,
+                               const AQLString& calendar,
+                               const AQLString& interpolation,
                                bool isBasisFlag,
-                               const LAString& curveName );
+                               const AQLString& curveName );
 
 
     /* @brief			validation method for mirGetDF5
@@ -107,16 +107,16 @@ namespace validation
     *  @param [in]		curveName		Name of the curve where DFs are read off. Default to 'STD'
     *  @return			A array of discount factors
     */
-    DoubleVector tryMirGetDF5( LADataInstance* dataInstance,
+    DoubleVector tryMirGetDF5( AQLDataInstance* dataInstance,
                                const DateVector& fromDates,
-                               const LAString& term,
-                               const LAString& curveID,
-                               const LAString& dayCount,
-                               const LAString& slidingRule,
-                               const LAString& calendar,
-                               const LAString& interpolation,
+                               const AQLString& term,
+                               const AQLString& curveID,
+                               const AQLString& dayCount,
+                               const AQLString& slidingRule,
+                               const AQLString& calendar,
+                               const AQLString& interpolation,
                                bool isBasisFlag,
-                               const LAString& curveName );
+                               const AQLString& curveName );
 
 
 

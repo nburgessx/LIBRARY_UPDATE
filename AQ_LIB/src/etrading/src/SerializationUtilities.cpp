@@ -3,7 +3,7 @@
 // Includes: This Library
 #include "SerializationUtilities.h"
 #include "FileUtilities.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 
 namespace etrading
 {
@@ -44,8 +44,8 @@ namespace etrading
         // Second check if the file exists
         if( !etrading::fileExists( filepathWithExtension ) )
 	    {
-            LAString errorMessage = "#Error: File does not exist: " + LAString( filepathWithExtension.c_str() );
-            throw LACoreInvalidData( errorMessage.getCString(), __FILE__, __LINE__ );
+            AQLString errorMessage = "#Error: File does not exist: " + AQLString( filepathWithExtension.c_str() );
+            throw AQLCoreInvalidData( errorMessage.getCString(), __FILE__, __LINE__ );
 	    }
     }
 

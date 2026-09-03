@@ -25,7 +25,7 @@ class LAPriceQuantAdjustmentHWFXDD : public LAPriceQuantAdjustmentFuncBase
 public:
 //  LIFECYCLE
 	// Default constructor
-	LAPriceQuantAdjustmentHWFXDD(const LAString& sdeAttrNameIR_F, const LAString& sdeAttrNameFX, const bool isAdjustInPath = false, double fxCriteria = 0.01, const double quantoCriteria = 10.0);
+	LAPriceQuantAdjustmentHWFXDD(const AQLString& sdeAttrNameIR_F, const AQLString& sdeAttrNameFX, const bool isAdjustInPath = false, double fxCriteria = 0.01, const double quantoCriteria = 10.0);
 	//	Copy constructor
 	LAPriceQuantAdjustmentHWFXDD(const LAPriceQuantAdjustmentHWFXDD& v);
 	// Destructor
@@ -37,7 +37,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;
+	virtual AQLCoreFunctionBase*		clone() const;
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -69,8 +69,8 @@ protected:
 	virtual void				setUp() const;
 	void                        searchTimeGridPos(const double t, unsigned int &pos)  const;
 
-	LAString					mSDEAttrNameIR_F;	// data name of ir(foreign currency) sde
-	LAString					mSDEAttrNameFX;	    // data name of fx sde
+	AQLString					mSDEAttrNameIR_F;	// data name of ir(foreign currency) sde
+	AQLString					mSDEAttrNameFX;	    // data name of fx sde
 	bool                        mIsAdjustInPath;
 	double						mFXCriteria;	     // fx criteria for avoid zero divide
 	double                      mQuantoCriteria;    // quanto adjust  criteria for avoid zero divide

@@ -4,10 +4,10 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LACalibrate.h"
 
-class LAObject;
+class AQLObject;
 
 class LACalibrateIRSABR : public LACalibrate
 {
@@ -20,32 +20,32 @@ public :
 
 	//=============================================
 	//  setup
-    virtual void	setUp(LAObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
+    virtual void	setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
 	//=============================================
 	//  calibration method
     virtual void    doCalibrate();
 
-	LAStringVector mUnderlyings;
-	std::map<LAString, LAString> mcurvesetid;
-	std::map<LAString, LAString> malphaid;
-	std::map<LAString, LAString> mbetaid;
-	std::map<LAString, LAString> mrhoid;
-	std::map<LAString, LAString> mnuid;
-	std::map<LAString, LAString> matmvolid;
-	std::map<LAString, LAString> mswapconvid;
-	std::map<LAString, LAString> mcapconvid;
-	std::map<LAString, LAStringVector> mswapvolid;
-	std::map<LAString, LAStringMatrix> msabrLimiter;
-	std::map<LAString, LAString> mtarget;
-	std::map<LAString, DoubleVector> mweight;
-	std::map<LAString, LAStringMatrix> mcurvesetmat;
-	std::map<LAString, bool> mIsCalibSkip;
-	std::map<LAString, LAString> mcalibmethod;
-	std::map<LAString, LAString> mapproxmethod;
-	std::map<LAString, BoolVector> mcalibflag;
-	std::map<LAString, IntVector> moptionsign;
-	std::map<LAString, BoolMatrix> mcalibflgmat;
-	std::map<LAString, bool> mishaganatmvolfixed;
-	std::map<LAString, double> mforwardshiftvalue;
+	AQLStringVector mUnderlyings;
+	std::map<AQLString, AQLString> mcurvesetid;
+	std::map<AQLString, AQLString> malphaid;
+	std::map<AQLString, AQLString> mbetaid;
+	std::map<AQLString, AQLString> mrhoid;
+	std::map<AQLString, AQLString> mnuid;
+	std::map<AQLString, AQLString> matmvolid;
+	std::map<AQLString, AQLString> mswapconvid;
+	std::map<AQLString, AQLString> mcapconvid;
+	std::map<AQLString, AQLStringVector> mswapvolid;
+	std::map<AQLString, AQLStringMatrix> msabrLimiter;
+	std::map<AQLString, AQLString> mtarget;
+	std::map<AQLString, DoubleVector> mweight;
+	std::map<AQLString, AQLStringMatrix> mcurvesetmat;
+	std::map<AQLString, bool> mIsCalibSkip;
+	std::map<AQLString, AQLString> mcalibmethod;
+	std::map<AQLString, AQLString> mapproxmethod;
+	std::map<AQLString, BoolVector> mcalibflag;
+	std::map<AQLString, IntVector> moptionsign;
+	std::map<AQLString, BoolMatrix> mcalibflgmat;
+	std::map<AQLString, bool> mishaganatmvolfixed;
+	std::map<AQLString, double> mforwardshiftvalue;
 };
 

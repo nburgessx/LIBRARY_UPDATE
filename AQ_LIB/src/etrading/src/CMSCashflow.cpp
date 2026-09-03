@@ -12,7 +12,7 @@ namespace etrading
     {}
     
     CMSCashflow::CMSCashflow(const PayReceiveEnum& payReceive, double spread, 
-							const LADate& fixingDate, const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, double accrualYearFraction, const LADate& paymentDate, 
+							const AQLDate& fixingDate, const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, double accrualYearFraction, const AQLDate& paymentDate, 
 							double notional, double leverage, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType)
 				: FloatCashflow( payReceive, spread, fixingDate, accrualStartDate, accrualEndDate, accrualDays, accrualYearFraction, paymentDate, notional, leverage, 1.0 /*couponMultiplier*/, zeroCouponSwapPaymentFreq, cashflowType, CashFlowBespokeInfo()),
 				  parRate1_(std::numeric_limits<double>::quiet_NaN()), 

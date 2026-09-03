@@ -43,10 +43,10 @@ namespace etrading
 		// This version accepts a prefix which is attached to the column name.
 		void addColumnWithPrefix( const std::string& prefix, const std::string& columnName, const std::vector<double>& values );
 
-		// Extend the dataframe by adding an additional column of type  LADate
-		// This is a specialization which checks if the LADate is valid.
+		// Extend the dataframe by adding an additional column of type  AQLDate
+		// This is a specialization which checks if the AQLDate is valid.
 		// This version accepts a prefix which is attached to the column name.
-		void addColumnWithPrefix( const std::string& prefix, const std::string& columnName, const std::vector<LADate>& values );
+		void addColumnWithPrefix( const std::string& prefix, const std::string& columnName, const std::vector<AQLDate>& values );
 
 		// Extends an existing dataframe by adding an additional column of values, where the values on each row are the same.
 		// If the DataFrame already contains a column with this name, the original column of values is replaced.

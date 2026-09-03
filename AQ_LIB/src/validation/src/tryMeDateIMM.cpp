@@ -22,10 +22,10 @@ namespace validation
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The IMM date on the given month
     */
-    LADate tryMeDateIMMFromMonth( int year,
+    AQLDate tryMeDateIMMFromMonth( int year,
                                   int month,
-                                  const LAString& calendar,
-                                  const LAString& businessDayAdj )
+                                  const AQLString& calendar,
+                                  const AQLString& businessDayAdj )
     {
         VALID_EXCEPTION_START
 
@@ -41,10 +41,10 @@ namespace validation
         }
 
         etrading::validateStringEmptiness( calendar, "#Error: 'Calendar' must be specified." );
-        LAString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
+        AQLString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
 
-		LAString calendarCopy( calendar );
-        LADate ret = etrading::LADateScheduleHelpers::getIMMDate1( year, month, calendarCopy, bdAdj );
+		AQLString calendarCopy( calendar );
+        AQLDate ret = etrading::LADateScheduleHelpers::getIMMDate1( year, month, calendarCopy, bdAdj );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -65,10 +65,10 @@ namespace validation
     *  @param [in]		businessDayAdj		Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The nth IMM date of the year
     */
-    LADate tryMeDateNthIMM( int year,
+    AQLDate tryMeDateNthIMM( int year,
                             int nth,
-                            const LAString& calendar,
-                            const LAString& businessDayAdj )
+                            const AQLString& calendar,
+                            const AQLString& businessDayAdj )
     {
         VALID_EXCEPTION_START
 
@@ -84,9 +84,9 @@ namespace validation
         }
 
         etrading::validateStringEmptiness( calendar, "#Error: 'Calendar' must be specified." );
-        LAString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
-		LAString calendarCopy( calendar );
-        LADate ret = etrading::LADateScheduleHelpers::getIMMDate2( year, nth, calendarCopy, bdAdj );
+        AQLString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
+		AQLString calendarCopy( calendar );
+        AQLDate ret = etrading::LADateScheduleHelpers::getIMMDate2( year, nth, calendarCopy, bdAdj );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -107,10 +107,10 @@ namespace validation
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The nth IMM date from the start date, starting from the one closest to the start date
     */
-    LADate tryMeDateNthIMMFromStartDate( const LADate& startDate,
+    AQLDate tryMeDateNthIMMFromStartDate( const AQLDate& startDate,
                                          int nth,
-                                         const LAString& calendar,
-                                         const LAString& businessDayAdj )
+                                         const AQLString& calendar,
+                                         const AQLString& businessDayAdj )
     {
         VALID_EXCEPTION_START
 
@@ -126,9 +126,9 @@ namespace validation
         }
 
         etrading::validateStringEmptiness( calendar, "#Error: 'Calendar' must be specified." );
-        LAString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
-		LAString calendarCopy( calendar );
-        LADate ret = etrading::LADateScheduleHelpers::getIMMDate3( startDate, nth, calendarCopy, bdAdj );
+        AQLString bdAdj( etrading::getDefaultValueForEmptyString( businessDayAdj, "FOLLOWING" ) );
+		AQLString calendarCopy( calendar );
+        AQLDate ret = etrading::LADateScheduleHelpers::getIMMDate3( startDate, nth, calendarCopy, bdAdj );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -147,7 +147,7 @@ namespace validation
     *  @param [in]		includeToday    Allow the IMM roll date to match the valuation date: TRUE = Don't roll IMM date if it falls on the valuation date
     *  @return			The current IMM start date, which may be in the past
     */
-    LADate tryMeDateIMMCurrent( const LADate & valuationDate, const bool includeToday )
+    AQLDate tryMeDateIMMCurrent( const AQLDate & valuationDate, const bool includeToday )
     {
         VALID_EXCEPTION_START
 
@@ -155,7 +155,7 @@ namespace validation
         RECORD_INPUTS( valuationDate, includeToday );
 
         // Calculation
-        const LADate result = etrading::currentIMMDate( valuationDate, includeToday );
+        const AQLDate result = etrading::currentIMMDate( valuationDate, includeToday );
 
         // Record Outputs AND Return the Result for logs, tests and playback
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );
@@ -167,7 +167,7 @@ namespace validation
     *  @param [in]		referenceDate	The IMM reference date
     *  @return			The next IMM start date relative to the reference date
     */
-    LADate tryMeDateIMMNext( const LADate & referenceDate )
+    AQLDate tryMeDateIMMNext( const AQLDate & referenceDate )
     {
         VALID_EXCEPTION_START
 
@@ -175,7 +175,7 @@ namespace validation
         RECORD_INPUTS( referenceDate );
 
         // Calculation
-        const LADate result = etrading::nextIMMDate( referenceDate );
+        const AQLDate result = etrading::nextIMMDate( referenceDate );
 
         // Record Outputs AND Return the Result for logs, tests and playback
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );
@@ -187,7 +187,7 @@ namespace validation
     *  @param [in]		referenceDate	The IMM reference date
     *  @return			The previous IMM start date relative to the reference date
     */
-    LADate tryMeDateIMMPrevious( const LADate & referenceDate )
+    AQLDate tryMeDateIMMPrevious( const AQLDate & referenceDate )
     {
         VALID_EXCEPTION_START
 
@@ -195,7 +195,7 @@ namespace validation
         RECORD_INPUTS( referenceDate );
 
         // Calculation
-        const LADate result = etrading::previousIMMDate( referenceDate );
+        const AQLDate result = etrading::previousIMMDate( referenceDate );
 
         // Record Outputs AND Return the Result for logs, tests and playback
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );
@@ -209,7 +209,7 @@ namespace validation
     *  @param [in]		includeToday    Allow the IMM roll date to match the valuation date: TRUE = Don't roll IMM date if it falls on the valuation date
     *  @return			The nth IMM date relative to the valuation date
     */
-    LADate tryMeDateIMMNth( const LADate & valuationDate, const int nthIMM, const bool includeToday )
+    AQLDate tryMeDateIMMNth( const AQLDate & valuationDate, const int nthIMM, const bool includeToday )
     {
         VALID_EXCEPTION_START
 
@@ -217,7 +217,7 @@ namespace validation
         RECORD_INPUTS( valuationDate, nthIMM, includeToday );
 
         // Calculation
-        const LADate result = etrading::nthIMMDate( valuationDate, nthIMM, includeToday );
+        const AQLDate result = etrading::nthIMMDate( valuationDate, nthIMM, includeToday );
 
         // Record Outputs AND Return the Result for logs, tests and playback
         RECORD_OUTPUTS_AND_RETURN_RESULT( result );

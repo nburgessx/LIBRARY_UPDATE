@@ -1,13 +1,13 @@
 #pragma once
 
 #include "GlobalCalibrationComponentCurve.h"
-#include "LAObject.h"
-#include "LADataReference.h"
+#include "AQLObject.h"
+#include "AQLDataReference.h"
 #include "CurveCalibrationData.h"
 #include <map>
 
-class LAInterpolationBase;
-class LADate;
+class AQLInterpolationBase;
+class AQLDate;
 
 /*! 
     @brief Class of SwapComponentCurve
@@ -17,7 +17,7 @@ class SwapComponentCurve : public GlobalCalibrationComponentCurve
 public:
 	
 	// Constructor
-	SwapComponentCurve(const LAString& curveName, const CurveCalibrationData& curveCalibrationData, const LADate& baseDate, const bool& fastRebuildRequested = false);
+	SwapComponentCurve(const AQLString& curveName, const CurveCalibrationData& curveCalibrationData, const AQLDate& baseDate, const bool& fastRebuildRequested = false);
 
 	// Destructor
 	virtual ~SwapComponentCurve() {}
@@ -29,7 +29,7 @@ public:
 	virtual void priceCalibrationInstruments(DoubleArray& allPVs);
 	
 	// Post processing results once instruments have been consumed in calibration steps
-	virtual void postProcessing(LAObject& yieldCurveProEntity);
+	virtual void postProcessing(AQLObject& yieldCurveProEntity);
 
 private:
 
@@ -37,8 +37,8 @@ private:
 	void calibrateSwapCurveWithCashAndForwards();
 
 	// Calculate the floating leg PV of a vanilla IRS
-	double calcFloatLegPV(std::shared_ptr<LAInterpolationBase>& inter, 
-					std::shared_ptr<LAInterpolationBase>& df_inter, 
+	double calcFloatLegPV(std::shared_ptr<AQLInterpolationBase>& inter, 
+					std::shared_ptr<AQLInterpolationBase>& df_inter, 
 					const DoubleArray &terms_grid, 
 					const int cpd_times, 
 					const double term_start,
@@ -49,23 +49,23 @@ private:
 
 	/////////////////////////////////////////
 		
-	LADate spotDate_;
+	AQLDate spotDate_;
 	
-	std::vector<LAObject*> data_;
+	std::vector<AQLObject*> data_;
 
-	LADataReference yieldDataRef_;
+	AQLDataReference yieldDataRef_;
 
 	/////////////////////////////////////////
 
-	LAString interpolationStr_;
-	LAString interpolationYGStr_;
+	AQLString interpolationStr_;
+	AQLString interpolationYGStr_;
 
-	std::shared_ptr<LAInterpolationBase> pInter_;
-	std::shared_ptr<LAInterpolationBase> pInter_yg_;
-	std::shared_ptr<LAInterpolationBase> pInter_fw_;	
+	std::shared_ptr<AQLInterpolationBase> pInter_;
+	std::shared_ptr<AQLInterpolationBase> pInter_yg_;
+	std::shared_ptr<AQLInterpolationBase> pInter_fw_;	
 
 	double interpolationJoinDateAsDouble_;
-	LADate interpolationJoinDate_;
+	AQLDate interpolationJoinDate_;
 
 	/////////////////////////////////////////
 
@@ -100,10 +100,10 @@ private:
 	DoubleArray terms_grid_s_float_;										
 
 	std::vector<int> cpd_times_;	
-	std::map< std::pair<LADate, LADate>, const LAObject* > moneyMarketDataMap_;
-	std::shared_ptr<LAStringVector> pRatePriority_;
+	std::map< std::pair<AQLDate, AQLDate>, const AQLObject* > moneyMarketDataMap_;
+	std::shared_ptr<AQLStringVector> pRatePriority_;
 
-	LAPriceDataDayCount dc_Libor_;
+	AQLPriceDataDayCount dc_Libor_;
 	
 };
 

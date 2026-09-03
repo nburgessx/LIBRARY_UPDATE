@@ -126,11 +126,11 @@ namespace google_test
         //
         // disambiguate accessors
         //
-        virtual LAString getCurveID() const
+        virtual AQLString getCurveID() const
         {
             return SourceEURYC_XCCY::getCurveID();
         }
-        virtual const LAStringVector& getCurveNames() const
+        virtual const AQLStringVector& getCurveNames() const
         {
             return SourceEURYC_XCCY::getCurveNames();
         }

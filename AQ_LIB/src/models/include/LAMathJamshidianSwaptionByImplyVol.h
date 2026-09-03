@@ -5,16 +5,16 @@
 #pragma interface
 #endif
 
-#include "LACoreValuation.h"
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LABasic.h"
-#include "LADist.h"
-#include "LADataValuation.h"
-#include "LAFindRootBrent.h"
+#include "AQLCoreValuation.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
+#include "AQLDataValuation.h"
+#include "AQLFindRootBrent.h"
 #include "LAMathJamshidianRStarFinder.h"
-#include "LAGaussLegendre.h"
+#include "AQLGaussLegendre.h"
 #include "LAMathJamshidianSwaption.h"
 
 #include "LAAnalyticFormula.h"
@@ -22,15 +22,15 @@
 
 
 
-// Funciton ID of LAShiftMethod
+// Funciton ID of AQLShiftMethod
 #define FN_JAMSHIDIANSWAPTIONBYIMPLYVOL	10044
-// Function Name of LAShiftMethod
+// Function Name of AQLShiftMethod
 #define FN_JAMSHIDIANSWAPTIONBYIMPLYVOL_STR	"fn_jamshidianswaptionbyimplyvol"
 
 
-class LAObject;
+class AQLObject;
 class LARatesPathElementCurve;
-class LAPriceDataManager;
+class AQLPriceDataManager;
 
 
 class LAMathJamshidianSwaptionByImplyVol : public LAMathJamshidianSwaption
@@ -47,11 +47,11 @@ public:
 	virtual function_t			getType() const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 
 	
 
-	virtual double              value(const LADate& basedate, LAObject& inst, const LADataValuation& att) const;
+	virtual double              value(const AQLDate& basedate, AQLObject& inst, const AQLDataValuation& att) const;
 
 	/*!
 		@brief cache class for performance up
@@ -69,13 +69,13 @@ public:
 	};
 
 		// set up dataProvider
-	LADataProvider*					setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const;
+	AQLDataProvider*					setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const;
 	
 
 private:
 	// create new cache class
-	virtual	LADataProvider*			createNewDataProvider() const;
+	virtual	AQLDataProvider*			createNewDataProvider() const;
 };
 #endif
 

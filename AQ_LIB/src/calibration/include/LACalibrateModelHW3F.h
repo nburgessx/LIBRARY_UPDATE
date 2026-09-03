@@ -17,14 +17,14 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
-#include "LAString.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLString.h"
 #include "LACalibrateModelIR.h"
 #include "LACalibrateModelHW.h"
 
 
 
-class LADataInstance;
+class AQLDataInstance;
 class LARatesCurveLogLinearInterpolation;
 class LAMathCorrelation;
 class LAMathVolatility;
@@ -42,7 +42,7 @@ class LACalibrateModelHW3F : public LACalibrateModelHW
 
 public:
 	// constructor
-	explicit LACalibrateModelHW3F(const LAString &baseCurrency);
+	explicit LACalibrateModelHW3F(const AQLString &baseCurrency);
 	// destructor
 	virtual ~LACalibrateModelHW3F(void);
 	// copy constructor
@@ -51,13 +51,13 @@ public:
 protected:
 	//==============================================
 	// create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const LAString &currency, LADataInstance &dataInstance) const;
+	virtual LARatesSDEBase *createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// set integralfunction 
-	virtual  void setIntegralFunction(const LAString &currency, LARatesSDEBase &sde)  const;
+	virtual  void setIntegralFunction(const AQLString &currency, LARatesSDEBase &sde)  const;
 	//==============================================
 	// create forein drift
-	virtual LAFunctionBase *createForeinDrift(const LAString &fx, const LAString &sdeBase, const LAString &sdeName, const LAString &fx_sdeName) const;
+	virtual AQLFunctionBase *createForeinDrift(const AQLString &fx, const AQLString &sdeBase, const AQLString &sdeName, const AQLString &fx_sdeName) const;
 
 private:
 

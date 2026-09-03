@@ -21,8 +21,8 @@
 
 
 
-class LAString;
-class LADataInstance;
+class AQLString;
+class AQLDataInstance;
 //===================== Class Declare LARiskConfigurationYieldIRDeltaOptionAnalytic==================================
 /*! 
     @brief FX Vega setup class
@@ -33,7 +33,7 @@ class LARiskConfigurationYieldIRDeltaOptionAnalytic : public LARiskConfiguration
 {
 public:
 	// constructor
-	explicit LARiskConfigurationYieldIRDeltaOptionAnalytic(const LAString& risktype);
+	explicit LARiskConfigurationYieldIRDeltaOptionAnalytic(const AQLString& risktype);
 	// destructor
 	virtual ~LARiskConfigurationYieldIRDeltaOptionAnalytic(void);
 	// copy constructor
@@ -44,42 +44,42 @@ protected:
 
 	//==============================================
 	// get target names 
-	virtual  LAString getTargetNames(const LAString &ccy, LADataInstance &dataInstance)  const {ccy; return AQ_NO_DATA;};
+	virtual  AQLString getTargetNames(const AQLString &ccy, AQLDataInstance &dataInstance)  const {ccy; return AQ_NO_DATA;};
 	//==============================================
 	// create risk object
-	virtual std::vector<std::pair<LAString, std::vector<LAObject *> > > createRiskEntity(LAObjectPool &objPool) const;
+	virtual std::vector<std::pair<AQLString, std::vector<AQLObject *> > > createRiskEntity(AQLObjectPool &objPool) const;
 	//==============================================
 	// setup target names 
-	virtual  void setUpTargetNames(const LAString &ccy, LAObject &e, LADataInstance &dataInstance) const;	
+	virtual  void setUpTargetNames(const AQLString &ccy, AQLObject &e, AQLDataInstance &dataInstance) const;	
 	//==============================================
 	// create scenario1 object 
-	virtual  std::vector<LAObject *> createScenario1Entity(const LAString &ccy, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario1Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// create scenario2 object
-	virtual  std::vector<LAObject *> createScenario2Entity(const LAString &ccy, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario2Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// get coefficient1
-	virtual  LAString  getCoefficient1(const LAString &ccy) const;
+	virtual  AQLString  getCoefficient1(const AQLString &ccy) const;
 	//==============================================
 	// get risk name
-	virtual  LAString getRiskName(void) const;
+	virtual  AQLString getRiskName(void) const;
 	//==============================================
 	// get is wave
-	virtual  bool  isWave(const LAString &ccy) const;
+	virtual  bool  isWave(const AQLString &ccy) const;
 	//==============================================
 	// get is gridsensitivity
-	virtual  bool isGridSensitivity(const LAString &ccy) const;
+	virtual  bool isGridSensitivity(const AQLString &ccy) const;
 	//==============================================
 	// get ShiftValForOptionAnalytic
-	virtual double getShiftValForOptionAnalytic(const LAString &ccy) const;
+	virtual double getShiftValForOptionAnalytic(const AQLString &ccy) const;
 	//==============================================
 	// get AnalyticalRiskType when domesticcur RHO otherwise PHI
-	virtual LAString getAnalyticalRiskType(const LAString& fx, LAObject& e) const;
+	virtual AQLString getAnalyticalRiskType(const AQLString& fx, AQLObject& e) const;
 	//==============================================
 	// IsSucceedAnalyticalRiskType
-	virtual bool IsSucceedAnalyticalRiskType(const LAString& ccy, LAObject& e) const;
+	virtual bool IsSucceedAnalyticalRiskType(const AQLString& ccy, AQLObject& e) const;
 	// create extraScenario object 
-	virtual  std::vector<std::vector<LAObject *> > createExtraScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+	virtual  std::vector<std::vector<AQLObject *> > createExtraScenarioEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 
 	
 };

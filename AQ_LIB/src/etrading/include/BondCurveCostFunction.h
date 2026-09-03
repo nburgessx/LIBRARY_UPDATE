@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BondCurves.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 #include <ql/math/optimization/costfunction.hpp>
 #include <ql/math/optimization/constraint.hpp>

@@ -6,13 +6,13 @@
 
 
 #include <algorithm>
-#include "LAObject.h"
-#include "LACoreAutoPtr.h"
-#include "LAPriceDataConvention.h"
-#include "LAFunctionBase.h"
-#include "LAFunctionVector.h"
+#include "AQLObject.h"
+#include "AQLCoreAutoPtr.h"
+#include "AQLPriceDataConvention.h"
+#include "AQLFunctionBase.h"
+#include "AQLFunctionVector.h"
 #include "LAMathYieldCurve.h"
-#include "LADataBasics.h"
+#include "AQLDataBasics.h"
 #include "LAMathDateCalculations.h"
 #include "LAPriceYieldGenerator.h"
 
@@ -632,23 +632,23 @@
 #endif
 
 
-class LADataInstance;
-class LADate;
-class LADataDoubles;
-class LADataDouble;
-class LADataDate;
-class LAInterpolationBase;
-class LACoreProcedure;
-class LADataString;
-class LADataStrings;
-class LAPriceDataCalendar;
-class LAPriceDataInterpolation;
-class LAPriceDataFunction;
-class LADataMultiReference;
-class LADataDoubleMatrix;
-class LADataBool;
-class LAPriceDataInterpolation;
-class LADataInts;
+class AQLDataInstance;
+class AQLDate;
+class AQLDataDoubles;
+class AQLDataDouble;
+class AQLDataDate;
+class AQLInterpolationBase;
+class AQLCoreProcedure;
+class AQLDataString;
+class AQLDataStrings;
+class AQLPriceDataCalendar;
+class AQLPriceDataInterpolation;
+class AQLPriceDataFunction;
+class AQLDataMultiReference;
+class AQLDataDoubleMatrix;
+class AQLDataBool;
+class AQLPriceDataInterpolation;
+class AQLDataInts;
 
 enum FloorType {
 	NOFLOOR,	
@@ -668,7 +668,7 @@ class LAMathYieldCurvePro : public LAMathYieldCurve
 public:
 // LIFECYCLE
 	// constructor
-	LAMathYieldCurvePro(LADataInstance* dataInstance);
+	LAMathYieldCurvePro(AQLDataInstance* dataInstance);
 	// copy constructor
 	LAMathYieldCurvePro(const LAMathYieldCurvePro& curve);
 	// destructor
@@ -681,115 +681,115 @@ public:
 	virtual bool		isTypeOf(object_t id) const;
 
 	// get AsOfDate
-	const LADataDate&	getAsOfDate(void) const;
+	const AQLDataDate&	getAsOfDate(void) const;
     // get AsOfDate
-	LADataDate&			getAsOfDate(void);
+	AQLDataDate&			getAsOfDate(void);
 	// get IsArbFree
-	const LADataBool&	getIsArbFree(void) const;
+	const AQLDataBool&	getIsArbFree(void) const;
     // get AsOfDate
-	LADataBool&			getIsArbFree(void);
+	AQLDataBool&			getIsArbFree(void);
 	//	get MarketData
-	const LADataMultiReference&
+	const AQLDataMultiReference&
 						getMarketData() const;
 	//	get MarketData
-	LADataMultiReference&
+	AQLDataMultiReference&
 						getMarketData();
     // get BasisRates
-	const LADataDoubleMatrix&
+	const AQLDataDoubleMatrix&
 						getBasisRates(void) const;
     // get BasisRates
-	LADataDoubleMatrix&		getBasisRates(void);
+	AQLDataDoubleMatrix&		getBasisRates(void);
 	// get BasisData
-	const LADataMultiReference&
+	const AQLDataMultiReference&
 						getBasisData() const;
     // get BasisData
-	LADataMultiReference&
+	AQLDataMultiReference&
 						getBasisData();
 	// get IsFutureUse
-	const LADataBool&	getIsFutureUse(void) const;
+	const AQLDataBool&	getIsFutureUse(void) const;
     // get IsFutureUse
-	LADataBool&			getIsFutureUse(void);
+	AQLDataBool&			getIsFutureUse(void);
 	// get IsFRAUse
-	const LADataBool&	getIsFRAUse(void) const;
+	const AQLDataBool&	getIsFRAUse(void) const;
     // get IsFRAUse
-	LADataBool&			getIsFRAUse(void);
+	AQLDataBool&			getIsFRAUse(void);
 	// get BaseYieldCurve
-	const LADataReference&
+	const AQLDataReference&
 						getBaseYieldCurve() const;
     // get BaseYieldCurve
-	LADataReference&
+	AQLDataReference&
 						getBaseYieldCurve();
 	//	get Interpolation to generate yield 
-	const LAPriceDataInterpolation&
+	const AQLPriceDataInterpolation&
 						getInterpolation_yg() const;
 	//	get Interpolation to generate yield 
-	LAPriceDataInterpolation&
+	AQLPriceDataInterpolation&
 						getInterpolation_yg();	
 	//	get Interpolation to use forward 
-	const LAPriceDataInterpolation&
+	const AQLPriceDataInterpolation&
 						getInterpolation_fw() const;
 	//	get Interpolation to use forward
-	LAPriceDataInterpolation&	
+	AQLPriceDataInterpolation&	
 						getInterpolation_fw();	
 	//	get Interpolation to set basis rates 
-	const LAPriceDataInterpolation&
+	const AQLPriceDataInterpolation&
 						getInterpolation_bs() const;
 	//	get Interpolation to set basis rates
-	LAPriceDataInterpolation&	
+	AQLPriceDataInterpolation&	
 						getInterpolation_bs();	
 	//	get Basis Function
-	const LAPriceDataFunction&
+	const AQLPriceDataFunction&
 						getBasisFunction() const;
 	//	get getBasisFunction
-	LAPriceDataFunction&		getBasisFunction();
+	AQLPriceDataFunction&		getBasisFunction();
 	
-	LADataStrings&		getRatePriority();
+	AQLDataStrings&		getRatePriority();
 
-	const LADataStrings&		getRatePriority() const;
+	const AQLDataStrings&		getRatePriority() const;
 	
 	// get fx object
-	const LADataReference&
+	const AQLDataReference&
 						getFXEntity() const;
 	// get fx object. The setting of fx object is also possible. 
-	LADataReference&
+	AQLDataReference&
 						getFXEntity();	
 
 	// get optimize method
-	const LADataString&
+	const AQLDataString&
 						getOptimizeMethod() const;
 	// get optimize method. The setting of optimize method is also possible. 
-	LADataString&
+	AQLDataString&
 						getOptimizeMethod();	
 
 	// get optimize method
-	const LAPriceDataFunction&
+	const AQLPriceDataFunction&
 						getCompoundingFunction() const;
 	// get optimize method. The setting of optimize method is also possible. 
-	LAPriceDataFunction&
+	AQLPriceDataFunction&
 						getCompoundingFunction();
 
 
 	//	clone this class
-	LAObject*			clone() const;// %%% COVARIANT RETURN %%%
+	AQLObject*			clone() const;// %%% COVARIANT RETURN %%%
 	
 //  OPERATION 
 	// remove specified Data. If Data is nothing, do nothing.
-    virtual void        remove(const LAString& dataName);
+    virtual void        remove(const AQLString& dataName);
 	// Initialize this Object.
 	virtual void		reset(void);
 	//
 	
 	//	set Interpolation
-	void				setInterpolation(LAInterpolationBase* a, 
-											const LAString& name);
+	void				setInterpolation(AQLInterpolationBase* a, 
+											const AQLString& name);
 	//	set Interpolation
-	void				setInterpolation(const LAString& name);
+	void				setInterpolation(const AQLString& name);
 	//	set Generator class
-	void				setDFGenerator(const LACoreProcedure* a,const LAString& name);
+	void				setDFGenerator(const AQLCoreProcedure* a,const AQLString& name);
 	//	set Generator class
-	void				setDFGenerator(const LAString& name);
+	void				setDFGenerator(const AQLString& name);
 	//	culc DF from marketData
-	void				calcDiscountFactor(const LADate& asof);
+	void				calcDiscountFactor(const AQLDate& asof);
 	//	Set DF By ShiftZero
 	void				setDFByShiftZero(double width, unsigned int pos, const UintArray& grids);
 	//	Set DF By parallel ShiftZero
@@ -802,9 +802,9 @@ public:
 	//	Set Basis rate
 	void				setBasisRates(void);
 	//	Set Basis rate
-	void				setBasisRates2(const LAString& basisCurveID);
+	void				setBasisRates2(const AQLString& basisCurveID);
 
-	void				setBasisRates(const LAString &curveType);
+	void				setBasisRates(const AQLString &curveType);
 	//	Set Basis rate
 	void				setBasisRates_old(void);
 	//	Set DF2
@@ -816,230 +816,230 @@ public:
 	void				addBasisRates(void);
 
 	// Set ArbFree Curve Flag
-	void				setArbFreeCurveName(const LAStringVector& curveNames_6ML, 
-											const LAStringVector& curveNames_DF, 
-											const LAStringVector& curveNames_3ML);
+	void				setArbFreeCurveName(const AQLStringVector& curveNames_6ML, 
+											const AQLStringVector& curveNames_DF, 
+											const AQLStringVector& curveNames_3ML);
 	// Set dNPV/dm
-	void				setdNPVdm(const LAString &curveType);
+	void				setdNPVdm(const AQLString &curveType);
 	// get conversion matirx
-	const LADataDoubleMatrix&	getConversionMatrix(const LAString &curveType) const;
+	const AQLDataDoubleMatrix&	getConversionMatrix(const AQLString &curveType) const;
 	// get conversion matirx term
-	const LADataDoubles&	getConversionMatrixTerm(const LAString &curveType) const;
+	const AQLDataDoubles&	getConversionMatrixTerm(const AQLString &curveType) const;
 	// get conversion matirx rates
-	const LADataDoubles&	getConversionMarketRates(const LAString &curveType) const;
+	const AQLDataDoubles&	getConversionMarketRates(const AQLString &curveType) const;
 	// get conversion matirx term types
-	const LADataStrings&	getConversionMatrixTermTypes(const LAString &curveType) const;
+	const AQLDataStrings&	getConversionMatrixTermTypes(const AQLString &curveType) const;
 	// get conversion matirx term types
-	const LADataStrings&	getConversionMarketTypes(const LAString &curveType) const;
+	const AQLDataStrings&	getConversionMarketTypes(const AQLString &curveType) const;
 
 	// isOmitGridsExist
-	bool					isOmitGridsExist(const LAString &curveType) const;
+	bool					isOmitGridsExist(const AQLString &curveType) const;
 	// getConversionOmitGrids
-	const LADataInts&	getConversionOmitGrids(const LAString &curveType) const;
+	const AQLDataInts&	getConversionOmitGrids(const AQLString &curveType) const;
 	// setCurveDependencyMap
 	void				setCurveDependencyMap(void);
 	// getCurveDependeny
-	std::map<LAString, double>& getCurveDependeny(const LAString &curveType) const ;
+	std::map<AQLString, double>& getCurveDependeny(const AQLString &curveType) const ;
 	// setGCurveGenerateMap
-	void setGCurveGenerateMap(const LAString &curveType){mGCurveGenMap[curveType] = true;};
+	void setGCurveGenerateMap(const AQLString &curveType){mGCurveGenMap[curveType] = true;};
 	// set affecting currency
-	void setAffectingCcy(const LAString &currency)
+	void setAffectingCcy(const AQLString &currency)
 	{
 		if (std::find(mAffectingCcys.begin(), mAffectingCcys.end(), currency) == mAffectingCcys.end()) 
 			mAffectingCcys.push_back(currency);
 	};
 	// set affected currency
-	void				setAffectedCcy(const LAString &currency){mAffectedCcy = currency;};
+	void				setAffectedCcy(const AQLString &currency){mAffectedCcy = currency;};
 	// isBasisCurve
-	bool				isBasisCurve(const LAString &curveType) { return (mGCurveGenMap.find(curveType) == mGCurveGenMap.end());};
+	bool				isBasisCurve(const AQLString &curveType) { return (mGCurveGenMap.find(curveType) == mGCurveGenMap.end());};
 	// getBCurveGenerateMap
-	const std::map<LAString, bool>& getBCurveGenerateMap(void) const {return mBCurveGenMap;};
+	const std::map<AQLString, bool>& getBCurveGenerateMap(void) const {return mBCurveGenMap;};
 	// getGCurveGenerateMap
-	const std::map<LAString, bool>& getGCurveGenerateMap(void) const {return mGCurveGenMap;};
+	const std::map<AQLString, bool>& getGCurveGenerateMap(void) const {return mGCurveGenMap;};
 	// getGCurveGenerateMap
-	std::map<LAString, bool>& getGCurveGenerateMap(void){return mGCurveGenMap;};
+	std::map<AQLString, bool>& getGCurveGenerateMap(void){return mGCurveGenMap;};
 	// get affecting currency
-	const LAStringVector& getAffectingCcy(void) const {return mAffectingCcys;};
+	const AQLStringVector& getAffectingCcy(void) const {return mAffectingCcys;};
 	// get affected currency
-	const LAString& getAffectedCcy(void) const {return mAffectedCcy;};
+	const AQLString& getAffectedCcy(void) const {return mAffectedCcy;};
 	// changeZeroRiskIntoMarketRisk
-	void changeZeroRiskIntoMarketRisk(LAString curveType, const DoubleVector& termZeroVals, const DoubleVector& riskZeroVals,
-												LAStringVector& termMarketGrids, DoubleVector& riskMarketVals) const;
+	void changeZeroRiskIntoMarketRisk(AQLString curveType, const DoubleVector& termZeroVals, const DoubleVector& riskZeroVals,
+												AQLStringVector& termMarketGrids, DoubleVector& riskMarketVals) const;
 		// getGCurveGenerateMap
 	void				clearGCurveGenerateMap(void) const {mGCurveGenMap.clear();};
 
 		// getGCurveGenerateMap
 	void				clearBCurveGenerateMap(void) const {mBCurveGenMap.clear();};
 	// get mAssignedCurveMktMap
-	LAString getMarketForCurve(const LAString &curveName) const
+	AQLString getMarketForCurve(const AQLString &curveName) const
 	{
 		if (mAssignedCurveMktMap.find(curveName) == mAssignedCurveMktMap.end())	return IR_NO_DATA;
 		else return mAssignedCurveMktMap[curveName];
 	};
 	// get mAssignedCurveMktMap
-	const std::map<LAString, LAString>& getAssignedCurveMktMap() const {return mAssignedCurveMktMap;};
+	const std::map<AQLString, AQLString>& getAssignedCurveMktMap() const {return mAssignedCurveMktMap;};
 	// set mAssignedCurveMktMap
-	void setAssignedCurveMktMap(const LAString &curveName, const LAString &mktName){mAssignedCurveMktMap[curveName] = mktName;};
+	void setAssignedCurveMktMap(const AQLString &curveName, const AQLString &mktName){mAssignedCurveMktMap[curveName] = mktName;};
 	// get IsSwapTenorCahnge
-	const LADataBool&	getIsSwapTenorAdjust(void) const;
+	const AQLDataBool&	getIsSwapTenorAdjust(void) const;
     // get IsSwapTenorCahnge
-	LADataBool&			getIsSwapTenorAdjust(void);
+	AQLDataBool&			getIsSwapTenorAdjust(void);
 	// get ForeignYieldData
-	const LADataReference&	
+	const AQLDataReference&	
 						getForeignYieldData() const;
     // get ForeignYieldData
-	LADataReference&	getForeignYieldData();
+	AQLDataReference&	getForeignYieldData();
 	// calc floater PV
-	void setFloater(const LAString& curveName);
+	void setFloater(const AQLString& curveName);
 	// check whether attricutes of curves exist or not
-	bool checkCurveAttr(const LAString& mktName) const;
+	bool checkCurveAttr(const AQLString& mktName) const;
 	// remove all curve data
-	void removeAllCuveData(LAObject &yieldData) const;
+	void removeAllCuveData(AQLObject &yieldData) const;
 	// remove curve data
-	void removeCuveData(LAObject &yieldData, const LAString& mktName) const;
+	void removeCuveData(AQLObject &yieldData, const AQLString& mktName) const;
 	// remove basis curve data
-	void removeBasisCuveData(LAObject &yieldData) const;
+	void removeBasisCuveData(AQLObject &yieldData) const;
 	// get forward convention
-	void getForwardConvention(const LAString &curveName, LAPriceDataDayCount &dc, LAPriceDataSlidingRule &sld, LAPriceDataCalendar &cal, LAString &accessary) const;
+	void getForwardConvention(const AQLString &curveName, AQLPriceDataDayCount &dc, AQLPriceDataSlidingRule &sld, AQLPriceDataCalendar &cal, AQLString &accessary) const;
 	// insert non removable market
-	void insertNonRemovableMarket(const LAString& mktName);
+	void insertNonRemovableMarket(const AQLString& mktName);
 	// erase non removable market
-	void eraseNonRemovableMarket(const LAString& mktName);
+	void eraseNonRemovableMarket(const AQLString& mktName);
 
 	// calc fwdfx constant curve
 	void calcFwdFXConstantCurve(void);
 	// calc fwdfx constant curve
-	void calcFwdFXConstantCurve(const LAString &curveType);
+	void calcFwdFXConstantCurve(const AQLString &curveType);
 	// get colateral YieldData
-	const LADataReference& getColYieldData() const;
+	const AQLDataReference& getColYieldData() const;
     // get colateral YieldData
-	LADataReference& getColYieldData();
+	AQLDataReference& getColYieldData();
 	// get colateral affecting currency
-	const LAStringVector& getColAffectingCcy(void) const {return mColAffectingCcys;};
+	const AQLStringVector& getColAffectingCcy(void) const {return mColAffectingCcys;};
 	// set colateral affecting currency
-	void setColAffectingCcy(const LAString &currency)
+	void setColAffectingCcy(const AQLString &currency)
 	{
 		if (std::find(mColAffectingCcys.begin(), mColAffectingCcys.end(), currency) == mColAffectingCcys.end()) 
 			mColAffectingCcys.push_back(currency);
 	};
 	// get colateral affected currency
-	const LAString& getColAffectedCcy(void) const {return mColAffectedCcy;};
+	const AQLString& getColAffectedCcy(void) const {return mColAffectedCcy;};
 	// set colateral affected currency
-	void setColAffectedCcy(const LAString &currency){mColAffectedCcy = currency;};
+	void setColAffectedCcy(const AQLString &currency){mColAffectedCcy = currency;};
 
 	
 protected:
 	// copy		 
-	virtual LAObject&	copy(const LAObject& e);
+	virtual AQLObject&	copy(const AQLObject& e);
 	//	calc Basis rate
-	void				calcBasisDiscountFactor(const LAString &type, const DoubleArray &dfs_base, DoubleArray &dfs_mod, DoubleArray &yield_mod, bool isSetAttr = true, const DoubleArray *pBasis = 0);
+	void				calcBasisDiscountFactor(const AQLString &type, const DoubleArray &dfs_base, DoubleArray &dfs_mod, DoubleArray &yield_mod, bool isSetAttr = true, const DoubleArray *pBasis = 0);
 private:
 	//	calc Index grid
-	void				calcIndexGrid(const LADate &asofdate, const LADate &date, int resetLag, const LAPriceDataDayCount &dc, const LAPriceDataCalendar &fixcal, const LAPriceDataCalendar &paycal, const LAPriceDataSlidingRule &sld, const LAString &freq, const LAString &accessary, 
+	void				calcIndexGrid(const AQLDate &asofdate, const AQLDate &date, int resetLag, const AQLPriceDataDayCount &dc, const AQLPriceDataCalendar &fixcal, const AQLPriceDataCalendar &paycal, const AQLPriceDataSlidingRule &sld, const AQLString &freq, const AQLString &accessary, 
 										DoubleVector &gridVec, DoubleVector &termVec);
 	//	calc basis cashflow
-	void calcBasisCF(const LAPriceDataInterpolation &s_inter, const bool isDiscount, const bool isFwdRen, const bool isUSD, const bool isFWDInter, const LAPriceDataInterpolation &f_inter, const LAPriceDataInterpolation *fwd_inter, const std::vector<DoubleArray> &dfsVec, 
-	    const LAPriceDataInterpolation &a_f_inter, const LAPriceDataInterpolation *a_fwd_inter, const LAPriceDataInterpolation &a_d_inter, const double a_d_df_adjust, const LAPriceDataInterpolation *adjust_inter, 
+	void calcBasisCF(const AQLPriceDataInterpolation &s_inter, const bool isDiscount, const bool isFwdRen, const bool isUSD, const bool isFWDInter, const AQLPriceDataInterpolation &f_inter, const AQLPriceDataInterpolation *fwd_inter, const std::vector<DoubleArray> &dfsVec, 
+	    const AQLPriceDataInterpolation &a_f_inter, const AQLPriceDataInterpolation *a_fwd_inter, const AQLPriceDataInterpolation &a_d_inter, const double a_d_df_adjust, const AQLPriceDataInterpolation *adjust_inter, 
 	    const bool isAgtSpread, const DoubleArray &spreadVec, const std::vector<IntArray> &cpd_timesVec, const std::vector<IntArray> &a_cpd_timesVec, const double spotTerm, const double a_spotTerm, 
 	    const std::vector<DoubleArray> &gridVec, const std::vector<DoubleArray> &tauVec, const std::vector<DoubleMatrix> &i_gridMatVec, const std::vector<DoubleMatrix> &i_termMatVec, 
 	    const std::vector<DoubleArray> &a_gridVec, const std::vector<DoubleArray> &a_tauVec, const std::vector<DoubleMatrix> &a_i_gridMatVec, const std::vector<DoubleMatrix> &a_i_termMatVec, 
 	    const std::vector<DoubleMatrix> &b_yieldTimeMatVec, DoubleArray &a_targetPVVec, DoubleArray &out, const bool isNegative);
 	// calc against PV (spot renotional)
 	double					
-	calcAgainstPV(const bool isFWDInter, const LAPriceDataInterpolation &f_inter, const LAPriceDataInterpolation *fwd_inter, 
-		const LAPriceDataInterpolation &d_inter, const double spread, const IntArray& cpd_times, const double term_spot, 
+	calcAgainstPV(const bool isFWDInter, const AQLPriceDataInterpolation &f_inter, const AQLPriceDataInterpolation *fwd_inter, 
+		const AQLPriceDataInterpolation &d_inter, const double spread, const IntArray& cpd_times, const double term_spot, 
 		const DoubleArray &terms_grid, const DoubleArray &terms_interval, const DoubleMatrix &i_gridMat, const DoubleMatrix &i_termMat, const bool isBackward);
 	// calc against PV (forward renotional)
 	double					
-	calcAgainstPV(const bool isFWDInter, const LAPriceDataInterpolation &f_inter, const LAPriceDataInterpolation *fwd_inter, 
-		const LAPriceDataInterpolation &d_inter, const LAPriceDataInterpolation &a_s_inter, const LAPriceDataInterpolation *adjust_inter, const double spread, const IntArray& cpd_times, const double term_spot, const double a_term_spot, 
+	calcAgainstPV(const bool isFWDInter, const AQLPriceDataInterpolation &f_inter, const AQLPriceDataInterpolation *fwd_inter, 
+		const AQLPriceDataInterpolation &d_inter, const AQLPriceDataInterpolation &a_s_inter, const AQLPriceDataInterpolation *adjust_inter, const double spread, const IntArray& cpd_times, const double term_spot, const double a_term_spot, 
 		const DoubleArray &terms_grid, const DoubleArray &terms_interval, const DoubleMatrix &i_gridMat, const DoubleMatrix &i_termMat);
 	// calc target PV for Newton-Raphson method to generate Discount Curve (spot renotional)
 	double
-	calcTargetPV(const LAPriceDataInterpolation &s_inter, const bool isFWDInter, const LAPriceDataInterpolation &f_inter, const LAPriceDataInterpolation *fwd_inter, const double spread, const IntArray& cpd_times, 
+	calcTargetPV(const AQLPriceDataInterpolation &s_inter, const bool isFWDInter, const AQLPriceDataInterpolation &f_inter, const AQLPriceDataInterpolation *fwd_inter, const double spread, const IntArray& cpd_times, 
 		const double term_spot, const DoubleArray &terms_grid, const DoubleArray &terms_interval, const DoubleMatrix &i_gridMat, const DoubleMatrix &i_termMat, 
 		const DoubleMatrix &b_yieldTimeMat);
 	// calc target PV for Newton-Raphson method to generate Discount Curve (forward renotional)
 	double
-	calcTargetPV(const LAPriceDataInterpolation &s_inter, const bool isFWDInter, const LAPriceDataInterpolation &f_inter, const LAPriceDataInterpolation *fwd_inter, const LAPriceDataInterpolation &a_d_inter, const LAPriceDataInterpolation *adjust_inter, const double spread, const IntArray& cpd_times, 
+	calcTargetPV(const AQLPriceDataInterpolation &s_inter, const bool isFWDInter, const AQLPriceDataInterpolation &f_inter, const AQLPriceDataInterpolation *fwd_inter, const AQLPriceDataInterpolation &a_d_inter, const AQLPriceDataInterpolation *adjust_inter, const double spread, const IntArray& cpd_times, 
 		const double term_spot, const DoubleArray &terms_grid, const DoubleArray &terms_interval, const DoubleMatrix &i_gridMat, const DoubleMatrix &i_termMat,
 		const DoubleMatrix &b_yieldTimeMat);
 	// calc target PV for Newton-Raphson method to generate Forecast Curve
 	double	
-	calcTargetPV(const LAPriceDataInterpolation &s_inter, const DoubleArray &dfsVec, const double spread, const IntArray& cpd_times, 
+	calcTargetPV(const AQLPriceDataInterpolation &s_inter, const DoubleArray &dfsVec, const double spread, const IntArray& cpd_times, 
 		const double term_spot, const DoubleArray &terms_grid, const DoubleArray &terms_interval, const DoubleMatrix &i_gridMat, const DoubleMatrix &i_termMat, 
 		const DoubleMatrix &b_yieldTimeMat);
 	// claculate present value of cashflows in specified leg.
 	double
-	calcLegPV(const DoubleArray &fwdsVec, const DoubleMatrix &dfsMat, const DoubleArray &a_dfsMat, const LAPriceDataInterpolation *adjust_inter,
+	calcLegPV(const DoubleArray &fwdsVec, const DoubleMatrix &dfsMat, const DoubleArray &a_dfsMat, const AQLPriceDataInterpolation *adjust_inter,
 		const double spread, const IntArray& cpd_times, const DoubleArray &terms_grid, const DoubleArray& terms_interval, const DoubleMatrix &i_gridMat);
 
 	//	set a rate convention into a curve data object
-	void				setCurveConvention(LAObjectHolder& objHolder, std::vector<LAObject*>& mktData, const LAString& curveName);
+	void				setCurveConvention(AQLObjectHolder& objHolder, std::vector<AQLObject*>& mktData, const AQLString& curveName);
 
 	// get market data reference
-	const LADataMultiReference& getMarketDataRef(const LAString& curveType) const;
+	const AQLDataMultiReference& getMarketDataRef(const AQLString& curveType) const;
 	//	save basis curve
-	void saveBasisCurve(const LAString& curveType, const DoubleArray& terms, const DoubleMatrix& termsmtx_fwd, const DoubleArray& dfs, std::vector<LAObject*>& data);
+	void saveBasisCurve(const AQLString& curveType, const DoubleArray& terms, const DoubleMatrix& termsmtx_fwd, const DoubleArray& dfs, std::vector<AQLObject*>& data);
 	// set curve interpolation
-	void setCurveInterpolation(const LAString& curveName, const LAObject &yieldData, LAPriceDataInterpolation& inter) const;
+	void setCurveInterpolation(const AQLString& curveName, const AQLObject &yieldData, AQLPriceDataInterpolation& inter) const;
 	// calc annuity
-	static double calcAnnuity(double spotTerm, const DoubleArray& terms_grid, const DoubleArray& terms_interval, const LAPriceDataInterpolation& d_inter);
+	static double calcAnnuity(double spotTerm, const DoubleArray& terms_grid, const DoubleArray& terms_interval, const AQLPriceDataInterpolation& d_inter);
 	// deduce dates and terms generally
-	static void deducePaymentDatesAndTerms(const LADate& spotdate, const LAString& strTerm, const LAPriceDataSlidingRule& sld, const LAPriceDataCalendar& cal,
-		const LAString& roll_conv, const LAString& freq, const LAString& freq_payment, const LAPriceDataDayCount& dc, bool eom, bool isBackward,
+	static void deducePaymentDatesAndTerms(const AQLDate& spotdate, const AQLString& strTerm, const AQLPriceDataSlidingRule& sld, const AQLPriceDataCalendar& cal,
+		const AQLString& roll_conv, const AQLString& freq, const AQLString& freq_payment, const AQLPriceDataDayCount& dc, bool eom, bool isBackward,
 		DateVector& dates, DoubleArray& terms_grid, DoubleArray& terms_interval, IntArray& num_reset);
 	// deduce dates and terms of the leg of this side reflecting the against-side leg info
-	static void deducePaymentDatesAndTermsThisSide(const LAString& strTerm, const LAString& roll_conv, bool eom, bool isSameGridIndex,
-		const LADate& c_spotdate, const LAPriceDataSlidingRule& c_sld, const LAPriceDataCalendar& c_cal, const LAString& c_freq, const LAString& c_freq_payment, const LAPriceDataDayCount& c_dc, bool c_isBackward, const LADate& a_c_spotdate, 
+	static void deducePaymentDatesAndTermsThisSide(const AQLString& strTerm, const AQLString& roll_conv, bool eom, bool isSameGridIndex,
+		const AQLDate& c_spotdate, const AQLPriceDataSlidingRule& c_sld, const AQLPriceDataCalendar& c_cal, const AQLString& c_freq, const AQLString& c_freq_payment, const AQLPriceDataDayCount& c_dc, bool c_isBackward, const AQLDate& a_c_spotdate, 
 		DateVector& dates, DoubleArray& terms_grid, DoubleArray& terms_interval, IntArray& num_reset);
 
 	// Set data by name
-	LADataHolder&		add(const LAString& name);
-    LADataHolder&		reset(const LAString& name); // remove then add
+	AQLDataHolder&		add(const AQLString& name);
+    AQLDataHolder&		reset(const AQLString& name); // remove then add
 	
-	LADataHolder*       mpAsOfDate;			// AsOfDate							(DATA_DATE)
-	LADataHolder*		mpProcedure;		// Procedure to genarate DF			(DATA_PROCEDURE) 
-	LADataHolder*		mpMarketData;		// Market Data						(DATA_MULTIREFERENCE) 
-	LADataHolder*       mpBasisRates;		// BasisRates of Terms				(DATA_DOUBLE_MATRIX)
-	LADataHolder*		mpBasisData;		// BasisData							(DATA_MULTIREFERENCE) 
-	LADataHolder*		mpIsFutureUse;		// Use FutureRate or not				(DATA_BOOL) 
-	LADataHolder*		mpBaseYieldCurve;	// BaseYieldCurve						(DATA_REFERENCE) 
-	LADataHolder*		mpCurrency;			// Currency							(DATA_STRING)
-	LADataHolder*		mpInterYG;			// interpolation to getnerate yeild	(DATA_PROCEDURE) 
-	LADataHolder*		mpInterFW;			// interpolation to use foward		(DATA_PROCEDURE) 
-	LADataHolder*		mpInterBS;			// interpolation to use basis			(DATA_PROCEDURE) 
-	LADataHolder*		mpBasisFunction;	// Basis Function						(DATA_FUNCTION)
-	LADataHolder*		mpInterOC;			// interpolation to optional curve	(DATA_PROCEDURE) 
-	LADataHolder*		mpRatePriority;		// interpolation to use basis			(DATA_STRINGS)
-	LADataHolder*		mpIsArbFree;		// ArbFree Flag						(DATA_BOOL)
-	LADataHolder*		mpIsFRAUse;			// FRA Flag							(DATA_BOOL)
-	LADataHolder*		mpIsSwapTenorAdjust;// Swap Tenor Change Flag				(DATA_BOOL)
-	LADataHolder*		mpFXEntity;			// FXEntity							(DATA_REFERENCE) 
-	LADataHolder*		mpOptimizeMethod;	// Name of Optimization Method		(DATA_STRING) 
-	LADataHolder*       mpCompoundFunction; // Compounding function               (DATA_FUNCTION)
-	mutable std::map<LAString, bool>  mBCurveGenMap;  // BasisCurveGenerateMap
-	std::map<LAString, bool>  mArbFreeCurveGenMap;  // ArbFreeCurveGenerateMap
-	mutable std::map<LAString, bool> mGCurveGenMap; // GenerateCurveGenMap
-	std::map<LAString, std::map<LAString, double> >mDpnCurveMap; 
-	mutable LAString mBfCurveType;
-	mutable std::map<LAString, double> mBfDpnMap;
-	LADataHolder*		mpForeignYieldData;	// Foreign currency YieldData			(DATA_REFERENCE)
-	mutable std::map<LAString, LAString> mAssignedCurveMktMap; // map(curve name, market name)
-	LAStringVector mAffectingCcys;
-	LAString mAffectedCcy;
+	AQLDataHolder*       mpAsOfDate;			// AsOfDate							(DATA_DATE)
+	AQLDataHolder*		mpProcedure;		// Procedure to genarate DF			(DATA_PROCEDURE) 
+	AQLDataHolder*		mpMarketData;		// Market Data						(DATA_MULTIREFERENCE) 
+	AQLDataHolder*       mpBasisRates;		// BasisRates of Terms				(DATA_DOUBLE_MATRIX)
+	AQLDataHolder*		mpBasisData;		// BasisData							(DATA_MULTIREFERENCE) 
+	AQLDataHolder*		mpIsFutureUse;		// Use FutureRate or not				(DATA_BOOL) 
+	AQLDataHolder*		mpBaseYieldCurve;	// BaseYieldCurve						(DATA_REFERENCE) 
+	AQLDataHolder*		mpCurrency;			// Currency							(DATA_STRING)
+	AQLDataHolder*		mpInterYG;			// interpolation to getnerate yeild	(DATA_PROCEDURE) 
+	AQLDataHolder*		mpInterFW;			// interpolation to use foward		(DATA_PROCEDURE) 
+	AQLDataHolder*		mpInterBS;			// interpolation to use basis			(DATA_PROCEDURE) 
+	AQLDataHolder*		mpBasisFunction;	// Basis Function						(DATA_FUNCTION)
+	AQLDataHolder*		mpInterOC;			// interpolation to optional curve	(DATA_PROCEDURE) 
+	AQLDataHolder*		mpRatePriority;		// interpolation to use basis			(DATA_STRINGS)
+	AQLDataHolder*		mpIsArbFree;		// ArbFree Flag						(DATA_BOOL)
+	AQLDataHolder*		mpIsFRAUse;			// FRA Flag							(DATA_BOOL)
+	AQLDataHolder*		mpIsSwapTenorAdjust;// Swap Tenor Change Flag				(DATA_BOOL)
+	AQLDataHolder*		mpFXEntity;			// FXEntity							(DATA_REFERENCE) 
+	AQLDataHolder*		mpOptimizeMethod;	// Name of Optimization Method		(DATA_STRING) 
+	AQLDataHolder*       mpCompoundFunction; // Compounding function               (DATA_FUNCTION)
+	mutable std::map<AQLString, bool>  mBCurveGenMap;  // BasisCurveGenerateMap
+	std::map<AQLString, bool>  mArbFreeCurveGenMap;  // ArbFreeCurveGenerateMap
+	mutable std::map<AQLString, bool> mGCurveGenMap; // GenerateCurveGenMap
+	std::map<AQLString, std::map<AQLString, double> >mDpnCurveMap; 
+	mutable AQLString mBfCurveType;
+	mutable std::map<AQLString, double> mBfDpnMap;
+	AQLDataHolder*		mpForeignYieldData;	// Foreign currency YieldData			(DATA_REFERENCE)
+	mutable std::map<AQLString, AQLString> mAssignedCurveMktMap; // map(curve name, market name)
+	AQLStringVector mAffectingCcys;
+	AQLString mAffectedCcy;
 	StringSet mNonRemovableMarket; // Non removable market
 
-	LADataHolder*		mpColYieldData;	// Collateral currency YieldData			(DATA_REFERENCE)
-	LAStringVector mColAffectingCcys;	// Collateral affecting currency
-	LAString mColAffectedCcy;	// Collateral  affected currency
+	AQLDataHolder*		mpColYieldData;	// Collateral currency YieldData			(DATA_REFERENCE)
+	AQLStringVector mColAffectingCcys;	// Collateral affecting currency
+	AQLString mColAffectedCcy;	// Collateral  affected currency
 
-	class CalibrationCostFunction : public LAFunctionVector
+	class CalibrationCostFunction : public AQLFunctionVector
 	{
 	public: 
 		CalibrationCostFunction(LAMathYieldCurvePro& outerObject,
                                 const DoubleArray grid_spread_time,
-                                LAPriceDataInterpolation& spread_time_inter,
+                                AQLPriceDataInterpolation& spread_time_inter,
                                 const DoubleVector targetPV,
 								unsigned int maxIterationNum = 150
 							   );
@@ -1057,7 +1057,7 @@ private:
 	protected:
 		LAMathYieldCurvePro& mParent;
 		DoubleArray mGrid_spread_time;
-		LAPriceDataInterpolation& mSpread_time_inter;
+		AQLPriceDataInterpolation& mSpread_time_inter;
 		DoubleVector mTargetPV;
 		unsigned int mMaxIterationNum;
 	};
@@ -1067,19 +1067,19 @@ private:
 	public: 
 		CalibrationCostFunctionBasis(LAMathYieldCurvePro& outerObject,
                                      const DoubleArray grid_spread_time,
-                                     LAPriceDataInterpolation &s_inter,
+                                     AQLPriceDataInterpolation &s_inter,
                                      const bool isDiscount, 
                                      const bool isFwdRen, 
                                      const bool isUSD, 
                                      const bool isFWDInter, 
-                                     const LAPriceDataInterpolation &f_inter, 
-                                     const LAPriceDataInterpolation *fwd_inter, 
+                                     const AQLPriceDataInterpolation &f_inter, 
+                                     const AQLPriceDataInterpolation *fwd_inter, 
                                      const std::vector<DoubleArray> &dfsVec, 
-	                                 const LAPriceDataInterpolation &a_f_inter, 
-                                     const LAPriceDataInterpolation *a_fwd_inter, 
-                                     const LAPriceDataInterpolation &a_d_inter, 
+	                                 const AQLPriceDataInterpolation &a_f_inter, 
+                                     const AQLPriceDataInterpolation *a_fwd_inter, 
+                                     const AQLPriceDataInterpolation &a_d_inter, 
                                      const double a_d_df_adjust, 
-                                     const LAPriceDataInterpolation *adjust_inter, 
+                                     const AQLPriceDataInterpolation *adjust_inter, 
 	                                 const bool isAgtSpread, 
                                      const DoubleArray &spreadVec, 
                                      const std::vector<IntArray> &cpd_times, 
@@ -1109,14 +1109,14 @@ private:
         const bool mIsFwdRen;
         const bool mIsUSD;
         const bool mIsFWDInter;
-        const LAPriceDataInterpolation &mF_inter;
-        const LAPriceDataInterpolation *mpFwd_inter;
+        const AQLPriceDataInterpolation &mF_inter;
+        const AQLPriceDataInterpolation *mpFwd_inter;
         const std::vector<DoubleArray> &mDfsVec;
-	    const LAPriceDataInterpolation &mA_f_inter;
-        const LAPriceDataInterpolation *mpA_fwd_inter; 
-        const LAPriceDataInterpolation &mA_d_inter;
+	    const AQLPriceDataInterpolation &mA_f_inter;
+        const AQLPriceDataInterpolation *mpA_fwd_inter; 
+        const AQLPriceDataInterpolation &mA_d_inter;
         const double mA_d_df_adjust;
-        const LAPriceDataInterpolation *mpAdjust_inter;
+        const AQLPriceDataInterpolation *mpAdjust_inter;
 	    const bool mIsAgtSpread;
         const DoubleArray &mSpreadVec;
         const std::vector<IntArray> mCpd_times;
@@ -1142,18 +1142,18 @@ private:
 #endif
 
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
-// Funciton ID of LAShiftMethod
+// Funciton ID of AQLShiftMethod
 #define FN_BASISFUNC1	2700
-// Function Name of LAShiftMethod
+// Function Name of AQLShiftMethod
 #define FN_BASISFUNC1_STR	"fn_basisfunc1"
 
 
-class LAMathBasisFunction : public LAFunctionBase
+class LAMathBasisFunction : public AQLFunctionBase
 {
 public:
 	// Default constructor
@@ -1165,15 +1165,15 @@ public:
 	virtual function_t			getType() const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 
 	virtual double				operator()(const DoubleArray& x) const;
 	virtual double				operator()(const double& x) const;
 
 	// 
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								}
 	//
 	LAMathBasisFunction & operator=( const LAMathBasisFunction & ) { return *this; }
@@ -1187,18 +1187,18 @@ private:
 #endif
 
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
-// Funciton ID of LAShiftMethod
+// Funciton ID of AQLShiftMethod
 #define FN_BASISFUNC2	2701
-// Function Name of LAShiftMethod
+// Function Name of AQLShiftMethod
 #define FN_BASISFUNC2_STR	"fn_basisfunc2"
 
 
-class LAMathBasisFunction2 : public LAFunctionBase
+class LAMathBasisFunction2 : public AQLFunctionBase
 {
 public:
 	// Default constructor
@@ -1207,15 +1207,15 @@ public:
 	~LAMathBasisFunction2();
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 
 	virtual double				operator()(const DoubleArray& x) const;
 	virtual double				operator()(const double& x) const;
 
 	// 
-	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
+	virtual	AQLFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
-									return LAFunctionBase::operator()(pos, x);
+									return AQLFunctionBase::operator()(pos, x);
 								}
 	//
 	LAMathBasisFunction2 & operator=( const LAMathBasisFunction2 & ) { return *this; }
@@ -1232,18 +1232,18 @@ public:
 		@param[in] _Right another object
 		@return true when right argument maturity date > left argument maturity date
 	*/
-	bool operator()(const LAObject* _Left, const LAObject* _Right) const
+	bool operator()(const AQLObject* _Left, const AQLObject* _Right) const
 	{
-		LADate asof, ldate, rdate;
-		LAString dataType = dynamic_cast<const LADataString&> ((_Left->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+		AQLDate asof, ldate, rdate;
+		AQLString dataType = dynamic_cast<const AQLDataString&> ((_Left->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		dataType.toUpper(); 
 
 		if (dataType == FRA3M || dataType == FRA6M || dataType == FRA)
 		{
-			LAString lterm_x = dynamic_cast<const LADataString&> ((_Left->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			LAString rterm_x = dynamic_cast<const LADataString&> ((_Right->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			LAString lterm = LAPriceYieldGenerator::changeFRATermFormat(lterm_x);
-			LAString rterm = LAPriceYieldGenerator::changeFRATermFormat(rterm_x);
+			AQLString lterm_x = dynamic_cast<const AQLDataString&> ((_Left->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			AQLString rterm_x = dynamic_cast<const AQLDataString&> ((_Right->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			AQLString lterm = LAPriceYieldGenerator::changeFRATermFormat(lterm_x);
+			AQLString rterm = LAPriceYieldGenerator::changeFRATermFormat(rterm_x);
 			asof.setSystemDate();
 			ldate = LAMathDateCalculations::getDate(asof, lterm, true);
 			rdate = LAMathDateCalculations::getDate(asof, rterm, true);
@@ -1251,16 +1251,16 @@ public:
 		}
 		else if(dataType != FUTURE && dataType != BOJ && dataType != FEDFUNDRATE)
 		{
-			LAString lterm = dynamic_cast<const LADataString&> ((_Left->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			LAString rterm = dynamic_cast<const LADataString&> ((_Right->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			AQLString lterm = dynamic_cast<const AQLDataString&> ((_Left->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			AQLString rterm = dynamic_cast<const AQLDataString&> ((_Right->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			asof.setSystemDate();
 			ldate = LAMathDateCalculations::getDate(asof, lterm, true);
 			rdate = LAMathDateCalculations::getDate(asof, rterm, true);
 			return ldate < rdate;
 		}
 
-		ldate = dynamic_cast<const LADataDate&> ((_Left->getData(IR_CALIBRATION_DATA_STARTDATE, ISNOTNULL)).get()).get();
-		rdate = dynamic_cast<const LADataDate&> ((_Right->getData(IR_CALIBRATION_DATA_STARTDATE, ISNOTNULL)).get()).get();
+		ldate = dynamic_cast<const AQLDataDate&> ((_Left->getData(IR_CALIBRATION_DATA_STARTDATE, ISNOTNULL)).get()).get();
+		rdate = dynamic_cast<const AQLDataDate&> ((_Right->getData(IR_CALIBRATION_DATA_STARTDATE, ISNOTNULL)).get()).get();
 		return ldate < rdate;
 	};
 };

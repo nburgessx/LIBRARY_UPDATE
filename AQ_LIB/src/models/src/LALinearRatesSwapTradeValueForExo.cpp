@@ -13,38 +13,38 @@
 #include <set>
 #include "LALinearRatesSwapTradeValueForExo.h"
 #include "LAPricePortfolioValue.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADate.h"
-#include "LADataValuation.h"
-#include "LADataProcedure.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectHolder.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAMathValuableEntity.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDate.h"
+#include "AQLDataValuation.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectHolder.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLMathValuableEntity.h"
 #include "LAMathIndexEntity.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathFXEntity.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include "LAPricePayOff.h"
 #include "LAPricePayOffTool.h"
 #include "LAPriceAccruedInterest.h"
 #include "LAMathPlainVanillaEntity.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAMathYieldCurve.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 
 #include "LAPriceCouponTool.h"
 #include "LAPriceCashFlowGenerator.h"
 #include "LAMathYieldCurvePro.h"
-#include "LAMatrix.h"
-#include "LALinearFunc.h"
-#include "LALinearInterpolation.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLMatrix.h"
+#include "AQLLinearFunc.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLPriceDataSlidingRule.h"
 #include "LAMathPathEntity.h"
 
 #define VOL "VOL"
@@ -91,7 +91,7 @@ LALinearRatesSwapTradeValueForExo::isTypeOf(function_t id) const
 
 	@return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LALinearRatesSwapTradeValueForExo::clone() const
 {
     try 
@@ -100,7 +100,7 @@ LALinearRatesSwapTradeValueForExo::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -119,26 +119,26 @@ LALinearRatesSwapTradeValueForExo::getType() const
 	@brief value trade
 
 	@param[in] basedate evaluate day
-	@param[in,out] object trade object object(reference to LAMathObjectValue class) 
+	@param[in,out] object trade object object(reference to AQLMathObjectValue class) 
 	@param[in] att Data to hold evaluation procedure class
 
 	@return clean price
 	
 */
 double
-LALinearRatesSwapTradeValueForExo::value(const LADate& basedate, LAObject& object,
-					const LADataValuation& att) const
+LALinearRatesSwapTradeValueForExo::value(const AQLDate& basedate, AQLObject& object,
+					const AQLDataValuation& att) const
 {
-	LADataInstance *dataInstance = object.getDataInstance();
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-	LADataReference &refP = dynamic_cast<LADataReference &>(object.getData(PRICING_DATA_PATHENTITY, ISNOTNULL).get());
+	AQLDataInstance *dataInstance = object.getDataInstance();
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+	AQLDataReference &refP = dynamic_cast<AQLDataReference &>(object.getData(PRICING_DATA_PATHENTITY, ISNOTNULL).get());
 	LAMathPathEntity &path = dynamic_cast<LAMathPathEntity &>(refP.get().get());
-	const LAString &pathName = dynamic_cast<const LADataString &>(path.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-	const LAString pathName_v = pathName + "_" + LAString(VNL);
+	const AQLString &pathName = dynamic_cast<const AQLDataString &>(path.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+	const AQLString pathName_v = pathName + "_" + AQLString(VNL);
 
 	// create vanilla path object
 	LAMathPlainVanillaEntity* pPath_v = NULL;
-	LAObjectHolder objHolder = objPool.getObject(pathName_v, ENCHKTYPE_NOCHECK);
+	AQLObjectHolder objHolder = objPool.getObject(pathName_v, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
 		pPath_v = new LAMathPlainVanillaEntity(dataInstance);
@@ -151,41 +151,41 @@ LALinearRatesSwapTradeValueForExo::value(const LADate& basedate, LAObject& objec
 		pPath_v->reset();
 	}
 
-	LAString curveNames = "";
+	AQLString curveNames = "";
 	LAMathFXEntity *pFX = NULL;
-	LAString ccyVolName = "";
-	LAString fxName = "";
-	LAString fxVolName = "";
-	const LADataMultiReference &initialRef = path.getInitialValues();
-	const LADataStrings& sdeNames = path.getSDEAttrNames();
-	LAStringVector ccys, fxs;
+	AQLString ccyVolName = "";
+	AQLString fxName = "";
+	AQLString fxVolName = "";
+	const AQLDataMultiReference &initialRef = path.getInitialValues();
+	const AQLDataStrings& sdeNames = path.getSDEAttrNames();
+	AQLStringVector ccys, fxs;
 	for (unsigned int i = 0; i < initialRef.getSize(); ++i)
 	{
 		const LAMathAttrSDE &sde = dynamic_cast<const LAMathAttrSDE &>(path.getData(sdeNames[i]).get());
-		const LAString &ccy = sde.getCurrency();
+		const AQLString &ccy = sde.getCurrency();
 		
 		if (ccy.findString('/') >= 0)
 		{
 			fxs.push_back(ccy);
 			pFX = &dynamic_cast<LAMathFXEntity &>(initialRef.get(i).get());
-			fxName = dynamic_cast<const LADataString &>(initialRef.get(i).getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-			fxVolName += LAString(VOL) + "_" + sdeNames[i] + ":";
+			fxName = dynamic_cast<const AQLDataString &>(initialRef.get(i).getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+			fxVolName += AQLString(VOL) + "_" + sdeNames[i] + ":";
 		}
 		else
 		{
 			ccys.push_back(ccy);
 			pPath_v->getIRCurveTypes().push_back(STD);
-			const LAString &name = dynamic_cast<const LADataString &>(initialRef.get(i).getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+			const AQLString &name = dynamic_cast<const AQLDataString &>(initialRef.get(i).getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 			curveNames += name + ":";
-			ccyVolName += LAString(VOL) + "_" + sdeNames[i] + ":";
+			ccyVolName += AQLString(VOL) + "_" + sdeNames[i] + ":";
 		}
 	}
-	LAStringVector ccys_simu;
-	const LADataStrings& sdeNames_simu = path.getSimulationSDEAttrNames();
+	AQLStringVector ccys_simu;
+	const AQLDataStrings& sdeNames_simu = path.getSimulationSDEAttrNames();
 	for (unsigned int i = 0; i < sdeNames_simu.getSize(); ++i)
 	{
 		const LAMathAttrSDE &sde = dynamic_cast<const LAMathAttrSDE &>(path.getData(sdeNames_simu[i]).get());
-		const LAString &ccy = sde.getCurrency();
+		const AQLString &ccy = sde.getCurrency();
 		if (ccy.findString('/') >= 0)
 		{
 			continue;
@@ -214,25 +214,25 @@ LALinearRatesSwapTradeValueForExo::value(const LADate& basedate, LAObject& objec
 	pPath_v->setUpIRCurveTypes();
 	pPath_v->getIRCurveProNames().set(path.getIRCurveProNames().get());
 	// setup path object reference
-	LACoreReferencePool &rp = dataInstance->getReferencePool();
-	LAObjectHolder &ehPah = rp.getReference(pathName);
+	AQLCoreReferencePool &rp = dataInstance->getReferencePool();
+	AQLObjectHolder &ehPah = rp.getReference(pathName);
 	if (!ehPah.isDefined())
 	{
-		throw LACoreInvalidData("LAMathPathEntity reference pool is not set.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("LAMathPathEntity reference pool is not set.", __FILE__, __LINE__);
 	}
 	pPath_v->update();
 	ehPah.setEntity(pPath_v, false);
 	// setup fx object reference
 	if (pFX)
 	{
-		LADataHolder &dh = object.getData(PRICING_DATA_FXRATE, NOCHECK);
+		AQLDataHolder &dh = object.getData(PRICING_DATA_FXRATE, NOCHECK);
 		if (dh.isDefined() && !dh.isNull())
 		{
-			const LAString &fxName_orig = dynamic_cast<LADataReference &>(dh.get()).get().getName();
-			LAObjectHolder &ehFX = rp.getReference(fxName_orig);
+			const AQLString &fxName_orig = dynamic_cast<AQLDataReference &>(dh.get()).get().getName();
+			AQLObjectHolder &ehFX = rp.getReference(fxName_orig);
 			if (!ehFX.isDefined())
 			{
-				throw LACoreInvalidData("LAMathFXEntity type USEMODEL reference pool is not set.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("LAMathFXEntity type USEMODEL reference pool is not set.", __FILE__, __LINE__);
 			}
 			pFX->update();
 			ehFX.setEntity(pFX, false);
@@ -245,22 +245,22 @@ LALinearRatesSwapTradeValueForExo::value(const LADate& basedate, LAObject& objec
 	// setup object for exo format
 	object.remove(PRICING_DATA_PVCURRENCY);
 	const LALinearRatesSwapTradeValueDataProvider &dataProvider = dynamic_cast<const LALinearRatesSwapTradeValueDataProvider&>(att.getDataProvider());
-	object.add(PRICING_DATA_PVCURRENCY, new LADataString(dataProvider.basecur));
+	object.add(PRICING_DATA_PVCURRENCY, new AQLDataString(dataProvider.basecur));
 
 	object.remove(PRICING_DATA_ISCALCVANILLA);
-	object.add(PRICING_DATA_ISCALCVANILLA, new LADataBool(true));
+	object.add(PRICING_DATA_ISCALCVANILLA, new AQLDataBool(true));
 
 	path.update();
 	ehPah.setEntity(&path, false);
 	if (pFX)
 	{
-		LADataHolder &dh = object.getData(PRICING_DATA_FXRATE, NOCHECK);
+		AQLDataHolder &dh = object.getData(PRICING_DATA_FXRATE, NOCHECK);
 		if (dh.isDefined() && !dh.isNull())
 		{
-			LADataReference &refFX = dynamic_cast<LADataReference &>(dh.get());
-			const LAString &fxName_orig = refFX.get().getName();
+			AQLDataReference &refFX = dynamic_cast<AQLDataReference &>(dh.get());
+			const AQLString &fxName_orig = refFX.get().getName();
 			LAMathFXEntity &fx = dynamic_cast<LAMathFXEntity &>(refFX.get().get());
-			LAObjectHolder &ehFX = rp.getReference(fxName_orig);
+			AQLObjectHolder &ehFX = rp.getReference(fxName_orig);
 			fx.update();
 			ehFX.setEntity(&fx, false);
 		}

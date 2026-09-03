@@ -5,8 +5,8 @@
 #endif
 
 #include "LAMathDriftFuncBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 // ID for LAPriceDriftHJM
@@ -17,7 +17,7 @@
 
 class LAMathPathEntity;
 class LARatesNumeraireBase;
-class LA1DDataSet;
+class AQL1DDataSet;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief Declaration of drift function of HJM sde
@@ -30,7 +30,7 @@ public:
 	// Default constructor
 	LAPriceDriftHJM();
 	// constructor
-	LAPriceDriftHJM(const LAString& sdeAttrName, double T, const DoubleArray& grid_T);	
+	LAPriceDriftHJM(const AQLString& sdeAttrName, double T, const DoubleArray& grid_T);	
 	//	Copy constructor
 	LAPriceDriftHJM(const LAPriceDriftHJM& v);
 	// Destructor
@@ -42,7 +42,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -54,12 +54,12 @@ public:
 	virtual double				operator()(double x) const;
 
 								// return string representaion
-    virtual LAString			convertToString(void) const;
+    virtual AQLString			convertToString(void) const;
 
 //	OPERATION
 								//==========================================
 								// transform from string representaion
-     virtual void				convertFromString(const LAString& str);
+     virtual void				convertFromString(const AQLString& str);
 
 								//======================================
 								// set up this class
@@ -70,7 +70,7 @@ public:
 									@param[in] vol volatility
 									@note this class is not pointer owner of input function
 								*/
-    void						setVolaility(const std::vector<std::vector<LAFunctionBase*> >& vol) 
+    void						setVolaility(const std::vector<std::vector<AQLFunctionBase*> >& vol) 
 								{mVolatility = vol;}
 								//======================================
 								// set correlation
@@ -78,7 +78,7 @@ public:
 									@param[in] cor correlation
 									@note	this class is pointer owner of input function for m_i = 0
 											this class is not pointer owner of input function for m_i > 0								*/
-	void						setCorrelation(const std::vector<std::vector<LAFunctionBase*> >& cor)
+	void						setCorrelation(const std::vector<std::vector<AQLFunctionBase*> >& cor)
 								{mCorrelation = cor;}
 								//======================================
 								// set tenor
@@ -95,8 +95,8 @@ private:
 								// get integral part
 	double						getIntegratedpart (unsigned int i, unsigned int j,
 												   double t1, double t2, unsigned int pos) const;
-								// calculate integral of product of LA1DDataSet functions
-	double						integral(double t1, double t2, std::vector<const LA1DDataSet*>& funcs) const;
+								// calculate integral of product of AQL1DDataSet functions
+	double						integral(double t1, double t2, std::vector<const AQL1DDataSet*>& funcs) const;
 								// calculate drift
 	double						calcDrift(double x) const;
 
@@ -107,9 +107,9 @@ protected:
 	unsigned int								mFactorNum;		// foctor number
 	double										mT;				// T
 	DoubleArray									mgrid_T;		// grid T
-	std::vector<std::vector<LAFunctionBase*> >	mVolatility;	// volatility
-	std::vector<std::vector<LAFunctionBase*> >	mCorrelation;	// correlation
-	LAString									mSDEAttrName;	// data name of ir sde
+	std::vector<std::vector<AQLFunctionBase*> >	mVolatility;	// volatility
+	std::vector<std::vector<AQLFunctionBase*> >	mCorrelation;	// correlation
+	AQLString									mSDEAttrName;	// data name of ir sde
 	const DoubleArray*							mpTimes;		// correlation data time
 	DoubleArray									mDrift;			// drift data
 	//DoubleMatrix								mCorData;		// correlation data

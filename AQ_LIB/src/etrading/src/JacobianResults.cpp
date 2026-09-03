@@ -14,7 +14,7 @@
 #include "LADateScheduleHelpers.h"              // Convert Strings to Dates and vice versa
 #include "CurveUtilities.h"				        // DateFromTenor methods
 #include "LACurvePricingObject.h"	            // Methods to get the curve daycount conventions
-#include "LAEnumConversion.h"		            // Methods to convert enum values to legacy enums
+#include "AQLEnumConversion.h"		            // Methods to convert enum values to legacy enums
 #include "DataUtilities.h"                      // Methods to cast numbers to strings
 #include <numeric>                              // For std::accumulate
 
@@ -223,7 +223,7 @@ namespace etrading
     // ShiftTypeEnum = FLAT_SHIFT
     // InstrumentVector not required since we are working on TOTALs with size 1
     // Jacobian result is a VECTOR ( n x 1 ), where n = number of dates in riskDateVector
-    JacobianResults::JacobianResults( const LADate & asOfDate,
+    JacobianResults::JacobianResults( const AQLDate & asOfDate,
                                       const std::shared_ptr<etrading::CurveDescription> & curveDescription,
                                       const RiskTypeEnum & riskType,
                                       const double & gradientShiftSize,
@@ -252,7 +252,7 @@ namespace etrading
     // ShiftTypeEnum = PERTURBED
     // InstrumentVector required for Pertubation buckets
     // Jacobian result is a MATRIX (n x m), where n = number of dates in riskDateVector and m = number of Instruments in instrumentVector
-    JacobianResults::JacobianResults( const LADate & asOfDate,
+    JacobianResults::JacobianResults( const AQLDate & asOfDate,
                                       const std::shared_ptr<etrading::CurveDescription> & curveDescription,
                                       const RiskTypeEnum & riskType,
                                       const double & gradientShiftSize,
@@ -286,7 +286,7 @@ namespace etrading
     // ShiftTypeEnum = FLAT_SHIFT
     // InstrumentVector not required since we are working on TOTALs with size 1
     // Jacobian result is a VECTOR ( n x 1 ), where n = number of dates in riskDateVector
-    JacobianResults::JacobianResults( const LADate & asOfDate,
+    JacobianResults::JacobianResults( const AQLDate & asOfDate,
                                       const std::shared_ptr<etrading::CurveDescription> & curveDescription,
                                       const RiskTypeEnum & riskType,
                                       const double & gradientShiftSize,
@@ -315,7 +315,7 @@ namespace etrading
     // ShiftTypeEnum = PERTURBED
     // InstrumentVector required for Pertubation buckets
     // Jacobian result is a MATRIX (n x m), where n = number of dates in riskDateVector and m = number of Instruments in instrumentVector
-    JacobianResults::JacobianResults( const LADate & asOfDate,
+    JacobianResults::JacobianResults( const AQLDate & asOfDate,
                                       const std::shared_ptr<etrading::CurveDescription> & curveDescription,
                                       const RiskTypeEnum & riskType,
                                       const double & gradientShiftSize,

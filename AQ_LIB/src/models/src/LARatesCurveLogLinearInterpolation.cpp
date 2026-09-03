@@ -23,10 +23,10 @@
 
 
 #include "LARatesCurveLogLinearInterpolation.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAModelDynamicsLMMCurve.h"
 #include "LAModelDynamicsDDLMMCurve.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 const double INFINITESIMAL = 1E-7;
 #define ISINCLUDEVOL
@@ -60,7 +60,7 @@ LARatesCurveLogLinearInterpolation::~LARatesCurveLogLinearInterpolation()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesCurveLogLinearInterpolation::clone() const
 		//20070410--Nagase--g++ throw
 {
@@ -70,7 +70,7 @@ LARatesCurveLogLinearInterpolation::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -134,7 +134,7 @@ LARatesCurveLogLinearInterpolation::value(double t, double t1, double t2,
 	
 	const DoubleArray& tenor = *( dynamic_cast<const LARatesPathElementLMMCurve*>(mValue.mpCurve1)->getTenor()); 
 	unsigned int tSize = tenor.size();
-	LAAlgorithm::locate<DoubleArray, double>(tenor,t,tSize,mValue.mfixpos);
+	AQLAlgorithm::locate<DoubleArray, double>(tenor,t,tSize,mValue.mfixpos);
 	
 	return mValue;
 	
@@ -206,7 +206,7 @@ LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::clone
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -225,9 +225,9 @@ LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::opera
 	if (!a.isTypeOf(PE_CURVEFORLOGLINEARINTER)) 
 	{	// 
 		// 
-		LAString err = "Assignment error for LARatesCurveForLinearInterpolation : from ";
-		err += LAString(a.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignment error for LARatesCurveForLinearInterpolation : from ";
+		err += AQLString(a.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	
 	delete mpDiscount1for;
@@ -257,7 +257,7 @@ LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::getP 
 	if (t1 > m_t || t2 < m_t)
 	{
 		//error
-		throw LACoreInvalidData("Condition of t1 <= t <= t2 is not maintain", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Condition of t1 <= t <= t2 is not maintain", __FILE__, __LINE__);
 	}
 	if (T <= m_t) return 1.0;
 	
@@ -268,7 +268,7 @@ LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::getP 
 	unsigned int pos = 0;
 	const DoubleArray* tenor = curve1->getTenor(); 
 	const DoubleArray* deltatenor = curve1->getDeltaTenor(); 
-	LAAlgorithm::locate<DoubleArray, double>(*tenor,T,tenor->size(),pos);
+	AQLAlgorithm::locate<DoubleArray, double>(*tenor,T,tenor->size(),pos);
 	
 	double ret = 1.0;
 	if (pos == mfixpos)
@@ -307,15 +307,15 @@ LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::getP 
 			bpos = apos + 1;
 		while (num < pos && pos >= 2)
 		{			
-			double L_b = LAMath::max(liborvec_b[bpos], LOGFLOOR);
-			double L_a = LAMath::max(liborvec_a[apos], LOGFLOOR);
+			double L_b = AQLMath::max(liborvec_b[bpos], LOGFLOOR);
+			double L_a = AQLMath::max(liborvec_a[apos], LOGFLOOR);
 						
-			double logL = weight_a * LAMath::log(L_a) + weight_b * LAMath::log(L_b);
+			double logL = weight_a * AQLMath::log(L_a) + weight_b * AQLMath::log(L_b);
 	#ifdef ISINCLUDEVOL
 			logL += 0.5 * vol * vol * tdiv;
 	#endif
 			
-			double L = LAMath::exp(logL) - mSpreads[num - 1];
+			double L = AQLMath::exp(logL) - mSpreads[num - 1];
 			double df = (*mpDiscount1for)[num - 1] / (1.0 + L * (*deltatenor)[num - 1]);
 			(*mpDiscount1for).push_back(df);
 			
@@ -338,14 +338,14 @@ LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::getP 
 	else
 	{
 		double L_a = curve2->getL(T_b, T, delta, *curve2) + mSpreads[pos - 1];
-		L_a = LAMath::max(L_a, LOGFLOOR);
-		L_b = LAMath::max(L_b, LOGFLOOR);
-		logL = weight_a * LAMath::log(L_a) + weight_b * LAMath::log(L_b);
+		L_a = AQLMath::max(L_a, LOGFLOOR);
+		L_b = AQLMath::max(L_b, LOGFLOOR);
+		logL = weight_a * AQLMath::log(L_a) + weight_b * AQLMath::log(L_b);
 	}
 	vol = volmat[mfixpos][pos - 1];
 	logL += 0.5 * vol * vol * tdiv;
 	
-	double L = LAMath::exp(logL) - mSpreads[pos - 1];
+	double L = AQLMath::exp(logL) - mSpreads[pos - 1];
 	ret /= (1.0 + L * delta);
 	return ret;
 }

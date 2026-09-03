@@ -5,7 +5,7 @@
 #pragma interface
 #endif
 
-#include "LAFunction.h"
+#include "AQLFunction.h"
 
 class LAPriceCMSSpreadFormula
 {
@@ -17,7 +17,7 @@ public:
                                      double S1, double S2, double vol1, double vol2);
 };
 
-class LAPriceCMSSpreadCallPricer : public LAFunction
+class LAPriceCMSSpreadCallPricer : public AQLFunction
 {
 public:
     LAPriceCMSSpreadCallPricer() {}

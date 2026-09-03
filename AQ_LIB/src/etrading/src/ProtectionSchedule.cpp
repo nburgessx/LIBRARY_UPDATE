@@ -26,10 +26,10 @@ namespace etrading
 
         accrualEndDateOrTenor_                  = scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::MATURITY_DATE,  inputLVB );
 
-		LAString fixedBusinessDayAdjustment     = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT) );
-        LAString fixedCalendar	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR) );
-		LAString fixedLegFreq	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY) );
-        LAString fixedDayCount	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT) );
+		AQLString fixedBusinessDayAdjustment     = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT) );
+        AQLString fixedCalendar	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR) );
+		AQLString fixedLegFreq	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY) );
+        AQLString fixedDayCount	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT) );
 
         accrualbusinessDayAdj_	                = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT,		IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT,	fixedBusinessDayAdjustment).getCString());
         accrualCalendar_		                = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALCALENDAR,					IRS_KEY::ACCRUALCALENDAR,				fixedCalendar);
@@ -92,7 +92,7 @@ namespace etrading
 
 		if (boost::math::isnan(notional_))
         {
-        	throw LACoreInvalidData( "#Error: Notional is a mandatory field for ProtectionSchedule", __FILE__, __LINE__ );
+        	throw AQLCoreInvalidData( "#Error: Notional is a mandatory field for ProtectionSchedule", __FILE__, __LINE__ );
         }
 
     }
@@ -133,13 +133,13 @@ namespace etrading
 	* @param[in]	recoveryRate			The estimated amount of capital recovered after default
 	* @param[in]	includeAccruedInterest	Not used for the Protection Schedule / Cashflows
 	*/
-	void ProtectionSchedule::setSurvivalProbabilitiesUsingHazardRate( const LADate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest )
+	void ProtectionSchedule::setSurvivalProbabilitiesUsingHazardRate( const AQLDate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest )
 	{
 		size_t cashflowSize = cashflows_.size();
 
 		double prevSurvivalProbability = 1.0;
 		double survivalProbability = 1.0;
-		LADate prevPaymentDate = asOfDate;
+		AQLDate prevPaymentDate = asOfDate;
 
 		// Calculate and set survival / default probabilities for each cashflow
 		for (size_t i=0; i<cashflowSize; i++ )
@@ -150,7 +150,7 @@ namespace etrading
 			std::shared_ptr<ProtectionCashflow> protectionCashflow = std::static_pointer_cast<ProtectionCashflow>( curCashflow );
 			protectionCashflow->setRecoveryRate( recoveryRate );
 
-			const LADate& paymentDate = paymentDates_[i];
+			const AQLDate& paymentDate = paymentDates_[i];
 
 			double paymentYearFraction = getYearFraction(prevPaymentDate, paymentDate, accrualDaycount_, false);	
 
@@ -171,7 +171,7 @@ namespace etrading
 	* @param[in]	asOfDate				The valuation date of the leg
 	* @param[in]	creditModel				The calibrated credit model
 	*/
-	void ProtectionSchedule::setSurvivalProbabilitiesUsingCreditModel( const LADate& asOfDate, const CreditModel& creditModel )
+	void ProtectionSchedule::setSurvivalProbabilitiesUsingCreditModel( const AQLDate& asOfDate, const CreditModel& creditModel )
 	{
 		const double recoveryRate = creditModel.getRecoveryRate();
 		double prevSurvivalProbability = creditModel.getSurvivalProbability( effectiveDate_ );
@@ -186,7 +186,7 @@ namespace etrading
 			std::shared_ptr<ProtectionCashflow> protectionCashflow = std::static_pointer_cast<ProtectionCashflow>( curCashflow );
 			protectionCashflow->setRecoveryRate( recoveryRate );
 
-			const LADate& paymentDate = paymentDates_[i];
+			const AQLDate& paymentDate = paymentDates_[i];
 			const double survivalProbability = creditModel.getSurvivalProbability( paymentDate );
 			protectionCashflow->setSurvivalProbability( survivalProbability );
 

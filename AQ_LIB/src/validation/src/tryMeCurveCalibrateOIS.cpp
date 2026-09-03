@@ -27,17 +27,17 @@ namespace validation
     *  @param [in]		swapConv			Libor swap conventions
     *  @param [in]		swapRates			Libor swap market rates
     */
-    const LAString tryMeCurveCalibrateOIS( const LAString& curveCollection,
-                                           const LAString& staticDataTable,
-                                           const LAString& curveIndexInput,
-                                           const LAStringMatrix& curveConv,
-                                           const LAStringMatrix& oisConv,
-                                           const LAStringMatrix& oisRates,
-                                           const LAStringMatrix& oisHistoricalRates,
-                                           const LAStringMatrix& liborOisBasisConv,
-                                           const LAStringMatrix& liborOisBasisRates,
-                                           const LAStringMatrix& swapConv,
-                                           const LAStringMatrix& swapRates )
+    const AQLString tryMeCurveCalibrateOIS( const AQLString& curveCollection,
+                                           const AQLString& staticDataTable,
+                                           const AQLString& curveIndexInput,
+                                           const AQLStringMatrix& curveConv,
+                                           const AQLStringMatrix& oisConv,
+                                           const AQLStringMatrix& oisRates,
+                                           const AQLStringMatrix& oisHistoricalRates,
+                                           const AQLStringMatrix& liborOisBasisConv,
+                                           const AQLStringMatrix& liborOisBasisRates,
+                                           const AQLStringMatrix& swapConv,
+                                           const AQLStringMatrix& swapRates )
     {
         VALID_EXCEPTION_START
         
@@ -47,7 +47,7 @@ namespace validation
         // Prefix the staticDataTable to the curveIndex Name Set, ensuring to use the ':' delimiter
         std::string curveIndexStdStr =  curveIndexInput.getCString();
         curveIndexStdStr = etrading::addPrefixStringAndCheckForDuplicates( curveIndexStdStr, std::string(staticDataTable.getCString()) );
-        LAString curveIndex  = curveIndexStdStr.c_str();
+        AQLString curveIndex  = curveIndexStdStr.c_str();
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -98,11 +98,11 @@ namespace validation
                                                             swapConv );
 
         // note that curveIndexCopy is actually the staticDataTable ...
-        LAString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "OIS" ) );
+        AQLString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "OIS" ) );
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndexCopy );
 
-        LAString ret( curveCollection + " " + staticDataTable + " Curve has been set" );
+        AQLString ret( curveCollection + " " + staticDataTable + " Curve has been set" );
 
         if ( CreateDataFile::recordEnabled() )
         {

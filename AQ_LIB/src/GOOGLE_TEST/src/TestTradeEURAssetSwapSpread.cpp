@@ -7,7 +7,7 @@
 #include "CurveTenorBasis.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"
-#include "LACoreError.h"
+#include "AQLCoreError.h"
 #include "tryMirAssetSwapSpread.h"
 
 #include <gTest/gTest.h>
@@ -121,8 +121,8 @@ namespace google_test
                 {
                     // Record outputs and rebase test outputs
                     etrading::CreateDataFile::setOutputFolder( TEST_DIR, false );
-                    LAStringVector v = LAString( getAssetSwapSpreadResults ).toToken( '/' );
-                    LAString outputFileName = v.back();
+                    AQLStringVector v = AQLString( getAssetSwapSpreadResults ).toToken( '/' );
+                    AQLString outputFileName = v.back();
                     etrading::CreateDataFile file( CreateDataFile::makeFilename( outputFileName, i ) );
                     file.write( "output", assetSwapSpread );
                 }
@@ -141,7 +141,7 @@ namespace google_test
         {
             EXPECT_GE( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

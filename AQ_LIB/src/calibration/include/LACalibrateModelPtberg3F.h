@@ -17,11 +17,11 @@
 #pragma interface
 #endif
 
-#include "LAString.h"
+#include "AQLString.h"
 #include "LACalibrateModelPtberg.h"
 
 
-class LADataInstance;
+class AQLDataInstance;
 class LAMathVolatility;
 class LACalibrationParametersPtberg;
 
@@ -45,14 +45,14 @@ public:
 protected:
 	//==============================================
 	// set drift 
-	virtual  void setDrift(const LAString &fx, LARatesSDEBase &sde)  const;
+	virtual  void setDrift(const AQLString &fx, LARatesSDEBase &sde)  const;
 	//==============================================
 	// get sde Type
-	virtual  SDE_TYPE getSDEType(const LAString &fx) const;
+	virtual  SDE_TYPE getSDEType(const AQLString &fx) const;
 private:
 	//==============================================
 	// set volatility object
-	void setUpVolEntity(const LAString &fx, LAMathVolatility &vol) const;
+	void setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const;
 	//==============================================
 	// create calibration info
 	virtual LACalibrationParametersPtberg *createCalibInfoCreator(void) const;

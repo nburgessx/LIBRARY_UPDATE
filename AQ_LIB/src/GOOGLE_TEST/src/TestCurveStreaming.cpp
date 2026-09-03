@@ -73,12 +73,12 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
 
         // Overwrite Discount Factors - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> newPaymentDates = {
-            LADate("20190101"),
-            LADate("20200101"),
-            LADate("20210101"),
-            LADate("20220101"),
-            LADate("20230101") };
+        const std::vector<AQLDate> newPaymentDates = {
+            AQLDate("20190101"),
+            AQLDate("20200101"),
+            AQLDate("20210101"),
+            AQLDate("20220101"),
+            AQLDate("20230101") };
 
         const std::vector<double> newDiscountFactors = {
             0.999999,
@@ -118,38 +118,38 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
 
         // Overwrite Discount Factors - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> newPaymentDates = {
-            LADate("20190101"),
-            LADate("20190102"),
-            LADate("20190103"),
-            LADate("20190104"),
-            LADate("20190105"),
-            LADate("20190106"),
-            LADate("20190107"),
-            LADate("20190108"),
-            LADate("20190109"),
-            LADate("20190110"),
-            LADate("20190111"),
-            LADate("20190112"),
-            LADate("20190113"),
-            LADate("20190114"),
-            LADate("20190115"),
-            LADate("20190116"),
-            LADate("20190117"),
-            LADate("20190118"),
-            LADate("20190119"),
-            LADate("20190120"),
-            LADate("20190121"),
-            LADate("20190122"),
-            LADate("20190123"),
-            LADate("20190124"),
-            LADate("20190125"),
-            LADate("20190126"),
-            LADate("20190127"),
-            LADate("20190128"),
-            LADate("20190129"),
-            LADate("20190130"),
-            LADate("20190131") };
+        const std::vector<AQLDate> newPaymentDates = {
+            AQLDate("20190101"),
+            AQLDate("20190102"),
+            AQLDate("20190103"),
+            AQLDate("20190104"),
+            AQLDate("20190105"),
+            AQLDate("20190106"),
+            AQLDate("20190107"),
+            AQLDate("20190108"),
+            AQLDate("20190109"),
+            AQLDate("20190110"),
+            AQLDate("20190111"),
+            AQLDate("20190112"),
+            AQLDate("20190113"),
+            AQLDate("20190114"),
+            AQLDate("20190115"),
+            AQLDate("20190116"),
+            AQLDate("20190117"),
+            AQLDate("20190118"),
+            AQLDate("20190119"),
+            AQLDate("20190120"),
+            AQLDate("20190121"),
+            AQLDate("20190122"),
+            AQLDate("20190123"),
+            AQLDate("20190124"),
+            AQLDate("20190125"),
+            AQLDate("20190126"),
+            AQLDate("20190127"),
+            AQLDate("20190128"),
+            AQLDate("20190129"),
+            AQLDate("20190130"),
+            AQLDate("20190131") };
 
         const std::vector<double> newDiscountFactors = {
             0.999901,
@@ -237,12 +237,12 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Discount Factors - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> newPaymentDates = {
-            LADate("20190101"),
-            LADate("20200101"),
-            LADate("20210101"),
-            LADate("20220101"),
-            LADate("20230101") };
+        const std::vector<AQLDate> newPaymentDates = {
+            AQLDate("20190101"),
+            AQLDate("20200101"),
+            AQLDate("20210101"),
+            AQLDate("20220101"),
+            AQLDate("20230101") };
 
         const std::vector<double> newDiscountFactors = {
             0.999999,
@@ -281,38 +281,38 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Discount Factors - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> newPaymentDates = {
-            LADate("20190101"),
-            LADate("20190102"),
-            LADate("20190103"),
-            LADate("20190104"),
-            LADate("20190105"),
-            LADate("20190106"),
-            LADate("20190107"),
-            LADate("20190108"),
-            LADate("20190109"),
-            LADate("20190110"),
-            LADate("20190111"),
-            LADate("20190112"),
-            LADate("20190113"),
-            LADate("20190114"),
-            LADate("20190115"),
-            LADate("20190116"),
-            LADate("20190117"),
-            LADate("20190118"),
-            LADate("20190119"),
-            LADate("20190120"),
-            LADate("20190121"),
-            LADate("20190122"),
-            LADate("20190123"),
-            LADate("20190124"),
-            LADate("20190125"),
-            LADate("20190126"),
-            LADate("20190127"),
-            LADate("20190128"),
-            LADate("20190129"),
-            LADate("20190130"),
-            LADate("20190131") };
+        const std::vector<AQLDate> newPaymentDates = {
+            AQLDate("20190101"),
+            AQLDate("20190102"),
+            AQLDate("20190103"),
+            AQLDate("20190104"),
+            AQLDate("20190105"),
+            AQLDate("20190106"),
+            AQLDate("20190107"),
+            AQLDate("20190108"),
+            AQLDate("20190109"),
+            AQLDate("20190110"),
+            AQLDate("20190111"),
+            AQLDate("20190112"),
+            AQLDate("20190113"),
+            AQLDate("20190114"),
+            AQLDate("20190115"),
+            AQLDate("20190116"),
+            AQLDate("20190117"),
+            AQLDate("20190118"),
+            AQLDate("20190119"),
+            AQLDate("20190120"),
+            AQLDate("20190121"),
+            AQLDate("20190122"),
+            AQLDate("20190123"),
+            AQLDate("20190124"),
+            AQLDate("20190125"),
+            AQLDate("20190126"),
+            AQLDate("20190127"),
+            AQLDate("20190128"),
+            AQLDate("20190129"),
+            AQLDate("20190130"),
+            AQLDate("20190131") };
 
         const std::vector<double> newDiscountFactors = {
             0.999901,
@@ -399,12 +399,12 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> fixingDates = {
-            LADate("20190101"),
-            LADate("20200101"),
-            LADate("20210101"),
-            LADate("20220101"),
-            LADate("20230101") };
+        const std::vector<AQLDate> fixingDates = {
+            AQLDate("20190101"),
+            AQLDate("20200101"),
+            AQLDate("20210101"),
+            AQLDate("20220101"),
+            AQLDate("20230101") };
 
         // Constant Forward Rates of 2.0%
         const std::vector<double> expectedForwardRates = {
@@ -416,7 +416,7 @@ namespace google_test
         
         // Solve for the Forward Rate Equivalent Discount Factors and then Set these Discount Factors
         const bool setEquivalentDiscountFactors = true;
-        LAString setForwardsResult = etrading::setCurveForwardRates( "USDYC", "USD3ML", fixingDates, expectedForwardRates, setEquivalentDiscountFactors );
+        AQLString setForwardsResult = etrading::setCurveForwardRates( "USDYC", "USD3ML", fixingDates, expectedForwardRates, setEquivalentDiscountFactors );
 
         // Get ForwardRates
         const std::vector<double> actualForwardRates
@@ -443,12 +443,12 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> fixingDates = {
-            LADate("20190101"),
-            LADate("20200101"),
-            LADate("20210101"),
-            LADate("20220101"),
-            LADate("20230101") };
+        const std::vector<AQLDate> fixingDates = {
+            AQLDate("20190101"),
+            AQLDate("20200101"),
+            AQLDate("20210101"),
+            AQLDate("20220101"),
+            AQLDate("20230101") };
 
         // Constant Forward Rates of 10%
         const std::vector<double> expectedForwardRates = {
@@ -460,7 +460,7 @@ namespace google_test
         
         // Solve for the Forward Rate Equivalent Discount Factors and then Set these Discount Factors
         const bool setEquivalentDiscountFactors = true;
-        LAString setForwardsResult = etrading::setCurveForwardRates( "USDYC", "USD3ML", fixingDates, expectedForwardRates, setEquivalentDiscountFactors );
+        AQLString setForwardsResult = etrading::setCurveForwardRates( "USDYC", "USD3ML", fixingDates, expectedForwardRates, setEquivalentDiscountFactors );
 
         // Get ForwardRates
         const std::vector<double> actualForwardRates
@@ -487,12 +487,12 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> fixingDates = {
-            LADate("20190101"),
-            LADate("20200101"),
-            LADate("20210101"),
-            LADate("20220101"),
-            LADate("20230101") };
+        const std::vector<AQLDate> fixingDates = {
+            AQLDate("20190101"),
+            AQLDate("20200101"),
+            AQLDate("20210101"),
+            AQLDate("20220101"),
+            AQLDate("20230101") };
 
         // Constant Forward Rates of 25%
         const std::vector<double> expectedForwardRates = {
@@ -504,7 +504,7 @@ namespace google_test
         
         // Solve for the Forward Rate Equivalent Discount Factors and then Set these Discount Factors
         const bool setEquivalentDiscountFactors = true;
-        LAString setForwardsResult = etrading::setCurveForwardRates( "USDYC", "USD3ML", fixingDates, expectedForwardRates, setEquivalentDiscountFactors );
+        AQLString setForwardsResult = etrading::setCurveForwardRates( "USDYC", "USD3ML", fixingDates, expectedForwardRates, setEquivalentDiscountFactors );
 
         // Get ForwardRates
         const std::vector<double> actualForwardRates
@@ -531,42 +531,42 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
          // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> fixingDates = {
-            LADate("20190101"),
-            LADate("20190201"),
-            LADate("20190301"),
-            LADate("20190401"),
-            LADate("20190501"),
-            LADate("20190601"),
-            LADate("20190701"),
-            LADate("20190801"),
-            LADate("20190901"),
-            LADate("20191001"),
-            LADate("20191101"),
-            LADate("20191201"),
-            LADate("20200101"),
-            LADate("20200201"),
-            LADate("20200301"),
-            LADate("20200401"),
-            LADate("20200501"),
-            LADate("20200601"),
-            LADate("20200701"),
-            LADate("20200801"),
-            LADate("20200901"),
-            LADate("20201001"),
-            LADate("20201101"),
-            LADate("20201201"),
-            LADate("20210101"),
-            LADate("20210201"),
-            LADate("20210301"),
-            LADate("20210401"),
-            LADate("20210501"),
-            LADate("20210601"),
-            LADate("20210701"),
-            LADate("20210801"),
-            LADate("20211001"), 
-            LADate("20211101"),
-            LADate("20211201") };
+        const std::vector<AQLDate> fixingDates = {
+            AQLDate("20190101"),
+            AQLDate("20190201"),
+            AQLDate("20190301"),
+            AQLDate("20190401"),
+            AQLDate("20190501"),
+            AQLDate("20190601"),
+            AQLDate("20190701"),
+            AQLDate("20190801"),
+            AQLDate("20190901"),
+            AQLDate("20191001"),
+            AQLDate("20191101"),
+            AQLDate("20191201"),
+            AQLDate("20200101"),
+            AQLDate("20200201"),
+            AQLDate("20200301"),
+            AQLDate("20200401"),
+            AQLDate("20200501"),
+            AQLDate("20200601"),
+            AQLDate("20200701"),
+            AQLDate("20200801"),
+            AQLDate("20200901"),
+            AQLDate("20201001"),
+            AQLDate("20201101"),
+            AQLDate("20201201"),
+            AQLDate("20210101"),
+            AQLDate("20210201"),
+            AQLDate("20210301"),
+            AQLDate("20210401"),
+            AQLDate("20210501"),
+            AQLDate("20210601"),
+            AQLDate("20210701"),
+            AQLDate("20210801"),
+            AQLDate("20211001"), 
+            AQLDate("20211101"),
+            AQLDate("20211201") };
 
         const std::vector<double> expectedForwardRates = {
             0.02,
@@ -608,7 +608,7 @@ namespace google_test
 
         // Solve for the Forward Rate Equivalent Discount Factors and then Set these Discount Factors
         const bool setEquivalentDiscountFactors = true;
-        LAString setForwardsResult = etrading::setCurveForwardRates( "USDYC", "USD3ML", fixingDates, expectedForwardRates, setEquivalentDiscountFactors );
+        AQLString setForwardsResult = etrading::setCurveForwardRates( "USDYC", "USD3ML", fixingDates, expectedForwardRates, setEquivalentDiscountFactors );
 
         // Get ForwardRates
         const std::vector<double> actualForwardRates
@@ -636,12 +636,12 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> fixingDates = {
-            LADate("20190101"),
-            LADate("20200101"),
-            LADate("20210101"),
-            LADate("20220101"),
-            LADate("20230101") };
+        const std::vector<AQLDate> fixingDates = {
+            AQLDate("20190101"),
+            AQLDate("20200101"),
+            AQLDate("20210101"),
+            AQLDate("20220101"),
+            AQLDate("20230101") };
 
         // Constant Forward Rates of 2.0%
         const std::vector<double> expectedForwardRates = {
@@ -680,12 +680,12 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( inputFile["curveCollection"], inputFile["curveIndex"] ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> fixingDates = {
-            LADate("20190101"),
-            LADate("20200101"),
-            LADate("20210101"),
-            LADate("20220101"),
-            LADate("20230101") };
+        const std::vector<AQLDate> fixingDates = {
+            AQLDate("20190101"),
+            AQLDate("20200101"),
+            AQLDate("20210101"),
+            AQLDate("20220101"),
+            AQLDate("20230101") };
 
         // Constant Forward Rates of 10%
         const std::vector<double> expectedForwardRates = {
@@ -723,12 +723,12 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
 
         // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> fixingDates = {
-            LADate("20190101"),
-            LADate("20200101"),
-            LADate("20210101"),
-            LADate("20220101"),
-            LADate("20230101") };
+        const std::vector<AQLDate> fixingDates = {
+            AQLDate("20190101"),
+            AQLDate("20200101"),
+            AQLDate("20210101"),
+            AQLDate("20220101"),
+            AQLDate("20230101") };
 
         // Constant Forward Rates of 25%
         const std::vector<double> expectedForwardRates = {
@@ -766,42 +766,42 @@ namespace google_test
         const std::vector<double> originalDiscountFactors = validation::tryMeCurveDiscountFactorsDisplay( "USDYC", "USD6ML" ).discountFactors_;
 
          // Overwrite Forward Rates - *** NOTE ASCENDING ORDER REQUIRED ***
-        const std::vector<LADate> fixingDates = {
-            LADate("20190101"),
-            LADate("20190201"),
-            LADate("20190301"),
-            LADate("20190401"),
-            LADate("20190501"),
-            LADate("20190601"),
-            LADate("20190701"),
-            LADate("20190801"),
-            LADate("20190901"),
-            LADate("20191001"),
-            LADate("20191101"),
-            LADate("20191201"),
-            LADate("20200101"),
-            LADate("20200201"),
-            LADate("20200301"),
-            LADate("20200401"),
-            LADate("20200501"),
-            LADate("20200601"),
-            LADate("20200701"),
-            LADate("20200801"),
-            LADate("20200901"),
-            LADate("20201001"),
-            LADate("20201101"),
-            LADate("20201201"),
-            LADate("20210101"),
-            LADate("20210201"),
-            LADate("20210301"),
-            LADate("20210401"),
-            LADate("20210501"),
-            LADate("20210601"),
-            LADate("20210701"),
-            LADate("20210801"),
-            LADate("20211001"), 
-            LADate("20211101"),
-            LADate("20211201") };
+        const std::vector<AQLDate> fixingDates = {
+            AQLDate("20190101"),
+            AQLDate("20190201"),
+            AQLDate("20190301"),
+            AQLDate("20190401"),
+            AQLDate("20190501"),
+            AQLDate("20190601"),
+            AQLDate("20190701"),
+            AQLDate("20190801"),
+            AQLDate("20190901"),
+            AQLDate("20191001"),
+            AQLDate("20191101"),
+            AQLDate("20191201"),
+            AQLDate("20200101"),
+            AQLDate("20200201"),
+            AQLDate("20200301"),
+            AQLDate("20200401"),
+            AQLDate("20200501"),
+            AQLDate("20200601"),
+            AQLDate("20200701"),
+            AQLDate("20200801"),
+            AQLDate("20200901"),
+            AQLDate("20201001"),
+            AQLDate("20201101"),
+            AQLDate("20201201"),
+            AQLDate("20210101"),
+            AQLDate("20210201"),
+            AQLDate("20210301"),
+            AQLDate("20210401"),
+            AQLDate("20210501"),
+            AQLDate("20210601"),
+            AQLDate("20210701"),
+            AQLDate("20210801"),
+            AQLDate("20211001"), 
+            AQLDate("20211101"),
+            AQLDate("20211201") };
 
         const std::vector<double> expectedForwardRates = {
             0.02,
@@ -866,9 +866,9 @@ namespace google_test
         const std::string loadUSD6ML        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Test the Curve Validation Utility function CurveIndexList, which should return a vector of aliases for a given curve index
-        LAStringVector USDOISCurveAliasList   = etrading::curveIndexAliasList( "USDYC", "USDOIS" );
-        LAStringVector USD3MLCurveAliasList   = etrading::curveIndexAliasList( "USDYC", "USD3ML" );
-        LAStringVector USD6MLCurveAliasList   = etrading::curveIndexAliasList( "USDYC", "USD6ML" );
+        AQLStringVector USDOISCurveAliasList   = etrading::curveIndexAliasList( "USDYC", "USDOIS" );
+        AQLStringVector USD3MLCurveAliasList   = etrading::curveIndexAliasList( "USDYC", "USD3ML" );
+        AQLStringVector USD6MLCurveAliasList   = etrading::curveIndexAliasList( "USDYC", "USD6ML" );
 
         // 1. Test USDOIS Curve Index Alias List
         ASSERT_EQ( USDOISCurveAliasList.size(), 5 );

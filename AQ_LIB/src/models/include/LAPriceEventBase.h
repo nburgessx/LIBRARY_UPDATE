@@ -4,11 +4,11 @@
 #pragma interface
 #endif
 
-#include "LACoreFunctionBase.h"
-#include "LACoreFunctionHolder.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LADate.h"
+#include "AQLCoreFunctionBase.h"
+#include "AQLCoreFunctionHolder.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDate.h"
 #include "LAPricePayOffTool.h"
 #include "LAPriceIndexTool.h"
 
@@ -28,7 +28,7 @@ class LAPricePayOff;
 /*! 
     @brief declaration of abstract base class of trigger action.
 */
-class LAPriceEventBase : public LACoreFunctionBase
+class LAPriceEventBase : public AQLCoreFunctionBase
 {
 friend class LAPriceEventTool;
 public:
@@ -43,7 +43,7 @@ public:
 		@brief make copy(clone) of this class
 	    @return deep copy of this class
 	*/	
-	virtual LACoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
 	// Return this class type
     virtual function_t          getType() const;
 	/*!
@@ -56,7 +56,7 @@ public:
 	    @param[in,out] pastaction past action
 		@param[in,out] iter position of nearest payoff from this action expiry date
 	*/	
-	virtual void	            doAction(const LADate& actiondate,
+	virtual void	            doAction(const AQLDate& actiondate,
 										 double actiontime,
 										 std::vector<PayOffToolHolderVector>& payoff,
 										 std::vector<PayOffToolHolderVector>& extrapayoff,
@@ -65,9 +65,9 @@ public:
 										 std::vector<PayOffToolHolderIter>& iter) = 0;
 
 	// set up this class
-	virtual	void				setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+	virtual	void				setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall);
 	
@@ -116,9 +116,9 @@ public:
 	    @param[in] payoff payoff
 	    @param[in] isCall call flag(true:call,false:trigger)
 	*/
-	virtual	void				setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+	virtual	void				setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall)
 								{
@@ -164,14 +164,14 @@ private:
 
 
 	unsigned int mID;// id number
-	LADate	mExpiryDate;// expiry date
+	AQLDate	mExpiryDate;// expiry date
 	double	mExpiryTime;// expiry time
 	DateVector	mActionDates;// action date
 	DoubleArray mActionTimes;// action time
 	bool	mIsOneTime;// one time trigger(true) or multi time trigger(false)  
 	bool*	mpEffectiveFlag;// trigger effective or not 	
-	LAFunctionBase*			mpOperator;// operator for trigger hit judge
-	LACoreFunctionHolder		mOperatorHolder;// function holder of operator for trigger hit judge
+	AQLFunctionBase*			mpOperator;// operator for trigger hit judge
+	AQLCoreFunctionHolder		mOperatorHolder;// function holder of operator for trigger hit judge
 	DoubleArray mX;// variable for trigger hit judge
 	std::vector<LAPriceIndexToolBase*>	mIndex;// reference index 
 	std::vector<LAPriceEventBase*>		mAction;// trigger action

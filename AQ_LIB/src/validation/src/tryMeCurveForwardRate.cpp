@@ -30,9 +30,9 @@ namespace validation
     */
     DoubleVector tryMeCurveForwardRatesFromYearFraction( const DateVector& fromDates,
 														double yearFraction,
-														const LAString& dayCount,
-														const LAString& curveCollection,
-														const LAString& curveIndex,
+														const AQLString& dayCount,
+														const AQLString& curveCollection,
+														const AQLString& curveIndex,
 														const std::string& fwdInter,
 														const std::string& businessDayAdjust)
     {
@@ -79,8 +79,8 @@ namespace validation
     */
     DoubleVector tryMeCurveForwardRatesFromForwardDates( const DateVector& fromDates,
                                                          const DateVector& toDates,
-                                                         const LAString& curveCollection,
-                                                         const LAString& curveIndex,
+                                                         const AQLString& curveCollection,
+                                                         const AQLString& curveIndex,
 														 const std::string& fwdInter,
 														 const std::string& businessDayAdjust)
     {
@@ -127,8 +127,8 @@ namespace validation
     */
     DoubleVector tryMeCurveForwardRatesFromForwardDatesFromObject( const DateVector& fromDates,
 																   const DateVector& toDates,
-																   const LAString& curveCollectionOrHandle,
-																   const LAString& curveIndex,
+																   const AQLString& curveCollectionOrHandle,
+																   const AQLString& curveIndex,
 																   const std::string& fwdInter,
 																   const std::string& businessDayAdjust)
     {
@@ -136,7 +136,7 @@ namespace validation
         VALID_EXCEPTION_START
 		
 		// To Allow Support for Curve Objects or Curve Collections
-		LAString curveCollectionFromHandle = etrading::getCurveCollectionFromHandle( curveCollectionOrHandle.c_str() );
+		AQLString curveCollectionFromHandle = etrading::getCurveCollectionFromHandle( curveCollectionOrHandle.c_str() );
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -175,8 +175,8 @@ namespace validation
 	*  @return			The forward rates based on the fixing dates
     */
     DoubleVector tryMeCurveForwardRates( const DateVector& fixingDates,
-                                         const LAString& curveCollectionOrHandle,
-                                         const LAString& curveIndex,
+                                         const AQLString& curveCollectionOrHandle,
+                                         const AQLString& curveIndex,
 										 const std::string& fwdInter,
 										 const std::string& businessDayAdjust)
     {
@@ -184,7 +184,7 @@ namespace validation
         VALID_EXCEPTION_START
 		
 		// To Allow Support for Curve Objects or Curve Collections
-		LAString curveCollectionFromHandle = etrading::getCurveCollectionFromHandle( curveCollectionOrHandle.c_str() );
+		AQLString curveCollectionFromHandle = etrading::getCurveCollectionFromHandle( curveCollectionOrHandle.c_str() );
 
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
@@ -229,15 +229,15 @@ namespace validation
 	*/
 	void tryMeLWOCurveForwardRatesTable( DateVector& fixingDates,
 										 DoubleMatrix& forwardRates,
-										 const LAString& curveCollection,
-										 const LAStringVector& curveIndices,
-										 const LAString& startDate,
-										 const LAString& maturity,
-										 const LAString& businessDayAdjust,
-										 const LAString& calendar,             // We allow the calendar to be empty
-										 const LAString& rollConvention,
-										 const LAString& frequency,
-										 const LAStringVector& fwdInterps)
+										 const AQLString& curveCollection,
+										 const AQLStringVector& curveIndices,
+										 const AQLString& startDate,
+										 const AQLString& maturity,
+										 const AQLString& businessDayAdjust,
+										 const AQLString& calendar,             // We allow the calendar to be empty
+										 const AQLString& rollConvention,
+										 const AQLString& frequency,
+										 const AQLStringVector& fwdInterps)
 	{
 		VALID_EXCEPTION_START
 
@@ -246,27 +246,27 @@ namespace validation
 
 		if ( curveCollection.size() == 0 )
 		{
-			throw LACoreInvalidData("#Error: No curve collection have been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No curve collection have been provided.",__FILE__,__LINE__);
 		}
 		if (curveIndices.empty() )
 		{
-			throw LACoreInvalidData("#Error: No curve indices have been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No curve indices have been provided.",__FILE__,__LINE__);
 		}
 		if ( maturity.size() == 0 )
 		{
-			throw LACoreInvalidData("#Error: No maturity tenor has been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No maturity tenor has been provided.",__FILE__,__LINE__);
 		}
 		if ( businessDayAdjust.size() == 0 )
 		{
-			throw LACoreInvalidData("#Error: No business day adjustment has been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No business day adjustment has been provided.",__FILE__,__LINE__);
 		}
 		if ( rollConvention.size() == 0 )
 		{
-			throw LACoreInvalidData("#Error: No roll convention has been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No roll convention has been provided.",__FILE__,__LINE__);
 		}
 		if ( frequency.size() == 0 )
 		{
-			throw LACoreInvalidData("#Error: No frequency has been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No frequency has been provided.",__FILE__,__LINE__);
 		}
 
 		// Calculate the forward rates

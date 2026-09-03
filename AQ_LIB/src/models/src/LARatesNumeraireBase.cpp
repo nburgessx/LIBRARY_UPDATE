@@ -26,9 +26,9 @@
 #include "LARatesNumeraireBase.h"
 #include "LARatesPEInterpolationBase.h"
 #include "LAModelDynamicsCurve.h"
-#include "LA1DDataSet.h"
-#include "LASplineInterpolation.h"
-#include "LALinearInterpolation.h"
+#include "AQL1DDataSet.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLLinearInterpolation.h"
 #include "LARatesSDEBase.h"
 
 #include <limits>
@@ -58,27 +58,27 @@ mUpdateFlag(true), mBasisName(NOBASIS)
 	@param[in] basis vector of basis value
 	@param[in] isStochasticIR interest rate is stochastic or not
 */
-LARatesNumeraireBase::LARatesNumeraireBase(const LAString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis, bool isStochasticIR)
+LARatesNumeraireBase::LARatesNumeraireBase(const AQLString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis, bool isStochasticIR)
 : mpInter(0), mIsStochastic(isStochasticIR), mIsLongJump(false), mpBasisCurve(0), mpCurveWithBasis(0), mpSDE(0), 
 mUpdateFlag(true), mBasisName(basisName)
 {
 	if (timeGrid.size() != basis.size())
 	{
 		//error
-		throw LACoreInvalidData("timeGrid must be same size as basis size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("timeGrid must be same size as basis size", __FILE__, __LINE__);
 	}	
 	try 
 	{
-		mpBasisCurve = new LA1DDataSet();
+		mpBasisCurve = new AQL1DDataSet();
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
-	dynamic_cast<LA1DDataSet*>(mpBasisCurve)->set(timeGrid, basis);
-	//LASplineInterpolation inter;
-	LALinearInterpolation inter;
-	dynamic_cast<LA1DDataSet*>(mpBasisCurve)->setInterpolation(inter);
+	dynamic_cast<AQL1DDataSet*>(mpBasisCurve)->set(timeGrid, basis);
+	//AQLSplineInterpolation inter;
+	AQLLinearInterpolation inter;
+	dynamic_cast<AQL1DDataSet*>(mpBasisCurve)->setInterpolation(inter);
 
 	mBasisCurveMap[basisName] = mpBasisCurve;
 }
@@ -86,12 +86,12 @@ mUpdateFlag(true), mBasisName(basisName)
 	@brief copy constructor
 */
 LARatesNumeraireBase::LARatesNumeraireBase(const LARatesNumeraireBase& v) 
-: LACoreFunctionBase(v)
+: AQLCoreFunctionBase(v)
 , mCurves(v.mCurves), mpInter(v.mpInter), mIsStochastic(v.mIsStochastic), mLastCurve(v.mLastCurve),
 mIsLongJump(v.mIsLongJump), mpBasisCurve(0), mpCurveWithBasis(0), mpSDE(0), mUpdateFlag(true), 
 mBasisName(v.mBasisName)
 {
-	if (v.mpBasisCurve != 0) mpBasisCurve = dynamic_cast<LAFunctionBase*>(v.mpBasisCurve->clone());
+	if (v.mpBasisCurve != 0) mpBasisCurve = dynamic_cast<AQLFunctionBase*>(v.mpBasisCurve->clone());
 	if (v.mpCurveWithBasis != 0)
 	{
 		mpCurveWithBasis = dynamic_cast<LARatesCurveWithBasis*>(v.mpCurveWithBasis->clone());
@@ -118,7 +118,7 @@ LARatesNumeraireBase::~LARatesNumeraireBase()
 bool
 LARatesNumeraireBase::isTypeOf(function_t id) const
 {
-	return (id==FN_NUMERAIREBASE ? true : LACoreFunctionBase::isTypeOf(id));
+	return (id==FN_NUMERAIREBASE ? true : AQLCoreFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -169,7 +169,7 @@ LARatesNumeraireBase::getCurveWithoutBasis(double t) const
 	{
 		if (mpInter == NULL)
 		{
-		      throw LACoreInvalidData("interpolation is not setted", __FILE__, __LINE__);
+		      throw AQLCoreInvalidData("interpolation is not setted", __FILE__, __LINE__);
 		}		
 		map<double, const LARatesPathElementCurve*>::const_iterator it2 = mCurves.end();
 		it2--;
@@ -181,14 +181,14 @@ LARatesNumeraireBase::getCurveWithoutBasis(double t) const
 	else if (it == mCurves.begin())
 	{
 		//error
-        throw LACoreInvalidData("input t is before first curve start time", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("input t is before first curve start time", __FILE__, __LINE__);
 	}
 	else
 	{
 
 		if (mpInter == NULL)
 		{
-		      throw LACoreInvalidData("interpolation is not setted", __FILE__, __LINE__);
+		      throw AQLCoreInvalidData("interpolation is not setted", __FILE__, __LINE__);
 		}
 		map<double, const LARatesPathElementCurve*>::const_iterator it2 = it;
 		it2--;
@@ -210,7 +210,7 @@ LARatesNumeraireBase::reset()
 		delete mpBasisCurve;
 		mpBasisCurve = 0;
 	}*/
-	for (std::map<LAString, LAFunctionBase*>::iterator it = mBasisCurveMap.begin(); it != mBasisCurveMap.end(); ++it)
+	for (std::map<AQLString, AQLFunctionBase*>::iterator it = mBasisCurveMap.begin(); it != mBasisCurveMap.end(); ++it)
 	{
 		delete it->second;
 	}
@@ -276,7 +276,7 @@ LARatesNumeraireBase::getCurveWithBasis() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -292,7 +292,7 @@ LARatesNumeraireBase::LARatesCurveForNumeraire::getP (double T) const
 	if (m_t != T)
 	{
 		//error
-		throw LACoreInvalidData("curve start time must be same as T", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("curve start time must be same as T", __FILE__, __LINE__);
 	}
 	return 1.0;
 }
@@ -307,7 +307,7 @@ LARatesNumeraireBase::LARatesCurveWithBasis::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -319,7 +319,7 @@ LARatesNumeraireBase::LARatesCurveWithBasis::clone() const
 
 */	
 void
-LARatesNumeraireBase::setBasisSpread(const LAString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis)
+LARatesNumeraireBase::setBasisSpread(const AQLString& basisName, const DoubleArray& timeGrid, const DoubleArray& basis)
 {
 	//if (mCancelSpread)
 	//	return;
@@ -327,7 +327,7 @@ LARatesNumeraireBase::setBasisSpread(const LAString& basisName, const DoubleArra
 	// data size check
 	if (timeGrid.size() != basis.size())
 	{
-		throw LACoreInvalidData("timeGrid must be same size as basis size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("timeGrid must be same size as basis size", __FILE__, __LINE__);
 	}	
 	// delete for clear cache
 	//if (mpBasisCurve)
@@ -341,7 +341,7 @@ LARatesNumeraireBase::setBasisSpread(const LAString& basisName, const DoubleArra
 		mpCurveWithBasis = 0;
 	}
 	//delete data of basis name in basis curve map
-	std::map<LAString, LAFunctionBase*>::iterator it = mBasisCurveMap.find(basisName);
+	std::map<AQLString, AQLFunctionBase*>::iterator it = mBasisCurveMap.find(basisName);
 	if (it != mBasisCurveMap.end())
 	{
 		delete it->second;
@@ -351,17 +351,17 @@ LARatesNumeraireBase::setBasisSpread(const LAString& basisName, const DoubleArra
 
 	try 
 	{
-		mpBasisCurve = new LA1DDataSet();		
+		mpBasisCurve = new AQL1DDataSet();		
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 
-	//LASplineInterpolation inter;
-	LALinearInterpolation inter;
-	dynamic_cast<LA1DDataSet*>(mpBasisCurve)->setInterpolation(inter);
-	dynamic_cast<LA1DDataSet*>(mpBasisCurve)->set(timeGrid, basis);
+	//AQLSplineInterpolation inter;
+	AQLLinearInterpolation inter;
+	dynamic_cast<AQL1DDataSet*>(mpBasisCurve)->setInterpolation(inter);
+	dynamic_cast<AQL1DDataSet*>(mpBasisCurve)->set(timeGrid, basis);
 
 	mpCurveWithBasis = getCurveWithBasis();
 	mpCurveWithBasis->setBasisCurve(mpBasisCurve);
@@ -374,7 +374,7 @@ LARatesNumeraireBase::setBasisSpread(const LAString& basisName, const DoubleArra
 	@param[in] basis name
 */	
 void
-LARatesNumeraireBase::setBasisName(const LAString& basisName)
+LARatesNumeraireBase::setBasisName(const AQLString& basisName)
 {
 	if (basisName != mBasisName)
 	{
@@ -390,12 +390,12 @@ LARatesNumeraireBase::setBasisName(const LAString& basisName)
 		}
 		else
 		{
-			std::map<LAString, LAFunctionBase*>::iterator it = mBasisCurveMap.find(basisName);
+			std::map<AQLString, AQLFunctionBase*>::iterator it = mBasisCurveMap.find(basisName);
 			if (it == mBasisCurveMap.end())
 			{
 				//error
-				LAString errorMsg = basisName + " is not set in mBasisCurveMap!";
-				throw LACoreInvalidData(errorMsg.getCString(), __FILE__, __LINE__);
+				AQLString errorMsg = basisName + " is not set in mBasisCurveMap!";
+				throw AQLCoreInvalidData(errorMsg.getCString(), __FILE__, __LINE__);
 			}
 			mpBasisCurve = mBasisCurveMap[mBasisName];
 
@@ -413,7 +413,7 @@ LARatesNumeraireBase::setBasisName(const LAString& basisName)
 // get basis name
 /*!
 */	
-LAString
+AQLString
 LARatesNumeraireBase::getBasisName()
 {
 	return mBasisName;

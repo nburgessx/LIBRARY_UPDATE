@@ -5,6 +5,6 @@
 class LARiskConfigurationYieldIRDeltaSimple : public LARiskConfigurationYieldIRDelta
 {
 protected:
-    virtual std::vector<LAObject *> createMarketBumpYieldEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
+    virtual std::vector<AQLObject *> createMarketBumpYieldEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const;
 };
 

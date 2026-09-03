@@ -64,7 +64,7 @@ LARatesPathElementBase::getType() const
 void
 LARatesPathElementBase::set(SCALAR a)
 {
-	throw LACoreInvalidData("this method does not support", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("this method does not support", __FILE__, __LINE__);
 }
 
 /*!
@@ -74,5 +74,5 @@ LARatesPathElementBase::set(SCALAR a)
 void
 LARatesPathElementBase::set(const SCALARARRAY& a)
 {
-	throw LACoreInvalidData("this method does not support", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("this method does not support", __FILE__, __LINE__);
 }

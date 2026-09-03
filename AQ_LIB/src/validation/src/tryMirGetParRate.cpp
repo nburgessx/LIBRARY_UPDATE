@@ -51,39 +51,39 @@ namespace validation
     *  @param [in]		useFwdData		Use fwd rates directly or derive them from spot rates
     *  @param [in]		floatFixingCalendar		Optional float fixing calendar - needed by the server team to price USD swaps
     */
-    double tryMirGetParRate4( LADataInstance* dataInstance,
-                              const LAString& effectDt,
-                              const LAString& maturity,
-                              const LAString& curveID,
-                              const LAString& fixedFrequency,
-                              const LAString& fixedDaycount,
-                              const LAString& fixedBusinessDayAdjustment,
-                              const LAString& fixedCalendar,
-                              const LAString& fixedFirstStub,
-                              const LAString& fixedLastStub,
-                              const LAString& fixedRollDay,
-                              const LAString& fixedPayLag,
-                              const LAString& fixedStubType,
-                              const LAString& floatFrequency,
-                              const LAString& floatDayCount,
-                              const LAString& floatBusinessDayAdjustment,
-                              const LAString& floatCalendar,    // Float Accrual Calendar
-                              const LAString& floatFirstStub,
-                              const LAString& floatLastStub,
-                              const LAString& floatRollDay,
-                              const LAString& floatFixingLag,
+    double tryMirGetParRate4( AQLDataInstance* dataInstance,
+                              const AQLString& effectDt,
+                              const AQLString& maturity,
+                              const AQLString& curveID,
+                              const AQLString& fixedFrequency,
+                              const AQLString& fixedDaycount,
+                              const AQLString& fixedBusinessDayAdjustment,
+                              const AQLString& fixedCalendar,
+                              const AQLString& fixedFirstStub,
+                              const AQLString& fixedLastStub,
+                              const AQLString& fixedRollDay,
+                              const AQLString& fixedPayLag,
+                              const AQLString& fixedStubType,
+                              const AQLString& floatFrequency,
+                              const AQLString& floatDayCount,
+                              const AQLString& floatBusinessDayAdjustment,
+                              const AQLString& floatCalendar,    // Float Accrual Calendar
+                              const AQLString& floatFirstStub,
+                              const AQLString& floatLastStub,
+                              const AQLString& floatRollDay,
+                              const AQLString& floatFixingLag,
                               double floatFirstFixing,
                               double floatLastFixing,
-                              const LAString& floatPayLag,
-                              const LAString& floatStubType,
-                              const LAString& interpolation,
-                              const LAString& forecastCurve,
-                              const LAString& discountCurve,
+                              const AQLString& floatPayLag,
+                              const AQLString& floatStubType,
+                              const AQLString& interpolation,
+                              const AQLString& forecastCurve,
+                              const AQLString& discountCurve,
                               bool interpFwds,
                               bool eomRoll,
                               double floatSpread,
                               bool useFwdData,
-                              const LAString& floatFixingCalendar ) // Optional: Float Fixing Calendar needed by server team to price USD swaps
+                              const AQLString& floatFixingCalendar ) // Optional: Float Fixing Calendar needed by server team to price USD swaps
     {
         VALID_EXCEPTION_START
 
@@ -128,20 +128,20 @@ namespace validation
         //----------------------------------------------------------------------------------
         // Validate non-cash flow related parameters
 
-        if( forecastCurve == LAString( "" ) )
+        if( forecastCurve == AQLString( "" ) )
         {
-            throw LACoreInvalidData( "#Error: The Swap 'forecast Curve' must be specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The Swap 'forecast Curve' must be specified.", __FILE__, __LINE__ );
         }
 
-        if( discountCurve == LAString( "" ) )
+        if( discountCurve == AQLString( "" ) )
         {
-            throw LACoreInvalidData( "#Error: The Swap 'discount Curve' must be specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The Swap 'discount Curve' must be specified.", __FILE__, __LINE__ );
         }
 
-        LAString interp( interpolation );
-        if( interpolation == LAString( "" ) )
+        AQLString interp( interpolation );
+        if( interpolation == AQLString( "" ) )
         {
-            interp = LAString( "SPLINE" );
+            interp = AQLString( "SPLINE" );
         }
 
 
@@ -266,20 +266,20 @@ namespace validation
     *  @param [in]		eomRoll			Boolean that decides if EOM rolling is enforced (only when effective date is on EOM)
     *  @return			par rate
     */
-    double tryMirGetParRate3( LADataInstance* dataInstance,
-                              const LAString& fromDate,
-                              const LAString& toDate,
-                              const LAString& curveId,
-                              const LAString& frequency,
-                              const LAString& dayCount,
-                              const LAString& slidingRule,
-                              const LAString& calendar,
-                              const LAString& interpolation,
-                              const LAString& firstOddDate,
-                              const LAString& lastOddDate,
-                              const LAString& paymentDay,
-                              const LAString& foreCurveName,
-                              const LAString& dfCurveName,
+    double tryMirGetParRate3( AQLDataInstance* dataInstance,
+                              const AQLString& fromDate,
+                              const AQLString& toDate,
+                              const AQLString& curveId,
+                              const AQLString& frequency,
+                              const AQLString& dayCount,
+                              const AQLString& slidingRule,
+                              const AQLString& calendar,
+                              const AQLString& interpolation,
+                              const AQLString& firstOddDate,
+                              const AQLString& lastOddDate,
+                              const AQLString& paymentDay,
+                              const AQLString& foreCurveName,
+                              const AQLString& dfCurveName,
                               bool interpFwds,
                               bool eomRoll )
     {
@@ -311,17 +311,17 @@ namespace validation
         }
 
 
-        LADate fromDt =  etrading::stringToDate( fromDate, "#Error: Invalid 'fromDate'." );
-        LADate toDt =  etrading::stringToDate( toDate, "#Error: Invalid 'toDate'." );
+        AQLDate fromDt =  etrading::stringToDate( fromDate, "#Error: Invalid 'fromDate'." );
+        AQLDate toDt =  etrading::stringToDate( toDate, "#Error: Invalid 'toDate'." );
 
-        LADate* firstOddDt    = NULL;
+        AQLDate* firstOddDt    = NULL;
         if ( firstOddDate.size() != 0 )
         {
 
             firstOddDt = &etrading::stringToDate( firstOddDate, "#Error: Invalid 'firstOddDate'." );
         }
 
-        LADate* lastOddDt  = NULL;
+        AQLDate* lastOddDt  = NULL;
         if ( lastOddDate.size() != 0 )
         {
             lastOddDt = &etrading::stringToDate( lastOddDate, "#Error: Invalid 'lastOddDate'." );
@@ -335,13 +335,13 @@ namespace validation
             pDay = &tempDay;
         }
 
-        LAString freq( etrading::getDefaultValueForEmptyString( frequency, LAString( "SEMI-ANNUAL" ) ) );
-        LAString slidingR( etrading::getDefaultValueForEmptyString( slidingRule, LAString( "NO_CHANGE" ) ) );
-        LAString cal( etrading::getDefaultValueForEmptyString( calendar, LAString( "TKB:LNB" ) ) );
-        LAString rollConvention( "EOM" );
+        AQLString freq( etrading::getDefaultValueForEmptyString( frequency, AQLString( "SEMI-ANNUAL" ) ) );
+        AQLString slidingR( etrading::getDefaultValueForEmptyString( slidingRule, AQLString( "NO_CHANGE" ) ) );
+        AQLString cal( etrading::getDefaultValueForEmptyString( calendar, AQLString( "TKB:LNB" ) ) );
+        AQLString rollConvention( "EOM" );
 
         // get dates
-        LAString* rollCon = NULL;
+        AQLString* rollCon = NULL;
         if ( eomRoll && etrading::isLastDayOfMonth( fromDt, calendar ) )
         {
             rollCon = &rollConvention;
@@ -358,10 +358,10 @@ namespace validation
                                                                        true,
                                                                        rollCon );
 
-        LAString dayC( etrading::getDefaultValueForEmptyString( dayCount, LAString( "ACT/365" ) ) );
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, LAString( "SPLINE" ) ) );
-        LAString foreCurName( etrading::getDefaultValueForEmptyString( foreCurveName, LAString( "STD" ) ) );
-        LAString dfCurName( etrading::getDefaultValueForEmptyString( dfCurveName, LAString( "STD" ) ) );
+        AQLString dayC( etrading::getDefaultValueForEmptyString( dayCount, AQLString( "ACT/365" ) ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
+        AQLString foreCurName( etrading::getDefaultValueForEmptyString( foreCurveName, AQLString( "STD" ) ) );
+        AQLString dfCurName( etrading::getDefaultValueForEmptyString( dfCurveName, AQLString( "STD" ) ) );
 
         // Get par rate based on the given dates
         // Note that the sliding rule from user input is not passed to the core function, in the core getParRate function the slidingRule is default as NO_CHANGE

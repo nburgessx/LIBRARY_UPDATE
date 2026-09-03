@@ -8,41 +8,41 @@
 
 const double INFINITESIMAL = 1E-7;
 
-#include "LAMathDefine.h"
-#include "LABasic.h"
-#include "LANl2sol.h"
-#include "LAPriceDataConvention.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAPriceDataManager.h"
-#include "LADataProcedure.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataInterpolation.h"
-#include "LADataMultiReference.h"
-#include "LADataMatrix.h"
-#include "LAPriceDataFunction.h"
-#include "LADataInstance.h"
-#include "LACoreUtil.h"
-#include "LAOptimumBrent.h"
+#include "AQLMathDefine.h"
+#include "AQLBasic.h"
+#include "AQLNl2sol.h"
+#include "AQLPriceDataConvention.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataProcedure.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataMatrix.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLDataInstance.h"
+#include "AQLCoreUtil.h"
+#include "AQLOptimumBrent.h"
 #include "LAPriceYieldGenerator.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathDateUtilities.h"
-#include "LALinearInterpolation.h"
+#include "AQLLinearInterpolation.h"
 #include <functional>
 #include <algorithm>
 #include <numeric>
 #include <cmath>
-#include "LAAlgorithm.h"
-#include "LAMatrix.h"
+#include "AQLAlgorithm.h"
+#include "AQLMatrix.h"
 #include "LAMathFXEntity.h"
 #include "ConstantDeclarations.h"
-#include "LAObjectHolder.h"
+#include "AQLObjectHolder.h"
 #include "LAMathYieldCurvePro.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
 
 using namespace std;
 
@@ -50,14 +50,14 @@ using namespace std;
 /*!
     @brief constructor
 
-	@param[in] dataInstance pointer of LADataInstance
+	@param[in] dataInstance pointer of AQLDataInstance
 
 */
-LAMathYieldCurvePro::LAMathYieldCurvePro(LADataInstance* dataInstance) : 
+LAMathYieldCurvePro::LAMathYieldCurvePro(AQLDataInstance* dataInstance) : 
 				LAMathYieldCurve(dataInstance)//,mCurveVersion(0)
 {
 	setDataInstance(dataInstance);
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 
 	dm.setData(CALIBRATION_DATA_ASOFDATE,					DATA_DATE			);
 	dm.setData(CALIBRATION_DATA_CURVEGENERATOR,				DATA_PROCEDURE		);
@@ -172,38 +172,38 @@ LAMathYieldCurvePro::isTypeOf(object_t id) const
     @brief get AsOfDate
 	@return AsOfDate
 */
-const LADataDate&  
+const AQLDataDate&  
 LAMathYieldCurvePro::getAsOfDate(void) const
 {
-	return dynamic_cast<const LADataDate&>(mpAsOfDate->get());
+	return dynamic_cast<const AQLDataDate&>(mpAsOfDate->get());
 }
 /*!
     @brief get AsOfDate
 	@return AsOfDate
 */
-LADataDate&  
+AQLDataDate&  
 LAMathYieldCurvePro::getAsOfDate(void)
 {
-	return dynamic_cast<LADataDate&>(mpAsOfDate->get());
+	return dynamic_cast<AQLDataDate&>(mpAsOfDate->get());
 }
 
 /*!
     @brief get IsArbFree
 	@return IsArbFree
 */
-const LADataBool&  
+const AQLDataBool&  
 LAMathYieldCurvePro::getIsArbFree(void) const
 {
-	return dynamic_cast<const LADataBool&>(mpIsArbFree->get());
+	return dynamic_cast<const AQLDataBool&>(mpIsArbFree->get());
 }
 /*!
     @brief get IsArbFree
 	@return IsArbFree
 */
-LADataBool&  
+AQLDataBool&  
 LAMathYieldCurvePro::getIsArbFree(void)
 {
-	return dynamic_cast<LADataBool&>(mpIsArbFree->get());
+	return dynamic_cast<AQLDataBool&>(mpIsArbFree->get());
 }
 
 /*!
@@ -211,20 +211,20 @@ LAMathYieldCurvePro::getIsArbFree(void)
 			
 	@return MarketData
 */
-const LADataMultiReference&
+const AQLDataMultiReference&
 LAMathYieldCurvePro::getMarketData() const
 {
-	return dynamic_cast<const LADataMultiReference&>(mpMarketData->get());
+	return dynamic_cast<const AQLDataMultiReference&>(mpMarketData->get());
 }
 /*!
     @brief get MarketData
 			
 	@return MarketData
 */
-LADataMultiReference&
+AQLDataMultiReference&
 LAMathYieldCurvePro::getMarketData()
 {
-	return dynamic_cast<LADataMultiReference&>(mpMarketData->get());
+	return dynamic_cast<AQLDataMultiReference&>(mpMarketData->get());
 }
 /*!
     @brief get BasisRates
@@ -232,10 +232,10 @@ LAMathYieldCurvePro::getMarketData()
 	@return BasisRates
 */
 
-const LADataDoubleMatrix&
+const AQLDataDoubleMatrix&
 LAMathYieldCurvePro::getBasisRates() const	
 {
-	return dynamic_cast<const LADataDoubleMatrix&>(mpBasisRates->get());
+	return dynamic_cast<const AQLDataDoubleMatrix&>(mpBasisRates->get());
 }
 
 /*!
@@ -243,10 +243,10 @@ LAMathYieldCurvePro::getBasisRates() const
 			
 	@return BasisRates
 */
-LADataDoubleMatrix&
+AQLDataDoubleMatrix&
 LAMathYieldCurvePro::getBasisRates() 
 {
-	return dynamic_cast<LADataDoubleMatrix&>(mpBasisRates->get());
+	return dynamic_cast<AQLDataDoubleMatrix&>(mpBasisRates->get());
 }
 
 /*!
@@ -255,10 +255,10 @@ LAMathYieldCurvePro::getBasisRates()
 	@return BasisData
 */
 
-const LADataMultiReference&
+const AQLDataMultiReference&
 LAMathYieldCurvePro::getBasisData() const	
 {
-	return dynamic_cast<const LADataMultiReference&>(mpBasisData->get());
+	return dynamic_cast<const AQLDataMultiReference&>(mpBasisData->get());
 }
 
 /*!
@@ -266,10 +266,10 @@ LAMathYieldCurvePro::getBasisData() const
 			
 	@return BasisData
 */
-LADataMultiReference&
+AQLDataMultiReference&
 LAMathYieldCurvePro::getBasisData() 
 {
-	return dynamic_cast<LADataMultiReference&>(mpBasisData->get());
+	return dynamic_cast<AQLDataMultiReference&>(mpBasisData->get());
 }
 
 
@@ -280,10 +280,10 @@ LAMathYieldCurvePro::getBasisData()
 	        false: don't use FutureRate
 */
 
-const LADataBool&
+const AQLDataBool&
 LAMathYieldCurvePro::getIsFutureUse() const	
 {
-	return dynamic_cast<const LADataBool&>(mpIsFutureUse->get());
+	return dynamic_cast<const AQLDataBool&>(mpIsFutureUse->get());
 }
 
 /*!
@@ -292,10 +292,10 @@ LAMathYieldCurvePro::getIsFutureUse() const
 	@return true : use FutureRate
 	        false: don't use FutureRate
 */
-LADataBool&
+AQLDataBool&
 LAMathYieldCurvePro::getIsFutureUse() 
 {
-	return dynamic_cast<LADataBool&>(mpIsFutureUse->get());
+	return dynamic_cast<AQLDataBool&>(mpIsFutureUse->get());
 }
 
 /*!
@@ -305,10 +305,10 @@ LAMathYieldCurvePro::getIsFutureUse()
 	        false: don't use FutureRate
 */
 
-const LADataBool&
+const AQLDataBool&
 LAMathYieldCurvePro::getIsFRAUse() const	
 {
-	return dynamic_cast<const LADataBool&>(mpIsFRAUse->get());
+	return dynamic_cast<const AQLDataBool&>(mpIsFRAUse->get());
 }
 
 /*!
@@ -317,10 +317,10 @@ LAMathYieldCurvePro::getIsFRAUse() const
 	@return true : use FutureRate
 	        false: don't use FutureRate
 */
-LADataBool&
+AQLDataBool&
 LAMathYieldCurvePro::getIsFRAUse() 
 {
-	return dynamic_cast<LADataBool&>(mpIsFRAUse->get());
+	return dynamic_cast<AQLDataBool&>(mpIsFRAUse->get());
 }
 
 /*!
@@ -329,10 +329,10 @@ LAMathYieldCurvePro::getIsFRAUse()
 	@return BaseYieldCurve
 */
 
-const LADataReference&
+const AQLDataReference&
 LAMathYieldCurvePro::getBaseYieldCurve() const	
 {
-	return dynamic_cast<const LADataReference&>(mpBaseYieldCurve->get());
+	return dynamic_cast<const AQLDataReference&>(mpBaseYieldCurve->get());
 }
 
 /*!
@@ -340,10 +340,10 @@ LAMathYieldCurvePro::getBaseYieldCurve() const
 			
 	@return BaseYieldCurve
 */
-LADataReference&
+AQLDataReference&
 LAMathYieldCurvePro::getBaseYieldCurve() 
 {
-	return dynamic_cast<LADataReference&>(mpBaseYieldCurve->get());
+	return dynamic_cast<AQLDataReference&>(mpBaseYieldCurve->get());
 }
 
 /*!
@@ -351,10 +351,10 @@ LAMathYieldCurvePro::getBaseYieldCurve()
 			
 	@return Interpolation to generate yield curve
 */
-const LAPriceDataInterpolation&
+const AQLPriceDataInterpolation&
 LAMathYieldCurvePro::getInterpolation_yg() const	
 {
-	return dynamic_cast<const LAPriceDataInterpolation&>(mpInterYG->get());
+	return dynamic_cast<const AQLPriceDataInterpolation&>(mpInterYG->get());
 }
 
 /*!
@@ -362,10 +362,10 @@ LAMathYieldCurvePro::getInterpolation_yg() const
 			
 	@return Interpolation to generate yield curve
 */
-LAPriceDataInterpolation&
+AQLPriceDataInterpolation&
 LAMathYieldCurvePro::getInterpolation_yg() 
 {
-	return dynamic_cast<LAPriceDataInterpolation&>(mpInterYG->get());
+	return dynamic_cast<AQLPriceDataInterpolation&>(mpInterYG->get());
 }
 
 /*!
@@ -373,10 +373,10 @@ LAMathYieldCurvePro::getInterpolation_yg()
 			
 	@return Interpolation to use future
 */
-const LAPriceDataInterpolation&
+const AQLPriceDataInterpolation&
 LAMathYieldCurvePro::getInterpolation_fw() const	
 {
-	return dynamic_cast<const LAPriceDataInterpolation&>(mpInterFW->get());
+	return dynamic_cast<const AQLPriceDataInterpolation&>(mpInterFW->get());
 }
 
 /*!
@@ -384,10 +384,10 @@ LAMathYieldCurvePro::getInterpolation_fw() const
 			
 	@return Interpolation to use future
 */
-LAPriceDataInterpolation&
+AQLPriceDataInterpolation&
 LAMathYieldCurvePro::getInterpolation_fw() 
 {
-	return dynamic_cast<LAPriceDataInterpolation&>(mpInterFW->get());
+	return dynamic_cast<AQLPriceDataInterpolation&>(mpInterFW->get());
 }
 
 /*!
@@ -395,10 +395,10 @@ LAMathYieldCurvePro::getInterpolation_fw()
 			
 	@return Interpolation to set basis rates
 */
-const LAPriceDataInterpolation&
+const AQLPriceDataInterpolation&
 LAMathYieldCurvePro::getInterpolation_bs() const	
 {
-	return dynamic_cast<const LAPriceDataInterpolation&>(mpInterBS->get());
+	return dynamic_cast<const AQLPriceDataInterpolation&>(mpInterBS->get());
 }
 
 /*!
@@ -406,10 +406,10 @@ LAMathYieldCurvePro::getInterpolation_bs() const
 			
 	@return Interpolation to set basis rates
 */
-LAPriceDataInterpolation&
+AQLPriceDataInterpolation&
 LAMathYieldCurvePro::getInterpolation_bs() 
 {
-	return dynamic_cast<LAPriceDataInterpolation&>(mpInterBS->get());
+	return dynamic_cast<AQLPriceDataInterpolation&>(mpInterBS->get());
 }
 
 /*!
@@ -417,10 +417,10 @@ LAMathYieldCurvePro::getInterpolation_bs()
 			
 	@return Basis Function
 */
-const LAPriceDataFunction&
+const AQLPriceDataFunction&
 LAMathYieldCurvePro::getBasisFunction() const	
 {
-	return dynamic_cast<const LAPriceDataFunction&>(mpBasisFunction->get());
+	return dynamic_cast<const AQLPriceDataFunction&>(mpBasisFunction->get());
 }
 
 /*!
@@ -428,22 +428,22 @@ LAMathYieldCurvePro::getBasisFunction() const
 			
 	@return Basis Function
 */
-LAPriceDataFunction&
+AQLPriceDataFunction&
 LAMathYieldCurvePro::getBasisFunction() 
 {
-	return dynamic_cast<LAPriceDataFunction&>(mpBasisFunction->get());
+	return dynamic_cast<AQLPriceDataFunction&>(mpBasisFunction->get());
 }
 
-LADataStrings&
+AQLDataStrings&
 LAMathYieldCurvePro::getRatePriority() 
 {
-	return dynamic_cast<LADataStrings&>(mpRatePriority->get());
+	return dynamic_cast<AQLDataStrings&>(mpRatePriority->get());
 }
 
-const LADataStrings&
+const AQLDataStrings&
 LAMathYieldCurvePro::getRatePriority() const 
 {
-	return dynamic_cast<LADataStrings&>(mpRatePriority->get());
+	return dynamic_cast<AQLDataStrings&>(mpRatePriority->get());
 }
 
 /*!
@@ -451,10 +451,10 @@ LAMathYieldCurvePro::getRatePriority() const
 			
 	@return FXEntity
 */
-const LADataReference&
+const AQLDataReference&
 LAMathYieldCurvePro::getFXEntity() const	
 {
-	return dynamic_cast<const LADataReference&>(mpFXEntity->get());
+	return dynamic_cast<const AQLDataReference&>(mpFXEntity->get());
 }
 
 /*!
@@ -462,10 +462,10 @@ LAMathYieldCurvePro::getFXEntity() const
 			
 	@return FXEntity
 */
-LADataReference&
+AQLDataReference&
 LAMathYieldCurvePro::getFXEntity() 
 {
-	return dynamic_cast<LADataReference&>(mpFXEntity->get());
+	return dynamic_cast<AQLDataReference&>(mpFXEntity->get());
 }
 
 /*!
@@ -473,10 +473,10 @@ LAMathYieldCurvePro::getFXEntity()
 			
 	@return OptimizeMethod
 */
-const LADataString&
+const AQLDataString&
 LAMathYieldCurvePro::getOptimizeMethod() const	
 {
-	return dynamic_cast<const LADataString&>(mpOptimizeMethod->get());
+	return dynamic_cast<const AQLDataString&>(mpOptimizeMethod->get());
 }
 
 /*!
@@ -484,10 +484,10 @@ LAMathYieldCurvePro::getOptimizeMethod() const
 			
 	@return OptimizeMethod
 */
-LADataString&
+AQLDataString&
 LAMathYieldCurvePro::getOptimizeMethod() 
 {
-	return dynamic_cast<LADataString&>(mpOptimizeMethod->get());
+	return dynamic_cast<AQLDataString&>(mpOptimizeMethod->get());
 }
 
 /*!
@@ -495,10 +495,10 @@ LAMathYieldCurvePro::getOptimizeMethod()
 
 	@return 
 */
-const LAPriceDataFunction&
+const AQLPriceDataFunction&
 LAMathYieldCurvePro::getCompoundingFunction() const
 {
-	return dynamic_cast<const LAPriceDataFunction&>(mpCompoundFunction->get());
+	return dynamic_cast<const AQLPriceDataFunction&>(mpCompoundFunction->get());
 }
 
 /*!
@@ -506,10 +506,10 @@ LAMathYieldCurvePro::getCompoundingFunction() const
 
 	@return CompoundingFunction
 */
-LAPriceDataFunction&
+AQLPriceDataFunction&
 LAMathYieldCurvePro::getCompoundingFunction()
 {
-	return dynamic_cast<LAPriceDataFunction&>(mpCompoundFunction->get());
+	return dynamic_cast<AQLPriceDataFunction&>(mpCompoundFunction->get());
 }
 
 
@@ -522,9 +522,9 @@ LAMathYieldCurvePro::getCompoundingFunction()
 */
 void
 LAMathYieldCurvePro::setInterpolation(
-	LAInterpolationBase* a, const LAString& name)
+	AQLInterpolationBase* a, const AQLString& name)
 {
-	dynamic_cast<LAPriceDataInterpolation*>(&(
+	dynamic_cast<AQLPriceDataInterpolation*>(&(
 		getData(CALIBRATION_DATA_INTERPOLATION).get()))->setMethod(a, name);
 }
 /*!
@@ -533,9 +533,9 @@ LAMathYieldCurvePro::setInterpolation(
 	@param[in] name name of Interpolation 
 */
 void
-LAMathYieldCurvePro::setInterpolation(const LAString& name)
+LAMathYieldCurvePro::setInterpolation(const AQLString& name)
 {
-	dynamic_cast<LAPriceDataInterpolation*>(&(
+	dynamic_cast<AQLPriceDataInterpolation*>(&(
 		getData(CALIBRATION_DATA_INTERPOLATION).get()))->setMethod(name);
 }
  
@@ -546,10 +546,10 @@ LAMathYieldCurvePro::setInterpolation(const LAString& name)
 	@param[in] name name of generate class
 */
 void
-LAMathYieldCurvePro::setDFGenerator(const LACoreProcedure* a,
-										const LAString& name)
+LAMathYieldCurvePro::setDFGenerator(const AQLCoreProcedure* a,
+										const AQLString& name)
 {
-	dynamic_cast<LADataProcedure*>(&(
+	dynamic_cast<AQLDataProcedure*>(&(
 		getData(CALIBRATION_DATA_CURVEGENERATOR).get()))->setMethod(a, name);
 }
 
@@ -559,9 +559,9 @@ LAMathYieldCurvePro::setDFGenerator(const LACoreProcedure* a,
 	@param[in] name name of generate class
 */
 void
-LAMathYieldCurvePro::setDFGenerator(const LAString& name)
+LAMathYieldCurvePro::setDFGenerator(const AQLString& name)
 {
-	dynamic_cast<LADataProcedure*>(&(
+	dynamic_cast<AQLDataProcedure*>(&(
 		getData(CALIBRATION_DATA_CURVEGENERATOR).get()))->setMethod(name);
 }
 
@@ -570,7 +570,7 @@ LAMathYieldCurvePro::setDFGenerator(const LAString& name)
 
 	@return	pointer of this class
 */
-LAObject* 
+AQLObject* 
 LAMathYieldCurvePro::clone() const
 {
     try {
@@ -578,12 +578,12 @@ LAMathYieldCurvePro::clone() const
     	return pCurve;
     }
     catch (bad_alloc & e){
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 void                
 LAMathYieldCurvePro::remove(
-	const LAString& dataName)
+	const AQLString& dataName)
 {
 	if (dataName == CALIBRATION_DATA_ASOFDATE
 		|| dataName == CALIBRATION_DATA_CURVEGENERATOR
@@ -640,18 +640,18 @@ LAMathYieldCurvePro::reset(void)
 	@param[in] e copy object
 	@return Reference of this object
 */
-LAObject&
+AQLObject&
 LAMathYieldCurvePro::copy(
-	const LAObject& e)
+	const AQLObject& e)
 {
 	if (this == &e) return *this;
 
 	LAMathYieldCurve::copy(e);
 	if (!e.isTypeOf(ENTITY_IRYCPRO))
 	{
-		LAString err = "Assignement error for LAMathYieldCurvePro : from ";
-		err += LAString(e.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignement error for LAMathYieldCurvePro : from ";
+		err += AQLString(e.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	mpAsOfDate			= &getData(CALIBRATION_DATA_ASOFDATE);
 	mpProcedure			= &getData(CALIBRATION_DATA_CURVEGENERATOR);
@@ -680,16 +680,16 @@ LAMathYieldCurvePro::copy(
 
 	@param[in] name name of Data
 
-	@return Reference of LADataHolder include this Data
+	@return Reference of AQLDataHolder include this Data
 
 */
-LADataHolder&
-LAMathYieldCurvePro::add(const LAString& name)
+AQLDataHolder&
+LAMathYieldCurvePro::add(const AQLString& name)
 {
-	LADataInstance* dataInstance = getDataInstance();
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
-	const LADataHolder& dh = dm.getData(name);
-	return LAObject::add(name, dh);
+	AQLDataInstance* dataInstance = getDataInstance();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
+	const AQLDataHolder& dh = dm.getData(name);
+	return AQLObject::add(name, dh);
 }
 
 /*!
@@ -697,16 +697,16 @@ LAMathYieldCurvePro::add(const LAString& name)
 
 	@param[in] name name of Data
 
-	@return Reference of LADataHolder include this Data
+	@return Reference of AQLDataHolder include this Data
 
 */
-LADataHolder&
-LAMathYieldCurvePro::reset(const LAString& name)
+AQLDataHolder&
+LAMathYieldCurvePro::reset(const AQLString& name)
 {
-	LADataInstance* dataInstance = getDataInstance();
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
-	const LADataHolder& dh = dm.getData(name);
-	return LAObject::reset(name, dh);
+	AQLDataInstance* dataInstance = getDataInstance();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
+	const AQLDataHolder& dh = dm.getData(name);
+	return AQLObject::reset(name, dh);
 }
 
 /*!
@@ -716,26 +716,26 @@ LAMathYieldCurvePro::reset(const LAString& name)
 */
 
 void
-LAMathYieldCurvePro::calcDiscountFactor(const LADate& asof)
+LAMathYieldCurvePro::calcDiscountFactor(const AQLDate& asof)
 {
 	try
 	{
 		if(getAsOfDate().get() != asof) getAsOfDate() = asof;
-		dynamic_cast<LADataProcedure&>(mpProcedure->get()).calibrateModel(asof);
+		dynamic_cast<AQLDataProcedure&>(mpProcedure->get()).calibrateModel(asof);
 	}
-	catch(LACoreError& e)
+	catch(AQLCoreError& e)
 	{
-		LAString msg("DiscountFactor Calculation Error at ");
+		AQLString msg("DiscountFactor Calculation Error at ");
 		msg += getName();
-		LACoreInvalidData err(msg.getCString(), __FILE__, __LINE__);
+		AQLCoreInvalidData err(msg.getCString(), __FILE__, __LINE__);
 		err += e;
 		throw err;
 	}
 	catch (...)
 	{
-		LAString msg("DiscountFactor Calculation at ");
+		AQLString msg("DiscountFactor Calculation at ");
 		msg += getName().get();
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 /*!
@@ -749,11 +749,11 @@ LAMathYieldCurvePro::setDFByShiftZero(double width, unsigned int pos, const Uint
 {
 	unsigned int i, j, i_l, i_r;
 
-	LAObjectHolder objHolder = getYieldData().get();
-	const LAObject& YieldData = objHolder.get();
-	const LADataDoubles& terms = dynamic_cast<const LADataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL)).get());
+	AQLObjectHolder objHolder = getYieldData().get();
+	const AQLObject& YieldData = objHolder.get();
+	const AQLDataDoubles& terms = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL)).get());
 	
-	LADataDoubles rates;
+	AQLDataDoubles rates;
 	rates.resize(terms.getSize());
 	for (i = 0; i < terms.getSize() ; i++)
 		rates.set(getZeroRate(terms[i]), i);
@@ -761,9 +761,9 @@ LAMathYieldCurvePro::setDFByShiftZero(double width, unsigned int pos, const Uint
 	if (pos > grids.size() - 1 || grids[grids.size() - 1] > terms.getSize() - 1)
 	{
 		// error
-		LAString msg = getName();
+		AQLString msg = getName();
 		msg += " : Input pos or grids are something wrong";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	
 	i = grids[pos];
@@ -806,12 +806,12 @@ LAMathYieldCurvePro::setDFByShiftZero(double width, unsigned int pos, const Uint
 	}
 	
 	RateConvention rc = setRC(getFrequency().get());
-	LAPriceDataConvention conv(getDayCount().getDayCount(), rc);
+	AQLPriceDataConvention conv(getDayCount().getDayCount(), rc);
 	for (i = 0; i < terms.getSize() ; i++)
-		rates.set(1 / LAPriceDataConvention::rateToRet(rates[i], terms[i], conv) ,i);
+		rates.set(1 / AQLPriceDataConvention::rateToRet(rates[i], terms[i], conv) ,i);
 	
 	objHolder.remove(IR_CALIBRATION_DATA_DFS + mCurveSuffix);
-	objHolder.add(IR_CALIBRATION_DATA_DFS + mCurveSuffix, new LADataDoubles(rates));
+	objHolder.add(IR_CALIBRATION_DATA_DFS + mCurveSuffix, new AQLDataDoubles(rates));
 }
 
 /*!
@@ -825,14 +825,14 @@ LAMathYieldCurvePro::setDFByShiftZero(double width, FloorType type, double floor
 {
 	unsigned int i;
 
-	LAObjectHolder objHolder = getYieldData().get();
-	const LAObject& YieldData = objHolder.get();
-	const LADataDoubles& terms = dynamic_cast<const LADataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL)).get());
+	AQLObjectHolder objHolder = getYieldData().get();
+	const AQLObject& YieldData = objHolder.get();
+	const AQLDataDoubles& terms = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL)).get());
 	
 	RateConvention rc = setRC(getFrequency().get());
-	LAPriceDataConvention conv(getDayCount().getDayCount(), rc);
+	AQLPriceDataConvention conv(getDayCount().getDayCount(), rc);
 	
-	LADataDoubles rates;
+	AQLDataDoubles rates;
 	rates.resize(terms.getSize());
 	
 	for (i = 0; i < terms.getSize() ; i++)
@@ -848,25 +848,25 @@ LAMathYieldCurvePro::setDFByShiftZero(double width, FloorType type, double floor
 			rnew = rates[i] + width;
 			break;		
 		case NORMAL:
-			rnew = LAMath::max(rates[i] + width, floor); 
+			rnew = AQLMath::max(rates[i] + width, floor); 
 			if(width < 0 && rnew > rates[i]) rnew = rates[i];
 			break;
 		case SYMMETRIC:
             if (width < 0)
-				rnew = LAMath::min(rates[i], LAMath::max(rates[i] + width, floor));
+				rnew = AQLMath::min(rates[i], AQLMath::max(rates[i] + width, floor));
 			else
 			{
-				rnew = LAMath::min(rates[i], LAMath::max(rates[i] - width, floor));
+				rnew = AQLMath::min(rates[i], AQLMath::max(rates[i] - width, floor));
 				rnew = 2 * rates[i] - rnew; 
 			}
 			break;
 		default:
-			throw LACoreInvalidData("Not Supported Floor Type", __FILE__, __LINE__);		
+			throw AQLCoreInvalidData("Not Supported Floor Type", __FILE__, __LINE__);		
 		}
-		rates.set(1 / LAPriceDataConvention::rateToRet(rnew, terms[i], conv) ,i);
+		rates.set(1 / AQLPriceDataConvention::rateToRet(rnew, terms[i], conv) ,i);
 	}
 	objHolder.remove(IR_CALIBRATION_DATA_DFS + mCurveSuffix);
-	objHolder.add(IR_CALIBRATION_DATA_DFS + mCurveSuffix, new LADataDoubles(rates));
+	objHolder.add(IR_CALIBRATION_DATA_DFS + mCurveSuffix, new AQLDataDoubles(rates));
 }
 
 /*!
@@ -878,14 +878,14 @@ LAMathYieldCurvePro::setDFByShiftZero(double width, FloorType type, double floor
 void
 LAMathYieldCurvePro::setBasisDFByShiftZero(double width, unsigned int pos, const UintArray& grids)
 {
-	LAObjectHolder &eh_y = getYieldData().get();
-	const LADataDoubles& terms = dynamic_cast<const LADataDoubles&> (eh_y.getData(CALIBRATION_DATA_TERMS + mCurveSuffix , ISNOTNULL).get());
+	AQLObjectHolder &eh_y = getYieldData().get();
+	const AQLDataDoubles& terms = dynamic_cast<const AQLDataDoubles&> (eh_y.getData(CALIBRATION_DATA_TERMS + mCurveSuffix , ISNOTNULL).get());
 	
 	RateConvention rc = setRC(getFrequency().get());
-	LAPriceDataConvention conv(getDayCount().getDayCount(), rc);
+	AQLPriceDataConvention conv(getDayCount().getDayCount(), rc);
 
 	const unsigned int termSize = terms.getSize();
-	LADataDoubles rates;
+	AQLDataDoubles rates;
 	rates.resize(termSize);
 	for (unsigned int i = 0; i < termSize ; ++i)
 	{
@@ -894,7 +894,7 @@ LAMathYieldCurvePro::setBasisDFByShiftZero(double width, unsigned int pos, const
 			// calc basis zero rate
 			const double dff = 1.0;
 			const double dft = getBasisDF(terms[i]);
-			rates.set(LAPriceDataConvention::retToRate(dff / dft, terms[i], conv), i);
+			rates.set(AQLPriceDataConvention::retToRate(dff / dft, terms[i], conv), i);
 		}
 		else
 		{
@@ -905,9 +905,9 @@ LAMathYieldCurvePro::setBasisDFByShiftZero(double width, unsigned int pos, const
 	if (pos > grids.size() - 1 || grids[grids.size() - 1] > terms.getSize() - 1)
 	{
 		// error
-		LAString msg = getName();
+		AQLString msg = getName();
 		msg += " : Input pos or grids are something wrong";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	
 	unsigned int center = grids[pos];
@@ -966,16 +966,16 @@ LAMathYieldCurvePro::setBasisDFByShiftZero(double width, unsigned int pos, const
 	for (unsigned int i = 0; i < termSize ; i++)
 	{
 		// calc df 
-		const double val = LAPriceDataConvention::rateToRet(rates[i], terms[i], conv);
+		const double val = AQLPriceDataConvention::rateToRet(rates[i], terms[i], conv);
 		/*if (val < 1.0)
 		{
-			throw LACoreInvalidData("DF is over one.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("DF is over one.", __FILE__, __LINE__);
 		}*/
 		rates.set(1.0 / val, i);
 	}
 	
 	eh_y.remove(IR_CALIBRATION_DATA_DFS2 + mCurveSuffix);
-	eh_y.add(IR_CALIBRATION_DATA_DFS2 + mCurveSuffix, new LADataDoubles(rates));
+	eh_y.add(IR_CALIBRATION_DATA_DFS2 + mCurveSuffix, new AQLDataDoubles(rates));
 }
 
 /*!
@@ -987,14 +987,14 @@ LAMathYieldCurvePro::setBasisDFByShiftZero(double width, unsigned int pos, const
 void
 LAMathYieldCurvePro::setBasisDFByShiftZero(double width, FloorType type, double floor)
 {
-	LAObjectHolder &eh_y = getYieldData().get();
-	const LADataDoubles& terms = dynamic_cast<const LADataDoubles&> (eh_y.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL).get());
+	AQLObjectHolder &eh_y = getYieldData().get();
+	const AQLDataDoubles& terms = dynamic_cast<const AQLDataDoubles&> (eh_y.getData(CALIBRATION_DATA_TERMS + mCurveSuffix, ISNOTNULL).get());
 	
 	RateConvention rc = setRC(getFrequency().get());
-	LAPriceDataConvention conv(getDayCount().getDayCount(), rc);
+	AQLPriceDataConvention conv(getDayCount().getDayCount(), rc);
 	
 	const unsigned int termSize = terms.getSize();
-	LADataDoubles rates;
+	AQLDataDoubles rates;
 	rates.resize(terms.getSize());
 	
 	for (unsigned int i = 0; i < termSize ; ++i)
@@ -1004,7 +1004,7 @@ LAMathYieldCurvePro::setBasisDFByShiftZero(double width, FloorType type, double 
 			// calc basis zero rate
 			const double dff = 1.0;
 			const double dft = getBasisDF(terms[i]);
-			rates.set(LAPriceDataConvention::retToRate(dff / dft, terms[i], conv), i);
+			rates.set(AQLPriceDataConvention::retToRate(dff / dft, terms[i], conv), i);
 		}
 		else
 		{
@@ -1020,7 +1020,7 @@ LAMathYieldCurvePro::setBasisDFByShiftZero(double width, FloorType type, double 
 			rnew = rates[i] + width;
 			break;		
 		case NORMAL:
-			rnew = LAMath::max(rates[i] + width, floor); 
+			rnew = AQLMath::max(rates[i] + width, floor); 
 			if (width < 0.0 && rnew > rates[i]) 
 			{
 				rnew = rates[i];
@@ -1029,27 +1029,27 @@ LAMathYieldCurvePro::setBasisDFByShiftZero(double width, FloorType type, double 
 		case SYMMETRIC:
             if (width < 0.0)
 			{
-				rnew = LAMath::min(rates[i], LAMath::max(rates[i] + width, floor));
+				rnew = AQLMath::min(rates[i], AQLMath::max(rates[i] + width, floor));
 			}
 			else
 			{
-				rnew = LAMath::min(rates[i], LAMath::max(rates[i] - width, floor));
+				rnew = AQLMath::min(rates[i], AQLMath::max(rates[i] - width, floor));
 				rnew = 2.0 * rates[i] - rnew; 
 			}
 			break;
 		default:
-			throw LACoreInvalidData("Not Supported Floor Type", __FILE__, __LINE__);		
+			throw AQLCoreInvalidData("Not Supported Floor Type", __FILE__, __LINE__);		
 		}
-		const double val = LAPriceDataConvention::rateToRet(rnew, terms[i], conv);
+		const double val = AQLPriceDataConvention::rateToRet(rnew, terms[i], conv);
 		/*if (val < 1.0)
 		{
-			throw LACoreInvalidData("DF is over one.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("DF is over one.", __FILE__, __LINE__);
 		}*/
 
 		rates.set(1.0 / val, i);
 	}
 	eh_y.remove(IR_CALIBRATION_DATA_DFS2 + mCurveSuffix);
-	eh_y.add(IR_CALIBRATION_DATA_DFS2 + mCurveSuffix, new LADataDoubles(rates));
+	eh_y.add(IR_CALIBRATION_DATA_DFS2 + mCurveSuffix, new AQLDataDoubles(rates));
 }
 
 /*!
@@ -1061,7 +1061,7 @@ LAMathYieldCurvePro::setBasisDFByShiftZero(double width, FloorType type, double 
 void 
 LAMathYieldCurvePro::setBasisRates(const DoubleMatrix& values)
 {	
-	LADataDoubleMatrix& attrvalue = dynamic_cast<LADataDoubleMatrix&>(mpBasisRates->get()); 
+	AQLDataDoubleMatrix& attrvalue = dynamic_cast<AQLDataDoubleMatrix&>(mpBasisRates->get()); 
 	attrvalue.set(values);
 }
 
@@ -1071,22 +1071,22 @@ LAMathYieldCurvePro::setBasisRates(const DoubleMatrix& values)
 
 */
 void
-LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
+LAMathYieldCurvePro::setBasisRates(const AQLString &curveType)
 {
-	LADataHolder *dh = 0;
+	AQLDataHolder *dh = 0;
 	dh = &getData(IR_CALIBRATION_CALIBRATION_DATAOGENERATEDFS,NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAStringVector& nonvec = dynamic_cast<LADataStrings &>(dh->get()).get();
+		const AQLStringVector& nonvec = dynamic_cast<AQLDataStrings &>(dh->get()).get();
 		if (nonvec.end() != std::find(nonvec.begin(),nonvec.end(),curveType))
 		{	
 			// set generate flag true
-			for (std::map<LAString, LAString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
+			for (std::map<AQLString, AQLString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
 			{
 				if (it->second == mAssignedCurveMktMap[curveType])
 				{
-					const LAString& curveName = it->first;
-					LAString suffix = "_" + curveName;
+					const AQLString& curveName = it->first;
+					AQLString suffix = "_" + curveName;
 					mBCurveGenMap[curveName] = true;
 				}
 			}
@@ -1104,26 +1104,26 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		return;
 	}
 
-	LAStringVector gCurveNames;
+	AQLStringVector gCurveNames;
 	dh = &getData(IR_CALIBRATION_DATA_GENERATEDFS, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		gCurveNames = dynamic_cast<const LADataStrings &>(dh->get()).get();
+		gCurveNames = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 	}
 
-	LAString suffix = "_" + mAssignedCurveMktMap[curveType];
+	AQLString suffix = "_" + mAssignedCurveMktMap[curveType];
 	// get market data
-	const LADataMultiReference* mr_ = &getMarketDataRef(mAssignedCurveMktMap[curveType]);
-	vector<LAObject*> data_;
-	vector<LAObject*> data_fwd;
+	const AQLDataMultiReference* mr_ = &getMarketDataRef(mAssignedCurveMktMap[curveType]);
+	vector<AQLObject*> data_;
+	vector<AQLObject*> data_fwd;
 	for(unsigned int i = 0; i < mr_->getSize(); i++)
 	{
 		// check use grid
-		const LADataHolder *dh = &mr_->get(i).getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
-		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const LADataBool &>(dh->get()).get()) continue;
+		const AQLDataHolder *dh = &mr_->get(i).getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
+		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const AQLDataBool &>(dh->get()).get()) continue;
 		
-        const LAString &dataType = dynamic_cast<const LADataString &>((mr_->get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
-		LAString tmpType = dataType;
+        const AQLString &dataType = dynamic_cast<const AQLDataString &>((mr_->get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+		AQLString tmpType = dataType;
 		tmpType.toUpper();
 		if (tmpType.findString(BASIS) == 0) 
 		{
@@ -1136,48 +1136,48 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	}
 
 	// 
-	std::vector<LAString> addtionalCalibGrid;
+	std::vector<AQLString> addtionalCalibGrid;
 	dh = &this->getData(IR_CALIBRATION_DATA_ADDITIONALCALIBGRID + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		addtionalCalibGrid = dynamic_cast<const LADataStrings&>(dh->get()).get();
+		addtionalCalibGrid = dynamic_cast<const AQLDataStrings&>(dh->get()).get();
 	}
-	const LAInterpolationBase* pSpreadInter;
-	dh = &this->LAObject::getData(IR_CALIBRATION_DATA_INTERPOLATIONBS + suffix, NOCHECK);
+	const AQLInterpolationBase* pSpreadInter;
+	dh = &this->AQLObject::getData(IR_CALIBRATION_DATA_INTERPOLATIONBS + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		pSpreadInter = &dynamic_cast<const LAPriceDataInterpolation&>(dh->get()).getMethod();
+		pSpreadInter = &dynamic_cast<const AQLPriceDataInterpolation&>(dh->get()).getMethod();
 	}
 
 	// generate addtional market data through interpolating basis spreads
-	std::vector<LAObject*> data_addtional;
+	std::vector<AQLObject*> data_addtional;
 	if (addtionalCalibGrid.size() > 0)
 	{
-		const LAPriceDataDayCount &c_dc = dynamic_cast<const LAPriceDataDayCount &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, ISNOTNULL).get());
-		const LAPriceDataCalendar &c_cal = dynamic_cast<const LAPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL).get());
-		const LAPriceDataSlidingRule &c_sld  = dynamic_cast<const LAPriceDataSlidingRule &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL).get());
-		const LADate &c_spotdate = dynamic_cast<const LADataDate &> (data_[0]->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE, ISNOTNULL).get());
-		const LAString c_freq = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCY, ISNOTNULL).get()).get();
+		const AQLPriceDataDayCount &c_dc = dynamic_cast<const AQLPriceDataDayCount &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, ISNOTNULL).get());
+		const AQLPriceDataCalendar &c_cal = dynamic_cast<const AQLPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL).get());
+		const AQLPriceDataSlidingRule &c_sld  = dynamic_cast<const AQLPriceDataSlidingRule &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL).get());
+		const AQLDate &c_spotdate = dynamic_cast<const AQLDataDate &> (data_[0]->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE, ISNOTNULL).get());
+		const AQLString c_freq = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCY, ISNOTNULL).get()).get();
 
 		bool eom = false;
 		dh = &(data_[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			eom = dynamic_cast<const LADataBool &>(dh->get()).get();
+			eom = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
-		LAString roll_conv_ts = ROLLCONV_NORMAL;
+		AQLString roll_conv_ts = ROLLCONV_NORMAL;
 		if (c_freq == LUNAR) roll_conv_ts = ROLLCONV_LUNAR;
 		else if (eom) roll_conv_ts = ROLLCONV_EOM;
 
-		const bool isTimeInter = dynamic_cast<const LADataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONBS, ISNOTNULL).get()).get();
+		const bool isTimeInter = dynamic_cast<const AQLDataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONBS, ISNOTNULL).get()).get();
 
 		for (unsigned int i = 0; i < addtionalCalibGrid.size(); ++i)
 		{
 			data_addtional.push_back(data_[0]->clone());
 			data_addtional[i]->remove(IR_CALIBRATION_DATA_TERM);
-			data_addtional[i]->add(IR_CALIBRATION_DATA_TERM, new LADataString(addtionalCalibGrid[i]));
+			data_addtional[i]->add(IR_CALIBRATION_DATA_TERM, new AQLDataString(addtionalCalibGrid[i]));
 			
-			LADate tmpDate = LAMathDateCalculations::getDate(c_spotdate, addtionalCalibGrid[i], c_sld, &c_cal, true, &roll_conv_ts);
+			AQLDate tmpDate = LAMathDateCalculations::getDate(c_spotdate, addtionalCalibGrid[i], c_sld, &c_cal, true, &roll_conv_ts);
 			double term_basis = c_dc.getTerm(c_spotdate, tmpDate);				
 			double rate;
 			if (isTimeInter)
@@ -1189,7 +1189,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 				rate = pSpreadInter->value(term_basis);
 			}
 			data_addtional[i]->remove(CALIBRATION_DATA_RATE);
-			data_addtional[i]->add(CALIBRATION_DATA_RATE, new LADataDouble(rate));
+			data_addtional[i]->add(CALIBRATION_DATA_RATE, new AQLDataDouble(rate));
 
 			data_.push_back(data_addtional[i]);
 		}
@@ -1200,8 +1200,8 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	// data exist check
 	if (data_.empty() && data_fwd.empty())
 	{
-		LAString msg = "CurveName = "+ curveType + ", basis/fwdfx data is not set.";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "CurveName = "+ curveType + ", basis/fwdfx data is not set.";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	else if (data_.empty() && !data_fwd.empty()) // only fwdfx case
 	{
@@ -1217,7 +1217,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		sort(data_fwd.begin(), data_fwd.end(), comp);
 		if (!fwd_isonly && comp(data_.front(), data_fwd.back()))
 		{
-			throw LACoreInvalidData("ForwardFX Term must be smaller than CCS Term", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("ForwardFX Term must be smaller than CCS Term", __FILE__, __LINE__);
 		}
 	}
 
@@ -1226,12 +1226,12 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	dh =  &getData(IR_CALIBRATION_DATA_ISFOREIGNCCYLEG + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isForeignCcyLeg = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isForeignCcyLeg = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	// 2-swap?
 	dh = &data_[0]->getData(IR_CALIBRATION_DATA_IS2SWAP, NOCHECK);
-	const bool is2Swap = (dh->isDefined() && !dh->isNull()) && dynamic_cast<const LADataBool &>(dh->get()).get();
+	const bool is2Swap = (dh->isDefined() && !dh->isNull()) && dynamic_cast<const AQLDataBool &>(dh->get()).get();
 
 	// get first element val
 	// curve info
@@ -1240,79 +1240,79 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	bool isBasisEnabled = false;
 	dh = &getData(IR_CALIBRATION_DATA_ENABLECALCULATION, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
-		isBasisEnabled = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isBasisEnabled = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 
-	const LAString &fCurve = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_FORECAST, ISNOTNULL).get()).get();
+	const AQLString &fCurve = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_FORECAST, ISNOTNULL).get()).get();
 	if ((fCurve != STD) && (fCurve != DUMMY) && (fCurve != FIXEDRATE) && (gCurveNames.end() == std::find(gCurveNames.begin(), gCurveNames.end(), fCurve)) &&!isBasisEnabled)
 	{
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 		setBasisRates(fCurve);
 #endif
 	}
-	const LAString &dCurve = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_DISCOUNT, ISNOTNULL).get()).get();
+	const AQLString &dCurve = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_DISCOUNT, ISNOTNULL).get()).get();
 	if ((dCurve != STD) && (dCurve != DUMMY) && (dCurve != FIXEDRATE) && (gCurveNames.end() == std::find(gCurveNames.begin(), gCurveNames.end(), dCurve)) &&!isBasisEnabled)
 	{
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 		setBasisRates(dCurve);
 #endif
 	}
-	const LAString &a_fCurve = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTFORECAST , ISNOTNULL).get()).get();
+	const AQLString &a_fCurve = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTFORECAST , ISNOTNULL).get()).get();
 	if ((a_fCurve != STD) && (a_fCurve != DUMMY) && (a_fCurve != FIXEDRATE) && (gCurveNames.end() == std::find(gCurveNames.begin(), gCurveNames.end(), a_fCurve)) &&!isBasisEnabled)
 	{
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 		if (!isForeignCcyLeg) setBasisRates(a_fCurve);
 #endif
 	}
-	const LAString &a_dCurve = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTDISCOUNT, ISNOTNULL).get()).get();
+	const AQLString &a_dCurve = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTDISCOUNT, ISNOTNULL).get()).get();
 	if ((a_dCurve != STD) && (a_dCurve != DUMMY) && (a_dCurve != FIXEDRATE) && (gCurveNames.end() == std::find(gCurveNames.begin(), gCurveNames.end(), a_dCurve)) &&!isBasisEnabled)
 	{
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 		if (!isForeignCcyLeg) setBasisRates(a_dCurve);
 #endif
 	}
-	const LAString *f_dCurve = 0;
+	const AQLString *f_dCurve = 0;
 	if (is2Swap)
 	{
-		f_dCurve = &dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_DFCURVENAME, ISNOTNULL).get()).get();
+		f_dCurve = &dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_DFCURVENAME, ISNOTNULL).get()).get();
 	}
 	// check Dummy
 	if (fCurve == DUMMY || dCurve == DUMMY || (f_dCurve && (*f_dCurve == DUMMY)))
 	{
-		throw LACoreInvalidData("Dummy curve must be used for against curve only.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Dummy curve must be used for against curve only.", __FILE__, __LINE__);
 	}
 	if ((a_fCurve == DUMMY && a_dCurve != DUMMY) || (a_fCurve != DUMMY && a_dCurve == DUMMY))
 	{
-		throw LACoreInvalidData("If DUMMY curve is used, both forecast and discount must be DUMMY curve.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("If DUMMY curve is used, both forecast and discount must be DUMMY curve.", __FILE__, __LINE__);
 	}
 	//// check FixedRate
 	//if (a_fCurve == FIXEDRATE || a_dCurve == FIXEDRATE && (f_dCurve && (*f_dCurve == FIXEDRATE)))
 	//{
-	//	throw LACoreInvalidData("FIXEDRATE must be used for target curve only.", __FILE__, __LINE__);
+	//	throw AQLCoreInvalidData("FIXEDRATE must be used for target curve only.", __FILE__, __LINE__);
 	//}
 	//if ((fCurve == FIXEDRATE && dCurve != FIXEDRATE) || (fCurve != FIXEDRATE && dCurve == FIXEDRATE))
 	//{
-	//	throw LACoreInvalidData("If FIXEDRATE is used, both forecast and discount must be FIXEDRATE.", __FILE__, __LINE__);
+	//	throw AQLCoreInvalidData("If FIXEDRATE is used, both forecast and discount must be FIXEDRATE.", __FILE__, __LINE__);
 	//}
 
-	const bool isDiscount =  dynamic_cast<const LADataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISDISCOUNT, ISNOTNULL).get()).get();
-	const bool isTimeInter  = dynamic_cast<const LADataBool &>((data_[0]->getData(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONBS, ISNOTNULL)).get()).get();
-	const bool isAgtSpread =  dynamic_cast<const LADataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL).get()).get();
+	const bool isDiscount =  dynamic_cast<const AQLDataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISDISCOUNT, ISNOTNULL).get()).get();
+	const bool isTimeInter  = dynamic_cast<const AQLDataBool &>((data_[0]->getData(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONBS, ISNOTNULL)).get()).get();
+	const bool isAgtSpread =  dynamic_cast<const AQLDataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL).get()).get();
 	// market convention info
 	// cashlet
-	const LAPriceDataDayCount &c_dc = dynamic_cast<const LAPriceDataDayCount &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, ISNOTNULL).get());
-	const LAPriceDataCalendar &c_cal = dynamic_cast<const LAPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL).get());
-	const LAPriceDataSlidingRule &c_sld  = dynamic_cast<const LAPriceDataSlidingRule &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL).get());
-	const LADate &c_spotdate = dynamic_cast<const LADataDate &> (data_[0]->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE, ISNOTNULL).get());
-	LAString c_freq = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCY, ISNOTNULL).get()).get();
-	const int c_lag  = dynamic_cast<const LADataInt &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETRESETLAG, ISNOTNULL).get());
+	const AQLPriceDataDayCount &c_dc = dynamic_cast<const AQLPriceDataDayCount &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, ISNOTNULL).get());
+	const AQLPriceDataCalendar &c_cal = dynamic_cast<const AQLPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL).get());
+	const AQLPriceDataSlidingRule &c_sld  = dynamic_cast<const AQLPriceDataSlidingRule &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL).get());
+	const AQLDate &c_spotdate = dynamic_cast<const AQLDataDate &> (data_[0]->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE, ISNOTNULL).get());
+	AQLString c_freq = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCY, ISNOTNULL).get()).get();
+	const int c_lag  = dynamic_cast<const AQLDataInt &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETRESETLAG, ISNOTNULL).get());
 	// index
-	const LAPriceDataDayCount &i_dc = dynamic_cast<const LAPriceDataDayCount &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL).get());
-	const LAPriceDataCalendar &i_fixcal = dynamic_cast<const LAPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, ISNOTNULL).get());
-	const LAPriceDataCalendar &i_paycal = dynamic_cast<const LAPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXPAYMENTCALENDAR, ISNOTNULL).get());
-	const LAPriceDataSlidingRule &i_sld  = dynamic_cast<const LAPriceDataSlidingRule &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, ISNOTNULL).get());
-	const int i_lag  = dynamic_cast<const LADataInt &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXRESETLAG, ISNOTNULL).get());
-	LAString i_freq = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXFREQUENCY, ISNOTNULL).get()).get();
-	LAString i_accessary = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXACCESSARY, ISNOTNULL).get()).get();
+	const AQLPriceDataDayCount &i_dc = dynamic_cast<const AQLPriceDataDayCount &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL).get());
+	const AQLPriceDataCalendar &i_fixcal = dynamic_cast<const AQLPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, ISNOTNULL).get());
+	const AQLPriceDataCalendar &i_paycal = dynamic_cast<const AQLPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXPAYMENTCALENDAR, ISNOTNULL).get());
+	const AQLPriceDataSlidingRule &i_sld  = dynamic_cast<const AQLPriceDataSlidingRule &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, ISNOTNULL).get());
+	const int i_lag  = dynamic_cast<const AQLDataInt &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXRESETLAG, ISNOTNULL).get());
+	AQLString i_freq = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXFREQUENCY, ISNOTNULL).get()).get();
+	AQLString i_accessary = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_INDEXACCESSARY, ISNOTNULL).get()).get();
 
 	if (!isDiscount)
 	{
@@ -1320,119 +1320,119 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		i_freq.toUpper();
 		if (i_freq != SIMPLE)
 		{
-			throw LACoreInvalidData("If forecast mode, only simple is possible in frequency.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("If forecast mode, only simple is possible in frequency.", __FILE__, __LINE__);
 		}
 		// if ForeignCcy
 		if (isForeignCcyLeg)
 		{
-			throw LACoreInvalidData("If it has foreign ccy leg, target must be discount curve.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("If it has foreign ccy leg, target must be discount curve.", __FILE__, __LINE__);
 		}
 		//// if FixedRate
 		//if (fCurve == FIXEDRATE)
 		//{
-		//	throw LACoreInvalidData("If FIXEDRATE is used, target must be discount curve.", __FILE__, __LINE__);
+		//	throw AQLCoreInvalidData("If FIXEDRATE is used, target must be discount curve.", __FILE__, __LINE__);
 		//}
 	}
 
 	// against cashlet
-	const LAPriceDataDayCount &a_c_dc = dynamic_cast<const LAPriceDataDayCount &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETDAYCOUNT, ISNOTNULL).get());
-	const LAPriceDataCalendar &a_c_cal = dynamic_cast<const LAPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETCALENDAR, ISNOTNULL).get());
-	const LAPriceDataSlidingRule &a_c_sld  = dynamic_cast<const LAPriceDataSlidingRule &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETSLIDINGRULE, ISNOTNULL).get());
-	const LADate &a_c_spotdate = dynamic_cast<const LADataDate &> (data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETSPOTDATE, ISNOTNULL).get());
-	LAString a_c_freq = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCY, ISNOTNULL).get()).get();
-	const bool c_isBackward = dynamic_cast<const LADataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETISBACKWARD, ISNOTNULL).get());
+	const AQLPriceDataDayCount &a_c_dc = dynamic_cast<const AQLPriceDataDayCount &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETDAYCOUNT, ISNOTNULL).get());
+	const AQLPriceDataCalendar &a_c_cal = dynamic_cast<const AQLPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETCALENDAR, ISNOTNULL).get());
+	const AQLPriceDataSlidingRule &a_c_sld  = dynamic_cast<const AQLPriceDataSlidingRule &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETSLIDINGRULE, ISNOTNULL).get());
+	const AQLDate &a_c_spotdate = dynamic_cast<const AQLDataDate &> (data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETSPOTDATE, ISNOTNULL).get());
+	AQLString a_c_freq = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCY, ISNOTNULL).get()).get();
+	const bool c_isBackward = dynamic_cast<const AQLDataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETISBACKWARD, ISNOTNULL).get());
 	// against index
-	const LAPriceDataDayCount &a_i_dc = dynamic_cast<const LAPriceDataDayCount &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL).get());
-	const LAPriceDataCalendar &a_i_fixcal = dynamic_cast<const LAPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXFIXINGCALENDAR, ISNOTNULL).get());
-	const LAPriceDataCalendar &a_i_paycal = dynamic_cast<const LAPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXPAYMENTCALENDAR, ISNOTNULL).get());
-	const LAPriceDataSlidingRule &a_i_sld  = dynamic_cast<const LAPriceDataSlidingRule &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXSLIDINGRULE, ISNOTNULL).get());
-	const int a_i_lag  = dynamic_cast<const LADataInt &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXRESETLAG, ISNOTNULL).get());
-	LAString a_i_freq = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXFREQUENCY, ISNOTNULL).get()).get();
-	LAString a_i_accessary = dynamic_cast<const LADataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXACCESSARY, ISNOTNULL).get()).get();
-	const bool a_c_isBackward = dynamic_cast<const LADataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETISBACKWARD, ISNOTNULL).get());
+	const AQLPriceDataDayCount &a_i_dc = dynamic_cast<const AQLPriceDataDayCount &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL).get());
+	const AQLPriceDataCalendar &a_i_fixcal = dynamic_cast<const AQLPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXFIXINGCALENDAR, ISNOTNULL).get());
+	const AQLPriceDataCalendar &a_i_paycal = dynamic_cast<const AQLPriceDataCalendar &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXPAYMENTCALENDAR, ISNOTNULL).get());
+	const AQLPriceDataSlidingRule &a_i_sld  = dynamic_cast<const AQLPriceDataSlidingRule &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXSLIDINGRULE, ISNOTNULL).get());
+	const int a_i_lag  = dynamic_cast<const AQLDataInt &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXRESETLAG, ISNOTNULL).get());
+	AQLString a_i_freq = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXFREQUENCY, ISNOTNULL).get()).get();
+	AQLString a_i_accessary = dynamic_cast<const AQLDataString &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTINDEXACCESSARY, ISNOTNULL).get()).get();
+	const bool a_c_isBackward = dynamic_cast<const AQLDataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETISBACKWARD, ISNOTNULL).get());
 
 	// simultaneous equation
 	bool isSimuEq = false;
 	dh = &(data_[0]->getData(IR_CALIBRATION_DATA_ISSIMULTANEOUSEQBS, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isSimuEq = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isSimuEq = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	// issamegridindex
 	bool isSameGridIndex = false;
 	dh = &(data_[0]->getData(IR_CALIBRATION_DATA_ISSAMEGRIDINDEX, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isSameGridIndex = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isSameGridIndex = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	// isoddtermfrnindex
 	bool isOddTermFRNIndex = false;
 	dh = &(data_[0]->getData(IR_CALIBRATION_DATA_ISODDTERMFRNINDEX, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isOddTermFRNIndex = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isOddTermFRNIndex = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	// isyieldspreadcalc
 	bool isYieldSpreadCalc = true;
 	dh = &(data_[0]->getData(IR_CALIBRATION_DATA_ISYIELDSPREADCALC, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isYieldSpreadCalc = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isYieldSpreadCalc = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	if (isForeignCcyLeg && isYieldSpreadCalc)
 	{
-		throw LACoreInvalidData("yield spread calc flag must be false.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("yield spread calc flag must be false.", __FILE__, __LINE__);
 	}
 	//iseomroll
 	bool eom = false;
 	dh = &(data_[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		eom = dynamic_cast<const LADataBool &>(dh->get()).get();
+		eom = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	// isfwdinterpolation
 	bool isFWDInter = false;
-	LAPriceDataInterpolation *a_fwdInter = 0;
-	LAPriceDataInterpolation *fwdInter = 0;
+	AQLPriceDataInterpolation *a_fwdInter = 0;
+	AQLPriceDataInterpolation *fwdInter = 0;
 	dh = &(data_[0]->getData(IR_CALIBRATION_DATA_ISFWDINTERPOLATION, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isFWDInter = dynamic_cast<const LADataBool &>(dh->get()).get();
-		a_fwdInter = &dynamic_cast<LAPriceDataInterpolation &>(data_[0]->getData(IR_CALIBRATION_DATA_FWDINTERPOLATION, ISNOTNULL).get());
+		isFWDInter = dynamic_cast<const AQLDataBool &>(dh->get()).get();
+		a_fwdInter = &dynamic_cast<AQLPriceDataInterpolation &>(data_[0]->getData(IR_CALIBRATION_DATA_FWDINTERPOLATION, ISNOTNULL).get());
 		if (isDiscount)
-			fwdInter = dynamic_cast<LAPriceDataInterpolation *>(a_fwdInter->clone());
+			fwdInter = dynamic_cast<AQLPriceDataInterpolation *>(a_fwdInter->clone());
 	}
 	// compounding	
-	LAString c_freq_cpd(c_freq), a_c_freq_cpd(a_c_freq);	
+	AQLString c_freq_cpd(c_freq), a_c_freq_cpd(a_c_freq);	
 	dh = &(data_[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCYCOMPOUND, NOCHECK));	
 	if (dh->isDefined() && !dh->isNull())	
 	{	
-		c_freq_cpd = dynamic_cast<const LADataString &>(dh->get()).get();
-		LADate period_reset(LAMathDateCalculations::getDate(c_spotdate, FrequencyToTerm(c_freq), true));
-		LADate period_payment(LAMathDateCalculations::getDate(c_spotdate, FrequencyToTerm(c_freq_cpd), true));
+		c_freq_cpd = dynamic_cast<const AQLDataString &>(dh->get()).get();
+		AQLDate period_reset(LAMathDateCalculations::getDate(c_spotdate, FrequencyToTerm(c_freq), true));
+		AQLDate period_payment(LAMathDateCalculations::getDate(c_spotdate, FrequencyToTerm(c_freq_cpd), true));
 		if (period_reset > period_payment)
 		{
-			throw LACoreInvalidData("Payment frequency must be wider than reset frequency.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Payment frequency must be wider than reset frequency.", __FILE__, __LINE__);
 		}
 	}	
 	dh = &(data_[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCYCOMPOUND, NOCHECK));	
 	if (dh->isDefined() && !dh->isNull())	
 	{	
-		a_c_freq_cpd = dynamic_cast<const LADataString &>(dh->get()).get();
-		LADate period_reset(LAMathDateCalculations::getDate(a_c_spotdate, FrequencyToTerm(a_c_freq), true));
-		LADate period_payment(LAMathDateCalculations::getDate(a_c_spotdate, FrequencyToTerm(a_c_freq_cpd), true));
+		a_c_freq_cpd = dynamic_cast<const AQLDataString &>(dh->get()).get();
+		AQLDate period_reset(LAMathDateCalculations::getDate(a_c_spotdate, FrequencyToTerm(a_c_freq), true));
+		AQLDate period_payment(LAMathDateCalculations::getDate(a_c_spotdate, FrequencyToTerm(a_c_freq_cpd), true));
 		if (period_reset > period_payment)
 		{
-			throw LACoreInvalidData("Payment frequency must be wider than reset frequency.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Payment frequency must be wider than reset frequency.", __FILE__, __LINE__);
 		}
 	}
 	if (!mpCompoundFunction->isDefined() || mpCompoundFunction->isNull())
 	{
-		throw LACoreInvalidData("no valid compounding function is set.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("no valid compounding function is set.", __FILE__, __LINE__);
 	}
 
 	// get max term
-	const LAString &termMax = dynamic_cast<const LADataString &>((data_.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+	const AQLString &termMax = dynamic_cast<const AQLDataString &>((data_.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 	// calc term (apply to month)
 	int y, m, d, w;
 	LAMathDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
@@ -1452,8 +1452,8 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	// check can be divided ?
 	if (m % mUnit != 0 || d != 0)
 	{
-		LAString msg = "frequency is wrong";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "frequency is wrong";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	a_c_freq_cpd.toUpper();
@@ -1461,8 +1461,8 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 
 	if ((c_freq == LUNAR && a_c_freq != LUNAR) || (c_freq != LUNAR && a_c_freq == LUNAR))
 	{
-		LAString msg = "if the one frequency is LUNAR, the other must be LUNAR";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "if the one frequency is LUNAR, the other must be LUNAR";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	unsigned int step = 1;
 	unsigned int a_step = 1;
@@ -1476,18 +1476,18 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	}
 
 	// set roll convention
-	LAString roll_conv(LAPriceYieldGenerator::deduceRollConvention(c_freq, eom));
+	AQLString roll_conv(LAPriceYieldGenerator::deduceRollConvention(c_freq, eom));
 
 	// fixed cashlet in 2-swap
-	const LAPriceDataCalendar *f_cal = 0;
-	const LADate *f_spotdate = 0;
+	const AQLPriceDataCalendar *f_cal = 0;
+	const AQLDate *f_spotdate = 0;
 	bool f_isBackward = false;
 	bool f_eom = false;
 	if (is2Swap)
 	{
-		f_cal = dynamic_cast<const LAPriceDataCalendar *>(&data_[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
-		f_spotdate = &dynamic_cast<const LADataDate &> (data_[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL).get()).get();
-		f_eom = dynamic_cast<const LADataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISEOMROLLSW, ISNOTNULL).get()).get();
+		f_cal = dynamic_cast<const AQLPriceDataCalendar *>(&data_[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+		f_spotdate = &dynamic_cast<const AQLDataDate &> (data_[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL).get()).get();
+		f_eom = dynamic_cast<const AQLDataBool &>(data_[0]->getData(IR_CALIBRATION_DATA_ISEOMROLLSW, ISNOTNULL).get()).get();
 		if (isAgtSpread)
 		{
 			f_isBackward = a_c_isBackward;
@@ -1498,21 +1498,21 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		}
 	}
 
-	LAObjectHolder &objHolder = getYieldData().get();
-	LAObject &yieldData = objHolder.get();
+	AQLObjectHolder &objHolder = getYieldData().get();
+	AQLObject &yieldData = objHolder.get();
 
 	// get base yield curve and asofdate
 	const LAMathYieldCurve &baseYieldCurve = dynamic_cast<const LAMathYieldCurve &>(getBaseYieldCurve().get().get());
-	const LADate &asof = dynamic_cast<const LADataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());	
+	const AQLDate &asof = dynamic_cast<const AQLDataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());	
 
 	// is xccy swap marked to market or not
-	bool isXccyMarkedToMarket = dynamic_cast<const LADataBool& > ((getData(IR_CALIBRATION_DATA_ISRENOTIONALADJUST,
+	bool isXccyMarkedToMarket = dynamic_cast<const AQLDataBool& > ((getData(IR_CALIBRATION_DATA_ISRENOTIONALADJUST,
 															               IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET, ISNOTNULL)).get()); // Alias Method: First Parameter Takes Priority
 	bool isUSD = false;
-	LAString currency = dynamic_cast<LADataString&> ((yieldData.getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL)).get());
+	AQLString currency = dynamic_cast<AQLDataString&> ((yieldData.getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL)).get());
 	if (currency.toUpper() == "USD") isUSD = true;
 
-	LAPriceDataDayCount dc_act(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act(ACT_365_ISDA);
 	DoubleArray b_t(1, 0.0);
 	DoubleArray df_mod(1, 1.0);
 	DoubleArray _terms;
@@ -1523,16 +1523,16 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	if (fCurve == STD || dCurve == STD 
 		|| !isForeignCcyLeg && (a_fCurve == STD || a_fCurve == DUMMY || a_fCurve == STD || a_fCurve == DUMMY))
 	{
-		std_terms = dynamic_cast<const LADataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
-		std_dfs   = dynamic_cast<const LADataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS, ISNOTNULL)).get()).get();
-		const LADataHolder* dh = &yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE, NOCHECK);
+		std_terms = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
+		std_dfs   = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS, ISNOTNULL)).get()).get();
+		const AQLDataHolder* dh = &yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
 			is_std_JoinDateExists = true;
-			std_linearSplineJoinDateAsDouble = dynamic_cast<const LADataDouble&>(dh->get()).get();
+			std_linearSplineJoinDateAsDouble = dynamic_cast<const AQLDataDouble&>(dh->get()).get();
 		}
 	}
-	LAPriceDataInterpolation f_inter = dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
+	AQLPriceDataInterpolation f_inter = dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
 	if (fCurve == STD)
 	{
 		if (is_std_JoinDateExists)
@@ -1553,12 +1553,12 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	}
 	else
 	{
-		const DoubleArray &terms = dynamic_cast<const LADataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + LAString("_") + fCurve, ISNOTNULL)).get()).get();
-		const DoubleArray &dfs   = dynamic_cast<const LADataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + LAString("_") + fCurve, ISNOTNULL)).get()).get();
-		const LADataHolder* dh = &yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + LAString("_") + fCurve, NOCHECK);
+		const DoubleArray &terms = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + AQLString("_") + fCurve, ISNOTNULL)).get()).get();
+		const DoubleArray &dfs   = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + AQLString("_") + fCurve, ISNOTNULL)).get()).get();
+		const AQLDataHolder* dh = &yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + AQLString("_") + fCurve, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			f_inter.setJoinDateAsDouble(dynamic_cast<const LADataDouble&>(dh->get()).get());
+			f_inter.setJoinDateAsDouble(dynamic_cast<const AQLDataDouble&>(dh->get()).get());
 		}
 		f_inter.set(terms, dfs);
 		if (!isDiscount)
@@ -1566,7 +1566,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			_terms = terms;
 		}
 	}
-	LAPriceDataInterpolation d_inter = dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
+	AQLPriceDataInterpolation d_inter = dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
 	if (dCurve == STD)
 	{
 		if (is_std_JoinDateExists)
@@ -1587,12 +1587,12 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	}
 	else
 	{
-		const DoubleArray &terms = dynamic_cast<const LADataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + LAString("_") + dCurve, ISNOTNULL)).get()).get();
-		const DoubleArray &dfs   = dynamic_cast<const LADataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + LAString("_") + dCurve, ISNOTNULL)).get()).get();
-		const LADataHolder* dh = &yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + LAString("_") + dCurve, NOCHECK);
+		const DoubleArray &terms = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + AQLString("_") + dCurve, ISNOTNULL)).get()).get();
+		const DoubleArray &dfs   = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + AQLString("_") + dCurve, ISNOTNULL)).get()).get();
+		const AQLDataHolder* dh = &yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + AQLString("_") + dCurve, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			d_inter.setJoinDateAsDouble(dynamic_cast<const LADataDouble&>(dh->get()).get());
+			d_inter.setJoinDateAsDouble(dynamic_cast<const AQLDataDouble&>(dh->get()).get());
 		}
 		d_inter.set(terms, dfs);
 		if (isDiscount)
@@ -1602,25 +1602,25 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	}
 
 	// against side
-	LAPriceDataInterpolation a_f_inter = dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
+	AQLPriceDataInterpolation a_f_inter = dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
 	if (isForeignCcyLeg)
 	{
-		LAObjectHolder &eh_fy = getForeignYieldData().get();
+		AQLObjectHolder &eh_fy = getForeignYieldData().get();
 		if(!eh_fy.isDefined())
 		{	
-			throw LACoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__); 
+			throw AQLCoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__); 
 		}
 		else
 		{
-			LAObject &fYieldData = eh_fy.get();
-			LAString suffix;
-			if (a_fCurve != STD) suffix = LAString("_") +  a_fCurve;
-			const DoubleArray &terms = dynamic_cast<const LADataDoubles&> ((fYieldData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
-			const DoubleArray &dfs   = dynamic_cast<const LADataDoubles&> ((fYieldData.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
-			const LADataHolder* dh = &fYieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + suffix, NOCHECK);
+			AQLObject &fYieldData = eh_fy.get();
+			AQLString suffix;
+			if (a_fCurve != STD) suffix = AQLString("_") +  a_fCurve;
+			const DoubleArray &terms = dynamic_cast<const AQLDataDoubles&> ((fYieldData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
+			const DoubleArray &dfs   = dynamic_cast<const AQLDataDoubles&> ((fYieldData.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
+			const AQLDataHolder* dh = &fYieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + suffix, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				a_f_inter.setJoinDateAsDouble(dynamic_cast<const LADataDouble&>(dh->get()).get());
+				a_f_inter.setJoinDateAsDouble(dynamic_cast<const AQLDataDouble&>(dh->get()).get());
 			}
 			a_f_inter.set(terms, dfs);
 		}		
@@ -1643,35 +1643,35 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		}
 		else
 		{
-			const DoubleArray &terms = dynamic_cast<const LADataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + LAString("_") +  a_fCurve, ISNOTNULL)).get()).get();
-			const DoubleArray &dfs   = dynamic_cast<const LADataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + LAString("_") +  a_fCurve, ISNOTNULL)).get()).get();
-			const LADataHolder* dh = &yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + LAString("_") + a_fCurve, NOCHECK);
+			const DoubleArray &terms = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + AQLString("_") +  a_fCurve, ISNOTNULL)).get()).get();
+			const DoubleArray &dfs   = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + AQLString("_") +  a_fCurve, ISNOTNULL)).get()).get();
+			const AQLDataHolder* dh = &yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + AQLString("_") + a_fCurve, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				a_f_inter.setJoinDateAsDouble(dynamic_cast<const LADataDouble&>(dh->get()).get());
+				a_f_inter.setJoinDateAsDouble(dynamic_cast<const AQLDataDouble&>(dh->get()).get());
 			}
 			a_f_inter.set(terms, dfs);
 		}
 	}
-	LAPriceDataInterpolation a_d_inter = dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
+	AQLPriceDataInterpolation a_d_inter = dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
 	if (isForeignCcyLeg)
 	{
-		LAObjectHolder &eh_fy = getForeignYieldData().get();
+		AQLObjectHolder &eh_fy = getForeignYieldData().get();
 		if(!eh_fy.isDefined())
 		{	
-			throw LACoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__); 
+			throw AQLCoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__); 
 		}
 		else
 		{
-			LAObject &fYieldData = eh_fy.get();
-			LAString suffix;
-			if (a_dCurve != STD) suffix = LAString("_") +  a_dCurve;
-			const DoubleArray &terms = dynamic_cast<const LADataDoubles&> ((fYieldData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
-			const DoubleArray &dfs   = dynamic_cast<const LADataDoubles&> ((fYieldData.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
-			const LADataHolder* dh = &fYieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + suffix, NOCHECK);
+			AQLObject &fYieldData = eh_fy.get();
+			AQLString suffix;
+			if (a_dCurve != STD) suffix = AQLString("_") +  a_dCurve;
+			const DoubleArray &terms = dynamic_cast<const AQLDataDoubles&> ((fYieldData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
+			const DoubleArray &dfs   = dynamic_cast<const AQLDataDoubles&> ((fYieldData.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
+			const AQLDataHolder* dh = &fYieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + suffix, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				a_d_inter.setJoinDateAsDouble(dynamic_cast<const LADataDouble&>(dh->get()).get());
+				a_d_inter.setJoinDateAsDouble(dynamic_cast<const AQLDataDouble&>(dh->get()).get());
 			}
 			a_d_inter.set(terms, dfs);
 		}		
@@ -1688,36 +1688,36 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		}
 		else
 		{
-			const DoubleArray &terms = dynamic_cast<const LADataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + LAString("_") +  a_dCurve, ISNOTNULL)).get()).get();
-			const DoubleArray &dfs   = dynamic_cast<const LADataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + LAString("_") + a_dCurve, ISNOTNULL)).get()).get();
-			const LADataHolder* dh = &yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + LAString("_") + a_dCurve, NOCHECK);
+			const DoubleArray &terms = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + AQLString("_") +  a_dCurve, ISNOTNULL)).get()).get();
+			const DoubleArray &dfs   = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + AQLString("_") + a_dCurve, ISNOTNULL)).get()).get();
+			const AQLDataHolder* dh = &yieldData.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + AQLString("_") + a_dCurve, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				a_d_inter.setJoinDateAsDouble(dynamic_cast<const LADataDouble&>(dh->get()).get());
+				a_d_inter.setJoinDateAsDouble(dynamic_cast<const AQLDataDouble&>(dh->get()).get());
 			}
 			a_d_inter.set(terms, dfs);
 		}
 	}
-	std::shared_ptr<LAPriceDataInterpolation> f_d_inter;
+	std::shared_ptr<AQLPriceDataInterpolation> f_d_inter;
 	if (is2Swap)
 	{
-		f_d_inter.reset(new LAPriceDataInterpolation(dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get())));
+		f_d_inter.reset(new AQLPriceDataInterpolation(dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get())));
 		if (*f_dCurve == STD)
 		{
 			f_d_inter->set(std_terms, std_dfs);
 		}
 		else
 		{
-			const DoubleArray &terms = dynamic_cast<const LADataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + LAString("_") + *f_dCurve, ISNOTNULL)).get()).get();
-			const DoubleArray &dfs   = dynamic_cast<const LADataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + LAString("_") + *f_dCurve, ISNOTNULL)).get()).get();
+			const DoubleArray &terms = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + AQLString("_") + *f_dCurve, ISNOTNULL)).get()).get();
+			const DoubleArray &dfs   = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + AQLString("_") + *f_dCurve, ISNOTNULL)).get()).get();
 			f_d_inter->set(terms, dfs);
 		}
 	}
 
 	const unsigned int max = m / mUnit + 1;
-	LADate fdate = c_spotdate;
-	LADate a_fdate = a_c_spotdate;
-	LAString strUnit = LAString(static_cast<int>(mUnit)) + LAString("M");
+	AQLDate fdate = c_spotdate;
+	AQLDate a_fdate = a_c_spotdate;
+	AQLString strUnit = AQLString(static_cast<int>(mUnit)) + AQLString("M");
 
 	const unsigned int MAX_LOOP = 100;
 
@@ -1732,15 +1732,15 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	if (isDiscount && (spotTerm != a_spotTerm)) a_d_df_adjust = a_d_spotdf / a_d_inter.value(spotTerm);
 
 	// calc extrapolation terms
-	LAString maxTerm, maxFreq;
+	AQLString maxTerm, maxFreq;
 	DoubleArray extra_terms;
 	dh = &objHolder.getData(IR_CALIBRATION_DATA_MAXTERM);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		maxTerm = dynamic_cast<LADataString&>(dh->get()).get();
+		maxTerm = dynamic_cast<AQLDataString&>(dh->get()).get();
 		maxTerm += "Y";
-		maxFreq = dynamic_cast<LADataString&>(objHolder.getData(IR_CALIBRATION_DATA_MAXTERMFREQ).get()).get();
-		const LADate& maxDate = LAMathDateCalculations::getDate(c_spotdate, maxTerm, c_sld, &c_cal, true, &roll_conv);
+		maxFreq = dynamic_cast<AQLDataString&>(objHolder.getData(IR_CALIBRATION_DATA_MAXTERMFREQ).get()).get();
+		const AQLDate& maxDate = LAMathDateCalculations::getDate(c_spotdate, maxTerm, c_sld, &c_cal, true, &roll_conv);
 		DateVector tmp_dates; DoubleArray tmp_taus;
 		LAPriceYieldGenerator::getPaymentDates(c_spotdate, maxDate, maxFreq, c_cal, c_sld, dc_act, tmp_dates, extra_terms, tmp_taus, eom);
 	}
@@ -1755,18 +1755,18 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	{
 		// isFXForwardQuotedAsOutright (can be Fx Outright or Forward Points) - aka isRatio
 		// Here the getData method has been overridden to accept an alias if the first name is missing
-		const bool isFXForwardQuotedAsOutright = dynamic_cast<const LADataBool &>(data_fwd[0]->getData(IR_CALIBRATION_DATA_ISRATIO, IR_CALIBRATION_DATA_ISFXOUTRIGHT, ISNOTNULL).get()).get();
-		const LAPriceDataCalendar &fwd_cal = dynamic_cast<const LAPriceDataCalendar &>(data_fwd[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
-		const LAPriceDataSlidingRule &fwd_sld  = dynamic_cast<const LAPriceDataSlidingRule &>(data_fwd[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
-		const LADate &fwd_spotdate = dynamic_cast<const LADataDate &> (data_fwd[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL).get());
-		const int fwd_spotlag = dynamic_cast<const LADataInt &> (data_fwd[0]->getData(IR_CALIBRATION_DATA_SPOTLAG, ISNOTNULL).get()).get();
+		const bool isFXForwardQuotedAsOutright = dynamic_cast<const AQLDataBool &>(data_fwd[0]->getData(IR_CALIBRATION_DATA_ISRATIO, IR_CALIBRATION_DATA_ISFXOUTRIGHT, ISNOTNULL).get()).get();
+		const AQLPriceDataCalendar &fwd_cal = dynamic_cast<const AQLPriceDataCalendar &>(data_fwd[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+		const AQLPriceDataSlidingRule &fwd_sld  = dynamic_cast<const AQLPriceDataSlidingRule &>(data_fwd[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+		const AQLDate &fwd_spotdate = dynamic_cast<const AQLDataDate &> (data_fwd[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL).get());
+		const int fwd_spotlag = dynamic_cast<const AQLDataInt &> (data_fwd[0]->getData(IR_CALIBRATION_DATA_SPOTLAG, ISNOTNULL).get()).get();
 		fwd_spotTerm = dc_act.getTerm(asof, fwd_spotdate);
 		fwd_spotdf = d_inter.value(fwd_spotTerm);
-		LAString fwd_freq = dynamic_cast<const LADataString &>(data_fwd[0]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL).get()).get();
-		const bool fwd_eom = dynamic_cast<const LADataBool &>(data_fwd[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, ISNOTNULL).get()).get();
+		AQLString fwd_freq = dynamic_cast<const AQLDataString &>(data_fwd[0]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL).get()).get();
+		const bool fwd_eom = dynamic_cast<const AQLDataBool &>(data_fwd[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, ISNOTNULL).get()).get();
 
 		// set roll convention
-		LAString fwd_roll_conv("");
+		AQLString fwd_roll_conv("");
 		if (fwd_freq == LUNAR) fwd_roll_conv = ROLLCONV_LUNAR;
 		else if (fwd_eom) fwd_roll_conv = ROLLCONV_EOM;
 		else fwd_roll_conv = ROLLCONV_NORMAL;
@@ -1775,14 +1775,14 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		if (fwd_isonly && extra_terms.size() > 0)
 		{
 			extra_terms.clear();
-			const LADate& maxDate = LAMathDateCalculations::getDate(fwd_spotdate, maxTerm, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
+			const AQLDate& maxDate = LAMathDateCalculations::getDate(fwd_spotdate, maxTerm, fwd_sld, &fwd_cal, true, &fwd_roll_conv);
 			DateVector tmp_dates; DoubleArray tmp_taus;
 			LAPriceYieldGenerator::getPaymentDates(fwd_spotdate, maxDate, maxFreq, fwd_cal, fwd_sld, dc_act, tmp_dates, extra_terms, tmp_taus, fwd_eom);
 		}
 
 		double term = 0.0;
 		double df = 1.0;
-		LADate end;
+		AQLDate end;
 
 		// isFXForwardQuotedAsOutright (can be Fx Outright or Forward Points) - aka isRatio
 		if ( isFXForwardQuotedAsOutright )
@@ -1790,8 +1790,8 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			double fwd_ratio_pow = 1.0;
 			for (int i = 0; i < fwd_size; i++)
 			{
-				const double fwd_ratio = dynamic_cast<const LADataDouble &>((data_fwd[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-				const LAString &fwd_termStr  = dynamic_cast<const LADataString &>((data_fwd[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+				const double fwd_ratio = dynamic_cast<const AQLDataDouble &>((data_fwd[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+				const AQLString &fwd_termStr  = dynamic_cast<const AQLDataString &>((data_fwd[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 				if (fwd_termStr == "ON")
 				{
 					if (fwd_spotlag < 1) continue;
@@ -1833,11 +1833,11 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		}
 		else
 		{
-			const bool fwd_ispriceccy = dynamic_cast<const LADataBool &>(data_fwd[0]->getData(IR_CALIBRATION_DATA_ISPRICECCY,
+			const bool fwd_ispriceccy = dynamic_cast<const AQLDataBool &>(data_fwd[0]->getData(IR_CALIBRATION_DATA_ISPRICECCY,
 																							  IR_CALIBRATION_DATA_ISDOMESTICCURRENCY, ISNOTNULL).get()).get();
 			//get spot fx
 			const LAMathFXEntity& fx = dynamic_cast<const LAMathFXEntity&>(getFXEntity().get().get());
-			const LAStringVector spotccys = fx.getCurrencys().get();
+			const AQLStringVector spotccys = fx.getCurrencys().get();
 			const DoubleArray spotfxs = fx.getSpotRates().get();
 			double spotfx_unitccy = 0.0;
 			double spotfx_usd_unitccy = 0.0;
@@ -1850,7 +1850,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			}
 			if (spotfx_unitccy == 0.0 || spotfx_usd_unitccy == 0.0)
 			{
-				throw LACoreInvalidData("SpotFX rates do not exist!", __FILE__, __LINE__); 
+				throw AQLCoreInvalidData("SpotFX rates do not exist!", __FILE__, __LINE__); 
 			}
 			const double spotfx = fwd_ispriceccy ? spotfx_usd_unitccy / spotfx_unitccy : spotfx_unitccy / spotfx_usd_unitccy;
 			//search ON&TN fwd spread
@@ -1858,11 +1858,11 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			double fwd_spread_tn = 0.0;
 			for (int i = 0; i < fwd_size; i++)
 			{
-				const LAString &termStr = dynamic_cast<const LADataString &>((data_fwd[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+				const AQLString &termStr = dynamic_cast<const AQLDataString &>((data_fwd[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 				if (termStr == "ON")
-					fwd_spread_on = dynamic_cast<const LADataDouble &>((data_fwd[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+					fwd_spread_on = dynamic_cast<const AQLDataDouble &>((data_fwd[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 				else if (termStr == "TN")
-					fwd_spread_tn = dynamic_cast<const LADataDouble &>((data_fwd[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+					fwd_spread_tn = dynamic_cast<const AQLDataDouble &>((data_fwd[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 				else if (fwd_spread_on != 0.0 && fwd_spread_tn != 0.0)
 					break;
 			}
@@ -1870,7 +1870,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			const double fwd_fx_tn = spotfx - fwd_spread_tn;
 			for (int i = 0; i < fwd_size; i++)
 			{
-				const LAString &fwd_termStr  = dynamic_cast<const LADataString &>((data_fwd[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+				const AQLString &fwd_termStr  = dynamic_cast<const AQLDataString &>((data_fwd[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 				double fwd_ratio = 1.0;
 				if (fwd_termStr == "ON")
 				{
@@ -1902,7 +1902,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 				}
 				else
 				{
-					const double fwd_spread = dynamic_cast<const LADataDouble &>((data_fwd[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+					const double fwd_spread = dynamic_cast<const AQLDataDouble &>((data_fwd[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 					const double fwd_fx = spotfx + fwd_spread;
 					if (fwd_spotlag == 0)
 						fwd_ratio = fwd_ispriceccy ? spotfx / fwd_fx : fwd_fx / spotfx;
@@ -1978,7 +1978,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		unsigned int b_size = data_.size();
 		if (!b_size)
 		{
-			throw LACoreInvalidData("Basis data is empty.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Basis data is empty.", __FILE__, __LINE__);
 		}
 		DoubleArray a_targetPVVec(b_size, 0.0);
 		DoubleArray spreadVec(b_size, 0.0);
@@ -1996,7 +1996,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		vector<IntArray> a_cpd_timesVec(b_size);
 		vector<DoubleMatrix> b_yieldTimeMatVec(b_size);
 
-		LAPriceDataInterpolation spread_time_inter = getInterpolation_yg();
+		AQLPriceDataInterpolation spread_time_inter = getInterpolation_yg();
 		DoubleArray grid_spread_time((fwd_size - fwd_size_mm) + b_size, 0.0);
 		DoubleArray spread_timeVec((fwd_size - fwd_size_mm) + b_size, 0.0);
 		double linearSplineJoinDateAsDouble_spread_time_inter = 0.;
@@ -2004,18 +2004,18 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 
 		if (fwd_terms.size() > 0 && fwd_spotTerm != spotTerm)
 		{
-			LAPriceDataInterpolation tmp_inter = dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
+			AQLPriceDataInterpolation tmp_inter = dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
 			tmp_inter.set(fwd_terms, fwd_dfs);
 			fwd_spotdf = tmp_inter.value(spotTerm);//to adjust for xccy basis spot
 		}
 		for (int i = fwd_size_mm; i < fwd_size; i++)
 		{
 			grid_spread_time[i - fwd_size_mm] = fwd_terms[i] - spotTerm;
-			spread_timeVec[i - fwd_size_mm] = -LAMath::log(fwd_dfs[i] / fwd_spotdf);
+			spread_timeVec[i - fwd_size_mm] = -AQLMath::log(fwd_dfs[i] / fwd_spotdf);
 		}
 
-		LAString a_fMarket = getMarketForCurve(a_fCurve);
-		LAString a_dMarket = getMarketForCurve(a_dCurve);
+		AQLString a_fMarket = getMarketForCurve(a_fCurve);
+		AQLString a_dMarket = getMarketForCurve(a_dCurve);
 		bool isSameMarket = false;
 		if (a_fMarket == a_dMarket)
 		{
@@ -2026,11 +2026,11 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		}
 		if (isFWDInter)
 		{
-			LAPriceDataDayCount dc;
-			LAPriceDataCalendar cal;
-			LAPriceDataSlidingRule sld;
-			LAString accessory;
-			LAString freq;
+			AQLPriceDataDayCount dc;
+			AQLPriceDataCalendar cal;
+			AQLPriceDataSlidingRule sld;
+			AQLString accessory;
+			AQLString freq;
 			DoubleArray terms;
 			DoubleArray fwds;
 			DoubleArray taus;
@@ -2050,8 +2050,8 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			{
 				if (isForeignCcyLeg)
 				{
-					LAString fYieldDataName = dynamic_cast<const LADataString &>(getForeignYieldData().get().get().getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-					LADataInstance* dataInstance = getDataInstance();
+					AQLString fYieldDataName = dynamic_cast<const AQLDataString &>(getForeignYieldData().get().get().getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+					AQLDataInstance* dataInstance = getDataInstance();
 					LAMathYieldCurve fYC(dataInstance);
 					fYC.getYieldData().convertFromString(fYieldDataName);
 					fYC.getCurveConvention(freq, cal, sld, dc, accessory, a_fCurve);
@@ -2071,22 +2071,22 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		}
 		for (unsigned int i = 0; i < b_size; ++i)
 		{
-			double spread = dynamic_cast<const LADataDouble &>((data_[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			double spread = dynamic_cast<const AQLDataDouble &>((data_[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 
 
-			const LAString &strTerm  = dynamic_cast<const LADataString &>((data_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 
 			if (is2Swap)
 			{
-				const LAPriceDataDayCount *f_dc = dynamic_cast<const LAPriceDataDayCount *>(&data_[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL).get());
-				const LAString *f_freq = &dynamic_cast<const LADataString &>(data_[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL).get()).get();
-				const LAPriceDataSlidingRule *f_sld = dynamic_cast<const LAPriceDataSlidingRule *>(&data_[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+				const AQLPriceDataDayCount *f_dc = dynamic_cast<const AQLPriceDataDayCount *>(&data_[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL).get());
+				const AQLString *f_freq = &dynamic_cast<const AQLDataString &>(data_[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL).get()).get();
+				const AQLPriceDataSlidingRule *f_sld = dynamic_cast<const AQLPriceDataSlidingRule *>(&data_[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
 
 				// Target (no 2-swap-based spread)
 				double t_annuity = 0.0;
 				if (isAgtSpread)
 				{
-					const LAString a_roll_conv = LAPriceYieldGenerator::deduceRollConvention(a_c_freq, eom);
+					const AQLString a_roll_conv = LAPriceYieldGenerator::deduceRollConvention(a_c_freq, eom);
 					DateVector a_dates;
 					DoubleArray a_terms_grid;
 					DoubleArray a_terms_interval;
@@ -2107,7 +2107,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 				}
 
 				// Original (2-swap-based spread)
-				const LAString o_roll_conv = LAPriceYieldGenerator::deduceRollConvention(*f_freq, f_eom);
+				const AQLString o_roll_conv = LAPriceYieldGenerator::deduceRollConvention(*f_freq, f_eom);
 				DateVector o_dates;
 				DoubleArray o_terms_grid;
 				DoubleArray o_terms_interval;
@@ -2137,7 +2137,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 				DoubleMatrix a_i_termMat(a_dates.size());				
 				double targetPV = 0.0;
 				double df = 1.0;
-				LADate fDate = a_c_spotdate;
+				AQLDate fDate = a_c_spotdate;
 
 				for (unsigned int j = 0; j < a_dates.size(); ++j)
 				{
@@ -2203,7 +2203,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			DoubleMatrix i_gridMat(dates.size());
 			DoubleMatrix i_termMat(dates.size());
 			DoubleMatrix b_yieldTimeMat(dates.size());
-			LADate fDate = c_spotdate;
+			AQLDate fDate = c_spotdate;
 			for (unsigned int j = 0; j < dates.size(); ++j)
 			{
 				
@@ -2243,7 +2243,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 					{
 						b_yieldTimeMat[j].resize(2);
 						b_yieldTimeMat[j][0] = j > 0 ? b_yieldTimeMat[j - 1][1] : 0.;
-						b_yieldTimeMat[j][1] = -LAMath::log(d_inter.value(terms_grid[j] + spotTerm) / d_spotdf);
+						b_yieldTimeMat[j][1] = -AQLMath::log(d_inter.value(terms_grid[j] + spotTerm) / d_spotdf);
 					}
 					else
 					{
@@ -2258,10 +2258,10 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 						for (unsigned int k = 1; k < i_gridVec.size(); ++k)
 						{
 							const double df = f_inter.value(i_gridVec[k]);
-							b_yieldTimeVec[k] = -LAMath::log(df / f_spotdf);
+							b_yieldTimeVec[k] = -AQLMath::log(df / f_spotdf);
 						}
 						const double df1 = f_inter.value(i_gridVec[0]);
-						b_yieldTimeVec[0] = -LAMath::log(df1 / f_spotdf) ;
+						b_yieldTimeVec[0] = -AQLMath::log(df1 / f_spotdf) ;
 					}
 					b_yieldTimeMat[j] = b_yieldTimeVec;
 				}
@@ -2279,7 +2279,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			datesVec[i] = dates;
 			dfsVec[i] = dfs;
 			grid_spread_time[(fwd_size - fwd_size_mm) + i] = terms_grid.back();
-			spread_timeVec[(fwd_size - fwd_size_mm) + i] = -LAMath::log(dfs.back());
+			spread_timeVec[(fwd_size - fwd_size_mm) + i] = -AQLMath::log(dfs.back());
 		}
 
 		if (!isDiscount)
@@ -2287,10 +2287,10 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			dh = &(data_[0]->getData(IR_CALIBRATION_DATA_SPOTRATETERM, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				const LAString &strTerm_s = dynamic_cast<const LADataString &>(dh->get()).get();
-				const LAString &strTerm  = dynamic_cast<const LADataString &>((data_[0]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-				LADate date_s = LAMathDateCalculations::getDate(asof, strTerm_s, true);
-				LADate date = LAMathDateCalculations::getDate(asof, strTerm, true);
+				const AQLString &strTerm_s = dynamic_cast<const AQLDataString &>(dh->get()).get();
+				const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_[0]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+				AQLDate date_s = LAMathDateCalculations::getDate(asof, strTerm_s, true);
+				AQLDate date = LAMathDateCalculations::getDate(asof, strTerm, true);
 				
 				if (date_s < date)
 				{
@@ -2315,10 +2315,10 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 						for (unsigned int k = 1; k < i_gridVec.size(); ++k)
 						{
 							const double df = f_inter.value(i_gridVec[k]);
-							b_yieldTimeVec[k] = -LAMath::log(df / f_spotdf);
+							b_yieldTimeVec[k] = -AQLMath::log(df / f_spotdf);
 						}
 						const double df1 = f_inter.value(i_gridVec[0]);
-						b_yieldTimeVec[0] = -LAMath::log(df1 / f_spotdf);
+						b_yieldTimeVec[0] = -AQLMath::log(df1 / f_spotdf);
 					}
 					
 					DoubleMatrix b_yieldTimeMat;
@@ -2328,7 +2328,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 					const double tau = tauVec.back().front();
 					const double df = d_inter.value(term + spotTerm) / d_spotdf;
 
-					const double spotRate = dynamic_cast<const LADataDouble &>(data_[0]->getData(IR_CALIBRATION_DATA_SPOTRATE, ISNOTNULL).get()).get();
+					const double spotRate = dynamic_cast<const AQLDataDouble &>(data_[0]->getData(IR_CALIBRATION_DATA_SPOTRATE, ISNOTNULL).get()).get();
 					const double targetPV = (1.0 + spotRate * tau) * df - 1.0;
 
 					i_gridMatVec.insert(i_gridMatVec.begin(), i_gridMat);
@@ -2341,7 +2341,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 					datesVec.insert(datesVec.begin(), DateVector(1, datesVec.back().front()));
 					dfsVec.insert(dfsVec.begin(),  DoubleArray(1, df));
 					grid_spread_time.insert(grid_spread_time.begin(),  term);
-					spread_timeVec.insert(spread_timeVec.begin(), isYieldSpreadCalc ? 0. : -LAMath::log(df));
+					spread_timeVec.insert(spread_timeVec.begin(), isYieldSpreadCalc ? 0. : -AQLMath::log(df));
 
 					spreadVec.insert(spreadVec.begin(), 0.0);
 					a_targetPVVec.insert(a_targetPVVec.begin(), targetPV);
@@ -2352,13 +2352,13 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 				{
 					if (gridVec[0].size() != 1)
 					{
-						throw LACoreInvalidData("basis first term, cashlet size must be one", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("basis first term, cashlet size must be one", __FILE__, __LINE__);
 					}
 					const double term = gridVec[0][0];
 					const double tau = tauVec[0][0];
 					const double df = d_inter.value(term + spotTerm) / d_spotdf;
 
-					const double spotRate = dynamic_cast<const LADataDouble &>(data_[0]->getData(IR_CALIBRATION_DATA_SPOTRATE, ISNOTNULL).get()).get();
+					const double spotRate = dynamic_cast<const AQLDataDouble &>(data_[0]->getData(IR_CALIBRATION_DATA_SPOTRATE, ISNOTNULL).get()).get();
 					const double targetPV = (1.0 + spotRate * tau) * df - 1.0;
 
 					if (isAgtSpread)
@@ -2371,7 +2371,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 
 						DoubleMatrix a_i_gridMat(a_dates.size());
 						DoubleMatrix a_i_termMat(a_dates.size());				
-						LADate fDate = a_c_spotdate;
+						AQLDate fDate = a_c_spotdate;
 
 						for (unsigned int i = 0; i < a_dates.size(); ++i)
 						{
@@ -2407,7 +2407,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 						int loopNum = MAX_LOOP;
 						while (loopNum--)
 						{
-							if (LAMath::abs(val0 - val1) < EPS_PV)
+							if (AQLMath::abs(val0 - val1) < EPS_PV)
 							{
 								break;
 							}
@@ -2430,14 +2430,14 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 						spreadVec[0] = spread;
 					}
 
-					dynamic_cast<LADataDouble &>(data_[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL).get()).set(spreadVec[0]);
+					dynamic_cast<AQLDataDouble &>(data_[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL).get()).set(spreadVec[0]);
 					data_[0]->remove(IR_CALIBRATION_DATA_SPOTRATE);
 					data_[0]->remove(IR_CALIBRATION_DATA_SPOTRATETERM);
 				}
 				else
 				{
-					LAString msg = "spotrateterm is after basis first term. spotrateterm = " + strTerm_s + ", basis first term = " + strTerm;
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "spotrateterm is after basis first term. spotrateterm = " + strTerm_s + ", basis first term = " + strTerm;
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 			}
 		}
@@ -2453,21 +2453,21 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		spread_time_inter.set(grid_spread_time, spread_timeVec);
 
 		//get convexity adjust interpolation
-		LAPriceDataInterpolation* adjust_inter = NULL;
+		AQLPriceDataInterpolation* adjust_inter = NULL;
 		if (isDiscount && isXccyMarkedToMarket)
 		{
 			dh = &(data_[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUETERM, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				const DoubleArray& adjustValue_term = dynamic_cast<const LADataDoubles&> (dh->get()).get();
+				const DoubleArray& adjustValue_term = dynamic_cast<const AQLDataDoubles&> (dh->get()).get();
 				const DoubleArray& adjustValue
-					= dynamic_cast<const LADataDoubles&> ((data_[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUE, ISNOTNULL)).get()).get();
-				adjust_inter = &(dynamic_cast<LAPriceDataInterpolation&> (data_[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, ISNOTNULL).get()));
+					= dynamic_cast<const AQLDataDoubles&> ((data_[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUE, ISNOTNULL)).get()).get();
+				adjust_inter = &(dynamic_cast<AQLPriceDataInterpolation&> (data_[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, ISNOTNULL).get()));
 				adjust_inter->set(adjustValue_term, adjustValue);
 			}
 		}
 
-		LAString OptimizationMethod = dynamic_cast<LADataString&>(mpOptimizeMethod->get()).get();
+		AQLString OptimizationMethod = dynamic_cast<AQLDataString&>(mpOptimizeMethod->get()).get();
 		OptimizationMethod.toUpper();
 
 		if (OptimizationMethod == NR)
@@ -2494,7 +2494,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			bool isEnd = true;
 			for (unsigned int i = 0; i < b_size; ++i)
 			{
-				if (LAMath::abs(targetValVec0[i] - targetValVec1[i]) >= EPS_PV)
+				if (AQLMath::abs(targetValVec0[i] - targetValVec1[i]) >= EPS_PV)
 				{
 					isEnd = false;
 					break;
@@ -2505,7 +2505,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 				break;
 			}
 
-			LAMatrix divMat(b_size, b_size);
+			AQLMatrix divMat(b_size, b_size);
 			// create divMat
 			for (unsigned int i = 0; i < b_size; ++i)
 			{
@@ -2520,16 +2520,16 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 				{
 					if (vals.size() != b_size )
 					{
-						throw LACoreInvalidData("size error!", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("size error!", __FILE__, __LINE__);
 					}
 					const double divVal = (vals[j] + targetValVec1[j]) / MIN_VAL;
 					divMat.setValue(j, i, divVal);
 				}
 			}
 
-			LAMatrix invMat = divMat.inverseMatrix();
-			LAMatrix valMat(targetValVec1);
-			LAMatrix deltaMat = invMat * valMat;
+			AQLMatrix invMat = divMat.inverseMatrix();
+			AQLMatrix valMat(targetValVec1);
+			AQLMatrix deltaMat = invMat * valMat;
 			// plus delta
 			for (unsigned int i = 0; i < b_size; ++i)
 			{
@@ -2547,9 +2547,9 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			for (unsigned int i = 0; i < b_size; ++i)
 			{
 				// check error is within 0.00001bp
-				if (LAMath::abs(targetValVec1[i]) > 1.0E-9)
+				if (AQLMath::abs(targetValVec1[i]) > 1.0E-9)
 				{
-					throw LACoreInvalidData("Convergence error in DF calc (Newton Raphson)", __FILE__, __LINE__); 
+					throw AQLCoreInvalidData("Convergence error in DF calc (Newton Raphson)", __FILE__, __LINE__); 
 				}
 			}
 		}
@@ -2603,7 +2603,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 
 			if (static_cast<unsigned int>(iter) == MAX_LOOP)
 			{
-				throw LACoreInvalidData("Convergence error in DF calc (NL2SOL)", __FILE__, __LINE__); 
+				throw AQLCoreInvalidData("Convergence error in DF calc (NL2SOL)", __FILE__, __LINE__); 
 			}
 
 			spread_timeVec.clear();
@@ -2614,11 +2614,11 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		}
 		else
 		{
-			LAString msg = LAString("Optimize method ") + OptimizationMethod + " is not supported.";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__); 
+			AQLString msg = AQLString("Optimize method ") + OptimizationMethod + " is not supported.";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__); 
 		}
 
-		LAPriceDataInterpolation *p_base_inter = 0;
+		AQLPriceDataInterpolation *p_base_inter = 0;
 		double b_spotdf = 1.0;
 		if (isDiscount)
 		{
@@ -2639,7 +2639,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 				int payment_pos = static_cast<int>(std::accumulate(cpd_timesVec.back().cbegin(), cpd_timesVec.back().cbegin() + i + 1, 0.)) - 1;
 				if (payment_pos >= gridVec.back().size())
 				{
-					throw LACoreInvalidData("coupon reset time is not consistent to fixing timing.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("coupon reset time is not consistent to fixing timing.", __FILE__, __LINE__);
 				}
 				terms_mod.push_back(gridVec.back()[payment_pos]);
 			}
@@ -2650,13 +2650,13 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		}
 		if (terms_mod.empty())
 		{
-			throw LACoreInvalidData("term is empty", __FILE__, __LINE__); 
+			throw AQLCoreInvalidData("term is empty", __FILE__, __LINE__); 
 		}
 
 		DoubleArray terms_mod_fwdmatend = terms_mod;
 		for (unsigned int i = 0; i < data_.size(); ++i)
 		{
-			const LAString &strTerm = dynamic_cast<const LADataString &>((data_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			const AQLString &strTerm = dynamic_cast<const AQLDataString &>((data_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			// set isOddTerm
 			int y_Term, m_Term, d_Term, w_Term;
 			LAMathDateCalculations::termStrtoYMDW(strTerm, y_Term, m_Term, d_Term, w_Term);
@@ -2668,8 +2668,8 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			if (isOddTermFRNIndex && !isDiscount)
 			{
 				int strTerm_int = 12 * y_Term + m_Term + mUnit;
-				LAString strTerm_add(strTerm_int);
-				strTerm_add += LAString("M");
+				AQLString strTerm_add(strTerm_int);
+				strTerm_add += AQLString("M");
 
 				DateVector dates;
 				DoubleArray terms_grid;
@@ -2691,8 +2691,8 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			else if (isDiscount)
 			{
 				int strTerm_int = 12 * y_Term + m_Term;
-				LAString strTerm_add(strTerm_int);
-				strTerm_add += LAString("M");
+				AQLString strTerm_add(strTerm_int);
+				strTerm_add += AQLString("M");
 
 				DateVector dates;
 				DoubleArray terms_grid;
@@ -2719,15 +2719,15 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 			for (unsigned int i = 0; i < terms_mod.size(); ++i)
 			{
 				const double y_spread_time = spread_time_inter.value(terms_mod[i]);
-				const double b_spread_time = -LAMath::log(p_base_inter->value(terms_mod[i] + spotTerm) / b_spotdf);
-				dfs[i] = LAMath::exp(-(b_spread_time + y_spread_time));
+				const double b_spread_time = -AQLMath::log(p_base_inter->value(terms_mod[i] + spotTerm) / b_spotdf);
+				dfs[i] = AQLMath::exp(-(b_spread_time + y_spread_time));
 			}
 		}
 		else
 		{
 			for (unsigned int i = 0; i < terms_mod.size(); ++i)
 			{
-				dfs[i] = LAMath::exp(-spread_time_inter.value(terms_mod[i]));
+				dfs[i] = AQLMath::exp(-spread_time_inter.value(terms_mod[i]));
 			}
 		}
 
@@ -2747,25 +2747,25 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 				}
 				else if (isYieldSpreadCalc)
 				{
-					spotdf = LAMath::exp((-spread_timeVec[1] / grid_spread_time[1]) * spotTerm) * b_spotdf;
+					spotdf = AQLMath::exp((-spread_timeVec[1] / grid_spread_time[1]) * spotTerm) * b_spotdf;
 				}
 				else
 				{
-					spotdf = LAMath::exp((-spread_timeVec[1] / grid_spread_time[1]) * spotTerm);
+					spotdf = AQLMath::exp((-spread_timeVec[1] / grid_spread_time[1]) * spotTerm);
 				}
-				yield_spot = -LAMath::log(spotdf) / spotTerm;
+				yield_spot = -AQLMath::log(spotdf) / spotTerm;
 			}
 			else
 			{
-				LAPriceDataInterpolation tmp_inter = *p_base_inter;
+				AQLPriceDataInterpolation tmp_inter = *p_base_inter;
 				DoubleArray tmp_yields(dfs.size());
 				for (unsigned int i = 0; i < terms_mod.size(); ++i)
 				{
-					tmp_yields[i] = -LAMath::log(dfs[i]) / terms_mod[i];
+					tmp_yields[i] = -AQLMath::log(dfs[i]) / terms_mod[i];
 				}
 				tmp_inter.set(terms_mod, tmp_yields);
 				yield_spot = tmp_inter.value(spotTerm);
-				spotdf = LAMath::exp(-yield_spot * spotTerm);
+				spotdf = AQLMath::exp(-yield_spot * spotTerm);
 			}
 			
 			for (unsigned int i = 0; i < terms_mod.size(); ++i)
@@ -2773,7 +2773,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 				terms_mod[i] += spotTerm;
 				terms_mod_fwdmatend[i] += spotTerm;
 				dfs[i] *= spotdf;
-				yield_mod[i] =  -LAMath::log(dfs[i]) / terms_mod[i];
+				yield_mod[i] =  -AQLMath::log(dfs[i]) / terms_mod[i];
 			}
 			
 			// insert short term curve		
@@ -2786,7 +2786,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 						terms_mod.insert(terms_mod.begin(), fwd_terms[i]);
 						terms_mod_fwdmatend.insert(terms_mod_fwdmatend.begin(), fwd_terms[i]);
 						dfs.insert(dfs.begin(), fwd_dfs[i]);
-						yield_mod.insert(yield_mod.begin(), -LAMath::log(fwd_dfs[i]) / fwd_terms[i]);
+						yield_mod.insert(yield_mod.begin(), -AQLMath::log(fwd_dfs[i]) / fwd_terms[i]);
 					}
 				}*/
 
@@ -2801,7 +2801,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 								terms_mod.insert(terms_mod.begin(), fwd_terms[i]);
 								terms_mod_fwdmatend.insert(terms_mod_fwdmatend.begin(), fwd_terms[i]);
 								dfs.insert(dfs.begin(), fwd_dfs[i]);
-								yield_mod.insert(yield_mod.begin(), -LAMath::log(fwd_dfs[i]) / fwd_terms[i]);
+								yield_mod.insert(yield_mod.begin(), -AQLMath::log(fwd_dfs[i]) / fwd_terms[i]);
 								break;
 							}
 						}
@@ -2812,7 +2812,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 								terms_mod.insert(terms_mod.begin() + k, fwd_terms[i]);
 								terms_mod_fwdmatend.insert(terms_mod_fwdmatend.begin() + k, fwd_terms[i]);
 								dfs.insert(dfs.begin() + k, fwd_dfs[i]);
-								yield_mod.insert(yield_mod.begin() + k, -LAMath::log(fwd_dfs[i]) / fwd_terms[i]);
+								yield_mod.insert(yield_mod.begin() + k, -AQLMath::log(fwd_dfs[i]) / fwd_terms[i]);
 								break;
 							}
 						}
@@ -2831,7 +2831,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 		{
 			for (unsigned int i = 0; i < terms_mod.size(); ++i)
 			{
-				yield_mod[i] =  -LAMath::log(dfs[i]) / terms_mod[i];
+				yield_mod[i] =  -AQLMath::log(dfs[i]) / terms_mod[i];
 			}
 		}
 
@@ -2873,7 +2873,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	}
 	else
 	{
-		throw LACoreInvalidData("We support Simultaneous-Equation method only.", __FILE__, __LINE__); 
+		throw AQLCoreInvalidData("We support Simultaneous-Equation method only.", __FILE__, __LINE__); 
 	}
 	//{
 	//	double sum1 = 0.0;
@@ -2893,28 +2893,28 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//	}
 
 	//	if (!yieldData.getData(CALIBRATION_DATA_TERMS).isDefined())
-	//		throw LACoreInvalidData("terms error", __FILE__,__LINE__);
-	//	const DoubleArray &terms = dynamic_cast<const LADataDoubles &>((yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
+	//		throw AQLCoreInvalidData("terms error", __FILE__,__LINE__);
+	//	const DoubleArray &terms = dynamic_cast<const AQLDataDoubles &>((yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
 	//	// maxterm for calc
 	//	const double tmax = terms.back();
 
 	//	// get interpolation method
-	//	LAPriceDataInterpolation &b_inter = getInterpolation_bs();
+	//	AQLPriceDataInterpolation &b_inter = getInterpolation_bs();
 	//	DoubleArray b_t_grid(1, 0.0);
 	//	DoubleArray b_termstruct_grid(1, 0.0);
 	//	for (unsigned int i = 0; i < data_.size(); i++)
 	//	{
-	//		const LAString &strTerm  = dynamic_cast<const LADataString &>((data_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-	//		double rate = dynamic_cast<const LADataDouble &>((data_[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+	//		const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+	//		double rate = dynamic_cast<const AQLDataDouble &>((data_[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 	//		double term = 0.0;
 	//		if (isAgtSpread)
 	//		{
-	//			LADate tmpDate = LAMathDateCalculations::getDate(a_c_spotdate, strTerm, a_c_sld, &a_c_cal, true, &a_c_roll_conv);
+	//			AQLDate tmpDate = LAMathDateCalculations::getDate(a_c_spotdate, strTerm, a_c_sld, &a_c_cal, true, &a_c_roll_conv);
 	//			term = a_c_dc.getTerm(a_c_spotdate, tmpDate);
 	//		}
 	//		else
 	//		{
-	//			LADate tmpDate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &c_roll_conv);
+	//			AQLDate tmpDate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &c_roll_conv);
 	//			term = c_dc.getTerm(c_spotdate, tmpDate);
 	//		}
 
@@ -2938,7 +2938,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//		{
 	//			break;
 	//		}
-	//		LAString strTerm = LAString(static_cast<int>(mUnit * (i - 1))) + LAString("M");
+	//		AQLString strTerm = AQLString(static_cast<int>(mUnit * (i - 1))) + AQLString("M");
 	//
 	//		double target_pv = 1.0;
 	//		if (a_fCurve != DUMMY)
@@ -2946,8 +2946,8 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//			double spread = 0.0;
 	//			if (isAgtSpread)
 	//			{
-	//				LAString a_dfstrTerm = LAString(static_cast<int>(mUnit * (i - 1) + a_mUnit * a_step)) + LAString("M");
-	//				LADate a_dfdate = LAMathDateCalculations::getDate(a_c_spotdate, a_dfstrTerm, a_c_sld, &a_c_cal, true);
+	//				AQLString a_dfstrTerm = AQLString(static_cast<int>(mUnit * (i - 1) + a_mUnit * a_step)) + AQLString("M");
+	//				AQLDate a_dfdate = LAMathDateCalculations::getDate(a_c_spotdate, a_dfstrTerm, a_c_sld, &a_c_cal, true);
 	//				const double s_lterm_ = c_dc.getTerm(a_c_spotdate, a_dfdate);
 	//				if (isTimeInter)
 	//				{
@@ -2959,14 +2959,14 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//				}				
 	//			}
 	//
-	//			LADate a_fdate = LAMathDateCalculations::getDate(a_c_spotdate, strTerm, a_c_sld, &a_c_cal, true);
-	//			LADate a_ldate;
+	//			AQLDate a_fdate = LAMathDateCalculations::getDate(a_c_spotdate, strTerm, a_c_sld, &a_c_cal, true);
+	//			AQLDate a_ldate;
 	//			double a_lterm = 0.0;
 	//			double a_d_df = 1.0;
 	//			for (unsigned int j = 0; j < a_step; ++j)
 	//			{
 	//				// calc cash flow
-	//				LAString a_strTerm_ = LAString(static_cast<int>(mUnit * (i - 1) + a_mUnit * (j + 1))) + LAString("M");
+	//				AQLString a_strTerm_ = AQLString(static_cast<int>(mUnit * (i - 1) + a_mUnit * (j + 1))) + AQLString("M");
 	//				a_ldate = LAMathDateCalculations::getDate(a_c_spotdate, a_strTerm_, a_c_sld, &a_c_cal, true);
 	//				const double a_delta = a_c_dc.getTerm(a_fdate, a_ldate);
 	//				a_lterm = dc_act.getTerm(asof, a_ldate);
@@ -3012,13 +3012,13 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//		{
 	//			fdate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true);
 	//		}
-	//		LADate ldate;		
+	//		AQLDate ldate;		
 	//		double val0 = 0.0;
 	//		// for discount df
 	//		if (isDiscount)
 	//		{
-	//			LAString dfstrTerm = LAString(static_cast<int>(mUnit * (i - 1) + mUnit * step)) + LAString("M");
-	//			LADate dfdate;
+	//			AQLString dfstrTerm = AQLString(static_cast<int>(mUnit * (i - 1) + mUnit * step)) + AQLString("M");
+	//			AQLDate dfdate;
 	//			if (c_spotdate < a_c_spotdate)
 	//			{
 	//				dfdate = LAMathDateCalculations::getDate(a_c_spotdate, dfstrTerm, c_sld, &c_cal, true);
@@ -3034,7 +3034,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//			double spread = 0.0;
 	//			if (!isAgtSpread)
 	//			{
-	//				LADate dfdate_ = LAMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true);
+	//				AQLDate dfdate_ = LAMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true);
 	//				const double s_lterm_ = c_dc.getTerm(c_spotdate, dfdate_);
 	//				if (isTimeInter && s_lterm_ != 0.0)
 	//				{
@@ -3096,7 +3096,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//				}
 	//
 	//				// calc cash flow
-	//				LAString strTerm_ = LAString(static_cast<int>(mUnit * (i - 1) + mUnit * (j + 1))) + LAString("M");
+	//				AQLString strTerm_ = AQLString(static_cast<int>(mUnit * (i - 1) + mUnit * (j + 1))) + AQLString("M");
 	//				if (c_spotdate < a_c_spotdate)
 	//				{
 	//					ldate = LAMathDateCalculations::getDate(a_c_spotdate, strTerm_, c_sld, &c_cal, true);
@@ -3164,7 +3164,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//			unsigned int loopNum = MAX_LOOP;
 	//			while (loopNum--)
 	//			{
-	//				if (LAMath::abs(val0 - val1) < EPS_PV)
+	//				if (AQLMath::abs(val0 - val1) < EPS_PV)
 	//				{
 	//					break;
 	//				}
@@ -3193,7 +3193,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//			}
 	//			if (loopNum < 0)
 	//			{
-	//				throw LACoreInvalidData("Convergence error in Basis calc (Newton Raphson)", __FILE__, __LINE__); 
+	//				throw AQLCoreInvalidData("Convergence error in Basis calc (Newton Raphson)", __FILE__, __LINE__); 
 	//			}
 	//			for (unsigned int j = 0; j < step; ++j)
 	//			{
@@ -3214,15 +3214,15 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//		}
 	//		else
 	//		{
-	//			LALinearInterpolation tmpInter;
+	//			AQLLinearInterpolation tmpInter;
 	//			DoubleVector delta_dfVec;
 	//			double d_ldf = 1.0;
 	//			DoubleMatrix i_gridMtx;
 	//			DoubleMatrix i_termMtx;
 	//			DoubleMatrix alphaMtx;
 	//
-	//			LAString dfstrTerm = LAString(static_cast<int>(mUnit * (i - 1) + mUnit * (step - 1))) + LAString("M");
-	//			LADate dfdate = LAMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true);
+	//			AQLString dfstrTerm = AQLString(static_cast<int>(mUnit * (i - 1) + mUnit * (step - 1))) + AQLString("M");
+	//			AQLDate dfdate = LAMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true);
 	//
 	//			DoubleVector tmp_termVec;
 	//			DoubleVector tmp_gridVec;
@@ -3238,8 +3238,8 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//			double spread = 0.0;
 	//			if (!isAgtSpread)
 	//			{
-	//				LAString dfstrTerm_ = LAString(static_cast<int>(mUnit * (i - 1) + mUnit * step)) + LAString("M");
-	//				LADate dfdate_ = LAMathDateCalculations::getDate(c_spotdate, dfstrTerm_, c_sld, &c_cal, true);
+	//				AQLString dfstrTerm_ = AQLString(static_cast<int>(mUnit * (i - 1) + mUnit * step)) + AQLString("M");
+	//				AQLDate dfdate_ = LAMathDateCalculations::getDate(c_spotdate, dfstrTerm_, c_sld, &c_cal, true);
 	//				const double s_lterm_ = c_dc.getTerm(c_spotdate, dfdate_);
 	//				if (isTimeInter && s_lterm_ != 0.0)
 	//				{
@@ -3255,7 +3255,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//			for (unsigned int j = 0; j < step; ++j)
 	//			{	
 	//				// calc cash flow
-	//				LAString strTerm_ = LAString(static_cast<int>(mUnit * (i - 1) + mUnit * (j + 1))) + LAString("M");
+	//				AQLString strTerm_ = AQLString(static_cast<int>(mUnit * (i - 1) + mUnit * (j + 1))) + AQLString("M");
 	//				ldate = LAMathDateCalculations::getDate(c_spotdate, strTerm_, c_sld, &c_cal, true);
 	//				//analytic for CalcDatesForDVZero
 	//				dvzeroDates.push_back(ldate);
@@ -3326,7 +3326,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//			unsigned int loopNum = MAX_LOOP;
 	//			while (loopNum--)
 	//			{
-	//				if (LAMath::abs(val0 - val1) < EPS_PV)
+	//				if (AQLMath::abs(val0 - val1) < EPS_PV)
 	//				{
 	//					break;
 	//				}
@@ -3357,7 +3357,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//			}
 	//			if (loopNum < 0)
 	//			{
-	//				throw LACoreInvalidData("Convergence error in Basis calc (Newton Raphson)", __FILE__, __LINE__); 
+	//				throw AQLCoreInvalidData("Convergence error in Basis calc (Newton Raphson)", __FILE__, __LINE__); 
 	//			}
 	//			// set forecast df map
 	//			map<double, double> f_dfmap;
@@ -3392,9 +3392,9 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//	double firstTerm = 0.0;
 	//	if (isDiscount)
 	//	{
-	//		const double f_yield = -LAMath::log(df_mod[1]) / b_t[1];
-	//		f_yieldSpread = f_yield - (-LAMath::log(d_inter.value(b_t[1] + spotTerm) / d_spotdf) / b_t[1]);
-	//		const double d_spotdf_ = LAMath::exp(-f_yieldSpread * spotTerm) * d_spotdf;
+	//		const double f_yield = -AQLMath::log(df_mod[1]) / b_t[1];
+	//		f_yieldSpread = f_yield - (-AQLMath::log(d_inter.value(b_t[1] + spotTerm) / d_spotdf) / b_t[1]);
+	//		const double d_spotdf_ = AQLMath::exp(-f_yieldSpread * spotTerm) * d_spotdf;
 	//		firstTerm = spotTerm + b_t[1];
 	//		if (spotTerm != 0.0)
 	//		{
@@ -3413,13 +3413,13 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//	}
 	//	else
 	//	{
-	//		const double f_yield = -LAMath::log(df_mod[1]) / b_t[1];
-	//		f_yieldSpread = f_yield - (-LAMath::log(f_inter.value(b_t[1])) / b_t[1]);
+	//		const double f_yield = -AQLMath::log(df_mod[1]) / b_t[1];
+	//		f_yieldSpread = f_yield - (-AQLMath::log(f_inter.value(b_t[1])) / b_t[1]);
 	//		firstTerm = b_t[1];
 	//		b_t_2 = b_t;
 	//		df_mod_2 = df_mod;
 	//	}
-	//	LAPriceDataInterpolation *p_base_inter = 0;
+	//	AQLPriceDataInterpolation *p_base_inter = 0;
 	//	if (isDiscount)
 	//	{
 	//		p_base_inter = &d_inter;
@@ -3433,16 +3433,16 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//	DoubleArray yieldSpread(p_time.size());
 	//	for (unsigned int i = 1; i < p_time.size(); ++i)
 	//	{
-	//		const double yield = -LAMath::log(b_inter.value(p_time[i])) / p_time[i];
-	//		yieldSpread[i] = yield - (-LAMath::log(p_base_inter->value(p_time[i])) / p_time[i]);
+	//		const double yield = -AQLMath::log(b_inter.value(p_time[i])) / p_time[i];
+	//		yieldSpread[i] = yield - (-AQLMath::log(p_base_inter->value(p_time[i])) / p_time[i]);
 	//	}
 	//	// merge term
 	//	if (dvzeroDates.empty())
 	//	{
-	//		throw LACoreInvalidData("dvzeroDates is empty", __FILE__, __LINE__);
+	//		throw AQLCoreInvalidData("dvzeroDates is empty", __FILE__, __LINE__);
 	//	}
-	//	const LADate &firstDate = dvzeroDates[0];
-	//	LADate shortDate = firstDate; 
+	//	const AQLDate &firstDate = dvzeroDates[0];
+	//	AQLDate shortDate = firstDate; 
 	//	shortDate.addDays(-10);// 10days before first date
 	//	const double shortTerm = firstTerm + dc_act.getTerm(firstDate, shortDate);
 	//	DoubleArray tmp(1, 0.0);
@@ -3455,7 +3455,7 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//		tmp.push_back(_terms[i]);
 	//	}
 	//	unsigned int f_pos;
-	//	LAAlgorithm::locate<DoubleVector, double>(b_t_2, tmp.back(), b_t_2.size(), f_pos);
+	//	AQLAlgorithm::locate<DoubleVector, double>(b_t_2, tmp.back(), b_t_2.size(), f_pos);
 	//	const double EPS_TERM = 1.0E-4;
 	//	if (b_t_2[f_pos] - tmp.back() < EPS_TERM)
 	//	{
@@ -3465,14 +3465,14 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//	_terms = tmp;
 	//	// calc yield
 	//	yield_mod.resize(_terms.size(), 0.0);
-	//	LAPriceDataInterpolation tmp_inter = b_inter;
+	//	AQLPriceDataInterpolation tmp_inter = b_inter;
 	//	tmp_inter.set(p_time, yieldSpread);
 	//	for (unsigned int i = 1; i < _terms.size(); i++)
 	//	{
 	//		if (f_yieldSpread != 0.0 && _terms[i] < firstTerm)
 	//		{
 	//			double df = p_base_inter->value(_terms[i]);
-	//			yield_mod[i] = -LAMath::log(df) / _terms[i];
+	//			yield_mod[i] = -AQLMath::log(df) / _terms[i];
 	//			yield_mod[i] += f_yieldSpread;
 	//		}
 	//		else
@@ -3480,9 +3480,9 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	//			const double df = p_base_inter->value(_terms[i]);
 	//			if (df <= 0.0)
 	//			{
-	//				throw LACoreInvalidData("Df is below zero.", __FILE__, __LINE__);
+	//				throw AQLCoreInvalidData("Df is below zero.", __FILE__, __LINE__);
 	//			}
-	//			const double yield =  -LAMath::log(df) / _terms[i];
+	//			const double yield =  -AQLMath::log(df) / _terms[i];
 	//			const double y_spread = tmp_inter.value(_terms[i]);
 	//			yield_mod[i] = yield + y_spread;
 	//		}
@@ -3493,11 +3493,11 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	// delete artificial market data
 	for (unsigned int i = 0; i < data_addtional.size(); ++i)
 	{
-		const LAString& term_additional = dynamic_cast<LADataString&>(data_addtional[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get());
-		std::vector<LAObject*>::iterator itr = data_.begin();
+		const AQLString& term_additional = dynamic_cast<AQLDataString&>(data_addtional[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get());
+		std::vector<AQLObject*>::iterator itr = data_.begin();
 		while (itr != data_.end())
 		{
-			const LAString& term = dynamic_cast<LADataString&>((*itr)->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get());
+			const AQLString& term = dynamic_cast<AQLDataString&>((*itr)->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL).get());
 			if(term == term_additional)
 			{
 				itr = data_.erase(itr);
@@ -3514,29 +3514,29 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 	DoubleArray dfs_mod(_terms.size(), 0.0);
 	for (unsigned int i = 0; i < yield_mod.size(); i++)
 	{
-		dfs_mod[i] = LAMath::exp(-_terms[i] * yield_mod[i]);
+		dfs_mod[i] = AQLMath::exp(-_terms[i] * yield_mod[i]);
 	}
 
 	DoubleArray::const_iterator min_it = min_element(_terms.begin(), _terms.end());
 	if (!_terms.empty() && *min_it < 0.0)
 	{
-		LAString msg = curveType + " terms, term must be positive.";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = curveType + " terms, term must be positive.";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	min_it = min_element(termsmtx_fwd[0].begin(), termsmtx_fwd[0].end());
 	if (!termsmtx_fwd[0].empty() && *min_it < 0.0)
 	{
-		LAString msg = curveType + " terms_fwd, term must be positive.";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = curveType + " terms_fwd, term must be positive.";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	//for (unsigned int i = 0; i < data_.size(); i++)
 	//{
 	//	DateVector ret;
 
-	//	const LAString &strTerm  = dynamic_cast<const LADataString &>((data_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+	//	const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 	//	if (strTerm == "ON" || strTerm == "TN") continue;
-	//	LADate matudate;
+	//	AQLDate matudate;
 	//	if (isDiscount || isSimuEq)
 	//	{
 	//		if (c_spotdate < a_c_spotdate && !isSameGridIndex)
@@ -3558,23 +3558,23 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 
 	//	//find dvzeroDates
 	//	unsigned int pos=0;
-	//	if (!LAAlgorithm::find<DateVector,LADate>(dvzeroDates,matudate,0,dvzeroDates.size()-1 ,pos))
+	//	if (!AQLAlgorithm::find<DateVector,AQLDate>(dvzeroDates,matudate,0,dvzeroDates.size()-1 ,pos))
 	//	{
 	//		//this means basis grid e.x. 100y is longer than DF1 max grid, which ofcourse can not be calculated.
 	//		if (matudate > dvzeroDates.back())
 	//			continue;
 	//		else
-	//			throw LACoreInvalidData("BasisGrid Search Error",__FILE__,__LINE__);
+	//			throw AQLCoreInvalidData("BasisGrid Search Error",__FILE__,__LINE__);
 	//	}
 
 	//	ret.insert(ret.end(),dvzeroDates.begin(),dvzeroDates.begin()+pos+1);
 	//	if(!data_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO,NOCHECK).isDefined())
 	//	{
-	//		data_[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new LADataDates(ret));
+	//		data_[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new AQLDataDates(ret));
 	//	}
 	//	else
 	//	{
-	//		dynamic_cast<LADataDates&>(data_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(ret);
+	//		dynamic_cast<AQLDataDates&>(data_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(ret);
 	//	}
 	//}
 
@@ -3589,10 +3589,10 @@ LAMathYieldCurvePro::setBasisRates(const LAString &curveType)
 void
 LAMathYieldCurvePro::calcFwdFXConstantCurve(void)
 {
-	LAString curveType;
-	for (std::map<LAString, LAString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); ++it)
+	AQLString curveType;
+	for (std::map<AQLString, AQLString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); ++it)
 	{
-		LAString market = it->second;
+		AQLString market = it->second;
 		if (market.toUpper() == FWDFXCONST)
 		{
 			curveType = it->first;
@@ -3601,10 +3601,10 @@ LAMathYieldCurvePro::calcFwdFXConstantCurve(void)
 	}
 	if (curveType.size() > 0)
 	{
-		const LADataHolder *dh;
+		const AQLDataHolder *dh;
 		bool isCheckCurves = false;
 		dh = &getData(IR_CALIBRATION_DATA_ISCURVEEXISTCHECK, NOCHECK);
-		if (dh->isDefined() && !dh->isNull()) isCheckCurves = dynamic_cast<const LADataBool &>(dh->get()).get();
+		if (dh->isDefined() && !dh->isNull()) isCheckCurves = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		bool isCurveAttrExist = checkCurveAttr(FWDFXCONST);
 		if (!isCheckCurves || !isCurveAttrExist)
 		{
@@ -3618,18 +3618,18 @@ LAMathYieldCurvePro::calcFwdFXConstantCurve(void)
 
 */
 void
-LAMathYieldCurvePro::calcFwdFXConstantCurve(const LAString &curveType)
+LAMathYieldCurvePro::calcFwdFXConstantCurve(const AQLString &curveType)
 {
 	// get yield data
-	LAObject &yData = getYieldData().get().get(); 
-	LAObject &colYData = getColYieldData().get().get();
+	AQLObject &yData = getYieldData().get().get(); 
+	AQLObject &colYData = getColYieldData().get().get();
 	// get market data
-	const LAString& market = mAssignedCurveMktMap[curveType];
-	LAObjectHolder& mktData = getMarketDataRef(market).get(0);
+	const AQLString& market = mAssignedCurveMktMap[curveType];
+	AQLObjectHolder& mktData = getMarketDataRef(market).get(0);
 
 	// get forecast curve
-	const LAString &fCurve = dynamic_cast<const LADataString &>(mktData.getData(IR_CALIBRATION_DATA_FORECAST).get()).get();
-	LAPriceDataInterpolation f_inter = dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
+	const AQLString &fCurve = dynamic_cast<const AQLDataString &>(mktData.getData(IR_CALIBRATION_DATA_FORECAST).get()).get();
+	AQLPriceDataInterpolation f_inter = dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
 	if (f_inter.isHybrid())
 	{
 		double linearSplineJoinDateAsDouble = 0.;
@@ -3637,8 +3637,8 @@ LAMathYieldCurvePro::calcFwdFXConstantCurve(const LAString &curveType)
 	}
 	setCurveInterpolation(fCurve, yData, f_inter);
 	// get against forecast curve
-	const LAString &a_fCurve = dynamic_cast<const LADataString &>(mktData.getData(IR_CALIBRATION_DATA_AGTFORECAST).get()).get();
-	LAPriceDataInterpolation a_f_inter = dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
+	const AQLString &a_fCurve = dynamic_cast<const AQLDataString &>(mktData.getData(IR_CALIBRATION_DATA_AGTFORECAST).get()).get();
+	AQLPriceDataInterpolation a_f_inter = dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
 	if (a_f_inter.isHybrid() )
 	{
 		double linearSplineJoinDateAsDouble = 0.;
@@ -3646,8 +3646,8 @@ LAMathYieldCurvePro::calcFwdFXConstantCurve(const LAString &curveType)
 	}
 	setCurveInterpolation(a_fCurve, colYData, a_f_inter);
 	// get against discount curve
-	const LAString &a_dCurve = dynamic_cast<const LADataString &>(mktData.getData(IR_CALIBRATION_DATA_AGTDISCOUNT).get()).get();
-	LAPriceDataInterpolation a_d_inter = dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
+	const AQLString &a_dCurve = dynamic_cast<const AQLDataString &>(mktData.getData(IR_CALIBRATION_DATA_AGTDISCOUNT).get()).get();
+	AQLPriceDataInterpolation a_d_inter = dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
 	if (a_d_inter.isHybrid())
 	{
 		double linearSplineJoinDateAsDouble = 0.;
@@ -3656,9 +3656,9 @@ LAMathYieldCurvePro::calcFwdFXConstantCurve(const LAString &curveType)
 	setCurveInterpolation(a_dCurve, colYData, a_d_inter);
 
 	// calc discount curve
-	const LAString &dCurve = dynamic_cast<const LADataString &>(mktData.getData(IR_CALIBRATION_DATA_DISCOUNT).get()).get();
-	const LAString &suffix = dCurve == STD ? LAString("") : LAString("_") + dCurve;
-	const DoubleArray &_terms = dynamic_cast<const LADataDoubles&> ((yData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
+	const AQLString &dCurve = dynamic_cast<const AQLDataString &>(mktData.getData(IR_CALIBRATION_DATA_DISCOUNT).get()).get();
+	const AQLString &suffix = dCurve == STD ? AQLString("") : AQLString("_") + dCurve;
+	const DoubleArray &_terms = dynamic_cast<const AQLDataDoubles&> ((yData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
 	DoubleVector _dfs(_terms.size());
 	for (unsigned int i = 0; i < _terms.size(); ++i)
 	{
@@ -3666,18 +3666,18 @@ LAMathYieldCurvePro::calcFwdFXConstantCurve(const LAString &curveType)
 	}
 
 	// save curves
-	LAObjectHolder &objHolder = getYieldData().get();
-	for (map<LAString, LAString>::const_iterator it = getAssignedCurveMktMap().begin(); it != getAssignedCurveMktMap().end(); ++it)
+	AQLObjectHolder &objHolder = getYieldData().get();
+	for (map<AQLString, AQLString>::const_iterator it = getAssignedCurveMktMap().begin(); it != getAssignedCurveMktMap().end(); ++it)
 	{
 		if (it->second == market)
 		{
-			const LAString& curveName = it->first;
-			const LAString suffix = "_" + curveName;
+			const AQLString& curveName = it->first;
+			const AQLString suffix = "_" + curveName;
 			// set result
 			objHolder.remove(CALIBRATION_DATA_TERMS + suffix);
 			objHolder.remove(IR_CALIBRATION_DATA_DFS + suffix);
-			objHolder.add(CALIBRATION_DATA_TERMS + suffix, new LADataDoubles(_terms));
-			objHolder.add(IR_CALIBRATION_DATA_DFS + suffix, new LADataDoubles(_dfs));
+			objHolder.add(CALIBRATION_DATA_TERMS + suffix, new AQLDataDoubles(_terms));
+			objHolder.add(IR_CALIBRATION_DATA_DFS + suffix, new AQLDataDoubles(_dfs));
 
 			//mBCurveGenMap[curveName] = true;
 			mGCurveGenMap[curveName] = true;
@@ -3685,7 +3685,7 @@ LAMathYieldCurvePro::calcFwdFXConstantCurve(const LAString &curveType)
 	}
 
 	// set df2
-	LADataHolder* dh = &getData(IR_CALIBRATION_DATA_MAINBASISDF, NOCHECK);
+	AQLDataHolder* dh = &getData(IR_CALIBRATION_DATA_MAINBASISDF, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
 		setDF2();
@@ -3697,28 +3697,28 @@ LAMathYieldCurvePro::calcFwdFXConstantCurve(const LAString &curveType)
 
 	@param[in] market name
 */
-const LADataMultiReference&
-LAMathYieldCurvePro::getMarketDataRef(const LAString& mktName) const
+const AQLDataMultiReference&
+LAMathYieldCurvePro::getMarketDataRef(const AQLString& mktName) const
 {
-	LAString suffix;
-	LAStringVector tmpMktNames = mktName.toToken('_');
+	AQLString suffix;
+	AQLStringVector tmpMktNames = mktName.toToken('_');
 	if (tmpMktNames.size() == 2)
 	{
-		const LAObjectHolder &eh_fy = getForeignYieldData().get();
+		const AQLObjectHolder &eh_fy = getForeignYieldData().get();
 		if(!eh_fy.isDefined())
 		{
-			throw LACoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__); 
+			throw AQLCoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__); 
 		}
 		else
 		{
 			suffix = "_" +tmpMktNames[1];
-			return dynamic_cast<const LADataMultiReference&>(eh_fy.get().getData(CALIBRATION_DATA_MARKETDATA + suffix, ISNOTNULL).get());
+			return dynamic_cast<const AQLDataMultiReference&>(eh_fy.get().getData(CALIBRATION_DATA_MARKETDATA + suffix, ISNOTNULL).get());
 		}
 	}
 	else
 	{
 		suffix = "_" +tmpMktNames[0];
-		return dynamic_cast<const LADataMultiReference&>(getData(CALIBRATION_DATA_MARKETDATA + suffix, ISNOTNULL).get());
+		return dynamic_cast<const AQLDataMultiReference&>(getData(CALIBRATION_DATA_MARKETDATA + suffix, ISNOTNULL).get());
 	}
 }
 
@@ -3732,42 +3732,42 @@ LAMathYieldCurvePro::getMarketDataRef(const LAString& mktName) const
 	@param[out] data
 */
 void
-LAMathYieldCurvePro::saveBasisCurve(const LAString& curveType, const DoubleArray& terms, const DoubleMatrix& termsmtx_fwd, const DoubleArray& dfs, std::vector<LAObject*>& data)
+LAMathYieldCurvePro::saveBasisCurve(const AQLString& curveType, const DoubleArray& terms, const DoubleMatrix& termsmtx_fwd, const DoubleArray& dfs, std::vector<AQLObject*>& data)
 {
-	LAObjectHolder &objHolder = getYieldData().get();
-	for (std::map<LAString, LAString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
+	AQLObjectHolder &objHolder = getYieldData().get();
+	for (std::map<AQLString, AQLString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
 	{
 		if (it->second == mAssignedCurveMktMap[curveType])
 		{
-			const LAString& curveName = it->first;
-			LAString suffix = "_" + curveName;
+			const AQLString& curveName = it->first;
+			AQLString suffix = "_" + curveName;
 			// set result
 			objHolder.remove(CALIBRATION_DATA_TERMS + suffix);
 			objHolder.remove(CALIBRATION_DATA_FWDTERMSMATRIX + suffix);
 			objHolder.remove(IR_CALIBRATION_DATA_DFS + suffix);
-			objHolder.add(CALIBRATION_DATA_TERMS + suffix, new LADataDoubles(terms));
-			objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX + suffix, new LADataDoubleMatrix(termsmtx_fwd));
-			objHolder.add(IR_CALIBRATION_DATA_DFS + suffix, new LADataDoubles(dfs));
+			objHolder.add(CALIBRATION_DATA_TERMS + suffix, new AQLDataDoubles(terms));
+			objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX + suffix, new AQLDataDoubleMatrix(termsmtx_fwd));
+			objHolder.add(IR_CALIBRATION_DATA_DFS + suffix, new AQLDataDoubles(dfs));
 			// set generate flag true
 			mBCurveGenMap[curveName] = true;
 			setCurveConvention(objHolder, data, curveName);
 			//set STD curve
-			const LADataHolder& dh = objHolder.getData(CALIBRATION_DATA_TERMS);
-			const LADataHolder& ah2 = objHolder.getData(IR_CALIBRATION_DATA_ISFWDFX);
+			const AQLDataHolder& dh = objHolder.getData(CALIBRATION_DATA_TERMS);
+			const AQLDataHolder& ah2 = objHolder.getData(IR_CALIBRATION_DATA_ISFWDFX);
 			bool isfwdfx = false;
 			if(ah2.isDefined() && !ah2.isNull())
-				isfwdfx = dynamic_cast<const LADataBool&>(ah2.get()).get();
+				isfwdfx = dynamic_cast<const AQLDataBool&>(ah2.get()).get();
 			
 			if (!dh.isDefined() || dh.isNull() || isfwdfx)
 			{
 				objHolder.remove(IR_CALIBRATION_DATA_ISFWDFX);
-				objHolder.add(IR_CALIBRATION_DATA_ISFWDFX, new LADataBool(true));
+				objHolder.add(IR_CALIBRATION_DATA_ISFWDFX, new AQLDataBool(true));
 				objHolder.remove(CALIBRATION_DATA_TERMS);
-				objHolder.add(CALIBRATION_DATA_TERMS, new LADataDoubles(terms));
+				objHolder.add(CALIBRATION_DATA_TERMS, new AQLDataDoubles(terms));
 				objHolder.remove(CALIBRATION_DATA_FWDTERMSMATRIX);
-				objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX, new LADataDoubleMatrix(termsmtx_fwd));
+				objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX, new AQLDataDoubleMatrix(termsmtx_fwd));
 				objHolder.remove(IR_CALIBRATION_DATA_DFS);
-				objHolder.add(IR_CALIBRATION_DATA_DFS, new LADataDoubles(dfs));
+				objHolder.add(IR_CALIBRATION_DATA_DFS, new AQLDataDoubles(dfs));
 				mGCurveGenMap[STD] = true;
 				setCurveConvention(objHolder, data, STD);
 			}
@@ -3783,11 +3783,11 @@ LAMathYieldCurvePro::saveBasisCurve(const LAString& curveType, const DoubleArray
 	@param[out] inter
 */
 void
-LAMathYieldCurvePro::setCurveInterpolation(const LAString& curveName, const LAObject &yieldData, LAPriceDataInterpolation& inter) const
+LAMathYieldCurvePro::setCurveInterpolation(const AQLString& curveName, const AQLObject &yieldData, AQLPriceDataInterpolation& inter) const
 {
-	const LAString &suffix = curveName == STD ? LAString("") : LAString("_") + curveName;
-	const DoubleArray &terms = dynamic_cast<const LADataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
-	const DoubleArray &dfs   = dynamic_cast<const LADataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
+	const AQLString &suffix = curveName == STD ? AQLString("") : AQLString("_") + curveName;
+	const DoubleArray &terms = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
+	const DoubleArray &dfs   = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
 	inter.set(terms, dfs);
 }
 
@@ -3808,14 +3808,14 @@ LAMathYieldCurvePro::setCurveInterpolation(const LAString& curveName, const LAOb
 
 */
 void
-LAMathYieldCurvePro::calcIndexGrid(const LADate &asofdate, const LADate &date, int resetLag, const LAPriceDataDayCount &dc, 
-								 const LAPriceDataCalendar &fixcal, const LAPriceDataCalendar &paycal, const LAPriceDataSlidingRule &sld, 
-								 const LAString &freq, const LAString &accessary, DoubleVector &gridVec, DoubleVector &termVec)
+LAMathYieldCurvePro::calcIndexGrid(const AQLDate &asofdate, const AQLDate &date, int resetLag, const AQLPriceDataDayCount &dc, 
+								 const AQLPriceDataCalendar &fixcal, const AQLPriceDataCalendar &paycal, const AQLPriceDataSlidingRule &sld, 
+								 const AQLString &freq, const AQLString &accessary, DoubleVector &gridVec, DoubleVector &termVec)
 {
 	gridVec.clear();
 	termVec.clear();
 
-	LAString tmpFreq = freq;
+	AQLString tmpFreq = freq;
 	tmpFreq.toUpper();
 	int y, m, d, w;
 	LAMathDateCalculations::termStrtoYMDW(accessary, y, m, d, w);
@@ -3824,11 +3824,11 @@ LAMathYieldCurvePro::calcIndexGrid(const LADate &asofdate, const LADate &date, i
 	unsigned int addmonth = 0;
 	if (d != 0)
 	{
-		throw LACoreInvalidData("d != 0 is not support", __FILE__, __LINE__);	
+		throw AQLCoreInvalidData("d != 0 is not support", __FILE__, __LINE__);	
 	}
 	if(0 == y && 0 == m)
 	{
-		throw LACoreInvalidData("This Accessory input supports only y,m,d",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("This Accessory input supports only y,m,d",__FILE__,__LINE__);
 	}
 
 	if (freq == SIMPLE)
@@ -3845,7 +3845,7 @@ LAMathYieldCurvePro::calcIndexGrid(const LADate &asofdate, const LADate &date, i
 	{
 		if (m % 3 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
 		}
 		size = y * 4 + m / 3 + 1;
 		addmonth = 3;
@@ -3855,7 +3855,7 @@ LAMathYieldCurvePro::calcIndexGrid(const LADate &asofdate, const LADate &date, i
 	{
 		if (m % 6 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
 		}	
 		size = y * 2 + m / 6 + 1;
 		addmonth = 6;
@@ -3865,7 +3865,7 @@ LAMathYieldCurvePro::calcIndexGrid(const LADate &asofdate, const LADate &date, i
 	{
 		if (m % 12 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);
 		}
 		size = y + m / 12 + 1;
 		addmonth = 12;
@@ -3873,23 +3873,23 @@ LAMathYieldCurvePro::calcIndexGrid(const LADate &asofdate, const LADate &date, i
 	else
 	{
 		//error
-		LAString err = "Frequency: ";
+		AQLString err = "Frequency: ";
 		err += freq;
 		err += " is not support";
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
-	LAPriceDataDayCount dc_act(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act(ACT_365_ISDA);
 	gridVec.resize(size);
 	termVec.resize(size - 1);
-	LADate fixingdate = fixcal.getBusinessDay(date, -1 * resetLag);
-	LADate paymentdate = paycal.getBusinessDay(fixingdate, resetLag);
-	LADate noadjdate = paymentdate;
+	AQLDate fixingdate = fixcal.getBusinessDay(date, -1 * resetLag);
+	AQLDate paymentdate = paycal.getBusinessDay(fixingdate, resetLag);
+	AQLDate noadjdate = paymentdate;
 	gridVec[0] = dc_act.getTerm(asofdate, paymentdate);
 
 	for (unsigned int i = 1; i < size; i++)
 	{
-		LADate olddate = paymentdate;
+		AQLDate olddate = paymentdate;
 		noadjdate.addMonths(addmonth);
 		paymentdate = sld.getDate(noadjdate, paycal);
 		gridVec[i] = dc_act.getTerm(asofdate, paymentdate);		
@@ -3924,8 +3924,8 @@ LAMathYieldCurvePro::calcIndexGrid(const LADate &asofdate, const LADate &date, i
 	@param[in] c_isBackward : backward flag of target leg
 */
 void
-LAMathYieldCurvePro::calcBasisCF(const LAPriceDataInterpolation &s_inter, const bool isDiscount, const bool isFwdRen, const bool isUSD, const bool isFWDInter, const LAPriceDataInterpolation &f_inter, const LAPriceDataInterpolation *fwd_inter, 
-							   const std::vector<DoubleArray> &dfsVec, const LAPriceDataInterpolation &a_f_inter, const LAPriceDataInterpolation *a_fwd_inter, const LAPriceDataInterpolation &a_d_inter, const double a_d_df_adjust, const LAPriceDataInterpolation *adjust_inter, 
+LAMathYieldCurvePro::calcBasisCF(const AQLPriceDataInterpolation &s_inter, const bool isDiscount, const bool isFwdRen, const bool isUSD, const bool isFWDInter, const AQLPriceDataInterpolation &f_inter, const AQLPriceDataInterpolation *fwd_inter, 
+							   const std::vector<DoubleArray> &dfsVec, const AQLPriceDataInterpolation &a_f_inter, const AQLPriceDataInterpolation *a_fwd_inter, const AQLPriceDataInterpolation &a_d_inter, const double a_d_df_adjust, const AQLPriceDataInterpolation *adjust_inter, 
 							   const bool isAgtSpread, const DoubleArray &spreadVec, const std::vector<IntArray> &cpd_timesVec, const std::vector<IntArray> &a_cpd_timesVec, const double spotTerm, const double a_spotTerm, 
 							   const std::vector<DoubleArray> &gridVec, const std::vector<DoubleArray> &tauVec, const std::vector<DoubleMatrix> &i_gridMatVec, const std::vector<DoubleMatrix> &i_termMatVec, 
 							   const std::vector<DoubleArray> &a_gridVec, const std::vector<DoubleArray> &a_tauVec, const std::vector<DoubleMatrix> &a_i_gridMatVec, const std::vector<DoubleMatrix> &a_i_termMatVec, 
@@ -3935,7 +3935,7 @@ LAMathYieldCurvePro::calcBasisCF(const LAPriceDataInterpolation &s_inter, const 
 	if (gridVec.size() != b_size || tauVec.size() != b_size || dfsVec.size() != b_size ||
 		i_gridMatVec.size() != b_size || i_termMatVec.size() != b_size || b_yieldTimeMatVec.size() != b_size || a_targetPVVec.size() != b_size)
 	{
-		throw LACoreInvalidData(" size is not consistent.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData(" size is not consistent.", __FILE__, __LINE__);
 	}
 
 	for (unsigned int i = 0; i < b_size; ++i)
@@ -3943,7 +3943,7 @@ LAMathYieldCurvePro::calcBasisCF(const LAPriceDataInterpolation &s_inter, const 
 		const unsigned int gridSize = gridVec[i].size();
 		if (i_gridMatVec[i].size() != gridSize || tauVec[i].size() != gridSize || dfsVec[i].size() != gridSize || b_yieldTimeMatVec[i].size() != gridSize)
 		{
-			throw LACoreInvalidData(" size is not consistent.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData(" size is not consistent.", __FILE__, __LINE__);
 		}
 	}
 
@@ -4014,10 +4014,10 @@ LAMathYieldCurvePro::calcBasisCF(const LAPriceDataInterpolation &s_inter, const 
 	@return against PV
 */
 double		
-LAMathYieldCurvePro::calcAgainstPV(const bool isFWDInter, const LAPriceDataInterpolation &f_inter, const LAPriceDataInterpolation *fwd_inter, const LAPriceDataInterpolation &d_inter, 
+LAMathYieldCurvePro::calcAgainstPV(const bool isFWDInter, const AQLPriceDataInterpolation &f_inter, const AQLPriceDataInterpolation *fwd_inter, const AQLPriceDataInterpolation &d_inter, 
  const double spread, const IntArray& cpd_times, const double term_spot, const DoubleArray &terms_grid, const DoubleArray &terms_interval, const DoubleMatrix &i_gridMat, const DoubleMatrix &i_termMat, const bool isBackward)
 {
-	LAPriceDataInterpolation dummy_interpolation;
+	AQLPriceDataInterpolation dummy_interpolation;
 	return calcAgainstPV(isFWDInter, f_inter, fwd_inter, d_inter, dummy_interpolation, NULL, spread, cpd_times, term_spot, term_spot, terms_grid, terms_interval, i_gridMat, i_termMat);
 }
 
@@ -4042,7 +4042,7 @@ LAMathYieldCurvePro::calcAgainstPV(const bool isFWDInter, const LAPriceDataInter
 	@return against PV
 */
 double		
-LAMathYieldCurvePro::calcAgainstPV(const bool isFWDInter, const LAPriceDataInterpolation &f_inter, const LAPriceDataInterpolation *fwd_inter, const LAPriceDataInterpolation &d_inter, const LAPriceDataInterpolation &a_s_inter, const LAPriceDataInterpolation *adjust_inter, 
+LAMathYieldCurvePro::calcAgainstPV(const bool isFWDInter, const AQLPriceDataInterpolation &f_inter, const AQLPriceDataInterpolation *fwd_inter, const AQLPriceDataInterpolation &d_inter, const AQLPriceDataInterpolation &a_s_inter, const AQLPriceDataInterpolation *adjust_inter, 
  const double spread, const IntArray& cpd_times, const double term_spot, const double a_term_spot, const DoubleArray &terms_grid, const DoubleArray &terms_interval, const DoubleMatrix &i_gridMat, const DoubleMatrix &i_termMat)
 {
 	if (terms_grid.empty())
@@ -4084,7 +4084,7 @@ LAMathYieldCurvePro::calcAgainstPV(const bool isFWDInter, const LAPriceDataInter
 		a_dfsVec[0] = 1.;
 		for (unsigned int j = 1; j < terms_grid.size(); ++j)
 		{
-			a_dfsVec[j] = LAMath::exp(-a_s_inter.value(terms_grid[j - 1] + adj_term_spot));
+			a_dfsVec[j] = AQLMath::exp(-a_s_inter.value(terms_grid[j - 1] + adj_term_spot));
 		}
 	}
 
@@ -4107,11 +4107,11 @@ LAMathYieldCurvePro::calcAgainstPV(const bool isFWDInter, const LAPriceDataInter
 	@return target PV	
 */	
 double
-LAMathYieldCurvePro::calcTargetPV(const LAPriceDataInterpolation &s_inter, const bool isFWDInter, const LAPriceDataInterpolation &f_inter, const LAPriceDataInterpolation *fwd_inter, 
+LAMathYieldCurvePro::calcTargetPV(const AQLPriceDataInterpolation &s_inter, const bool isFWDInter, const AQLPriceDataInterpolation &f_inter, const AQLPriceDataInterpolation *fwd_inter, 
 	const double spread, const IntArray& cpd_times, double term_spot, const DoubleArray &terms_grid, const DoubleArray &terms_interval, const DoubleMatrix &i_gridMat, const DoubleMatrix &i_termMat, 
 	const DoubleMatrix &b_yieldTimeMat)
 {
-	LAPriceDataInterpolation dummy_interpolation;
+	AQLPriceDataInterpolation dummy_interpolation;
 	return calcTargetPV(s_inter, isFWDInter, f_inter, fwd_inter, dummy_interpolation, NULL, spread, cpd_times, term_spot, terms_grid, terms_interval, i_gridMat, i_termMat, b_yieldTimeMat);
 }
 
@@ -4135,15 +4135,15 @@ LAMathYieldCurvePro::calcTargetPV(const LAPriceDataInterpolation &s_inter, const
 	@return target PV	
 */	
 double
-LAMathYieldCurvePro::calcTargetPV(const LAPriceDataInterpolation &s_inter, const bool isFWDInter, const LAPriceDataInterpolation &f_inter, const LAPriceDataInterpolation *fwd_inter, 
-	const LAPriceDataInterpolation &a_d_inter, const LAPriceDataInterpolation *adjust_inter, const double spread, const IntArray& cpd_times, const double term_spot, 
+LAMathYieldCurvePro::calcTargetPV(const AQLPriceDataInterpolation &s_inter, const bool isFWDInter, const AQLPriceDataInterpolation &f_inter, const AQLPriceDataInterpolation *fwd_inter, 
+	const AQLPriceDataInterpolation &a_d_inter, const AQLPriceDataInterpolation *adjust_inter, const double spread, const IntArray& cpd_times, const double term_spot, 
 	const DoubleArray &terms_grid, const DoubleArray &terms_interval, const DoubleMatrix &i_gridMat, const DoubleMatrix &i_termMat, const DoubleMatrix &b_yieldTimeMat) 
 {
 	for (unsigned int j = 0; j < terms_grid.size(); j++)
 	{
 		if (b_yieldTimeMat[j].empty())
 		{
-			throw LACoreInvalidData(" size is not consistent.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData(" size is not consistent.", __FILE__, __LINE__);
 		}
 	}
 
@@ -4177,13 +4177,13 @@ LAMathYieldCurvePro::calcTargetPV(const LAPriceDataInterpolation &s_inter, const
 	yieldTimes = { 1.0, s_inter.value(terms_grid.front()) };
 	b_yieldTimes = { b_yieldTimeMat.front().front(), b_yieldTimeMat.front().back() };
 	transform(yieldTimes.cbegin(), yieldTimes.cend(), b_yieldTimes.cbegin(), dfsMat.front().begin(),
-		[](const double& yieldTime, const double& b_yieldTime) { return LAMath::exp(-(yieldTime + b_yieldTime)); });
+		[](const double& yieldTime, const double& b_yieldTime) { return AQLMath::exp(-(yieldTime + b_yieldTime)); });
 	for (unsigned int j = 1; j < terms_grid.size(); ++j)
 	{
 		yieldTimes = { yieldTimes.back(), s_inter.value(terms_grid[j]) };	// yieldTimes.back() must be s_inter.value(terms_grid[j - 1]) on right hand side
 		b_yieldTimes = { b_yieldTimeMat[j].front(), b_yieldTimeMat[j].back() };
 		transform(yieldTimes.cbegin(), yieldTimes.cend(), b_yieldTimes.cbegin(), dfsMat[j].begin(),
-			[](const double& yieldTime, const double& b_yieldTime) { return LAMath::exp(-(yieldTime + b_yieldTime)); });
+			[](const double& yieldTime, const double& b_yieldTime) { return AQLMath::exp(-(yieldTime + b_yieldTime)); });
 	}
 
 
@@ -4221,7 +4221,7 @@ LAMathYieldCurvePro::calcTargetPV(const LAPriceDataInterpolation &s_inter, const
 	@return target PV
 */
 double	
-LAMathYieldCurvePro::calcTargetPV(const LAPriceDataInterpolation &s_inter, const DoubleArray &dfsVec, const double spread, const IntArray& cpd_times,
+LAMathYieldCurvePro::calcTargetPV(const AQLPriceDataInterpolation &s_inter, const DoubleArray &dfsVec, const double spread, const IntArray& cpd_times,
 	 const double term_spot, const DoubleArray &terms_grid, const DoubleArray &terms_interval, const DoubleMatrix &i_gridMat, const DoubleMatrix &i_termMat, 
 	 const DoubleMatrix &b_yieldTimeMat)
 {
@@ -4229,7 +4229,7 @@ LAMathYieldCurvePro::calcTargetPV(const LAPriceDataInterpolation &s_inter, const
 	{
 		if (b_yieldTimeMat[j].empty())
 		{
-			throw LACoreInvalidData(" size is not consistent.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData(" size is not consistent.", __FILE__, __LINE__);
 		}
 	}
 
@@ -4248,14 +4248,14 @@ LAMathYieldCurvePro::calcTargetPV(const LAPriceDataInterpolation &s_inter, const
 			const double term = i_gridMat[j][k] - term_spot;
 			const double y_spread_time = s_inter.value(term);
 			const double yield_time = y_spread_time + b_yieldTimeMat[j][k];
-			df = LAMath::exp(-yield_time);
+			df = AQLMath::exp(-yield_time);
 			ant += i_termMat[j][k - 1] * df;
 		}
 
 		const double term1 = i_gridMat[j][0] - term_spot;
 		const double y_spread_time1 = s_inter.value(term1);
 		const double yield_time1 = y_spread_time1 + b_yieldTimeMat[j][0];
-		const double df1 = LAMath::exp(-yield_time1);
+		const double df1 = AQLMath::exp(-yield_time1);
 		fwdsVec[j] = (df1 - df) / ant;
 	}
 
@@ -4288,7 +4288,7 @@ LAMathYieldCurvePro::calcTargetPV(const LAPriceDataInterpolation &s_inter, const
 @return target PV
 */
 double
-LAMathYieldCurvePro::calcLegPV(const DoubleArray &fwdsVec, const DoubleMatrix &dfsMat, const DoubleArray &a_dfsVec, const LAPriceDataInterpolation *adjust_inter,
+LAMathYieldCurvePro::calcLegPV(const DoubleArray &fwdsVec, const DoubleMatrix &dfsMat, const DoubleArray &a_dfsVec, const AQLPriceDataInterpolation *adjust_inter,
 	const double spread, const IntArray& cpd_times, const DoubleArray &terms_grid, const DoubleArray& terms_interval, const DoubleMatrix &i_gridMat)
 {
 	double ret = 0.0;
@@ -4353,26 +4353,26 @@ void
 LAMathYieldCurvePro::setBasisRates(void)
 {
 	mBCurveGenMap.clear();
-	LADataHolder *dh = 0;
+	AQLDataHolder *dh = 0;
 	// calc basis dfs
 	dh = &getData(IR_CALIBRATION_DATA_BASISDFS, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAStringVector &basisDFs = dynamic_cast<const LADataStrings &>(dh->get()).get();
-		LAStringVector::const_iterator it = basisDFs.begin();
+		const AQLStringVector &basisDFs = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
+		AQLStringVector::const_iterator it = basisDFs.begin();
 		while (it != basisDFs.end())
 		{
 			// data check
 			bool isCheckCurves = false;
 			dh = &getData(IR_CALIBRATION_DATA_ISCURVEEXISTCHECK, NOCHECK);
-			if (dh->isDefined() && !dh->isNull()) isCheckCurves = dynamic_cast<const LADataBool &>(dh->get()).get();
+			if (dh->isDefined() && !dh->isNull()) isCheckCurves = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 			bool isCurveAttrExist = checkCurveAttr(getMarketForCurve(*it));
 			if (!isCheckCurves || !isCurveAttrExist)
 			{
 				dh = &getData(IR_CALIBRATION_DATA_BASISTARGETDF, NOCHECK);
 				if (dh->isDefined() && !dh->isNull())
 				{
-					const LAString &targetDF = dynamic_cast<const LADataString &>(dh->get()).get();
+					const AQLString &targetDF = dynamic_cast<const AQLDataString &>(dh->get()).get();
 					if (targetDF == *it) setBasisRates(*it);
 					else mBCurveGenMap[*it] = true;
 				}
@@ -4407,36 +4407,36 @@ LAMathYieldCurvePro::setBasisRates(void)
 void 
 LAMathYieldCurvePro::setDF2(void)
 {
-	const LAString &mainCName = dynamic_cast<const LADataString &>(getData(IR_CALIBRATION_DATA_MAINBASISDF, ISNOTNULL).get()).get();
+	const AQLString &mainCName = dynamic_cast<const AQLDataString &>(getData(IR_CALIBRATION_DATA_MAINBASISDF, ISNOTNULL).get()).get();
 	if (mGCurveGenMap.find(mainCName) == mGCurveGenMap.end() && 
 		mBCurveGenMap.find(mainCName) == mBCurveGenMap.end() && 
 		mArbFreeCurveGenMap.find(mainCName) == mArbFreeCurveGenMap.end()) return;
 
-	LAObjectHolder &objHolder = getYieldData().get();
+	AQLObjectHolder &objHolder = getYieldData().get();
 	DoubleArray dfs_mod;
 	DoubleArray yield_mod;
 
-	//const LAString &mainCName = dynamic_cast<const LADataString &>(getData(IR_CALIBRATION_DATA_MAINBASISDF, ISNOTNULL).get()).get();
+	//const AQLString &mainCName = dynamic_cast<const AQLDataString &>(getData(IR_CALIBRATION_DATA_MAINBASISDF, ISNOTNULL).get()).get();
 		
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (mainCName != STD)
 	{
 		suffix = "_" + mainCName;
 	}
-	//const DoubleArray &terms = dynamic_cast<const LADataDoubles &>(objHolder.getData(CALIBRATION_DATA_TERMS, ISNOTNULL).get()).get();
-	DoubleArray terms_mod = dynamic_cast<const LADataDoubles &>(objHolder.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL).get()).get();
-	DoubleArray dfs_mod_ = dynamic_cast<const LADataDoubles &>(objHolder.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL).get()).get();
+	//const DoubleArray &terms = dynamic_cast<const AQLDataDoubles &>(objHolder.getData(CALIBRATION_DATA_TERMS, ISNOTNULL).get()).get();
+	DoubleArray terms_mod = dynamic_cast<const AQLDataDoubles &>(objHolder.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL).get()).get();
+	DoubleArray dfs_mod_ = dynamic_cast<const AQLDataDoubles &>(objHolder.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL).get()).get();
 	DoubleArray terms = terms_mod;
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	dh = &objHolder.getData(CALIBRATION_DATA_TERMS, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
-		terms = dynamic_cast<LADataDoubles &>(objHolder.getData(CALIBRATION_DATA_TERMS, NOCHECK).get()).get();
+		terms = dynamic_cast<AQLDataDoubles &>(objHolder.getData(CALIBRATION_DATA_TERMS, NOCHECK).get()).get();
 	// adjust terms
-	LAPriceDataInterpolation inter = getInterpolation();
+	AQLPriceDataInterpolation inter = getInterpolation();
 	dh = &objHolder.getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + suffix, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		inter.setJoinDateAsDouble(dynamic_cast<LADataDouble&>(dh->get()).get());
+		inter.setJoinDateAsDouble(dynamic_cast<AQLDataDouble&>(dh->get()).get());
 	}
 	else if (inter.isHybrid())
 	{
@@ -4451,7 +4451,7 @@ LAMathYieldCurvePro::setDF2(void)
 	}
 	// set DF2, grid is same with attr CALIBRATION_DATA_TERMS
 	objHolder.remove(IR_CALIBRATION_DATA_DFS2);
-	objHolder.add(IR_CALIBRATION_DATA_DFS2, new LADataDoubles(dfs_mod));
+	objHolder.add(IR_CALIBRATION_DATA_DFS2, new AQLDataDoubles(dfs_mod));
 }
 
 /*!
@@ -4461,12 +4461,12 @@ LAMathYieldCurvePro::setDF2(void)
 void
 LAMathYieldCurvePro::setBasisRates_old(void)
 {
-	vector<const LAObject *> data_basis;
+	vector<const AQLObject *> data_basis;
 	// get market data
-	const LADataMultiReference &mr = getMarketData();
+	const AQLDataMultiReference &mr = getMarketData();
 	for (unsigned int i = 0; i < mr.getSize(); i++)
 	{
-        LAString term = dynamic_cast<const LADataString &>((mr.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+        AQLString term = dynamic_cast<const AQLDataString &>((mr.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		term.toUpper();
 		if (term == BASIS) 
 			data_basis.push_back(&mr.get(i).get());
@@ -4475,38 +4475,38 @@ LAMathYieldCurvePro::setBasisRates_old(void)
 	if (data_basis.empty())
 	{
 		return;
-		//throw LACoreInvalidData("basis data is not set.", __FILE__, __LINE__);
+		//throw AQLCoreInvalidData("basis data is not set.", __FILE__, __LINE__);
 	}
 	// sort
 	sort(data_basis.begin(), data_basis.end(), Comp_term());
 
 	// get spotdate
-	const LADate &spotdate = dynamic_cast<const LADataDate &> ((data_basis[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+	const AQLDate &spotdate = dynamic_cast<const AQLDataDate &> ((data_basis[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 	// get base yield curve and asofdate
 	const LAMathYieldCurve &baseYieldCurve = dynamic_cast<const LAMathYieldCurve &>(getBaseYieldCurve().get().get());
-	const LADate &asof = dynamic_cast<const LADataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());
+	const AQLDate &asof = dynamic_cast<const AQLDataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());
 	// asof and spot check
 	if (asof > spotdate)
 	{
-		throw LACoreInvalidData("asofdate > spotdate, cannnot calc basis DF", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("asofdate > spotdate, cannnot calc basis DF", __FILE__, __LINE__);
 	}
 
 	// get first element val
-	const LAPriceDataDayCount &dcbs = dynamic_cast<const LAPriceDataDayCount &>((data_basis[0]->getData(IR_CALIBRATION_DATA_DAYCOUNTBASE, ISNOTNULL)).get());
-	const LAPriceDataDayCount &dc = dynamic_cast<const LAPriceDataDayCount &>((data_basis[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-	const LAPriceDataCalendar &calbs = dynamic_cast<const LAPriceDataCalendar &>((data_basis[0]->getData(IR_CALIBRATION_DATA_CALENDARBASE, ISNOTNULL)).get());
-	const LAPriceDataSlidingRule &sldbs  = dynamic_cast<const LAPriceDataSlidingRule &>((data_basis[0]->getData(IR_CALIBRATION_DATA_SLIDINGRULEBASE, ISNOTNULL)).get());
+	const AQLPriceDataDayCount &dcbs = dynamic_cast<const AQLPriceDataDayCount &>((data_basis[0]->getData(IR_CALIBRATION_DATA_DAYCOUNTBASE, ISNOTNULL)).get());
+	const AQLPriceDataDayCount &dc = dynamic_cast<const AQLPriceDataDayCount &>((data_basis[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+	const AQLPriceDataCalendar &calbs = dynamic_cast<const AQLPriceDataCalendar &>((data_basis[0]->getData(IR_CALIBRATION_DATA_CALENDARBASE, ISNOTNULL)).get());
+	const AQLPriceDataSlidingRule &sldbs  = dynamic_cast<const AQLPriceDataSlidingRule &>((data_basis[0]->getData(IR_CALIBRATION_DATA_SLIDINGRULEBASE, ISNOTNULL)).get());
 	//iseomroll
 	bool eombs = false;
-	LADataHolder dh = data_basis[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK);
+	AQLDataHolder dh = data_basis[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK);
 	if (dh.isDefined() && !dh.isNull())
 	{
-		eombs = dynamic_cast<const LADataBool &>(dh.get()).get();
+		eombs = dynamic_cast<const AQLDataBool &>(dh.get()).get();
 	}
-	LAString freqbs = dynamic_cast<const LADataString &>((data_basis[0]->getData(IR_CALIBRATION_DATA_FREQUENCYBASE, ISNOTNULL)).get()).get();
+	AQLString freqbs = dynamic_cast<const AQLDataString &>((data_basis[0]->getData(IR_CALIBRATION_DATA_FREQUENCYBASE, ISNOTNULL)).get()).get();
 	freqbs.toUpper();
 	// set roll convention
-	LAString roll_conv_bs("");
+	AQLString roll_conv_bs("");
 	if (freqbs == LUNAR) roll_conv_bs = ROLLCONV_LUNAR;
 	else if (eombs) roll_conv_bs = ROLLCONV_EOM;
 	else roll_conv_bs = ROLLCONV_NORMAL;
@@ -4515,18 +4515,18 @@ LAMathYieldCurvePro::setBasisRates_old(void)
 	DoubleArray b_termstruct_grid(1, 0.0);
 	for (unsigned int i = 0; i < data_basis.size(); i++)
 	{
-		const LAString &strTerm  = dynamic_cast<const LADataString &>((data_basis[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-		double rate = dynamic_cast<const LADataDouble &>((data_basis[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		LADate tmpDate = LAMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_basis[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+		double rate = dynamic_cast<const AQLDataDouble &>((data_basis[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+		AQLDate tmpDate = LAMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		double term = dcbs.getTerm(spotdate, tmpDate);
 
 		b_t_grid.push_back(term);
 		b_termstruct_grid.push_back(rate);	
 	}
 	// get max term
-	const LAString &termMax = dynamic_cast<const LADataString &>((data_basis.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+	const AQLString &termMax = dynamic_cast<const AQLDataString &>((data_basis.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 	// get interpolation method
-	LAPriceDataInterpolation &inter = getInterpolation_bs();
+	AQLPriceDataInterpolation &inter = getInterpolation_bs();
 	inter.set(b_t_grid, b_termstruct_grid);
 
 	// calc term (apply to month)
@@ -4541,20 +4541,20 @@ LAMathYieldCurvePro::setBasisRates_old(void)
 	else if (freqbs == MONTHLY || freqbs == LUNAR)	  mUnit = 1;
 	else 
 	{
-		LAString msg = "frequency is wrong";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "frequency is wrong";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	// check can be divided ?
 	if (m % mUnit != 0 || d != 0)
 	{
-		LAString msg = "frequency is wrong";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "frequency is wrong";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
-	LAObjectHolder objHolder = getYieldData().get();
-	const LAObject &yieldData = objHolder.get(); 
-	const DoubleArray &terms = dynamic_cast<const LADataDoubles &>((yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
+	AQLObjectHolder objHolder = getYieldData().get();
+	const AQLObject &yieldData = objHolder.get(); 
+	const DoubleArray &terms = dynamic_cast<const AQLDataDoubles &>((yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
 	// maxterm for calc
 	const double tmax = terms.back();
 
@@ -4565,14 +4565,14 @@ LAMathYieldCurvePro::setBasisRates_old(void)
 	double sum2 = 0.0;
 	double b_delta = 0.0;
 	double b_libor = 0.0;
-	LADate fdate = spotdate;
+	AQLDate fdate = spotdate;
 	const unsigned int max = m / mUnit + 1;
 	for (unsigned int i = 1; i < max; i++)
 	{
-		LAString strTerm = LAString(static_cast<int>(mUnit * i));
+		AQLString strTerm = AQLString(static_cast<int>(mUnit * i));
 		strTerm += "M";
 
-		LADate ldate =  LAMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		AQLDate ldate =  LAMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		//term is term under basis convention.
 		const double term = dcbs.getTerm(spotdate, ldate);
 		//termaa is term act/act.
@@ -4586,7 +4586,7 @@ LAMathYieldCurvePro::setBasisRates_old(void)
 		const double basis = inter.value(term);
 
 		//making sum of (L + s)*term*DF which tenor is j*i
-		LAString strTerm_ = LAString(static_cast<int>(mUnit * i));
+		AQLString strTerm_ = AQLString(static_cast<int>(mUnit * i));
 		strTerm_ += "M";
 		ldate = LAMathDateCalculations::getDate(spotdate, strTerm_, sldbs, &calbs, true, &roll_conv_bs);
 		const double delta = dcbs.getTerm(fdate, ldate);
@@ -4607,7 +4607,7 @@ LAMathYieldCurvePro::setBasisRates_old(void)
 		const double df = (1.0 - sum) / (1.0 + (libor + basis) * delta);
 		if (df <= 0.0)
 		{
-			throw LACoreInvalidData("Df is below zero.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Df is below zero.", __FILE__, __LINE__);
 		}
 		df_mod.push_back(df);
 		b_t.push_back(termaa);
@@ -4618,7 +4618,7 @@ LAMathYieldCurvePro::setBasisRates_old(void)
 	const double asofdf = getDF(asof, spotdate);
 	if (asofdf <= 0.0)
 	{
-		throw LACoreInvalidData("Df from asofdate to spotdate is below zero.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Df from asofdate to spotdate is below zero.", __FILE__, __LINE__);
 	}
 
 	DoubleArray b_t_2(1, 0.0);
@@ -4645,9 +4645,9 @@ LAMathYieldCurvePro::setBasisRates_old(void)
 		const double df = inter.value(terms[i]);
 		if (df <= 0.0)
 		{
-			throw LACoreInvalidData("Df is below zero.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Df is below zero.", __FILE__, __LINE__);
 		}
-		b_mod[i] = -LAMath::log(df) / terms[i];
+		b_mod[i] = -AQLMath::log(df) / terms[i];
 	}
 	
 	DoubleMatrix b1(1, b_mod);
@@ -4663,11 +4663,11 @@ LAMathYieldCurvePro::setBasisRates_old(void)
 		{
 			const double term = terms[j];
 			const double bRate = d_matrix[i][j];
-			dfs_mod.push_back(LAMath::exp(-term * bRate));
+			dfs_mod.push_back(AQLMath::exp(-term * bRate));
 		}
 	}
 	objHolder.remove(IR_CALIBRATION_DATA_DFS2);
-	objHolder.add(IR_CALIBRATION_DATA_DFS2, new LADataDoubles(dfs_mod));
+	objHolder.add(IR_CALIBRATION_DATA_DFS2, new AQLDataDoubles(dfs_mod));
 }
 
 /*!
@@ -4675,14 +4675,14 @@ LAMathYieldCurvePro::setBasisRates_old(void)
 
 */
 void
-LAMathYieldCurvePro::setBasisRates2(const LAString& basisCurveID)
+LAMathYieldCurvePro::setBasisRates2(const AQLString& basisCurveID)
 {
-	vector<const LAObject *> data_basis;
+	vector<const AQLObject *> data_basis;
 	// get market data
-	const LADataMultiReference &mr = getMarketData();
+	const AQLDataMultiReference &mr = getMarketData();
 	for (unsigned int i = 0; i < mr.getSize(); i++)
 	{
-        LAString term = dynamic_cast<const LADataString &>((mr.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+        AQLString term = dynamic_cast<const AQLDataString &>((mr.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		term.toUpper();
 		if (term == BASIS) 
 			data_basis.push_back(&mr.get(i).get());
@@ -4690,38 +4690,38 @@ LAMathYieldCurvePro::setBasisRates2(const LAString& basisCurveID)
 	// data exist check
 	if (data_basis.empty())
 	{
-		throw LACoreInvalidData("basis data is not set.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("basis data is not set.", __FILE__, __LINE__);
 	}
 	// sort
 	sort(data_basis.begin(), data_basis.end(), Comp_term());
 
 	// get spotdate
-	const LADate &spotdate = dynamic_cast<const LADataDate &> ((data_basis[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
+	const AQLDate &spotdate = dynamic_cast<const AQLDataDate &> ((data_basis[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 	// get base yield curve and asofdate
 	const LAMathYieldCurve &baseYieldCurve = dynamic_cast<const LAMathYieldCurve &>(getBaseYieldCurve().get().get());
-	const LADate &asof = dynamic_cast<const LADataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());
+	const AQLDate &asof = dynamic_cast<const AQLDataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());
 	// asof and spot check
 	if (asof > spotdate)
 	{
-		throw LACoreInvalidData("asofdate > spotdate, cannnot calc basis DF", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("asofdate > spotdate, cannnot calc basis DF", __FILE__, __LINE__);
 	}
 
 	// get first element val
-	const LAPriceDataDayCount &dcbs = dynamic_cast<const LAPriceDataDayCount &>((data_basis[0]->getData(IR_CALIBRATION_DATA_DAYCOUNTBASE, ISNOTNULL)).get());
-	const LAPriceDataDayCount &dc = dynamic_cast<const LAPriceDataDayCount &>((data_basis[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-	const LAPriceDataCalendar &calbs = dynamic_cast<const LAPriceDataCalendar &>((data_basis[0]->getData(IR_CALIBRATION_DATA_CALENDARBASE, ISNOTNULL)).get());
-	const LAPriceDataSlidingRule &sldbs  = dynamic_cast<const LAPriceDataSlidingRule &>((data_basis[0]->getData(IR_CALIBRATION_DATA_SLIDINGRULEBASE, ISNOTNULL)).get());
+	const AQLPriceDataDayCount &dcbs = dynamic_cast<const AQLPriceDataDayCount &>((data_basis[0]->getData(IR_CALIBRATION_DATA_DAYCOUNTBASE, ISNOTNULL)).get());
+	const AQLPriceDataDayCount &dc = dynamic_cast<const AQLPriceDataDayCount &>((data_basis[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+	const AQLPriceDataCalendar &calbs = dynamic_cast<const AQLPriceDataCalendar &>((data_basis[0]->getData(IR_CALIBRATION_DATA_CALENDARBASE, ISNOTNULL)).get());
+	const AQLPriceDataSlidingRule &sldbs  = dynamic_cast<const AQLPriceDataSlidingRule &>((data_basis[0]->getData(IR_CALIBRATION_DATA_SLIDINGRULEBASE, ISNOTNULL)).get());
 	//iseomroll
 	bool eombs = false;
-	LADataHolder dh = data_basis[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK);
+	AQLDataHolder dh = data_basis[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK);
 	if (dh.isDefined() && !dh.isNull())
 	{
-		eombs = dynamic_cast<const LADataBool &>(dh.get()).get();
+		eombs = dynamic_cast<const AQLDataBool &>(dh.get()).get();
 	}
-	LAString freqbs = dynamic_cast<const LADataString &>((data_basis[0]->getData(IR_CALIBRATION_DATA_FREQUENCYBASE, ISNOTNULL)).get()).get();
+	AQLString freqbs = dynamic_cast<const AQLDataString &>((data_basis[0]->getData(IR_CALIBRATION_DATA_FREQUENCYBASE, ISNOTNULL)).get()).get();
 	freqbs.toUpper();
 	// set roll convention
-	LAString roll_conv_bs("");
+	AQLString roll_conv_bs("");
 	if (freqbs == LUNAR) roll_conv_bs = ROLLCONV_LUNAR;
 	else if (eombs) roll_conv_bs = ROLLCONV_EOM;
 	else roll_conv_bs = ROLLCONV_NORMAL;
@@ -4730,18 +4730,18 @@ LAMathYieldCurvePro::setBasisRates2(const LAString& basisCurveID)
 	DoubleArray b_termstruct_grid(1, 0.0);
 	for (unsigned int i = 0; i < data_basis.size(); i++)
 	{
-		const LAString &strTerm  = dynamic_cast<const LADataString &>((data_basis[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-		double rate = dynamic_cast<const LADataDouble &>((data_basis[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		LADate tmpDate = LAMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data_basis[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+		double rate = dynamic_cast<const AQLDataDouble &>((data_basis[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+		AQLDate tmpDate = LAMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		double term = dcbs.getTerm(spotdate, tmpDate);
 
 		b_t_grid.push_back(term);
 		b_termstruct_grid.push_back(rate);	
 	}
 	// get max term
-	const LAString &termMax = dynamic_cast<const LADataString &>((data_basis.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+	const AQLString &termMax = dynamic_cast<const AQLDataString &>((data_basis.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 	// get interpolation method
-	LAPriceDataInterpolation &inter = getInterpolation_bs();
+	AQLPriceDataInterpolation &inter = getInterpolation_bs();
 	inter.set(b_t_grid, b_termstruct_grid);
 
 	// calc term (apply to month)
@@ -4756,33 +4756,33 @@ LAMathYieldCurvePro::setBasisRates2(const LAString& basisCurveID)
 	else if (freqbs == MONTHLY || freqbs == LUNAR)	  mUnit = 1;
 	else 
 	{
-		LAString msg = "frequency is wrong";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "frequency is wrong";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	// check can be divided ?
 	if (m % mUnit != 0 || d != 0)
 	{
-		LAString msg = "frequency is wrong";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "frequency is wrong";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
-	LAObjectHolder objHolder = getYieldData().get();
-	const LAObject &yieldData = objHolder.get(); 
-	const DoubleArray &terms = dynamic_cast<const LADataDoubles &>((yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
+	AQLObjectHolder objHolder = getYieldData().get();
+	const AQLObject &yieldData = objHolder.get(); 
+	const DoubleArray &terms = dynamic_cast<const AQLDataDoubles &>((yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
 	// maxterm for calc
 	const double tmax = terms.back();
 
 	DoubleArray b_t(1, 0.0);
 	DoubleArray df_mod(1, 1.0);
-	LADate fdate = spotdate;
+	AQLDate fdate = spotdate;
 	const unsigned int max = m / mUnit + 1;
 	for (unsigned int i = 1; i < max; i++)
 	{
-		LAString strTerm = LAString(static_cast<int>(mUnit * i));
+		AQLString strTerm = AQLString(static_cast<int>(mUnit * i));
 		strTerm += "M";
 
-		LADate ldate = LAMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
+		AQLDate ldate = LAMathDateCalculations::getDate(spotdate, strTerm, sldbs, &calbs, true, &roll_conv_bs);
 		//term is term under basis convention.
 		const double term = dcbs.getTerm(spotdate, ldate);
 		//termaa is term act/act.
@@ -4797,7 +4797,7 @@ LAMathYieldCurvePro::setBasisRates2(const LAString& basisCurveID)
 		for (unsigned int j = 1; j < i + 1; j++)
 		{
 			// calc ldate which is never same with fdate
-			LAString strTerm_ = LAString(static_cast<int>(mUnit * j));
+			AQLString strTerm_ = AQLString(static_cast<int>(mUnit * j));
 			strTerm_ += "M";
 			ldate = LAMathDateCalculations::getDate(spotdate, strTerm_, sldbs, &calbs, true, &roll_conv_bs);
 			
@@ -4816,7 +4816,7 @@ LAMathYieldCurvePro::setBasisRates2(const LAString& basisCurveID)
 		const double df = (1.0 - sum) / (1.0 + (temp_val + basis) * delta);
 		if (df <= 0.0)
 		{
-			throw LACoreInvalidData("Df is below zero.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Df is below zero.", __FILE__, __LINE__);
 		}
 		df_mod.push_back(df);
 		b_t.push_back(termaa);
@@ -4834,7 +4834,7 @@ LAMathYieldCurvePro::setBasisRates2(const LAString& basisCurveID)
 	const double asofdf = getDF(asof, spotdate);
 	if (asofdf <= 0.0)
 	{
-		throw LACoreInvalidData("Df from asofdate to spotdate is below zero.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Df from asofdate to spotdate is below zero.", __FILE__, __LINE__);
 	}
 
 	DoubleArray b_t_2(1, 0.0);
@@ -4861,9 +4861,9 @@ LAMathYieldCurvePro::setBasisRates2(const LAString& basisCurveID)
 		const double df = inter.value(terms[i]);
 		if (df <= 0.0)
 		{
-			throw LACoreInvalidData("Df is below zero.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Df is below zero.", __FILE__, __LINE__);
 		}
-		b_mod[i] = -LAMath::log(df) / terms[i];
+		b_mod[i] = -AQLMath::log(df) / terms[i];
 	}
 	
 	DoubleMatrix b1(1, b_mod);
@@ -4879,34 +4879,34 @@ LAMathYieldCurvePro::setBasisRates2(const LAString& basisCurveID)
 		{
 			const double term = terms[j];
 			const double bRate = d_matrix[i][j];
-			dfs_mod.push_back(LAMath::exp(-term * bRate));
+			dfs_mod.push_back(AQLMath::exp(-term * bRate));
 		}
 	}
     
-    LADataInstance* dataInstance = getDataInstance();
-    LAObjectPool &objPool = dataInstance->getObjectPool();
+    AQLDataInstance* dataInstance = getDataInstance();
+    AQLObjectPool &objPool = dataInstance->getObjectPool();
 	objHolder = objPool.getObject(basisCurveID,ENCHKTYPE_NOCHECK);
 	if(!objHolder.isDefined())
 	{
-		LAObject* e = new LAObject();
-		e->add("Name", new LADataString()).convertFromString(basisCurveID);
-		e->add("AsOfDate", new LADataDate(asof));
-		e->add("Terms",	new LADataDoubles(terms));
-		e->add("DiscountFactors",new LADataDoubles(dfs_mod));
+		AQLObject* e = new AQLObject();
+		e->add("Name", new AQLDataString()).convertFromString(basisCurveID);
+		e->add("AsOfDate", new AQLDataDate(asof));
+		e->add("Terms",	new AQLDataDoubles(terms));
+		e->add("DiscountFactors",new AQLDataDoubles(dfs_mod));
 		objPool.set(basisCurveID,e);
 	}
 	else if(objHolder.isDefined())
 	{
-		LADataHolder* dh;
+		AQLDataHolder* dh;
 		dh = &objHolder.getData("AsOfDate",ISDEFINED);
-		LADataDate& date = dynamic_cast<LADataDate &>(dh->get());
+		AQLDataDate& date = dynamic_cast<AQLDataDate &>(dh->get());
 		date.set(asof);
 
 		dh = &objHolder.getData("Terms",ISDEFINED);
-		LADataDoubles& terms_att = dynamic_cast<LADataDoubles& >(dh->get());
+		AQLDataDoubles& terms_att = dynamic_cast<AQLDataDoubles& >(dh->get());
 		terms_att.set(terms);
 		dh = &objHolder.getData("DiscountFactors",ISDEFINED);
-		LADataDoubles& dfs = dynamic_cast<LADataDoubles& >(dh->get());
+		AQLDataDoubles& dfs = dynamic_cast<AQLDataDoubles& >(dh->get());
 		dfs.set(dfs_mod);
 	}
 }
@@ -4918,9 +4918,9 @@ LAMathYieldCurvePro::setBasisRates2(const LAString& basisCurveID)
 void
 LAMathYieldCurvePro::addBasisRates(void)
 {	
-	LAObjectHolder objHolder = getYieldData().get();
-	const LAObject& YieldData = objHolder.get();
-	const DoubleArray& dfs   = dynamic_cast<const LADataDoubles&> ((YieldData.getData(IR_CALIBRATION_DATA_DFS + mCurveSuffix, ISNOTNULL)).get()).get();
+	AQLObjectHolder objHolder = getYieldData().get();
+	const AQLObject& YieldData = objHolder.get();
+	const DoubleArray& dfs   = dynamic_cast<const AQLDataDoubles&> ((YieldData.getData(IR_CALIBRATION_DATA_DFS + mCurveSuffix, ISNOTNULL)).get()).get();
 	DoubleArray dfs_mod(dfs.size());
 	
 	const DoubleMatrix& d_matrix = getBasisRates().get();
@@ -4928,19 +4928,19 @@ LAMathYieldCurvePro::addBasisRates(void)
 	for(unsigned int i = 0; i < d_matrix.size(); i++)
 	{
 		for(unsigned int j = 0; j < d_matrix[i].size(); j++)
-			dfs_mod[j] = LAMath::exp(-d_matrix[i][j]/* * terms[j]*/) * dfs[j];
+			dfs_mod[j] = AQLMath::exp(-d_matrix[i][j]/* * terms[j]*/) * dfs[j];
 	}
 	objHolder.remove(IR_CALIBRATION_DATA_DFS + mCurveSuffix);
-	objHolder.add(IR_CALIBRATION_DATA_DFS + mCurveSuffix, new LADataDoubles(dfs_mod));
+	objHolder.add(IR_CALIBRATION_DATA_DFS + mCurveSuffix, new AQLDataDoubles(dfs_mod));
 }
 
 /*!
     @brief set arb free flag and curve name
 */
 void
-LAMathYieldCurvePro::setArbFreeCurveName(const LAStringVector& curveNames_6ML, 
-									   const LAStringVector& curveNames_DF, 
-									   const LAStringVector& curveNames_3ML)
+LAMathYieldCurvePro::setArbFreeCurveName(const AQLStringVector& curveNames_6ML, 
+									   const AQLStringVector& curveNames_DF, 
+									   const AQLStringVector& curveNames_3ML)
 {
 	for (size_t i=0; i<curveNames_6ML.size(); i++)
 	{
@@ -4973,7 +4973,7 @@ LAMathYieldCurvePro::setArbFreeCurveName(const LAStringVector& curveNames_6ML,
 */
 LAMathYieldCurvePro::CalibrationCostFunction::CalibrationCostFunction(LAMathYieldCurvePro& outerObject,
                                                                     const DoubleArray grid_spread_time,
-                                                                    LAPriceDataInterpolation& spread_time_inter,
+                                                                    AQLPriceDataInterpolation& spread_time_inter,
 	                                                                const DoubleVector targetPV,
 																	unsigned int maxIterationNum
 	                                                               )
@@ -5020,19 +5020,19 @@ LAMathYieldCurvePro::CalibrationCostFunction::constraintsAreViolated(const Doubl
 */
 LAMathYieldCurvePro::CalibrationCostFunctionBasis::CalibrationCostFunctionBasis(LAMathYieldCurvePro& outerObject,
                                                                               const DoubleArray grid_spread_time,
-                                                                              LAPriceDataInterpolation &s_inter,
+                                                                              AQLPriceDataInterpolation &s_inter,
                                                                               const bool isDiscount, 
                                                                               const bool isFwdRen, 
                                                                               const bool isUSD, 
                                                                               const bool isFWDInter, 
-                                                                              const LAPriceDataInterpolation &f_inter, 
-                                                                              const LAPriceDataInterpolation *fwd_inter, 
+                                                                              const AQLPriceDataInterpolation &f_inter, 
+                                                                              const AQLPriceDataInterpolation *fwd_inter, 
                                                                               const std::vector<DoubleArray> &dfsVec, 
-	                                                                          const LAPriceDataInterpolation &a_f_inter, 
-                                                                              const LAPriceDataInterpolation *a_fwd_inter, 
-                                                                              const LAPriceDataInterpolation &a_d_inter, 
+	                                                                          const AQLPriceDataInterpolation &a_f_inter, 
+                                                                              const AQLPriceDataInterpolation *a_fwd_inter, 
+                                                                              const AQLPriceDataInterpolation &a_d_inter, 
                                                                               const double a_d_df_adjust, 
-                                                                              const LAPriceDataInterpolation *adjust_inter, 
+                                                                              const AQLPriceDataInterpolation *adjust_inter, 
 	                                                                          const bool isAgtSpread, 
                                                                               const DoubleArray &spreadVec, 
                                                                               const std::vector<IntArray> &cpd_times, 
@@ -5210,7 +5210,7 @@ LAMathBasisFunction::getType() const
 
 	@return	pointer of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAMathBasisFunction::clone() const
 {
     try 
@@ -5219,7 +5219,7 @@ LAMathBasisFunction::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -5233,7 +5233,7 @@ LAMathBasisFunction::operator()(const DoubleArray& x) const
 {
 	if(x.size() == 1)
 		return operator()(x[0]);
-	throw LACoreInvalidData("parameter size must be one", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("parameter size must be one", __FILE__, __LINE__);
 }
 
 /*!
@@ -5252,10 +5252,10 @@ LAMathBasisFunction::operator()(const double& x) const
 	for (unsigned int i = 0; i < mParam.size() -6; i += 2)
 	{
 		sum += mParam[i + 1] * x;
-		ret += mParam[i] * LAMath::exp(sum);
+		ret += mParam[i] * AQLMath::exp(sum);
 	}
-	ret += dfn * LAMath::exp(sum) + vminusv ;
-	return LAMath::sqr(ret);
+	ret += dfn * AQLMath::exp(sum) + vminusv ;
+	return AQLMath::sqr(ret);
 }
 
 /*!
@@ -5277,7 +5277,7 @@ LAMathBasisFunction2::~LAMathBasisFunction2()
 
 	@return	pointer of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAMathBasisFunction2::clone() const
 {
     try 
@@ -5286,7 +5286,7 @@ LAMathBasisFunction2::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -5300,7 +5300,7 @@ LAMathBasisFunction2::operator()(const DoubleArray& x) const
 {
 	if(x.size() == 1)
 		return operator()(x[0]);
-	throw LACoreInvalidData("parameter size must be one", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("parameter size must be one", __FILE__, __LINE__);
 }
 /*!
     @brief Return function value
@@ -5322,29 +5322,29 @@ LAMathBasisFunction2::operator()(const double& x) const
 	{
 		t += - mParam[i + 1];
 		sum += mParam[i + 1] * (t * x + b);
-		ret += mParam[i] * LAMath::exp(sum);
+		ret += mParam[i] * AQLMath::exp(sum);
 	}
 
-	ret += dfn*LAMath::exp(sum) + vminusv ;
-	return LAMath::sqr(ret);
+	ret += dfn*AQLMath::exp(sum) + vminusv ;
+	return AQLMath::sqr(ret);
 }
 
 void
-LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
+LAMathYieldCurvePro::setdNPVdm(const AQLString &curveType)
 {
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveType != STD)
 		suffix = "_" + curveType;
 
 	//check whethor Matrix has been made or not
-	LADataHolder *dh = 0;
+	AQLDataHolder *dh = 0;
 
 	dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONMATRIX + suffix));
 	if (dh->isDefined() && !dh->isNull())
 		return;
 
 	// get market data
-	LAString mktName;
+	AQLString mktName;
 	if (curveType == STD)
 	{
 		mktName = SWAP;
@@ -5353,32 +5353,32 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 	{
 		mktName = mAssignedCurveMktMap[curveType];
 	}
-	LAString suffix_mkt = "";
+	AQLString suffix_mkt = "";
 	if (mktName != SWAP)
 		suffix_mkt = "_" + mktName;
-	const LADataMultiReference* mr_;
-	LAStringVector tmpMktNames = mktName.toToken('_');
+	const AQLDataMultiReference* mr_;
+	AQLStringVector tmpMktNames = mktName.toToken('_');
 	if (tmpMktNames.size() == 2)
 	{
-		LAObjectHolder &eh_fy = getForeignYieldData().get();
+		AQLObjectHolder &eh_fy = getForeignYieldData().get();
 		if(!eh_fy.isDefined())
 		{	
-			throw LACoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__); 
+			throw AQLCoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__); 
 		}
 		else
 		{
-			mr_ = &dynamic_cast<const LADataMultiReference&>(eh_fy.get().getData(CALIBRATION_DATA_MARKETDATA + LAString("_") + tmpMktNames[1], ISNOTNULL).get());
+			mr_ = &dynamic_cast<const AQLDataMultiReference&>(eh_fy.get().getData(CALIBRATION_DATA_MARKETDATA + AQLString("_") + tmpMktNames[1], ISNOTNULL).get());
 		}
 	}
 	else
 	{
-		mr_ = &dynamic_cast<const LADataMultiReference&>(getData(CALIBRATION_DATA_MARKETDATA + suffix_mkt, ISNOTNULL).get());
+		mr_ = &dynamic_cast<const AQLDataMultiReference&>(getData(CALIBRATION_DATA_MARKETDATA + suffix_mkt, ISNOTNULL).get());
 	}
-	vector<LAObject*> dataall;
+	vector<AQLObject*> dataall;
 	IntArray omitvec;
 	for(unsigned int i = 0; i < mr_->getSize(); i++)
 	{
-       const LAString &dataType = dynamic_cast<const LADataString &>((mr_->get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+       const AQLString &dataType = dynamic_cast<const AQLDataString &>((mr_->get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 
 	   //grid long case whether we can omit or not
 	   dh = &(mr_->get(i).getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, NOCHECK));
@@ -5389,7 +5389,7 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 		   continue;
 	   }
 
-		LAString tmpType = dataType;
+		AQLString tmpType = dataType;
 		tmpType.toUpper();
 		if (tmpType == BASIS) 
 		{
@@ -5421,30 +5421,30 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 		}
 	}
 
-	LAStringVector typevec(dataall.size());
+	AQLStringVector typevec(dataall.size());
 	std::vector<DateVector> dateMat(dataall.size());
 	DoubleVector gridtermvec(dataall.size());
-	LAStringVector gridstrvec(dataall.size());
+	AQLStringVector gridstrvec(dataall.size());
 	DoubleVector mratevec(dataall.size());
 
 	DoubleVector dNPVdm(dataall.size());
 	DoubleMatrix dNPVdzero(dataall.size());
 	double dnpvdm = 0.0;
-	const LADate& asOfDate = getAsOfDate().get();
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA); 
+	const AQLDate& asOfDate = getAsOfDate().get();
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA); 
 	
-	const LAInterpolationBase& pInter = getDFInterpolation(&curveType);
+	const AQLInterpolationBase& pInter = getDFInterpolation(&curveType);
 	dh = &getData(IR_CALIBRATION_DATA_DFCURVENAME + suffix, NOCHECK);
-	LAString dfcurveType = curveType;
+	AQLString dfcurveType = curveType;
 	if (dh->isDefined() && !dh->isNull())
 	{
-		LAString keyname = dynamic_cast<LADataString &>(dh->get());
+		AQLString keyname = dynamic_cast<AQLDataString &>(dh->get());
 		if (keyname == ITSELF)
 			dfcurveType = curveType;
 		else
 			dfcurveType = keyname;
 	}
-	const LAInterpolationBase& pInterSTD = getDFInterpolation(&dfcurveType);
+	const AQLInterpolationBase& pInterSTD = getDFInterpolation(&dfcurveType);
 
 
 	//note that cashflow is always payers
@@ -5453,10 +5453,10 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 	for (unsigned int i = 0; i < sizeAll; i++)
 	{
 		dh = &(dataall[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL));
-		typevec[i] = dynamic_cast<const LADataString &>(dh->get());
+		typevec[i] = dynamic_cast<const AQLDataString &>(dh->get());
 
 		dh = &(dataall[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, ISNOTNULL));
-		dateMat[i] = dynamic_cast<const LADataDates &>(dh->get()).get();
+		dateMat[i] = dynamic_cast<const AQLDataDates &>(dh->get()).get();
 		dNPVdzero[i].resize(dateMat[i].size());
 
 		//termvec
@@ -5466,10 +5466,10 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 		if (!dh->isDefined() || dh->isNull())
 		{
 			dh = &(dataall[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL));
-			gridstrvec[i]= dynamic_cast<const LADataString &>(dh->get());
+			gridstrvec[i]= dynamic_cast<const AQLDataString &>(dh->get());
 		}
 		else
-			gridstrvec[i]= dynamic_cast<const LADataString &>(dh->get());
+			gridstrvec[i]= dynamic_cast<const AQLDataString &>(dh->get());
 		
 
 		dh = &(dataall[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, NOCHECK));
@@ -5477,16 +5477,16 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 		{
 			dh = &(dataall[i]->getData(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, ISNOTNULL));
 		}
-		const LAPriceDataDayCount& dcCalc = dynamic_cast<const LAPriceDataDayCount &>(dh->get());
+		const AQLPriceDataDayCount& dcCalc = dynamic_cast<const AQLPriceDataDayCount &>(dh->get());
 
 		//Libor, O_N or T_N case
 		if (typevec[i] == ZERO || typevec[i] == O_N || typevec[i] == T_N || typevec[i] == BOJ || typevec[i] == FEDFUNDRATE)
 		{
 			if (dateMat[i].size() != 2)
-				throw LACoreInvalidData("dNPVdzero Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("dNPVdzero Error",__FILE__,__LINE__);
 
 			dh = &(dataall[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL));
-			double mrate = dynamic_cast<const LADataDouble &>(dh->get());
+			double mrate = dynamic_cast<const AQLDataDouble &>(dh->get());
 
 			double calcterm = dcCalc.getTerm(dateMat[i][0],dateMat[i][1]);
 			double dfterm1 = dc_act365.getTerm(asOfDate, dateMat[i][0]);
@@ -5503,7 +5503,7 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 		else if(typevec[i] == PAR)
 		{
 			if (dateMat[i].size() < 2)
-				throw LACoreInvalidData("dNPVdzero Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("dNPVdzero Error",__FILE__,__LINE__);
 
 			double dfterm1 = dc_act365.getTerm(asOfDate, dateMat[i][0]);
 			double dftermLast = dc_act365.getTerm(asOfDate, dateMat[i].back());
@@ -5512,10 +5512,10 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 			double dfLast =  pInter.value(dftermLast);
 
 			dh = &(dataall[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL));
-			double mrate = dynamic_cast<const LADataDouble &>(dh->get());
-			if (LAMath::abs(mrate) < EPS)
+			double mrate = dynamic_cast<const AQLDataDouble &>(dh->get());
+			if (AQLMath::abs(mrate) < EPS)
 			{
-				//throw LACoreInvalidData("Market rate 0", __FILE__,__LINE__);
+				//throw AQLCoreInvalidData("Market rate 0", __FILE__,__LINE__);
 				mrate = EPS;
 				dNPVdm[i] = EPS;
 			}
@@ -5542,15 +5542,15 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 			// in case of basis there are 3cases, discountcase, forecastAndagainstspreadcase,
 			//and forecastAndnotspreadcase
 			if (dateMat[i].size() < 2)
-				throw LACoreInvalidData("dNPVdzero Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("dNPVdzero Error",__FILE__,__LINE__);
 
 			if (0==i)
 			{
 				dh = &(dataall[i]->getData(IR_CALIBRATION_DATA_ISDISCOUNT, ISNOTNULL));
-				isdiscount = dynamic_cast<LADataBool &>(dh->get());
+				isdiscount = dynamic_cast<AQLDataBool &>(dh->get());
 
 				dh = &(dataall[i]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL));
-				isagtspd = dynamic_cast<LADataBool &>(dh->get());
+				isagtspd = dynamic_cast<AQLDataBool &>(dh->get());
 			}
 
 			if (isdiscount)//XCCYBasisCase
@@ -5565,7 +5565,7 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 				double spreadj = 0.0;
 
 				dh = &(dataall[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL));
-				double brate = dynamic_cast<const LADataDouble &>(dh->get());
+				double brate = dynamic_cast<const AQLDataDouble &>(dh->get());
 				dNPVdzero[i][0] = -dfterm1 * basisdf1;
 				for (unsigned int j =1; j < dNPVdzero[i].size(); j++)
 				{
@@ -5619,23 +5619,23 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 				dNPVdzero[i].back() +=  sgn * afdfterm * baisdfj * afdivspreadj;
 				dNPVdm[i] += calcterm * baisdfj;
 				dh = &(dataall[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL));
-				double brate = dynamic_cast<const LADataDouble &>(dh->get());
+				double brate = dynamic_cast<const AQLDataDouble &>(dh->get());
 				mratevec[i] = brate;
 			}
 		}//future case
 		else if (typevec[i] == FUTURE)
 		{
 			if (dateMat[i].size() != 2)
-				throw LACoreInvalidData("dNPVdzero Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("dNPVdzero Error",__FILE__,__LINE__);
 
 			double mrate = 0.0;
 			dh = &(dataall[i]->getData(CALIBRATION_DATA_RATE, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
-				mrate = dynamic_cast<const LADataDouble &>(dh->get());
+				mrate = dynamic_cast<const AQLDataDouble &>(dh->get());
 			else
 			{
 				dh = &(dataall[i]->getData(PRICING_DATA_PRICE, ISNOTNULL));
-				mrate = 1.0- 0.01 *  dynamic_cast<const LADataDouble &>(dh->get());
+				mrate = 1.0- 0.01 *  dynamic_cast<const AQLDataDouble &>(dh->get());
 			}
 
 			double calcterm = dcCalc.getTerm(dateMat[i][0],dateMat[i][1]);
@@ -5651,16 +5651,16 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 		}
 		else if (typevec[i] == BASIS)
 		{
-			throw LACoreInvalidData("Not Support Now",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Not Support Now",__FILE__,__LINE__);
 		}
 		else if (typevec[i] == FRA3M || typevec[i] == FRA6M)
 		{
 			if (dateMat[i].size() != 2)
-				throw LACoreInvalidData("dNPVdzero Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("dNPVdzero Error",__FILE__,__LINE__);
 
 			double mrate = 0.0;
 			dh = &(dataall[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL));
-			mrate = dynamic_cast<const LADataDouble &>(dh->get());
+			mrate = dynamic_cast<const AQLDataDouble &>(dh->get());
 
 			double calcterm = dcCalc.getTerm(dateMat[i][0],dateMat[i][1]);
 			double dfterm1 = dc_act365.getTerm(asOfDate, dateMat[i][0]);
@@ -5688,8 +5688,8 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 		//decompose dNPVdzero
 		for (unsigned int j =0; j < dateMat[i].size(); j++)
 		{
-			LADate targetdate = dateMat[i][j];
-			LAAlgorithm::locate<DateVector, LADate>(gridvec,targetdate,gridvec.size(),gridpos);
+			AQLDate targetdate = dateMat[i][j];
+			AQLAlgorithm::locate<DateVector, AQLDate>(gridvec,targetdate,gridvec.size(),gridpos);
 
 			if (gridpos == 0)
 			{
@@ -5703,7 +5703,7 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 			{
 				double diffD = static_cast<double>(gridvec[gridpos-1].intervalDays(gridvec[gridpos]));
 				if (diffD == 0.0)
-					throw LACoreInvalidData("DateMatrix Error",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("DateMatrix Error",__FILE__,__LINE__);
 
 				double ratio1 = targetdate.intervalDays(gridvec[gridpos]) / diffD;
 
@@ -5717,108 +5717,108 @@ LAMathYieldCurvePro::setdNPVdm(const LAString &curveType)
 	for (unsigned int i= 0; i < sizeAll; i++)
 	{
 		if (dNPVdm[i] == 0.0)
-			throw LACoreInvalidData("dNPVdm 0 Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("dNPVdm 0 Error",__FILE__,__LINE__);
 		DoubleVector div_vec(sizeAll, dNPVdm[i]);
 		transform(decompMat[i].begin(), decompMat[i].end(), div_vec.begin(), decompMat[i].begin(), divides<double>());
 	}
 
 	//inverse
-	LAMatrix matobj(decompMat);
-	const LAMatrix& invmat = matobj.inverseMatrix();
-	const LAMatrix& transmat = invmat.transpose();
+	AQLMatrix matobj(decompMat);
+	const AQLMatrix& invmat = matobj.inverseMatrix();
+	const AQLMatrix& transmat = invmat.transpose();
 
 	DoubleMatrix ret(sizeAll, DoubleVector(sizeAll,0.0));
 	for (unsigned int i = 0; i < sizeAll; i++)
 		for (unsigned int j = 0; j < sizeAll; j++)
 			ret[i][j] = transmat.getValue(i,j);
 
-	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONMATRIX + suffix, new LADataDoubleMatrix(ret));
-	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONMATRIXTERM + suffix, new LADataDoubles(gridtermvec));
-	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONOMITGRIDS + suffix, new LADataInts(omitvec));
-	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONMATRIXTERMTYPES + suffix, new LADataStrings(gridstrvec));
-	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONRATEGRIDS + suffix, new LADataDoubles(mratevec));
-	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONMARKETTYPES + suffix, new LADataStrings(typevec));
+	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONMATRIX + suffix, new AQLDataDoubleMatrix(ret));
+	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONMATRIXTERM + suffix, new AQLDataDoubles(gridtermvec));
+	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONOMITGRIDS + suffix, new AQLDataInts(omitvec));
+	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONMATRIXTERMTYPES + suffix, new AQLDataStrings(gridstrvec));
+	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONRATEGRIDS + suffix, new AQLDataDoubles(mratevec));
+	getYieldData().get().add(IR_CALIBRATION_DATA_CONVERSIONMARKETTYPES + suffix, new AQLDataStrings(typevec));
 
 	return;
 }
 
 
-const LADataDoubleMatrix&
-LAMathYieldCurvePro::getConversionMatrix(const LAString &curveType) const
+const AQLDataDoubleMatrix&
+LAMathYieldCurvePro::getConversionMatrix(const AQLString &curveType) const
 {
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveType != STD)
 		suffix = "_" + curveType;
 
-	const LADataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONMATRIX + suffix, ISNOTNULL));
-	return dynamic_cast<const LADataDoubleMatrix &>(dh->get());
+	const AQLDataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONMATRIX + suffix, ISNOTNULL));
+	return dynamic_cast<const AQLDataDoubleMatrix &>(dh->get());
 }
 
-const LADataDoubles&	
-LAMathYieldCurvePro::getConversionMatrixTerm(const LAString &curveType) const
+const AQLDataDoubles&	
+LAMathYieldCurvePro::getConversionMatrixTerm(const AQLString &curveType) const
 {
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveType != STD)
 		suffix = "_" + curveType;
 
-	const LADataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONMATRIXTERM + suffix, ISNOTNULL));
-	return dynamic_cast<const LADataDoubles &>(dh->get());
+	const AQLDataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONMATRIXTERM + suffix, ISNOTNULL));
+	return dynamic_cast<const AQLDataDoubles &>(dh->get());
 }
 
-const LADataDoubles&	
-LAMathYieldCurvePro::getConversionMarketRates(const LAString &curveType) const
+const AQLDataDoubles&	
+LAMathYieldCurvePro::getConversionMarketRates(const AQLString &curveType) const
 {
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveType != STD)
 		suffix = "_" + curveType;
 
-	const LADataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONRATEGRIDS + suffix, ISNOTNULL));
-	return dynamic_cast<const LADataDoubles &>(dh->get());
+	const AQLDataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONRATEGRIDS + suffix, ISNOTNULL));
+	return dynamic_cast<const AQLDataDoubles &>(dh->get());
 }
 
 
-const LADataInts&
-LAMathYieldCurvePro::getConversionOmitGrids(const LAString &curveType) const
+const AQLDataInts&
+LAMathYieldCurvePro::getConversionOmitGrids(const AQLString &curveType) const
 {
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveType != STD)
 		suffix = "_" + curveType;
 
-	const LADataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONOMITGRIDS + suffix, ISNOTNULL));
-	return dynamic_cast<const LADataInts &>(dh->get());
+	const AQLDataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONOMITGRIDS + suffix, ISNOTNULL));
+	return dynamic_cast<const AQLDataInts &>(dh->get());
 }
 
-const LADataStrings&
-LAMathYieldCurvePro::getConversionMatrixTermTypes(const LAString &curveType) const
+const AQLDataStrings&
+LAMathYieldCurvePro::getConversionMatrixTermTypes(const AQLString &curveType) const
 {
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveType != STD)
 		suffix = "_" + curveType;
 
-	const LADataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONMATRIXTERMTYPES + suffix, ISNOTNULL));
-	return dynamic_cast<const LADataStrings &>(dh->get());
+	const AQLDataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONMATRIXTERMTYPES + suffix, ISNOTNULL));
+	return dynamic_cast<const AQLDataStrings &>(dh->get());
 }
 
-const LADataStrings&
-LAMathYieldCurvePro::getConversionMarketTypes(const LAString &curveType) const
+const AQLDataStrings&
+LAMathYieldCurvePro::getConversionMarketTypes(const AQLString &curveType) const
 {
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveType != STD)
 		suffix = "_" + curveType;
 
-	const LADataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONMARKETTYPES + suffix, ISNOTNULL));
-	return dynamic_cast<const LADataStrings &>(dh->get());
+	const AQLDataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONMARKETTYPES + suffix, ISNOTNULL));
+	return dynamic_cast<const AQLDataStrings &>(dh->get());
 }
 
 
 bool 
-LAMathYieldCurvePro::isOmitGridsExist(const LAString &curveType) const
+LAMathYieldCurvePro::isOmitGridsExist(const AQLString &curveType) const
 {
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveType != STD)
 		suffix = "_" + curveType;
 
-	const LADataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONOMITGRIDS + suffix));
+	const AQLDataHolder* dh = &(getYieldData().get().getData(IR_CALIBRATION_DATA_CONVERSIONOMITGRIDS + suffix));
 	return (dh->isDefined() && !dh->isNull());
 
 }
@@ -5826,41 +5826,41 @@ void
 LAMathYieldCurvePro::setCurveDependencyMap(void)
 {
 	//bcurve = STD + alpha then map[bcurve][Base][+alpha]
-	std::map<LAString, bool>::iterator itbgen = mBCurveGenMap.begin();
+	std::map<AQLString, bool>::iterator itbgen = mBCurveGenMap.begin();
 	for (itbgen = mBCurveGenMap.begin(); itbgen != mBCurveGenMap.end(); ++itbgen)
 	{
-		LAString curveType = itbgen->first;
+		AQLString curveType = itbgen->first;
 
-		LAString suffix = "";
+		AQLString suffix = "";
 		if (curveType != STD)
 			suffix = "_" + curveType;
 		//	// get market data
-		LAString suffix_mkt = "";
+		AQLString suffix_mkt = "";
 		if (curveType != STD)
 			suffix_mkt = "_" + mAssignedCurveMktMap[curveType];
-		const LADataMultiReference* mr_;
-		LAStringVector tmpMktNames = mAssignedCurveMktMap[curveType].toToken('_');
+		const AQLDataMultiReference* mr_;
+		AQLStringVector tmpMktNames = mAssignedCurveMktMap[curveType].toToken('_');
 		if (tmpMktNames.size() == 2)
 		{
-			LAObjectHolder &eh_fy = getForeignYieldData().get();
+			AQLObjectHolder &eh_fy = getForeignYieldData().get();
 			if(!eh_fy.isDefined())
 			{	
-				throw LACoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__); 
+				throw AQLCoreInvalidData("Foreign Yield Data does not exist!", __FILE__, __LINE__); 
 			}
 			else
 			{
-				mr_ = &dynamic_cast<const LADataMultiReference&>(eh_fy.get().getData(CALIBRATION_DATA_MARKETDATA + LAString("_") + tmpMktNames[1], ISNOTNULL).get());
+				mr_ = &dynamic_cast<const AQLDataMultiReference&>(eh_fy.get().getData(CALIBRATION_DATA_MARKETDATA + AQLString("_") + tmpMktNames[1], ISNOTNULL).get());
 			}
 		}
 		else
 		{
-			mr_ = &dynamic_cast<const LADataMultiReference&>(getData(CALIBRATION_DATA_MARKETDATA + suffix_mkt, ISNOTNULL).get());
+			mr_ = &dynamic_cast<const AQLDataMultiReference&>(getData(CALIBRATION_DATA_MARKETDATA + suffix_mkt, ISNOTNULL).get());
 		}
 		//find basis object
 		unsigned int bpos =  mr_->getSize();
 		for (unsigned int i = 0; i < mr_->getSize(); i++)
 		{
-			const LAString &dataType = dynamic_cast<const LADataString &>((mr_->get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+			const AQLString &dataType = dynamic_cast<const AQLDataString &>((mr_->get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 			if (dataType == BASIS)
 			{	
 				bpos = i;
@@ -5868,28 +5868,28 @@ LAMathYieldCurvePro::setCurveDependencyMap(void)
 			}
 		}
 		if (bpos == mr_->getSize())
-			throw LACoreInvalidData("Not found DataType = BASIS",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Not found DataType = BASIS",__FILE__,__LINE__);
 
-		LAObject& ebasis = mr_->get(bpos).get();
-		bool isdiscount = dynamic_cast<const LADataBool &>(ebasis.getData(IR_CALIBRATION_DATA_ISDISCOUNT, ISNOTNULL).get()).get();
-		bool isagtspd =  dynamic_cast<const LADataBool &>(ebasis.getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL).get()).get();
+		AQLObject& ebasis = mr_->get(bpos).get();
+		bool isdiscount = dynamic_cast<const AQLDataBool &>(ebasis.getData(IR_CALIBRATION_DATA_ISDISCOUNT, ISNOTNULL).get()).get();
+		bool isagtspd =  dynamic_cast<const AQLDataBool &>(ebasis.getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL).get()).get();
 		double spdval = 0.0;
-		LAString targetCurve;
+		AQLString targetCurve;
 		//forecasttype
 		if (!isdiscount)
 		{ 
 			//now under construnction
 			spdval = 1.0;
-			targetCurve = dynamic_cast<const LADataString &>(ebasis.getData(IR_CALIBRATION_DATA_AGTFORECAST , ISNOTNULL).get()).get();
+			targetCurve = dynamic_cast<const AQLDataString &>(ebasis.getData(IR_CALIBRATION_DATA_AGTFORECAST , ISNOTNULL).get()).get();
 		}
 		else //discount
 		{
 			//now under construnction
 			spdval = 1.0;
 			if (isagtspd)
-				targetCurve = dynamic_cast<const LADataString &>(ebasis.getData(IR_CALIBRATION_DATA_AGTFORECAST , ISNOTNULL).get()).get();
+				targetCurve = dynamic_cast<const AQLDataString &>(ebasis.getData(IR_CALIBRATION_DATA_AGTFORECAST , ISNOTNULL).get()).get();
 			else
-				targetCurve = dynamic_cast<const LADataString &>(ebasis.getData(IR_CALIBRATION_DATA_FORECAST , ISNOTNULL).get()).get();
+				targetCurve = dynamic_cast<const AQLDataString &>(ebasis.getData(IR_CALIBRATION_DATA_FORECAST , ISNOTNULL).get()).get();
 		}
 
 		if (mBCurveGenMap.find(targetCurve) == mBCurveGenMap.end())
@@ -5906,21 +5906,21 @@ LAMathYieldCurvePro::setCurveDependencyMap(void)
 
 }
 
-std::map<LAString, double>&
-LAMathYieldCurvePro::getCurveDependeny(const LAString &curveType) const 
+std::map<AQLString, double>&
+LAMathYieldCurvePro::getCurveDependeny(const AQLString &curveType) const 
 {
-	LAString tmp(curveType);
+	AQLString tmp(curveType);
 	if (mBfCurveType == tmp)
 		return mBfDpnMap;
 
 	//if xccybasiscurve = STD + (xccySpred) + (- 3M/6MSpread) 
 	//then return map, [xccybasiscurve][1], [3M-6Mbasiscurve][-1]
 	mBfDpnMap.clear();
-	mBfCurveType = LAString(tmp);
+	mBfCurveType = AQLString(tmp);
 
-	std::map<LAString, bool>::const_iterator itbgen = mBCurveGenMap.begin();
-	std::map<LAString, std::map<LAString, double> >::const_iterator itdpn = mDpnCurveMap.begin();
-	std::map<LAString, bool>::const_iterator itggen = mGCurveGenMap.begin();
+	std::map<AQLString, bool>::const_iterator itbgen = mBCurveGenMap.begin();
+	std::map<AQLString, std::map<AQLString, double> >::const_iterator itdpn = mDpnCurveMap.begin();
+	std::map<AQLString, bool>::const_iterator itggen = mGCurveGenMap.begin();
 
 	//std, 6mlibor both shift case
 	/*for(itggen = mGCurveGenMap.begin(); itggen != mGCurveGenMap.end(); ++itggen)
@@ -5941,20 +5941,20 @@ LAMathYieldCurvePro::getCurveDependeny(const LAString &curveType) const
 
 	if (mBCurveGenMap.find(curveType) == mBCurveGenMap.end() || 
 				mDpnCurveMap.find(curveType) == mDpnCurveMap.end())
-		throw LACoreInvalidData("Curve Generate Map Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Curve Generate Map Error",__FILE__,__LINE__);
 
-	LAString nameTmp = curveType;
+	AQLString nameTmp = curveType;
 	bool iscomplete = false;
 	while (!iscomplete)
 	{
 		
 		itdpn = mDpnCurveMap.find(nameTmp);
 		if (itdpn->second.size() != 1)
-			throw LACoreInvalidData("Not Support Now",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Not Support Now",__FILE__,__LINE__);
 		
-		std::map<LAString, double>::const_iterator itTmp = itdpn->second.begin();
+		std::map<AQLString, double>::const_iterator itTmp = itdpn->second.begin();
 		if (itTmp->first == nameTmp)
-			throw LACoreInvalidData("Loop Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Loop Error",__FILE__,__LINE__);
 	
 		//std, 6mlibor both shift case
 		//if (itTmp->first == "GenCurve")
@@ -5984,8 +5984,8 @@ LAMathYieldCurvePro::getCurveDependeny(const LAString &curveType) const
 }
 
 void
-LAMathYieldCurvePro::changeZeroRiskIntoMarketRisk(LAString curveType, const DoubleVector& termZeroVals, const DoubleVector& riskZeroVals,
-												LAStringVector& termMarketGrids, DoubleVector& riskMarketVals) const
+LAMathYieldCurvePro::changeZeroRiskIntoMarketRisk(AQLString curveType, const DoubleVector& termZeroVals, const DoubleVector& riskZeroVals,
+												AQLStringVector& termMarketGrids, DoubleVector& riskMarketVals) const
 {
 
 	termMarketGrids = getConversionMatrixTermTypes(curveType).get();
@@ -6002,7 +6002,7 @@ LAMathYieldCurvePro::changeZeroRiskIntoMarketRisk(LAString curveType, const Doub
 	{
 		double term = termZeroVals[i];
 		double riskval = riskZeroVals[i];
-		LAAlgorithm::locate<DoubleVector, double>(termvec,term,termvec.size(),gridpos);
+		AQLAlgorithm::locate<DoubleVector, double>(termvec,term,termvec.size(),gridpos);
 		if (gridpos == 0)
 		{
 			dNPVdzero[0] += riskval;
@@ -6015,7 +6015,7 @@ LAMathYieldCurvePro::changeZeroRiskIntoMarketRisk(LAString curveType, const Doub
 		{
 			double diffD = termvec[gridpos] - termvec[gridpos-1];
 			if (diffD == 0.0)
-				throw LACoreInvalidData("TermVec Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("TermVec Error",__FILE__,__LINE__);
 			
 			double ratio1 = (termvec[gridpos]- term) / diffD;
 			dNPVdzero[gridpos-1] +=riskval * ratio1;
@@ -6023,9 +6023,9 @@ LAMathYieldCurvePro::changeZeroRiskIntoMarketRisk(LAString curveType, const Doub
 		}
 	}
 	
-	LAMatrix convertMat(mat);
-	LAMatrix dNPVdzeroMat(dNPVdzero);
-	const LAMatrix& multimat = convertMat * dNPVdzeroMat;
+	AQLMatrix convertMat(mat);
+	AQLMatrix dNPVdzeroMat(dNPVdzero);
+	const AQLMatrix& multimat = convertMat * dNPVdzeroMat;
 	for (unsigned int l = 0; l < riskMarketVals.size(); l++)
 		riskMarketVals[l] = multimat.getValue(l,0);
 
@@ -6048,19 +6048,19 @@ LAMathYieldCurvePro::changeZeroRiskIntoMarketRisk(LAString curveType, const Doub
     @brief get IsSwapTenorAdjust
 	@return IsSwapTenorAdjust
 */
-const LADataBool&  
+const AQLDataBool&  
 LAMathYieldCurvePro::getIsSwapTenorAdjust(void) const
 {
-	return dynamic_cast<const LADataBool&>(mpIsSwapTenorAdjust->get());
+	return dynamic_cast<const AQLDataBool&>(mpIsSwapTenorAdjust->get());
 }
 /*!
     @brief get IsSwapTenorCahnge
 	@return IsSwapTenorCahnge
 */
-LADataBool&  
+AQLDataBool&  
 LAMathYieldCurvePro::getIsSwapTenorAdjust(void)
 {
-	return dynamic_cast<LADataBool&>(mpIsSwapTenorAdjust->get());
+	return dynamic_cast<AQLDataBool&>(mpIsSwapTenorAdjust->get());
 }
 
 /*!
@@ -6068,20 +6068,20 @@ LAMathYieldCurvePro::getIsSwapTenorAdjust(void)
 
 	@return 
 */
-const LADataReference&
+const AQLDataReference&
 LAMathYieldCurvePro::getForeignYieldData() const
 {
-	return dynamic_cast<const LADataReference&>(mpForeignYieldData->get());
+	return dynamic_cast<const AQLDataReference&>(mpForeignYieldData->get());
 }
 /*!
     @brief 
 			
 	@return 
 */
-LADataReference&
+AQLDataReference&
 LAMathYieldCurvePro::getForeignYieldData()
 {
-	return dynamic_cast<LADataReference&>(mpForeignYieldData->get());
+	return dynamic_cast<AQLDataReference&>(mpForeignYieldData->get());
 }
 
 /*!
@@ -6089,10 +6089,10 @@ LAMathYieldCurvePro::getForeignYieldData()
 
 	@return 
 */
-const LADataReference&
+const AQLDataReference&
 LAMathYieldCurvePro::getColYieldData() const
 {
-	return dynamic_cast<const LADataReference&>(mpColYieldData->get());
+	return dynamic_cast<const AQLDataReference&>(mpColYieldData->get());
 }
 
 /*!
@@ -6100,10 +6100,10 @@ LAMathYieldCurvePro::getColYieldData() const
 			
 	@return 
 */
-LADataReference&
+AQLDataReference&
 LAMathYieldCurvePro::getColYieldData()
 {
-	return dynamic_cast<LADataReference&>(mpColYieldData->get());
+	return dynamic_cast<AQLDataReference&>(mpColYieldData->get());
 }
 
 /*!
@@ -6112,69 +6112,69 @@ LAMathYieldCurvePro::getColYieldData()
 
 */
 void
-LAMathYieldCurvePro::setFloater(const LAString& curveName)
+LAMathYieldCurvePro::setFloater(const AQLString& curveName)
 {
-	LAString tmpCurveName = curveName;
-	LAObjectHolder &objHolder = getYieldData().get();
-	LADataHolder *dh;
+	AQLString tmpCurveName = curveName;
+	AQLObjectHolder &objHolder = getYieldData().get();
+	AQLDataHolder *dh;
 	// data check
 	bool isCheckCurves = false;
 	dh = &getData(IR_CALIBRATION_DATA_ISCURVEEXISTCHECK, NOCHECK);
-	if (dh->isDefined() && !dh->isNull()) isCheckCurves = dynamic_cast<const LADataBool &>(dh->get()).get();
+	if (dh->isDefined() && !dh->isNull()) isCheckCurves = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	bool isCurveAttrExist = checkCurveAttr(curveName);
 	if (isCheckCurves && isCurveAttrExist) return;
 
-	LAPriceDataDayCount dc_act(ACT_365_ISDA);
-	LAObject &yieldData = objHolder.get();
+	AQLPriceDataDayCount dc_act(ACT_365_ISDA);
+	AQLObject &yieldData = objHolder.get();
 
-	LAString discountName = 
-		dynamic_cast<LADataString&> (getData(IR_CALIBRATION_DATA_DISCOUNT + LAString("_") + tmpCurveName.toLower(), ISNOTNULL).get());
-	LAString forecastName = 
-		dynamic_cast<LADataString&> (getData(IR_CALIBRATION_DATA_FORECAST + LAString("_") + tmpCurveName.toLower(), ISNOTNULL).get());
-	LAString suffix_d = ""; if (discountName != STD) suffix_d = LAString("_") + discountName;
-	LAString suffix_f = ""; if (forecastName != STD) suffix_f = LAString("_") + forecastName;
+	AQLString discountName = 
+		dynamic_cast<AQLDataString&> (getData(IR_CALIBRATION_DATA_DISCOUNT + AQLString("_") + tmpCurveName.toLower(), ISNOTNULL).get());
+	AQLString forecastName = 
+		dynamic_cast<AQLDataString&> (getData(IR_CALIBRATION_DATA_FORECAST + AQLString("_") + tmpCurveName.toLower(), ISNOTNULL).get());
+	AQLString suffix_d = ""; if (discountName != STD) suffix_d = AQLString("_") + discountName;
+	AQLString suffix_f = ""; if (forecastName != STD) suffix_f = AQLString("_") + forecastName;
 	
 	// set forecast curve
-	LAPriceDataInterpolation f_inter = dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
-	const DoubleArray &terms_f = dynamic_cast<const LADataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + suffix_f, ISNOTNULL)).get()).get();
-	const DoubleArray &dfs_f   = dynamic_cast<const LADataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + suffix_f, ISNOTNULL)).get()).get();
+	AQLPriceDataInterpolation f_inter = dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
+	const DoubleArray &terms_f = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + suffix_f, ISNOTNULL)).get()).get();
+	const DoubleArray &dfs_f   = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + suffix_f, ISNOTNULL)).get()).get();
 	f_inter.set(terms_f, dfs_f);
 
 	// set discount curve
-	LAPriceDataInterpolation d_inter = dynamic_cast<LAPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
-	const DoubleArray &terms_d = dynamic_cast<const LADataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + suffix_d, ISNOTNULL)).get()).get();
-	const DoubleArray &dfs_d   = dynamic_cast<const LADataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + suffix_d, ISNOTNULL)).get()).get();
+	AQLPriceDataInterpolation d_inter = dynamic_cast<AQLPriceDataInterpolation &>(getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get());
+	const DoubleArray &terms_d = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(CALIBRATION_DATA_TERMS + suffix_d, ISNOTNULL)).get()).get();
+	const DoubleArray &dfs_d   = dynamic_cast<const AQLDataDoubles&> ((yieldData.getData(IR_CALIBRATION_DATA_DFS + suffix_d, ISNOTNULL)).get()).get();
 	d_inter.set(terms_d, dfs_d);
 
-	const DoubleArray &terms_std = dynamic_cast<const LADataDoubles &>((yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
+	const DoubleArray &terms_std = dynamic_cast<const AQLDataDoubles &>((yieldData.getData(CALIBRATION_DATA_TERMS, ISNOTNULL)).get()).get();
 	// maxterm for calc
 	const double tmax = terms_std.back();
 	// get base yield curve and asofdate
 	const LAMathYieldCurve &baseYieldCurve = dynamic_cast<const LAMathYieldCurve &>(getBaseYieldCurve().get().get());
-	const LADate &asof = dynamic_cast<const LADataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());	
+	const AQLDate &asof = dynamic_cast<const AQLDataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());	
 
 	DoubleArray dfs; dfs.push_back(1.);
 	DoubleArray terms; terms.push_back(0.);
 
 	const double eps_term = 1E-10;
 	
-	dh = &getData(IR_CALIBRATION_DATA_BASISDATA + LAString("_") + tmpCurveName.toLower(),NOCHECK);
+	dh = &getData(IR_CALIBRATION_DATA_BASISDATA + AQLString("_") + tmpCurveName.toLower(),NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		LAString basisMkt = dynamic_cast<LADataString &>(dh->get()).get();
-		LAString suffix = "_" + basisMkt;
+		AQLString basisMkt = dynamic_cast<AQLDataString &>(dh->get()).get();
+		AQLString suffix = "_" + basisMkt;
 		// get market data
-		const LADataMultiReference& mr = dynamic_cast<const LADataMultiReference&>
+		const AQLDataMultiReference& mr = dynamic_cast<const AQLDataMultiReference&>
 			(getData(CALIBRATION_DATA_MARKETDATA + suffix, ISNOTNULL).get());
-		vector<LAObject*> data;
+		vector<AQLObject*> data;
 		for(unsigned int i = 0; i < mr.getSize(); i++)
 		{
 			// check use grid
-			const LADataHolder *dh = &mr.get(i).getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
-			if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const LADataBool &>(dh->get()).get()) continue;
+			const AQLDataHolder *dh = &mr.get(i).getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
+			if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const AQLDataBool &>(dh->get()).get()) continue;
 			
-		   const LAString &dataType = dynamic_cast<const LADataString &>((mr.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
-			LAString tmpType = dataType;
+		   const AQLString &dataType = dynamic_cast<const AQLDataString &>((mr.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+			AQLString tmpType = dataType;
 			tmpType.toUpper();
 			if (tmpType.findString(BASIS) == 0) 
 			{
@@ -6184,48 +6184,48 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 		// data exist check
 		if (data.empty())
 		{
-			LAString msg = "CurveName = "+ basisMkt + ", basis data is not set.";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "CurveName = "+ basisMkt + ", basis data is not set.";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		// sort
 		sort(data.begin(), data.end(), Comp_term());
 		// market convencion info
-		const bool isTimeInter  = dynamic_cast<const LADataBool &>((data[0]->getData(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONBS, ISNOTNULL)).get()).get();
+		const bool isTimeInter  = dynamic_cast<const AQLDataBool &>((data[0]->getData(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONBS, ISNOTNULL)).get()).get();
 		//eom roll
 		bool eom = false;
 		dh = &data[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK);
 		if (dh->isDefined() && !dh->isNull()) 
-			eom = dynamic_cast<const LADataBool &>(dh->get()).get();
+			eom = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		// cashlet
-		const LAPriceDataDayCount &c_dc = dynamic_cast<const LAPriceDataDayCount &>(data[0]->getData(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, ISNOTNULL).get());
-		const LAPriceDataCalendar &c_cal = dynamic_cast<const LAPriceDataCalendar &>(data[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL).get());
-		const LAPriceDataSlidingRule &c_sld  = dynamic_cast<const LAPriceDataSlidingRule &>(data[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL).get());
-		const LADate &c_spotdate = dynamic_cast<const LADataDate &> (data[0]->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE, ISNOTNULL).get());
-		LAString c_freq = dynamic_cast<const LADataString &>(data[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCY, ISNOTNULL).get()).get();
-		const int c_lag  = dynamic_cast<const LADataInt &>(data[0]->getData(IR_CALIBRATION_DATA_CASHLETRESETLAG, ISNOTNULL).get());
+		const AQLPriceDataDayCount &c_dc = dynamic_cast<const AQLPriceDataDayCount &>(data[0]->getData(IR_CALIBRATION_DATA_CASHLETDAYCOUNT, ISNOTNULL).get());
+		const AQLPriceDataCalendar &c_cal = dynamic_cast<const AQLPriceDataCalendar &>(data[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL).get());
+		const AQLPriceDataSlidingRule &c_sld  = dynamic_cast<const AQLPriceDataSlidingRule &>(data[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL).get());
+		const AQLDate &c_spotdate = dynamic_cast<const AQLDataDate &> (data[0]->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE, ISNOTNULL).get());
+		AQLString c_freq = dynamic_cast<const AQLDataString &>(data[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCY, ISNOTNULL).get()).get();
+		const int c_lag  = dynamic_cast<const AQLDataInt &>(data[0]->getData(IR_CALIBRATION_DATA_CASHLETRESETLAG, ISNOTNULL).get());
 		// index
-		const LAPriceDataDayCount &i_dc = dynamic_cast<const LAPriceDataDayCount &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL).get());
-		const LAPriceDataCalendar &i_fixcal = dynamic_cast<const LAPriceDataCalendar &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, ISNOTNULL).get());
-		const LAPriceDataCalendar &i_paycal = dynamic_cast<const LAPriceDataCalendar &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXPAYMENTCALENDAR, ISNOTNULL).get());
-		const LAPriceDataSlidingRule &i_sld  = dynamic_cast<const LAPriceDataSlidingRule &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, ISNOTNULL).get());
-		const int i_lag  = dynamic_cast<const LADataInt &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXRESETLAG, ISNOTNULL).get());
-		LAString i_freq = dynamic_cast<const LADataString &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXFREQUENCY, ISNOTNULL).get()).get();
-		LAString i_accessary = dynamic_cast<const LADataString &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXACCESSARY, ISNOTNULL).get()).get();
+		const AQLPriceDataDayCount &i_dc = dynamic_cast<const AQLPriceDataDayCount &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL).get());
+		const AQLPriceDataCalendar &i_fixcal = dynamic_cast<const AQLPriceDataCalendar &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, ISNOTNULL).get());
+		const AQLPriceDataCalendar &i_paycal = dynamic_cast<const AQLPriceDataCalendar &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXPAYMENTCALENDAR, ISNOTNULL).get());
+		const AQLPriceDataSlidingRule &i_sld  = dynamic_cast<const AQLPriceDataSlidingRule &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, ISNOTNULL).get());
+		const int i_lag  = dynamic_cast<const AQLDataInt &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXRESETLAG, ISNOTNULL).get());
+		AQLString i_freq = dynamic_cast<const AQLDataString &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXFREQUENCY, ISNOTNULL).get()).get();
+		AQLString i_accessary = dynamic_cast<const AQLDataString &>(data[0]->getData(IR_CALIBRATION_DATA_INDEXACCESSARY, ISNOTNULL).get()).get();
 		// isfwdinterpolation
 		bool isFWDInter = false;
-		LAPriceDataInterpolation *fwdInter = 0;
+		AQLPriceDataInterpolation *fwdInter = 0;
 		dh = &(data[0]->getData(IR_CALIBRATION_DATA_ISFWDINTERPOLATION, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			isFWDInter = dynamic_cast<const LADataBool &>(dh->get()).get();
-			fwdInter = &dynamic_cast<LAPriceDataInterpolation &>(data[0]->getData(IR_CALIBRATION_DATA_FWDINTERPOLATION, ISNOTNULL).get());
+			isFWDInter = dynamic_cast<const AQLDataBool &>(dh->get()).get();
+			fwdInter = &dynamic_cast<AQLPriceDataInterpolation &>(data[0]->getData(IR_CALIBRATION_DATA_FWDINTERPOLATION, ISNOTNULL).get());
 		}
 		if (isFWDInter)
 		{
-			LAPriceDataDayCount dc;
-			LAPriceDataCalendar cal;
-			LAPriceDataSlidingRule sld;
-			LAString accessory;
+			AQLPriceDataDayCount dc;
+			AQLPriceDataCalendar cal;
+			AQLPriceDataSlidingRule sld;
+			AQLString accessory;
 			DoubleArray terms;
 			DoubleArray fwds;
 			DoubleArray taus;
@@ -6236,7 +6236,7 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 			fwdInter->set(terms, fwds);
 		}
 		// get max term
-		const LAString &termMax = dynamic_cast<const LADataString &>((data.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+		const AQLString &termMax = dynamic_cast<const AQLDataString &>((data.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		// calc term (apply to month)
 		int y, m, d, w;
 		LAMathDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
@@ -6262,30 +6262,30 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 		}
 		else 
 		{
-			LAString msg = "frequency is wrong";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "frequency is wrong";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
 		// set roll convention
-		LAString roll_conv("");
+		AQLString roll_conv("");
 		if (c_freq == LUNAR) roll_conv = ROLLCONV_LUNAR;
 		else if (eom) roll_conv = ROLLCONV_EOM;
 		else roll_conv = ROLLCONV_NORMAL;
 	
 		// get interpolation method
-		LAPriceDataInterpolation &b_inter = getInterpolation_bs();
+		AQLPriceDataInterpolation &b_inter = getInterpolation_bs();
 		DoubleArray b_t_grid(1, 0.0);
 		DoubleArray b_termstruct_grid(1, 0.0);
-		LAStringVector basisTerms;
+		AQLStringVector basisTerms;
 
 		for (unsigned int i = 0; i < data.size(); i++)
 		{
-			const LAString &strTerm  = dynamic_cast<const LADataString &>((data[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			basisTerms.push_back(strTerm);
 
-			double rate = dynamic_cast<const LADataDouble &>((data[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			double rate = dynamic_cast<const AQLDataDouble &>((data[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 			double term = 0.0;
-			LADate tmpDate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate tmpDate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
 			term = c_dc.getTerm(c_spotdate, tmpDate);
 
 			b_t_grid.push_back(term);
@@ -6314,10 +6314,10 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 		DateVector dvzeroDates;
 		for (unsigned int i = 1; i < max; ++i)
 		{
-			LAString strTerm = LAString(static_cast<int>(mUnit * (i - 1))) + LAString("M");
-			LAString dfstrTerm = LAString(static_cast<int>(mUnit * i)) + LAString("M");
-			LADate fdate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
-			LADate ldate = LAMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLString strTerm = AQLString(static_cast<int>(mUnit * (i - 1))) + AQLString("M");
+			AQLString dfstrTerm = AQLString(static_cast<int>(mUnit * i)) + AQLString("M");
+			AQLDate fdate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate ldate = LAMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
 			double dfTerm = dc_act.getTerm(asof, ldate);
 			double dfTerm_last = dc_act.getTerm(asof, fdate);
 			if (dfTerm > tmax + eps_term)
@@ -6371,82 +6371,82 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 		{
 			DateVector ret;
 
-			const LAString &strTerm  = dynamic_cast<const LADataString &>((data[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			LADate matudate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			const AQLString &strTerm  = dynamic_cast<const AQLDataString &>((data[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			AQLDate matudate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
 			ret.push_back(c_spotdate);
 
 			//find dvzeroDates
 			unsigned int pos=0;
-			if (!LAAlgorithm::find<DateVector,LADate>(dvzeroDates,matudate,0,dvzeroDates.size()-1 ,pos))
+			if (!AQLAlgorithm::find<DateVector,AQLDate>(dvzeroDates,matudate,0,dvzeroDates.size()-1 ,pos))
 			{
 				//this means basis grid e.x. 100y is longer than DF1 max grid, which ofcourse can not be calculated.
 				if (matudate > dvzeroDates.back())
 					continue;
 				else
-					throw LACoreInvalidData("BasisGrid Search Error",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("BasisGrid Search Error",__FILE__,__LINE__);
 			}
 
 			ret.insert(ret.end(),dvzeroDates.begin(),dvzeroDates.begin()+pos+1);
 			if(!data[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO,NOCHECK).isDefined())
 			{
-				data[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new LADataDates(ret));
+				data[i]->add(IR_CALIBRATION_DATA_CALCDATESFORDVZERO, new AQLDataDates(ret));
 			}
 			else
 			{
-				dynamic_cast<LADataDates&>(data[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(ret);
+				dynamic_cast<AQLDataDates&>(data[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(ret);
 			}
 		}
 
 		// cashlet
-		objHolder.remove(IR_CALIBRATION_DATA_CASHLETCALENDAR + LAString("_") + curveName);
-		objHolder.add(IR_CALIBRATION_DATA_CASHLETCALENDAR + LAString("_") + curveName, new LAPriceDataCalendar(c_cal));
-		objHolder.remove(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE + LAString("_") + curveName);
-		objHolder.add(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE + LAString("_") + curveName, new LAPriceDataSlidingRule(c_sld));
-		objHolder.remove(IR_CALIBRATION_DATA_CASHLETSPOTDATE + LAString("_") + curveName);
-		objHolder.add(IR_CALIBRATION_DATA_CASHLETSPOTDATE + LAString("_") + curveName, new LADataDate(c_spotdate));
-		objHolder.remove(IR_CALIBRATION_DATA_XCCYBASISTERM + LAString("_") + curveName);
-		objHolder.add(IR_CALIBRATION_DATA_XCCYBASISTERM + LAString("_") + curveName, new LADataStrings(basisTerms));
-		objHolder.remove(IR_CALIBRATION_DATA_ISEOMROLL + LAString("_") + curveName);
-		objHolder.add(IR_CALIBRATION_DATA_ISEOMROLL + LAString("_") + curveName, new LADataBool(eom));
+		objHolder.remove(IR_CALIBRATION_DATA_CASHLETCALENDAR + AQLString("_") + curveName);
+		objHolder.add(IR_CALIBRATION_DATA_CASHLETCALENDAR + AQLString("_") + curveName, new AQLPriceDataCalendar(c_cal));
+		objHolder.remove(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE + AQLString("_") + curveName);
+		objHolder.add(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE + AQLString("_") + curveName, new AQLPriceDataSlidingRule(c_sld));
+		objHolder.remove(IR_CALIBRATION_DATA_CASHLETSPOTDATE + AQLString("_") + curveName);
+		objHolder.add(IR_CALIBRATION_DATA_CASHLETSPOTDATE + AQLString("_") + curveName, new AQLDataDate(c_spotdate));
+		objHolder.remove(IR_CALIBRATION_DATA_XCCYBASISTERM + AQLString("_") + curveName);
+		objHolder.add(IR_CALIBRATION_DATA_XCCYBASISTERM + AQLString("_") + curveName, new AQLDataStrings(basisTerms));
+		objHolder.remove(IR_CALIBRATION_DATA_ISEOMROLL + AQLString("_") + curveName);
+		objHolder.add(IR_CALIBRATION_DATA_ISEOMROLL + AQLString("_") + curveName, new AQLDataBool(eom));
 
-		const LADataHolder *dh = &data[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUETERM, NOCHECK);
+		const AQLDataHolder *dh = &data[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUETERM, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const DoubleArray& adjustValue_term = dynamic_cast<const LADataDoubles&>(dh->get()).get();
-			objHolder.remove(IR_CALIBRATION_DATA_ADJUSTVALUETERM + LAString("_") + curveName);
-			objHolder.add(IR_CALIBRATION_DATA_ADJUSTVALUETERM + LAString("_") + curveName, new LADataDoubles(adjustValue_term));
+			const DoubleArray& adjustValue_term = dynamic_cast<const AQLDataDoubles&>(dh->get()).get();
+			objHolder.remove(IR_CALIBRATION_DATA_ADJUSTVALUETERM + AQLString("_") + curveName);
+			objHolder.add(IR_CALIBRATION_DATA_ADJUSTVALUETERM + AQLString("_") + curveName, new AQLDataDoubles(adjustValue_term));
 
 			const DoubleArray& adjustValue 
-				= dynamic_cast<const LADataDoubles&>(data[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUE, ISNOTNULL).get()).get();
-			objHolder.remove(IR_CALIBRATION_DATA_ADJUSTVALUE + LAString("_") + curveName);
-			objHolder.add(IR_CALIBRATION_DATA_ADJUSTVALUE + LAString("_") + curveName, new LADataDoubles(adjustValue));
+				= dynamic_cast<const AQLDataDoubles&>(data[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUE, ISNOTNULL).get()).get();
+			objHolder.remove(IR_CALIBRATION_DATA_ADJUSTVALUE + AQLString("_") + curveName);
+			objHolder.add(IR_CALIBRATION_DATA_ADJUSTVALUE + AQLString("_") + curveName, new AQLDataDoubles(adjustValue));
 
-			const LAPriceDataInterpolation& interpAtt
-				= dynamic_cast<const LAPriceDataInterpolation&>(data[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, ISNOTNULL).get());
-			objHolder.remove(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION + LAString("_") + curveName);
-			objHolder.add(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION + LAString("_") + curveName, new LAPriceDataInterpolation(interpAtt));
+			const AQLPriceDataInterpolation& interpAtt
+				= dynamic_cast<const AQLPriceDataInterpolation&>(data[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, ISNOTNULL).get());
+			objHolder.remove(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION + AQLString("_") + curveName);
+			objHolder.add(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION + AQLString("_") + curveName, new AQLPriceDataInterpolation(interpAtt));
 		}
 	}
 	else
 	{
 		// get market data
-		const LADataMultiReference& mr = getMarketData();
-		vector<LAObject*> data;
+		const AQLDataMultiReference& mr = getMarketData();
+		vector<AQLObject*> data;
 		for(unsigned int i = 0; i < mr.getSize(); i++)
 		{
 			// check use grid
-			const LADataHolder *dh = &mr.get(i).get().getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
-			if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const LADataBool &>(dh->get()).get()) continue;
+			const AQLDataHolder *dh = &mr.get(i).get().getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
+			if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const AQLDataBool &>(dh->get()).get()) continue;
 
-			LAString datatype_str = dynamic_cast<const LADataString&> ((mr.get(i).get().getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+			AQLString datatype_str = dynamic_cast<const AQLDataString&> ((mr.get(i).get().getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 			datatype_str.toUpper();
 			if (datatype_str == PAR) data.push_back(&mr.get(i).get());
 		}
 		// data exist check
 		if (data.empty())
 		{
-			LAString msg = "swap market is not set.";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "swap market is not set.";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		// sort
 		sort(data.begin(), data.end(), Comp_term());
@@ -6454,36 +6454,36 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 		bool eom = false;
 		dh = &data[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK);
 		if (dh->isDefined() && !dh->isNull()) 
-			eom = dynamic_cast<const LADataBool &>(dh->get()).get();
+			eom = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		// cashlet
-		const LAPriceDataDayCount &c_dc = dynamic_cast<const LAPriceDataDayCount &>(data[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, ISNOTNULL).get());
-		const LAPriceDataCalendar &c_cal = dynamic_cast<const LAPriceDataCalendar &>(data[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
-		const LAPriceDataSlidingRule &c_sld  = dynamic_cast<const LAPriceDataSlidingRule &>(data[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
-		const LADate &c_spotdate = dynamic_cast<const LADataDate &> (data[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL).get());
-		LAString c_freq = dynamic_cast<const LADataString &>(data[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, ISNOTNULL).get()).get();
-		const int c_lag  = dynamic_cast<const LADataInt &>(data[0]->getData(IR_CALIBRATION_DATA_SPOTLAG, ISNOTNULL).get());
+		const AQLPriceDataDayCount &c_dc = dynamic_cast<const AQLPriceDataDayCount &>(data[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, ISNOTNULL).get());
+		const AQLPriceDataCalendar &c_cal = dynamic_cast<const AQLPriceDataCalendar &>(data[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+		const AQLPriceDataSlidingRule &c_sld  = dynamic_cast<const AQLPriceDataSlidingRule &>(data[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+		const AQLDate &c_spotdate = dynamic_cast<const AQLDataDate &> (data[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL).get());
+		AQLString c_freq = dynamic_cast<const AQLDataString &>(data[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, ISNOTNULL).get()).get();
+		const int c_lag  = dynamic_cast<const AQLDataInt &>(data[0]->getData(IR_CALIBRATION_DATA_SPOTLAG, ISNOTNULL).get());
 		// index
-		const LAPriceDataDayCount &i_dc = dynamic_cast<const LAPriceDataDayCount &>(data[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, ISNOTNULL).get());
-		const LAPriceDataCalendar &i_fixcal = dynamic_cast<const LAPriceDataCalendar &>(data[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
-		const LAPriceDataCalendar &i_paycal = dynamic_cast<const LAPriceDataCalendar &>(data[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
-		const LAPriceDataSlidingRule &i_sld  = dynamic_cast<const LAPriceDataSlidingRule &>(data[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
-		const int i_lag  = dynamic_cast<const LADataInt &>(data[0]->getData(IR_CALIBRATION_DATA_SPOTLAG, ISNOTNULL).get());
-		LAString i_freq = dynamic_cast<const LADataString &>(data[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, ISNOTNULL).get()).get();
+		const AQLPriceDataDayCount &i_dc = dynamic_cast<const AQLPriceDataDayCount &>(data[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, ISNOTNULL).get());
+		const AQLPriceDataCalendar &i_fixcal = dynamic_cast<const AQLPriceDataCalendar &>(data[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+		const AQLPriceDataCalendar &i_paycal = dynamic_cast<const AQLPriceDataCalendar &>(data[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+		const AQLPriceDataSlidingRule &i_sld  = dynamic_cast<const AQLPriceDataSlidingRule &>(data[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+		const int i_lag  = dynamic_cast<const AQLDataInt &>(data[0]->getData(IR_CALIBRATION_DATA_SPOTLAG, ISNOTNULL).get());
+		AQLString i_freq = dynamic_cast<const AQLDataString &>(data[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, ISNOTNULL).get()).get();
 		// isfwdinterpolation
 		bool isFWDInter = false;
-		LAPriceDataInterpolation *fwdInter = 0;
+		AQLPriceDataInterpolation *fwdInter = 0;
 		dh = &(data[0]->getData(IR_CALIBRATION_DATA_ISFWDINTERPOLATION, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			isFWDInter = dynamic_cast<const LADataBool &>(dh->get()).get();
-			fwdInter = &dynamic_cast<LAPriceDataInterpolation &>(data[0]->getData(IR_CALIBRATION_DATA_FWDINTERPOLATION, ISNOTNULL).get());
+			isFWDInter = dynamic_cast<const AQLDataBool &>(dh->get()).get();
+			fwdInter = &dynamic_cast<AQLPriceDataInterpolation &>(data[0]->getData(IR_CALIBRATION_DATA_FWDINTERPOLATION, ISNOTNULL).get());
 		}
 		if (isFWDInter)
 		{
-			LAPriceDataDayCount dc;
-			LAPriceDataCalendar cal;
-			LAPriceDataSlidingRule sld;
-			LAString accessory;
+			AQLPriceDataDayCount dc;
+			AQLPriceDataCalendar cal;
+			AQLPriceDataSlidingRule sld;
+			AQLString accessory;
 			DoubleArray terms;
 			DoubleArray fwds;
 			DoubleArray taus;
@@ -6494,7 +6494,7 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 			fwdInter->set(terms, fwds);
 		}
 		// get max term
-		const LAString &termMax = dynamic_cast<const LADataString &>((data.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+		const AQLString &termMax = dynamic_cast<const AQLDataString &>((data.back()->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		// calc term (apply to month)
 		int y, m, d, w;
 		LAMathDateCalculations::termStrtoYMDW(termMax, y, m, d, w);
@@ -6520,12 +6520,12 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 		}
 		else 
 		{
-			LAString msg = "frequency is wrong";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "frequency is wrong";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
-		LAString i_accessary = LAString(static_cast<int > (mUnit)) + LAString("M");
+		AQLString i_accessary = AQLString(static_cast<int > (mUnit)) + AQLString("M");
 		// set roll convention
-		LAString roll_conv("");
+		AQLString roll_conv("");
 		if (c_freq == LUNAR) roll_conv = ROLLCONV_LUNAR;
 		else if (eom) roll_conv = ROLLCONV_EOM;
 		else roll_conv = ROLLCONV_NORMAL;
@@ -6543,10 +6543,10 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 		double rateTauDF = 0.;
 		for (unsigned int i = 1; i < max; ++i)
 		{
-			LAString strTerm = LAString(static_cast<int>(mUnit * (i - 1))) + LAString("M");
-			LAString dfstrTerm = LAString(static_cast<int>(mUnit * i)) + LAString("M");
-			LADate fdate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
-			LADate ldate = LAMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLString strTerm = AQLString(static_cast<int>(mUnit * (i - 1))) + AQLString("M");
+			AQLString dfstrTerm = AQLString(static_cast<int>(mUnit * i)) + AQLString("M");
+			AQLDate fdate = LAMathDateCalculations::getDate(c_spotdate, strTerm, c_sld, &c_cal, true, &roll_conv);
+			AQLDate ldate = LAMathDateCalculations::getDate(c_spotdate, dfstrTerm, c_sld, &c_cal, true, &roll_conv);
 			double dfTerm = dc_act.getTerm(asof, ldate);
 			double dfTerm_last = dc_act.getTerm(asof, fdate);
 			if (dfTerm > tmax + eps_term)
@@ -6583,10 +6583,10 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 		}
 	}
 
-	objHolder.remove(CALIBRATION_DATA_TERMS + LAString("_") + curveName);
-	objHolder.remove(IR_CALIBRATION_DATA_DFS + LAString("_") + curveName);
-	objHolder.add(CALIBRATION_DATA_TERMS + LAString("_") + curveName, new LADataDoubles(terms));
-	objHolder.add(IR_CALIBRATION_DATA_DFS + LAString("_") + curveName, new LADataDoubles(dfs));
+	objHolder.remove(CALIBRATION_DATA_TERMS + AQLString("_") + curveName);
+	objHolder.remove(IR_CALIBRATION_DATA_DFS + AQLString("_") + curveName);
+	objHolder.add(CALIBRATION_DATA_TERMS + AQLString("_") + curveName, new AQLDataDoubles(terms));
+	objHolder.add(IR_CALIBRATION_DATA_DFS + AQLString("_") + curveName, new AQLDataDoubles(dfs));
 }
 
 /*!
@@ -6595,18 +6595,18 @@ LAMathYieldCurvePro::setFloater(const LAString& curveName)
 	@param[in] market name
 */
 bool 
-LAMathYieldCurvePro::checkCurveAttr(const LAString& mktName) const
+LAMathYieldCurvePro::checkCurveAttr(const AQLString& mktName) const
 {
 	bool ret = true;
-	const LADataHolder *dh;
-	const LADataReference& ref = getYieldData();
-	LAObjectHolder objHolder = ref.get();
-	for (std::map<LAString, LAString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
+	const AQLDataHolder *dh;
+	const AQLDataReference& ref = getYieldData();
+	AQLObjectHolder objHolder = ref.get();
+	for (std::map<AQLString, AQLString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
 	{
 		if (it->second == mktName)
 		{
-			const LAString& curveName = it->first;
-			LAString suffix = "";
+			const AQLString& curveName = it->first;
+			AQLString suffix = "";
 			if (curveName != STD) suffix = "_" + curveName;
 			dh = &(objHolder.getData(CALIBRATION_DATA_TERMS + suffix, NOCHECK));
 			if (!dh->isDefined() || dh->isNull()) ret = false;
@@ -6623,16 +6623,16 @@ LAMathYieldCurvePro::checkCurveAttr(const LAString& mktName) const
 	@param[out] yieldData
 */
 void 
-LAMathYieldCurvePro::removeAllCuveData(LAObject &yieldData) const
+LAMathYieldCurvePro::removeAllCuveData(AQLObject &yieldData) const
 {
-	for (std::map<LAString, LAString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
+	for (std::map<AQLString, AQLString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
 	{
 		if (mNonRemovableMarket.end() != mNonRemovableMarket.find(it->second))
 		{
 			continue;
 		}
-		const LAString& curveName = it->first;
-		LAString suffix = "";
+		const AQLString& curveName = it->first;
+		AQLString suffix = "";
 		if (curveName != STD) suffix = "_" + curveName;
 		yieldData.remove(CALIBRATION_DATA_TERMS + suffix);
 		yieldData.remove(IR_CALIBRATION_DATA_DFS + suffix);		
@@ -6646,19 +6646,19 @@ LAMathYieldCurvePro::removeAllCuveData(LAObject &yieldData) const
 	@param[in] market name
 */
 void 
-LAMathYieldCurvePro::removeCuveData(LAObject &yieldData, const LAString& mktName) const
+LAMathYieldCurvePro::removeCuveData(AQLObject &yieldData, const AQLString& mktName) const
 {
 	if (mNonRemovableMarket.end() != mNonRemovableMarket.find(mktName))
 	{
-		LAString msg = "This market cannot be removed. market = " + mktName;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "This market cannot be removed. market = " + mktName;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
-	for (std::map<LAString, LAString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
+	for (std::map<AQLString, AQLString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
 	{
 		if (it->second == mktName)
 		{
-			const LAString& curveName = it->first;
-			LAString suffix = "";
+			const AQLString& curveName = it->first;
+			AQLString suffix = "";
 			if (curveName != STD) suffix = "_" + curveName;
 			yieldData.remove(CALIBRATION_DATA_TERMS + suffix);
 			yieldData.remove(IR_CALIBRATION_DATA_DFS + suffix);		
@@ -6673,13 +6673,13 @@ LAMathYieldCurvePro::removeCuveData(LAObject &yieldData, const LAString& mktName
 	@param[in] market name
 */
 void 
-LAMathYieldCurvePro::removeBasisCuveData(LAObject &yieldData) const
+LAMathYieldCurvePro::removeBasisCuveData(AQLObject &yieldData) const
 {
-	const LADataHolder *dh = &getData(IR_CALIBRATION_DATA_BASISDFS, NOCHECK);
+	const AQLDataHolder *dh = &getData(IR_CALIBRATION_DATA_BASISDFS, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LAStringVector &basisDFs = dynamic_cast<const LADataStrings &>(dh->get()).get();		
-		for (std::map<LAString, LAString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
+		const AQLStringVector &basisDFs = dynamic_cast<const AQLDataStrings &>(dh->get()).get();		
+		for (std::map<AQLString, AQLString>::const_iterator it = mAssignedCurveMktMap.begin(); it != mAssignedCurveMktMap.end(); it++)
 		{
 			if (mNonRemovableMarket.end() != mNonRemovableMarket.find(it->second))
 			{
@@ -6687,8 +6687,8 @@ LAMathYieldCurvePro::removeBasisCuveData(LAObject &yieldData) const
 			}
 			if (basisDFs.end() != std::find(basisDFs.begin(), basisDFs.end(), it->first))
 			{
-				const LAString& curveName = it->first;
-				LAString suffix = "";
+				const AQLString& curveName = it->first;
+				AQLString suffix = "";
 				if (curveName != STD) suffix = "_" + curveName;
 				yieldData.remove(CALIBRATION_DATA_TERMS + suffix);
 				yieldData.remove(IR_CALIBRATION_DATA_DFS + suffix);		
@@ -6706,22 +6706,22 @@ LAMathYieldCurvePro::removeBasisCuveData(LAObject &yieldData) const
 	@param[out] cal
 */
 void 
-LAMathYieldCurvePro::getForwardConvention(const LAString &curveName, LAPriceDataDayCount &dc, LAPriceDataSlidingRule &sld, LAPriceDataCalendar &cal, LAString &accessary) const
+LAMathYieldCurvePro::getForwardConvention(const AQLString &curveName, AQLPriceDataDayCount &dc, AQLPriceDataSlidingRule &sld, AQLPriceDataCalendar &cal, AQLString &accessary) const
 {
-	const LAString def_accessary = "1Y";
-	const LADataHolder *dh = 0;
+	const AQLString def_accessary = "1Y";
+	const AQLDataHolder *dh = 0;
 	if (mBCurveGenMap.find(curveName) != mBCurveGenMap.end())
 	{
-		LAString suffix = "_" + getMarketForCurve(curveName);
+		AQLString suffix = "_" + getMarketForCurve(curveName);
 		dh = &getData(CALIBRATION_DATA_MARKETDATA + suffix, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
 
-			const LADataMultiReference& mr = dynamic_cast<const LADataMultiReference&>(dh->get());
-			vector<LAObject*> data_basis;
+			const AQLDataMultiReference& mr = dynamic_cast<const AQLDataMultiReference&>(dh->get());
+			vector<AQLObject*> data_basis;
 			for (unsigned int i = 0; i < mr.getSize(); ++i)
 			{
-				LAString datatype_str = dynamic_cast<const LADataString&> ((mr.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+				AQLString datatype_str = dynamic_cast<const AQLDataString&> ((mr.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 				datatype_str.toUpper();
 				if (datatype_str == BASIS)
 				{
@@ -6734,14 +6734,14 @@ LAMathYieldCurvePro::getForwardConvention(const LAString &curveName, LAPriceData
 			}
 			if (data_basis.empty())
 			{
-				LAString msg = "Basis Data is empty. curveName = " + curveName;
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "Basis Data is empty. curveName = " + curveName;
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
-			dc = dynamic_cast<const LAPriceDataDayCount &>(data_basis[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL).get());
-			sld = dynamic_cast<const LAPriceDataSlidingRule &>(data_basis[0]->getData(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, ISNOTNULL).get());
+			dc = dynamic_cast<const AQLPriceDataDayCount &>(data_basis[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL).get());
+			sld = dynamic_cast<const AQLPriceDataSlidingRule &>(data_basis[0]->getData(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, ISNOTNULL).get());
 			// calendar get from cashflow info, because we use frn method.
-			cal = dynamic_cast<const LAPriceDataCalendar &>(data_basis[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL).get());
-			accessary = dynamic_cast<const LADataString &>(data_basis[0]->getData(IR_CALIBRATION_DATA_INDEXACCESSARY, ISNOTNULL).get()).get();
+			cal = dynamic_cast<const AQLPriceDataCalendar &>(data_basis[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL).get());
+			accessary = dynamic_cast<const AQLDataString &>(data_basis[0]->getData(IR_CALIBRATION_DATA_INDEXACCESSARY, ISNOTNULL).get()).get();
 		}
 		else
 		{
@@ -6750,8 +6750,8 @@ LAMathYieldCurvePro::getForwardConvention(const LAString &curveName, LAPriceData
 	}
 	else
 	{
-		LAString suffix = "";
-		const LAString market = getMarketForCurve(curveName);
+		AQLString suffix = "";
+		const AQLString market = getMarketForCurve(curveName);
 		if (!getIsArbFree() && market != SWAP)
 		{
 			suffix = "_" + market;
@@ -6760,13 +6760,13 @@ LAMathYieldCurvePro::getForwardConvention(const LAString &curveName, LAPriceData
 		dh = &getData(CALIBRATION_DATA_MARKETDATA + suffix, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const LADataMultiReference& mr = dynamic_cast<const LADataMultiReference&>(dh->get());
+			const AQLDataMultiReference& mr = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 
-			vector<LAObject*> data_libor;
-			vector<LAObject*> data_swap;
+			vector<AQLObject*> data_libor;
+			vector<AQLObject*> data_swap;
 			for (unsigned int i = 0; i < mr.getSize(); ++i)
 			{
-				LAString datatype_str = dynamic_cast<const LADataString&> ((mr.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+				AQLString datatype_str = dynamic_cast<const AQLDataString&> ((mr.get(i).getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 				datatype_str.toUpper();
 				if (datatype_str == ZERO)
 				{
@@ -6781,12 +6781,12 @@ LAMathYieldCurvePro::getForwardConvention(const LAString &curveName, LAPriceData
 			{
 				accessary = def_accessary;
 				return;
-				//LAString msg = "Libor or Swap Data is empty. curveName = " + curveName;
-				//throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				//AQLString msg = "Libor or Swap Data is empty. curveName = " + curveName;
+				//throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
-			dc = dynamic_cast<const LAPriceDataDayCount &>(data_libor[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL).get());
-			sld = dynamic_cast<const LAPriceDataSlidingRule &>(data_libor[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
-			cal = dynamic_cast<const LAPriceDataCalendar &>(data_libor[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
+			dc = dynamic_cast<const AQLPriceDataDayCount &>(data_libor[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL).get());
+			sld = dynamic_cast<const AQLPriceDataSlidingRule &>(data_libor[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL).get());
+			cal = dynamic_cast<const AQLPriceDataCalendar &>(data_libor[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL).get());
 
 			if (getIsArbFree())
 			{
@@ -6805,22 +6805,22 @@ LAMathYieldCurvePro::getForwardConvention(const LAString &curveName, LAPriceData
 			}
 			else
 			{
-				LAString freq;
+				AQLString freq;
 				dh = &data_swap[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, NOCHECK);
 				if (dh->isDefined() && !dh->isNull())
 				{
-					freq = dynamic_cast<const LADataString &>(dh->get()).get();
+					freq = dynamic_cast<const AQLDataString &>(dh->get()).get();
 				}
 				else
 				{
 					dh = &data_swap[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, NOCHECK);
 					if (dh->isDefined() && !dh->isNull())
 					{
-						freq = dynamic_cast<const LADataString &>(dh->get()).get();
+						freq = dynamic_cast<const AQLDataString &>(dh->get()).get();
 					}
 					else
 					{
-						freq = dynamic_cast<const LADataString &>(data_swap[0]->getData(IR_CALIBRATION_DATA_FREQUENCY, NOCHECK).get()).get();
+						freq = dynamic_cast<const AQLDataString &>(data_swap[0]->getData(IR_CALIBRATION_DATA_FREQUENCY, NOCHECK).get()).get();
 					}
 				}
 				if (freq == ANNUAL)
@@ -6841,8 +6841,8 @@ LAMathYieldCurvePro::getForwardConvention(const LAString &curveName, LAPriceData
 				}
 				else 
 				{
-					LAString msg = "frequency is wrong";
-					throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+					AQLString msg = "frequency is wrong";
+					throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 			}
 		}
@@ -6859,7 +6859,7 @@ LAMathYieldCurvePro::getForwardConvention(const LAString &curveName, LAPriceData
 
 */
 void 
-LAMathYieldCurvePro::insertNonRemovableMarket(const LAString& mktName)
+LAMathYieldCurvePro::insertNonRemovableMarket(const AQLString& mktName)
 {
 	if (mNonRemovableMarket.end() == mNonRemovableMarket.find(mktName))
 	{
@@ -6875,7 +6875,7 @@ LAMathYieldCurvePro::insertNonRemovableMarket(const LAString& mktName)
 
 */
 void 
-LAMathYieldCurvePro::eraseNonRemovableMarket(const LAString& mktName)
+LAMathYieldCurvePro::eraseNonRemovableMarket(const AQLString& mktName)
 {
 	if (mNonRemovableMarket.end() != mNonRemovableMarket.find(mktName))
 	{
@@ -6891,23 +6891,23 @@ LAMathYieldCurvePro::eraseNonRemovableMarket(const LAString& mktName)
 	@param[in] curveName          
 */
 void
-LAMathYieldCurvePro::setCurveConvention(LAObjectHolder& objHolder,
-									  std::vector<LAObject*>& mktData,
-									  const LAString& curveName)
+LAMathYieldCurvePro::setCurveConvention(AQLObjectHolder& objHolder,
+									  std::vector<AQLObject*>& mktData,
+									  const AQLString& curveName)
 {
-	LAString suffix = "";
+	AQLString suffix = "";
 	if (curveName != STD) suffix = "_" + curveName;
 	
 	if (mktData.size() == 0)
 	{
-		throw LACoreInvalidData("Swap size must be more than one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Swap size must be more than one", __FILE__, __LINE__);
 	}
 
-	LAString freq = dynamic_cast<const LADataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_INDEXFREQUENCY, ISNOTNULL).get()).get();
-	const LAPriceDataCalendar* cal = &dynamic_cast<const LAPriceDataCalendar&> ((mktData[0]->getData(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, ISNOTNULL)).get());
-	const LAPriceDataSlidingRule* sld  = &dynamic_cast<const LAPriceDataSlidingRule &>(mktData[0]->getData(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, ISNOTNULL).get());
-	const LAPriceDataDayCount* dc = &dynamic_cast<const LAPriceDataDayCount &>(mktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL).get());
-	LAString accessary = dynamic_cast<const LADataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_INDEXACCESSARY, ISNOTNULL).get()).get();
+	AQLString freq = dynamic_cast<const AQLDataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_INDEXFREQUENCY, ISNOTNULL).get()).get();
+	const AQLPriceDataCalendar* cal = &dynamic_cast<const AQLPriceDataCalendar&> ((mktData[0]->getData(IR_CALIBRATION_DATA_INDEXFIXINGCALENDAR, ISNOTNULL)).get());
+	const AQLPriceDataSlidingRule* sld  = &dynamic_cast<const AQLPriceDataSlidingRule &>(mktData[0]->getData(IR_CALIBRATION_DATA_INDEXSLIDINGRULE, ISNOTNULL).get());
+	const AQLPriceDataDayCount* dc = &dynamic_cast<const AQLPriceDataDayCount &>(mktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL).get());
+	AQLString accessary = dynamic_cast<const AQLDataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_INDEXACCESSARY, ISNOTNULL).get()).get();
 
 	objHolder.remove(IR_CALIBRATION_DATA_FREQUENCY + suffix);
 	objHolder.remove(CALIBRATION_DATA_CALENDAR + suffix);
@@ -6915,11 +6915,11 @@ LAMathYieldCurvePro::setCurveConvention(LAObjectHolder& objHolder,
 	objHolder.remove(IR_CALIBRATION_DATA_DAYCOUNT + suffix);
 	objHolder.remove(IR_CALIBRATION_DATA_ACCESSARY + suffix);
 	
-	objHolder.add(IR_CALIBRATION_DATA_FREQUENCY + suffix, new LADataString(freq));
-	objHolder.add(CALIBRATION_DATA_CALENDAR + suffix, new LAPriceDataCalendar(*cal));
-	objHolder.add(CALIBRATION_DATA_SLIDINGRULE + suffix, new LAPriceDataSlidingRule(*sld));
-	objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT + suffix, new LAPriceDataDayCount(*dc));
-	objHolder.add(IR_CALIBRATION_DATA_ACCESSARY + suffix, new LADataString(accessary));
+	objHolder.add(IR_CALIBRATION_DATA_FREQUENCY + suffix, new AQLDataString(freq));
+	objHolder.add(CALIBRATION_DATA_CALENDAR + suffix, new AQLPriceDataCalendar(*cal));
+	objHolder.add(CALIBRATION_DATA_SLIDINGRULE + suffix, new AQLPriceDataSlidingRule(*sld));
+	objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT + suffix, new AQLPriceDataDayCount(*dc));
+	objHolder.add(IR_CALIBRATION_DATA_ACCESSARY + suffix, new AQLDataString(accessary));
 }	
 
 /*
@@ -6931,7 +6931,7 @@ LAMathYieldCurvePro::setCurveConvention(LAObjectHolder& objHolder,
 	@param d_inter [in] discount factor
 	@return annuity
 */
-double LAMathYieldCurvePro::calcAnnuity(double spotTerm, const DoubleArray& terms_grid, const DoubleArray& terms_interval, const LAPriceDataInterpolation& d_inter)
+double LAMathYieldCurvePro::calcAnnuity(double spotTerm, const DoubleArray& terms_grid, const DoubleArray& terms_interval, const AQLPriceDataInterpolation& d_inter)
 {
 	double annuity = 0.0;
 	for (std::size_t j = 0, je = terms_grid.size(); j < je; ++j)
@@ -6960,11 +6960,11 @@ double LAMathYieldCurvePro::calcAnnuity(double spotTerm, const DoubleArray& term
 	@param num_reset [out] number of reset in accrual periods
 	@return void
 */
-void LAMathYieldCurvePro::deducePaymentDatesAndTerms(const LADate& spotdate, const LAString& strTerm, const LAPriceDataSlidingRule& sld, const LAPriceDataCalendar& cal,
-	const LAString& roll_conv, const LAString& freq, const LAString& freq_payment, const LAPriceDataDayCount& dc, bool eom, bool isBackward,
+void LAMathYieldCurvePro::deducePaymentDatesAndTerms(const AQLDate& spotdate, const AQLString& strTerm, const AQLPriceDataSlidingRule& sld, const AQLPriceDataCalendar& cal,
+	const AQLString& roll_conv, const AQLString& freq, const AQLString& freq_payment, const AQLPriceDataDayCount& dc, bool eom, bool isBackward,
 	DateVector& dates, DoubleArray& terms_grid, DoubleArray& terms_interval, IntArray& num_reset)
 {
-	LADate end;
+	AQLDate end;
 	if (isBackward)
 	{
 		end = LAMathDateCalculations::getDate(spotdate, strTerm, true);
@@ -6985,9 +6985,9 @@ void LAMathYieldCurvePro::deducePaymentDatesAndTerms(const LADate& spotdate, con
 	}
 	else
 	{
-		LADate end_unadjust = LAMathDateCalculations::getDate(spotdate, strTerm, true);
+		AQLDate end_unadjust = LAMathDateCalculations::getDate(spotdate, strTerm, true);
 		DateVector reset_dates;
-		LAString roll_conv_payment(LAPriceYieldGenerator::deduceRollConvention(freq_payment, eom));
+		AQLString roll_conv_payment(LAPriceYieldGenerator::deduceRollConvention(freq_payment, eom));
 		int roll_date_payment = spotdate.dayOfMonth();
 		if (freq == BUSINESS_DAYS || freq == DAILY)
 		{
@@ -7000,7 +7000,7 @@ void LAMathYieldCurvePro::deducePaymentDatesAndTerms(const LADate& spotdate, con
 
 		if (reset_dates.size() < 1)
 		{
-			throw LACoreInvalidData("There are no payment date in the target basis swap.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("There are no payment date in the target basis swap.", __FILE__, __LINE__);
 		}
 		LAPriceYieldGenerator::getPaymentDates(spotdate, reset_dates[0], freq, cal, sld, dc, dates, terms_grid, terms_interval, eom, isBackward);
 		num_reset.push_back(dates.size());
@@ -7021,7 +7021,7 @@ void LAMathYieldCurvePro::deducePaymentDatesAndTerms(const LADate& spotdate, con
 	int total_num_reset = accumulate(num_reset.cbegin(), num_reset.cend(), 0);
 	if (dates.size() < total_num_reset || terms_grid.size() < total_num_reset || terms_interval.size() < total_num_reset)
 	{
-		throw LACoreInvalidData("Total number of fixing and total number of coupon reset time must be match.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Total number of fixing and total number of coupon reset time must be match.", __FILE__, __LINE__);
 	}
 }
 
@@ -7046,8 +7046,8 @@ void LAMathYieldCurvePro::deducePaymentDatesAndTerms(const LADate& spotdate, con
 	@param num_reset [out] number of reset in accrual periods
 	@return void
 */
-void LAMathYieldCurvePro::deducePaymentDatesAndTermsThisSide(const LAString& strTerm, const LAString& roll_conv, bool eom, bool isSameGridIndex,
-	const LADate& c_spotdate, const LAPriceDataSlidingRule& c_sld, const LAPriceDataCalendar& c_cal, const LAString& c_freq, const LAString& c_freq_payment, const LAPriceDataDayCount& c_dc, bool c_isBackward, const LADate& a_c_spotdate,
+void LAMathYieldCurvePro::deducePaymentDatesAndTermsThisSide(const AQLString& strTerm, const AQLString& roll_conv, bool eom, bool isSameGridIndex,
+	const AQLDate& c_spotdate, const AQLPriceDataSlidingRule& c_sld, const AQLPriceDataCalendar& c_cal, const AQLString& c_freq, const AQLString& c_freq_payment, const AQLPriceDataDayCount& c_dc, bool c_isBackward, const AQLDate& a_c_spotdate,
 	DateVector& dates, DoubleArray& terms_grid, DoubleArray& terms_interval, IntArray& num_reset)
 {
 	if (c_spotdate < a_c_spotdate && !isSameGridIndex)
@@ -7055,7 +7055,7 @@ void LAMathYieldCurvePro::deducePaymentDatesAndTermsThisSide(const LAString& str
 		// roll from a_c_spotdate
 		deducePaymentDatesAndTerms(a_c_spotdate, strTerm, c_sld, c_cal, roll_conv, c_freq, c_freq_payment, c_dc, eom, c_isBackward, dates, terms_grid, terms_interval, num_reset);
 		// calc odd date
-		LAPriceDataDayCount dc_act(ACT_365_ISDA);
+		AQLPriceDataDayCount dc_act(ACT_365_ISDA);
 		const double odd_term = dc_act.getTerm(c_spotdate, a_c_spotdate);
 		const double odd_interval = c_dc.getTerm(c_spotdate, a_c_spotdate, false);
 		// term from c_spotdate

@@ -20,21 +20,21 @@
 
 #include <algorithm>
 #include "LARiskConfigurationVolFXVegaOptionAnalytic.h"
-#include "LAString.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAFunctionManager.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataFunction.h"
+#include "AQLString.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLFunctionManager.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataFunction.h"
 #include "LAPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LADealUtils.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
-#include "LALinearFunc.h"
+#include "AQLLinearFunc.h"
 
 
 using namespace std;
@@ -43,7 +43,7 @@ using namespace std;
 /*!
 
 */
-LARiskConfigurationVolFXVegaOptionAnalytic::LARiskConfigurationVolFXVegaOptionAnalytic(const LAString& risktype)
+LARiskConfigurationVolFXVegaOptionAnalytic::LARiskConfigurationVolFXVegaOptionAnalytic(const AQLString& risktype)
 : LARiskConfigurationVolFXVega()
 {
 	mAnalyticRiskType = risktype;
@@ -57,8 +57,8 @@ LARiskConfigurationVolFXVegaOptionAnalytic::~LARiskConfigurationVolFXVegaOptionA
 {
 }
 
-vector<pair<LAString, vector<LAObject *> > >
-LARiskConfigurationVolFXVegaOptionAnalytic::createRiskEntity(LAObjectPool &objPool) const
+vector<pair<AQLString, vector<AQLObject *> > >
+LARiskConfigurationVolFXVegaOptionAnalytic::createRiskEntity(AQLObjectPool &objPool) const
 {
 	return LARiskConfiguration::createOptionAnalyticRiskEntity(objPool);
 }
@@ -70,7 +70,7 @@ LARiskConfigurationVolFXVegaOptionAnalytic::createRiskEntity(LAObjectPool &objPo
 	@param[out] e
 */
 void
-LARiskConfigurationVolFXVegaOptionAnalytic::setUpTargetNames(const LAString &ccy, LAObject &e, LADataInstance &dataInstance) const
+LARiskConfigurationVolFXVegaOptionAnalytic::setUpTargetNames(const AQLString &ccy, AQLObject &e, AQLDataInstance &dataInstance) const
 {
 	return LARiskConfiguration::setUpOptionAnalyticTargetNames(ccy,e);
 }
@@ -80,10 +80,10 @@ LARiskConfigurationVolFXVegaOptionAnalytic::setUpTargetNames(const LAString &ccy
 	@param[in] fx
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationVolFXVegaOptionAnalytic::createScenario1Entity(const LAString &fx, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationVolFXVegaOptionAnalytic::createScenario1Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index)  const
 {
 	return LARiskConfiguration::createOptionAnalyticEntity(fx,dataInstance,index);
 }
@@ -95,13 +95,13 @@ LARiskConfigurationVolFXVegaOptionAnalytic::createScenario1Entity(const LAString
 	@param[in] key fx
 	@param[in,out] dataInstance
 	@param[in] index
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *> 
-LARiskConfigurationVolFXVegaOptionAnalytic::createScenario2Entity(const LAString &fx, LADataInstance &dataInstance, int index)  const
+vector<AQLObject *> 
+LARiskConfigurationVolFXVegaOptionAnalytic::createScenario2Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index)  const
 {	
 	(void)fx;(void)dataInstance;(void)index;
-	return vector<LAObject *>(0);
+	return vector<AQLObject *>(0);
 }
 
 
@@ -110,13 +110,13 @@ LARiskConfigurationVolFXVegaOptionAnalytic::createScenario2Entity(const LAString
 /*!
     @brief return riskname
 
-	@return LAString
+	@return AQLString
 */
-LAString
+AQLString
 LARiskConfigurationVolFXVegaOptionAnalytic::getRiskName(void) const
 {
-	LAString ret = LARiskConfigurationVolFXVega::getRiskName();
-	ret += LAString("_") + RISK_FRONT_OPTIONANALYTIC;
+	AQLString ret = LARiskConfigurationVolFXVega::getRiskName();
+	ret += AQLString("_") + RISK_FRONT_OPTIONANALYTIC;
 	return ret;
 }
 
@@ -127,7 +127,7 @@ LARiskConfigurationVolFXVegaOptionAnalytic::getRiskName(void) const
 	@return bool
 */
 bool
-LARiskConfigurationVolFXVegaOptionAnalytic::isWave(const LAString &fx) const
+LARiskConfigurationVolFXVegaOptionAnalytic::isWave(const AQLString &fx) const
 {
 	(void)fx;
 	return false;
@@ -140,7 +140,7 @@ LARiskConfigurationVolFXVegaOptionAnalytic::isWave(const LAString &fx) const
 	@return bool
 */
 bool
-LARiskConfigurationVolFXVegaOptionAnalytic::isGridSensitivity(const LAString &fx) const
+LARiskConfigurationVolFXVegaOptionAnalytic::isGridSensitivity(const AQLString &fx) const
 {
 	(void)fx;
 	return false;
@@ -150,28 +150,28 @@ LARiskConfigurationVolFXVegaOptionAnalytic::isGridSensitivity(const LAString &fx
     @brief return coefficient1
 
 	@param[in] fx
-	@return LAString
+	@return AQLString
 */
-LAString
-LARiskConfigurationVolFXVegaOptionAnalytic::getCoefficient1(const LAString &fx) const
+AQLString
+LARiskConfigurationVolFXVegaOptionAnalytic::getCoefficient1(const AQLString &fx) const
 {
 	(void)fx;
-	return LAString("0.0:") + LAString("1.0") + LAString(":0.0");
+	return AQLString("0.0:") + AQLString("1.0") + AQLString(":0.0");
 }
 
 double 
-LARiskConfigurationVolFXVegaOptionAnalytic::getShiftValForOptionAnalytic(const LAString &fx) const
+LARiskConfigurationVolFXVegaOptionAnalytic::getShiftValForOptionAnalytic(const AQLString &fx) const
 {
 	
 	double shiftval = getScenario1ShiftValue(fx);
-	LAString bumpdirection = getBumpDirection(fx);
+	AQLString bumpdirection = getBumpDirection(fx);
 	if (bumpdirection.toUpper() == RISK_BUMPDIRECTION_DOWNSHIFT)
 		shiftval *= -1.0;
 
 	const double divUnit = getDivUnit(fx);
 	if (divUnit == 0.0)
 	{	
-		throw LACoreInvalidData("Divid unit = 0 !!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Divid unit = 0 !!", __FILE__, __LINE__);
 	}
 	
 	shiftval /= divUnit;

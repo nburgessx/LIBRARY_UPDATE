@@ -162,7 +162,7 @@ namespace google_test
 	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOCurveFromFileName( const LAString& curveCalibrationFileName )
+	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
@@ -180,7 +180,7 @@ namespace google_test
 	*  @param [in]		marketDataFileName			The filename specifying generator curve data
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/
-	void setUpGeneratorCurve( const LAString& marketDataFileName, const LAString& curveCalibrationFileName )
+	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
 		google_test::createLWOMarketDataObjectFromFileName( marketDataFileName );
 		createLWOCurveFromFileName( curveCalibrationFileName );
@@ -194,7 +194,7 @@ namespace google_test
 	*  @param [in]		genCurveMarketData	The filename specifying generator curve data
 	*  @param [in]		meCurveCalibrate	The filename specifying generator curve build instructions
 	*/
-    void buildMeAndGeneratorCurves_OIS( const LAString& meCurveCalibrate, const LAString& genCurveMarketData, const LAString& genCurveCalibrate )
+    void buildMeAndGeneratorCurves_OIS( const AQLString& meCurveCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
 	{
 		// Build ME curve	
 		setUpMeOISCurve( meCurveCalibrate );
@@ -208,7 +208,7 @@ namespace google_test
 	*  @param [in]		genCurveMarketData	The filename specifying generator curve data
 	*  @param [in]		meCurveCalibrate	The filename specifying generator curve build instructions
 	*/
-	void buildMeAndGeneratorCurves_STD( const LAString& meCurveCalibrate, const LAString& genCurveMarketData, const LAString& genCurveCalibrate )
+	void buildMeAndGeneratorCurves_STD( const AQLString& meCurveCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
 	{
 		setUpMeSTDCurve( meCurveCalibrate );							// Build "ME" curve
 		setUpGeneratorCurve( genCurveMarketData, genCurveCalibrate );	// Build "Generator" curve
@@ -219,7 +219,7 @@ namespace google_test
 	*  @param [in]		genCurveMarketData	The filename specifying generator curve data
 	*  @param [in]		meCurveCalibrate	The filename specifying generator curve build instructions
 	*/
-	void buildMeAndGeneratorCurves_BASIS( const LAString& meCurveCalibrate, const LAString& genCurveMarketData, const LAString& genCurveCalibrate )
+	void buildMeAndGeneratorCurves_BASIS( const AQLString& meCurveCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
 	{
 		setUpMeTenorBasisCurve( meCurveCalibrate );						// Build "ME" curve
 		setUpGeneratorCurve( genCurveMarketData, genCurveCalibrate );	// Build Generator curve
@@ -230,7 +230,7 @@ namespace google_test
 	*  @param [in]		genCurveMarketData	The filename specifying generator curve data
 	*  @param [in]		meCurveCalibrate	The filename specifying generator curve build instructions
 	*/
-	void buildMeAndGeneratorCurves_XCCY( const LAString& meCurveCalibrate, const LAString& genCurveMarketData, const LAString& genCurveCalibrate )
+	void buildMeAndGeneratorCurves_XCCY( const AQLString& meCurveCalibrate, const AQLString& genCurveMarketData, const AQLString& genCurveCalibrate )
 	{
 		setUpMeXccyBasisCurve( meCurveCalibrate );						// Build "ME" curve
 		setUpGeneratorCurve( genCurveMarketData, genCurveCalibrate );	// Build Generator curve
@@ -242,17 +242,17 @@ namespace google_test
 	*  @param [out]		fixingDates			A vector containing monthly dates, up to 25Y in the future
 	*  @param [out]		forwardRates		A matrix containing forward rates corresponding to each fixing date, and curve index.
 	*/
-	void getForwardRatesForCollection( const LAString& curveCollection, const LAStringVector& curveIndices, DateVector& fixingDates, DoubleMatrix& forwardRates )
+	void getForwardRatesForCollection( const AQLString& curveCollection, const AQLStringVector& curveIndices, DateVector& fixingDates, DoubleMatrix& forwardRates )
 	{
 		fixingDates.clear();
 		forwardRates.clear();
 
-		const LAString startDate;  // Leave blank; default to curve asOfDate.
-		const LAString maturity          = "25Y";
-		const LAString businessDayAdjust = "NO_CHANGE";
-		const LAString calendar;
-		const LAString rollConvention    = "NORMAL";
-		const LAString frequency         = "Monthly";
+		const AQLString startDate;  // Leave blank; default to curve asOfDate.
+		const AQLString maturity          = "25Y";
+		const AQLString businessDayAdjust = "NO_CHANGE";
+		const AQLString calendar;
+		const AQLString rollConvention    = "NORMAL";
+		const AQLString frequency         = "Monthly";
 
 		validation::tryMeLWOCurveForwardRatesTable( fixingDates, forwardRates, curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency );
 	}
@@ -262,7 +262,7 @@ namespace google_test
     *  @param [in]		genCurveCollection		The curve collection containing Generator curves
     *  @param [in]		curveIndices			A vector of curveIndices to check
 	*/
-	void checkForwardRatesConsistency( const LAString& meCurveCollection, const LAString& genCurveCollection, const LAStringVector& curveIndices )
+	void checkForwardRatesConsistency( const AQLString& meCurveCollection, const AQLString& genCurveCollection, const AQLStringVector& curveIndices )
 	{
 		DateVector meFixingDates;
 		DoubleMatrix meForwardRates;
@@ -306,7 +306,7 @@ namespace google_test
 		{
 			for (size_t j=0; j<numMeForwardRateRows; j++)
 			{
-				LADate fixingDate                = meFixingDates[j];
+				AQLDate fixingDate                = meFixingDates[j];
 				double meCurveForwardRate        = meForwardRates[i][j];
 				double generatorCurveForwardRate = genForwardRates[i][j];
 
@@ -330,12 +330,12 @@ namespace google_test
 		buildMeAndGeneratorCurves_BASIS( ME_USD_3X12BASIS_CURVE, GEN_USD_3X12BASIS_MARKETDATA, GEN_USD_3X12BASIS_CURVE );
 
 		// Compare forward rates between USDME and USDGEN collections
-		LAStringVector curveIndices;
-		curveIndices.push_back( LAString( "OIS" ) );
-		curveIndices.push_back( LAString( "STD" ) );
-		curveIndices.push_back( LAString( "3M6MBasis" ) );
-		curveIndices.push_back( LAString( "1M3MBasis" ) );
-		curveIndices.push_back( LAString( "3M12MBasis" ) );
+		AQLStringVector curveIndices;
+		curveIndices.push_back( AQLString( "OIS" ) );
+		curveIndices.push_back( AQLString( "STD" ) );
+		curveIndices.push_back( AQLString( "3M6MBasis" ) );
+		curveIndices.push_back( AQLString( "1M3MBasis" ) );
+		curveIndices.push_back( AQLString( "3M12MBasis" ) );
 		checkForwardRatesConsistency( "USDME", "USDGEN", curveIndices );
 	}	
 	
@@ -347,9 +347,9 @@ namespace google_test
         buildMeAndGeneratorCurves_OIS( ME_EUR_OIS_CURVE2, GEN_EUR_OIS_MARKETDATA2, GEN_EUR_OIS_CURVE2 );
 		buildMeAndGeneratorCurves_STD( ME_EUR_STD_CURVE2, GEN_EUR_STD_MARKETDATA2, GEN_EUR_STD_CURVE2 );
 
-		LAStringVector curveIndices;
-		curveIndices.push_back( LAString( "OIS" ) );
-		curveIndices.push_back( LAString( "EUR3ML" ) );
+		AQLStringVector curveIndices;
+		curveIndices.push_back( AQLString( "OIS" ) );
+		curveIndices.push_back( AQLString( "EUR3ML" ) );
 
         checkForwardRatesConsistency( "EURME", "EURGEN", curveIndices );
 	}
@@ -375,19 +375,19 @@ namespace google_test
 		buildMeAndGeneratorCurves_BASIS( ME_JPY_TIBOR_3X6BASIS_CURVE, GEN_JPY_TIBOR_3X6BASIS_MARKETDATA, GEN_JPY_TIBOR_3X6BASIS_CURVE );
 		buildMeAndGeneratorCurves_BASIS( ME_JPY_TIBOR_1X6BASIS_CURVE, GEN_JPY_TIBOR_1X6BASIS_MARKETDATA, GEN_JPY_TIBOR_1X6BASIS_CURVE );
 
-		LAStringVector curveIndices;
-		curveIndices.push_back( LAString( "OIS" ) );
-		curveIndices.push_back( LAString( "STD" ) );
-		curveIndices.push_back( LAString( "3M6MBasis" ) );  // JSCC 3M
-		curveIndices.push_back( LAString( "1M6MBasis" ) );  // JSCC 1M
-		curveIndices.push_back( LAString( "JPY6ML" ) );
-		curveIndices.push_back( LAString( "JPY3ML" ) );
-		curveIndices.push_back( LAString( "JPY1ML" ) );
-		curveIndices.push_back( LAString( "XccyBasis" ) );
-        curveIndices.push_back( LAString( "JPY6ML" ) );     // JSCC 6M
-        curveIndices.push_back( LAString( "Tibor6M" ) );    
-		curveIndices.push_back( LAString( "Tibor3M" ) );
-		curveIndices.push_back( LAString( "Tibor1M" ) );
+		AQLStringVector curveIndices;
+		curveIndices.push_back( AQLString( "OIS" ) );
+		curveIndices.push_back( AQLString( "STD" ) );
+		curveIndices.push_back( AQLString( "3M6MBasis" ) );  // JSCC 3M
+		curveIndices.push_back( AQLString( "1M6MBasis" ) );  // JSCC 1M
+		curveIndices.push_back( AQLString( "JPY6ML" ) );
+		curveIndices.push_back( AQLString( "JPY3ML" ) );
+		curveIndices.push_back( AQLString( "JPY1ML" ) );
+		curveIndices.push_back( AQLString( "XccyBasis" ) );
+        curveIndices.push_back( AQLString( "JPY6ML" ) );     // JSCC 6M
+        curveIndices.push_back( AQLString( "Tibor6M" ) );    
+		curveIndices.push_back( AQLString( "Tibor3M" ) );
+		curveIndices.push_back( AQLString( "Tibor1M" ) );
 		checkForwardRatesConsistency( "JPYME", "JPYGEN", curveIndices );
 	}
 

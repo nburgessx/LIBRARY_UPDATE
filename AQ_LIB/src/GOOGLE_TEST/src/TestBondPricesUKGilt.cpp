@@ -70,7 +70,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -102,7 +102,7 @@ namespace google_test
 				//2) Check Yield Matching
 				const ReadDataFile::Load yieldInputFile(yieldInputFilename.c_str());
 				const std::string bondObjectName = yieldInputFile["bondObjectName"];
-				std::vector< LADate > settlementDates = yieldInputFile["settlementDates"];
+				std::vector< AQLDate > settlementDates = yieldInputFile["settlementDates"];
 				std::vector< double > prices = yieldInputFile["prices"];
 
 				auto actualYields = validation::tryMeLWOBondYield(bondObjectName, settlementDates, prices);
@@ -117,7 +117,7 @@ namespace google_test
 		{
 			EXPECT_GE(i, TEST_COUNT);
 		}
-		catch (const LACoreError& m)
+		catch (const AQLCoreError& m)
 		{
 			std::cout << m.getMsg();
 			ASSERT_FALSE(true);

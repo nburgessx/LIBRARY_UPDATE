@@ -2,17 +2,17 @@
     @brief Source code for class to represent index.
 
 			Following dataValues are registered automatically to data master<BR>
-			1.CALIBRATION_DATA_NAME(LADataString)<BR>			
-			2.IR_MODEL_DATA_INDEXTYPE(LADataString)<BR>			
-			3.IR_MODEL_DATA_ACCESSORY(LADataString)<BR>			
-			4.IR_MODEL_DATA_CURRENCY(LADataString)<BR>			
-			5.IR_MODEL_DATA_DAYCOUNT(LAPriceDataDayCount)<BR>
-			6.IR_MODEL_DATA_FREQUENCY(LADataString)<BR>			
-			7.IR_MODEL_DATA_CALENDAR(LAPriceDataCalendar)<BR>
-			8.IR_MODEL_DATA_SLIDINGRULE(LAPriceDataSlidingRule)<BR>
-			9.IR_MODEL_DATA_PATHENTITY(LADataReference)<BR>
-			10.IR_MODEL_DATA_FXRATE(LADataReference)<BR>
-			11.IR_MODEL_DATA_CACHESIZE(LADataInt)<BR>
+			1.CALIBRATION_DATA_NAME(AQLDataString)<BR>			
+			2.IR_MODEL_DATA_INDEXTYPE(AQLDataString)<BR>			
+			3.IR_MODEL_DATA_ACCESSORY(AQLDataString)<BR>			
+			4.IR_MODEL_DATA_CURRENCY(AQLDataString)<BR>			
+			5.IR_MODEL_DATA_DAYCOUNT(AQLPriceDataDayCount)<BR>
+			6.IR_MODEL_DATA_FREQUENCY(AQLDataString)<BR>			
+			7.IR_MODEL_DATA_CALENDAR(AQLPriceDataCalendar)<BR>
+			8.IR_MODEL_DATA_SLIDINGRULE(AQLPriceDataSlidingRule)<BR>
+			9.IR_MODEL_DATA_PATHENTITY(AQLDataReference)<BR>
+			10.IR_MODEL_DATA_FXRATE(AQLDataReference)<BR>
+			11.IR_MODEL_DATA_CACHESIZE(AQLDataInt)<BR>
 
 */
 //  2006, AlgoQuantHub..
@@ -24,17 +24,17 @@
 
 #include "LAMathIndexEntityInterpolation.h"
 #include "LAMathDateCalculations.h"
-#include "LADataVector.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLDataVector.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathPathEntity.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLPriceDataSlidingRule.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAMathFXEntity.h"
-#include "LALinearInterpolation.h"
-#include "LADataMultiReference.h"
-#include "LAObjectHolder.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathYieldCurve.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include <cmath>
 
 //
@@ -54,10 +54,10 @@ const double INFINITESIMAL = 1E-7;
 /*!
     @brief default constructor
 
-	@param[in] dataInstance pointer of LADataInstance object
+	@param[in] dataInstance pointer of AQLDataInstance object
 
 */
-LAMathIndexEntityInterpolation::LAMathIndexEntityInterpolation(LADataInstance* dataInstance)
+LAMathIndexEntityInterpolation::LAMathIndexEntityInterpolation(AQLDataInstance* dataInstance)
 :
 LAMathIndexEntity(dataInstance)
 {
@@ -163,7 +163,7 @@ LAMathIndexEntityInterpolation::calcIndex()
 {
     calcInterCache();
     
-	LALinearInterpolation interplation;
+	AQLLinearInterpolation interplation;
 	interplation.set(mT_Canonic, mInterCache);
 	for (unsigned int i = 0; i < mTimeGrid.size(); i++)
 	{
@@ -176,8 +176,8 @@ LAMathIndexEntityInterpolation::calcIndex()
 	@param[in] e copy source
 	@return reference to this object
 */
-LAObject&
-LAMathIndexEntityInterpolation::copy(const LAObject& e)
+AQLObject&
+LAMathIndexEntityInterpolation::copy(const AQLObject& e)
 {
     LAMathIndexEntity::copy(e);
     
@@ -195,7 +195,7 @@ LAMathIndexEntityInterpolation::copy(const LAObject& e)
     @brief Make copy(clone) of this Index Object object.
     @return pointer of Index Object object.
 */
-LAObject*  LAMathIndexEntityInterpolation::clone() const
+AQLObject*  LAMathIndexEntityInterpolation::clone() const
 {
     return new LAMathIndexEntityInterpolation(*this);
 }
@@ -205,19 +205,19 @@ LAObject*  LAMathIndexEntityInterpolation::clone() const
 void LAMathIndexEntityInterpolation::convertTermtoDate(DateVector& dateVec, DoubleArray& termVec)
 {
     // Get AsOfDate --------
-    const LADate& asof = mpPath->getAsOfDate().get();
+    const AQLDate& asof = mpPath->getAsOfDate().get();
 
     //
-    //LAPriceDataDayCount DC_(DayCount::ACT_365_ISDA);
-	LAPriceDataDayCount DC_(ACT_365_ISDA);
+    //AQLPriceDataDayCount DC_(DayCount::ACT_365_ISDA);
+	AQLPriceDataDayCount DC_(ACT_365_ISDA);
 
     //
     size_t n = termVec.size();
     dateVec.resize(n);
     
     //
-    LADate date_  = asof;
-    LADate date_tmp; 
+    AQLDate date_  = asof;
+    AQLDate date_tmp; 
     for(size_t i = 0; i < n; ++i)
     {   
         if(termVec[i] == 0.)
@@ -231,7 +231,7 @@ void LAMathIndexEntityInterpolation::convertTermtoDate(DateVector& dateVec, Doub
             {
                 date_.addDays(1);
                 tmp = DC_.getTerm(asof, date_);
-                if(DC_.getTerm(asof,date_) > 100.) {throw LACoreInvalidData("DC_.getTerm(asof,date_) > 100.", __FILE__, __LINE__); }
+                if(DC_.getTerm(asof,date_) > 100.) {throw AQLCoreInvalidData("DC_.getTerm(asof,date_) > 100.", __FILE__, __LINE__); }
             }
             
             date_tmp = date_; date_tmp.addDays(1);
@@ -260,7 +260,7 @@ LAMathIndexEntityInterpolation::setUp(void)
     //-------- Canonical Time Grid --------
     mT_Canonic = mpPath->getSDETimeGrid().get();
 	unsigned int pos;
-	LAAlgorithm::locate<DoubleArray, double>(mT_Canonic, mTimeGrid.back(), mT_Canonic.size(), pos);
+	AQLAlgorithm::locate<DoubleArray, double>(mT_Canonic, mTimeGrid.back(), mT_Canonic.size(), pos);
 	mT_Canonic.resize(pos + 1);
     mInterCache.resize(mT_Canonic.size());
 
@@ -270,10 +270,10 @@ LAMathIndexEntityInterpolation::setUp(void)
 	}
     //-------- Date handling --------
     // Get Frequency --------
-    LAString freq_(getFrequency()); freq_.toUpper();
+    AQLString freq_(getFrequency()); freq_.toUpper();
     
     // Get Accessory --------
-	LAString accessory(getAccessory().get());
+	AQLString accessory(getAccessory().get());
     bool CoTermFlg = accessory.findString("Co-Term") != -1;
 	if(CoTermFlg)
 	{
@@ -286,21 +286,21 @@ LAMathIndexEntityInterpolation::setUp(void)
     LAMathDateCalculations::termStrtoYMDW(accessory, Y_, M_, D_, W_);
     
     // Error handle
-    if(D_ != 0) { throw LACoreInvalidData("D_ != 0", __FILE__, __LINE__);	}
-	if(Y_ == 0 && M_ == 0) { throw LACoreInvalidData("Y_ == 0 && M_ == 0",__FILE__,__LINE__); }
+    if(D_ != 0) { throw AQLCoreInvalidData("D_ != 0", __FILE__, __LINE__);	}
+	if(Y_ == 0 && M_ == 0) { throw AQLCoreInvalidData("Y_ == 0 && M_ == 0",__FILE__,__LINE__); }
 
     // Get Calender --------
-    const LAPriceDataCalendar& cal = getCalendar();
+    const AQLPriceDataCalendar& cal = getCalendar();
 
     // Get SlidingRule --------
-    const LAPriceDataSlidingRule& srule = getSlidingRule();
+    const AQLPriceDataSlidingRule& srule = getSlidingRule();
 
     // Get DayCount --------
-    const LAPriceDataDayCount& Daycount = getDayCount();
-	const LAPriceDataDayCount& DaycountOfPath = mpPath->getDayCount();
+    const AQLPriceDataDayCount& Daycount = getDayCount();
+	const AQLPriceDataDayCount& DaycountOfPath = mpPath->getDayCount();
 
     // Get AsOfDate --------
-    const LADate& asof = mpPath->getAsOfDate().get();
+    const AQLDate& asof = mpPath->getAsOfDate().get();
     
 	size_t num_IndexTenorGridOf = 0;
 	size_t addmonth = 0;
@@ -319,7 +319,7 @@ LAMathIndexEntityInterpolation::setUp(void)
 	{
 		if (M_ % 3 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
 		}
 		num_IndexTenorGridOf = Y_ * 4 + M_ / 3 + 1;
 		addmonth = 3;
@@ -329,7 +329,7 @@ LAMathIndexEntityInterpolation::setUp(void)
 	{
 		if (M_ % 6 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
 		}	
 		num_IndexTenorGridOf = Y_ * 2 + M_ / 6 + 1;
 		addmonth = 6;
@@ -339,30 +339,30 @@ LAMathIndexEntityInterpolation::setUp(void)
 	{
 		if (M_ % 12 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);
 		}
 		num_IndexTenorGridOf = Y_ + M_ / 12 + 1;
 		addmonth = 12;
 	}
 	else
 	{
-            LAString msg = freq_ + "is not support"; 
-            throw LACoreInvalidData(msg.getCString() , __FILE__, __LINE__);
+            AQLString msg = freq_ + "is not support"; 
+            throw AQLCoreInvalidData(msg.getCString() , __FILE__, __LINE__);
 	}
 
     // Convert Term to Date
     convertTermtoDate(mDate_Canonic, mT_Canonic);
 
-	LADate date, date_nonadjust, olddate;
+	AQLDate date, date_nonadjust, olddate;
     
     size_t n = mT_Canonic.size();
     mIndex_TenorGrid.resize(n);
     mIndex_TermGrid.resize(n);
     if(CoTermFlg)
 	{
-		LADate terminal_nonadj = cal.getBusinessDay(asof,SPOTLAG);
+		AQLDate terminal_nonadj = cal.getBusinessDay(asof,SPOTLAG);
 		terminal_nonadj.addMonths(addmonth * (num_IndexTenorGridOf-1));
-		LADate terminal = srule.getDate(terminal_nonadj,cal);
+		AQLDate terminal = srule.getDate(terminal_nonadj,cal);
 		for (size_t i = 0; i < mT_Canonic.size(); i++)
 		{
 			mIndex_TermGrid[i].clear();
@@ -413,7 +413,7 @@ LAMathIndexEntityInterpolation::setUp(void)
 			mIndex_TenorGrid[i][0] = DaycountOfPath.getTerm(asof, date);//spot date
 			if (mT_Canonic[i] > mIndex_TenorGrid[i][0] + INFINITESIMAL)
 			{
-				throw LACoreInvalidData("mIndex_TenorGrid[i][0] is before mT_Canonic[i]", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("mIndex_TenorGrid[i][0] is before mT_Canonic[i]", __FILE__, __LINE__);
 			}
 			for (unsigned int j = 1; j < num_IndexTenorGridOf; j++)
 			{
@@ -429,7 +429,7 @@ LAMathIndexEntityInterpolation::setUp(void)
 	//calc basis spread
 	if (mpBasis->isDefined() && !mpBasis->isNull())
 	{
-		const LAStringVector &sde_attrnames_ = mpPath->getSDEAttrNames().get();
+		const AQLStringVector &sde_attrnames_ = mpPath->getSDEAttrNames().get();
 		for (size_t i = 0; i < sde_attrnames_.size(); i++)
 		{
 			const LAMathAttrSDE& attrsde = 

@@ -4,8 +4,8 @@
 #include <string>
 
 #include "CoreEnumerations.h"
-#include "LAMathCalendarSet.h"
-#include "LAMathCalendar.h"
+#include "AQLMathCalendarSet.h"
+#include "AQLMathCalendar.h"
 
 /*
 This class brings togetther the fixing business day adjusment, the accrual day business adjustment and the payment day adjustment.
@@ -31,15 +31,15 @@ namespace etrading
         // this adjusts from fixing date to the Accrual Start Date
         const BusinessDayAdjustmentEnum fixingDateBusinessDayAdjustment_;
         const std::string& fixingDateCalendar_;
-        const LAMathCalendar* mlibFixingDateCalendar_;
+        const AQLMathCalendar* mlibFixingDateCalendar_;
 
         const BusinessDayAdjustmentEnum accrualEndDateDateBusinessDayAdjustment_;
         const std::string& accrualEndDateDateCalendar_;
-        const LAMathCalendar* mlibAccrualEndDateDateCalendar_;
+        const AQLMathCalendar* mlibAccrualEndDateDateCalendar_;
 
         const BusinessDayAdjustmentEnum paymentDateBusinessDayAdjustment_;
         const std::string& paymentDateCalendar_;
-        const LAMathCalendar* mlibPaymentDateCalendar_;
+        const AQLMathCalendar* mlibPaymentDateCalendar_;
     };
 
 };

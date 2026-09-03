@@ -10,16 +10,16 @@
 
 
 #include <algorithm>
-#include "LADataInstance.h"
-#include "LAFunctionManager.h"
-#include "LACoreReferencePool.h"
-#include "LAObjectPool.h"
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataProcedure.h"
-#include "LADataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLFunctionManager.h"
+#include "AQLCoreReferencePool.h"
+#include "AQLObjectPool.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataMultiReference.h"
 #include "LAMathVolatility.h"
 #include "LAMathDateCalculations.h"
 #include "LAScenarioConfigurationVolatility.h"
@@ -27,7 +27,7 @@
 #include "LACalibrateVolatility.h"
 #include "LACalibrateVolatilityManager.h"
 #include "LACalibrationUtilities.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 using namespace std;
 
@@ -56,14 +56,14 @@ LAScenarioConfigurationVolatility::~LAScenarioConfigurationVolatility(void)
 	@param[in] param
 	@return vector<MBEnity *>
 */
-vector<LAObject *>
-LAScenarioConfigurationVolatility::createScenario(LADataInstance &dataInstance, const MAScenarioParam &param) const
+vector<AQLObject *>
+LAScenarioConfigurationVolatility::createScenario(AQLDataInstance &dataInstance, const MAScenarioParam &param) const
 {
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	LAMathVolatility &b_vol = dynamic_cast<LAMathVolatility &>
 		(objPool.getObject(param.targetName, ENCHKTYPE_ISDEFINED).get());
 
-	vector<LAObject *> ret(0);
+	vector<AQLObject *> ret(0);
 
 	if (param.isParallel)
 	{
@@ -72,7 +72,7 @@ LAScenarioConfigurationVolatility::createScenario(LADataInstance &dataInstance, 
 
 	if (param.isGrid)
 	{
-		vector<LAObject *> gridVol = createGridShiftVol(dataInstance, b_vol, param);
+		vector<AQLObject *> gridVol = createGridShiftVol(dataInstance, b_vol, param);
 		ret.insert(ret.end(), gridVol.begin(), gridVol.end());
 	}
 
@@ -86,21 +86,21 @@ LAScenarioConfigurationVolatility::createScenario(LADataInstance &dataInstance, 
 	@param[in] dataInstance
 	@param[in] baseVol
 	@param[in] param
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *>
-LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const
+vector<AQLObject *>
+LAScenarioConfigurationVolatility::createParallelShiftVol(AQLDataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const
 {
-	vector<LAObject *> ret(0);
-	LAString inputType = param.inputType;
+	vector<AQLObject *> ret(0);
+	AQLString inputType = param.inputType;
 	inputType.toUpper();
 
-	LAString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Parallel";
+	AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Parallel";
 
 	bool is_vol_clone = false;
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	LAMathVolatility *vol = 0;
-	LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+	AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
 		vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
@@ -120,7 +120,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 	// shift val input case
 	if (!param.paraShiftVec.empty())
 	{
-		LAString shiftType = param.shiftType;
+		AQLString shiftType = param.shiftType;
 		shiftType.toUpper();
 
 		double shiftVal = param.paraShiftVec[0];
@@ -143,7 +143,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 					const unsigned int size_t = volMtx[i].size();
 					for (unsigned int j = 0; j < size_t; ++j)
 					{
-						volMtx[i][j] = LAMath::max(volMtx[i][j], 0.0);
+						volMtx[i][j] = AQLMath::max(volMtx[i][j], 0.0);
 					}
 				}
 			}
@@ -161,7 +161,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 					const unsigned int size_t = volMtx[i].size();
 					for (unsigned int j = 0; j < size_t; ++j)
 					{
-						volMtx[i][j] = LAMath::max(volMtx[i][j], 0.0);
+						volMtx[i][j] = AQLMath::max(volMtx[i][j], 0.0);
 					}
 				}
 			}
@@ -187,9 +187,9 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 		else if (inputType == INPUT_T_FUNC_VECTOR)
 		{
 			// method vector input case
-			LAString model = param.model;
+			AQLString model = param.model;
 			model.toUpper();
-			LAString bumpType = param.bumpType;
+			AQLString bumpType = param.bumpType;
 			bumpType.toUpper();
 
 			if (model == MODEL_LMM && bumpType == RISK_MODEL_VOL_BUMP) {
@@ -203,7 +203,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 				unsigned int marketSize = grid_t.size() - 1;
 				const unsigned int tSize = grid_t.size();
 
-				vector<LAFunctionBase *> volFuncVec;
+				vector<AQLFunctionBase *> volFuncVec;
 				if (! is_vol_clone)
 				{
 					volCreator->createVolatility(volFuncVec, param.paraFile, &param, &objPool, -1);
@@ -212,7 +212,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 				{
 					for(unsigned int i = 0; i < marketSize; i++)
 					{
-						LAFunctionBase* volFunc = vol->getVolatilityFunc(i, 0);
+						AQLFunctionBase* volFunc = vol->getVolatilityFunc(i, 0);
 						volFuncVec.push_back(volFunc);
 					}
 				}
@@ -235,7 +235,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 						const unsigned int size_t = volMtx[i].size();
 						for (unsigned int j = 0; j < size_t; ++j)
 						{
-							volMtx[i][j] = LAMath::max(volMtx[i][j], 0.0);
+							volMtx[i][j] = AQLMath::max(volMtx[i][j], 0.0);
 						}
 					}
 					else
@@ -249,7 +249,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 						transform(volMtx[i].begin(), volMtx[i].end(), shiftVals.begin(), volMtx[i].begin(), plus<double>());
 						for (unsigned int j = 0; j < marketSize; ++j)
 						{
-							volMtx[i][j] = LAMath::max(volMtx[i][j], 0.0);
+							volMtx[i][j] = AQLMath::max(volMtx[i][j], 0.0);
 						}
 					}
 
@@ -260,7 +260,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 			}
 			else
 			{
-				vector<LAFunctionBase *> volFuncVec;
+				vector<AQLFunctionBase *> volFuncVec;
 				volCreator->createVolatility(volFuncVec, param.paraFile, &param, &objPool, -1);
 				vol->setVolatility(volFuncVec);
 			}
@@ -268,20 +268,20 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 		else if (inputType == INPUT_FUNC_SCALAR)
 		{
 			// method scalar input case
-			LAFunctionBase *volFunc = volCreator->createVolatility(param.paraFile, &param, &objPool);	
+			AQLFunctionBase *volFunc = volCreator->createVolatility(param.paraFile, &param, &objPool);	
 			vol->setVolatility(volFunc);
 		}
 		else
 		{
-			LAString msg = "This input type is not support, input type = " + inputType;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "This input type is not support, input type = " + inputType;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
 	}
 	// shift matrix input case
 	else if (!param.paraShiftMtx.empty())
 	{
-		LAString shiftType = param.shiftType;
+		AQLString shiftType = param.shiftType;
 		shiftType.toUpper();
 
 		// set matrix val
@@ -295,7 +295,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 
 			if (param.paraShiftMtx.size() < size_m)
 			{
-				throw LACoreInvalidData("Volatility parallel shift matrix must be same or more than tenor size", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Volatility parallel shift matrix must be same or more than tenor size", __FILE__, __LINE__);
 			}
 
 			// diff
@@ -323,7 +323,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 					}
 
 					volMtx[i][j] += shiftVal;	///// for XLL plus
-					volMtx[i][j] = LAMath::max(volMtx[i][j], 0.0);
+					volMtx[i][j] = AQLMath::max(volMtx[i][j], 0.0);
 				}
 			}
 			vol->setVolatility(grid_t, volMtx);
@@ -331,9 +331,9 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 		else if (inputType == INPUT_T_FUNC_VECTOR)
 		{
 			// method vector input case
-			LAString model = param.model;
+			AQLString model = param.model;
 			model.toUpper();
-			LAString bumpType = param.bumpType;
+			AQLString bumpType = param.bumpType;
 			bumpType.toUpper();
 
 			if (model == MODEL_LMM && bumpType == RISK_MODEL_VOL_BUMP) {
@@ -349,10 +349,10 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 
 				if (param.paraShiftMtx.size() < marketSize)
 				{
-					throw LACoreInvalidData("Volatility parallel shift matrix must be same or more than tenor size", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Volatility parallel shift matrix must be same or more than tenor size", __FILE__, __LINE__);
 				}
 
-				vector<LAFunctionBase *> volFuncVec;
+				vector<AQLFunctionBase *> volFuncVec;
 				if (! is_vol_clone)
 				{
 					volCreator->createVolatility(volFuncVec, param.paraFile, &param, &objPool, -1);
@@ -361,7 +361,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 				{
 					for(unsigned int i = 0; i < marketSize; i++)
 					{
-						LAFunctionBase* volFunc = vol->getVolatilityFunc(i, 0);
+						AQLFunctionBase* volFunc = vol->getVolatilityFunc(i, 0);
 						volFuncVec.push_back(volFunc);
 					}
 				}
@@ -398,7 +398,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 						}
 
 						volMtx[i][j] += shiftVal;	///// for XLL plus
-						volMtx[i][j] = LAMath::max(volMtx[i][j], 0.0);
+						volMtx[i][j] = AQLMath::max(volMtx[i][j], 0.0);
 					}
 
 					delete volFuncVec[i];
@@ -408,15 +408,15 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 			}
 			else
 			{
-				vector<LAFunctionBase *> volFuncVec;
+				vector<AQLFunctionBase *> volFuncVec;
 				volCreator->createVolatility(volFuncVec, param.paraFile, &param, &objPool, -1);
 				vol->setVolatility(volFuncVec);
 			}
 		}
 		else
 		{
-			LAString msg = "This input type is not supported, input type = " + inputType;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "This input type is not supported, input type = " + inputType;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 	else
@@ -424,14 +424,14 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 		if (inputType == INPUT_T_FUNC_VECTOR)
 		{
 			// method vector input case
-			vector<LAFunctionBase *> volFuncVec;
+			vector<AQLFunctionBase *> volFuncVec;
 			volCreator->createVolatility(volFuncVec, param.paraFile, &param, &objPool);
 			vol->setVolatility(volFuncVec);
 		}
 		else if (inputType == INPUT_FUNC_SCALAR)
 		{
 			// method scalar input case
-			LAFunctionBase *volFunc = volCreator->createVolatility(param.paraFile, &param, &objPool);	
+			AQLFunctionBase *volFunc = volCreator->createVolatility(param.paraFile, &param, &objPool);	
 			vol->setVolatility(volFunc);
 		}
 	}
@@ -447,22 +447,22 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(LADataInstance &dataIn
 	@param[in] dataInstance
 	@param[in] baseVol
 	@param[in] param
-	@return vector<LAObject *>
+	@return vector<AQLObject *>
 */
-vector<LAObject *>
-LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const
+vector<AQLObject *>
+LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const
 {
-	vector<LAObject *> ret(0);
-	LAString inputType = param.inputType;
+	vector<AQLObject *> ret(0);
+	AQLString inputType = param.inputType;
 	inputType.toUpper();
 
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	// get volatility creator
 	LACalibrateVolatility *volCreator = LACalibrateVolatilityManager::getInstance()->createVolCreator(param.model);
 	// shift val input case
 	if (!param.gridShiftVec.empty())
 	{
-		LAString shiftType = param.shiftType;
+		AQLString shiftType = param.shiftType;
 		shiftType.toUpper();
 
 		if (inputType == INPUT_T_DATA_MATRIX)
@@ -501,13 +501,13 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 							// ratio
 							volMtx[k][j] += volMtx[k][j] * shiftVal;
 						}
-						volMtx[k][j] = LAMath::max(volMtx[k][j], 0.0);
+						volMtx[k][j] = AQLMath::max(volMtx[k][j], 0.0);
 					}
 				}
 
-				LAString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + LAString(static_cast<int>(i));
+				AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
 				LAMathVolatility *vol = 0;
-				LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+				AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 				if (!objHolder.isDefined())
 				{
 					vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
@@ -526,9 +526,9 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 		else if (inputType == INPUT_T_FUNC_VECTOR)
 		{
 			// method vector input case
-			LAString model = param.model;
+			AQLString model = param.model;
 			model.toUpper();
-			LAString bumpType = param.bumpType;
+			AQLString bumpType = param.bumpType;
 			bumpType.toUpper();
 
 			if (model == MODEL_LMM && bumpType == RISK_MODEL_VOL_BUMP)
@@ -556,9 +556,9 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 					searchCoordinatesMatrix(grid_t, grid_T, cMatrix[i], pos_t_s, pos_t_e, pos_T_s, pos_T_e);
 
 					bool is_vol_clone = false;
-					LAString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + LAString(static_cast<int>(i));
+					AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
 					LAMathVolatility *vol = 0;
-					LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+					AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 					if (!objHolder.isDefined())
 					{
 						vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
@@ -571,7 +571,7 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 					}
 
 					DoubleMatrix volMtx;
-					vector<LAFunctionBase *> volFuncVec;
+					vector<AQLFunctionBase *> volFuncVec;
 					if (! is_vol_clone)
 					{
 						volCreator->createVolatility(volFuncVec, param.gridFile[i], &param, &objPool, i);
@@ -580,7 +580,7 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 					{
 						for(unsigned int i = 0; i < marketSize; i++)
 						{
-							LAFunctionBase* volFunc = vol->getVolatilityFunc(i, 0);
+							AQLFunctionBase* volFunc = vol->getVolatilityFunc(i, 0);
 							volFuncVec.push_back(volFunc);
 						}
 					}
@@ -613,7 +613,7 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 								// ratio
 								volMtx[k][j] += volMtx[k][j] * shiftVal;
 							}
-							volMtx[k][j] = LAMath::max(volMtx[k][j], 0.0);
+							volMtx[k][j] = AQLMath::max(volMtx[k][j], 0.0);
 						}
 					}
 
@@ -627,9 +627,9 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 				unsigned int size_g = param.gridFile.size();
 				for (unsigned int i = 0; i < size_g; ++i)
 				{
-					LAString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + LAString(static_cast<int>(i));
+					AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
 					LAMathVolatility *vol = 0;
-					LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+					AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 					if (!objHolder.isDefined())
 					{
 						vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
@@ -639,7 +639,7 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 					{
 						vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
 					}
-					vector<LAFunctionBase *> volFuncVec;
+					vector<AQLFunctionBase *> volFuncVec;
 					volCreator->createVolatility(volFuncVec, param.gridFile[i], &param, &objPool, i);
 
 					vol->setVolatility(volFuncVec);
@@ -676,9 +676,9 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 
 			for (unsigned int i = 0; i < size_g; ++i)
 			{
-				LAString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + LAString(static_cast<int>(i));
+				AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
 				LAMathVolatility *vol = 0;
-				LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+				AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 				if (!objHolder.isDefined())
 				{
 					vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
@@ -688,7 +688,7 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 				{
 					vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
 				}
-				LAFunctionBase *volFunc;
+				AQLFunctionBase *volFunc;
 				if (isBucket)
 				{
 					 volFunc = volCreator->createVolatility(param.gridFile[i], &param, &objPool, pos[i]);
@@ -703,14 +703,14 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 		} 
 		else
 		{
-			LAString msg = "This input type is not support, input type = " + inputType;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "This input type is not support, input type = " + inputType;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 	// shift matrix input case
 	else if (!param.paraShiftMtx.empty())
 	{
-		LAString shiftType = param.shiftType;
+		AQLString shiftType = param.shiftType;
 		shiftType.toUpper();
 		// get coordinate
 		DoubleMatrix cMatrix;
@@ -754,14 +754,14 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 							}
 						}
 						volMtx[k][j] += shiftVal;
-						volMtx[k][j] = LAMath::max(volMtx[k][j], 0.0);
+						volMtx[k][j] = AQLMath::max(volMtx[k][j], 0.0);
 
 					}
 				}
 
-				LAString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + LAString(static_cast<int>(i));
+				AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
 				LAMathVolatility *vol = 0;
-				LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+				AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 				if (!objHolder.isDefined())
 				{
 					vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
@@ -778,9 +778,9 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 		}
 		else if (inputType == INPUT_T_FUNC_VECTOR)
 		{
-			LAString model = param.model;
+			AQLString model = param.model;
 			model.toUpper();
-			LAString bumpType = param.bumpType;
+			AQLString bumpType = param.bumpType;
 			bumpType.toUpper();
 
 			if (model == MODEL_LMM && bumpType == RISK_MODEL_VOL_BUMP)
@@ -801,9 +801,9 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 					searchCoordinatesMatrix(grid_t, grid_T, cMatrix[i], pos_t_s, pos_t_e, pos_T_s, pos_T_e);
 
 					bool is_vol_clone = false;
-					LAString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + LAString(static_cast<int>(i));
+					AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
 					LAMathVolatility *vol = 0;
-					LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+					AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 					if (!objHolder.isDefined())
 					{
 						vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
@@ -816,7 +816,7 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 					}
 
 					DoubleMatrix volMtx;
-					vector<LAFunctionBase *> volFuncVec;
+					vector<AQLFunctionBase *> volFuncVec;
 					if (! is_vol_clone)
 					{
 						volCreator->createVolatility(volFuncVec, param.gridFile[i], &param, &objPool, i);
@@ -825,7 +825,7 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 					{
 						for(unsigned int i = 0; i < marketSize; i++)
 						{
-							LAFunctionBase* volFunc = vol->getVolatilityFunc(i, 0);
+							AQLFunctionBase* volFunc = vol->getVolatilityFunc(i, 0);
 							volFuncVec.push_back(volFunc);
 						}
 					}
@@ -866,7 +866,7 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 								}
 							}
 							volMtx[k][j] += shiftVal;
-							volMtx[k][j] = LAMath::max(volMtx[k][j], 0.0);
+							volMtx[k][j] = AQLMath::max(volMtx[k][j], 0.0);
 
 						}
 					}
@@ -877,14 +877,14 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 			}
 			else
 			{
-				LAString msg = "This input type is not supported, input type = " + inputType;
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "This input type is not supported, input type = " + inputType;
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 		}
 		else
 		{
-			LAString msg = "This input type is not supported, input type = " + inputType;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "This input type is not supported, input type = " + inputType;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 	else
@@ -895,9 +895,9 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 			unsigned int size_g = param.gridFile.size();
 			for (unsigned int i = 0; i < size_g; ++i)
 			{
-				LAString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + LAString(static_cast<int>(i));
+				AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
 				LAMathVolatility *vol = 0;
-				LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+				AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 				if (!objHolder.isDefined())
 				{
 					vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
@@ -907,7 +907,7 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 				{
 					vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
 				}
-				vector<LAFunctionBase *> volFuncVec;
+				vector<AQLFunctionBase *> volFuncVec;
 				volCreator->createVolatility(volFuncVec, param.gridFile[i], &param, &objPool, i);
 				vol->setVolatility(volFuncVec);
 				ret.push_back(vol);
@@ -919,9 +919,9 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 			unsigned int size_g = param.gridFile.size();
 			for (unsigned int i = 0; i < size_g; ++i)
 			{
-				LAString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + LAString(static_cast<int>(i));
+				AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
 				LAMathVolatility *vol = 0;
-				LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+				AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 				if (!objHolder.isDefined())
 				{
 					vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
@@ -931,7 +931,7 @@ LAScenarioConfigurationVolatility::createGridShiftVol(LADataInstance &dataInstan
 				{
 					vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
 				}
-				LAFunctionBase *volFunc = volCreator->createVolatility(param.gridFile[i], &param, &objPool, i);
+				AQLFunctionBase *volFunc = volCreator->createVolatility(param.gridFile[i], &param, &objPool, i);
 				vol->setVolatility(volFunc);
 				ret.push_back(vol);
 			}
@@ -986,24 +986,24 @@ LAScenarioConfigurationVolatility::searchCoordinatesMatrix(const DoubleArray &gr
 	
 */
 void 
-LAScenarioConfigurationVolatility::getCoordinatesMatrix(const LAStringVector &term, DoubleMatrix &matrix) const
+LAScenarioConfigurationVolatility::getCoordinatesMatrix(const AQLStringVector &term, DoubleMatrix &matrix) const
 {
 	matrix.clear();
 	// day count
-	LAPriceDataDayCount dayCount;
+	AQLPriceDataDayCount dayCount;
 	dayCount.convertFromString(LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT));
 	// asOfDate
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 
 	const unsigned int COORDINATESNUM = 4;
 	const unsigned int size = term.size();
 	matrix.resize(size);
 	for (unsigned int i = 0; i < size; ++i)
 	{
-		LAStringVector cdns = term[i].toToken('_');
+		AQLStringVector cdns = term[i].toToken('_');
 		if (cdns.size() != COORDINATESNUM)
 		{
-			throw LACoreInvalidData(" IR vega coordinate grid format is wrong .", __FILE__, __LINE__);
+			throw AQLCoreInvalidData(" IR vega coordinate grid format is wrong .", __FILE__, __LINE__);
 		}
 		matrix[i].resize(COORDINATESNUM);
 		for (unsigned int j = 0; j < COORDINATESNUM; ++j)

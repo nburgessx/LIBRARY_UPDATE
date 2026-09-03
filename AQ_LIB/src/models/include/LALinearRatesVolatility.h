@@ -28,10 +28,10 @@
 
 
 
-class LAString;
+class AQLString;
 class LALinearRatesVolatility;
-class LAObject;
-class LADataProvider;
+class AQLObject;
+class AQLDataProvider;
 //===================== Class Declare LALinearRatesVolatility==================================
 /*! 
     @brief plain vanilla volatility set upper class
@@ -44,7 +44,7 @@ public:
 	// destructor
 	virtual ~LALinearRatesVolatility(void);
 	//set up volatility
-	virtual void setVolatility(LADataProvider* dp, LAObject& object, LAString model);
+	virtual void setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model);
 private:
 };
 
@@ -56,7 +56,7 @@ public:
 	// destructor
 	virtual ~LAPricePlainVolatilityFromDirectInput(void);
 	//set up volatility
-	virtual void setVolatility(LADataProvider* dp, LAObject& object, LAString model);
+	virtual void setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model);
 private:
 };
 
@@ -68,7 +68,7 @@ public:
 	// destructor
 	virtual ~LAPricePlainVolatilityFromDirectInputOfCashlets(void);
 	//set up volatility
-	virtual void setVolatility(LADataProvider* dp, LAObject& object, LAString model);
+	virtual void setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model);
 private:
 };
 
@@ -80,7 +80,7 @@ public:
 	// destructor
 	virtual ~LAPriceFXStrangleSolverVolatility(void);
 	//set up volatility
-	virtual void setVolatility(LADataProvider* dp, LAObject& object, LAString model);
+	virtual void setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model);
 private:
 };
 
@@ -92,7 +92,7 @@ public:
 	// destructor
 	virtual ~LAPriceFXStrangleSolverATMVolatility(void);
 	//set up volatility	
-	virtual void setVolatility(LADataProvider* dp, LAObject& object, LAString model);
+	virtual void setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model);
 private:
 };
 
@@ -105,7 +105,7 @@ public:
 	// destructor
 	virtual ~LAPriceFXVannaVolgaVolatility(void);
 	//set up volatility
-	virtual void setVolatility(LADataProvider* dp, LAObject& object, LAString model);
+	virtual void setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model);
 private:
 };
 
@@ -117,7 +117,7 @@ public:
 	// destructor
 	virtual ~LAPriceIRSABRVolatility(void);
 	//set up volatility	
-	virtual void setVolatility(LADataProvider* dp, LAObject& object, LAString model);
+	virtual void setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model);
 private:
 };
 
@@ -130,7 +130,7 @@ public:
 	// destructor
 	virtual ~LAPricePlainVolatilityPVVolMatrixUse(void);
 	//set up volatility	
-	virtual void setVolatility(LADataProvider* dp, LAObject& object, LAString model);
+	virtual void setVolatility(AQLDataProvider* dp, AQLObject& object, AQLString model);
 private:
 };
 

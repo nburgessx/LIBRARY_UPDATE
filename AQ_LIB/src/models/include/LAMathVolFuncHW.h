@@ -5,12 +5,12 @@
 #endif
 
 //+++++ INCLUDE +++++
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAInterpolationBase.h"
-#include "LAAlgorithm.h"
-#include "LAGaussLegendre.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLInterpolationBase.h"
+#include "AQLAlgorithm.h"
+#include "AQLGaussLegendre.h"
 #include "LAMathHWFuncTool.h"
 #include <map>
 //
@@ -27,7 +27,7 @@
 class LAMathHWFuncMR;
 class LAMathHWFuncSigma;
 
-class LAMathVolFuncHW : public LAFunctionBase
+class LAMathVolFuncHW : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
@@ -47,7 +47,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;
@@ -60,7 +60,7 @@ public :
 	const LAMathHWFuncToolForVar*		getHWFuncTool(void) const {return mpforVar;}; 
 	
 protected :
-	LAGaussLegendre mGL;
+	AQLGaussLegendre mGL;
 	LAMathHWFuncToolForVar* mpforVar;
     bool is_cloned;
 	mutable std::map<double, double> integrate_cache;

@@ -99,8 +99,8 @@ namespace google_test
 		// Load API parameters
 		etrading::ReadDataFile::Load forwardSpreadParams = etrading::ReadDataFile::Load( CDS_INDEX_CALCULATE_FORWARD_SPREAD );
 		std::string creditModelName	= forwardSpreadParams["creditModelName"];
-		LADate startDate			= forwardSpreadParams["startDate"];
-		LADate endDate				= forwardSpreadParams["endDate"];
+		AQLDate startDate			= forwardSpreadParams["startDate"];
+		AQLDate endDate				= forwardSpreadParams["endDate"];
 
 		// Invoke API
 		const double calcForwardSpread = validation::tryMeLWOCreditIndexSpread( creditModelName, startDate, endDate );
@@ -116,7 +116,7 @@ namespace google_test
 		// Load API parameters
 		etrading::ReadDataFile::Load pvParameters	= etrading::ReadDataFile::Load(CDS_INDEX_OPTION_PV);
 		std::string creditModelName = pvParameters["creditModelName"];
-		LAStringMatrix optionLVB			= pvParameters["optionLVB"];
+		AQLStringMatrix optionLVB			= pvParameters["optionLVB"];
 
 		// Invoke API
 		const double calcOptionPV = validation::tryMeLWOCreditIndexOptionPV( creditModelName, optionLVB );
@@ -132,7 +132,7 @@ namespace google_test
 		// Load API parameters
 		etrading::ReadDataFile::Load impliedVolParameters = etrading::ReadDataFile::Load(CDS_INDEX_OPTION_IMPLIED_VOL);
 		std::string creditModelName = impliedVolParameters["creditModelName"];
-		LAStringMatrix optionLVB = impliedVolParameters["optionLVB"];
+		AQLStringMatrix optionLVB = impliedVolParameters["optionLVB"];
 
 		// Invoke API
 		const double calcOptionImpliedVol = validation::tryMeLWOCreditIndexOptionImpliedVol(creditModelName, optionLVB);
@@ -147,7 +147,7 @@ namespace google_test
 		// Load API parameters
 		etrading::ReadDataFile::Load vegaParameters = etrading::ReadDataFile::Load(CDS_INDEX_OPTION_VEGA);
 		std::string creditModelName = vegaParameters["creditModelName"];
-		LAStringMatrix optionLVB = vegaParameters["optionLVB"];
+		AQLStringMatrix optionLVB = vegaParameters["optionLVB"];
 
 		double volatilityBump = vegaParameters["volatilityBump"];
 
@@ -165,7 +165,7 @@ namespace google_test
 		// Load API parameters
 		etrading::ReadDataFile::Load cs01Parameters = etrading::ReadDataFile::Load(CDS_INDEX_OPTION_CS01);
 		std::string creditModelName = cs01Parameters["creditModelName"];
-		LAStringMatrix optionLVB = cs01Parameters["optionLVB"];
+		AQLStringMatrix optionLVB = cs01Parameters["optionLVB"];
 
 		// Invoke API
 		const double calcOptionCS01 = validation::tryMeLWOCreditIndexOptionCS01(creditModelName, optionLVB);
@@ -181,7 +181,7 @@ namespace google_test
 		// Load API parameters
 		etrading::ReadDataFile::Load thetaParameters = etrading::ReadDataFile::Load(CDS_INDEX_OPTION_THETA);
 		std::string creditModelName = thetaParameters["creditModelName"];
-		LAStringMatrix optionLVB = thetaParameters["optionLVB"];
+		AQLStringMatrix optionLVB = thetaParameters["optionLVB"];
 
 		// Invoke API
 		const double calcOptionTheta = validation::tryMeLWOCreditIndexOptionTheta(creditModelName, optionLVB);

@@ -19,7 +19,7 @@ namespace etrading
 		virtual ~SwapGenerator() {}
 
         const SchemaObject toSchemaObject() const;
-        LAStringMatrix viewInputParameters() const;
+        AQLStringMatrix viewInputParameters() const;
         LegGenerator getLegGenerator(size_t i) const;
 
         static std::vector<std::string> lvbKeys()

@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent IR volatility function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 //  2007, AlgoQuantHub.
@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       LAMathVolFuncIRSABR
 //  DESCRIPTION :       Source code of class  to represent volatility of FX
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -25,9 +25,9 @@
 
 #include "LAMathVolFuncIRSABR.h"
 #include "LAMathSwaptionVolUtility.h"
-#include "LABasic.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
+#include "AQLBasic.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
 #include "LAMathSwaptionSABR.h"
 
 
@@ -44,7 +44,7 @@ using namespace std;
 
 */
 
-LAMathVolFuncIRSABR::LAMathVolFuncIRSABR(LADataInstance* dataInstance)
+LAMathVolFuncIRSABR::LAMathVolFuncIRSABR(AQLDataInstance* dataInstance)
 : mpDataInstance(dataInstance), mApproxmethod(APPROXIMATION_ANTONOV), mForwardShiftValue(0.)
 {
 }
@@ -71,7 +71,7 @@ mTargetUnderlying(rhs.mTargetUnderlying), mApproxmethod(rhs.mApproxmethod), mFor
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathVolFuncIRSABR::clone() const
 {
     try 
@@ -81,7 +81,7 @@ LAMathVolFuncIRSABR::clone() const
 	}
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -93,7 +93,7 @@ LAMathVolFuncIRSABR::clone() const
 bool
 LAMathVolFuncIRSABR::isTypeOf(function_t id) const
 {
-	return (id == FN_VOLFUNCIRSABR ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_VOLFUNCIRSABR ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -119,7 +119,7 @@ LAMathVolFuncIRSABR::operator()(const DoubleArray& x) const
 {
 	
 	if (x.size() != 4)
-		throw LACoreInvalidData("VolFuncSABR size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("VolFuncSABR size error",__FILE__,__LINE__);
 
 	double ret = LAMathSwaptionVolUtility::getSABRVol3(mpDataInstance,
 													x[0],x[1],x[2],x[3], 
@@ -136,7 +136,7 @@ LAMathVolFuncIRSABR::operator()(const DoubleArray& x) const
     @return void
 */
 void	
-LAMathVolFuncIRSABR::setParamID(const LAString& ID, const LAString& paramName)
+LAMathVolFuncIRSABR::setParamID(const AQLString& ID, const AQLString& paramName)
 {
 	if (paramName == SABR_ALPHA)
 	{
@@ -156,8 +156,8 @@ LAMathVolFuncIRSABR::setParamID(const LAString& ID, const LAString& paramName)
 	}
 	else
 	{
-		LAString msg = paramName + "is not sabr parmeter!";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = paramName + "is not sabr parmeter!";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
 }
@@ -167,9 +167,9 @@ LAMathVolFuncIRSABR::setParamID(const LAString& ID, const LAString& paramName)
     @return void
 */
 void	
-LAMathVolFuncIRSABR::setUnderlying(const LAString& underlying) const
+LAMathVolFuncIRSABR::setUnderlying(const AQLString& underlying) const
 {
-	LAString tmpUnderlying = underlying;
+	AQLString tmpUnderlying = underlying;
 	mTargetUnderlying = tmpUnderlying.toLower();
 }
 
@@ -178,9 +178,9 @@ LAMathVolFuncIRSABR::setUnderlying(const LAString& underlying) const
     @return void
 */
 void	
-LAMathVolFuncIRSABR::setApproxmethod(const LAString& approxmethod)
+LAMathVolFuncIRSABR::setApproxmethod(const AQLString& approxmethod)
 {
-	LAString tmpApproxmethod = approxmethod;
+	AQLString tmpApproxmethod = approxmethod;
 	mApproxmethod = tmpApproxmethod.toUpper();
 }
 
@@ -198,14 +198,14 @@ LAMathVolFuncIRSABR::setForwardShiftValue(const double forwardShiftValue)
 /*!
     @return swapconv id
 */
-LAString	
+AQLString	
 LAMathVolFuncIRSABR::getSwapConvID(void) const
 {
-	std::map<LAString, LAString>::const_iterator it = mSwapConvID.find(mTargetUnderlying);
+	std::map<AQLString, AQLString>::const_iterator it = mSwapConvID.find(mTargetUnderlying);
 	if (it == mSwapConvID.end())
 	{
-		LAString msg = mTargetUnderlying + " is not set in swap convention ID!";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = mTargetUnderlying + " is not set in swap convention ID!";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 	return it->second;
 }
@@ -213,14 +213,14 @@ LAMathVolFuncIRSABR::getSwapConvID(void) const
 /*!
     @return capconv id
 */
-LAString	
+AQLString	
 LAMathVolFuncIRSABR::getCapConvID(void) const
 {
-	std::map<LAString, LAString>::const_iterator it = mCapConvID.find(mTargetUnderlying);
+	std::map<AQLString, AQLString>::const_iterator it = mCapConvID.find(mTargetUnderlying);
 	if (it == mCapConvID.end())
 	{
-		LAString msg = mTargetUnderlying + " is not set in cap convention ID!";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = mTargetUnderlying + " is not set in cap convention ID!";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 	return it->second;
 }
@@ -229,17 +229,17 @@ LAMathVolFuncIRSABR::getCapConvID(void) const
 	@param[in] paramName	sabr parameter name
     @return sabr parmeter ID
 */
-LAString	
-LAMathVolFuncIRSABR::getParamID(const LAString& paramName) const
+AQLString	
+LAMathVolFuncIRSABR::getParamID(const AQLString& paramName) const
 {
-	std::map<LAString, LAString>::const_iterator it;
+	std::map<AQLString, AQLString>::const_iterator it;
 	if (paramName == SABR_ALPHA)
 	{
 		it = mAlphaID.find(mTargetUnderlying);
 		if (it == mAlphaID.end())
 		{
-			LAString msg = mTargetUnderlying + "is not set in " + SABR_ALPHA + "!";
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg = mTargetUnderlying + "is not set in " + SABR_ALPHA + "!";
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 	}
 	else if (paramName == SABR_BETA)
@@ -247,8 +247,8 @@ LAMathVolFuncIRSABR::getParamID(const LAString& paramName) const
 		it = mBetaID.find(mTargetUnderlying);
 		if (it == mBetaID.end())
 		{
-			LAString msg = mTargetUnderlying + "is not set in " + SABR_BETA + "!";
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg = mTargetUnderlying + "is not set in " + SABR_BETA + "!";
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 	}
 	else if (paramName == SABR_NU)
@@ -256,8 +256,8 @@ LAMathVolFuncIRSABR::getParamID(const LAString& paramName) const
 		it = mNuID.find(mTargetUnderlying);
 		if (it == mNuID.end())
 		{
-			LAString msg = mTargetUnderlying + "is not set in " + SABR_NU + "!";
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg = mTargetUnderlying + "is not set in " + SABR_NU + "!";
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 	}
 	else if (paramName == SABR_RHO)
@@ -265,14 +265,14 @@ LAMathVolFuncIRSABR::getParamID(const LAString& paramName) const
 		it = mRhoID.find(mTargetUnderlying);
 		if (it == mRhoID.end())
 		{
-			LAString msg = mTargetUnderlying + "is not set in " + SABR_RHO + "!";
-			throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+			AQLString msg = mTargetUnderlying + "is not set in " + SABR_RHO + "!";
+			throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 		}
 	}
 	else
 	{
-		LAString msg = paramName + "is not sabr parmeter!";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = paramName + "is not sabr parmeter!";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
 	return it->second;
@@ -285,18 +285,18 @@ LAMathVolFuncIRSABR::getParamID(const LAString& paramName) const
 	@return sabr parameter
 */
 double
-LAMathVolFuncIRSABR::getSABRParam(const LAString& paramName, double expPoint, double tenorPoint) const
+LAMathVolFuncIRSABR::getSABRParam(const AQLString& paramName, double expPoint, double tenorPoint) const
 {
 	// get tenor vector and expiry vector
-	const LAString& alphaID = getParamID(SABR_ALPHA);
-	const DoubleVector& tenorVec = dynamic_cast<const LADataDoubles& >
+	const AQLString& alphaID = getParamID(SABR_ALPHA);
+	const DoubleVector& tenorVec = dynamic_cast<const AQLDataDoubles& >
 		(mpDataInstance->getObjectPool().getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
-	const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
+	const DoubleVector& expiryVec = dynamic_cast<const AQLDataDoubles& >
 		(mpDataInstance->getObjectPool().getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
 	
 	// get parmeter matrix
-	const LAString& paramID = getParamID(paramName);
-	const DoubleMatrix& paramMat = dynamic_cast<LADataDoubleMatrix& >
+	const AQLString& paramID = getParamID(paramName);
+	const DoubleMatrix& paramMat = dynamic_cast<AQLDataDoubleMatrix& >
 		(mpDataInstance->getObjectPool().getObject( paramID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
 	LAMathSwaptionMatrix paramMat_(paramMat, expiryVec, tenorVec);

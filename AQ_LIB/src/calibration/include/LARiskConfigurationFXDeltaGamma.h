@@ -34,25 +34,25 @@ public:
 protected:
 	//==============================================
 	// get coefficient1
-	virtual  LAString  getCoefficient1(const LAString &ccy) const;
+	virtual  AQLString  getCoefficient1(const AQLString &ccy) const;
 	//==============================================
 	// get operator2
-	virtual  LAString  getOperator2(void) const;	
+	virtual  AQLString  getOperator2(void) const;	
 	//==============================================
 	// get coefficient2
-	virtual  LAString  getCoefficient2(const LAString &ccy) const;
+	virtual  AQLString  getCoefficient2(const AQLString &ccy) const;
 	//==============================================
 	// get outputname2
-	virtual  LAString  getOutPutName2(const LAString &ccy) const;
+	virtual  AQLString  getOutPutName2(const AQLString &ccy) const;
 	//==============================================
 	// create scenario2 object
-	virtual  std::vector<LAObject *> createScenario2Entity(const LAString &fx, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario2Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// get bump direction
-	virtual  LAString getBumpDirection(const LAString &ccy) const;
+	virtual  AQLString getBumpDirection(const AQLString &ccy) const;
 	//==============================================
 	// get property bump direction
-	LAString getPropBumpDirection(const LAString &ccy) const;
+	AQLString getPropBumpDirection(const AQLString &ccy) const;
 };
 
 

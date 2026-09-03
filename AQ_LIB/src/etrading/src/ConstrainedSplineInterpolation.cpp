@@ -13,7 +13,7 @@ namespace etrading
     ConstrainedSplineInterpolation::ConstrainedSplineInterpolation(	const std::vector<double>& inXs, const std::vector<double>& inYs )
         : Interpolation( etrading::CONSTRAINED_SPLINE_INTERPOLATION )
     {
-        // LASplineInterpolation.cpp:   void LASplineInterpolation::set(const DoubleArray& index, const DoubleArray& value)  - line 166
+        // AQLSplineInterpolation.cpp:   void AQLSplineInterpolation::set(const DoubleArray& index, const DoubleArray& value)  - line 166
         if ( inXs.size() != inYs.size() || inYs.size() <= 1 || inXs.size() == 0 )
         {
             throw ETradingException( ( boost::format( "SplineInterpolation: Illegal sizes => x-vector size (%i) and y-vector size (%i)" ) % inXs.size() % inYs.size() ).str() );

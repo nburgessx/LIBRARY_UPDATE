@@ -16,7 +16,7 @@ namespace validation
     * @param [in]		volatility          The Hull-White 1F Volatility Parameter
     * @param [out]		Returns the EuroDollar Futures Convexity Adjustment
     */
-    double tryMeCurveEuroDollarConvexityAdjustment( const LADate& curveAsOfDate, const LADate& futuresStartDate, const LADate& futuresEndDate, const double& meanReversion, const double& volatility )
+    double tryMeCurveEuroDollarConvexityAdjustment( const AQLDate& curveAsOfDate, const AQLDate& futuresStartDate, const AQLDate& futuresEndDate, const double& meanReversion, const double& volatility )
     {
         VALID_EXCEPTION_START
 

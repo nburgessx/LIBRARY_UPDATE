@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to adjust FX value
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 //  2007, AlgoQuantHub.
@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       LAMathFXAdjuster
 //  DESCRIPTION :       Source code of class  to adjust FX value
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -39,7 +39,7 @@ using namespace std;
 
 */
 LAMathFXAdjuster::LAMathFXAdjuster(double maxFXMultiplier, const LAMathVolFuncFX *pVolFX, bool delFlg, bool exAdjFlg) 
-: LAFunctionBase(), mMaxFXMultiplier(maxFXMultiplier), mpVolFX(pVolFX), mDelFlg(delFlg), mExAdjFlg(exAdjFlg),
+: AQLFunctionBase(), mMaxFXMultiplier(maxFXMultiplier), mpVolFX(pVolFX), mDelFlg(delFlg), mExAdjFlg(exAdjFlg),
 mpPath(0), mpNume(0)
 {
 
@@ -61,7 +61,7 @@ LAMathFXAdjuster::~LAMathFXAdjuster(void)
 	@brief copy constructor
 */
 LAMathFXAdjuster::LAMathFXAdjuster(const LAMathFXAdjuster &rhs) 
-: LAFunctionBase(), mMaxFXMultiplier(rhs.mMaxFXMultiplier), mpVolFX(rhs.mpVolFX), mDelFlg(rhs.mDelFlg), mExAdjFlg(rhs.mExAdjFlg),
+: AQLFunctionBase(), mMaxFXMultiplier(rhs.mMaxFXMultiplier), mpVolFX(rhs.mpVolFX), mDelFlg(rhs.mDelFlg), mExAdjFlg(rhs.mExAdjFlg),
 mpPath(rhs.mpPath), mpNume(rhs.mpNume), mFXCorrectnum(rhs.mFXCorrectnum), mFXCorrectden(rhs.mFXCorrectden)
 {
 	if (mDelFlg)
@@ -74,7 +74,7 @@ mpPath(rhs.mpPath), mpNume(rhs.mpNume), mFXCorrectnum(rhs.mFXCorrectnum), mFXCor
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathFXAdjuster::clone() const
 {
     try 
@@ -83,7 +83,7 @@ LAMathFXAdjuster::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -95,7 +95,7 @@ LAMathFXAdjuster::clone() const
 bool
 LAMathFXAdjuster::isTypeOf(function_t id) const
 {
-	return (id == FN_FXADJUSTER ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_FXADJUSTER ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -121,13 +121,13 @@ LAMathFXAdjuster::operator()(const DoubleArray& x) const
 {
 	if (x.size() < 2)
 	{
-		throw LACoreInvalidData("argument size is less than two ", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("argument size is less than two ", __FILE__, __LINE__);
 	}
 
 	if (mpVolFX)
 	{
 		unsigned int idx = mpVolFX->searchIndex(x[0]);
-		double scaler = 1.0 + mMaxFXMultiplier * mpVolFX->getSigma()[idx] * LAMath::sqrt(x[0]);
+		double scaler = 1.0 + mMaxFXMultiplier * mpVolFX->getSigma()[idx] * AQLMath::sqrt(x[0]);
 		double fx0 = mpVolFX->getForwardFX0()[idx];
 
 		double maxSpotFX = fx0 * scaler;
@@ -147,7 +147,7 @@ LAMathFXAdjuster::operator()(const DoubleArray& x) const
 		}
 		else
 		{
-			val = LAMath::min(maxSpotFX, 2.0 * minSpotFX - x[1]);
+			val = AQLMath::min(maxSpotFX, 2.0 * minSpotFX - x[1]);
 		}
 
 		// check extra adjustment
@@ -183,7 +183,7 @@ LAMathFXAdjuster::operator()(const DoubleArray& x) const
 			}
 			else
 			{
-				return LAMath::min(maxSpotFX, 2.0 * minSpotFX - val);
+				return AQLMath::min(maxSpotFX, 2.0 * minSpotFX - val);
 			}
 		}
 	}

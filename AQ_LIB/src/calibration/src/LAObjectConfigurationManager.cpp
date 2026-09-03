@@ -72,9 +72,9 @@ LAObjectConfigurationManager::getInstance()
 	@return LAObjectConfiguration *
 */
 LAObjectConfiguration *
-LAObjectConfigurationManager::createEntitySetUpper(const LAString &model) const
+LAObjectConfigurationManager::createEntitySetUpper(const AQLString &model) const
 {
-	LAString tmpModel = model;
+	AQLString tmpModel = model;
 	tmpModel.toUpper();
 	if (tmpModel == MODEL_LMM)
 	{

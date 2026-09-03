@@ -1,4 +1,4 @@
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "meCurveCalibrateFXForwards.h"
 #include "tryMeCurveCalibrateFXForwards.h"
@@ -19,17 +19,17 @@ const std::string meCurveCalibrateFXForwards(const std::string& curveCollection,
 											const SWIG_STRINGMATRIX & fxFwdConv)
 {
     AQ_API_START
-	LAString ret;
+	AQLString ret;
 	
     // marshall all inputs
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_staticDataTable(staticDataTable.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_staticDataTable(staticDataTable.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
 
-	LAStringMatrix tmp_curveConv;
+	AQLStringMatrix tmp_curveConv;
 	swig::buildStringMatrix(tmp_curveConv, curveConv);
 
-	LAStringMatrix tmp_fxFwdConv;
+	AQLStringMatrix tmp_fxFwdConv;
 	swig::buildStringMatrix(tmp_fxFwdConv, fxFwdConv);
 
 	ret = validation::tryMeCurveCalibrateFXForwards(

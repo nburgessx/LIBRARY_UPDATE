@@ -56,7 +56,7 @@ namespace etrading
 
 	protected:
 		void populateNotionalAndPaymentFreqEnum(const LabelValueBlock& scheduleLVB=LabelValueBlock());
-		void createUpfrontCashflow(const LADate& paymentDate, double leverage);
+		void createUpfrontCashflow(const AQLDate& paymentDate, double leverage);
         virtual void createCashflows();
 		void createBespokeCashflows(const std::vector<LabelValueBlock>& cashflowLVBs); 
 

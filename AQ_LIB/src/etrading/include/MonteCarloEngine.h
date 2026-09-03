@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MonteCarloStatistics.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 #include <functional>
 

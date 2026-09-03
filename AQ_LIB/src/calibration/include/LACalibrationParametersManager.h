@@ -7,7 +7,7 @@
 
 
 
-class LAString;
+class AQLString;
 class LACoreDataService;
 class LACalibrationParameters;
 //===================== Class Declare LACalibrationParametersManager==================================
@@ -24,7 +24,7 @@ public:
 	static LACalibrationParametersManager     *getInstance();
 	//==============================================
 	// create LACalibrationParameters
-	LACalibrationParameters *createCalibInfoCreator(const LAString &model) const;
+	LACalibrationParameters *createCalibInfoCreator(const AQLString &model) const;
 
 private:
 

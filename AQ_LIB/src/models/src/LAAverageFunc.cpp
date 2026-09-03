@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent average function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //  2006, AlgoQuantHub..
@@ -32,7 +32,7 @@ using namespace std;
 	@brief default constructor
 */
 LAAverageMethod::LAAverageMethod() 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -48,7 +48,7 @@ LAAverageMethod::~LAAverageMethod()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAAverageMethod::clone() const
 {
     try 
@@ -57,7 +57,7 @@ LAAverageMethod::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -69,7 +69,7 @@ LAAverageMethod::clone() const
 bool
 LAAverageMethod::isTypeOf(function_t id) const
 {
-	return (id == FN_AVERAGE ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_AVERAGE ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -112,7 +112,7 @@ LAAverageMethod::partialDerivative(const DoubleArray& x, unsigned int pos,
 								CALC_TYPE calctype, DIFF_TYPE difftype, double delta) const
 {
 	if (calctype == NUMERICAL)
-		return LAFunctionBase::partialDerivative(x, pos, calctype, difftype, delta);
+		return AQLFunctionBase::partialDerivative(x, pos, calctype, difftype, delta);
 	else
 	{
 		return 1.0 / x.size();
@@ -134,7 +134,7 @@ LAAverageMethod::partialDerivative2(const DoubleArray& x, unsigned int posi, uns
 												CALC_TYPE calctype, double delta) const
 {
 	if (calctype == NUMERICAL)
-		return LAFunctionBase::partialDerivative2(x, 0, 0, calctype, delta);
+		return AQLFunctionBase::partialDerivative2(x, 0, 0, calctype, delta);
 	else
 	{
 		return 0;

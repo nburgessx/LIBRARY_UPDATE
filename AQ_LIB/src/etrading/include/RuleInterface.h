@@ -35,7 +35,7 @@
 #include "TypeName.h"
 #include "ETradingException.h"
 #include "Singleton.h"
-#include "LAMathCalendar.h"
+#include "AQLMathCalendar.h"
 
 using etrading::is_container;
 
@@ -205,7 +205,7 @@ namespace etrading
     {
         typedef typename A::value_type ElementType;
     public:
-        IsWorkingDayRule( const LAMathCalendar* ptrCalendar = nullptr ) : ptrCalendar_( ptrCalendar )
+        IsWorkingDayRule( const AQLMathCalendar* ptrCalendar = nullptr ) : ptrCalendar_( ptrCalendar )
         {
             if( ptrCalendar_ == nullptr )
             {
@@ -215,7 +215,7 @@ namespace etrading
 
         virtual bool verify( const A& a )  const
         {
-            const LAMathCalendar* ptrCalendar = ptrCalendar_;
+            const AQLMathCalendar* ptrCalendar = ptrCalendar_;
             auto non_bus_day = std::find_if( a.cbegin(), a.cend(),
                                              [ptrCalendar]( const A & dateToCheck )
             {
@@ -234,7 +234,7 @@ namespace etrading
         };
 
     private:
-        const LAMathCalendar* ptrCalendar_;
+        const AQLMathCalendar* ptrCalendar_;
 
     };
 
@@ -243,7 +243,7 @@ namespace etrading
     class IsWorkingDayRule<A, N, false> : public RuleInterface<A>
     {
     public:
-        IsWorkingDayRule( const LAMathCalendar* ptrCalendar = nullptr ) : ptrCalendar_( ptrCalendar )
+        IsWorkingDayRule( const AQLMathCalendar* ptrCalendar = nullptr ) : ptrCalendar_( ptrCalendar )
         {
             if( ptrCalendar_ == nullptr )
             {
@@ -265,7 +265,7 @@ namespace etrading
             return std::shared_ptr<RuleInterface<A>>( new IsWorkingDayRule<A, N, false>( *this )  );
         };
     private:
-        const LAMathCalendar* ptrCalendar_;
+        const AQLMathCalendar* ptrCalendar_;
     };
 
 

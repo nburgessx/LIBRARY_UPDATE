@@ -9,7 +9,7 @@ namespace etrading
 	{
 	public:
 		
-		RateProviderExternal(const LADate& asOfDate, const DoubleVector& dfs, const DoubleVector& liborRates);
+		RateProviderExternal(const AQLDate& asOfDate, const DoubleVector& dfs, const DoubleVector& liborRates);
 		RateProviderExternal(const RateProviderExternal& rhs);
 		virtual ~RateProviderExternal() {}
 
@@ -18,11 +18,11 @@ namespace etrading
 		//Override
 		const DoubleVector liborRates(const std::shared_ptr<ScheduleParameters>& schParams, const std::shared_ptr<EnrichedSchedule>& schOutput) const;
 		//Override
-		const LADate asOfDate() const;
+		const AQLDate asOfDate() const;
 
 	private:
 
-		LADate asOfDate_;
+		AQLDate asOfDate_;
 		DoubleVector discountFactors_;
 		DoubleVector liborRates_;
 

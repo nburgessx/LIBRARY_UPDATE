@@ -36,7 +36,7 @@ namespace google_test
 		
 			const std::string bondObjectName	  = bondCreateFromGeneratorFileObj[ "bondObjectName" ];
 			const std::string bondGeneratorName   = bondCreateFromGeneratorFileObj[ "bondGeneratorName" ];
-			const LAStringMatrix expressionLVB	  = bondCreateFromGeneratorFileObj[ "expressionLVB" ];
+			const AQLStringMatrix expressionLVB	  = bondCreateFromGeneratorFileObj[ "expressionLVB" ];
 			const bool validateKeys               = bondCreateFromGeneratorFileObj[ "validateKeys" ];
 		
 			// Check that we can create the bond instance from the specified BondGenerator, and the
@@ -47,7 +47,7 @@ namespace google_test
 			etrading::ReadDataFile::Load cleanPriceInputFileObj = etrading::ReadDataFile::Load( cleanPriceInputs );
 
 			const std::string expectedBondObjHandle   = cleanPriceInputFileObj[ "bondObjectName" ];
-			const std::vector<LADate> settlementDates = cleanPriceInputFileObj[ "settlementDates" ];
+			const std::vector<AQLDate> settlementDates = cleanPriceInputFileObj[ "settlementDates" ];
 			const std::vector<double> yields          = cleanPriceInputFileObj[ "yields" ];
 			const std::string yieldCalculationType    = cleanPriceInputFileObj[ "yieldCalculationType" ];
 
@@ -55,7 +55,7 @@ namespace google_test
 
             // Compare Results
             const double tolerance = 1.e-9;
-            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, LAString( cleanPriceOutputs ), tolerance );
+            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, AQLString( cleanPriceOutputs ), tolerance );
 			
         }
         catch( const ReadDataFile::LoadError& )
@@ -63,7 +63,7 @@ namespace google_test
             std::cout <<  "#Error: Unable to open the Google Test File";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -81,15 +81,15 @@ namespace google_test
 		const std::string bondGeneratorName   = "US_TREASURY_TYPE1";
 			            
         // Parameter Place Holders of size 2  i.e. key and value
-        LAStringVector p1( 2 );
-        LAStringVector p2( 2 );
-        LAStringVector p3( 2 );
-        LAStringVector p4( 2 );
-        LAStringVector p5( 2 );
-        LAStringVector p6( 2 );
-        LAStringVector p7( 2 );
-        LAStringVector p8( 2 );
-        LAStringVector p9( 2 );
+        AQLStringVector p1( 2 );
+        AQLStringVector p2( 2 );
+        AQLStringVector p3( 2 );
+        AQLStringVector p4( 2 );
+        AQLStringVector p5( 2 );
+        AQLStringVector p6( 2 );
+        AQLStringVector p7( 2 );
+        AQLStringVector p8( 2 );
+        AQLStringVector p9( 2 );
 
         p1[0] = "BondDescription";              p1[1] = "US_TREASURY_2.25_31DEC2023";
         p2[0] = "ISIN";                         p2[1] = "US912828V236";                     
@@ -102,7 +102,7 @@ namespace google_test
         p9[0] = "AccrualStartDate";             p9[1] = "42735";      // 31-Dec-2016
             
         // Send Parameters to Bond Expression LVB - size 9 to hold 9 parameter key-values
-        LAStringMatrix expressionLVB( 9 );
+        AQLStringMatrix expressionLVB( 9 );
         expressionLVB[0] = p1;
         expressionLVB[1] = p2;
         expressionLVB[2] = p3;
@@ -117,8 +117,8 @@ namespace google_test
 		const std::string bondObjHandle = validation::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
 
         // Settlement Date
-        const LADate settlementDate = LADate("20180131"); // 31-Jan-2018
-        const std::vector< LADate > settlementDates( 1, settlementDate );
+        const AQLDate settlementDate = AQLDate("20180131"); // 31-Jan-2018
+        const std::vector< AQLDate > settlementDates( 1, settlementDate );
             
         // Yield
         const double yield = 0.025838257000; // 2.58%
@@ -158,15 +158,15 @@ namespace google_test
 		const std::string bondGeneratorName   = "GERMAN_BUND_TYPE60";
 			            
         // Parameter Place Holders of size 2  i.e. key and value
-        LAStringVector p1( 2 );
-        LAStringVector p2( 2 );
-        LAStringVector p3( 2 );
-        LAStringVector p4( 2 );
-        LAStringVector p5( 2 );
-        LAStringVector p6( 2 );
-        LAStringVector p7( 2 );
-        LAStringVector p8( 2 );
-        LAStringVector p9( 2 );
+        AQLStringVector p1( 2 );
+        AQLStringVector p2( 2 );
+        AQLStringVector p3( 2 );
+        AQLStringVector p4( 2 );
+        AQLStringVector p5( 2 );
+        AQLStringVector p6( 2 );
+        AQLStringVector p7( 2 );
+        AQLStringVector p8( 2 );
+        AQLStringVector p9( 2 );
 
         p1[0] = "BondDescription";              p1[1] = "BUNDESREPUBLIK_2.00_15AUG2023";
         p2[0] = "ISIN";                         p2[1] = "DE0001102325";                     
@@ -179,7 +179,7 @@ namespace google_test
         p9[0] = "AccrualStartDate";             p9[1] = "41501";      // 15-Aug-2013
             
         // Send Parameters to Bond Expression LVB - size 9 to hold 9 parameter key-values
-        LAStringMatrix expressionLVB( 9 );
+        AQLStringMatrix expressionLVB( 9 );
         expressionLVB[0] = p1;
         expressionLVB[1] = p2;
         expressionLVB[2] = p3;
@@ -194,8 +194,8 @@ namespace google_test
 		const std::string bondObjHandle = validation::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
 
         // Settlement Date
-        const LADate settlementDate = LADate("20180201"); // 1-Feb-2018
-        const std::vector< LADate > settlementDates( 1, settlementDate );
+        const AQLDate settlementDate = AQLDate("20180201"); // 1-Feb-2018
+        const std::vector< AQLDate > settlementDates( 1, settlementDate );
             
         // Yield
         const double yield = -0.00242816751526698; // -0.2428%
@@ -234,15 +234,15 @@ namespace google_test
 		const std::string bondGeneratorName   = "JAPAN_JGB_TYPE51";
 			            
         // Parameter Place Holders of size 2  i.e. key and value
-        LAStringVector p1( 2 );
-        LAStringVector p2( 2 );
-        LAStringVector p3( 2 );
-        LAStringVector p4( 2 );
-        LAStringVector p5( 2 );
-        LAStringVector p6( 2 );
-        LAStringVector p7( 2 );
-        LAStringVector p8( 2 );
-        LAStringVector p9( 2 );
+        AQLStringVector p1( 2 );
+        AQLStringVector p2( 2 );
+        AQLStringVector p3( 2 );
+        AQLStringVector p4( 2 );
+        AQLStringVector p5( 2 );
+        AQLStringVector p6( 2 );
+        AQLStringVector p7( 2 );
+        AQLStringVector p8( 2 );
+        AQLStringVector p9( 2 );
 
         p1[0] = "BondDescription";              p1[1] = "JAPAN_JGB_2.20_20JUN2024";
         p2[0] = "ISIN";                         p2[1] = "JP1200711487";                     
@@ -255,7 +255,7 @@ namespace google_test
         p9[0] = "AccrualStartDate";             p9[1] = "41810";      // 20-Jun-2014
             
         // Send Parameters to Bond Expression LVB - size 9 to hold 9 parameter key-values
-        LAStringMatrix expressionLVB( 9 );
+        AQLStringMatrix expressionLVB( 9 );
         expressionLVB[0] = p1;
         expressionLVB[1] = p2;
         expressionLVB[2] = p3;
@@ -270,8 +270,8 @@ namespace google_test
 		const std::string bondObjHandle = validation::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
 
         // Settlement Date
-        const LADate settlementDate = LADate("20180201"); // 1-Feb-2018
-        const std::vector< LADate > settlementDates( 1, settlementDate );
+        const AQLDate settlementDate = AQLDate("20180201"); // 1-Feb-2018
+        const std::vector< AQLDate > settlementDates( 1, settlementDate );
             
         // Yield
         const double yield = -0.000370; // -0.00370%
@@ -310,15 +310,15 @@ namespace google_test
 		const std::string bondGeneratorName   = "FRENCH_OAT_TYPE89";
 			            
         // Parameter Place Holders of size 2  i.e. key and value
-        LAStringVector p1( 2 );
-        LAStringVector p2( 2 );
-        LAStringVector p3( 2 );
-        LAStringVector p4( 2 );
-        LAStringVector p5( 2 );
-        LAStringVector p6( 2 );
-        LAStringVector p7( 2 );
-        LAStringVector p8( 2 );
-        LAStringVector p9( 2 );
+        AQLStringVector p1( 2 );
+        AQLStringVector p2( 2 );
+        AQLStringVector p3( 2 );
+        AQLStringVector p4( 2 );
+        AQLStringVector p5( 2 );
+        AQLStringVector p6( 2 );
+        AQLStringVector p7( 2 );
+        AQLStringVector p8( 2 );
+        AQLStringVector p9( 2 );
 
         p1[0] = "BondDescription";              p1[1] = "FRENCH_OAT_1.750_25MAY2023";
         p2[0] = "ISIN";                         p2[1] = "FR0011486067";                     
@@ -331,7 +331,7 @@ namespace google_test
         p9[0] = "AccrualStartDate";             p9[1] = "41054";      // 25-May-2012
             
         // Send Parameters to Bond Expression LVB - size 9 to hold 9 parameter key-values
-        LAStringMatrix expressionLVB( 9 );
+        AQLStringMatrix expressionLVB( 9 );
         expressionLVB[0] = p1;
         expressionLVB[1] = p2;
         expressionLVB[2] = p3;
@@ -346,8 +346,8 @@ namespace google_test
 		const std::string bondObjHandle = validation::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
 
         // Settlement Date
-        const LADate settlementDate = LADate("20180201"); // 1-Feb-2018
-        const std::vector< LADate > settlementDates( 1, settlementDate );
+        const AQLDate settlementDate = AQLDate("20180201"); // 1-Feb-2018
+        const std::vector< AQLDate > settlementDates( 1, settlementDate );
             
         // Yield
         const double yield = -0.00055709175025347; // -0.0557%
@@ -386,16 +386,16 @@ namespace google_test
 		const std::string bondGeneratorName   = "ITALIAN_BTPS_TYPE523";
 			            
         // Parameter Place Holders of size 2  i.e. key and value
-        LAStringVector p1( 2 );
-        LAStringVector p2( 2 );
-        LAStringVector p3( 2 );
-        LAStringVector p4( 2 );
-        LAStringVector p5( 2 );
-        LAStringVector p6( 2 );
-        LAStringVector p7( 2 );
-        LAStringVector p8( 2 );
-        LAStringVector p9( 2 );
-        LAStringVector p10( 2 );
+        AQLStringVector p1( 2 );
+        AQLStringVector p2( 2 );
+        AQLStringVector p3( 2 );
+        AQLStringVector p4( 2 );
+        AQLStringVector p5( 2 );
+        AQLStringVector p6( 2 );
+        AQLStringVector p7( 2 );
+        AQLStringVector p8( 2 );
+        AQLStringVector p9( 2 );
+        AQLStringVector p10( 2 );
 
         p1[0] = "BondDescription";              p1[1] = "ITALIAN_BTPS_8.5_22JUN2023";
         p2[0] = "ISIN";                         p2[1] = "IT0000366721";                     
@@ -409,7 +409,7 @@ namespace google_test
         p10[0] = "IssuePrice";                  p10[1] = "92.50";     // 92.50
             
         // Send Parameters to Bond Expression LVB - size 10 to hold 10 parameter key-values
-        LAStringMatrix expressionLVB( 10 );
+        AQLStringMatrix expressionLVB( 10 );
         expressionLVB[0] = p1;
         expressionLVB[1] = p2;
         expressionLVB[2] = p3;
@@ -425,8 +425,8 @@ namespace google_test
 		const std::string bondObjHandle = validation::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, true ); // Validate keys = true
 
         // Settlement Date
-        const LADate settlementDate = LADate("20180201"); // 1-Feb-2018
-        const std::vector< LADate > settlementDates( 1, settlementDate );
+        const AQLDate settlementDate = AQLDate("20180201"); // 1-Feb-2018
+        const std::vector< AQLDate > settlementDates( 1, settlementDate );
             
         // Yield
         const double yield = 0.0147; // 1.47%

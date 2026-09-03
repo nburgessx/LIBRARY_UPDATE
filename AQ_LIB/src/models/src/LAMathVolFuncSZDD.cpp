@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent ScobelZhu & DD version of FX volatility function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 //  2008, AlgoQuantHub..
@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       LAMathVolFuncSZDD
 //  DESCRIPTION :       Source code of class  to represent ScobelZhu & DD version of volatility of FX
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -24,11 +24,11 @@
 
 
 #include "LAMathVolFuncSZDD.h"
-#include "LAAlgorithm.h"
-#include "LABasic.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LACombinationFunc.h"
+#include "AQLAlgorithm.h"
+#include "AQLBasic.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLCombinationFunc.h"
 
 using namespace std;
 
@@ -50,24 +50,24 @@ using namespace std;
 */
 ////LAMathVolFuncSZDD::LAMathVolFuncSZDD(const DoubleArray &timeGrid, const DoubleArray &sigma, 
 ////										const DoubleArray &fx0, const DoubleArray &beta, 
-////										const LAString &currency, SDE_TYPE type, int integrate_n_)
+////										const AQLString &currency, SDE_TYPE type, int integrate_n_)
 ////: LAMathVolFuncFX(timeGrid, sigma, fx0, beta, currency, integrate_n_), mType(type)
 //temp!!
 LAMathVolFuncSZDD::LAMathVolFuncSZDD(const DoubleArray &timeGrid,const DoubleArray &fx0, 
 										const DoubleArray &beta, const DoubleArray &theta, const DoubleArray &kappa, const DoubleArray &epsilon, 
-										const LAString &currency,const DoubleArray &sigma, 
+										const AQLString &currency,const DoubleArray &sigma, 
 										SDE_TYPE type, int integrate_n_)
 										: LAMathVolFuncFX(timeGrid, sigma, fx0, beta, currency, integrate_n_), mType(type)
 										//temp!!/
-										//////: mType(type),LAFunctionBase(), mTimeGrid(timeGrid), mFX0(fx0), mV0(v0),
+										//////: mType(type),AQLFunctionBase(), mTimeGrid(timeGrid), mFX0(fx0), mV0(v0),
 										//////mBeta(beta), mTheta(theta), mKappa(kappa), mEpsilon(epsilon), mCurrency(currency), mGL(integrate_n_)
 {
-	//LASplineInterpolation inter;
+	//AQLSplineInterpolation inter;
 	if (timeGrid.empty() || timeGrid[0] != 0.0)
 	{
-		throw LACoreInvalidData("Wrong timegrid, first grid must be 0.0", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Wrong timegrid, first grid must be 0.0", __FILE__, __LINE__);
 	}
-	LAStepInterpolation inter;
+	AQLStepInterpolation inter;
 	//furuya
 	//DoubleArray v(timeGrid.size()), s(timeGrid.size()), alpha(timeGrid.size());
 	DoubleArray v(timeGrid.size()), s(timeGrid.size()), alpha(timeGrid.size()), theta_(timeGrid.size()), kappa_(timeGrid.size()), epsilon_(timeGrid.size());
@@ -75,7 +75,7 @@ LAMathVolFuncSZDD::LAMathVolFuncSZDD(const DoubleArray &timeGrid,const DoubleArr
 	for (unsigned int i = 0; i < size; i++)
 	{
 		if(0.0 == beta[i])
-			throw LACoreInvalidData("Beta 0.0 is not allowed",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Beta 0.0 is not allowed",__FILE__,__LINE__);
 
 		//v[i] = beta[i] * sigma[i];
 		//s[i] = (1.0 - beta[i]) / beta[i] * fx0[i];
@@ -84,7 +84,7 @@ LAMathVolFuncSZDD::LAMathVolFuncSZDD(const DoubleArray &timeGrid,const DoubleArr
 		if (i != size - 1)
 		{
 			double todayFX = fx0[0];
-			fx0_ = todayFX * LAMath::exp(0.5 * (LAMath::log(fx0[i] / todayFX )+ LAMath::log(fx0[i + 1] / todayFX)));
+			fx0_ = todayFX * AQLMath::exp(0.5 * (AQLMath::log(fx0[i] / todayFX )+ AQLMath::log(fx0[i + 1] / todayFX)));
 		}
 		alpha[i] = (1.0 - beta[i]) * fx0_;
 
@@ -120,20 +120,20 @@ LAMathVolFuncSZDD::setFwdFX(const DoubleArray &fx)
 	const unsigned int size = mTimeGrid.size();
 	if (fx.size() != size)
 	{
-		throw LACoreInvalidData("fx array size is wrong.",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("fx array size is wrong.",__FILE__,__LINE__);
 	}
 	DoubleArray s(size), alpha(size);
 	for (unsigned int i = 0; i < size; i++)
 	{
 		if(0.0 == mBeta[i])
-			throw LACoreInvalidData("Beta 0.0 is not allowed",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Beta 0.0 is not allowed",__FILE__,__LINE__);
 
 		s[i] = (1.0 - mBeta[i]) / mBeta[i] * fx[i];
 		double fx_ = fx[i];
 		if (i != size - 1)
 		{
 			double todayFX = fx[0];
-			fx_ = todayFX * LAMath::exp(0.5 * (LAMath::log(fx[i] / todayFX )+ LAMath::log(fx[i + 1] / todayFX)));
+			fx_ = todayFX * AQLMath::exp(0.5 * (AQLMath::log(fx[i] / todayFX )+ AQLMath::log(fx[i + 1] / todayFX)));
 		}
 		alpha[i] = (1.0 - mBeta[i]) * fx_;
 	}
@@ -166,7 +166,7 @@ LAMathVolFuncSZDD::LAMathVolFuncSZDD(const LAMathVolFuncSZDD &rhs)
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathVolFuncSZDD::clone() const
 {
     try 
@@ -175,7 +175,7 @@ LAMathVolFuncSZDD::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -187,7 +187,7 @@ LAMathVolFuncSZDD::clone() const
 bool
 LAMathVolFuncSZDD::isTypeOf(function_t id) const
 {
-	return (id == FN_VOLFUNCSZDD ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_VOLFUNCSZDD ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -213,7 +213,7 @@ LAMathVolFuncSZDD::operator()(const DoubleArray& x) const
 {
 	if (mTimeGrid.size() == 0 || x.size() < 2)
 	{
-		throw LACoreInvalidData("No data is set or argument size is less than two ", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("No data is set or argument size is less than two ", __FILE__, __LINE__);
 	}
 
 //	unsigned int pos = searchIndex(x[0]);
@@ -239,16 +239,16 @@ LAMathVolFuncSZDD::integral(const vector<pair<double,double> >& x) const
 {
 	if (mTimeGrid.size() == 0 || x.size() < 2)
 	{
-		throw LACoreInvalidData("No data is set or argument size is less than two ", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("No data is set or argument size is less than two ", __FILE__, __LINE__);
 	}
 
 	unsigned int pos = searchIndex(x[0].first);
 
 	if (mType == dX)
-		return LAMath::sqrt(x[0].second - x[0].first) * 
+		return AQLMath::sqrt(x[0].second - x[0].first) * 
 				mSigma[pos] *  (mBeta[pos] * x[1].first + (1.0 - mBeta[pos]) * mFX0[pos]);	
 	else
-		return LAMath::sqrt(x[0].second - x[0].first) * 
+		return AQLMath::sqrt(x[0].second - x[0].first) * 
 				mSigma[pos] *  (mBeta[pos] + (1.0 - mBeta[pos]) * mFX0[pos] / x[1].first);		
 
 }
@@ -291,9 +291,9 @@ LAMathVolFuncSZDD::getIntegralofV(double ts, double te) const
 
 
 	if (getIntegralofSVV(ts, te) < 0 && getBeta(ts) < 0.5)
-		return -LAMath::sqrt(ret2 - ret1);
+		return -AQLMath::sqrt(ret2 - ret1);
 	else
-		return LAMath::sqrt(ret2 - ret1);
+		return AQLMath::sqrt(ret2 - ret1);
 }
 	                            //==========================================
 	                            // Return integral of s * square of v(=beta*sigma)		
@@ -368,9 +368,9 @@ LAMathVolFuncSZDD::getIntegralofSV(double ts, double te) const
 		ret2 = integrate_cache[te][2];
 
 	if (getIntegralofSVV(ts, te) < 0 && getBeta(ts) >= 0.5)
-		return -LAMath::sqrt(ret2 - ret1);
+		return -AQLMath::sqrt(ret2 - ret1);
 	else
-		return LAMath::sqrt(ret2 - ret1);
+		return AQLMath::sqrt(ret2 - ret1);
 
 }
 

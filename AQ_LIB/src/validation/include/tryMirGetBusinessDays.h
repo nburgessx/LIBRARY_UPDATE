@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LADate.h"
+#include "AQLDate.h"
 
 namespace validation
 {
@@ -11,9 +11,9 @@ namespace validation
     *  @param [in]		calendar		Calendar
     *  @return			Number of business days between fromDate and toDate
     */
-    int tryMirGetBusinessDays( const LADate& fromDate,
-                               const LADate& toDate,
-                               const LAString& calendar );
+    int tryMirGetBusinessDays( const AQLDate& fromDate,
+                               const AQLDate& toDate,
+                               const AQLString& calendar );
 
 
 }

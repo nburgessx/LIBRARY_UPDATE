@@ -6,37 +6,37 @@
 #endif
 
 #include "LAMathJamshidianSwaption.h"
-#include "LAObject.h"
-#include "LADataProcedure.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LADataReference.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLObject.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "LAMathDateCalculations.h"
 #include "LAPriceCFGenUtility.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
 #include "LAModelDynamicsHW1FCurve.h"
 
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 
 using namespace std;
 
 LAMathJamshidianSwaption::LAMathJamshidianSwaption()
-: LACoreValuation()
+: AQLCoreValuation()
 {}
 
 LAMathJamshidianSwaption::~LAMathJamshidianSwaption()
@@ -61,7 +61,7 @@ LAMathJamshidianSwaption::getType() const
 	@param[in, out] dm data master 
 */
 void
-LAMathJamshidianSwaption::registerData(LAPriceDataManager& dm) const
+LAMathJamshidianSwaption::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(PRICING_DATA_CURVEID,				DATA_REFERENCE);
 	dm.setData(PRICING_DATA_SDEINTEGRALGRID,		DATA_INT);
@@ -86,7 +86,7 @@ LAMathJamshidianSwaption::registerData(LAPriceDataManager& dm) const
 	dm.setData(PRICING_DATA_ISTIMEDEPENDMEANREV,	DATA_BOOL);
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAMathJamshidianSwaption::clone() const
 {
     try 
@@ -95,7 +95,7 @@ LAMathJamshidianSwaption::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -104,17 +104,17 @@ LAMathJamshidianSwaption::clone() const
 	@brief value trade
 
 	@param[in] basedate evaluate day
-	@param[in,out] object trade object object(reference to LAMathObjectValue class) 
+	@param[in,out] object trade object object(reference to AQLMathObjectValue class) 
 	@param[in] att Data to hold evaluation procedure class
 
 	@return swaption prem
 	
 */
 double
-LAMathJamshidianSwaption::value(const LADate& basedate, LAObject& object,
-					const LADataValuation& att) const
+LAMathJamshidianSwaption::value(const AQLDate& basedate, AQLObject& object,
+					const AQLDataValuation& att) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAMathJamshidianSwaptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
 		dataProvider = dynamic_cast<LAMathJamshidianSwaptionDataProvider*>(setUpDataProvider(basedate, object, att));
@@ -128,9 +128,9 @@ LAMathJamshidianSwaption::value(const LADate& basedate, LAObject& object,
 	pcurve->clear_cache();
 	//set variables to curve
 	dh = &(object.getData(PRICING_DATA_MODELPARAM,ISNOTNULL));
-	LAObject& models= dynamic_cast<LADataReference&>(dh->get()).get().get();
+	AQLObject& models= dynamic_cast<AQLDataReference&>(dh->get()).get().get();
 	dh = &(models.getData(PRICING_DATA_CALIBVARIABLES,ISNOTNULL));
-	double volval = dynamic_cast<LADataDoubles&>(dh->get()).get()[0];
+	double volval = dynamic_cast<AQLDataDoubles&>(dh->get()).get()[0];
 	for(unsigned int i = dataProvider->mStartpos ;i<dataProvider->mEndpos;i++)
 		dataProvider->mModelVol[i] = volval;
 	dynamic_cast<LAMathHWFuncSigmaTMDPT* >(pcurve->mpHWtoolMR->getHWSigma())->set_s(dataProvider->mModelVol);
@@ -150,7 +150,7 @@ LAMathJamshidianSwaption::value(const LADate& basedate, LAObject& object,
 	double simannuity=0.0 , zboprem=0.0;
 	double annuity=0.0;
 	pm.Poptm= pcurve0->getP(dataProvider->mGrids[0]);
-	double v = LAMath::sqrt( dataProvider->mpGL->integrate(*pcurve->mpHWtoolVar,0.0,dataProvider->mGrids[0]) );
+	double v = AQLMath::sqrt( dataProvider->mpGL->integrate(*pcurve->mpHWtoolVar,0.0,dataProvider->mGrids[0]) );
 	double adj = pcurve->mpHWtoolMR->ExpIntegralInvMR(dataProvider->mGrids[0]);
 	for(unsigned int i=0;i<N;i++)
 	{
@@ -164,7 +164,7 @@ LAMathJamshidianSwaption::value(const LADate& basedate, LAObject& object,
 	}
 	dataProvider->mSimPrem = dataProvider->mStrike * simannuity + zboprem;
 	dataProvider->mAnnuity = annuity; 
-	double ret = 10000 * LAMath::abs(dataProvider->mPrem - dataProvider->mSimPrem) * dataProvider->mWeight;
+	double ret = 10000 * AQLMath::abs(dataProvider->mPrem - dataProvider->mSimPrem) * dataProvider->mWeight;
 	return ret;
 }
 
@@ -173,96 +173,96 @@ LAMathJamshidianSwaption::value(const LADate& basedate, LAObject& object,
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*					
-LAMathJamshidianSwaption::setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const
+AQLDataProvider*					
+LAMathJamshidianSwaption::setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const
 {
 	//temporary
-	LADate asof = basedate;
+	AQLDate asof = basedate;
 
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAMathJamshidianSwaptionDataProvider* dataProvider = dynamic_cast<LAMathJamshidianSwaptionDataProvider*>(createNewDataProvider());
 	att.setDataProvider(dataProvider);
 
 	//mStrike
 	dh = &(object.getData(PRICING_DATA_STRIKE,ISNOTNULL));
-	double strike = dynamic_cast<LADataDouble &>(dh->get()).get();
+	double strike = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	dataProvider->mStrike = strike;
 
 	dh = &(object.getData(IR_CALIBRATION_DATA_BLACKVOLATILITY,NOCHECK));
 	double vol = 0.0;
 	if(dh->isDefined() && !dh->isNull())
-		vol = dynamic_cast<LADataDouble &>(dh->get()).get();
+		vol = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	dataProvider->mVol = vol;
 	
 	//mPrem
 	dh = &(object.getData(PRICING_DATA_OPTIONPREMIUM,ISNOTNULL));
-	double premium = dynamic_cast<LADataDouble &>(dh->get()).get();
+	double premium = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	dataProvider->mPrem = premium;
 
 	//mWeight
 	dh = &(object.getData(PRICING_DATA_WEIGHT,ISNOTNULL));
-	double weight = dynamic_cast<LADataDouble &>(dh->get()).get();
+	double weight = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	dataProvider->mWeight = weight;
 
 	//mrStar
 	dh = &(object.getData(PRICING_DATA_INITIALRSTAR,ISNOTNULL));
-	double rstar = dynamic_cast<LADataDouble&>(dh->get()).get();
+	double rstar = dynamic_cast<AQLDataDouble&>(dh->get()).get();
 	dataProvider->mrStar = rstar;
 
 	//mAnalyticMethod
 	dh = &(object.getData(PRICING_DATA_OPTIONTYPE,ISNOTNULL));
-	LAString optiontype = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString optiontype = dynamic_cast<AQLDataString &>(dh->get()).get();
 	optiontype.toUpper();
 	if("PAYERS" == optiontype)
 		optiontype= "PUT";
 	else if("RECEIVERS" == optiontype)
 		optiontype = "CALL";
 	else
-		throw LACoreInvalidData("Error or OptonType",__FILE__,__LINE__);
-	LAString bscomponent = LAString(AFF) + LAString(PREM)  + optiontype;
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
+		throw AQLCoreInvalidData("Error or OptonType",__FILE__,__LINE__);
+	AQLString bscomponent = AQLString(AFF) + AQLString(PREM)  + optiontype;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it = var.find(bscomponent);
 	if(it==var.end())
-		throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 	dataProvider->mAnalyticMethod = it->second;
 
 	//mGridMat mDeltaMat
 	dh = &(object.getData(IR_CALIBRATION_DATA_OPTIONMATURITY,ISNOTNULL));
-	LAString optionmatu = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString optionmatu = dynamic_cast<AQLDataString &>(dh->get()).get();
 
 	dh = &(object.getData(IR_CALIBRATION_DATA_SWAPTENOR,ISNOTNULL));
-	LAString swapterm = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString swapterm = dynamic_cast<AQLDataString &>(dh->get()).get();
 
 	dh = &(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISNOTNULL));
-	const LAPriceDataSlidingRule& sr = dynamic_cast<const LAPriceDataSlidingRule &>(dh->get());
+	const AQLPriceDataSlidingRule& sr = dynamic_cast<const AQLPriceDataSlidingRule &>(dh->get());
 
 	dh = &(object.getData(PRICING_DATA_FIXINGCALENDAR,ISNOTNULL));
-	const LAPriceDataCalendar& fixcal = dynamic_cast<const LAPriceDataCalendar &>(dh->get());
+	const AQLPriceDataCalendar& fixcal = dynamic_cast<const AQLPriceDataCalendar &>(dh->get());
 
 	dh = &(object.getData(IR_CALIBRATION_DATA_PAYMENTCALENDAR,ISNOTNULL));
-	const LAPriceDataCalendar& paycal = dynamic_cast<const LAPriceDataCalendar &>(dh->get());
+	const AQLPriceDataCalendar& paycal = dynamic_cast<const AQLPriceDataCalendar &>(dh->get());
 
 	dh = &(object.getData(IR_MODEL_DATA_DAYCOUNT,ISNOTNULL));
-	const LAPriceDataDayCount& daycount = dynamic_cast<const LAPriceDataDayCount &>(dh->get());
+	const AQLPriceDataDayCount& daycount = dynamic_cast<const AQLPriceDataDayCount &>(dh->get());
 	
 	dh = &(object.getData(PRICING_CALIBRATION_DATAOTICEPERIOD,ISNOTNULL));
-	LAString spotlag = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString spotlag = dynamic_cast<AQLDataString &>(dh->get()).get();
 	
 	dh = &(object.getData(IR_MODEL_DATA_FREQUENCY,ISNOTNULL));
-	LAString frequency = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString frequency = dynamic_cast<AQLDataString &>(dh->get()).get();
 
-	LADate expdate = LAMathDateCalculations::getDate(asof,optionmatu,sr,&fixcal,true);
-	LADate valuedate = LAMathDateCalculations::getDate(asof,spotlag,sr,&fixcal,true);
-	LADate tmpdate = LAMathDateCalculations::getDate(expdate,spotlag,sr,&fixcal,true);
+	AQLDate expdate = LAMathDateCalculations::getDate(asof,optionmatu,sr,&fixcal,true);
+	AQLDate valuedate = LAMathDateCalculations::getDate(asof,spotlag,sr,&fixcal,true);
+	AQLDate tmpdate = LAMathDateCalculations::getDate(expdate,spotlag,sr,&fixcal,true);
 	
-	LAPriceDataDayCount dc(ACT_365_ISDA);
-	LADate swapenddate = LAMathDateCalculations::getDate(tmpdate,swapterm,sr,&paycal,true);
+	AQLPriceDataDayCount dc(ACT_365_ISDA);
+	AQLDate swapenddate = LAMathDateCalculations::getDate(tmpdate,swapterm,sr,&paycal,true);
 	DateVector datevec;
 	LAMathDateCalculations::generateSchedule(expdate,swapenddate,frequency,true,NULL,NULL,NULL,datevec,&sr,&paycal);
 	
@@ -280,44 +280,44 @@ LAMathJamshidianSwaption::setUpDataProvider(const LADate& basedate, LAObject& ob
 
 	//mModelGrid mModelVol
 	dh = &(object.getData(PRICING_DATA_MODELPARAM,ISNOTNULL));
-	LAObject& models= dynamic_cast<LADataReference&>(dh->get()).get().get();
+	AQLObject& models= dynamic_cast<AQLDataReference&>(dh->get()).get().get();
 	dh = &(models.getData(PRICING_DATA_CALIBCANONICAL_T,ISNOTNULL));
-	DoubleVector calib_T = dynamic_cast<LADataDoubles&>(dh->get()).get();
+	DoubleVector calib_T = dynamic_cast<AQLDataDoubles&>(dh->get()).get();
 	dh = &(models.getData(PRICING_DATA_CALIBVOL_T,ISNOTNULL));
-	DoubleVector vol_T = dynamic_cast<LADataDoubles&>(dh->get()).get();
+	DoubleVector vol_T = dynamic_cast<AQLDataDoubles&>(dh->get()).get();
 	dataProvider->mModelGrid = calib_T;
 	dataProvider->mModelVol = vol_T;
 
 	//mStartpos
 	unsigned int spos = 0;
 	dh = &(object.getData(PRICING_DATA_STARTPOSITION,ISNOTNULL));
-	spos = dynamic_cast<LADataInt&>(dh->get()).get();
+	spos = dynamic_cast<AQLDataInt&>(dh->get()).get();
 	dataProvider->mStartpos = spos;
 	
 	//mEndpos
 	unsigned int epos = 0;
 	DoubleArray::iterator its;
-	LAAlgorithm::locate(calib_T,gridvec[0],calib_T.size(),epos);
+	AQLAlgorithm::locate(calib_T,gridvec[0],calib_T.size(),epos);
 	if (epos == calib_T.size())
 	{
 		--epos;
 	}
 	else
 	{
-		double diff = LAMath::abs(calib_T[epos] - gridvec[0]); 
-		if (diff > LAMath::abs(gridvec[0] - calib_T[epos - 1]))
+		double diff = AQLMath::abs(calib_T[epos] - gridvec[0]); 
+		if (diff > AQLMath::abs(gridvec[0] - calib_T[epos - 1]))
 		{
 			--epos;
 		}
 	}
 	//check whether HWVolterm is longer than Swaption maturity;
 	if(gridvec[0] > calib_T.back())
-		throw LACoreInvalidData("HWVolTerm must be longer than Swaption maturity",__FILE__,__LINE__); 
+		throw AQLCoreInvalidData("HWVolTerm must be longer than Swaption maturity",__FILE__,__LINE__); 
 	dataProvider->mEndpos = epos;
 	
 	//mpGL
 	delete dataProvider->mpGL;
-	dataProvider->mpGL = new LAGaussLegendre(dataProvider->mEndpos*2);
+	dataProvider->mpGL = new AQLGaussLegendre(dataProvider->mEndpos*2);
 	dataProvider->mBound.resize(1);
 	//dataProvider->mBound[0].first  = -1.0;
 	//dataProvider->mBound[0].second = 0.1;
@@ -325,14 +325,14 @@ LAMathJamshidianSwaption::setUpDataProvider(const LADate& basedate, LAObject& ob
 	dataProvider->mBound[0].second = 0.2;
 	//mpCurve0
 	dh = &(models.getData(PRICING_DATA_CURVEID,ISNOTNULL));
-	LAObject& yldentity = dynamic_cast<LADataReference &>(dh->get()).get().get();
+	AQLObject& yldentity = dynamic_cast<AQLDataReference &>(dh->get()).get().get();
 	
 	dh = &(yldentity.getData(CALIBRATION_DATA_NAME,ISNOTNULL));
-	LAString yldname = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString yldname = dynamic_cast<AQLDataString &>(dh->get()).get();
 
 	// create tmp curve
 	delete dataProvider->mpTmpCurve;
-	LADataInstance* pDataInstance = object.getDataInstance();
+	AQLDataInstance* pDataInstance = object.getDataInstance();
 	dataProvider->mpTmpCurve = new LAMathYieldCurve(pDataInstance);
 	dataProvider->mpTmpCurve->getData(IR_CALIBRATION_DATA_YIELDDATA,ISDEFINED).convertFromString(yldname);
 	dataProvider->mpTmpCurve->setInterpolation(FN_SPLINEINTERPOLATION_STR);
@@ -343,23 +343,23 @@ LAMathJamshidianSwaption::setUpDataProvider(const LADate& basedate, LAObject& ob
 	
 	//mpCurve
 	dh = &(models.getData(PRICING_DATA_CALIBMEANREV_T,ISNOTNULL));
-	const DoubleArray& a_T = dynamic_cast<const LADataDoubles &>(dh->get()).get();
-	double a0 = dynamic_cast<LADataDoubles &>(dh->get()).get()[0];
+	const DoubleArray& a_T = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
+	double a0 = dynamic_cast<AQLDataDoubles &>(dh->get()).get()[0];
 	dh = &(models.getData(PRICING_DATA_SDEINTEGRALGRID,ISNOTNULL));
-	int integralgrid = dynamic_cast<LADataInt &>(dh->get()).get();
+	int integralgrid = dynamic_cast<AQLDataInt &>(dh->get()).get();
 
 	dh = &(models.getData(PRICING_DATA_ISTIMEDEPENDMEANREV,ISNOTNULL));
-	bool isTMREV = dynamic_cast<const LADataBool &>(dh->get()).get();
+	bool isTMREV = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	LAMathHWFuncMR* HW_a = 0;
 	if (isTMREV)
 	{
-		HW_a = new LAMathHWFuncMRTMDPT(calib_T,a_T,*(new LAStepInterpolation()));
+		HW_a = new LAMathHWFuncMRTMDPT(calib_T,a_T,*(new AQLStepInterpolation()));
 	}
 	else
 	{
 		HW_a = new LAMathHWFuncMR(a0);
 	}
-	LAMathHWFuncSigmaTMDPT* HW_s = new LAMathHWFuncSigmaTMDPT(calib_T,vol_T,*(new LAStepInterpolation()));
+	LAMathHWFuncSigmaTMDPT* HW_s = new LAMathHWFuncSigmaTMDPT(calib_T,vol_T,*(new AQLStepInterpolation()));
 	double r0 = curve0->getF(0.0001,0.0001);
 	
 	LARatesPathElementCurve* curve0_HW = new LARatesPathElementHW1FCurveTMDPT(0.0,r0,*HW_a,*HW_s, *curve0);
@@ -383,11 +383,11 @@ LAMathJamshidianSwaption::setUpDataProvider(const LADate& basedate, LAObject& ob
 }
 
 DoubleVector	
-LAMathJamshidianSwaption::getVolatilityResult(const LADataValuation& att) const 
+LAMathJamshidianSwaption::getVolatilityResult(const AQLDataValuation& att) const 
 {
 	LAMathJamshidianSwaptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("JamshidianSwaptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("JamshidianSwaptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathJamshidianSwaptionDataProvider&>(att.getDataProvider());
 
@@ -395,11 +395,11 @@ LAMathJamshidianSwaption::getVolatilityResult(const LADataValuation& att) const
 
 }
 unsigned int				
-LAMathJamshidianSwaption::getNextPos(const LADataValuation& att) const
+LAMathJamshidianSwaption::getNextPos(const AQLDataValuation& att) const
 {
 	LAMathJamshidianSwaptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("JamshidianSwaptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("JamshidianSwaptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathJamshidianSwaptionDataProvider&>(att.getDataProvider());
 
@@ -407,11 +407,11 @@ LAMathJamshidianSwaption::getNextPos(const LADataValuation& att) const
 }
 
 double						
-LAMathJamshidianSwaption::getNextRstar(const LADataValuation& att) const
+LAMathJamshidianSwaption::getNextRstar(const AQLDataValuation& att) const
 {
 	LAMathJamshidianSwaptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("JamshidianSwaptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("JamshidianSwaptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathJamshidianSwaptionDataProvider&>(att.getDataProvider());
 
@@ -419,11 +419,11 @@ LAMathJamshidianSwaption::getNextRstar(const LADataValuation& att) const
 }
 
 double						
-LAMathJamshidianSwaption::getSimPrem(const LADataValuation& att) const
+LAMathJamshidianSwaption::getSimPrem(const AQLDataValuation& att) const
 {
 	LAMathJamshidianSwaptionDataProvider* dataProvider = NULL;
 	if (att.isNullDataProvider())
-		throw LACoreInvalidData("JamshidianSwaptionDataProvider does not exist",__FILE__, __LINE__);
+		throw AQLCoreInvalidData("JamshidianSwaptionDataProvider does not exist",__FILE__, __LINE__);
 	else
 		dataProvider = &dynamic_cast<LAMathJamshidianSwaptionDataProvider&>(att.getDataProvider());
 
@@ -434,7 +434,7 @@ LAMathJamshidianSwaption::getSimPrem(const LADataValuation& att) const
 	@brief create new cache class
 	@return cache class
 */
-LADataProvider*
+AQLDataProvider*
 LAMathJamshidianSwaption::createNewDataProvider() const
 {
 	LAMathJamshidianSwaptionDataProvider* dataProvider = NULL;
@@ -444,7 +444,7 @@ LAMathJamshidianSwaption::createNewDataProvider() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 	return dataProvider;
 }

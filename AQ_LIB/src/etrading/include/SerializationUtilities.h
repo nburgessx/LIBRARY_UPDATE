@@ -2,7 +2,7 @@
 #pragma once
 
 // Includes: This Library
-#include "LAString.h"
+#include "AQLString.h"
 #include "CoreEnumerations.h"
 
 namespace etrading

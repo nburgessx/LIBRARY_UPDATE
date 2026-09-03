@@ -51,12 +51,12 @@ namespace etrading
         /* @brief		Method that returns True if the legType exits in legs
         *  @return		True if the legType exits
         */
-        bool exists(const LAString& legType) const;
+        bool exists(const AQLString& legType) const;
 
         /* @brief		Method that returns the leg with matching legName
         *  @return		The leg with matching legName
         */
-        LegPtr findLegByName(const LAString& legName) const;
+        LegPtr findLegByName(const AQLString& legName) const;
 
         /* @brief		Method that returns True if the currency exits in legs
         *  @return		True if the legCurrency exits

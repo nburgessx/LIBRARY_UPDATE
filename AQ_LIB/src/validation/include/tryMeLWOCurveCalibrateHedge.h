@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 #include "LabelValueBlock.h"
 #include "HedgeCurveEngine.h" // Included here to declare the 'HedgeCurveInfo' struct return type
 

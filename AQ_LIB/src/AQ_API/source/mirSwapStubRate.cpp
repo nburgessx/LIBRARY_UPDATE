@@ -1,8 +1,8 @@
 #include "InitializeAQETrading.h"
 #include "mirSwapStubRate.h"
-#include "LADate.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLDate.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "tryMirSwapStubRate.h"
 
@@ -58,26 +58,26 @@ double mirSwapStubRate(const std::string& EffDt,
 	try 
 	{
 		// marshall all inputs		
-		LAString effDt		(EffDt.c_str());
-		LAString mat		(Mat.c_str());
-		LAString freq		(Freq.c_str());
-		LAString dayCt		(DayCt.c_str());
-		LAString rollCnv	(RollCnv.c_str());
-		LAString cal		(Cal.c_str());
-		LAString fixLag		(FixLag.c_str());
-		LAString interpolation	(Interpolation.c_str());
-		LAString firstStub		(FirstStub.c_str());
-		LAString lastStub		(LastStub.c_str());
-		LAString stubType		(StubType.c_str());
-		LAString crvID			(CrvID.c_str());
-		LAString useCurveName	(UseCurveName.c_str());
-		LAString toleranceTenor	(ToleranceTenor.c_str());
-		LAString rollDay		(RollDay.c_str());
+		AQLString effDt		(EffDt.c_str());
+		AQLString mat		(Mat.c_str());
+		AQLString freq		(Freq.c_str());
+		AQLString dayCt		(DayCt.c_str());
+		AQLString rollCnv	(RollCnv.c_str());
+		AQLString cal		(Cal.c_str());
+		AQLString fixLag		(FixLag.c_str());
+		AQLString interpolation	(Interpolation.c_str());
+		AQLString firstStub		(FirstStub.c_str());
+		AQLString lastStub		(LastStub.c_str());
+		AQLString stubType		(StubType.c_str());
+		AQLString crvID			(CrvID.c_str());
+		AQLString useCurveName	(UseCurveName.c_str());
+		AQLString toleranceTenor	(ToleranceTenor.c_str());
+		AQLString rollDay		(RollDay.c_str());
 
-		LAStringVector curveNames;
+		AQLStringVector curveNames;
 		swig::buildStringVector(curveNames, CurveNames);
 
-		LAStringVector curveTenors;
+		AQLStringVector curveTenors;
 		swig::buildStringVector(curveTenors, CurveTenors);
 
 		ret = validation::tryMirSwapStubRate(etrading::InitializeAQETrading::instance().dataInstance(),
@@ -103,7 +103,7 @@ double mirSwapStubRate(const std::string& EffDt,
 												IsFwdInterp,
 												UseFwdData);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

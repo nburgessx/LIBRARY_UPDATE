@@ -39,46 +39,46 @@ public:
 protected:
 	//==============================================
 	// get operator1
-	virtual  LAString  getOperator1(void) const;	
+	virtual  AQLString  getOperator1(void) const;	
 	//==============================================
 	// get operator2
-	virtual  LAString  getOperator2(void) const;
+	virtual  AQLString  getOperator2(void) const;
 	//==============================================
 	// get coefficient1
-	virtual  LAString  getCoefficient1(const LAString &fx) const;
+	virtual  AQLString  getCoefficient1(const AQLString &fx) const;
 	//==============================================
 	// get coefficient2
-	virtual  LAString  getCoefficient2(const LAString &fx) const;
+	virtual  AQLString  getCoefficient2(const AQLString &fx) const;
 	//==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &fx) const;
+	virtual  AQLString  getOutPutName1(const AQLString &fx) const;
 	//==============================================
 	// get outputname2
-	virtual  LAString  getOutPutName2(const LAString &fx) const;
+	virtual  AQLString  getOutPutName2(const AQLString &fx) const;
 	//==============================================
 	// get risk name
-	virtual  LAString getRiskName(void) const;
+	virtual  AQLString getRiskName(void) const;
 	//==============================================
 	// get shift type
-	virtual  LAString getShiftType(const LAString &fx) const;
+	virtual  AQLString getShiftType(const AQLString &fx) const;
 	//==============================================
 	// get shift value
-	virtual double getShiftVal(const LAString &fx, SCENARIONUM scenarioNum) const;
+	virtual double getShiftVal(const AQLString &fx, SCENARIONUM scenarioNum) const;
 	//==============================================
 	// get target currencies
-	virtual  LAString getTargetCurrencies() const;
+	virtual  AQLString getTargetCurrencies() const;
 	// get calibration target currencies
-	virtual  LAString getCalibTargetCurrencies() const;
+	virtual  AQLString getCalibTargetCurrencies() const;
 	// get coefficient ratio1
-	virtual double getCoefficientRatio1(const LAString& ccy, LAObject& e, LADataInstance& dataInstance) const;
+	virtual double getCoefficientRatio1(const AQLString& ccy, AQLObject& e, AQLDataInstance& dataInstance) const;
 	// get coefficient ratio2
-	virtual double getCoefficientRatio2(const LAString& ccy, LAObject& e, LADataInstance& dataInstance) const;
+	virtual double getCoefficientRatio2(const AQLString& ccy, AQLObject& e, AQLDataInstance& dataInstance) const;
 	//==============================================
 	// isRiskCurrencyMode
-	virtual bool isRiskCurrencyMode(const LAString& fx) const;
+	virtual bool isRiskCurrencyMode(const AQLString& fx) const;
 	//==============================================
 	// create scenario2 object
-	virtual  std::vector<LAObject *> createScenario2Entity(const LAString &fx, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<AQLObject *> createScenario2Entity(const AQLString &fx, AQLDataInstance &dataInstance, int index) const;
 
 };
 

@@ -26,20 +26,20 @@
 #include "LAPriceFXVolatility.h"
 
 
-#include "LADataBasics.h"
-#include "LADataVector.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
 
 
 
-#include "LAAlgorithm.h"
-#include "LAConstant.h"
-#include "LA1DDataSet.h"
-#include "LACombinationFunc.h"
-#include "LALinearInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LAGaussLegendre.h"
-#include "LACombinationFunc.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLConstant.h"
+#include "AQL1DDataSet.h"
+#include "AQLCombinationFunc.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLGaussLegendre.h"
+#include "AQLCombinationFunc.h"
+#include "AQLBasic.h"
 
 using namespace std;
 #define GAUSSLEGENDREPOINTNUM 20
@@ -53,13 +53,13 @@ using namespace std;
 	@note volatility function = fx function part * t function part
 	@note input pointers are deleted of this class destructor 
 */
-LAPriceFXVolatility::LAPriceFXVolatility(LAFunctionBase* pVol_fx_and_t, LAFunctionBase* pVol_t, const DoubleArray& timegrid)
+LAPriceFXVolatility::LAPriceFXVolatility(AQLFunctionBase* pVol_fx_and_t, AQLFunctionBase* pVol_t, const DoubleArray& timegrid)
 : mpVol_t(pVol_t), mpVol_fx_and_t(pVol_fx_and_t), mTimeGrid(timegrid), mPos_old(0)
 {
 	if (pVol_t == 0 || pVol_fx_and_t == 0)
 	{
 		//error
-		throw LACoreInvalidData("Input Volatility is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Input Volatility is NULL", __FILE__, __LINE__);
 	}
 	setUp();
 
@@ -70,10 +70,10 @@ LAPriceFXVolatility::LAPriceFXVolatility(LAFunctionBase* pVol_fx_and_t, LAFuncti
 	@brief copy constructor
 */
 LAPriceFXVolatility::LAPriceFXVolatility(const LAPriceFXVolatility& v) 
-: LAFunctionBase(v), mTimeGrid(v.mTimeGrid), mVolData(v.mVolData), mIntegratedVolData(v.mIntegratedVolData), mPos_old(0) 
+: AQLFunctionBase(v), mTimeGrid(v.mTimeGrid), mVolData(v.mVolData), mIntegratedVolData(v.mIntegratedVolData), mPos_old(0) 
 {
-	mpVol_t = dynamic_cast<LAFunctionBase*>(v.mpVol_t->clone());//%%% COVARIANT RETURN %%%
-	mpVol_fx_and_t = dynamic_cast<LAFunctionBase*>(v.mpVol_fx_and_t->clone());//%%% COVARIANT RETURN %%%
+	mpVol_t = dynamic_cast<AQLFunctionBase*>(v.mpVol_t->clone());//%%% COVARIANT RETURN %%%
+	mpVol_fx_and_t = dynamic_cast<AQLFunctionBase*>(v.mpVol_fx_and_t->clone());//%%% COVARIANT RETURN %%%
 }
 
 /*!
@@ -88,7 +88,7 @@ LAPriceFXVolatility::~LAPriceFXVolatility()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceFXVolatility::clone() const	
 {
     try 
@@ -97,7 +97,7 @@ LAPriceFXVolatility::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -109,7 +109,7 @@ LAPriceFXVolatility::clone() const
 bool
 LAPriceFXVolatility::isTypeOf(function_t id) const
 {
-	return (id==FN_FXVOLATILITY ? true : LAFunctionBase::isTypeOf(id));
+	return (id==FN_FXVOLATILITY ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -138,7 +138,7 @@ LAPriceFXVolatility::operator()(const DoubleArray& x) const
 	if (x[0] == 0.0) pos = 0;
 	else if (x[0] == mTimeGrid[mPos_old]) pos = mPos_old;
 	else if (mPos_old + 1 < size && x[0] == mTimeGrid[mPos_old + 1]) pos = mPos_old + 1;
-	else if (!LAAlgorithm::find<DoubleArray, double>(mTimeGrid, x[0], 0, size - 1, pos))
+	else if (!AQLAlgorithm::find<DoubleArray, double>(mTimeGrid, x[0], 0, size - 1, pos))
 	{
 		pos = 0;
 		mPos_old = 0;
@@ -167,34 +167,34 @@ LAPriceFXVolatility::integral(const std::vector<std::pair<double,double> >& x) c
 	unsigned int size = mTimeGrid.size();
 	if (size == 0)
 	{
-		LAGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
-		return fx_and_t_part * LAMath::sqrt(integral(x[0].first, x[0].second, &gl));	
+		AQLGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
+		return fx_and_t_part * AQLMath::sqrt(integral(x[0].first, x[0].second, &gl));	
 	}
 
 	unsigned int pos_e;
 	if (x[0].second == mTimeGrid[mPos_old]) pos_e = mPos_old;
 	else if (x[0].second == mTimeGrid[mPos_old + 1]) pos_e = mPos_old + 1;
-	else if (!LAAlgorithm::find<DoubleArray, double>(mTimeGrid, x[0].second, 0, size - 1, pos_e))
+	else if (!AQLAlgorithm::find<DoubleArray, double>(mTimeGrid, x[0].second, 0, size - 1, pos_e))
 	{
 		pos_e = 0;
 		mPos_old = 0;
-		LAGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
-		return fx_and_t_part * LAMath::sqrt(integral(x[0].first, x[0].second, &gl));	
+		AQLGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
+		return fx_and_t_part * AQLMath::sqrt(integral(x[0].first, x[0].second, &gl));	
 	}
 	mPos_old = pos_e; 
 	if (x[0].first == 0.0)
-		return fx_and_t_part * LAMath::sqrt(mIntegratedVolData[pos_e]);	
+		return fx_and_t_part * AQLMath::sqrt(mIntegratedVolData[pos_e]);	
 	
     
 	unsigned int pos_s;
 	if (x[0].first == mTimeGrid[mPos_old - 1]) pos_s = mPos_old - 1;
-	else if (!LAAlgorithm::find<DoubleArray, double>(mTimeGrid, x[0].first, 0, size - 1, pos_s))
+	else if (!AQLAlgorithm::find<DoubleArray, double>(mTimeGrid, x[0].first, 0, size - 1, pos_s))
 	{
-		LAGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
-		return fx_and_t_part * LAMath::sqrt(integral(x[0].first, x[0].second, &gl));	
+		AQLGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
+		return fx_and_t_part * AQLMath::sqrt(integral(x[0].first, x[0].second, &gl));	
 	}
 	
-	return fx_and_t_part * LAMath::sqrt((mIntegratedVolData[pos_e] - mIntegratedVolData[pos_s]));
+	return fx_and_t_part * AQLMath::sqrt((mIntegratedVolData[pos_e] - mIntegratedVolData[pos_s]));
 
 }
 
@@ -207,13 +207,13 @@ LAPriceFXVolatility::setUp()
 		mVolData[i] = (*mpVol_t)(mTimeGrid[i]);
 
 	mIntegratedVolData.resize(size);
-	LAGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
+	AQLGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
 	for (unsigned int i = 1; i < size; i++)
 		mIntegratedVolData[i] = mIntegratedVolData[i - 1] + integral(mTimeGrid[i - 1], mTimeGrid[i], &gl);
 }
 
 double
-LAPriceFXVolatility::integral(double t1, double t2, LA1DIntegral* pIntegral) const
+LAPriceFXVolatility::integral(double t1, double t2, AQL1DIntegral* pIntegral) const
 {
 	if (mpVol_t->isTypeOf(FN_CONSTANT))
 	{
@@ -221,12 +221,12 @@ LAPriceFXVolatility::integral(double t1, double t2, LA1DIntegral* pIntegral) con
 		return vol * vol * (t2 - t1);
 	}
 	else if (mpVol_t->isTypeOf(FN_1DDATASET) 
-		&& dynamic_cast<const LA1DDataSet*>(mpVol_t)->getInterpolationType() == FN_STEPINTERPOLATION)
+		&& dynamic_cast<const AQL1DDataSet*>(mpVol_t)->getInterpolationType() == FN_STEPINTERPOLATION)
 	{
-		const DoubleArray& grid = dynamic_cast<const LA1DDataSet*>(mpVol_t)->getGrids();
+		const DoubleArray& grid = dynamic_cast<const AQL1DDataSet*>(mpVol_t)->getGrids();
 		unsigned int pos1, pos2;
-		LAAlgorithm::locate<DoubleArray, double>(grid, t1, grid.size(), pos1);
-		LAAlgorithm::locate<DoubleArray, double>(grid, t2, grid.size(), pos2);
+		AQLAlgorithm::locate<DoubleArray, double>(grid, t1, grid.size(), pos1);
+		AQLAlgorithm::locate<DoubleArray, double>(grid, t2, grid.size(), pos2);
 
 		double sum = 0.0;
 		double xx1, xx2;

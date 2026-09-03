@@ -4,8 +4,8 @@
 #pragma interface
 #endif
 
-#include "LADate.h"
-#include "LACoreTemplateType.h"
+#include "AQLDate.h"
+#include "AQLCoreTemplateType.h"
 
 #include <map>
 
@@ -15,19 +15,19 @@
 // SYNPOSIS:
 //     #include "LAMathCentralBank.h"
 //
-//     const std::vector<LADate>& ecbDates = LAMathCentralBank::meetingSchedule("ECB"); 
+//     const std::vector<AQLDate>& ecbDates = LAMathCentralBank::meetingSchedule("ECB"); 
 //
 class LAMathCentralBank
 {
-	friend void setupCBSchedule( const LAString*, const bool );			// in LibSetup
-	friend void setupCBScheduleETrading( const LAString*, const bool );	// in LibSetupETrading
+	friend void setupCBSchedule( const AQLString*, const bool );			// in LibSetup
+	friend void setupCBScheduleETrading( const AQLString*, const bool );	// in LibSetupETrading
 
 public:
-	typedef std::map<LAString, DateVector> Schedules;
+	typedef std::map<AQLString, DateVector> Schedules;
 
 	// return sorted list of monetary committee meeting dates of a central bank
 	// given by its three-letter abbreviation (case insensitive);
-	static const DateVector& meetingSchedule(const LAString& centralBank);
+	static const DateVector& meetingSchedule(const AQLString& centralBank);
 
 private:
 	// disable instantiation

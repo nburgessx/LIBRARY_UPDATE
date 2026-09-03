@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -25,19 +25,19 @@ namespace validation
     */
     DoubleVector tryMeCurveCompoundRate( const DateVector& startDates,
                                          const DateVector& endDates,
-                                         const LAString& curveCollection,
-                                         const LAString& forecastCurveIndex,
-                                         const LAString& frequency,
+                                         const AQLString& curveCollection,
+                                         const AQLString& forecastCurveIndex,
+                                         const AQLString& frequency,
                                          double spread,
-                                         const LAString& stubType,
-                                         const LAString& rollDayInput,
-                                         const LAString& calendar,
-                                         const LAString& businessDayAdj,
-                                         const LAString& dayCount,
-                                         const LAString& interpolation,
-                                         const LAString& compoundType,
-                                         const LAString& firstStubDate,
-                                         const LAString& lastStubDate );
+                                         const AQLString& stubType,
+                                         const AQLString& rollDayInput,
+                                         const AQLString& calendar,
+                                         const AQLString& businessDayAdj,
+                                         const AQLString& dayCount,
+                                         const AQLString& interpolation,
+                                         const AQLString& compoundType,
+                                         const AQLString& firstStubDate,
+                                         const AQLString& lastStubDate );
 
 
     /* @brief			validation interface for the meCompoundRate method
@@ -58,21 +58,21 @@ namespace validation
     *  @param [in]		lastStubDate		Start date of the end stub period
     *  @return			compounding rate calculated based on the startDate, endDate, and compound type
     */
-    double tryMeCurveCompoundRate( const LADate& startDate,
-                                   const LADate& endDate,
-                                   const LAString& curveCollection,
-                                   const LAString& forecastCurveIndex,
-                                   const LAString& frequency,
+    double tryMeCurveCompoundRate( const AQLDate& startDate,
+                                   const AQLDate& endDate,
+                                   const AQLString& curveCollection,
+                                   const AQLString& forecastCurveIndex,
+                                   const AQLString& frequency,
                                    double spread,
-                                   const LAString& stubType,
-                                   const LAString& rollDayInput,
-                                   const LAString& calendar,
-                                   const LAString& businessDayAdj,
-                                   const LAString& dayCount,
-                                   const LAString& interpolation,
-                                   const LAString& compoundType,
-                                   const LAString& firstStubDate,
-                                   const LAString& lastStubDate );
+                                   const AQLString& stubType,
+                                   const AQLString& rollDayInput,
+                                   const AQLString& calendar,
+                                   const AQLString& businessDayAdj,
+                                   const AQLString& dayCount,
+                                   const AQLString& interpolation,
+                                   const AQLString& compoundType,
+                                   const AQLString& firstStubDate,
+                                   const AQLString& lastStubDate );
 
     /* @brief			validation interface for the meCurveCompoundRateWithFixingTable method
     *  @param [in]		startDates			A vector of start dates
@@ -96,19 +96,19 @@ namespace validation
     */
     DoubleVector tryMeCurveCompoundRateWithFixingTable( const DateVector& startDates,
                                          const DateVector& endDates,
-                                         const LAString& curveCollection,
-                                         const LAString& forecastCurveIndex,
-                                         const LAString& frequency,
+                                         const AQLString& curveCollection,
+                                         const AQLString& forecastCurveIndex,
+                                         const AQLString& frequency,
                                          double spread,
-                                         const LAString& stubType,
-                                         const LAString& rollDayInput,
-                                         const LAString& calendar,
-                                         const LAString& businessDayAdj,
-                                         const LAString& dayCount,
-                                         const LAString& interpolation,
-                                         const LAString& compoundType,
-                                         const LAString& firstStubDate,
-                                         const LAString& lastStubDate,
+                                         const AQLString& stubType,
+                                         const AQLString& rollDayInput,
+                                         const AQLString& calendar,
+                                         const AQLString& businessDayAdj,
+                                         const AQLString& dayCount,
+                                         const AQLString& interpolation,
+                                         const AQLString& compoundType,
+                                         const AQLString& firstStubDate,
+                                         const AQLString& lastStubDate,
                                          const std::string& fixingTableName,
                                          bool annualized=true);
 
@@ -132,21 +132,21 @@ namespace validation
     *  @param [in]		annualized  		True to return annualized rate. Default to true
     *  @return			compounding rate calculated based on the startDate, endDate, and compound type
     */
-    double tryMeCurveCompoundRateWithFixingTable( const LADate& startDate,
-                                   const LADate& endDate,
-                                   const LAString& curveCollection,
-                                   const LAString& forecastCurveIndex,
-                                   const LAString& frequency,
+    double tryMeCurveCompoundRateWithFixingTable( const AQLDate& startDate,
+                                   const AQLDate& endDate,
+                                   const AQLString& curveCollection,
+                                   const AQLString& forecastCurveIndex,
+                                   const AQLString& frequency,
                                    double spread,
-                                   const LAString& stubType,
-                                   const LAString& rollDayInput,
-                                   const LAString& calendar,
-                                   const LAString& businessDayAdj,
-                                   const LAString& dayCount,
-                                   const LAString& interpolation,
-                                   const LAString& compoundType,
-                                   const LAString& firstStubDate,
-                                   const LAString& lastStubDate, 
+                                   const AQLString& stubType,
+                                   const AQLString& rollDayInput,
+                                   const AQLString& calendar,
+                                   const AQLString& businessDayAdj,
+                                   const AQLString& dayCount,
+                                   const AQLString& interpolation,
+                                   const AQLString& compoundType,
+                                   const AQLString& firstStubDate,
+                                   const AQLString& lastStubDate, 
                                    const std::string& fixingTableName,
                                    bool annualized=true);
 }

@@ -45,15 +45,15 @@ namespace validation
 		// Perform initial basic sanity checks
 		if ( lwoCurveGeneratorName.size() == 0 )
 		{
-				throw LACoreInvalidData(	( "#Error: Missing lwoCurveGenerator name" ), __FILE__, __LINE__ );
+				throw AQLCoreInvalidData(	( "#Error: Missing lwoCurveGenerator name" ), __FILE__, __LINE__ );
 		}
 		if ( lwoCurveMarketDataName.size() == 0 )
 		{
-				throw LACoreInvalidData(	( "#Error: Missing lwoCurveMarketData name" ), __FILE__, __LINE__ );
+				throw AQLCoreInvalidData(	( "#Error: Missing lwoCurveMarketData name" ), __FILE__, __LINE__ );
 		}
 		if ( domesticCurveCollection.size() == 0 )
 		{
-			throw LACoreInvalidData(	( "#Error: Missing domesticCurveCollection name" ), __FILE__, __LINE__ );
+			throw AQLCoreInvalidData(	( "#Error: Missing domesticCurveCollection name" ), __FILE__, __LINE__ );
 		}
 
 		// Create the Curve object and store in the cache

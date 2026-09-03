@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -30,26 +30,26 @@ namespace validation
     *  @param [in]		isFwdInterp					Boolean that decides if direct interpolation on fwd rates is employed
     *  @param [in]		useFwdData					Use fwd rates directly or derive them from spot rates
     */
-    double tryMirSwapStubRate( LADataInstance* dataInstance,
-                               const LAString& effDt,
-                               const LAString& mat,
-                               const LAString& freq,
-                               const LAString& dayCt,
-                               const LAString& busDayAdj,
-                               const LAString& cal,
-                               const LAString& rollDayString,
-                               const LAString& fixLag,
+    double tryMirSwapStubRate( AQLDataInstance* dataInstance,
+                               const AQLString& effDt,
+                               const AQLString& mat,
+                               const AQLString& freq,
+                               const AQLString& dayCt,
+                               const AQLString& busDayAdj,
+                               const AQLString& cal,
+                               const AQLString& rollDayString,
+                               const AQLString& fixLag,
                                bool eomRoll,
-                               const LAString& interpolation,
-                               const LAString& firstStub,
-                               const LAString& lastStub,
-                               const LAString& stub,
-                               const LAString& crvID,
-                               const LAStringVector& curveNames,
-                               const LAStringVector& curveTenors,
+                               const AQLString& interpolation,
+                               const AQLString& firstStub,
+                               const AQLString& lastStub,
+                               const AQLString& stub,
+                               const AQLString& crvID,
+                               const AQLStringVector& curveNames,
+                               const AQLStringVector& curveTenors,
                                const DoubleVector& tenorCurveFixings,
-                               const LAString& useCurveName,
-                               const LAString& toleranceTenor,
+                               const AQLString& useCurveName,
+                               const AQLString& toleranceTenor,
                                bool isFwdInterp,
                                bool useFwdData );
 
@@ -77,26 +77,26 @@ namespace validation
     *  @param [in]		isFwdInterp					Boolean that decides if direct interpolation on fwd rates is employed
     *  @param [in]		useFwdData					Use fwd rates directly or derive them from spot rates
     */
-    LADate tryMirSwapStubFixingDate( LADataInstance* dataInstance,
-									 const LAString& effDt,
-									 const LAString& mat,
-									 const LAString& freq,
-									 const LAString& dayCt,
-									 const LAString& busDayAdj,
-									 const LAString& cal,
-									 const LAString& rollDayString,
-									 const LAString& fixLag,
+    AQLDate tryMirSwapStubFixingDate( AQLDataInstance* dataInstance,
+									 const AQLString& effDt,
+									 const AQLString& mat,
+									 const AQLString& freq,
+									 const AQLString& dayCt,
+									 const AQLString& busDayAdj,
+									 const AQLString& cal,
+									 const AQLString& rollDayString,
+									 const AQLString& fixLag,
 									 bool eomRoll,
-									 const LAString& interpolation,
-									 const LAString& firstStub,
-									 const LAString& lastStub,
-									 const LAString& stub,
-									 const LAString& crvID,
-									 const LAStringVector& curveNames,
-									 const LAStringVector& curveTenors,
+									 const AQLString& interpolation,
+									 const AQLString& firstStub,
+									 const AQLString& lastStub,
+									 const AQLString& stub,
+									 const AQLString& crvID,
+									 const AQLStringVector& curveNames,
+									 const AQLStringVector& curveTenors,
 									 const DoubleVector& tenorCurveFixings,
-									 const LAString& useCurveName,
-									 const LAString& toleranceTenor,
+									 const AQLString& useCurveName,
+									 const AQLString& toleranceTenor,
 									 bool isFwdInterp,
 									 bool useFwdData );
 }

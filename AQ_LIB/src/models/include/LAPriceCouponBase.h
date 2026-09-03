@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 // LAPriceCouponBase's function id
@@ -16,14 +16,14 @@
 
 
 
-class LADate;
-class LAObject;
+class AQLDate;
+class AQLObject;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief declaration of abstract base class of coupon select operator.
 
 */
-class LAPriceCouponBase : public LAFunctionBase
+class LAPriceCouponBase : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
@@ -37,7 +37,7 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const = 0;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
@@ -62,8 +62,8 @@ public:
 		@param[in] legNo leg number(first leg number = 0)
 		@param[in] cashlet cashlet object
 	*/
-	virtual void				setUp(const LADate& basedate, const LAObject& trade,
-									unsigned int legNo, const LAObject& cashlet) = 0;
+	virtual void				setUp(const AQLDate& basedate, const AQLObject& trade,
+									unsigned int legNo, const AQLObject& cashlet) = 0;
 
 protected:
 	

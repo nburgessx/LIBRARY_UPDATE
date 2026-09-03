@@ -2,7 +2,7 @@
 
 #include "BondCurveCostFunction.h"
 #include "BondCurves.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CoreEnumerations.h"
 
 namespace etrading

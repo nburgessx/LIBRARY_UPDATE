@@ -3,8 +3,8 @@
 */
 
 #include "LABlackScholesDelayedCapletOptionPayoff.h"
-#include "LABasic.h"
-#include "LADist.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
 #include "LAAnalyticFormula.h"
 
 LABlackScholesDelayedCapletOption::LABlackScholesDelayedCapletOption()
@@ -24,7 +24,7 @@ LABlackScholesDelayedCapletOption::~LABlackScholesDelayedCapletOption()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LABlackScholesDelayedCapletOption::clone() const
 {
     try 
@@ -33,7 +33,7 @@ LABlackScholesDelayedCapletOption::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -62,7 +62,7 @@ void
 LABlackScholesDelayedCapletOption::setConvexityFactors(const DoubleArray& x)
 {
 	if (x.size() < 3 )
-		throw LACoreInvalidData("Convexity factors size error", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Convexity factors size error", __FILE__, __LINE__);
 
 	mTimingTerm = x[0];
 	mDFFromPayment2End = x[1];
@@ -81,10 +81,10 @@ LABlackScholesDelayedCapletOption::calcConvexityAdjustment(AnalyticParam& param,
 	double vol = x.Vol;
 	if (mVolCutoff > 0.)
 	{
-		vol = LAMath::min(vol, mVolCutoff);
+		vol = AQLMath::min(vol, mVolCutoff);
 	}
 
-	const double ret = mTimingTerm * mDFFromPayment2End * x.Nu * x.F * (x.F * LAMath::exp(vol*vol*x.Te) * LADist::normsdist(AnalyticFormulae::BKd1(x)) - x.K * LADist::normsdist(AnalyticFormulae::BKd2(x)) - premium);
+	const double ret = mTimingTerm * mDFFromPayment2End * x.Nu * x.F * (x.F * AQLMath::exp(vol*vol*x.Te) * AQLDist::normsdist(AnalyticFormulae::BKd1(x)) - x.K * AQLDist::normsdist(AnalyticFormulae::BKd2(x)) - premium);
 	return ret;
 }
 

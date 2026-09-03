@@ -8,7 +8,7 @@
 #endif
 
 #include <csignal>
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 #include <boost/atomic.hpp>
 
 
@@ -39,7 +39,7 @@ namespace etrading
 			{
 				// Terminate the construction of this object and atomic decrement the instance count
 				instanceCount_.fetch_sub( 1, boost::memory_order_relaxed ); 
-				throw LACoreError( "#Error: Thread Guard: Calling AlgoQuantLib from multiple threads is not currently supported.", __FILE__, __LINE__ );
+				throw AQLCoreError( "#Error: Thread Guard: Calling AlgoQuantLib from multiple threads is not currently supported.", __FILE__, __LINE__ );
 			}
 		}
 
@@ -79,7 +79,7 @@ namespace etrading
 
 #define VALID_EXCEPTION_END	         \
     }						         \
-    catch(const LACoreError& e)	         \
+    catch(const AQLCoreError& e)	         \
     {						         \
         throw e;			         \
     }                                \

@@ -15,7 +15,7 @@
 
 
 #include "LAModelDynamicsSMMCurve.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 using namespace std;
 const double INFINITESIMAL = 1E-7; 
@@ -35,12 +35,12 @@ LARatesPathElementSMMCurve::LARatesPathElementSMMCurve(const DoubleArray& tenor,
 	if (tenor.size() <= 1 || (tenor[0] == 0.0 && tenor.size() <= 2))
 	{
 		//error
-		throw LACoreInvalidData("tenor size is one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size is one", __FILE__, __LINE__);
 	}
 	if (tenor.size() != delta_tenor.size() + 1)
 	{
 		//error
-		throw LACoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
 	}
 
 	mpRefCount = new int(1);
@@ -110,7 +110,7 @@ LARatesPathElementSMMCurve::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -152,11 +152,11 @@ LARatesPathElementSMMCurve::getP (double T) const
 {
 	if (m_t > T + INFINITESIMAL)
 	{
-		throw LACoreInvalidData("maturity is before start", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("maturity is before start", __FILE__, __LINE__);
 	}
 	else if (T > mpTenor->back() + INFINITESIMAL)
 	{
-		throw LACoreInvalidData("maturity is after last tenor", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("maturity is after last tenor", __FILE__, __LINE__);
 	}
 	else if (m_t >= T) return 1.0;
 	else if (m_t == 0.0) return mpInitialCurve->getP(T);
@@ -169,7 +169,7 @@ LARatesPathElementSMMCurve::getP (double T) const
 	unsigned int pos  = 0;
 	unsigned int tSize = mpTenor->size();
 	double _T = T > mpTenor->back() ? mpTenor->back() : T;
-	LAAlgorithm::locate<DoubleArray,double>(*mpTenor, _T, tSize, pos);
+	AQLAlgorithm::locate<DoubleArray,double>(*mpTenor, _T, tSize, pos);
 	if ((*mpTenor)[pos] == _T)
 		isOnTenor = true;	
 
@@ -238,10 +238,10 @@ LARatesPathElementSMMCurve::set_t(void)
 		return;
 	}	
 	unsigned int pos;
-	LAAlgorithm::locate<DoubleArray, double>(*mpTenor, m_t, mpTenor->size(), pos);
+	AQLAlgorithm::locate<DoubleArray, double>(*mpTenor, m_t, mpTenor->size(), pos);
 	if (pos == mpTenor->size())
 	{
-		throw LACoreInvalidData("curve start time is after last tenor", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("curve start time is after last tenor", __FILE__, __LINE__);
 	}
 	else if ((*mpTenor)[pos] == m_t)
 	{
@@ -266,13 +266,13 @@ LARatesPathElementSMMCurve::set_t(void)
 		}
 
 		double criteria = 1.0;
-		for (unsigned int i = 1; i < LASTRING_DOUBLESIZE; i++)
+		for (unsigned int i = 1; i < AQLSTRING_DOUBLESIZE; i++)
 			criteria *= 0.1;
 		
 		if (diff > criteria)
 		{
 			//error
-			throw LACoreInvalidData("Curve start time is not on tenor grid", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Curve start time is not on tenor grid", __FILE__, __LINE__);
 		}
 	}
 }

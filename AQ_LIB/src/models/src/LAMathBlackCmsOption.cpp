@@ -2,7 +2,7 @@
     @brief Source code for LAMathBlackCmsOption.
 */
 #include <LAMathBlackCmsOption.h>
-#include "LADist.h"
+#include "AQLDist.h"
 
 /*!
     @brief constructor
@@ -49,9 +49,9 @@ double LAMathBalckCmsOption::Get_cms_option(double P, double K, int sgn)
 {
 	double var = vol * vol * t_f;
 
-	double tmp1 = S0 * S0 * exp(vol * vol * t_f) * LADist::normsdist( sgn * d(S0, K, var, 1.5) );
-    double tmp2 = S0 * (S0 + K) * LADist::normsdist( sgn * d(S0, K, var, 0.5) );
-	double tmp3 = S0 * K * LADist::normsdist( sgn * d(S0, K, var, -0.5) );
+	double tmp1 = S0 * S0 * exp(vol * vol * t_f) * AQLDist::normsdist( sgn * d(S0, K, var, 1.5) );
+    double tmp2 = S0 * (S0 + K) * AQLDist::normsdist( sgn * d(S0, K, var, 0.5) );
+	double tmp3 = S0 * K * AQLDist::normsdist( sgn * d(S0, K, var, -0.5) );
     
     return P / annuity0 * swaption_prem + sgn * G_D() * annuity0 * (tmp1 - tmp2 + tmp3);
 }

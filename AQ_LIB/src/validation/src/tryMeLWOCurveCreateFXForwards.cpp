@@ -17,10 +17,10 @@
 #include "EnvironmentUtilities.h"
 #include "Environment.h"
 #include "DateUtilities.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LACurvePricingObject.h"
 #include "LACurveForwardRateHelpers.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "EntityPoolUtilities.h"
 #include "CurveResultsContainer.h"
 
@@ -37,12 +37,12 @@ namespace validation
     *  @param [in]		curveConv			General curve properties such as asofdate, ccy, interp, etc
     *  @param [in]		fxFwdConv			FX forward conventions
     */
-    LAString tryMeLWOCurveCreateFXForwards( const std::string& lwoCurveName,
-                                            const LAString& curveCollectionInput,
-                                            const LAString& staticDataTableInput,
-                                            const LAString& curveIndexInput,
-                                            const LAStringMatrix& curveConv,
-                                            const LAStringMatrix& fxFwdConv )
+    AQLString tryMeLWOCurveCreateFXForwards( const std::string& lwoCurveName,
+                                            const AQLString& curveCollectionInput,
+                                            const AQLString& staticDataTableInput,
+                                            const AQLString& curveIndexInput,
+                                            const AQLStringMatrix& curveConv,
+                                            const AQLStringMatrix& fxFwdConv )
     {
         VALID_EXCEPTION_START
         
@@ -52,14 +52,14 @@ namespace validation
         // Ensure Curve Name Data is in uppercase
         // --------------------------------------
 
-        LAString curveCollection  = curveCollectionInput;
+        AQLString curveCollection  = curveCollectionInput;
         curveCollection.toUpper();
         
-        LAString staticDataTable  = staticDataTableInput;
+        AQLString staticDataTable  = staticDataTableInput;
         staticDataTable.toUpper();
 
         // Append the staticDataTable to the curveIndex Name Set, ensuring to use the ':' delimiter
-        LAString curveIndex       = curveIndexInput + ":" + staticDataTable;
+        AQLString curveIndex       = curveIndexInput + ":" + staticDataTable;
         curveIndex.toUpper();
 
         // --------------------------------------
@@ -79,7 +79,7 @@ namespace validation
 
         if( fxFwdConv.empty() )
         {
-            throw LACoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Input Matrix is empty", __FILE__, __LINE__ );
         }
 
         if( fxFwdConv[0].size() < 2 )
@@ -108,7 +108,7 @@ namespace validation
         // The 'curveIndexCopy' variable is used to search for a curve for discount factors and forward rates. Unfortunately the object pool sometimes searches for
         // curves by 'staticDataTable' (aka MarketDataName) and sometimes by 'curveIndex'. To mitigate this problem we ensure that 'staticDataTable' name is always
         // included in the 'curveIndex' name list.
-        LAString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "FWDFXCONST" ) );
+        AQLString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "FWDFXCONST" ) );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
@@ -117,7 +117,7 @@ namespace validation
 
 
         LabelValueBlock curveConvLVB( curveConv );
-        LADate  effectiveDate = curveConvLVB.getCompulsoryValueAsDate( "ASOFDATE" );
+        AQLDate  effectiveDate = curveConvLVB.getCompulsoryValueAsDate( "ASOFDATE" );
 
         const boost::gregorian::date asOfDate( effectiveDate.yearOfEra(), effectiveDate.monthOfYear(), effectiveDate.dayOfMonth() );
         const etrading::CCY ccy = etrading::toCCYEnum( curveConvLVB.getCompulsoryValue( "CURRENCY" ) );
@@ -133,14 +133,14 @@ namespace validation
         std::vector<double> massiveYearFractionVector
             = etrading::stepVector( 0.0, 51.0 / static_cast<double>( numberOfdaysBetween ), numberOfdaysBetween );
 
-        LAString interpolation = etrading::trim_to_upper( etrading::getCurveInterpolation( curveCollection, staticDataTable ).getCString() ).c_str();
+        AQLString interpolation = etrading::trim_to_upper( etrading::getCurveInterpolation( curveCollection, staticDataTable ).getCString() ).c_str();
 
 
         // Calculate Discount Factors and Forwards & Set LWO Curve Container
         // ----------------------------------------------------------------
 
         // Get the Discount Factors from the Object Pool Curve Engine
-        auto massiveDFVector = etrading::LACurveForwardRateHelpers::getMultiDF( massiveYearFractionVector, etrading::getDataInstance(), curveCollection, LAString( "ACT/365" ), interpolation.toUpper(), false, staticDataTable );
+        auto massiveDFVector = etrading::LACurveForwardRateHelpers::getMultiDF( massiveYearFractionVector, etrading::getDataInstance(), curveCollection, AQLString( "ACT/365" ), interpolation.toUpper(), false, staticDataTable );
 
         // Set the LWO Curve; yearFractions, discountFactors and Curve build properties (cbp)
         etrading::LWOCurve lwoCurve( lwoCurveName, massiveYearFractionVector, massiveDFVector, cbp );
@@ -165,7 +165,7 @@ namespace validation
 
         if( curve_store.has( lwoCurveName ) )
         {
-            LAString ret = lwoCurveName.c_str();
+            AQLString ret = lwoCurveName.c_str();
             if ( CreateDataFile::recordEnabled() )
             {
                 CreateDataFile file( decorateCurvename( "tryMeLWOCurveCalibrateFXForwards_outputs", curveCollection, staticDataTable ) );

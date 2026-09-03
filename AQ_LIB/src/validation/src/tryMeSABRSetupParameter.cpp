@@ -17,7 +17,7 @@ namespace validation
 	*  @param [in]		conventionID	ID of convention data
 	*  @param [in]		gridData		Data of the parameter being set up
 	*/
-	void tryMeSABRSetupParameter(const LAString& gridID, const LAString& conventionID, LAStringMatrix& gridData)
+	void tryMeSABRSetupParameter(const AQLString& gridID, const AQLString& conventionID, AQLStringMatrix& gridData)
 	{
 		VALID_EXCEPTION_START
 

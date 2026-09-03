@@ -5,15 +5,15 @@
 #pragma interface
 #endif
 
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
-#include "LAString.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
+#include "AQLString.h"
 #include "LAMathYieldCurve.h"
 #include "ConstantDeclarations.h"
 #include "LATime.h"
-#include "LAFunction.h"
+#include "AQLFunction.h"
 #include "LAMathSABR.h"
 #include "LAMathAnalyticalFormula.h"
 #include "LAAnalyticFormula.h"
@@ -104,7 +104,7 @@ public:
 
 };
 
-class LASABRCAIntegral: public LAFunction
+class LASABRCAIntegral: public AQLFunction
 {
 public:
 	LASABRCAIntegral(double S0_,double T_,const vector<double>& sabr_params, double threshold_);
@@ -138,154 +138,154 @@ private:
 class LAMathIRVanillaFuncUtility
 {
 public:
-	static double bkOption(LAString& optiontype, LAString& buysell, LAString& callput,
+	static double bkOption(AQLString& optiontype, AQLString& buysell, AQLString& callput,
                            double futureprice, double strike, double vol, 
-                           double localrate,const LADate& basedate, 
-                           const LADate& spotdate, const LADate& expirydate, const LADate& deliverydate);
+                           double localrate,const AQLDate& basedate, 
+                           const AQLDate& spotdate, const AQLDate& expirydate, const AQLDate& deliverydate);
 
-	static double bkOption(LAString& optiontype, LAString& buysell, LAString& callput,
+	static double bkOption(AQLString& optiontype, AQLString& buysell, AQLString& callput,
                            double futureprice, double strike, double vol, 
-                           double localrate,const LADate& basedate, 
-                           const LADate& spotdate, const LADate& expirydate, const LADate& deliverydate,
-                           const LAString& calendar);
+                           double localrate,const AQLDate& basedate, 
+                           const AQLDate& spotdate, const AQLDate& expirydate, const AQLDate& deliverydate,
+                           const AQLString& calendar);
 
-    static double bkOption(AnalyticBKParam& param, LAString& optiontype, LAString& buysell, LAString& callput, bool isUnitAdjust = true);
+    static double bkOption(AnalyticBKParam& param, AQLString& optiontype, AQLString& buysell, AQLString& callput, bool isUnitAdjust = true);
 
-	static double bkOption(LAString optiontype, LAString buysell, LAString callput,
+	static double bkOption(AQLString optiontype, AQLString buysell, AQLString callput,
 						   double futureprice, double strike, double vol,
-							double NumeraireRatio, const LADate& basedate,const LADate& expirydate);
+							double NumeraireRatio, const AQLDate& basedate,const AQLDate& expirydate);
 
-	static double bkOption(LAString optiontype, LAString buysell, LAString callput, double futureprice, 
+	static double bkOption(AQLString optiontype, AQLString buysell, AQLString callput, double futureprice, 
 						   double strike, double vol, double numeraire, double expiryterm, double localrate, bool isUnitAdjust = true);
 	
-	static double bkOptionIV(LAString& buysell, LAString& callput,
+	static double bkOptionIV(AQLString& buysell, AQLString& callput,
 							double futureprice, double strike, double prem, 
-							double localrate, const LADate& basedate, const LADate& spotdate, 
-							const LADate& expirydate, const LADate& deliverydate,
-							double high, double low, const bool isBusinessAdjust = false, const LAString& cal = "");
+							double localrate, const AQLDate& basedate, const AQLDate& spotdate, 
+							const AQLDate& expirydate, const AQLDate& deliverydate,
+							double high, double low, const bool isBusinessAdjust = false, const AQLString& cal = "");
 
-	static double bkOptionIV(const LAString& callput, double futureprice, double strike, double numeraire,
+	static double bkOptionIV(const AQLString& callput, double futureprice, double strike, double numeraire,
 							 double expiryterm, double prem, double high, double low);
 
-	static double bkOptionIV(const LAString& callput, double futureprice, double strike, double numeraire,
-							 const LADate& basedate,const LADate& expirydate, double prem, double high, double low);
+	static double bkOptionIV(const AQLString& callput, double futureprice, double strike, double numeraire,
+							 const AQLDate& basedate,const AQLDate& expirydate, double prem, double high, double low);
 
-	static double bkOptionIV(AnalyticBKParam& param, const LAString& callput, double prem, double high, double low);
+	static double bkOptionIV(AnalyticBKParam& param, const AQLString& callput, double prem, double high, double low);
 
-	static double capfloorOption(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid, 
-					   LAString& buysell,double nominal, double strike, double avevol, 
-					   LAString& frequency, LAString& daycount,const DateVector& payVec, const LADate& fixingdate, 
-					   const LADate& valuedate, LAString& paymentslidingrule, LAString& paymentcalendar, LAString& spotlag,  
-					   LAString& fixingcalendar, bool iswithoutfirst = true, double firstfixingrate = 0.0,
-					   double forwardrate = -10.0, LAString foreCurveName = STD, 
-					   LAString dfCurveName = STD, const bool isFWDInter=true);
+	static double capfloorOption(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid, 
+					   AQLString& buysell,double nominal, double strike, double avevol, 
+					   AQLString& frequency, AQLString& daycount,const DateVector& payVec, const AQLDate& fixingdate, 
+					   const AQLDate& valuedate, AQLString& paymentslidingrule, AQLString& paymentcalendar, AQLString& spotlag,  
+					   AQLString& fixingcalendar, bool iswithoutfirst = true, double firstfixingrate = 0.0,
+					   double forwardrate = -10.0, AQLString foreCurveName = STD, 
+					   AQLString dfCurveName = STD, const bool isFWDInter=true);
 
-	static double capfloorOption_SABRParams(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid,
-					   LAString& buysell, double nominal, double strike, const LAString& alphaid, const LAString& betaid, const LAString& nuid, const LAString& rhoid,
-					   LAString& frequency, LAString& daycount, const DateVector& payVec, const LADate& fixingdate,
-					   const LADate& valuedate, LAString& paymentslidingrule, LAString& paymentcalendar, LAString& spotlag,
-					   LAString& fixingcalendar, bool iswithoutfirst = true, double firstfixingrate = 0.0,
-					   double forwardrate = -10.0, LAString foreCurveName = STD,
-					   LAString dfCurveName = STD, const bool isFWDInter = true, double shiftvalue = 0.0);
+	static double capfloorOption_SABRParams(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid,
+					   AQLString& buysell, double nominal, double strike, const AQLString& alphaid, const AQLString& betaid, const AQLString& nuid, const AQLString& rhoid,
+					   AQLString& frequency, AQLString& daycount, const DateVector& payVec, const AQLDate& fixingdate,
+					   const AQLDate& valuedate, AQLString& paymentslidingrule, AQLString& paymentcalendar, AQLString& spotlag,
+					   AQLString& fixingcalendar, bool iswithoutfirst = true, double firstfixingrate = 0.0,
+					   double forwardrate = -10.0, AQLString foreCurveName = STD,
+					   AQLString dfCurveName = STD, const bool isFWDInter = true, double shiftvalue = 0.0);
 
-	static double capfloorOption(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid, 
-					   LAString& buysell, double nominal, double strike, double avevol, 
-					   LAString& frequency, LAString& daycount, const LADate& tradedate, const LADate& valuedate,
-					   LAString& capterm, int roll, 
-					   LAString& paymentslidingrule, LAString& paymentcalendar, LAString& spotlag,  
-					   LAString& fixingcalendar, bool iswithoutfirst = true, double firstfixingrate = 0.0,
-					   double forwardrate=-10.0, LAString foreCurveName = STD, 
-					   LAString dfCurveName = STD, const bool isFWDInter=true);
+	static double capfloorOption(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid, 
+					   AQLString& buysell, double nominal, double strike, double avevol, 
+					   AQLString& frequency, AQLString& daycount, const AQLDate& tradedate, const AQLDate& valuedate,
+					   AQLString& capterm, int roll, 
+					   AQLString& paymentslidingrule, AQLString& paymentcalendar, AQLString& spotlag,  
+					   AQLString& fixingcalendar, bool iswithoutfirst = true, double firstfixingrate = 0.0,
+					   double forwardrate=-10.0, AQLString foreCurveName = STD, 
+					   AQLString dfCurveName = STD, const bool isFWDInter=true);
 
-	static double capfloorOption_SABRParams(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid,
-						LAString& buysell, double nominal, double strike, const LAString& alphaid, const LAString& betaid, const LAString& nuid, const LAString& rhoid,
-						LAString& frequency, LAString& daycount, const LADate& tradedate, const LADate& valuedate, LAString& capterm, int roll,
-						LAString& paymentslidingrule, LAString& paymentcalendar, LAString& spotlag,
-						LAString& fixingcalendar, bool iswithoutfirst = true, double firstfixingrate = 0.0,
-						double forwardrate = -10.0, LAString foreCurveName = STD,
-						LAString dfCurveName = STD, const bool isFWDInter = true, double shiftvalue = 0.0);
+	static double capfloorOption_SABRParams(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid,
+						AQLString& buysell, double nominal, double strike, const AQLString& alphaid, const AQLString& betaid, const AQLString& nuid, const AQLString& rhoid,
+						AQLString& frequency, AQLString& daycount, const AQLDate& tradedate, const AQLDate& valuedate, AQLString& capterm, int roll,
+						AQLString& paymentslidingrule, AQLString& paymentcalendar, AQLString& spotlag,
+						AQLString& fixingcalendar, bool iswithoutfirst = true, double firstfixingrate = 0.0,
+						double forwardrate = -10.0, AQLString foreCurveName = STD,
+						AQLString dfCurveName = STD, const bool isFWDInter = true, double shiftvalue = 0.0);
 
-	static double capfloorOptionVol(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid, 
-					    double strike, double prem, LAString& frequency, LAString& daycount,
-						const DateVector& payVec, const LADate& fixingdate, const LADate& valuedate, 
-					   LAString& paymentslidingrule, LAString& paymentcalendar, LAString& spotlag,  
-					   LAString& fixingcalendar, double low, double high, 
+	static double capfloorOptionVol(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid, 
+					    double strike, double prem, AQLString& frequency, AQLString& daycount,
+						const DateVector& payVec, const AQLDate& fixingdate, const AQLDate& valuedate, 
+					   AQLString& paymentslidingrule, AQLString& paymentcalendar, AQLString& spotlag,  
+					   AQLString& fixingcalendar, double low, double high, 
 					   bool iswithoutfirst= true, double firstfixingrate=0.0, double forwardrate=-10.0,
-					   LAString foreCurveName = STD, LAString dfCurveName = STD, const bool isFWDInter=true);
+					   AQLString foreCurveName = STD, AQLString dfCurveName = STD, const bool isFWDInter=true);
 
-	static double capfloorOptionVol(LADataInstance* dataInstance, LAString& caporfloor, const LAString& curveid, 
-					   double strike, double prem, LAString& frequency, LAString& daycount,
-					   const LADate& fixingdate, const LADate& valuedate,LAString& capterm, int roll, 
-					   LAString& paymentslidingrule, LAString& paymentcalendar, LAString& spotlag,  
-					   LAString& fixingcalendar, double low, double high,
+	static double capfloorOptionVol(AQLDataInstance* dataInstance, AQLString& caporfloor, const AQLString& curveid, 
+					   double strike, double prem, AQLString& frequency, AQLString& daycount,
+					   const AQLDate& fixingdate, const AQLDate& valuedate,AQLString& capterm, int roll, 
+					   AQLString& paymentslidingrule, AQLString& paymentcalendar, AQLString& spotlag,  
+					   AQLString& fixingcalendar, double low, double high,
 					   bool iswithoutfirst= true, double firstfixingrate=0.0, double forwardrate=-10.0,
-					   LAString foreCurveName = STD, LAString dfCurveName = STD, const bool isFWDInter=true);
+					   AQLString foreCurveName = STD, AQLString dfCurveName = STD, const bool isFWDInter=true);
 
-	static double capFloorLet(LADataInstance* dataInstance,LAString& caporfloor, const LAString& curveid, LAString& buysell,
-							  double strike, double vol, LAString& daycount, const LADate& tradedate,
-							  const LADate& valuedate, const LADate& expirydate, const LADate& startdate, const LADate& enddate,
-							  LAString foreCurveName, LAString dfCurveName, const bool isFwdInter=true);
+	static double capFloorLet(AQLDataInstance* dataInstance,AQLString& caporfloor, const AQLString& curveid, AQLString& buysell,
+							  double strike, double vol, AQLString& daycount, const AQLDate& tradedate,
+							  const AQLDate& valuedate, const AQLDate& expirydate, const AQLDate& startdate, const AQLDate& enddate,
+							  AQLString foreCurveName, AQLString dfCurveName, const bool isFwdInter=true);
 
-	static double capFloorLetVol(LADataInstance* dataInstance,LAString& caporfloor, const LAString& curveid, 
-								 double strike, double prem, LAString& daycount, const LADate& tradedate,
-								 const LADate& valuedate, const LADate& expirydate, const LADate& startdate, const LADate& enddate,
+	static double capFloorLetVol(AQLDataInstance* dataInstance,AQLString& caporfloor, const AQLString& curveid, 
+								 double strike, double prem, AQLString& daycount, const AQLDate& tradedate,
+								 const AQLDate& valuedate, const AQLDate& expirydate, const AQLDate& startdate, const AQLDate& enddate,
 								 double low, double high,
-								 LAString foreCurveName, LAString dfCurveName);
+								 AQLString foreCurveName, AQLString dfCurveName);
 
-	static double getAnnuity(const LADate& fromdate, LAString& term_str, const LAMathYieldCurve& yc);
+	static double getAnnuity(const AQLDate& fromdate, AQLString& term_str, const LAMathYieldCurve& yc);
 
-	static double getCashSettledAnnuity(const LADate& fromdate, LAString& term_str, const LAMathYieldCurve& yc, const double swaprate);
+	static double getCashSettledAnnuity(const AQLDate& fromdate, AQLString& term_str, const LAMathYieldCurve& yc, const double swaprate);
 
-	static double swaption(LADataInstance* dataInstance, const LAString& curveid, LAString& buysell, LAString& callput, 
+	static double swaption(AQLDataInstance* dataInstance, const AQLString& curveid, AQLString& buysell, AQLString& callput, 
 									double nominal, double strike, double vol,
-									const LADate& optiontradedate, const LADate& optionmaturitydate, const LADate& valuedate,
-									LAString& spotlag, LAString& swapterm,
-									LAString& frequency, LAString& slidingrule, LAString& daycount, LAString& calendar, 
-									LAString& fixingcalendar, double forwardrate = -10.0, double forwardShift = 0.,
-									LAString foreCurveName = STD, LAString dfCurveName = STD, 
+									const AQLDate& optiontradedate, const AQLDate& optionmaturitydate, const AQLDate& valuedate,
+									AQLString& spotlag, AQLString& swapterm,
+									AQLString& frequency, AQLString& slidingrule, AQLString& daycount, AQLString& calendar, 
+									AQLString& fixingcalendar, double forwardrate = -10.0, double forwardShift = 0.,
+									AQLString foreCurveName = STD, AQLString dfCurveName = STD, 
 									const bool isIRRModel = false);
 
-	static double swaption(LADataInstance* dataInstance, const LAString& curveid, LAString& buysell, LAString& callput, 
-						   double nominal, double strike, const LADate& tradedate, const LADate& valuedate,
-						   LAString& optionmaturity, LAString& swapterm, double vol, 
-					       LAString foreCurveName = STD, LAString dfCurveName = STD, 
+	static double swaption(AQLDataInstance* dataInstance, const AQLString& curveid, AQLString& buysell, AQLString& callput, 
+						   double nominal, double strike, const AQLDate& tradedate, const AQLDate& valuedate,
+						   AQLString& optionmaturity, AQLString& swapterm, double vol, 
+					       AQLString foreCurveName = STD, AQLString dfCurveName = STD, 
 						   const bool isIRRModel = false);
 
-	static double swaptionVol(LADataInstance* dataInstance, const LAString& curveid, LAString& callput, 
+	static double swaptionVol(AQLDataInstance* dataInstance, const AQLString& curveid, AQLString& callput, 
 							  double strike, double prem,
-							  const LADate& optiontradedate, const LADate& optionmaturitydate, const LADate& valuedate,
-							  LAString& spotlag, LAString& swapterm,
-							  LAString& frequency, LAString& slidingrule, LAString& daycount, LAString& calendar, 
-							  LAString& fixingcalendar, double& low, double& high, bool isBusinessAdjust = false, 
-							  LAString foreCurveName = STD, LAString dfCurveName = STD,
+							  const AQLDate& optiontradedate, const AQLDate& optionmaturitydate, const AQLDate& valuedate,
+							  AQLString& spotlag, AQLString& swapterm,
+							  AQLString& frequency, AQLString& slidingrule, AQLString& daycount, AQLString& calendar, 
+							  AQLString& fixingcalendar, double& low, double& high, bool isBusinessAdjust = false, 
+							  AQLString foreCurveName = STD, AQLString dfCurveName = STD,
                               const double* forwardRate=NULL, double forwardShift = 0.,
 						      const bool isIRRModel = false);
 
-	static double swaption_NormalDist(LADataInstance* dataInstance, const LAString& curveid, LAString& buysell, LAString& callput, 
+	static double swaption_NormalDist(AQLDataInstance* dataInstance, const AQLString& curveid, AQLString& buysell, AQLString& callput, 
 									  double nominal, double strike, double vol,
-									  const LADate& optiontradedate, const LADate& optionmaturitydate, const LADate& valuedate,
-									  LAString& spotlag, LAString& swapterm,
-									  LAString& frequency, LAString& slidingrule, LAString& daycount, LAString& calendar, 
-									  LAString& fixingcalendar, double forwardrate = -10.0, 
-									  LAString foreCurveName = STD, LAString dfCurveName = STD, 
+									  const AQLDate& optiontradedate, const AQLDate& optionmaturitydate, const AQLDate& valuedate,
+									  AQLString& spotlag, AQLString& swapterm,
+									  AQLString& frequency, AQLString& slidingrule, AQLString& daycount, AQLString& calendar, 
+									  AQLString& fixingcalendar, double forwardrate = -10.0, 
+									  AQLString foreCurveName = STD, AQLString dfCurveName = STD, 
 									  const bool isIRRModel = false);
 
 
-	static double floorletOption(const LAString& curveid, LAString& buysell, 
+	static double floorletOption(const AQLString& curveid, AQLString& buysell, 
 								 double libor, double strike, double vol,  
-								 const LADate& basedate, const LADate& spotdate, const LADate& expirydate, const LADate& deliverydate);
+								 const AQLDate& basedate, const AQLDate& spotdate, const AQLDate& expirydate, const AQLDate& deliverydate);
 
-	static double capletOption(	const LAString& curveid, LAString& buysell, 
+	static double capletOption(	const AQLString& curveid, AQLString& buysell, 
 								double libor, double strike, double vol,  
-								const LADate& basedate, const LADate& spotdate, const LADate& expirydate, const LADate& deliverydate);
+								const AQLDate& basedate, const AQLDate& spotdate, const AQLDate& expirydate, const AQLDate& deliverydate);
 
 	static double getConvexityAdjust(double fwd, double tau, double delta, double fixTerm, double atmVol, unsigned int cfNum);
 
 	static double getSABRConvexityAdjust2(double S0, double T, double tau, double delta, double num_swap, const DoubleArray& sabr_params, 
 										 double int_regime, const DoubleArray& int_cond, size_t num_int_step = 20);
-	static double getConvexityAdjust2(	LADataInstance* dataInstance, const LADate& asof, const LAString& curveID, const double& fwd, const double& fwdVol, const LADate& fixingDate, 
-										const double& swapTerm, const unsigned int& paymentsPerYear, const DayCount& indexDaycount, const LAString* pCalendar = NULL,
-										const LAString* pCurveType = NULL);
+	static double getConvexityAdjust2(	AQLDataInstance* dataInstance, const AQLDate& asof, const AQLString& curveID, const double& fwd, const double& fwdVol, const AQLDate& fixingDate, 
+										const double& swapTerm, const unsigned int& paymentsPerYear, const DayCount& indexDaycount, const AQLString* pCalendar = NULL,
+										const AQLString* pCurveType = NULL);
 
 	static double getSABRConvexityAdjust(double S0, double T, double tau, double delta, double num_swap, const DoubleArray& sabr_params, 
 										 double threshold, const DoubleArray& int_cond);
@@ -297,7 +297,7 @@ public:
 	static double optimize(const double x1, const double x2);
 	static double optimize(double x1, double x2, double x3, AnalyticParam& param, LABlackScholesBase*& p1, LABlackScholesBase*& p2, LABlackScholesBase*& p3, LABlackScholesBase*& p4);
 
-	static int businessDaysBetween(const LADate& d1, const LADate& d2, const LAString& calendar);
+	static int businessDaysBetween(const AQLDate& d1, const AQLDate& d2, const AQLString& calendar);
 
 private:
 	LAMathIRVanillaFuncUtility(void);

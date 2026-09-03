@@ -70,12 +70,12 @@ mTarget_(target_)
 {
     if( mWeight.size() != mn)
     {
-        throw LACoreInvalidData("mWeight.size() != mSwaptionTargetValue.size()",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("mWeight.size() != mSwaptionTargetValue.size()",__FILE__,__LINE__);
     }
 
     if( mWeight[0].size() != mm )
     {
-        throw LACoreInvalidData("mWeight[0].size() != mSwaptionTargetValue[0].size()",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("mWeight[0].size() != mSwaptionTargetValue[0].size()",__FILE__,__LINE__);
     }
 
     mNumTarget = 0;
@@ -90,7 +90,7 @@ mTarget_(target_)
             }
         }
     }
-    if( mNumTarget == 0 ) throw LACoreInvalidData( "mNumTarget == 0",__FILE__,__LINE__);
+    if( mNumTarget == 0 ) throw AQLCoreInvalidData( "mNumTarget == 0",__FILE__,__LINE__);
 
 
     // setup weight
@@ -211,8 +211,8 @@ mCloned(false)
 {
     if( mn * mm != Swaption_Vol_.size() )
     {
-        LAString msg = "Swaption_vol and Swaption_Vol_ size is not consistent!";
-        throw LACoreInvalidData( msg.getCString(),__FILE__,__LINE__ );
+        AQLString msg = "Swaption_vol and Swaption_Vol_ size is not consistent!";
+        throw AQLCoreInvalidData( msg.getCString(),__FILE__,__LINE__ );
     }
 }
 
@@ -231,8 +231,8 @@ mCloned(false)
 {
     if( mn * mm != Swaption_Vol_.size() )
     {
-        LAString msg = "Swaption_vol and Swaption_Vol_ size is not consistent!";
-        throw LACoreInvalidData( msg.getCString(),__FILE__,__LINE__ );
+        AQLString msg = "Swaption_vol and Swaption_Vol_ size is not consistent!";
+        throw AQLCoreInvalidData( msg.getCString(),__FILE__,__LINE__ );
     }
 }
 

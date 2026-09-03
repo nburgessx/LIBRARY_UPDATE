@@ -5,9 +5,9 @@
 #endif
 
 #include "LAPriceEventBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LADate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDate.h"
 #include "LAPricePayOffTool.h"
 
 
@@ -40,13 +40,13 @@ public:
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class type
     virtual function_t          getType() const;
 
     // execute trigger action
-	virtual void	            doAction(const LADate& actiondate,
+	virtual void	            doAction(const AQLDate& actiondate,
 										 double actiontime,
 										 std::vector<PayOffToolHolderVector>& payoff,
 										 std::vector<PayOffToolHolderVector>& extrapayoff,
@@ -54,15 +54,15 @@ public:
 										 std::vector<LAPriceEventHolder*>& pastaction,
 										 std::vector<PayOffToolHolderIter>& iter);
 	// set up this class
-	virtual	void				setUp(const LADate& basedate,	
-									const LAObject& trade,
-									LAObject& triggerinfo,
+	virtual	void				setUp(const AQLDate& basedate,	
+									const AQLObject& trade,
+									AQLObject& triggerinfo,
 									const LAPricePayOff& payoff,
 									bool isCall = false);
 
 
 	// calculate extra cf
-	virtual double				calcExtraCF(const LADate& actiondate,
+	virtual double				calcExtraCF(const AQLDate& actiondate,
 										 double actiontime,
 										 std::vector<PayOffToolHolderVector>& payoff,
 										 std::vector<PayOffToolHolderVector>& extrapayoff,
@@ -77,14 +77,14 @@ protected:
 
 	const DateVector*  mpActionDates; // action dates
 	const DateVector*  mpExpiryDates; // expiry dates 
-	LAFunctionBase*	   mpExtraCFFunc;// extra cf function
+	AQLFunctionBase*	   mpExtraCFFunc;// extra cf function
 	const DoubleMatrix* mpCoefficients;// coefficinet
 	std::vector<std::pair<unsigned int, unsigned int> > mInputsInfo; // inputs information of extra cf function
 
 	const LAMathFXEntity*	mpFX_for_ExtraCF;// FX Rate for extra cf
-	LAString	mBaseCur;// base currency
-	LAString	mExtraCFCur;// extra cf currency
-	LAStringVector mExtraCFCurs;
+	AQLString	mBaseCur;// base currency
+	AQLString	mExtraCFCur;// extra cf currency
+	AQLStringVector mExtraCFCurs;
 	bool mIsMultiExtraCF;
 
     DoubleMatrix	   mPastCouponPayOff;// past coupon payoff;
@@ -92,7 +92,7 @@ protected:
 	DoubleMatrix	   mPastNotionalExchange;// past notional exchange;
 
 	std::vector<std::vector<LAPriceIndexToolBase*> >		mIndex;// index
-	std::map<LADate, std::vector<LAPriceIndexToolBase*> >	mIndexMap;// indexmap
+	std::map<AQLDate, std::vector<LAPriceIndexToolBase*> >	mIndexMap;// indexmap
 
 	DoubleVector mSettlementAdjustRatios;
 

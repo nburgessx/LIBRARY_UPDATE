@@ -12,7 +12,7 @@
 #include <boost/lexical_cast.hpp>
 
 // Includes: This Library
-#include <LAString.h>
+#include <AQLString.h>
 #include <ReadDataFile.h>
 
 using etrading::ReadDataFile;
@@ -54,7 +54,7 @@ namespace google_test
     {
         const ReadDataFile::Load& inputFile = TestDataFilesRead::inputFile();
         EXPECT_THROW( inputFile["non-existent key"], ReadDataFile::Exception );
-        EXPECT_THROW( inputFile["non-existent key"], LACoreAppError );
+        EXPECT_THROW( inputFile["non-existent key"], AQLCoreAppError );
         EXPECT_THROW( inputFile["non-existent key"], std::exception );
 
         EXPECT_EQ( false, inputFile.hasItem( "non-existent key" ) );
@@ -68,8 +68,8 @@ namespace google_test
 
         EXPECT_EQ( x0, x1 );
 
-        EXPECT_EQ( x1(), LAString( "x0" ) );
-        EXPECT_EQ( LAString( "x0" ), x1() );
+        EXPECT_EQ( x1(), AQLString( "x0" ) );
+        EXPECT_EQ( AQLString( "x0" ), x1() );
 
         ReadDataFile x2;
         x2 = x0;
@@ -86,14 +86,14 @@ namespace google_test
     {
         const ReadDataFile::Load& inputFile = TestDataFilesRead::inputFile();
 
-        LAString curveID = inputFile["curveID"];
+        AQLString curveID = inputFile["curveID"];
         EXPECT_EQ( curveID, "EUR" );
 
         std::cout << inputFile["curveID"] << std::endl;
 
-        EXPECT_EQ( LAString( "OIS" ), inputFile["marketName"]() );
-        EXPECT_EQ( LAString( "string with blanks" ), inputFile["stringWithBlanks"]() );
-        EXPECT_EQ( LAString( "OIS:USDOIS:USDDISCOUNT:USDDF:DF" ), inputFile["curveNames"]() );
+        EXPECT_EQ( AQLString( "OIS" ), inputFile["marketName"]() );
+        EXPECT_EQ( AQLString( "string with blanks" ), inputFile["stringWithBlanks"]() );
+        EXPECT_EQ( AQLString( "OIS:USDOIS:USDDISCOUNT:USDDF:DF" ), inputFile["curveNames"]() );
         EXPECT_EQ( "ACT/360", inputFile["dayCount"]() );
         EXPECT_EQ( "SPLINE", inputFile["interpolation"]() );
 
@@ -105,9 +105,9 @@ namespace google_test
     {
         ReadDataFile::Load& inputFile = TestDataFilesRead::inputFile();
 
-        const LAString missing( "does not exist" );
+        const AQLString missing( "does not exist" );
 
-        EXPECT_THROW( inputFile[missing], LACoreAppError );
+        EXPECT_THROW( inputFile[missing], AQLCoreAppError );
 
         const double d0 = inputFile.getOptional( missing, 3.141 );
         EXPECT_EQ( 3.141, d0 );
@@ -115,12 +115,12 @@ namespace google_test
         const double d1 = inputFile.getOptional( "Euler3Digs", 1.234 );
         EXPECT_EQ( d1, 2.718 );
 
-        LAStringMatrix m = inputFile.getOptional( missing );
+        AQLStringMatrix m = inputFile.getOptional( missing );
         EXPECT_EQ( 0, m.size() );
 
         const char* missing1 = "does not exist1";
 
-        EXPECT_THROW( inputFile[missing1], LACoreAppError );
+        EXPECT_THROW( inputFile[missing1], AQLCoreAppError );
 
         ReadDataFile w = inputFile.getOptional( "absent", ReadDataFile( "hello" ) );
 
@@ -150,13 +150,13 @@ namespace google_test
         EXPECT_NEAR( 0.99961137288460877, results[0], tolerance );
         EXPECT_NEAR( 0.32302550878348, results[10], tolerance );
 
-        std::vector<LADate> mydates = inputFile["mydates"];
-        EXPECT_EQ( LADate( "20150714" ), mydates[1] );
-        EXPECT_THROW( inputFile["mydates"][100], LACoreAppError );
+        std::vector<AQLDate> mydates = inputFile["mydates"];
+        EXPECT_EQ( AQLDate( "20150714" ), mydates[1] );
+        EXPECT_THROW( inputFile["mydates"][100], AQLCoreAppError );
 
         std::cout << "mydates: " << inputFile["mydates"] << std::endl;
 
-        std::vector<LAString> mystrings = inputFile["mystrings"];
+        std::vector<AQLString> mystrings = inputFile["mystrings"];
         EXPECT_EQ( "lksdjf", mystrings[0] );
 
         std::cout << "mystrings: " << inputFile["mystrings"] << std::endl;
@@ -191,11 +191,11 @@ namespace google_test
 
         std::cout << "oisConv: " << oisConv << std::endl;
 
-        EXPECT_THROW( oisConv[ LAString("Calender") ] , std::exception );
+        EXPECT_THROW( oisConv[ AQLString("Calender") ] , std::exception );
 
-        EXPECT_EQ( "NYB", oisConv[ LAString("Calendar") ] );
+        EXPECT_EQ( "NYB", oisConv[ AQLString("Calendar") ] );
 
-        EXPECT_EQ( 31, boost::lexical_cast<int>( oisConv[ LAString("EOMDay") ] ) );
+        EXPECT_EQ( 31, boost::lexical_cast<int>( oisConv[ AQLString("EOMDay") ] ) );
 
         EXPECT_EQ( "DAYCOUNT", oisConv( 1, 0 ) );
         EXPECT_EQ( "ACT/360", oisConv( 1, 1 ) );
@@ -206,11 +206,11 @@ namespace google_test
         EXPECT_EQ( "31", oisConv( 8, 1 ) );
         EXPECT_EQ( "CALENDAR", oisConv( 0, 0 ) );
 
-        EXPECT_THROW( oisConv( "xxx", 1 ), LACoreAppError );
-        EXPECT_THROW( oisConv( "yyy", 17 ), LACoreAppError );
-        EXPECT_THROW( oisConv( 42, 84 ), LACoreAppError );
+        EXPECT_THROW( oisConv( "xxx", 1 ), AQLCoreAppError );
+        EXPECT_THROW( oisConv( "yyy", 17 ), AQLCoreAppError );
+        EXPECT_THROW( oisConv( 42, 84 ), AQLCoreAppError );
 
-        const LAStringMatrix& m = oisConv;
+        const AQLStringMatrix& m = oisConv;
 
         EXPECT_EQ( "CALENDAR", m[0][0] );
         EXPECT_EQ( "NYB", m[0][1] );
@@ -219,11 +219,11 @@ namespace google_test
         ReadDataFile x2;
         x2 = x1;
 
-        EXPECT_THROW( x1[ LAString( "Calender" ) ], std::exception );
-        EXPECT_THROW( x2[ LAString( "Calender" ) ], std::exception );
+        EXPECT_THROW( x1[ AQLString( "Calender" ) ], std::exception );
+        EXPECT_THROW( x2[ AQLString( "Calender" ) ], std::exception );
 
-        EXPECT_EQ( oisConv[ LAString( "Calendar" ) ], x1[ LAString( "Calendar" ) ] );
-        EXPECT_EQ( oisConv[ LAString( "Calendar" ) ], x2[ LAString( "Calendar" ) ] );
+        EXPECT_EQ( oisConv[ AQLString( "Calendar" ) ], x1[ AQLString( "Calendar" ) ] );
+        EXPECT_EQ( oisConv[ AQLString( "Calendar" ) ], x2[ AQLString( "Calendar" ) ] );
 
     }
 
@@ -238,10 +238,10 @@ namespace google_test
         EXPECT_EQ( "0.00132", oisRates( "1M", "rate" ) );
         EXPECT_EQ( "TRUE", oisRates( "12M", "useQuote" ) );
 
-        EXPECT_THROW( oisRates( "99M", "rate" ), LACoreAppError );
-        EXPECT_THROW( oisRates( "9M", "xxxxx" ), LACoreAppError );
+        EXPECT_THROW( oisRates( "99M", "rate" ), AQLCoreAppError );
+        EXPECT_THROW( oisRates( "9M", "xxxxx" ), AQLCoreAppError );
 
-        const LAStringMatrix& rates = oisRates;
+        const AQLStringMatrix& rates = oisRates;
 
         EXPECT_EQ( 20, oisRates.rows() );
         EXPECT_EQ( 5, oisRates.cols() );
@@ -255,12 +255,12 @@ namespace google_test
         EXPECT_EQ( "0.00177", oisRates( 4, "rate" ) );
         EXPECT_EQ( "0.00177", oisRates( 4, 1 ) );
 
-        EXPECT_THROW( oisRates( "99M", 1 ), LACoreAppError );
-        EXPECT_THROW( oisRates( "5M", 17 ), LACoreAppError );
-        EXPECT_THROW( oisRates( 88, 44 ), LACoreAppError );
+        EXPECT_THROW( oisRates( "99M", 1 ), AQLCoreAppError );
+        EXPECT_THROW( oisRates( "5M", 17 ), AQLCoreAppError );
+        EXPECT_THROW( oisRates( 88, 44 ), AQLCoreAppError );
 
         EXPECT_THROW( std::vector<double> v = inputFile["OISRates"], ReadDataFile::Exception );
-        EXPECT_THROW( std::vector<double> v = inputFile["OISRates"], LACoreAppError );
+        EXPECT_THROW( std::vector<double> v = inputFile["OISRates"], AQLCoreAppError );
 
         ReadDataFile x0( oisRates );
         ReadDataFile x1( "x1" );
@@ -275,15 +275,15 @@ namespace google_test
         const ReadDataFile::Load& inputFile = TestDataFilesRead::inputFile();
 
         ReadDataFile dupesArr = inputFile["DupesArr"];
-        EXPECT_THROW( dupesArr[ LAString("aaa")], LACoreAppError );
+        EXPECT_THROW( dupesArr[ AQLString("aaa")], AQLCoreAppError );
         EXPECT_EQ( "AAA", dupesArr( 0, 0 ) );
         EXPECT_EQ( "111", dupesArr( 0, "value" ) );
         EXPECT_EQ( "999", dupesArr( 2, 1 ) );
 
-        EXPECT_THROW( LAString aaa = dupesArr[ LAString("aaa")], LACoreAppError );
+        EXPECT_THROW( AQLString aaa = dupesArr[ AQLString("aaa")], AQLCoreAppError );
 
         ReadDataFile dupesTab = inputFile["DupesTab"];
-        EXPECT_THROW( dupesTab( "aaa", "col1" ), LACoreAppError );
+        EXPECT_THROW( dupesTab( "aaa", "col1" ), AQLCoreAppError );
         EXPECT_EQ( "AAA", dupesTab( 0, 0 ) );
         EXPECT_EQ( "111", dupesTab( 0, "col1" ) );
         EXPECT_EQ( "xxx", dupesTab( 1, "col2" ) );

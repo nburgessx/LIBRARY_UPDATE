@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -11,10 +11,10 @@ namespace validation
     *  @param [in]		curveConv			General curve properties such as asofdate, ccy, interp, etc
     *  @param [in]		fxFwdConv			FX forward conventions
     */
-    LAString tryMeCurveCalibrateFXForwards( const LAString& curveCollection,
-                                            const LAString& staticDataTable,
-                                            const LAString& curveIndex,
-                                            const LAStringMatrix& curveConv,
-                                            const LAStringMatrix& fxFwdConv );
+    AQLString tryMeCurveCalibrateFXForwards( const AQLString& curveCollection,
+                                            const AQLString& staticDataTable,
+                                            const AQLString& curveIndex,
+                                            const AQLStringMatrix& curveConv,
+                                            const AQLStringMatrix& fxFwdConv );
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -10,6 +10,6 @@ namespace validation
 	*  @param [in]		interpolation		Interpolation type
 	*  @return			Interpolation join date
     */
-    LADate tryMeCurveGetInterpolationJoinDate(const LAString& curveCollection, const LAString& curveIndex, const LAString& interpolation = "");
+    AQLDate tryMeCurveGetInterpolationJoinDate(const AQLString& curveCollection, const AQLString& curveIndex, const AQLString& interpolation = "");
 
 }

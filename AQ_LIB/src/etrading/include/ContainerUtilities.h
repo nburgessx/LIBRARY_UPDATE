@@ -168,9 +168,9 @@ namespace etrading
         }
     }
 
-	std::vector<double> createDoubleVector(const LAStringVector&);
-	std::vector<std::string> createStringVector(const LAStringVector&);
-	std::vector<boost::gregorian::date> createDateVector(const LAStringVector&);
+	std::vector<double> createDoubleVector(const AQLStringVector&);
+	std::vector<std::string> createStringVector(const AQLStringVector&);
+	std::vector<boost::gregorian::date> createDateVector(const AQLStringVector&);
 
 
 }

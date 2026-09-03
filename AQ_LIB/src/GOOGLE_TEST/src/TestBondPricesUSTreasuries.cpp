@@ -115,8 +115,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT1; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile1, i );
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile1, i );
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile1, i );
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile1, i );
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -128,7 +128,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -151,7 +151,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT1 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -172,8 +172,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT2; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile2, i+25 ); // File starts at 25
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile2, i+25 ); // File starts at 25
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile2, i+25 ); // File starts at 25
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile2, i+25 ); // File starts at 25
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -185,7 +185,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields  = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -209,7 +209,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT2 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -229,8 +229,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT3; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile3, i+50 ); // File Starts at 50
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile3, i+50 ); // File Starts at 50
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile3, i+50 ); // File Starts at 50
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile3, i+50 ); // File Starts at 50
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -242,7 +242,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -265,7 +265,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT3 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -285,8 +285,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT4; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile4, i+75 ); // File Starts at 75
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile4, i+75 ); // File Starts at 75
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile4, i+75 ); // File Starts at 75
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile4, i+75 ); // File Starts at 75
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -298,7 +298,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -322,7 +322,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT4 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -342,8 +342,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT5; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile5, i+100 ); // File Starts at 100
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile5, i+100 ); // File Starts at 100
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile5, i+100 ); // File Starts at 100
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile5, i+100 ); // File Starts at 100
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -355,7 +355,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -379,7 +379,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT5 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -399,8 +399,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT6; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile6, i+125 ); // File Starts at 125
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile6, i+125 ); // File Starts at 125
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile6, i+125 ); // File Starts at 125
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile6, i+125 ); // File Starts at 125
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -412,7 +412,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -436,7 +436,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT6 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -456,8 +456,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT7; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile7, i+150 ); // File Starts at 150
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile7, i+150 ); // File Starts at 150
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile7, i+150 ); // File Starts at 150
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile7, i+150 ); // File Starts at 150
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -469,7 +469,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -492,7 +492,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT7 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -512,8 +512,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT8; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile8, i+175 ); // File Starts at 175
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile8, i+175 ); // File Starts at 175
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile8, i+175 ); // File Starts at 175
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile8, i+175 ); // File Starts at 175
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -525,7 +525,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -549,7 +549,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT8 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -569,8 +569,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT9; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile9, i+200 ); // File Starts at 200
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile9, i+200 ); // File Starts at 200
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile9, i+200 ); // File Starts at 200
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile9, i+200 ); // File Starts at 200
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -582,7 +582,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -606,7 +606,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT9 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -626,8 +626,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT10; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile10, i+225 ); // File Starts at 225
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile10, i+225 ); // File Starts at 225
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile10, i+225 ); // File Starts at 225
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile10, i+225 ); // File Starts at 225
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -639,7 +639,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -663,7 +663,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT10 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -683,8 +683,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT11; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile11, i+250 ); // File Starts at 250
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile11, i+250 ); // File Starts at 250
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile11, i+250 ); // File Starts at 250
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile11, i+250 ); // File Starts at 250
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -696,7 +696,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -720,7 +720,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT3 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -740,8 +740,8 @@ namespace google_test
              for ( i = 0; i < TEST_COUNT12; ++i )
              {
                 // Create the Bond and Price filenames
-                LAString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile12, i+275 ); // File Starts at 275
-                LAString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile12, i+275 ); // File Starts at 275
+                AQLString bondInputFilename      = CreateDataFile::makeFilename( createBondInputFile12, i+275 ); // File Starts at 275
+                AQLString priceInputFilename     = CreateDataFile::makeFilename( priceBondInputFile12, i+275 ); // File Starts at 275
                 
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
@@ -753,7 +753,7 @@ namespace google_test
                 const ReadDataFile::Load priceInputFile( priceInputFilename );
                 const std::string bondObjectName = priceInputFile["bondObjectName"];
                 
-                std::vector< LADate > settlementDates = priceInputFile["settlementDates"];
+                std::vector< AQLDate > settlementDates = priceInputFile["settlementDates"];
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
@@ -776,7 +776,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT12 );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

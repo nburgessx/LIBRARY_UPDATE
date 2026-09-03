@@ -38,12 +38,12 @@ namespace google_test
 
 	/* @brief	Run consistency test on all available swap curves in all ccys
     */
-    void swapCurveConsistencyCheck(const LAString& ccy, const LAString& testDir)
+    void swapCurveConsistencyCheck(const AQLString& ccy, const AQLString& testDir)
 	{
-		LAString prefix("");
+		AQLString prefix("");
 		if (ccy != "LINEARSPLINE")
 		{
-			prefix = ccy + LAString("_");
+			prefix = ccy + AQLString("_");
 		}
 
 		size_t TEST_COUNT = 0;
@@ -77,11 +77,11 @@ namespace google_test
 			//----------------------------------------------------------------------------------------
 			// Build yield curves of the current test case
 
-			LAString forecastCurveFile = prefix + LAString("STD_") + LAString(static_cast<int>(i + 1));
-			LAString discountCurveFile = prefix + LAString("OIS_") + LAString(static_cast<int>(i + 1));
+			AQLString forecastCurveFile = prefix + AQLString("STD_") + AQLString(static_cast<int>(i + 1));
+			AQLString discountCurveFile = prefix + AQLString("OIS_") + AQLString(static_cast<int>(i + 1));
 						
-			LAString forecastFileDir = testDir + forecastCurveFile + LAString(".csv");
-			LAString discountFileDir = testDir + discountCurveFile + LAString(".csv");
+			AQLString forecastFileDir = testDir + forecastCurveFile + AQLString(".csv");
+			AQLString discountFileDir = testDir + discountCurveFile + AQLString(".csv");
 			SET_UP_STD_CURVE(discountFileDir, forecastFileDir);
 
 			//----------------------------------------------------------------------------------------
@@ -99,30 +99,30 @@ namespace google_test
 			{
 				generateProp = inputFile_STD["generalProps"];			
 			}
-			const std::set<LAString>& generatePropkeys = generateProp.getKeys();
+			const std::set<AQLString>& generatePropkeys = generateProp.getKeys();
 
 			// swap par rates block
 			etrading::ReadDataFile swapRates = inputFile_STD["swapRates"];			
-			const std::set<LAString>& swapRatekeys = swapRates.getKeys();
+			const std::set<AQLString>& swapRatekeys = swapRates.getKeys();
 
 			// swap convention block
 			etrading::ReadDataFile swapConv = inputFile_STD["swapConv"];			
-			const std::set<LAString>& swapConvkeys = swapConv.getKeys();
+			const std::set<AQLString>& swapConvkeys = swapConv.getKeys();
 			
 			//----------------------------------------------------------------------------------------
 			// Retrieve all parameters required from various data blocks. 
 			// Should any of these parameters be not available, skip this test as it's not a valid test
 			
 			// Discount curve
-			LAString dfCurve("OIS");
+			AQLString dfCurve("OIS");
 			findValByKey(dfCurve, generateProp, generatePropkeys, "dfcurvename");
 
 			// Calendar
-			LAString calendar;
+			AQLString calendar;
 			findValByKey(calendar, swapConv, swapConvkeys, "Calendar");
 
 			// Spot lag
-			LAString spotLag;
+			AQLString spotLag;
 			findValByKey(spotLag, swapConv, swapConvkeys, "ResetLag");
 			if (spotLag.findString("D") == -1)
 			{
@@ -130,36 +130,36 @@ namespace google_test
 			}
 
 			// Day count convention fixed leg
-			LAString dayCountFixed;
+			AQLString dayCountFixed;
 			findValByKey(dayCountFixed, swapConv, swapConvkeys, "DayCount");
 
 			// Day count convention float leg
-			LAString dayCountFloat;
+			AQLString dayCountFloat;
 			findValByKey(dayCountFloat, swapConv, swapConvkeys, "DayCountFloat");
 
 			// Frequency fixed leg
-			LAString frequencyFixed;
+			AQLString frequencyFixed;
 			findValByKey(frequencyFixed, swapConv, swapConvkeys, "Frequency");
 
 			// Frequency float leg
-			LAString frequencyFloat;
+			AQLString frequencyFloat;
 			findValByKey(frequencyFloat, swapConv, swapConvkeys, "FrequencyFloat");
 
 			// Roll convention
-			LAString rollConvention;
+			AQLString rollConvention;
 			findValByKey(rollConvention, swapConv, swapConvkeys, "SlidingRule");
 
 			// Fixing lag
-			LAString fixingLag("0D");
+			AQLString fixingLag("0D");
 			findValByKey(fixingLag, swapConv, swapConvkeys, "FixingLag", true);
 
 			// Interpolation
-			LAString interpolation;
+			AQLString interpolation;
 			findValByKey(interpolation, generateProp, generatePropkeys, "yieldgen.interpolation");
 			interpolation = interpolationShortName(interpolation);
 
 			// Is rolling at end of month?
-			LAString isEomRollStr;
+			AQLString isEomRollStr;
 			findValByKey(isEomRollStr, swapConv, swapConvkeys, "IsEomRoll");
 			isEomRollStr.toUpper();
 			
@@ -170,14 +170,14 @@ namespace google_test
 			}
 
 			// Effective date
-			LAString asofDateStr;
+			AQLString asofDateStr;
 			findValByKey(asofDateStr, generateProp, generatePropkeys, "AsOfDate");
-			LADate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
-			LADate effectiveDate = etrading::LADateScheduleHelpers::getDate( asofDate, spotLag, rollConvention, calendar );
+			AQLDate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
+			AQLDate effectiveDate = etrading::LADateScheduleHelpers::getDate( asofDate, spotLag, rollConvention, calendar );
 
 			// Curve collection and forecast curve
-			LAString curveCollection = etrading::getCurveID( inputFile_STD );
-			LAString foreCurve	 = etrading::getMarketName( inputFile_STD );
+			AQLString curveCollection = etrading::getCurveID( inputFile_STD );
+			AQLString foreCurve	 = etrading::getMarketName( inputFile_STD );
 
 			// Forcibly setting fixing lag to 0D until development has completed in supporting fixing lag in curve building
 			fixingLag = "0D";
@@ -186,7 +186,7 @@ namespace google_test
 			std::vector<int> tempMaturityVec;
 			for(auto iterator = swapRatekeys.begin(); iterator != swapRatekeys.end(); ++iterator)
 			{
-				LAString maturityTenor = *iterator;
+				AQLString maturityTenor = *iterator;
                 char * pFirstNonNumber;
 				int amount = strtol(maturityTenor.subString(0, maturityTenor.size() - 1).getCString(), &pFirstNonNumber, 10); // base 10 numbers
 				tempMaturityVec.push_back(amount);
@@ -198,10 +198,10 @@ namespace google_test
 			// Check pricing consistency on all swap tenors
 			for(auto iterator = swapRatekeys.begin(); iterator != swapRatekeys.end(); ++iterator)
 			{
-				LAString maturityTenor = *iterator;
+				AQLString maturityTenor = *iterator;
                 char * pFirstNonNumber;
                 int amount = strtol(maturityTenor.subString(0, maturityTenor.size() - 1).getCString(), &pFirstNonNumber, 10); // base 10 numbers
-				LADate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
+				AQLDate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 				
                 const double calcParRate = validation::tryMirGetParRate4( etrading::InitializeAQETrading::instance().dataInstance(),
 																               effectiveDate.stringWithFormat( "YYYYMMDD" ),
@@ -238,7 +238,7 @@ namespace google_test
 																               calendar	// fixing calendar
 																               );
 
-				LAString inputParRateStr; 
+				AQLString inputParRateStr; 
 				findValByKey(inputParRateStr, swapRates, swapRatekeys, maturityTenor);
 				
 				double inputParRate(0.0);
@@ -249,16 +249,16 @@ namespace google_test
 				{
 					if (diff > tolerance2)
 					{
-						LAString err = "#Err: Test curve '" + forecastCurveFile + "' has error at " + maturityTenor;
-						throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__); 
+						AQLString err = "#Err: Test curve '" + forecastCurveFile + "' has error at " + maturityTenor;
+						throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__); 
 					}	
 				}
 				else
 				{
 					if (diff > tolerance)
 					{
-						LAString err = "#Err: Test curve '" + forecastCurveFile + "' has error at " + maturityTenor;
-						throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__); 
+						AQLString err = "#Err: Test curve '" + forecastCurveFile + "' has error at " + maturityTenor;
+						throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__); 
 					}
 				}
 			}

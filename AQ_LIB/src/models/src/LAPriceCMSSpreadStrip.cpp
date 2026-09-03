@@ -7,25 +7,25 @@
 #include "LAPriceCMSSpreadStrip.h"
 #include "LAPriceCMSSpreadCalibration.h"
 #include "LAMathCashFlowSchedules.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathDateUtilities.h"
 #include "LAMathInterpolationUtilities.h"
-#include "LAOptimumBrent.h"
+#include "AQLOptimumBrent.h"
 #include "LAMathParameterUtility.h"
-#include "LACoreUtil.h"
+#include "AQLCoreUtil.h"
 #include "LAPriceCMSSpreadTools.h"
 
-void LAPriceCMSSpreadStrip::Strip(LADataInstance* dataInstance, LAString convID, LAString currency,
-                             LADate valDate, const LAString& pairID, const LAStringMatrix& legScheduler, const LAStringMatrix& cmsScheduler,
-                             const LAStringMatrix& quoteMatrix, const vector<bool>& isCalls,
+void LAPriceCMSSpreadStrip::Strip(AQLDataInstance* dataInstance, AQLString convID, AQLString currency,
+                             AQLDate valDate, const AQLString& pairID, const AQLStringMatrix& legScheduler, const AQLStringMatrix& cmsScheduler,
+                             const AQLStringMatrix& quoteMatrix, const vector<bool>& isCalls,
                              CurveInfo discCurveInfo, CurveInfo cmsCurveInfo,
                              ReplicationConfig repConfig, double shift,
-                             const LAStringVector& slTerms, const DateVector& slDates,
+                             const AQLStringVector& slTerms, const DateVector& slDates,
                              DoubleVector& smileStrikes, DoubleMatrix& slPrices)
 {
     // Expiries
     size_t nExpiries = quoteMatrix.size() - 1;
-    LAStringVector expiryTerms(nExpiries);
+    AQLStringVector expiryTerms(nExpiries);
     for (size_t i = 0; i < nExpiries; i++)
         expiryTerms[i] = quoteMatrix[i + 1][0];
 
@@ -35,7 +35,7 @@ void LAPriceCMSSpreadStrip::Strip(LADataInstance* dataInstance, LAString convID,
     for (size_t j = 0; j < nStrikes; j++)
         strikes[j] = quoteMatrix[0][j + 2].getDoubleValue() / 100.0;
     if (isCalls.size() != nStrikes)
-        throw LACoreInvalidData("Inconsistent strike sizes in spread strip", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Inconsistent strike sizes in spread strip", __FILE__, __LINE__);
 
     // Quotes
     DoubleMatrix quotes(nExpiries, DoubleVector(nStrikes));
@@ -44,7 +44,7 @@ void LAPriceCMSSpreadStrip::Strip(LADataInstance* dataInstance, LAString convID,
             quotes[i][j] = quoteMatrix[i + 1][j + 2].getDoubleValue();
 
     // Index information
-    LAString tenor1, tenor2;
+    AQLString tenor1, tenor2;
     LAPriceCMSObject::ParseTenors(pairID, tenor1, tenor2);
     SwapRateInfo rateInfo1(dataInstance, currency, tenor1, discCurveInfo, cmsCurveInfo, cmsScheduler, repConfig, shift);
     SwapRateInfo rateInfo2(dataInstance, currency, tenor2, discCurveInfo, cmsCurveInfo, cmsScheduler, repConfig, shift);
@@ -64,7 +64,7 @@ void LAPriceCMSSpreadStrip::Strip(LADataInstance* dataInstance, LAString convID,
     // Set optimizer
     double init = 0.50, lwBound = -0.9999, upBound = 0.9999, tol = 0.0000001;
     size_t maxIter = 1000;
-    LAOptimumBrent minimizer(init, lwBound, upBound, maxIter, tol);
+    AQLOptimumBrent minimizer(init, lwBound, upBound, maxIter, tol);
 
     // Strip for each strike
     DoubleMatrix rawStrip(nStrikes, DoubleVector(nExpiries));
@@ -91,10 +91,10 @@ void LAPriceCMSSpreadStrip::Strip(LADataInstance* dataInstance, LAString convID,
     slPrices = DoubleMatrix(nStrikes, DoubleVector(nSlDates));
     //double deltaT = 0.0;
     etrading::InterpolationEnum interpolation = etrading::LINEAR_INTERPOLATION;
-    LAStringMatrix stripRhoOut(nSlDates + 1, LAStringVector(nStrikes + 1));
-    LAStringMatrix stripPriceOut(nSlDates + 1, LAStringVector(nStrikes + 1));
-    LAString stripRhoID = "_StripRho_" + pairID + "_";
-    LAString stripPriceID = "_StripPrice_" + pairID + "_";
+    AQLStringMatrix stripRhoOut(nSlDates + 1, AQLStringVector(nStrikes + 1));
+    AQLStringMatrix stripPriceOut(nSlDates + 1, AQLStringVector(nStrikes + 1));
+    AQLString stripRhoID = "_StripRho_" + pairID + "_";
+    AQLString stripPriceID = "_StripPrice_" + pairID + "_";
     stripRhoOut[0][0] = stripRhoID;
     stripPriceOut[0][0] = stripPriceID;
     for (size_t i = 0; i < nSlDates; i++)
@@ -113,8 +113,8 @@ void LAPriceCMSSpreadStrip::Strip(LADataInstance* dataInstance, LAString convID,
         {
             double rho = LAMathInterpolationUtilities::interpolate(stripTimes, rawStrip[j], expiry, interpolation);
             slPrices[j][i] = df * LAPriceCMSSpreadUtility::CMSSpreadCoupon(strikes[j], isCalls[j], S1, S2, stDev1, stDev2, rho);
-            stripRhoOut[1 + i][1 + j] = LAString(n2s(rho).c_str());
-            stripPriceOut[1 + i][1 + j] = LAString(n2s(slPrices[j][i]).c_str());
+            stripRhoOut[1 + i][1 + j] = AQLString(n2s(rho).c_str());
+            stripPriceOut[1 + i][1 + j] = AQLString(n2s(slPrices[j][i]).c_str());
             if (j == 0)
             {
                 stripRhoOut[1 + i][0] = slTerms[i];
@@ -127,8 +127,8 @@ void LAPriceCMSSpreadStrip::Strip(LADataInstance* dataInstance, LAString convID,
         {
             for (size_t j = 0; j < nStrikes; j++)
             {
-                stripRhoOut[0][1 + j] = LAString(n2s(strikes[j]).c_str());
-                stripPriceOut[0][1 + j] = LAString(n2s(strikes[j]).c_str());
+                stripRhoOut[0][1 + j] = AQLString(n2s(strikes[j]).c_str());
+                stripPriceOut[0][1 + j] = AQLString(n2s(strikes[j]).c_str());
             }
         }
     }
@@ -140,9 +140,9 @@ void LAPriceCMSSpreadStrip::Strip(LADataInstance* dataInstance, LAString convID,
 }
 
 //================ CMSCalibrationTarget ===================================
-LAPriceCMSSpreadStripTarget::LAPriceCMSSpreadStripTarget(LADate valDate, LAString mtyTerm,
+LAPriceCMSSpreadStripTarget::LAPriceCMSSpreadStripTarget(AQLDate valDate, AQLString mtyTerm,
                                                SwapRateInfo rateInfo1, SwapRateInfo rateInfo2,
-                                               LAStringMatrix legScheduler, LAStringMatrix cmsScheduler,
+                                               AQLStringMatrix legScheduler, AQLStringMatrix cmsScheduler,
                                                CurveInfo discCurveInfo, size_t parameterIdx)
 {
     vector<CashFlowTiming> schedule = LAMathScheduleUtility::LegSchedule(valDate, mtyTerm, legScheduler, cmsScheduler);
@@ -202,7 +202,7 @@ void LAPriceCMSSpreadStripTarget::SetMarket(double quote, double strike, bool is
     mQuote = quote; mStrike = strike; mIsCall = isCall;
 }
 
-LADate LAPriceCMSSpreadStripTarget::LastFixing()
+AQLDate LAPriceCMSSpreadStripTarget::LastFixing()
 {
     return mLastFixing;
 }

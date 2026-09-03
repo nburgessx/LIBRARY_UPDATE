@@ -81,7 +81,7 @@ namespace google_test
         {
             EXPECT_GE( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -118,7 +118,7 @@ namespace google_test
         {
             EXPECT_GE( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -153,7 +153,7 @@ namespace google_test
         {
             EXPECT_GE( i, minTests );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

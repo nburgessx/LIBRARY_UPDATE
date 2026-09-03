@@ -146,7 +146,7 @@ namespace etrading
                 break;
 
             default:
-		        throw LACoreInvalidData("#Error: Invalid accrual frequency. Only 'ANNUAL', 'SEMI-ANNUAL', 'QUARTERLY', 'MONTHLY', 'WEEKLY' or 'DAILY' supported.",__FILE__,__LINE__);
+		        throw AQLCoreInvalidData("#Error: Invalid accrual frequency. Only 'ANNUAL', 'SEMI-ANNUAL', 'QUARTERLY', 'MONTHLY', 'WEEKLY' or 'DAILY' supported.",__FILE__,__LINE__);
                 break;
         }
 	}
@@ -158,7 +158,7 @@ namespace etrading
     *  @param [in]		bondPaymentlDatesForIndexation      A vector of all bond cashflow payment dates, these dates are assumed to be SORTED
 	*  @Return          returns the index position of the active cashflow given a vector of dates. Will return the final index position if all cashflows are in the past
     */
-    unsigned int getBondActiveCashflowIndex( const LADate& settlementDate, const std::vector< LADate >& bondPaymentlDatesForIndexation )
+    unsigned int getBondActiveCashflowIndex( const AQLDate& settlementDate, const std::vector< AQLDate >& bondPaymentlDatesForIndexation )
     {   
         // In Bloomberg, the first active coupon (payment date) is greater than (not equal) the settle date.
         auto nextDayToSettleDate = settlementDate;
@@ -174,12 +174,12 @@ namespace etrading
     *  @param [in]		bondPaymentDatesForIndexation      A vector of all bond cashflow payment dates, these dates are assumed to be SORTED
 	*  @Return          returns the index position of the active cashflow given a vector of dates. Will return the final index position if all cashflows are in the past
     */
-    unsigned int getBondCashflowIndex( const LADate& searchDate, const std::vector< LADate >& bondPaymentlDatesForIndexation )
+    unsigned int getBondCashflowIndex( const AQLDate& searchDate, const std::vector< AQLDate >& bondPaymentlDatesForIndexation )
     {
         const size_t numberOfCashflows = bondPaymentlDatesForIndexation.size();
         if ( numberOfCashflows == 0 )
         {
-            throw LACoreInvalidData("#Error: The Bond has no Cashflows. Unable to find the active cashflow.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: The Bond has no Cashflows. Unable to find the active cashflow.",__FILE__,__LINE__);
         }
 
         // Iterate over the Bond Payment dates, which are sored and return the first cashflow yet to pay i.e. the active bond coupon
@@ -204,18 +204,18 @@ namespace etrading
     *  @param [in]		bondPaymentlDatesForIndexation      A vector of all bond cashflow payment dates, these dates are assumed to be SORTED
 	*  @Return          returns the index of the cashflow. The first future cashflow has index 0, the second future cashflow is 1 etc ....
     */
-    unsigned int getBondRelativeCashflowIndex( unsigned int& firstActiveCashflowIndex, const LADate& searchPaymentDate, const std::vector< LADate >& bondPaymentlDatesForIndexation )
+    unsigned int getBondRelativeCashflowIndex( unsigned int& firstActiveCashflowIndex, const AQLDate& searchPaymentDate, const std::vector< AQLDate >& bondPaymentlDatesForIndexation )
     {
         const size_t numberOfCashflows = bondPaymentlDatesForIndexation.size();
         if ( numberOfCashflows == 0 )
         {
-            throw LACoreInvalidData("#Error: The Bond has no Cashflows. Unable to find the active cashflow.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: The Bond has no Cashflows. Unable to find the active cashflow.",__FILE__,__LINE__);
         }
 
         // Check if the searchDate is in the list of bond cashflow Dates
         if ( std::find( bondPaymentlDatesForIndexation.begin(), bondPaymentlDatesForIndexation.end(), searchPaymentDate ) == bondPaymentlDatesForIndexation.end() )
         {
-            throw LACoreInvalidData("#Error: Unable to evaluate the Bond Cashflow. Invalid bond payment dates(s) provided.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: Unable to evaluate the Bond Cashflow. Invalid bond payment dates(s) provided.",__FILE__,__LINE__);
         }
 
         // Get the Active Cashflow Index and SearchPaymentDate Index
@@ -249,23 +249,23 @@ namespace etrading
     *  @param [in]		bondPaymentlDatesForIndexation      A vector of all bond payment dates, these dates are our reference dates to determine if a bond coupon should be considered historic or in the future
 	*  @Return          returns the first future cashflow date and index. Today is considered in the future. Will return the last date in the dates vector if all dates are historic and in the past
     */
-    std::pair<LADate, size_t> getActiveCashflowDateAndIndex( const LADate& settlementDate, const std::vector< LADate >& bondCashflowDates, const std::vector< LADate >& bondPaymentlDatesForIndexation )
+    std::pair<AQLDate, size_t> getActiveCashflowDateAndIndex( const AQLDate& settlementDate, const std::vector< AQLDate >& bondCashflowDates, const std::vector< AQLDate >& bondPaymentlDatesForIndexation )
     {
         if ( bondPaymentlDatesForIndexation.size() != bondCashflowDates.size() )
         {
-            throw LACoreInvalidData("#Error: Inconsistent Bond Schedule. The number of bond cashflows does not match the number of bond payment dates.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: Inconsistent Bond Schedule. The number of bond cashflows does not match the number of bond payment dates.",__FILE__,__LINE__);
         }
         
         const size_t numberOfCashflows = bondPaymentlDatesForIndexation.size();
         if ( numberOfCashflows == 0 ) 
         {
-            throw LACoreInvalidData("#Error: There are no Bond Cashflows to evaluate.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: There are no Bond Cashflows to evaluate.",__FILE__,__LINE__);
         }
         
         // Get the Result Index as the distance from the start of the Payment Date Vector
         auto resultIndex = getBondActiveCashflowIndex(settlementDate,  bondPaymentlDatesForIndexation);
 
-        LADate cashflowDateResult = bondCashflowDates[ resultIndex ];
+        AQLDate cashflowDateResult = bondCashflowDates[ resultIndex ];
 
         return std::make_pair(cashflowDateResult, resultIndex);
     }
@@ -277,7 +277,7 @@ namespace etrading
     *  @param [in]		bondAccrualFrequency   Bond accrual frequency
     *  @return			Full coupon period days
     */
-    double getBondFullCouponPeriodDays(const LADate& paymentDate1, const LADate& paymentDate2, const DayCountEnum & bondDaycount, const FrequencyEnum & bondAccrualFrequency)
+    double getBondFullCouponPeriodDays(const AQLDate& paymentDate1, const AQLDate& paymentDate2, const DayCountEnum & bondDaycount, const FrequencyEnum & bondAccrualFrequency)
     { 
         double totalCouponDays      = 0.0;
         double yearFraction = convertBondFrequencyToYearFraction( bondAccrualFrequency );
@@ -303,13 +303,13 @@ namespace etrading
                 break;
             }
            default:
-                throw LACoreInvalidData("#Error: Bond only support the following daycount methods: 'ACT/ACT', 'ACT/365', 'NL/365', '30/360', '30/360 ISMA', '30E/360 ISDA', 'ACT/360'",__FILE__,__LINE__);
+                throw AQLCoreInvalidData("#Error: Bond only support the following daycount methods: 'ACT/ACT', 'ACT/365', 'NL/365', '30/360', '30/360 ISMA', '30E/360 ISDA', 'ACT/360'",__FILE__,__LINE__);
                 break;
         }
 
         if ( totalCouponDays == 0 )
         {
-            throw LACoreInvalidData("#Error: Invalid Bond Coupon Dates. Cannot evaluate a Bond Coupon with full coupon period as zero days.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: Invalid Bond Coupon Dates. Cannot evaluate a Bond Coupon with full coupon period as zero days.",__FILE__,__LINE__);
         }
         
         return totalCouponDays;
@@ -321,7 +321,7 @@ namespace etrading
     *  @param [in]		bondDaycount    Bond Daycount Basis
     *  @return			Actual coupon period days
     */
-    double getBondActualCouponPeriodDays(const LADate& paymentDate1, const LADate& paymentDate2, const DayCountEnum & bondDaycount)
+    double getBondActualCouponPeriodDays(const AQLDate& paymentDate1, const AQLDate& paymentDate2, const DayCountEnum & bondDaycount)
     { 
         double actualCouponDays      = 0.0;
         switch ( bondDaycount )
@@ -347,7 +347,7 @@ namespace etrading
                 break;
             }
            default:
-                throw LACoreInvalidData("#Error: Bond only support the following daycount methods: 'ACT/ACT', 'ACT/365', 'NL/365', '30/360', '30/360 ISMA', '30E/360 ISDA', 'ACT/360'",__FILE__,__LINE__);
+                throw AQLCoreInvalidData("#Error: Bond only support the following daycount methods: 'ACT/ACT', 'ACT/365', 'NL/365', '30/360', '30/360 ISMA', '30E/360 ISDA', 'ACT/360'",__FILE__,__LINE__);
                 break;
         }
 
@@ -359,13 +359,13 @@ namespace etrading
     *  @param [in]		issueDateStr        Issue date of the bond
     *  @return			True/false
     */
-    bool isBondJGBIssuedPriorToMarketConventionChangeDate(const BondCalculationTypeEnum& bondCalculationType, const LAString& issueDateStr)
+    bool isBondJGBIssuedPriorToMarketConventionChangeDate(const BondCalculationTypeEnum& bondCalculationType, const AQLString& issueDateStr)
     {
         //Bonds that are issued prior to 3/1/2001 are given one extra day in the first coupon period.
         if (isJapaneseGovenmentBond(bondCalculationType))
         {
-            LADate jgbMarketConventionChangeDate = LADate("20010301");
-            LADate issueDt    = stringToDate( issueDateStr, "#Error: Invalid 'IssueDate'" );
+            AQLDate jgbMarketConventionChangeDate = AQLDate("20010301");
+            AQLDate issueDt    = stringToDate( issueDateStr, "#Error: Invalid 'IssueDate'" );
 
             if (issueDt < jgbMarketConventionChangeDate)
             {
@@ -406,14 +406,14 @@ namespace etrading
     *  @param [in]		paymentDates            Bond paymentDates excluding the upfront cashflow if there is one
     *  @return			Bond's notinoal exchange at maturity
     */
-    double getBondNotionalExchangeAtMaturity(const BondCalculationTypeEnum& bondCalculationType, const LADate& effectiveDate, const LADate& maturityDate, double notional, double issuePrice, double taxRate, const std::vector<LADate>& paymentDates) 
+    double getBondNotionalExchangeAtMaturity(const BondCalculationTypeEnum& bondCalculationType, const AQLDate& effectiveDate, const AQLDate& maturityDate, double notional, double issuePrice, double taxRate, const std::vector<AQLDate>& paymentDates) 
     {
 
         double notionalExchangeAtMaturity = notional;
 
         if (bondCalculationType == TYPE523_ITALY_TRSY_BONDS)
         {
-            LADate italianBTPSMarketConventionChangeDate = LADate("19970101");
+            AQLDate italianBTPSMarketConventionChangeDate = AQLDate("19970101");
 
             auto firstAccrualStartDt = effectiveDate;
             auto maturityDt = maturityDate;
@@ -437,12 +437,12 @@ namespace etrading
                 int dtm = firstAccrualStartDt.intervalDays(maturityDt);
 
                 // IssuedDateToFirstPaymentDtLaterThan19970101
-                auto targetPaymentDtIter = std::find_if(paymentDates.begin(), paymentDates.end(), [italianBTPSMarketConventionChangeDate](const LADate& paymentDate) { return paymentDate >= italianBTPSMarketConventionChangeDate;});
+                auto targetPaymentDtIter = std::find_if(paymentDates.begin(), paymentDates.end(), [italianBTPSMarketConventionChangeDate](const AQLDate& paymentDate) { return paymentDate >= italianBTPSMarketConventionChangeDate;});
                 if (targetPaymentDtIter == paymentDates.end())
                 {
                 	throw ETradingException(  ( boost::format( "#Error: cannot find a payment date later than '%i'" ) % italianBTPSMarketConventionChangeDate.stringWithFormat()  ).str()  );
                 }
-                LADate targetPaymentDt = *targetPaymentDtIter;
+                AQLDate targetPaymentDt = *targetPaymentDtIter;
 
                 int dnc = firstAccrualStartDt.intervalDays(targetPaymentDt);
                             
@@ -520,7 +520,7 @@ namespace etrading
     }
 
 
-	double roundBondAccruedInterestFactor(const double& origAccruedInterestFactor, const BondCalculationTypeEnum& calculationType, const LADate& settlementDate)
+	double roundBondAccruedInterestFactor(const double& origAccruedInterestFactor, const BondCalculationTypeEnum& calculationType, const AQLDate& settlementDate)
 	{
 
 		double accruedInterestFactor = origAccruedInterestFactor;
@@ -532,7 +532,7 @@ namespace etrading
 		}
 		else if (calculationType == TYPE89_FRENCH_COMPOUND_METHOD)
 		{
-			LADate frenchFixedBondMarketConventionChangeDate = LADate("20050418");
+			AQLDate frenchFixedBondMarketConventionChangeDate = AQLDate("20050418");
 			if (settlementDate < frenchFixedBondMarketConventionChangeDate)
 			{
 				//rounded to 3 decimals
@@ -636,9 +636,9 @@ namespace etrading
 	}
 
 
-	bool excludeCouponInterest(const LADate& settlementDate, const LADate& exDividendDate)
+	bool excludeCouponInterest(const AQLDate& settlementDate, const AQLDate& exDividendDate)
 	{
-		if (exDividendDate == LADate())
+		if (exDividendDate == AQLDate())
 		{
 			return false;
 		}
@@ -682,7 +682,7 @@ namespace etrading
 	*  @param [in]		reinvestedCouponFwdValue	Sum of paid voupons between settleDate and forwardSettleDate
 	*  @return			Bond forward dirty price
 	*/
-	double calculateForwardDirtyPrice(const double& dirtyPrice, const LADate& settleDate, const LADate& forwardSettleDate, const double& repoRate, const DayCountEnum& repoDayCount, const double& reinvestedCouponFwdValue)
+	double calculateForwardDirtyPrice(const double& dirtyPrice, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const double& repoRate, const DayCountEnum& repoDayCount, const double& reinvestedCouponFwdValue)
 	{
 
 		AQ_REQUIRE(settleDate < forwardSettleDate, "Bond's settle date must be earlier than forward settle date.");
@@ -708,7 +708,7 @@ namespace etrading
 	*  @param [in]		reinvestedCoupons		Coupons between settleDate and forwardSettleDate
 	*  @return			Bond implied repo rate
 	*/
-	double calculateRepoRate(const double& dirtyPrice, const double& forwardDirtyPrice, const LADate& settleDate, const LADate& forwardSettleDate, const DayCountEnum& repoDayCount, const std::vector< BondFwdReinvestedCoupon >& reinvestedCoupons)
+	double calculateRepoRate(const double& dirtyPrice, const double& forwardDirtyPrice, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const DayCountEnum& repoDayCount, const std::vector< BondFwdReinvestedCoupon >& reinvestedCoupons)
 	{
 		AQ_REQUIRE(settleDate < forwardSettleDate, "Bond's settle date must be earlier than forward settle date.");
 
@@ -762,7 +762,7 @@ namespace etrading
 	*  @param [in]		frequency						Bond frequency
 	*  @return			First full coupon days of the long start stub
 	*/
-	double getLongStartStubFirstFullCouponDays(const LADate& firstActivePaymentDate, const LADate& firstPriorVirtualPaymentDate, const LADate& secondPriorVirtualPaymentDate, const BondCalculationTypeEnum& bondCalculationType, const DayCountEnum& dayCount, const FrequencyEnum& frequency)
+	double getLongStartStubFirstFullCouponDays(const AQLDate& firstActivePaymentDate, const AQLDate& firstPriorVirtualPaymentDate, const AQLDate& secondPriorVirtualPaymentDate, const BondCalculationTypeEnum& bondCalculationType, const DayCountEnum& dayCount, const FrequencyEnum& frequency)
 	{
 		double fullCouponPeriodDays = 0.0;
 

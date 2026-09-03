@@ -66,8 +66,8 @@ namespace etrading
 	LabelValueBlock CMSSchedule::setupSwapExpressionLVBForCMS() const
 	{		
 		// Set up the Swap Expression LVB used for constructing Swap Index underlying
-		LAStringVector keys; 
-		LAStringVector values;
+		AQLStringVector keys; 
+		AQLStringVector values;
 
         // Reserve vector sizes to speed_up data push_back
         keys.reserve(6);
@@ -93,7 +93,7 @@ namespace etrading
 	*  @param[in]	swapIndexMaturity	A string containing the IRS maturity tenor, e.g '5Y'
 	*  @returns		The IRS par-rate
 	*/
-	double CMSSchedule::calculateUnderlyingParRate( const LabelValueBlock& valuationSettingsLVB, const LAString& swapGeneratorName, const LADate& underlyingEffectiveDate, const LAString& underlyingMaturity ) const
+	double CMSSchedule::calculateUnderlyingParRate( const LabelValueBlock& valuationSettingsLVB, const AQLString& swapGeneratorName, const AQLDate& underlyingEffectiveDate, const AQLString& underlyingMaturity ) const
 	{
         // Calculate the parRate for and IRS starting on each accrualStartDate
         LabelValueBlock swapPropertiesLVB;
@@ -108,7 +108,7 @@ namespace etrading
 
         StandardStringVector addValues(2);
         addValues[0] = AQ_TO_STRING_FROM_INT( LADateScheduleHelpers::getExcelDate( underlyingEffectiveDate ) );
-        const LADate irsMaturityDate = validateMaturityDate( underlyingEffectiveDate, underlyingMaturity );
+        const AQLDate irsMaturityDate = validateMaturityDate( underlyingEffectiveDate, underlyingMaturity );
         addValues[1] = AQ_TO_STRING_FROM_INT(LADateScheduleHelpers::getExcelDate( irsMaturityDate ) );
 
         LabelValueBlock swapExpressionLVB( setupSwapExpressionLVBForCMS(), addKeys, addValues );
@@ -126,12 +126,12 @@ namespace etrading
 	{
 		LabelValueBlock valuationSettingsLVB( VALUATION_SETTING_KEYS::CURVE_COLLECTION, dataProvider.getValuationSettings().getCurveCollection() );
 
-		const LAString& swapGeneratorName1 = cmsLegStaticData->getSwapGeneratorName1();
-		const LAString& swapIndexMaturity1 = cmsLegStaticData->getSwapIndexMaturity1();
+		const AQLString& swapGeneratorName1 = cmsLegStaticData->getSwapGeneratorName1();
+		const AQLString& swapIndexMaturity1 = cmsLegStaticData->getSwapIndexMaturity1();
 		const double swapIndexMultiplier1  = cmsLegStaticData->getSwapIndexMultiplier1();
 
-		const LAString& swapGeneratorName2 = cmsLegStaticData->getSwapGeneratorName2();
-		const LAString& swapIndexMaturity2 = cmsLegStaticData->getSwapIndexMaturity2();
+		const AQLString& swapGeneratorName2 = cmsLegStaticData->getSwapGeneratorName2();
+		const AQLString& swapIndexMaturity2 = cmsLegStaticData->getSwapIndexMaturity2();
 		const double swapIndexMultiplier2  = cmsLegStaticData->getSwapIndexMultiplier2();
 
 		const size_t cashflowSize = cashflows_.size();
@@ -143,7 +143,7 @@ namespace etrading
 			std::shared_ptr<CMSCashflow> cmsCashflow = std::dynamic_pointer_cast<CMSCashflow>( curCashflow );
 			AQ_REQUIRE( cmsCashflow != nullptr,  "Found a non CMS cashflow in the CMS Schedule! ");
 
-			const LADate& irsEffectiveDate = cmsCashflow->getAccrualStartDate();	
+			const AQLDate& irsEffectiveDate = cmsCashflow->getAccrualStartDate();	
 
 			double parRate1 = calculateUnderlyingParRate( valuationSettingsLVB, swapGeneratorName1, irsEffectiveDate, swapIndexMaturity1 );
 			cmsCashflow->setParRate1( parRate1 );

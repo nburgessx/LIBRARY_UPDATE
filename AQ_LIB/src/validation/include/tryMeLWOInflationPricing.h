@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "Swap.h"
 #include "JSONInfoBlock.h"
@@ -86,7 +86,7 @@ namespace validation
 	* @param[in]	lag						Adjust the specified date backwards by this lag tenor
 	* @returns	The calculated CPI level
 	*/
-	double tryMeLWOInflationCPI( const std::string& inflationCurveName, const LADate& date, const std::string& inflationResetType, const std::string& lag );
+	double tryMeLWOInflationCPI( const std::string& inflationCurveName, const AQLDate& date, const std::string& inflationResetType, const std::string& lag );
 
 
 }

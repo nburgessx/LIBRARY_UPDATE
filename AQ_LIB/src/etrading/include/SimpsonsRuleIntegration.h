@@ -1,7 +1,7 @@
 #pragma once
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CoreEnumerations.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 
 namespace etrading
 {
@@ -54,8 +54,8 @@ namespace etrading
             double                  joinDateAsDouble;
         };
 
-        // Helper Function to Convert the interpolation method enum to the LAPriceDataInterpolation identifier string method
-        LAString toInterpolationMethod( const InterpolationEnum & interpolationType );
+        // Helper Function to Convert the interpolation method enum to the AQLPriceDataInterpolation identifier string method
+        AQLString toInterpolationMethod( const InterpolationEnum & interpolationType );
 
     }
     // End of Namespace SimpsonsRule
@@ -98,7 +98,7 @@ namespace etrading
          // Initialize the TargetFunction
         void setUpTargetFunction();
 
-        std::shared_ptr<LAInterpolationBase> targetInterpolationPtr_;
+        std::shared_ptr<AQLInterpolationBase> targetInterpolationPtr_;
         srTargetFunction targetFunction_;
     };
 }

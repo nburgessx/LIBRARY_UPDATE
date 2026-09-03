@@ -8,7 +8,7 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "StructuredExceptionHandler.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLPriceDataCalendar.h"
 #include "CoreEnumerations.h"
 #include "DateUtilities.h"
 #include "FuturesDates.h"
@@ -19,7 +19,7 @@ namespace validation
     using etrading::CreateDataFile;
 
     // Function to get today's date using the system date
-    LADate tryMeDateToday()
+    AQLDate tryMeDateToday()
     {
         return etrading::todaysDate();
     }
@@ -32,11 +32,11 @@ namespace validation
     *  @param [in]		rollConvention		Roll conventions, ie, Normal, IMM, EOM, Lunar, etc
     *  @return			The end date
     */
-    LADate tryMeDateFromTenor( const LADate& startDate,
-                               const LAString& tenor,
-                               const LAString& businessDayAdj,
-                               const LAString& calendar,
-                               const LAString& rollConvention )
+    AQLDate tryMeDateFromTenor( const AQLDate& startDate,
+                               const AQLString& tenor,
+                               const AQLString& businessDayAdj,
+                               const AQLString& calendar,
+                               const AQLString& rollConvention )
     {
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
 
@@ -58,10 +58,10 @@ namespace validation
     *  @return			A vector of end dates
     */
     DateVector tryMeDateFromTenor( const DateVector& startDates,
-                                   const LAString& tenor,
-                                   const LAString& businessDayAdj,
-                                   const LAString& calendar,
-                                   const LAString& rollConvention )
+                                   const AQLString& tenor,
+                                   const AQLString& businessDayAdj,
+                                   const AQLString& calendar,
+                                   const AQLString& rollConvention )
     {
         VALID_EXCEPTION_START
 
@@ -105,29 +105,29 @@ namespace validation
     *  @param [in]		paymentBusDayAdj        Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The curve spot date
     */
-	LADate tryMeDateShiftedSpotDate( const LADate& asOfDate,
-						             const LAString& fixingLag,			    // TODO: Convert to StandardString
-						             const LAString& fixingCalendar,	    // TODO: Convert to StandardString
-                                     const LAString& fixingBusDayAdj,	    // TODO: Convert to StandardString
-                                     const LAString& paymentLag,	        // TODO: Convert to StandardString
-						             const LAString& paymentCalendar,       // TODO: Convert to StandardString
-                                     const LAString& paymentBusDayAdj )	    // TODO: Convert to StandardString
+	AQLDate tryMeDateShiftedSpotDate( const AQLDate& asOfDate,
+						             const AQLString& fixingLag,			    // TODO: Convert to StandardString
+						             const AQLString& fixingCalendar,	    // TODO: Convert to StandardString
+                                     const AQLString& fixingBusDayAdj,	    // TODO: Convert to StandardString
+                                     const AQLString& paymentLag,	        // TODO: Convert to StandardString
+						             const AQLString& paymentCalendar,       // TODO: Convert to StandardString
+                                     const AQLString& paymentBusDayAdj )	    // TODO: Convert to StandardString
     {
         VALID_EXCEPTION_START
 		
 		RECORD_INPUTS( asOfDate, fixingLag, fixingCalendar, fixingBusDayAdj, paymentLag, paymentCalendar, paymentBusDayAdj )
         
         // Parameter Validation
-        LAString fixingLag_                 = fixingLag;
-        LAString fixingBusDayAdj_           = fixingBusDayAdj;
-        LAString paymentLag_                = paymentLag;
-        LAString paymentBusDayAdj_          = paymentBusDayAdj;
+        AQLString fixingLag_                 = fixingLag;
+        AQLString fixingBusDayAdj_           = fixingBusDayAdj;
+        AQLString paymentLag_                = paymentLag;
+        AQLString paymentBusDayAdj_          = paymentBusDayAdj;
         if ( fixingLag == "" )              fixingLag_           = "0D";
         if ( fixingBusDayAdj == "" )        fixingBusDayAdj_     = "NO_CHANGE";
         if ( paymentLag == "" )             paymentLag_          = "0D";
         if ( paymentBusDayAdj == "" )       paymentBusDayAdj_    = "NO_CHANGE";
 
-        const LADate spotDate = etrading::getShiftedSpotDate( asOfDate, fixingLag_, fixingCalendar, fixingBusDayAdj_, paymentLag_, paymentCalendar, paymentBusDayAdj_ );
+        const AQLDate spotDate = etrading::getShiftedSpotDate( asOfDate, fixingLag_, fixingCalendar, fixingBusDayAdj_, paymentLag_, paymentCalendar, paymentBusDayAdj_ );
         
         RECORD_OUTPUTS_AND_RETURN_RESULT( spotDate )
 
@@ -142,24 +142,24 @@ namespace validation
     *  @param [in]		rollConvention		Roll conventions, ie, Normal, IMM, EOM, Lunar, etc
     *  @return			The curve spot date
     */
-	LADate tryMeCurveUSDSpotDate( const LADate& curveAsOfDate,
-							      const LAString& spotLag,               // TODO: Convert to StandardString
-							      const LAString& fixingCalendar,        // TODO: Convert to StandardString
-							      const LAString& paymentCalendar,       // TODO: Convert to StandardString
-							      const LAString& businessDayAdj,        // TODO: Convert to StandardString
-							      const LAString& rollConvention )       // TODO: Convert to StandardString
+	AQLDate tryMeCurveUSDSpotDate( const AQLDate& curveAsOfDate,
+							      const AQLString& spotLag,               // TODO: Convert to StandardString
+							      const AQLString& fixingCalendar,        // TODO: Convert to StandardString
+							      const AQLString& paymentCalendar,       // TODO: Convert to StandardString
+							      const AQLString& businessDayAdj,        // TODO: Convert to StandardString
+							      const AQLString& rollConvention )       // TODO: Convert to StandardString
 	{
 		VALID_EXCEPTION_START
 		
 		RECORD_INPUTS( curveAsOfDate, spotLag, fixingCalendar, paymentCalendar, businessDayAdj, rollConvention )
         
         // Parameter Validation
-        LAString spotLag_               = spotLag;
-        LAString businessDayAdj_        = businessDayAdj;
+        AQLString spotLag_               = spotLag;
+        AQLString businessDayAdj_        = businessDayAdj;
         if ( spotLag == "" )            spotLag_ = "0D";
         if ( businessDayAdj == "" )     businessDayAdj_ = "NO_CHANGE";
             
-        const LADate spotDate = etrading::getCurveUSDSpotDate( curveAsOfDate, spotLag_, fixingCalendar, paymentCalendar, businessDayAdj_, rollConvention );
+        const AQLDate spotDate = etrading::getCurveUSDSpotDate( curveAsOfDate, spotLag_, fixingCalendar, paymentCalendar, businessDayAdj_, rollConvention );
         
         RECORD_OUTPUTS_AND_RETURN_RESULT( spotDate )
 
@@ -172,9 +172,9 @@ namespace validation
     *  @param [in]		dayCount			Day count convention
     *  @return			The end date derived from the FromDate and given year fraction
     */
-    LADate tryMeDateFromYearFraction( const LADate& startDate,
+    AQLDate tryMeDateFromYearFraction( const AQLDate& startDate,
                                       double yearFraction,
-                                      const LAString& dayCount )
+                                      const AQLString& dayCount )
     {
         VALID_EXCEPTION_START
 
@@ -188,13 +188,13 @@ namespace validation
             file.write( "dayCount",			dayCount );
         }
 
-        LADate ret;
+        AQLDate ret;
         const etrading::DayCountEnum dayCounter = etrading::toDayCountEnum( dayCount.getCString() );
 
         if( dayCounter == etrading::ACT_ACT_DAYCOUNT )
         {
             auto date = etrading::toGregorianDateFromYYYYMMDD( startDate.stringWithFormat().getCString() );
-            ret = LADate( etrading::toYYYYMMDDFromGregorianDate( etrading::addYearFraction( date, yearFraction ) ).c_str() );
+            ret = AQLDate( etrading::toYYYYMMDDFromGregorianDate( etrading::addYearFraction( date, yearFraction ) ).c_str() );
         }
         else
         {
@@ -218,9 +218,9 @@ namespace validation
     *  @param[in]		includelast		True(default):include the last day and not include start day; False:include start day and not include last day
     *  @return			Year fraction between fromDate and toDate
     */
-    double tryMeDateYearFraction( const LADate& fromDate,
-                                  const LADate& toDate,
-                                  const LAString& dayCount,
+    double tryMeDateYearFraction( const AQLDate& fromDate,
+                                  const AQLDate& toDate,
+                                  const AQLString& dayCount,
                                   bool includeLast )
     {
         VALID_EXCEPTION_START
@@ -256,9 +256,9 @@ namespace validation
     *  @param [in]		calendar		Calendar
     *  @return			Number of business days between fromDate and toDate
     */
-    int tryMeDateBusinessDays( const LADate& fromDate,
-                               const LADate& toDate,
-                               const LAString& calendar )
+    int tryMeDateBusinessDays( const AQLDate& fromDate,
+                               const AQLDate& toDate,
+                               const AQLString& calendar )
     {
         VALID_EXCEPTION_START
 
@@ -272,9 +272,9 @@ namespace validation
             file.write( "calendar", calendar );
         }
 
-        LAPriceDataCalendar cal;
+        AQLPriceDataCalendar cal;
         cal.convertFromString( calendar );
-        LADate tmpdate = fromDate;
+        AQLDate tmpdate = fromDate;
 
         int ret = 0;
         do
@@ -302,8 +302,8 @@ namespace validation
     *  @param [in]		calendar		holidayCentre(s)
     *  @return			returns a boolean to indicate if the date specified is a working day
     */
-    bool tryMeDateIsWorkingDay( const LADate& date,
-                                const LAString& holidayCentre )
+    bool tryMeDateIsWorkingDay( const AQLDate& date,
+                                const AQLString& holidayCentre )
     {
         VALID_EXCEPTION_START
 
@@ -328,7 +328,7 @@ namespace validation
         
         if ( adjustedDate.size() < 1 )
         {
-            throw LACoreInvalidData( "#Error: Unable to verify if the date is a holiday. Please check if holiday centre is correct.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Unable to verify if the date is a holiday. Please check if holiday centre is correct.", __FILE__, __LINE__ );
         }
 
         // If the adjusted date is not equal to our initial start date then we have identified a holiday
@@ -355,8 +355,8 @@ namespace validation
     *  @param [in]		calendar		holidayCentre(s)
     *  @return			returns a boolean to indicate if the date specified is a holday
     */
-    bool tryMeDateIsHoliday( const LADate& date,
-                             const LAString& holidayCentre )
+    bool tryMeDateIsHoliday( const AQLDate& date,
+                             const AQLString& holidayCentre )
     {
         VALID_EXCEPTION_START
 
@@ -389,7 +389,7 @@ namespace validation
         
             if ( adjustedDate.size() < 1 )
             {
-                throw LACoreInvalidData( "#Error: Unable to verify if the date is a holiday. Please check if holiday centre is correct.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Unable to verify if the date is a holiday. Please check if holiday centre is correct.", __FILE__, __LINE__ );
             }
 
             // If the adjusted date is not equal to our initial start date then we have identified a holiday, provided the original date is not a weekend
@@ -414,7 +414,7 @@ namespace validation
     *  @param [in]		date	        date
     *  @return			returns a boolean to indicate if the date specified falls on a weekend
     */
-    bool tryMeDateIsWeekend( const LADate& date )
+    bool tryMeDateIsWeekend( const AQLDate& date )
     {
         VALID_EXCEPTION_START
 
@@ -444,7 +444,7 @@ namespace validation
     *  @param [in]		date	        date
     *  @return			returns a boolean to indicate if the date specified is a weekday
     */
-    bool tryMeDateIsWeekday( const LADate& date )
+    bool tryMeDateIsWeekday( const AQLDate& date )
     {
         VALID_EXCEPTION_START
 
@@ -471,10 +471,10 @@ namespace validation
     }
 
     /* @brief			validation interface for the meDateFuturesContract method
-    *  @param [in]		LAString        future's ticker
+    *  @param [in]		AQLString        future's ticker
     *  @return			returns a date representing the future's start date
     */
-    LADate tryMeDateFuturesContract( const LAString& futuresTicker )
+    AQLDate tryMeDateFuturesContract( const AQLString& futuresTicker )
     {
         VALID_EXCEPTION_START
 
@@ -487,7 +487,7 @@ namespace validation
         }
 
         // Get the futures start date for the specified futures contract
-        const LADate futureStartDate = etrading::futureStartDate( futuresTicker );
+        const AQLDate futureStartDate = etrading::futureStartDate( futuresTicker );
 
         if ( CreateDataFile::recordEnabled() )
         {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -9,24 +9,24 @@ namespace validation
 
     /* @brief		validation interface for the meSABRCalibrate method
     */
-    const LAString tryMeSABRCalibrate(const LAString& approxMethod,
-											const LAStringVector& calibFlg, 
-											const LAString& calibMethod, 
-											const LAString& curveSetID, 
-											const LAString& alphaID, 
-											const LAString& betaID,
-											const LAString& nuID, 
-											const LAString& rhoID, 
-											const LAString& convID,
-											const LAString& capConvID, 
-											const LAStringVector& swapVolID, 
-											const LAString& target, 
+    const AQLString tryMeSABRCalibrate(const AQLString& approxMethod,
+											const AQLStringVector& calibFlg, 
+											const AQLString& calibMethod, 
+											const AQLString& curveSetID, 
+											const AQLString& alphaID, 
+											const AQLString& betaID,
+											const AQLString& nuID, 
+											const AQLString& rhoID, 
+											const AQLString& convID,
+											const AQLString& capConvID, 
+											const AQLStringVector& swapVolID, 
+											const AQLString& target, 
 											const DoubleVector& weight, 
 											const IntVector& sgn, 
-											const LAString& forwardID, 
+											const AQLString& forwardID, 
 											const double forwardShiftValue,
-											const LAString& numeraireID,
-											const LAStringMatrix& curveMat,
+											const AQLString& numeraireID,
+											const AQLStringMatrix& curveMat,
 											const std::string& volType = "");
 
 }

@@ -15,13 +15,13 @@
 ////X///////////////////X///////////////////////////////X///////////////////
 
 
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "LADefinitions.h"
 #include "LAMarketData.h"
 
-class LADataInstance;
-class LAObject;
+class AQLDataInstance;
+class AQLObject;
 
 //===================== Struct Declare LAScenarioConfiguration==================================
 /*! 
@@ -42,18 +42,18 @@ struct MAScenarioParam
 	// destructor
 	~MAScenarioParam(void) {}
 
-	LAString ccy;                  // currency
-	LAString calcType;		       // calcType
-	LAString model;		           // model
-	LAString inputType;		       // market input type (for volatility or correlation)
-	LAString shiftType;            // shiftType
-	LAString basisType;            // basisType
-	LAString bumpDirection;        // bump direction
-	LAString bumpType;             // bump type
-	LAString serializeStatus;      // scerialize status
-	LAString serializeFile;        // scerialize file
-	LAString calendar;             // calendar
-	LAString vegaType;             // vega type
+	AQLString ccy;                  // currency
+	AQLString calcType;		       // calcType
+	AQLString model;		           // model
+	AQLString inputType;		       // market input type (for volatility or correlation)
+	AQLString shiftType;            // shiftType
+	AQLString basisType;            // basisType
+	AQLString bumpDirection;        // bump direction
+	AQLString bumpType;             // bump type
+	AQLString serializeStatus;      // scerialize status
+	AQLString serializeFile;        // scerialize file
+	AQLString calendar;             // calendar
+	AQLString vegaType;             // vega type
 	bool isParallel;               // parallel shift flag
 	bool isGrid;                   // grid shift flag
 	bool isLJ;                     // long jump flag
@@ -64,20 +64,20 @@ struct MAScenarioParam
 	bool isAdjustDF;               // adjust discount factor flag
 	bool isAudExtra;               // aud extra flag
 	bool isBusinessDayRoll;          // business day roll flag
-	LAStringVector paraTerm;          // parallel shift term
+	AQLStringVector paraTerm;          // parallel shift term
 	DoubleVector paraShiftVec;     // parallel shift vector
 	DoubleMatrix paraShiftMtx;     // parallel shift matrix
-	LAStringVector paraFile;        // file path for parameter(parallel)
-	LAStringVector gridTerm;         // grid shift term
+	AQLStringVector paraFile;        // file path for parameter(parallel)
+	AQLStringVector gridTerm;         // grid shift term
 	IntArray     gridGroupID;      // grid shift group id
 	DoubleVector gridShiftVec;     // grid shift vector
 	DoubleMatrix gridShiftMtx;     // grid shift matrix
-	LAStringMatrix gridFile;        // file path for parameter(grid)
+	AQLStringMatrix gridFile;        // file path for parameter(grid)
 	DoubleVector baseShiftVal;     // base shift val
 	DoubleVector baseShiftMtx;     // base shift matrix
-	LAString targetName;           // target market
-	LAString targetCurveType;           // target curve Type
-	LAStringVector refName;          // reference market data val
+	AQLString targetName;           // target market
+	AQLString targetCurveType;           // target curve Type
+	AQLStringVector refName;          // reference market data val
 	unsigned int maxIndex;         // max index for grid risk
 	DoubleVector extraParam;              // extra param
 	double extraBaseParam;			// extra base param
@@ -116,18 +116,18 @@ public:
 
 	//==============================================
 	// create risk scenario
-	virtual std::vector<LAObject *> createScenario(LADataInstance &dataInstance, const MAScenarioParam &param) const = 0;
+	virtual std::vector<AQLObject *> createScenario(AQLDataInstance &dataInstance, const MAScenarioParam &param) const = 0;
 protected:
 	// create risk scenario for foregin currency
-	virtual std::vector<LAObject *> createScenarioForeignYield(LADataInstance &dataInstance, const MAScenarioParam &param) const;
+	virtual std::vector<AQLObject *> createScenarioForeignYield(AQLDataInstance &dataInstance, const MAScenarioParam &param) const;
 	// create risk scenario for foregin currency
-	virtual std::vector<LAObject *> createScenarioCollateralYield(LADataInstance &dataInstance, const MAScenarioParam &param) const;
+	virtual std::vector<AQLObject *> createScenarioCollateralYield(AQLDataInstance &dataInstance, const MAScenarioParam &param) const;
 	// dataout curves
-	virtual void dataoutCurve(LADataInstance &dataInstance, const LAMathYieldCurvePro& yieldCurvePro, const std::vector<LAObject *>& ret) const;
+	virtual void dataoutCurve(AQLDataInstance &dataInstance, const LAMathYieldCurvePro& yieldCurvePro, const std::vector<AQLObject *>& ret) const;
 	// create scenario of extra Xccy basis curve for fxdelta
-	virtual std::vector<LAObject *> createScenarioExtraXccyCurveForFXDelta(LADataInstance &dataInstance, const MAScenarioParam &param) const;
+	virtual std::vector<AQLObject *> createScenarioExtraXccyCurveForFXDelta(AQLDataInstance &dataInstance, const MAScenarioParam &param) const;
 	// create scenario of extra FwdFX constant curve for fxdelta
-	virtual std::vector<LAObject *> createScenarioExtraFwdFXConstCurveForFXDelta(LADataInstance &dataInstance, const MAScenarioParam &param) const;
+	virtual std::vector<AQLObject *> createScenarioExtraFwdFXConstCurveForFXDelta(AQLDataInstance &dataInstance, const MAScenarioParam &param) const;
 };
 
 

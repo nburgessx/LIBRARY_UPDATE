@@ -23,26 +23,26 @@ namespace google_test
     {
         // Date Format 1: Excel Integer 43686 = 09-Aug-2019
         std::string dateFormat1 = "43686";
-        LADate expectedDate1( "20190809" );
-        LADate actualDate1 = etrading::toLADateFromREGEX( dateFormat1 );
+        AQLDate expectedDate1( "20190809" );
+        AQLDate actualDate1 = etrading::toLADateFromREGEX( dateFormat1 );
         EXPECT_EQ( expectedDate1, actualDate1 );
 
         // Date Format 2: YYYYMMDD
         std::string dateFormat2 = "20190809";
-        LADate expectedDate2( "20190809" );
-        LADate actualDate2 = etrading::toLADateFromREGEX( dateFormat2 );
+        AQLDate expectedDate2( "20190809" );
+        AQLDate actualDate2 = etrading::toLADateFromREGEX( dateFormat2 );
         EXPECT_EQ( expectedDate2, actualDate2 );
 
         // Date Format 3: YYYY-MM-DD
         std::string dateFormat3 = "2019-08-09";
-        LADate expectedDate3( "20190809" );
-        LADate actualDate3 = etrading::toLADateFromREGEX( dateFormat3 );
+        AQLDate expectedDate3( "20190809" );
+        AQLDate actualDate3 = etrading::toLADateFromREGEX( dateFormat3 );
         EXPECT_EQ( expectedDate3, actualDate3 );
 
         // Date Format 4: DD-MM-YYYY
         std::string dateFormat4 = "09-08-2019";
-        LADate expectedDate4( "20190809" );
-        LADate actualDate4 = etrading::toLADateFromREGEX( dateFormat4 );
+        AQLDate expectedDate4( "20190809" );
+        AQLDate actualDate4 = etrading::toLADateFromREGEX( dateFormat4 );
         EXPECT_EQ( expectedDate4, actualDate4 );
     }
 
@@ -77,8 +77,8 @@ namespace google_test
     {
         // 09-Aug-2019
         boost::gregorian::date gregorianDate( 2019, 8, 9 );
-        LADate expectedDate("20190809");
-        LADate actualDate = etrading::toLADateFromGregorianDate( gregorianDate );
+        AQLDate expectedDate("20190809");
+        AQLDate actualDate = etrading::toLADateFromGregorianDate( gregorianDate );
         EXPECT_EQ( expectedDate, actualDate );
     }
 
@@ -94,7 +94,7 @@ namespace google_test
     TEST( TestDateConverters, UNIT_toYYYYMMDDFromDate )
     {
         // 09-Aug-2019
-        LADate laDate("20190809");
+        AQLDate laDate("20190809");
         std::string expectedDate("20190809");
         std::string actualDate = etrading::toYYYYMMDDFromDate( laDate );
         EXPECT_EQ( expectedDate, actualDate );
@@ -103,7 +103,7 @@ namespace google_test
     TEST( TestDateConverters, UNIT_toGregorianDateFromLADate )
     {
         // 09-Aug-2019
-        LADate laDate("20190809");
+        AQLDate laDate("20190809");
         boost::gregorian::date expectedDate( 2019, 8, 9 );
         boost::gregorian::date actualDate = etrading::toGregorianDateFromLADate( laDate );
         EXPECT_EQ( expectedDate, actualDate );

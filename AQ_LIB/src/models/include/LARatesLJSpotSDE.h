@@ -24,8 +24,8 @@ class LARatesLJSpotSDE : public LARatesSpotSDE
 public:
 //  LIFECYCLE
 	// Default constructor
-	explicit LARatesLJSpotSDE(SDE_TYPE type, LAFunctionBase* pTransformer = 0, LAFunctionBase* pInvTransformer = 0,
-								LAFunctionBase* pAdjuster = 0);
+	explicit LARatesLJSpotSDE(SDE_TYPE type, AQLFunctionBase* pTransformer = 0, AQLFunctionBase* pInvTransformer = 0,
+								AQLFunctionBase* pAdjuster = 0);
 	//	Copy constructor
 	LARatesLJSpotSDE(const LARatesLJSpotSDE& v);
 	// Destructor
@@ -36,7 +36,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;

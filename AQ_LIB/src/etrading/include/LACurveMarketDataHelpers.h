@@ -4,15 +4,15 @@
 //
 
 #include <algorithm>
-#include "LADataInstance.h"
-#include "LACoreTemplateType.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLDataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataCalendar.h"
 #include "LADateHelpers.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLPriceDataDayCount.h"
 #include "LADefinitions.h"
 #include "LADefinitionsRisk.h"
 #include "LACoreDataService.h"
@@ -33,7 +33,7 @@ public:
 		
 	//==============================================
 	// reset marketdata use libor
-	static void resetMarketDataUsingLibor(CurveCalibrationData &curve, const LAString &ccy, const LAString *pCurveType = 0);
+	static void resetMarketDataUsingLibor(CurveCalibrationData &curve, const AQLString &ccy, const AQLString *pCurveType = 0);
 
 	//==============================================
 	// sort yield curve reference
@@ -41,7 +41,7 @@ public:
 
 	//==============================================
 	// restore swap rate 
-	static void restoreSwapRateFromLibor(CurveCalibrationData &curve, const std::map<LAString, double> &sRateMap, const LAString &ccy, const LAString *pCurveType = 0);
+	static void restoreSwapRateFromLibor(CurveCalibrationData &curve, const std::map<AQLString, double> &sRateMap, const AQLString &ccy, const AQLString *pCurveType = 0);
 
 private:
 

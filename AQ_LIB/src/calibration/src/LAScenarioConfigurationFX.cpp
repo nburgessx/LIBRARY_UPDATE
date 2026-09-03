@@ -18,18 +18,18 @@
 #endif
 
 
-#include "LADataInstance.h"
-#include "LACoreReferencePool.h"
-#include "LAObjectPool.h"
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataProcedure.h"
-#include "LADataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLCoreReferencePool.h"
+#include "AQLObjectPool.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataMultiReference.h"
 #include "LAScenarioConfigurationFX.h"
 #include "LAMarketData.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 using namespace std;
 
@@ -58,21 +58,21 @@ LAScenarioConfigurationFX::~LAScenarioConfigurationFX(void)
 	@param[in] param
 	@return vector<MBEnity *>
 */
-vector<LAObject *>
-LAScenarioConfigurationFX::createScenario(LADataInstance &dataInstance, const MAScenarioParam &param) const
+vector<AQLObject *>
+LAScenarioConfigurationFX::createScenario(AQLDataInstance &dataInstance, const MAScenarioParam &param) const
 {
 	// check
 	if (!param.isParallel || param.isGrid)
 	{
-		throw LACoreInvalidData("FX Scenario creator only supoort parallel shift", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("FX Scenario creator only supoort parallel shift", __FILE__, __LINE__);
 	}
 	// get target FX
-	LAString tFXName = param.targetName;
-	LAObjectPool &objPool = dataInstance.getObjectPool();
-	LAString name = tFXName + "_" + param.calcType;
+	AQLString tFXName = param.targetName;
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
+	AQLString name = tFXName + "_" + param.calcType;
 	LAMathFXEntity *fx = 0;
 	const LAMathFXEntity &t_fx = dynamic_cast<const LAMathFXEntity &>(objPool.getObject(tFXName, ENCHKTYPE_ISDEFINED).get());
-	LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
+	AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
 		// create fx
@@ -91,16 +91,16 @@ LAScenarioConfigurationFX::createScenario(LADataInstance &dataInstance, const MA
 	//set base shift value
 	if (spotSize != param.extraBaseParamVec.size())
 	{
-		throw LACoreInvalidData("Spot rate size and Base shift size is not same.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Spot rate size and Base shift size is not same.", __FILE__, __LINE__);
 	}
 	for (unsigned int i = 0; i < spotSize; ++i)
 		spotRates[i] += param.extraBaseParamVec[i];
 
 	if (spotSize != param.paraShiftVec.size())
 	{
-		throw LACoreInvalidData("Spot rate size and parallel shift size is not same.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Spot rate size and parallel shift size is not same.", __FILE__, __LINE__);
 	}
-	LAString shiftType = param.shiftType;
+	AQLString shiftType = param.shiftType;
 	shiftType.toUpper();
 	for (unsigned int i = 0; i < spotSize; ++i)
 	{
@@ -109,9 +109,9 @@ LAScenarioConfigurationFX::createScenario(LADataInstance &dataInstance, const MA
 		{
 			shiftVal *= spotRates[i];
 		}
-		spotRates[i] = LAMath::max(spotRates[i] + shiftVal, 0.0);
+		spotRates[i] = AQLMath::max(spotRates[i] + shiftVal, 0.0);
 		if (0.0 == spotRates[i])
-			throw LACoreInvalidData("Spot rate must be positive.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Spot rate must be positive.", __FILE__, __LINE__);
 	}
 	fx->getSpotRates() = spotRates;
 
@@ -120,10 +120,10 @@ LAScenarioConfigurationFX::createScenario(LADataInstance &dataInstance, const MA
 	///////////////////////
 	if (spotSize != param.refName.size())
 	{
-		throw LACoreInvalidData("Spot rate size and target curve size is not same.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Spot rate size and target curve size is not same.", __FILE__, __LINE__);
 	}
 
-	LAString curveRef;
+	AQLString curveRef;
 	for (unsigned int i = 0; i < spotSize; ++i)
 	{
 		curveRef += param.refName[i] + ":";
@@ -132,7 +132,7 @@ LAScenarioConfigurationFX::createScenario(LADataInstance &dataInstance, const MA
 	fx->getYieldCurves().convertFromString(curveRef);
 	dataInstance.getReferencePool().completeDependency();
 	
-	vector<LAObject *> ret(1, fx);
+	vector<AQLObject *> ret(1, fx);
 	return ret;
 
 }

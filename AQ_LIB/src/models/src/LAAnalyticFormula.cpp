@@ -4,27 +4,27 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LALinearInterpolation.h"
-#include "LAInterpolationBase.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLInterpolationBase.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAPriceCFGenUtility.h"
 
 #include "LAAnalyticFormula.h"
 #include "LABlackScholesCalc.h"
 #include "LAMathYieldCurve.h"
-#include "LADataProcedure.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLDataProcedure.h"
+#include "AQLPriceDataInterpolation.h"
 
 #include <map>
 using namespace std;
@@ -44,7 +44,7 @@ using namespace std;
 	//differencial of Normdist	
 	double AnalyticFormulae::diffNormdist(double z)
 	{
-		return 1.0/(LAMath::sqrt(2.0*LAMath::pi()) ) * LAMath::exp(-0.5*z*z);
+		return 1.0/(AQLMath::sqrt(2.0*AQLMath::pi()) ) * AQLMath::exp(-0.5*z*z);
 	}
 	//2nd differencial of Normdist
 	double AnalyticFormulae::diff2ndNormdist(double z)
@@ -55,7 +55,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = ( LAMath::log(x.S/x.K)+(x.rd-x.rf) * x.Td + 0.5*x.Vol*x.Vol*x.Te) / (x.Vol* LAMath::sqrt( x.Te) ) ; 	
+		double ret = ( AQLMath::log(x.S/x.K)+(x.rd-x.rf) * x.Td + 0.5*x.Vol*x.Vol*x.Te) / (x.Vol* AQLMath::sqrt( x.Te) ) ; 	
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -64,7 +64,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = GKd1(x) - x.Vol*LAMath::sqrt(x.Te);	
+		double ret = GKd1(x) - x.Vol*AQLMath::sqrt(x.Te);	
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -73,7 +73,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret= x.S*LAMath::exp(-x.rf * x.Td )*LADist::normsdist(GKd1(x)) - x.K*LAMath::exp(-x.rd * x.Td )*LADist::normsdist(GKd2(x));
+		double ret= x.S*AQLMath::exp(-x.rf * x.Td )*AQLDist::normsdist(GKd1(x)) - x.K*AQLMath::exp(-x.rd * x.Td )*AQLDist::normsdist(GKd2(x));
 		retchk;
 		//return ret;
 		return ret < 0.0 ? 0.0 : ret;
@@ -83,7 +83,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = GKpremCall(x) - x.S*LAMath::exp(-x.rf * x.Td) + x.K * LAMath::exp(-x.rd * x.Td);
+		double ret = GKpremCall(x) - x.S*AQLMath::exp(-x.rf * x.Td) + x.K * AQLMath::exp(-x.rd * x.Td);
 		retchk;
 		//return ret;
 		return ret < 0.0 ? 0.0 : ret;
@@ -93,7 +93,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = LAMath::exp(-x.rf * x.Td ) * LADist::normsdist(GKd1(x));
+		double ret = AQLMath::exp(-x.rf * x.Td ) * AQLDist::normsdist(GKd1(x));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -102,7 +102,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret =  GKdeltaCall(x) - LAMath::exp(-x.rf * x.Td);
+		double ret =  GKdeltaCall(x) - AQLMath::exp(-x.rf * x.Td);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -111,7 +111,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = ( LAMath::exp(-x.rf * x.Td ) * diffNormdist( GKd1(x) ) ) / ( x.S * x.Vol * LAMath::sqrt(x.Te) );
+		double ret = ( AQLMath::exp(-x.rf * x.Td ) * diffNormdist( GKd1(x) ) ) / ( x.S * x.Vol * AQLMath::sqrt(x.Te) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -201,7 +201,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = -GKvegaCall(x)/x.Vol/x.S/LAMath::sqrt(x.Te)*GKd2(x);
+		double ret = -GKvegaCall(x)/x.Vol/x.S/AQLMath::sqrt(x.Te)*GKd2(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -248,7 +248,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = ( LAMath::log(x.F/x.K) + 0.5*x.Vol*x.Vol*x.Te) / (x.Vol* LAMath::sqrt(x.Te) ) ; 	
+		double ret = ( AQLMath::log(x.F/x.K) + 0.5*x.Vol*x.Vol*x.Te) / (x.Vol* AQLMath::sqrt(x.Te) ) ; 	
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -257,7 +257,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = ( LAMath::log(x.F/x.K) - 0.5*x.Vol*x.Vol*x.Te) / (x.Vol * LAMath::sqrt(x.Te) );	
+		double ret = ( AQLMath::log(x.F/x.K) - 0.5*x.Vol*x.Vol*x.Te) / (x.Vol * AQLMath::sqrt(x.Te) );	
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -266,7 +266,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = x.Nu * (x.F * LADist::normsdist( BKd1(x) ) - x.K * LADist::normsdist(BKd2(x)) ); 
+		double ret = x.Nu * (x.F * AQLDist::normsdist( BKd1(x) ) - x.K * AQLDist::normsdist(BKd2(x)) ); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -275,7 +275,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = x.Nu * (- x.F * LADist::normsdist( -BKd1(x) ) + x.K * LADist::normsdist( -BKd2(x)) ); 
+		double ret = x.Nu * (- x.F * AQLDist::normsdist( -BKd1(x) ) + x.K * AQLDist::normsdist( -BKd2(x)) ); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -284,7 +284,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = x.Nu * (x.F * diffNormdist( BKd1(x) ) )*LAMath::sqrt(x.Te); 
+		double ret = x.Nu * (x.F * diffNormdist( BKd1(x) ) )*AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -297,7 +297,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = x.Nu * LADist::normsdist( BKd1(x) ); 
+		double ret = x.Nu * AQLDist::normsdist( BKd1(x) ); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -306,7 +306,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = -x.Nu * LADist::normsdist( -BKd1(x) ); 
+		double ret = -x.Nu * AQLDist::normsdist( -BKd1(x) ); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -315,7 +315,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = x.Nu / (x.F * x.Vol * LAMath::sqrt(x.Te)) * diffNormdist( BKd1(x) ); 
+		double ret = x.Nu / (x.F * x.Vol * AQLMath::sqrt(x.Te)) * diffNormdist( BKd1(x) ); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -330,7 +330,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = - x.rd * BKpremCall(param) + x.Nu * x.F * 0.5* x.Vol / LAMath::sqrt(x.Te) * diffNormdist( BKd1(x) ); 
+		double ret = - x.rd * BKpremCall(param) + x.Nu * x.F * 0.5* x.Vol / AQLMath::sqrt(x.Te) * diffNormdist( BKd1(x) ); 
 		ret *= -1;
 		retchk;
 		return ret;
@@ -340,7 +340,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = - x.rd * BKpremPut(param) + x.Nu * x.F * 0.5* x.Vol / LAMath::sqrt(x.Te) * diffNormdist( -BKd1(x) ); 
+		double ret = - x.rd * BKpremPut(param) + x.Nu * x.F * 0.5* x.Vol / AQLMath::sqrt(x.Te) * diffNormdist( -BKd1(x) ); 
 		ret *= -1;
 		retchk;
 		return ret;
@@ -350,7 +350,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = x.Nu * LAMath::max(x.F - x.K, 0.0);
+		double ret = x.Nu * AQLMath::max(x.F - x.K, 0.0);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -359,7 +359,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticBKParam& x = dynamic_cast<AnalyticBKParam& >(param);
-		double ret = x.Nu * LAMath::max(x.K - x.F, 0.0);
+		double ret = x.Nu * AQLMath::max(x.K - x.F, 0.0);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -377,7 +377,7 @@ using namespace std;
 		AnalyticBKParam y;
 		size_t N = x.F.size(); 
 
-		double ret = LAMath::max((x.F[0]-x.K)*x.Nu[0],0);
+		double ret = AQLMath::max((x.F[0]-x.K)*x.Nu[0],0);
 		for(size_t i=1; i<N;i++)
 			{
 				y.K		= x.K;
@@ -420,7 +420,7 @@ using namespace std;
 		AnalyticBKParam y;
 		size_t N = x.F.size(); 
 
-		double	ret	=	LAMath::max((x.K-x.F[0])*x.Nu[0],0);
+		double	ret	=	AQLMath::max((x.K-x.F[0])*x.Nu[0],0);
 		for(size_t i=1; i<N;i++)
 			{
 				y.K		= x.K;
@@ -472,7 +472,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = ( LAMath::log(x.S/x.K)+(x.rd-x.rf) * x.Td + 0.5*x.Vol*x.Vol*x.Te) / (x.Vol* LAMath::sqrt(x.Te) );
+		double ret = ( AQLMath::log(x.S/x.K)+(x.rd-x.rf) * x.Td + 0.5*x.Vol*x.Vol*x.Te) / (x.Vol* AQLMath::sqrt(x.Te) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -481,7 +481,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = DGd1(x) - x.Vol*LAMath::sqrt(x.Te);
+		double ret = DGd1(x) - x.Vol*AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -491,7 +491,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = x.Dig * LAMath::exp(-x.rd * x.Td ) * LADist::normsdist(DGd2(x)); 
+		double ret = x.Dig * AQLMath::exp(-x.rd * x.Td ) * AQLDist::normsdist(DGd2(x)); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -500,7 +500,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = x.Dig * LAMath::exp(-x.rd * x.Td ) * LADist::normsdist(-DGd2(x)); 
+		double ret = x.Dig * AQLMath::exp(-x.rd * x.Td ) * AQLDist::normsdist(-DGd2(x)); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -509,7 +509,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret =  ( x.Dig * LAMath::exp(-x.rd * x.Td )* diffNormdist(DGd2(x)) ) / ( x.S * x.Vol * LAMath::sqrt(x.Te) );  
+		double ret =  ( x.Dig * AQLMath::exp(-x.rd * x.Td )* diffNormdist(DGd2(x)) ) / ( x.S * x.Vol * AQLMath::sqrt(x.Te) );  
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -527,7 +527,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = x.Dig * LAMath::exp(-x.rd * x.Td ) / ( x.Vol * x.Vol * x.S * x.S * sqrt(x.Te) )  *  (diff2ndNormdist(DGd2(x)) - x.Vol * diffNormdist(DGd2(x)) );
+		double ret = x.Dig * AQLMath::exp(-x.rd * x.Td ) / ( x.Vol * x.Vol * x.S * x.S * sqrt(x.Te) )  *  (diff2ndNormdist(DGd2(x)) - x.Vol * diffNormdist(DGd2(x)) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -545,8 +545,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = - x.Dig * ( x.rd * LAMath::exp(-x.rd * x.Td ) * LADist::normsdist(DGd2(x)) + LAMath::exp(-x.rd * x.Td ) * diffNormdist(DGd2(x)) * 
-			(  (x.rd-x.rf- 0.5*x.Vol*x.Vol)/(2*x.Vol*LAMath::sqrt(x.Te)) - LAMath::log(x.S/x.K)/(2*x.Vol*LAMath::sqrt(x.Te)*x.Te) )
+		double ret = - x.Dig * ( x.rd * AQLMath::exp(-x.rd * x.Td ) * AQLDist::normsdist(DGd2(x)) + AQLMath::exp(-x.rd * x.Td ) * diffNormdist(DGd2(x)) * 
+			(  (x.rd-x.rf- 0.5*x.Vol*x.Vol)/(2*x.Vol*AQLMath::sqrt(x.Te)) - AQLMath::log(x.S/x.K)/(2*x.Vol*AQLMath::sqrt(x.Te)*x.Te) )
 						);
 		retchk;
 		return ret;
@@ -556,7 +556,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = - x.Dig * x.rd * LAMath::exp(- x.rd * x.Td ) - DGthetaCall(x);
+		double ret = - x.Dig * x.rd * AQLMath::exp(- x.rd * x.Td ) - DGthetaCall(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -565,7 +565,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = -  x.Dig * LAMath::exp(- x.rd * x.Td ) * diffNormdist( DGd2(x) ) * DGd1(x)  / x.Vol ; 	
+		double ret = -  x.Dig * AQLMath::exp(- x.rd * x.Td ) * diffNormdist( DGd2(x) ) * DGd1(x)  / x.Vol ; 	
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -582,8 +582,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = x.Dig * ( -x.Td * LAMath::exp(- x.rd * x.Td ) * LADist::normsdist(DGd2(x)) 
-			+ ( sqrt(x.Te)*LAMath::exp(-x.rd*x.Td) * diffNormdist(DGd2(x)) ) / x.Vol ); 
+		double ret = x.Dig * ( -x.Td * AQLMath::exp(- x.rd * x.Td ) * AQLDist::normsdist(DGd2(x)) 
+			+ ( sqrt(x.Te)*AQLMath::exp(-x.rd*x.Td) * diffNormdist(DGd2(x)) ) / x.Vol ); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -592,7 +592,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = - x.Dig * x.Td * LAMath::exp(- x.rd * x.Td ) - DGrhoCall(x);
+		double ret = - x.Dig * x.Td * AQLMath::exp(- x.rd * x.Td ) - DGrhoCall(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -601,7 +601,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDGParam& x = dynamic_cast<AnalyticDGParam& >(param);
-		double ret = - x.Dig * LAMath::exp(- x.rd * x.Td ) * DGd1(x) / x.Vol * diffNormdist(DGd2(x));
+		double ret = - x.Dig * AQLMath::exp(- x.rd * x.Td ) * DGd1(x) / x.Vol * diffNormdist(DGd2(x));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -642,9 +642,9 @@ using namespace std;
 		double ret = 0.0;
 		if (x.L > x.S)
 		{
-			ret =  LADist::normsdist((LAMath::log(keyval) -(x.rd-x.rf)*x.Td)/x.Vol/LAMath::sqrt(x.Te))
-			- LAMath::pow(keyval,2*(x.rd-x.rf)/x.Vol/x.Vol) 
-				* LADist::normsdist(- (LAMath::log(keyval) +(x.rd-x.rf)*x.Td)/x.Vol/LAMath::sqrt(x.Te));
+			ret =  AQLDist::normsdist((AQLMath::log(keyval) -(x.rd-x.rf)*x.Td)/x.Vol/AQLMath::sqrt(x.Te))
+			- AQLMath::pow(keyval,2*(x.rd-x.rf)/x.Vol/x.Vol) 
+				* AQLDist::normsdist(- (AQLMath::log(keyval) +(x.rd-x.rf)*x.Td)/x.Vol/AQLMath::sqrt(x.Te));
 		}
 		else
 		{
@@ -663,9 +663,9 @@ using namespace std;
 		double ret = 0.0;
 		if (x.L < x.S)
 		{
-			ret =  LADist::normsdist((LAMath::log(keyval) -(x.rd-x.rf)*x.Td)/x.Vol/LAMath::sqrt(x.Te))
-			- LAMath::pow(keyval,2*(x.rd-x.rf)/x.Vol/x.Vol) 
-				* LADist::normsdist(- (LAMath::log(keyval) +(x.rd-x.rf)*x.Td)/x.Vol/LAMath::sqrt(x.Te));
+			ret =  AQLDist::normsdist((AQLMath::log(keyval) -(x.rd-x.rf)*x.Td)/x.Vol/AQLMath::sqrt(x.Te))
+			- AQLMath::pow(keyval,2*(x.rd-x.rf)/x.Vol/x.Vol) 
+				* AQLDist::normsdist(- (AQLMath::log(keyval) +(x.rd-x.rf)*x.Td)/x.Vol/AQLMath::sqrt(x.Te));
 		}
 		else
 		{
@@ -703,7 +703,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = LAMath::sqrt( SBmu2(x)*SBmu2(x) + 2.0 * x.rd * x.Vol * x.Vol);
+		double ret = AQLMath::sqrt( SBmu2(x)*SBmu2(x) + 2.0 * x.rd * x.Vol * x.Vol);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -730,7 +730,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = LAMath::log(x.S/x.K)/(x.Vol*LAMath::sqrt(x.Te)) + SBnu2(x) * x.Vol * LAMath::sqrt(x.Te); 
+		double ret = AQLMath::log(x.S/x.K)/(x.Vol*AQLMath::sqrt(x.Te)) + SBnu2(x) * x.Vol * AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -739,7 +739,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = LAMath::log(x.L*x.L/x.S/x.K)/(x.Vol*LAMath::sqrt(x.Te)) + SBnu2(x) * x.Vol * LAMath::sqrt(x.Te);
+		double ret = AQLMath::log(x.L*x.L/x.S/x.K)/(x.Vol*AQLMath::sqrt(x.Te)) + SBnu2(x) * x.Vol * AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -748,7 +748,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = LAMath::log(x.S/x.L)/(x.Vol*LAMath::sqrt(x.Te)) + SBnu2(x) * x.Vol * LAMath::sqrt(x.Te); 
+		double ret = AQLMath::log(x.S/x.L)/(x.Vol*AQLMath::sqrt(x.Te)) + SBnu2(x) * x.Vol * AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -757,7 +757,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = LAMath::log(x.L/x.S)/(x.Vol*LAMath::sqrt(x.Te)) + SBnu2(x) * x.Vol * LAMath::sqrt(x.Te); 
+		double ret = AQLMath::log(x.L/x.S)/(x.Vol*AQLMath::sqrt(x.Te)) + SBnu2(x) * x.Vol * AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -769,11 +769,11 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = LAMath::log(x.L/x.S)/(x.Vol*LAMath::sqrt(x.Te)) + SBmu3(x) / x.Vol * LAMath::sqrt(x.Te); 
+			ret = AQLMath::log(x.L/x.S)/(x.Vol*AQLMath::sqrt(x.Te)) + SBmu3(x) / x.Vol * AQLMath::sqrt(x.Te); 
 		}
 		else if(!x.ReTime)
 		{
-			ret = LAMath::log(x.L/x.S)/(x.Vol*LAMath::sqrt(x.Te)) + SBmu2(x) / x.Vol * LAMath::sqrt(x.Te);
+			ret = AQLMath::log(x.L/x.S)/(x.Vol*AQLMath::sqrt(x.Te)) + SBmu2(x) / x.Vol * AQLMath::sqrt(x.Te);
 		}
 		retchk;
 		return ret;
@@ -784,7 +784,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = 1/x.S/x.Vol/LAMath::sqrt(x.Te); 
+		double ret = 1/x.S/x.Vol/AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -793,7 +793,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =  - 1/x.S/x.Vol/LAMath::sqrt(x.Te);
+		double ret =  - 1/x.S/x.Vol/AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -802,7 +802,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =  1/x.S/x.Vol/LAMath::sqrt(x.Te);
+		double ret =  1/x.S/x.Vol/AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -811,7 +811,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = - 1.0/x.S/x.Vol/LAMath::sqrt(x.Te);
+		double ret = - 1.0/x.S/x.Vol/AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -823,11 +823,11 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret =  - 1/x.S/x.Vol/LAMath::sqrt(x.Te);
+			ret =  - 1/x.S/x.Vol/AQLMath::sqrt(x.Te);
 		}
 		else if(!x.ReTime)
 		{
-			ret =  - 1/x.S/x.Vol/LAMath::sqrt(x.Te);
+			ret =  - 1/x.S/x.Vol/AQLMath::sqrt(x.Te);
 		}
 		retchk;
 		return ret;
@@ -839,7 +839,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = - 1/x.S/x.S/x.Vol/LAMath::sqrt(x.Te); 
+		double ret = - 1/x.S/x.S/x.Vol/AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -848,7 +848,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =   1/x.S/x.S/x.Vol/LAMath::sqrt(x.Te);
+		double ret =   1/x.S/x.S/x.Vol/AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -857,7 +857,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =  - 1/x.S/x.S/x.Vol/LAMath::sqrt(x.Te);
+		double ret =  - 1/x.S/x.S/x.Vol/AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -866,7 +866,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =  1/x.S/x.S/x.Vol/LAMath::sqrt(x.Te);
+		double ret =  1/x.S/x.S/x.Vol/AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -878,11 +878,11 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret =  1/x.S/x.S/x.Vol/LAMath::sqrt(x.Te);
+			ret =  1/x.S/x.S/x.Vol/AQLMath::sqrt(x.Te);
 		}
 		else if(!x.ReTime)
 		{
-			ret =   1/x.S/x.S/x.Vol/LAMath::sqrt(x.Te);
+			ret =   1/x.S/x.S/x.Vol/AQLMath::sqrt(x.Te);
 		}
 		retchk;
 		return ret;
@@ -902,7 +902,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.Vol*(-SBmu2(x) + 2.0*x.rd)/LAMath::sqrt( SBmu2(x)*SBmu2(x) + 2.0 * x.rd * x.Vol * x.Vol);
+		double ret = x.Vol*(-SBmu2(x) + 2.0*x.rd)/AQLMath::sqrt( SBmu2(x)*SBmu2(x) + 2.0 * x.rd * x.Vol * x.Vol);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -929,7 +929,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -LAMath::log(x.S/x.K)/(x.Vol*x.Vol*LAMath::sqrt(x.Te)) + SBnu2(x) * LAMath::sqrt(x.Te) + x.Vol * LAMath::sqrt(x.Te) * SBvnu2(x) ; 
+		double ret = -AQLMath::log(x.S/x.K)/(x.Vol*x.Vol*AQLMath::sqrt(x.Te)) + SBnu2(x) * AQLMath::sqrt(x.Te) + x.Vol * AQLMath::sqrt(x.Te) * SBvnu2(x) ; 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -938,7 +938,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -LAMath::log(x.L*x.L/x.S/x.K)/(x.Vol*LAMath::sqrt(x.Te)) + SBnu2(x) * LAMath::sqrt(x.Te) + x.Vol * LAMath::sqrt(x.Te) * SBvnu2(x) ; 
+		double ret = -AQLMath::log(x.L*x.L/x.S/x.K)/(x.Vol*AQLMath::sqrt(x.Te)) + SBnu2(x) * AQLMath::sqrt(x.Te) + x.Vol * AQLMath::sqrt(x.Te) * SBvnu2(x) ; 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -947,7 +947,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -LAMath::log(x.S/x.L)/(x.Vol*x.Vol*LAMath::sqrt(x.Te)) + SBnu2(x) * LAMath::sqrt(x.Te) + x.Vol * LAMath::sqrt(x.Te) * SBvnu2(x) ; 
+		double ret = -AQLMath::log(x.S/x.L)/(x.Vol*x.Vol*AQLMath::sqrt(x.Te)) + SBnu2(x) * AQLMath::sqrt(x.Te) + x.Vol * AQLMath::sqrt(x.Te) * SBvnu2(x) ; 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -956,7 +956,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -LAMath::log(x.L/x.S)/(x.Vol*x.Vol*LAMath::sqrt(x.Te)) + SBnu2(x) * LAMath::sqrt(x.Te) + x.Vol * LAMath::sqrt(x.Te) * SBvnu2(x) ; 
+		double ret = -AQLMath::log(x.L/x.S)/(x.Vol*x.Vol*AQLMath::sqrt(x.Te)) + SBnu2(x) * AQLMath::sqrt(x.Te) + x.Vol * AQLMath::sqrt(x.Te) * SBvnu2(x) ; 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -968,13 +968,13 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = -LAMath::log(x.L/x.S)/(x.Vol*x.Vol*LAMath::sqrt(x.Te)) 
-					- SBmu3(x) / x.Vol/x.Vol * LAMath::sqrt(x.Te) + SBvmu3(x) * LAMath::sqrt(x.Te) /x.Vol; 
+			ret = -AQLMath::log(x.L/x.S)/(x.Vol*x.Vol*AQLMath::sqrt(x.Te)) 
+					- SBmu3(x) / x.Vol/x.Vol * AQLMath::sqrt(x.Te) + SBvmu3(x) * AQLMath::sqrt(x.Te) /x.Vol; 
 		}
 		else if(!x.ReTime)
 		{
-			ret = -LAMath::log(x.L/x.S)/(x.Vol*x.Vol*LAMath::sqrt(x.Te)) 
-					- SBmu2(x) / x.Vol/x.Vol * LAMath::sqrt(x.Te) + SBvmu2(x) * LAMath::sqrt(x.Te) /x.Vol;
+			ret = -AQLMath::log(x.L/x.S)/(x.Vol*x.Vol*AQLMath::sqrt(x.Te)) 
+					- SBmu2(x) / x.Vol/x.Vol * AQLMath::sqrt(x.Te) + SBvmu2(x) * AQLMath::sqrt(x.Te) /x.Vol;
 		}
 		retchk;
 		return ret;
@@ -994,7 +994,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = SBmu2(x) / LAMath::sqrt( SBmu2(x)*SBmu2(x) + 2.0 * x.rd * x.Vol * x.Vol) * SBtmu2(x);
+		double ret = SBmu2(x) / AQLMath::sqrt( SBmu2(x)*SBmu2(x) + 2.0 * x.rd * x.Vol * x.Vol) * SBtmu2(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1021,8 +1021,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -LAMath::log(x.S/x.K)/(2.0*x.Vol*x.Te*LAMath::sqrt(x.Te)) 
-						+ SBtnu2(x) * x.Vol * LAMath::sqrt(x.Te) + SBnu2(x) * x.Vol /2.0/LAMath::sqrt(x.Te); 
+		double ret = -AQLMath::log(x.S/x.K)/(2.0*x.Vol*x.Te*AQLMath::sqrt(x.Te)) 
+						+ SBtnu2(x) * x.Vol * AQLMath::sqrt(x.Te) + SBnu2(x) * x.Vol /2.0/AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1031,8 +1031,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -LAMath::log(x.L*x.L/x.S/x.K)/(2.0*x.Vol*x.Te*LAMath::sqrt(x.Te))
-					+ SBtnu2(x) * x.Vol * LAMath::sqrt(x.Te) + SBnu2(x) * x.Vol /2.0/LAMath::sqrt(x.Te);
+		double ret = -AQLMath::log(x.L*x.L/x.S/x.K)/(2.0*x.Vol*x.Te*AQLMath::sqrt(x.Te))
+					+ SBtnu2(x) * x.Vol * AQLMath::sqrt(x.Te) + SBnu2(x) * x.Vol /2.0/AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1041,8 +1041,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -LAMath::log(x.S/x.L)/2.0/x.Vol/x.Te/LAMath::sqrt(x.Te) 
-					+SBtnu2(x)*x.Vol*LAMath::sqrt(x.Te) + SBnu2(x) * x.Vol /2.0/ LAMath::sqrt(x.Te); 
+		double ret = -AQLMath::log(x.S/x.L)/2.0/x.Vol/x.Te/AQLMath::sqrt(x.Te) 
+					+SBtnu2(x)*x.Vol*AQLMath::sqrt(x.Te) + SBnu2(x) * x.Vol /2.0/ AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1051,8 +1051,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -LAMath::log(x.L/x.S)/2.0/x.Vol/x.Te/LAMath::sqrt(x.Te) 
-					+ SBtnu2(x) * x.Vol * LAMath::sqrt(x.Te) + SBnu2(x) * x.Vol /2.0/LAMath::sqrt(x.Te); 
+		double ret = -AQLMath::log(x.L/x.S)/2.0/x.Vol/x.Te/AQLMath::sqrt(x.Te) 
+					+ SBtnu2(x) * x.Vol * AQLMath::sqrt(x.Te) + SBnu2(x) * x.Vol /2.0/AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1064,13 +1064,13 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = -LAMath::log(x.L/x.S)/(2.0*x.Vol*x.Te*LAMath::sqrt(x.Te)) 
-					+ SBtmu3(x) / x.Vol * LAMath::sqrt(x.Te)+ SBmu3(x) /2.0 / x.Vol / LAMath::sqrt(x.Te); 
+			ret = -AQLMath::log(x.L/x.S)/(2.0*x.Vol*x.Te*AQLMath::sqrt(x.Te)) 
+					+ SBtmu3(x) / x.Vol * AQLMath::sqrt(x.Te)+ SBmu3(x) /2.0 / x.Vol / AQLMath::sqrt(x.Te); 
 		}
 		else if(!x.ReTime)
 		{
-			ret = -LAMath::log(x.L/x.S)/(2.0*x.Vol*x.Te*LAMath::sqrt(x.Te)) 
-					+ SBtmu2(x) / x.Vol * LAMath::sqrt(x.Te)+ SBmu2(x) /2.0 / x.Vol / LAMath::sqrt(x.Te);
+			ret = -AQLMath::log(x.L/x.S)/(2.0*x.Vol*x.Te*AQLMath::sqrt(x.Te)) 
+					+ SBtmu2(x) / x.Vol * AQLMath::sqrt(x.Te)+ SBmu2(x) /2.0 / x.Vol / AQLMath::sqrt(x.Te);
 		}
 		retchk;
 		return ret;
@@ -1100,7 +1100,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = 1/2.0/LAMath::sqrt( SBmu2(x)*SBmu2(x) + 2.0 * x.rd * x.Vol * x.Vol)*( 2.0*SBmu2(x)*x.Td/x.Te + 2.0*x.Vol*x.Vol );
+		double ret = 1/2.0/AQLMath::sqrt( SBmu2(x)*SBmu2(x) + 2.0 * x.rd * x.Vol * x.Vol)*( 2.0*SBmu2(x)*x.Td/x.Te + 2.0*x.Vol*x.Vol );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1127,7 +1127,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = SBrnu2(x) * x.Vol * LAMath::sqrt(x.Te); 
+		double ret = SBrnu2(x) * x.Vol * AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1136,7 +1136,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =  SBrnu2(x) * x.Vol * LAMath::sqrt(x.Te);
+		double ret =  SBrnu2(x) * x.Vol * AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1145,7 +1145,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = SBrnu2(x) * x.Vol * LAMath::sqrt(x.Te); 
+		double ret = SBrnu2(x) * x.Vol * AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1154,7 +1154,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = SBrnu2(x) * x.Vol * LAMath::sqrt(x.Te); 
+		double ret = SBrnu2(x) * x.Vol * AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1166,11 +1166,11 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = SBrmu3(x) / x.Vol * LAMath::sqrt(x.Te); 
+			ret = SBrmu3(x) / x.Vol * AQLMath::sqrt(x.Te); 
 		}
 		else if(!x.ReTime)
 		{
-			ret = SBrmu2(x) / x.Vol * LAMath::sqrt(x.Te);
+			ret = SBrmu2(x) / x.Vol * AQLMath::sqrt(x.Te);
 		}
 		retchk;
 		return ret;
@@ -1199,7 +1199,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -1/LAMath::sqrt( SBmu2(x)*SBmu2(x) + 2.0 * x.rd * x.Vol * x.Vol)*SBmu2(x)*x.Td/x.Te ;
+		double ret = -1/AQLMath::sqrt( SBmu2(x)*SBmu2(x) + 2.0 * x.rd * x.Vol * x.Vol)*SBmu2(x)*x.Td/x.Te ;
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1226,7 +1226,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = SBpnu2(x) * x.Vol * LAMath::sqrt(x.Te); 
+		double ret = SBpnu2(x) * x.Vol * AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1235,7 +1235,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = SBpnu2(x) * x.Vol * LAMath::sqrt(x.Te);
+		double ret = SBpnu2(x) * x.Vol * AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1245,7 +1245,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =  SBpnu2(x) * x.Vol * LAMath::sqrt(x.Te); 
+		double ret =  SBpnu2(x) * x.Vol * AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1254,7 +1254,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = SBpnu2(x) * x.Vol * LAMath::sqrt(x.Te); 
+		double ret = SBpnu2(x) * x.Vol * AQLMath::sqrt(x.Te); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1266,11 +1266,11 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = SBpmu3(x) / x.Vol * LAMath::sqrt(x.Te); 
+			ret = SBpmu3(x) / x.Vol * AQLMath::sqrt(x.Te); 
 		}
 		else if(!x.ReTime)
 		{
-			ret = SBpmu2(x) / x.Vol * LAMath::sqrt(x.Te);
+			ret = SBpmu2(x) / x.Vol * AQLMath::sqrt(x.Te);
 		}
 		retchk;
 		return ret;
@@ -1282,7 +1282,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.cp*LAMath::exp(-x.rf*x.Td)*LADist::normsdist(x.cp*SBx1(x)) ;
+		double ret = x.cp*AQLMath::exp(-x.rf*x.Td)*AQLDist::normsdist(x.cp*SBx1(x)) ;
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1291,9 +1291,9 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.cp*LAMath::exp(-x.rf*x.Td)*LADist::normsdist(x.cp*SBy1(x))
-			+ x.S * LAMath::exp(- x.rf * x.Td ) * diffNormdist(x.cp * SBy1(x) ) * SBdy1(x)
-			- x.K * LAMath::exp(- x.rd * x.Td ) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * LAMath::sqrt(x.Te) ) * SBdy1(x) ;
+		double ret = x.cp*AQLMath::exp(-x.rf*x.Td)*AQLDist::normsdist(x.cp*SBy1(x))
+			+ x.S * AQLMath::exp(- x.rf * x.Td ) * diffNormdist(x.cp * SBy1(x) ) * SBdy1(x)
+			- x.K * AQLMath::exp(- x.rd * x.Td ) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * AQLMath::sqrt(x.Te) ) * SBdy1(x) ;
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1302,8 +1302,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = (1.0-2.0*SBnu2(x))*x.cp*LAMath::exp(-x.rf*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu2(x)) * LADist::normsdist(x.du*SBx2(x))
-			+2.0 * SBnu1(x) * x.cp*x.K/x.S * LAMath::exp(-x.rd*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu1(x)) * LADist::normsdist( x.du*SBx2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) ) ;
+		double ret = (1.0-2.0*SBnu2(x))*x.cp*AQLMath::exp(-x.rf*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu2(x)) * AQLDist::normsdist(x.du*SBx2(x))
+			+2.0 * SBnu1(x) * x.cp*x.K/x.S * AQLMath::exp(-x.rd*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * AQLDist::normsdist( x.du*SBx2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) ) ;
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1312,10 +1312,10 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = (1.0-2.0*SBnu2(x) ) * x.cp * LAMath::exp(-x.rf*x.Td) * LAMath::pow(x.L/x.S, 2.0*SBnu2(x)) * LADist::normsdist(x.du*SBy2(x))
-			+2.0 * SBnu1(x) * x.cp*x.K/x.S * LAMath::exp(-x.rd*x.Td) * LAMath::pow(x.L/x.S, 2.0*SBnu1(x)) * LADist::normsdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) )
-			+ x.cp * x.du * x.S * LAMath::exp(-x.rf * x.Td) * LAMath::pow(x.L/x.S, 2.0 * SBnu2(x) ) * diffNormdist( x.du * SBy2(x) ) * SBdy2(x) 
-			- x.cp * x.du * x.K * LAMath::exp(-x.rd * x.Td) * LAMath::pow(x.L/x.S, 2.0 * SBnu1(x) ) * diffNormdist( x.du * SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te) ) * SBdy2(x) ;
+		double ret = (1.0-2.0*SBnu2(x) ) * x.cp * AQLMath::exp(-x.rf*x.Td) * AQLMath::pow(x.L/x.S, 2.0*SBnu2(x)) * AQLDist::normsdist(x.du*SBy2(x))
+			+2.0 * SBnu1(x) * x.cp*x.K/x.S * AQLMath::exp(-x.rd*x.Td) * AQLMath::pow(x.L/x.S, 2.0*SBnu1(x)) * AQLDist::normsdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) )
+			+ x.cp * x.du * x.S * AQLMath::exp(-x.rf * x.Td) * AQLMath::pow(x.L/x.S, 2.0 * SBnu2(x) ) * diffNormdist( x.du * SBy2(x) ) * SBdy2(x) 
+			- x.cp * x.du * x.K * AQLMath::exp(-x.rd * x.Td) * AQLMath::pow(x.L/x.S, 2.0 * SBnu1(x) ) * diffNormdist( x.du * SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te) ) * SBdy2(x) ;
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1324,9 +1324,9 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.R*LAMath::exp(-x.rd*x.Td)* ( x.du*diffNormdist(x.du*SBy1(x)- x.du*x.Vol*LAMath::sqrt(x.Te))*SBdy1(x) 
-					 - LAMath::pow(x.L/x.S, 2*SBnu1(x)) *x.du* diffNormdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) )*SBdy2(x) )
-					 +x.R*LAMath::exp(-x.rd*x.Td)*2.0*SBnu1(x)/x.S*LAMath::pow(x.L/x.S, 2*SBnu1(x)) * LADist::normsdist(x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te)) ;
+		double ret = x.R*AQLMath::exp(-x.rd*x.Td)* ( x.du*diffNormdist(x.du*SBy1(x)- x.du*x.Vol*AQLMath::sqrt(x.Te))*SBdy1(x) 
+					 - AQLMath::pow(x.L/x.S, 2*SBnu1(x)) *x.du* diffNormdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) )*SBdy2(x) )
+					 +x.R*AQLMath::exp(-x.rd*x.Td)*2.0*SBnu1(x)/x.S*AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * AQLDist::normsdist(x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te)) ;
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1338,16 +1338,16 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = x.du*x.R * ( LAMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * SBdz(x)
-								+LAMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) -2* x.du * SBmu3(x)/x.Vol * LAMath::sqrt(x.Te) )*SBdz(x))	
-				-x.R*((SBmu2(x)+SBmu3(x))/x.Vol/x.Vol/x.S*LAMath::pow(x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * LADist::normsdist(x.du * SBz(x))
-						+(SBmu2(x)-SBmu3(x))/x.Vol/x.Vol/x.S*LAMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * LADist::normsdist(x.du * SBz(x)-2* x.du * SBmu3(x)/x.Vol * LAMath::sqrt(x.Te) ) ) ;
+			ret = x.du*x.R * ( AQLMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * SBdz(x)
+								+AQLMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) -2* x.du * SBmu3(x)/x.Vol * AQLMath::sqrt(x.Te) )*SBdz(x))	
+				-x.R*((SBmu2(x)+SBmu3(x))/x.Vol/x.Vol/x.S*AQLMath::pow(x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * AQLDist::normsdist(x.du * SBz(x))
+						+(SBmu2(x)-SBmu3(x))/x.Vol/x.Vol/x.S*AQLMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * AQLDist::normsdist(x.du * SBz(x)-2* x.du * SBmu3(x)/x.Vol * AQLMath::sqrt(x.Te) ) ) ;
 		}
 		else if(!x.ReTime)
 		{
-			ret = x.du*x.R * ( LAMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * SBdz(x)
-								+diffNormdist(x.du * SBz(x) -2* x.du * SBmu2(x)/x.Vol * LAMath::sqrt(x.Te) )*SBdz(x))	
-				-x.R*2.0*SBmu2(x)/x.Vol/x.Vol/x.S*LAMath::pow(x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * LADist::normsdist(x.du * SBz(x)) ;
+			ret = x.du*x.R * ( AQLMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * SBdz(x)
+								+diffNormdist(x.du * SBz(x) -2* x.du * SBmu2(x)/x.Vol * AQLMath::sqrt(x.Te) )*SBdz(x))	
+				-x.R*2.0*SBmu2(x)/x.Vol/x.Vol/x.S*AQLMath::pow(x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * AQLDist::normsdist(x.du * SBz(x)) ;
 		}
 		retchk;
 		return ret;
@@ -1358,7 +1358,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =  LAMath::exp(-x.rf*x.Td)*diffNormdist(x.cp*SBx1(x))*SBdx1(x) ;
+		double ret =  AQLMath::exp(-x.rf*x.Td)*diffNormdist(x.cp*SBx1(x))*SBdx1(x) ;
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1367,11 +1367,11 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = 2.0 * LAMath::exp(-x.rf*x.Td)*diffNormdist(x.cp*SBy1(x))*SBdy1(x)
-			- x.S * LAMath::exp(-x.rf * x.Td ) * diffNormdist(x.cp * SBy1(x)) * SBy1(x) * SBdy1(x) * SBdy1(x) 
-			+ x.S * LAMath::exp(-x.rf*x.Td) * diffNormdist(x.cp * SBy1(x) )*SBddy1(x)
-			+ x.K * LAMath::exp(-x.rd * x.Td) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * LAMath::sqrt(x.Te) ) * (SBy1(x) - x.Vol * LAMath::sqrt(x.Te) ) *SBdy1(x) * SBdy1(x)
-			- x.K * LAMath::exp(-x.rd * x.Td) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * LAMath::sqrt(x.Te) ) * SBddy1(x);
+		double ret = 2.0 * AQLMath::exp(-x.rf*x.Td)*diffNormdist(x.cp*SBy1(x))*SBdy1(x)
+			- x.S * AQLMath::exp(-x.rf * x.Td ) * diffNormdist(x.cp * SBy1(x)) * SBy1(x) * SBdy1(x) * SBdy1(x) 
+			+ x.S * AQLMath::exp(-x.rf*x.Td) * diffNormdist(x.cp * SBy1(x) )*SBddy1(x)
+			+ x.K * AQLMath::exp(-x.rd * x.Td) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * AQLMath::sqrt(x.Te) ) * (SBy1(x) - x.Vol * AQLMath::sqrt(x.Te) ) *SBdy1(x) * SBdy1(x)
+			- x.K * AQLMath::exp(-x.rd * x.Td) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * AQLMath::sqrt(x.Te) ) * SBddy1(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1380,10 +1380,10 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = 2.0* SBnu2(x) * ( 2.0 * SBnu2(x) - 1 ) * x.cp*LAMath::exp(-x.rf*x.Td)* LAMath::pow(x.L, 2*SBnu2(x)) * LAMath::pow(1/x.S, 2*SBnu2(x)+1) * LADist::normsdist(x.du*SBx2(x))
-					- ( 2.0* SBnu2(x) - 1 ) * x.cp * x.du * LAMath::exp(-x.rf*x.Td)*LAMath::pow(x.L/x.S, 2*SBnu2(x)) * diffNormdist(x.du*SBx2(x)) * SBdx2(x)
-					- 2.0 * SBnu1(x) * (2.0*SBnu1(x) + 1) * x.cp * x.K * LAMath::exp(-x.rd*x.Td) * LAMath::pow(x.L, 2*SBnu1(x))* LAMath::pow(1/x.S, 2*SBnu1(x)+2) * LADist::normsdist(x.du*SBx2(x) - x.du * x.Vol * LAMath::sqrt(x.Te))
-					+ 2.0 * SBnu1(x) * x.cp * x.du * x.K * LAMath::exp(-x.rd*x.Td) * LAMath::pow(x.L, 2*SBnu1(x)) * LAMath::pow(1/x.S, 2*SBnu1(x)+1)* diffNormdist(x.du * SBx2(x) - x.du * x.Vol  *LAMath::sqrt(x.Te)) * SBdx2(x);			
+		double ret = 2.0* SBnu2(x) * ( 2.0 * SBnu2(x) - 1 ) * x.cp*AQLMath::exp(-x.rf*x.Td)* AQLMath::pow(x.L, 2*SBnu2(x)) * AQLMath::pow(1/x.S, 2*SBnu2(x)+1) * AQLDist::normsdist(x.du*SBx2(x))
+					- ( 2.0* SBnu2(x) - 1 ) * x.cp * x.du * AQLMath::exp(-x.rf*x.Td)*AQLMath::pow(x.L/x.S, 2*SBnu2(x)) * diffNormdist(x.du*SBx2(x)) * SBdx2(x)
+					- 2.0 * SBnu1(x) * (2.0*SBnu1(x) + 1) * x.cp * x.K * AQLMath::exp(-x.rd*x.Td) * AQLMath::pow(x.L, 2*SBnu1(x))* AQLMath::pow(1/x.S, 2*SBnu1(x)+2) * AQLDist::normsdist(x.du*SBx2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te))
+					+ 2.0 * SBnu1(x) * x.cp * x.du * x.K * AQLMath::exp(-x.rd*x.Td) * AQLMath::pow(x.L, 2*SBnu1(x)) * AQLMath::pow(1/x.S, 2*SBnu1(x)+1)* diffNormdist(x.du * SBx2(x) - x.du * x.Vol  *AQLMath::sqrt(x.Te)) * SBdx2(x);			
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1392,12 +1392,12 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =  2.0* SBnu2(x) * ( 2.0 * SBnu2(x) - 1 ) * x.cp *LAMath::exp(-x.rf*x.Td)* LAMath::pow(x.L, 2*SBnu2(x)) * LAMath::pow(1/x.S, 2*SBnu2(x)+1) * LADist::normsdist(x.du*SBy2(x))
-					-2.0*( 2.0* SBnu2(x) - 1 ) * x.cp * x.du * LAMath::exp(-x.rf*x.Td)*LAMath::pow(x.L/x.S, 2*SBnu2(x)) * diffNormdist(x.du*SBy2(x)) * SBdy2(x)
-					-x.cp * x.du * LAMath::exp(-x.rf*x.Td) * LAMath::pow(x.L, 2*SBnu2(x)) * LAMath::pow(1/x.S, 2*SBnu2(x) - 1) * diffNormdist(x.du*SBy2(x))* ( SBy2(x) * SBdy2(x) * SBdy2(x) - SBddy2(x) )
-					- 2.0 * SBnu1(x) * (2.0*SBnu1(x) + 1) * x.cp * x.K * LAMath::exp(-x.rd*x.Td) * LAMath::pow(x.L, 2*SBnu1(x))* LAMath::pow(1/x.S, 2*SBnu1(x)+2) * LADist::normsdist(x.du*SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te))
-					+ 4.0 * SBnu1(x) * x.cp * x.du * x.K * LAMath::exp(-x.rd*x.Td) * LAMath::pow(x.L, 2*SBnu1(x))* LAMath::pow(1/x.S, 2*SBnu1(x)+1) * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te)) *SBdy2(x)
-					+ x.cp * x.du * x.K * LAMath::exp(-x.rd*x.Td) * LAMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te)) * ( ( SBy2(x) - x.Vol * LAMath::sqrt(x.Te) ) * SBdy2(x) * SBdy2(x) - SBddy2(x) );	
+		double ret =  2.0* SBnu2(x) * ( 2.0 * SBnu2(x) - 1 ) * x.cp *AQLMath::exp(-x.rf*x.Td)* AQLMath::pow(x.L, 2*SBnu2(x)) * AQLMath::pow(1/x.S, 2*SBnu2(x)+1) * AQLDist::normsdist(x.du*SBy2(x))
+					-2.0*( 2.0* SBnu2(x) - 1 ) * x.cp * x.du * AQLMath::exp(-x.rf*x.Td)*AQLMath::pow(x.L/x.S, 2*SBnu2(x)) * diffNormdist(x.du*SBy2(x)) * SBdy2(x)
+					-x.cp * x.du * AQLMath::exp(-x.rf*x.Td) * AQLMath::pow(x.L, 2*SBnu2(x)) * AQLMath::pow(1/x.S, 2*SBnu2(x) - 1) * diffNormdist(x.du*SBy2(x))* ( SBy2(x) * SBdy2(x) * SBdy2(x) - SBddy2(x) )
+					- 2.0 * SBnu1(x) * (2.0*SBnu1(x) + 1) * x.cp * x.K * AQLMath::exp(-x.rd*x.Td) * AQLMath::pow(x.L, 2*SBnu1(x))* AQLMath::pow(1/x.S, 2*SBnu1(x)+2) * AQLDist::normsdist(x.du*SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te))
+					+ 4.0 * SBnu1(x) * x.cp * x.du * x.K * AQLMath::exp(-x.rd*x.Td) * AQLMath::pow(x.L, 2*SBnu1(x))* AQLMath::pow(1/x.S, 2*SBnu1(x)+1) * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te)) *SBdy2(x)
+					+ x.cp * x.du * x.K * AQLMath::exp(-x.rd*x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te)) * ( ( SBy2(x) - x.Vol * AQLMath::sqrt(x.Te) ) * SBdy2(x) * SBdy2(x) - SBddy2(x) );	
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1406,11 +1406,11 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.R * LAMath::exp(-x.rd*x.Td) * x.du * diffNormdist(x.du*SBy1(x) - x.du*x.Vol*LAMath::sqrt(x.Te)) * ( -( SBy1(x) - x.Vol * LAMath::sqrt(x.Te)) * SBdy1(x) * SBdy1(x) + SBddy1(x))
-					+ x.R * LAMath::exp(-x.rd*x.Td) * ( -2.0 *SBnu1(x) * ( 2.0 * SBnu1(x) + 1) * LAMath::pow(x.L, 2*SBnu1(x))* LAMath::pow(1/x.S, 2*SBnu1(x)+2) * LADist::normsdist(x.du*SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te))
-					+ 2.0*SBnu1(x) * LAMath::pow(x.L, 2*SBnu1(x))* LAMath::pow(1/x.S, 2*SBnu1(x)+1) * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te)) * x.du * SBdy2(x))
-                    - x.R * LAMath::exp(-x.rd*x.Td) * x.du * ( -2.0 * SBnu1(x) * LAMath::pow(x.L, 2*SBnu1(x)) * LAMath::pow(1/x.S, 2*SBnu1(x)+1) * diffNormdist( x.du*SBy2(x) - x.du*x.Vol*LAMath::sqrt(x.Te)) * SBdy2(x)
-					+ LAMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist( x.du*SBy2(x) - x.du*x.Vol*LAMath::sqrt(x.Te))  * ( -(SBy2(x) - x.Vol*LAMath::sqrt(x.Te)) * (SBdy2(x) * SBdy2(x)) + SBddy2(x) )  );
+		double ret = x.R * AQLMath::exp(-x.rd*x.Td) * x.du * diffNormdist(x.du*SBy1(x) - x.du*x.Vol*AQLMath::sqrt(x.Te)) * ( -( SBy1(x) - x.Vol * AQLMath::sqrt(x.Te)) * SBdy1(x) * SBdy1(x) + SBddy1(x))
+					+ x.R * AQLMath::exp(-x.rd*x.Td) * ( -2.0 *SBnu1(x) * ( 2.0 * SBnu1(x) + 1) * AQLMath::pow(x.L, 2*SBnu1(x))* AQLMath::pow(1/x.S, 2*SBnu1(x)+2) * AQLDist::normsdist(x.du*SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te))
+					+ 2.0*SBnu1(x) * AQLMath::pow(x.L, 2*SBnu1(x))* AQLMath::pow(1/x.S, 2*SBnu1(x)+1) * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te)) * x.du * SBdy2(x))
+                    - x.R * AQLMath::exp(-x.rd*x.Td) * x.du * ( -2.0 * SBnu1(x) * AQLMath::pow(x.L, 2*SBnu1(x)) * AQLMath::pow(1/x.S, 2*SBnu1(x)+1) * diffNormdist( x.du*SBy2(x) - x.du*x.Vol*AQLMath::sqrt(x.Te)) * SBdy2(x)
+					+ AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist( x.du*SBy2(x) - x.du*x.Vol*AQLMath::sqrt(x.Te))  * ( -(SBy2(x) - x.Vol*AQLMath::sqrt(x.Te)) * (SBdy2(x) * SBdy2(x)) + SBddy2(x) )  );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1422,19 +1422,19 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = x.R * LAMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * ( ((SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * ((SBmu2(x)+SBmu3(x))/x.Vol/x.Vol + 1)  / x.S/x.S * LADist::normsdist(x.du * SBz(x))
+			ret = x.R * AQLMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * ( ((SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * ((SBmu2(x)+SBmu3(x))/x.Vol/x.Vol + 1)  / x.S/x.S * AQLDist::normsdist(x.du * SBz(x))
 				- 2.0 *  (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol /x.S *  diffNormdist(x.du * SBz(x)) * x.du * SBdz(x)
 				- diffNormdist(x.du * SBz(x)) * x.du * (SBz(x) * SBdz(x) * SBdz(x) - SBddz(x)) ) 
-				+ x.R * LAMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * (  (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol * ((SBmu2(x)-SBmu3(x))/x.Vol/x.Vol+1) /x.S/x.S * LADist::normsdist(x.du * SBz(x) -2* x.du * SBmu3(x)/x.Vol * LAMath::sqrt(x.Te))
-				- 2.0 * (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol /x.S * diffNormdist(x.du * SBz(x) -2* x.du * SBmu3(x)/x.Vol * LAMath::sqrt(x.Te))*x.du*SBdz(x)
-				- diffNormdist(x.du * SBz(x) -2* x.du * SBmu3(x)/x.Vol * LAMath::sqrt(x.Te)) * x.du * ( ( SBz(x) - 2 * SBmu3(x)/x.Vol * LAMath::sqrt(x.Te)) * SBdz(x) * SBdz(x) - SBddz(x))  );
+				+ x.R * AQLMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * (  (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol * ((SBmu2(x)-SBmu3(x))/x.Vol/x.Vol+1) /x.S/x.S * AQLDist::normsdist(x.du * SBz(x) -2* x.du * SBmu3(x)/x.Vol * AQLMath::sqrt(x.Te))
+				- 2.0 * (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol /x.S * diffNormdist(x.du * SBz(x) -2* x.du * SBmu3(x)/x.Vol * AQLMath::sqrt(x.Te))*x.du*SBdz(x)
+				- diffNormdist(x.du * SBz(x) -2* x.du * SBmu3(x)/x.Vol * AQLMath::sqrt(x.Te)) * x.du * ( ( SBz(x) - 2 * SBmu3(x)/x.Vol * AQLMath::sqrt(x.Te)) * SBdz(x) * SBdz(x) - SBddz(x))  );
 		}
 		else if(!x.ReTime)
 		{
-			ret = x.R * LAMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * ( (2.0*SBmu2(x)/x.Vol/x.Vol) * (2.0*SBmu2(x)/x.Vol/x.Vol + 1)  / x.S/x.S * LADist::normsdist(x.du * SBz(x))
+			ret = x.R * AQLMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * ( (2.0*SBmu2(x)/x.Vol/x.Vol) * (2.0*SBmu2(x)/x.Vol/x.Vol + 1)  / x.S/x.S * AQLDist::normsdist(x.du * SBz(x))
 				- 4.0 * SBmu2(x)/x.Vol/x.Vol /x.S * diffNormdist(x.du * SBz(x)) * x.du * SBdz(x)
 				- diffNormdist(x.du * SBz(x)) * x.du * (SBz(x) * SBdz(x) * SBdz(x) - SBddz(x)) ) 
-				- x.R * diffNormdist(x.du * SBz(x) -2* x.du * SBmu2(x)/x.Vol * LAMath::sqrt(x.Te)) * x.du * (( SBz(x) - 2 * SBmu2(x)/x.Vol * LAMath::sqrt(x.Te)) * SBdz(x) * SBdz(x) - SBddz(x));
+				- x.R * diffNormdist(x.du * SBz(x) -2* x.du * SBmu2(x)/x.Vol * AQLMath::sqrt(x.Te)) * x.du * (( SBz(x) - 2 * SBmu2(x)/x.Vol * AQLMath::sqrt(x.Te)) * SBdz(x) * SBdz(x) - SBddz(x));
 		}
 		retchk;
 		return ret;
@@ -1455,8 +1455,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.S*LAMath::exp(-x.rf *x.Td)*diffNormdist(x.cp * SBy1(x))*SBvy1(x) 
-					- x.K * LAMath::exp(-x.rd *x.Td) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * LAMath::sqrt(x.Te)) * (SBvy1(x) - LAMath::sqrt(x.Te));
+		double ret = x.S*AQLMath::exp(-x.rf *x.Td)*diffNormdist(x.cp * SBy1(x))*SBvy1(x) 
+					- x.K * AQLMath::exp(-x.rd *x.Td) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * AQLMath::sqrt(x.Te)) * (SBvy1(x) - AQLMath::sqrt(x.Te));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1465,8 +1465,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.cp*x.K*LAMath::exp(-x.rd *x.Td)* LAMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist(x.du*SBx2(x) - x.du*x.Vol*LAMath::sqrt(x.Te) ) * x.du * LAMath::sqrt(x.Te) 
-					+ 2.0 * SBI3(x) *SBvnu1(x) * LAMath::log(x.L/x.S);
+		double ret = x.cp*x.K*AQLMath::exp(-x.rd *x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist(x.du*SBx2(x) - x.du*x.Vol*AQLMath::sqrt(x.Te) ) * x.du * AQLMath::sqrt(x.Te) 
+					+ 2.0 * SBI3(x) *SBvnu1(x) * AQLMath::log(x.L/x.S);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1475,9 +1475,9 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =x.cp * x.S * LAMath::exp(-x.rf *x.Td) * LAMath::pow(x.L/x.S, 2*SBnu2(x)) * diffNormdist(x.du*SBy2(x)) * x.du * SBvy2(x)  
-					- x.cp*x.K*LAMath::exp(-x.rd *x.Td)* LAMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist(x.du*SBy2(x) - x.du*x.Vol*LAMath::sqrt(x.Te) ) * (x.du * SBvy2(x)  - x.du * LAMath::sqrt(x.Te) ) 
-					+ 2.0 * SBI4(x) *SBvnu1(x) * LAMath::log(x.L/x.S);
+		double ret =x.cp * x.S * AQLMath::exp(-x.rf *x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu2(x)) * diffNormdist(x.du*SBy2(x)) * x.du * SBvy2(x)  
+					- x.cp*x.K*AQLMath::exp(-x.rd *x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist(x.du*SBy2(x) - x.du*x.Vol*AQLMath::sqrt(x.Te) ) * (x.du * SBvy2(x)  - x.du * AQLMath::sqrt(x.Te) ) 
+					+ 2.0 * SBI4(x) *SBvnu1(x) * AQLMath::log(x.L/x.S);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1486,9 +1486,9 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.R*LAMath::exp(-x.rd*x.Td)* (  diffNormdist(x.du*SBy1(x)- x.du*x.Vol*LAMath::sqrt(x.Te)) * x.du * (SBvy1(x) - LAMath::sqrt(x.Te) ) 
-														- LAMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) ) * x.du * (SBvy2(x) - LAMath::sqrt(x.Te)) 
-														- LAMath::log(x.L/x.S) *LAMath::pow(x.L/x.S, 2.0*SBnu1(x))*2.0*SBvnu1(x)*LADist::normsdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te)) ); 
+		double ret = x.R*AQLMath::exp(-x.rd*x.Td)* (  diffNormdist(x.du*SBy1(x)- x.du*x.Vol*AQLMath::sqrt(x.Te)) * x.du * (SBvy1(x) - AQLMath::sqrt(x.Te) ) 
+														- AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) ) * x.du * (SBvy2(x) - AQLMath::sqrt(x.Te)) 
+														- AQLMath::log(x.L/x.S) *AQLMath::pow(x.L/x.S, 2.0*SBnu1(x))*2.0*SBvnu1(x)*AQLDist::normsdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te)) ); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1500,17 +1500,17 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = x.R * (  LAMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * x.du * SBvz(x)
-							+ LAMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) -2.0* x.du * SBmu3(x)/x.Vol * LAMath::sqrt(x.Te) ) * x.du * (SBvz(x) - 2.0* LAMath::sqrt(x.Te) / x.Vol *SBvmu3(x) + 2.0 * SBmu3(x) * LAMath::sqrt(x.Te) /x.Vol/x.Vol  )  )
-				+ x.R * LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) *( (SBvmu2(x) + SBvmu3(x))/x.Vol/x.Vol - 2.0*(SBmu2(x)+SBmu3(x))/x.Vol/x.Vol/x.Vol ) * LADist::normsdist(x.du * SBz(x)) 
-				+ x.R * LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) *( (SBvmu2(x) - SBvmu3(x))/x.Vol/x.Vol - 2.0*(SBmu2(x)-SBmu3(x))/x.Vol/x.Vol/x.Vol ) * LADist::normsdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) *LAMath::sqrt(x.Te) / x.Vol);
+			ret = x.R * (  AQLMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * x.du * SBvz(x)
+							+ AQLMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) -2.0* x.du * SBmu3(x)/x.Vol * AQLMath::sqrt(x.Te) ) * x.du * (SBvz(x) - 2.0* AQLMath::sqrt(x.Te) / x.Vol *SBvmu3(x) + 2.0 * SBmu3(x) * AQLMath::sqrt(x.Te) /x.Vol/x.Vol  )  )
+				+ x.R * AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) *( (SBvmu2(x) + SBvmu3(x))/x.Vol/x.Vol - 2.0*(SBmu2(x)+SBmu3(x))/x.Vol/x.Vol/x.Vol ) * AQLDist::normsdist(x.du * SBz(x)) 
+				+ x.R * AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) *( (SBvmu2(x) - SBvmu3(x))/x.Vol/x.Vol - 2.0*(SBmu2(x)-SBmu3(x))/x.Vol/x.Vol/x.Vol ) * AQLDist::normsdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) *AQLMath::sqrt(x.Te) / x.Vol);
 				
 		}
 		else if(!x.ReTime)
 		{
-			ret = x.R * ( LAMath::pow( x.L/x.S, (2.0 * SBmu2(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * x.du * SBvz(x)
-				+ diffNormdist(x.du * SBz(x) -2.0* x.du * SBmu2(x)/x.Vol * LAMath::sqrt(x.Te) ) * x.du * (SBvz(x) - 2.0* LAMath::sqrt(x.Te) / x.Vol *SBvmu2(x) + 2.0 * SBmu2(x) * LAMath::sqrt(x.Te) /x.Vol/x.Vol  ))
-				+ x.R * LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) *( 2.0*SBvmu2(x)/x.Vol/x.Vol - 4.0*SBmu2(x)/x.Vol/x.Vol/x.Vol ) * LADist::normsdist(x.du * SBz(x));
+			ret = x.R * ( AQLMath::pow( x.L/x.S, (2.0 * SBmu2(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * x.du * SBvz(x)
+				+ diffNormdist(x.du * SBz(x) -2.0* x.du * SBmu2(x)/x.Vol * AQLMath::sqrt(x.Te) ) * x.du * (SBvz(x) - 2.0* AQLMath::sqrt(x.Te) / x.Vol *SBvmu2(x) + 2.0 * SBmu2(x) * AQLMath::sqrt(x.Te) /x.Vol/x.Vol  ))
+				+ x.R * AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) *( 2.0*SBvmu2(x)/x.Vol/x.Vol - 4.0*SBmu2(x)/x.Vol/x.Vol/x.Vol ) * AQLDist::normsdist(x.du * SBz(x));
 		}
 		retchk;
 		return ret;
@@ -1530,10 +1530,10 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =- x.cp * x.rf * x.S * LAMath::exp(-x.rf*x.Td) * LADist::normsdist(x.cp*SBy1(x))
-					+ x.rd * x.cp * x.K * LAMath::exp(-x.rd*x.Td) * LADist::normsdist(x.cp*SBy1(x) - x.cp * x.Vol * LAMath::sqrt(x.Te))
-					+ x.S * LAMath::exp(-x.rf*x.Td) * diffNormdist(x.cp*SBy1(x)) * SBty1(x) 
-					- x.K * LAMath::exp(-x.rd*x.Td) * diffNormdist(x.cp*SBy1(x) - x.cp * x.Vol * LAMath::sqrt(x.Te) ) * ( SBty1(x) - x.Vol/2/LAMath::sqrt(x.Te));
+		double ret =- x.cp * x.rf * x.S * AQLMath::exp(-x.rf*x.Td) * AQLDist::normsdist(x.cp*SBy1(x))
+					+ x.rd * x.cp * x.K * AQLMath::exp(-x.rd*x.Td) * AQLDist::normsdist(x.cp*SBy1(x) - x.cp * x.Vol * AQLMath::sqrt(x.Te))
+					+ x.S * AQLMath::exp(-x.rf*x.Td) * diffNormdist(x.cp*SBy1(x)) * SBty1(x) 
+					- x.K * AQLMath::exp(-x.rd*x.Td) * diffNormdist(x.cp*SBy1(x) - x.cp * x.Vol * AQLMath::sqrt(x.Te) ) * ( SBty1(x) - x.Vol/2/AQLMath::sqrt(x.Te));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1542,10 +1542,10 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -x.cp* x.rf *x.S*LAMath::exp(-x.rf*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu2(x)) * LADist::normsdist(x.du*SBx2(x))
-					+x.cp* x.rd *x.K*LAMath::exp(-x.rd*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu1(x)) * LADist::normsdist( x.du*SBx2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) )
-					+2.0*SBtnu2(x)* LAMath::log(x.L/x.S) *SBI3(x)
-					+x.cp* x.du *x.K*LAMath::exp(-x.rd*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist( x.du*SBx2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) ) * x.Vol/2/LAMath::sqrt(x.Te);
+		double ret = -x.cp* x.rf *x.S*AQLMath::exp(-x.rf*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu2(x)) * AQLDist::normsdist(x.du*SBx2(x))
+					+x.cp* x.rd *x.K*AQLMath::exp(-x.rd*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * AQLDist::normsdist( x.du*SBx2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) )
+					+2.0*SBtnu2(x)* AQLMath::log(x.L/x.S) *SBI3(x)
+					+x.cp* x.du *x.K*AQLMath::exp(-x.rd*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist( x.du*SBx2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) ) * x.Vol/2/AQLMath::sqrt(x.Te);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1554,11 +1554,11 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = -x.cp* x.rf *x.S*LAMath::exp(-x.rf*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu2(x)) * LADist::normsdist(x.du*SBy2(x))
-					+x.cp* x.rd *x.K*LAMath::exp(-x.rd*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu1(x)) * LADist::normsdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) )
-					+2.0*SBtnu2(x)* LAMath::log(x.L/x.S) *SBI4(x)
-					+x.cp * x.du * x.S * LAMath::exp(-x.rf*x.Td) * LAMath::pow(x.L/x.S, 2*SBnu2(x)) * diffNormdist( x.du*SBy2(x)) * SBty2(x) 
-					-x.cp * x.du * x.K * LAMath::exp(-x.rd*x.Td) * LAMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) ) * ( SBty2(x) - x.Vol/2/LAMath::sqrt(x.Te));
+		double ret = -x.cp* x.rf *x.S*AQLMath::exp(-x.rf*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu2(x)) * AQLDist::normsdist(x.du*SBy2(x))
+					+x.cp* x.rd *x.K*AQLMath::exp(-x.rd*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * AQLDist::normsdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) )
+					+2.0*SBtnu2(x)* AQLMath::log(x.L/x.S) *SBI4(x)
+					+x.cp * x.du * x.S * AQLMath::exp(-x.rf*x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu2(x)) * diffNormdist( x.du*SBy2(x)) * SBty2(x) 
+					-x.cp * x.du * x.K * AQLMath::exp(-x.rd*x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) ) * ( SBty2(x) - x.Vol/2/AQLMath::sqrt(x.Te));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1568,9 +1568,9 @@ using namespace std;
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
 		double ret = - x.rd * SBI5(x)
-					 + x.du * x.R * LAMath::exp(-x.rd*x.Td) * ( diffNormdist(x.du*SBy1(x) - x.du * x.Vol*LAMath::sqrt(x.Te)) * (SBty1(x) - x.Vol/2.0/LAMath::sqrt(x.Te))
-																	-LAMath::pow(x.L/x.S,2.0*SBnu1(x)) * diffNormdist(x.du*SBy2(x)-x.du*x.Vol*LAMath::sqrt(x.Te)) * ( SBty2(x) - x.Vol/2.0/LAMath::sqrt(x.Te)) )
-					 - x.R * LAMath::exp(-x.rd*x.Td) * LAMath::log(x.L/x.S)*LAMath::pow(x.L/x.S, 2.0*SBnu1(x))*2.0*SBtnu1(x) * LADist::normsdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te));
+					 + x.du * x.R * AQLMath::exp(-x.rd*x.Td) * ( diffNormdist(x.du*SBy1(x) - x.du * x.Vol*AQLMath::sqrt(x.Te)) * (SBty1(x) - x.Vol/2.0/AQLMath::sqrt(x.Te))
+																	-AQLMath::pow(x.L/x.S,2.0*SBnu1(x)) * diffNormdist(x.du*SBy2(x)-x.du*x.Vol*AQLMath::sqrt(x.Te)) * ( SBty2(x) - x.Vol/2.0/AQLMath::sqrt(x.Te)) )
+					 - x.R * AQLMath::exp(-x.rd*x.Td) * AQLMath::log(x.L/x.S)*AQLMath::pow(x.L/x.S, 2.0*SBnu1(x))*2.0*SBtnu1(x) * AQLDist::normsdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1584,16 +1584,16 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = x.R * ( LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * (SBtmu2(x) + SBtmu3(x)) * LADist::normsdist(x.du * SBz(x))
-							+LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * (SBtmu2(x) - SBtmu3(x)) * LADist::normsdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) /x.Vol * LAMath::sqrt(x.Te)) )
-				+ x.du * x.R * ( LAMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * SBtz(x)
-									+LAMath::pow( x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol)* diffNormdist(x.du * SBz(x) -2.0 * x.du * SBmu3(x) /x.Vol * LAMath::sqrt(x.Te)) * ( SBtz(x) - 2.0 * LAMath::sqrt(x.Te)/x.Vol*SBtmu3(x) - SBmu3(x)/x.Vol/LAMath::sqrt(x.Te)));
+			ret = x.R * ( AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * (SBtmu2(x) + SBtmu3(x)) * AQLDist::normsdist(x.du * SBz(x))
+							+AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * (SBtmu2(x) - SBtmu3(x)) * AQLDist::normsdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) /x.Vol * AQLMath::sqrt(x.Te)) )
+				+ x.du * x.R * ( AQLMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * SBtz(x)
+									+AQLMath::pow( x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol)* diffNormdist(x.du * SBz(x) -2.0 * x.du * SBmu3(x) /x.Vol * AQLMath::sqrt(x.Te)) * ( SBtz(x) - 2.0 * AQLMath::sqrt(x.Te)/x.Vol*SBtmu3(x) - SBmu3(x)/x.Vol/AQLMath::sqrt(x.Te)));
 		}
 		else if(!x.ReTime)
 		{
-			ret = x.R * ( LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) /x.Vol/x.Vol * 2.0*SBtmu2(x) * LADist::normsdist(x.du * SBz(x)) )
-				+ x.du * x.R * ( LAMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * SBtz(x)
-									+diffNormdist(x.du * SBz(x) -2.0 * x.du * SBmu2(x) /x.Vol * LAMath::sqrt(x.Te)) * ( SBtz(x) - 2.0 * LAMath::sqrt(x.Te)/x.Vol*SBtmu2(x) - SBmu2(x)/x.Vol/LAMath::sqrt(x.Te)));
+			ret = x.R * ( AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) /x.Vol/x.Vol * 2.0*SBtmu2(x) * AQLDist::normsdist(x.du * SBz(x)) )
+				+ x.du * x.R * ( AQLMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x)) * SBtz(x)
+									+diffNormdist(x.du * SBz(x) -2.0 * x.du * SBmu2(x) /x.Vol * AQLMath::sqrt(x.Te)) * ( SBtz(x) - 2.0 * AQLMath::sqrt(x.Te)/x.Vol*SBtmu2(x) - SBmu2(x)/x.Vol/AQLMath::sqrt(x.Te)));
 		}
 		retchk;
 		return ret;
@@ -1614,9 +1614,9 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.Td * x.cp * x.K * LAMath::exp( - x.rd * x.Td ) * LADist::normsdist(x.cp * SBy1(x) - x.cp * x.Vol * LAMath::sqrt(x.Te))
-					+ x.S * LAMath::exp( - x.rf * x.Td ) * diffNormdist(x.cp * SBy1(x)) * SBry1(x)
-					- x.K * LAMath::exp( - x.rd * x.Td ) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * LAMath::sqrt(x.Te)) * SBry1(x);
+		double ret = x.Td * x.cp * x.K * AQLMath::exp( - x.rd * x.Td ) * AQLDist::normsdist(x.cp * SBy1(x) - x.cp * x.Vol * AQLMath::sqrt(x.Te))
+					+ x.S * AQLMath::exp( - x.rf * x.Td ) * diffNormdist(x.cp * SBy1(x)) * SBry1(x)
+					- x.K * AQLMath::exp( - x.rd * x.Td ) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * AQLMath::sqrt(x.Te)) * SBry1(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1625,8 +1625,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.cp * x.K * x.Td * LAMath::exp(-x.rd * x.Td) * LAMath::pow(x.L/x.S, 2*SBnu1(x))  * LADist::normsdist(x.du*SBx2(x) - x.du * x.Vol * LAMath::sqrt(x.Te))
-					+2.0*LAMath::log(x.L/x.S)*SBrnu2(x) *SBI3(x);
+		double ret = x.cp * x.K * x.Td * AQLMath::exp(-x.rd * x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu1(x))  * AQLDist::normsdist(x.du*SBx2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te))
+					+2.0*AQLMath::log(x.L/x.S)*SBrnu2(x) *SBI3(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1635,10 +1635,10 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.cp * x.K * x.Td * LAMath::exp(-x.rd * x.Td) * LAMath::pow(x.L/x.S, 2*SBnu1(x))  * LADist::normsdist(x.du*SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te))
-					+ 2.0 * LAMath::log(x.L/x.S) * SBrnu2(x) * SBI4(x)
-					+ x.cp * x.du * x.S * LAMath::exp(-x.rf * x.Td) * LAMath::pow(x.L/x.S, 2*SBnu2(x))  * diffNormdist(x.du*SBy2(x) ) * SBry2(x) 
-					- x.cp * x.du * x.K * LAMath::exp(-x.rd * x.Td) * LAMath::pow(x.L/x.S, 2*SBnu1(x))  * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te)) * SBry2(x);
+		double ret = x.cp * x.K * x.Td * AQLMath::exp(-x.rd * x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu1(x))  * AQLDist::normsdist(x.du*SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te))
+					+ 2.0 * AQLMath::log(x.L/x.S) * SBrnu2(x) * SBI4(x)
+					+ x.cp * x.du * x.S * AQLMath::exp(-x.rf * x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu2(x))  * diffNormdist(x.du*SBy2(x) ) * SBry2(x) 
+					- x.cp * x.du * x.K * AQLMath::exp(-x.rd * x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu1(x))  * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te)) * SBry2(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1648,8 +1648,8 @@ using namespace std;
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
 		double ret = -x.Td *SBI5(x) 
-					- x.R * LAMath::exp(-x.rd*x.Td) * LAMath::log(x.L/x.S) * LAMath::pow(x.L/x.S, 2*SBnu1(x)) * 2.0 * SBrnu1(x) * LADist::normsdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te))
-					+ x.R * LAMath::exp(-x.rd*x.Td) * ( diffNormdist(x.du*SBy1(x)- x.du*x.Vol*LAMath::sqrt(x.Te)) * x.du * SBry1(x) - LAMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te)) * x.du * SBry2(x) );
+					- x.R * AQLMath::exp(-x.rd*x.Td) * AQLMath::log(x.L/x.S) * AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * 2.0 * SBrnu1(x) * AQLDist::normsdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te))
+					+ x.R * AQLMath::exp(-x.rd*x.Td) * ( diffNormdist(x.du*SBy1(x)- x.du*x.Vol*AQLMath::sqrt(x.Te)) * x.du * SBry1(x) - AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te)) * x.du * SBry2(x) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1661,14 +1661,14 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = x.R * ( LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * ( SBrmu2(x) + SBrmu3(x) ) * LADist::normsdist(x.du * SBz(x))
-							+ LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * ( SBrmu2(x) - SBrmu3(x) ) * LADist::normsdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) / x.Vol * LAMath::sqrt(x.Te)) ) 
-				+ x.R * ( LAMath::pow(x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) ) * x.du * SBrz(x) + LAMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) / x.Vol * LAMath::sqrt(x.Te) ) * x.du * ( SBrz(x) - 2.0 / x.Vol * LAMath::sqrt(x.Te) * SBrmu3(x)) );
+			ret = x.R * ( AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * ( SBrmu2(x) + SBrmu3(x) ) * AQLDist::normsdist(x.du * SBz(x))
+							+ AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * ( SBrmu2(x) - SBrmu3(x) ) * AQLDist::normsdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) / x.Vol * AQLMath::sqrt(x.Te)) ) 
+				+ x.R * ( AQLMath::pow(x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) ) * x.du * SBrz(x) + AQLMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) / x.Vol * AQLMath::sqrt(x.Te) ) * x.du * ( SBrz(x) - 2.0 / x.Vol * AQLMath::sqrt(x.Te) * SBrmu3(x)) );
 		}
 		else if(!x.ReTime)
 		{
-			ret = x.R * LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) /x.Vol/x.Vol * 2.0 * SBrmu2(x) * LADist::normsdist(x.du * SBz(x))		
-				+ x.R * ( LAMath::pow(x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) ) * x.du * SBrz(x) + diffNormdist(x.du * SBz(x) - 2.0 * x.du * SBmu2(x) / x.Vol * LAMath::sqrt(x.Te) ) * x.du * ( SBrz(x) - 2.0 / x.Vol * LAMath::sqrt(x.Te) * SBrmu2(x)) );
+			ret = x.R * AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) /x.Vol/x.Vol * 2.0 * SBrmu2(x) * AQLDist::normsdist(x.du * SBz(x))		
+				+ x.R * ( AQLMath::pow(x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) ) * x.du * SBrz(x) + diffNormdist(x.du * SBz(x) - 2.0 * x.du * SBmu2(x) / x.Vol * AQLMath::sqrt(x.Te) ) * x.du * ( SBrz(x) - 2.0 / x.Vol * AQLMath::sqrt(x.Te) * SBrmu2(x)) );
 		}
 		retchk;
 		return ret;
@@ -1689,9 +1689,9 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =- x.Td * x.cp * x.S * LAMath::exp( - x.rf * x.Td ) * LADist::normsdist(x.cp * SBy1(x))
-					+ x.S * LAMath::exp( - x.rf * x.Td ) * diffNormdist(x.cp * SBy1(x)) * SBpy1(x)
-					- x.K * LAMath::exp( - x.rd * x.Td ) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * LAMath::sqrt(x.Te)) * SBpy1(x);
+		double ret =- x.Td * x.cp * x.S * AQLMath::exp( - x.rf * x.Td ) * AQLDist::normsdist(x.cp * SBy1(x))
+					+ x.S * AQLMath::exp( - x.rf * x.Td ) * diffNormdist(x.cp * SBy1(x)) * SBpy1(x)
+					- x.K * AQLMath::exp( - x.rd * x.Td ) * diffNormdist(x.cp * SBy1(x) - x.cp * x.Vol * AQLMath::sqrt(x.Te)) * SBpy1(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1700,8 +1700,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = - x.cp * x.S * x.Td * LAMath::exp(-x.rf * x.Td) * LAMath::pow(x.L/x.S, 2*SBnu2(x)) * LADist::normsdist(x.du*SBx2(x) )
-					+ 2.0*LAMath::log(x.L/x.S) *SBpnu2(x) * SBI3(x);
+		double ret = - x.cp * x.S * x.Td * AQLMath::exp(-x.rf * x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu2(x)) * AQLDist::normsdist(x.du*SBx2(x) )
+					+ 2.0*AQLMath::log(x.L/x.S) *SBpnu2(x) * SBI3(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1710,10 +1710,10 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret =- x.cp * x.S * x.Td * LAMath::exp(-x.rf * x.Td) * LAMath::pow(x.L/x.S, 2*SBnu2(x))  * LADist::normsdist(x.du*SBy2(x))
-					+ 2.0 * LAMath::log(x.L/x.S) * SBpnu2(x) * SBI4(x)
-					+ x.cp * x.du * x.S * LAMath::exp(-x.rf * x.Td) * LAMath::pow(x.L/x.S, 2*SBnu2(x))  * diffNormdist(x.du*SBy2(x) ) * SBpy2(x) 
-					- x.cp * x.du * x.K * LAMath::exp(-x.rd * x.Td) * LAMath::pow(x.L/x.S, 2*SBnu1(x))  * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te)) * SBpy2(x);
+		double ret =- x.cp * x.S * x.Td * AQLMath::exp(-x.rf * x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu2(x))  * AQLDist::normsdist(x.du*SBy2(x))
+					+ 2.0 * AQLMath::log(x.L/x.S) * SBpnu2(x) * SBI4(x)
+					+ x.cp * x.du * x.S * AQLMath::exp(-x.rf * x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu2(x))  * diffNormdist(x.du*SBy2(x) ) * SBpy2(x) 
+					- x.cp * x.du * x.K * AQLMath::exp(-x.rd * x.Td) * AQLMath::pow(x.L/x.S, 2*SBnu1(x))  * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te)) * SBpy2(x);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1722,8 +1722,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = - x.R * LAMath::exp(-x.rd*x.Td) *  LAMath::log(x.L/x.S) * LAMath::pow(x.L/x.S, 2*SBnu1(x)) * 2.0 * SBpnu1(x) * LADist::normsdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te))
-					+ x.R * LAMath::exp(-x.rd*x.Td) * ( diffNormdist(x.du*SBy1(x)- x.du*x.Vol*LAMath::sqrt(x.Te)) * x.du * SBpy1(x) - LAMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * LAMath::sqrt(x.Te)) * x.du * SBpy2(x) );
+		double ret = - x.R * AQLMath::exp(-x.rd*x.Td) *  AQLMath::log(x.L/x.S) * AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * 2.0 * SBpnu1(x) * AQLDist::normsdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te))
+					+ x.R * AQLMath::exp(-x.rd*x.Td) * ( diffNormdist(x.du*SBy1(x)- x.du*x.Vol*AQLMath::sqrt(x.Te)) * x.du * SBpy1(x) - AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * diffNormdist(x.du*SBy2(x) - x.du * x.Vol * AQLMath::sqrt(x.Te)) * x.du * SBpy2(x) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1735,16 +1735,16 @@ using namespace std;
 		double ret=0;
 		if(x.ReTime)
 		{
-			ret = x.R * ( LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * ( SBpmu2(x) + SBpmu3(x) ) * LADist::normsdist(x.du * SBz(x))
-							+ LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * ( SBpmu2(x) - SBpmu3(x) ) * LADist::normsdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) / x.Vol * LAMath::sqrt(x.Te)) ) 
-				+ x.R * ( LAMath::pow(x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) ) * x.du * SBpz(x) 
-							+ LAMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) / x.Vol * LAMath::sqrt(x.Te) ) * x.du * ( SBpz(x) - 2.0 / x.Vol * LAMath::sqrt(x.Te) * SBpmu3(x)) );
+			ret = x.R * ( AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * ( SBpmu2(x) + SBpmu3(x) ) * AQLDist::normsdist(x.du * SBz(x))
+							+ AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) /x.Vol/x.Vol * ( SBpmu2(x) - SBpmu3(x) ) * AQLDist::normsdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) / x.Vol * AQLMath::sqrt(x.Te)) ) 
+				+ x.R * ( AQLMath::pow(x.L/x.S, (SBmu2(x)+SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) ) * x.du * SBpz(x) 
+							+ AQLMath::pow(x.L/x.S, (SBmu2(x)-SBmu3(x))/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) - 2.0 * x.du * SBmu3(x) / x.Vol * AQLMath::sqrt(x.Te) ) * x.du * ( SBpz(x) - 2.0 / x.Vol * AQLMath::sqrt(x.Te) * SBpmu3(x)) );
 		}
 		else if(!x.ReTime)
 		{
-			ret = x.R * LAMath::log(x.L/x.S) * LAMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) /x.Vol/x.Vol * 2.0 * SBpmu2(x) * LADist::normsdist(x.du * SBz(x))		
-				+ x.R * ( LAMath::pow(x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) ) * x.du * SBpz(x) 
-							+ diffNormdist(x.du * SBz(x) - 2.0 * x.du * SBmu2(x) / x.Vol * LAMath::sqrt(x.Te) ) * x.du * ( SBpz(x) - 2.0 / x.Vol * LAMath::sqrt(x.Te) * SBpmu2(x)) );
+			ret = x.R * AQLMath::log(x.L/x.S) * AQLMath::pow( x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) /x.Vol/x.Vol * 2.0 * SBpmu2(x) * AQLDist::normsdist(x.du * SBz(x))		
+				+ x.R * ( AQLMath::pow(x.L/x.S, 2.0*SBmu2(x)/x.Vol/x.Vol) * diffNormdist(x.du * SBz(x) ) * x.du * SBpz(x) 
+							+ diffNormdist(x.du * SBz(x) - 2.0 * x.du * SBmu2(x) / x.Vol * AQLMath::sqrt(x.Te) ) * x.du * ( SBpz(x) - 2.0 / x.Vol * AQLMath::sqrt(x.Te) * SBpmu2(x)) );
 		}
 		retchk;
 		return ret;
@@ -1756,8 +1756,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.cp*x.S*LAMath::exp(-x.rf*x.Td)*LADist::normsdist(x.cp*SBx1(x))
-			- x.cp*x.K*LAMath::exp(-x.rd*x.Td)*LADist::normsdist(x.cp*SBx1(x)-x.cp*x.Vol*LAMath::sqrt(x.Te));
+		double ret = x.cp*x.S*AQLMath::exp(-x.rf*x.Td)*AQLDist::normsdist(x.cp*SBx1(x))
+			- x.cp*x.K*AQLMath::exp(-x.rd*x.Td)*AQLDist::normsdist(x.cp*SBx1(x)-x.cp*x.Vol*AQLMath::sqrt(x.Te));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1766,8 +1766,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.cp*x.S*LAMath::exp(-x.rf*x.Td)*LADist::normsdist(x.cp*SBy1(x))
-			- x.cp*x.K*LAMath::exp(-x.rd*x.Td)*LADist::normsdist(x.cp*SBy1(x)-x.cp*x.Vol*LAMath::sqrt(x.Te));
+		double ret = x.cp*x.S*AQLMath::exp(-x.rf*x.Td)*AQLDist::normsdist(x.cp*SBy1(x))
+			- x.cp*x.K*AQLMath::exp(-x.rd*x.Td)*AQLDist::normsdist(x.cp*SBy1(x)-x.cp*x.Vol*AQLMath::sqrt(x.Te));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1776,8 +1776,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.cp*x.S*LAMath::exp(-x.rf*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu2(x)) * LADist::normsdist(x.du*SBx2(x))
-			-x.cp*x.K*LAMath::exp(-x.rd*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu1(x)) * LADist::normsdist( x.du*SBx2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) );
+		double ret = x.cp*x.S*AQLMath::exp(-x.rf*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu2(x)) * AQLDist::normsdist(x.du*SBx2(x))
+			-x.cp*x.K*AQLMath::exp(-x.rd*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * AQLDist::normsdist( x.du*SBx2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1786,8 +1786,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.cp*x.S*LAMath::exp(-x.rf*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu2(x)) * LADist::normsdist(x.du*SBy2(x))
-			-x.cp*x.K*LAMath::exp(-x.rd*x.Td)* LAMath::pow(x.L/x.S, 2*SBnu1(x)) * LADist::normsdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) );
+		double ret = x.cp*x.S*AQLMath::exp(-x.rf*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu2(x)) * AQLDist::normsdist(x.du*SBy2(x))
+			-x.cp*x.K*AQLMath::exp(-x.rd*x.Td)* AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * AQLDist::normsdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1796,8 +1796,8 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
-		double ret = x.R*LAMath::exp(-x.rd*x.Td)* ( LADist::normsdist(x.du*SBy1(x)- x.du*x.Vol*LAMath::sqrt(x.Te)) 
-					 - LAMath::pow(x.L/x.S, 2*SBnu1(x)) * LADist::normsdist( x.du*SBy2(x)- x.du*x.Vol*LAMath::sqrt(x.Te) ));
+		double ret = x.R*AQLMath::exp(-x.rd*x.Td)* ( AQLDist::normsdist(x.du*SBy1(x)- x.du*x.Vol*AQLMath::sqrt(x.Te)) 
+					 - AQLMath::pow(x.L/x.S, 2*SBnu1(x)) * AQLDist::normsdist( x.du*SBy2(x)- x.du*x.Vol*AQLMath::sqrt(x.Te) ));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -1811,16 +1811,16 @@ using namespace std;
 		{
 			if (fabs(x.R) > 1.0e-8)
 			{
-				ret = x.R * (LAMath::pow(x.L / x.S, (SBmu2(x) + SBmu3(x)) / x.Vol / x.Vol) * LADist::normsdist(x.du * SBz(x))
-					+ LAMath::pow(x.L / x.S, (SBmu2(x) - SBmu3(x)) / x.Vol / x.Vol) * LADist::normsdist(x.du * SBz(x) - 2 * x.du * SBmu3(x) / x.Vol * LAMath::sqrt(x.Te)));
+				ret = x.R * (AQLMath::pow(x.L / x.S, (SBmu2(x) + SBmu3(x)) / x.Vol / x.Vol) * AQLDist::normsdist(x.du * SBz(x))
+					+ AQLMath::pow(x.L / x.S, (SBmu2(x) - SBmu3(x)) / x.Vol / x.Vol) * AQLDist::normsdist(x.du * SBz(x) - 2 * x.du * SBmu3(x) / x.Vol * AQLMath::sqrt(x.Te)));
 			}
 		}
 		else if(!x.ReTime)
 		{
 			if (fabs(x.R) > 1.0e-8)
 			{
-				ret = x.R * LAMath::exp(-x.rd * x.Td) *  (LAMath::pow(x.L / x.S, 2.0 *SBmu2(x) / x.Vol / x.Vol) * LADist::normsdist(x.du * SBz(x))
-					+ LADist::normsdist(x.du * SBz(x) - 2.0 * x.du * SBmu2(x) / x.Vol * LAMath::sqrt(x.Te)));
+				ret = x.R * AQLMath::exp(-x.rd * x.Td) *  (AQLMath::pow(x.L / x.S, 2.0 *SBmu2(x) / x.Vol / x.Vol) * AQLDist::normsdist(x.du * SBz(x))
+					+ AQLDist::normsdist(x.du * SBz(x) - 2.0 * x.du * SBmu2(x) / x.Vol * AQLMath::sqrt(x.Te)));
 			}
 		}
 		retchk;
@@ -3055,7 +3055,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDBParam& x = dynamic_cast<AnalyticDBParam& >(param);
-		double ret =	LAMath::sqrt( DBmu2(x)*DBmu2(x) + 2.0*x.rd*x.Vol*x.Vol);
+		double ret =	AQLMath::sqrt( DBmu2(x)*DBmu2(x) + 2.0*x.rd*x.Vol*x.Vol);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3064,7 +3064,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDBParam& x = dynamic_cast<AnalyticDBParam& >(param);
-		double ret = LAMath::log(x.K/x.S);
+		double ret = AQLMath::log(x.K/x.S);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3073,7 +3073,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDBParam& x = dynamic_cast<AnalyticDBParam& >(param);
-		double ret = LAMath::log(x.Ll/x.S);
+		double ret = AQLMath::log(x.Ll/x.S);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3082,14 +3082,14 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDBParam& x = dynamic_cast<AnalyticDBParam& >(param);
-		double ret = LAMath::log(x.Lh/x.S);
+		double ret = AQLMath::log(x.Lh/x.S);
 		retchk;
 		return ret;
 		FORMULAE_END
 	}
 	double AnalyticFormulae::Phi(double z1, double z2, double b, double c, double d)
 	{
-		double ret = LAMath::exp(0.5*d*(d*c*c-2.0*b))*( LADist::normsdist(c*d-(b+z1)/c)-LADist::normsdist(c*d-(b+z2)/c) );
+		double ret = AQLMath::exp(0.5*d*(d*c*c-2.0*b))*( AQLDist::normsdist(c*d-(b+z1)/c)-AQLDist::normsdist(c*d-(b+z2)/c) );
 		retchk;
 		return ret;
 	}
@@ -3112,12 +3112,12 @@ using namespace std;
 			ret   = 0.0;
 			for(int k=-steps; k< steps+1; k++)
 			{
-				ret += LAMath::exp(-mu* u(k,xh,xl) /vol/vol) * Phi(alpha1, alpha2, -mu *t +u(k, xh, xl) , vol*LAMath::sqrt(t), nu) 
-					 - LAMath::exp(mu/vol/vol* (2*xh-u(k,xh,xl) ) ) * Phi(alpha1, alpha2, -mu*t-2*xh+u(k,xh,xl), vol*LAMath::sqrt(t), nu) ;
+				ret += AQLMath::exp(-mu* u(k,xh,xl) /vol/vol) * Phi(alpha1, alpha2, -mu *t +u(k, xh, xl) , vol*AQLMath::sqrt(t), nu) 
+					 - AQLMath::exp(mu/vol/vol* (2*xh-u(k,xh,xl) ) ) * Phi(alpha1, alpha2, -mu*t-2*xh+u(k,xh,xl), vol*AQLMath::sqrt(t), nu) ;
 			}
-			if(LAMath::abs(ret-bfret) <= 0.0000000001 && steps !=0) break;
+			if(AQLMath::abs(ret-bfret) <= 0.0000000001 && steps !=0) break;
 		}
-		if(LAMath::abs(ret-bfret)>0.0000000001 ) throw LACoreNumericalError("Not Convergence",__FILE__,__LINE__);
+		if(AQLMath::abs(ret-bfret)>0.0000000001 ) throw AQLCoreNumericalError("Not Convergence",__FILE__,__LINE__);
 		retchk;
 		return ret;
 	}
@@ -3132,21 +3132,21 @@ using namespace std;
 			for(int k=0; k<steps+1; k++)
 			{
 				double uh = xh + u(k, xh, xl);
-				ret += LAMath::exp(mu*uh/vol/vol)
-					  * LADist::normsdist( (-uh-mu*t)/vol/LAMath::sqrt(t) ) 
-					  + LAMath::exp(-mu*uh/vol/vol) * LADist::normsdist( (-uh+mu*t)/vol/LAMath::sqrt(t) ) ;
+				ret += AQLMath::exp(mu*uh/vol/vol)
+					  * AQLDist::normsdist( (-uh-mu*t)/vol/AQLMath::sqrt(t) ) 
+					  + AQLMath::exp(-mu*uh/vol/vol) * AQLDist::normsdist( (-uh+mu*t)/vol/AQLMath::sqrt(t) ) ;
 			}
 
 			for(int k=-steps ;k<0; k++)
 			{
 				double uh = xh + u(k, xh, xl);
-				ret -= LAMath::exp(mu*uh/vol/vol)*LADist::normsdist( (uh+mu*t)/vol/LAMath::sqrt(t)) 
-					+ LAMath::exp(-mu*uh/vol/vol)*LADist::normsdist( (uh-mu*t)/vol/LAMath::sqrt(t)) ;
+				ret -= AQLMath::exp(mu*uh/vol/vol)*AQLDist::normsdist( (uh+mu*t)/vol/AQLMath::sqrt(t)) 
+					+ AQLMath::exp(-mu*uh/vol/vol)*AQLDist::normsdist( (uh-mu*t)/vol/AQLMath::sqrt(t)) ;
 			}
-			ret *= LAMath::exp(mu*xh/vol/vol);
-			if(LAMath::abs(ret-bfret) <= 0.0000000001 && steps !=0) break;
+			ret *= AQLMath::exp(mu*xh/vol/vol);
+			if(AQLMath::abs(ret-bfret) <= 0.0000000001 && steps !=0) break;
 		}
-		if(LAMath::abs(ret-bfret)>0.0000000001 ) throw LACoreNumericalError("Not Convergence",__FILE__,__LINE__);
+		if(AQLMath::abs(ret-bfret)>0.0000000001 ) throw AQLCoreNumericalError("Not Convergence",__FILE__,__LINE__);
 		retchk;
 		return ret;
 	}
@@ -3160,19 +3160,19 @@ using namespace std;
 			for(int k=0; k<steps+1; k++)
 			{
 				double ul = -xl + u(k, xh, xl);
-				ret += LAMath::exp(mu*ul/vol/vol)*LADist::normsdist( (-ul-mu*t)/vol/LAMath::sqrt(t)) 
-					+ LAMath::exp(-mu*ul/vol/vol)*LADist::normsdist( (-ul+mu*t)/vol/LAMath::sqrt(t)) ;
+				ret += AQLMath::exp(mu*ul/vol/vol)*AQLDist::normsdist( (-ul-mu*t)/vol/AQLMath::sqrt(t)) 
+					+ AQLMath::exp(-mu*ul/vol/vol)*AQLDist::normsdist( (-ul+mu*t)/vol/AQLMath::sqrt(t)) ;
 			}
 			for(int k=-steps ;k<0; k++)
 			{
 				double ul = -xl + u(k, xh, xl);
-				ret -= LAMath::exp(mu*ul/vol/vol)*LADist::normsdist( (ul+mu*t)/vol/LAMath::sqrt(t)) 
-					+ LAMath::exp(-mu*ul/vol/vol)*LADist::normsdist( (ul-mu*t)/vol/LAMath::sqrt(t)) ;
+				ret -= AQLMath::exp(mu*ul/vol/vol)*AQLDist::normsdist( (ul+mu*t)/vol/AQLMath::sqrt(t)) 
+					+ AQLMath::exp(-mu*ul/vol/vol)*AQLDist::normsdist( (ul-mu*t)/vol/AQLMath::sqrt(t)) ;
 			}
-			ret *= LAMath::exp(mu*xl/vol/vol);
-			if(LAMath::abs(ret-bfret) <= 0.0000000001 && steps !=0) break;
+			ret *= AQLMath::exp(mu*xl/vol/vol);
+			if(AQLMath::abs(ret-bfret) <= 0.0000000001 && steps !=0) break;
 		}
-		if(LAMath::abs(ret-bfret)>0.0000000001 ) throw LACoreNumericalError("Not Convergence",__FILE__,__LINE__);
+		if(AQLMath::abs(ret-bfret)>0.0000000001 ) throw AQLCoreNumericalError("Not Convergence",__FILE__,__LINE__);
 		retchk;
 		return ret;
 	}
@@ -3181,7 +3181,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDBParam& x = dynamic_cast<AnalyticDBParam& >(param);
-		double ret = LAMath::exp(-x.rd*x.Td) *
+		double ret = AQLMath::exp(-x.rd*x.Td) *
 			( x.S * F(x.Te, DBmu2(x), x.Vol, xl(x), xh(x), 1.0, x0(x), xh(x), x.Num)
 			- x.K * F(x.Te, DBmu2(x), x.Vol, xl(x), xh(x), 0.0, x0(x), xh(x), x.Num)
 			);
@@ -3202,7 +3202,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDBParam& x = dynamic_cast<AnalyticDBParam& >(param);
-		double ret = LAMath::exp(-x.rd * x.Td ) *
+		double ret = AQLMath::exp(-x.rd * x.Td ) *
 			( x.S * F(x.Te, DBmu2(x), x.Vol, xl(x), xh(x), 1.0, xl(x), x0(x), x.Num)
 			- x.K * F(x.Te, DBmu2(x), x.Vol, xl(x), xh(x), 0.0, xl(x), x0(x), x.Num)
 			);
@@ -3226,11 +3226,11 @@ using namespace std;
 		double ret=0.0;
 		if(x.RelTime)
 		{
-			ret = x.Rl * LAMath::exp( xl(x) * (DBmu2(x)-DBmu3(x) ) / x.Vol /x.Vol)  * Gl(x.Te, DBmu3(x), x.Vol, xl(x), xh(x), x.Num);
+			ret = x.Rl * AQLMath::exp( xl(x) * (DBmu2(x)-DBmu3(x) ) / x.Vol /x.Vol)  * Gl(x.Te, DBmu3(x), x.Vol, xl(x), xh(x), x.Num);
 		}
 		else 
 		{
-			ret = x.Rl * LAMath::exp(-x.rd * x.Td )  * Gl(x.Te, DBmu2(x), x.Vol, xl(x), xh(x), x.Num);
+			ret = x.Rl * AQLMath::exp(-x.rd * x.Td )  * Gl(x.Te, DBmu2(x), x.Vol, xl(x), xh(x), x.Num);
 		}
 		retchk;
 		return ret;
@@ -3243,11 +3243,11 @@ using namespace std;
 		double ret=0.0;
 		if(x.RehTime)
 		{
-			ret = x.Rh * LAMath::exp( xl(x) * (DBmu2(x)-DBmu3(x) ) / x.Vol /x.Vol)  * Gh(x.Te, DBmu3(x), x.Vol, xl(x), xh(x), x.Num);
+			ret = x.Rh * AQLMath::exp( xl(x) * (DBmu2(x)-DBmu3(x) ) / x.Vol /x.Vol)  * Gh(x.Te, DBmu3(x), x.Vol, xl(x), xh(x), x.Num);
 		}
 		else 
 		{
-			ret = x.Rh * LAMath::exp(- x.rd * x.Td ) * Gh(x.Te, DBmu2(x), x.Vol, xl(x), xh(x), x.Num);
+			ret = x.Rh * AQLMath::exp(- x.rd * x.Td ) * Gh(x.Te, DBmu2(x), x.Vol, xl(x), xh(x), x.Num);
 		}
 		retchk;
 		return ret;
@@ -3257,7 +3257,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticDBParam& x = dynamic_cast<AnalyticDBParam& >(param);
-		double ret = x.Ri * LAMath::exp(-x.rd * x.Td) * F(x.Te,DBmu2(x), x.Vol, xl(x), xh(x), 0.0, xl(x), xh(x), x.Num);
+		double ret = x.Ri * AQLMath::exp(-x.rd * x.Td) * F(x.Te,DBmu2(x), x.Vol, xl(x), xh(x), 0.0, xl(x), xh(x), x.Num);
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3268,7 +3268,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = ( LAMath::log(x.F/x.K) + 0.5*x.Vol*x.Vol*x.Te) / (x.Vol* LAMath::sqrt( x.Te) ) ; 	
+		double ret = ( AQLMath::log(x.F/x.K) + 0.5*x.Vol*x.Vol*x.Te) / (x.Vol* AQLMath::sqrt( x.Te) ) ; 	
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3277,7 +3277,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = FDd1(x) - x.Vol*LAMath::sqrt(x.Te);	
+		double ret = FDd1(x) - x.Vol*AQLMath::sqrt(x.Te);	
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3287,7 +3287,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN    
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = x.DFf * x.K/x.F*LADist::normsdist(FDd2(x));
+		double ret = x.DFf * x.K/x.F*AQLDist::normsdist(FDd2(x));
 		retchk;      
 		return ret;  
 		FORMULAE_END 
@@ -3297,7 +3297,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = - x.DFf * x.K/x.F*LADist::normsdist(-FDd2(x));
+		double ret = - x.DFf * x.K/x.F*AQLDist::normsdist(-FDd2(x));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3308,7 +3308,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = x.DFd/x.S * (  LADist::normsdist(FDd2(x)) - diffNormdist(FDd2(x))/x.Vol/LAMath::sqrt(x.Te) );
+		double ret = x.DFd/x.S * (  AQLDist::normsdist(FDd2(x)) - diffNormdist(FDd2(x))/x.Vol/AQLMath::sqrt(x.Te) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3318,7 +3318,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = x.DFd /x.S * (  - LADist::normsdist(-FDd2(x)) - diffNormdist(-FDd2(x))/x.Vol/LAMath::sqrt(x.Te) );
+		double ret = x.DFd /x.S * (  - AQLDist::normsdist(-FDd2(x)) - diffNormdist(-FDd2(x))/x.Vol/AQLMath::sqrt(x.Te) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3328,7 +3328,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN    
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = x.K/x.F*LADist::normsdist(FDd2(x));
+		double ret = x.K/x.F*AQLDist::normsdist(FDd2(x));
 		retchk;      
 		return ret;  
 		FORMULAE_END 
@@ -3338,7 +3338,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = -x.K/x.F*LADist::normsdist(-FDd2(x));
+		double ret = -x.K/x.F*AQLDist::normsdist(-FDd2(x));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3348,7 +3348,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = 1.0/x.F * ( LADist::normsdist(FDd2(x)) - diffNormdist(FDd2(x))/x.Vol/LAMath::sqrt(x.Te) );
+		double ret = 1.0/x.F * ( AQLDist::normsdist(FDd2(x)) - diffNormdist(FDd2(x))/x.Vol/AQLMath::sqrt(x.Te) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3358,7 +3358,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticGKParam& x = dynamic_cast<AnalyticGKParam& >(param);
-		double ret = 1.0/x.F * (  - LADist::normsdist(-FDd2(x)) - diffNormdist(-FDd2(x))/x.Vol/LAMath::sqrt(x.Te) );
+		double ret = 1.0/x.F * (  - AQLDist::normsdist(-FDd2(x)) - diffNormdist(-FDd2(x))/x.Vol/AQLMath::sqrt(x.Te) );
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3379,7 +3379,7 @@ using namespace std;
     {
         FORMULAE_BEGIN
         AnalyticGKParam& x = dynamic_cast<AnalyticGKParam&> (param);
-        double ret = - LADist::normsdist(FDd2(x)) / (x.F * x.K ) * (1.0 + FDd2(x)/x.Vol/LAMath::sqrt(x.Te) ); 
+        double ret = - AQLDist::normsdist(FDd2(x)) / (x.F * x.K ) * (1.0 + FDd2(x)/x.Vol/AQLMath::sqrt(x.Te) ); 
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3397,7 +3397,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticAFFParam& x = dynamic_cast<AnalyticAFFParam& >(param);
-		double ret = LAMath::log(x.Pbondm/x.Poptm/x.K)/x.Vol + 0.5* x.Vol;
+		double ret = AQLMath::log(x.Pbondm/x.Poptm/x.K)/x.Vol + 0.5* x.Vol;
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3416,7 +3416,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticAFFParam& x = dynamic_cast<AnalyticAFFParam& >(param);
-		double ret = x.Pbondm * LADist::normsdist(AFFd1(x)) - x.K * x.Poptm * LADist::normsdist(AFFd2(x));
+		double ret = x.Pbondm * AQLDist::normsdist(AFFd1(x)) - x.K * x.Poptm * AQLDist::normsdist(AFFd2(x));
 		retchk;
 		return ret;
 		FORMULAE_END
@@ -3426,7 +3426,7 @@ using namespace std;
 	{
 		FORMULAE_BEGIN
 		AnalyticAFFParam& x = dynamic_cast<AnalyticAFFParam& >(param);
-		double ret = - x.Pbondm * LADist::normsdist(-AFFd1(x)) + x.K * x.Poptm * LADist::normsdist(-AFFd2(x));
+		double ret = - x.Pbondm * AQLDist::normsdist(-AFFd1(x)) + x.K * x.Poptm * AQLDist::normsdist(-AFFd2(x));
 		retchk;
 		return ret;
 		FORMULAE_END

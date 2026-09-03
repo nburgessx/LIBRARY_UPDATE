@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent LMM volatility function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 //  2007, AlgoQuantHub.
@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       LAMathVolFuncLMM
 //  DESCRIPTION :       Source code of class  to represent volatility of LMM
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -40,21 +40,21 @@ using namespace std;
 	@param[in] delFlg     tenor and term function delete flg
 */
 
-LAMathVolFuncLMM::LAMathVolFuncLMM(const LAFunctionBase *funcTenor, const LAFunctionBase *funcTerm, 
+LAMathVolFuncLMM::LAMathVolFuncLMM(const AQLFunctionBase *funcTenor, const AQLFunctionBase *funcTerm, 
 				const DoubleArray &TFix, const DoubleArray &TFix_30_360, int suffix, double multiple, bool delFlg)
-: LAFunctionBase(), mpFuncTenor(funcTenor), mpFuncTerm(funcTerm), mTFix(TFix), 
+: AQLFunctionBase(), mpFuncTenor(funcTenor), mpFuncTerm(funcTerm), mTFix(TFix), 
   mTFix_30_360(TFix_30_360), m_t(DoubleArray()), m_T(0.0), mMultiple(multiple), mDelFlg(delFlg)
 {
 	// data size check
 	const int dataSize = TFix.size();
 	if (dataSize != static_cast<int>(TFix_30_360.size()))
 	{
-		throw LACoreInvalidData("data size must be same !! ", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("data size must be same !! ", __FILE__, __LINE__);
 	}
 	// suffix check
 	if (dataSize <= suffix)
 	{
-		throw LACoreInvalidData("suffix must be less than data size  !! ", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("suffix must be less than data size  !! ", __FILE__, __LINE__);
 	}
 
 	m_T = mTFix_30_360[suffix];
@@ -86,7 +86,7 @@ LAMathVolFuncLMM::~LAMathVolFuncLMM(void)
 	@brief copy constructor
 */
 LAMathVolFuncLMM::LAMathVolFuncLMM(const LAMathVolFuncLMM &rhs) 
-: LAFunctionBase(), mpFuncTenor(0), mpFuncTerm(0), mTFix(rhs.mTFix), 
+: AQLFunctionBase(), mpFuncTenor(0), mpFuncTerm(0), mTFix(rhs.mTFix), 
   mTFix_30_360(rhs.mTFix_30_360), m_t(rhs.m_t), m_T(rhs.m_T), mMultiple(rhs.mMultiple), mDelFlg(rhs.mDelFlg)
 {
 	if (mDelFlg)
@@ -94,11 +94,11 @@ LAMathVolFuncLMM::LAMathVolFuncLMM(const LAMathVolFuncLMM &rhs)
 		// pointer owner
 		if (rhs.mpFuncTenor)
 		{
-			mpFuncTenor = dynamic_cast<const LAFunctionBase *>(rhs.mpFuncTenor->clone());
+			mpFuncTenor = dynamic_cast<const AQLFunctionBase *>(rhs.mpFuncTenor->clone());
 		}
 		if (rhs.mpFuncTerm)
 		{
-			mpFuncTerm = dynamic_cast<const LAFunctionBase *>(rhs.mpFuncTerm->clone());
+			mpFuncTerm = dynamic_cast<const AQLFunctionBase *>(rhs.mpFuncTerm->clone());
 		}	
 	}
 	else
@@ -112,7 +112,7 @@ LAMathVolFuncLMM::LAMathVolFuncLMM(const LAMathVolFuncLMM &rhs)
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathVolFuncLMM::clone() const
 {
     try 
@@ -121,7 +121,7 @@ LAMathVolFuncLMM::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -133,7 +133,7 @@ LAMathVolFuncLMM::clone() const
 bool
 LAMathVolFuncLMM::isTypeOf(function_t id) const
 {
-	return (id == FN_VOLFUNCLMM ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_VOLFUNCLMM ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -157,7 +157,7 @@ LAMathVolFuncLMM::operator()(const DoubleArray& x) const
 {
 	if (static_cast<int>(x.size()) < 1)
 	{
-		throw LACoreInvalidData("The argument DoubleArray's size must be more than zero !", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("The argument DoubleArray's size must be more than zero !", __FILE__, __LINE__);
 	}
 	return operator()(x[0]);
 }

@@ -36,18 +36,18 @@ double mirGetAnnuity1(const std::string& fromDate,
 	try 
 	{
 		// marshall all inputs		
-		LADate fromDt(fromDate.c_str(),"YYYYMMDD");
-		LADate toDt (toDate.c_str(),"YYYYMMDD");
-		LAString curId			(curveId.c_str());
-		LAString freq			(frequency.c_str());
-		LAString sRule			(slidingRule.c_str());
-		LAString cal			(calendar.c_str());
-		LAString firstOddDt		(firstOddDate.c_str());
-		LAString lastOddDt		(lastOddDate.c_str());
-		LAString paymentDy	    (paymentDay.c_str());
-		LAString dayC			(dayCount.c_str());
-		LAString interp			(interpolation.c_str());
-		LAString curName		(curveName.c_str());
+		AQLDate fromDt(fromDate.c_str(),"YYYYMMDD");
+		AQLDate toDt (toDate.c_str(),"YYYYMMDD");
+		AQLString curId			(curveId.c_str());
+		AQLString freq			(frequency.c_str());
+		AQLString sRule			(slidingRule.c_str());
+		AQLString cal			(calendar.c_str());
+		AQLString firstOddDt		(firstOddDate.c_str());
+		AQLString lastOddDt		(lastOddDate.c_str());
+		AQLString paymentDy	    (paymentDay.c_str());
+		AQLString dayC			(dayCount.c_str());
+		AQLString interp			(interpolation.c_str());
+		AQLString curName		(curveName.c_str());
 		
 		ret = validation::tryMirGetAnnuity1(etrading::InitializeAQETrading::instance().dataInstance(),
 												fromDt, 
@@ -64,7 +64,7 @@ double mirGetAnnuity1(const std::string& fromDate,
 												curName);
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -93,10 +93,10 @@ double mirGetAnnuity2(const std::string& curveId,
 		// Input marshalling
 		DateVector dateVec;
 		swig::buildDateVector(dateVec, dates);
-		LAString curId(curveId.c_str());
-		LAString dayC(dayCount.c_str());
-		LAString interp(interpolation.c_str());
-		LAString curName(curveName.c_str());
+		AQLString curId(curveId.c_str());
+		AQLString dayC(dayCount.c_str());
+		AQLString interp(interpolation.c_str());
+		AQLString curName(curveName.c_str());
 
 		ret = validation::tryMirGetAnnuity2(etrading::InitializeAQETrading::instance().dataInstance(),
 								curId,
@@ -106,7 +106,7 @@ double mirGetAnnuity2(const std::string& curveId,
 								curName);
 		
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

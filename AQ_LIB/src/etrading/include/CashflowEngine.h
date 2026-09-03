@@ -12,7 +12,7 @@
 
 #include "CoreEnumerations.h"
 
-#include "LADate.h"
+#include "AQLDate.h"
 
 #include <string>
 #include <vector>
@@ -52,10 +52,10 @@ namespace etrading
 						const size_t nDiversityMetric,			// In MGEN this is 'n'
 						const SupervisoryTypeEnum supervisoryType,
 						const PoolTypeEnum poolType,
-						const LADate& effectiveDate,
-						const LADate& maturityDate,
+						const AQLDate& effectiveDate,
+						const AQLDate& maturityDate,
 						const std::vector<std::shared_ptr<Trigger> >& triggers,
-						const LADate& reinvestmentEndDate,
+						const AQLDate& reinvestmentEndDate,
 						const size_t reinvestmentEndPeriod );	
 
 		/* @brief	Configures the CashflowEngine using a label value block
@@ -198,19 +198,19 @@ namespace etrading
 		SupervisoryTypeEnum supervisoryType_;
 		PoolTypeEnum poolType_;
 
-		LADate effectiveDate_;
-		LADate maturityDate_;
+		AQLDate effectiveDate_;
+		AQLDate maturityDate_;
 
-		std::vector<LADate> resetDates_;
+		std::vector<AQLDate> resetDates_;
 		std::vector<double> resetRates_;
 
-		std::vector<LADate> portfolioFixingDates_;
-		std::vector<LADate> portfolioAccrualStartDates_;
-		std::vector<LADate> portfolioAccrualEndDates_;
-		std::vector<LADate> portfolioPaymentDates_;
+		std::vector<AQLDate> portfolioFixingDates_;
+		std::vector<AQLDate> portfolioAccrualStartDates_;
+		std::vector<AQLDate> portfolioAccrualEndDates_;
+		std::vector<AQLDate> portfolioPaymentDates_;
 
 		std::vector<std::shared_ptr<Trigger> > triggers_;
-		LADate reinvestmentEndDate_;
+		AQLDate reinvestmentEndDate_;
 		size_t reinvestmentEndPeriod_;
 		bool paymentAveraging_;
 

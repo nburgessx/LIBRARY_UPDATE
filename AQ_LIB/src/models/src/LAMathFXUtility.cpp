@@ -14,12 +14,12 @@
 #include "LAMathFXUtility.h"
 
 
-#include "LAObject.h"
-#include "LADataBasics.h"
-//#include "LADataVector.h"
-#include "LACoreTemplateType.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+//#include "AQLDataVector.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
 #include "LAModelDynamicsCurve.h"
 
 
@@ -38,18 +38,18 @@ using namespace std;
 
     @return spot date
 */
-LADate
-LAMathFXUtility::getSpotDate_IncludedUSD(const LAString& cur,
-												const LADate& today, 
-												const LAString& calname,
-												const LAString& calname_usd,
+AQLDate
+LAMathFXUtility::getSpotDate_IncludedUSD(const AQLString& cur,
+												const AQLDate& today, 
+												const AQLString& calname,
+												const AQLString& calname_usd,
 												unsigned int spotlag)
 {
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(calname);
-	const LADate& spot = cal.getBusinessDay(today, spotlag);
+	const AQLDate& spot = cal.getBusinessDay(today, spotlag);
 	cal.convertFromString(calname_usd);
-	LAPriceDataSlidingRule srule(SLIDING_RULE_FOLLOWING);
+	AQLPriceDataSlidingRule srule(SLIDING_RULE_FOLLOWING);
 	return srule.getDate(spot, cal);
 }
 
@@ -66,18 +66,18 @@ LAMathFXUtility::getSpotDate_IncludedUSD(const LAString& cur,
 
     @return spot date
 */
-LADate
-LAMathFXUtility::getSpotDate_NotIncludedUSD(const LAString& cur1,
-												const LAString& cur2,
-												const LADate& today, 
-												const LAString& calname1,
-												const LAString& calname2,
-												const LAString& calname_usd,
+AQLDate
+LAMathFXUtility::getSpotDate_NotIncludedUSD(const AQLString& cur1,
+												const AQLString& cur2,
+												const AQLDate& today, 
+												const AQLString& calname1,
+												const AQLString& calname2,
+												const AQLString& calname_usd,
 												unsigned int spotlag1,
 												unsigned int spotlag2)
 {
-	const LADate& spot1 = getSpotDate_IncludedUSD(cur1, today, calname1, calname_usd, spotlag1); 
-	const LADate& spot2 = getSpotDate_IncludedUSD(cur2, today, calname2, calname_usd, spotlag2); 
+	const AQLDate& spot1 = getSpotDate_IncludedUSD(cur1, today, calname1, calname_usd, spotlag1); 
+	const AQLDate& spot2 = getSpotDate_IncludedUSD(cur2, today, calname2, calname_usd, spotlag2); 
 	if (spot1 > spot2) return spot1;
 	else return spot2;
 }
@@ -112,18 +112,18 @@ LAMathFXUtility::getForwardRate(double rate_base,
   
     @return two currencys
 */
-LAStringVector
-LAMathFXUtility::getCurrencyPair(const LAString& curpair)
+AQLStringVector
+LAMathFXUtility::getCurrencyPair(const AQLString& curpair)
 {
-    const LAStringVector& curs = curpair.toToken('/');
+    const AQLStringVector& curs = curpair.toToken('/');
 
 	if (curs.size() != 2)
 	{
 	    //error
-		LAString msg = "Currency : ";
+		AQLString msg = "Currency : ";
 		msg += curpair;
 		msg = " is invaid format(right format example is USD/JPY)";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 	}
 
 	return curs;

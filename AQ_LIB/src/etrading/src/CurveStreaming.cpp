@@ -18,10 +18,10 @@
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
 #include "LACurveCalibrationHelpers.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLPriceDataCalendar.h"
 #include "CurveCalibrationData.h"
 #include "LAMarketData.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "CommonConstants.h"
 #include "LAStaticData.h"
 #include "ExceptionMacros.h"
@@ -48,8 +48,8 @@ namespace etrading
 	*  @param [in]		forwardRates		                The new forward rates
     *  @param [in]		setCorrespondingDiscountFactors	    Set the corresponding discount factors (for STD curves only)
 	*/
-    LAString setCurveForwardRates( const LAString& curveCollection,
-                                   const LAString& curveIndex,
+    AQLString setCurveForwardRates( const AQLString& curveCollection,
+                                   const AQLString& curveIndex,
                                    const DateVector& fixingDates,
                                    const DoubleVector& forwardRates,
                                    const bool setCorrespondingDiscountFactors )
@@ -57,10 +57,10 @@ namespace etrading
         AQ_REQUIRE( curveCollection.size() != 0, "Missing Curve Collection" )
         AQ_REQUIRE( curveIndex.size() != 0, "Missing Curve Index" )
 
-		LAString result;
+		AQLString result;
 		
 		// Get the CurveIndices alias list
-		const LAStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
+		const AQLStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
 
 		// Check if a STD curve
 		const bool isSTDSwapCurve = etrading::isSTDCurve( curveCollection, curveIndex );
@@ -97,7 +97,7 @@ namespace etrading
                 
                 // Solve for equivalent discount factors that imply the forward rates provided and set the curve discount factors
                 const EquivalentDiscountFactors::SolverResults solverResults = setForwardRateEquivalentDiscountFactors( fixingDates, forwardRates, curveCollection, curveIndex );
-                LAString nIterations( (int) solverResults.numberOfIterations_ );
+                AQLString nIterations( (int) solverResults.numberOfIterations_ );
 
                 // Return Extra Solver Result Information in the case where we solve for equivalent discount factors
                 result = "Forward rates set for curve " + curveCollection + ", curve index " + curveIndex + ". Implied Discount Factors Solved in " + nIterations + " Iteration(s)";
@@ -122,7 +122,7 @@ namespace etrading
 				if( etrading::isEnabledCurveResults() && etrading::doesExistCurveResultsDiscountFactors( curveCollection.c_str(), curveIndex.c_str() ) )
 				{
 					AQ_REQUIRE( termEnds.size() == dummyDiscountFactors.size(), "Invalid Discount Factors, The number of payment dates and discount factors do not match." )
-					for( LAString thisIndex : curveIndices )
+					for( AQLString thisIndex : curveIndices )
 					{
 						etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection.c_str(), thisIndex.c_str() )->discountFactorResults()->setDiscountFactorsUsingTerms( termEnds, dummyDiscountFactors );
 					}
@@ -139,7 +139,7 @@ namespace etrading
 
             // Solve for equivalent discount factors that imply the forward rates provided and set the curve discount factors
             const EquivalentDiscountFactors::SolverResults solverResults = setForwardRateEquivalentDiscountFactors( fixingDates, forwardRates, curveCollection, curveIndex );
-            LAString nIterations( (int) solverResults.numberOfIterations_ );
+            AQLString nIterations( (int) solverResults.numberOfIterations_ );
 
 			// Return Extra Solver Result Information in the case where we solve for equivalent discount factors
 			result = "Forward rates set for curve " + curveCollection + ", curve index " + curveIndex + ". Implied Discount Factors Solved in " + nIterations + " Iteration(s)";
@@ -156,8 +156,8 @@ namespace etrading
 	*  @param [in]		discountFactors		        The new discount factors
     *  @param [in]		setCorrespondingForwards	Set the corresponding forwards (for STD curves only)
 	*/
-    LAString setCurveDiscountFactors( const LAString& curveCollection,
-                                      const LAString& curveIndex,
+    AQLString setCurveDiscountFactors( const AQLString& curveCollection,
+                                      const AQLString& curveIndex,
                                       const DateVector& paymentDates,
                                       const DoubleVector& discountFactors,
                                       const bool setCorrespondingForwards )
@@ -181,7 +181,7 @@ namespace etrading
         }
 
         // Set the Discount Factors to the Curve - No dates are used here, just terms and discount factors.
-        const LAStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
+        const AQLStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
         etrading::LACurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndices,  dfInputTable );
 
         // Imply and Set Equivalent Forward Rates on STD Curve
@@ -203,13 +203,13 @@ namespace etrading
 		// Set Discount Factors in the Curve Results Object
 		if( etrading::isEnabledCurveResults() && etrading::doesExistCurveResultsDiscountFactors( curveCollection.c_str(), curveIndex.c_str() ) )
 		{
-			for( LAString thisIndex : curveIndices )
+			for( AQLString thisIndex : curveIndices )
 			{
 				etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection.c_str(), thisIndex.c_str() )->discountFactorResults()->setDiscountFactors( paymentDates, discountFactors );
 			}
 		}
 
-        LAString result =  "Discount Factors set for curve " + curveCollection + ", curve index " + curveIndex;
+        AQLString result =  "Discount Factors set for curve " + curveCollection + ", curve index " + curveIndex;
         return result;
     }
 
@@ -217,7 +217,7 @@ namespace etrading
 	*  @param [in]		curveCollection		The curveCollection to use when accessing the curveIndices
 	*  @param [in]		curveIndex			The curveindex within the curve
 	*/
-    LAString setCurveDiscountFactorsToOne( const LAString& curveCollection, const LAString& curveIndex )
+    AQLString setCurveDiscountFactorsToOne( const AQLString& curveCollection, const AQLString& curveIndex )
     {
 		// Get the existing discount factor dates and values, then reset the values to one
         DiscountFactorTable results = etrading::LACurveCalibrationHelpers::getCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndex );
@@ -229,7 +229,7 @@ namespace etrading
 
 		// No Need to Set Discount Factors in the Curve Results Object since this is done in the underlying setCurveDiscountFactors() method
 		
-        LAString result = "Discount Factors set to ONE for curve " + curveCollection + ", curve index " + curveIndex;
+        AQLString result = "Discount Factors set to ONE for curve " + curveCollection + ", curve index " + curveIndex;
         return result;
     }
     
@@ -238,7 +238,7 @@ namespace etrading
 	*  @param [in]		curveIndex			    The curveindex within the curve
 	*  @param [out]		DiscountFactorTable     A discount factor table structure that contains paymentDates_ and discountFactors_
     */
-    DiscountFactorTable getCurveDiscountFactors( const LAString& curveCollection, const LAString& curveIndex )
+    DiscountFactorTable getCurveDiscountFactors( const AQLString& curveCollection, const AQLString& curveIndex )
     {
 		// Discount Factor Results are returned as an of array terms and discount factors 
         DiscountFactorTable results = etrading::LACurveCalibrationHelpers::getCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndex );
@@ -250,7 +250,7 @@ namespace etrading
 	*  @param [in]		curveIndex			    The curveindex within the curve
 	*  @param [out]		ForwardRateTable        A forward rate table structure that contains fixingDates_ and forwardRates_
     */
-    ForwardRateTable getCurveForwardRates( const LAString& curveCollection, const LAString& curveIndex )
+    ForwardRateTable getCurveForwardRates( const AQLString& curveCollection, const AQLString& curveIndex )
     {
 		// Forward Rate Results are returned as an array of terms and forward rates
         ForwardRateTable results = etrading::LACurveCalibrationHelpers::getCurveForwardRateTable( etrading::getDataInstance(), curveCollection, curveIndex );
@@ -412,7 +412,7 @@ namespace etrading
     * @param [in]		curveIndex          curve index
 	* @output			ImpliedDiscountFactorResults struct containing impliedDiscountFactors_, numberOfInterations_ and epsilon_
 	*/
-    EquivalentDiscountFactors::SolverResults setForwardRateEquivalentDiscountFactors( const DateVector & fixingDates, const DoubleVector & targetForwardRates, const LAString & curveCollection, const LAString & curveIndex )
+    EquivalentDiscountFactors::SolverResults setForwardRateEquivalentDiscountFactors( const DateVector & fixingDates, const DoubleVector & targetForwardRates, const AQLString & curveCollection, const AQLString & curveIndex )
     {
         // Validate Input Dimensions
         AQ_REQUIRE( fixingDates.size() == targetForwardRates.size(), "Convert Forwards to Discount Factors: Invalid Input - Inconsistent number of fixing dates and forward rates" )
@@ -474,7 +474,7 @@ namespace etrading
 
 			// For each iteration set the estimated discount factors to the curve to update the implied forwards
 			// Only Set a single curveIndex, not the entire curve index alias list, we update all index aliases at the end of the routine only rather than on every solver iteration
-			etrading::LACurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, LAStringVector( 1, curveIndex ), solverDiscountFactorTable );
+			etrading::LACurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, AQLStringVector( 1, curveIndex ), solverDiscountFactorTable );
 
 			// Set Discount Factors in the Curve Results Object since required for implied forward rates
 			// Only Set a single curveIndex, not the entire curve index alias list, we update all index aliases at the end of the routine only rather than on every solver iteration
@@ -539,7 +539,7 @@ namespace etrading
 		{
 			// Restore Original DFs and Throw 
             // Only Reset the single solver curveIndex, not the entire curve index alias list, since we only used one curveIndex for solving purposes
-            etrading::LACurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, LAStringVector( 1, curveIndex ), originalDFs );
+            etrading::LACurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, AQLStringVector( 1, curveIndex ), originalDFs );
 
 			// Set Discount Factors in the Curve Results Object
 			if( etrading::isEnabledCurveResults() && etrading::doesExistCurveResultsDiscountFactors( curveCollection.c_str(), curveIndex.c_str() ) )
@@ -551,13 +551,13 @@ namespace etrading
         }
 
 		// Set the results for the entire curve index alias list
-		const LAStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
+		const AQLStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
 		etrading::LACurveCalibrationHelpers::setCurveDiscountFactorTable( etrading::getDataInstance(), curveCollection, curveIndices, solverDiscountFactorTable );
 
 		// Set Discount Factors in the Curve Results Object for the entire curve index alias list
 		if( etrading::isEnabledCurveResults() && etrading::doesExistCurveResultsDiscountFactors( curveCollection.c_str(), curveIndex.c_str() ) )
 		{
-			for( LAString thisIndex:curveIndices )
+			for( AQLString thisIndex:curveIndices )
 			{
 				etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection.c_str(), thisIndex.c_str() )->discountFactorResults()->setDiscountFactorsUsingTerms( solverDiscountFactorTable.terms_, solverDiscountFactorTable.discountFactors_ );
 			}
@@ -581,7 +581,7 @@ namespace etrading
 	*  @param [in]		paymentDates        Discount Factor Payment Dates
 	*  @param [in]		discountFactors		Discount Factor Values
 	*/
-    void implyAndSetForwardRatesFromDiscountFactors( const LAString& curveCollection, const LAString& curveIndex, const DateVector& paymentDates, const DoubleVector& discountFactors )
+    void implyAndSetForwardRatesFromDiscountFactors( const AQLString& curveCollection, const AQLString& curveIndex, const DateVector& paymentDates, const DoubleVector& discountFactors )
     {
 		AQ_REQUIRE( discountFactors.size() >= 3, "Invalid Discount Factors - At least 3 discount factors required" )
         
@@ -607,7 +607,7 @@ namespace etrading
         forwardRateTable.forwardRates_      = impliedForwardRates;
 
         // Set Implied Forward Rates on STD Curve
-        const LAStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
+        const AQLStringVector curveIndices = curveIndexAliasList( curveCollection, curveIndex );
         etrading::LACurveCalibrationHelpers::setCurveForwardRateTable( etrading::getDataInstance(), curveCollection, curveIndices, forwardRateTable );
     }
 

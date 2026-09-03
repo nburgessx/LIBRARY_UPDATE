@@ -41,7 +41,7 @@ namespace etrading
 	* @param[in]	recoveryRate			The estimated amount of capital recovered after default
 	* @param[in]	includeAccruedInterest	Specifies whether cashflows should include the accruedInterest
 	*/
-	void ProtectionLeg::setSurvivalProbabilitiesUsingHazardRate( const LADate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest )
+	void ProtectionLeg::setSurvivalProbabilitiesUsingHazardRate( const AQLDate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest )
 	{
 		// OK to use static_pointer_cast here because we know the schedule type for sure (the ProtectionLeg created it).
 		std::shared_ptr<ProtectionSchedule> protectionSchedule = std::static_pointer_cast<ProtectionSchedule> ( schedule_ );
@@ -53,7 +53,7 @@ namespace etrading
 	* @param[in]	asOfDate				The valuation date of the leg
 	* @param[in]	creditModel				The calibrated credit model
 	*/
-	void ProtectionLeg::setSurvivalProbabilitiesUsingCreditModel( const LADate& asOfDate, const CreditModel& creditModel )
+	void ProtectionLeg::setSurvivalProbabilitiesUsingCreditModel( const AQLDate& asOfDate, const CreditModel& creditModel )
 	{
 		// OK to use static_pointer_cast here because we know the schedule type for sure (the ProtectionLeg created it).
 		std::shared_ptr<ProtectionSchedule> protectionSchedule = std::static_pointer_cast<ProtectionSchedule> ( schedule_ );
@@ -69,10 +69,10 @@ namespace etrading
 	*				When set to TRUE (pay on next coupon date ), the PV should match the analytic formula.
 	*  @returns	The calculated PV value
 	*/
-	double ProtectionLeg::riskFreePVtoStoppingDate( DataProvider& dataProvider, const CreditModel& creditModel, const LADate& stoppingDate, const double discountFactorAtStoppingDate, const bool payDefaultCashflowsOnNextCouponDate )
+	double ProtectionLeg::riskFreePVtoStoppingDate( DataProvider& dataProvider, const CreditModel& creditModel, const AQLDate& stoppingDate, const double discountFactorAtStoppingDate, const bool payDefaultCashflowsOnNextCouponDate )
 	{
-		const LADate effectiveDate = schedule_->getEffectiveDate();
-		const LADate maturityDate  = schedule_->getMaturityDate();
+		const AQLDate effectiveDate = schedule_->getEffectiveDate();
+		const AQLDate maturityDate  = schedule_->getMaturityDate();
 
 		if ( (stoppingDate < effectiveDate ) || ( stoppingDate > maturityDate ) )
 		{

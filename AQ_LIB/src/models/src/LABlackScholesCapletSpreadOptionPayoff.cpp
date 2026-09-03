@@ -24,10 +24,10 @@
 
 
 #include "LABlackScholesCapletSpreadOptionPayoff.h"
-#include "LABasic.h"
-#include "LADist.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
 #include "LAAnalyticFormula.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 
 using namespace std;
 //================ LABlackScholesCapletSpreadOption ===================================
@@ -51,7 +51,7 @@ LABlackScholesCapletSpreadOption::~LABlackScholesCapletSpreadOption()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LABlackScholesCapletSpreadOption::clone() const
 {
     try 
@@ -60,7 +60,7 @@ LABlackScholesCapletSpreadOption::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -86,36 +86,36 @@ LABlackScholesCapletSpreadOption::getType() const
 }
 
 
-LAStringVector
+AQLStringVector
 LABlackScholesCapletSpreadOption::getOptionTypeVector()
 {
-	LAStringVector ret(2);
-	ret[0] = LAString(CALL);
-	ret[1] = LAString(CALL);
+	AQLStringVector ret(2);
+	ret[0] = AQLString(CALL);
+	ret[1] = AQLString(CALL);
 	mOptionType = ret;
 
 	return ret;
 }
 
 
-LAStringVector 
-LABlackScholesCapletSpreadOption::getBSComponentVector(LAString risktype) const
+AQLStringVector 
+LABlackScholesCapletSpreadOption::getBSComponentVector(AQLString risktype) const
 {
-	LAStringVector ret(2);
-	ret[0] = LAString(BK) + risktype + LAString(CALL);
-	ret[1] = LAString(BK) + risktype + LAString(CALL);
+	AQLStringVector ret(2);
+	ret[0] = AQLString(BK) + risktype + AQLString(CALL);
+	ret[1] = AQLString(BK) + risktype + AQLString(CALL);
 
 	return ret;
 
 }
 
 
-LAStringVector 
-LABlackScholesCapletSpreadOption::getBSPayoffComponentVector(LAString risktype) const
+AQLStringVector 
+LABlackScholesCapletSpreadOption::getBSPayoffComponentVector(AQLString risktype) const
 {
-	LAStringVector ret(2);
-	ret[0] = LAString(BKPAYOFF) + risktype + LAString(CALL);
-	ret[1] = LAString(BKPAYOFF) + risktype + LAString(CALL);
+	AQLStringVector ret(2);
+	ret[0] = AQLString(BKPAYOFF) + risktype + AQLString(CALL);
+	ret[1] = AQLString(BKPAYOFF) + risktype + AQLString(CALL);
 
 	return ret;
 
@@ -130,10 +130,10 @@ double
 LABlackScholesCapletSpreadOption::operator()(const DoubleArray& x) const
 {
 	if (x.size() + 2 != mParam.size() || mParam.size() < 2)
-		throw LACoreInvalidData("BSOption size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("BSOption size error",__FILE__,__LINE__);
 
 	if (mParam[0] == 0.)
-		throw LACoreInvalidData("BSOption coefficient error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("BSOption coefficient error",__FILE__,__LINE__);
 	double gearing = mParam[0];
 
 	
@@ -144,7 +144,7 @@ LABlackScholesCapletSpreadOption::operator()(const DoubleArray& x) const
 		rate += mParam[i] * x[i] / gearing;
 	}
 //#ifdef ZEROFLOOR
-//	rate = LAMath::max(rate, MIN_RATE);
+//	rate = AQLMath::max(rate, MIN_RATE);
 //#endif	
 	//option payoff expressed by bying cap1 and selling cap2
 	std::vector<double > ret(2);
@@ -158,11 +158,11 @@ LABlackScholesCapletSpreadOption::operator()(const DoubleArray& x) const
 		getForwardShiftParam(slideParam);
 		if(slideParam->F > MIN_RATE && slideParam->K > MIN_RATE && !mFixedPayOffs[j])
 		{
-			ret[j] = mBSAnalyticMethod[j]->calc(*(slideParam)) * LAMath::abs(gearing);
+			ret[j] = mBSAnalyticMethod[j]->calc(*(slideParam)) * AQLMath::abs(gearing);
 		}
 		else
 		{
-			ret[j] = mBSPayoffMethod[j]->calc(*(slideParam)) * LAMath::abs(gearing);
+			ret[j] = mBSPayoffMethod[j]->calc(*(slideParam)) * AQLMath::abs(gearing);
 		}
 
 			// if gearing is negative, option value should be the value converted through put-call parity condition.
@@ -174,9 +174,9 @@ LABlackScholesCapletSpreadOption::operator()(const DoubleArray& x) const
 			else if (mOptionType[j] == PUT)
 				sgn = -1.;
 			else
-				throw LACoreInvalidData("Option type error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("Option type error",__FILE__,__LINE__);
 
-		ret[j] = ret[j] - sgn * slideParam->Nu * (slideParam->F - slideParam->K) * LAMath::abs(gearing);
+		ret[j] = ret[j] - sgn * slideParam->Nu * (slideParam->F - slideParam->K) * AQLMath::abs(gearing);
 		}
 
 		delete slideParam;

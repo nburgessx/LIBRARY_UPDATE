@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LAQuantLibArray.h"
 #include "LAQuantLibConstraint.h"
 #include <ql/math/optimization/problem.hpp>

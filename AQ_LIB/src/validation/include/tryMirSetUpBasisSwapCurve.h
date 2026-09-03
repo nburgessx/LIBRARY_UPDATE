@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -20,16 +20,16 @@ namespace validation
 	*  @param [in]		fraConv			FRA Conventions
 	*  @param [in]		fraRates		FRA market quotes
     */
-    const LAString tryMirSetUpBasisSwapCurve( LADataInstance* dataInstance,
-            const LAString& curveID,
-            const LAString& marketName,
-            const LAStringMatrix& generalProps,
-            const LAStringMatrix& basisConv,
-            const LAStringMatrix& basisRates,
-            const LAString& curveNames,
-            const LAStringMatrix& fwdConv,
-            const LAStringMatrix& fwdFXs,
-            const LAStringMatrix& spotFXs,
-			const LAStringMatrix& fraConv = LAStringMatrix(),
-			const LAStringMatrix& fraRates = LAStringMatrix());
+    const AQLString tryMirSetUpBasisSwapCurve( AQLDataInstance* dataInstance,
+            const AQLString& curveID,
+            const AQLString& marketName,
+            const AQLStringMatrix& generalProps,
+            const AQLStringMatrix& basisConv,
+            const AQLStringMatrix& basisRates,
+            const AQLString& curveNames,
+            const AQLStringMatrix& fwdConv,
+            const AQLStringMatrix& fwdFXs,
+            const AQLStringMatrix& spotFXs,
+			const AQLStringMatrix& fraConv = AQLStringMatrix(),
+			const AQLStringMatrix& fraRates = AQLStringMatrix());
 }

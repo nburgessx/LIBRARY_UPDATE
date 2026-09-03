@@ -5,12 +5,12 @@
 #pragma interface
 #endif
 
-#include <LADataInstance.h>
-#include <LAString.h>
-#include <LADate.h>
-#include <LACoreTemplateType.h>
+#include <AQLDataInstance.h>
+#include <AQLString.h>
+#include <AQLDate.h>
+#include <AQLCoreTemplateType.h>
 #include <ConstantDeclarations.h>
-#include "LAPriceDataSlidingRule.h"
+#include "AQLPriceDataSlidingRule.h"
 
 class LAMathSABR;
 //////////////////////////
@@ -109,133 +109,133 @@ class LAMathSwaptionVolUtility
 friend class LAMathLeastSquareSABRCapFloorCostFuncQlib;
 
 public:
-    static void setUpConvention( LADataInstance* dataInstance, const LAString& convID, LAStringMatrix& convMat );
+    static void setUpConvention( AQLDataInstance* dataInstance, const AQLString& convID, AQLStringMatrix& convMat );
 
-	static void setCurveID(LADataInstance* dataInstance, const LAString& name, const LAString& swapConvID, const LAString& capConvID);
+	static void setCurveID(AQLDataInstance* dataInstance, const AQLString& name, const AQLString& swapConvID, const AQLString& capConvID);
 
-	static void setCurveID2(LADataInstance* dataInstance, const LAString& name, LAStringMatrix& curveMat);
+	static void setCurveID2(AQLDataInstance* dataInstance, const AQLString& name, AQLStringMatrix& curveMat);
 
-	static void setCurveID2(LADataInstance* dataInstance, const LAString& name, const LAStringVector& sTenor, LAStringMatrix& curveMat);
+	static void setCurveID2(AQLDataInstance* dataInstance, const AQLString& name, const AQLStringVector& sTenor, AQLStringMatrix& curveMat);
 
-	static void setUpSABRGrid( LADataInstance* dataInstance, const LAString& matID, const LAString& convID, LAStringMatrix& mat );
+	static void setUpSABRGrid( AQLDataInstance* dataInstance, const AQLString& matID, const AQLString& convID, AQLStringMatrix& mat );
 
-    static void setUpSwaptionVol( LADataInstance* dataInstance, const LAString& matID, LAStringMatrix& volMat, LAStringMatrix& strikeMat , LAStringMatrix& sign);
+    static void setUpSwaptionVol( AQLDataInstance* dataInstance, const AQLString& matID, AQLStringMatrix& volMat, AQLStringMatrix& strikeMat , AQLStringMatrix& sign);
 
-	static void setUpForwardShiftValue(LADataInstance* dataInstance, LAString& currencyID, double forwardshiftvalue = 0.);
+	static void setUpForwardShiftValue(AQLDataInstance* dataInstance, AQLString& currencyID, double forwardshiftvalue = 0.);
 
-	static double getForwardShiftValue(LADataInstance* dataInstance, LAString& CurrencyID );
+	static double getForwardShiftValue(AQLDataInstance* dataInstance, AQLString& CurrencyID );
 
-    static double lookUpSwapGrid(LADataInstance* dataInstance, const LAString& matID, LAString expPoint, LAString tenorPoint);
+    static double lookUpSwapGrid(AQLDataInstance* dataInstance, const AQLString& matID, AQLString expPoint, AQLString tenorPoint);
 
-    static double lookUpSwapGrid(LADataInstance* dataInstance, const LAString& matID, LADate expDate, LAString tenorPoint);
+    static double lookUpSwapGrid(AQLDataInstance* dataInstance, const AQLString& matID, AQLDate expDate, AQLString tenorPoint);
 
-    static void outPutSABRGrid( LADataInstance* dataInstance, const LAString& matID, DoubleVector& ret, size_t& row, size_t& colum );
+    static void outPutSABRGrid( AQLDataInstance* dataInstance, const AQLString& matID, DoubleVector& ret, size_t& row, size_t& colum );
     
-    static void calibrateSABRMatrix( LADataInstance* dataInstance, const LAString& approxMethod, const std::vector<bool>& calibFlg, const LAString& calibMethod, const LAString& curveSetID, const LAString& alphaID, const LAString& betaID, 
-									 const LAString& nuID, const LAString& rhoID, const LAString& swapConvID, 
-									 const LAString& capConvID, const LAStringVector& swapVolID, /*LAStringMatrix sabrLimiter,*/
-									 const LAString& target, const DoubleVector& weight, const IntVector& sgn, const LAString& forwardID, const double forwardShiftValue, 
-									 const LAString& numeraireID, LAString& msg, const BoolMatrix *calibFlgMtx = 0, bool isLognormal = true);
+    static void calibrateSABRMatrix( AQLDataInstance* dataInstance, const AQLString& approxMethod, const std::vector<bool>& calibFlg, const AQLString& calibMethod, const AQLString& curveSetID, const AQLString& alphaID, const AQLString& betaID, 
+									 const AQLString& nuID, const AQLString& rhoID, const AQLString& swapConvID, 
+									 const AQLString& capConvID, const AQLStringVector& swapVolID, /*AQLStringMatrix sabrLimiter,*/
+									 const AQLString& target, const DoubleVector& weight, const IntVector& sgn, const AQLString& forwardID, const double forwardShiftValue, 
+									 const AQLString& numeraireID, AQLString& msg, const BoolMatrix *calibFlgMtx = 0, bool isLognormal = true);
 
 	static void calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatrix& betaMat, DoubleMatrix& nuMat, DoubleMatrix& rhoMat,
-									const LAString& approxMethod, const std::vector<bool>& calibFlg, const LAString& calibMethod, 
+									const AQLString& approxMethod, const std::vector<bool>& calibFlg, const AQLString& calibMethod, 
 									const std::vector<DoubleMatrix >& marketVol, const std::vector<DoubleMatrix >& marketStrike, const DoubleVector& expiryTerm,
-									const LAString& target, const DoubleVector& weight, const IntVector& sgn, const double solverEpsilon,
+									const AQLString& target, const DoubleVector& weight, const IntVector& sgn, const double solverEpsilon,
 									const DoubleMatrix& forwardMat, const double forwardShiftValue, const DoubleMatrix& numeraireMat,
 									const DoubleMatrix& atmMarketVol, const bool alphaFromAtmVol,
-									LAString& msg, const BoolMatrix *calibFlgMtx = 0, const bool isLognormal = true);
+									AQLString& msg, const BoolMatrix *calibFlgMtx = 0, const bool isLognormal = true);
 
-	static void calibrateSABRMatrix( LADataInstance* dataInstance, const LAString& curveSetID, const LAString& alphaID, const LAString& betaID,
-									 const LAString& nuID, const LAString& rhoID, const LAString& swapConvID, 
-									 const LAString& capConvID, const LAStringVector& swapVolID, LAStringMatrix sabrLimiter, 
-									 LAString target, const DoubleVector& weight, const LAString& forwardID, const double forwardShiftValue );
+	static void calibrateSABRMatrix( AQLDataInstance* dataInstance, const AQLString& curveSetID, const AQLString& alphaID, const AQLString& betaID,
+									 const AQLString& nuID, const AQLString& rhoID, const AQLString& swapConvID, 
+									 const AQLString& capConvID, const AQLStringVector& swapVolID, AQLStringMatrix sabrLimiter, 
+									 AQLString target, const DoubleVector& weight, const AQLString& forwardID, const double forwardShiftValue );
 
-	static void calibrateSABRMatrixCapFloor(LADataInstance* dataInstance, const LAString& approxMethod, const std::vector<bool>& calibFlg, const LAString& calibMethod, const LAString& curveSetID, const LAString& alphaID, const LAString& betaID,
-									const LAString& nuID, const LAString& rhoID, const LAString& swapConvID,
-									const LAString& capConvID, const LAStringVector& swapVolID, const LAString& target, const DoubleVector& weight,
-		                            const IntVector& sgn_in, const double forwardShiftValue, LAString& msg, const BoolMatrix *calibFlgMtx = 0);
+	static void calibrateSABRMatrixCapFloor(AQLDataInstance* dataInstance, const AQLString& approxMethod, const std::vector<bool>& calibFlg, const AQLString& calibMethod, const AQLString& curveSetID, const AQLString& alphaID, const AQLString& betaID,
+									const AQLString& nuID, const AQLString& rhoID, const AQLString& swapConvID,
+									const AQLString& capConvID, const AQLStringVector& swapVolID, const AQLString& target, const DoubleVector& weight,
+		                            const IntVector& sgn_in, const double forwardShiftValue, AQLString& msg, const BoolMatrix *calibFlgMtx = 0);
 
-	static DoubleArray calibrateSABR( const LAString& approxMethod, const std::vector<bool>& calibFlg, const LAString& calibMethod,
-									  double alpha, double beta, double nu, double rho, double forward, LAString expiryPoint,
+	static DoubleArray calibrateSABR( const AQLString& approxMethod, const std::vector<bool>& calibFlg, const AQLString& calibMethod,
+									  double alpha, double beta, double nu, double rho, double forward, AQLString expiryPoint,
 									  double numeraire, const DoubleArray& strikes, const DoubleArray& vols, 
-									  /*LAStringMatrix sabrLimiter,*/ const LAString& target, const DoubleVector& weight, const IntVector& sgn );
-    static DoubleArray calibrateSABR( double alpha, double beta, double nu, double rho, double forward, LAString expiryPoint,
+									  /*AQLStringMatrix sabrLimiter,*/ const AQLString& target, const DoubleVector& weight, const IntVector& sgn );
+    static DoubleArray calibrateSABR( double alpha, double beta, double nu, double rho, double forward, AQLString expiryPoint,
                                       double numeraire, const DoubleArray& strikes, const DoubleArray& vols, 
-                                      LAStringMatrix sabrLimiter, LAString target, const DoubleVector& weight );
+                                      AQLStringMatrix sabrLimiter, AQLString target, const DoubleVector& weight );
 
 
-    static void calibrateSABRATMFix( LADataInstance* dataInstance, const LAString& curveSetID, const LAString& alphaID, const LAString& betaID, 
-									 const LAString& nuID, const LAString& rhoID, const LAString& swapConvID, 
-									 const LAString& capConvID, const LAString& ATMVolID, const LAStringVector& swapVolID, 
-									 LAStringMatrix sabrLimiter, const LAString& target, const DoubleVector& weight, 
-									 const LAString& forwardID, const double forwardShiftValue );
+    static void calibrateSABRATMFix( AQLDataInstance* dataInstance, const AQLString& curveSetID, const AQLString& alphaID, const AQLString& betaID, 
+									 const AQLString& nuID, const AQLString& rhoID, const AQLString& swapConvID, 
+									 const AQLString& capConvID, const AQLString& ATMVolID, const AQLStringVector& swapVolID, 
+									 AQLStringMatrix sabrLimiter, const AQLString& target, const DoubleVector& weight, 
+									 const AQLString& forwardID, const double forwardShiftValue );
 
-    static double getSABRAlpha( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, const LAString& volID, 
-                                const LAString& forwardID, const LAString& alphaID, const LAString& betaID, const LAString& nuID, 
-                                const LAString& rhoID );
+    static double getSABRAlpha( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, const AQLString& volID, 
+                                const AQLString& forwardID, const AQLString& alphaID, const AQLString& betaID, const AQLString& nuID, 
+                                const AQLString& rhoID );
 
-    static double getSABRAlpha2( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, double vol, 
-                                 const LAString& alphaID, const LAString& betaID, const LAString& nuID, const LAString& rhoID, 
-                                 const LAString& curveID, const LAString& convID , const LAString& foreCurveName, 
-								 const LAString& dfCurveName);
+    static double getSABRAlpha2( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, double vol, 
+                                 const AQLString& alphaID, const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, 
+                                 const AQLString& curveID, const AQLString& convID , const AQLString& foreCurveName, 
+								 const AQLString& dfCurveName);
 
-    static double getSABRVol( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, double strike, 
-                              const LAString& fowardID, const LAString& alphaID, const LAString& betaID, const LAString& nuID, 
-                              const LAString& rhoID, const LAString& approxMethod = "Antonov", const double shift = 0.0, bool isLognormal = true);
+    static double getSABRVol( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, double strike, 
+                              const AQLString& fowardID, const AQLString& alphaID, const AQLString& betaID, const AQLString& nuID, 
+                              const AQLString& rhoID, const AQLString& approxMethod = "Antonov", const double shift = 0.0, bool isLognormal = true);
 
-	static double calcSABRVol(const double alpha, const double beta, const double nu, const double rho, const double expiryTerm, const double strike, const double forward, const double shift, const LAString& approxMethod, bool isLognormal = true);
+	static double calcSABRVol(const double alpha, const double beta, const double nu, const double rho, const double expiryTerm, const double strike, const double forward, const double shift, const AQLString& approxMethod, bool isLognormal = true);
 
 	static double calcSABRParam(const DoubleMatrix& paramMat, const double expiryTerm, const double tenorTerm, const DoubleVector& expiryVec, const DoubleVector& tenorVec);
 
-	static double getSABRVol2( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, double strike, const LAString& alphaID,
-                               const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& curveID, 
-							   const LAString& convID, LAString foreCurveName = STD, LAString dfCurveName = STD, const LAString& approxMethod = "Antonov");
+	static double getSABRVol2( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, double strike, const AQLString& alphaID,
+                               const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& curveID, 
+							   const AQLString& convID, AQLString foreCurveName = STD, AQLString dfCurveName = STD, const AQLString& approxMethod = "Antonov");
 
-	static double getSABRVol3( LADataInstance* dataInstance, double expPoint, double tenorPoint, double forward, double strike, const LAString& alphaID,
-							   const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& approxMethod = "Antonov");
+	static double getSABRVol3( AQLDataInstance* dataInstance, double expPoint, double tenorPoint, double forward, double strike, const AQLString& alphaID,
+							   const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& approxMethod = "Antonov");
 
-    static double getSABRVol4( LADataInstance* dataInstance, double expTerm, const LAString& tenorPoint, double forward, double strike, const LAString& alphaID,
-                               const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& curveID, 
-							   const LAString& convID, LAString foreCurveName = STD, LAString dfCurveName = STD,const LAString& approxMethod = "Antonov");
+    static double getSABRVol4( AQLDataInstance* dataInstance, double expTerm, const AQLString& tenorPoint, double forward, double strike, const AQLString& alphaID,
+                               const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& curveID, 
+							   const AQLString& convID, AQLString foreCurveName = STD, AQLString dfCurveName = STD,const AQLString& approxMethod = "Antonov");
 
 
-    static double getSABRPrem( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, double strike, int sgn,
-                               const LAString& fowardID, const LAString& numeraireID, const LAString& alphaID, const LAString& betaID, const LAString& nuID, 
-                               const LAString& rhoID, const LAString& approxMethod = "Antonov", const double shift = 0.0, bool isLognormal = true);
+    static double getSABRPrem( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, double strike, int sgn,
+                               const AQLString& fowardID, const AQLString& numeraireID, const AQLString& alphaID, const AQLString& betaID, const AQLString& nuID, 
+                               const AQLString& rhoID, const AQLString& approxMethod = "Antonov", const double shift = 0.0, bool isLognormal = true);
 
-	static double getSABRPrem2( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, double strike, int sgn, const LAString& alphaID,
-                               const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& curveID, 
-							   const LAString& convID, LAString foreCurveName = STD, LAString dfCurveName = STD, const LAString& approxMethod = "Antonov");
+	static double getSABRPrem2( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, double strike, int sgn, const AQLString& alphaID,
+                               const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& curveID, 
+							   const AQLString& convID, AQLString foreCurveName = STD, AQLString dfCurveName = STD, const AQLString& approxMethod = "Antonov");
 	
-	static double getSABRPrem3( LADataInstance* dataInstance, double expPoint, double tenorPoint, double forward, double numeraire, double strike, int sgn, const LAString& alphaID,
-							   const LAString& betaID, const LAString& nuID, const LAString& rhoID,const LAString& approxMethod = "Antonov");
+	static double getSABRPrem3( AQLDataInstance* dataInstance, double expPoint, double tenorPoint, double forward, double numeraire, double strike, int sgn, const AQLString& alphaID,
+							   const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID,const AQLString& approxMethod = "Antonov");
 
 
 
-	static DoubleMatrix getSABRVolMatrix( LADataInstance* dataInstance, const LAString& strikeID, const LAString& forwardID, const LAString& alphaID,
-										  const LAString& betaID, const LAString& nuID, const LAString& rhoID );
+	static DoubleMatrix getSABRVolMatrix( AQLDataInstance* dataInstance, const AQLString& strikeID, const AQLString& forwardID, const AQLString& alphaID,
+										  const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID );
 //private:
-	static double getExpiryPoint(LAString str, const LADate& asOfDate, const LAPriceDataSlidingRule& slr, const LAPriceDataCalendar& cal);
+	static double getExpiryPoint(AQLString str, const AQLDate& asOfDate, const AQLPriceDataSlidingRule& slr, const AQLPriceDataCalendar& cal);
 
-	static LADate getExpiryPoint2(LAString str, const LADate& asOfDate, const LAPriceDataSlidingRule& slr, const LAPriceDataCalendar& cal);
+	static AQLDate getExpiryPoint2(AQLString str, const AQLDate& asOfDate, const AQLPriceDataSlidingRule& slr, const AQLPriceDataCalendar& cal);
 
-	static double getForward(LADataInstance* dataInstance, const LADate& expiry, const LAString& tenor, const LAString& curveID, const LAString& convID, 
-							 LAString foreCurveName = STD, LAString dfCurveName = STD, bool isFWDInter = true);
+	static double getForward(AQLDataInstance* dataInstance, const AQLDate& expiry, const AQLString& tenor, const AQLString& curveID, const AQLString& convID, 
+							 AQLString foreCurveName = STD, AQLString dfCurveName = STD, bool isFWDInter = true);
 
-	static double getNumeraire(LADataInstance* dataInstance, const LADate& expiry, const LAString& tenor, const LAString& curveID, const LAString& convID, 
-							   LAString curveName = STD);
+	static double getNumeraire(AQLDataInstance* dataInstance, const AQLDate& expiry, const AQLString& tenor, const AQLString& curveID, const AQLString& convID, 
+							   AQLString curveName = STD);
 
-	static LADate getLADate(LAString date);
+	static AQLDate getLADate(AQLString date);
 
-	static double getTenorPoint(LAString str);
+	static double getTenorPoint(AQLString str);
 
-	static void getSABRParam(DoubleVector& expiry, DoubleVector& tenor, const LAString& alphaID, const LAString& betaID, 
-							 const LAString& nuID, const LAString& rhoID);
+	static void getSABRParam(DoubleVector& expiry, DoubleVector& tenor, const AQLString& alphaID, const AQLString& betaID, 
+							 const AQLString& nuID, const AQLString& rhoID);
 
-    static void matirixCheck( LADataInstance* dataInstance, const LAString& entityName, const LAString& entityName2, bool isVolMat = false );
+    static void matirixCheck( AQLDataInstance* dataInstance, const AQLString& entityName, const AQLString& entityName2, bool isVolMat = false );
 
 private:
-    static LAMathSABR* createSABR(const LAString& approxMethod, double alpha, double beta, double nu, double rho, bool isLognormal = true);
+    static LAMathSABR* createSABR(const AQLString& approxMethod, double alpha, double beta, double nu, double rho, bool isLognormal = true);
 
 	LAMathSwaptionVolUtility(void);
 	~LAMathSwaptionVolUtility(void);

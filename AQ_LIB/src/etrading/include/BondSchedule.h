@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "Schedule.h"
 #include "BondCurves.h"
 
@@ -22,13 +22,13 @@ namespace etrading
         // It it is not the first cashflow, the priorDate is the payment date before the first active coupon (payment) date
         // If it is the first cashflow, 1) when isPriorDtWithFullCouponPeriod is true (used in bond yield calculation), then priorDate is the prior date with full coupon period from the first active payment date. 
         //                              2) when isPriorDtWithFullCouponPeriod is false (used in bondAccruedInterest calculation), then priorDate is first accrualStartDate (effective date).
-		BondActiveCouponDates getBondFirstActiveCouponDates( const LADate& settlementDate, bool isPriorDtWithFullCouponPeriod) const;
+		BondActiveCouponDates getBondFirstActiveCouponDates( const AQLDate& settlementDate, bool isPriorDtWithFullCouponPeriod) const;
 
         //Get the front stub type enum based on the first coupon date, or get the end stub type enum based on the last coupon date
         StubTypeEnum getBondStubTypeEnum(bool isFrontStub) const;
 
-		double calculateBondAccruedInterest(const LADate& settlementDate, const BondYieldParameters & bondYieldParameters) const;
-        int calculateBondAccruedInterestDays( const LADate& settlementDate, const BondYieldParameters & bondYieldParameters) const;
+		double calculateBondAccruedInterest(const AQLDate& settlementDate, const BondYieldParameters & bondYieldParameters) const;
+        int calculateBondAccruedInterestDays( const AQLDate& settlementDate, const BondYieldParameters & bondYieldParameters) const;
 		
         // For Bonds: Update the Cashflow Yields and Forward Rates                                                                                           
         void initializeDataProviderWithYieldData( DataProvider& dataProvider, const BondYieldParameters & bondYieldParameters, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, const std::shared_ptr<BondActiveCouponDates>& activeCouponDatesPtr, const std::vector< FloatRateData >& floatRates = std::vector< FloatRateData >()) const;
@@ -44,7 +44,7 @@ namespace etrading
 		void initializeDataProviderWithBondCurve( DataProvider& dataProvider, const BondYieldParameters & bondYieldParameters, const BondCurve& bondCurve, const std::shared_ptr<BondActiveCouponDates>& activeCouponDatesPtr, const std::vector< FloatRateData >& floatRates = std::vector< FloatRateData >() ) const;
 
 		// Override
-		void initializeDataProviderWithCurveData(DataProvider& dataProvider, const LAString& discountCurve, const std::vector< FloatRateData >& floatRates = std::vector< FloatRateData >()) const;
+		void initializeDataProviderWithCurveData(DataProvider& dataProvider, const AQLString& discountCurve, const std::vector< FloatRateData >& floatRates = std::vector< FloatRateData >()) const;
 
 		const FrequencyEnum getYieldFrequency() const { return yieldFrequency_; };
 		const BondCalculationTypeEnum getBondCalculationType() const { return bondCalculationType_; };
@@ -55,10 +55,10 @@ namespace etrading
 		virtual void calculateScheduleDates();
 
 		//Override
-		LADate getMaturityDate() const;
+		AQLDate getMaturityDate() const;
 
 		//Include cashflow's couponRate when settlementDate >= exDividendDate
-		bool getFirstActiveCashflowIncludeCouponRate(const CashflowPtr& firstActiveCashflow, const LADate& settleDate) const;
+		bool getFirstActiveCashflowIncludeCouponRate(const CashflowPtr& firstActiveCashflow, const AQLDate& settleDate) const;
 
 		//When settlementDate >= exDividendDate, this method will set the firstActiveCashflow's includeCouponRate to false; otherwise it will be true
 		void updateIncludeCouponRates(DataProvider& dataProvider, const size_t& firstActiveCashflowIndex) const;
@@ -71,7 +71,7 @@ namespace etrading
 
 		//Input parameters
 		BondCalculationTypeEnum bondCalculationType_;
-		LAString issueDate_;
+		AQLString issueDate_;
 		double issuePrice_;			
 		double taxRate_;			
 		FrequencyEnum yieldFrequency_;			
@@ -93,13 +93,13 @@ namespace etrading
 
 	
         // Virtual payment date with full coupon period prior the given paymentDate
-        LADate getBondPriorVirtualPaymentDate(const LADate& paymentDate) const;
+        AQLDate getBondPriorVirtualPaymentDate(const AQLDate& paymentDate) const;
 
         // If the first/last cashflow has stub, calculate the yearFraction differently from the normalYearFraction.
         double calculateBondCashflowYearFraction(bool firstCashflow, bool lastCashflow) const; 
 
 		//Bond actual year fractions for TRUE yield calculation, with consideration of accrual business adjustment 
-        double calculateBondTrueYieldYearFraction(size_t cashflowIndex, const LADate& accrualStart, const LADate& accrualEnd, const LADate& paymentDate) const;
+        double calculateBondTrueYieldYearFraction(size_t cashflowIndex, const AQLDate& accrualStart, const AQLDate& accrualEnd, const AQLDate& paymentDate) const;
 
 		//Helper function to initialize the member variables
 		void initialize(const LabelValueBlock& scheduleLVB);

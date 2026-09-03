@@ -45,23 +45,23 @@ namespace validation
     *  @param[in]		showColumnHeaders				True to show column headers.
     *  @return			a matrix of floading leg/fixing leg schedules
     */
-    LAStringMatrix tryMirSwapSchedule( const LAString& accrualStartDate,
-                                     const LAString& accrualEndDateOrTenor,
-                                     const LAString& accrualDaycount,
-                                     const LAString& accrualFrequency,
-                                     const LAString& accrualSlidingRule,
-                                     const LAString& accrualCalendar,
-                                     const LAString& paymentFrequency,
-                                     const LAString& paymentSlidingRule,
-                                     const LAString& paymentCalendar,
-                                     const LAString& paymentLag,
-                                     const LAString& fixingSlidingRule,
-                                     const LAString& fixingCalendar,
-                                     const LAString& fixingLag,
-                                     const LAString& fixingAdvanceOrArrears,
-                                     const LAString& firstStub,
-                                     const LAString& lastStub,
-                                     const LAString& paymentRollDay,
+    AQLStringMatrix tryMirSwapSchedule( const AQLString& accrualStartDate,
+                                     const AQLString& accrualEndDateOrTenor,
+                                     const AQLString& accrualDaycount,
+                                     const AQLString& accrualFrequency,
+                                     const AQLString& accrualSlidingRule,
+                                     const AQLString& accrualCalendar,
+                                     const AQLString& paymentFrequency,
+                                     const AQLString& paymentSlidingRule,
+                                     const AQLString& paymentCalendar,
+                                     const AQLString& paymentLag,
+                                     const AQLString& fixingSlidingRule,
+                                     const AQLString& fixingCalendar,
+                                     const AQLString& fixingLag,
+                                     const AQLString& fixingAdvanceOrArrears,
+                                     const AQLString& firstStub,
+                                     const AQLString& lastStub,
+                                     const AQLString& paymentRollDay,
                                      bool showColumnHeaders )
     {
         VALID_EXCEPTION_START
@@ -94,31 +94,31 @@ namespace validation
         etrading::validateStringEmptiness( accrualEndDateOrTenor,	"#Error: The'accrualEndDateOrTenor' is missing." );
         etrading::validateStringEmptiness( accrualFrequency,		"#Error: The'accrualFrequency' is missing." );
 
-        LADate accrualStartDt = etrading::stringToDate( accrualStartDate, "#Error: Invalid 'AccrualStartDate'." );
+        AQLDate accrualStartDt = etrading::stringToDate( accrualStartDate, "#Error: Invalid 'AccrualStartDate'." );
 
-        LADate firstSt;
+        AQLDate firstSt;
         if ( firstStub.size() > 0 )
         {
             firstSt = etrading::stringToDate( firstStub, "#Error: Invalid 'FirstStubDate'." );
         }
 
-        LADate lastSt;
+        AQLDate lastSt;
         if ( lastStub.size() > 0 )
         {
             lastSt = etrading::stringToDate( lastStub, "#Error: Invalid 'LastStubDate'." );
         }
 
-        LADate accrualEndDt  = etrading::validateMaturityDate( accrualStartDt, accrualEndDateOrTenor );
+        AQLDate accrualEndDt  = etrading::validateMaturityDate( accrualStartDt, accrualEndDateOrTenor );
 
-        LAString payLag( etrading::getDefaultValueForEmptyString( paymentLag, "0D" ) );
-        LAString fixLag( etrading::getDefaultValueForEmptyString( fixingLag, "0D" ) );
+        AQLString payLag( etrading::getDefaultValueForEmptyString( paymentLag, "0D" ) );
+        AQLString fixLag( etrading::getDefaultValueForEmptyString( fixingLag, "0D" ) );
 
 
         // Validate the 'fixingAdvanceOrArrears'.
         bool isfixingInAdvance = true;
         if ( fixingAdvanceOrArrears.size() > 0 )
         {
-            LAString fixingAdOrAr( fixingAdvanceOrArrears );
+            AQLString fixingAdOrAr( fixingAdvanceOrArrears );
             fixingAdOrAr.toLower();
 
             if ( fixingAdOrAr != "adv"
@@ -126,7 +126,7 @@ namespace validation
                     && fixingAdOrAr != "arr"
                     && fixingAdOrAr != "arrears" )
             {
-                throw LACoreInvalidData( "#Error: Invalid Input, the 'fixingAdvanceOrArrears' parameter must be set to 'advance', 'arrears', 'adv', 'arr' or left blank.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Invalid Input, the 'fixingAdvanceOrArrears' parameter must be set to 'advance', 'arrears', 'adv', 'arr' or left blank.", __FILE__, __LINE__ );
             }
             else if ( fixingAdvanceOrArrears == "arrears" || fixingAdvanceOrArrears == "arr" )
             {
@@ -160,26 +160,26 @@ namespace validation
         unsigned int numberOfRows = result.size();
         if ( numberOfRows == 0 )
         {
-            throw LACoreInvalidData( "#Error: Unable to build the schedule. The results schedule is empty.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Unable to build the schedule. The results schedule is empty.", __FILE__, __LINE__ );
         }
 
         unsigned int numberOfColumns = result[0].size();
         if ( numberOfColumns == 0 )
         {
-            throw LACoreInvalidData( "#Error: Unable to build the schedule. The results schedule has no columns.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Unable to build the schedule. The results schedule has no columns.", __FILE__, __LINE__ );
         }
 
         size_t COLUMN_SIZE = 5;
         if ( numberOfColumns != COLUMN_SIZE )
         {
-            throw LACoreInvalidData( "#Error: Unable to build the schedule. The results schedule has the wrong number of columns. Must contain 5 columns, representing Fixing Date, Accrual Start Date, Accrual End Date, Accrual Period and Payment Date respectively.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Unable to build the schedule. The results schedule has the wrong number of columns. Must contain 5 columns, representing Fixing Date, Accrual Start Date, Accrual End Date, Accrual Period and Payment Date respectively.", __FILE__, __LINE__ );
         }
 
-        LAStringMatrix ret = LAStringMatrix( 0 );
+        AQLStringMatrix ret = AQLStringMatrix( 0 );
         if( showColumnHeaders )
         {
             // Insert Column Headings, if requested.
-            LAStringVector headers;
+            AQLStringVector headers;
             headers.push_back( "Fixing Date" );
             headers.push_back( "Accrual Start" );
             headers.push_back( "Accrual End" );
@@ -194,10 +194,10 @@ namespace validation
         {
             if ( ret[i].size() < numberOfColumns )
             {
-                throw LACoreInvalidData( "#Error: results schedule has inconstistent column sizes.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: results schedule has inconstistent column sizes.", __FILE__, __LINE__ );
             }
 
-            LAStringVector row( 0 );
+            AQLStringVector row( 0 );
             for( unsigned int j = 0; j < numberOfColumns; ++j )
             {
                 std::stringstream s;

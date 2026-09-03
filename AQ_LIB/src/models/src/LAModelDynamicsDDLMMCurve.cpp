@@ -18,7 +18,7 @@ const double INFINITESIMAL = 1E-7;
 const double TRANCATEINF = 1E-10; 
 //const double TRANCATEINF = -1E10;
 #include "LAModelDynamicsDDLMMCurve.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 unsigned int  LARatesPathElementDDLMMCurve::mSpreadsID = 0;
 
@@ -88,7 +88,7 @@ LARatesPathElementDDLMMCurve::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -121,7 +121,7 @@ LARatesPathElementDDLMMCurve::set(const LARatesPathElementBase& a)
 		mSpreads.resize(size);
 		for (unsigned int i = 0; i < size; i++)
 		{
-			//(*mpInitialData_L)[i] = LAMath::max((*mpInitialData_L)[i], mTrancateVal);
+			//(*mpInitialData_L)[i] = AQLMath::max((*mpInitialData_L)[i], mTrancateVal);
 			mSpreads[i] = (*mpInitialData_L)[i] * mSpread + mConstShift * (1. + mSpread); 
 		}
 
@@ -130,7 +130,7 @@ LARatesPathElementDDLMMCurve::set(const LARatesPathElementBase& a)
 
 	for (unsigned int i = 0; i < size; i++)
 	{
-		mValue[i] = LAMath::max(mValue[i] + mSpreads[i], mTrancateVal);
+		mValue[i] = AQLMath::max(mValue[i] + mSpreads[i], mTrancateVal);
 	}
 	
 }
@@ -145,11 +145,11 @@ LARatesPathElementDDLMMCurve::getP (double T) const
 {
 	if (m_t > T + INFINITESIMAL)
 	{
-		throw LACoreInvalidData("maturity is before start", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("maturity is before start", __FILE__, __LINE__);
 	}
 	else if (T > mpTenor->back() + INFINITESIMAL)
 	{
-		throw LACoreInvalidData("maturity is after last tenor", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("maturity is after last tenor", __FILE__, __LINE__);
 	}
 	else if (m_t + INFINITESIMAL >= T) return 1.0;
 	else if (m_t == 0.0) return mpInitialCurve->getP(T);
@@ -163,7 +163,7 @@ LARatesPathElementDDLMMCurve::getP (double T) const
 	unsigned int pos  = 0;
 	unsigned int tSize = mpTenor->size();
 	double _T = T > mpTenor->back() ? mpTenor->back() : T;
-	LAAlgorithm::locate<DoubleArray,double>(*mpTenor, _T, tSize, pos);
+	AQLAlgorithm::locate<DoubleArray,double>(*mpTenor, _T, tSize, pos);
 	if ((*mpTenor)[pos] == _T)
 		isOnTenor = true;
 

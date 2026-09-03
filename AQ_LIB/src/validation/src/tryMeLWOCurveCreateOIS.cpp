@@ -26,16 +26,16 @@
 #include "LACurveForwardRateHelpers.h"
 #include "LAUpdateStaticDataManager.h"
 #include "LACurveCalibrationHelpers.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAInterpolationBase.h"
-#include "LASplineInterpolation.h"
-#include "LAConstrainedSplineInterpolation.h"
-#include "LAMonotoneConvexInterpolation.h"
-#include "LALinearInterpolation.h"
-#include "LAStepInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLInterpolationBase.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLConstrainedSplineInterpolation.h"
+#include "AQLMonotoneConvexInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLStepInterpolation.h"
 #include "EnvironmentPool.h"
 #include "tryMeLWOGrid.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LACalibrateModelIR.h"
 #include "EntityPoolUtilities.h"
 #include "CurveResultsContainer.h"
@@ -59,18 +59,18 @@ namespace validation
     *  @param [in]		swapConv			Libor swap conventions
     *  @param [in]		swapRates			Libor swap market rates
     */
-    const LAString tryMeLWOCurveCreateOIS( const std::string& lwoCurveName,
-                                           const LAString& curveCollectionInput,
-                                           const LAString& staticDataTableInput,
-                                           const LAString& curveIndexInput,
-                                           const LAStringMatrix& curveConv,
-                                           const LAStringMatrix& oisConv,
-                                           const LAStringMatrix& oisRates,
-                                           const LAStringMatrix& oisHistoricalRates,
-                                           const LAStringMatrix& liborOisBasisConv,
-                                           const LAStringMatrix& liborOisBasisRates,
-                                           const LAStringMatrix& swapConv,
-                                           const LAStringMatrix& swapRates )
+    const AQLString tryMeLWOCurveCreateOIS( const std::string& lwoCurveName,
+                                           const AQLString& curveCollectionInput,
+                                           const AQLString& staticDataTableInput,
+                                           const AQLString& curveIndexInput,
+                                           const AQLStringMatrix& curveConv,
+                                           const AQLStringMatrix& oisConv,
+                                           const AQLStringMatrix& oisRates,
+                                           const AQLStringMatrix& oisHistoricalRates,
+                                           const AQLStringMatrix& liborOisBasisConv,
+                                           const AQLStringMatrix& liborOisBasisRates,
+                                           const AQLStringMatrix& swapConv,
+                                           const AQLStringMatrix& swapRates )
     {
         VALID_EXCEPTION_START
         
@@ -80,14 +80,14 @@ namespace validation
         // Ensure Curve Name Data is in uppercase
         // --------------------------------------
 
-        LAString curveCollection  = curveCollectionInput;
+        AQLString curveCollection  = curveCollectionInput;
         curveCollection.toUpper();
         
-        LAString staticDataTable  = staticDataTableInput;
+        AQLString staticDataTable  = staticDataTableInput;
         staticDataTable.toUpper();
 
         // Append the staticDataTable to the curveIndex Name Set, ensuring to use the ':' delimiter
-        LAString curveIndex       = curveIndexInput + ":" + staticDataTable;
+        AQLString curveIndex       = curveIndexInput + ":" + staticDataTable;
         curveIndex.toUpper();
 
         // --------------------------------------
@@ -138,7 +138,7 @@ namespace validation
         // The 'curveIndexCopy' variable is used to search for a curve for discount factors and forward rates. Unfortunately the object pool sometimes searches for
         // curves by 'staticDataTable' (aka MarketDataName) and sometimes by 'curveIndex'. To mitigate this problem we ensure that 'staticDataTable' name is always
         // included in the 'curveIndex' name list.
-        LAString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "OIS" ) );
+        AQLString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "OIS" ) );
 
 
         // Build Curve using Object Pool Curve Engine
@@ -158,13 +158,13 @@ namespace validation
         // ------------------------------------------
 
 
-        LAString interpolation = etrading::trim_to_upper( etrading::getCurveInterpolation( curveCollection, staticDataTable ).getCString() ).c_str();
+        AQLString interpolation = etrading::trim_to_upper( etrading::getCurveInterpolation( curveCollection, staticDataTable ).getCString() ).c_str();
         auto& env = etrading::Environment::defaultEnv();
 
         // AsOfDate and Calendar to get the start of the year fractions (and whether date is a holiday -> not in AlgoQuantLib) +
         // CurveBuildProperties because it creates the AlgoQuantLib Calendar
         LabelValueBlock curveConvLVB( curveConv );
-        LADate  effectiveDate = curveConvLVB.getCompulsoryValueAsDate( "ASOFDATE" );
+        AQLDate  effectiveDate = curveConvLVB.getCompulsoryValueAsDate( "ASOFDATE" );
 
         const boost::gregorian::date asOfDate( effectiveDate.yearOfEra(), effectiveDate.monthOfYear(), effectiveDate.dayOfMonth() );
 
@@ -231,14 +231,14 @@ namespace validation
         boost::gregorian::date endDate  = asOfDate + boost::gregorian::years( 51 );
         auto numberOfDays               = boost::gregorian::date_period( asOfDate, endDate ).length().days();
         
-        std::vector<LADate> dates;
+        std::vector<AQLDate> dates;
         dates.reserve( numberOfDays );
         
         // this is the a way of generating the points using an add from the day count outwards...
         std::vector<double> yearFractions;
 
         yearFractions.reserve( numberOfDays );
-        LAPriceDataDayCount dc_act365( ACT_365 ); // ACT_365
+        AQLPriceDataDayCount dc_act365( ACT_365 ); // ACT_365
 
         auto spotDate   = etrading::toLADateFromGregorianDate( asOfDate );
         auto finalDate  = etrading::toLADateFromGregorianDate( endDate );
@@ -258,7 +258,7 @@ namespace validation
         auto discountFactors = etrading::LACurveForwardRateHelpers::getMultiDF( yearFractions,
                                                                            etrading::getDataInstance(),
                                                                            curveCollection,
-                                                                           LAString( "ACT/365" ),         // dayCount
+                                                                           AQLString( "ACT/365" ),         // dayCount
                                                                            interpolation.toUpper(),
                                                                            false,                         // isBasis
                                                                            staticDataTable );
@@ -267,13 +267,13 @@ namespace validation
         std::vector<boost::gregorian::date> datesInBoostFormat;
         datesInBoostFormat.reserve( dates.size() );
 
-        // Populate datesInBoostFormat by transfoming 'dates' in LADate format
+        // Populate datesInBoostFormat by transfoming 'dates' in AQLDate format
         std::transform( dates.cbegin(),
                         dates.cend(),
                         std::back_inserter( datesInBoostFormat ),
-                        []( const LADate & LADate )
+                        []( const AQLDate & AQLDate )
         {
-            return etrading::toGregorianDateFromLADate( LADate );
+            return etrading::toGregorianDateFromLADate( AQLDate );
         } );
 
         // Calculate the forward rates using the Object Pool Curve Engine

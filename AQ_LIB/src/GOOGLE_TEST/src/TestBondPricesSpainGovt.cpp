@@ -70,7 +70,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -103,7 +103,7 @@ namespace google_test
 				const ReadDataFile::Load yieldInputFile(yieldInputFilename.c_str());
 				const std::string bondObjectName = yieldInputFile["bondObjectName"];
 
-				LAStringMatrix valuationSettingLVB = yieldInputFile["valuationSettingsLVB"];
+				AQLStringMatrix valuationSettingLVB = yieldInputFile["valuationSettingsLVB"];
 				
 				double price = yieldInputFile["price"];
 
@@ -117,7 +117,7 @@ namespace google_test
 		{
 			EXPECT_GE(i, TEST_COUNT);
 		}
-		catch (const LACoreError& m)
+		catch (const AQLCoreError& m)
 		{
 			std::cout << m.getMsg();
 			ASSERT_FALSE(true);

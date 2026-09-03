@@ -57,12 +57,12 @@ namespace
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 
-	/* @brief			A helper function which converts a LAStringMatrix into a VariantMatrix
-	*                   If the input LAStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns 
-	*  @param [in]		stringMatrix		The input LAStringMatrix
+	/* @brief			A helper function which converts a AQLStringMatrix into a VariantMatrix
+	*                   If the input AQLStringMatrix is empty, creates a dummy VariantMatrix containing two blank columns 
+	*  @param [in]		stringMatrix		The input AQLStringMatrix
 	*  @returns			The corresponding VariantMatrix
 	*/
-	etrading::VariantMatrix convertStringMatrixToVariantMatrix( LAStringMatrix stringMatrix )
+	etrading::VariantMatrix convertStringMatrixToVariantMatrix( AQLStringMatrix stringMatrix )
 	{
 		etrading::VariantMatrix variantMatrix;
 
@@ -84,7 +84,7 @@ namespace
 		}
 		else
 		{
-			// The input LAStringMatrix is empty.
+			// The input AQLStringMatrix is empty.
 			// Create a default variantMatrix with 2 columns of dummy data.
 			// This simulates an empty block in Excel.
 			etrading::VariantVector dummyVector ( 1, "" );
@@ -96,11 +96,11 @@ namespace
 	}
 
 
-	/* @brief			Builds a "TableInfo" tuple from a LAStringMatrix of marketdata
+	/* @brief			Builds a "TableInfo" tuple from a AQLStringMatrix of marketdata
 	*                   This tuple consists of columnNames, columnTypes and the actual data values.
-	*  @param [in]		marketDataBlock		A LAStringMatrix containing key/value market data values
+	*  @param [in]		marketDataBlock		A AQLStringMatrix containing key/value market data values
 	*/
-	TableInfo getTableInfoFromStringMatrix( const LAStringMatrix& marketDataBlock )
+	TableInfo getTableInfoFromStringMatrix( const AQLStringMatrix& marketDataBlock )
 	{
 		etrading::VariantMatrix dataValues =  convertStringMatrixToVariantMatrix( marketDataBlock );
 		size_t numColumns = dataValues.size();
@@ -124,7 +124,7 @@ namespace
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOMarketDataObjectFromFileName( const LAString& marketDataFileName )
+	void createLWOMarketDataObjectFromFileName( const AQLString& marketDataFileName )
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load( marketDataFileName );
 
@@ -146,7 +146,7 @@ namespace
 
 				// We obtained the enum, so this is a marketData key we are interested in
 				marketDataKeys.push_back( key );
-				LAStringMatrix marketDataBlock = marketDataFileObj[ *it ];
+				AQLStringMatrix marketDataBlock = marketDataFileObj[ *it ];
 				infoBlocks.push_back ( getTableInfoFromStringMatrix( marketDataBlock ) );
 			}
 			catch( ... )
@@ -162,7 +162,7 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOCurveFromFileName( const LAString& curveCalibrationFileName )
+	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
@@ -180,18 +180,18 @@ namespace
 	*  @param [in]		marketDataFileName			The filename specifying generator curve data
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/
-	void setUpGeneratorCurve( const LAString& marketDataFileName, const LAString& curveCalibrationFileName )
+	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
 		createLWOMarketDataObjectFromFileName( marketDataFileName );
 		createLWOCurveFromFileName( curveCalibrationFileName );
 	}
 
-	std::string createLWOCreditBasketModelFromFileName( const LAString& creditBasketModelFileName )
+	std::string createLWOCreditBasketModelFromFileName( const AQLString& creditBasketModelFileName )
 	{
 		etrading::ReadDataFile::Load creditBasketModelFileObj = etrading::ReadDataFile::Load( creditBasketModelFileName );
 		const std::string creditBasketModelName	= creditBasketModelFileObj[ "objectName" ];
-		const LAStringMatrix modelProperties		= creditBasketModelFileObj[ "MODEL_PROPERTIES" ];
-		const LAStringMatrix creditModels			= creditBasketModelFileObj[ "CREDIT_MODELS" ];
+		const AQLStringMatrix modelProperties		= creditBasketModelFileObj[ "MODEL_PROPERTIES" ];
+		const AQLStringMatrix creditModels			= creditBasketModelFileObj[ "CREDIT_MODELS" ];
 
 		std::vector<std::string> propertyNames;
 		propertyNames.push_back( "MODEL_PROPERTIES" );
@@ -288,12 +288,12 @@ namespace google_test
 		std::string creditBasketModelName = createLWOCreditBasketModelFromFileName( CREDIT_BASKET_MODEL );
 
 
-		LADate fromDate(stoppingDates[0].c_str());
+		AQLDate fromDate(stoppingDates[0].c_str());
 		const size_t numDates = sizeof( stoppingDates ) / sizeof(stoppingDates[0]);
 
 		for (size_t i=1; i< numDates; i++)
 		{
-			LADate toDate(stoppingDates[i].c_str());
+			AQLDate toDate(stoppingDates[i].c_str());
 
 			const double singleSurvivalProbability = validation::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
 

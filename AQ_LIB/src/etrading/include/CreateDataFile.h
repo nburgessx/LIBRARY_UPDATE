@@ -1,9 +1,9 @@
 #pragma once
 
-#include "LAString.h"
-#include "LADate.h"
-#include "LACoreTemplateType.h"
-#include "LACoreAppError.h"
+#include "AQLString.h"
+#include "AQLDate.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLCoreAppError.h"
 #include "LabelValueBlock.h"
 #include "LabelValueBlockValidation.h"
 #include "TypeName.h"
@@ -32,13 +32,13 @@ namespace etrading
     //    // ..
     //    if (CreateDataFile::recordEnabled()) {
     //      CreateDataFile p("C:\\temp\\mycapture");
-    //      LAString myval; // ...
-    //      LAStringVector myvec; // ...
-    //      LAStringMatrix mymat; // ...
+    //      AQLString myval; // ...
+    //      AQLStringVector myvec; // ...
+    //      AQLStringMatrix mymat; // ...
     //      double myval; // any streamable type
     //      bool myflag;
     //      std::vector<double> mynums; // ...
-    //      std::vector<LADate> mydates; // ...
+    //      std::vector<AQLDate> mydates; // ...
     //      p.write(myval);
     //      p.write(myvec);
     //      p.write(mymat);
@@ -64,7 +64,7 @@ namespace etrading
         template<typename T, bool = false>
         struct WriteForCreateDataFile
         {
-            static void write( const LAString& name, const T& value, std::ofstream& file )
+            static void write( const AQLString& name, const T& value, std::ofstream& file )
             {
                 file << name << ',' << value << "\n\n";
             };
@@ -73,7 +73,7 @@ namespace etrading
         template<>
         struct WriteForCreateDataFile<const char*, false>
         {
-            static void write( const LAString& name, const char* value, std::ofstream& file )
+            static void write( const AQLString& name, const char* value, std::ofstream& file )
             {
                 file << name << ',' << value << "\n\n";
             };
@@ -82,16 +82,16 @@ namespace etrading
         template<typename T>
         struct WriteForCreateDataFile<T, true>
         {
-            static void write( const LAString& name, const T& value, std::ofstream& file )
+            static void write( const AQLString& name, const T& value, std::ofstream& file )
             {
                 file << name << ',' << etrading::containerAsString( value, ":" ) << "\n\n";
             };
         };
 
         template<>
-        struct WriteForCreateDataFile<LAString, false>
+        struct WriteForCreateDataFile<AQLString, false>
         {
-            static void write( const LAString& comment, std::ofstream& file )
+            static void write( const AQLString& comment, std::ofstream& file )
             {
                 file << comment << "\n\n";
             };
@@ -106,13 +106,13 @@ namespace etrading
         
         // generic exception class
         // -----------------------
-        class Exception : public LACoreAppError
+        class Exception : public AQLCoreAppError
         {
         public:
-            Exception( const LAString& fileName );
+            Exception( const AQLString& fileName );
             /* virtual */ const char* what() const;
         private:
-            LAString msg;
+            AQLString msg;
         };
 
         // file output exception class
@@ -120,9 +120,9 @@ namespace etrading
         class OutputError : public Exception
         {
         public:
-            OutputError( const LAString& fileName );
+            OutputError( const AQLString& fileName );
         private:
-            static LAString makeMessage( const LAString& fileName );
+            static AQLString makeMessage( const AQLString& fileName );
         };
 
         
@@ -131,52 +131,52 @@ namespace etrading
 		@param[in]  ext		        The file extension, defaults to ".csv"
 		@param[in]  useAppendMode	Set to TRUE to append results to the same file or FALSE to clear file contents and overwrite.
 	    */
-        CreateDataFile( const LAString& basename, const LAString& ext = ".csv", const bool useAppendMode = false );
+        CreateDataFile( const AQLString& basename, const AQLString& ext = ".csv", const bool useAppendMode = false );
 
         // Destructor
         // Compiler-generated destructor is fine
 
         // return filename / full path name
-        LAString filename() const { return filename_; }
-        LAString fullpath() const { return fullpath_; }
+        AQLString filename() const { return filename_; }
+        AQLString fullpath() const { return fullpath_; }
 
         //
         // explicit printing support for double to prevent rounding / truncation errors
         //
-        void write( const LAString& name, const double& value, int precision = 15 );
+        void write( const AQLString& name, const double& value, int precision = 15 );
 
         // Printing Comments for Logging and Debug Support
-        void write( const LAString& comment );
+        void write( const AQLString& comment );
 
         //
-        // printing LAString-based types
+        // printing AQLString-based types
         //
-        void write( const LAString& name, const LAString& value );
-        void write( const LAString& name, const LAStringVector& value );
-		void write( const LAString& name, const std::vector<std::string>& value);
-		void write( const LAString& name, const LAStringMatrix& value );
-        void write( const LAString& name, const DoubleMatrix& value );
-        void write( const LAString& name, const LabelValueBlock& value );
-        void write( const LAString& name, const AnyTypeMatrix& value );  // Boost::Any
-		void write( const LAString& name, const VariantMatrix& value);	 // In-house AlgoQuantLib Variant
+        void write( const AQLString& name, const AQLString& value );
+        void write( const AQLString& name, const AQLStringVector& value );
+		void write( const AQLString& name, const std::vector<std::string>& value);
+		void write( const AQLString& name, const AQLStringMatrix& value );
+        void write( const AQLString& name, const DoubleMatrix& value );
+        void write( const AQLString& name, const LabelValueBlock& value );
+        void write( const AQLString& name, const AnyTypeMatrix& value );  // Boost::Any
+		void write( const AQLString& name, const VariantMatrix& value);	 // In-house AlgoQuantLib Variant
         //
         // printing native types and arrays of native types
         //
 
         // special handling for booleans: true -> "TRUE", false -> "FALSE"
-        void write( const LAString& name, const bool value );
+        void write( const AQLString& name, const bool value );
 
-        // handles any streamable scalar (except LAString, bool)
+        // handles any streamable scalar (except AQLString, bool)
         template<typename T>
-        void write( const LAString& name, const T& value );
+        void write( const AQLString& name, const T& value );
 
         // friend WriteForCreateDataFile<T, etrading::is_etrading_container<T>::value>;
 
-        void write( const LAString& name, const std::vector<double>& value, int precision = 12 ); // set the precission to 12 by default
-		void write( const LAString& name, const std::vector<int>& value );
-		void write( const LAString& name, const std::vector<bool>& value );
-		void write( const LAString& name, const std::vector<LADate>& value );
-		void write( const LAString& name, const std::vector< boost::gregorian::date >& value );
+        void write( const AQLString& name, const std::vector<double>& value, int precision = 12 ); // set the precission to 12 by default
+		void write( const AQLString& name, const std::vector<int>& value );
+		void write( const AQLString& name, const std::vector<bool>& value );
+		void write( const AQLString& name, const std::vector<AQLDate>& value );
+		void write( const AQLString& name, const std::vector< boost::gregorian::date >& value );
 
         // Return true iff in DEBUG mode
         // Note: not thread-safe.
@@ -193,7 +193,7 @@ namespace etrading
         static void setRebaseResultsFlag( bool rebaseResults );
 
         // the folder where files given by relative path name are created
-        static LAString outputFolder();
+        static AQLString outputFolder();
 
         // Start generating output files with indexed file names,
         // increasing the index each time a file with a fixed basename is created.
@@ -205,33 +205,33 @@ namespace etrading
         static int endTestCount();
 
         // return indexed file name
-        static LAString makeFilename( const LAString& basename, int index, const LAString& fileExtension = ".csv" );
+        static AQLString makeFilename( const AQLString& basename, int index, const AQLString& fileExtension = ".csv" );
 
         // return un-indexed file name
-        static LAString makeFilename( const LAString& basename, const LAString& fileExtension = ".csv" )
+        static AQLString makeFilename( const AQLString& basename, const AQLString& fileExtension = ".csv" )
         {
             return makeFilename( basename, -1, fileExtension );
         }
 
         // return indexed file name with a suffix
-        static LAString makeFilename( const LAString& basename, const LAString& suffix, int index, const LAString& fileExtension = ".csv" );
+        static AQLString makeFilename( const AQLString& basename, const AQLString& suffix, int index, const AQLString& fileExtension = ".csv" );
 
         // return un-indexed file name with a suffix
-        static LAString makeFilename( const LAString& basename, const LAString& suffix, const LAString& fileExtension = ".csv" )
+        static AQLString makeFilename( const AQLString& basename, const AQLString& suffix, const AQLString& fileExtension = ".csv" )
         {
             return makeFilename( basename, suffix, -1, fileExtension );
         }
 
         // return indexed file name with a prefix and suffix
-        static LAString makeFilename( const LAString& basename, const LAString& prefix, const LAString& suffix, int index, const LAString& fileExtension = ".csv" );
+        static AQLString makeFilename( const AQLString& basename, const AQLString& prefix, const AQLString& suffix, int index, const AQLString& fileExtension = ".csv" );
 
         // return un-indexed file name with a prefix and suffix
-        static LAString makeFilename( const LAString& basename, const LAString& prefix, const LAString& suffix, const LAString& fileExtension = ".csv" )
+        static AQLString makeFilename( const AQLString& basename, const AQLString& prefix, const AQLString& suffix, const AQLString& fileExtension = ".csv" )
         {
             return makeFilename( basename, prefix, suffix, -1, fileExtension );
         }
 
-        static LAString setOutputFolder( const LAString& p, bool fullPathGiven = true );
+        static AQLString setOutputFolder( const AQLString& p, bool fullPathGiven = true );
 
         static int setMaxIndex( const int& i );
 
@@ -245,8 +245,8 @@ namespace etrading
         CreateDataFile& operator=( const CreateDataFile& );
 
 
-        LAString filename_;
-        LAString fullpath_;
+        AQLString filename_;
+        AQLString fullpath_;
         std::ofstream file_;
 
         // initialise record flag by reading environment variable
@@ -262,7 +262,7 @@ namespace etrading
         static void initOutputFolder();
 
         // output folder
-        static LAString outputFolder_;
+        static AQLString outputFolder_;
 
         // initialise max index value by reading environment variable
         static void initMaxIndex();
@@ -275,31 +275,31 @@ namespace etrading
         //
 
         // maintain current array index for each file given by basename
-        static std::map<LAString, int> usedIndices_;
+        static std::map<AQLString, int> usedIndices_;
 
         // get index for file, and increase it if not negative
-        static int useTestIndex( const LAString& basename );
+        static int useTestIndex( const AQLString& basename );
 
         // first index to be used; if negative, generate ordinary (un-indexed) filenames
         static int baseIndex_;
 };
 
     // add market key information to filename
-    LAString decorateCurvename( const LAString& curvename, const LAString& curveIDPrefix1 = "", const LAString& marketNamePrefix2 = "" );
+    AQLString decorateCurvename( const AQLString& curvename, const AQLString& curveIDPrefix1 = "", const AQLString& marketNamePrefix2 = "" );
 	
     // decorate file name with a prefix and suffix
-    LAString decorateFilename( const LAString& filename, const LAString& prefix = "" );
-    LAString decorateFilename( const LAString& filename, const LAString& prefix, const LAString& suffix );
+    AQLString decorateFilename( const AQLString& filename, const AQLString& prefix = "" );
+    AQLString decorateFilename( const AQLString& filename, const AQLString& prefix, const AQLString& suffix );
 }
 
 template<typename T>
-inline void etrading::CreateDataFile::write( const LAString& name, const T& value )
+inline void etrading::CreateDataFile::write( const AQLString& name, const T& value )
 {
     implementation::WriteForCreateDataFile<T, etrading::is_etrading_container<T>::value>::write( name, value, file_ );
 };
 
-inline void etrading::CreateDataFile::write( const LAString& comment )
+inline void etrading::CreateDataFile::write( const AQLString& comment )
 {
-    implementation::WriteForCreateDataFile<LAString,false>::write( comment, file_ );
+    implementation::WriteForCreateDataFile<AQLString,false>::write( comment, file_ );
 };
 

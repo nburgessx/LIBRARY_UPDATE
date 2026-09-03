@@ -4,42 +4,42 @@
 #pragma interface
 #endif
 
-#include "LADate.h"
-#include "LACoreAppError.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
 #include <map>
 #include "LABlackScholesCalc.h"
 #include "ConstantDeclarations.h"
 
-class LAString;
-class LAObject;
-class LAPriceDataSlidingRule;
-class LAPriceDataCalendar;
+class AQLString;
+class AQLObject;
+class AQLPriceDataSlidingRule;
+class AQLPriceDataCalendar;
 
-class LACoreComponentManager
+class AQLCoreComponentManager
 {
 public:
-	static std::map<LAString, LAString>&		getInterpolationMap();
-	static std::map<LAString, LAString>&		getDayCountMap();
-	static std::map<LAString, LAString>&		getBasisTypeMap();
-	static std::map<LAString, LAString>&		getBasisIndexMap();
-	static std::map<LAString, LABlackScholesBase*>&		getBlackComponentMap(); 
-	static std::map<LAString, AnalyticParam*>&	getBlackParamComponentMap(); 
+	static std::map<AQLString, AQLString>&		getInterpolationMap();
+	static std::map<AQLString, AQLString>&		getDayCountMap();
+	static std::map<AQLString, AQLString>&		getBasisTypeMap();
+	static std::map<AQLString, AQLString>&		getBasisIndexMap();
+	static std::map<AQLString, LABlackScholesBase*>&		getBlackComponentMap(); 
+	static std::map<AQLString, AnalyticParam*>&	getBlackParamComponentMap(); 
 	
 	static void deleteBlackComponentMap();
 	static void deleteBlackParamComponentMap();
 
 	//====================================================
 	// getInterpolation
-	static LAString getInterpolation(const LAString &key);
+	static AQLString getInterpolation(const AQLString &key);
 	//====================================================
 	// getDayCount
-	static LAString getDayCount(const LAString &key);
+	static AQLString getDayCount(const AQLString &key);
 	//====================================================
 	// getBasisType
-	static LAString getBasisType(const LAString &key);
+	static AQLString getBasisType(const AQLString &key);
 	//====================================================
 	// getBasisIndex
-	static LAString getBasisIndex(const LAString &key);
+	static AQLString getBasisIndex(const AQLString &key);
 	//====================================================
 	// initialize
 	static void initialize();
@@ -48,11 +48,11 @@ public:
 	static void finalize();
 
 private:
-	static std::map<LAString, LAString>			interpolationMap;
-	static std::map<LAString, LAString>			dayCountMap;
-	static std::map<LAString, LAString>			basisTypeMap;
-	static std::map<LAString, LAString>			basisIndexMap;
-	static std::map<LAString, LABlackScholesBase*>		blackComponentMap;
-	static std::map<LAString, AnalyticParam*>	blackParamComponentMap;
+	static std::map<AQLString, AQLString>			interpolationMap;
+	static std::map<AQLString, AQLString>			dayCountMap;
+	static std::map<AQLString, AQLString>			basisTypeMap;
+	static std::map<AQLString, AQLString>			basisIndexMap;
+	static std::map<AQLString, LABlackScholesBase*>		blackComponentMap;
+	static std::map<AQLString, AnalyticParam*>	blackParamComponentMap;
 
 };

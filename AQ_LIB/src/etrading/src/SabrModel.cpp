@@ -71,16 +71,16 @@ namespace etrading
 		return data;
 	}
 
-	LAString SabrModel::getValueFromGenerator(const SwapGeneratorPtr& swapGenerator, const std::string& lvbKey) const
+	AQLString SabrModel::getValueFromGenerator(const SwapGeneratorPtr& swapGenerator, const std::string& lvbKey) const
 	{
 		std::string value;
 
 		// Fetch the Swap Conventions block from the CDS Swap Generator
-		LAStringMatrix swapConventions = swapGenerator->viewInputParameters();
+		AQLStringMatrix swapConventions = swapGenerator->viewInputParameters();
 
 		for (size_t i = 0; i < swapConventions.size(); i++)
 		{
-			const LAStringVector& row = swapConventions[i];
+			const AQLStringVector& row = swapConventions[i];
 			std::string key(row[0].getCString());
 			if (boost::iequals(key, lvbKey))
 			{
@@ -96,11 +96,11 @@ namespace etrading
 	* @param [in]   effectiveDate	Swap effective date
 	* @param [in]   maturityTenor	Swap maturity tenor
 	*/
-	LabelValueBlock SabrModel::setupSwapExpressionLVBforCalibration(const LADate& effectiveDate, const std::string& maturityTenor) const
+	LabelValueBlock SabrModel::setupSwapExpressionLVBforCalibration(const AQLDate& effectiveDate, const std::string& maturityTenor) const
 	{
 		// Set up the Swap Expression LVB used for repricing swap calibration instruments
-		LAStringVector keys;
-		LAStringVector values;
+		AQLStringVector keys;
+		AQLStringVector values;
 
 		keys.reserve(6);
 		values.reserve(6);
@@ -136,11 +136,11 @@ namespace etrading
 		tenorTermVector_.reserve(tenorSize);
 
 		//Core function hard code the dayCount to be AC_365I, which is the same as ACT/ACT
-		LAString dayCountToUse = toString(dayCount_).c_str();
+		AQLString dayCountToUse = toString(dayCount_).c_str();
 		
 		for (size_t i = 0; i < expirySize; i++)
 		{
-			const LADate expiryDate = etrading::getDateFromTenor(boost::assign::list_of(asOfDate_), expiryStrVector[i], businessDayAdjustment_, calendar_, "")[0];
+			const AQLDate expiryDate = etrading::getDateFromTenor(boost::assign::list_of(asOfDate_), expiryStrVector[i], businessDayAdjustment_, calendar_, "")[0];
 
 			//TODO: the core function use LAMathDateUtilities::getTerm() which has different result from etrading::getYearFraction().
 			// We use the same code for now, as it is also used in LAMathSwaptionVolUtility::getExpiryPoint()
@@ -158,7 +158,7 @@ namespace etrading
 			LAMathDateCalculations::termStrtoYMDW(tenorStrVector[i], y, m, d, w);
 			tenorTermVector_.push_back(static_cast<double> (y) + static_cast<double> (m) / 12.0);
 
-			//const LADate tenorDate = etrading::getDateFromTenor(boost::assign::list_of(asOfDate_), tenorStrVector[i], businessDayAdjustment_, calendar_, "")[0];
+			//const AQLDate tenorDate = etrading::getDateFromTenor(boost::assign::list_of(asOfDate_), tenorStrVector[i], businessDayAdjustment_, calendar_, "")[0];
 			//tenorTermVector_.push_back(etrading::getYearFraction(asOfDate_, tenorDate, dayCountToUse));
 
 		}
@@ -180,8 +180,8 @@ namespace etrading
 		for (size_t i = 0; i < rowSize; i++)
 		{
 			//Swap effective date
-			LAString expiryTenor = volAtmObject->getExpiryStrVector()[i];
-			const LADate effectiveDate = etrading::getDateFromTenor(boost::assign::list_of(asOfDate_), expiryTenor, businessDayAdjustment_, calendar_, "")[0];
+			AQLString expiryTenor = volAtmObject->getExpiryStrVector()[i];
+			const AQLDate effectiveDate = etrading::getDateFromTenor(boost::assign::list_of(asOfDate_), expiryTenor, businessDayAdjustment_, calendar_, "")[0];
 
 			for (size_t j = 0; j < columnSize; j++)
 			{
@@ -308,7 +308,7 @@ namespace etrading
 		DoubleMatrix annuityMat(rowSize, DoubleVector(columnSize, 1.0));
 
 		//Allow user to provide Strike MarketData Block, don't throw if empty 
-		LAStringMatrix swapMarketDataMatrix = getLAStringMatrixFromFreeObject(freeObject_, toString(SABR_MODEL_MKTDATA), true /*trimBlankRows*/, false /* throwIfMissing */);
+		AQLStringMatrix swapMarketDataMatrix = getLAStringMatrixFromFreeObject(freeObject_, toString(SABR_MODEL_MKTDATA), true /*trimBlankRows*/, false /* throwIfMissing */);
 
 		if (swapMarketDataMatrix.size() == 0)
 		{
@@ -463,7 +463,7 @@ namespace etrading
 
 		if (calibrateSabr)
 		{
-			LAString erroMsg;
+			AQLString erroMsg;
 			LAMathSwaptionVolUtility::calibrateSABRMatrix(alphaMat,
 				betaMat,
 				nuMat,
@@ -590,7 +590,7 @@ namespace etrading
 	*/
 	LabelValueBlock SabrModel::toLabelValueBlock(const std::string& propertyKey) const
 	{
-		LAStringMatrix stringMatrix = getLAStringMatrixFromFreeObject(freeObject_, propertyKey);
+		AQLStringMatrix stringMatrix = getLAStringMatrixFromFreeObject(freeObject_, propertyKey);
 		LabelValueBlock lvb(stringMatrix);
 
 		return lvb;
@@ -598,10 +598,10 @@ namespace etrading
 
 	double SabrModel::getVol(const std::string& expiry, const std::string& tenor, const double strike, const double forward)
 	{
-		LAPriceDataSlidingRule paySlr;
+		AQLPriceDataSlidingRule paySlr;
 		paySlr.convertFromString(businessDayAdjustment_);
 
-		LAPriceDataCalendar fixCal;
+		AQLPriceDataCalendar fixCal;
 		fixCal.convertFromString(calendar_);
 
 		double expiryTerm = LAMathSwaptionVolUtility::getExpiryPoint(expiry, asOfDate_, paySlr, fixCal);
@@ -639,10 +639,10 @@ namespace etrading
 
 	double SabrModel::getParam(const std::string& expiry, const std::string& tenor, const SabrParamEnum& paramName)
 	{
-		LAPriceDataSlidingRule paySlr;
+		AQLPriceDataSlidingRule paySlr;
 		paySlr.convertFromString(businessDayAdjustment_);
 
-		LAPriceDataCalendar fixCal;
+		AQLPriceDataCalendar fixCal;
 		fixCal.convertFromString(calendar_);
 
 		double expiryTerm = LAMathSwaptionVolUtility::getExpiryPoint(expiry, asOfDate_, paySlr, fixCal);

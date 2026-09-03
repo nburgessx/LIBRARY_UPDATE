@@ -17,10 +17,10 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "LADataBasics.h"
+#include "AQLDataBasics.h"
 #include "LAFileAccessor.h"
 #include "LACoreDataService.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "LADefinitions.h"
 #ifdef __HAS_MIC__
 
@@ -30,7 +30,7 @@ using namespace std;
 
 bool MAFileAccessor::mIsIStringStream = false;
 bool MAFileAccessor::mIsSFlgInitial = false;
-std::map<LAString, LAStringVector> MAFileAccessor::mDataMap;
+std::map<AQLString, AQLStringVector> MAFileAccessor::mDataMap;
 #ifdef __HAS_MIC__
 common_lib::StaticMutex MAFileAccessor::mMutex;
 #endif
@@ -42,7 +42,7 @@ common_lib::StaticMutex MAFileAccessor::mMutex;
 	@param[in] mode
 
 */
-MAFileAccessor::MAFileAccessor(const LAString &name, ios_base::openmode mode)
+MAFileAccessor::MAFileAccessor(const AQLString &name, ios_base::openmode mode)
 : mName(name), /*mIstream(new ifstream(file.getCString(),mode))*/mIstream(0), mFilemode(mode)
 {
 	if (!mIsSFlgInitial)
@@ -86,15 +86,15 @@ MAFileAccessor::MAFileAccessor(const MAFileAccessor &rhs)
 // 
 /*!
     @brief return is stringstream
-	get all file data as LAStringVector
+	get all file data as AQLStringVector
 
 	@param[out] vec
 */
 bool
 MAFileAccessor::isIStringStream()
 {
-	LAString str = LACoreDataService::getContext(CONTEXT_KEY_ISPRICER);
-	LADataBool tmp;
+	AQLString str = LACoreDataService::getContext(CONTEXT_KEY_ISPRICER);
+	AQLDataBool tmp;
 	tmp.convertFromString(str);
 	return tmp.get();
 }
@@ -103,12 +103,12 @@ MAFileAccessor::isIStringStream()
 /*!
     @brief get all file data
 
-	get all file data as LAStringVector
+	get all file data as AQLStringVector
 
 	@param[out] vec
 */
 void
-MAFileAccessor::readAllData(LAStringVector &vec)
+MAFileAccessor::readAllData(AQLStringVector &vec)
 {
 	vec.clear();
 #ifdef __HAS_MIC__
@@ -116,14 +116,14 @@ MAFileAccessor::readAllData(LAStringVector &vec)
 #endif
 	try
 	{
-		//LAStringVector &sData = mDataMap[mName];
+		//AQLStringVector &sData = mDataMap[mName];
 		//if (!sData.empty())
 		//{
 		//	vec = sData;
 
 		//	return;
 		//}
-		map<LAString, LAStringVector>::const_iterator itr = mDataMap.find(mName);
+		map<AQLString, AQLStringVector>::const_iterator itr = mDataMap.find(mName);
 		if (itr!=mDataMap.end())
 		{
 			vec = itr->second;
@@ -133,27 +133,27 @@ MAFileAccessor::readAllData(LAStringVector &vec)
 
 		open();
 		string str;
-		LAStringVector &sData = mDataMap[mName];
+		AQLStringVector &sData = mDataMap[mName];
 		while (getline(*mIstream, str))
 		{
-			const LAString tmp(str.c_str());
+			const AQLString tmp(str.c_str());
 			if (tmp.findString(STATIC_DATA_COMMENT_OUT_CHAR) == 0)
 			{
 				continue;
 			}
-			sData.push_back(LAString(str.c_str()));
+			sData.push_back(AQLString(str.c_str()));
 		}
 
 		vec = sData;
 	}
-	catch(LACoreError &e)
+	catch(AQLCoreError &e)
 	{
 		throw e;
 	}
 	catch(...)
 	{
-		LAString msg = "Error has occurred in reading file . file = " + mName;
-		throw LACoreSystemError(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Error has occurred in reading file . file = " + mName;
+		throw AQLCoreSystemError(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
@@ -161,16 +161,16 @@ MAFileAccessor::readAllData(LAStringVector &vec)
 /*!
     @brief get all file data
 
-	get all file data as LAStringMatrix.
+	get all file data as AQLStringMatrix.
 	data is tokenized as specified param.
 	
 	@param[in] demi
 	@param[out] mat
 */
 void
-MAFileAccessor::readAllData(const char demi, LAStringMatrix &mat)
+MAFileAccessor::readAllData(const char demi, AQLStringMatrix &mat)
 {
-	LAStringVector rowVec;
+	AQLStringVector rowVec;
 	readAllData(rowVec);
 
 	mat.clear();
@@ -180,7 +180,7 @@ MAFileAccessor::readAllData(const char demi, LAStringMatrix &mat)
 	StrItr it = rowVec.begin();
 	while (it != rowVec.end())
 	{
-		const LAString &line = *it;
+		const AQLString &line = *it;
 		mat[row] = line.toToken(demi);
 		++row;
 		++it;
@@ -191,7 +191,7 @@ MAFileAccessor::readAllData(const char demi, LAStringMatrix &mat)
 /*!
     @brief get all file data
 
-	get all file data as LAStringMatrix.
+	get all file data as AQLStringMatrix.
 	data is tokenized as specified param.
 	
 	@param[in] demi
@@ -200,9 +200,9 @@ MAFileAccessor::readAllData(const char demi, LAStringMatrix &mat)
 	@param[in] isLock
 */
 void
-MAFileAccessor::readAllData(const char demi, const LAString trimStr, LAStringMatrix &mat)
+MAFileAccessor::readAllData(const char demi, const AQLString trimStr, AQLStringMatrix &mat)
 {
-	LAStringVector rowVec;
+	AQLStringVector rowVec;
 	readAllData(rowVec);
 
 	mat.clear();
@@ -212,7 +212,7 @@ MAFileAccessor::readAllData(const char demi, const LAString trimStr, LAStringMat
 	StrItr it = rowVec.begin();
 	while (it != rowVec.end())
 	{
-		LAString &line = *it;
+		AQLString &line = *it;
 		line.exchange(trimStr, "");
 		mat[row] = line.toToken(demi);
 		++row;
@@ -247,14 +247,14 @@ MAFileAccessor::open(void)
 	}
 	catch (bad_alloc &e)
 	{
-		LAString msg = LAString(e.what()) + " Cannot open file.. File : " + mName;
-		throw LACoreSystemError(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString(e.what()) + " Cannot open file.. File : " + mName;
+		throw AQLCoreSystemError(msg.getCString(), __FILE__, __LINE__);
 	}
 	// check
 	if (!mIstream || !*mIstream)
 	{
-		LAString msg = mName + " cannot be open ";
-		throw LACoreSystemError(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = mName + " cannot be open ";
+		throw AQLCoreSystemError(msg.getCString(), __FILE__, __LINE__);
 	}
 
 }
@@ -276,8 +276,8 @@ MAFileAccessor::close(void)
 	}
 	catch (exception &e)
 	{
-		LAString msg = LAString(e.what()) + " Cannnot close file.. File : " + mName;
-		throw LACoreSystemError(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString(e.what()) + " Cannnot close file.. File : " + mName;
+		throw AQLCoreSystemError(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
@@ -300,14 +300,14 @@ MAFileAccessor::initialize()
 
 */
 void
-MAFileAccessor::clearFileCache(const LAString &fileNum)
+MAFileAccessor::clearFileCache(const AQLString &fileNum)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear file cache
-	LAStringVector keyVec;
-	map<LAString, LAStringVector>::iterator fIt = MAFileAccessor::mDataMap.begin();
+	AQLStringVector keyVec;
+	map<AQLString, AQLStringVector>::iterator fIt = MAFileAccessor::mDataMap.begin();
 	while (fIt != MAFileAccessor::mDataMap.end())
 	{
 		if (fIt->first.findString(fileNum) >= 0)
@@ -336,7 +336,7 @@ MAFileAccessor::clearAllFileCache()
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear file cache
-	map<LAString, LAStringVector>::iterator fIt = MAFileAccessor::mDataMap.begin();
+	map<AQLString, AQLStringVector>::iterator fIt = MAFileAccessor::mDataMap.begin();
 	while (fIt != MAFileAccessor::mDataMap.end())
 	{
 		fIt->second.clear();
@@ -351,13 +351,13 @@ MAFileAccessor::clearAllFileCache()
 	@param[in] key file key
 */
 void
-MAFileAccessor::clearFileMember(const LAString &key)
+MAFileAccessor::clearFileMember(const AQLString &key)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear file member
-	map<LAString, LAStringVector>::iterator fIt = MAFileAccessor::mDataMap.find(key);
+	map<AQLString, AQLStringVector>::iterator fIt = MAFileAccessor::mDataMap.find(key);
 	if (fIt != MAFileAccessor::mDataMap.end())
 	{
 		fIt->second.clear();

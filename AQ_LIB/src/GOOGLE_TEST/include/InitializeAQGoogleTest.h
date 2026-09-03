@@ -3,7 +3,7 @@
 #include <gTest/gTest.h>
 #include<string>
 
-class LADataInstance;
+class AQLDataInstance;
 
 namespace google_test
 {
@@ -54,7 +54,7 @@ namespace google_test
 
     protected:
         // return initialised AlgoQuantLib dataInstance object
-        LADataInstance* getDataInstance()
+        AQLDataInstance* getDataInstance()
         {
             return dataInstance_;
         }
@@ -65,6 +65,6 @@ namespace google_test
         InitializeAQGoogleTest& operator=( const InitializeAQGoogleTest& );
 
         static bool doReinit_;			// force AlgoQuantLib re-initialisation after end of test?
-        LADataInstance* dataInstance_;
+        AQLDataInstance* dataInstance_;
     };
 }

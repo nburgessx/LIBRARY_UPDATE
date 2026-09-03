@@ -5,8 +5,8 @@
 #endif
 
 
-#include "LAObject.h"
-#include "LACoreAutoPtr.h"
+#include "AQLObject.h"
+#include "AQLCoreAutoPtr.h"
 
 
 //// DEFINES ////
@@ -49,23 +49,23 @@
 
 
 
-class LADataInstance;
-class LADate;
-class LADataDoubles;
-class LAString;
-class LADataString;
-class LAFunctionBase;
-class LAPriceDataInterpolation;
+class AQLDataInstance;
+class AQLDate;
+class AQLDataDoubles;
+class AQLString;
+class AQLDataString;
+class AQLFunctionBase;
+class AQLPriceDataInterpolation;
 
 /*! 
     @brief Class to represent volatility.
 */
-class LAMathVolatility : public LAObject
+class LAMathVolatility : public AQLObject
 {
 public:
 // LIFECYCLE
     // default constructor
-	LAMathVolatility(LADataInstance* dataInstance);
+	LAMathVolatility(AQLDataInstance* dataInstance);
     // copy constructor
 	LAMathVolatility(const LAMathVolatility& vol);
     // destructor
@@ -77,26 +77,26 @@ public:
     // Check function for this class type
 	virtual bool		isTypeOf(object_t id) const;
 	// get this FX name
-	const LADataString&	getName() const;
+	const AQLDataString&	getName() const;
 	// get this FX name. The setting of name is also possible. 
-	LADataString&		getName();
+	AQLDataString&		getName();
 	//	get interpolation method
-	const LAPriceDataInterpolation&
+	const AQLPriceDataInterpolation&
 						getInterpolation() const;
 	//	get interpolation method. The setting of interpolation method is also possible. 
-	LAPriceDataInterpolation&
+	AQLPriceDataInterpolation&
 						getInterpolation();	    
 
 
 	//	make copy(clone) of this FX object object.
-	LAObject*			clone() const;// %%% COVARIANT RETURN %%%
+	AQLObject*			clone() const;// %%% COVARIANT RETURN %%%
 
 	//	get volatility function.
-	LAFunctionBase*
+	AQLFunctionBase*
 						getVolatilityFunc(unsigned i, unsigned int j) const;
 
 	// get volatiliy not clone
-	const LAFunctionBase*
+	const AQLFunctionBase*
 						getVolatilityFunc() const;
 
 	// get volatiliy initialvalue
@@ -108,19 +108,19 @@ public:
 	void				setVolatility(const DoubleArray& grid_t, 
 									 const std::vector<DoubleMatrix>& vol); //for multifactor HJM
 	// set Volatility as function matrix
-	void				setVolatility(const std::vector<std::vector<LAFunctionBase*> >& vol); //for multifactor HJM
+	void				setVolatility(const std::vector<std::vector<AQLFunctionBase*> >& vol); //for multifactor HJM
 	// set Volatility from grid_t and Volatility of Function vector
-	void				setVolatility(const DoubleArray& grid_T, const std::vector<LAFunctionBase*>& vol); //for multifactor HJM
+	void				setVolatility(const DoubleArray& grid_T, const std::vector<AQLFunctionBase*>& vol); //for multifactor HJM
 	// set Volatility from grid_t and Volatility of DoubleMatrix
 	void				setVolatility(const DoubleArray& grid_t, const DoubleMatrix& vol); 
 	// set Volatility as function vector
-	void				setVolatility(const std::vector<LAFunctionBase*>& vol);
+	void				setVolatility(const std::vector<AQLFunctionBase*>& vol);
 	// set Volatility from grid_t and Volatility of function
-	void				setVolatility(const DoubleArray& grid_T, LAFunctionBase* vol);
+	void				setVolatility(const DoubleArray& grid_T, AQLFunctionBase* vol);
 	// set Volatility from grid_t and Volatility of vector
 	void				setVolatility(const DoubleArray& grid_t, const DoubleArray& vol);//for fx
 	// set Volatility as function for fx
-	void				setVolatility(LAFunctionBase* vol);//for fx
+	void				setVolatility(AQLFunctionBase* vol);//for fx
 	// set Volatility as double
 	void				setVolatility(double vol);
 
@@ -130,31 +130,31 @@ public:
 	void				setInitialValue(const double vol0);
 
 	// remove specified Data.If there is not Data to remove, do nothing.If member variable is specified to remove, do not remove it.
-	virtual void        remove(const LAString& dataName);
+	virtual void        remove(const AQLString& dataName);
 	// Initialize this Object.
 	virtual void		reset(void);
 
 protected:
 	// copy FX object	 
-	virtual LAObject&	copy(const LAObject& e);
+	virtual AQLObject&	copy(const AQLObject& e);
 
 private:
 	// set Data specified by the name.
-	LADataHolder&				add(const LAString& name);
+	AQLDataHolder&				add(const AQLString& name);
 
-	LADataHolder*				mpName;			// name (DATA_STRING)
-	LADataHolder*				mpGrid_T;		// T grid (DATA_DOUBLES)
-	LADataHolder*				mpGrid_t;		// t grid (DATA_DOUBLES)
-	LADataHolder*				mpInter;		// interpolation (DATA_INTERPOLATION)	
-	LADataHolder*				mpVol_vec_f;	// volatility (DATA_FUNCTIONS)
-	LADataHolder*				mpVol_f;		// volatility (DATA_FUNCTION)
-	LADataHolder*				mpVol_mat_d;	// volatility (DATA_DOUBLE_MATRIX)
-	LADataHolder*				mpVol_vec_d;	// volatility (DATA_DOUBLES)
-	LADataHolder*				mpVol_d;		// volatility (DATA_DOUBLE)
-	LADataHolder*				mpFactorNum;	// factor num (DATA_INT)
-	LADataHolder*				mpInitialValues;// intial value of stochastic factor (DATA_DOUBLES)
-	LADataHolder*				mpInitialValue;	// intial value of stochastic factor (DATA_DOUBLE)
-	LADataHolder*				mpVolType;		// type (DATA_INT)
+	AQLDataHolder*				mpName;			// name (DATA_STRING)
+	AQLDataHolder*				mpGrid_T;		// T grid (DATA_DOUBLES)
+	AQLDataHolder*				mpGrid_t;		// t grid (DATA_DOUBLES)
+	AQLDataHolder*				mpInter;		// interpolation (DATA_INTERPOLATION)	
+	AQLDataHolder*				mpVol_vec_f;	// volatility (DATA_FUNCTIONS)
+	AQLDataHolder*				mpVol_f;		// volatility (DATA_FUNCTION)
+	AQLDataHolder*				mpVol_mat_d;	// volatility (DATA_DOUBLE_MATRIX)
+	AQLDataHolder*				mpVol_vec_d;	// volatility (DATA_DOUBLES)
+	AQLDataHolder*				mpVol_d;		// volatility (DATA_DOUBLE)
+	AQLDataHolder*				mpFactorNum;	// factor num (DATA_INT)
+	AQLDataHolder*				mpInitialValues;// intial value of stochastic factor (DATA_DOUBLES)
+	AQLDataHolder*				mpInitialValue;	// intial value of stochastic factor (DATA_DOUBLE)
+	AQLDataHolder*				mpVolType;		// type (DATA_INT)
 	
 
 };

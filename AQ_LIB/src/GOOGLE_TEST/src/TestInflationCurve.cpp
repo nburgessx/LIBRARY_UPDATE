@@ -58,12 +58,12 @@ namespace
 	const std::string api_ZC_INFLATIONSWAP_PAR_RATE			= TEST_DIR + "tryMeLWOInflationZCSwapParRate_inputs.csv";
 
 	// Utility functions
-	std::vector<LADate> calculateLaggedDates( const std::vector<LADate>& dates, const std::string& tenor )
+	std::vector<AQLDate> calculateLaggedDates( const std::vector<AQLDate>& dates, const std::string& tenor )
 	{
 		std::string busDayAdjust = "MOD_FOLLOWING";
 		std::string calendar = "LNB";
 		std::string rollConvention;
-		std::vector<LADate> laggedDates = etrading::getDateFromTenor( dates, tenor, busDayAdjust, calendar, rollConvention );
+		std::vector<AQLDate> laggedDates = etrading::getDateFromTenor( dates, tenor, busDayAdjust, calendar, rollConvention );
 
 		for ( auto& date : laggedDates )
 		{
@@ -72,11 +72,11 @@ namespace
 		return laggedDates;
 	}
 
-	void checkCalibrationDates( std::vector<LADate> expectedDates, const AnyTypeMatrix& calibrationResults )
+	void checkCalibrationDates( std::vector<AQLDate> expectedDates, const AnyTypeMatrix& calibrationResults )
 	{
 		for (size_t i = 0; i< expectedDates.size(); i++ )
 		{
-			const LADate expectedDate = expectedDates[ i ];
+			const AQLDate expectedDate = expectedDates[ i ];
 			const int expectedExcelDate = etrading::LADateScheduleHelpers::getExcelDate( expectedDate );
 
 			const int calibrationDate = boost::get<int>( calibrationResults[ i ][0] );
@@ -85,7 +85,7 @@ namespace
 		}
 	}
 
-	void checkCalibrationValues( const LADate& asOfDateWithLag,
+	void checkCalibrationValues( const AQLDate& asOfDateWithLag,
 								const std::vector<double>& swapMaturitiesInYears,
 								const std::shared_ptr<etrading::FixingTable> & fixingTable,
 								const std::shared_ptr<etrading::InflationCurve>& inflationCurve,
@@ -153,9 +153,9 @@ namespace
 
 		// Get the curve object so we can directly invoke methods that are not exposed via validation api
 		auto inflationCurve = etrading::getInflationCurve( inflationCurveHandle );
-		LADate asOfDate = inflationCurve->getAsOfDate();
+		AQLDate asOfDate = inflationCurve->getAsOfDate();
 
-		std::vector<LADate> dates = { asOfDate };
+		std::vector<AQLDate> dates = { asOfDate };
 
 		// Get market data quotes
 		std::vector<etrading::ZCInflationSwapMarketData> zcInflationSwapQuotes = inflationCurve->getZCInflationSwapInputMarketData();
@@ -172,18 +172,18 @@ namespace
 
 			//std::cout << "Tenor: " << quoteTenor << " " << tenorMaturityYear << std::endl;
 
-			LADate swapMaturity = asOfDate;
+			AQLDate swapMaturity = asOfDate;
 			swapMaturity.addYears( maturityYears );
 			dates.push_back( swapMaturity );
 		}
 
 		const std::string lagTenor = "-2M";
-		const std::vector<LADate> laggedDates = calculateLaggedDates(dates, lagTenor);
+		const std::vector<AQLDate> laggedDates = calculateLaggedDates(dates, lagTenor);
 
 		checkCalibrationDates( laggedDates, results );
 
 		// Check calibration values are consistent with the input market data and fixings
-		const LADate asOfDateWithLag = laggedDates[0];
+		const AQLDate asOfDateWithLag = laggedDates[0];
 		auto fixingTable = etrading::getFixingTable( inflationFixingsHandle );
 
 		checkCalibrationValues( asOfDateWithLag, swapMaturitiesInYears, fixingTable, inflationCurve, results );
@@ -245,17 +245,17 @@ namespace google_test
 
 		// Check first year calibration pillar dates
 		auto inflationCurve = etrading::getInflationCurve( inflationCurveHandle );
-		LADate asOfDate = inflationCurve->getAsOfDate();
+		AQLDate asOfDate = inflationCurve->getAsOfDate();
 
-		std::vector<LADate> dates = { asOfDate };
-		LADate currentDate = asOfDate;
+		std::vector<AQLDate> dates = { asOfDate };
+		AQLDate currentDate = asOfDate;
 		for (size_t i=1; i<nExpectedRows; i++ )
 		{
 			currentDate.addMonths( 1 );
 			dates.push_back( currentDate );
 		}
 		const std::string lagTenor = "-2M";
-		std::vector<LADate> laggedDates = calculateLaggedDates(dates, lagTenor );
+		std::vector<AQLDate> laggedDates = calculateLaggedDates(dates, lagTenor );
 
 		checkCalibrationDates( laggedDates, results );
 
@@ -272,8 +272,8 @@ namespace google_test
 		// Parameters for creating a ZC Inflation Swap
 		etrading::ReadDataFile::Load createSwap = etrading::ReadDataFile::Load( api_ZC_INFLATIONSWAP_CREATE_TEMPLATE );
 		const std::string swapGeneratorName		= createSwap["swapGeneratorName"];
-		const LAStringMatrix expressionMat		= createSwap["expressionLVB"];
-		const LAStringMatrix swapPropertiesMat	= createSwap["swapPropertiesLVB"];
+		const AQLStringMatrix expressionMat		= createSwap["expressionLVB"];
+		const AQLStringMatrix swapPropertiesMat	= createSwap["swapPropertiesLVB"];
 		const bool isXccy						= false;
 		const bool validateKeys					= true;
 
@@ -282,12 +282,12 @@ namespace google_test
 
 		// Parameters for invoking parRate
 		etrading::ReadDataFile::Load parRateParams = etrading::ReadDataFile::Load(api_ZC_INFLATIONSWAP_PAR_RATE);
-		const LAStringMatrix valuationMat = parRateParams[ "valuationSettingsLVB" ];
+		const AQLStringMatrix valuationMat = parRateParams[ "valuationSettingsLVB" ];
 		LabelValueBlock valuationSettingsLVB( valuationMat );
 
 		// Get market data quotes
 		auto inflationCurve = etrading::getInflationCurve( inflationCurveHandle);
-		LADate asOfDate = inflationCurve->getAsOfDate();
+		AQLDate asOfDate = inflationCurve->getAsOfDate();
 		std::vector<etrading::ZCInflationSwapMarketData> zcInflationSwapQuotes = inflationCurve->getZCInflationSwapInputMarketData();
 		const size_t nMarketDataQuotes = zcInflationSwapQuotes.size();
 
@@ -300,7 +300,7 @@ namespace google_test
             const double maturityYears = std::strtod(maturityStr.c_str(), &pFirstNonNumber);
 			swapMaturitiesInYears.push_back(maturityYears);
 
-			LADate swapMaturity = asOfDate;
+			AQLDate swapMaturity = asOfDate;
 			swapMaturity.addYears(maturityYears);
 			const int maturityExcelDate = etrading::LADateScheduleHelpers::getExcelDate( swapMaturity );
 			std::string maturityString = std::to_string( maturityExcelDate );
@@ -335,14 +335,14 @@ namespace google_test
 
 		// Get the curve object so we can directly invoke methods that are not exposed via validation api
 		auto inflationCurve = etrading::getInflationCurve( inflationCurveHandle );
-		LADate asOfDate = inflationCurve->getAsOfDate();
+		AQLDate asOfDate = inflationCurve->getAsOfDate();
 
 		// Test going directly to inflation curve with lagged date
 		for ( size_t i=0; i<nExpectedRows; i++)
 		{
 			const double calibrationValue	= boost::get<double>( calibrationResults[i][1] );
 			const int calibrationExcelDate	= boost::get<int>( calibrationResults[i][0] );
-			const LADate laggedDate = LAMathDateUtilities::getLADate( calibrationExcelDate );
+			const AQLDate laggedDate = LAMathDateUtilities::getLADate( calibrationExcelDate );
 
 			const double interpolatedValue = inflationCurve->getMonthlyInflationIndexForLaggedDate( laggedDate );
 
@@ -355,7 +355,7 @@ namespace google_test
 		std::vector<etrading::ZCInflationSwapMarketData> zcInflationSwapQuotes = inflationCurve->getZCInflationSwapInputMarketData();
 		const size_t nMarketDataQuotes = zcInflationSwapQuotes.size();
 
-		std::vector<LADate> pillarDates = { asOfDate };
+		std::vector<AQLDate> pillarDates = { asOfDate };
 		for ( auto swapQuote : zcInflationSwapQuotes)
 		{
 			std::string quoteTenor = swapQuote.tenorOrDate;
@@ -363,7 +363,7 @@ namespace google_test
 			char * pFirstNonNumber;
             const double maturityYears = std::strtod(maturityStr.c_str(), &pFirstNonNumber);
 
-			LADate swapMaturity = asOfDate;
+			AQLDate swapMaturity = asOfDate;
 			swapMaturity.addYears( maturityYears );
 			pillarDates.push_back( swapMaturity );
 		}
@@ -375,7 +375,7 @@ namespace google_test
 		{
 			const double calibrationValue = boost::get<double>( calibrationResults[i][1] );
 
-			const LADate pillarDate = pillarDates[i];
+			const AQLDate pillarDate = pillarDates[i];
 			const double interpolatedValue = inflationCurve->getInflationIndexForDate( pillarDate, inflationResetTypeEnum, fixLag );
 
 			EXPECT_NEAR(calibrationValue, interpolatedValue, tolerance);
@@ -387,7 +387,7 @@ namespace google_test
 		{
 			const double calibrationValue = boost::get<double>(calibrationResults[i][1]);
 
-			const LADate pillarDate = pillarDates[i];
+			const AQLDate pillarDate = pillarDates[i];
 			const double interpolatedValue = validation::tryMeLWOInflationCPI( inflationCurveHandle, pillarDate, inflationResetType, fixLag );
 				
 			EXPECT_NEAR( calibrationValue, interpolatedValue, tolerance );
@@ -398,7 +398,7 @@ namespace google_test
 		{
 			const double calibrationValue = boost::get<double>(calibrationResults[i][1]);
 
-			LADate pillarDate = pillarDates[i];
+			AQLDate pillarDate = pillarDates[i];
 			pillarDate.setDay(1);
 			const double interpolatedValue = inflationCurve->getInflationIndexForDate(pillarDate, inflationResetTypeEnum, fixLag);
 

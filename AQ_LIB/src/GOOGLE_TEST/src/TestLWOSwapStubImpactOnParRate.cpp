@@ -75,9 +75,9 @@ namespace google_test
     // Call Test Fixture
     //
 
-	void runTest(const LAString& testType)
+	void runTest(const AQLString& testType)
 	{
-		LAString input, output32bit, output64bit;
+		AQLString input, output32bit, output64bit;
 		unsigned int testCount;
 		if (testType == "IMM_SWAPS")
 		{
@@ -110,12 +110,12 @@ namespace google_test
 			for (size_t i = 0; i < testCount; ++i)
 			{
                 // Load the Input Files
-                const ReadDataFile::Load tradeInputFile( input + LAString(static_cast<int>(i)) + LAString(".csv") );
+                const ReadDataFile::Load tradeInputFile( input + AQLString(static_cast<int>(i)) + AQLString(".csv") );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -126,15 +126,15 @@ namespace google_test
                 
                 // Check the Test Results or Rebase
 				#if defined(GTEST32)
-                    LAString parRateOutputsFilename   = output32bit + LAString(static_cast<int>(i)) + LAString(".csv"); 
+                    AQLString parRateOutputsFilename   = output32bit + AQLString(static_cast<int>(i)) + AQLString(".csv"); 
                 #else
-                    LAString parRateOutputsFilename   = output64bit + LAString(static_cast<int>(i)) + LAString(".csv");
+                    AQLString parRateOutputsFilename   = output64bit + AQLString(static_cast<int>(i)) + AQLString(".csv");
                 #endif
 
                 CheckTestResultsAndRebaseOnRequest( swapParRate, TEST_DIR, parRateOutputsFilename, tolerance );
 			}
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

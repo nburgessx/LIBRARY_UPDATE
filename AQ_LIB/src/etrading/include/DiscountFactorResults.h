@@ -12,9 +12,9 @@
 #include <vector>
 #include <memory>
 
-#include "LADate.h"
+#include "AQLDate.h"
 #include "CoreEnumerations.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 #include "Variant.h"
 #include "CurveInterpolation.h"		// Curve Interpolation Module with turn-of-year logic
 
@@ -23,9 +23,9 @@ namespace etrading
     
     // Typedefs
     typedef std::vector<double> VectorDouble;
-    typedef std::vector<LADate> VectorDate;
+    typedef std::vector<AQLDate> VectorDate;
     typedef std::vector<double> DoubleVector;   // For Backwards compatibility
-    typedef std::vector<LADate> DateVector;     // For Backwards compatibility
+    typedef std::vector<AQLDate> DateVector;     // For Backwards compatibility
     
 
     // =============================== DISCOUNT FACTOR RESULTS CLASS ==================================================================
@@ -42,7 +42,7 @@ namespace etrading
         DiscountFactorResults( const DiscountFactorResults& rhs );
 
 		// Copy and Override Constructor
-		DiscountFactorResults( const DiscountFactorResults& rhs, const VectorDate& paymentDates, const VectorDouble& discountFactors, const LADate & joinDate = LADate() );
+		DiscountFactorResults( const DiscountFactorResults& rhs, const VectorDate& paymentDates, const VectorDouble& discountFactors, const AQLDate & joinDate = AQLDate() );
 
 		// Clone
 		std::shared_ptr<DiscountFactorResults> clone() const;
@@ -53,8 +53,8 @@ namespace etrading
         // Object Pool Constructor - Object Pool Stores Dates as Doubles representing Year Fractions
 		// Note: Spot Date should be Curve Swap Calibration Instrument Spot Date - needed for the linear spline join date calculation
         DiscountFactorResults( const CurveTenorEnum & curveTenor,
-                               const LADate & asOfDate,
-							   const LADate & spotDate,
+                               const AQLDate & asOfDate,
+							   const AQLDate & spotDate,
 							   const std::string & curveCollection,		// Needed to support legacy isFwdInter = true
 							   const std::string & curveIndex,			// Needed to support legacy isFwdInter = true
                                const InterpolationEnum & interpolationEnum,
@@ -63,14 +63,14 @@ namespace etrading
 							   const DayCountEnum & daycount,
                                const BusinessDayAdjustmentEnum& fixingBusinessDayAdj,
                                const StandardString & fixingCalendar,
-                               const LADate & joinDate = LADate(),
+                               const AQLDate & joinDate = AQLDate(),
 							   const StandardStringMatrix & forwardAdjustments = StandardStringMatrix() );
         
         // Server Side (Non-Object Pool) Constructor - Dates entered as regular dates here instead of object pool doubles representing year fractions
 		// Note: Spot Date should be Curve Swap Calibration Instrument Spot Date - needed for the linear spline join date calculation
         DiscountFactorResults( const CurveTenorEnum & curveTenor,
-                               const LADate & asOfDate,
-							   const LADate & spotDate,
+                               const AQLDate & asOfDate,
+							   const AQLDate & spotDate,
 							   const std::string & curveCollection,		// Needed to support legacy isFwdInter = true
 							   const std::string & curveIndex,			// Needed to support legacy isFwdInter = true
                                const InterpolationEnum & interpolationEnum,
@@ -79,13 +79,13 @@ namespace etrading
 							   const DayCountEnum & daycount,
                                const BusinessDayAdjustmentEnum& fixingBusinessDayAdj,
                                const StandardString & fixingCalendar,
-                               const LADate & joinDate = LADate(),
+                               const AQLDate & joinDate = AQLDate(),
 							   const StandardStringMatrix & forwardAdjustments = StandardStringMatrix() );
 
 		// Object Pool Constructor - Object Pool Stores Dates as Doubles representing Year Fractions
 		// No Spot Date Required, but joinDateAsDouble instead
 		DiscountFactorResults( const CurveTenorEnum & curveTenor,
-							   const LADate & asOfDate,
+							   const AQLDate & asOfDate,
 							   const std::string & curveCollection,		// Needed to support legacy isFwdInter = true
 							   const std::string & curveIndex,			// Needed to support legacy isFwdInter = true
 							   const InterpolationEnum & interpolationEnum,
@@ -100,7 +100,7 @@ namespace etrading
 		// Server Side (Non-Object Pool) Constructor - Dates entered as regular dates here instead of object pool doubles representing year fractions
 		// No Spot Date Required, but joinDateAsDouble instead
 		DiscountFactorResults( const CurveTenorEnum & curveTenor,
-							   const LADate & asOfDate,
+							   const AQLDate & asOfDate,
 							   const std::string & curveCollection,		// Needed to support legacy isFwdInter = true
 							   const std::string & curveIndex,			// Needed to support legacy isFwdInter = true
 							   const InterpolationEnum & interpolationEnum,
@@ -120,7 +120,7 @@ namespace etrading
 
         double getDiscountFactor( const double & paymentDateInTermFormat ) const;
         
-        double getDiscountFactor( const LADate & paymentDate ) const;
+        double getDiscountFactor( const AQLDate & paymentDate ) const;
 
         VectorDouble getDiscountFactors( const VectorDate & paymentDates ) const;
         
@@ -134,8 +134,8 @@ namespace etrading
                                  const bool isFwdInter,
 								 const CompoundingFrequencyEnum & compoundFrequency = SIMPLE_COMPOUNDING ) const;
 
-        double implyForwardRate( const LADate & fromDate,
-                                 const LADate & toDate,
+        double implyForwardRate( const AQLDate & fromDate,
+                                 const AQLDate & toDate,
 								 //const bool isFwdInter = false, // Legacy parameter: interpolate on pseudo Forwards when using a discount factor state variable
                                  const bool isFwdInter,
 								 const CompoundingFrequencyEnum & compoundFrequency = SIMPLE_COMPOUNDING ) const;
@@ -147,7 +147,7 @@ namespace etrading
                                  const bool isFwdInter,
 								 const CompoundingFrequencyEnum & compoundFrequency = SIMPLE_COMPOUNDING ) const;
 
-        double implyForwardRate( const LADate & fixingDate,
+        double implyForwardRate( const AQLDate & fixingDate,
                                  const BusinessDayAdjustmentEnum& fixingBusinessDayAdj,
                                  const StandardString & fixingCalendar,
 								 //const bool isFwdInter = false, // Legacy parameter: interpolate on pseudo Forwards when using a discount factor state variable
@@ -194,9 +194,9 @@ namespace etrading
         
         CurveTenorEnum curveTenorEnum() const                       { return curveTenorEnum_;           }
         StandardString curveTenor() const                           { return curveTenor_;               }
-        LADate asOfDate() const                                     { return asOfDate_;                 }
-        LADate spotDate() const                                     { return spotDate_;                 }
-        LADate joinDate() const                                     { return joinDate_;                 }
+        AQLDate asOfDate() const                                     { return asOfDate_;                 }
+        AQLDate spotDate() const                                     { return spotDate_;                 }
+        AQLDate joinDate() const                                     { return joinDate_;                 }
         double joinDateAsDouble() const                             { return joinDateAsDouble_;         }
         std::string curveCollection() const							{ return curveCollection_;			}
 	    std::string curveIndex() const								{ return curveIndex_;				}
@@ -215,8 +215,8 @@ namespace etrading
         // Object Pool - Helper Method to initialize the discount factor class
 		// Note: Spot Date should be Curve Swap Calibration Instrument Spot Date - needed for the linear spline join date calculation
         void initializeDiscountFactorResults( const CurveTenorEnum & curveTenor,
-                                              const LADate & asOfDate,
-											  const LADate & spotDate,
+                                              const AQLDate & asOfDate,
+											  const AQLDate & spotDate,
 											  const std::string & curveCollection,		// Needed to support legacy isFwdInter = true
 											  const std::string & curveIndex,			// Needed to support legacy isFwdInter = true
 											  const InterpolationEnum & interpolationEnum,
@@ -225,14 +225,14 @@ namespace etrading
 											  const DayCountEnum & daycount,
                                               const BusinessDayAdjustmentEnum& fixingBusinessDayAdj,
                                               const StandardString & fixingCalendar,
-                                              const LADate & joinDate = LADate(),
+                                              const AQLDate & joinDate = AQLDate(),
 											  const StandardStringMatrix & forwardAdjustments = StandardStringMatrix() );
 		
 		// Server Side (Non-Object Pool) Method - Dates entered as regular dates here instead of object pool doubles representing year fractions
 		// Helper Method to initialize the discount factor class
 		// No Spot Date Required, but joinDateAsDouble instead
 		void initializeDiscountFactorResults( const CurveTenorEnum & curveTenor,
-											  const LADate & asOfDate,
+											  const AQLDate & asOfDate,
 											  const std::string & curveCollection,		// Needed to support legacy isFwdInter = true
 											  const std::string & curveIndex,			// Needed to support legacy isFwdInter = true
 											  const InterpolationEnum & interpolationEnum,
@@ -247,9 +247,9 @@ namespace etrading
         CurveTenorEnum curveTenorEnum_; 
         StandardString curveTenor_;
 
-        LADate asOfDate_;
-		LADate spotDate_;
-        LADate joinDate_;
+        AQLDate asOfDate_;
+		AQLDate spotDate_;
+        AQLDate joinDate_;
 		double joinDateAsDouble_;
 		DayCountEnum daycount_;
         BusinessDayAdjustmentEnum fixingBusinessDayAdj_;
@@ -266,7 +266,7 @@ namespace etrading
 		std::shared_ptr<CurveInterpolation> interpolator_;
 		
 		// Stores the Underlying Interpolation Object
-		std::shared_ptr<LAInterpolationBase> baseInterpolationMethod_;	
+		std::shared_ptr<AQLInterpolationBase> baseInterpolationMethod_;	
         InterpolationEnum interpolationEnum_;
 
         VectorDouble paymentDatesInTermFormat_;   

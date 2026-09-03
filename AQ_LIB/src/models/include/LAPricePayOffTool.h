@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAPriceCFGenUtility.h"
 
 
@@ -14,18 +14,18 @@
 
 
 
-class LAObject;
+class AQLObject;
 class LAPriceCouponTool;
 class LAMathFXEntity;
-class LAFunctionBase;
+class AQLFunctionBase;
 class LAPricePayOffToolHolder;
 class Comp_pLAPricePayOffTool;
 class LAPricePayOff;
 class LAPriceCouponBase;
-class LAInterpolationBase;
+class AQLInterpolationBase;
 class LACompoundMethod;
-class LADataReference;
-class LADataDoubles;
+class AQLDataReference;
+class AQLDataDoubles;
 
 typedef std::vector<LAPricePayOffToolHolder>			PayOffToolHolderVector;   // vector of LAPricePayOffToolHolder
 typedef std::vector<LAPricePayOffToolHolder>::iterator	PayOffToolHolderIter;   // iterator of LAPricePayOffToolHolder vector
@@ -72,7 +72,7 @@ public:
 		@brief get payment date
 		@return payment date
 	*/	
-	const LADate&				getPaymentDate(void) const {return mPaymentDate;}
+	const AQLDate&				getPaymentDate(void) const {return mPaymentDate;}
 	/*!
 		@brief get coupon that has calulated lastly
 		@return coupon
@@ -100,8 +100,8 @@ public:
 	*/		
 	void						setNotional(const double notional) {mNotional = notional;}
 	// set up this class
-	virtual	void				setUp(const LADate& basedate, const LAObject& trade,
-									unsigned int legNo, const LAObject& cashlet, 
+	virtual	void				setUp(const AQLDate& basedate, const AQLObject& trade,
+									unsigned int legNo, const AQLObject& cashlet, 
 									const LAPricePayOff& payoff,
 									unsigned int currentpos);
 
@@ -110,24 +110,24 @@ public:
 
 
 	// calculate accrued interest
-	double						calcAccruedInt(const LADate& date) const;
+	double						calcAccruedInt(const AQLDate& date) const;
 	// calculate accrued interest by payoff currency
-	double						calcAccruedIntbyPayOffCur(const LADate& date) const;
+	double						calcAccruedIntbyPayOffCur(const AQLDate& date) const;
 	// calculate payoff
-	virtual void calcDerivationOfLibor(std::map<LAString, std::map<double, double> >& delivationLiborMap, const LAInterpolationBase* pNumeInterp, bool isRec) const;
-	virtual void getCompoundedRateInfo(DateVector& start, DateVector& end, DoubleVector& term, DateVector& fixing_date, LAStringVector& fixing_flag, DoubleVector& rate) const;
+	virtual void calcDerivationOfLibor(std::map<AQLString, std::map<double, double> >& delivationLiborMap, const AQLInterpolationBase* pNumeInterp, bool isRec) const;
+	virtual void getCompoundedRateInfo(DateVector& start, DateVector& end, DoubleVector& term, DateVector& fixing_date, AQLStringVector& fixing_flag, DoubleVector& rate) const;
 	virtual void setFlagForUpFrontFee(const bool b){ flagForUpFrontFee = b; }
 	virtual bool isUpFrontFee() const { return flagForUpFrontFee; }
     virtual bool isCompounding() const { return false; }
 
 
 	
-	LADate	mPaymentDate;// payment date 
+	AQLDate	mPaymentDate;// payment date 
 	double	mPaymentTime;// payment time
 	double	mTerm;// interest calculation term
-	LADate	mStart;// interest calculation startdate;
-	LADate  mEnd;// interest calculation enddate;
-	LAPriceDataDayCount mDC;// day count for interest calculation
+	AQLDate	mStart;// interest calculation startdate;
+	AQLDate  mEnd;// interest calculation enddate;
+	AQLPriceDataDayCount mDC;// day count for interest calculation
 	double	mNotional;// notional
 	double	mDenomiRatio;// denominator ratio
 	
@@ -143,7 +143,7 @@ public:
 	LAPriceCouponBase*					mpCpnSelectOperator;// coupon select operator
 
 	double	mNotionalCF;// notional cf by mNotionalCur
-	LADate	mRenotionalFixingDate;// notional cf by mNotionalCur
+	AQLDate	mRenotionalFixingDate;// notional cf by mNotionalCur
 
 
 	double	mAccruedInt;// accrued interest
@@ -151,21 +151,21 @@ public:
 	mutable const LAMathFXEntity*			mpFX_for_PayOff;// fx rate for payoff
 	mutable const LAMathFXEntity*			mpFX_for_Notional;// fx rate for notional
 	mutable const LAMathFXEntity*			mpFX_for_ExtraCF;// fx rate for extra cf
-	const LADataReference*					mpRefFX_for_PayOff;// reference to fx rate for payoff
-	const LADataReference*					mpRefFX_for_Notional;//reference to fx rate for notional
-	const LADataReference*					mpRefFX_for_ExtraCF;// reference to fx rate for extra cf
+	const AQLDataReference*					mpRefFX_for_PayOff;// reference to fx rate for payoff
+	const AQLDataReference*					mpRefFX_for_Notional;//reference to fx rate for notional
+	const AQLDataReference*					mpRefFX_for_ExtraCF;// reference to fx rate for extra cf
 	double									mNotionalCFExchangeRate;// notional cf exchange rate
     std::unique_ptr<const double>			mpCouponCFFXRateValue;
 
 //	std::vector<const LAMathFXEntity*>	mpFX_for_Coupons;// fx rate for coupon
 
-	LAString	mBaseCur;// base currency
-	LAString	mNotionalCur;// notional currency
-	LAString	mExtraCFCur;// extra cf currency
-	LAString    mNotionalCFCur;// notional cf payment currency
+	AQLString	mBaseCur;// base currency
+	AQLString	mNotionalCur;// notional currency
+	AQLString	mExtraCFCur;// extra cf currency
+	AQLString    mNotionalCFCur;// notional cf payment currency
 	
 
-	LAStringVector mCouponsCur;// coupon currency
+	AQLStringVector mCouponsCur;// coupon currency
 
 
 	bool			mIsArrear;// Arrear(true) or Advance(false)
@@ -178,13 +178,13 @@ public:
 
 	std::vector<LAPriceCouponTool*>        mpNotionalCFCoupons;// notional coupon
 	LAPriceCouponBase*             mpNotionalCFCpnSelectOperator;// notional cf coupon select operator
-	std::vector<LAString>				mNotionalCFCouponsCur;// notional cf payment currency
+	std::vector<AQLString>				mNotionalCFCouponsCur;// notional cf payment currency
 
 	bool flagForUpFrontFee;
 
 	// for non-deliverable (vanilla and exotic) swaps 
 	double mSettlementAdjustRatio;
-	LADate mSettlementFixingDate;
+	AQLDate mSettlementFixingDate;
 	bool mIsNonDeliverable;
 
 protected:
@@ -198,7 +198,7 @@ protected:
 									payoff = LAPriceCFGenUtility::round(payoff, mRoundFunction, mRoundDigit);									
 								}
 
-    virtual LAPriceCouponTool* createCouponTool(const LAObject& cashlet, const LAObject& coupon_info);
+    virtual LAPriceCouponTool* createCouponTool(const AQLObject& cashlet, const AQLObject& coupon_info);
     virtual double calculateCouponCashflow() const;
 
 private:
@@ -288,21 +288,21 @@ public:
 class LAPricePayOffToolCompound : public LAPricePayOffTool
 {
 public:
-	virtual	void setUp(const LADate& basedate, 
-                       const LAObject& trade,
+	virtual	void setUp(const AQLDate& basedate, 
+                       const AQLObject& trade,
                        unsigned int legNo,
-                       const LAObject& cashlet, 
+                       const AQLObject& cashlet, 
                        const LAPricePayOff& payoff,
                        unsigned int currentpos);
     virtual bool isCompounding() const { return true; }
-    virtual void setCashflow(double& gearing, double& forward, double& spread, LADate& fixing_date, LAString& fixing_flag) const;
-    void getCompoundedRateInfo(DateVector& start, DateVector& end, DoubleVector& term, DateVector& fixing_date, LAStringVector& fixing_flag, DoubleVector& rate) const;
+    virtual void setCashflow(double& gearing, double& forward, double& spread, AQLDate& fixing_date, AQLString& fixing_flag) const;
+    void getCompoundedRateInfo(DateVector& start, DateVector& end, DoubleVector& term, DateVector& fixing_date, AQLStringVector& fixing_flag, DoubleVector& rate) const;
 
 protected:
-    virtual LAPriceCouponTool* createCouponTool(const LAObject& cashlet, const LAObject& coupon_info);
+    virtual LAPriceCouponTool* createCouponTool(const AQLObject& cashlet, const AQLObject& coupon_info);
     virtual double calculateCouponCashflow() const;
-    virtual void setupStartEndDates(const LAObject& cashlet);
-    virtual LAPriceCouponTool* getStubCoupon(const LAString& stub_coupon_name, const LAObject& cashlet_info);
+    virtual void setupStartEndDates(const AQLObject& cashlet);
+    virtual LAPriceCouponTool* getStubCoupon(const AQLString& stub_coupon_name, const AQLObject& cashlet_info);
 
     LAPriceCouponTool *first_stub, *last_stub;
 
@@ -311,7 +311,7 @@ protected:
 
     bool compound_all_days;
     DateVector start_dates, end_dates;
-	const LADataDoubles* mpCoefficient;
+	const AQLDataDoubles* mpCoefficient;
 
 };
 

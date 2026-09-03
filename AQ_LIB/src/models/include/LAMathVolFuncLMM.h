@@ -5,9 +5,9 @@
 #endif
 
 #include <algorithm>
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 // Funciton ID of LAMathVolFuncLMM
@@ -16,12 +16,12 @@
 #define FN_VOLFUNCLMM_STR	"fn_volfunclmm"
 
 
-class LAMathVolFuncLMM : public LAFunctionBase
+class LAMathVolFuncLMM : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
 	// constructor
-	explicit LAMathVolFuncLMM(const LAFunctionBase *funcTenor, const LAFunctionBase *funcTerm, 
+	explicit LAMathVolFuncLMM(const AQLFunctionBase *funcTenor, const AQLFunctionBase *funcTerm, 
 				const DoubleArray &TFix, const DoubleArray &TFix_30_360, int suffix, double multiple, bool delFlg = false);
 	// destructor
 	virtual ~LAMathVolFuncLMM(void);
@@ -33,7 +33,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;
@@ -48,8 +48,8 @@ public :
 
 	
 protected :
-	const LAFunctionBase *mpFuncTenor;		// pointer to tenor function
-	const LAFunctionBase *mpFuncTerm;		// pointer to term function
+	const AQLFunctionBase *mpFuncTenor;		// pointer to tenor function
+	const AQLFunctionBase *mpFuncTerm;		// pointer to term function
 	DoubleArray mTFix;					     // fixing  grid
 	DoubleArray mTFix_30_360;			     // 30/360 fixing grid
 	DoubleArray m_t;					    // term for calculation

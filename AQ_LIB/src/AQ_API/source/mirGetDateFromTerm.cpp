@@ -1,6 +1,6 @@
 #include "mirGetDateFromTerm.h"
-#include "LADate.h"
-#include "LAString.h"
+#include "AQLDate.h"
+#include "AQLString.h"
 #include "tryMirGetDateFromTerm.h"
 
 /* @brief			swig interface for mirGetDateFromTerm
@@ -19,11 +19,11 @@ const std::string mirGetDateFromTerm(const std::string& FromDate,
 	try 
 	{
 		// Data type marshalling
-		LADate LADate(FromDate.c_str(),"YYYYMMDD");
-		LAString mbDayCount(DayCount.c_str());
-		ret = validation::tryMirGetDateFromTerm(LADate, TermY, mbDayCount, IncludeLast).getCString();
+		AQLDate AQLDate(FromDate.c_str(),"YYYYMMDD");
+		AQLString mbDayCount(DayCount.c_str());
+		ret = validation::tryMirGetDateFromTerm(AQLDate, TermY, mbDayCount, IncludeLast).getCString();
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

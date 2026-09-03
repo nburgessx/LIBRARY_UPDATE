@@ -41,8 +41,8 @@ namespace etrading
 		double getStrikeAdjustAmount() const { return strikeAdjustAmount_; };
 		double isATM() const { return AQ_IS_EQUAL_ZERO(strikeAdjustAmount_); };
 		SabrMarketDataValueTypeEnum getValyeType() const { return valueType_; };
-		LAStringVector getExpiryStrVector() const { return expiryStrVector_; };
-		LAStringVector getTenorStrVector() const { return tenorStrVector_; };
+		AQLStringVector getExpiryStrVector() const { return expiryStrVector_; };
+		AQLStringVector getTenorStrVector() const { return tenorStrVector_; };
 		DoubleMatrix getInstrumentQuoteMatrix() const { return instrumentQuoteMatrix_; };
 
 		/* @brief Copy Constructor
@@ -68,8 +68,8 @@ namespace etrading
 
         /* @brief Returns a LabelValueBlock containing the marketData information for the specified marketDataKey
 		 * @param [in]   marketDataKey   The property to be displayed
-		 * @param [in]   trimBlankRows   Whether to remove blank rows from the end of the LAStringMatrix
-	     * @param [out]  A LAStringMatrix containing the LabelValue block
+		 * @param [in]   trimBlankRows   Whether to remove blank rows from the end of the AQLStringMatrix
+	     * @param [out]  A AQLStringMatrix containing the LabelValue block
 		 */
 		LabelValueBlock toLabelValueBlock( const std::string& marketDataKey, const bool trimBlankRows = true ) const;
 
@@ -103,8 +103,8 @@ namespace etrading
 		double strikeAdjustAmount_;
 		SabrMarketDataValueTypeEnum valueType_;		
 
-		LAStringVector expiryStrVector_;
-		LAStringVector tenorStrVector_;
+		AQLStringVector expiryStrVector_;
+		AQLStringVector tenorStrVector_;
 		DoubleMatrix instrumentQuoteMatrix_;
 		
 	};

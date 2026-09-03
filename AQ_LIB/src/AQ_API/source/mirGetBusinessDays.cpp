@@ -16,13 +16,13 @@ int mirGetBusinessDays(const std::string& fromDate,
 	try 
 	{
 		// Input marshalling
-		LADate fromDt(fromDate.c_str(),"YYYYMMDD");
-		LADate toDt (toDate.c_str(),"YYYYMMDD");
-		LAString cal			(calendar.c_str());
+		AQLDate fromDt(fromDate.c_str(),"YYYYMMDD");
+		AQLDate toDt (toDate.c_str(),"YYYYMMDD");
+		AQLString cal			(calendar.c_str());
 
 		ret = validation::tryMirGetBusinessDays(fromDt, toDt, cal);		
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

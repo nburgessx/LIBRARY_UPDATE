@@ -25,7 +25,7 @@ namespace etrading
 
 		double pv( DataProvider& dataProvider, bool nativeCurrencyPV=false, bool updateCurveData=true);
 
-		//double dv01(const LAString& curveCollection);
+		//double dv01(const AQLString& curveCollection);
 
         ScheduleTypeEnum getType() const;
 
@@ -55,17 +55,17 @@ namespace etrading
 		}
 
 	private:
-		DoubleVector calculateOisFloatRates( size_t firstNonpastFixingDateIndex, const LAString& curveCollection, const std::shared_ptr<FixingTable>& fixingTable) const;
-		std::vector<FloatRateData> calculateFloatRates( const LAString& curveCollection, const LADate& valuationDate, const std::shared_ptr<FixingTable>& fixingTable, const std::string& volatilityModelName, const ConvexityMethodEnum& convexityMethod) const;
+		DoubleVector calculateOisFloatRates( size_t firstNonpastFixingDateIndex, const AQLString& curveCollection, const std::shared_ptr<FixingTable>& fixingTable) const;
+		std::vector<FloatRateData> calculateFloatRates( const AQLString& curveCollection, const AQLDate& valuationDate, const std::shared_ptr<FixingTable>& fixingTable, const std::string& volatilityModelName, const ConvexityMethodEnum& convexityMethod) const;
 
 		//Stub rate from float leg's fixing date list
-        double calculateStubRate( const LAString& curveCollection, const LAString& stubCurveIndex, const LAStringVector& curveIndices, const LAStringVector& curveTenors, const LAString& indexFrequency) const;
+        double calculateStubRate( const AQLString& curveCollection, const AQLString& stubCurveIndex, const AQLStringVector& curveIndices, const AQLStringVector& curveTenors, const AQLString& indexFrequency) const;
 
 		//Stub rate from fixing start date and fixing end date
-		double calculateStubRateFromFixingStartEnd(const LADate& fixingDate, const LADate& fixingEndDate, const LAString& curveCollection, const LAString& stubCurveIndex, const LAStringVector& curveIndices, const LAStringVector& curveTenors, const DayCountEnum& accrualDayCount, const LAString& fixingCalendar, const BusinessDayAdjustmentEnum& fixingBusinessDayAdj) const;
+		double calculateStubRateFromFixingStartEnd(const AQLDate& fixingDate, const AQLDate& fixingEndDate, const AQLString& curveCollection, const AQLString& stubCurveIndex, const AQLStringVector& curveIndices, const AQLStringVector& curveTenors, const DayCountEnum& accrualDayCount, const AQLString& fixingCalendar, const BusinessDayAdjustmentEnum& fixingBusinessDayAdj) const;
 
 		//floatRate from individual cashflows (bespoke cashflows)
-		std::vector<FloatRateData> calculateFloatRatesFromCashflows(const LAString& curveCollection, const LADate& valuationDate, const std::shared_ptr<FixingTable>& fixingTable, const std::string& volatilityModelName, const ConvexityMethodEnum& convexityMethod) const;
+		std::vector<FloatRateData> calculateFloatRatesFromCashflows(const AQLString& curveCollection, const AQLDate& valuationDate, const std::shared_ptr<FixingTable>& fixingTable, const std::string& volatilityModelName, const ConvexityMethodEnum& convexityMethod) const;
 
 		/* @brief Updates the dataProvider survival probabilities and discount factors using the provided modelName.
 		*
@@ -85,7 +85,7 @@ namespace etrading
 		* @param[in]	asOfDate				The valuation date of the leg
 		* @param[in]	creditModel				The calibrated credit model
 		*/
-		void setSurvivalProbabilitiesUsingCreditModel( const LADate& asOfDate, const CreditModel& creditModel );
+		void setSurvivalProbabilitiesUsingCreditModel( const AQLDate& asOfDate, const CreditModel& creditModel );
 
 		/*
 		* @brief	Helper method which ensures that all cashflow survivalProbabilities are initialised to 1.0

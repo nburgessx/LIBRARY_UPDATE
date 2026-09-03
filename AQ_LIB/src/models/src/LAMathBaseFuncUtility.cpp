@@ -8,7 +8,7 @@
 
 ////////////////////////////AlgoQuantLib-Userfunc
 void 
-LAMathBaseFuncUtility::adjustunit(double& ret, LAString& optiontype)
+LAMathBaseFuncUtility::adjustunit(double& ret, AQLString& optiontype)
 {
 	if(VEGA == optiontype)
 		ret*= 0.01;

@@ -8,9 +8,9 @@ namespace etrading
     {}
     
     FixedCashflow::FixedCashflow(const PayReceiveEnum& payReceive, double fixedRate,  
-		const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, double accrualYearFraction, const LADate& paymentDate, 
+		const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, double accrualYearFraction, const AQLDate& paymentDate, 
         double notional, double leverage, double couponMultiplier, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType, const CashFlowBespokeInfo& bespokeInfo)
-		: fixedRate_(fixedRate) , Cashflow(payReceive, LADate(), accrualStartDate, accrualEndDate, accrualDays, accrualYearFraction, paymentDate, notional, leverage, couponMultiplier, zeroCouponSwapPaymentFreq, cashflowType, bespokeInfo)
+		: fixedRate_(fixedRate) , Cashflow(payReceive, AQLDate(), accrualStartDate, accrualEndDate, accrualDays, accrualYearFraction, paymentDate, notional, leverage, couponMultiplier, zeroCouponSwapPaymentFreq, cashflowType, bespokeInfo)
     {}
 
 	/*
@@ -38,7 +38,7 @@ namespace etrading
 		{
 			if (boost::math::isnan(fixedRate_))
 			{
-				throw LACoreInvalidData("#Error: fixedRate is not set for the cashflow", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("#Error: fixedRate is not set for the cashflow", __FILE__, __LINE__);
 			}
 			compoundRate =  fixedRate_;
 		}

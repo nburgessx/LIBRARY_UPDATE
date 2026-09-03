@@ -1,7 +1,7 @@
 #pragma once
 
 #include <boost/date_time.hpp>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 // Forward Declaration, for definition see "LACurveCalibrationHelpers.h" was "LACurveCalibrationHelpers.h" 
 struct DiscountFactorTable;
@@ -11,7 +11,7 @@ namespace validation
     
     /* @brief			return the day count used in the core library
     */
-    LAString getDayCount();
+    AQLString getDayCount();
 
     /* @brief			function sets the legacy isBasisFlag parameter to false in all cases
     */
@@ -23,7 +23,7 @@ namespace validation
     *  @param [inout]	curveIndex		curve index
     *  @param [inout]	interpolation	interpolation
     */
-    void populateDiscountFactorConventions( const LAString& curveCollection, LAString& curveIndex, LAString& interpolation );
+    void populateDiscountFactorConventions( const AQLString& curveCollection, AQLString& curveIndex, AQLString& interpolation );
 
     /* @brief			populate and setting default values
     *  @param [in]		curveCollection	curve collection
@@ -32,7 +32,7 @@ namespace validation
     *  @param [inout]	businessDayAdj	business day adjustment
     *  @param [inout]	calendar		calendar
     */
-    void populateDiscountFactorConventions( const LAString& curveCollection, LAString& curveIndex, LAString& interpolation, LAString& businessDayAdj, LAString& calendar );
+    void populateDiscountFactorConventions( const AQLString& curveCollection, AQLString& curveIndex, AQLString& interpolation, AQLString& businessDayAdj, AQLString& calendar );
 
 
 
@@ -44,9 +44,9 @@ namespace validation
     *  @return			An array of discount factor
     */
     DoubleVector tryMeCurveDiscountFactorsFromYearFractions( const DoubleVector& yearFractions,
-                                                             const LAString& dayCount,
-                                                             const LAString& curveCollection,
-                                                             const LAString& curveIndex );
+                                                             const AQLString& dayCount,
+                                                             const AQLString& curveCollection,
+                                                             const AQLString& curveIndex );
 
     /* @brief			validation method for meCurveDiscountFactorsFromTenors
     *  @param [in]		tenors			An array of tenor strings
@@ -56,11 +56,11 @@ namespace validation
     *  @param [in]		curveIndex		Index of the curve set. Default to OIS
     *  @return			An array of discount factor
     */
-    DoubleVector tryMeCurveDiscountFactorsFromTenors( const LAStringVector& tenors,
-                                                      const LAString& businessDayAdj,
-                                                      const LAString& calendar,
-                                                      const LAString& curveCollection,
-                                                      const LAString& curveIndex );
+    DoubleVector tryMeCurveDiscountFactorsFromTenors( const AQLStringVector& tenors,
+                                                      const AQLString& businessDayAdj,
+                                                      const AQLString& calendar,
+                                                      const AQLString& curveCollection,
+                                                      const AQLString& curveIndex );
 
     /* @brief			validation method for meCurveDiscountFactors
     *  @param [in]		toDates			A single or an array of to-date in YYYYMMDD formate
@@ -69,8 +69,8 @@ namespace validation
     *  @return			A array of discount factors
     */
     DoubleVector tryMeCurveDiscountFactors( const DateVector& toDates,
-                                            const LAString& curveCollectionOrHandle,
-                                            const LAString& curveIndex );
+                                            const AQLString& curveCollectionOrHandle,
+                                            const AQLString& curveIndex );
 
     /* @brief			validation method for meCurveDiscountFactorsForwardStarting
     *  @param [in]		fromDates		A single array of dates in YYYYMMDD formate
@@ -81,8 +81,8 @@ namespace validation
     */
     DoubleVector tryMeCurveDiscountFactorsForwardStarting( const DateVector& fromDates,
                                                            const DateVector& toDates,
-                                                           const LAString& curveCollection,
-                                                           const LAString& curveIndex );
+                                                           const AQLString& curveCollection,
+                                                           const AQLString& curveIndex );
 
     /* @brief			validation method for meCurveDiscountFactorsForwardStartingFromYearFractions
     *  @param [in]		fromDates			An array of from-dates in YYYYMMDD formate
@@ -96,9 +96,9 @@ namespace validation
     */
     DoubleVector tryMeCurveDiscountFactorsForwardStartingFromYearFractions( const DateVector& fromDates,
                                                                             const DoubleVector& yearFractions,
-                                                                            const LAString& dayCount,
-                                                                            const LAString& curveCollection,
-                                                                            const LAString& curveIndex );
+                                                                            const AQLString& dayCount,
+                                                                            const AQLString& curveCollection,
+                                                                            const AQLString& curveIndex );
 
     /* @brief			validation method for meCurveDiscountFactorsForwardStartingFromTenor
     *  @param [in]		fromDates		An array of from-dates in YYYYMMDD formate
@@ -110,11 +110,11 @@ namespace validation
     *  @return			A array of discount factors
     */
     DoubleVector tryMeCurveDiscountFactorsForwardStartingFromTenor( const DateVector& fromDates,
-                                                                    const LAString& tenor,
-                                                                    const LAString& curveCollection,
-                                                                    const LAString& curveIndex,
-                                                                    const LAString& businessDayAdj,
-                                                                    const LAString& calendar );
+                                                                    const AQLString& tenor,
+                                                                    const AQLString& curveCollection,
+                                                                    const AQLString& curveIndex,
+                                                                    const AQLString& businessDayAdj,
+                                                                    const AQLString& calendar );
 
     /* @brief			Validation interface for tryMeCurveForwardRatesOverride function, which overrides curve forward rates by setting equivalent discount factors
 	*  @param [in]		curveCollection		        The curveCollection to use when accessing the curveIndices
@@ -123,8 +123,8 @@ namespace validation
 	*  @param [in]		forwardRates		        The new discount factors
     *  @param [in]		setCorrespondingForwards	Set the corresponding discount factors on STD curves, will set DFs = 1.0 on STD curves if false
 	*/
-    LAString tryMeCurveForwardRatesOverride( const LAString& curveCollection,
-                                             const LAString& curveIndex,
+    AQLString tryMeCurveForwardRatesOverride( const AQLString& curveCollection,
+                                             const AQLString& curveIndex,
                                              const DateVector& fixingDates,
                                              const DoubleVector& forwardRates,
                                              const bool setCorrespondingDiscountFactors = true );
@@ -136,8 +136,8 @@ namespace validation
 	*  @param [in]		discountFactors		        The new discount factors		
     *  @param [in]		setCorrespondingForwards	Set the corresponding forwards on STD curves, will set Forwards on STD curves to zero if false. *** Note *** When true this involves reverse calibration solving and can fail to solve / converge for extreme data sets.
 	*/
-    LAString tryMeCurveDiscountFactorsOverride( const LAString& curveCollection,
-                                                const LAString& curveIndex,
+    AQLString tryMeCurveDiscountFactorsOverride( const AQLString& curveCollection,
+                                                const AQLString& curveIndex,
                                                 const DateVector& paymentDates,
                                                 const DoubleVector& discountFactors,
                                                 const bool setCorrespondingForwards = true );
@@ -146,28 +146,28 @@ namespace validation
 	*  @param [in]		curveCollection		The curveCollection to use when accessing the curveIndices
 	*  @param [in]		curveIndex			The curveindex within the curve
 	*/
-    LAString tryMeCurveDiscountFactorsSetToOne( const LAString& curveCollection, const LAString& curveIndex );
+    AQLString tryMeCurveDiscountFactorsSetToOne( const AQLString& curveCollection, const AQLString& curveIndex );
 
     /* @brief			Validation interface for tryMeCurveDiscountFactorsDisplay function, which retrieves all discount factors
 	*  @param [in]		curveCollection		    The curveCollection to use when accessing the curveIndices
 	*  @param [in]		curveIndex			    The curveindex within the curve
 	*  @param [out]		DiscountFactorTable     A discount factor table structure that contains paymentDates_ and discountFactors_
     */
-    DiscountFactorTable tryMeCurveDiscountFactorsDisplay( const LAString& curveCollection, const LAString& curveIndex );
+    DiscountFactorTable tryMeCurveDiscountFactorsDisplay( const AQLString& curveCollection, const AQLString& curveIndex );
 
     /* @brief			Validation interface for tryMeCurveTermsToDates function, which retrieves curve payment dates given terms year fractions
 	*  @param [in]		curveCollection		    The curveCollection to use to get the curve asOfDate
 	*  @param [in]		terms			        A vector of terms year fractions
 	*  @param [out]		paymentDates            A vector of corresponding payment dates
     */
-    DateVector tryMeCurveTermsToDates( const LAString& curveCollection, const DoubleVector terms );
+    DateVector tryMeCurveTermsToDates( const AQLString& curveCollection, const DoubleVector terms );
 
     /* @brief			Validation interface for tryMeCurveDatesToTerms function, which retrieves curve payment dates given terms year fractions
 	*  @param [in]		curveCollection		    The curveCollection to use to get the curve asOfDate
 	*  @param [in]		paymentDates			A vector of corresponding payment dates
 	*  @param [out]		terms                   A vector of corresponding terms year fractions
     */
-    DoubleVector tryMeCurveDatesToTerms( const LAString& curveCollection, const DateVector paymentDates );
+    DoubleVector tryMeCurveDatesToTerms( const AQLString& curveCollection, const DateVector paymentDates );
 
 }
 

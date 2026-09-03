@@ -94,11 +94,11 @@ std::string meLWOCurveCalibrate( const std::string& objectName,
 	AQ_API_END
 }
 
-	/* @brief			Builds a "TableInfo" tuple from a LAStringMatrix of marketdata
+	/* @brief			Builds a "TableInfo" tuple from a AQLStringMatrix of marketdata
 	*                   This tuple consists of columnNames, columnTypes and the actual data values.
-	*  @param [in]		marketDataBlock		A LAStringMatrix containing key/value market data values
+	*  @param [in]		marketDataBlock		A AQLStringMatrix containing key/value market data values
 	*/
-	etrading::JSONInfoBlockTuple getTableInfoFromStringMatrix( const LAStringMatrix& marketDataBlock )
+	etrading::JSONInfoBlockTuple getTableInfoFromStringMatrix( const AQLStringMatrix& marketDataBlock )
 	{
 		etrading::VariantMatrix variantMatrix;
 		swig::buildVariantMatrix( variantMatrix, marketDataBlock );
@@ -146,7 +146,7 @@ std::string meLWOCurveMarketDataCreate( const std::string& objectName,
 	AQ_REQUIRE( key1 == etrading::GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES, "Please specify the MARKETDATAPROPERTIES in the first data block." );
 	marketDataKeys.push_back( key1 );
 
-	LAStringMatrix matrix1;
+	AQLStringMatrix matrix1;
 	swig::buildStringMatrix( matrix1, value1 );
 
 	// Extract the CurveType from the MARKETDATAPROPERTIES
@@ -160,7 +160,7 @@ std::string meLWOCurveMarketDataCreate( const std::string& objectName,
 	{
 		marketDataKeys.push_back( key2 );
 		
-		LAStringMatrix matrix2;
+		AQLStringMatrix matrix2;
 		const etrading::CurveMarketDataEnum curveMarketDataEnum = etrading::toCurveMarketDataEnum( key2 );
 		swig::buildStringMatrix( matrix2, value2, curveTypeEnum, curveMarketDataEnum );
 		infoBlocks.push_back( getTableInfoFromStringMatrix( matrix2 ));
@@ -170,7 +170,7 @@ std::string meLWOCurveMarketDataCreate( const std::string& objectName,
 	{
 		marketDataKeys.push_back( key3 );
 		
-		LAStringMatrix matrix3;
+		AQLStringMatrix matrix3;
 		const etrading::CurveMarketDataEnum curveMarketDataEnum = etrading::toCurveMarketDataEnum( key3 );
 		swig::buildStringMatrix( matrix3, value3, curveTypeEnum, curveMarketDataEnum  );
 		infoBlocks.push_back( getTableInfoFromStringMatrix( matrix3 ));
@@ -180,7 +180,7 @@ std::string meLWOCurveMarketDataCreate( const std::string& objectName,
 	{
 		marketDataKeys.push_back( key4 );
 		
-		LAStringMatrix matrix4;
+		AQLStringMatrix matrix4;
 		const etrading::CurveMarketDataEnum curveMarketDataEnum = etrading::toCurveMarketDataEnum( key4 );
 		swig::buildStringMatrix( matrix4, value4, curveTypeEnum, curveMarketDataEnum );
 		infoBlocks.push_back( getTableInfoFromStringMatrix( matrix4 ));
@@ -215,7 +215,7 @@ std::string meLWOCurveMarketDataCreateUsingMultipleBlocks( const std::string& ob
 	AQ_REQUIRE( key1 == etrading::GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES, "Please specify the MARKETDATAPROPERTIES in the first data block." );
 	
 	// Read the first block of data to determine the curveType
-	LAStringMatrix matrix1;
+	AQLStringMatrix matrix1;
 	const SWIG_STRINGMATRIX& value1 = valueVector[0];
 	swig::buildStringMatrix( matrix1, value1 );
 
@@ -234,7 +234,7 @@ std::string meLWOCurveMarketDataCreateUsingMultipleBlocks( const std::string& ob
 		const SWIG_STRINGMATRIX& value = valueVector[idx];
 		const etrading::CurveMarketDataEnum curveMarketDataEnum = etrading::toCurveMarketDataEnum( key );
 
-		LAStringMatrix matrix;
+		AQLStringMatrix matrix;
 		swig::buildStringMatrix( matrix, value, curveTypeEnum, curveMarketDataEnum  );
 		infoBlocks.push_back( getTableInfoFromStringMatrix( matrix ));
 	}

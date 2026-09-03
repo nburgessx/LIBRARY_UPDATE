@@ -11,7 +11,7 @@ This class derives from LABlackScholesBaseMethod
 //
 //  SYNOPSIS    :       LABlackScholesBaseMethod
 //  DESCRIPTION :       Class declaration to represent linear function
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -19,9 +19,9 @@ This class derives from LABlackScholesBaseMethod
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LABlackScholesDigitalCapletOptionPayoff.h"
 
 
@@ -59,7 +59,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const override;
 	//======================================
 	// Make copy(clone) of this class
-	virtual LACoreFunctionBase*     clone() const override;
+	virtual AQLCoreFunctionBase*     clone() const override;
 	//======================================
 	// Return this class type
 	virtual function_t          getType() const override;

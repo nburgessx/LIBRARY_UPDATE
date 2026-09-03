@@ -53,82 +53,82 @@ namespace google_test
                 curveIndex_         = "OIS";
 
                 curveLVB_ = 
-                    { { LAString("CURVETYPE"),                      LAString("OIS")             },
-                      { LAString("CURVETENOR"),                     LAString("1D")              },
-                      { LAString("CURVECOLLECTION"),                LAString("USDYC")           }, 
-                      { LAString("CURVEINDEX"),                     LAString("OIS")             } };
+                    { { AQLString("CURVETYPE"),                      AQLString("OIS")             },
+                      { AQLString("CURVETENOR"),                     AQLString("1D")              },
+                      { AQLString("CURVECOLLECTION"),                AQLString("USDYC")           }, 
+                      { AQLString("CURVEINDEX"),                     AQLString("OIS")             } };
 
                 parameterLVB_ = 
-                    { { LAString("ASOFDATE"),                       LAString(43571)             },      // 16-Apr-2019
-                      { LAString("JOINDATE"),                       LAString(43571)             },      // 16-Apr-2019
-                      { LAString("SPOTDATE"),                       LAString(43573)		        },		// 18-Apr-2019
-					  { LAString("DAYCOUNT"),                       LAString("ACT/360")         },
-					  { LAString("INTERPOLATION"),                  LAString("SPLINE")          },
-                      { LAString("FIXINGBUSINESSDAYADJUSTMENT"),    LAString("MOD_FOLLOWING")   },
-                      { LAString("FIXINGCALENDAR"),                 LAString("NYB")  }          };
+                    { { AQLString("ASOFDATE"),                       AQLString(43571)             },      // 16-Apr-2019
+                      { AQLString("JOINDATE"),                       AQLString(43571)             },      // 16-Apr-2019
+                      { AQLString("SPOTDATE"),                       AQLString(43573)		        },		// 18-Apr-2019
+					  { AQLString("DAYCOUNT"),                       AQLString("ACT/360")         },
+					  { AQLString("INTERPOLATION"),                  AQLString("SPLINE")          },
+                      { AQLString("FIXINGBUSINESSDAYADJUSTMENT"),    AQLString("MOD_FOLLOWING")   },
+                      { AQLString("FIXINGCALENDAR"),                 AQLString("NYB")  }          };
 
                 paymentDatesIn_ = 
-                    { LAString(43571),
-                      LAString(43661), 
-                      LAString(43751), 
-                      LAString(43841), 
-                      LAString(43931), 
-                      LAString(44021),
-                      LAString(44111), 
-                      LAString(44201), 
-                      LAString(44291), 
-                      LAString(44381), 
-                      LAString(44471), 
-                      LAString(44561),
-                      LAString(44651), 
-                      LAString(44741), 
-                      LAString(44831), 
-                      LAString(44921), 
-                      LAString(45011), 
-                      LAString(45101),
-                      LAString(45191) };
+                    { AQLString(43571),
+                      AQLString(43661), 
+                      AQLString(43751), 
+                      AQLString(43841), 
+                      AQLString(43931), 
+                      AQLString(44021),
+                      AQLString(44111), 
+                      AQLString(44201), 
+                      AQLString(44291), 
+                      AQLString(44381), 
+                      AQLString(44471), 
+                      AQLString(44561),
+                      AQLString(44651), 
+                      AQLString(44741), 
+                      AQLString(44831), 
+                      AQLString(44921), 
+                      AQLString(45011), 
+                      AQLString(45101),
+                      AQLString(45191) };
 
                 discountFactorsIn_ = 
-                    { LAString(1.0),		// Boundary Condition - Discount Factors on curve the 'AsOfDate' must be one
-                      LAString(0.993791), 
-                      LAString(0.987688), 
-                      LAString(0.981622), 
-                      LAString(0.975594), 
-                      LAString(0.969602),
-                      LAString(0.963648), 
-                      LAString(0.957730), 
-                      LAString(0.951848), 
-                      LAString(0.946003), 
-                      LAString(0.940193), 
-                      LAString(0.934419),
-                      LAString(0.928681), 
-                      LAString(0.922977), 
-                      LAString(0.917309), 
-                      LAString(0.911676), 
-                      LAString(0.906077), 
-                      LAString(0.900512),
-                      LAString(0.894982) };
+                    { AQLString(1.0),		// Boundary Condition - Discount Factors on curve the 'AsOfDate' must be one
+                      AQLString(0.993791), 
+                      AQLString(0.987688), 
+                      AQLString(0.981622), 
+                      AQLString(0.975594), 
+                      AQLString(0.969602),
+                      AQLString(0.963648), 
+                      AQLString(0.957730), 
+                      AQLString(0.951848), 
+                      AQLString(0.946003), 
+                      AQLString(0.940193), 
+                      AQLString(0.934419),
+                      AQLString(0.928681), 
+                      AQLString(0.922977), 
+                      AQLString(0.917309), 
+                      AQLString(0.911676), 
+                      AQLString(0.906077), 
+                      AQLString(0.900512),
+                      AQLString(0.894982) };
 
                 paymentDatesExpected_= 
-                    { LADate("16-04-2019", "DD-MM-YYYY"),
-                      LADate("15-07-2019", "DD-MM-YYYY"),
-                      LADate("13-10-2019", "DD-MM-YYYY"),
-                      LADate("11-01-2020", "DD-MM-YYYY"), 
-                      LADate("10-04-2020", "DD-MM-YYYY"), 
-                      LADate("09-07-2020", "DD-MM-YYYY"),
-                      LADate("07-10-2020", "DD-MM-YYYY"), 
-                      LADate("05-01-2021", "DD-MM-YYYY"), 
-                      LADate("05-04-2021", "DD-MM-YYYY"), 
-                      LADate("04-07-2021", "DD-MM-YYYY"), 
-                      LADate("02-10-2021", "DD-MM-YYYY"), 
-                      LADate("31-12-2021", "DD-MM-YYYY"),
-                      LADate("31-03-2022", "DD-MM-YYYY"),
-                      LADate("29-06-2022", "DD-MM-YYYY"), 
-                      LADate("27-09-2022", "DD-MM-YYYY"), 
-                      LADate("26-12-2022", "DD-MM-YYYY"), 
-                      LADate("26-03-2023", "DD-MM-YYYY"), 
-                      LADate("24-06-2023", "DD-MM-YYYY"),
-                      LADate("22-09-2023", "DD-MM-YYYY") };
+                    { AQLDate("16-04-2019", "DD-MM-YYYY"),
+                      AQLDate("15-07-2019", "DD-MM-YYYY"),
+                      AQLDate("13-10-2019", "DD-MM-YYYY"),
+                      AQLDate("11-01-2020", "DD-MM-YYYY"), 
+                      AQLDate("10-04-2020", "DD-MM-YYYY"), 
+                      AQLDate("09-07-2020", "DD-MM-YYYY"),
+                      AQLDate("07-10-2020", "DD-MM-YYYY"), 
+                      AQLDate("05-01-2021", "DD-MM-YYYY"), 
+                      AQLDate("05-04-2021", "DD-MM-YYYY"), 
+                      AQLDate("04-07-2021", "DD-MM-YYYY"), 
+                      AQLDate("02-10-2021", "DD-MM-YYYY"), 
+                      AQLDate("31-12-2021", "DD-MM-YYYY"),
+                      AQLDate("31-03-2022", "DD-MM-YYYY"),
+                      AQLDate("29-06-2022", "DD-MM-YYYY"), 
+                      AQLDate("27-09-2022", "DD-MM-YYYY"), 
+                      AQLDate("26-12-2022", "DD-MM-YYYY"), 
+                      AQLDate("26-03-2023", "DD-MM-YYYY"), 
+                      AQLDate("24-06-2023", "DD-MM-YYYY"),
+                      AQLDate("22-09-2023", "DD-MM-YYYY") };
 
                 discountFactorsExpected_= 
                     { 1.0,			// Boundary Condition - Discount Factors on the curve 'AsOfDate' must be one
@@ -155,14 +155,14 @@ namespace google_test
 
             virtual void TearDown() {}
 
-            // Helper Function to Create a DiscountFactorTable of type LAStringMatrix from a vector of paymentDates and discountFactors of type LAString
-            LAStringMatrix createDiscountFactorTable( const std::vector<LAString> & paymentDates, const std::vector<LAString> & discountFactors )
+            // Helper Function to Create a DiscountFactorTable of type AQLStringMatrix from a vector of paymentDates and discountFactors of type AQLString
+            AQLStringMatrix createDiscountFactorTable( const std::vector<AQLString> & paymentDates, const std::vector<AQLString> & discountFactors )
             {
                 AQ_REQUIRE( paymentDates.size() == discountFactors.size(), "The number of paymentDates and discountFactors does not match" );
-                LAStringMatrix discountFactorTable( discountFactorsIn_.size() );
+                AQLStringMatrix discountFactorTable( discountFactorsIn_.size() );
                 for ( size_t i = 0; i < discountFactorsIn_.size(); ++i )
                 {
-                    std::vector<LAString> currentDataRow(2); // 2 Columns
+                    std::vector<AQLString> currentDataRow(2); // 2 Columns
                     currentDataRow[0]       = paymentDatesIn_[i];
                     currentDataRow[1]       = discountFactorsIn_[i];
                     discountFactorTable[i]  = currentDataRow;
@@ -177,13 +177,13 @@ namespace google_test
             std::string curveCollection_;
             std::string curveIndex_;
 
-            LAStringMatrix curveLVB_;
-            LAStringMatrix parameterLVB_;
-            LAStringMatrix discountFactorLVB_;
+            AQLStringMatrix curveLVB_;
+            AQLStringMatrix parameterLVB_;
+            AQLStringMatrix discountFactorLVB_;
 
-            std::vector<LAString> paymentDatesIn_;
-            std::vector<LAString> discountFactorsIn_;
-            std::vector<LADate> paymentDatesExpected_;
+            std::vector<AQLString> paymentDatesIn_;
+            std::vector<AQLString> discountFactorsIn_;
+            std::vector<AQLDate> paymentDatesExpected_;
             std::vector<double> discountFactorsExpected_;
     };
 
@@ -193,18 +193,18 @@ namespace google_test
     // This Test was manufactured with curve asOfDate 16-Apr-2019 with discount factors based on a zero rate of 2.5% using DF=exp(-r.t) with Act/365.25 as the daycount
     TEST_F( TestCurveResults, UNIT_ConvertFromDiscountFactorTableToDateValueVectors )
     {
-        // Populate Input LAStringMatrix
+        // Populate Input AQLStringMatrix
         ASSERT_EQ( paymentDatesIn_.size(), discountFactorsIn_.size() );
-        LAStringMatrix DiscountFactorTableIn( discountFactorsIn_.size() );
+        AQLStringMatrix DiscountFactorTableIn( discountFactorsIn_.size() );
         
         for( size_t i = 0; i < discountFactorsIn_.size(); ++i )
         {
-            DiscountFactorTableIn[i].push_back( paymentDatesIn_[i] );        // Column 1 must contain Dates as LAString
-            DiscountFactorTableIn[i].push_back( discountFactorsIn_[i] );     // Column 2 must contain Values as LAString
+            DiscountFactorTableIn[i].push_back( paymentDatesIn_[i] );        // Column 1 must contain Dates as AQLString
+            DiscountFactorTableIn[i].push_back( discountFactorsIn_[i] );     // Column 2 must contain Values as AQLString
         }
 
-        // Call Method which casts LAStringMatrix and populates DateVector and ValueVector results
-        std::vector<LADate> paymentDatesOut;
+        // Call Method which casts AQLStringMatrix and populates DateVector and ValueVector results
+        std::vector<AQLDate> paymentDatesOut;
         std::vector<double> discountFactorsOut;
         
         etrading::populateDateValueVectorsFromStringMatrix( paymentDatesOut, discountFactorsOut, DiscountFactorTableIn );
@@ -230,7 +230,7 @@ namespace google_test
         ASSERT_EQ( paymentDatesIn_.size(), discountFactorsIn_.size() );
         
         // Create Discount Factor Table
-        LAStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
+        AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // Update Discount Factors within Curve Results
         EXPECT_NO_THROW( validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
@@ -244,7 +244,7 @@ namespace google_test
         ASSERT_EQ( paymentDatesIn_.size(), discountFactorsIn_.size() );
         
         // Create Discount Factor Table
-        LAStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
+        AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // Update Discount Factors within Curve Results
         validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable );
@@ -278,7 +278,7 @@ namespace google_test
         ASSERT_EQ( paymentDatesIn_.size(), discountFactorsIn_.size() );
         
         // Create Discount Factor Table
-        LAStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
+        AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // Update Discount Factors within Curve Results
         validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable );
@@ -305,7 +305,7 @@ namespace google_test
         ASSERT_EQ( paymentDatesIn_.size(), discountFactorsIn_.size() );
         
         // Create Discount Factor Table
-        LAStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
+        AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // Update Discount Factors within Curve Results
         EXPECT_NO_THROW( validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
@@ -322,7 +322,7 @@ namespace google_test
         ASSERT_EQ( paymentDatesIn_.size(), discountFactorsIn_.size() );
         
         // Create Discount Factor Table
-        LAStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
+        AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // Update Discount Factors within Curve Results
         EXPECT_NO_THROW( validation::tryMeCurveResultsDiscountFactorsUpdate( curveLVB_, parameterLVB_, discountFactorTable ) );
@@ -350,7 +350,7 @@ namespace google_test
         ASSERT_EQ( paymentDatesIn_.size(), discountFactorsIn_.size() );
         
         // Create Discount Factor Table
-        LAStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
+        AQLStringMatrix discountFactorTable = createDiscountFactorTable( paymentDatesIn_, discountFactorsIn_ );
         
         // 1. Create DFs and Test Results
         // ================================================
@@ -444,17 +444,17 @@ namespace google_test
         std::string curveCollection     = "EURYC";
         std::string curveIndex          = "OIS";
 
-        DateVector paymentDates { LADate("20190503"),       // Curve AsOfDate
-                                  LADate("20200503"),       // 1Y
-                                  LADate("20210503"),       // 2Y
-                                  LADate("20220503"),       // 3Y
-                                  LADate("20230503"),       // 4Y
-                                  LADate("20240503"),       // 5Y
-                                  LADate("20250503"),       // 6Y
-                                  LADate("20260503"),       // 7Y
-                                  LADate("20270503"),       // 8Y
-                                  LADate("20280503"),       // 9Y
-                                  LADate("20290503") };     // 10Y
+        DateVector paymentDates { AQLDate("20190503"),       // Curve AsOfDate
+                                  AQLDate("20200503"),       // 1Y
+                                  AQLDate("20210503"),       // 2Y
+                                  AQLDate("20220503"),       // 3Y
+                                  AQLDate("20230503"),       // 4Y
+                                  AQLDate("20240503"),       // 5Y
+                                  AQLDate("20250503"),       // 6Y
+                                  AQLDate("20260503"),       // 7Y
+                                  AQLDate("20270503"),       // 8Y
+                                  AQLDate("20280503"),       // 9Y
+                                  AQLDate("20290503") };     // 10Y
 
 
         // 3.   Get Discount Factors from Curve Results
@@ -463,9 +463,9 @@ namespace google_test
         
         // 4.   Get Discount Factors from Object Pool
         // ================================================
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
         const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
@@ -499,17 +499,17 @@ namespace google_test
         std::string curveCollection     = "EURYC";
         std::string curveIndex          = "EUR1ML";
 
-        DateVector paymentDates { LADate("20190503"),       // Curve AsOfDate
-                                  LADate("20200503"),       // 1Y
-                                  LADate("20210503"),       // 2Y
-                                  LADate("20220503"),       // 3Y
-                                  LADate("20230503"),       // 4Y
-                                  LADate("20240503"),       // 5Y
-                                  LADate("20250503"),       // 6Y
-                                  LADate("20260503"),       // 7Y
-                                  LADate("20270503"),       // 8Y
-                                  LADate("20280503"),       // 9Y
-                                  LADate("20290503") };     // 10Y
+        DateVector paymentDates { AQLDate("20190503"),       // Curve AsOfDate
+                                  AQLDate("20200503"),       // 1Y
+                                  AQLDate("20210503"),       // 2Y
+                                  AQLDate("20220503"),       // 3Y
+                                  AQLDate("20230503"),       // 4Y
+                                  AQLDate("20240503"),       // 5Y
+                                  AQLDate("20250503"),       // 6Y
+                                  AQLDate("20260503"),       // 7Y
+                                  AQLDate("20270503"),       // 8Y
+                                  AQLDate("20280503"),       // 9Y
+                                  AQLDate("20290503") };     // 10Y
 
 
         // 3.   Get Discount Factors from Curve Results
@@ -518,9 +518,9 @@ namespace google_test
         
         // 4.   Get Discount Factors from Object Pool
         // ================================================
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
         const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
@@ -554,17 +554,17 @@ namespace google_test
         std::string curveCollection     = "EURYC";
         std::string curveIndex          = "EUR3ML";
     
-        DateVector paymentDates { LADate("20190503"),       // Curve AsOfDate
-                                  LADate("20200503"),       // 1Y
-                                  LADate("20210503"),       // 2Y
-                                  LADate("20220503"),       // 3Y
-                                  LADate("20230503"),       // 4Y
-                                  LADate("20240503"),       // 5Y
-                                  LADate("20250503"),       // 6Y
-                                  LADate("20260503"),       // 7Y
-                                  LADate("20270503"),       // 8Y
-                                  LADate("20280503"),       // 9Y
-                                  LADate("20290503") };     // 10Y
+        DateVector paymentDates { AQLDate("20190503"),       // Curve AsOfDate
+                                  AQLDate("20200503"),       // 1Y
+                                  AQLDate("20210503"),       // 2Y
+                                  AQLDate("20220503"),       // 3Y
+                                  AQLDate("20230503"),       // 4Y
+                                  AQLDate("20240503"),       // 5Y
+                                  AQLDate("20250503"),       // 6Y
+                                  AQLDate("20260503"),       // 7Y
+                                  AQLDate("20270503"),       // 8Y
+                                  AQLDate("20280503"),       // 9Y
+                                  AQLDate("20290503") };     // 10Y
     
     
         // 3.   Get Discount Factors from Curve Results
@@ -573,9 +573,9 @@ namespace google_test
         
         // 4.   Get Discount Factors from Object Pool
         // ================================================
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
         const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
@@ -608,17 +608,17 @@ namespace google_test
         std::string curveCollection     = "EURYC";
         std::string curveIndex          = "EUR6ML";
     
-        DateVector paymentDates { LADate("20190503"),       // Curve AsOfDate
-                                  LADate("20200503"),       // 1Y
-                                  LADate("20210503"),       // 2Y
-                                  LADate("20220503"),       // 3Y
-                                  LADate("20230503"),       // 4Y
-                                  LADate("20240503"),       // 5Y
-                                  LADate("20250503"),       // 6Y
-                                  LADate("20260503"),       // 7Y
-                                  LADate("20270503"),       // 8Y
-                                  LADate("20280503"),       // 9Y
-                                  LADate("20290503") };     // 10Y
+        DateVector paymentDates { AQLDate("20190503"),       // Curve AsOfDate
+                                  AQLDate("20200503"),       // 1Y
+                                  AQLDate("20210503"),       // 2Y
+                                  AQLDate("20220503"),       // 3Y
+                                  AQLDate("20230503"),       // 4Y
+                                  AQLDate("20240503"),       // 5Y
+                                  AQLDate("20250503"),       // 6Y
+                                  AQLDate("20260503"),       // 7Y
+                                  AQLDate("20270503"),       // 8Y
+                                  AQLDate("20280503"),       // 9Y
+                                  AQLDate("20290503") };     // 10Y
     
     
         // 3.   Get Discount Factors from Curve Results
@@ -627,9 +627,9 @@ namespace google_test
         
         // 4.   Get Discount Factors from Object Pool
         // ================================================
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
         const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
@@ -662,17 +662,17 @@ namespace google_test
         std::string curveCollection     = "EURYC";
         std::string curveIndex          = "EUR12ML";
 
-        DateVector paymentDates { LADate("20190503"),       // Curve AsOfDate
-                                  LADate("20200503"),       // 1Y
-                                  LADate("20210503"),       // 2Y
-                                  LADate("20220503"),       // 3Y
-                                  LADate("20230503"),       // 4Y
-                                  LADate("20240503"),       // 5Y
-                                  LADate("20250503"),       // 6Y
-                                  LADate("20260503"),       // 7Y
-                                  LADate("20270503"),       // 8Y
-                                  LADate("20280503"),       // 9Y
-                                  LADate("20290503") };     // 10Y
+        DateVector paymentDates { AQLDate("20190503"),       // Curve AsOfDate
+                                  AQLDate("20200503"),       // 1Y
+                                  AQLDate("20210503"),       // 2Y
+                                  AQLDate("20220503"),       // 3Y
+                                  AQLDate("20230503"),       // 4Y
+                                  AQLDate("20240503"),       // 5Y
+                                  AQLDate("20250503"),       // 6Y
+                                  AQLDate("20260503"),       // 7Y
+                                  AQLDate("20270503"),       // 8Y
+                                  AQLDate("20280503"),       // 9Y
+                                  AQLDate("20290503") };     // 10Y
 
 
         // 3.   Get Discount Factors from Curve Results
@@ -681,9 +681,9 @@ namespace google_test
         
         // 4.   Get Discount Factors from Object Pool
         // ================================================
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
         const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
@@ -716,17 +716,17 @@ namespace google_test
         std::string curveCollection     = "USDYC";
         std::string curveIndex          = "OIS";
          
-        DateVector paymentDates { LADate("20190503"),       // Curve AsOfDate
-                                  LADate("20200503"),       // 1Y
-                                  LADate("20210503"),       // 2Y
-                                  LADate("20220503"),       // 3Y
-                                  LADate("20230503"),       // 4Y
-                                  LADate("20240503"),       // 5Y
-                                  LADate("20250503"),       // 6Y
-                                  LADate("20260503"),       // 7Y
-                                  LADate("20270503"),       // 8Y
-                                  LADate("20280503"),       // 9Y
-                                  LADate("20290503") };     // 10Y
+        DateVector paymentDates { AQLDate("20190503"),       // Curve AsOfDate
+                                  AQLDate("20200503"),       // 1Y
+                                  AQLDate("20210503"),       // 2Y
+                                  AQLDate("20220503"),       // 3Y
+                                  AQLDate("20230503"),       // 4Y
+                                  AQLDate("20240503"),       // 5Y
+                                  AQLDate("20250503"),       // 6Y
+                                  AQLDate("20260503"),       // 7Y
+                                  AQLDate("20270503"),       // 8Y
+                                  AQLDate("20280503"),       // 9Y
+                                  AQLDate("20290503") };     // 10Y
 
 
         // 3.   Get Discount Factors from Curve Results
@@ -735,9 +735,9 @@ namespace google_test
         
         // 4.   Get Discount Factors from Object Pool
         // ================================================
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
         const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
@@ -771,17 +771,17 @@ namespace google_test
         std::string curveCollection     = "USDYC";
         std::string curveIndex          = "USD1ML";
          
-        DateVector paymentDates { LADate("20190503"),       // Curve AsOfDate
-                                  LADate("20200503"),       // 1Y
-                                  LADate("20210503"),       // 2Y
-                                  LADate("20220503"),       // 3Y
-                                  LADate("20230503"),       // 4Y
-                                  LADate("20240503"),       // 5Y
-                                  LADate("20250503"),       // 6Y
-                                  LADate("20260503"),       // 7Y
-                                  LADate("20270503"),       // 8Y
-                                  LADate("20280503"),       // 9Y
-                                  LADate("20290503") };     // 10Y
+        DateVector paymentDates { AQLDate("20190503"),       // Curve AsOfDate
+                                  AQLDate("20200503"),       // 1Y
+                                  AQLDate("20210503"),       // 2Y
+                                  AQLDate("20220503"),       // 3Y
+                                  AQLDate("20230503"),       // 4Y
+                                  AQLDate("20240503"),       // 5Y
+                                  AQLDate("20250503"),       // 6Y
+                                  AQLDate("20260503"),       // 7Y
+                                  AQLDate("20270503"),       // 8Y
+                                  AQLDate("20280503"),       // 9Y
+                                  AQLDate("20290503") };     // 10Y
 
 
         // 3.   Get Discount Factors from Curve Results
@@ -790,9 +790,9 @@ namespace google_test
         
         // 4.   Get Discount Factors from Object Pool
         // ================================================
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
         const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
@@ -825,17 +825,17 @@ namespace google_test
         std::string curveCollection     = "USDYC";
         std::string curveIndex          = "USD3ML";
          
-        DateVector paymentDates { LADate("20190503"),       // Curve AsOfDate
-                                  LADate("20200503"),       // 1Y
-                                  LADate("20210503"),       // 2Y
-                                  LADate("20220503"),       // 3Y
-                                  LADate("20230503"),       // 4Y
-                                  LADate("20240503"),       // 5Y
-                                  LADate("20250503"),       // 6Y
-                                  LADate("20260503"),       // 7Y
-                                  LADate("20270503"),       // 8Y
-                                  LADate("20280503"),       // 9Y
-                                  LADate("20290503") };     // 10Y
+        DateVector paymentDates { AQLDate("20190503"),       // Curve AsOfDate
+                                  AQLDate("20200503"),       // 1Y
+                                  AQLDate("20210503"),       // 2Y
+                                  AQLDate("20220503"),       // 3Y
+                                  AQLDate("20230503"),       // 4Y
+                                  AQLDate("20240503"),       // 5Y
+                                  AQLDate("20250503"),       // 6Y
+                                  AQLDate("20260503"),       // 7Y
+                                  AQLDate("20270503"),       // 8Y
+                                  AQLDate("20280503"),       // 9Y
+                                  AQLDate("20290503") };     // 10Y
     
     
         // 3.   Get Discount Factors from Curve Results
@@ -844,9 +844,9 @@ namespace google_test
         
         // 4.   Get Discount Factors from Object Pool
         // ================================================
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
         const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
@@ -881,17 +881,17 @@ namespace google_test
         std::string curveCollection     = "USDYC";
         std::string curveIndex          = "USD6ML";
          
-        DateVector paymentDates { LADate("20190503"),       // Curve AsOfDate
-                                  LADate("20200503"),       // 1Y
-                                  LADate("20210503"),       // 2Y
-                                  LADate("20220503"),       // 3Y
-                                  LADate("20230503"),       // 4Y
-                                  LADate("20240503"),       // 5Y
-                                  LADate("20250503"),       // 6Y
-                                  LADate("20260503"),       // 7Y
-                                  LADate("20270503"),       // 8Y
-                                  LADate("20280503"),       // 9Y
-                                  LADate("20290503") };     // 10Y
+        DateVector paymentDates { AQLDate("20190503"),       // Curve AsOfDate
+                                  AQLDate("20200503"),       // 1Y
+                                  AQLDate("20210503"),       // 2Y
+                                  AQLDate("20220503"),       // 3Y
+                                  AQLDate("20230503"),       // 4Y
+                                  AQLDate("20240503"),       // 5Y
+                                  AQLDate("20250503"),       // 6Y
+                                  AQLDate("20260503"),       // 7Y
+                                  AQLDate("20270503"),       // 8Y
+                                  AQLDate("20280503"),       // 9Y
+                                  AQLDate("20290503") };     // 10Y
 
 
         // 3.   Get Discount Factors from Curve Results
@@ -900,9 +900,9 @@ namespace google_test
         
         // 4.   Get Discount Factors from Object Pool
         // ================================================
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
         const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
@@ -936,17 +936,17 @@ namespace google_test
         std::string curveCollection     = "USDYC";
         std::string curveIndex          = "USD12ML";
          
-        DateVector paymentDates { LADate("20190503"),       // Curve AsOfDate
-                                  LADate("20200503"),       // 1Y
-                                  LADate("20210503"),       // 2Y
-                                  LADate("20220503"),       // 3Y
-                                  LADate("20230503"),       // 4Y
-                                  LADate("20240503"),       // 5Y
-                                  LADate("20250503"),       // 6Y
-                                  LADate("20260503"),       // 7Y
-                                  LADate("20270503"),       // 8Y
-                                  LADate("20280503"),       // 9Y
-                                  LADate("20290503") };     // 10Y
+        DateVector paymentDates { AQLDate("20190503"),       // Curve AsOfDate
+                                  AQLDate("20200503"),       // 1Y
+                                  AQLDate("20210503"),       // 2Y
+                                  AQLDate("20220503"),       // 3Y
+                                  AQLDate("20230503"),       // 4Y
+                                  AQLDate("20240503"),       // 5Y
+                                  AQLDate("20250503"),       // 6Y
+                                  AQLDate("20260503"),       // 7Y
+                                  AQLDate("20270503"),       // 8Y
+                                  AQLDate("20280503"),       // 9Y
+                                  AQLDate("20290503") };     // 10Y
 
 
         // 3.   Get Discount Factors from Curve Results
@@ -955,9 +955,9 @@ namespace google_test
         
         // 4.   Get Discount Factors from Object Pool
         // ================================================
-        LAString interp;
-        LAString bdAdj( "NO_CHANGE" );
-        LAString cal;
+        AQLString interp;
+        AQLString bdAdj( "NO_CHANGE" );
+        AQLString cal;
         etrading::populateDiscountFactorConventions( curveCollection.c_str(), curveIndex.c_str(), interp, bdAdj, cal );
         
         const DoubleVector discountFactorsFromEntityPool = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates,
@@ -992,29 +992,29 @@ namespace google_test
         const bool interpolateOnForwards                        = false;
         etrading::CompoundingFrequencyEnum simpleCompounding    = etrading::SIMPLE_COMPOUNDING;
     
-        DateVector fixingStartDates { LADate("20190503"),       // Curve AsOfDate
-                                      LADate("20200503"),       // 1Y
-                                      LADate("20210503"),       // 2Y
-                                      LADate("20220503"),       // 3Y
-                                      LADate("20230503"),       // 4Y
-                                      LADate("20240503"),       // 5Y
-                                      LADate("20250503"),       // 6Y
-                                      LADate("20260503"),       // 7Y
-                                      LADate("20270503"),       // 8Y
-                                      LADate("20280503"),       // 9Y
-                                      LADate("20290503") };     // 10Y
+        DateVector fixingStartDates { AQLDate("20190503"),       // Curve AsOfDate
+                                      AQLDate("20200503"),       // 1Y
+                                      AQLDate("20210503"),       // 2Y
+                                      AQLDate("20220503"),       // 3Y
+                                      AQLDate("20230503"),       // 4Y
+                                      AQLDate("20240503"),       // 5Y
+                                      AQLDate("20250503"),       // 6Y
+                                      AQLDate("20260503"),       // 7Y
+                                      AQLDate("20270503"),       // 8Y
+                                      AQLDate("20280503"),       // 9Y
+                                      AQLDate("20290503") };     // 10Y
     
-        DateVector fixingEndDates { LADate("20190506"),       // Curve AsOfDate + 1D (weekend)
-                                    LADate("20200506"),       // 1Y + 1D (weekend)
-                                    LADate("20210506"),       // 2Y + 1D (weekend)
-                                    LADate("20220506"),       // 3Y + 1D (weekend)
-                                    LADate("20230506"),       // 4Y + 1D (weekend)
-                                    LADate("20240506"),       // 5Y + 1D (weekend)
-                                    LADate("20250506"),       // 6Y + 1D (weekend)
-                                    LADate("20260506"),       // 7Y + 1D (weekend)
-                                    LADate("20270506"),       // 8Y + 1D (weekend)
-                                    LADate("20280506"),       // 9Y + 1D (weekend)
-                                    LADate("20290506") };     // 10Y + 1D (weekend)
+        DateVector fixingEndDates { AQLDate("20190506"),       // Curve AsOfDate + 1D (weekend)
+                                    AQLDate("20200506"),       // 1Y + 1D (weekend)
+                                    AQLDate("20210506"),       // 2Y + 1D (weekend)
+                                    AQLDate("20220506"),       // 3Y + 1D (weekend)
+                                    AQLDate("20230506"),       // 4Y + 1D (weekend)
+                                    AQLDate("20240506"),       // 5Y + 1D (weekend)
+                                    AQLDate("20250506"),       // 6Y + 1D (weekend)
+                                    AQLDate("20260506"),       // 7Y + 1D (weekend)
+                                    AQLDate("20270506"),       // 8Y + 1D (weekend)
+                                    AQLDate("20280506"),       // 9Y + 1D (weekend)
+                                    AQLDate("20290506") };     // 10Y + 1D (weekend)
     
     
         // 3.   Get Forward Rates from Curve Results
@@ -1023,10 +1023,10 @@ namespace google_test
         
         // 4.   Get ForwardRates from Object Pool
         // ================================================
-        LAString dayC   = "";
-		LAString bdAdj = "";
-		LAString cal = "";
-        LAString interp;
+        AQLString dayC   = "";
+		AQLString bdAdj = "";
+		AQLString cal = "";
+        AQLString interp;
         bool isFwdInter;
         bool useFwdData;
     
@@ -1058,29 +1058,29 @@ namespace google_test
         const bool interpolateOnForwards                        = false;
         etrading::CompoundingFrequencyEnum simpleCompounding    = etrading::SIMPLE_COMPOUNDING;
     
-        DateVector fixingStartDates { LADate("20190503"),       // Curve AsOfDate
-                                      LADate("20200503"),       // 1Y
-                                      LADate("20210503"),       // 2Y
-                                      LADate("20220503"),       // 3Y
-                                      LADate("20230503"),       // 4Y
-                                      LADate("20240503"),       // 5Y
-                                      LADate("20250503"),       // 6Y
-                                      LADate("20260503"),       // 7Y
-                                      LADate("20270503"),       // 8Y
-                                      LADate("20280503"),       // 9Y
-                                      LADate("20290503") };     // 10Y
+        DateVector fixingStartDates { AQLDate("20190503"),       // Curve AsOfDate
+                                      AQLDate("20200503"),       // 1Y
+                                      AQLDate("20210503"),       // 2Y
+                                      AQLDate("20220503"),       // 3Y
+                                      AQLDate("20230503"),       // 4Y
+                                      AQLDate("20240503"),       // 5Y
+                                      AQLDate("20250503"),       // 6Y
+                                      AQLDate("20260503"),       // 7Y
+                                      AQLDate("20270503"),       // 8Y
+                                      AQLDate("20280503"),       // 9Y
+                                      AQLDate("20290503") };     // 10Y
     
-        DateVector fixingEndDates { LADate("20190603"),       // Curve AsOfDate + 1M
-                                    LADate("20200603"),       // 1Y + 1M
-                                    LADate("20210603"),       // 2Y + 1M
-                                    LADate("20220603"),       // 3Y + 1M
-                                    LADate("20230603"),       // 4Y + 1M
-                                    LADate("20240603"),       // 5Y + 1M
-                                    LADate("20250603"),       // 6Y + 1M
-                                    LADate("20260603"),       // 7Y + 1M
-                                    LADate("20270603"),       // 8Y + 1M
-                                    LADate("20280603"),       // 9Y + 1M
-                                    LADate("20290603") };     // 10Y + 1M
+        DateVector fixingEndDates { AQLDate("20190603"),       // Curve AsOfDate + 1M
+                                    AQLDate("20200603"),       // 1Y + 1M
+                                    AQLDate("20210603"),       // 2Y + 1M
+                                    AQLDate("20220603"),       // 3Y + 1M
+                                    AQLDate("20230603"),       // 4Y + 1M
+                                    AQLDate("20240603"),       // 5Y + 1M
+                                    AQLDate("20250603"),       // 6Y + 1M
+                                    AQLDate("20260603"),       // 7Y + 1M
+                                    AQLDate("20270603"),       // 8Y + 1M
+                                    AQLDate("20280603"),       // 9Y + 1M
+                                    AQLDate("20290603") };     // 10Y + 1M
     
     
         // 3.   Get Forward Rates from Curve Results
@@ -1089,10 +1089,10 @@ namespace google_test
         
         // 4.   Get ForwardRates from Object Pool
         // ================================================
-        LAString dayC   = "";
-		LAString bdAdj = "";
-		LAString cal = "";
-        LAString interp;
+        AQLString dayC   = "";
+		AQLString bdAdj = "";
+		AQLString cal = "";
+        AQLString interp;
         bool isFwdInter;
         bool useFwdData;
     
@@ -1124,29 +1124,29 @@ namespace google_test
         const bool interpolateOnForwards                        = false;
         etrading::CompoundingFrequencyEnum simpleCompounding    = etrading::SIMPLE_COMPOUNDING;
     
-        DateVector fixingStartDates { LADate("20190503"),       // Curve AsOfDate
-                                      LADate("20200503"),       // 1Y
-                                      LADate("20210503"),       // 2Y
-                                      LADate("20220503"),       // 3Y
-                                      LADate("20230503"),       // 4Y
-                                      LADate("20240503"),       // 5Y
-                                      LADate("20250503"),       // 6Y
-                                      LADate("20260503"),       // 7Y
-                                      LADate("20270503"),       // 8Y
-                                      LADate("20280503"),       // 9Y
-                                      LADate("20290503") };     // 10Y
+        DateVector fixingStartDates { AQLDate("20190503"),       // Curve AsOfDate
+                                      AQLDate("20200503"),       // 1Y
+                                      AQLDate("20210503"),       // 2Y
+                                      AQLDate("20220503"),       // 3Y
+                                      AQLDate("20230503"),       // 4Y
+                                      AQLDate("20240503"),       // 5Y
+                                      AQLDate("20250503"),       // 6Y
+                                      AQLDate("20260503"),       // 7Y
+                                      AQLDate("20270503"),       // 8Y
+                                      AQLDate("20280503"),       // 9Y
+                                      AQLDate("20290503") };     // 10Y
     
-        DateVector fixingEndDates { LADate("20190803"),       // Curve AsOfDate + 3M
-                                    LADate("20200803"),       // 1Y + 3M
-                                    LADate("20210803"),       // 2Y + 3M
-                                    LADate("20220803"),       // 3Y + 3M
-                                    LADate("20230803"),       // 4Y + 3M
-                                    LADate("20240803"),       // 5Y + 3M
-                                    LADate("20250803"),       // 6Y + 3M
-                                    LADate("20260803"),       // 7Y + 3M
-                                    LADate("20270803"),       // 8Y + 3M
-                                    LADate("20280803"),       // 9Y + 3M
-                                    LADate("20290803") };     // 10Y + 3M
+        DateVector fixingEndDates { AQLDate("20190803"),       // Curve AsOfDate + 3M
+                                    AQLDate("20200803"),       // 1Y + 3M
+                                    AQLDate("20210803"),       // 2Y + 3M
+                                    AQLDate("20220803"),       // 3Y + 3M
+                                    AQLDate("20230803"),       // 4Y + 3M
+                                    AQLDate("20240803"),       // 5Y + 3M
+                                    AQLDate("20250803"),       // 6Y + 3M
+                                    AQLDate("20260803"),       // 7Y + 3M
+                                    AQLDate("20270803"),       // 8Y + 3M
+                                    AQLDate("20280803"),       // 9Y + 3M
+                                    AQLDate("20290803") };     // 10Y + 3M
     
     
         // 3.   Get Forward Rates from Curve Results
@@ -1155,10 +1155,10 @@ namespace google_test
         
         // 4.   Get ForwardRates from Object Pool
         // ================================================
-        LAString dayC   = "";
-		LAString bdAdj = "";
-		LAString cal = "";
-        LAString interp;
+        AQLString dayC   = "";
+		AQLString bdAdj = "";
+		AQLString cal = "";
+        AQLString interp;
         bool isFwdInter;
         bool useFwdData;
     
@@ -1190,29 +1190,29 @@ namespace google_test
         const bool interpolateOnForwards                        = false;
         etrading::CompoundingFrequencyEnum simpleCompounding    = etrading::SIMPLE_COMPOUNDING;
     
-        DateVector fixingStartDates { LADate("20190503"),       // Curve AsOfDate
-                                      LADate("20200503"),       // 1Y
-                                      LADate("20210503"),       // 2Y
-                                      LADate("20220503"),       // 3Y
-                                      LADate("20230503"),       // 4Y
-                                      LADate("20240503"),       // 5Y
-                                      LADate("20250503"),       // 6Y
-                                      LADate("20260503"),       // 7Y
-                                      LADate("20270503"),       // 8Y
-                                      LADate("20280503"),       // 9Y
-                                      LADate("20290503") };     // 10Y
+        DateVector fixingStartDates { AQLDate("20190503"),       // Curve AsOfDate
+                                      AQLDate("20200503"),       // 1Y
+                                      AQLDate("20210503"),       // 2Y
+                                      AQLDate("20220503"),       // 3Y
+                                      AQLDate("20230503"),       // 4Y
+                                      AQLDate("20240503"),       // 5Y
+                                      AQLDate("20250503"),       // 6Y
+                                      AQLDate("20260503"),       // 7Y
+                                      AQLDate("20270503"),       // 8Y
+                                      AQLDate("20280503"),       // 9Y
+                                      AQLDate("20290503") };     // 10Y
     
-        DateVector fixingEndDates { LADate("20191103"),         // Curve AsOfDate + 6M
-                                    LADate("20201103"),         // 1Y + 6M
-                                    LADate("20211103"),         // 2Y + 6M
-                                    LADate("20221103"),         // 3Y + 6M
-                                    LADate("20231103"),         // 4Y + 6M
-                                    LADate("20241103"),         // 5Y + 6M
-                                    LADate("20251103"),         // 6Y + 6M
-                                    LADate("20261103"),         // 7Y + 6M
-                                    LADate("20271103"),         // 8Y + 6M
-                                    LADate("20281103"),         // 9Y + 6M
-                                    LADate("20291103") };       // 10Y + 6M
+        DateVector fixingEndDates { AQLDate("20191103"),         // Curve AsOfDate + 6M
+                                    AQLDate("20201103"),         // 1Y + 6M
+                                    AQLDate("20211103"),         // 2Y + 6M
+                                    AQLDate("20221103"),         // 3Y + 6M
+                                    AQLDate("20231103"),         // 4Y + 6M
+                                    AQLDate("20241103"),         // 5Y + 6M
+                                    AQLDate("20251103"),         // 6Y + 6M
+                                    AQLDate("20261103"),         // 7Y + 6M
+                                    AQLDate("20271103"),         // 8Y + 6M
+                                    AQLDate("20281103"),         // 9Y + 6M
+                                    AQLDate("20291103") };       // 10Y + 6M
     
     
         // 3.   Get Forward Rates from Curve Results
@@ -1221,10 +1221,10 @@ namespace google_test
         
         // 4.   Get ForwardRates from Object Pool
         // ================================================
-        LAString dayC   = "";
-		LAString bdAdj = "";
-		LAString cal = "";
-        LAString interp;
+        AQLString dayC   = "";
+		AQLString bdAdj = "";
+		AQLString cal = "";
+        AQLString interp;
         bool isFwdInter;
         bool useFwdData;
     
@@ -1256,29 +1256,29 @@ namespace google_test
         const bool interpolateOnForwards                        = false;
         etrading::CompoundingFrequencyEnum simpleCompounding    = etrading::SIMPLE_COMPOUNDING;
     
-        DateVector fixingStartDates { LADate("20190503"),       // Curve AsOfDate
-                                      LADate("20200503"),       // 1Y
-                                      LADate("20210503"),       // 2Y
-                                      LADate("20220503"),       // 3Y
-                                      LADate("20230503"),       // 4Y
-                                      LADate("20240503"),       // 5Y
-                                      LADate("20250503"),       // 6Y
-                                      LADate("20260503"),       // 7Y
-                                      LADate("20270503"),       // 8Y
-                                      LADate("20280503"),       // 9Y
-                                      LADate("20290503") };     // 10Y
+        DateVector fixingStartDates { AQLDate("20190503"),       // Curve AsOfDate
+                                      AQLDate("20200503"),       // 1Y
+                                      AQLDate("20210503"),       // 2Y
+                                      AQLDate("20220503"),       // 3Y
+                                      AQLDate("20230503"),       // 4Y
+                                      AQLDate("20240503"),       // 5Y
+                                      AQLDate("20250503"),       // 6Y
+                                      AQLDate("20260503"),       // 7Y
+                                      AQLDate("20270503"),       // 8Y
+                                      AQLDate("20280503"),       // 9Y
+                                      AQLDate("20290503") };     // 10Y
     
-        DateVector fixingEndDates { LADate("20200503"),         // Curve AsOfDate + 12M
-                                    LADate("20210503"),         // 1Y + 12M
-                                    LADate("20220503"),         // 2Y + 12M
-                                    LADate("20230503"),         // 3Y + 12M
-                                    LADate("20240503"),         // 4Y + 12M
-                                    LADate("20250503"),         // 5Y + 12M
-                                    LADate("20260503"),         // 6Y + 12M
-                                    LADate("20270503"),         // 7Y + 12M
-                                    LADate("20280503"),         // 8Y + 12M
-                                    LADate("20290503"),         // 9Y + 12M
-                                    LADate("20300503") };       // 10Y + 12M
+        DateVector fixingEndDates { AQLDate("20200503"),         // Curve AsOfDate + 12M
+                                    AQLDate("20210503"),         // 1Y + 12M
+                                    AQLDate("20220503"),         // 2Y + 12M
+                                    AQLDate("20230503"),         // 3Y + 12M
+                                    AQLDate("20240503"),         // 4Y + 12M
+                                    AQLDate("20250503"),         // 5Y + 12M
+                                    AQLDate("20260503"),         // 6Y + 12M
+                                    AQLDate("20270503"),         // 7Y + 12M
+                                    AQLDate("20280503"),         // 8Y + 12M
+                                    AQLDate("20290503"),         // 9Y + 12M
+                                    AQLDate("20300503") };       // 10Y + 12M
     
     
         // 3.   Get Forward Rates from Curve Results
@@ -1287,10 +1287,10 @@ namespace google_test
         
         // 4.   Get ForwardRates from Object Pool
         // ================================================
-        LAString dayC   = "";
-		LAString bdAdj = "";
-		LAString cal = "";
-        LAString interp;
+        AQLString dayC   = "";
+		AQLString bdAdj = "";
+		AQLString cal = "";
+        AQLString interp;
         bool isFwdInter;
         bool useFwdData;
     
@@ -1321,29 +1321,29 @@ namespace google_test
         const bool interpolateOnForwards                        = false;
         etrading::CompoundingFrequencyEnum simpleCompounding    = etrading::SIMPLE_COMPOUNDING;
     
-        DateVector fixingStartDates { LADate("20190503"),       // Curve AsOfDate
-                                      LADate("20200503"),       // 1Y
-                                      LADate("20210503"),       // 2Y
-                                      LADate("20220503"),       // 3Y
-                                      LADate("20230503"),       // 4Y
-                                      LADate("20240503"),       // 5Y
-                                      LADate("20250503"),       // 6Y
-                                      LADate("20260503"),       // 7Y
-                                      LADate("20270503"),       // 8Y
-                                      LADate("20280503"),       // 9Y
-                                      LADate("20290503") };     // 10Y
+        DateVector fixingStartDates { AQLDate("20190503"),       // Curve AsOfDate
+                                      AQLDate("20200503"),       // 1Y
+                                      AQLDate("20210503"),       // 2Y
+                                      AQLDate("20220503"),       // 3Y
+                                      AQLDate("20230503"),       // 4Y
+                                      AQLDate("20240503"),       // 5Y
+                                      AQLDate("20250503"),       // 6Y
+                                      AQLDate("20260503"),       // 7Y
+                                      AQLDate("20270503"),       // 8Y
+                                      AQLDate("20280503"),       // 9Y
+                                      AQLDate("20290503") };     // 10Y
     
-        DateVector fixingEndDates { LADate("20190506"),       // Curve AsOfDate + 1D (weekend)
-                                    LADate("20200506"),       // 1Y + 1D (weekend)
-                                    LADate("20210506"),       // 2Y + 1D (weekend)
-                                    LADate("20220506"),       // 3Y + 1D (weekend)
-                                    LADate("20230506"),       // 4Y + 1D (weekend)
-                                    LADate("20240506"),       // 5Y + 1D (weekend)
-                                    LADate("20250506"),       // 6Y + 1D (weekend)
-                                    LADate("20260506"),       // 7Y + 1D (weekend)
-                                    LADate("20270506"),       // 8Y + 1D (weekend)
-                                    LADate("20280506"),       // 9Y + 1D (weekend)
-                                    LADate("20290506") };     // 10Y + 1D (weekend)
+        DateVector fixingEndDates { AQLDate("20190506"),       // Curve AsOfDate + 1D (weekend)
+                                    AQLDate("20200506"),       // 1Y + 1D (weekend)
+                                    AQLDate("20210506"),       // 2Y + 1D (weekend)
+                                    AQLDate("20220506"),       // 3Y + 1D (weekend)
+                                    AQLDate("20230506"),       // 4Y + 1D (weekend)
+                                    AQLDate("20240506"),       // 5Y + 1D (weekend)
+                                    AQLDate("20250506"),       // 6Y + 1D (weekend)
+                                    AQLDate("20260506"),       // 7Y + 1D (weekend)
+                                    AQLDate("20270506"),       // 8Y + 1D (weekend)
+                                    AQLDate("20280506"),       // 9Y + 1D (weekend)
+                                    AQLDate("20290506") };     // 10Y + 1D (weekend)
     
     
         // 3.   Get Forward Rates from Curve Results
@@ -1352,10 +1352,10 @@ namespace google_test
         
         // 4.   Get ForwardRates from Object Pool
         // ================================================
-        LAString dayC   = "";
-		LAString bdAdj = "";
-		LAString cal = "";
-        LAString interp;
+        AQLString dayC   = "";
+		AQLString bdAdj = "";
+		AQLString cal = "";
+        AQLString interp;
         bool isFwdInter;
         bool useFwdData;
     
@@ -1387,29 +1387,29 @@ namespace google_test
         const bool interpolateOnForwards                        = false;
         etrading::CompoundingFrequencyEnum simpleCompounding    = etrading::SIMPLE_COMPOUNDING;
     
-        DateVector fixingStartDates { LADate("20190503"),       // Curve AsOfDate
-                                      LADate("20200503"),       // 1Y
-                                      LADate("20210503"),       // 2Y
-                                      LADate("20220503"),       // 3Y
-                                      LADate("20230503"),       // 4Y
-                                      LADate("20240503"),       // 5Y
-                                      LADate("20250503"),       // 6Y
-                                      LADate("20260503"),       // 7Y
-                                      LADate("20270503"),       // 8Y
-                                      LADate("20280503"),       // 9Y
-                                      LADate("20290503") };     // 10Y
+        DateVector fixingStartDates { AQLDate("20190503"),       // Curve AsOfDate
+                                      AQLDate("20200503"),       // 1Y
+                                      AQLDate("20210503"),       // 2Y
+                                      AQLDate("20220503"),       // 3Y
+                                      AQLDate("20230503"),       // 4Y
+                                      AQLDate("20240503"),       // 5Y
+                                      AQLDate("20250503"),       // 6Y
+                                      AQLDate("20260503"),       // 7Y
+                                      AQLDate("20270503"),       // 8Y
+                                      AQLDate("20280503"),       // 9Y
+                                      AQLDate("20290503") };     // 10Y
     
-        DateVector fixingEndDates { LADate("20190603"),       // Curve AsOfDate + 1M
-                                    LADate("20200603"),       // 1Y + 1M
-                                    LADate("20210603"),       // 2Y + 1M
-                                    LADate("20220603"),       // 3Y + 1M
-                                    LADate("20230603"),       // 4Y + 1M
-                                    LADate("20240603"),       // 5Y + 1M
-                                    LADate("20250603"),       // 6Y + 1M
-                                    LADate("20260603"),       // 7Y + 1M
-                                    LADate("20270603"),       // 8Y + 1M
-                                    LADate("20280603"),       // 9Y + 1M
-                                    LADate("20290603") };     // 10Y + 1M
+        DateVector fixingEndDates { AQLDate("20190603"),       // Curve AsOfDate + 1M
+                                    AQLDate("20200603"),       // 1Y + 1M
+                                    AQLDate("20210603"),       // 2Y + 1M
+                                    AQLDate("20220603"),       // 3Y + 1M
+                                    AQLDate("20230603"),       // 4Y + 1M
+                                    AQLDate("20240603"),       // 5Y + 1M
+                                    AQLDate("20250603"),       // 6Y + 1M
+                                    AQLDate("20260603"),       // 7Y + 1M
+                                    AQLDate("20270603"),       // 8Y + 1M
+                                    AQLDate("20280603"),       // 9Y + 1M
+                                    AQLDate("20290603") };     // 10Y + 1M
     
     
         // 3.   Get Forward Rates from Curve Results
@@ -1418,10 +1418,10 @@ namespace google_test
         
         // 4.   Get ForwardRates from Object Pool
         // ================================================
-        LAString dayC   = "";
-		LAString bdAdj = "";
-		LAString cal = "";
-        LAString interp;
+        AQLString dayC   = "";
+		AQLString bdAdj = "";
+		AQLString cal = "";
+        AQLString interp;
         bool isFwdInter;
         bool useFwdData;
     
@@ -1453,29 +1453,29 @@ namespace google_test
         const bool interpolateOnForwards                        = false;
         etrading::CompoundingFrequencyEnum simpleCompounding    = etrading::SIMPLE_COMPOUNDING;
     
-        DateVector fixingStartDates { LADate("20190503"),       // Curve AsOfDate
-                                      LADate("20200503"),       // 1Y
-                                      LADate("20210503"),       // 2Y
-                                      LADate("20220503"),       // 3Y
-                                      LADate("20230503"),       // 4Y
-                                      LADate("20240503"),       // 5Y
-                                      LADate("20250503"),       // 6Y
-                                      LADate("20260503"),       // 7Y
-                                      LADate("20270503"),       // 8Y
-                                      LADate("20280503"),       // 9Y
-                                      LADate("20290503") };     // 10Y
+        DateVector fixingStartDates { AQLDate("20190503"),       // Curve AsOfDate
+                                      AQLDate("20200503"),       // 1Y
+                                      AQLDate("20210503"),       // 2Y
+                                      AQLDate("20220503"),       // 3Y
+                                      AQLDate("20230503"),       // 4Y
+                                      AQLDate("20240503"),       // 5Y
+                                      AQLDate("20250503"),       // 6Y
+                                      AQLDate("20260503"),       // 7Y
+                                      AQLDate("20270503"),       // 8Y
+                                      AQLDate("20280503"),       // 9Y
+                                      AQLDate("20290503") };     // 10Y
     
-        DateVector fixingEndDates { LADate("20190803"),       // Curve AsOfDate + 3M
-                                    LADate("20200803"),       // 1Y + 3M
-                                    LADate("20210803"),       // 2Y + 3M
-                                    LADate("20220803"),       // 3Y + 3M
-                                    LADate("20230803"),       // 4Y + 3M
-                                    LADate("20240803"),       // 5Y + 3M
-                                    LADate("20250803"),       // 6Y + 3M
-                                    LADate("20260803"),       // 7Y + 3M
-                                    LADate("20270803"),       // 8Y + 3M
-                                    LADate("20280803"),       // 9Y + 3M
-                                    LADate("20290803") };     // 10Y + 3M
+        DateVector fixingEndDates { AQLDate("20190803"),       // Curve AsOfDate + 3M
+                                    AQLDate("20200803"),       // 1Y + 3M
+                                    AQLDate("20210803"),       // 2Y + 3M
+                                    AQLDate("20220803"),       // 3Y + 3M
+                                    AQLDate("20230803"),       // 4Y + 3M
+                                    AQLDate("20240803"),       // 5Y + 3M
+                                    AQLDate("20250803"),       // 6Y + 3M
+                                    AQLDate("20260803"),       // 7Y + 3M
+                                    AQLDate("20270803"),       // 8Y + 3M
+                                    AQLDate("20280803"),       // 9Y + 3M
+                                    AQLDate("20290803") };     // 10Y + 3M
     
     
         // 3.   Get Forward Rates from Curve Results
@@ -1484,10 +1484,10 @@ namespace google_test
         
         // 4.   Get ForwardRates from Object Pool
         // ================================================
-        LAString dayC   = "";
-		LAString bdAdj = "";
-		LAString cal = "";
-        LAString interp;
+        AQLString dayC   = "";
+		AQLString bdAdj = "";
+		AQLString cal = "";
+        AQLString interp;
         bool isFwdInter;
         bool useFwdData;
     
@@ -1519,29 +1519,29 @@ namespace google_test
         const bool interpolateOnForwards                        = false;
         etrading::CompoundingFrequencyEnum simpleCompounding    = etrading::SIMPLE_COMPOUNDING;
     
-        DateVector fixingStartDates { LADate("20190503"),       // Curve AsOfDate
-                                      LADate("20200503"),       // 1Y
-                                      LADate("20210503"),       // 2Y
-                                      LADate("20220503"),       // 3Y
-                                      LADate("20230503"),       // 4Y
-                                      LADate("20240503"),       // 5Y
-                                      LADate("20250503"),       // 6Y
-                                      LADate("20260503"),       // 7Y
-                                      LADate("20270503"),       // 8Y
-                                      LADate("20280503"),       // 9Y
-                                      LADate("20290503") };     // 10Y
+        DateVector fixingStartDates { AQLDate("20190503"),       // Curve AsOfDate
+                                      AQLDate("20200503"),       // 1Y
+                                      AQLDate("20210503"),       // 2Y
+                                      AQLDate("20220503"),       // 3Y
+                                      AQLDate("20230503"),       // 4Y
+                                      AQLDate("20240503"),       // 5Y
+                                      AQLDate("20250503"),       // 6Y
+                                      AQLDate("20260503"),       // 7Y
+                                      AQLDate("20270503"),       // 8Y
+                                      AQLDate("20280503"),       // 9Y
+                                      AQLDate("20290503") };     // 10Y
     
-        DateVector fixingEndDates { LADate("20191103"),         // Curve AsOfDate + 6M
-                                    LADate("20201103"),         // 1Y + 6M
-                                    LADate("20211103"),         // 2Y + 6M
-                                    LADate("20221103"),         // 3Y + 6M
-                                    LADate("20231103"),         // 4Y + 6M
-                                    LADate("20241103"),         // 5Y + 6M
-                                    LADate("20251103"),         // 6Y + 6M
-                                    LADate("20261103"),         // 7Y + 6M
-                                    LADate("20271103"),         // 8Y + 6M
-                                    LADate("20281103"),         // 9Y + 6M
-                                    LADate("20291103") };       // 10Y + 6M
+        DateVector fixingEndDates { AQLDate("20191103"),         // Curve AsOfDate + 6M
+                                    AQLDate("20201103"),         // 1Y + 6M
+                                    AQLDate("20211103"),         // 2Y + 6M
+                                    AQLDate("20221103"),         // 3Y + 6M
+                                    AQLDate("20231103"),         // 4Y + 6M
+                                    AQLDate("20241103"),         // 5Y + 6M
+                                    AQLDate("20251103"),         // 6Y + 6M
+                                    AQLDate("20261103"),         // 7Y + 6M
+                                    AQLDate("20271103"),         // 8Y + 6M
+                                    AQLDate("20281103"),         // 9Y + 6M
+                                    AQLDate("20291103") };       // 10Y + 6M
     
     
         // 3.   Get Forward Rates from Curve Results
@@ -1550,10 +1550,10 @@ namespace google_test
         
         // 4.   Get ForwardRates from Object Pool
         // ================================================
-        LAString dayC   = "";
-		LAString bdAdj = "";
-		LAString cal = "";
-        LAString interp;
+        AQLString dayC   = "";
+		AQLString bdAdj = "";
+		AQLString cal = "";
+        AQLString interp;
         bool isFwdInter;
         bool useFwdData;
     
@@ -1585,29 +1585,29 @@ namespace google_test
         const bool interpolateOnForwards                        = false;
         etrading::CompoundingFrequencyEnum simpleCompounding    = etrading::SIMPLE_COMPOUNDING;
     
-        DateVector fixingStartDates { LADate("20190503"),       // Curve AsOfDate
-                                      LADate("20200503"),       // 1Y
-                                      LADate("20210503"),       // 2Y
-                                      LADate("20220503"),       // 3Y
-                                      LADate("20230503"),       // 4Y
-                                      LADate("20240503"),       // 5Y
-                                      LADate("20250503"),       // 6Y
-                                      LADate("20260503"),       // 7Y
-                                      LADate("20270503"),       // 8Y
-                                      LADate("20280503"),       // 9Y
-                                      LADate("20290503") };     // 10Y
+        DateVector fixingStartDates { AQLDate("20190503"),       // Curve AsOfDate
+                                      AQLDate("20200503"),       // 1Y
+                                      AQLDate("20210503"),       // 2Y
+                                      AQLDate("20220503"),       // 3Y
+                                      AQLDate("20230503"),       // 4Y
+                                      AQLDate("20240503"),       // 5Y
+                                      AQLDate("20250503"),       // 6Y
+                                      AQLDate("20260503"),       // 7Y
+                                      AQLDate("20270503"),       // 8Y
+                                      AQLDate("20280503"),       // 9Y
+                                      AQLDate("20290503") };     // 10Y
     
-        DateVector fixingEndDates { LADate("20200503"),         // Curve AsOfDate + 12M
-                                    LADate("20210503"),         // 1Y + 12M
-                                    LADate("20220503"),         // 2Y + 12M
-                                    LADate("20230503"),         // 3Y + 12M
-                                    LADate("20240503"),         // 4Y + 12M
-                                    LADate("20250503"),         // 5Y + 12M
-                                    LADate("20260503"),         // 6Y + 12M
-                                    LADate("20270503"),         // 7Y + 12M
-                                    LADate("20280503"),         // 8Y + 12M
-                                    LADate("20290503"),         // 9Y + 12M
-                                    LADate("20300503") };       // 10Y + 12M
+        DateVector fixingEndDates { AQLDate("20200503"),         // Curve AsOfDate + 12M
+                                    AQLDate("20210503"),         // 1Y + 12M
+                                    AQLDate("20220503"),         // 2Y + 12M
+                                    AQLDate("20230503"),         // 3Y + 12M
+                                    AQLDate("20240503"),         // 4Y + 12M
+                                    AQLDate("20250503"),         // 5Y + 12M
+                                    AQLDate("20260503"),         // 6Y + 12M
+                                    AQLDate("20270503"),         // 7Y + 12M
+                                    AQLDate("20280503"),         // 8Y + 12M
+                                    AQLDate("20290503"),         // 9Y + 12M
+                                    AQLDate("20300503") };       // 10Y + 12M
     
     
         // 3.   Get Forward Rates from Curve Results
@@ -1616,10 +1616,10 @@ namespace google_test
         
         // 4.   Get ForwardRates from Object Pool
         // ================================================
-        LAString dayC   = "";
-		LAString bdAdj = "";
-		LAString cal = "";
-        LAString interp;
+        AQLString dayC   = "";
+		AQLString bdAdj = "";
+		AQLString cal = "";
+        AQLString interp;
         bool isFwdInter;
         bool useFwdData;
     

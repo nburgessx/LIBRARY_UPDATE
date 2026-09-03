@@ -3,8 +3,8 @@
 
 // AlgoQuantLib Includes
 #include "CurveInstruments.h"
-#include "LABasic.h"
-#include "LASplineInterpolation.h"
+#include "AQLBasic.h"
+#include "AQLSplineInterpolation.h"
 
 
 namespace google_test
@@ -34,7 +34,7 @@ namespace google_test
 
         // 4. Discount Factor Check
         actual = getStateVariableValue( zeroRate, term, STATE_VARIABLE_DF );
-        expected = LAMath::exp( -zeroRate * term );
+        expected = AQLMath::exp( -zeroRate * term );
         EXPECT_EQ( expected, actual );
     }
 
@@ -47,9 +47,9 @@ namespace google_test
         double zeroRate = 0.01;
         double zeroRateTimesTime = zeroRate * term;
         double logDF = -zeroRate * term;
-        double df = LAMath::exp( -zeroRate * term );
+        double df = AQLMath::exp( -zeroRate * term );
 
-		LADate asOfDate("20200422");
+		AQLDate asOfDate("20200422");
 		etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		etrading::CompoundingFrequencyEnum compoundFreq(etrading::SIMPLE_COMPOUNDING);
 
@@ -67,7 +67,7 @@ namespace google_test
 
         // 4. Check for zero rate from DF
         actual = getZeroRateFromStateVariable( term, df, STATE_VARIABLE_DF );
-        EXPECT_NEAR( zeroRate, actual, 1e-15 ); // LAMath::log function precision is high, but not exact
+        EXPECT_NEAR( zeroRate, actual, 1e-15 ); // AQLMath::log function precision is high, but not exact
 
         // 5. Check that the zero rate is zero regardless of state variable value when the term is zero
         actual = getZeroRateFromStateVariable( 0.0, zeroRate, STATE_VARIABLE_ZERO_RATE );
@@ -95,11 +95,11 @@ namespace google_test
         const double zero2 = 0.01;
         const double zero3 = 0.02;
 
-        const double df1 = LAMath::exp( -zero1 * time1 );
-        const double df2 = LAMath::exp( -zero2 * time2 );
-        const double df3 = LAMath::exp( -zero3 * time3 );
+        const double df1 = AQLMath::exp( -zero1 * time1 );
+        const double df2 = AQLMath::exp( -zero2 * time2 );
+        const double df3 = AQLMath::exp( -zero3 * time3 );
 
-		LADate asOfDate("20200422");
+		AQLDate asOfDate("20200422");
 		etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		etrading::CompoundingFrequencyEnum compoundFreq(etrading::SIMPLE_COMPOUNDING);
 
@@ -116,7 +116,7 @@ namespace google_test
         zeroRates.push_back( zero3 );
         
         // Cubic Spline Interpolation
-        LASplineInterpolation pInterpolatorDF;
+        AQLSplineInterpolation pInterpolatorDF;
         pInterpolatorDF.set( timeGrid, zeroRates );
 
         // Check discount factors can be retrieved correctly
@@ -146,11 +146,11 @@ namespace google_test
         const double zt2 = zero2 * time2;
         const double zt3 = zero3 * time3;
 
-        const double df1 = LAMath::exp( -zt1 );
-        const double df2 = LAMath::exp( -zt2 );
-        const double df3 = LAMath::exp( -zt3 );
+        const double df1 = AQLMath::exp( -zt1 );
+        const double df2 = AQLMath::exp( -zt2 );
+        const double df3 = AQLMath::exp( -zt3 );
 
-		LADate asOfDate("20200422");
+		AQLDate asOfDate("20200422");
 		etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		etrading::CompoundingFrequencyEnum compoundFreq(etrading::SIMPLE_COMPOUNDING);
 
@@ -167,7 +167,7 @@ namespace google_test
         zeroRateTimesTimeGrid.push_back( zt3 );
         
         // Cubic Spline Interpolation
-        LASplineInterpolation pInterpolatorDF;
+        AQLSplineInterpolation pInterpolatorDF;
         pInterpolatorDF.set( timeGrid, zeroRateTimesTimeGrid );
 
         // Check discount factors can be retrieved correctly
@@ -197,11 +197,11 @@ namespace google_test
         const double logDF2 = zero2 * time2;
         const double logDF3 = zero3 * time3;
 
-        const double df1 = LAMath::exp( logDF1 );
-        const double df2 = LAMath::exp( logDF2 );
-        const double df3 = LAMath::exp( logDF3 );
+        const double df1 = AQLMath::exp( logDF1 );
+        const double df2 = AQLMath::exp( logDF2 );
+        const double df3 = AQLMath::exp( logDF3 );
 
-		LADate asOfDate("20200422");
+		AQLDate asOfDate("20200422");
 		etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		etrading::CompoundingFrequencyEnum compoundFreq(etrading::SIMPLE_COMPOUNDING);
 
@@ -218,7 +218,7 @@ namespace google_test
         logDFGrid.push_back( logDF3 );
         
         // Cubic Spline Interpolation
-        LASplineInterpolation pInterpolatorDF;
+        AQLSplineInterpolation pInterpolatorDF;
         pInterpolatorDF.set( timeGrid, logDFGrid );
 
         // Check discount factors can be retrieved correctly
@@ -244,7 +244,7 @@ namespace google_test
         const double df2 = 0.9;
         const double df3 = 0.8;
 
-		LADate asOfDate("20200422");
+		AQLDate asOfDate("20200422");
 		etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		etrading::CompoundingFrequencyEnum compoundFreq(etrading::SIMPLE_COMPOUNDING);
 
@@ -261,7 +261,7 @@ namespace google_test
         discountFactors.push_back( df3 );
         
         // Cubic Spline Interpolation
-        LASplineInterpolation pInterpolatorDF;
+        AQLSplineInterpolation pInterpolatorDF;
         pInterpolatorDF.set( timeGrid, discountFactors );
 
         // Check discount factors can be retrieved correctly
@@ -287,7 +287,7 @@ namespace google_test
         const double zero2 = 0.01;
         const double zero3 = 0.02;
 
-		LADate asOfDate("20200422");
+		AQLDate asOfDate("20200422");
 		etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		etrading::CompoundingFrequencyEnum compoundFreq(etrading::SIMPLE_COMPOUNDING);
 
@@ -304,7 +304,7 @@ namespace google_test
         zeroRates.push_back( zero3 );
         
         // Cubic Spline Interpolation
-        LASplineInterpolation pInterpolatorDF;
+        AQLSplineInterpolation pInterpolatorDF;
         pInterpolatorDF.set( timeGrid, zeroRates );
 
         // Check discount factors can be retrieved correctly
@@ -334,7 +334,7 @@ namespace google_test
         const double zt2 = zero2 * time2;
         const double zt3 = zero3 * time3;
 
-		LADate asOfDate("20200422");
+		AQLDate asOfDate("20200422");
 		etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		etrading::CompoundingFrequencyEnum compoundFreq(etrading::SIMPLE_COMPOUNDING);
 
@@ -351,7 +351,7 @@ namespace google_test
         zeroRateTimesTimeGrid.push_back( zt3 );
         
         // Cubic Spline Interpolation
-        LASplineInterpolation pInterpolatorDF;
+        AQLSplineInterpolation pInterpolatorDF;
         pInterpolatorDF.set( timeGrid, zeroRateTimesTimeGrid );
 
         // Check discount factors can be retrieved correctly
@@ -381,7 +381,7 @@ namespace google_test
         const double logDF2 = -zero2 * time2;
         const double logDF3 = -zero3 * time3;
 
-		LADate asOfDate("20200422");
+		AQLDate asOfDate("20200422");
 		etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		etrading::CompoundingFrequencyEnum compoundFreq(etrading::SIMPLE_COMPOUNDING);
 
@@ -398,7 +398,7 @@ namespace google_test
         logDFGrid.push_back( logDF3 );
         
         // Cubic Spline Interpolation
-        LASplineInterpolation pInterpolatorDF;
+        AQLSplineInterpolation pInterpolatorDF;
         pInterpolatorDF.set( timeGrid, logDFGrid );
 
         // Check discount factors can be retrieved correctly
@@ -424,13 +424,13 @@ namespace google_test
         const double zero2 = 0.01;
         const double zero3 = 0.02;
 
-		LADate asOfDate("20200422");
+		AQLDate asOfDate("20200422");
 		etrading::DayCountEnum accrualDaycount(etrading::ACT_365_DAYCOUNT);
 		etrading::CompoundingFrequencyEnum compoundFreq(etrading::SIMPLE_COMPOUNDING);
 
-        const double df1 = LAMath::exp( -zero1 * time1 );
-        const double df2 = LAMath::exp( -zero2 * time2 );
-        const double df3 = LAMath::exp( -zero3 * time3 );
+        const double df1 = AQLMath::exp( -zero1 * time1 );
+        const double df2 = AQLMath::exp( -zero2 * time2 );
+        const double df3 = AQLMath::exp( -zero3 * time3 );
 
         // Update Vector Data for Interpolator
         DoubleArray timeGrid;
@@ -445,18 +445,18 @@ namespace google_test
         discountFactors.push_back( df3 );
         
         // Cubic Spline Interpolation
-        LASplineInterpolation pInterpolatorDF;
+        AQLSplineInterpolation pInterpolatorDF;
         pInterpolatorDF.set( timeGrid, discountFactors );
 
         // Check discount factors can be retrieved correctly
         double result1 = getInterpolatedZeroRate( time1, &pInterpolatorDF, STATE_VARIABLE_DF, asOfDate, accrualDaycount, compoundFreq );
-        EXPECT_NEAR( zero1, result1, 1e-15 ); // LAMath::log function precision is high, but not exact
+        EXPECT_NEAR( zero1, result1, 1e-15 ); // AQLMath::log function precision is high, but not exact
 
         double result2 = getInterpolatedZeroRate( time2, &pInterpolatorDF, STATE_VARIABLE_DF, asOfDate, accrualDaycount, compoundFreq );
-        EXPECT_NEAR( zero2, result2, 1e-15 ); // LAMath::log function precision is high, but not exact
+        EXPECT_NEAR( zero2, result2, 1e-15 ); // AQLMath::log function precision is high, but not exact
 
         double result3 = getInterpolatedZeroRate( time3, &pInterpolatorDF, STATE_VARIABLE_DF, asOfDate, accrualDaycount, compoundFreq );
-        EXPECT_NEAR( zero3, result3, 1e-15 ); // LAMath::log function precision is high, but not exact
+        EXPECT_NEAR( zero3, result3, 1e-15 ); // AQLMath::log function precision is high, but not exact
     }
 
 

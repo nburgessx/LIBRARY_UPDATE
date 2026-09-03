@@ -180,8 +180,8 @@ namespace etrading
         }   // ELSE LAMBDA_ !=0
 
         /*
-        mpDataProvider = new LAMonotoneConvexInterpolationDataProvider(tau, input, fdiscrete, f, n + 1);
-        LAMonotoneConvexInterpolationDataProvider(const DoubleArray dataIndex,
+        mpDataProvider = new AQLMonotoneConvexInterpolationDataProvider(tau, input, fdiscrete, f, n + 1);
+        AQLMonotoneConvexInterpolationDataProvider(const DoubleArray dataIndex,
         							const DoubleArray dataValue,
         							const DoubleArray dataFdiscrete,
         							const DoubleArray dataF,
@@ -303,7 +303,7 @@ namespace etrading
 }
 
 /*
-        // LASplineInterpolation.cpp:   void LASplineInterpolation::set(const DoubleArray& index, const DoubleArray& value)  - line 166
+        // AQLSplineInterpolation.cpp:   void AQLSplineInterpolation::set(const DoubleArray& index, const DoubleArray& value)  - line 166
 
         std::vector<double> xs = inXs;
         std::vector<double> ys = inYs;

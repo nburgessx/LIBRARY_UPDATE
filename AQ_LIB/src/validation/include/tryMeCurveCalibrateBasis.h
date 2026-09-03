@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -20,18 +20,18 @@ namespace validation
 	*  @param [in]		liborConv			Libor instrument conventions
 	*  @param [in]		liborRates			Libor market data
     */
-    const LAString tryMeCurveCalibrateBasis( const LAString& curveCollection,
-            const LAString& staticDataTable,
-            const LAString& curveIndex,
-            const LAStringMatrix& curveConv,
-            const LAStringMatrix& basisConv,
-            const LAStringMatrix& basisRates,
-            const LAStringMatrix& fxFwdConv,
-            const LAStringMatrix& fxFwdRates,
-            const LAStringMatrix& spotFxRates,
-			const LAStringMatrix& fraConv = LAStringMatrix(),
-			const LAStringMatrix& fraRates = LAStringMatrix(),
-			const LAStringMatrix& liborConv = LAStringMatrix(),
-			const LAStringMatrix& liborRates = LAStringMatrix());
+    const AQLString tryMeCurveCalibrateBasis( const AQLString& curveCollection,
+            const AQLString& staticDataTable,
+            const AQLString& curveIndex,
+            const AQLStringMatrix& curveConv,
+            const AQLStringMatrix& basisConv,
+            const AQLStringMatrix& basisRates,
+            const AQLStringMatrix& fxFwdConv,
+            const AQLStringMatrix& fxFwdRates,
+            const AQLStringMatrix& spotFxRates,
+			const AQLStringMatrix& fraConv = AQLStringMatrix(),
+			const AQLStringMatrix& fraRates = AQLStringMatrix(),
+			const AQLStringMatrix& liborConv = AQLStringMatrix(),
+			const AQLStringMatrix& liborRates = AQLStringMatrix());
 
 }

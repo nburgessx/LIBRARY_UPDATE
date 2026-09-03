@@ -4,22 +4,22 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LAMathHWFuncMR.h"
 #include "LAMathHWFuncSigma.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include <limits>
-#include "LAGaussLegendre.h"
+#include "AQLGaussLegendre.h"
 
 
-// ID for LAFunctionBase
+// ID for AQLFunctionBase
 #define FN_HWFUNCTIONTOOL	10023 
 
-class LAIntegralBase;
-class LA1DIntegral;
-class LACombinationMethod;
+class AQLIntegralBase;
+class AQL1DIntegral;
+class AQLCombinationMethod;
 
 ///////////////////////////////////////////////////////////////////////
 /*! 
@@ -29,7 +29,7 @@ class LACombinationMethod;
 	This class has a pure virtual method "operator()".
 
 */
-class LAMathHWFuncTool : public LAFunctionBase
+class LAMathHWFuncTool : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
@@ -46,7 +46,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;
+	virtual AQLCoreFunctionBase*		clone() const;
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -59,14 +59,14 @@ public:
 
 	double	ExpIntegralMR(double T) const
 	{
-		return LAMath::exp( mpHWMR->integrate(0,T) );
+		return AQLMath::exp( mpHWMR->integrate(0,T) );
 	};
 	double ExpIntegralInvMR(double T) const 
 	{
-		return LAMath::exp( - mpHWMR->integrate(0,T) );
+		return AQLMath::exp( - mpHWMR->integrate(0,T) );
 	}
 	
-	//LAGaussLegendre mGL;
+	//AQLGaussLegendre mGL;
 	LAMathHWFuncMR*		getHWMR(void) const{return mpHWMR;};
 	LAMathHWFuncSigma*	getHWSigma(void)  const {return mpHWSigma;};
 private:
@@ -77,12 +77,12 @@ protected:
 };
 
 
-// ID for LAFunctionBase
+// ID for AQLFunctionBase
 #define FN_HWFUNCTIONTOOLFORVAR	10024 
 
-class LAIntegralBase;
-class LA1DIntegral;
-class LACombinationMethod;
+class AQLIntegralBase;
+class AQL1DIntegral;
+class AQLCombinationMethod;
 
 ///////////////////////////////////////////////////////////////////////
 /*! 
@@ -100,7 +100,7 @@ public:
 	explicit LAMathHWFuncToolForVar(LAMathHWFuncMR& funcHWMR, LAMathHWFuncSigma& funcHWSigma);
 	//copy constructor
     LAMathHWFuncToolForVar(const LAMathHWFuncToolForVar &rhs);
-//	LAFunctionBase(const LAFunctionBase& v);
+//	AQLFunctionBase(const AQLFunctionBase& v);
 	// Destructor
 	virtual ~LAMathHWFuncToolForVar();
 
@@ -110,7 +110,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;
+	virtual AQLCoreFunctionBase*		clone() const;
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -127,12 +127,12 @@ protected:
 };
 
 
-// ID for LAFunctionBase
+// ID for AQLFunctionBase
 #define FN_HWFUNCTIONTOOLFORMR	10025 
 
-class LAIntegralBase;
-class LA1DIntegral;
-class LACombinationMethod;
+class AQLIntegralBase;
+class AQL1DIntegral;
+class AQLCombinationMethod;
 
 ///////////////////////////////////////////////////////////////////////
 /*! 
@@ -150,7 +150,7 @@ public:
 	explicit LAMathHWFuncToolForMR(LAMathHWFuncMR& funcHWMR, LAMathHWFuncSigma& funcHWSigma);
 	//copy constructor
     LAMathHWFuncToolForMR(const LAMathHWFuncToolForMR &rhs);
-//	LAFunctionBase(const LAFunctionBase& v);
+//	AQLFunctionBase(const AQLFunctionBase& v);
 	// Destructor
 	virtual ~LAMathHWFuncToolForMR();
 
@@ -160,7 +160,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;
+	virtual AQLCoreFunctionBase*		clone() const;
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -177,12 +177,12 @@ protected:
 };
 
 
-// ID for LAFunctionBase
+// ID for AQLFunctionBase
 #define FN_HWFUNCTIONTOOLFORMRINTEGRAL	10026 
 
-class LAIntegralBase;
-class LA1DIntegral;
-class LACombinationMethod;
+class AQLIntegralBase;
+class AQL1DIntegral;
+class AQLCombinationMethod;
 
 ///////////////////////////////////////////////////////////////////////
 /*! 
@@ -200,7 +200,7 @@ public:
 	explicit LAMathHWFuncToolForMRIntegral(LAMathHWFuncMR& funcHWMR, LAMathHWFuncSigma& funcHWSigma);
 	//copy constructor
     LAMathHWFuncToolForMRIntegral(const LAMathHWFuncToolForMRIntegral &rhs);
-//	LAFunctionBase(const LAFunctionBase& v);
+//	AQLFunctionBase(const AQLFunctionBase& v);
 	// Destructor
 	virtual ~LAMathHWFuncToolForMRIntegral();
 
@@ -210,7 +210,7 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;
+	virtual AQLCoreFunctionBase*		clone() const;
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
@@ -222,7 +222,7 @@ public:
 	virtual double				operator()(double x) const;
 	
 	LAMathHWFuncToolForMR* mpToolMR;
-	LAGaussLegendre mGL;
+	AQLGaussLegendre mGL;
 private:
 
 protected:

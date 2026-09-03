@@ -17,15 +17,15 @@ std::string mirGetNextCBDate(const std::string& centralBankId,
 	try 
 	{
 		// Input marshalling
-		LAString cbId(centralBankId.c_str());
-		LADate baseDt(baseDate.c_str(),"YYYYMMDD");
+		AQLString cbId(centralBankId.c_str());
+		AQLDate baseDt(baseDate.c_str(),"YYYYMMDD");
 
-		LADate date = validation::tryMirGetNextCBDate(cbId, baseDt, strictlyAfter);
+		AQLDate date = validation::tryMirGetNextCBDate(cbId, baseDt, strictlyAfter);
 		
 		ret = date.stringWithFormat("YYYYMMDD").getCString();
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

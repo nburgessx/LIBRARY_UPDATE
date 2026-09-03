@@ -19,19 +19,19 @@
 #include "ParameterValidation.h"
 #include "LACurveCalibrationHelpers.h"
 #include "LACurveForwardRateHelpers.h"
-#include "LAMonotoneConvexInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAConstrainedSplineInterpolation.h"
-#include "LALinearInterpolation.h"
-#include "LAStepInterpolation.h"
+#include "AQLMonotoneConvexInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLConstrainedSplineInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLStepInterpolation.h"
 #include "ObjectUtilities.h"
 #include "LWOCurve.h"
 #include "EnvironmentUtilities.h"
 #include "Environment.h"
 #include "DateUtilities.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LACurvePricingObject.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "tryMeCurveForwardRate.h"
 #include "EntityPoolUtilities.h"
 #include "CurveResultsContainer.h"
@@ -60,23 +60,23 @@ namespace validation
     *  @param [in]		convexityAdjConv	Convexity adjustment market conventions
     *  @param [in]		convexityAdjRates	Convexity adjustment market data
     */
-    const LAString tryMeLWOCurveCreateSwap( const std::string& lwoCurveName,
-                                            const LAString& curveCollectionInput,
-                                            const LAString& staticDataTableInput,
-                                            const LAString& curveIndexInput,
-                                            const LAStringMatrix& curveConv,
-                                            const LAStringMatrix& moneyMarketConv,
-                                            const LAStringMatrix& liborConv,
-                                            const LAStringMatrix& liborRates,
-                                            const LAStringMatrix& swapConv,
-                                            const LAStringMatrix& swapRates,
-                                            const LAStringMatrix& fraConv,
-                                            const LAStringMatrix& fra3mRates,
-                                            const LAStringMatrix& fra6mRates,
-                                            const LAStringMatrix& futureConv,
-                                            const LAStringMatrix& futureRates,
-                                            const LAStringMatrix& convexityAdjConv,
-                                            const LAStringMatrix& convexityAdjRates )
+    const AQLString tryMeLWOCurveCreateSwap( const std::string& lwoCurveName,
+                                            const AQLString& curveCollectionInput,
+                                            const AQLString& staticDataTableInput,
+                                            const AQLString& curveIndexInput,
+                                            const AQLStringMatrix& curveConv,
+                                            const AQLStringMatrix& moneyMarketConv,
+                                            const AQLStringMatrix& liborConv,
+                                            const AQLStringMatrix& liborRates,
+                                            const AQLStringMatrix& swapConv,
+                                            const AQLStringMatrix& swapRates,
+                                            const AQLStringMatrix& fraConv,
+                                            const AQLStringMatrix& fra3mRates,
+                                            const AQLStringMatrix& fra6mRates,
+                                            const AQLStringMatrix& futureConv,
+                                            const AQLStringMatrix& futureRates,
+                                            const AQLStringMatrix& convexityAdjConv,
+                                            const AQLStringMatrix& convexityAdjRates )
     {
         VALID_EXCEPTION_START
         
@@ -86,14 +86,14 @@ namespace validation
         // Ensure Curve Name Data is in uppercase
         // --------------------------------------
 
-        LAString curveCollection  = curveCollectionInput;
+        AQLString curveCollection  = curveCollectionInput;
         curveCollection.toUpper();
         
-        LAString staticDataTable  = staticDataTableInput;
+        AQLString staticDataTable  = staticDataTableInput;
         staticDataTable.toUpper();
 
         // Append the staticDataTable to the curveIndex Name Set, ensuring to use the ':' delimiter
-        LAString curveIndex       = curveIndexInput + ":" + staticDataTable;
+        AQLString curveIndex       = curveIndexInput + ":" + staticDataTable;
         curveIndex.toUpper();
 
         // --------------------------------------
@@ -174,7 +174,7 @@ namespace validation
 
         if ( !futureRates.empty() && futureRates[0].size() < 3 )
         {
-            throw LACoreInvalidData( "Matrix column size must be greater or equal to 3", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "Matrix column size must be greater or equal to 3", __FILE__, __LINE__ );
         }
 
         if ( !convexityAdjConv.empty() && convexityAdjConv[0].size() < 2 )
@@ -216,7 +216,7 @@ namespace validation
 																	  convexityAdjConv,
 																	  convexityAdjRates,
 																	  curveIndex,
-																	  LAString( "" ) );
+																	  AQLString( "" ) );
 
 		// 2. Calibrate Curve
 		etrading::LAUpdateStaticDataManager::calibrateSwapCurve( etrading::getDataInstance(), curveCollection, staticDataTable, curveConv );
@@ -229,7 +229,7 @@ namespace validation
         // The 'curveIndexCopy' variable is used to search for a curve for discount factors and forward rates. Unfortunately the object pool sometimes searches for
         // curves by 'staticDataTable' (aka MarketDataName) and sometimes by 'curveIndex'. To mitigate this problem we ensure that 'staticDataTable' name is always
         // included in the 'curveIndex' name list.
-        LAString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "STD" ) );
+        AQLString curveIndexCopy( etrading::getDefaultValueForEmptyString( staticDataTable, "STD" ) );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndexCopy );
@@ -237,7 +237,7 @@ namespace validation
         // ------------------------------------------
 
 
-        LAString interpolation = etrading::trim_to_upper( etrading::getCurveInterpolation( curveCollection, staticDataTable ).getCString() ).c_str();
+        AQLString interpolation = etrading::trim_to_upper( etrading::getCurveInterpolation( curveCollection, staticDataTable ).getCString() ).c_str();
         auto& env =  etrading::Environment::defaultEnv();
 
         // AsOfDate and Calendar to get the start of the year fractions (and whether date is a holiday -> not in AlgoQuantLib) +
@@ -250,7 +250,7 @@ namespace validation
         const etrading::CurveTypeEnum curveTypeEnum = etrading::toCurveTypeEnum( staticDataName );
 
         LabelValueBlock curveConvLVB( curveConv );
-        LADate effectiveDate = curveConvLVB.getCompulsoryValueAsDate( "ASOFDATE" );
+        AQLDate effectiveDate = curveConvLVB.getCompulsoryValueAsDate( "ASOFDATE" );
 
         const boost::gregorian::date asOfDate( effectiveDate.yearOfEra(), effectiveDate.monthOfYear(), effectiveDate.dayOfMonth() );
         const etrading::CCY ccy = etrading::toCCYEnum( curveConvLVB.getCompulsoryValue( "CURRENCY" ) );
@@ -293,12 +293,12 @@ namespace validation
         boost::gregorian::date endDate  = asOfDate + boost::gregorian::years( 51 );
         auto numberOfdaysBetween        = boost::gregorian::date_period( asOfDate, endDate ).length().days();
 
-        std::vector<LADate> massiveDateVector;
+        std::vector<AQLDate> massiveDateVector;
         massiveDateVector.reserve( numberOfdaysBetween );
 
         std::vector<double> massiveYearFractionVector;
         massiveYearFractionVector.reserve( numberOfdaysBetween );
-        LAPriceDataDayCount dc_act365( ACT_365 ); // ACT_365
+        AQLPriceDataDayCount dc_act365( ACT_365 ); // ACT_365
 
         auto spotDate = etrading::toLADateFromGregorianDate( asOfDate );
         auto finalDate = etrading::toLADateFromGregorianDate( endDate );
@@ -320,7 +320,7 @@ namespace validation
         auto massiveDFVector = etrading::LACurveForwardRateHelpers::getMultiDF( massiveYearFractionVector,
                                                                            etrading::getDataInstance(),
                                                                            curveCollection,
-                                                                           LAString( "ACT/365" ),
+                                                                           AQLString( "ACT/365" ),
                                                                            interpolation.toUpper(),
                                                                            false,                     // isBasisFlag
                                                                            staticDataTable );
@@ -336,9 +336,9 @@ namespace validation
         std::transform( massiveDateVector.cbegin(),
                         massiveDateVector.cend(),
                         std::back_inserter( massiveDateVectorBoost ),
-                        []( const LADate & LADate )
+                        []( const AQLDate & AQLDate )
         {
-            return etrading::toGregorianDateFromLADate( LADate );
+            return etrading::toGregorianDateFromLADate( AQLDate );
         } );
 
 
@@ -358,7 +358,7 @@ namespace validation
         
         if( curve_store.has( curveNameForLWOCurve ) )
         {
-            LAString ret = curveNameForLWOCurve.c_str();
+            AQLString ret = curveNameForLWOCurve.c_str();
             if ( CreateDataFile::recordEnabled() )
             {
                 CreateDataFile file( decorateCurvename( "tryMeLWOCurveCalibrateSwap_outputs", curveCollection, staticDataTable ) );

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -11,8 +11,8 @@ namespace validation
     *  @param [in]		update		A number that tracks the nth calculation of the same PCA analysis
     *  @return			PCA results
     */
-    LAStringMatrix tryMirGetPCAResults( LADataInstance* dataInstance,
-                                      const LAString& id,
+    AQLStringMatrix tryMirGetPCAResults( AQLDataInstance* dataInstance,
+                                      const AQLString& id,
                                       int update );
 
 }

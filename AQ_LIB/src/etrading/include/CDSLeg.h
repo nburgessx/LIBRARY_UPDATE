@@ -29,7 +29,7 @@ namespace etrading
 		* @param[in]	recoveryRate			The estimated amount of capital recovered after default
 		* @param[in]	includeAccruedInterest	Specifies whether cashflows should include the accruedInterest
 		*/
-		virtual void setSurvivalProbabilitiesUsingHazardRate( const LADate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest ) = 0;
+		virtual void setSurvivalProbabilitiesUsingHazardRate( const AQLDate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest ) = 0;
 
 		/* @brief Updates the cashflow survival / default probabilities using the provided credit model.
 		*         Derived classes must implement this.
@@ -37,7 +37,7 @@ namespace etrading
 		* @param[in]	asOfDate				The valuation date of the leg
 		* @param[in]	creditModel				The calibrated credit model
 		*/
-		virtual void setSurvivalProbabilitiesUsingCreditModel( const LADate& asOfDate, const CreditModel& creditModel ) = 0;
+		virtual void setSurvivalProbabilitiesUsingCreditModel( const AQLDate& asOfDate, const CreditModel& creditModel ) = 0;
 
 		/* @brief Calculates the PV of the CDS leg.
 		*
@@ -67,7 +67,7 @@ namespace etrading
 		*				When set to TRUE (pay on next coupon date ), the PV should match the analytic formula.
 		*  @returns	The calculated PV value
 		*/
-		virtual double riskFreePVtoStoppingDate( DataProvider& dataProvider, const CreditModel& creditModel, const LADate& stoppingDate, const double discountFactorAtStoppingDate = std::numeric_limits<double>::quiet_NaN(), const bool payDefaultCashflowsOnNextCouponDate = false ) = 0;
+		virtual double riskFreePVtoStoppingDate( DataProvider& dataProvider, const CreditModel& creditModel, const AQLDate& stoppingDate, const double discountFactorAtStoppingDate = std::numeric_limits<double>::quiet_NaN(), const bool payDefaultCashflowsOnNextCouponDate = false ) = 0;
 
 	private:
 		/* @brief Updates the dataProvider survival probabilities and discount factors using the provided modelName.

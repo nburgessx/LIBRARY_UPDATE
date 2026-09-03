@@ -141,7 +141,7 @@ namespace etrading
 
         if(legs_.size() < 2)
 		{
-			throw LACoreInvalidData( "#Error: Expecting two legs to be present on the Total Return Swap", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: Expecting two legs to be present on the Total Return Swap", __FILE__, __LINE__ );
 		}
 
 		LegPtr leg1 = legs_.get(0);
@@ -270,12 +270,12 @@ namespace etrading
 	{
 
 		if ( legName.size() == 0 ) {
-           throw LACoreInvalidData( "#Error: Leg name must be provided", __FILE__, __LINE__ );
+           throw AQLCoreInvalidData( "#Error: Leg name must be provided", __FILE__, __LINE__ );
         }
 
         if ( !legs_.exists( legName.c_str() )) 
         {
-            throw LACoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
         }
 
 		CreditModelPtr creditModel = getCreditModel( creditModelName );

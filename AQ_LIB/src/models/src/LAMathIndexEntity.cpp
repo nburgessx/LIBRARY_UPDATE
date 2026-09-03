@@ -2,17 +2,17 @@
     @brief Source code for class to represent index.
 
 			Following dataValues are registered automatically to data master<BR>
-			1.CALIBRATION_DATA_NAME(LADataString)<BR>			
-			2.IR_MODEL_DATA_INDEXTYPE(LADataString)<BR>			
-			3.IR_MODEL_DATA_ACCESSORY(LADataString)<BR>			
-			4.IR_MODEL_DATA_CURRENCY(LADataString)<BR>			
-			5.IR_MODEL_DATA_DAYCOUNT(LAPriceDataDayCount)<BR>
-			6.IR_MODEL_DATA_FREQUENCY(LADataString)<BR>			
-			7.IR_MODEL_DATA_CALENDAR(LAPriceDataCalendar)<BR>
-			8.IR_MODEL_DATA_SLIDINGRULE(LAPriceDataSlidingRule)<BR>
-			9.IR_MODEL_DATA_PATHENTITY(LADataReference)<BR>
-			10.IR_MODEL_DATA_FXRATE(LADataReference)<BR>
-			11.IR_MODEL_DATA_CACHESIZE(LADataInt)<BR>
+			1.CALIBRATION_DATA_NAME(AQLDataString)<BR>			
+			2.IR_MODEL_DATA_INDEXTYPE(AQLDataString)<BR>			
+			3.IR_MODEL_DATA_ACCESSORY(AQLDataString)<BR>			
+			4.IR_MODEL_DATA_CURRENCY(AQLDataString)<BR>			
+			5.IR_MODEL_DATA_DAYCOUNT(AQLPriceDataDayCount)<BR>
+			6.IR_MODEL_DATA_FREQUENCY(AQLDataString)<BR>			
+			7.IR_MODEL_DATA_CALENDAR(AQLPriceDataCalendar)<BR>
+			8.IR_MODEL_DATA_SLIDINGRULE(AQLPriceDataSlidingRule)<BR>
+			9.IR_MODEL_DATA_PATHENTITY(AQLDataReference)<BR>
+			10.IR_MODEL_DATA_FXRATE(AQLDataReference)<BR>
+			11.IR_MODEL_DATA_CACHESIZE(AQLDataInt)<BR>
 
 */
 //  2006, AlgoQuantHub..
@@ -22,43 +22,43 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "LADate.h"
+#include "AQLDate.h"
 #include "LAMathIndexEntity.h"
-#include "LAMathDefine.h"
-#include "LABasic.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADataReference.h"
-#include "LAPriceDataManager.h"
-#include "LADataProcedure.h"
-#include "LADataInstance.h"
-#include "LADataVector.h"
+#include "AQLMathDefine.h"
+#include "AQLBasic.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataInstance.h"
+#include "AQLDataVector.h"
 
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathAttrSDE.h"
 #include "LAMathPathEntity.h"
 #include "LAMathFXEntity.h"
 #include "LAMathDateCalculations.h"
 #include "LAMathFXUtility.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAMathPlainVanillaEntity.h"
-#include "LADataMultiReference.h"
+#include "AQLDataMultiReference.h"
 #include "LAMathYieldCurve.h"
 #include "LAMathYieldCurvePro.h"
-#include "LA1DDataSet.h"
+#include "AQL1DDataSet.h"
 #include "LAMathVolFuncIRSABR.h"
 #include "LABlackScholesBaseFunc.h"
 #include "LAPricePayOff.h"
 #include "LAMathIRVanillaFuncUtility.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
 
 #include <cmath>
 
@@ -81,7 +81,7 @@ using namespace std;
 
 #define STD "STD"
 
-// (copied by LADate.cpp) 
+// (copied by AQLDate.cpp) 
 static const unsigned short LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[2][2][12] =
     {{{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
       { 0, 31, 59, 90,120,151,181,212,243,273,304,334}},
@@ -92,17 +92,17 @@ static const unsigned short LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[2][2]
 /*!
     @brief default constructor
 
-	@param[in] dataInstance pointer of LADataInstance object
+	@param[in] dataInstance pointer of AQLDataInstance object
 
 */
-LAMathIndexEntity::LAMathIndexEntity(LADataInstance* dataInstance) : 
-LAObject(), /*mCacheSize(0), */mCachePos(-1), mAntiCachePos(-1), mPos(0),
+LAMathIndexEntity::LAMathIndexEntity(AQLDataInstance* dataInstance) : 
+AQLObject(), /*mCacheSize(0), */mCachePos(-1), mAntiCachePos(-1), mPos(0),
 mIsAntithetic(false), mSDEPos(-1), mpPath(0), mpFX(0), mIndexVersion(0), mSDEType(IR)
 ,mpVanilla(0), mIsSameFwds(true), mIsDaycountAdj(false), mCurveType(STD)
 {
 	setDataInstance(dataInstance);
 
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
 	dm.setData(CALIBRATION_DATA_NAME, DATA_STRING);
 	dm.setData(IR_MODEL_DATA_INDEXTYPE, DATA_STRING);
 	dm.setData(IR_MODEL_DATA_ACCESSORY, DATA_STRING);
@@ -147,7 +147,7 @@ mIsAntithetic(false), mSDEPos(-1), mpPath(0), mpFX(0), mIndexVersion(0), mSDETyp
 	mpIsFWDInter    = &add(PRICING_DATA_ISFWDINTERPOLATION);
 	mpFWDInter      = &add(PRICING_DATA_FWDINTERPOLATION);
 	mpVolUnderlying = &add(PRICING_DATA_VOLATILITYUNDERLYING);
-	dynamic_cast<LADataInt&>(mpCacheSize->get()).set(0);
+	dynamic_cast<AQLDataInt&>(mpCacheSize->get()).set(0);
 
 	mpIndexArray = &mIndexArray;
 }
@@ -158,7 +158,7 @@ mIsAntithetic(false), mSDEPos(-1), mpPath(0), mpFX(0), mIndexVersion(0), mSDETyp
 */
 LAMathIndexEntity::LAMathIndexEntity(
 	const LAMathIndexEntity& index) : 
-	LAObject(index),
+	AQLObject(index),
 /*mCacheSize(index.mCacheSize), */
 mCache(index.mCache), mAntiCache(index.mAntiCache), 
 mCachePos(index.mCachePos), mAntiCachePos(index.mAntiCachePos), mPos(index.mPos),
@@ -218,7 +218,7 @@ LAMathIndexEntity::getType(void) const
 bool
 LAMathIndexEntity::isTypeOf(object_t id) const
 {
-	return (id == ENTITY_INDEX ? true : LAObject::isTypeOf(id));
+	return (id == ENTITY_INDEX ? true : AQLObject::isTypeOf(id));
 }
 
 
@@ -226,239 +226,239 @@ LAMathIndexEntity::isTypeOf(object_t id) const
     @brief get this IndexEntity-name.
 	@return name
 */
-const LADataString&	
+const AQLDataString&	
 LAMathIndexEntity::getName() const	
 {
-	return dynamic_cast<const LADataString&>(mpName->get());
+	return dynamic_cast<const AQLDataString&>(mpName->get());
 }
 /*!
     @brief get this IndexEntity-name.The setting of name is also possible.
 	@return name
 */
-LADataString&	
+AQLDataString&	
 LAMathIndexEntity::getName()
 {
-	return dynamic_cast<LADataString&>(mpName->get());
+	return dynamic_cast<AQLDataString&>(mpName->get());
 }
 /*!
     @brief get index type.
 	@return index type
 */
-const LADataString&	
+const AQLDataString&	
 LAMathIndexEntity::getIndexType() const	
 {
-	return dynamic_cast<const LADataString&>(mpIndexType->get());
+	return dynamic_cast<const AQLDataString&>(mpIndexType->get());
 }
 /*!
     @brief get index tpye.The setting of index type is also possible.
 	@return index type
 */
-LADataString&	
+AQLDataString&	
 LAMathIndexEntity::getIndexType()
 {
-	return dynamic_cast<LADataString&>(mpIndexType->get());
+	return dynamic_cast<AQLDataString&>(mpIndexType->get());
 }
 
 /*!
     @brief get index accesory.
 	@return index accessory
 */
-const LADataString&	
+const AQLDataString&	
 LAMathIndexEntity::getAccessory() const	
 {
-	return dynamic_cast<const LADataString&>(mpAccessory->get());
+	return dynamic_cast<const AQLDataString&>(mpAccessory->get());
 }
 /*!
     @brief get index accesory.The setting of index accesory is also possible.
 	@return index accesory
 */
-LADataString&	
+AQLDataString&	
 LAMathIndexEntity::getAccessory()
 {
-	return dynamic_cast<LADataString&>(mpAccessory->get());
+	return dynamic_cast<AQLDataString&>(mpAccessory->get());
 }
 /*!
     @brief get this index currency.
 	@return currncy
 */
-const LADataString&	
+const AQLDataString&	
 LAMathIndexEntity::getCurrency() const	
 {
-	return dynamic_cast<const LADataString&>(mpCurrency->get());
+	return dynamic_cast<const AQLDataString&>(mpCurrency->get());
 }
 /*!
     @brief get this index currency.The setting of index currency is also possible.
 	@return currency
 */
-LADataString&	
+AQLDataString&	
 LAMathIndexEntity::getCurrency()
 {
-	return dynamic_cast<LADataString&>(mpCurrency->get());
+	return dynamic_cast<AQLDataString&>(mpCurrency->get());
 }
 /*!
     @brief get index daycount
 	@return index daycount
 */
-const LAPriceDataDayCount&
+const AQLPriceDataDayCount&
 LAMathIndexEntity::getDayCount() const
 {
-	return dynamic_cast<const LAPriceDataDayCount&>(mpDC->get());
+	return dynamic_cast<const AQLPriceDataDayCount&>(mpDC->get());
 }
 /*!
     @brief get index daycount. The setting of index daycount is also possible.
 	@return index daycount
 */
-LAPriceDataDayCount&
+AQLPriceDataDayCount&
 LAMathIndexEntity::getDayCount()
 {
-	return dynamic_cast<LAPriceDataDayCount&>(mpDC->get());
+	return dynamic_cast<AQLPriceDataDayCount&>(mpDC->get());
 }
 /*!
     @brief get index frequency
 	@return index frequency
 */
-const LADataString&
+const AQLDataString&
 LAMathIndexEntity::getFrequency() const
 {
-	return dynamic_cast<const LADataString&>(mpFrequency->get());
+	return dynamic_cast<const AQLDataString&>(mpFrequency->get());
 }
 /*!
     @brief get index frequency. The setting of index frequency is also possible.
 	@return index frequency
 */
-LADataString&
+AQLDataString&
 LAMathIndexEntity::getFrequency()
 {
-	return dynamic_cast<LADataString&>(mpFrequency->get());
+	return dynamic_cast<AQLDataString&>(mpFrequency->get());
 }
 /*!
     @brief get index calendar
 	@return index calendar
 */
-const LAPriceDataCalendar&
+const AQLPriceDataCalendar&
 LAMathIndexEntity::getCalendar() const
 {
-	return dynamic_cast<const LAPriceDataCalendar&>(mpCalendar->get());
+	return dynamic_cast<const AQLPriceDataCalendar&>(mpCalendar->get());
 }
 /*!
     @brief get index calendar. The setting of index calendar is also possible.
 	@return index calendar
 */
-LAPriceDataCalendar&
+AQLPriceDataCalendar&
 LAMathIndexEntity::getCalendar()
 {
-	return dynamic_cast<LAPriceDataCalendar&>(mpCalendar->get());
+	return dynamic_cast<AQLPriceDataCalendar&>(mpCalendar->get());
 }	
 /*!
     @brief get index sliding rule
 	@return index sliding rule
 */
-const LAPriceDataSlidingRule&
+const AQLPriceDataSlidingRule&
 LAMathIndexEntity::getSlidingRule() const
 {
-	return dynamic_cast<const LAPriceDataSlidingRule&>(mpSlidingRule->get());
+	return dynamic_cast<const AQLPriceDataSlidingRule&>(mpSlidingRule->get());
 }
 /*!
     @brief get index sliding rule. The setting of index sliding rule is also possible.
 	@return index sliding rule
 */
-LAPriceDataSlidingRule&
+AQLPriceDataSlidingRule&
 LAMathIndexEntity::getSlidingRule()
 {
-	return dynamic_cast<LAPriceDataSlidingRule&>(mpSlidingRule->get());
+	return dynamic_cast<AQLPriceDataSlidingRule&>(mpSlidingRule->get());
 }
 /*!
     @brief get path object.
 	@return path object
 */
-const LADataReference&	
+const AQLDataReference&	
 LAMathIndexEntity::getPathEntity() const	
 {
-	return dynamic_cast<const LADataReference&>(mpPathEntity->get());
+	return dynamic_cast<const AQLDataReference&>(mpPathEntity->get());
 }
 /*!
     @brief get path object.The setting of path object is also possible.
 	@return path object
 */
-LADataReference&	
+AQLDataReference&	
 LAMathIndexEntity::getPathEntity()
 {
-	return dynamic_cast<LADataReference&>(mpPathEntity->get());
+	return dynamic_cast<AQLDataReference&>(mpPathEntity->get());
 }
 /*!
     @brief get fx object.
 	@return fx object
 */
-const LADataReference&	
+const AQLDataReference&	
 LAMathIndexEntity::getFXEntity() const	
 {
-	return dynamic_cast<const LADataReference&>(mpFXEntity->get());
+	return dynamic_cast<const AQLDataReference&>(mpFXEntity->get());
 }
 /*!
     @brief get fx object.The setting of fx object is also possible.
 	@return fx object
 */
-LADataReference&	
+AQLDataReference&	
 LAMathIndexEntity::getFXEntity()
 {
-	return dynamic_cast<LADataReference&>(mpFXEntity->get());
+	return dynamic_cast<AQLDataReference&>(mpFXEntity->get());
 } 
 
 /*!
     @brief get basis
 	@return basis
 */
-const LADataString&	
+const AQLDataString&	
 LAMathIndexEntity::getBasis() const	
 {
-	return dynamic_cast<const LADataString&>(mpBasis->get());
+	return dynamic_cast<const AQLDataString&>(mpBasis->get());
 }
 /*!
     @brief get basis.The setting of basis is also possible.
 	@return basis
 */
-LADataString&	
+AQLDataString&	
 LAMathIndexEntity::getBasis()
 {
-	return dynamic_cast<LADataString&>(mpBasis->get());
+	return dynamic_cast<AQLDataString&>(mpBasis->get());
 } 
 
 /*!
     @brief get discount curve
 	@return discount curve
 */
-const LADataString&	
+const AQLDataString&	
 LAMathIndexEntity::getDiscountCurve() const	
 {
-	return dynamic_cast<const LADataString&>(mpDiscountCurve->get());
+	return dynamic_cast<const AQLDataString&>(mpDiscountCurve->get());
 }
 /*!
     @brief get discount curve.The setting of discount curve is also possible.
 	@return discount curve
 */
-LADataString&	
+AQLDataString&	
 LAMathIndexEntity::getDiscountCurve()
 {
-	return dynamic_cast<LADataString&>(mpDiscountCurve->get());
+	return dynamic_cast<AQLDataString&>(mpDiscountCurve->get());
 } 
 
 /*!
     @brief get basis interpolation
 	@return basis interpolation
 */
-const LAPriceDataInterpolation&	
+const AQLPriceDataInterpolation&	
 LAMathIndexEntity::getBasisInterpolation() const	
 {
-	return dynamic_cast<const LAPriceDataInterpolation&>(mpBasisInter->get());
+	return dynamic_cast<const AQLPriceDataInterpolation&>(mpBasisInter->get());
 }
 /*!
     @brief basis interpolation.The setting of basis interpolation is also possible.
 	@return basis interpolation
 */
-LAPriceDataInterpolation&	
+AQLPriceDataInterpolation&	
 LAMathIndexEntity::getBasisInterpolation()
 {
-	return dynamic_cast<LAPriceDataInterpolation&>(mpBasisInter->get());
+	return dynamic_cast<AQLPriceDataInterpolation&>(mpBasisInter->get());
 }
 
 
@@ -466,57 +466,57 @@ LAMathIndexEntity::getBasisInterpolation()
     @brief get isfwdinterpolation
 	@return isfwdinterpolation
 */
-const LADataBool&	
+const AQLDataBool&	
 LAMathIndexEntity::getIsFWDInterpolation() const	
 {
-	return dynamic_cast<const LADataBool&>(mpIsFWDInter->get());
+	return dynamic_cast<const AQLDataBool&>(mpIsFWDInter->get());
 }
 /*!
     @brief get isfwdinterpolation.The setting of isfwdinterpolation is also possible.
 	@return isfwdinterpolation
 */
-LADataBool&	
+AQLDataBool&	
 LAMathIndexEntity::getIsFWDInterpolation()
 {
-	return dynamic_cast<LADataBool&>(mpIsFWDInter->get());
+	return dynamic_cast<AQLDataBool&>(mpIsFWDInter->get());
 } 
 
 /*!
     @brief get fwd interpolation
 	@return fwd interpolation
 */
-const LAPriceDataInterpolation&	
+const AQLPriceDataInterpolation&	
 LAMathIndexEntity::getFWDInterpolation() const	
 {
-	return dynamic_cast<const LAPriceDataInterpolation&>(mpFWDInter->get());
+	return dynamic_cast<const AQLPriceDataInterpolation&>(mpFWDInter->get());
 }
 /*!
     @brief fwd interpolation.The setting of fwd interpolation is also possible.
 	@return fwd interpolation
 */
-LAPriceDataInterpolation&	
+AQLPriceDataInterpolation&	
 LAMathIndexEntity::getFWDInterpolation()
 {
-	return dynamic_cast<LAPriceDataInterpolation&>(mpFWDInter->get());
+	return dynamic_cast<AQLPriceDataInterpolation&>(mpFWDInter->get());
 }
 
 /*!
     @brief get volatility underlying
 	@return volatility underlying
 */
-const LADataString&	
+const AQLDataString&	
 LAMathIndexEntity::getVolUnderlying() const	
 {
-	return dynamic_cast<const LADataString&>(mpVolUnderlying->get());
+	return dynamic_cast<const AQLDataString&>(mpVolUnderlying->get());
 }
 /*!
     @brief get volatility underlying
 	@return volatility underlying
 */
-LADataString&	
+AQLDataString&	
 LAMathIndexEntity::getVolUnderlying()
 {
-	return dynamic_cast<LADataString&>(mpVolUnderlying->get());
+	return dynamic_cast<AQLDataString&>(mpVolUnderlying->get());
 } 
 
 /*!
@@ -583,7 +583,7 @@ LAMathIndexEntity::setNextIndex()
 int
 LAMathIndexEntity::getCacheSize() const
 {
-	return dynamic_cast<const LADataInt&>(mpCacheSize->get()).get();
+	return dynamic_cast<const AQLDataInt&>(mpCacheSize->get()).get();
 }
 
 
@@ -595,7 +595,7 @@ void
 LAMathIndexEntity::setCacheSize(unsigned int size)
 {
 	bool flag = (mIndexVersion == getModel());
-	dynamic_cast<LADataInt&>(mpCacheSize->get()).set(size);
+	dynamic_cast<AQLDataInt&>(mpCacheSize->get()).set(size);
 //	update(TYPE_CACHESIZE_CHANGE);
     if (flag) mIndexVersion = getModel();
 }
@@ -604,7 +604,7 @@ LAMathIndexEntity::setCacheSize(unsigned int size)
 	@param[in] date date added to time grid
 */
 void
-LAMathIndexEntity::addGrid(const LADate& date)
+LAMathIndexEntity::addGrid(const AQLDate& date)
 {
 	double term = 0.0;
 	if (getPathEntity().get().get().isTypeOf(ENTITY_PATH))
@@ -618,7 +618,7 @@ LAMathIndexEntity::addGrid(const LADate& date)
 		term = path.getDayCount().getTerm(path.getAsOfDate().get(), date);
 	}
 	else 
-		throw LACoreInvalidData("Error add grid",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Error add grid",__FILE__,__LINE__);
 	
 	//const LAMathPathEntity& path = dynamic_cast<const LAMathPathEntity&>(getPathEntity().get().get());
 	//double term = path.getDayCount().getTerm(path.getAsOfDate().get(), date);
@@ -630,7 +630,7 @@ LAMathIndexEntity::addGrid(const LADate& date)
 	else
 	{
 		unsigned int pos;
-		LAAlgorithm::locate<DateVector, LADate>(mDateGrid, date, mDateGrid.size(), pos);
+		AQLAlgorithm::locate<DateVector, AQLDate>(mDateGrid, date, mDateGrid.size(), pos);
 		if (pos == mDateGrid.size())
 		{
 			mDateGrid.push_back(date);
@@ -650,7 +650,7 @@ LAMathIndexEntity::addGrid(const LADate& date)
 /*!
 	@brief add to time grids used for calculation of convexity adjustment.
 */
-void LAMathIndexEntity::addConvexityGrids(const LADate& fixingdate, const LADate& paymentdate, const LADate& enddate)
+void LAMathIndexEntity::addConvexityGrids(const AQLDate& fixingdate, const AQLDate& paymentdate, const AQLDate& enddate)
 {
 	double fixingterm  = 0.0;
 	double paymentterm = 0.0;
@@ -666,8 +666,8 @@ void LAMathIndexEntity::addConvexityGrids(const LADate& fixingdate, const LADate
 		fixingterm  = path.getDayCount().getTerm(path.getAsOfDate().get(), fixingdate);
 		paymentterm = path.getDayCount().getTerm(path.getAsOfDate().get(), paymentdate);
 	}
-	mFixingGrid .push_back(LAMath::max(fixingterm, 0.0));
-	mPaymentGrid.push_back(LAMath::max(paymentterm, 0.0));
+	mFixingGrid .push_back(AQLMath::max(fixingterm, 0.0));
+	mPaymentGrid.push_back(AQLMath::max(paymentterm, 0.0));
 
 	double timingterm = getDayCount().getTerm(paymentdate, enddate);
 	mTimingTerm.push_back(timingterm);
@@ -805,7 +805,7 @@ LAMathIndexEntity::calcIndex()
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 	if (mSDEType == IR)
 	{
-		if (mIsSameFwds && mpIsFWDInter->isDefined() && !mpIsFWDInter->isNull() && dynamic_cast<const LADataBool &>(mpIsFWDInter->get()).get())
+		if (mIsSameFwds && mpIsFWDInter->isDefined() && !mpIsFWDInter->isNull() && dynamic_cast<const AQLDataBool &>(mpIsFWDInter->get()).get())
 		{
 			DoubleArray rates(mFwdsGrid.size());
 			if (mSpreadMat.empty())
@@ -853,8 +853,8 @@ LAMathIndexEntity::calcIndex()
 				}
 			}
 
-			dynamic_cast<LAPriceDataInterpolation &>(mpFWDInter->get()).set(mFwdsStartGrid, rates);
-			const LAInterpolationBase &inter = dynamic_cast<const LAPriceDataInterpolation &>(mpFWDInter->get()).getMethod(); 
+			dynamic_cast<AQLPriceDataInterpolation &>(mpFWDInter->get()).set(mFwdsStartGrid, rates);
+			const AQLInterpolationBase &inter = dynamic_cast<const AQLPriceDataInterpolation &>(mpFWDInter->get()).getMethod(); 
 			for (unsigned int i = 0; i < mTimeGrid.size(); i++)
 			{
 				mIndexArray[i] = inter.value(mGridMat[i][0]);
@@ -960,7 +960,7 @@ LAMathIndexEntity::calcIndexforPlainVanilla()
 			calcSpreadMat(curve, mGridMat);
 		}
 
-		if (mIsSameFwds && mpIsFWDInter->isDefined() && !mpIsFWDInter->isNull() && dynamic_cast<const LADataBool &>(mpIsFWDInter->get()).get())
+		if (mIsSameFwds && mpIsFWDInter->isDefined() && !mpIsFWDInter->isNull() && dynamic_cast<const AQLDataBool &>(mpIsFWDInter->get()).get())
 		{	
 			// set forwardrates
 			DoubleArray taus;
@@ -975,20 +975,20 @@ LAMathIndexEntity::calcIndexforPlainVanilla()
 				curve.getBaseForwardRate(mCurveType, mFwdsStartGrid, mFwdsGridMat, taus, mFwds, NULL, &mFwdsStartEndDate);
 			}
 
-			if (dynamic_cast<LAPriceDataInterpolation &>(mpFWDInter->get()).isHybrid())
+			if (dynamic_cast<AQLPriceDataInterpolation &>(mpFWDInter->get()).isHybrid())
 			{
-				LADataInstance* dataInstance = getDataInstance();
-				LAObjectPool& objPool = dataInstance->getObjectPool();
-				LADataHolder *dh = &objPool.getObject("YIELD_SDE_" + getCurrency() + "_IR_DATA", ENCHKTYPE_ISDEFINED).get().getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + LAString("_") + mCurveType, NOCHECK);
+				AQLDataInstance* dataInstance = getDataInstance();
+				AQLObjectPool& objPool = dataInstance->getObjectPool();
+				AQLDataHolder *dh = &objPool.getObject("YIELD_SDE_" + getCurrency() + "_IR_DATA", ENCHKTYPE_ISDEFINED).get().getData(CALIBRATION_DATA_INTERPOLATION_JOINDATE_ASDOUBLE + AQLString("_") + mCurveType, NOCHECK);
 				double JoinDateAsDouble = 0.;
 				if (dh->isDefined() && !dh->isNull())
 				{
-					JoinDateAsDouble = dynamic_cast<LADataDouble&>(dh->get()).get();
+					JoinDateAsDouble = dynamic_cast<AQLDataDouble&>(dh->get()).get();
 				}
-				dynamic_cast<LAPriceDataInterpolation &>(mpFWDInter->get()).setJoinDateAsDouble(JoinDateAsDouble);
+				dynamic_cast<AQLPriceDataInterpolation &>(mpFWDInter->get()).setJoinDateAsDouble(JoinDateAsDouble);
 			}
-			dynamic_cast<LAPriceDataInterpolation &>(mpFWDInter->get()).set(mFwdsStartGrid, mFwds);
-			const LAInterpolationBase &inter = dynamic_cast<const LAPriceDataInterpolation &>(mpFWDInter->get()).getMethod();
+			dynamic_cast<AQLPriceDataInterpolation &>(mpFWDInter->get()).set(mFwdsStartGrid, mFwds);
+			const AQLInterpolationBase &inter = dynamic_cast<const AQLPriceDataInterpolation &>(mpFWDInter->get()).getMethod();
 			const unsigned int offset = (mTimeGrid.size() - mPaymentGrid.size());
 
 			for (unsigned int i = 0; i < mTimeGrid.size(); i++)
@@ -999,19 +999,19 @@ LAMathIndexEntity::calcIndexforPlainVanilla()
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 					if ((i >= offset) && isDelayedConvexityAdjusted())
 					{
-						LADataMultiReference* pirvols = &(mpVanilla->getIRVolatilitys());
+						AQLDataMultiReference* pirvols = &(mpVanilla->getIRVolatilitys());
 						if (pirvols == 0 || pirvols->getSize() == 0)
 						{
-							throw LACoreInvalidData("IR Calibration Model For Convexity Adjust is not set", __FILE__, __LINE__);
+							throw AQLCoreInvalidData("IR Calibration Model For Convexity Adjust is not set", __FILE__, __LINE__);
 						}
 
 						const LAMathVolFuncIRSABR* method = dynamic_cast<const LAMathVolFuncIRSABR*>(mpVanilla->getIRVolFunc(getCurrency().get()));
 						if (!method->isTypeOf(FN_VOLFUNCIRSABR))
 						{
-							throw LACoreInvalidData("Convexity Adjust needs only SABR model now", __FILE__, __LINE__);
+							throw AQLCoreInvalidData("Convexity Adjust needs only SABR model now", __FILE__, __LINE__);
 						}
 
-						const LAInterpolationBase* oiscurve = &mpVanilla->getIRCurve(getCurrency().get()).getBasisDFInterpolation();
+						const AQLInterpolationBase* oiscurve = &mpVanilla->getIRCurve(getCurrency().get()).getBasisDFInterpolation();
 						const auto& curvePro = mpVanilla->getIRCurvePro(getCurrency().get());
 						const auto& assignedCurveMktMap = curvePro.getAssignedCurveMktMap();
 						for (auto iac = assignedCurveMktMap.begin(); iac != assignedCurveMktMap.end(); ++iac)
@@ -1033,7 +1033,7 @@ LAMathIndexEntity::calcIndexforPlainVanilla()
 				else
 				{
 					if (mSpreadMat_DF.empty())
-						throw LACoreInvalidData("mSpreadMat_DF is not set.", __FILE__, __LINE__);
+						throw AQLCoreInvalidData("mSpreadMat_DF is not set.", __FILE__, __LINE__);
 
 					double annuity = 0.;
 					for (unsigned int j = 1; j < mGridMat[i].size(); j++)
@@ -1159,7 +1159,7 @@ LAMathIndexEntity::calcIndexforPlainVanilla()
     @brief Make copy(clone) of this Index Object object.
     @return pointer of Index Object object.
 */
-LAObject* 
+AQLObject* 
 LAMathIndexEntity::clone() const
 {
     try 
@@ -1169,7 +1169,7 @@ LAMathIndexEntity::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -1181,7 +1181,7 @@ LAMathIndexEntity::clone() const
 */
 void                
 LAMathIndexEntity::remove(
-	const LAString& dataName)
+	const AQLString& dataName)
 {
 	if(dataName == CALIBRATION_DATA_NAME
 		|| dataName == IR_MODEL_DATA_INDEXTYPE
@@ -1197,7 +1197,7 @@ LAMathIndexEntity::remove(
 	{
 		return; 
 	}
-	LAObject::remove(dataName);
+	AQLObject::remove(dataName);
 }
 
 /*!
@@ -1256,7 +1256,7 @@ LAMathIndexEntity::reset(void)
 void                
 LAMathIndexEntity::update(const unsigned int type) 
 {
-	LAObject::update(type);
+	AQLObject::update(type);
     if ((type & TYPE_CACHESIZE_CHANGE) != 0x0000
 		|| (type & TYPE_ANTITHETICFLAG_CHANGE) != 0x0000)
 		mIndexVersion = getModel();
@@ -1269,18 +1269,18 @@ LAMathIndexEntity::update(const unsigned int type)
 	@param[in] e copy source
 	@return reference to this object
 */
-LAObject&
+AQLObject&
 LAMathIndexEntity::copy(
-	const LAObject& e)
+	const AQLObject& e)
 {
 	if (this == &e) return *this;
 
-	LAObject::copy(e);
+	AQLObject::copy(e);
 	if (!e.isTypeOf(ENTITY_INDEX))
 	{
-		LAString err = "Assignement error for LAMathIndexEntity : from ";
-		err += LAString(e.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignement error for LAMathIndexEntity : from ";
+		err += AQLString(e.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	mpName			= &getData(CALIBRATION_DATA_NAME);
@@ -1334,13 +1334,13 @@ LAMathIndexEntity::copy(
 	@param[in] name name of certain data
 	@return reference to holder class 
 */
-LADataHolder&
-LAMathIndexEntity::add(const LAString& name)
+AQLDataHolder&
+LAMathIndexEntity::add(const AQLString& name)
 {
-	LADataInstance* dataInstance = getDataInstance();
-	LAPriceDataManager& dm = dataInstance->getDataMaster();
-	const LADataHolder& dh = dm.getData(name);
-	return LAObject::add(name, dh);
+	AQLDataInstance* dataInstance = getDataInstance();
+	AQLPriceDataManager& dm = dataInstance->getDataMaster();
+	const AQLDataHolder& dh = dm.getData(name);
+	return AQLObject::add(name, dh);
 }
 
 /*!
@@ -1352,7 +1352,7 @@ void
 LAMathIndexEntity::setUp(void)
 {
 	//SDE Type (IR or FX) correspond to this index
-	LAString indextype = getIndexType();
+	AQLString indextype = getIndexType();
 	indextype.toUpper();
 	if (indextype == LIBOR || indextype == CMS || indextype == CMT || indextype == OIS)
 		mSDEType = IR;
@@ -1361,10 +1361,10 @@ LAMathIndexEntity::setUp(void)
 	else
 	{
 		//error
-		LAString msg = "IndexTpye: ";
+		AQLString msg = "IndexTpye: ";
 		msg += indextype;
 		msg += " is not support";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	
@@ -1394,7 +1394,7 @@ LAMathIndexEntity::setUpforPlainVanilla(void)
 	mConvexityAdjustVol.resize(mTimeGrid.size());
 
 	//SDE Type (IR or FX) correspond to this index
-	LAString indextype = getIndexType();
+	AQLString indextype = getIndexType();
 	indextype.toUpper();
 	if (indextype == LIBOR || indextype == CMS || indextype == CMT || indextype == OIS)
 		mSDEType = IR;
@@ -1403,10 +1403,10 @@ LAMathIndexEntity::setUpforPlainVanilla(void)
 	else
 	{
 		//error
-		LAString msg = "IndexTpye: ";
+		AQLString msg = "IndexTpye: ";
 		msg += indextype;
 		msg += " is not support";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	
@@ -1433,7 +1433,7 @@ void
 LAMathIndexEntity::setUpforIR(void)
 {
 	// sde position number correspond to this index
-	LAStringVector sde_attrnames = mpPath->getSimulationSDEAttrNames().get();
+	AQLStringVector sde_attrnames = mpPath->getSimulationSDEAttrNames().get();
 	if (sde_attrnames.size() == 0)
 		sde_attrnames = mpPath->getSDEAttrNames().get();
 
@@ -1451,15 +1451,15 @@ LAMathIndexEntity::setUpforIR(void)
 	if (i == sde_attrnames.size())
 	{
 		//error
-		throw LACoreInvalidData("There is not sde correspond to this index", __FILE__, __LINE__);		
+		throw AQLCoreInvalidData("There is not sde correspond to this index", __FILE__, __LINE__);		
 	}
 
 	
-	LAString freq = getFrequency();
+	AQLString freq = getFrequency();
 	freq.toUpper();
-	//const LAString& accessory = getAccessory().get();
-	const LAString& tmpaccessory = getAccessory().get();
-	LAString accessory(tmpaccessory);
+	//const AQLString& accessory = getAccessory().get();
+	const AQLString& tmpaccessory = getAccessory().get();
+	AQLString accessory(tmpaccessory);
 	bool iscoterm = (accessory.findString("Co-Term") != -1); 
 	if(iscoterm)
 	{
@@ -1471,18 +1471,18 @@ LAMathIndexEntity::setUpforIR(void)
 	LAMathDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
 	if (freq != SIMPLE && d != 0)
 	{
-		throw LACoreInvalidData("d != 0 is not support", __FILE__, __LINE__);	
+		throw AQLCoreInvalidData("d != 0 is not support", __FILE__, __LINE__);	
 	}
 	if (freq != SIMPLE && 0 == y && 0 == m)
 	{
-		throw LACoreInvalidData("This Accessory input supports only y,m,d or (Co-term) y,m,d",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("This Accessory input supports only y,m,d or (Co-term) y,m,d",__FILE__,__LINE__);
 	}
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& srule = getSlidingRule();
-	const LAPriceDataDayCount& daycount_index = getDayCount();
-	const LAPriceDataDayCount& daycount_path = mpPath->getDayCount();
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& srule = getSlidingRule();
+	const AQLPriceDataDayCount& daycount_index = getDayCount();
+	const AQLPriceDataDayCount& daycount_path = mpPath->getDayCount();
 
-	const LADate& asof = mpPath->getAsOfDate().get();
+	const AQLDate& asof = mpPath->getAsOfDate().get();
 
 	mGridMat.resize(mDateGrid.size());
 	mTermMat.resize(mDateGrid.size());
@@ -1504,7 +1504,7 @@ LAMathIndexEntity::setUpforIR(void)
 	{
 		if (m % 3 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
 		}
 		size = y * 4 + m / 3 + 1;
 		addmonth = 3;
@@ -1514,7 +1514,7 @@ LAMathIndexEntity::setUpforIR(void)
 	{
 		if (m % 6 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
 		}	
 		size = y * 2 + m / 6 + 1;
 		addmonth = 6;
@@ -1524,7 +1524,7 @@ LAMathIndexEntity::setUpforIR(void)
 	{
 		if (m % 12 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);
 		}
 		size = y + m / 12 + 1;
 		addmonth = 12;
@@ -1532,20 +1532,20 @@ LAMathIndexEntity::setUpforIR(void)
 	else
 	{
 		//error
-		LAString err = "Frequency: ";
+		AQLString err = "Frequency: ";
 		err += freq;
 		err += " is not support";
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	mSpreadMat.clear();
 	mSpreadMat_DF.clear();
-	LADate date, date_nonadjust, olddate;
+	AQLDate date, date_nonadjust, olddate;
 	if(iscoterm)
 	{
-		LADate terminal_nonadj = cal.getBusinessDay(asof,SPOTLAG);
+		AQLDate terminal_nonadj = cal.getBusinessDay(asof,SPOTLAG);
 		terminal_nonadj.addMonths(addmonth * (size-1));
-		LADate terminal = srule.getDate(terminal_nonadj,cal);
+		AQLDate terminal = srule.getDate(terminal_nonadj,cal);
 		for (i = 0; i < mGridMat.size(); i++)
 		{
 			mGridMat[i].clear();
@@ -1587,7 +1587,7 @@ LAMathIndexEntity::setUpforIR(void)
 		}
 		if (mpBasis->isDefined() && !mpBasis->isNull())
 		{
-			const LAStringVector &sde_attrnames_ = mpPath->getSDEAttrNames().get();
+			const AQLStringVector &sde_attrnames_ = mpPath->getSDEAttrNames().get();
 			for (i = 0; i < sde_attrnames_.size(); i++)
 			{
 				const LAMathAttrSDE& attrsde = 
@@ -1623,7 +1623,7 @@ LAMathIndexEntity::setUpforIR(void)
 	}
 	if (mpBasis->isDefined() && !mpBasis->isNull())
 	{
-		const LAStringVector &sde_attrnames_ = mpPath->getSDEAttrNames().get();
+		const AQLStringVector &sde_attrnames_ = mpPath->getSDEAttrNames().get();
 		for (i = 0; i < sde_attrnames_.size(); i++)
 		{
 			const LAMathAttrSDE& attrsde = 
@@ -1636,24 +1636,24 @@ LAMathIndexEntity::setUpforIR(void)
 			}		
 		}
 	}
-	if (mpIsFWDInter->isDefined() && !mpIsFWDInter->isNull() && dynamic_cast<const LADataBool &>(mpIsFWDInter->get()).get())
+	if (mpIsFWDInter->isDefined() && !mpIsFWDInter->isNull() && dynamic_cast<const AQLDataBool &>(mpIsFWDInter->get()).get())
 	{
-		LAString indexType = getIndexType();
+		AQLString indexType = getIndexType();
 		indexType.toUpper();
 		if (indexType == LIBOR)
 		{
-			LAString curveType = STD;
+			AQLString curveType = STD;
 			if (mpBasis->isDefined() && !mpBasis->isNull())
 			{
-				curveType = dynamic_cast<const LADataString &>(mpBasis->get()).get();
+				curveType = dynamic_cast<const AQLDataString &>(mpBasis->get()).get();
 			}
 			LAMathYieldCurve& curve =  dynamic_cast<LAMathYieldCurve &>(mpPath->getInitialValues().get(mSDEPos).get());
 
-			LAString freq_;
-			LAPriceDataSlidingRule srule_;
-			LAPriceDataDayCount dc_;
-			LAPriceDataCalendar cal_;
-			LAString accessory_;
+			AQLString freq_;
+			AQLPriceDataSlidingRule srule_;
+			AQLPriceDataDayCount dc_;
+			AQLPriceDataCalendar cal_;
+			AQLString accessory_;
 			//getYieldCurvePro().getForwardConvention(curveType, dc_, srule_, cal_, accessory_);
 			curve.getCurveConvention(freq_, cal_, srule_, dc_, accessory_, curveType);
 			if (LAMathDateCalculations::getDate(asof, accessory_, true) == LAMathDateCalculations::getDate(asof, getAccessory().get(), true))
@@ -1664,7 +1664,7 @@ LAMathIndexEntity::setUpforIR(void)
 
 				if (mFwdsStartGrid.empty())
 				{
-					throw LACoreInvalidData("Forward rate grid is empty", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("Forward rate grid is empty", __FILE__, __LINE__);
 				}
 				DateVector startDates;
 				LAMathDateCalculations::convertToDateGrid(asof, mFwdsStartGrid, startDates);
@@ -1676,7 +1676,7 @@ LAMathIndexEntity::setUpforIR(void)
 					mFwdsTermMat[i].push_back(taus[i]);
 					// calc fixing
 					date = startDates[i];
-					LADate fixingDate = cal_.getBusinessDay(startDates[i], -SPOTLAG);
+					AQLDate fixingDate = cal_.getBusinessDay(startDates[i], -SPOTLAG);
 					mFwdsGrid[i] = daycount_path.getTerm(asof, fixingDate);
 				}
 				const double maxTerm = mpPath->getSDETimeGrid().get().back();
@@ -1699,7 +1699,7 @@ LAMathIndexEntity::setUpforIR(void)
 				mIsSameFwds = false;
 			}
 
-			//dynamic_cast<LAPriceDataInterpolation &>(mpFWDInter->get()).set(terms, rates);
+			//dynamic_cast<AQLPriceDataInterpolation &>(mpFWDInter->get()).set(terms, rates);
 		}
 	}
 }
@@ -1714,9 +1714,9 @@ void
 LAMathIndexEntity::calcSpreadMat(const LAMathYieldCurve &curve, const DoubleMatrix &gridMat)
 {	
 	// get basis df
-	const LAString &curveName_b = dynamic_cast<const LADataString &>(mpBasis->get()).get();
-	const LAInterpolationBase &dfInter_b = curve.getDFInterpolation(&curveName_b);
-	const LAInterpolationBase &dfInter = curve.getDFInterpolation();
+	const AQLString &curveName_b = dynamic_cast<const AQLDataString &>(mpBasis->get()).get();
+	const AQLInterpolationBase &dfInter_b = curve.getDFInterpolation(&curveName_b);
+	const AQLInterpolationBase &dfInter = curve.getDFInterpolation();
 
 	mSpreadMat.resize(gridMat.size());
 	for (unsigned i = 0; i < gridMat.size(); i++)
@@ -1735,10 +1735,10 @@ LAMathIndexEntity::calcSpreadMat(const LAMathYieldCurve &curve, const DoubleMatr
 		}
 	}
 
-	const LAInterpolationBase *pInter_df;
+	const AQLInterpolationBase *pInter_df;
 	if (mpDiscountCurve->isDefined() && !mpDiscountCurve->isNull())
 	{
-		const LAString &curveName_df = dynamic_cast<const LADataString &>(mpDiscountCurve->get()).get();
+		const AQLString &curveName_df = dynamic_cast<const AQLDataString &>(mpDiscountCurve->get()).get();
 		pInter_df = &curve.getDFInterpolation(&curveName_df);
 	}
 	else
@@ -1771,7 +1771,7 @@ LAMathIndexEntity::calcSpreadMat(const LAMathYieldCurve &curve, const DoubleMatr
 void
 LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 {
-	LAStringVector sde_ircurs = mpVanilla->getIRCurrencys().get();
+	AQLStringVector sde_ircurs = mpVanilla->getIRCurrencys().get();
 	unsigned int i;
 	for (i = 0; i < sde_ircurs.size(); i++)
 	{
@@ -1784,14 +1784,14 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 	if (i == sde_ircurs.size())
 	{
 		//error
-		throw LACoreInvalidData("There is not sde correspond to this index", __FILE__, __LINE__);		
+		throw AQLCoreInvalidData("There is not sde correspond to this index", __FILE__, __LINE__);		
 	}
 
-	LAString freq = getFrequency();
+	AQLString freq = getFrequency();
 	freq.toUpper();
-	//const LAString& accessory = getAccessory().get();
-	const LAString& tmpaccessory = getAccessory().get();
-	LAString accessory(tmpaccessory);
+	//const AQLString& accessory = getAccessory().get();
+	const AQLString& tmpaccessory = getAccessory().get();
+	AQLString accessory(tmpaccessory);
 	bool iscoterm = (accessory.findString("Co-Term") != -1); 
 	if(iscoterm)
 	{
@@ -1803,18 +1803,18 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 	LAMathDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
 	if (freq != SIMPLE && d != 0)
 	{
-		throw LACoreInvalidData("d != 0 is not support", __FILE__, __LINE__);	
+		throw AQLCoreInvalidData("d != 0 is not support", __FILE__, __LINE__);	
 	}
 	if (freq != SIMPLE && 0 == y && 0 == m)
 	{
-		throw LACoreInvalidData("This Accessory input supports only y,m,d or (Co-term) y,m,d",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("This Accessory input supports only y,m,d or (Co-term) y,m,d",__FILE__,__LINE__);
 	}
-	const LAPriceDataCalendar& cal = getCalendar();
-	const LAPriceDataSlidingRule& srule = getSlidingRule();
-	const LAPriceDataDayCount& daycount_index = getDayCount();
-	const LAPriceDataDayCount& daycount_path = mpVanilla->getDayCount();
+	const AQLPriceDataCalendar& cal = getCalendar();
+	const AQLPriceDataSlidingRule& srule = getSlidingRule();
+	const AQLPriceDataDayCount& daycount_index = getDayCount();
+	const AQLPriceDataDayCount& daycount_path = mpVanilla->getDayCount();
 
-	const LADate& asof = mpVanilla->getAsOfDate().get();
+	const AQLDate& asof = mpVanilla->getAsOfDate().get();
 
 	mGridMat.resize(mDateGrid.size());
 	mTermMat.resize(mDateGrid.size());
@@ -1836,7 +1836,7 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 	{
 		if (m % 3 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
 		}
 		size = y * 4 + m / 3 + 1;
 		addmonth = 3;
@@ -1846,7 +1846,7 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 	{
 		if (m % 6 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);	
 		}	
 		size = y * 2 + m / 6 + 1;
 		addmonth = 6;
@@ -1856,7 +1856,7 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 	{
 		if (m % 12 != 0)
 		{
-			throw LACoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Frequency and Accessory are not consistent", __FILE__, __LINE__);
 		}
 		size = y + m / 12 + 1;
 		addmonth = 12;
@@ -1864,32 +1864,32 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 	else
 	{
 		//error
-		LAString err = "Frequency: ";
+		AQLString err = "Frequency: ";
 		err += freq;
 		err += " is not support";
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	unsigned int spotlag = 0;
-	map<LAString, unsigned int>::const_iterator it = mSpotLag.find(getCurrency().get());
+	map<AQLString, unsigned int>::const_iterator it = mSpotLag.find(getCurrency().get());
 	if (it != mSpotLag.end())
 		spotlag = it->second;
 	else
-		throw LACoreInvalidData("Index Spot Lag Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Index Spot Lag Error",__FILE__,__LINE__);
 
 	int rollday = 0;
-	LADataHolder* dh = &getData(PRICING_DATA_ROLLDAYFORINDEXGENERATE);
+	AQLDataHolder* dh = &getData(PRICING_DATA_ROLLDAYFORINDEXGENERATE);
 	if (dh->isDefined() && !dh->isNull())
-		rollday = dynamic_cast<LADataInt &>(dh->get()).get();
+		rollday = dynamic_cast<AQLDataInt &>(dh->get()).get();
 
 	bool isgdatesexist = (!mDatesForGenerate.empty());
 	
 	mSpreadMat.clear();
 	mSpreadMat_DF.clear();
-	LADate date, date_nonadjust, olddate;
+	AQLDate date, date_nonadjust, olddate;
 	if(iscoterm)
 	{
-		LADate terminal_nonadj = cal.getBusinessDay(asof,spotlag);
+		AQLDate terminal_nonadj = cal.getBusinessDay(asof,spotlag);
 		terminal_nonadj.addMonths(addmonth * (size-1));
 		if (rollday != 0)
 		{
@@ -1899,7 +1899,7 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 			else terminal_nonadj.setDay(rollday);
 		}
 		
-		LADate terminal = srule.getDate(terminal_nonadj,cal);
+		AQLDate terminal = srule.getDate(terminal_nonadj,cal);
 		for (i = 0; i < mGridMat.size(); i++)
 		{
 			mGridMat[i].clear();
@@ -1956,11 +1956,11 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 	}
 
 	//set payment lag
-	const LAString* pPaymentLag = NULL;
+	const AQLString* pPaymentLag = NULL;
 	dh = &(getData(PRICING_DATA_PAYMENTLAG, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		pPaymentLag = &dynamic_cast<const LADataString &>(dh->get()).get();
+		pPaymentLag = &dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
 	for (i = 0; i < mGridMat.size(); i++)
@@ -1968,12 +1968,12 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 		
 		if (isgdatesexist)
 		{
-			std::map<LADate,DateVector>::const_iterator it = mDatesForGenerate.find(mDateGrid[i]);
+			std::map<AQLDate,DateVector>::const_iterator it = mDatesForGenerate.find(mDateGrid[i]);
 			if (it != mDatesForGenerate.end())
 			{
 				//check size
 				if (it->second.size() != size)
-					throw LACoreInvalidData("Generate Dates is not consisitent with GridMat",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Generate Dates is not consisitent with GridMat",__FILE__,__LINE__);
 				mGridMat[i].resize(size);
 				mTermMat[i].resize(size - 1);
 				mGridMat[i][0] = daycount_path.getTerm(asof,it->second[0]);
@@ -1990,17 +1990,17 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 
 		mGridMat[i].resize(size);
 		mTermMat[i].resize(size - 1);
-		LADate spotDate = cal.getBusinessDay(mDateGrid[i], spotlag);
+		AQLDate spotDate = cal.getBusinessDay(mDateGrid[i], spotlag);
 		mGridMat[i][0] = daycount_path.getTerm(asof, spotDate);//spot date
 		if (pPaymentLag)
 		{
 			date = LAMathDateCalculations::getDate(spotDate, *pPaymentLag, false);
 			date = srule.getDate(date, cal);
 			//check
-			LADate date_first_payment = date;
+			AQLDate date_first_payment = date;
 			date_first_payment.addMonths(addmonth);
 			if (spotDate >= date_first_payment)
-				throw LACoreInvalidData("Payment lag is bigger than the index frequency!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Payment lag is bigger than the index frequency!", __FILE__, __LINE__);
 		}
 		else
 		{
@@ -2033,13 +2033,13 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 	//	//calcSpreadMat(spreadSet);
 	//}
 
-	LAString indexType = getIndexType();
+	AQLString indexType = getIndexType();
 	indexType.toUpper();
-	if (mpIsFWDInter->isDefined() && !mpIsFWDInter->isNull() && dynamic_cast<const LADataBool &>(mpIsFWDInter->get()).get())
+	if (mpIsFWDInter->isDefined() && !mpIsFWDInter->isNull() && dynamic_cast<const AQLDataBool &>(mpIsFWDInter->get()).get())
 	{
 		if (mpBasis->isDefined() && !mpBasis->isNull())
 		{
-			mCurveType = dynamic_cast<const LADataString &>(mpBasis->get()).get();
+			mCurveType = dynamic_cast<const AQLDataString &>(mpBasis->get()).get();
 		}
 		// to save mFwdsStartEndDate
 		LAMathYieldCurve& curve = dynamic_cast<LAMathYieldCurve &>(mpVanilla->getIRCurves().get(mSDEPos).get());
@@ -2048,11 +2048,11 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 
 		if (indexType == LIBOR)
 		{
-			LAString freq_fwd;
-			LAPriceDataSlidingRule sld_fwd;
-			LAPriceDataDayCount dc_fwd;
-			LAPriceDataCalendar cal_fwd;
-			LAString accessory;
+			AQLString freq_fwd;
+			AQLPriceDataSlidingRule sld_fwd;
+			AQLPriceDataDayCount dc_fwd;
+			AQLPriceDataCalendar cal_fwd;
+			AQLString accessory;
 			//getYieldCurvePro().getForwardConvention(curveType, dc, sld, cal, accessory);
 			curve.getCurveConvention(freq_fwd, cal_fwd, sld_fwd, dc_fwd, accessory, mCurveType);
 			if (LAMathDateCalculations::getDate(asof, accessory, true) == LAMathDateCalculations::getDate(asof, getAccessory().get(), true))
@@ -2070,31 +2070,31 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 		}
 		else if (indexType == CMS)
 		{
-			LAString freq_fwd;
-			LAPriceDataSlidingRule sld_fwd;
-			LAPriceDataDayCount dc_fwd;
-			LAPriceDataCalendar cal_fwd;
-			LAString accessory;
+			AQLString freq_fwd;
+			AQLPriceDataSlidingRule sld_fwd;
+			AQLPriceDataDayCount dc_fwd;
+			AQLPriceDataCalendar cal_fwd;
+			AQLString accessory;
 			//getYieldCurvePro().getForwardConvention(curveType, dc, sld, cal, accessory);
 			curve.getCurveConvention(freq_fwd, cal_fwd, sld_fwd, dc_fwd, accessory, mCurveType);
 			int span = LAMathDateCalculations::getPeriodFrequencyInMonths(getFrequency().get());
-			LAString termOfOnePeriod = LAString(span) + "M";
+			AQLString termOfOnePeriod = AQLString(span) + "M";
 			if (LAMathDateCalculations::getDate(asof, accessory, true) == LAMathDateCalculations::getDate(asof, termOfOnePeriod, true))
 			{
 				mIsSameFwds = true;
-				//dynamic_cast<LAPriceDataInterpolation &>(mpFWDInter->get()).set(mFwdsStartGrid, mFwds);
+				//dynamic_cast<AQLPriceDataInterpolation &>(mpFWDInter->get()).set(mFwdsStartGrid, mFwds);
 				//calculate taus of forward rates
 				mFloatTermMat.resize(mGridMat.size());
 				for (i = 0; i < mGridMat.size(); i++)
 				{
 					if (isgdatesexist)
 					{
-						std::map<LADate,DateVector>::const_iterator it = mDatesForGenerate.find(mDateGrid[i]);
+						std::map<AQLDate,DateVector>::const_iterator it = mDatesForGenerate.find(mDateGrid[i]);
 						if (it != mDatesForGenerate.end())
 						{
 							//check size
 							if (it->second.size() != size)
-								throw LACoreInvalidData("Generate Dates is not consisitent with GridMat",__FILE__,__LINE__);
+								throw AQLCoreInvalidData("Generate Dates is not consisitent with GridMat",__FILE__,__LINE__);
 
 							for (unsigned int j = 1; j < size; j++)
 							{
@@ -2106,15 +2106,15 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 					}
 
 					mFloatTermMat[i].resize(size - 1);
-					LADate spotDate = cal.getBusinessDay(mDateGrid[i], spotlag);
+					AQLDate spotDate = cal.getBusinessDay(mDateGrid[i], spotlag);
 					if (pPaymentLag)
 					{
 						date = LAMathDateCalculations::getDate(spotDate, *pPaymentLag, false);
 						date = srule.getDate(date, cal);
-						LADate date_first_payment = date;
+						AQLDate date_first_payment = date;
 						date_first_payment.addMonths(addmonth);
 						if (mDateGrid[i] >= date_first_payment)
-							throw LACoreInvalidData("Payment lag is bigger than the index frequency!", __FILE__, __LINE__);
+							throw AQLCoreInvalidData("Payment lag is bigger than the index frequency!", __FILE__, __LINE__);
 					}
 					else
 					{
@@ -2153,23 +2153,23 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 		dh = &getData(PRICING_DATA_CAMODEL, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			mConvexityAdjustModel = dynamic_cast<const LADataString&> (dh->get()).get();
+			mConvexityAdjustModel = dynamic_cast<const AQLDataString&> (dh->get()).get();
 			if (isDelayedConvexityAdjusted())
 			{
-				mConvexityAdjustThreshold = dynamic_cast<const LADataDouble&> ((getData(PRICING_DATA_CATHRESHOLD, ISNOTNULL)).get()).get();
+				mConvexityAdjustThreshold = dynamic_cast<const AQLDataDouble&> ((getData(PRICING_DATA_CATHRESHOLD, ISNOTNULL)).get()).get();
 			}
 		}
 	}
 	else if (indexType == CMS)
 	{
-		mConvexityAdjustModel = dynamic_cast<const LADataString&> ((getData(PRICING_DATA_CAMODEL, ISNOTNULL)).get()).get();
+		mConvexityAdjustModel = dynamic_cast<const AQLDataString&> ((getData(PRICING_DATA_CAMODEL, ISNOTNULL)).get()).get();
 		if (mConvexityAdjustModel.findString(CMS_CA_SABR) >= 0)
 		{
-			mConvexityAdjustThreshold = dynamic_cast<const LADataDouble&> ((getData(PRICING_DATA_CATHRESHOLD, ISNOTNULL)).get()).get();
+			mConvexityAdjustThreshold = dynamic_cast<const AQLDataDouble&> ((getData(PRICING_DATA_CATHRESHOLD, ISNOTNULL)).get()).get();
 			// calculate mCouponTerm
-			LAString termOfOnePeriod;
-			LAPriceDataDayCount& dc_cf = dynamic_cast<LAPriceDataDayCount&> ((getData(PRICING_DATA_CFDAYCOUNT, ISNOTNULL)).get());
-			const LAString& freq_cf = dynamic_cast<const LADataString&> ((getData(PRICING_DATA_CFFREQUENCY, ISNOTNULL)).get());
+			AQLString termOfOnePeriod;
+			AQLPriceDataDayCount& dc_cf = dynamic_cast<AQLPriceDataDayCount&> ((getData(PRICING_DATA_CFDAYCOUNT, ISNOTNULL)).get());
+			const AQLString& freq_cf = dynamic_cast<const AQLDataString&> ((getData(PRICING_DATA_CFFREQUENCY, ISNOTNULL)).get());
 			if (freq_cf == BUSINESS_DAYS || freq_cf == DAILY )
 			{
 				termOfOnePeriod = "1D";
@@ -2178,13 +2178,13 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 
 			{
 				int span = LAMathDateCalculations::getPeriodFrequencyInMonths(freq_cf);
-				termOfOnePeriod = LAString(span) + "M";
+				termOfOnePeriod = AQLString(span) + "M";
 			}
 
-			std::vector<LADate> startDate;
-			std::vector<LADate> endDate;
-			startDate = dynamic_cast<const LADataDates &>((getData(PRICING_DATA_CFCALCSTARTDATES, ISNOTNULL)).get()).get();
-			endDate = dynamic_cast<const LADataDates &>((getData(PRICING_DATA_CFCALCENDDATES, ISNOTNULL)).get()).get();
+			std::vector<AQLDate> startDate;
+			std::vector<AQLDate> endDate;
+			startDate = dynamic_cast<const AQLDataDates &>((getData(PRICING_DATA_CFCALCSTARTDATES, ISNOTNULL)).get()).get();
+			endDate = dynamic_cast<const AQLDataDates &>((getData(PRICING_DATA_CFCALCENDDATES, ISNOTNULL)).get()).get();
 			if (dc_cf.getDayCount() == ACT_ACT_ICMA)
 			{
 				int span = LAMathDateCalculations::getPeriodFrequencyInMonths(freq_cf);
@@ -2197,12 +2197,12 @@ LAMathIndexEntity::setUpforIRforPlainVanilla(void)
 				mCouponTerm.push_back( dc_cf.getTerm(startDate[i], endDate[i]) );
 			}
 
-			mConvexityAdjustIC = dynamic_cast<const LADataDoubles&> ((getData(PRICING_DATA_CAINTEGRALCONDITION, ISNOTNULL)).get()).get();
+			mConvexityAdjustIC = dynamic_cast<const AQLDataDoubles&> ((getData(PRICING_DATA_CAINTEGRALCONDITION, ISNOTNULL)).get()).get();
 			mConvexityAdjustPremIntegralStep = 20;
 			dh = &getData(PRICING_DATA_CAPREMIUMINTEGRALSTEP, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				mConvexityAdjustPremIntegralStep = dynamic_cast<const LADataInt &>(dh->get()).get();
+				mConvexityAdjustPremIntegralStep = dynamic_cast<const AQLDataInt &>(dh->get()).get();
 			}
 		}
 	}
@@ -2221,28 +2221,28 @@ LAMathIndexEntity::setUpforFX(void)
 {
 	mpFX = &dynamic_cast<LAMathFXEntity&>(getFXEntity().get().get());
 	
-	const LAString& currency = getCurrency().get();
-    const LAStringVector& curs = LAMathFXUtility::getCurrencyPair(currency);
+	const AQLString& currency = getCurrency().get();
+    const AQLStringVector& curs = LAMathFXUtility::getCurrencyPair(currency);
 	mToCurrency = curs[0];
 	mFromCurrency = curs[1];
 
-	const LADate& asof = mpPath->getAsOfDate();
-	const LAPriceDataDayCount& daycount_path = mpPath->getDayCount();
+	const AQLDate& asof = mpPath->getAsOfDate();
+	const AQLPriceDataDayCount& daycount_path = mpPath->getDayCount();
 	
-	LAString accessory = getAccessory().get();
+	AQLString accessory = getAccessory().get();
 	accessory.toUpper();
 	mForwardTimes.resize(mTimeGrid.size());
 	for (unsigned int i = 0; i < mForwardTimes.size(); i++)
 	{
-		const LADate& spotdate = mpFX->getSpotDate(mFromCurrency, mToCurrency, mDateGrid[i]);
+		const AQLDate& spotdate = mpFX->getSpotDate(mFromCurrency, mToCurrency, mDateGrid[i]);
 		if (accessory == SPOT)
 			mForwardTimes[i] = daycount_path.getTerm(asof, spotdate);
 		else
 		{
-			const LAPriceDataCalendar& cal = getCalendar();
-			const LAPriceDataSlidingRule& srule = getSlidingRule();
-			//const LADate& forwarddate = mpFX->getForwardDate(mFromCurrency, mToCurrency, spotdate, accessory);
-			const LADate& forwarddate = LAMathDateCalculations::getDate(spotdate, accessory, srule, &cal, true);
+			const AQLPriceDataCalendar& cal = getCalendar();
+			const AQLPriceDataSlidingRule& srule = getSlidingRule();
+			//const AQLDate& forwarddate = mpFX->getForwardDate(mFromCurrency, mToCurrency, spotdate, accessory);
+			const AQLDate& forwarddate = LAMathDateCalculations::getDate(spotdate, accessory, srule, &cal, true);
 			mForwardTimes[i] = daycount_path.getTerm(asof, forwarddate);
 		}
 	}
@@ -2258,28 +2258,28 @@ LAMathIndexEntity::setUpforFXforPlainVanilla(void)
 {
 	mpFX = &dynamic_cast<LAMathFXEntity&>(getFXEntity().get().get());
 	
-	const LAString& currency = getCurrency().get();
-    const LAStringVector& curs = LAMathFXUtility::getCurrencyPair(currency);
+	const AQLString& currency = getCurrency().get();
+    const AQLStringVector& curs = LAMathFXUtility::getCurrencyPair(currency);
 	mToCurrency = curs[0];
 	mFromCurrency = curs[1];
 
-	const LADate& asof = mpVanilla->getAsOfDate();
-	const LAPriceDataDayCount& daycount_path = mpVanilla->getDayCount();
+	const AQLDate& asof = mpVanilla->getAsOfDate();
+	const AQLPriceDataDayCount& daycount_path = mpVanilla->getDayCount();
 	
-	LAString accessory = getAccessory().get();
+	AQLString accessory = getAccessory().get();
 	accessory.toUpper();
 	mForwardTimes.resize(mTimeGrid.size());
 	for (unsigned int i = 0; i < mForwardTimes.size(); i++)
 	{
-		const LADate& spotdate = mpFX->getSpotDate(mFromCurrency, mToCurrency, mDateGrid[i]);
+		const AQLDate& spotdate = mpFX->getSpotDate(mFromCurrency, mToCurrency, mDateGrid[i]);
 		if (accessory == SPOT)
 			mForwardTimes[i] = daycount_path.getTerm(asof, spotdate);
 		else
 		{
-			const LAPriceDataCalendar& cal = getCalendar();
-			const LAPriceDataSlidingRule& srule = getSlidingRule();
-			//const LADate& forwarddate = mpFX->getForwardDate(mFromCurrency, mToCurrency, spotdate, accessory);
-			const LADate& forwarddate = LAMathDateCalculations::getDate(spotdate, accessory, srule, &cal, true);
+			const AQLPriceDataCalendar& cal = getCalendar();
+			const AQLPriceDataSlidingRule& srule = getSlidingRule();
+			//const AQLDate& forwarddate = mpFX->getForwardDate(mFromCurrency, mToCurrency, spotdate, accessory);
+			const AQLDate& forwarddate = LAMathDateCalculations::getDate(spotdate, accessory, srule, &cal, true);
 			mForwardTimes[i] = daycount_path.getTerm(asof, forwarddate);
 		}
 	}
@@ -2287,14 +2287,14 @@ LAMathIndexEntity::setUpforFXforPlainVanilla(void)
 
 // set spot lag
 void 
-LAMathIndexEntity::setSpotLag(const LAString &ccy, unsigned int lag)
+LAMathIndexEntity::setSpotLag(const AQLString &ccy, unsigned int lag)
 {
-	mSpotLag.insert(pair<LAString, unsigned int>(ccy, lag));
+	mSpotLag.insert(pair<AQLString, unsigned int>(ccy, lag));
 }
 
 // set indexgeneratedates
 void 
-LAMathIndexEntity::setDatesForIndexGenerates(const std::map<LADate, DateVector>& datesmap)
+LAMathIndexEntity::setDatesForIndexGenerates(const std::map<AQLDate, DateVector>& datesmap)
 {
 	
 	if (mDatesForGenerate.size() == 0)
@@ -2302,18 +2302,18 @@ LAMathIndexEntity::setDatesForIndexGenerates(const std::map<LADate, DateVector>&
 	else
 	{
 
-		std::map<LADate, DateVector>::const_iterator it = datesmap.begin();
+		std::map<AQLDate, DateVector>::const_iterator it = datesmap.begin();
 		for (it = datesmap.begin(); it != datesmap.end(); ++it)
 		{
 			mDatesForGenerate[it->first] = it->second;
 			//check is exist fixing date
-			//std::map<LADate, DateVector>::const_iterator it2 = mDatesForGenerate.find(it->first);
+			//std::map<AQLDate, DateVector>::const_iterator it2 = mDatesForGenerate.find(it->first);
 			//if (it2 == mDatesForGenerate.end())
 			//	mDatesForGenerate.insert(std::make_pair(it->first,it->second));
 			//else
 			//{
 			//	if (it->second != it2->second)
-			//		throw LACoreInvalidData("Indexdate must be 1 to 1 for Dates for Index Generate",__FILE__,__LINE__);
+			//		throw AQLCoreInvalidData("Indexdate must be 1 to 1 for Dates for Index Generate",__FILE__,__LINE__);
 			//	else
 			//		return;
 			//}
@@ -2324,15 +2324,15 @@ LAMathIndexEntity::setDatesForIndexGenerates(const std::map<LADate, DateVector>&
 bool
 LAMathIndexEntity::isDelayedConvexityAdjusted() const
 {
-	const LAString& indextype = getIndexType();
+	const AQLString& indextype = getIndexType();
 
-	return (indextype == LAString(LIBOR)) && LAMathIndexEntity::isDelayedConvexityAdjustModel(mConvexityAdjustModel);
+	return (indextype == AQLString(LIBOR)) && LAMathIndexEntity::isDelayedConvexityAdjustModel(mConvexityAdjustModel);
 }
 
 bool
-LAMathIndexEntity::isDelayedConvexityAdjustModel(const LAString& caModel)
+LAMathIndexEntity::isDelayedConvexityAdjustModel(const AQLString& caModel)
 {
-	LAString tmpCaModel = caModel;
+	AQLString tmpCaModel = caModel;
 	tmpCaModel.toUpper();
 	return (tmpCaModel == DELAYED_CA);
 }
@@ -2352,22 +2352,22 @@ LAMathIndexEntity::getLIBORConvexityAdjust(double forward, double fixingterm, do
 		return 0.0;
 	}
 
-	LADataMultiReference* pirvols = &(mpVanilla->getIRVolatilitys());
+	AQLDataMultiReference* pirvols = &(mpVanilla->getIRVolatilitys());
 	if (pirvols == 0 || pirvols->getSize() == 0)
 	{
-		//throw LACoreInvalidData("IR Calibration Model For Convexity Adjust is not set", __FILE__, __LINE__);
+		//throw AQLCoreInvalidData("IR Calibration Model For Convexity Adjust is not set", __FILE__, __LINE__);
 		return 0.0;
 	}
 
-	LAString currency = getCurrency();
+	AQLString currency = getCurrency();
 	const LAMathVolFuncIRSABR* method = dynamic_cast<const LAMathVolFuncIRSABR*>(mpVanilla->getIRVolFunc(currency));
 	if (!method->isTypeOf(FN_VOLFUNCIRSABR))
 	{
-		//throw LACoreInvalidData("Convexity Adjust needs only SABR model now", __FILE__, __LINE__);
+		//throw AQLCoreInvalidData("Convexity Adjust needs only SABR model now", __FILE__, __LINE__);
 		return 0.0;
 	}
 
-	LAString accessory = getAccessory();
+	AQLString accessory = getAccessory();
 	int y,m,d, w;
 	LAMathDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
 	double mtenorval = static_cast<double > (y) + static_cast<double > (m) / 12.;
@@ -2379,10 +2379,10 @@ LAMathIndexEntity::getLIBORConvexityAdjust(double forward, double fixingterm, do
 	double shift = method->getForwardShiftValue();
 
 	double F = (forward + shift);
-	double vol = LAMathSABR_Hagan(alpha, beta, nu, rho).getSABRVol(fixingterm, LAMath::max(F, MIN_RATE), LAMath::max(F, MIN_RATE));
-	vol = LAMath::min(vol, mConvexityAdjustThreshold);
+	double vol = LAMathSABR_Hagan(alpha, beta, nu, rho).getSABRVol(fixingterm, AQLMath::max(F, MIN_RATE), AQLMath::max(F, MIN_RATE));
+	vol = AQLMath::min(vol, mConvexityAdjustThreshold);
 
-	double ret = (dfEnd / dfPayment) * timingterm * F * F * (LAMath::exp(fixingterm*vol*vol) - 1.0);
+	double ret = (dfEnd / dfPayment) * timingterm * F * F * (AQLMath::exp(fixingterm*vol*vol) - 1.0);
 
 	mConvexityAdjust   [curpos] = ret;
 	mConvexityAdjustVol[curpos] = vol;
@@ -2401,24 +2401,24 @@ LAMathIndexEntity::getConvexityAdjust(double forward, double optionterm, unsigne
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
 	double ret = 0.0;
 
-	LAString indextype = getIndexType();
+	AQLString indextype = getIndexType();
 	indextype.toUpper();
 	if (indextype != "CMS" || optionterm == 0.)
 		return 0.0;
 
-	LAString currency = getCurrency();
-	LADataMultiReference* pirvols = &(mpVanilla->getIRVolatilitys());
+	AQLString currency = getCurrency();
+	AQLDataMultiReference* pirvols = &(mpVanilla->getIRVolatilitys());
 	if (pirvols == 0  || pirvols->getSize() == 0)
-		throw LACoreInvalidData("IR Calibration Model For Convexity Adjust is not set", __FILE__,__LINE__);
+		throw AQLCoreInvalidData("IR Calibration Model For Convexity Adjust is not set", __FILE__,__LINE__);
 
 	const LAMathVolFuncIRSABR* method = dynamic_cast<const LAMathVolFuncIRSABR*>(mpVanilla->getIRVolFunc(currency));
 	if (!method->isTypeOf(FN_VOLFUNCIRSABR))
-		throw LACoreInvalidData("Convexity Adjust needs only SABR model now", __FILE__,__LINE__);
+		throw AQLCoreInvalidData("Convexity Adjust needs only SABR model now", __FILE__,__LINE__);
 
-	const LAString &underlying = getVolUnderlying().get();
+	const AQLString &underlying = getVolUnderlying().get();
 	method->setUnderlying(underlying);
 
-	LAString accessory = getAccessory();
+	AQLString accessory = getAccessory();
 	int y,m,d, w;
 	LAMathDateCalculations::termStrtoYMDW(accessory, y, m, d, w);
 	double mtenorval = static_cast<double > (y) + static_cast<double > (m) / 12.;
@@ -2429,8 +2429,8 @@ LAMathIndexEntity::getConvexityAdjust(double forward, double optionterm, unsigne
 		volvec[0] = optionterm;
 		volvec[1] = mtenorval;
 #ifdef ZEROFLOOR
-		volvec[2] = LAMath::max(forward, MIN_RATE);
-		volvec[3] = LAMath::max(forward, MIN_RATE);
+		volvec[2] = AQLMath::max(forward, MIN_RATE);
+		volvec[3] = AQLMath::max(forward, MIN_RATE);
 #else
 		volvec[2] = forward;
 		volvec[3] = forward;
@@ -2482,13 +2482,13 @@ LAMathIndexEntity::getConvexityAdjust(double forward, double optionterm, unsigne
 		}
 
 		if (0.0==pvbp)
-			throw LACoreInvalidData("Convexity Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Convexity Error",__FILE__,__LINE__);
 		ret = + 0.5 * forward * forward * vol * vol * optionterm * conv / pvbp;
 	}
 	else if (mConvexityAdjustModel.findString(CMS_CA_SABR) >= 0)
 	{
 		// calculate tau by frequency
-		LAString freq = getFrequency();
+		AQLString freq = getFrequency();
 		freq.toUpper();
 		double tau = 0.;
 		if (freq == MONTHLY)
@@ -2510,10 +2510,10 @@ LAMathIndexEntity::getConvexityAdjust(double forward, double optionterm, unsigne
 		else
 		{
 			//error
-			LAString err = "Frequency: ";
+			AQLString err = "Frequency: ";
 			err += freq;
 			err += " is not support in SABR convexity adjust.";
-			throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 		}
 		// create sabr parameter arguement
 		DoubleArray sabr_params;
@@ -2524,7 +2524,7 @@ LAMathIndexEntity::getConvexityAdjust(double forward, double optionterm, unsigne
 		if (mConvexityAdjustModel == CMS_CA_SABR || mConvexityAdjustModel == CMS_CA_SABR_HAGAN)
 		{
 			// calculate SABR convexity adjustment
-			ret = LAMathIRVanillaFuncUtility::getSABRConvexityAdjust(	LAMath::max(forward, MIN_RATE),
+			ret = LAMathIRVanillaFuncUtility::getSABRConvexityAdjust(	AQLMath::max(forward, MIN_RATE),
 																	optionterm,
 																	tau,
 																	mCouponTerm[curpos],
@@ -2534,13 +2534,13 @@ LAMathIndexEntity::getConvexityAdjust(double forward, double optionterm, unsigne
 																	mConvexityAdjustIC);
 			// calculate SABR vol
 			LAMathSABR_Hagan sabr(sabr_params[0], sabr_params[1], sabr_params[2], sabr_params[3]);
-			mConvexityAdjustVol[curpos] = sabr.getSABRVol(optionterm, LAMath::max(forward, MIN_RATE), LAMath::max(forward, MIN_RATE));
+			mConvexityAdjustVol[curpos] = sabr.getSABRVol(optionterm, AQLMath::max(forward, MIN_RATE), AQLMath::max(forward, MIN_RATE));
 		}
 		else if (mConvexityAdjustModel == CMS_CA_SABR_ANTONOV)
 		{
 			const double int_regime = 0.;
 			// calculate SABR Antonov convexity adjustment
-			ret = LAMathIRVanillaFuncUtility::getSABRConvexityAdjust2(LAMath::max(forward, MIN_RATE),
+			ret = LAMathIRVanillaFuncUtility::getSABRConvexityAdjust2(AQLMath::max(forward, MIN_RATE),
 																	optionterm,
 																	tau,
 																	mCouponTerm[curpos],
@@ -2551,13 +2551,13 @@ LAMathIndexEntity::getConvexityAdjust(double forward, double optionterm, unsigne
 																	mConvexityAdjustPremIntegralStep);
 			// calculate SABR vol
 			LAMathSABR_Antonov sabr(sabr_params[0], sabr_params[1], sabr_params[2], sabr_params[3]);
-			mConvexityAdjustVol[curpos] = sabr.getSABRVol(optionterm, LAMath::max(forward, MIN_RATE), LAMath::max(forward, MIN_RATE));
+			mConvexityAdjustVol[curpos] = sabr.getSABRVol(optionterm, AQLMath::max(forward, MIN_RATE), AQLMath::max(forward, MIN_RATE));
 
 		}
 		else
 		{
-			LAString err = mConvexityAdjustModel + " is not supported in convexity adjust!";
-			throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+			AQLString err = mConvexityAdjustModel + " is not supported in convexity adjust!";
+			throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 		}
 	}
 	else if (mConvexityAdjustModel == CMS_CA_ZERO)
@@ -2567,8 +2567,8 @@ LAMathIndexEntity::getConvexityAdjust(double forward, double optionterm, unsigne
 	}
 	else
 	{
-		LAString err = mConvexityAdjustModel + " is not supported in convexity adjust!";
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = mConvexityAdjustModel + " is not supported in convexity adjust!";
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	mConvexityAdjust[curpos] = ret;
@@ -2596,6 +2596,6 @@ LAMathIndexEntity::getConvexityAdjust(double forward, double optionterm, unsigne
 //	}
 //	else
 //	{
-//		throw LACoreInvalidData("Both mpVanilla and mpPath are NULL.", __FILE__, __LINE__);
+//		throw AQLCoreInvalidData("Both mpVanilla and mpPath are NULL.", __FILE__, __LINE__);
 //	}
 //}

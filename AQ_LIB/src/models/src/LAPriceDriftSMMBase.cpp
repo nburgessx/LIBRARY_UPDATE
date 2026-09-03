@@ -26,16 +26,16 @@
 #include "LAPriceDriftSMMBase.h"
 
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAMathCorrelation.h"
 #include "LAMathVolFuncBase.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 //#include "LAPriceDriftQuantAdjustment.h"
 
@@ -61,14 +61,14 @@ LAPriceDriftSMMBase::LAPriceDriftSMMBase(double s)
 	@param[in] s spread added to L (for displaced diffusion case)
 
 */
-LAPriceDriftSMMBase::LAPriceDriftSMMBase(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double s)
+LAPriceDriftSMMBase::LAPriceDriftSMMBase(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double s)
 : LAMathDriftFuncBase(), mTenor(tenor), mDeltaTenor(delta_tenor), m_i(i), mSDEAttrName(sdeAttrName),
 mpTimes(0), mPos_old(0), mpCache(0), mSpread(s)
 {
 	if (tenor.size() != delta_tenor.size() + 1)
 	{
 		//error
-		throw LACoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
 	}
 	if (mTenor.at(0) == 0.0)
 	{	
@@ -90,8 +90,8 @@ mSDEAttrName(v.mSDEAttrName), mpTimes(v.mpTimes), mCorData(v.mCorData), mPos_old
 		mCorrelation[i].resize(v.mCorrelation[i].size());
 		for (unsigned int j = 0; j < mCorrelation[i].size(); j++)
 		{
-			if (m_i == 0) mCorrelation[i][j] = dynamic_cast<LAFunctionBase*>(v.mCorrelation[i][j]->clone());
-			else mCorrelation[i][j] = dynamic_cast<LAFunctionBase*>(v.mCorrelation[i][j]);
+			if (m_i == 0) mCorrelation[i][j] = dynamic_cast<AQLFunctionBase*>(v.mCorrelation[i][j]->clone());
+			else mCorrelation[i][j] = dynamic_cast<AQLFunctionBase*>(v.mCorrelation[i][j]);
 		}
 	}
 	if (m_i == 0 && v.mpCache != 0)
@@ -136,17 +136,17 @@ LAPriceDriftSMMBase::getType() const
     @brief return string representaion
     @return string representaion (sde attr name : suffix : tenor : deltatenor)
 */
-LAString
+AQLString
 LAPriceDriftSMMBase::convertToString(void) const
 {
-	LAString ret;
+	AQLString ret;
 	ret += mSDEAttrName;
 	ret += ":";
-	ret += LADataInt(m_i).convertToString();
+	ret += AQLDataInt(m_i).convertToString();
 	ret += ":";
-	ret += LADataDoubles(mTenor).convertToString();
+	ret += AQLDataDoubles(mTenor).convertToString();
 	ret += ":";
-	ret += LADataDoubles(mDeltaTenor).convertToString();
+	ret += AQLDataDoubles(mDeltaTenor).convertToString();
 
 	return ret;
 }
@@ -156,14 +156,14 @@ LAPriceDriftSMMBase::convertToString(void) const
     @param[in] string representaion  (sde attr name : suffix : tenor : deltatenor)
 */
 void
-LAPriceDriftSMMBase::convertFromString(const LAString& str)
+LAPriceDriftSMMBase::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() < 5 || tmp.getSize() % 2 == 0)
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	}
 
 	mSDEAttrName = tmp.get()[0];
@@ -198,7 +198,7 @@ LAPriceDriftSMMBase::setTenor(const DoubleArray& tenor, const DoubleArray& delta
 	if (tenor.size() != delta_tenor.size() + 1)
 	{
 		//error
-		throw LACoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
 	}
 	mTenor = tenor;
 	mDeltaTenor = delta_tenor;
@@ -217,7 +217,7 @@ LAPriceDriftSMMBase::setTenor(const DoubleArray& tenor, const DoubleArray& delta
 void
 LAPriceDriftSMMBase::setUp(LAMathPathEntity& path)
 {
-	LADataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
+	AQLDataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
 	LAMathAttrSDE* pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
 	mVolatility = pattrsde->getSDE().getVolatility();
 	mpTimes = 0;
@@ -225,11 +225,11 @@ LAPriceDriftSMMBase::setUp(LAMathPathEntity& path)
 
 	if (m_i == 0)
 	{
-		LAString name = COR;
+		AQLString name = COR;
 		name += "_";
 		name += mSDEAttrName;
 		dh = &path.getData(name, ISNOTNULL);
-		LADataReference* ref = &dynamic_cast<LADataReference&>(dh->get());
+		AQLDataReference* ref = &dynamic_cast<AQLDataReference&>(dh->get());
 		LAMathCorrelation* cor = &dynamic_cast<LAMathCorrelation&>(ref->get().get());
 		mCorrelation = cor->getCorrelationFunc();
 
@@ -238,14 +238,14 @@ LAPriceDriftSMMBase::setUp(LAMathPathEntity& path)
 	}	
 	else
 	{
-		LAFunctionBase* method = pattrsde->getSDE().getDrift()[0];
+		AQLFunctionBase* method = pattrsde->getSDE().getDrift()[0];
 		//if (method->isTypeOf(FN_DRIFTQUANTADJ))
 		//	method = dynamic_cast<LAPriceDriftQuantAdjustment*>(method)->getDrift();
 	 
 		if (!method->isTypeOf(getType()))
 		{
 			//error
-			throw LACoreInvalidData("dirft function is not LAPriceDriftSMMBase", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("dirft function is not LAPriceDriftSMMBase", __FILE__, __LINE__);
 		}
 		LAPriceDriftSMMBase* drift = dynamic_cast<LAPriceDriftSMMBase*>(method);
 		mCorrelation = drift->mCorrelation;

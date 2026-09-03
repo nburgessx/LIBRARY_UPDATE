@@ -1,4 +1,4 @@
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "meCurveCalibrateBasis.h"
 #include "tryMeCurveCalibrateBasis.h"
@@ -28,29 +28,29 @@ const std::string meCurveCalibrateBasis(const std::string& curveCollection,
 {
 	AQ_API_START
 
-    LAString ret;
+    AQLString ret;
 	
 	// marshall all inputs
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_staticDataTable(staticDataTable.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_staticDataTable(staticDataTable.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
 
-	LAStringMatrix tmp_curveConv;
+	AQLStringMatrix tmp_curveConv;
 	swig::buildStringMatrix(tmp_curveConv, curveConv);
 
-	LAStringMatrix tmp_basisConv;
+	AQLStringMatrix tmp_basisConv;
 	swig::buildStringMatrix(tmp_basisConv, basisConv);
 
-	LAStringMatrix tmp_basisRates;
+	AQLStringMatrix tmp_basisRates;
 	swig::buildStringMatrix(tmp_basisRates, basisRates);
 
-	LAStringMatrix tmp_fxFwdConv;
+	AQLStringMatrix tmp_fxFwdConv;
 	swig::buildStringMatrix(tmp_fxFwdConv, fxFwdConv);
 
-	LAStringMatrix tmp_fxFwdRates;
+	AQLStringMatrix tmp_fxFwdRates;
 	swig::buildStringMatrix(tmp_fxFwdRates, fxFwdRates);
 
-	LAStringMatrix tmp_spotFxRates;
+	AQLStringMatrix tmp_spotFxRates;
 	swig::buildStringMatrix(tmp_spotFxRates, spotFxRates);
 		
 	ret = validation::tryMeCurveCalibrateBasis(
@@ -97,35 +97,35 @@ const std::string meCurveCalibrateBasis(const std::string& curveCollection,
 {
     AQ_API_START
 	
-    LAString ret;
+    AQLString ret;
 	
     // marshall all inputs
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_staticDataTable(staticDataTable.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_staticDataTable(staticDataTable.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
 
-	LAStringMatrix tmp_curveConv;
+	AQLStringMatrix tmp_curveConv;
 	swig::buildStringMatrix(tmp_curveConv, curveConv);
 
-	LAStringMatrix tmp_basisConv;
+	AQLStringMatrix tmp_basisConv;
 	swig::buildStringMatrix(tmp_basisConv, basisConv);
 
-	LAStringMatrix tmp_basisRates;
+	AQLStringMatrix tmp_basisRates;
 	swig::buildStringMatrix(tmp_basisRates, basisRates);
 
-	LAStringMatrix tmp_fxFwdConv;
+	AQLStringMatrix tmp_fxFwdConv;
 	swig::buildStringMatrix(tmp_fxFwdConv, fxFwdConv);
 
-	LAStringMatrix tmp_fxFwdRates;
+	AQLStringMatrix tmp_fxFwdRates;
 	swig::buildStringMatrix(tmp_fxFwdRates, fxFwdRates);
 
-	LAStringMatrix tmp_spotFxRates;
+	AQLStringMatrix tmp_spotFxRates;
 	swig::buildStringMatrix(tmp_spotFxRates, spotFxRates);
 
-	LAStringMatrix fraConv;
+	AQLStringMatrix fraConv;
 	swig::buildStringMatrix(fraConv, FRAConv);
 
-	LAStringMatrix fraRates;
+	AQLStringMatrix fraRates;
 	swig::buildStringMatrix(fraRates, FRARates);
 		
 	ret = validation::tryMeCurveCalibrateBasis(

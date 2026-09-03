@@ -2,15 +2,15 @@
 #include "CurveValidation.h"
 #include "ParameterValidation.h"
 #include "LACurveForwardRateHelpers.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLPriceDataCalendar.h"
 
-#include "LAMathDefine.h"
+#include "AQLMathDefine.h"
 #include "LACurvePricingObject.h"
-#include "LADataBasics.h"
-#include "LACoreComponentManager.h"
+#include "AQLDataBasics.h"
+#include "AQLCoreComponentManager.h"
 
-#include "LAPriceDataSlidingRule.h"
-#include "LADataReference.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLDataReference.h"
 #include "LADateScheduleHelpers.h"
 #include <algorithm>
 #include "CurveBuildDefaults.h"
@@ -85,11 +85,11 @@ namespace etrading
 		return fxRate;
 	 }
 
-	 LADate getDateFromTenorWithFxConvention(const LADate& fromDate, const std::string& tenor, const std::string& calendar, const std::string& businessDayAdjustment, const std::string& rollDayInput)
+	 AQLDate getDateFromTenorWithFxConvention(const AQLDate& fromDate, const std::string& tenor, const std::string& calendar, const std::string& businessDayAdjustment, const std::string& rollDayInput)
 	 {
-		 auto rollConvention = getRollConvection(LADate(), LADate(), rollDayInput.c_str());
+		 auto rollConvention = getRollConvection(AQLDate(), AQLDate(), rollDayInput.c_str());
 
-		 LADate toDate = getDateFromTenor(boost::assign::list_of(fromDate),
+		 AQLDate toDate = getDateFromTenor(boost::assign::list_of(fromDate),
 			 tenor.c_str(),
 			 businessDayAdjustment.c_str(),
 			 calendar.c_str(),
@@ -104,17 +104,17 @@ namespace etrading
 		 return boost::iequals(settlementDateOrTenor, "Spot") || boost::iequals(settlementDateOrTenor, "SP");
 	 }
 
-	 bool isSettleEarlierThanSpotDate(const std::string& settleDateOrTenor, const LADate& settleDate, const LADate& spotDate) 
+	 bool isSettleEarlierThanSpotDate(const std::string& settleDateOrTenor, const AQLDate& settleDate, const AQLDate& spotDate) 
 	 {
 		 return (settleDate < spotDate);
 	 }
 
 
-	 LADate fromSettleDateOrTenorToDate(const std::string& settlementDateOrTenor, const LADate& asOfDate, const LADate& spotDate, const std::string& calendar, const std::string& businessDayAdjustment, const std::string& rollDayInput)
+	 AQLDate fromSettleDateOrTenorToDate(const std::string& settlementDateOrTenor, const AQLDate& asOfDate, const AQLDate& spotDate, const std::string& calendar, const std::string& businessDayAdjustment, const std::string& rollDayInput)
 	 {
 		 //Decide if the settlementDatesOrTenors are in tenor format by checking the first element
 		 bool isSettleTenor = isMaturityDateTenor(settlementDateOrTenor.c_str());
-		 LADate settleDate;
+		 AQLDate settleDate;
 		 if (isSettleTenor)
 		 {
 			 if (isSpotTenor(settlementDateOrTenor))
@@ -138,15 +138,15 @@ namespace etrading
 		 return settleDate;
 	 }
 
-	 std::vector<LADate> fromSettleDatesOrTenorsToDates(const std::vector<std::string>& settlementDatesOrTenors, const LADate& asOfDate, const LADate& spotDate, const std::string& calendar, const std::string& businessDayAdjustment, const std::string& rollDayInput)
+	 std::vector<AQLDate> fromSettleDatesOrTenorsToDates(const std::vector<std::string>& settlementDatesOrTenors, const AQLDate& asOfDate, const AQLDate& spotDate, const std::string& calendar, const std::string& businessDayAdjustment, const std::string& rollDayInput)
 	 {
 		 //Populate settleDates
 		 size_t expectedSize = settlementDatesOrTenors.size();
-		 std::vector<LADate> settlementDates(expectedSize);
+		 std::vector<AQLDate> settlementDates(expectedSize);
 
 		 for (size_t i = 0; i < expectedSize; ++i)
 		 {
-			 LADate settleDate = fromSettleDateOrTenorToDate(settlementDatesOrTenors[i], asOfDate, spotDate, calendar, businessDayAdjustment, rollDayInput);
+			 AQLDate settleDate = fromSettleDateOrTenorToDate(settlementDatesOrTenors[i], asOfDate, spotDate, calendar, businessDayAdjustment, rollDayInput);
 			 settlementDates[i] = settleDate;
 		 }
 
@@ -203,7 +203,7 @@ namespace etrading
 		{
 			if (farLegFwdFxBidAsks.size() != nearLegFwdFxBidAsks.size())
 			{
-				throw LACoreInvalidData( "#Error: farLegFwdFxBids and nearLegFwdFxAsks must have same columns: bidPoints, askPoints, bidOutright, askOutright" , __FILE__, __LINE__ );
+				throw AQLCoreInvalidData( "#Error: farLegFwdFxBids and nearLegFwdFxAsks must have same columns: bidPoints, askPoints, bidOutright, askOutright" , __FILE__, __LINE__ );
 			}
 
 			double farLegFwdFxPointsBid = farLegFwdFxBidAsks[0].bid;
@@ -283,7 +283,7 @@ namespace etrading
 
         if (outputFarLeg && nearLegFwdFxBidAskMatrix.size() != farLegFwdFxBidAskMatrix.size())
         {
-            throw LACoreInvalidData( "#Error: nearLegFwdFxBidAskMatrix and farLegFwdFxBidAskMatrix must have same number of rows" , __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: nearLegFwdFxBidAskMatrix and farLegFwdFxBidAskMatrix must have same number of rows" , __FILE__, __LINE__ );
         }
 
 		std::vector<std::vector<FxFwd>> fwdFwdFxRateMatrix;
@@ -310,7 +310,7 @@ namespace etrading
 
 		if (fxFwd.size() < 2)
 		{
-            throw LACoreInvalidData( "fwdFxRates vector must have at least 2 items: point and outright.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "fwdFxRates vector must have at least 2 items: point and outright.", __FILE__, __LINE__ );
 		}
 
 		FxFwd fxFwdPoint = fxFwd[0];
@@ -376,17 +376,17 @@ namespace etrading
 	std::vector<std::vector<FxFwd>> calculateFxForwardsFromDiscountCurves(const std::vector<std::string>& settlementDatesOrTenors, const CurveFxFwdDataProvider& curveFxInfo, const double xccySwapRateBumpSize)
 	{
 
-		LAString baseCollection(curveFxInfo.baseCurveCollection.c_str());
-		LAString termCollection(curveFxInfo.termCurveCollection.c_str());
-		LAString baseDfCurve(curveFxInfo.baseDiscountCurveIndex.c_str());
-		LAString termDfCurve(curveFxInfo.termDiscountCurveIndex.c_str());
+		AQLString baseCollection(curveFxInfo.baseCurveCollection.c_str());
+		AQLString termCollection(curveFxInfo.termCurveCollection.c_str());
+		AQLString baseDfCurve(curveFxInfo.baseDiscountCurveIndex.c_str());
+		AQLString termDfCurve(curveFxInfo.termDiscountCurveIndex.c_str());
 
 		//Check if the required DF curves have been built:
 		getCurveStaticDataTableName(baseCollection, baseDfCurve);
 		getCurveStaticDataTableName(termCollection, termDfCurve);
 
 		//Populate settleDates
-		std::vector<LADate> settlementDates = fromSettleDatesOrTenorsToDates(settlementDatesOrTenors, curveFxInfo.asOfDate, curveFxInfo.spotDate, curveFxInfo.calendar, curveFxInfo.businessDayAdjustment, curveFxInfo.rollDayInput);
+		std::vector<AQLDate> settlementDates = fromSettleDatesOrTenorsToDates(settlementDatesOrTenors, curveFxInfo.asOfDate, curveFxInfo.spotDate, curveFxInfo.calendar, curveFxInfo.businessDayAdjustment, curveFxInfo.rollDayInput);
 
 		//DF(spotDate, settleDate), base - first ccy in the currencyPair, term - second ccy in the currencyPair
 		auto baseDiscountFactors = getCurveDiscountFactors(curveFxInfo.spotDate, settlementDates, baseCollection, baseDfCurve);
@@ -400,7 +400,7 @@ namespace etrading
 
 		for (size_t i = 0; i < expectedSize; ++i)
 		{
-			const LADate& settleDate = settlementDates[i];
+			const AQLDate& settleDate = settlementDates[i];
 
 			double baseDF = baseDiscountFactors[i];
 			double termDF = termDiscountFactors[i];
@@ -416,7 +416,7 @@ namespace etrading
 
 			if (std::abs(termDF) <= epsilon)
 			{
-				throw LACoreInvalidData((boost::format("#Error: Cannot imply FxForward from discount curves as term discount factor is smaller than \"%s\"") % epsilon).str().c_str(), __FILE__, __LINE__);
+				throw AQLCoreInvalidData((boost::format("#Error: Cannot imply FxForward from discount curves as term discount factor is smaller than \"%s\"") % epsilon).str().c_str(), __FILE__, __LINE__);
 			}
 
 			double bidTermDF = termDF, askTermDF = termDF;
@@ -537,10 +537,10 @@ namespace etrading
 		}
 		else
 		{
-			throw LACoreInvalidData("#Error: either baseCurve or termCurve must be XccyBasis or FxConst Curve", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: either baseCurve or termCurve must be XccyBasis or FxConst Curve", __FILE__, __LINE__);
 		}
 
-		LADate curveAsOfDate = getCurveAsOfDate(xccyCurveCollection);
+		AQLDate curveAsOfDate = getCurveAsOfDate(xccyCurveCollection);
 
 		AQ_REQUIRE(isEnabledCurveResults() && doesExistCurveResultsConventionsAndMarketData(xccyCurveCollection, xccyCurveIndex), "Curve Results have been Disabled");
 
@@ -587,7 +587,7 @@ namespace etrading
 		std::string calendar, businessDayAdjustment, rollDayInput;
 		populateFxFwdConventions(curveFxConventionsLVB, calendar, businessDayAdjustment, rollDayInput);
 
-		const LADate spotDate = getDateFromTenorWithFxConvention(curveAsOfDate, resetLag, calendar, businessDayAdjustment, rollDayInput);
+		const AQLDate spotDate = getDateFromTenorWithFxConvention(curveAsOfDate, resetLag, calendar, businessDayAdjustment, rollDayInput);
 
 		CurveFxFwdDataProvider xccyCurveFxInfo;
 
@@ -618,7 +618,7 @@ namespace etrading
 	CurveFxFwdDataProvider populateCurveFxFwdDataProvider(const std::shared_ptr<SingleCurveObject> xccyCurveObject)
 	{
 
-		LAString domensticDiscountCurve = xccyCurveObject->getCurveIndexName();
+		AQLString domensticDiscountCurve = xccyCurveObject->getCurveIndexName();
 		if (domensticDiscountCurve.findString(MULTI_STATIC_DATA_DELIMITER) != -1)
 		{
 			domensticDiscountCurve = domensticDiscountCurve.toToken(MULTI_STATIC_DATA_DELIMITER)[0];
@@ -630,7 +630,7 @@ namespace etrading
 		const LabelValueBlock curveFxConventionsLVB = xccyCurveObject->getCurveGeneratorObj()->toLabelValueBlock(toString(FXFWD_CONVENTIONS));
 		const LabelValueBlock curveXccySwapConventionsLVB = xccyCurveObject->getCurveGeneratorObj()->toLabelValueBlock(toString(XCCY_BASIS_CONVENTIONS));
 
-		LAString foreignDiscountCurve = "";
+		AQLString foreignDiscountCurve = "";
 
 		//We use getDiscountFactorDayCount() as all curve DFs in CurveUtilities.cpp are using ACt/365.
 		DayCountEnum dayCount = toDayCountEnum(getDiscountFactorDayCount().getCString());
@@ -648,13 +648,13 @@ namespace etrading
 			foreignDiscountCurve = foreignDiscountCurve.toToken(MULTI_STATIC_DATA_DELIMITER)[1];
 		}
 
-		LADate curveAsOfDate = getCurveAsOfDate(xccyCurveObject->getDomesticCurveCollection());
+		AQLDate curveAsOfDate = getCurveAsOfDate(xccyCurveObject->getDomesticCurveCollection());
 		const std::string resetLag = curveFxConventionsLVB.getCompulsoryValue(CURVEGENERATOR_FXFWDS_KEY::RESET_LAG);
 
 		std::string calendar, businessDayAdjustment, rollDayInput;
 		populateFxFwdConventions(curveFxConventionsLVB, calendar, businessDayAdjustment, rollDayInput);
 
-		const LADate spotDate = getDateFromTenorWithFxConvention(curveAsOfDate, resetLag, calendar, businessDayAdjustment, rollDayInput);
+		const AQLDate spotDate = getDateFromTenorWithFxConvention(curveAsOfDate, resetLag, calendar, businessDayAdjustment, rollDayInput);
 
 		auto fxSpotMatrix = xccyCurveObject->getCurveMarketDataObj()->toLAStringMatrix(toString(FXSPOT_MARKETDATA));
 
@@ -732,7 +732,7 @@ namespace etrading
 
 	}
 
-	double fxRateFromSpotToAsOfDate(const double spotFXRate, const LADate& spotFXDate, const LAString& baseCurveCollection, const LAString& baseCurveIndex, const LAString& termCurveCollection, const LAString& termCurveIndex)
+	double fxRateFromSpotToAsOfDate(const double spotFXRate, const AQLDate& spotFXDate, const AQLString& baseCurveCollection, const AQLString& baseCurveIndex, const AQLString& termCurveCollection, const AQLString& termCurveIndex)
 	{
 		//SPOT_FX(EUR/USD) = ASOF_FX(EUR / USD) * DF( EUR_USDCSA, 0, SPOTDATE ) / DF( USD_USDCSA, 0, SPOTDATE)
 		//=>  ASOF_FX(EUR / USD)  = SPOT_FX(EUR/USD) * DF( USD_USDCSA, 0, SPOTDATE) / DF( EUR_USDCSA, 0, SPOTDATE )
@@ -752,7 +752,7 @@ namespace etrading
 		return asOfDateFxRate;
 	}
 
-	double fxRateFromAsOfDateToSpot(const double asOfDateFXRate, const LADate& spotFXDate, const LAString& baseCurveCollection, const LAString& baseCurveIndex, const LAString& termCurveCollection, const LAString& termCurveIndex)
+	double fxRateFromAsOfDateToSpot(const double asOfDateFXRate, const AQLDate& spotFXDate, const AQLString& baseCurveCollection, const AQLString& baseCurveIndex, const AQLString& termCurveCollection, const AQLString& termCurveIndex)
 	{
 		//SPOT_FX(EUR/USD) = ASOF_FX(EUR / USD) * DF( EUR_USDCSA, 0, SPOTDATE ) / DF( USD_USDCSA, 0, SPOTDATE)
 

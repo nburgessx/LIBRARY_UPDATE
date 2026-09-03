@@ -15,7 +15,7 @@ mNoOfFactors(mCor->getNoFactors()),
 mfct2fit(mn, DoubleVector(mn, 0.0)),
 mCloned(false)
 {
-    if( mn != mCorTarget[0].size() ) throw LACoreInvalidData("Target Cor is not correct! : LAMathLeastSquareCorrelationLMMQlib::targetAndValue", __FILE__, __LINE__);
+    if( mn != mCorTarget[0].size() ) throw AQLCoreInvalidData("Target Cor is not correct! : LAMathLeastSquareCorrelationLMMQlib::targetAndValue", __FILE__, __LINE__);
 }
 
 LAMathLeastSquareCorrelationLMMQlib::LAMathLeastSquareCorrelationLMMQlib( const LAMathLeastSquareCorrelationLMMQlib& rhs )

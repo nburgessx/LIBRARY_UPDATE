@@ -7,7 +7,7 @@
 #include "CoreEnumerations.h"
 #include "LabelValueBlock.h"
 
-#include "LADefinitions.h"							// LAStringMatrix
+#include "LADefinitions.h"							// AQLStringMatrix
 #include "LADateScheduleHelpers.h"					// validateDate()
 #include "LAMathDateUtilities.h"					// getLADate( int excelDate )
 #include "LACurveForwardRateHelpers.h"				// getMultiSpotDiscountFactors
@@ -24,7 +24,7 @@ namespace etrading
 	namespace
 	{
 		// TODO: Extract this from curve conventions
-		LabelValueBlock setUpFloatScheduleConventions( const LADate& effectiveDate, const LADate& maturityDate, const std::string& frequency )
+		LabelValueBlock setUpFloatScheduleConventions( const AQLDate& effectiveDate, const AQLDate& maturityDate, const std::string& frequency )
 		{
 			
 			const std::vector<std::string> EUR_CONVENTION_KEYS = {  "EffectiveDate",
@@ -107,17 +107,17 @@ namespace etrading
 			return doubleVector;
 		}
 
-		std::vector<LADate> getScheduleColumnAsDate( const SchedulePtr& schedule, const CashflowHeaderEnum cashflowHeaderEnum )
+		std::vector<AQLDate> getScheduleColumnAsDate( const SchedulePtr& schedule, const CashflowHeaderEnum cashflowHeaderEnum )
 		{
 			auto resultMatrix = getScheduleColumn( schedule, cashflowHeaderEnum );
 			const size_t nRows = resultMatrix.size();
 
-			std::vector<LADate> dateVector( nRows );
+			std::vector<AQLDate> dateVector( nRows );
 			for ( size_t row = 0; row < nRows; row++ )
 			{
 				auto anyTypeValue = resultMatrix[ row ][ 0 ];
 				int dateAsExcelDouble = boost::get<double>( anyTypeValue );
-				LADate date = LAMathDateUtilities::getLADate( dateAsExcelDouble );
+				AQLDate date = LAMathDateUtilities::getLADate( dateAsExcelDouble );
 				dateVector[ row ] = date;
 			}
 			return dateVector;
@@ -183,10 +183,10 @@ namespace etrading
 									const size_t nDiversityMetric,			// n
 									const SupervisoryTypeEnum supervisoryType,
 									const PoolTypeEnum poolType,
-									const LADate& effectiveDate,
-									const LADate& maturityDate,
+									const AQLDate& effectiveDate,
+									const AQLDate& maturityDate,
 									const std::vector<std::shared_ptr<Trigger> >& triggers,
-									const LADate& reinvestmentEndDate,
+									const AQLDate& reinvestmentEndDate,
 									const size_t reinvestmentEndPeriod )
 	{
 		loanPortfolio_ = loanPortfolio;
@@ -386,14 +386,14 @@ namespace etrading
 			currentTrancheCouponScheduleData.paymentDate_			= getScheduleColumnAsDate( floatScheduleForTranche, PAYMENT_DATE_HEADER );
 
 			// *** TODO: Deal with this hard-coded information
-			LAString curveIndex( currentTrancheDefinition->resetCurve_ );
-			LAString curveCollection( currentTrancheDefinition->curveCollection_ );
-			LAString staticDataTable = getCurveStaticDataTableName( curveCollection, curveIndex );
-			LAString interpolation = getCurveInterpolation( curveCollection, staticDataTable );
-			LAString bdAdj( "NO_CHANGE" );
-			LAString dayCount( "ACT/365" );
+			AQLString curveIndex( currentTrancheDefinition->resetCurve_ );
+			AQLString curveCollection( currentTrancheDefinition->curveCollection_ );
+			AQLString staticDataTable = getCurveStaticDataTableName( curveCollection, curveIndex );
+			AQLString interpolation = getCurveInterpolation( curveCollection, staticDataTable );
+			AQLString bdAdj( "NO_CHANGE" );
+			AQLString dayCount( "ACT/365" );
 			bool basisFlag( false );
-			LAString calendar;
+			AQLString calendar;
 			calendar = getDefaultCalendarForEmptyString( calendar, curveCollection );
 
 			currentTrancheCouponScheduleData.discountFactorRiskless_ = LACurveForwardRateHelpers::getMultiSpotDiscountFactors(   currentTrancheCouponScheduleData.paymentDate_,
@@ -447,7 +447,7 @@ namespace etrading
 				Search the current tranche coupon schedule payment dates to see if it contains the portfolioPaymentDate
 				for this time period. If the portfolioPaymentDate is present, it means this time period pays a coupon.
 			*/
-			const LADate& portfolioPaymentDate = portfolioPaymentDates_[ period ];
+			const AQLDate& portfolioPaymentDate = portfolioPaymentDates_[ period ];
 			auto paymentDateIter = std::find( currentTrancheCouponScheduleData.paymentDate_.begin(),
 								   currentTrancheCouponScheduleData.paymentDate_.end(),
 								   portfolioPaymentDate );
@@ -457,7 +457,7 @@ namespace etrading
 				// # find the index of the coupon payment date, use this to find the reset index
 				const size_t payCouponPeriodIdx = std::distance( currentTrancheCouponScheduleData.paymentDate_.begin(), paymentDateIter );
 
-				const LADate& resetDate =  currentTrancheCouponScheduleData.resetDate_[ payCouponPeriodIdx ];
+				const AQLDate& resetDate =  currentTrancheCouponScheduleData.resetDate_[ payCouponPeriodIdx ];
 
 				auto resetDateIter = std::find( resetDates_.begin(), resetDates_.end(), resetDate );
 				AQ_REQUIRE( resetDateIter != resetDates_.end(), "Could not find tranche reset date in resetDates vector" );
@@ -817,7 +817,7 @@ namespace etrading
 
 
 		// Check if this is a coupon paying period
-		const LADate& portfolioPaymentDate = portfolioPaymentDates_[ period ];
+		const AQLDate& portfolioPaymentDate = portfolioPaymentDates_[ period ];
 
 		const TrancheScheduleData& equityTrancheCouponScheduleData = trancheCouponScheduleData_[ 0 ];
 		auto paymentDateIter = std::find( equityTrancheCouponScheduleData.paymentDate_.begin(),
@@ -830,7 +830,7 @@ namespace etrading
 			// # find the index of the coupon payment date, use this to find the reset index
 			const size_t payPeriodTranche = std::distance( equityTrancheCouponScheduleData.paymentDate_.begin(), paymentDateIter );
 
-			const LADate& resetDate = equityTrancheCouponScheduleData.resetDate_[ payPeriodTranche ];
+			const AQLDate& resetDate = equityTrancheCouponScheduleData.resetDate_[ payPeriodTranche ];
 
 			auto resetDateIter = std::find( resetDates_.begin(), resetDates_.end(), resetDate );
 			AQ_REQUIRE( resetDateIter != resetDates_.end(), "Could not find tranche reset date in resetDates vector" );

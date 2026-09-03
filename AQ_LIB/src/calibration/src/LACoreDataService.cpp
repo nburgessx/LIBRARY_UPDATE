@@ -31,8 +31,8 @@
 
 using namespace std;
 
-map<LAString, istringstream *> LACoreDataService::mIStringStreamMap;
-map<LAString, LAString> LACoreDataService::mSettingFiles;
+map<AQLString, istringstream *> LACoreDataService::mIStringStreamMap;
+map<AQLString, AQLString> LACoreDataService::mSettingFiles;
 LAStaticDataManager *LACoreDataService::mpPropertyManager = 0;
 MALogManager *LACoreDataService::mpLogManager = 0;
 bool LACoreDataService::mInitializeFlg = false;
@@ -42,12 +42,12 @@ common_lib::StaticMutex LACoreDataService::mMutex;
 #endif
 
 #if defined (WIN32) || defined (WIN64)
-map<DWORD, map<LAString, LAString> > LACoreDataService::mContextMap;
+map<DWORD, map<AQLString, AQLString> > LACoreDataService::mContextMap;
 #else
-map<pthread_t, map<LAString, LAString> > LACoreDataService::mContextMap;
+map<pthread_t, map<AQLString, AQLString> > LACoreDataService::mContextMap;
 #endif
  
-//LAString LACoreDataService::mPropertyFile;
+//AQLString LACoreDataService::mPropertyFile;
 
 //================ LACoreDataService ===================================
 
@@ -107,9 +107,9 @@ LACoreDataService::clearContext(bool isAll)
 	{
 
 #if defined (WIN32) || defined (WIN64)
-		map<DWORD, map<LAString, LAString> >::iterator it = mContextMap.begin();
+		map<DWORD, map<AQLString, AQLString> >::iterator it = mContextMap.begin();
 #else
-		map<pthread_t, map<LAString, LAString> >::iterator it = mContextMap.begin();
+		map<pthread_t, map<AQLString, AQLString> >::iterator it = mContextMap.begin();
 #endif
 
         while (it != mContextMap.end())
@@ -138,14 +138,14 @@ LACoreDataService::clearContext(bool isAll)
 	@param[in] fileNum
 */
 void
-LACoreDataService::clearStringStream(const LAString &fileNum)
+LACoreDataService::clearStringStream(const AQLString &fileNum)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
 	// clear string stream
-	LAStringVector keyVec;
-	map<LAString, istringstream *>::iterator strIt = mIStringStreamMap.begin();
+	AQLStringVector keyVec;
+	map<AQLString, istringstream *>::iterator strIt = mIStringStreamMap.begin();
 	while (strIt != mIStringStreamMap.end())
 	{
 		if (strIt->first.findString(fileNum) >= 0)
@@ -172,7 +172,7 @@ LACoreDataService::clearAllStringStream()
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
-	map<LAString, istringstream *>::iterator strIt = mIStringStreamMap.begin();
+	map<AQLString, istringstream *>::iterator strIt = mIStringStreamMap.begin();
 	while (strIt != mIStringStreamMap.end())
 	{
 		delete strIt->second;
@@ -186,7 +186,7 @@ LACoreDataService::clearAllStringStream()
 	@param[in] fileNum
 */
 void
-LACoreDataService::clear(const LAString &fileNum)
+LACoreDataService::clear(const AQLString &fileNum)
 {
 	// clear properties
 	LAStaticDataManager::clearStaticDataObject(fileNum);
@@ -308,15 +308,15 @@ LACoreDataService::finalize(void)
 		mInitializeFlg = false;
 		//delete LACoreDataService::mpInstance;
 	}
-	catch(LACoreError& e)
+	catch(AQLCoreError& e)
 	{
-        LACoreError ex("Error at LACoreDataService::finalize", __FILE__, __LINE__);
+        AQLCoreError ex("Error at LACoreDataService::finalize", __FILE__, __LINE__);
         ex += e;
 		throw ex;
 	}
 	catch (...)
 	{
-        throw LACoreSystemError(__FILE__, __LINE__);
+        throw AQLCoreSystemError(__FILE__, __LINE__);
 	}
 }
 
@@ -330,7 +330,7 @@ LACoreDataService::finalize(void)
 
 */
 void
-LACoreDataService::setContext(const LAString &key, const LAString &data)
+LACoreDataService::setContext(const AQLString &key, const AQLString &data)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
@@ -343,8 +343,8 @@ LACoreDataService::setContext(const LAString &key, const LAString &data)
 	pthread_t thread_id = pthread_self();
 #endif
 
-    map<LAString, LAString> &context = mContextMap[thread_id];
-	map<LAString, LAString>::iterator it = context.find(key);
+    map<AQLString, AQLString> &context = mContextMap[thread_id];
+	map<AQLString, AQLString>::iterator it = context.find(key);
 	if (it != context.end())
 	{
 		context.erase(key);
@@ -356,11 +356,11 @@ LACoreDataService::setContext(const LAString &key, const LAString &data)
 /*!
     @brief get context
 
-	@return LAString
+	@return AQLString
 
 */
-LAString
-LACoreDataService::getContext(const LAString &key)
+AQLString
+LACoreDataService::getContext(const AQLString &key)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
@@ -373,8 +373,8 @@ LACoreDataService::getContext(const LAString &key)
 	pthread_t thread_id = pthread_self();
 #endif
 	
-	map<LAString, LAString> &context = mContextMap[thread_id];
-	map<LAString, LAString>::const_iterator it = context.find(key);
+	map<AQLString, AQLString> &context = mContextMap[thread_id];
+	map<AQLString, AQLString>::const_iterator it = context.find(key);
 	if (it != context.end())
 	{
 		return it->second;
@@ -382,8 +382,8 @@ LACoreDataService::getContext(const LAString &key)
 	else
 	{
 		return AQ_NO_DATA;
-		//LAString msg = LAString("Key is not set in context key = ") + key;
-		//throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		//AQLString msg = AQLString("Key is not set in context key = ") + key;
+		//throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
@@ -395,12 +395,12 @@ LACoreDataService::getContext(const LAString &key)
 	@param istringstream
 */
 void 
-LACoreDataService::setIStringStream(const LAString &key, std::istringstream *pstream)
+LACoreDataService::setIStringStream(const AQLString &key, std::istringstream *pstream)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
-	map<LAString, istringstream *>::iterator it = mIStringStreamMap.find(key);
+	map<AQLString, istringstream *>::iterator it = mIStringStreamMap.find(key);
 	if (it != mIStringStreamMap.end())
 	{
 		delete it->second;
@@ -419,12 +419,12 @@ LACoreDataService::setIStringStream(const LAString &key, std::istringstream *pst
 
 */
 std::istringstream *
-LACoreDataService::getIStringStream(const LAString &key)
+LACoreDataService::getIStringStream(const AQLString &key)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
-	map<LAString, istringstream *>::iterator it = mIStringStreamMap.find(key);
+	map<AQLString, istringstream *>::iterator it = mIStringStreamMap.find(key);
 
 	if (it != mIStringStreamMap.end())
 	{
@@ -448,12 +448,12 @@ LACoreDataService::getIStringStream(const LAString &key)
 
 */
 void
-LACoreDataService::setSettingFileStream(const LAString key, const LAString data)
+LACoreDataService::setSettingFileStream(const AQLString key, const AQLString data)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
-	map<LAString, LAString>::iterator it = mSettingFiles.find(key);
+	map<AQLString, AQLString>::iterator it = mSettingFiles.find(key);
 	if (it != mSettingFiles.end())
 	{
 		mSettingFiles.erase(key);
@@ -465,39 +465,39 @@ LACoreDataService::setSettingFileStream(const LAString key, const LAString data)
 /*!
     @brief get context
 
-	@return LAString
+	@return AQLString
 
 */
-LAString
-LACoreDataService::getSettingFileStream(const LAString key)
+AQLString
+LACoreDataService::getSettingFileStream(const AQLString key)
 {
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
-	map<LAString, LAString>::iterator it = mSettingFiles.find(key);
+	map<AQLString, AQLString>::iterator it = mSettingFiles.find(key);
 
 	if (it != mSettingFiles.end())
 	{
-		LAString tmp(it->second);
+		AQLString tmp(it->second);
 		return tmp;
 		//return it->second;
 	}
 	else
 	{
-		LAString msg = LAString("Key is not set in settting file key = ") + key;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = AQLString("Key is not set in settting file key = ") + key;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 }
 
-LAString
+AQLString
 LACoreDataService::getOutputDirectory()
 {
-	LAString dirName = LACoreDataService::getStaticDataManager().
+	AQLString dirName = LACoreDataService::getStaticDataManager().
 							getStaticData().getStaticData( KEY_DEAL_PV_FILE );	
 	
 	std::string sDirName( dirName.getCString() );
 	unsigned int ex_pos = sDirName.find_last_of("/");
-	LAString dirName_no_ex;
+	AQLString dirName_no_ex;
 	if ( ex_pos != std::string::npos )
 	{
 		dirName_no_ex = dirName.subString(0, ex_pos );
@@ -516,7 +516,7 @@ LACoreDataService::getOutputDirectory()
 
 */
 bool
-LACoreDataService::isFileExist(const LAString &key)
+LACoreDataService::isFileExist(const AQLString &key)
 {
 	bool ret;
 	if (MAFileAccessor::isIStringStream())
@@ -524,7 +524,7 @@ LACoreDataService::isFileExist(const LAString &key)
 #ifdef __HAS_MIC__
 		common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
-		map<LAString, istringstream *>::iterator it = mIStringStreamMap.find(key);
+		map<AQLString, istringstream *>::iterator it = mIStringStreamMap.find(key);
 
 		if (it != mIStringStreamMap.end())
 		{

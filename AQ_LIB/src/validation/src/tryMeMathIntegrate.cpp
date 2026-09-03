@@ -85,13 +85,13 @@ namespace validation
     *  @param [in]		optimize            Enable OMP threading: True / False
     *  @return			The numerically intergrated area
     */
-    std::vector<double> tryMeMathIntegrate( const LADate & asOfDate,
-                                            const std::vector<LADate> & dates,
+    std::vector<double> tryMeMathIntegrate( const AQLDate & asOfDate,
+                                            const std::vector<AQLDate> & dates,
                                             const std::vector<double> & values,
                                             const std::string & interpolationType,
-                                            const LADate & joinDate,
-                                            const std::vector<LADate> & lowerBoundDates,
-                                            const std::vector<LADate> & upperBoundDates,
+                                            const AQLDate & joinDate,
+                                            const std::vector<AQLDate> & lowerBoundDates,
+                                            const std::vector<AQLDate> & upperBoundDates,
                                             const unsigned int & nSteps,
                                             const bool optimize )
     {

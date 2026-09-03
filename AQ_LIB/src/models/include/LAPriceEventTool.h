@@ -4,16 +4,16 @@
 #pragma interface
 #endif
 
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 class LAPriceIndexToolBase;
 class LAPriceEventBase;
 class LAPriceEventHolder;
-class LADate;
-class LAObject;
-class LAFunctionBase;
+class AQLDate;
+class AQLObject;
+class AQLFunctionBase;
 class LAPricePayOff;
 
 ///////////////////////////////////////////////////////////////////////
@@ -35,9 +35,9 @@ public:
 								
 	
 	// set up this class
-	virtual	void				setUp(const LADate& basedate, 
-										const LAObject& trade,
-										LAObject& trigger,
+	virtual	void				setUp(const AQLDate& basedate, 
+										const AQLObject& trade,
+										AQLObject& trigger,
 										const LAPricePayOff& payoff,
 										unsigned int id,
 										bool isCall = false,
@@ -56,7 +56,7 @@ private:
 	void						clear();
 	
 	bool	mEffectiveFlag;	// trigger effective flag
-	LAFunctionBase*	mpOperator;// operator of trigger reference index calculation
+	AQLFunctionBase*	mpOperator;// operator of trigger reference index calculation
 	std::vector<std::vector<LAPriceIndexToolBase*> >		mIndex;// trigger refenrence index
 	std::vector<LAPriceEventBase*> mActionMaster;// trigger action master
 	std::vector<LAPriceEventHolder*> mAction;// trigger actions

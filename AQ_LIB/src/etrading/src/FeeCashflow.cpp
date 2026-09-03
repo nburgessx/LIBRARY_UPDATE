@@ -6,12 +6,12 @@
 namespace etrading
 {
 
-	FeeCashflow::FeeCashflow(const PayReceiveEnum& payReceive, const LADate& paymentDate, double amount) 
+	FeeCashflow::FeeCashflow(const PayReceiveEnum& payReceive, const AQLDate& paymentDate, double amount) 
 		: amount_(amount), 
         Cashflow(payReceive, 
-        LADate(), //fixingDate
-        LADate(), //accrualStartDate
-        LADate(), //accrualEndDate
+        AQLDate(), //fixingDate
+        AQLDate(), //accrualStartDate
+        AQLDate(), //accrualEndDate
         0, //accrualDays
         0, //accrualYearFraction
         paymentDate, 

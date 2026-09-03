@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent linear function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //  2010, AlgoQuantHub.
@@ -24,9 +24,9 @@
 
 
 #include "LABlackScholesBaseFunc.h"
-#include "LABasic.h"
-#include "LADist.h"
-#include "LACoreComponentManager.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
+#include "AQLCoreComponentManager.h"
 
 using namespace std;
 //================ LABlackScholesBaseMethod ===================================
@@ -34,7 +34,7 @@ using namespace std;
 	@brief default constructor
 */
 LABlackScholesBaseMethod::LABlackScholesBaseMethod() 
-: LAFunctionBase(), mBSAnalyticMethod(std::vector<LABlackScholesBase* >(0)), mBSInputParam(std::vector<AnalyticParam* >(0))
+: AQLFunctionBase(), mBSAnalyticMethod(std::vector<LABlackScholesBase* >(0)), mBSInputParam(std::vector<AnalyticParam* >(0))
 ,mIsAfterMaturity(false),mForwardShiftValue(0.),mFixedPayOffs(BoolVector())
 {
 
@@ -51,7 +51,7 @@ LABlackScholesBaseMethod::~LABlackScholesBaseMethod()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LABlackScholesBaseMethod::clone() const
 {
     try 
@@ -60,7 +60,7 @@ LABlackScholesBaseMethod::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -72,7 +72,7 @@ LABlackScholesBaseMethod::clone() const
 bool
 LABlackScholesBaseMethod::isTypeOf(function_t id) const
 {
-	return (id == FN_BSBASEFUNC ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_BSBASEFUNC ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -93,27 +93,27 @@ LABlackScholesBaseMethod::getType() const
 double
 LABlackScholesBaseMethod::operator()(const DoubleArray& x) const
 {
-	throw LACoreInvalidData("Not support now",__FILE__,__LINE__);
+	throw AQLCoreInvalidData("Not support now",__FILE__,__LINE__);
 	return 0.0;
 }
 
 std::vector<LABlackScholesBase* > 
-LABlackScholesBaseMethod::getAnalyticMethod(LAString risktype)
+LABlackScholesBaseMethod::getAnalyticMethod(AQLString risktype)
 {
-	LAStringVector bsstrvec = getBSComponentVector(risktype);
+	AQLStringVector bsstrvec = getBSComponentVector(risktype);
 
 	if (bsstrvec.size() < 1)
-		throw LACoreInvalidData("BSComponent Size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("BSComponent Size error",__FILE__,__LINE__);
 
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it;
 	
 	mBSAnalyticMethod.resize(bsstrvec.size());
 	for (unsigned int i = 0; i < bsstrvec.size(); i++)
 	{
 		 it = var.find(bsstrvec[i]);
 		 if(it==var.end())
-			throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 
 		 mBSAnalyticMethod[i] = it->second;
 	}
@@ -122,22 +122,22 @@ LABlackScholesBaseMethod::getAnalyticMethod(LAString risktype)
 }
 
 std::vector<LABlackScholesBase* > 
-LABlackScholesBaseMethod::getPayoffMethod(LAString risktype)
+LABlackScholesBaseMethod::getPayoffMethod(AQLString risktype)
 {
-	LAStringVector bsstrvec = getBSPayoffComponentVector(risktype);
+	AQLStringVector bsstrvec = getBSPayoffComponentVector(risktype);
 
 	if (bsstrvec.size() < 1)
-		throw LACoreInvalidData("BSComponent Size error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("BSComponent Size error",__FILE__,__LINE__);
 
-	std::map<LAString, LABlackScholesBase*> &var = LACoreComponentManager::getBlackComponentMap();
-	std::map<LAString, LABlackScholesBase*> ::iterator it;
+	std::map<AQLString, LABlackScholesBase*> &var = AQLCoreComponentManager::getBlackComponentMap();
+	std::map<AQLString, LABlackScholesBase*> ::iterator it;
 	
 	mBSPayoffMethod.resize(bsstrvec.size());
 	for (unsigned int i = 0; i < bsstrvec.size(); i++)
 	{
 		 it = var.find(bsstrvec[i]);
 		 if(it==var.end())
-			throw LACoreInvalidData("Option type is not supported",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Option type is not supported",__FILE__,__LINE__);
 
 		 mBSPayoffMethod[i] = it->second;
 	}

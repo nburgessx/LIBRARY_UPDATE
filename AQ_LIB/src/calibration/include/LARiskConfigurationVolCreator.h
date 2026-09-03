@@ -17,8 +17,8 @@
 #pragma interface
 #endif
 
-#include "LAString.h"
-#include "LADataInstance.h"
+#include "AQLString.h"
+#include "AQLDataInstance.h"
 #include "LAMathVolatility.h"
 #include "LACoreDataService.h"
 #include "LAStaticData.h"
@@ -47,31 +47,31 @@ public:
 
 	//==============================================
 	// create volatility object for parallel
-	virtual LAMathVolatility *createVolatilityEntityForParallel(const LAString &riskName, const LAString &key, 
-											LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
+	virtual LAMathVolatility *createVolatilityEntityForParallel(const AQLString &riskName, const AQLString &key, 
+											AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
 	//==============================================
 	// create volatility object for grid
-	virtual std::vector<LAMathVolatility *> createVolatilityEntityForGrid(const LAString &riskName, const LAString &key, 
-											LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
+	virtual std::vector<LAMathVolatility *> createVolatilityEntityForGrid(const AQLString &riskName, const AQLString &key, 
+											AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
 
 protected:
 	//==============================================
 	// setup volatility method for parallel
-	virtual void setUpVolatilityFuncForParallel(const LAString &riskName, const LAString &key, LADataInstance &dataInstance,
+	virtual void setUpVolatilityFuncForParallel(const AQLString &riskName, const AQLString &key, AQLDataInstance &dataInstance,
 											LAMathVolatility &vol, SCENARIONUM scenarioNum = SCENARIO_1) const = 0;
 	//==============================================
 	// setup volatility data for grid
-	virtual void setUpVolatilityDataForParallel(const LAString &riskName, const LAString &key, LADataInstance &dataInstance,
+	virtual void setUpVolatilityDataForParallel(const AQLString &riskName, const AQLString &key, AQLDataInstance &dataInstance,
 											LAMathVolatility &vol, SCENARIONUM scenarioNum = SCENARIO_1) const = 0;
 	//==============================================
 	// create volatility object for grid
-	virtual std::vector<LAMathVolatility *> createVolatilityEntityFuncForGrid(const LAString &riskName, const LAString &key, 
-											LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const = 0;
+	virtual std::vector<LAMathVolatility *> createVolatilityEntityFuncForGrid(const AQLString &riskName, const AQLString &key, 
+											AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const = 0;
 
 	//==============================================
 	// create volatility object for grid
-	virtual std::vector<LAMathVolatility *> createVolatilityEntityDataForGrid(const LAString &riskName, const LAString &key, 
-											LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const = 0;
+	virtual std::vector<LAMathVolatility *> createVolatilityEntityDataForGrid(const AQLString &riskName, const AQLString &key, 
+											AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const = 0;
 	LAStaticData *mpStaticData; // property accessor
 	LAStaticData *mpRiskStaticData; // risk property accessor
 	bool mFuncFlg; // vol method flg 

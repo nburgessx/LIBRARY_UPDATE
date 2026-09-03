@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MonteCarloPath.h"
-#include "LADate.h"
+#include "AQLDate.h"
 
 namespace etrading
 {
@@ -9,19 +9,19 @@ namespace etrading
 	{
 	public:
 		SurvivalPath();
-		SurvivalPath( const double survivalProbability, const LADate& stoppingDate, const double discountFactorAtStoppingDate );
+		SurvivalPath( const double survivalProbability, const AQLDate& stoppingDate, const double discountFactorAtStoppingDate );
 		virtual ~SurvivalPath();
 
 		/* @brief	Returns the stopping date when the underlying index defaults.
 		*/
-		LADate getStoppingDate() const;
+		AQLDate getStoppingDate() const;
 
 		/* @brief	Returns the discount factor on the stopping date. Used for payments which occur on default.
 		*/
 		double getDiscountFactorAtStoppingDate() const;
 
 	private:
-		LADate stoppingDate_;
+		AQLDate stoppingDate_;
 		double discountFactorAtStoppingDate_;
 	};
 

@@ -4,7 +4,7 @@
 //
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CoreEnumerations.h"
 #include <vector>
 #include <unordered_map>
@@ -18,23 +18,23 @@ using etrading::STATE_VARIABLE_DF;
 // Class Forward Declarations
 class LAStaticData;
 class CurveCalibrationData;
-class LAObjectPool;
-class LAInterpolationBase;
-class LAPriceDataDayCount;
-class LAObject;
-class LAPriceDataInterpolation;
-class LAPriceDataConvention;
-class LAPriceDataSlidingRule;
-class LAPriceDataCalendar;
+class AQLObjectPool;
+class AQLInterpolationBase;
+class AQLPriceDataDayCount;
+class AQLObject;
+class AQLPriceDataInterpolation;
+class AQLPriceDataConvention;
+class AQLPriceDataSlidingRule;
+class AQLPriceDataCalendar;
 
 // Type Definitions
 // **************************************************************************
 
 // TypeDef: Start- and End-date
-typedef std::pair<LADate, LADate> StartAndEndDate;
+typedef std::pair<AQLDate, AQLDate> StartAndEndDate;
 
-// TypeDef: Money Market Data Map with Key = Start & End Date, Value = LAObject data
-typedef std::map<StartAndEndDate, const LAObject*>	MoneyMarketData;
+// TypeDef: Money Market Data Map with Key = Start & End Date, Value = AQLObject data
+typedef std::map<StartAndEndDate, const AQLObject*>	MoneyMarketData;
 
 // **************************************************************************
 
@@ -64,7 +64,7 @@ namespace etrading
 		public:
 
 		DiscountFactors()
-			: paymentDatesAsTerms_(DoubleVector()), discountFactors_ (DoubleVector()), paymentDates_(DateVector()), lastLiborEndDate_(LADate()), lastLiborPosition_(0)
+			: paymentDatesAsTerms_(DoubleVector()), discountFactors_ (DoubleVector()), paymentDates_(DateVector()), lastLiborEndDate_(AQLDate()), lastLiborPosition_(0)
 			{};
 		
 		~DiscountFactors()	{};
@@ -81,7 +81,7 @@ namespace etrading
 		DoubleVector	paymentDatesAsTerms_;
 		DoubleVector	discountFactors_;
 		DateVector		paymentDates_;
-		LADate			lastLiborEndDate_;
+		AQLDate			lastLiborEndDate_;
 		size_t			lastLiborPosition_;
 		
 		// Private member since we must keep paymentDatesAsTerms and discountFactors in synch with termsDFMatrix
@@ -97,32 +97,32 @@ namespace etrading
 	{
 		// Default Struct Constructor to intialize the iteration count to zero
 		tensionMarketData() : frontForwardRate(0.0),
-			frontStartDate(LADate()),
-			frontEndDate(LADate()),
+			frontStartDate(AQLDate()),
+			frontEndDate(AQLDate()),
 			frontStartTerm(0.0),
 			frontEndTerm(0.0),
 			backForwardRate(0.0),
-			backStartDate(LADate()),
-			backEndDate(LADate()),
+			backStartDate(AQLDate()),
+			backEndDate(AQLDate()),
 			backStartTerm(0.0),
 			backEndTerm(0.0) {}
 
 		double frontForwardRate;
-		LADate frontStartDate;
-		LADate frontEndDate;
+		AQLDate frontStartDate;
+		AQLDate frontEndDate;
 		double frontStartTerm;
 		double frontEndTerm;
 		double backForwardRate;
-		LADate backStartDate;
-		LADate backEndDate;
+		AQLDate backStartDate;
+		AQLDate backEndDate;
 		double backStartTerm;
 		double backEndTerm;
 	};
 
 	struct ForwardRate
 	{
-		LADate startDate;
-		LADate endDate;
+		AQLDate startDate;
+		AQLDate endDate;
 		double fwdRate;
 	};
 
@@ -139,10 +139,10 @@ namespace etrading
 		@param[in]		yield_insert	Yield to be insert
 		@param[in]		overrideIfDatesClash	Override DF(DiscountFactor)/Yields if dates clashed
 	*/
-	void insertDFData(DoubleVector& dfTerms, DoubleVector& dfValues, DateVector& dfDates, double df_insert, double term_insert, const LADate& date_insert, DoubleVector& yields, const double yield_insert, const bool overrideIfDatesClash = false);
+	void insertDFData(DoubleVector& dfTerms, DoubleVector& dfValues, DateVector& dfDates, double df_insert, double term_insert, const AQLDate& date_insert, DoubleVector& yields, const double yield_insert, const bool overrideIfDatesClash = false);
 
 	// Update dfResults, insert df, term and date info data into the dfResults
-	void insertDFData( DiscountFactors & dfResults, double df_insert, double term_insert, const LADate& date_insert, const bool overrideIfDatesClash = false );
+	void insertDFData( DiscountFactors & dfResults, double df_insert, double term_insert, const AQLDate& date_insert, const bool overrideIfDatesClash = false );
 
 	/*
 		@brief insert df, term and date into df data
@@ -154,7 +154,7 @@ namespace etrading
 		@param[in]		date_in			Discount factor date
 		@param[in]		overrideIfDatesClash	Override DF(DiscountFactor) if dates clashed
 	*/
-	void insertDFData(DoubleMatrix& dfs, DateVector& dates, double df_insert, double term_insert, const LADate& date_insert, const bool overrideIfDatesClash = false);
+	void insertDFData(DoubleMatrix& dfs, DateVector& dates, double df_insert, double term_insert, const AQLDate& date_insert, const bool overrideIfDatesClash = false);
 
 	/*
 		@brief Function to insert a ***SINGLE*** additional forward rate into an existing forward rate array in a sorted manner. Used for insertion of tension data points
@@ -210,19 +210,19 @@ namespace etrading
 	void insertSyntheticTensionPoints( DiscountFactors & dfResults,
 									   DoubleArray& forwardRatesVector,
 									   DoubleMatrix& forwardTermsMatrix,
-									   LAInterpolationBase* discountFactorInterpolationTable,
+									   AQLInterpolationBase* discountFactorInterpolationTable,
 									   const StateVariableEnum& stateVariable,
-									   const LADate & asOfDate,
-									   const LADate& spotDate,
-									   const LADate& startDate,
-									   const LADate& endDate,
+									   const AQLDate & asOfDate,
+									   const AQLDate& spotDate,
+									   const AQLDate& startDate,
+									   const AQLDate& endDate,
 									   const double& forwardRate,
 									   const bool& isFirstDataPoint,
-									   const LAPriceDataDayCount& termsToDateDaycount,
-									   const LAPriceDataDayCount& instrumentDaycount,
+									   const AQLPriceDataDayCount& termsToDateDaycount,
+									   const AQLPriceDataDayCount& instrumentDaycount,
 									   const unsigned int& tensionGap,
 									   tensionMarketData& instrumentData,
-									   const LADate& cutoffDate,
+									   const AQLDate& cutoffDate,
 									   bool implyForwards = true);
 
 
@@ -233,10 +233,10 @@ namespace etrading
 	*  @param [inout]	useGrid_FRA		A string used for market data validation
 	*  @return			File carrying FRA market data
 	*/
-	LAString buildFRAMarketDataFile(const LAString& fraFileName,
-									const LAStringMatrix& fraRates,
+	AQLString buildFRAMarketDataFile(const AQLString& fraFileName,
+									const AQLStringMatrix& fraRates,
 									bool areSwapsForwardStarting,
-									LAString& useGrid_FRA);
+									AQLString& useGrid_FRA);
 
 
 	/* @brief			Populate FRA data into object pool
@@ -257,17 +257,17 @@ namespace etrading
 	*/
 	void populateFRADataToEntityPool(LAStaticData * mpStaticData,
 									 CurveCalibrationData &curveCalibrationData,
-									 LAString& refData,
-									 LAObjectPool& objPool,
-									 const LAString& currency,
-									 const LAString& marketName,
-									 const LAString& yieldDataName,
-									 const LAString& staticDataSuffix,
-									 const LAString& suffix_data,
+									 AQLString& refData,
+									 AQLObjectPool& objPool,
+									 const AQLString& currency,
+									 const AQLString& marketName,
+									 const AQLString& yieldDataName,
+									 const AQLString& staticDataSuffix,
+									 const AQLString& suffix_data,
 									 bool isAudExtra,
 									 bool isSpotUse,
 									 bool areSwapsForwardStarting,
-									 const LADate &asOfDate,
+									 const AQLDate &asOfDate,
 									 bool isBasisCurve = false);
 
 	/*
@@ -275,7 +275,7 @@ namespace etrading
 		@param[in] term in "X" format
 		@return term in "M" format
 	*/
-	LAString changeFRATermFormat(const LAString& inputTerm);
+	AQLString changeFRATermFormat(const AQLString& inputTerm);
 
 
 	/*
@@ -300,21 +300,21 @@ namespace etrading
 	void bootstrapFRAs( DiscountFactors & dfResults,
 						DoubleArray& fwds,
 						DoubleMatrix& fwd_termsmtx,
-						const std::vector<LAObject*>& data_fra,
-						const std::vector<LAObject*>&  data_libor,
-						LAInterpolationBase* pInter_fw,
+						const std::vector<AQLObject*>& data_fra,
+						const std::vector<AQLObject*>&  data_libor,
+						AQLInterpolationBase* pInter_fw,
 						const StateVariableEnum& stateVariable,
 						bool is_fwdswap,
-						const LAString& frequency,
-						const LAString& liborIndexTerm,
-						const LADate & asOfDate,
-						const LADate& spotdate,
-						const LADate& spotDateLibor,
-						const LADate& firstSwapDate,
+						const AQLString& frequency,
+						const AQLString& liborIndexTerm,
+						const AQLDate & asOfDate,
+						const AQLDate& spotdate,
+						const AQLDate& spotDateLibor,
+						const AQLDate& firstSwapDate,
 						bool implyForwards,
 					    const double linearSplineJoinDate = 0.0,
 					    unsigned int lastLiborPosition = 0,
-					    const LADate& lastLiborEndDate = LADate() );
+					    const AQLDate& lastLiborEndDate = AQLDate() );
 	
 	/*
 		@brief Bootstrap yield curve using Libor instruments producing discount factors and forward rates
@@ -335,13 +335,13 @@ namespace etrading
 	*/
 	DiscountFactors bootstrapLibors( DoubleArray& fwds,
 									 DoubleMatrix& fwd_termsmtx,
-									 const std::vector<LAObject*> & data_libor,
+									 const std::vector<AQLObject*> & data_libor,
 									 const MoneyMarketData & data_moneymarket,
 									 bool is_fra_use,
 									 bool is_f_use,
-									 const LADate& spotDateSwap,
-									 const LADate& spotDateLibor,
-									 const LAString& liborIndexTerm,
+									 const AQLDate& spotDateSwap,
+									 const AQLDate& spotDateLibor,
+									 const AQLString& liborIndexTerm,
 									 bool implyForwards = true );
 	
 	/*
@@ -355,13 +355,13 @@ namespace etrading
 		@param[in]	baseFreq		The frequency of the curve
 		@param[in]	dc				FRA day count
 	*/
-	void calculateFraDates(LADate& startDate,
-						   LADate& endDate,
-						   const LADate& spotDate,
-						   const LAObject* data_fra,
-						   const LAString& liborIndexTerm,
-						   const LAString& baseFreq,
-						   const LAPriceDataDayCount& dc);
+	void calculateFraDates(AQLDate& startDate,
+						   AQLDate& endDate,
+						   const AQLDate& spotDate,
+						   const AQLObject* data_fra,
+						   const AQLString& liborIndexTerm,
+						   const AQLString& baseFreq,
+						   const AQLPriceDataDayCount& dc);
 
 	/*
 		@brief Populate start and end dates of a FRA instrument
@@ -374,15 +374,15 @@ namespace etrading
 		@param[in]	baseFreq		The frequency of the curve
 		@param[in]	dc				FRA day count
 	*/
-	void populateFraDates(LADate& startDate,
-						  LADate& endDate,
-						  const LADate& spotDate,
-						  const LAObject* data_fra,
-						  const LAString& liborIndexTerm,
-						  const LAString& roll_conv,
-						  const LAPriceDataSlidingRule& sld,
-						  const LAPriceDataCalendar& cal,
-						  const LAPriceDataDayCount& dc);
+	void populateFraDates(AQLDate& startDate,
+						  AQLDate& endDate,
+						  const AQLDate& spotDate,
+						  const AQLObject* data_fra,
+						  const AQLString& liborIndexTerm,
+						  const AQLString& roll_conv,
+						  const AQLPriceDataSlidingRule& sld,
+						  const AQLPriceDataCalendar& cal,
+						  const AQLPriceDataDayCount& dc);
 
 	/*
 		@brief Get YieldGen interpolation method for a curve from object pool
@@ -391,7 +391,7 @@ namespace etrading
 		@param[in]		suffix		Name of the curve concerned
 		@return			Curve's interpolation
 	*/
-	LAPriceDataInterpolation getYieldGenInterpolationByCurveName(LAObjectHolder& objHolder, const LAString& suffix);
+	AQLPriceDataInterpolation getYieldGenInterpolationByCurveName(AQLObjectHolder& objHolder, const AQLString& suffix);
 
 	/*
 		@brief calc float side pv on spot date
@@ -410,13 +410,13 @@ namespace etrading
 
 		@return floatside pv
 	*/
-	double calcFloatPV( LAInterpolationBase &fwdRate_Interpolation,
+	double calcFloatPV( AQLInterpolationBase &fwdRate_Interpolation,
 						const StateVariableEnum& stateVariable,
-						LAInterpolationBase &discFactor_Interpolation,
+						AQLInterpolationBase &discFactor_Interpolation,
 						const double spotDiscountFactor,
 						const double spotDateAsTerms,
 						const DoubleArray &term_grid,
-						const LADate & asOfDate,
+						const AQLDate & asOfDate,
 						const DayCountEnum & accrualDaycount,
 						const CompoundingFrequencyEnum & compoundFreq = SIMPLE_COMPOUNDING,
 						const int cpd_times = 1,
@@ -447,17 +447,17 @@ namespace etrading
 	*/
 	void solveSmoothSTDShortEnd(double& startDF,
 								double& endDF,
-								const LADate& startDate,
-								const LADate& endDate,
-								const LADate& spotDateLibor,
-								const LADate& spotDateSwap,
-								const LADate& liborDate,
-								const LAObject* data_libor,
-								const std::unique_ptr<LAInterpolationBase>& cashDepositInterpolation,
+								const AQLDate& startDate,
+								const AQLDate& endDate,
+								const AQLDate& spotDateLibor,
+								const AQLDate& spotDateSwap,
+								const AQLDate& liborDate,
+								const AQLObject* data_libor,
+								const std::unique_ptr<AQLInterpolationBase>& cashDepositInterpolation,
 								const StateVariableEnum& stateVariable,
 								const DiscountFactors & dfResults,
 								const double forwardRate,
-								const LAPriceDataConvention& forwardConv);
+								const AQLPriceDataConvention& forwardConv);
 
 	class SwapPaymentSchedule
 	{
@@ -468,13 +468,13 @@ namespace etrading
 		~SwapPaymentSchedule() {};
 		
 		// Main Constructor
-		SwapPaymentSchedule( const LADate & startDate,
-							 const LADate & endDate,
-							 const LAString & frequency,
-							 const LAPriceDataCalendar & calendar,
-							 const LAPriceDataSlidingRule & businessDayAdjustment,
-							 const LAPriceDataDayCount & daycount,
-							 const LADate & forwardStartingSpotDate );
+		SwapPaymentSchedule( const AQLDate & startDate,
+							 const AQLDate & endDate,
+							 const AQLString & frequency,
+							 const AQLPriceDataCalendar & calendar,
+							 const AQLPriceDataSlidingRule & businessDayAdjustment,
+							 const AQLPriceDataDayCount & daycount,
+							 const AQLDate & forwardStartingSpotDate );
 
 		// Accessors
 		DateVector	paymentDates()			const	{ return paymentDates_; };
@@ -485,13 +485,13 @@ namespace etrading
 		protected:
 
 		// Inputs
-		LADate startDate_;
-		LADate endDate_;
-		LAString frequency_;
-		const LAPriceDataCalendar * calendar_;
-		const LAPriceDataSlidingRule * businessDayAdjustment_;
-		const LAPriceDataDayCount * daycount_;
-		const LADate * forwardStartingSpotDate_;
+		AQLDate startDate_;
+		AQLDate endDate_;
+		AQLString frequency_;
+		const AQLPriceDataCalendar * calendar_;
+		const AQLPriceDataSlidingRule * businessDayAdjustment_;
+		const AQLPriceDataDayCount * daycount_;
+		const AQLDate * forwardStartingSpotDate_;
 
 		// Outputs
 		DateVector paymentDates_;
@@ -515,17 +515,17 @@ namespace etrading
 		@param[out] isEOMRoll roll end-of-month
 		@param[in] spotDateSwap ( swap spot date, optionally)
 	*/
-	void updateAccrualPeriodsAndPaymentDates( const LADate& startDate,
-							                  const LADate& endDate,
-							                  const LAString& frequency,
-							                  const LAPriceDataCalendar& calendar,
-							                  const LAPriceDataSlidingRule& busDayAdj,
-							                  const LAPriceDataDayCount& daycount,
+	void updateAccrualPeriodsAndPaymentDates( const AQLDate& startDate,
+							                  const AQLDate& endDate,
+							                  const AQLString& frequency,
+							                  const AQLPriceDataCalendar& calendar,
+							                  const AQLPriceDataSlidingRule& busDayAdj,
+							                  const AQLPriceDataDayCount& daycount,
 							                  DateVector& cashflowPaymentDates,
 							                  DoubleArray& cashflowPaymentDatesAsTerms,
 							                  DoubleArray& accuralPeriods,
 							                  bool isEOMRoll,
-							                  const LADate* spotDateSwap = 0 );
+							                  const AQLDate* spotDateSwap = 0 );
 
 	/*!
 		@brief Determine the join date used by linear spline interpolation
@@ -535,9 +535,9 @@ namespace etrading
 		@param[in] is_fwdswap	Is forward starting swap used?
 		@return	   Linear spline join date
 	*/
-	LADate determineLinearSplineInterpolationJoinDate(const LAObject* lastFuture,
-													  const LAObject* firstSwap,
-													  const LADate& spotDate,
+	AQLDate determineLinearSplineInterpolationJoinDate(const AQLObject* lastFuture,
+													  const AQLObject* firstSwap,
+													  const AQLDate& spotDate,
 													  bool is_fwdswap);
 
 	/*!
@@ -546,7 +546,7 @@ namespace etrading
 		@param[in] data_swap	The market data object
 		@returns				The term string
 	*/
-	const LAString& getMaturityAsTermString(unsigned int i, const std::vector<LAObject*> & data_item);
+	const AQLString& getMaturityAsTermString(unsigned int i, const std::vector<AQLObject*> & data_item);
 
 	/* @brief	Populate cash instrument data into object pool.
 	*			Cash market instruments include ON, TN and Libor market data.
@@ -567,18 +567,18 @@ namespace etrading
 	*  @return			Libor rate that matches spot rate term (if provided)
 	*/
 	double populateCashInstrumentsToEntityPool(LAStaticData * mpStaticData,
-											   LAString& refData,
-											   LAObjectPool& objPool,
-											   const LAString& currency,
-											   const LAString& marketName,
-											   const LAString& yieldDataName,
-											   const LAString& staticDataSuffix,
-											   const LAString& suffix_data,
+											   AQLString& refData,
+											   AQLObjectPool& objPool,
+											   const AQLString& currency,
+											   const AQLString& marketName,
+											   const AQLString& yieldDataName,
+											   const AQLString& staticDataSuffix,
+											   const AQLString& suffix_data,
 											   bool isSpotUse,
 											   bool isFwdFX,
-											   const LADate &asOfDate,
-											   const LAString& fixingSource = "",
-											   const LAString& spotRateTerm = "");
+											   const AQLDate &asOfDate,
+											   const AQLString& fixingSource = "",
+											   const AQLString& spotRateTerm = "");
 
 	/*! @brief get Grid property val
 
@@ -588,7 +588,7 @@ namespace etrading
 
 		@return Property data value
 	*/
-	LAString getGridStaticData(LAStaticData * mpStaticData, const LAString &key, const LAString &curve, const LAString &grid);
+	AQLString getGridStaticData(LAStaticData * mpStaticData, const AQLString &key, const AQLString &curve, const AQLString &grid);
 
 	/*! @brief Price the PVs of a group of OIS swaps (either outright or Libor-OIS basis swap)
 
@@ -623,8 +623,8 @@ namespace etrading
 		@param[inout]  endterms			Terms from spot to end date of each OIS cash flow
 	*/
 	void priceOISSwaps( DoubleVector& allPVs,
-						LAInterpolationBase* pInter_yield,
-						LAInterpolationBase *df_inter,
+						AQLInterpolationBase* pInter_yield,
+						AQLInterpolationBase *df_inter,
 						const std::vector<size_t>& size_calcs,
 						const std::vector<size_t>& size_calcs_s,
 						const std::vector<size_t>& calced_sizes,
@@ -638,16 +638,16 @@ namespace etrading
 						const std::vector<DateVector>& fixingStartDates,
 						const std::vector<DateVector>& fixingEndDates,
 						const DoubleMatrix& fixingTaus,
-						const LAStringVector& term_strs,
+						const AQLStringVector& term_strs,
 						bool is_selfdf,
 						double d_spotdf,
 						double spotterm,
-						const LADate& spotdate,
+						const AQLDate& spotdate,
 						const std::vector<etrading::OISCompoundingEnum> & swapCompoundingMethods,
 						const std::vector<etrading::OISLongTermInstrumentsEnum> & longTermConvs,
-						const LAStringVector& longTermGens,
-						const std::vector<const LAPriceDataCalendar*>& cals,
-						const std::vector<const LAPriceDataDayCount*>& dateCounts,
+						const AQLStringVector& longTermGens,
+						const std::vector<const AQLPriceDataCalendar*>& cals,
+						const std::vector<const AQLPriceDataDayCount*>& dateCounts,
 						const std::vector<bool>& bOISSwapCalcReset,
 						const std::vector<bool>& bFullSigmaReset,
 						const std::vector<bool>& bLiborSwapCalcReset,
@@ -697,8 +697,8 @@ namespace etrading
 	double priceSingleOISSwapPV(double oisParRate,
 								double liborOisParSpread,
 								double liborParRate,
-								LAInterpolationBase* pInter_yield,
-								LAInterpolationBase* df_inter,
+								AQLInterpolationBase* pInter_yield,
+								AQLInterpolationBase* df_inter,
 								double& oisFloatLegPV_WithoutSpread,
 								double& oisFloatLegAnnuity,
 								double& oisFixedLegAnnuity,
@@ -721,12 +721,12 @@ namespace etrading
 								bool is_selfdf,
 								double spotterm,
 								double d_spotdf,
-								const LADate& spotdate,
+								const AQLDate& spotdate,
 								const etrading::OISCompoundingEnum& swapAveragingMethodEnum,
 								const etrading::OISLongTermInstrumentsEnum& longTermConvEnum,
-								const LAString& longTermGen,
-								const LAPriceDataDayCount* dayCount,
-								const LAPriceDataCalendar* cal,
+								const AQLString& longTermGen,
+								const AQLPriceDataDayCount* dayCount,
+								const AQLPriceDataCalendar* cal,
 								DoubleMatrix& startterms,
 								DoubleMatrix& endterms);
 
@@ -742,7 +742,7 @@ namespace etrading
 		@param[in] searchIntervalDays			Default (1 Day): Controls the search inverval days
 		@return a pair of boolean indicating success and the refined join date
 	*/
-	InterpolationJoinDate optimizeInterpolationJoinDate( std::unique_ptr<LAInterpolationBase>& interp,
+	InterpolationJoinDate optimizeInterpolationJoinDate( std::unique_ptr<AQLInterpolationBase>& interp,
 														 const DoubleArray& futuresStartDateTerms,
 														 const DoubleArray& futuresEndDateTerms,
 														 const DoubleVector& futuresRates,
@@ -760,17 +760,17 @@ namespace etrading
 		@param[in,out] start start date
 		@param[in,out] end end date
 	*/
-	void getMoneyMarketDates(const LADate& basedate, const LAString& termstr, const LAPriceDataCalendar& cal, const LAPriceDataSlidingRule& srule, LADate& start, LADate& end);
+	void getMoneyMarketDates(const AQLDate& basedate, const AQLString& termstr, const AQLPriceDataCalendar& cal, const AQLPriceDataSlidingRule& srule, AQLDate& start, AQLDate& end);
 
 	// Initialise yield curve state variables prior to solving
 	void initialiseStateVariablesForSolving(DoubleArray& stateVariable_rates,
 										    DoubleArray&stateVariable_grid,
-										    const LAObjectHolder& objHolder,
+										    const AQLObjectHolder& objHolder,
 										    const StateVariableEnum& stateVariable,
 										    const DoubleArray& rates,
 										    const DoubleArray& grids,
 										    const bool& fastRebuildRequested,
-										    const LAString& targetSuffix,
+										    const AQLString& targetSuffix,
 										    size_t dataSize);
 
 
@@ -778,110 +778,110 @@ namespace etrading
 	void insertDailyZeroRatesForCentralBankFromShortTermSwaps(DoubleVector& grid,
 															  DoubleVector& yields,
 															  DateVector& dates,
-															  const LADate& fromDate,
-															  const LADate& spotdate,
-															  const LADate& shortterm_date,
+															  const AQLDate& fromDate,
+															  const AQLDate& spotdate,
+															  const AQLDate& shortterm_date,
 															  const double lastSwapRate,
-															  const LADate& firstCBSStartDate,
+															  const AQLDate& firstCBSStartDate,
 															  const double firstCBSRate,
-															  const std::map<LADate, std::pair<LADate, double>>& mpcSwapRates,
+															  const std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates,
 															  const double initialDF,
-															  const LAPriceDataDayCount& dc_act365,
-															  const LAPriceDataCalendar& cal,
-															  const LAPriceDataConvention& conv);
+															  const AQLPriceDataDayCount& dc_act365,
+															  const AQLPriceDataCalendar& cal,
+															  const AQLPriceDataConvention& conv);
 
 	// Insert daily zero rates for the  Central Bank Swap/ARR future, when there is no short end swap
 	void insertDailyZeroRatesForCentralBank(DoubleVector& grid,
 											DoubleVector& yields,
 											DateVector& dates,
-											const LADate& fromDate,
-											const LADate& spotdate,
-											const LADate& shortterm_date,
-											const std::map<LADate, std::pair<LADate, double>>& mpcSwapRates,
+											const AQLDate& fromDate,
+											const AQLDate& spotdate,
+											const AQLDate& shortterm_date,
+											const std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates,
 											const double initialDF,
-											const LAPriceDataDayCount& dc_act365,
-											const LAPriceDataCalendar& cal,
-											const LAPriceDataConvention& conv,
+											const AQLPriceDataDayCount& dc_act365,
+											const AQLPriceDataCalendar& cal,
+											const AQLPriceDataConvention& conv,
 											const double lastShortSwapTerm = std::numeric_limits<double>::quiet_NaN());
 
 	// Insert zero rates for the Central Bank Swap/ARR future, by interpolation on rateTime or fwdRates.
 	void insertZeroRatesForFutures( DoubleVector& grid,
 									DoubleVector& yields,
 									DateVector& dates,
-									const LADate& spotdate,
-									const std::unique_ptr<LAInterpolationBase>& pInter_yield,
-									const std::map<LADate, std::pair<LADate, double>>& mpcSwapRates, // key as startDate, values as endDate and fwdRate
-									const LAPriceDataDayCount& dc_act365,
-									const LAPriceDataConvention& conv,
-									const LAPriceDataCalendar& cal,
+									const AQLDate& spotdate,
+									const std::unique_ptr<AQLInterpolationBase>& pInter_yield,
+									const std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates, // key as startDate, values as endDate and fwdRate
+									const AQLPriceDataDayCount& dc_act365,
+									const AQLPriceDataConvention& conv,
+									const AQLPriceDataCalendar& cal,
 									const bool interpOnFwdRate );
 
 	// Helper function to insert daily zeroRates based on a constant fwd rate 
 	void insertDailyZeroRatesByConstantFwdRate(DoubleVector& grid,
 											   DoubleVector& yields,
 											   DateVector& dates,
-											   const LADate& spotdate,
-											   const LADate& startDate,
-											   const LADate& endDate,
+											   const AQLDate& spotdate,
+											   const AQLDate& startDate,
+											   const AQLDate& endDate,
 											   const double fwdRateToUse,
 											   const double initialDF,
-											   const LAPriceDataDayCount& dc_act365,
-											   const LAPriceDataCalendar& cal,
-											   const LAPriceDataConvention& conv);
+											   const AQLPriceDataDayCount& dc_act365,
+											   const AQLPriceDataCalendar& cal,
+											   const AQLPriceDataConvention& conv);
 		
 	// Interpolate on rateTime for the Central Bank Swap, so that the curve section can have step fwd rates
 	void insertZeroRatesWithStepFwdRates(DoubleVector& grid,
 										 DoubleVector& yields,
 										 DateVector& dates,
-										 const LADate& spotdate,
-										 const std::unique_ptr<LAInterpolationBase>& pInter_yield,
-										 const std::map<LADate, std::pair<LADate, double>>& futureRates, // key as startDate, values as endDate and fwdRate
-										 const LAPriceDataDayCount& dc_act365,
-										 const LAPriceDataConvention& conv,
-										 const LAPriceDataCalendar& cal);
+										 const AQLDate& spotdate,
+										 const std::unique_ptr<AQLInterpolationBase>& pInter_yield,
+										 const std::map<AQLDate, std::pair<AQLDate, double>>& futureRates, // key as startDate, values as endDate and fwdRate
+										 const AQLPriceDataDayCount& dc_act365,
+										 const AQLPriceDataConvention& conv,
+										 const AQLPriceDataCalendar& cal);
 
 	// Interpolate on fwd rate directly, for ARR future, so that the curve section can have linear fwd rates
 	void insertZeroRatesWithLinearFwdRates(DoubleVector& grid,
 										   DoubleVector& yields,
 										   DateVector& dates,
-										   const LADate& spotdate,
-										   const std::unique_ptr<LAInterpolationBase>& pInter_yield,
-										   const std::map<LADate, std::pair<LADate, double>>& futureRates, // key as startDate, values as endDate and fwdRate
-										   const LAPriceDataDayCount& dc_act365,
-										   const LAPriceDataConvention& conv,
-										   const LAPriceDataCalendar& cal);
+										   const AQLDate& spotdate,
+										   const std::unique_ptr<AQLInterpolationBase>& pInter_yield,
+										   const std::map<AQLDate, std::pair<AQLDate, double>>& futureRates, // key as startDate, values as endDate and fwdRate
+										   const AQLPriceDataDayCount& dc_act365,
+										   const AQLPriceDataConvention& conv,
+										   const AQLPriceDataCalendar& cal);
 
 	// Helper function to get the DF from zero rate
-	double getOISdiscountFactor(const double term, const std::unordered_map<double, double>& termYieldMap, const std::unique_ptr<LAInterpolationBase>& pInter_yield);
+	double getOISdiscountFactor(const double term, const std::unordered_map<double, double>& termYieldMap, const std::unique_ptr<AQLInterpolationBase>& pInter_yield);
 
 	// Helper function to populate the input fixings to the market date object
-	void populateHistoricalDataToMarketData(LAObject *mktData, const LAString& oisHistFileName);
+	void populateHistoricalDataToMarketData(AQLObject *mktData, const AQLString& oisHistFileName);
 
 	// Helper function to get the convexity adjusted rate for future instruments
-	double getConvexityAdjustedFutureRate(LAObject *mktData, const double futureRate, const LADate& asOfDate, const double meanReversion, const LAPriceDataDayCount& dc);
+	double getConvexityAdjustedFutureRate(AQLObject *mktData, const double futureRate, const AQLDate& asOfDate, const double meanReversion, const AQLPriceDataDayCount& dc);
 
 	/*
 	@brief Helper function to check if it's a Central bank swap based on the term string
 	*/
-	bool isCentralBankSwap(const LAString& term);
+	bool isCentralBankSwap(const AQLString& term);
 
 	/*
 	@brief Helper function to check if it's a Future based on the term string
 	*/
-	bool isFuture(const LAString& term);
+	bool isFuture(const AQLString& term);
 
 	/*
 	@brief Helper function to check if it's a Central bank swap based on the term string
 	*/
-	OISMidTermInstrumentsEnum getOISMidTermInstrumentsEnum(const LAString& term);
+	OISMidTermInstrumentsEnum getOISMidTermInstrumentsEnum(const AQLString& term);
 
 	/*
 	@brief Helper function to get the default OIS compounding method, based on the instrument type
 	*/
-	OISCompoundingEnum getDefaultOISCompounding(const OISMidTermInstrumentsEnum& instrumentType, const LAString& userInputShortTermConvStr);
+	OISCompoundingEnum getDefaultOISCompounding(const OISMidTermInstrumentsEnum& instrumentType, const AQLString& userInputShortTermConvStr);
 
 	//curveMarketName is the unique staticDataTable, which is different from a curveIndex
-	CurveTypeEnum getCurveTypeEnum(const LAObject& yieldData, const LAString& curveMarketName);
+	CurveTypeEnum getCurveTypeEnum(const AQLObject& yieldData, const AQLString& curveMarketName);
 
 	/*
 	@brief Calculate forward rates given a list of calibrated discount factors of the curve
@@ -896,7 +896,7 @@ namespace etrading
 	@param[out] fwd_termsmtx
 	@param[out] fwds
 	*/
-	void updateImpliedForwardRates(const LAInterpolationBase &inter, const StateVariableEnum& stateVariable, const DoubleArray &fixingStarts, const DoubleArray &fixingEnds, const DoubleArray &tau_swap, bool generateForwardsFromSwapsOnly, const LADate & asOfDate, const DayCountEnum & accrualDaycount, DoubleMatrix &fwd_termsmtx, DoubleArray &fwds);
+	void updateImpliedForwardRates(const AQLInterpolationBase &inter, const StateVariableEnum& stateVariable, const DoubleArray &fixingStarts, const DoubleArray &fixingEnds, const DoubleArray &tau_swap, bool generateForwardsFromSwapsOnly, const AQLDate & asOfDate, const DayCountEnum & accrualDaycount, DoubleMatrix &fwd_termsmtx, DoubleArray &fwds);
 
 	/*
 	@brief calc forwardrates for swap grid
@@ -911,20 +911,20 @@ namespace etrading
 	@param[out] fwd_termsmtx    From/to terms of forward rate table
 	@param[out] fwds			Forward rates of forward rate table
 	*/
-	void populateARRCurveForwardRateTable(const LAInterpolationBase &inter,
-										  const LADate& baseDate,
+	void populateARRCurveForwardRateTable(const AQLInterpolationBase &inter,
+										  const AQLDate& baseDate,
 										  const DoubleVector& terms,
 										  const DoubleVector& dfs,
-										  const LAPriceDataCalendar& cal,
-										  const LAPriceDataDayCount& dc_act365,
-										  const LAPriceDataDayCount& dc,
+										  const AQLPriceDataCalendar& cal,
+										  const AQLPriceDataDayCount& dc_act365,
+										  const AQLPriceDataDayCount& dc,
 										  DoubleMatrix& fwd_termsmtx,
 										  DoubleArray& fwds);
 
 	etrading::StateVariableEnum getInterpolationStateVariable(const CurveTypeEnum& curveTypeEnum);
 
 	// Calculate the Swap Curve Spot Discount Factor and update money market discount factors and dates
-	double getSpotDFandUpdateMoneyMarket(DoubleMatrix& df_moneymarket, DateVector& df_moneymarket_date, const std::map<std::pair<LADate, LADate>, const LAObject*>&  data_moneymarket, const LAPriceDataDayCount& dc_act365, const LADate& spotDateSwap);
+	double getSpotDFandUpdateMoneyMarket(DoubleMatrix& df_moneymarket, DateVector& df_moneymarket_date, const std::map<std::pair<AQLDate, AQLDate>, const AQLObject*>&  data_moneymarket, const AQLPriceDataDayCount& dc_act365, const AQLDate& spotDateSwap);
 
 	/*
 	@brief Function to evaluate the curve state variable requested, which can be a Zero Rate, Zero Rate times Time, Log DF or DF
@@ -984,10 +984,10 @@ namespace etrading
 	@param[in]  compoundFreq		The compounding frequency, defaults to SIMPLE
 	@return    returns a single adiscount factor applying the appropriate state variable conversion
 	*/
-	double getInterpolatedDiscountfactor(const LAInterpolationBase& interpolator,
+	double getInterpolatedDiscountfactor(const AQLInterpolationBase& interpolator,
 										  const double& paymentDateAsTerm,
 										  const StateVariableEnum& stateVariableType,
-									      const LADate & asOfDate,
+									      const AQLDate & asOfDate,
 									      const DayCountEnum & accrualDaycount,
 									      const CompoundingFrequencyEnum & compoundFreq = SIMPLE_COMPOUNDING );
 
@@ -1008,26 +1008,26 @@ namespace etrading
 	*/
 	double getInterpolatedForwardRate( const double& fixingStartTerm,
 									   const double& fixingEndTerm,
-									   const LAInterpolationBase& interpolator,
+									   const AQLInterpolationBase& interpolator,
 									   const StateVariableEnum& stateVariableType,
-									   const LADate & asOfDate,
+									   const AQLDate & asOfDate,
 									   const DayCountEnum & accrualDaycount,
 									   const CompoundingFrequencyEnum & compoundFreq = SIMPLE_COMPOUNDING );
 
 	// Method to get a discount factor given the state variable
 	double getdiscountFactor( const double& paymentDateAsTerm,
-							  const LAInterpolationBase & interpolator,
+							  const AQLInterpolationBase & interpolator,
 							  const StateVariableEnum& stateVariableType,
-							  const LADate & asOfDate,
+							  const AQLDate & asOfDate,
 							  const DayCountEnum & accrualDaycount,
 							  const CompoundingFrequencyEnum & compoundFreq = SIMPLE_COMPOUNDING );
 
 	// Method to get a forward rate given the state variable
 	double getForwardRate( const double& fixingStartDateAsTerm,
 						   const double& fixingEndDateAsTerm,
-						   const LAInterpolationBase & interpolator,
+						   const AQLInterpolationBase & interpolator,
 						   const StateVariableEnum& stateVariableType,
-						   const LADate & asOfDate,
+						   const AQLDate & asOfDate,
 						   const DayCountEnum & accrualDaycount,
 						   const CompoundingFrequencyEnum & compoundFreq = SIMPLE_COMPOUNDING );
 
@@ -1047,13 +1047,13 @@ namespace etrading
 	@return    returns a single zero rate applying the appropriate state variable conversion
 	*/
 	double getInterpolatedZeroRate( const double& dateInTermFormat,
-								    const LAInterpolationBase* interpolator,
+								    const AQLInterpolationBase* interpolator,
 									const StateVariableEnum& stateVariableType,
-									const LADate & asOfDate,
+									const AQLDate & asOfDate,
 									const DayCountEnum & accrualDaycount,
 									const CompoundingFrequencyEnum & compoundFreq = SIMPLE_COMPOUNDING );
 
-	bool isContiguousFraFuture(const LADate& spotDate, const LADate& startDate, const LAString& liborIndexTerm, const bool isFuture);
+	bool isContiguousFraFuture(const AQLDate& spotDate, const AQLDate& startDate, const AQLString& liborIndexTerm, const bool isFuture);
 
 	/*
 		@brief Insert DFs for Serial Fra/Futures by interpolating existing DFs and fwdRates
@@ -1079,15 +1079,15 @@ namespace etrading
 									  DoubleMatrix& fwd_termsmtx,
 									  DoubleArray& fwds,
 									  const std::vector<ForwardRate>& serialFraFutures,
-									  const LADate & asOfDate,
-									  const LADate& spotdate,
-									  const LAInterpolationBase& pInter_fw,
-									  const LAString& liborIndexTerm,
-									  const LAString& roll_conv,
-									  const LAPriceDataSlidingRule& sld,
-									  const LAPriceDataCalendar& cal,
-									  const LAPriceDataDayCount& dc,
-									  const LAPriceDataDayCount& dc_act365,
+									  const AQLDate & asOfDate,
+									  const AQLDate& spotdate,
+									  const AQLInterpolationBase& pInter_fw,
+									  const AQLString& liborIndexTerm,
+									  const AQLString& roll_conv,
+									  const AQLPriceDataSlidingRule& sld,
+									  const AQLPriceDataCalendar& cal,
+									  const AQLPriceDataDayCount& dc,
+									  const AQLPriceDataDayCount& dc_act365,
 									  const StateVariableEnum& stateVariable,
 									  const bool populateFwdTable,
 									  const int dayIntervalTolerance = 7);
@@ -1120,16 +1120,16 @@ namespace etrading
 										const DateVector& futureStartDates,
 										const DateVector& futureEndDates,
 										const DoubleVector& futureRates,
-										const LADate & asOfDate,
-										const LADate& spotDateLibor,
-										const LADate& spotDateSwap,
-										const LAInterpolationBase& pInter_fw,
-										const LAPriceDataDayCount& dc,
-										const LAPriceDataDayCount& dc_act365,
+										const AQLDate & asOfDate,
+										const AQLDate& spotDateLibor,
+										const AQLDate& spotDateSwap,
+										const AQLInterpolationBase& pInter_fw,
+										const AQLPriceDataDayCount& dc,
+										const AQLPriceDataDayCount& dc_act365,
 										const StateVariableEnum& stateVariableFutureFra,
 										const bool includeSwapsBeforeMPCSwaps,
-										const LAObject* data_libor,
-										const LADate& liborDate,
+										const AQLObject* data_libor,
+										const AQLDate& liborDate,
 										const bool populateFwdTable = true,
 										const int dayIntervalTolerance = 7 );
 
@@ -1167,24 +1167,24 @@ namespace etrading
 	void insertDFs_ContiguousFutures( DiscountFactors & dfResults,
 									  DoubleMatrix& fwd_termsmtx,
 									  DoubleArray& fwds,
-									  const std::vector<LAObject*>&  data_libor,
-									  const std::vector<LAObject*>& data_fraFuture,
+									  const std::vector<AQLObject*>&  data_libor,
+									  const std::vector<AQLObject*>& data_fraFuture,
 									  const DateVector& fraFutureStartDates,
 									  const DateVector& fraFutureEndDates,
 									  const DoubleVector& fraFutureRates,
-									  const LADate & asOfDate,
-									  const LADate& spotDateSwap,
-									  const LADate& spotDateLibor,
-									  const LAInterpolationBase& pInter_fw,
-									  const LAString& liborIndexTerm,
-									  const LAString& roll_conv,
-									  const LAPriceDataDayCount& dc,
-									  const LAPriceDataDayCount& dc_act365,
+									  const AQLDate & asOfDate,
+									  const AQLDate& spotDateSwap,
+									  const AQLDate& spotDateLibor,
+									  const AQLInterpolationBase& pInter_fw,
+									  const AQLString& liborIndexTerm,
+									  const AQLString& roll_conv,
+									  const AQLPriceDataDayCount& dc,
+									  const AQLPriceDataDayCount& dc_act365,
 									  const StateVariableEnum& stateVariable,
 									  const double interpolationJoinDateAsDouble,
-									  const LADate& liborDate,
+									  const AQLDate& liborDate,
 									  const int liborPos,
-									  const LADate& firstSwapDate,
+									  const AQLDate& firstSwapDate,
 									  const bool includeSwapsBeforeMPCSwaps,
 									  const bool applyTension,
 									  const int tensionGap,
@@ -1196,7 +1196,7 @@ namespace etrading
 	@param[in]	freq			Frequency
 	@param[in]	isEOMRoll	    End of the Month flag
 	*/
-	LAString getRollConv(const LAString& freq, const bool isEOMRoll);
+	AQLString getRollConv(const AQLString& freq, const bool isEOMRoll);
 
 	/*
 	@brief Bootstrap Futures
@@ -1234,26 +1234,26 @@ namespace etrading
 								  DoubleArray& fwds,
 								  const etrading::FuturesTypeEnum& futuresType,
 								  const std::vector<ForwardRate>& serialFraFutures,
-								  const std::vector<LAObject*>&  data_libor,
-								  const std::vector<LAObject*>& data_fraFuture,
+								  const std::vector<AQLObject*>&  data_libor,
+								  const std::vector<AQLObject*>& data_fraFuture,
 								  const DateVector& fraFutureStartDates,
 								  const DateVector& fraFutureEndDates,
 								  const DoubleVector& fraFutureRates,
-								  const LADate & asOfDate,
-								  const LADate& spotDateSwap,
-								  const LADate& spotDateLibor,
-								  const LAInterpolationBase& pInter_fw,
-								  const LAString& liborIndexTerm,
-								  const LAString& roll_conv,
-								  const LAPriceDataSlidingRule& sld,
-								  const LAPriceDataCalendar& cal,
-								  const LAPriceDataDayCount& dc,
-								  const LAPriceDataDayCount& dc_act365,
+								  const AQLDate & asOfDate,
+								  const AQLDate& spotDateSwap,
+								  const AQLDate& spotDateLibor,
+								  const AQLInterpolationBase& pInter_fw,
+								  const AQLString& liborIndexTerm,
+								  const AQLString& roll_conv,
+								  const AQLPriceDataSlidingRule& sld,
+								  const AQLPriceDataCalendar& cal,
+								  const AQLPriceDataDayCount& dc,
+								  const AQLPriceDataDayCount& dc_act365,
 								  const StateVariableEnum& stateVariable,
 								  const double interpolationJoinDateAsDouble,
-								  const LADate& liborDate,
+								  const AQLDate& liborDate,
 								  const int liborPos,
-								  const LADate& firstSwapDate,
+								  const AQLDate& firstSwapDate,
 								  const bool includeSwapsBeforeMPCSwaps,
 								  const bool applyTension,
 								  const int tensionGap,
@@ -1282,10 +1282,10 @@ namespace etrading
 							   std::vector<ForwardRate>& serialFraFutures,
 							   bool& allContiguous,
 							   const etrading::FuturesTypeEnum& futuresType,
-							   const LAString& liborIndexTerm,
-							   const LADate& spotDate,
-							   const LADate& startDate,
-							   const LADate& endDate,
+							   const AQLString& liborIndexTerm,
+							   const AQLDate& spotDate,
+							   const AQLDate& startDate,
+							   const AQLDate& endDate,
 							   const double fwdRate,
 							   const bool isFuture);
 
@@ -1293,10 +1293,10 @@ namespace etrading
 	void updateMarketQuotes( ForwardQuotes& marketQuotes,
 							 bool& areAllForwardsContiguous,
 							 const etrading::FuturesTypeEnum& futuresType,
-							 const LAString& liborIndexTerm,
-							 const LADate& spotDate,
-							 const LADate& startDate,
-							 const LADate& endDate,
+							 const AQLString& liborIndexTerm,
+							 const AQLDate& spotDate,
+							 const AQLDate& startDate,
+							 const AQLDate& endDate,
 							 const double fwdRate,
 							 const bool isFuture );
 
@@ -1310,11 +1310,11 @@ namespace etrading
 	@param[in]	endDate			EndDate of Fra/Future
 	@param[in]	fwdRate			Forward rate of Fra/Future
 	*/
-	void populateOISMidInstrumentRate(std::map<LADate, std::pair<LADate, double>>& mpcSwapRates, 
-									std::map<LADate, std::pair<LADate, double>>& futureRates,
+	void populateOISMidInstrumentRate(std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates, 
+									std::map<AQLDate, std::pair<AQLDate, double>>& futureRates,
 									const OISMidTermInstrumentsEnum& instrumentType,
-									const LADate& startDate,
-									const LADate& endDate,
+									const AQLDate& startDate,
+									const AQLDate& endDate,
 									const double fwdRate);
 
 	/*
@@ -1322,15 +1322,15 @@ namespace etrading
 	*/
 	void insertZeroRatesFromShortTermSwapToMidInstrument(DoubleVector& grid,
 														DoubleVector& yields,
-														std::vector<LADate>& dates,
-														const LADate& lastShortTermSwapDate,
+														std::vector<AQLDate>& dates,
+														const AQLDate& lastShortTermSwapDate,
 														const double lastShortTermSwapRate,
-														const std::map<LADate, std::pair<LADate, double>>& mpcSwapRates,
-														const std::map<LADate, std::pair<LADate, double>>& futureRates,
-														const LADate& spotdate,
-														const LAPriceDataDayCount& dc_act365,
-														const LAPriceDataCalendar& cal,
-														const LAPriceDataConvention& conv);
+														const std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates,
+														const std::map<AQLDate, std::pair<AQLDate, double>>& futureRates,
+														const AQLDate& spotdate,
+														const AQLPriceDataDayCount& dc_act365,
+														const AQLPriceDataCalendar& cal,
+														const AQLPriceDataConvention& conv);
 
 	/*
 	@brief Populate Zero Rates for OIS Mid term instruments (CentralBanks, FedFunds, Futures)
@@ -1338,16 +1338,16 @@ namespace etrading
 	void insertZeroRatesForOISMidInstruments(DoubleVector& grid,
 											DoubleVector& yields,
 											DateVector& dates,
-											const LADate& spotdate,
-											const LADate& centralBankFromDate,
-											const LADate& centralBankShortTermDate,
+											const AQLDate& spotdate,
+											const AQLDate& centralBankFromDate,
+											const AQLDate& centralBankShortTermDate,
 											const double initialDF,
-											const std::map<LADate, std::pair<LADate, double>>& mpcSwapRates,
-											const std::map<LADate, std::pair<LADate, double>>& futureRates,
-											const std::unique_ptr<LAInterpolationBase>& pInter_yield,
-											const LAPriceDataDayCount& dc_act365,
-											const LAPriceDataCalendar& cal,
-											const LAPriceDataConvention& conv,
+											const std::map<AQLDate, std::pair<AQLDate, double>>& mpcSwapRates,
+											const std::map<AQLDate, std::pair<AQLDate, double>>& futureRates,
+											const std::unique_ptr<AQLInterpolationBase>& pInter_yield,
+											const AQLPriceDataDayCount& dc_act365,
+											const AQLPriceDataCalendar& cal,
+											const AQLPriceDataConvention& conv,
 											const bool isARRCurve,
 											const double lastShortSwapTerm = std::numeric_limits<double>::quiet_NaN());
 
@@ -1368,14 +1368,14 @@ namespace etrading
 	*/
 	void insertDFsForFixingStartEnds(DoubleMatrix& df_2,
 									DateVector& df_2_date,
-									const LAInterpolationBase &inter,
+									const AQLInterpolationBase &inter,
 									const StateVariableEnum& stateVariable,
 									const DoubleArray &fixingStartTerms,
 									const DoubleArray &fixingEndTerms,
 									const DateVector &fixingStartDates,
 									const DateVector &fixingEndDates,
 									bool generateForwardsFromSwapsOnly,
-									const LADate & asOfDate,
+									const AQLDate & asOfDate,
 									const DayCountEnum & accrualDaycount);
 	/*
 	@brief Insert DF to the DiscountFactor table for fixing start date and fixing end dates
@@ -1392,14 +1392,14 @@ namespace etrading
 	@param[in] accrualDaycount
 	*/
 	void insertDFsForFixingStartEnds( DiscountFactors & dfResults,
-									  const LAInterpolationBase &inter,
+									  const AQLInterpolationBase &inter,
 									  const StateVariableEnum& stateVariable,
 									  const DoubleArray &fixingStartTerms,
 									  const DoubleArray &fixingEndTerms,
 									  const DateVector &fixingStartDates,
 									  const DateVector &fixingEndDates,
 									  bool generateForwardsFromSwapsOnly,
-									  const LADate & asOfDate,
+									  const AQLDate & asOfDate,
 									  const DayCountEnum & accrualDaycount );
 
 

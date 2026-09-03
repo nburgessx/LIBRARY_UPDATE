@@ -6,20 +6,20 @@
 #pragma interface
 #endif
 
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
-// Funciton ID of LAShiftMethod
+// Funciton ID of AQLShiftMethod
 #define FN_JAMSHIDIANRSTARFINDER	10042
-// Function Name of LAShiftMethod
+// Function Name of AQLShiftMethod
 #define FN_JAMSHIDIANRSTARFINDER_STR	"fn_jamshidianrstarfinder"
 
 
 class LARatesPathElementCurve;
 
-class LAMathJamshidianRStarFinder : public LAFunctionBase
+class LAMathJamshidianRStarFinder : public AQLFunctionBase
 {
 public:
 	// constructor
@@ -34,7 +34,7 @@ public:
 	virtual function_t			getType() const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 
 	virtual double				operator()(const DoubleArray& x) const;
 	virtual double				operator()(const double& x) const;

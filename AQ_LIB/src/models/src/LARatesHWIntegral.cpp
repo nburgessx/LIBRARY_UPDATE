@@ -27,7 +27,7 @@
 #include "LAMathVolFuncHW.h"
 #include "LAPriceDriftHW.h"
 #include "LAMathVolFuncBase.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 using namespace std;
 //================ LARatesHWIntegral ===================================
@@ -52,7 +52,7 @@ is_cloned(false)
 	@param[in] type sde integral type
 
 */
-LARatesHWIntegral::LARatesHWIntegral(SDEINTEGRAL_TYPE type, const LAString& sdeAttrName)
+LARatesHWIntegral::LARatesHWIntegral(SDEINTEGRAL_TYPE type, const AQLString& sdeAttrName)
 : 
 LARatesSDEIntegralBase(type, sdeAttrName),
 mpHWtool(0),
@@ -87,7 +87,7 @@ LARatesHWIntegral::~LARatesHWIntegral()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesHWIntegral::clone() const
 {
     try 
@@ -96,7 +96,7 @@ LARatesHWIntegral::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -137,9 +137,9 @@ LARatesHWIntegral::setUpInitialVal(const SCALARARRAY& rate0)
 void
 LARatesHWIntegral::setUp(const LAMathPathEntity& path)
 {
-	const LADataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
+	const AQLDataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
 	const LAMathAttrSDE* pattrsde = &dynamic_cast<const LAMathAttrSDE&>(dh->get());
-	const std::vector<std::vector<LAFunctionBase* > > mVolatility = pattrsde->getSDE().getVolatility();
+	const std::vector<std::vector<AQLFunctionBase* > > mVolatility = pattrsde->getSDE().getVolatility();
 
 	const LAMathVolFuncHW* pvolHW=0;
 	//in case of calculating vega
@@ -147,7 +147,7 @@ LARatesHWIntegral::setUp(const LAMathPathEntity& path)
 		pvolHW = dynamic_cast<LAMathVolFuncHW*>(mVolatility[0][0]);
 	else//otherwise
 	{
-		const LAFunctionBase* pbase = dynamic_cast<LAMathVolFuncBase*>(mVolatility[0][0])->getVolatility();
+		const AQLFunctionBase* pbase = dynamic_cast<LAMathVolFuncBase*>(mVolatility[0][0])->getVolatility();
 		pvolHW = dynamic_cast<const LAMathVolFuncHW*>(pbase);
 	}
 	mpHWtool = pvolHW->getHWFuncTool();
@@ -168,8 +168,8 @@ LARatesHWIntegral::setUp(const LAMathPathEntity& path)
 */
 void
 LARatesHWIntegral::integral(double ts, double te, 
-							vector<LAFunctionBase*>::const_iterator drift,										
-							vector<vector<LAFunctionBase*> >::const_iterator vol,
+							vector<AQLFunctionBase*>::const_iterator drift,										
+							vector<vector<AQLFunctionBase*> >::const_iterator vol,
 							DoubleArray::const_iterator	bm,
 							SCALARARRAY::iterator	x_in_out,
 							unsigned int varnum
@@ -177,7 +177,7 @@ LARatesHWIntegral::integral(double ts, double te,
 {
     if ( te < ts )
     {
-        throw LACoreInvalidData("ts < te", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("ts < te", __FILE__, __LINE__);
     }
 
     mVar.resize(varnum + 2);

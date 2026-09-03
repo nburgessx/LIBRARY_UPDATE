@@ -7,7 +7,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdio>
-#include "LADataFile.h"
+#include "AQLDataFile.h"
 
 
 #define TIMELEN             (20+1) 
@@ -32,7 +32,7 @@ public:
 #endif
 	}
 
-	static LAString now(void)
+	static AQLString now(void)
 	{
 		tm*     nowtime;
 		time_t  local_t;
@@ -46,7 +46,7 @@ public:
                     nowtime->tm_mday,
                     nowtime->tm_hour,
                     nowtime->tm_min);
-		LAString ret;
+		AQLString ret;
 		for(int i=0;i<TIMELEN;i++)
 			ret+= strTime[i];
 		return ret;
@@ -76,7 +76,7 @@ public:
 		unsigned int logrow = mdf.getRowCounts();//get row numbers
 		if(logrow>n)
 		{
-			LAStringVector logrec;
+			AQLStringVector logrec;
 			for(unsigned int i=0;i<n;i++)
 			{
 				logrec.push_back(mdf.getRecord(logrow-n+i));
@@ -87,7 +87,7 @@ public:
 			MDFile mdf_w(logfile,MODE_W);//reopen the file as writable mode which initializes the file.
 			for(unsigned int i=0;i<n;i++)
 			{
-				LAString addrec = logrec[i];
+				AQLString addrec = logrec[i];
 				mdf_w.addRecord(addrec);
 			}
 			mdf_w.closeFile();

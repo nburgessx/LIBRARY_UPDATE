@@ -1,4 +1,4 @@
-#include "LAString.h"
+#include "AQLString.h"
 #include "LACurvePricingObject.h"
 #include "InitializeAQETrading.h"
 #include "meCurveDisplay.h"
@@ -17,12 +17,12 @@ std::vector<std::vector<double> > meCurveDisplay(const std::string& curveCollect
     DoubleMatrix ret;
 	
     // marshall all inputs		
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
 		
 	DoubleArray ans = validation::tryMeCurveDisplay(tmp_curveCollection, tmp_curveIndex);
 
-    LADataHolder* dh = &(etrading::InitializeAQETrading::instance().dataInstance()->getObjectPool().getObject(tmp_curveCollection,ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_DFS2));
+    AQLDataHolder* dh = &(etrading::InitializeAQETrading::instance().dataInstance()->getObjectPool().getObject(tmp_curveCollection,ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_DFS2));
 	if(dh->isDefined() && !dh->isNull() && tmp_curveIndex == STD)
 	{
 		DoubleVector terms;

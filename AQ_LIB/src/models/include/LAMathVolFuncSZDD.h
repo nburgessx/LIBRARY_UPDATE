@@ -5,11 +5,11 @@
 #endif
 
 #include "LAMathVolFuncFX.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LARatesSDEBase.h"
-#include "LAGaussLegendre.h"
-#include "LA1DDataSet.h"
+#include "AQLGaussLegendre.h"
+#include "AQL1DDataSet.h"
 
 
 // Funciton ID of LAMathVolFuncSZDD
@@ -25,12 +25,12 @@ public :
 	// constructor
 	////LAMathVolFuncSZDD(const DoubleArray &timeGrid, const DoubleArray &sigma, 
 	////								const DoubleArray &fx, const DoubleArray &beta, 
-	////								const LAString &currency, SDE_TYPE type = DIVIDEdXbyX,
+	////								const AQLString &currency, SDE_TYPE type = DIVIDEdXbyX,
 	////								int integrate_n_ = 30);
 	//temp!!
 	LAMathVolFuncSZDD(const DoubleArray &timeGrid, const DoubleArray &fx0,
 									const DoubleArray &beta,const DoubleArray &theta,const DoubleArray &kappa,const DoubleArray &epsilon, 
-									const LAString &currency, const DoubleArray &sigma , 
+									const AQLString &currency, const DoubleArray &sigma , 
 									SDE_TYPE type = DIVIDEdXbyX,int integrate_n_ = 30);
 	// destructor
 	virtual ~LAMathVolFuncSZDD(void);
@@ -42,7 +42,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;
@@ -55,21 +55,21 @@ public :
 	virtual double				integral(const std::vector<std::pair<double,double> >& x) const;	
 	                            //==========================================
 	                            // Return S function
-	const LAFunctionBase&		getS() const {return mS;}
+	const AQLFunctionBase&		getS() const {return mS;}
 	                            //==========================================
 	                            // Return V(=beta * sigma) function
-	const LAFunctionBase&		getV() const {return mV;}
+	const AQLFunctionBase&		getV() const {return mV;}
 	                            // Return alpha(=(1 - beta) * fx0) function
-	const LAFunctionBase&		getAlpha() const {return mAlpha;}
+	const AQLFunctionBase&		getAlpha() const {return mAlpha;}
 								//==========================================
 								// Return theta
-	const LAFunctionBase&		getTheta() const {return mTheta;}
+	const AQLFunctionBase&		getTheta() const {return mTheta;}
 								//==========================================
 								// Return kappa
-	const LAFunctionBase&		getKappa() const {return mKappa;}
+	const AQLFunctionBase&		getKappa() const {return mKappa;}
 								//==========================================
 								// Return Epsilon
-	const LAFunctionBase&		getEpsilon() const {return mEpsilon;}
+	const AQLFunctionBase&		getEpsilon() const {return mEpsilon;}
 								//==========================================
 								// set fwd fx
 	virtual void				setFwdFX(const DoubleArray &fx);
@@ -85,13 +85,13 @@ public :
 
 protected :
 	SDE_TYPE				mType;			// sde type
-	mutable LA1DDataSet		mV;
-	mutable LA1DDataSet		mS;
-	mutable LA1DDataSet		mAlpha;
+	mutable AQL1DDataSet		mV;
+	mutable AQL1DDataSet		mS;
+	mutable AQL1DDataSet		mAlpha;
 	//furuya
-	mutable LA1DDataSet		mTheta;
-	mutable LA1DDataSet		mEpsilon;
-	mutable LA1DDataSet		mKappa;
+	mutable AQL1DDataSet		mTheta;
+	mutable AQL1DDataSet		mEpsilon;
+	mutable AQL1DDataSet		mKappa;
 	
 private	:
 	mutable std::map<double, std::vector<double> > integrate_cache;

@@ -18,15 +18,15 @@
 #endif
 
 
-#include "LAString.h"
-#include "LAObjectPool.h"
-#include "LAObject.h"
-#include "LAPriceDataType.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataMatrix.h"
-#include "LADataReference.h"
-#include "LAMathDefine.h"
+#include "AQLString.h"
+#include "AQLObjectPool.h"
+#include "AQLObject.h"
+#include "AQLPriceDataType.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataMatrix.h"
+#include "AQLDataReference.h"
+#include "AQLMathDefine.h"
 #include "LADealUtils.h"
 #include "LACalibrationParametersLMM.h"
 #include "LAStaticData.h"
@@ -69,56 +69,56 @@ LACalibrationParametersLMM::~LACalibrationParametersLMM(void)
 
 	@param[out] objPool
 	@param[out] currency
-	@return LAString object name
+	@return AQLString object name
 
 */
-LAString 
-LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const LAString &ccy)
+AQLString 
+LACalibrationParametersLMM::createCalibrationInfo(AQLObjectPool &objPool, const AQLString &ccy)
 {
-	LAString tmpCurrency = ccy;
-	const LAString CALIBINFONAME = tmpCurrency.toUpper() + "_LMMCalibInfoEntity";
-	LAObjectHolder objHolder = objPool.getObject(CALIBINFONAME, ENCHKTYPE_NOCHECK);
+	AQLString tmpCurrency = ccy;
+	const AQLString CALIBINFONAME = tmpCurrency.toUpper() + "_LMMCalibInfoEntity";
+	AQLObjectHolder objHolder = objPool.getObject(CALIBINFONAME, ENCHKTYPE_NOCHECK);
 	if (objHolder.isDefined())
 	{
 		// do nothing
 		return CALIBINFONAME;
 	}
-	LAObject *info = new LAObject;
+	AQLObject *info = new AQLObject;
 	objPool.set(CALIBINFONAME, info);
 	// set name
-	info->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(CALIBINFONAME);
+	info->add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(CALIBINFONAME);
 
 	tmpCurrency.toLower();
 
-	LAString is_extratenor_calib_str = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_IS_EXTRATENOR_CALIB);
+	AQLString is_extratenor_calib_str = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_IS_EXTRATENOR_CALIB);
 	is_extratenor_calib_str.toUpper();
 	bool is_extratenor_calib = (is_extratenor_calib_str == "TRUE");
-	info->add(CALIBRATION_DATA_IS_EXTRATENOR_CALIB, new LADataBool(is_extratenor_calib));
+	info->add(CALIBRATION_DATA_IS_EXTRATENOR_CALIB, new AQLDataBool(is_extratenor_calib));
 
 	// T_fix_,  T_fix_30_360_
 	DoubleVector tenor_30_360, tenor, deltatenor;
 	int maxTerm = (int)LAMarketDataLMM::getMaxTerm(tmpCurrency);
 	BoolVector tenor_extraflag;
 
-	LAString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
-	LAPriceDataDayCount dayCount;
+	AQLString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
+	AQLPriceDataDayCount dayCount;
 	dayCount.convertFromString(dayCountStr);
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 	// create tenor 
-	LAString freq = FREQ_SEMI_ANNUAL;
+	AQLString freq = FREQ_SEMI_ANNUAL;
 	if (LACoreDataService::getContext(ARG_KEY_CANONICALFREQ) == "QA")
 	{
 		freq = FREQ_QUARTERLY;
 	}
-	LAStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
+	AQLStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
  	LAMarketDataLMM::getCanonicalGrid(tenor_30_360, tenor, deltatenor, tenor_extraflag, asOfDate, dayCount, freq, maxTerm, exTenor);
 
 	// skew
 	double skew = LAMarketDataLMM::getSkew(tmpCurrency);
 	if (skew <= 0. || skew >= 2.)
 	{
-		LAString msg = tmpCurrency + " Q = " + LAString(skew, 2) + " is out of range. Q must be in (0, 2).";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = tmpCurrency + " Q = " + AQLString(skew, 2) + " is out of range. Q must be in (0, 2).";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 	// const shift
 	double constShift = LAMarketDataLMM::getConstShift(tmpCurrency);
@@ -168,47 +168,47 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 	}
 
 	// set tenor and tenor_30_360 without extratenor
-	info->add(PRICING_DATA_CALIBCANONICAL_FREQ, new LADataString(freq));
-	info->add(PRICING_DATA_CALIBCANONICAL_T, new LADataDoubles(tenor));
-	info->add(PRICING_DATA_CALIBCANONICAL_T_DELTATENOR, new LADataDoubles(deltatenor));
-	info->add(PRICING_DATA_CALIBCANONICAL_T_30_360, new LADataDoubles(tenor_30_360));
-	info->add(PRICING_DATA_CALIBCANONICAL_T_EXTRAFLAG, new LADataBools(tenor_extraflag));
-	info->add(CALIBRATION_DATA_MAXTERM, new LADataDouble(maxTerm));
-	info->add(CALIBRATION_DATA_VOL_SKEW, new LADataDouble(skew));
-	info->add(CALIBRATION_DATA_VOL_CONSTSHIFT, new LADataDouble(constShift));
+	info->add(PRICING_DATA_CALIBCANONICAL_FREQ, new AQLDataString(freq));
+	info->add(PRICING_DATA_CALIBCANONICAL_T, new AQLDataDoubles(tenor));
+	info->add(PRICING_DATA_CALIBCANONICAL_T_DELTATENOR, new AQLDataDoubles(deltatenor));
+	info->add(PRICING_DATA_CALIBCANONICAL_T_30_360, new AQLDataDoubles(tenor_30_360));
+	info->add(PRICING_DATA_CALIBCANONICAL_T_EXTRAFLAG, new AQLDataBools(tenor_extraflag));
+	info->add(CALIBRATION_DATA_MAXTERM, new AQLDataDouble(maxTerm));
+	info->add(CALIBRATION_DATA_VOL_SKEW, new AQLDataDouble(skew));
+	info->add(CALIBRATION_DATA_VOL_CONSTSHIFT, new AQLDataDouble(constShift));
 
 	// set up optimization method type
-	LAString optMethodType = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_METHOD_TYPE);
+	AQLString optMethodType = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_METHOD_TYPE);
 	optMethodType.toUpper();
-	info->add(CALIBRATION_DATA_OPT_METHOD_TYPE, new LADataString(optMethodType));
+	info->add(CALIBRATION_DATA_OPT_METHOD_TYPE, new AQLDataString(optMethodType));
 
 	// set up cost function mode
-	LAString costFuncMode = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_COST_FUNC_MODE);
+	AQLString costFuncMode = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_COST_FUNC_MODE);
 	costFuncMode.toUpper();
-	info->add(CALIBRATION_DATA_OPT_COST_FUNC_MODE, new LADataString(costFuncMode));
+	info->add(CALIBRATION_DATA_OPT_COST_FUNC_MODE, new AQLDataString(costFuncMode));
 
 	// set up optimization target
-	LAString costFuncTarget = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_COST_FUNC_TARGET);
+	AQLString costFuncTarget = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_COST_FUNC_TARGET);
 	costFuncTarget.toUpper();
-	info->add(CALIBRATION_DATA_OPT_COST_FUNC_TARGET, new LADataString(costFuncTarget));
+	info->add(CALIBRATION_DATA_OPT_COST_FUNC_TARGET, new AQLDataString(costFuncTarget));
 
 	// get cap vol file
-	LAString capFile = LAMarketData::getNumFileName(mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_VOL_FILE));
+	AQLString capFile = LAMarketData::getNumFileName(mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_VOL_FILE));
 
 	// get swaption vol file
-	LAString swaptionFile = LAMarketData::getNumFileName(mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_VOL_FILE));
-	LAString swaptionWeightFile = LAMarketData::getNumFileName(mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_WEIGHT_FILE));
+	AQLString swaptionFile = LAMarketData::getNumFileName(mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_VOL_FILE));
+	AQLString swaptionWeightFile = LAMarketData::getNumFileName(mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_WEIGHT_FILE));
 
 	// create market param
 	// ##### cap parameters
-	//LAString capTerm = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_TERM);
-	LAString capTenor = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_TENOR);
-	//LAStringVector capTenorVec = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_TENOR).toToken(MULTI_STATIC_DATA_DELIMITER);
-	LAStringVector capTermVec = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_TERM).toToken(MULTI_STATIC_DATA_DELIMITER);
+	//AQLString capTerm = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_TERM);
+	AQLString capTenor = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_TENOR);
+	//AQLStringVector capTenorVec = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_TENOR).toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector capTermVec = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_TERM).toToken(MULTI_STATIC_DATA_DELIMITER);
 	//unsigned int capTenorSize = capTenorVec.size();
 	unsigned int capTermSize = capTermVec.size();
-	//LAStringVector capTermVec(capTenorSize,capTerm);
-	LAStringVector capTenorVec(capTermSize,capTenor);
+	//AQLStringVector capTermVec(capTenorSize,capTerm);
+	AQLStringVector capTenorVec(capTermSize,capTenor);
 
 	DoubleVector capBlackVolVec(capTermSize);
 	unsigned int idx = 0;
@@ -219,9 +219,9 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 
 	// ##### swaption parameters
 	// optionmaturity
-	LAStringVector optionMatVec = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_TERM).toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector optionMatVec = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_TERM).toToken(MULTI_STATIC_DATA_DELIMITER);
 	// swapterm
-	LAStringVector swapTenorVec = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_TENOR).toToken(MULTI_STATIC_DATA_DELIMITER);
+	AQLStringVector swapTenorVec = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_TENOR).toToken(MULTI_STATIC_DATA_DELIMITER);
 	unsigned int optionMatSize = optionMatVec.size();
 	unsigned int swapTenorSize = swapTenorVec.size();
 
@@ -237,35 +237,35 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 	}
 
 	// set up date information of Libor
-	LAString liborDayCount = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_LIBOR_DAYCOUNT);
-	LAString liborSlidingRule = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_LIBOR_SLIDINGRULE);
-	LAString liborCalendar = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_LIBOR_CALENDAR);
-	LAString liborFrequency = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_LIBOR_FREQUENCY);
+	AQLString liborDayCount = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_LIBOR_DAYCOUNT);
+	AQLString liborSlidingRule = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_LIBOR_SLIDINGRULE);
+	AQLString liborCalendar = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_LIBOR_CALENDAR);
+	AQLString liborFrequency = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_LIBOR_FREQUENCY);
 	bool liborIncludeLast = false;
 	if(liborFrequency != freq)
 	{
-		LAString msg = "Libor frequency is inconsistent with canonical frequency";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "Libor frequency is inconsistent with canonical frequency";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 	// set up date information of cap
-	LAString capDayCount = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_DAYCOUNT);
-	LAString capSlidingRule = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_SLIDINGRULE);
-	LAString capCalendar = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_CALENDAR);
-	LAString capSpotLag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_SPOTLAG);
-	LAString capFrequency = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_FREQUENCY);
+	AQLString capDayCount = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_DAYCOUNT);
+	AQLString capSlidingRule = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_SLIDINGRULE);
+	AQLString capCalendar = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_CALENDAR);
+	AQLString capSpotLag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_SPOTLAG);
+	AQLString capFrequency = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_CAP_FREQUENCY);
 	bool capIncludeLast = false;
 	// set up date information of swaption
-	LAString swaptionDayCount = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_DAYCOUNT);
-	LAString swaptionSlidingRule = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_SLIDINGRULE);
-	LAString swaptionCalendar = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_CALENDAR);
-	LAString swaptionSpotLag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_SPOTLAG);
-	LAString swaptionFrequency = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_FREQUENCY);
-	LAString swaptionVolType = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_VOLTYPE);
+	AQLString swaptionDayCount = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_DAYCOUNT);
+	AQLString swaptionSlidingRule = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_SLIDINGRULE);
+	AQLString swaptionCalendar = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_CALENDAR);
+	AQLString swaptionSpotLag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_SPOTLAG);
+	AQLString swaptionFrequency = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_FREQUENCY);
+	AQLString swaptionVolType = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_VOLTYPE);
 	double swaptionVolForwardShift = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_MARKET_FORWARDSHIFT).getDoubleValue();
 	bool swaptionIncludeLast = false;
 	//set up curve information of swaption
-	LAString swaptionForecastCurve = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_FORECASTCURVE);
-	LAString swaptionDiscountCurve = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_DISCOUNTCURVE);
+	AQLString swaptionForecastCurve = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_FORECASTCURVE);
+	AQLString swaptionDiscountCurve = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_DISCOUNTCURVE);
 
 
 	// get Param_V_,  Param_F_,  Param_G_ file
@@ -273,7 +273,7 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 	MAFileAccessor initParamFFile( LAMarketData::getNumFileName(mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_INIT_F_FILE)) );
 	MAFileAccessor initParamGFile( LAMarketData::getNumFileName(mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_INIT_G_FILE)) );
 
-	LAStringMatrix initParamVMtx, initParamFMtx, initParamGMtx;
+	AQLStringMatrix initParamVMtx, initParamFMtx, initParamGMtx;
 	initParamVFile.readAllData(MARKET_DATA_DELIMITER, initParamVMtx);
 	initParamFFile.readAllData(MARKET_DATA_DELIMITER, initParamFMtx);
 	initParamGFile.readAllData(MARKET_DATA_DELIMITER, initParamGMtx);
@@ -282,18 +282,18 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 	initParamGFile.close();
 	if (initParamVMtx.size() == 0 || initParamFMtx.size() == 0 || initParamGMtx.size() == 0)
 	{
-		LAString msg = "LACalibrationParametersLMM::createCalibrationInfo failed. Initial param file is empty.";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "LACalibrationParametersLMM::createCalibrationInfo failed. Initial param file is empty.";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 	if (initParamVMtx.size() != 4 || initParamFMtx.size() != 8)
 	{
-		LAString msg = "LACalibrationParametersLMM::createCalibrationInfo failed. Initial param file is wrong format.";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "LACalibrationParametersLMM::createCalibrationInfo failed. Initial param file is wrong format.";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 	if ((initParamGMtx.size() != 2) || (initParamGMtx[0].size() != initParamGMtx[1].size()))
 	{
-		LAString msg = "LACalibrationParametersLMM::createCalibrationInfo failed. Initial values of G(T) must be given in the form (tenorG, paramG).";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "LACalibrationParametersLMM::createCalibrationInfo failed. Initial values of G(T) must be given in the form (tenorG, paramG).";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	DoubleVector paramV(4), paramF(9);
@@ -314,16 +314,16 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 	//unsigned int paramGSize = tenor_vollmm.size();
 	//if (paramGSize > initParamGMtx[0].size())
 	//{
-	//	throw LACoreInvalidData(
+	//	throw AQLCoreInvalidData(
 	//		"LACalibrationParametersLMM::createCalibrationInfo failed. Size of param G is less than size of grids."
 	//		,__FILE__,__LINE__);
 	//}
-	LAString frequencyG = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_FREQUENCY_G).toUpper();
+	AQLString frequencyG = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_FREQUENCY_G).toUpper();
 	double gridsizeG = LAMathDateCalculations::getPeriodFrequencyInMonths(frequencyG)/12.0;
 	const unsigned int paramGSize = (int)((maxTerm/gridsizeG)+0.5);
 	if (paramGSize > initParamGMtx[0].size())
 	{
-		throw LACoreInvalidData("LACalibrationParametersLMM::createCalibrationInfo failed. Size of param G is less than size of grids.",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("LACalibrationParametersLMM::createCalibrationInfo failed. Size of param G is less than size of grids.",__FILE__,__LINE__);
 	}
 
 	DoubleVector tenorG;
@@ -334,7 +334,7 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 		paramG.push_back(initParamGMtx[1][i].getDoubleValue());
 	}
 
-	LAString interpolationG = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_INTERPOLATION_G);
+	AQLString interpolationG = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_INTERPOLATION_G);
 	if (interpolationG == AQ_NO_DATA)
 	{
 		interpolationG = "fn_stepinterpolation";
@@ -342,66 +342,66 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 
 	if (frequencyG != FREQ_SEMI_ANNUAL && frequencyG != FREQ_QUARTERLY)
 	{
-		LAString msg = "Frequency of LMM function G input must be """ + LAString(FREQ_SEMI_ANNUAL) +""" or """ + LAString(FREQ_QUARTERLY) + """, However input is " + frequencyG + ".";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Frequency of LMM function G input must be """ + AQLString(FREQ_SEMI_ANNUAL) +""" or """ + AQLString(FREQ_QUARTERLY) + """, However input is " + frequencyG + ".";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	// set market param
 	// ##### cap parameters
 	// term
-	info->add(IR_CALIBRATION_DATA_CAP_TERM, new LADataStrings(capTermVec));
+	info->add(IR_CALIBRATION_DATA_CAP_TERM, new AQLDataStrings(capTermVec));
 	// tenor
-	info->add(IR_CALIBRATION_DATA_CAP_TENOR, new LADataStrings(capTenorVec));
+	info->add(IR_CALIBRATION_DATA_CAP_TENOR, new AQLDataStrings(capTenorVec));
 	// black vol
-	info->add(LAString("CAP_") + IR_CALIBRATION_DATA_BLACKVOLATILITY, new LADataDoubles(capBlackVolVec));
+	info->add(AQLString("CAP_") + IR_CALIBRATION_DATA_BLACKVOLATILITY, new AQLDataDoubles(capBlackVolVec));
 	// ##### swaption parameters
 	// optionmaturity
-	info->add(IR_CALIBRATION_DATA_OPTIONMATURITY, new LADataStrings(optionMatVec));
+	info->add(IR_CALIBRATION_DATA_OPTIONMATURITY, new AQLDataStrings(optionMatVec));
 	// swaptenor
-	info->add(IR_CALIBRATION_DATA_SWAPTENOR, new LADataStrings(swapTenorVec));
+	info->add(IR_CALIBRATION_DATA_SWAPTENOR, new AQLDataStrings(swapTenorVec));
 	// black vol
 	//if( costFuncTarget == "VOLATILITY" )
 	//{
-	info->add(LAString("SWAPTION_") + IR_CALIBRATION_DATA_BLACKVOLATILITY, new LADataDoubleMatrix(swaptionVolMat));
+	info->add(AQLString("SWAPTION_") + IR_CALIBRATION_DATA_BLACKVOLATILITY, new AQLDataDoubleMatrix(swaptionVolMat));
 	//}
 	//else if( costFuncTarget == "PREMIUM" )
 	//{
-	//	info->add(LAString("SWAPTION_") + IR_CALIBRATION_DATA_SWAPTIONPREM, new LADataDoubleMatrix(swaptionBlackVolPremMat));
+	//	info->add(AQLString("SWAPTION_") + IR_CALIBRATION_DATA_SWAPTIONPREM, new AQLDataDoubleMatrix(swaptionBlackVolPremMat));
 	//}
 	//else
 	//{
-	//	LAString msg = "Wrong costFuncTarget! : " + costFuncTarget + "?";
-	//	throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+	//	AQLString msg = "Wrong costFuncTarget! : " + costFuncTarget + "?";
+	//	throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	//}
 
 	// swaption vol weight
-	info->add(LAString(IR_CALIBRATION_DATA_SWAPTIONVOLWEIGHT), new LADataDoubleMatrix(swaptionVolWeightMat));
+	info->add(AQLString(IR_CALIBRATION_DATA_SWAPTIONVOLWEIGHT), new AQLDataDoubleMatrix(swaptionVolWeightMat));
 
 	// swaption vol type
-	info->add(LAString(IR_CALIBRATION_DATA_SWAPTIONVOLTYPE), new LADataString(swaptionVolType));
+	info->add(AQLString(IR_CALIBRATION_DATA_SWAPTIONVOLTYPE), new AQLDataString(swaptionVolType));
 
 	// swaption vol strike shift
-	info->add(LAString(IR_CALIBRATION_DATA_SWAPTIONVOL_MARKET_FORWARDSHIFT), new LADataDouble(swaptionVolForwardShift));
+	info->add(AQLString(IR_CALIBRATION_DATA_SWAPTIONVOL_MARKET_FORWARDSHIFT), new AQLDataDouble(swaptionVolForwardShift));
 
 	// swaption curve name
-	info->add(LAString(PRICING_DATA_FORECASTCURVE), new LADataString(swaptionForecastCurve));
-	info->add(LAString(PRICING_DATA_DISCOUNTCURVE), new LADataString(swaptionDiscountCurve));
+	info->add(AQLString(PRICING_DATA_FORECASTCURVE), new AQLDataString(swaptionForecastCurve));
+	info->add(AQLString(PRICING_DATA_DISCOUNTCURVE), new AQLDataString(swaptionDiscountCurve));
 
 	// set calib parameters
 	// param V
-	info->add(CALIBRATION_DATA_PARAM_V, new LADataDoubles(paramV));
+	info->add(CALIBRATION_DATA_PARAM_V, new AQLDataDoubles(paramV));
 	// param F
-	info->add(CALIBRATION_DATA_PARAM_F, new LADataDoubles(paramF));
+	info->add(CALIBRATION_DATA_PARAM_F, new AQLDataDoubles(paramF));
 	// param G
-	info->add(CALIBRATION_DATA_TENOR_G, new LADataDoubles(tenorG));
-	info->add(CALIBRATION_DATA_PARAM_G, new LADataDoubles(paramG));
-	info->add(CALIBRATION_DATA_INTERPOLATION_G, new LADataString(interpolationG));
-	info->add(CALIBRATION_DATA_FREQUENCY_G, new LADataString(frequencyG));
+	info->add(CALIBRATION_DATA_TENOR_G, new AQLDataDoubles(tenorG));
+	info->add(CALIBRATION_DATA_PARAM_G, new AQLDataDoubles(paramG));
+	info->add(CALIBRATION_DATA_INTERPOLATION_G, new AQLDataString(interpolationG));
+	info->add(CALIBRATION_DATA_FREQUENCY_G, new AQLDataString(frequencyG));
 
 	// swaption vol approximation method 
-	LAString swaptionApproxMethod = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_APPROX_METHOD);
+	AQLString swaptionApproxMethod = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_APPROX_METHOD);
 	swaptionApproxMethod.toUpper();
-	info->add(CALIBRATION_DATA_SWAPTION_APPROX_MEHOD, new LADataString(swaptionApproxMethod));
+	info->add(CALIBRATION_DATA_SWAPTION_APPROX_MEHOD, new AQLDataString(swaptionApproxMethod));
 
 	// set up optimization parameters
 	double boundaryMaxV = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_BOUNDARY_MAX_V).getDoubleValue();
@@ -419,57 +419,57 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 	double rootEpsilon = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_ROOT_EPSILON).getDoubleValue();
 	double functionEpsilon = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_FUNCTION_EPSILON).getDoubleValue();
 	double gradientNormEpsilon = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_GRADIENT_NORM_EPSILON).getDoubleValue();
-	LAString vegaWeight = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_VEGA_WEIGHT);
+	AQLString vegaWeight = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_VEGA_WEIGHT);
 	int vfgLoopNum = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_LOOP_NUM).getIntValue();
-	LAStringVector volWeight(2);
+	AQLStringVector volWeight(2);
     volWeight[0] = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_CAPFLOORS_WEIGHT);
 	volWeight[1] = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_SWAPTIONS_WEIGHT);
 	int numSmallSteps = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_NUM_SMALL_STEPS).getIntValue();
-	LAString optVFlag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_TARGET_V);
-	LAString optFFlag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_TARGET_F);
-	LAString optGFlag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_TARGET_G);
+	AQLString optVFlag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_TARGET_V);
+	AQLString optFFlag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_TARGET_F);
+	AQLString optGFlag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_TARGET_G);
 
-	LAString doOptimize = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_DO_OPTIMIZE);
+	AQLString doOptimize = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_DO_OPTIMIZE);
 	doOptimize.toUpper();
 	if(doOptimize != "FALSE"){
 		doOptimize = "TRUE";
 	}
 
 	// set optimization parameters
-	info->add(CALIBRATION_DATA_BOUNDARY_MAX_V, new LADataDouble(boundaryMaxV));
-	info->add(CALIBRATION_DATA_BOUNDARY_MIN_V, new LADataDouble(boundaryMinV));
-	info->add(CALIBRATION_DATA_BOUNDARY_MAX_F, new LADataDouble(boundaryMaxF));
-	info->add(CALIBRATION_DATA_BOUNDARY_MIN_F, new LADataDouble(boundaryMinF));
-	info->add(CALIBRATION_DATA_BOUNDARY_MAX_G, new LADataDouble(boundaryMaxG));
-	info->add(CALIBRATION_DATA_BOUNDARY_MIN_G, new LADataDouble(boundaryMinG));
-	info->add(CALIBRATION_DATA_SMOOTH_BOUNDARY_G, new LADataDouble(smoothBoundaryG));
-	info->add(CALIBRATION_DATA_LEVENBERG_ADJUST_Tor, new LADataDouble(levenbergAdjustTor));
-	info->add(CALIBRATION_DATA_LEVENBERG_ADJUST_V, new LADataDouble(levenbergAdjustV));
-	info->add(CALIBRATION_DATA_LEVENBERG_ADJUST_F, new LADataDouble(levenbergAdjustF));
-	info->add(CALIBRATION_DATA_MAX_ITERATION, new LADataInt(maxIteration));
-	info->add(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, new LADataInt(maxStationaryStateIteration));
-	info->add(CALIBRATION_DATA_ROOT_EPSILON, new LADataDouble(rootEpsilon));
-    info->add(CALIBRATION_DATA_FUNCTION_EPSILON, new LADataDouble(functionEpsilon));
-    info->add(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, new LADataDouble(gradientNormEpsilon));
-	info->add(CALIBRATION_DATA_VEGA_WEIGHT, new LADataString(vegaWeight));
-	info->add(CALIBRATION_DATA_VFG_LOOP_NUM, new LADataInt(vfgLoopNum));
-	info->add(CALIBRATION_DATA_VOL_WEIGHT, new LADataStrings(volWeight));
-	info->add(CALIBRATION_DATA_NUM_SMALL_STEPS, new LADataInt(numSmallSteps));
-	info->add(CALIBRATION_DATA_OPT_V_FLAG, new LADataString(optVFlag));
-	info->add(CALIBRATION_DATA_OPT_F_FLAG, new LADataString(optFFlag));
-	info->add(CALIBRATION_DATA_OPT_G_FLAG, new LADataString(optGFlag));
-	info->add(CALIBRATION_DATA_DO_OPT_FLAG, new LADataString(doOptimize));
+	info->add(CALIBRATION_DATA_BOUNDARY_MAX_V, new AQLDataDouble(boundaryMaxV));
+	info->add(CALIBRATION_DATA_BOUNDARY_MIN_V, new AQLDataDouble(boundaryMinV));
+	info->add(CALIBRATION_DATA_BOUNDARY_MAX_F, new AQLDataDouble(boundaryMaxF));
+	info->add(CALIBRATION_DATA_BOUNDARY_MIN_F, new AQLDataDouble(boundaryMinF));
+	info->add(CALIBRATION_DATA_BOUNDARY_MAX_G, new AQLDataDouble(boundaryMaxG));
+	info->add(CALIBRATION_DATA_BOUNDARY_MIN_G, new AQLDataDouble(boundaryMinG));
+	info->add(CALIBRATION_DATA_SMOOTH_BOUNDARY_G, new AQLDataDouble(smoothBoundaryG));
+	info->add(CALIBRATION_DATA_LEVENBERG_ADJUST_Tor, new AQLDataDouble(levenbergAdjustTor));
+	info->add(CALIBRATION_DATA_LEVENBERG_ADJUST_V, new AQLDataDouble(levenbergAdjustV));
+	info->add(CALIBRATION_DATA_LEVENBERG_ADJUST_F, new AQLDataDouble(levenbergAdjustF));
+	info->add(CALIBRATION_DATA_MAX_ITERATION, new AQLDataInt(maxIteration));
+	info->add(CALIBRATION_DATA_MAX_STATIONARY_STATE_ITERATION, new AQLDataInt(maxStationaryStateIteration));
+	info->add(CALIBRATION_DATA_ROOT_EPSILON, new AQLDataDouble(rootEpsilon));
+    info->add(CALIBRATION_DATA_FUNCTION_EPSILON, new AQLDataDouble(functionEpsilon));
+    info->add(CALIBRATION_DATA_GRADIENT_NORM_EPSILON, new AQLDataDouble(gradientNormEpsilon));
+	info->add(CALIBRATION_DATA_VEGA_WEIGHT, new AQLDataString(vegaWeight));
+	info->add(CALIBRATION_DATA_VFG_LOOP_NUM, new AQLDataInt(vfgLoopNum));
+	info->add(CALIBRATION_DATA_VOL_WEIGHT, new AQLDataStrings(volWeight));
+	info->add(CALIBRATION_DATA_NUM_SMALL_STEPS, new AQLDataInt(numSmallSteps));
+	info->add(CALIBRATION_DATA_OPT_V_FLAG, new AQLDataString(optVFlag));
+	info->add(CALIBRATION_DATA_OPT_F_FLAG, new AQLDataString(optFFlag));
+	info->add(CALIBRATION_DATA_OPT_G_FLAG, new AQLDataString(optGFlag));
+	info->add(CALIBRATION_DATA_DO_OPT_FLAG, new AQLDataString(doOptimize));
 
 	// set up T stream of cap
-	LAString capSpotLag_mns = "-" + capSpotLag;
-	LADate _00_pay = LAMathDateUtilities::getDate(asOfDate, capSpotLag, liborSlidingRule, liborCalendar);
-	LADate _0_pay, last_pay;
-	vector<LADate> date_stream;
+	AQLString capSpotLag_mns = "-" + capSpotLag;
+	AQLDate _00_pay = LAMathDateUtilities::getDate(asOfDate, capSpotLag, liborSlidingRule, liborCalendar);
+	AQLDate _0_pay, last_pay;
+	vector<AQLDate> date_stream;
 	for (unsigned int i = 0; i < capTermSize; ++i)
 	{
 		// calc date
-		LAString capTerm = capTermVec[i];
-		LAString capTenor = capTenorVec[i];
+		AQLString capTerm = capTermVec[i];
+		AQLString capTenor = capTenorVec[i];
 		_0_pay   = LAMathDateUtilities::getDate(_00_pay, capTenor, liborSlidingRule, liborCalendar); // start date?
 		last_pay = LAMathDateUtilities::getDate(_0_pay, capTerm, liborSlidingRule, liborCalendar); // expiry date?
 
@@ -480,7 +480,7 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 		DoubleVector tau_L_cap( date_stream.size() - 1 );
 		DoubleVector tau_cap( date_stream.size() - 1 );
 
-		LADate tmp_D;
+		AQLDate tmp_D;
 		for(size_t j = 0; j < date_stream.size() - 1; ++j)
 		{
 			T_pay_cap[j] = LAMathDateUtilities::getTerm( asOfDate, date_stream[j + 1], dayCountStr, true );
@@ -492,21 +492,21 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 			tau_cap[j] = LAMathDateUtilities::getTerm( date_stream[j], date_stream[j + 1], capDayCount, capIncludeLast );
 		}
 
-		LAString prefix = "CAP_";
-		LAString postfix = "_" + capTerm + "_" + capTenor;
-		info->add(prefix + IR_CALIBRATION_DATA_T_PAY + postfix, new LADataDoubles(T_pay_cap));
-		info->add(prefix + IR_CALIBRATION_DATA_T_FIX + postfix, new LADataDoubles(T_fix_cap));
-		info->add(prefix + IR_CALIBRATION_DATA_TAU_L + postfix, new LADataDoubles(tau_L_cap));
-		info->add(prefix + IR_CALIBRATION_DATA_TAU + postfix, new LADataDoubles(tau_cap));
+		AQLString prefix = "CAP_";
+		AQLString postfix = "_" + capTerm + "_" + capTenor;
+		info->add(prefix + IR_CALIBRATION_DATA_T_PAY + postfix, new AQLDataDoubles(T_pay_cap));
+		info->add(prefix + IR_CALIBRATION_DATA_T_FIX + postfix, new AQLDataDoubles(T_fix_cap));
+		info->add(prefix + IR_CALIBRATION_DATA_TAU_L + postfix, new AQLDataDoubles(tau_L_cap));
+		info->add(prefix + IR_CALIBRATION_DATA_TAU + postfix, new AQLDataDoubles(tau_cap));
 	}
 
 	// set up T stream of swaption
-	LADate last_pay_L;
-	vector<LADate> date_stream_L;
+	AQLDate last_pay_L;
+	vector<AQLDate> date_stream_L;
 	for (unsigned int i = 0; i < optionMatSize; ++i)
 	{
 		// calc date
-		const LAString optionMat = optionMatVec[i];
+		const AQLString optionMat = optionMatVec[i];
 		_00_pay = LAMathDateUtilities::getDate(asOfDate, optionMat, swaptionSlidingRule, swaptionCalendar);
 		_0_pay = LAMathDateUtilities::getDate(_00_pay, swaptionSpotLag, swaptionSlidingRule, swaptionCalendar);
 		if (swaptionForecastCurve == swaptionDiscountCurve && liborFrequency == swaptionFrequency)
@@ -517,7 +517,7 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 		}
 		for(unsigned int j = 0; j < swapTenorSize; ++j)
 		{
-			const LAString swapTenor = swapTenorVec[j];
+			const AQLString swapTenor = swapTenorVec[j];
 
 			last_pay_L    = LAMathDateUtilities::getDate(_0_pay, swapTenor, liborSlidingRule, liborCalendar);
 			date_stream_L = LAMathDateUtilities::generateSchedule(_0_pay, last_pay_L, liborFrequency, liborSlidingRule, liborCalendar);
@@ -543,31 +543,31 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 				tau_swaption[k] = LAMathDateUtilities::getTerm( date_stream[k], date_stream[k + 1], swaptionDayCount, swaptionIncludeLast );
 			}
 
-			const LAString prefix = "SWAPTION_";
-			const LAString postfix = "_" + optionMat + "_" + swapTenor;
-			info->add(prefix + IR_CALIBRATION_DATA_T_PAY_L + postfix, new LADataDoubles(T_pay_L_swaption));
-			info->add(prefix + IR_CALIBRATION_DATA_T_FIX_L + postfix, new LADataDoubles(T_fix_L_swaption));
-			info->add(prefix + IR_CALIBRATION_DATA_TAU_L + postfix, new LADataDoubles(tau_L_swaption));
-			info->add(prefix + IR_CALIBRATION_DATA_T_PAY + postfix, new LADataDoubles(T_pay_swaption));
-			info->add(prefix + IR_CALIBRATION_DATA_TAU + postfix, new LADataDoubles(tau_swaption));
+			const AQLString prefix = "SWAPTION_";
+			const AQLString postfix = "_" + optionMat + "_" + swapTenor;
+			info->add(prefix + IR_CALIBRATION_DATA_T_PAY_L + postfix, new AQLDataDoubles(T_pay_L_swaption));
+			info->add(prefix + IR_CALIBRATION_DATA_T_FIX_L + postfix, new AQLDataDoubles(T_fix_L_swaption));
+			info->add(prefix + IR_CALIBRATION_DATA_TAU_L + postfix, new AQLDataDoubles(tau_L_swaption));
+			info->add(prefix + IR_CALIBRATION_DATA_T_PAY + postfix, new AQLDataDoubles(T_pay_swaption));
+			info->add(prefix + IR_CALIBRATION_DATA_TAU + postfix, new AQLDataDoubles(tau_swaption));
 		}
 	}
 
 	// set up correlation information
 	if (LACoreDataService::getContext(CONTEXT_KEY_ISEXCELREQUEST) == "TRUE")
 	{
-		info->add(CALIBRATION_DATA_LMM_CALIB_CORRELATION, new LADataReference()).convertFromString("cor" + tmpCurrency.toUpper() + "ir");
+		info->add(CALIBRATION_DATA_LMM_CALIB_CORRELATION, new AQLDataReference()).convertFromString("cor" + tmpCurrency.toUpper() + "ir");
 	}
 	else
 	{
-		LAString sdeName = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
-		info->add(CALIBRATION_DATA_LMM_CALIB_CORRELATION, new LADataReference()).convertFromString(PREFIX_COR + sdeName);
+		AQLString sdeName = mpStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
+		info->add(CALIBRATION_DATA_LMM_CALIB_CORRELATION, new AQLDataReference()).convertFromString(PREFIX_COR + sdeName);
 	}
 
 	// set up the flag for setting up result of lmm swatpion vol
-	LAString isResultoutLMMSwaptionStr = mpCalibStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_CALIB_LMM_ISRESULTOUT_SWAPTION);
+	AQLString isResultoutLMMSwaptionStr = mpCalibStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_CALIB_LMM_ISRESULTOUT_SWAPTION);
 	const bool isResultoutLMMSwaption = (isResultoutLMMSwaptionStr.toUpper() == "TRUE" || isResultoutLMMSwaptionStr == AQ_NO_DATA);
-	info->add(CALIBRATION_DATA_IS_RESULTOUT_LMM_SWAPTION, new LADataBool(isResultoutLMMSwaption));
+	info->add(CALIBRATION_DATA_IS_RESULTOUT_LMM_SWAPTION, new AQLDataBool(isResultoutLMMSwaption));
 
 	return CALIBINFONAME;
 
@@ -581,37 +581,37 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 
 */
 void
-LACalibrationParametersLMM::getCalibCorParam(const LAString &ccy, MACalibCorrelationParam &param)
+LACalibrationParametersLMM::getCalibCorParam(const AQLString &ccy, MACalibCorrelationParam &param)
 {
-	LAString tmpccy = ccy;
+	AQLString tmpccy = ccy;
 	tmpccy.toLower();
 
-	LAString corFuncParamFilePath = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_CORRELATION_FUNC_PARAM_FILE);
+	AQLString corFuncParamFilePath = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_CORRELATION_FUNC_PARAM_FILE);
 	MAFileAccessor corFuncParamFile(LAMarketData::getNumFileName(corFuncParamFilePath));
-	LAStringMatrix corFuncParamMtx;
+	AQLStringMatrix corFuncParamMtx;
 	corFuncParamFile.readAllData(MARKET_DATA_DELIMITER, corFuncParamMtx);
 	corFuncParamFile.close();
 	double param_x = corFuncParamMtx[0][0].trimLeft().trimRight().getDoubleValue();
 	double param_y = corFuncParamMtx[1][0].trimLeft().trimRight().getDoubleValue();
 
-	LAString maxtermFilePath = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_CORRELATION_FUNC_TMAX_FILE);
+	AQLString maxtermFilePath = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_CORRELATION_FUNC_TMAX_FILE);
 	MAFileAccessor maxtermFile(LAMarketData::getNumFileName(maxtermFilePath));
-	LAStringMatrix maxtermMtx;
+	AQLStringMatrix maxtermMtx;
 	maxtermFile.readAllData(MARKET_DATA_DELIMITER, maxtermMtx);
 	maxtermFile.close();
 	double maxterm = maxtermMtx[0][0].trimLeft().trimRight().getDoubleValue();
 
-	LAString corFuncTypeFilePath = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_CORRELATION_FUNC_TYPE_FILE);
+	AQLString corFuncTypeFilePath = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_CORRELATION_FUNC_TYPE_FILE);
 	MAFileAccessor corFuncTypeFile(LAMarketData::getNumFileName(corFuncTypeFilePath));
-	LAStringMatrix corFuncTypeMtx;
+	AQLStringMatrix corFuncTypeMtx;
 	corFuncTypeFile.readAllData(MARKET_DATA_DELIMITER, corFuncTypeMtx);
 	corFuncTypeFile.close();
-	LAString corFuncType = corFuncTypeMtx[0][0].trimLeft().trimRight();
+	AQLString corFuncType = corFuncTypeMtx[0][0].trimLeft().trimRight();
 	corFuncType.toUpper();
 
-	LAString targetFactorFilePath = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_CORRELATION_OPT_TARGET_FACTOR_FILE);
+	AQLString targetFactorFilePath = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_CORRELATION_OPT_TARGET_FACTOR_FILE);
 	MAFileAccessor targetFactorFile(LAMarketData::getNumFileName(targetFactorFilePath));
-	LAStringMatrix targetFactorMtx;
+	AQLStringMatrix targetFactorMtx;
 	targetFactorFile.readAllData(MARKET_DATA_DELIMITER, targetFactorMtx);
 	targetFactorFile.close();
 	unsigned int targetFactor = targetFactorMtx[0][0].trimLeft().trimRight().getIntValue();
@@ -631,7 +631,7 @@ LACalibrationParametersLMM::getCalibCorParam(const LAString &ccy, MACalibCorrela
 	param.gradientNormEpsilon         = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_CORRELATION_OPT_GRADIENT_NORM_EPSILON).getDoubleValue();
 	param.optCorMethodType            = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_CORRELATION_OPT_METHOD_TYPE).toUpper();
 
-	LAString is_extratenor_calib = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_IS_EXTRATENOR_CALIB).toUpper();
+	AQLString is_extratenor_calib = mpCalibStaticData->getStaticData(tmpccy + STATIC_DATA_KEY_CALIB_LMM_IS_EXTRATENOR_CALIB).toUpper();
 	param.isExtraTenorCalib = (is_extratenor_calib == "TRUE");
 }
 
@@ -641,13 +641,13 @@ LACalibrationParametersLMM::getCalibCorParam(const LAString &ccy, MACalibCorrela
 
 	@param[in] key
 	@param[in] grid
-	@return LAString value
+	@return AQLString value
 
 */
-LAString 
-LACalibrationParametersLMM::getCalibStaticDataValue(const LAString &key, const LAString &grid)
+AQLString 
+LACalibrationParametersLMM::getCalibStaticDataValue(const AQLString &key, const AQLString &grid)
 {
-	LAString ret = mpCalibStaticData->getStaticData(key + "." + grid);
+	AQLString ret = mpCalibStaticData->getStaticData(key + "." + grid);
 
 	if (ret == AQ_NO_DATA)
 	{

@@ -20,10 +20,10 @@ namespace validation
     *  @param [in]		slidingRule		Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The IMM date on the given month
     */
-    LAString tryMirGetIMMDate1( int year,
+    AQLString tryMirGetIMMDate1( int year,
                                 int month,
-                                const LAString& calendar,
-                                const LAString& slidingRule )
+                                const AQLString& calendar,
+                                const AQLString& slidingRule )
     {
         VALID_EXCEPTION_START
 
@@ -38,10 +38,10 @@ namespace validation
             file.write( "slidingRule",		slidingRule );
         }
 
-		LAString calendarCopy( calendar );
-		LAString slidingRuleCopy( slidingRule );
-        LADate immDate = etrading::LADateScheduleHelpers::getIMMDate1( year, month, calendarCopy, slidingRuleCopy );
-        LAString ret = immDate.stringWithFormat( "YYYYMMDD" );
+		AQLString calendarCopy( calendar );
+		AQLString slidingRuleCopy( slidingRule );
+        AQLDate immDate = etrading::LADateScheduleHelpers::getIMMDate1( year, month, calendarCopy, slidingRuleCopy );
+        AQLString ret = immDate.stringWithFormat( "YYYYMMDD" );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -62,10 +62,10 @@ namespace validation
     *  @param [in]		slidingRule		Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The nth IMM date of the year
     */
-    LAString tryMirGetIMMDate2( int year,
+    AQLString tryMirGetIMMDate2( int year,
                                 int number,
-                                const LAString& calendar,
-                                const LAString& slidingRule )
+                                const AQLString& calendar,
+                                const AQLString& slidingRule )
     {
         VALID_EXCEPTION_START
 
@@ -80,10 +80,10 @@ namespace validation
             file.write( "slidingRule",		slidingRule );
         }
 
-		LAString calendarCopy( calendar );
-		LAString slidingRuleCopy( slidingRule );
-        LADate immDate = etrading::LADateScheduleHelpers::getIMMDate2( year, number, calendarCopy, slidingRuleCopy );
-        LAString ret = immDate.stringWithFormat( "YYYYMMDD" );
+		AQLString calendarCopy( calendar );
+		AQLString slidingRuleCopy( slidingRule );
+        AQLDate immDate = etrading::LADateScheduleHelpers::getIMMDate2( year, number, calendarCopy, slidingRuleCopy );
+        AQLString ret = immDate.stringWithFormat( "YYYYMMDD" );
 
         if ( CreateDataFile::recordEnabled() )
         {
@@ -104,10 +104,10 @@ namespace validation
     *  @param [in]		slidingRule		Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The nth IMM date from the base date, starting from the one closest to the base date
     */
-    LAString tryMirGetIMMDate3( const LADate& baseDate,
+    AQLString tryMirGetIMMDate3( const AQLDate& baseDate,
                                 int number,
-                                const LAString& calendar,
-                                const LAString& slidingRule )
+                                const AQLString& calendar,
+                                const AQLString& slidingRule )
     {
         VALID_EXCEPTION_START
 
@@ -122,10 +122,10 @@ namespace validation
             file.write( "slidingRule",			slidingRule );
         }
 
-		LAString calendarCopy( calendar );
-		LAString slidingRuleCopy( slidingRule );
-        LADate immDate = etrading::LADateScheduleHelpers::getIMMDate3( baseDate, number, calendarCopy, slidingRuleCopy );
-        LAString ret = immDate.stringWithFormat( "YYYYMMDD" );
+		AQLString calendarCopy( calendar );
+		AQLString slidingRuleCopy( slidingRule );
+        AQLDate immDate = etrading::LADateScheduleHelpers::getIMMDate3( baseDate, number, calendarCopy, slidingRuleCopy );
+        AQLString ret = immDate.stringWithFormat( "YYYYMMDD" );
 
         if ( CreateDataFile::recordEnabled() )
         {

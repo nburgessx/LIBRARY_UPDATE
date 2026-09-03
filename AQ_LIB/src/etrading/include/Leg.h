@@ -39,7 +39,7 @@ namespace etrading
 		SchedulePtr getSchedule() const;
         virtual void flipPayerReceiver();
 
-        LAString getLegName() const;
+        AQLString getLegName() const;
 
 		virtual double annuityWithNotional(DataProvider& dataProvider);
 		virtual double pv( DataProvider& dataProvider, bool nativeCurrencyPV=false, bool updateCurveData=true);

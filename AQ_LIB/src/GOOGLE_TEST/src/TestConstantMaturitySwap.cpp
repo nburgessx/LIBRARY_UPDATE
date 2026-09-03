@@ -73,7 +73,7 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createLWOCurveFromFileName( const LAString& curveCalibrationFileName )
+	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
@@ -91,20 +91,20 @@ namespace
 	*  @param [in]		marketDataFileName			The filename specifying generator curve data
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/
-	void setUpGeneratorCurve( const LAString& marketDataFileName, const LAString& curveCalibrationFileName )
+	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
 		google_test::createLWOMarketDataObjectFromFileName( marketDataFileName );
 		createLWOCurveFromFileName( curveCalibrationFileName );
 	}
 
-	void createLWOConstantMaturitySwapFromFileName( const LAString& cmsFileName )
+	void createLWOConstantMaturitySwapFromFileName( const AQLString& cmsFileName )
 	{
 		etrading::ReadDataFile::Load constantMaturitySwapFileObj = etrading::ReadDataFile::Load( cmsFileName );
 		
 		const std::string swapName				= constantMaturitySwapFileObj[ "swapName" ];
 		const std::string lwoswapGeneratorName	= constantMaturitySwapFileObj[ "swapGeneratorName" ];
-		const LAStringMatrix expressionLVB		= constantMaturitySwapFileObj[ "expressionLVB" ];
-		const LAStringMatrix swapPropertiesLVB	= constantMaturitySwapFileObj[ "swapPropertiesLVB" ];
+		const AQLStringMatrix expressionLVB		= constantMaturitySwapFileObj[ "expressionLVB" ];
+		const AQLStringMatrix swapPropertiesLVB	= constantMaturitySwapFileObj[ "swapPropertiesLVB" ];
 		const bool isXccySwap					= constantMaturitySwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= constantMaturitySwapFileObj[ "validateKeys" ];
 		
@@ -130,7 +130,7 @@ namespace google_test
 
 		etrading::ReadDataFile::Load PVFileObj = etrading::ReadDataFile::Load( CMS_CALCULATE_PV );
 		const std::string swapName			= PVFileObj[ "swapName" ];
-		LAStringMatrix curveCollections		= PVFileObj[ "curveCollections" ];
+		AQLStringMatrix curveCollections		= PVFileObj[ "curveCollections" ];
 		const double convexityAdjustment	= PVFileObj[ "convexityAdjustment" ];
 		std::string legName					= PVFileObj[ "legName"];
 
@@ -153,7 +153,7 @@ namespace google_test
 
 		etrading::ReadDataFile::Load parRateFileObj = etrading::ReadDataFile::Load( CMS_CALCULATE_PAR_RATE );
 		const std::string swapName			= parRateFileObj[ "swapName" ];
-		LAStringMatrix curveCollections		= parRateFileObj[ "curveCollections" ];
+		AQLStringMatrix curveCollections		= parRateFileObj[ "curveCollections" ];
 		const double convexityAdjustment	= parRateFileObj[ "convexityAdjustment" ];
 
 		const double calculatedParRate = validation::tryMeLWOConstantMaturitySwapParRateUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment );

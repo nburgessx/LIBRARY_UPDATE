@@ -5,8 +5,8 @@
 #pragma interface
 #endif
 
-#include <LACoreTemplateType.h>
-#include "LAFunction.h"
+#include <AQLCoreTemplateType.h>
+#include "AQLFunction.h"
 #include <LAPriceCMSCalibration.h>
 #include <vector>
 
@@ -18,24 +18,24 @@ class LAPriceCMSSpreadStrip
 {
 public:
 
-    static void Strip(LADataInstance* dataInstance, LAString convID, LAString currency,
-                      LADate valDate, const LAString& pairID, const LAStringMatrix& legScheduler, const LAStringMatrix& cmsScheduler,
-                      const LAStringMatrix& quoteMatrix, const vector<bool>& isCalls,
+    static void Strip(AQLDataInstance* dataInstance, AQLString convID, AQLString currency,
+                      AQLDate valDate, const AQLString& pairID, const AQLStringMatrix& legScheduler, const AQLStringMatrix& cmsScheduler,
+                      const AQLStringMatrix& quoteMatrix, const vector<bool>& isCalls,
                       CurveInfo discCurveInfo, CurveInfo cmsCurveInfo,
                       ReplicationConfig repConfig, double shift,
-                      const LAStringVector& slTerms, const DateVector& slDates,
+                      const AQLStringVector& slTerms, const DateVector& slDates,
                       DoubleVector& smileStrikes, DoubleMatrix& smilePrices);
 };
 
 //================ CMSCalibrationTarget ===================================
-class LAPriceCMSSpreadStripTarget : public LAFunction
+class LAPriceCMSSpreadStripTarget : public AQLFunction
 {
 public:
     LAPriceCMSSpreadStripTarget() {};
 
-    LAPriceCMSSpreadStripTarget(LADate valDate, LAString mtyTerm,
+    LAPriceCMSSpreadStripTarget(AQLDate valDate, AQLString mtyTerm,
                            SwapRateInfo rateInfo1, SwapRateInfo rateInfo2,
-                           LAStringMatrix legScheduler, LAStringMatrix cmsScheduler, CurveInfo discCurveInfo,
+                           AQLStringMatrix legScheduler, AQLStringMatrix cmsScheduler, CurveInfo discCurveInfo,
                            size_t parameterIdx);
 
     void SetMarket(double quote, double strike, bool isCall);
@@ -46,7 +46,7 @@ public:
 
     double InterpolateCorrelations(double t, const DoubleVector& pGrid) const;
 
-    LADate LastFixing();
+    AQLDate LastFixing();
 
     DoubleVector UpdatedParameterGrid(double x) const;
 
@@ -54,11 +54,11 @@ private:
     vector<CashFlowTiming> mStructLegSchedule;
     double mQuote, mStrike;
     bool mIsCall;
-    LAString mIndexTenor, mSwapMaturity;
+    AQLString mIndexTenor, mSwapMaturity;
     DoubleVector mAccs, mS1s, mS2s, mStDev1s, mStDev2s, mDFs, mTFix;
     DoubleVector mtGrid, mpGrid;
     size_t mNFlows, mParameterIdx;
-    LADate mLastFixing;
+    AQLDate mLastFixing;
 };
 
 #endif 

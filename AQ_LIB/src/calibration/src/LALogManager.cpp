@@ -78,7 +78,7 @@ MALogManager::getLogger(void)
 		LAStaticDataManager manager;
 		LAStaticData &accessor = manager.getStaticData();
 		// log file name
-		LAString logFile  = accessor.getStaticData(KEY_LOG_FILE);
+		AQLString logFile  = accessor.getStaticData(KEY_LOG_FILE);
 		// log level
 		MALoggerImpl::logLevel = accessor.getStaticData(KEY_LOG_LEVEL).getIntValue();
 		mpLogger = new MALoggerImpl(logFile);
@@ -116,7 +116,7 @@ MALogManager::getXVALogger(void)
 		LAStaticDataManager manager;
 		LAStaticData &accessor = manager.getXVAStaticData();
 		// log file name
-		LAString logFile  = accessor.getStaticData(KEY_LOG_FILE);
+		AQLString logFile  = accessor.getStaticData(KEY_LOG_FILE);
 		// log level
 		MALoggerImpl::logLevel = accessor.getStaticData(KEY_LOG_LEVEL).getIntValue();
 		mpXVALogger = new MALoggerImpl(logFile);

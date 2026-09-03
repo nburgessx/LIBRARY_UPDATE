@@ -54,15 +54,15 @@ namespace etrading
         //Helper functions
         std::pair<CCY, CCY> getBaseTermCurrencies() const;
         std::pair<std::string, std::string> getBaseTermDFCurves() const;
-		LADate getDate(const LADate& fromDate, const std::string& tenor) const; 
-		LADate getAsOfDate() const;
-		LADate getSpotDate() const;
+		AQLDate getDate(const AQLDate& fromDate, const std::string& tenor) const; 
+		AQLDate getAsOfDate() const;
+		AQLDate getSpotDate() const;
 
 		double getFxPipSize() const;
 		bool isOutright() const;
 
         //Get fxForwards for a given settleDate from the interpolated fxCurve
-		FxFwd interpolateFxForwardOutrightsFromFxCurve(const LADate& settlementDate, const std::map<LADate, std::vector<FxFwd>>& fwdFxRateMap, const std::string& interpolationMethod);
+		FxFwd interpolateFxForwardOutrightsFromFxCurve(const AQLDate& settlementDate, const std::map<AQLDate, std::vector<FxFwd>>& fwdFxRateMap, const std::string& interpolationMethod);
 
         std::shared_ptr<CurveGenerator> curveGenerator_;
         std::shared_ptr<CurveMarketData> curveMarketData_;

@@ -3,7 +3,7 @@
 
 namespace google_test
 {
-    TryMeCurveXccyBasis::TryMeCurveXccyBasis( const LAString& inputFile )
+    TryMeCurveXccyBasis::TryMeCurveXccyBasis( const AQLString& inputFile )
         : TryMeCurveAccessors( inputFile )
     {
         if ( fileLoaded_ )
@@ -23,7 +23,7 @@ namespace google_test
 					inputFile_.getOptional("fraConv"),
 					inputFile_.getOptional("fraRates"));
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }
@@ -38,7 +38,7 @@ namespace google_test
 	*  @brief			Set up xccy basis curve
 	*  @param [in]		inputFile	File representation of the curve
 	*/
-	void setUpMeXccyBasisCurve(const LAString& inputFile)
+	void setUpMeXccyBasisCurve(const AQLString& inputFile)
 	{
 		if ( inputFile.size() != 0 )
         {
@@ -59,7 +59,7 @@ namespace google_test
 					inputFileObj.getOptional("fraConv"),
 					inputFileObj.getOptional("fraRates"));
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }

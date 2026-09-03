@@ -1,15 +1,15 @@
 #pragma once
 
-#include "LAMathDefine.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 
 
-typedef LAStringVector::iterator StrItr;
-typedef LAStringVector::const_iterator CStrItr;
-typedef std::vector<LAStringVector> LAStringMatrix;
-typedef std::vector<LAObjectHolder *>	EntityHolderPVec;
-typedef std::vector<LAObjectHolder>	EntityHolderVec;
+typedef AQLStringVector::iterator StrItr;
+typedef AQLStringVector::const_iterator CStrItr;
+typedef std::vector<AQLStringVector> AQLStringMatrix;
+typedef std::vector<AQLObjectHolder *>	EntityHolderPVec;
+typedef std::vector<AQLObjectHolder>	EntityHolderVec;
 typedef EntityHolderVec::iterator EntityHolItr; 
 typedef EntityHolderVec::const_iterator CEntityHolItr;  
 
@@ -695,9 +695,9 @@ const int SOME_ERROR_CODE = 2;
 
 struct MAIndexData
 {
-	LAString frequency;
-	LAString slidingrule;
-	LAString daycount;
+	AQLString frequency;
+	AQLString slidingrule;
+	AQLString daycount;
 	int resetlag;
-	LAStringVector cities; 
+	AQLStringVector cities; 
 };

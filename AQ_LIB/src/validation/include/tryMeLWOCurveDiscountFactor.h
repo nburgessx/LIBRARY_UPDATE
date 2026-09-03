@@ -1,7 +1,7 @@
 #pragma once
 
 #include <boost/date_time.hpp>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -13,7 +13,7 @@ namespace validation
     */
     DoubleVector tryMeLWOCurveDiscountFactorsFromYearFractions( const std::string& lwoCurveName,
             const DoubleVector& yearFractions,
-            const LAString& dayCount );
+            const AQLString& dayCount );
 
     /* @brief			validation method for meCurveLWODiscountFactorsFromTenors
     *  @param [in]		lwoCurveName	Curve Name
@@ -56,7 +56,7 @@ namespace validation
     DoubleVector tryMeLWOCurveDiscountFactorsForwardStartingFromYearFractions( const std::string& lwoCurveName,
             const std::vector<boost::gregorian::date>& fromDates,
             const DoubleVector& yearFractions,
-            const LAString& dayCount );
+            const AQLString& dayCount );
 
     /* @brief			validation method for meCurveDiscountFactorsForwardStartingFromTenor
     *  @param [in]		lwoCurveName	    LWO Curve Name
@@ -87,14 +87,14 @@ namespace validation
 	*/
 	void tryMeLWOCurveDiscountFactorsTable( DateVector& paymentDates,
 											DoubleMatrix& discountFactors,
-											const LAString& curveCollection,
-											const LAStringVector& curveIndices,
-											const LAString& startDate,
-											const LAString& maturity,
-											const LAString& businessDayAdjust,
-											const LAString& calendar,
-											const LAString& rollConvention,
-											const LAString& frequency );
+											const AQLString& curveCollection,
+											const AQLStringVector& curveIndices,
+											const AQLString& startDate,
+											const AQLString& maturity,
+											const AQLString& businessDayAdjust,
+											const AQLString& calendar,
+											const AQLString& rollConvention,
+											const AQLString& frequency );
 
 
 	/* @brief			Validation method which calculates a set of discount factors for the specified dates.

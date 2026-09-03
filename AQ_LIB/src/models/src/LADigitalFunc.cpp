@@ -24,7 +24,7 @@ using namespace std;
 	@brief default constructor
 */
 LADigitalMethod::LADigitalMethod() 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -40,7 +40,7 @@ LADigitalMethod::~LADigitalMethod()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LADigitalMethod::clone() const
 {
     try 
@@ -49,7 +49,7 @@ LADigitalMethod::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -61,7 +61,7 @@ LADigitalMethod::clone() const
 bool
 LADigitalMethod::isTypeOf(function_t id) const
 {
-	return (id == FN_DIGITAL ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_DIGITAL ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -83,13 +83,13 @@ double
 LADigitalMethod::operator()(const DoubleArray& x) const
 {
 	if(mParam.size() != 3 * x.size() - 3)
-		throw LACoreInvalidData("parameter size should be equal to 3 * index size - 3.",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("parameter size should be equal to 3 * index size - 3.",__FILE__,__LINE__);
 
 	// check input if mParam[x.size()] < mParam[x.size() + 1] < ... or not
 	for(size_t i = 2 * x.size() + 1; i < mParam.size(); ++i)
 	{
 		if(mParam[i - 1] > mParam[i])
-			throw LACoreInvalidData("trigger strike should be in order",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("trigger strike should be in order",__FILE__,__LINE__);
 	}
 
 	double referenceValue = mParam[0] * x[0];

@@ -88,10 +88,10 @@ namespace google_test
 
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( Test1_getStubRateInputs, i ) );
 
-                LAStringVector curveIndices = inputFile["curveIndices"];
-                LAStringVector curveTenors = inputFile["curveTenors"];
+                AQLStringVector curveIndices = inputFile["curveIndices"];
+                AQLStringVector curveTenors = inputFile["curveTenors"];
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
-                LAStringMatrix swapLVB = inputFile["swapLVB"];
+                AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
                 double stubRate = validation::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, true );
 
@@ -102,7 +102,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST1_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -136,10 +136,10 @@ namespace google_test
 
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( Test2_getStubRateInputs, i ) );
 
-                LAStringVector curveIndices = inputFile["curveIndices"];
-                LAStringVector curveTenors = inputFile["curveTenors"];
+                AQLStringVector curveIndices = inputFile["curveIndices"];
+                AQLStringVector curveTenors = inputFile["curveTenors"];
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
-                LAStringMatrix swapLVB = inputFile["swapLVB"];
+                AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
                 double stubRate = validation::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
@@ -150,7 +150,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST2_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -183,10 +183,10 @@ namespace google_test
 
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( Test3_getStubRateInputs, i ) );
 
-                LAStringVector curveIndices = inputFile["curveIndices"];
-                LAStringVector curveTenors = inputFile["curveTenors"];
+                AQLStringVector curveIndices = inputFile["curveIndices"];
+                AQLStringVector curveTenors = inputFile["curveTenors"];
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
-                LAStringMatrix swapLVB = inputFile["swapLVB"];
+                AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
                 double stubRate = validation::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
@@ -197,7 +197,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST3_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -230,10 +230,10 @@ namespace google_test
 
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( Test4_getStubRateInputs, i ) );
 
-                LAStringVector curveIndices = inputFile["curveIndices"];
-                LAStringVector curveTenors = inputFile["curveTenors"];
+                AQLStringVector curveIndices = inputFile["curveIndices"];
+                AQLStringVector curveTenors = inputFile["curveTenors"];
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
-                LAStringMatrix swapLVB = inputFile["swapLVB"];
+                AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
                 double stubRate = validation::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
@@ -244,7 +244,7 @@ namespace google_test
         {
             EXPECT_GE( i, TEST4_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

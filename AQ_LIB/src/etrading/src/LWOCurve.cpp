@@ -157,8 +157,8 @@ namespace etrading
     {
         if( curveBuildProps_ )
         {
-            LAString curveCollection = curveBuildProps_->curveCollectionName_.c_str();
-            LAString curveIndex = curveBuildProps_->curveIndexName_.c_str();
+            AQLString curveCollection = curveBuildProps_->curveCollectionName_.c_str();
+            AQLString curveIndex = curveBuildProps_->curveIndexName_.c_str();
             if(etrading::isCurveRegistered(curveCollection))
             {
                 etrading::removeCurveFromEntityPool(curveCollection,curveIndex);
@@ -830,7 +830,7 @@ namespace etrading
 
         // Forward Rates are saved and indexed by an ACT/365 yearFraction
         const bool includeLast = true;
-		LAString dayCount("ACT/365");
+		AQLString dayCount("ACT/365");
         const double yearFractionForFixingDate = LADateScheduleHelpers::getTerm( toLADateFromGregorianDate( asOfDate ), toLADateFromGregorianDate( unadjustedFixingDate ), dayCount, includeLast );
 
         return calculateForwardRate( yearFractionForFixingDate );
@@ -930,7 +930,7 @@ namespace etrading
         return retVec;
     };
 
-    const std::pair<const BusinessDayAdjustmentEnum, const LAMathCalendar*> LWOCurve::getBusinessDayAdjust( const BusinessDayAdjustmentType adjType ) const
+    const std::pair<const BusinessDayAdjustmentEnum, const AQLMathCalendar*> LWOCurve::getBusinessDayAdjust( const BusinessDayAdjustmentType adjType ) const
     {
         if( curveBuildProps_ == nullptr )
         {
@@ -974,7 +974,7 @@ namespace etrading
         return date;
     };
 
-    const LAMathCalendar* LWOCurve::getCalendar( const std::string& calendar ) const
+    const AQLMathCalendar* LWOCurve::getCalendar( const std::string& calendar ) const
     {
         const std::string calendarName = trim_to_upper( calendar.c_str() );
         if( curveBuildProps_ )
@@ -992,7 +992,7 @@ namespace etrading
                 return curveBuildProps_->getMlibPaymentCalendar();
             }
         }
-        return &LAMathCalendarSet::getCalendar( calendarName.c_str() );
+        return &AQLMathCalendarSet::getCalendar( calendarName.c_str() );
     };
 
     VariantMatrix LWOCurve::getVariantMatrix() const

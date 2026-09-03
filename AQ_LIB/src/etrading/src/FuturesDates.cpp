@@ -9,31 +9,31 @@
 namespace etrading
 {
     // Function to get today's date using system date
-    LADate todaysDate()
+    AQLDate todaysDate()
     {
-        LADate today;
+        AQLDate today;
         today.setSystemDate();
         return today;
     }
      
 
     /* @brief			Function to calculate a future's start date given the futures contract ticker
-    *  @param [in]		LAString        future's ticker
+    *  @param [in]		AQLString        future's ticker
     *  @return			returns a date representing the future's start date
     */
-    LADate futureStartDate( const LAString& futuresTicker )
+    AQLDate futureStartDate( const AQLString& futuresTicker )
     {
         // Futures Ticker must be in the format futures contract + year e.g. Dec-19 as Z9 or Z2019.
         // This means the futures ticker must be of size 2, 3 or 5 to be valid.
         if ( futuresTicker.size() != 2 && futuresTicker.size() != 3 && futuresTicker.size() != 5 )
         {
-            throw LACoreInvalidData("#Error: Invalid futures ticker. The futures ticker must be input as contract + year. For example Dec-19 can be entered as Z9, Z19 or Z2019.", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("#Error: Invalid futures ticker. The futures ticker must be input as contract + year. For example Dec-19 can be entered as Z9, Z19 or Z2019.", __FILE__, __LINE__);
         }
 
-        LADate futuresStartDate = LADate();
+        AQLDate futuresStartDate = AQLDate();
 
         // Get the future's month from the ticker
-        LAString futuresContract = futuresTicker.subString( 0, 0 ).toUpper(); // Get the first character from the futuresTicker, note must be in uppercase
+        AQLString futuresContract = futuresTicker.subString( 0, 0 ).toUpper(); // Get the first character from the futuresTicker, note must be in uppercase
         unsigned int month  = etrading::LADateHelpers::changeFutureMonthFormat( futuresContract );
         
         // Get the future's year from the ticker
@@ -43,10 +43,10 @@ namespace etrading
             //
             // Case 1: Format: Z7 = Dec-2017
             //
-            LAString futuresYear = futuresTicker.subString( 1, 1 ); // Get the second character from the futuresTicker
+            AQLString futuresYear = futuresTicker.subString( 1, 1 ); // Get the second character from the futuresTicker
             year = etrading::StringToNumber< unsigned int >( futuresYear.getCString() );
 
-            LADate currentDate = etrading::getCurrentMLibDate();
+            AQLDate currentDate = etrading::getCurrentMLibDate();
             unsigned int currentDecade = etrading::getCurrentDecade();
 
             // Get the contract year, if the year is in the past roll forwards 1 decade
@@ -66,7 +66,7 @@ namespace etrading
             //
             // Case 2: Format: Z17 = Dec-2017
             //
-            LAString futuresYear = futuresTicker.subString( 1, 2 ); // Get characters 2-3 from the futuresTicker
+            AQLString futuresYear = futuresTicker.subString( 1, 2 ); // Get characters 2-3 from the futuresTicker
             year = etrading::StringToNumber< unsigned int >( futuresYear.getCString() );
             
             unsigned int currentCentury = etrading::getCurrentCentury();
@@ -78,7 +78,7 @@ namespace etrading
             //
             // Case 3: Format: Z2017 = Dec-2017
             //
-            LAString futuresYear = futuresTicker.subString( 1, 4 ); // Get characters 2-5 from the futuresTicker
+            AQLString futuresYear = futuresTicker.subString( 1, 4 ); // Get characters 2-5 from the futuresTicker
             year = etrading::StringToNumber< unsigned int >( futuresYear.getCString() );
             
             futuresStartDate = etrading::LADateHelpers::getFuturesContractStartDate( month, year );
@@ -140,7 +140,7 @@ namespace etrading
         monthAndYear.year_  = year;
     }
 
-    MonthYear monthYearCurrentIMM( const LADate& valuationDate )
+    MonthYear monthYearCurrentIMM( const AQLDate& valuationDate )
     {
         MonthYear monthyear; 
         monthyear.month_   = valuationDate.monthOfYear();
@@ -161,18 +161,18 @@ namespace etrading
 
 
     /* @brief			Function to calculate the current IMM Date
-    *  @param [in]		LADate          valuationDate - valuation date the reference date for the IMM Date
+    *  @param [in]		AQLDate          valuationDate - valuation date the reference date for the IMM Date
     *  @param [in]		boolean         includeToday - if IMM date is today include or exclude? Defaults to false
     *  @param [in]		string          calendar - LA Flag, needed for the underlying fuction - we think this is not needed - defaults to nothing "" i.e. null string
     *  @param [in]		string          businessDayAdjustment - LA flag, needed for the underlying function - we think this is not needed - defaults to NO_CHANGE i.e. unadjusted
     *  @return			returns a date representing the future's start date
     */
-    LADate currentIMMDate( const LADate& valuationDate, const bool includeToday, const std::string& calendar, const std::string businessDayAdjustment )
+    AQLDate currentIMMDate( const AQLDate& valuationDate, const bool includeToday, const std::string& calendar, const std::string businessDayAdjustment )
     {
         MonthYear currentIMM = monthYearCurrentIMM( valuationDate );
-		LAString calendarStr( calendar.c_str() );
-		LAString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        LADate IMMDate = LADateScheduleHelpers::getIMMDate1( currentIMM.year_, currentIMM.month_, calendarStr , businessDayAdjustmentStr );
+		AQLString calendarStr( calendar.c_str() );
+		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
+        AQLDate IMMDate = LADateScheduleHelpers::getIMMDate1( currentIMM.year_, currentIMM.month_, calendarStr , businessDayAdjustmentStr );
         
         // Roll Backwards when the current IMM is in the future and manage the IMM that rolls on the valuation date
         if ( (IMMDate > valuationDate) || ( IMMDate == valuationDate && !includeToday) )
@@ -187,19 +187,19 @@ namespace etrading
     
 
     /* @brief			Function to calculate the Nth IMM Date from the Valuation Date
-    *  @param [in]		LADate          valuationDate - valuation date the reference date for the IMM Date
+    *  @param [in]		AQLDate          valuationDate - valuation date the reference date for the IMM Date
     *  @param [in]		int             nthIMM - the nth IMM date to calculate
     *  @param [in]		boolean         includeToday - if IMM date is today include or exclude? Defaults to false
     *  @param [in]		string          calendar - LA Flag, needed for the underlying fuction - we think this is not needed - defaults to nothing "" i.e. null string
     *  @param [in]		string          businessDayAdjustment - LA flag, needed for the underlying function - we think this is not needed - defaults to NO_CHANGE i.e. unadjusted
     *  @return			returns a date representing the future's start date
     */
-    LADate nthIMMDate( const LADate& valuationDate, const int& nthIMM, const bool includeToday, const std::string& calendar, const std::string businessDayAdjustment )
+    AQLDate nthIMMDate( const AQLDate& valuationDate, const int& nthIMM, const bool includeToday, const std::string& calendar, const std::string businessDayAdjustment )
     {
         AQ_REQUIRE( nthIMM >= 0 && nthIMM <= 1000, "Invalid IMM Futures Contract - nthIMM must be between 0 and 1,000")
 
         // Imply the Nth IMM Month and Year from the Current IMM Month Year
-        const LADate currentIMMReferenceDate = currentIMMDate( valuationDate, includeToday, calendar, businessDayAdjustment );
+        const AQLDate currentIMMReferenceDate = currentIMMDate( valuationDate, includeToday, calendar, businessDayAdjustment );
         
         // Return the result for nthIMM = 0 i.e. CurrentIMMDate
         if ( nthIMM == 0 )
@@ -224,65 +224,65 @@ namespace etrading
         }
 
         // Calculate the Nth IMM Date from the Current IMM Date
-		LAString calendarStr( calendar.c_str() );
-		LAString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        LADate nthIMMDate = LADateScheduleHelpers::getIMMDate1( monthYearNthIMM.year_, monthYearNthIMM.month_, calendarStr , businessDayAdjustmentStr );
+		AQLString calendarStr( calendar.c_str() );
+		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
+        AQLDate nthIMMDate = LADateScheduleHelpers::getIMMDate1( monthYearNthIMM.year_, monthYearNthIMM.month_, calendarStr , businessDayAdjustmentStr );
         return nthIMMDate;
     }
 
 
     /* @brief			Function to calculate the Next IMM Date relative to the Reference Date
-    *  @param [in]		LADate          referenceDate - the reference date for the IMM Date
+    *  @param [in]		AQLDate          referenceDate - the reference date for the IMM Date
     *  @param [in]		string          calendar - LA Flag, needed for the underlying fuction - we think this is not needed - defaults to nothing "" i.e. null string
     *  @param [in]		string          businessDayAdjustment - LA flag, needed for the underlying function - we think this is not needed - defaults to NO_CHANGE i.e. unadjusted
     *  @return			returns a date representing the future's start date
     */
-    LADate nextIMMDate( const LADate& referenceDate, const std::string& calendar, const std::string businessDayAdjustment )
+    AQLDate nextIMMDate( const AQLDate& referenceDate, const std::string& calendar, const std::string businessDayAdjustment )
     {
         MonthYear monthYearIMM = monthYearCurrentIMM( referenceDate );
         monthYearRollIMMForwards( monthYearIMM, 3 );
-		LAString calendarStr( calendar.c_str() );
-		LAString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        LADate nextIMMDate = LADateScheduleHelpers::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
+		AQLString calendarStr( calendar.c_str() );
+		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
+        AQLDate nextIMMDate = LADateScheduleHelpers::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
         return nextIMMDate;
     }
 
 
     /* @brief			Function to calculate the previous IMM Date relative to the Reference Date
-    *  @param [in]		LADate          referenceDate - reference date the reference date for the IMM Date
+    *  @param [in]		AQLDate          referenceDate - reference date the reference date for the IMM Date
     *  @param [in]		string          calendar - LA Flag, needed for the underlying fuction - we think this is not needed - defaults to nothing "" i.e. null string
     *  @param [in]		string          businessDayAdjustment - LA flag, needed for the underlying function - we think this is not needed - defaults to NO_CHANGE i.e. unadjusted
     *  @return			returns a date representing the future's start date
     */
-    LADate previousIMMDate( const LADate& referenceDate, const std::string& calendar, const std::string businessDayAdjustment )
+    AQLDate previousIMMDate( const AQLDate& referenceDate, const std::string& calendar, const std::string businessDayAdjustment )
     {
         MonthYear monthYearIMM = monthYearCurrentIMM( referenceDate );
         monthYearRollIMMBackwards( monthYearIMM, 3 );
-		LAString calendarStr( calendar.c_str() );
-		LAString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
-        LADate previousIMMDate = LADateScheduleHelpers::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
+		AQLString calendarStr( calendar.c_str() );
+		AQLString businessDayAdjustmentStr( businessDayAdjustment.c_str() );
+        AQLDate previousIMMDate = LADateScheduleHelpers::getIMMDate1( monthYearIMM.year_, monthYearIMM.month_, calendarStr , businessDayAdjustmentStr );
         return previousIMMDate;
     }
 
 
     /* @brief			Function to provide the current IMM Futures Ticker
-    *  @param [in]		LADate          valuationDate - valuation date the reference date for the IMM Date
+    *  @param [in]		AQLDate          valuationDate - valuation date the reference date for the IMM Date
     *  @param [in]		boolean         includeToday - if IMM date is today include or exclude? Defaults to false
     *  @param [in]		string          calendar - LA Flag, needed for the underlying fuction - we think this is not needed - defaults to nothing "" i.e. null string
     *  @param [in]		string          businessDayAdjustment - LA flag, needed for the underlying function - we think this is not needed - defaults to NO_CHANGE i.e. unadjusted
     *  @param [in]		bool            showYearWithTwoDigits - Show contacts with 2 year digits i.e. Z19 instead of the traditional Z9 format
     *  @return			returns a date representing the future's start date
     */
-    std::string currentIMMFuturesTicker( const LADate& valuationDate, const bool includeToday, const std::string& calendar, const std::string businessDayAdjustment, const bool showYearWithTwoDigits )
+    std::string currentIMMFuturesTicker( const AQLDate& valuationDate, const bool includeToday, const std::string& calendar, const std::string businessDayAdjustment, const bool showYearWithTwoDigits )
     {
-        const LADate futuresStartDate = currentIMMDate( valuationDate, includeToday, calendar, businessDayAdjustment );
+        const AQLDate futuresStartDate = currentIMMDate( valuationDate, includeToday, calendar, businessDayAdjustment );
         std::string futuresTicker = convertDateToFuturesTicker( futuresStartDate, showYearWithTwoDigits );
         return futuresTicker;
     }
     
 
     /* @brief			Function to provide the nth IMM Futures Ticker
-    *  @param [in]		LADate          valuationDate - valuation date the reference date for the IMM Date
+    *  @param [in]		AQLDate          valuationDate - valuation date the reference date for the IMM Date
     *  @param [in]		int             nthIMM - the nth IMM date to calculate
     *  @param [in]		boolean         includeToday - if IMM date is today include or exclude? Defaults to false
     *  @param [in]		string          calendar - LA Flag, needed for the underlying fuction - we think this is not needed - defaults to nothing "" i.e. null string
@@ -290,50 +290,50 @@ namespace etrading
     *  @param [in]		bool            showYearWithTwoDigits - Show contacts with 2 year digits i.e. Z19 instead of the traditional Z9 format
     *  @return			returns a date representing the future's start date
     */
-    std::string nthIMMFuturesTicker( const LADate& valuationDate, const int& nthIMM, const bool includeToday, const std::string& calendar, const std::string businessDayAdjustment, const bool showYearWithTwoDigits  )
+    std::string nthIMMFuturesTicker( const AQLDate& valuationDate, const int& nthIMM, const bool includeToday, const std::string& calendar, const std::string businessDayAdjustment, const bool showYearWithTwoDigits  )
     {
         AQ_REQUIRE( nthIMM >= 0 && nthIMM <= 1000, "Invalid IMM Futures Contract - nthIMM must be between 0 and 1,000")
-        const LADate futuresStartDate = nthIMMDate( valuationDate, nthIMM, includeToday, calendar, businessDayAdjustment );
+        const AQLDate futuresStartDate = nthIMMDate( valuationDate, nthIMM, includeToday, calendar, businessDayAdjustment );
         std::string futuresTicker = convertDateToFuturesTicker( futuresStartDate, showYearWithTwoDigits );
         return futuresTicker;
     }
 
 
     /* @brief			Function to provide the next IMM Futures Ticker
-    *  @param [in]		LADate          referenceDate - the reference date for the IMM Date
+    *  @param [in]		AQLDate          referenceDate - the reference date for the IMM Date
     *  @param [in]		string          calendar - LA Flag, needed for the underlying fuction - we think this is not needed - defaults to nothing "" i.e. null string
     *  @param [in]		string          businessDayAdjustment - LA flag, needed for the underlying function - we think this is not needed - defaults to NO_CHANGE i.e. unadjusted
     *  @param [in]		bool            showYearWithTwoDigits - Show contacts with 2 year digits i.e. Z19 instead of the traditional Z9 format
     *  @return			returns a date representing the future's start date
     */
-    std::string nextIMMFuturesTicker( const LADate& referenceDate, const std::string& calendar, const std::string businessDayAdjustment, const bool showYearWithTwoDigits )
+    std::string nextIMMFuturesTicker( const AQLDate& referenceDate, const std::string& calendar, const std::string businessDayAdjustment, const bool showYearWithTwoDigits )
     {
-        const LADate futuresStartDate = nextIMMDate( referenceDate, calendar, businessDayAdjustment );
+        const AQLDate futuresStartDate = nextIMMDate( referenceDate, calendar, businessDayAdjustment );
         std::string futuresTicker = convertDateToFuturesTicker( futuresStartDate, showYearWithTwoDigits );
         return futuresTicker;
     }
     
 
     /* @brief			Function to provide the previous IMM Futures Ticker
-    *  @param [in]		LADate          referenceDate - reference date the reference date for the IMM Date
+    *  @param [in]		AQLDate          referenceDate - reference date the reference date for the IMM Date
     *  @param [in]		string          calendar - LA Flag, needed for the underlying fuction - we think this is not needed - defaults to nothing "" i.e. null string
     *  @param [in]		string          businessDayAdjustment - LA flag, needed for the underlying function - we think this is not needed - defaults to NO_CHANGE i.e. unadjusted
     *  @param [in]		bool            showYearWithTwoDigits - Show contacts with 2 year digits i.e. Z19 instead of the traditional Z9 format
     *  @return			returns a date representing the future's start date
     */
-    std::string previousIMMFuturesTicker( const LADate& referenceDate, const std::string& calendar, const std::string businessDayAdjustment, const bool showYearWithTwoDigits )
+    std::string previousIMMFuturesTicker( const AQLDate& referenceDate, const std::string& calendar, const std::string businessDayAdjustment, const bool showYearWithTwoDigits )
     {
-        const LADate futuresStartDate = previousIMMDate( referenceDate, calendar, businessDayAdjustment );
+        const AQLDate futuresStartDate = previousIMMDate( referenceDate, calendar, businessDayAdjustment );
         std::string futuresTicker = convertDateToFuturesTicker( futuresStartDate, showYearWithTwoDigits );
         return futuresTicker;
     }
 
     /* @brief			Function to provide the previous IMM Futures Ticker
-    *  @param [in]		LADate          futuresStartDate - The futures start date
+    *  @param [in]		AQLDate          futuresStartDate - The futures start date
     *  @param [in]		bool            showYearWithTwoDigits - Show contacts with 2 year digits i.e. Z19 instead of the traditional Z9 format
     *  @return			returns the corresponding futures ticker
     */
-    std::string convertDateToFuturesTicker( const LADate& futuresStartDate, const bool showYearWithTwoDigits  )
+    std::string convertDateToFuturesTicker( const AQLDate& futuresStartDate, const bool showYearWithTwoDigits  )
     {
         // Futures Month Codes
         std::vector<std::string> monthCode = { "F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z" };

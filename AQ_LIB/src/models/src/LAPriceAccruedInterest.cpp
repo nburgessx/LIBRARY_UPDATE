@@ -14,7 +14,7 @@
 
 #include "LAPriceAccruedInterest.h"
 #include "LAPriceTradeValue.h"
-#include "LAObject.h"
+#include "AQLObject.h"
 
 
 
@@ -28,7 +28,7 @@ using namespace std;
     @brief default constructor
 */
 LAPriceAccruedInterest::LAPriceAccruedInterest()
-: LACoreFunctionBase(), mpPayOff(NULL)
+: AQLCoreFunctionBase(), mpPayOff(NULL)
 {
 
 }
@@ -47,7 +47,7 @@ LAPriceAccruedInterest::~LAPriceAccruedInterest()
 	@param[in] v LAPriceAccruedInterest object
 */
 LAPriceAccruedInterest::LAPriceAccruedInterest(const LAPriceAccruedInterest& v)
-: LACoreFunctionBase(v), mpPayOff(v.mpPayOff)
+: AQLCoreFunctionBase(v), mpPayOff(v.mpPayOff)
 {
 
 }
@@ -63,7 +63,7 @@ LAPriceAccruedInterest::LAPriceAccruedInterest(const LAPriceAccruedInterest& v)
 bool
 LAPriceAccruedInterest::isTypeOf(function_t id) const
 {
-	return (id == FN_IR_ACCRUEDINTEREST ? true : LACoreFunctionBase::isTypeOf(id));
+	return (id == FN_IR_ACCRUEDINTEREST ? true : AQLCoreFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -80,7 +80,7 @@ LAPriceAccruedInterest::getType() const
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceAccruedInterest::clone() const
 {
     try 
@@ -89,7 +89,7 @@ LAPriceAccruedInterest::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -100,7 +100,7 @@ LAPriceAccruedInterest::clone() const
 	@return accrued interest
 */
 double
-LAPriceAccruedInterest::calcAccruedInterest(const LADate& basedate, unsigned int legno) const
+LAPriceAccruedInterest::calcAccruedInterest(const AQLDate& basedate, unsigned int legno) const
 {
 	const vector<PayOffToolHolderVector>& payoff_vec = mpPayOff->getPayOff();
 	unsigned int size = payoff_vec.at(legno).size();
@@ -129,13 +129,13 @@ LAPriceAccruedInterest::calcAccruedInterest(const LADate& basedate, unsigned int
 	@param[in] att Data to hold evaluation class
 */
 void	            
-LAPriceAccruedInterest::setUp(const LADate& basedate, LAObject& trade, const LADataValuation& att) 
+LAPriceAccruedInterest::setUp(const AQLDate& basedate, AQLObject& trade, const AQLDataValuation& att) 
 {
 	(void)basedate; (void)trade; (void)att; //20070411--Nagase--gcc
 	if (att.isNullDataProvider())
 	{
 		//error
-		throw LACoreInvalidData("LADataProvider class does not exist", __FILE__, __LINE__);	
+		throw AQLCoreInvalidData("AQLDataProvider class does not exist", __FILE__, __LINE__);	
 	}	
 	LAPriceTradeValue::LAPriceTradeValueDataProvider* dataProvider = 
 		&dynamic_cast<LAPriceTradeValue::LAPriceTradeValueDataProvider&>(att.getDataProvider());

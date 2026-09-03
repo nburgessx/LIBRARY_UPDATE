@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -21,15 +21,15 @@ namespace validation
     *  @param [in]		swapRates			Libor swap market rates
     */
 
-    const LAString tryMeCurveCalibrateOIS( const LAString& curveCollection,
-                                           const LAString& staticDataTable,
-                                           const LAString& curveIndex,
-                                           const LAStringMatrix& curveConv,
-                                           const LAStringMatrix& oisConv,
-                                           const LAStringMatrix& oisRates,
-                                           const LAStringMatrix& oisHistoricalRates,
-                                           const LAStringMatrix& liborOisBasisConv,
-                                           const LAStringMatrix& liborOisBasisRates,
-                                           const LAStringMatrix& swapConv,
-                                           const LAStringMatrix& swapRates );
+    const AQLString tryMeCurveCalibrateOIS( const AQLString& curveCollection,
+                                           const AQLString& staticDataTable,
+                                           const AQLString& curveIndex,
+                                           const AQLStringMatrix& curveConv,
+                                           const AQLStringMatrix& oisConv,
+                                           const AQLStringMatrix& oisRates,
+                                           const AQLStringMatrix& oisHistoricalRates,
+                                           const AQLStringMatrix& liborOisBasisConv,
+                                           const AQLStringMatrix& liborOisBasisRates,
+                                           const AQLStringMatrix& swapConv,
+                                           const AQLStringMatrix& swapRates );
 }

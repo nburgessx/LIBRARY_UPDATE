@@ -1,8 +1,8 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "FixingTable.h"
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 #include "CoreEnumerations.h"
 #include "LabelValueBlock.h"
 #include "DataProvider.h"
@@ -13,7 +13,7 @@ namespace etrading
 
 	/* @brief			return the day count used in the core library
 	*/
-	LAString getDiscountFactorDayCount();
+	AQLString getDiscountFactorDayCount();
 
 	bool isBasisFlagForDiscountFactor();
 
@@ -22,7 +22,7 @@ namespace etrading
 	*  @param [inout]	crvIndex		curve index
 	*  @param [inout]	interpolation	interpolation
 	*/
-	void populateDiscountFactorConventions(const LAString& curveCollection, const LAString& crvIndex, LAString& interpolation);
+	void populateDiscountFactorConventions(const AQLString& curveCollection, const AQLString& crvIndex, AQLString& interpolation);
 
 	/* @brief			populate and setting default values
 	*  @param [in]		curveCollection	curve collection
@@ -31,7 +31,7 @@ namespace etrading
 	*  @param [inout]	businessDayAdj	business day adjustment
 	*  @param [inout]	calendar		calendar
 	*/
-	void populateDiscountFactorConventions(const LAString& curveCollection, const LAString& curveIndex, LAString& interpolation, LAString& businessDayAdj, LAString& calendar);
+	void populateDiscountFactorConventions(const AQLString& curveCollection, const AQLString& curveIndex, AQLString& interpolation, AQLString& businessDayAdj, AQLString& calendar);
 
 	/* @brief			populate and setting default values
 	*  @param [in]		curveCollection	Curve collection
@@ -43,19 +43,19 @@ namespace etrading
 	*  @param [inout]	dayCount		Day count
 	*  @param [out]		isStdCurve		True if the curve is STD
 	*/
-	void populateForwardRateConventions(const LAString& curveCollection,
-		const LAString& crvIndex,
+	void populateForwardRateConventions(const AQLString& curveCollection,
+		const AQLString& crvIndex,
 		const BooleanEnum& fwdInter,
-		LAString& interpolation,
-		LAString& businessDayAdj,
-		LAString& calendar,
-		LAString& dayCount,
+		AQLString& interpolation,
+		AQLString& businessDayAdj,
+		AQLString& calendar,
+		AQLString& dayCount,
 		bool& isFwdInter,
 		bool& useFwdData);
 
 
-	// Function to get the curve Daycount as an LAString
-	LAString getCurveDaycountAsLAString(const LAString& curveCollection, const LAString& curveIndex);
+	// Function to get the curve Daycount as an AQLString
+	AQLString getCurveDaycountAsLAString(const AQLString& curveCollection, const AQLString& curveIndex);
 
 	/// Function to get the curve Daycount as a std::string
 	std::string getCurveDaycountAsStandardString(const std::string & curveCollection, const std::string & curveIndex);
@@ -75,7 +75,7 @@ namespace etrading
 	void generateScheduleForZeroDiscountMargin(const std::string & curveCollection,
 		const std::string & curveIndex,
 		CurveTenorEnum &curveTenorEnum,
-		LADate &asOfDate,
+		AQLDate &asOfDate,
 		std::string &curveDayCount,
 		DateVector &schedulePaymentDates,
 		DateVector &scheduleAccrualStartDates,
@@ -114,8 +114,8 @@ namespace etrading
 	*  @return			A vector of discount factors
 	*/
 	DoubleVector getCurveDiscountFactors(const DateVector& paymentDates,
-		const LAString& curveCollection,
-		const LAString& curveIndex,
+		const AQLString& curveCollection,
+		const AQLString& curveIndex,
 		const double& spread = 0.0,
 		const std::string& fixingTableName = "");
 
@@ -128,15 +128,15 @@ namespace etrading
 	*  @return			The forward rate
 	*/
 	FloatRateData getForwardRate(const FloatRateData& curveFowardRate,
-		const LADate& asOfDate,
-		const LADate& fixingDate,
-		const LADate& paymentDate,
+		const AQLDate& asOfDate,
+		const AQLDate& fixingDate,
+		const AQLDate& paymentDate,
 		const std::shared_ptr<FixingTable>& fixingTable);
 
 	std::string validateCompoundingMethod(const std::string& compoundingMethod);
 
 	// Find the index for the next cashflow, so that we can ignore cashflows in the past
-	size_t getFirstNonpastDateIndex(const DateVector& dates, const LADate& asOf);
+	size_t getFirstNonpastDateIndex(const DateVector& dates, const AQLDate& asOf);
 
 	/* @brief			Get CurveDiscountFactors
 	*  @param [in]		toDates			A single or an array of to-date in YYYYMMDD formate
@@ -146,8 +146,8 @@ namespace etrading
 	*/
 	DoubleVector getCurveDiscountFactors(size_t firstNonpastCashflowIndex,
 		const DateVector& toDates,
-		const LAString& curveCollection,
-		const LAString& curveIndex);
+		const AQLString& curveCollection,
+		const AQLString& curveIndex);
 
 	/* @brief			validation method for meCurveDiscountFactors
 	*  @param [in]		toDates			A single or an array of to-date in YYYYMMDD formate
@@ -158,10 +158,10 @@ namespace etrading
 	*  @return			A array of discount factors
 	*/
 	DoubleVector getCurveDiscountFactorsFromBaseDate(const size_t& firstNonpastCashflowIndex,
-		const LADate& baseDate,
+		const AQLDate& baseDate,
 		const DateVector& paymentDates,
-		const LAString& curveCollection,
-		const LAString& curveIndex);
+		const AQLString& curveCollection,
+		const AQLString& curveIndex);
 
 	/* @brief			Get the curve forward rate given a year fraction
 	*  @param [in]		fromDate			forward rate start or from date
@@ -174,9 +174,9 @@ namespace etrading
 	*/
 	DoubleVector getCurveForwardRatesFromYearFraction(const DateVector& fromDates,
 		double yearFraction,
-		const LAString& dayCount,
-		const LAString& curveCollection,
-		const LAString& curveIndex,
+		const AQLString& dayCount,
+		const AQLString& curveCollection,
+		const AQLString& curveIndex,
 		const BooleanEnum& fwdInter = NONE_BOOL,
 		const BusinessDayAdjustmentEnum& businessDayAdj = NONE_BUSINESS_DAY_ADJ);
 
@@ -191,8 +191,8 @@ namespace etrading
 	*/
 	DoubleVector getCurveForwardRatesFromForwardDates(const DateVector& fromDates,
 		const DateVector& toDates,
-		const LAString& curveCollection,
-		const LAString& curveIndex,
+		const AQLString& curveCollection,
+		const AQLString& curveIndex,
 		const BooleanEnum& fwdInter = NONE_BOOL,
 		const BusinessDayAdjustmentEnum& businessDayAdj = NONE_BUSINESS_DAY_ADJ);
 
@@ -211,9 +211,9 @@ namespace etrading
 	*  @param [in]		ToleranceTenor			Fixing date tolerance tenor
 	*  @return			Fixing type, i.e. Advance, Arrears, or Abitrary
 	*/
-	FixingTypeEnum getFixingTypeByFixingDate(const LADate& fixingDate,
-		const LADate& accrualStartDate,
-		const LADate& accrualEndDate,
+	FixingTypeEnum getFixingTypeByFixingDate(const AQLDate& fixingDate,
+		const AQLDate& accrualStartDate,
+		const AQLDate& accrualEndDate,
 		const BusinessDayAdjustmentEnum& fixingBusinessDayAdj,
 		const std::string& fixingCalendar,
 		const std::string& fixingDateToleranceTenor);
@@ -231,9 +231,9 @@ namespace etrading
 	*  @return			The adjusted forward rate
 	*/
 	FloatRateData getCurveForwardRateWithConvexityAdjustment(const double& unadjustedForwardRate,
-		const LADate& fixingDate,
-		const LADate& fixingEndDate,
-		const LADate& valuationDate,
+		const AQLDate& fixingDate,
+		const AQLDate& fixingEndDate,
+		const AQLDate& valuationDate,
 		const DayCountEnum& dayCount,
 		const FixingTypeEnum& fixingType,
 		const VolatilityPtr& volObject,
@@ -256,7 +256,7 @@ namespace etrading
 	std::vector<FloatRateData> getCurveForwardRatesWithConvexityAdjustment(const DoubleVector& unadjustedForwardRates,
 		const DateVector& fromDates,
 		const DateVector& toDates,
-		const LADate& valuationDate,
+		const AQLDate& valuationDate,
 		const DayCountEnum& dayCount,
 		const FixingTypeEnum& fixingType,
 		const VolatilityPtr& volObject,
@@ -274,10 +274,10 @@ namespace etrading
 	*  @return			The forward rates based on the fixing dates
 	*/
 	DateVector getCurveFixingEndDates(const DateVector& fixingDates,
-		const LAString& curveCollection,
-		const LAString& curveIndex,
+		const AQLString& curveCollection,
+		const AQLString& curveIndex,
 		const BusinessDayAdjustmentEnum& businessDayAdj = NONE_BUSINESS_DAY_ADJ,
-		const LAString& calendar = "",
+		const AQLString& calendar = "",
 		const BooleanEnum& fwdInter = NONE_BOOL,
 		const CurveTenorEnum& curveTenorOverride = NONE_CURVE_TENOR);
 
@@ -291,10 +291,10 @@ namespace etrading
 	*  @return			The forward rates based on the fixing dates
 	*/
 	DoubleVector getCurveFixingEndDatesAsTerms(const DateVector& fixingDates,
-		const LAString& curveCollection,
-		const LAString& curveIndex,
+		const AQLString& curveCollection,
+		const AQLString& curveIndex,
 		const BusinessDayAdjustmentEnum& businessDayAdj = NONE_BUSINESS_DAY_ADJ,
-		const LAString& calendar = "",
+		const AQLString& calendar = "",
 		const BooleanEnum& fwdInter = NONE_BOOL,
 		const CurveTenorEnum& curveTenorOverride = NONE_CURVE_TENOR);
 
@@ -308,10 +308,10 @@ namespace etrading
 	*  @return			The forward rates based on the fixing dates
 	*/
 	DoubleVector getCurveForwardRates( const DateVector& fixingDates,
-									   const LAString& curveCollection,
-									   const LAString& curveIndex,
+									   const AQLString& curveCollection,
+									   const AQLString& curveIndex,
 									   const BusinessDayAdjustmentEnum& businessDayAdj = NONE_BUSINESS_DAY_ADJ,
-									   const LAString& calendar = "",
+									   const AQLString& calendar = "",
 									   const BooleanEnum& fwdInter = NONE_BOOL,
 									   const CurveTenorEnum& curveTenorOverride = NONE_CURVE_TENOR);
 
@@ -331,15 +331,15 @@ namespace etrading
 	*/
 	void getForwardRatesForCurveIndices(DateVector& fixingDates,
 									    DoubleMatrix& forwardRates,
-									    const LAString& curveCollection,
-									    const LAStringVector& curveIndices,
-									    const LAString& startDate,
-									    const LAString& maturity,
+									    const AQLString& curveCollection,
+									    const AQLStringVector& curveIndices,
+									    const AQLString& startDate,
+									    const AQLString& maturity,
 									    const BusinessDayAdjustmentEnum& businessDayAdjust,
-									    const LAString& calendar,
-									    const LAString& rollConvention,
-									    const LAString& frequency,
-									    const LAStringVector& fwdInters = LAStringVector());
+									    const AQLString& calendar,
+									    const AQLString& rollConvention,
+									    const AQLString& frequency,
+									    const AQLStringVector& fwdInters = AQLStringVector());
 
 	/* @brief			Generates a date schedule and uses the date schedule to calculate a vector of discount factors for a set of curveIndices.
 	*  @param [out]		paymentDates		The payment dates on which the discount factors are calculated. Generated from schedule parameters.
@@ -355,14 +355,14 @@ namespace etrading
 	*/
 	void getDiscountFactorsForCurveIndices(DateVector& paymentDates,
 										   DoubleMatrix& discountFactors,
-										   const LAString& curveCollection,
-										   const LAStringVector& curveIndices,
-										   const LAString& startDate,
-										   const LAString& maturity,
+										   const AQLString& curveCollection,
+										   const AQLStringVector& curveIndices,
+										   const AQLString& startDate,
+										   const AQLString& maturity,
 										   const BusinessDayAdjustmentEnum& businessDayAdjust,
-										   const LAString& calendar,
-										   const LAString& rollConvention,
-										   const LAString& frequency);
+										   const AQLString& calendar,
+										   const AQLString& rollConvention,
+										   const AQLString& frequency);
 
 
 	/* @brief			Calculates discount factors for a curve.
@@ -385,14 +385,14 @@ namespace etrading
 	*  @param [in]		curveCollection	ID of the yield curve
 	*  @return			curve indics and curve tenors
 	*/
-	std::pair<LAStringVector, LAStringVector> getStubRateCurveIndicesTenors(const LAString& curveCollection);
+	std::pair<AQLStringVector, AQLStringVector> getStubRateCurveIndicesTenors(const AQLString& curveCollection);
 
 	/* @brief			Get the matching curveIndex (by staticDataTable) from the curveIndices
 	*  @param [in]		stubCurveIndex Stub Curve Index specified by the user
 	*  @param [in]		curveIndices     Indcies for the stub curves
 	*  @return			the matching curveIndex from curveIndices
 	*/
-	LAString getMatchingCurveIndex(const LAString& curveCollection, const LAString& stubCurveIndex, const LAStringVector& curveIndices);
+	AQLString getMatchingCurveIndex(const AQLString& curveCollection, const AQLString& stubCurveIndex, const AQLStringVector& curveIndices);
 
 	/* @brief			Calculate toDate based on startDates and tenor
 	*  @param [in]		startDate			The from date
@@ -402,11 +402,11 @@ namespace etrading
 	*  @param [in]		rollConvention		Roll conventions, ie, Normal, IMM, EOM, Lunar, etc
 	*  @return			A vector of end dates
 	*/
-	LADate getSingleDateFromTenor(const LADate& startDate,
-								  const LAString & tenor,                    // TODO: Convert to StandardString
-								  const LAString & businessDayAdj,           // TODO: Convert to StandardString
-								  const LAString & calendar,                 // TODO: Convert to StandardString
-								  const LAString & rollConvention = "");     // TODO: Convert to StandardString
+	AQLDate getSingleDateFromTenor(const AQLDate& startDate,
+								  const AQLString & tenor,                    // TODO: Convert to StandardString
+								  const AQLString & businessDayAdj,           // TODO: Convert to StandardString
+								  const AQLString & calendar,                 // TODO: Convert to StandardString
+								  const AQLString & rollConvention = "");     // TODO: Convert to StandardString
 
 /* @brief			Calculate toDate based on startDates and tenor
 *  @param [in]		startDates			A vector of from dates
@@ -417,10 +417,10 @@ namespace etrading
 *  @return			A vector of end dates
 */
 	DateVector getDateFromTenor(const DateVector& startDates,
-								const LAString& tenor,              // TODO: Convert to StandardString
-								const LAString& businessDayAdj,     // TODO: Convert to StandardString
-								const LAString& calendar,           // TODO: Convert to StandardString
-								const LAString& rollConvention);	// TODO: Convert to StandardString
+								const AQLString& tenor,              // TODO: Convert to StandardString
+								const AQLString& businessDayAdj,     // TODO: Convert to StandardString
+								const AQLString& calendar,           // TODO: Convert to StandardString
+								const AQLString& rollConvention);	// TODO: Convert to StandardString
 
     /* @brief			Method to get the curve spot date by applying multiple date shifts
     *  @param [in]		asOfDate		        The curve asOfDate
@@ -432,13 +432,13 @@ namespace etrading
     *  @param [in]		paymentBusDayAdj        Rule that decides if end date should roll forward or backward etc, ie, MF
     *  @return			The curve spot date
     */
-	LADate getShiftedSpotDate(const LADate& asOfDate,
-						      const LAString& fixingLag,			// TODO: Convert to StandardString
-						      const LAString& fixingCalendar,		// TODO: Convert to StandardString
-                              const LAString& fixingBusDayAdj,		// TODO: Convert to StandardString
-                              const LAString& paymentLag,			// TODO: Convert to StandardString
-						      const LAString& paymentCalendar,		// TODO: Convert to StandardString
-                              const LAString& paymentBusDayAdj);	// TODO: Convert to StandardString
+	AQLDate getShiftedSpotDate(const AQLDate& asOfDate,
+						      const AQLString& fixingLag,			// TODO: Convert to StandardString
+						      const AQLString& fixingCalendar,		// TODO: Convert to StandardString
+                              const AQLString& fixingBusDayAdj,		// TODO: Convert to StandardString
+                              const AQLString& paymentLag,			// TODO: Convert to StandardString
+						      const AQLString& paymentCalendar,		// TODO: Convert to StandardString
+                              const AQLString& paymentBusDayAdj);	// TODO: Convert to StandardString
 
     /* @brief			Calculate the curve spot date based on the curve asOfDate, spot lag, fixing calendar and payment calendar
     *  @param [in]		curveAsOfDate		The curve asOfDate
@@ -449,12 +449,12 @@ namespace etrading
     *  @param [in]		rollConvention		Roll conventions, ie, Normal, IMM, EOM, Lunar, etc
     *  @return			The curve spot date
     */
-	LADate getCurveUSDSpotDate(const LADate& curveAsOfDate,
-							   const LAString& spotLag,				// TODO: Convert to StandardString
-							   const LAString& fixingCalendar,	    // TODO: Convert to StandardString
-							   const LAString& paymentCalendar,		// TODO: Convert to StandardString
-							   const LAString& businessDayAdj,		// TODO: Convert to StandardString
-							   const LAString& rollConvention);		// TODO: Convert to StandardString
+	AQLDate getCurveUSDSpotDate(const AQLDate& curveAsOfDate,
+							   const AQLString& spotLag,				// TODO: Convert to StandardString
+							   const AQLString& fixingCalendar,	    // TODO: Convert to StandardString
+							   const AQLString& paymentCalendar,		// TODO: Convert to StandardString
+							   const AQLString& businessDayAdj,		// TODO: Convert to StandardString
+							   const AQLString& rollConvention);		// TODO: Convert to StandardString
 
     /* @brief			Calculate toDate based on startDate and yearFraction
     *  @param [in]		startDate			Start date
@@ -462,30 +462,30 @@ namespace etrading
     *  @param [in]		dayCount			Day count convention
     *  @return			The end date derived from the FromDate and given year fraction
     */
-	LADate getDateFromYearFraction(const LADate& startDate,
+	AQLDate getDateFromYearFraction(const AQLDate& startDate,
 		                           const double& yearFraction,
 		                           const DayCountEnum& dayCount);
 
 	//This function is the same as etrading::LACurveForwardRateHelpers::compound() function, but making use of the fixing table
-	double compound(LADataInstance* dataInstance,
-					const LAString& curveID,
-					const LAString& forecastCurveName,
-					const LADate& start_date,
-					const LADate& end_date,
+	double compound(AQLDataInstance* dataInstance,
+					const AQLString& curveID,
+					const AQLString& forecastCurveName,
+					const AQLDate& start_date,
+					const AQLDate& end_date,
 					const double spread,
-					const LAString& frequency_,
+					const AQLString& frequency_,
 					const bool is_start_roll,
-					const LAString& roll_convention_,
-					const LAString& calendar_,
-					const LAString& sliding_rule_,
-					const LAString& day_count_,
-					const LAString& interpolation_,
-					const LAString& compound_type_,
+					const AQLString& roll_convention_,
+					const AQLString& calendar_,
+					const AQLString& sliding_rule_,
+					const AQLString& day_count_,
+					const AQLString& interpolation_,
+					const AQLString& compound_type_,
 					const bool isFwdInter,
 					const std::shared_ptr<FixingTable>& fixingTable,  //fixing table 
 					bool annualized,                                 //true to return annualized rate, default to true
-					const LADate* first_odd = NULL,
-					const LADate* last_odd = NULL,
+					const AQLDate* first_odd = NULL,
+					const AQLDate* last_odd = NULL,
 					const bool usePDay = false);
 
 	/* @brief			Calculate compound rate with fixing table
@@ -511,24 +511,24 @@ namespace etrading
 	*/
 	DoubleVector calculateCompoundRateWithFixingTable(const DateVector& startDates,
 													  const DateVector& endDates,
-													  const LAString& curveCollection,
-													  const LAString& forecastCurveIndex,
-													  const LAString& frequency,
+													  const AQLString& curveCollection,
+													  const AQLString& forecastCurveIndex,
+													  const AQLString& frequency,
 													  double spread,
 													  const StubTypeEnum& stubType,
-													  const LAString& rollDayInput,
-													  const LAString& calendar,
+													  const AQLString& rollDayInput,
+													  const AQLString& calendar,
 													  const BusinessDayAdjustmentEnum& businessDayAdj,
 													  const DayCountEnum& dayCount,
-													  const LAString& interpolation,
-													  const LAString& compoundType,
-													  const LAString& firstStubDate,
-													  const LAString& lastStubDate,
+													  const AQLString& interpolation,
+													  const AQLString& compoundType,
+													  const AQLString& firstStubDate,
+													  const AQLString& lastStubDate,
 													  const BooleanEnum& fwdInter,
 													  const std::shared_ptr<FixingTable>& fixingTable,
 													  bool annualized = true);
 
-	void fixingTableExistenceValidation(const std::shared_ptr<FixingTable>& fixingTable, const LADate& asOfDate, const DateVector& fixingDates, const DateVector& paymentDates);
+	void fixingTableExistenceValidation(const std::shared_ptr<FixingTable>& fixingTable, const AQLDate& asOfDate, const DateVector& fixingDates, const DateVector& paymentDates);
 
 
 	/* @brief			Method to interpolate an interpolation function
@@ -593,7 +593,7 @@ namespace etrading
 						 const double fromXPoint,
 						 const double toXPoint,
 						 const InterpolationEnum& interpolationMethod,
-						 const LADate & asOfDate,
+						 const AQLDate & asOfDate,
 						 const DayCountEnum & accrualDaycount,
 						 const CompoundingFrequencyEnum & compoundFrequency = SIMPLE_COMPOUNDING,
 						 const double joinXValue = 0.0);
@@ -611,7 +611,7 @@ namespace etrading
 							   const DoubleVector fromXPoints,
 							   const DoubleVector toXPoints,
 							   const InterpolationEnum& interpolationMethod,
-							   const LADate & asOfDate,
+							   const AQLDate & asOfDate,
 							   const DayCountEnum & accrualDaycount,
 							   const CompoundingFrequencyEnum & compoundFrequency = SIMPLE_COMPOUNDING,
 							   const double joinXValue = 0.0);
@@ -629,7 +629,7 @@ namespace etrading
 					 const double lowerBound,
 					 const double upperBound,
 					 const InterpolationEnum& interpolationMethod,
-					 const LADate & asOfDate,
+					 const AQLDate & asOfDate,
 					 const DayCountEnum & accrualDaycount,
 					 const CompoundingFrequencyEnum & compoundFrequency = SIMPLE_COMPOUNDING,
 					 const double joinXValue = 0.0);
@@ -640,7 +640,7 @@ namespace etrading
 						   const DoubleVector lowerBounds,
 						   const DoubleVector upperBounds,
 						   const InterpolationEnum& interpolationMethod,
-						   const LADate & asOfDate,
+						   const AQLDate & asOfDate,
 						   const DayCountEnum & accrualDaycount,
 						   const CompoundingFrequencyEnum & compoundFrequency = SIMPLE_COMPOUNDING,
 						   const double joinXValue = 0.0);
@@ -652,10 +652,10 @@ namespace etrading
 	*  @param [in]		curveIndex		The curve index for which to calculate Discount Factors. Default to OIS
 	*  @return			A array of discount factors
 	*/
-	DoubleVector getCurveDiscountFactors(const LADate& baseDate,
+	DoubleVector getCurveDiscountFactors(const AQLDate& baseDate,
 		const DateVector& targetDates,
-		const LAString& curveCollection,
-		const LAString& curveIndex);
+		const AQLString& curveCollection,
+		const AQLString& curveIndex);
 
 	/* @brief			Calculate the discount factors from FromDates to ToDates
 	*  @param [in]		fromDates	    A single or an array of From-date
@@ -664,7 +664,7 @@ namespace etrading
 	*  @param [in]		curveIndex		The curve index for which to calculate Discount Factors. Default to OIS
 	*  @return			A array of discount factors
 	*/
-	DoubleVector getCurveDiscountFactors(const DateVector& fromDates, const DateVector& toDates, const LAString& curveCollection, const LAString& curveIndex);
+	DoubleVector getCurveDiscountFactors(const DateVector& fromDates, const DateVector& toDates, const AQLString& curveCollection, const AQLString& curveIndex);
 
 
 	/* @brief			Converts a given set of yearFractions to ACT/365 yearFractions for Discount factor functions
@@ -674,7 +674,7 @@ namespace etrading
 	*  @param[in]		includelast		True(default):include the last day and not include start day; False:include start day and not include last day
 	*  @return			Year fraction based on ACT365
 	*/
-	void convertToYearFractionsACT365(const LADate& startDate, DoubleVector& yearFractions, const LAString& dayCount, const bool& includeLast = true);
+	void convertToYearFractionsACT365(const AQLDate& startDate, DoubleVector& yearFractions, const AQLString& dayCount, const bool& includeLast = true);
 
 	/* @brief			Get curve discount factor based on fromDate and year fractions
 	*  @param [in]		fromDates			An array of from-dates in YYYYMMDD formate
@@ -686,9 +686,9 @@ namespace etrading
 	*/
 	DoubleVector getCurveDiscountFactorsForwardStartingFromYearFractions(const DateVector& fromDates,
 		const DoubleVector& yearFractions,
-		const LAString& dayCount,
-		const LAString& curveCollection,
-		const LAString& curveIndex);
+		const AQLString& dayCount,
+		const AQLString& curveCollection,
+		const AQLString& curveIndex);
 
 	/* @brief			Get discount factors from asOfDate and yearFractions
    *  @param [in]      yearFractions	An array of yearFractions by year count
@@ -698,9 +698,9 @@ namespace etrading
    *  @return			An array of discount factor
    */
 	DoubleVector getCurveDiscountFactorsFromYearFractions(const DoubleVector& yearFractions,
-		const LAString& dayCount,
-		const LAString& curveCollection,
-		const LAString& curveIndex);
+		const AQLString& dayCount,
+		const AQLString& curveCollection,
+		const AQLString& curveIndex);
 
 	/* @brief			populate and setting default values
 	*  @param [in]		curveCollection	curve collection
@@ -710,14 +710,14 @@ namespace etrading
 	*  @param [inout]	businessDayAdj	business day adjustment
 	*  @param [inout]	dayCount		day count
 	*/
-	void populateZeroRateConventions(const LAString& curveCollection,
-		LAString& curveIndex,
+	void populateZeroRateConventions(const AQLString& curveCollection,
+		AQLString& curveIndex,
 		const BooleanEnum& fwdInter,
-		LAString& interpolation,
-		LAString& dayCount,
-		LAString& frequency,
+		AQLString& interpolation,
+		AQLString& dayCount,
+		AQLString& frequency,
 		bool& isFwdInter,
-		LAString& businessDayAdj);
+		AQLString& businessDayAdj);
 
 	/* @brief			Zero rate over the yearFractions from the curve's asof date
 	*  @param [in]		yearFractions	A  list of given year fractions
@@ -728,10 +728,10 @@ namespace etrading
 	*  @return			Zero rate
 	*/
 	DoubleVector getCurveZeroRatesFromYearFractions(const DoubleVector& yearFractions,
-		const LAString& curveCollection,
-		const LAString& curveIndex,
-		const LAString& frequency = "",
-		const LAString& dayCount = "",
+		const AQLString& curveCollection,
+		const AQLString& curveIndex,
+		const AQLString& frequency = "",
+		const AQLString& dayCount = "",
 		const BooleanEnum& fwdInter = NONE_BOOL);
 
 
@@ -743,8 +743,8 @@ namespace etrading
 	*  @return			The forward rates based on fromDates and toDates
 	*/
 	DoubleVector getCurveForwardRatesFromAsOfDate(const DateVector& toDates,
-												  const LAString& curveCollection,
-												  const LAString& curveIndex,
+												  const AQLString& curveCollection,
+												  const AQLString& curveIndex,
 												  const BooleanEnum& fwdInter = NONE_BOOL);
 
 
@@ -762,7 +762,7 @@ namespace etrading
 	*  @param [in]		curveIndex		Index of the curve set
 	*  @return			The join date used in hybrid interpolation of a swap curve
 	*/
-	LADate getHybridInterpolationJoinDate(const LAString& curveCollection, const LAString& curveIndex);
+	AQLDate getHybridInterpolationJoinDate(const AQLString& curveCollection, const AQLString& curveIndex);
 
 	/* @brief			Retrieve the hybrid interpolation join date as a double from a swap curve
 	*  IMPORTANT NOTE:	Join Dates are Relative to the Curve's Swap Calibration Spot Dates NOT the curve asOfDate
@@ -770,14 +770,14 @@ namespace etrading
 	*  @param [in]		curveIndex		Index of the curve set
 	*  @return			The join date used in hybrid interpolation of a swap curve
 	*/
-	double getHybridInterpolationJoinDateAsDouble(const LAString& curveCollection, const LAString& curveIndex);
+	double getHybridInterpolationJoinDateAsDouble(const AQLString& curveCollection, const AQLString& curveIndex);
 
 	/* @brief			Retrieve the linear spline join date from a swap curve
 	*  @param [in]		curveCollection	ID of the yield curve
 	*  @param [in]		curveIndex		Index of the curve set
 	*  @return			The join date used in linear spline interpolation of a swap curve
 	*/
-	LADate getLinearSplineJoinDate(const LAString& curveCollection, const LAString& curveIndex);
+	AQLDate getLinearSplineJoinDate(const AQLString& curveCollection, const AQLString& curveIndex);
 
 	/* @brief			Retrieve the linear spline join date as a double from a swap curve
 	*  IMPORTANT NOTE:	Join Dates are Relative to the Curve's Swap Calibration Spot Dates NOT the curve asOfDate
@@ -785,7 +785,7 @@ namespace etrading
 	*  @param [in]		curveIndex		Index of the curve set
 	*  @return			The join date used in linear spline interpolation of a swap curve
 	*/
-	double getLinearSplineJoinDateAsDouble(const LAString& curveCollection, const LAString& curveIndex);
+	double getLinearSplineJoinDateAsDouble(const AQLString& curveCollection, const AQLString& curveIndex);
 
 	/* @brief			Calculate the EuroDollar Futures Convexity Adjustment
 	* @param [in]		curveAsOfDate       The yield curve as of or valuation date
@@ -795,7 +795,7 @@ namespace etrading
 	* @param [in]		volatility          The Hull-White 1F Volatility Parameter
 	* @param [out]		Returns the EuroDollar Futures Convexity Adjustment
 	*/
-	double getCurveEuroDollarConvexityAdjustment(const LADate& curveAsOfDate, const LADate& futuresStartDate, const LADate& futuresEndDate, const double& meanReversion, const double& volatility);
+	double getCurveEuroDollarConvexityAdjustment(const AQLDate& curveAsOfDate, const AQLDate& futuresStartDate, const AQLDate& futuresEndDate, const double& meanReversion, const double& volatility);
 
 	/* @brief			Future Price from FRA rate based on the given convexity adjustment
 	* @param [in]		fraRate				The given fra rate
@@ -816,7 +816,7 @@ namespace etrading
 	* @param [in]		curveName				Curve name
 	* @return			Boolean - was curve built from curve engine
 	*/
-	bool isCurveBuiltFromCurveEngine(const LAString& curveCollection, const LAString& curveName);
+	bool isCurveBuiltFromCurveEngine(const AQLString& curveCollection, const AQLString& curveName);
 
 	/* @brief Display the yield curve engine jacobian matrix
 	* @param [out] matrix							Matrix being returned and displayed
@@ -827,9 +827,9 @@ namespace etrading
 	* @param [in] displayInverseMatrix				Display inverse Jacobian matrix or not
 	*/
 	void displayCurveEngineJacobian(DoubleMatrix& matrix,
-									LAStringMatrix& labelMatrix,
-									const LAString& curveEngineObject,
-									const LAString& curveCollection,
+									AQLStringMatrix& labelMatrix,
+									const AQLString& curveEngineObject,
+									const AQLString& curveCollection,
 									bool displayLabels,
 									bool displayInverseMatrix);
 
@@ -840,8 +840,8 @@ namespace etrading
 	* @param [in] displayInverseMatrix				Display inverse Jacobian matrix or not
 	*/
 	void displayCurveJacobian(DoubleMatrix& matrix,
-							  const LAString& curveCollection,
-							  const LAString& curveName,
+							  const AQLString& curveCollection,
+							  const AQLString& curveName,
 							  bool displayInverseMatrix);
 
 	/* @brief			Get ValuationDate from the valuationSettingsLVB map, default by using curve's asOfDate
@@ -849,7 +849,7 @@ namespace etrading
 	* @param [in]		modelName			The model or curve collection name
 	* @output			The matched valuationDate
 	*/
-	LADate getValuationDate(const LabelValueBlock& valuationSettingsLVB, const LAString& modelName);
+	AQLDate getValuationDate(const LabelValueBlock& valuationSettingsLVB, const AQLString& modelName);
 
 	/* @brief			Get ValuationDate from the valuationSettingsLVB map, default by using curve's asOfDate
 	* @param [in]		forwardRate					Forward rate fixed in advance
@@ -861,7 +861,7 @@ namespace etrading
 	* @param [in]		volatilityType  			Volatility type
 	* @output			Convexity for libor in arrear
 	*/
-	double liborInArrearConvexity(const double& forwardRate, const LADate& fixingDate, const LADate& inArrearFixingDate, const LADate& valuationDate, const DayCountEnum& dayCount, const double& volatility, const VolatilityTypeEnum& volatilityType);
+	double liborInArrearConvexity(const double& forwardRate, const AQLDate& fixingDate, const AQLDate& inArrearFixingDate, const AQLDate& valuationDate, const DayCountEnum& dayCount, const double& volatility, const VolatilityTypeEnum& volatilityType);
 
 
 	/* @brief			Helper function to populate fixing start and end dates from fixingDates
@@ -879,9 +879,9 @@ namespace etrading
 									DateVector& fixingEndDates,
 									const DateVector& allFixingDates,
 									const FrequencyEnum& curveFrequency,
-									const LAString& fixingBusinessDayAdj,
-									const LAString& fixingCalendar,
-									const LAString& rollConvention,
+									const AQLString& fixingBusinessDayAdj,
+									const AQLString& fixingCalendar,
+									const AQLString& rollConvention,
 									const bool isRegularSwap,
 									const bool isFrontStubType);
 
@@ -896,7 +896,7 @@ namespace etrading
 	*/
 	double accrualPeriod( const double & fixingStartTerm,
 						  const double & fixingEndTerm,
-						  const LADate & asOfDate,
+						  const AQLDate & asOfDate,
 						  const DayCountEnum & accrualDaycount,
 						  const CompoundingFrequencyEnum & compoundFrequency = SIMPLE_COMPOUNDING );
 
@@ -908,9 +908,9 @@ namespace etrading
 	* @param [in]		compoundFrequency			compounding frequency enum - defaults to SIMPLE COMPOUNDING
 	* @output			The forward rate accrual period
 	*/
-	double accrualPeriod( const LADate & fixingStartDate,
-						  const LADate & fixingEndDate,
-						  const LADate & asOfDate,
+	double accrualPeriod( const AQLDate & fixingStartDate,
+						  const AQLDate & fixingEndDate,
+						  const AQLDate & asOfDate,
 						  const DayCountEnum & accrualDaycount,
 						  const CompoundingFrequencyEnum & compoundFrequency= SIMPLE_COMPOUNDING );
 
@@ -924,7 +924,7 @@ namespace etrading
 	*/
 	double daycountConversionFactor( const double & fixingStartTerm,
 									 const double & fixingEndTerm,
-									 const LADate & asOfDate,
+									 const AQLDate & asOfDate,
 									 const DayCountEnum & accrualDaycount,
 									 const CompoundingFrequencyEnum & compoundFrequency = SIMPLE_COMPOUNDING );
 
@@ -937,15 +937,15 @@ namespace etrading
 	* @param [in]		compoundFrequency			compounding frequency enum - defaults to SIMPLE COMPOUNDING
 	* @output			The accrual daycount adjustment to convert a year fraction to the correct daycount basis
 	*/
-	double daycountConversionFactor( const LADate & fixingStartDate,
-									 const LADate & fixingEndDate,
+	double daycountConversionFactor( const AQLDate & fixingStartDate,
+									 const AQLDate & fixingEndDate,
 									 const double & accrualPeriodAct365,
-									 const LADate & asOfDate,
+									 const AQLDate & asOfDate,
 									 const DayCountEnum & accrualDaycount,
 									 const CompoundingFrequencyEnum & compoundFrequency= SIMPLE_COMPOUNDING );
 
 	// oisHistoricalRates can be either: 1) fixingTable object handle name, or 2) a column of fixingDates and a column of fixintRates
-	LAStringMatrix retrieveFixingTableMatrix(const LAStringMatrix& oisHistoricalRates);
+	AQLStringMatrix retrieveFixingTableMatrix(const AQLStringMatrix& oisHistoricalRates);
 }
 
 

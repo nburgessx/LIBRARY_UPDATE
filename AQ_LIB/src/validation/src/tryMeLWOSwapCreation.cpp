@@ -114,8 +114,8 @@ namespace validation
 		}
     	
         const std::string inputLVB = "swapLVB";
-        LAString leg1Name = leg1LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
-		LAString leg2Name = leg2LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+        AQLString leg1Name = leg1LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+		AQLString leg2Name = leg2LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
         
         etrading::validateSwapLegLVBKeys(leg1Name, leg1LVB.getKeys(), validateKeys);
 		etrading::validateSwapLegLVBKeys(leg2Name, leg2LVB.getKeys(), validateKeys);
@@ -149,7 +149,7 @@ namespace validation
 	*  @param [in]		validateKeys	True to validate the all keys provided are valid. Default to True
 	*  @return			swapName
 	*/
-	std::string tryMeLWOSwapCreate(const std::string& swapName, const LAStringMatrix& swapLVB, const LabelValueBlock& swapPropertiesLVB, bool isXccySwap, bool validateKeys)
+	std::string tryMeLWOSwapCreate(const std::string& swapName, const AQLStringMatrix& swapLVB, const LabelValueBlock& swapPropertiesLVB, bool isXccySwap, bool validateKeys)
 	{
 		VALID_EXCEPTION_START
         
@@ -176,7 +176,7 @@ namespace validation
 		{
     		const std::string inputLVB = "swapLVB";
 			LabelValueBlock legLVB;
-			LAString legName = "";
+			AQLString legName = "";
 			for (size_t i = 0; i < legsLVB.size(); ++i)
 			{
 				legLVB = legsLVB[i];
@@ -283,8 +283,8 @@ namespace validation
 		std::shared_ptr<Schedule> schedule2 = etrading::getSchedule(schedule2Name);
 
 		const std::string inputLVB = "swapLVB";
-   		LAString leg1Name = leg1LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
-		LAString leg2Name = leg2LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+   		AQLString leg1Name = leg1LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+		AQLString leg2Name = leg2LVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
 
 		etrading::validateSwapLegLVBKeys(leg1Name, leg1LVB.getKeys(), validateKeys, false);
 		etrading::validateSwapLegLVBKeys(leg2Name, leg2LVB.getKeys(), validateKeys, false);
@@ -408,7 +408,7 @@ namespace validation
 
 		if (leg->getType() != etrading::FEE_SCHEDULE_TYPE)
 		{
-			throw LACoreInvalidData( "#Error: The Leg is not a Fee", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: The Leg is not a Fee", __FILE__, __LINE__ );
 		}
         swap->addToLegCollection(leg);
 
@@ -432,7 +432,7 @@ namespace validation
 	*  @param [in]		validateKeys	True to validate the all keys provided are valid. Default to True
 	*  @return			swapGeneratorName
 	*/
-	std::string tryMeLWOSwapGeneratorCreate(const std::string& swapGeneratorName, const LAStringMatrix& swapGeneratorLVB, bool validateKeys)
+	std::string tryMeLWOSwapGeneratorCreate(const std::string& swapGeneratorName, const AQLStringMatrix& swapGeneratorLVB, bool validateKeys)
 	{
 		VALID_EXCEPTION_START
         
@@ -452,7 +452,7 @@ namespace validation
 
         if (legsLVB.size() != 2) 
         {
-			throw LACoreInvalidData( "#Error: SwapGeneratorLVB must have a key column and two value columns", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: SwapGeneratorLVB must have a key column and two value columns", __FILE__, __LINE__ );
         }
 
         auto legGen1 = legsLVB.at(0);
@@ -482,7 +482,7 @@ namespace validation
 	*  @param [in]		swapGeneratorName		Swap generator name
 	*  @return			Swap generator display of the input parameters
 	*/
-	LAStringMatrix tryMeLWOSwapGeneratorDisplay(const std::string& swapGeneratorName)
+	AQLStringMatrix tryMeLWOSwapGeneratorDisplay(const std::string& swapGeneratorName)
 	{
 		VALID_EXCEPTION_START
 

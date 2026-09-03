@@ -1,30 +1,30 @@
 #pragma once
 
 #include "SwigTypes.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 #include "Variant.h"
-#include "SwigTypes.h"	// For SWIG_STRINGMATRIX which manages the LAStringMatrix idiosyncrasies type for R API
+#include "SwigTypes.h"	// For SWIG_STRINGMATRIX which manages the AQLStringMatrix idiosyncrasies type for R API
 #include "CoreEnumerations.h"
 
 using etrading::LabelValueBlock;
 
-class LAString;
+class AQLString;
 
 namespace swig
 {
 
-	/* @brief		build LAStringMatrix from a vector of string vectors
-	*  @param [out]		sMatrix					the LAStringMatrix object being built
+	/* @brief		build AQLStringMatrix from a vector of string vectors
+	*  @param [out]		sMatrix					the AQLStringMatrix object being built
 	*  @param [in]		inputData				A vector of string vectors
 	*  @param [in]		curveTypeEnum			The curveType which thw data block "rhs" comes from.
 	*  @param [in]		curveMarketDataEnum		The name of the curve data block contained in inputData.
 	*/
-	void buildStringMatrix( LAStringMatrix& sMatrix, const std::vector<std::vector<std::string> >& inputData,	
+	void buildStringMatrix( AQLStringMatrix& sMatrix, const std::vector<std::vector<std::string> >& inputData,	
 							const etrading::CurveTypeEnum& curveTypeEnum = etrading::NONE_CURVETYPE,
 							const etrading::CurveMarketDataEnum& curveMarketDataEnum = etrading::NONE_MARKETDATA );
 
-    /* @brief			Build LAStringMatrix from input type SWIG_STRINGMATRIX.
+    /* @brief			Build AQLStringMatrix from input type SWIG_STRINGMATRIX.
 	*                   In "R", the SWIG_STRINGMATRIX is defined as vector< string >.
 	*					In all other languages, SWIG_STRINGMATRIX is a vector of string vectors.
 	*					The curveTypeEnum and curveMarketDataEnum is used to figure out how many columns there should be in the final matrix.
@@ -35,7 +35,7 @@ namespace swig
 	*  @param [in]		curveMarketDataEnum		The name of the curve data block contained in inputData.
 	*/
 #if defined(SWIG_R) || defined(SWIGR)
-	void buildStringMatrix( LAStringMatrix& sMatrix, const SWIG_STRINGMATRIX & inputData,
+	void buildStringMatrix( AQLStringMatrix& sMatrix, const SWIG_STRINGMATRIX & inputData,
 							const etrading::CurveTypeEnum& curveTypeEnum = etrading::NONE_CURVETYPE,
 							const etrading::CurveMarketDataEnum& curveMarketDataEnum = etrading::NONE_MARKETDATA );
 #endif
@@ -52,24 +52,24 @@ namespace swig
 	*/
 	void buildGregorianDateVector( std::vector< boost::gregorian::date > & toDateVector, const std::vector<std::string>& fromStringVector );
 
-	/* @brief			build LAStringVector from a vector of strings 
-	*  @param [out]		sVector			A LAStringVector object
+	/* @brief			build AQLStringVector from a vector of strings 
+	*  @param [out]		sVector			A AQLStringVector object
 	*  @param [in]		rhs				a vector of strings
 	*/
-	void buildStringVector(LAStringVector& sVector, const std::vector<std::string>& rhs);
+	void buildStringVector(AQLStringVector& sVector, const std::vector<std::string>& rhs);
 
-    /* @brief			Build a LADate from a std::string type
+    /* @brief			Build a AQLDate from a std::string type
 	*  @param [in]		dateString		String Date
     *  @param [in]		dateFormat		Date Format, typically "YYYYMMDD"
-	*  @output			Date in LADate format
+	*  @output			Date in AQLDate format
 	*/
-    LADate fromStringToLADate(const std::string& dateString, const std::string& dateFormat = "YYYYMMDD" );
+    AQLDate fromStringToLADate(const std::string& dateString, const std::string& dateFormat = "YYYYMMDD" );
 
 	/* @brief			build a vector of strings from a DoubleVector object
 	*  @param [in]		dVector			A DoubleVector object
 	*  @output			date with expected format
 	*/
-	LAString fromStringToLAString(const std::string& inVal);
+	AQLString fromStringToLAString(const std::string& inVal);
 
 	/* @brief			Check each row of the input matrix and keep a record of the maximum column size. This is designed to work with ragged matrices.
 	*  @param [in]		inputMatrix	The matrix of type T to check.
@@ -79,11 +79,11 @@ namespace swig
 	template<typename T>
 	size_t getMatrixMaxColumnDimension(const std::vector< std::vector< T > >& inputMatrix, const bool checkForEmptyMatrix);
 
-	/* @brief			build a matrix of strings from a LAStringMatrix object
-	*  @param [in]		LAStringMatrix	a LAStringMatrix object
+	/* @brief			build a matrix of strings from a AQLStringMatrix object
+	*  @param [in]		AQLStringMatrix	a AQLStringMatrix object
 	*  @output			output a matrix of strings
 	*/
-	SWIG_STRINGMATRIX fromStringMatrixToMatrixOfString( const LAStringMatrix& LAStringMatrix );
+	SWIG_STRINGMATRIX fromStringMatrixToMatrixOfString( const AQLStringMatrix& AQLStringMatrix );
 
     /* @brief			build a matrix of strings from a AnyTypeMatrix object
 	*  @param [in]		anyMatrix	a AnyTypeMatrix object
@@ -108,11 +108,11 @@ namespace swig
 	*  @return		String output
 	*/
 	template <typename T>
-	LAString NumberToString ( T number )
+	AQLString NumberToString ( T number )
 	{
 		std::stringstream ss;
 		ss << number;
-		return LAString(ss.str().c_str());
+		return AQLString(ss.str().c_str());
 	}
 
 	/* @brief	Template method that converts a string to a number
@@ -120,7 +120,7 @@ namespace swig
 	*  @return		Output of a certain numeric data type
 	*/
 	template <typename T>
-	T StringToNumber ( const LAString &text )
+	T StringToNumber ( const AQLString &text )
 	{
 		std::stringstream ss(text.getCString());
 		T result;
@@ -139,11 +139,11 @@ namespace swig
 	*/
 	void buildVariantMatrix( etrading::VariantMatrix & toMatrix, const std::vector<std::vector<std::string> >& fromMatrix );
 
-	/* @brief			build Variant Matrix from an LAStringMatrix
+	/* @brief			build Variant Matrix from an AQLStringMatrix
 	*  @param [out]		toMatrix			the variant matrix object being built
 	*  @param [in]		fromMatrix  	    the string matrix input
 	*/
-	void buildVariantMatrix( etrading::VariantMatrix & toMatrix, const LAStringMatrix& fromMatrix );
+	void buildVariantMatrix( etrading::VariantMatrix & toMatrix, const AQLStringMatrix& fromMatrix );
 
     /* @brief			build Variant Vector from a string vector
 	*  @param [out]		toVector			the variant vector object being built

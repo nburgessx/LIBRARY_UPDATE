@@ -32,14 +32,14 @@ namespace validation
     * @param [out]		Returns initial volatility, should be close to zero
     */
     AnyTypeMatrix tryMeCurveVasicekChecking(const DateVector& fixingDates, const DoubleVector& targetForwardRates, const std::string& curveCollection, const std::string& curveIndex, 
-											const double& initialTheta, const double& initialSigma, const double& alpha, const double& rt, const LADate& valuationDate, const bool& showColumnHeaders)
+											const double& initialTheta, const double& initialSigma, const double& alpha, const double& rt, const AQLDate& valuationDate, const bool& showColumnHeaders)
     {
         VALID_EXCEPTION_START
 
         // Record Inputs for logs, tests and playback
         RECORD_INPUTS( valuationDate, fixingDates, targetForwardRates, curveCollection, curveIndex, initialTheta, initialSigma, alpha, rt, valuationDate, showColumnHeaders);
 
-		const LADate curveAsOfDate = etrading::getCurveAsOfDate( curveCollection.c_str() );
+		const AQLDate curveAsOfDate = etrading::getCurveAsOfDate( curveCollection.c_str() );
 
 		const bool futureValuation = etrading::isFutureValuation(curveAsOfDate, valuationDate);
 		const double shortRate = etrading::getDefaultShortRate(curveAsOfDate, curveCollection, curveIndex, rt, futureValuation);
@@ -87,7 +87,7 @@ namespace validation
     * @param [out]		Returns forward rates from on the Vasicek model
     */
 	DoubleVector tryMeCurveVasicekForwardRates(const DateVector& fixingDates, const std::string& curveCollection, const std::string& curveIndex,
-											   const double& theta, const double& sigma, const double& alpha, const double& rt, const LADate& valuationDate)
+											   const double& theta, const double& sigma, const double& alpha, const double& rt, const AQLDate& valuationDate)
     {
         VALID_EXCEPTION_START
 
@@ -96,7 +96,7 @@ namespace validation
 
 		etrading::VasicekModel vkModel(alpha, theta, sigma);
 
-		const LADate curveAsOfDate = etrading::getCurveAsOfDate( curveCollection.c_str() );
+		const AQLDate curveAsOfDate = etrading::getCurveAsOfDate( curveCollection.c_str() );
 		const bool futureValuation = etrading::isFutureValuation(curveAsOfDate, valuationDate);
 		const double shortRate = etrading::getDefaultShortRate(curveAsOfDate, curveCollection, curveIndex, rt, futureValuation);
 

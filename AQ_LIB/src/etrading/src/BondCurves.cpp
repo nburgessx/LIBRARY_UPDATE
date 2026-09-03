@@ -229,8 +229,8 @@ namespace etrading
 		   i.e. detect two or more bond quotes for the same maturity date.
 		   The map also sorts the bond quotes in order of increasing maturity date.
 		 */
-		std::map<LADate, double> marketDataBondQuotes;		// map from maturityDate to bondYieldQuote
-		std::map<LADate, std::string> marketDataBondIds;    // map from maturityDate to bondId
+		std::map<AQLDate, double> marketDataBondQuotes;		// map from maturityDate to bondYieldQuote
+		std::map<AQLDate, std::string> marketDataBondIds;    // map from maturityDate to bondId
 
 		const std::vector<std::string> bondInstrumentIds = bondQuoteLVB.getKeys();
 
@@ -240,7 +240,7 @@ namespace etrading
 
 			// Check for duplicate bond maturity dates
 			auto bondInstrument = getBond( bondId );
-			const LADate bondMaturityDate = bondInstrument->getSchedule()->getMaturityDate();
+			const AQLDate bondMaturityDate = bondInstrument->getSchedule()->getMaturityDate();
 			AQ_REQUIRE ( marketDataBondQuotes.count( bondMaturityDate ) == 0, "Duplicate maturity date: " + bondMaturityDate.convertDateToString() + " for bond ID " + bondId.c_str() );
 
 			marketDataBondQuotes[ bondMaturityDate ] = yieldQuoteInPercent_ ? bondYieldQuote / 100.0 : bondYieldQuote;
@@ -251,7 +251,7 @@ namespace etrading
 		// and calibrate a bond curve yield point for each quote
 		for ( const auto& bondQuote : marketDataBondQuotes )
 		{
-			const LADate& sortedMaturityDate = bondQuote.first;
+			const AQLDate& sortedMaturityDate = bondQuote.first;
 			const double bondYieldQuote = bondQuote.second;
 			const double yieldPlusSpread = bondYieldQuote + spread_;
 
@@ -273,7 +273,7 @@ namespace etrading
 	* @param[in]	couponDate	The date for which the yield is required
 	* @returns		The interpolated yield
 	*/
-	double BondCurve::getYield( const LADate& couponDate ) const
+	double BondCurve::getYield( const AQLDate& couponDate ) const
 	{
 		AQ_REQUIRE( ! calibratedYields_.empty(), "No bond curve calibration points have been found. Check bond quotes input." );
 
@@ -303,7 +303,7 @@ namespace etrading
 	* @param [in]   bondMaturityDate	The date corresponding to this coupon yield
 	* @param [in]   yield				The estimate of the yield for this curve pillar date
 	*/
-	void BondCurve::setCalibrationPoint( const LADate& bondMaturityDate, const double& yield)
+	void BondCurve::setCalibrationPoint( const AQLDate& bondMaturityDate, const double& yield)
 	{
 		calibratedYields_[ bondMaturityDate ] = yield;
 	}
@@ -314,7 +314,7 @@ namespace etrading
 	* @param [in]   bondMaturityDate	The date corresponding to this coupon yield
 	* @param [in]   discountFactor		The discountFactor at the bond curve pillar date
 	*/
-	void BondCurve::setDiscountFactorAtCalibrationPoint( const LADate& bondMaturityDate, const double& discountFactor )
+	void BondCurve::setDiscountFactorAtCalibrationPoint( const AQLDate& bondMaturityDate, const double& discountFactor )
 	{
 		calibratedDiscountFactors_[ bondMaturityDate ] = discountFactor;
 	}	
@@ -333,7 +333,7 @@ namespace etrading
 		for ( auto yieldPillar : calibratedYields_ )
 		{
 			AnyTypeVector row;
-			const LADate pillarDate = yieldPillar.first;
+			const AQLDate pillarDate = yieldPillar.first;
 			const double yield = yieldPillar.second;
 
 			const int dateAsInt = static_cast<long long> (LADateScheduleHelpers::getExcelDate(pillarDate));
@@ -392,7 +392,7 @@ namespace etrading
 	*/
 	LabelValueBlock BondCurve::toLabelValueBlock( const std::string& propertyKey ) const
 	{
-		LAStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
+		AQLStringMatrix stringMatrix = getLAStringMatrixFromFreeObject( freeObject_, propertyKey );
 		LabelValueBlock lvb( stringMatrix );
 
 		return lvb;
@@ -400,7 +400,7 @@ namespace etrading
 
 	// Simple data getters
 
-	LADate BondCurve::getSettlementDate() const
+	AQLDate BondCurve::getSettlementDate() const
 	{
 		return settlementDate_;
 	}

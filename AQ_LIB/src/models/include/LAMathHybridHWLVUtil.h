@@ -7,10 +7,10 @@
 #define LAMathHybridHWLVUtil_h
 
 
-#include <LACoreUtil.h>
+#include <AQLCoreUtil.h>
 #include <vector>
 #include <map>
-#include "LAFunction.h"
+#include "AQLFunction.h"
 #include <limits>
 
 //#ifdef __GNUC__
@@ -23,7 +23,7 @@
 
 //#include "LAMathAnalyticalFormula.h"
 #include "LAModelDynamicsCurve.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 using namespace std;
 
 //===================== Struct Declare LAMathHullWhiteParams==================================
@@ -115,7 +115,7 @@ class LAMathHybridHWLVProcessHelper
 
        // Model Volatility
        virtual double calcVar() const { return calcIntLamSQ(mT); }
-	   double calcSigma() const { return LAMath::sqrt(calcVar() / mT); }
+	   double calcSigma() const { return AQLMath::sqrt(calcVar() / mT); }
 
        // Discount Bond Price volatility
        virtual double calcVol_Pd(double t) const { return calcVol_Pd(t, mT); }
@@ -200,15 +200,15 @@ class LAMathHybridHWLVProcessHelper
 private:
 
        // Cache
-        LAMathFunction<LAMathHybridHWLVProcessHelper> mIntInvE_d;
+        AQLMathFunction<LAMathHybridHWLVProcessHelper> mIntInvE_d;
         mutable map<double, double> mCacheE_d;
         mutable map<double, bool> mIsCacheE_d;
 
-        LAMathFunction<LAMathHybridHWLVProcessHelper> mIntInvE_f;
+        AQLMathFunction<LAMathHybridHWLVProcessHelper> mIntInvE_f;
         mutable map<double, double> mCacheE_f;
         mutable map<double, bool> mIsCacheE_f;
 
-        LAMathFunction<LAMathHybridHWLVProcessHelper> mIntLamSQ;
+        AQLMathFunction<LAMathHybridHWLVProcessHelper> mIntLamSQ;
         mutable map<double, map<double, double> > mCacheIntLamSQ;
         mutable map<double, map<double, bool> > mIsCacheIntLamSQ;
 };
@@ -337,7 +337,7 @@ class LAMathHybridHWDDMPProcessHelper : public LAMathHybridHWDDProcessHelper
 
        virtual double calcCDF(double ts, double te) const;
        virtual double calcCDFHelper(double t) const;
-       LAMathFunction<LAMathHybridHWDDMPProcessHelper> mIntCDFHelper;
+       AQLMathFunction<LAMathHybridHWDDMPProcessHelper> mIntCDFHelper;
 
    protected:
 
@@ -389,12 +389,12 @@ class LAMathHybridHWDDMPProcessHelper : public LAMathHybridHWDDProcessHelper
 
 
        // Skew
-       LAMathFunction<LAMathHybridHWDDMPProcessHelper> mIntSkewHelper;
+       AQLMathFunction<LAMathHybridHWDDMPProcessHelper> mIntSkewHelper;
        mutable map<double, map<double, double> > mCacheSkew;
        mutable map<double, map<double, bool> > mIsCacheSkew;
 
        //
-       LAMathFunction<LAMathHybridHWDDMPProcessHelper> mIntU1Helper;
+       AQLMathFunction<LAMathHybridHWDDMPProcessHelper> mIntU1Helper;
        mutable map<double, double> mCacheU1;
        mutable map<double, bool> mIsCacheU1;
 };
@@ -469,9 +469,9 @@ class LAMathHybridHWDDMPProcessHelper2 : public LAMathHybridHWDDMPProcessHelper
             }
             else
             {
-                //if(t < 0.00001) return  simga * ( beta + (1. - beta) * mFX0 / x * LAMath::exp(-calcR(t) *  log(x / mFX0) ) );;
-                //return simga * ( beta + (1. - beta) * mFX0 / x * LAMath::exp(-calcR(t) *  log(x / mFX0) * theta(t) ) );
-                return simga * ( beta + (1. - beta) * mFX0 / x * LAMath::exp(-calcR(t) *  log(x / mFX0) ) );
+                //if(t < 0.00001) return  simga * ( beta + (1. - beta) * mFX0 / x * AQLMath::exp(-calcR(t) *  log(x / mFX0) ) );;
+                //return simga * ( beta + (1. - beta) * mFX0 / x * AQLMath::exp(-calcR(t) *  log(x / mFX0) * theta(t) ) );
+                return simga * ( beta + (1. - beta) * mFX0 / x * AQLMath::exp(-calcR(t) *  log(x / mFX0) ) );
             }
        }
 
@@ -482,8 +482,8 @@ class LAMathHybridHWDDMPProcessHelper2 : public LAMathHybridHWDDMPProcessHelper
        virtual double theta(double t) const
        {
            double u1 = calcU1(t);
-           return LAMath::exp( calcC1(t) - 0.5 * u1 + 0.5 * ( calcU3(t) - u1 * u1 / calcU2(t) ) );
-           //return LAMath::exp( calcC1(t) - 0.5 * u1_ + 0.5 * ( calcU3(t) ) );
+           return AQLMath::exp( calcC1(t) - 0.5 * u1 + 0.5 * ( calcU3(t) - u1 * u1 / calcU2(t) ) );
+           //return AQLMath::exp( calcC1(t) - 0.5 * u1_ + 0.5 * ( calcU3(t) ) );
        }
 
        //
@@ -533,16 +533,16 @@ class LAMathHybridHWDDMPProcessHelper2 : public LAMathHybridHWDDMPProcessHelper
        virtual double calcU3Helper(double s) const;
 
        //
-       LAMathFunction<LAMathHybridHWDDMPProcessHelper2> mIntC1Helper;
+       AQLMathFunction<LAMathHybridHWDDMPProcessHelper2> mIntC1Helper;
        mutable map<double, double> mCacheC1;
        mutable map<double, bool> mIsCacheC1;
 
        //
-       LAMathFunction<LAMathHybridHWDDMPProcessHelper2> mIntU3Helper;
+       AQLMathFunction<LAMathHybridHWDDMPProcessHelper2> mIntU3Helper;
        mutable map<double, double> mCacheU3;
        mutable map<double, bool> mIsCacheU3;
 
-       LAMathFunction<LAMathHybridHWDDMPProcessHelper2> mIntLamSQApproximated;
+       AQLMathFunction<LAMathHybridHWDDMPProcessHelper2> mIntLamSQApproximated;
        mutable map<double, map<double, double> > mCacheIntLamSQApproximated;
        mutable map<double, map<double, bool> > mIsCacheIntLamSQApproximated;
 };
@@ -586,7 +586,7 @@ class LAMathHybridHWDDMPProcessHelperConstHWparams : public LAMathHybridHWDDMPPr
         //
         double calcE_d(double t) const
         {
-            return LAMath::exp( mpHWParams_d->mA[0] * t );
+            return AQLMath::exp( mpHWParams_d->mA[0] * t );
         }    
 
         //
@@ -600,7 +600,7 @@ class LAMathHybridHWDDMPProcessHelperConstHWparams : public LAMathHybridHWDDMPPr
             double a = mpHWParams_d->mA[0];    
             if(!mIsCacheVol_Pd[T][t])
 	    {
-	            mCacheVol_Pd[T][t] = 1. / a * ( 1. - LAMath::exp( -a * (T - t) ) );
+	            mCacheVol_Pd[T][t] = 1. / a * ( 1. - AQLMath::exp( -a * (T - t) ) );
 	            mIsCacheVol_Pd[T][t] = true;
             }
 
@@ -611,7 +611,7 @@ class LAMathHybridHWDDMPProcessHelperConstHWparams : public LAMathHybridHWDDMPPr
 
         double calcE_f(double t) const
         {
-            return LAMath::exp( mpHWParams_f->mA[0] * t );
+            return AQLMath::exp( mpHWParams_f->mA[0] * t );
         }
 
         double calcVol_Pf(double t, double T) const
@@ -624,7 +624,7 @@ class LAMathHybridHWDDMPProcessHelperConstHWparams : public LAMathHybridHWDDMPPr
             double a = mpHWParams_f->mA[0];    
             if(!mIsCacheVol_Pf[T][t])
 	        {
-	            mCacheVol_Pf[T][t] = 1. / a * ( 1. - LAMath::exp( -a * (T - t) ) );
+	            mCacheVol_Pf[T][t] = 1. / a * ( 1. - AQLMath::exp( -a * (T - t) ) );
 	            mIsCacheVol_Pf[T][t] = true;
             }
             

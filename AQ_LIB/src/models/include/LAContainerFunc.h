@@ -6,13 +6,13 @@
 #ifndef MMContainer_h
 #define MMContainer_h
 
-#include "LAFunction.h"
+#include "AQLFunction.h"
 #include <cmath>
 #include <map>
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 
-class LAInterpolationBase;
+class AQLInterpolationBase;
 
 //===================== Class Declare LAMathObject==================================
 /*! 
@@ -31,9 +31,9 @@ public:
 
     virtual double integrate( double t_s, double t_e ) = 0;
 
-	double expIntegrate( double t_s, double t_e ) { return LAMath::exp( integrate( t_s, t_e ) ); }
+	double expIntegrate( double t_s, double t_e ) { return AQLMath::exp( integrate( t_s, t_e ) ); }
 
-    virtual LAString getType() const = 0;
+    virtual AQLString getType() const = 0;
 };
 
 //===================== Class Declare LAMathObjectConst==================================
@@ -55,7 +55,7 @@ public:
 
     double integrate( double t_s, double t_e ) { return mC * (t_e - t_s); }
 
-    LAString getType() const { return "CONST"; }
+    AQLString getType() const { return "CONST"; }
 
 private:
 
@@ -73,7 +73,7 @@ public:
 
     LAMathObjectArray( const DoubleArray& x_,
                           const DoubleArray& y_,
-                          LAInterpolationBase& interpolation_
+                          AQLInterpolationBase& interpolation_
                         );
 
     LAMathObjectArray( const LAMathObjectArray& rhs );
@@ -88,7 +88,7 @@ public:
     
     double integrate( double t_s, double t_e );
 
-    LAString getType() const { return "ARRAY"; }
+    AQLString getType() const { return "ARRAY"; }
 
     const DoubleArray &getX() const { return mX; }
     const DoubleArray &getY() const { return mY; }
@@ -101,9 +101,9 @@ private:
 
     DoubleArray mX;
     DoubleArray mY;
-    LAInterpolationBase *mpInterpolation;
+    AQLInterpolationBase *mpInterpolation;
     
-    LAMathFunction<LAMathObjectArray> mGet;
+    AQLMathFunction<LAMathObjectArray> mGet;
     map<pair<double, double>, double>* mpIntegrateCache;
     bool mDeleteCache;
 

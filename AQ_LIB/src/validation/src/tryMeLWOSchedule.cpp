@@ -34,7 +34,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-		LAString scheduleType = swapScheduleLVB.getOptionalValueAsLAString( etrading::IRS_KEY::SCHEDULE_TYPE);
+		AQLString scheduleType = swapScheduleLVB.getOptionalValueAsLAString( etrading::IRS_KEY::SCHEDULE_TYPE);
 		etrading::validateKeysForLVB(etrading::getScheduleLVBKeys(scheduleType), swapScheduleLVB.getKeys(), validateKeys );
 
 		std::shared_ptr<Schedule> mySchedule = etrading::createSchedule(scheduleName, swapScheduleLVB);
@@ -87,7 +87,7 @@ namespace validation
 	*  @param [in]		validateKeys		            True to validate the all keys provided are valid for the bespokeScheduleProperties. Default to True
     *  @return			The schedule name
     */
-	std::string tryMeLWOScheduleCreateBespoke(const std::string& scheduleName, const LabelValueBlock& bespokeScheduleProperties, const LAStringMatrix& bespokeScheduleLVB, bool validateKeys)
+	std::string tryMeLWOScheduleCreateBespoke(const std::string& scheduleName, const LabelValueBlock& bespokeScheduleProperties, const AQLStringMatrix& bespokeScheduleLVB, bool validateKeys)
 	{
 		VALID_EXCEPTION_START
 
@@ -128,7 +128,7 @@ namespace validation
 	*  @param [in]		validateKeys		            True to validate the all keys provided are valid for the bespokeScheduleProperties. Default to True
 	*  @return			The schedule name
 	*/
-	std::string tryMeLWOScheduleCreateBespokeFromCashflows(const std::string& scheduleObjectName, const LabelValueBlock& bespokeScheduleProperties, const LAStringMatrix& bespokeCashflowsLVB, bool validateKeys)
+	std::string tryMeLWOScheduleCreateBespokeFromCashflows(const std::string& scheduleObjectName, const LabelValueBlock& bespokeScheduleProperties, const AQLStringMatrix& bespokeCashflowsLVB, bool validateKeys)
 	{
 		VALID_EXCEPTION_START
 
@@ -171,7 +171,7 @@ namespace validation
 	*  @param [in]		validateKeys		True to validate the all keys provided are valid. Default to True
     *  @return			The schedule name
     */
-	std::string tryMeLWOFeeScheduleCreate(const std::string& scheduleName, const LAStringMatrix& feeScheduleLVB, bool validateKeys)
+	std::string tryMeLWOFeeScheduleCreate(const std::string& scheduleName, const AQLStringMatrix& feeScheduleLVB, bool validateKeys)
 	{
 		VALID_EXCEPTION_START
 
@@ -185,7 +185,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-        LAStringVector keys;
+        AQLStringVector keys;
         for (size_t i = 0; i < feeScheduleLVB.size(); ++i)
         {
             keys.push_back(feeScheduleLVB[i][0]);
@@ -228,7 +228,7 @@ namespace validation
 
 		const std::string inputLVB = "SwapScheduleLVB";
 
-		LAString scheduleType = swapScheduleLVB.getOptionalValueAsLAString(etrading::IRS_KEY::SCHEDULE_TYPE, "");
+		AQLString scheduleType = swapScheduleLVB.getOptionalValueAsLAString(etrading::IRS_KEY::SCHEDULE_TYPE, "");
 		etrading::validateKeysForLVB(etrading::getScheduleLVBKeys(scheduleType), swapScheduleLVB.getKeys(), validateKeys);
 
 		auto schedule = etrading::createSchedule("schedule", swapScheduleLVB);

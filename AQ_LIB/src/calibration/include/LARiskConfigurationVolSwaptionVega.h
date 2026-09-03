@@ -40,42 +40,42 @@ public:
 protected:
 	//==============================================
 	// create scenario volatility object
-	virtual std::vector<LAObject *> createVolatilityEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const;
+	virtual std::vector<AQLObject *> createVolatilityEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1, int index = 0) const;
 	//==============================================
 	// create scenario volatility object
-	virtual std::vector<LAObject *> createVolatilityEntityOld(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
+	virtual std::vector<AQLObject *> createVolatilityEntityOld(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
 	//==============================================
 	// get operator1
-	virtual  LAString  getOperator1(void) const;	
+	virtual  AQLString  getOperator1(void) const;	
 	//==============================================
 	// get coefficient1
-	virtual  LAString  getCoefficient1(const LAString &ccy) const;
+	virtual  AQLString  getCoefficient1(const AQLString &ccy) const;
 	//==============================================
 	// get outputname1
-	virtual  LAString  getOutPutName1(const LAString &ccy) const;
+	virtual  AQLString  getOutPutName1(const AQLString &ccy) const;
 	//==============================================
 	// get risk name
-	virtual  LAString getRiskName(void) const;
+	virtual  AQLString getRiskName(void) const;
 	//==============================================
 	// get target currencies
-	virtual  LAString getTargetCurrencies() const;
+	virtual  AQLString getTargetCurrencies() const;
 	//==============================================
 	// get calibration target currencies
-	virtual  LAString getCalibTargetCurrencies() const;
+	virtual  AQLString getCalibTargetCurrencies() const;
 	//==============================================
 	// get parallel shift
-	virtual double getParallelShiftVal(const LAString &ccy) const;
+	virtual double getParallelShiftVal(const AQLString &ccy) const;
 	//==============================================
 	// create extraScenario1 object 
-	virtual  std::vector<std::vector<LAObject *> > createExtraScenario1Entity(const LAString &ccy, LADataInstance &dataInstance, int index) const;
+	virtual  std::vector<std::vector<AQLObject *> > createExtraScenario1Entity(const AQLString &ccy, AQLDataInstance &dataInstance, int index) const;
 	//==============================================
 	// get extra target names1
-	virtual  LAStringVector getExtraTargetNames1(const LAString &ccy, LADataInstance &dataInstance) const;
+	virtual  AQLStringVector getExtraTargetNames1(const AQLString &ccy, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// get grid term
-	virtual LAString getParallelShiftTerm(const LAString &ccy) const { (void)ccy; return CALIB_MARKET_SWAPTION; }
+	virtual AQLString getParallelShiftTerm(const AQLString &ccy) const { (void)ccy; return CALIB_MARKET_SWAPTION; }
 
-    virtual bool isRiskCurrencyMode(const LAString &ccy) const;
+    virtual bool isRiskCurrencyMode(const AQLString &ccy) const;
 };
 
 

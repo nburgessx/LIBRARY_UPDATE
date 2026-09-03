@@ -70,39 +70,39 @@ namespace google_test
 			// Build yield curves of the current test case
 
 			// Build dependent EUR, USD and SEK curves
-			LAString EUR_OIS_Dir		= TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + EUR_OIS + LAString(".csv");
+			AQLString EUR_OIS_Dir		= TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + EUR_OIS + AQLString(".csv");
 			setUpMeOISCurve(EUR_OIS_Dir);
 
-			LAString EUR_6M_STD_Dir		= TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + EUR_6M_STD + LAString(".csv");
+			AQLString EUR_6M_STD_Dir		= TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + EUR_6M_STD + AQLString(".csv");
 			setUpMeSTDCurve(EUR_6M_STD_Dir);
 
-			LAString EUR_3M_Basis_Dir	= TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + EUR_3M_Basis + LAString(".csv");
+			AQLString EUR_3M_Basis_Dir	= TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + EUR_3M_Basis + AQLString(".csv");
 			setUpMeTenorBasisCurve(EUR_3M_Basis_Dir);
 
-			LAString USD_OIS_Dir		= TEST_DIR +  LAString("Test") + LAString(static_cast<int>(i + 1)) + USD_OIS + LAString(".csv");
+			AQLString USD_OIS_Dir		= TEST_DIR +  AQLString("Test") + AQLString(static_cast<int>(i + 1)) + USD_OIS + AQLString(".csv");
 			setUpMeOISCurve(USD_OIS_Dir);
 
-			LAString USD_3M_STD_Dir		= TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + USD_3M_STD + LAString(".csv");
+			AQLString USD_3M_STD_Dir		= TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + USD_3M_STD + AQLString(".csv");
 			setUpMeSTDCurve(USD_3M_STD_Dir);
 
-			LAString SEK_3M_STD_Dir		= TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + SEK_3M_STD + LAString(".csv");
+			AQLString SEK_3M_STD_Dir		= TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + SEK_3M_STD + AQLString(".csv");
 			setUpMeSTDCurve(SEK_3M_STD_Dir);
 
-			LAString SEKDF_USDCSA_Dir	= TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + SEKDF_USDCSA + LAString(".csv");
+			AQLString SEKDF_USDCSA_Dir	= TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + SEKDF_USDCSA + AQLString(".csv");
 			setUpMeXccyBasisCurve(SEKDF_USDCSA_Dir);
 
 			// Build EURDF_USDCSA and EURDF_SEKCSA
-			LAString EURDF_USDCSA_Dir	= TEST_DIR +  LAString("Test") + LAString(static_cast<int>(i + 1)) + EURDF_USDCSA + LAString(".csv");
+			AQLString EURDF_USDCSA_Dir	= TEST_DIR +  AQLString("Test") + AQLString(static_cast<int>(i + 1)) + EURDF_USDCSA + AQLString(".csv");
 			setUpMeXccyBasisCurve(EURDF_USDCSA_Dir);
 
-			LAString EURDF_SEKCSA_Dir	= TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + EURDF_SEKCSA + LAString(".csv");
+			AQLString EURDF_SEKCSA_Dir	= TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + EURDF_SEKCSA + AQLString(".csv");
 			setUpMeFwdFxConstCurveCurve(EURDF_SEKCSA_Dir);
 
 			// Build cheapest to deliver curve that has a daily frequency
-			LAString CTD_Curve_Dir		= TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + Daily_CTD_Curve + LAString(".csv");
+			AQLString CTD_Curve_Dir		= TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + Daily_CTD_Curve + AQLString(".csv");
 			setUpMeCTDCurve(CTD_Curve_Dir);
 									
-			LAString inputDir = TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + curveDisplayInputs_Daily + LAString(".csv");
+			AQLString inputDir = TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + curveDisplayInputs_Daily + AQLString(".csv");
 			const ReadDataFile::Load inputFile1( inputDir );
 			const DoubleArray results1
 				= validation::tryMeCurveDisplay(
@@ -110,18 +110,18 @@ namespace google_test
 					  inputFile1["curveIndex"] );
 
 			#ifdef GTEST32
-			LAString outputDir = TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + curveDisplayOutputs_Daily_32bit + LAString(".csv");
+			AQLString outputDir = TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + curveDisplayOutputs_Daily_32bit + AQLString(".csv");
 			#else
-			LAString outputDir = TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + curveDisplayOutputs_Daily_64bit + LAString(".csv");
+			AQLString outputDir = TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + curveDisplayOutputs_Daily_64bit + AQLString(".csv");
 			#endif
 			
 			CheckTestResultsAndRebaseOnRequest( results1, TEST_DIR, outputDir, tolerance );
 
 			// Build cheapest to deliver curve that has a quarterly frequency
-			CTD_Curve_Dir		= TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + Quarterly_CTD_Curve + LAString(".csv");
+			CTD_Curve_Dir		= TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + Quarterly_CTD_Curve + AQLString(".csv");
 			setUpMeCTDCurve(CTD_Curve_Dir);
 									
-			inputDir = TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + curveDisplayInputs_Quarterly + LAString(".csv");
+			inputDir = TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + curveDisplayInputs_Quarterly + AQLString(".csv");
 			const ReadDataFile::Load inputFile2( inputDir );
 			const DoubleArray results2
 				= validation::tryMeCurveDisplay(
@@ -129,9 +129,9 @@ namespace google_test
 					  inputFile2["curveIndex"] );
 
 			#ifdef GTEST32
-			outputDir = TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + curveDisplayOutputs_Quarterly_32bit + LAString(".csv");
+			outputDir = TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + curveDisplayOutputs_Quarterly_32bit + AQLString(".csv");
 			#else
-			outputDir = TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + curveDisplayOutputs_Quarterly_64bit + LAString(".csv");
+			outputDir = TEST_DIR + AQLString("Test") + AQLString(static_cast<int>(i + 1)) + curveDisplayOutputs_Quarterly_64bit + AQLString(".csv");
 			#endif
 			
 			CheckTestResultsAndRebaseOnRequest( results2, TEST_DIR, outputDir, tolerance );

@@ -23,10 +23,10 @@
 #include "LAMarketData.h"
 #include "LADealUtils.h"
 #include "LAScenarioConfiguration.h"
-#include "LADate.h"
-#include "LAPriceDataDayCount.h"
-#include "LAConstant.h"
-#include "LABasic.h"
+#include "AQLDate.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLConstant.h"
+#include "AQLBasic.h"
 #include "LACalibrationFunc.h"
 #include "LACalibrateIRSABR.h"
 #include "LACalibratePool.h"
@@ -62,10 +62,10 @@ LACalibrateVolatilityIRSABR::~LACalibrateVolatilityIRSABR(void)
 
 */
 void 
-LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_t, vector<DoubleMatrix> &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_t, vector<DoubleMatrix> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_t, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
 }
 
 /*!
@@ -78,10 +78,10 @@ LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_t, vector<Double
 
 */
 void 
-LACalibrateVolatilityIRSABR::createVolatility(vector<vector<LAFunctionBase *> > &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityIRSABR::createVolatility(vector<vector<AQLFunctionBase *> > &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
 }
 
 
@@ -96,10 +96,10 @@ LACalibrateVolatilityIRSABR::createVolatility(vector<vector<LAFunctionBase *> > 
 
 */
 void 
-LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_T, vector<LAFunctionBase *> &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_T, vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_T, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
 }
 
 
@@ -114,10 +114,10 @@ LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_T, vector<LAFunc
 
 */
 void 
-LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_t, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
 }
 
 
@@ -131,16 +131,16 @@ LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_t, DoubleMatrix 
 
 */
 void 
-LACalibrateVolatilityIRSABR::createVolatility(vector<LAFunctionBase *> &vol, const LAStringVector &filePath, 
-											const MAScenarioParam *param, LAObjectPool *objPool, int gridPos) const
+LACalibrateVolatilityIRSABR::createVolatility(vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, 
+											const MAScenarioParam *param, AQLObjectPool *objPool, int gridPos) const
 {
 	/*vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);*/
+	throw AQLCoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);*/
 
 	// null check
 	if (!param || !objPool)
 	{
-		throw LACoreInvalidData("Param or entitypool is null .", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Param or entitypool is null .", __FILE__, __LINE__);
 	}
 	
 	if (param->isCalib)
@@ -152,12 +152,12 @@ LACalibrateVolatilityIRSABR::createVolatility(vector<LAFunctionBase *> &vol, con
 			request.setUp(*objPool,*param,&method,gridPos);
 			request.doCalibrate();
 			
-			vol.resize(1, dynamic_cast<LAFunctionBase *>(method.clone()));
+			vol.resize(1, dynamic_cast<AQLFunctionBase *>(method.clone()));
 		}
 	}
 	else
 	{
-		throw LACoreInvalidData("Only Calibration supports",__FILE__,__LINE__); 
+		throw AQLCoreInvalidData("Only Calibration supports",__FILE__,__LINE__); 
 	}
 	return;
 
@@ -175,10 +175,10 @@ LACalibrateVolatilityIRSABR::createVolatility(vector<LAFunctionBase *> &vol, con
 
 */
 void 
-LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_T, LAFunctionBase *vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_T, AQLFunctionBase *vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_T, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
 }
 
 
@@ -193,10 +193,10 @@ LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_T, LAFunctionBas
 
 */
 void 
-LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_t, DoubleArray &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_t, DoubleArray &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_t, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
 }
 
 /*!
@@ -208,13 +208,13 @@ LACalibrateVolatilityIRSABR::createVolatility(DoubleArray &grid_t, DoubleArray &
 	@param[return]  vol		Volatility as function 
 
 */
-LAFunctionBase * 
-LACalibrateVolatilityIRSABR::createVolatility(const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool, int gridPos) const
+AQLFunctionBase * 
+LACalibrateVolatilityIRSABR::createVolatility(const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool, int gridPos) const
 {
 	//// null check
 	//if (!param || !objPool)
 	//{
-	//	throw LACoreInvalidData("Param or entitypool is null .", __FILE__, __LINE__);
+	//	throw AQLCoreInvalidData("Param or entitypool is null .", __FILE__, __LINE__);
 	//}
 	//
 	//if (param->isCalib)
@@ -224,14 +224,14 @@ LACalibrateVolatilityIRSABR::createVolatility(const LAStringVector &filePath, co
 	//	request.setUp(*objPool,*param,&method,gridPos);
 	//	request.doCalibrate();
 
-	//	return dynamic_cast<LAFunctionBase *>(method.clone());
+	//	return dynamic_cast<AQLFunctionBase *>(method.clone());
 
 	//}
 	//else
 	//{
-	//	throw LACoreInvalidData("Only Calibration supports",__FILE__,__LINE__); 
+	//	throw AQLCoreInvalidData("Only Calibration supports",__FILE__,__LINE__); 
 	//}	
-	throw LACoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
 }
 
 /*!
@@ -244,10 +244,10 @@ LACalibrateVolatilityIRSABR::createVolatility(const LAStringVector &filePath, co
 
 */
 void 
-LACalibrateVolatilityIRSABR::createVolatility(double &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityIRSABR::createVolatility(double &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in irsabr.", __FILE__, __LINE__);
 }
 
 /*!
@@ -257,7 +257,7 @@ LACalibrateVolatilityIRSABR::createVolatility(double &vol, const LAStringVector 
 	@param[in] filepath
 */
 void 
-LACalibrateVolatilityIRSABR::getGrid_T(DoubleArray &grid_T, const LAStringVector &filePath) const
+LACalibrateVolatilityIRSABR::getGrid_T(DoubleArray &grid_T, const AQLStringVector &filePath) const
 {
 	filePath;
 	// IRSABR(FX) has no grid_T

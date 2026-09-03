@@ -100,9 +100,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs_AtMaturity_Flat; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs_AtMaturity_Flat; 
                 #else
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs64_AtMaturity_Flat; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs64_AtMaturity_Flat; 
                 #endif
 
                 // 2. Load the Input Files
@@ -112,8 +112,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -121,7 +121,7 @@ namespace google_test
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = parRateInputFile["swapName"];
-                LAString curveCollection        = parRateInputFile["curveCollections"];
+                AQLString curveCollection        = parRateInputFile["curveCollections"];
                 std::string fixingTable         = parRateInputFile["fixingTableNames"];
                 
                 double actualSwapParSpread          = validation::tryMeLWOSwapParSpread( swapName, etrading::fromStringToLVB(curveCollection.getCString()), etrading::fromStringToLVB(fixingTable) );
@@ -129,7 +129,7 @@ namespace google_test
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParSpread, TEST_DIR, parSpreadOutputsFilename, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -147,9 +147,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs_AtMaturity_Normal; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs_AtMaturity_Normal; 
                 #else
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs64_AtMaturity_Normal; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs64_AtMaturity_Normal; 
                 #endif
 
                 // 2. Load the Input Files
@@ -159,8 +159,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -168,7 +168,7 @@ namespace google_test
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = parRateInputFile["swapName"];
-                LAString curveCollection        = parRateInputFile["curveCollections"];
+                AQLString curveCollection        = parRateInputFile["curveCollections"];
                 std::string fixingTable         = parRateInputFile["fixingTableNames"];
                 
                 double actualSwapParSpread          = validation::tryMeLWOSwapParSpread( swapName, etrading::fromStringToLVB(curveCollection.getCString()), etrading::fromStringToLVB(fixingTable) );
@@ -176,7 +176,7 @@ namespace google_test
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParSpread, TEST_DIR, parSpreadOutputsFilename, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -195,9 +195,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs_AtMaturity_Simple; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs_AtMaturity_Simple; 
                 #else
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs64_AtMaturity_Simple; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs64_AtMaturity_Simple; 
                 #endif
 
                 // 2. Load the Input Files
@@ -207,8 +207,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -216,7 +216,7 @@ namespace google_test
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = parRateInputFile["swapName"];
-                LAString curveCollection        = parRateInputFile["curveCollections"];
+                AQLString curveCollection        = parRateInputFile["curveCollections"];
                 std::string fixingTable         = parRateInputFile["fixingTableNames"];
                 
                 double actualSwapParSpread          = validation::tryMeLWOSwapParSpread( swapName, etrading::fromStringToLVB(curveCollection.getCString()), etrading::fromStringToLVB(fixingTable) );
@@ -224,7 +224,7 @@ namespace google_test
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParSpread, TEST_DIR, parSpreadOutputsFilename, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -242,9 +242,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs_SemiAnnual_Flat; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs_SemiAnnual_Flat; 
                 #else
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs64_SemiAnnual_Flat; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs64_SemiAnnual_Flat; 
                 #endif
 
                 // 2. Load the Input Files
@@ -254,8 +254,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -263,7 +263,7 @@ namespace google_test
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = parRateInputFile["swapName"];
-                LAString curveCollection        = parRateInputFile["curveCollections"];
+                AQLString curveCollection        = parRateInputFile["curveCollections"];
                 std::string fixingTable         = parRateInputFile["fixingTableNames"];
                 
                 double actualSwapParSpread          = validation::tryMeLWOSwapParSpread( swapName, etrading::fromStringToLVB(curveCollection.getCString()), etrading::fromStringToLVB(fixingTable) );
@@ -271,7 +271,7 @@ namespace google_test
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParSpread, TEST_DIR, parSpreadOutputsFilename, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -289,9 +289,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs_SemiAnnual_Normal; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs_SemiAnnual_Normal; 
                 #else
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs64_SemiAnnual_Normal; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs64_SemiAnnual_Normal; 
                 #endif
 
                 // 2. Load the Input Files
@@ -301,8 +301,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -310,7 +310,7 @@ namespace google_test
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = parRateInputFile["swapName"];
-                LAString curveCollection        = parRateInputFile["curveCollections"];
+                AQLString curveCollection        = parRateInputFile["curveCollections"];
                 std::string fixingTable         = parRateInputFile["fixingTableNames"];
                 
                 double actualSwapParSpread          = validation::tryMeLWOSwapParSpread( swapName, etrading::fromStringToLVB(curveCollection.getCString()), etrading::fromStringToLVB(fixingTable) );
@@ -318,7 +318,7 @@ namespace google_test
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParSpread, TEST_DIR, parSpreadOutputsFilename, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -337,9 +337,9 @@ namespace google_test
         {
                 // 1. Create the Input File Names 
                 #if defined(GTEST32)
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs_SemiAnnual_Simple; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs_SemiAnnual_Simple; 
                 #else
-                    LAString parSpreadOutputsFilename   = parSpreadOutputs64_SemiAnnual_Simple; 
+                    AQLString parSpreadOutputsFilename   = parSpreadOutputs64_SemiAnnual_Simple; 
                 #endif
 
                 // 2. Load the Input Files
@@ -349,8 +349,8 @@ namespace google_test
         
                 // 3. Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
-                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
-                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                AQLStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                AQLStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
@@ -358,7 +358,7 @@ namespace google_test
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = parRateInputFile["swapName"];
-                LAString curveCollection        = parRateInputFile["curveCollections"];
+                AQLString curveCollection        = parRateInputFile["curveCollections"];
                 std::string fixingTable         = parRateInputFile["fixingTableNames"];
                 
                 double actualSwapParSpread          = validation::tryMeLWOSwapParSpread( swapName, etrading::fromStringToLVB(curveCollection.getCString()), etrading::fromStringToLVB(fixingTable) );
@@ -366,7 +366,7 @@ namespace google_test
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParSpread, TEST_DIR, parSpreadOutputsFilename, tolerance );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

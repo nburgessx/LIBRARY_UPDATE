@@ -32,7 +32,7 @@
 	@brief default constructor
 */
 LAPolyFitBase::LAPolyFitBase()
-: LACoreFunctionBase()
+: AQLCoreFunctionBase()
 {
 
 }
@@ -40,7 +40,7 @@ LAPolyFitBase::LAPolyFitBase()
 	@brief copy constructor
 */
 /*LAPolyFitBase::LAPolyFitBase(const LAPolyFitBase& v) 
-: LACoreFunctionBase(v)
+: AQLCoreFunctionBase(v)
 {
 
 }*/
@@ -61,7 +61,7 @@ LAPolyFitBase::~LAPolyFitBase()
 bool
 LAPolyFitBase::isTypeOf(function_t id) const
 {
-	return (id == FN_POLYFITBASE ? true : LACoreFunctionBase::isTypeOf(id));
+	return (id == FN_POLYFITBASE ? true : AQLCoreFunctionBase::isTypeOf(id));
 }
 
 /*!

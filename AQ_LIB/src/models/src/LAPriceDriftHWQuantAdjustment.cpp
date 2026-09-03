@@ -26,24 +26,24 @@
 #include "LAPriceDriftHWQuantAdjustment.h"
 #include "LAPriceFXVolatility.h"
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
-#include "LAPriceDataFunction.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMathVolFuncBase.h"
 #include "LARatesSpotSDE.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAModelDynamicsScalar.h"
-#include "LAAlgorithm.h"
-#include "LAConstant.h"
-#include "LA1DDataSet.h"
-#include "LASplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LAGaussLegendre.h"
-#include "LACombinationFunc.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLConstant.h"
+#include "AQL1DDataSet.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLGaussLegendre.h"
+#include "AQLCombinationFunc.h"
+#include "AQLBasic.h"
 #include "LAPriceDriftHW.h"
 #include "LAMathVolFuncFXDD.h"
 
@@ -66,7 +66,7 @@ mpDriftIR(pDriftIR), mCorrelation(cor), mIsSetUped(false), mPos_old(0), mFxCrite
 	if (pDriftIR == 0)
 	{
 		//error
-		throw LACoreInvalidData("input IR drift is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("input IR drift is NULL", __FILE__, __LINE__);
 	}
 }
 
@@ -79,9 +79,9 @@ mpDriftIR(pDriftIR), mCorrelation(cor), mIsSetUped(false), mPos_old(0), mFxCrite
 	@param[in] sdeAttrNameFX data name of fx model
 	@param[in] pDriftIR drift class before quant adjustment
 */
-LAPriceDriftHWQuantAdjustment::LAPriceDriftHWQuantAdjustment(const LAString& sdeAttrNameIR_D, 
-													   const LAString& sdeAttrNameIR_F, 
-													   const LAString& sdeAttrNameFX, 
+LAPriceDriftHWQuantAdjustment::LAPriceDriftHWQuantAdjustment(const AQLString& sdeAttrNameIR_D, 
+													   const AQLString& sdeAttrNameIR_F, 
+													   const AQLString& sdeAttrNameFX, 
 													   LAPriceDriftHW* pDriftIR,
 													   double fx_criteria)
 : mpNumeraireD(0), mpFxVolatility(0), mpSDEFX(0),
@@ -91,7 +91,7 @@ mSDEAttrNameIR_D(sdeAttrNameIR_D), mSDEAttrNameIR_F(sdeAttrNameIR_F), mSDEAttrNa
 	if (pDriftIR == 0)
 	{
 		//error
-		throw LACoreInvalidData("input IR drift is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("input IR drift is NULL", __FILE__, __LINE__);
 	}
 }
 
@@ -134,7 +134,7 @@ LAPriceDriftHWQuantAdjustment::~LAPriceDriftHWQuantAdjustment()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftHWQuantAdjustment::clone() const	
 {
     try 
@@ -143,7 +143,7 @@ LAPriceDriftHWQuantAdjustment::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -184,12 +184,12 @@ LAPriceDriftHWQuantAdjustment::operator()(const DoubleArray& x) const
 	if (x[0] == 0.0) pos = 0;
 	else if (x[0] == timegrid[mPos_old]) pos = mPos_old;
 	else if (mPos_old + 2 < timegrid.size() && x[0] == timegrid[mPos_old + 1]) pos = mPos_old + 1;
-	else if (!LAAlgorithm::find<DoubleArray, double>(timegrid, x[0], 0, timegrid.size() - 1, pos))
+	else if (!AQLAlgorithm::find<DoubleArray, double>(timegrid, x[0], 0, timegrid.size() - 1, pos))
 	{
 		//error
-		LAString msg = "Time =" + LADataDouble(x[0]).convertToString();
+		AQLString msg = "Time =" + AQLDataDouble(x[0]).convertToString();
 		msg += " is not in sde integral time grid";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	
 	//fx
@@ -214,10 +214,10 @@ LAPriceDriftHWQuantAdjustment::operator()(const DoubleArray& x) const
     @brief return string representaion
     @return string representaion (domestic ir sde attr name : foreign ir sde attr name : fx sde attr name : mpDriftIR.convertToString() : fxcriteria)
 */
-LAString
+AQLString
 LAPriceDriftHWQuantAdjustment::convertToString(void) const
 {
-	LAString ret;
+	AQLString ret;
 	ret = mSDEAttrNameIR_D;
 	ret += ":";
 	ret = mSDEAttrNameIR_F;
@@ -229,7 +229,7 @@ LAPriceDriftHWQuantAdjustment::convertToString(void) const
 		ret += mpDriftIR->convertToString();
 	}
 	ret += ":";
-	ret += LADataDouble(mFxCriteria).convertToString();
+	ret += AQLDataDouble(mFxCriteria).convertToString();
 	return ret;
 
 }
@@ -239,14 +239,14 @@ LAPriceDriftHWQuantAdjustment::convertToString(void) const
     @param[in] string representaion  (domestic ir sde attr name : foreign ir sde attr name : fx sde attr name : mpDriftIR.convertToString() : fxcriteria)
 */
 void
-LAPriceDriftHWQuantAdjustment::convertFromString(const LAString& str)
+LAPriceDriftHWQuantAdjustment::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() < 4)
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	}
 
 	mSDEAttrNameIR_D = tmp.get()[0];
@@ -260,7 +260,7 @@ LAPriceDriftHWQuantAdjustment::convertFromString(const LAString& str)
 		return;
 	}
 	
-	LAString str2 = tmp.get()[3];
+	AQLString str2 = tmp.get()[3];
 	for (unsigned int i = 4; i < tmp.getSize() - 1; i++)
 	{
 		str2 += ":";
@@ -279,7 +279,7 @@ void
 LAPriceDriftHWQuantAdjustment::setUp(LAMathPathEntity& path)
 {
 	//domestic numeraire
-	LADataHolder* dh = &path.getData(mSDEAttrNameIR_D, ISNOTNULL);
+	AQLDataHolder* dh = &path.getData(mSDEAttrNameIR_D, ISNOTNULL);
 	LAMathAttrSDE* pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
 	mpNumeraireD = pattrsde->getSDE().getNumeraire();
 
@@ -287,7 +287,7 @@ LAPriceDriftHWQuantAdjustment::setUp(LAMathPathEntity& path)
 	dh = &path.getData(mSDEAttrNameFX, ISNOTNULL);
 	pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
 	mpSDEFX = dynamic_cast<LARatesSpotSDE*>(&pattrsde->getSDE());
-	const LAFunctionBase* pvol = mpSDEFX->getVolatility()[0][0];
+	const AQLFunctionBase* pvol = mpSDEFX->getVolatility()[0][0];
 	if (pvol->isTypeOf(FN_VOLFUNCBASE))
 		pvol = dynamic_cast<const LAMathVolFuncBase*>(pvol)->getVolatility();
 	if (pvol->isTypeOf(FN_VOLFUNCFXDD))
@@ -295,7 +295,7 @@ LAPriceDriftHWQuantAdjustment::setUp(LAMathPathEntity& path)
 	else
 	{
 		//error
-		throw LACoreInvalidData("fx volatility function is not LAMathVolFuncFXDD", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("fx volatility function is not LAMathVolFuncFXDD", __FILE__, __LINE__);
 	}
 
 	//drift ir setup
@@ -344,10 +344,10 @@ LAPriceDriftHWQuantAdjustment::setUp() const
 		//s[i] = (1.0 - beta[i]) / beta[i] * fwd0[0];
 		s[i] = (1.0 - beta[i]) / beta[i] * fwd0[i];
 	}
-	LA1DDataSet _s, _v;
+	AQL1DDataSet _s, _v;
 	_s.set(time, s);
 	_v.set(time, v);
-	LAStepInterpolation inter;
+	AQLStepInterpolation inter;
 	_s.setInterpolation(inter);
 	_v.setInterpolation(inter);
 	
@@ -356,7 +356,7 @@ LAPriceDriftHWQuantAdjustment::setUp() const
 	MMHWQAdjInnerFunc2 func2(hwMR, hwSigma, _v, _s);
 	MMHWQAdjInnerFunc3 func3(hwMR, hwSigma, _v, _s);
 
-	LAGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
+	AQLGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
 	for (unsigned int i = 0; i < size; i++)
 	{
 		mCache1[i] = -mCorrelation[i] * func1.integral(timegrid[i], timegrid[i + 1], &gl);

@@ -77,7 +77,7 @@ namespace
     	FUNCTION_NAME \
 		std::string fileName = functionName; \
 		fileName += "_outputs"; \
-		CreateDataFile outputFile( LAString( fileName.c_str() ) ); \
+		CreateDataFile outputFile( AQLString( fileName.c_str() ) ); \
 		outputFile.write( "output", (result) ); }
 
 
@@ -87,7 +87,7 @@ namespace
     	FUNCTION_NAME \
 		std::string fileName = functionName; \
 		fileName += "_outputs"; \
-		CreateDataFile outputFile( LAString( fileName.c_str() ) ); \
+		CreateDataFile outputFile( AQLString( fileName.c_str() ) ); \
 		outputFile.write( "output", (result) ); } \
     return result;
 
@@ -98,7 +98,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); }
 
 // Macro to record a function's input parameters to a file	
@@ -107,7 +107,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) }
 
@@ -117,7 +117,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) }
@@ -128,7 +128,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -140,7 +140,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -153,7 +153,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -167,7 +167,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -182,7 +182,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -198,7 +198,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -215,7 +215,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -233,7 +233,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -252,7 +252,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -272,7 +272,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -293,7 +293,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -315,7 +315,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -338,7 +338,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -362,7 +362,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -387,7 +387,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -413,7 +413,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -440,7 +440,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -468,7 +468,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName += "_inputs"; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -535,7 +535,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) }
@@ -546,7 +546,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -558,7 +558,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -571,7 +571,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -585,7 +585,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
@@ -600,7 +600,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -616,7 +616,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -633,7 +633,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -651,7 +651,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -670,7 +670,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -690,7 +690,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -711,7 +711,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -733,7 +733,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -756,7 +756,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -780,7 +780,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -805,7 +805,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -831,7 +831,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -858,7 +858,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -886,7 +886,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -915,7 +915,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
 		WRITE_TIMESTAMP() \
         file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) \
@@ -969,7 +969,7 @@ namespace
         FUNCTION_NAME \
         std::string fileName = functionName; \
 		fileName = "log_" + fileName; \
-		CreateDataFile file( LAString( fileName.c_str() ), ".csv", true ); \
+		CreateDataFile file( AQLString( fileName.c_str() ), ".csv", true ); \
         std::ostringstream ss; \
         ss << comment; \
         file.write( ss.str().c_str() ); }
@@ -982,7 +982,7 @@ namespace
         if ( PREFIX != "" ) decoratedOutputFunction = "_" + decoratedOutputFunction; \
         if ( SUFFIX != "" ) decoratedOutputFunction = decoratedOutputFunction + "_"; \
         std::string fileName = PREFIX + decoratedOutputFunction + SUFFIX; \
-		CreateDataFile outputFile( LAString( fileName.c_str() ) ); \
+		CreateDataFile outputFile( AQLString( fileName.c_str() ) ); \
 		outputFile.write( "output", (result) ); }
 
 
@@ -994,7 +994,7 @@ namespace
         if ( PREFIX != "" ) decoratedOutputFunction = "_" + decoratedOutputFunction; \
         if ( SUFFIX != "" ) decoratedOutputFunction = decoratedOutputFunction + "_"; \
         std::string fileName = PREFIX + decoratedOutputFunction + SUFFIX; \
-		CreateDataFile outputFile( LAString( fileName.c_str() ) ); \
+		CreateDataFile outputFile( AQLString( fileName.c_str() ) ); \
 		outputFile.write( "output", (result) ); } \
     return result;
 
@@ -1006,7 +1006,7 @@ namespace
         std::string decoratedInputFunction = functionName + "_inputs"; \
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         std::string fileName = PREFIX + decoratedInputFunction + inputs; \
-        CreateDataFile outputFile( LAString( fileName.c_str() ) ); \
+        CreateDataFile outputFile( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); }
 
 
@@ -1018,7 +1018,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); }
 
 // Macro to record a function's input parameters to a file, which we decorate with a prefix	and suffix
@@ -1029,7 +1029,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
         WRITE_PARAMETER( P1 ) }
 
@@ -1041,7 +1041,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) }
@@ -1054,7 +1054,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1068,7 +1068,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1083,7 +1083,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1099,7 +1099,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1116,7 +1116,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1134,7 +1134,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1153,7 +1153,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1173,7 +1173,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1194,7 +1194,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1216,7 +1216,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1239,7 +1239,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1263,7 +1263,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1288,7 +1288,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1314,7 +1314,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1341,7 +1341,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1369,7 +1369,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1398,7 +1398,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \
@@ -1428,7 +1428,7 @@ namespace
         if ( PREFIX != "" ) decoratedInputFunction = "_" + decoratedInputFunction; \
         if ( SUFFIX != "" ) decoratedInputFunction = decoratedInputFunction + "_"; \
         std::string fileName = PREFIX + decoratedInputFunction + SUFFIX; \
-		CreateDataFile file( LAString( fileName.c_str() ) ); \
+		CreateDataFile file( AQLString( fileName.c_str() ) ); \
 		file.write( "generatorFunction", functionName ); \
 		WRITE_PARAMETER( P1 ) \
 		WRITE_PARAMETER( P2 ) \

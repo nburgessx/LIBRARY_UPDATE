@@ -155,8 +155,8 @@ namespace etrading
 			TDates[i] = inputDateInfo.TDate;
 		}
 
-		const LAString curveId (curveCollection.c_str()); 
-		const LAString curveIndx (curveIndex.c_str()); 
+		const AQLString curveId (curveCollection.c_str()); 
+		const AQLString curveIndx (curveIndex.c_str()); 
 
 		//market forward rates f(0,t)
 		const DoubleVector Fm_ts = getCurveForwardRatesFromAsOfDate( tDates, curveId, curveIndx);
@@ -175,13 +175,13 @@ namespace etrading
 
 	//TODO: to implement
 	// Formula: theta(t) = dF(0,t)/dt + a * F(0,t) + sigma^2/(2a) * (1- exp(-2a*t)), where F(0,t) is forward rate from t0 to t, and a is the mean reversion spread
-	double HullWhiteModel::calculateTheta(const LADate& t, const std::string& curveCollection, const std::string& curveIndex) const
+	double HullWhiteModel::calculateTheta(const AQLDate& t, const std::string& curveCollection, const std::string& curveIndex) const
 	{
 		// Formula: theta(t) = dF(0,t)/dt + a * F(0,t) + sigma^2/(2a) * (1- exp(-2a*t)), where F(0,t) is forward rate from t0 to t, and a is the mean reversion spread
 		// ref: (3.34) on page 73 of Brigo book 
 
 		// theta is required when simulating zero rates, e.g. using Euler discretization: r(i+1) = r(i) + (theta(i) - a*r(i))*dt + sigma*sqrt(dt)*N(0,1)
-    	throw LACoreInvalidData( "#Error: HullWhiteModel calculateTheta method is not supported (TODO)", __FILE__, __LINE__ );
+    	throw AQLCoreInvalidData( "#Error: HullWhiteModel calculateTheta method is not supported (TODO)", __FILE__, __LINE__ );
 	}
 
 	// Get Accessors

@@ -9,12 +9,12 @@
 #endif
 
 
-#include "LACoreAppError.h"
-#include "LACoreSystemError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreSystemError.h"
+#include "AQLCoreTemplateType.h"
 
 
-class LARandBase;
+class AQLRandBase;
 
 ///////////////////////////////////////////////////////////////////////
 /*! 
@@ -26,9 +26,9 @@ class LARatesBM
 public:
 //  LIFECYCLE
 	// constructor
-	LARatesBM(const DoubleArray& timegrid, const LARandBase& rand, unsigned int factor_num = 1);
+	LARatesBM(const DoubleArray& timegrid, const AQLRandBase& rand, unsigned int factor_num = 1);
 	// constructor
-	LARatesBM(const DoubleArray& timegrid, const LARandBase& rand, const std::vector<DoubleMatrix>& loading);
+	LARatesBM(const DoubleArray& timegrid, const AQLRandBase& rand, const std::vector<DoubleMatrix>& loading);
 	// constructor
 	LARatesBM(std::vector<std::pair<LARatesBM*, unsigned int> >& bm, 
 			const std::vector<DoubleMatrix>& loading, bool deleteflag = true);
@@ -72,7 +72,7 @@ protected:
 	int mType;// type of BM
 	unsigned int mID;// id
 	unsigned long mRefCount;// reference counter
-	LARandBase* mpRand;// rand generator
+	AQLRandBase* mpRand;// rand generator
 	std::vector<std::pair<LARatesBM*, unsigned int> > mBM;// BM classes 
 	std::vector<DoubleMatrix> mLoading;// factor loading
 	DoubleMatrix	mData;// BM values

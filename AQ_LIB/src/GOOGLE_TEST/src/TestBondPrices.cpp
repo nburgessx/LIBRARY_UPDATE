@@ -79,7 +79,7 @@ namespace google_test
 
             // Read the Trade Inputs and Create the Swap
             const std::string bondObjectName                = myBondPtr->getBondObjectName(); 
-            const std::vector< LADate > settlementDates     = tradeInputFile["settlementDates"];
+            const std::vector< AQLDate > settlementDates     = tradeInputFile["settlementDates"];
             const std::vector< double > yields              = tradeInputFile["yields"];
 
             // Calculate the Actual Results
@@ -87,14 +87,14 @@ namespace google_test
 
             // Compare Results
             const double tolerance = 0.000000001;
-            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, LAString( dirtyPriceOutputs.c_str() ), tolerance );
+            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, AQLString( dirtyPriceOutputs.c_str() ), tolerance );
         }
         catch( const ReadDataFile::LoadError& )
         {
             std::cout <<  "#Error: Unable to open the Google Test File";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -122,7 +122,7 @@ namespace google_test
 
             // Read the Trade Inputs and Create the Swap
             const std::string bondObjectName                = myBondPtr->getBondObjectName(); 
-            const std::vector< LADate > settlementDates     = tradeInputFile["settlementDates"];
+            const std::vector< AQLDate > settlementDates     = tradeInputFile["settlementDates"];
             const std::vector< double > yields              = tradeInputFile["yields"];
 
             // Calculate the Actual Results
@@ -130,14 +130,14 @@ namespace google_test
 
             // Compare Results
             const double tolerance = 0.000000001;
-            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, LAString( cleanPriceOutputs.c_str() ), tolerance );
+            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, AQLString( cleanPriceOutputs.c_str() ), tolerance );
         }
         catch( const ReadDataFile::LoadError& )
         {
             std::cout <<  "#Error: Unable to open the Google Test File";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -164,21 +164,21 @@ namespace google_test
 
             // Read the Trade Inputs and Create the Swap
             const std::string bondObjectName                = myBondPtr->getBondObjectName(); 
-            const std::vector< LADate > settlementDates     = tradeInputFile["settlementDates"];
+            const std::vector< AQLDate > settlementDates     = tradeInputFile["settlementDates"];
 
             // Calculate the Actual Results
             std::vector< double > actualResults = validation::tryMeLWOBondAccruedInterest( bondObjectName, settlementDates );
 
             // Compare Results
             const double tolerance = 0.000000001;
-            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, LAString( accruedInterestOutputs.c_str() ), tolerance );
+            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, AQLString( accruedInterestOutputs.c_str() ), tolerance );
         }
         catch( const ReadDataFile::LoadError& )
         {
             std::cout <<  "#Error: Unable to open the Google Test File";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -205,7 +205,7 @@ namespace google_test
 
             // Read the Trade Inputs and Create the Swap
             const std::string bondObjectName                = myBondPtr->getBondObjectName(); 
-            const std::vector< LADate > settlementDates     = tradeInputFile["settlementDates"];
+            const std::vector< AQLDate > settlementDates     = tradeInputFile["settlementDates"];
             const std::vector< double > dirtyPrices         = tradeInputFile["prices"];
 
             // Calculate the Actual Results
@@ -213,14 +213,14 @@ namespace google_test
 
             // Compare Results
             const double tolerance = 0.000000001;
-            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, LAString( yieldOutputs.c_str() ), tolerance );
+            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, AQLString( yieldOutputs.c_str() ), tolerance );
         }
         catch( const ReadDataFile::LoadError& )
         {
             std::cout <<  "#Error: Unable to open the Google Test File";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -248,7 +248,7 @@ namespace google_test
 
             // Read the Trade Inputs and Create the Swap
             const std::string bondObjectName                = myBondPtr->getBondObjectName(); 
-            const std::vector< LADate > settlementDates     = tradeInputFile["settlementDates"];
+            const std::vector< AQLDate > settlementDates     = tradeInputFile["settlementDates"];
             const std::vector< double > dirtyPrices         = tradeInputFile["prices"];
 
             // Calculate the Actual Results
@@ -265,14 +265,14 @@ namespace google_test
 
             // Compare Results
             const double tolerance = 0.000000001;
-            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, LAString( yieldOutputsParallel.c_str() ), tolerance );
+            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, AQLString( yieldOutputsParallel.c_str() ), tolerance );
         }
         catch( const ReadDataFile::LoadError& )
         {
             std::cout <<  "#Error: Unable to open the Google Test File";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -309,24 +309,24 @@ namespace google_test
 
             // Read the Trade Inputs and Create the Swap
             const std::string bondObjectName                = myBondPtr->getBondObjectName(); 
-            const std::vector< LADate > settlementDates     = tradeInputFile["settlementDates"];
+            const std::vector< AQLDate > settlementDates     = tradeInputFile["settlementDates"];
             const std::vector< double > yields              = tradeInputFile["yields"];
 
             // Calculate the DV01 numerically
 			double bumpSize = 0.01; // in bps
-			LAString bumpMode = "CENTRAL";
+			AQLString bumpMode = "CENTRAL";
             std::vector< double > actualResults = validation::tryMeLWOBondDV01Numerical( bondObjectName, settlementDates, yields,bumpSize, bumpMode );
 
             // Compare Results
             const double tolerance = 0.000001; // Use wider tolerance on Numerical DV01. Allows us to use the same output file for win32 and x64.
-            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, LAString( dv01Outputs.c_str() ), tolerance );
+            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, AQLString( dv01Outputs.c_str() ), tolerance );
         }
         catch( const ReadDataFile::LoadError& )
         {
             std::cout <<  "#Error: Unable to open the Google Test File";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -353,7 +353,7 @@ namespace google_test
 
             // Read the Trade Inputs and Create the Swap
             const std::string bondObjectName                = myBondPtr->getBondObjectName(); 
-            const std::vector< LADate > settlementDates     = tradeInputFile["settlementDates"];
+            const std::vector< AQLDate > settlementDates     = tradeInputFile["settlementDates"];
             const std::vector< double > yields              = tradeInputFile["yields"];
 
             // Calculate the Analytic DV01
@@ -361,14 +361,14 @@ namespace google_test
 
             // Compare Results
             const double tolerance = 0.000000001;
-            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, LAString( dv01Outputs.c_str() ), tolerance );
+            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, AQLString( dv01Outputs.c_str() ), tolerance );
         }
         catch( const ReadDataFile::LoadError& )
         {
             std::cout <<  "#Error: Unable to open the Google Test File";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -395,7 +395,7 @@ namespace google_test
 
             // Read the Trade Inputs and Create the Swap
             const std::string bondObjectName                = myBondPtr->getBondObjectName(); 
-            const std::vector< LADate > settlementDates     = tradeInputFile["settlementDates"];
+            const std::vector< AQLDate > settlementDates     = tradeInputFile["settlementDates"];
             const std::vector< double > yields              = tradeInputFile["yields"];
        
             // Calculate the Analytic DV01
@@ -403,14 +403,14 @@ namespace google_test
 
             // Compare Results
             const double tolerance = 0.000000001;
-            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, LAString( modifiedDurationOutputs.c_str() ), tolerance );
+            CheckTestResultsAndRebaseOnRequest( actualResults, TEST_DIR, AQLString( modifiedDurationOutputs.c_str() ), tolerance );
         }
         catch( const ReadDataFile::LoadError& )
         {
             std::cout <<  "#Error: Unable to open the Google Test File";
             ASSERT_FALSE( true );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

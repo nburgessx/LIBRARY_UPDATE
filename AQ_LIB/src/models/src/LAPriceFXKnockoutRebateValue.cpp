@@ -6,23 +6,23 @@
 #endif
 
 #include <algorithm>
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LADataReference.h"
-#include "LABasic.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLDataReference.h"
+#include "AQLBasic.h"
 #include "LAMathDateCalculations.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAPriceFXKnockoutRebateValue.h"
 #include "LAMathFXEntity.h"
 #include "LAMathYieldCurve.h"
@@ -70,7 +70,7 @@ LAPriceFXKnockoutRebateValue::isTypeOf(function_t id) const
     @brief get option method name
      @return option method name
 */
-LAString 
+AQLString 
 LAPriceFXKnockoutRebateValue::getOptionPayoffName() const
 {
 	return FN_FXKNOCKOUTREBATEVALUE_STR;
@@ -83,13 +83,13 @@ LAPriceFXKnockoutRebateValue::getOptionPayoffName() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceFXKnockoutRebateValue::registerData(LAPriceDataManager& dm) const
+LAPriceFXKnockoutRebateValue::registerData(AQLPriceDataManager& dm) const
 {
 
 	LAPriceFXOptionValue::registerData(dm);
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceFXKnockoutRebateValue::clone() const
 {
     try 
@@ -98,13 +98,13 @@ LAPriceFXKnockoutRebateValue::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
 // calc option
 double 
-LAPriceFXKnockoutRebateValue::calcOption(const LADataValuation& att, LADataProvider* dp, LAObject& e) const
+LAPriceFXKnockoutRebateValue::calcOption(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& e) const
 {
 	LAPriceFXKnockoutRebateValueDataProvider* dataProvider = &dynamic_cast<LAPriceFXKnockoutRebateValueDataProvider &>(att.getDataProvider());
 	//this means call spread value
@@ -113,13 +113,13 @@ LAPriceFXKnockoutRebateValue::calcOption(const LADataValuation& att, LADataProvi
 	AnalyticSBParam* touch = dynamic_cast<AnalyticSBParam* >(dataProvider->mParam[0][0]);
 		
 	//basis rate forward df
-	double basisforwarddf =  LAMath::exp(touch->rd * touch->Td);
+	double basisforwarddf =  AQLMath::exp(touch->rd * touch->Td);
 	
 	double touchprob = 1.0 - dataProvider->mAnalyticMethod[0][0]->calc(*touch) * basisforwarddf;
 
 	AnalyticSBParam* notouch = dynamic_cast<AnalyticSBParam* >(dataProvider->mParam[0][1]);
 	//libor rate df
-	double libordf = LAMath::exp(-notouch->rd * notouch->Td);
+	double libordf = AQLMath::exp(-notouch->rd * notouch->Td);
 	double notouchval = (1.0-touchprob) * dataProvider->rebate * libordf;
 	
 	double touchval = dataProvider->mAnalyticMethod[0][1]->calc(*notouch);
@@ -132,29 +132,29 @@ LAPriceFXKnockoutRebateValue::calcOption(const LADataValuation& att, LADataProvi
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*					
-LAPriceFXKnockoutRebateValue::setUpDataProvider(const LADate& basedate, LAObject& object, const LADataValuation& att) const
+AQLDataProvider*					
+LAPriceFXKnockoutRebateValue::setUpDataProvider(const AQLDate& basedate, AQLObject& object, const AQLDataValuation& att) const
 {
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceFXKnockoutRebateValueDataProvider* dataProvider = NULL;
 	dataProvider = dynamic_cast<LAPriceFXKnockoutRebateValueDataProvider*>(LAPriceFXOptionValue::setUpDataProvider(basedate,object,att));
 	
 	dh = &(object.getData(PRICING_DATA_REBATE,ISNOTNULL));
-	dataProvider->rebate = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	dataProvider->rebate = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	dh = &(object.getData(PRICING_DATA_LIMITVAL,ISNOTNULL));
-	dataProvider->limitval = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	dataProvider->limitval = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	
 	return dataProvider;
 }
 
 std::vector< std::vector<AnalyticParam*> >
-LAPriceFXKnockoutRebateValue::createAnalyticParam(LAObject& object, LADataProvider* dp) const
+LAPriceFXKnockoutRebateValue::createAnalyticParam(AQLObject& object, AQLDataProvider* dp) const
 {
 	std::vector<AnalyticParam*> retvec(2);
 	std::vector< std::vector<AnalyticParam*> > ret(1,retvec);
@@ -164,18 +164,18 @@ LAPriceFXKnockoutRebateValue::createAnalyticParam(LAObject& object, LADataProvid
 }
 
 void
-LAPriceFXKnockoutRebateValue::setUpAnalyticParam(LAObject& object, LADataProvider* dp) const
+LAPriceFXKnockoutRebateValue::setUpAnalyticParam(AQLObject& object, AQLDataProvider* dp) const
 {
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceFXKnockoutRebateValueDataProvider* dataProvider =  dynamic_cast<LAPriceFXKnockoutRebateValueDataProvider*>(dp);
 
 	dataProvider->mSpotDate = (dataProvider->mSpotDate < dataProvider->mAsofDate) ? dataProvider->mAsofDate : dataProvider->mSpotDate;
 
-	LADate mdydelivdate = (dataProvider->mSpotDate < dataProvider->mDeliveryDate) ? dataProvider->mDeliveryDate : dataProvider->mSpotDate;
-	LADate mdymatudate = (dataProvider->mAsofDate < dataProvider->mMaturityDate) ? dataProvider->mMaturityDate : dataProvider->mAsofDate;
+	AQLDate mdydelivdate = (dataProvider->mSpotDate < dataProvider->mDeliveryDate) ? dataProvider->mDeliveryDate : dataProvider->mSpotDate;
+	AQLDate mdymatudate = (dataProvider->mAsofDate < dataProvider->mMaturityDate) ? dataProvider->mMaturityDate : dataProvider->mAsofDate;
 	
 	//Td, Te
-	LAPriceDataDayCount dc(ACT_365_ISDA);
+	AQLPriceDataDayCount dc(ACT_365_ISDA);
 	double td = dc.getTerm(dataProvider->mSpotDate, mdydelivdate,false);
 	double te = dataProvider->mBlackDayCount.getTerm(dataProvider->mAsofDate, mdymatudate,false);
 	double actt = dc.getTerm(dataProvider->mAsofDate, mdymatudate,false);
@@ -232,7 +232,7 @@ LAPriceFXKnockoutRebateValue::setUpAnalyticParam(LAObject& object, LADataProvide
 	@brief create new cache class
 	@return cache class
 */
-LADataProvider*
+AQLDataProvider*
 LAPriceFXKnockoutRebateValue::createNewDataProvider() const
 {
 	LAPriceFXKnockoutRebateValueDataProvider* dataProvider = NULL;
@@ -242,7 +242,7 @@ LAPriceFXKnockoutRebateValue::createNewDataProvider() const
 	}
 	catch (bad_alloc & e)
 	{
-		throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 	}
 	return dataProvider;
 }

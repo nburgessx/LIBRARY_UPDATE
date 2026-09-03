@@ -1,11 +1,11 @@
 #include "SimpsonsRuleIntegration.h"
 #include "ExceptionMacros.h"
-#include "LAStepInterpolation.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
-#include "LAMonotoneSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
+#include "AQLMonotoneSplineInterpolation.h"
 #include <omp.h>
 
 namespace etrading
@@ -54,8 +54,8 @@ namespace etrading
                 "Invalid Target Function Interpolation: We currently support Step, Linear, Spline and Linear-Spline interpolation only" )
         }
 
-        // Helper Function to Convert the interpolation method enum to the LAPriceDataInterpolation identifier string method
-        LAString toInterpolationMethod( const InterpolationEnum & interpolationType )
+        // Helper Function to Convert the interpolation method enum to the AQLPriceDataInterpolation identifier string method
+        AQLString toInterpolationMethod( const InterpolationEnum & interpolationType )
         {
             switch( interpolationType )
             {
@@ -121,42 +121,42 @@ namespace etrading
         {
             case STEP_INTERPOLATION:
             {
-                targetInterpolationPtr_ = std::make_shared<LAStepInterpolation>();
+                targetInterpolationPtr_ = std::make_shared<AQLStepInterpolation>();
                 break;
             }
             case LINEARSPLINE_INTERPOLATION:
             {
-                targetInterpolationPtr_ = std::make_shared<LALinearSplineInterpolation>();
+                targetInterpolationPtr_ = std::make_shared<AQLLinearSplineInterpolation>();
                 break;
             }
 			case LINEARMONOTONESPLINE_INTERPOLATION:
             {
-                targetInterpolationPtr_ = std::make_shared<LALinearMonotoneSplineInterpolation>(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+                targetInterpolationPtr_ = std::make_shared<AQLLinearMonotoneSplineInterpolation>(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
                 break;
             }
 			case LINEARMONOTONEPARABOLIC_INTERPOLATION:
             {
-                targetInterpolationPtr_ = std::make_shared<LALinearMonotoneSplineInterpolation>(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+                targetInterpolationPtr_ = std::make_shared<AQLLinearMonotoneSplineInterpolation>(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
                 break;
             }
             case LINEAR_INTERPOLATION:
             {
-                targetInterpolationPtr_ = std::make_shared<LALinearInterpolation>();
+                targetInterpolationPtr_ = std::make_shared<AQLLinearInterpolation>();
                 break;
             }
             case SPLINE_INTERPOLATION:
             {
-                targetInterpolationPtr_ = std::make_shared<LASplineInterpolation>();
+                targetInterpolationPtr_ = std::make_shared<AQLSplineInterpolation>();
                 break;
             }
 			case MONOTONESPLINE_INTERPOLATION:
             {
-                targetInterpolationPtr_ = std::make_shared<LAMonotoneSplineInterpolation>(LAMonotoneSplineInterpolation::FRITSCH_BUTLAND);
+                targetInterpolationPtr_ = std::make_shared<AQLMonotoneSplineInterpolation>(AQLMonotoneSplineInterpolation::FRITSCH_BUTLAND);
                 break;
             }
 			case MONOTONEPARABOLIC_INTERPOLATION:
             {
-                targetInterpolationPtr_ = std::make_shared<LAMonotoneSplineInterpolation>(LAMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
+                targetInterpolationPtr_ = std::make_shared<AQLMonotoneSplineInterpolation>(AQLMonotoneSplineInterpolation::MONOTONE_PARABOLIC);
                 break;
             }
             default:

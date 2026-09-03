@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "AffineModelUtilities.h"
 
 namespace etrading
@@ -76,7 +76,7 @@ namespace etrading
 		
 		//TODO: to implement
 		// Formula: theta(t) = dF(0,t)/dt + a * F(0,t) + sigma^2/(2a) * (1- exp(-2a*t)), where F(0,t) is forward rate from t0 to t, and a is the mean reversion spread
-        double calculateTheta(const LADate& t, const std::string& curveCollection, const std::string& curveIndex) const;
+        double calculateTheta(const AQLDate& t, const std::string& curveCollection, const std::string& curveIndex) const;
 
     private:
         

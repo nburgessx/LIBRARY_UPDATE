@@ -13,15 +13,15 @@
 #include "LAPriceCFGenUtility.h"
 
 #include "LAMathDateCalculations.h"
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 
 #include <cmath>
 
@@ -47,7 +47,7 @@ using namespace std;
 /*!
 	@brief calculate dates by String input
 
-    @param[in] object			LAObject Class
+    @param[in] object			AQLObject Class
     @param[in] start			start date
 	@param[in] end				end date
 	@param[in] data_frequency	stirng of payment frequency
@@ -60,27 +60,27 @@ using namespace std;
 
 */
 void
-LAPriceCFGenUtility::generateSchedule(const LAObject& object,
-							const LADate& start, const LADate& end,
-							const LAString& data_frequency,
-							const LAString& data_timing,
-							const LAString& data_fodd, const LAString& data_lodd,
-							const LAString& data_day,
-							const LAString& data_slidingrule, 
-							const LAString& data_calendar,
+LAPriceCFGenUtility::generateSchedule(const AQLObject& object,
+							const AQLDate& start, const AQLDate& end,
+							const AQLString& data_frequency,
+							const AQLString& data_timing,
+							const AQLString& data_fodd, const AQLString& data_lodd,
+							const AQLString& data_day,
+							const AQLString& data_slidingrule, 
+							const AQLString& data_calendar,
 							DateVector& out,
 							DateVector& out_unadjust)
 {
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	//sliding rule
 	dh = &(object.getData(data_slidingrule, ISNOTNULL));
-	const LAPriceDataSlidingRule& srule = dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+	const AQLPriceDataSlidingRule& srule = dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 
 	//calendar
-	const LAPriceDataCalendar* pCal = NULL;
+	const AQLPriceDataCalendar* pCal = NULL;
 	dh = &(object.getData(data_calendar, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		pCal = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+		pCal = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 
 
 	LAPriceCFGenUtility::generateSchedule(object, start, end, data_frequency, data_timing,
@@ -92,7 +92,7 @@ LAPriceCFGenUtility::generateSchedule(const LAObject& object,
 /*!
 	@brief calculate both adjusted and unadjusted dates 
 
-    @param[in] object			LAObject Class
+    @param[in] object			AQLObject Class
     @param[in] start			start date
 	@param[in] end				end date
 	@param[in] data_frequency	stirng of payment frequency
@@ -105,39 +105,39 @@ LAPriceCFGenUtility::generateSchedule(const LAObject& object,
 
 */
 void
-LAPriceCFGenUtility::generateSchedule(const LAObject& object,
-							const LADate& start, const LADate& end,
-							const LAString& data_frequency,
-							const LAString& data_timing,
-							const LAString& data_fodd, const LAString& data_lodd,
-							const LAString& data_day,
-							const LAPriceDataSlidingRule& busdayrule,
-							const LAPriceDataCalendar* pCal,
+LAPriceCFGenUtility::generateSchedule(const AQLObject& object,
+							const AQLDate& start, const AQLDate& end,
+							const AQLString& data_frequency,
+							const AQLString& data_timing,
+							const AQLString& data_fodd, const AQLString& data_lodd,
+							const AQLString& data_day,
+							const AQLPriceDataSlidingRule& busdayrule,
+							const AQLPriceDataCalendar* pCal,
 							DateVector& out,
 							DateVector& out_unadjust)
 {
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	//frequency
 	dh = &(object.getData(data_frequency, ISNOTNULL));
-	const LAString& freq = dynamic_cast<const LADataString&>(dh->get()).get();
+	const AQLString& freq = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	
 	//isArrear
 	dh = &(object.getData(data_timing, ISNOTNULL));
-	const LAString& timing = dynamic_cast<const LADataString&>(dh->get()).get();
+	const AQLString& timing = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	bool isarrear = LAPriceCFGenUtility::isArrear(timing);
 
 
 	//first odd date
-	const LADate* firstStubDate = NULL;
+	const AQLDate* firstStubDate = NULL;
 	dh = &(object.getData(data_fodd, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		firstStubDate = &dynamic_cast<const LADataDate&>(dh->get()).get();
+		firstStubDate = &dynamic_cast<const AQLDataDate&>(dh->get()).get();
 
 	//last odd date
-	const LADate* lastStubDate = NULL;
+	const AQLDate* lastStubDate = NULL;
 	dh = &(object.getData(data_lodd, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		lastStubDate = &dynamic_cast<const LADataDate&>(dh->get()).get();
+		lastStubDate = &dynamic_cast<const AQLDataDate&>(dh->get()).get();
 
 	//coupon day
 	int day;
@@ -145,7 +145,7 @@ LAPriceCFGenUtility::generateSchedule(const LAObject& object,
 	dh = &(object.getData(data_day, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		day = dynamic_cast<const LADataInt&>(dh->get()).get();
+		day = dynamic_cast<const AQLDataInt&>(dh->get()).get();
 		pday = &day;
 	}
 
@@ -167,8 +167,8 @@ LAPriceCFGenUtility::generateSchedule(const LAObject& object,
 		if (pCal == NULL)
 		{
 			//error
-			LAString msg = "Calendar is need";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+			AQLString msg = "Calendar is need";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 		}
 		for (unsigned int i = 0; i < out_unadjust.size(); i++)	
 		{
@@ -190,26 +190,26 @@ LAPriceCFGenUtility::generateSchedule(const LAObject& object,
 	@brief get slidingdate by specified SlidingRule and Calender
 	
 	@param[in] basedate			base date
-	@param[in] object			LAObject Class
+	@param[in] object			AQLObject Class
 	@param[in] data_slidngrule	stirng of SlidingRule
 	@param[in] data_calendar	stirng of Calender
 
 */
-LADate
-LAPriceCFGenUtility::getDate(const LADate& basedate, 
-							const LAObject& object,
-							const LAString& data_slidingrule, 
-							const LAString& data_calendar)
+AQLDate
+LAPriceCFGenUtility::getDate(const AQLDate& basedate, 
+							const AQLObject& object,
+							const AQLString& data_slidingrule, 
+							const AQLString& data_calendar)
 {
-	LADate date = basedate;
+	AQLDate date = basedate;
 	//sliding rule
-	const LADataHolder *dh = &(object.getData(data_slidingrule, ISNOTNULL));
-	const LAPriceDataSlidingRule& srule = dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+	const AQLDataHolder *dh = &(object.getData(data_slidingrule, ISNOTNULL));
+	const AQLPriceDataSlidingRule& srule = dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 	if (srule.getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 	{
 		//calendar
 		dh = &(object.getData(data_calendar, ISNOTNULL));
-		const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+		const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 		date = srule.getDate(date, cal);
 	}
 	return date;
@@ -231,16 +231,16 @@ LAPriceCFGenUtility::getDate(const LADate& basedate,
 	@param[in] rollForwards			true:after, false:before(bool)
 	
 */
-LADate
-LAPriceCFGenUtility::getDate(const LADate& basedate, const LAString& term, 
-							const LAObject& object,
-							const LAString& data_slidingrule, 
-							const LAString& data_calendar, 
+AQLDate
+LAPriceCFGenUtility::getDate(const AQLDate& basedate, const AQLString& term, 
+							const AQLObject& object,
+							const AQLString& data_slidingrule, 
+							const AQLString& data_calendar, 
 							bool rollForwards)
 {
 	int y, m, d, w;
 	LAMathDateCalculations::termStrtoYMDW(term, y, m, d, w);
-	LADate date = basedate;
+	AQLDate date = basedate;
 	if (!rollForwards)
 	{
 		y = -y;
@@ -254,13 +254,13 @@ LAPriceCFGenUtility::getDate(const LADate& basedate, const LAString& term,
 	if (d == 0) return date;
 
 	//sliding rule
-	const LADataHolder *dh = &(object.getData(data_slidingrule, ISNOTNULL));
-	const LAPriceDataSlidingRule& srule = dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+	const AQLDataHolder *dh = &(object.getData(data_slidingrule, ISNOTNULL));
+	const AQLPriceDataSlidingRule& srule = dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 	if (srule.getSlidingRule() != SLIDING_RULE_NO_CHANGE)
 	{
 		//calendar
 		dh = &(object.getData(data_calendar, ISNOTNULL));
-		const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+		const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 		date = cal.getBusinessDay(date, d);
 	}
 	else 
@@ -283,14 +283,14 @@ LAPriceCFGenUtility::getDate(const LADate& basedate, const LAString& term,
 
 */
 
-LADate
-LAPriceCFGenUtility::getDate(const LADate& basedate, 
-							const LAString& specialoffset,
+AQLDate
+LAPriceCFGenUtility::getDate(const AQLDate& basedate, 
+							const AQLString& specialoffset,
 							const IntArray& specialday,
-							const LAPriceDataSlidingRule& busdayrule,
-							const LAPriceDataCalendar* pCal)
+							const AQLPriceDataSlidingRule& busdayrule,
+							const AQLPriceDataCalendar* pCal)
 {
-	LADate date = basedate;
+	AQLDate date = basedate;
 	int y, m, d, w;
 	LAMathDateCalculations::termStrtoYMDW(specialoffset, y, m, d, w);
 	
@@ -310,8 +310,8 @@ LAPriceCFGenUtility::getDate(const LADate& basedate,
 	if (pCal == NULL)
 	{
 		//error
-		LAString msg = "Calendar is need";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+		AQLString msg = "Calendar is need";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 	}
 	return busdayrule.getDate(date, *pCal);
 }
@@ -326,18 +326,18 @@ LAPriceCFGenUtility::getDate(const LADate& basedate,
 */
 
 bool
-LAPriceCFGenUtility::isArrear(const LAString& timing)
+LAPriceCFGenUtility::isArrear(const AQLString& timing)
 {
-	LAString str = timing;
+	AQLString str = timing;
 	str.toUpper();
 	if (str == ARREAR) return true;
 	else if (str == ADVANCE) return false;
 	else
 	{
 		//error
-		LAString msg = str;
+		AQLString msg = str;
 		msg += " is wrong input";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);				
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);				
 	}
 }
 
@@ -346,10 +346,10 @@ LAPriceCFGenUtility::isArrear(const LAString& timing)
 
 
 
-    @param[in] object			first priority LAObject Class
+    @param[in] object			first priority AQLObject Class
 	@param[in] data_slidngrule	stirng of SlidingRule
 	@param[in] data_calendar	stirng of Calender
-	@param[in] entity2			sedond priority LAObject Class
+	@param[in] entity2			sedond priority AQLObject Class
 	@param[in, out] pbusdayrule		pointer of SlidingRule
 	@param[in, out] pcal			pointer of Calender
 
@@ -359,26 +359,26 @@ LAPriceCFGenUtility::isArrear(const LAString& timing)
 */
 
 void
-LAPriceCFGenUtility::getBusDayRuleAndCalendar(const LAObject& object,
-											const LAString& data_slidingrule, 
-											const LAString& data_calendar,
-											const LAObject& entity2,
-											const LAString& data_slidingrule2, 
-											const LAString& data_calendar2,
-											const LAPriceDataSlidingRule*& pbusdayrule,
-											const LAPriceDataCalendar*& pcal
+LAPriceCFGenUtility::getBusDayRuleAndCalendar(const AQLObject& object,
+											const AQLString& data_slidingrule, 
+											const AQLString& data_calendar,
+											const AQLObject& entity2,
+											const AQLString& data_slidingrule2, 
+											const AQLString& data_calendar2,
+											const AQLPriceDataSlidingRule*& pbusdayrule,
+											const AQLPriceDataCalendar*& pcal
 														)
 {
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	pcal = NULL;
 	//sliding rule
 	dh = &(object.getData(data_slidingrule, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		pbusdayrule = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+		pbusdayrule = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 	else
 	{
 		dh = &(entity2.getData(data_slidingrule2, ISNOTNULL));
-		pbusdayrule = &dynamic_cast<const LAPriceDataSlidingRule&>(dh->get());
+		pbusdayrule = &dynamic_cast<const AQLPriceDataSlidingRule&>(dh->get());
 	}
 
 	if (pbusdayrule->getSlidingRule() == SLIDING_RULE_NO_CHANGE) return;
@@ -386,11 +386,11 @@ LAPriceCFGenUtility::getBusDayRuleAndCalendar(const LAObject& object,
 		
 	dh = &(object.getData(data_calendar, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		pcal = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+		pcal = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 	else
 	{
 		dh = &(entity2.getData(data_calendar2, ISNOTNULL));
-		pcal = &dynamic_cast<const LAPriceDataCalendar&>(dh->get());
+		pcal = &dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
 	}
 	
 }
@@ -407,9 +407,9 @@ LAPriceCFGenUtility::getBusDayRuleAndCalendar(const LAObject& object,
 */
 
 double
-LAPriceCFGenUtility::round(const double value, const LAString& roundfunction, const int rounddigit)
+LAPriceCFGenUtility::round(const double value, const AQLString& roundfunction, const int rounddigit)
 {
-	LAString roundstr = roundfunction;
+	AQLString roundstr = roundfunction;
 	roundstr.toUpper();
 	
 
@@ -422,9 +422,9 @@ LAPriceCFGenUtility::round(const double value, const LAString& roundfunction, co
 	else
 	{
 		//error
-		LAString msg = "RoundFunction : " + roundfunction;
+		AQLString msg = "RoundFunction : " + roundfunction;
 		msg += " is not support";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
 	
 	}
 
@@ -446,7 +446,7 @@ LAPriceCFGenUtility::round(const double value, RoundFunction roundfunction, cons
 {
 	
 	int a = 1;
-	for (int i = 0; i < LAMath::abs(rounddigit); i++)
+	for (int i = 0; i < AQLMath::abs(rounddigit); i++)
 		a *= 10;
 
 	if (roundfunction == ROUND)

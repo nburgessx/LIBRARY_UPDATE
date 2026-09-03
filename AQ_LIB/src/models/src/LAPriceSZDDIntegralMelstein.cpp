@@ -25,15 +25,15 @@
 
 #include <algorithm>
 #include "LAPriceSZDDIntegralMelstein.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAPriceDriftFX.h"
 #include "LAPriceDriftFXLogNumeraire.h"
 #include "LAMathVolFuncBase.h"
 #include "LAMathVolFuncSZDD.h"
 #include "LAPriceQuantAdjustmentHWFXDD.h"
 #include "LAMathIndexEntity.h"
-#include "LADataBasics.h"
-#include "LADataMatrix.h"
+#include "AQLDataBasics.h"
+#include "AQLDataMatrix.h"
 
 using namespace std;
 
@@ -57,7 +57,7 @@ using namespace std;
 	@param[in] type sde integral type
 
 */
-LAPriceSZDDIntegralMelstein::LAPriceSZDDIntegralMelstein(const LAString &sdeAttrName, const LAString &sdeAttrNameVol)
+LAPriceSZDDIntegralMelstein::LAPriceSZDDIntegralMelstein(const AQLString &sdeAttrName, const AQLString &sdeAttrNameVol)
 : LARatesSDEIntegralBase(NORMAL_INTEGRAL, sdeAttrName), mpVolSDE(0), mSDEAttrNameVol(sdeAttrNameVol), mPos_old(0), mCorr(0)
 {
 	mVar.resize(3);
@@ -84,7 +84,7 @@ LAPriceSZDDIntegralMelstein::~LAPriceSZDDIntegralMelstein()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceSZDDIntegralMelstein::clone() const	
 {
     try 
@@ -93,7 +93,7 @@ LAPriceSZDDIntegralMelstein::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -130,8 +130,8 @@ LAPriceSZDDIntegralMelstein::getType() const
 */
 void
 LAPriceSZDDIntegralMelstein::integral(double ts, double te, 
-							vector<LAFunctionBase*>::const_iterator drift,										
-							vector<vector<LAFunctionBase*> >::const_iterator vol,
+							vector<AQLFunctionBase*>::const_iterator drift,										
+							vector<vector<AQLFunctionBase*> >::const_iterator vol,
 							DoubleArray::const_iterator	bm,
 							SCALARARRAY::iterator	x_in_out,
 							unsigned int varnum
@@ -141,10 +141,10 @@ LAPriceSZDDIntegralMelstein::integral(double ts, double te,
 	////if (!(*drift)->isTypeOf(FN_DRIFTFX))
 	////{	
 	////	//error
-	////	throw LACoreInvalidData("drift class must be LAPriceDriftFX!", __FILE__, __LINE__);
+	////	throw AQLCoreInvalidData("drift class must be LAPriceDriftFX!", __FILE__, __LINE__);
 	////}	
 	
-	const LAFunctionBase* volfunc;
+	const AQLFunctionBase* volfunc;
 	if ((*vol)[0]->isTypeOf(FN_VOLFUNCBASE))
 	{
 		volfunc = dynamic_cast<LAMathVolFuncBase*>((*vol)[0])->getVolatility();
@@ -156,7 +156,7 @@ LAPriceSZDDIntegralMelstein::integral(double ts, double te,
 	if (!volfunc->isTypeOf(FN_VOLFUNCSZDD))
 	{
 		//error
-		throw LACoreInvalidData("volatility class must be LAMathVolFuncSZDD!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("volatility class must be LAMathVolFuncSZDD!", __FILE__, __LINE__);
 	}
 	const LAMathVolFuncSZDD* volfuncsz =dynamic_cast<const LAMathVolFuncSZDD*>(volfunc);
 
@@ -199,19 +199,19 @@ LAPriceSZDDIntegralMelstein::integral(double ts, double te,
 
 		if (!mpVolSDE)
 		{
-			throw LACoreInvalidData("Vol SDE is not set in LAPriceSZDDIntegralMelstein", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Vol SDE is not set in LAPriceSZDDIntegralMelstein", __FILE__, __LINE__);
 		}
 		const DoubleArray& timegrid = mpVolSDE->getBM()->getTimeGrid();
 		unsigned int pos;
 		if (ts == 0.0) pos = 0;
 		else if (ts == timegrid[mPos_old]) pos = mPos_old;
 		else if (mPos_old + 2 < timegrid.size() && ts == timegrid[mPos_old + 1]) pos = mPos_old + 1;
-		else if (!LAAlgorithm::find<DoubleArray, double>(timegrid, ts, 0, timegrid.size() - 1, pos))
+		else if (!AQLAlgorithm::find<DoubleArray, double>(timegrid, ts, 0, timegrid.size() - 1, pos))
 		{
 			//error
-			LAString msg = "Time =" + LADataDouble(ts).convertToString();
+			AQLString msg = "Time =" + AQLDataDouble(ts).convertToString();
 			msg += " is not in sde integral time grid";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
 		mPos_old = pos;
@@ -360,32 +360,32 @@ LAPriceSZDDIntegralMelstein::integral(double ts, double te,
 void LAPriceSZDDIntegralMelstein::setUp(LAMathPathEntity& path)
 {
 	//fx sde 
-	LADataHolder *dh = &path.getData(mSDEAttrNameVol, ISNOTNULL);
+	AQLDataHolder *dh = &path.getData(mSDEAttrNameVol, ISNOTNULL);
 	mpVolSDE = &dynamic_cast<LAMathAttrSDE&>(dh->get()).getSDE();
 
 	//correlation
-	LAStringVector SDEAttrNames = path.getSimulationSDEAttrNames().get();
+	AQLStringVector SDEAttrNames = path.getSimulationSDEAttrNames().get();
 	if (SDEAttrNames.size() == 0)
 		SDEAttrNames = path.getSDEAttrNames().get();
 
-	LAStringVector::iterator it;
+	AQLStringVector::iterator it;
 	it = std::find(SDEAttrNames.begin(), SDEAttrNames.end(), mSDEAttrName);
 	if (it == SDEAttrNames.end())
 	{
-		LAString msg = mSDEAttrName + "is not found path.mSDEAttrName.";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = mSDEAttrName + "is not found path.mSDEAttrName.";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	unsigned int spotpos = std::distance(SDEAttrNames.begin(), it);
 	it = std::find(SDEAttrNames.begin(), SDEAttrNames.end(), mSDEAttrNameVol);
 	if (it == SDEAttrNames.end())
 	{
-		LAString msg = mSDEAttrNameVol + "is not found path.mSDEAttrName.";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = mSDEAttrNameVol + "is not found path.mSDEAttrName.";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	unsigned int volapos = std::distance(SDEAttrNames.begin(), it);
 	unsigned int CorrMat1Dsize = path.getCorrelationMatrix().get1DSize();
 	if (CorrMat1Dsize < SDEAttrNames.size())
-		throw LACoreInvalidData("CorrelationMatrix size must be larger than SDEAttrNames size", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("CorrelationMatrix size must be larger than SDEAttrNames size", __FILE__, __LINE__);
 	else
 		mCorr = path.getCorrelationMatrix().get()[spotpos][volapos];
 

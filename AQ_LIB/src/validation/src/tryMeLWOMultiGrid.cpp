@@ -27,12 +27,12 @@ namespace validation
     {
         if( infoBlocks.size() <= 0 )
         {
-			throw LACoreInvalidData( "#Error: No Grid Information provided to tryMeLWOMultiGridCreate", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: No Grid Information provided to tryMeLWOMultiGridCreate", __FILE__, __LINE__ );
         }
 
         if( gridNames.size() != infoBlocks.size() )
         {
-			throw LACoreInvalidData( ( boost::format( "#Error: Number of Grid names (%i) does not match number of grid data ranges (%i)." )
+			throw AQLCoreInvalidData( ( boost::format( "#Error: Number of Grid names (%i) does not match number of grid data ranges (%i)." )
                                    % gridNames.size()
                                    % infoBlocks.size() ).str().c_str(), __FILE__, __LINE__ );
         }
@@ -45,7 +45,7 @@ namespace validation
         } );
         if( hasAnEmptyName )
         {
-			throw LACoreInvalidData( ( boost::format( "#Error: One of the individual grid names is empty or invalid (%s)" )
+			throw AQLCoreInvalidData( ( boost::format( "#Error: One of the individual grid names is empty or invalid (%s)" )
                                    % etrading::containerAsString( gridNames ).c_str() ).str().c_str(), __FILE__, __LINE__ );
         }
 
@@ -97,7 +97,7 @@ namespace validation
 				}
 				catch (std::out_of_range e)
 				{
-					throw LACoreInvalidData (  ( boost::format("#Error: Unable to retrieve GridName \"%s\" from the MultiGrid object." ) 
+					throw AQLCoreInvalidData (  ( boost::format("#Error: Unable to retrieve GridName \"%s\" from the MultiGrid object." ) 
 											 % gridName.c_str()).str().c_str(), __FILE__, __LINE__);
 				}
 
@@ -109,13 +109,13 @@ namespace validation
             }
             else
             {
-				throw LACoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
+				throw AQLCoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
 										  % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
             }
         }
         else
         {
-			throw LACoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
+			throw AQLCoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
                                       % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
         }
     };
@@ -140,13 +140,13 @@ namespace validation
             }
             else
             {
-				throw LACoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
+				throw AQLCoreInvalidData(	( boost::format( "#Error: Found object \"%s\", but data is NULL" )
 										  % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
             }
         }
         else
         {
-			throw LACoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
+			throw AQLCoreInvalidData(	( boost::format( "#Error: Unable to find object with name \"%s\"" )
                                       % objectName.c_str() ).str().c_str(), __FILE__, __LINE__ );
         }
 

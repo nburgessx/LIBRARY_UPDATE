@@ -6,24 +6,24 @@
 #endif
 
 #include <algorithm>
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LADataReference.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
 #include "LAMathDateCalculations.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAPriceFXSingleBarrierOptionValue.h"
 #include "LAMathFXEntity.h"
 #include "LAMathYieldCurve.h"
@@ -72,7 +72,7 @@ LAPriceFXSingleBarrierOptionValue::isTypeOf(function_t id) const
     @brief get option method name
      @return option method name
 */
-LAString 
+AQLString 
 LAPriceFXSingleBarrierOptionValue::getOptionPayoffName() const
 {
 	return FN_FXSINGLEBARRIEROPTIONVALUE_STR;
@@ -85,7 +85,7 @@ LAPriceFXSingleBarrierOptionValue::getOptionPayoffName() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceFXSingleBarrierOptionValue::registerData(LAPriceDataManager& dm) const
+LAPriceFXSingleBarrierOptionValue::registerData(AQLPriceDataManager& dm) const
 {
 
 	LALinearRatesOptionValue::registerData(dm);
@@ -95,7 +95,7 @@ LAPriceFXSingleBarrierOptionValue::registerData(LAPriceDataManager& dm) const
 	dm.setData(PRICING_DATA_REBATEPAYMENTCALENDAR, DATA_CALENDAR);
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceFXSingleBarrierOptionValue::clone() const
 {
     try 
@@ -104,7 +104,7 @@ LAPriceFXSingleBarrierOptionValue::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -117,29 +117,29 @@ LAPriceFXSingleBarrierOptionValue::clone() const
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*					
-LAPriceFXSingleBarrierOptionValue::setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const
+AQLDataProvider*					
+LAPriceFXSingleBarrierOptionValue::setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const
 {
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceFXOptionValueDataProvider* dataProvider = NULL;
 	dataProvider = dynamic_cast<LAPriceFXOptionValueDataProvider *>(LAPriceFXOptionValue::setUpDataProvider(basedate,object,att));
 
 	//Limit val
 	dh = &(object.getData(PRICING_DATA_LIMITVAL, ISNOTNULL));
-	double limitval = dynamic_cast<LADataDouble &>(dh->get()).get();
+	double limitval = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 	//option type
 	int optypenum = 1;
 	dh = &(object.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
-	LAString optiontype = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString optiontype = dynamic_cast<AQLDataString &>(dh->get()).get();
 	optiontype.toUpper();
-	if (LAString("CALL") == optiontype)
+	if (AQLString("CALL") == optiontype)
 		optypenum = 1;
 	else
 		optypenum = -1;
@@ -147,9 +147,9 @@ LAPriceFXSingleBarrierOptionValue::setUpDataProvider(const LADate& basedate, LAO
 	//up and down
 	int updownnum = 1;
 	dh = &(object.getData(PRICING_DATA_UPANDDOWN, ISNOTNULL));
-	LAString updown = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString updown = dynamic_cast<AQLDataString &>(dh->get()).get();
 	updown.toUpper();
-	if (LAString("UP") == updown)
+	if (AQLString("UP") == updown)
 		updownnum = -1;
 	else
 		updownnum = 1;
@@ -158,24 +158,24 @@ LAPriceFXSingleBarrierOptionValue::setUpDataProvider(const LADate& basedate, LAO
 	int knocktimenum = 1;
 	//judge in or out if in we don't need rebateval;
 	dh = &(object.getData(PRICING_DATA_INANDOUT, ISNOTNULL));
-	LAString inout = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLString inout = dynamic_cast<AQLDataString &>(dh->get()).get();
 	inout.toUpper();
-	if (LAString("IN") != inout)
+	if (AQLString("IN") != inout)
 	{
 		//Rebate
 		dh = &(object.getData(PRICING_DATA_REBATE,ISNOTNULL));
-		 rebateval = dynamic_cast<LADataDouble &>(dh->get()).get();
+		 rebateval = dynamic_cast<AQLDataDouble &>(dh->get()).get();
 
 		//knockout time
 		dh = &(object.getData(PRICING_DATA_REBATEPAYMENTTIME, ISNOTNULL));
-		LAString retimestr = dynamic_cast<LADataString &>(dh->get()).get();
+		AQLString retimestr = dynamic_cast<AQLDataString &>(dh->get()).get();
 		retimestr.toUpper();
 		if (retimestr == "KNOCKTIME")
 			knocktimenum = 1;
 		else if(retimestr == "MATURITYTIME")
 			knocktimenum = 0;
 		else 
-			throw LACoreInvalidData("RebatePaymentTime Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("RebatePaymentTime Error",__FILE__,__LINE__);
 	}
 
 	//for phase6.5
@@ -199,7 +199,7 @@ LAPriceFXSingleBarrierOptionValue::setUpDataProvider(const LADate& basedate, LAO
 }
 
 std::vector< std::vector<AnalyticParam*> >
-LAPriceFXSingleBarrierOptionValue::createAnalyticParam(LAObject& object, LADataProvider* dataProvider) const
+LAPriceFXSingleBarrierOptionValue::createAnalyticParam(AQLObject& object, AQLDataProvider* dataProvider) const
 {
 	(void)object;(void)dataProvider;
 	std::vector<AnalyticParam*> retvec(1);

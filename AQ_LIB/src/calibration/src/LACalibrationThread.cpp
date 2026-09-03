@@ -17,7 +17,7 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "LACoreError.h"
+#include "AQLCoreError.h"
 #include "LACalibrationThread.h"
 #include "LACalibrate.h"
 #include "LACalibratePool.h"
@@ -66,7 +66,7 @@ MACalibrationThread::run()
 			request->doCalibrate();
 			mpChannel->releaseRequest(request);
 		}
-		catch (LACoreError &e)
+		catch (AQLCoreError &e)
 		{
 			e.print();
 			join();

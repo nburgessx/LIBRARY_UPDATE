@@ -7,7 +7,7 @@
 #endif
 
 #include "LAMathCentralBank.h"
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 
 #include <sstream>
 #include <cstdio>
@@ -100,9 +100,9 @@ namespace
 	};
 }
 
-std::map<LAString, DateVector>& LAMathCentralBank::schedules()
+std::map<AQLString, DateVector>& LAMathCentralBank::schedules()
 {
-	static std::map<LAString, DateVector> sched;
+	static std::map<AQLString, DateVector> sched;
 	return sched;
 }
 
@@ -127,7 +127,7 @@ void LAMathCentralBank::loadScheduleDatesFromDefaults()
 	const size_t rows = sizeof(schedulesDefault)/(sizeof(int) * nCBDefault);
 	const size_t cols = nCBDefault;
 	for (size_t j = 0; j != cols; ++j) {
-		LAString cb(CBDefault[j]);
+		AQLString cb(CBDefault[j]);
 
 		DateVector& dvec = scheds[cb.toUpper()];
 
@@ -150,7 +150,7 @@ void LAMathCentralBank::loadScheduleDatesFromDefaults()
 			const int yyyy = res1.quot;
 			assert(0 <= yyyy && yyyy <= 9999);
 
-			LADate d;
+			AQLDate d;
 			d.setYear(yyyy);
 			d.setMonth(mm);
 			d.setDay(dd);
@@ -160,7 +160,7 @@ void LAMathCentralBank::loadScheduleDatesFromDefaults()
 	}
 }
 
-const DateVector& LAMathCentralBank::meetingSchedule(const LAString& cb_input)
+const DateVector& LAMathCentralBank::meetingSchedule(const AQLString& cb_input)
 {
 #if defined(WIN32) || defined(WIN64)
 	boost::call_once(&loadScheduleDates, schedulesLoaded);
@@ -170,12 +170,12 @@ const DateVector& LAMathCentralBank::meetingSchedule(const LAString& cb_input)
 
 	const Schedules& scheds = schedules();
 
-	LAString cb(cb_input);
+	AQLString cb(cb_input);
 	Schedules::const_iterator it = scheds.find(cb.toUpper());
 
 	if (it != scheds.end()) {
 		return it->second;
 	}
 
-	throw LACoreAppError("unsupported central bank", __FILE__, __LINE__);
+	throw AQLCoreAppError("unsupported central bank", __FILE__, __LINE__);
 }

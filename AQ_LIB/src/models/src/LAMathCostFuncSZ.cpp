@@ -3,7 +3,7 @@
 #include <LAMathYieldCurve.h>
 #include <LAMathSwaptionFormulaSZ.h>
 #include "LAModelUtilities.h"
-#include <LACoreAppError.h>
+#include <AQLCoreAppError.h>
 
 LAMathCostFuncSZ::LAMathCostFuncSZ(double S0_,
 						 double V0_,
@@ -40,14 +40,14 @@ ddsv_approx(new LAMathSwaptionFormulaSZ(curve_d_,
 								   ))
 {
 	if(weight.size() != n)
-		throw LACoreInvalidData("T_grid.size() != weight.size() : CostFunc_SZ::CostFunc_SZ", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("T_grid.size() != weight.size() : CostFunc_SZ::CostFunc_SZ", __FILE__, __LINE__);
 
 	if(t2f.size() != n)
-		throw LACoreInvalidData("t2f.size() != n : CostFunc_SZ::CostFunc_SZ", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("t2f.size() != n : CostFunc_SZ::CostFunc_SZ", __FILE__, __LINE__);
 
 	if(calibFlag.size() != 4)
 	{
-		throw LACoreInvalidData("flg.size() != 4 : CostFunc_SZ::CostFunc_SZ", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("flg.size() != 4 : CostFunc_SZ::CostFunc_SZ", __FILE__, __LINE__);
 	}
 }
 
@@ -60,12 +60,12 @@ LAMathCostFuncSZ::~LAMathCostFuncSZ()
 // method to overload to compute the cost function value in x
 Real LAMathCostFuncSZ::value(const Array& x) const
 {   
-	if(n == 0) throw LACoreInvalidData("target to fit is not setted! :: CostFunc_SZ::value", __FILE__, __LINE__);
+	if(n == 0) throw AQLCoreInvalidData("target to fit is not setted! :: CostFunc_SZ::value", __FILE__, __LINE__);
 	double m = x.size();
 	
 	if(m == 0 || m > 4)
 	//if(m == 0 || m > 3)
-		throw LACoreInvalidData("m == 0 || m > 4 : CostFunc_SZ::value", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("m == 0 || m > 4 : CostFunc_SZ::value", __FILE__, __LINE__);
 
 	set_params(x);
 	//beta[idx] = x[0]; theta[idx] = x[1]; kappa[idx] = x[2]; epsilon[idx] = x[3];
@@ -91,7 +91,7 @@ Array LAMathCostFuncSZ::values(const Array& x) const
 	
 	//if(m == 0 || m > 4)
 	if(m == 0 || m > 3)
-		throw LACoreInvalidData("m == 0 || m > 3 : CostFunc_SZ::value", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("m == 0 || m > 3 : CostFunc_SZ::value", __FILE__, __LINE__);
 
 	set_params(x);
 	//beta[idx] = x[0]; theta[idx] = x[1]; kappa[idx] = x[2]; epsilon[idx] = x[3];
@@ -129,8 +129,8 @@ void LAMathCostFuncSZ::Set_t2f(double T_,
 	idx > 0 && LAModelUtilities::eq(T_, T_param[idx], 1. /365) ? --idx : idx;
 
 	n = strike.size();
-	if(n != weight.size()) throw LACoreInvalidData("strike.size() != weight.size() : CostFunc_SZ::Set_t2f", __FILE__, __LINE__);
-	if(n != t2f.size()) throw LACoreInvalidData("strike.size() != t2f.size() : CostFunc_SZ::Set_t2f", __FILE__, __LINE__);
+	if(n != weight.size()) throw AQLCoreInvalidData("strike.size() != weight.size() : CostFunc_SZ::Set_t2f", __FILE__, __LINE__);
+	if(n != t2f.size()) throw AQLCoreInvalidData("strike.size() != t2f.size() : CostFunc_SZ::Set_t2f", __FILE__, __LINE__);
 }
 
 double LAMathCostFuncSZ::Get_Call_Opt(double t, double K)

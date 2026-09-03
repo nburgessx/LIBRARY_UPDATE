@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 #include <boost/lexical_cast.hpp>
 #include "LabelValueBlock.h"
 #include "LACurveCalibrationHelpers.h"
@@ -42,8 +42,8 @@ namespace etrading
 	*  @param [in]		forwardRates		                The new forward rates
     *  @param [in]		setCorrespondingDiscountFactors	    Set the corresponding discount factors (for STD curves only)
 	*/
-    LAString setCurveForwardRates( const LAString& curveCollection,
-                                   const LAString& curveIndex,
+    AQLString setCurveForwardRates( const AQLString& curveCollection,
+                                   const AQLString& curveIndex,
                                    const DateVector& fixingDates,
                                    const DoubleVector& forwardRates,
                                    const bool setCorrespondingDiscountFactors = true );
@@ -55,8 +55,8 @@ namespace etrading
 	*  @param [in]		discountFactors		        The new discount factors
     *  @param [in]		setCorrespondingForwards	Set the corresponding forwards (for STD curves only)
 	*/
-    LAString setCurveDiscountFactors( const LAString& curveCollection,
-                                      const LAString& curveIndex,
+    AQLString setCurveDiscountFactors( const AQLString& curveCollection,
+                                      const AQLString& curveIndex,
                                       const DateVector& paymentDates,
                                       const DoubleVector& discountFactors,
                                       const bool setCorrespondingForwards = false );
@@ -65,21 +65,21 @@ namespace etrading
 	*  @param [in]		curveCollection		The curveCollection to use when accessing the curveIndices
 	*  @param [in]		curveIndex			The curveindex within the curve
 	*/
-    LAString setCurveDiscountFactorsToOne( const LAString& curveCollection, const LAString& curveIndices );
+    AQLString setCurveDiscountFactorsToOne( const AQLString& curveCollection, const AQLString& curveIndices );
 
     /* @brief			getCurveDiscountFactors function, which retrieves all discount factors
 	*  @param [in]		curveCollection		    The curveCollection to use when accessing the curveIndices
 	*  @param [in]		curveIndex			    The curveindex within the curve
 	*  @param [out]		DiscountFactorTable     A discount factor table structure that contains paymentDates_ and discountFactors_
     */
-    DiscountFactorTable getCurveDiscountFactors( const LAString& curveCollection, const LAString& curveIndex );
+    DiscountFactorTable getCurveDiscountFactors( const AQLString& curveCollection, const AQLString& curveIndex );
 
     /* @brief			getCurveForwardRates function, which retrieves all forward rates
 	*  @param [in]		curveCollection		    The curveCollection to use when accessing the curveIndices
 	*  @param [in]		curveIndex			    The curveindex within the curve
 	*  @param [out]		ForwardRateTable        A forward rate table structure that contains fixingDates_ and forwardRates_
     */
-    ForwardRateTable getCurveForwardRates( const LAString& curveCollection, const LAString& curveIndex );
+    ForwardRateTable getCurveForwardRates( const AQLString& curveCollection, const AQLString& curveIndex );
 
     /* @brief			This function approximates a discount factor from a forward rate using numerical integration
     *                   and the formula df = exp[ - Integral{0,T}( Forward Rates ~du ) ]
@@ -120,7 +120,7 @@ namespace etrading
     * @param [in]		curveIndex          curve index
 	* @output			EquivalentDiscountFactors::SolverResults struct containing discountFactors_, numberOfInterations_ and epsilon_
 	*/
-    EquivalentDiscountFactors::SolverResults setForwardRateEquivalentDiscountFactors( const DateVector & fixingDates, const DoubleVector & targetForwardRates, const LAString & curveCollection, const LAString & curveIndex );
+    EquivalentDiscountFactors::SolverResults setForwardRateEquivalentDiscountFactors( const DateVector & fixingDates, const DoubleVector & targetForwardRates, const AQLString & curveCollection, const AQLString & curveIndex );
 
     /* @brief			Function to set curve forward rates that are equivalent to discount factors provided
 	*  @param [in]		curveCollection		The curveCollection to use when accessing the curveIndices
@@ -128,5 +128,5 @@ namespace etrading
 	*  @param [in]		paymentDates        Discount Factor Payment Dates
 	*  @param [in]		discountFactors		Discount Factor Values
 	*/
-    void implyAndSetForwardRatesFromDiscountFactors( const LAString& curveCollection, const LAString& curveIndex, const DateVector& paymentDates, const DoubleVector& discountFactors );
+    void implyAndSetForwardRatesFromDiscountFactors( const AQLString& curveCollection, const AQLString& curveIndex, const DateVector& paymentDates, const DoubleVector& discountFactors );
 }

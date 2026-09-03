@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 
 using etrading::LabelValueBlock; 
@@ -32,7 +32,7 @@ namespace validation
 	*  @param [in]		discountDayCount	Day count for the discounting
 	*  @return			The Bond Option PV
 	*/
-	double tryMeLWOBondOptionPV(const std::string& objectName, const LAStringMatrix& valuationSettings, const double& bondPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount);
+	double tryMeLWOBondOptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount);
 
 
 	/* @brief			validation interface for the meLWOBondFutureOptionPV method, which calculates the PV of the cached bond future option
@@ -43,7 +43,7 @@ namespace validation
 	*  @param [in]		discountDayCount	Day count for the discounting
 	*  @return			The Bond Option PV
 	*/
-	double tryMeLWOBondFutureOptionPV(const std::string& objectName, const LAStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount);
+	double tryMeLWOBondFutureOptionPV(const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount);
 
 	/* @brief			validation interface for the meLWOBondFutureOptionGreeks method, to calculate Numerical greeks
 	*  @param [in]		greekType			Greek type: Analytical or Numerical
@@ -60,7 +60,7 @@ namespace validation
 	*  @param [in]		showColumnHeaders	showColumnHeaders
 	*  @return			Bond option Greeks' display
 	*/
-	AnyTypeMatrix tryMeLWOBondFutureOptionGreeks(const std::string& greekType, const std::string& objectName, const LAStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders = true);
+	AnyTypeMatrix tryMeLWOBondFutureOptionGreeks(const std::string& greekType, const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondFuturePrice, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders = true);
 
 	/* @brief			validation interface for the meLWOBondOptionGreeks method, to calculate Numerical greeks
 	*  @param [in]		greekType			Greek type: Analytical or Numerical
@@ -79,7 +79,7 @@ namespace validation
 	*  @param [in]		showColumnHeaders	showColumnHeaders
 	*  @return			Bond option Greeks' display
 	*/
-	AnyTypeMatrix tryMeLWOBondOptionGreeks(const std::string& greekType, const std::string& objectName, const LAStringMatrix& valuationSettings, const double& bondSpotPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders = true);
+	AnyTypeMatrix tryMeLWOBondOptionGreeks(const std::string& greekType, const std::string& objectName, const AQLStringMatrix& valuationSettings, const double& bondSpotPrice, const double& repoRate, const std::string& repoDaycount, const double& discountRate, const std::string& discountDayCount, const double & deltaBump, const double & gammaBump, const double & vegaBump, const double & thetaBump, const double & rhoBump, const bool& showColumnHeaders = true);
 
 }
 

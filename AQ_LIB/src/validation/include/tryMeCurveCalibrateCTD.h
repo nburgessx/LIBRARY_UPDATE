@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -11,10 +11,10 @@ namespace validation
     *  @param [in]		curveConv			General curve properties such as asofdate, ccy, interp, etc
     *  @param [in]		collateralCurves	The group of collateral curves out of which the CTD curve is constructed
     */
-    LAString tryMeCurveCalibrateCTD( const LAString& curveCollection,
-                                    const LAString& curveName,
-                                    const LAString& curveIndexInput,
-                                    const LAStringMatrix& curveConv,
-                                    const LAStringVector& collateralCurves );
+    AQLString tryMeCurveCalibrateCTD( const AQLString& curveCollection,
+                                    const AQLString& curveName,
+                                    const AQLString& curveIndexInput,
+                                    const AQLStringMatrix& curveConv,
+                                    const AQLStringVector& collateralCurves );
 }
 

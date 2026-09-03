@@ -13,13 +13,13 @@ std::string mirGetECBStartDate(const std::string& ecbDate)
 	try 
 	{
 		// Input marshalling
-		LADate ecbDt(ecbDate.c_str(),"YYYYMMDD");
+		AQLDate ecbDt(ecbDate.c_str(),"YYYYMMDD");
 
-		LADate date = validation::tryMirGetECBStartDate(ecbDt);
+		AQLDate date = validation::tryMirGetECBStartDate(ecbDt);
 		ret = date.stringWithFormat("YYYYMMDD").getCString();
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

@@ -13,7 +13,7 @@ namespace validation
     *  @param [in]		ecbDate ECB(European Central Bank) date
     *  @return			The start date of an ECB Swap based on the ecb date
     */
-    LADate tryMirGetECBStartDate( const LADate& ecbDate )
+    AQLDate tryMirGetECBStartDate( const AQLDate& ecbDate )
     {
         VALID_EXCEPTION_START
 
@@ -25,7 +25,7 @@ namespace validation
             file.write( "ecbDate", ecbDate );
         }
 
-        LADate ret = etrading::LADateHelpers::getECBStartDate( ecbDate );
+        AQLDate ret = etrading::LADateHelpers::getECBStartDate( ecbDate );
 
         if ( CreateDataFile::recordEnabled() )
         {

@@ -4,9 +4,9 @@
 #pragma interface
 #endif
 
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 enum RoundFunction
 {
@@ -17,10 +17,10 @@ enum RoundFunction
 
 
 
-class LAString;
-class LAObject;
-class LAPriceDataSlidingRule;
-class LAPriceDataCalendar;
+class AQLString;
+class AQLObject;
+class AQLPriceDataSlidingRule;
+class AQLPriceDataCalendar;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief calculate date of schedule
@@ -30,86 +30,86 @@ class LAPriceCFGenUtility
 {
 public:
 	// calculate dates by String input
-	static void					generateSchedule(const LAObject& object,
-										const LADate& start, const LADate& end,
-										const LAString& data_frequency,
-										const LAString& data_timing,
-										const LAString& data_fodd, const LAString& data_lodd,
-										const LAString& data_day,
-										const LAString& data_slidingrule, 
-										const LAString& data_calendar,
+	static void					generateSchedule(const AQLObject& object,
+										const AQLDate& start, const AQLDate& end,
+										const AQLString& data_frequency,
+										const AQLString& data_timing,
+										const AQLString& data_fodd, const AQLString& data_lodd,
+										const AQLString& data_day,
+										const AQLString& data_slidingrule, 
+										const AQLString& data_calendar,
 										DateVector& out,
 										DateVector& out_unadjust); 
 	// calculate both adjusted and unadjusted dates 
-	static void					generateSchedule(const LAObject& object,
-										const LADate& start, const LADate& end,
-										const LAString& data_frequency,
-										const LAString& data_timing,
-										const LAString& data_fodd, const LAString& data_lodd,
-										const LAString& data_day,
-										const LAPriceDataSlidingRule& busdayrule,
-										const LAPriceDataCalendar* pCal,
+	static void					generateSchedule(const AQLObject& object,
+										const AQLDate& start, const AQLDate& end,
+										const AQLString& data_frequency,
+										const AQLString& data_timing,
+										const AQLString& data_fodd, const AQLString& data_lodd,
+										const AQLString& data_day,
+										const AQLPriceDataSlidingRule& busdayrule,
+										const AQLPriceDataCalendar* pCal,
 										DateVector& out,
 										DateVector& out_unadjust); 
 
 	// calculate dates
-/*	static	void				generateSchedule(const LADate& start, const LADate& end,
-										const LAString& data_frequency,
+/*	static	void				generateSchedule(const AQLDate& start, const AQLDate& end,
+										const AQLString& data_frequency,
 										const bool isarrear,
-										const LADate* firstStubDate, const LADate* lastStubDate,
+										const AQLDate* firstStubDate, const AQLDate* lastStubDate,
 										const int* pday,
 										DateVector& out,
-										const LAPriceDataSlidingRule* pbusdayrule = NULL,
-										const LAPriceDataCalendar* pcal = NULL
+										const AQLPriceDataSlidingRule* pbusdayrule = NULL,
+										const AQLPriceDataCalendar* pcal = NULL
 										);*/
 	// Set term from string to integer 
-//	static	void				termStrtoYMD(const LAString& term, int& y, int& m, int& d);
+//	static	void				termStrtoYMD(const AQLString& term, int& y, int& m, int& d);
 	
 	// get slidingdate by specified SlidingRule and Calender
-	static	LADate				getDate(const LADate& basedate, 
-										const LAObject& object,
-										const LAString& data_slidingrule, 
-										const LAString& data_calendar); 
+	static	AQLDate				getDate(const AQLDate& basedate, 
+										const AQLObject& object,
+										const AQLString& data_slidingrule, 
+										const AQLString& data_calendar); 
 	// get date either term after or before from basedate  
-/*	static	LADate				getDate(const LADate& basedate, const LAString& term, 
+/*	static	AQLDate				getDate(const AQLDate& basedate, const AQLString& term, 
 										bool rollForwards);
 	// get date, which slidied by specified SlidingRule and Calender, either term after or before from basedate 
-	static	LADate				getDate(const LADate& basedate, const LAString& term, 
-										const LAPriceDataSlidingRule& busdayrule,
-										const LAPriceDataCalendar* pCal,
+	static	AQLDate				getDate(const AQLDate& basedate, const AQLString& term, 
+										const AQLPriceDataSlidingRule& busdayrule,
+										const AQLPriceDataCalendar* pCal,
 										bool rollForwards);
 */
 	// get date, which slidied by specified SlidingRule and Calender, either term after or before from basedate
-	static	LADate				getDate(const LADate& basedate, const LAString& term, 
-										const LAObject& object,
-										const LAString& data_slidingrule, 
-										const LAString& data_calendar, 
+	static	AQLDate				getDate(const AQLDate& basedate, const AQLString& term, 
+										const AQLObject& object,
+										const AQLString& data_slidingrule, 
+										const AQLString& data_calendar, 
 										bool rollForwards);
 
 	// get date, which is special day and slidied by specified SlidingRule and Calender, before specified term from basedate
-	static	LADate				getDate(const LADate& basedate, 
-										const LAString& specialoffset,
+	static	AQLDate				getDate(const AQLDate& basedate, 
+										const AQLString& specialoffset,
 										const IntArray& specialday,
-										const LAPriceDataSlidingRule& busdayrule,
-										const LAPriceDataCalendar* pCal = NULL);
+										const AQLPriceDataSlidingRule& busdayrule,
+										const AQLPriceDataCalendar* pCal = NULL);
 
 	// get SlidingRule and Calender by Object Class
-	static void					getBusDayRuleAndCalendar(const LAObject& object,
-														const LAString& data_slidingrule, 
-														const LAString& data_calendar,
-														const LAObject& entity2,
-														const LAString& data_slidingrule2, 
-														const LAString& data_calendar2,
-														const LAPriceDataSlidingRule*& pbusdayrule,
-														const LAPriceDataCalendar*& pcal
+	static void					getBusDayRuleAndCalendar(const AQLObject& object,
+														const AQLString& data_slidingrule, 
+														const AQLString& data_calendar,
+														const AQLObject& entity2,
+														const AQLString& data_slidingrule2, 
+														const AQLString& data_calendar2,
+														const AQLPriceDataSlidingRule*& pbusdayrule,
+														const AQLPriceDataCalendar*& pcal
 														);
 	// get rounded value by specified function and digit
-	static	double				round(const double value, const LAString& roundfunction, const int rounddigit);
+	static	double				round(const double value, const AQLString& roundfunction, const int rounddigit);
 	// get rounded value by specified function and digit
 	static	double				round(const double value, RoundFunction roundfunction, const int rounddigit);
 	
 	// check arrear or not  
-	static	bool				isArrear(const LAString& timing);
+	static	bool				isArrear(const AQLString& timing);
 
 protected:
 

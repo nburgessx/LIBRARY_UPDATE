@@ -4,7 +4,7 @@
 #include "BaseInstrument.h"
 #include "DeltaRiskGenerator.h"
 
-class LADate;
+class AQLDate;
 
 namespace etrading
 {
@@ -32,7 +32,7 @@ namespace etrading
         /* @brief		Set interpolation for pricing
         *  @param [in]	interpolation	Yield curve interpolation
         */
-        virtual void setInterpolation( const LAString& interpolation );
+        virtual void setInterpolation( const AQLString& interpolation );
 
         /* @brief		Method that returns swap PV
         *  @return		instrument PV
@@ -45,10 +45,10 @@ namespace etrading
         std::vector<BaseInstrumentPtr> trades_;
 
         // Market
-        LAString curveSet_;
-        LAString forecastCurve_;
-        LAString discountCurve_;
-        LAString interpolation_;
+        AQLString curveSet_;
+        AQLString forecastCurve_;
+        AQLString discountCurve_;
+        AQLString interpolation_;
 
         // Delta ladder generators, one for each trade
         DeltaGenerator riskGen_;

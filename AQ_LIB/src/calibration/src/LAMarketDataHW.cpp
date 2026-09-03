@@ -43,21 +43,21 @@ LAMarketDataHW::~LAMarketDataHW(void)
 	@param[in] max term
 */
 void
-LAMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const LADate &asOfDate, const LAPriceDataDayCount &dayCount, int max, bool isReflesh, const LAString *p_freq_str)
+LAMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const AQLDate &asOfDate, const AQLPriceDataDayCount &dayCount, int max, bool isReflesh, const AQLString *p_freq_str)
 {
 	isReflesh;
 	tenor.clear();
 
-	LAString str_tenor = LACoreDataService::getContext(CONTEXT_KEY_HW_TENOR);
+	AQLString str_tenor = LACoreDataService::getContext(CONTEXT_KEY_HW_TENOR);
 	if (str_tenor != AQ_NO_DATA)
 	{
-		LADataDoubles data_tenor;
+		AQLDataDoubles data_tenor;
 		data_tenor.convertFromString(str_tenor);
 		tenor = data_tenor.get();
 		return;
 	}
-	LAString freq_str = "SA";
-	LAString freq = FREQ_SEMI_ANNUAL;
+	AQLString freq_str = "SA";
+	AQLString freq = FREQ_SEMI_ANNUAL;
 	if (p_freq_str)
 	{
 		freq_str = *p_freq_str;
@@ -76,16 +76,16 @@ LAMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const LADate &asOfDate, con
 		freq = FREQ_WEEKLY;
 	}
 
-	LADate start = asOfDate;
-	LADate end = asOfDate;
+	AQLDate start = asOfDate;
+	AQLDate end = asOfDate;
 	end.addYears(max);
 
 	// sliding
-	LAPriceDataSlidingRule sliding;
+	AQLPriceDataSlidingRule sliding;
 	sliding.convertFromString(SLIDING_MOD_FOLLOWING);
 
 	// calendar
-	LAPriceDataCalendar cal;
+	AQLPriceDataCalendar cal;
 	cal.convertFromString(CITY_LnB);
 
 	DateVector dates;
@@ -95,13 +95,13 @@ LAMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const LADate &asOfDate, con
 	//if (freq == FREQ_SEMI_ANNUAL)
 	//{
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
-	LADataBool tmp;
+	AQLDataBool tmp;
 	tmp.convertFromString(staticData.getStaticData(KEY_HW_GRID_ISEXTRATENORUSE));
 	bool isExTenor = tmp.get();
 	if (isExTenor)
 	{
-		LAString exTenorStr = staticData.getStaticData(KEY_HW_GRID_EXTRATENOR);
-		LAStringVector exTenor = exTenorStr.toToken(MULTI_STATIC_DATA_DELIMITER);
+		AQLString exTenorStr = staticData.getStaticData(KEY_HW_GRID_EXTRATENOR);
+		AQLStringVector exTenor = exTenorStr.toToken(MULTI_STATIC_DATA_DELIMITER);
 		unsigned int exTSize = exTenor.size();
 		exDates.resize(exTSize);
 		for (unsigned int i = 0; i < exTSize; ++i)
@@ -149,11 +149,11 @@ LAMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const LADate &asOfDate, con
 
 	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
- 		const LAString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);
-		const LAString dirName = LACoreDataService::getOutputDirectory(); 
-		const LAString tenorFileName = dirName + "tenor" + fileSuffix + ".csv";
-		const LAString tenor30_360FileName = dirName + "tenor30_360" + fileSuffix + ".csv";
-		const LAString deltaFileName = dirName + "deltatenor" + fileSuffix + ".csv";
+ 		const AQLString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);
+		const AQLString dirName = LACoreDataService::getOutputDirectory(); 
+		const AQLString tenorFileName = dirName + "tenor" + fileSuffix + ".csv";
+		const AQLString tenor30_360FileName = dirName + "tenor30_360" + fileSuffix + ".csv";
+		const AQLString deltaFileName = dirName + "deltatenor" + fileSuffix + ".csv";
 		ifstream fin;
 		ofstream fout;
 		// tenor file
@@ -164,7 +164,7 @@ LAMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const LADate &asOfDate, con
 			const int size = tenor.size();
 			for (int i = 0; i < size; ++i)
 			{
-				LAString outStr = LAString(tenor[i]);
+				AQLString outStr = AQLString(tenor[i]);
 				fout << outStr.getCString() << "," << std::endl;
 			}
 			fout.close();
@@ -178,7 +178,7 @@ LAMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const LADate &asOfDate, con
 			while (getline(fin, line))
 			{
 				const char *c_line = line.c_str();
-				tenor.push_back(LAString(c_line).toToken(MARKET_DATA_DELIMITER)[0].trimLeft().trimRight().getDoubleValue());
+				tenor.push_back(AQLString(c_line).toToken(MARKET_DATA_DELIMITER)[0].trimLeft().trimRight().getDoubleValue());
 			}
 			fin.close();
 			fin.clear();
@@ -197,17 +197,17 @@ LAMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const LADate &asOfDate, con
 	@param[out] sigma
 */
 void
-LAMarketDataHW::getHullWhiteParam(const LAString &fileName, DoubleArray &t_grid, DoubleArray &alpha, DoubleArray &sigma)
+LAMarketDataHW::getHullWhiteParam(const AQLString &fileName, DoubleArray &t_grid, DoubleArray &alpha, DoubleArray &sigma)
 {
 	MAFileAccessor paramFile(fileName);
-	LAStringMatrix strMtx;
+	AQLStringMatrix strMtx;
 	paramFile.readAllData(MARKET_DATA_DELIMITER, strMtx);
 	paramFile.close();
 
 	if (strMtx.size() == 0 || strMtx[0].size() != 3) 
 	{
-		LAString msg = "Invalid Hull-White parameter size";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Invalid Hull-White parameter size";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	const unsigned int size = strMtx.size();

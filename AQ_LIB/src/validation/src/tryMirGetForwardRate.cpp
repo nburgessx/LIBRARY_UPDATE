@@ -29,16 +29,16 @@ namespace validation
     *  @param [in]		isFwdInterp		Boolean that decides if direct interpolation on fwd rates is employed
     *  @return			The forward rates based on fromDates and term
     */
-    DoubleVector tryMirGetForwardRate1( LADataInstance* dataInstance,
+    DoubleVector tryMirGetForwardRate1( AQLDataInstance* dataInstance,
                                         const DateVector& fromDateVec,
                                         double term,
-                                        const LAString& curveId,
-                                        const LAString& frequency,
-                                        const LAString& dayCount,
-                                        const LAString& slidingRule,
-                                        const LAString& calendar,
-                                        const LAString& interpolation,
-                                        const LAString& curveName,
+                                        const AQLString& curveId,
+                                        const AQLString& frequency,
+                                        const AQLString& dayCount,
+                                        const AQLString& slidingRule,
+                                        const AQLString& calendar,
+                                        const AQLString& interpolation,
+                                        const AQLString& curveName,
                                         bool isFwdInterp )
     {
 
@@ -61,23 +61,23 @@ namespace validation
             file.write( "isFwdInterp", isFwdInterp );
         }
 
-        if( isFwdInterp && LAString( frequency ).toUpper() != "SIMPLE" )
+        if( isFwdInterp && AQLString( frequency ).toUpper() != "SIMPLE" )
         {
-            throw LACoreInvalidData( "forward interpolation may not be used with Frequency other than 'SIMPLE'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "forward interpolation may not be used with Frequency other than 'SIMPLE'", __FILE__, __LINE__ );
         }
 
 
         if( fromDateVec.size() == 0 )
         {
-            throw LACoreInvalidData( "a size of  vector is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "a size of  vector is zero.", __FILE__, __LINE__ );
         }
 
-        LAString freq( etrading::getDefaultValueForEmptyString( frequency, LAString( "SEMI-ANNUAL" ) ) );
-        LAString dayC( etrading::getDefaultValueForEmptyString( dayCount, LAString( "ACT/365" ) ) );
-        LAString sRule( etrading::getDefaultValueForEmptyString( slidingRule, LAString( "NO_CHANGE" ) ) );
-        LAString cal( etrading::getDefaultValueForEmptyString( calendar, LAString( "TKB:LNB" ) ) );
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, LAString( "SPLINE" ) ) );
-        LAString curveNm( etrading::getDefaultValueForEmptyString( curveName, LAString( "STD" ) ) );
+        AQLString freq( etrading::getDefaultValueForEmptyString( frequency, AQLString( "SEMI-ANNUAL" ) ) );
+        AQLString dayC( etrading::getDefaultValueForEmptyString( dayCount, AQLString( "ACT/365" ) ) );
+        AQLString sRule( etrading::getDefaultValueForEmptyString( slidingRule, AQLString( "NO_CHANGE" ) ) );
+        AQLString cal( etrading::getDefaultValueForEmptyString( calendar, AQLString( "TKB:LNB" ) ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
+        AQLString curveNm( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
         DoubleArray ret = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fromDateVec, term, dataInstance, curveId, freq, dayC, sRule, calendar, interp, curveNm, isFwdInterp );
 
@@ -107,16 +107,16 @@ namespace validation
     *  @param [in]		useFwdData		Use False to imply forwards from Discount Factors and True to use Forward Data directly. It's default to False.
     *  @return			The forward rates based on fromDates and toDates
     */
-    DoubleVector tryMirGetForwardRate2( LADataInstance* dataInstance,
+    DoubleVector tryMirGetForwardRate2( AQLDataInstance* dataInstance,
                                         const DateVector& fromDates,
                                         const DateVector& toDates,
-                                        const LAString& curveId,
-                                        const LAString& frequency,
-                                        const LAString& dayCount,
-                                        const LAString& slidingRule,
-                                        const LAString& calendar,
-                                        const LAString& interpolation,
-                                        const LAString& curveName,
+                                        const AQLString& curveId,
+                                        const AQLString& frequency,
+                                        const AQLString& dayCount,
+                                        const AQLString& slidingRule,
+                                        const AQLString& calendar,
+                                        const AQLString& interpolation,
+                                        const AQLString& curveName,
                                         bool isFwdInterp,
                                         bool useFwdData )
 
@@ -142,24 +142,24 @@ namespace validation
         }
 
         // Validate parameters
-        if( isFwdInterp && LAString( frequency ).toUpper() != "SIMPLE" )
+        if( isFwdInterp && AQLString( frequency ).toUpper() != "SIMPLE" )
         {
-            throw LACoreInvalidData( "forward interpolation may not be used with Frequency other than 'SIMPLE'", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "forward interpolation may not be used with Frequency other than 'SIMPLE'", __FILE__, __LINE__ );
         }
         if( fromDates.size() == 0 || toDates.size() == 0 )
         {
-            throw LACoreInvalidData( "a size of  vector is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "a size of  vector is zero.", __FILE__, __LINE__ );
         }
         if ( fromDates.size() != toDates.size() )
         {
-            throw LACoreInvalidData( "FromDate Arr. does not match ToDate Arr.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "FromDate Arr. does not match ToDate Arr.", __FILE__, __LINE__ );
         }
-        LAString freq( etrading::getDefaultValueForEmptyString( frequency, LAString( "SEMI-ANNUAL" ) ) );
-        LAString dayC( etrading::getDefaultValueForEmptyString( dayCount, LAString( "ACT/365" ) ) );
-        LAString sRule( etrading::getDefaultValueForEmptyString( slidingRule, LAString( "NO_CHANGE" ) ) );
-        LAString cal( etrading::getDefaultValueForEmptyString( calendar, LAString( "TKB:LNB" ) ) );
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, LAString( "SPLINE" ) ) );
-        LAString curveNm( etrading::getDefaultValueForEmptyString( curveName, LAString( "STD" ) ) );
+        AQLString freq( etrading::getDefaultValueForEmptyString( frequency, AQLString( "SEMI-ANNUAL" ) ) );
+        AQLString dayC( etrading::getDefaultValueForEmptyString( dayCount, AQLString( "ACT/365" ) ) );
+        AQLString sRule( etrading::getDefaultValueForEmptyString( slidingRule, AQLString( "NO_CHANGE" ) ) );
+        AQLString cal( etrading::getDefaultValueForEmptyString( calendar, AQLString( "TKB:LNB" ) ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
+        AQLString curveNm( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
         DoubleArray ret = etrading::LACurveForwardRateHelpers::getMultiForwardRate( fromDates, toDates, dataInstance, curveId, freq, dayC, sRule, cal, interp, curveName, isFwdInterp, useFwdData );
 

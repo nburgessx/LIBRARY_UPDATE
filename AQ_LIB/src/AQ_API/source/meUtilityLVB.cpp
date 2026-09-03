@@ -11,7 +11,7 @@
 
 #include "meUtilityLVB.h"
 #include "tryMeUtilityLVB.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 

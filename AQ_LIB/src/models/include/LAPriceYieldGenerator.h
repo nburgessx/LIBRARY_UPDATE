@@ -4,11 +4,11 @@
 #pragma interface
 #endif
 
-#include "LACoreProcedure.h"
-#include "LADate.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LADataMultiReference.h"
+#include "AQLCoreProcedure.h"
+#include "AQLDate.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataMultiReference.h"
 #include <vector>
 
             
@@ -60,18 +60,18 @@
 #endif
 
 
-class LAObject;
-class LADataProcedure;
-class LAInterpolationBase;
-class LAPriceDataManager;
-class LAPriceDataCalendar;
-class LAPriceDataDayCount;
-class LAPriceDataSlidingRule;
+class AQLObject;
+class AQLDataProcedure;
+class AQLInterpolationBase;
+class AQLPriceDataManager;
+class AQLPriceDataCalendar;
+class AQLPriceDataDayCount;
+class AQLPriceDataSlidingRule;
 ///////////////////////////////////////////////////////////////////////
 /*! 
     @brief Class to calc IR DiscoutFactor
 */
-class LAPriceYieldGenerator : public LACoreProcedure
+class LAPriceYieldGenerator : public AQLCoreProcedure
 {
 public:
 //  LIFECYCLE
@@ -82,48 +82,48 @@ public:
     // Check function for this class ID
     virtual bool                isTypeOf(function_t id) const;
     // Make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;// %%% COVARIANT RETURN %%%
+    virtual AQLCoreFunctionBase*     clone() const;// %%% COVARIANT RETURN %%%
    	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
 	// Return this class type
     virtual function_t          getType() const;
     // calibrate curve
-    virtual void                calibrateModel(const LADate& basedate, 
-                                        LAObject& object, 
-                                        const LADataProcedure& att) const;
+    virtual void                calibrateModel(const AQLDate& basedate, 
+                                        AQLObject& object, 
+                                        const AQLDataProcedure& att) const;
     // function to calc DiscountFactor
-    static void                 calcDiscountFactor(const LADate& basedate,
-										std::vector<LAObject*>& data,
-										const LAObjectHolder& objHolder,
-										const LAString& tragetMarketName,
+    static void                 calcDiscountFactor(const AQLDate& basedate,
+										std::vector<AQLObject*>& data,
+										const AQLObjectHolder& objHolder,
+										const AQLString& tragetMarketName,
                                         DoubleArray& terms,
 										DoubleArray& dfs,
 										DoubleMatrix& fwd_termsmtx,
 										DoubleArray& fwds,
 										double& interpolationJoinDateAsDouble,
-										LADate& interpolationJoinDate,
+										AQLDate& interpolationJoinDate,
 										unsigned int& fwd_samegridstart_pos,
 										const bool is_f_use,										
 										const bool is_fra_use,
-										LAInterpolationBase* pInter,
-										LAInterpolationBase* pInter_yg,
-										LAInterpolationBase* pInter_fw,
+										AQLInterpolationBase* pInter,
+										AQLInterpolationBase* pInter_yg,
+										AQLInterpolationBase* pInter_fw,
 										const bool isSwapTenorAdjust,
-										LAInterpolationBase* pInter_ts,
-										const LAStringVector* pRatePriority = 0,
-										const LAString* pDFCurveName = 0);
+										AQLInterpolationBase* pInter_ts,
+										const AQLStringVector* pRatePriority = 0,
+										const AQLString* pDFCurveName = 0);
 
-	static LAString				changeFRATermFormat(const LAString& inputTerm);
+	static AQLString				changeFRATermFormat(const AQLString& inputTerm);
 
-	static LAString				deduceRollConvention(const LAString& freq, bool eom);
+	static AQLString				deduceRollConvention(const AQLString& freq, bool eom);
 
-	static void					getPaymentDates(const LADate& basedate, const LADate& sdate, const LADate& edate, const LAString& freq,
-									const LAPriceDataCalendar& cal, const LAPriceDataSlidingRule& sld, const LAPriceDataDayCount& dc,
+	static void					getPaymentDates(const AQLDate& basedate, const AQLDate& sdate, const AQLDate& edate, const AQLString& freq,
+									const AQLPriceDataCalendar& cal, const AQLPriceDataSlidingRule& sld, const AQLPriceDataDayCount& dc,
 									DateVector& dates, DoubleArray& terms, DoubleArray& terms_interval, bool is_eomroll,
 									bool isBackward = false);
 
-	static void					getPaymentDates(const LADate& sdate, const LADate& edate, const LAString& freq,
-									const LAPriceDataCalendar& cal, const LAPriceDataSlidingRule& sld, const LAPriceDataDayCount& dc,
+	static void					getPaymentDates(const AQLDate& sdate, const AQLDate& edate, const AQLString& freq,
+									const AQLPriceDataCalendar& cal, const AQLPriceDataSlidingRule& sld, const AQLPriceDataDayCount& dc,
 									DateVector& dates, DoubleArray& terms, DoubleArray& terms_interval, bool is_eomroll, 
 									bool isBackward = false);
 
@@ -131,81 +131,81 @@ protected:
     // copy constructor    
     LAPriceYieldGenerator(const LAPriceYieldGenerator& p);
 
-	static void                 calcOISDiscountFactor(const LADate& basedate,
-										std::vector<LAObject*>& data,
-										const LAObjectHolder& objHolder,
+	static void                 calcOISDiscountFactor(const AQLDate& basedate,
+										std::vector<AQLObject*>& data,
+										const AQLObjectHolder& objHolder,
                                         DoubleArray& terms,
 										DoubleArray& dfs,
 										const bool is_f_use,										
-										LAInterpolationBase* pInter,
-										LAInterpolationBase* pInter_yg,
-										LAInterpolationBase* pInter_fw,
-										const LAString* pDFCurveName = 0);
+										AQLInterpolationBase* pInter,
+										AQLInterpolationBase* pInter_yg,
+										AQLInterpolationBase* pInter_fw,
+										const AQLString* pDFCurveName = 0);
 	
-	static double                solveOISRateS(const LADate& startdate,
-											const LADate& enddate,
-											const LAPriceDataDayCount& dc,
-											const LAPriceDataCalendar& cal,
+	static double                solveOISRateS(const AQLDate& startdate,
+											const AQLDate& enddate,
+											const AQLPriceDataDayCount& dc,
+											const AQLPriceDataCalendar& cal,
 											double market_rate,
-											const std::map<LADate, double> &onforward_map);
+											const std::map<AQLDate, double> &onforward_map);
 
-	static double                solveOISRateSAverage(const LADate& startdate,
-											const LADate& enddate,
-											const LAPriceDataDayCount& dc,
-											const LAPriceDataCalendar& cal,
+	static double                solveOISRateSAverage(const AQLDate& startdate,
+											const AQLDate& enddate,
+											const AQLPriceDataDayCount& dc,
+											const AQLPriceDataCalendar& cal,
 											double market_rate,
-											const std::map<LADate, double> &onforward_map,
+											const std::map<AQLDate, double> &onforward_map,
 											bool compoundAllDays);
 
-	static double                solveOISRate(const LADate& startdate,
-											const LADate& enddate,
-											const LAPriceDataDayCount& dc,
-											const LAPriceDataCalendar& cal,
+	static double                solveOISRate(const AQLDate& startdate,
+											const AQLDate& enddate,
+											const AQLPriceDataDayCount& dc,
+											const AQLPriceDataCalendar& cal,
 											double market_rate);
 
-	static double                solveOISRateAverage(const LADate& startdate,
-											const LADate& enddate,
-											const LAPriceDataDayCount& dc,
-											const LAPriceDataCalendar& cal,
+	static double                solveOISRateAverage(const AQLDate& startdate,
+											const AQLDate& enddate,
+											const AQLPriceDataDayCount& dc,
+											const AQLPriceDataCalendar& cal,
 											double market_rate,
 											bool compoundAllDays);
 
-	static double                calcSettleRate(const LADate& startdate,
-											const LADate& enddate,
-											const LAPriceDataDayCount& dc,
-											const LAPriceDataCalendar& cal,
+	static double                calcSettleRate(const AQLDate& startdate,
+											const AQLDate& enddate,
+											const AQLPriceDataDayCount& dc,
+											const AQLPriceDataCalendar& cal,
 											double onforward_rate);
 
 	static double                calcSettleRates(const DateVector& startdates,
 											const DateVector& enddates,
 											const DoubleVector& onforward_rates,
-											const LAPriceDataDayCount& dc);
+											const AQLPriceDataDayCount& dc);
 
 	static double                calcSettleRatesA(const DoubleVector& startterms,
 											const DoubleVector& endterms,
-											const LAInterpolationBase* pInter,
+											const AQLInterpolationBase* pInter,
 											const DoubleVector& onrateaccrualterms,
 											const DoubleVector& weights);
 
-	static double                calcSettleRateDailyAverage(const LADate& startdate,
-											const LADate& enddate,
-											const LAPriceDataDayCount& dc,
-											const LAPriceDataCalendar& cal,
+	static double                calcSettleRateDailyAverage(const AQLDate& startdate,
+											const AQLDate& enddate,
+											const AQLPriceDataDayCount& dc,
+											const AQLPriceDataCalendar& cal,
 											double onforward_rate,
 											bool compoundAllDays);
 
 	static double                calcSettleRateDailyAverage(const DateVector& startdates,
 											const DateVector& enddates,
 											const DoubleVector& onforward_rates,
-											const LAPriceDataDayCount& dc,
-											const LAPriceDataCalendar& cal,
+											const AQLPriceDataDayCount& dc,
+											const AQLPriceDataCalendar& cal,
 											bool compoundAllDays);
 
 	static void					insertDFData(DoubleMatrix& dfs, 
 											 DateVector& dates, 
 											 double df_insert, 
 											 double term_insert, 
-											 const LADate date_insert);
+											 const AQLDate date_insert);
 	
 	static void                 insertForwardRateData( DoubleMatrix &fwd_termsmtx,
                                                        DoubleArray &fwds,
@@ -219,60 +219,60 @@ protected:
                                                         const DoubleArray &insertEndTerms,
                                                         const DoubleArray &insertFwdRates );
 
-	static double				calcFloatSide(LAInterpolationBase &inter, 
-										 LAInterpolationBase &df_inter, 
+	static double				calcFloatSide(AQLInterpolationBase &inter, 
+										 AQLInterpolationBase &df_inter, 
 										 const double df_spot,
 										 const double term_spot,
 										 const DoubleArray &term_grid,
 										 const int cpd_times);
 
-	static void                 updateImpliedForwardRates(const LAInterpolationBase &inter,
+	static void                 updateImpliedForwardRates(const AQLInterpolationBase &inter,
 		                                 const DoubleArray &grid_swap,
 										 const DoubleArray &tau_swap,
 										 DoubleMatrix &fwd_termsmtx, 
 										 DoubleArray &fwds);
 
-	static double				getAverageRateFromHistRates(const LADate& startdate,
-												const LADate& enddate,
-												const LAPriceDataDayCount& dc,
-												const LAPriceDataCalendar& cal,
+	static double				getAverageRateFromHistRates(const AQLDate& startdate,
+												const AQLDate& enddate,
+												const AQLPriceDataDayCount& dc,
+												const AQLPriceDataCalendar& cal,
 												double market_rate,
-												LAObject* data,
-												const LADate& basedate,
+												AQLObject* data,
+												const AQLDate& basedate,
 												bool istodayrateexist,
 												double todayffrate);
 
-	static void					setCurveConvention(LAObjectHolder& objHolder,
-												   std::vector<LAObject*>& mktData,
-												   const LAString& curveName);
+	static void					setCurveConvention(AQLObjectHolder& objHolder,
+												   std::vector<AQLObject*>& mktData,
+												   const AQLString& curveName);
 
-	static void                 setAddtionalCalibGridForTenorBasis(const LADataMultiReference& mr_mktdata,
-		                                                           const LADataMultiReference& mr_mktdata_ts,
-													               LAString& addtionalCalibGrid);
+	static void                 setAddtionalCalibGridForTenorBasis(const AQLDataMultiReference& mr_mktdata,
+		                                                           const AQLDataMultiReference& mr_mktdata_ts,
+													               AQLString& addtionalCalibGrid);
 
 	//  This struct is needed for the insertSyntheticTensionPoints function to carry the tension iteration data
     struct tensionMarketData
     {
         // Default Struct Constructor to intialize the iteration count to zero
         tensionMarketData() :   frontForwardRate( 0.0 ),
-                                frontStartDate( LADate() ),
-                                frontEndDate( LADate() ),
+                                frontStartDate( AQLDate() ),
+                                frontEndDate( AQLDate() ),
                                 frontStartTerm( 0.0 ),
                                 frontEndTerm( 0.0 ),
                                 backForwardRate( 0.0 ),
-                                backStartDate( LADate() ),
-                                backEndDate( LADate() ),
+                                backStartDate( AQLDate() ),
+                                backEndDate( AQLDate() ),
                                 backStartTerm( 0.0 ),
                                 backEndTerm( 0.0 )  {}
 
         double      frontForwardRate;
-        LADate      frontStartDate;
-        LADate      frontEndDate;
+        AQLDate      frontStartDate;
+        AQLDate      frontEndDate;
         double      frontStartTerm;
         double      frontEndTerm;
         double      backForwardRate;
-        LADate      backStartDate;
-        LADate      backEndDate;
+        AQLDate      backStartDate;
+        AQLDate      backEndDate;
         double      backStartTerm;
         double      backEndTerm;
     };
@@ -282,25 +282,25 @@ protected:
                                                         DoubleMatrix &          discountFactorMatrix,                   // [Output]
                                                         DoubleArray &           forwardRatesVector,                     // [Output]
                                                         DoubleMatrix &          forwardTermsMatrix,                     // [Output]
-                                                        LAInterpolationBase *   discountFactorInterpolationTable,       // [Input]
-                                                const   LADate &                spotDate,                               // [Input]
-                                                const   LADate &                startDate,                              // [Input]
-                                                const   LADate &                endDate,                                // [Input]
+                                                        AQLInterpolationBase *   discountFactorInterpolationTable,       // [Input]
+                                                const   AQLDate &                spotDate,                               // [Input]
+                                                const   AQLDate &                startDate,                              // [Input]
+                                                const   AQLDate &                endDate,                                // [Input]
                                                 const   double &                forwardRate,                            // [Input]
                                                 const   bool &                  isFirstDataPoint,                       // [Input]
-                                                const   LAPriceDataDayCount &        termsToDateDaycount,                    // [Input]
-                                                const   LAPriceDataDayCount &        instrumentDaycount,                     // [Input]
+                                                const   AQLPriceDataDayCount &        termsToDateDaycount,                    // [Input]
+                                                const   AQLPriceDataDayCount &        instrumentDaycount,                     // [Input]
                                                 const   unsigned int &          tensionGap,                             // [Input]
                                                         tensionMarketData &     instrumentData,                         // [Input]      ( tensionMarketData struct used here )
-                                                const   LADate &                cutOffDate = LADate() );                // [Input]
+                                                const   AQLDate &                cutOffDate = AQLDate() );                // [Input]
 
 
 private:
 	// calibrate DiscountFactor
-    void                estimateSwapDFCurve(const LADate& basedate, 
-											LAObject& object, 
-											const LADataProcedure& att,
-											const LAString& dfCurveName) const;
+    void                estimateSwapDFCurve(const AQLDate& basedate, 
+											AQLObject& object, 
+											const AQLDataProcedure& att,
+											const AQLString& dfCurveName) const;
 
 	/*
 	@brief Calculate start and end dates of a FRA instrument
@@ -313,13 +313,13 @@ private:
 	@param[in]	baseFreq		The frequency of the curve
 	@param[in]	dc				FRA day count
 	*/
-	static void calculateFraDates(LADate& startDate,
-		LADate& endDate,
-		const LADate& spotDate,
-		const LAObject* data_fra,
-		const LAString& refRateTerm,
-		const LAString& baseFreq,
-		const LAPriceDataDayCount& dc);
+	static void calculateFraDates(AQLDate& startDate,
+		AQLDate& endDate,
+		const AQLDate& spotDate,
+		const AQLObject* data_fra,
+		const AQLString& refRateTerm,
+		const AQLString& baseFreq,
+		const AQLPriceDataDayCount& dc);
 
 	/*!
 		@brief Determine the join date used by linear spline interpolation
@@ -329,9 +329,9 @@ private:
 		@param[in] is_fwdswap	Is forward starting swap used?
 		@return	   Linear spline join date
 	*/
-	static LADate determineLinearSplineInterpolationJoinDate(const LAObject* lastFuture,
-													  const LAObject* firstSwap,
-													  const LADate& spotDate,
+	static AQLDate determineLinearSplineInterpolationJoinDate(const AQLObject* lastFuture,
+													  const AQLObject* firstSwap,
+													  const AQLDate& spotDate,
 													  bool is_fwdswap);
 };
 

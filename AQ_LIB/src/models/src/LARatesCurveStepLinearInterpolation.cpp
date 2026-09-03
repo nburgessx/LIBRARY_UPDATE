@@ -56,7 +56,7 @@ LARatesCurveStepLinearInterpolation::~LARatesCurveStepLinearInterpolation()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesCurveStepLinearInterpolation::clone() const
 		//20070410--Nagase--g++ throw
 {
@@ -66,7 +66,7 @@ LARatesCurveStepLinearInterpolation::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -169,7 +169,7 @@ LARatesCurveStepLinearInterpolation::LARatesCurveForStepLinearInterpolation::clo
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -188,9 +188,9 @@ LARatesCurveStepLinearInterpolation::LARatesCurveForStepLinearInterpolation::ope
 	if (!a.isTypeOf(PE_CURVEFORSTEPLINEARINTER)) 
 	{	// 
 		// 
-		LAString err = "Assignment error for LARatesCurveForStepLinearInterpolation : from ";
-		err += LAString(a.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignment error for LARatesCurveForStepLinearInterpolation : from ";
+		err += AQLString(a.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	LARatesPathElementCurve::operator = (a);

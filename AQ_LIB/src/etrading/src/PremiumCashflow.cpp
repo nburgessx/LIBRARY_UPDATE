@@ -9,10 +9,10 @@ namespace etrading
     {}
     
     PremiumCashflow::PremiumCashflow(const PayReceiveEnum& payReceive, double cdsSpread,
-		const LADate& accrualStartDate, const LADate& accrualEndDate, int accrualDays, double accrualYearFraction, const LADate& paymentDate,
+		const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, int accrualDays, double accrualYearFraction, const AQLDate& paymentDate,
         double notional, double leverage, const FrequencyEnum& zeroCouponSwapPaymentFreq, const CashflowTypeEnum& cashflowType)
 		: cdsSpread_( cdsSpread), survivalProbability_( std::numeric_limits<double>::quiet_NaN() ), marginalDefaultProbability_( std::numeric_limits<double>::quiet_NaN() ), includeAccruedInterest_( false ), performance_( std::numeric_limits<double>::quiet_NaN() ),
-		  Cashflow(payReceive, LADate(), accrualStartDate, accrualEndDate, accrualDays, accrualYearFraction, paymentDate, notional, leverage, 1.0/*couponMultiplier*/, zeroCouponSwapPaymentFreq, cashflowType, CashFlowBespokeInfo())
+		  Cashflow(payReceive, AQLDate(), accrualStartDate, accrualEndDate, accrualDays, accrualYearFraction, paymentDate, notional, leverage, 1.0/*couponMultiplier*/, zeroCouponSwapPaymentFreq, cashflowType, CashFlowBespokeInfo())
     {}
 
 	/*

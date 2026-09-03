@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent linear function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //  2006, AlgoQuantHub..
@@ -24,8 +24,8 @@
 
 
 #include "LACompoundingFunc.h"
-#include "LABasic.h"
-#include "LADist.h"
+#include "AQLBasic.h"
+#include "AQLDist.h"
 #include <numeric>
 
 using namespace std;
@@ -34,7 +34,7 @@ using namespace std;
 	@brief default constructor
 */
 LACompoundMethod::LACompoundMethod() 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -50,7 +50,7 @@ LACompoundMethod::~LACompoundMethod()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod::clone() const
 {
     try 
@@ -59,7 +59,7 @@ LACompoundMethod::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -71,7 +71,7 @@ LACompoundMethod::clone() const
 bool
 LACompoundMethod::isTypeOf(function_t id) const
 {
-	return (id == FN_COMPOUNDING ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_COMPOUNDING ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -94,7 +94,7 @@ LACompoundMethod::operator()(const DoubleArray& x) const
 {
 	//calc compounding rate
 	if (x.size() % 3 != 0)
-		throw LACoreInvalidData("Compounidng params Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Compounidng params Error",__FILE__,__LINE__);
 
 	// x[i] ... coupon
 	// x[i+N] ... term
@@ -151,7 +151,7 @@ LACompoundMethod1::LACompoundMethod1()
 
 LACompoundMethod1::~LACompoundMethod1() {}
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod1::clone() const	
 {
     try 
@@ -160,7 +160,7 @@ LACompoundMethod1::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -199,7 +199,7 @@ LACompoundMethod2::LACompoundMethod2()
 
 LACompoundMethod2::~LACompoundMethod2() {}
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod2::clone() const	
 {
     try 
@@ -208,7 +208,7 @@ LACompoundMethod2::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -246,7 +246,7 @@ LACompoundMethod3::LACompoundMethod3()
 
 LACompoundMethod3::~LACompoundMethod3() {}
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod3::clone() const	
 {
     try 
@@ -255,7 +255,7 @@ LACompoundMethod3::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -293,7 +293,7 @@ LACompoundMethod4::LACompoundMethod4()
 
 LACompoundMethod4::~LACompoundMethod4() {}
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod4::clone() const	
 {
     try 
@@ -302,7 +302,7 @@ LACompoundMethod4::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -340,7 +340,7 @@ LACompoundMethod5::LACompoundMethod5()
 
 LACompoundMethod5::~LACompoundMethod5() {}
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod5::clone() const	
 {
     try 
@@ -349,7 +349,7 @@ LACompoundMethod5::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -387,7 +387,7 @@ LACompoundMethod6::LACompoundMethod6()
 
 LACompoundMethod6::~LACompoundMethod6() {}
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod6::clone() const	
 {
     try 
@@ -396,7 +396,7 @@ LACompoundMethod6::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -435,7 +435,7 @@ LACompoundMethod7::LACompoundMethod7()
 
 LACompoundMethod7::~LACompoundMethod7() {}
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod7::clone() const	
 {
     try 
@@ -444,7 +444,7 @@ LACompoundMethod7::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -469,7 +469,7 @@ LACompoundMethod7::operator()(const DoubleArray& x) const
 {
 	//calc compounding rate
 	if (x.size() % 3 != 0)
-		throw LACoreInvalidData("Compounidng params Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Compounidng params Error",__FILE__,__LINE__);
 
 	// x[i] ... coupon
 	// x[i+N] ... term
@@ -505,7 +505,7 @@ LACompoundMethod8::LACompoundMethod8()
 
 LACompoundMethod8::~LACompoundMethod8() {}
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod8::clone() const	
 {
     try 
@@ -514,7 +514,7 @@ LACompoundMethod8::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -539,7 +539,7 @@ LACompoundMethod8::operator()(const DoubleArray& x) const
 {
 	//calc compounding rate
 	if (x.size() % 3 != 0)
-		throw LACoreInvalidData("Compounidng params Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Compounidng params Error",__FILE__,__LINE__);
 
 	// x[i] ... coupon
 	// x[i+n] ... term
@@ -568,7 +568,7 @@ LACompoundMethod9::LACompoundMethod9()
 
 LACompoundMethod9::~LACompoundMethod9() {}
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod9::clone() const	
 {
     try 
@@ -577,7 +577,7 @@ LACompoundMethod9::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -595,7 +595,7 @@ double
 LACompoundMethod9::operator()(const DoubleArray& x) const
 {
 	if(x.size() % 3 != 1){
-		throw LACoreInvalidData("Compounidng params Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Compounidng params Error",__FILE__,__LINE__);
 	}
 
 	// x[i] ... coupon
@@ -622,7 +622,7 @@ LACompoundMethod9::operator()(const DoubleArray& x) const
 
 
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod10::clone() const	
 {
     try 
@@ -631,7 +631,7 @@ LACompoundMethod10::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -655,7 +655,7 @@ double
 LACompoundMethod10::operator()(const DoubleArray& x) const
 {
 	if (x.size() % 3 != 1){
-		throw LACoreInvalidData("Compounding params Error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Compounding params Error",__FILE__,__LINE__);
 	}
 
 	// x[i] ... coupon
@@ -677,7 +677,7 @@ LACompoundMethod10::operator()(const DoubleArray& x) const
 
 
 
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LACompoundMethod11::clone() const	
 {
     try 
@@ -686,7 +686,7 @@ LACompoundMethod11::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 bool
@@ -711,7 +711,7 @@ LACompoundMethod11::operator()(const DoubleArray& x) const
 {
 	if (x.size() % 3 != 0)
     {
-        throw LACoreInvalidData("#Error: Unable to calculate the compound rate",__FILE__,__LINE__);
+        throw AQLCoreInvalidData("#Error: Unable to calculate the compound rate",__FILE__,__LINE__);
 	}
 
 	// x[i] ... coupon

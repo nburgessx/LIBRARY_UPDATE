@@ -13,12 +13,12 @@ namespace etrading
     {
 		if(leg1 == nullptr || leg2 == nullptr)
 		{
-			throw LACoreInvalidData( "#Error: One of the legs is NOT set on the Swap", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: One of the legs is NOT set on the Swap", __FILE__, __LINE__ );
 		}
 
         if(same(leg1->getLegName(), leg2->getLegName()))
 		{
-			throw LACoreInvalidData( "#Error: Swap's two legs cannot have the same leg name", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: Swap's two legs cannot have the same leg name", __FILE__, __LINE__ );
 		}
 
 
@@ -132,18 +132,18 @@ namespace etrading
 		return swapType_;
 	}
 
-    void Swap::validateCollectionSize(const LabelValueBlock& valuationSettingsLVB, const LAString& legName) const
+    void Swap::validateCollectionSize(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName) const
     {
 
         if (valuationSettingsLVB.size() == 0)
         {
-    		throw LACoreInvalidData( "#Error: A curveCollection must be provided", __FILE__, __LINE__ );
+    		throw AQLCoreInvalidData( "#Error: A curveCollection must be provided", __FILE__, __LINE__ );
         }
 
         //LegName is specified
         if (legName.size() != 0 && !legs_.exists(legName))
         {
-            throw LACoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
         }
 
     }
@@ -153,7 +153,7 @@ namespace etrading
 		AQ_THROW("getFxAsOfDateRate() not supported.");
 	}
 
-	double Swap::pv(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName)
+	double Swap::pv(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const AQLString& legName)
 	{
         validateCollectionSize(valuationSettingsLVB, legName);
 
@@ -219,18 +219,18 @@ namespace etrading
 	}
 
 
-    double Swap::annuity(const LabelValueBlock& valuationSettingsLVB, const LAString& legName, const bool & includeSign)
+    double Swap::annuity(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName, const bool & includeSign)
 	{
 	    double result = 0;
 
         if (legName.size() == 0)
         {
-           throw LACoreInvalidData( "#Error: Leg name must be provided", __FILE__, __LINE__ );
+           throw AQLCoreInvalidData( "#Error: Leg name must be provided", __FILE__, __LINE__ );
         }
 
         if (!legs_.exists(legName)) 
         {
-            throw LACoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
         }
 
         for (size_t i = 0; i < legs_.size(); ++i)
@@ -250,7 +250,7 @@ namespace etrading
         return result;
 	}
 
-    double Swap::spread(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread, const LAString& spreadLegName)
+    double Swap::spread(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, bool isParSpread, const AQLString& spreadLegName)
 	{
         validateCollectionSize(valuationSettingsLVB);
 
@@ -259,18 +259,18 @@ namespace etrading
         return spread;	
     }
 
-	double Swap::accruedInterest(const LabelValueBlock& valuationSettingsLVB, const LAString& legName, const LabelValueBlock&  fixingTableNames)
+	double Swap::accruedInterest(const LabelValueBlock& valuationSettingsLVB, const AQLString& legName, const LabelValueBlock&  fixingTableNames)
 	{
 	    double ret = 0;
 
         if (legName.size() == 0)
         {
-           throw LACoreInvalidData( "#Error: Leg name must be provided", __FILE__, __LINE__ );
+           throw AQLCoreInvalidData( "#Error: Leg name must be provided", __FILE__, __LINE__ );
         }
 
         if (!legs_.exists(legName)) 
         {
-            throw LACoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Leg name does not exist in the swap", __FILE__, __LINE__ );
         }
 
         for (size_t i = 0; i < legs_.size(); ++i)
@@ -306,7 +306,7 @@ namespace etrading
 	*
 	*  Returns a vector of Header-Body matrix pairs
 	*/ 
-	std::vector<AnyTypeMatrix> Swap::view(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName, bool showColumnHeaders, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList)
+	std::vector<AnyTypeMatrix> Swap::view(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const AQLString& legName, bool showColumnHeaders, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList)
 	{
         validateCollectionSize(valuationSettingsLVB, legName);
 
@@ -327,7 +327,7 @@ namespace etrading
 
         if (matchingLegs.size() == 0)
         {
-            throw LACoreInvalidData( "#Error: Cannot find matching leg name from the Swap", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Cannot find matching leg name from the Swap", __FILE__, __LINE__ );
         }
 
         //Display the matching legs
@@ -360,7 +360,7 @@ namespace etrading
 	{
 		if(legs_.size() < 2)
 		{
-			throw LACoreInvalidData( "#Error: Swap should have at least two legs", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: Swap should have at least two legs", __FILE__, __LINE__ );
 		}
 		
 		// Find the user-input key set from all legs
@@ -473,7 +473,7 @@ namespace etrading
 	{
 		if(legs_.size() < 2)
 		{
-			throw LACoreInvalidData( "#Error: One of the legs is NOT set on the Swap", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData( "#Error: One of the legs is NOT set on the Swap", __FILE__, __LINE__ );
 		}
 
 		SchemaObject schemaObject( SWAP_OBJECT, getRefToName());

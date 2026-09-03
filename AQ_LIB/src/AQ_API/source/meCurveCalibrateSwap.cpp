@@ -1,5 +1,5 @@
 #include "TypeUtilities.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "meCurveCalibrateSwap.h"
 #include "tryMeCurveCalibrateSwap.h"
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
@@ -41,50 +41,50 @@ const std::string meCurveCalibrateSwap( const std::string& curveCollection,
 								        const SWIG_STRINGMATRIX & tenorBasisRates ) 
 {
     AQ_API_START
-	LAString ret;
+	AQLString ret;
 	
 	// marshall all inputs
-	LAString tmp_curveCollection(curveCollection.c_str());
-	LAString tmp_staticDataTable(staticDataTable.c_str());
-	LAString tmp_curveIndex(curveIndex.c_str());
+	AQLString tmp_curveCollection(curveCollection.c_str());
+	AQLString tmp_staticDataTable(staticDataTable.c_str());
+	AQLString tmp_curveIndex(curveIndex.c_str());
 
-	LAStringMatrix tmp_curveConv;
+	AQLStringMatrix tmp_curveConv;
 	swig::buildStringMatrix(tmp_curveConv, curveConv);
 
-	LAStringMatrix tmp_moneyMarketConv;
+	AQLStringMatrix tmp_moneyMarketConv;
 	swig::buildStringMatrix(tmp_moneyMarketConv, moneyMarketConv);
 
-	LAStringMatrix tmp_liborConv;
+	AQLStringMatrix tmp_liborConv;
 	swig::buildStringMatrix(tmp_liborConv, liborConv);
 
-	LAStringMatrix tmp_liborRates;
+	AQLStringMatrix tmp_liborRates;
 	swig::buildStringMatrix(tmp_liborRates, liborRates);
 
-	LAStringMatrix tmp_swapConv;
+	AQLStringMatrix tmp_swapConv;
 	swig::buildStringMatrix(tmp_swapConv, swapConv);
 
-	LAStringMatrix tmp_swapRates;
+	AQLStringMatrix tmp_swapRates;
 	swig::buildStringMatrix(tmp_swapRates, swapRates);
 
-	LAStringMatrix tmp_fraConv;
+	AQLStringMatrix tmp_fraConv;
 	swig::buildStringMatrix(tmp_fraConv, fraConv);
 
-	LAStringMatrix tmp_fra3mRates;
+	AQLStringMatrix tmp_fra3mRates;
 	swig::buildStringMatrix(tmp_fra3mRates, fra3mRates);
 
-	LAStringMatrix tmp_fra6mRates;
+	AQLStringMatrix tmp_fra6mRates;
 	swig::buildStringMatrix(tmp_fra6mRates, fra6mRates);
 
-	LAStringMatrix tmp_futureConv;
+	AQLStringMatrix tmp_futureConv;
 	swig::buildStringMatrix(tmp_futureConv, futureConv);
 
-	LAStringMatrix tmp_futureRates;
+	AQLStringMatrix tmp_futureRates;
 	swig::buildStringMatrix(tmp_futureRates, futureRates);
 
-	LAStringMatrix tmp_tenorBasisConv;
+	AQLStringMatrix tmp_tenorBasisConv;
 	swig::buildStringMatrix(tmp_tenorBasisConv, tenorBasisConv);
 
-	LAStringMatrix tmp_tenorBasisRates;
+	AQLStringMatrix tmp_tenorBasisRates;
 	swig::buildStringMatrix(tmp_tenorBasisRates, tenorBasisRates);
 
 	ret = validation::tryMeCurveCalibrateSwap( tmp_curveCollection,

@@ -16,14 +16,14 @@
 using namespace std;
 
 
-std::vector<LAObject *> 
-LARiskConfigurationYieldIRDeltaMultiParallel::createMarketBumpYieldEntity(const LAString &ccy, LADataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
+std::vector<AQLObject *> 
+LARiskConfigurationYieldIRDeltaMultiParallel::createMarketBumpYieldEntity(const AQLString &ccy, AQLDataInstance &dataInstance, SCENARIONUM scenarioNum, int index) const
 {
-	LAString bumpDirection = getBumpDirection(ccy);
+	AQLString bumpDirection = getBumpDirection(ccy);
 	bumpDirection.toUpper();
 	if (scenarioNum == SCENARIO_2 && bumpDirection != RISK_BUMPDIRECTION_UPDOWNSHIFT)
 	{
-		return vector<LAObject*>(0);
+		return vector<AQLObject*>(0);
 	}
 
     double shift_val = getScenario1ParallelShiftStr(ccy).getDoubleValue() / 10000.0; // The unit of shift val is basis point.

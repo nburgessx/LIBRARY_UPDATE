@@ -3,8 +3,8 @@
 
 #include <cmath>
 #include <vector>
-#include "LAFunction.h"
-#include "LADist.h"
+#include "AQLFunction.h"
+#include "AQLDist.h"
 #include <LAMathAnalyticalBlack2.h>
 
 namespace local
@@ -33,45 +33,45 @@ double BlackFormulaCapFloor( const vector<T1>& P0,       //[in] Initial Discount
 {
     if ( sgn != -1 && sgn != 1 ) 
     {   
-        LAString msg("Sign must be -1 or 1. (Last argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Sign must be -1 or 1. (Last argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     
     size_t n = P0.size();
     if( n != L0.size() )
     {
-        LAString msg("Error : P0.size() != L0.size()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Error : P0.size() != L0.size()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }    
     if( n != stdDev.size() )
     {
-        LAString msg("Error : P0.size() != stdDev_LN.size()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Error : P0.size() != stdDev_LN.size()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     if( n != margin.size() )
     {
-        LAString msg("Error : P0.size() != margin.size()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Error : P0.size() != margin.size()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     for(size_t i = 0; i < n; ++i)
     {
         if( L0[i] < 0 )
         {
-            LAString msg("Error : L0[i] < 0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("Error : L0[i] < 0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
         
         if( P0[i] < 0 )
         {
-            LAString msg("Error : L0[i] < 0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("Error : L0[i] < 0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         if( stdDev[i] < 0 )
         {
-            LAString msg("Error : stdDev[i] < 0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("Error : stdDev[i] < 0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     }
 
@@ -109,45 +109,45 @@ double BlackFormulaCapFloorDD( const vector<T1>& P0,       //[in] Initial Discou
 {
     if ( sgn != -1 && sgn != 1 )
     {   
-        LAString msg("Sign must be -1 or 1. (Last argument)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Sign must be -1 or 1. (Last argument)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     
     size_t n = P0.size();
     if( n != L0.size() )
     {
-        LAString msg("Error : P0.size() != L0.size()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Error : P0.size() != L0.size()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }    
     if( n != stdDev.size() )
     {
-        LAString msg("Error : P0.size() != stdDev_LN.size()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Error : P0.size() != stdDev_LN.size()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     if( n != margin.size() )
     {
-        LAString msg("Error : P0.size() != margin.size()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("Error : P0.size() != margin.size()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     for(size_t i = 0; i < n; ++i)
     {
         if( L0[i] < 0 )
         {
-            LAString msg("Error : L0[i] < 0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("Error : L0[i] < 0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
         
         if( P0[i] < 0 )
         {
-            LAString msg("Error : L0[i] < 0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("Error : L0[i] < 0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         if( stdDev[i] < 0 )
         {
-            LAString msg("Error : stdDev[i] < 0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("Error : stdDev[i] < 0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
     }
 
@@ -165,7 +165,7 @@ double BlackFormulaCapFloorDD( const vector<T1>& P0,       //[in] Initial Discou
 // Cap/Floor Implied Vol
 
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-class Sub_func_CapFloorImplVol : public LAFunction
+class Sub_func_CapFloorImplVol : public AQLFunction
 {
 public:
     Sub_func_CapFloorImplVol( T1 prem_,
@@ -226,7 +226,7 @@ double CapFloorImplVol( T1 prem,
 //--------------------------------------------------
 // Cap/Floor Implied Vol in the Displaced Diffusion model
 template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
-class Sub_func_CapFloorImplVolDD : public LAFunction
+class Sub_func_CapFloorImplVolDD : public AQLFunction
 {
 public:
     Sub_func_CapFloorImplVolDD( T1 prem_,

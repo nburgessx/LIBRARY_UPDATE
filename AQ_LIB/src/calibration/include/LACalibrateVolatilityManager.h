@@ -17,7 +17,7 @@
 #pragma interface
 #endif
 
-#include "LAString.h"
+#include "AQLString.h"
 
 
 class LACoreDataService;
@@ -36,7 +36,7 @@ public:
 	static LACalibrateVolatilityManager     *getInstance();
 	//==============================================
 	// create LACalibrateVolatility
-	LACalibrateVolatility *createVolCreator(const LAString &model) const;
+	LACalibrateVolatility *createVolCreator(const AQLString &model) const;
 
 private:
 

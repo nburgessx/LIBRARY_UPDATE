@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -10,8 +10,8 @@ namespace validation
     *  @param [in]		data					Data under analysis
     *  @param [in]		useCorrelationMatrix	True to use correlation matrix. False to use covariance matrix. Default to False
     *  @param [in]		nFactors				The number of PCA factors
-    *  @return			A LAStringMatrix for the PCA results
+    *  @return			A AQLStringMatrix for the PCA results
     */
-    LAStringMatrix tryMeUtilityPCA( const LAString& key, const DoubleMatrix& data, bool useCorrelationMatrix, int nFactors );
+    AQLStringMatrix tryMeUtilityPCA( const AQLString& key, const DoubleMatrix& data, bool useCorrelationMatrix, int nFactors );
 
 }

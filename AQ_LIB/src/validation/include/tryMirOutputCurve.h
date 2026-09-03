@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -13,8 +13,8 @@ namespace validation
     *  @param [in]		curveName		Name of the curve set
     *  @return			Array of terms and corresponding discount factors from the yield curve
     */
-    DoubleArray tryMirOutputCurve( LADataInstance* dataInstance,
-                                   const LAString& curveId,
-                                   const LAString& curveName );
+    DoubleArray tryMirOutputCurve( AQLDataInstance* dataInstance,
+                                   const AQLString& curveId,
+                                   const AQLString& curveName );
 
 }

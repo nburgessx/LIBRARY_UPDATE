@@ -19,7 +19,7 @@
 
 
 #include "LAModelConfiguration.h"
-#include "LADataBasics.h"
+#include "AQLDataBasics.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LADefinitionsRisk.h"
@@ -92,17 +92,17 @@ LAModelConfiguration::getInstance()
 	@return  LACalibrateModel *
 */
 LACalibrateModel *
-LAModelConfiguration::createSDEGenerator(const LAString &model) const
+LAModelConfiguration::createSDEGenerator(const AQLString &model) const
 {
-	LAString baseCurrency = MADealUtils::getSDECurrencys()[0];
-	LAStringVector simCurs = MADealUtils::getSimulationSDECurrencys();
+	AQLString baseCurrency = MADealUtils::getSDECurrencys()[0];
+	AQLStringVector simCurs = MADealUtils::getSimulationSDECurrencys();
 	if (simCurs.size() != 0)
 	{
 		baseCurrency = simCurs[0];
 	}
 
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
-	LAString tmpModel = model;
+	AQLString tmpModel = model;
 	tmpModel.toUpper();
 	if (tmpModel == MODEL_IRVANILLA)
 	{
@@ -130,7 +130,7 @@ LAModelConfiguration::createSDEGenerator(const LAString &model) const
 		// check dmy sde use
 		if (MADealUtils::getSDECurrencys().size() > 1)
 		{
-			LADataBool isDmyUse;
+			AQLDataBool isDmyUse;
 			isDmyUse.convertFromString(staticData.getStaticData(KEY_LMM_CROSS_ISDMY));
 			if (isDmyUse.get())
 			{
@@ -142,8 +142,8 @@ LAModelConfiguration::createSDEGenerator(const LAString &model) const
 	}
 	else if (tmpModel == MODEL_HW)
 	{
-		LAString is3FStr = staticData.getStaticData(KEY_HW_IS3F);
-		LADataBool is3F;
+		AQLString is3FStr = staticData.getStaticData(KEY_HW_IS3F);
+		AQLDataBool is3F;
 		if (is3FStr == AQ_NO_DATA)
 		{
 			is3F.set(false);
@@ -164,8 +164,8 @@ LAModelConfiguration::createSDEGenerator(const LAString &model) const
 	else if  (tmpModel == MODEL_PTBERG)
 	{
 		// check 3F
-		LAString is3FStr = staticData.getStaticData(KEY_PTBERG_IS3F);
-		LADataBool is3F;
+		AQLString is3FStr = staticData.getStaticData(KEY_PTBERG_IS3F);
+		AQLDataBool is3F;
 		if (is3FStr == AQ_NO_DATA)
 		{
 			is3F.set(false);
@@ -182,7 +182,7 @@ LAModelConfiguration::createSDEGenerator(const LAString &model) const
 		else
 		{
 			// check skew
-			LADataBool isSkewInclude;
+			AQLDataBool isSkewInclude;
 			isSkewInclude.convertFromString(staticData.getStaticData(KEY_PTBERG_SKEW_ISINCLUDE));
 			if (isSkewInclude.get())
 			{
@@ -198,7 +198,7 @@ LAModelConfiguration::createSDEGenerator(const LAString &model) const
 	{
 		return new LACalibrateModelSZ();
 	}
-	else if (tmpModel == LAString(MODEL_SZ) + LAString(POSTFIX_VOL))
+	else if (tmpModel == AQLString(MODEL_SZ) + AQLString(POSTFIX_VOL))
 	{
 		return new LACalibrateModelSZ::VF();
 	}

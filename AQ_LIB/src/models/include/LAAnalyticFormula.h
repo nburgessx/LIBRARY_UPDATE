@@ -6,17 +6,17 @@
 #endif
 
 
-#include "LADist.h"
-#include "LACoreAppError.h"
-#include "LABasic.h"
+#include "AQLDist.h"
+#include "AQLCoreAppError.h"
+#include "AQLBasic.h"
 #include "LATime.h"
 #include "ConstantDeclarations.h"
 
 #include <typeinfo>
 
-#define retchk  if(LATime::isError(ret)) throw LACoreNumericalError(ERMATH,__FILE__,__LINE__)
+#define retchk  if(LATime::isError(ret)) throw AQLCoreNumericalError(ERMATH,__FILE__,__LINE__)
 #define FORMULAE_BEGIN	try{ 
-#define FORMULAE_END		}catch(std::bad_cast){throw LACoreInvalidData("params are not set well", __FILE__,__LINE__);}		
+#define FORMULAE_END		}catch(std::bad_cast){throw AQLCoreInvalidData("params are not set well", __FILE__,__LINE__);}		
 
 
 using namespace std;
@@ -36,9 +36,9 @@ public :
 
 	virtual void ErrorCheck(void)
 	{
-		if (K < 0.0)	throw LACoreInvalidData("Strike Negative!", __FILE__,__LINE__);
-		if (Vol < 0.0)	throw LACoreInvalidData("Volatility Negative!", __FILE__,__LINE__);
-		if (actT < 0.0)	throw LACoreInvalidData("Actual Term Negative!", __FILE__,__LINE__);
+		if (K < 0.0)	throw AQLCoreInvalidData("Strike Negative!", __FILE__,__LINE__);
+		if (Vol < 0.0)	throw AQLCoreInvalidData("Volatility Negative!", __FILE__,__LINE__);
+		if (actT < 0.0)	throw AQLCoreInvalidData("Actual Term Negative!", __FILE__,__LINE__);
 	}
 
 	//hishida vannavolga
@@ -63,11 +63,11 @@ public :
 	virtual void ErrorCheck(void)
 	{
 		AnalyticParam::ErrorCheck();
-		if (F < 0.0)					   throw LACoreInvalidData("FuturePrice Negative!", __FILE__,__LINE__);
-		if (rd < 0.0)					   throw LACoreInvalidData("LocalRate Negative!", __FILE__,__LINE__);
-		if (Te < 0.0)					   throw LACoreInvalidData("ExpiryTerm Negative!", __FILE__,__LINE__);
-		if (Td < 0.0)					   throw LACoreInvalidData("DeliveryTerm Negative!", __FILE__,__LINE__);
-		if (Nu < 0.0)					   throw LACoreInvalidData("NumeraireRatio(DF) Negative!", __FILE__,__LINE__);
+		if (F < 0.0)					   throw AQLCoreInvalidData("FuturePrice Negative!", __FILE__,__LINE__);
+		if (rd < 0.0)					   throw AQLCoreInvalidData("LocalRate Negative!", __FILE__,__LINE__);
+		if (Te < 0.0)					   throw AQLCoreInvalidData("ExpiryTerm Negative!", __FILE__,__LINE__);
+		if (Td < 0.0)					   throw AQLCoreInvalidData("DeliveryTerm Negative!", __FILE__,__LINE__);
+		if (Nu < 0.0)					   throw AQLCoreInvalidData("NumeraireRatio(DF) Negative!", __FILE__,__LINE__);
 	}
 	
 	//hishida vannavolga
@@ -95,16 +95,16 @@ public :
 	virtual void ErrorCheck(void)
 	{
 		AnalyticParam::ErrorCheck();
-		if (S < 0.0)					   throw LACoreInvalidData("SpotPrice Negative!", __FILE__,__LINE__);
+		if (S < 0.0)					   throw AQLCoreInvalidData("SpotPrice Negative!", __FILE__,__LINE__);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
-		//if (rd < 0.0)					   throw LACoreInvalidData("LocalRate Negative!", __FILE__,__LINE__);
-		//if (rf < 0.0)					   throw LACoreInvalidData("ForeignRate Negative!", __FILE__,__LINE__);
+		//if (rd < 0.0)					   throw AQLCoreInvalidData("LocalRate Negative!", __FILE__,__LINE__);
+		//if (rf < 0.0)					   throw AQLCoreInvalidData("ForeignRate Negative!", __FILE__,__LINE__);
 #endif
-		if (Te < 0.0)					   throw LACoreInvalidData("ExpiryTerm Negative!", __FILE__,__LINE__);
-		if (Td < 0.0)					   throw LACoreInvalidData("DeliveryTerm Negative!", __FILE__,__LINE__);
-		if (F < 0.0)					   throw LACoreInvalidData("ForwardPrice Negative!", __FILE__,__LINE__);
-		if (DFf < 0.0)					   throw LACoreInvalidData("Foreign DF Negative!", __FILE__,__LINE__);
-		if (DFd < 0.0)					   throw LACoreInvalidData("Domestic DF Negative!", __FILE__,__LINE__);
+		if (Te < 0.0)					   throw AQLCoreInvalidData("ExpiryTerm Negative!", __FILE__,__LINE__);
+		if (Td < 0.0)					   throw AQLCoreInvalidData("DeliveryTerm Negative!", __FILE__,__LINE__);
+		if (F < 0.0)					   throw AQLCoreInvalidData("ForwardPrice Negative!", __FILE__,__LINE__);
+		if (DFf < 0.0)					   throw AQLCoreInvalidData("Foreign DF Negative!", __FILE__,__LINE__);
+		if (DFd < 0.0)					   throw AQLCoreInvalidData("Domestic DF Negative!", __FILE__,__LINE__);
 	}
 
 	//hishida vannavolga
@@ -199,8 +199,8 @@ public :
 	virtual void ErrorCheck(void)
 	{
 		AnalyticParam::ErrorCheck();
-		if (Pbondm < 0.0)					   throw LACoreInvalidData("Pbondm Negative!", __FILE__,__LINE__);
-		if (Poptm < 0.0)					   throw LACoreInvalidData("Poptm Negative!", __FILE__,__LINE__);
+		if (Pbondm < 0.0)					   throw AQLCoreInvalidData("Pbondm Negative!", __FILE__,__LINE__);
+		if (Poptm < 0.0)					   throw AQLCoreInvalidData("Poptm Negative!", __FILE__,__LINE__);
 	}
 
 	//hishida vannavolga

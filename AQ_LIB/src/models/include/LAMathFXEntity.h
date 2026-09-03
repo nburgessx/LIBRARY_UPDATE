@@ -5,9 +5,9 @@
 #endif
 
 
-#include "LAObject.h"
-#include "LACoreAutoPtr.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLObject.h"
+#include "AQLCoreAutoPtr.h"
+#include "AQLPriceDataDayCount.h"
 
 //// DEFINES ////
 // Entitiy id of LAMathFXEntity
@@ -36,26 +36,26 @@
 #endif
 
 
-class LADataInstance;
-class LADate;
-class LADataDoubles;
-class LADataDouble;
-class LADataDate;
-class LAString;
-class LADataString;
-class LADataStrings;
-class LADataReference;
-class LADataMultiReference;
+class AQLDataInstance;
+class AQLDate;
+class AQLDataDoubles;
+class AQLDataDouble;
+class AQLDataDate;
+class AQLString;
+class AQLDataString;
+class AQLDataStrings;
+class AQLDataReference;
+class AQLDataMultiReference;
 
 /*! 
     @brief Class to represent FX.
 */
-class LAMathFXEntity : public LAObject
+class LAMathFXEntity : public AQLObject
 {
 public:
 // LIFECYCLE
     // default constructor
-	LAMathFXEntity(LADataInstance* dataInstance);
+	LAMathFXEntity(AQLDataInstance* dataInstance);
     // copy constructor
 	LAMathFXEntity(const LAMathFXEntity& fx);
     // destructor
@@ -67,80 +67,80 @@ public:
     // Check function for this class type
 	virtual bool		isTypeOf(object_t id) const;
 	// get this FX name
-	const LADataString&	getName() const;
+	const AQLDataString&	getName() const;
 	// get this FX name. The setting of name is also possible. 
-	LADataString&		getName();
+	AQLDataString&		getName();
     // get basedate
-	const LADataDate&	getAsOfDate(void) const;
+	const AQLDataDate&	getAsOfDate(void) const;
     // get basedate. The setting of basedate is also possible. 
-	LADataDate&			getAsOfDate(void);
+	AQLDataDate&			getAsOfDate(void);
     // get fx type
-	const LADataString&	getFXType(void) const;
+	const AQLDataString&	getFXType(void) const;
     // get fx type. The setting of fx type is also possible. 
-	LADataString&		getFXType(void);
+	AQLDataString&		getFXType(void);
 	// get path object
-	const LADataReference&
+	const AQLDataReference&
 						getPathEntity() const;
 	// get path object. The setting of path object is also possible. 
-	LADataReference&
+	AQLDataReference&
 						getPathEntity();	
 	// get yield entities
-	const LADataMultiReference&
+	const AQLDataMultiReference&
 						getYieldCurves() const;
 	// get yiled entities. The setting of yiled entities is also possible. 
-	LADataMultiReference&
+	AQLDataMultiReference&
 						getYieldCurves();
 	// get currency names
-	const LADataStrings&
+	const AQLDataStrings&
 						getCurrencys() const;
 	// get currency names. The setting of get currency names is also possible. 
-	LADataStrings&		getCurrencys();		
+	AQLDataStrings&		getCurrencys();		
 	// get spot rates
-	const LADataDoubles&
+	const AQLDataDoubles&
 						getSpotRates() const;
 	// get spot rates. The setting of spot rates is also possible. 
-	LADataDoubles&		getSpotRates();	
+	AQLDataDoubles&		getSpotRates();	
 	// get calendar names
-	const LADataStrings&
+	const AQLDataStrings&
 						getCalendarNames() const;
 	// get calendar names. The setting of calendar names is also possible. 
-	LADataStrings&		getCalendarNames();
+	AQLDataStrings&		getCalendarNames();
 	// set spot lag
-	void setSpotLag(const LAString &ccy, unsigned int lag);
+	void setSpotLag(const AQLString &ccy, unsigned int lag);
 	// get spot lag
-	unsigned int getSpotLag(const LAString &fx);
+	unsigned int getSpotLag(const AQLString &fx);
 
 	// get fx rate (today base)
-	double				getRate(const LAString& from, const LAString& to,
-								const LADate& date) const;
+	double				getRate(const AQLString& from, const AQLString& to,
+								const AQLDate& date) const;
 	// get fx rate (today base)
-	double				getRate(const LAString& from, const LAString& to,
+	double				getRate(const AQLString& from, const AQLString& to,
 								double t, DayCount dc = ACT_365_ISDA) const;	
 	// get fx rate (spot base)
-//	double				getSpotRate(const LAString& from, const LAString& to,
-//								const LADate& date) const;
+//	double				getSpotRate(const AQLString& from, const AQLString& to,
+//								const AQLDate& date) const;
 	// get fx rate (spot base)
-//	double				getSpotRate(const LAString& from, const LAString& to,
+//	double				getSpotRate(const AQLString& from, const AQLString& to,
 //								double t, DayCount dc = ACT_365_ISDA) const;
 	// get forward fx rate 
-	double				getForwardRate(const LAString& from, const LAString& to,
-								const LADate& date, const LADate& forward_date) const;
+	double				getForwardRate(const AQLString& from, const AQLString& to,
+								const AQLDate& date, const AQLDate& forward_date) const;
 	// get forward fx rate
-	double				getForwardRate(const LAString& from, const LAString& to,
+	double				getForwardRate(const AQLString& from, const AQLString& to,
 								double t, double forward_t, DayCount dc = ACT_365_ISDA) const;
 	// get spot date
-	LADate				getSpotDate(const LAString& cur1, const LAString& cur2,
-									const LADate& basedate) const;
+	AQLDate				getSpotDate(const AQLString& cur1, const AQLString& cur2,
+									const AQLDate& basedate) const;
 	// get forward	
-//	LADate				getForwardDate(const LAString& cur1, const LAString& cur2,
-//									const LADate& basedate, const LAString& term) const;
+//	AQLDate				getForwardDate(const AQLString& cur1, const AQLString& cur2,
+//									const AQLDate& basedate, const AQLString& term) const;
 	
 	//	make copy(clone) of this FX object object.
-	LAObject*			clone() const;// %%% COVARIANT RETURN %%%
+	AQLObject*			clone() const;// %%% COVARIANT RETURN %%%
 	
 //  OPERATION 
 	// remove specified Data.If there is not Data to remove, do nothing. If member variable is specified to remove, do not remove it.
-	virtual void        remove(const LAString& dataName);
+	virtual void        remove(const AQLString& dataName);
 	// Initialize this Object.
 	virtual void		reset(void);
     // called when updating the Data, the number of Version representing number of updates is incremented
@@ -148,7 +148,7 @@ public:
 
 protected:
 	// copy FX object	 
-	virtual LAObject&	copy(const LAObject& e);
+	virtual AQLObject&	copy(const AQLObject& e);
 	
 
 private:
@@ -159,20 +159,20 @@ private:
 
 
 	// set Data specified by the name.
-	LADataHolder&				add(const LAString& name);
+	AQLDataHolder&				add(const AQLString& name);
 
-	LADataHolder*				mpName;     // name (DATA_STRING)
-	LADataHolder*               mpAsOfDate; // basedate (DATA_DATE)
-	LADataHolder*               mpFXType;	// fx type (DATA_STRING)
-	LADataHolder*				mpPathEntity;// path object (DATA_REFERENCE)
-	LADataHolder*				mpYieldCurves;// yield object (DATA_MULTIREFERENCE)
-	LADataHolder*				mpCurrencys;// currency name (DATA_STRINGS)
-	LADataHolder*				mpSpotRates;// rates (DATA_DOUBLES) 
-	LADataHolder*				mpCalendarNames;// calendar names (DATA_STRINGS)  
-	std::map<LAString, unsigned int> mSpotLag;// spot lag 
+	AQLDataHolder*				mpName;     // name (DATA_STRING)
+	AQLDataHolder*               mpAsOfDate; // basedate (DATA_DATE)
+	AQLDataHolder*               mpFXType;	// fx type (DATA_STRING)
+	AQLDataHolder*				mpPathEntity;// path object (DATA_REFERENCE)
+	AQLDataHolder*				mpYieldCurves;// yield object (DATA_MULTIREFERENCE)
+	AQLDataHolder*				mpCurrencys;// currency name (DATA_STRINGS)
+	AQLDataHolder*				mpSpotRates;// rates (DATA_DOUBLES) 
+	AQLDataHolder*				mpCalendarNames;// calendar names (DATA_STRINGS)  
+	std::map<AQLString, unsigned int> mSpotLag;// spot lag 
 	// variables for performance up
 	mutable int									mFXVersion;		// version
-	mutable std::map<LAString, unsigned int>	mCurrencyPosMap;// position of each currency
+	mutable std::map<AQLString, unsigned int>	mCurrencyPosMap;// position of each currency
 	mutable int									mFXType;// fx type
 	mutable DoubleArray							mTodayRates;// today rates
 	mutable std::vector<std::vector<std::vector<std::pair<unsigned int, bool> > > >

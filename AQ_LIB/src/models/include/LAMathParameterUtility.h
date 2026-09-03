@@ -5,8 +5,8 @@
 #pragma interface
 #endif
 
-#include <LADataInstance.h>
-#include "LAPriceDataSlidingRule.h"
+#include <AQLDataInstance.h>
+#include "AQLPriceDataSlidingRule.h"
 
 #ifndef AQ_DATAMATRIX
 #define AQ_DATAMATRIX "DataMatrix"
@@ -29,47 +29,47 @@ using namespace std;
 class LAMathParameterObject
 {
 public:
-    static void SetParameterMatrix(LADataInstance* dataInstance, const LAString& matID, const LAString& convID, LAStringMatrix& mat);
+    static void SetParameterMatrix(AQLDataInstance* dataInstance, const AQLString& matID, const AQLString& convID, AQLStringMatrix& mat);
 
-    static LAStringMatrix ParameterMatrix(LADataInstance* dataInstance, const LAString& matID);
+    static AQLStringMatrix ParameterMatrix(AQLDataInstance* dataInstance, const AQLString& matID);
 
     // By expiry term
-    static double LookUpParameterMatrix(LADataInstance* dataInstance, const LAString& matID, const LAString& expTerm, const LAString& idxPoint,
-                                        LAString interpolationType = "Linear");
+    static double LookUpParameterMatrix(AQLDataInstance* dataInstance, const AQLString& matID, const AQLString& expTerm, const AQLString& idxPoint,
+                                        AQLString interpolationType = "Linear");
 
     // By expiry date
-    static double LookUpParameterMatrix(LADataInstance* dataInstance, const LAString& matID, LADate expDate, const LAString& idxPoint,
-                                        LAString interpolationType = "Linear");
+    static double LookUpParameterMatrix(AQLDataInstance* dataInstance, const AQLString& matID, AQLDate expDate, const AQLString& idxPoint,
+                                        AQLString interpolationType = "Linear");
 
-    static LAStringVector ParameterMatrixTerms(LADataInstance* dataInstance, const LAString& matID);
+    static AQLStringVector ParameterMatrixTerms(AQLDataInstance* dataInstance, const AQLString& matID);
 
-    static LAStringVector ParameterMatrixIndexes(LADataInstance* dataInstance, const LAString& matID);
+    static AQLStringVector ParameterMatrixIndexes(AQLDataInstance* dataInstance, const AQLString& matID);
 
-    static LADate GetDate(const LADate& asOfDate, LAString term, const LAPriceDataSlidingRule& slr, const LAPriceDataCalendar& cal);
+    static AQLDate GetDate(const AQLDate& asOfDate, AQLString term, const AQLPriceDataSlidingRule& slr, const AQLPriceDataCalendar& cal);
 
-    static void SetMatrixAxis(const LAString& title, const LAStringVector& terms, const LAStringVector& indexes,
-                              LAStringMatrix& matrix);
+    static void SetMatrixAxis(const AQLString& title, const AQLStringVector& terms, const AQLStringVector& indexes,
+                              AQLStringMatrix& matrix);
 
-    static void SetMatrixData(const DoubleMatrix& data, LAStringMatrix& matrix);
+    static void SetMatrixData(const DoubleMatrix& data, AQLStringMatrix& matrix);
 
 private:
-    static double Lookup(LADate asOfDate, LADate expDate, const LAString& idxPoint,
-                                             const DoubleVector& expiryVec, const LAStringVector& indexVec,
-                                             const DoubleMatrix& dataMatrix, LAString interpolationType);
+    static double Lookup(AQLDate asOfDate, AQLDate expDate, const AQLString& idxPoint,
+                                             const DoubleVector& expiryVec, const AQLStringVector& indexVec,
+                                             const DoubleMatrix& dataMatrix, AQLString interpolationType);
 
 };
 
 class MFParameterMatrix
 {
 public:
-    MFParameterMatrix(const DoubleMatrix& mat_, const DoubleVector& expiryVec_, const LAStringVector& idxVec_);
+    MFParameterMatrix(const DoubleMatrix& mat_, const DoubleVector& expiryVec_, const AQLStringVector& idxVec_);
 
-    double LookUp(double expiry, const LAString& idxID, LAString interpolationType);
+    double LookUp(double expiry, const AQLString& idxID, AQLString interpolationType);
 
 private:
     DoubleMatrix mMatrix;
     DoubleVector mExpiries;
-    LAStringVector mIndexes;
+    AQLStringVector mIndexes;
 };
 
 #endif 

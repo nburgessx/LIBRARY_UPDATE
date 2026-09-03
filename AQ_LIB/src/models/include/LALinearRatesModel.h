@@ -21,10 +21,10 @@
 
 
 
-class LAString;
-class LAObject;
-class LADataProvider;
-class LADataValuation;
+class AQLString;
+class AQLObject;
+class AQLDataProvider;
+class AQLDataValuation;
 //===================== Class Declare LALinearRatesModel==================================
 /*! 
     @brief plain vanilla volatility set upper class
@@ -37,7 +37,7 @@ public:
 	// destructor
 	virtual ~LALinearRatesModel(void);
 	//set up volatility
-	virtual double calcValue(const LADataValuation& att, LADataProvider* dp, LAObject& object, LAString productname) = 0;
+	virtual double calcValue(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& object, AQLString productname) = 0;
 private:
 };
 
@@ -49,7 +49,7 @@ public:
 	// destructor
 	virtual ~LAPriceBSValueModel(void);
 	//set up volatility	
-	virtual double calcValue(const LADataValuation& att, LADataProvider* dp, LAObject& object, LAString productname);
+	virtual double calcValue(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& object, AQLString productname);
 private:
 };
 
@@ -61,7 +61,7 @@ public:
 	// destructor
 	virtual ~LAPriceVVValueModel(void);
 	//set up volatility
-	virtual double calcValue(const LADataValuation& att, LADataProvider* dp, LAObject& object, LAString productname);
+	virtual double calcValue(const AQLDataValuation& att, AQLDataProvider* dp, AQLObject& object, AQLString productname);
 private:
 };
 

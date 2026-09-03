@@ -9,11 +9,11 @@ namespace google_test
     * @param [in]		key				Key that gives value
 	* @param [in]		optional		Is optional key?
     */
-	void findValByKey(LAString& val, const etrading::ReadDataFile& collection, const std::set<LAString>& keys, const LAString& key, bool optional)
+	void findValByKey(AQLString& val, const etrading::ReadDataFile& collection, const std::set<AQLString>& keys, const AQLString& key, bool optional)
 	{
-		LAString temp(key);
+		AQLString temp(key);
 		temp.toUpper();
-		if (keys.find(LAString(temp).toUpper()) != keys.end())
+		if (keys.find(AQLString(temp).toUpper()) != keys.end())
 		{
 			val = collection(temp, "col1");
 		}
@@ -21,7 +21,7 @@ namespace google_test
 		{
 			if (!optional)
 			{
-				LAString err = "#Err: Failed to find key '" + key + "'. Please correct input file.";
+				AQLString err = "#Err: Failed to find key '" + key + "'. Please correct input file.";
 				throw err.getCString();
 			}
 		}
@@ -31,11 +31,11 @@ namespace google_test
 	* @param [in]		interpolation	Interpolation in long name
     * @output			interpolation short name
     */
-	LAString interpolationShortName(const LAString& interpolation)
+	AQLString interpolationShortName(const AQLString& interpolation)
 	{
-		LAString temp(interpolation);
+		AQLString temp(interpolation);
 		temp.toUpper();
-		LAString ret;
+		AQLString ret;
 		if (temp == "FN_SPLINEINTERPOLATION")
 		{
 			ret = "SPLINE";

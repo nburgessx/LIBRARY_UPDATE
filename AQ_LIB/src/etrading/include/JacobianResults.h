@@ -12,9 +12,9 @@
 #include <vector>
 #include <memory>
 
-#include "LADate.h"
+#include "AQLDate.h"
 #include "CoreEnumerations.h"
-#include "LAInterpolationBase.h"
+#include "AQLInterpolationBase.h"
 #include "Variant.h"
 
 // The Jacobian Builds and Extends upon the Curve Desccription Results & Discount Factor Results Classes
@@ -112,7 +112,7 @@ namespace etrading
         // ShiftTypeEnum = FLAT_SHIFT
         // InstrumentVector not required since we are working on TOTALs with size 1
         // Jacobian result is a VECTOR ( n x 1 ), where n = number of dates in riskDateVector
-        JacobianResults( const LADate & asOfDate,
+        JacobianResults( const AQLDate & asOfDate,
                          const std::shared_ptr<etrading::CurveDescription> & curveDescription,
                          const RiskTypeEnum & riskType,
                          const double & gradientShiftSize,
@@ -126,7 +126,7 @@ namespace etrading
         // ShiftTypeEnum = PERTURBED
         // InstrumentVector required for Pertubation buckets
         // Jacobian result is a MATRIX (n x m), where n = number of dates in riskDateVector and m = number of Instruments in instrumentVector
-        JacobianResults( const LADate & asOfDate,
+        JacobianResults( const AQLDate & asOfDate,
                          const std::shared_ptr<etrading::CurveDescription> & curveDescription,
                          const RiskTypeEnum & riskType,   
                          const double & gradientShiftSize,
@@ -142,7 +142,7 @@ namespace etrading
         // ShiftTypeEnum = FLAT_SHIFT
         // InstrumentVector not required since we are working on TOTALs with size 1
         // Jacobian result is a VECTOR ( n x 1 ), where n = number of dates in riskDateVector
-        JacobianResults( const LADate & asOfDate,
+        JacobianResults( const AQLDate & asOfDate,
                          const std::shared_ptr<etrading::CurveDescription> & curveDescription,
                          const RiskTypeEnum & riskType,
                          const double & gradientShiftSize,
@@ -156,7 +156,7 @@ namespace etrading
         // ShiftTypeEnum = PERTURBED
         // InstrumentVector required for Pertubation buckets
         // Jacobian result is a MATRIX (n x m), where n = number of dates in riskDateVector and m = number of Instruments in instrumentVector
-        JacobianResults( const LADate & asOfDate,
+        JacobianResults( const AQLDate & asOfDate,
                          const std::shared_ptr<etrading::CurveDescription> & curveDescription,
                          const RiskTypeEnum & riskType,
                          const double & gradientShiftSize,
@@ -218,7 +218,7 @@ namespace etrading
         std::shared_ptr<etrading::CurveDescription> curveDescription() const;
         std::shared_ptr<etrading::DiscountFactorResults> discountFactorResults() const;
         
-        LADate asOfDate() const                                     { return asOfDate_;                         }
+        AQLDate asOfDate() const                                     { return asOfDate_;                         }
         RiskTypeEnum riskType() const                               { return riskType_;                         }
         ShiftTypeEnum shiftType() const                             { return shiftType_;                        }
         double gradientShiftSize() const                            { return gradientShiftSize_;                }
@@ -236,7 +236,7 @@ namespace etrading
         std::shared_ptr<etrading::CurveDescription>         curveDescription_;
         std::shared_ptr<etrading::DiscountFactorResults>    discountFactorResults_;
 
-        LADate                  asOfDate_;
+        AQLDate                  asOfDate_;
         RiskTypeEnum            riskType_;
         ShiftTypeEnum           shiftType_;
         double                  gradientShiftSize_;

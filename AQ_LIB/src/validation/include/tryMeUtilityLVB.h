@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 
 using etrading::LabelValueBlock;
@@ -15,37 +15,37 @@ namespace validation
     *  @param [in]		keys			A list of keys from user input
     *  @param [in]		values			A list of values from user input
     *  @param [in]		keyPrefix		Prefix added to for keys
-    *  @return			a LAStringMatrix representing LabelValueBlock, i.e. first columns are keys, second columns are values
+    *  @return			a AQLStringMatrix representing LabelValueBlock, i.e. first columns are keys, second columns are values
     */
-    LAStringMatrix tryMeUtilityLVBFromKeysValues( const LAStringVector& keys, const LAStringVector& values, const LAString& keyPrefix );
+    AQLStringMatrix tryMeUtilityLVBFromKeysValues( const AQLStringVector& keys, const AQLStringVector& values, const AQLString& keyPrefix );
 
     /* @brief			validation interface for meUtilityLVB method
-    *  @param [in]		sMatrix			A input LAStringMatrix with common key column/row and mutltiple value columns/rows
+    *  @param [in]		sMatrix			A input AQLStringMatrix with common key column/row and mutltiple value columns/rows
     *  @param [in]		keyPrefix		Prefix added to for keys
     *  @param [in]		verticalKeys	True if the keys are vertical
-    *  @return			a LAStringMatrix representing a LabelValueBlock, i.e. first columns are keys, second columns are values
+    *  @return			a AQLStringMatrix representing a LabelValueBlock, i.e. first columns are keys, second columns are values
     */
-    LAStringMatrix tryMeUtilityLVB( const LAStringMatrix& sMatrix, LAStringVector& keyPrefixes, bool verticalKeys );
+    AQLStringMatrix tryMeUtilityLVB( const AQLStringMatrix& sMatrix, AQLStringVector& keyPrefixes, bool verticalKeys );
 
     /* @brief			validation interface for meUtilityLVBGroup method
-    *  @param [in]		lvbs		A list of LAStringMatrix objects representing label value blocks
-    *  @return			A LAStringMatrix representing the concatenated LabelValueBlock
+    *  @param [in]		lvbs		A list of AQLStringMatrix objects representing label value blocks
+    *  @return			A AQLStringMatrix representing the concatenated LabelValueBlock
     */
-    LAStringMatrix tryMeUtilityLVBGroup( const std::vector<LAStringMatrix>& lvbs );
+    AQLStringMatrix tryMeUtilityLVBGroup( const std::vector<AQLStringMatrix>& lvbs );
 
     /* @brief			validation interface for meUtilityLVBFromMultipleKeysValues method
     *  @param [in]		keys			Multiple lists of keys from user input
     *  @param [in]		values			Multiple lists of values from user input
-    *  @return			a LAStringMatrix representing LabelValueBlock, i.e. first columns are keys, second columns are values
+    *  @return			a AQLStringMatrix representing LabelValueBlock, i.e. first columns are keys, second columns are values
     */
-    LAStringMatrix tryMeUtilityLVBFromMultipleKeysValues( const std::vector<LAStringVector>& keys, const std::vector<LAStringVector>& values );
+    AQLStringMatrix tryMeUtilityLVBFromMultipleKeysValues( const std::vector<AQLStringVector>& keys, const std::vector<AQLStringVector>& values );
 
     /* @brief			validation interface for meUtilityLVBFromKeysAndMultipleValues method
     *  @param [in]		commonKeys		A lists of keys from user input
     *  @param [in]		multiValues		Multiple lists of values from user input
-    *  @return			a vertial LAStringMatrix with a key column and multiple values columns
+    *  @return			a vertial AQLStringMatrix with a key column and multiple values columns
     */
-    LAStringMatrix tryMeUtilityLVBFromKeysAndMultipleValues( const LAStringVector& commonKeys, const std::vector<LAStringVector>& multiValues);
+    AQLStringMatrix tryMeUtilityLVBFromKeysAndMultipleValues( const AQLStringVector& commonKeys, const std::vector<AQLStringVector>& multiValues);
 
     /* @brief			create a string matrix
     *  @param [in]		keys			A vector of keys from user input

@@ -5,10 +5,10 @@
 #endif
 
 #include <fstream>
-#include "LADataInstance.h"
-#include "LAFunctionManager.h"
-#include "LAPriceDataManager.h"
-#include "LADataReference.h"
+#include "AQLDataInstance.h"
+#include "AQLFunctionManager.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataReference.h"
 #include "LAMathCorrelation.h"
 #include "LAMathYieldCurve.h"
 #include "LAMathYieldCurvePro.h"
@@ -19,16 +19,16 @@
 #include "LAStaticData.h"
 #include "LADealUtils.h"
 #include "LACalibrateModelIRSABR.h"
-#include "LADataVector.h"
-#include "LADataProcedure.h"
+#include "AQLDataVector.h"
+#include "AQLDataProcedure.h"
 #include "LAMathYieldCurve.h"
 #include "LAPriceYieldGenerator.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAPriceDataInterpolation.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LAPriceDataFunction.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLPriceDataFunction.h"
 #include "LAMarketData.h"
 #include "LAMathVolFuncBase.h"
 #include "LACalibrateVolatilityIRSABR.h"
@@ -36,7 +36,7 @@
 #include "LAMathVolatility.h"
 #include "LAScenarioConfiguration.h"
 #include "LADefinitionsIRSABR.h"
-#include "LADataMatrix.h"
+#include "AQLDataMatrix.h"
 
 using namespace std;
 
@@ -44,7 +44,7 @@ using namespace std;
 /*!
 
 */
-LACalibrateModelIRSABR::LACalibrateModelIRSABR(const LAString &baseCurrency)
+LACalibrateModelIRSABR::LACalibrateModelIRSABR(const AQLString &baseCurrency)
 : LACalibrateModelIR(baseCurrency)
 {
 }
@@ -64,7 +64,7 @@ LACalibrateModelIRSABR::~LACalibrateModelIRSABR(void)
 	@param[out] sde
 */
 void
-LACalibrateModelIRSABR::setVolatility(const LAString &currency, LARatesSDEBase &sde) const
+LACalibrateModelIRSABR::setVolatility(const AQLString &currency, LARatesSDEBase &sde) const
 {
 	return ;
 }
@@ -75,8 +75,8 @@ LACalibrateModelIRSABR::setVolatility(const LAString &currency, LARatesSDEBase &
 
 	@param[in]  fx 
 */
-LAString
-LACalibrateModelIRSABR::getVolType(const LAString &key) const
+AQLString
+LACalibrateModelIRSABR::getVolType(const AQLString &key) const
 {
 	return INPUT_FUNC;
 }
@@ -90,51 +90,51 @@ LACalibrateModelIRSABR::getVolType(const LAString &key) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelIRSABR::setUpVolFunc(const LAString &currency, LAMathVolatility &vol, LADataInstance &dataInstance) const
+LACalibrateModelIRSABR::setUpVolFunc(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
-	LAString key_ccy = currency;
+	AQLString key_ccy = currency;
 	key_ccy.toLower();
-	LAStringVector fileVec(1);
+	AQLStringVector fileVec(1);
 	LACalibrateVolatilityIRSABR volCreator;
 	// create method vec
-	vector<LAFunctionBase *> funcVec;
+	vector<AQLFunctionBase *> funcVec;
 
 	MAScenarioParam param;
-	LAObjectPool &objPool = dataInstance.getObjectPool();
+	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	param.isCalib = isCalibTarget(currency);
 	param.calcType = KEY_PV;
 	if (param.isCalib)
 	{
 		LAStaticData &calibProp = LACoreDataService::getStaticDataManager().getCalibStaticData();
-		LAString underlying = calibProp.getStaticData(key_ccy + STATIC_DATA_KEY_CALIB_IRSABR_UNDERLYING);
+		AQLString underlying = calibProp.getStaticData(key_ccy + STATIC_DATA_KEY_CALIB_IRSABR_UNDERLYING);
 		underlying.toLower();
-		LAStringVector underlyings = underlying.toToken(':');
+		AQLStringVector underlyings = underlying.toToken(':');
 		//get a flag to calibrate all grids
 		bool isAllGridsCalibrate = false;
-		LAString strIsAllCalib= calibProp.getStaticData(key_ccy + STATIC_DATA_KEY_CALIB_IRSABR_ISALLGRIDSCALIBRATE);
+		AQLString strIsAllCalib= calibProp.getStaticData(key_ccy + STATIC_DATA_KEY_CALIB_IRSABR_ISALLGRIDSCALIBRATE);
 		if (strIsAllCalib != AQ_NO_DATA)
 		{
-			LADataBool tmpAttrBool;
+			AQLDataBool tmpAttrBool;
 			tmpAttrBool.convertFromString(strIsAllCalib);
 			isAllGridsCalibrate = tmpAttrBool.get();
 		}
 		for (size_t j = 0; j < underlyings.size(); ++j)
 		{
-			const LAString key = key_ccy + "." CONTEXT_KEY_DEAL_IRVOL + "." + underlyings[j];
-			const LAString val = LACoreDataService::getContext(key);
-			const LAString fileName = calibProp.getStaticData(key_ccy + STATIC_DATA_KEY_CALIB_IRSABR_TARGETVOLGRID_FILE + "." + underlyings[j]);
+			const AQLString key = key_ccy + "." CONTEXT_KEY_DEAL_IRVOL + "." + underlyings[j];
+			const AQLString val = LACoreDataService::getContext(key);
+			const AQLString fileName = calibProp.getStaticData(key_ccy + STATIC_DATA_KEY_CALIB_IRSABR_TARGETVOLGRID_FILE + "." + underlyings[j]);
 			if (val == AQ_NO_DATA && fileName != AQ_NO_DATA && !isAllGridsCalibrate)
 			{
-				LADate asofDate = LAMarketData::getAsofDate(objPool);
+				AQLDate asofDate = LAMarketData::getAsofDate(objPool);
 				BoolMatrix calibTarget = MADealUtils::getCalibTargetIRVolGrids(objPool, asofDate, key_ccy, underlyings[j], true);
-				LADataBoolMatrix tmp(calibTarget);
+				AQLDataBoolMatrix tmp(calibTarget);
 				LACoreDataService::setContext(key, tmp.convertToString());
 			}
 		}
 
 		// create calib info
 		LACalibrationParametersIRSABR cInfo;
-		LAString cInfoName = cInfo.createCalibrationInfo(objPool, currency);
+		AQLString cInfoName = cInfo.createCalibrationInfo(objPool, currency);
 		// first element set calib info
 		param.refName.push_back(cInfoName);
 

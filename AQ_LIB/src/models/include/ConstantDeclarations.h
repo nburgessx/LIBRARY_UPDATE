@@ -151,7 +151,7 @@
 #define CONTINUOUS			"CONTINUOUS"
 #define LUNAR				"LUNAR"
 
-//define interpolation method c.f. LACoreComponentManager::getInterpolation()
+//define interpolation method c.f. AQLCoreComponentManager::getInterpolation()
 #define LINEAR						"LINEAR"
 #define SPLINE						"SPLINE"
 #define MONOTONESPLINE				"MONOTONESPLINE"
@@ -215,6 +215,6 @@
 #define ERMATH   "A mathematical operation produced a wrong number"
 enum{ERMATHINF_ = 1 , ERMATHNAN_ };
 
-//typedef std::vector<LAStringVector > LAStringMatrix;
+//typedef std::vector<AQLStringVector > AQLStringMatrix;
 
 #endif

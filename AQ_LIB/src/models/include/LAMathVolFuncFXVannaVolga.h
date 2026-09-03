@@ -4,36 +4,36 @@
 #pragma interface
 #endif
 
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 #include "LAMathFXVolatilitySurfaceGenerate.h"
-#include "LAFunctionBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
-#include "LAInterpolationBase.h"
-#include "LAAlgorithm.h"
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLInterpolationBase.h"
+#include "AQLAlgorithm.h"
 #include "LAAnalyticFormula.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLPriceDataCalendar.h"
 
 // Funciton ID of LAMathVolFuncFXVannaVolga
 #define FN_VOLFUNCFXVANNAVOLGA	10062
 // Function Name of LAMathVolFuncFXVannaVolga
 #define FN_VOLFUNCFXVANNAVOLGA_STR	"fn_volfuncfxvannavolga"
 
-class LAObject;
-class LADataInstance;
-class LADataProvider;
+class AQLObject;
+class AQLDataInstance;
+class AQLDataProvider;
 
 
-class LAMathVolFuncFXVannaVolga : public LAFunctionBase
+class LAMathVolFuncFXVannaVolga : public AQLFunctionBase
 {
 public :
 //  LIFECYCLE
 	// constructor
-	explicit LAMathVolFuncFXVannaVolga(LADataInstance* dataInstance, const ATMInterpolationMethod &atmMethod,
+	explicit LAMathVolFuncFXVannaVolga(AQLDataInstance* dataInstance, const ATMInterpolationMethod &atmMethod,
 							const std::vector<FXOptionData> &opdata, const std::vector<SmileData> &smiledata,
-							const DoubleVector& matuterms365, const LAString& dYieldDataName, const LAString& fYieldName,
-							double spotrate/*, const LAPriceDataCalendar& calendar, const LAPriceDataSlidingRule& slidingrule,
-							LAString spotlag*/);
+							const DoubleVector& matuterms365, const AQLString& dYieldDataName, const AQLString& fYieldName,
+							double spotrate/*, const AQLPriceDataCalendar& calendar, const AQLPriceDataSlidingRule& slidingrule,
+							AQLString spotlag*/);
 
 	//LAMathVolFuncFXVannaVolga(mpDataInstance,mAtmMethod,mFxParams,mSmileData,mMatuTerms365,
 	//												mdYieldDataName,mfYieldDataName,mSpotRate);
@@ -48,7 +48,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;
@@ -57,7 +57,7 @@ public :
 	                            // return function value
 	virtual double				operator()(const DoubleArray& x) const;
 
-	void						setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, LADataProvider* dp) const;
+	void						setUpVannaVolgaMatrix(AnalyticGKParam* gkParam, AQLDataProvider* dp) const;
 	const DoubleVector&			getMarketPriceVec(double maturityTerm365) const;
 	const DoubleVector&			getStrikeVec(double maturityTerm365) const;
 	
@@ -69,13 +69,13 @@ public :
 
 protected :
 
-	LADataInstance* mpDataInstance;
+	AQLDataInstance* mpDataInstance;
 	mutable ATMInterpolationMethod mAtmMethod;
 	mutable std::vector<FXOptionData> mOpData;
 	mutable	std::vector<SmileData> mSmileData;
 	mutable DoubleVector mMatuTerms365;
-	LAString mdYieldDataName;
-	LAString mfYieldDataName;
+	AQLString mdYieldDataName;
+	AQLString mfYieldDataName;
 	double mSpotRate;
 
 	mutable std::map<double, DoubleVector> mOmegaMap;

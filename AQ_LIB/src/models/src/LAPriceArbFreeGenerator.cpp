@@ -11,17 +11,17 @@
 #endif
 
 
-#include "LANl2sol.h"
+#include "AQLNl2sol.h"
 
 #include "LAPriceYieldGenerator.h"
 #include "LAPriceArbFreeGenerator.h"
-#include "LALinearInterpolation.h"
+#include "AQLLinearInterpolation.h"
 
 #include <algorithm>
 #include "LAMathYieldCurvePro.h"
 #include "LAMathDateCalculations.h"
-#include "LAAlgorithm.h"
-#include "LADataMatrix.h"
+#include "AQLAlgorithm.h"
+#include "AQLDataMatrix.h"
 
 #ifndef DUMMY
 #define DUMMY "DUMMY"
@@ -66,14 +66,14 @@ bool
 LAPriceArbFreeGenerator::isTypeOf(function_t id) const
 {
     return (id == FN_IRARBFREEGENERATOR ? true :
-                        LACoreProcedure::isTypeOf(id));
+                        AQLCoreProcedure::isTypeOf(id));
 }
 /*!
     @brief  Make copy(clone) of this class
 
     @return copy object
 */
-LACoreFunctionBase*     
+AQLCoreFunctionBase*     
 LAPriceArbFreeGenerator::clone() const
 {
     try 
@@ -82,7 +82,7 @@ LAPriceArbFreeGenerator::clone() const
     }
     catch (bad_alloc & e)
     {
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }   
 }
 
@@ -93,7 +93,7 @@ LAPriceArbFreeGenerator::clone() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceArbFreeGenerator::registerData(LAPriceDataManager& dm) const
+LAPriceArbFreeGenerator::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(CALIBRATION_DATA_ASOFDATE, DATA_DATE);
     dm.setData(CALIBRATION_DATA_TERMS, DATA_DOUBLES);
@@ -128,9 +128,9 @@ LAPriceArbFreeGenerator::getType() const
     @param[in] att Data of Estimate Procedure (we don't use for this method)
 
 */
-void LAPriceArbFreeGenerator::calibrateModel( const LADate& basedate, 
-										      LAObject& object, 
-										      const LADataProcedure& att ) const
+void LAPriceArbFreeGenerator::calibrateModel( const AQLDate& basedate, 
+										      AQLObject& object, 
+										      const AQLDataProcedure& att ) const
 {
     (void)att;
     const LAMathYieldCurvePro& yg = dynamic_cast<LAMathYieldCurvePro&>(object);
@@ -144,58 +144,58 @@ void LAPriceArbFreeGenerator::calibrateModel( const LADate& basedate,
 	unsigned int threeMLSPos, sixMLSPos;
 
    // get curve ID and currency
-	const LADataReference& ref = yg.getYieldData();
-	LAObjectPool& objPool = object.getDataInstance()->getObjectPool();
-	LAObjectHolder objHolder = ref.get();
+	const AQLDataReference& ref = yg.getYieldData();
+	AQLObjectPool& objPool = object.getDataInstance()->getObjectPool();
+	AQLObjectHolder objHolder = ref.get();
     
     // foreign currency data
-	const LADataReference& ref_fy = yg.getForeignYieldData();
-	const LAObject* fYieldData = NULL;
+	const AQLDataReference& ref_fy = yg.getForeignYieldData();
+	const AQLObject* fYieldData = NULL;
 	if (!ref_fy.isNull())
 	{	
 		fYieldData= &ref_fy.get().get();
 	}
 	// get market date
-	vector<LAObject*> data;
-    const LADataMultiReference& mr = yg.getMarketData();
+	vector<AQLObject*> data;
+    const AQLDataMultiReference& mr = yg.getMarketData();
     for(unsigned int i = 0; i < mr.getSize(); i++)
 	{
 		data.push_back(&mr.get(i).get());
 	}
 	//xccybasis
-	const LADataHolder *dh = &yg.getData(CALIBRATION_DATA_MARKETDATA + LAString("_") + LAString(XCCYBASIS) ,NOCHECK);
+	const AQLDataHolder *dh = &yg.getData(CALIBRATION_DATA_MARKETDATA + AQLString("_") + AQLString(XCCYBASIS) ,NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		const LADataMultiReference& mr_xccy = dynamic_cast<const LADataMultiReference&> (dh->get());
+		const AQLDataMultiReference& mr_xccy = dynamic_cast<const AQLDataMultiReference&> (dh->get());
 		for(unsigned int i = 0; i < mr_xccy.getSize(); i++)
 		{
 			data.push_back(&mr_xccy.get(i).get());
 		}
 	}
 	//3m6mbasis
-	const LADataMultiReference& mr_3m6m = 
-		dynamic_cast<const LADataMultiReference&> (yg.getData(CALIBRATION_DATA_MARKETDATA + LAString("_") + LAString(THREESIXBASIS), ISNOTNULL).get());
+	const AQLDataMultiReference& mr_3m6m = 
+		dynamic_cast<const AQLDataMultiReference&> (yg.getData(CALIBRATION_DATA_MARKETDATA + AQLString("_") + AQLString(THREESIXBASIS), ISNOTNULL).get());
 	for(unsigned int i = 0; i < mr_3m6m.getSize(); i++)
 	{
 		data.push_back(&mr_3m6m.get(i).get());
 	}
 
-    bool isFRAUse = dynamic_cast<const LADataBool& > ((yg.getData(IR_CALIBRATION_DATA_ISFRAUSE, ISNOTNULL)).get());
-	bool isFutureUse = dynamic_cast<const LADataBool&>(yg.getIsFutureUse()).get();
-	bool isRenAdj = dynamic_cast<const LADataBool& > ((yg.getData(IR_CALIBRATION_DATA_ISRENOTIONALADJUST,
+    bool isFRAUse = dynamic_cast<const AQLDataBool& > ((yg.getData(IR_CALIBRATION_DATA_ISFRAUSE, ISNOTNULL)).get());
+	bool isFutureUse = dynamic_cast<const AQLDataBool&>(yg.getIsFutureUse()).get();
+	bool isRenAdj = dynamic_cast<const AQLDataBool& > ((yg.getData(IR_CALIBRATION_DATA_ISRENOTIONALADJUST,
 																  IR_CALIBRATION_DATA_ISXCCYMARKEDTOMARKET, ISNOTNULL)).get()); // Alias Method: First Parameter Takes Priortity
     
-    LAInterpolationBase* pInter = dynamic_cast<LAInterpolationBase*>(yg.getInterpolation().getMethod().clone());
-	LACoreFunctionHolder fh(pInter, true);
+    AQLInterpolationBase* pInter = dynamic_cast<AQLInterpolationBase*>(yg.getInterpolation().getMethod().clone());
+	AQLCoreFunctionHolder fh(pInter, true);
 
 	// data check
 	bool isCheckCurves = false;
 	dh = &yg.getData(IR_CALIBRATION_DATA_ISCURVEEXISTCHECK, NOCHECK);
-	if (dh->isDefined() && !dh->isNull()) isCheckCurves = dynamic_cast<const LADataBool &>(dh->get()).get();
+	if (dh->isDefined() && !dh->isNull()) isCheckCurves = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	bool isCurveAttrExist = yg.checkCurveAttr(AF6ML) && yg.checkCurveAttr(AFDF) && yg.checkCurveAttr(AF3ML) && yg.checkCurveAttr(SWAP);
 	if (!isCheckCurves || !isCurveAttrExist)
 	{
-		const LAString& currency = dynamic_cast<LADataString& > ((objHolder.get().getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL)).get());
+		const AQLString& currency = dynamic_cast<AQLDataString& > ((objHolder.get().getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL)).get());
 		if( currency == CURRENCY_USD )
 		{
 			generateUSDCurve( basedate, data, fYieldData, dfTerms, dfCurve, threeMLTermsMtx_Rate, threeMLRate, threeMLTerms_DF, threeMLDF,
@@ -211,24 +211,24 @@ void LAPriceArbFreeGenerator::calibrateModel( const LADate& basedate,
 		DoubleArray::const_iterator it = min_element(dfTerms.begin(), dfTerms.end());
 		if (!dfTerms.empty() && *it < 0.0)
 		{
-			throw LACoreInvalidData("dfTerms, term must be positive.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("dfTerms, term must be positive.", __FILE__, __LINE__);
 		}
 		it = min_element(threeMLTerms_DF.begin(), threeMLTerms_DF.end());
 		if (!threeMLTerms_DF.empty() && *it < 0.0)
 		{
-			throw LACoreInvalidData("threeMLTerms_DF, term must be positive.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("threeMLTerms_DF, term must be positive.", __FILE__, __LINE__);
 		}
 		it = min_element(sixMLTerms_DF.begin(), sixMLTerms_DF.end());
 		if (!sixMLTerms_DF.empty() && *it < 0.0)
 		{
-			throw LACoreInvalidData("sixMLTerms_DF, term must be positive.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("sixMLTerms_DF, term must be positive.", __FILE__, __LINE__);
 		}
 		if (!threeMLTermsMtx_Rate.empty() && !threeMLTermsMtx_Rate[0].empty())
 		{
 			it = min_element(threeMLTermsMtx_Rate[0].begin(), threeMLTermsMtx_Rate[0].end());
 			if (*it < 0.0)
 			{
-				throw LACoreInvalidData("threeMLTermsMtx_Rate, term must be positive.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("threeMLTermsMtx_Rate, term must be positive.", __FILE__, __LINE__);
 			}
 		}
 		if (!sixMLTermsMtx_Rate.empty() && !sixMLTermsMtx_Rate[0].empty())
@@ -236,27 +236,27 @@ void LAPriceArbFreeGenerator::calibrateModel( const LADate& basedate,
 			it = min_element(sixMLTermsMtx_Rate[0].begin(), sixMLTermsMtx_Rate[0].end());
 			if (*it < 0.0)
 			{
-				throw LACoreInvalidData("sixMLTermsMtx_Rate, term must be positive.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("sixMLTermsMtx_Rate, term must be positive.", __FILE__, __LINE__);
 			}
 		}
 		//set DF Curve
-		LAStringVector curveNames_6ML;
-		LAStringVector curveNames_DF;
-		LAStringVector curveNames_3ML;
+		AQLStringVector curveNames_6ML;
+		AQLStringVector curveNames_DF;
+		AQLStringVector curveNames_3ML;
 		dh = &objHolder.get().getData(IR_CALIBRATION_DATA_6MLCURVENAMES, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			curveNames_6ML = dynamic_cast<const LADataStrings& > (dh->get()).get();
+			curveNames_6ML = dynamic_cast<const AQLDataStrings& > (dh->get()).get();
 		}
 		dh = &objHolder.get().getData(IR_CALIBRATION_DATA_DFCURVENAMES, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			curveNames_DF = dynamic_cast<const LADataStrings& > (dh->get()).get();
+			curveNames_DF = dynamic_cast<const AQLDataStrings& > (dh->get()).get();
 		}
 		dh = &objHolder.get().getData(IR_CALIBRATION_DATA_3MLCURVENAMES, NOCHECK);
 		if (dh->isDefined() && !dh->isNull())
 		{
-			curveNames_3ML = dynamic_cast<const LADataStrings& > (dh->get()).get();
+			curveNames_3ML = dynamic_cast<const AQLDataStrings& > (dh->get()).get();
 		}
 		objHolder.remove(CALIBRATION_DATA_ASOFDATE);
 		objHolder.remove(CALIBRATION_DATA_TERMS);
@@ -264,19 +264,19 @@ void LAPriceArbFreeGenerator::calibrateModel( const LADate& basedate,
 		objHolder.remove(IR_CALIBRATION_DATA_DFS);
 		objHolder.remove(IR_CALIBRATION_DATA_DFS2);
 		objHolder.remove(CALIBRATION_DATA_INTERPOLATION);
-		objHolder.add(CALIBRATION_DATA_ASOFDATE, new LADataDate(basedate));
-		objHolder.add(CALIBRATION_DATA_INTERPOLATION, new LAPriceDataInterpolation(yg.getInterpolation()));
+		objHolder.add(CALIBRATION_DATA_ASOFDATE, new AQLDataDate(basedate));
+		objHolder.add(CALIBRATION_DATA_INTERPOLATION, new AQLPriceDataInterpolation(yg.getInterpolation()));
 
 		for (size_t i=0; i<curveNames_DF.size(); i++)
 		{
 			if(curveNames_DF[i]==STD)
 			{
-				throw LACoreInvalidData("ArbFree DF Curve Name is not STD!", __FILE__, __LINE__);	
+				throw AQLCoreInvalidData("ArbFree DF Curve Name is not STD!", __FILE__, __LINE__);	
 			}
-			objHolder.remove(CALIBRATION_DATA_TERMS + LAString("_") + curveNames_DF[i]);
-			objHolder.remove(IR_CALIBRATION_DATA_DFS + LAString("_") + curveNames_DF[i]);	
-			objHolder.add(CALIBRATION_DATA_TERMS + LAString("_") + curveNames_DF[i] , new LADataDoubles(dfTerms));
-			objHolder.add(IR_CALIBRATION_DATA_DFS + LAString("_") + curveNames_DF[i], new LADataDoubles(dfCurve));
+			objHolder.remove(CALIBRATION_DATA_TERMS + AQLString("_") + curveNames_DF[i]);
+			objHolder.remove(IR_CALIBRATION_DATA_DFS + AQLString("_") + curveNames_DF[i]);	
+			objHolder.add(CALIBRATION_DATA_TERMS + AQLString("_") + curveNames_DF[i] , new AQLDataDoubles(dfTerms));
+			objHolder.add(IR_CALIBRATION_DATA_DFS + AQLString("_") + curveNames_DF[i], new AQLDataDoubles(dfCurve));
 		}
 
 		bool isSTDExist = false;
@@ -284,19 +284,19 @@ void LAPriceArbFreeGenerator::calibrateModel( const LADate& basedate,
 		{
 			if(curveNames_6ML[i]==STD)
 			{
-				objHolder.add(CALIBRATION_DATA_TERMS, new LADataDoubles(sixMLTerms_DF));
-				objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX, new LADataDoubleMatrix(sixMLTermsMtx_Rate));
-				objHolder.add(IR_CALIBRATION_DATA_DFS, new LADataDoubles(sixMLDF));
+				objHolder.add(CALIBRATION_DATA_TERMS, new AQLDataDoubles(sixMLTerms_DF));
+				objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX, new AQLDataDoubleMatrix(sixMLTermsMtx_Rate));
+				objHolder.add(IR_CALIBRATION_DATA_DFS, new AQLDataDoubles(sixMLDF));
 				isSTDExist = true;
 			}
 			else
 			{
-				objHolder.remove(CALIBRATION_DATA_TERMS + LAString("_") + curveNames_6ML[i]);
-				objHolder.remove(CALIBRATION_DATA_FWDTERMSMATRIX + LAString("_") + curveNames_6ML[i]);
-				objHolder.remove(IR_CALIBRATION_DATA_DFS + LAString("_") + curveNames_6ML[i]);
-				objHolder.add(CALIBRATION_DATA_TERMS + LAString("_") + curveNames_6ML[i] , new LADataDoubles(sixMLTerms_DF));
-				objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX + LAString("_") + curveNames_6ML[i] , new LADataDoubleMatrix(sixMLTermsMtx_Rate));
-				objHolder.add(IR_CALIBRATION_DATA_DFS + LAString("_") + curveNames_6ML[i], new LADataDoubles(sixMLDF));
+				objHolder.remove(CALIBRATION_DATA_TERMS + AQLString("_") + curveNames_6ML[i]);
+				objHolder.remove(CALIBRATION_DATA_FWDTERMSMATRIX + AQLString("_") + curveNames_6ML[i]);
+				objHolder.remove(IR_CALIBRATION_DATA_DFS + AQLString("_") + curveNames_6ML[i]);
+				objHolder.add(CALIBRATION_DATA_TERMS + AQLString("_") + curveNames_6ML[i] , new AQLDataDoubles(sixMLTerms_DF));
+				objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX + AQLString("_") + curveNames_6ML[i] , new AQLDataDoubleMatrix(sixMLTermsMtx_Rate));
+				objHolder.add(IR_CALIBRATION_DATA_DFS + AQLString("_") + curveNames_6ML[i], new AQLDataDoubles(sixMLDF));
 			}
 		}
 
@@ -307,36 +307,36 @@ void LAPriceArbFreeGenerator::calibrateModel( const LADate& basedate,
 				// error check
 				if(isSTDExist)
 				{
-					throw LACoreInvalidData("there exist more than two STD Curve name!", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("there exist more than two STD Curve name!", __FILE__, __LINE__);
 				}
 
-				objHolder.add(CALIBRATION_DATA_TERMS, new LADataDoubles(threeMLTerms_DF));
-				objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX, new LADataDoubleMatrix(threeMLTermsMtx_Rate));
-				objHolder.add(IR_CALIBRATION_DATA_DFS, new LADataDoubles(threeMLDF));
+				objHolder.add(CALIBRATION_DATA_TERMS, new AQLDataDoubles(threeMLTerms_DF));
+				objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX, new AQLDataDoubleMatrix(threeMLTermsMtx_Rate));
+				objHolder.add(IR_CALIBRATION_DATA_DFS, new AQLDataDoubles(threeMLDF));
 
 				isSTDExist = true;
 			}
 			else
 			{
-				objHolder.remove(CALIBRATION_DATA_TERMS + LAString("_") + curveNames_3ML[i]);
-				objHolder.remove(CALIBRATION_DATA_FWDTERMSMATRIX + LAString("_") + curveNames_3ML[i]);
-				objHolder.remove(IR_CALIBRATION_DATA_DFS + LAString("_") + curveNames_3ML[i]);
-				objHolder.add(CALIBRATION_DATA_TERMS + LAString("_") + curveNames_3ML[i] , new LADataDoubles(threeMLTerms_DF));
-				objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX + LAString("_") + curveNames_3ML[i] , new LADataDoubleMatrix(threeMLTermsMtx_Rate));
-				objHolder.add(IR_CALIBRATION_DATA_DFS + LAString("_") + curveNames_3ML[i], new LADataDoubles(threeMLDF));
+				objHolder.remove(CALIBRATION_DATA_TERMS + AQLString("_") + curveNames_3ML[i]);
+				objHolder.remove(CALIBRATION_DATA_FWDTERMSMATRIX + AQLString("_") + curveNames_3ML[i]);
+				objHolder.remove(IR_CALIBRATION_DATA_DFS + AQLString("_") + curveNames_3ML[i]);
+				objHolder.add(CALIBRATION_DATA_TERMS + AQLString("_") + curveNames_3ML[i] , new AQLDataDoubles(threeMLTerms_DF));
+				objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX + AQLString("_") + curveNames_3ML[i] , new AQLDataDoubleMatrix(threeMLTermsMtx_Rate));
+				objHolder.add(IR_CALIBRATION_DATA_DFS + AQLString("_") + curveNames_3ML[i], new AQLDataDoubles(threeMLDF));
 			}
 		}
 		
 		if (!isSTDExist)
 		{
-			vector<LAObject*> data_swap;
+			vector<AQLObject*> data_swap;
 			for(unsigned i = 0; i < data.size(); i++)
 			{
 				// check use grid
-				const LADataHolder *dh = &data[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
-				if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const LADataBool &>(dh->get()).get()) continue;
+				const AQLDataHolder *dh = &data[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
+				if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const AQLDataBool &>(dh->get()).get()) continue;
 
-				LAString dataType = dynamic_cast<const LADataString&> ((data[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+				AQLString dataType = dynamic_cast<const AQLDataString&> ((data[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 				dataType.toUpper();
 
 				if (dataType == PAR) data_swap.push_back(data[i]);//swap case
@@ -344,26 +344,26 @@ void LAPriceArbFreeGenerator::calibrateModel( const LADate& basedate,
 
 			if (data_swap.size() == 0)
 			{
-				throw LACoreInvalidData("No Swap Market Object", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("No Swap Market Object", __FILE__, __LINE__);
 			}
 			else
 			{
-				const LAString& freq_Float = dynamic_cast<const LADataString&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, ISNOTNULL)).get());
+				const AQLString& freq_Float = dynamic_cast<const AQLDataString&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, ISNOTNULL)).get());
 				if ( freq_Float == SEMI_ANNUAL )
 				{
-					objHolder.add(CALIBRATION_DATA_TERMS, new LADataDoubles(sixMLTerms_DF));
-					objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX, new LADataDoubleMatrix(sixMLTermsMtx_Rate));
-					objHolder.add(IR_CALIBRATION_DATA_DFS, new LADataDoubles(sixMLDF));
+					objHolder.add(CALIBRATION_DATA_TERMS, new AQLDataDoubles(sixMLTerms_DF));
+					objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX, new AQLDataDoubleMatrix(sixMLTermsMtx_Rate));
+					objHolder.add(IR_CALIBRATION_DATA_DFS, new AQLDataDoubles(sixMLDF));
 				}
 				else if ( freq_Float == QUARTERLY )
 				{
-					objHolder.add(CALIBRATION_DATA_TERMS, new LADataDoubles(threeMLTerms_DF));
-					objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX, new LADataDoubleMatrix(threeMLTermsMtx_Rate));
-					objHolder.add(IR_CALIBRATION_DATA_DFS, new LADataDoubles(threeMLDF));
+					objHolder.add(CALIBRATION_DATA_TERMS, new AQLDataDoubles(threeMLTerms_DF));
+					objHolder.add(CALIBRATION_DATA_FWDTERMSMATRIX, new AQLDataDoubleMatrix(threeMLTermsMtx_Rate));
+					objHolder.add(IR_CALIBRATION_DATA_DFS, new AQLDataDoubles(threeMLDF));
 				}
 				else
 				{
-					throw LACoreInvalidData("swap floating leg frequecy is not supported.", __FILE__, __LINE__);
+					throw AQLCoreInvalidData("swap floating leg frequecy is not supported.", __FILE__, __LINE__);
 				}
 			}
 		}
@@ -401,9 +401,9 @@ void LAPriceArbFreeGenerator::calibrateModel( const LADate& basedate,
 */
 void 
 LAPriceArbFreeGenerator::
-generateCurve( const LADate& basedate,
-			   const std::vector<LAObject*>& mktData,
-			   const LAObject* fYieldData,
+generateCurve( const AQLDate& basedate,
+			   const std::vector<AQLObject*>& mktData,
+			   const AQLObject* fYieldData,
                DoubleArray& dfTerms,
 			   DoubleArray& dfCurve,
                DoubleMatrix& threeMLTermsMtx_Rate,
@@ -419,9 +419,9 @@ generateCurve( const LADate& basedate,
                bool isFRAUse,
 			   bool isFutureUse, 
 			   bool isRenAdj,
-			   LAInterpolationBase* pInter_DF )
+			   AQLInterpolationBase* pInter_DF )
 {
-	if (isFutureUse) throw LACoreInvalidData("Furue is not supported!",__FILE__,__LINE__);
+	if (isFutureUse) throw AQLCoreInvalidData("Furue is not supported!",__FILE__,__LINE__);
 
     dfTerms.clear();
     dfCurve.clear();
@@ -438,21 +438,21 @@ generateCurve( const LADate& basedate,
 	threeMLSPos = 0;
 	sixMLSPos = 0;
 
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
-	vector<const LAObject*> data_mon, data_libor, data_fra6m, data_fra3m, data_swap, data_3m6m, data_xccy;
+	vector<const AQLObject*> data_mon, data_libor, data_fra6m, data_fra3m, data_swap, data_3m6m, data_xccy;
 	unsigned int size_data = mktData.size();
-	LAString dataType, dataName;
+	AQLString dataType, dataName;
 	for(unsigned i = 0; i < size_data; i++)
 	{
 		// check use grid
-		const LADataHolder *dh = &mktData[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
-		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const LADataBool &>(dh->get()).get()) continue;
+		const AQLDataHolder *dh = &mktData[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
+		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const AQLDataBool &>(dh->get()).get()) continue;
 
-		dataType = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+		dataType = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		dataType.toUpper();
 
-		dataName = dynamic_cast<const LADataString&> ((mktData[i]->getData(CALIBRATION_DATA_NAME, ISNOTNULL)).get()).get();
+		dataName = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(CALIBRATION_DATA_NAME, ISNOTNULL)).get()).get();
 		dataName.toUpper();
 
 		if (dataType == ZERO) data_libor.push_back(mktData[i]);//libor case
@@ -482,12 +482,12 @@ generateCurve( const LADate& basedate,
 
 	if (isFRAUse)
 	{
-		if (fra3MLMkt.map_term_rate.find("3M") == fra3MLMkt.map_term_rate.end()) throw LACoreInvalidData("3X6 FRA No Data!", __FILE__, __LINE__);
-		if (fra3MLMkt.map_term_rate.find("6M") == fra3MLMkt.map_term_rate.end()) throw LACoreInvalidData("6X9 FRA No Data!", __FILE__, __LINE__);
+		if (fra3MLMkt.map_term_rate.find("3M") == fra3MLMkt.map_term_rate.end()) throw AQLCoreInvalidData("3X6 FRA No Data!", __FILE__, __LINE__);
+		if (fra3MLMkt.map_term_rate.find("6M") == fra3MLMkt.map_term_rate.end()) throw AQLCoreInvalidData("6X9 FRA No Data!", __FILE__, __LINE__);
 	}
     
 	if( libMkt.dc == swapMkt.dc_Float ) ;
-    else throw LACoreInvalidData("a daycount of Libor is different from a daycount of swap!", __FILE__, __LINE__);
+    else throw AQLCoreInvalidData("a daycount of Libor is different from a daycount of swap!", __FILE__, __LINE__);
 
     //set term grid. use swap convention
     DoubleArray termGrid_3MRoll;
@@ -536,7 +536,7 @@ generateCurve( const LADate& basedate,
 	}   
 	else
 	{
-		throw LACoreInvalidData("Frequency is not supported.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Frequency is not supported.", __FILE__, __LINE__);
 	}
 
 	double ANN_Swap=0.,ANN_Swap_6M=0.,ANN_Swap_3M=0.,ANN_3L6L_3L=0.,ANN_3L6L_6L=0.,ANN_Curr=0.,PV_Swap=0.,PV_Swap_3L=0.,PV_3L6L_3L=0.,PV_3L6L_6L=0.,PV_Curr=0.;
@@ -564,7 +564,7 @@ generateCurve( const LADate& basedate,
 			}
 			else
 			{
-				throw LACoreInvalidData("Frequency is not supported.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Frequency is not supported.", __FILE__, __LINE__);
 			}
 		}
 	}
@@ -572,7 +572,7 @@ generateCurve( const LADate& basedate,
 	{
 		for(size_t j=0; j<dateSize_6M-1; j++)
 		{
-			LAString frequencyFix = getSwapFixFrequency(6*(j+1), swapMkt);
+			AQLString frequencyFix = getSwapFixFrequency(6*(j+1), swapMkt);
 			if (frequencyFix == SEMI_ANNUAL && swapMkt.freq_Float == SEMI_ANNUAL)
 			{
 				calcCurve_Semi_Semi(basedate, dfTerms, dfCurve, threeMLTermsMtx_Rate, threeMLRate, threeMLTerms_DF, threeMLDF, sixMLTermsMtx_Rate, sixMLRate,
@@ -603,7 +603,7 @@ generateCurve( const LADate& basedate,
 			}
 			else
 			{
-				throw LACoreInvalidData("Frequency is not supported.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Frequency is not supported.", __FILE__, __LINE__);
 			}
 		}
 	}
@@ -632,15 +632,15 @@ generateCurve( const LADate& basedate,
 
 	for (unsigned int i = 0; i < dfCurve.size(); ++i)
 	{
-		dfCurve[i] = LAMath::max(dfCurve[i], MIN_DF);
+		dfCurve[i] = AQLMath::max(dfCurve[i], MIN_DF);
 	}
 	for (unsigned int i = 0; i < threeMLDF.size(); ++i)
 	{
-		threeMLDF[i] = LAMath::max(threeMLDF[i], MIN_DF);
+		threeMLDF[i] = AQLMath::max(threeMLDF[i], MIN_DF);
 	}
 	for (unsigned int i = 0; i < sixMLDF.size(); ++i)
 	{
-		sixMLDF[i] = LAMath::max(sixMLDF[i], MIN_DF);
+		sixMLDF[i] = AQLMath::max(sixMLDF[i], MIN_DF);
 	}
 	if (swapMkt.optimizeMethod == NR)
 	{
@@ -684,9 +684,9 @@ generateCurve( const LADate& basedate,
 */
 void 
 LAPriceArbFreeGenerator::
-generateUSDCurve( const LADate& basedate,
-				  const std::vector<LAObject*>& mktData,
-				  const LAObject* fYieldData,
+generateUSDCurve( const AQLDate& basedate,
+				  const std::vector<AQLObject*>& mktData,
+				  const AQLObject* fYieldData,
                   DoubleArray& dfTerms,
 				  DoubleArray& dfCurve,
                   DoubleMatrix& threeMLTermsMtx_Rate,
@@ -702,11 +702,11 @@ generateUSDCurve( const LADate& basedate,
                   bool isFRAUse,
 				  bool isFutureUse, 
 				  bool isRenAdj,
-				  LAInterpolationBase* pInter_DF )
+				  AQLInterpolationBase* pInter_DF )
 {
 	if (isFRAUse && isFutureUse) 
 	{
-		throw LACoreInvalidData("We can not use fra and future at a same time!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("We can not use fra and future at a same time!", __FILE__, __LINE__);
 	}
 
     dfTerms.clear();
@@ -724,21 +724,21 @@ generateUSDCurve( const LADate& basedate,
 	threeMLSPos = 0;
 	sixMLSPos = 0;
 
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
     
-	vector<const LAObject*> data_mon, data_libor, data_fra6m, data_fra3m, data_swap, data_3m6m, data_xccy, data_future;
+	vector<const AQLObject*> data_mon, data_libor, data_fra6m, data_fra3m, data_swap, data_3m6m, data_xccy, data_future;
 	unsigned int size_data = mktData.size();
-	LAString dataType, dataName;
+	AQLString dataType, dataName;
 	for(unsigned i = 0; i < size_data; i++)
 	{
 		// check use grid
-		const LADataHolder *dh = &mktData[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
-		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const LADataBool &>(dh->get()).get()) continue;
+		const AQLDataHolder *dh = &mktData[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
+		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const AQLDataBool &>(dh->get()).get()) continue;
 
-		dataType = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+		dataType = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		dataType.toUpper();
 
-		dataName = dynamic_cast<const LADataString&> ((mktData[i]->getData(CALIBRATION_DATA_NAME, ISNOTNULL)).get()).get();
+		dataName = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(CALIBRATION_DATA_NAME, ISNOTNULL)).get()).get();
 		dataName.toUpper();
 
 		if (dataType == ZERO) data_libor.push_back(mktData[i]);//libor case
@@ -771,8 +771,8 @@ generateUSDCurve( const LADate& basedate,
 
 	if (isFRAUse)
 	{
-		if (fra3MLMkt.map_term_rate.find("3M") == fra3MLMkt.map_term_rate.end()) throw LACoreInvalidData("3X6 FRA No Data!", __FILE__, __LINE__);
-		if (fra3MLMkt.map_term_rate.find("6M") == fra3MLMkt.map_term_rate.end()) throw LACoreInvalidData("6X9 FRA No Data!", __FILE__, __LINE__);
+		if (fra3MLMkt.map_term_rate.find("3M") == fra3MLMkt.map_term_rate.end()) throw AQLCoreInvalidData("3X6 FRA No Data!", __FILE__, __LINE__);
+		if (fra3MLMkt.map_term_rate.find("6M") == fra3MLMkt.map_term_rate.end()) throw AQLCoreInvalidData("6X9 FRA No Data!", __FILE__, __LINE__);
 	}
 
     unsigned int span;
@@ -781,11 +781,11 @@ generateUSDCurve( const LADate& basedate,
 	else
 	{
 		//error
-		throw LACoreInvalidData("Input freq type is not supported.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Input freq type is not supported.", __FILE__, __LINE__);
 	}
 
 	if( libMkt.dc == swapMkt.dc_Float ) ;
-    else throw LACoreInvalidData("a daycount of Libor is different from a daycount of swap!", __FILE__, __LINE__);
+    else throw AQLCoreInvalidData("a daycount of Libor is different from a daycount of swap!", __FILE__, __LINE__);
 
     DoubleArray df_tmp,dfTerms_tmp;
     DateVector dfDates_tmp;
@@ -819,7 +819,7 @@ generateUSDCurve( const LADate& basedate,
 	double spotAdjust = getSpotAdjust(basedate, swapMkt.spotDate, monMkt);
 	double spotAdjust_baseccy;
 	spotAdjust_baseccy = xccyBasisMkt.pInter_fPrices->value(dc_act365.getTerm(basedate, swapMkt.spotDate));
-	map<LAString, double >::const_iterator it;
+	map<AQLString, double >::const_iterator it;
 	if(!isRenAdj)
 	{
 		for(size_t j=0; j<dfTerms_tmp.size()-1; j++)
@@ -877,7 +877,7 @@ generateUSDCurve( const LADate& basedate,
 			}
 			else if( isFRAUse && i<3 )
 			{
-				LAString month = LAString( 3 * i ) + LAString("M");
+				AQLString month = AQLString( 3 * i ) + AQLString("M");
 				it = fra3MLMkt.map_term_rate.find(month);
 				rate = it->second;
 
@@ -1247,15 +1247,15 @@ generateUSDCurve( const LADate& basedate,
 
 	for (unsigned int i = 0; i < dfCurve.size(); ++i)
 	{
-		dfCurve[i] = LAMath::max(dfCurve[i], MIN_DF);
+		dfCurve[i] = AQLMath::max(dfCurve[i], MIN_DF);
 	}
 	for (unsigned int i = 0; i < threeMLDF.size(); ++i)
 	{
-		threeMLDF[i] = LAMath::max(threeMLDF[i], MIN_DF);
+		threeMLDF[i] = AQLMath::max(threeMLDF[i], MIN_DF);
 	}
 	for (unsigned int i = 0; i < sixMLDF.size(); ++i)
 	{
-		sixMLDF[i] = LAMath::max(sixMLDF[i], MIN_DF);
+		sixMLDF[i] = AQLMath::max(sixMLDF[i], MIN_DF);
 	}    
 	if (swapMkt.optimizeMethod == NR)
 	{
@@ -1276,7 +1276,7 @@ generateUSDCurve( const LADate& basedate,
 */
 void 
 LAPriceArbFreeGenerator::calcCurve_Semi_Semi
-(	const LADate& basedate, 
+(	const AQLDate& basedate, 
 	DoubleArray& dfTerms,
 	DoubleArray& dfCurve,
 	DoubleMatrix& threeMLTermsMtx_Rate,
@@ -1316,13 +1316,13 @@ LAPriceArbFreeGenerator::calcCurve_Semi_Semi
 	double spotTerm,
 	unsigned int pos )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	double spotAdjust_dol,spotAdjust_baseccy,term_f,H1, H2;
 	if(isRenAdj)  spotAdjust_dol = xccyBasisMkt.pInter_usd->value(spotTerm);
 	else  spotAdjust_baseccy = xccyBasisMkt.pInter_fPrices->value(dc_act365.getTerm(basedate, swapMkt.spotDate));
 
-	map<LAString, double >::const_iterator it;
+	map<AQLString, double >::const_iterator it;
 
 	double rate;
 	double term_accru_Curr1 = xccyBasisMkt.dc.getTerm(dateGrid_3MRoll[2*pos], dateGrid_3MRoll[2*pos+1], false);
@@ -1596,7 +1596,7 @@ LAPriceArbFreeGenerator::calcCurve_Semi_Semi
 */
 void 
 LAPriceArbFreeGenerator::calcCurve_Quar_Quar
-(	const LADate& basedate, 
+(	const AQLDate& basedate, 
 	DoubleArray& dfTerms,
 	DoubleArray& dfCurve,
 	DoubleMatrix& threeMLTermsMtx_Rate,
@@ -1636,13 +1636,13 @@ LAPriceArbFreeGenerator::calcCurve_Quar_Quar
 	double spotTerm,
 	unsigned int pos )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	double spotAdjust_dol,spotAdjust_baseccy,term_f,H1, H2;
 	if(isRenAdj)  spotAdjust_dol = xccyBasisMkt.pInter_usd->value(spotTerm);
 	else  spotAdjust_baseccy = xccyBasisMkt.pInter_fPrices->value(dc_act365.getTerm(basedate, swapMkt.spotDate));
 
-	map<LAString, double >::const_iterator it;
+	map<AQLString, double >::const_iterator it;
 
 	double rate;
 	double term_accru_Curr1 = xccyBasisMkt.dc.getTerm(dateGrid_3MRoll[2*pos], dateGrid_3MRoll[2*pos+1], false);
@@ -1925,7 +1925,7 @@ LAPriceArbFreeGenerator::calcCurve_Quar_Quar
 */
 void 
 LAPriceArbFreeGenerator::calcCurve_Quar_Semi
-(	const LADate& basedate, 
+(	const AQLDate& basedate, 
 	DoubleArray& dfTerms,
 	DoubleArray& dfCurve,
 	DoubleMatrix& threeMLTermsMtx_Rate,
@@ -1965,13 +1965,13 @@ LAPriceArbFreeGenerator::calcCurve_Quar_Semi
 	double spotTerm,
 	unsigned int pos )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	double spotAdjust_dol,spotAdjust_baseccy,term_f,H1, H2;
 	if(isRenAdj)  spotAdjust_dol = xccyBasisMkt.pInter_usd->value(spotTerm);
 	else  spotAdjust_baseccy = xccyBasisMkt.pInter_fPrices->value(dc_act365.getTerm(basedate, swapMkt.spotDate));
 
-	map<LAString, double >::const_iterator it;
+	map<AQLString, double >::const_iterator it;
 
 	double rate;
 	double term_accru_Curr1 = xccyBasisMkt.dc.getTerm(dateGrid_3MRoll[2*pos], dateGrid_3MRoll[2*pos+1], false);
@@ -2247,7 +2247,7 @@ LAPriceArbFreeGenerator::calcCurve_Quar_Semi
 */
 void 
 LAPriceArbFreeGenerator::calcCurve_Semi_Quar
-(	const LADate& basedate, 
+(	const AQLDate& basedate, 
 	DoubleArray& dfTerms,
 	DoubleArray& dfCurve,
 	DoubleMatrix& threeMLTermsMtx_Rate,
@@ -2287,13 +2287,13 @@ LAPriceArbFreeGenerator::calcCurve_Semi_Quar
 	double spotTerm,
 	unsigned int pos )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	double spotAdjust_dol,spotAdjust_baseccy,term_f,H1, H2;
 	if(isRenAdj)  spotAdjust_dol = xccyBasisMkt.pInter_usd->value(spotTerm);
 	else  spotAdjust_baseccy = xccyBasisMkt.pInter_fPrices->value(dc_act365.getTerm(basedate, swapMkt.spotDate));
 
-	map<LAString, double >::const_iterator it;
+	map<AQLString, double >::const_iterator it;
 
 	double rate;
 	double term_accru_Curr1 = xccyBasisMkt.dc.getTerm(dateGrid_3MRoll[2*pos], dateGrid_3MRoll[2*pos+1], false);
@@ -2574,7 +2574,7 @@ LAPriceArbFreeGenerator::calcCurve_Semi_Quar
 */
 void 
 LAPriceArbFreeGenerator::calcCurve_Annu_Semi
-(	const LADate& basedate,
+(	const AQLDate& basedate,
 	DoubleArray& dfTerms,
 	DoubleArray& dfCurve,
 	DoubleMatrix& threeMLTermsMtx_Rate,
@@ -2613,14 +2613,14 @@ LAPriceArbFreeGenerator::calcCurve_Annu_Semi
 	double spotTerm,
 	unsigned int pos )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	double spotAdjust_dol,spotAdjust_baseccy,term_f;
 	DoubleArray H(4);
 	if(isRenAdj)  spotAdjust_dol = xccyBasisMkt.pInter_usd->value(spotTerm);
 	else  spotAdjust_baseccy = xccyBasisMkt.pInter_fPrices->value(dc_act365.getTerm(basedate, swapMkt.spotDate));
 
-	map<LAString, double >::const_iterator it;
+	map<AQLString, double >::const_iterator it;
 
 	double rate;
 	DoubleArray term_accru_Curr(4),term_accru_3L6L_3L(4);
@@ -3079,7 +3079,7 @@ LAPriceArbFreeGenerator::calcCurve_Annu_Semi
 */
 void 
 LAPriceArbFreeGenerator::calcCurve_Annu_Quar(	
-	const LADate& basedate,
+	const AQLDate& basedate,
 	DoubleArray& dfTerms,
 	DoubleArray& dfCurve,
 	DoubleMatrix& threeMLTermsMtx_Rate,
@@ -3118,14 +3118,14 @@ LAPriceArbFreeGenerator::calcCurve_Annu_Quar(
 	double spotTerm,
 	unsigned int pos )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	double spotAdjust_dol,spotAdjust_baseccy,term_f;
 	DoubleArray H(4);
 	if(isRenAdj)  spotAdjust_dol = xccyBasisMkt.pInter_usd->value(spotTerm);
 	else  spotAdjust_baseccy = xccyBasisMkt.pInter_fPrices->value(dc_act365.getTerm(basedate, swapMkt.spotDate));
 
-	map<LAString, double >::const_iterator it;
+	map<AQLString, double >::const_iterator it;
 
 	double rate;
 	DoubleArray term_accru_Curr(4),term_accru_3L6L_3L(4),term_accru_Swap_Float(4);
@@ -3586,7 +3586,7 @@ LAPriceArbFreeGenerator::calcCurve_Annu_Quar(
 */
 void 
 LAPriceArbFreeGenerator::calcCurve_NewtonRaphson(	
-	const LADate&  basedate, 
+	const AQLDate&  basedate, 
 	DoubleArray& dfTerms, 
 	DoubleArray& dfCurve, 
 	DoubleArray& threeMLTerms_DF, 
@@ -3605,7 +3605,7 @@ LAPriceArbFreeGenerator::calcCurve_NewtonRaphson(
 	const DoubleArray& termGrid_6MRoll,
 	const DateVector& dateGrid_12MRoll,
 	const DoubleArray& termGrid_12MRoll,
-	LAInterpolationBase* pInter_yg,
+	AQLInterpolationBase* pInter_yg,
 	bool isUSD)
 {
 	DoubleArray dfTerms_ori = dfTerms; dfTerms.clear();
@@ -3614,9 +3614,9 @@ LAPriceArbFreeGenerator::calcCurve_NewtonRaphson(
 	DoubleArray threeMLDF_ori = threeMLDF; threeMLDF.clear();
 	DoubleArray sixMLTerms_DF_ori = sixMLTerms_DF; sixMLTerms_DF.clear();
 	DoubleArray sixMLDF_ori = sixMLDF; sixMLDF.clear();
-	LAInterpolationBase* pInter_3ML = dynamic_cast<LAInterpolationBase*>(pInter_yg->clone());
-	LAInterpolationBase* pInter_6ML = dynamic_cast<LAInterpolationBase*>(pInter_yg->clone());
-	LAInterpolationBase* pInter_DF = dynamic_cast<LAInterpolationBase*>(pInter_yg->clone());
+	AQLInterpolationBase* pInter_3ML = dynamic_cast<AQLInterpolationBase*>(pInter_yg->clone());
+	AQLInterpolationBase* pInter_6ML = dynamic_cast<AQLInterpolationBase*>(pInter_yg->clone());
+	AQLInterpolationBase* pInter_DF = dynamic_cast<AQLInterpolationBase*>(pInter_yg->clone());
 	pInter_3ML->set(threeMLTerms_DF_ori, threeMLDF_ori);
 	pInter_6ML->set(sixMLTerms_DF_ori, sixMLDF_ori);
 	pInter_DF->set(dfTerms_ori, dfCurve_ori);
@@ -3696,7 +3696,7 @@ LAPriceArbFreeGenerator::calcCurve_NewtonRaphson(
 	}	
 	else
 	{
-		throw LACoreInvalidData("Swap floating frequency is not supported!", __FILE__, __LINE__); 
+		throw AQLCoreInvalidData("Swap floating frequency is not supported!", __FILE__, __LINE__); 
 	}
 
 	size_t size_all = swapMkt.mktTerms.size() + libBasisMkt.mktTerms.size() + xccyBasisMkt.mktTerms.size();
@@ -3729,8 +3729,8 @@ LAPriceArbFreeGenerator::calcCurve_NewtonRaphson(
 		bool isEnd = true;
 		for (unsigned int i = 0; i < size_all; ++i)
 		{
-			//if (LAMath::abs(valVec0[i] - valVec1[i]) >= EPS_PV)
-			if (LAMath::abs(valVec1[i]) > 1.0E-9)
+			//if (AQLMath::abs(valVec0[i] - valVec1[i]) >= EPS_PV)
+			if (AQLMath::abs(valVec1[i]) > 1.0E-9)
 			{
 				isEnd = false;
 				break;
@@ -3741,7 +3741,7 @@ LAPriceArbFreeGenerator::calcCurve_NewtonRaphson(
 			break;
 		}
 
-		LAMatrix divMat(size_all, size_all);
+		AQLMatrix divMat(size_all, size_all);
 		// create divMat
 		sixMLDF_div = sixMLDF, threeMLDF_div = threeMLDF, dfCurve_div = dfCurve;
 		for (unsigned int j = 0; j < size_all; ++j)
@@ -3798,9 +3798,9 @@ LAPriceArbFreeGenerator::calcCurve_NewtonRaphson(
 			}
 		}
 
-		LAMatrix invMat = divMat.inverseMatrix();
-		LAMatrix valMat(valVec1);
-		LAMatrix deltaMat = invMat * valMat;
+		AQLMatrix invMat = divMat.inverseMatrix();
+		AQLMatrix valMat(valVec1);
+		AQLMatrix deltaMat = invMat * valMat;
 		// plus delta
 		for (unsigned int i = 0; i < size_all; ++i)
 		{
@@ -3857,9 +3857,9 @@ LAPriceArbFreeGenerator::calcCurve_NewtonRaphson(
 		for (unsigned int i = 0; i < size_all; ++i)
 		{
 			// check error is within 0.00001bp
-			if (LAMath::abs(valVec1[i]) > 1.0E-9)
+			if (AQLMath::abs(valVec1[i]) > 1.0E-9)
 			{
-				throw LACoreInvalidData("Convergence error in DF calc (Newton Raphson)", __FILE__, __LINE__); 
+				throw AQLCoreInvalidData("Convergence error in DF calc (Newton Raphson)", __FILE__, __LINE__); 
 			}
 		}
 	}
@@ -3900,7 +3900,7 @@ LAPriceArbFreeGenerator::calcCurve_NewtonRaphson(
 */
 void 
 LAPriceArbFreeGenerator::calcCurve_NL2SOL(	
-	const LADate&  basedate, 
+	const AQLDate&  basedate, 
 	DoubleArray& dfTerms, 
 	DoubleArray& dfCurve, 
 	DoubleMatrix& threeMLTermsMtx_Rate,
@@ -3917,7 +3917,7 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 	const SwapMarket& swapMkt, 
 	const XCCYBasisMarket& xccyBasisMkt, 
 	const LiborBasisMarket& libBasisMkt, 
-	LAInterpolationBase* pInter_yg,
+	AQLInterpolationBase* pInter_yg,
 	bool isUSD)
 {
 	DoubleArray dfTerms_ori = dfTerms; dfTerms.clear();
@@ -3926,9 +3926,9 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 	DoubleArray threeMLDF_ori = threeMLDF; threeMLDF.clear();
 	DoubleArray sixMLTerms_DF_ori = sixMLTerms_DF; sixMLTerms_DF.clear();
 	DoubleArray sixMLDF_ori = sixMLDF; sixMLDF.clear();
-	LAInterpolationBase* pInter_3ML = dynamic_cast<LAInterpolationBase*>(pInter_yg->clone());
-	LAInterpolationBase* pInter_6ML = dynamic_cast<LAInterpolationBase*>(pInter_yg->clone());
-	LAInterpolationBase* pInter_DF = dynamic_cast<LAInterpolationBase*>(pInter_yg->clone());
+	AQLInterpolationBase* pInter_3ML = dynamic_cast<AQLInterpolationBase*>(pInter_yg->clone());
+	AQLInterpolationBase* pInter_6ML = dynamic_cast<AQLInterpolationBase*>(pInter_yg->clone());
+	AQLInterpolationBase* pInter_DF = dynamic_cast<AQLInterpolationBase*>(pInter_yg->clone());
 	pInter_3ML->set(threeMLTerms_DF_ori, threeMLDF_ori);
 	pInter_6ML->set(sixMLTerms_DF_ori, sixMLDF_ori);
 	pInter_DF->set(dfTerms_ori, dfCurve_ori);
@@ -3979,14 +3979,14 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 		for (size_t i=0; i<swapMkt.mktTerms.size(); i++)
 		{
 			sixMLTerms_DF.push_back(swapMkt.mktTerms[i]);
-			val.push_back(LAMath::max(pInter_6ML->value(swapMkt.mktTerms[i]), MIN_DF));
+			val.push_back(AQLMath::max(pInter_6ML->value(swapMkt.mktTerms[i]), MIN_DF));
 			sixMLDF.push_back(val[i]);
 		}
 
 		for (size_t i=0; i<libBasisMkt.mktTerms.size(); i++)
 		{
 			threeMLTerms_DF.push_back(libBasisMkt.mktTerms[i]);
-			val.push_back(LAMath::max(pInter_3ML->value(libBasisMkt.mktTerms[i]), MIN_DF));
+			val.push_back(AQLMath::max(pInter_3ML->value(libBasisMkt.mktTerms[i]), MIN_DF));
 			threeMLDF.push_back(val[i + swapMkt.mktTerms.size()]);
 		}
 
@@ -3996,26 +3996,26 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 		for (size_t i=0; i<swapMkt.mktTerms.size(); i++)
 		{
 			threeMLTerms_DF.push_back(swapMkt.mktTerms[i]);
-			val.push_back(LAMath::max(pInter_3ML->value(swapMkt.mktTerms[i]), MIN_DF));
+			val.push_back(AQLMath::max(pInter_3ML->value(swapMkt.mktTerms[i]), MIN_DF));
 			threeMLDF.push_back(val[i]);
 		}
 
 		for (size_t i=0; i<libBasisMkt.mktTerms.size(); i++)
 		{
 			sixMLTerms_DF.push_back(libBasisMkt.mktTerms[i]);
-			val.push_back(LAMath::max(pInter_6ML->value(libBasisMkt.mktTerms[i]), MIN_DF));
+			val.push_back(AQLMath::max(pInter_6ML->value(libBasisMkt.mktTerms[i]), MIN_DF));
 			sixMLDF.push_back(val[i + swapMkt.mktTerms.size()]);
 		}
 	}	
 	else
 	{
-		throw LACoreInvalidData("Swap floating frequency is not supported!", __FILE__, __LINE__); 
+		throw AQLCoreInvalidData("Swap floating frequency is not supported!", __FILE__, __LINE__); 
 	}
 
 	for (size_t i=0; i<xccyBasisMkt.mktTerms.size(); i++)
 	{
 		dfTerms.push_back(xccyBasisMkt.mktTerms[i]);
-		val.push_back(LAMath::max(pInter_DF->value(xccyBasisMkt.mktTerms[i]), MIN_DF));
+		val.push_back(AQLMath::max(pInter_DF->value(xccyBasisMkt.mktTerms[i]), MIN_DF));
 		dfCurve.push_back(val[i + swapMkt.mktTerms.size() + libBasisMkt.mktTerms.size()]);
 	}
 
@@ -4074,17 +4074,17 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 	for (size_t i=0; i<shortTermSize_DF; i++)
 	{
 		dfTerms.push_back(dfTerms_ori[i]);
-		dfCurve.push_back(LAMath::max(pInter_DF->value(dfTerms_ori[i]), MIN_DF));
+		dfCurve.push_back(AQLMath::max(pInter_DF->value(dfTerms_ori[i]), MIN_DF));
 	}
 	for (size_t i=0; i<shortTermSize_3ML; i++)
 	{
 		threeMLTerms_DF.push_back(threeMLTerms_DF_ori[i]);
-		threeMLDF.push_back(LAMath::max(pInter_3ML->value(threeMLTerms_DF_ori[i]), MIN_DF));
+		threeMLDF.push_back(AQLMath::max(pInter_3ML->value(threeMLTerms_DF_ori[i]), MIN_DF));
 	}
 	for (size_t i=0; i<shortTermSize_6ML; i++)
 	{
 		sixMLTerms_DF.push_back(sixMLTerms_DF_ori[i]);
-		sixMLDF.push_back(LAMath::max(pInter_6ML->value(sixMLTerms_DF_ori[i]), MIN_DF));
+		sixMLDF.push_back(AQLMath::max(pInter_6ML->value(sixMLTerms_DF_ori[i]), MIN_DF));
 	}
 
 	double df, rate, accruTerm;
@@ -4100,10 +4100,10 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 				if (libBasisMkt.termGrid_3MRoll[i] < threeMLTerms_DF[pos]) break;
 			}
 
-			if (LAMath::abs(threeMLTerms_DF[pos-1] - libBasisMkt.termGrid_3MRoll[i]) > eps && 
-				(pos>=threeMLTerms_DF.size() || LAMath::abs(threeMLTerms_DF[pos] - libBasisMkt.termGrid_3MRoll[i]) > eps))
+			if (AQLMath::abs(threeMLTerms_DF[pos-1] - libBasisMkt.termGrid_3MRoll[i]) > eps && 
+				(pos>=threeMLTerms_DF.size() || AQLMath::abs(threeMLTerms_DF[pos] - libBasisMkt.termGrid_3MRoll[i]) > eps))
 			{
-				df = LAMath::max(pInter_3ML->value(libBasisMkt.termGrid_3MRoll[i]), MIN_DF);
+				df = AQLMath::max(pInter_3ML->value(libBasisMkt.termGrid_3MRoll[i]), MIN_DF);
 				threeMLTerms_DF.insert(threeMLTerms_DF.begin() + pos, libBasisMkt.termGrid_3MRoll[i]);
 				threeMLDF.insert(threeMLDF.begin() + pos, df);
 
@@ -4125,10 +4125,10 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 				if (swapMkt.termGrid_6MRoll[i] < sixMLTerms_DF[pos]) break;
 			}
 
-			if (LAMath::abs(sixMLTerms_DF[pos-1] - swapMkt.termGrid_6MRoll[i]) > eps && 
-				(pos>=sixMLTerms_DF.size() || LAMath::abs(sixMLTerms_DF[pos] - swapMkt.termGrid_6MRoll[i]) > eps))
+			if (AQLMath::abs(sixMLTerms_DF[pos-1] - swapMkt.termGrid_6MRoll[i]) > eps && 
+				(pos>=sixMLTerms_DF.size() || AQLMath::abs(sixMLTerms_DF[pos] - swapMkt.termGrid_6MRoll[i]) > eps))
 			{
-				df = LAMath::max(pInter_6ML->value(swapMkt.termGrid_6MRoll[i]), MIN_DF);
+				df = AQLMath::max(pInter_6ML->value(swapMkt.termGrid_6MRoll[i]), MIN_DF);
 				sixMLTerms_DF.insert(sixMLTerms_DF.begin() + pos, swapMkt.termGrid_6MRoll[i]);
 				sixMLDF.insert(sixMLDF.begin() + pos, df);
 
@@ -4153,10 +4153,10 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 				if (swapMkt.termGrid_3MRoll[i] < threeMLTerms_DF[pos]) break;
 			}
 
-			if (LAMath::abs(threeMLTerms_DF[pos-1] - swapMkt.termGrid_3MRoll[i]) > eps && 
-				(pos>=threeMLTerms_DF.size() || LAMath::abs(threeMLTerms_DF[pos] - swapMkt.termGrid_3MRoll[i]) > eps))
+			if (AQLMath::abs(threeMLTerms_DF[pos-1] - swapMkt.termGrid_3MRoll[i]) > eps && 
+				(pos>=threeMLTerms_DF.size() || AQLMath::abs(threeMLTerms_DF[pos] - swapMkt.termGrid_3MRoll[i]) > eps))
 			{
-				df = LAMath::max(pInter_3ML->value(swapMkt.termGrid_3MRoll[i]), MIN_DF);
+				df = AQLMath::max(pInter_3ML->value(swapMkt.termGrid_3MRoll[i]), MIN_DF);
 				threeMLTerms_DF.insert(threeMLTerms_DF.begin() + pos, swapMkt.termGrid_3MRoll[i]);
 				threeMLDF.insert(threeMLDF.begin() + pos, df);
 
@@ -4178,10 +4178,10 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 				if (libBasisMkt.termGrid_6MRoll[i] < sixMLTerms_DF[pos]) break;
 			}
 
-			if (LAMath::abs(sixMLTerms_DF[pos-1] - libBasisMkt.termGrid_6MRoll[i]) > eps && 
-				(pos>=sixMLTerms_DF.size() || LAMath::abs(sixMLTerms_DF[pos] - libBasisMkt.termGrid_6MRoll[i]) > eps))
+			if (AQLMath::abs(sixMLTerms_DF[pos-1] - libBasisMkt.termGrid_6MRoll[i]) > eps && 
+				(pos>=sixMLTerms_DF.size() || AQLMath::abs(sixMLTerms_DF[pos] - libBasisMkt.termGrid_6MRoll[i]) > eps))
 			{
-				df = LAMath::max(pInter_6ML->value(libBasisMkt.termGrid_6MRoll[i]), MIN_DF);
+				df = AQLMath::max(pInter_6ML->value(libBasisMkt.termGrid_6MRoll[i]), MIN_DF);
 				sixMLTerms_DF.insert(sixMLTerms_DF.begin() + pos, libBasisMkt.termGrid_6MRoll[i]);
 				sixMLDF.insert(sixMLDF.begin() + pos, df);
 
@@ -4200,7 +4200,7 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 	{
 		if (dfTerms_ori[shortTermSize_DF-1] >= xccyBasisMkt.termGrid_3MRoll[i] - eps) continue;
 		dfTerms.push_back(xccyBasisMkt.termGrid_3MRoll[i]);
-		dfCurve.push_back(LAMath::max(pInter_DF->value(xccyBasisMkt.termGrid_3MRoll[i]), MIN_DF));
+		dfCurve.push_back(AQLMath::max(pInter_DF->value(xccyBasisMkt.termGrid_3MRoll[i]), MIN_DF));
 	}
 	if (swapMkt.freq_Float == SEMI_ANNUAL)
 	{
@@ -4208,13 +4208,13 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 		{
 			if (threeMLTerms_DF_ori[shortTermSize_3ML] >= libBasisMkt.termGrid_3MRoll[i] + eps) continue;
 			threeMLTerms_DF.push_back(libBasisMkt.termGrid_3MRoll[i]);
-			threeMLDF.push_back(LAMath::max(pInter_3ML->value(libBasisMkt.termGrid_3MRoll[i]), MIN_DF));
+			threeMLDF.push_back(AQLMath::max(pInter_3ML->value(libBasisMkt.termGrid_3MRoll[i]), MIN_DF));
 		}
 		for (size_t i=0; i<swapMkt.termGrid_6MRoll.size(); i++)
 		{
 			if (sixMLTerms_DF_ori[shortTermSize_6ML] >= swapMkt.termGrid_6MRoll[i] + eps) continue;
 			sixMLTerms_DF.push_back(swapMkt.termGrid_6MRoll[i]);
-			sixMLDF.push_back(LAMath::max(pInter_6ML->value(swapMkt.termGrid_6MRoll[i]), MIN_DF));
+			sixMLDF.push_back(AQLMath::max(pInter_6ML->value(swapMkt.termGrid_6MRoll[i]), MIN_DF));
 		}
 	}
 	else if (swapMkt.freq_Float == QUARTERLY)
@@ -4223,13 +4223,13 @@ LAPriceArbFreeGenerator::calcCurve_NL2SOL(
 		{
 			if (threeMLTerms_DF_ori[shortTermSize_3ML] >= swapMkt.termGrid_3MRoll[i] + eps) continue;
 			threeMLTerms_DF.push_back(swapMkt.termGrid_3MRoll[i]);
-			threeMLDF.push_back(LAMath::max(pInter_3ML->value(swapMkt.termGrid_3MRoll[i]), MIN_DF));
+			threeMLDF.push_back(AQLMath::max(pInter_3ML->value(swapMkt.termGrid_3MRoll[i]), MIN_DF));
 		}
 		for (size_t i=0; i<libBasisMkt.termGrid_6MRoll.size(); i++)
 		{
 			if (sixMLTerms_DF_ori[shortTermSize_6ML] >= libBasisMkt.termGrid_6MRoll[i] + eps) continue;
 			sixMLTerms_DF.push_back(libBasisMkt.termGrid_6MRoll[i]);
-			sixMLDF.push_back(LAMath::max(pInter_6ML->value(libBasisMkt.termGrid_6MRoll[i]), MIN_DF));
+			sixMLDF.push_back(AQLMath::max(pInter_6ML->value(libBasisMkt.termGrid_6MRoll[i]), MIN_DF));
 		}
 	}
 
@@ -4248,9 +4248,9 @@ LAPriceArbFreeGenerator::getSwapValue(
 	const DoubleArray& termGrid_6MRoll,
 	const DateVector& dateGrid_12MRoll,
 	const DoubleArray& termGrid_12MRoll,
-	LAInterpolationBase* pInter_3ML,
-	LAInterpolationBase* pInter_6ML,
-	LAInterpolationBase* pInter_DF )
+	AQLInterpolationBase* pInter_3ML,
+	AQLInterpolationBase* pInter_6ML,
+	AQLInterpolationBase* pInter_DF )
 {
 	size_t dateSize_3M = termGrid_3MRoll.size();
     size_t dateSize_6M = termGrid_6MRoll.size();
@@ -4261,7 +4261,7 @@ LAPriceArbFreeGenerator::getSwapValue(
 	////set frequency information
 	DateVector dates_float_payment, dates_float_index;
 	DoubleArray terms_float_payment, terms_float_index;
-	LAInterpolationBase* pInter_float;
+	AQLInterpolationBase* pInter_float;
 	//payment of floating leg
 	if (swapMkt.freq_Float_Pay == ANNUAL)
 	{
@@ -4294,10 +4294,10 @@ LAPriceArbFreeGenerator::getSwapValue(
 
 	DoubleVector ret(swapMkt.mktTerms.size());
 	size_t pos_float = 0,pos_float_index = 0,pos_fix = 0,pos_fix_irre = 0;
-	LAString frequencyFix = "";
+	AQLString frequencyFix = "";
 	for (unsigned int i = 0; i < swapMkt.mktTerms.size(); ++i)
 	{
-		LADate endDate = LAMathDateCalculations::getDate(swapMkt.spotDate, swapMkt.mktTerms_str[i], swapMkt.sld, swapMkt.pCal, true, &swapMkt.roll_conv);
+		AQLDate endDate = LAMathDateCalculations::getDate(swapMkt.spotDate, swapMkt.mktTerms_str[i], swapMkt.sld, swapMkt.pCal, true, &swapMkt.roll_conv);
 
 		for (; dates_float_payment[pos_float+1] <= endDate; ++pos_float)
 		{
@@ -4410,19 +4410,19 @@ LAPriceArbFreeGenerator::getSwapValue(
 
 DoubleVector 
 LAPriceArbFreeGenerator::getXccyBasisValue(	
-	const LADate&  basedate, 
+	const AQLDate&  basedate, 
 	bool isRenAdj, 
 	const LiborMarket& libMkt, 
 	const SwapMarket& swapMkt, 
 	const XCCYBasisMarket& xccyBasisMkt,
 	const DateVector& dateGrid_3MRoll,
 	const DoubleArray& termGrid_3MRoll,
-	LAInterpolationBase* pInter_3ML,
-	LAInterpolationBase* pInter_6ML,
-	LAInterpolationBase* pInter_DF,
+	AQLInterpolationBase* pInter_3ML,
+	AQLInterpolationBase* pInter_6ML,
+	AQLInterpolationBase* pInter_DF,
 	bool isUSD )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	size_t dateSize_3M = termGrid_3MRoll.size();
 	double PV_Curr=0.,ANN_Curr=0.,PV_USD=0.,PV_baseccy=0.;
@@ -4455,7 +4455,7 @@ LAPriceArbFreeGenerator::getXccyBasisValue(
 	{
 		for (unsigned int i = 0; i < xccyBasisMkt.mktTerms.size(); i++)
 		{
-			LADate endDate = LAMathDateCalculations::getDate(xccyBasisMkt.spotDate, xccyBasisMkt.mktTerms_str[i], xccyBasisMkt.sld, xccyBasisMkt.pCal, true, &xccyBasisMkt.roll_conv);
+			AQLDate endDate = LAMathDateCalculations::getDate(xccyBasisMkt.spotDate, xccyBasisMkt.mktTerms_str[i], xccyBasisMkt.sld, xccyBasisMkt.pCal, true, &xccyBasisMkt.roll_conv);
 			double floaterPrice = 0.;
 
 			for (; dateGrid_3MRoll[pos+1]<=endDate; pos++)
@@ -4497,7 +4497,7 @@ LAPriceArbFreeGenerator::getXccyBasisValue(
 	{
 		for (unsigned int i = 0; i < xccyBasisMkt.mktTerms.size(); i++)
 		{
-			LADate endDate = LAMathDateCalculations::getDate(xccyBasisMkt.spotDate, xccyBasisMkt.mktTerms_str[i], xccyBasisMkt.sld, xccyBasisMkt.pCal, true, &xccyBasisMkt.roll_conv);
+			AQLDate endDate = LAMathDateCalculations::getDate(xccyBasisMkt.spotDate, xccyBasisMkt.mktTerms_str[i], xccyBasisMkt.sld, xccyBasisMkt.pCal, true, &xccyBasisMkt.roll_conv);
 
 			for (; dateGrid_3MRoll[pos+1]<=endDate; pos++)
 			{
@@ -4549,9 +4549,9 @@ LAPriceArbFreeGenerator::getLibBasisValue(
 	const DoubleArray& termGrid_3MRoll,
 	const DateVector& dateGrid_6MRoll,
 	const DoubleArray& termGrid_6MRoll,
-	LAInterpolationBase* pInter_3ML,
-	LAInterpolationBase* pInter_6ML,
-	LAInterpolationBase* pInter_DF )
+	AQLInterpolationBase* pInter_3ML,
+	AQLInterpolationBase* pInter_6ML,
+	AQLInterpolationBase* pInter_DF )
 {
 	size_t dateSize_3M = termGrid_3MRoll.size();
     size_t dateSize_6M = termGrid_6MRoll.size();
@@ -4563,7 +4563,7 @@ LAPriceArbFreeGenerator::getLibBasisValue(
 	size_t pos_3m = 0, pos_6m = 0;
 	for (unsigned int i = 0; i < libBasisMkt.mktTerms.size(); ++i)
 	{
-		LADate endDate = LAMathDateCalculations::getDate(libBasisMkt.spotDate, libBasisMkt.mktTerms_str[i], libBasisMkt.sld, libBasisMkt.pCal, true, &libBasisMkt.roll_conv);
+		AQLDate endDate = LAMathDateCalculations::getDate(libBasisMkt.spotDate, libBasisMkt.mktTerms_str[i], libBasisMkt.sld, libBasisMkt.pCal, true, &libBasisMkt.roll_conv);
 		
 		for (; dateGrid_6MRoll[pos_6m+1] <= endDate; ++pos_6m)
 		{
@@ -4624,59 +4624,59 @@ LAPriceArbFreeGenerator::getLibBasisValue(
 	@brief generate a forecast rate curve adding basis from arbitrage free curve 
 */
 void 
-LAPriceArbFreeGenerator::setForecastCurve(	LADataInstance* dataInstance,
-                                        const LAString& setUpCurveName)
+LAPriceArbFreeGenerator::setForecastCurve(	AQLDataInstance* dataInstance,
+                                        const AQLString& setUpCurveName)
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
-    LAObjectPool& objPool	= dataInstance->getObjectPool();
+    AQLObjectPool& objPool	= dataInstance->getObjectPool();
     //Basis Swap Data
-    LAString marketDataName = setUpCurveName + "Market";
-    LAObject& marketData = objPool.getObject(marketDataName,ENCHKTYPE_ISDEFINED).get();
-    LAPriceDataCalendar& cal = dynamic_cast<LAPriceDataCalendar&> ((marketData.getData(IR_CALIBRATION_DATA_CALENDARBASE, ISNOTNULL)).get());
-    const LAPriceDataSlidingRule& sld = dynamic_cast<const LAPriceDataSlidingRule&> ((marketData.getData(IR_CALIBRATION_DATA_SLIDINGRULEBASE, ISNOTNULL)).get());
+    AQLString marketDataName = setUpCurveName + "Market";
+    AQLObject& marketData = objPool.getObject(marketDataName,ENCHKTYPE_ISDEFINED).get();
+    AQLPriceDataCalendar& cal = dynamic_cast<AQLPriceDataCalendar&> ((marketData.getData(IR_CALIBRATION_DATA_CALENDARBASE, ISNOTNULL)).get());
+    const AQLPriceDataSlidingRule& sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((marketData.getData(IR_CALIBRATION_DATA_SLIDINGRULEBASE, ISNOTNULL)).get());
     
-    const LADate& spotDate = dynamic_cast<const LADataDate&> ((marketData.getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
-    const DoubleArray& basis_Market = dynamic_cast<const LADataDoubles&> ((marketData.getData("BasisRate", ISNOTNULL)).get()).get();
-    double initialRate = dynamic_cast<const LADataDouble&> ((marketData.getData("InitialRate", ISNOTNULL)).get()).get();
-    bool isIniRateUse = dynamic_cast<const LADataBool&> (marketData.getData("IsInitialRateUse", ISNOTNULL).get()).get();
-    const LAStringVector& terms_str = dynamic_cast<const LADataStrings&> ((marketData.getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+    const AQLDate& spotDate = dynamic_cast<const AQLDataDate&> ((marketData.getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
+    const DoubleArray& basis_Market = dynamic_cast<const AQLDataDoubles&> ((marketData.getData("BasisRate", ISNOTNULL)).get()).get();
+    double initialRate = dynamic_cast<const AQLDataDouble&> ((marketData.getData("InitialRate", ISNOTNULL)).get()).get();
+    bool isIniRateUse = dynamic_cast<const AQLDataBool&> (marketData.getData("IsInitialRateUse", ISNOTNULL).get()).get();
+    const AQLStringVector& terms_str = dynamic_cast<const AQLDataStrings&> ((marketData.getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 
-    const LAString& baseFreq = dynamic_cast<const LADataString&> ((marketData.getData("BaseCurveFrequency", ISNOTNULL)).get()).get();
-    const LAString& setFreq = dynamic_cast<const LADataString&> ((marketData.getData("SetUpCurveFrequency", ISNOTNULL)).get()).get();
+    const AQLString& baseFreq = dynamic_cast<const AQLDataString&> ((marketData.getData("BaseCurveFrequency", ISNOTNULL)).get()).get();
+    const AQLString& setFreq = dynamic_cast<const AQLDataString&> ((marketData.getData("SetUpCurveFrequency", ISNOTNULL)).get()).get();
 
-	const LAString& arbFreeCurveID = dynamic_cast<const LADataString&> ((marketData.getData("ArbFreeCurveID", ISNOTNULL)).get()).get();
-    const LAString& baseForecastCurveName = dynamic_cast<const LADataString&> ((marketData.getData("BaseForecastCurveName", ISNOTNULL)).get()).get();
-    const LAString& dfCurveName = dynamic_cast<const LADataString&> ((marketData.getData("DiscountCurveName", ISNOTNULL)).get()).get();
+	const AQLString& arbFreeCurveID = dynamic_cast<const AQLDataString&> ((marketData.getData("ArbFreeCurveID", ISNOTNULL)).get()).get();
+    const AQLString& baseForecastCurveName = dynamic_cast<const AQLDataString&> ((marketData.getData("BaseForecastCurveName", ISNOTNULL)).get()).get();
+    const AQLString& dfCurveName = dynamic_cast<const AQLDataString&> ((marketData.getData("DiscountCurveName", ISNOTNULL)).get()).get();
 
-    const LAPriceDataDayCount& bdc = dynamic_cast<const LAPriceDataDayCount&> ((marketData.getData("BaseCurveDayCount", ISNOTNULL)).get());
-    const LAPriceDataDayCount& sdc = dynamic_cast<const LAPriceDataDayCount&> ((marketData.getData("SetUpCurveDayCount", ISNOTNULL)).get());
+    const AQLPriceDataDayCount& bdc = dynamic_cast<const AQLPriceDataDayCount&> ((marketData.getData("BaseCurveDayCount", ISNOTNULL)).get());
+    const AQLPriceDataDayCount& sdc = dynamic_cast<const AQLPriceDataDayCount&> ((marketData.getData("SetUpCurveDayCount", ISNOTNULL)).get());
 
     //Get Base Curve Data
-    const LAObject& arbFreeCurve = objPool.getObject(arbFreeCurveID,ENCHKTYPE_ISDEFINED).get();
-    const LADate& asOfDate = dynamic_cast<const LADataDate&> ((arbFreeCurve.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
-    const DoubleArray& DFTerms = dynamic_cast<const LADataDoubles& >(arbFreeCurve.getData(CALIBRATION_DATA_TERMS + LAString("_") + dfCurveName,ISDEFINED).get()).get();
-    const DoubleArray& DFs = dynamic_cast<const LADataDoubles& >(arbFreeCurve.getData(IR_CALIBRATION_DATA_DFS + LAString("_") + dfCurveName,ISDEFINED).get()).get();
+    const AQLObject& arbFreeCurve = objPool.getObject(arbFreeCurveID,ENCHKTYPE_ISDEFINED).get();
+    const AQLDate& asOfDate = dynamic_cast<const AQLDataDate&> ((arbFreeCurve.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL)).get()).get();
+    const DoubleArray& DFTerms = dynamic_cast<const AQLDataDoubles& >(arbFreeCurve.getData(CALIBRATION_DATA_TERMS + AQLString("_") + dfCurveName,ISDEFINED).get()).get();
+    const DoubleArray& DFs = dynamic_cast<const AQLDataDoubles& >(arbFreeCurve.getData(IR_CALIBRATION_DATA_DFS + AQLString("_") + dfCurveName,ISDEFINED).get()).get();
 
-    LAInterpolationBase* pInter_basis = dynamic_cast<LAInterpolationBase*>
-        (dynamic_cast<const LAPriceDataInterpolation& >(arbFreeCurve.getData(CALIBRATION_DATA_INTERPOLATION,ISDEFINED).get()).getMethod().clone());
-	LACoreFunctionHolder fh_basis(pInter_basis, true);
-    LAInterpolationBase* pInter_BaseRate = dynamic_cast<LAInterpolationBase*>
-        (dynamic_cast<const LAPriceDataInterpolation& >(arbFreeCurve.getData(CALIBRATION_DATA_INTERPOLATION,ISDEFINED).get()).getMethod().clone());
-	LACoreFunctionHolder fh_BaseRate(pInter_BaseRate, true);
-    LAInterpolationBase* pInter_DF = dynamic_cast<LAInterpolationBase*>
-        (dynamic_cast<const LAPriceDataInterpolation& >(arbFreeCurve.getData(CALIBRATION_DATA_INTERPOLATION,ISDEFINED).get()).getMethod().clone());
-	LACoreFunctionHolder fh_DF(pInter_DF, true);
+    AQLInterpolationBase* pInter_basis = dynamic_cast<AQLInterpolationBase*>
+        (dynamic_cast<const AQLPriceDataInterpolation& >(arbFreeCurve.getData(CALIBRATION_DATA_INTERPOLATION,ISDEFINED).get()).getMethod().clone());
+	AQLCoreFunctionHolder fh_basis(pInter_basis, true);
+    AQLInterpolationBase* pInter_BaseRate = dynamic_cast<AQLInterpolationBase*>
+        (dynamic_cast<const AQLPriceDataInterpolation& >(arbFreeCurve.getData(CALIBRATION_DATA_INTERPOLATION,ISDEFINED).get()).getMethod().clone());
+	AQLCoreFunctionHolder fh_BaseRate(pInter_BaseRate, true);
+    AQLInterpolationBase* pInter_DF = dynamic_cast<AQLInterpolationBase*>
+        (dynamic_cast<const AQLPriceDataInterpolation& >(arbFreeCurve.getData(CALIBRATION_DATA_INTERPOLATION,ISDEFINED).get()).getMethod().clone());
+	AQLCoreFunctionHolder fh_DF(pInter_DF, true);
     pInter_DF->set(DFTerms,DFs);
     //Set Basis Market
-    const LAString& basisLeg = dynamic_cast<const LADataString&> ((marketData.getData("BasisLeg", ISNOTNULL)).get()).get();
+    const AQLString& basisLeg = dynamic_cast<const AQLDataString&> ((marketData.getData("BasisLeg", ISNOTNULL)).get()).get();
     if( basis_Market.size() != terms_str.size() ) 
-        throw LACoreInvalidData("size of swap market rates and size of swap market terms are not same.", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("size of swap market rates and size of swap market terms are not same.", __FILE__, __LINE__);
     size_t basisSize = basis_Market.size();
     DoubleArray basisTerms;
     for(size_t i=0; i < basisSize; i++)
     {
-        LADate endDate = LAMathDateCalculations::getDate(spotDate, terms_str[i], sld, &cal, true);
+        AQLDate endDate = LAMathDateCalculations::getDate(spotDate, terms_str[i], sld, &cal, true);
         basisTerms.push_back( dc_act365.getTerm(asOfDate, endDate) );
     }
     pInter_basis->set(basisTerms,basis_Market);   
@@ -4690,7 +4690,7 @@ LAPriceArbFreeGenerator::setForecastCurve(	LADataInstance* dataInstance,
 	else
 	{
 		//error
-		throw LACoreInvalidData("Input freq type is not supported", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Input freq type is not supported", __FILE__, __LINE__);
 	}
 
     if (setFreq == ANNUAL) setSpan = 12;
@@ -4700,15 +4700,15 @@ LAPriceArbFreeGenerator::setForecastCurve(	LADataInstance* dataInstance,
 	else
 	{
 		//error
-		throw LACoreInvalidData("Input freq type is not supported", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Input freq type is not supported", __FILE__, __LINE__);
 	}
 
-    //LAString baseCurveName = arbFreeCurveID;
-    //const LAObject& arbFreeCurve = objPool.getObject(arbFreeCurveID,ENCHKTYPE_ISDEFINED).get();
-    //const LAString& arbFreeCurveID_ = dynamic_cast<const LADataString& >(baseForecastCurve.getData("ArbFreeCurve",ISDEFINED).get()).get();
-    //if( arbFreeCurveID_ != arbFreeCurveID ) throw LACoreInvalidData("arb free curves are inconsistent!", __FILE__, __LINE__);
-    const DoubleArray& RateTerms_DF = dynamic_cast<const LADataDoubles& >(arbFreeCurve.getData(CALIBRATION_DATA_TERMS + LAString("_") + baseForecastCurveName,ISDEFINED).get()).get();
-    const DoubleArray& Rates_DF= dynamic_cast<const LADataDoubles& >(arbFreeCurve.getData(IR_CALIBRATION_DATA_DFS + LAString("_") + baseForecastCurveName).get()).get();
+    //AQLString baseCurveName = arbFreeCurveID;
+    //const AQLObject& arbFreeCurve = objPool.getObject(arbFreeCurveID,ENCHKTYPE_ISDEFINED).get();
+    //const AQLString& arbFreeCurveID_ = dynamic_cast<const AQLDataString& >(baseForecastCurve.getData("ArbFreeCurve",ISDEFINED).get()).get();
+    //if( arbFreeCurveID_ != arbFreeCurveID ) throw AQLCoreInvalidData("arb free curves are inconsistent!", __FILE__, __LINE__);
+    const DoubleArray& RateTerms_DF = dynamic_cast<const AQLDataDoubles& >(arbFreeCurve.getData(CALIBRATION_DATA_TERMS + AQLString("_") + baseForecastCurveName,ISDEFINED).get()).get();
+    const DoubleArray& Rates_DF= dynamic_cast<const AQLDataDoubles& >(arbFreeCurve.getData(IR_CALIBRATION_DATA_DFS + AQLString("_") + baseForecastCurveName).get()).get();
     pInter_BaseRate->set(RateTerms_DF,Rates_DF);
 
     DoubleArray setTerms,setDFs,setRates,baseTerms,baseDFs,baseRates,basis,setRates_DF,setTerms_DF;
@@ -4722,7 +4722,7 @@ LAPriceArbFreeGenerator::setForecastCurve(	LADataInstance* dataInstance,
     }
 
     DateVector setDates,baseDates;
-    const LADate endDate = LAMathDateCalculations::getDate(spotDate, terms_str[basisSize-1], true);
+    const AQLDate endDate = LAMathDateCalculations::getDate(spotDate, terms_str[basisSize-1], true);
 
     generateSchedule(asOfDate, spotDate, endDate, setSpan, &cal, sld, setDates, setTerms,false);      
     for(size_t i=1; i<setTerms.size(); i++)
@@ -4947,16 +4947,16 @@ LAPriceArbFreeGenerator::setForecastCurve(	LADataInstance* dataInstance,
     }
     else
     {
-        throw LACoreInvalidData("basis leg curve is not supported!", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("basis leg curve is not supported!", __FILE__, __LINE__);
     }
 
     setTerms.erase( setTerms.end()-1 );
 
-    LAObject* e = NULL;
-    LAString name = arbFreeCurveID + "_" + setUpCurveName;
+    AQLObject* e = NULL;
+    AQLString name = arbFreeCurveID + "_" + setUpCurveName;
 	if(!objPool.getObject(name).isDefined())
 	{
-		e = new LAObject;
+		e = new AQLObject;
 		objPool.set(name,e);
 	}
 	else
@@ -4965,26 +4965,26 @@ LAPriceArbFreeGenerator::setForecastCurve(	LADataInstance* dataInstance,
 		e = &objPool.getObject(name).get();
 	}
     
-    e->add(CALIBRATION_DATA_ASOFDATE, new LADataDate(asOfDate));
-    e->add(CALIBRATION_DATA_NAME,	new LADataString(name) );
-    e->add("Terms_Rate", new LADataDoubles(setTerms) );
-    e->add("ForecastRates",	new LADataDoubles(setRates) );
-	e->add("ArbFreeCurve", new LADataString(arbFreeCurveID));
+    e->add(CALIBRATION_DATA_ASOFDATE, new AQLDataDate(asOfDate));
+    e->add(CALIBRATION_DATA_NAME,	new AQLDataString(name) );
+    e->add("Terms_Rate", new AQLDataDoubles(setTerms) );
+    e->add("ForecastRates",	new AQLDataDoubles(setRates) );
+	e->add("ArbFreeCurve", new AQLDataString(arbFreeCurveID));
 
     name = arbFreeCurveID;;
 	if(!objPool.getObject(name).isDefined())
 	{
-		e = new LAObject;
+		e = new AQLObject;
 		objPool.set(name,e);
 	}
 	else
 	{
 		e = &objPool.getObject(name).get();
 	}
-	e->remove(CALIBRATION_DATA_TERMS + LAString("_") + setUpCurveName);
-	e->remove(IR_CALIBRATION_DATA_DFS + LAString("_") + setUpCurveName);
-    e->add(CALIBRATION_DATA_TERMS + LAString("_") + setUpCurveName, new LADataDoubles(setTerms_DF));
-	e->add(IR_CALIBRATION_DATA_DFS + LAString("_") + setUpCurveName, new LADataDoubles(setRates_DF));
+	e->remove(CALIBRATION_DATA_TERMS + AQLString("_") + setUpCurveName);
+	e->remove(IR_CALIBRATION_DATA_DFS + AQLString("_") + setUpCurveName);
+    e->add(CALIBRATION_DATA_TERMS + AQLString("_") + setUpCurveName, new AQLDataDoubles(setTerms_DF));
+	e->add(IR_CALIBRATION_DATA_DFS + AQLString("_") + setUpCurveName, new AQLDataDoubles(setRates_DF));
 }
 
 /*!
@@ -4992,40 +4992,40 @@ LAPriceArbFreeGenerator::setForecastCurve(	LADataInstance* dataInstance,
 */
 void 
 LAPriceArbFreeGenerator::
-generateCdtDFCurve( LADataInstance* dataInstance,
-                    const LAString& arbFreeCurveID,
-                    const LAString& forecastCurveID,
-                    const LAString& ctdCurveID,
-                    const LADate& spotDate,
-                    LAPriceDataCalendar& cal, 
-                    LAPriceDataSlidingRule& sld, 
-                    LAString& freq, 
-                    LAPriceDataDayCount& dc,
+generateCdtDFCurve( AQLDataInstance* dataInstance,
+                    const AQLString& arbFreeCurveID,
+                    const AQLString& forecastCurveID,
+                    const AQLString& ctdCurveID,
+                    const AQLDate& spotDate,
+                    AQLPriceDataCalendar& cal, 
+                    AQLPriceDataSlidingRule& sld, 
+                    AQLString& freq, 
+                    AQLPriceDataDayCount& dc,
                     double spread )
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-    LAObjectPool& objPool	= dataInstance->getObjectPool();
-    LAString curveName = arbFreeCurveID + "_" + forecastCurveID;
-    const LAObject& forecastCurve = objPool.getObject(curveName,ENCHKTYPE_ISDEFINED).get();
-    const LAString& arbFreeCurveID_ = dynamic_cast<const LADataString& >(forecastCurve.getData("ArbFreeCurve",ISDEFINED).get()).get();
-    if( arbFreeCurveID_ != arbFreeCurveID ) throw LACoreInvalidData("arv free curves are inconsistent!", __FILE__, __LINE__);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLObjectPool& objPool	= dataInstance->getObjectPool();
+    AQLString curveName = arbFreeCurveID + "_" + forecastCurveID;
+    const AQLObject& forecastCurve = objPool.getObject(curveName,ENCHKTYPE_ISDEFINED).get();
+    const AQLString& arbFreeCurveID_ = dynamic_cast<const AQLDataString& >(forecastCurve.getData("ArbFreeCurve",ISDEFINED).get()).get();
+    if( arbFreeCurveID_ != arbFreeCurveID ) throw AQLCoreInvalidData("arv free curves are inconsistent!", __FILE__, __LINE__);
 
-    const DoubleArray& terms_rate = dynamic_cast<const LADataDoubles& >(forecastCurve.getData("Terms_Rate",ISDEFINED).get()).get();
-    const DoubleArray& rates = dynamic_cast<const LADataDoubles& >(forecastCurve.getData("ForecastRates",ISDEFINED).get()).get();
-    if( terms_rate.size() != rates.size() ) throw LACoreInvalidData("sizes of rates and terms are not same!", __FILE__, __LINE__);
+    const DoubleArray& terms_rate = dynamic_cast<const AQLDataDoubles& >(forecastCurve.getData("Terms_Rate",ISDEFINED).get()).get();
+    const DoubleArray& rates = dynamic_cast<const AQLDataDoubles& >(forecastCurve.getData("ForecastRates",ISDEFINED).get()).get();
+    if( terms_rate.size() != rates.size() ) throw AQLCoreInvalidData("sizes of rates and terms are not same!", __FILE__, __LINE__);
 
-    LAObject& arbFreeCurve = objPool.getObject(arbFreeCurveID,ENCHKTYPE_ISDEFINED).get();
-    const LADate& asOfDate = dynamic_cast<const LADataDate& >(arbFreeCurve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get()).get();
-    const DoubleArray& terms_df = dynamic_cast<const LADataDoubles& >(arbFreeCurve.getData(CALIBRATION_DATA_TERMS,ISDEFINED).get()).get();
-    const DoubleArray& dfs = dynamic_cast<const LADataDoubles& >(arbFreeCurve.getData(IR_CALIBRATION_DATA_DFS,ISDEFINED).get()).get();
-    if( terms_df.size() != dfs.size()  ) throw LACoreInvalidData("sizes of dfs and terms are not same!", __FILE__, __LINE__);
+    AQLObject& arbFreeCurve = objPool.getObject(arbFreeCurveID,ENCHKTYPE_ISDEFINED).get();
+    const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(arbFreeCurve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get()).get();
+    const DoubleArray& terms_df = dynamic_cast<const AQLDataDoubles& >(arbFreeCurve.getData(CALIBRATION_DATA_TERMS,ISDEFINED).get()).get();
+    const DoubleArray& dfs = dynamic_cast<const AQLDataDoubles& >(arbFreeCurve.getData(IR_CALIBRATION_DATA_DFS,ISDEFINED).get()).get();
+    if( terms_df.size() != dfs.size()  ) throw AQLCoreInvalidData("sizes of dfs and terms are not same!", __FILE__, __LINE__);
 
-    LAInterpolationBase* pInter_Rates = dynamic_cast<LAInterpolationBase*>
-        (dynamic_cast<const LAPriceDataInterpolation& >(arbFreeCurve.getData(CALIBRATION_DATA_INTERPOLATION,ISDEFINED).get()).getMethod().clone());
-	LACoreFunctionHolder fh_Rates(pInter_Rates, true);
-    LAInterpolationBase* pInter_DF = dynamic_cast<LAInterpolationBase*>
-        (dynamic_cast<const LAPriceDataInterpolation& >(arbFreeCurve.getData(CALIBRATION_DATA_INTERPOLATION,ISDEFINED).get()).getMethod().clone());
-	LACoreFunctionHolder fh_DF(pInter_DF, true);
+    AQLInterpolationBase* pInter_Rates = dynamic_cast<AQLInterpolationBase*>
+        (dynamic_cast<const AQLPriceDataInterpolation& >(arbFreeCurve.getData(CALIBRATION_DATA_INTERPOLATION,ISDEFINED).get()).getMethod().clone());
+	AQLCoreFunctionHolder fh_Rates(pInter_Rates, true);
+    AQLInterpolationBase* pInter_DF = dynamic_cast<AQLInterpolationBase*>
+        (dynamic_cast<const AQLPriceDataInterpolation& >(arbFreeCurve.getData(CALIBRATION_DATA_INTERPOLATION,ISDEFINED).get()).getMethod().clone());
+	AQLCoreFunctionHolder fh_DF(pInter_DF, true);
     pInter_Rates->set(terms_rate, rates);
     pInter_DF->set(terms_df, dfs);
 
@@ -5047,14 +5047,14 @@ generateCdtDFCurve( LADataInstance* dataInstance,
 	else
 	{
 		//error
-		throw LACoreInvalidData("Input freq type is not supported", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Input freq type is not supported", __FILE__, __LINE__);
 	}
 
-    LADate date = spotDate;
-    LADate date_sld = sld.getDate(date, cal);
+    AQLDate date = spotDate;
+    AQLDate date_sld = sld.getDate(date, cal);
     size_t n;
     double rate,term_sld=0.;
-    LADate fixingDate;
+    AQLDate fixingDate;
     while(term_sld<=terms_df.back())
     {
         n = dfs_ctd.size();
@@ -5069,10 +5069,10 @@ generateCdtDFCurve( LADataInstance* dataInstance,
         dfs_ctd.push_back( dfs_ctd[n-1] / (1. + (rate + spread) * dc.getTerm(fixingDate, date_sld, false) ) );   
     }
     
-    LAObject* e = NULL;
+    AQLObject* e = NULL;
 	if(!objPool.getObject(ctdCurveID).isDefined())
 	{
-		e = new LAObject;
+		e = new AQLObject;
 		objPool.set(ctdCurveID,e);
 	}
 	else
@@ -5081,36 +5081,36 @@ generateCdtDFCurve( LADataInstance* dataInstance,
 		e = &objPool.getObject(ctdCurveID).get();
 	}
     
-    e->add(CALIBRATION_DATA_NAME,	new LADataString(ctdCurveID));
-    e->add(CALIBRATION_DATA_ASOFDATE,	new LADataDate(asOfDate));
-    e->add(CALIBRATION_DATA_TERMS, new LADataDoubles(terms_ctd));
-    e->add(IR_CALIBRATION_DATA_DFS, new LADataDoubles(dfs_ctd));
-    e->add("ArbFreeCurve", new LADataString(arbFreeCurveID_));
+    e->add(CALIBRATION_DATA_NAME,	new AQLDataString(ctdCurveID));
+    e->add(CALIBRATION_DATA_ASOFDATE,	new AQLDataDate(asOfDate));
+    e->add(CALIBRATION_DATA_TERMS, new AQLDataDoubles(terms_ctd));
+    e->add(IR_CALIBRATION_DATA_DFS, new AQLDataDoubles(dfs_ctd));
+    e->add("ArbFreeCurve", new AQLDataString(arbFreeCurveID_));
 }
 
 void 
 LAPriceArbFreeGenerator::
-generateSchedule( const LADate& asOfDate,
-           const LADate& spotDate,
-           const LADate& endDate,
+generateSchedule( const AQLDate& asOfDate,
+           const AQLDate& spotDate,
+           const AQLDate& endDate,
            unsigned int span,
-           const LAPriceDataCalendar* pCal,
-           const LAPriceDataSlidingRule& sld,
+           const AQLPriceDataCalendar* pCal,
+           const AQLPriceDataSlidingRule& sld,
            DateVector& dates,
            DoubleArray& terms,
 		   bool isEOMRoll)
 {
     dates.clear();
     terms.clear();
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
-    if( asOfDate > spotDate ) throw LACoreInvalidData("as of date is before spot date!", __FILE__, __LINE__);
+    if( asOfDate > spotDate ) throw AQLCoreInvalidData("as of date is before spot date!", __FILE__, __LINE__);
 
     dates.push_back( spotDate );
     terms.push_back( dc_act365.getTerm(asOfDate, spotDate) );
-    LADate date = spotDate;
+    AQLDate date = spotDate;
     date.addMonths(span);
-    LADate date_sld;
+    AQLDate date_sld;
 	if (isEOMRoll)
 	{
 		date_sld = pCal->getEOMDay(date);
@@ -5126,7 +5126,7 @@ generateSchedule( const LADate& asOfDate,
         dates.push_back(date_sld);
         terms.push_back(dc_act365.getTerm(asOfDate, date_sld));
 
-		LADate date = spotDate;
+		AQLDate date = spotDate;
         date.addMonths(span * count);
         if (isEOMRoll)
 		{
@@ -5150,13 +5150,13 @@ insertRate( double rate,
             DoubleArray& dfs,
             double staTerm, 
             double endTerm, 
-            const LADate& staDate, 
-            const LADate& endDate, 
-            const LAPriceDataDayCount& dc )
+            const AQLDate& staDate, 
+            const AQLDate& endDate, 
+            const AQLPriceDataDayCount& dc )
 {
 	if (termsMtx.size() != 2)
 	{
-		throw LACoreInvalidData("Invaild termsMtx", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Invaild termsMtx", __FILE__, __LINE__);
 	}
     termsMtx[0].push_back( staTerm );
 	termsMtx[1].push_back( endTerm );
@@ -5179,7 +5179,7 @@ insertToVector( double in1,
 				unsigned int& pos)
 {
 	if (array1.size() != array2.size()) 
-		throw LACoreInvalidData("sizes must be same!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("sizes must be same!", __FILE__, __LINE__);
 
 	if (array1.end() == std::find(array1.begin(), array1.end(), in1))
 	{
@@ -5205,7 +5205,7 @@ getPositionOfVector( double target,
 {
 	for (pos = 0; pos < vec.size(); pos++)
 	{
-		if (LAMath::abs(target - vec[pos]) < error) return true;
+		if (AQLMath::abs(target - vec[pos]) < error) return true;
 	}
 	for (pos = 0; pos < vec.size(); pos++)
 	{
@@ -5217,7 +5217,7 @@ getPositionOfVector( double target,
 
 void 
 LAPriceArbFreeGenerator::
-insertFRA( const LADate& basedate,   
+insertFRA( const AQLDate& basedate,   
 		   const FRAMarket& fra3LMkt,
            const FRAMarket& fra6LMkt,
 		   DoubleArray& dfTerms,
@@ -5232,27 +5232,27 @@ insertFRA( const LADate& basedate,
            DoubleArray& sixMLDF,
 		   unsigned int& threeMLSPos,
 		   unsigned int& sixMLSPos,
-           LAInterpolationBase* pInter )
+           AQLInterpolationBase* pInter )
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-	map<LAString, double >::const_iterator it;
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+	map<AQLString, double >::const_iterator it;
 
-    LADate date_sld,date,startDate;
-	LAInterpolationBase* pInter_DF = dynamic_cast<LAInterpolationBase*>(pInter->clone());
+    AQLDate date_sld,date,startDate;
+	AQLInterpolationBase* pInter_DF = dynamic_cast<AQLInterpolationBase*>(pInter->clone());
     pInter_DF->set(dfTerms, dfCurve);
-    LAInterpolationBase* pInter_threeMLDF = dynamic_cast<LAInterpolationBase*>(pInter->clone());
+    AQLInterpolationBase* pInter_threeMLDF = dynamic_cast<AQLInterpolationBase*>(pInter->clone());
     pInter_threeMLDF->set(threeMLTerms_DF, threeMLDF);
-    LACoreFunctionHolder fh_threeMLDF(pInter_threeMLDF, true);
-    LAInterpolationBase* pInter_sixMLDF = dynamic_cast<LAInterpolationBase*>(pInter->clone());
+    AQLCoreFunctionHolder fh_threeMLDF(pInter_threeMLDF, true);
+    AQLInterpolationBase* pInter_sixMLDF = dynamic_cast<AQLInterpolationBase*>(pInter->clone());
     pInter_sixMLDF->set(sixMLTerms_DF, sixMLDF);
-    LACoreFunctionHolder fh_sixMLDF(pInter_sixMLDF, true);   
+    AQLCoreFunctionHolder fh_sixMLDF(pInter_sixMLDF, true);   
     
 	// 3M FRA
 	double l_threeStartTerm = threeMLTermsMtx_Rate[0].front();
 	unsigned int pos;
 	for (int month=1; month<9; month++)
 	{
-		LAString month_str = LAString(month) + LAString("M");
+		AQLString month_str = AQLString(month) + AQLString("M");
 		it = fra3LMkt.map_term_rate.find(month_str);
 		if( it == fra3LMkt.map_term_rate.end() ) continue;
 		date = fra3LMkt.spotDate;
@@ -5260,7 +5260,7 @@ insertFRA( const LADate& basedate,
 		date.addMonths(month);
 		date_sld = fra3LMkt.sld.getDate( date, *fra3LMkt.pCal );
 		if (fra3LMkt.isEOMRoll) date_sld = fra3LMkt.pCal->getEOMDay(date_sld);
-		LADate startDate = date_sld;
+		AQLDate startDate = date_sld;
 		double startTerm = dc_act365.getTerm( basedate, date_sld );
 		double startDF = pInter_threeMLDF->value(startTerm);
 		insertToVector(startTerm, pInter_DF->value(startTerm), dfTerms, dfCurve, pos);
@@ -5283,21 +5283,21 @@ insertFRA( const LADate& basedate,
 		pInter_threeMLDF->set(threeMLTerms_DF, threeMLDF);
 	}
 
-	if (!LAAlgorithm::find<DoubleArray, double>(threeMLTermsMtx_Rate[0], l_threeStartTerm, 0, threeMLTermsMtx_Rate[0].size() - 1, threeMLSPos))
+	if (!AQLAlgorithm::find<DoubleArray, double>(threeMLTermsMtx_Rate[0], l_threeStartTerm, 0, threeMLTermsMtx_Rate[0].size() - 1, threeMLSPos))
 	{
-		throw LACoreInvalidData("threeMLTermsMtx_Rate is not consistent.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("threeMLTermsMtx_Rate is not consistent.", __FILE__, __LINE__);
 	}
 	++threeMLSPos;
 	if (threeMLTermsMtx_Rate[0].size() <= threeMLSPos)
 	{
-		throw LACoreInvalidData("threeMLTermsMtx_Rate, swap term does not exist.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("threeMLTermsMtx_Rate, swap term does not exist.", __FILE__, __LINE__);
 	}
 
 	// 6M FRA
 	double l_sixStartTerm = sixMLTermsMtx_Rate[0].front();
 	for (int month=1; month<6; month++)
 	{
-		LAString month_str = LAString(month) + LAString("M");
+		AQLString month_str = AQLString(month) + AQLString("M");
 		it = fra6LMkt.map_term_rate.find(month_str);
 		if( it == fra6LMkt.map_term_rate.end() ) continue;
 		date = fra6LMkt.spotDate;
@@ -5305,7 +5305,7 @@ insertFRA( const LADate& basedate,
 		date.addMonths(month);
 		date_sld = fra6LMkt.sld.getDate( date, *fra6LMkt.pCal );
 		if (fra6LMkt.isEOMRoll) date_sld = fra6LMkt.pCal->getEOMDay(date_sld);
-		LADate startDate = date_sld;
+		AQLDate startDate = date_sld;
 		double startTerm = dc_act365.getTerm( basedate, date_sld );
 		double startDF = pInter_sixMLDF->value(startTerm);
 		insertToVector(startTerm, startDF, sixMLTerms_DF, sixMLDF, pos);
@@ -5324,20 +5324,20 @@ insertFRA( const LADate& basedate,
 		l_sixStartTerm = startTerm;
 		pInter_sixMLDF->set(sixMLTerms_DF, sixMLDF);
 	}
-	if (!LAAlgorithm::find<DoubleArray, double>(sixMLTermsMtx_Rate[0], l_sixStartTerm, 0, sixMLTermsMtx_Rate[0].size() - 1, sixMLSPos))
+	if (!AQLAlgorithm::find<DoubleArray, double>(sixMLTermsMtx_Rate[0], l_sixStartTerm, 0, sixMLTermsMtx_Rate[0].size() - 1, sixMLSPos))
 	{
-		throw LACoreInvalidData("sixMLTermsMtx_Rate is not consistent.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("sixMLTermsMtx_Rate is not consistent.", __FILE__, __LINE__);
 	}
 	++sixMLSPos;
 	if (sixMLTermsMtx_Rate[0].size() <= sixMLSPos)
 	{
-		throw LACoreInvalidData("sixMLTermsMtx_Rate, swap term does not exist.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("sixMLTermsMtx_Rate, swap term does not exist.", __FILE__, __LINE__);
 	}
 }
 
 void 
 LAPriceArbFreeGenerator::
-insertFuture(	const LADate& basedate, 
+insertFuture(	const AQLDate& basedate, 
 				const FutureMarket& futureMkt,
 				const SwapMarket& swapMkt,
 				DoubleMatrix& threeMLTermsMtx_Rate,
@@ -5345,7 +5345,7 @@ insertFuture(	const LADate& basedate,
 				DoubleArray& threeMLTerms_DF,
 				DoubleArray& threeMLDF,
 				unsigned int& threeMLSPos,
-				LAInterpolationBase* pInter )
+				AQLInterpolationBase* pInter )
 {
 	if (futureMkt.mktRates.empty())
 	{
@@ -5353,11 +5353,11 @@ insertFuture(	const LADate& basedate,
 	}
 	if (threeMLTermsMtx_Rate.size() != 2 || threeMLTermsMtx_Rate[0].size() != threeMLTermsMtx_Rate[1].size())
 	{
-		throw LACoreInvalidData("Invalid threeMLTermsMtx_Rate", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Invalid threeMLTermsMtx_Rate", __FILE__, __LINE__);
 	}
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 	RateConvention rc = LAMathYieldCurve::setRC(SIMPLE);
-	LAPriceDataConvention conv(futureMkt.dc.getDayCount(), rc);
+	AQLPriceDataConvention conv(futureMkt.dc.getDayCount(), rc);
 	
 	DoubleArray::iterator it;
 
@@ -5396,9 +5396,9 @@ insertFuture(	const LADate& basedate,
 		}
 	}
 
-	LAInterpolationBase* pInter_threeMLDF = dynamic_cast<LAInterpolationBase*>(pInter->clone());
+	AQLInterpolationBase* pInter_threeMLDF = dynamic_cast<AQLInterpolationBase*>(pInter->clone());
     pInter_threeMLDF->set(threeMLTerms_DF, threeMLDF);
-    LACoreFunctionHolder fh_threeMLDF(pInter_threeMLDF, true);
+    AQLCoreFunctionHolder fh_threeMLDF(pInter_threeMLDF, true);
 
 	// 3M Future
 	double l_threeStartTerm = threeMLTermsMtx_Rate[0].front();
@@ -5420,37 +5420,37 @@ insertFuture(	const LADate& basedate,
 
 		pInter_threeMLDF->set(threeMLTerms_DF, threeMLDF);
 	}
-	if (!LAAlgorithm::find<DoubleArray, double>(threeMLTermsMtx_Rate[0], l_threeStartTerm, 0, threeMLTermsMtx_Rate[0].size() - 1, threeMLSPos))
+	if (!AQLAlgorithm::find<DoubleArray, double>(threeMLTermsMtx_Rate[0], l_threeStartTerm, 0, threeMLTermsMtx_Rate[0].size() - 1, threeMLSPos))
 	{
-		throw LACoreInvalidData("threeMLTermsMtx_Rate is not consistent.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("threeMLTermsMtx_Rate is not consistent.", __FILE__, __LINE__);
 	}
 	++threeMLSPos;
 	if (threeMLTermsMtx_Rate[0].size() <= threeMLSPos)
 	{
-		throw LACoreInvalidData("threeMLTermsMtx_Rate, swap term does not exist.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("threeMLTermsMtx_Rate, swap term does not exist.", __FILE__, __LINE__);
 	}
 }
 
 double 
 LAPriceArbFreeGenerator::
-getSpotAdjust( const LADate& basedate,
-               const LADate& spotDate,
+getSpotAdjust( const AQLDate& basedate,
+               const AQLDate& spotDate,
 			   const MoneyMarket& monMkt )
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
     double term_O_N,term_accru_O_N,DF_O_N,term_T_N,term_accru_T_N,DF_T_N=1.;
     //spot date check
-    if( spotDate < basedate ) throw LACoreInvalidData("spotDate of Swap Market is before base date.", __FILE__, __LINE__);
+    if( spotDate < basedate ) throw AQLCoreInvalidData("spotDate of Swap Market is before base date.", __FILE__, __LINE__);
     //adjust from spot date of Swap to base date
     if( spotDate > basedate )
     {
-	    LADate tmpDate = basedate; 
+	    AQLDate tmpDate = basedate; 
         tmpDate.addDays(1);
-        const LADate endDate_O_N = monMkt.sld.getDate(tmpDate, *monMkt.pCal);
+        const AQLDate endDate_O_N = monMkt.sld.getDate(tmpDate, *monMkt.pCal);
         if( endDate_O_N < basedate ) 
         {
-            throw LACoreInvalidData("spot date of overnight is before asofdate.", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("spot date of overnight is before asofdate.", __FILE__, __LINE__);
         }
         else if( endDate_O_N < spotDate )
         {
@@ -5475,8 +5475,8 @@ getSpotAdjust( const LADate& basedate,
 
 void 
 LAPriceArbFreeGenerator::
-baseDateAdjust( const LADate& basedate,
-                const LADate& spotDate,
+baseDateAdjust( const AQLDate& basedate,
+                const AQLDate& spotDate,
 			    const MoneyMarket& monMkt,
                 DoubleArray& dfTerms,
 			    DoubleArray& dfCurve,
@@ -5489,27 +5489,27 @@ baseDateAdjust( const LADate& basedate,
                 DoubleArray& sixMLTerms_DF,
                 DoubleArray& sixMLDF )
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	if (threeMLTermsMtx_Rate.size() != 2 || threeMLTermsMtx_Rate[0].size() != threeMLTermsMtx_Rate[1].size())
 	{
-		throw LACoreInvalidData("Invalid threeMLTermsMtx_Rate", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Invalid threeMLTermsMtx_Rate", __FILE__, __LINE__);
 	}
 	if (sixMLTermsMtx_Rate.size() != 2 || sixMLTermsMtx_Rate[0].size() != sixMLTermsMtx_Rate[1].size())
 	{
-		throw LACoreInvalidData("Invalid sixMLTermsMtx_Rate", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Invalid sixMLTermsMtx_Rate", __FILE__, __LINE__);
 	}
     //spot date check
-    if( spotDate < basedate ) throw LACoreInvalidData("spotDate of Swap Market is before base date.", __FILE__, __LINE__);
+    if( spotDate < basedate ) throw AQLCoreInvalidData("spotDate of Swap Market is before base date.", __FILE__, __LINE__);
     //adjust from spot date of Swap to base date
     if( spotDate >= basedate )
     {
-	    LADate tmpDate = basedate; 
+	    AQLDate tmpDate = basedate; 
         tmpDate.addDays(1);
-        const LADate endDate_O_N = monMkt.sld.getDate(tmpDate, *monMkt.pCal);
+        const AQLDate endDate_O_N = monMkt.sld.getDate(tmpDate, *monMkt.pCal);
 		tmpDate = endDate_O_N;
 		tmpDate.addDays(1);
-        const LADate endDate_T_N = monMkt.sld.getDate(tmpDate, *monMkt.pCal);
+        const AQLDate endDate_T_N = monMkt.sld.getDate(tmpDate, *monMkt.pCal);
 
 		double term_O_N,term_accru_O_N,DF_O_N,
 			   term_T_N,term_accru_T_N,DF_T_N,
@@ -5525,7 +5525,7 @@ baseDateAdjust( const LADate& basedate,
 
         if( endDate_O_N < basedate ) 
         {
-            throw LACoreInvalidData("spot date of overnight is before asofdate.", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("spot date of overnight is before asofdate.", __FILE__, __LINE__);
         }
         else if( endDate_O_N < spotDate )
         {
@@ -5675,7 +5675,7 @@ baseDateAdjust( const LADate& basedate,
 
 void 
 LAPriceArbFreeGenerator::
-liborDateAdjust(	const LADate& basedate,
+liborDateAdjust(	const AQLDate& basedate,
 					const LiborMarket& libMkt, 
 					const SwapMarket& swapMkt,
 					DoubleMatrix& threeMLTermsMtx_Rate,
@@ -5686,20 +5686,20 @@ liborDateAdjust(	const LADate& basedate,
 					DoubleArray& sixMLRate,
 					DoubleArray& sixMLTerms_DF,
 					DoubleArray& sixMLDF,
-					LAInterpolationBase* pInter )
+					AQLInterpolationBase* pInter )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
 	double term_spot_libor = dc_act365.getTerm(basedate, libMkt.spotDate);
-	LADate threeMDate_libor = LAMathDateCalculations::getDate(libMkt.spotDate, "3M", libMkt.sld, libMkt.pCal, true, &libMkt.roll_conv);
+	AQLDate threeMDate_libor = LAMathDateCalculations::getDate(libMkt.spotDate, "3M", libMkt.sld, libMkt.pCal, true, &libMkt.roll_conv);
 	double term_3M_libor = dc_act365.getTerm(basedate, threeMDate_libor);
-	LADate sixMDate_libor = LAMathDateCalculations::getDate(libMkt.spotDate, "6M", libMkt.sld, libMkt.pCal, true, &libMkt.roll_conv);
+	AQLDate sixMDate_libor = LAMathDateCalculations::getDate(libMkt.spotDate, "6M", libMkt.sld, libMkt.pCal, true, &libMkt.roll_conv);
 	double term_6M_libor = dc_act365.getTerm(basedate, sixMDate_libor);
 
 	unsigned int pos_del = 0, pos_insert = 0;
 	//3M rate
 	if (!getPositionOfVector(swapMkt.termGrid_3MRoll[0], threeMLTermsMtx_Rate[0], eps, pos_del)) 
-		throw LACoreInvalidData("spot term does not exist in threeMLTermsMtx_Rate.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("spot term does not exist in threeMLTermsMtx_Rate.", __FILE__, __LINE__);
 	threeMLTermsMtx_Rate[0].erase(threeMLTermsMtx_Rate[0].begin() + pos_del);
 	threeMLTermsMtx_Rate[1].erase(threeMLTermsMtx_Rate[1].begin() + pos_del);
 	if (!getPositionOfVector(term_spot_libor, threeMLTermsMtx_Rate[0], eps, pos_insert))
@@ -5709,7 +5709,7 @@ liborDateAdjust(	const LADate& basedate,
 	}
 	//6M rate
 	if (!getPositionOfVector(swapMkt.termGrid_3MRoll[0], sixMLTermsMtx_Rate[0], eps, pos_del)) 
-		throw LACoreInvalidData("spot term does not exist in sixMLTermsMtx_Rate.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("spot term does not exist in sixMLTermsMtx_Rate.", __FILE__, __LINE__);
 	sixMLTermsMtx_Rate[0].erase(sixMLTermsMtx_Rate[0].begin() + pos_del);
 	sixMLTermsMtx_Rate[1].erase(sixMLTermsMtx_Rate[1].begin() + pos_del);
 	if (!getPositionOfVector(term_spot_libor, sixMLTermsMtx_Rate[0], eps, pos_insert))
@@ -5720,7 +5720,7 @@ liborDateAdjust(	const LADate& basedate,
 	//3M df
 	pInter->set(threeMLTerms_DF, threeMLDF);
 	if (!getPositionOfVector(swapMkt.termGrid_3MRoll[0], threeMLTerms_DF, eps, pos_del)) 
-		throw LACoreInvalidData("spot term does not exist in threeMLTerms_DF.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("spot term does not exist in threeMLTerms_DF.", __FILE__, __LINE__);
 	threeMLTerms_DF.erase(threeMLTerms_DF.begin() + pos_del);
 	threeMLDF.erase(threeMLDF.begin() + pos_del);
 	if (!getPositionOfVector(term_spot_libor, threeMLTerms_DF, eps, pos_insert)) 
@@ -5729,7 +5729,7 @@ liborDateAdjust(	const LADate& basedate,
 		threeMLDF.insert(threeMLDF.begin() + pos_insert, pInter->value(term_spot_libor));
 	}
 	if (!getPositionOfVector(swapMkt.termGrid_3MRoll[1], threeMLTerms_DF, eps, pos_del)) 
-		throw LACoreInvalidData("spot term does not exist in threeMLTerms_DF.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("spot term does not exist in threeMLTerms_DF.", __FILE__, __LINE__);
 	threeMLTerms_DF.erase(threeMLTerms_DF.begin() + pos_del);
 	threeMLDF.erase(threeMLDF.begin() + pos_del);
 	if (!getPositionOfVector(term_3M_libor, threeMLTerms_DF, eps, pos_insert)) 
@@ -5743,7 +5743,7 @@ liborDateAdjust(	const LADate& basedate,
 	//6M df
 	pInter->set(sixMLTerms_DF, sixMLDF);
 	if (!getPositionOfVector(swapMkt.termGrid_3MRoll[0], sixMLTerms_DF, eps, pos_del)) 
-		throw LACoreInvalidData("spot term does not exist in threeMLTerms_DF.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("spot term does not exist in threeMLTerms_DF.", __FILE__, __LINE__);
 	sixMLTerms_DF.erase(sixMLTerms_DF.begin() + pos_del);
 	sixMLDF.erase(sixMLDF.begin() + pos_del);
 	if (!getPositionOfVector(term_spot_libor, sixMLTerms_DF, eps, pos_insert)) 
@@ -5752,7 +5752,7 @@ liborDateAdjust(	const LADate& basedate,
 		sixMLDF.insert(sixMLDF.begin() + pos_insert, pInter->value(term_spot_libor));
 	}
 	if (!getPositionOfVector(swapMkt.termGrid_3MRoll[2], sixMLTerms_DF, eps, pos_del)) 
-		throw LACoreInvalidData("spot term does not exist in threeMLTerms_DF.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("spot term does not exist in threeMLTerms_DF.", __FILE__, __LINE__);
 	sixMLTerms_DF.erase(sixMLTerms_DF.begin() + pos_del);
 	sixMLDF.erase(sixMLDF.begin() + pos_del);
 	if (!getPositionOfVector(term_6M_libor, sixMLTerms_DF, eps, pos_insert)) 
@@ -5766,7 +5766,7 @@ liborDateAdjust(	const LADate& basedate,
 
 }
 
-LAString 
+AQLString 
 LAPriceArbFreeGenerator::getSwapFixFrequency(unsigned int month, const SwapMarket& swapMkt)
 {
 	if (swapMkt.map_freq_Fix.size() == 0 || !swapMkt.isSwapTenorAdjust) 
@@ -5775,7 +5775,7 @@ LAPriceArbFreeGenerator::getSwapFixFrequency(unsigned int month, const SwapMarke
 	}
 	else
 	{
-		map<int, LAString>::const_iterator it = swapMkt.map_freq_Fix.begin();
+		map<int, AQLString>::const_iterator it = swapMkt.map_freq_Fix.begin();
 		while( it != swapMkt.map_freq_Fix.end() )
 		{
 			if ((*it).first >= month)  return (*it).second;
@@ -5787,18 +5787,18 @@ LAPriceArbFreeGenerator::getSwapFixFrequency(unsigned int month, const SwapMarke
 }
 
 LAPriceArbFreeGenerator::MoneyMarket::
-MoneyMarket( vector<const LAObject* > mktData )
+MoneyMarket( vector<const AQLObject* > mktData )
 {
-	if (mktData.size() != 2) throw LACoreInvalidData("No Money Market Object", __FILE__, __LINE__);
+	if (mktData.size() != 2) throw AQLCoreInvalidData("No Money Market Object", __FILE__, __LINE__);
 
-    pCal = &dynamic_cast<const LAPriceDataCalendar&> ((mktData[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-    sld = dynamic_cast<const LAPriceDataSlidingRule&> ((mktData[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-    dc = dynamic_cast<const LAPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+    pCal = &dynamic_cast<const AQLPriceDataCalendar&> ((mktData[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+    sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((mktData[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+    dc = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 	rates.resize(2); terms.resize(2);
 	for (size_t i=0; i<2; i++)
 	{
-		double rate = dynamic_cast<const LADataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		LAString dataType = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+		double rate = dynamic_cast<const AQLDataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+		AQLString dataType = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		if (dataType == O_N)
 		{
 			rates[0] = rate;
@@ -5811,7 +5811,7 @@ MoneyMarket( vector<const LAObject* > mktData )
 		}
 		else
 		{
-			throw LACoreInvalidData("Money market term is ON or TN.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Money market term is ON or TN.", __FILE__, __LINE__);
 		}
 	}
 }
@@ -5819,31 +5819,31 @@ MoneyMarket( vector<const LAObject* > mktData )
 LAPriceArbFreeGenerator::MoneyMarket::~MoneyMarket(){}
 
 LAPriceArbFreeGenerator::LiborMarket::
-LiborMarket( vector<const LAObject* > mktData )
+LiborMarket( vector<const AQLObject* > mktData )
 {
-	if (mktData.size() == 0) throw LACoreInvalidData("No Libor Market Object", __FILE__, __LINE__);
+	if (mktData.size() == 0) throw AQLCoreInvalidData("No Libor Market Object", __FILE__, __LINE__);
 	
 	DoubleArray rates;
-	LAStringVector terms;
+	AQLStringVector terms;
 	for (size_t i=0; i<mktData.size(); i++)
 	{
-		double rate = dynamic_cast<const LADataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		LAString term = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+		double rate = dynamic_cast<const AQLDataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+		AQLString term = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		rates.push_back(rate);
 		terms.push_back(term);
-		if (term == "6M") dc = dynamic_cast<const LAPriceDataDayCount&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+		if (term == "6M") dc = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 	}
 
-	map<LAString, double > liborLMarketMap;
-    map<LAString, double >::const_iterator it_libor;
+	map<AQLString, double > liborLMarketMap;
+    map<AQLString, double >::const_iterator it_libor;
 	for(size_t i=0; i<terms.size(); i++)
     {
-        liborLMarketMap.insert( map<LAString, double >::value_type(terms[i], rates[i]) );
+        liborLMarketMap.insert( map<AQLString, double >::value_type(terms[i], rates[i]) );
     }
 	it_libor = liborLMarketMap.find("3M");
 	if(it_libor == liborLMarketMap.end())
 	{
-		throw LACoreInvalidData("Both 3M Libor and 6M Libor are needed.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Both 3M Libor and 6M Libor are needed.", __FILE__, __LINE__);
 	}
 	else 
 	{
@@ -5852,21 +5852,21 @@ LiborMarket( vector<const LAObject* > mktData )
 	it_libor = liborLMarketMap.find("6M");
 	if(it_libor == liborLMarketMap.end())
 	{
-		throw LACoreInvalidData("Both 3M Libor and 6M Libor are needed.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Both 3M Libor and 6M Libor are needed.", __FILE__, __LINE__);
 	}
 	else 
 	{
 		sixMLibor = it_libor->second;
 	}
 
-	spotDate = dynamic_cast<const LADataDate&> ((mktData[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
-	pCal = &dynamic_cast<const LAPriceDataCalendar&> ((mktData[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-	sld = dynamic_cast<const LAPriceDataSlidingRule&> ((mktData[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+	spotDate = dynamic_cast<const AQLDataDate&> ((mktData[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
+	pCal = &dynamic_cast<const AQLPriceDataCalendar&> ((mktData[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+	sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((mktData[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 	isEOMRoll = false;
-	const LADataHolder *dh = &(mktData[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
+	const AQLDataHolder *dh = &(mktData[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	roll_conv = isEOMRoll ? ROLLCONV_EOM : ROLLCONV_NORMAL;
 }
@@ -5874,23 +5874,23 @@ LiborMarket( vector<const LAObject* > mktData )
 LAPriceArbFreeGenerator::LiborMarket::~LiborMarket(){}
 
 LAPriceArbFreeGenerator::SwapMarket::
-SwapMarket( vector<const LAObject* > mktData, vector<const LAObject* > tenorSwapMktData, const LiborMarket& libMkt, const LADate& basedate )
+SwapMarket( vector<const AQLObject* > mktData, vector<const AQLObject* > tenorSwapMktData, const LiborMarket& libMkt, const AQLDate& basedate )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
-	if (mktData.size() == 0) throw LACoreInvalidData("No Swap Market Object", __FILE__, __LINE__);
+	if (mktData.size() == 0) throw AQLCoreInvalidData("No Swap Market Object", __FILE__, __LINE__);
 
-	pCal = &dynamic_cast<const LAPriceDataCalendar&> ((mktData[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-	sld = dynamic_cast<const LAPriceDataSlidingRule&> ((mktData[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-    spotDate = dynamic_cast<const LADataDate&> ((mktData[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
-    dc_Float = dynamic_cast<const LAPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, ISNOTNULL)).get());
-    dc_Fix = dynamic_cast<const LAPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-	freq_Fix = dynamic_cast<const LADataString&> ((mktData[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FIX, ISNOTNULL)).get());
-    freq_Float = dynamic_cast<const LADataString&> ((mktData[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, ISNOTNULL)).get());
-	const LADataHolder *dh = &mktData[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_COMPOUND, NOCHECK); 
+	pCal = &dynamic_cast<const AQLPriceDataCalendar&> ((mktData[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+	sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((mktData[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+    spotDate = dynamic_cast<const AQLDataDate&> ((mktData[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
+    dc_Float = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, ISNOTNULL)).get());
+    dc_Fix = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+	freq_Fix = dynamic_cast<const AQLDataString&> ((mktData[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FIX, ISNOTNULL)).get());
+    freq_Float = dynamic_cast<const AQLDataString&> ((mktData[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, ISNOTNULL)).get());
+	const AQLDataHolder *dh = &mktData[0]->getData(IR_CALIBRATION_DATA_FREQUENCY_COMPOUND, NOCHECK); 
 	if (dh->isDefined() && !dh->isNull()) 
 	{ 
-		freq_Float_Pay = dynamic_cast<const LADataString&> (dh->get());
+		freq_Float_Pay = dynamic_cast<const AQLDataString&> (dh->get());
 	}
 	else
 	{
@@ -5899,34 +5899,34 @@ SwapMarket( vector<const LAObject* > mktData, vector<const LAObject* > tenorSwap
 	int onePeriod_Float = LAMathDateCalculations::getPeriodFrequencyInMonths(freq_Float);
 	int onePeriod_Float_Pay = LAMathDateCalculations::getPeriodFrequencyInMonths(freq_Float_Pay);
 	if (onePeriod_Float_Pay % onePeriod_Float != 0)
-		throw LACoreInvalidData("convention of compounding is not correct!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("convention of compounding is not correct!", __FILE__, __LINE__);
 
 	optimizeMethod = NONE;
 
 	dh = &(mktData[0]->getData(IR_CALIBRATION_DATA_OPTIMIZEMETHOD, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		optimizeMethod = dynamic_cast<const LADataString &>(dh->get()).get();
+		optimizeMethod = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
 	isEOMRoll = false;
 	dh = &(mktData[0]->getData(IR_CALIBRATION_DATA_ISEOMROLLSW, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	roll_conv = isEOMRoll ? ROLLCONV_EOM : ROLLCONV_NORMAL;
 
 	DoubleArray rates;
-	LAStringVector terms_str;
+	AQLStringVector terms_str;
 	for (size_t i=0; i<mktData.size(); i++)
 	{
-		double rate = dynamic_cast<const LADataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		LAString term = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+		double rate = dynamic_cast<const AQLDataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+		AQLString term = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		rates.push_back(rate);
 		terms_str.push_back(term);
 
-		LADate gridDate = LAMathDateCalculations::getDate(spotDate, term, sld, pCal, true, &roll_conv);
+		AQLDate gridDate = LAMathDateCalculations::getDate(spotDate, term, sld, pCal, true, &roll_conv);
         mktTerms.push_back( dc_act365.getTerm(basedate, gridDate) );
 	}
 	mktTerms_str = terms_str;
@@ -5937,9 +5937,9 @@ SwapMarket( vector<const LAObject* > mktData, vector<const LAObject* > tenorSwap
 	int startPos = 0;
 	if ( freq_Float == SEMI_ANNUAL )
 	{
-		if ( terms_str[0] != LAString("6M") )
+		if ( terms_str[0] != AQLString("6M") )
 		{
-			terms_str.insert(terms_str.begin(),LAString("6M"));
+			terms_str.insert(terms_str.begin(),AQLString("6M"));
 			rates.insert(rates.begin(), libMkt.sixMLibor);
 			++startPos;
 			map_freq_Fix[6] = SEMI_ANNUAL;
@@ -5947,9 +5947,9 @@ SwapMarket( vector<const LAObject* > mktData, vector<const LAObject* > tenorSwap
 	}
 	else if ( freq_Float == QUARTERLY )
 	{
-		if ( terms_str[0] != LAString("3M") )
+		if ( terms_str[0] != AQLString("3M") )
 		{
-			terms_str.insert(terms_str.begin(),LAString("3M"));
+			terms_str.insert(terms_str.begin(),AQLString("3M"));
 			rates.insert(rates.begin(), libMkt.threeMLibor);
 			++startPos;
 			map_freq_Fix[3] = QUARTERLY;
@@ -5957,61 +5957,61 @@ SwapMarket( vector<const LAObject* > mktData, vector<const LAObject* > tenorSwap
 	}
 	else
 	{
-		throw LACoreInvalidData("swap floating leg frequecy is not supported.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("swap floating leg frequecy is not supported.", __FILE__, __LINE__);
 	}
 
 	isSwapTenorAdjust = false;
 	dh = &mktData[0]->getData(IR_CALIBRATION_DATA_ISSWAPTENORADJUST, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isSwapTenorAdjust = dynamic_cast<const LADataBool&> (dh->get()).get();
+		isSwapTenorAdjust = dynamic_cast<const AQLDataBool&> (dh->get()).get();
 	}
 
 	if (isSwapTenorAdjust)
 	{
-		if (tenorSwapMktData.size() == 0) throw LACoreInvalidData("No Tenor Swap Market Object", __FILE__, __LINE__);
+		if (tenorSwapMktData.size() == 0) throw AQLCoreInvalidData("No Tenor Swap Market Object", __FILE__, __LINE__);
 		
-		bool isAgtSpread = dynamic_cast<const LADataBool&> ((tenorSwapMktData[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL)).get());
+		bool isAgtSpread = dynamic_cast<const AQLDataBool&> ((tenorSwapMktData[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL)).get());
 		if ( freq_Float == SEMI_ANNUAL )
 		{
-			LAPriceDataDayCount dc_Float_six;
+			AQLPriceDataDayCount dc_Float_six;
 			if (isAgtSpread)
 			{
-				dc_Float_six = dynamic_cast<const LAPriceDataDayCount&> ((tenorSwapMktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
+				dc_Float_six = dynamic_cast<const AQLPriceDataDayCount&> ((tenorSwapMktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
 			}
 			else
 			{
-				dc_Float_six = dynamic_cast<const LAPriceDataDayCount&> ((tenorSwapMktData[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
+				dc_Float_six = dynamic_cast<const AQLPriceDataDayCount&> ((tenorSwapMktData[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
 			}
-			if (!(dc_Float_six == dc_Float)) throw LACoreInvalidData("daycount is not consistent.", __FILE__, __LINE__);
+			if (!(dc_Float_six == dc_Float)) throw AQLCoreInvalidData("daycount is not consistent.", __FILE__, __LINE__);
 		}
 		else if ( freq_Float == QUARTERLY )
 		{
-			LAPriceDataDayCount dc_Float_three;
+			AQLPriceDataDayCount dc_Float_three;
 			if (isAgtSpread)
 			{
-				dc_Float_three = dynamic_cast<const LAPriceDataDayCount&> ((tenorSwapMktData[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
+				dc_Float_three = dynamic_cast<const AQLPriceDataDayCount&> ((tenorSwapMktData[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
 			}
 			else
 			{
-				dc_Float_three = dynamic_cast<const LAPriceDataDayCount&> ((tenorSwapMktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
+				dc_Float_three = dynamic_cast<const AQLPriceDataDayCount&> ((tenorSwapMktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
 			}
-			if (!(dc_Float_three == dc_Float)) throw LACoreInvalidData("daycount is not consistent.", __FILE__, __LINE__);
+			if (!(dc_Float_three == dc_Float)) throw AQLCoreInvalidData("daycount is not consistent.", __FILE__, __LINE__);
 		}
 		DoubleArray basisRates;
-		LAStringVector terms_str_basis;
+		AQLStringVector terms_str_basis;
 		for (size_t i=0; i<tenorSwapMktData.size(); i++)
 		{
-			double rate = dynamic_cast<const LADataDouble&> ((tenorSwapMktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-			LAString term = dynamic_cast<const LADataString&> ((tenorSwapMktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			double rate = dynamic_cast<const AQLDataDouble&> ((tenorSwapMktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			AQLString term = dynamic_cast<const AQLDataString&> ((tenorSwapMktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			basisRates.push_back(rate);
 			terms_str_basis.push_back(term);
 		}
 		
-		map<LAString, double> map_36basis;
+		map<AQLString, double> map_36basis;
 		if (basisRates.size() != terms_str_basis.size()) 
 		{
-			throw LACoreInvalidData("size of 36 basis rate and size of 36 basis term are not same.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("size of 36 basis rate and size of 36 basis term are not same.", __FILE__, __LINE__);
 		}
 		else
 		{
@@ -6025,12 +6025,12 @@ SwapMarket( vector<const LAObject* > mktData, vector<const LAObject* > tenorSwap
 		for (size_t i=startPos; i<terms_str.size(); i++)
 		{
 			LAMathDateCalculations::termStrtoYMDW(terms_str[i],y,m,d,w);
-			if (d!=0 || w!=0) throw LACoreInvalidData("a format of swap term is not supported.", __FILE__, __LINE__);
+			if (d!=0 || w!=0) throw AQLCoreInvalidData("a format of swap term is not supported.", __FILE__, __LINE__);
 
 			dh = &mktData[i-startPos]->getData(IR_CALIBRATION_DATA_FREQUENCY, NOCHECK);
 			if (dh->isDefined() && !dh->isNull())
 			{
-				map_freq_Fix[12*y + m] = dynamic_cast<const LADataString&> (dh->get()).get();
+				map_freq_Fix[12*y + m] = dynamic_cast<const AQLDataString&> (dh->get()).get();
 			}
 			else
 			{
@@ -6038,11 +6038,11 @@ SwapMarket( vector<const LAObject* > mktData, vector<const LAObject* > tenorSwap
 			}
 
 			dh = &mktData[i-startPos]->getData(IR_CALIBRATION_DATA_FREQUENCY_FLOAT, ISNOTNULL);
-			const LAString& freq_float_irregular = dynamic_cast<const LADataString&> (dh->get()).get();
+			const AQLString& freq_float_irregular = dynamic_cast<const AQLDataString&> (dh->get()).get();
 			if (freq_float_irregular == freq_Float) continue;
 			if (map_36basis.find(terms_str[i]) == map_36basis.end())
 			{
-				throw LACoreInvalidData("a term of swap is not in 36 basis terms in frequency change.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("a term of swap is not in 36 basis terms in frequency change.", __FILE__, __LINE__);
 			}
 
 			if (freq_Float == SEMI_ANNUAL || freq_float_irregular == QUARTERLY)
@@ -6061,10 +6061,10 @@ SwapMarket( vector<const LAObject* > mktData, vector<const LAObject* > tenorSwap
 	DoubleArray terms;
 	for(size_t i=0; i < terms_str.size(); i++)
     {
-        LADate gridDate = LAMathDateCalculations::getDate(spotDate, terms_str[i], sld, pCal, true, &roll_conv);
+        AQLDate gridDate = LAMathDateCalculations::getDate(spotDate, terms_str[i], sld, pCal, true, &roll_conv);
         terms.push_back( dc_act365.getTerm(basedate, gridDate) );
     }
-	pInter = dynamic_cast<LAInterpolationBase*> ((dynamic_cast<const LAPriceDataInterpolation&> 
+	pInter = dynamic_cast<AQLInterpolationBase*> ((dynamic_cast<const AQLPriceDataInterpolation&> 
 		(mktData[0]->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get())).getMethod().clone());
 	pInter->set(terms,rates);
 
@@ -6084,7 +6084,7 @@ LAPriceArbFreeGenerator::SwapMarket::SwapMarket(const SwapMarket& v)
 	dateGrid_6MRoll(v.dateGrid_6MRoll), dateGrid_12MRoll(v.dateGrid_12MRoll), termGrid_3MRoll(v.termGrid_3MRoll), 
 	termGrid_6MRoll(v.termGrid_6MRoll), termGrid_12MRoll(v.termGrid_12MRoll)
 {
-	pInter = dynamic_cast<LAInterpolationBase*>( v.pInter->clone() );
+	pInter = dynamic_cast<AQLInterpolationBase*>( v.pInter->clone() );
 }
 
 LAPriceArbFreeGenerator::SwapMarket::~SwapMarket()
@@ -6093,8 +6093,8 @@ LAPriceArbFreeGenerator::SwapMarket::~SwapMarket()
 }
 
 LAPriceArbFreeGenerator::XCCYBasisMarket::
-XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, const SwapMarket& swapMkt, bool& isRenAdj, bool isUSD,
-				 const LADate& basedate )
+XCCYBasisMarket( vector<const AQLObject* > mktData, const AQLObject* fYieldData, const SwapMarket& swapMkt, bool& isRenAdj, bool isUSD,
+				 const AQLDate& basedate )
 {
 	pInter = NULL;
 	pInter_usd = NULL;
@@ -6103,41 +6103,41 @@ XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, c
 	pInter_baseccydf = NULL;
 	pInter_adjust = NULL;
 
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 	double swapEndTerm = dc_act365.getTerm(swapMkt.spotDate, swapMkt.endDate);
 
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	if (!isUSD)
 	{
-		if (mktData.size() == 0) throw LACoreInvalidData("No Swap Market Object", __FILE__, __LINE__);
+		if (mktData.size() == 0) throw AQLCoreInvalidData("No Swap Market Object", __FILE__, __LINE__);
 
-		pCal = &dynamic_cast<const LAPriceDataCalendar&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL)).get());
-		sld = dynamic_cast<const LAPriceDataSlidingRule&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL)).get());
-		spotDate = dynamic_cast<const LADataDate&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE, ISNOTNULL)).get()).get();
-		dc = dynamic_cast<const LAPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
+		pCal = &dynamic_cast<const AQLPriceDataCalendar&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL)).get());
+		sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL)).get());
+		spotDate = dynamic_cast<const AQLDataDate&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE, ISNOTNULL)).get()).get();
+		dc = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
 
 		isEOMRoll = false;
 		dh = &(mktData[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+			isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 		}
 		roll_conv = isEOMRoll ? ROLLCONV_EOM : ROLLCONV_NORMAL;
 
 		for (size_t i=0; i<mktData.size(); i++)
 		{
-			double rate = dynamic_cast<const LADataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-			LAString term = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+			double rate = dynamic_cast<const AQLDataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+			AQLString term = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			mktRates.push_back(rate);
 			mktTerms_str.push_back(term);
 		}
 		
 		for(size_t i=0; i < mktRates.size(); i++)
 		{
-			LADate gridDate = LAMathDateCalculations::getDate(spotDate, mktTerms_str[i], sld, pCal, true, &roll_conv);
+			AQLDate gridDate = LAMathDateCalculations::getDate(spotDate, mktTerms_str[i], sld, pCal, true, &roll_conv);
 			mktTerms.push_back( dc_act365.getTerm(basedate, gridDate) );
 		}
-		pInter = dynamic_cast<LAInterpolationBase*> ((dynamic_cast<const LAPriceDataInterpolation&> 
+		pInter = dynamic_cast<AQLInterpolationBase*> ((dynamic_cast<const AQLPriceDataInterpolation&> 
 			(mktData[0]->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get())).getMethod().clone());
 		pInter->set(mktTerms,mktRates);
 
@@ -6146,16 +6146,16 @@ XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, c
 		dh = &(mktData[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUETERM, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const DoubleArray& adjustValue_term = dynamic_cast<const LADataDoubles&> (dh->get()).get();
+			const DoubleArray& adjustValue_term = dynamic_cast<const AQLDataDoubles&> (dh->get()).get();
 			const DoubleArray& adjustValue
-				= dynamic_cast<const LADataDoubles&> ((mktData[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUE, ISNOTNULL)).get()).get();
-			pInter_adjust = dynamic_cast<LAInterpolationBase*> ((dynamic_cast<const LAPriceDataInterpolation&> 
+				= dynamic_cast<const AQLDataDoubles&> ((mktData[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUE, ISNOTNULL)).get()).get();
+			pInter_adjust = dynamic_cast<AQLInterpolationBase*> ((dynamic_cast<const AQLPriceDataInterpolation&> 
 				(mktData[0]->getData(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION, ISNOTNULL).get())).getMethod().clone());
 			pInter_adjust->set(adjustValue_term,adjustValue);
 		}
 
-		LAString suffix;
-		LAString fCurveName = dynamic_cast<const LADataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTFORECAST, ISNOTNULL).get()).get();
+		AQLString suffix;
+		AQLString fCurveName = dynamic_cast<const AQLDataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTFORECAST, ISNOTNULL).get()).get();
 		if (fCurveName.findString(DUMMY) >= 0)
 		{
 			isRenAdj = false;
@@ -6171,31 +6171,31 @@ XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, c
 				fTerms.push_back(static_cast<double >(i));
 				fPrices.push_back(1.);
 			}
-			pInter_fPrices = new LALinearInterpolation(); 
+			pInter_fPrices = new AQLLinearInterpolation(); 
 			pInter_fPrices->set(fTerms, fPrices);
 		}
 		else
 		{
 			if (!fYieldData)
 			{
-				throw LACoreInvalidData("Foreign yield data is null!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Foreign yield data is null!", __FILE__, __LINE__);
 			}
 
 			if (isRenAdj) 
 			{	
-				fCurveName = dynamic_cast<const LADataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTDISCOUNT, ISNOTNULL).get()).get();
+				fCurveName = dynamic_cast<const AQLDataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTDISCOUNT, ISNOTNULL).get()).get();
 
 				if (fCurveName != STD)
 				{
-					suffix = LAString("_") +  fCurveName;
+					suffix = AQLString("_") +  fCurveName;
 				}
 				else
 				{
 					suffix = "";
 				}
-				const DoubleArray& terms_usd = dynamic_cast<const LADataDoubles& > ((fYieldData->getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
-				const DoubleArray& dfs_usd = dynamic_cast<const LADataDoubles& > ((fYieldData->getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
-				pInter_usd = dynamic_cast<LAInterpolationBase*>(dynamic_cast<const LAPriceDataInterpolation& > 
+				const DoubleArray& terms_usd = dynamic_cast<const AQLDataDoubles& > ((fYieldData->getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
+				const DoubleArray& dfs_usd = dynamic_cast<const AQLDataDoubles& > ((fYieldData->getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
+				pInter_usd = dynamic_cast<AQLInterpolationBase*>(dynamic_cast<const AQLPriceDataInterpolation& > 
 					((fYieldData->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL)).get()).getMethod().clone());
 				if (swapEndTerm > terms_usd.back())
 				{
@@ -6210,18 +6210,18 @@ XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, c
 					pInter_usd->set(terms_usd, dfs_usd);
 				}
 
-				fCurveName = dynamic_cast<const LADataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTFORECAST, ISNOTNULL).get()).get();
+				fCurveName = dynamic_cast<const AQLDataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTFORECAST, ISNOTNULL).get()).get();
 				if (fCurveName != STD)
 				{
-					suffix = LAString("_") +  fCurveName;
+					suffix = AQLString("_") +  fCurveName;
 				}
 				else
 				{
 					suffix = "";
 				}
-				const DoubleArray& terms_usd_3ML = dynamic_cast<const LADataDoubles& > ((fYieldData->getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
-				const DoubleArray& dfs_usd_3ML = dynamic_cast<const LADataDoubles& > ((fYieldData->getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
-				pInter_usd_3ML = dynamic_cast<LAInterpolationBase*>(dynamic_cast<const LAPriceDataInterpolation& > 
+				const DoubleArray& terms_usd_3ML = dynamic_cast<const AQLDataDoubles& > ((fYieldData->getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
+				const DoubleArray& dfs_usd_3ML = dynamic_cast<const AQLDataDoubles& > ((fYieldData->getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
+				pInter_usd_3ML = dynamic_cast<AQLInterpolationBase*>(dynamic_cast<const AQLPriceDataInterpolation& > 
 					((fYieldData->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL)).get()).getMethod().clone());
 				if (swapEndTerm > terms_usd_3ML.back())
 				{
@@ -6238,19 +6238,19 @@ XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, c
 			}
 			else
 			{
-				fCurveName = dynamic_cast<const LADataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTFORECAST, ISNOTNULL).get()).get();
+				fCurveName = dynamic_cast<const AQLDataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTFORECAST, ISNOTNULL).get()).get();
 				
 				if (fCurveName != STD)
 				{
-					suffix = LAString("_") +  fCurveName;
+					suffix = AQLString("_") +  fCurveName;
 				}
 				else
 				{
 					suffix = "";
 				}
-				const DoubleArray& fTerms = dynamic_cast<const LADataDoubles& > ((fYieldData->getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
-				const DoubleArray& fPrices = dynamic_cast<const LADataDoubles& > ((fYieldData->getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
-				pInter_fPrices = dynamic_cast<LAInterpolationBase*>(dynamic_cast<const LAPriceDataInterpolation& > 
+				const DoubleArray& fTerms = dynamic_cast<const AQLDataDoubles& > ((fYieldData->getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
+				const DoubleArray& fPrices = dynamic_cast<const AQLDataDoubles& > ((fYieldData->getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
+				pInter_fPrices = dynamic_cast<AQLInterpolationBase*>(dynamic_cast<const AQLPriceDataInterpolation& > 
 					((fYieldData->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL)).get()).getMethod().clone()); 
 				if (swapEndTerm > fTerms.back())
 				{
@@ -6271,31 +6271,31 @@ XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, c
 	{
 		if (mktData.size() == 0) return;
 
-		LAString suffix;
-		LAString fCurveName;
+		AQLString suffix;
+		AQLString fCurveName;
 		if (isRenAdj) 
 		{
 			if (!fYieldData)
 			{
-				throw LACoreInvalidData("Foreign yield data is null!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Foreign yield data is null!", __FILE__, __LINE__);
 			}
 
-			fCurveName = dynamic_cast<const LADataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTDISCOUNT, ISNOTNULL).get()).get();
+			fCurveName = dynamic_cast<const AQLDataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTDISCOUNT, ISNOTNULL).get()).get();
 			if (fCurveName == DUMMY)
 			{
-				throw LACoreInvalidData("do not set renotional adjust when the forecast curve is dummy!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("do not set renotional adjust when the forecast curve is dummy!", __FILE__, __LINE__);
 			}
 			else if (fCurveName != STD)
 			{
-				suffix = LAString("_") +  fCurveName;
+				suffix = AQLString("_") +  fCurveName;
 			}
 			else
 			{
 				suffix = "";
 			}
-			const DoubleArray& terms = dynamic_cast<const LADataDoubles& > ((fYieldData->getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
-			const DoubleArray& dfs = dynamic_cast<const LADataDoubles& > ((fYieldData->getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
-			pInter_baseccydf = dynamic_cast<LAInterpolationBase*> (dynamic_cast<const LAPriceDataInterpolation& > 
+			const DoubleArray& terms = dynamic_cast<const AQLDataDoubles& > ((fYieldData->getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
+			const DoubleArray& dfs = dynamic_cast<const AQLDataDoubles& > ((fYieldData->getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
+			pInter_baseccydf = dynamic_cast<AQLInterpolationBase*> (dynamic_cast<const AQLPriceDataInterpolation& > 
 				((fYieldData->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL)).get()).getMethod().clone());
 			if (swapEndTerm > terms.back())
 			{
@@ -6311,7 +6311,7 @@ XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, c
 			}
 		}
 		
-		fCurveName = dynamic_cast<const LADataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTFORECAST, ISNOTNULL).get()).get();
+		fCurveName = dynamic_cast<const AQLDataString &>(mktData[0]->getData(IR_CALIBRATION_DATA_AGTFORECAST, ISNOTNULL).get()).get();
 		if (fCurveName.findString(DUMMY) >= 0)
 		{
 			DoubleArray fTerms;
@@ -6325,7 +6325,7 @@ XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, c
 				fTerms.push_back(static_cast<double >(i));
 				fPrices.push_back(1.);
 			}
-			pInter_fPrices = new LALinearInterpolation(); 
+			pInter_fPrices = new AQLLinearInterpolation(); 
 			pInter_fPrices->set(fTerms, fPrices);
 
 			pCal = swapMkt.pCal;
@@ -6336,20 +6336,20 @@ XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, c
 		{
 			if (!fYieldData)
 			{
-				throw LACoreInvalidData("Foreign yield data is null!", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Foreign yield data is null!", __FILE__, __LINE__);
 			}
 
 			if (fCurveName != STD)
 			{
-				suffix = LAString("_") +  fCurveName;
+				suffix = AQLString("_") +  fCurveName;
 			}
 			else
 			{
 				suffix = "";
 			}
-			const DoubleArray& fTerms = dynamic_cast<const LADataDoubles& > ((fYieldData->getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
-			const DoubleArray& fPrices = dynamic_cast<const LADataDoubles& > ((fYieldData->getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
-			pInter_fPrices = dynamic_cast<LAInterpolationBase*>(dynamic_cast<const LAPriceDataInterpolation& > 
+			const DoubleArray& fTerms = dynamic_cast<const AQLDataDoubles& > ((fYieldData->getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
+			const DoubleArray& fPrices = dynamic_cast<const AQLDataDoubles& > ((fYieldData->getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
+			pInter_fPrices = dynamic_cast<AQLInterpolationBase*>(dynamic_cast<const AQLPriceDataInterpolation& > 
 				((fYieldData->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL)).get()).getMethod().clone()); 
 			if (swapEndTerm > fTerms.back())
 			{
@@ -6364,32 +6364,32 @@ XCCYBasisMarket( vector<const LAObject* > mktData, const LAObject* fYieldData, c
 				pInter_fPrices->set(fTerms, fPrices);
 			}
 
-			pCal = &dynamic_cast<const LAPriceDataCalendar&> ((fYieldData->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR + suffix, ISNOTNULL)).get());
-			sld = dynamic_cast<const LAPriceDataSlidingRule&> ((fYieldData->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE + suffix, ISNOTNULL)).get());
-			spotDate = dynamic_cast<const LADataDate&> ((fYieldData->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE + suffix, ISNOTNULL)).get()).get();
+			pCal = &dynamic_cast<const AQLPriceDataCalendar&> ((fYieldData->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR + suffix, ISNOTNULL)).get());
+			sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((fYieldData->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE + suffix, ISNOTNULL)).get());
+			spotDate = dynamic_cast<const AQLDataDate&> ((fYieldData->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE + suffix, ISNOTNULL)).get()).get();
 
 			isEOMRoll = false;
 			dh = &(fYieldData->getData(IR_CALIBRATION_DATA_ISEOMROLL + suffix, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+				isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 			}
 			roll_conv = isEOMRoll ? ROLLCONV_EOM : ROLLCONV_NORMAL;
 
-			mktTerms_str = dynamic_cast<const LADataStrings& > ((fYieldData->getData(IR_CALIBRATION_DATA_XCCYBASISTERM + suffix, ISNOTNULL)).get()).get();
+			mktTerms_str = dynamic_cast<const AQLDataStrings& > ((fYieldData->getData(IR_CALIBRATION_DATA_XCCYBASISTERM + suffix, ISNOTNULL)).get()).get();
 			for (size_t i=0; i<mktTerms_str.size(); i++)
 			{
-				LADate gridDate = LAMathDateCalculations::getDate(spotDate, mktTerms_str[i], sld, pCal, true, &roll_conv);
+				AQLDate gridDate = LAMathDateCalculations::getDate(spotDate, mktTerms_str[i], sld, pCal, true, &roll_conv);
 				mktTerms.push_back( dc_act365.getTerm(basedate, gridDate) );
 			}
 
-			const LADataHolder *dh = &(fYieldData->getData(IR_CALIBRATION_DATA_ADJUSTVALUETERM + suffix, NOCHECK));
+			const AQLDataHolder *dh = &(fYieldData->getData(IR_CALIBRATION_DATA_ADJUSTVALUETERM + suffix, NOCHECK));
 			if (dh->isDefined() && !dh->isNull())
 			{
-				const DoubleArray& adjustValue_term = dynamic_cast<const LADataDoubles&> (dh->get()).get();
+				const DoubleArray& adjustValue_term = dynamic_cast<const AQLDataDoubles&> (dh->get()).get();
 				const DoubleArray& adjustValue
-					= dynamic_cast<const LADataDoubles&> ((fYieldData->getData(IR_CALIBRATION_DATA_ADJUSTVALUE + suffix, ISNOTNULL)).get()).get();
-				pInter_adjust = dynamic_cast<LAInterpolationBase*> ((dynamic_cast<const LAPriceDataInterpolation&> 
+					= dynamic_cast<const AQLDataDoubles&> ((fYieldData->getData(IR_CALIBRATION_DATA_ADJUSTVALUE + suffix, ISNOTNULL)).get()).get();
+				pInter_adjust = dynamic_cast<AQLInterpolationBase*> ((dynamic_cast<const AQLPriceDataInterpolation&> 
 					(fYieldData->getData(IR_CALIBRATION_DATA_ADJUSTVALUEINTERPOLATION + suffix, ISNOTNULL).get())).getMethod().clone());
 				pInter_adjust->set(adjustValue_term,adjustValue);
 			}
@@ -6414,12 +6414,12 @@ LAPriceArbFreeGenerator::XCCYBasisMarket::XCCYBasisMarket(const XCCYBasisMarket&
 	pInter_baseccydf = NULL;
 	pInter_adjust = NULL;
 
-	if (v.pInter) pInter = dynamic_cast<LAInterpolationBase*>( v.pInter->clone() );
-	if (v.pInter_usd) pInter_usd = dynamic_cast<LAInterpolationBase*>( v.pInter_usd->clone() );
-	if (v.pInter_usd_3ML) pInter_usd_3ML = dynamic_cast<LAInterpolationBase*>( v.pInter_usd_3ML->clone() );
-	if (v.pInter_fPrices) pInter_fPrices = dynamic_cast<LAInterpolationBase*>( v.pInter_fPrices->clone() );
-	if (v.pInter_baseccydf) pInter_baseccydf = dynamic_cast<LAInterpolationBase*>( v.pInter_baseccydf->clone() );
-	if (v.pInter_adjust) pInter_adjust = dynamic_cast<LAInterpolationBase*>( v.pInter_adjust->clone() );
+	if (v.pInter) pInter = dynamic_cast<AQLInterpolationBase*>( v.pInter->clone() );
+	if (v.pInter_usd) pInter_usd = dynamic_cast<AQLInterpolationBase*>( v.pInter_usd->clone() );
+	if (v.pInter_usd_3ML) pInter_usd_3ML = dynamic_cast<AQLInterpolationBase*>( v.pInter_usd_3ML->clone() );
+	if (v.pInter_fPrices) pInter_fPrices = dynamic_cast<AQLInterpolationBase*>( v.pInter_fPrices->clone() );
+	if (v.pInter_baseccydf) pInter_baseccydf = dynamic_cast<AQLInterpolationBase*>( v.pInter_baseccydf->clone() );
+	if (v.pInter_adjust) pInter_adjust = dynamic_cast<AQLInterpolationBase*>( v.pInter_adjust->clone() );
 }
 
 LAPriceArbFreeGenerator::XCCYBasisMarket::~XCCYBasisMarket()
@@ -6433,77 +6433,77 @@ LAPriceArbFreeGenerator::XCCYBasisMarket::~XCCYBasisMarket()
 }
 
 LAPriceArbFreeGenerator::LiborBasisMarket::
-LiborBasisMarket( vector<const LAObject* > mktData, const SwapMarket& swapMkt, const LADate& basedate )
+LiborBasisMarket( vector<const AQLObject* > mktData, const SwapMarket& swapMkt, const AQLDate& basedate )
 {
-	if (mktData.size() == 0) throw LACoreInvalidData("No Swap Market Object", __FILE__, __LINE__);
-	const LADataHolder *dh;
+	if (mktData.size() == 0) throw AQLCoreInvalidData("No Swap Market Object", __FILE__, __LINE__);
+	const AQLDataHolder *dh;
 
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-	bool isAgtSpread = dynamic_cast<const LADataBool&> ((mktData[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL)).get());
-	pCal = &dynamic_cast<const LAPriceDataCalendar&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL)).get());
-	sld = dynamic_cast<const LAPriceDataSlidingRule&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL)).get());
-	spotDate = dynamic_cast<const LADataDate&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE, ISNOTNULL)).get()).get();
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+	bool isAgtSpread = dynamic_cast<const AQLDataBool&> ((mktData[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL)).get());
+	pCal = &dynamic_cast<const AQLPriceDataCalendar&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETCALENDAR, ISNOTNULL)).get());
+	sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETSLIDINGRULE, ISNOTNULL)).get());
+	spotDate = dynamic_cast<const AQLDataDate&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETSPOTDATE, ISNOTNULL)).get()).get();
 	//check frequency
-	LAString freq = dynamic_cast<const LADataString&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCY, ISNOTNULL)).get()).get();
-	LAString freq_against = dynamic_cast<const LADataString&> ((mktData[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCY, ISNOTNULL)).get()).get();
+	AQLString freq = dynamic_cast<const AQLDataString&> ((mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCY, ISNOTNULL)).get()).get();
+	AQLString freq_against = dynamic_cast<const AQLDataString&> ((mktData[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCY, ISNOTNULL)).get()).get();
 	freq_3L_pay = QUARTERLY;
 	if (isAgtSpread)
 	{
 		if (freq != SEMI_ANNUAL || freq_against != QUARTERLY)
-			throw LACoreInvalidData("ArbFree curve does not support a case of spread on the 6M leg of 36 basis swap!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("ArbFree curve does not support a case of spread on the 6M leg of 36 basis swap!", __FILE__, __LINE__);
 		dh = &mktData[0]->getData(IR_CALIBRATION_DATA_AGTCASHLETFREQUENCYCOMPOUND, NOCHECK); 
 		if (dh->isDefined() && !dh->isNull()) 
 		{ 
-			freq_3L_pay = dynamic_cast<const LADataString&> (dh->get());
+			freq_3L_pay = dynamic_cast<const AQLDataString&> (dh->get());
 		}
 	}
 	else
 	{
 		if (freq != QUARTERLY || freq_against != SEMI_ANNUAL)
-			throw LACoreInvalidData("ArbFree curve does not support a case of spread on the 6M leg of 36 basis swap!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("ArbFree curve does not support a case of spread on the 6M leg of 36 basis swap!", __FILE__, __LINE__);
 		dh = &mktData[0]->getData(IR_CALIBRATION_DATA_CASHLETFREQUENCYCOMPOUND, NOCHECK); 
 		if (dh->isDefined() && !dh->isNull()) 
 		{ 
-			freq_3L_pay = dynamic_cast<const LADataString&> (dh->get());
+			freq_3L_pay = dynamic_cast<const AQLDataString&> (dh->get());
 		}
 	}
 
 	if (freq_3L_pay != QUARTERLY && freq_3L_pay != SEMI_ANNUAL)
-		throw LACoreInvalidData("ArbFree curve supports a case that payment of the 3M leg of 36 basis swap is quarterly or semi-annual!", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("ArbFree curve supports a case that payment of the 3M leg of 36 basis swap is quarterly or semi-annual!", __FILE__, __LINE__);
 
 	isEOMRoll = false;
 	dh = &(mktData[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	roll_conv = isEOMRoll ? ROLLCONV_EOM : ROLLCONV_NORMAL;
 
     if (isAgtSpread)
 	{
-		dc_3L = dynamic_cast<const LAPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
-		dc_6L = dynamic_cast<const LAPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
+		dc_3L = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
+		dc_6L = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
 	}
 	else
 	{
-		dc_3L = dynamic_cast<const LAPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
-		dc_6L = dynamic_cast<const LAPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
+		dc_3L = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
+		dc_6L = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
 	}
 
 	for (size_t i = 0; i < mktData.size(); ++i)
 	{
-		double rate = dynamic_cast<const LADataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		LAString term = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+		double rate = dynamic_cast<const AQLDataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+		AQLString term = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		mktRates.push_back(rate);
 		mktTerms_str.push_back(term);
 	}
 
     for(size_t i=0; i < mktRates.size(); ++i)
     {
-		LADate gridDate = LAMathDateCalculations::getDate(swapMkt.spotDate, mktTerms_str[i], swapMkt.sld, swapMkt.pCal, true, &roll_conv);
+		AQLDate gridDate = LAMathDateCalculations::getDate(swapMkt.spotDate, mktTerms_str[i], swapMkt.sld, swapMkt.pCal, true, &roll_conv);
         mktTerms.push_back( dc_act365.getTerm(basedate, gridDate) );
     }
-	pInter = dynamic_cast<LAInterpolationBase*> ((dynamic_cast<const LAPriceDataInterpolation&> 
+	pInter = dynamic_cast<AQLInterpolationBase*> ((dynamic_cast<const AQLPriceDataInterpolation&> 
 		(mktData[0]->getData(CALIBRATION_DATA_INTERPOLATION, ISNOTNULL).get())).getMethod().clone());
 	pInter->set(mktTerms,mktRates);
 
@@ -6519,7 +6519,7 @@ LAPriceArbFreeGenerator::LiborBasisMarket::LiborBasisMarket(const LiborBasisMark
 	dateGrid_3MRoll(v.dateGrid_3MRoll), dateGrid_6MRoll(v.dateGrid_6MRoll),	termGrid_3MRoll(v.termGrid_3MRoll), 
 	termGrid_6MRoll(v.termGrid_6MRoll), sld(v.sld), pCal(v.pCal), spotDate(v.spotDate), endDate(v.endDate), freq_3L_pay(v.freq_3L_pay)
 {
-	pInter = dynamic_cast<LAInterpolationBase*>( v.pInter->clone() );
+	pInter = dynamic_cast<AQLInterpolationBase*>( v.pInter->clone() );
 }
 
 LAPriceArbFreeGenerator::LiborBasisMarket::~LiborBasisMarket()
@@ -6528,39 +6528,39 @@ LAPriceArbFreeGenerator::LiborBasisMarket::~LiborBasisMarket()
 }
 
 LAPriceArbFreeGenerator::FRAMarket::
-FRAMarket( vector<const LAObject* > mktData, bool isFRAUse )
+FRAMarket( vector<const AQLObject* > mktData, bool isFRAUse )
 {
 	if (!isFRAUse || mktData.size() == 0) return;
 
 	DoubleArray rates;
-	LAStringVector terms_str;
+	AQLStringVector terms_str;
 	for (size_t i=0; i<mktData.size(); i++)
 	{
-		double rate = dynamic_cast<const LADataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-		LAString term = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+		double rate = dynamic_cast<const AQLDataDouble&> ((mktData[i]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+		AQLString term = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 		rates.push_back(rate);
 		terms_str.push_back(LAPriceYieldGenerator::changeFRATermFormat(term));
 	}
-	//const DoubleArray& rates = dynamic_cast<const LADataDoubles&> ((mktData->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
-    //const LAStringVector& terms = dynamic_cast<const LADataStrings&> ((mktData->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
+	//const DoubleArray& rates = dynamic_cast<const AQLDataDoubles&> ((mktData->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
+    //const AQLStringVector& terms = dynamic_cast<const AQLDataStrings&> ((mktData->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
     
 	if( rates.size() != terms_str.size() )
-    throw LACoreInvalidData("size of libor market rates and size of libor market terms are not same.", __FILE__, __LINE__);
+    throw AQLCoreInvalidData("size of libor market rates and size of libor market terms are not same.", __FILE__, __LINE__);
 
 	for(size_t i=0; i<rates.size(); i++)
     {
-        map_term_rate.insert( map<LAString, double >::value_type(terms_str[i], rates[i]) );
+        map_term_rate.insert( map<AQLString, double >::value_type(terms_str[i], rates[i]) );
     }     
 	
-	spotDate = dynamic_cast<const LADataDate&> ((mktData[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
-	sld = dynamic_cast<const LAPriceDataSlidingRule&> ((mktData[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-    dc = dynamic_cast<const LAPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-    pCal = &dynamic_cast<const LAPriceDataCalendar&> ((mktData[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+	spotDate = dynamic_cast<const AQLDataDate&> ((mktData[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
+	sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((mktData[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+    dc = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+    pCal = &dynamic_cast<const AQLPriceDataCalendar&> ((mktData[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 	isEOMRoll = false;
-	const LADataHolder *dh = &(mktData[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
+	const AQLDataHolder *dh = &(mktData[0]->getData(IR_CALIBRATION_DATA_ISEOMROLL, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isEOMRoll = dynamic_cast<const LADataBool &>(dh->get()).get();
+		isEOMRoll = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	roll_conv = isEOMRoll ? ROLLCONV_EOM : ROLLCONV_NORMAL;
 }
@@ -6568,20 +6568,20 @@ FRAMarket( vector<const LAObject* > mktData, bool isFRAUse )
 LAPriceArbFreeGenerator::FRAMarket::~FRAMarket(){}
 
 LAPriceArbFreeGenerator::FutureMarket::
-FutureMarket( vector<const LAObject* > mktData, const SwapMarket& swapMkt, bool isFutureUse, const LADate& basedate )
+FutureMarket( vector<const AQLObject* > mktData, const SwapMarket& swapMkt, bool isFutureUse, const AQLDate& basedate )
 {
 	if (!isFutureUse || mktData.size() == 0) return;
 
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-	LADate firstSwapDate = LAMathDateCalculations::getDate(swapMkt.spotDate, swapMkt.mktTerms_str[0], swapMkt.sld, swapMkt.pCal, true, &swapMkt.roll_conv);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLDate firstSwapDate = LAMathDateCalculations::getDate(swapMkt.spotDate, swapMkt.mktTerms_str[0], swapMkt.sld, swapMkt.pCal, true, &swapMkt.roll_conv);
 
-	LADate startDate, endDate;
+	AQLDate startDate, endDate;
 	double rate;
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	for (size_t i=0; i<mktData.size(); i++)
 	{
-		startDate = dynamic_cast<const LADataDate&> ((mktData[i]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
-		endDate = dynamic_cast<const LADataDate&> ((mktData[i]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
+		startDate = dynamic_cast<const AQLDataDate&> ((mktData[i]->getData(PRICING_DATA_STARTDATE, ISNOTNULL)).get()).get();
+		endDate = dynamic_cast<const AQLDataDate&> ((mktData[i]->getData(PRICING_DATA_ENDDATE, ISNOTNULL)).get()).get();
 		if (endDate >= firstSwapDate) break;
 		if (startDate <= swapMkt.spotDate) continue;
 
@@ -6591,36 +6591,36 @@ FutureMarket( vector<const LAObject* > mktData, const SwapMarket& swapMkt, bool 
 		dh = &(mktData[i]->getData(CALIBRATION_DATA_RATE, NOCHECK));
 		if (dh->isDefined() && !dh->isNull()) 
 		{
-			rate = dynamic_cast<const LADataDouble&> (dh->get()).get();
+			rate = dynamic_cast<const AQLDataDouble&> (dh->get()).get();
 		}
 		else 
 		{
-			double price = dynamic_cast<const LADataDouble&> ((mktData[i]->getData(PRICING_DATA_PRICE, ISNOTNULL)).get()).get(); 
+			double price = dynamic_cast<const AQLDataDouble&> ((mktData[i]->getData(PRICING_DATA_PRICE, ISNOTNULL)).get()).get(); 
 			rate = 1.0 - price * 0.01;
 		}	
 
 		// get spread
 		double sp = 0.0;
 		dh = &(mktData[i]->getData(PRICING_DATA_SPREAD, NOCHECK));
-		if (dh->isDefined() && !dh->isNull()) sp = dynamic_cast<const LADataDouble&> (dh->get()).get();
+		if (dh->isDefined() && !dh->isNull()) sp = dynamic_cast<const AQLDataDouble&> (dh->get()).get();
 		rate += sp;
 		
 		// get future volatility
 		double f_vol = 0.0;
 		dh = &(mktData[i]->getData(PRICING_DATA_FUTUREVOLATILITY, NOCHECK));
-		if (dh->isDefined() && !dh->isNull()) f_vol = dynamic_cast<const LADataDouble&> (dh->get()).get();
+		if (dh->isDefined() && !dh->isNull()) f_vol = dynamic_cast<const AQLDataDouble&> (dh->get()).get();
 		
 		RateConvention rc = LAMathYieldCurve::setRC(SIMPLE);
-		LAPriceDataConvention conv(dc.getDayCount(), rc);
+		AQLPriceDataConvention conv(dc.getDayCount(), rc);
 		if(f_vol > 0.0)
 		{
 			/*double start_term = dc_act365.getTerm(swapMkt.spotDate, startDate);
 			double term = dc.getTerm(startDate, endDate, false);
 			double term_rate = 1.0 / conv.getDF(rate, startDate, endDate) - 1.; 
 			rate = (term_rate - 1) 
-					+ LAMath::sqrt((LAMath::sqr(term_rate - 1) +
-						   4 * term_rate * LAMath::exp(LAMath::sqr(f_vol) * start_term)));
-			rate = rate / (2 * term * LAMath::exp(LAMath::sqr(f_vol) * start_term));*/
+					+ AQLMath::sqrt((AQLMath::sqr(term_rate - 1) +
+						   4 * term_rate * AQLMath::exp(AQLMath::sqr(f_vol) * start_term)));
+			rate = rate / (2 * term * AQLMath::exp(AQLMath::sqr(f_vol) * start_term));*/
 			//Convexity Adjust by Ho-Lee Model 
 			double start_term = dc_act365.getTerm(basedate, startDate);
 			double end_term = dc_act365.getTerm(basedate, endDate);
@@ -6629,13 +6629,13 @@ FutureMarket( vector<const LAObject* > mktData, const SwapMarket& swapMkt, bool 
 		mktRates.push_back(rate);
 	}
 
-	dc  = dynamic_cast<const LAPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
+	dc  = dynamic_cast<const AQLPriceDataDayCount&> ((mktData[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 }
 
 LAPriceArbFreeGenerator::FutureMarket::~FutureMarket(){}
 
 LAPriceArbFreeGenerator::LAMathAFCurveCalibrator::LAMathAFCurveCalibrator(
-	const LADate& basedate_,
+	const AQLDate& basedate_,
 	const DoubleArray& threeMLTerms_DF_, 
 	const DoubleArray& threeMLDF_, 
 	const DoubleArray& sixMLTerms_DF_, 
@@ -6647,9 +6647,9 @@ LAPriceArbFreeGenerator::LAMathAFCurveCalibrator::LAMathAFCurveCalibrator(
 	const SwapMarket& swapMkt_, 
 	const XCCYBasisMarket& xccyBasisMkt_, 
 	const LiborBasisMarket& libBasisMkt_, 
-	LAInterpolationBase* pInter_3ML_, 
-	LAInterpolationBase* pInter_6ML_, 
-	LAInterpolationBase* pInter_DF_, 
+	AQLInterpolationBase* pInter_3ML_, 
+	AQLInterpolationBase* pInter_6ML_, 
+	AQLInterpolationBase* pInter_DF_, 
 	const size_t& shortTermSize_3ML_, 
 	const size_t& shortTermSize_6ML_, 
 	const size_t& shortTermSize_DF_, 
@@ -6751,24 +6751,24 @@ LAPriceArbFreeGenerator::LAMathAFCurveCalibrator::constraintsAreViolated( const 
 	@param[in] curveName          
 */
 void
-LAPriceArbFreeGenerator::setCurveConvention(	LAObjectHolder& objHolder,
-											std::vector<LAObject*>& mktData,
-											const LAStringVector& curveNames_3ML,
-											const LAStringVector& curveNames_6ML)
+LAPriceArbFreeGenerator::setCurveConvention(	AQLObjectHolder& objHolder,
+											std::vector<AQLObject*>& mktData,
+											const AQLStringVector& curveNames_3ML,
+											const AQLStringVector& curveNames_6ML)
 {
-	const LADataHolder *dh;
+	const AQLDataHolder *dh;
 
-	vector<const LAObject*> data_swap, data_libor, data_3m6m;
+	vector<const AQLObject*> data_swap, data_libor, data_3m6m;
 	for(unsigned i = 0; i < mktData.size(); i++)
 	{
 		// check use grid
 		dh = &mktData[i]->getData(IR_CALIBRATION_DATA_GRIDUSEFLAG, NOCHECK);
-		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const LADataBool &>(dh->get()).get()) continue;
+		if (dh->isDefined() && !dh->isNull() && !dynamic_cast<const AQLDataBool &>(dh->get()).get()) continue;
 
-		LAString dataType = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
+		AQLString dataType = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		dataType.toUpper();
 
-		LAString dataName = dynamic_cast<const LADataString&> ((mktData[i]->getData(CALIBRATION_DATA_NAME, ISNOTNULL)).get()).get();
+		AQLString dataName = dynamic_cast<const AQLDataString&> ((mktData[i]->getData(CALIBRATION_DATA_NAME, ISNOTNULL)).get()).get();
 		dataName.toUpper();
 
 		if (dataType == ZERO) data_libor.push_back(mktData[i]);//libor case
@@ -6776,31 +6776,31 @@ LAPriceArbFreeGenerator::setCurveConvention(	LAObjectHolder& objHolder,
 		else if (dataType == BASIS && dataName.findString(THREESIXBASIS) != -1) data_3m6m.push_back(mktData[i]);//3m6m basis swap
 	}
 
-	if (data_libor.size() == 0) throw LACoreInvalidData("No Libor Market Object", __FILE__, __LINE__);
-	if (data_swap.size() == 0) throw LACoreInvalidData("No Swap Market Object", __FILE__, __LINE__);
-	if (data_3m6m.size() == 0) throw LACoreInvalidData("No 3M6M Basis Swap Market Object", __FILE__, __LINE__);
+	if (data_libor.size() == 0) throw AQLCoreInvalidData("No Libor Market Object", __FILE__, __LINE__);
+	if (data_swap.size() == 0) throw AQLCoreInvalidData("No Swap Market Object", __FILE__, __LINE__);
+	if (data_3m6m.size() == 0) throw AQLCoreInvalidData("No 3M6M Basis Swap Market Object", __FILE__, __LINE__);
 
-	LAString baseFreq = dynamic_cast<const LADataString&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, ISNOTNULL)).get());
-	const LAPriceDataCalendar* cal = &dynamic_cast<const LAPriceDataCalendar&> ((data_libor[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-	const LAPriceDataSlidingRule* sld = &dynamic_cast<const LAPriceDataSlidingRule&> ((data_libor[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+	AQLString baseFreq = dynamic_cast<const AQLDataString&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, ISNOTNULL)).get());
+	const AQLPriceDataCalendar* cal = &dynamic_cast<const AQLPriceDataCalendar&> ((data_libor[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
+	const AQLPriceDataSlidingRule* sld = &dynamic_cast<const AQLPriceDataSlidingRule&> ((data_libor[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 
-	const LAPriceDataDayCount* dc_3ml;
-	const LAPriceDataDayCount* dc_6ml;
-	bool isAgtSpread = dynamic_cast<const LADataBool&> ((data_3m6m[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL)).get());
+	const AQLPriceDataDayCount* dc_3ml;
+	const AQLPriceDataDayCount* dc_6ml;
+	bool isAgtSpread = dynamic_cast<const AQLDataBool&> ((data_3m6m[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL)).get());
 	if (isAgtSpread)
 	{
-		dc_3ml = &dynamic_cast<const LAPriceDataDayCount&> ((data_3m6m[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
-		dc_6ml = &dynamic_cast<const LAPriceDataDayCount&> ((data_3m6m[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
+		dc_3ml = &dynamic_cast<const AQLPriceDataDayCount&> ((data_3m6m[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
+		dc_6ml = &dynamic_cast<const AQLPriceDataDayCount&> ((data_3m6m[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
 	}
 	else
 	{
-		dc_6ml = &dynamic_cast<const LAPriceDataDayCount&> ((data_3m6m[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
-		dc_3ml = &dynamic_cast<const LAPriceDataDayCount&> ((data_3m6m[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
+		dc_6ml = &dynamic_cast<const AQLPriceDataDayCount&> ((data_3m6m[0]->getData(IR_CALIBRATION_DATA_AGTINDEXDAYCOUNT, ISNOTNULL)).get());
+		dc_3ml = &dynamic_cast<const AQLPriceDataDayCount&> ((data_3m6m[0]->getData(IR_CALIBRATION_DATA_INDEXDAYCOUNT, ISNOTNULL)).get());
 	}
-	//const LAPriceDataSlidingRule* sld = &dynamic_cast<const LAPriceDataSlidingRule&> ((data_swap[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
+	//const AQLPriceDataSlidingRule* sld = &dynamic_cast<const AQLPriceDataSlidingRule&> ((data_swap[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
 
 	bool isSTDExist = false;
-	LAString suffix = "";
+	AQLString suffix = "";
 	for (size_t i = 0; i < curveNames_6ML.size(); i++)
 	{	
 		if (curveNames_6ML[i] == STD)
@@ -6819,11 +6819,11 @@ LAPriceArbFreeGenerator::setCurveConvention(	LAObjectHolder& objHolder,
 		objHolder.remove(IR_CALIBRATION_DATA_DAYCOUNT + suffix);
 		objHolder.remove(IR_CALIBRATION_DATA_ACCESSARY + suffix);
 		
-		objHolder.add(IR_CALIBRATION_DATA_FREQUENCY + suffix, new LADataString(SIMPLE));
-		objHolder.add(CALIBRATION_DATA_CALENDAR + suffix, new LAPriceDataCalendar(*cal));
-		objHolder.add(CALIBRATION_DATA_SLIDINGRULE + suffix, new LAPriceDataSlidingRule(*sld));
-		objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT + suffix, new LAPriceDataDayCount(*dc_6ml));
-		objHolder.add(IR_CALIBRATION_DATA_ACCESSARY + suffix, new LADataString("6M"));
+		objHolder.add(IR_CALIBRATION_DATA_FREQUENCY + suffix, new AQLDataString(SIMPLE));
+		objHolder.add(CALIBRATION_DATA_CALENDAR + suffix, new AQLPriceDataCalendar(*cal));
+		objHolder.add(CALIBRATION_DATA_SLIDINGRULE + suffix, new AQLPriceDataSlidingRule(*sld));
+		objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT + suffix, new AQLPriceDataDayCount(*dc_6ml));
+		objHolder.add(IR_CALIBRATION_DATA_ACCESSARY + suffix, new AQLDataString("6M"));
 	}
 
 	for (size_t i = 0; i < curveNames_3ML.size(); i++)
@@ -6844,11 +6844,11 @@ LAPriceArbFreeGenerator::setCurveConvention(	LAObjectHolder& objHolder,
 		objHolder.remove(IR_CALIBRATION_DATA_DAYCOUNT + suffix);
 		objHolder.remove(IR_CALIBRATION_DATA_ACCESSARY + suffix);
 		
-		objHolder.add(IR_CALIBRATION_DATA_FREQUENCY + suffix, new LADataString(SIMPLE));
-		objHolder.add(CALIBRATION_DATA_CALENDAR + suffix, new LAPriceDataCalendar(*cal));
-		objHolder.add(CALIBRATION_DATA_SLIDINGRULE + suffix, new LAPriceDataSlidingRule(*sld));
-		objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT + suffix, new LAPriceDataDayCount(*dc_3ml));
-		objHolder.add(IR_CALIBRATION_DATA_ACCESSARY + suffix, new LADataString("3M"));
+		objHolder.add(IR_CALIBRATION_DATA_FREQUENCY + suffix, new AQLDataString(SIMPLE));
+		objHolder.add(CALIBRATION_DATA_CALENDAR + suffix, new AQLPriceDataCalendar(*cal));
+		objHolder.add(CALIBRATION_DATA_SLIDINGRULE + suffix, new AQLPriceDataSlidingRule(*sld));
+		objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT + suffix, new AQLPriceDataDayCount(*dc_3ml));
+		objHolder.add(IR_CALIBRATION_DATA_ACCESSARY + suffix, new AQLDataString("3M"));
 	}
 	
 	if (!isSTDExist)
@@ -6861,11 +6861,11 @@ LAPriceArbFreeGenerator::setCurveConvention(	LAObjectHolder& objHolder,
 			objHolder.remove(IR_CALIBRATION_DATA_DAYCOUNT);
 			objHolder.remove(IR_CALIBRATION_DATA_ACCESSARY);
 			
-			objHolder.add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString(SIMPLE));
-			objHolder.add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar(*cal));
-			objHolder.add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule(*sld));
-			objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount(*dc_6ml));
-			objHolder.add(IR_CALIBRATION_DATA_ACCESSARY, new LADataString("6M"));
+			objHolder.add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString(SIMPLE));
+			objHolder.add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar(*cal));
+			objHolder.add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule(*sld));
+			objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount(*dc_6ml));
+			objHolder.add(IR_CALIBRATION_DATA_ACCESSARY, new AQLDataString("6M"));
 		}
 		else if ( baseFreq == QUARTERLY )
 		{
@@ -6875,15 +6875,15 @@ LAPriceArbFreeGenerator::setCurveConvention(	LAObjectHolder& objHolder,
 			objHolder.remove(IR_CALIBRATION_DATA_DAYCOUNT);
 			objHolder.remove(IR_CALIBRATION_DATA_ACCESSARY);
 			
-			objHolder.add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString(SIMPLE));
-			objHolder.add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar(*cal));
-			objHolder.add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule(*sld));
-			objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount(*dc_3ml));
-			objHolder.add(IR_CALIBRATION_DATA_ACCESSARY, new LADataString("3M"));
+			objHolder.add(IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString(SIMPLE));
+			objHolder.add(CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar(*cal));
+			objHolder.add(CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule(*sld));
+			objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount(*dc_3ml));
+			objHolder.add(IR_CALIBRATION_DATA_ACCESSARY, new AQLDataString("3M"));
 		}
 		else
 		{
-			throw LACoreInvalidData("swap floating leg frequecy is not supported.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("swap floating leg frequecy is not supported.", __FILE__, __LINE__);
 		}
 	}
 }	

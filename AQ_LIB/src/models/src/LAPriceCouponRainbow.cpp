@@ -15,14 +15,14 @@
 
 #include "LAPriceCouponRainbow.h"
 
-#include "LAObject.h"
-#include "LAObjectHolder.h"
-#include "LADataBasics.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
+#include "AQLObject.h"
+#include "AQLObjectHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
 
-#include "LAPriceDataDayCount.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathPathEntity.h"
 #include "LAMathFXEntity.h"
 
@@ -52,14 +52,14 @@ LAPriceCouponRainbow::~LAPriceCouponRainbow()
 bool
 LAPriceCouponRainbow::isTypeOf(function_t id) const
 {
-	return (id == FN_CPNSLTOPERATORRAINBOW ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CPNSLTOPERATORRAINBOW ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceCouponRainbow::clone() const    
 {
     try 
@@ -68,7 +68,7 @@ LAPriceCouponRainbow::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }	
 }
 
@@ -89,7 +89,7 @@ LAPriceCouponRainbow::getType() const
 	@param[in, out] dm Data master 
 */
 void
-LAPriceCouponRainbow::registerData(LAPriceDataManager& dm) const
+LAPriceCouponRainbow::registerData(AQLPriceDataManager& dm) const
 {
 	dm.setData(PRICING_DATA_PATHENTITY,		DATA_REFERENCE);
 	dm.setData(PRICING_DATA_CURRENCY,		DATA_STRING);
@@ -109,7 +109,7 @@ LAPriceCouponRainbow::registerData(LAPriceDataManager& dm) const
 	@param[in] current position of payoff(first payoff position = 0)
 */
 void
-LAPriceCouponRainbow::setUp(const LADate& basedate, const LAObject& trade, unsigned int legNo, const LAObject& cashlet) 
+LAPriceCouponRainbow::setUp(const AQLDate& basedate, const AQLObject& trade, unsigned int legNo, const AQLObject& cashlet) 
 {
 	(void)basedate;	(void)legNo; //20070411--Nagase--gcc
 	mpFX_for_Notional = NULL;
@@ -117,21 +117,21 @@ LAPriceCouponRainbow::setUp(const LADate& basedate, const LAObject& trade, unsig
 	mCouponsCur.clear();
 
 	//fx rate for notional
-	const LADataHolder* ah = &(cashlet.getData(PRICING_DATA_FXRATE, NOCHECK));
+	const AQLDataHolder* ah = &(cashlet.getData(PRICING_DATA_FXRATE, NOCHECK));
 	if (ah->isDefined() && !ah->isNull())
 	{
-		const LADataReference& ref = dynamic_cast<const LADataReference&>(ah->get());
+		const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(ah->get());
 		mpFX_for_Notional = &dynamic_cast<const LAMathFXEntity&>(ref.get().get());	
 	}
 	//notional currecny
 	ah = &(cashlet.getData(PRICING_DATA_CURRENCY, NOCHECK));
 	if (ah->isDefined() && !ah->isNull())
-		mNotionalCur = dynamic_cast<const LADataString&>(ah->get()).get();	
+		mNotionalCur = dynamic_cast<const AQLDataString&>(ah->get()).get();	
 	
 	//coupon info
 	ah = &(cashlet.getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 	if (!ah->isDefined() || ah->isNull()) return;//extra cf only
-	const LADataMultiReference& couponinfos = dynamic_cast<const LADataMultiReference&>(ah->get());
+	const AQLDataMultiReference& couponinfos = dynamic_cast<const AQLDataMultiReference&>(ah->get());
 
 	mpFX_for_Coupons.resize(couponinfos.getSize(), NULL);
 	mCouponsCur.resize(couponinfos.getSize());
@@ -139,25 +139,25 @@ LAPriceCouponRainbow::setUp(const LADate& basedate, const LAObject& trade, unsig
 	{
 		//coupon currecny
 		ah = &(couponinfos.get(i).getData(PRICING_DATA_CURRENCY, ISNOTNULL));
-		mCouponsCur[i] = dynamic_cast<const LADataString&>(ah->get()).get();
+		mCouponsCur[i] = dynamic_cast<const AQLDataString&>(ah->get()).get();
 		//fx rate for notional
 		ah = &(couponinfos.get(i).getData(PRICING_DATA_FXRATE, NOCHECK));
 		if (ah->isDefined() && !ah->isNull())
 		{
-			const LADataReference& ref = dynamic_cast<const LADataReference&>(ah->get());
+			const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(ah->get());
 			mpFX_for_Coupons[i] = &dynamic_cast<const LAMathFXEntity&>(ref.get().get());	
 		}		
 	}
 
 	//payment date
 	ah = &(cashlet.getData(PRICING_DATA_PAYMENTDATE, ISNOTNULL));
-	const LADate& paymentdate = dynamic_cast<const LADataDate&>(ah->get()).get();
+	const AQLDate& paymentdate = dynamic_cast<const AQLDataDate&>(ah->get()).get();
 	//path entity
 	ah = &(trade.getData(PRICING_DATA_PATHENTITY, ISNOTNULL));
-	const LADataReference& ref = dynamic_cast<const LADataReference&>(ah->get());
+	const AQLDataReference& ref = dynamic_cast<const AQLDataReference&>(ah->get());
 	const LAMathPathEntity& path = dynamic_cast<const LAMathPathEntity&>(ref.get().get());
 	//daycount of path entity
-	const LAPriceDataDayCount& dc_path = path.getDayCount();
+	const AQLPriceDataDayCount& dc_path = path.getDayCount();
 	//payment time
 	mPaymentTime = dc_path.getTerm(path.getAsOfDate().get(), paymentdate);
 

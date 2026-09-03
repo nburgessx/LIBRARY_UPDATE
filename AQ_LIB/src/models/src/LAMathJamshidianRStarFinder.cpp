@@ -6,24 +6,24 @@
 #endif
 
 #include "LAMathJamshidianRStarFinder.h"
-#include "LAObject.h"
-#include "LADataProcedure.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LADataReference.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLObject.h"
+#include "AQLDataProcedure.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "LAModelDynamicsHW1FCurve.h"
 
 using namespace std;
@@ -31,7 +31,7 @@ using namespace std;
 
 LAMathJamshidianRStarFinder::LAMathJamshidianRStarFinder(double strike, double premium, const DoubleVector& grids, 
 													  const DoubleVector& deltas, LARatesPathElementCurve* pcurve)
-													  : LAFunctionBase(), mStrike(strike),mPrem(premium),mGrids(grids),mDelta(deltas),is_cloned(false)
+													  : AQLFunctionBase(), mStrike(strike),mPrem(premium),mGrids(grids),mDelta(deltas),is_cloned(false)
 {
 	mpCurve = pcurve;
 }
@@ -51,7 +51,7 @@ LAMathJamshidianRStarFinder::~LAMathJamshidianRStarFinder()
 */
 LAMathJamshidianRStarFinder::LAMathJamshidianRStarFinder(const LAMathJamshidianRStarFinder &rhs) 
 :
-LAFunctionBase(rhs),mStrike(rhs.mStrike),mPrem(rhs.mPrem),mGrids(rhs.mGrids),mDelta(rhs.mDelta),is_cloned(true),
+AQLFunctionBase(rhs),mStrike(rhs.mStrike),mPrem(rhs.mPrem),mGrids(rhs.mGrids),mDelta(rhs.mDelta),is_cloned(true),
 mpCurve(rhs.mpCurve !=0 ? dynamic_cast<LARatesPathElementCurve*>(rhs.mpCurve->clone()) : 0)
 {
 }
@@ -67,7 +67,7 @@ LAMathJamshidianRStarFinder::getType() const
 	return FN_JAMSHIDIANRSTARFINDER;
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAMathJamshidianRStarFinder::clone() const
 {
     try 
@@ -76,7 +76,7 @@ LAMathJamshidianRStarFinder::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -86,7 +86,7 @@ LAMathJamshidianRStarFinder::operator()(const DoubleArray& x) const
 {
 	if(x.size() == 1)
 		return operator()(x[0]);
-	throw LACoreInvalidData("parameter size must be one", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("parameter size must be one", __FILE__, __LINE__);
 }
 
 

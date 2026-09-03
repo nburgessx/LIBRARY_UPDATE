@@ -12,15 +12,15 @@
 
 //+++++ INCLUDE +++++
 #include "LAModelDynamicsAFFCurve.h"
-#include "LAString.h"
-#include "LABasic.h"
+#include "AQLString.h"
+#include "AQLBasic.h"
 #include "float.h"
 #include <cmath>
 
 using namespace std;
 class LARatesPathElementSRCurve;
 
-static const double MAXIMUM_10031 = LAMath::log(DBL_MAX) - 1.0;
+static const double MAXIMUM_10031 = AQLMath::log(DBL_MAX) - 1.0;
 //================ LARatesPathElementAFFCurve ===================================
 /*!
 	@brief default constructor
@@ -57,9 +57,9 @@ LARatesPathElementAFFCurve::getP (double T) const
 
 	double afval = A(T)-B(T)*mValue[0];
 	if(afval > MAXIMUM_10031)
-		return LAMath::exp(MAXIMUM_10031);
+		return AQLMath::exp(MAXIMUM_10031);
 	else
-		return LAMath::exp(afval);
+		return AQLMath::exp(afval);
 }
 /*!
     @brief Return this path element type

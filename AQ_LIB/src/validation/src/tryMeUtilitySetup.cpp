@@ -1,4 +1,4 @@
-#include "LADataInstance.h"
+#include "AQLDataInstance.h"
 #include "InitializeAQETrading.h"
 #include "LibSetUpETrading.h"
 #include "LAUpdateStaticDataManager.h"
@@ -17,7 +17,7 @@
 #include "EnvironmentUtilities.h"
 #include "FolderConfig.h"
 #include "VersionNumber.h"
-#include "LACoreLockControl.h"
+#include "AQLCoreLockControl.h"
 #include "ExceptionMacros.h"
 #include "CurveResultsContainer.h"  // Curve Results Container/Cache
 #include "SwapResultsContainer.h"   // Swap Results Container/Cache
@@ -64,18 +64,18 @@ namespace validation
 		LACoreDataService::setContext(CONTEXT_KEY_ISSETCURVEID, "TRUE");
 
         // Excel Addin Config: set the calendar filepath member variable
-		LAString calendarFullFileName(calendarFullFilePath.c_str());
+		AQLString calendarFullFileName(calendarFullFilePath.c_str());
 		etrading::FolderConfig::set_calendar_path(calendarFullFileName);
 			
         // Excel Addin Config: set the ir properties filepath member variable
-        LAString irPropertiesFilePath(irPropsFullFilePath.c_str());
+        AQLString irPropertiesFilePath(irPropsFullFilePath.c_str());
 		etrading::FolderConfig::set_ir_prop_path(irPropertiesFilePath);
 			
         // Excel Addin Config: set the central bank calendar filepath member variable
         if ( centralBankCalendarFullFilePath.size() == 0)
         {
             // Use Default Central Bank Path if not provided
-            const LAString* defaultCentralBankPath =  etrading::FolderConfig::cbschedule_path();
+            const AQLString* defaultCentralBankPath =  etrading::FolderConfig::cbschedule_path();
             if ( defaultCentralBankPath != nullptr )
             {
                 etrading::FolderConfig::set_cbschedule_path(*defaultCentralBankPath);
@@ -84,11 +84,11 @@ namespace validation
         else
         {
             // Use the file path if provided
-            LAString centralBankCalendarPath(centralBankCalendarFullFilePath.c_str());
+            AQLString centralBankCalendarPath(centralBankCalendarFullFilePath.c_str());
             etrading::FolderConfig::set_cbschedule_path(centralBankCalendarPath);
         }
 
-        // Load IR Properties - filepaths are set to LAString* of type NULL if not found
+        // Load IR Properties - filepaths are set to AQLString* of type NULL if not found
         // ---------------------------------------------------------------------------------------------------------------
         // Note: The InitializeAQETrading::instance() method below calls the InitializeAQETrading constructor,
         // which checks if calendar files have been loaded
@@ -100,7 +100,7 @@ namespace validation
         // ---------------------------------------------------------------------------------------------------------------
 			
         // Disable Thread Locking - since we have a local thread guard
-		common::LACoreLockControl::enableThreadLocks( false );
+		common::AQLCoreLockControl::enableThreadLocks( false );
 
 		// Initialize the Optional LWO Configuration Files - will not throw if unsuccessful
 		validation::tryMeUtilityLoadConfigurationFiles();
@@ -142,18 +142,18 @@ namespace validation
     /* @brief			validation interface for the meUtilityClearEntityPool function, to clear the object pool
     *  @return			A notification string
     */
-    LAString tryMeUtilityClearEntityPool()
+    AQLString tryMeUtilityClearEntityPool()
     {
         VALID_EXCEPTION_START
 
-        LADataInstance* dataInstance = etrading::getDataInstance();
+        AQLDataInstance* dataInstance = etrading::getDataInstance();
         dataInstance->getObjectPool().clear();
         LACoreDataService::finalize();
         etrading::LAUpdateStaticDataManager::setUpForIRServer();
         LACoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
         etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance );
 
-        LAString ret( "Cleared the Object Pool Cache" );
+        AQLString ret( "Cleared the Object Pool Cache" );
         return ret;
 
         VALID_EXCEPTION_END
@@ -162,7 +162,7 @@ namespace validation
     /* @brief			validation interface for the meUtilityClearLWOCache function, to clear the object pool and all the objects in the LWO Cache
     *  @return			A notification string
     */
-    LAString tryMeUtilityClearLWOCache()
+    AQLString tryMeUtilityClearLWOCache()
     {
         // IMPORTANT: Use no thread guard because the nested try functions will invalidate the thread guard reference count
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
@@ -182,7 +182,7 @@ namespace validation
         tryMeUtilityLoadConfigurationFiles();
 
         std::string ret = "Cleared LWO and Object Pool Cache";
-        LAString retMB( ret.c_str() ) ;
+        AQLString retMB( ret.c_str() ) ;
         
         return retMB;
 
@@ -193,7 +193,7 @@ namespace validation
     *  @param [in]		filepath The full name of the calendar file
     *  @return			A notification string
     */
-    LAString tryMeUtilityLoadCalendarFile( const LAString& filepath )
+    AQLString tryMeUtilityLoadCalendarFile( const AQLString& filepath )
     {
         VALID_EXCEPTION_START
 
@@ -211,7 +211,7 @@ namespace validation
 
         setupCalendarETrading( &filepath );
 
-        LAString ret( "CalendarFileLoaded" );
+        AQLString ret( "CalendarFileLoaded" );
 
         return ret;
 
@@ -222,11 +222,11 @@ namespace validation
     *  @param [in]		filepath The full name of the properties file
     *  @return			A notification string
     */
-    LAString tryMeUtilityLoadStaticData( const LAString& filepath )
+    AQLString tryMeUtilityLoadStaticData( const AQLString& filepath )
     {
         VALID_EXCEPTION_START
 
-        LADataInstance* dataInstance = etrading::getDataInstance();
+        AQLDataInstance* dataInstance = etrading::getDataInstance();
         dataInstance->getObjectPool().clear();
 
         LACoreDataService::finalize();
@@ -247,7 +247,7 @@ namespace validation
 
         etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance, filepath );
 
-        LAString ret( "AllEntityPoolCleared and StaticDataLoaded" );
+        AQLString ret( "AllEntityPoolCleared and StaticDataLoaded" );
 
         return ret;
 
@@ -257,11 +257,11 @@ namespace validation
    /*  @brief			validation interface for the setupOptionalConfiguration function
     *  @return			A notification string
     */
-	LAString tryMeUtilityLoadConfigurationFiles()
+	AQLString tryMeUtilityLoadConfigurationFiles()
 	{
 		VALID_EXCEPTION_START
 
-		const LAString* lwoStartUpConfigPath = etrading::FolderConfig::setupOptionalStartupConfig();
+		const AQLString* lwoStartUpConfigPath = etrading::FolderConfig::setupOptionalStartupConfig();
 
         if( lwoStartUpConfigPath == nullptr )
         {
@@ -272,7 +272,7 @@ namespace validation
         result = "Loaded lwo configuration files from ";
 		result += lwoStartUpConfigPath->getCString();
 		
-        LAString resultString( result.c_str() ) ;
+        AQLString resultString( result.c_str() ) ;
         return resultString;
 
         VALID_EXCEPTION_END
@@ -340,7 +340,7 @@ namespace validation
                     expiryMonthString = "Dec";
                     break;
                 default:
-                    throw LACoreInvalidData( "#Error: Invalid License Expiry Month", __FILE__, __LINE__ );
+                    throw AQLCoreInvalidData( "#Error: Invalid License Expiry Month", __FILE__, __LINE__ );
             }
         }
 

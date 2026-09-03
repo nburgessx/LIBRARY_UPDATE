@@ -24,24 +24,24 @@
 
 
 #include "LAPriceDriftHJM.h"
-#include "LAFunctionBase.h"
-#include "LAConstant.h"
-#include "LA1DDataSet.h"
-#include "LACombinationFunc.h"
-#include "LALinearInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LAGaussLegendre.h"
+#include "AQLFunctionBase.h"
+#include "AQLConstant.h"
+#include "AQL1DDataSet.h"
+#include "AQLCombinationFunc.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLGaussLegendre.h"
 
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 #include "LAModelDynamicsCurve.h"
 #include "LAMathCorrelation.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 using namespace std;
 
@@ -65,7 +65,7 @@ LAPriceDriftHJM::LAPriceDriftHJM()
 	@param[in] deltatenor delta of tenor
 
 */
-LAPriceDriftHJM::LAPriceDriftHJM(const LAString& sdeAttrName, double T, const DoubleArray& grid_T)	
+LAPriceDriftHJM::LAPriceDriftHJM(const AQLString& sdeAttrName, double T, const DoubleArray& grid_T)	
 : LAMathDriftFuncBase(), mT(T), mSDEAttrName(sdeAttrName), mgrid_T(grid_T),
 mpTimes(0), mPos_old(0) //, mpCache(0)
 {
@@ -86,8 +86,8 @@ mgrid_T(v.mgrid_T), mpTimes(v.mpTimes), /*mCorData(v.mCorData),*/ mPos_old(v.mPo
 		mCorrelation[i].resize(v.mCorrelation[i].size());
 		for (unsigned int j = 0; j < mCorrelation[i].size(); j++)
 		{
-			if (mT == 0) mCorrelation[i][j] = dynamic_cast<LAFunctionBase*>(v.mCorrelation[i][j]->clone());
-			else mCorrelation[i][j] = dynamic_cast<LAFunctionBase*>(v.mCorrelation[i][j]);
+			if (mT == 0) mCorrelation[i][j] = dynamic_cast<AQLFunctionBase*>(v.mCorrelation[i][j]->clone());
+			else mCorrelation[i][j] = dynamic_cast<AQLFunctionBase*>(v.mCorrelation[i][j]);
 		}
 	}
 	//if (mT == 0.0 && v.mpCache != 0)
@@ -111,7 +111,7 @@ LAPriceDriftHJM::~LAPriceDriftHJM()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftHJM::clone() const	
 {
     try 
@@ -120,7 +120,7 @@ LAPriceDriftHJM::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -166,7 +166,7 @@ double
 LAPriceDriftHJM::operator()(double x) const
 {
 	if (x > mT || x < 0.0) 
-		throw LACoreInvalidData("t is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("t is something wrong", __FILE__, __LINE__);
 	
 	double ret = 0.0;
 	unsigned int pos;
@@ -178,7 +178,7 @@ LAPriceDriftHJM::operator()(double x) const
 		if (x == 0.0) pos = 0;
 		else if (x == (*mpTimes)[mPos_old]) pos = mPos_old;
 		else if (x == (*mpTimes)[mPos_old + 1]) pos = mPos_old + 1;
-		else if (!LAAlgorithm::find<DoubleArray, double>(*mpTimes, x, 0, mpTimes->size() - 1, pos))
+		else if (!AQLAlgorithm::find<DoubleArray, double>(*mpTimes, x, 0, mpTimes->size() - 1, pos))
 		{
 			pos = 0;
 			mPos_old = 0;
@@ -192,7 +192,7 @@ LAPriceDriftHJM::operator()(double x) const
 	else
 		ret = calcDrift(x);
 		/*
-		LAAlgorithm::locate<DoubleArray, double>(mgrid_T, mT, mgrid_T.size(), pos);
+		AQLAlgorithm::locate<DoubleArray, double>(mgrid_T, mT, mgrid_T.size(), pos);
 		for (unsigned int i = 0; i < mFactorNum; i++)
 			for (unsigned int j = 0; i < mFactorNum; j++)
 				ret += mVolatility[pos][i]->operator ()(x) * getIntegratedpart(i, j, x, mT, pos);*/
@@ -210,7 +210,7 @@ double
 LAPriceDriftHJM::calcDrift (double x) const
 {
 	unsigned int pos;
-	LAAlgorithm::locate<DoubleArray, double>(mgrid_T, mT, mgrid_T.size(), pos);
+	AQLAlgorithm::locate<DoubleArray, double>(mgrid_T, mT, mgrid_T.size(), pos);
 	double ret = 0.0;
 	for (unsigned int i = 0; i < mFactorNum; i++)
 		for (unsigned int j = 0; i < mFactorNum; j++)
@@ -231,7 +231,7 @@ double
 LAPriceDriftHJM::getIntegratedpart (unsigned int i, unsigned int j, 
 								   double t1, double t2, unsigned int pos) const
 {
-	LAGaussLegendre GL(GAUSSLEGENDREPOINTNUM);
+	AQLGaussLegendre GL(GAUSSLEGENDREPOINTNUM);
 	if (t1 == t2) return 0;
 	if (mVolatility[pos][j]->isTypeOf(FN_CONSTANT))// && mVolatility[j]->isTypeOf(FN_CONSTANT))
 	{
@@ -243,7 +243,7 @@ LAPriceDriftHJM::getIntegratedpart (unsigned int i, unsigned int j,
 			return vol * (*mCorrelation[i][j])(t1) * (t2 - t1);
 		if (mCorrelation[i][j]->isTypeOf(FN_1DDATASET))
 		{ 
-			const LA1DDataSet* pCor = dynamic_cast<const LA1DDataSet*>(mCorrelation[i][j]);
+			const AQL1DDataSet* pCor = dynamic_cast<const AQL1DDataSet*>(mCorrelation[i][j]);
 			if(pCor->getInterpolationType() == FN_STEPINTERPOLATION || 
 			   pCor->getInterpolationType() == FN_LINEARINTERPOLATION)
 				return vol * pCor->integral(t1, t2);
@@ -255,9 +255,9 @@ LAPriceDriftHJM::getIntegratedpart (unsigned int i, unsigned int j,
 	
 	if (mVolatility[pos][j]->isTypeOf(FN_1DDATASET))// && mVolatility[j]->isTypeOf(FN_1DDATASET))
 	{
-		const LA1DDataSet* pVol = dynamic_cast<const LA1DDataSet*>(mVolatility[pos][j]);
-		//const LA1DDataSet* pVol2 = dynamic_cast<const LA1DDataSet*>(mVolatility[j]);
-		vector<const LA1DDataSet*> funcs(1);
+		const AQL1DDataSet* pVol = dynamic_cast<const AQL1DDataSet*>(mVolatility[pos][j]);
+		//const AQL1DDataSet* pVol2 = dynamic_cast<const AQL1DDataSet*>(mVolatility[j]);
+		vector<const AQL1DDataSet*> funcs(1);
 		funcs[0] = pVol;
 		//funcs[1] = pVol2;
 		if (i == j) return integral(t1, t2, funcs);
@@ -265,7 +265,7 @@ LAPriceDriftHJM::getIntegratedpart (unsigned int i, unsigned int j,
 			return integral(t1, t2, funcs) * (*mCorrelation[i][j])(t1);
 		else if (mCorrelation[i][j]->isTypeOf(FN_1DDATASET))
 		{
-			funcs.push_back(dynamic_cast<const LA1DDataSet*>(mCorrelation[i][j]));
+			funcs.push_back(dynamic_cast<const AQL1DDataSet*>(mCorrelation[i][j]));
 			return integral(t1, t2, funcs);
 		}
 		//else return mGL.integrate((*mVolatility[i]) * (*mVolatility[j]) * (*mCorrelation[i][j]), t1, t2);
@@ -278,15 +278,15 @@ LAPriceDriftHJM::getIntegratedpart (unsigned int i, unsigned int j,
 }
 
 /*!
-	@brief calculte integral of product of LA1DDataSet functions
+	@brief calculte integral of product of AQL1DDataSet functions
 	@param[in] t1 left edge of integral region
 	@param[in] t2 right edge of integral region
-	@param[in] funcs vector of LA1DDataSet functions
+	@param[in] funcs vector of AQL1DDataSet functions
 */
 double
-LAPriceDriftHJM::integral(double t1, double t2, vector<const LA1DDataSet*>& funcs) const
+LAPriceDriftHJM::integral(double t1, double t2, vector<const AQL1DDataSet*>& funcs) const
 {
-	LAGaussLegendre GL(GAUSSLEGENDREPOINTNUM);
+	AQLGaussLegendre GL(GAUSSLEGENDREPOINTNUM);
 	if (t1 > t2) return integral (t2, t1, funcs);
 	else if (t1 == t2) return 0.0;
 
@@ -330,7 +330,7 @@ LAPriceDriftHJM::integral(double t1, double t2, vector<const LA1DDataSet*>& func
 		if (funcs.size() == 1)
 			return funcs[0]->integral(t1, t2, &GL); 
 
-		LACombinationMethod combi = (*funcs[0]) * (*funcs[1]);
+		AQLCombinationMethod combi = (*funcs[0]) * (*funcs[1]);
 		for (unsigned int i = 2; i < func_num; i++)
 			combi = combi * (*funcs[i]);
 		
@@ -349,13 +349,13 @@ LAPriceDriftHJM::integral(double t1, double t2, vector<const LA1DDataSet*>& func
     @brief return string representaion
     @return string representaion  (sde attr name : maturity)
 */
-LAString
+AQLString
 LAPriceDriftHJM::convertToString(void) const
 {
-	LAString ret;
+	AQLString ret;
 	ret += mSDEAttrName;
 	ret += ":";
-	ret += LADataDouble(mT).convertToString();
+	ret += AQLDataDouble(mT).convertToString();
 	
 	return ret;
 }
@@ -365,14 +365,14 @@ LAPriceDriftHJM::convertToString(void) const
     @param[in] string representaion  (sde attr name : maturity)
 */
 void
-LAPriceDriftHJM::convertFromString(const LAString& str)
+LAPriceDriftHJM::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() < 3)
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	}
 
 	mSDEAttrName = tmp.get()[0];
@@ -387,7 +387,7 @@ LAPriceDriftHJM::convertFromString(const LAString& str)
 void
 LAPriceDriftHJM::setUp(LAMathPathEntity& path)
 {
-	LADataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
+	AQLDataHolder* dh = &path.getData(mSDEAttrName, ISNOTNULL);
 	LAMathAttrSDE* pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
 	mVolatility = pattrsde->getSDE().getVolatility();
 
@@ -397,7 +397,7 @@ LAPriceDriftHJM::setUp(LAMathPathEntity& path)
 	mDrift.resize(mpTimes->size());
 	mPos_old = 0;
 	//unsigned int pos;
-	//LAAlgorithm::locate<DoubleArray, double>(mgrid_T, mT, mgrid_T.size(), pos);
+	//AQLAlgorithm::locate<DoubleArray, double>(mgrid_T, mT, mgrid_T.size(), pos);
 	for (unsigned int i = 0; i < mpTimes->size(); i++)
 		mDrift[i] = calcDrift((*mpTimes)[i]);	
 

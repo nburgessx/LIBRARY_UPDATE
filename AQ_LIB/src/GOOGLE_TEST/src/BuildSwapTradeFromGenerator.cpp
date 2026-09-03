@@ -17,8 +17,8 @@ using etrading::ReadDataFile;
 
 namespace google_test
 {
-    // Function to Build a Swap Expression Label Value Block / LAStringMatrix
-    LAStringMatrix buildSwapExpression( const std::string & effectiveDate,
+    // Function to Build a Swap Expression Label Value Block / AQLStringMatrix
+    AQLStringMatrix buildSwapExpression( const std::string & effectiveDate,
                                       const std::string & maturityDateOrTenor,
                                       const std::string & payReceive,
                                       const std::string & notional,
@@ -31,22 +31,22 @@ namespace google_test
                                       const std::string & isFwdInter1,
                                       const std::string & isFwdInter2 )
     {
-        LAStringVector effective_     = { LAString("EffectiveDate"),  effectiveDate.c_str() };
-        LAStringVector maturity_      = { LAString("MaturityDate"),   maturityDateOrTenor.c_str() };
-        LAStringVector payReceive_    = { LAString("PayReceive"),     payReceive.c_str() };
-        LAStringVector notional_      = { LAString("Notional"),       notional.c_str() };
-        LAStringVector rateOrSpread1_ = { LAString("RateOrSpread1"),  rateOrSpread1.c_str() };
-        LAStringVector rateOrSpread2_ = { LAString("RateOrSpread2"),  rateOrSpread2.c_str() };
-        LAStringVector firstFixing1_  = { LAString("FirstFixing1"),   firstFixing1.c_str() };
-        LAStringVector firstFixing2_  = { LAString("FirstFixing2"),   firstFixing2.c_str() };
-        LAStringVector lastFixing1_   = { LAString("LastFixing1"),    lastFixing1.c_str() };
-        LAStringVector lastFixing2_   = { LAString("LastFixing2"),    lastFixing2.c_str() };
-        LAStringVector isFwdInter1_   = { LAString("isFwdInter1"),    isFwdInter1.c_str() };
-        LAStringVector isFwdInter2_   = { LAString("isFwdInter2"),    isFwdInter2.c_str() };
+        AQLStringVector effective_     = { AQLString("EffectiveDate"),  effectiveDate.c_str() };
+        AQLStringVector maturity_      = { AQLString("MaturityDate"),   maturityDateOrTenor.c_str() };
+        AQLStringVector payReceive_    = { AQLString("PayReceive"),     payReceive.c_str() };
+        AQLStringVector notional_      = { AQLString("Notional"),       notional.c_str() };
+        AQLStringVector rateOrSpread1_ = { AQLString("RateOrSpread1"),  rateOrSpread1.c_str() };
+        AQLStringVector rateOrSpread2_ = { AQLString("RateOrSpread2"),  rateOrSpread2.c_str() };
+        AQLStringVector firstFixing1_  = { AQLString("FirstFixing1"),   firstFixing1.c_str() };
+        AQLStringVector firstFixing2_  = { AQLString("FirstFixing2"),   firstFixing2.c_str() };
+        AQLStringVector lastFixing1_   = { AQLString("LastFixing1"),    lastFixing1.c_str() };
+        AQLStringVector lastFixing2_   = { AQLString("LastFixing2"),    lastFixing2.c_str() };
+        AQLStringVector isFwdInter1_   = { AQLString("isFwdInter1"),    isFwdInter1.c_str() };
+        AQLStringVector isFwdInter2_   = { AQLString("isFwdInter2"),    isFwdInter2.c_str() };
 
 
         // Build the Swap Expression LVB
-        LAStringMatrix swapExpressionLVB( 12 );
+        AQLStringMatrix swapExpressionLVB( 12 );
         swapExpressionLVB[0]        = effective_;
         swapExpressionLVB[1]        = maturity_;
         swapExpressionLVB[2]        = payReceive_;
@@ -81,7 +81,7 @@ namespace google_test
                                          const std::string & isFwdInter2 )
     {
         // Build Swap Expression LVB
-        LAStringMatrix swapExpression = buildSwapExpression( effectiveDate,
+        AQLStringMatrix swapExpression = buildSwapExpression( effectiveDate,
                                                            maturityDateOrTenor,
                                                            payReceive,
                                                            notional,
@@ -98,7 +98,7 @@ namespace google_test
         std::string swapObjectName = validation::tryMeLWOSwapCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock( swapExpression ),
-                                                                                      etrading::LabelValueBlock( LAStringMatrix() ),
+                                                                                      etrading::LabelValueBlock( AQLStringMatrix() ),
                                                                                       false,    // isXccySwap
                                                                                       true );   // validateKeys
         return swapObjectName;
@@ -109,13 +109,13 @@ namespace google_test
     std::string createSwapCalibrationInstrument( const std::string & swapName, const std::string & swapGeneratorName, const std::string & effectiveDate, const std::string & maturityDateOrTenor )
     {
         // Build Swap Expression LVB - This LVB contains dynamic swap information: start date, end date, tenor, notional, fixed rate and the libor spread.
-        LAStringMatrix swapExpression = buildSwapExpression( effectiveDate, maturityDateOrTenor );
+        AQLStringMatrix swapExpression = buildSwapExpression( effectiveDate, maturityDateOrTenor );
 
         // Create Swap from Swap Generator
         std::string swapObjectName = validation::tryMeLWOSwapCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock( swapExpression ),
-                                                                                      etrading::LabelValueBlock( LAStringMatrix() ),
+                                                                                      etrading::LabelValueBlock( AQLStringMatrix() ),
                                                                                       false,    // isXccySwap
                                                                                       true );   // validateKeys
         return swapObjectName;
@@ -128,8 +128,8 @@ namespace google_test
 	{
 		const ReadDataFile::Load swapInputFile(swapInputs);
 		std::string swapName = swapInputFile["swapName"];
-		LAStringMatrix swapLvb = swapInputFile["swapLVB"];
-		LAStringMatrix swapProperties = swapInputFile["swapPropertiesLVB"];
+		AQLStringMatrix swapLvb = swapInputFile["swapLVB"];
+		AQLStringMatrix swapProperties = swapInputFile["swapPropertiesLVB"];
 		bool isXccySwap = swapInputFile["isXccySwap"];
 		bool validateKeys = swapInputFile["validateKeys"];
 

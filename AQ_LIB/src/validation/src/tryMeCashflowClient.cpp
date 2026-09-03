@@ -181,18 +181,18 @@ namespace validation
 			return total;
 		}
 
-		/* @brief Populates a LAStringMatrix from a vector of LoanCashflowBreakdown struct
+		/* @brief Populates a AQLStringMatrix from a vector of LoanCashflowBreakdown struct
 		*  @param[in]	cashflowBreakdown	a vector of LoanCashflowBreakdown ( a struct containing various loan cashflow parameters )
-		*  @param[in]	includeCashflowColumnHeaders	Specifies whether to label the output LAStringMatrix with column headings
-		*  @returns		A LAStringMatrix containing all the values from cashflowBreakdown, optionally annotated with column headings.
+		*  @param[in]	includeCashflowColumnHeaders	Specifies whether to label the output AQLStringMatrix with column headings
+		*  @returns		A AQLStringMatrix containing all the values from cashflowBreakdown, optionally annotated with column headings.
 		*/
-		LAStringMatrix cashflowBreakdownToMatrix( const std::vector<etrading::LoanCashflowBreakdown> cashflowBreakdown, const bool& includeCashflowColumnHeaders )
+		AQLStringMatrix cashflowBreakdownToMatrix( const std::vector<etrading::LoanCashflowBreakdown> cashflowBreakdown, const bool& includeCashflowColumnHeaders )
 		{
-			LAStringMatrix cashflowMatrix;
+			AQLStringMatrix cashflowMatrix;
 
 			if ( includeCashflowColumnHeaders )
 			{
-				LAStringVector header = { "period", "balanceStart", "defaultBalance", "lossGivenLoss", "severityRecovered", "prepayment", "balanceAfterDefaultAndPrepayment", "loanPayment", "interestComponent", "principalComponent", "balanceEnd", "riskWeight", "kirbAmount" };
+				AQLStringVector header = { "period", "balanceStart", "defaultBalance", "lossGivenLoss", "severityRecovered", "prepayment", "balanceAfterDefaultAndPrepayment", "loanPayment", "interestComponent", "principalComponent", "balanceEnd", "riskWeight", "kirbAmount" };
 				cashflowMatrix.push_back( header );
 			}
 
@@ -200,7 +200,7 @@ namespace validation
 			for (size_t i=0; i<nCashflows; i++ )
 			{
 				const etrading::LoanCashflowBreakdown& cashflow = cashflowBreakdown[ i ];
-				LAStringVector row;
+				AQLStringVector row;
 
 				row.push_back( AQ_TO_STRING_FROM_INT( cashflow.period ).c_str() );
 				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.balanceStart ).c_str() );
@@ -275,11 +275,11 @@ namespace validation
 	* @param[in]	riskWeightVector	Specifies the risk-weight in each period of the loan
 	* @param[in]	kirbVector			Specifies the capital requirement in each period fo a loan 
 	* @param[in]	loanType			Whether  the loan is amortizing or has bullet repayment.
-	*  @param[in]	includeCashflowColumnHeaders	Whether to annotate the LAStringMatrix with column headers
+	*  @param[in]	includeCashflowColumnHeaders	Whether to annotate the AQLStringMatrix with column headers
 	*
 	* @returns	A matrix containing the cashflows and default amounts
 	*/
-	LAStringMatrix tryMeSRTAmortizeSingleLoanAsMatrix( const int& term,
+	AQLStringMatrix tryMeSRTAmortizeSingleLoanAsMatrix( const int& term,
 													 const double& loanRate,
 													 const double& originalBalance,
 													 const std::vector<double>& defaultVector,
@@ -302,7 +302,7 @@ namespace validation
 																											kirbVector,
 																											loanType );
 
-		const LAStringMatrix cashflowMatrix = cashflowBreakdownToMatrix( cashflowBreakdown, includeCashflowColumnHeaders );
+		const AQLStringMatrix cashflowMatrix = cashflowBreakdownToMatrix( cashflowBreakdown, includeCashflowColumnHeaders );
 		return cashflowMatrix;
 
 		VALID_EXCEPTION_END
@@ -336,16 +336,16 @@ namespace validation
 	/* @brief	Reads a CSV file containing a portfolio of loans and computes the cashflow amortization of the portfolio
 	*  @param[in]	loanCsvFilename	The CSV file containing the loan portfolio details.
 	*  @param[in]	csvColumnNames	The CSV file can contain many columns; this data lists the column names corresponding to "EAD", "RW", "KIRB"
-	*  @param[in]	includeCashflowColumnHeaders	Specifies whether to annotate the LAStringMatrix with column headings.
+	*  @param[in]	includeCashflowColumnHeaders	Specifies whether to annotate the AQLStringMatrix with column headings.
 	*
-	*  @returns	A LAStringMatrix containing the monthly cashflows and default amounts of the loan portfolio
+	*  @returns	A AQLStringMatrix containing the monthly cashflows and default amounts of the loan portfolio
 	*/
-	LAStringMatrix tryMeSRTAmortizeLoanPortfolioAsMatrix( const std::string& loanCsvFilename, const etrading::LabelValueBlock& csvColumnNames, const bool& includeCashflowColumnHeaders )
+	AQLStringMatrix tryMeSRTAmortizeLoanPortfolioAsMatrix( const std::string& loanCsvFilename, const etrading::LabelValueBlock& csvColumnNames, const bool& includeCashflowColumnHeaders )
 	{
 		VALID_EXCEPTION_START
 
 		const std::vector<etrading::LoanCashflowBreakdown> cashflowBreakdown = tryMeSRTAmortizeLoanPortfolio( loanCsvFilename, csvColumnNames );
-		const LAStringMatrix cashflowMatrix = cashflowBreakdownToMatrix( cashflowBreakdown, includeCashflowColumnHeaders );
+		const AQLStringMatrix cashflowMatrix = cashflowBreakdownToMatrix( cashflowBreakdown, includeCashflowColumnHeaders );
 
 		return cashflowMatrix;
 

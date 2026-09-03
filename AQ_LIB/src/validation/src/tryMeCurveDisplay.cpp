@@ -20,7 +20,7 @@ namespace validation
     *  @param [in]		curveIndex			Index of the curve set
     *  @return			Array of terms and corresponding discount factors from the yield curve
     */
-    DoubleArray tryMeCurveDisplay( const LAString& curveCollection, const LAString& curveIndex )
+    DoubleArray tryMeCurveDisplay( const AQLString& curveCollection, const AQLString& curveIndex )
 
     {
         VALID_EXCEPTION_START
@@ -34,7 +34,7 @@ namespace validation
             file.write( "curveIndex", curveIndex );
         }
 
-        LAString curIndex( etrading::getDefaultValueForEmptyString( curveIndex, "STD" ) );
+        AQLString curIndex( etrading::getDefaultValueForEmptyString( curveIndex, "STD" ) );
 
         //Throw exception if the curve has not been built.
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );

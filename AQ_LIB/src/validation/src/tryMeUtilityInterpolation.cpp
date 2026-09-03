@@ -19,7 +19,7 @@ namespace validation
     double tryMeUtilityInterpolation( const DoubleVector& xValues,
                                       const DoubleVector& yValues,
                                       double xPoint,
-                                      const LAString& interpolation,
+                                      const AQLString& interpolation,
 									  const double joinXValue)
 
     {

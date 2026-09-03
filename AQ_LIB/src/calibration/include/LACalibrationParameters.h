@@ -20,8 +20,8 @@
 
 
 class LAStaticData;
-class LAString;
-class LAObjectPool;
+class AQLString;
+class AQLObjectPool;
 
 
 //===================== Class Declare LACalibrationParameters==================================
@@ -43,7 +43,7 @@ public:
 
 	//==============================================
 	// create  calibration info object
-	virtual LAString createCalibrationInfo(LAObjectPool &objPool, const LAString &ccy) = 0; 
+	virtual AQLString createCalibrationInfo(AQLObjectPool &objPool, const AQLString &ccy) = 0; 
 
 protected:
 	LAStaticData *mpCalibStaticData; // calib property accessor

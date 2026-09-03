@@ -1,4 +1,4 @@
-#include "LAString.h"
+#include "AQLString.h"
 #include "TypeUtilities.h"
 
 #include "meUtilityPCA.h"
@@ -11,7 +11,7 @@
 *  @param [in]		data					Data under analysis
 *  @param [in]		useCorrelationMatrix	True to use correlation matrix. False to use covariance matrix. Default to False
 *  @param [in]		nFactors				The number of PCA factors
-*  @return			A LAStringMatrix for the PCA results
+*  @return			A AQLStringMatrix for the PCA results
 */
 SWIG_STRINGMATRIX meUtilityPCA(const std::string& key,
 							   const std::vector<std::vector<double> >& data,
@@ -21,11 +21,11 @@ SWIG_STRINGMATRIX meUtilityPCA(const std::string& key,
     AQ_API_START
 
 	// Input marshalling
-	LAString tmp_key(key.c_str());
+	AQLString tmp_key(key.c_str());
 
 	SWIG_STRINGMATRIX ret;
 	
-	LAStringMatrix pca = validation::tryMeUtilityPCA(tmp_key, data, useCorrelationMatrix, nFactors);
+	AQLStringMatrix pca = validation::tryMeUtilityPCA(tmp_key, data, useCorrelationMatrix, nFactors);
 	ret = swig::fromStringMatrixToMatrixOfString(pca);
 	
 	return ret;

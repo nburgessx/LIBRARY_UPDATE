@@ -4,25 +4,25 @@
 #include "SwapSchedule.h"
 #include "LADateScheduleHelpers.h"
 #include "LAMathBaseFuncUtility.h"
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAPriceCFGenUtility.h"
 #include "LADateHelpers.h"
-#include "LADataReference.h"
+#include "AQLDataReference.h"
 #include "LAAnalyticFormula.h"
 #include "LABlackScholesCalc.h"
-#include "LADataProcedure.h"
-#include "LACoreComponentManager.h"
-#include "LAPriceDataConvention.h"
-#include "LADataMultiReference.h"
+#include "AQLDataProcedure.h"
+#include "AQLCoreComponentManager.h"
+#include "AQLPriceDataConvention.h"
+#include "AQLDataMultiReference.h"
 
 // Includes: Standard Library
 #include <cmath>
@@ -34,54 +34,54 @@ using namespace std;
 
 namespace etrading
 {
-    SwapSchedule::SwapSchedule( const LADate&       accrualStartDate,
-                                const LADate&       accrualEndDate,
-                                const LAString&     accrualDaycount,
-                                const LAString&     accrualFrequency,
-                                const LAString&     accrualRollConvention,      // aka Accrual Sliding Rule
-                                const LAString&     accrualCalendar,
-                                const LAString&     paymentFrequency,
-                                const LAString&     paymentRollConvention,      // aka Payment Sliding Rule
-                                const LAString&     paymentCalendar,
-                                const LAString&     paymentLag,
-                                const LAString&     fixingLag,
-                                const LAString&     fixingRollConvention,
-                                const LAString&     fixingCalendar,
-                                const LADate&       firstStub,                  // aka First Odd Date
-                                const LADate&       lastStub,                   // aka Last Odd Date
-                                const LAString&     rollDayOrConvention,        // Roll Day ( e.g. 9th of month ) or Roll Convention ( IMM, ECM, EOM, End of Month ... )
+    SwapSchedule::SwapSchedule( const AQLDate&       accrualStartDate,
+                                const AQLDate&       accrualEndDate,
+                                const AQLString&     accrualDaycount,
+                                const AQLString&     accrualFrequency,
+                                const AQLString&     accrualRollConvention,      // aka Accrual Sliding Rule
+                                const AQLString&     accrualCalendar,
+                                const AQLString&     paymentFrequency,
+                                const AQLString&     paymentRollConvention,      // aka Payment Sliding Rule
+                                const AQLString&     paymentCalendar,
+                                const AQLString&     paymentLag,
+                                const AQLString&     fixingLag,
+                                const AQLString&     fixingRollConvention,
+                                const AQLString&     fixingCalendar,
+                                const AQLDate&       firstStub,                  // aka First Odd Date
+                                const AQLDate&       lastStub,                   // aka Last Odd Date
+                                const AQLString&     rollDayOrConvention,        // Roll Day ( e.g. 9th of month ) or Roll Convention ( IMM, ECM, EOM, End of Month ... )
                                 const bool&         isStartRoll,
                                 const bool&         isFixingInAdvance )         // Fixing in Advance ( True ) or Arrears ( False )
     {
         // Date Validation
         if( !LADateScheduleHelpers::isValidDate( accrualStartDate ) )
         {
-            throw LACoreInvalidData( "#Error: Invalid 'AccrualStartDate'.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Invalid 'AccrualStartDate'.", __FILE__, __LINE__ );
         }
 
         if( !LADateScheduleHelpers::isValidDate( accrualEndDate ) )
         {
-            throw LACoreInvalidData( "#Error: Invalid 'AccrualEndDate'.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Invalid 'AccrualEndDate'.", __FILE__, __LINE__ );
         }
 
         if ( accrualStartDate >= accrualEndDate )
         {
-            throw LACoreInvalidData( "#Error: The 'AccrualStartDate' must be strictly greater than the 'AccrualEndDate'.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The 'AccrualStartDate' must be strictly greater than the 'AccrualEndDate'.", __FILE__, __LINE__ );
         }
 
         DateVector      accrualBaseDates;
-        LAString        accFrequency            = accrualFrequency;
-        LAString        accRollConvention       = accrualRollConvention;
-        LAString        accCalendar             = accrualCalendar;
+        AQLString        accFrequency            = accrualFrequency;
+        AQLString        accRollConvention       = accrualRollConvention;
+        AQLString        accCalendar             = accrualCalendar;
 
-        const LADate*   pFirstStub              = ( firstStub == LADate() ) ? NULL : pFirstStub = & firstStub;
-        const LADate*   pLastStub               = ( lastStub  == LADate() ) ? NULL : pLastStub  = & lastStub;
+        const AQLDate*   pFirstStub              = ( firstStub == AQLDate() ) ? NULL : pFirstStub = & firstStub;
+        const AQLDate*   pLastStub               = ( lastStub  == AQLDate() ) ? NULL : pLastStub  = & lastStub;
 
         if ( pFirstStub != NULL )
         {
             if( !LADateScheduleHelpers::isValidDate( firstStub ) )
             {
-                throw LACoreInvalidData( "#Error: Invalid 'FirstStub'.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Invalid 'FirstStub'.", __FILE__, __LINE__ );
             }
         }
 
@@ -89,40 +89,40 @@ namespace etrading
         {
             if( !LADateScheduleHelpers::isValidDate( lastStub ) )
             {
-                throw LACoreInvalidData( "#Error: Invalid 'LastStub'.", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: Invalid 'LastStub'.", __FILE__, __LINE__ );
             }
         }
 
         if ( pFirstStub != NULL && firstStub < accrualStartDate )
         {
-            throw LACoreInvalidData( "#Error: The 'FirstStub' cannot be before the 'AccrualStartDate'.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The 'FirstStub' cannot be before the 'AccrualStartDate'.", __FILE__, __LINE__ );
         }
 
         if ( pLastStub != NULL && lastStub > accrualEndDate )
         {
-            throw LACoreInvalidData( "#Error: The 'LastStub' cannot be after the 'AccrualEndDate'.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The 'LastStub' cannot be after the 'AccrualEndDate'.", __FILE__, __LINE__ );
         }
 
         if ( pFirstStub != NULL && pLastStub != NULL && firstStub > lastStub )
         {
-            throw LACoreInvalidData( "#Error: The 'LastStub' cannot be before the 'FirstStub'.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The 'LastStub' cannot be before the 'FirstStub'.", __FILE__, __LINE__ );
         }
 
 
         // Daycount Basis, default is ACT/360 ( This is the floating swap leg convention for JPY, USD, EUR swaps )
         // Make uppercase for validation check below.
-        LAString        dayCount                = accrualDaycount;
+        AQLString        dayCount                = accrualDaycount;
         dayCount.toUpper();
 
-        if ( dayCount == LAString( "" ) )
+        if ( dayCount == AQLString( "" ) )
         {
-            dayCount    = LAString( "ACT/360" );
+            dayCount    = AQLString( "ACT/360" );
         }
-        else if ( dayCount != LAString( "ACT/360" )      && dayCount != LAString( "30/360" )
-                  && dayCount != LAString( "ACT/365" )      && dayCount != LAString( "30E/360" )
-                  && dayCount != LAString( "ACT/365_ISDA" ) && dayCount != LAString( "ACT/365FJ" ) )
+        else if ( dayCount != AQLString( "ACT/360" )      && dayCount != AQLString( "30/360" )
+                  && dayCount != AQLString( "ACT/365" )      && dayCount != AQLString( "30E/360" )
+                  && dayCount != AQLString( "ACT/365_ISDA" ) && dayCount != AQLString( "ACT/365FJ" ) )
         {
-            throw LACoreInvalidData( "#Error: Invalid 'AccrualDaycount', must be 'Act/360', 'Act/365', 'Act/365_ISDA', 'Act/365FJ', '30/360', '30E/360' or left blank.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Invalid 'AccrualDaycount', must be 'Act/360', 'Act/365', 'Act/365_ISDA', 'Act/365FJ', '30/360', '30E/360' or left blank.", __FILE__, __LINE__ );
         }
 
         // Roll Day or Roll Convention
@@ -133,43 +133,43 @@ namespace etrading
         // would mean roll on the IMM date
 
         int tempRollDay;
-        LAString tempRollDayConvention;
+        AQLString tempRollDayConvention;
 
         int*            pRollDay                = NULL;
-        LAString*       pRollDayConvention      = NULL;
+        AQLString*       pRollDayConvention      = NULL;
 
-        if ( rollDayOrConvention != LAString( "" ) )
+        if ( rollDayOrConvention != AQLString( "" ) )
         {
             // Quick and Dirty Check if rollDayOrConvention is a Roll Day Convention or a day of the month
-            if ( rollDayOrConvention == LAString( "EOM" )
-                    || rollDayOrConvention == LAString( "IMM" ) )
+            if ( rollDayOrConvention == AQLString( "EOM" )
+                    || rollDayOrConvention == AQLString( "IMM" ) )
             {
                 tempRollDayConvention           = rollDayOrConvention;
                 pRollDayConvention              = & tempRollDayConvention;
             }
-            else if ( rollDayOrConvention == LAString( "1" )    || rollDayOrConvention == LAString( "17" )
-                      || rollDayOrConvention == LAString( "2" )    || rollDayOrConvention == LAString( "18" )
-                      || rollDayOrConvention == LAString( "3" )    || rollDayOrConvention == LAString( "19" )
-                      || rollDayOrConvention == LAString( "4" )    || rollDayOrConvention == LAString( "20" )
-                      || rollDayOrConvention == LAString( "5" )    || rollDayOrConvention == LAString( "21" )
-                      || rollDayOrConvention == LAString( "6" )    || rollDayOrConvention == LAString( "22" )
-                      || rollDayOrConvention == LAString( "7" )    || rollDayOrConvention == LAString( "23" )
-                      || rollDayOrConvention == LAString( "8" )    || rollDayOrConvention == LAString( "24" )
-                      || rollDayOrConvention == LAString( "9" )    || rollDayOrConvention == LAString( "25" )
-                      || rollDayOrConvention == LAString( "10" )   || rollDayOrConvention == LAString( "26" )
-                      || rollDayOrConvention == LAString( "11" )   || rollDayOrConvention == LAString( "27" )
-                      || rollDayOrConvention == LAString( "12" )   || rollDayOrConvention == LAString( "28" )
-                      || rollDayOrConvention == LAString( "13" )   || rollDayOrConvention == LAString( "29" )
-                      || rollDayOrConvention == LAString( "14" )   || rollDayOrConvention == LAString( "30" )
-                      || rollDayOrConvention == LAString( "15" )   || rollDayOrConvention == LAString( "31" )
-                      || rollDayOrConvention == LAString( "16" )   )
+            else if ( rollDayOrConvention == AQLString( "1" )    || rollDayOrConvention == AQLString( "17" )
+                      || rollDayOrConvention == AQLString( "2" )    || rollDayOrConvention == AQLString( "18" )
+                      || rollDayOrConvention == AQLString( "3" )    || rollDayOrConvention == AQLString( "19" )
+                      || rollDayOrConvention == AQLString( "4" )    || rollDayOrConvention == AQLString( "20" )
+                      || rollDayOrConvention == AQLString( "5" )    || rollDayOrConvention == AQLString( "21" )
+                      || rollDayOrConvention == AQLString( "6" )    || rollDayOrConvention == AQLString( "22" )
+                      || rollDayOrConvention == AQLString( "7" )    || rollDayOrConvention == AQLString( "23" )
+                      || rollDayOrConvention == AQLString( "8" )    || rollDayOrConvention == AQLString( "24" )
+                      || rollDayOrConvention == AQLString( "9" )    || rollDayOrConvention == AQLString( "25" )
+                      || rollDayOrConvention == AQLString( "10" )   || rollDayOrConvention == AQLString( "26" )
+                      || rollDayOrConvention == AQLString( "11" )   || rollDayOrConvention == AQLString( "27" )
+                      || rollDayOrConvention == AQLString( "12" )   || rollDayOrConvention == AQLString( "28" )
+                      || rollDayOrConvention == AQLString( "13" )   || rollDayOrConvention == AQLString( "29" )
+                      || rollDayOrConvention == AQLString( "14" )   || rollDayOrConvention == AQLString( "30" )
+                      || rollDayOrConvention == AQLString( "15" )   || rollDayOrConvention == AQLString( "31" )
+                      || rollDayOrConvention == AQLString( "16" )   )
             {
                 tempRollDay                     = rollDayOrConvention.getIntValue();
                 pRollDay                        = & tempRollDay;
             }
             else
             {
-                throw LACoreInvalidData( "#Error: 'RollDayOrConvention' must be a day of the month or a date convention i.e. IMM or EOM (End of Month).", __FILE__, __LINE__ );
+                throw AQLCoreInvalidData( "#Error: 'RollDayOrConvention' must be a day of the month or a date convention i.e. IMM or EOM (End of Month).", __FILE__, __LINE__ );
             }
         }
 
@@ -190,13 +190,13 @@ namespace etrading
 
         if ( accrualBaseDates.empty() || accrualBaseDates.size() < MINIMUM_NUMBER_OF_DATES )
         {
-            throw LACoreInvalidData( "#Error: Unable to generate accrual dates with the parameters specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Unable to generate accrual dates with the parameters specified.", __FILE__, __LINE__ );
         }
 
         DateVector  paymentBaseDates;
-        LAString    payFrequency        = paymentFrequency;
-        LAString    payRollConvention   = paymentRollConvention;
-        LAString    payCalendar         = paymentCalendar;
+        AQLString    payFrequency        = paymentFrequency;
+        AQLString    payRollConvention   = paymentRollConvention;
+        AQLString    payCalendar         = paymentCalendar;
 
         // Generate the Payment Base Dates: This is a one dimensional vector representing payment start and end dates
         paymentBaseDates = LADateScheduleHelpers::generateSchedule( accrualStartDate,
@@ -212,22 +212,22 @@ namespace etrading
 
         if ( paymentBaseDates.empty() || paymentBaseDates.size() < MINIMUM_NUMBER_OF_DATES )
         {
-            throw LACoreInvalidData( "#Error: Unable to generate the payment dates using the parameters specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Unable to generate the payment dates using the parameters specified.", __FILE__, __LINE__ );
         }
 
         // Schedule Data Placeholders
         DoubleMatrix    scheduleResults;
         DoubleVector    scheduleRow;
 
-        LADate      thisStartDate           = LADate();
-        LADate      thisEndDate             = LADate();
-        LADate      thisFixingDateNoLag     = LADate();
-        LADate      thisFixingDateWithLag   = LADate();
-        LADate      thisPaymentDateNoLag    = LADate();
-        LADate      thisPaymentDateWithLag  = LADate();
+        AQLDate      thisStartDate           = AQLDate();
+        AQLDate      thisEndDate             = AQLDate();
+        AQLDate      thisFixingDateNoLag     = AQLDate();
+        AQLDate      thisFixingDateWithLag   = AQLDate();
+        AQLDate      thisPaymentDateNoLag    = AQLDate();
+        AQLDate      thisPaymentDateWithLag  = AQLDate();
         double      thisAccrualPeriod       = 0.0;
 
-        LADate      lastEndDate             = LADate();
+        AQLDate      lastEndDate             = AQLDate();
 
         // Accrual and Payment Position Indicies
         // -------------------------------------
@@ -264,12 +264,12 @@ namespace etrading
                 {
                     if ( accrualRowIndex == 0 || accrualRowIndex > accrualBaseDates.size() )
                     {
-                        throw LACoreInvalidData( "#Error: Unable to build schedule. Incorrect accrual schedule dimensions.", __FILE__, __LINE__ );
+                        throw AQLCoreInvalidData( "#Error: Unable to build schedule. Incorrect accrual schedule dimensions.", __FILE__, __LINE__ );
                     }
 
                     if ( paymentRowIndex == 0 || paymentRowIndex > paymentBaseDates.size() )
                     {
-                        throw LACoreInvalidData( "#Error: Unable to build schedule. Incorrect accrual schedule dimensions.", __FILE__, __LINE__ );
+                        throw AQLCoreInvalidData( "#Error: Unable to build schedule. Incorrect accrual schedule dimensions.", __FILE__, __LINE__ );
                     }
 
                     // Clear the existing schedule row
@@ -288,12 +288,12 @@ namespace etrading
 
                     if ( !isFixingInAdvance && paymentBaseDates.size() > accrualBaseDates.size() )
                     {
-                        throw LACoreInvalidData( "#Error: Unable to fix in Arrears, since floating paymennts cannot be made before their fixing dates.", __FILE__, __LINE__ );
+                        throw AQLCoreInvalidData( "#Error: Unable to fix in Arrears, since floating paymennts cannot be made before their fixing dates.", __FILE__, __LINE__ );
                     }
 
                     if ( ( accrualRowIndex - 1 ) < 0 )
                     {
-                        throw LACoreInvalidData( "#Error: Unable to generate fixing dates. Access Violation Error.", __FILE__, __LINE__ );
+                        throw AQLCoreInvalidData( "#Error: Unable to generate fixing dates. Access Violation Error.", __FILE__, __LINE__ );
                     }
 
                     thisFixingDateNoLag         = accrualBaseDates[ accrualRowIndex - 1 ]; // we check for access violation above
@@ -333,12 +333,12 @@ namespace etrading
 
                     if ( thisFixingDateWithLag > thisPaymentDateWithLag )
                     {
-                        throw LACoreInvalidData( "#Error: Payments cannot be made before fixing dates. Please check if the schedule payment and fixing lags and other inputs are correct.", __FILE__, __LINE__ );
+                        throw AQLCoreInvalidData( "#Error: Payments cannot be made before fixing dates. Please check if the schedule payment and fixing lags and other inputs are correct.", __FILE__, __LINE__ );
                     }
 
                     if ( thisStartDate > thisEndDate )
                     {
-                        throw LACoreInvalidData( "#Error: Accrual start dates cannot be after the accrual end dates. Please check that the schedule inputs are correct.", __FILE__, __LINE__ );
+                        throw AQLCoreInvalidData( "#Error: Accrual start dates cannot be after the accrual end dates. Please check that the schedule inputs are correct.", __FILE__, __LINE__ );
                     }
 
                     // Update the schedule's current row of results
@@ -388,12 +388,12 @@ namespace etrading
                 {
                     if ( accrualRowIndex == 0 || accrualRowIndex > accrualBaseDates.size() )
                     {
-                        throw LACoreInvalidData( "#Error: Unable to build schedule. Incorrect accrual schedule dimensions.", __FILE__, __LINE__ );
+                        throw AQLCoreInvalidData( "#Error: Unable to build schedule. Incorrect accrual schedule dimensions.", __FILE__, __LINE__ );
                     }
 
                     if ( paymentRowIndex == 0 || paymentRowIndex > paymentBaseDates.size() )
                     {
-                        throw LACoreInvalidData( "#Error: Unable to build schedule. Incorrect accrual schedule dimensions.", __FILE__, __LINE__ );
+                        throw AQLCoreInvalidData( "#Error: Unable to build schedule. Incorrect accrual schedule dimensions.", __FILE__, __LINE__ );
                     }
 
                     // Clear the existing schedule row
@@ -433,12 +433,12 @@ namespace etrading
 
                     if ( thisFixingDateWithLag > thisPaymentDateWithLag )
                     {
-                        throw LACoreInvalidData( "#Error: Payments cannot be made before fixing dates. Please check if the schedule payment and fixing lags and other inputs are correct.", __FILE__, __LINE__ );
+                        throw AQLCoreInvalidData( "#Error: Payments cannot be made before fixing dates. Please check if the schedule payment and fixing lags and other inputs are correct.", __FILE__, __LINE__ );
                     }
 
                     if ( thisStartDate > thisEndDate )
                     {
-                        throw LACoreInvalidData( "#Error: Accrual start dates cannot be after the accrual end dates. Please check that the schedule inputs are correct.", __FILE__, __LINE__ );
+                        throw AQLCoreInvalidData( "#Error: Accrual start dates cannot be after the accrual end dates. Please check that the schedule inputs are correct.", __FILE__, __LINE__ );
                     }
 
                     // Update the schedule's current row of results

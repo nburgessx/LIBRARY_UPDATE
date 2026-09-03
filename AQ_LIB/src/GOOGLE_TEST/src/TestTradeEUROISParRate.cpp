@@ -102,7 +102,7 @@ namespace google_test
         {
             EXPECT_GE( i, PARRATE_TEST_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );
@@ -169,7 +169,7 @@ namespace google_test
         {
             EXPECT_GE( i, PV_TEST_COUNT );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
             ASSERT_FALSE( true );

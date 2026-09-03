@@ -83,7 +83,7 @@ namespace etrading
         auto cashflows = schedule_->getAllCashflows();
         if (cashflows.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
+			throw AQLCoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__ );
 		}
 
         double pv = 0;
@@ -108,13 +108,13 @@ namespace etrading
 		// Calculate Discount Factors
 		initializeDataProvider(dataProvider, updateCurveData);
 
-		const LADate curveAsOfDate = inflationCurve.getAsOfDate();
-		const LADate baseFixingDate = getSchedule()->getFixingDates().front();
+		const AQLDate curveAsOfDate = inflationCurve.getAsOfDate();
+		const AQLDate baseFixingDate = getSchedule()->getFixingDates().front();
 		
 		// The inflation curve knows about fixings. So we can simply ask the curve for the baseIndex
 		const double baseIndex = inflationCurve.getMonthlyInflationIndexForLaggedDate( baseFixingDate );
 
-		LADate finalFixingDate = getSchedule()->getFixingDates().back();
+		AQLDate finalFixingDate = getSchedule()->getFixingDates().back();
 		const double resetIndex = inflationCurve.getMonthlyInflationIndexForLaggedDate( finalFixingDate );
 
 		std::shared_ptr<InflationSchedule> inflationSchedule = std::static_pointer_cast<InflationSchedule> (schedule_);
@@ -124,7 +124,7 @@ namespace etrading
 		auto cashflows = schedule_->getAllCashflows();
 		if (cashflows.size() == 0)
 		{
-			throw LACoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("#Error: No cashflow has been built yet", __FILE__, __LINE__);
 		}
 
 		double pv = 0;

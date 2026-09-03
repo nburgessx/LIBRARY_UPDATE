@@ -84,7 +84,7 @@ namespace validation
 	*  @param[in] bondCurveName		The Bond Curve Name
 	*  @param[in] referenceDate		The forward reference date
 	*/
-	double tryMeBondYield(const std::string& bondCurveName, const LADate& referenceDate );
+	double tryMeBondYield(const std::string& bondCurveName, const AQLDate& referenceDate );
 
 
 	/* @brief Calculates the price of a bond using a bond curve to discount the coupons
@@ -92,14 +92,14 @@ namespace validation
 	*  @param[in] settlementDate	The settlement date to use for bond pricing
 	*  @param[in] bondCurveName		Name of the bond curve
 	*/
-	double tryMeLWOBondPriceFromBondCurve( const std::string& bondObjectName, const LADate& settlementDate, const std::string & bondCurveName );
+	double tryMeLWOBondPriceFromBondCurve( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string & bondCurveName );
 
 	/* @brief Calculates the yield-to-maturity of a bond using a bond curve to discount the coupons
 	*  @param[in] bondObjectName	Name of the bond object to price
 	*  @param[in] settlementDate	The settlement date to use for bond pricing
 	*  @param[in] bondCurveName		Name of the bond curve
 	*/
-	double tryMeLWOBondYieldFromBondCurve( const std::string& bondObjectName, const LADate& settlementDate, const std::string & bondCurveName );
+	double tryMeLWOBondYieldFromBondCurve( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string & bondCurveName );
 
 	/* @brief	Nelson-Siegel interpolation. Given a set of maturities, calculates the corresponding bond yields
 	*  @param[in]	beta0						Long term yield

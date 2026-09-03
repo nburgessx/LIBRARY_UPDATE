@@ -30,19 +30,19 @@ namespace validation
     *  @param [in]		curveName		Name of the curve set
     *  @return			Annuity
     */
-    double tryMirGetAnnuity1( LADataInstance* dataInstance,
-                              const LADate& fromDate,
-                              const LADate& toDate,
-                              const LAString& curveId,
-                              const LAString& frequency,
-                              const LAString& slidingRule,
-                              const LAString& calendar,
-                              const LAString& firstOddDate,
-                              const LAString& lastOddDate,
-                              const LAString& paymentDay,
-                              const LAString& dayCount,
-                              const LAString& interpolation,
-                              const LAString& curveName )
+    double tryMirGetAnnuity1( AQLDataInstance* dataInstance,
+                              const AQLDate& fromDate,
+                              const AQLDate& toDate,
+                              const AQLString& curveId,
+                              const AQLString& frequency,
+                              const AQLString& slidingRule,
+                              const AQLString& calendar,
+                              const AQLString& firstOddDate,
+                              const AQLString& lastOddDate,
+                              const AQLString& paymentDay,
+                              const AQLString& dayCount,
+                              const AQLString& interpolation,
+                              const AQLString& curveName )
     {
         VALID_EXCEPTION_START
 
@@ -65,13 +65,13 @@ namespace validation
             file.write( "curveName", curveName );
         }
 
-        LADate* firstOddDt    = NULL;
+        AQLDate* firstOddDt    = NULL;
         if ( firstOddDate.size() != 0 )
         {
             firstOddDt = &etrading::stringToDate( firstOddDate, "#Error: Invalid 'firstOddDate'." );
         }
 
-        LADate* lastOddDt  = NULL;
+        AQLDate* lastOddDt  = NULL;
         if ( lastOddDate.size() != 0 )
         {
             lastOddDt = &etrading::stringToDate( lastOddDate, "#Error: Invalid 'lastOddDate'." );
@@ -85,12 +85,12 @@ namespace validation
             pDay = &tempDay;
         }
 
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, LAString( "SPLINE" ) ) );
-        LAString dayC( etrading::getDefaultValueForEmptyString( dayCount, LAString( "ACT/365" ) ) );
-        LAString cal( etrading::getDefaultValueForEmptyString( calendar, LAString( "TKB:LNB" ) ) );
-        LAString sRule( etrading::getDefaultValueForEmptyString( slidingRule, LAString( "NO_CHANGE" ) ) );
-        LAString freq( etrading::getDefaultValueForEmptyString( frequency, LAString( "SEMI-ANNUAL" ) ) );
-        LAString curName( etrading::getDefaultValueForEmptyString( curveName, LAString( "STD" ) ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
+        AQLString dayC( etrading::getDefaultValueForEmptyString( dayCount, AQLString( "ACT/365" ) ) );
+        AQLString cal( etrading::getDefaultValueForEmptyString( calendar, AQLString( "TKB:LNB" ) ) );
+        AQLString sRule( etrading::getDefaultValueForEmptyString( slidingRule, AQLString( "NO_CHANGE" ) ) );
+        AQLString freq( etrading::getDefaultValueForEmptyString( frequency, AQLString( "SEMI-ANNUAL" ) ) );
+        AQLString curName( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
 
         double ret = etrading::LACurveForwardRateHelpers::getAnnuity( fromDate, toDate, dataInstance, curveId, freq, sRule, cal, firstOddDt, lastOddDt, pDay, dayC, interp, curName );
 
@@ -114,12 +114,12 @@ namespace validation
     *  @param [in]		curveName		Name of the curve set
     *  @return			Aannuity
     */
-    double tryMirGetAnnuity2( LADataInstance* dataInstance,
-                              const LAString& curveId,
+    double tryMirGetAnnuity2( AQLDataInstance* dataInstance,
+                              const AQLString& curveId,
                               const DateVector& dates,
-                              const LAString& dayCount,
-                              const LAString& interpolation,
-                              const LAString& curveName )
+                              const AQLString& dayCount,
+                              const AQLString& interpolation,
+                              const AQLString& curveName )
     {
         VALID_EXCEPTION_START
 
@@ -137,12 +137,12 @@ namespace validation
 
         if( dates.size() == 0 )
         {
-            throw LACoreInvalidData( "#Error: The size of dates is zero.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The size of dates is zero.", __FILE__, __LINE__ );
         }
 
-        LAString curName( etrading::getDefaultValueForEmptyString( curveName, LAString( "STD" ) ) );
-        LAString dayC( etrading::getDefaultValueForEmptyString( dayCount, LAString( "ACT/365" ) ) );
-        LAString interp( etrading::getDefaultValueForEmptyString( interpolation, LAString( "SPLINE" ) ) );
+        AQLString curName( etrading::getDefaultValueForEmptyString( curveName, AQLString( "STD" ) ) );
+        AQLString dayC( etrading::getDefaultValueForEmptyString( dayCount, AQLString( "ACT/365" ) ) );
+        AQLString interp( etrading::getDefaultValueForEmptyString( interpolation, AQLString( "SPLINE" ) ) );
 
         double ret = etrading::LACurveForwardRateHelpers::getAnnuity( dates, dataInstance, curveId, dayC, interp, curName );
 

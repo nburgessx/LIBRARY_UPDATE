@@ -7,8 +7,8 @@
 #include <string>
 
 // Includes: This Library
-#include <LAString.h>
-#include <LADate.h>
+#include <AQLString.h>
+#include <AQLDate.h>
 
 // Namespaces
 using namespace std;
@@ -27,20 +27,20 @@ namespace google_test
 
     TEST( ComparisionTest2, UNIT_LAStrings )
     {
-        EXPECT_EQ( LAString( "A" ), LAString( "A" ) );
-        EXPECT_EQ( LAString( "B" ), LAString( "B" ) );
-        EXPECT_EQ( LAString( "C" ), LAString( "C" ) );
-        EXPECT_EQ( LAString( "D" ), LAString( "D" ) );
-        EXPECT_EQ( LAString( "E" ), LAString( "E" ) );
+        EXPECT_EQ( AQLString( "A" ), AQLString( "A" ) );
+        EXPECT_EQ( AQLString( "B" ), AQLString( "B" ) );
+        EXPECT_EQ( AQLString( "C" ), AQLString( "C" ) );
+        EXPECT_EQ( AQLString( "D" ), AQLString( "D" ) );
+        EXPECT_EQ( AQLString( "E" ), AQLString( "E" ) );
     }
 
     TEST( ComparisionTest3, UNIT_LADates )
     {
-        EXPECT_EQ( LADate( "20150827" ), LADate( "20150827" ) );
-        EXPECT_EQ( LADate( "20160827" ), LADate( "20160827" ) );
-        EXPECT_EQ( LADate( "20170827" ), LADate( "20170827" ) );
-        EXPECT_EQ( LADate( "20180827" ), LADate( "20180827" ) );
-        EXPECT_EQ( LADate( "20190827" ), LADate( "20190827" ) );
+        EXPECT_EQ( AQLDate( "20150827" ), AQLDate( "20150827" ) );
+        EXPECT_EQ( AQLDate( "20160827" ), AQLDate( "20160827" ) );
+        EXPECT_EQ( AQLDate( "20170827" ), AQLDate( "20170827" ) );
+        EXPECT_EQ( AQLDate( "20180827" ), AQLDate( "20180827" ) );
+        EXPECT_EQ( AQLDate( "20190827" ), AQLDate( "20190827" ) );
     }
 
     TEST( ComparisionTest3, UNIT_Vectors )

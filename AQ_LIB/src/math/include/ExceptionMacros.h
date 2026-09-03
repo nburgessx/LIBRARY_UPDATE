@@ -6,7 +6,7 @@
 #include <sstream>
 #include <memory>
 #include <boost/math/special_functions/round.hpp>
-#include "LACoreAppError.h"
+#include "AQLCoreAppError.h"
 
 //
 // PURPOSE
@@ -25,7 +25,7 @@
 { \
 	std::ostringstream AQ_VALUE; \
     AQ_VALUE << "#Error: " << error_message; \
-	throw LACoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
+	throw AQLCoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
 }
 #endif
 
@@ -36,7 +36,7 @@ if ( !(condition) ) \
 { \
     std::ostringstream AQ_VALUE; \
     AQ_VALUE << "#Error: " << error_message; \
-	throw LACoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
+	throw AQLCoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
 }
 #endif
 
@@ -47,14 +47,14 @@ if ( (condition) ) \
 { \
     std::ostringstream AQ_VALUE; \
     AQ_VALUE << "#Error: " << error_message; \
-	throw LACoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
+	throw AQLCoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
 }
 #endif
 
 // Macro to catch an error message
 #ifndef AQ_CATCH
 #define AQ_CATCH \
-    catch(const LACoreError& e) \
+    catch(const AQLCoreError& e) \
     { \
         throw e; \
     } \
@@ -97,7 +97,7 @@ catch(...) \
 { \
     std::ostringstream AQ_VALUE; \
     AQ_VALUE << "#Error: " << error_message; \
-    throw LACoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
+    throw AQLCoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
 }
 #endif
 
@@ -118,7 +118,7 @@ catch(...) \
 { \
     std::ostringstream AQ_VALUE; \
     AQ_VALUE << "#Error: " << error_message; \
-    throw LACoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
+    throw AQLCoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
 }
 #endif
 

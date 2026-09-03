@@ -16,7 +16,7 @@ namespace validation
 	*  @param [in]		conventionID	ID of convention data
 	*  @param [in]		convData		Convention data in label value block
 	*/
-	void tryMeSABRSetupConvention(const LAString& conventionID, LAStringMatrix& convData)
+	void tryMeSABRSetupConvention(const AQLString& conventionID, AQLStringMatrix& convData)
 	{
 		VALID_EXCEPTION_START
 

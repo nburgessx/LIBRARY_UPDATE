@@ -6,24 +6,24 @@
 #endif
 
 #include <algorithm>
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LADataInstance.h"
-#include "LAPriceDataManager.h"
-#include "LAObjectPool.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
-#include "LADataReference.h"
-#include "LAPriceDataFunction.h"
-#include "LABasic.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLDataInstance.h"
+#include "AQLPriceDataManager.h"
+#include "AQLObjectPool.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
+#include "AQLDataReference.h"
+#include "AQLPriceDataFunction.h"
+#include "AQLBasic.h"
 #include "LAMathDateCalculations.h"
-#include "LACoreComponentManager.h"
+#include "AQLCoreComponentManager.h"
 #include "LAPriceFXDigitalOptionValue.h"
 #include "LAMathFXEntity.h"
 #include "LAMathYieldCurve.h"
@@ -72,7 +72,7 @@ LAPriceFXDigitalOptionValue::isTypeOf(function_t id) const
     @brief get option method name
      @return option method name
 */
-LAString 
+AQLString 
 LAPriceFXDigitalOptionValue::getOptionPayoffName() const
 {
 	return FN_FXDIGITALOPTIONVALUE_STR;
@@ -85,7 +85,7 @@ LAPriceFXDigitalOptionValue::getOptionPayoffName() const
 	@param[in, out] dm data master 
 */
 void
-LAPriceFXDigitalOptionValue::registerData(LAPriceDataManager& dm) const
+LAPriceFXDigitalOptionValue::registerData(AQLPriceDataManager& dm) const
 {
 
 	LALinearRatesOptionValue::registerData(dm);
@@ -95,7 +95,7 @@ LAPriceFXDigitalOptionValue::registerData(LAPriceDataManager& dm) const
 	dm.setData(PRICING_DATA_DIGITALPAYOFF, DATA_DOUBLE);
 }
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceFXDigitalOptionValue::clone() const
 {
     try 
@@ -104,7 +104,7 @@ LAPriceFXDigitalOptionValue::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -117,48 +117,48 @@ LAPriceFXDigitalOptionValue::clone() const
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*					
-LAPriceFXDigitalOptionValue::setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const
+AQLDataProvider*					
+LAPriceFXDigitalOptionValue::setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const
 {
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 	LAPriceFXOptionValueDataProvider* dataProvider = NULL;
 	dataProvider = dynamic_cast<LAPriceFXOptionValueDataProvider *>(LAPriceFXOptionValue::setUpDataProvider(basedate,object,att));
 
 	AnalyticDGParam* pm = dynamic_cast<AnalyticDGParam *>(dataProvider->mParam[0][0]);
 
 	dh = &(object.getData(PRICING_DATA_DIGITALPAYOFF, ISNOTNULL));
-	pm->Dig = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	pm->Dig = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	
 	return dataProvider;
 }
 
 // calc payoff after maturity
 double				
-LAPriceFXDigitalOptionValue::calcPayOffAterMaturity(const LADataValuation& att, LADataProvider* dataProvider, LAObject& e) const
+LAPriceFXDigitalOptionValue::calcPayOffAterMaturity(const AQLDataValuation& att, AQLDataProvider* dataProvider, AQLObject& e) const
 {
 	
 	//dataProvider;
 	LAPriceFXOptionValueDataProvider* dp =  dynamic_cast<LAPriceFXOptionValueDataProvider*>(dataProvider);
 	//LALinearRatesOptionValueDataProvider* dataProvider = &dynamic_cast<LALinearRatesOptionValueDataProvider &>(att.getDataProvider());
 	
-	LADataHolder* dh = &(e.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
-	LAString optiontype = dynamic_cast<LADataString &>(dh->get()).get();
+	AQLDataHolder* dh = &(e.getData(PRICING_DATA_OPTIONTYPE, ISNOTNULL));
+	AQLString optiontype = dynamic_cast<AQLDataString &>(dh->get()).get();
 	optiontype.toUpper();
 	
 	double ret = 0.0;
 	AnalyticDGParam* dgparam = dynamic_cast<AnalyticDGParam* >(dp->mParam[0][0]);
-	if (LAString("CALL") == optiontype && dgparam->S > dgparam->K)
+	if (AQLString("CALL") == optiontype && dgparam->S > dgparam->K)
 	{
 		ret = dgparam->Dig;
 	}
-	else if(LAString("PUT") == optiontype && dgparam->K > dgparam->S)
+	else if(AQLString("PUT") == optiontype && dgparam->K > dgparam->S)
 	{
 		ret = dgparam->Dig;
 	}
@@ -169,7 +169,7 @@ LAPriceFXDigitalOptionValue::calcPayOffAterMaturity(const LADataValuation& att, 
 
 
 std::vector< std::vector<AnalyticParam*> >
-LAPriceFXDigitalOptionValue::createAnalyticParam(LAObject& object, LADataProvider* dataProvider) const
+LAPriceFXDigitalOptionValue::createAnalyticParam(AQLObject& object, AQLDataProvider* dataProvider) const
 {
 	std::vector<AnalyticParam*> retvec(1);
 	std::vector< std::vector<AnalyticParam*> > ret(1,retvec);

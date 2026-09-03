@@ -5,11 +5,11 @@
 #endif
 
 #include "LAMathVolFuncFX.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 #include "LARatesSDEBase.h"
-#include "LAGaussLegendre.h"
-#include "LA1DDataSet.h"
+#include "AQLGaussLegendre.h"
+#include "AQL1DDataSet.h"
 
 
 // Funciton ID of LAMathVolFuncFXDD
@@ -25,7 +25,7 @@ public :
 	// constructor
 	LAMathVolFuncFXDD(const DoubleArray &timeGrid, const DoubleArray &sigma, 
 									const DoubleArray &fx, const DoubleArray &beta, 
-									const LAString &currency, SDE_TYPE type = DIVIDEdXbyX,
+									const AQLString &currency, SDE_TYPE type = DIVIDEdXbyX,
 									int integrate_n_ = 30);
 	// destructor
 	virtual ~LAMathVolFuncFXDD(void);
@@ -37,7 +37,7 @@ public :
     virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// make copy(clone) of this class
-    virtual LACoreFunctionBase*     clone() const;
+    virtual AQLCoreFunctionBase*     clone() const;
 								//======================================
 								// return this class type
     virtual function_t          getType() const;
@@ -50,12 +50,12 @@ public :
 	virtual double				integral(const std::vector<std::pair<double,double> >& x) const;	
 	                            //==========================================
 	                            // Return S function
-	const LAFunctionBase&		getS() const {return mS;}
+	const AQLFunctionBase&		getS() const {return mS;}
 	                            //==========================================
 	                            // Return V(=beta * sigma) function
-	const LAFunctionBase&		getV() const {return mV;}
+	const AQLFunctionBase&		getV() const {return mV;}
 	                            // Return alpha(=(1 - beta) * fx0) function
-	const LAFunctionBase&		getAlpha() const {return mAlpha;}
+	const AQLFunctionBase&		getAlpha() const {return mAlpha;}
 								//==========================================
 								// set fwd fx
 	virtual void				setFwdFX(const DoubleArray &fx);
@@ -70,9 +70,9 @@ public :
 	double						getIntegralofSV(double ts, double te) const;
 protected :
 	SDE_TYPE					mType;			// sde type
-	mutable LA1DDataSet		mV;
-	mutable LA1DDataSet		mS;
-	mutable LA1DDataSet		mAlpha;
+	mutable AQL1DDataSet		mV;
+	mutable AQL1DDataSet		mS;
+	mutable AQL1DDataSet		mAlpha;
 	
 private	:
 	mutable std::map<double, std::vector<double> > integrate_cache;

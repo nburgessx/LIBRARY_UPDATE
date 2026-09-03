@@ -1,7 +1,7 @@
 #include "InitializeAQETrading.h"
 #include "mirGetForwardRate.h"
 #include "TypeUtilities.h"
-#include "LAString.h"
+#include "AQLString.h"
 #include "tryMirGetForwardRate.h"
 
 
@@ -40,18 +40,18 @@ std::vector<double> mirGetForwardRate2( const std::vector<std::string>& fromDate
 		DateVector toDateVec;
 		swig::buildDateVector(toDateVec, toDates);
 
-		LAString cId(curveId.c_str());
-		LAString freq(frequency.c_str());
-		LAString dayC(dayCount.c_str());
-		LAString sRule(slidingRule.c_str());
-		LAString cal(calendar.c_str());
-		LAString interp(interpolation.c_str());
-		LAString cName(curveName.c_str());
+		AQLString cId(curveId.c_str());
+		AQLString freq(frequency.c_str());
+		AQLString dayC(dayCount.c_str());
+		AQLString sRule(slidingRule.c_str());
+		AQLString cal(calendar.c_str());
+		AQLString interp(interpolation.c_str());
+		AQLString cName(curveName.c_str());
 
 		results = validation::tryMirGetForwardRate2(etrading::InitializeAQETrading::instance().dataInstance(), fromDateVec, toDateVec, cId, freq, dayC, sRule, cal, interp, cName, isFwdInterp, useFwdData);
 
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

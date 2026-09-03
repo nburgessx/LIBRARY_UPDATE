@@ -19,19 +19,19 @@
 #include "LAPriceEventTerminate.h"
 
 
-#include "LADataHolder.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAObject.h"
-#include "LAObjectHolder.h"
+#include "AQLDataHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObject.h"
+#include "AQLObjectHolder.h"
 
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 #include "LARatesNumeraireBase.h"
 #include "LAModelDynamicsCurve.h"
 
-#include "LAMathDefine.h"
+#include "AQLMathDefine.h"
 #include "LAMathFXEntity.h"
 
 #include "LAPricePayOff.h"
@@ -45,7 +45,7 @@ using namespace std;
     @brief constructor
 */
 LAPriceEventBase::LAPriceEventBase()
-: LACoreFunctionBase()
+: AQLCoreFunctionBase()
 {
 
 }
@@ -66,7 +66,7 @@ LAPriceEventBase::~LAPriceEventBase()
 bool
 LAPriceEventBase::isTypeOf(function_t id) const
 {
-	return (id == FN_IR_TRIGGERACTIONBASE ? true : LACoreFunctionBase::isTypeOf(id));
+	return (id == FN_IR_TRIGGERACTIONBASE ? true : AQLCoreFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -88,9 +88,9 @@ LAPriceEventBase::getType() const
 	    @param[in] isCall call flag(true:call,false:trigger)
 */
 void
-LAPriceEventBase::setUp(const LADate& basedate,	
-								const LAObject& trade,
-								LAObject& triggerinfo,
+LAPriceEventBase::setUp(const AQLDate& basedate,	
+								const AQLObject& trade,
+								AQLObject& triggerinfo,
 								const LAPricePayOff& payoff,
 								bool isCall)
 {
@@ -100,13 +100,13 @@ LAPriceEventBase::setUp(const LADate& basedate,
 
 
 	(void)payoff; (void)basedate; //20070411--Nagase--gcc
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	//leg object
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference&>(dh->get());
+	const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference&>(dh->get());
 
 	dh =  &(triggerinfo.getData(PRICING_DATA_TARGETLEG, ISNOTNULL));
-	LAString target = dynamic_cast<const LADataString&>(dh->get()).get();
+	AQLString target = dynamic_cast<const AQLDataString&>(dh->get()).get();
 	target.toUpper();
 	if (target == BOTH) 
 	{
@@ -122,10 +122,10 @@ LAPriceEventBase::setUp(const LADate& basedate,
 			|| legs.getSize() < legNo)
 		{
 			//error
-			LAString msg = PRICING_DATA_TARGETLEG;
+			AQLString msg = PRICING_DATA_TARGETLEG;
 			msg += ": " + target;
 			msg += " is a wrong input";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);	
 		}
 		mTargetLegNo.push_back(legNo - 1);
 	}

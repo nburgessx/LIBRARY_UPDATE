@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent LMM correlation function
 
-	This class derives from LAFunctionBase
+	This class derives from AQLFunctionBase
 
 */
 //  2007, AlgoQuantHub.
@@ -11,7 +11,7 @@
 //
 //  SYNOPSIS    :       LAMathCorrelationFuncLMM
 //  DESCRIPTION :       Source code of class  to represent correlation of LMM
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -24,7 +24,7 @@
 
 
 #include "LAMathCorrelationFuncLMM.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 
 using namespace std;
 
@@ -34,7 +34,7 @@ using namespace std;
 */
 
 LAMathCorrelationFuncLMM::LAMathCorrelationFuncLMM(void)
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 }
 
@@ -50,7 +50,7 @@ LAMathCorrelationFuncLMM::~LAMathCorrelationFuncLMM(void)
 	@brief copy constructor
 */
 LAMathCorrelationFuncLMM::LAMathCorrelationFuncLMM(const LAMathCorrelationFuncLMM &rhs) 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 	mX = rhs.mX;
 }
@@ -59,7 +59,7 @@ LAMathCorrelationFuncLMM::LAMathCorrelationFuncLMM(const LAMathCorrelationFuncLM
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathCorrelationFuncLMM::clone() const
 {
     try 
@@ -68,7 +68,7 @@ LAMathCorrelationFuncLMM::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -80,7 +80,7 @@ LAMathCorrelationFuncLMM::clone() const
 bool
 LAMathCorrelationFuncLMM::isTypeOf(function_t id) const
 {
-	return (id == FN_CORRELATIONFUNCLMM ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_CORRELATIONFUNCLMM ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -119,9 +119,9 @@ LAMathCorrelationFuncLMM::operator()(double t) const
 	(void)t;
 	if (mX.size() < 3)
 	{
-		throw LACoreInvalidData("default argument mX's size must be >=  3 !", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("default argument mX's size must be >=  3 !", __FILE__, __LINE__);
 	}
-//	return LAMath::exp(-LAMath::abs(mX[1] - mX[2]) * (mx + my * (1.0 - (mX[1] + mX[2]) / (2.0 * mTMax))));
+//	return AQLMath::exp(-AQLMath::abs(mX[1] - mX[2]) * (mx + my * (1.0 - (mX[1] + mX[2]) / (2.0 * mTMax))));
 	return get(t, mX[1], mX[2]);
 }
 

@@ -14,17 +14,17 @@
 #include "LADateScheduleHelpers.h"      // was called #include "LAMathDateFuncUti1ity.h"
 
 // Internal Includes
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LACoreTemplateType.h"
-#include "LAMathDefine.h"
-#include "LAPriceDataCalendar.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLMathDefine.h"
+#include "AQLPriceDataCalendar.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathFXUtility.h"
-#include "LABasic.h"
-#include "LAAlgorithm.h"
+#include "AQLBasic.h"
+#include "AQLAlgorithm.h"
 #include "ExceptionMacros.h"
 
 // External Includes
@@ -72,9 +72,9 @@ using namespace std;
 
 namespace
 {
-	const RollConventionEnum toRollConventionEnum( const LAString& enumString )
+	const RollConventionEnum toRollConventionEnum( const AQLString& enumString )
 	{
-		LAString uCaseString("");
+		AQLString uCaseString("");
 		if (enumString != NULL) uCaseString = enumString;
 		uCaseString.toUpper();
 
@@ -108,10 +108,10 @@ namespace
 		}
 		else
 		{
-			LAString msg;
+			AQLString msg;
 			msg += "#Error: Unknown roll convention; ";
 			msg += enumString;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 }
@@ -120,7 +120,7 @@ namespace
 namespace etrading
 {
 
-    const LAString toString( const RollConventionEnum enumValue )
+    const AQLString toString( const RollConventionEnum enumValue )
     {
         switch( enumValue )
         {
@@ -154,17 +154,17 @@ namespace etrading
 
             default:
 		    {
-			    LAString msg = "#Error: RollConventionEnum number '";
+			    AQLString msg = "#Error: RollConventionEnum number '";
 			    msg += enumValue;
 			    msg += "' is not convertable to a string.";
-			    throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);;
+			    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);;
 			    break;
 		    }
         }
     }
 
     // each leap year and not, day of month and day from head of this year to head of this month (from 0)
-    // (copied by LADate.cpp) 
+    // (copied by AQLDate.cpp) 
     static const unsigned short LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[2][2][12] =
         {{{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
           { 0, 31, 59, 90,120,151,181,212,243,273,304,334}},
@@ -173,7 +173,7 @@ namespace etrading
 
 
     // Get date adjusted for holidays
-    LADate LADateHelpers::getAdjDate(const LAPriceDataSlidingRule* busDayAdj, const LAPriceDataCalendar* calendar, const LADate &date)
+    AQLDate LADateHelpers::getAdjDate(const AQLPriceDataSlidingRule* busDayAdj, const AQLPriceDataCalendar* calendar, const AQLDate &date)
     {
 	    if (busDayAdj != NULL && calendar != NULL)
 	    {
@@ -187,7 +187,7 @@ namespace etrading
 
 
     void
-    LADateHelpers::setDate(const int* rollDay, LADate &date, const RollConventionEnum rollConventionEnum)
+    LADateHelpers::setDate(const int* rollDay, AQLDate &date, const RollConventionEnum rollConventionEnum)
     {
 	    if ( rollConventionEnum == ROLLCONV_ENUM_NONE ||
 		     rollConventionEnum == ROLLCONV_ENUM_NORMAL ||
@@ -228,20 +228,20 @@ namespace etrading
 
         @return DateVector of grid points
     */
-    DateVector LADateHelpers::generateRegularSchedule( const LADate& start, 
-													   const LADate& end,
-													   const LAString& data_frequency,
+    DateVector LADateHelpers::generateRegularSchedule( const AQLDate& start, 
+													   const AQLDate& end,
+													   const AQLString& data_frequency,
 													   const bool inArrears,
 													   const int* rollDay,
-													   const LAPriceDataSlidingRule* busDayAdj,
-													   const LAPriceDataCalendar* calendar,
+													   const AQLPriceDataSlidingRule* busDayAdj,
+													   const AQLPriceDataCalendar* calendar,
 													   const bool isStartRoll,
-													   const LAString* roll_convention )
+													   const AQLString* roll_convention )
     {
-		std::deque<LADate> resultDates;
+		std::deque<AQLDate> resultDates;
 
-	    LADate unadjustedDate;
-	    LADate adjustedDate;
+	    AQLDate unadjustedDate;
+	    AQLDate adjustedDate;
 
 	    RollConventionEnum rollConventionEnum = roll_convention == NULL ? ROLLCONV_ENUM_NONE : toRollConventionEnum( *roll_convention );
 
@@ -354,7 +354,7 @@ namespace etrading
 	    }
 	    else
 	    {
-		    LADate unadjustedDate = end;
+		    AQLDate unadjustedDate = end;
 		    if (data_frequency == BUSINESS_DAYS || data_frequency == DAILY)
 		    {
 			    unadjustedDate.addDays(-1);
@@ -467,14 +467,14 @@ namespace etrading
 	    
 		// Add Start Date if we have a Front Stub
 		// **************************************
-		LADate startRollDate = getAdjDate(busDayAdj, calendar, start);
+		AQLDate startRollDate = getAdjDate(busDayAdj, calendar, start);
 		if( !inArrears && ( ( resultDates.size() != 0 && startRollDate != resultDates.front() ) || resultDates.size() == 0 ) )
 		{
 			resultDates.push_front(startRollDate);
 		}
 
 		// Add End Date if we have a Back Stub
-		LADate EndRollDate = getAdjDate(busDayAdj, calendar, end);
+		AQLDate EndRollDate = getAdjDate(busDayAdj, calendar, end);
 		if (inArrears && ((resultDates.size() != 0 && EndRollDate != resultDates.back()) || resultDates.size() == 0))
 		{
 		    resultDates.push_back(EndRollDate);
@@ -498,22 +498,22 @@ namespace etrading
 	    @param[in] calendar			pointer of Calender
     */
     void							
-    LADateHelpers::generateSchedule( const LADate& unadjustedStart,
-									 const LADate& unadjustedEnd,
-									 const LAString& data_frequency,
+    LADateHelpers::generateSchedule( const AQLDate& unadjustedStart,
+									 const AQLDate& unadjustedEnd,
+									 const AQLString& data_frequency,
 									 const bool inArrears,
-									 const LADate* firstStubDate,
-									 const LADate* lastStubDate,
+									 const AQLDate* firstStubDate,
+									 const AQLDate* lastStubDate,
 									 const int* rollDay,
 									 DateVector& out,
-									 const LAPriceDataSlidingRule* busDayAdj,
-									 const LAPriceDataCalendar* calendar,
+									 const AQLPriceDataSlidingRule* busDayAdj,
+									 const AQLPriceDataCalendar* calendar,
 									 const bool isStartRoll,
-									 const LAString* roll_convention )
+									 const AQLString* roll_convention )
     {
 	    out.clear();
-	    LADate rollDate; 
-	    LAString freq_str = data_frequency;
+	    AQLDate rollDate; 
+	    AQLString freq_str = data_frequency;
 	    freq_str.toUpper();
 
 		AQ_THROW_IF( unadjustedStart > unadjustedEnd, "Invalid Schedule: Start Date '" + unadjustedStart.stringWithFormat("DD-MMM-YY") + "' cannot be after the End Date '" + unadjustedEnd.stringWithFormat("DD-MMM-YY") +"'" ) 
@@ -533,8 +533,8 @@ namespace etrading
 		    return;
 	    }
 	
-	    const LADate& frontStub = ( firstStubDate == NULL && lastStubDate != NULL ) ? unadjustedStart : *firstStubDate; 
-	    const LADate& endStub	= ( firstStubDate != NULL && lastStubDate == NULL ) ? unadjustedEnd	: *lastStubDate;
+	    const AQLDate& frontStub = ( firstStubDate == NULL && lastStubDate != NULL ) ? unadjustedStart : *firstStubDate; 
+	    const AQLDate& endStub	= ( firstStubDate != NULL && lastStubDate == NULL ) ? unadjustedEnd	: *lastStubDate;
 
 
 	    // *** STUB SCHEDULE USING STUB TYPE ***
@@ -551,8 +551,8 @@ namespace etrading
 			// ... Since Start and End Dates are Unadjusted to Get the Correct Roll Dates
 			// *********************************************************************************
 
-			LADate adjustedStartDate = unadjustedStart;
-			LADate adjustedEndDate = unadjustedEnd;
+			AQLDate adjustedStartDate = unadjustedStart;
+			AQLDate adjustedEndDate = unadjustedEnd;
 
 			if( inArrears )
 			{
@@ -600,7 +600,7 @@ namespace etrading
     */
 
     void
-    LADateHelpers::termStrtoYMDW(const LAString& term, int& y, int& m, int& d, int& w)
+    LADateHelpers::termStrtoYMDW(const AQLString& term, int& y, int& m, int& d, int& w)
     {
 		// For backwards compatibility we maintain the old API, and forward to the enhanced function with a dummy calendar days output variable set to zero.
 		int c = 0;
@@ -609,10 +609,10 @@ namespace etrading
 
 	// ! Set term from string to integer - Enhanced version of the above which handles calendar days, c
 	void
-	LADateHelpers::termStrtoYMDWC(const LAString& term, int& y, int& m, int& d, int& w, int& c)
+	LADateHelpers::termStrtoYMDWC(const AQLString& term, int& y, int& m, int& d, int& w, int& c)
 	{
 		int      pl_y, pl_m, pl_d, pl_w, pl_c;		//place of year, month, busday, week, caledarday
-		LAString str = term;
+		AQLString str = term;
 		str.toUpper();
 
 		if (str == ON)
@@ -638,22 +638,22 @@ namespace etrading
 
 		if ( pl_d != -1 && pl_c != -1 )
 		{
-			LAString msg = "Invalid Tenor String: Cannot have calendar (C) and business-day (D) tenors at the same time";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "Invalid Tenor String: Cannot have calendar (C) and business-day (D) tenors at the same time";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
 		if (pl_y == -1 && pl_m == -1 && pl_d == -1 && pl_w == -1 && pl_c == -1 )
 		{
 			//error
-			LAString msg = "Invalid Tenor String: Term must be Y, M, W, D, C or TN, ON.";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "Invalid Tenor String: Term must be Y, M, W, D, C or TN, ON.";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 		// week 
 		if ((pl_y != -1 || pl_m != -1 || pl_d != -1 || pl_c != -1) && pl_w != -1)
 		{
 			//error
-			LAString msg = "#Error: Invalid Tenor String: Weekly Terms W cannot be used in in combination with other term strings.";
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "#Error: Invalid Tenor String: Weekly Terms W cannot be used in in combination with other term strings.";
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 
 		// String can only contain the following characters and numbers
@@ -664,7 +664,7 @@ namespace etrading
 		if (std::string::npos != tempString.find_first_not_of("YMDWC-0123456789"))
 		{
 			std::string msg = "Invalid Tenor String '" + tempString + "' : Term must be Y, M, W, D, C or TN, ON and contain no spaces";
-			throw LACoreInvalidData(msg.c_str(), __FILE__, __LINE__);
+			throw AQLCoreInvalidData(msg.c_str(), __FILE__, __LINE__);
 		}
 
 		// --------------------------------------------------------------------------------
@@ -726,15 +726,15 @@ namespace etrading
 	    @param[in] roll_conv		roll convention
 	
     */
-    LADate
-    LADateHelpers::getDate(const LADate& basedate, 
-                                 const LAString& term, 
+    AQLDate
+    LADateHelpers::getDate(const AQLDate& basedate, 
+                                 const AQLString& term, 
                                  bool rollForwards, 
-                                 const LAString* roll_conv)
+                                 const AQLString* roll_conv)
     {
 	    int y, m, d, w;
 	    LADateHelpers::termStrtoYMDW(term, y, m, d, w);
-	    LADate date = basedate;
+	    AQLDate date = basedate;
 	    if (!rollForwards)
 	    {
 		    y = -y;
@@ -764,12 +764,12 @@ namespace etrading
 	    @param[in] rollForwards			true:after, false:before(bool)
 	    @param[in] roll_conv		roll convention
     */
-    LADate LADateHelpers::getDate(const LADate& basedate, 
-                                  const LAString& term, 
-                                  const LAPriceDataSlidingRule& busdayrule,
-                                  const LAPriceDataCalendar* pCal,
+    AQLDate LADateHelpers::getDate(const AQLDate& basedate, 
+                                  const AQLString& term, 
+                                  const AQLPriceDataSlidingRule& busdayrule,
+                                  const AQLPriceDataCalendar* pCal,
                                   bool rollForwards,
-							      const LAString* roll_conv)
+							      const AQLString* roll_conv)
     {
 		// These variables store the number of years, months, busdays, weeks, and calendardays represented by "term"
 	    int y, m, d, w, c;
@@ -782,7 +782,7 @@ namespace etrading
 		    w = -w;
 			c = -c;
 	    }
-	    LADate date = basedate;
+	    AQLDate date = basedate;
 	    
         // set W only
 	    if (w != 0) // cannot use W with other terms
@@ -819,8 +819,8 @@ namespace etrading
 	    {
 		    if (!pCal)
 		    {
-                LAString msg = "#Error: Missing Calendar";
-			    throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
+                AQLString msg = "#Error: Missing Calendar";
+			    throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);			
 		    }
 		    date = pCal->getBusinessDay(date, d);
 	    }
@@ -840,8 +840,8 @@ namespace etrading
 	    @param[in] pCal		pointer of Calendar
 	    @return				date
     */
-    LADate 
-    LADateHelpers::slideDate(const LADate& date, const LAPriceDataSlidingRule& srule, const LAPriceDataCalendar* pCal)
+    AQLDate 
+    LADateHelpers::slideDate(const AQLDate& date, const AQLPriceDataSlidingRule& srule, const AQLPriceDataCalendar* pCal)
     {
 	    if (srule.getSlidingRule() != SLIDING_RULE_NO_CHANGE) 
 	    {
@@ -858,10 +858,10 @@ namespace etrading
 	    @param[in] roll		roll convention
 	    @return				date
     */
-    LADate 
-    LADateHelpers::rollDate(const LADate& basedate, const LAString* roll)
+    AQLDate 
+    LADateHelpers::rollDate(const AQLDate& basedate, const AQLString* roll)
     {
-	    LADate date = basedate;
+	    AQLDate date = basedate;
 	    const int day = date.dayOfMonth();
 
 	    const RollConventionEnum rollConventionEnum = roll == NULL ? ROLLCONV_ENUM_NONE : toRollConventionEnum( *roll );
@@ -876,15 +876,15 @@ namespace etrading
 	    @param[in] y				year
 	    @param[in] m				month	
     */
-    LADate
+    AQLDate
     LADateHelpers::getIMMDate(const int& y, const int& m, bool isOddMonth)
     {
 	    if ((m%3 && !isOddMonth) || m <= 0 || m>=13) 
-            throw LACoreInvalidData("#Error: Invalid IMM Month: IMM Month must be 3, 6, 9  or 12", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("#Error: Invalid IMM Month: IMM Month must be 3, 6, 9  or 12", __FILE__, __LINE__);
 	
-	    LADate date;
+	    AQLDate date;
 	    date.setYear(y); date.setMonth(m); date.setDay(1);
-	    LADayOfWeekEnum weekly = date.dayOfWeek();
+	    AQLDayOfWeekEnum weekly = date.dayOfWeek();
 	    if (weekly == SUN)
         {
             date.addDays(3);
@@ -915,9 +915,9 @@ namespace etrading
         }
         else 
         {
-            LAString    msg = "#Error: Invalid Date: Invalid Weekday [";
+            AQLString    msg = "#Error: Invalid Date: Invalid Weekday [";
             msg += weekly + "]";
-            throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+            throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
         }
 	
 	    date.addWeeks(2);
@@ -932,14 +932,14 @@ namespace etrading
 	    @param[in] strTerm		    stirng of term
 	    @param[in] lag				lag
     */
-    LADate 
-    LADateHelpers::getImmEndDate(const LADate& startDate, const LAString& strTerm, int lag)
+    AQLDate 
+    LADateHelpers::getImmEndDate(const AQLDate& startDate, const AQLString& strTerm, int lag)
     {
-	    LADate	endDate = getDate(startDate, strTerm, true);
+	    AQLDate	endDate = getDate(startDate, strTerm, true);
 
 	    // set year YYYY
-	    LADate	s1(endDate);
-	    LADate	e1(endDate), e2(endDate), e3(endDate), e4(endDate);
+	    AQLDate	s1(endDate);
+	    AQLDate	e1(endDate), e2(endDate), e3(endDate), e4(endDate);
 
 	    // s1 : YYYY/1/1
 	    s1.setMonth(1);
@@ -993,20 +993,20 @@ namespace etrading
 	    @param[in]      year    futures contract year
         @param[out]     returns the futures contract start date
     */
-    LADate
+    AQLDate
     LADateHelpers::getFuturesContractStartDate(const unsigned int& month, const unsigned int& year )
     {
 	    if ( month > 12 ) 
         {
-            throw LACoreInvalidData("#Error: Invalid futures contract month.", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("#Error: Invalid futures contract month.", __FILE__, __LINE__);
         }
 	
-	    LADate date;
+	    AQLDate date;
 	    date.setYear( year );
         date.setMonth( month );
         date.setDay( 1 );
 	
-        LADayOfWeekEnum weekly = date.dayOfWeek();
+        AQLDayOfWeekEnum weekly = date.dayOfWeek();
 	    if (weekly == SUN)
         {
             date.addDays(3);
@@ -1037,7 +1037,7 @@ namespace etrading
         }
         else 
         {
-            throw LACoreInvalidData("#Error: Invalid day of the week.", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("#Error: Invalid day of the week.", __FILE__, __LINE__);
         }
 	
 	    date.addWeeks( 2 );
@@ -1051,14 +1051,14 @@ namespace etrading
 	    @param[in] baseDate				asOfdate of market rate
 	    @param[in] futureTerm			term of future market(ex. EDV1,EDV2)
     */
-    LADate
-    LADateHelpers::getIMMDateFromTerm(const LADate& baseDate, const LAString& futureTerm)
+    AQLDate
+    LADateHelpers::getIMMDateFromTerm(const AQLDate& baseDate, const AQLString& futureTerm)
     {
 	    if (futureTerm.size() != 4) 
-            throw LACoreInvalidData("#Error: Invalid Futures Contract Tenor - Futures contracts must have 4 characters", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("#Error: Invalid Futures Contract Tenor - Futures contracts must have 4 characters", __FILE__, __LINE__);
 
 	    if (!isdigit(*futureTerm.subString(3, 3).getCString()))
-		    throw LACoreInvalidData("#Error: Invalid Futures Contract Tenor - Futures contracts must end with a digit", __FILE__, __LINE__);
+		    throw AQLCoreInvalidData("#Error: Invalid Futures Contract Tenor - Futures contracts must end with a digit", __FILE__, __LINE__);
 	    
         unsigned int month = changeFutureMonthFormat(futureTerm.subString(2, 2));
 	    int year = baseDate.yearOfEra();
@@ -1077,21 +1077,21 @@ namespace etrading
 	    @param[in] futureTerm			term of future market(ex. EDV1,EDV2)
     */
     DateVector
-    LADateHelpers::getFFDatesFromTerm(const LADate& baseDate, const LAString& fedfundTerm)
+    LADateHelpers::getFFDatesFromTerm(const AQLDate& baseDate, const AQLString& fedfundTerm)
     {
 	    if (fedfundTerm.size() != 4) 
-            throw LACoreInvalidData("#Error: Invalid FED Fund Contract Tenor - Contract tenor must be 4 characters", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("#Error: Invalid FED Fund Contract Tenor - Contract tenor must be 4 characters", __FILE__, __LINE__);
 	    
         unsigned int month = changeFutureMonthFormat(fedfundTerm.subString(2, 2));
-	    LAString yearStr_basedate = LAString(baseDate.yearOfEra());
-	    LAString yearStr = yearStr_basedate.subString(0, 2) + fedfundTerm.subString(3, 3);
+	    AQLString yearStr_basedate = AQLString(baseDate.yearOfEra());
+	    AQLString yearStr = yearStr_basedate.subString(0, 2) + fedfundTerm.subString(3, 3);
 
-	    LADate startdate;
+	    AQLDate startdate;
 	    startdate.setYear(yearStr.getIntValue());
 	    startdate.setMonth(month);
 	    startdate.setDay(1);
 
-	    LADate enddate = startdate;
+	    AQLDate enddate = startdate;
 	    enddate.addMonths(1);
 	    enddate.addDays(-1);
 
@@ -1112,32 +1112,32 @@ namespace etrading
 	    @param[in] calStr				city of calendar in String (ex. "TkB:LnB")
 	    @param[in] rollForwards				true:after, false:before(bool)
     */
-    LADate
-    LADateHelpers::getFXSpotDate(const LAString& keyFX,
-								       const LADate& basedate,
-								       const LAString& calStr,
+    AQLDate
+    LADateHelpers::getFXSpotDate(const AQLString& keyFX,
+								       const AQLDate& basedate,
+								       const AQLString& calStr,
 								       int spotlag,
 								       bool rollForwards)
     {
-	    LADate ret;
-	    LAString tempStr = calStr;
+	    AQLDate ret;
+	    AQLString tempStr = calStr;
 	    tempStr.toUpper();
 
 	    int nybpos = tempStr.findString("NYB");
 	    if (nybpos < 0) {
 		    SlidingRuleType sruleType;
 		    sruleType = (spotlag >= 0) ? SLIDING_RULE_FOLLOWING : SLIDING_RULE_PRECEDING;
-		    LAPriceDataSlidingRule busdayrule(sruleType);
+		    AQLPriceDataSlidingRule busdayrule(sruleType);
 
-		    LAPriceDataCalendar Cal;
+		    AQLPriceDataCalendar Cal;
 		    Cal.convertFromString(calStr);
 
-		    ret = getDate(basedate, LAString(spotlag) + "D", busdayrule, &Cal, rollForwards);
+		    ret = getDate(basedate, AQLString(spotlag) + "D", busdayrule, &Cal, rollForwards);
 	    } else {
 		    // Remove NYB Calendar
-		    LAStringVector tempStrs(tempStr.toToken(':'));
+		    AQLStringVector tempStrs(tempStr.toToken(':'));
 		    tempStr = "";
-		    for(LAStringVector::iterator it = tempStrs.begin(); it != tempStrs.end(); it++)
+		    for(AQLStringVector::iterator it = tempStrs.begin(); it != tempStrs.end(); it++)
 			    if(*it != "NYB")
 				    tempStr += *it + ":";
 
@@ -1145,9 +1145,9 @@ namespace etrading
 		    if(tempStr.size() > 0)
 			    tempStr.remove(tempStr.size() - 1, 1);
 	
-		    LAString tempStr2 = keyFX;
+		    AQLString tempStr2 = keyFX;
 		    tempStr2.toUpper();
-		    LAStringVector curs(tempStr2.toToken('/'));
+		    AQLStringVector curs(tempStr2.toToken('/'));
 
 		    if(curs[0] == "USD")
 			    ret = LAMathFXUtility::getSpotDate_IncludedUSD(curs[0],basedate,tempStr,"NyB",spotlag);
@@ -1162,25 +1162,25 @@ namespace etrading
 
     /* static */ bool
     LADateHelpers::haveNextCBDate(
-	    const LAString& cb, const LADate& baseDate, bool strictlyAfter)
+	    const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter)
     {
-	    LADate ignore;
+	    AQLDate ignore;
 	    return getIfExistsNextCBDate(cb, baseDate, strictlyAfter, ignore);
     }
 
-    /* static */ LADate
+    /* static */ AQLDate
     LADateHelpers::getNextCBDate(
-	    const LAString& cb, const LADate& baseDate, bool strictlyAfter)
+	    const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter)
     {
-	    LADate result;
+	    AQLDate result;
 	    const bool exists = getIfExistsNextCBDate(cb, baseDate, strictlyAfter, result);
 
 	    if (!exists) {
 		    if (strictlyAfter) {
-                throw LACoreAppError("#Error: No central bank data available after specified reference date", __FILE__, __LINE__);
+                throw AQLCoreAppError("#Error: No central bank data available after specified reference date", __FILE__, __LINE__);
 		    }
 		    else {
-			    throw LACoreAppError("#Error: No central bank data available on or after specified reference date", __FILE__, __LINE__);
+			    throw AQLCoreAppError("#Error: No central bank data available on or after specified reference date", __FILE__, __LINE__);
 		    }
 	    }
 
@@ -1189,9 +1189,9 @@ namespace etrading
 
     /* static */ bool
     LADateHelpers::getIfExistsNextCBDate(
-	    const LAString& cb, const LADate& baseDate, bool strictlyAfter, LADate& result)
+	    const AQLString& cb, const AQLDate& baseDate, bool strictlyAfter, AQLDate& result)
     {
-	    typedef vector<LADate> Schedule;
+	    typedef vector<AQLDate> Schedule;
 	    typedef Schedule::const_iterator cIter;
 
 	    const Schedule& cbDates = LAMathCentralBank::meetingSchedule(cb);
@@ -1226,7 +1226,7 @@ namespace etrading
 	    @param[in] futureMonth			string of future market format(ex. V,Z,K)
     */
     unsigned int
-    LADateHelpers::changeFutureMonthFormat(const LAString& futureMonth)
+    LADateHelpers::changeFutureMonthFormat(const AQLString& futureMonth)
     {
         if (futureMonth == F_FUTURE_MONTH)
         {
@@ -1278,7 +1278,7 @@ namespace etrading
 	    }
 	    else
 	    {
-            throw LACoreInvalidData("#Error: Invalid Futures Contract: Futures month is invalid", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("#Error: Invalid Futures Contract: Futures month is invalid", __FILE__, __LINE__);
 	    }	
     }
 
@@ -1292,34 +1292,34 @@ namespace etrading
 	
     */
     void
-    LADateHelpers::convertToDateGrid(const LADate &asofDate, const DoubleArray &terms, DateVector &dates)
+    LADateHelpers::convertToDateGrid(const AQLDate &asofDate, const DoubleArray &terms, DateVector &dates)
     {
 	    dates.clear();
 	
-	    const LAPriceDataDayCount dc_act365(ACT_365);
+	    const AQLPriceDataDayCount dc_act365(ACT_365);
 
 	    for (unsigned int i = 0; i < terms.size(); ++i)
 	    {
 		    const double term = terms[i];
 
-		    LADate date = LADateScheduleHelpers::getDateFromTerm( asofDate, term, dc_act365 );
+		    AQLDate date = LADateScheduleHelpers::getDateFromTerm( asofDate, term, dc_act365 );
 
 		    dates.push_back(date);
 	    }
 
 	    if (dates.size() != terms.size())
 	    {
-            throw LACoreInvalidData("#Error: Inconsistent Data: Number of dates and terms must match", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("#Error: Inconsistent Data: Number of dates and terms must match", __FILE__, __LINE__);
 	    }
     }
 
     // Return the frequency in months for comparing two frequencies, not for accurate calculations
 	// *** Duplicate method in LAMathDateCalculations.cpp ***
-    double LADateHelpers::getPeriodFrequencyInMonths(const LAString& freq)
+    double LADateHelpers::getPeriodFrequencyInMonths(const AQLString& freq)
     {
 	    double frequencyInMonths;
 
-		LAString freq_capital = freq;
+		AQLString freq_capital = freq;
 		freq_capital.toUpper();
 
 		if (freq_capital == ANNUAL)											frequencyInMonths = 12.0;
@@ -1345,21 +1345,21 @@ namespace etrading
 	    @return compounding times
     */
     int
-    LADateHelpers::calcCompoundingTimes(const LAString& freq_rst, const LAString& freq_pay)
+    LADateHelpers::calcCompoundingTimes(const AQLString& freq_rst, const AQLString& freq_pay)
     {
 	    int span_rst = getPeriodFrequencyInMonths(freq_rst);
 	    int	span_pay = getPeriodFrequencyInMonths(freq_pay); 
 
 	    if (span_pay < span_rst) //error
-            throw LACoreInvalidData("#Error: Invalid compound frequency - Pay frequency cannot be more regular than the accrual / reset frequency", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("#Error: Invalid compound frequency - Pay frequency cannot be more regular than the accrual / reset frequency", __FILE__, __LINE__);
 	    else return span_pay / span_rst;
     }
 
     /* static */
-    LADate LADateHelpers::getNextWeekdayDate(
-	    LADayOfWeekEnum weekday, const LADate& baseDate, bool strictlyAfter)
+    AQLDate LADateHelpers::getNextWeekdayDate(
+	    AQLDayOfWeekEnum weekday, const AQLDate& baseDate, bool strictlyAfter)
     {
-	    LADate result(baseDate);
+	    AQLDate result(baseDate);
 
 		// Get the current day of the week and check it is valid
 	    const unsigned int currentDayOfWeek = static_cast<unsigned int>( baseDate.dayOfWeek() );
@@ -1384,12 +1384,12 @@ namespace etrading
 	// Static - Nth ECB Meeting Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the asOfDate
 	//
-	LADate LADateHelpers::getNthECBMeetingDate(const LADate& asOfDate, const int n, bool strictlyAfter)
+	AQLDate LADateHelpers::getNthECBMeetingDate(const AQLDate& asOfDate, const int n, bool strictlyAfter)
 	{
 		AQ_REQUIRE(n > 0, "ECB Meeting Date - Invalid Input: n must be larger than zero");
 		
 		// n=1 case, note strictlyAfter = false
-		LADate ecbMeetingDate = LADateHelpers::getNextECBDate(asOfDate, strictlyAfter);
+		AQLDate ecbMeetingDate = LADateHelpers::getNextECBDate(asOfDate, strictlyAfter);
 		
 		// n=2 onwards, note strictlyAfter = true
 		for (size_t i = 0; i < size_t(n-1); ++i) 
@@ -1404,9 +1404,9 @@ namespace etrading
 	// Static - Nth ECB Swap Start Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the asOfDate
 	//
-	LADate LADateHelpers::getNthECBSwapStartDate(const LADate& asOfDate, const int n, bool strictlyAfter)
+	AQLDate LADateHelpers::getNthECBSwapStartDate(const AQLDate& asOfDate, const int n, bool strictlyAfter)
 	{
-		LADate ecbMeetingDate = getNthECBMeetingDate(asOfDate,n,strictlyAfter);
+		AQLDate ecbMeetingDate = getNthECBMeetingDate(asOfDate,n,strictlyAfter);
 		return LADateHelpers::getECBStartDate(ecbMeetingDate); // Always Wednesday
 	}
 
@@ -1414,10 +1414,10 @@ namespace etrading
 	// Static - Nth ECB Swap End Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the asOfDate
 	//
-	LADate LADateHelpers::getNthECBSwapEndDate(const LADate& asOfDate, const int n, bool strictlyAfter)
+	AQLDate LADateHelpers::getNthECBSwapEndDate(const AQLDate& asOfDate, const int n, bool strictlyAfter)
 	{
 		// Nth Swap End Date = (N+1)th Swap Start Date
-		LADate ecbSwapEndDate = getNthECBSwapStartDate(asOfDate, n + 1, strictlyAfter);
+		AQLDate ecbSwapEndDate = getNthECBSwapStartDate(asOfDate, n + 1, strictlyAfter);
 		ecbSwapEndDate.addDays(-1);
 		return ecbSwapEndDate; //Always Tuesday
 	}
@@ -1426,7 +1426,7 @@ namespace etrading
 	// Static - Next ECB Meeting Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the inputDate
 	//
-	LADate LADateHelpers::getNextECBMeetingDate(const LADate& meetingDate)
+	AQLDate LADateHelpers::getNextECBMeetingDate(const AQLDate& meetingDate)
 	{
 		return getNextECBDate(meetingDate,true); // StrictlyAfter = true
 	}
@@ -1435,7 +1435,7 @@ namespace etrading
 	// Static - Next ECB Swap Start Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the inputDate
 	//
-	LADate LADateHelpers::getNextECBSwapStartDate(const LADate& swapStartDate)
+	AQLDate LADateHelpers::getNextECBSwapStartDate(const AQLDate& swapStartDate)
 	{
 		return getNthECBSwapStartDate(swapStartDate,1); // nth date = 1
 	}
@@ -1444,10 +1444,10 @@ namespace etrading
 	// Static - Next ECB Swap Start Date
 	// Note: StrictlyAfter = roll the ECB date if it falls on the inputDate
 	//
-	LADate LADateHelpers::getNextECBSwapEndDate(const LADate& swapEndDate)
+	AQLDate LADateHelpers::getNextECBSwapEndDate(const AQLDate& swapEndDate)
 	{
 		// getNthECBSwapEndDate takes asOfDate as input not SwapEndDate, hence we use n=0 (not n=1) with strictlyAfter = true
-		LADate ecbSwapEndDate = getNthECBSwapEndDate(swapEndDate, 0, true);
+		AQLDate ecbSwapEndDate = getNthECBSwapEndDate(swapEndDate, 0, true);
 		return ecbSwapEndDate; //Always Tuesday
 	}
 }

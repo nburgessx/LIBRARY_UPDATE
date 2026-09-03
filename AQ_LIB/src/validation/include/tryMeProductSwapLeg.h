@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LabelValueBlock.h"
 
 using etrading::LabelValueBlock;
@@ -11,7 +11,7 @@ namespace validation
    /* @brief			return a set of expected keys for swap pv label value block
 	*  @return			expected keys
 	*/
-	std::vector<std::string> tryMeSwapLegLVBKeys(const LAString& legName);
+	std::vector<std::string> tryMeSwapLegLVBKeys(const AQLString& legName);
 
 	/* @brief			validation interface for the meProductSwapLegDisplay method
 	*  @param [in]		legLVB			A label value block defining the swap leg

@@ -1,9 +1,9 @@
 #include "InitializeAQETrading.h"
 #include "TypeUtilities.h"
 #include "mirSetUpSwapCurve.h"
-#include "LADate.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLDate.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "tryMirSetUpSwapCurve.h"
 
 
@@ -45,52 +45,52 @@ const std::string mirSetUpSwapCurve(const std::string& CurveID,
 									const std::string& CurveNames,
 									const std::string& CurveName_DF2) 
 {
-	LAString ret;
+	AQLString ret;
 	try 
 	{
 		// marshall all inputs
-		LAString curveID(CurveID.c_str());
-		LAString marketName(MarketName.c_str());
-		LAString curveNames(CurveNames.c_str());
-		LAString curveName_DF2(CurveName_DF2.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString marketName(MarketName.c_str());
+		AQLString curveNames(CurveNames.c_str());
+		AQLString curveName_DF2(CurveName_DF2.c_str());
 
-		LAStringMatrix yldData;
+		AQLStringMatrix yldData;
 		swig::buildStringMatrix(yldData, YldData);
 
-		LAStringMatrix moneyConv;
+		AQLStringMatrix moneyConv;
 		swig::buildStringMatrix(moneyConv, MData);
 
-		LAStringMatrix liborConv;
+		AQLStringMatrix liborConv;
 		swig::buildStringMatrix(liborConv, LData);
 
-		LAStringMatrix liborRates;
+		AQLStringMatrix liborRates;
 		swig::buildStringMatrix(liborRates, LGrid);
 
-		LAStringMatrix swapRates;
+		AQLStringMatrix swapRates;
 		swig::buildStringMatrix(swapRates, SGrid);
 
-		LAStringMatrix swapConv;
+		AQLStringMatrix swapConv;
 		swig::buildStringMatrix(swapConv, SData);
 
-		LAStringMatrix fraConv;
+		AQLStringMatrix fraConv;
 		swig::buildStringMatrix(fraConv, FRAData);
 
-		LAStringMatrix fra3mRates;
+		AQLStringMatrix fra3mRates;
 		swig::buildStringMatrix(fra3mRates, FRA3MGrid);
 
-		LAStringMatrix fra6mRates;
+		AQLStringMatrix fra6mRates;
 		swig::buildStringMatrix(fra6mRates, FRA6MGrid);
 
-		LAStringMatrix futureConv;
+		AQLStringMatrix futureConv;
 		swig::buildStringMatrix(futureConv, FData);
 
-		LAStringMatrix futureRates;
+		AQLStringMatrix futureRates;
 		swig::buildStringMatrix(futureRates, FGrid);
 
-		LAStringMatrix adjustSwapConv;
+		AQLStringMatrix adjustSwapConv;
 		swig::buildStringMatrix(adjustSwapConv, AdjData);
 
-		LAStringMatrix adjustSwapRates;
+		AQLStringMatrix adjustSwapRates;
 		swig::buildStringMatrix(adjustSwapRates, AdjGrid);
 
 		ret = validation::tryMirSetUpSwapCurve(etrading::InitializeAQETrading::instance().dataInstance(),
@@ -113,7 +113,7 @@ const std::string mirSetUpSwapCurve(const std::string& CurveID,
 																curveName_DF2);
 		
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

@@ -23,7 +23,7 @@ namespace validation
 	*  @param [in]		terms			        A vector of terms year fractions
 	*  @param [out]		paymentDates            A vector of corresponding payment dates
     */
-    DateVector tryMeUtilityTermsToDates( const LADate& asOfDate, const DoubleVector terms )
+    DateVector tryMeUtilityTermsToDates( const AQLDate& asOfDate, const DoubleVector terms )
     {
         VALID_EXCEPTION_START
 
@@ -43,7 +43,7 @@ namespace validation
 	*  @param [in]		paymentDates			A vector of corresponding payment dates
 	*  @param [out]		terms                   A vector of corresponding terms year fractions
     */
-    DoubleVector tryMeUtilityDatesToTerms( const LADate& asOfDate, const DateVector paymentDates )
+    DoubleVector tryMeUtilityDatesToTerms( const AQLDate& asOfDate, const DateVector paymentDates )
     {
         VALID_EXCEPTION_START
 

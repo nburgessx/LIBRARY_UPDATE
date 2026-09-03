@@ -43,7 +43,7 @@ LAPolynomialPS::LAPolynomialPS(unsigned int order, unsigned int varnum)
 	@brief copy constructor
 */
 /*LAPolynomialPS::LAPolynomialPS(const LAPolynomialPS& v) 
-: LACoreFunctionBase(v)
+: AQLCoreFunctionBase(v)
 {
 
 }*/
@@ -59,7 +59,7 @@ LAPolynomialPS::~LAPolynomialPS()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPolynomialPS::clone() const
 {
     try 
@@ -68,7 +68,7 @@ LAPolynomialPS::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -103,7 +103,7 @@ LAPolynomialPS::calcBasisFunc(const DoubleArray& x, DoubleArray& basis_func) con
 	if (x.size() != mNumVar)
 	{
 		//error
-		throw LACoreInvalidData("size of x is not same as mNumVar", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("size of x is not same as mNumVar", __FILE__, __LINE__);
 	}
 
 

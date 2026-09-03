@@ -186,6 +186,6 @@ namespace etrading
     };
 
    /* std::tuple<std::unique_ptr<etrading::SwapQuotes>,std::unique_ptr<etrading::CentralBankSwapQuotes>> 
-        getMarketQuotesFromOisConv(const LAStringMatrix& oisConv, const etrading::CCY ccy);*/
+        getMarketQuotesFromOisConv(const AQLStringMatrix& oisConv, const etrading::CCY ccy);*/
 
 }

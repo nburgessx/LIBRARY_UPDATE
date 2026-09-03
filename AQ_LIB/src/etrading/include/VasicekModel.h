@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "AffineModelUtilities.h"
 
 namespace etrading

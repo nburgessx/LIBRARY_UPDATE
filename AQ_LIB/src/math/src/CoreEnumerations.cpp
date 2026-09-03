@@ -267,7 +267,7 @@ namespace etrading
 
      std::string toString( const DayCountEnum enumValue )
     {
-        //map to string accepted by core AlgoQuantLib LACoreComponentManager.cpp's getDayCount(const LAString &key)
+        //map to string accepted by core AlgoQuantLib AQLCoreComponentManager.cpp's getDayCount(const AQLString &key)
         switch( enumValue )
         {
             case NONE_DAYCOUNT:
@@ -660,7 +660,7 @@ namespace etrading
         }
         else
         {
-            throw LACoreInvalidData( "#Error: Frequency, must be Annual, Semi-Annual, Quarterly, Monthly or Weekly for conversion to a Term String.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Frequency, must be Annual, Semi-Annual, Quarterly, Monthly or Weekly for conversion to a Term String.", __FILE__, __LINE__ );
         }
     }
 

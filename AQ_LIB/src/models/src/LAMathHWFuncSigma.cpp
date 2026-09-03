@@ -18,7 +18,7 @@ using namespace std;
 
 */
 LAMathHWFuncSigma:: LAMathHWFuncSigma( double sigma )
-: LAFunctionBase(), mSigma(sigma)
+: AQLFunctionBase(), mSigma(sigma)
 {
 }
 
@@ -34,7 +34,7 @@ LAMathHWFuncSigma::~LAMathHWFuncSigma(void)
 	@brief copy constructor
 */
 LAMathHWFuncSigma::LAMathHWFuncSigma(const LAMathHWFuncSigma &rhs) 
-: LAFunctionBase(rhs), mSigma(rhs.mSigma)
+: AQLFunctionBase(rhs), mSigma(rhs.mSigma)
 {
 }
 
@@ -42,7 +42,7 @@ LAMathHWFuncSigma::LAMathHWFuncSigma(const LAMathHWFuncSigma &rhs)
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathHWFuncSigma::clone() const
 {
     try 
@@ -51,7 +51,7 @@ LAMathHWFuncSigma::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -63,7 +63,7 @@ LAMathHWFuncSigma::clone() const
 bool
 LAMathHWFuncSigma::isTypeOf(function_t id) const
 {
-	return (id == FN_HWFUNCSIGMA ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_HWFUNCSIGMA ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -87,7 +87,7 @@ LAMathHWFuncSigma::getType() const
 	@param[in] s      function value
 
 */
-LAMathHWFuncSigmaTMDPT::LAMathHWFuncSigmaTMDPT(const DoubleArray& T_grid_, const DoubleArray& s_grid_, LAInterpolationBase& interpolation)
+LAMathHWFuncSigmaTMDPT::LAMathHWFuncSigmaTMDPT(const DoubleArray& T_grid_, const DoubleArray& s_grid_, AQLInterpolationBase& interpolation)
 :
 LAMathHWFuncSigma(s_grid_[0]),
 T_grid(T_grid_),
@@ -99,7 +99,7 @@ is_cloned(false)
 	if ( n != s_grid.size() )
 	{
 		// error
-		throw LACoreInvalidData(" T_grid.size() != s.size()", __FILE__, __LINE__);
+		throw AQLCoreInvalidData(" T_grid.size() != s.size()", __FILE__, __LINE__);
 	}
 	mpInter->set(T_grid,s_grid);
 }
@@ -128,14 +128,14 @@ T_grid(rhs.T_grid),
 s_grid(rhs.s_grid),
 is_cloned(true)
 {
-	mpInter = rhs.mpInter != 0 ? dynamic_cast<LAInterpolationBase* >(rhs.mpInter->clone()) : 0;
+	mpInter = rhs.mpInter != 0 ? dynamic_cast<AQLInterpolationBase* >(rhs.mpInter->clone()) : 0;
 }
 
 /*!
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathHWFuncSigmaTMDPT::clone() const
 {
     try 
@@ -144,7 +144,7 @@ LAMathHWFuncSigmaTMDPT::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -157,7 +157,7 @@ LAMathHWFuncSigmaTMDPT::clone() const
 //
 //     T_grid = rhs.T_grid;
 //     s_grid = rhs.s_grid;
-//	 mpInter = rhs.mpInter != 0 ? dynamic_cast<LAInterpolationBase* >(rhs.mpInter->clone()) : 0;
+//	 mpInter = rhs.mpInter != 0 ? dynamic_cast<AQLInterpolationBase* >(rhs.mpInter->clone()) : 0;
 //     is_cloned = true;
 //     
 //     return *this;        
@@ -192,7 +192,7 @@ LAMathHWFuncSigmaTMDPT::getType() const
 void LAMathHWFuncSigmaTMDPT::set_s(const DoubleArray& sgrid)
 {
 	if(sgrid.size()!= T_grid.size())
-		throw LACoreInvalidData("SigmaSize should be the same as Tgrid",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("SigmaSize should be the same as Tgrid",__FILE__,__LINE__);
 
 	s_grid = sgrid;
 	mpInter->set(T_grid,s_grid);

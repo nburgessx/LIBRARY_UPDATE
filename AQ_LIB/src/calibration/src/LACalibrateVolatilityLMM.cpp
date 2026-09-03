@@ -23,9 +23,9 @@
 #include "LAMarketData.h"
 #include "LAMarketDataLMM.h"
 #include "LAScenarioConfiguration.h"
-#include "LADate.h"
-#include "LABasic.h"
-#include "LAPriceDataDayCount.h"
+#include "AQLDate.h"
+#include "AQLBasic.h"
+#include "AQLPriceDataDayCount.h"
 #include "LAMathInterpolationUtilities.h"
 #include "LAMathVolFuncStructureBase.h"
 #include "LAMathVolFuncWave.h"
@@ -72,10 +72,10 @@ LACalibrateVolatilityLMM::~LACalibrateVolatilityLMM(void)
 
 */
 void 
-LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_t, vector<DoubleMatrix> &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_t, vector<DoubleMatrix> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_t, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
 }
 
 /*!
@@ -88,10 +88,10 @@ LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_t, vector<DoubleMat
 
 */
 void 
-LACalibrateVolatilityLMM::createVolatility(vector<vector<LAFunctionBase *> > &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityLMM::createVolatility(vector<vector<AQLFunctionBase *> > &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
 }
 
 
@@ -106,10 +106,10 @@ LACalibrateVolatilityLMM::createVolatility(vector<vector<LAFunctionBase *> > &vo
 
 */
 void 
-LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_T, vector<LAFunctionBase *> &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_T, vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_T, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
 }
 
 
@@ -124,12 +124,12 @@ LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_T, vector<LAFunctio
 
 */
 void 
-LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_t, DoubleMatrix &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	param, objPool;
 	if (filePath.size() != 4)
 	{
-		throw LACoreInvalidData("FilePath size must be 4, calibfile, adjfile, maxfile, skewfile.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("FilePath size must be 4, calibfile, adjfile, maxfile, skewfile.", __FILE__, __LINE__);
 	}
 	vol.clear();
 	grid_t.clear();
@@ -141,7 +141,7 @@ LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_t, DoubleMatrix &vo
 	BoolVector exFlag;
 	getGridInfo(tenor_30_360, tenor, deltatenor, exFlag);
 
-	vector<LAFunctionBase *> volFunc = createVolFunc(filePath[0], filePath[1], filePath[2], filePath[3], tenor_30_360, tenor, exFlag);
+	vector<AQLFunctionBase *> volFunc = createVolFunc(filePath[0], filePath[1], filePath[2], filePath[3], tenor_30_360, tenor, exFlag);
 	unsigned int marketSize = 0;
 	if (tenor[0] == 0.0)
 	{
@@ -184,13 +184,13 @@ LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_t, DoubleMatrix &vo
 
 */
 void 
-LACalibrateVolatilityLMM::createVolatility(vector<LAFunctionBase *> &vol, const LAStringVector &filePath, const MAScenarioParam *param, 
-										 LAObjectPool *objPool, int gridPos) const
+LACalibrateVolatilityLMM::createVolatility(vector<AQLFunctionBase *> &vol, const AQLStringVector &filePath, const MAScenarioParam *param, 
+										 AQLObjectPool *objPool, int gridPos) const
 {
 	// null check
 	if (!param || !objPool)
 	{
-		throw LACoreInvalidData("Param or entitypool is null.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Param or entitypool is null.", __FILE__, __LINE__);
 	}
 
 	if (param->isCalib)
@@ -198,11 +198,11 @@ LACalibrateVolatilityLMM::createVolatility(vector<LAFunctionBase *> &vol, const 
 		// get calibration tenor 
 		if (param->refName.empty())
 		{
-			throw LACoreInvalidData("calibration info name is empty.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("calibration info name is empty.", __FILE__, __LINE__);
 		}
-		const LAString &calibInfoName = param->refName[0];
-		const LAObject &calibInfo = objPool->getObject(calibInfoName, ENCHKTYPE_ISDEFINED).get();
-		const DoubleVector &tenor = dynamic_cast<const LADataDoubles &>(calibInfo.getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
+		const AQLString &calibInfoName = param->refName[0];
+		const AQLObject &calibInfo = objPool->getObject(calibInfoName, ENCHKTYPE_ISDEFINED).get();
+		const DoubleVector &tenor = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData(PRICING_DATA_CALIBCANONICAL_T, ISNOTNULL).get()).get();
 
 		LACalibrateLMM *request = new LACalibrateLMM();
 		unsigned int size = tenor.size() - 2;
@@ -245,7 +245,7 @@ LACalibrateVolatilityLMM::createVolatility(vector<LAFunctionBase *> &vol, const 
 
 		if (filePath.size() != 4)
 		{
-			throw LACoreInvalidData("FilePath size must be 4, calibfile, adjfile, maxfile, skewfile.", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("FilePath size must be 4, calibfile, adjfile, maxfile, skewfile.", __FILE__, __LINE__);
 		}
 		vol.clear();
 
@@ -266,10 +266,10 @@ LACalibrateVolatilityLMM::createVolatility(vector<LAFunctionBase *> &vol, const 
 
 */
 void 
-LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_T, LAFunctionBase *vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_T, AQLFunctionBase *vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_T, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
 }
 
 
@@ -284,10 +284,10 @@ LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_T, LAFunctionBase *
 
 */
 void 
-LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_t, DoubleArray &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_t, DoubleArray &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	grid_t, vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
 }
 
 /*!
@@ -299,11 +299,11 @@ LACalibrateVolatilityLMM::createVolatility(DoubleArray &grid_t, DoubleArray &vol
 	@return vol		Volatility as function 
 
 */
-LAFunctionBase * 
-LACalibrateVolatilityLMM::createVolatility(const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool, int gridPos) const
+AQLFunctionBase * 
+LACalibrateVolatilityLMM::createVolatility(const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool, int gridPos) const
 {
 	filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
 }
 
 /*!
@@ -316,10 +316,10 @@ LACalibrateVolatilityLMM::createVolatility(const LAStringVector &filePath, const
 
 */
 void 
-LACalibrateVolatilityLMM::createVolatility(double &vol, const LAStringVector &filePath, const MAScenarioParam *param, LAObjectPool *objPool) const
+LACalibrateVolatilityLMM::createVolatility(double &vol, const AQLStringVector &filePath, const MAScenarioParam *param, AQLObjectPool *objPool) const
 {
 	vol, filePath, param, objPool;
-	throw LACoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("This create method is not support in lmm.", __FILE__, __LINE__);
 }
 
 /*!
@@ -329,7 +329,7 @@ LACalibrateVolatilityLMM::createVolatility(double &vol, const LAStringVector &fi
 	@param[in] filepath
 */
 void 
-LACalibrateVolatilityLMM::getGrid_T(DoubleArray &grid_T, const LAStringVector &filePath) const
+LACalibrateVolatilityLMM::getGrid_T(DoubleArray &grid_T, const AQLStringVector &filePath) const
 {
 	filePath;
 	grid_T.clear();
@@ -364,16 +364,16 @@ LACalibrateVolatilityLMM::getGridInfo(DoubleArray &tenor_30_360, DoubleArray &te
 	exFlag.clear();
 
 	unsigned int term = LACoreDataService::getContext(CONTEXT_KEY_MAXTERM).getIntValue();
-	LAString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
-	LAPriceDataDayCount dayCount;
+	AQLString dayCountStr = LACoreDataService::getContext(CONTEXT_KEY_TIMEGRID_DAYCOUNT);
+	AQLPriceDataDayCount dayCount;
 	dayCount.convertFromString(dayCountStr);
-	LADate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
-	LAString freq = FREQ_SEMI_ANNUAL;
+	AQLDate asOfDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+	AQLString freq = FREQ_SEMI_ANNUAL;
 	if (LACoreDataService::getContext(ARG_KEY_CANONICALFREQ) == "QA")
 	{
 		freq = FREQ_QUARTERLY;
 	}
-	LAStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
+	AQLStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
 	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA);
 	LAMarketDataLMM::getCanonicalGrid(tenor_30_360, tenor, deltatenor, exFlag, asOfDate, dayCount, freq, term, exTenor, isDataOut);
 }
@@ -385,7 +385,7 @@ LACalibrateVolatilityLMM::getGridInfo(DoubleArray &tenor_30_360, DoubleArray &te
 
 */
 void 
-LACalibrateVolatilityLMM::setAdjParamInterpolation(const LAString &adjParamInterpolationStr)
+LACalibrateVolatilityLMM::setAdjParamInterpolation(const AQLString &adjParamInterpolationStr)
 {
 	mAdjParamInterpolationStr = adjParamInterpolationStr;
 }
@@ -397,7 +397,7 @@ LACalibrateVolatilityLMM::setAdjParamInterpolation(const LAString &adjParamInter
 
 */
 void 
-LACalibrateVolatilityLMM::setAdjParamFrequency(const LAString &adjParamFrequency)
+LACalibrateVolatilityLMM::setAdjParamFrequency(const AQLString &adjParamFrequency)
 {
 	mAdjParamFrequency = adjParamFrequency;
 }
@@ -412,30 +412,30 @@ LACalibrateVolatilityLMM::setAdjParamFrequency(const LAString &adjParamFrequency
 	@param[in] skewfilename
 	@param[in] tenor
 	@param[in] tenor_30_360
-	@return vector<LAFunctionBase *> 
+	@return vector<AQLFunctionBase *> 
 
 */
-vector<LAFunctionBase *> 
-LACalibrateVolatilityLMM::createVolFunc(const LAString &calibFileName, const LAString &adjFileName, 
-									  const LAString &maxFileName, const LAString &skewFileName, const DoubleArray &tenor_30_360, const DoubleArray &tenor, const BoolVector &exFlag) const
+vector<AQLFunctionBase *> 
+LACalibrateVolatilityLMM::createVolFunc(const AQLString &calibFileName, const AQLString &adjFileName, 
+									  const AQLString &maxFileName, const AQLString &skewFileName, const DoubleArray &tenor_30_360, const DoubleArray &tenor, const BoolVector &exFlag) const
 {
 	MAFileAccessor calibFile(calibFileName);
-	LAStringMatrix paramCalibMtx;
+	AQLStringMatrix paramCalibMtx;
 	calibFile.readAllData(MARKET_DATA_DELIMITER, paramCalibMtx);
 	calibFile.close();
 
 	MAFileAccessor adjFile(adjFileName);
-	LAStringMatrix paramAdjMtx;
+	AQLStringMatrix paramAdjMtx;
 	adjFile.readAllData(MARKET_DATA_DELIMITER, paramAdjMtx);
 	adjFile.close();
 
 	MAFileAccessor maxFile(maxFileName);
-	LAStringMatrix maxMtx;
+	AQLStringMatrix maxMtx;
 	maxFile.readAllData(MARKET_DATA_DELIMITER, maxMtx);
 	maxFile.close();
 
 	MAFileAccessor skewFile(skewFileName);
-	LAStringMatrix skewMtx;
+	AQLStringMatrix skewMtx;
 	skewFile.readAllData(MARKET_DATA_DELIMITER, skewMtx);
 	skewFile.close();
 
@@ -444,35 +444,35 @@ LACalibrateVolatilityLMM::createVolFunc(const LAString &calibFileName, const LAS
 	const unsigned int CALIBPARAMSIZE = 12;
 	if (paramCalibMtx.size() != CALIBPARAMSIZE)
 	{
-		LAString msg = "LMM calibration file, format is wrong. file = " + calibFileName;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "LMM calibration file, format is wrong. file = " + calibFileName;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	for (unsigned int i = 0; i < CALIBPARAMSIZE; ++i)
 	{
 		if (paramCalibMtx[i].size() != 1)
 		{
-			LAString msg = "LMM calibration file, format is wrong. file = " + calibFileName;
-			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "LMM calibration file, format is wrong. file = " + calibFileName;
+			throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 	// adjust
 	const unsigned int size = tenor.size() - 2;
 	if (paramAdjMtx.size() != 2 || paramAdjMtx[0].size() < size)
 	{
-		LAString msg = "LMM volatility adjust file, format is wrong. file = " + adjFileName;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "LMM volatility adjust file, format is wrong. file = " + adjFileName;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	// tmax 
 	if (maxMtx.size() != 1 || maxMtx[0].size() != 1)
 	{
-		LAString msg = "LMM tmax file, format is wrong. file = " + maxFileName;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "LMM tmax file, format is wrong. file = " + maxFileName;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	// skew
 	if (skewMtx.size() != 1 || skewMtx[0].size() != 1)
 	{
-		LAString msg = "LMM skew file, format is wrong. file = " + skewFileName;
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "LMM skew file, format is wrong. file = " + skewFileName;
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	// calib param
@@ -495,23 +495,23 @@ LACalibrateVolatilityLMM::createVolFunc(const LAString &calibFileName, const LAS
 	const double skew = skewMtx[0][0].getDoubleValue();
 	if (skew <= 0. || skew >= 2.)
 	{
-		LAString msg = "Q = " + LAString(skew, 2) + " is out of range. Q must be in (0, 2).";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "Q = " + AQLString(skew, 2) + " is out of range. Q must be in (0, 2).";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 
-	vector<LAFunctionBase *> volVec(size);
+	vector<AQLFunctionBase *> volVec(size);
 	// set vol
-	LAFunctionBase *funcTerm = new LAMathVolFuncWave(tmax, decay, amp1, phase1, 
+	AQLFunctionBase *funcTerm = new LAMathVolFuncWave(tmax, decay, amp1, phase1, 
 														amp2, phase2, amp3, phase3, shift);
-	LAFunctionBase *funcTenor = new LAMathVolFuncStructureBase(a, b, c, d);
+	AQLFunctionBase *funcTenor = new LAMathVolFuncStructureBase(a, b, c, d);
 
-	const double qval = 1.0 / (1.0 - LAMath::log(skew) / LAMath::log(2.0));
+	const double qval = 1.0 / (1.0 - AQLMath::log(skew) / AQLMath::log(2.0));
 
 	//const double f_adjParam = paramAdjMtx[0][0].trimLeft().trimRight().getDoubleValue() * qval;
 	if (paramAdjMtx[0].size() != paramAdjMtx[1].size())
 	{
-		LAString msg = "Size of adjust tenor and adjust parameter are different.";
-		throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		AQLString msg = "Size of adjust tenor and adjust parameter are different.";
+		throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 	}
 	vector<vector<double> > adjParamMat(2, vector<double>(paramAdjMtx[0].size()));
 	for (unsigned int i = 0; i < adjParamMat[0].size(); i++)
@@ -529,7 +529,7 @@ LACalibrateVolatilityLMM::createVolFunc(const LAString &calibFileName, const LAS
 	}
 	else
 	{
-		std::shared_ptr<LAInterpolationBase> inter_adjParam = LAMathInterpolationUtilities::createInterpolation(mAdjParamInterpolationStr);
+		std::shared_ptr<AQLInterpolationBase> inter_adjParam = LAMathInterpolationUtilities::createInterpolation(mAdjParamInterpolationStr);
 		inter_adjParam->set(adjParamMat[0], adjParamMat[1]);
 
 		const size_t extG_size = tenor.size() - 1;

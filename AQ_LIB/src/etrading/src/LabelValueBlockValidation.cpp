@@ -2,9 +2,9 @@
 
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
-#include "LAPriceDataCalendar.h"
+#include "AQLPriceDataCalendar.h"
 #include <cctype>
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 #include "CommonConstants.h"
 #include <utility>
 #include "LAStaticData.h"
@@ -19,7 +19,7 @@ namespace etrading
     *  @param [in]		validateKeys	True to do the verification
     *  @param [in]		LVBname     	Optional name of the LVB
     */
-    void validateKeysForLVB( const std::vector<std::string>& expectedKeys, const LAStringVector& keys, bool validateKeys, const std::string& LVBname )
+    void validateKeysForLVB( const std::vector<std::string>& expectedKeys, const AQLStringVector& keys, bool validateKeys, const std::string& LVBname )
     {
         if( validateKeys && keys.size() != 0 )
         {
@@ -55,7 +55,7 @@ namespace etrading
                     {
                         ss << "#Error: Key " << key << " is not an expected key in the " << LVBname << " Label Value Block";
                     }
-                    throw LACoreInvalidData( ss.str().c_str(), __FILE__, __LINE__ );
+                    throw AQLCoreInvalidData( ss.str().c_str(), __FILE__, __LINE__ );
                 }
             }
         }
@@ -67,19 +67,19 @@ namespace etrading
     *  @param [in]		keyPrefix		Prefix to the keys
     *  @return			LabelValueBlock
     */
-    LabelValueBlock populateLabelValueBlock( const LAStringVector& keys, const LAStringVector& values, const LAString& keyPrefix )
+    LabelValueBlock populateLabelValueBlock( const AQLStringVector& keys, const AQLStringVector& values, const AQLString& keyPrefix )
     {
 
         if ( keys.size() != values.size() )
         {
-            throw LACoreInvalidData( "#Error: Keys and Values are not the same size.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: Keys and Values are not the same size.", __FILE__, __LINE__ );
         }
 
-        LAStringVector decoratedKeys( keys.size() );
+        AQLStringVector decoratedKeys( keys.size() );
 
         for ( size_t i = 0; i < keys.size(); ++i )
         {
-            if ( keyPrefix != LAString() )
+            if ( keyPrefix != AQLString() )
             {
                 decoratedKeys[i] = keyPrefix + keys[i];
             }
@@ -142,11 +142,11 @@ namespace etrading
     }
 
 
-    /* @brief			build a vector of strings from LAStringVector object
-    *  @param [out]		sVector			A LAStringVector object
+    /* @brief			build a vector of strings from AQLStringVector object
+    *  @param [out]		sVector			A AQLStringVector object
     *  @output			output a vector of strings
     */
-    std::vector<std::string> fromStringVectorToStdVector( const LAStringVector& sVector )
+    std::vector<std::string> fromStringVectorToStdVector( const AQLStringVector& sVector )
     {
         std::vector<std::string> ret;
         for ( size_t i = 0; i < sVector.size(); ++i )
@@ -156,26 +156,26 @@ namespace etrading
         return ret;
     }
 
-    /* @brief			build a vector of strings from LAStringVector object
-    *  @param [out]		inVal			A LAStringVector object
+    /* @brief			build a vector of strings from AQLStringVector object
+    *  @param [out]		inVal			A AQLStringVector object
     *  @output			output a vector of strings
     */
-    LAStringVector fromStdVectorToStringVector( const std::vector<std::string>& inVal )
+    AQLStringVector fromStdVectorToStringVector( const std::vector<std::string>& inVal )
     {
-        LAStringVector ret;
+        AQLStringVector ret;
         for ( size_t i = 0; i < inVal.size(); ++i )
         {
-            ret.push_back( LAString( inVal[i].c_str() ) );
+            ret.push_back( AQLString( inVal[i].c_str() ) );
         }
         return ret;
     }
 
 
-    /* @brief			build a matrix of strings from a LAStringMatrix object
-    *  @param [in]		inVal	a LAStringMatrix object
+    /* @brief			build a matrix of strings from a AQLStringMatrix object
+    *  @param [in]		inVal	a AQLStringMatrix object
     *  @output			output a matrix of strings
     */
-    std::vector<std::vector<std::string>> fromStringMatrixToStdMatrix( const LAStringMatrix& inVal )
+    std::vector<std::vector<std::string>> fromStringMatrixToStdMatrix( const AQLStringMatrix& inVal )
     {
         std::vector<std::vector<std::string> > ret;
         for ( size_t i = 0; i < inVal.size(); ++i )
@@ -190,37 +190,37 @@ namespace etrading
         return ret;
     }
 
-    /* @brief			build a matrix of strings from a LAStringMatrix object
-    *  @param [in]		inVal	a LAStringMatrix object
+    /* @brief			build a matrix of strings from a AQLStringMatrix object
+    *  @param [in]		inVal	a AQLStringMatrix object
     *  @output			output a matrix of strings
     */
-    LAStringMatrix fromStdMatrixToStringMatrix( const std::vector<std::vector<std::string>>& inVal )
+    AQLStringMatrix fromStdMatrixToStringMatrix( const std::vector<std::vector<std::string>>& inVal )
     {
-        LAStringMatrix ret;
+        AQLStringMatrix ret;
         for ( size_t i = 0; i < inVal.size(); ++i )
         {
-            LAStringVector tempVec;
+            AQLStringVector tempVec;
             for ( size_t j = 0; j < inVal[i].size(); ++j )
             {
-                tempVec.push_back( LAString( inVal[i][j].c_str() ) );
+                tempVec.push_back( AQLString( inVal[i][j].c_str() ) );
             }
             ret.push_back( tempVec );
         }
         return ret;
     }
 
-    /* @brief			build a LAStringMatrix object from LabelValueBlock object
+    /* @brief			build a AQLStringMatrix object from LabelValueBlock object
     *  @param [in]		lvb	a LabelValueBlock object, where the first columns are keys and the second columns are values
-    *  @output			LAStringMatrix object
+    *  @output			AQLStringMatrix object
     */
-    LAStringMatrix fromLabelValueBlockToStringMatrix( const LabelValueBlock& lvb )
+    AQLStringMatrix fromLabelValueBlockToStringMatrix( const LabelValueBlock& lvb )
     {
-        LAStringMatrix ret;
+        AQLStringMatrix ret;
         size_t rowSize = lvb.size();
         std::vector<std::string> keys = lvb.getKeys();
         std::vector<std::string> values = lvb.getValues();
 
-        LAStringVector tempVec;
+        AQLStringVector tempVec;
         for( size_t i = 0; i < rowSize; i++ )
         {
             tempVec.clear();
@@ -231,26 +231,26 @@ namespace etrading
         return ret;
     }
 
-    /* @brief			check if a LAStringMatrix a label value block
-    *  @param [in]		lvb	a LAStringMatrix object
+    /* @brief			check if a AQLStringMatrix a label value block
+    *  @param [in]		lvb	a AQLStringMatrix object
     */
-    void validateLVBStringMatrix( const LAStringMatrix& lvb )
+    void validateLVBStringMatrix( const AQLStringMatrix& lvb )
     {
         if ( lvb.size() != 0 && lvb[0].size() != 2 )
         {
-            throw LACoreInvalidData( "#Error: the Matrix is not a valid label value block.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: the Matrix is not a valid label value block.", __FILE__, __LINE__ );
         }
     }
 
     /* @brief			Appends the rhs string matrix to the lhs Matrix 
-    *  @param [in]		rhs	a LAStringMatrix object
-    *  @param [out]		lhs	a LAStringMatrix object to be assigned values from rhs
+    *  @param [in]		rhs	a AQLStringMatrix object
+    *  @param [out]		lhs	a AQLStringMatrix object to be assigned values from rhs
     */
-    void appendToMatrix( LAStringMatrix& lhs, const LAStringMatrix& rhs )
+    void appendToMatrix( AQLStringMatrix& lhs, const AQLStringMatrix& rhs )
     {
         for ( size_t i = 0; i < rhs.size(); ++i )
         {
-            LAStringVector tempVec;
+            AQLStringVector tempVec;
             for ( size_t j = 0; j < rhs[i].size(); ++j )
             {
                 tempVec.push_back( rhs[i][j] );

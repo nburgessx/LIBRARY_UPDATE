@@ -25,8 +25,8 @@
 
 #include "LARatesLJSpotSDE.h"
 #include "LARatesSDEIntegralBase.h"
-#include "LAAlgorithm.h"
-#include "LABasic.h"
+#include "AQLAlgorithm.h"
+#include "AQLBasic.h"
 
 using namespace std;
 //================ LARatesLJSpotSDE ===================================
@@ -38,7 +38,7 @@ using namespace std;
 	@param[in] pAdjuster adjustment function
 
 */
-LARatesLJSpotSDE::LARatesLJSpotSDE(SDE_TYPE type, LAFunctionBase* pTransformer, LAFunctionBase* pInvTransformer, LAFunctionBase* pAdjuster)
+LARatesLJSpotSDE::LARatesLJSpotSDE(SDE_TYPE type, AQLFunctionBase* pTransformer, AQLFunctionBase* pInvTransformer, AQLFunctionBase* pAdjuster)
 : LARatesSpotSDE(type, pTransformer, pInvTransformer, pAdjuster), mpNumeraire_LJ(0)
 {
 
@@ -73,7 +73,7 @@ LARatesLJSpotSDE::~LARatesLJSpotSDE()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesLJSpotSDE::clone() const
 {
     try 
@@ -82,7 +82,7 @@ LARatesLJSpotSDE::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -117,12 +117,12 @@ LARatesLJSpotSDE::check(void) const
 		&& mType != DIVIDEdXbyX)
     {
 		//error
-		throw LACoreInvalidData("If SDEType is DIVIDEdXbyX, SDEIntegralType must be LOG", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("If SDEType is DIVIDEdXbyX, SDEIntegralType must be LOG", __FILE__, __LINE__);
 	}
 	else if (mpIntegral->getIntegralType() == NORMAL_INTEGRAL && mType != dX)
 	{
 		//error
-		throw LACoreInvalidData("If SDEType is dX, SDEIntegralType must be NORMAL_INTEGRAL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("If SDEType is dX, SDEIntegralType must be NORMAL_INTEGRAL", __FILE__, __LINE__);
 
 	}
 	return LARatesSpotSDE::check();
@@ -178,13 +178,13 @@ LARatesLJSpotSDE::calcPath(unsigned int pos)
 	else if (pos < mPos)
 	{
 		unsigned int _pos_s;
-		LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), _pos_s);
+		AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos], mTimeGrid.size(), _pos_s);
 		if (grid[pos] != mTimeGrid[_pos_s])
 		{
 			if (_pos_s == 0)
 			{
 				//error
-				throw LACoreInvalidData("grid is something wrong", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("grid is something wrong", __FILE__, __LINE__);
 			}
 			_pos_s--;
 		}
@@ -201,15 +201,15 @@ LARatesLJSpotSDE::calcPath(unsigned int pos)
 			mVar[0] = (*mpTransformer)(var);
 #endif
 		}			
-		if (!LAAlgorithm::find<DoubleArray, double>(grid, mTimeGrid[_pos_s], 0, grid.size() - 1, pos_s))
+		if (!AQLAlgorithm::find<DoubleArray, double>(grid, mTimeGrid[_pos_s], 0, grid.size() - 1, pos_s))
 		{
-			throw LACoreInvalidData("TimeGrid is inconsistent with BM grid", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("TimeGrid is inconsistent with BM grid", __FILE__, __LINE__);
 		}	
 	}
 	else pos_s = mPos;
 		
 	unsigned int j;
-	LAAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos_s], mTimeGrid.size(), j);
+	AQLAlgorithm::locate<DoubleArray, double>(mTimeGrid, grid[pos_s], mTimeGrid.size(), j);
 	if (grid[pos_s] == mTimeGrid[j]) j++;
 	
 	const DoubleMatrix& bm = mpBM->getBM();
@@ -250,8 +250,8 @@ LARatesLJSpotSDE::calcPath(unsigned int pos)
 			double ret = mDrift[0]->integral(mIntegralRegion);
 			double vol = mVolatility[0][0]->integral(mIntegralRegion);
 			if (mType == DIVIDEdXbyX) ret -= 0.5 * vol * vol;
-			ret += vol * mWt / LAMath::sqrt(mTimeGrid[j]);
-			if (mpIntegral->getIntegralType() == LOG_INTEGRAL) ret = mIntegralRegion[1].first * LAMath::exp(ret);
+			ret += vol * mWt / AQLMath::sqrt(mTimeGrid[j]);
+			if (mpIntegral->getIntegralType() == LOG_INTEGRAL) ret = mIntegralRegion[1].first * AQLMath::exp(ret);
 			else ret += mIntegralRegion[1].first;
 			if (mpTransformer == 0)
 			{

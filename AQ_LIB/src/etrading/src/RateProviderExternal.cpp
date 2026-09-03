@@ -3,13 +3,13 @@
 namespace etrading
 {
 
-	RateProviderExternal::RateProviderExternal(const LADate& asOfDate, const DoubleVector& dfs, const DoubleVector& liborRates) : RateProvider("", {} ), asOfDate_(asOfDate), discountFactors_(dfs), liborRates_(liborRates)
+	RateProviderExternal::RateProviderExternal(const AQLDate& asOfDate, const DoubleVector& dfs, const DoubleVector& liborRates) : RateProvider("", {} ), asOfDate_(asOfDate), discountFactors_(dfs), liborRates_(liborRates)
 	{}
 
 	RateProviderExternal::RateProviderExternal(const RateProviderExternal& rhs) : RateProvider(rhs), asOfDate_(rhs.asOfDate_), discountFactors_(rhs.discountFactors_), liborRates_(rhs.liborRates_)
 	{}
 
-	const LADate RateProviderExternal::asOfDate() const
+	const AQLDate RateProviderExternal::asOfDate() const
 	{
 		return asOfDate_;
 	}

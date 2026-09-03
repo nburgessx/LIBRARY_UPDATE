@@ -1,9 +1,9 @@
 #include "GlobalCalibrationComponentCurve.h"
-#include "LAPriceDataInterpolation.h"
+#include "AQLPriceDataInterpolation.h"
 
 // constructor
-GlobalCalibrationComponentCurve::GlobalCalibrationComponentCurve(const LAString& curveName,
-																const LADate& baseDate,
+GlobalCalibrationComponentCurve::GlobalCalibrationComponentCurve(const AQLString& curveName,
+																const AQLDate& baseDate,
 																const bool& fastRebuildRequested)
 		: curveName_(curveName),
 		  baseDate_(baseDate),
@@ -33,7 +33,7 @@ void GlobalCalibrationComponentCurve::updateAllRatePoints(double delta)
 }
 
 // Set DF interpolator	
-void GlobalCalibrationComponentCurve::setDFInterpolator(const std::shared_ptr<LAInterpolationBase>& dfInterp) 
+void GlobalCalibrationComponentCurve::setDFInterpolator(const std::shared_ptr<AQLInterpolationBase>& dfInterp) 
 {
 	//Don't use reset or clone method here as that is not the intended behavior
 	pInter_DF_ = dfInterp;

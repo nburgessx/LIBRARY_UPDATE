@@ -8,9 +8,9 @@ namespace etrading
     {
     public:
         InflationCashflow();
-        InflationCashflow( const PayReceiveEnum& payReceive, const LADate& fixingDate,
-							const LADate& accrualStartDate, const LADate& accrualEndDate, const int accrualDays, const double accrualYearFraction,
-							const LADate& paymentDate, const double notional, double leverage,
+        InflationCashflow( const PayReceiveEnum& payReceive, const AQLDate& fixingDate,
+							const AQLDate& accrualStartDate, const AQLDate& accrualEndDate, const int accrualDays, const double accrualYearFraction,
+							const AQLDate& paymentDate, const double notional, double leverage,
 							const FrequencyEnum& paymentFrequency, const CashflowTypeEnum& cashflowType );
 		virtual ~InflationCashflow() {}
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -13,11 +13,11 @@ namespace validation
     *  @param [in]		fwdFXConstantConv	FX forward conventions
     *  @param [in]		curveNames			Equivalent names of the curve being built
     */
-    LAString tryMirSetUpFwdFXConstantCurve( LADataInstance* dataInstance,
-                                            const LAString& curveID,
-                                            const LAString& marketName,
-                                            const LAStringMatrix& generalProps,
-                                            const LAStringMatrix& fwdFXConstantConv,
-                                            const LAString& curveNames ) ;
+    AQLString tryMirSetUpFwdFXConstantCurve( AQLDataInstance* dataInstance,
+                                            const AQLString& curveID,
+                                            const AQLString& marketName,
+                                            const AQLStringMatrix& generalProps,
+                                            const AQLStringMatrix& fwdFXConstantConv,
+                                            const AQLString& curveNames ) ;
 }
 

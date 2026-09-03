@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "ReadDataFile.h"
 
 namespace google_test
@@ -10,7 +10,7 @@ namespace google_test
     class TryMeCurveAccessors
     {
     public:
-        TryMeCurveAccessors( const LAString& inputFilename );
+        TryMeCurveAccessors( const AQLString& inputFilename );
 
         virtual ~TryMeCurveAccessors() {}
 

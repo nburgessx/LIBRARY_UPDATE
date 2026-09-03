@@ -4,13 +4,13 @@
 #define IR_CALIBRATION_DATA_OPTIONMATURITY				"OptionMaturity"		//  data name of OptionMaturity
 #endif
 
-#include "LAString.h"
+#include "AQLString.h"
 #include <map>
 
-class LAObject;
-class LAObjectPool;
+class AQLObject;
+class AQLObjectPool;
 class MACalibrationFunc;
-class LADataInstance;
+class AQLDataInstance;
 struct MAScenarioParam;
 
 
@@ -25,19 +25,19 @@ public :
 
 	//=============================================
 	//  setup
-    virtual void	setUp(LAObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1) = 0;
+    virtual void	setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1) = 0;
 	//=============================================
 	//  calibration method
     virtual void    doCalibrate() = 0;
 	//=============================================
 	//  get calib engine
-	virtual LAObject *getCalibEngine() { return mpCaibEngine; }
+	virtual AQLObject *getCalibEngine() { return mpCaibEngine; }
 	//=============================================
 	//  get serialized result
-	static LAString getSerializedData(LAString file) { return mSerializeMap[file]; }
+	static AQLString getSerializedData(AQLString file) { return mSerializeMap[file]; }
 	//=============================================
 	//  clear method
-	static void clear(const LAString &fileNum);
+	static void clear(const AQLString &fileNum);
 	//=============================================
 	//  clear method
 	static void clear();
@@ -47,19 +47,19 @@ protected :
 
 	//=============================================
 	//  deserialize method
-	void deserializeStream(const LAString &key);
-	LAString mCalcType;      // calctype
+	void deserializeStream(const AQLString &key);
+	AQLString mCalcType;      // calctype
 	int mGridPos;            // calibration grid pos
 	MACalibrationFunc *mpFunc;  // calibration method
-	LAObject *mpCaibEngine;     // calibration engine
-	LAString mSerializeStatus;  // serialize status
-	LAString mSerializeFile;    // serialize file
-	LAString mCalibIDName;      // calibration ID name
-	LADataInstance *mpDataInstance;             // dataInstance pointer
-	static std::map<LAString, LAString> mSerializeMap;  // serialize map
-	static std::map<LAString, std::map<LAString, LAString> > mDeserializedEMap; // deserialized object map
-	static std::map<LAString, bool> mIsDeserializedMap; // deserialized flag
-	void setmSerializeMap(const LAString &fileNum);
+	AQLObject *mpCaibEngine;     // calibration engine
+	AQLString mSerializeStatus;  // serialize status
+	AQLString mSerializeFile;    // serialize file
+	AQLString mCalibIDName;      // calibration ID name
+	AQLDataInstance *mpDataInstance;             // dataInstance pointer
+	static std::map<AQLString, AQLString> mSerializeMap;  // serialize map
+	static std::map<AQLString, std::map<AQLString, AQLString> > mDeserializedEMap; // deserialized object map
+	static std::map<AQLString, bool> mIsDeserializedMap; // deserialized flag
+	void setmSerializeMap(const AQLString &fileNum);
 	void setmIsDeserializedMap(bool isDeserializedMap);
 private:
 #ifdef __HAS_MIC__

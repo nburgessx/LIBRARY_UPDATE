@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent RangeCount function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //   2007,AlgoQuantHub.
@@ -32,7 +32,7 @@ using namespace std;
 	@brief default constructor
 */
 LARatesUnionLinearFunc::LARatesUnionLinearFunc() 
-: LAFunctionBase()
+: AQLFunctionBase()
 {
 
 }
@@ -48,7 +48,7 @@ LARatesUnionLinearFunc::~LARatesUnionLinearFunc()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesUnionLinearFunc::clone() const
 {
     try 
@@ -57,7 +57,7 @@ LARatesUnionLinearFunc::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -69,7 +69,7 @@ LARatesUnionLinearFunc::clone() const
 bool
 LARatesUnionLinearFunc::isTypeOf(function_t id) const
 {
-	return (id == FN_UNIONLINEARFUNC ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_UNIONLINEARFUNC ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -92,8 +92,8 @@ LARatesUnionLinearFunc::operator()(const DoubleArray& x) const
 {
 	if (mParam.size()!= x.size() + 5)
 	{
-		LAString msg = "parameter size must be index +5:lower,upper,coef[1],,,,constant,lflag,rflag";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "parameter size must be index +5:lower,upper,coef[1],,,,constant,lflag,rflag";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	double ret = -1.0;
 	
@@ -104,7 +104,7 @@ LARatesUnionLinearFunc::operator()(const DoubleArray& x) const
 	val += mParam[N+2];
 
 	if(mParam[0]>mParam[1])
-			throw LACoreInvalidData("wrong input lower > upper",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("wrong input lower > upper",__FILE__,__LINE__);
 		
 	if((mParam[0]< val && val < mParam[1]))
 	{	

@@ -31,7 +31,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		
@@ -75,7 +75,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		
@@ -120,7 +120,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		
@@ -167,7 +167,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		
@@ -213,7 +213,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 		
@@ -255,7 +255,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -297,7 +297,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -339,7 +339,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -381,7 +381,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -423,7 +423,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -465,7 +465,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -508,7 +508,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -550,7 +550,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -592,7 +592,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -634,7 +634,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -676,7 +676,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 
@@ -718,7 +718,7 @@ namespace google_test
 
 		// 2.	Interpolation Data
 		// ---------------------------
-		const LADate asOfDate("20200101");
+		const AQLDate asOfDate("20200101");
 		const etrading::DayCountEnum accrualDaycount = etrading::ACT_365_DAYCOUNT;
 		const etrading::StateVariableEnum stateVariable = etrading::STATE_VARIABLE_FORWARD_RATE;
 

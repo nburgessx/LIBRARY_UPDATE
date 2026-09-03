@@ -3,7 +3,7 @@
 
 #include "InterestRateSwap.h"
 #include "LAMultiSwapPricer.h"
-#include "LACoreError.h"
+#include "AQLCoreError.h"
 #include "tryMirGetParRate.h"
 #include "tryMirSwapPV.h"
 #include "tryMirSwapPV01.h"
@@ -11,63 +11,63 @@
 namespace google_test
 {
 
-    InterestRateSwap::InterestRateSwap( LADataInstance* dataInstance, const ReadDataFile::Load& inputFile )
+    InterestRateSwap::InterestRateSwap( AQLDataInstance* dataInstance, const ReadDataFile::Load& inputFile )
     {
         // Initialize the dataInstance
         dataInstance_                       = dataInstance;
 
         //Schedule parameters:
-        effectDt_			= LAString( inputFile[ "effectDt" ]() );
-        maturity_			= LAString( inputFile[ "maturity" ]() );
-        xFirstStub_			= LAString( inputFile[ "xFirstStub" ]() );
-        xLastStub_			= LAString( inputFile[ "xLastStub" ]() );
-        xRollDay_			= LAString( inputFile[ "xRollDay" ]() );
-        tFirstStub_			= LAString( inputFile[ "tFirstStub" ]() );
-        tLastStub_			= LAString( inputFile[ "tLastStub" ]() );
-        tRollDay_			= LAString( inputFile[ "tRollDay" ]() );
-        xFreq_				= LAString( inputFile[ "xFreq" ]() );
-        tFreq_				= LAString( inputFile[ "tFreq" ]() );
+        effectDt_			= AQLString( inputFile[ "effectDt" ]() );
+        maturity_			= AQLString( inputFile[ "maturity" ]() );
+        xFirstStub_			= AQLString( inputFile[ "xFirstStub" ]() );
+        xLastStub_			= AQLString( inputFile[ "xLastStub" ]() );
+        xRollDay_			= AQLString( inputFile[ "xRollDay" ]() );
+        tFirstStub_			= AQLString( inputFile[ "tFirstStub" ]() );
+        tLastStub_			= AQLString( inputFile[ "tLastStub" ]() );
+        tRollDay_			= AQLString( inputFile[ "tRollDay" ]() );
+        xFreq_				= AQLString( inputFile[ "xFreq" ]() );
+        tFreq_				= AQLString( inputFile[ "tFreq" ]() );
         eomRoll_			= inputFile[ "eomRoll" ];
-        xRollCnv_			= LAString( inputFile[ "xRollCnv" ]() );
-        xCalendar_			= LAString( inputFile[ "xCalendar" ]() );
-        tRollCnv_		    = LAString( inputFile[ "tRollCnv" ]() );
-        tCalendar_		    = LAString( inputFile[ "tCalendar" ]() );
-        xStub_			    = LAString( inputFile[ "xStub" ]() );
-        tStub_				= LAString( inputFile[ "tStub" ]() );
-        xPayLag_			= LAString( inputFile[ "xPayLag" ]() );
-        tPayLag_			= LAString( inputFile[ "tPayLag" ]() );
-        tFixLag_			= LAString( inputFile[ "tFixLag" ]() );
+        xRollCnv_			= AQLString( inputFile[ "xRollCnv" ]() );
+        xCalendar_			= AQLString( inputFile[ "xCalendar" ]() );
+        tRollCnv_		    = AQLString( inputFile[ "tRollCnv" ]() );
+        tCalendar_		    = AQLString( inputFile[ "tCalendar" ]() );
+        xStub_			    = AQLString( inputFile[ "xStub" ]() );
+        tStub_				= AQLString( inputFile[ "tStub" ]() );
+        xPayLag_			= AQLString( inputFile[ "xPayLag" ]() );
+        tPayLag_			= AQLString( inputFile[ "tPayLag" ]() );
+        tFixLag_			= AQLString( inputFile[ "tFixLag" ]() );
 
         // parRate Parameters: Mandatory
-        curveID_                    = LAString( inputFile[ "curveID" ]() );
-        xDayCount_			        = LAString( inputFile[ "xDayCount" ]() );
-        tDayCount_					= LAString( inputFile[ "tDayCount" ]() );
+        curveID_                    = AQLString( inputFile[ "curveID" ]() );
+        xDayCount_			        = AQLString( inputFile[ "xDayCount" ]() );
+        tDayCount_					= AQLString( inputFile[ "tDayCount" ]() );
         tFirstFix_					= inputFile[ "tFirstFix" ];
         tLastFix_					= inputFile[ "tLastFix" ];
-        interpolation_				= LAString( inputFile[ "interpolation" ]() );
-        forecastCurve_				= LAString( inputFile[ "forecastCurve" ]() );
-        discountCurve_				= LAString( inputFile[ "discountCurve" ]() );
+        interpolation_				= AQLString( inputFile[ "interpolation" ]() );
+        forecastCurve_				= AQLString( inputFile[ "forecastCurve" ]() );
+        discountCurve_				= AQLString( inputFile[ "discountCurve" ]() );
         interpFwds_					= inputFile[ "interpFwds" ];
 
         // parRate Parameters: Optional
         tSpd_						= inputFile.getOptional( "tSpd",                         0.0 );
         useFwdData_                 = inputFile.getOptional( "useFwdData",                   false );
         isOIS_                      = inputFile.getOptional( "isOIS",                        false );
-        oisCompoundingType_         = inputFile.getOptional( "oisCompoundingType",           LAString() );
-        calendar_                   = inputFile.getOptional( "calendar",                     LAString() );
-        rollConvention_             = inputFile.getOptional( "rollConvention",               LAString() );
-        slidingRule_                = inputFile.getOptional( "slidingRule",                  LAString() );
+        oisCompoundingType_         = inputFile.getOptional( "oisCompoundingType",           AQLString() );
+        calendar_                   = inputFile.getOptional( "calendar",                     AQLString() );
+        rollConvention_             = inputFile.getOptional( "rollConvention",               AQLString() );
+        slidingRule_                = inputFile.getOptional( "slidingRule",                  AQLString() );
 
         // swapPV Parameters: Mandatory ( inlcuded in the swapPV parameters but not included in parRate function parameters )
-        payRec_						= inputFile.getOptional( "payRec",						LAString( "PAYER" ) );
+        payRec_						= inputFile.getOptional( "payRec",						AQLString( "PAYER" ) );
         notional_                   = inputFile.getOptional( "notional",                     1000000 );
         fixedRate_                  = inputFile.getOptional( "fixedRate",                    0.0 );
 
         // swapPV Parameters: Optional
         floatSpreadInBasisPoints_   = inputFile.getOptional( "floatSpreadInBasisPoints",     0.0 );
-        compoundingMethod_          = inputFile.getOptional( "compoundingMethod",            LAString() );
-        floatCalendar_              = inputFile.getOptional( "floatCalendar",                LAString() );
-        floatRollConv_              = inputFile.getOptional( "floatRollConv",                LAString() );
+        compoundingMethod_          = inputFile.getOptional( "compoundingMethod",            AQLString() );
+        floatCalendar_              = inputFile.getOptional( "floatCalendar",                AQLString() );
+        floatRollConv_              = inputFile.getOptional( "floatRollConv",                AQLString() );
 
     }
 

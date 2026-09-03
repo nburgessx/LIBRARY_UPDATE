@@ -36,10 +36,10 @@ namespace google_test
 
 	/* @brief	Run consistency test on all available swap curves in all ccys
     */
-	void OISCurveConsistencyCheck(const LAString& ccy, const LAString& testDir)
+	void OISCurveConsistencyCheck(const AQLString& ccy, const AQLString& testDir)
 	{
-		LAString prefix("");
-		prefix = ccy + LAString("_");
+		AQLString prefix("");
+		prefix = ccy + AQLString("_");
 		
 		size_t TEST_COUNT = 0;
 		if (ccy == "USD")
@@ -68,9 +68,9 @@ namespace google_test
 			//----------------------------------------------------------------------------------------
 			// Build yield curves of the current test case
 
-			LAString curveFile = prefix + LAString("OIS_") + LAString(static_cast<int>(i + 1));
+			AQLString curveFile = prefix + AQLString("OIS_") + AQLString(static_cast<int>(i + 1));
 						
-			LAString curveFileDir = testDir + curveFile + LAString(".csv");
+			AQLString curveFileDir = testDir + curveFile + AQLString(".csv");
 			SET_UP_OIS_CURVE(curveFileDir);
 
 			//----------------------------------------------------------------------------------------
@@ -88,51 +88,51 @@ namespace google_test
 			{
 				generateProp = inputFile_OIS["generalProps"];			
 			}
-			const std::set<LAString>& generatePropkeys = generateProp.getKeys();
+			const std::set<AQLString>& generatePropkeys = generateProp.getKeys();
 
 			// OIS par rates block
 			etrading::ReadDataFile oisRates = inputFile_OIS["oisRates"];			
-			const std::set<LAString>& oisRateskeys = oisRates.getKeys();
+			const std::set<AQLString>& oisRateskeys = oisRates.getKeys();
 
 			// OIS convention block
 			etrading::ReadDataFile oisConv = inputFile_OIS["oisConv"];			
-			const std::set<LAString>& oisConvkeys = oisConv.getKeys();
+			const std::set<AQLString>& oisConvkeys = oisConv.getKeys();
 
 			// LO basis rates block
 			etrading::ReadDataFile loBasisRates = inputFile_OIS["loBasisRates"];			
-			const std::set<LAString>& loBasisRateskeys = loBasisRates.getKeys();
+			const std::set<AQLString>& loBasisRateskeys = loBasisRates.getKeys();
 
 			// LO basis convention block
 			etrading::ReadDataFile loBasisConv = inputFile_OIS["loBasisConv"];			
-			const std::set<LAString>& loBasisConvkeys = loBasisConv.getKeys();
+			const std::set<AQLString>& loBasisConvkeys = loBasisConv.getKeys();
 
 			// Swap par rates block
 			etrading::ReadDataFile swapRates = inputFile_OIS["swapRates"];			
-			const std::set<LAString>& swapRatekeys = swapRates.getKeys();
+			const std::set<AQLString>& swapRatekeys = swapRates.getKeys();
 
 			// Swap convention block
 			etrading::ReadDataFile swapConv = inputFile_OIS["swapConv"];			
-			const std::set<LAString>& swapConvkeys = swapConv.getKeys();
+			const std::set<AQLString>& swapConvkeys = swapConv.getKeys();
 			
 			//----------------------------------------------------------------------------------------
 			// Retrieve all parameters required from various data blocks. 
 			// Should any of these parameters be not available, skip this test as it's not a valid test
 			
 			// Interpolation
-			LAString interpolation;
+			AQLString interpolation;
 			findValByKey(interpolation, generateProp, generatePropkeys, "yieldgen.interpolation");
 			interpolation = interpolationShortName(interpolation);
 
 			// Curve collection and forecast curve
-			LAString curveCollection = etrading::getCurveID( inputFile_OIS );
-			LAString foreCurve	     = etrading::getMarketName( inputFile_OIS );
-			LAString discCurve = foreCurve;
+			AQLString curveCollection = etrading::getCurveID( inputFile_OIS );
+			AQLString foreCurve	     = etrading::getMarketName( inputFile_OIS );
+			AQLString discCurve = foreCurve;
 
 			//--------------------------
 			// OIS swap related
 
 			// Spot lag
-			LAString spotLag;
+			AQLString spotLag;
 			findValByKey(spotLag, oisConv, oisConvkeys, "ResetLag");
 			if (spotLag.findString("D") == -1)
 			{
@@ -140,23 +140,23 @@ namespace google_test
 			}
 
 			// OIS calendar
-			LAString oisCalendar;
+			AQLString oisCalendar;
 			findValByKey(oisCalendar, oisConv, oisConvkeys, "Calendar");
 						
 			// OIS day count convention 
-			LAString oisDayCount;
+			AQLString oisDayCount;
 			findValByKey(oisDayCount, oisConv, oisConvkeys, "DayCount");
 
 			// OIS Frequency 
-			LAString oisFrequency;
+			AQLString oisFrequency;
 			findValByKey(oisFrequency, oisConv, oisConvkeys, "Frequency");
 
 			// OIS roll convention
-			LAString oisRollConvention;
+			AQLString oisRollConvention;
 			findValByKey(oisRollConvention, oisConv, oisConvkeys, "SlidingRule");
 
 			// OIS compound method
-			LAString compoundMethod("");
+			AQLString compoundMethod("");
 			findValByKey(compoundMethod, oisConv, oisConvkeys, "CompoundMethod", true);
 			if (compoundMethod.size() == 0)
 			{
@@ -164,7 +164,7 @@ namespace google_test
 			}
 
 			// Is rolling at end of month?
-			LAString isEomRollStr("");
+			AQLString isEomRollStr("");
 			findValByKey(isEomRollStr, oisConv, oisConvkeys, "IsEomRoll", true);
 			isEomRollStr.toUpper();
 			
@@ -179,26 +179,26 @@ namespace google_test
 			// Libor-OIS basis related
 
 			// LOBasis calendar
-			LAString loBasisCalendar("");
+			AQLString loBasisCalendar("");
 			findValByKey(loBasisCalendar, loBasisConv, loBasisConvkeys, "Calendar", true);
 						
 			// LOBasis day count convention 
-			LAString loBasisDayCount("");
+			AQLString loBasisDayCount("");
 			findValByKey(loBasisDayCount, loBasisConv, loBasisConvkeys, "DayCount", true);
 
 			// LOBasis Frequency 
-			LAString loBasisFrequency("");
+			AQLString loBasisFrequency("");
 			findValByKey(loBasisFrequency, loBasisConv, loBasisConvkeys, "Frequency", true);
 
 			// LOBasis roll convention
-			LAString loBasisRollConvention("");
+			AQLString loBasisRollConvention("");
 			findValByKey(loBasisRollConvention, loBasisConv, loBasisConvkeys, "SlidingRule", true);
 
 			//--------------------------
 			// Related to fixed leg of Libor swaps
 
 			// Swap calendar
-			LAString swapCalendar("");
+			AQLString swapCalendar("");
 			findValByKey(swapCalendar, swapConv, swapConvkeys, "CalendarFix", true);
 			if (swapCalendar.size() == 0)
 			{
@@ -206,7 +206,7 @@ namespace google_test
 			}
 
 			// Swap day count convention 
-			LAString swapDayCount("");
+			AQLString swapDayCount("");
 			findValByKey(swapDayCount, swapConv, swapConvkeys, "DayCountFix", true);
 			if (swapDayCount.size() == 0)
 			{
@@ -214,7 +214,7 @@ namespace google_test
 			}
 
 			// Swap Frequency 
-			LAString swapFrequency("");
+			AQLString swapFrequency("");
 			findValByKey(swapFrequency, swapConv, swapConvkeys, "FrequencyFix", true);
 			if (swapFrequency.size() == 0)
 			{
@@ -222,7 +222,7 @@ namespace google_test
 			}
 
 			// Swap roll convention
-			LAString swapRollConvention("");
+			AQLString swapRollConvention("");
 			findValByKey(swapRollConvention, swapConv, swapConvkeys, "SlidingRuleFix", true);
 			if (swapRollConvention.size() == 0)
 			{
@@ -230,24 +230,24 @@ namespace google_test
 			}
 			
 			// Effective date
-			LAString asofDateStr;
+			AQLString asofDateStr;
 			findValByKey(asofDateStr, generateProp, generatePropkeys, "AsOfDate");
-			LADate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
-			LADate effectiveDate = etrading::LADateScheduleHelpers::getDate( asofDate, spotLag, oisRollConvention, oisCalendar );
+			AQLDate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
+			AQLDate effectiveDate = etrading::LADateScheduleHelpers::getDate( asofDate, spotLag, oisRollConvention, oisCalendar );
 					
 			// OIS long term convention
-			LAString oisLongTermConvention("");
+			AQLString oisLongTermConvention("");
 			findValByKey(oisLongTermConvention, oisConv, oisConvkeys, "LongTermConvention", true);
 
 			// OIS long term generation method
-			LAString oisLongTermGenMethod("");
+			AQLString oisLongTermGenMethod("");
 			findValByKey(oisLongTermGenMethod, oisConv, oisConvkeys, "longterm.generatemethod", true);
 			oisLongTermGenMethod.toUpper();
 
 			// OIS long term cut off tenor
-			LAString oisLongTermTenor("");
+			AQLString oisLongTermTenor("");
 			findValByKey(oisLongTermTenor, oisConv, oisConvkeys, "LongTerm", true);
-			LADate longTermCutoffDate;
+			AQLDate longTermCutoffDate;
 			if (oisLongTermTenor.size() != 0 && oisLongTermTenor.size() != 0)
 			{
 				longTermCutoffDate = etrading::LADateScheduleHelpers::getDate(effectiveDate, oisLongTermTenor, "", "");
@@ -262,7 +262,7 @@ namespace google_test
 
 				for(auto iterator = oisRateskeys.begin(); iterator != oisRateskeys.end(); ++iterator)
 				{
-					LAString maturityTenor = *iterator;
+					AQLString maturityTenor = *iterator;
 					if (maturityTenor == "ON" || maturityTenor == "TN" )
 					{
 						continue;	// Do not support ON or TN instruments yet
@@ -280,7 +280,7 @@ namespace google_test
 					// Do NOT test this swap as an OIS outright swap when the maturity tenor is longer than the longTermCutOff tenor
 					if (oisLongTermConvention.size() != 0 && oisLongTermTenor.size() != 0)
 					{					
-						LADate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
+						AQLDate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 						if (maturity >= longTermCutoffDate)
 						{
 							continue;
@@ -319,7 +319,7 @@ namespace google_test
 								                                                 0.0,	// floatSpread
 								                                                 compoundMethod );
 
-					LAString inputParRateStr; 
+					AQLString inputParRateStr; 
 					findValByKey(inputParRateStr, oisRates, oisRateskeys, maturityTenor);
 				
 					double inputParRate(0.0);
@@ -329,8 +329,8 @@ namespace google_test
 				
 					if (diff > PARRATE_TOLERANCE)
 					{
-						LAString err = "#Err: Test curve '" + curveFile + "' has error at " + maturityTenor;
-						throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__); 
+						AQLString err = "#Err: Test curve '" + curveFile + "' has error at " + maturityTenor;
+						throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__); 
 					}
 				}
 			}
@@ -344,22 +344,22 @@ namespace google_test
 
 				for(auto iterator = loBasisRateskeys.begin(); iterator != loBasisRateskeys.end(); ++iterator)
 				{
-					LAString maturityTenor = *iterator;
+					AQLString maturityTenor = *iterator;
 				
 					if (oisLongTermConvention.size() != 0 && oisLongTermTenor.size() != 0)
 					{					
-						LADate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
+						AQLDate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 						if (maturity >= longTermCutoffDate)
 						{
 							// Find libor swap par rate
-							LAString swapParRateStr; 
+							AQLString swapParRateStr; 
 							findValByKey(swapParRateStr, swapRates, swapRatekeys, maturityTenor);
 
 							double liborSwapParRate(0.0);
 							std::stringstream(swapParRateStr.getCString()) >> liborSwapParRate;
 
 							// Find Libor-OIS basis spread
-							LAString loBasisStr; 
+							AQLString loBasisStr; 
 							findValByKey(loBasisStr, loBasisRates, loBasisRateskeys, maturityTenor);
 
 							double loBasis(0.0);
@@ -408,8 +408,8 @@ namespace google_test
 				
 							if (diff > PV_TOLERANCE)
 							{
-								LAString err = "#Err: Test curve '" + curveFile + "' has error at " + maturityTenor;
-								throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__); 
+								AQLString err = "#Err: Test curve '" + curveFile + "' has error at " + maturityTenor;
+								throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__); 
 							}
 						}
 					}								

@@ -49,8 +49,8 @@ mCapletVar(mn),
 mCloned(false)
 {
     size_t n = mT_fix.size();
-    if( n != mT_pay.size() ) throw LACoreInvalidData("T_fix.size != T_pay.size",__FILE__,__LINE__);
-    if( n != mTau.size() ) throw LACoreInvalidData("T_fix.size != tau.size",__FILE__,__LINE__);
+    if( n != mT_pay.size() ) throw AQLCoreInvalidData("T_fix.size != T_pay.size",__FILE__,__LINE__);
+    if( n != mTau.size() ) throw AQLCoreInvalidData("T_fix.size != tau.size",__FILE__,__LINE__);
 
     // Libor
     mL.resize( n );
@@ -88,9 +88,9 @@ mCapletVar(mn),
 mCloned(false)
 {
     size_t n = mT_fix.size();
-    if( n != mT_pay.size() ) throw LACoreInvalidData("mT_fix.size != mT_pay.size",__FILE__,__LINE__);
-    if( n != mTau.size() ) throw LACoreInvalidData("mT_fix.size != mTau.size",__FILE__,__LINE__);
-    if( n != mStrike.size() ) throw LACoreInvalidData("mT_fix.size != mTau.size",__FILE__,__LINE__);
+    if( n != mT_pay.size() ) throw AQLCoreInvalidData("mT_fix.size != mT_pay.size",__FILE__,__LINE__);
+    if( n != mTau.size() ) throw AQLCoreInvalidData("mT_fix.size != mTau.size",__FILE__,__LINE__);
+    if( n != mStrike.size() ) throw AQLCoreInvalidData("mT_fix.size != mTau.size",__FILE__,__LINE__);
 
     // Libor
     mL.resize( n );
@@ -165,7 +165,7 @@ double LAMathCapFloor::getStdDev( int sgn )
     double prem = getPV();
 	double minPrem = getMinimumPV();
 
-	if (LAMath::abs(prem) <= LAMath::abs(minPrem)) return minVol;
+	if (AQLMath::abs(prem) <= AQLMath::abs(minPrem)) return minVol;
 
 	return local::CapFloorImplVol( prem, P0, mL, mTau, mT_fix, mStrike, sgn );
     //return 1.0;
@@ -176,7 +176,7 @@ double LAMathCapFloor::getStdDev( int sgn )
 */
 double LAMathCapFloor::getPV( int callfloor_flg )
 {
-    if( callfloor_flg != 1 && callfloor_flg != -1) throw LACoreInvalidData("callfloor_flg != 1 && callfloor_flg != -1",__FILE__,__LINE__);
+    if( callfloor_flg != 1 && callfloor_flg != -1) throw AQLCoreInvalidData("callfloor_flg != 1 && callfloor_flg != -1",__FILE__,__LINE__);
 
     getCapletVariance();
 
@@ -193,7 +193,7 @@ double LAMathCapFloor::getPV( int callfloor_flg )
 */
 double LAMathCapFloor::getMinimumPV( int callfloor_flg )
 {
-    if( callfloor_flg != 1 && callfloor_flg != -1) throw LACoreInvalidData("callfloor_flg != 1 && callfloor_flg != -1",__FILE__,__LINE__);
+    if( callfloor_flg != 1 && callfloor_flg != -1) throw AQLCoreInvalidData("callfloor_flg != 1 && callfloor_flg != -1",__FILE__,__LINE__);
 
     double tmp = 0.0;
     for( size_t i = 0; i < mT_fix.size(); ++i )
@@ -217,44 +217,44 @@ double LAMathCapFloor::getForwardLIBOR( double T_fix, double term_rate, double T
 {
     if( T_pay < T_fix )
     {
-        LAString msg("T_pay < T_fix");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_pay < T_fix");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     if( T_fix < mCurve0->get_t() )
     {
-        LAString msg("T_fix < curve0->get_t()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_fix < curve0->get_t()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     if ( term_rate < 0.0 )
     {
-        LAString msg("term_rate < 0.0");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("term_rate < 0.0");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     if ( T_fix < 0.0 )
     {
-        LAString msg("T_fix < 0.0");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_fix < 0.0");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     if ( T_pay < 0.0 )
     {
-        LAString msg("T_pay < 0.0");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_pay < 0.0");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     if ( LAModelUtilities::eq(term_rate, 0.0, eps_1d) && LAModelUtilities::eq(T_fix, T_pay, eps_1d) )
     {
-        LAString msg("eq(term_rate, 0.0, eps_1d) && eq(T_fix, T_pay, eps_1d)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("eq(term_rate, 0.0, eps_1d) && eq(T_fix, T_pay, eps_1d)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     if (( LAModelUtilities::eq(term_rate, 0.0, eps_1d) && !LAModelUtilities::eq(T_fix, T_pay, eps_1d) ) ||
 		   	( !LAModelUtilities::eq(term_rate, 0., eps_1d) && LAModelUtilities::eq(T_fix, T_pay, eps_1d) ))
     {
-        LAString msg("( eq(term_rate, 0.0, eps_1d) && !eq(T_fix, T_pay, eps_1d) ) || ( !eq(term_rate, 0., eps_1d) && eq(T_fix, T_pay, eps_1d) )");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("( eq(term_rate, 0.0, eps_1d) && !eq(T_fix, T_pay, eps_1d) ) || ( !eq(term_rate, 0., eps_1d) && eq(T_fix, T_pay, eps_1d) )");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
 	double rate = ( (mCurve0->getP(T_fix) / mCurve0->getP(T_pay)) - 1 ) / term_rate;
 #ifdef ZEROFLOOR
-	rate = LAMath::max(rate, MIN_RATE);
+	rate = AQLMath::max(rate, MIN_RATE);
 #endif
     return rate;
 }
@@ -268,18 +268,18 @@ double LAMathCapFloor::getForwardRateValue( double T_fix, double T_pay ) const
 {
     if ( T_fix < 0.0 )
     {
-        LAString msg("T_fix < 0.0");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_fix < 0.0");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     if ( T_pay < 0.0 )
     {
-        LAString msg("T_pay < 0.0");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_pay < 0.0");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
     if( T_pay < T_fix )
     {
-        LAString msg("T_pay < T_fix");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_pay < T_fix");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     if ( T_fix < mCurve0->get_t() ) return 0.0;
@@ -321,27 +321,27 @@ double LAMathCapFloor::getSwapRate( const DoubleVector& T_fix, const DoubleVecto
 {
     if( T_fix[0] < mCurve0->get_t() )
     {
-        LAString msg("T_fix < curve0->get_t()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_fix < curve0->get_t()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     size_t n = T_fix.size();
     if ( T_pay.size() != n )
     {
-        LAString msg("T_pay.size() != T_fix.size()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_pay.size() != T_fix.size()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     double annuity = getAnnuity( T_pay, term_acc );
     if ( annuity < 0.0 || LAModelUtilities::eq(annuity,0.0) )
     {
-        LAString msg("annuity < 0 || eq(annuity,0.)");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("annuity < 0 || eq(annuity,0.)");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
 	double rate = getSwapFloat( T_fix, T_pay ) / annuity;
 #ifdef ZEROFLOOR
-	rate = LAMath::max(rate, MIN_RATE);
+	rate = AQLMath::max(rate, MIN_RATE);
 #endif
     return rate;
 }
@@ -356,8 +356,8 @@ double LAMathCapFloor::getSwapFloat( const DoubleVector& T_fix, const DoubleVect
     size_t n = T_fix.size();
     if ( T_pay.size() != n )
     {
-        LAString msg("T_pay.size() != T_fix.size()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_pay.size() != T_fix.size()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     double swap_Float = 0.0;
@@ -365,18 +365,18 @@ double LAMathCapFloor::getSwapFloat( const DoubleVector& T_fix, const DoubleVect
     {
         if ( T_fix[i] < 0.0 )
         {
-            LAString msg("T_fix[i] < 0.0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("T_fix[i] < 0.0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
         if ( T_pay[i] < 0.0 )
         {
-            LAString msg("T_pay[i] < 0.0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("T_pay[i] < 0.0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
         if ( T_pay[i] < T_fix[i]  )
         {
-            LAString msg("T_pay[i] < T_fix[i] ");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("T_pay[i] < T_fix[i] ");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
 
         swap_Float += getForwardRateValue( T_fix[i], T_pay[i] );
@@ -393,16 +393,16 @@ double LAMathCapFloor::getAnnuity( const DoubleVector& T_pay, const DoubleVector
 {
     if ( T_pay.front() < mCurve0->get_t() )
     {
-        LAString msg("T_pay.front() < mCurve0->get_t()");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("T_pay.front() < mCurve0->get_t()");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     size_t n = T_pay.size();
 
     if ( term_acc.size() != n )
     {
-        LAString msg("term_acc.size() != n");
-	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        AQLString msg("term_acc.size() != n");
+	    throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
     }
 
     double temp_Anuity = 0.0;
@@ -410,13 +410,13 @@ double LAMathCapFloor::getAnnuity( const DoubleVector& T_pay, const DoubleVector
     {
         if ( term_acc[i] < 0.0 )
         {
-            LAString msg("term_acc[i] < 0.0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("term_acc[i] < 0.0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
         if ( T_pay[i] < 0.0 )
         {
-            LAString msg("T_pay[i] < 0.0");
-	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            AQLString msg("T_pay[i] < 0.0");
+	        throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
         }
         temp_Anuity += term_acc[i] * mCurve0->getP( T_pay[i] );
     }
@@ -542,7 +542,7 @@ void LAMathCapFloorBlackVol::getCapletVariance()
 */
 double LAMathCapFloorBlackVol::getVega()
 {
-    if( mStrike.size() != mn ) throw LACoreInvalidData("strike.size() != T_fix.size() : CapFloor::Get_PV",__FILE__,__LINE__);
+    if( mStrike.size() != mn ) throw AQLCoreInvalidData("strike.size() != T_fix.size() : CapFloor::Get_PV",__FILE__,__LINE__);
 
     double tmp = 0;
     for(size_t t_ = 0; t_ < mn; ++t_)

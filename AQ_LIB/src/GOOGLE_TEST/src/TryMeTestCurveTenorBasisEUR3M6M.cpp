@@ -102,11 +102,11 @@ namespace google_test
             // Record outputs and rebase test outputs
             etrading::CreateDataFile::setOutputFolder( TEST_DIR, false );
 			#if defined(GTEST32)
-            LAStringVector v = LAString( curveDisplayOutputs_32bit ).toToken( '/' );
+            AQLStringVector v = AQLString( curveDisplayOutputs_32bit ).toToken( '/' );
 			#else
-			LAStringVector v = LAString( curveDisplayOutputs_64bit ).toToken( '/' );
+			AQLStringVector v = AQLString( curveDisplayOutputs_64bit ).toToken( '/' );
 			#endif
-            LAString outputFileName = v.back();
+            AQLString outputFileName = v.back();
             etrading::CreateDataFile file( etrading::decorateFilename( outputFileName ) );
             file.write( "output", results );
         }
@@ -147,12 +147,12 @@ namespace google_test
             etrading::CreateDataFile::setOutputFolder( TEST_DIR, false );
             
 			#if defined(GTEST32)
-            LAStringVector v = LAString( CheckDiscountFactorsOutputs_32bit ).toToken( '/' );
+            AQLStringVector v = AQLString( CheckDiscountFactorsOutputs_32bit ).toToken( '/' );
 			#else
-			LAStringVector v = LAString( CheckDiscountFactorsOutputs_64bit ).toToken( '/' );
+			AQLStringVector v = AQLString( CheckDiscountFactorsOutputs_64bit ).toToken( '/' );
 			#endif
 
-            LAString outputFileName = v.back();
+            AQLString outputFileName = v.back();
             etrading::CreateDataFile file( etrading::decorateFilename( outputFileName ) );
             file.write( "output", results );
         }

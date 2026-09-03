@@ -3,7 +3,7 @@
 #include "LabelValueBlock.h"
 #include "InterestRateSwap.h"
 
-class LADate;
+class AQLDate;
 
 namespace etrading
 {

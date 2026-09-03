@@ -1,7 +1,7 @@
 /*! @file
     @brief Source code of class to represent Coupon Cap function
 
-    This class derives from LAFunctionBase
+    This class derives from AQLFunctionBase
 
 */
 //  2007,AlgoQuantHub.
@@ -57,7 +57,7 @@ LARatesAggregateCouponCapFloor::~LARatesAggregateCouponCapFloor()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LARatesAggregateCouponCapFloor::clone() const
 {
     try 
@@ -66,7 +66,7 @@ LARatesAggregateCouponCapFloor::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -100,7 +100,7 @@ double
 LARatesAggregateCouponCapFloor::operator()(const DoubleArray& x) const
 {
 	if (mParam.size() != 2)
-		throw LACoreInvalidData("parameter size must be two; the first should be TargetValue and the last should be leverage of AggregateCoupon", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("parameter size must be two; the first should be TargetValue and the last should be leverage of AggregateCoupon", __FILE__, __LINE__);
 	
 	double ret = 0.0;
 	int size = x.size();

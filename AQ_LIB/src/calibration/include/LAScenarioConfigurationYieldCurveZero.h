@@ -38,7 +38,7 @@ public:
 
 	//==============================================
 	// create risk scenario
-	virtual std::vector<LAObject *> createScenario(LADataInstance &dataInstance, const MAScenarioParam &param) const;
+	virtual std::vector<AQLObject *> createScenario(AQLDataInstance &dataInstance, const MAScenarioParam &param) const;
 private:
 	bool mIsBasis; // basis flag
 };

@@ -48,13 +48,13 @@ namespace validation
 		const std::string& currency,
 		const std::string& tenorString,
 		const std::string& swapType,
-		const LAStringMatrix& swapStringBlock,
+		const AQLStringMatrix& swapStringBlock,
 		const std::string& toTenorString,
-		const LAStringMatrix& fraStringBlock,
-		const LAStringMatrix& irFuturesStringBlock,
+		const AQLStringMatrix& fraStringBlock,
+		const AQLStringMatrix& irFuturesStringBlock,
 		const std::string& centralBankTypeString,
-		const LAStringMatrix& centralBankStringBlock,
-		const LAStringMatrix& fxStringBlock,
+		const AQLStringMatrix& centralBankStringBlock,
+		const AQLStringMatrix& fxStringBlock,
 		const std::string& unitCurrency,
 		const bool isInvertedFX
 		)
@@ -110,7 +110,7 @@ namespace validation
 			} 
 			else
 			{
-			   throw LACoreInvalidData( "Swap Quotes column size must be 2", __FILE__, __LINE__ );
+			   throw AQLCoreInvalidData( "Swap Quotes column size must be 2", __FILE__, __LINE__ );
 			}
 		}
 

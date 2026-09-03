@@ -1,8 +1,8 @@
 #include "InitializeAQETrading.h"
 #include "mirSetUpBasisSwapCurve.h"
-#include "LADate.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLDate.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "tryMirSetUpBasisSwapCurve.h"
 #include "TypeUtilities.h"
 
@@ -28,30 +28,30 @@ const std::string mirSetUpBasisSwapCurve(const std::string& CurveID,
 								const SWIG_STRINGMATRIX & FwdFXs, 
 								const SWIG_STRINGMATRIX & SpotFXs) 
 {
-	LAString ret;
+	AQLString ret;
 	try 
 	{
 		// marshall all inputs
-		LAString curveID(CurveID.c_str());
-		LAString marketName(MarketName.c_str());
-		LAString curveNames(CurveNames.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString marketName(MarketName.c_str());
+		AQLString curveNames(CurveNames.c_str());
 
-		LAStringMatrix generalProps;
+		AQLStringMatrix generalProps;
 		swig::buildStringMatrix(generalProps, GeneralProps);
 
-		LAStringMatrix basisConv;
+		AQLStringMatrix basisConv;
 		swig::buildStringMatrix(basisConv, BasisConv);
 
-		LAStringMatrix basisRates;
+		AQLStringMatrix basisRates;
 		swig::buildStringMatrix(basisRates, BasisRates);
 
-		LAStringMatrix fwdConv;
+		AQLStringMatrix fwdConv;
 		swig::buildStringMatrix(fwdConv, FwdConv);
 
-		LAStringMatrix fwdFXs;
+		AQLStringMatrix fwdFXs;
 		swig::buildStringMatrix(fwdFXs, FwdFXs);
 
-		LAStringMatrix spotFXs;
+		AQLStringMatrix spotFXs;
 		swig::buildStringMatrix(spotFXs, SpotFXs);
 		
 		ret = validation::tryMirSetUpBasisSwapCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
@@ -65,7 +65,7 @@ const std::string mirSetUpBasisSwapCurve(const std::string& CurveID,
 															fwdFXs,
 															spotFXs);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -101,36 +101,36 @@ const std::string mirSetUpBasisSwapCurve(const std::string& CurveID,
 										const SWIG_STRINGMATRIX & FRAConv,
 										const SWIG_STRINGMATRIX & FRARates)
 {
-	LAString ret;
+	AQLString ret;
 	try 
 	{
 		// marshall all inputs
-		LAString curveID(CurveID.c_str());
-		LAString marketName(MarketName.c_str());
-		LAString curveNames(CurveNames.c_str());
+		AQLString curveID(CurveID.c_str());
+		AQLString marketName(MarketName.c_str());
+		AQLString curveNames(CurveNames.c_str());
 
-		LAStringMatrix generalProps;
+		AQLStringMatrix generalProps;
 		swig::buildStringMatrix(generalProps, GeneralProps);
 
-		LAStringMatrix basisConv;
+		AQLStringMatrix basisConv;
 		swig::buildStringMatrix(basisConv, BasisConv);
 
-		LAStringMatrix basisRates;
+		AQLStringMatrix basisRates;
 		swig::buildStringMatrix(basisRates, BasisRates);
 
-		LAStringMatrix fwdConv;
+		AQLStringMatrix fwdConv;
 		swig::buildStringMatrix(fwdConv, FwdConv);
 
-		LAStringMatrix fwdFXs;
+		AQLStringMatrix fwdFXs;
 		swig::buildStringMatrix(fwdFXs, FwdFXs);
 
-		LAStringMatrix spotFXs;
+		AQLStringMatrix spotFXs;
 		swig::buildStringMatrix(spotFXs, SpotFXs);
 
-		LAStringMatrix fraConv;
+		AQLStringMatrix fraConv;
 		swig::buildStringMatrix(fraConv, FRAConv);
 
-		LAStringMatrix fraRates;
+		AQLStringMatrix fraRates;
 		swig::buildStringMatrix(fraRates, FRARates);
 		
 		ret = validation::tryMirSetUpBasisSwapCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
@@ -146,7 +146,7 @@ const std::string mirSetUpBasisSwapCurve(const std::string& CurveID,
 															fraConv,
 															fraRates);
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

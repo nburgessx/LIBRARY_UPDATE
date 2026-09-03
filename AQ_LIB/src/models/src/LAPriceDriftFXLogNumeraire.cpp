@@ -26,12 +26,12 @@
 #include "LAPriceDriftFXLogNumeraire.h"
 
 #include "LAMathPathEntity.h"
-#include "LADataHolder.h"
-#include "LADataVector.h"
+#include "AQLDataHolder.h"
+#include "AQLDataVector.h"
 #include "LAMathAttrSDE.h"
 #include "LARatesSDEBase.h"
 #include "LAModelDynamicsCurve.h"
-#include "LABasic.h"
+#include "AQLBasic.h"
 #include "LAPriceDriftHWQuantAdjustment3F.h"
 #include "LAPriceQuantAdjustmentHWFXDD.h"
 
@@ -53,7 +53,7 @@ LAPriceDriftFXLogNumeraire::LAPriceDriftFXLogNumeraire(const double s, SDE_TYPE 
 	@param[in] sdeAttrNameD data name of foreign ir model
 	@param[in] s displaced diffusion parameter
 */
-LAPriceDriftFXLogNumeraire::LAPriceDriftFXLogNumeraire(const LAString& sdeAttrNameD, const LAString& sdeAttrNameF, const double s, SDE_TYPE type)
+LAPriceDriftFXLogNumeraire::LAPriceDriftFXLogNumeraire(const AQLString& sdeAttrNameD, const AQLString& sdeAttrNameF, const double s, SDE_TYPE type)
 : LAPriceDriftFX(sdeAttrNameD,  sdeAttrNameF, s, type)
 {
 
@@ -64,7 +64,7 @@ LAPriceDriftFXLogNumeraire::LAPriceDriftFXLogNumeraire(const LAString& sdeAttrNa
 	@brief copy constructor
 */
 /*LAPriceDriftFXLogNumeraire::LAPriceDriftFXLogNumeraire(const LAPriceDriftFXLogNumeraire& v) 
-: LACoreFunctionBase(v)
+: AQLCoreFunctionBase(v)
 {
 
 }*/
@@ -80,7 +80,7 @@ LAPriceDriftFXLogNumeraire::~LAPriceDriftFXLogNumeraire()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceDriftFXLogNumeraire::clone() const	
 {
     try 
@@ -89,7 +89,7 @@ LAPriceDriftFXLogNumeraire::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 /*!
@@ -131,7 +131,7 @@ LAPriceDriftFXLogNumeraire::operator()(const DoubleArray& x) const
     double numeRatioD = mpNumeraireD->operator ()(te) / mpNumeraireD->operator ()(ts);
     double numeRatioF = mpNumeraireF->operator ()(te) / mpNumeraireF->operator ()(ts);
 
-	double ret = LAMath::log(numeRatioD / numeRatioF) / (te - ts);
+	double ret = AQLMath::log(numeRatioD / numeRatioF) / (te - ts);
 
 	return ret;
 }
@@ -146,7 +146,7 @@ LAPriceDriftFXLogNumeraire::operator()(const DoubleArray& x) const
 void
 LAPriceDriftFXLogNumeraire::setUp(LAMathPathEntity& path)
 {
-	LADataHolder* dh = &path.getData(mSDEAttrNameD, ISNOTNULL);
+	AQLDataHolder* dh = &path.getData(mSDEAttrNameD, ISNOTNULL);
 	LAMathAttrSDE* pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
 	mpNumeraireD = pattrsde->getSDE().LARatesSDEBase::getNumeraire();
 	const LARatesPathElementCurve* pInitialCurveD = dynamic_cast<const LARatesPathElementCurve*>(pattrsde->getSDE().getInitialValue());
@@ -155,10 +155,10 @@ LAPriceDriftFXLogNumeraire::setUp(LAMathPathEntity& path)
 	pattrsde = &dynamic_cast<LAMathAttrSDE&>(dh->get());
 	mpNumeraireF = pattrsde->getSDE().LARatesSDEBase::getNumeraire();
 	const LARatesPathElementCurve* pInitialCurveF = dynamic_cast<const LARatesPathElementCurve*>(pattrsde->getSDE().getInitialValue());
-	vector<LAFunctionBase *> driftVec = pattrsde->getSDE().getDrift();
+	vector<AQLFunctionBase *> driftVec = pattrsde->getSDE().getDrift();
 	if (driftVec.empty() || !driftVec[0]->isTypeOf(FN_DRIFTHWQUANTADJ3F))
 	{
-		throw LACoreInvalidData("FX drift class is wrong.", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("FX drift class is wrong.", __FILE__, __LINE__);
 	}
 	mpDriftForeign = dynamic_cast<const LAPriceDriftHWQuantAdjustment3F *>(driftVec[0]);
 	mpQuantAdjuster = &(dynamic_cast<const LAPriceQuantAdjustmentHWFXDD &>(mpDriftForeign->getQuantAdjuster()));
@@ -172,7 +172,7 @@ LAPriceDriftFXLogNumeraire::getQuantAdjuster() const
 {
 	if (!mpQuantAdjuster)
 	{
-		throw LACoreInvalidData("mpQuantAdjuster is NULL", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("mpQuantAdjuster is NULL", __FILE__, __LINE__);
 	}
 	return *mpQuantAdjuster;
 }

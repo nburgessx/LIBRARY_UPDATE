@@ -16,7 +16,7 @@ namespace etrading
 	// FORWARD ADJUSTMENT HELPER CLASS
 	// ----------------------------------------------------------------------------------------------------------------------
 	
-	ForwardAdjustments::ForwardAdjustments( const LADate& asOfDate, const StandardStringMatrix & forwardAdjustments )
+	ForwardAdjustments::ForwardAdjustments( const AQLDate& asOfDate, const StandardStringMatrix & forwardAdjustments )
 		: asOfDate_(asOfDate), forwardAdjustments_(forwardAdjustments)
 	{
 		forwardAdjustments_ = trimStandardStringMatrix( forwardAdjustments );
@@ -24,7 +24,7 @@ namespace etrading
 		// The valid format is three columns: start date, end date, and adjustment (double in rate)
 		if ( !forwardAdjustments_.empty() )
 		{
-			const LADate asOfDate = asOfDate_;
+			const AQLDate asOfDate = asOfDate_;
 			
 			// Base 0
 			const size_t turnTypeColumn		= 0; // i.e. column 1
@@ -32,8 +32,8 @@ namespace etrading
 			const size_t endDateColumn		= 2; // i.e. column 3
 			const size_t spreadOrRateColumn = 3; // i.e. column 4
 
-			LADate previousStartDate;
-			LADate previousEndDate;
+			AQLDate previousStartDate;
+			AQLDate previousEndDate;
 			for ( size_t i = 0; i < forwardAdjustments_.size(); ++i )
 			{
 				const StandardStringVector& thisRow = forwardAdjustments[i];
@@ -42,8 +42,8 @@ namespace etrading
 				AQ_REQUIRE( thisRow.size() == 4, "Forward rate adjustment table must have exactly 4 columns: AdjustmentType, StartDate, EndDate, RateOrSpread")
 
 				const TurnOfYearAdjustmentTypeEnum turnType = toTurnOfYearAdjustmentTypeEnum( thisRow[turnTypeColumn] );
-				const LADate startDate = stringToDate( thisRow[startDateColumn] );
-				const LADate endDate = stringToDate( thisRow[endDateColumn] );
+				const AQLDate startDate = stringToDate( thisRow[startDateColumn] );
+				const AQLDate endDate = stringToDate( thisRow[endDateColumn] );
 
 				AQ_REQUIRE( endDate >= startDate, "Invalid Forward Adjustment Data in Row " + AQ_TO_STRING_FROM_SIZE_T( i ) + " : StartDate cannot be after the EndDate" )
 				AQ_REQUIRE( startDate > previousStartDate, "Invalid Forward Adjustment Data in Row " + AQ_TO_STRING_FROM_SIZE_T( i ) + " : StartDates must be sorted in ascending order with no duplicates" )
@@ -199,16 +199,16 @@ namespace etrading
 	// ----------------------------------------------------------------------------------------------------------------------
 	
 	// Constructor using Dates - *** Piecewise Constant = FALSE ***
-	Interpolator::Interpolator( const LADate & asOfDate,
+	Interpolator::Interpolator( const AQLDate & asOfDate,
 								const InterpolationEnum interpolationEnum,
 								const StateVariableEnum stateVariableEnum,
-								const std::vector<LADate> & xValues,
+								const std::vector<AQLDate> & xValues,
 								const std::vector<double> & yValues,
 								const DayCountEnum accrualDaycount,
 								const std::string & curveFrequencyTenor,
 							    const BusinessDayAdjustmentEnum fixingBusDayAdj,
 							    const std::string & fixingCalendar,
-								const LADate & joinDate,
+								const AQLDate & joinDate,
 								const size_t polynomialOrder )
 		
 	{
@@ -220,7 +220,7 @@ namespace etrading
 	}
 
 	// Constructor with Dates Represented as Terms - *** Piecewise Constant = FALSE ***
-	Interpolator::Interpolator( const LADate & asOfDate,
+	Interpolator::Interpolator( const AQLDate & asOfDate,
 								const InterpolationEnum interpolationEnum,
 								const StateVariableEnum stateVariableEnum,
 								const std::vector<double> & xValues,
@@ -238,12 +238,12 @@ namespace etrading
 	
 	// Constructor for Legacy Interpolators & Backwards Compatibility - *** Piecewise Constant = TRUE ***
 	// Allows isFwdInter = true, where curveCollection and curveIndex is required
-	Interpolator::Interpolator( const LADate & asOfDate,
+	Interpolator::Interpolator( const AQLDate & asOfDate,
 								const std::string & curveCollection,
 								const std::string & curveIndex,
 								const InterpolationEnum interpolationEnum,
 								const StateVariableEnum stateVariableEnum,
-								const std::shared_ptr<LAInterpolationBase> & laInterpolationPtr,
+								const std::shared_ptr<AQLInterpolationBase> & laInterpolationPtr,
 								const DayCountEnum accrualDaycount,
 								const std::string & curveFrequencyTenor,
 								const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -255,10 +255,10 @@ namespace etrading
 
 	// Constructor for Legacy Interpolators & Backwards Compatibility - *** Piecewise Constant = TRUE ***
 	// Does not allows isFwdInter = true, where curveCollection and curveIndex is required
-	Interpolator::Interpolator( const LADate & asOfDate,
+	Interpolator::Interpolator( const AQLDate & asOfDate,
 								const InterpolationEnum interpolationEnum,
 								const StateVariableEnum stateVariableEnum,
-								const std::shared_ptr<LAInterpolationBase> & laInterpolationPtr,
+								const std::shared_ptr<AQLInterpolationBase> & laInterpolationPtr,
 								const DayCountEnum accrualDaycount,
 								const std::string & curveFrequencyTenor,
 								const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -268,11 +268,11 @@ namespace etrading
 		init( asOfDate, "", "", interpolationEnum, stateVariableEnum, laInterpolationPtr, accrualDaycount, curveFrequencyTenor, fixingBusDayAdj, fixingCalendar );
 	}
 
-	double Interpolator::joinDateAsDouble( const LADate& asOfDate, const LADate& joinDate )
+	double Interpolator::joinDateAsDouble( const AQLDate& asOfDate, const AQLDate& joinDate )
 	{
-		AQ_REQUIRE( asOfDate != LADate(), "Invalid Interpolator Parameters: 'AsOfDate' is missing")
+		AQ_REQUIRE( asOfDate != AQLDate(), "Invalid Interpolator Parameters: 'AsOfDate' is missing")
 		double joinDateAsDouble = 0.0;
-		if ( joinDate != LADate() )
+		if ( joinDate != AQLDate() )
 		{
 			joinDateAsDouble = convertCurveDateToTerm( asOfDate, joinDate );
 		}
@@ -280,7 +280,7 @@ namespace etrading
 	}
 
 	// Private Constructor Helper - *** Piecewise Constant = FALSE ***
-	void Interpolator::init( const LADate & asOfDate,
+	void Interpolator::init( const AQLDate & asOfDate,
 							 const InterpolationEnum interpolationEnum,
 							 const StateVariableEnum stateVariableEnum,
 							 const std::vector<double> & xValues,
@@ -330,12 +330,12 @@ namespace etrading
 	}
 
 	// Private Constructor Helper - *** Piecewise Constant = TRUE ***
-	void Interpolator::init( const LADate & asOfDate,
+	void Interpolator::init( const AQLDate & asOfDate,
 							 const std::string & curveCollection,
 							 const std::string & curveIndex,
 							 const InterpolationEnum interpolationEnum,
 							 const StateVariableEnum stateVariableEnum,
-							 const std::shared_ptr<LAInterpolationBase> & laInterpolationPtr,
+							 const std::shared_ptr<AQLInterpolationBase> & laInterpolationPtr,
 							 const DayCountEnum accrualDaycount,
 					         const std::string & curveFrequencyTenor,
 					         const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -379,16 +379,16 @@ namespace etrading
 	}
 
 	// Constructor with interpolation raw inputs as dates
-	CurveInterpolation::CurveInterpolation( const LADate & asOfDate,
+	CurveInterpolation::CurveInterpolation( const AQLDate & asOfDate,
 											const InterpolationEnum interpolationEnum,
 											const StateVariableEnum stateVariableEnum,
-											const std::vector<LADate> & xValues,
+											const std::vector<AQLDate> & xValues,
 											const std::vector<double> & yValues,
 											const DayCountEnum accrualDaycount,
 											const std::string & curveFrequencyTenor,
 											const BusinessDayAdjustmentEnum fixingBusDayAdj,
 											const std::string & fixingCalendar,
-											const LADate & joinDate,
+											const AQLDate & joinDate,
 											const size_t polynomialOrder,
 											const StandardStringMatrix & forwardAdjustmentsStringMatrix )
 	{
@@ -409,7 +409,7 @@ namespace etrading
 	}
 		
 	// Constructor with interpolation raw inputs as terms
-	CurveInterpolation::CurveInterpolation( const LADate & asOfDate,
+	CurveInterpolation::CurveInterpolation( const AQLDate & asOfDate,
 											const InterpolationEnum interpolationEnum,
 											const StateVariableEnum stateVariableEnum,
 											const std::vector<double> & xValues,
@@ -441,12 +441,12 @@ namespace etrading
 
 	// *** Legacy *** Constructor with interpolation raw inputs as dates
 	// Allows isFwdInter = true, where CurveCollection and CurveIndex are required
-	CurveInterpolation::CurveInterpolation( const LADate & asOfDate,
+	CurveInterpolation::CurveInterpolation( const AQLDate & asOfDate,
 											const std::string & curveCollection,
 											const std::string & curveIndex,
 											const InterpolationEnum interpolationEnum,
 											const StateVariableEnum stateVariableEnum,
-											const std::shared_ptr<LAInterpolationBase> & laInterpolationObject,
+											const std::shared_ptr<AQLInterpolationBase> & laInterpolationObject,
 											const DayCountEnum accrualDaycount,
 											const std::string & curveFrequencyTenor,
 											const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -470,10 +470,10 @@ namespace etrading
 
 	// *** Legacy *** Constructor with interpolation raw inputs as dates
 	// Allows isFwdInter = true, where CurveCollection and CurveIndex are required
-	CurveInterpolation::CurveInterpolation( const LADate & asOfDate,
+	CurveInterpolation::CurveInterpolation( const AQLDate & asOfDate,
 											const InterpolationEnum interpolationEnum,
 											const StateVariableEnum stateVariableEnum,
-											const std::shared_ptr<LAInterpolationBase> & laInterpolationObject,
+											const std::shared_ptr<AQLInterpolationBase> & laInterpolationObject,
 											const DayCountEnum accrualDaycount,
 											const std::string & curveFrequencyTenor,
 											const BusinessDayAdjustmentEnum fixingBusDayAdj,
@@ -907,15 +907,15 @@ namespace etrading
 	// *** Important Note: For backwards compatibility we support and assume piecewiseConstant rates between cashflows ***
 	// -------------------------------------------------------------------------------------------------------------------------------------
 
-	double CurveInterpolation::discountFactor( const LADate & paymentDate ) const
+	double CurveInterpolation::discountFactor( const AQLDate & paymentDate ) const
 	{
-		const std::vector<double> discountFactorVector =  discountFactors( std::vector<LADate>( 1, paymentDate ) );
+		const std::vector<double> discountFactorVector =  discountFactors( std::vector<AQLDate>( 1, paymentDate ) );
 		AQ_REQUIRE( discountFactorVector.size() == 1, "Invalid Discount Factor Result")
 		return discountFactorVector[0];
 	}
 	
 	
-	std::vector<double> CurveInterpolation::discountFactors( const std::vector<LADate> & paymentDates ) const
+	std::vector<double> CurveInterpolation::discountFactors( const std::vector<AQLDate> & paymentDates ) const
 	{
 		std::vector<double> paymentDatesAsTerms;
 		for (auto thisPaymentDate : paymentDates)
@@ -925,14 +925,14 @@ namespace etrading
 		return discountFactors(paymentDatesAsTerms);
 	}
 
-	double CurveInterpolation::forwardRate( const LADate & fixingDate, const bool & useForwardInterpolation ) const
+	double CurveInterpolation::forwardRate( const AQLDate & fixingDate, const bool & useForwardInterpolation ) const
 	{
-		const std::vector<double> forwardRateVector =  forwardRates( std::vector<LADate>( 1, fixingDate ), useForwardInterpolation );
+		const std::vector<double> forwardRateVector =  forwardRates( std::vector<AQLDate>( 1, fixingDate ), useForwardInterpolation );
 		AQ_REQUIRE( forwardRateVector.size() == 1, "Invalid Forward Rate Result")
 		return forwardRateVector[0];
 	}
 
-	std::vector<double> CurveInterpolation::forwardRates( const std::vector<LADate> & fixingDates, const bool useForwardInterpolation ) const
+	std::vector<double> CurveInterpolation::forwardRates( const std::vector<AQLDate> & fixingDates, const bool useForwardInterpolation ) const
 	{
 		std::vector<double> fixingDatesAsTerms;
 		for (auto thisFixingDate : fixingDates)
@@ -943,7 +943,7 @@ namespace etrading
 	}
 
 	// Method to calculate the OIS or ARR effective compound rate(s)
-	std::vector<double> CurveInterpolation::compoundRates( const std::vector<LADate> & fixingDates, const OISCompoundingEnum & compoundingEnum ) const
+	std::vector<double> CurveInterpolation::compoundRates( const std::vector<AQLDate> & fixingDates, const OISCompoundingEnum & compoundingEnum ) const
 	{
 		std::vector<double> fixingDatesAsTerms;
 		for (auto thisFixingDate : fixingDates)
@@ -1197,8 +1197,8 @@ namespace etrading
 											  const std::string & calendar ) const
 	{
 		// Imply the toDate(s) using the fromDate(s) and curve frequency e.g. todate = fromDate + 3M 
-		const LADate fixingStartDate = convertCurveTermToDate( interpolator_->asOfDate_, fixingStartTerm );
-		const LADate fixingEndDate = LADateScheduleHelpers::getDate( fixingStartDate, curveFrequencyTenor.c_str(), businessDayAdjustment.c_str(), calendar.c_str() );
+		const AQLDate fixingStartDate = convertCurveTermToDate( interpolator_->asOfDate_, fixingStartTerm );
+		const AQLDate fixingEndDate = LADateScheduleHelpers::getDate( fixingStartDate, curveFrequencyTenor.c_str(), businessDayAdjustment.c_str(), calendar.c_str() );
 		const double fixingEndTerm = convertCurveDateToTerm( interpolator_->asOfDate_, fixingEndDate );
 		return fixingEndTerm;
 	}

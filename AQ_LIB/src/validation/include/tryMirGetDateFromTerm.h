@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
-#include "LADataInstance.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLDataInstance.h"
 
 namespace validation
 {
@@ -13,9 +13,9 @@ namespace validation
     *  @param [in]		includeLast			True if include the last day, not used in the core function
     *  @return			The end date derived from the FromDate and given year fraction
     */
-    LAString tryMirGetDateFromTerm( const LADate& fromDate,
+    AQLString tryMirGetDateFromTerm( const AQLDate& fromDate,
                                     double termY,
-                                    const LAString& dayCount,
+                                    const AQLString& dayCount,
                                     bool includeLast );
 
 

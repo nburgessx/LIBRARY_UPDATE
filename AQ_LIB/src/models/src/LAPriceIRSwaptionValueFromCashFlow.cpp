@@ -5,16 +5,16 @@
 #pragma warning(disable:4786)
 #endif
 
-#include "LAObject.h"
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAPriceDataManager.h"
-#include "LADataProcedure.h"
-#include "LAMathDefine.h"
+#include "AQLObject.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLPriceDataManager.h"
+#include "AQLDataProcedure.h"
+#include "AQLMathDefine.h"
 #include "LAMathDateCalculations.h"
-#include "LAMathValuableEntity.h"
+#include "AQLMathValuableEntity.h"
 #include "LAPricePayOff.h"
 #include "LAMathCurveFuncUtility.h"
 #include "LAPriceIRSwaptionValueFromCashFlow.h"
@@ -22,7 +22,7 @@
 #include "LALinearRatesOptionValueDataProvider.h"
 #include "LAPriceCashFlowGenerator.h"
 #include "LALinearRatesSwapTradeValue.h"
-#include "LASplineInterpolation.h"
+#include "AQLSplineInterpolation.h"
 #include "LAMathIRVanillaFuncUtility.h"
 #include "LAMathIndexEntity.h"
 #include "LAPriceConvergenceValue.h"
@@ -69,14 +69,14 @@ LAPriceIRSwaptionValueFromCashFlow::isTypeOf(function_t id) const
     @brief get option method name
      @return option method name
 */
-LAString 
+AQLString 
 LAPriceIRSwaptionValueFromCashFlow::getOptionPayoffName() const
 {
 	return FN_IR_SWAPTIONVALUEFROMCASHFLOW_STR;
 }
 
 
-LACoreFunctionBase*
+AQLCoreFunctionBase*
 LAPriceIRSwaptionValueFromCashFlow::clone() const
 {
     try 
@@ -85,7 +85,7 @@ LAPriceIRSwaptionValueFromCashFlow::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -95,17 +95,17 @@ LAPriceIRSwaptionValueFromCashFlow::clone() const
 
 	@param[in] basedate basedate of valuation
 	@param[in] object trade
-	@param[in] att LADataValuation class that this valuation class is setted
+	@param[in] att AQLDataValuation class that this valuation class is setted
 
 	@return cashe class
 	
 */
-LADataProvider*					
-LAPriceIRSwaptionValueFromCashFlow::setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const
+AQLDataProvider*					
+LAPriceIRSwaptionValueFromCashFlow::setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const
 {
 	
-	const LADataHolder* dh;
+	const AQLDataHolder* dh;
 	LAPriceIROptionValueDataProvider* dataProvider = NULL;
 	dataProvider = dynamic_cast<LAPriceIROptionValueDataProvider *>(LALinearRatesOptionValue::setUpDataProvider(basedate,object,att));
 	//in this class forward rate is made by cashflow.
@@ -124,19 +124,19 @@ LAPriceIRSwaptionValueFromCashFlow::setUpDataProvider(const LADate& basedate, LA
 	}
 
 	dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& refs = dynamic_cast<const LADataMultiReference &>(dh->get());
+	const AQLDataMultiReference& refs = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 	if (refs.getSize() != 2)
-		throw LACoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
-	LAObject& floatleg = refs.get(dataProvider->mFloatLegNo).get();
+		throw AQLCoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
+	AQLObject& floatleg = refs.get(dataProvider->mFloatLegNo).get();
 
 	//unit
-	dataProvider->unit = dynamic_cast<const LADataDouble &>(refs.get(dataProvider->mFloatLegNo).get().getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
+	dataProvider->unit = dynamic_cast<const AQLDataDouble &>(refs.get(dataProvider->mFloatLegNo).get().getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
 
 	//check detail
 	dh = &(floatleg.getData(PRICING_DATA_INPUTTYPE, ISNOTNULL));
-	LAString inputtype = dynamic_cast<const LADataString &>(dh->get()).get();
+	AQLString inputtype = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	if (inputtype.toUpper() != "MANUAL")
-		throw LACoreInvalidData("Swaption CashFlowMode error",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("Swaption CashFlowMode error",__FILE__,__LINE__);
 
 	dataProvider->mUnFrequency = getFrequencyFromIndexGenerator(object, dataProvider->mFloatLegNo);
 
@@ -148,33 +148,33 @@ LAPriceIRSwaptionValueFromCashFlow::setUpDataProvider(const LADate& basedate, LA
 	dh = &(floatleg.getData(PRICING_DATA_DISCOUNTCURVE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dataProvider->mDCurveType = dynamic_cast<const LADataString &>(dh->get()).get();
+		dataProvider->mDCurveType = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 
 
 	//mFCurveTypes must exist for irsabr calibration
 	dataProvider->mFCurveTypes.resize(1);
 	dataProvider->mFCurveTypes[0] = STD;
-	const LAObject& eindex = getLiborEntity(object, dataProvider->mFloatLegNo);
+	const AQLObject& eindex = getLiborEntity(object, dataProvider->mFloatLegNo);
 	dh = &(eindex.getData(PRICING_DATA_BASISCURVE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dataProvider->mFCurveTypes[0] = dynamic_cast<const LADataString &>(dh->get()).get();
+		dataProvider->mFCurveTypes[0] = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	}
 	//forward interpolation
 	dh = &(eindex.getData(PRICING_DATA_ISFWDINTERPOLATION, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
-		dataProvider->mIsFWDInter = dynamic_cast<const LADataBool &>(dh->get()).get();
+		dataProvider->mIsFWDInter = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 	//strike
 	dh = &(object.getData(PRICING_DATA_STRIKE, ISNOTNULL));
-	double strike = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	double strike = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	std::vector<AnalyticBKParam *> bkparam(dataProvider->mParam[0].size());
 	//volatility underlying
 	dh = &(object.getData(PRICING_DATA_VOLATILITYUNDERLYING, ISNOTNULL));
 	dataProvider->mUnderlying.resize(1);
-	dataProvider->mUnderlying[0] = dynamic_cast<const LADataString &>(dh->get()).get();
+	dataProvider->mUnderlying[0] = dynamic_cast<const AQLDataString &>(dh->get()).get();
 
 	for (unsigned int i = 0; i < bkparam.size(); i++)
 	{
@@ -185,35 +185,35 @@ LAPriceIRSwaptionValueFromCashFlow::setUpDataProvider(const LADate& basedate, LA
 	//is calc equivalent strike
 	dh = &(object.getData(PRICING_DATA_ISCALCEQUIVALENTSTRIKE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		dataProvider->mIsCalcEquivStrike = dynamic_cast<const LADataBool &>(dh->get()).get();
+		dataProvider->mIsCalcEquivStrike = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 
 	dh = &(object.getData(PRICING_DATA_ISIRRMODEL, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		dataProvider->mIsIRRModel = dynamic_cast<const LADataBool &>(dh->get()).get();
+		dataProvider->mIsIRRModel = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 
 	dh = &(object.getData(PRICING_DATA_PREMIUMPAYMENTDATE, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
 		dataProvider->mIsPremAdjust = true;
 
-		dataProvider->mPremPayDate = dynamic_cast<const LADataDate &>(dh->get()).get();
+		dataProvider->mPremPayDate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 		dataProvider->mPremAmount = 0.0;
 		dh = &(object.getData(PRICING_DATA_PREMIUMAMOUT, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			dataProvider->mPremAmount = dynamic_cast<const LADataDouble &>(dh->get()).get();
+			dataProvider->mPremAmount = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 
 		dh = &(object.getData(PRICING_DATA_PREMIUMPAYCURRENCY, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			LAString chkccy = dynamic_cast<const LADataString &>(dh->get()).get();
+			AQLString chkccy = dynamic_cast<const AQLDataString &>(dh->get()).get();
 			if (chkccy.toUpper () != dataProvider->mpvcur)
-				throw LACoreInvalidData("PremiumCurrency Error",__FILE__,__LINE__); 
+				throw AQLCoreInvalidData("PremiumCurrency Error",__FILE__,__LINE__); 
 		}
 
 		dataProvider->mIsAddFwdPremPV = false;
 		dh = &(object.getData( PRICING_DATA_ISADDFWDPREMPV, NOCHECK ));
 		if (dh->isDefined() && !dh->isNull())
-			dataProvider->mIsAddFwdPremPV = dynamic_cast<const LADataBool &>(dh->get()).get();
+			dataProvider->mIsAddFwdPremPV = dynamic_cast<const AQLDataBool &>(dh->get()).get();
 	}
 
 	dh = &(object.getData(PRICING_DATA_CASHSETTLEMENTPAYMENTDATE, NOCHECK));
@@ -221,12 +221,12 @@ LAPriceIRSwaptionValueFromCashFlow::setUpDataProvider(const LADate& basedate, LA
 	{
 		dataProvider->mIsCashSettlementAdjust = true;
 
-		dataProvider->mCashSettlementPayDate = dynamic_cast<const LADataDate &>(dh->get()).get();
+		dataProvider->mCashSettlementPayDate = dynamic_cast<const AQLDataDate &>(dh->get()).get();
 		
 		dataProvider->mCashSettlementAmount = 0.0;
 		dh = &(object.getData(PRICING_DATA_CASHSETTLEMENTAMOUNT, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
-			dataProvider->mCashSettlementAmount = dynamic_cast<const LADataDouble &>(dh->get()).get();
+			dataProvider->mCashSettlementAmount = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 
 
@@ -235,19 +235,19 @@ LAPriceIRSwaptionValueFromCashFlow::setUpDataProvider(const LADate& basedate, LA
 
 
 void
-LAPriceIRSwaptionValueFromCashFlow::setUpAnalyticParam(LAObject& object, LADataProvider* dp) const
+LAPriceIRSwaptionValueFromCashFlow::setUpAnalyticParam(AQLObject& object, AQLDataProvider* dp) const
 {
 	LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dp);
 	
 	//even if maturity date has passed, set up bkparam for obtaining the temporary volatility, forward
 	
-	LADataInstance* dataInstance = object.getDataInstance(); 
-	LADataHolder*dh;
+	AQLDataInstance* dataInstance = object.getDataInstance(); 
+	AQLDataHolder*dh;
 
-	LADate mdymatudate = (dataProvider->mAsofDate < dataProvider->mMaturityDate) ? dataProvider->mMaturityDate : dataProvider->mAsofDate;
+	AQLDate mdymatudate = (dataProvider->mAsofDate < dataProvider->mMaturityDate) ? dataProvider->mMaturityDate : dataProvider->mAsofDate;
 	std::vector <AnalyticBKParam *> bkparam(dataProvider->mParam[0].size());
 	
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 	
 	double te = dataProvider->mBlackDayCount.getTerm(dataProvider->mAsofDate,mdymatudate,true);
 	double actt = dc_act365.getTerm(dataProvider->mAsofDate, mdymatudate,true);
@@ -257,7 +257,7 @@ LAPriceIRSwaptionValueFromCashFlow::setUpAnalyticParam(LAObject& object, LADataP
 	double avenotional = 0.0;
 	double converror = getCalcDataFromCashFlow(object,dataProvider, forward, nu, equivstrike, avenotional);
 //#ifdef ZEROFLOOR
-//	forward = LAMath::max(forward, MIN_RATE);
+//	forward = AQLMath::max(forward, MIN_RATE);
 //#endif
 	for (unsigned int i = 0; i < dataProvider->mParam[0].size(); i++)
 	{
@@ -279,14 +279,14 @@ LAPriceIRSwaptionValueFromCashFlow::setUpAnalyticParam(LAObject& object, LADataP
 }
 
 
-LAString 
-LAPriceIRSwaptionValueFromCashFlow::getFrequencyFromIndexGenerator(const LAObject& object, unsigned int floatLegNo, bool isMonthString) const
+AQLString 
+LAPriceIRSwaptionValueFromCashFlow::getFrequencyFromIndexGenerator(const AQLObject& object, unsigned int floatLegNo, bool isMonthString) const
 {
-	const LAObject& eindex = getLiborEntity(object, floatLegNo);
+	const AQLObject& eindex = getLiborEntity(object, floatLegNo);
 
 	//accessory
-	const LADataHolder* dh = &(eindex.getData(PRICING_DATA_ACCESSORY, ISNOTNULL));
-	LAString libormonth = dynamic_cast<const LADataString &>(dh->get()).get();
+	const AQLDataHolder* dh = &(eindex.getData(PRICING_DATA_ACCESSORY, ISNOTNULL));
+	AQLString libormonth = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	int y, m, d, w;
 	LAMathDateCalculations::termStrtoYMDW(libormonth, y, m, d, w);
 	m = 12*y + m;
@@ -301,7 +301,7 @@ LAPriceIRSwaptionValueFromCashFlow::getFrequencyFromIndexGenerator(const LAObjec
 		else if (1 == m)
 			return MONTHLY;
 		else
-			throw LACoreInvalidData("Accessory Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Accessory Error",__FILE__,__LINE__);
 	}
 	else
 	{
@@ -314,51 +314,51 @@ LAPriceIRSwaptionValueFromCashFlow::getFrequencyFromIndexGenerator(const LAObjec
 		else if (1 == m)
 			return "1M";
 		else
-			throw LACoreInvalidData("Accessory Error",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Accessory Error",__FILE__,__LINE__);
 	}
 }
 
 //get Libor Object
-const LAObject& 
-LAPriceIRSwaptionValueFromCashFlow::getLiborEntity(const LAObject& object, unsigned int floatLegNo) const
+const AQLObject& 
+LAPriceIRSwaptionValueFromCashFlow::getLiborEntity(const AQLObject& object, unsigned int floatLegNo) const
 {
 	//LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dataProvider);
 
 	//this object is swaption trade object not indexgenerator object.
-	const LADataHolder* dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& legs = dynamic_cast<const LADataMultiReference &>(dh->get());
+	const AQLDataHolder* dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
+	const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 	//unsigned int floatLegNo = dataProvider->mFloatLegNo;
-	const LAObject& liborleg = legs.get(floatLegNo).get();
+	const AQLObject& liborleg = legs.get(floatLegNo).get();
 
 	dh = &(liborleg.getData(PRICING_DATA_INPUTTYPE, ISNOTNULL));
-	LAString inputtype = dynamic_cast<const LADataString &>(dh->get()).get();
+	AQLString inputtype = dynamic_cast<const AQLDataString &>(dh->get()).get();
 	if (inputtype.toUpper() != "MANUAL")
-		throw LACoreInvalidData("getFrequencyFromSwaption error", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("getFrequencyFromSwaption error", __FILE__, __LINE__);
 
 	dh = &(liborleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference &>(dh->get());
+	const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 	
 	for (unsigned int i = 0; i < cashlets.getSize(); i++)
 	{
-		const LAObject& ecash = cashlets.get(i).get();
+		const AQLObject& ecash = cashlets.get(i).get();
 
 		//for notional exchange
 		dh = &(ecash.getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 		if (!dh->isDefined() || dh->isNull())
 			continue;
 
-		const LADataMultiReference& coupons = dynamic_cast<const LADataMultiReference &>(dh->get());
-		const LAObject& ecoupon = coupons.get(0).get();
+		const AQLDataMultiReference& coupons = dynamic_cast<const AQLDataMultiReference &>(dh->get());
+		const AQLObject& ecoupon = coupons.get(0).get();
 
 		dh = &(ecoupon.getData(PRICING_DATA_INDEXINFOS, NOCHECK));
 		if (!dh->isDefined() || dh->isNull())
-			throw LACoreInvalidData("getFrequencyFromSwaption error", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("getFrequencyFromSwaption error", __FILE__, __LINE__);
 		
-		const LADataMultiReference& indexs = dynamic_cast<const LADataMultiReference &>(dh->get());
-		const LAObject& eindex = indexs.get(0).get();
+		const AQLDataMultiReference& indexs = dynamic_cast<const AQLDataMultiReference &>(dh->get());
+		const AQLObject& eindex = indexs.get(0).get();
 
 		dh = &(eindex.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL));
-		LAString indextype = dynamic_cast<const LADataString &>(dh->get()).get();
+		AQLString indextype = dynamic_cast<const AQLDataString &>(dh->get()).get();
 		if (indextype.toUpper() == "LIBOR")
 		{
 			return eindex;
@@ -366,40 +366,40 @@ LAPriceIRSwaptionValueFromCashFlow::getLiborEntity(const LAObject& object, unsig
 	}
 
 	//if we can not find Libor object throw Error;
-	throw LACoreInvalidData("getFrequencyFromSwaption error", __FILE__, __LINE__);
+	throw AQLCoreInvalidData("getFrequencyFromSwaption error", __FILE__, __LINE__);
 }
 
 //get float leg number
 unsigned int
-LAPriceIRSwaptionValueFromCashFlow::getFloatLegNum(const LAObject& object) const
+LAPriceIRSwaptionValueFromCashFlow::getFloatLegNum(const AQLObject& object) const
 {
 	//VirIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dataProvider);
-	const LADataHolder* dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	const LADataMultiReference& refs = dynamic_cast<const LADataMultiReference &>(dh->get());
+	const AQLDataHolder* dh = &(object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
+	const AQLDataMultiReference& refs = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 	if (refs.getSize() != 2)
-		throw LACoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
-	const LAObject& leg1 = refs.get(0).get();
+		throw AQLCoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
+	const AQLObject& leg1 = refs.get(0).get();
 
 	dh = &(leg1.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-	const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference &>(dh->get());
+	const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference &>(dh->get());
 	unsigned int cSize = cashlets.getSize();
 	for (unsigned int i = 0; i < cSize; i++)
 	{
-		const LAObject& ecash = cashlets.get(i).get();
+		const AQLObject& ecash = cashlets.get(i).get();
 		dh = &(ecash.getData(PRICING_DATA_COUPONINFOS, NOCHECK));
 		if (!dh->isDefined() || dh->isNull())
 			continue;
 			
 
-		const LADataMultiReference& coupons = dynamic_cast<const LADataMultiReference &>(dh->get());
-		const LAObject& ecoupon = coupons.get(0).get();
+		const AQLDataMultiReference& coupons = dynamic_cast<const AQLDataMultiReference &>(dh->get());
+		const AQLObject& ecoupon = coupons.get(0).get();
 
 		dh = &(ecoupon.getData(PRICING_DATA_INDEXINFOS, ISNOTNULL));
-		const LADataMultiReference& indexs = dynamic_cast<const LADataMultiReference &>(dh->get());
-		const LAObject& eindex = indexs.get(0).get();
+		const AQLDataMultiReference& indexs = dynamic_cast<const AQLDataMultiReference &>(dh->get());
+		const AQLObject& eindex = indexs.get(0).get();
 
 		dh = &(eindex.getData(PRICING_DATA_INDEXTYPE, ISNOTNULL));
-		LAString indextype = dynamic_cast<const LADataString &>(dh->get()).get();
+		AQLString indextype = dynamic_cast<const AQLDataString &>(dh->get()).get();
 		indextype.toUpper();
 		if (indextype == "FIXEDRATE")
 		{
@@ -423,19 +423,19 @@ LAPriceIRSwaptionValueFromCashFlow::getFloatLegNum(const LAObject& object) const
 
 //getCalcDataFromCashFlow
 double 
-LAPriceIRSwaptionValueFromCashFlow::getCalcDataFromCashFlow(const LAObject& object, LADataProvider* dp, double& frate, double& annuity, double& equivstrike, double& avenotional) const
+LAPriceIRSwaptionValueFromCashFlow::getCalcDataFromCashFlow(const AQLObject& object, AQLDataProvider* dp, double& frate, double& annuity, double& equivstrike, double& avenotional) const
 {
 	//the below is main source of swaption
-	const LADataHolder*dh;
+	const AQLDataHolder*dh;
 	LAPriceIROptionValueDataProvider* dataProvider =  dynamic_cast<LAPriceIROptionValueDataProvider*>(dp);
 
-	LADataInstance* dataInstance = object.getDataInstance();
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLDataInstance* dataInstance = object.getDataInstance();
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 	
-	LAString nb = dynamic_cast<const LADataString& >(object.getData(CALIBRATION_DATA_NAME,ISNOTNULL).get()).get();
+	AQLString nb = dynamic_cast<const AQLDataString& >(object.getData(CALIBRATION_DATA_NAME,ISNOTNULL).get()).get();
 	double targetPV = 0.0;
-	LAMathObjectValue* orgswap =NULL;
-	LADate swap_basedate = dataProvider->mMaturityDate;
+	AQLMathObjectValue* orgswap =NULL;
+	AQLDate swap_basedate = dataProvider->mMaturityDate;
 	if (dataProvider->mMaturityDate < dataProvider->mAsofDate)
 	{
 		swap_basedate = dataProvider->mAsofDate;
@@ -444,60 +444,60 @@ LAPriceIRSwaptionValueFromCashFlow::getCalcDataFromCashFlow(const LAObject& obje
 	dh = &object.getData( PRICING_DATA_ISRESULTOUTPUT, NOCHECK );
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isResultOut = dynamic_cast<const LADataBool&>(dh->get()).get();
+		isResultOut = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	}
 	if (dataProvider->mIsCalcEquivStrike || isResultOut)
 	{
-		LAString orgname = "ChangeToOriginalSwap" + nb;
-		const LAObjectHolder ehOrg = objPool.getObject(orgname);
+		AQLString orgname = "ChangeToOriginalSwap" + nb;
+		const AQLObjectHolder ehOrg = objPool.getObject(orgname);
 		if(!ehOrg.isDefined())
 		{	
-			//orgswap= new LAMathObjectValue(object.getDataInstance());
-			orgswap= dynamic_cast<LAMathObjectValue *>(object.clone());
+			//orgswap= new AQLMathObjectValue(object.getDataInstance());
+			orgswap= dynamic_cast<AQLMathObjectValue *>(object.clone());
 			objPool.set(orgname,orgswap);
 			//name
 			orgswap->getName().convertFromString(orgname);
 			////path object
-			LAString pathname = dataProvider->mpvanilla->getName().get();
+			AQLString pathname = dataProvider->mpvanilla->getName().get();
 			orgswap->remove(PRICING_DATA_PATHENTITY);
-			orgswap->LAObject::add(PRICING_DATA_PATHENTITY, new LADataReference()).convertFromString(pathname);
+			orgswap->AQLObject::add(PRICING_DATA_PATHENTITY, new AQLDataReference()).convertFromString(pathname);
 			//isdetailoutput
 			orgswap->remove(PRICING_DATA_ISDETAILOUTPUT);
-			orgswap->LAObject::add(PRICING_DATA_ISDETAILOUTPUT, new LADataString()).convertFromString("TRUE");
+			orgswap->AQLObject::add(PRICING_DATA_ISDETAILOUTPUT, new AQLDataString()).convertFromString("TRUE");
 			//settledate
 			orgswap->remove(PRICING_DATA_SETTLEDATE);
-			orgswap->LAObject::add(PRICING_DATA_SETTLEDATE, new LADataDate(swap_basedate));
+			orgswap->AQLObject::add(PRICING_DATA_SETTLEDATE, new AQLDataDate(swap_basedate));
 			//valuedate
 			orgswap->remove(PRICING_DATA_VALUEDATE);
-			orgswap->LAObject::add(PRICING_DATA_VALUEDATE, new LADataDate(swap_basedate));
+			orgswap->AQLObject::add(PRICING_DATA_VALUEDATE, new AQLDataDate(swap_basedate));
 			//today
 			orgswap->remove(PRICING_DATA_TODAY);
-			orgswap->LAObject::add(PRICING_DATA_TODAY, new LADataDate(dataProvider->mAsofDate));
+			orgswap->AQLObject::add(PRICING_DATA_TODAY, new AQLDataDate(dataProvider->mAsofDate));
 			//underlyings
-			//LAString understrs = object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).convertToString();
-			//orgswap->LAObject::add(CALIBRATION_DATA_UNDERLYINGS, new LADataMultiReference()).convertFromString(understrs);
+			//AQLString understrs = object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).convertToString();
+			//orgswap->AQLObject::add(CALIBRATION_DATA_UNDERLYINGS, new AQLDataMultiReference()).convertFromString(understrs);
 			//currency
 			dh = &(object.getData(PRICING_DATA_PREMIUMCURRENCY,ISNOTNULL));
-			LAString premcur = dynamic_cast<const LADataString &>(dh->get()).get();
+			AQLString premcur = dynamic_cast<const AQLDataString &>(dh->get()).get();
 			orgswap->remove(PRICING_DATA_CURRENCY);
-			orgswap->LAObject::add(PRICING_DATA_CURRENCY, new LADataString(premcur));
+			orgswap->AQLObject::add(PRICING_DATA_CURRENCY, new AQLDataString(premcur));
 			////cfgenerator
 			orgswap->remove(PRICING_DATA_CFGENERATOR);
-			orgswap->LAObject::add(PRICING_DATA_CFGENERATOR, new LADataProcedure()).convertFromString(FN_IR_CASHFLOWGENERATOR_STR);
+			orgswap->AQLObject::add(PRICING_DATA_CFGENERATOR, new AQLDataProcedure()).convertFromString(FN_IR_CASHFLOWGENERATOR_STR);
 			//resultoutput
 			orgswap->remove(PRICING_DATA_ISRESULTOUTPUT);
-			orgswap->LAObject::add(PRICING_DATA_ISRESULTOUTPUT, new LADataBool(true));
+			orgswap->AQLObject::add(PRICING_DATA_ISRESULTOUTPUT, new AQLDataBool(true));
 
 			//even if basdate > fixing date(swaption maturity date), never throw error
 			//that is why we must add PRICING_DATA_ISSAVEPASTFIXING
 			orgswap->remove(PRICING_DATA_ISSAVEPASTFIXING);
-			orgswap->LAObject::add(PRICING_DATA_ISSAVEPASTFIXING, new LADataBool(true));
+			orgswap->AQLObject::add(PRICING_DATA_ISSAVEPASTFIXING, new AQLDataBool(true));
 				
 			//about theta
 			//dh = &(e.getData(PRICING_DATA_ISSAVEPASTFIXING, NOCHECK));
 			//if (dh->isDefined() && !dh->isNull())
 			//{
-			//	parswap->LAObject::add(PRICING_DATA_ISSAVEPASTFIXING, dh->clone());
+			//	parswap->AQLObject::add(PRICING_DATA_ISSAVEPASTFIXING, dh->clone());
 			//}	
 
 			//the below is difference of parswap
@@ -505,167 +505,167 @@ LAPriceIRSwaptionValueFromCashFlow::getCalcDataFromCashFlow(const LAObject& obje
 		}
 		else
 		{
-			orgswap	= &dynamic_cast<LAMathObjectValue &>(objPool.getObject(orgname).get());
+			orgswap	= &dynamic_cast<AQLMathObjectValue &>(objPool.getObject(orgname).get());
 			//settledate
-			dynamic_cast<LADataDate &>(orgswap->getData(PRICING_DATA_SETTLEDATE, ISNOTNULL).get()).set(swap_basedate);
+			dynamic_cast<AQLDataDate &>(orgswap->getData(PRICING_DATA_SETTLEDATE, ISNOTNULL).get()).set(swap_basedate);
 			//valuedate
-			dynamic_cast<LADataDate &>(orgswap->getData(PRICING_DATA_VALUEDATE, ISNOTNULL).get()).set(swap_basedate);
+			dynamic_cast<AQLDataDate &>(orgswap->getData(PRICING_DATA_VALUEDATE, ISNOTNULL).get()).set(swap_basedate);
 			//today
-			dynamic_cast<LADataDate &>(orgswap->getData(PRICING_DATA_TODAY, ISNOTNULL).get()).set(dataProvider->mAsofDate);
+			dynamic_cast<AQLDataDate &>(orgswap->getData(PRICING_DATA_TODAY, ISNOTNULL).get()).set(dataProvider->mAsofDate);
 			//currency
 			dh = &(object.getData(PRICING_DATA_PREMIUMCURRENCY,ISNOTNULL));
-			LAString premcur = dynamic_cast<const LADataString &>(dh->get()).get();
-			dynamic_cast<LADataString &>(orgswap->getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).set(premcur);
+			AQLString premcur = dynamic_cast<const AQLDataString &>(dh->get()).get();
+			dynamic_cast<AQLDataString &>(orgswap->getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).set(premcur);
 			
-			LAString pathname = dataProvider->mpvanilla->getName().get();
+			AQLString pathname = dataProvider->mpvanilla->getName().get();
 			orgswap->getData(PRICING_DATA_PATHENTITY, ISNOTNULL).convertFromString(pathname);
 		}
 
 		orgswap->remove(PRICING_DATA_ISSETUPPAYOFF);
-		orgswap->LAObject::add(PRICING_DATA_ISSETUPPAYOFF, new LADataBool(false));
+		orgswap->AQLObject::add(PRICING_DATA_ISSETUPPAYOFF, new AQLDataBool(false));
 
 		//in case of libor spreads mode
 		dh = &(orgswap->getData(PRICING_DATA_ORIGINALLIBORSPREADNAMES, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const LAStringVector& libornames = dynamic_cast<const LADataStrings &>(dh->get()).get();
+			const AQLStringVector& libornames = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 
 			dh = &(orgswap->getData(PRICING_DATA_ORIGINALLIBORSPREADS, ISNOTNULL));
-			DoubleVector spreads = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+			DoubleVector spreads = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 			if (libornames.size() != spreads.size())
-				throw LACoreInvalidData("Original Libor Size Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("Original Libor Size Error",__FILE__,__LINE__);
 			
 			for (unsigned int i = 0; i < libornames.size(); i++)
 			{
-				LAObject& ecoupon = objPool.getObject(libornames[i], ENCHKTYPE_ISDEFINED).get();
+				AQLObject& ecoupon = objPool.getObject(libornames[i], ENCHKTYPE_ISDEFINED).get();
 				
-				DoubleVector coeffs = dynamic_cast<LADataDoubles &>
+				DoubleVector coeffs = dynamic_cast<AQLDataDoubles &>
 										(ecoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get()).get();
 				if (coeffs.size() < 2)
-					throw LACoreInvalidData("Original Libor Size Error",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Original Libor Size Error",__FILE__,__LINE__);
 				coeffs.back() = spreads[i];
-				dynamic_cast<LADataDoubles &>(ecoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get()).set(coeffs);
+				dynamic_cast<AQLDataDoubles &>(ecoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get()).set(coeffs);
 			}
 		}
 		//in case of amortize mode
 		dh = &(orgswap->getData(PRICING_DATA_ORIGINALNOTIONALNAMES, NOCHECK));
 		if (dh->isDefined() && !dh->isNull())
 		{
-			const LAStringVector& notionalnames = dynamic_cast<const LADataStrings &>(dh->get()).get();
+			const AQLStringVector& notionalnames = dynamic_cast<const AQLDataStrings &>(dh->get()).get();
 
 			dh = &(orgswap->getData(PRICING_DATA_ORIGINALNOTIONALS, ISNOTNULL));
-			DoubleVector notionals = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+			DoubleVector notionals = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 			if (notionalnames.size() != notionals.size())
-				throw LACoreInvalidData("Original Notional Size Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("Original Notional Size Error",__FILE__,__LINE__);
 			
 			for (unsigned int i = 0; i < notionalnames.size(); i++)
 			{
-				LAObject& ecash = objPool.getObject(notionalnames[i], ENCHKTYPE_ISDEFINED).get();
-				double notional = dynamic_cast<LADataDouble &>
+				AQLObject& ecash = objPool.getObject(notionalnames[i], ENCHKTYPE_ISDEFINED).get();
+				double notional = dynamic_cast<AQLDataDouble &>
 										(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
 				notional = notionals[i];
-				dynamic_cast<LADataDouble &>(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).set(notional);
+				dynamic_cast<AQLDataDouble &>(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).set(notional);
 			}
 		}
 		orgswap->value(swap_basedate);
 		if (dataProvider->mIsCalcEquivStrike)
 		{
 			dh = &(orgswap->getData(PRICING_DATA_DIRTYPRICE, ISNOTNULL));
-			targetPV = dynamic_cast<const LADataDouble&>(dh->get()).get(); 
+			targetPV = dynamic_cast<const AQLDataDouble&>(dh->get()).get(); 
 		}
 	}
 	
 
-	LAString tempname = "ChangeToSwap" + nb;
-	LAMathObjectValue* parswap =NULL;
-	const LAObjectHolder ehCur = objPool.getObject(tempname);
+	AQLString tempname = "ChangeToSwap" + nb;
+	AQLMathObjectValue* parswap =NULL;
+	const AQLObjectHolder ehCur = objPool.getObject(tempname);
 	if(!ehCur.isDefined())
 	{	
-		//parswap= new LAMathObjectValue(object.getDataInstance());
-		parswap= dynamic_cast<LAMathObjectValue *>(object.clone());
+		//parswap= new AQLMathObjectValue(object.getDataInstance());
+		parswap= dynamic_cast<AQLMathObjectValue *>(object.clone());
 		objPool.set(tempname,parswap);
 		//name
 		parswap->getName().convertFromString(tempname);
 		//path object
-		LAString pathname = dataProvider->mpvanilla->getName().get();
+		AQLString pathname = dataProvider->mpvanilla->getName().get();
 		parswap->remove(PRICING_DATA_PATHENTITY);
-		parswap->LAObject::add(PRICING_DATA_PATHENTITY, new LADataReference()).convertFromString(pathname);
+		parswap->AQLObject::add(PRICING_DATA_PATHENTITY, new AQLDataReference()).convertFromString(pathname);
 		//isdetailoutput
 		parswap->remove(PRICING_DATA_ISDETAILOUTPUT);
-		parswap->LAObject::add(PRICING_DATA_ISDETAILOUTPUT, new LADataString()).convertFromString("TRUE");
+		parswap->AQLObject::add(PRICING_DATA_ISDETAILOUTPUT, new AQLDataString()).convertFromString("TRUE");
 		//settledate
 		parswap->remove(PRICING_DATA_SETTLEDATE);
-		parswap->LAObject::add(PRICING_DATA_SETTLEDATE, new LADataDate(swap_basedate));
+		parswap->AQLObject::add(PRICING_DATA_SETTLEDATE, new AQLDataDate(swap_basedate));
 		//valuedate
 		parswap->remove(PRICING_DATA_VALUEDATE);
-		parswap->LAObject::add(PRICING_DATA_VALUEDATE, new LADataDate(swap_basedate));
+		parswap->AQLObject::add(PRICING_DATA_VALUEDATE, new AQLDataDate(swap_basedate));
 		//today
 		parswap->remove(PRICING_DATA_TODAY);
-		parswap->LAObject::add(PRICING_DATA_TODAY, new LADataDate(dataProvider->mAsofDate));
+		parswap->AQLObject::add(PRICING_DATA_TODAY, new AQLDataDate(dataProvider->mAsofDate));
 		////underlyings
-		//LAString understrs = object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).convertToString();
-		//parswap->LAObject::add(CALIBRATION_DATA_UNDERLYINGS, new LADataMultiReference()).convertFromString(understrs);
+		//AQLString understrs = object.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).convertToString();
+		//parswap->AQLObject::add(CALIBRATION_DATA_UNDERLYINGS, new AQLDataMultiReference()).convertFromString(understrs);
 		//currency
 		dh = &(object.getData(PRICING_DATA_PREMIUMCURRENCY,ISNOTNULL));
-		LAString premcur = dynamic_cast<const LADataString &>(dh->get()).get();
+		AQLString premcur = dynamic_cast<const AQLDataString &>(dh->get()).get();
 		parswap->remove(PRICING_DATA_CURRENCY);
-		parswap->LAObject::add(PRICING_DATA_CURRENCY, new LADataString(premcur));
+		parswap->AQLObject::add(PRICING_DATA_CURRENCY, new AQLDataString(premcur));
 		//cfgenerator
 		parswap->remove(PRICING_DATA_CFGENERATOR);
-		parswap->LAObject::add(PRICING_DATA_CFGENERATOR, new LADataProcedure()).convertFromString(FN_IR_CASHFLOWGENERATOR_STR);
+		parswap->AQLObject::add(PRICING_DATA_CFGENERATOR, new AQLDataProcedure()).convertFromString(FN_IR_CASHFLOWGENERATOR_STR);
 		//resultoutput
 		parswap->remove(PRICING_DATA_ISRESULTOUTPUT);
-		parswap->LAObject::add(PRICING_DATA_ISRESULTOUTPUT, new LADataBool(true));
+		parswap->AQLObject::add(PRICING_DATA_ISRESULTOUTPUT, new AQLDataBool(true));
 
 		//even if basdate > fixing date(swaption maturity date), never throw error
 		//that is why we must add PRICING_DATA_ISSAVEPASTFIXING
 		parswap->remove(PRICING_DATA_ISSAVEPASTFIXING);
-		parswap->LAObject::add(PRICING_DATA_ISSAVEPASTFIXING, new LADataBool(true));
+		parswap->AQLObject::add(PRICING_DATA_ISSAVEPASTFIXING, new AQLDataBool(true));
 
 		
 		//about theta
 		//dh = &(e.getData(PRICING_DATA_ISSAVEPASTFIXING, NOCHECK));
 		//if (dh->isDefined() && !dh->isNull())
 		//{
-		//	parswap->LAObject::add(PRICING_DATA_ISSAVEPASTFIXING, dh->clone());
+		//	parswap->AQLObject::add(PRICING_DATA_ISSAVEPASTFIXING, dh->clone());
 		//}	
 
 		
 		//value
 		parswap->setValuationMethod(FN_IR_CONVERGENCEVALUE_STR);
 
-		parswap->LAObject::remove(PRICING_DATA_CONVERGENCETARGET);
-		parswap->LAObject::remove(PRICING_DATA_SUBVALUE);
+		parswap->AQLObject::remove(PRICING_DATA_CONVERGENCETARGET);
+		parswap->AQLObject::remove(PRICING_DATA_SUBVALUE);
 		//find target leg
 		if (dataProvider->mFixedLegNo == 0)
-			parswap->LAObject::add(PRICING_DATA_CONVERGENCETARGET, new LADataString()).convertFromString("LEG1FIXEDRATE");
+			parswap->AQLObject::add(PRICING_DATA_CONVERGENCETARGET, new AQLDataString()).convertFromString("LEG1FIXEDRATE");
 		else
-			parswap->LAObject::add(PRICING_DATA_CONVERGENCETARGET, new LADataString()).convertFromString("LEG2FIXEDRATE");
+			parswap->AQLObject::add(PRICING_DATA_CONVERGENCETARGET, new AQLDataString()).convertFromString("LEG2FIXEDRATE");
 		//sub value
-		parswap->LAObject::add(PRICING_DATA_SUBVALUE, new LADataValuation()).convertFromString(FN_IR_PLAINVANILLASWAPTRADEVALUE_STR);
+		parswap->AQLObject::add(PRICING_DATA_SUBVALUE, new AQLDataValuation()).convertFromString(FN_IR_PLAINVANILLASWAPTRADEVALUE_STR);
 		//annuity calc mode
-		parswap->LAObject::add(PRICING_DATA_ISANNUITYCALC, new LADataBool(true));
+		parswap->AQLObject::add(PRICING_DATA_ISANNUITYCALC, new AQLDataBool(true));
 		// omit fee from par rate calculation
-		parswap->LAObject::remove(CALIBRATION_DATA_FEEAMOUNTS);
-		parswap->LAObject::remove(CALIBRATION_DATA_FEEPAYMENTDATES);
-		parswap->LAObject::remove(CALIBRATION_DATA_FEECURRENCIES);
-		parswap->LAObject::remove(CALIBRATION_DATA_FEEDISCOUNTCURVES);
+		parswap->AQLObject::remove(CALIBRATION_DATA_FEEAMOUNTS);
+		parswap->AQLObject::remove(CALIBRATION_DATA_FEEPAYMENTDATES);
+		parswap->AQLObject::remove(CALIBRATION_DATA_FEECURRENCIES);
+		parswap->AQLObject::remove(CALIBRATION_DATA_FEEDISCOUNTCURVES);
 	}
 	else
 	{
-		parswap	= &dynamic_cast<LAMathObjectValue &>(objPool.getObject(tempname).get());
+		parswap	= &dynamic_cast<AQLMathObjectValue &>(objPool.getObject(tempname).get());
 		//settledate
-		dynamic_cast<LADataDate &>(parswap->getData(PRICING_DATA_SETTLEDATE, ISNOTNULL).get()).set(swap_basedate);
+		dynamic_cast<AQLDataDate &>(parswap->getData(PRICING_DATA_SETTLEDATE, ISNOTNULL).get()).set(swap_basedate);
 		//valuedate
-		dynamic_cast<LADataDate &>(parswap->getData(PRICING_DATA_VALUEDATE, ISNOTNULL).get()).set(swap_basedate);
+		dynamic_cast<AQLDataDate &>(parswap->getData(PRICING_DATA_VALUEDATE, ISNOTNULL).get()).set(swap_basedate);
 		//today
-		dynamic_cast<LADataDate &>(parswap->getData(PRICING_DATA_TODAY, ISNOTNULL).get()).set(dataProvider->mAsofDate);
+		dynamic_cast<AQLDataDate &>(parswap->getData(PRICING_DATA_TODAY, ISNOTNULL).get()).set(dataProvider->mAsofDate);
 		//currency
 		dh = &(object.getData(PRICING_DATA_PREMIUMCURRENCY,ISNOTNULL));
-		LAString premcur = dynamic_cast<const LADataString &>(dh->get()).get();
-		dynamic_cast<LADataString &>(parswap->getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).set(premcur);
+		AQLString premcur = dynamic_cast<const AQLDataString &>(dh->get()).get();
+		dynamic_cast<AQLDataString &>(parswap->getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).set(premcur);
 		
-		LAString pathname = dataProvider->mpvanilla->getName().get();
+		AQLString pathname = dataProvider->mpvanilla->getName().get();
 		parswap->getData(PRICING_DATA_PATHENTITY, ISNOTNULL).convertFromString(pathname);
 	}
 
@@ -673,84 +673,84 @@ LAPriceIRSwaptionValueFromCashFlow::getCalcDataFromCashFlow(const LAObject& obje
 	bool iscalcrisk = false;
 	dh = &(object.getData(PRICING_DATA_ISCALCRISK, NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
-		iscalcrisk = dynamic_cast<const LADataBool&>(dh->get()).get();
+		iscalcrisk = dynamic_cast<const AQLDataBool&>(dh->get()).get();
 	parswap->remove(PRICING_DATA_ISCALCRISK);
-	parswap->LAObject::add(PRICING_DATA_ISCALCRISK, new LADataBool(iscalcrisk));
+	parswap->AQLObject::add(PRICING_DATA_ISCALCRISK, new AQLDataBool(iscalcrisk));
 
 	parswap->remove(PRICING_DATA_ISSETUPPAYOFF);
-	parswap->LAObject::add(PRICING_DATA_ISSETUPPAYOFF, new LADataBool(false));
+	parswap->AQLObject::add(PRICING_DATA_ISSETUPPAYOFF, new AQLDataBool(false));
 
 	parswap->remove(PRICING_DATA_ISSTUBSETCOMPLETE);
-	parswap->LAObject::add(PRICING_DATA_ISSTUBSETCOMPLETE, new LADataBool(true));
+	parswap->AQLObject::add(PRICING_DATA_ISSTUBSETCOMPLETE, new AQLDataBool(true));
 
 	if (dataProvider->mIsCalcEquivStrike && orgswap != 0)
 	{
 		//set libor spreads
-		LADataHolder* attpar = &(orgswap->getData(PRICING_DATA_ORIGINALLIBORSPREADNAMES, NOCHECK));
+		AQLDataHolder* attpar = &(orgswap->getData(PRICING_DATA_ORIGINALLIBORSPREADNAMES, NOCHECK));
 		if (attpar->isDefined() && !attpar->isNull())
 		{
-			const LAStringVector& libornames = dynamic_cast<const LADataStrings &>(attpar->get()).get();
+			const AQLStringVector& libornames = dynamic_cast<const AQLDataStrings &>(attpar->get()).get();
 			for (unsigned int i = 0; i < libornames.size(); i++)
 			{
-				LAObject& ecoupon = objPool.getObject(libornames[i], ENCHKTYPE_ISDEFINED).get();
+				AQLObject& ecoupon = objPool.getObject(libornames[i], ENCHKTYPE_ISDEFINED).get();
 				
-				DoubleVector coeffs = dynamic_cast<LADataDoubles &>
+				DoubleVector coeffs = dynamic_cast<AQLDataDoubles &>
 										(ecoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get()).get();
 				if (coeffs.size() < 2)
-					throw LACoreInvalidData("Original Libor Size Error",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Original Libor Size Error",__FILE__,__LINE__);
 				coeffs.back() = 0.0;
-				dynamic_cast<LADataDoubles &>(ecoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get()).set(coeffs);
+				dynamic_cast<AQLDataDoubles &>(ecoupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get()).set(coeffs);
 			}
 		}
 		else 
 		{
 			attpar = &(orgswap->getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-			LAObject& liborleg = dynamic_cast<const LADataMultiReference &>(attpar->get()).get(dataProvider->mFloatLegNo).get();
+			AQLObject& liborleg = dynamic_cast<const AQLDataMultiReference &>(attpar->get()).get(dataProvider->mFloatLegNo).get();
 			attpar = &(liborleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-			const LADataMultiReference& cashlets = dynamic_cast<const LADataMultiReference &>(attpar->get());
+			const AQLDataMultiReference& cashlets = dynamic_cast<const AQLDataMultiReference &>(attpar->get());
 			unsigned int cSize = cashlets.getSize();
 
-			LAStringVector spreadnames;
+			AQLStringVector spreadnames;
 			DoubleVector spreads;
 			for (unsigned int i = 0; i < cSize; i++)
 			{
-				LAObject& ecash = cashlets.get(i).get();
+				AQLObject& ecash = cashlets.get(i).get();
 				attpar = &(ecash.getData(PRICING_DATA_COUPONINFOS, ISNOTNULL));
-				const LADataMultiReference& coupons = dynamic_cast<const LADataMultiReference &>(attpar->get());
-				LAObject& coupon = coupons.get(0).get();
+				const AQLDataMultiReference& coupons = dynamic_cast<const AQLDataMultiReference &>(attpar->get());
+				AQLObject& coupon = coupons.get(0).get();
 
-				LAString name = dynamic_cast<const LADataString &>(coupon.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+				AQLString name = dynamic_cast<const AQLDataString &>(coupon.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 				
 
 				attpar = &(coupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL));
-				DoubleVector coeffs = dynamic_cast<const LADataDoubles &>(attpar->get()).get();
+				DoubleVector coeffs = dynamic_cast<const AQLDataDoubles &>(attpar->get()).get();
 				if (coeffs.size() < 2)
-					throw LACoreInvalidData("Coefficient Size Error",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Coefficient Size Error",__FILE__,__LINE__);
 
 				spreadnames.push_back(name);
 				spreads.push_back(coeffs.back());
 				coeffs.back() = 0.0;
-				dynamic_cast<LADataDoubles &>(coupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get()).set(coeffs);
+				dynamic_cast<AQLDataDoubles &>(coupon.getData(PRICING_DATA_COEFFICIENT, ISNOTNULL).get()).set(coeffs);
 			}
-			orgswap->LAObject::remove(PRICING_DATA_ORIGINALLIBORSPREADNAMES);
-			orgswap->LAObject::add(PRICING_DATA_ORIGINALLIBORSPREADNAMES, new LADataStrings(spreadnames));
-			orgswap->LAObject::remove(PRICING_DATA_ORIGINALLIBORSPREADS);
-			orgswap->LAObject::add(PRICING_DATA_ORIGINALLIBORSPREADS, new LADataDoubles(spreads));
+			orgswap->AQLObject::remove(PRICING_DATA_ORIGINALLIBORSPREADNAMES);
+			orgswap->AQLObject::add(PRICING_DATA_ORIGINALLIBORSPREADNAMES, new AQLDataStrings(spreadnames));
+			orgswap->AQLObject::remove(PRICING_DATA_ORIGINALLIBORSPREADS);
+			orgswap->AQLObject::add(PRICING_DATA_ORIGINALLIBORSPREADS, new AQLDataDoubles(spreads));
 		}
 
 		//set amorticase
 		attpar = &(orgswap->getData(PRICING_DATA_ORIGINALNOTIONALNAMES, NOCHECK));
 		if (attpar->isDefined() && !attpar->isNull())
 		{
-			const LAStringVector& notionalnames = dynamic_cast<const LADataStrings &>(attpar->get()).get();
+			const AQLStringVector& notionalnames = dynamic_cast<const AQLDataStrings &>(attpar->get()).get();
 			
 			//be careful about object
 			attpar = &(parswap->getData(PRICING_DATA_AVERAGENOTIONAL,ISDEFINED));
-			double avenotional = dynamic_cast<const LADataDouble &>(attpar->get()).get();
+			double avenotional = dynamic_cast<const AQLDataDouble &>(attpar->get()).get();
 			for (unsigned int i = 0; i < notionalnames.size(); i++)
 			{
-				LAObject& ecash = objPool.getObject(notionalnames[i], ENCHKTYPE_ISDEFINED).get();
-				dynamic_cast<LADataDouble &>(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).set(avenotional);
+				AQLObject& ecash = objPool.getObject(notionalnames[i], ENCHKTYPE_ISDEFINED).get();
+				dynamic_cast<AQLDataDouble &>(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).set(avenotional);
 			}
 		}
 		else 
@@ -762,80 +762,80 @@ LAPriceIRSwaptionValueFromCashFlow::getCalcDataFromCashFlow(const LAObject& obje
 				double notonalamount = 0.0;
 				int countnum = 0;
 				attpar = &(orgswap->getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-				LADataMultiReference& legs = dynamic_cast<LADataMultiReference &>(attpar->get());
+				AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference &>(attpar->get());
 				for (unsigned int i = 0; i < legs.getSize(); i++)
 				{
-					LAObject& eleg = legs.get(i).get();
+					AQLObject& eleg = legs.get(i).get();
 					attpar = &(eleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-					LADataMultiReference& cashlets = dynamic_cast<LADataMultiReference &>(attpar->get());
+					AQLDataMultiReference& cashlets = dynamic_cast<AQLDataMultiReference &>(attpar->get());
 					for (unsigned int j = 0; j < cashlets.getSize(); j++)
 					{
-						LAObject& ecash = cashlets.get(j).get();
-						notonalamount += dynamic_cast<LADataDouble &>(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
+						AQLObject& ecash = cashlets.get(j).get();
+						notonalamount += dynamic_cast<AQLDataDouble &>(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
 						countnum++;
 					}
 				}
 
 				if (0 == countnum)
-					throw LACoreInvalidData("Notional Error",__FILE__,__LINE__);
+					throw AQLCoreInvalidData("Notional Error",__FILE__,__LINE__);
 
 				averagenotional = notonalamount / static_cast<double>(countnum);
-				parswap->LAObject::add(PRICING_DATA_AVERAGENOTIONAL, new LADataDouble(averagenotional));
+				parswap->AQLObject::add(PRICING_DATA_AVERAGENOTIONAL, new AQLDataDouble(averagenotional));
 			}
 			else
 			{
-				averagenotional = dynamic_cast<const LADataDouble &>(attpar->get()).get();
+				averagenotional = dynamic_cast<const AQLDataDouble &>(attpar->get()).get();
 				
 			}
 				
 			
-			LAStringVector nationalnames;
+			AQLStringVector nationalnames;
 			DoubleVector notionals;
 			attpar = &(orgswap->getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-			LADataMultiReference& legs = dynamic_cast<LADataMultiReference &>(attpar->get());
+			AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference &>(attpar->get());
 			for (unsigned int i = 0; i < legs.getSize(); i++)
 			{
-				LAObject& eleg = legs.get(i).get();
+				AQLObject& eleg = legs.get(i).get();
 				attpar = &(eleg.getData(PRICING_DATA_CASHLETS, ISNOTNULL));
-				LADataMultiReference& cashlets = dynamic_cast<LADataMultiReference &>(attpar->get());
+				AQLDataMultiReference& cashlets = dynamic_cast<AQLDataMultiReference &>(attpar->get());
 				for (unsigned int j = 0; j < cashlets.getSize(); j++)
 				{
-					LAObject& ecash = cashlets.get(j).get();
-					LAString name = dynamic_cast<const LADataString &>(ecash.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
-					double notional = dynamic_cast<LADataDouble &>(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
+					AQLObject& ecash = cashlets.get(j).get();
+					AQLString name = dynamic_cast<const AQLDataString &>(ecash.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
+					double notional = dynamic_cast<AQLDataDouble &>(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).get();
 				
 					nationalnames.push_back(name);
 					notionals.push_back(notional);
 
 					//change and set
-					dynamic_cast<LADataDouble &>(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).set(averagenotional);
+					dynamic_cast<AQLDataDouble &>(ecash.getData(PRICING_CALIBRATION_DATAOTIONAL, ISNOTNULL).get()).set(averagenotional);
 
 				}
 			}
-			orgswap->LAObject::remove(PRICING_DATA_ORIGINALNOTIONALNAMES);
-			orgswap->LAObject::add(PRICING_DATA_ORIGINALNOTIONALNAMES, new LADataStrings(nationalnames));
-			orgswap->LAObject::remove(PRICING_DATA_ORIGINALNOTIONALS);
-			orgswap->LAObject::add(PRICING_DATA_ORIGINALNOTIONALS, new LADataDoubles(notionals));
+			orgswap->AQLObject::remove(PRICING_DATA_ORIGINALNOTIONALNAMES);
+			orgswap->AQLObject::add(PRICING_DATA_ORIGINALNOTIONALNAMES, new AQLDataStrings(nationalnames));
+			orgswap->AQLObject::remove(PRICING_DATA_ORIGINALNOTIONALS);
+			orgswap->AQLObject::add(PRICING_DATA_ORIGINALNOTIONALS, new AQLDataDoubles(notionals));
 		}
 	}
 	//target pv target pv can be always changed
-	parswap->LAObject::remove(PRICING_DATA_DIRTYPRICE);
-	parswap->LAObject::add(PRICING_DATA_DIRTYPRICE, new LADataDouble(targetPV));
+	parswap->AQLObject::remove(PRICING_DATA_DIRTYPRICE);
+	parswap->AQLObject::add(PRICING_DATA_DIRTYPRICE, new AQLDataDouble(targetPV));
 	double convergent = parswap->value(swap_basedate);
 	
 	if (dataProvider->mIsCalcEquivStrike && parswap != 0)
 	{
 		dh = &(parswap->getData(PRICING_DATA_CONVERGENCEVALUE, ISNOTNULL));
-		equivstrike = dynamic_cast<const LADataDouble &>(dh->get()).get();
-		parswap->LAObject::remove(PRICING_DATA_DIRTYPRICE);
-		parswap->LAObject::add(PRICING_DATA_DIRTYPRICE, new LADataDouble(0.0));
+		equivstrike = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
+		parswap->AQLObject::remove(PRICING_DATA_DIRTYPRICE);
+		parswap->AQLObject::add(PRICING_DATA_DIRTYPRICE, new AQLDataDouble(0.0));
 		convergent = parswap->value(dataProvider->mAsofDate);
 		dh = &(parswap->getData(PRICING_DATA_AVERAGENOTIONAL,ISDEFINED));
-		avenotional = dynamic_cast<const LADataDouble &>(dh->get()).get();
+		avenotional = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 
 	dh = &(parswap->getData(PRICING_DATA_CONVERGENCEVALUE, ISNOTNULL));
-	frate = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	frate = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 
 	//in case of exotic cashflow, negative rate can be considered;
 	//if (dataProvider->mIsCalcEquivStrike && frate <= 0.0)
@@ -844,15 +844,15 @@ LAPriceIRSwaptionValueFromCashFlow::getCalcDataFromCashFlow(const LAObject& obje
 	if (dataProvider->mIsIRRModel)
 	{
 		dh = &(parswap->getData(PRICING_DATA_ANNUITYTERMS, ISNOTNULL));
-		const DoubleVector& termvec = dynamic_cast<const LADataDoubles &>(dh->get()).get();
+		const DoubleVector& termvec = dynamic_cast<const AQLDataDoubles &>(dh->get()).get();
 
 		dh = &(parswap->getData(PRICING_DATA_FIRSTNUMERAIREFORIRR, ISNOTNULL));
-		double firstnumeraire = dynamic_cast<const LADataDouble &>(dh->get()).get();
+		double firstnumeraire = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 
 		//irrmodel is unadjusted convention
-		LAString termstr = getFrequencyFromIndexGenerator(object, dataProvider->mFloatLegNo, true);
+		AQLString termstr = getFrequencyFromIndexGenerator(object, dataProvider->mFloatLegNo, true);
 		termstr = termstr.subString(0,termstr.findString("M")-1);
-		LADataDouble tmp;
+		AQLDataDouble tmp;
 		tmp.convertFromString(termstr);
 		double unadjterm = tmp.get()/ 12.0;
 
@@ -873,7 +873,7 @@ LAPriceIRSwaptionValueFromCashFlow::getCalcDataFromCashFlow(const LAObject& obje
 	else
 	{
 		dh = &(parswap->getData(PRICING_DATA_ANNUITYVALUE, ISNOTNULL));
-		annuity = dynamic_cast<const LADataDouble &>(dh->get()).get();
+		annuity = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	}
 	
 	// discounted by basis curve based on the option collateral currency
@@ -892,38 +892,38 @@ LAPriceIRSwaptionValueFromCashFlow::getCalcDataFromCashFlow(const LAObject& obje
 
 // Output cashflow
 void
-LAPriceIRSwaptionValueFromCashFlow::outputResult( LAObject& object, LADataProvider* dp ) const
+LAPriceIRSwaptionValueFromCashFlow::outputResult( AQLObject& object, AQLDataProvider* dp ) const
 {
 	// !Output Cashflow or OptionParams 
 	LALinearRatesOptionValue::outputResult( object, dp );
 
 	// ! Get valuable object
-	LAString nb = dynamic_cast<const LADataString& >(object.getData(CALIBRATION_DATA_NAME,ISNOTNULL).get()).get();
+	AQLString nb = dynamic_cast<const AQLDataString& >(object.getData(CALIBRATION_DATA_NAME,ISNOTNULL).get()).get();
 
-	//LAString tempname = "ChangeToSwap" + nb;
-	LAString tempname;
+	//AQLString tempname = "ChangeToSwap" + nb;
+	AQLString tempname;
 	LAPriceIROptionValueDataProvider* dataProvider = dynamic_cast<LAPriceIROptionValueDataProvider *>(dataProvider);
-	LADataHolder* dh = &object.getData( PRICING_DATA_ISRESULTOUTPUT, NOCHECK );
+	AQLDataHolder* dh = &object.getData( PRICING_DATA_ISRESULTOUTPUT, NOCHECK );
 	bool isResultOut = false;
 	if (dh->isDefined() && !dh->isNull())
-		isResultOut = dynamic_cast<LADataBool&>(dh->get()).get();
+		isResultOut = dynamic_cast<AQLDataBool&>(dh->get()).get();
 	if (dataProvider->mIsCalcEquivStrike || isResultOut)
 		tempname = "ChangeToOriginalSwap" + nb;
 	else
 		tempname = "ChangeToSwap" + nb;
 	
-	LAObjectPool& objPool = object.getDataInstance()->getObjectPool(); 
-	LAObjectHolder objHolder = objPool.getObject( tempname, ENCHKTYPE_NOCHECK );
-	LAMathObjectValue* vswaption = NULL;
+	AQLObjectPool& objPool = object.getDataInstance()->getObjectPool(); 
+	AQLObjectHolder objHolder = objPool.getObject( tempname, ENCHKTYPE_NOCHECK );
+	AQLMathObjectValue* vswaption = NULL;
 	if ( objHolder.isDefined() )
-		vswaption = dynamic_cast< LAMathObjectValue* >( &( objHolder.get() ) );
+		vswaption = dynamic_cast< AQLMathObjectValue* >( &( objHolder.get() ) );
 	else
-		throw LACoreInvalidData( "vswaption is not set! LAPriceIRSwaptionValueFromCashFlow::outputResult() ",__FILE__,__LINE__);
+		throw AQLCoreInvalidData( "vswaption is not set! LAPriceIRSwaptionValueFromCashFlow::outputResult() ",__FILE__,__LINE__);
 
 	dh = &(vswaption->getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));
-	LADataMultiReference& legs = dynamic_cast<LADataMultiReference &>(dh->get());
+	AQLDataMultiReference& legs = dynamic_cast<AQLDataMultiReference &>(dh->get());
 	if (legs.getSize() != 2)
-		throw LACoreInvalidData("LegSize must be 2 on Swaption underlying",__FILE__,__LINE__);
+		throw AQLCoreInvalidData("LegSize must be 2 on Swaption underlying",__FILE__,__LINE__);
 
 
 	for (unsigned int i = 0; i < 2; i++)
@@ -932,69 +932,69 @@ LAPriceIRSwaptionValueFromCashFlow::outputResult( LAObject& object, LADataProvid
 	
 		// ! Set Cashlet to TradeEntity
 		// ! CFCalcStartDate
-		LAString cfCalcStartDateName = PRICING_DATA_CFCALCSTARTDATE_LEG + LAString( num );
+		AQLString cfCalcStartDateName = PRICING_DATA_CFCALCSTARTDATE_LEG + AQLString( num );
 		object.remove( cfCalcStartDateName );
-		object.add( cfCalcStartDateName, new LADataDates() ).convertFromString( vswaption->getData( cfCalcStartDateName, ISDEFINED ).convertToString() );	
+		object.add( cfCalcStartDateName, new AQLDataDates() ).convertFromString( vswaption->getData( cfCalcStartDateName, ISDEFINED ).convertToString() );	
 		
 		// ! CFCalcEndDate
-		LAString cfCalcEndDateName = PRICING_DATA_CFCALCENDDATE_LEG + LAString( num );
+		AQLString cfCalcEndDateName = PRICING_DATA_CFCALCENDDATE_LEG + AQLString( num );
 		object.remove( cfCalcEndDateName );
-		object.add( cfCalcEndDateName, new LADataDates() ).convertFromString( vswaption->getData( cfCalcEndDateName, ISDEFINED ).convertToString() );
+		object.add( cfCalcEndDateName, new AQLDataDates() ).convertFromString( vswaption->getData( cfCalcEndDateName, ISDEFINED ).convertToString() );
 
 		// ! PaymentDate
-		LAString paymentDateName = PRICING_DATA_PAYMENTDATE_LEG + LAString( num );
+		AQLString paymentDateName = PRICING_DATA_PAYMENTDATE_LEG + AQLString( num );
 		object.remove( paymentDateName );
-		object.add( paymentDateName, new LADataDates() ).convertFromString( vswaption->getData( paymentDateName, ISDEFINED ).convertToString() );
+		object.add( paymentDateName, new AQLDataDates() ).convertFromString( vswaption->getData( paymentDateName, ISDEFINED ).convertToString() );
 		
 		// ! PaymentTime
-		LAString time = PRICING_DATA_CASHLETVALUETIME_LEG + LAString( num );		
+		AQLString time = PRICING_DATA_CASHLETVALUETIME_LEG + AQLString( num );		
 		object.remove(time);
-		object.add( time, new LADataDoubles() ).convertFromString( vswaption->getData( time, ISDEFINED ).convertToString() );
+		object.add( time, new AQLDataDoubles() ).convertFromString( vswaption->getData( time, ISDEFINED ).convertToString() );
 		
 		// ! Cachflow
-		LAString cfname = PRICING_DATA_CASHLETVALUE_LEG + LAString( num );		
+		AQLString cfname = PRICING_DATA_CASHLETVALUE_LEG + AQLString( num );		
 		object.remove( cfname );
-		object.add( cfname, new LADataDoubles() ).convertFromString( vswaption->getData( cfname, ISDEFINED ).convertToString() );
+		object.add( cfname, new AQLDataDoubles() ).convertFromString( vswaption->getData( cfname, ISDEFINED ).convertToString() );
 
 		// ! PV
-		LAString pvname = PRICING_DATA_PVVALUE_LEG + LAString( num );
+		AQLString pvname = PRICING_DATA_PVVALUE_LEG + AQLString( num );
 		object.remove( pvname );
-		object.add( pvname, new LADataDoubles() ).convertFromString( vswaption->getData( pvname, ISDEFINED ).convertToString() );
+		object.add( pvname, new AQLDataDoubles() ).convertFromString( vswaption->getData( pvname, ISDEFINED ).convertToString() );
 
 		// ! DF
-		LAString dfName = PRICING_DATA_DF_LEG + LAString( num );
+		AQLString dfName = PRICING_DATA_DF_LEG + AQLString( num );
 		object.remove( dfName );
-		object.add( dfName, new LADataDoubles() ).convertFromString( vswaption->getData( dfName, ISDEFINED ).convertToString() );
+		object.add( dfName, new AQLDataDoubles() ).convertFromString( vswaption->getData( dfName, ISDEFINED ).convertToString() );
 			
 		// ! Gearing
-		LAString gearingName = PRICING_DATA_GEARING_LEG + LAString( num );
+		AQLString gearingName = PRICING_DATA_GEARING_LEG + AQLString( num );
 		object.remove( gearingName );
-		object.add( gearingName, new LADataDoubles() ).convertFromString( vswaption->getData( gearingName, ISDEFINED ).convertToString() );
+		object.add( gearingName, new AQLDataDoubles() ).convertFromString( vswaption->getData( gearingName, ISDEFINED ).convertToString() );
 		
 		// ! Forward
-		LAString forwardName = PRICING_DATA_FORWARD_LEG + LAString( num );
+		AQLString forwardName = PRICING_DATA_FORWARD_LEG + AQLString( num );
 		object.remove( forwardName );
-		object.add( forwardName, new LADataDoubles() ).convertFromString( vswaption->getData( forwardName, ISDEFINED ).convertToString() );
+		object.add( forwardName, new AQLDataDoubles() ).convertFromString( vswaption->getData( forwardName, ISDEFINED ).convertToString() );
 
 		// ! Spreads
-		LAString spreadName = PRICING_DATA_SPREAD_LEG + LAString( num );
+		AQLString spreadName = PRICING_DATA_SPREAD_LEG + AQLString( num );
 		object.remove( spreadName );
-		object.add( spreadName, new LADataDoubles() ).convertFromString( vswaption->getData( spreadName, ISDEFINED ).convertToString() );
+		object.add( spreadName, new AQLDataDoubles() ).convertFromString( vswaption->getData( spreadName, ISDEFINED ).convertToString() );
 
 		// ! AccrualDays
-		LAString accDaysName = PRICING_DATA_ACCRUALDAYS_LEG + LAString( num );
+		AQLString accDaysName = PRICING_DATA_ACCRUALDAYS_LEG + AQLString( num );
 		object.remove( accDaysName );
-		object.add( accDaysName, new LADataDoubles() ).convertFromString( vswaption->getData( accDaysName, ISDEFINED ).convertToString() );
+		object.add( accDaysName, new AQLDataDoubles() ).convertFromString( vswaption->getData( accDaysName, ISDEFINED ).convertToString() );
 
 		// ! Notional
-		LAString notionalName = PRICING_CALIBRATION_DATAOTIONAL_LEG + LAString( num );
+		AQLString notionalName = PRICING_CALIBRATION_DATAOTIONAL_LEG + AQLString( num );
 		object.remove( notionalName );
-		object.add( notionalName, new LADataDoubles() ).convertFromString( vswaption->getData( notionalName, ISDEFINED ).convertToString() );
+		object.add( notionalName, new AQLDataDoubles() ).convertFromString( vswaption->getData( notionalName, ISDEFINED ).convertToString() );
 
 		// ! FixingDate
-		LAString fixingDateName = PRICING_DATA_FIXINGDATE_LEG + LAString( num );
+		AQLString fixingDateName = PRICING_DATA_FIXINGDATE_LEG + AQLString( num );
 		object.remove( fixingDateName );
-		object.add( fixingDateName, new LADataDates() ).convertFromString( vswaption->getData( fixingDateName, ISDEFINED ).convertToString() );
+		object.add( fixingDateName, new AQLDataDates() ).convertFromString( vswaption->getData( fixingDateName, ISDEFINED ).convertToString() );
 	
 	}
 }

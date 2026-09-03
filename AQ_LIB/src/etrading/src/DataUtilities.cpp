@@ -494,18 +494,18 @@ namespace etrading
 		return variantMatrix;
 	}
 
-	/* @brief Returns a LAStringMatrix containing the configuration information for the specified propertyKey
+	/* @brief Returns a AQLStringMatrix containing the configuration information for the specified propertyKey
 	*  @param [in]	freeObject		The object containing blocks of data indexed by propertyKey
 	*  @param [in]  propertyKey		The property data block to be retrieved from the freeObject
 	*  @param [in]  trimBlankRows	Whether to trim blank rows at the end of the block. Default behaviour is to trim
 	*  @param [in]  throwIfMissing	Whether to throw an exception if the specified propertyKey is missing. Default behaviour is to throw.
 	*  @returns		A VariantMatrix containing the data specified by propertyKey
 	*/
-	LAStringMatrix getLAStringMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool trimBlankRows, const bool throwIfMissing)
+	AQLStringMatrix getLAStringMatrixFromFreeObject( const FreeObject& freeObject, const std::string& propertyKey, const bool trimBlankRows, const bool throwIfMissing)
 	{
 		VariantMatrix variantMatrix = getVariantMatrixFromFreeObject( freeObject, propertyKey, throwIfMissing);
 
-		LAStringMatrix tmpMatrix;
+		AQLStringMatrix tmpMatrix;
 		if (variantMatrix.size() == 0)
 		{
 			return tmpMatrix;
@@ -514,7 +514,7 @@ namespace etrading
 
 		for (size_t i=0; i<variantMatrix.size(); i++)
 		{
-			LAStringVector stringVector;
+			AQLStringVector stringVector;
 			auto columnData = variantMatrix[i];
 			for (size_t j=0; j<columnData.size(); j++)
 			{
@@ -523,9 +523,9 @@ namespace etrading
 			tmpMatrix.push_back( stringVector );
 		}
 
-		// AlgoQuantLib LAStringMatrix is represented as : rows x cols
+		// AlgoQuantLib AQLStringMatrix is represented as : rows x cols
 		// whereas VariantMatrix is:  cols x rows
-		LAStringMatrix resultMatrix = transpose( tmpMatrix );
+		AQLStringMatrix resultMatrix = transpose( tmpMatrix );
 
 		// There may be one or more blank rows at the end of the block
 		if ( trimBlankRows )
@@ -537,7 +537,7 @@ namespace etrading
 			}
 
 			// Copy the remaining rows to a new matrix
-			LAStringMatrix trimmedMatrix;
+			AQLStringMatrix trimmedMatrix;
 			for (size_t i=0; i<nRows; i++)
 			{
 				trimmedMatrix.push_back( resultMatrix[i] );
@@ -549,7 +549,7 @@ namespace etrading
 		return resultMatrix;
 	}
 
-    /* @brief Returns a LAStringMatrix containing the configuration information for the specified propertyKey
+    /* @brief Returns a AQLStringMatrix containing the configuration information for the specified propertyKey
 	*  @param [in]	freeObject		The object containing blocks of data indexed by propertyKey
 	*  @param [in]  propertyKey		The property data block to be retrieved from the freeObject
 	*  @param [in]  trimBlankRows	Whether to trim blank rows at the end of the block. Default behaviour is to trim
@@ -571,7 +571,7 @@ namespace etrading
 			tmpMatrix.push_back( stringVector );
 		}
 
-		// AlgoQuantLib LAStringMatrix is represented as : rows x cols
+		// AlgoQuantLib AQLStringMatrix is represented as : rows x cols
 		// whereas VariantMatrix is:  cols x rows
 		StandardStringMatrix resultMatrix = transpose( tmpMatrix );
 
@@ -598,9 +598,9 @@ namespace etrading
 	}
 
 	// Function to trim a LA String Vector and remove blanks
-	LAStringVector trimLAStringVector(const LAStringVector & inputVector)
+	AQLStringVector trimLAStringVector(const AQLStringVector & inputVector)
 	{
-		LAStringVector results;
+		AQLStringVector results;
 		for (size_t i = 0; i < inputVector.size(); ++i)
 		{
 			if ( inputVector[i].size() != 0 ) results.push_back( inputVector[i] );
@@ -620,7 +620,7 @@ namespace etrading
 	}
 
     // Function to trim a LA String Matrix and remove blanks
-	LAStringMatrix trimLAStringMatrix(const LAStringMatrix & inputMatrix)
+	AQLStringMatrix trimLAStringMatrix(const AQLStringMatrix & inputMatrix)
     {
         // Access Violation Guard
         if( inputMatrix.size() == 0 )
@@ -628,7 +628,7 @@ namespace etrading
             return inputMatrix;
         }
 
-        LAStringMatrix result;
+        AQLStringMatrix result;
         
         for( unsigned int row = 0; row < inputMatrix.size(); ++row )
         {
@@ -689,8 +689,8 @@ namespace etrading
         return result;
     }
 
-	// Function to convert a LAStringMatrix to a VariantMatrix
-	etrading::VariantMatrix convertLAStringMatrixToVariantMatrix( LAStringMatrix stringMatrix )
+	// Function to convert a AQLStringMatrix to a VariantMatrix
+	etrading::VariantMatrix convertLAStringMatrixToVariantMatrix( AQLStringMatrix stringMatrix )
 	{
 		etrading::VariantMatrix variantMatrix;
 
@@ -712,7 +712,7 @@ namespace etrading
 		}
 		else
 		{
-			// The input LAStringMatrix is empty.
+			// The input AQLStringMatrix is empty.
 			// Create a default variantMatrix with 2 columns of dummy data.
 			// This simulates an empty block in Excel.
 			etrading::VariantVector dummyVector ( 1, "" );
@@ -746,7 +746,7 @@ namespace etrading
 		}
 		else
 		{
-			// The input LAStringMatrix is empty.
+			// The input AQLStringMatrix is empty.
 			// Create a default variantMatrix with 2 columns of dummy data.
 			// This simulates an empty block in Excel.
 			etrading::VariantVector dummyVector ( 1, "" );

@@ -39,7 +39,7 @@ public:
 	static LARiskConfigurationVolCreatorManager     *getInstance();
 	//==============================================
 	// create LAObjectConfiguration
-	LARiskConfigurationVolCreator *createVolCreator(const LAString &model, bool funcFlg = true) const;
+	LARiskConfigurationVolCreator *createVolCreator(const AQLString &model, bool funcFlg = true) const;
 
 private:
 

@@ -18,13 +18,13 @@
 #endif
 
 #include <map>
-#include "LACoreTemplateType.h"
-#include "LACoreFunctionBase.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLCoreFunctionBase.h"
 
-class LAString;
+class AQLString;
 class LALinearRatesVolatility;
-class LAObject;
-class LADataProvider;
+class AQLObject;
+class AQLDataProvider;
 //hishida vannavolga
 class LALinearRatesModel;
 
@@ -48,10 +48,10 @@ public:
 	static LALinearRatesVolatilityManager     *getInstance();
 	//==============================================
 	// create LALinearRatesVolatilityManager
-	LALinearRatesVolatility *createPlainVanillaVolatiltyGenerator(LADataProvider* dataProvider, LAObject& object, function_t producttype, LAString productname, LAString modelname) const;
+	LALinearRatesVolatility *createPlainVanillaVolatiltyGenerator(AQLDataProvider* dataProvider, AQLObject& object, function_t producttype, AQLString productname, AQLString modelname) const;
 	//==============================================
 	// create LALinearRatesModel
-	LALinearRatesModel *createPlainVanillaModelGenerator(LADataProvider* dataProvider, LAObject& object, function_t producttype, LAString productname, LAString modelname) const;
+	LALinearRatesModel *createPlainVanillaModelGenerator(AQLDataProvider* dataProvider, AQLObject& object, function_t producttype, AQLString productname, AQLString modelname) const;
 	//clear pointer
 	static void finalize(void);
 	
@@ -64,9 +64,9 @@ private:
 	LALinearRatesVolatilityManager(const LALinearRatesVolatilityManager &rhs);
 	LALinearRatesVolatilityManager &operator=(const LALinearRatesVolatilityManager &rhs);
 	
-	static std::map<LAString, LALinearRatesVolatility*> mVolatilityMap;
+	static std::map<AQLString, LALinearRatesVolatility*> mVolatilityMap;
 	//hishida vannavolga
-	static std::map<LAString, LALinearRatesModel*> mModelMap;
+	static std::map<AQLString, LALinearRatesModel*> mModelMap;
 	static LALinearRatesVolatilityManager *mpInstance; // single instance
 #ifdef __HAS_MIC__
 	static common_lib::StaticMutex mMutex;

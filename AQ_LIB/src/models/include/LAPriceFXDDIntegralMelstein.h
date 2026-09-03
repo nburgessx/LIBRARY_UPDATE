@@ -5,8 +5,8 @@
 #endif
 
 #include "LARatesSDEIntegralBase.h"
-#include "LACoreAppError.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
 
 
 
@@ -39,15 +39,15 @@ public:
 	virtual bool                isTypeOf(function_t id) const;
 								//======================================
 								// Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
 								//======================================
 								// Return this class ID
 	virtual function_t			getType() const;
 								//======================================
 								// excecute integral
 	inline 	virtual void		integral(double ts, double te, 
-										std::vector<LAFunctionBase*>::const_iterator drift,										
-										std::vector<std::vector<LAFunctionBase*> >::const_iterator vol,
+										std::vector<AQLFunctionBase*>::const_iterator drift,										
+										std::vector<std::vector<AQLFunctionBase*> >::const_iterator vol,
 										DoubleArray::const_iterator	bm,
 										SCALARARRAY::iterator	x_in_out,	
 										unsigned int varnum

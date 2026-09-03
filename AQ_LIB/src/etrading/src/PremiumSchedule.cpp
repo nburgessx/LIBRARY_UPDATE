@@ -36,10 +36,10 @@ namespace etrading
 
         accrualEndDateOrTenor_                  = scheduleLVB.getCompulsoryValueAsLAString( IRS_KEY::MATURITY_DATE,  inputLVB );
 
-		LAString fixedBusinessDayAdjustment     = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT) );
-        LAString fixedCalendar	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR) );
-		LAString fixedLegFreq	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY) );
-        LAString fixedDayCount	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT) );
+		AQLString fixedBusinessDayAdjustment     = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_BUSINESSDAYADJUSTMENT)(IRS_KEY::BUSINESSDAYADJUSTMENT) );
+        AQLString fixedCalendar	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_CALENDAR)(IRS_KEY::CALENDAR) );
+		AQLString fixedLegFreq	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_FREQUENCY)(IRS_KEY::FREQUENCY) );
+        AQLString fixedDayCount	                = scheduleLVB.getOptionalValueAsLAStringFromMultipleKeys( boost::assign::list_of(IRS_KEY::FIXED_DAYCOUNT)(IRS_KEY::DAYCOUNT) );
 
         accrualbusinessDayAdj_	                = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALBUSINESSDAYADJUSTMENT,		IRS_KEY::ACCRUALBUSINESSDAYADJUSTMENT,	fixedBusinessDayAdjustment).getCString());
         accrualCalendar_		                = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXED_ACCRUALCALENDAR,					IRS_KEY::ACCRUALCALENDAR,				fixedCalendar);
@@ -93,13 +93,13 @@ namespace etrading
 
 			bondName_                 = scheduleLVB.getCompulsoryValueAsString( TRS_KEY::BOND_NAME, inputLVB );
 			auto bond = getBond( bondName_ );
-			const LADate bondMaturityDate = bond->getSchedule()->getMaturityDate();
+			const AQLDate bondMaturityDate = bond->getSchedule()->getMaturityDate();
 
 			// Check that bond does not mature before the swap leg schedule.
 			// Note that we cannot invoke getMaturityDate() because the schedule is not yet fully initialized
 			const size_t nAccrualEndDates = accrualEndDates_.size();
 			AQ_REQUIRE( nAccrualEndDates > 0, "TRS premium leg does not contain any accrual periods.");
-			const LADate scheduleEndDate = accrualEndDates_[ nAccrualEndDates - 1];
+			const AQLDate scheduleEndDate = accrualEndDates_[ nAccrualEndDates - 1];
 			AQ_REQUIRE( bondMaturityDate >= scheduleEndDate, "Bond " + bondName_ + " has a maturity earlier than the TRS premium leg maturity." );
 
 			const std::string cdsSpreadAsString = scheduleLVB.getOptionalValueAsString( CDS_KEY::CDS_SPREAD );
@@ -145,17 +145,17 @@ namespace etrading
 
 		if (boost::math::isnan(notional_))
         {
-        	throw LACoreInvalidData( "#Error: Notional is a mandatory field for PremiumSchedule", __FILE__, __LINE__ );
+        	throw AQLCoreInvalidData( "#Error: Notional is a mandatory field for PremiumSchedule", __FILE__, __LINE__ );
         }
     }
 
-	void PremiumSchedule::createUpfrontCashflow( const LADate& paymentDate, double leverage ) 
+	void PremiumSchedule::createUpfrontCashflow( const AQLDate& paymentDate, double leverage ) 
     {
         if ( notionalExchangeEnum_ == START_NE || notionalExchangeEnum_ == START_AND_END_NE )
         {
             auto nanDoubleValue = std::numeric_limits<double>::quiet_NaN();
 
-            upfrontCashflow_= CashflowPtr( new PremiumCashflow( payerReceiver_, nanDoubleValue, LADate(), LADate(), 0, nanDoubleValue, paymentDate, nanDoubleValue, leverage, paymentFreqEnum_, FIRST_NOTIONAL_EXCHANGE_CASHFLOW_TYPE));
+            upfrontCashflow_= CashflowPtr( new PremiumCashflow( payerReceiver_, nanDoubleValue, AQLDate(), AQLDate(), 0, nanDoubleValue, paymentDate, nanDoubleValue, leverage, paymentFreqEnum_, FIRST_NOTIONAL_EXCHANGE_CASHFLOW_TYPE));
             upfrontCashflow_->setFwdFxRate( nanDoubleValue );
     	}
     }
@@ -213,11 +213,11 @@ namespace etrading
 	* @param[in]	recoveryRate			The estimated amount of capital recovered after default
 	* @param[in]	includeAccruedInterest	Specifies whether cashflows should include the accruedInterest
 	*/
-	void PremiumSchedule::setSurvivalProbabilitiesUsingHazardRate( const LADate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest )
+	void PremiumSchedule::setSurvivalProbabilitiesUsingHazardRate( const AQLDate& asOfDate, const double hazardRate, const double recoveryRate, const bool includeAccruedInterest )
 	{
 		double prevSurvivalProbability = 1.0;
 		double survivalProbability = 1.0;
-		LADate prevPaymentDate = asOfDate;
+		AQLDate prevPaymentDate = asOfDate;
 
 		// Calculate and set survival / default probabilities for each cashflow
 		size_t cashflowSize = cashflows_.size();
@@ -230,7 +230,7 @@ namespace etrading
 
 			premiumCashflow->setIncludeAccruedInterest( includeAccruedInterest );
 
-			const LADate& paymentDate = paymentDates_[i];
+			const AQLDate& paymentDate = paymentDates_[i];
 			double paymentYearFraction = getYearFraction(prevPaymentDate, paymentDate, accrualDaycount_, false);	
 
 			const double survivalFactor = exp( -hazardRate * paymentYearFraction );
@@ -252,7 +252,7 @@ namespace etrading
 	* @param[in]	asOfDate				The valuation date of the leg
 	* @param[in]	creditModel				The calibrated credit model
 	*/
-	void PremiumSchedule::setSurvivalProbabilitiesUsingCreditModel( const LADate& asOfDate, const CreditModel& creditModel )
+	void PremiumSchedule::setSurvivalProbabilitiesUsingCreditModel( const AQLDate& asOfDate, const CreditModel& creditModel )
 	{
 		const bool includeAccruedInterest = creditModel.getIncludeAccruedInterest();
 
@@ -269,7 +269,7 @@ namespace etrading
 
 			premiumCashflow->setIncludeAccruedInterest( includeAccruedInterest );
 
-			const LADate& paymentDate = paymentDates_[i];
+			const AQLDate& paymentDate = paymentDates_[i];
 			const double survivalProbability = creditModel.getSurvivalProbability( paymentDate );
 			premiumCashflow->setSurvivalProbability( survivalProbability );
 
@@ -321,7 +321,7 @@ namespace etrading
 					// Calculate the pull-to-par performance at maturity
 					if ( premiumCashflow->isLastCashflow() )
 					{
-						const LADate forwardSettlementDate = getMaturityDate(); // *** TODO: Any lag on this date?
+						const AQLDate forwardSettlementDate = getMaturityDate(); // *** TODO: Any lag on this date?
 						
 						double bondForwardDirtyPrice = 0.0;
 						switch ( paymentTrigger )

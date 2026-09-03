@@ -6,18 +6,18 @@
 
 #include "LAPriceCMSSpreadTools.h"
 #include "LAPriceCMSTools.h"
-#include "LAFunctionUtilities.h"
+#include "AQLFunctionUtilities.h"
 #include "LAMathParameterUtility.h"
 #include "LAMathOptionTools.h"
 #include "LAPriceCopulaCMSSpread.h"
 #include "LAMathDateUtilities.h"
-#include "LAOptimumBrent.h"
+#include "AQLOptimumBrent.h"
 
 //================ Pricing ===================================
-double LAPriceCMSSpreadUtility::CMSSpreadMLATM(LADataInstance* dataInstance, const LAString& tenor1, const LAString& tenor2,
-                                          const LAString& expiryTerm, const LAStringMatrix& pricingConfig,
-                                          const LAStringMatrix& legScheduler, const LAStringMatrix& cmsScheduler,
-                                          const LAString& proxySpreadID)
+double LAPriceCMSSpreadUtility::CMSSpreadMLATM(AQLDataInstance* dataInstance, const AQLString& tenor1, const AQLString& tenor2,
+                                          const AQLString& expiryTerm, const AQLStringMatrix& pricingConfig,
+                                          const AQLStringMatrix& legScheduler, const AQLStringMatrix& cmsScheduler,
+                                          const AQLString& proxySpreadID)
 {
     LAPriceCMSMLATMTarget pricer = WarmUpMLPrice(dataInstance, tenor1, tenor2, expiryTerm, pricingConfig, legScheduler, cmsScheduler,
                                             proxySpreadID);
@@ -25,18 +25,18 @@ double LAPriceCMSSpreadUtility::CMSSpreadMLATM(LADataInstance* dataInstance, con
     // Set optimizer
     double init = 0.005, lwBound = -0.05, upBound = 0.05, tol = 0.0000001;
     size_t maxIter = 1000;
-    LAOptimumBrent minimizer(init, lwBound, upBound, maxIter, tol);
+    AQLOptimumBrent minimizer(init, lwBound, upBound, maxIter, tol);
     // Solve
     DoubleVector solution(1, init);
     minimizer.findMinimum(pricer, solution);
     return solution[0];
 }
 
-double LAPriceCMSSpreadUtility::CMSSpreadMLPrice(LADataInstance* dataInstance, const LAString& tenor1, const LAString& tenor2,
-                                            const LAString& expiryTerm, double strike, const LAString& optionType,
-                                            const LAStringMatrix& pricingConfig,
-                                            const LAStringMatrix& legScheduler, const LAStringMatrix& cmsScheduler,
-                                            const LAString& proxySpreadID)
+double LAPriceCMSSpreadUtility::CMSSpreadMLPrice(AQLDataInstance* dataInstance, const AQLString& tenor1, const AQLString& tenor2,
+                                            const AQLString& expiryTerm, double strike, const AQLString& optionType,
+                                            const AQLStringMatrix& pricingConfig,
+                                            const AQLStringMatrix& legScheduler, const AQLStringMatrix& cmsScheduler,
+                                            const AQLString& proxySpreadID)
 {
     LAPriceCMSMLATMTarget pricer = WarmUpMLPrice(dataInstance, tenor1, tenor2, expiryTerm, pricingConfig, legScheduler, cmsScheduler,
                                             proxySpreadID);
@@ -55,15 +55,15 @@ double LAPriceCMSSpreadUtility::CMSSpreadMLPrice(LADataInstance* dataInstance, c
         price = cap + floor;
     }
     else
-        throw LACoreInvalidData("Invalid price type", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Invalid price type", __FILE__, __LINE__);
 
     return price;
 }
 
-LAPriceCMSMLATMTarget LAPriceCMSSpreadUtility::WarmUpMLPrice(LADataInstance* dataInstance, const LAString& tenor1, const LAString& tenor2,
-                                                   const LAString& expiryTerm, const LAStringMatrix& pricingConfig,
-                                                   const LAStringMatrix& legScheduler, const LAStringMatrix& cmsScheduler,
-                                                   const LAString& proxySpreadID)
+LAPriceCMSMLATMTarget LAPriceCMSSpreadUtility::WarmUpMLPrice(AQLDataInstance* dataInstance, const AQLString& tenor1, const AQLString& tenor2,
+                                                   const AQLString& expiryTerm, const AQLStringMatrix& pricingConfig,
+                                                   const AQLStringMatrix& legScheduler, const AQLStringMatrix& cmsScheduler,
+                                                   const AQLString& proxySpreadID)
 {
     SwapRateInfo rate1, rate2;
     WarmUpCMSSpread(dataInstance, tenor1, tenor2, expiryTerm, pricingConfig, legScheduler, cmsScheduler, rate1, rate2);
@@ -73,26 +73,26 @@ LAPriceCMSMLATMTarget LAPriceCMSSpreadUtility::WarmUpMLPrice(LADataInstance* dat
     string copType = "PowerGaussian";
 
     // Other inputs
-    LAString ccy = LAFunctionUtilities::findElement(pricingConfig, "Currency");
-    LAString colCcy = ccy;
-    LADate valDate = LAStringToDate(LAFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLString ccy = AQLFunctionUtilities::findElement(pricingConfig, "Currency");
+    AQLString colCcy = ccy;
+    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
 
     // Curves
     CurveInfo discCurveInfo = LAPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
 
     // Interpret forward expiry term
     size_t xPos;
-    if (!TryFind(LAString("x"), expiryTerm, xPos) || xPos < 1 || xPos > expiryTerm.size() - 1)
-        throw LACoreInvalidData("Invalid expiry format for Multi-Look", __FILE__, __LINE__);
-    LAString startTerm = expiryTerm.subString(0, xPos - 1);
-    LAString endTerm = expiryTerm.subString(xPos + 1, expiryTerm.size() - 1);
+    if (!TryFind(AQLString("x"), expiryTerm, xPos) || xPos < 1 || xPos > expiryTerm.size() - 1)
+        throw AQLCoreInvalidData("Invalid expiry format for Multi-Look", __FILE__, __LINE__);
+    AQLString startTerm = expiryTerm.subString(0, xPos - 1);
+    AQLString endTerm = expiryTerm.subString(xPos + 1, expiryTerm.size() - 1);
 
     // Cash-flow
     vector<CashFlowTiming> schedule = LAMathScheduleUtility::LegSchedule(valDate, endTerm, legScheduler, cmsScheduler);
 
     // Generate month vector from fixing dates
-    LAString frequency = LAFunctionUtilities::findElement(legScheduler, "Frequency");
-    LAString freqTerm = FrequencyToTerm(frequency);
+    AQLString frequency = AQLFunctionUtilities::findElement(legScheduler, "Frequency");
+    AQLString freqTerm = FrequencyToTerm(frequency);
     int monthLength = TermToMonthLength(freqTerm);
     size_t nFlows = schedule.size();
     vector<size_t> months(nFlows);
@@ -107,9 +107,9 @@ LAPriceCMSMLATMTarget LAPriceCMSSpreadUtility::WarmUpMLPrice(LADataInstance* dat
                             discCurveInfo, copType, confidence);
 }
 
-void LAPriceCMSSpreadUtility::WarmUpCMSSpread(LADataInstance* dataInstance, const LAString& tenor1, const LAString& tenor2,
-                                         const LAString& expiryTerm, const LAStringMatrix& pricingConfig,
-                                         const LAStringMatrix& legScheduler, const LAStringMatrix& cmsScheduler,
+void LAPriceCMSSpreadUtility::WarmUpCMSSpread(AQLDataInstance* dataInstance, const AQLString& tenor1, const AQLString& tenor2,
+                                         const AQLString& expiryTerm, const AQLStringMatrix& pricingConfig,
+                                         const AQLStringMatrix& legScheduler, const AQLStringMatrix& cmsScheduler,
                                          SwapRateInfo& rate1, SwapRateInfo& rate2)
 {
     // Fixed Inputs
@@ -117,15 +117,15 @@ void LAPriceCMSSpreadUtility::WarmUpCMSSpread(LADataInstance* dataInstance, cons
     string copType = "PowerGaussian";
 
     // Other inputs
-    LAString ccy = LAFunctionUtilities::findElement(pricingConfig, "Currency");
-    LAString colCcy = ccy;
+    AQLString ccy = AQLFunctionUtilities::findElement(pricingConfig, "Currency");
+    AQLString colCcy = ccy;
     ReplicationConfig repConfig = GetReplicationConfig(pricingConfig);
-    double shift = LAFunctionUtilities::findElement(pricingConfig, "Shift").getDoubleValue();
-    LADate valDate = LAStringToDate(LAFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    double shift = AQLFunctionUtilities::findElement(pricingConfig, "Shift").getDoubleValue();
+    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
 
     // Curves
     CurveInfo discCurveInfo = LAPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
-    LAString cmsFloatFreq = LAFunctionUtilities::findElement(cmsScheduler, "FloatLegFrequency");
+    AQLString cmsFloatFreq = AQLFunctionUtilities::findElement(cmsScheduler, "FloatLegFrequency");
     CurveInfo cmsCurveInfo = LAPriceCMSObject::ForecastCurveInfo(dataInstance, ccy, colCcy, FrequencyToTerm(cmsFloatFreq));
 
     // Swap rate definitions and parameters
@@ -133,14 +133,14 @@ void LAPriceCMSSpreadUtility::WarmUpCMSSpread(LADataInstance* dataInstance, cons
     rate2 = SwapRateInfo(dataInstance, ccy, tenor2, discCurveInfo, cmsCurveInfo, cmsScheduler, repConfig, shift);
 }
 
-double LAPriceCMSSpreadUtility::CMSSpreadSLATM(LADataInstance* dataInstance, const LAString& tenor1, const LAString& tenor2,
-                                          const LAString& expiryTerm, const LAStringMatrix& pricingConfig,
-                                          const LAStringMatrix& legScheduler, const LAStringMatrix& cmsScheduler)
+double LAPriceCMSSpreadUtility::CMSSpreadSLATM(AQLDataInstance* dataInstance, const AQLString& tenor1, const AQLString& tenor2,
+                                          const AQLString& expiryTerm, const AQLStringMatrix& pricingConfig,
+                                          const AQLStringMatrix& legScheduler, const AQLStringMatrix& cmsScheduler)
 {
     SwapRateInfo rate1, rate2;
     WarmUpCMSSpread(dataInstance, tenor1, tenor2, expiryTerm, pricingConfig, legScheduler, cmsScheduler, rate1, rate2);
 
-    LADate valDate = LAStringToDate(LAFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
     CashFlowTiming cf = LAMathScheduleUtility::CashFlowSchedule(valDate, expiryTerm, legScheduler, cmsScheduler);
     cf.accrual = 0.0;
 
@@ -149,20 +149,20 @@ double LAPriceCMSSpreadUtility::CMSSpreadSLATM(LADataInstance* dataInstance, con
     return cms1 - cms2;
 }
 
-double LAPriceCMSSpreadUtility::CMSSpreadSLPrice(LADataInstance* dataInstance, const LAString& tenor1, const LAString& tenor2,
-                                            const LAString& expiryTerm, double strike, const LAString& optionType,
-                                            const LAStringMatrix& pricingConfig,
-                                            const LAStringMatrix& legScheduler, const LAStringMatrix& cmsScheduler,
-                                            const LAString& proxySpreadID)
+double LAPriceCMSSpreadUtility::CMSSpreadSLPrice(AQLDataInstance* dataInstance, const AQLString& tenor1, const AQLString& tenor2,
+                                            const AQLString& expiryTerm, double strike, const AQLString& optionType,
+                                            const AQLStringMatrix& pricingConfig,
+                                            const AQLStringMatrix& legScheduler, const AQLStringMatrix& cmsScheduler,
+                                            const AQLString& proxySpreadID)
 {
     // Fixed Inputs
     double confidence = 10.0;
     string copType = "PowerGaussian";
 
     // Other inputs
-    LAString ccy = LAFunctionUtilities::findElement(pricingConfig, "Currency");
-    LAString colCcy = ccy;
-    LADate valDate = LAStringToDate(LAFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
+    AQLString ccy = AQLFunctionUtilities::findElement(pricingConfig, "Currency");
+    AQLString colCcy = ccy;
+    AQLDate valDate = LAStringToDate(AQLFunctionUtilities::findElement(pricingConfig, "AsOfDate"));
 
     // Curves
     CurveInfo discCurveInfo = LAPriceCMSObject::DiscountCurveInfo(dataInstance, ccy, colCcy);
@@ -181,16 +181,16 @@ double LAPriceCMSSpreadUtility::CMSSpreadSLPrice(LADataInstance* dataInstance, c
 
     // Copula parameters
     double t = ModelTime(valDate, cf.fixing);
-    LAString pairID = proxySpreadID;
+    AQLString pairID = proxySpreadID;
     size_t nCopParams = 3;
     if (AQ_COP_NAMES.size() < nCopParams)
-        throw LACoreInvalidData("Invalid copula parameter index", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Invalid copula parameter index", __FILE__, __LINE__);
 
-    LAString theta1ID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[0] + "_", ccy);
+    AQLString theta1ID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[0] + "_", ccy);
     double theta1 = LAMathParameterObject::LookUpParameterMatrix(dataInstance, theta1ID, cf.fixing, pairID, "Linear");
-    LAString theta2ID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[1] + "_", ccy);
+    AQLString theta2ID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[1] + "_", ccy);
     double theta2 = LAMathParameterObject::LookUpParameterMatrix(dataInstance, theta2ID, cf.fixing, pairID, "Linear");
-    LAString rhoID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[2] + "_", ccy);
+    AQLString rhoID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[2] + "_", ccy);
     double rho = LAMathParameterObject::LookUpParameterMatrix(dataInstance, rhoID, cf.fixing, pairID, "Linear");
     DoubleVector copParams(nCopParams);
     copParams[0] = theta1; copParams[1] = theta2; copParams[2] = rho;
@@ -209,7 +209,7 @@ double LAPriceCMSSpreadUtility::CMSSpreadSLPrice(LADataInstance* dataInstance, c
         fwdPrice = cap + floor;
     }
     else
-        throw LACoreInvalidData("Invalid price type", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Invalid price type", __FILE__, __LINE__);
 
     //// Spot premium
     //double df = LAPriceCMSObject::DiscountFactor(discCurveInfo, valDate, cf.payment);
@@ -220,10 +220,10 @@ double LAPriceCMSSpreadUtility::CMSSpreadSLPrice(LADataInstance* dataInstance, c
 }
 
 //================ Tools ===================================
-DoubleVector LAPriceCMSSpreadUtility::InterpolateParameters(LADataInstance* dataInstance, const DateVector& dates, const LAString& index,
-                                                       const LAString& id, const LAString& currency)
+DoubleVector LAPriceCMSSpreadUtility::InterpolateParameters(AQLDataInstance* dataInstance, const DateVector& dates, const AQLString& index,
+                                                       const AQLString& id, const AQLString& currency)
 {
-    LAString matrixID = LAPriceCMSObject::MatrixID(id, currency);
+    AQLString matrixID = LAPriceCMSObject::MatrixID(id, currency);
     size_t nDates = dates.size();
     DoubleVector result(nDates);
     for (size_t i = 0; i < nDates; i++)
@@ -232,22 +232,22 @@ DoubleVector LAPriceCMSSpreadUtility::InterpolateParameters(LADataInstance* data
     return result;
 }
 
-void LAPriceCMSSpreadUtility::CheckInitialParameters(LADataInstance* dataInstance, const LAString& ccy, LAStringVector& expiryTerms,
-                                                   LAStringVector& indexes)
+void LAPriceCMSSpreadUtility::CheckInitialParameters(AQLDataInstance* dataInstance, const AQLString& ccy, AQLStringVector& expiryTerms,
+                                                   AQLStringVector& indexes)
 {
-    LAString theta1ID = LAPriceCMSObject::MatrixID(AQ_THETA1_IN, ccy);
-    LAStringVector theta1Terms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, theta1ID);
-    LAStringVector theta1Indexes = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, theta1ID);
+    AQLString theta1ID = LAPriceCMSObject::MatrixID(AQ_THETA1_IN, ccy);
+    AQLStringVector theta1Terms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, theta1ID);
+    AQLStringVector theta1Indexes = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, theta1ID);
 
-    LAString theta2ID = LAPriceCMSObject::MatrixID(AQ_THETA2_IN, ccy);
-    LAStringVector theta2Terms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, theta2ID);
-    LAStringVector theta2Indexes = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, theta2ID);
+    AQLString theta2ID = LAPriceCMSObject::MatrixID(AQ_THETA2_IN, ccy);
+    AQLStringVector theta2Terms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, theta2ID);
+    AQLStringVector theta2Indexes = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, theta2ID);
     CheckStringVectors(theta2Terms, theta1Terms);
     CheckStringVectors(theta2Indexes, theta1Indexes);
 
-    LAString rhoID = LAPriceCMSObject::MatrixID(AQ_COPRHO_IN, ccy);
-    LAStringVector rhoTerms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, rhoID);
-    LAStringVector rhoIndexes = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, rhoID);
+    AQLString rhoID = LAPriceCMSObject::MatrixID(AQ_COPRHO_IN, ccy);
+    AQLStringVector rhoTerms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, rhoID);
+    AQLStringVector rhoIndexes = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, rhoID);
     CheckStringVectors(rhoTerms, theta2Terms);
     CheckStringVectors(rhoIndexes, theta2Indexes);
 
@@ -255,18 +255,18 @@ void LAPriceCMSSpreadUtility::CheckInitialParameters(LADataInstance* dataInstanc
     indexes = theta1Indexes;
 }
 
-void LAPriceCMSSpreadUtility::ReadSLGrid(LADataInstance* dataInstance, const LAString& currency, LAStringVector& slTerms)
+void LAPriceCMSSpreadUtility::ReadSLGrid(AQLDataInstance* dataInstance, const AQLString& currency, AQLStringVector& slTerms)
 {
     slTerms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, LAPriceCMSObject::MatrixID(AQ_SL_ATM, currency));
 }
 
-void LAPriceCMSSpreadUtility::CheckIndexes(LADataInstance* dataInstance, const LAString& ccy, bool calibrate,
-                                      const LAStringVector& pairIDs, const LAStringVector& initIDs)
+void LAPriceCMSSpreadUtility::CheckIndexes(AQLDataInstance* dataInstance, const AQLString& ccy, bool calibrate,
+                                      const AQLStringVector& pairIDs, const AQLStringVector& initIDs)
 {
     if (calibrate)
     {
         // Check that pairIDs and SL indexes are the same
-        LAStringVector slVec = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, LAPriceCMSObject::MatrixID(AQ_SL_ATM, ccy));
+        AQLStringVector slVec = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, LAPriceCMSObject::MatrixID(AQ_SL_ATM, ccy));
         CheckStringVectors(slVec, pairIDs);
 
         // Check that all pairIDs have initial parameters
@@ -274,7 +274,7 @@ void LAPriceCMSSpreadUtility::CheckIndexes(LADataInstance* dataInstance, const L
         for (size_t i = 0; i < pairIDs.size(); i++)
         {
             if (!TryFind(pairIDs[i], initIDs, idx))
-                throw LACoreInvalidData("Target index does not have initial parameters", __FILE__, __LINE__);
+                throw AQLCoreInvalidData("Target index does not have initial parameters", __FILE__, __LINE__);
         }
 
         // What about the case where initial parameters exist for IDs which are not in pairIDs?
@@ -282,7 +282,7 @@ void LAPriceCMSSpreadUtility::CheckIndexes(LADataInstance* dataInstance, const L
     }
 }
 
-bool LAPriceCMSSpreadUtility::CheckModes(const LAStringVector& modes)
+bool LAPriceCMSSpreadUtility::CheckModes(const AQLStringVector& modes)
 {
     bool calibrate;
     size_t nPairs = modes.size();
@@ -296,22 +296,22 @@ bool LAPriceCMSSpreadUtility::CheckModes(const LAStringVector& modes)
             break;
         }
         else
-            throw LACoreInvalidData("Invalid calibration mode", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("Invalid calibration mode", __FILE__, __LINE__);
     }
 
     return calibrate;
 }
 
-void LAPriceCMSSpreadUtility::CheckStringVectors(const LAStringVector& terms1, const LAStringVector& terms2)
+void LAPriceCMSSpreadUtility::CheckStringVectors(const AQLStringVector& terms1, const AQLStringVector& terms2)
 {
     size_t n1 = terms1.size();
     if (terms2.size() != n1)
-        throw LACoreInvalidData("Mismatched array sizes in string vector comparison", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Mismatched array sizes in string vector comparison", __FILE__, __LINE__);
 
     for (size_t i = 0; i < n1; i++)
     {
         if (terms1[i] != terms2[i])
-            throw LACoreInvalidData("Mismatched array content in string vector comparison", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("Mismatched array content in string vector comparison", __FILE__, __LINE__);
     }
 }
 
@@ -324,8 +324,8 @@ double LAPriceCMSSpreadUtility::CMSSpreadCoupon(double strike, bool isCall, doub
 }
 
 //================ Targets ===================================
-LAPriceCMSMLATMTarget::LAPriceCMSMLATMTarget(LADataInstance* dataInstance, const LAString& ccy, LADate valDate,
-                                   SwapRateInfo rate1, SwapRateInfo rate2, const LAString& pairID,
+LAPriceCMSMLATMTarget::LAPriceCMSMLATMTarget(AQLDataInstance* dataInstance, const AQLString& ccy, AQLDate valDate,
+                                   SwapRateInfo rate1, SwapRateInfo rate2, const AQLString& pairID,
                                    const vector<CashFlowTiming>& schedule, const vector<size_t>& months,
                                    int startLength, int endLength, CurveInfo discCurveInfo,
                                    const string& copType, double confidence)
@@ -345,7 +345,7 @@ LAPriceCMSMLATMTarget::LAPriceCMSMLATMTarget(LADataInstance* dataInstance, const
 
     size_t nCopParams = 3;
     if (AQ_COP_NAMES.size() < nCopParams)
-        throw LACoreInvalidData("Invalid copula parameter index", __FILE__, __LINE__);
+        throw AQLCoreInvalidData("Invalid copula parameter index", __FILE__, __LINE__);
 
     mTheta1ID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[0] + "_", ccy);
     mTheta2ID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[1] + "_", ccy);

@@ -9,8 +9,8 @@
 
 #include "LALinearRatesVolatilityManager.h"
 #include "LALinearRatesVolatility.h"
-#include "LADataBasics.h"
-#include "LAObject.h"
+#include "AQLDataBasics.h"
+#include "AQLObject.h"
 #include "LALinearRatesOptionValueDataProvider.h"
 #include "LALinearRatesOptionValue.h"
 #include "LALinearRatesModel.h"
@@ -24,9 +24,9 @@
 #ifdef __HAS_MIC__
 common_lib::StaticMutex LALinearRatesVolatilityManager::mMutex;
 #endif
-std::map<LAString, LALinearRatesVolatility*> LALinearRatesVolatilityManager::mVolatilityMap;
+std::map<AQLString, LALinearRatesVolatility*> LALinearRatesVolatilityManager::mVolatilityMap;
 //hishida vannavolga
-std::map<LAString, LALinearRatesModel*> LALinearRatesVolatilityManager::mModelMap;
+std::map<AQLString, LALinearRatesModel*> LALinearRatesVolatilityManager::mModelMap;
 LALinearRatesVolatilityManager *LALinearRatesVolatilityManager::mpInstance = 0;
 //================ LALinearRatesVolatilityManager ===================================
 // constructor
@@ -72,13 +72,13 @@ LALinearRatesVolatilityManager::getInstance()
 	@return  LALinearRatesVolatility *
 */
 LALinearRatesVolatility *
-LALinearRatesVolatilityManager::createPlainVanillaVolatiltyGenerator(LADataProvider* dataProvider, LAObject& object, function_t producttype, LAString productname, LAString modelname) const
+LALinearRatesVolatilityManager::createPlainVanillaVolatiltyGenerator(AQLDataProvider* dataProvider, AQLObject& object, function_t producttype, AQLString productname, AQLString modelname) const
 {
-	LAString keyname(producttype);
+	AQLString keyname(producttype);
 	keyname += "_" + modelname;
 
 	bool isvolinput = false;
-	LADataHolder* dh = &(object.getData(PRICING_DATA_VOLATILITYDIRECTINPUT,NOCHECK));
+	AQLDataHolder* dh = &(object.getData(PRICING_DATA_VOLATILITYDIRECTINPUT,NOCHECK));
 	if (dh->isDefined() && !dh->isNull())
 	{
 		keyname += "_VOLINPUT";
@@ -104,7 +104,7 @@ LALinearRatesVolatilityManager::createPlainVanillaVolatiltyGenerator(LADataProvi
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
-	std::map<LAString, LALinearRatesVolatility*>::iterator it = mVolatilityMap.find(keyname);
+	std::map<AQLString, LALinearRatesVolatility*>::iterator it = mVolatilityMap.find(keyname);
 	if (it == mVolatilityMap.end())
 	{
 		LALinearRatesVolatility* pvol = 0;
@@ -155,7 +155,7 @@ LALinearRatesVolatilityManager::createPlainVanillaVolatiltyGenerator(LADataProvi
 			}
 			else
 			{
-				throw LACoreInvalidData("Model Name Error",__FILE__,__LINE__);
+				throw AQLCoreInvalidData("Model Name Error",__FILE__,__LINE__);
 			}
 		}
 		else if (producttype == FN_IR_CAPFLOOROPTIONVALUE)
@@ -199,14 +199,14 @@ LALinearRatesVolatilityManager::createPlainVanillaVolatiltyGenerator(LADataProvi
 	@return  LALinearRatesModel *
 */
 LALinearRatesModel *
-LALinearRatesVolatilityManager::createPlainVanillaModelGenerator(LADataProvider* dataProvider, LAObject& object, function_t producttype, LAString productname, LAString modelname) const
+LALinearRatesVolatilityManager::createPlainVanillaModelGenerator(AQLDataProvider* dataProvider, AQLObject& object, function_t producttype, AQLString productname, AQLString modelname) const
 {
-	LAString keyname(modelname);
+	AQLString keyname(modelname);
 
 #ifdef __HAS_MIC__
 	common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
-	std::map<LAString, LALinearRatesModel*>::iterator it = mModelMap.find(keyname);
+	std::map<AQLString, LALinearRatesModel*>::iterator it = mModelMap.find(keyname);
 	if (it == mModelMap.end())
 	{
 		LALinearRatesModel* pmodel = 0;
@@ -244,7 +244,7 @@ LALinearRatesVolatilityManager::finalize(void)
 #ifdef __HAS_MIC__
 		common_lib::ScopedLock<common_lib::StaticMutex> lock(mMutex);
 #endif
-		std::map<LAString, LALinearRatesVolatility*>::iterator it = mVolatilityMap.begin();
+		std::map<AQLString, LALinearRatesVolatility*>::iterator it = mVolatilityMap.begin();
 		while (it != mVolatilityMap.end())
 		{
 			delete it->second;
@@ -253,7 +253,7 @@ LALinearRatesVolatilityManager::finalize(void)
 		mVolatilityMap.clear();
 
 		//hishida vanna volga
-		std::map<LAString, LALinearRatesModel*>::iterator itmodel = mModelMap.begin();
+		std::map<AQLString, LALinearRatesModel*>::iterator itmodel = mModelMap.begin();
 		while (itmodel != mModelMap.end())
 		{
 			delete itmodel->second;
@@ -267,15 +267,15 @@ LALinearRatesVolatilityManager::finalize(void)
 			mpInstance = 0;
 		}
 	}
-	catch(LACoreError& e)
+	catch(AQLCoreError& e)
 	{
-        LACoreError ex("Error at LALinearRatesVolatilityManager::finalize", __FILE__, __LINE__);
+        AQLCoreError ex("Error at LALinearRatesVolatilityManager::finalize", __FILE__, __LINE__);
         ex += e;
 		throw ex;
 	}
 	catch (...)
 	{
-        throw LACoreSystemError(__FILE__, __LINE__);
+        throw AQLCoreSystemError(__FILE__, __LINE__);
 	}
 }
 

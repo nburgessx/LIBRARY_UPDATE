@@ -31,7 +31,7 @@ namespace etrading
     *  @param [in]		yieldCalcType                   Yield calculation type
     *  @return			Bond coupon accrual ratio of future days versus total days in coupon period in percent
     */
-	const double calculateBondActiveCouponFutureAccrualRatio( const LADate & settlementDate,
+	const double calculateBondActiveCouponFutureAccrualRatio( const AQLDate & settlementDate,
 															  const BondActiveCouponDates& activeCouponDates,
 															  const DayCountEnum & bondDaycount,
 															  const FrequencyEnum & bondCouponFrequency,
@@ -46,7 +46,7 @@ namespace etrading
         // Divide by Zero Guard
         if ( totalCouponDays == 0 )
         {
-            throw LACoreInvalidData("#Error: Invalid Bond Coupon Dates. Cannot evaluate a Bond Coupon accruing for zero days.",__FILE__,__LINE__);
+            throw AQLCoreInvalidData("#Error: Invalid Bond Coupon Dates. Cannot evaluate a Bond Coupon accruing for zero days.",__FILE__,__LINE__);
         }
 
         const double accrualRatio = futureDays / ( 1.0 * totalCouponDays ); // Cast to double
@@ -66,10 +66,10 @@ namespace etrading
     *  @return			Returns a single Bond Discount Factor
     */
     const double calculateSingleDiscountFactorFromBondYield( const BondYieldParameters & bondYieldParameters,
-                                                             const LADate& settlementDate, 
+                                                             const AQLDate& settlementDate, 
                                                              unsigned int& firstActivePaymentIndex,
-                                                             const LADate& couponPaymentDate, 
-                                                             const std::vector< LADate>& bondPaymentlDatesForIndexation,
+                                                             const AQLDate& couponPaymentDate, 
+                                                             const std::vector< AQLDate>& bondPaymentlDatesForIndexation,
                                                              const double& yield,
                                                              const double& accruedAdjustmentFactor, 
                                                              const YieldCalculationTypeEnum& yieldCalcType,
@@ -124,10 +124,10 @@ namespace etrading
     *  @return			Returns a single Bond Discount Factor
     */
 	const double  calculateSingleDiscountFactorFromConventionsAndBondYield( const BondYieldParameters & bondYieldParameters,
-                                                                            const LADate& settlementDate, 
+                                                                            const AQLDate& settlementDate, 
                                                                             unsigned int& firstActivePaymentIndex,
-                                                                            const LADate& currentPaymentDate, const LADate& previousPaymentDate, 
-		                                                                    const std::vector< LADate>& paymentDates,
+                                                                            const AQLDate& currentPaymentDate, const AQLDate& previousPaymentDate, 
+		                                                                    const std::vector< AQLDate>& paymentDates,
                                                                             const double& yield, const double& settleDateToFirstActivePaymentDateRatio, 
 		                                                                    const YieldCalculationTypeEnum& yieldCalcType,
                                                                             const double& sumYearFractionsFromSecondActivePaymentToCurrentCashflow,
@@ -153,10 +153,10 @@ namespace etrading
 			//--- DF formula: 1/(1 +(Days Remaining to Maturity/365)* Yield ---//
 
 			//Days remaining to maturity
-			const LADate maturityDate = currentPaymentDate;
+			const AQLDate maturityDate = currentPaymentDate;
 
 			// If the maturity is a holiday, use the next business date
-			const LADate adjustedMaturityDate = etrading::LADateScheduleHelpers::getDate(maturityDate, "0D", "FOLLOWING", bondYieldParameters.calendar_.c_str());
+			const AQLDate adjustedMaturityDate = etrading::LADateScheduleHelpers::getDate(maturityDate, "0D", "FOLLOWING", bondYieldParameters.calendar_.c_str());
 
 
 			const double remainingDays = getBondActualCouponPeriodDays(settlementDate, adjustedMaturityDate, bondDaycount);
@@ -168,7 +168,7 @@ namespace etrading
 		//Special handling for SPAIN Govt
 		else if ( isLastCashflow && bondYieldParameters.calculationType_ == TYPE1029_SPAIN_GOVERNMENT_BONDS)
 		{
-			const LADate maturityDate = currentPaymentDate;
+			const AQLDate maturityDate = currentPaymentDate;
 
 
 			if (isSettleDateInLastCashflow)
@@ -178,7 +178,7 @@ namespace etrading
 			else
 			{
 				// If the maturity is a holiday, use the next business date
-				const LADate adjustedMaturityDate = etrading::LADateScheduleHelpers::getDate(maturityDate, "0D", "FOLLOWING", bondYieldParameters.calendar_.c_str());
+				const AQLDate adjustedMaturityDate = etrading::LADateScheduleHelpers::getDate(maturityDate, "0D", "FOLLOWING", bondYieldParameters.calendar_.c_str());
 				const double adjustedDays = previousPaymentDate.intervalDays(adjustedMaturityDate);
 				const double unAdjustedDays = previousPaymentDate.intervalDays(maturityDate);
 
@@ -194,8 +194,8 @@ namespace etrading
 		//Special handling for SPAIN T-Bill, Calculates simple interest for the 6- and 12-month bills and compound interest for the 18-month bills.
 		else if (bondYieldParameters.calculationType_ == TYPE730_SPAIN_T_BILL)
 		{
-			const LADate accrualStartDate = paymentDates.front();
-			const LADate maturityDate = currentPaymentDate;
+			const AQLDate accrualStartDate = paymentDates.front();
+			const AQLDate maturityDate = currentPaymentDate;
 
 			const double issueToMaturityYearFraction = getYearFraction(accrualStartDate, maturityDate, bondDaycount);
 
@@ -234,8 +234,8 @@ namespace etrading
     *  @param [in]		trueYieldYearFractions              The accrual year fractions using dates with budiness day adjusted
     *  @return			Returns a vector of Bond Discount Factors
     */
-	const std::vector< double > calculateDiscountFactorsFromBondYield( const BondYieldParameters & bondYieldParameters, const LADate& settlementDate, const BondActiveCouponDates& activeCouponDates,
-																		const std::vector< LADate>& paymentDates, const double& yield, const DayCountEnum & bondDaycount, 
+	const std::vector< double > calculateDiscountFactorsFromBondYield( const BondYieldParameters & bondYieldParameters, const AQLDate& settlementDate, const BondActiveCouponDates& activeCouponDates,
+																		const std::vector< AQLDate>& paymentDates, const double& yield, const DayCountEnum & bondDaycount, 
 																		const YieldCalculationTypeEnum& yieldCalcType, const DoubleVector& trueYieldYearFractions ) 
 
     {
@@ -263,7 +263,7 @@ namespace etrading
             {
                 if (trueYieldYearFractions.size() == 0)
                 {
-                    throw LACoreInvalidData("#Error: For True Yield, trueYieldYearFractions cannot be empty.",__FILE__,__LINE__);
+                    throw AQLCoreInvalidData("#Error: For True Yield, trueYieldYearFractions cannot be empty.",__FILE__,__LINE__);
                 }
 
                 for( size_t k = secondActivePaymentIndex; k <= i; ++k )
@@ -320,8 +320,8 @@ namespace etrading
     *  @param [in]		trueYieldYearFractions              The accrual year fractions using dates with budiness day adjusted
     *  @return			Returns a vector of Bond Discount Factors
     */
-	const std::vector< double > calculateDiscountFactorsFromBondCurve( const BondYieldParameters & bondYieldParameters, const LADate& settlementDate, const BondActiveCouponDates& activeCouponDates,
-																		const std::vector< LADate>& paymentDates, const BondCurve& bondCurve, const DayCountEnum & bondDaycount, 
+	const std::vector< double > calculateDiscountFactorsFromBondCurve( const BondYieldParameters & bondYieldParameters, const AQLDate& settlementDate, const BondActiveCouponDates& activeCouponDates,
+																		const std::vector< AQLDate>& paymentDates, const BondCurve& bondCurve, const DayCountEnum & bondDaycount, 
 																		const DoubleVector& trueYieldYearFractions )
 	{
 		const YieldCalculationTypeEnum yieldCalcType = bondCurve.getYieldCalculationTypeEnum();
@@ -348,7 +348,7 @@ namespace etrading
             {
                 if (trueYieldYearFractions.size() == 0)
                 {
-                    throw LACoreInvalidData("#Error: For True Yield, trueYieldYearFractions cannot be empty.",__FILE__,__LINE__);
+                    throw AQLCoreInvalidData("#Error: For True Yield, trueYieldYearFractions cannot be empty.",__FILE__,__LINE__);
                 }
 
                 for( size_t k = secondActivePaymentIndex; k <= i; ++k )

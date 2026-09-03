@@ -9,7 +9,7 @@
 //
 //  SYNOPSIS    :       LAMathVolFuncSZDDVolFactor
 //  DESCRIPTION :       Source code of class  to represent volatility of FX
-//						This class derives from LAFunctionBase
+//						This class derives from AQLFunctionBase
 //                      
 //  VERSION		:
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -38,10 +38,10 @@ using namespace std;
 	@param[in] integrate_n
 
 */
-LAMathVolFuncSZDDVolFactor::LAMathVolFuncSZDDVolFactor( LAMathHWFuncMR& HW_a_, LAMathHWFuncSigma& HW_s_, LA1DDataSet& HW_theta_)
+LAMathVolFuncSZDDVolFactor::LAMathVolFuncSZDDVolFactor( LAMathHWFuncMR& HW_a_, LAMathHWFuncSigma& HW_s_, AQL1DDataSet& HW_theta_)
 :
 LAMathVolFuncHW(HW_a_, HW_s_),
-mpThetaFunc(dynamic_cast<LA1DDataSet*>(HW_theta_.clone()))
+mpThetaFunc(dynamic_cast<AQL1DDataSet*>(HW_theta_.clone()))
 {
 }
 
@@ -63,14 +63,14 @@ LAMathVolFuncSZDDVolFactor::LAMathVolFuncSZDDVolFactor(const LAMathVolFuncSZDDVo
 :
 LAMathVolFuncHW(rhs)
 {
-	mpThetaFunc = rhs.mpThetaFunc == 0 ? 0 : dynamic_cast<LA1DDataSet*>(rhs.mpThetaFunc->clone());
+	mpThetaFunc = rhs.mpThetaFunc == 0 ? 0 : dynamic_cast<AQL1DDataSet*>(rhs.mpThetaFunc->clone());
 }
 
 /*!
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAMathVolFuncSZDDVolFactor::clone() const
 {
     try 
@@ -79,7 +79,7 @@ LAMathVolFuncSZDDVolFactor::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -91,7 +91,7 @@ LAMathVolFuncSZDDVolFactor::clone() const
 bool
 LAMathVolFuncSZDDVolFactor::isTypeOf(function_t id) const
 {
-	return (id == FN_VOLFUNCSZDDVOLFACTOR ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_VOLFUNCSZDDVOLFACTOR ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!

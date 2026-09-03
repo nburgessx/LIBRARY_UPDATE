@@ -10,11 +10,11 @@
 #pragma interface
 #endif
 
-#include "LACoreValuation.h"
-#include "LADataValuation.h"
-#include "LACoreAppError.h"
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreValuation.h"
+#include "AQLDataValuation.h"
+#include "AQLCoreAppError.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 #include "LAPricePayOff.h"
 #include "LAPriceTradeValue.h"
 
@@ -34,16 +34,16 @@
 
 //#define __ITM_CHECK__ 
 //// FROTOTYPE ////
-class LADate;
-class LAObject;
-class LAPriceDataManager;
+class AQLDate;
+class AQLObject;
+class AQLPriceDataManager;
 class LAMathFXEntity;
 class LAMathIndexEntity;
 class LAMathPathEntity;
 class LARatesNumeraireBase;
 class LAPriceAccruedInterest;
 class LAPolynomialBase;
-class LADataDoubleMatrix;
+class AQLDataDoubleMatrix;
 class LAMathPlainVanillaEntity;
 class LAMathYieldCurve;
 ///////////////////////////////////////////////////////////////////////
@@ -61,15 +61,15 @@ public:
 	// Check function for this class ID	
 	virtual bool                isTypeOf(function_t id) const;
     // Make copy(clone) of this class
-	virtual LACoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
+	virtual AQLCoreFunctionBase*		clone() const;// %%% COVARIANT RETURN %%%
     // Return this class type
 	virtual function_t			getType() const;
 	// register dataValues that this class uses
-	virtual void				registerData(LAPriceDataManager& dm) const;
+	virtual void				registerData(AQLPriceDataManager& dm) const;
     // evaluation function
-	virtual double              value(const LADate& basedate, 
-										LAObject& object,
-									const LADataValuation& att) const;
+	virtual double              value(const AQLDate& basedate, 
+										AQLObject& object,
+									const AQLDataValuation& att) const;
 
 
 	//Remove warning:C4512
@@ -85,10 +85,10 @@ public:
 		virtual ~LALinearRatesSwapTradeValueDataProvider(); 
 	
 		LAMathPlainVanillaEntity* pVanilla; // plain vanilla object
-		LAString recDCurve;  //rec side discount curve name
-		LAString payDCurve;  //pay side discount curve name
-		LAString reccur;  //rec side currency
-		LAString paycur;  //pay side currency
+		AQLString recDCurve;  //rec side discount curve name
+		AQLString payDCurve;  //pay side discount curve name
+		AQLString reccur;  //rec side currency
+		AQLString paycur;  //pay side currency
 		bool isannuitycalc; //is annuity calc
 		unsigned int annuityLegNo; //is annuityLegNo
 		std::map<unsigned int, double> annuitymap;
@@ -98,60 +98,60 @@ public:
 
 		// for NDS
 		BoolVector isnondeliverableLeg; // is the leg non-deliverable or not
-		LAString originalcur; // non-deliverable currency
+		AQLString originalcur; // non-deliverable currency
 	};
 
-    bool hasCashflow(const LAObject& trade) const;
+    bool hasCashflow(const AQLObject& trade) const;
 	// calculate fee value
-	static double calcFeeValueVanilla(LAObject &tradeEntity, const LAString& baseCurrency);
+	static double calcFeeValueVanilla(AQLObject &tradeEntity, const AQLString& baseCurrency);
 
 protected:
     // copy constructor
     LALinearRatesSwapTradeValue(const LALinearRatesSwapTradeValue& v);	
 
     // evaluation function
-	virtual double              value(const LADate& basedate, 
-										LAObject& object, LADataProvider* dp,
+	virtual double              value(const AQLDate& basedate, 
+										AQLObject& object, AQLDataProvider* dp,
 										unsigned int startpathnum = 0) const;
 
 
 	//// get reference indexs
 	//std::set<LAMathIndexEntity*>
-	//							getReferenceIndex(LAObject& trade) const;
+	//							getReferenceIndex(AQLObject& trade) const;
 	// set up dataProvider
-	LADataProvider*					setUpDataProvider(const LADate& basedate, LAObject& object, 
-											const LADataValuation& att) const;	
+	AQLDataProvider*					setUpDataProvider(const AQLDate& basedate, AQLObject& object, 
+											const AQLDataValuation& att) const;	
 	// value by backward
 	virtual double				value_backward(const DoubleMatrix& time,
 											const DoubleMatrix& cf,
-											std::vector<std::pair<unsigned int, LADate> >& triggerhit,
+											std::vector<std::pair<unsigned int, AQLDate> >& triggerhit,
 											const DoubleArray& rebate,
 											const DoubleMatrix& explanatory,
-											const LADataProvider* dp,
+											const AQLDataProvider* dp,
 											DoubleVector &callval,
 											BoolVector* afterjudge = 0,
 											BoolVector* judge = 0,
 											DoubleVector* explainedvar = 0) const;
 	// get FXEntity
-	const LAMathFXEntity &getFXEntity(LAObject &object) const;
+	const LAMathFXEntity &getFXEntity(AQLObject &object) const;
 	// set up for annuity calc
-	void						setUpForAnnuityCalc(LAObject& object, LADataProvider* dp) const;
+	void						setUpForAnnuityCalc(AQLObject& object, AQLDataProvider* dp) const;
 	// set ir analytic risk into grid
 	// we stopped giving the analytic risk function on 2012/11/26 for improving performance of the linepricer
-	//void						setAnatlyticIRRiskIntoGrid(LAObject& object, LADataProvider* dp, const std::map<LAString, std::map<double,double> >& dfZero) const;
+	//void						setAnatlyticIRRiskIntoGrid(AQLObject& object, AQLDataProvider* dp, const std::map<AQLString, std::map<double,double> >& dfZero) const;
 	
-	void setUpStubCoefficient(LAObject& trade, LADataProvider* dp) const;
+	void setUpStubCoefficient(AQLObject& trade, AQLDataProvider* dp) const;
     
-    void doSetUpStubCoefficient(LAObject& coupon, LAObject& cashlet, LAMathPlainVanillaEntity* pvanilla) const;
+    void doSetUpStubCoefficient(AQLObject& coupon, AQLObject& cashlet, LAMathPlainVanillaEntity* pvanilla) const;
 	// set compounded rate
-	void setCompoundedRate(LAObject& trade, const LAPricePayOff& payoff) const;
+	void setCompoundedRate(AQLObject& trade, const LAPricePayOff& payoff) const;
 	// remove notional exposure
-	void removeNotionalExposure(LAObject& trade, LADataProvider* dp) const;
+	void removeNotionalExposure(AQLObject& trade, AQLDataProvider* dp) const;
 
 private:
 	// create new cache class
-	virtual	LADataProvider*			createNewDataProvider() const;
+	virtual	AQLDataProvider*			createNewDataProvider() const;
 	
-    double do_value(const LADate& basedate, LAObject& object, const LADataValuation& att) const;
+    double do_value(const AQLDate& basedate, AQLObject& object, const AQLDataValuation& att) const;
 };
 #endif

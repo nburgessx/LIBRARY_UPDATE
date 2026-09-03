@@ -27,11 +27,11 @@
 #include "LAMathVolatility.h"
 #include "LAMathPathEntity.h"
 
-#include "LADataBasics.h"
-#include "LADataVector.h"
-#include "LADataReference.h"
-#include "LADataMultiReference.h"
-#include "LAObjectHolder.h"
+#include "AQLDataBasics.h"
+#include "AQLDataVector.h"
+#include "AQLDataReference.h"
+#include "AQLDataMultiReference.h"
+#include "AQLObjectHolder.h"
 #include "LAMathYieldCurve.h"
 
 using namespace std;
@@ -55,13 +55,13 @@ LAPriceVolLMMDisplacedDiffusion::LAPriceVolLMMDisplacedDiffusion(bool isMultiVar
 	@param[in] beta beta
 	@param[in] isMultiVariables volatility function(before displaced diffusion)  depends L or not(only t depend)
 */
-LAPriceVolLMMDisplacedDiffusion::LAPriceVolLMMDisplacedDiffusion(const LAString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double beta, bool isMultiVariables)
+LAPriceVolLMMDisplacedDiffusion::LAPriceVolLMMDisplacedDiffusion(const AQLString& sdeAttrName, unsigned int i, const DoubleArray& tenor, const DoubleArray& delta_tenor, double beta, bool isMultiVariables)
 : LAMathVolFuncBase(sdeAttrName, i, 0, isMultiVariables), mBeta(beta), mTenor(tenor), mDeltaTenor(delta_tenor)
 {
 	if (tenor.size() != delta_tenor.size() + 1)
 	{
 		//error
-		throw LACoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
 	}
 	if (mTenor.at(0) == 0.0)
 	{	
@@ -90,7 +90,7 @@ LAPriceVolLMMDisplacedDiffusion::~LAPriceVolLMMDisplacedDiffusion()
     @brief Make copy(clone) of this class
     @return Deep copy of this class
 */
-LACoreFunctionBase*	
+AQLCoreFunctionBase*	
 LAPriceVolLMMDisplacedDiffusion::clone() const
 {
     try 
@@ -99,7 +99,7 @@ LAPriceVolLMMDisplacedDiffusion::clone() const
     }
     catch (bad_alloc & e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -153,19 +153,19 @@ LAPriceVolLMMDisplacedDiffusion::operator()(const DoubleArray& x) const
     @brief return string representaion
     @return string representaion (sde attr name : suffix : tenor : deltatenor : beta)
 */
-LAString
+AQLString
 LAPriceVolLMMDisplacedDiffusion::convertToString(void) const
 {
-	LAString ret;
+	AQLString ret;
 	ret += mSDEAttrName;
 	ret += ":";
-	ret += LADataInt(m_i).convertToString();
+	ret += AQLDataInt(m_i).convertToString();
 	ret += ":";
-	ret += LADataDoubles(mTenor).convertToString();
+	ret += AQLDataDoubles(mTenor).convertToString();
 	ret += ":";
-	ret += LADataDoubles(mDeltaTenor).convertToString();
+	ret += AQLDataDoubles(mDeltaTenor).convertToString();
 	ret += ":";
-	ret += LADataDouble(mBeta).convertToString();
+	ret += AQLDataDouble(mBeta).convertToString();
 	return ret;
 }
 
@@ -174,14 +174,14 @@ LAPriceVolLMMDisplacedDiffusion::convertToString(void) const
     @param[in] string representaion (sde attr name : suffix : tenor : deltatenor : beta)
 */
 void
-LAPriceVolLMMDisplacedDiffusion::convertFromString(const LAString& str)
+LAPriceVolLMMDisplacedDiffusion::convertFromString(const AQLString& str)
 {
-	LADataStrings tmp;
+	AQLDataStrings tmp;
 	tmp.convertFromString(str);
 	if (tmp.getSize() < 5 || tmp.getSize() % 2 == 1)
 	{
 		//error
-		throw LACoreInvalidData("Format is something wrong", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Format is something wrong", __FILE__, __LINE__);
 	
 	}
 	
@@ -238,7 +238,7 @@ LAPriceVolLMMDisplacedDiffusion::setTenor(const DoubleArray& tenor, const Double
 	if (tenor.size() != delta_tenor.size() + 1)
 	{
 		//error
-		throw LACoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("tenor size must be delta_tenor size plus one", __FILE__, __LINE__);
 	}
 	mTenor = tenor;
 	mDeltaTenor = delta_tenor;
@@ -258,7 +258,7 @@ LAPriceVolLMMDisplacedDiffusion::setUp(LAMathPathEntity& path)
 {
 	LAMathVolFuncBase::setUp(path);
     
-	const LAStringVector& names = path.getSDEAttrNames().get();
+	const AQLStringVector& names = path.getSDEAttrNames().get();
 	unsigned int i;
 	for (i = 0; i < names.size(); i++)
 	{
@@ -267,9 +267,9 @@ LAPriceVolLMMDisplacedDiffusion::setUp(LAMathPathEntity& path)
 	if (i == names.size())
 	{
 		//error
-		LAString msg = "SDEAttrName: " + mSDEAttrName;
+		AQLString msg = "SDEAttrName: " + mSDEAttrName;
 		msg += " does not exsist";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 	const LAMathYieldCurve& yield = dynamic_cast<const LAMathYieldCurve&>(path.getInitialValues().get(i).get());
 	const LARatesPathElementCurve& curve = yield.getCurve(0, path.getDayCount().getDayCount());

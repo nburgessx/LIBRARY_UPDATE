@@ -17,7 +17,7 @@ namespace validation
 	*  @param [out]		row			Row count of the data matrix
 	*  @param [out]		column		Column count of the data matrix
 	*/
-	void tryMeSABROutputParameter(const LAString& gridID, DoubleVector& ret, size_t& row, size_t& column)
+	void tryMeSABROutputParameter(const AQLString& gridID, DoubleVector& ret, size_t& row, size_t& column)
 	{
 		VALID_EXCEPTION_START
 

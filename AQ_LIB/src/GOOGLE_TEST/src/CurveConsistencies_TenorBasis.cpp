@@ -38,12 +38,12 @@ namespace google_test
 {
 	/* @brief	Run consistency test on all available tenor basis curves in all ccys
     */
-	void basisCurveConsistencyCheck(const LAString& ccy, const LAString& testDir)
+	void basisCurveConsistencyCheck(const AQLString& ccy, const AQLString& testDir)
 	{
-		LAString prefix("");
+		AQLString prefix("");
 		if (ccy != "LINEARSPLINE")
 		{
-			prefix = ccy + LAString("_");
+			prefix = ccy + AQLString("_");
 		}
 
 		size_t TEST_COUNT;
@@ -79,13 +79,13 @@ namespace google_test
 			//----------------------------------------------------------------------------------------
 			// Build yield curves of the current test case
 
-			LAString swapCurveFile		 = prefix + LAString("STD_") + LAString(static_cast<int>(i + 1));
-			LAString oisCurveFile		 = prefix + LAString("OIS_") + LAString(static_cast<int>(i + 1));
-			LAString tenorBasisCurveFile = prefix + LAString("TenorBasis_") + LAString(static_cast<int>(i + 1));
+			AQLString swapCurveFile		 = prefix + AQLString("STD_") + AQLString(static_cast<int>(i + 1));
+			AQLString oisCurveFile		 = prefix + AQLString("OIS_") + AQLString(static_cast<int>(i + 1));
+			AQLString tenorBasisCurveFile = prefix + AQLString("TenorBasis_") + AQLString(static_cast<int>(i + 1));
 			
-			LAString swapFileDir	   = testDir + swapCurveFile + LAString(".csv");
-			LAString oisFileDir		   = testDir + oisCurveFile + LAString(".csv");
-			LAString tenorBasisFileDir = testDir + tenorBasisCurveFile + LAString(".csv");
+			AQLString swapFileDir	   = testDir + swapCurveFile + AQLString(".csv");
+			AQLString oisFileDir		   = testDir + oisCurveFile + AQLString(".csv");
+			AQLString tenorBasisFileDir = testDir + tenorBasisCurveFile + AQLString(".csv");
 			SET_UP_TENOR_BASIS_CURVE_1(oisFileDir, swapFileDir, tenorBasisFileDir);
 
 			//----------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ namespace google_test
 			{
 				generateProp_STD = inputFile_STD["generalProps"];			
 			}
-			const std::set<LAString>& generatePropkeys_STD = generateProp_STD.getKeys();
+			const std::set<AQLString>& generatePropkeys_STD = generateProp_STD.getKeys();
 
 			//----------------------------------------------------------------------------------------
 			// Retrieve blocks of data from the tenor basis curve file
@@ -120,18 +120,18 @@ namespace google_test
 			{
 				generateProp = inputFile_TenorBasis["generalProps"];			
 			}
-			const std::set<LAString>& generatePropkeys = generateProp.getKeys();
+			const std::set<AQLString>& generatePropkeys = generateProp.getKeys();
 			
 			// basis convention block
 			etrading::ReadDataFile basisConv = inputFile_TenorBasis["basisConv"];			
-			const std::set<LAString>& basisConvkeys = basisConv.getKeys();
+			const std::set<AQLString>& basisConvkeys = basisConv.getKeys();
 			
 			//----------------------------------------------------------------------------------------
 			// Retrieve all parameters required from various data blocks. 
 			// Should any of these parameters be not available, skip this test as it's not a valid test
 			
 			// IsFwdBasis
-			LAString isFwdBasisStr;
+			AQLString isFwdBasisStr;
 			findValByKey(isFwdBasisStr, generateProp, generatePropkeys, "isFwdBasis", true);
 			isFwdBasisStr.toUpper();
 			bool isFwdBasis = false;
@@ -141,7 +141,7 @@ namespace google_test
 			}
 
 			// IsYieldSpreadCalc
-			LAString IsYieldSpreadCalcStr("");
+			AQLString IsYieldSpreadCalcStr("");
 			bool IsYieldSpreadCalc = false;
 			findValByKey(IsYieldSpreadCalcStr, basisConv, basisConvkeys, "isyieldspreadcalc", true);
 			if (IsYieldSpreadCalcStr.toUpper() == "TRUE")
@@ -150,7 +150,7 @@ namespace google_test
 			}
 
 			// IsSameGridIndex
-			LAString IsSameGridIndexStr("");
+			AQLString IsSameGridIndexStr("");
 			bool IsSameGridIndex = true;
 			findValByKey(IsSameGridIndexStr, basisConv, basisConvkeys, "IsSameGridIndex", true);
 			if (IsSameGridIndexStr.toUpper() == "FALSE")
@@ -165,7 +165,7 @@ namespace google_test
 			}
 
 			// IsFwdInterp
-			LAString IsFwdInterStr("");
+			AQLString IsFwdInterStr("");
 			bool IsFwdInter = false;
 			findValByKey(IsFwdInterStr, basisConv, basisConvkeys, "IsFwdInter", true);
 			if (IsFwdInterStr.toUpper() == "TRUE")
@@ -174,33 +174,33 @@ namespace google_test
 			}
 
 			// Target leg
-			LAString targetLeg;
+			AQLString targetLeg;
 			findValByKey(targetLeg, basisConv, basisConvkeys, "Target");
 			bool isLeg1Target = targetLeg.subString(0, 3).toUpper() == "LEG1" ? true : false;
 
 			// Spread leg
-			LAString basisLeg;
+			AQLString basisLeg;
 			findValByKey(basisLeg, basisConv, basisConvkeys, "IsLeg1Spread");
 			bool isLeg1Spread = basisLeg.toUpper() == "TRUE" ? true : false;
 
 			// Against leg calendar
-			LAString a_calendar;
-			LAString a_calendarKey = isLeg1Target ? "Leg2Cashlet.calendar" : "Leg1Cashlet.calendar";
+			AQLString a_calendar;
+			AQLString a_calendarKey = isLeg1Target ? "Leg2Cashlet.calendar" : "Leg1Cashlet.calendar";
 			findValByKey(a_calendar, basisConv, basisConvkeys, a_calendarKey);
 
 			// Against leg date count convention
-			LAString a_dayCount;
-			LAString a_dayCountKey = isLeg1Target ? "Leg2Cashlet.daycount" : "Leg1Cashlet.daycount";
+			AQLString a_dayCount;
+			AQLString a_dayCountKey = isLeg1Target ? "Leg2Cashlet.daycount" : "Leg1Cashlet.daycount";
 			findValByKey(a_dayCount, basisConv, basisConvkeys, a_dayCountKey);
 
 			// Against leg frequency
-			LAString a_frequency;
-			LAString a_frequencyKey = isLeg1Target ? "Leg2Cashlet.frequency" : "Leg1Cashlet.frequency";
+			AQLString a_frequency;
+			AQLString a_frequencyKey = isLeg1Target ? "Leg2Cashlet.frequency" : "Leg1Cashlet.frequency";
 			findValByKey(a_frequency, basisConv, basisConvkeys, a_frequencyKey);
 
 			// Target leg compounding frequency
-			LAString a_compounding_frequency("");
-			LAString a_compoundingFrequencyKey = isLeg1Target ? "Leg2Cashlet.frequencycompound" : "Leg1Cashlet.frequencycompound";
+			AQLString a_compounding_frequency("");
+			AQLString a_compoundingFrequencyKey = isLeg1Target ? "Leg2Cashlet.frequencycompound" : "Leg1Cashlet.frequencycompound";
 			findValByKey(a_compounding_frequency, basisConv, basisConvkeys, a_compoundingFrequencyKey, true);
 			if (a_compounding_frequency.size() != 0 && a_compounding_frequency.toUpper() != a_frequency.toUpper())
 			{
@@ -209,23 +209,23 @@ namespace google_test
 			}
 
 			// Against leg roll convention
-			LAString a_rollConvention;
-			LAString a_rollConventionKey = isLeg1Target ? "Leg2Cashlet.slidingrule" : "Leg1Cashlet.slidingrule";
+			AQLString a_rollConvention;
+			AQLString a_rollConventionKey = isLeg1Target ? "Leg2Cashlet.slidingrule" : "Leg1Cashlet.slidingrule";
 			findValByKey(a_rollConvention, basisConv, basisConvkeys, a_rollConventionKey);
 
 			// Against leg forecast curve
-			LAString a_forecast;
-			LAString a_forecastKey = isLeg1Target ? "Leg2forecast" : "Leg1forecast";
+			AQLString a_forecast;
+			AQLString a_forecastKey = isLeg1Target ? "Leg2forecast" : "Leg1forecast";
 			findValByKey(a_forecast, basisConv, basisConvkeys, a_forecastKey);
 
 			// Against leg discount curve
-			LAString a_discount;
-			LAString a_discountKey = isLeg1Target ? "Leg2discount" : "Leg1discount";
+			AQLString a_discount;
+			AQLString a_discountKey = isLeg1Target ? "Leg2discount" : "Leg1discount";
 			findValByKey(a_discount, basisConv, basisConvkeys, a_discountKey);
 
 			// Against leg spot lag
-			LAString a_spotLag;
-			LAString a_spotLagKey = isLeg1Target ? "Leg2Cashlet.spotlag" : "Leg1Cashlet.spotlag";
+			AQLString a_spotLag;
+			AQLString a_spotLagKey = isLeg1Target ? "Leg2Cashlet.spotlag" : "Leg1Cashlet.spotlag";
 			findValByKey(a_spotLag, basisConv, basisConvkeys, a_spotLagKey);
 			if (a_spotLag.findString("D") == -1)
 			{
@@ -233,10 +233,10 @@ namespace google_test
 			}
 
 			// Against leg fixing lag
-			LAString a_fixingLag("0D");
+			AQLString a_fixingLag("0D");
 			if (!IsSameGridIndex)
 			{
-				LAString a_fixingLagKey = isLeg1Target ? "Leg2index.resetlag" : "Leg1index.resetlag";
+				AQLString a_fixingLagKey = isLeg1Target ? "Leg2index.resetlag" : "Leg1index.resetlag";
 				findValByKey(a_fixingLag, basisConv, basisConvkeys, a_fixingLagKey);
 				if (a_fixingLag.findString("D") == -1)
 				{
@@ -245,23 +245,23 @@ namespace google_test
 			}
 
 			// Target leg calendar
-			LAString t_calendar;
-			LAString t_calendarKey = isLeg1Target ? "Leg1Cashlet.calendar" : "Leg2Cashlet.calendar";
+			AQLString t_calendar;
+			AQLString t_calendarKey = isLeg1Target ? "Leg1Cashlet.calendar" : "Leg2Cashlet.calendar";
 			findValByKey(t_calendar, basisConv, basisConvkeys, t_calendarKey);
 
 			// Target leg date count convention
-			LAString t_dayCount;
-			LAString t_dayCountKey = isLeg1Target ? "Leg1Cashlet.daycount" : "Leg2Cashlet.daycount";
+			AQLString t_dayCount;
+			AQLString t_dayCountKey = isLeg1Target ? "Leg1Cashlet.daycount" : "Leg2Cashlet.daycount";
 			findValByKey(t_dayCount, basisConv, basisConvkeys, t_dayCountKey);
 
 			// Target leg frequency
-			LAString t_frequency;
-			LAString t_frequencyKey = isLeg1Target ? "Leg1Cashlet.frequency" : "Leg2Cashlet.frequency";
+			AQLString t_frequency;
+			AQLString t_frequencyKey = isLeg1Target ? "Leg1Cashlet.frequency" : "Leg2Cashlet.frequency";
 			findValByKey(t_frequency, basisConv, basisConvkeys, t_frequencyKey);
 
 			// Target leg compounding frequency
-			LAString t_compounding_frequency("");
-			LAString t_compoundingFrequencyKey = isLeg1Target ? "Leg1Cashlet.frequencycompound" : "Leg2Cashlet.frequencycompound";
+			AQLString t_compounding_frequency("");
+			AQLString t_compoundingFrequencyKey = isLeg1Target ? "Leg1Cashlet.frequencycompound" : "Leg2Cashlet.frequencycompound";
 			findValByKey(t_compounding_frequency, basisConv, basisConvkeys, t_compoundingFrequencyKey, true);
 			if (t_compounding_frequency.size() != 0 && t_compounding_frequency.toUpper() != t_frequency.toUpper())
 			{
@@ -270,18 +270,18 @@ namespace google_test
 			}
 
 			// Target leg roll convention
-			LAString t_rollConvention;
-			LAString t_rollConventionKey = isLeg1Target ? "Leg1Cashlet.slidingrule" : "Leg2Cashlet.slidingrule";
+			AQLString t_rollConvention;
+			AQLString t_rollConventionKey = isLeg1Target ? "Leg1Cashlet.slidingrule" : "Leg2Cashlet.slidingrule";
 			findValByKey(t_rollConvention, basisConv, basisConvkeys, t_rollConventionKey);
 
 			// Target leg discount curve
-			LAString t_discount;
-			LAString t_discountKey = isLeg1Target ? "Leg1discount" : "Leg2discount";
+			AQLString t_discount;
+			AQLString t_discountKey = isLeg1Target ? "Leg1discount" : "Leg2discount";
 			findValByKey(t_discount, basisConv, basisConvkeys, t_discountKey);
 
 			// Target leg spot lag
-			LAString t_spotLag;
-			LAString t_spotLagKey = isLeg1Target ? "Leg1Cashlet.spotlag" : "Leg2Cashlet.spotlag";
+			AQLString t_spotLag;
+			AQLString t_spotLagKey = isLeg1Target ? "Leg1Cashlet.spotlag" : "Leg2Cashlet.spotlag";
 			findValByKey(t_spotLag, basisConv, basisConvkeys, t_spotLagKey);
 			if (t_spotLag.findString("D") == -1)
 			{
@@ -289,10 +289,10 @@ namespace google_test
 			}
 
 			// Target leg fixing lag
-			LAString t_fixingLag("0D");
+			AQLString t_fixingLag("0D");
 			if (!IsSameGridIndex)
 			{
-				LAString t_fixingLagKey = isLeg1Target ? "Leg1index.resetlag" : "Leg2index.resetlag";
+				AQLString t_fixingLagKey = isLeg1Target ? "Leg1index.resetlag" : "Leg2index.resetlag";
 				findValByKey(t_fixingLag, basisConv, basisConvkeys, t_fixingLagKey);
 				if (t_fixingLag.findString("D") == -1)
 				{
@@ -301,7 +301,7 @@ namespace google_test
 			}
 
 			// Is rolling at end of month?
-			LAString isEomRollStr;
+			AQLString isEomRollStr;
 			findValByKey(isEomRollStr, basisConv, basisConvkeys, "IsEomRoll", true);
 			isEomRollStr.toUpper();
 			bool isEomRoll(false);
@@ -311,7 +311,7 @@ namespace google_test
 			}
 
 			// Against Leg Interpolation
-			LAString a_interpolation;
+			AQLString a_interpolation;
 			if (IsFwdInter)
 			{
 				findValByKey(a_interpolation, basisConv, basisConvkeys, "fwdinterpolation");
@@ -323,7 +323,7 @@ namespace google_test
 			a_interpolation = interpolationShortName(a_interpolation);
 
 			// Target Leg Interpolation
-			LAString t_interpolation;
+			AQLString t_interpolation;
 			if (IsYieldSpreadCalc)
 			{
 				// When calibrating spreads, target curve interpolation is the same as that of the reference curve which
@@ -337,20 +337,20 @@ namespace google_test
 			t_interpolation = interpolationShortName(t_interpolation);
 			
 			// Effective dates
-			LAString asofDateStr;
+			AQLString asofDateStr;
 			findValByKey(asofDateStr, generateProp, generatePropkeys, "AsOfDate");
-			LADate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
-			LADate a_startDate = etrading::LADateScheduleHelpers::getDate( asofDate, a_spotLag, a_rollConvention, a_calendar );
-			LADate t_startDate = etrading::LADateScheduleHelpers::getDate( asofDate, t_spotLag, t_rollConvention, t_calendar );
+			AQLDate asofDate = etrading::LADateScheduleHelpers::getLADate(asofDateStr);
+			AQLDate a_startDate = etrading::LADateScheduleHelpers::getDate( asofDate, a_spotLag, a_rollConvention, a_calendar );
+			AQLDate t_startDate = etrading::LADateScheduleHelpers::getDate( asofDate, t_spotLag, t_rollConvention, t_calendar );
 			if (a_startDate != t_startDate)
 			{
-				LAString err = "#Err: Start date is not the same on both legs. This scenario is currently not supported by the test. Please amend your test file or enhance code.";
-				throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__); 
+				AQLString err = "#Err: Start date is not the same on both legs. This scenario is currently not supported by the test. Please amend your test file or enhance code.";
+				throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__); 
 			}
 
 			// Curve collection and forecast curve
-			LAString curveCollection = etrading::getCurveID( inputFile_TenorBasis );
-			LAString t_forecast		 = etrading::getMarketName( inputFile_TenorBasis );
+			AQLString curveCollection = etrading::getCurveID( inputFile_TenorBasis );
+			AQLString t_forecast		 = etrading::getMarketName( inputFile_TenorBasis );
 
 			// basis rates block 
 			etrading::ReadDataFile basisRates = inputFile_TenorBasis["basisRates"];			
@@ -364,11 +364,11 @@ namespace google_test
 			//for(auto iterator = spotStartingbasisRatekeys.begin(); iterator != spotStartingbasisRatekeys.end(); ++iterator)
 			for (size_t k = 0; k < rowCount; ++k)
 			{
-				LAString maturityTenor;
-				LAString startTenor;
+				AQLString maturityTenor;
+				AQLString startTenor;
 
-				LADate a_effectiveStart = a_startDate;
-				LADate t_effectiveStart = t_startDate;
+				AQLDate a_effectiveStart = a_startDate;
+				AQLDate t_effectiveStart = t_startDate;
 				if (isFwdBasis)
 				{
 					maturityTenor = basisRates(k, colCount - 1);
@@ -380,12 +380,12 @@ namespace google_test
 				{
 					maturityTenor = basisRates(k, 0);
 				}
-				LADate maturity = etrading::LADateScheduleHelpers::getDate(a_effectiveStart, maturityTenor, "", "");	// Maturity date must not be adjusted first
+				AQLDate maturity = etrading::LADateScheduleHelpers::getDate(a_effectiveStart, maturityTenor, "", "");	// Maturity date must not be adjusted first
 				
-				LAString frequencyFixed = (isLeg1Spread == isLeg1Target) ? t_frequency : a_frequency;
-				LAString dayCountFixed  = (isLeg1Spread == isLeg1Target) ? t_dayCount : a_dayCount;
-				LAString rollConvFixed  = (isLeg1Spread == isLeg1Target) ? t_rollConvention : a_rollConvention;
-				LAString calendarFixed  = (isLeg1Spread == isLeg1Target) ? t_calendar : a_calendar;								
+				AQLString frequencyFixed = (isLeg1Spread == isLeg1Target) ? t_frequency : a_frequency;
+				AQLString dayCountFixed  = (isLeg1Spread == isLeg1Target) ? t_dayCount : a_dayCount;
+				AQLString rollConvFixed  = (isLeg1Spread == isLeg1Target) ? t_rollConvention : a_rollConvention;
+				AQLString calendarFixed  = (isLeg1Spread == isLeg1Target) ? t_calendar : a_calendar;								
 
 				// Calculate 'against leg' par rate
 				const double a_ParRate = validation::tryMirGetParRate4(
@@ -461,7 +461,7 @@ namespace google_test
 																   t_calendar			// fixing calendar
 																   );
 
-				LAString inputBasisStr = basisRates(k, 1);
+				AQLString inputBasisStr = basisRates(k, 1);
 				
 				double inputBasisRate(0.0);
 				std::stringstream(inputBasisStr.getCString()) >> inputBasisRate;

@@ -60,14 +60,14 @@ namespace etrading
     *  @param [in]		bondPaymentlDatesForIndexation      A vector of all bond cashflow payment dates, these dates are assumed to be SORTED
 	*  @Return          returns the index position of the active cashflow given a vector of dates. Will return the final index position if all cashflows are in the past
     */
-    unsigned int getBondActiveCashflowIndex( const LADate& settlementDate, const std::vector< LADate >& bondPaymentlDatesForIndexation );
+    unsigned int getBondActiveCashflowIndex( const AQLDate& settlementDate, const std::vector< AQLDate >& bondPaymentlDatesForIndexation );
 
     /* @brief   Function to calculate the start index to get the index for the first bond coupon that is not in the past
     *  @param [in]		settlementDate                      The bond settlement date
     *  @param [in]		bondPaymentlDatesForIndexation      A vector of all bond cashflow payment dates, these dates are assumed to be SORTED
 	*  @Return          returns the index position of the active cashflow given a vector of dates. Will return the final index position if all cashflows are in the past
     */
-    unsigned int getBondCashflowIndex( const LADate& searchDate, const std::vector< LADate >& bondPaymentlDatesForIndexation );
+    unsigned int getBondCashflowIndex( const AQLDate& searchDate, const std::vector< AQLDate >& bondPaymentlDatesForIndexation );
 
     /* @brief   Function to calculate the index of a bond's cashflow relative to the first non-past coupon
     *  @param [in]		firstActiveCashflowIndex            The first active coupon (payment) date index
@@ -75,7 +75,7 @@ namespace etrading
     *  @param [in]		bondPaymentlDatesForIndexation      A vector of all bond cashflow payment dates, these dates are assumed to be SORTED
 	*  @Return          returns the index of the cashflow. The first future cashflow has index 0, the second future cashflow is 1 etc ....
     */
-    unsigned int getBondRelativeCashflowIndex( unsigned int& firstActiveCashflowIndex, const LADate& searchPaymentDate, const std::vector< LADate >& bondPaymentlDatesForIndexation );
+    unsigned int getBondRelativeCashflowIndex( unsigned int& firstActiveCashflowIndex, const AQLDate& searchPaymentDate, const std::vector< AQLDate >& bondPaymentlDatesForIndexation );
 
 
    /* @brief   Function to extract the first future date from a SORTED vector of historic and future cashflow dates using Bond Payment Dates for Indexation
@@ -84,7 +84,7 @@ namespace etrading
     *  @param [in]		bondPaymentlDatesForIndexation      A vector of all bond payment dates, these dates are our reference dates to determine if a bond coupon should be considered historic or in the future
 	*  @Return          returns the first future cashflow date and index. Today is considered in the future. Will return the last date in the dates vector if all dates are historic and in the past
     */
-    std::pair<LADate, size_t> getActiveCashflowDateAndIndex( const LADate& settlementDate, const std::vector< LADate >& bondCashflowDates, const std::vector< LADate >& bondPaymentlDatesForIndexation );
+    std::pair<AQLDate, size_t> getActiveCashflowDateAndIndex( const AQLDate& settlementDate, const std::vector< AQLDate >& bondCashflowDates, const std::vector< AQLDate >& bondPaymentlDatesForIndexation );
 
     /* @brief			Calculate the bond full periods from couponDate1 to couponDate2
     *  @param [in]		paymentDate1    Payment date one
@@ -93,7 +93,7 @@ namespace etrading
     *  @param [in]		bondAccrualFrequency   Bond accrual frequency
     *  @return			Full coupon period days
     */
-    double getBondFullCouponPeriodDays(const LADate& paymentDate1, const LADate& paymentDate2, const DayCountEnum & bondDaycount, const FrequencyEnum & bondAccrualFrequency);
+    double getBondFullCouponPeriodDays(const AQLDate& paymentDate1, const AQLDate& paymentDate2, const DayCountEnum & bondDaycount, const FrequencyEnum & bondAccrualFrequency);
 
     /* @brief			Calculate the bond actual coupon period days from paymentDate1 to paymentDate2
     *  @param [in]		paymentDate1    Payment date one
@@ -101,14 +101,14 @@ namespace etrading
     *  @param [in]		bondDaycount    Bond Daycount Basis
     *  @return			Actual coupon period days
     */
-    double getBondActualCouponPeriodDays(const LADate& paymentDate1, const LADate& paymentDate2, const DayCountEnum & bondDaycount);
+    double getBondActualCouponPeriodDays(const AQLDate& paymentDate1, const AQLDate& paymentDate2, const DayCountEnum & bondDaycount);
 
     /* @brief			Check if it is JGBBond with issue date earlier than the market convention change date
     *  @param [in]		bondCalculationType Bond calculation type
     *  @param [in]		issueDateStr        Issue date of the bond
     *  @return			True/false
     */
-    bool isBondJGBIssuedPriorToMarketConventionChangeDate(const BondCalculationTypeEnum& bondCalculationType, const LAString& issueDateStr);
+    bool isBondJGBIssuedPriorToMarketConventionChangeDate(const BondCalculationTypeEnum& bondCalculationType, const AQLString& issueDateStr);
 
     /* @brief			Check if the bond calculation type is JGB (JapaneseGovenmentBond)
     *  @param [in]		bondCalculationType   Bond calculation type
@@ -132,7 +132,7 @@ namespace etrading
     *  @param [in]		paymentDates            Bond paymentDates excluding the upfront cashflow if there is one
     *  @return			Bond's notinoal exchange at maturity
     */
-    double getBondNotionalExchangeAtMaturity(const BondCalculationTypeEnum& bondCalculationType, const LADate& effectiveDate, const LADate& maturityDate, double notional, double issuePrice, double taxRate, const std::vector<LADate>& paymentDates) ;
+    double getBondNotionalExchangeAtMaturity(const BondCalculationTypeEnum& bondCalculationType, const AQLDate& effectiveDate, const AQLDate& maturityDate, double notional, double issuePrice, double taxRate, const std::vector<AQLDate>& paymentDates) ;
 
     /* @brief			Convert yield between frequencies
     *  @param [in]		fromYield     Input yield
@@ -142,7 +142,7 @@ namespace etrading
     */
     double convertYield(double fromYield, const FrequencyEnum&  fromFreq, const FrequencyEnum& toFreq);
 
-	double roundBondAccruedInterestFactor(const double& origAccruedInterestFactor, const BondCalculationTypeEnum& calculationType, const LADate& settlementDate);
+	double roundBondAccruedInterestFactor(const double& origAccruedInterestFactor, const BondCalculationTypeEnum& calculationType, const AQLDate& settlementDate);
 
     /* @brief			Function to format a raw bond price according to its quote convention
     *  @param [in]		rawBondPrice      Frequency of input yield
@@ -159,7 +159,7 @@ namespace etrading
 									const std::string& accrualCalendar,
 									const std::string& exDividendTenor);
 
-	bool excludeCouponInterest(const LADate& settlementDate, const LADate& exDividendDate);
+	bool excludeCouponInterest(const AQLDate& settlementDate, const AQLDate& exDividendDate);
 
 	/* @brief			Calculate Fwd Bond's sum of coupon future value
 	*  @param [in]		reinvestedCoupons		Coupons between settleDate and forwardSettleDate
@@ -176,7 +176,7 @@ namespace etrading
 	*  @param [in]		reinvestedCouponsFwdValue	Sum of paid voupons between settleDate and forwardSettleDate
 	*  @return			Bond forward dirty price
 	*/
-	double calculateForwardDirtyPrice(const double& dirtyPrice, const LADate& settleDate, const LADate& forwardSettleDate, const double& repoRate, const DayCountEnum& repoDayCount, const double& reinvestedCouponsFwdValue);
+	double calculateForwardDirtyPrice(const double& dirtyPrice, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const double& repoRate, const DayCountEnum& repoDayCount, const double& reinvestedCouponsFwdValue);
 
 	/* @brief			Calculate Bond's implied repo rate from bond's forward dirty price at settle date
 	*  @param [in]		dirtyPrice			Bond dirty price at settle date
@@ -187,7 +187,7 @@ namespace etrading
 	*  @param [in]		reinvestedCoupons		Coupons between settleDate and forwardSettleDate
 	*  @return			Bond implied repo rate
 	*/
-	double calculateRepoRate(const double& dirtyPrice, const double& forwardDirtyPrice, const LADate& settleDate, const LADate& forwardSettleDate, const DayCountEnum& repoDayCount, const std::vector< BondFwdReinvestedCoupon >& reinvestedCoupons);
+	double calculateRepoRate(const double& dirtyPrice, const double& forwardDirtyPrice, const AQLDate& settleDate, const AQLDate& forwardSettleDate, const DayCountEnum& repoDayCount, const std::vector< BondFwdReinvestedCoupon >& reinvestedCoupons);
 
 	/* @brief			Get Bond's implied forward price from quoted future price
 	*  @param [in]		futurePrice			Bond future dirty/price at future settle date
@@ -205,7 +205,7 @@ namespace etrading
 	*  @param [in]		frequency						Bond frequency
 	*  @return			First full coupon days of the long start stub
 	*/
-	double getLongStartStubFirstFullCouponDays(const LADate& firstActivePaymentDate, const LADate& firstPriorVirtualPaymentDate, const LADate& secondPriorVirtualPaymentDate, const BondCalculationTypeEnum& bondCalculationType, const DayCountEnum& dayCount, const FrequencyEnum& frequency);
+	double getLongStartStubFirstFullCouponDays(const AQLDate& firstActivePaymentDate, const AQLDate& firstPriorVirtualPaymentDate, const AQLDate& secondPriorVirtualPaymentDate, const BondCalculationTypeEnum& bondCalculationType, const DayCountEnum& dayCount, const FrequencyEnum& frequency);
 
 }
 

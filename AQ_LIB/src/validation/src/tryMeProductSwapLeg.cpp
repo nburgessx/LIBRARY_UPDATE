@@ -17,7 +17,7 @@ namespace validation
 	/* @brief			return a set of expected keys for swap pv label value block
 	*  @return			expected keys
 	*/
-	std::vector<std::string> tryMeSwapLegLVBKeys(const LAString& legName) 
+	std::vector<std::string> tryMeSwapLegLVBKeys(const AQLString& legName) 
 	{
 		return etrading::getSwapLegLVBKeys(legName);
 	}
@@ -36,12 +36,12 @@ namespace validation
         // Record Inputs for logs, tests and playback
         RECORD_INPUTS( legLVB, validateKeys, showColumnHeaders, columnList );
 
-		LAString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+		AQLString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
 		etrading::validateKeysForLVB(tryMeSwapLegLVBKeys(legName), legLVB.getKeys(), validateKeys);
 
 		etrading::LegPtr leg = etrading::createLegByLVB(legLVB);
 
-        const LAString curveCollection = legLVB.getCompulsoryValueAsLAString(etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB);
+        const AQLString curveCollection = legLVB.getCompulsoryValueAsLAString(etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB);
         LabelValueBlock valuationSettingsLVB( etrading::VALUATION_SETTING_KEYS::CURVE_COLLECTION, curveCollection.c_str() );
 
 		etrading::DataProvider dataProvider(etrading::ValuationSettings(valuationSettingsLVB, {}, leg->getLegName()));
@@ -64,7 +64,7 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		const std::string inputLVB = "LegLVB";
-		LAString curveCollection = legLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB);
+		AQLString curveCollection = legLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB);
 
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
@@ -75,7 +75,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-		LAString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+		AQLString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
 		etrading::validateKeysForLVB(tryMeSwapLegLVBKeys(legName), legLVB.getKeys(), validateKeys);
 
 		etrading::LegPtr leg = etrading::createLegByLVB(legLVB);
@@ -107,7 +107,7 @@ namespace validation
 		VALID_EXCEPTION_START
 		
 		const std::string inputLVB = "LegLVB";
-		LAString curveCollection = legLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB);
+		AQLString curveCollection = legLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB);
 
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
@@ -118,7 +118,7 @@ namespace validation
 			file.write("validateKeys", validateKeys);
 		}
 
-		LAString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
+		AQLString legName = legLVB.getCompulsoryValueAsLAString( etrading::IRS_KEY::LEG_TYPE, inputLVB);
 		etrading::validateKeysForLVB(tryMeSwapLegLVBKeys(legName), legLVB.getKeys(), validateKeys);
 
 		etrading::LegPtr leg = etrading::createLegByLVB(legLVB);

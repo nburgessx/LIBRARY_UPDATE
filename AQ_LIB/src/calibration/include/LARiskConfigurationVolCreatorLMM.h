@@ -17,8 +17,8 @@
 #pragma interface
 #endif
 
-#include "LAString.h"
-#include "LADataInstance.h"
+#include "AQLString.h"
+#include "AQLDataInstance.h"
 #include "LAMathVolatility.h"
 #include "LARiskConfigurationVolCreator.h"
 #include "LAMarketData.h"
@@ -48,30 +48,30 @@ public:
 protected :
 	//==============================================
 	// setup volatility method 
-	virtual void setUpVolatilityFuncForParallel(const LAString &riskName, const LAString &ccy, LADataInstance &dataInstance,
+	virtual void setUpVolatilityFuncForParallel(const AQLString &riskName, const AQLString &ccy, AQLDataInstance &dataInstance,
 											LAMathVolatility &vol, SCENARIONUM scenarioNum = SCENARIO_1) const;
 	//==============================================
 	// setup volatility data 
-	virtual void setUpVolatilityDataForParallel(const LAString &riskName, const LAString &ccy, LADataInstance &dataInstance,
+	virtual void setUpVolatilityDataForParallel(const AQLString &riskName, const AQLString &ccy, AQLDataInstance &dataInstance,
 											LAMathVolatility &vol, SCENARIONUM scenarioNum = SCENARIO_1) const;
 	//==============================================
 	// create volatility object for grid
 	virtual std::vector<LAMathVolatility *> createVolatilityEntityFuncForGrid
-					(const LAString &riskName, const LAString &ccy, 
-					LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
+					(const AQLString &riskName, const AQLString &ccy, 
+					AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
 
 	//==============================================
 	// create volatility object for grid
 	virtual std::vector<LAMathVolatility *> createVolatilityEntityDataForGrid
-					(const LAString &riskName, const LAString &ccy, 
-					LADataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
+					(const AQLString &riskName, const AQLString &ccy, 
+					AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const;
 
 	//==============================================
 	// get calibfile path 
-	virtual LAString getCalibFilePath(const LAString &riskName, const LAString &ccy, SCENARIONUM scenarioNum = SCENARIO_1) const;
+	virtual AQLString getCalibFilePath(const AQLString &riskName, const AQLString &ccy, SCENARIONUM scenarioNum = SCENARIO_1) const;
 	//==============================================
 	// get adjfile path
-	virtual LAString getAdjFilePath(const LAString &riskName, const LAString &ccy, SCENARIONUM scenarioNum = SCENARIO_1) const;
+	virtual AQLString getAdjFilePath(const AQLString &riskName, const AQLString &ccy, SCENARIONUM scenarioNum = SCENARIO_1) const;
 private :
 	//==============================================
 	// get grid info

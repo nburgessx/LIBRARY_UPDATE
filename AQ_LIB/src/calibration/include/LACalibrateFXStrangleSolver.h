@@ -4,11 +4,11 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LACalibrate.h"
 #include "LAMathFXVolatilitySurfaceGenerate.h"
 
-class LAObject;
+class AQLObject;
 class LAMathYieldCurve;
 
 class LACalibrateFXStrangleSolver : public LACalibrate
@@ -22,7 +22,7 @@ public :
 
 	//=============================================
 	//  setup
-    virtual void	setUp(LAObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
+    virtual void	setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
 	//=============================================
 	//  calibration method
     virtual void    doCalibrate();

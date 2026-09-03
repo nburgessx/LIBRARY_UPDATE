@@ -23,22 +23,22 @@ public:
 protected:
 	//==============================================
 	// get operator2
-	virtual  LAString  getOperator2(void) const;	
+	virtual  AQLString  getOperator2(void) const;	
 	//==============================================
 	// get coefficient1
-	virtual  LAString  getCoefficient1(const LAString &ccy) const;
+	virtual  AQLString  getCoefficient1(const AQLString &ccy) const;
 	//==============================================
 	// get coefficient2
-	virtual  LAString  getCoefficient2(const LAString &ccy) const;
+	virtual  AQLString  getCoefficient2(const AQLString &ccy) const;
 	//==============================================
 	// get outputname2
-	virtual  LAString  getOutPutName2(const LAString &ccy) const;
+	virtual  AQLString  getOutPutName2(const AQLString &ccy) const;
 	//==============================================
 	// get bump direction
-	virtual  LAString getBumpDirection(const LAString &ccy) const;
+	virtual  AQLString getBumpDirection(const AQLString &ccy) const;
 	//==============================================
 	// get property bump direction
-	LAString getPropBumpDirection(const LAString &ccy) const;
+	AQLString getPropBumpDirection(const AQLString &ccy) const;
 
 };
 

@@ -9,8 +9,8 @@
 #include <unordered_map>
 #include <functional>		// for std::hash
 
-#include "LAString.h"
-#include "LACoreTemplateType.h"
+#include "AQLString.h"
+#include "AQLCoreTemplateType.h"
 
 #if defined (WIN32) || defined (WIN64)
 #include <windows.h>
@@ -26,13 +26,13 @@ class LAStaticDataManager;
 class LAStaticData
 {
 public:
-	LAString                    getStaticData(const LAString &key) const;
-	LAString                    getStaticData(const LAString &key, const LAString &alias) const;
-	void						setStaticData(const LAString &key, const LAString &value);
-	void						removeStaticData(const LAString &key);
+	AQLString                    getStaticData(const AQLString &key) const;
+	AQLString                    getStaticData(const AQLString &key, const AQLString &alias) const;
+	void						setStaticData(const AQLString &key, const AQLString &value);
+	void						removeStaticData(const AQLString &key);
 
 #ifdef VISUAL_STUDIO_2010_ANALYTICS
-	LAStringMatrix           loadStaticDataObject(const LAString &prefix, const LAString &suffix) const;
+	AQLStringMatrix           loadStaticDataObject(const AQLString &prefix, const AQLString &suffix) const;
 #endif
 
 private:
@@ -42,11 +42,11 @@ private:
 	friend class LACurveSetup;
 	friend class StaticDataName;
 
-	typedef std::map<LAString, LAString>::iterator Itr;
-	typedef std::map<LAString, LAString>::const_iterator CItr;
+	typedef std::map<AQLString, AQLString>::iterator Itr;
+	typedef std::map<AQLString, AQLString>::const_iterator CItr;
 	
 	// constructor
-	LAStaticData(const LAString &file, std::ios_base::openmode mode = std::ios_base::out);
+	LAStaticData(const AQLString &file, std::ios_base::openmode mode = std::ios_base::out);
 	
 	// destructor
 	~LAStaticData();
@@ -59,7 +59,7 @@ private:
 
 	// Members
 	MAFileAccessor *mpFile;         
-	std::map<LAString, LAString> mProp; 
+	std::map<AQLString, AQLString> mProp; 
 
 #ifdef __HAS_MIC__
 	mutable common_lib::Mutex mMutex;

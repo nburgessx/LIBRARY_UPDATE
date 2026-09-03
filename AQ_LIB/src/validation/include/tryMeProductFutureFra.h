@@ -1,5 +1,5 @@
 #pragma once
-#include "LADate.h"
+#include "AQLDate.h"
 
 namespace validation
 {
@@ -13,7 +13,7 @@ namespace validation
 	* @param [in]		volatility          The Hull-White 1F Volatility Parameter
 	* @param [out]		Returns Fra rate
 	*/
-	double tryMeProductFuturePriceToFraRate(const double& futurePrice, const LADate& curveAsOfDate, const LADate& futuresStartDate, const LADate& futuresEndDate, const double& meanReversion, const double& volatility);
+	double tryMeProductFuturePriceToFraRate(const double& futurePrice, const AQLDate& curveAsOfDate, const AQLDate& futuresStartDate, const AQLDate& futuresEndDate, const double& meanReversion, const double& volatility);
 
 	/* @brief			Calculate the FRA rate from Future price, validation API for meProductFuturePriceToFraRateFromConvAdj
 	* @param [in]		futurePrice			The given future price

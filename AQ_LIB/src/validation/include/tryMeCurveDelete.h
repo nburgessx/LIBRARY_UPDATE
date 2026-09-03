@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -10,6 +10,6 @@ namespace validation
     *  @param [in]		curveIndex			Name of the curve to be removed from object pool	
     *  @return	A message showing the output of the action
     */
-	LAString tryMeCurveDelete(const LAString& curveCollection, const LAString& curveIndex);
+	AQLString tryMeCurveDelete(const AQLString& curveCollection, const AQLString& curveIndex);
 
 }

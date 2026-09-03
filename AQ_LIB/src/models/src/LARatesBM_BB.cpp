@@ -14,7 +14,7 @@
 
 
 #include "LARatesBM_BB.h"
-#include "LARandBase.h"
+#include "AQLRandBase.h"
 
 #include <cstdlib>
 
@@ -30,7 +30,7 @@ using namespace std;
 	@param[in] rand rand generator
 	@param[in] factor_num number of factor
 */
-LARatesBM_BB::LARatesBM_BB(const DoubleArray& timegrid, const LARandBase& rand, unsigned int factor_num)
+LARatesBM_BB::LARatesBM_BB(const DoubleArray& timegrid, const AQLRandBase& rand, unsigned int factor_num)
 :LARatesBM(timegrid, rand, factor_num), mNumberOfSteps(timegrid.size() - 1), mNumFactor(factor_num), mLeftIndex(mNumberOfSteps), mRightIndex(mNumberOfSteps), 
 mBridgeIndex(mNumberOfSteps), mLeftWeight(mNumberOfSteps), mRightWeight(mNumberOfSteps), mStdDiv(mNumberOfSteps), mSqrtdt(mNumberOfSteps)
 {
@@ -46,7 +46,7 @@ mBridgeIndex(mNumberOfSteps), mLeftWeight(mNumberOfSteps), mRightWeight(mNumberO
 	@param[in] rand rand generator
 	@param[in] loading factor loading(i * j * time)
 */
-LARatesBM_BB::LARatesBM_BB(const DoubleArray& timegrid, const LARandBase& rand, const std::vector<DoubleMatrix>& loading)
+LARatesBM_BB::LARatesBM_BB(const DoubleArray& timegrid, const AQLRandBase& rand, const std::vector<DoubleMatrix>& loading)
 : LARatesBM(timegrid, rand, loading), mNumberOfSteps(timegrid.size() - 1), mNumFactor(1), mLeftIndex(mNumberOfSteps), mRightIndex(mNumberOfSteps), mBridgeIndex(mNumberOfSteps),
 mLeftWeight(mNumberOfSteps), mRightWeight(mNumberOfSteps), mStdDiv(mNumberOfSteps), mSqrtdt(mNumberOfSteps)
 {
@@ -101,7 +101,7 @@ LARatesBM_BB::clone() const
     }
     catch (bad_alloc &e)
 	{
-        throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
     }
 }
 
@@ -231,14 +231,14 @@ LARatesBM_BB::buildPath(DoubleArray &path, const vector<double> &gaussians)
 {
 	if (gaussians.size() != mNumberOfSteps)
 	{
-		LAString msg("gaussians.size() and mNumberOfSteps are not consistent!");
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg("gaussians.size() and mNumberOfSteps are not consistent!");
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	} 
 
 	if (path.size() != mNumberOfSteps)
 	{
-		LAString msg("path.size() and mNumberOfSteps are not consistent!");
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg("path.size() and mNumberOfSteps are not consistent!");
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	} 
 
 	path[mNumberOfSteps - 1] = mStdDiv.front() * gaussians.front();

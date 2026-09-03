@@ -51,37 +51,37 @@ namespace validation
     *  @param [in]		eomRoll			                Boolean that decides if EOM rolling is enforced (only when effective date is on EOM)
     *  @param [in]		floatSpread			            Floating leg spread
     */
-    double tryMirSwapPV( LADataInstance* dataInstance,
+    double tryMirSwapPV( AQLDataInstance* dataInstance,
                          double notional,
-                         const LAString& payRec,
-                         const LAString& effectDt,
-                         const LAString& maturity,
-                         const LAString& curveID,
+                         const AQLString& payRec,
+                         const AQLString& effectDt,
+                         const AQLString& maturity,
+                         const AQLString& curveID,
                          double fixedRate,
-                         const LAString& fixedFrequency,
-                         const LAString& fixedDaycount,
-                         const LAString& fixedBusinessDayAdjustment,
-                         const LAString& fixedCalendar,
-                         const LAString& fixedFirstStub,
-                         const LAString& fixedLastStub,
-                         const LAString& fixedRollDay,
-                         const LAString& fixedPayLag,
-                         const LAString& fixedStubType,
-                         const LAString& floatFrequency,
-                         const LAString& floatDayCount,
-                         const LAString& floatBusinessDayAdjustment,
-                         const LAString& floatCalendar,
-                         const LAString& floatFirstStub,
-                         const LAString& floatLastStub,
-                         const LAString& floatRollDay,
-                         const LAString& floatFixingLag,
+                         const AQLString& fixedFrequency,
+                         const AQLString& fixedDaycount,
+                         const AQLString& fixedBusinessDayAdjustment,
+                         const AQLString& fixedCalendar,
+                         const AQLString& fixedFirstStub,
+                         const AQLString& fixedLastStub,
+                         const AQLString& fixedRollDay,
+                         const AQLString& fixedPayLag,
+                         const AQLString& fixedStubType,
+                         const AQLString& floatFrequency,
+                         const AQLString& floatDayCount,
+                         const AQLString& floatBusinessDayAdjustment,
+                         const AQLString& floatCalendar,
+                         const AQLString& floatFirstStub,
+                         const AQLString& floatLastStub,
+                         const AQLString& floatRollDay,
+                         const AQLString& floatFixingLag,
                          double floatFirstFixing,
                          double floatLastFixing,
-                         const LAString& floatPayLag,
-                         const LAString& floatStubType,
-                         const LAString& interpolation,
-                         const LAString& forecastCurve,
-                         const LAString& discountCurve,
+                         const AQLString& floatPayLag,
+                         const AQLString& floatStubType,
+                         const AQLString& interpolation,
+                         const AQLString& forecastCurve,
+                         const AQLString& discountCurve,
                          bool interpFwds,
                          bool eomRoll,
                          double floatSpread )
@@ -131,20 +131,20 @@ namespace validation
         //----------------------------------------------------------------------------------
         // Validate non-cash flow related parameters
 
-        if( forecastCurve == LAString( "" ) )
+        if( forecastCurve == AQLString( "" ) )
         {
-            throw LACoreInvalidData( "#Error: The Swap 'forecast Curve' must be specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The Swap 'forecast Curve' must be specified.", __FILE__, __LINE__ );
         }
 
-        if( discountCurve == LAString( "" ) )
+        if( discountCurve == AQLString( "" ) )
         {
-            throw LACoreInvalidData( "#Error: The Swap 'discount Curve' must be specified.", __FILE__, __LINE__ );
+            throw AQLCoreInvalidData( "#Error: The Swap 'discount Curve' must be specified.", __FILE__, __LINE__ );
         }
 
-        LAString interp( interpolation );
-        if( interpolation == LAString( "" ) )
+        AQLString interp( interpolation );
+        if( interpolation == AQLString( "" ) )
         {
-            interp = LAString( "SPLINE" );
+            interp = AQLString( "SPLINE" );
         }
 
 

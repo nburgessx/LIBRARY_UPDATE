@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CommonConstants.h"
 #include "CoreEnumerations.h"
 #include "LabelValueBlock.h"

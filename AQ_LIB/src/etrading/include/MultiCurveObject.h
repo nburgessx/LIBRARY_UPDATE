@@ -30,7 +30,7 @@ namespace etrading
 		MultiCurveObject(const std::string& objectName,
 						 const std::vector<std::string>& curveGeneratorNames,
 						 const std::vector<std::string>& curveMarketDataNames,
-						 const LAStringMatrix& engineParams,
+						 const AQLStringMatrix& engineParams,
 						 const std::string& domesticCurveCollection,
 						 const std::string& foreignCurveCollection = "");
 		
@@ -62,7 +62,7 @@ namespace etrading
 		*           The CurveIndex names are populated from the curve generator conventions
 		* @returns	The curveIndexNames
 		*/
-		const LAStringVector& getCurveIndexNames() const;
+		const AQLStringVector& getCurveIndexNames() const;
 
 		/* @brief	Helper function which returns all the component single curve ojects
 		* @returns	All component curve objects
@@ -79,7 +79,7 @@ namespace etrading
 
 		/* @brief	Set engine parameters that are common across all curves
 		*/
-		void setEngineParams(const LAStringMatrix& engineParams) { engineParams_ = engineParams; }
+		void setEngineParams(const AQLStringMatrix& engineParams) { engineParams_ = engineParams; }
 
 		// Get Curve Collection Names
 		virtual std::string getCurveCollection() const				{ return domesticCurveCollection_; }
@@ -92,7 +92,7 @@ namespace etrading
 		std::vector<SingleCurveObjectPtr> singleCurves_;
 		
 		// Common parameters across the curves
-		LAStringMatrix engineParams_;
+		AQLStringMatrix engineParams_;
 
 		// Name of the dual-bootstrapped curves object
 		std::string objectName_;
@@ -126,14 +126,14 @@ namespace etrading
 													   std::vector<std::string>& curveMarketDataNames,
 													   std::string& domesticCurveCollection,
 													   std::string& foreignCurveCollection,
-												       LAStringMatrix& engineParams ) const;
+												       AQLStringMatrix& engineParams ) const;
 		
 
 		//----------------------------------------------------------------------
 		// private member variables
 
 		// Curve indexes
-		LAStringVector componentCurveIndexNames_;
+		AQLStringVector componentCurveIndexNames_;
 
 		// Domestic curve collection
 		std::string domesticCurveCollection_;

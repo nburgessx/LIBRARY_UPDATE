@@ -93,7 +93,7 @@ namespace etrading
     /* @brief		Method that returns True if the legName exits in legs
     *  @return		True if the legName exits
     */
-    bool LegCollection::exists(const LAString& legName) const
+    bool LegCollection::exists(const AQLString& legName) const
     {
        //Check if legName exits
         StringSet legNames;
@@ -104,7 +104,7 @@ namespace etrading
             legNames.insert(legNm.toUpper());
         }
 
-        LAString name  = legName; 
+        AQLString name  = legName; 
         if (legNames.find(name.toUpper()) == legNames.end())  
         {
             return false;
@@ -115,7 +115,7 @@ namespace etrading
     /* @brief		Method that returns the leg with matching legName
     *  @return		The leg with matching legName
     */
-    LegPtr LegCollection::findLegByName(const LAString& legName) const
+    LegPtr LegCollection::findLegByName(const AQLString& legName) const
     {
         for (size_t i = 0; i < legs_.size(); ++i)
         {

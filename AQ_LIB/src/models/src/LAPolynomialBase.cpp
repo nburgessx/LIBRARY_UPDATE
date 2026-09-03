@@ -24,8 +24,8 @@
 
 
 #include "LAPolynomialBase.h"
-#include "LACoreTemplateType.h"
-#include "LABasic.h"
+#include "AQLCoreTemplateType.h"
+#include "AQLBasic.h"
 #include <numeric>
 
 
@@ -37,7 +37,7 @@
 	@param[in] checkflag check flag
 */
 LAPolynomialBase::LAPolynomialBase(unsigned int order, unsigned int varnum , bool checkflag)
-: LAFunctionBase(checkflag)
+: AQLFunctionBase(checkflag)
 , mOrderBF(order), mNumVar(varnum), mIsConvert(false), mShift_Y(0.0), mScale_Y(0.0), mShift_X(DoubleArray(1, 0.0)), mScale_X(DoubleArray(1, 0.0))
 {
 
@@ -46,7 +46,7 @@ LAPolynomialBase::LAPolynomialBase(unsigned int order, unsigned int varnum , boo
 	@brief copy constructor
 */
 LAPolynomialBase::LAPolynomialBase(const LAPolynomialBase& v) 
-	: LAFunctionBase(v), mOrderBF(v.mOrderBF), mNumVar(v.mNumVar), mIsConvert(v.mIsConvert), mShift_Y(v.mShift_Y), mScale_Y(v.mScale_Y), mShift_X(v.mShift_X), mScale_X(v.mScale_X)
+	: AQLFunctionBase(v), mOrderBF(v.mOrderBF), mNumVar(v.mNumVar), mIsConvert(v.mIsConvert), mShift_Y(v.mShift_Y), mScale_Y(v.mScale_Y), mShift_X(v.mShift_X), mScale_X(v.mScale_X)
 {
 
 }
@@ -67,7 +67,7 @@ LAPolynomialBase::~LAPolynomialBase()
 bool
 LAPolynomialBase::isTypeOf(function_t id) const
 {
-	return (id == FN_POLYNOMIALBASE ? true : LAFunctionBase::isTypeOf(id));
+	return (id == FN_POLYNOMIALBASE ? true : AQLFunctionBase::isTypeOf(id));
 }
 
 /*!
@@ -117,7 +117,7 @@ LAPolynomialBase::combin(unsigned int m, unsigned int n) const
 {
 	if (m < n)
 	{
-		throw LACoreInvalidData("first parameter must be equal or more than second parameter ", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("first parameter must be equal or more than second parameter ", __FILE__, __LINE__);
 	}
 	if (n == 0 || m == n) return 1;
 	unsigned int ret = 1;
@@ -168,7 +168,7 @@ LAPolynomialBase::calcTransformedValue(const DoubleArray& y, const DoubleMatrix&
 			sum2 -= sum1 * sum1;
 			if (sum2 > 0.0)
 			{
-				sum2 = LAMath::sqrt(sum2);
+				sum2 = AQLMath::sqrt(sum2);
 			}
 			if (isScale_Y && sum2 != 0.0)
 			{
@@ -199,7 +199,7 @@ LAPolynomialBase::calcTransformedValue(const DoubleArray& y, const DoubleMatrix&
 				sum2 -= sum1 * sum1;
 				if (sum2 > 0.0)
 				{
-					sum2 = LAMath::sqrt(sum2);
+					sum2 = AQLMath::sqrt(sum2);
 				}
 				mShift_X[j] = sum1;
 				if (isScale_X && sum2 != 0.0)

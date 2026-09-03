@@ -14,18 +14,18 @@
 #include "LAMathInterpolationUtilities.h"		// Get Interpolation Values
 #include "CurveUtilities.h"				        // DateFromTenor methods
 #include "LACurvePricingObject.h"	            // Methods to get the curve daycount conventions
-#include "LAEnumConversion.h"		            // Methods to convert enum values to legacy enums
+#include "AQLEnumConversion.h"		            // Methods to convert enum values to legacy enums
 #include "LADefinitions.h"                      // Needed for the delimiter curve index delimiter token "MULTI_STATIC_DATA_DELIMITER", which is typically a token
 
 // Interpolation Methods
-#include "LAMonotoneConvexInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LAParabolicInterpolation.h"
-#include "LALinearSplineInterpolation.h"
-#include "LALinearMonotoneSplineInterpolation.h"
-#include "LAConstrainedSplineInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LALinearInterpolation.h"
+#include "AQLMonotoneConvexInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLParabolicInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
+#include "AQLLinearMonotoneSplineInterpolation.h"
+#include "AQLConstrainedSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLLinearInterpolation.h"
 
 namespace etrading
 {

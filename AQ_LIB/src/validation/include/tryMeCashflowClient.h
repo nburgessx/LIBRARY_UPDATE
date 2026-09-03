@@ -6,7 +6,7 @@
 #include "CashflowModel.h"
 #include "LoanCalculations.h"
 #include "LabelValueBlock.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "CommonConstants.h"
 
 
@@ -46,11 +46,11 @@ namespace validation
 	* @param[in]	riskWeightVector	Specifies the risk-weight in each period of the loan
 	* @param[in]	kirbVector			Specifies the capital requirement in each period fo a loan 
 	* @param[in]	loanType			Whether  the loan is amortizing or has bullet repayment.
-	*  @param[in]	includeCashflowColumnHeaders	Whether to annotate the LAStringMatrix with column headers
+	*  @param[in]	includeCashflowColumnHeaders	Whether to annotate the AQLStringMatrix with column headers
 	*
 	* @returns	A matrix containing the cashflows and default amounts
 	*/
-	LAStringMatrix tryMeSRTAmortizeSingleLoanAsMatrix( const int& term,
+	AQLStringMatrix tryMeSRTAmortizeSingleLoanAsMatrix( const int& term,
 													 const double& loanRate,
 													 const double& originalBalance,
 													 const std::vector<double>& defaultVector,
@@ -73,11 +73,11 @@ namespace validation
 	*			except that the results are presented in an Excel-friendly matrix.
 	*  @param[in]	loanCsvFilename	The CSV file containing the loan portfolio details.
 	*  @param[in]	csvColumnNames	The CSV file can contain many columns; this data lists the column names corresponding to "EAD", "RW", "KIRB"
-	*  @param[in]	includeCashflowColumnHeaders	Whether to annotate the LAStringMatrix with column headers
+	*  @param[in]	includeCashflowColumnHeaders	Whether to annotate the AQLStringMatrix with column headers
 	*
 	*  @returns	A structure containing the monthly cashflows and default amounts of the loan portfolio
 	*/
-	LAStringMatrix tryMeSRTAmortizeLoanPortfolioAsMatrix( const std::string& loanCsvFilename, const etrading::LabelValueBlock& csvColumnNames, const bool& includeCashflowColumnHeaders );
+	AQLStringMatrix tryMeSRTAmortizeLoanPortfolioAsMatrix( const std::string& loanCsvFilename, const etrading::LabelValueBlock& csvColumnNames, const bool& includeCashflowColumnHeaders );
 
 
 	/* @brief CashflowModel: This function projects the input loan-cashflows through a capital structure

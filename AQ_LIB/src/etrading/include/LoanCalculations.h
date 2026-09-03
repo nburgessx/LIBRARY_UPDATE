@@ -3,7 +3,7 @@
 #include "DataFrame.h"
 #include "CoreEnumerations.h"
 
-#include "LACoreTemplateType.h"  // AnyTypeMatrix
+#include "AQLCoreTemplateType.h"  // AnyTypeMatrix
 
 #include <string>
 #include <vector>

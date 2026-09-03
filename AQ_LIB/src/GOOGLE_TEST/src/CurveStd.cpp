@@ -5,7 +5,7 @@
 
 namespace google_test
 {
-    CurveStd::CurveStd( const LAString& inputFile )
+    CurveStd::CurveStd( const AQLString& inputFile )
         : CurveAccessors( inputFile )
     {
         if ( fileLoaded_ )
@@ -16,7 +16,7 @@ namespace google_test
                     getDataInstance(),
                     curveID_,
                     marketName_,
-                    inputFile_.getOptional( "generateProp", inputFile_.getOptional( "generalProps", LAStringMatrix() ) ), // Some files have generateProp and others generalProps
+                    inputFile_.getOptional( "generateProp", inputFile_.getOptional( "generalProps", AQLStringMatrix() ) ), // Some files have generateProp and others generalProps
                     inputFile_["moneyConv"],
                     inputFile_["liborRates"],
                     inputFile_["liborConv"],
@@ -32,7 +32,7 @@ namespace google_test
                     inputFile_["curveNames"],
                     inputFile_["curveName_DF2"] );
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }
@@ -47,14 +47,14 @@ namespace google_test
 	*  @brief			Set up STD swap curve
 	*  @param [in]		inputFile	File representation of the curve
     */
-	void setUpSTDCurve(const LAString& stdInputFile)
+	void setUpSTDCurve(const AQLString& stdInputFile)
 	{
 		if ( stdInputFile.size() != 0 )
         {
             etrading::ReadDataFile::Load inputFileObj = etrading::ReadDataFile::Load( stdInputFile );
-            LAString curveID = etrading::getCurveID( inputFileObj );
-            LAString marketName = etrading::getMarketName( inputFileObj );
-            LAStringVector curveNames = etrading::getCurveNames( inputFileObj );
+            AQLString curveID = etrading::getCurveID( inputFileObj );
+            AQLString marketName = etrading::getMarketName( inputFileObj );
+            AQLStringVector curveNames = etrading::getCurveNames( inputFileObj );
 
 			try
             {
@@ -62,7 +62,7 @@ namespace google_test
                     etrading::InitializeAQETrading::instance().dataInstance(),
                     curveID,
                     marketName,
-                    inputFileObj.getOptional( "generateProp", inputFileObj.getOptional( "generalProps", LAStringMatrix() ) ), // Some files have generateProp and others generalProps
+                    inputFileObj.getOptional( "generateProp", inputFileObj.getOptional( "generalProps", AQLStringMatrix() ) ), // Some files have generateProp and others generalProps
                     inputFileObj["moneyConv"],
                     inputFileObj["liborRates"],
                     inputFileObj["liborConv"],
@@ -78,7 +78,7 @@ namespace google_test
                     inputFileObj["curveNames"],
                     inputFileObj["curveName_DF2"] );
             }
-            catch( const LACoreError& m )
+            catch( const AQLCoreError& m )
             {
                 std::cout <<  m.getMsg();
             }

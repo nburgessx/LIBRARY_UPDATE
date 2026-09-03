@@ -4,14 +4,14 @@
 #pragma interface
 #endif
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 #include "LACalibrate.h"
 #include "LAMathFXVolatilitySurfaceGenerate.h"
-#include "LAPriceDataSlidingRule.h"
-#include "LAFunctionBase.h"
-#include "LABasic.h"
+#include "AQLPriceDataSlidingRule.h"
+#include "AQLFunctionBase.h"
+#include "AQLBasic.h"
 
-class LAObject;
+class AQLObject;
 
 class LACalibrateFXVannaVolga : public LACalibrate
 {
@@ -24,7 +24,7 @@ public :
 
 	//=============================================
 	//  setup
-    virtual void	setUp(LAObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
+    virtual void	setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACalibrationFunc *method, int gridPos = -1);
 	//=============================================
 	//  calibration method
     virtual void    doCalibrate();
@@ -32,9 +32,9 @@ private :
 	double mSpotRate;
 	
 	DoubleArray mDFRatios;
-	LAString mFXCurrency;
-	LAString mdYieldDataName;
-	LAString mfYieldDataName;
+	AQLString mFXCurrency;
+	AQLString mdYieldDataName;
+	AQLString mfYieldDataName;
 	ATMInterpolationMethod mAtmMethod;
 	mutable	std::vector<SmileData> mSmileData;
 	mutable std::vector<FXOptionData > mFxParams;
@@ -42,7 +42,7 @@ private :
 	
 
 	//hishida vannavolga
-	class MMATM : public LAFunctionBase
+	class MMATM : public AQLFunctionBase
 	{
 	public:
 		// constructor
@@ -58,7 +58,7 @@ private :
 		virtual function_t			getType() const{return 0;};
 									//======================================
 									// Make copy(clone) of this class
-		virtual LACoreFunctionBase*		clone() const
+		virtual AQLCoreFunctionBase*		clone() const
 		{
 			return new MMATM(*this);
 			/*try 
@@ -67,7 +67,7 @@ private :
 			}
 			catch (bad_alloc & e)
 			{
-				throw LACoreSystemError(e.what(), __FILE__, __LINE__);
+				throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
 			}*/
 		
 		};// %%% COVARIANT RETURN %%%
@@ -76,7 +76,7 @@ private :
 		{
 			if(x.size() == 1)
 				return operator()(x[0]);
-			throw LACoreInvalidData("parameter size must be one", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("parameter size must be one", __FILE__, __LINE__);
 			
 		};
 		virtual double				operator()(const double& x) const 
@@ -89,14 +89,14 @@ private :
 			double v3 = msmiledata.vols[2];
 			double k1 = msmiledata.strikes[0];
 			double k2 = (mopdata.deltaType == FWD_PRE || mopdata.deltaType == SPOT_PRE)
-						? mopdata.F * LAMath::exp(-0.5 * v2 * v2 * mopdata.T)
-						: mopdata.F * LAMath::exp(0.5 * v2 * v2 * mopdata.T);
+						? mopdata.F * AQLMath::exp(-0.5 * v2 * v2 * mopdata.T)
+						: mopdata.F * AQLMath::exp(0.5 * v2 * v2 * mopdata.T);
 			double k3 = msmiledata.strikes[2];
 
 			double targetimplyvol 
-				= LAMath::log(k2 / k) * LAMath::log(k3 / k) / LAMath::log(k2 / k1) / LAMath::log(k3 / k1) * v1
-				+ LAMath::log(k / k1) * LAMath::log(k3 / k) / LAMath::log(k2 / k1) / LAMath::log(k3 / k2) * v2
-				+ LAMath::log(k / k1) * LAMath::log(k / k2) / LAMath::log(k3 / k1) / LAMath::log(k3 / k2) * v3;
+				= AQLMath::log(k2 / k) * AQLMath::log(k3 / k) / AQLMath::log(k2 / k1) / AQLMath::log(k3 / k1) * v1
+				+ AQLMath::log(k / k1) * AQLMath::log(k3 / k) / AQLMath::log(k2 / k1) / AQLMath::log(k3 / k2) * v2
+				+ AQLMath::log(k / k1) * AQLMath::log(k / k2) / AQLMath::log(k3 / k1) / AQLMath::log(k3 / k2) * v3;
 
 			return /*(targetimplyvol-targetvol) * 10000*/targetimplyvol / targetvol - 1.0;
 		};

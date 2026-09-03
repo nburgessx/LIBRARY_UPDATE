@@ -1,5 +1,5 @@
 #include "TypeUtilities.h"
-#include "LAString.h"
+#include "AQLString.h"
 
 #include "meUtilityInterpolation.h"
 #include "tryMeUtilityInterpolation.h"
@@ -21,7 +21,7 @@ double meUtilityInterpolation(const std::vector<double>& array1,
     AQ_API_START
 	double ret;
 			
-	LAString interp(interpolation.c_str());
+	AQLString interp(interpolation.c_str());
 	ret = validation::tryMeUtilityInterpolation(array1, array2, point, interp);
  
 	return ret;

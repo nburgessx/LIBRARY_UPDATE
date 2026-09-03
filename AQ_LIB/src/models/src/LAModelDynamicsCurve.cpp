@@ -12,8 +12,8 @@
 
 
 #include "LAModelDynamicsCurve.h"
-#include "LAString.h"
-#include "LABasic.h"
+#include "AQLString.h"
+#include "AQLBasic.h"
 
 using namespace std;
 //================ LARatesPathElementCurve ===================================
@@ -27,7 +27,7 @@ LARatesPathElementCurve::LARatesPathElementCurve(double t)
 	if (t < 0.0)
 	{
 		//error
-		throw LACoreInvalidData("Can't set negative t" , __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Can't set negative t" , __FILE__, __LINE__);
 	}
 }
 
@@ -86,9 +86,9 @@ LARatesPathElementCurve::operator = (const LARatesPathElementCurve& a)
 /*	if (!a.isTypeOf(PE_CURVE)) 
 	{	// error when type-check
 		// exception
-		LAString err = "Assignment error for LARatesPathElementCurve : from ";
-		err += LAString(a.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "Assignment error for LARatesPathElementCurve : from ";
+		err += AQLString(a.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}*/
 
 	m_t = dynamic_cast<const LARatesPathElementCurve&>(a).m_t;
@@ -105,15 +105,15 @@ LARatesPathElementCurve::set(const LARatesPathElementBase& a)
 	{	
 		// error when type-check
 		// exception
-		LAString err = "set error for LARatesPathElementCurve : from ";
-		err += LAString(a.getType());
-		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
+		AQLString err = "set error for LARatesPathElementCurve : from ";
+		err += AQLString(a.getType());
+		throw AQLCoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	
 //	m_t = dynamic_cast<const LARatesPathElementCurve&>(a).m_t;
 	if (m_t < dynamic_cast<const LARatesPathElementCurve&>(a).m_t)
 	{
-		throw LACoreInvalidData("input curve start time must be same or before this curve start time", __FILE__, __LINE__);
+		throw AQLCoreInvalidData("input curve start time must be same or before this curve start time", __FILE__, __LINE__);
 	}
 
 }
@@ -178,10 +178,10 @@ LARatesPathElementCurve::getZero (double T) const
 {
 	if (m_t > T)
 	{
-		return 0.0;//throw LACoreInvalidData("maturity is before start", __FILE__, __LINE__);
+		return 0.0;//throw AQLCoreInvalidData("maturity is before start", __FILE__, __LINE__);
 	}
 	if (m_t == T) return getZero(T + 0.0001);
-	return -LAMath::log(getP(T)) / (T - m_t);
+	return -AQLMath::log(getP(T)) / (T - m_t);
 }
 
 /*!
@@ -224,7 +224,7 @@ LARatesPathElementCurve::set_t (double t)
 	if (t < 0.0)
 	{
 		//error
-		throw LACoreInvalidData("Can't set negative t" , __FILE__, __LINE__);
+		throw AQLCoreInvalidData("Can't set negative t" , __FILE__, __LINE__);
 	}
 	m_t = t;
 }

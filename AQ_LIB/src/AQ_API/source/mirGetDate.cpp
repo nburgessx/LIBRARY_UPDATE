@@ -1,7 +1,7 @@
 #include "TypeUtilities.h"
 #include "mirGetDate.h"
-#include "LADate.h"
-#include "LAString.h"
+#include "AQLDate.h"
+#include "AQLString.h"
 #include "tryMirGetDate.h"
 
 
@@ -24,15 +24,15 @@ std::string mirGetDate(const std::string& BaseDate,
 	try 
 	{
 		// Input marshalling
-		LADate baseDate(BaseDate.c_str(),"YYYYMMDD");
-		LAString term(Term.c_str());
-		LAString slidingRule(SlidingRule.c_str());
-		LAString calendar(Calendar.c_str());
-		LAString rollConvention(RollConvention.c_str());
+		AQLDate baseDate(BaseDate.c_str(),"YYYYMMDD");
+		AQLString term(Term.c_str());
+		AQLString slidingRule(SlidingRule.c_str());
+		AQLString calendar(Calendar.c_str());
+		AQLString rollConvention(RollConvention.c_str());
 
 		ret = validation::tryMirGetDate(baseDate, term, slidingRule, calendar, rollConvention).getCString();
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 
@@ -62,10 +62,10 @@ std::vector<std::string> mirGetDate(const std::vector<std::string>& BaseDates,
 		DateVector baseDateVec;
 		swig::buildDateVector(baseDateVec, BaseDates);
 
-		LAString term(Term.c_str());
-		LAString slidingRule(SlidingRule.c_str());
-		LAString calendar(Calendar.c_str());
-		LAString rollConvention(RollConvention.c_str());
+		AQLString term(Term.c_str());
+		AQLString slidingRule(SlidingRule.c_str());
+		AQLString calendar(Calendar.c_str());
+		AQLString rollConvention(RollConvention.c_str());
 
 		DateVector dates = validation::tryMirGetDate(baseDateVec, term, slidingRule, calendar, rollConvention);
 		
@@ -74,7 +74,7 @@ std::vector<std::string> mirGetDate(const std::vector<std::string>& BaseDates,
 			ret.push_back(dates[i].stringWithFormat("YYYYMMDD").getCString());
 		}		
 	} 
-	catch (LACoreError& mesx) 
+	catch (AQLCoreError& mesx) 
 	{
 		throw std::runtime_error(mesx.getMsg());
 	} 

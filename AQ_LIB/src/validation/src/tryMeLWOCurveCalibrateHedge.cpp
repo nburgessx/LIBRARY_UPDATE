@@ -40,12 +40,12 @@ namespace validation
 
 		if (oisCurveObjectName.empty() )
 		{
-			throw LACoreInvalidData("#Error: No OIS curve object name has been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No OIS curve object name has been provided.",__FILE__,__LINE__);
 		}
 
 		if (swapCurveObjectName.empty() )
 		{
-			throw LACoreInvalidData("#Error: No Swap curve object name has been provided.",__FILE__,__LINE__);
+			throw AQLCoreInvalidData("#Error: No Swap curve object name has been provided.",__FILE__,__LINE__);
 		}
 
 		// Initialise the hedge curve engine with curve generators and curve market data

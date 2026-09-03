@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 namespace validation
 {
@@ -19,7 +19,7 @@ namespace validation
     * @param [out]		Returns initial volatility, should be close to zero
     */
     AnyTypeMatrix tryMeCurveVasicekChecking(const DateVector& fixingDates, const DoubleVector& targetForwardRates, const std::string& curveCollection, const std::string& curveIndex, 
-											const double& initialTheta, const double& initialSigma, const double& alpha = 0.03, const double& rt = std::numeric_limits<double>::quiet_NaN() , const LADate& valuationDate = LADate(), const bool& showColumnHeaders = true);
+											const double& initialTheta, const double& initialSigma, const double& alpha = 0.03, const double& rt = std::numeric_limits<double>::quiet_NaN() , const AQLDate& valuationDate = AQLDate(), const bool& showColumnHeaders = true);
 
 	/* @brief			Check forward rates from on the Vasicek model
     * @param [in]		fixingDates         fixing dates of the forward rates
@@ -33,7 +33,7 @@ namespace validation
     * @param [out]		Returns forward rates from on the Vasicek model
     */
 	DoubleVector tryMeCurveVasicekForwardRates(const DateVector& fixingDates, const std::string& curveCollection, const std::string& curveIndex,
-											   const double& theta, const double& sigma, const double& alpha = 0.03, const double& rt = std::numeric_limits<double>::quiet_NaN() , const LADate& valuationDate = LADate());
+											   const double& theta, const double& sigma, const double& alpha = 0.03, const double& rt = std::numeric_limits<double>::quiet_NaN() , const AQLDate& valuationDate = AQLDate());
 
 
 }

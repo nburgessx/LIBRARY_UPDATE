@@ -213,17 +213,17 @@ namespace etrading
             useFirstHolidayCity = calendar.substr( 0, position );
 
             paymentCalendar_ = trim_to_upper( useFirstHolidayCity.c_str() );
-            mlibPaymentCalendar_ = &LAMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
+            mlibPaymentCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
         }
         else
         //-----------------------------------------------------------------------------
         {
             paymentCalendar_ = trim_to_upper( calendar.c_str() );
-            mlibPaymentCalendar_ = &LAMathCalendarSet::getCalendar( paymentCalendar_.c_str() );
+            mlibPaymentCalendar_ = &AQLMathCalendarSet::getCalendar( paymentCalendar_.c_str() );
         }
     };
 
-    const LAMathCalendar* CurveBuildProperties::getMlibPaymentCalendar() const
+    const AQLMathCalendar* CurveBuildProperties::getMlibPaymentCalendar() const
     {
         return mlibPaymentCalendar_;
     };
@@ -250,17 +250,17 @@ namespace etrading
             useFirstHolidayCity = calendar.substr( 0, position );
 
             accrualCalendar_ = trim_to_upper( useFirstHolidayCity.c_str() );
-            mlibAccrualCalendar_ = &LAMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
+            mlibAccrualCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
         }
         else
         //-----------------------------------------------------------------------------
         {
             accrualCalendar_ = trim_to_upper( calendar.c_str() );
-            mlibAccrualCalendar_ = &LAMathCalendarSet::getCalendar( accrualCalendar_.c_str() );
+            mlibAccrualCalendar_ = &AQLMathCalendarSet::getCalendar( accrualCalendar_.c_str() );
         }
     }
 
-    const LAMathCalendar* CurveBuildProperties::getMlibAccrualCalendar() const
+    const AQLMathCalendar* CurveBuildProperties::getMlibAccrualCalendar() const
     {
         return mlibAccrualCalendar_;
     };
@@ -287,17 +287,17 @@ namespace etrading
             useFirstHolidayCity = calendar.substr( 0, position );
 
             fixingCalendar_ = trim_to_upper( useFirstHolidayCity.c_str() );
-            mlibFixingCalendar_ = &LAMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
+            mlibFixingCalendar_ = &AQLMathCalendarSet::getCalendar( useFirstHolidayCity.c_str() );
         }
         else
         //-----------------------------------------------------------------------------
         {
             fixingCalendar_ = trim_to_upper( calendar.c_str() );
-            mlibFixingCalendar_ = &LAMathCalendarSet::getCalendar( fixingCalendar_.c_str() );
+            mlibFixingCalendar_ = &AQLMathCalendarSet::getCalendar( fixingCalendar_.c_str() );
         }
     }
 
-    const LAMathCalendar* CurveBuildProperties::getMlibFixingCalendar() const
+    const AQLMathCalendar* CurveBuildProperties::getMlibFixingCalendar() const
     {
         return mlibFixingCalendar_;
     };

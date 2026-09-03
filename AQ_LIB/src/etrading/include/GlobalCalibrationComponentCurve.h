@@ -1,9 +1,9 @@
 #pragma once
 
-#include "LAObject.h"
+#include "AQLObject.h"
 #include "CurveCalibrationData.h"
 
-class LAInterpolationBase;
+class AQLInterpolationBase;
 
 /*! 
     @brief Structure for parameters used in solving
@@ -26,7 +26,7 @@ class GlobalCalibrationComponentCurve
 public:
 
 	// Constructor
-	GlobalCalibrationComponentCurve(const LAString& curveName, const LADate& baseDate, const bool& fastRebuildRequested = false);
+	GlobalCalibrationComponentCurve(const AQLString& curveName, const AQLDate& baseDate, const bool& fastRebuildRequested = false);
 
 	// Destructor
 	virtual ~GlobalCalibrationComponentCurve() {}
@@ -38,7 +38,7 @@ public:
 	virtual void priceCalibrationInstruments(DoubleVector& allPVs) = 0;
 
 	// Post processing results once instruments have been consumed in calibration steps
-	virtual void postProcessing(LAObject& yieldCurveProEntity) = 0;
+	virtual void postProcessing(AQLObject& yieldCurveProEntity) = 0;
 
 	//==============================================================================
 
@@ -52,10 +52,10 @@ public:
 	void update();
 	
 	// Set DF interpolator	
-	void setDFInterpolator(const std::shared_ptr<LAInterpolationBase>& dfInterp);
+	void setDFInterpolator(const std::shared_ptr<AQLInterpolationBase>& dfInterp);
 
 	// Get state variable interpolator
-	std::shared_ptr<LAInterpolationBase> getStateVarInterp() const { return pInter_StateVariable_;}
+	std::shared_ptr<AQLInterpolationBase> getStateVarInterp() const { return pInter_StateVariable_;}
 
 	// Get the state variables
 	void getStateVariableRates(DoubleArray& stateVariables);
@@ -67,7 +67,7 @@ public:
 	unsigned int getPreSolvingInstrumentCount() const	{ return preSwapSize_; }
 
 	// Get curve name
-	const LAString getCurveName() const	{ return curveName_;}
+	const AQLString getCurveName() const	{ return curveName_;}
 
 	// Get state variable rates
 	const DoubleArray& getStateVariableRates() const { return stateVariable_rates_;}
@@ -85,8 +85,8 @@ protected:
 
 	//==============================================================================
 
-	std::shared_ptr<LAInterpolationBase> pInter_StateVariable_;
-	std::shared_ptr<LAInterpolationBase> pInter_DF_;
+	std::shared_ptr<AQLInterpolationBase> pInter_StateVariable_;
+	std::shared_ptr<AQLInterpolationBase> pInter_DF_;
 
 	DoubleArray stateVariable_grid_;
 	DoubleArray stateVariable_rates_;
@@ -94,8 +94,8 @@ protected:
 	size_t preSwapSize_;		// The number of instruments prior to the swaps that get solved 
 	size_t swapCount_;			// The number of swaps that are solved 
 
-	LAString curveName_;
-	LADate baseDate_;
+	AQLString curveName_;
+	AQLDate baseDate_;
 
 	bool fastRebuild_;
 };

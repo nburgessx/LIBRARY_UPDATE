@@ -40,10 +40,10 @@ public:
 	virtual void setUp(void);
 	//==============================================
 	// setup entities
-	virtual void setUpEntityes(LADataInstance &dataInstance) const;
+	virtual void setUpEntityes(AQLDataInstance &dataInstance) const;
 	//==============================================
 	// setup  risk entities
-	virtual void setUpRiskEntityes(LADataInstance &dataInstance) const;
+	virtual void setUpRiskEntityes(AQLDataInstance &dataInstance) const;
 
 protected:
 

@@ -3,7 +3,7 @@
 
 namespace google_test
 {
-    CurveFwdFxConst::CurveFwdFxConst( const LAString& inputFile )
+    CurveFwdFxConst::CurveFwdFxConst( const AQLString& inputFile )
         : CurveAccessors( inputFile )
     {
         try
@@ -16,7 +16,7 @@ namespace google_test
                 inputFile_["fwdFXConstantConv"],
                 inputFile_["curveNames"] );
         }
-        catch( const LACoreError& m )
+        catch( const AQLCoreError& m )
         {
             std::cout <<  m.getMsg();
         }

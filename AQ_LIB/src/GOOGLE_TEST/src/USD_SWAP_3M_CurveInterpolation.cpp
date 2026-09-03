@@ -38,10 +38,10 @@
 
 // Interpolators
 #include "CurveInterpolation.h"
-#include "LAStepInterpolation.h"
-#include "LALinearInterpolation.h"
-#include "LASplineInterpolation.h"
-#include "LALinearSplineInterpolation.h"
+#include "AQLStepInterpolation.h"
+#include "AQLLinearInterpolation.h"
+#include "AQLSplineInterpolation.h"
+#include "AQLLinearSplineInterpolation.h"
 
 // Forward Rate Math Methods
 #include "tryMeMathForwardRate.h"
@@ -81,8 +81,8 @@ namespace google_test
 		// 2. Static Data
 		const std::string curveCollection							= "USDYC";
 		const std::string curveIndex								= "USD3ML";
-		const LADate asOfDate										= etrading::getCurveAsOfDate( curveCollection );
-		const LADate hybridInterpolationJoinDate					= etrading::getHybridInterpolationJoinDate( curveCollection, curveIndex );
+		const AQLDate asOfDate										= etrading::getCurveAsOfDate( curveCollection );
+		const AQLDate hybridInterpolationJoinDate					= etrading::getHybridInterpolationJoinDate( curveCollection, curveIndex );
 		const bool useForwardInterpolation							= false;
 		const std::string fixingCalendar							= "LNB:NYB";
 		
@@ -101,7 +101,7 @@ namespace google_test
 		ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
         ASSERT_EQ( curveResults[0].size(), size_t(2) );		// we expect exactly 2 columns of data
 
-		std::vector< LADate > curveDates( curveResults.size() );
+		std::vector< AQLDate > curveDates( curveResults.size() );
 		std::vector< double > discountFactors( curveResults.size(), 1.0 );
 
 		for ( size_t i = 0; i < curveResults.size(); ++i )
@@ -136,8 +136,8 @@ namespace google_test
 		// 2. Static Data
 		const std::string curveCollection							= "USDYC";
 		const std::string curveIndex								= "USD3ML";
-		const LADate asOfDate										= etrading::getCurveAsOfDate( curveCollection );
-		const LADate hybridInterpolationJoinDate					= etrading::getHybridInterpolationJoinDate( curveCollection, curveIndex );
+		const AQLDate asOfDate										= etrading::getCurveAsOfDate( curveCollection );
+		const AQLDate hybridInterpolationJoinDate					= etrading::getHybridInterpolationJoinDate( curveCollection, curveIndex );
 		const bool useForwardInterpolation							= false;
 		const std::string fixingCalendar							= "LNB:NYB";
 		
@@ -156,7 +156,7 @@ namespace google_test
 		ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
         ASSERT_EQ( curveResults[0].size(), size_t(2) );		// we expect exactly 2 columns of data
 
-		std::vector< LADate > curveDates( curveResults.size() );
+		std::vector< AQLDate > curveDates( curveResults.size() );
 		std::vector< double > discountFactors( curveResults.size(), 1.0 );
 
 		for ( size_t i = 0; i < curveResults.size(); ++i )
@@ -191,8 +191,8 @@ namespace google_test
 		// 2. Static Data
 		const std::string curveCollection							= "USDYC";
 		const std::string curveIndex								= "USD3ML";
-		const LADate asOfDate										= etrading::getCurveAsOfDate( curveCollection );
-		const LADate hybridInterpolationJoinDate					= etrading::getHybridInterpolationJoinDate( curveCollection, curveIndex );
+		const AQLDate asOfDate										= etrading::getCurveAsOfDate( curveCollection );
+		const AQLDate hybridInterpolationJoinDate					= etrading::getHybridInterpolationJoinDate( curveCollection, curveIndex );
 		const bool useForwardInterpolation							= false;
 		const std::string fixingCalendar							= "LNB:NYB";
 		
@@ -211,7 +211,7 @@ namespace google_test
 		ASSERT_GT( curveResults.size(), size_t(0) );		// we expect more than 1 row of data
         ASSERT_EQ( curveResults[0].size(), size_t(2) );		// we expect exactly 2 columns of data
 
-		std::vector< LADate > curveDates( curveResults.size() );
+		std::vector< AQLDate > curveDates( curveResults.size() );
 		std::vector< double > discountFactors( curveResults.size(), 1.0 );
 
 		for ( size_t i = 0; i < curveResults.size(); ++i )

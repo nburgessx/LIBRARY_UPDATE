@@ -2,14 +2,14 @@
 
 
 #include <vector>
-#include "LAObject.h"
+#include "AQLObject.h"
 #include "LAMathCorrelationFuncLMM.h"
-#include "LACoreTemplateType.h"
+#include "AQLCoreTemplateType.h"
 
 using namespace std;
 
 
-class LAMathCorrelationLMM : public LAObject
+class LAMathCorrelationLMM : public AQLObject
 {
 
 public:

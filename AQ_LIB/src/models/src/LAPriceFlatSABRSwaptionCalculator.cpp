@@ -5,8 +5,8 @@
 #endif
 
 #include "LAPriceFlatSABRSwaptionCalculator.h"
-#include "LADist.h"
-#include "LACoreUtil.h"
+#include "AQLDist.h"
+#include "AQLCoreUtil.h"
 #include "LAMathOptionTools.h"
 
 // Flat SABR option model to use for CMS replication. The price tails are replaced by constants.
@@ -15,7 +15,7 @@ MVFlatSABRSwaptionCalculator::MVFlatSABRSwaptionCalculator(double S0_, const vec
 : MVSABRSwaptionCalculator(S0_, sabrParameters_)
 {
     if (extraParameters_.size() < 2)
-        LACoreInvalidData("Invalid parameter size in Flat SABR swaption calculator",__FILE__,__LINE__);
+        AQLCoreInvalidData("Invalid parameter size in Flat SABR swaption calculator",__FILE__,__LINE__);
 
     mLeftCutOff = extraParameters_[0];
     mRightCutOff = extraParameters_[1];
@@ -32,12 +32,12 @@ void MVFlatSABRSwaptionCalculator::CheckCache(double t)
         double stDev = atmVol * sqrt(t);
 
         // Left tail
-        double confLeft = LADist::invNormdist(mLeftCutOff);
+        double confLeft = AQLDist::invNormdist(mLeftCutOff);
         mKl = mS0 * exp(-0.5 * stDev * stDev - confLeft * stDev);
         mVl = SABRIV(t, mKl);
 
         // Right tail
-        double confRight = LADist::invNormdist(mRightCutOff);
+        double confRight = AQLDist::invNormdist(mRightCutOff);
         mKr = mS0 * exp(-0.5 * stDev * stDev + confRight * stDev);
         mVr = SABRIV(t, mKr);
 

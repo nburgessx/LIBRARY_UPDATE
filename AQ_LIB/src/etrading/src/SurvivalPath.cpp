@@ -8,7 +8,7 @@ namespace etrading
 		: MonteCarloPath(), stoppingDate_(), discountFactorAtStoppingDate_( std::numeric_limits<double>::quiet_NaN() )
 	{}
 
-	SurvivalPath::SurvivalPath( const double survivalProbability, const LADate& stoppingDate, const double discountFactorAtStoppingDate )
+	SurvivalPath::SurvivalPath( const double survivalProbability, const AQLDate& stoppingDate, const double discountFactorAtStoppingDate )
 		: MonteCarloPath( survivalProbability ), stoppingDate_( stoppingDate ), discountFactorAtStoppingDate_( discountFactorAtStoppingDate )
 	{}
 
@@ -17,7 +17,7 @@ namespace etrading
 
 	/* @brief	Returns the stopping date when the underlying index defaults.
 	*/
-	LADate SurvivalPath::getStoppingDate() const
+	AQLDate SurvivalPath::getStoppingDate() const
 	{
 		return stoppingDate_;
 	}

@@ -14,27 +14,27 @@ namespace etrading
         FloatStaticData(const FloatStaticData& rhs);
         virtual ~FloatStaticData() {};
 
-        void validateCurveInput(const LAString& curveCollection);
+        void validateCurveInput(const AQLString& curveCollection);
 
         LegStaticDataPtr clone();
 
-        LAString getForecastCurve() const;
-        LAString getForecastCurveMarketName() const;
+        AQLString getForecastCurve() const;
+        AQLString getForecastCurveMarketName() const;
         double getFirstFixing() const;
         double getLastFixing() const;
-        LAString getFirstStubCurveIndex() const;
-        LAString getLastStubCurveIndex() const;
+        AQLString getFirstStubCurveIndex() const;
+        AQLString getLastStubCurveIndex() const;
 		BooleanEnum getFwdInter() const;
         void setFwdInter(const BooleanEnum& fwdInter);
 
    	private:
-        LAString forecastCurve_;
+        AQLString forecastCurve_;
 
         //useful dataValues:
-        LAString forecastCurveMarketName_;
+        AQLString forecastCurveMarketName_;
         
-        LAString firstStubCurveIndex_;
-		LAString lastStubCurveIndex_;
+        AQLString firstStubCurveIndex_;
+		AQLString lastStubCurveIndex_;
 		double firstFixing_;
 		double lastFixing_;
 		BooleanEnum fwdInter_;

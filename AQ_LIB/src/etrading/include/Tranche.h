@@ -4,7 +4,7 @@
 #include "LabelValueBlock.h"
 #include "CoreEnumerations.h"
 #include "CommonConstants.h"
-#include "LADate.h"
+#include "AQLDate.h"
 
 #include <vector>
 #include <string>
@@ -110,21 +110,21 @@ namespace etrading
 		*  @param[in]	valuationDate	PV the coupons to this valuation date
 		*  @returns		The PV of all coupons occurring at the specified time period
 		*/
-		double calculateNPVDiscountMargin( const size_t callPeriod, const LADate& valuationDate ) const;
+		double calculateNPVDiscountMargin( const size_t callPeriod, const AQLDate& valuationDate ) const;
 
 		/* @brief Calculates the NPV of coupon flows at the specified time period and valuation date
 		*  @param[in]	callPeriod		calculate the PV of coupons at this time period
 		*  @param[in]	valuationDate	PV the coupons to this valuation date
 		*  @returns		The PV of all coupons occurring at the specified time period
 		*/
-		double calculateNPV( const double& interestRate, const size_t callPeriod, const LADate& valuationDate ) const ;
+		double calculateNPV( const double& interestRate, const size_t callPeriod, const AQLDate& valuationDate ) const ;
 
 		/* @brief Calculates the internal rate of return implied by the specified target price
 		*  @param[in]	callPeriod		calculate the PV of coupons at this time period
 		*  @param[in]	valuationDate	PV the coupons to this valuation date
 		*  @param[in]	targetPrice		Calculate the internal rate of return such that the PV of coupons matches this targetPrice.
 		*/
-		double calculateIRR( const size_t callPeriod, const LADate& valuationDate, const double& targetPrice ) const;
+		double calculateIRR( const size_t callPeriod, const AQLDate& valuationDate, const double& targetPrice ) const;
 
 		/* @brief	Used for output / visualization: Convert the tranche schedule information into a dataframe
 		*/
@@ -132,10 +132,10 @@ namespace etrading
 
 		std::string trancheName_;
 
-		std::vector<LADate> fixingDate_;
-		std::vector<LADate> accrualStartDate_;
-		std::vector<LADate> accrualEndDate_;
-		std::vector<LADate> paymentDate_;
+		std::vector<AQLDate> fixingDate_;
+		std::vector<AQLDate> accrualStartDate_;
+		std::vector<AQLDate> accrualEndDate_;
+		std::vector<AQLDate> paymentDate_;
 
 		std::vector<double> balanceStart_;
 		std::vector<double> balanceEnd_;
@@ -149,7 +149,7 @@ namespace etrading
 
 		std::vector<double> couponYearFraction_;
 		std::vector<double> resetRate_;
-		std::vector<LADate> resetDate_;   // <-- is this not the same as fixingDate?
+		std::vector<AQLDate> resetDate_;   // <-- is this not the same as fixingDate?
 		std::vector<double> discountFactorRiskless_;
 		std::vector<double> discountFactorDiscountMargin_;
 		std::vector<double> riskWeight_;

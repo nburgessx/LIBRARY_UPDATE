@@ -6,14 +6,14 @@
 
 #include <vector>
 
-#include <LADataInstance.h>
-#include <LAFunctionUtilities.h>
-#include <LAPriceDataCalendar.h>
-#include <LAPriceDataSlidingRule.h>
-#include <LAPriceDataCalendar.h>
-#include <LADataMatrix.h>
-#include <LAMathDefine.h>
-#include "LANl2sol.h"
+#include <AQLDataInstance.h>
+#include <AQLFunctionUtilities.h>
+#include <AQLPriceDataCalendar.h>
+#include <AQLPriceDataSlidingRule.h>
+#include <AQLPriceDataCalendar.h>
+#include <AQLDataMatrix.h>
+#include <AQLMathDefine.h>
+#include "AQLNl2sol.h"
 
 #include <LAMathYieldCurve.h>
 #include <LAMathDateCalculations.h>
@@ -38,11 +38,11 @@
 #include "LAQuantLibSteepestDescent.h"
 #include "LAQuantLibSimplex.h"
 #include "LAQuantLibLevenbergMarquardt.h"
-#include "LAAlgorithm.h"
+#include "AQLAlgorithm.h"
 
 using namespace std;
 
-// (copied by LADate.cpp) 
+// (copied by AQLDate.cpp) 
 static const unsigned short LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[2][2][12] =
 { { { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
 { 0, 31, 59, 90,120,151,181,212,243,273,304,334 } },
@@ -52,21 +52,21 @@ static const unsigned short LOOKUP_TABLE_NUMBER_OF_DAYS_IN_A_MONTH_OR_YEAR[2][2]
 static const double OPTION_SIGN_DUMMY = -9999.;
 
 void
-LAMathSwaptionVolUtility::setUpSABRGrid( LADataInstance* dataInstance, const LAString& matID, const LAString& convID, 
-									   LAStringMatrix& mat )
+LAMathSwaptionVolUtility::setUpSABRGrid( AQLDataInstance* dataInstance, const AQLString& matID, const AQLString& convID, 
+									   AQLStringMatrix& mat )
 {
-    LAString daycount(AC_365I);
-    const LAObject& object = dataInstance->getObjectPool().getObject( convID, ENCHKTYPE_ISDEFINED ).get();
-    const LAPriceDataCalendar& cal =
-        dynamic_cast<const LAPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
-    const LAPriceDataSlidingRule& sr = 
-        dynamic_cast<const LAPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
-    const LADate asOfDate = 
-        dynamic_cast<const LADataDate& >(object.getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
-	if(mat.size()<=1 || mat[0].size()<=1) throw LACoreInvalidData("the size of matrix is small!", __FILE__, __LINE__);
+    AQLString daycount(AC_365I);
+    const AQLObject& object = dataInstance->getObjectPool().getObject( convID, ENCHKTYPE_ISDEFINED ).get();
+    const AQLPriceDataCalendar& cal =
+        dynamic_cast<const AQLPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
+    const AQLPriceDataSlidingRule& sr = 
+        dynamic_cast<const AQLPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
+    const AQLDate asOfDate = 
+        dynamic_cast<const AQLDataDate& >(object.getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
+	if(mat.size()<=1 || mat[0].size()<=1) throw AQLCoreInvalidData("the size of matrix is small!", __FILE__, __LINE__);
 
     DoubleVector tenorVec,expiryVec;
-    LAStringVector tenorStr,expiryStr;
+    AQLStringVector tenorStr,expiryStr;
     DateVector expiDateVec;
     for(size_t i=1; i<mat.size(); i++)
     {
@@ -95,72 +95,72 @@ LAMathSwaptionVolUtility::setUpSABRGrid( LADataInstance* dataInstance, const LAS
             mat_per[i][j] = mat[i][j].getDoubleValue();
 
 	uppervec(tenorStr); uppervec(expiryStr);
-    LAObjectPool &objPool = dataInstance->getObjectPool();
-    LAObjectHolder objHolder = objPool.getObject(matID ,ENCHKTYPE_NOCHECK);
+    AQLObjectPool &objPool = dataInstance->getObjectPool();
+    AQLObjectHolder objHolder = objPool.getObject(matID ,ENCHKTYPE_NOCHECK);
 	if(!objHolder.isDefined())
 	{
-		LAObject* e = new LAObject();
-		e->add( CALIBRATION_DATA_NAME, new LADataString() ).convertFromString(matID);
-		e->add( CALIBRATION_DATA_ASOFDATE, new LADataDate(asOfDate));
-		e->add( CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar(cal));
-		e->add( CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule(sr));
-        e->add( PRICING_DATA_SWAPTIONMATRIX, new LADataDoubleMatrix( mat_per ));
-		e->add( PRICING_DATA_EXPIRYDATEVECTOR,	new LADataDates(expiDateVec));
-		e->add( PRICING_DATA_EXPIRYVECTOR,	new LADataDoubles(expiryVec));
-        e->add( PRICING_DATA_TENORVECTOR,	new LADataDoubles(tenorVec));
-        e->add( PRICING_DATA_EXPIRYSTRING,	new LADataStrings(expiryStr));
-        e->add( PRICING_DATA_TENORSTRING,	new LADataStrings(tenorStr));
+		AQLObject* e = new AQLObject();
+		e->add( CALIBRATION_DATA_NAME, new AQLDataString() ).convertFromString(matID);
+		e->add( CALIBRATION_DATA_ASOFDATE, new AQLDataDate(asOfDate));
+		e->add( CALIBRATION_DATA_CALENDAR, new AQLPriceDataCalendar(cal));
+		e->add( CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule(sr));
+        e->add( PRICING_DATA_SWAPTIONMATRIX, new AQLDataDoubleMatrix( mat_per ));
+		e->add( PRICING_DATA_EXPIRYDATEVECTOR,	new AQLDataDates(expiDateVec));
+		e->add( PRICING_DATA_EXPIRYVECTOR,	new AQLDataDoubles(expiryVec));
+        e->add( PRICING_DATA_TENORVECTOR,	new AQLDataDoubles(tenorVec));
+        e->add( PRICING_DATA_EXPIRYSTRING,	new AQLDataStrings(expiryStr));
+        e->add( PRICING_DATA_TENORSTRING,	new AQLDataStrings(tenorStr));
 		objPool.set( matID , e );
 	}
 	else if(objHolder.isDefined())
 	{
-        LADataHolder* dh;
+        AQLDataHolder* dh;
 		dh = &objHolder.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED);
-		LADataDate& asOfDate_att = dynamic_cast<LADataDate &>(dh->get());
+		AQLDataDate& asOfDate_att = dynamic_cast<AQLDataDate &>(dh->get());
         asOfDate_att.set( asOfDate );	
 
 		dh = &objHolder.getData(CALIBRATION_DATA_CALENDAR,ISDEFINED);
-		LAPriceDataCalendar& cal_att = dynamic_cast<LAPriceDataCalendar &>(dh->get());
+		AQLPriceDataCalendar& cal_att = dynamic_cast<AQLPriceDataCalendar &>(dh->get());
         cal_att = cal;
 
 		dh = &objHolder.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED);
-		LAPriceDataSlidingRule& sr_att = dynamic_cast<LAPriceDataSlidingRule &>(dh->get());
+		AQLPriceDataSlidingRule& sr_att = dynamic_cast<AQLPriceDataSlidingRule &>(dh->get());
         sr_att = sr;
 
 		dh = &objHolder.getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED);
-		LADataDoubleMatrix& mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+		AQLDataDoubleMatrix& mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
         mat_att.set( mat_per );		
 
 		dh = &objHolder.getData(PRICING_DATA_EXPIRYDATEVECTOR,ISDEFINED);
-		LADataDates& expiryDateVec_att = dynamic_cast<LADataDates &>(dh->get());
+		AQLDataDates& expiryDateVec_att = dynamic_cast<AQLDataDates &>(dh->get());
 		expiryDateVec_att.set(expiDateVec);
 
 		dh = &objHolder.getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED);
-		LADataDoubles& expiryVec_att = dynamic_cast<LADataDoubles &>(dh->get());
+		AQLDataDoubles& expiryVec_att = dynamic_cast<AQLDataDoubles &>(dh->get());
 		expiryVec_att.set(expiryVec);
 
         dh = &objHolder.getData(PRICING_DATA_TENORVECTOR,ISDEFINED);
-		LADataDoubles& tenorVec_att = dynamic_cast<LADataDoubles &>(dh->get());
+		AQLDataDoubles& tenorVec_att = dynamic_cast<AQLDataDoubles &>(dh->get());
 		tenorVec_att.set(tenorVec);
 
         dh = &objHolder.getData(PRICING_DATA_EXPIRYSTRING,ISDEFINED);
-		LADataStrings& expiryStr_att = dynamic_cast<LADataStrings &>(dh->get());
+		AQLDataStrings& expiryStr_att = dynamic_cast<AQLDataStrings &>(dh->get());
 		expiryStr_att.set(expiryStr);
 
         dh = &objHolder.getData(PRICING_DATA_TENORSTRING,ISDEFINED);
-		LADataStrings& tenorStr_att = dynamic_cast<LADataStrings &>(dh->get());
+		AQLDataStrings& tenorStr_att = dynamic_cast<AQLDataStrings &>(dh->get());
 		tenorStr_att.set(tenorStr);        
 	}
 }
 
 void
-LAMathSwaptionVolUtility::setUpSwaptionVol( LADataInstance* dataInstance, const LAString& matID, LAStringMatrix& volMat, LAStringMatrix& strikeMat, LAStringMatrix& signMat)
+LAMathSwaptionVolUtility::setUpSwaptionVol( AQLDataInstance* dataInstance, const AQLString& matID, AQLStringMatrix& volMat, AQLStringMatrix& strikeMat, AQLStringMatrix& signMat)
 {
-	if(strikeMat.size()==0 || strikeMat[0].size()==0) throw LACoreInvalidData("the size of matrix is zero!", __FILE__, __LINE__);
-	if(volMat.size()==0 || volMat[0].size()==0) throw LACoreInvalidData("the size of matrix is zero!", __FILE__, __LINE__);
+	if(strikeMat.size()==0 || strikeMat[0].size()==0) throw AQLCoreInvalidData("the size of matrix is zero!", __FILE__, __LINE__);
+	if(volMat.size()==0 || volMat[0].size()==0) throw AQLCoreInvalidData("the size of matrix is zero!", __FILE__, __LINE__);
 
     //vol matrix
-    LAStringVector tenorStr_vol,expiryStr_vol;
+    AQLStringVector tenorStr_vol,expiryStr_vol;
     for(size_t i=1; i<volMat.size(); i++)
     {
         expiryStr_vol.push_back(volMat[i][0]);
@@ -184,7 +184,7 @@ LAMathSwaptionVolUtility::setUpSwaptionVol( LADataInstance* dataInstance, const 
             volMat_per[i][j] = volMat[i][j].getDoubleValue();
 
     //strike matrix
-    LAStringVector tenorStr_K,expiryStr_K;
+    AQLStringVector tenorStr_K,expiryStr_K;
     for(size_t i=1; i<strikeMat.size(); i++)
     {
         expiryStr_K.push_back(strikeMat[i][0]);
@@ -194,7 +194,7 @@ LAMathSwaptionVolUtility::setUpSwaptionVol( LADataInstance* dataInstance, const 
         tenorStr_K.push_back(strikeMat[0][i]);
     }
     if(tenorStr_vol != tenorStr_K ||  expiryStr_vol != expiryStr_K)
-        throw LACoreInvalidData("strike matrix and vol matrix are inconsistent!",	__FILE__,__LINE__);
+        throw AQLCoreInvalidData("strike matrix and vol matrix are inconsistent!",	__FILE__,__LINE__);
 
     strikeMat.erase( strikeMat.begin() );
     for(size_t i=0; i<strikeMat.size(); i++)
@@ -211,7 +211,7 @@ LAMathSwaptionVolUtility::setUpSwaptionVol( LADataInstance* dataInstance, const 
 	DoubleMatrix signMat_per(volMat_per.size(), DoubleVector(volMat_per[0].size(), OPTION_SIGN_DUMMY));
 	if (signMat.size() > 0)
 	{
-		LAStringVector tenorStr_Sign, expiryStr_Sign;
+		AQLStringVector tenorStr_Sign, expiryStr_Sign;
 		for (size_t i = 1; i < signMat.size(); i++)
 		{
 			expiryStr_Sign.push_back(signMat[i][0]);
@@ -221,7 +221,7 @@ LAMathSwaptionVolUtility::setUpSwaptionVol( LADataInstance* dataInstance, const 
 			tenorStr_Sign.push_back(signMat[0][i]);
 		}
 		if (tenorStr_vol != tenorStr_Sign || expiryStr_vol != expiryStr_Sign)
-			throw LACoreInvalidData("sign matrix and vol matrix are inconsistent!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("sign matrix and vol matrix are inconsistent!", __FILE__, __LINE__);
 
 		signMat.erase(signMat.begin());
 		for (size_t i = 0; i < signMat.size(); i++)
@@ -236,63 +236,63 @@ LAMathSwaptionVolUtility::setUpSwaptionVol( LADataInstance* dataInstance, const 
 	}
 
 	uppervec(tenorStr_vol); uppervec(expiryStr_vol);
-    LAObjectPool &objPool = dataInstance->getObjectPool();
-    LAObjectHolder objHolder = objPool.getObject(matID ,ENCHKTYPE_NOCHECK);
+    AQLObjectPool &objPool = dataInstance->getObjectPool();
+    AQLObjectHolder objHolder = objPool.getObject(matID ,ENCHKTYPE_NOCHECK);
 	if(!objHolder.isDefined())
 	{
-		LAObject* e = new LAObject();
-		e->add( CALIBRATION_DATA_NAME, new LADataString() ).convertFromString(matID);
-        e->add( PRICING_DATA_SWAPTIONMATRIX, new LADataDoubleMatrix( volMat_per ));
-        e->add( PRICING_DATA_SWAPTIONSTRIKEMATRIX, new LADataDoubleMatrix( strikeMat_per ));
-		e->add( PRICING_DATA_SWAPTIONSIGNMATRIX, new LADataDoubleMatrix( signMat_per ));
-        e->add( PRICING_DATA_EXPIRYSTRING,	new LADataStrings(expiryStr_vol));
-        e->add( PRICING_DATA_TENORSTRING,	new LADataStrings(tenorStr_vol));
+		AQLObject* e = new AQLObject();
+		e->add( CALIBRATION_DATA_NAME, new AQLDataString() ).convertFromString(matID);
+        e->add( PRICING_DATA_SWAPTIONMATRIX, new AQLDataDoubleMatrix( volMat_per ));
+        e->add( PRICING_DATA_SWAPTIONSTRIKEMATRIX, new AQLDataDoubleMatrix( strikeMat_per ));
+		e->add( PRICING_DATA_SWAPTIONSIGNMATRIX, new AQLDataDoubleMatrix( signMat_per ));
+        e->add( PRICING_DATA_EXPIRYSTRING,	new AQLDataStrings(expiryStr_vol));
+        e->add( PRICING_DATA_TENORSTRING,	new AQLDataStrings(tenorStr_vol));
 		objPool.set( matID , e );
 	}
 	else if(objHolder.isDefined())
 	{
-        LADataHolder* dh;
+        AQLDataHolder* dh;
 
         dh = &objHolder.getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED);
-		LADataDoubleMatrix& matVol_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+		AQLDataDoubleMatrix& matVol_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
         matVol_att.set( volMat_per );
 
         dh = &objHolder.getData(PRICING_DATA_SWAPTIONSTRIKEMATRIX,ISDEFINED);
-		LADataDoubleMatrix& matStri_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+		AQLDataDoubleMatrix& matStri_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
         matStri_att.set( strikeMat_per );
 
 		dh = &objHolder.getData(PRICING_DATA_SWAPTIONSIGNMATRIX, ISDEFINED);
-		LADataDoubleMatrix& matSign_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+		AQLDataDoubleMatrix& matSign_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
 		matSign_att.set( signMat_per );
 
         dh = &objHolder.getData(PRICING_DATA_EXPIRYSTRING,ISDEFINED);
-		LADataStrings& expiryStr_att = dynamic_cast<LADataStrings &>(dh->get());
+		AQLDataStrings& expiryStr_att = dynamic_cast<AQLDataStrings &>(dh->get());
 		expiryStr_att.set(expiryStr_vol);
 
         dh = &objHolder.getData(PRICING_DATA_TENORSTRING,ISDEFINED);
-		LADataStrings& tenorStr_att = dynamic_cast<LADataStrings &>(dh->get());
+		AQLDataStrings& tenorStr_att = dynamic_cast<AQLDataStrings &>(dh->get());
 		tenorStr_att.set(tenorStr_vol);        
 	}
 }
 
 double
-LAMathSwaptionVolUtility::lookUpSwapGrid( LADataInstance* dataInstance, const LAString& matID, 
-                                        LAString expPoint, LAString tenorPoint )
+LAMathSwaptionVolUtility::lookUpSwapGrid( AQLDataInstance* dataInstance, const AQLString& matID, 
+                                        AQLString expPoint, AQLString tenorPoint )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
-    LAObjectPool& objPool = dataInstance->getObjectPool();
-    const DoubleMatrix& mat = dynamic_cast<LADataDoubleMatrix& >
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
+    const DoubleMatrix& mat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( matID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleVector& tenorVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& tenorVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( matID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
-    const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& expiryVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( matID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
-    const LAPriceDataSlidingRule& paySlr = dynamic_cast<const LAPriceDataSlidingRule& >(objPool.getObject( matID, ENCHKTYPE_ISDEFINED ).
+    const AQLPriceDataSlidingRule& paySlr = dynamic_cast<const AQLPriceDataSlidingRule& >(objPool.getObject( matID, ENCHKTYPE_ISDEFINED ).
 		get().getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
-    const LAPriceDataCalendar& fixCal = dynamic_cast<const LAPriceDataCalendar& >(objPool.getObject( matID, ENCHKTYPE_ISDEFINED ).get().
+    const AQLPriceDataCalendar& fixCal = dynamic_cast<const AQLPriceDataCalendar& >(objPool.getObject( matID, ENCHKTYPE_ISDEFINED ).get().
 		getData(CALIBRATION_DATA_CALENDAR,ISDEFINED).get());
-    const LADate& asOfDate = dynamic_cast<const LADataDate& >(dataInstance->getObjectPool().getObject(matID,ENCHKTYPE_ISDEFINED).
+    const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(matID,ENCHKTYPE_ISDEFINED).
 		get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
 
 	double expPoint_d = getExpiryPoint(expPoint, asOfDate, paySlr, fixCal);
@@ -304,22 +304,22 @@ LAMathSwaptionVolUtility::lookUpSwapGrid( LADataInstance* dataInstance, const LA
 }
 
 double
-LAMathSwaptionVolUtility::lookUpSwapGrid(LADataInstance* dataInstance, const LAString& matID, LADate expDate, LAString tenorPoint)
+LAMathSwaptionVolUtility::lookUpSwapGrid(AQLDataInstance* dataInstance, const AQLString& matID, AQLDate expDate, AQLString tenorPoint)
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
 
-    LAObjectPool& objPool = dataInstance->getObjectPool();
-    const DoubleMatrix& mat = dynamic_cast<LADataDoubleMatrix& >
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
+    const DoubleMatrix& mat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject(matID, ENCHKTYPE_ISDEFINED).get().getData(PRICING_DATA_SWAPTIONMATRIX, ISDEFINED).get()).get();
-    const DoubleVector& tenorVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& tenorVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject(matID, ENCHKTYPE_ISDEFINED).get().getData(PRICING_DATA_TENORVECTOR, ISDEFINED).get()).get();
-    const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& expiryVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject(matID, ENCHKTYPE_ISDEFINED).get().getData(PRICING_DATA_EXPIRYVECTOR, ISDEFINED).get()).get();
-    const LAPriceDataSlidingRule& paySlr = dynamic_cast<const LAPriceDataSlidingRule& >(objPool.getObject(matID, ENCHKTYPE_ISDEFINED).
+    const AQLPriceDataSlidingRule& paySlr = dynamic_cast<const AQLPriceDataSlidingRule& >(objPool.getObject(matID, ENCHKTYPE_ISDEFINED).
         get().getData(CALIBRATION_DATA_SLIDINGRULE, ISDEFINED).get());
-    const LAPriceDataCalendar& fixCal = dynamic_cast<const LAPriceDataCalendar& >(objPool.getObject(matID, ENCHKTYPE_ISDEFINED).get().
+    const AQLPriceDataCalendar& fixCal = dynamic_cast<const AQLPriceDataCalendar& >(objPool.getObject(matID, ENCHKTYPE_ISDEFINED).get().
         getData(CALIBRATION_DATA_CALENDAR, ISDEFINED).get());
-    const LADate& asOfDate = dynamic_cast<const LADataDate& >(dataInstance->getObjectPool().getObject(matID, ENCHKTYPE_ISDEFINED).
+    const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(matID, ENCHKTYPE_ISDEFINED).
         get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get()).get();
 
     double expPoint_d = ModelTime(asOfDate, expDate);
@@ -331,13 +331,13 @@ LAMathSwaptionVolUtility::lookUpSwapGrid(LADataInstance* dataInstance, const LAS
 }
 
 void 
-LAMathSwaptionVolUtility::outPutSABRGrid( LADataInstance* dataInstance, const LAString& matID, 
+LAMathSwaptionVolUtility::outPutSABRGrid( AQLDataInstance* dataInstance, const AQLString& matID, 
                                         DoubleVector& ret, size_t& row, size_t& colum )
 {
-    LAObjectPool& objPool = dataInstance->getObjectPool();
-    const LAObject& object = objPool.getObject( matID, ENCHKTYPE_ISDEFINED ).get();
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
+    const AQLObject& object = objPool.getObject( matID, ENCHKTYPE_ISDEFINED ).get();
 
-    const DoubleMatrix& mat = dynamic_cast<const LADataDoubleMatrix &>
+    const DoubleMatrix& mat = dynamic_cast<const AQLDataDoubleMatrix &>
         (object.getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
     row = mat.size();
@@ -353,504 +353,504 @@ LAMathSwaptionVolUtility::outPutSABRGrid( LADataInstance* dataInstance, const LA
 }
 
 void
-LAMathSwaptionVolUtility::setUpConvention( LADataInstance* dataInstance, const LAString& convID, LAStringMatrix& convMat )
+LAMathSwaptionVolUtility::setUpConvention( AQLDataInstance* dataInstance, const AQLString& convID, AQLStringMatrix& convMat )
 {
-	LAString curveID = searchbyrow(convMat, "CurveID",1,false);
-	LAString oneMCurveName = searchbyrow(convMat, "1MLName",1,false);
-	LAString threeMCurveName = searchbyrow(convMat, "3MLName",1,false);
-	LAString sixMCurveName = searchbyrow(convMat, "6MLName",1,false);
-	LAString swapCurveName = searchbyrow(convMat, "SwapRateName",1,false);
-	LAString discountCurveName = searchbyrow(convMat, "DFName",1,false);
+	AQLString curveID = searchbyrow(convMat, "CurveID",1,false);
+	AQLString oneMCurveName = searchbyrow(convMat, "1MLName",1,false);
+	AQLString threeMCurveName = searchbyrow(convMat, "3MLName",1,false);
+	AQLString sixMCurveName = searchbyrow(convMat, "6MLName",1,false);
+	AQLString swapCurveName = searchbyrow(convMat, "SwapRateName",1,false);
+	AQLString discountCurveName = searchbyrow(convMat, "DFName",1,false);
 
 	uppermat(convMat);
-	LAString asOfDate_str = searchbyrow(convMat,CURVEINPUT_ASOFDATE,1,false);
-    LAString freq = searchbyrow(convMat, CURVEINPUT_FREQUENCY,1,false);
-    LAString daycount = searchbyrow(convMat, CURVEINPUT_DAYCOUNT,1,false);
-    LAString paySlr = searchbyrow(convMat, CURVEINPUT_SLIDINGRULE,1,false);
-    LAString spotLag = searchbyrow(convMat, CURVEINPUT_SPOTLAG,1,false);
-    LAString payCal = searchbyrow(convMat, "PAYMENTCALENDAR",1,false);
-    LAString fixCal = searchbyrow(convMat, "FIXINGCALENDAR",1,false);
+	AQLString asOfDate_str = searchbyrow(convMat,CURVEINPUT_ASOFDATE,1,false);
+    AQLString freq = searchbyrow(convMat, CURVEINPUT_FREQUENCY,1,false);
+    AQLString daycount = searchbyrow(convMat, CURVEINPUT_DAYCOUNT,1,false);
+    AQLString paySlr = searchbyrow(convMat, CURVEINPUT_SLIDINGRULE,1,false);
+    AQLString spotLag = searchbyrow(convMat, CURVEINPUT_SPOTLAG,1,false);
+    AQLString payCal = searchbyrow(convMat, "PAYMENTCALENDAR",1,false);
+    AQLString fixCal = searchbyrow(convMat, "FIXINGCALENDAR",1,false);
 
-	LAPriceDataSlidingRule paySlr_att; LAPriceDataCalendar payCal_att, fixCal_att;  LAPriceDataDayCount daycount_att;
-	if(paySlr != LAString("")) { paySlr_att.convertFromString(paySlr); }
-	if(payCal != LAString("")) { payCal_att.convertFromString(payCal); }
-	if(fixCal != LAString("")) { fixCal_att.convertFromString(fixCal); }
-	if(daycount != LAString("")) { daycount_att.convertFromString(daycount); }
-	LADate asOfDate;
-	if(asOfDate_str != LAString("")) 
+	AQLPriceDataSlidingRule paySlr_att; AQLPriceDataCalendar payCal_att, fixCal_att;  AQLPriceDataDayCount daycount_att;
+	if(paySlr != AQLString("")) { paySlr_att.convertFromString(paySlr); }
+	if(payCal != AQLString("")) { payCal_att.convertFromString(payCal); }
+	if(fixCal != AQLString("")) { fixCal_att.convertFromString(fixCal); }
+	if(daycount != AQLString("")) { daycount_att.convertFromString(daycount); }
+	AQLDate asOfDate;
+	if(asOfDate_str != AQLString("")) 
 	{
 		asOfDate = LAMathDateUtilities::getLADate(asOfDate_str);
 	}
-	else if(curveID != LAString(""))
+	else if(curveID != AQLString(""))
 	{
-		const LAObject& object = dataInstance->getObjectPool().getObject( curveID, ENCHKTYPE_ISDEFINED ).get();
-		LADate asOfDate_curve = dynamic_cast<const LADataDate &>(object.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get()).get();
-		if(asOfDate_str != LAString("") && asOfDate != asOfDate_curve) throw LACoreInvalidData("asOfDates are inconsistent!",	__FILE__,__LINE__);
+		const AQLObject& object = dataInstance->getObjectPool().getObject( curveID, ENCHKTYPE_ISDEFINED ).get();
+		AQLDate asOfDate_curve = dynamic_cast<const AQLDataDate &>(object.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get()).get();
+		if(asOfDate_str != AQLString("") && asOfDate != asOfDate_curve) throw AQLCoreInvalidData("asOfDates are inconsistent!",	__FILE__,__LINE__);
 		else asOfDate = asOfDate_curve;
 	}
 	else
 	{
-		throw LACoreInvalidData("input asOfDate!",	__FILE__,__LINE__);
+		throw AQLCoreInvalidData("input asOfDate!",	__FILE__,__LINE__);
 	}
 
-    LAObjectPool &objPool = dataInstance->getObjectPool();
-    LAObjectHolder objHolder = objPool.getObject(convID, ENCHKTYPE_NOCHECK);
+    AQLObjectPool &objPool = dataInstance->getObjectPool();
+    AQLObjectHolder objHolder = objPool.getObject(convID, ENCHKTYPE_NOCHECK);
     if(!objHolder.isDefined())
 	{
-		LAObject* e = new LAObject();
-		e->add( CALIBRATION_DATA_NAME, new LADataString()).convertFromString(convID);
-		if(asOfDate_str != LAString("") || curveID != LAString("")) { e->add( CALIBRATION_DATA_ASOFDATE, new LADataDate(asOfDate) ); }
-		if(curveID != LAString("")) { e->add( CALIBRATION_DATA_CURVEID, new LADataString()).convertFromString(curveID); }
-		if(oneMCurveName != LAString("")) { e->add( CALIBRATION_DATA_1MLCURVENAME, new LADataString()).convertFromString(oneMCurveName); }
-		if(threeMCurveName != LAString("")) { e->add( CALIBRATION_DATA_3MLCURVENAME, new LADataString()).convertFromString(threeMCurveName); }
-		if(sixMCurveName != LAString("")) { e->add( CALIBRATION_DATA_6MLCURVENAME, new LADataString()).convertFromString(sixMCurveName); }
-		if(swapCurveName != LAString("")) { e->add( CALIBRATION_DATA_SWAPRATELCURVENAME, new LADataString()).convertFromString(swapCurveName); }
-		if(discountCurveName != LAString("")) { e->add( CALIBRATION_DATA_DISCOUNTCURVENAME, new LADataString()).convertFromString(discountCurveName); }
-        if(freq != LAString("")) { e->add( IR_CALIBRATION_DATA_FREQUENCY, new LADataString(freq)); }
-        if(daycount != LAString("")) { e->add( IR_CALIBRATION_DATA_DAYCOUNT, new LAPriceDataDayCount(daycount_att)); }
-        if(spotLag != LAString("")) { e->add( CURVEINPUT_SPOTLAG, new LADataString(spotLag)); }
-        if(paySlr != LAString("")) { e->add( CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule(paySlr_att)); }
-        if(payCal != LAString("")) { e->add( CALIBRATION_DATA_CALENDAR	, new LAPriceDataCalendar(payCal_att)); }
-        if(fixCal != LAString("")) { e->add( PRICING_DATA_FIXINGCALENDAR, new LAPriceDataCalendar(fixCal_att)); }
+		AQLObject* e = new AQLObject();
+		e->add( CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(convID);
+		if(asOfDate_str != AQLString("") || curveID != AQLString("")) { e->add( CALIBRATION_DATA_ASOFDATE, new AQLDataDate(asOfDate) ); }
+		if(curveID != AQLString("")) { e->add( CALIBRATION_DATA_CURVEID, new AQLDataString()).convertFromString(curveID); }
+		if(oneMCurveName != AQLString("")) { e->add( CALIBRATION_DATA_1MLCURVENAME, new AQLDataString()).convertFromString(oneMCurveName); }
+		if(threeMCurveName != AQLString("")) { e->add( CALIBRATION_DATA_3MLCURVENAME, new AQLDataString()).convertFromString(threeMCurveName); }
+		if(sixMCurveName != AQLString("")) { e->add( CALIBRATION_DATA_6MLCURVENAME, new AQLDataString()).convertFromString(sixMCurveName); }
+		if(swapCurveName != AQLString("")) { e->add( CALIBRATION_DATA_SWAPRATELCURVENAME, new AQLDataString()).convertFromString(swapCurveName); }
+		if(discountCurveName != AQLString("")) { e->add( CALIBRATION_DATA_DISCOUNTCURVENAME, new AQLDataString()).convertFromString(discountCurveName); }
+        if(freq != AQLString("")) { e->add( IR_CALIBRATION_DATA_FREQUENCY, new AQLDataString(freq)); }
+        if(daycount != AQLString("")) { e->add( IR_CALIBRATION_DATA_DAYCOUNT, new AQLPriceDataDayCount(daycount_att)); }
+        if(spotLag != AQLString("")) { e->add( CURVEINPUT_SPOTLAG, new AQLDataString(spotLag)); }
+        if(paySlr != AQLString("")) { e->add( CALIBRATION_DATA_SLIDINGRULE, new AQLPriceDataSlidingRule(paySlr_att)); }
+        if(payCal != AQLString("")) { e->add( CALIBRATION_DATA_CALENDAR	, new AQLPriceDataCalendar(payCal_att)); }
+        if(fixCal != AQLString("")) { e->add( PRICING_DATA_FIXINGCALENDAR, new AQLPriceDataCalendar(fixCal_att)); }
 
 		objPool.set( convID , e );
 	}
 	else if(objHolder.isDefined())
 	{
-        LADataHolder* dh;
+        AQLDataHolder* dh;
 
-		if(asOfDate_str != LAString("") || curveID != LAString(""))
+		if(asOfDate_str != AQLString("") || curveID != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED);
-			LADataDate& asOfDate_att = dynamic_cast<LADataDate &>(dh->get());
+			AQLDataDate& asOfDate_att = dynamic_cast<AQLDataDate &>(dh->get());
 			asOfDate_att.set(asOfDate);
 		}
 
-		if(curveID != LAString(""))
+		if(curveID != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_CURVEID,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(curveID);
 		}
 
-		if(oneMCurveName != LAString(""))
+		if(oneMCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_1MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(oneMCurveName);
 		}
 
-		if(threeMCurveName != LAString(""))
+		if(threeMCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_3MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(threeMCurveName);
 		}
 
-		if(sixMCurveName != LAString(""))
+		if(sixMCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_6MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(sixMCurveName);
 		}
 
-		if(swapCurveName != LAString(""))
+		if(swapCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_SWAPRATELCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(swapCurveName);
 		}
 
-		if(discountCurveName != LAString(""))
+		if(discountCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(discountCurveName);
 		}
 
-		if(freq != LAString(""))
+		if(freq != AQLString(""))
 		{
 			dh = &objHolder.getData(IR_CALIBRATION_DATA_FREQUENCY,ISDEFINED);
-			LADataString& freq_ = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& freq_ = dynamic_cast<AQLDataString &>(dh->get());
 			freq_.set(freq);
 		}
 
-		if(daycount != LAString(""))
+		if(daycount != AQLString(""))
 		{
 			dh = &objHolder.getData(IR_CALIBRATION_DATA_DAYCOUNT,ISDEFINED);
-			LAPriceDataDayCount& daycount_att_ = dynamic_cast<LAPriceDataDayCount &>(dh->get());
+			AQLPriceDataDayCount& daycount_att_ = dynamic_cast<AQLPriceDataDayCount &>(dh->get());
 			daycount_att_ = daycount_att;      
 		}
 
-		if(spotLag != LAString(""))
+		if(spotLag != AQLString(""))
 		{
 			dh = &objHolder.getData(CURVEINPUT_SPOTLAG,ISDEFINED);
-			LADataString& spotLag_ = dynamic_cast<LADataString& >(dh->get());
+			AQLDataString& spotLag_ = dynamic_cast<AQLDataString& >(dh->get());
 			spotLag_.set(spotLag);
 		}
 
-		if(paySlr != LAString("")) 
+		if(paySlr != AQLString("")) 
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED);
-			LAPriceDataSlidingRule& paySlr_att_ = dynamic_cast<LAPriceDataSlidingRule& >(dh->get());
+			AQLPriceDataSlidingRule& paySlr_att_ = dynamic_cast<AQLPriceDataSlidingRule& >(dh->get());
 			paySlr_att_ = paySlr_att;
 		}
 
-		if(payCal != LAString(""))
+		if(payCal != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_CALENDAR,ISDEFINED);
-			LAPriceDataCalendar& payCal_att_ = dynamic_cast<LAPriceDataCalendar& >(dh->get());
+			AQLPriceDataCalendar& payCal_att_ = dynamic_cast<AQLPriceDataCalendar& >(dh->get());
 			payCal_att_ = payCal_att;
 		}
 
-		if(fixCal != LAString(""))
+		if(fixCal != AQLString(""))
 		{
 			dh = &objHolder.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED);
-			LAPriceDataCalendar& fixCal_att_ = dynamic_cast<LAPriceDataCalendar& >(dh->get());
+			AQLPriceDataCalendar& fixCal_att_ = dynamic_cast<AQLPriceDataCalendar& >(dh->get());
 			fixCal_att_ = fixCal_att;
 		}
 	}
 }
 
 void 
-LAMathSwaptionVolUtility::setCurveID(LADataInstance* dataInstance, const LAString& name, const LAString& swapConvID, const LAString& capConvID)
+LAMathSwaptionVolUtility::setCurveID(AQLDataInstance* dataInstance, const AQLString& name, const AQLString& swapConvID, const AQLString& capConvID)
 {
-	const LAObject& object = dataInstance->getObjectPool().getObject( swapConvID, ENCHKTYPE_ISDEFINED ).get();
-	LAString curveID = dynamic_cast<const LADataString& >(object.getData(CALIBRATION_DATA_CURVEID,ISDEFINED).get()).get();
-	LAString oneMCurveName(""),threeMCurveName(""),sixMCurveName(""),swapCurveName(""),discountCurveName("");
-	if(capConvID != LAString(""))
+	const AQLObject& object = dataInstance->getObjectPool().getObject( swapConvID, ENCHKTYPE_ISDEFINED ).get();
+	AQLString curveID = dynamic_cast<const AQLDataString& >(object.getData(CALIBRATION_DATA_CURVEID,ISDEFINED).get()).get();
+	AQLString oneMCurveName(""),threeMCurveName(""),sixMCurveName(""),swapCurveName(""),discountCurveName("");
+	if(capConvID != AQLString(""))
 	{
-		const LAObject& entity_cap = dataInstance->getObjectPool().getObject(capConvID, ENCHKTYPE_ISDEFINED).get();
-		oneMCurveName = dynamic_cast<const LADataString& >(entity_cap.getData(CALIBRATION_DATA_1MLCURVENAME,ISDEFINED).get()).get();
-		threeMCurveName = dynamic_cast<const LADataString& >(entity_cap.getData(CALIBRATION_DATA_3MLCURVENAME,ISDEFINED).get()).get();
-		sixMCurveName = dynamic_cast<const LADataString& >(entity_cap.getData(CALIBRATION_DATA_6MLCURVENAME,ISDEFINED).get()).get();
-		swapCurveName = dynamic_cast<const LADataString& >(entity_cap.getData(CALIBRATION_DATA_SWAPRATELCURVENAME,ISDEFINED).get()).get();
-		discountCurveName = dynamic_cast<const LADataString& >(entity_cap.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
+		const AQLObject& entity_cap = dataInstance->getObjectPool().getObject(capConvID, ENCHKTYPE_ISDEFINED).get();
+		oneMCurveName = dynamic_cast<const AQLDataString& >(entity_cap.getData(CALIBRATION_DATA_1MLCURVENAME,ISDEFINED).get()).get();
+		threeMCurveName = dynamic_cast<const AQLDataString& >(entity_cap.getData(CALIBRATION_DATA_3MLCURVENAME,ISDEFINED).get()).get();
+		sixMCurveName = dynamic_cast<const AQLDataString& >(entity_cap.getData(CALIBRATION_DATA_6MLCURVENAME,ISDEFINED).get()).get();
+		swapCurveName = dynamic_cast<const AQLDataString& >(entity_cap.getData(CALIBRATION_DATA_SWAPRATELCURVENAME,ISDEFINED).get()).get();
+		discountCurveName = dynamic_cast<const AQLDataString& >(entity_cap.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
 	}
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-    LAObjectHolder objHolder = objPool.getObject(name ,ENCHKTYPE_NOCHECK);
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+    AQLObjectHolder objHolder = objPool.getObject(name ,ENCHKTYPE_NOCHECK);
     if(!objHolder.isDefined())
 	{
-		LAObject* e = new LAObject();
-		e->add( CALIBRATION_DATA_NAME, new LADataString()).convertFromString(name);
-		e->add( CALIBRATION_DATA_CURVEID, new LADataString()).convertFromString(curveID); 
+		AQLObject* e = new AQLObject();
+		e->add( CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(name);
+		e->add( CALIBRATION_DATA_CURVEID, new AQLDataString()).convertFromString(curveID); 
 
-		if(oneMCurveName != LAString("")) 
+		if(oneMCurveName != AQLString("")) 
 		{ 
-			e->add( CALIBRATION_DATA_1MLCURVENAME, new LADataString()).convertFromString(oneMCurveName); 
+			e->add( CALIBRATION_DATA_1MLCURVENAME, new AQLDataString()).convertFromString(oneMCurveName); 
 		}
 		else
 		{
-			e->add( CALIBRATION_DATA_1MLCURVENAME, new LADataString()).convertFromString(STD); 
+			e->add( CALIBRATION_DATA_1MLCURVENAME, new AQLDataString()).convertFromString(STD); 
 		}
 
-		if(threeMCurveName != LAString("")) 
+		if(threeMCurveName != AQLString("")) 
 		{
-			e->add( CALIBRATION_DATA_3MLCURVENAME, new LADataString()).convertFromString(threeMCurveName); 
+			e->add( CALIBRATION_DATA_3MLCURVENAME, new AQLDataString()).convertFromString(threeMCurveName); 
 		}
 		else
 		{
-			e->add( CALIBRATION_DATA_3MLCURVENAME, new LADataString()).convertFromString(STD); 
+			e->add( CALIBRATION_DATA_3MLCURVENAME, new AQLDataString()).convertFromString(STD); 
 		}
 
-		if(sixMCurveName != LAString("")) 
+		if(sixMCurveName != AQLString("")) 
 		{ 
-			e->add( CALIBRATION_DATA_6MLCURVENAME, new LADataString()).convertFromString(sixMCurveName); 
+			e->add( CALIBRATION_DATA_6MLCURVENAME, new AQLDataString()).convertFromString(sixMCurveName); 
 		}
 		else
 		{
-			e->add( CALIBRATION_DATA_6MLCURVENAME, new LADataString()).convertFromString(STD); 
+			e->add( CALIBRATION_DATA_6MLCURVENAME, new AQLDataString()).convertFromString(STD); 
 		}
 
-		if(swapCurveName != LAString("")) 
+		if(swapCurveName != AQLString("")) 
 		{ 
-			e->add( CALIBRATION_DATA_SWAPRATELCURVENAME	, new LADataString()).convertFromString(swapCurveName); 
+			e->add( CALIBRATION_DATA_SWAPRATELCURVENAME	, new AQLDataString()).convertFromString(swapCurveName); 
 		}
 		else
 		{
-			e->add( CALIBRATION_DATA_SWAPRATELCURVENAME	, new LADataString()).convertFromString(STD); 
+			e->add( CALIBRATION_DATA_SWAPRATELCURVENAME	, new AQLDataString()).convertFromString(STD); 
 		}
 
-		if(discountCurveName != LAString("")) 
+		if(discountCurveName != AQLString("")) 
 		{ 
-			e->add( CALIBRATION_DATA_DISCOUNTCURVENAME	, new LADataString()).convertFromString(discountCurveName); 
+			e->add( CALIBRATION_DATA_DISCOUNTCURVENAME	, new AQLDataString()).convertFromString(discountCurveName); 
 		}
 		else
 		{
-			e->add( CALIBRATION_DATA_DISCOUNTCURVENAME	, new LADataString()).convertFromString(STD); 
+			e->add( CALIBRATION_DATA_DISCOUNTCURVENAME	, new AQLDataString()).convertFromString(STD); 
 		}
       
 		objPool.set( name , e );
 	}
 	else if(objHolder.isDefined())
 	{
-        LADataHolder* dh;
+        AQLDataHolder* dh;
 
 		dh = &objHolder.getData(CALIBRATION_DATA_CURVEID,ISDEFINED);
-		LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+		AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 		curveid_att.set(curveID);
 
-		if(oneMCurveName != LAString(""))
+		if(oneMCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_1MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(oneMCurveName);
 		}
 		else
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_1MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(STD);
 		}
 
-		if(threeMCurveName != LAString(""))
+		if(threeMCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_3MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(threeMCurveName);
 		}
 		else
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_3MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(STD);
 		}
 
-		if(sixMCurveName != LAString(""))
+		if(sixMCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_6MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(sixMCurveName);
 		}
 		else
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_6MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(STD);
 		}
 
-		if(swapCurveName != LAString(""))
+		if(swapCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_SWAPRATELCURVENAME	,NOCHECK);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(swapCurveName);
 		}
 		else
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_SWAPRATELCURVENAME	,NOCHECK);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(STD);
 		}
 
-		if(discountCurveName != LAString(""))
+		if(discountCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_DISCOUNTCURVENAME	,NOCHECK);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(discountCurveName);
 		}
 		else
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_DISCOUNTCURVENAME	,NOCHECK);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(STD);
 		}
 	}
 }
 
 void 
-LAMathSwaptionVolUtility::setCurveID2(LADataInstance* dataInstance, const LAString& name, LAStringMatrix& curveMat)
+LAMathSwaptionVolUtility::setCurveID2(AQLDataInstance* dataInstance, const AQLString& name, AQLStringMatrix& curveMat)
 {
-	LAString curveID = searchbyrow(curveMat, "CurveID",1,true);
-	LAString oneMCurveName = searchbyrow(curveMat, "1MLName",1,true);
-	LAString threeMCurveName = searchbyrow(curveMat, "3MLName",1,true);
-	LAString sixMCurveName = searchbyrow(curveMat, "6MLName",1,true);
-	LAString swapCurveName = searchbyrow(curveMat, "SwapRateName",1,true);
-	LAString discountCurveName = searchbyrow(curveMat, "DFName",1,true);
+	AQLString curveID = searchbyrow(curveMat, "CurveID",1,true);
+	AQLString oneMCurveName = searchbyrow(curveMat, "1MLName",1,true);
+	AQLString threeMCurveName = searchbyrow(curveMat, "3MLName",1,true);
+	AQLString sixMCurveName = searchbyrow(curveMat, "6MLName",1,true);
+	AQLString swapCurveName = searchbyrow(curveMat, "SwapRateName",1,true);
+	AQLString discountCurveName = searchbyrow(curveMat, "DFName",1,true);
 
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-    LAObjectHolder objHolder = objPool.getObject(name ,ENCHKTYPE_NOCHECK);
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+    AQLObjectHolder objHolder = objPool.getObject(name ,ENCHKTYPE_NOCHECK);
     if(!objHolder.isDefined())
 	{
-		LAObject* e = new LAObject();
-		e->add( CALIBRATION_DATA_NAME, new LADataString()).convertFromString(name);
-		if(curveID != LAString("")) 
+		AQLObject* e = new AQLObject();
+		e->add( CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(name);
+		if(curveID != AQLString("")) 
 		{ 
-			e->add( CALIBRATION_DATA_CURVEID, new LADataString()).convertFromString(curveID); 
+			e->add( CALIBRATION_DATA_CURVEID, new AQLDataString()).convertFromString(curveID); 
 		}
 		else
 		{
-			throw LACoreInvalidData("input curve ID!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("input curve ID!", __FILE__, __LINE__);
 		}
 
-		if(oneMCurveName != LAString("")) 
+		if(oneMCurveName != AQLString("")) 
 		{ 
-			e->add( CALIBRATION_DATA_1MLCURVENAME, new LADataString()).convertFromString(oneMCurveName); 
+			e->add( CALIBRATION_DATA_1MLCURVENAME, new AQLDataString()).convertFromString(oneMCurveName); 
 		}
 		else
 		{
-			e->add( CALIBRATION_DATA_1MLCURVENAME, new LADataString()).convertFromString(STD); 
+			e->add( CALIBRATION_DATA_1MLCURVENAME, new AQLDataString()).convertFromString(STD); 
 		}
 
-		if(threeMCurveName != LAString("")) 
+		if(threeMCurveName != AQLString("")) 
 		{
-			e->add( CALIBRATION_DATA_3MLCURVENAME, new LADataString()).convertFromString(threeMCurveName); 
+			e->add( CALIBRATION_DATA_3MLCURVENAME, new AQLDataString()).convertFromString(threeMCurveName); 
 		}
 		else
 		{
-			e->add( CALIBRATION_DATA_3MLCURVENAME, new LADataString()).convertFromString(STD); 
+			e->add( CALIBRATION_DATA_3MLCURVENAME, new AQLDataString()).convertFromString(STD); 
 		}
 
-		if(sixMCurveName != LAString("")) 
+		if(sixMCurveName != AQLString("")) 
 		{ 
-			e->add( CALIBRATION_DATA_6MLCURVENAME, new LADataString()).convertFromString(sixMCurveName); 
+			e->add( CALIBRATION_DATA_6MLCURVENAME, new AQLDataString()).convertFromString(sixMCurveName); 
 		}
 		else
 		{
-			e->add( CALIBRATION_DATA_6MLCURVENAME, new LADataString()).convertFromString(STD); 
+			e->add( CALIBRATION_DATA_6MLCURVENAME, new AQLDataString()).convertFromString(STD); 
 		}
 
-		if(swapCurveName != LAString("")) 
+		if(swapCurveName != AQLString("")) 
 		{ 
-			e->add( CALIBRATION_DATA_SWAPRATELCURVENAME	, new LADataString()).convertFromString(swapCurveName); 
+			e->add( CALIBRATION_DATA_SWAPRATELCURVENAME	, new AQLDataString()).convertFromString(swapCurveName); 
 		}
 		else
 		{
-			e->add( CALIBRATION_DATA_SWAPRATELCURVENAME	, new LADataString()).convertFromString(STD); 
+			e->add( CALIBRATION_DATA_SWAPRATELCURVENAME	, new AQLDataString()).convertFromString(STD); 
 		}
 
-		if(discountCurveName != LAString("")) 
+		if(discountCurveName != AQLString("")) 
 		{ 
-			e->add( CALIBRATION_DATA_DISCOUNTCURVENAME	, new LADataString()).convertFromString(discountCurveName); 
+			e->add( CALIBRATION_DATA_DISCOUNTCURVENAME	, new AQLDataString()).convertFromString(discountCurveName); 
 		}
 		else
 		{
-			e->add( CALIBRATION_DATA_DISCOUNTCURVENAME	, new LADataString()).convertFromString(STD); 
+			e->add( CALIBRATION_DATA_DISCOUNTCURVENAME	, new AQLDataString()).convertFromString(STD); 
 		}
       
 		objPool.set( name , e );
 	}
 	else if(objHolder.isDefined())
 	{
-        LADataHolder* dh;
+        AQLDataHolder* dh;
 
-		if(curveID != LAString(""))
+		if(curveID != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_CURVEID,NOCHECK);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(curveID);
 		}
 		else
 		{
-			throw LACoreInvalidData("input curve ID!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("input curve ID!", __FILE__, __LINE__);
 		}
 
-		if(oneMCurveName != LAString(""))
+		if(oneMCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_1MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(oneMCurveName);
 		}
 		else
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_1MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(STD);
 		}
 
-		if(threeMCurveName != LAString(""))
+		if(threeMCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_3MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(threeMCurveName);
 		}
 		else
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_3MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(STD);
 		}
 
-		if(sixMCurveName != LAString(""))
+		if(sixMCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_6MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(sixMCurveName);
 		}
 		else
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_6MLCURVENAME,ISDEFINED);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(STD);
 		}
 
-		if(swapCurveName != LAString(""))
+		if(swapCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_SWAPRATELCURVENAME	,NOCHECK);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(swapCurveName);
 		}
 		else
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_SWAPRATELCURVENAME	,NOCHECK);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(STD);
 		}
 
-		if(discountCurveName != LAString(""))
+		if(discountCurveName != AQLString(""))
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_DISCOUNTCURVENAME	,NOCHECK);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(discountCurveName);
 		}
 		else
 		{
 			dh = &objHolder.getData(CALIBRATION_DATA_DISCOUNTCURVENAME	,NOCHECK);
-			LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+			AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 			curveid_att.set(STD);
 		}
 	}
 }
 
 void 
-LAMathSwaptionVolUtility::setCurveID2(LADataInstance* dataInstance, const LAString& name, const LAStringVector& sTenor, LAStringMatrix& curveMat)
+LAMathSwaptionVolUtility::setCurveID2(AQLDataInstance* dataInstance, const AQLString& name, const AQLStringVector& sTenor, AQLStringMatrix& curveMat)
 {
 	LAMathSwaptionVolUtility::setCurveID2(dataInstance, name, curveMat);
 
-	LAObjectPool &objPool = dataInstance->getObjectPool();
-    LAObjectHolder objHolder = objPool.getObject(name,ENCHKTYPE_NOCHECK);
+	AQLObjectPool &objPool = dataInstance->getObjectPool();
+    AQLObjectHolder objHolder = objPool.getObject(name,ENCHKTYPE_NOCHECK);
 
 	for(size_t i = 0; i < sTenor.size(); i++)
 	{
-		LAString swapCurveName = searchbyrow(curveMat, LAString("SwapRateName_") + sTenor[i],1,false);
+		AQLString swapCurveName = searchbyrow(curveMat, AQLString("SwapRateName_") + sTenor[i],1,false);
 
-		LADataHolder* dh;
-		dh = &objHolder.getData(CALIBRATION_DATA_SWAPRATELCURVENAME + LAString("_") + sTenor[i], NOCHECK);		
+		AQLDataHolder* dh;
+		dh = &objHolder.getData(CALIBRATION_DATA_SWAPRATELCURVENAME + AQLString("_") + sTenor[i], NOCHECK);		
 		if(dh->isDefined() && !dh->isNull())
 		{
-			if(swapCurveName != LAString(""))
+			if(swapCurveName != AQLString(""))
 			{
-				LADataString& curveid_att = dynamic_cast<LADataString &>(dh->get());
+				AQLDataString& curveid_att = dynamic_cast<AQLDataString &>(dh->get());
 				curveid_att.set(swapCurveName);
 			}
 		}
 		else
 		{
-			if(swapCurveName != LAString(""))
-				objHolder.get().add( CALIBRATION_DATA_SWAPRATELCURVENAME + LAString("_") + sTenor[i], new LADataString()).convertFromString(swapCurveName); 
+			if(swapCurveName != AQLString(""))
+				objHolder.get().add( CALIBRATION_DATA_SWAPRATELCURVENAME + AQLString("_") + sTenor[i], new AQLDataString()).convertFromString(swapCurveName); 
 		}
 	}
 }
 
 void 
 LAMathSwaptionVolUtility::calibrateSABRMatrix
-( LADataInstance* dataInstance, const LAString& approxMethod, const std::vector<bool>& calibFlg, const LAString& calibMethod, const LAString& curveSetID, const LAString& alphaID, const LAString& betaID, 
-  const LAString& nuID, const LAString& rhoID, const LAString& swapConvID, 
-  const LAString& capConvID, const LAStringVector& swapVolID, /*LAStringMatrix sabrLimiter,*/
-  const LAString& target, const DoubleVector& weight, const IntVector& sgn, const LAString& forwardID, const double forwardShiftValue, 
-  const LAString& numeraireID, LAString& msg, const BoolMatrix *calibFlgMtx, bool isLognormal)
+( AQLDataInstance* dataInstance, const AQLString& approxMethod, const std::vector<bool>& calibFlg, const AQLString& calibMethod, const AQLString& curveSetID, const AQLString& alphaID, const AQLString& betaID, 
+  const AQLString& nuID, const AQLString& rhoID, const AQLString& swapConvID, 
+  const AQLString& capConvID, const AQLStringVector& swapVolID, /*AQLStringMatrix sabrLimiter,*/
+  const AQLString& target, const DoubleVector& weight, const IntVector& sgn, const AQLString& forwardID, const double forwardShiftValue, 
+  const AQLString& numeraireID, AQLString& msg, const BoolMatrix *calibFlgMtx, bool isLognormal)
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-	LAString tmp_target = target;
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLString tmp_target = target;
 	tmp_target.toUpper();
     //upper(sabrLimiter);
     //const double eps = 0.000000001;
@@ -858,44 +858,44 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
     //LAMathSABRLimiter limiter(sabrLimiter);
 
     if( swapVolID.size() != weight.size() )
-        throw LACoreInvalidData("sizes are inconsistent!",	__FILE__,__LINE__);
+        throw AQLCoreInvalidData("sizes are inconsistent!",	__FILE__,__LINE__);
 
 	if( swapVolID.size() != sgn.size() )
-        throw LACoreInvalidData("sizes are inconsistent!",	__FILE__,__LINE__);
+        throw AQLCoreInvalidData("sizes are inconsistent!",	__FILE__,__LINE__);
 
 	matirixCheck(dataInstance, alphaID, betaID);
 	matirixCheck(dataInstance, alphaID, nuID);
 	matirixCheck(dataInstance, alphaID, rhoID);
 
-    LAObjectPool& objPool = dataInstance->getObjectPool();
-    DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix &>
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
+    DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const LAStringVector& expiry = dynamic_cast<const LADataStrings &>
+    const AQLStringVector& expiry = dynamic_cast<const AQLDataStrings &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYSTRING,ISDEFINED).get()).get();
-    const LAStringVector& tenor = dynamic_cast<const LADataStrings &>
+    const AQLStringVector& tenor = dynamic_cast<const AQLDataStrings &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORSTRING,ISDEFINED).get()).get();
-	const DoubleVector& expiryTerms = dynamic_cast<const LADataDoubles &>
+	const DoubleVector& expiryTerms = dynamic_cast<const AQLDataDoubles &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
-	const DateVector& expiryDates = dynamic_cast<const LADataDates &>
+	const DateVector& expiryDates = dynamic_cast<const AQLDataDates &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYDATEVECTOR,ISDEFINED).get()).get();
-    DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix &>
+    DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix &>
+    DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( nuID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix &>
+    DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( rhoID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
-    LADataHolder* dh = &((objPool.getObject( alphaID, ENCHKTYPE_NOCHECK ).get()).getData(PRICING_DATA_GRIDAPPROXMETHOD,NOCHECK));
-	LAString tmp_approxMethod = approxMethod;
-	LAStringVector stmpvec(tenor.size(),tmp_approxMethod.toUpper());
-	LAStringMatrix gridApproxMethodMtx(expiry.size(),stmpvec);
+    AQLDataHolder* dh = &((objPool.getObject( alphaID, ENCHKTYPE_NOCHECK ).get()).getData(PRICING_DATA_GRIDAPPROXMETHOD,NOCHECK));
+	AQLString tmp_approxMethod = approxMethod;
+	AQLStringVector stmpvec(tenor.size(),tmp_approxMethod.toUpper());
+	AQLStringMatrix gridApproxMethodMtx(expiry.size(),stmpvec);
 
 	if(dh->isDefined() && !dh->isNull())
 	{
-		gridApproxMethodMtx = dynamic_cast<const LADataStringMatrix&>(dh->get()).get();
+		gridApproxMethodMtx = dynamic_cast<const AQLDataStringMatrix&>(dh->get()).get();
 		if (gridApproxMethodMtx.size() != expiry.size() || (gridApproxMethodMtx)[0].size() != tenor.size())
 		{
-			throw LACoreInvalidData("Grid Approximation Method matrix does not match swaption volatility matrix!",	__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Grid Approximation Method matrix does not match swaption volatility matrix!",	__FILE__,__LINE__);
 		}
 	}
 	
@@ -903,18 +903,18 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 	{
 		if (calibFlgMtx->size() != expiry.size() || (*calibFlgMtx)[0].size() != tenor.size())
 		{
-			throw LACoreInvalidData("Calibration flag matrix does not match swaption volatility matrix!",	__FILE__,__LINE__);
+			throw AQLCoreInvalidData("Calibration flag matrix does not match swaption volatility matrix!",	__FILE__,__LINE__);
 		}
 	}
 
 	DoubleMatrix forwardMat, numeraireMat;
-	if(forwardID != LAString("")) 
+	if(forwardID != AQLString("")) 
 	{
 		matirixCheck(dataInstance, alphaID, forwardID);
-		forwardMat = dynamic_cast<LADataDoubleMatrix &>
+		forwardMat = dynamic_cast<AQLDataDoubleMatrix &>
 			(objPool.getObject( forwardID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
-		numeraireMat = dynamic_cast<LADataDoubleMatrix &>
+		numeraireMat = dynamic_cast<AQLDataDoubleMatrix &>
 			(objPool.getObject( numeraireID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 	}
 
@@ -923,11 +923,11 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
     {
         matirixCheck(dataInstance, alphaID, swapVolID[i], true);
         marketVol.push_back(
-        dynamic_cast<const LADataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
+        dynamic_cast<const AQLDataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
         getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get() );
 
         marketStk.push_back(
-        dynamic_cast<const LADataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
+        dynamic_cast<const AQLDataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
         getData(PRICING_DATA_SWAPTIONSTRIKEMATRIX,ISDEFINED).get()).get() );
     }
 
@@ -945,13 +945,13 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
     DoubleArray forward_calib, numeraire_calib, strike_calib, vol_calib, expiry_calib;//, x(limiter.getParamNum());
     DateVector dates;
 //    LAMathSABR_Hagan sabr;
-	LAString curveID,convID,foreName,dfName;
-	LAObject curveEntity;
+	AQLString curveID,convID,foreName,dfName;
+	AQLObject curveEntity;
 	
-	if(forwardID == LAString(""))
+	if(forwardID == AQLString(""))
 	{
 		curveEntity = dataInstance->getObjectPool().getObject( curveSetID, ENCHKTYPE_ISDEFINED ).get();
-		curveID = dynamic_cast<const LADataString& >(curveEntity.getData(CALIBRATION_DATA_CURVEID,ISDEFINED).get()).get();
+		curveID = dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_CURVEID,ISDEFINED).get()).get();
 		bool isMap = false;
 	}
 
@@ -965,19 +965,19 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 			{
 				continue;
 			}
-			if(forwardID == LAString(""))
+			if(forwardID == AQLString(""))
 			{
-				if( tenor[j]==LAString("1M") || tenor[j]==LAString("3M") || tenor[j]==LAString("6M") )
+				if( tenor[j]==AQLString("1M") || tenor[j]==AQLString("3M") || tenor[j]==AQLString("6M") )
 				{
 					convID = capConvID;
-					foreName = dynamic_cast<const LADataString& >(curveEntity.getData(tenor[j]+LAString("LiborCurveName"),ISDEFINED).get()).get();
-					dfName = dynamic_cast<const LADataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
+					foreName = dynamic_cast<const AQLDataString& >(curveEntity.getData(tenor[j]+AQLString("LiborCurveName"),ISDEFINED).get()).get();
+					dfName = dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
 				}
 				else
 				{
 					convID = swapConvID;
-					foreName = dynamic_cast<const LADataString& >(curveEntity.getData(LAString("SwapRateCurveName"),ISDEFINED).get()).get();
-					dfName = dynamic_cast<const LADataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
+					foreName = dynamic_cast<const AQLDataString& >(curveEntity.getData(AQLString("SwapRateCurveName"),ISDEFINED).get()).get();
+					dfName = dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
 				}
 				//forward = getForward(dataInstance, expiryDates[i], tenor[j], curveID, convID, foreName, dfName); forward = (forward > 0.0) ? forward : eps_SABR;
 				forward = getForward(dataInstance, expiryDates[i], tenor[j], curveID, convID, foreName, dfName);
@@ -1011,17 +1011,17 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 			initValue[3] = rhoMat[i][j];
 
 
-			msg = LAString("alpha is out of range.");
-			if(initValue[0] < min_alpha || initValue[0] > max_alpha) throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			msg = AQLString("alpha is out of range.");
+			if(initValue[0] < min_alpha || initValue[0] > max_alpha) throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 
-			msg = LAString("beta is out of range.");
-			if(initValue[1] < min_beta || initValue[1] > max_beta) throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			msg = AQLString("beta is out of range.");
+			if(initValue[1] < min_beta || initValue[1] > max_beta) throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 
-			msg = LAString("nu is out of range.");
-			if(initValue[2] < min_nu || initValue[2] > max_nu) throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			msg = AQLString("nu is out of range.");
+			if(initValue[2] < min_nu || initValue[2] > max_nu) throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 
-			msg = LAString("rho is out of range.");
-			if(initValue[3] < min_rho || initValue[3] > max_rho) throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			msg = AQLString("rho is out of range.");
+			if(initValue[3] < min_rho || initValue[3] > max_rho) throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 
             //calibration
 			LAMathSABR* sabr = createSABR(gridApproxMethodMtx[i][j], alphaMat[i][j], betaMat[i][j], nuMat[i][j], rhoMat[i][j], isLognormal);
@@ -1041,7 +1041,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 	
 			// Create constraint
 			LAQuantLibConstraint* constraint = 0;
-			LAString tmp_approxMethod = gridApproxMethodMtx[i][j];
+			AQLString tmp_approxMethod = gridApproxMethodMtx[i][j];
 			tmp_approxMethod.toUpper();
 			if(tmp_approxMethod == APPROXIMATION_ANTONOV)
 			{
@@ -1081,7 +1081,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 					{
 						if(!calibFlg[3])
 						{
-							throw LACoreInvalidData("All element of flg is false : LAMathLeastSquareSABRCostFunc::set_params", __FILE__, __LINE__);
+							throw AQLCoreInvalidData("All element of flg is false : LAMathLeastSquareSABRCostFunc::set_params", __FILE__, __LINE__);
 						}
 						else x_.push_back(rhoMat[i][j]);
 					}
@@ -1142,7 +1142,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 
 			// Set Optimization Method
 			LAQuantLibOptimizationMethod* optMethod;
-			LAString tmp_calibMethod = calibMethod;
+			AQLString tmp_calibMethod = calibMethod;
 			tmp_calibMethod.toUpper();
 			if (tmp_calibMethod == CALIB_NON_LINEAR_CONJUGATE_GRADIENT_METHOD)
 			{
@@ -1183,8 +1183,8 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 				delete sabr;
 
 
-				LAString msg = LAString("Optimization Method: ") + calibMethod + " not support";
-				throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+				AQLString msg = AQLString("Optimization Method: ") + calibMethod + " not support";
+				throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 			}
 
 
@@ -1204,8 +1204,8 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 				delete costfunc;
 				delete sabr;
 
-				LAString msg = LAString("maxStationaryStateIteration must be smaller than maxIterration.");
-				throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+				AQLString msg = AQLString("maxStationaryStateIteration must be smaller than maxIterration.");
+				throw AQLCoreInvalidData(msg.getCString(),__FILE__,__LINE__);
 			}
 
 			LAQuantLibEndCriteria* endCriteria = new LAQuantLibEndCriteria(maxIteration, 
@@ -1224,25 +1224,25 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 				}
 				catch(std::exception& e)
 				{
-					msg += LAString(e.what());
-					msg += LAString("(");
-					msg += LAString(LAModelUtilities::n2s(i).c_str());
-					msg += LAString(",");
-					msg += LAString(LAModelUtilities::n2s(j).c_str());
-					msg += LAString(")");
-					msg += LAString(" : ");
+					msg += AQLString(e.what());
+					msg += AQLString("(");
+					msg += AQLString(LAModelUtilities::n2s(i).c_str());
+					msg += AQLString(",");
+					msg += AQLString(LAModelUtilities::n2s(j).c_str());
+					msg += AQLString(")");
+					msg += AQLString(" : ");
 
 				}
 			}
-			catch(LACoreError&e)
+			catch(AQLCoreError&e)
 			{
-				for(unsigned int k =0;k<e.getSize();k++) msg+=LAString(e.getMsg(e.getSize()-k-1));
-				msg += LAString("(");
-				msg += LAString(LAModelUtilities::n2s(i).c_str());
-				msg += LAString(",");
-				msg += LAString(LAModelUtilities::n2s(j).c_str());
-				msg += LAString(")");
-				msg += LAString(" : ");
+				for(unsigned int k =0;k<e.getSize();k++) msg+=AQLString(e.getMsg(e.getSize()-k-1));
+				msg += AQLString("(");
+				msg += AQLString(LAModelUtilities::n2s(i).c_str());
+				msg += AQLString(",");
+				msg += AQLString(LAModelUtilities::n2s(j).c_str());
+				msg += AQLString(")");
+				msg += AQLString(" : ");
 			}
 
 			//QuantLib::Array xMinCalculated = opt_problem->currentValue();
@@ -1262,36 +1262,36 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
         }
     }
 
-    LADataDoubleMatrix mat_att;
+    AQLDataDoubleMatrix mat_att;
     dh = &dataInstance->getObjectPool().getObject(alphaID ,ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED);   
-    mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+    mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
     mat_att.set( alphaMat );
 
     dh = &dataInstance->getObjectPool().getObject(betaID ,ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED);   
-    mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+    mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
     mat_att.set( betaMat );
 
     dh = &dataInstance->getObjectPool().getObject(nuID ,ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED);   
-    mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+    mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
     mat_att.set( nuMat );
 
     dh = &dataInstance->getObjectPool().getObject(rhoID ,ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED);   
-    mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+    mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
     mat_att.set( rhoMat );
 }
 
 
 void
 LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatrix& betaMat, DoubleMatrix& nuMat, DoubleMatrix& rhoMat,
-											const LAString& approxMethod, const std::vector<bool>& calibFlg, const LAString& calibMethod,
+											const AQLString& approxMethod, const std::vector<bool>& calibFlg, const AQLString& calibMethod,
 											const std::vector<DoubleMatrix >& marketVol, const std::vector<DoubleMatrix >& marketStrike, const DoubleVector& expiryTerm,
-											const LAString& target, const DoubleVector& weight, const IntVector& sgn, const double solverEpsilon,
+											const AQLString& target, const DoubleVector& weight, const IntVector& sgn, const double solverEpsilon,
 											const DoubleMatrix& forwardMat, const double forwardShiftValue, const DoubleMatrix& numeraireMat,
 											const DoubleMatrix& atmMarketVol, const bool alphaFromAtmVol,
-											LAString& msg, const BoolMatrix *calibFlgMtx, const bool isLognormal)
+											AQLString& msg, const BoolMatrix *calibFlgMtx, const bool isLognormal)
 {
 
-	LAString tmp_target = target;
+	AQLString tmp_target = target;
 	tmp_target.toUpper();
 
 	//vol size is the row size of marketVol
@@ -1307,9 +1307,9 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 
 	AQ_REQUIRE(swapVolSize == sgn.size(), "Inconsistent Market Data: The number of Swap Vol Objects and Call/Put Sign Indicators must match")
 	
-	LAString tmp_approxMethod = approxMethod;
-	LAStringVector stmpvec(tenorSize, tmp_approxMethod.toUpper());
-	LAStringMatrix gridApproxMethodMtx(expiryTerm.size(), stmpvec);
+	AQLString tmp_approxMethod = approxMethod;
+	AQLStringVector stmpvec(tenorSize, tmp_approxMethod.toUpper());
+	AQLStringMatrix gridApproxMethodMtx(expiryTerm.size(), stmpvec);
 
 	if (calibFlgMtx)
 	{
@@ -1392,7 +1392,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 
 			// Create constraint
 			LAQuantLibConstraint* constraint = 0;
-			LAString tmp_approxMethod = gridApproxMethodMtx[i][j];
+			AQLString tmp_approxMethod = gridApproxMethodMtx[i][j];
 			tmp_approxMethod.toUpper();
 			if (tmp_approxMethod == APPROXIMATION_ANTONOV)
 			{
@@ -1493,7 +1493,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 
 			// Set Optimization Method
 			LAQuantLibOptimizationMethod* optMethod;
-			LAString tmp_calibMethod = calibMethod;
+			AQLString tmp_calibMethod = calibMethod;
 			tmp_calibMethod.toUpper();
 			if (tmp_calibMethod == CALIB_NON_LINEAR_CONJUGATE_GRADIENT_METHOD)
 			{
@@ -1572,25 +1572,25 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 				}
 				catch (std::exception& e)
 				{
-					msg += LAString(e.what());
-					msg += LAString("(");
-					msg += LAString(LAModelUtilities::n2s(i).c_str());
-					msg += LAString(",");
-					msg += LAString(LAModelUtilities::n2s(j).c_str());
-					msg += LAString(")");
-					msg += LAString(" : ");
+					msg += AQLString(e.what());
+					msg += AQLString("(");
+					msg += AQLString(LAModelUtilities::n2s(i).c_str());
+					msg += AQLString(",");
+					msg += AQLString(LAModelUtilities::n2s(j).c_str());
+					msg += AQLString(")");
+					msg += AQLString(" : ");
 
 				}
 			}
-			catch (LACoreError&e)
+			catch (AQLCoreError&e)
 			{
-				for (unsigned int k = 0; k < e.getSize(); k++) msg += LAString(e.getMsg(e.getSize() - k - 1));
-				msg += LAString("(");
-				msg += LAString(LAModelUtilities::n2s(i).c_str());
-				msg += LAString(",");
-				msg += LAString(LAModelUtilities::n2s(j).c_str());
-				msg += LAString(")");
-				msg += LAString(" : ");
+				for (unsigned int k = 0; k < e.getSize(); k++) msg += AQLString(e.getMsg(e.getSize() - k - 1));
+				msg += AQLString("(");
+				msg += AQLString(LAModelUtilities::n2s(i).c_str());
+				msg += AQLString(",");
+				msg += AQLString(LAModelUtilities::n2s(j).c_str());
+				msg += AQLString(")");
+				msg += AQLString(" : ");
 			}
 
 			//QuantLib::Array xMinCalculated = opt_problem->currentValue();
@@ -1615,12 +1615,12 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 
 void 
 LAMathSwaptionVolUtility::calibrateSABRMatrix
-( LADataInstance* dataInstance, const LAString& curveSetID, const LAString& alphaID, const LAString& betaID, 
-  const LAString& nuID, const LAString& rhoID, const LAString& swapConvID, 
-  const LAString& capConvID, const LAStringVector& swapVolID, LAStringMatrix sabrLimiter, 
-  LAString target, const DoubleVector& weight, const LAString& forwardID, const double forwardShiftValue )
+( AQLDataInstance* dataInstance, const AQLString& curveSetID, const AQLString& alphaID, const AQLString& betaID, 
+  const AQLString& nuID, const AQLString& rhoID, const AQLString& swapConvID, 
+  const AQLString& capConvID, const AQLStringVector& swapVolID, AQLStringMatrix sabrLimiter, 
+  AQLString target, const DoubleVector& weight, const AQLString& forwardID, const double forwardShiftValue )
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
     upper(target);
     upper(sabrLimiter);
     const double eps = 0.000000001;
@@ -1633,29 +1633,29 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 	matirixCheck(dataInstance, alphaID, nuID);
 	matirixCheck(dataInstance, alphaID, rhoID);
 
-    LAObjectPool& objPool = dataInstance->getObjectPool();
-    DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix &>
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
+    DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const LAStringVector& expiry = dynamic_cast<const LADataStrings &>
+    const AQLStringVector& expiry = dynamic_cast<const AQLDataStrings &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYSTRING,ISDEFINED).get()).get();
-    const LAStringVector& tenor = dynamic_cast<const LADataStrings &>
+    const AQLStringVector& tenor = dynamic_cast<const AQLDataStrings &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORSTRING,ISDEFINED).get()).get();
-	const DoubleVector& expiryTerms = dynamic_cast<const LADataDoubles &>
+	const DoubleVector& expiryTerms = dynamic_cast<const AQLDataDoubles &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
-	const DateVector& expiryDates = dynamic_cast<const LADataDates &>
+	const DateVector& expiryDates = dynamic_cast<const AQLDataDates &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYDATEVECTOR,ISDEFINED).get()).get();
-    DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix &>
+    DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix &>
+    DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( nuID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix &>
+    DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( rhoID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 	
 	DoubleMatrix forwardMat;
-	if(forwardID != LAString("")) 
+	if(forwardID != AQLString("")) 
 	{
 		matirixCheck(dataInstance, alphaID, forwardID);
-		forwardMat = dynamic_cast<LADataDoubleMatrix &>
+		forwardMat = dynamic_cast<AQLDataDoubleMatrix &>
 			(objPool.getObject( forwardID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 	}
 
@@ -1664,11 +1664,11 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
     {
         matirixCheck(dataInstance, alphaID, swapVolID[i], true);
         marketVol.push_back(
-        dynamic_cast<const LADataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
+        dynamic_cast<const AQLDataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
         getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get() );
 
         marketStk.push_back(
-        dynamic_cast<const LADataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
+        dynamic_cast<const AQLDataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
         getData("SwaptionStrikeMatrix",ISDEFINED).get()).get() );
     }
 
@@ -1676,27 +1676,27 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
     DoubleArray forward_calib, numeraire_calib, strike_calib, vol_calib, expiry_calib, x(limiter.getParamNum());
     DateVector dates;
     LAMathSABR_Hagan sabr;
-	LAObject curveEntity = dataInstance->getObjectPool().getObject( curveSetID, ENCHKTYPE_ISDEFINED ).get();
-	LAString curveID,convID,foreName,dfName;
-	curveID = dynamic_cast<const LADataString& >(curveEntity.getData(CALIBRATION_DATA_CURVEID,ISDEFINED).get()).get();
+	AQLObject curveEntity = dataInstance->getObjectPool().getObject( curveSetID, ENCHKTYPE_ISDEFINED ).get();
+	AQLString curveID,convID,foreName,dfName;
+	curveID = dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_CURVEID,ISDEFINED).get()).get();
     bool isMap = false;
 	for(size_t j=0; j<tenor.size(); j++)
     {
 		for(size_t i=0; i<expiry.size(); i++)
 		{  
-			if(forwardID == LAString(""))
+			if(forwardID == AQLString(""))
 			{
-				if( tenor[j]==LAString("1M") || tenor[j]==LAString("3M") || tenor[j]==LAString("6M") )
+				if( tenor[j]==AQLString("1M") || tenor[j]==AQLString("3M") || tenor[j]==AQLString("6M") )
 				{
 					convID = capConvID;
-					foreName = dynamic_cast<const LADataString& >(curveEntity.getData(tenor[j]+LAString("LiborCurveName"),ISDEFINED).get()).get();
-					dfName = dynamic_cast<const LADataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
+					foreName = dynamic_cast<const AQLDataString& >(curveEntity.getData(tenor[j]+AQLString("LiborCurveName"),ISDEFINED).get()).get();
+					dfName = dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
 				}
 				else
 				{
 					convID = swapConvID;
-					foreName = dynamic_cast<const LADataString& >(curveEntity.getData(LAString("SwapRateCurveName"),ISDEFINED).get()).get();
-					dfName = dynamic_cast<const LADataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
+					foreName = dynamic_cast<const AQLDataString& >(curveEntity.getData(AQLString("SwapRateCurveName"),ISDEFINED).get()).get();
+					dfName = dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
 				}
 				forward = getForward(dataInstance, expiryDates[i], tenor[j], curveID, convID, foreName, dfName); forward = (forward > 0.0) ? forward : eps_SABR;
 				numeraire = getNumeraire(dataInstance, expiryDates[i], tenor[j], curveID, convID, dfName);
@@ -1742,34 +1742,34 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
         }
     }
 
-    LADataHolder* dh;
-    LADataDoubleMatrix mat_att;
+    AQLDataHolder* dh;
+    AQLDataDoubleMatrix mat_att;
     dh = &dataInstance->getObjectPool().getObject(alphaID ,ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED);   
-    mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+    mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
     mat_att.set( alphaMat );
 
     dh = &dataInstance->getObjectPool().getObject(betaID ,ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED);   
-    mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+    mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
     mat_att.set( betaMat );
 
     dh = &dataInstance->getObjectPool().getObject(nuID ,ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED);   
-    mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+    mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
     mat_att.set( nuMat );
 
     dh = &dataInstance->getObjectPool().getObject(rhoID ,ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED);   
-    mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+    mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
     mat_att.set( rhoMat );
 }
 
 void
 LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
-(LADataInstance* dataInstance, const LAString& approxMethod, const std::vector<bool>& calibFlg, const LAString& calibMethod, const LAString& curveSetID, const LAString& alphaID, const LAString& betaID,
-	const LAString& nuID, const LAString& rhoID, const LAString& swapConvID,
-	const LAString& capConvID, const LAStringVector& swapVolID, /*LAStringMatrix sabrLimiter,*/
-	const LAString& target, const DoubleVector& weight, const IntVector& sgn_in, const double forwardShiftValue,
-    LAString& msg, const BoolMatrix *calibFlgMtx)
+(AQLDataInstance* dataInstance, const AQLString& approxMethod, const std::vector<bool>& calibFlg, const AQLString& calibMethod, const AQLString& curveSetID, const AQLString& alphaID, const AQLString& betaID,
+	const AQLString& nuID, const AQLString& rhoID, const AQLString& swapConvID,
+	const AQLString& capConvID, const AQLStringVector& swapVolID, /*AQLStringMatrix sabrLimiter,*/
+	const AQLString& target, const DoubleVector& weight, const IntVector& sgn_in, const double forwardShiftValue,
+    AQLString& msg, const BoolMatrix *calibFlgMtx)
 {
-	LAString tmp_target = target;
+	AQLString tmp_target = target;
 	tmp_target.toUpper();
 	AQ_THROW_IF(tmp_target != "PREMIUM", "Only premium is allowed as a calibration target.")
 	
@@ -1786,50 +1786,50 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 	matirixCheck(dataInstance, alphaID, nuID);
 	matirixCheck(dataInstance, alphaID, rhoID);
 
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix &>
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix &>
 		(objPool.getObject(alphaID, ENCHKTYPE_ISDEFINED).get().getData(PRICING_DATA_SWAPTIONMATRIX, ISDEFINED).get()).get();
-	const LAStringVector& expiry = dynamic_cast<const LADataStrings &>
+	const AQLStringVector& expiry = dynamic_cast<const AQLDataStrings &>
 		(objPool.getObject(alphaID, ENCHKTYPE_ISDEFINED).get().getData(PRICING_DATA_EXPIRYSTRING, ISDEFINED).get()).get();
-	const LAStringVector& tenor = dynamic_cast<const LADataStrings &>
+	const AQLStringVector& tenor = dynamic_cast<const AQLDataStrings &>
 		(objPool.getObject(alphaID, ENCHKTYPE_ISDEFINED).get().getData(PRICING_DATA_TENORSTRING, ISDEFINED).get()).get();
-	DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix &>
+	DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix &>
 		(objPool.getObject(betaID, ENCHKTYPE_ISDEFINED).get().getData(PRICING_DATA_SWAPTIONMATRIX, ISDEFINED).get()).get();
-	DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix &>
+	DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix &>
 		(objPool.getObject(nuID, ENCHKTYPE_ISDEFINED).get().getData(PRICING_DATA_SWAPTIONMATRIX, ISDEFINED).get()).get();
-	DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix &>
+	DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix &>
 		(objPool.getObject(rhoID, ENCHKTYPE_ISDEFINED).get().getData(PRICING_DATA_SWAPTIONMATRIX, ISDEFINED).get()).get();
-	const LAObject& object = dataInstance->getObjectPool().getObject(capConvID, ENCHKTYPE_ISDEFINED).get();
-	const LAPriceDataCalendar& cal =	dynamic_cast<const LAPriceDataCalendar& >(object.getData(CALIBRATION_DATA_CALENDAR, ISDEFINED).get());
-	const LAPriceDataCalendar& cal2 = dynamic_cast<const LAPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR, ISDEFINED).get());
-	const LAPriceDataSlidingRule& sr = dynamic_cast<const LAPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE, ISDEFINED).get());
-	const LADate& asOfDate =	dynamic_cast<const LADataDate& >(object.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get()).get();
-	const LAString& spotlag = dynamic_cast<const LADataString& >(object.getData(CURVEINPUT_SPOTLAG, ISDEFINED).get()).get();
-	const LAPriceDataDayCount& daycount = dynamic_cast<const LAPriceDataDayCount& >(object.getData(IR_CALIBRATION_DATA_DAYCOUNT, ISDEFINED).get());
+	const AQLObject& object = dataInstance->getObjectPool().getObject(capConvID, ENCHKTYPE_ISDEFINED).get();
+	const AQLPriceDataCalendar& cal =	dynamic_cast<const AQLPriceDataCalendar& >(object.getData(CALIBRATION_DATA_CALENDAR, ISDEFINED).get());
+	const AQLPriceDataCalendar& cal2 = dynamic_cast<const AQLPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR, ISDEFINED).get());
+	const AQLPriceDataSlidingRule& sr = dynamic_cast<const AQLPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE, ISDEFINED).get());
+	const AQLDate& asOfDate =	dynamic_cast<const AQLDataDate& >(object.getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get()).get();
+	const AQLString& spotlag = dynamic_cast<const AQLDataString& >(object.getData(CURVEINPUT_SPOTLAG, ISDEFINED).get()).get();
+	const AQLPriceDataDayCount& daycount = dynamic_cast<const AQLPriceDataDayCount& >(object.getData(IR_CALIBRATION_DATA_DAYCOUNT, ISDEFINED).get());
 
 	if (calibFlgMtx)
 	{
 		if (calibFlgMtx->size() != expiry.size() || (*calibFlgMtx)[0].size() != tenor.size())
 		{
-			throw LACoreInvalidData("Calibration flag matrix does not match capfloor premium matrix!", __FILE__, __LINE__);
+			throw AQLCoreInvalidData("Calibration flag matrix does not match capfloor premium matrix!", __FILE__, __LINE__);
 		}
 	}
 
 	vector<DoubleMatrix > marketVol, marketStk, marketSign;
-	vector<LAStringVector > premiumTerms;
+	vector<AQLStringVector > premiumTerms;
 	for (size_t i = 0; i<swapVolID.size(); i++)
 	{
 		marketVol.push_back(
-			dynamic_cast<const LADataDoubleMatrix &> (objPool.getObject(swapVolID[i], ENCHKTYPE_ISDEFINED).get().
+			dynamic_cast<const AQLDataDoubleMatrix &> (objPool.getObject(swapVolID[i], ENCHKTYPE_ISDEFINED).get().
 				getData(PRICING_DATA_SWAPTIONMATRIX, ISDEFINED).get()).get());
 		marketStk.push_back(
-			dynamic_cast<const LADataDoubleMatrix &> (objPool.getObject(swapVolID[i], ENCHKTYPE_ISDEFINED).get().
+			dynamic_cast<const AQLDataDoubleMatrix &> (objPool.getObject(swapVolID[i], ENCHKTYPE_ISDEFINED).get().
 				getData(PRICING_DATA_SWAPTIONSTRIKEMATRIX, ISDEFINED).get()).get());
 		marketSign.push_back(
-			dynamic_cast<const LADataDoubleMatrix &> (objPool.getObject(swapVolID[i], ENCHKTYPE_ISDEFINED).get().
+			dynamic_cast<const AQLDataDoubleMatrix &> (objPool.getObject(swapVolID[i], ENCHKTYPE_ISDEFINED).get().
 				getData(PRICING_DATA_SWAPTIONSIGNMATRIX, ISDEFINED).get()).get());
 		premiumTerms.push_back(
-			dynamic_cast<const LADataStrings &> (objPool.getObject(swapVolID[i], ENCHKTYPE_ISDEFINED).get().
+			dynamic_cast<const AQLDataStrings &> (objPool.getObject(swapVolID[i], ENCHKTYPE_ISDEFINED).get().
 				getData(PRICING_DATA_EXPIRYSTRING, ISDEFINED).get()).get());
 	}
 
@@ -1849,9 +1849,9 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 	for (size_t j = 0; j<tenor.size(); j++)
 	{
 		// get caplet/floorlet tenor
-		const LAString tenorPoint = tenor[j];
+		const AQLString tenorPoint = tenor[j];
 		const double tenorPoint_d = LAMathSwaptionVolUtility::getTenorPoint(tenorPoint);
-		LAString CapFloorletFrequency;
+		AQLString CapFloorletFrequency;
 		int tenor_num;
 		if (tenorPoint == "3M")
 		{
@@ -1869,17 +1869,17 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 		}
 
 		// Set up LAMathYieldCurve for fwdrate, numeraire
-		LAObject curveEntity;
-		LAString curveID, convID, foreName, dfName;
+		AQLObject curveEntity;
+		AQLString curveID, convID, foreName, dfName;
 		curveEntity = dataInstance->getObjectPool().getObject(curveSetID, ENCHKTYPE_ISDEFINED).get();
-		const LAString curveid = dynamic_cast<const LADataString&>(curveEntity.getData(CALIBRATION_DATA_CURVEID, ISDEFINED).get()).get();
+		const AQLString curveid = dynamic_cast<const AQLDataString&>(curveEntity.getData(CALIBRATION_DATA_CURVEID, ISDEFINED).get()).get();
 		LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance, curveid);
 		yc.setInterpolation(FN_SPLINEINTERPOLATION_STR);
 		yc.getDayCount().setDayCount(daycount.convertToString());
 		yc.getSlidingRule().convertFromString(NO_CH);
 		LAMathCurveFuncUtility::setCalendarForCurveID(yc, cal.convertToString());
 		yc.getFrequency().convertFromString(CapFloorletFrequency);
-		LAPriceDataConvention conv(ACT_ACT, CONT), conv2(yc.getDayCount().getDayCount(), CONT);
+		AQLPriceDataConvention conv(ACT_ACT, CONT), conv2(yc.getDayCount().getDayCount(), CONT);
 		yc.getFrequency().set("SIMPLE");
 		// set up slidingrule and daycount for numeraire
 		LAMathYieldCurve& yc_nu = yc;
@@ -1887,28 +1887,28 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 		yc_nu.getDayCount().setDayCount(ACT_ACT);
 
 		// get curvename
-		if (tenor[j] == LAString("1M") || tenor[j] == LAString("3M") || tenor[j] == LAString("6M"))
+		if (tenor[j] == AQLString("1M") || tenor[j] == AQLString("3M") || tenor[j] == AQLString("6M"))
 		{
 			convID = capConvID;
-			foreName = dynamic_cast<const LADataString&>(curveEntity.getData(tenor[j] + LAString("LiborCurveName"), ISDEFINED).get()).get();
-			dfName = dynamic_cast<const LADataString&>(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME, ISDEFINED).get()).get();
+			foreName = dynamic_cast<const AQLDataString&>(curveEntity.getData(tenor[j] + AQLString("LiborCurveName"), ISDEFINED).get()).get();
+			dfName = dynamic_cast<const AQLDataString&>(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME, ISDEFINED).get()).get();
 		}
 		else
 		{
 			convID = swapConvID;
-			foreName = dynamic_cast<const LADataString&>(curveEntity.getData(LAString("SwapRateCurveName"), ISDEFINED).get()).get();
-			dfName = dynamic_cast<const LADataString&>(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME, ISDEFINED).get()).get();
+			foreName = dynamic_cast<const AQLDataString&>(curveEntity.getData(AQLString("SwapRateCurveName"), ISDEFINED).get()).get();
+			dfName = dynamic_cast<const AQLDataString&>(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME, ISDEFINED).get()).get();
 		}
 
 		// check SABR parameters term
 		const size_t num_diffterm = expiry.size() - premiumTerms[0].size();; // this parameter is used for calibrating some parameter grids simultaneously which do not exist in premium grid. ex) premium grid = 1Y, parameter grids = 3M, 6M, 1Y  
-		LAStringVector paramsterm_month, paramsterm_month_calib; //  the second parmeter is used for changing expiry of SABR parameters into "expiry - tenor";
+		AQLStringVector paramsterm_month, paramsterm_month_calib; //  the second parmeter is used for changing expiry of SABR parameters into "expiry - tenor";
 		int paramsterm, paramsterm_calib;
 		for (size_t i = 0; i < expiry.size(); i++)
 		{
 			LAMathDateCalculations::termStrtoYMDW(expiry[i], y, m, d, w);
 			paramsterm = 12 * y + m;
-			paramsterm_month.push_back(LAString(paramsterm) + "M");
+			paramsterm_month.push_back(AQLString(paramsterm) + "M");
 			
 			if (i < num_diffterm)
 			{
@@ -1920,7 +1920,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 				AQ_THROW_IF(paramsterm % tenor_num != 0, "Terms of SABR parameters should be multiples of " + tenorPoint )
 				paramsterm_calib = 12 * y + m - tenor_num;
 			}
-			paramsterm_month_calib.push_back(LAString(paramsterm_calib) + "M");
+			paramsterm_month_calib.push_back(AQLString(paramsterm_calib) + "M");
 		}
 
 		// check whether expiry of SABR parameters include all of the "premiumTerms - tenor"
@@ -1932,11 +1932,11 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 			{
 				LAMathDateCalculations::termStrtoYMDW(premiumTerms[i][k], y, m, d, w);
 				int premiumterm = 12 * y + m;
-				const LAString premiumterm_month = LAString(premiumterm) + "M";
+				const AQLString premiumterm_month = AQLString(premiumterm) + "M";
 				if (num_diffterm >= 0)
 				{
 					if (premiumterm_month != paramsterm_month[k + num_diffterm])
-						throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+						throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 				}
 				else
 				{
@@ -1952,7 +1952,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 		LAMathSwaptionMatrix rhoMat_temp({ {1} ,{1} }, {1}, tenorVec);
 
 		// create expiry of calibration target
-		LAStringVector target_expiry;
+		AQLStringVector target_expiry;
 		for (size_t i = num_diffterm; i < paramsterm_month_calib.size(); i++)
 			target_expiry.push_back(paramsterm_month_calib[i]);
 
@@ -1968,9 +1968,9 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 			}
 
 			// Set up information on expiry term, fwdrate, numeraire
-			const LAString roll_conv = "TRUE";
-			const LADate tmpstart = LAMathDateCalculations::getDate(asOfDate, spotlag, sr, &cal, true, &roll_conv);
-			LADate endpay(tmpstart);
+			const AQLString roll_conv = "TRUE";
+			const AQLDate tmpstart = LAMathDateCalculations::getDate(asOfDate, spotlag, sr, &cal, true, &roll_conv);
+			AQLDate endpay(tmpstart);
 			int y, m, d, w;
 			LAMathDateCalculations::termStrtoYMDW(premiumTerms[0][i], y, m, d, w);
 			endpay.addYears(y);
@@ -1985,7 +1985,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 			DateVector payVec;
 			LAMathDateCalculations::generateSchedule(tmpstart, endpay, CapFloorletFrequency, true, NULL, NULL, &roll, payVec, &sr, &cal);
 			//slidingrule 
-			LAPriceDataSlidingRule sr2;
+			AQLPriceDataSlidingRule sr2;
 			sr2.convertFromString(PRE);
 			//fixingVector
 			const size_t N = payVec.size();
@@ -1996,11 +1996,11 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 			}
 
 			unsigned int pos = 0;
-			LAAlgorithm::locate<DateVector, LADate>(fixVec, asOfDate, N - 1, pos);
+			AQLAlgorithm::locate<DateVector, AQLDate>(fixVec, asOfDate, N - 1, pos);
 			if (N - 1 == static_cast<int>(pos))
 			{
-				LAString msg = "valuedate : " + asOfDate.stringWithFormat("YYYYMMDD") + " is not support for this option pricing";
-				throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+				AQLString msg = "valuedate : " + asOfDate.stringWithFormat("YYYYMMDD") + " is not support for this option pricing";
+				throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 			}
 
 			// create forward rate, numeraire, expiryterm for caplet/floorlet
@@ -2021,8 +2021,8 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 
 			// create expiry terms for cap/floor
 			DoubleVector expiryterms_capfloor;
-			LADate expiryDate;
-			LAString daycount_expiry(AC_365I);
+			AQLDate expiryDate;
+			AQLString daycount_expiry(AC_365I);
 			for (size_t k = 0; k < i + num_diffterm + 1; k++)
 			{
 				expiryDate = LAMathDateCalculations::getDate(asOfDate, expiry[k], sr, &cal2, true);
@@ -2093,17 +2093,17 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 			initValue[1] = betaMat_calib[i + num_diffterm][j];
 			initValue[2] = nuMat_calib[i + num_diffterm][j];
 			initValue[3] = rhoMat_calib[i + num_diffterm][j];
-			msg = LAString("alpha is out of range.");
-			if (initValue[0] < min_alpha || initValue[0] > max_alpha) throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
-			msg = LAString("beta is out of range.");
-			if (initValue[1] < min_beta || initValue[1] > max_beta) throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
-			msg = LAString("nu is out of range.");
-			if (initValue[2] < min_nu || initValue[2] > max_nu) throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
-			msg = LAString("rho is out of range.");
-			if (initValue[3] < min_rho || initValue[3] > max_rho) throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			msg = AQLString("alpha is out of range.");
+			if (initValue[0] < min_alpha || initValue[0] > max_alpha) throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			msg = AQLString("beta is out of range.");
+			if (initValue[1] < min_beta || initValue[1] > max_beta) throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			msg = AQLString("nu is out of range.");
+			if (initValue[2] < min_nu || initValue[2] > max_nu) throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+			msg = AQLString("rho is out of range.");
+			if (initValue[3] < min_rho || initValue[3] > max_rho) throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 
 			// Create CostFunc
-			LAString tmp_approxMethod = approxMethod;
+			AQLString tmp_approxMethod = approxMethod;
 			tmp_approxMethod.toUpper();
 			IntVector param_pos(2);
 			param_pos[0] = i + num_diffterm;
@@ -2170,7 +2170,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 					{
 						if (!calibFlg[3])
 						{
-							throw LACoreInvalidData("All calibration flags have been set to false", __FILE__, __LINE__);
+							throw AQLCoreInvalidData("All calibration flags have been set to false", __FILE__, __LINE__);
 						}
 						else x_.push_back(rhoMat_calib[i + num_diffterm][j]);
 					}
@@ -2230,7 +2230,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 
 			// Set Optimization Method
 			LAQuantLibOptimizationMethod* optMethod;
-			LAString tmp_calibMethod = calibMethod;
+			AQLString tmp_calibMethod = calibMethod;
 			tmp_calibMethod.toUpper();
 			if (tmp_calibMethod == CALIB_NON_LINEAR_CONJUGATE_GRADIENT_METHOD)
 			{
@@ -2302,24 +2302,24 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 				}
 				catch (std::exception& e)
 				{
-					msg += LAString(e.what());
-					msg += LAString("(");
-					msg += LAString(LAModelUtilities::n2s(i).c_str());
-					msg += LAString(",");
-					msg += LAString(LAModelUtilities::n2s(j).c_str());
-					msg += LAString(")");
-					msg += LAString(" : ");
+					msg += AQLString(e.what());
+					msg += AQLString("(");
+					msg += AQLString(LAModelUtilities::n2s(i).c_str());
+					msg += AQLString(",");
+					msg += AQLString(LAModelUtilities::n2s(j).c_str());
+					msg += AQLString(")");
+					msg += AQLString(" : ");
 				}
 			}
-			catch (LACoreError& e)
+			catch (AQLCoreError& e)
 			{
-				for (unsigned int k = 0; k < e.getSize(); k++) msg += LAString(e.getMsg(e.getSize() - k - 1));
-				msg += LAString("(");
-				msg += LAString(LAModelUtilities::n2s(i).c_str());
-				msg += LAString(",");
-				msg += LAString(LAModelUtilities::n2s(j).c_str());
-				msg += LAString(")");
-				msg += LAString(" : ");
+				for (unsigned int k = 0; k < e.getSize(); k++) msg += AQLString(e.getMsg(e.getSize() - k - 1));
+				msg += AQLString("(");
+				msg += AQLString(LAModelUtilities::n2s(i).c_str());
+				msg += AQLString(",");
+				msg += AQLString(LAModelUtilities::n2s(j).c_str());
+				msg += AQLString(")");
+				msg += AQLString(" : ");
 			}
 
 			std::shared_ptr<LAMathLeastSquareSABRCapFloorCostFuncQlib> costfuncQlib = dynamic_pointer_cast<LAMathLeastSquareSABRCapFloorCostFuncQlib>(costfunc->getCostFunction());
@@ -2364,33 +2364,33 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 	}
 	
 	// calibrated paramameters on the same grid as the input parameters grid. ex) 1Y, 2Y ,,,
-	LADataHolder* dh;
-	LADataDoubleMatrix mat_att;
+	AQLDataHolder* dh;
+	AQLDataDoubleMatrix mat_att;
 	dh = &dataInstance->getObjectPool().getObject(alphaID, ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX, ISDEFINED);
-	mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+	mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
 	mat_att.set(alphaMat);
 
 	dh = &dataInstance->getObjectPool().getObject(betaID, ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX, ISDEFINED);
-	mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+	mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
 	mat_att.set(betaMat);
 
 	dh = &dataInstance->getObjectPool().getObject(nuID, ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX, ISDEFINED);
-	mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+	mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
 	mat_att.set(nuMat);
 
 	dh = &dataInstance->getObjectPool().getObject(rhoID, ENCHKTYPE_NOCHECK).getData(PRICING_DATA_SWAPTIONMATRIX, ISDEFINED);
-	mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
+	mat_att = dynamic_cast<AQLDataDoubleMatrix &>(dh->get());
 	mat_att.set(rhoMat);
 }
 
 DoubleArray 
 LAMathSwaptionVolUtility::calibrateSABR
-( const LAString& approxMethod, const std::vector<bool>& calibFlg, const LAString& calibMethod, 
-  double alpha, double beta, double nu, double rho, double forward, LAString expiryPoint,
+( const AQLString& approxMethod, const std::vector<bool>& calibFlg, const AQLString& calibMethod, 
+  double alpha, double beta, double nu, double rho, double forward, AQLString expiryPoint,
   double numeraire, const DoubleArray& strikes, const DoubleArray& vols, 
-  /*LAStringMatrix sabrLimiter,*/ const LAString& target, const DoubleVector& weight, const IntVector& sgn )
+  /*AQLStringMatrix sabrLimiter,*/ const AQLString& target, const DoubleVector& weight, const IntVector& sgn )
 {
-	LAString tmp_target = target;
+	AQLString tmp_target = target;
 	tmp_target.toUpper();
 
 	double expiry = LAMathSwaptionVolUtility::getTenorPoint(expiryPoint);
@@ -2437,7 +2437,7 @@ LAMathSwaptionVolUtility::calibrateSABR
 	
 	// Create constraint
 	LAQuantLibConstraint* constraint;
-	LAString tmp_approxMethod = approxMethod;
+	AQLString tmp_approxMethod = approxMethod;
 	tmp_approxMethod.toUpper();
 	if(approxMethod == APPROXIMATION_ANTONOV)
 	{
@@ -2538,7 +2538,7 @@ LAMathSwaptionVolUtility::calibrateSABR
 
 	// Set Optimization Method
 	LAQuantLibOptimizationMethod* optMethod = 0;
-	LAString tmp_calibMethod = calibMethod;
+	AQLString tmp_calibMethod = calibMethod;
 	tmp_calibMethod.toUpper();
 	if (tmp_calibMethod == CALIB_NON_LINEAR_CONJUGATE_GRADIENT_METHOD)
 	{
@@ -2611,16 +2611,16 @@ LAMathSwaptionVolUtility::calibrateSABR
 		{
 			LAQuantLibEndCriteria::Type endCriteriaResult = optMethod->minimize(*opt_problem, *endCriteria);
 		}
-		catch(LACoreError&e)
+		catch(AQLCoreError&e)
 		{
-			LAString msg = "";
-			for(unsigned int k =0;k<e.getSize();k++) msg+=LAString(e.getMsg(e.getSize()-k-1));
-			throw LACoreError(msg.getCString(), __FILE__, __LINE__);
+			AQLString msg = "";
+			for(unsigned int k =0;k<e.getSize();k++) msg+=AQLString(e.getMsg(e.getSize()-k-1));
+			throw AQLCoreError(msg.getCString(), __FILE__, __LINE__);
 		}
 	}
 	catch(std::exception& e)
 	{
-		throw LACoreError(e.what(), __FILE__, __LINE__);
+		throw AQLCoreError(e.what(), __FILE__, __LINE__);
 	}
 
 	//QuantLib::Array xMinCalculated = opt_problem->currentValue();
@@ -2644,9 +2644,9 @@ LAMathSwaptionVolUtility::calibrateSABR
 
 DoubleArray 
 LAMathSwaptionVolUtility::calibrateSABR
-( double alpha, double beta, double nu, double rho, double forward, LAString expiryPoint,
+( double alpha, double beta, double nu, double rho, double forward, AQLString expiryPoint,
   double numeraire, const DoubleArray& strikes, const DoubleArray& vols, 
-  LAStringMatrix sabrLimiter, LAString target, const DoubleVector& weight )
+  AQLStringMatrix sabrLimiter, AQLString target, const DoubleVector& weight )
 {
     upper(target);
     upper(sabrLimiter);
@@ -2686,18 +2686,18 @@ LAMathSwaptionVolUtility::calibrateSABR
 
 void 
 LAMathSwaptionVolUtility::calibrateSABRATMFix
-( LADataInstance* dataInstance, const LAString& curveSetID, const LAString& alphaID, const LAString& betaID, 
-  const LAString& nuID, const LAString& rhoID, const LAString& swapConvID, 
-  const LAString& capConvID, const LAString& ATMVolID, const LAStringVector& swapVolID, 
-  LAStringMatrix sabrLimiter, const LAString& target, const DoubleVector& weight, 
-  const LAString& forwardID,  const double forwardShiftValue )
+( AQLDataInstance* dataInstance, const AQLString& curveSetID, const AQLString& alphaID, const AQLString& betaID, 
+  const AQLString& nuID, const AQLString& rhoID, const AQLString& swapConvID, 
+  const AQLString& capConvID, const AQLString& ATMVolID, const AQLStringVector& swapVolID, 
+  AQLStringMatrix sabrLimiter, const AQLString& target, const DoubleVector& weight, 
+  const AQLString& forwardID,  const double forwardShiftValue )
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-    LAString tmp_target = target;
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLString tmp_target = target;
 	tmp_target.toUpper();
     upper(sabrLimiter);
     const double eps = 0.000000001;
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 
 	//get ATM Vol
 	vector<DoubleMatrix > marketVol, marketStk;
@@ -2705,22 +2705,22 @@ LAMathSwaptionVolUtility::calibrateSABRATMFix
     {
         matirixCheck(dataInstance, betaID, swapVolID[i], true);
         marketVol.push_back(
-        dynamic_cast<const LADataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
+        dynamic_cast<const AQLDataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
         getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get() );
 
         marketStk.push_back(
-        dynamic_cast<const LADataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
+        dynamic_cast<const AQLDataDoubleMatrix &> (objPool.getObject( swapVolID[i], ENCHKTYPE_ISDEFINED ).get().
         getData(PRICING_DATA_SWAPTIONSTRIKEMATRIX,ISDEFINED).get()).get() );
     }
 	matirixCheck(dataInstance, betaID, ATMVolID, true);
-    DoubleMatrix& atmVol = dynamic_cast<LADataDoubleMatrix &> (objPool.getObject( ATMVolID, ENCHKTYPE_ISDEFINED ).get().
+    DoubleMatrix& atmVol = dynamic_cast<AQLDataDoubleMatrix &> (objPool.getObject( ATMVolID, ENCHKTYPE_ISDEFINED ).get().
                 getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
 	BoolMatrix isCalib;
-	LADataHolder* dh = &objPool.getObject( ATMVolID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_CALIBRATIONFLAG, NOCHECK);
+	AQLDataHolder* dh = &objPool.getObject( ATMVolID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_CALIBRATIONFLAG, NOCHECK);
 	if (dh->isDefined() && !dh->isNull())
 	{
-		isCalib = dynamic_cast<const LADataBoolMatrix &>(dh->get()).get();
+		isCalib = dynamic_cast<const AQLDataBoolMatrix &>(dh->get()).get();
 		if (isCalib.size() != atmVol.size() || isCalib[0].size() != atmVol[0].size())
 		{
 			AQ_THROW("Inconsistent Data: Enable Calibration table size does not match ATM Vol table size")
@@ -2728,15 +2728,15 @@ LAMathSwaptionVolUtility::calibrateSABRATMFix
 	}
 
 	//set alpha
-    LAObjectHolder objHolder = objPool.getObject(alphaID ,ENCHKTYPE_NOCHECK);
+    AQLObjectHolder objHolder = objPool.getObject(alphaID ,ENCHKTYPE_NOCHECK);
 	if(!objHolder.isDefined())
 	{
-		const LAObject& beta = dataInstance->getObjectPool().getObject( betaID, ENCHKTYPE_ISDEFINED ).get();
-		LAObject* e = beta.clone();
+		const AQLObject& beta = dataInstance->getObjectPool().getObject( betaID, ENCHKTYPE_ISDEFINED ).get();
+		AQLObject* e = beta.clone();
 		e->remove( CALIBRATION_DATA_NAME );
-		e->add( CALIBRATION_DATA_NAME, new LADataString() ).convertFromString(alphaID);
+		e->add( CALIBRATION_DATA_NAME, new AQLDataString() ).convertFromString(alphaID);
 		e->remove(PRICING_DATA_SWAPTIONMATRIX);
-        e->add( PRICING_DATA_SWAPTIONMATRIX, new LADataDoubleMatrix( atmVol ));	
+        e->add( PRICING_DATA_SWAPTIONMATRIX, new AQLDataDoubleMatrix( atmVol ));	
 		objPool.set( alphaID , e );
 	}
 
@@ -2750,29 +2750,29 @@ LAMathSwaptionVolUtility::calibrateSABRATMFix
 	matirixCheck(dataInstance, betaID, alphaID);
 	matirixCheck(dataInstance, betaID, nuID);
 	matirixCheck(dataInstance, betaID, rhoID);
-    DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix &>
+    DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const LAStringVector& tenor = dynamic_cast<const LADataStrings &>
+    const AQLStringVector& tenor = dynamic_cast<const AQLDataStrings &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORSTRING,ISDEFINED).get()).get();
-	const DoubleVector& tenor_d = dynamic_cast<const LADataDoubles &>
+	const DoubleVector& tenor_d = dynamic_cast<const AQLDataDoubles &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
-    const DoubleVector& expiryTerms = dynamic_cast<const LADataDoubles &>
+    const DoubleVector& expiryTerms = dynamic_cast<const AQLDataDoubles &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
-	const DateVector& expiryDates = dynamic_cast<const LADataDates &>
+	const DateVector& expiryDates = dynamic_cast<const AQLDataDates &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYDATEVECTOR,ISDEFINED).get()).get();
 
-	DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix &>
+	DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix &>
+    DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( nuID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix &>
+    DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( rhoID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
 	DoubleMatrix forwardMat;
-	if(forwardID != LAString("")) 
+	if(forwardID != AQLString("")) 
 	{
 		matirixCheck(dataInstance, betaID, forwardID);
-		forwardMat = dynamic_cast<LADataDoubleMatrix &>
+		forwardMat = dynamic_cast<AQLDataDoubleMatrix &>
 			(objPool.getObject( forwardID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 	}
 
@@ -2780,9 +2780,9 @@ LAMathSwaptionVolUtility::calibrateSABRATMFix
     DoubleArray strike_calib, vol_calib, x(limiter.getParamNum());
     DateVector dates;
     LAMathSABR_Hagan sabr;
-	//LAObject curveEntity = dataInstance->getObjectPool().getObject( curveSetID, ENCHKTYPE_ISDEFINED ).get();
-	LAString curveID,convID,foreName,dfName;
-	//curveID = dynamic_cast<const LADataString& >(curveEntity.getData(CALIBRATION_DATA_CURVEID,ISDEFINED).get()).get();
+	//AQLObject curveEntity = dataInstance->getObjectPool().getObject( curveSetID, ENCHKTYPE_ISDEFINED ).get();
+	AQLString curveID,convID,foreName,dfName;
+	//curveID = dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_CURVEID,ISDEFINED).get()).get();
     bool isMap = false;
 	for(size_t j=0; j<tenor.size(); j++)
 	{
@@ -2790,29 +2790,29 @@ LAMathSwaptionVolUtility::calibrateSABRATMFix
 		{
 			if (isCalib.size() !=0 && !isCalib[i][j]) continue;
 
-			if(forwardID == LAString(""))
+			if(forwardID == AQLString(""))
 			{
 				//curveEntity = dataInstance->getObjectPool().getObject( curveSetID, ENCHKTYPE_ISDEFINED ).get();
-				LAObject curveEntity = dataInstance->getObjectPool().getObject( curveSetID, ENCHKTYPE_ISDEFINED ).get();
-				curveID = dynamic_cast<const LADataString& >(curveEntity.getData(CALIBRATION_DATA_CURVEID,ISDEFINED).get()).get();
+				AQLObject curveEntity = dataInstance->getObjectPool().getObject( curveSetID, ENCHKTYPE_ISDEFINED ).get();
+				curveID = dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_CURVEID,ISDEFINED).get()).get();
 
-				if( tenor[j]==LAString("1M") || tenor[j]==LAString("3M") || tenor[j]==LAString("6M") )
+				if( tenor[j]==AQLString("1M") || tenor[j]==AQLString("3M") || tenor[j]==AQLString("6M") )
 				{
 					convID = capConvID;
-					foreName = dynamic_cast<const LADataString& >(curveEntity.getData(tenor[j]+LAString("LiborCurveName"),ISDEFINED).get()).get();
-					dfName = dynamic_cast<const LADataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
+					foreName = dynamic_cast<const AQLDataString& >(curveEntity.getData(tenor[j]+AQLString("LiborCurveName"),ISDEFINED).get()).get();
+					dfName = dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
 				}
 				else
 				{
 					convID = swapConvID;
-					const LADataHolder* dh;
-					dh = &curveEntity.getData(CALIBRATION_DATA_SWAPRATELCURVENAME + LAString("_") + tenor[j],NOCHECK);
+					const AQLDataHolder* dh;
+					dh = &curveEntity.getData(CALIBRATION_DATA_SWAPRATELCURVENAME + AQLString("_") + tenor[j],NOCHECK);
 					if(!dh->isDefined() || dh->isNull())
 					{
 						dh = &curveEntity.getData(CALIBRATION_DATA_SWAPRATELCURVENAME,ISDEFINED);
 					}
-					foreName = dynamic_cast<const LADataString& >(dh->get()).get();
-					dfName = dynamic_cast<const LADataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
+					foreName = dynamic_cast<const AQLDataString& >(dh->get()).get();
+					dfName = dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_DISCOUNTCURVENAME,ISDEFINED).get()).get();
 				}	
 				forward = getForward(dataInstance, expiryDates[i], tenor[j], curveID, convID, foreName, dfName);
 				numeraire = getNumeraire(dataInstance, expiryDates[i], tenor[j], curveID, convID, dfName);
@@ -2853,21 +2853,21 @@ LAMathSwaptionVolUtility::calibrateSABRATMFix
             //set param
             sabr = limiter.getSABR( sabr, x , isMap );
             sabr.setAlphaForATMVol(atmVol[i][j], expiryTerms[i], forward);
-            alphaMat[i][j] = LAMath::max(sabr.getAlpha(), alpha_low);
-            betaMat[i][j] = LAMath::max(sabr.getBeta(), beta_low);
-            nuMat[i][j] = LAMath::max(sabr.getNu(), nu_low);
-            rhoMat[i][j] = LAMath::max(sabr.getRho(), rho_low);
+            alphaMat[i][j] = AQLMath::max(sabr.getAlpha(), alpha_low);
+            betaMat[i][j] = AQLMath::max(sabr.getBeta(), beta_low);
+            nuMat[i][j] = AQLMath::max(sabr.getNu(), nu_low);
+            rhoMat[i][j] = AQLMath::max(sabr.getRho(), rho_low);
         }
     }
 }
 
 double 
 LAMathSwaptionVolUtility::getSABRAlpha
-( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, const LAString& volID, const LAString& forwardID, 
-  const LAString& alphaID, const LAString& betaID, const LAString& nuID, const LAString& rhoID )
+( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, const AQLString& volID, const AQLString& forwardID, 
+  const AQLString& alphaID, const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID )
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-    LAObjectPool& objPool = dataInstance->getObjectPool();
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
 
 	matirixCheck(dataInstance, alphaID, volID, true);
 	matirixCheck(dataInstance, alphaID, forwardID);
@@ -2875,29 +2875,29 @@ LAMathSwaptionVolUtility::getSABRAlpha
 	matirixCheck(dataInstance, alphaID, nuID);
 	matirixCheck(dataInstance, alphaID, rhoID);
 
-    const DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleVector& tenorVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& tenorVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
-    const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& expiryVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
 
-    const DoubleMatrix& volMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& volMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( volID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& forwardMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& forwardMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( forwardID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( nuID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( rhoID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
-    const LAPriceDataSlidingRule& paySlr = dynamic_cast<const LAPriceDataSlidingRule& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).
+    const AQLPriceDataSlidingRule& paySlr = dynamic_cast<const AQLPriceDataSlidingRule& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).
 		get().getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
-    const LAPriceDataCalendar& fixCal = dynamic_cast<const LAPriceDataCalendar& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().
+    const AQLPriceDataCalendar& fixCal = dynamic_cast<const AQLPriceDataCalendar& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().
 		getData(CALIBRATION_DATA_CALENDAR,ISDEFINED).get());
-    const LADate& asOfDate = dynamic_cast<const LADataDate& >(dataInstance->getObjectPool().getObject(alphaID,ENCHKTYPE_ISDEFINED).
+    const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(alphaID,ENCHKTYPE_ISDEFINED).
 		get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
 
 	double expPoint_d = getExpiryPoint(expPoint, asOfDate, paySlr, fixCal);
@@ -2926,41 +2926,41 @@ LAMathSwaptionVolUtility::getSABRAlpha
 
 double 
 LAMathSwaptionVolUtility::getSABRAlpha2
-( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, double vol, const LAString& alphaID,
-  const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& curveID, const LAString& convID,
-  const LAString& foreCurveName, const LAString& dfCurveName)
+( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, double vol, const AQLString& alphaID,
+  const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& curveID, const AQLString& convID,
+  const AQLString& foreCurveName, const AQLString& dfCurveName)
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-    LAObjectPool& objPool = dataInstance->getObjectPool();
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
 
 	matirixCheck(dataInstance, alphaID, betaID);
 	matirixCheck(dataInstance, alphaID, nuID);
 	matirixCheck(dataInstance, alphaID, rhoID);
-    const DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleVector& tenorVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& tenorVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
-    const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& expiryVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
  
-    const DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( nuID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( rhoID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
-    const LAObject& object = objPool.getObject( convID, ENCHKTYPE_ISDEFINED ).get();
-    const LAPriceDataSlidingRule& paySlr = 
-        dynamic_cast<const LAPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
-    const LAPriceDataCalendar& fixCal =
-        dynamic_cast<const LAPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
+    const AQLObject& object = objPool.getObject( convID, ENCHKTYPE_ISDEFINED ).get();
+    const AQLPriceDataSlidingRule& paySlr = 
+        dynamic_cast<const AQLPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
+    const AQLPriceDataCalendar& fixCal =
+        dynamic_cast<const AQLPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
     
-	const LAObject& curve = objPool.getObject( curveID, ENCHKTYPE_ISDEFINED ).get();
-	const LADate& asOfDate = dynamic_cast<const LADataDate&>(curve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get());
+	const AQLObject& curve = objPool.getObject( curveID, ENCHKTYPE_ISDEFINED ).get();
+	const AQLDate& asOfDate = dynamic_cast<const AQLDataDate&>(curve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get());
 
 	double expPoint_d = getExpiryPoint(expPoint, asOfDate, paySlr, fixCal);
-	LADate expPoint_date = getExpiryPoint2(expPoint, asOfDate, paySlr, fixCal);
+	AQLDate expPoint_date = getExpiryPoint2(expPoint, asOfDate, paySlr, fixCal);
 
     double forward = getForward(dataInstance, expPoint_date, tenorPoint, curveID, convID, foreCurveName, dfCurveName);
 
@@ -2984,38 +2984,38 @@ LAMathSwaptionVolUtility::getSABRAlpha2
 
 double 
 LAMathSwaptionVolUtility::getSABRVol
-( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, double strike, const LAString& fowardID, 
-  const LAString& alphaID, const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& approxMethod , const double shift, bool isLognormal)
+( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, double strike, const AQLString& fowardID, 
+  const AQLString& alphaID, const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& approxMethod , const double shift, bool isLognormal)
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-    LAObjectPool& objPool = dataInstance->getObjectPool();
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
 
 	matirixCheck(dataInstance, alphaID, fowardID);
 	matirixCheck(dataInstance, alphaID, betaID);
 	matirixCheck(dataInstance, alphaID, nuID);
 	matirixCheck(dataInstance, alphaID, rhoID);
 
-    const DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleVector& tenorVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& tenorVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
-    const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& expiryVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
     
-    const DoubleMatrix& fowardMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& fowardMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( fowardID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( nuID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( rhoID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();    
 
-    const LAPriceDataSlidingRule& paySlr = dynamic_cast<const LAPriceDataSlidingRule& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).
+    const AQLPriceDataSlidingRule& paySlr = dynamic_cast<const AQLPriceDataSlidingRule& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).
 		get().getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
-    const LAPriceDataCalendar& fixCal = dynamic_cast<const LAPriceDataCalendar& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().
+    const AQLPriceDataCalendar& fixCal = dynamic_cast<const AQLPriceDataCalendar& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().
 		getData(CALIBRATION_DATA_CALENDAR,ISDEFINED).get());
-    const LADate& asOfDate = dynamic_cast<const LADataDate& >(dataInstance->getObjectPool().getObject(alphaID,ENCHKTYPE_ISDEFINED).
+    const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(alphaID,ENCHKTYPE_ISDEFINED).
 		get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
 
     double expPoint_d = getExpiryPoint(expPoint, asOfDate, paySlr, fixCal);
@@ -3050,7 +3050,7 @@ LAMathSwaptionVolUtility::getSABRVol
 }
 
 
-double LAMathSwaptionVolUtility::calcSABRVol(const double alpha, const double beta, const double nu, const double rho, const double expiryTerm, const double strike, const double forward, const double shift, const LAString& approxMethod, bool isLognormal)
+double LAMathSwaptionVolUtility::calcSABRVol(const double alpha, const double beta, const double nu, const double rho, const double expiryTerm, const double strike, const double forward, const double shift, const AQLString& approxMethod, bool isLognormal)
 {
 	//LAMathSABR_Hagan sabr(alpha, beta, nu, rho);
 	//return sabr.getSABRVol(expPoint_d, forward, strike);
@@ -3081,23 +3081,23 @@ double LAMathSwaptionVolUtility::calcSABRParam(const DoubleMatrix& paramMat, con
 
 double 
 LAMathSwaptionVolUtility::getSABRVol2
-( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, double strike, const LAString& alphaID,
-  const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& curveID, 
-  const LAString& convID, LAString foreCurveName, LAString dfCurveName, const LAString& approxMethod)
+( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, double strike, const AQLString& alphaID,
+  const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& curveID, 
+  const AQLString& convID, AQLString foreCurveName, AQLString dfCurveName, const AQLString& approxMethod)
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-    LAObjectPool& objPool = dataInstance->getObjectPool();
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
 
-	const LAObject& object = objPool.getObject( convID, ENCHKTYPE_ISDEFINED ).get();
-    const LAPriceDataSlidingRule& paySlr = 
-        dynamic_cast<const LAPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
-    const LAPriceDataCalendar& fixCal =
-        dynamic_cast<const LAPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
-	const LAObject& curve = objPool.getObject( curveID, ENCHKTYPE_ISDEFINED ).get();
-	const LADate& asOfDate = dynamic_cast<const LADataDate& >(curve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get());
+	const AQLObject& object = objPool.getObject( convID, ENCHKTYPE_ISDEFINED ).get();
+    const AQLPriceDataSlidingRule& paySlr = 
+        dynamic_cast<const AQLPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
+    const AQLPriceDataCalendar& fixCal =
+        dynamic_cast<const AQLPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
+	const AQLObject& curve = objPool.getObject( curveID, ENCHKTYPE_ISDEFINED ).get();
+	const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(curve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get());
 
 	double expPoint_d = LAMathSwaptionVolUtility::getExpiryPoint(expPoint, asOfDate, paySlr, fixCal);
-	LADate expPoint_date = LAMathSwaptionVolUtility::getExpiryPoint2(expPoint, asOfDate, paySlr, fixCal);
+	AQLDate expPoint_date = LAMathSwaptionVolUtility::getExpiryPoint2(expPoint, asOfDate, paySlr, fixCal);
 
 	double forward = getForward(dataInstance, expPoint_date, tenorPoint, curveID, convID, foreCurveName, dfCurveName);
 	forward = (std::fabs(forward) < eps_SABR) ? eps_SABR : forward;
@@ -3108,30 +3108,30 @@ LAMathSwaptionVolUtility::getSABRVol2
 
 double 
 LAMathSwaptionVolUtility::getSABRVol3
-( LADataInstance* dataInstance, double expPoint, double tenorPoint, double forward, double strike, const LAString& alphaID,
-  const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& approxMethod)
+( AQLDataInstance* dataInstance, double expPoint, double tenorPoint, double forward, double strike, const AQLString& alphaID,
+  const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& approxMethod)
 {
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 
-	const DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix& >
+	const DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleVector& tenorVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& tenorVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
-    const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& expiryVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
-    //const LAStringVector& expiry = dynamic_cast<const LADataStrings& >
+    //const AQLStringVector& expiry = dynamic_cast<const AQLDataStrings& >
     //    (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYSTRING,ISDEFINED).get()).get();
-    //const LAStringVector& tenor = dynamic_cast<const LADataStrings& >
+    //const AQLStringVector& tenor = dynamic_cast<const AQLDataStrings& >
     //    (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORSTRING,ISDEFINED).get()).get();
 
     matirixCheck(dataInstance, alphaID, betaID, true);
-    const DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
      matirixCheck(dataInstance, alphaID, nuID, true);
-    const DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( nuID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
     matirixCheck(dataInstance, alphaID, rhoID, true);
-    const DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( rhoID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
 	LAMathSwaptionMatrix alphaMat_(alphaMat, expiryVec, tenorVec);
@@ -3155,9 +3155,9 @@ LAMathSwaptionVolUtility::getSABRVol3
 
 double 
 LAMathSwaptionVolUtility::getSABRVol4
-( LADataInstance* dataInstance, double expTerm, const LAString& tenorPoint, double forward, double strike, const LAString& alphaID,
-  const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& curveID, 
-  const LAString& convID, LAString foreCurveName, LAString dfCurveName, const LAString& approxMethod)
+( AQLDataInstance* dataInstance, double expTerm, const AQLString& tenorPoint, double forward, double strike, const AQLString& alphaID,
+  const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& curveID, 
+  const AQLString& convID, AQLString foreCurveName, AQLString dfCurveName, const AQLString& approxMethod)
 {
     double tenorPoint_d = getTenorPoint(tenorPoint);
 	forward = (std::fabs(forward) < eps_SABR) ? eps_SABR : forward;
@@ -3167,41 +3167,41 @@ LAMathSwaptionVolUtility::getSABRVol4
 //++++++++ Funahashi ++++++++
 double 
 LAMathSwaptionVolUtility::getSABRPrem
-( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, double strike, int sgn, const LAString& fowardID, const LAString& numeraireID, 
-  const LAString& alphaID, const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& approxMethod, double shift, bool isLognormal)
+( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, double strike, int sgn, const AQLString& fowardID, const AQLString& numeraireID, 
+  const AQLString& alphaID, const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& approxMethod, double shift, bool isLognormal)
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-    LAObjectPool& objPool = dataInstance->getObjectPool();
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
 
 	matirixCheck(dataInstance, alphaID, fowardID);
 	matirixCheck(dataInstance, alphaID, betaID);
 	matirixCheck(dataInstance, alphaID, nuID);
 	matirixCheck(dataInstance, alphaID, rhoID);
 
-    const DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleVector& tenorVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& tenorVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
-    const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& expiryVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
     
-    const DoubleMatrix& fowardMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& fowardMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( fowardID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-	const DoubleMatrix& numeraireMat = dynamic_cast<LADataDoubleMatrix &>
+	const DoubleMatrix& numeraireMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( numeraireID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
-	const DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix &>
+	const DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( nuID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix &>
+    const DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix &>
         (objPool.getObject( rhoID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();    
 
-    const LAPriceDataSlidingRule& paySlr = dynamic_cast<const LAPriceDataSlidingRule& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).
+    const AQLPriceDataSlidingRule& paySlr = dynamic_cast<const AQLPriceDataSlidingRule& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).
 		get().getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
-    const LAPriceDataCalendar& fixCal = dynamic_cast<const LAPriceDataCalendar& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().
+    const AQLPriceDataCalendar& fixCal = dynamic_cast<const AQLPriceDataCalendar& >(objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().
 		getData(CALIBRATION_DATA_CALENDAR,ISDEFINED).get());
-    const LADate& asOfDate = dynamic_cast<const LADataDate& >(dataInstance->getObjectPool().getObject(alphaID,ENCHKTYPE_ISDEFINED).
+    const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(dataInstance->getObjectPool().getObject(alphaID,ENCHKTYPE_ISDEFINED).
 		get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
 
     double expPoint_d = getExpiryPoint(expPoint, asOfDate, paySlr, fixCal);
@@ -3239,23 +3239,23 @@ LAMathSwaptionVolUtility::getSABRPrem
 
 double 
 LAMathSwaptionVolUtility::getSABRPrem2
-( LADataInstance* dataInstance, const LAString& expPoint, const LAString& tenorPoint, double strike, int sgn, const LAString& alphaID,
-  const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& curveID, 
-  const LAString& convID, LAString foreCurveName, LAString dfCurveName, const LAString& approxMethod)
+( AQLDataInstance* dataInstance, const AQLString& expPoint, const AQLString& tenorPoint, double strike, int sgn, const AQLString& alphaID,
+  const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& curveID, 
+  const AQLString& convID, AQLString foreCurveName, AQLString dfCurveName, const AQLString& approxMethod)
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-    LAObjectPool& objPool = dataInstance->getObjectPool();
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
 
-	const LAObject& object = objPool.getObject( convID, ENCHKTYPE_ISDEFINED ).get();
-    const LAPriceDataSlidingRule& paySlr = 
-        dynamic_cast<const LAPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
-    const LAPriceDataCalendar& fixCal =
-        dynamic_cast<const LAPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
-	const LAObject& curve = objPool.getObject( curveID, ENCHKTYPE_ISDEFINED ).get();
-	const LADate& asOfDate = dynamic_cast<const LADataDate& >(curve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get());
+	const AQLObject& object = objPool.getObject( convID, ENCHKTYPE_ISDEFINED ).get();
+    const AQLPriceDataSlidingRule& paySlr = 
+        dynamic_cast<const AQLPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
+    const AQLPriceDataCalendar& fixCal =
+        dynamic_cast<const AQLPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
+	const AQLObject& curve = objPool.getObject( curveID, ENCHKTYPE_ISDEFINED ).get();
+	const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(curve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get());
 
 	double expPoint_d = LAMathSwaptionVolUtility::getExpiryPoint(expPoint, asOfDate, paySlr, fixCal);
-	LADate expPoint_date = LAMathSwaptionVolUtility::getExpiryPoint2(expPoint, asOfDate, paySlr, fixCal);
+	AQLDate expPoint_date = LAMathSwaptionVolUtility::getExpiryPoint2(expPoint, asOfDate, paySlr, fixCal);
 	double numeraire = getNumeraire(dataInstance, expPoint_date, tenorPoint, curveID, convID, dfCurveName);
 	double forward = getForward(dataInstance, expPoint_date, tenorPoint, curveID, convID, foreCurveName, dfCurveName);
 	double tenorPoint_d = getTenorPoint(tenorPoint);
@@ -3267,30 +3267,30 @@ LAMathSwaptionVolUtility::getSABRPrem2
 
 double 
 LAMathSwaptionVolUtility::getSABRPrem3
-( LADataInstance* dataInstance, double expPoint, double tenorPoint, double forward, double numeraire, double strike, int sgn, const LAString& alphaID,
-  const LAString& betaID, const LAString& nuID, const LAString& rhoID, const LAString& approxMethod)
+( AQLDataInstance* dataInstance, double expPoint, double tenorPoint, double forward, double numeraire, double strike, int sgn, const AQLString& alphaID,
+  const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID, const AQLString& approxMethod)
 {
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 
-	const DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix& >
+	const DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-    const DoubleVector& tenorVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& tenorVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
-    const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
+    const DoubleVector& expiryVec = dynamic_cast<const AQLDataDoubles& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
-    const LAStringVector& expiry = dynamic_cast<const LADataStrings& >
+    const AQLStringVector& expiry = dynamic_cast<const AQLDataStrings& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYSTRING,ISDEFINED).get()).get();
-    const LAStringVector& tenor = dynamic_cast<const LADataStrings& >
+    const AQLStringVector& tenor = dynamic_cast<const AQLDataStrings& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_TENORSTRING,ISDEFINED).get()).get();
 
     matirixCheck(dataInstance, alphaID, betaID);
-    const DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
     matirixCheck(dataInstance, alphaID, nuID);
-    const DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( nuID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
     matirixCheck(dataInstance, alphaID, rhoID);
-    const DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( rhoID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
 
 	LAMathSwaptionMatrix alphaMat_(alphaMat, expiryVec, tenorVec);
@@ -3315,11 +3315,11 @@ LAMathSwaptionVolUtility::getSABRPrem3
 
 DoubleMatrix 
 LAMathSwaptionVolUtility::getSABRVolMatrix
-( LADataInstance* dataInstance, const LAString& strikeID, const LAString& forwardID, const LAString& alphaID,
-  const LAString& betaID, const LAString& nuID, const LAString& rhoID )
+( AQLDataInstance* dataInstance, const AQLString& strikeID, const AQLString& forwardID, const AQLString& alphaID,
+  const AQLString& betaID, const AQLString& nuID, const AQLString& rhoID )
 {
-    LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-    LAObjectPool& objPool = dataInstance->getObjectPool();
+    AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
 
 	matirixCheck(dataInstance, alphaID, betaID);
 	matirixCheck(dataInstance, alphaID, nuID);
@@ -3327,19 +3327,19 @@ LAMathSwaptionVolUtility::getSABRVolMatrix
 	matirixCheck(dataInstance, alphaID, strikeID);
 	matirixCheck(dataInstance, alphaID, forwardID);
 
-    const DoubleMatrix& alphaMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& alphaMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();    
-    const DoubleMatrix& betaMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& betaMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( betaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();    
-    const DoubleMatrix& nuMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& nuMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( nuID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();    
-    const DoubleMatrix& rhoMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& rhoMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( rhoID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();	
-    const DoubleMatrix& strikeMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& strikeMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( strikeID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();	
-    const DoubleMatrix& forwardMat = dynamic_cast<LADataDoubleMatrix& >
+    const DoubleMatrix& forwardMat = dynamic_cast<AQLDataDoubleMatrix& >
         (objPool.getObject( forwardID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_SWAPTIONMATRIX,ISDEFINED).get()).get();
-	const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles &>
+	const DoubleVector& expiryVec = dynamic_cast<const AQLDataDoubles &>
         (objPool.getObject( alphaID, ENCHKTYPE_ISDEFINED ).get().getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
     
 	DoubleMatrix ret(alphaMat.size(),DoubleArray(alphaMat[0].size()));
@@ -3360,112 +3360,112 @@ LAMathSwaptionVolUtility::getSABRVolMatrix
 
 void
 LAMathSwaptionVolUtility::
-matirixCheck( LADataInstance* dataInstance, const LAString& entityName, const LAString& entityName2, bool isVolMat)
+matirixCheck( AQLDataInstance* dataInstance, const AQLString& entityName, const AQLString& entityName2, bool isVolMat)
 {
-    LAObjectPool& objPool = dataInstance->getObjectPool();
-	const LAObject& object = objPool.getObject( entityName, ENCHKTYPE_ISDEFINED ).get();
-	const LAObject& entity2 = objPool.getObject( entityName2, ENCHKTYPE_ISDEFINED ).get();
+    AQLObjectPool& objPool = dataInstance->getObjectPool();
+	const AQLObject& object = objPool.getObject( entityName, ENCHKTYPE_ISDEFINED ).get();
+	const AQLObject& entity2 = objPool.getObject( entityName2, ENCHKTYPE_ISDEFINED ).get();
 
-	const LADataHolder* dh = &object.getData(PRICING_DATA_TENORSTRING, NOCHECK);
+	const AQLDataHolder* dh = &object.getData(PRICING_DATA_TENORSTRING, NOCHECK);
 	if ( dh->isDefined() && !dh->isNull() )
 	{
-		const LAStringVector& tenor = dynamic_cast<const LADataStrings &>
+		const AQLStringVector& tenor = dynamic_cast<const AQLDataStrings &>
 			(object.getData(PRICING_DATA_TENORSTRING,ISDEFINED).get()).get();
-		const LAStringVector& tenor2 = dynamic_cast<const LADataStrings &>
+		const AQLStringVector& tenor2 = dynamic_cast<const AQLDataStrings &>
 			(entity2.getData(PRICING_DATA_TENORSTRING,ISDEFINED).get()).get();
 		if( tenor != tenor2 ) 
-			throw LACoreInvalidData("tenors are inconsistent!",	__FILE__,__LINE__);
+			throw AQLCoreInvalidData("tenors are inconsistent!",	__FILE__,__LINE__);
 	}
 	else
 	{
-		const DoubleVector& tenor = dynamic_cast<const LADataDoubles &>
+		const DoubleVector& tenor = dynamic_cast<const AQLDataDoubles &>
 			(object.getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
-		const DoubleVector& tenor2 = dynamic_cast<const LADataDoubles &>
+		const DoubleVector& tenor2 = dynamic_cast<const AQLDataDoubles &>
 			(entity2.getData(PRICING_DATA_TENORVECTOR,ISDEFINED).get()).get();
 		if( tenor != tenor2 ) 
-			throw LACoreInvalidData("tenors are inconsistent!",	__FILE__,__LINE__);
+			throw AQLCoreInvalidData("tenors are inconsistent!",	__FILE__,__LINE__);
 	}
 
 	dh = &object.getData(PRICING_DATA_EXPIRYSTRING, NOCHECK);
 	if ( dh->isDefined() && !dh->isNull() )
 	{
-		const LAStringVector& expiry = dynamic_cast<const LADataStrings &>
+		const AQLStringVector& expiry = dynamic_cast<const AQLDataStrings &>
 			(object.getData(PRICING_DATA_EXPIRYSTRING,ISDEFINED).get()).get();
-		const LAStringVector& expiry2 = dynamic_cast<const LADataStrings &>
+		const AQLStringVector& expiry2 = dynamic_cast<const AQLDataStrings &>
 			(entity2.getData(PRICING_DATA_EXPIRYSTRING,ISDEFINED).get()).get();   
 		if( expiry != expiry2 ) 
-			throw LACoreInvalidData("expiries are inconsistent!",	__FILE__,__LINE__);
+			throw AQLCoreInvalidData("expiries are inconsistent!",	__FILE__,__LINE__);
 	}
 	else
 	{
-		const DoubleVector& expiry = dynamic_cast<const LADataDoubles &>
+		const DoubleVector& expiry = dynamic_cast<const AQLDataDoubles &>
 			(object.getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();
-		const DoubleVector& expiry2 = dynamic_cast<const LADataDoubles &>
+		const DoubleVector& expiry2 = dynamic_cast<const AQLDataDoubles &>
 			(entity2.getData(PRICING_DATA_EXPIRYVECTOR,ISDEFINED).get()).get();   
 		if( expiry != expiry2 ) 
-			throw LACoreInvalidData("expiries are inconsistent!",	__FILE__,__LINE__);
+			throw AQLCoreInvalidData("expiries are inconsistent!",	__FILE__,__LINE__);
 	}
 
 	if(isVolMat==false)
 	{
-		const LADate& asOfDate = dynamic_cast<const LADataDate &>
+		const AQLDate& asOfDate = dynamic_cast<const AQLDataDate &>
 			(object.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get()).get();
-		const LADate& asOfDate2 = dynamic_cast<const LADataDate &>
+		const AQLDate& asOfDate2 = dynamic_cast<const AQLDataDate &>
 			(entity2.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get()).get();   
 		if( asOfDate != asOfDate2 ) 
-			throw LACoreInvalidData("asOfDates are inconsistent!",	__FILE__,__LINE__);
+			throw AQLCoreInvalidData("asOfDates are inconsistent!",	__FILE__,__LINE__);
 
-		const DateVector& expiDateVec = dynamic_cast<const LADataDates &>
+		const DateVector& expiDateVec = dynamic_cast<const AQLDataDates &>
 			(object.getData(PRICING_DATA_EXPIRYDATEVECTOR,ISDEFINED).get()).get();
-		const DateVector& expiDateVec2 = dynamic_cast<const LADataDates &>
+		const DateVector& expiDateVec2 = dynamic_cast<const AQLDataDates &>
 			(entity2.getData(PRICING_DATA_EXPIRYDATEVECTOR,ISDEFINED).get()).get();   
 		if( expiDateVec != expiDateVec2 ) 
-			throw LACoreInvalidData("expiry date vector is inconsistent!",	__FILE__,__LINE__);
+			throw AQLCoreInvalidData("expiry date vector is inconsistent!",	__FILE__,__LINE__);
 	}
 }
 
 double 
 LAMathSwaptionVolUtility::
-getForward(LADataInstance* dataInstance, const LADate& expiry, const LAString& tenor, const LAString& curveID, 
-		   const LAString& convID, LAString foreCurveName, LAString dfCurveName, bool isFWDInter)
+getForward(AQLDataInstance* dataInstance, const AQLDate& expiry, const AQLString& tenor, const AQLString& curveID, 
+		   const AQLString& convID, AQLString foreCurveName, AQLString dfCurveName, bool isFWDInter)
 {
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 
-	const LAObject& object = objPool.getObject( convID, ENCHKTYPE_ISDEFINED ).get();
-	const LADataHolder* dh;
-	dh = &object.getData(IR_CALIBRATION_DATA_FREQUENCY + LAString("_") + tenor, NOCHECK);
+	const AQLObject& object = objPool.getObject( convID, ENCHKTYPE_ISDEFINED ).get();
+	const AQLDataHolder* dh;
+	dh = &object.getData(IR_CALIBRATION_DATA_FREQUENCY + AQLString("_") + tenor, NOCHECK);
 	if(!dh->isDefined() || dh->isNull())
 	{
 		dh = &object.getData(IR_CALIBRATION_DATA_FREQUENCY, ISDEFINED);
 	}
-	const LAString& freq = dynamic_cast<const LADataString& >(dh->get()).get();
-    const LAString& spotLag = 
-        dynamic_cast<const LADataString& >(object.getData(CURVEINPUT_SPOTLAG,ISDEFINED).get()).get();
-    const LAPriceDataDayCount& daycount =
-        dynamic_cast<const LAPriceDataDayCount& >(object.getData(IR_CALIBRATION_DATA_DAYCOUNT,ISDEFINED).get());
-    const LAPriceDataSlidingRule& paySlr = 
-        dynamic_cast<const LAPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
-    const LAPriceDataCalendar& payCal =
-        dynamic_cast<const LAPriceDataCalendar& >(object.getData(CALIBRATION_DATA_CALENDAR,ISDEFINED).get());
-    const LAPriceDataCalendar& fixCal =
-        dynamic_cast<const LAPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
+	const AQLString& freq = dynamic_cast<const AQLDataString& >(dh->get()).get();
+    const AQLString& spotLag = 
+        dynamic_cast<const AQLDataString& >(object.getData(CURVEINPUT_SPOTLAG,ISDEFINED).get()).get();
+    const AQLPriceDataDayCount& daycount =
+        dynamic_cast<const AQLPriceDataDayCount& >(object.getData(IR_CALIBRATION_DATA_DAYCOUNT,ISDEFINED).get());
+    const AQLPriceDataSlidingRule& paySlr = 
+        dynamic_cast<const AQLPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
+    const AQLPriceDataCalendar& payCal =
+        dynamic_cast<const AQLPriceDataCalendar& >(object.getData(CALIBRATION_DATA_CALENDAR,ISDEFINED).get());
+    const AQLPriceDataCalendar& fixCal =
+        dynamic_cast<const AQLPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
 
-	LAPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
-    LADate tmpDate = LAMathDateCalculations::getDate(expiry,spotLag,slr_Fol,&fixCal,true);
-    LADate endDate = LAMathDateCalculations::getDate(tmpDate,tenor,paySlr,&payCal,true);
+	AQLPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
+    AQLDate tmpDate = LAMathDateCalculations::getDate(expiry,spotLag,slr_Fol,&fixCal,true);
+    AQLDate endDate = LAMathDateCalculations::getDate(tmpDate,tenor,paySlr,&payCal,true);
     DateVector dates;
 	double rate;
 	if (freq == SIMPLE)
 	{
 		dates.push_back(endDate);	
 		dates.insert(dates.begin(),tmpDate);
-		rate = LAMathCurveFuncUtility::getParRate(dates, dataInstance, curveID, daycount.convertToString(), LAString("SPLINE"), foreCurveName, dfCurveName, isFWDInter);
+		rate = LAMathCurveFuncUtility::getParRate(dates, dataInstance, curveID, daycount.convertToString(), AQLString("SPLINE"), foreCurveName, dfCurveName, isFWDInter);
 	}
 	else
 	{
 		//LAMathDateCalculations::generateSchedule(tmpDate, endDate, freq, true, NULL, NULL, NULL, dates, &paySlr, &payCal);
 		rate = LAMathCurveFuncUtility::getParRate(dataInstance, curveID, tmpDate, endDate, NULL, NULL, NULL, freq, daycount.convertToString(), 
-												paySlr.convertToString(), payCal.convertToString(), LAString("SPLINE"), foreCurveName, dfCurveName, isFWDInter);
+												paySlr.convertToString(), payCal.convertToString(), AQLString("SPLINE"), foreCurveName, dfCurveName, isFWDInter);
 	}
 
 	return rate;
@@ -3473,40 +3473,40 @@ getForward(LADataInstance* dataInstance, const LADate& expiry, const LAString& t
 
 double 
 LAMathSwaptionVolUtility::
-getNumeraire(LADataInstance* dataInstance, const LADate& expiry, const LAString& tenor, 
-			 const LAString& curveID, const LAString& convID, LAString curveName)
+getNumeraire(AQLDataInstance* dataInstance, const AQLDate& expiry, const AQLString& tenor, 
+			 const AQLString& curveID, const AQLString& convID, AQLString curveName)
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-	LAObjectPool& objPool = dataInstance->getObjectPool();
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
 
-	const LAObject& object = objPool.getObject( convID, ENCHKTYPE_ISDEFINED ).get();
-	const LADataHolder* dh;
-	dh = &object.getData(IR_CALIBRATION_DATA_FREQUENCY + LAString("_") + tenor,NOCHECK);
+	const AQLObject& object = objPool.getObject( convID, ENCHKTYPE_ISDEFINED ).get();
+	const AQLDataHolder* dh;
+	dh = &object.getData(IR_CALIBRATION_DATA_FREQUENCY + AQLString("_") + tenor,NOCHECK);
 	if(!dh->isDefined() || dh->isNull())
 	{
 		dh = &object.getData(IR_CALIBRATION_DATA_FREQUENCY,ISDEFINED);
 	}
-    const LAString& freq = dynamic_cast<const LADataString& >(dh->get()).get();
-    const LAString& spotLag = 
-        dynamic_cast<const LADataString& >(object.getData(CURVEINPUT_SPOTLAG,ISDEFINED).get()).get();
-    const LAPriceDataDayCount& daycount =
-        dynamic_cast<const LAPriceDataDayCount& >(object.getData(IR_CALIBRATION_DATA_DAYCOUNT,ISDEFINED).get());
-    const LAPriceDataSlidingRule& paySlr = 
-        dynamic_cast<const LAPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
-    const LAPriceDataCalendar& payCal =
-        dynamic_cast<const LAPriceDataCalendar& >(object.getData(CALIBRATION_DATA_CALENDAR,ISDEFINED).get());
-    const LAPriceDataCalendar& fixCal =
-        dynamic_cast<const LAPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
-	const LAObject& curve = objPool.getObject( curveID, ENCHKTYPE_ISDEFINED ).get();
-	const LADate& asOfDate = dynamic_cast<const LADataDate& >(curve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get());
+    const AQLString& freq = dynamic_cast<const AQLDataString& >(dh->get()).get();
+    const AQLString& spotLag = 
+        dynamic_cast<const AQLDataString& >(object.getData(CURVEINPUT_SPOTLAG,ISDEFINED).get()).get();
+    const AQLPriceDataDayCount& daycount =
+        dynamic_cast<const AQLPriceDataDayCount& >(object.getData(IR_CALIBRATION_DATA_DAYCOUNT,ISDEFINED).get());
+    const AQLPriceDataSlidingRule& paySlr = 
+        dynamic_cast<const AQLPriceDataSlidingRule& >(object.getData(CALIBRATION_DATA_SLIDINGRULE,ISDEFINED).get());
+    const AQLPriceDataCalendar& payCal =
+        dynamic_cast<const AQLPriceDataCalendar& >(object.getData(CALIBRATION_DATA_CALENDAR,ISDEFINED).get());
+    const AQLPriceDataCalendar& fixCal =
+        dynamic_cast<const AQLPriceDataCalendar& >(object.getData(PRICING_DATA_FIXINGCALENDAR,ISDEFINED).get());
+	const AQLObject& curve = objPool.getObject( curveID, ENCHKTYPE_ISDEFINED ).get();
+	const AQLDate& asOfDate = dynamic_cast<const AQLDataDate& >(curve.getData(CALIBRATION_DATA_ASOFDATE,ISDEFINED).get());
 
-	LAPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
-	LADate tmpDate = LAMathDateCalculations::getDate(expiry,spotLag,slr_Fol,&fixCal,true);
-    LADate endDate = LAMathDateCalculations::getDate(tmpDate,tenor,paySlr,&payCal,true);
-    const LADate spotDate = LAMathDateCalculations::getDate(asOfDate, spotLag, slr_Fol, &fixCal, true);
+	AQLPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
+	AQLDate tmpDate = LAMathDateCalculations::getDate(expiry,spotLag,slr_Fol,&fixCal,true);
+    AQLDate endDate = LAMathDateCalculations::getDate(tmpDate,tenor,paySlr,&payCal,true);
+    const AQLDate spotDate = LAMathDateCalculations::getDate(asOfDate, spotLag, slr_Fol, &fixCal, true);
 	double adjust_term = dc_act365.getTerm(asOfDate, spotDate);
 	double adjustDF = LAMathCurveFuncUtility::getDF(adjust_term, dataInstance, curveID, dc_act365.convertToString(), 
-		LAString("SPLINE"),false,curveName);
+		AQLString("SPLINE"),false,curveName);
     DateVector dates;
 	if(freq==SIMPLE)
 	{
@@ -3518,17 +3518,17 @@ getNumeraire(LADataInstance* dataInstance, const LADate& expiry, const LAString&
 	}
     dates.insert(dates.begin(),tmpDate);
 
-	return LAMathCurveFuncUtility::getAnnuity(dates, dataInstance, curveID, daycount.convertToString(), LAString("SPLINE"),
+	return LAMathCurveFuncUtility::getAnnuity(dates, dataInstance, curveID, daycount.convertToString(), AQLString("SPLINE"),
 		curveName) / adjustDF;
 }
 
 double 
 LAMathSwaptionVolUtility::
-getExpiryPoint(LAString str, const LADate& asOfDate, const LAPriceDataSlidingRule& slr, 
-			   const LAPriceDataCalendar& cal)
+getExpiryPoint(AQLString str, const AQLDate& asOfDate, const AQLPriceDataSlidingRule& slr, 
+			   const AQLPriceDataCalendar& cal)
 {
-	LAPriceDataDayCount dc_act365(ACT_365_ISDA);
-	LADate date;
+	AQLPriceDataDayCount dc_act365(ACT_365_ISDA);
+	AQLDate date;
 	double ret;
 	str.toUpper();
 	int y_pos=-1, m_pos=-1, d_pos=-1, dot_pos=-1;
@@ -3550,13 +3550,13 @@ getExpiryPoint(LAString str, const LADate& asOfDate, const LAPriceDataSlidingRul
 	return ret;
 }
 
-LADate 
+AQLDate 
 LAMathSwaptionVolUtility::
-getExpiryPoint2(LAString str, const LADate& asOfDate, const LAPriceDataSlidingRule& slr, 
-				const LAPriceDataCalendar& cal)
+getExpiryPoint2(AQLString str, const AQLDate& asOfDate, const AQLPriceDataSlidingRule& slr, 
+				const AQLPriceDataCalendar& cal)
 
 {
-	LADate date;
+	AQLDate date;
 	str.toUpper();
 	int y_pos=-1, m_pos=-1, d_pos=-1;
 	y_pos = str.findString("Y");
@@ -3576,9 +3576,9 @@ getExpiryPoint2(LAString str, const LADate& asOfDate, const LAPriceDataSlidingRu
 
 double 
 LAMathSwaptionVolUtility::
-getTenorPoint(LAString str)
+getTenorPoint(AQLString str)
 {
-	LADate date;
+	AQLDate date;
 	double ret;
 	str.toUpper();
 	int y_pos=-1, m_pos=-1, d_pos=-1, w_pos=-1;
@@ -3599,11 +3599,11 @@ getTenorPoint(LAString str)
 	return ret;
 }
 
-LADate
-LAMathSwaptionVolUtility::getLADate(LAString date)
+AQLDate
+LAMathSwaptionVolUtility::getLADate(AQLString date)
 {
     return LAStringToDate(date);
-	//LADate ret;
+	//AQLDate ret;
 	//int slushCheck = date.findString("/");
 	//if(slushCheck==-1)
 	//{
@@ -3612,7 +3612,7 @@ LAMathSwaptionVolUtility::getLADate(LAString date)
 	//else
 	//{
 	//	if(slushCheck==4) date.remove(4,1);
-	//	else throw LACoreInvalidData("Input error",__FILE__,__LINE__);
+	//	else throw AQLCoreInvalidData("Input error",__FILE__,__LINE__);
 
 	//	slushCheck = date.findString("/");
 	//	if(slushCheck==6) { date.remove(6,1);}
@@ -3621,31 +3621,31 @@ LAMathSwaptionVolUtility::getLADate(LAString date)
 	//		date.remove(5,1);
 	//		date.insert(4,"0");
 	//	}
-	//	else throw LACoreInvalidData("Input error",__FILE__,__LINE__);
+	//	else throw AQLCoreInvalidData("Input error",__FILE__,__LINE__);
 
 	//	if(date.size() == 7)
 	//	{
 	//		date.insert(6,"0");
 	//	}
-	//	else if(date.size() != 8) throw LACoreInvalidData("Input error",__FILE__,__LINE__);
-	//	LADate ret_(date.getCString()); ret = ret_;
+	//	else if(date.size() != 8) throw AQLCoreInvalidData("Input error",__FILE__,__LINE__);
+	//	AQLDate ret_(date.getCString()); ret = ret_;
 	//}
 	//
 	//return ret;
 }
 
 LAMathSABR*
-LAMathSwaptionVolUtility::createSABR(const LAString& approxMethod, double alpha, double beta, double nu, double rho, bool isLognormal)
+LAMathSwaptionVolUtility::createSABR(const AQLString& approxMethod, double alpha, double beta, double nu, double rho, bool isLognormal)
 {
 	LAMathSABR* sabr;
-	LAString tmp_approxMethod = approxMethod;
+	AQLString tmp_approxMethod = approxMethod;
 	tmp_approxMethod.toUpper();
 
 	//Only Hagan method support normal vol
 	if (!isLognormal && tmp_approxMethod != APPROXIMATION_HAGAN)
 	{
-		LAString msg = "Normal Vol Calibration Only Supports Hagan Approximation : Method " + approxMethod + " is not supported";
-		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+		AQLString msg = "Normal Vol Calibration Only Supports Hagan Approximation : Method " + approxMethod + " is not supported";
+		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
 
 	if(tmp_approxMethod == APPROXIMATION_HAGAN)
@@ -3669,15 +3669,15 @@ LAMathSwaptionVolUtility::createSABR(const LAString& approxMethod, double alpha,
 
 
 void
-LAMathSwaptionVolUtility::setUpForwardShiftValue(LADataInstance* dataInstance, LAString& CurrencyID, double forwardShiftValue)
+LAMathSwaptionVolUtility::setUpForwardShiftValue(AQLDataInstance* dataInstance, AQLString& CurrencyID, double forwardShiftValue)
 {
 
 	upper(CurrencyID);
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAObject* e = NULL;
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObject* e = NULL;
 	if(!objPool.getObject(CurrencyID).isDefined())
 	{
-		e = new LAObject();
+		e = new AQLObject();
 		objPool.set(CurrencyID,e);
 	}
 	else 
@@ -3686,21 +3686,21 @@ LAMathSwaptionVolUtility::setUpForwardShiftValue(LADataInstance* dataInstance, L
 		e = &objPool.getObject(CurrencyID).get();
 	}
 
-	e->add(CurrencyID, new LADataDouble(forwardShiftValue)	);
+	e->add(CurrencyID, new AQLDataDouble(forwardShiftValue)	);
 }
 
 double
-LAMathSwaptionVolUtility::getForwardShiftValue(LADataInstance* dataInstance, LAString& CurrencyID )
+LAMathSwaptionVolUtility::getForwardShiftValue(AQLDataInstance* dataInstance, AQLString& CurrencyID )
 {
 	upper(CurrencyID);
 
-	LAObjectPool& objPool = dataInstance->getObjectPool();
-	LAObject& e = objPool.getObject(CurrencyID, ENCHKTYPE_ISDEFINED).get();
+	AQLObjectPool& objPool = dataInstance->getObjectPool();
+	AQLObject& e = objPool.getObject(CurrencyID, ENCHKTYPE_ISDEFINED).get();
 	
-	LADataHolder* dh;
+	AQLDataHolder* dh;
 
 	dh = &(e.getData(CurrencyID, ISNOTNULL));
-	double forwardShiftValue = dynamic_cast<const LADataDouble &>(dh->get()).get();
+	double forwardShiftValue = dynamic_cast<const AQLDataDouble &>(dh->get()).get();
 	
 	return forwardShiftValue;
 }
