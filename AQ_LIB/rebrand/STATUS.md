@@ -1,9 +1,8 @@
 # Rebrand status — pause point 2026-09-05 ~04:00
 
-**HEAD: `97c8461e`. Last user-confirmed green build: `2d7eb95c`.**
-Since then, unbuilt: `4fb2fdb6` (step 7a guards, no build impact) and
-`97c8461e` (step 6a — GTEST curve-fixture builders ported off mir wrappers;
-needs a build + GTest run to confirm the Basis/FwdFXConst arg reordering).
+**HEAD: `5a29a51a`. Last user-confirmed green build: `97c8461e` (step 6a).**
+Unbuilt: `5a29a51a` (step 6b — mir stack deleted, 166 files; needs a full
+Rebuild + GTest, expect 43 fewer test suites, all remaining must pass).
 Tree is clean. `baseline` tag is the pre-rebrand reference for GTest output diffs.
 
 ---
@@ -39,7 +38,12 @@ prose/error-string mentions (`"LWO Curve … does not exist"` → `AQO`/`Object`
 naming call). `validation_api` / `MLIB_CLIENT_API` / `GOOGLE_TEST` residue is
 **Linux-Makefile only → Phase 7**. `XllPlus` → Phase 4.
 
-### Step 6 — mir removal  ← IN PROGRESS
+### Step 6 — mir removal  ← DONE (6a `97c8461e`, 6b `5a29a51a`)
+mir stack deleted. Residual `mir` only in strings/comments (Replay.cpp dispatch
+keys `functionList["tryMirSetUpOISCurve"]`, a few error messages) -> fold into 7b.
+`TestMirDateFunctions.cpp` kept (no mir) -> rename to a non-legacy name in 7b.
+
+### Step 6 (old plan text below, superseded)
 **6a DONE (`97c8461e`)**: 5 GTEST curve-fixture builders (`CurveOis/Std/TenorBasis/
 XccyBasis/FwdFxConst.cpp`) now call `etrading::AQLUpdateStaticDataManager::setUp*
 Curve` directly. Needs build + GTest.
