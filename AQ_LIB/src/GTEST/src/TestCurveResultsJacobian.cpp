@@ -6,7 +6,7 @@
 #include "GetGoogleTestFolder.h"
 #include "RecordMacros.h"						// Logfile Macros
 #include "ResultsProcessor.h"					// Test Rebase Methods
-#include "tryMeLWO.h"							// LWO Curve Loading et al.
+#include "tryAqObjects.h"							// LWO Curve Loading et al.
 #include "tryAqCurvesResults.h"					// Curve Results Jacobian 
 
 
@@ -59,8 +59,8 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator		= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string loadUSDOISCurve		        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator		= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string loadUSDOISCurve		        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
 
 		// Jacobian Discount Factor Delta
 		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USDOIS" );
@@ -81,10 +81,10 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator		= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string loadUSD3MLCurveGenerator		= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
-        const std::string loadUSDOISCurve		        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
-        const std::string loadUSD3MLCurve		        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator		= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string loadUSD3MLCurveGenerator		= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
+        const std::string loadUSDOISCurve		        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+        const std::string loadUSD3MLCurve		        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
         
 		// Jacobian Discount Factor Delta
 		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USD3ML" );
@@ -106,12 +106,12 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator		= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string loadUSD3MLCurveGenerator		= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
-		const std::string loadUSD6MLCurveGenerator		= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_CurveGenerator, etrading::JSON );
-		const std::string loadUSDOISCurve		        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
-        const std::string loadUSD3MLCurve		        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
-        const std::string loadUSD6MLCurve		        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_NoBump, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator		= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string loadUSD3MLCurveGenerator		= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
+		const std::string loadUSD6MLCurveGenerator		= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_CurveGenerator, etrading::JSON );
+		const std::string loadUSDOISCurve		        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+        const std::string loadUSD3MLCurve		        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
+        const std::string loadUSD6MLCurve		        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_NoBump, etrading::JSON );
 
 		// Jacobian Discount Factor Delta
 		etrading::VariantMatrix discountFactorDeltas = validation::tryAqCurvesResultsJacobianDiscountFactorDelta( "USDYC", "USD6ML" );
@@ -132,8 +132,8 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string originalCurveUSDOIS = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string originalCurveUSDOIS = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
 		
 		const double oneBasisPointShiftSize = 0.0001;
 
@@ -174,7 +174,7 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 5. Load Shifted Curve with Market Data Bumped by 1 Bps
-		const std::string shiftedCurveUSDOIS = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_Bumped, etrading::JSON );
+		const std::string shiftedCurveUSDOIS = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_Bumped, etrading::JSON );
 
 		// 6. Shifted Discount Factors
 		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USDOIS");
@@ -197,11 +197,11 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string loadUSD3MLCurveGenerator = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string loadUSD3MLCurveGenerator = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
 
-		const std::string originalCurveUSDOIS = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
-		const std::string originalCurveUSD3ML = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
+		const std::string originalCurveUSDOIS = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+		const std::string originalCurveUSD3ML = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
 		
 		const double oneBasisPointShiftSize = 0.0001;
 
@@ -242,7 +242,7 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 5. Load Shifted Curve with Market Data Bumped by 1 Bps
-		const std::string shiftedCurveUSD3ML = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_Bumped, etrading::JSON );
+		const std::string shiftedCurveUSD3ML = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_Bumped, etrading::JSON );
 
 		// 6. Shifted Discount Factors
 		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USD3ML");
@@ -265,13 +265,13 @@ namespace google_test
 	{
 		// Load Curve Generators and Build Curve With Flat Shift Risk Enabled
 		// Note Curves Don't Need to be Bumped - Use the Original Curves
-		const std::string loadUSDOISCurveGenerator = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
-		const std::string loadUSD3MLCurveGenerator = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
-		const std::string loadUSD6MLCurveGenerator = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_CurveGenerator, etrading::JSON );
+		const std::string loadUSDOISCurveGenerator = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_CurveGenerator, etrading::JSON );
+		const std::string loadUSD3MLCurveGenerator = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_CurveGenerator, etrading::JSON );
+		const std::string loadUSD6MLCurveGenerator = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_CurveGenerator, etrading::JSON );
 
-		const std::string originalCurveUSDOIS = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
-		const std::string originalCurveUSD3ML = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
-		const std::string originalCurveUSD6ML = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_NoBump, etrading::JSON );
+		const std::string originalCurveUSDOIS = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS_NoBump, etrading::JSON );
+		const std::string originalCurveUSD3ML = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML_NoBump, etrading::JSON );
+		const std::string originalCurveUSD6ML = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_NoBump, etrading::JSON );
 		
 		const double oneBasisPointShiftSize = 0.0001;
 
@@ -312,7 +312,7 @@ namespace google_test
 		// ========================================================================================================================================================
 
 		// 5. Load Shifted Curve with Market Data Bumped by 1 Bps
-		const std::string shiftedCurveUSD6ML = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_Bumped, etrading::JSON );
+		const std::string shiftedCurveUSD6ML = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML_Bumped, etrading::JSON );
 
 		// 6. Shifted Discount Factors
 		etrading::VariantMatrix expectedShiftedDiscountFactors	= validation::tryAqCurvesResultsDiscountFactorsDisplayAll("USDYC","USD6ML");

@@ -333,7 +333,7 @@ namespace validation
 	*  @param[in] settlementDate	The settlement date to use for bond pricing
 	*  @param[in] bondCurveName		Name of the bond curve
 	*/
-	double tryMeLWOBondPriceFromBondCurve( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string & bondCurveName )
+	double tryAqObjectsBondPriceFromBondCurve( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string & bondCurveName )
 	{
 		VALID_EXCEPTION_START
 
@@ -356,7 +356,7 @@ namespace validation
 	*  @param[in] settlementDate	The settlement date to use for bond pricing
 	*  @param[in] bondCurveName		Name of the bond curve
 	*/
-	double tryMeLWOBondYieldFromBondCurve( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string & bondCurveName )
+	double tryAqObjectsBondYieldFromBondCurve( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string & bondCurveName )
 	{
 		VALID_EXCEPTION_START
 

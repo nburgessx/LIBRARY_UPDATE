@@ -1,16 +1,16 @@
 // Curves
-#include "tryMeLWOCurveMarketData.h"
-#include "tryMeLWOCurveCalibrate.h"
-#include "tryMeLWOCurveCalibrateHedge.h"
-#include "tryMeLWOCurveGenerator.h"
+#include "tryAqObjectsCurveMarketData.h"
+#include "tryAqObjectsCurveCalibrate.h"
+#include "tryAqObjectsCurveCalibrateHedge.h"
+#include "tryAqObjectsCurveGenerator.h"
 
 // Swap Creation and Pricing
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
 
 // Risk calculation
-#include "tryMeLWOSwapDelta.h"
-#include "tryMeLWOFixingTable.h"
+#include "tryAqObjectsSwapDelta.h"
+#include "tryAqObjectsFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"
@@ -101,10 +101,10 @@ namespace
 		AQLStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
-		return validation::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		return validation::tryAqObjectsSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 
-	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
+	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
 	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
@@ -118,7 +118,7 @@ namespace
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjectsCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -141,7 +141,7 @@ namespace
 		std::string newObjectName  = hedgeCurveGeneratorInputFile[ "newObjectName" ];
 		std::string baseObjectName = hedgeCurveGeneratorInputFile[ "baseObjectName" ];
 		AQLStringMatrix modifiedValues = hedgeCurveGeneratorInputFile[ "modifiedValues" ];
-		validation::tryMeLWOCurveGeneratorModify( newObjectName, baseObjectName, modifiedValues );
+		validation::tryAqObjectsCurveGeneratorModify( newObjectName, baseObjectName, modifiedValues );
 
 		// c. Construct Hedge Curve
 		const ReadDataFile::Load hedgeCurveInputFile( curveCalibrationFileName );
@@ -155,7 +155,7 @@ namespace
 		std::string swapCurveMarketDataName	= hedgeCurveInputFile[ "swapCurveMarketDataName" ];
 		std::string swapGeneratorName		= hedgeCurveInputFile[ "swapGeneratorName" ]; // return this as an output parameter
 
-		validation::tryMeLWOCurveCalibrateHedge( oisCurveObjectName,
+		validation::tryAqObjectsCurveCalibrateHedge( oisCurveObjectName,
 													swapCurveObjectName,
 													pricingCurveCollection,
 													hedgeCurveCollection,
@@ -182,7 +182,7 @@ namespace
         // Dummy Xccy FX Spot Rates
         DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 
-		validation::tryMeLWOSwapDeltaLadder(headers,
+		validation::tryAqObjectsSwapDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,
@@ -280,7 +280,7 @@ namespace
 		// Swap Generator
         const ReadDataFile::Load swapGeneratorInputFile( swapGeneratorInputs );
 		AQLStringMatrix swapGeneratorLVB = swapGeneratorInputFile[ "swapGeneratorLVB" ];
-		std::string swapGeneratorName = validation::tryMeLWOSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
+		std::string swapGeneratorName = validation::tryAqObjectsSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
 
 		// Swap
 		const ReadDataFile::Load swapInputFile( swapInputs );
@@ -289,7 +289,7 @@ namespace
 		AQLStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
-		return validation::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		return validation::tryAqObjectsSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 
 
@@ -301,7 +301,7 @@ namespace
 		AQLStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
-		return validation::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
+		return validation::tryAqObjectsSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
 	};
 }
 

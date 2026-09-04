@@ -101,7 +101,7 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-    DoubleVector tryMeLWOCurveDiscountFactorsFromYearFractions( const DoubleVector& yearFractions,
+    DoubleVector tryAqObjectsCurveDiscountFactorsFromYearFractions( const DoubleVector& yearFractions,
                                                                 const AQLString& dayCount,
                                                                 const std::string& lwoCurveName )
     {
@@ -219,7 +219,7 @@ namespace validation
     *  @param [in]		calendar		Calendar
     *  @return			An array of discount factor
     */
-    DoubleVector tryMeLWOCurveDiscountFactorsFromTenors( const std::vector<std::string>& tenors,
+    DoubleVector tryAqObjectsCurveDiscountFactorsFromTenors( const std::vector<std::string>& tenors,
             const std::string& businessDayAdj,
             const std::string& calendar,
             const std::string& lwoCurveName )
@@ -355,7 +355,7 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-    DoubleVector tryMeLWOCurveDiscountFactorsForwardStarting( const std::vector<boost::gregorian::date>& fromDates,
+    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStarting( const std::vector<boost::gregorian::date>& fromDates,
             const std::vector<boost::gregorian::date>& toDates,
             const std::string& businessDayAdj,
             const std::string& calendar,
@@ -485,7 +485,7 @@ namespace validation
     *  @param [in]		lwoCurveName		Curve Name
     *  @return			A array of discount factors
     */
-    DoubleVector tryMeLWOCurveDiscountFactorsForwardStartingFromYearFractions( const std::vector<boost::gregorian::date>& fromDates,
+    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStartingFromYearFractions( const std::vector<boost::gregorian::date>& fromDates,
             const DoubleVector& yearFractions,
             const AQLString& dayCount,
             const std::string& lwoCurveName )
@@ -621,7 +621,7 @@ namespace validation
     *  @param [in]		calendar		Calendar
     *  @return			A array of discount factors
     */
-    DoubleVector tryMeLWOCurveDiscountFactorsForwardStartingFromTenor( const std::vector<boost::gregorian::date>& fromDates,
+    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStartingFromTenor( const std::vector<boost::gregorian::date>& fromDates,
             const std::vector<std::string>& tenors,
             const std::string& businessDayAdj,
             const std::string& calendar,

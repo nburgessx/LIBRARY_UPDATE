@@ -5,8 +5,8 @@
 #include "TryAqCurvesXccyBasis.h"
 
 // Swap Creation and Pricing
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -88,12 +88,12 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 AQLStringMatrix curveCollectionLVB = pvInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = pvInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
-                double actualPV = validation::tryMeLWOSwapPV( swapName, curveCollectionLVB, "", fixingTableLVB);
+                double actualPV = validation::tryAqObjectsSwapPV( swapName, curveCollectionLVB, "", fixingTableLVB);
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualPV, TEST_DIR, pvOutputFileName, tolerance );

@@ -4,9 +4,9 @@
 #include "TryAqCurvesTenorBasis.h"
 
 // Swap Creation and Pricing
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
-#include "tryMeLWOLeg.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjectsLeg.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -86,14 +86,14 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = parRateInputFile["swapName"];
                 AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
-                double actualSwapParRate          = validation::tryMeLWOSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
+                double actualSwapParRate          = validation::tryAqObjectsSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParRate, TEST_DIR, parRateOutputsFilename, tolerance );
@@ -126,14 +126,14 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = parRateInputFile["swapName"];
                 AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
-                double parRate = validation::tryMeLWOSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
+                double parRate = validation::tryAqObjectsSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
 
 				//Update the swap's fixedRate by parRate
 				std::vector<LabelValueBlock> legsLVB = etrading::buildMultiLabelValueBlock(swapLVB);
@@ -144,9 +144,9 @@ namespace google_test
                 legsLVB[0] = LabelValueBlock( legsLVB[0], etrading::IRS_KEY::FIXED_RATE, parRateStr.str() );
 
 				std::string newSwapTradeName = swapTradeName + "_1";
-				validation::tryMeLWOSwapCreateFromLegLVBs(newSwapTradeName, legsLVB[0], legsLVB[1], swapPropertiesLVB, isXccySwap, validateKeys);
+				validation::tryAqObjectsSwapCreateFromLegLVBs(newSwapTradeName, legsLVB[0], legsLVB[1], swapPropertiesLVB, isXccySwap, validateKeys);
                 
-                double actualPV = validation::tryMeLWOSwapPV(newSwapTradeName, curveCollectionLVB, "", fixingTableLVB);
+                double actualPV = validation::tryAqObjectsSwapPV(newSwapTradeName, curveCollectionLVB, "", fixingTableLVB);
                 
                 // 5. Check the Test Results
                 EXPECT_NEAR( 0, actualPV, tolerance );
@@ -179,14 +179,14 @@ namespace google_test
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
 				//1) Check Default Value
-                std::string swapName          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string swapName          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 				auto swap = etrading::getSwap(swapName);
 
                 AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
 				// Call any pricing function so that the fwdInter flag will be retrieved from a specific curveCollection and staticTable
-                validation::tryMeLWOSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
+                validation::tryAqObjectsSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
 
 				EXPECT_EQ(etrading::TRUE_BOOL, swap->getLeg(1)->getStaticData()->getFwdInter());
 
@@ -195,11 +195,11 @@ namespace google_test
 				auto firstLegLVB = legsLVB[0];
 				auto secondLegLVB = LabelValueBlock( legsLVB[1], etrading::IRS_KEY::IS_FWD_INTER, etrading::toString(etrading::FALSE_BOOL) );
 
-				std::string swapName2          = validation::tryMeLWOSwapCreateFromLegLVBs( swapTradeName, firstLegLVB, secondLegLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+				std::string swapName2          = validation::tryAqObjectsSwapCreateFromLegLVBs( swapTradeName, firstLegLVB, secondLegLVB, swapPropertiesLVB, isXccySwap, validateKeys );
            		auto swap2 = etrading::getSwap(swapName2);
 
 				// Call any pricing function so that the fwdInter flag will be retrieved from a specific curveCollection and staticTable
-                validation::tryMeLWOSwapParRate( swapName2, curveCollectionLVB, fixingTableLVB );
+                validation::tryAqObjectsSwapParRate( swapName2, curveCollectionLVB, fixingTableLVB );
 
 				EXPECT_EQ(etrading::FALSE_BOOL, swap2->getLeg(1)->getStaticData()->getFwdInter());
 		}
@@ -260,16 +260,16 @@ namespace google_test
 
 				auto fourthLegLVB = LabelValueBlock( legsLVB[1], leg4Keys, leg4Values );
 
-				std::string swapName          = validation::tryMeLWOSwapCreateFromLegLVBs( swapTradeName, firstLegLVB, secondLegLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+				std::string swapName          = validation::tryAqObjectsSwapCreateFromLegLVBs( swapTradeName, firstLegLVB, secondLegLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 
                 AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
-                validation::tryMeLWOSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
+                validation::tryAqObjectsSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
 
-				std::string legName3          = validation::tryMeLWOLegCreate("thirdLeg", thirdLegLVB);
-				std::string legName4          = validation::tryMeLWOLegCreate("fourLeg", fourthLegLVB);
-				validation::tryMeLWOSwapAddLeg(swapName, legName3);
-				validation::tryMeLWOSwapAddLeg(swapName, legName4);
+				std::string legName3          = validation::tryAqObjectsLegCreate("thirdLeg", thirdLegLVB);
+				std::string legName4          = validation::tryAqObjectsLegCreate("fourLeg", fourthLegLVB);
+				validation::tryAqObjectsSwapAddLeg(swapName, legName3);
+				validation::tryAqObjectsSwapAddLeg(swapName, legName4);
 
 				auto swap = etrading::getSwap(swapName);
 
@@ -277,7 +277,7 @@ namespace google_test
                 //AQLStringMatrix curveCollectionLVB = parRateInputFile["curveCollections"];
                 //AQLStringMatrix fixingTableLVB     = parRateInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
 
-				validation::tryMeLWOSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
+				validation::tryAqObjectsSwapParRate( swapName, curveCollectionLVB, fixingTableLVB );
 
 				EXPECT_EQ(etrading::TRUE_BOOL, swap->getLeg(1)->getStaticData()->getFwdInter());
 				EXPECT_EQ(etrading::FALSE_BOOL, swap->getLeg(2)->getStaticData()->getFwdInter()); 

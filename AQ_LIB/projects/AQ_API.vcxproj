@@ -622,7 +622,7 @@
     <ClInclude Include="..\src\AQ_API\source\BondUtilities.h" />
     <ClInclude Include="..\src\AQ_API\source\exposed_functions.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCurvesResults.h" />
-    <ClInclude Include="..\src\AQ_API\source\meLWOCredit.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqObjectsCredit.h" />
     <ClInclude Include="..\src\AQ_API\source\aqBondsCurve.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCurvesCalibrateBasis.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCurvesCalibrateFXForwards.h" />
@@ -638,13 +638,13 @@
     <ClInclude Include="..\src\AQ_API\source\aqDatesCentralBank.h" />
     <ClInclude Include="..\src\AQ_API\source\aqDatesIMM.h" />
     <ClInclude Include="..\src\AQ_API\source\aqCurvesDualBootstrap.h" />
-    <ClInclude Include="..\src\AQ_API\source\meLWO.h" />
-    <ClInclude Include="..\src\AQ_API\source\meLWOBondCreate.h" />
-    <ClInclude Include="..\src\AQ_API\source\meLWOBondPrice.h" />
-    <ClInclude Include="..\src\AQ_API\source\meLWOCurve.h" />
-    <ClInclude Include="..\src\AQ_API\source\meLWOGrids.h" />
-    <ClInclude Include="..\src\AQ_API\source\meLWOSwapCreate.h" />
-    <ClInclude Include="..\src\AQ_API\source\meLWOSwapPrice.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqObjects.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqObjectsBondCreate.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqObjectsBondPrice.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqObjectsCurve.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqObjectsGrids.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqObjectsSwapCreate.h" />
+    <ClInclude Include="..\src\AQ_API\source\aqObjectsSwapPrice.h" />
     <ClInclude Include="..\src\AQ_API\source\aqAssetSwapSpread.h" />
     <ClInclude Include="..\src\AQ_API\source\aqOISParRate.h" />
     <ClInclude Include="..\src\AQ_API\source\aqOISPV.h" />
@@ -710,13 +710,13 @@
     <ClCompile Include="..\src\AQ_API\source\aqDatesCentralBank.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqDatesIMM.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqCurvesDualBootstrap.cpp" />
-    <ClCompile Include="..\src\AQ_API\source\meLWO.cpp" />
-    <ClCompile Include="..\src\AQ_API\source\meLWOBondCreate.cpp" />
-    <ClCompile Include="..\src\AQ_API\source\meLWOBondPrice.cpp" />
-    <ClCompile Include="..\src\AQ_API\source\meLWOCredit.cpp" />
-    <ClCompile Include="..\src\AQ_API\source\meLWOCurve.cpp" />
-    <ClCompile Include="..\src\AQ_API\source\meLWOSwapCreate.cpp" />
-    <ClCompile Include="..\src\AQ_API\source\meLWOSwapPrice.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqObjects.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqObjectsBondCreate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqObjectsBondPrice.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqObjectsCredit.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqObjectsCurve.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqObjectsSwapCreate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqObjectsSwapPrice.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqAssetSwapSpread.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqOISParRate.cpp" />
     <ClCompile Include="..\src\AQ_API\source\aqOISPV.cpp" />
@@ -760,7 +760,7 @@
     <ClCompile Include="..\src\AQ_API\source\mirSwapPV01.cpp" />
     <ClCompile Include="..\src\AQ_API\source\mirSwapSchedule.cpp" />
     <ClCompile Include="..\src\AQ_API\source\mirSwapStubRate.cpp" />
-    <ClCompile Include="..\src\AQ_API\source\meLWOGrids.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\aqObjectsGrids.cpp" />
     <ClCompile Include="..\src\AQ_API\source\swig_CSharp_wrap.cxx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>

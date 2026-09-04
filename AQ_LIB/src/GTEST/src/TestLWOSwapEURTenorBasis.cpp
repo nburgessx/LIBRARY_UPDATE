@@ -1,7 +1,7 @@
 // TestLWOSwapEURTenorBasis.cpp
 
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
 
 #include "Dependency.h"
 #include "ReadDataFile.h"
@@ -79,12 +79,12 @@ namespace google_test
                 AQLString inputFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load inputFile( inputFilename );
 
-                // Read the input file into the tryMeLWOSwapCreateFromLegLVBs
+                // Read the input file into the tryAqObjectsSwapCreateFromLegLVBs
                 std::string swapName            = inputFile["swapName"];
                 AQLStringMatrix leg1LVB            = inputFile["leg1LVB"];
                 AQLStringMatrix leg2LVB            = inputFile["leg2LVB"];
                 bool validateKeys               = inputFile["validateKeys"];
-	            std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
+	            std::string localResult         = validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
 
                 // Load the output file and the result                   
                 AQLString outputFilename = CreateDataFile::makeFilename( tenorBasisSwapOutputs, "_tryMeLWOSwapCreateFromLegLVBs_outputs", i ); // Append the Index and Suffix to test file name
@@ -124,20 +124,20 @@ namespace google_test
                 AQLString createSwapFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load createSwapFile( createSwapFilename );
 
-                    // Read the input file into the tryMeLWOSwapCreateFromLegLVBs
+                    // Read the input file into the tryAqObjectsSwapCreateFromLegLVBs
                     std::string swapName            = createSwapFile["swapName"];
                     AQLStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
                     AQLStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
                     bool validateKeys               = createSwapFile["validateKeys"];
-	                std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
+	                std::string localResult         = validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
                 
                 // 2. Price the Swap
                  AQLString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapPV_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load swapPVFile( SwapPVFilename );
 
-                    // Read the input file into the tryMeLWOSwapPV
+                    // Read the input file into the tryAqObjectsSwapPV
                     std::string swapObjectName      = swapPVFile["swapName"];
-                    double localSwapPV              = validation::tryMeLWOSwapPV( swapObjectName, etrading::fromStringToLVB("EURYC") );
+                    double localSwapPV              = validation::tryAqObjectsSwapPV( swapObjectName, etrading::fromStringToLVB("EURYC") );
                 
                 // 3. Load the Tenor Basis Spread Results File and Compare against the Local Spread                   
                 const double tolerance = 1e-02;  // Notional of test trades is 1MM
@@ -178,20 +178,20 @@ namespace google_test
                 AQLString createSwapFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load createSwapFile( createSwapFilename );
 
-                    // Read the input file into the tryMeLWOSwapCreateFromLegLVBs
+                    // Read the input file into the tryAqObjectsSwapCreateFromLegLVBs
                     std::string swapName            = createSwapFile["swapName"];
                     AQLStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
                     AQLStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
                     bool validateKeys               = createSwapFile["validateKeys"];
-	                std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
+	                std::string localResult         = validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
                 
                 // 2. Price the Swap
                  AQLString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapSpread_inputs", i ); // Append the Index and Suffix to test file name
                 const ReadDataFile::Load swapPVFile( SwapPVFilename );
 
-                    // Read the input file into the tryMeLWOSwapSpread
+                    // Read the input file into the tryAqObjectsSwapSpread
                     std::string swapObjectName      = swapPVFile["swapName"];
-                    double localBasisSpread         = validation::tryMeLWOSwapSpread( swapObjectName, etrading::fromStringToLVB("EURYC"));
+                    double localBasisSpread         = validation::tryAqObjectsSwapSpread( swapObjectName, etrading::fromStringToLVB("EURYC"));
                 
                 // 3. Load the Swap Spread Results File and Compare against the Local spread
                 const double tolerance = 1e-007;

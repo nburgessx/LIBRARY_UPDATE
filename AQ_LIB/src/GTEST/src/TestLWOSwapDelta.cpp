@@ -5,12 +5,12 @@
 #include "TryAqCurvesXccyBasis.h"
 
 // Swap Creation and Pricing
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
 
 // Risk calculation
-#include "tryMeLWOSwapDelta.h"
-#include "tryMeLWOFixingTable.h"
+#include "tryAqObjectsSwapDelta.h"
+#include "tryAqObjectsFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!
@@ -95,7 +95,7 @@ namespace
 		// Swap Generator
         const ReadDataFile::Load swapGeneratorInputFile( swapGeneratorInputs );
 		AQLStringMatrix swapGeneratorLVB = swapGeneratorInputFile[ "swapGeneratorLVB" ];
-		std::string swapGeneratorName = validation::tryMeLWOSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
+		std::string swapGeneratorName = validation::tryAqObjectsSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
 
 		// Swap
 		const ReadDataFile::Load swapInputFile( swapInputs );
@@ -104,7 +104,7 @@ namespace
 		AQLStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
-		return validation::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		return validation::tryAqObjectsSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 
 	std::string helperCreateSwapFromLegLVBs( const char* swapInputs )
@@ -116,7 +116,7 @@ namespace
 		AQLStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
-		return validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1Lvb, leg2Lvb, swapProperties, isXccySwap, validateKeys );
+		return validation::tryAqObjectsSwapCreateFromLegLVBs( swapName, leg1Lvb, leg2Lvb, swapProperties, isXccySwap, validateKeys );
 	};
 
 	std::string createSwapFromDataFile( const char* swapInputs )
@@ -127,7 +127,7 @@ namespace
 		AQLStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
-		return validation::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
+		return validation::tryAqObjectsSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
 	};
 }
 
@@ -168,7 +168,7 @@ namespace google_test
 
 		AQLStringVector legNames;
 		DoubleVector deltas;
-		validation::tryMeLWOSwapDelta( legNames,
+		validation::tryAqObjectsSwapDelta( legNames,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -238,7 +238,7 @@ namespace google_test
 		std::vector< boost::gregorian::date > fixingDates = fixingTableFile[ "fixingDates" ];
 		DoubleVector fixingValues = fixingTableFile[ "fixingValues" ];
 		
-		std::string fixingTableLeg1 = validation::tryMeLWOFixingTableCreate( tableName, currency, tenor, fixingDates, fixingValues );
+		std::string fixingTableLeg1 = validation::tryAqObjectsFixingTableCreate( tableName, currency, tenor, fixingDates, fixingValues );
 		
 		const ReadDataFile::Load flatShiftDelta( flatShiftDeltaInputs_irs );
 		AQLStringVector swapNames					= flatShiftDelta[ "swapNames" ];
@@ -256,7 +256,7 @@ namespace google_test
 
 		AQLStringVector legNames;
 		DoubleVector deltas;
-		validation::tryMeLWOSwapDelta( legNames,
+		validation::tryAqObjectsSwapDelta( legNames,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -314,7 +314,7 @@ namespace google_test
 			// 2. Now recalculate the risk by SWAP
 			DoubleVector deltaBySwap;
 			AQLString groupRiskBySwap = "SWAP";
-			validation::tryMeLWOSwapDelta( legNames,
+			validation::tryAqObjectsSwapDelta( legNames,
 											   deltaBySwap,
 											   swapNames,
 											   curveCollectionNames,
@@ -336,7 +336,7 @@ namespace google_test
 			// As this is a single trade, this will match the SWAP level delta
 			DoubleVector deltaByTotal;
 			AQLString groupRiskByTotal = "TOTAL";
-			validation::tryMeLWOSwapDelta( legNames,
+			validation::tryAqObjectsSwapDelta( legNames,
 											   deltaByTotal,
 											   swapNames,
 											   curveCollectionNames,
@@ -381,7 +381,7 @@ namespace google_test
 
 		AQLStringVector legNames;
 		DoubleVector deltas;
-		validation::tryMeLWOSwapDelta( legNames,
+		validation::tryAqObjectsSwapDelta( legNames,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -455,7 +455,7 @@ namespace google_test
 
 		AQLStringVector legNames;
 		DoubleVector deltas;
-		validation::tryMeLWOSwapDelta( legNames,
+		validation::tryAqObjectsSwapDelta( legNames,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -537,7 +537,7 @@ namespace google_test
 
 		AQLStringVector legNames;
 		DoubleVector deltas;
-		validation::tryMeLWOSwapDelta( legNames,
+		validation::tryAqObjectsSwapDelta( legNames,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -621,8 +621,8 @@ namespace google_test
 
 		AQLStringVector positionIDs;
 		DoubleVector deltas;
-		// The DV01 is actually calculated by the tryMeLWOSwapDelta function
-		validation::tryMeLWOSwapDelta( positionIDs,
+		// The DV01 is actually calculated by the tryAqObjectsSwapDelta function
+		validation::tryAqObjectsSwapDelta( positionIDs,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -707,7 +707,7 @@ namespace google_test
 		AQLStringVector pillarNames;
 		AQLStringVector headers;
 		DoubleMatrix deltas;
-		validation::tryMeLWOSwapDeltaLadder(headers,
+		validation::tryAqObjectsSwapDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,

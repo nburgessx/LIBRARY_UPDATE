@@ -1,14 +1,14 @@
 // Curves
-#include "tryMeLWOCurveMarketData.h"
-#include "tryMeLWOCurveDualBootstrap.h"
+#include "tryAqObjectsCurveMarketData.h"
+#include "tryAqObjectsCurveDualBootstrap.h"
 
 // Swap Creation and Pricing
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
 
 // Risk calculation
-#include "tryMeLWOSwapDelta.h"
-#include "tryMeLWOFixingTable.h"
+#include "tryAqObjectsSwapDelta.h"
+#include "tryAqObjectsFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!
@@ -60,7 +60,7 @@ namespace
 		std::string oisCurveMarketObjectHandle = google_test::createLWOMarketDataObjectFromFileName(oisCurveMarketDataFile);
 		std::string stdCurveMarketObjectHandle = google_test::createLWOMarketDataObjectFromFileName(stdCurveMarketDataFile);
 
-		validation::tryMeLWOCurveDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
+		validation::tryAqObjectsCurveDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
 	}
 
 }
@@ -87,7 +87,7 @@ namespace google_test
 			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildDualBootstrapCurves(ccy, prefix, "EUR_SWAP_3M", "EUR_OIS", "EURYC");
 
-			// Load inputs to meLWOSwapDDeltaLadder
+			// Load inputs to aqObjectsSwapDDeltaLadder
 			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
@@ -111,7 +111,7 @@ namespace google_test
             // Dummy Xccy FX Spot Rates
             DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 
-			validation::tryMeLWOSwapDeltaLadder(headers,
+			validation::tryAqObjectsSwapDeltaLadder(headers,
 													pillarNames,
 													deltas,
 													swapNames,
@@ -154,7 +154,7 @@ namespace google_test
 			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildDualBootstrapCurves(ccy, prefix, "USD_SWAP_3M", "USD_OIS", "USDYC");
 
-			// Load inputs to meLWOSwapDDeltaLadder
+			// Load inputs to aqObjectsSwapDDeltaLadder
 			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
@@ -178,7 +178,7 @@ namespace google_test
             // Dummy Xccy FX Spot Rates
             DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 			
-            validation::tryMeLWOSwapDeltaLadder(headers,
+            validation::tryAqObjectsSwapDeltaLadder(headers,
 													pillarNames,
 													deltas,
 													swapNames,

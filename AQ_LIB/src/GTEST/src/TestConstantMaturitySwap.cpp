@@ -16,13 +16,13 @@
 #include "CurveOis.h"
 
 // "me" API
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsSwapPricing.h"
 
 
 // "Generator" API
-#include "tryMeLWOCurveMarketData.h"
-#include "tryMeLWOCurveCalibrate.h"
-#include "tryMeLWOSwapCreation.h"
+#include "tryAqObjectsCurveMarketData.h"
+#include "tryAqObjectsCurveCalibrate.h"
+#include "tryAqObjectsSwapCreation.h"
 
 
 using etrading::ReadDataFile;
@@ -70,7 +70,7 @@ namespace
 	const char CMS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryMeLWOConstantMaturitySwapParRateUsingConvexityAdjustment_outputs.csv";
 
 	
-	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
+	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
 	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
@@ -84,7 +84,7 @@ namespace
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjectsCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -108,7 +108,7 @@ namespace
 		const bool isXccySwap					= constantMaturitySwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= constantMaturitySwapFileObj[ "validateKeys" ];
 		
-		validation::tryMeLWOSwapCreateFromGenerator( swapName, lwoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		validation::tryAqObjectsSwapCreateFromGenerator( swapName, lwoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 }
 
@@ -134,7 +134,7 @@ namespace google_test
 		const double convexityAdjustment	= PVFileObj[ "convexityAdjustment" ];
 		std::string legName					= PVFileObj[ "legName"];
 
-		const double calculatedPV = validation::tryMeLWOConstantMaturitySwapPVUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment, legName.c_str() );
+		const double calculatedPV = validation::tryAqObjectsConstantMaturitySwapPVUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		const double pvTolerance = 10.0;  // Notional of 1MM. We can afford a slightly wider tolerance which allows 64bit test to pass.
@@ -156,7 +156,7 @@ namespace google_test
 		AQLStringMatrix curveCollections		= parRateFileObj[ "curveCollections" ];
 		const double convexityAdjustment	= parRateFileObj[ "convexityAdjustment" ];
 
-		const double calculatedParRate = validation::tryMeLWOConstantMaturitySwapParRateUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment );
+		const double calculatedParRate = validation::tryAqObjectsConstantMaturitySwapParRateUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedParRate, TEST_DIR, CMS_EXPECTED_PAR_RATE, tolerance );

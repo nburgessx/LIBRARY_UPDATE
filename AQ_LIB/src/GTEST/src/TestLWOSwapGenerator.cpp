@@ -4,7 +4,7 @@
 #include "ReadDataFile.h"
 #include "AQLCoreError.h"
 #include "InitializeETrading.h"
-#include "tryMeLWOSwapCreation.h"
+#include "tryAqObjectsSwapCreation.h"
 
 #include <gTest/gTest.h>
 using etrading::ReadDataFile;
@@ -37,7 +37,7 @@ namespace google_test
         bool validateKeys                                   = inputFile["validateKeys"];
         
         // Create Swap
-        std::string swapNameResult = validation::tryMeLWOSwapCreateFromGenerator( swapName,
+        std::string swapNameResult = validation::tryAqObjectsSwapCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock(expressionLVB),
                                                                                       etrading::LabelValueBlock(swapPropertiesLVB),
@@ -64,14 +64,14 @@ namespace google_test
         bool validateKeys                                   = inputFile["validateKeys"];
         
         // Create Swap
-        std::string swapNameResult = validation::tryMeLWOSwapCreateFromGenerator( swapName,
+        std::string swapNameResult = validation::tryAqObjectsSwapCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock(expressionLVB),
                                                                                       etrading::LabelValueBlock(swapPropertiesLVB),
                                                                                       isXccySwap,
                                                                                       validateKeys );
 
-        swapNameResult = validation::tryMeLWOSwapCreateFromGenerator( swapName,
+        swapNameResult = validation::tryAqObjectsSwapCreateFromGenerator( swapName,
                                                                           swapGeneratorName,
                                                                           etrading::LabelValueBlock(expressionLVB),
                                                                           etrading::LabelValueBlock(swapPropertiesLVB),

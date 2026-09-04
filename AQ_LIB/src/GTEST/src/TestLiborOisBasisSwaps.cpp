@@ -5,8 +5,8 @@
 #include "ReadDataFile.h"
 #include "GetGoogleTestFolder.h"
 #include "ResultsProcessor.h"
-#include "tryMeLWO.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjects.h"
+#include "tryAqObjectsSwapPricing.h"
 
 namespace
 {
@@ -34,35 +34,35 @@ namespace google_test
     TEST_F( TestLiborOisSwaps, CONSISTENCY_CheckLiborOisSwapsReprice_USD )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation::tryMeLWOLoad( OIScurveUSD, etrading::JSON );
-        const std::string curveUSD3ML   = validation::tryMeLWOLoad( STDcurveUSD, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryAqObjectsLoad( OIScurveUSD, etrading::JSON );
+        const std::string curveUSD3ML   = validation::tryAqObjectsLoad( STDcurveUSD, etrading::JSON );
 
         // Load Libor-OIS Swap Trades
-        const std::string liborOis1     = validation::tryMeLWOLoad( liborOISTradeUSD + "1.JSON" , etrading::JSON );
-        const std::string liborOis2     = validation::tryMeLWOLoad( liborOISTradeUSD + "2.JSON" , etrading::JSON );
-        const std::string liborOis3     = validation::tryMeLWOLoad( liborOISTradeUSD + "3.JSON" , etrading::JSON );
-        const std::string liborOis4     = validation::tryMeLWOLoad( liborOISTradeUSD + "4.JSON" , etrading::JSON );
-        const std::string liborOis5     = validation::tryMeLWOLoad( liborOISTradeUSD + "5.JSON" , etrading::JSON );
-        const std::string liborOis6     = validation::tryMeLWOLoad( liborOISTradeUSD + "6.JSON" , etrading::JSON );
-        const std::string liborOis7     = validation::tryMeLWOLoad( liborOISTradeUSD + "7.JSON" , etrading::JSON );
-        const std::string liborOis8     = validation::tryMeLWOLoad( liborOISTradeUSD + "8.JSON" , etrading::JSON );
-        const std::string liborOis9     = validation::tryMeLWOLoad( liborOISTradeUSD + "9.JSON" , etrading::JSON );
-        const std::string liborOis10    = validation::tryMeLWOLoad( liborOISTradeUSD + "10.JSON", etrading::JSON );
+        const std::string liborOis1     = validation::tryAqObjectsLoad( liborOISTradeUSD + "1.JSON" , etrading::JSON );
+        const std::string liborOis2     = validation::tryAqObjectsLoad( liborOISTradeUSD + "2.JSON" , etrading::JSON );
+        const std::string liborOis3     = validation::tryAqObjectsLoad( liborOISTradeUSD + "3.JSON" , etrading::JSON );
+        const std::string liborOis4     = validation::tryAqObjectsLoad( liborOISTradeUSD + "4.JSON" , etrading::JSON );
+        const std::string liborOis5     = validation::tryAqObjectsLoad( liborOISTradeUSD + "5.JSON" , etrading::JSON );
+        const std::string liborOis6     = validation::tryAqObjectsLoad( liborOISTradeUSD + "6.JSON" , etrading::JSON );
+        const std::string liborOis7     = validation::tryAqObjectsLoad( liborOISTradeUSD + "7.JSON" , etrading::JSON );
+        const std::string liborOis8     = validation::tryAqObjectsLoad( liborOISTradeUSD + "8.JSON" , etrading::JSON );
+        const std::string liborOis9     = validation::tryAqObjectsLoad( liborOISTradeUSD + "9.JSON" , etrading::JSON );
+        const std::string liborOis10    = validation::tryAqObjectsLoad( liborOISTradeUSD + "10.JSON", etrading::JSON );
         
         // Valuation Settings LVB
         LabelValueBlock valuationSettings = LabelValueBlock::createLabelValueBlock( "CURVECOLLECTION", "USDYC" );
 
         // Get Par Spreads
-        const double result1            = validation::tryMeLWOSwapParSpread( liborOis1,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result2            = validation::tryMeLWOSwapParSpread( liborOis2,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result3            = validation::tryMeLWOSwapParSpread( liborOis3,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result4            = validation::tryMeLWOSwapParSpread( liborOis4,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result5            = validation::tryMeLWOSwapParSpread( liborOis5,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result6            = validation::tryMeLWOSwapParSpread( liborOis6,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result7            = validation::tryMeLWOSwapParSpread( liborOis7,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result8            = validation::tryMeLWOSwapParSpread( liborOis8,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result9            = validation::tryMeLWOSwapParSpread( liborOis9,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result10           = validation::tryMeLWOSwapParSpread( liborOis10, valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result1            = validation::tryAqObjectsSwapParSpread( liborOis1,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result2            = validation::tryAqObjectsSwapParSpread( liborOis2,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result3            = validation::tryAqObjectsSwapParSpread( liborOis3,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result4            = validation::tryAqObjectsSwapParSpread( liborOis4,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result5            = validation::tryAqObjectsSwapParSpread( liborOis5,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result6            = validation::tryAqObjectsSwapParSpread( liborOis6,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result7            = validation::tryAqObjectsSwapParSpread( liborOis7,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result8            = validation::tryAqObjectsSwapParSpread( liborOis8,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result9            = validation::tryAqObjectsSwapParSpread( liborOis9,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result10           = validation::tryAqObjectsSwapParSpread( liborOis10, valuationSettings, LabelValueBlock(), "Leg1:Float" );
         
         // Compare against Hard Coded Par Rates used in curve calibration instruments
         // These results should never be rebased, since this is a curve calibration arbitrage and consistency test
@@ -83,47 +83,47 @@ namespace google_test
     TEST_F( TestLiborOisSwaps, CONSISTENCY_CheckLiborOisSwapsReprice_EUR )
     {
         // Load Curves
-        const std::string curveEUROIS   = validation::tryMeLWOLoad( OIScurveEUR, etrading::JSON );
-        const std::string curveEUR3ML   = validation::tryMeLWOLoad( STDcurveEUR, etrading::JSON );
+        const std::string curveEUROIS   = validation::tryAqObjectsLoad( OIScurveEUR, etrading::JSON );
+        const std::string curveEUR3ML   = validation::tryAqObjectsLoad( STDcurveEUR, etrading::JSON );
 
         // Load Libor-OIS Swap Trades
-        const std::string liborOis1     = validation::tryMeLWOLoad( liborOISTradeEUR + "1.JSON" , etrading::JSON );
-        const std::string liborOis2     = validation::tryMeLWOLoad( liborOISTradeEUR + "2.JSON" , etrading::JSON );
-        const std::string liborOis3     = validation::tryMeLWOLoad( liborOISTradeEUR + "3.JSON" , etrading::JSON );
-        const std::string liborOis4     = validation::tryMeLWOLoad( liborOISTradeEUR + "4.JSON" , etrading::JSON );
-        const std::string liborOis5     = validation::tryMeLWOLoad( liborOISTradeEUR + "5.JSON" , etrading::JSON );
-        const std::string liborOis6     = validation::tryMeLWOLoad( liborOISTradeEUR + "6.JSON" , etrading::JSON );
-        const std::string liborOis7     = validation::tryMeLWOLoad( liborOISTradeEUR + "7.JSON" , etrading::JSON );
-        const std::string liborOis8     = validation::tryMeLWOLoad( liborOISTradeEUR + "8.JSON" , etrading::JSON );
-        const std::string liborOis9     = validation::tryMeLWOLoad( liborOISTradeEUR + "9.JSON" , etrading::JSON );
-        const std::string liborOis10    = validation::tryMeLWOLoad( liborOISTradeEUR + "10.JSON", etrading::JSON );
-        const std::string liborOis11    = validation::tryMeLWOLoad( liborOISTradeEUR + "11.JSON", etrading::JSON );
-        const std::string liborOis12    = validation::tryMeLWOLoad( liborOISTradeEUR + "12.JSON", etrading::JSON );
-        const std::string liborOis13    = validation::tryMeLWOLoad( liborOISTradeEUR + "13.JSON", etrading::JSON );
-        const std::string liborOis14    = validation::tryMeLWOLoad( liborOISTradeEUR + "14.JSON", etrading::JSON );
-        const std::string liborOis15    = validation::tryMeLWOLoad( liborOISTradeEUR + "15.JSON", etrading::JSON );
-        const std::string liborOis16    = validation::tryMeLWOLoad( liborOISTradeEUR + "16.JSON", etrading::JSON );
+        const std::string liborOis1     = validation::tryAqObjectsLoad( liborOISTradeEUR + "1.JSON" , etrading::JSON );
+        const std::string liborOis2     = validation::tryAqObjectsLoad( liborOISTradeEUR + "2.JSON" , etrading::JSON );
+        const std::string liborOis3     = validation::tryAqObjectsLoad( liborOISTradeEUR + "3.JSON" , etrading::JSON );
+        const std::string liborOis4     = validation::tryAqObjectsLoad( liborOISTradeEUR + "4.JSON" , etrading::JSON );
+        const std::string liborOis5     = validation::tryAqObjectsLoad( liborOISTradeEUR + "5.JSON" , etrading::JSON );
+        const std::string liborOis6     = validation::tryAqObjectsLoad( liborOISTradeEUR + "6.JSON" , etrading::JSON );
+        const std::string liborOis7     = validation::tryAqObjectsLoad( liborOISTradeEUR + "7.JSON" , etrading::JSON );
+        const std::string liborOis8     = validation::tryAqObjectsLoad( liborOISTradeEUR + "8.JSON" , etrading::JSON );
+        const std::string liborOis9     = validation::tryAqObjectsLoad( liborOISTradeEUR + "9.JSON" , etrading::JSON );
+        const std::string liborOis10    = validation::tryAqObjectsLoad( liborOISTradeEUR + "10.JSON", etrading::JSON );
+        const std::string liborOis11    = validation::tryAqObjectsLoad( liborOISTradeEUR + "11.JSON", etrading::JSON );
+        const std::string liborOis12    = validation::tryAqObjectsLoad( liborOISTradeEUR + "12.JSON", etrading::JSON );
+        const std::string liborOis13    = validation::tryAqObjectsLoad( liborOISTradeEUR + "13.JSON", etrading::JSON );
+        const std::string liborOis14    = validation::tryAqObjectsLoad( liborOISTradeEUR + "14.JSON", etrading::JSON );
+        const std::string liborOis15    = validation::tryAqObjectsLoad( liborOISTradeEUR + "15.JSON", etrading::JSON );
+        const std::string liborOis16    = validation::tryAqObjectsLoad( liborOISTradeEUR + "16.JSON", etrading::JSON );
         
         // Valuation Settings LVB
         LabelValueBlock valuationSettings = LabelValueBlock::createLabelValueBlock( "CURVECOLLECTION", "EURYC" );
 
         // Get Par Spreads
-        const double result1            = validation::tryMeLWOSwapParSpread( liborOis1,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result2            = validation::tryMeLWOSwapParSpread( liborOis2,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result3            = validation::tryMeLWOSwapParSpread( liborOis3,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result4            = validation::tryMeLWOSwapParSpread( liborOis4,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result5            = validation::tryMeLWOSwapParSpread( liborOis5,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result6            = validation::tryMeLWOSwapParSpread( liborOis6,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result7            = validation::tryMeLWOSwapParSpread( liborOis7,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result8            = validation::tryMeLWOSwapParSpread( liborOis8,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result9            = validation::tryMeLWOSwapParSpread( liborOis9,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result10           = validation::tryMeLWOSwapParSpread( liborOis10, valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result11           = validation::tryMeLWOSwapParSpread( liborOis11, valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result12           = validation::tryMeLWOSwapParSpread( liborOis12, valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result13           = validation::tryMeLWOSwapParSpread( liborOis13, valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result14           = validation::tryMeLWOSwapParSpread( liborOis14, valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result15           = validation::tryMeLWOSwapParSpread( liborOis15, valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result16           = validation::tryMeLWOSwapParSpread( liborOis16, valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result1            = validation::tryAqObjectsSwapParSpread( liborOis1,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result2            = validation::tryAqObjectsSwapParSpread( liborOis2,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result3            = validation::tryAqObjectsSwapParSpread( liborOis3,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result4            = validation::tryAqObjectsSwapParSpread( liborOis4,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result5            = validation::tryAqObjectsSwapParSpread( liborOis5,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result6            = validation::tryAqObjectsSwapParSpread( liborOis6,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result7            = validation::tryAqObjectsSwapParSpread( liborOis7,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result8            = validation::tryAqObjectsSwapParSpread( liborOis8,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result9            = validation::tryAqObjectsSwapParSpread( liborOis9,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result10           = validation::tryAqObjectsSwapParSpread( liborOis10, valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result11           = validation::tryAqObjectsSwapParSpread( liborOis11, valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result12           = validation::tryAqObjectsSwapParSpread( liborOis12, valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result13           = validation::tryAqObjectsSwapParSpread( liborOis13, valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result14           = validation::tryAqObjectsSwapParSpread( liborOis14, valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result15           = validation::tryAqObjectsSwapParSpread( liborOis15, valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result16           = validation::tryAqObjectsSwapParSpread( liborOis16, valuationSettings, LabelValueBlock(), "Leg1:Float" );
         
         // Compare against Hard Coded Par Rates used in curve calibration instruments
         // These results should never be rebased, since this is a curve calibration arbitrage and consistency test
@@ -150,31 +150,31 @@ namespace google_test
     TEST_F( TestLiborOisSwaps, CONSISTENCY_CheckLiborOisSwapsReprice_GBP )
     {
         // Load Curves
-        const std::string curveGBPOIS   = validation::tryMeLWOLoad( OIScurveGBP, etrading::JSON );
-        const std::string curveGBP3ML   = validation::tryMeLWOLoad( STDcurveGBP, etrading::JSON );
+        const std::string curveGBPOIS   = validation::tryAqObjectsLoad( OIScurveGBP, etrading::JSON );
+        const std::string curveGBP3ML   = validation::tryAqObjectsLoad( STDcurveGBP, etrading::JSON );
 
         // Load Libor-OIS Swap Trades
-        const std::string liborOis1     = validation::tryMeLWOLoad( liborOISTradeGBP + "1.JSON" , etrading::JSON );
-        const std::string liborOis2     = validation::tryMeLWOLoad( liborOISTradeGBP + "2.JSON" , etrading::JSON );
-        const std::string liborOis3     = validation::tryMeLWOLoad( liborOISTradeGBP + "3.JSON" , etrading::JSON );
-        const std::string liborOis4     = validation::tryMeLWOLoad( liborOISTradeGBP + "4.JSON" , etrading::JSON );
-        const std::string liborOis5     = validation::tryMeLWOLoad( liborOISTradeGBP + "5.JSON" , etrading::JSON );
-        const std::string liborOis6     = validation::tryMeLWOLoad( liborOISTradeGBP + "6.JSON" , etrading::JSON );
-        const std::string liborOis7     = validation::tryMeLWOLoad( liborOISTradeGBP + "7.JSON" , etrading::JSON );
-        const std::string liborOis8     = validation::tryMeLWOLoad( liborOISTradeGBP + "8.JSON" , etrading::JSON );
+        const std::string liborOis1     = validation::tryAqObjectsLoad( liborOISTradeGBP + "1.JSON" , etrading::JSON );
+        const std::string liborOis2     = validation::tryAqObjectsLoad( liborOISTradeGBP + "2.JSON" , etrading::JSON );
+        const std::string liborOis3     = validation::tryAqObjectsLoad( liborOISTradeGBP + "3.JSON" , etrading::JSON );
+        const std::string liborOis4     = validation::tryAqObjectsLoad( liborOISTradeGBP + "4.JSON" , etrading::JSON );
+        const std::string liborOis5     = validation::tryAqObjectsLoad( liborOISTradeGBP + "5.JSON" , etrading::JSON );
+        const std::string liborOis6     = validation::tryAqObjectsLoad( liborOISTradeGBP + "6.JSON" , etrading::JSON );
+        const std::string liborOis7     = validation::tryAqObjectsLoad( liborOISTradeGBP + "7.JSON" , etrading::JSON );
+        const std::string liborOis8     = validation::tryAqObjectsLoad( liborOISTradeGBP + "8.JSON" , etrading::JSON );
         
         // Valuation Settings LVB
         LabelValueBlock valuationSettings = LabelValueBlock::createLabelValueBlock( "CURVECOLLECTION", "GBPYC" );
 
         // Get Par Spreads
-        const double result1            = validation::tryMeLWOSwapParSpread( liborOis1,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result2            = validation::tryMeLWOSwapParSpread( liborOis2,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result3            = validation::tryMeLWOSwapParSpread( liborOis3,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result4            = validation::tryMeLWOSwapParSpread( liborOis4,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result5            = validation::tryMeLWOSwapParSpread( liborOis5,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result6            = validation::tryMeLWOSwapParSpread( liborOis6,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result7            = validation::tryMeLWOSwapParSpread( liborOis7,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
-        const double result8            = validation::tryMeLWOSwapParSpread( liborOis8,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result1            = validation::tryAqObjectsSwapParSpread( liborOis1,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result2            = validation::tryAqObjectsSwapParSpread( liborOis2,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result3            = validation::tryAqObjectsSwapParSpread( liborOis3,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result4            = validation::tryAqObjectsSwapParSpread( liborOis4,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result5            = validation::tryAqObjectsSwapParSpread( liborOis5,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result6            = validation::tryAqObjectsSwapParSpread( liborOis6,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result7            = validation::tryAqObjectsSwapParSpread( liborOis7,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
+        const double result8            = validation::tryAqObjectsSwapParSpread( liborOis8,  valuationSettings, LabelValueBlock(), "Leg1:Float" );
         
         // Compare against Hard Coded Par Rates used in curve calibration instruments
         // These results should never be rebased, since this is a curve calibration arbitrage and consistency test

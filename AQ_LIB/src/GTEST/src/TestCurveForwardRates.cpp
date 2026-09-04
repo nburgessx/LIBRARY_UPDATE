@@ -22,8 +22,8 @@
 #include "TryAqCurvesXccyBasis.h"
 
 // "Generator" API
-#include "tryMeLWOCurveMarketData.h"
-#include "tryMeLWOCurveCalibrate.h"
+#include "tryAqObjectsCurveMarketData.h"
+#include "tryAqObjectsCurveCalibrate.h"
 
 // Forward Rates Table
 #include "tryAqCurvesForwardRate.h"
@@ -159,7 +159,7 @@ namespace google_test
 {
 	DECLARE_TEST_FIXTURE(TestCurveGeneratorForwardRates);
 
-	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
+	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
 	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
@@ -173,7 +173,7 @@ namespace google_test
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjectsCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -254,7 +254,7 @@ namespace google_test
 		const AQLString rollConvention    = "NORMAL";
 		const AQLString frequency         = "Monthly";
 
-		validation::tryMeLWOCurveForwardRatesTable( fixingDates, forwardRates, curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency );
+		validation::tryAqObjectsCurveForwardRatesTable( fixingDates, forwardRates, curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency );
 	}
 
 	/* @brief			Check forward rate consistency between ME and Generator curves
@@ -272,7 +272,7 @@ namespace google_test
 		DoubleMatrix genForwardRates;
 		getForwardRatesForCollection( genCurveCollection, curveIndices, genFixingDates, genForwardRates );
 
-		// First some basic sanity checks on the result of calling tryMeLWOCurveForwardRatesTable()
+		// First some basic sanity checks on the result of calling tryAqObjectsCurveForwardRatesTable()
 		if ( aqRatesFixingDates.size() != genFixingDates.size() )
 		{
 			FAIL() << "meFixingDates has different number of dates to genFixingDates: " << aqRatesFixingDates.size() << " vs " << genFixingDates.size() << std::endl;

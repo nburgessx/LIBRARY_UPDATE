@@ -1,9 +1,9 @@
 // Curves
-#include "tryMeLWO.h"
+#include "tryAqObjects.h"
 
 // Risk calculation
-#include "tryMeLWOSwapDelta.h"
-#include "tryMeLWOFixingTable.h"
+#include "tryAqObjectsSwapDelta.h"
+#include "tryAqObjectsFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!
@@ -138,14 +138,14 @@ namespace google_test
 	TEST_F(TestLWOSwapARRDelta, RISK_Swap_DeltaLadder_SOFR )
 	{
 		// Load Curves
-		auto loadSOFR = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USDYC_SOFR, etrading::JSON);
-		auto loadOIS  = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USDYC_OIS, etrading::JSON);
+		auto loadSOFR = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USDYC_SOFR, etrading::JSON);
+		auto loadOIS  = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USDYC_OIS, etrading::JSON);
 
 		// load swap generator
-		auto loadSOFRSwapGenerator = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USD_SOFR_SWAP, etrading::JSON);
+		auto loadSOFRSwapGenerator = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USD_SOFR_SWAP, etrading::JSON);
 
 		// Load swap trade
-		auto loadSOFRSwap = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USD_SOFR_SWAP_5Y, etrading::JSON);
+		auto loadSOFRSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USD_SOFR_SWAP_5Y, etrading::JSON);
 
 		// Risk delta ladder config
 		const ReadDataFile::Load deltaLadder( fileName_deltaLadder_SOFR_Inputs );
@@ -164,7 +164,7 @@ namespace google_test
 		AQLStringVector pillarNames;
 		AQLStringVector headers;
 		DoubleMatrix deltas;
-		validation::tryMeLWOSwapDeltaLadder(headers,
+		validation::tryAqObjectsSwapDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,
@@ -185,14 +185,14 @@ namespace google_test
 	TEST_F(TestLWOSwapARRDelta, RISK_Swap_DeltaLadder_SOFR_OIS)
 	{
 		// Load Curves
-		auto loadSOFR = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USDYC_SOFR, etrading::JSON);
-		auto loadOIS = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USDYC_OIS, etrading::JSON);
+		auto loadSOFR = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USDYC_SOFR, etrading::JSON);
+		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USDYC_OIS, etrading::JSON);
 
 		// load swap generator
-		auto loadOISSwapGenerator = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USD_OIS_SWAP, etrading::JSON);
+		auto loadOISSwapGenerator = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USD_OIS_SWAP, etrading::JSON);
 
 		// Load swap trade
-		auto loadSOFRSwap = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USD_OIS_SWAP_5Y, etrading::JSON);
+		auto loadSOFRSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USD_OIS_SWAP_5Y, etrading::JSON);
 
 		// Risk delta ladder config
 		const ReadDataFile::Load deltaLadder(fileName_deltaLadder_OIS_Inputs);
@@ -211,7 +211,7 @@ namespace google_test
 		AQLStringVector pillarNames;
 		AQLStringVector headers;
 		DoubleMatrix deltas;
-		validation::tryMeLWOSwapDeltaLadder(headers,
+		validation::tryAqObjectsSwapDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,

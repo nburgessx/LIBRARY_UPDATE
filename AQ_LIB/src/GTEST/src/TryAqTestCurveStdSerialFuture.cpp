@@ -4,9 +4,9 @@
 
 #include "TryAqCurvesOis.h"
 #include "TryAqCurvesStd.h"
-#include "tryMeLWO.h"
+#include "tryAqObjects.h"
 #include "tryAqCurvesForwardRate.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsSwapPricing.h"
 
 #include <gTest/gTest.h>
 
@@ -127,12 +127,12 @@ namespace google_test
 		setUpAqOISCurve(Contiguous_USDYC_OIS);
 		setUpAqSTDCurve(Contiguous_USDYC_STD);
 
-		const std::string swapObjectName = validation::tryMeLWOLoad(SwapInput);
+		const std::string swapObjectName = validation::tryAqObjectsLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(Contiguous_SwapParRateInputs);
 		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryAqObjectsSwapParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, Contiguous_SwapParRateOutputs, tolerance);
 	}
@@ -143,12 +143,12 @@ namespace google_test
 		setUpAqOISCurve(SerialRate_USDYC_OIS);
 		setUpAqSTDCurve(SerialRate_USDYC_STD);
 
-		const std::string swapObjectName = validation::tryMeLWOLoad(SwapInput);
+		const std::string swapObjectName = validation::tryAqObjectsLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(SerialRate_SwapParRateInputs);
 		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryAqObjectsSwapParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, SerialRate_SwapParRateOutputs, tolerance);
 	}
@@ -159,12 +159,12 @@ namespace google_test
 		setUpAqOISCurve(SerialDF_USDYC_OIS);
 		setUpAqSTDCurve(SerialDF_USDYC_STD);
 
-		const std::string swapObjectName = validation::tryMeLWOLoad(SwapInput);
+		const std::string swapObjectName = validation::tryAqObjectsLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(SerialDF_SwapParRateInputs);
 		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryAqObjectsSwapParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, SerialDF_SwapParRateOutputs, tolerance);
 	}

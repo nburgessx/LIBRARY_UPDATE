@@ -481,7 +481,7 @@
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapGenerator.cpp">
       <Filter>src\etrading\Swaps\Swaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestMeLWOCurveCalibrate.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqObjectsCurveCalibrate.cpp">
       <Filter>src\etrading\Curves\AQOCurve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLiborOisBasisSwaps.cpp">

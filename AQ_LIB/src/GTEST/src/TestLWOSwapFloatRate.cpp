@@ -4,10 +4,10 @@
 #include "TryAqCurvesTenorBasis.h"
 
 // Swap Creation and Pricing
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
-#include "tryMeLWOFixingTable.h"
-#include "tryMeLWOLeg.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjectsFixingTable.h"
+#include "tryAqObjectsLeg.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -77,7 +77,7 @@ namespace google_test
 
         //Need to call a pricing function so that the discountFactors & floatRates are populated from the curve
 
-		validation::tryMeLWOSwapPV(swapName, etrading::fromStringToLVB("EURYC"), "", etrading::fromStringToLVB(dataProvider.getValuationSettings().getFixingTableName("", etrading::FLOAT_SCHEDULE_TYPE)));
+		validation::tryAqObjectsSwapPV(swapName, etrading::fromStringToLVB("EURYC"), "", etrading::fromStringToLVB(dataProvider.getValuationSettings().getFixingTableName("", etrading::FLOAT_SCHEDULE_TYPE)));
 
 		cachedSwap->getLeg(1)->initializeDataProvider( dataProvider);
 
@@ -111,7 +111,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryMeLWOFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqObjectsFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
 
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -120,7 +120,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 
 				etrading::DataProvider dataProvider = getDataProvider(fixingTableName);
 		
@@ -165,7 +165,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryMeLWOFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqObjectsFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
 
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -174,7 +174,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 
 				etrading::DataProvider dataProvider = getDataProvider(fixingTableName);
 				auto swap = getSwapFromCacheWithCurveDataPopulated(swapTradeName, dataProvider );
@@ -224,7 +224,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 				
 				etrading::DataProvider dataProvider = getDataProvider("");
 
@@ -263,7 +263,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryMeLWOFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqObjectsFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -272,7 +272,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 				
 				etrading::DataProvider dataProvider = getDataProvider(fixingTableName);
 				
@@ -318,7 +318,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryMeLWOFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqObjectsFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -327,7 +327,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 
 				etrading::DataProvider dataProvider = getDataProvider(fixingTableName);
 				
@@ -381,7 +381,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryMeLWOFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqObjectsFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -390,7 +390,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 				
 				etrading::DataProvider dataProvider = getDataProvider(fixingTableName);
 				
@@ -432,7 +432,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryMeLWOFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqObjectsFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -441,7 +441,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 				
 				etrading::DataProvider dataProvider = getDataProvider(fixingTableName);
 				
@@ -482,7 +482,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 				auto dataProvider = getDataProvider("");
 				auto swap = getSwapFromCacheWithCurveDataPopulated(swapTradeName, dataProvider);
 				double actualFirstCashflowFloatRate = dataProvider.getCashflowDataExcludingUpfront( 0 ).floatRateData.resetRate;
@@ -524,7 +524,7 @@ namespace google_test
                 auto fixingDates                = fixingTableInputFile["fixingDates"];
                 auto fixingValues               = fixingTableInputFile["fixingValues"];
 
-                std::string fixingTableName          = validation::tryMeLWOFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
+                std::string fixingTableName          = validation::tryAqObjectsFixingTableCreate( tableName, currency, curveTenor, fixingDates, fixingValues );
         
                 // Get the Trade Inputs & Create the Swap
                 std::string swapTradeName       = tradeInputFile["swapName"];
@@ -533,7 +533,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 				etrading::DataProvider dataProvider = getDataProvider(fixingTableName);
 				auto swap = getSwapFromCacheWithCurveDataPopulated(swapTradeName, dataProvider );
 				double actualFirstCashflowFloatRate = dataProvider.getCashflowDataExcludingUpfront( 0 ).floatRateData.resetRate;

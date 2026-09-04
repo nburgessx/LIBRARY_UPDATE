@@ -106,7 +106,7 @@
     <ClCompile Include="..\src\GTEST\src\TestLiborOisBasisSwaps.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaDualBootstrap.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestLWOSwapGenerator.cpp" />
-    <ClCompile Include="..\src\GTEST\src\TestMeLWOCurveCalibrate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAqObjectsCurveCalibrate.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestAqMathEuropeanIRSwaption.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestLeakChecker.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestLWOFra.cpp" />

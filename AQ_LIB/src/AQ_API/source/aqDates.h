@@ -96,7 +96,7 @@ double aqDatesYearFraction( const std::string& fromDate,
 						   const std::string& dayCount ); 
 
 
-/* @brief			swig interface for the meLWOSwapSpotDate method
+/* @brief			swig interface for the aqObjectsSwapSpotDate method
 *  @param [in]		asOfDate			The asOf- or valuation-date
 *  @param [in]		spotLag				The spot lag
 *  @param [in]		fixingCalendar		Fixing Calendar
@@ -105,7 +105,7 @@ double aqDatesYearFraction( const std::string& fromDate,
 *  @param [in]		rollConvention		Roll Convention
 *  @return			Swap Spot Date 
 */
-std::string meLWOSwapUSDSpotDate( const std::string & asOfDate,
+std::string aqObjectsSwapUSDSpotDate( const std::string & asOfDate,
 						          const std::string & spotLag,
 						          const std::string & fixingCalendar,
 						          const std::string & paymentCalendar,

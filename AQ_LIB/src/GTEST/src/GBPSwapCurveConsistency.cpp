@@ -17,9 +17,9 @@
 #include "GetGoogleTestFolder.h"
 #include "ResultsProcessor.h"
 #include "CoreEnumerations.h"
-#include "tryMeLWO.h"
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjects.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "DataUtilities.h" // AQ_TO_STRING macros
@@ -42,8 +42,8 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectGBPOIS_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameGBPOIS, etrading::JSON );
-        const std::string curveObjectGBP3ML_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameGBP3ML, etrading::JSON );
+        const std::string curveObjectGBPOIS_ = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameGBPOIS, etrading::JSON );
+        const std::string curveObjectGBP3ML_ = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameGBP3ML, etrading::JSON );
     };
 
     
@@ -80,7 +80,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180810", swapTerms[i] ); // Effective Date = 20180810
-            const double actualResult                    = validation::tryMeLWOSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqObjectsSwapParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

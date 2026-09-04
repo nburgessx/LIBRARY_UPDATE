@@ -12,9 +12,9 @@
 #include "ObjectUtilities.h"
 #include "CreateFixedBond.h"
 
-#include "tryMeLWO.h"
-#include "tryMeLWOAssetSwap.h"
-#include "tryMeLWOBond.h"
+#include "tryAqObjects.h"
+#include "tryAqObjectsAssetSwap.h"
+#include "tryAqObjectsBond.h"
 
 #include "CreateDataFile.h"
 
@@ -74,11 +74,11 @@ namespace google_test
 	TEST_F(TestBondRepo, SNAPSHOT_ForwardPrice)
 	{
 		// Load Bond
-		auto loadBond = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
+		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(forwardPrice_input.c_str());
 
-		auto actualResult = validation::tryMeLWOBondForwardPrice(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["forwardSettleDate"], inputFile["price"], inputFile["repoRate"], inputFile["repoDayCount"]);
+		auto actualResult = validation::tryAqObjectsBondForwardPrice(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["forwardSettleDate"], inputFile["price"], inputFile["repoRate"], inputFile["repoDayCount"]);
 
 		CheckTestResultsAndRebaseOnRequest(actualResult, TEST_DIR.c_str(), forwardPrice_output.c_str(), priceTolerance);
 
@@ -87,11 +87,11 @@ namespace google_test
 	TEST_F(TestBondRepo, SNAPSHOT_RepoRate)
 	{
 		// Load Bond
-		auto loadBond = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
+		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(repoRateFromForwardPrice_input.c_str());
 
-		auto actualResult = validation::tryMeLWOBondRepoRate(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["forwardSettleDate"], inputFile["price"], inputFile["forwardPrice"], inputFile["repoDayCount"]);
+		auto actualResult = validation::tryAqObjectsBondRepoRate(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["forwardSettleDate"], inputFile["price"], inputFile["forwardPrice"], inputFile["repoDayCount"]);
 
 		CheckTestResultsAndRebaseOnRequest(actualResult, TEST_DIR.c_str(), repoRateFromForwardPrice_output.c_str(), yieldTolerance);
 
@@ -100,11 +100,11 @@ namespace google_test
 	TEST_F(TestBondRepo, SNAPSHOT_FuturePrice)
 	{
 		// Load Bond
-		auto loadBond = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
+		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(futurePrice_input.c_str());
 
-		auto actualResult = validation::tryMeLWOBondFuturePrice(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["deliveryDate"], inputFile["bondPrice"], inputFile["repoRate"], inputFile["repoDayCount"], inputFile["conversionFactor"]);
+		auto actualResult = validation::tryAqObjectsBondFuturePrice(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["deliveryDate"], inputFile["bondPrice"], inputFile["repoRate"], inputFile["repoDayCount"], inputFile["conversionFactor"]);
 
 		CheckTestResultsAndRebaseOnRequest(actualResult, TEST_DIR.c_str(), futurePrice_output.c_str(), priceTolerance);
 
@@ -113,11 +113,11 @@ namespace google_test
 	TEST_F(TestBondRepo, SNAPSHOT_ImpliedRepo)
 	{
 		// Load Bond
-		auto loadBond = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
+		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(impliedRate_input.c_str());
 
-		auto actualResult = validation::tryMeLWOBondRepoRateFromFuture(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["deliveryDate"], inputFile["price"], inputFile["futurePrice"], inputFile["conversionFactor"], inputFile["repoDayCount"]);
+		auto actualResult = validation::tryAqObjectsBondRepoRateFromFuture(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["deliveryDate"], inputFile["price"], inputFile["futurePrice"], inputFile["conversionFactor"], inputFile["repoDayCount"]);
 
 		CheckTestResultsAndRebaseOnRequest(actualResult, TEST_DIR.c_str(), impliedRate_output.c_str(), yieldTolerance);
 
@@ -126,11 +126,11 @@ namespace google_test
 	TEST_F(TestBondRepo, SNAPSHOT_ConversionFactor)
 	{
 		// Load Bond
-		auto loadBond = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
+		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(conversionFactor_input.c_str());
 
-		auto actualResult = validation::tryMeLWOBondConversionFactor(inputFile["bondObjectName"], inputFile["firstFutureSettleDate"], inputFile["notionalBondCouponRate"]);
+		auto actualResult = validation::tryAqObjectsBondConversionFactor(inputFile["bondObjectName"], inputFile["firstFutureSettleDate"], inputFile["notionalBondCouponRate"]);
 
 		CheckTestResultsAndRebaseOnRequest(actualResult, TEST_DIR.c_str(), conversionFactor_output.c_str(), yieldTolerance);
 
@@ -139,11 +139,11 @@ namespace google_test
 	TEST_F(TestBondRepo, SNAPSHOT_GrossBasis)
 	{
 		// Load Bond
-		auto loadBond = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
+		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(grossBasis_input.c_str());
 
-		auto actualResult = validation::tryMeLWOBondGrossBasis(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["price"], inputFile["futurePrice"], inputFile["conversionFactor"]);
+		auto actualResult = validation::tryAqObjectsBondGrossBasis(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["price"], inputFile["futurePrice"], inputFile["conversionFactor"]);
 
 		CheckTestResultsAndRebaseOnRequest(actualResult, TEST_DIR.c_str(), grossBasis_output.c_str(), yieldTolerance);
 
@@ -152,11 +152,11 @@ namespace google_test
 	TEST_F(TestBondRepo, SNAPSHOT_NetBasis)
 	{
 		// Load Bond
-		auto loadBond = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
+		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(netBasis_input.c_str());
 
-		auto actualResult = validation::tryMeLWOBondNetBasis(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["deliveryDate"], inputFile["bondPrice"], inputFile["actualRepoRate"], inputFile["repoDayCount"], inputFile["futurePrice"], inputFile["conversionFactor"]);
+		auto actualResult = validation::tryAqObjectsBondNetBasis(inputFile["bondObjectName"], inputFile["settleDate"], inputFile["deliveryDate"], inputFile["bondPrice"], inputFile["actualRepoRate"], inputFile["repoDayCount"], inputFile["futurePrice"], inputFile["conversionFactor"]);
 
 		CheckTestResultsAndRebaseOnRequest(actualResult, TEST_DIR.c_str(), netBasis_output.c_str(), yieldTolerance);
 	}
@@ -164,12 +164,12 @@ namespace google_test
 	TEST_F(TestBondRepo, SNAPSHOT_CheapestToDeliver)
 	{
 		// Load Bonds
-		validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
-		validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input2, etrading::JSON);
+		validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
+		validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input2, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(cheapestToDeliver_input.c_str());
 
-		auto actualResult = validation::tryMeLWOBondCheapestToDeliver(inputFile["futurePrice"], inputFile["settleDate"], inputFile["deliveryDate"], inputFile["repoDayCount"], inputFile["bondObjectNames"], inputFile["bondPrices"], inputFile["conversionFactors"]);
+		auto actualResult = validation::tryAqObjectsBondCheapestToDeliver(inputFile["futurePrice"], inputFile["settleDate"], inputFile["deliveryDate"], inputFile["repoDayCount"], inputFile["bondObjectNames"], inputFile["bondPrices"], inputFile["conversionFactors"]);
 
 		const ReadDataFile::Load outputFile(cheapestToDeliver_output.c_str());
 
@@ -181,12 +181,12 @@ namespace google_test
 	TEST_F(TestBondRepo, SNAPSHOT_CheapestToDeliverByNetBasis)
 	{
 		// Load Bonds
-		validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
-		validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondObject_input2, etrading::JSON);
+		validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input1, etrading::JSON);
+		validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + bondObject_input2, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(cheapestToDeliverByNetBasis_input.c_str());
 
-		auto actualResult = validation::tryMeLWOBondCheapestToDeliverByNetBasis(inputFile["futurePrice"], inputFile["settleDate"], inputFile["deliveryDate"], inputFile["repoDayCount"], inputFile["bondObjectNames"], inputFile["bondPrices"], inputFile["conversionFactors"], inputFile["actualRepoRates"]);
+		auto actualResult = validation::tryAqObjectsBondCheapestToDeliverByNetBasis(inputFile["futurePrice"], inputFile["settleDate"], inputFile["deliveryDate"], inputFile["repoDayCount"], inputFile["bondObjectNames"], inputFile["bondPrices"], inputFile["conversionFactors"], inputFile["actualRepoRates"]);
 
 		const ReadDataFile::Load outputFile(cheapestToDeliver_output.c_str());
 

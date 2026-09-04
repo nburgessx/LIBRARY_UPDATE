@@ -8,8 +8,8 @@
 #include "TryAqCurvesFwdFxConst.h"
 
 // Swap Creation and Pricing
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -101,7 +101,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the Par Spread Inputs & the Basis Spreads
                 std::string swapName            = parSpreadInputFile["swapName"];
@@ -109,7 +109,7 @@ namespace google_test
                 AQLStringMatrix fixingTableLVB     = parSpreadInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 auto spreadLegName              = parSpreadInputFile["spreadLegName"];
                 
-                double actualBasisSpread        = validation::tryMeLWOSwapParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName );
+                double actualBasisSpread        = validation::tryAqObjectsSwapParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualBasisSpread, TEST_DIR, parSpreadOutputsFilename, basisSpreadTolerance );

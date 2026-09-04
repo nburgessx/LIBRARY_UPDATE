@@ -213,7 +213,7 @@ namespace validation
         VALID_EXCEPTION_END
     };
 
-	/* @brief			Validation interface for meLWOCurveForwardRatesTable, which generates a date schedule and
+	/* @brief			Validation interface for aqObjectsCurveForwardRatesTable, which generates a date schedule and
 	*					uses the date schedule to calculate a matrix of forward rates for a set of curveIndices.
 	*  @param [out]		fixingDates			The fixing dates on which the forwardRates are calculated. Generated from schedule parameters
 	*  @param [out]		forwardRates		A matrix containing the calculated forward rates for each curve, for each fixing date in the generated schedule
@@ -227,7 +227,7 @@ namespace validation
 	*  @param [in]		frequency			The frquency of points in the date schedule, for example MONTHLY		
 	*  @param [in]		fwdInterps			A list of fwdInter Flags for the curveIndices. Default to empty
 	*/
-	void tryMeLWOCurveForwardRatesTable( DateVector& fixingDates,
+	void tryAqObjectsCurveForwardRatesTable( DateVector& fixingDates,
 										 DoubleMatrix& forwardRates,
 										 const AQLString& curveCollection,
 										 const AQLStringVector& curveIndices,

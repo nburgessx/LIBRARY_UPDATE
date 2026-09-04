@@ -15,13 +15,13 @@
 #include "CurveOis.h"
 #include "AQLMathDateUtilities.h"
 
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsSwapPricing.h"
 #include "JSONInfoBlock.h"          // JSON InfoBlock Helpers
 
-#include "tryMeLWOCurveMarketData.h"
-#include "tryMeLWOCurveCalibrate.h"
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsCurveMarketData.h"
+#include "tryAqObjectsCurveCalibrate.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
 
 #include "tryAqDates.h"
 
@@ -119,7 +119,7 @@ namespace
 	}
 
 
-	/* @brief			Builds LWO MarketData Object by invoking the tryMeLWOCurveMarketDataCreate() API.
+	/* @brief			Builds LWO MarketData Object by invoking the tryAqObjectsCurveMarketDataCreate() API.
 	*                   The code loops over all of the capitalized data keys in the specified filename and uses
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
@@ -156,10 +156,10 @@ namespace
 			}
 		}
 
-		validation::tryMeLWOCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
+		validation::tryAqObjectsCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
 	}
 
-	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
+	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
 	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
@@ -173,7 +173,7 @@ namespace
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjectsCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -201,7 +201,7 @@ namespace
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 		infoBlocks.push_back( getTableInfoFromStringMatrix( creditModels ));
 
-		std::string objectName = validation::tryMeLWOCreditBasketModelCreate( creditBasketModelName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryAqObjectsCreditBasketModelCreate( creditBasketModelName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -252,7 +252,7 @@ namespace
         const etrading::JSONInfoBlockTuples modelData       = { modelInfoBlock, cdsInfoBlock };
 
         // Calibrate and Create the Credit Model
-        const std::string result = validation::tryMeLWOCreditModelCreate( creditModelName, modelDataTypes, modelData );
+        const std::string result = validation::tryAqObjectsCreditModelCreate( creditModelName, modelDataTypes, modelData );
 		return result;
 	}
 
@@ -295,9 +295,9 @@ namespace google_test
 		{
 			AQLDate toDate(stoppingDates[i].c_str());
 
-			const double singleSurvivalProbability = validation::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
+			const double singleSurvivalProbability = validation::tryAqObjectsCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
 
-			const double basketSurvivalProbability = validation::tryMeLWOCreditBasketModelSurvivalProbability( creditBasketModelName, toDate, fromDate );
+			const double basketSurvivalProbability = validation::tryAqObjectsCreditBasketModelSurvivalProbability( creditBasketModelName, toDate, fromDate );
 			
 			ASSERT_NEAR( singleSurvivalProbability, basketSurvivalProbability, tolerance );
 		}

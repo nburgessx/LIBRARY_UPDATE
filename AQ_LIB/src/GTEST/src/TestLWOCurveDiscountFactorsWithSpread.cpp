@@ -16,14 +16,14 @@
 #include "CurveOis.h"
 #include "AQLDateScheduleHelpers.h"
 
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjectsSwapPricing.h"
 #include "JSONInfoBlock.h"          // JSON InfoBlock Helpers
 
-#include "tryMeLWOCurveMarketData.h"
-#include "tryMeLWOCurveCalibrate.h"
+#include "tryAqObjectsCurveMarketData.h"
+#include "tryAqObjectsCurveCalibrate.h"
 
-#include "tryMeLWOCurveDiscountFactor.h"
-#include "tryMeLWOFixingTable.h"
+#include "tryAqObjectsCurveDiscountFactor.h"
+#include "tryAqObjectsFixingTable.h"
 
 
 using etrading::ReadDataFile;
@@ -44,7 +44,7 @@ namespace
 
 	// -------------------------------------------------------------
 
-	// Curves objects saved with meLWOSave
+	// Curves objects saved with aqObjectsSave
 	const char EUR_OIS_MARKET_DATA[]			= TEST_DIR "EUR_OIS_CURVE_MARKETDATA@34_tryMeLWOCurveMarketDataCreate_inputs.csv";
 	const char EUR_OIS_CURVE[]					= TEST_DIR "EUR_OIS_CURVE@35_tryMeLWOCurveCalibrate_inputs.csv";
 
@@ -123,7 +123,7 @@ namespace
 	}
 
 
-	/* @brief			Builds LWO MarketData Object by invoking the tryMeLWOCurveMarketDataCreate() API.
+	/* @brief			Builds LWO MarketData Object by invoking the tryAqObjectsCurveMarketDataCreate() API.
 	*                   The code loops over all of the capitalized data keys in the specified filename and uses
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
@@ -160,10 +160,10 @@ namespace
 			}
 		}
 
-		validation::tryMeLWOCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
+		validation::tryAqObjectsCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
 	}
 
-	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
+	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
 	void createLWOCurveFromFileName( const AQLString& curveCalibrationFileName )
@@ -177,7 +177,7 @@ namespace
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjectsCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -199,7 +199,7 @@ namespace
 		const double spread					= DFInputFileObj[ "spread"];
 		const std::string fixingTableName	= DFInputFileObj[ "fixingTableName" ];
 	
-		const DoubleVector calculatedDFs = validation::tryMeLWOCurveDiscountFactorsWithSpread( paymentDates, curveCollection, curveIndex, spread, fixingTableName );
+		const DoubleVector calculatedDFs = validation::tryAqObjectsCurveDiscountFactorsWithSpread( paymentDates, curveCollection, curveIndex, spread, fixingTableName );
 		
         google_test::CheckTestResultsAndRebaseOnRequest( calculatedDFs, TEST_DIR, expectedResultsFile, tolerance );
 	
@@ -214,7 +214,7 @@ namespace
 		auto fixingDates   = fixingInputFileObj["fixingDates"];
 		auto fixingValues  = fixingInputFileObj["fixingValues"];
 		
-		const std::string fixingTableName = validation::tryMeLWOFixingTableCreate(tableName, currency, curveTenor, fixingDates, fixingValues);
+		const std::string fixingTableName = validation::tryAqObjectsFixingTableCreate(tableName, currency, curveTenor, fixingDates, fixingValues);
 	}
 
 }

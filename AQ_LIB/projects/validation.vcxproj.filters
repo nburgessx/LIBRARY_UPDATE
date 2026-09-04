@@ -244,103 +244,103 @@
     <ClCompile Include="..\src\validation\src\tryAqMathIntegrate.cpp">
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWO.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjects.cpp">
       <Filter>src\etrading\LWO\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOAssetSwap.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsAssetSwap.cpp">
       <Filter>src\etrading\LWO\Swap</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCalibrate.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveCalibrate.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCalibrateHedge.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveCalibrateHedge.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCreateBasis.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveCreateBasis.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCreateFXForwards.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveCreateFXForwards.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCreateOIS.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveCreateOIS.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCreateSwap.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveCreateSwap.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveData.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveData.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveDiscountFactor.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveDiscountFactor.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveDualBootstrap.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveDualBootstrap.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveEngineCalibrate.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveEngineCalibrate.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveForwardRate.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveForwardRate.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveGenerator.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveGenerator.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveJacobianDisplay.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveJacobianDisplay.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveMarketData.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveMarketData.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveUtilities.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveUtilities.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOFixingTable.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsFixingTable.cpp">
       <Filter>src\etrading\LWO\FixingTable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOFra.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsFra.cpp">
       <Filter>src\etrading\LWO\FRA</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOFX.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsFX.cpp">
       <Filter>src\etrading\LWO\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOGrid.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsGrid.cpp">
       <Filter>src\etrading\LWO\Grid</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOLeg.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsLeg.cpp">
       <Filter>src\etrading\LWO\Swap</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOMultiGrid.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsMultiGrid.cpp">
       <Filter>src\etrading\LWO\Grid</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOSchedule.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsSchedule.cpp">
       <Filter>src\etrading\LWO\Schedule</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOSwapCreation.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsSwapCreation.cpp">
       <Filter>src\etrading\LWO\Swap</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOSwapDelta.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsSwapDelta.cpp">
       <Filter>src\etrading\LWO\Swap</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOSwapPricing.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsSwapPricing.cpp">
       <Filter>src\etrading\LWO\Swap</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOVolatility.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsVolatility.cpp">
       <Filter>src\etrading\LWO\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCurveDisplay.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCurveDisplay.cpp">
       <Filter>src\etrading\LWO\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOBondOption.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsBondOption.cpp">
       <Filter>src\etrading\LWO\Options</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOCapFloor.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsCapFloor.cpp">
       <Filter>src\etrading\LWO\Options</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOSwaption.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsSwaption.cpp">
       <Filter>src\etrading\LWO\Options</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOBond.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsBond.cpp">
       <Filter>src\etrading\Bond</Filter>
     </ClCompile>
     <ClCompile Include="..\src\validation\src\tryAqBondsCurves.cpp">
@@ -391,7 +391,7 @@
     <ClCompile Include="..\src\validation\src\tryAqMathForwardRate.cpp">
       <Filter>src\etrading\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\validation\src\tryMeLWOInflationPricing.cpp">
+    <ClCompile Include="..\src\validation\src\tryAqObjectsInflationPricing.cpp">
       <Filter>src\etrading\Inflation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -639,103 +639,103 @@
     <ClInclude Include="..\src\validation\include\tryAqMathIntegrate.h">
       <Filter>include\etrading\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveCalibrate.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveCalibrate.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveCalibrateHedge.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveCalibrateHedge.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveCreateBasis.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveCreateBasis.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveCreateFXForwards.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveCreateFXForwards.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveCreateOIS.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveCreateOIS.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMELWOCurveCreateSwap.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveCreateSwap.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveData.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveData.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveDiscountFactor.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveDiscountFactor.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveDualBootstrap.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveDualBootstrap.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveEngineCalibrate.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveEngineCalibrate.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveForwardRate.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveForwardRate.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveGenerator.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveGenerator.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveJacobianDisplay.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveJacobianDisplay.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveMarketData.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveMarketData.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveUtilities.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveUtilities.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOSwapCreation.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsSwapCreation.h">
       <Filter>include\etrading\LWO\Swap</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOSwapDelta.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsSwapDelta.h">
       <Filter>include\etrading\LWO\Swap</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOSwapPricing.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsSwapPricing.h">
       <Filter>include\etrading\LWO\Swap</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOBond.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsBond.h">
       <Filter>include\etrading\Bond</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWO.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjects.h">
       <Filter>include\etrading\LWO\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOAssetSwap.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsAssetSwap.h">
       <Filter>include\etrading\LWO\Swap</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOLeg.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsLeg.h">
       <Filter>include\etrading\LWO\Swap</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOGrid.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsGrid.h">
       <Filter>include\etrading\LWO\Grid</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOMultiGrid.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsMultiGrid.h">
       <Filter>include\etrading\LWO\Grid</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOFixingTable.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsFixingTable.h">
       <Filter>include\etrading\LWO\FixingTable</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOFra.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsFra.h">
       <Filter>include\etrading\LWO\FRA</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOFX.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsFX.h">
       <Filter>include\etrading\LWO\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOSchedule.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsSchedule.h">
       <Filter>include\etrading\LWO\Schedule</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOVolatility.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsVolatility.h">
       <Filter>include\etrading\LWO\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCurveDisplay.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCurveDisplay.h">
       <Filter>include\etrading\LWO\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOBondOption.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsBondOption.h">
       <Filter>include\etrading\LWO\Options</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOCapFloor.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsCapFloor.h">
       <Filter>include\etrading\LWO\Options</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOSwaption.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsSwaption.h">
       <Filter>include\etrading\LWO\Options</Filter>
     </ClInclude>
     <ClInclude Include="..\src\validation\include\tryAqBondsCurves.h">
@@ -786,7 +786,7 @@
     <ClInclude Include="..\src\validation\include\tryAqMathForwardRate.h">
       <Filter>include\etrading\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\validation\include\tryMeLWOInflationPricing.h">
+    <ClInclude Include="..\src\validation\include\tryAqObjectsInflationPricing.h">
       <Filter>include\etrading\Inflation</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,9 +22,9 @@
 #include "DataUtilities.h"		// AQ_TO_STRING macros
 
 // Curves and Swap Pricing
-#include "tryMeLWO.h"
-#include "tryMeLWOSwapCreation.h"
-#include "tryMeLWOSwapPricing.h"
+#include "tryAqObjects.h"
+#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjectsSwapPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "RepriceCalibrationInstruments.h"
@@ -63,8 +63,8 @@ namespace google_test
 			const std::string fileNameUSD3ML = TEST_FOLDER + "USD_SWAP_3M_CURVE_" + interpolation + ".JSON";
 
 			// Load Curves
-		    const std::string curveObjectEUROIS_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-		    const std::string curveObjectEUR3ML_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+		    const std::string curveObjectEUROIS_ = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+		    const std::string curveObjectEUR3ML_ = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
 		}
 	}
 
