@@ -1,16 +1,16 @@
 
 #include "EnvironmentImplementation.h"
 #include "Environment.h"
-#include "AQOCurve.h"
+#include "AQObjCurve.h"
 
 namespace etrading
 {
      namespace environment_implementation
     {
         template<>
-        bool eraseObject<AQOCurve>( const std::string& objectName, Environment& env )
+        bool eraseObject<AQObjCurve>( const std::string& objectName, Environment& env )
         {
-            auto& store = env.getCache<AQOCurve>();
+            auto& store = env.getCache<AQObjCurve>();
             if( store.has( objectName ) )
             {
                 auto ptrCurve = store.get(objectName);
@@ -24,13 +24,13 @@ namespace etrading
         };
 
         template<>
-        const unsigned int eraseAllObjects<AQOCurve>( Environment& env )
+        const unsigned int eraseAllObjects<AQObjCurve>( Environment& env )
         {
-            auto& store = env.getCache<AQOCurve>();
+            auto& store = env.getCache<AQObjCurve>();
             auto numberOfObjects = store.size();
             auto curveNames = store.keys();
             std::for_each(curveNames.cbegin(), curveNames.cend(), [&env](const std::string& curveName) 
-            {  eraseObject<AQOCurve>(curveName, env); });
+            {  eraseObject<AQObjCurve>(curveName, env); });
             store.clear();
             return numberOfObjects;
         };

@@ -1,7 +1,7 @@
 # Rebrand status — pause point 2026-09-05 ~04:00
 
 **HEAD: `8e632c65`. Last user-confirmed green build: `5a29a51a` (step 6b).**
-Unbuilt: `ab35bf0b` (7b prose sweep) and `8e632c65` (7c embedded LWO -> AQO:
+Unbuilt: `ab35bf0b` (7b prose sweep) and `8e632c65` (7c embedded LWO -> AQObj:
 34 GTEST files renamed, 1108 fixture paths + their code strings moved in
 lockstep, 200 project-file refs). Needs a full Rebuild + GTest.
 Tree is clean. `baseline` tag is the pre-rebrand reference for GTest output diffs.
@@ -21,7 +21,7 @@ Tree is clean. `baseline` tag is the pre-rebrand reference for GTest output diff
 | `a8905ca5` | `boost::swap` → `std::swap` in `StatisticsUtilities` (kills the deprecated-header warning). |
 | `0bab362e` | `InitializeAQETrading → InitializeETrading`, `InitializeAQGoogleTest → InitializeGoogleTest`. |
 | `91a0ad38` / `13ad0c2e` | **Phase 3.1c (Classic)** — `MA/MM/MV/MD/MF/ME_ → AQL` in math/models/calibration (431 renames). `MLIB_2D_MATRIX_CHECK → AQ_2D_MATRIX_CHECK`. Census tool widened. |
-| earlier | Phase 3.1 math, 3.2 models, 3.2 etrading (`LA→AQL`, `LWO→AQO`), Initialize renames, `validation_api→validation`, `MLIB_*→AQ_*`, project renames `AQ_BINDINGS→AQ_API` / `GOOGLE_TEST→GTEST`, solution `AlgoQuantLib-VS22.sln`, solution folders `AQ - Core` / `AQL - Classic`. |
+| earlier | Phase 3.1 math, 3.2 models, 3.2 etrading (`LA→AQL`, `LWO→AQObj`), Initialize renames, `validation_api→validation`, `MLIB_*→AQ_*`, project renames `AQ_BINDINGS→AQ_API` / `GOOGLE_TEST→GTEST`, solution `AlgoQuantLib-VS22.sln`, solution folders `AQ - Core` / `AQL - Classic`. |
 
 **Group B (`me→aq`) is COMPLETE** — no `me*/tryMe*/meLWO*` names anywhere in `src/` or `resources/test/`.
 
@@ -34,7 +34,7 @@ Tree is clean. `baseline` tag is the pre-rebrand reference for GTest output diff
 only, no build impact.
 
 ### Step 7b/7c — LWO + MLIB sweep  ← DONE (`ab35bf0b`, `8e632c65`)
-7b: 299 bare LWO->AQO (comments + 9 message strings), 117 plain-English
+7b: 299 bare LWO->AQObj (comments + 9 message strings), 117 plain-English
 supplements, 28 MLIB test labels -> AQ, deleted stale AQ_API README.txt.
 7c: 128 embedded LWO/lwo identifiers, 34 TestLWO*.cpp renamed, the
 ETrading/LWObjects fixture tree (1108 files) renamed in lockstep with its code
@@ -45,7 +45,7 @@ resources/{documentation,examples} -> Phase 6 audit.
 
 ### OLD 7b note (superseded)
 ~70 `MLIB` GTest test-case labels (`UNIT_TestMacro_MLIB_THROW`) + ~296 `LWO`
-prose/error-string mentions (`"LWO Curve … does not exist"` → `AQO`/`Object`? — a
+prose/error-string mentions (`"LWO Curve … does not exist"` → `AQObj`/`Object`? — a
 naming call). `validation_api` / `MLIB_CLIENT_API` / `GOOGLE_TEST` residue is
 **Linux-Makefile only → Phase 7**. `XllPlus` → Phase 4.
 
@@ -149,7 +149,7 @@ Folder the `validation` `tryAq*` wrappers by category (`src/validation/Curves/`,
 
 ## Tooling
 - `rebrand/tools/prefix_census.py` — legacy-prefix census per project.
-- `rebrand/tools/run_batch.py` — approved-list batch runner (git mv + \b-anchored replace + string-literal report + verify gate). `FILE_PREFIX` handles `LWO→AQO`.
+- `rebrand/tools/run_batch.py` — approved-list batch runner (git mv + \b-anchored replace + string-literal report + verify gate). `FILE_PREFIX` handles `LWO→AQObj`.
 - Scratch scripts used this run (not committed) are in the session scratchpad:
   `map_bsimple.py`, `map_blwo.py`, `run_bsimple.py`, `run_blwo.py`, `bfixtures.py`.
 - `rebrand/phase3_Bsimple_MAP.csv`, `phase3_BLWO_mapB.csv` — the approved `me→aq` maps (committed).

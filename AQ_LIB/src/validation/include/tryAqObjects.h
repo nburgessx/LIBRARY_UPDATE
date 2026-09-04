@@ -33,29 +33,29 @@ namespace validation
     int tryAqObjDeleteAll( const std::string& typeAsString );
 
     // Helper Function:
-    std::string getObjectName( const std::tuple<std::string, etrading::CachedObjectEnum> & aqoLoadResultTuple );
+    std::string getObjectName( const std::tuple<std::string, etrading::CachedObjectEnum> & aqObjLoadResultTuple );
     
 	std::tuple<std::string, etrading::CachedObjectEnum> tryAqObjLoadAndReturnTupleResults( const std::string& fileName, const etrading::FileTypeEnum fileType = etrading::JSON, etrading::Environment& env = etrading::Environment::defaultEnv() );
     
-    // Load a Single AQO object given the full file path
+    // Load a Single AQObj object given the full file path
     std::string tryAqObjLoad( const std::string& fileName,
                               const etrading::FileTypeEnum fileType = etrading::JSON,
                               etrading::Environment& env = etrading::Environment::defaultEnv() );
 
-    // Loads Multiple AQO objects of the Same Type by Referencing the Names and Folder
+    // Loads Multiple AQObj objects of the Same Type by Referencing the Names and Folder
     std::vector<std::string> tryAqObjQuickLoad( const std::vector<std::string>& objectNames,
                                                 const std::string& folder,
                                                 const etrading::FileTypeEnum fileType = etrading::JSON,
                                                 etrading::Environment& env = etrading::Environment::defaultEnv() );
 
-    // Save a Single AQO object givent the full file path
+    // Save a Single AQObj object givent the full file path
 	std::string tryAqObjSave( const std::string& objectName,
 		                      const std::string& objectTypeString,
                               const std::string& fileName,
                               const etrading::FileTypeEnum fileType = etrading::JSON,
 		                      etrading::Environment& env = etrading::Environment::defaultEnv() );
 
-    // Loads Multiple AQO objects of the Same Type by Referencing the Names and Folder
+    // Loads Multiple AQObj objects of the Same Type by Referencing the Names and Folder
     std::vector<std::string> tryAqObjQuickSave( const std::vector<std::string>& objectNames,
                                                 const std::string& folder,
                                                 const etrading::FileTypeEnum fileType = etrading::JSON,

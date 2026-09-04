@@ -6,67 +6,67 @@
 namespace validation
 {
     /* @brief			validation method for aqCurvesDiscountFactorsFromYearFractions
-    *  @param [in]		aqoCurveName	Curve Name
+    *  @param [in]		aqObjCurveName	Curve Name
     *  @param [in]		yearFractions	An array of yearFractions by year count
     *  @param [in]		dayCount	    The daycount fraction used to generate the yearFraction
     *  @return			An array of discount factor
     */
-    DoubleVector tryAqObjCurvesDiscountFactorsFromYearFractions( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactorsFromYearFractions( const std::string& aqObjCurveName,
             const DoubleVector& yearFractions,
             const AQLString& dayCount );
 
     /* @brief			validation method for aqObjCurvesDiscountFactorsFromTenors
-    *  @param [in]		aqoCurveName	Curve Name
+    *  @param [in]		aqObjCurveName	Curve Name
     *  @param [in]		tenors			An array of tenor strings
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc, ie, MF. Default to 'NO_CHANGE'.
     *  @param [in]		calendar		Calendar
     *  @return			An array of discount factor
     */
-    DoubleVector tryAqObjCurvesDiscountFactorsFromTenors( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactorsFromTenors( const std::string& aqObjCurveName,
             const std::vector< std::string >& tenors,
             const std::string& businessDayAdj  = "NO_CHANGE",
             const std::string& calendar = "" );
 
     /* @brief			validation method for aqCurvesDiscountFactors
-    *  @param [in]		aqoCurveName	Curve Name
+    *  @param [in]		aqObjCurveName	Curve Name
     *  @param [in]		paymentDates			A single or an array of payment Dates in YYYYMMDD formate
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjCurvesDiscountFactors( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactors( const std::string& aqObjCurveName,
             const std::vector<boost::gregorian::date>& paymentDates );
 
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStarting
-    *  @param [in]		aqoCurveName	AQO Curve Name
+    *  @param [in]		aqObjCurveName	AQObj Curve Name
     *  @param [in]		fromDates		A single array of dates in YYYYMMDD formate
     *  @param [in]		toDates			An array of dates in YYYYMMDD formate
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjCurvesDiscountFactorsForwardStarting( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactorsForwardStarting( const std::string& aqObjCurveName,
             const std::vector<boost::gregorian::date>& fromDates,
             const std::vector<boost::gregorian::date>& toDates );
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromYearFractions
-    *  @param [in]		aqoCurveName	AQO Curve Name
+    *  @param [in]		aqObjCurveName	AQObj Curve Name
     *  @param [in]		fromDates			An array of from-dates in YYYYMMDD formate
     *  @param [in]		yearFractions		An array of year fraction yearFractions
     *  @param [in]		dayCount	        The daycount fraction used to generate the yearFraction
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjCurvesDiscountFactorsForwardStartingFromYearFractions( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactorsForwardStartingFromYearFractions( const std::string& aqObjCurveName,
             const std::vector<boost::gregorian::date>& fromDates,
             const DoubleVector& yearFractions,
             const AQLString& dayCount );
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromTenor
-    *  @param [in]		aqoCurveName	    AQO Curve Name
+    *  @param [in]		aqObjCurveName	    AQObj Curve Name
     *  @param [in]		fromDates		    An array of from-dates in YYYYMMDD formate
     *  @param [in]		tenor			    A tenor string
     *  @param [in]		businessDayAdj	    Rule that decides if end date should roll forward or backward etc, ie, MF. Default to 'NO_CHANGE'.
     *  @param [in]		calendar		    Calendar
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjCurvesDiscountFactorsForwardStartingFromTenors( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactorsForwardStartingFromTenors( const std::string& aqObjCurveName,
                                                                         const std::vector<boost::gregorian::date>& fromDates,
                                                                         const std::vector<std::string>& tenors,
                                                                         const std::string& businessDayAdj,

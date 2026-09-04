@@ -4,7 +4,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "ObjectUtilities.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "RecordMacros.h"
 #include "OptionFactory.h"
 
@@ -30,7 +30,7 @@ namespace validation
 
 		std::shared_ptr<etrading::Option> optionPtr = etrading::createOption(objectName, optionLVB, validateKeys);
 
-		// Register the Option in the AQO object cache
+		// Register the Option in the AQObj object cache
 		etrading::registerToCache< etrading::Option >(optionPtr);
 
 		std::string result = objectName;

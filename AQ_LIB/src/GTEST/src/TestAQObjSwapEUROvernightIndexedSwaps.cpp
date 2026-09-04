@@ -1,0 +1,266 @@
+// TestAQObjSwapEUROvernightIndexedSwaps.cpp
+
+#include "tryAqObjSwapsCreation.h"
+#include "tryAqObjSwapsPricing.h"
+
+#include "Dependency.h"
+#include "ReadDataFile.h"
+#include "ResultsProcessor.h"
+#include "TryAqCurvesOis.h"
+#include "TryAqCurvesStd.h"
+#include "TryAqCurvesTenorBasis.h"
+
+
+using etrading::ReadDataFile;
+using etrading::CreateDataFile;
+#include <gTest/gTest.h>
+
+using google_test::CurveOis;
+using google_test::CurveStd;
+using google_test::BindFileToClassConstructor;
+using google_test::Dependency0;
+using google_test::Dependency1;
+using google_test::Dependency2;
+using google_test::Dependency3;
+using google_test::Dependency4;
+
+using etrading::ReadDataFile;
+using etrading::CreateDataFile;
+
+#define TEST_DIR "ETrading/AQObjects/TestAQObjSwapOvernightIndexedSwaps/"
+
+namespace
+{
+    // test tolerance
+    const double tolerance = 1e-8;	// solver tolerance is 1e-9
+
+    const int minTests = 18;
+
+    //
+    // curve input files
+    //
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryAqCurvesCalibrateOIS_inputs";
+    extern const char EURYC_1M[]			    = "";
+    extern const char EURYC_3M[]			    = "";
+    extern const char EURYC_6M[]			    = "";
+    extern const char EURYC_12M[]			    = "";
+
+    //
+    // test call input and reference files
+    //
+    extern const char oisInputs[]	            = TEST_DIR "EUROIS"; // Test files require a suffix. Format :=  Basename + Index + '_tryAqObjSwapsCreateFromLegLVBs_inputs'
+
+#if defined(GTEST32)
+    extern const char oisOutputs[]	    = TEST_DIR "x86_EUROIS"; // Test files require a suffix. Format :=  Basename + Index + '_tryAqObjSwapsCreateFromLegLVBs_outputs'
+#else
+	extern const char oisOutputs[]	    = TEST_DIR "x64_EUROIS"; // Test files require a suffix. Format :=  Basename + Index + '_tryAqObjSwapsCreateFromLegLVBs_outputs'
+#endif
+}
+
+namespace google_test
+{
+    //
+    // Construct depedent curves from curve source files by calling the curve constructor methods
+    //
+    // All tenor curve name MUST be defined for the ADD_EUR_CURVE_DEPENDENCIES macro to work.
+    // If any curve is not in use and not defined, simply assign a "" to the curve name.
+    //
+    AQL_BUILD_EUR_CURVE( TestAQObjSwapEUROvernightIndexedSwaps, EURYC_OIS, EURYC_1M, EURYC_3M, EURYC_6M, EURYC_12M );
+
+
+    //
+    // Call Test Fixture
+    //
+
+    TEST_F( TestAQObjSwapEUROvernightIndexedSwaps, UNIT_CreateOvernightIndexedSwaps )
+    {
+        int i = 0;
+        try
+        {
+            for ( i = 1; ; ++i )
+            {
+                // Load the input file
+                AQLString inputFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjSwapsCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                const ReadDataFile::Load inputFile( inputFilename );
+
+                // Read the input file into the tryAqObjSwapsCreateFromLegLVBs
+                std::string swapName            = inputFile["swapName"];
+                AQLStringMatrix leg1LVB            = inputFile["leg1LVB"];
+                AQLStringMatrix leg2LVB            = inputFile["leg2LVB"];
+                bool validateKeys               = inputFile["validateKeys"];
+	            std::string localResult         = validation::tryAqObjSwapsCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
+
+                // Load the output file and the result                   
+                AQLString outputFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjSwapsCreateFromLegLVBs_outputs", i ); // Append the Index and Suffix to test file name
+                const ReadDataFile::Load outputFile( outputFilename );
+                
+                std::string outputFileResult = outputFile["output"];
+
+                // Compare the local result with the output file result
+                EXPECT_EQ( localResult, outputFileResult );
+            }
+        }
+        catch( const ReadDataFile::LoadError& )
+        {
+            EXPECT_GT( i, minTests );
+        }
+        catch( const AQLCoreError& m )
+        {
+            std::cout <<  m.getMsg();
+            ASSERT_FALSE( true );
+        }
+        catch( const std::exception& e )
+        {
+            std::cout << e.what();
+            ASSERT_FALSE( true );
+        }
+    }
+
+
+    TEST_F( TestAQObjSwapEUROvernightIndexedSwaps, SNAPSHOT_CheckOisPV )
+    {
+        int i = 0;
+        try
+        {
+            for ( i = 1; ; ++i )
+            {
+                // 1. Create the Swap
+                AQLString createSwapFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjSwapsCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                const ReadDataFile::Load createSwapFile( createSwapFilename );
+
+                    // Read the input file into the tryAqObjSwapsCreateFromLegLVBs
+                    std::string swapName            = createSwapFile["swapName"];
+                    AQLStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
+                    AQLStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
+                    bool validateKeys               = createSwapFile["validateKeys"];
+	                std::string localResult         = validation::tryAqObjSwapsCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
+                
+                // 2. Price the Swap
+                 AQLString SwapPVFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjSwapsPV_inputs", i ); // Append the Index and Suffix to test file name
+                const ReadDataFile::Load swapPVFile( SwapPVFilename );
+
+                    // Read the input file into the tryAqObjSwapsPV
+                    std::string swapObjectName      = swapPVFile["swapName"];
+
+					double localSwapPV              = validation::tryAqObjSwapsPV( swapObjectName, etrading::fromStringToLVB("EURYC"));
+                
+                // 3. Load the Tenor Basis Spread Results File and Compare against the Local Spread                   
+                const double tolerance = 1e-006;  // Notional of trades is 1MM
+                CheckTestResultsAndRebaseOnRequest( localSwapPV, TEST_DIR, oisOutputs, "_tryAqObjSwapsPV_outputs", tolerance, i ); // Append the Index and Suffix to test file name
+            }
+        }
+        catch( const ReadDataFile::LoadError& )
+        {
+            EXPECT_GT( i, minTests );
+        }
+        catch( const AQLCoreError& m )
+        {
+            std::cout <<  m.getMsg();
+            ASSERT_FALSE( true );
+        }
+        catch( const std::exception& e )
+        {
+            std::cout << e.what();
+            ASSERT_FALSE( true );
+        }
+    }
+
+
+    TEST_F( TestAQObjSwapEUROvernightIndexedSwaps, SNAPSHOT_CheckOisParRate )
+    {
+        int i = 0;
+        try
+        {
+            for ( i = 1; ; ++i )
+            {
+                // 1. Create the Swap
+                AQLString createSwapFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjSwapsCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                const ReadDataFile::Load createSwapFile( createSwapFilename );
+
+                    // Read the input file into the tryAqObjSwapsCreateFromLegLVBs
+                    std::string swapName            = createSwapFile["swapName"];
+                    AQLStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
+                    AQLStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
+                    bool validateKeys               = createSwapFile["validateKeys"];
+	                std::string localResult         = validation::tryAqObjSwapsCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
+                
+                // 2. Get the Swap Par Rate
+                 AQLString SwapParRateFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjSwapsParRate_inputs", i ); // Append the Index and Suffix to test file name
+                const ReadDataFile::Load swapParRateFile( SwapParRateFilename );
+
+                    // Read the input file into the tryAqObjSwapsParRate
+                    std::string swapObjectName      = swapParRateFile["swapName"];
+                    double localSwapParRate         = validation::tryAqObjSwapsParRate( swapObjectName, etrading::fromStringToLVB("EURYC") );
+                
+                // 3. Load the Tenor Basis Spread Results File and Compare against the Local Spread                   
+                const double tolerance = 1e-008;
+                CheckTestResultsAndRebaseOnRequest( localSwapParRate, TEST_DIR, oisOutputs, "_tryAqObjSwapsParRate_outputs", tolerance, i ); // Append the Index and Suffix to test file name
+            }
+        }
+        catch( const ReadDataFile::LoadError& )
+        {
+            EXPECT_GT( i, minTests );
+        }
+        catch( const AQLCoreError& m )
+        {
+            std::cout <<  m.getMsg();
+            ASSERT_FALSE( true );
+        }
+        catch( const std::exception& e )
+        {
+            std::cout << e.what();
+            ASSERT_FALSE( true );
+        }
+    }
+
+
+    TEST_F( TestAQObjSwapEUROvernightIndexedSwaps, SNAPSHOT_CheckOisPV01 )
+    {
+        int i = 0;
+        try
+        {
+            for ( i = 1; ; ++i )
+            {
+                // 1. Create the Swap
+                AQLString createSwapFilename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjSwapsCreateFromLegLVBs_inputs", i ); // Append the Index and Suffix to test file name
+                const ReadDataFile::Load createSwapFile( createSwapFilename );
+
+                    // Read the input file into the tryAqObjSwapsCreateFromLegLVBs
+                    std::string swapName            = createSwapFile["swapName"];
+                    AQLStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
+                    AQLStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
+                    bool validateKeys               = createSwapFile["validateKeys"];
+	                std::string localResult         = validation::tryAqObjSwapsCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, AQLStringMatrix(), false, validateKeys );
+                
+                // 2. Price the Swap
+                 AQLString SwapPV01Filename = CreateDataFile::makeFilename( oisInputs, "_tryAqObjSwapsPV01_inputs", i ); // Append the Index and Suffix to test file name
+                const ReadDataFile::Load swapPV01File( SwapPV01Filename );
+
+                    // Read the input file into the tryAqObjSwapsPV01
+                    std::string swapObjectName      = swapPV01File["swapName"];
+                    double localSwapPV01            = validation::tryAqObjSwapsPV01( swapObjectName, etrading::fromStringToLVB("EURYC") );
+                
+                // 3. Load the Tenor Basis Spread Results File and Compare against the Local Spread                   
+                const double tolerance = 1e-008;
+                CheckTestResultsAndRebaseOnRequest( localSwapPV01, TEST_DIR, oisOutputs, "_tryAqObjSwapsPV01_outputs", tolerance, i ); // Append the Index and Suffix to test file name
+            }
+        }
+        catch( const ReadDataFile::LoadError& )
+        {
+            EXPECT_GT( i, minTests );
+        }
+        catch( const AQLCoreError& m )
+        {
+            std::cout <<  m.getMsg();
+            ASSERT_FALSE( true );
+        }
+        catch( const std::exception& e )
+        {
+            std::cout << e.what();
+            ASSERT_FALSE( true );
+        }
+    }
+
+    
+}
+

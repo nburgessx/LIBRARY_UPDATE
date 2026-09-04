@@ -11,7 +11,7 @@ namespace validation
     *  @param [in]		curveConv			General curve properties such as asofdate, ccy, interp, etc
     *  @param [in]		fxFwdConv			FX forward conventions
     */
-    AQLString tryAqObjCurvesCreateFXForwards( const std::string& aqoCurveName,
+    AQLString tryAqObjCurvesCreateFXForwards( const std::string& aqObjCurveName,
                                             const AQLString& curveCollectionInput,
                                             const AQLString& staticDataTableInput,
                                             const AQLString& curveIndexInput,

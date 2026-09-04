@@ -5,7 +5,7 @@
 #include "RecordMacros.h"
 
 #include "SwapUtilities.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "BondSpreadCalculation.h"
 #include "ExceptionMacros.h"
 #include "BondFactory.h"

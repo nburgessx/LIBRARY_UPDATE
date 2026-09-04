@@ -5,7 +5,7 @@
 #include "StructuredExceptionHandler.h"
 #include "CoreEnumerations.h"
 #include "RecordMacros.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "ObjectUtilities.h"
 #include "FXCurveUtilities.h"
 
@@ -17,41 +17,41 @@ namespace validation
 
     /* @brief validation interface for aqObjFXCurveCreate, creating a FxCurve using a CurveGenerator object and a CurveMarketData object
 	 * @param [in] objectName                The objectName of the FxCurve
-     * @param [in] aqoCurveGeneratorName     The name of the AQOCurveGenerator object to use
-	 * @param [in] aqoCurveMarketDataName    The name of the AQOCurveMarketData object to use
+     * @param [in] aqObjCurveGeneratorName     The name of the AQObjCurveGenerator object to use
+	 * @param [in] aqObjCurveMarketDataName    The name of the AQObjCurveMarketData object to use
 	 * @param [out]                          The created FxCurve objectName
 	 */
     std::string tryAqObjFXCurveCreate(	const std::string& objectName,
-										const std::string& aqoCurveGeneratorName,
-										const std::string& aqoCurveMarketDataName )
+										const std::string& aqObjCurveGeneratorName,
+										const std::string& aqObjCurveMarketDataName )
     {
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, aqoCurveGeneratorName, aqoCurveMarketDataName );
+        RECORD_INPUTS( objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName );
 
 		// Perform initial basic sanity checks
-		if ( aqoCurveGeneratorName.size() == 0 )
+		if ( aqObjCurveGeneratorName.size() == 0 )
 		{
-				throw AQLCoreInvalidData(	( "#Error: Missing aqoCurveGenerator name" ), __FILE__, __LINE__ );
+				throw AQLCoreInvalidData(	( "#Error: Missing aqObjCurveGenerator name" ), __FILE__, __LINE__ );
 		}
-		if ( aqoCurveMarketDataName.size() == 0 )
+		if ( aqObjCurveMarketDataName.size() == 0 )
 		{
-				throw AQLCoreInvalidData(	( "#Error: Missing aqoCurveMarketData name" ), __FILE__, __LINE__ );
+				throw AQLCoreInvalidData(	( "#Error: Missing aqObjCurveMarketData name" ), __FILE__, __LINE__ );
 		}
 
-		// Attempt to retrieve AQOCurveMarketData object from the AQO object cache
-		auto aqoCurveMarketData = etrading::getCurveMarketData( aqoCurveMarketDataName );
+		// Attempt to retrieve AQObjCurveMarketData object from the AQObj object cache
+		auto aqObjCurveMarketData = etrading::getCurveMarketData( aqObjCurveMarketDataName );
   
-		// Attempt to retrieve AQOCurveGenerator object from the AQO object cache
-		auto aqoCurveGenerator = etrading::getCurveGenerator( aqoCurveGeneratorName );
+		// Attempt to retrieve AQObjCurveGenerator object from the AQObj object cache
+		auto aqObjCurveGenerator = etrading::getCurveGenerator( aqObjCurveGeneratorName );
        
 		// Check for matching IdentityParams from the CurveGenerator and CurveMarketData
-		const LabelValueBlock curvePropertiesLVB = aqoCurveGenerator->toLabelValueBlock( "CURVEPROPERTIES" );
+		const LabelValueBlock curvePropertiesLVB = aqObjCurveGenerator->toLabelValueBlock( "CURVEPROPERTIES" );
 		const std::string configCurrency         = curvePropertiesLVB.getCompulsoryValue( "Currency" );
 		const std::string configCurveType        = curvePropertiesLVB.getCompulsoryValue( "CurveType" );
 		
-		const LabelValueBlock marketDataPropertiesLVB = aqoCurveMarketData->toLabelValueBlock( "MARKETDATAPROPERTIES" );
+		const LabelValueBlock marketDataPropertiesLVB = aqObjCurveMarketData->toLabelValueBlock( "MARKETDATAPROPERTIES" );
 		const std::string marketDataCurrency          = marketDataPropertiesLVB.getCompulsoryValue( "Currency" );
 		const std::string marketDataCurveType         = marketDataPropertiesLVB.getCompulsoryValue( "CurveType" );
 		
@@ -74,7 +74,7 @@ namespace validation
 		}
 
 		// Create the FxCurve object
-        etrading::FXCurve fxCurve(objectName, aqoCurveGenerator, aqoCurveMarketData);
+        etrading::FXCurve fxCurve(objectName, aqObjCurveGenerator, aqObjCurveMarketData);
 
         // ..  and store in the cache
         etrading::copyToCache<etrading::FXCurve>( fxCurve );

@@ -55,7 +55,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::OIS_MARKETDATA,    // Calibration Instrument: OIS Outright Swaps
                                        {"12M", "18M", "2Y"},                             // Calibration Tenors                                  
-                                       curveObjectEUROIS_,                               // AQOCurveName
+                                       curveObjectEUROIS_,                               // AQObjCurveName
                                        "EURYC",                                          // CurveCollection
                                        "20180814",                                       // Swap Effective Date
                                        "EUR_OIS",                                        // Swap Generator
@@ -65,7 +65,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( EUR_OisCurve_Consistency, CONSISTENCY_EUROIS_OisSwap_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the AQO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    oisSwapTerms    = curveCalibrationOisSwapTenors( curveObjectEUROIS_ ); 
         std::vector<double>         oisSwapParRates = curveCalibrationOisSwapParRates( curveObjectEUROIS_ );
         AQ_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
@@ -108,7 +108,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::LIBOR_OIS_BASISSPREAD_MARKETDATA,    // Calibration Instrument: LIBOR-OIS Basis Swaps
                                        { "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "11Y", "12Y", "15Y", "20Y", "25Y", "30Y", "40Y", "50Y" },  // Calibration Tenors                                  
-                                       curveObjectEUROIS_,                               // AQOCurveName
+                                       curveObjectEUROIS_,                               // AQObjCurveName
                                        "EURYC",                                          // CurveCollection
                                        "20180814",                                       // Swap Effective Date
                                        "EUR_BASIS_LIBOROIS",                             // Swap Generator
@@ -118,7 +118,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( EUR_OisCurve_Consistency, CONSISTENCY_EUROIS_LiborOIS_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the AQO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    liborOisTerms    = curveCalibrationLiborOisTenors( curveObjectEUROIS_ ); 
         std::vector<double>         liborOisSpreads  = curveCalibrationLiborOisSpreads( curveObjectEUROIS_ );
         AQ_REQUIRE( liborOisTerms.size() == liborOisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Libor OIS Terms and Spreads" )

@@ -144,7 +144,7 @@ namespace etrading
 
 		for (size_t i = 0; i < legs_.size(); ++i)
 		{
-			if (getAQOCurveCollectionFromValuationSettings(valuationSettingsLVB, legs_.get(i)->getLegName()).size() == 0)
+			if (getAQObjCurveCollectionFromValuationSettings(valuationSettingsLVB, legs_.get(i)->getLegName()).size() == 0)
 			{
 				throw AQLCoreInvalidData("#Error: Invalid Valuation Settings: For Xccy Swaps the number of Valuation Settings blocks must match the number of trade legs", __FILE__, __LINE__);
 			}

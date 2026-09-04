@@ -206,12 +206,12 @@
     <ClInclude Include="..\src\etrading\include\LegGenerator.h" />
     <ClInclude Include="..\src\etrading\include\LibSetUpETrading.h" />
     <ClInclude Include="..\src\etrading\include\LinearInterpolation.h" />
-    <ClInclude Include="..\src\etrading\include\AQOCurve.h" />
+    <ClInclude Include="..\src\etrading\include\AQObjCurve.h" />
     <ClInclude Include="..\src\etrading\include\DataHolder.h" />
     <ClInclude Include="..\src\etrading\include\ExposedInterface.h" />
     <ClInclude Include="..\src\etrading\include\HasDataHolderConversion.h" />
-    <ClInclude Include="..\src\etrading\include\AQOCurveDayAdjustment.h" />
-    <ClInclude Include="..\src\etrading\include\AQOUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\AQObjCurveDayAdjustment.h" />
+    <ClInclude Include="..\src\etrading\include\AQObjUtilities.h" />
     <ClInclude Include="..\src\etrading\include\MarketQuote.h" />
     <ClInclude Include="..\src\etrading\include\CurveData.h" />
     <ClInclude Include="..\src\etrading\include\MonotoneConvexInterpolation.h" />
@@ -476,8 +476,8 @@
     <ClCompile Include="..\src\etrading\src\LegGenerator.cpp" />
     <ClCompile Include="..\src\etrading\src\LibSetUpETrading.cpp" />
     <ClCompile Include="..\src\etrading\src\LinearInterpolation.cpp" />
-    <ClCompile Include="..\src\etrading\src\AQOCurveDayAdjustment.cpp" />
-    <ClCompile Include="..\src\etrading\src\AQOUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\AQObjCurveDayAdjustment.cpp" />
+    <ClCompile Include="..\src\etrading\src\AQObjUtilities.cpp" />
     <ClCompile Include="..\src\etrading\src\MarketQuote.cpp" />
     <ClCompile Include="..\src\etrading\src\CurveData.cpp" />
     <ClCompile Include="..\src\etrading\src\MonotoneConvexInterpolation.cpp" />
@@ -499,7 +499,7 @@
     <ClCompile Include="..\src\etrading\src\ContainerUtilities.cpp" />
     <ClCompile Include="..\src\etrading\src\CreateDataFile.cpp" />
     <ClCompile Include="..\src\etrading\src\CurveBuildProperties.cpp" />
-    <ClCompile Include="..\src\etrading\src\AQOCurve.cpp" />
+    <ClCompile Include="..\src\etrading\src\AQObjCurve.cpp" />
     <ClCompile Include="..\src\etrading\src\DeltaRiskGenerator.cpp" />
     <ClCompile Include="..\src\etrading\src\ExposedObject.cpp" />
     <ClCompile Include="..\src\etrading\src\FileUtilities.cpp" />

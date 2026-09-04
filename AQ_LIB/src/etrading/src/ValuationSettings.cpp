@@ -1,6 +1,6 @@
 #include "ValuationSettings.h"
 #include "SettingsValidation.h"
-#include "AQOUtilities.h"					// Undecorate Handle Method & Curve Object Accessors for Single, Dual and Globally Calibrate Curves
+#include "AQObjUtilities.h"					// Undecorate Handle Method & Curve Object Accessors for Single, Dual and Globally Calibrate Curves
 #include "CurveResultsContainer.h"			// CurveGroup Object Methods
 
 namespace etrading
@@ -165,7 +165,7 @@ namespace etrading
 
 		if (creditModelName_.empty())
 		{
-			curveCollection_ = getAQOCurveCollectionFromValuationSettings(valuationSettingsLVB, legName).getCString();
+			curveCollection_ = getAQObjCurveCollectionFromValuationSettings(valuationSettingsLVB, legName).getCString();
 		}
 		else
 		{

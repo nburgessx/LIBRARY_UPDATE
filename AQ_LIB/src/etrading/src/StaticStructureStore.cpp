@@ -98,7 +98,7 @@ namespace etrading
     DataSchema schemaCurveBuildProperties( DEFINE_SCHEMA2( CURVE_BUILD_PROPERTIES, STRING_VALUE, VARIANT_VALUE, VARIABLE_NAME, VARIABLE_VALUE ) );
     std::vector<DataSchema> schemaVectorForCurveBuildProperties = boost::assign::list_of( schemaCurveBuildProperties );
 
-    // Set up the DataSchema of a AQOCurve
+    // Set up the DataSchema of a AQObjCurve
     DataSchema schemaRates( DEFINE_SCHEMA3( RATES, DATE_VALUE, DOUBLE_VALUE, DOUBLE_VALUE, DATE_VALUE, DISCOUNT_FACTORS, FORWARD_RATES ) );
     DataSchema schemaCurveConvention( DEFINE_SCHEMA2( CURVE_BUILD_PROPERTIES, STRING_VALUE, VARIANT_VALUE, VARIABLE_NAME, VARIABLE_VALUE ) );
     std::vector<DataSchema> schemaVectorForCurveConvention = boost::assign::list_of( schemaCurveConvention )( schemaRates );

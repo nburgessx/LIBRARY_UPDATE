@@ -44,7 +44,7 @@
 #include "FileUtilities.h"
 #include "EnvironmentPool.h"
 #include "RuleInterface.h"
-#include "AQOCurve.h"
+#include "AQObjCurve.h"
 #include "CurveBuildProperties.h"
 #include "EnvironmentUtilities.h"
 #include "ObjectUtilities.h"

@@ -6,7 +6,7 @@
 #include "ExceptionMacros.h"
 #include "ParameterValidation.h"
 #include "AQLCurveForwardRateHelpers.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "SettingsValidation.h"
 
 namespace etrading
@@ -18,15 +18,15 @@ namespace etrading
 		AQ_REQUIRE( swaptionTrade_ != nullptr, "Invalid swaption trade" );
 		
 
-        // Set the CurveCollection from the Valuation Settings - Compatible with CurveCollection or AQO CurveObject input
+        // Set the CurveCollection from the Valuation Settings - Compatible with CurveCollection or AQObj CurveObject input
         // =======================================================================================================
-        curveCollection_  = getAQOCurveCollectionFromValuationSettings( valuationSettingsLVB ).getCString();
+        curveCollection_  = getAQObjCurveCollectionFromValuationSettings( valuationSettingsLVB ).getCString();
 
 
         // Set the Volatility Provider
         // =======================================================================================================
         const AQLString volObjectName = getVolatilityModelFromValuationSettings( valuationSettingsLVB );
-        volProvider_ = getVolatility( volObjectName.getCString() ); // AQO Utility method to get the volatility object pointer from the AQO object cache
+        volProvider_ = getVolatility( volObjectName.getCString() ); // AQObj Utility method to get the volatility object pointer from the AQObj object cache
 
 
         // Validation: Ensure that Curve and Vol Model have the same Valuation Date and Currency

@@ -36,7 +36,7 @@ namespace etrading
                                   const bool aggregateRisks,
 								  const std::string& riskCutOffTenor );
 
-		/* @brief	Constructor for AQO Swaps
+		/* @brief	Constructor for AQObj Swaps
         *  Note1:   We must disable the CurveResults Object otherwise Products will price outside the object pool and not incorporate curve bumps and shift results
 		*/
 		MultiCurveDeltaGenerator( const AQLStringVector& swapNames,
@@ -104,46 +104,46 @@ namespace etrading
 		};
 
 		/* @brief		Returns the size of the trade portfolio
-		*				Examines portfolio_ or aqoPortfolio_ depending on whether AQO Swaps are being used
+		*				Examines portfolio_ or aqObjPortfolio_ depending on whether AQObj Swaps are being used
 		*/
 		size_t getPortfolioSize();
 
-		/* @brief		Examines the aqoTrade input and adds the trade leg data to a map based on the curve dependencies required to PV that leg
-		 * @param [in]	aqoTrade					The AQO Swap to be processed
+		/* @brief		Examines the aqObjTrade input and adds the trade leg data to a map based on the curve dependencies required to PV that leg
+		 * @param [in]	aqObjTrade					The AQObj Swap to be processed
 		 * @param [in]	curveCollectionForTrade		A LabelValueBlock containing the curve collections required to PV this swap
 		 * @param [out] fixingTableForTrade			A fixingTableMap containing the fixingTableNames required to PV this swap
 		 * @param [out]	allLegIDs					An output containing all LegIDs processed so far
 		 * @param [out]	allLegCCYs					An output containing the Leg native currencies
-		 * @param [out]	aqoSwapLegsByCurves			An output map containing mini-portfolios of swap legs, keyed by CurveDependencies
-		 * @param [out]	aqoLegIDsByCurves			An output map containing mini-portfolios of swap legIDs, keyed by CurveDependencies
+		 * @param [out]	aqObjSwapLegsByCurves			An output map containing mini-portfolios of swap legs, keyed by CurveDependencies
+		 * @param [out]	aqObjLegIDsByCurves			An output map containing mini-portfolios of swap legIDs, keyed by CurveDependencies
 		 * @param [out]	fixingTableNamesByCurves		An output map containing mini-portfolios of swap fixingTableNames, keyed by CurveDependencies.
 		*/
-		void groupAQOTradeLegsByCurveDependencies( const std::shared_ptr<Swap>& aqoTrade,
+		void groupAQObjTradeLegsByCurveDependencies( const std::shared_ptr<Swap>& aqObjTrade,
 											       const LabelValueBlock& curveCollectionForTrade,
 											       const LabelValueBlock& fixingTableForTrade,
 											       AQLStringVector& allLegIDs,
 											       AQLStringVector& allLegCCYs,
-											       std::map< CurveDependencies, std::vector< std::shared_ptr<Leg> > >& aqoSwapLegsByCurves,
-											       std::map< CurveDependencies, std::vector< AQLString > >& aqoTradeIDsByCurves,
-											       std::map< CurveDependencies, std::vector< AQLString > >& aqoLegIDsByCurves,
+											       std::map< CurveDependencies, std::vector< std::shared_ptr<Leg> > >& aqObjSwapLegsByCurves,
+											       std::map< CurveDependencies, std::vector< AQLString > >& aqObjTradeIDsByCurves,
+											       std::map< CurveDependencies, std::vector< AQLString > >& aqObjLegIDsByCurves,
 											       std::map< CurveDependencies, std::vector< LabelValueBlock > >& fixingTableNamesByCurves);
 
-		/* @brief		Examines the aqoTrade input and adds the trade data to a map based on the curve dependencies required to PV that leg
-		* @param [in]	aqoTrade					The AQO Swap to be processed
+		/* @brief		Examines the aqObjTrade input and adds the trade data to a map based on the curve dependencies required to PV that leg
+		* @param [in]	aqObjTrade					The AQObj Swap to be processed
 		* @param [in]	curveCollectionForTrade		A LabelValueBlock containing the curve collections required to PV this swap
 		* @param [out]	allTradeIDs					An output which accumulates the trade IDs that have been processed so far
 		* @param [out]	allTradeCCYs				An output which accumulates the trade native currencies
 		* @param [out]  fixingTableForTrade			A fixingTableMap containing the fixingTableNames required to PV this swap
-		* @param [out]	aqoSwapLegsByCurves			An output map containing mini-portfolios of swap legs, keyed by CurveDependencies
+		* @param [out]	aqObjSwapLegsByCurves			An output map containing mini-portfolios of swap legs, keyed by CurveDependencies
 		* @param [out]	fixingTableNamesByCurves		An output map containing mini-portfolios of swap fixingTableNames, keyed by CurveDependencies.
 		*/
-		void groupAQOTradesByCurveDependencies(const SwapPtr& aqoTrade,
+		void groupAQObjTradesByCurveDependencies(const SwapPtr& aqObjTrade,
 												const LabelValueBlock& curveCollectionForTrade,
 												const LabelValueBlock& fixingTableForTrade,
 												AQLStringVector& allTradeIDs,
 												AQLStringVector& allTradeCcys,
-												std::map< CurveDependencies, std::vector< SwapPtr > >& aqoSwapByCurves,
-												std::map< CurveDependencies, std::vector< AQLString > >& aqoTradeIDsByCurves,
+												std::map< CurveDependencies, std::vector< SwapPtr > >& aqObjSwapByCurves,
+												std::map< CurveDependencies, std::vector< AQLString > >& aqObjTradeIDsByCurves,
 												std::map< CurveDependencies, std::vector< LabelValueBlock > >& fixingTableNamesByCurves);
 
 		/* @brief		Invokes the delta risk generator on a mini portfolio to calculate the delta-ladder, and post-processes the results
@@ -161,15 +161,15 @@ namespace etrading
 
         std::vector<BaseInstrumentPtr> portfolio_;
 
-		// For AQO Swaps
-		AQLStringVector aqoSwapNames_;
-		std::vector<std::shared_ptr<Swap> > aqoPortfolio_;
+		// For AQObj Swaps
+		AQLStringVector aqObjSwapNames_;
+		std::vector<std::shared_ptr<Swap> > aqObjPortfolio_;
 		std::vector<LabelValueBlock> fixingTableNames_;
 		std::vector<LabelValueBlock> curveCollections_;
         std::vector<LabelValueBlock> valuationSettingsLVB_;
 
-		// Set to true if the portfolio contains AQO Swaps
-		bool usingAQO_;
+		// Set to true if the portfolio contains AQObj Swaps
+		bool usingAQObj_;
 
 		// Stores the CurveDependencies for a portfolio of BaseInstrument Swaps
         std::vector<CurveDependencies> forecastAndDiscountCurves_;

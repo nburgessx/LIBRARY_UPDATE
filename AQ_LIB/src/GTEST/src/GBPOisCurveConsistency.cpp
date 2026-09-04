@@ -52,7 +52,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( GBP_OisCurve_Consistency, CONSISTENCY_GBPOIS_OisSwap_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the AQO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    oisSwapTerms    = curveCalibrationOisSwapTenors( curveObjectGBPOIS_ ); 
         std::vector<double>         oisSwapParRates = curveCalibrationOisSwapParRates( curveObjectGBPOIS_ );
         AQ_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
@@ -93,7 +93,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( GBP_OisCurve_Consistency, CONSISTENCY_GBPOIS_LiborOIS_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the AQO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    liborOisTerms    = curveCalibrationLiborOisTenors( curveObjectGBPOIS_ ); 
         std::vector<double>         liborOisSpreads  = curveCalibrationLiborOisSpreads( curveObjectGBPOIS_ );
         AQ_REQUIRE( liborOisTerms.size() == liborOisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Libor OIS Terms and Spreads" )

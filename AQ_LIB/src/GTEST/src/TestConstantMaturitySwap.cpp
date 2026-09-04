@@ -28,7 +28,7 @@
 using etrading::ReadDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR			  "ETrading/AQObjects/TestAQOConstantMaturitySwap/"
+#define TEST_DIR			  "ETrading/AQObjects/TestAQObjConstantMaturitySwap/"
 
 
 namespace
@@ -73,18 +73,18 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryAqObjCurvesCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createAQOCurveFromFileName( const AQLString& curveCalibrationFileName )
+	void createAQObjCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
-		std::string aqoCurveGeneratorName	= curveCalibrationFileObj[ "aqoCurveGeneratorName" ];
-		std::string aqoCurveMarketDataName	= curveCalibrationFileObj[ "aqoCurveMarketDataName" ];
+		std::string aqObjCurveGeneratorName	= curveCalibrationFileObj[ "aqObjCurveGeneratorName" ];
+		std::string aqObjCurveMarketDataName	= curveCalibrationFileObj[ "aqObjCurveMarketDataName" ];
 		std::string domesticCurveCollection	= curveCalibrationFileObj[ "domesticCurveCollection" ];
 		std::string foreignCurveCollection	= curveCalibrationFileObj[ "foreignCurveCollection" ];
 		
-		std::string objectName = aqoCurveGeneratorName;
+		std::string objectName = aqObjCurveGeneratorName;
 
-		validation::tryAqObjCurvesCalibrate(	objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjCurvesCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -93,22 +93,22 @@ namespace
 	*/
 	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
-		google_test::createAQOMarketDataObjectFromFileName( marketDataFileName );
-		createAQOCurveFromFileName( curveCalibrationFileName );
+		google_test::createAQObjMarketDataObjectFromFileName( marketDataFileName );
+		createAQObjCurveFromFileName( curveCalibrationFileName );
 	}
 
-	void createAQOConstantMaturitySwapFromFileName( const AQLString& cmsFileName )
+	void createAQObjConstantMaturitySwapFromFileName( const AQLString& cmsFileName )
 	{
 		etrading::ReadDataFile::Load constantMaturitySwapFileObj = etrading::ReadDataFile::Load( cmsFileName );
 		
 		const std::string swapName				= constantMaturitySwapFileObj[ "swapName" ];
-		const std::string aqoswapGeneratorName	= constantMaturitySwapFileObj[ "swapGeneratorName" ];
+		const std::string aqObjswapGeneratorName	= constantMaturitySwapFileObj[ "swapGeneratorName" ];
 		const AQLStringMatrix expressionLVB		= constantMaturitySwapFileObj[ "expressionLVB" ];
 		const AQLStringMatrix swapPropertiesLVB	= constantMaturitySwapFileObj[ "swapPropertiesLVB" ];
 		const bool isXccySwap					= constantMaturitySwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= constantMaturitySwapFileObj[ "validateKeys" ];
 		
-		validation::tryAqObjSwapsCreateFromGenerator( swapName, aqoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		validation::tryAqObjSwapsCreateFromGenerator( swapName, aqObjswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 }
 
@@ -124,7 +124,7 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
 		setUpGeneratorCurve( GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
 
-		createAQOConstantMaturitySwapFromFileName( GEN_CONSTANT_MATURITY_SWAP );
+		createAQObjConstantMaturitySwapFromFileName( GEN_CONSTANT_MATURITY_SWAP );
 
 		// Calculate the PV from hazard rate
 
@@ -147,7 +147,7 @@ namespace google_test
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
 		setUpGeneratorCurve( GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );
 
-		createAQOConstantMaturitySwapFromFileName( GEN_CONSTANT_MATURITY_SWAP );
+		createAQObjConstantMaturitySwapFromFileName( GEN_CONSTANT_MATURITY_SWAP );
 
 		// Calculate the Par Spread from hazard rate
 

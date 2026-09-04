@@ -19,7 +19,7 @@ namespace validation
      */
     AQLString tryAqToolsClearEntityPool();
 
-    /* @brief	Clear the object pool and the AQO object cache
+    /* @brief	Clear the object pool and the AQObj object cache
      *  @return	A notification string
      */
     AQLString tryAqObjClearCache();
@@ -37,7 +37,7 @@ namespace validation
     */
     AQLString tryAqToolsLoadStaticData( const AQLString& filepath );
 	
-    /* @brief			validation interface for loading the optional AQO configuration files
+    /* @brief			validation interface for loading the optional AQObj configuration files
     *  @return			A notification string
     */
 	AQLString tryAqToolsLoadConfigurationFiles();

@@ -55,7 +55,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::OIS_MARKETDATA,    // Calibration Instrument: OIS Outright Swaps
                                        {"1W", "1M", "2M", "3M", "4M", "5M", "6M", "9M", "1Y", "18M", "2Y" }, // Calibration Tenors
-                                       curveObjectJPYOIS_,        // AQOCurveName - Extract Calibration Data from this curve object
+                                       curveObjectJPYOIS_,        // AQObjCurveName - Extract Calibration Data from this curve object
                                        "JPYYC_LCH",               // CurveCollection - For Repricing
                                        "20180829",                // Swap Effective Date
                                        "JPY_OIS",                 // Swap Generator
@@ -68,7 +68,7 @@ namespace google_test
     //    // Function will throw on failure or if no tests are run
     //    repriceCalibrationInstruments( etrading::CurveMarketDataEnum::LIBOR_OIS_BASISSPREAD_MARKETDATA,    // Calibration Instrument: LIBOR-OIS Basis Swaps
     //                                   { "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y", "25Y", "30Y", "25Y", "40Y" },  // Calibration Tenors
-    //                                   curveObjectJPYOIS_,        // AQOCurveName - Extract Calibration Data from this curve object
+    //                                   curveObjectJPYOIS_,        // AQObjCurveName - Extract Calibration Data from this curve object
     //                                   "JPYYC_LCH",               // CurveCollection - For Repricing
     //                                   "20180829",                // Swap Effective Date
     //                                   "JPY_BASIS_LIBOROIS",      // Swap Generator
@@ -81,7 +81,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::SWAP_MARKETDATA,    // Calibration Instrument: STD Interest Rate Swap
                                        { "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "11Y", "12Y", "15Y", "20Y", "25Y", "30Y", "40Y", "50Y" }, // Calibration Tenors                                  
-                                       curveObjectJPYStd6ML_,      // AQOCurveName - Extract Calibration Data from this curve object
+                                       curveObjectJPYStd6ML_,      // AQObjCurveName - Extract Calibration Data from this curve object
                                        "JPYYC_LCH",                // CurveCollection - For Repricing
                                        "20180829",                 // Swap Effective Date
                                        "JPY_6ML",                  // Swap Generator
@@ -94,7 +94,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA,    // Calibration Instrument: Tenor Basis Swap
                                        { "1Y", "18M", "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y", "25Y", "30Y" }, // Calibration Tenors                                  
-                                       curveObjectJPYBasis3ML_,     // AQOCurveName - Extract Calibration Data from this curve object
+                                       curveObjectJPYBasis3ML_,     // AQObjCurveName - Extract Calibration Data from this curve object
                                        "JPYYC_LCH",                 // CurveCollection - For Repricing
                                        "20180829",                  // Swap Effective Date
                                        "JPY_BASIS_3X6",             // Swap Generator
@@ -107,7 +107,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA,    // Calibration Instrument: Tenor Basis Swap
                                        { "1Y", "18M", "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y", "25Y", "30Y" }, // Calibration Tenors                                  
-                                       curveObjectJPYBasis1ML_,      // AQOCurveName - Extract Calibration Data from this curve object
+                                       curveObjectJPYBasis1ML_,      // AQObjCurveName - Extract Calibration Data from this curve object
                                        "JPYYC_LCH",                  // CurveCollection - For Repricing
                                        "20180829",                   // Swap Effective Date
                                        "JPY_BASIS_1X6",              // Swap Generator

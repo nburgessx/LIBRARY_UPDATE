@@ -7,7 +7,7 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "StructuredExceptionHandler.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;

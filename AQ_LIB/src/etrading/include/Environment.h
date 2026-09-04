@@ -36,7 +36,7 @@
 #include "FreeObject.h"
 #include "TableDateDouble.h"
 #include "CurveBuildProperties.h"
-#include "AQOCurve.h"
+#include "AQObjCurve.h"
 #include "SerializeContainedData.h"
 #include "StaticStructureStore.h"
 #include "EnvironmentPool.h"
@@ -72,7 +72,7 @@ namespace etrading
     class Environment;
 
     template <typename T>
-    environment_implementation::CachedObjectFunctionSet functionTupleForAQO()
+    environment_implementation::CachedObjectFunctionSet functionTupleForAQObj()
     {
         return std::make_tuple(
                    &environment_implementation::has<T>,
@@ -111,7 +111,7 @@ namespace etrading
     // @Environment : a class that represents the context of an individual client
     class Environment : public HasObjectsOfType<FreeObject>,
                         public HasObjectsOfType<TableDateDouble>,
-                        public HasObjectsOfType<AQOCurve>,
+                        public HasObjectsOfType<AQObjCurve>,
                         public HasObjectsOfType<CurveBuildProperties>,
                         public HasObjectsOfType<StandAlone>,
                         public HasObjectsOfType<BaseObject>,
@@ -182,33 +182,33 @@ namespace etrading
 								 SABR_MODEL,
 								 SABR_MARKETDATA};
 
-                functionsForCachedObjectMap_[CURVE_DEPRECATED]          = functionTupleForAQO<AQOCurve>();
-                functionsForCachedObjectMap_[TABLE]                     = functionTupleForAQO<TableDateDouble>();
-                functionsForCachedObjectMap_[CURVE_BUILD_PROPERTIES]    = functionTupleForAQO<CurveBuildProperties>();
-                functionsForCachedObjectMap_[FREE_OBJECT]               = functionTupleForAQO<FreeObject>();
-                functionsForCachedObjectMap_[EXAMPLE_STAND_ALONE]       = functionTupleForAQO<StandAlone>();
-                functionsForCachedObjectMap_[EXAMPLE_BASE]              = functionTupleForAQO<BaseObject>();
-                functionsForCachedObjectMap_[SWAP_OBJECT]               = functionTupleForAQO<Swap>(); 
-                functionsForCachedObjectMap_[SWAP_GENERATOR]            = functionTupleForAQO<SwapGenerator>(); 
-				functionsForCachedObjectMap_[SCHEDULE]                  = functionTupleForAQO<Schedule>(); 
-				functionsForCachedObjectMap_[LEG]                       = functionTupleForAQO<Leg>(); 
-                functionsForCachedObjectMap_[BOND]                      = functionTupleForAQO<Bond>(); 
-				functionsForCachedObjectMap_[CURVE_DATA]                = functionTupleForAQO<CurveData>(); 
-                functionsForCachedObjectMap_[FIXING_TABLE]              = functionTupleForAQO<FixingTable>(); 
-				functionsForCachedObjectMap_[CURVE_GENERATOR]           = functionTupleForAQO<CurveGenerator>();
-				functionsForCachedObjectMap_[CURVE_MARKETDATA]          = functionTupleForAQO<CurveMarketData>();
-				functionsForCachedObjectMap_[CURVE]                     = functionTupleForAQO<SingleCurveObject>();
-				functionsForCachedObjectMap_[MULTICURVE]				= functionTupleForAQO<MultiCurveObject>();
-				functionsForCachedObjectMap_[FX_CURVE]                  = functionTupleForAQO<FXCurve>();
-				functionsForCachedObjectMap_[BOND_GENERATOR]            = functionTupleForAQO<BondGenerator>();
-				functionsForCachedObjectMap_[OPTION]					= functionTupleForAQO<Option>();
-				functionsForCachedObjectMap_[VOLATILITY]				= functionTupleForAQO<Volatility>();
-				functionsForCachedObjectMap_[CREDIT_MODEL]				= functionTupleForAQO<CreditModel>();
-				functionsForCachedObjectMap_[CREDIT_BASKET_MODEL]		= functionTupleForAQO<CreditBasketModel>();
-				functionsForCachedObjectMap_[BOND_CURVE]				= functionTupleForAQO<BondCurve>();
-				functionsForCachedObjectMap_[INFLATION_CURVE]			= functionTupleForAQO<InflationCurve>();
-				functionsForCachedObjectMap_[SABR_MODEL]				= functionTupleForAQO<SabrModel>();
-				functionsForCachedObjectMap_[SABR_MARKETDATA]		    = functionTupleForAQO<SabrMarketData>();
+                functionsForCachedObjectMap_[CURVE_DEPRECATED]          = functionTupleForAQObj<AQObjCurve>();
+                functionsForCachedObjectMap_[TABLE]                     = functionTupleForAQObj<TableDateDouble>();
+                functionsForCachedObjectMap_[CURVE_BUILD_PROPERTIES]    = functionTupleForAQObj<CurveBuildProperties>();
+                functionsForCachedObjectMap_[FREE_OBJECT]               = functionTupleForAQObj<FreeObject>();
+                functionsForCachedObjectMap_[EXAMPLE_STAND_ALONE]       = functionTupleForAQObj<StandAlone>();
+                functionsForCachedObjectMap_[EXAMPLE_BASE]              = functionTupleForAQObj<BaseObject>();
+                functionsForCachedObjectMap_[SWAP_OBJECT]               = functionTupleForAQObj<Swap>(); 
+                functionsForCachedObjectMap_[SWAP_GENERATOR]            = functionTupleForAQObj<SwapGenerator>(); 
+				functionsForCachedObjectMap_[SCHEDULE]                  = functionTupleForAQObj<Schedule>(); 
+				functionsForCachedObjectMap_[LEG]                       = functionTupleForAQObj<Leg>(); 
+                functionsForCachedObjectMap_[BOND]                      = functionTupleForAQObj<Bond>(); 
+				functionsForCachedObjectMap_[CURVE_DATA]                = functionTupleForAQObj<CurveData>(); 
+                functionsForCachedObjectMap_[FIXING_TABLE]              = functionTupleForAQObj<FixingTable>(); 
+				functionsForCachedObjectMap_[CURVE_GENERATOR]           = functionTupleForAQObj<CurveGenerator>();
+				functionsForCachedObjectMap_[CURVE_MARKETDATA]          = functionTupleForAQObj<CurveMarketData>();
+				functionsForCachedObjectMap_[CURVE]                     = functionTupleForAQObj<SingleCurveObject>();
+				functionsForCachedObjectMap_[MULTICURVE]				= functionTupleForAQObj<MultiCurveObject>();
+				functionsForCachedObjectMap_[FX_CURVE]                  = functionTupleForAQObj<FXCurve>();
+				functionsForCachedObjectMap_[BOND_GENERATOR]            = functionTupleForAQObj<BondGenerator>();
+				functionsForCachedObjectMap_[OPTION]					= functionTupleForAQObj<Option>();
+				functionsForCachedObjectMap_[VOLATILITY]				= functionTupleForAQObj<Volatility>();
+				functionsForCachedObjectMap_[CREDIT_MODEL]				= functionTupleForAQObj<CreditModel>();
+				functionsForCachedObjectMap_[CREDIT_BASKET_MODEL]		= functionTupleForAQObj<CreditBasketModel>();
+				functionsForCachedObjectMap_[BOND_CURVE]				= functionTupleForAQObj<BondCurve>();
+				functionsForCachedObjectMap_[INFLATION_CURVE]			= functionTupleForAQObj<InflationCurve>();
+				functionsForCachedObjectMap_[SABR_MODEL]				= functionTupleForAQObj<SabrModel>();
+				functionsForCachedObjectMap_[SABR_MARKETDATA]		    = functionTupleForAQObj<SabrMarketData>();
 			};
         } const initializer_;
     public:
@@ -296,7 +296,7 @@ namespace etrading
         template <typename Z>
         std::shared_ptr<Z> accessObject( const std::string& objectName )
         {
-			const std::string::size_type indexInString = objectName.find_last_of( AQO_KEY::AQO_OBJECT_COUNTER_DELIMITER );
+			const std::string::size_type indexInString = objectName.find_last_of( AQOBJ_KEY::AQOBJ_OBJECT_COUNTER_DELIMITER );
 			const std::string objectNameWithoutCounter = indexInString == std::string::npos ? objectName :  objectName.substr( 0, indexInString );
 
             auto& objectStore = this->getCache<Z>();
@@ -361,14 +361,14 @@ namespace etrading
 	// Template Specializations
 	// ------------------------
 
-    // specialization for AQOCurve, this delegates to 
-    // const unsigned int environment_implementation::eraseAllObjects<AQOCurve>( Environment& env )
+    // specialization for AQObjCurve, this delegates to 
+    // const unsigned int environment_implementation::eraseAllObjects<AQObjCurve>( Environment& env )
     // required because we need to clear the corresponding EntityPool Curve
     template <>
-    const unsigned int Environment::deleteAllObjects<AQOCurve>();
+    const unsigned int Environment::deleteAllObjects<AQObjCurve>();
 
 	template <>
-    const bool Environment::deleteObject<AQOCurve>( const std::string& objectName );
+    const bool Environment::deleteObject<AQObjCurve>( const std::string& objectName );
 
 
     // Place implementations here, to avoid problem with incomplete types in EnvironmentImplementation.h

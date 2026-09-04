@@ -76,13 +76,13 @@ namespace
 namespace google_test
 {
 
-	/* @brief			Builds AQO MarketData Object by invoking the tryAqObjCurvesMarketDataCreate() API.
+	/* @brief			Builds AQObj MarketData Object by invoking the tryAqObjCurvesMarketDataCreate() API.
 	*                   The code loops over all of the capitalized data keys in the specified filename and uses
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*  @return			Handle to the market data object
 	*/
-	std::string createAQOMarketDataObjectFromFileName(const AQLString& marketDataFileName)
+	std::string createAQObjMarketDataObjectFromFileName(const AQLString& marketDataFileName)
 	{
 		etrading::ReadDataFile::Load marketDataFileObj = etrading::ReadDataFile::Load(marketDataFileName);
 

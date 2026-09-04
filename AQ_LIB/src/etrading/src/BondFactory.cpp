@@ -1,7 +1,7 @@
 // BondFactory.cpp
 
 /*
- * @brief			Bond Factory to Create Bond AQO objects
+ * @brief			Bond Factory to Create Bond AQObj objects
  * @Created:		3rd February 2017
  * @Author:			Nicholas Burgess
  * @Department:		AlgoQuantHub Quant Research and Analytics
@@ -15,7 +15,7 @@
 #include "FloatingBond.h"
 #include "CommonConstants.h"
 #include "LabelValueBlockValidation.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 
 #include <string>
 #include <vector>

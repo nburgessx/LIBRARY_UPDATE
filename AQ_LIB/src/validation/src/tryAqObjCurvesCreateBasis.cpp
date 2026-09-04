@@ -29,7 +29,7 @@
 #include "Environment.h"
 #include "EnvironmentPool.h"
 #include "ObjectUtilities.h"
-#include "AQOCurve.h"
+#include "AQObjCurve.h"
 #include "EnvironmentUtilities.h"
 #include "DateUtilities.h"
 #include "CurveResultsContainer.h"
@@ -50,7 +50,7 @@ namespace validation
     *  @param [in]		fxFwdRates			Forward FX rates
     *  @param [in]		spotFxRates			Spot FX rates
     */
-    const AQLString tryAqObjCurvesCreateBasis( const std::string& aqoCurveName,
+    const AQLString tryAqObjCurvesCreateBasis( const std::string& aqObjCurveName,
                                              const AQLString& curveCollectionInput,
                                              const AQLString& staticDataTableInput,
                                              const AQLString& curveIndexInput,
@@ -63,7 +63,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
         
-        // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
+        // AQObj Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Ensure Curve Name Data is in uppercase
@@ -86,7 +86,7 @@ namespace validation
         {
             CreateDataFile file( decorateCurvename( "tryAqObjCurvesCalibrateBasis_inputs", curveCollection, staticDataTable ) );
             file.write( "generatorFunction", "tryAqObjCurvesCreateBasis" );
-            file.write( "aqoCurveName", aqoCurveName );
+            file.write( "aqObjCurveName", aqObjCurveName );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", staticDataTable );
             file.write( "curveIndex", curveIndex );
@@ -181,7 +181,7 @@ namespace validation
 
         const std::string staticDataName = etrading::trim_to_upper( staticDataTable.getCString() );
 
-        const std::string baseOfCurveName = aqoCurveName;
+        const std::string baseOfCurveName = aqObjCurveName;
         const std::string	newCurveName = baseOfCurveName;
 
 
@@ -211,12 +211,12 @@ namespace validation
 			    oisCompoundingMethod, busDayAdjustment, isLeg2 ?  leg2calendar : leg1calendar, {}, true );
 
         // call this paragraph of code if you wish to populate discount factors for every day
-        // this method retrieves 51 years of discount factors and places it in the AQOCurve
+        // this method retrieves 51 years of discount factors and places it in the AQObjCurve
         boost::gregorian::date endDate  = asOfDate + boost::gregorian::years( 51 );
         auto numberOfdaysBetween        = boost::gregorian::date_period( asOfDate, endDate ).length().days();
         
 
-        // Calculate Discount Factors and Forwards & Set AQO Curve Container
+        // Calculate Discount Factors and Forwards & Set AQObj Curve Container
         // ----------------------------------------------------------------
         
         // Calculate the year fractions
@@ -232,26 +232,26 @@ namespace validation
                                                                            false,
                                                                            staticDataTable );
 
-        // Set the AQO Curve; yearFractions, discountFactors and Curve build properties (cbp)
-        etrading::AQOCurve aqoCurve( newCurveName, massiveYearFractionVector, massiveDFVector, stdCurveBuildProperties );
+        // Set the AQObj Curve; yearFractions, discountFactors and Curve build properties (cbp)
+        etrading::AQObjCurve aqObjCurve( newCurveName, massiveYearFractionVector, massiveDFVector, stdCurveBuildProperties );
         
         // Get the Fixing Dates
-        const auto& aqoFixingDates = aqoCurve.getDates();
-        auto fixingDatesAsMlibDates = etrading::toAQLDatesFromGregorianDates( aqoFixingDates );
+        const auto& aqObjFixingDates = aqObjCurve.getDates();
+        auto fixingDatesAsMlibDates = etrading::toAQLDatesFromGregorianDates( aqObjFixingDates );
         
         // Get the Forward Rates from the Object Pool Curve Engine
         auto massiveFwdRatesVector
             = etrading::getCurveForwardRates( fixingDatesAsMlibDates, curveCollection, curveIndexCopy ); // Note we use curveIndexCopy, which is actually the staticDataTable
 
-        // Set the AQO Curve; dates, discountFactors and forwardRates ... done twice to resolve a date consistency issue
-        aqoCurve.setData( aqoCurve.getDates(), aqoCurve.getDiscountFactors(), massiveFwdRatesVector );
+        // Set the AQObj Curve; dates, discountFactors and forwardRates ... done twice to resolve a date consistency issue
+        aqObjCurve.setData( aqObjCurve.getDates(), aqObjCurve.getDiscountFactors(), massiveFwdRatesVector );
 
         // ----------------------------------------------------------------
 
 
-        etrading::moveToCache( std::move( aqoCurve ) );
+        etrading::moveToCache( std::move( aqObjCurve ) );
 
-        auto& default_env = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        auto& default_env = etrading::getObjectStore<etrading::AQObjCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         if( default_env.has( newCurveName ) )
         {
             AQLString ret = newCurveName.c_str();
@@ -264,7 +264,7 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Unable to create AQOCurve named %s" ) % newCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Unable to create AQObjCurve named %s" ) % newCurveName.c_str() ).str().c_str() );
         }
 
         /*

@@ -10,7 +10,7 @@
 #include "ContainerUtilities.h"
 #include "CurveValidation.h"
 #include "CurveUtilities.h"
-#include "AQOUtilities.h"			// includes getCurveCollectionFromHandle()
+#include "AQObjUtilities.h"			// includes getCurveCollectionFromHandle()
 
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;

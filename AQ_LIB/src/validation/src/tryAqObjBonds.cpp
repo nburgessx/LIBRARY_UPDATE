@@ -2,7 +2,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "ObjectUtilities.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "RecordMacros.h"
 #include "BondFactory.h"
 #include "Bond.h"
@@ -37,7 +37,7 @@ namespace validation
         // Use the Bond Factory to validate and create the bond
         etrading::BondPtr bondPtr = etrading::createBond( bondObjectName, bondLVB, scheduleLVB, validateKeys ); // bondSchedule = nullptr; The schedule class will build the schedule object if null. Note sometimes the end-user will want to provide the schedule
 
-        // Register the Bond in the AQO object cache
+        // Register the Bond in the AQObj object cache
         etrading::registerToCache< etrading::Bond >( bondPtr );
 
         std::string result = bondObjectName;
@@ -67,7 +67,7 @@ namespace validation
 		// Use the Bond Factory to validate and create the bond
         etrading::BondPtr bondPtr = etrading::createBondFromGenerator( bondObjectName, bondGeneratorName, expressionLVB, validateKeys ); 
 
-		// Register the Bond in the AQO object cache
+		// Register the Bond in the AQObj object cache
         etrading::registerToCache< etrading::Bond >( bondPtr );
 		
 		std::string result = bondObjectName;
@@ -1045,7 +1045,7 @@ namespace validation
 	}
 
 
-	/* @brief Creates an AQOBondGenerator object, containing all of the curve properties.
+	/* @brief Creates an AQObjBondGenerator object, containing all of the curve properties.
 	 * @param [in] objectName        The name of the Curve Configuration object
 	 * @param [in] propertyNames     A vector of property names corresponding to each label-value block of properties
 	 * @param [in] infoBlocks        A vector of containing the label-value blocks of properties
@@ -1128,7 +1128,7 @@ namespace validation
 		VALID_EXCEPTION_END
     };
 
-	/* @brief Displays the specified property of a AQOBondGenerator. If propertyName is blank, all properties are returned.
+	/* @brief Displays the specified property of a AQObjBondGenerator. If propertyName is blank, all properties are returned.
 	 * @param [in] objectName        The BondGenerator object you wish to display
 	 * @param [in] propertyName      The name of the property label-value block that you wish to display
 	 * @param [out]                  A VariantMatrix containing a LabelValue block of properties
@@ -1140,7 +1140,7 @@ namespace validation
 		// Record Inputs for logs, tests and playback
         RECORD_INPUTS( objectName, propertyKey );
 		
-		// Attempt to retrieve AQOCurveGenerator object from the AQO object cache
+		// Attempt to retrieve AQObjCurveGenerator object from the AQObj object cache
 		auto bondGenerator = etrading::getBondGenerator( objectName );
 
 		// extract just the data for the specified propertyKey
@@ -1165,7 +1165,7 @@ namespace validation
 		// Use the Bond Factory to validate and create the bond
 		etrading::BondPtr bondPtr = etrading::createBondFromSingleLVB(bondObjectName, bondLVB, validateKeys);
 		
-		// Register the Bond in the AQO object cache
+		// Register the Bond in the AQObj object cache
 		etrading::registerToCache< etrading::Bond >(bondPtr);
 
 		std::string result = bondObjectName;
@@ -1661,7 +1661,7 @@ namespace validation
 		// Use the Bond Factory to validate and create the bond
 		etrading::BondPtr notionalBond = etrading::createBondFromSingleLVB(bondObjectName, bondLVB, false);
 
-		// Register the Bond in the AQO object cache
+		// Register the Bond in the AQObj object cache
 		etrading::registerToCache< etrading::Bond >(notionalBond);
 
 		std::string result = bondObjectName;

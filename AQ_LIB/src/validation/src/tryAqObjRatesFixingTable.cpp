@@ -68,7 +68,7 @@ namespace validation
         }
         else
         {
-            std::string errString =  ( boost::format( "Unable to create AQO Fixing Table named %s" ) % tableName.c_str() ).str();
+            std::string errString =  ( boost::format( "Unable to create AQObj Fixing Table named %s" ) % tableName.c_str() ).str();
             if ( CreateDataFile::recordEnabled() )
             {
 				CreateDataFile file( decorateFilename( "tryAqObjRatesFixingTableCreate_outputs", tableName.c_str() ) );
@@ -108,7 +108,7 @@ namespace validation
 
 		// Check Object exists on the cache
 		auto ptrCachedObject = etrading::Environment::defaultEnv().accessObject<etrading::FixingTable>( tableName );
-		AQ_REQUIRE( ptrCachedObject != nullptr, "Unable to store AQO Fixing Table named " + tableName );
+		AQ_REQUIRE( ptrCachedObject != nullptr, "Unable to store AQObj Fixing Table named " + tableName );
 
 		std::string result = tableName;
 

@@ -14,20 +14,20 @@ namespace etrading
     class DualBootstrappedCurveObject: public MultiCurveObject
     {
 	public:
-		/* @brief Main Constructor of the AQO Dual Bootstrapped Curve object
-		*  @param [in]	objectName				The AQO object handle name for the curve object
+		/* @brief Main Constructor of the AQObj Dual Bootstrapped Curve object
+		*  @param [in]	objectName				The AQObj object handle name for the curve object
 		*  @param [in]  curveCollection			Curve collection to which calibrated curves belong
 		*  @param [in]  swapCurveGeneratorName  The name of the Swap curve generator that defines Swap curve's conventions
 		*  @param [in]  oisCurveGeneratorName   The name of the OIS curve generator that defines OIS curve's conventions
-		*  @param [in]  aqoSwapMarketObj		Object that encapsulates all of Swap curve's market data
-		*  @param [in]  aqoOISMarketObj			Object that encapsulates all of OIS curve's market data
+		*  @param [in]  aqObjSwapMarketObj		Object that encapsulates all of Swap curve's market data
+		*  @param [in]  aqObjOISMarketObj			Object that encapsulates all of OIS curve's market data
 		*/
 		DualBootstrappedCurveObject(const std::string& objectName,
 									const std::string& curveCollection,
 									const std::string& swapCurveGeneratorName,
 									const std::string& oisCurveGeneratorName,
-									const std::string& aqoSwapMarketObj,
-									const std::string& aqoOISMarketObj);
+									const std::string& aqObjSwapMarketObj,
+									const std::string& aqObjOISMarketObj);
 		
 		/* @brief Constructor used by deserialization
 		* @param[in] objectName     The name of this CurveMarketData instance
@@ -96,9 +96,9 @@ namespace etrading
 
 		/* @brief	Converts the internal FreeObject into a group of string parameters.
 		*			Used when de-serialising the curves.
-		*  @param[out]	objectName				The AQO object handle name for the curve object
+		*  @param[out]	objectName				The AQObj object handle name for the curve object
 		*  @param[out]	curveGeneratorNames		The curve generators containing the conventions used to build this curve
-		*  @param[out]	curveMarketDataNames	The AQO object handles of the objects containing the market data for this curve
+		*  @param[out]	curveMarketDataNames	The AQObj object handles of the objects containing the market data for this curve
 		*  @param[out]	domesticCurveCollection	The collection which this curve will be placed in, once built
 		*  @param[out]	foreignCurveCollection	The collection containing foreign curve dependencies
 		*/

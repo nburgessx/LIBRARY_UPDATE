@@ -77,7 +77,7 @@ namespace google_test
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
 
-                // Register the Bond in the AQO object cache
+                // Register the Bond in the AQObj object cache
                 etrading::registerToCache< etrading::Bond >( myBondPtr );
 
                 // Get the Bond Price Inputs
@@ -132,7 +132,7 @@ namespace google_test
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
 
-                // Register the Bond in the AQO object cache
+                // Register the Bond in the AQObj object cache
                 etrading::registerToCache< etrading::Bond >( myBondPtr );
 
                 // Get the Bond Price Inputs
@@ -187,7 +187,7 @@ namespace google_test
                 // Create the Bond
                 etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputFilename.getCString() );
 
-                // Register the Bond in the AQO object cache
+                // Register the Bond in the AQObj object cache
                 etrading::registerToCache< etrading::Bond >( myBondPtr );
 
                 // Get the Bond Price Inputs

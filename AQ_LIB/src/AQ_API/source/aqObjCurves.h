@@ -5,20 +5,20 @@
 #include "SwigTypes.h"	// For SWIG_STRINGMATRIX which manages the AQLStringMatrix idiosyncrasies type for R API
 
 /* @brief			swig interface for aqObjCurvesDisplay
-*  @param [in]		curveHandle		    AQO curve handle or object name
-*  @return			StandardStringMatrix of AQO Curve static and market data inputs
+*  @param [in]		curveHandle		    AQObj curve handle or object name
+*  @return			StandardStringMatrix of AQObj Curve static and market data inputs
 */
 SWIG_STRINGMATRIX aqObjCurvesDisplay(const std::string& curveHandle);
 
 /* @brief			swig interface for aqObjCurvesMarketDataDisplay
-*  @param [in]		marketDataObjectName	AQO curve market data handle or object name
+*  @param [in]		marketDataObjectName	AQObj curve market data handle or object name
 *  @param [in]		marketDataKey			The specific market data block of interest, for example "SWAPS"
 *  @return			A string matrix containing the specified market data block.
 */
 SWIG_STRINGMATRIX aqObjCurvesMarketDataDisplay(const std::string& marketDataObjectName, const std::string marketDataKey );
 
 /* @brief			swig interface for aqObjCurvesDisplayMarketDataFromCurve
-*  @param [in]		curveObjectName			AQO curve data handle or object name
+*  @param [in]		curveObjectName			AQObj curve data handle or object name
 *  @param [in]		marketDataKey			The specific market data block of interest, for example "SWAPS"
 *  @return			A string matrix containing the specified market data block.
 */
@@ -26,21 +26,21 @@ SWIG_STRINGMATRIX aqObjCurvesMarketDataDisplayFromCurve(const std::string& curve
 
 
 /* @brief Builds a curve using a CurveGenerator object and a CurveMarketData object
-* @param [in] aqoCurveGeneratorName     The name of the AQOCurveGenerator object to use
-* @param [in] aqoCurveMarketDataName    The name of the AQOCurveMarketData object to use
+* @param [in] aqObjCurveGeneratorName     The name of the AQObjCurveGenerator object to use
+* @param [in] aqObjCurveMarketDataName    The name of the AQObjCurveMarketData object to use
 * @param [in] domesticCurveCollection   The curveCollection this curve will be stored in ( The Target CurveCollection )
 * @param [in] foreignCurveCollection    The curveCollection containing foreign curve dependencies ( The Against CurveCollection )
 *                                       Allowed to be blank if this is a single CCY curve (OIS, STD, TenorBasis)
 * @param [out]                          The curve build status
 */
 std::string aqObjCurvesCalibrate( const std::string& objectName,
-								 const std::string& aqoCurveGeneratorName,
-								 const std::string& aqoCurveMarketDataName,
+								 const std::string& aqObjCurveGeneratorName,
+								 const std::string& aqObjCurveMarketDataName,
 								 const std::string& domesticCurveCollection,
 								 const std::string& foreignCurveCollection );
 
 
-/* @brief Creates a AQOCurveMarketData object, containing all of the curve properties.
+/* @brief Creates a AQObjCurveMarketData object, containing all of the curve properties.
 * @param [in] objectName	The name of the Market Data object
 * @param [in] key1			The name of datablock1 For example "MARKETDATAPROPERTIES"
 * @param [in] value1		The contents of datablock1 
@@ -59,7 +59,7 @@ std::string aqObjCurvesMarketDataCreate( const std::string& objectName,
 										const std::string& key4, const SWIG_STRINGMATRIX& value4) ;
 
 
-/* @brief Creates a AQOCurveMarketData object, containing all of the curve properties.
+/* @brief Creates a AQObjCurveMarketData object, containing all of the curve properties.
 *			NOTE: This function not work correctly in R because R cannot cope with vectors of vectors.
 *			In particular the vector<SWIG_STRINGMATRIX> parameter is a problem in R.
 * @param [in] objectName	The name of the Market Data object

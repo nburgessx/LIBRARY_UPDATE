@@ -236,7 +236,7 @@ customisation surface:
   is ~90% of a booking; a generator carries the conventions so a user books a USD
   swap from `notional, effective, maturity, rate, pay/receive` (or a UST from
   `notional, issue/settle, maturity, coupon`) instead of hand-building
-  conventions. Consumed by the AQO object layer: generator + overrides → handle.
+  conventions. Consumed by the AQObj object layer: generator + overrides → handle.
   Seeds: `resources\config\{SWAP,BOND,CURVE}_GENERATOR`.
 
 Generator JSON and calendar config get rebranded like code (legacy names,
@@ -298,8 +298,8 @@ framework only — *not* bond/credit curves), `Vols`, `Rates`, `Swaps`, `Bonds`
 | `LA`, `LB` ("Legacy Analytics" type/object prefixes) | **`AQL`** ("AQ Legacy") — marks legacy-to-deprecate, greppable vs new `AQ*` |
 | `MA`, `MB` (type/object prefixes) | `AQ` — confirm per project (`math` had zero real ones) |
 | `MLIB_*` macros | `AQ_*` |
-| LWO (light-weight objects) — **C++ classes** | **`AQO`** prefix: `AQOCurve`, `AQOUtilities`, `AQOCurveDayAdjustment`, `AQOHandleEnums`; free predicate `isLWOObject → isAQObject`. (Not `Obj` — `AQO` is brand-consistent and distinctive.) |
-| LWO — **public function names** (`meLWO…`) | take the **category** prefix, not `AQO`: lifecycle ops → `aqObjects…`; handle-based pricing/creation → `aq<AssetCategory>…` (`aqSwapsPv`, `aqCurvesMarketDataDisplay`, …). Trading in a handle is an impl detail, not a category. |
+| LWO (light-weight objects) — **C++ classes** | **`AQObj`** prefix: `AQObjCurve`, `AQObjUtilities`, `AQObjCurveDayAdjustment`, `AQOHandleEnums`; free predicate `isLWOObject → isAQObject`. (Not `Obj` — `AQObj` is brand-consistent and distinctive.) |
+| LWO — **public function names** (`meLWO…`) | take the **category** prefix, not `AQObj`: lifecycle ops → `aqObjects…`; handle-based pricing/creation → `aq<AssetCategory>…` (`aqSwapsPv`, `aqCurvesMarketDataDisplay`, …). Trading in a handle is an impl detail, not a category. |
 | `mir*` (whole stack: `AQ_API\mir*` 58 files, `validation\tryMir*` ~35, `LAXL.cpp` 156 fns) | **delete wholesale** — self-contained, no inbound `aq`/`me` deps (0.5 call-graph) |
 | `msc*`, `LoanCalculations`, `SupervisoryRules`, `CashflowClient` + securitisation cluster | **delete — client-specific**; keep only what `Credit` genuinely needs (0.6 removal map) |
 | project `AQ_BINDINGS` | **`AQ_API`** (agreed) — update `.vcxproj`/`.filters`/`.user`, `.sln`, folder, SWIG `.i`, the 8 `generate*`/`deploy*` batch files, and the pre/post-build `<Command>` lines |
@@ -334,7 +334,7 @@ codebase in ways that compile.
   sign-off, rename from the approved list.**
 - Reviewable batches — one project or category at a time. Build between each.
 - Never rename inside string literals, third-party headers, or `.APPLES`.
-- `LWO` → `AQO`; predicate stays `isAQObject()`; never write `AQOObject`.
+- `LWO` → `AQObj`; predicate stays `isAQObject()`; never write `AQOObject`.
 
 ### 5.6 Renaming Excel functions — clean break
 
@@ -362,7 +362,7 @@ The handle framework is a deliberate feature and matters to the product:
 
 Port it from `.APPLES\APPLE\src\etrading` (`LWOCurve`, `IsLWOObject`,
 `HandleEnums`, `LWOUtilities`, `StructuredExceptionHandler` — shells already
-present in `src\etrading`), rebrand `LWO→AQO`, keep the behaviour exactly.
+present in `src\etrading`), rebrand `LWO→AQObj`, keep the behaviour exactly.
 
 ### 6.1 Port source
 

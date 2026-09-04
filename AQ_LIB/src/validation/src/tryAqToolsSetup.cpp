@@ -102,7 +102,7 @@ namespace validation
         // Disable Thread Locking - since we have a local thread guard
 		common::AQLCoreLockControl::enableThreadLocks( false );
 
-		// Initialize the Optional AQO Configuration Files - will not throw if unsuccessful
+		// Initialize the Optional AQObj Configuration Files - will not throw if unsuccessful
 		validation::tryAqToolsLoadConfigurationFiles();
 
 		return "Initialized AlgoQuantLib";
@@ -118,7 +118,7 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 
-		// Clear AQO object cache
+		// Clear AQObj object cache
 		etrading::deleteAllObjects( etrading::Environment::defaultEnv() );  
         
         // Clear the Curve- and Swap results objects
@@ -159,7 +159,7 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-    /* @brief			validation interface for the aqObjClearCache function, to clear the object pool and all the objects in the AQO object cache
+    /* @brief			validation interface for the aqObjClearCache function, to clear the object pool and all the objects in the AQObj object cache
     *  @return			A notification string
     */
     AQLString tryAqObjClearCache()
@@ -167,7 +167,7 @@ namespace validation
         // IMPORTANT: Use no thread guard because the nested try functions will invalidate the thread guard reference count
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
         
-        // Clear the AQO object cache                
+        // Clear the AQObj object cache                
         etrading::deleteAllObjects(etrading::Environment::defaultEnv());
 
         // Clear the Curve- and Swap results objects
@@ -178,10 +178,10 @@ namespace validation
         // Clear the Object Pool Cache
         tryAqToolsClearEntityPool();
         
-        // Restore the AQO Configuration Files
+        // Restore the AQObj Configuration Files
         tryAqToolsLoadConfigurationFiles();
 
-        std::string ret = "Cleared AQO and Object Pool Cache";
+        std::string ret = "Cleared AQObj and Object Pool Cache";
         AQLString retMB( ret.c_str() ) ;
         
         return retMB;
@@ -261,16 +261,16 @@ namespace validation
 	{
 		VALID_EXCEPTION_START
 
-		const AQLString* aqoStartUpConfigPath = etrading::FolderConfig::setupOptionalStartupConfig();
+		const AQLString* aqObjStartUpConfigPath = etrading::FolderConfig::setupOptionalStartupConfig();
 
-        if( aqoStartUpConfigPath == nullptr )
+        if( aqObjStartUpConfigPath == nullptr )
         {
-            return "#Error: Failed to load AQO configuration file(s)";
+            return "#Error: Failed to load AQObj configuration file(s)";
         }
 
         std::string result;
-        result = "Loaded aqo configuration files from ";
-		result += aqoStartUpConfigPath->getCString();
+        result = "Loaded aqObj configuration files from ";
+		result += aqObjStartUpConfigPath->getCString();
 		
         AQLString resultString( result.c_str() ) ;
         return resultString;

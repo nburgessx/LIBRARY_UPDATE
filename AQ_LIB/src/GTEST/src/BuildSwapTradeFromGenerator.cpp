@@ -121,7 +121,7 @@ namespace google_test
         return swapObjectName;
     }
 
-	/* @brief			Build a AQO swap object from a given test file representing a AQO swap
+	/* @brief			Build a AQObj swap object from a given test file representing a AQObj swap
 	*  @param [in]		swapInputs			The filename specifying the swap file
 	*/
 	void createSwapFromDataFile(const char* swapInputs)

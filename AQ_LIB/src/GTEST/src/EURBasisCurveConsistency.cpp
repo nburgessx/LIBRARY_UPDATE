@@ -59,7 +59,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA,    // Calibration Instrument: Tenor Basis Swap
                                        { "1Y", "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y", "25Y", "30Y" }, // Calibration Tenors                                  
-                                       curveObjectEUR1ML_,                               // AQOCurveName
+                                       curveObjectEUR1ML_,                               // AQObjCurveName
                                        "EURYC",                                          // CurveCollection
                                        "20180814",                                       // Swap Effective Date
                                        "EUR_BASIS_1X3",                                  // Swap Generator
@@ -69,7 +69,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( EUR_BasisCurve_Consistency, CONSISTENCY_EUR1ML_TenorBasis_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the AQO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    basisTerms   = curveCalibrationBasisSwapTenors( curveObjectEUR1ML_ ); 
         std::vector<double>         basisSpreads = curveCalibrationBasisSwapSpreads( curveObjectEUR1ML_ );
         AQ_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
@@ -112,7 +112,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA,    // Calibration Instrument: Tenor Basis Swap
                                        { "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "12Y", "15Y", "20Y", "25Y", "30Y" }, // Calibration Tenors                                  
-                                       curveObjectEUR12ML_,                              // AQOCurveName
+                                       curveObjectEUR12ML_,                              // AQObjCurveName
                                        "EURYC",                                          // CurveCollection
                                        "20180814",                                       // Swap Effective Date
                                        "EUR_BASIS_6X12",                                 // Swap Generator
@@ -122,7 +122,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( EUR_BasisCurve_Consistency, CONSISTENCY_EUR12ML_TenorBasis_Instrument_Repricing )
     {
-         // Extract the Swap Terms & Par Rates from the AQO Curve Object
+         // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    basisTerms   = curveCalibrationBasisSwapTenors( curveObjectEUR12ML_ ); 
         std::vector<double>         basisSpreads = curveCalibrationBasisSwapSpreads( curveObjectEUR12ML_ );
         AQ_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )

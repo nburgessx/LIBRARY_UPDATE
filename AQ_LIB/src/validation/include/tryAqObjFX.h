@@ -10,13 +10,13 @@ namespace validation
 
     /* @brief validation interface for aqObjFXCurveCreate, creating a FxCurve using a CurveGenerator object and a CurveMarketData object
 	 * @param [in] objectName                The objectName of the FxCurve
-     * @param [in] aqoCurveGeneratorName     The name of the AQOCurveGenerator object to use
-	 * @param [in] aqoCurveMarketDataName    The name of the AQOCurveMarketData object to use
+     * @param [in] aqObjCurveGeneratorName     The name of the AQObjCurveGenerator object to use
+	 * @param [in] aqObjCurveMarketDataName    The name of the AQObjCurveMarketData object to use
 	 * @param [out]                          The created FxCurve objectName
 	 */
     std::string tryAqObjFXCurveCreate(	const std::string& objectName,
-										const std::string& aqoCurveGeneratorName,
-										const std::string& aqoCurveMarketDataName );
+										const std::string& aqObjCurveGeneratorName,
+										const std::string& aqObjCurveMarketDataName );
 
 
     /* @brief validation interface for aqFXForwardsFromDiscountCurves

@@ -9,7 +9,7 @@
 
 #include "SwapUtilities.h"
 #include "ObjectUtilities.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "CoreEnumerations.h"
 #include "CrossCurrencySwap.h"
 #include "FeeLeg.h"
@@ -20,7 +20,7 @@
 #include "TotalReturnSwap.h"
 #include "CreditModel.h"
 #include "CreditBasketModel.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "ExceptionMacros.h"
 #include "tryAqCurvesDiscountFactor.h"
 #include "AQLCurveForwardRateHelpers.h"

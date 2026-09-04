@@ -1,7 +1,7 @@
 // JSONInfoBlock.h
 
 /*
- * @brief			Class to Manage the JSON InfoBlock Container for AQO Serialization
+ * @brief			Class to Manage the JSON InfoBlock Container for AQObj Serialization
  * @Created:		24th September 2018
  * @Author:			Nicholas Burgess
  * @Department:		AlgoQuantHub, Quant Research & Analytics
@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 #include "Variant.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 
 namespace etrading
 {

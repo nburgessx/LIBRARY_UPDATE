@@ -20,7 +20,7 @@ namespace validation
     *  @param [in]		swapConv			Libor swap conventions
     *  @param [in]		swapRates			Libor swap market rates
     */
-    const AQLString tryAqObjCurvesCreateOIS( const std::string& aqoCurveName,
+    const AQLString tryAqObjCurvesCreateOIS( const std::string& aqObjCurveName,
                                            const AQLString& curveCollectionInput,
                                            const AQLString& staticDataTableInput,
                                            const AQLString& curveIndexInput,

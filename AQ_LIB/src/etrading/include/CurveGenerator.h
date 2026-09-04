@@ -50,7 +50,7 @@ namespace etrading
 
 		/* @brief Builds a new CurveGenerator from an existing base CurveGenerator, with additional modified properties
 		*         This method may be viewed as a specialized type of copy constructor.
-		*  @param[in] newObjectName			The AQO object cache handle name to use for the new object
+		*  @param[in] newObjectName			The AQObj object cache handle name to use for the new object
 		*  @param[in] baseCurveGenerator	The CurveGenerator object on which to base the properties of this new object
 		*  @param[in] modifiedValuesLVB		A LabelValueBlock containing key/value pairs to update. Each key is specified in the format: PROPERTYNAME:KEYNAME.
 		*/

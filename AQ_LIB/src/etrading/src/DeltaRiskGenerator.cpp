@@ -171,7 +171,7 @@ namespace etrading
     {}
 
     /* @brief	Constructor for BaseInstruments
-    *  Note:    Non-AQO Base Case does not support Xccy Swaps
+    *  Note:    Non-AQObj Base Case does not support Xccy Swaps
     */
     DeltaGenerator::DeltaGenerator( const std::vector<BaseInstrumentPtr>& trades,
 									const std::vector<AQLString>& tradeIDs,
@@ -190,15 +190,15 @@ namespace etrading
 										  aggregateRisks_( aggregateRisks ),
 										  reportInLegCCY_( false ),
 										  riskCutOffTenor_( riskCutOffTenor ),
-										  usingAQO_( false ),
+										  usingAQObj_( false ),
 										  isUsingGlobalCurveEngine_(false)
 
     {
-		myAQOSwaps_.clear();
-		myAQOSwapLegs_.clear();
+		myAQObjSwaps_.clear();
+		myAQObjSwapLegs_.clear();
 	}
 
-	/* @brief	Constructor for AQO Swap legs
+	/* @brief	Constructor for AQObj Swap legs
     */
 	DeltaGenerator::DeltaGenerator( const std::vector<std::shared_ptr<Leg> >& swapLegs,
 									const std::vector<AQLString>& legIDs,
@@ -211,10 +211,10 @@ namespace etrading
 									const bool reportInLegCCY,
 									const std::string& riskCutOffTenor,
 									const bool useGlobalCurveEngine)
-										: myAQOSwapLegs_( swapLegs ),
+										: myAQObjSwapLegs_( swapLegs ),
 										  myInstrumentIDs_( legIDs ),
-										  myAQOFixingTables_( fixingTableNames ),
-                                          myAQOXccyFXAsOfDateRates_( xccyFXAsOfDateRates ),
+										  myAQObjFixingTables_( fixingTableNames ),
+                                          myAQObjXccyFXAsOfDateRates_( xccyFXAsOfDateRates ),
 										  bumpSpreadInstruments_( bumpSpreadInstruments ),
 										  bumpSize_( bumpSize ),
 										  bumpMode_( bumpMode ),
@@ -222,16 +222,16 @@ namespace etrading
 										  aggregateRisks_( aggregateRisks ),
 										  reportInLegCCY_( reportInLegCCY ),
 										  riskCutOffTenor_( riskCutOffTenor ),
-										  usingAQO_( true ),
-										  riskOnAQOLegs_(true),
+										  usingAQObj_( true ),
+										  riskOnAQObjLegs_(true),
 										  isUsingGlobalCurveEngine_(useGlobalCurveEngine)
     {
-		myAQOSwaps_.clear();
+		myAQObjSwaps_.clear();
 	}
 
-	/* @brief	Constructor for AQO Swaps
+	/* @brief	Constructor for AQObj Swaps
 	*/
-	DeltaGenerator::DeltaGenerator(const std::vector<SwapPtr >& aqoSwaps,
+	DeltaGenerator::DeltaGenerator(const std::vector<SwapPtr >& aqObjSwaps,
 											const std::vector<AQLString>& swapIDs,
 											const std::vector<LabelValueBlock >& fixingTableNames,
                                             const std::vector<double>& xccyFXAsOfDateRates,
@@ -241,10 +241,10 @@ namespace etrading
 											const bool aggregateRisks,
 											const std::string& riskCutOffTenor,
 											const bool useGlobalCurveEngine)
-											: myAQOSwaps_(aqoSwaps),
+											: myAQObjSwaps_(aqObjSwaps),
 												myInstrumentIDs_(swapIDs),
-												myAQOFixingTables_(fixingTableNames),
-                                                myAQOXccyFXAsOfDateRates_( xccyFXAsOfDateRates ),
+												myAQObjFixingTables_(fixingTableNames),
+                                                myAQObjXccyFXAsOfDateRates_( xccyFXAsOfDateRates ),
 												bumpSpreadInstruments_(bumpSpreadInstruments),
 												bumpSize_(bumpSize),
 												bumpMode_(bumpMode),
@@ -252,11 +252,11 @@ namespace etrading
 												aggregateRisks_(aggregateRisks),
 												reportInLegCCY_(false),
 												riskCutOffTenor_(riskCutOffTenor),
-												usingAQO_(true),
-										        riskOnAQOLegs_(false),
+												usingAQObj_(true),
+										        riskOnAQObjLegs_(false),
 												isUsingGlobalCurveEngine_(useGlobalCurveEngine)
 	{
-		myAQOSwapLegs_.clear();
+		myAQObjSwapLegs_.clear();
 	}
 
 	/* @brief			Set the yield curves required for delta calculation
@@ -350,19 +350,19 @@ namespace etrading
     }
 
 	/* @brief		Returns the size of the trade portfolio
-	*				Examines myTrades_ or myAQOSwapLegs_ depending on whether AQO Swaps are being used
+	*				Examines myTrades_ or myAQObjSwapLegs_ depending on whether AQObj Swaps are being used
 	*/
 	size_t DeltaGenerator::getPortfolioSize()
 	{
-		if (usingAQO_)
+		if (usingAQObj_)
 		{
-			if (riskOnAQOLegs_)
+			if (riskOnAQObjLegs_)
 			{
-				return myAQOSwapLegs_.size();
+				return myAQObjSwapLegs_.size();
 			}
 			else
 			{
-				return myAQOSwaps_.size();
+				return myAQObjSwaps_.size();
 			}
 		}
 		else
@@ -432,14 +432,14 @@ namespace etrading
 
 	/* @brief		Calculates the PV of the specified instrument
 	 * @param [in]	index							The index of the instrument in the portfolio
-	 * @param [in]	setMarketDataAndInterpolation	For non AQO-swaps, specifies whether to initialize the trade with MarketData and Interpolation parameters
+	 * @param [in]	setMarketDataAndInterpolation	For non AQObj-swaps, specifies whether to initialize the trade with MarketData and Interpolation parameters
 	*/
 	double DeltaGenerator::calculateTradePV(int index, bool setMarketDataAndInterpolation)
 	{
-		if (usingAQO_)
+		if (usingAQObj_)
 		{
 			const AQLString curveCollectionID = marketDataCollection_.getOptionalValueAsAQLString( MARKET_KEY::CURVE_COLLECTION );
-			const double xccyFXAsOfDateRate = myAQOXccyFXAsOfDateRates_[index];
+			const double xccyFXAsOfDateRate = myAQObjXccyFXAsOfDateRates_[index];
 			//We assume valuation date is always the asOfDate when calculating risk.
 			const AQLDate valuationDate = getCurveAsOfDate(curveCollectionID);
 
@@ -456,11 +456,11 @@ namespace etrading
 
             LabelValueBlock valuationSettingsLVB( lvbKeys, lvbValues );
 			
-			const LabelValueBlock fixingTableNames = myAQOFixingTables_[index];
+			const LabelValueBlock fixingTableNames = myAQObjFixingTables_[index];
 
-			if (riskOnAQOLegs_)
+			if (riskOnAQObjLegs_)
 			{
-				auto leg = myAQOSwapLegs_[index];
+				auto leg = myAQObjSwapLegs_[index];
 
 				DataProvider dataProvider(ValuationSettings(valuationSettingsLVB, fixingTableNames, leg->getLegName()));
 
@@ -469,10 +469,10 @@ namespace etrading
 			else
 			{
 				double pv = 0.0;
-				SwapPtr aqoTrade = myAQOSwaps_[index];
-				for (size_t j = 0; j < aqoTrade->getLegSize(); j++)
+				SwapPtr aqObjTrade = myAQObjSwaps_[index];
+				for (size_t j = 0; j < aqObjTrade->getLegSize(); j++)
 				{
-					auto leg = aqoTrade->getLeg(j);
+					auto leg = aqObjTrade->getLeg(j);
 
 					DataProvider dataProvider(ValuationSettings(valuationSettingsLVB, fixingTableNames, leg->getLegName()));
 

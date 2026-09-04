@@ -162,18 +162,18 @@ namespace google_test
 	/* @brief			Builds Generator curve by invoking the tryAqObjCurvesCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createAQOCurveFromFileName( const AQLString& curveCalibrationFileName )
+	void createAQObjCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
-		std::string aqoCurveGeneratorName	= curveCalibrationFileObj[ "aqoCurveGeneratorName" ];
-		std::string aqoCurveMarketDataName	= curveCalibrationFileObj[ "aqoCurveMarketDataName" ];
+		std::string aqObjCurveGeneratorName	= curveCalibrationFileObj[ "aqObjCurveGeneratorName" ];
+		std::string aqObjCurveMarketDataName	= curveCalibrationFileObj[ "aqObjCurveMarketDataName" ];
 		std::string domesticCurveCollection	= curveCalibrationFileObj[ "domesticCurveCollection" ];
 		std::string foreignCurveCollection	= curveCalibrationFileObj[ "foreignCurveCollection" ];
 		
-		std::string objectName = aqoCurveGeneratorName;
+		std::string objectName = aqObjCurveGeneratorName;
 
-		validation::tryAqObjCurvesCalibrate(	objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjCurvesCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -182,8 +182,8 @@ namespace google_test
 	*/
 	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
-		google_test::createAQOMarketDataObjectFromFileName( marketDataFileName );
-		createAQOCurveFromFileName( curveCalibrationFileName );
+		google_test::createAQObjMarketDataObjectFromFileName( marketDataFileName );
+		createAQObjCurveFromFileName( curveCalibrationFileName );
 	}
 
 
@@ -318,7 +318,7 @@ namespace google_test
 		validation::tryAqToolsClearEntityPool();
 	}
 
-	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_AqVsAQOCurveForwardRatesFor25Y_USD )
+	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_AqVsAQObjCurveForwardRatesFor25Y_USD )
     {
 		// Build ME and Generator curves for OIS, STD, 3X6Basis, 1X3Basis and 3X12Basis.
 		// The ME curves are stored in the "USDME" collection,
@@ -339,7 +339,7 @@ namespace google_test
 		checkForwardRatesConsistency( "USDME", "USDGEN", curveIndices );
 	}	
 	
-	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_AqVsAQOCurveForwardRatesFor25Y_EUR )
+	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_AqVsAQObjCurveForwardRatesFor25Y_EUR )
     {
 		buildAqAndGeneratorCurves_OIS( ME_USD_OIS_CURVE2, GEN_USD_OIS_MARKETDATA2, GEN_USD_OIS_CURVE2 );
 		buildAqAndGeneratorCurves_STD( ME_USD_STD_CURVE2, GEN_USD_STD_MARKETDATA2, GEN_USD_STD_CURVE2 );
@@ -354,7 +354,7 @@ namespace google_test
         checkForwardRatesConsistency( "EURME", "EURGEN", curveIndices );
 	}
 
-	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_AqVsAQOCurveForwardRatesFor25Y_JPY )
+	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_AqVsAQObjCurveForwardRatesFor25Y_JPY )
     {
 		buildAqAndGeneratorCurves_OIS( ME_USD_OIS_CURVE, GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
 		buildAqAndGeneratorCurves_STD( ME_USD_STD_CURVE, GEN_USD_STD_MARKETDATA, GEN_USD_STD_CURVE );

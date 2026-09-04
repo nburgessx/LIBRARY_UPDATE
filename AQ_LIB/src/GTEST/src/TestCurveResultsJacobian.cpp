@@ -6,7 +6,7 @@
 #include "GetGoogleTestFolder.h"
 #include "RecordMacros.h"						// Logfile Macros
 #include "ResultsProcessor.h"					// Test Rebase Methods
-#include "tryAqObjects.h"							// AQO Curve Loading et al.
+#include "tryAqObjects.h"							// AQObj Curve Loading et al.
 #include "tryAqCurvesResults.h"					// Curve Results Jacobian 
 
 

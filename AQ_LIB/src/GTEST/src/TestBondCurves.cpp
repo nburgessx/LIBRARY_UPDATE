@@ -172,7 +172,7 @@ namespace
 
 	/*
 	 * Given an inputFile, read the file and construct the bond from the specified BondGenerator
-	 * Returns a string corresponding to the bond object name in the AQO object cache.
+	 * Returns a string corresponding to the bond object name in the AQObj object cache.
 	 */
 	std::string createBondFromFileName( const std::string& inputFile )
     {
@@ -189,7 +189,7 @@ namespace
 
 	/*
 	 * Given an inputFile, read the file and construct a BondCurve object
-	 * Returns a string corresponding to the bondcurve object name in the AQO object cache.
+	 * Returns a string corresponding to the bondcurve object name in the AQObj object cache.
 	 */
 	std::string createBondCurveFromFileName( const std::string& bondCurveFileName )
 	{
@@ -212,7 +212,7 @@ namespace
 
 	/*
 	 * Given an inputFile, read the file and construct a spread BondCurve object
-	 * Returns a string corresponding to the bondcurve object name in the AQO object cache.
+	 * Returns a string corresponding to the bondcurve object name in the AQObj object cache.
 	 */
 	std::string createBondSpreadCurveFromFileName( const std::string& bondCurveFileName )
 	{

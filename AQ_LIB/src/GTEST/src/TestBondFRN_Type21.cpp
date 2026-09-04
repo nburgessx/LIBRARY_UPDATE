@@ -3,7 +3,7 @@
 #include "InitializeGoogleTest.h"
 #include "FolderConfig.h"
 
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "FloatingBond.h"
 #include "tryAqObjBonds.h"
 

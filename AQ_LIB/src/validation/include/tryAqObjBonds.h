@@ -248,7 +248,7 @@ namespace validation
 	 */
 	 double tryAqObjBondsPriceFromCreditModel( const std::string& bondObjectName, const AQLDate& settlementDate, const std::string& creditModelName );
 
-	 /* @brief Creates a AQOBondGenerator object, containing the bond static properties.
+	 /* @brief Creates a AQObjBondGenerator object, containing the bond static properties.
 	 * @param [in] objectName        The name of the Bond Generator object
 	 * @param [in] propertyNames     A vector of property names corresponding to each label-value block of properties
 	 * @param [in] infoBlocks        A vector of containing the label-value blocks of properties
@@ -258,7 +258,7 @@ namespace validation
                                              const std::vector<std::string>& propertyNames,
                                              const std::vector<TableInfo>& infoBlocks );
 
-	 /* @brief Displays the specified property of a AQOBondGenerator. If propertyName is blank, all properties are returned.
+	 /* @brief Displays the specified property of a AQObjBondGenerator. If propertyName is blank, all properties are returned.
 	 * @param [in] objectName        The BondGenerator object you wish to display
 	 * @param [in] propertyName      The name of the property label-value block that you wish to display
 	 * @param [out]                  A VariantMatrix containing a LabelValue block of properties

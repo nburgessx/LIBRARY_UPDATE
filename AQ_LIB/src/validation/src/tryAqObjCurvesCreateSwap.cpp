@@ -25,7 +25,7 @@
 #include "AQLLinearInterpolation.h"
 #include "AQLStepInterpolation.h"
 #include "ObjectUtilities.h"
-#include "AQOCurve.h"
+#include "AQObjCurve.h"
 #include "EnvironmentUtilities.h"
 #include "Environment.h"
 #include "DateUtilities.h"
@@ -60,7 +60,7 @@ namespace validation
     *  @param [in]		convexityAdjConv	Convexity adjustment market conventions
     *  @param [in]		convexityAdjRates	Convexity adjustment market data
     */
-    const AQLString tryAqObjCurvesCreateSwap( const std::string& aqoCurveName,
+    const AQLString tryAqObjCurvesCreateSwap( const std::string& aqObjCurveName,
                                             const AQLString& curveCollectionInput,
                                             const AQLString& staticDataTableInput,
                                             const AQLString& curveIndexInput,
@@ -80,7 +80,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
         
-        // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
+        // AQObj Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Ensure Curve Name Data is in uppercase
@@ -103,7 +103,7 @@ namespace validation
         {
             CreateDataFile file( decorateCurvename( "tryAqObjCurvesCalibrateSwap_inputs", curveCollection, staticDataTable ) );
             file.write( "generatorFunction", "tryAqCurvesCalibrateSwap" );
-            file.write( "aqoCurveName", aqoCurveName.c_str()  );
+            file.write( "aqObjCurveName", aqObjCurveName.c_str()  );
             file.write( "curveCollection", curveCollection );
             file.write( "staticDataTable", staticDataTable );
             file.write( "curveIndex", curveIndex );
@@ -244,8 +244,8 @@ namespace validation
         // CurveBuildProperties because it creates the AlgoQuantLib Calendar
         const std::string staticDataName = etrading::trim_to_upper( staticDataTable.getCString() );
 
-        const std::string baseCurveName = aqoCurveName;
-        const std::string curveNameForAQOCurve =  baseCurveName;
+        const std::string baseCurveName = aqObjCurveName;
+        const std::string curveNameForAQObjCurve =  baseCurveName;
 
         const etrading::CurveTypeEnum curveTypeEnum = etrading::toCurveTypeEnum( staticDataName );
 
@@ -274,7 +274,7 @@ namespace validation
             etrading::toInterpolationEnum( curveConvLVB.getCompulsoryValue( "YIELDGEN.INTERPOLATION" ) );
 
         etrading::CurveBuildProperties stdCurveBuildProperties(	curveTypeEnum,
-                                                                curveNameForAQOCurve + "_CBP",
+                                                                curveNameForAQObjCurve + "_CBP",
                                                                 std::string( curveCollection.getCString() ),
                                                                 staticDataName,
                                                                 ccy,
@@ -289,7 +289,7 @@ namespace validation
                                                                 true );
 
         // call this paragraph of code if you wish to populate discount factors for every day
-        // this method retrieves 51 years of discount factors and places it in the AQOCurve
+        // this method retrieves 51 years of discount factors and places it in the AQObjCurve
         boost::gregorian::date endDate  = asOfDate + boost::gregorian::years( 51 );
         auto numberOfdaysBetween        = boost::gregorian::date_period( asOfDate, endDate ).length().days();
 
@@ -313,7 +313,7 @@ namespace validation
         }
 
 
-        // Calculate Discount Factors and Forwards & Set AQO Curve Container
+        // Calculate Discount Factors and Forwards & Set AQObj Curve Container
         // ----------------------------------------------------------------
 
         // Calculate the discount factors using the Object Pool Curve Engine
@@ -342,8 +342,8 @@ namespace validation
         } );
 
 
-        // Set the AQO Curve; yearFractions, discountFactors, forward rates and Curve build properties (cbp)
-        etrading::AQOCurve aqoCurve( curveNameForAQOCurve,
+        // Set the AQObj Curve; yearFractions, discountFactors, forward rates and Curve build properties (cbp)
+        etrading::AQObjCurve aqObjCurve( curveNameForAQObjCurve,
                                      massiveDateVectorBoost,
                                      massiveYearFractionVector,
                                      massiveDFVector,
@@ -353,12 +353,12 @@ namespace validation
         // ----------------------------------------------------------------
 
 
-        etrading::moveToCache(  std::move( aqoCurve ) );
-        auto& curve_store = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        etrading::moveToCache(  std::move( aqObjCurve ) );
+        auto& curve_store = etrading::getObjectStore<etrading::AQObjCurve>( etrading::Environment::DEFAULT_ENV_NAME );
         
-        if( curve_store.has( curveNameForAQOCurve ) )
+        if( curve_store.has( curveNameForAQObjCurve ) )
         {
-            AQLString ret = curveNameForAQOCurve.c_str();
+            AQLString ret = curveNameForAQObjCurve.c_str();
             if ( CreateDataFile::recordEnabled() )
             {
                 CreateDataFile file( decorateCurvename( "tryAqObjCurvesCalibrateSwap_outputs", curveCollection, staticDataTable ) );
@@ -368,7 +368,7 @@ namespace validation
         }
         else
         {
-            AQ_THROW( ( boost::format( "Unable to create AQOCurve named %s" ) % curveNameForAQOCurve.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Unable to create AQObjCurve named %s" ) % curveNameForAQObjCurve.c_str() ).str().c_str() );
         }
 
         VALID_EXCEPTION_END

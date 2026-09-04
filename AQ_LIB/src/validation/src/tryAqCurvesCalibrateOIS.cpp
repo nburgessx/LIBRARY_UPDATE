@@ -5,7 +5,7 @@
 #include "CurveValidation.h"
 #include "ParameterValidation.h"
 #include "CurveResultsContainer.h"          // CurveResultsContainer - Singleton object for storage of curve results
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "CurveUtilities.h"
 
 using etrading::CreateDataFile;
@@ -41,7 +41,7 @@ namespace validation
     {
         VALID_EXCEPTION_START
         
-        // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
+        // AQObj Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Prefix the staticDataTable to the curveIndex Name Set, ensuring to use the ':' delimiter

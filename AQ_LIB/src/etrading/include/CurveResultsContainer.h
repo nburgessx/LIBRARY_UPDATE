@@ -17,7 +17,7 @@
 #include "CurveResults.h"
 #include "CoreEnumerations.h"
 
-// Macro to Clear Curve Results Container - Only Single AQO Curves Generate Curve Results, so we must clear the Cache for Other Curve Types
+// Macro to Clear Curve Results Container - Only Single AQObj Curves Generate Curve Results, so we must clear the Cache for Other Curve Types
 #define AQ_CLEAR_CURVE_RESULTS_CACHE etrading::CurveResultsContainer::getInstance().deleteAllCurveResults(); 
 
 namespace etrading

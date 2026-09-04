@@ -188,7 +188,7 @@ namespace validation
         }
         else
         {
-            std::string errString =  ( boost::format( "Unable to create AQOCurveData named %s" ) % mdcName.c_str() ).str();
+            std::string errString =  ( boost::format( "Unable to create AQObjCurveData named %s" ) % mdcName.c_str() ).str();
             if ( CreateDataFile::recordEnabled() )
             {
 				CreateDataFile file( decorateFilename( "tryAqObjCurvesDataCreate_outputs", mdcName.c_str() ) );

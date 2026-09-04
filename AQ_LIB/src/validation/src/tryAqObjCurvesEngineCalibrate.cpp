@@ -6,7 +6,7 @@
 #include "EnvironmentUtilities.h"
 #include "ObjectUtilities.h"
 #include "CoreEnumerations.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "MultiCurveObject.h"
 
 #include <string>
@@ -37,7 +37,7 @@ namespace validation
     {
 		VALID_EXCEPTION_START
 	
-        // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
+        // AQObj Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE
 
 		if (curveGeneratorNames.size() != marketDataObjects.size())

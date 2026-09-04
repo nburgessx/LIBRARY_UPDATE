@@ -2,7 +2,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "ObjectUtilities.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "RecordMacros.h"
 #include "OptionFactory.h"
 #include "SabrModel.h"
@@ -32,7 +32,7 @@ namespace validation
 
 		std::shared_ptr<etrading::Volatility> optionPtr = etrading::createVolatility(objectName, volLVB, validateKeys);
 
-        // Register the Option in the AQO object cache
+        // Register the Option in the AQObj object cache
         etrading::registerToCache< Volatility >(optionPtr);
 
         std::string result = objectName;

@@ -11,7 +11,7 @@
 #include "ContainerUtilities.h"
 #include "CurveValidation.h"        // getCurveAsOfDate
 #include "InitializeETrading.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 
 #include <cctype>
 #include <utility>

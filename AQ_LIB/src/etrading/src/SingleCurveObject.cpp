@@ -3,7 +3,7 @@
 #include "CommonConstants.h"
 #include "ObjectUtilities.h"
 #include "AQLUpdateStaticDataManager.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "CreateDataFile.h"
 #include "ExceptionMacros.h"
 #include "Variant.h"
@@ -37,8 +37,8 @@ namespace etrading
 
 		VariantVector attributeValues;
 		attributeValues.push_back( objectName_ );
-		attributeValues.push_back( aqoCurveGeneratorName_ );
-		attributeValues.push_back( aqoCurveMarketDataName_ );
+		attributeValues.push_back( aqObjCurveGeneratorName_ );
+		attributeValues.push_back( aqObjCurveMarketDataName_ );
 		attributeValues.push_back( domesticCurveCollection_ );
 		attributeValues.push_back( foreignCurveCollection_ );
 
@@ -55,15 +55,15 @@ namespace etrading
 
 	/* @brief	Converts the internal FreeObject into a group of string parameters.
 	*			Used when de-serialising the curve.
-	*  @param[out]	objectName				The AQO object handle name for the curve object
-	*  @param[out]	aqoCurveGeneratorName	The curve generator containing the conventions used to build this curve
-	*  @param[out]	aqoCurveMarketDataName	The AQO object handle of the object containing the market data for this curve
+	*  @param[out]	objectName				The AQObj object handle name for the curve object
+	*  @param[out]	aqObjCurveGeneratorName	The curve generator containing the conventions used to build this curve
+	*  @param[out]	aqObjCurveMarketDataName	The AQObj object handle of the object containing the market data for this curve
 	*  @param[out]	domesticCurveCollection	The collection which this curve will be placed in, once built
 	*  @param[out]	foreignCurveCollection	The collection containing foreign curve dependencies
 	*/
 	void SingleCurveObject::getBuildParametersFromFreeObject( std::string& objectName,
-														      std::string& aqoCurveGeneratorName,
-														      std::string& aqoCurveMarketDataName,
+														      std::string& aqObjCurveGeneratorName,
+														      std::string& aqObjCurveMarketDataName,
 														      std::string& domesticCurveCollection,
 														      std::string& foreignCurveCollection ) const
 	{
@@ -94,11 +94,11 @@ namespace etrading
 			}
 			else if ( attributeNames[i] == CURVE_GENERATOR_NAME )
 			{
-				aqoCurveGeneratorName = attributeValues[i].getValueAsString();
+				aqObjCurveGeneratorName = attributeValues[i].getValueAsString();
 			}
 			else if ( attributeNames[i] == CURVE_MARKET_CALIBRATION_DATAAME )
 			{
-				aqoCurveMarketDataName = attributeValues[i].getValueAsString();
+				aqObjCurveMarketDataName = attributeValues[i].getValueAsString();
 			}
 			else if ( attributeNames[i] == DOMESTIC_CURVE_COLLECTION )
 			{
@@ -152,42 +152,42 @@ namespace etrading
 			case etrading::OIS_CURVETYPE:
 			{
 				// Create OIS curve data object that supplies curve data for OIS curve build
-		        const std::shared_ptr<OISCurveObjectData> oisCurveData = std::make_shared<OISCurveObjectData>( aqoCurveGenerator_, aqoCurveMarketData_, marketDataAsOfDate );
+		        const std::shared_ptr<OISCurveObjectData> oisCurveData = std::make_shared<OISCurveObjectData>( aqObjCurveGenerator_, aqObjCurveMarketData_, marketDataAsOfDate );
                 CurveEngine curveEngine( curveDescription, oisCurveData );
                 break;
 			}
 			case etrading::ARR_CURVETYPE:
 			{
 				// Create ARR curve data object that supplies curve data for ARR curve build
-				const std::shared_ptr<ARRCurveObjectData> arrCurveData = std::make_shared<ARRCurveObjectData>(aqoCurveGenerator_, aqoCurveMarketData_, marketDataAsOfDate);
+				const std::shared_ptr<ARRCurveObjectData> arrCurveData = std::make_shared<ARRCurveObjectData>(aqObjCurveGenerator_, aqObjCurveMarketData_, marketDataAsOfDate);
 				CurveEngine curveEngine( curveDescription, arrCurveData );
 				break;
 			}
 			case etrading::SWAP_CURVETYPE:
 			{
 				// Create Swap curve data object that supplies curve data for swap curve build
-				const std::shared_ptr<SwapCurveObjectData> swapCurveData = std::make_shared<SwapCurveObjectData>(aqoCurveGenerator_, aqoCurveMarketData_, configFrequency, marketDataAsOfDate);
+				const std::shared_ptr<SwapCurveObjectData> swapCurveData = std::make_shared<SwapCurveObjectData>(aqObjCurveGenerator_, aqObjCurveMarketData_, configFrequency, marketDataAsOfDate);
                 CurveEngine curveEngine( curveDescription, swapCurveData );
                 break;
 			}
 			case etrading::TENORBASIS_CURVETYPE:
 			{
 				// Create tenor basis curve data object that supplies curve data for tenor basis curve build
-				const std::shared_ptr<TenorBasisCurveObjectData> tenorBasisCurveData = std::make_shared<TenorBasisCurveObjectData>(aqoCurveGenerator_, aqoCurveMarketData_, configFrequency, marketDataAsOfDate, domesticCurveCollection_, foreignCurveCollection_);
+				const std::shared_ptr<TenorBasisCurveObjectData> tenorBasisCurveData = std::make_shared<TenorBasisCurveObjectData>(aqObjCurveGenerator_, aqObjCurveMarketData_, configFrequency, marketDataAsOfDate, domesticCurveCollection_, foreignCurveCollection_);
                 CurveEngine curveEngine( curveDescription, tenorBasisCurveData );
                 break;
 			}
 			case etrading::XCCYBASIS_CURVETYPE:
 			{		
 				// Create xccy basis curve data object that supplies curve data for xccy basis curve build
-				const std::shared_ptr<XccyBasisCurveObjectData> xccyBasisCurveData = std::make_shared<XccyBasisCurveObjectData>(aqoCurveGenerator_, aqoCurveMarketData_, marketDataAsOfDate, domesticCurveCollection_, foreignCurveCollection_);
+				const std::shared_ptr<XccyBasisCurveObjectData> xccyBasisCurveData = std::make_shared<XccyBasisCurveObjectData>(aqObjCurveGenerator_, aqObjCurveMarketData_, marketDataAsOfDate, domesticCurveCollection_, foreignCurveCollection_);
                 CurveEngine curveEngine( curveDescription, xccyBasisCurveData );
                 break;
 			}
 			case etrading::FWDFXCONST_CURVETYPE:
 			{		
 				// Create forward constant curve data object that supplies curve data for forward constant curve build
-				const std::shared_ptr<FwdConstantCurveObjectData> fxFwdConstantCurveData = std::make_shared<FwdConstantCurveObjectData>(aqoCurveGenerator_, marketDataAsOfDate, domesticCurveCollection_, foreignCurveCollection_);
+				const std::shared_ptr<FwdConstantCurveObjectData> fxFwdConstantCurveData = std::make_shared<FwdConstantCurveObjectData>(aqObjCurveGenerator_, marketDataAsOfDate, domesticCurveCollection_, foreignCurveCollection_);
                 CurveEngine curveEngine( curveDescription, fxFwdConstantCurveData );
                 break;
 			}
@@ -207,28 +207,28 @@ namespace etrading
 	}
 
 
-	/* @brief Main Constructor of the AQO Curve object
-	*  @param[in]	objectName				The AQO object handle name for the curve object
-	*  @param[in]	aqoCurveGeneratorName	The curve generator containing the conventions used to build this curve
-	*  @param[in]	aqoCurveMarketDataName	The AQO object handle of the object containing the market data for this curve
+	/* @brief Main Constructor of the AQObj Curve object
+	*  @param[in]	objectName				The AQObj object handle name for the curve object
+	*  @param[in]	aqObjCurveGeneratorName	The curve generator containing the conventions used to build this curve
+	*  @param[in]	aqObjCurveMarketDataName	The AQObj object handle of the object containing the market data for this curve
 	*  @param[in]	domesticCurveCollection	The collection which this curve will be placed in, once built   ( The Target CurveCollection )
 	*  @param[in]	foreignCurveCollection	The collection containing foreign curve dependencies   ( The Against CurveCollection )
 	*/
 	SingleCurveObject::SingleCurveObject( const std::string& objectName,
-							const std::string& aqoCurveGeneratorName,
-							const std::string& aqoCurveMarketDataName,
+							const std::string& aqObjCurveGeneratorName,
+							const std::string& aqObjCurveMarketDataName,
 							const std::string& domesticCurveCollection,
 							const std::string& foreignCurveCollection ) 
 								: CurveObject(objectName), 
 								  freeObject_(objectName),
 								  objectName_(objectName),
-								  aqoCurveGeneratorName_(aqoCurveGeneratorName),
-								  aqoCurveMarketDataName_(aqoCurveMarketDataName),
+								  aqObjCurveGeneratorName_(aqObjCurveGeneratorName),
+								  aqObjCurveMarketDataName_(aqObjCurveMarketDataName),
 								  domesticCurveCollection_(domesticCurveCollection),
 								  foreignCurveCollection_(foreignCurveCollection)
 	{
-		aqoCurveGenerator_  = getCurveGenerator(  aqoCurveGeneratorName_ );
-		aqoCurveMarketData_ = getCurveMarketData( aqoCurveMarketDataName_ );
+		aqObjCurveGenerator_  = getCurveGenerator(  aqObjCurveGeneratorName_ );
+		aqObjCurveMarketData_ = getCurveMarketData( aqObjCurveMarketDataName_ );
 
 		populateFreeObjectFromBuildParameters();
 	}
@@ -244,7 +244,7 @@ namespace etrading
 										  objectName_(objectName)
 	{
 		std::string tmpObjectName;
-		getBuildParametersFromFreeObject( tmpObjectName, aqoCurveGeneratorName_, aqoCurveMarketDataName_, domesticCurveCollection_, foreignCurveCollection_ );
+		getBuildParametersFromFreeObject( tmpObjectName, aqObjCurveGeneratorName_, aqObjCurveMarketDataName_, domesticCurveCollection_, foreignCurveCollection_ );
 
 		if ( tmpObjectName != objectName )
 		{
@@ -252,8 +252,8 @@ namespace etrading
 						% objectName % tmpObjectName ).str().c_str(), __FILE__, __LINE__ );	
 		}
 		
-		aqoCurveGenerator_  = getCurveGenerator(  aqoCurveGeneratorName_ );
-		aqoCurveMarketData_ = getCurveMarketData( aqoCurveMarketDataName_ );
+		aqObjCurveGenerator_  = getCurveGenerator(  aqObjCurveGeneratorName_ );
+		aqObjCurveMarketData_ = getCurveMarketData( aqObjCurveMarketDataName_ );
     }
 
 	/* @brief Copy Constructor
@@ -263,12 +263,12 @@ namespace etrading
 		  freeObject_(rhs.freeObject_), 
 		  cachedCurveIndexName_(rhs.cachedCurveIndexName_),
 		  objectName_(rhs.objectName_),
-		  aqoCurveGeneratorName_(rhs.aqoCurveGeneratorName_),
-		  aqoCurveMarketDataName_(rhs.aqoCurveMarketDataName_),
+		  aqObjCurveGeneratorName_(rhs.aqObjCurveGeneratorName_),
+		  aqObjCurveMarketDataName_(rhs.aqObjCurveMarketDataName_),
 		  domesticCurveCollection_(rhs.domesticCurveCollection_),
 		  foreignCurveCollection_(rhs.foreignCurveCollection_),
-          aqoCurveGenerator_(rhs.aqoCurveGenerator_),
-		  aqoCurveMarketData_(rhs.aqoCurveMarketData_)
+          aqObjCurveGenerator_(rhs.aqObjCurveGenerator_),
+		  aqObjCurveMarketData_(rhs.aqObjCurveMarketData_)
 	{
 		// The copy constructor does not need to invoke SingleCurveObject::calibrateCurve() :
 		// The curve will have already been built by the rhs object.
@@ -301,8 +301,8 @@ namespace etrading
 		}
 		
 		// Add these dependencies as nested schema objects
-		schemaObject.addNestedSchemaObject( aqoCurveGenerator_->toSchemaObject() );
-		schemaObject.addNestedSchemaObject( aqoCurveMarketData_->toSchemaObject() );
+		schemaObject.addNestedSchemaObject( aqObjCurveGenerator_->toSchemaObject() );
+		schemaObject.addNestedSchemaObject( aqObjCurveMarketData_->toSchemaObject() );
 
 		return schemaObject;
 	}
@@ -321,7 +321,7 @@ namespace etrading
 	*/
 	const CurveMarketDataPtr& SingleCurveObject::getCurveMarketDataObj() const
 	{
-		return aqoCurveMarketData_;
+		return aqObjCurveMarketData_;
 	}
 
 	/* @brief	Method that returns the curve generator object
@@ -329,7 +329,7 @@ namespace etrading
 	*/
 	const CurveGeneratorPtr& SingleCurveObject::getCurveGeneratorObj() const
 	{
-		return aqoCurveGenerator_;
+		return aqObjCurveGenerator_;
 	}
 
 	/* @brief	Method that sets the market data object back to the curve
@@ -337,7 +337,7 @@ namespace etrading
 	*/
 	void SingleCurveObject::setCurveMarketDataObj(const CurveMarketDataPtr& marketObj)
 	{
-		aqoCurveMarketData_ = marketObj;
+		aqObjCurveMarketData_ = marketObj;
 	}
 
 	/* @brief	Return a series of information that uniquely identify a curve
@@ -356,12 +356,12 @@ namespace etrading
 													 std::string& marketDataAsOfDate )
 	{
 		// Check for matching IdentityParams from the CurveGenerator and CurveMarketData
-		const LabelValueBlock curvePropertiesLVB        = aqoCurveGenerator_->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_CURVEPROPERTIES );
+		const LabelValueBlock curvePropertiesLVB        = aqObjCurveGenerator_->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_CURVEPROPERTIES );
 		const std::string configCurrency                = curvePropertiesLVB.getCompulsoryValue( "Currency" );
 		configCurveType                                 = curvePropertiesLVB.getCompulsoryValue( "CurveType" );
 		configFrequency                                 = curvePropertiesLVB.getCompulsoryValue( "CurveIndexFrequency" );
 		
-		const LabelValueBlock marketDataPropertiesLVB   = aqoCurveMarketData_->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES );
+		const LabelValueBlock marketDataPropertiesLVB   = aqObjCurveMarketData_->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES );
 		const std::string marketDataCurrency            = marketDataPropertiesLVB.getCompulsoryValue( "Currency" );
 		const std::string marketDataCurveType           = marketDataPropertiesLVB.getCompulsoryValue( "CurveType" );
 		const std::string marketDataFrequency           = marketDataPropertiesLVB.getCompulsoryValue( "CurveIndexFrequency" );

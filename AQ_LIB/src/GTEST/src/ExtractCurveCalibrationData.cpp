@@ -24,7 +24,7 @@ namespace google_test
     // Function to get calibration data from a curve - Basis Swap Tenors
     std::vector<std::string> curveCalibrationOisSwapTenors( const std::string & curveObject )
     {
-        // Extract the Swap Terms from the AQO Curve Object
+        // Extract the Swap Terms from the AQObj Curve Object
         etrading::VariantVector oisSwapTerms = validation::tryAqObjCurvesMarketDataColumn( curveObject, toString( etrading::CurveMarketDataEnum::OIS_MARKETDATA ), 1 ); // OIS_MARKETDATA Column 1
 
         // Convert from Variant
@@ -41,7 +41,7 @@ namespace google_test
     // Function to get calibration data from a curve - Basis Swap Spreads
     std::vector<double> curveCalibrationOisSwapParRates(const std::string & curveObject )
     {
-        // Extract the Swap Par Rates from the AQO Curve Object
+        // Extract the Swap Par Rates from the AQObj Curve Object
         etrading::VariantVector oisParRates = validation::tryAqObjCurvesMarketDataColumn( curveObject, toString( etrading::CurveMarketDataEnum::OIS_MARKETDATA ), 2 ); // OIS_MARKETDATA Column 2
 
         // Convert from Variant
@@ -58,7 +58,7 @@ namespace google_test
     // Function to get calibration data from a curve - Basis Swap Tenors
     std::vector<std::string> curveCalibrationLiborOisTenors( const std::string & curveObject )
     {
-        // Extract the Swap Terms from the AQO Curve Object
+        // Extract the Swap Terms from the AQObj Curve Object
         etrading::VariantVector liborOisTerms = validation::tryAqObjCurvesMarketDataColumn( curveObject, toString( etrading::CurveMarketDataEnum::LIBOR_OIS_BASISSPREAD_MARKETDATA ), 1 ); // LIBOR_OIS_BASISSPREAD_MARKETDATA Column 1
 
         // Convert from Variant
@@ -75,7 +75,7 @@ namespace google_test
     // Function to get calibration data from a curve - Basis Swap Spreads
     std::vector<double> curveCalibrationLiborOisSpreads(const std::string & curveObject )
     {
-        // Extract the Swap Terms from the AQO Curve Object
+        // Extract the Swap Terms from the AQObj Curve Object
         etrading::VariantVector liborOisSpreads = validation::tryAqObjCurvesMarketDataColumn( curveObject, toString( etrading::CurveMarketDataEnum::LIBOR_OIS_BASISSPREAD_MARKETDATA ), 2 ); // LIBOR_OIS_BASISSPREAD_MARKETDATA Column 2
 
         // Convert from Variant
@@ -92,7 +92,7 @@ namespace google_test
     // Function to get calibration data from a curve - Swap Tenors
     std::vector<std::string> curveCalibrationSwapTenors( const std::string & curveObject )
     {
-        // Extract the Swap Terms from the AQO Curve Object
+        // Extract the Swap Terms from the AQObj Curve Object
         etrading::VariantVector swapTerms = validation::tryAqObjCurvesMarketDataColumn( curveObject, toString( etrading::CurveMarketDataEnum::SWAP_MARKETDATA ), 1 ); // SWAP_MARKETDATA Column 1
 
         // Convert from Variant
@@ -109,7 +109,7 @@ namespace google_test
     // Function to get calibration data from a curve - Swap Par Rates
     std::vector<double> curveCalibrationSwapParRates(const std::string & curveObject )
     {
-        // Extract the Swap Par Rates from the AQO Curve Object
+        // Extract the Swap Par Rates from the AQObj Curve Object
         etrading::VariantVector parRates = validation::tryAqObjCurvesMarketDataColumn( curveObject, toString( etrading::CurveMarketDataEnum::SWAP_MARKETDATA ), 2 ); // SWAP_MARKETDATA Column 2
 
         // Convert from Variant
@@ -126,7 +126,7 @@ namespace google_test
     // Function to get calibration data from a curve - Basis Swap Tenors
     std::vector<std::string> curveCalibrationBasisSwapTenors( const std::string & curveObject )
     {
-        // Extract the Swap Terms from the AQO Curve Object
+        // Extract the Swap Terms from the AQObj Curve Object
         etrading::VariantVector basisSwapTerms = validation::tryAqObjCurvesMarketDataColumn( curveObject, toString( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA ), 1 ); // BASIS_SWAP_MARKETDATA Column 1
 
         // Convert from Variant
@@ -143,7 +143,7 @@ namespace google_test
     // Function to get calibration data from a curve - Basis Swap Spreads
     std::vector<double> curveCalibrationBasisSwapSpreads(const std::string & curveObject )
     {
-        // Extract the Swap Par Rates from the AQO Curve Object
+        // Extract the Swap Par Rates from the AQObj Curve Object
         etrading::VariantVector basisSwapSpreads = validation::tryAqObjCurvesMarketDataColumn( curveObject, toString( etrading::CurveMarketDataEnum::BASIS_SWAP_MARKETDATA ), 2 ); // BASIS_SWAP_MARKETDATA Column 2
 
         // Convert from Variant

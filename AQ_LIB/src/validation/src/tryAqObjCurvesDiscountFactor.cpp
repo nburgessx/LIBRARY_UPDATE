@@ -22,12 +22,12 @@ using etrading::decorateCurvename;
 namespace validation
 {
     /* @brief			validation method for aqCurvesDiscountFactorsFromYearFractions
-    *  @param [in]		aqoCurveName	Curve Name
+    *  @param [in]		aqObjCurveName	Curve Name
     *  @param [in]		yearFractions	An array of yearFractions by year count
     *  @param [in]		dayCount	    The daycount fraction used to generate the yearFraction
     *  @return			An array of discount factor
     */
-    DoubleVector tryAqObjCurvesDiscountFactorsFromYearFractions( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactorsFromYearFractions( const std::string& aqObjCurveName,
             const DoubleVector& yearFractions,
             const AQLString& dayCount )
     {
@@ -36,9 +36,9 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromYearFractions_inputs_" ) + aqoCurveName ).c_str()  );
+            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromYearFractions_inputs_" ) + aqObjCurveName ).c_str()  );
             file.write( "generatorFunction", "tryAqObjCurvesDiscountFactorsFromYearFractions" );
-            file.write( "aqoCurveName",	    aqoCurveName );
+            file.write( "aqObjCurveName",	    aqObjCurveName );
             file.write( "yearFractions",		yearFractions );
             file.write( "dayCount",          dayCount );
         }
@@ -52,24 +52,24 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto aqoCurve = env.accessObject<etrading::AQOCurve>( aqoCurveName ); // 			etrading::getAQOCurve(aqoCurveName);
+        auto aqObjCurve = env.accessObject<etrading::AQObjCurve>( aqObjCurveName ); // 			etrading::getAQObjCurve(aqObjCurveName);
 
         // Convert Year Fractions to ACT/365 ones
-        AQLDate curveAsOfDate = etrading::toAQLDateFromGregorianDate( aqoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
+        AQLDate curveAsOfDate = etrading::toAQLDateFromGregorianDate( aqObjCurve->getCurveBuildStaticDataObject()->asOfDate_ );
         etrading::convertToYearFractionsACT365( curveAsOfDate, const_cast< DoubleVector& >( yearFractions ), dayCount );
 
-        if( aqoCurve )
+        if( aqObjCurve )
         {
-            ret = aqoCurve->calculateDiscountFactor( yearFractions );
+            ret = aqObjCurve->calculateDiscountFactor( yearFractions );
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
         }
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromYearFractions_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromYearFractions_outputs_" ) + aqObjCurveName ).c_str() );
             file.write( "output", ret );
         }
 
@@ -80,13 +80,13 @@ namespace validation
 
 
     /* @brief			validation method for aqCurvesDiscountFactorsFromTenors
-    *  @param [in]		aqoCurveName	Curve Name
+    *  @param [in]		aqObjCurveName	Curve Name
     *  @param [in]		tenors			An array of tenor strings
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc, ie, MF. Default to 'NO_CHANGE'.
     *  @param [in]		calendar		Calendar
     *  @return			An array of discount factor
     */
-    DoubleVector tryAqObjCurvesDiscountFactorsFromTenors( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactorsFromTenors( const std::string& aqObjCurveName,
             const std::vector<std::string>& tenors,
             const std::string& businessDayAdj,
             const std::string& calendar )
@@ -96,9 +96,9 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromTenors_inputs_" ) + aqoCurveName ).c_str()  );
+            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromTenors_inputs_" ) + aqObjCurveName ).c_str()  );
             file.write( "generatorFunction", "tryAqObjCurvesDiscountFactorsFromTenors" );
-            file.write( "aqoCurveName",	    aqoCurveName );
+            file.write( "aqObjCurveName",	    aqObjCurveName );
             file.write( "tenors",			tenors );
             file.write( "businessDayAdj",	businessDayAdj );
             file.write( "calendar",			calendar );
@@ -115,14 +115,14 @@ namespace validation
 
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
         auto& env = etrading::Environment::defaultEnv();
-        auto aqoCurve = env.accessObject<etrading::AQOCurve>( aqoCurveName ); // 			etrading::getAQOCurve(aqoCurveName);
-        if( aqoCurve )
+        auto aqObjCurve = env.accessObject<etrading::AQObjCurve>( aqObjCurveName ); // 			etrading::getAQObjCurve(aqObjCurveName);
+        if( aqObjCurve )
         {
-            ret = aqoCurve->calculateDiscountFactor( tenors, busDayAdjust, calendar );
+            ret = aqObjCurve->calculateDiscountFactor( tenors, busDayAdjust, calendar );
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -132,7 +132,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromTenors_outputs_" ) + aqoCurveName ).c_str()  );
+            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromTenors_outputs_" ) + aqObjCurveName ).c_str()  );
             file.write( "output", ret );
         }
 
@@ -142,7 +142,7 @@ namespace validation
     }
 
 
-    DoubleVector tryAqObjCurvesDiscountFactorsForwardStarting( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactorsForwardStarting( const std::string& aqObjCurveName,
             const std::vector<boost::gregorian::date>& fromDates,
             const std::vector<boost::gregorian::date>& toDates )
     {
@@ -151,9 +151,9 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStarting_inputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStarting_inputs_" ) + aqObjCurveName ).c_str() );
             file.write( "generatorFunction", "tryAqObjCurvesDiscountFactorsForwardStarting" );
-            file.write( "aqoCurveName",	    aqoCurveName );
+            file.write( "aqObjCurveName",	    aqObjCurveName );
             file.write( "fromDates",			fromDates );
             file.write( "toDates",			toDates );
         }
@@ -190,15 +190,15 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto aqoCurve = env.accessObject<etrading::AQOCurve>( aqoCurveName ); // 			etrading::getAQOCurve(aqoCurveName);
+        auto aqObjCurve = env.accessObject<etrading::AQObjCurve>( aqObjCurveName ); // 			etrading::getAQObjCurve(aqObjCurveName);
 
-        if( aqoCurve )
+        if( aqObjCurve )
         {
-            ret = aqoCurve->calculateDiscountFactor( fromDateVec, toDates );
+            ret = aqObjCurve->calculateDiscountFactor( fromDateVec, toDates );
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -208,7 +208,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStarting_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStarting_outputs_" ) + aqObjCurveName ).c_str() );
             file.write( "output", ret );
         }
 
@@ -219,13 +219,13 @@ namespace validation
 
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromYearFractions
-    *  @param [in]		aqoCurveName		Curve Name
+    *  @param [in]		aqObjCurveName		Curve Name
     *  @param [in]		fromDates			An array of from-dates in YYYYMMDD formate
     *  @param [in]		yearFractions		An array of year fraction yearFractions
     *  @param [in]		dayCount	        The daycount fraction used to generate the yearFraction
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjCurvesDiscountFactorsForwardStartingFromYearFractions( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactorsForwardStartingFromYearFractions( const std::string& aqObjCurveName,
             const std::vector<boost::gregorian::date>& fromDates,
             const DoubleVector& yearFractions,
             const AQLString& dayCount )
@@ -235,9 +235,9 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStartingFromYearFractions_inputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStartingFromYearFractions_inputs_" ) + aqObjCurveName ).c_str() );
             file.write( "generatorFunction", "tryAqObjCurvesDiscountFactorsForwardStartingFromYearFractions" );
-            file.write( "aqoCurveName",		aqoCurveName );
+            file.write( "aqObjCurveName",		aqObjCurveName );
             file.write( "fromDates",			fromDates );
             file.write( "yearFractions",		yearFractions );
             file.write( "dayCount",          dayCount );
@@ -259,21 +259,21 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto aqoCurve = env.accessObject<etrading::AQOCurve>( aqoCurveName ); // 			etrading::getAQOCurve(aqoCurveName);
+        auto aqObjCurve = env.accessObject<etrading::AQObjCurve>( aqObjCurveName ); // 			etrading::getAQObjCurve(aqObjCurveName);
 
 
         // Convert Year Fractions to ACT/365 ones
-        AQLDate curveAsOfDate = etrading::toAQLDateFromGregorianDate( aqoCurve->getCurveBuildStaticDataObject()->asOfDate_ );
+        AQLDate curveAsOfDate = etrading::toAQLDateFromGregorianDate( aqObjCurve->getCurveBuildStaticDataObject()->asOfDate_ );
         etrading::convertToYearFractionsACT365( curveAsOfDate, const_cast< DoubleVector& >( yearFractions ), dayCount );
 
-        if( aqoCurve )
+        if( aqObjCurve )
         {
             std::string calendar( "" );
-            ret = aqoCurve->calculateDiscountFactor( fromDates, yearFractions, busDayAdjust, calendar );
+            ret = aqObjCurve->calculateDiscountFactor( fromDates, yearFractions, busDayAdjust, calendar );
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -283,7 +283,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqCurvesDiscountFactorsForwardStartingFromYearFractions_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqCurvesDiscountFactorsForwardStartingFromYearFractions_outputs_" ) + aqObjCurveName ).c_str() );
             file.write( "output", ret );
         }
 
@@ -294,14 +294,14 @@ namespace validation
 
 
     /* @brief			validation method for aqCurvesDiscountFactorsForwardStartingFromTenor
-    *  @param [in]		aqoCurveName		Curve Name
+    *  @param [in]		aqObjCurveName		Curve Name
     *  @param [in]		fromDates		An array of from-dates in YYYYMMDD formate
     *  @param [in]		tenor			A tenor string
     *  @param [in]		businessDayAdj	Rule that decides if end date should roll forward or backward etc, ie, MF. Default to 'NO_CHANGE'.
     *  @param [in]		calendar		Calendar
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjCurvesDiscountFactorsForwardStartingFromTenors( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactorsForwardStartingFromTenors( const std::string& aqObjCurveName,
             const std::vector<boost::gregorian::date>& fromDates,
             const std::vector<std::string>& tenors,
             const std::string& businessDayAdj,
@@ -312,9 +312,9 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStartingFromTenor_inputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStartingFromTenor_inputs_" ) + aqObjCurveName ).c_str() );
             file.write( "generatorFunction", "tryAqObjCurvesDiscountFactorsForwardStartingFromTenor" );
-            file.write( "aqoCurveName",		aqoCurveName );
+            file.write( "aqObjCurveName",		aqObjCurveName );
             file.write( "fromDates",			fromDates );
             file.write( "tenor",				tenors );
             file.write( "businessDayAdj",	businessDayAdj );
@@ -336,14 +336,14 @@ namespace validation
         DoubleVector ret( 0, std::numeric_limits<double>::quiet_NaN() );
 
         auto& env = etrading::Environment::defaultEnv();
-        auto aqoCurve = env.accessObject<etrading::AQOCurve>( aqoCurveName ); // 			etrading::getAQOCurve(aqoCurveName);
-        if( aqoCurve )
+        auto aqObjCurve = env.accessObject<etrading::AQObjCurve>( aqObjCurveName ); // 			etrading::getAQObjCurve(aqObjCurveName);
+        if( aqObjCurve )
         {
-            ret = aqoCurve->calculateDiscountFactor( fromDates, tenors, busDayAdjust, calendar );
+            ret = aqObjCurve->calculateDiscountFactor( fromDates, tenors, busDayAdjust, calendar );
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -353,7 +353,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStartingFromTenor_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStartingFromTenor_outputs_" ) + aqObjCurveName ).c_str() );
             file.write( "output", ret );
         }
 
@@ -365,10 +365,10 @@ namespace validation
 
     /* @brief			validation method for aqObjCurvesDiscountFactors
     *  @param [in]		paymentDates	A single or an array of to-date in YYYYMMDD formate
-    *  @param [in]		aqoCurveName	AQO Curve Name
+    *  @param [in]		aqObjCurveName	AQObj Curve Name
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjCurvesDiscountFactors( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesDiscountFactors( const std::string& aqObjCurveName,
             const std::vector<boost::gregorian::date>&  paymentDates )
     {
         VALID_EXCEPTION_START
@@ -376,24 +376,24 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactors_inputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactors_inputs_" ) + aqObjCurveName ).c_str() );
             file.write( "generatorFunction",     "tryAqObjCurvesDiscountFactors" );
-            file.write( "aqoCurveName",		    aqoCurveName );
+            file.write( "aqObjCurveName",		    aqObjCurveName );
             file.write( "paymentDates",	        paymentDates );
         }
 
         DoubleVector ret( 0, std::numeric_limits< double >::quiet_NaN() );
 
         auto& env       = etrading::Environment::defaultEnv();
-        auto aqoCurve   = env.accessObject< etrading::AQOCurve >( aqoCurveName );
+        auto aqObjCurve   = env.accessObject< etrading::AQObjCurve >( aqObjCurveName );
 
-        if( aqoCurve )
+        if( aqObjCurve )
         {
-            ret = aqoCurve->calculateDiscountFactor( paymentDates );
+            ret = aqObjCurve->calculateDiscountFactor( paymentDates );
         }
         else
         {
-            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % aqObjCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -403,7 +403,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactors_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactors_outputs_" ) + aqObjCurveName ).c_str() );
             file.write( "output", ret );
         }
 

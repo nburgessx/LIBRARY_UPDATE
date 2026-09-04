@@ -57,7 +57,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( GBP_BasisCurve_Consistency, CONSISTENCY_GBP6ML_TenorBasis_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the AQO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    basisTerms   = curveCalibrationBasisSwapTenors( curveObjectGBP6ML_ ); 
         std::vector<double>         basisSpreads = curveCalibrationBasisSwapSpreads( curveObjectGBP6ML_ );
         AQ_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
@@ -98,7 +98,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( GBP_BasisCurve_Consistency, CONSISTENCY_GBP1ML_TenorBasis_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the AQO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    basisTerms   = curveCalibrationBasisSwapTenors( curveObjectGBP1ML_ ); 
         std::vector<double>         basisSpreads = curveCalibrationBasisSwapSpreads( curveObjectGBP1ML_ );
         AQ_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
@@ -139,7 +139,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( GBP_BasisCurve_Consistency, CONSISTENCY_GBP12ML_TenorBasis_Instrument_Repricing )
     {
-         // Extract the Swap Terms & Par Rates from the AQO Curve Object
+         // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    basisTerms   = curveCalibrationBasisSwapTenors( curveObjectGBP12ML_ ); 
         std::vector<double>         basisSpreads = curveCalibrationBasisSwapSpreads( curveObjectGBP12ML_ );
         AQ_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )

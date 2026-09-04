@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "AQOCurve.h"
+#include "AQObjCurve.h"
 
 
 namespace etrading
@@ -19,7 +19,7 @@ namespace etrading
         // Usage: copyObject(myInstance) 
         // where myInstance is an instance of MyClass
         // If MyClass has a clone method it will get called else its copy CTOR is used to produce a shared_ptr to a copy
-        // cfr. TEST (TestAQOInfrastructure, EnvironmentImplementation)
+        // cfr. TEST (TestAQObjInfrastructure, EnvironmentImplementation)
         template<typename T>
         struct has_clone
         {
@@ -83,13 +83,13 @@ namespace etrading
         bool eraseObject( const std::string& objectName, Environment& env );
 
         template<>
-        bool eraseObject<AQOCurve>( const std::string& objectName, Environment& env ); // needs to be in cpp else instantiation before Environment class defined
+        bool eraseObject<AQObjCurve>( const std::string& objectName, Environment& env ); // needs to be in cpp else instantiation before Environment class defined
 
         template<typename T>
         const unsigned int eraseAllObjects( Environment& env );
 
         template<>
-        const unsigned int eraseAllObjects<AQOCurve>( Environment& env );
+        const unsigned int eraseAllObjects<AQObjCurve>( Environment& env );
 
 	template<typename T>
         std::shared_ptr<IsAQObject> accessObjectInterface( const std::string& objectName,  Environment& env );

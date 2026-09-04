@@ -12,7 +12,7 @@
 #include "PulseObject.h"
 #include "ExceptionMacros.h"
 #include <time.h>
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 
 namespace etrading
 {
@@ -38,7 +38,7 @@ namespace etrading
         }
         
         // Always Pulse / Recalculate if the Object does not exist
-        const bool doesObjectExist = etrading::doesAQOExist( objectName, objectType );
+        const bool doesObjectExist = etrading::doesAQObjExist( objectName, objectType );
         if ( !doesObjectExist )
         {
             return recalculate;

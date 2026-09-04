@@ -4,7 +4,7 @@
 
 /*
  * @File: SingleCurveObject.h
- * @brief: This class represents the curve object used to represent curve inputs which can be stored in the AQO object cache
+ * @brief: This class represents the curve object used to represent curve inputs which can be stored in the AQObj object cache
  * @Created: 17 July 2017
  * @Author: Ian Castleton
  * @Department: ISO Front Office Development
@@ -26,10 +26,10 @@ namespace etrading
     class SingleCurveObject: public CurveObject
     {
 	public:
-		/* @brief Main Constructor of the AQO Curve object
-		*  @param[in]	objectName				The AQO object handle name for the curve object
-		*  @param[in]	aqoCurveGeneratorName	The curve generator containing the conventions used to build this curve
-		*  @param[in]	aqoCurveMarketDataName	The AQO object handle of the object containing the market data for this curve
+		/* @brief Main Constructor of the AQObj Curve object
+		*  @param[in]	objectName				The AQObj object handle name for the curve object
+		*  @param[in]	aqObjCurveGeneratorName	The curve generator containing the conventions used to build this curve
+		*  @param[in]	aqObjCurveMarketDataName	The AQObj object handle of the object containing the market data for this curve
 		*  @param[in]	domesticCurveCollection	The collection which this curve will be placed in, once built   ( The Target CurveCollection )
 		*  @param[in]	foreignCurveCollection	The collection containing foreign curve dependencies   ( The Against CurveCollection )
 		*/
@@ -120,16 +120,16 @@ namespace etrading
 		std::string objectName_;
 
 		// Name of the curve generator
-		std::string aqoCurveGeneratorName_;
+		std::string aqObjCurveGeneratorName_;
 
 		// Curve generator object
-		CurveGeneratorPtr aqoCurveGenerator_;
+		CurveGeneratorPtr aqObjCurveGenerator_;
 
 		// Name of the curve market data object
-		std::string aqoCurveMarketDataName_;
+		std::string aqObjCurveMarketDataName_;
 
 		// Curve market data object
-		CurveMarketDataPtr aqoCurveMarketData_;
+		CurveMarketDataPtr aqObjCurveMarketData_;
 
 		// Domestic curve collection
 		std::string domesticCurveCollection_;
@@ -144,15 +144,15 @@ namespace etrading
 
 		/* @brief	Converts the internal FreeObject into a group of string parameters.
 		*			Used when de-serialising the curve.
-		*  @param[out]	objectName				The AQO object handle name for the curve object
-		*  @param[out]	aqoCurveGeneratorName	The curve generator containing the conventions used to build this curve
-		*  @param[out]	aqoCurveMarketDataName	The AQO object handle of the object containing the market data for this curve
+		*  @param[out]	objectName				The AQObj object handle name for the curve object
+		*  @param[out]	aqObjCurveGeneratorName	The curve generator containing the conventions used to build this curve
+		*  @param[out]	aqObjCurveMarketDataName	The AQObj object handle of the object containing the market data for this curve
 		*  @param[out]	domesticCurveCollection	The collection which this curve will be placed in, once built
 		*  @param[out]	foreignCurveCollection	The collection containing foreign curve dependencies
 		*/
 		virtual void getBuildParametersFromFreeObject( std::string& objectName,
-											   std::string& aqoCurveGeneratorName,
-											   std::string& aqoCurveMarketDataName,
+											   std::string& aqObjCurveGeneratorName,
+											   std::string& aqObjCurveMarketDataName,
 											   std::string& domesticCurveCollection,
 											   std::string& foreignCurveCollection ) const;
 						

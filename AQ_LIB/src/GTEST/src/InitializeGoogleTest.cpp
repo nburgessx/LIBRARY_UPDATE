@@ -75,8 +75,8 @@ namespace google_test
         // Disable Thread Locking - since we have a local thread guard
 		common::AQLCoreLockControl::enableThreadLocks( false );
 
-        // Initialize the AQO Configuration Files
-        AQLString loadAQOConfigStatus = validation::tryAqToolsLoadConfigurationFiles();
+        // Initialize the AQObj Configuration Files
+        AQLString loadAQObjConfigStatus = validation::tryAqToolsLoadConfigurationFiles();
     }
 
     InitializeGoogleTest::~InitializeGoogleTest()
@@ -89,7 +89,7 @@ namespace google_test
         // TODO: Clean-up required for now Keep this in synch with the tearDown function within AQ_CLIENT_API exposed_functions.cpp
         // This code should be centralized at some point soon
 
-        // Clear AQO object cache
+        // Clear AQObj object cache
         etrading::deleteAllObjects( etrading::Environment::defaultEnv() );  
         
         // Clean-Up Object Pool

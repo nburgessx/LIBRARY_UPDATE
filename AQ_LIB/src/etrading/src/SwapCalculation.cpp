@@ -400,8 +400,8 @@ namespace etrading
 			AQ_THROW("Valuation Currency must be one of the leg currency of the swap's first two legs.");
 		}
 
-		AQLString valCcyLegCurveCollection = getAQOCurveCollectionFromValuationSettings(valuationSettingsLVB, valCcyLeg->getLegName());
-		AQLString nonValCcyLegCurveCollection = getAQOCurveCollectionFromValuationSettings(valuationSettingsLVB, nonValCcyLeg->getLegName());
+		AQLString valCcyLegCurveCollection = getAQObjCurveCollectionFromValuationSettings(valuationSettingsLVB, valCcyLeg->getLegName());
+		AQLString nonValCcyLegCurveCollection = getAQObjCurveCollectionFromValuationSettings(valuationSettingsLVB, nonValCcyLeg->getLegName());
 
 	   // Both legs should be nased on the same asOfDate
 		AQLDate asOfDate = getCurveAsOfDate(nonValCcyLegCurveCollection);
@@ -463,8 +463,8 @@ namespace etrading
 			throw AQLCoreInvalidData("#Error: Invalid NotionalResetLeg: The NotionalResetLeg need to match the name (LegType) one of the swap first two legs", __FILE__, __LINE__);
 		}
 
-		AQLString resetLegCurveCollection = getAQOCurveCollectionFromValuationSettings(valuationSettingsLVB, resetLeg->getLegName());
-		AQLString normalLegCurveCollection = getAQOCurveCollectionFromValuationSettings(valuationSettingsLVB, normalLeg->getLegName());
+		AQLString resetLegCurveCollection = getAQObjCurveCollectionFromValuationSettings(valuationSettingsLVB, resetLeg->getLegName());
+		AQLString normalLegCurveCollection = getAQObjCurveCollectionFromValuationSettings(valuationSettingsLVB, normalLeg->getLegName());
 
 		//TODO: Enhance refresh logic to allow curves to tick, must be based on the object build time rather than the object name changes
 		// See Swap.cpp Swap::updateNotionalResetByFxLeg line # 257 and Leg.cpp Leg::updateCashflows method line #62

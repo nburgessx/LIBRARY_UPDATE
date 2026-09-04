@@ -17,7 +17,7 @@ using etrading::decorateCurvename;
 namespace validation
 {
 
-    DoubleVector tryAqObjCurvesForwardRatesFromYearFraction( const std::string &                                 aqoCurveName,
+    DoubleVector tryAqObjCurvesForwardRatesFromYearFraction( const std::string &                                 aqObjCurveName,
                                                             const std::vector< boost::gregorian::date > &       fromDates,
                                                             double                                              yearFraction,
                                                             const std::string &                                 dayCount )
@@ -27,9 +27,9 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRatesFromYearFraction_inputs_" ) + aqoCurveName ).c_str() ) ;
+            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRatesFromYearFraction_inputs_" ) + aqObjCurveName ).c_str() ) ;
             file.write( "generatorFunction",    "tryAqObjCurvesForwardRatesFromYearFraction" );
-            file.write( "aqoCurveName",	        aqoCurveName );
+            file.write( "aqObjCurveName",	        aqObjCurveName );
             file.write( "fromDates",			fromDates );
             file.write( "yearFraction",		    yearFraction );
             file.write( "dayCount",			    dayCount );
@@ -37,16 +37,16 @@ namespace validation
 
         DoubleVector forwardRateResults;
 
-        // Load the AQO Curve
-        auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
-        if( curveStore.has( aqoCurveName ) )
+        // Load the AQObj Curve
+        auto& curveStore = etrading::getObjectStore<etrading::AQObjCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        if( curveStore.has( aqObjCurveName ) )
         {
-            auto aqoCurve = curveStore.get( aqoCurveName );
-            if( aqoCurve )
+            auto aqObjCurve = curveStore.get( aqObjCurveName );
+            if( aqObjCurve )
             {
                 // Get the Curve Collection and Curve Index names
-                AQLString curveCollection    = AQLString( aqoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
-                AQLString curveIndex         = AQLString( aqoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
+                AQLString curveCollection    = AQLString( aqObjCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
+                AQLString curveIndex         = AQLString( aqObjCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
 
                 // Cast the boost gregorian dates into AQLDates
                 std::vector< AQLDate > fromDatesFormatted = etrading::toAQLDatesFromGregorianDates( fromDates );
@@ -60,14 +60,14 @@ namespace validation
             }
             else
             {
-                std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % aqoCurveName.c_str() ).str();
+                std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % aqObjCurveName.c_str() ).str();
                 throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
             }
         }
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRatesFromYearFraction_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRatesFromYearFraction_outputs_" ) + aqObjCurveName ).c_str() );
             file.write( "output", forwardRateResults );
         }
 
@@ -78,7 +78,7 @@ namespace validation
     };
 
 
-    DoubleVector tryAqObjCurvesForwardRatesFromForwardDates( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesForwardRatesFromForwardDates( const std::string& aqObjCurveName,
                                                             const std::vector<boost::gregorian::date>& fromDates,
                                                             const std::vector<boost::gregorian::date>& toDates )
     {
@@ -87,25 +87,25 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRatesFromForwardDates_inputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRatesFromForwardDates_inputs_" ) + aqObjCurveName ).c_str() );
             file.write( "generatorFunction",    "tryAqObjCurvesForwardRatesFromForwardDates" );
-            file.write( "aqoCurveName",	        aqoCurveName );
+            file.write( "aqObjCurveName",	        aqObjCurveName );
             file.write( "fromDates",			fromDates );
             file.write( "toDates",			    toDates );
         }
 
         DoubleVector forwardRateResults;
 
-        // Load the AQO Curve
-        auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
-        if( curveStore.has( aqoCurveName ) )
+        // Load the AQObj Curve
+        auto& curveStore = etrading::getObjectStore<etrading::AQObjCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        if( curveStore.has( aqObjCurveName ) )
         {
-            auto aqoCurve = curveStore.get( aqoCurveName );
-            if( aqoCurve )
+            auto aqObjCurve = curveStore.get( aqObjCurveName );
+            if( aqObjCurve )
             {
                 // Get the Curve Collection and Curve Index names
-                AQLString curveCollection    = AQLString( aqoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
-                AQLString curveIndex         = AQLString( aqoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
+                AQLString curveCollection    = AQLString( aqObjCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
+                AQLString curveIndex         = AQLString( aqObjCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
 
                 // Cast the boost gregorian dates into AQLDates
                 std::vector< AQLDate > fromDatesFormatted    = etrading::toAQLDatesFromGregorianDates( fromDates );
@@ -119,14 +119,14 @@ namespace validation
             }
             else
             {
-                std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % aqoCurveName.c_str() ).str();
+                std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % aqObjCurveName.c_str() ).str();
                 throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
             }
         }
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRatesFromForwardDates_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRatesFromForwardDates_outputs_" ) + aqObjCurveName ).c_str() );
             file.write( "output", forwardRateResults );
         }
 
@@ -137,11 +137,11 @@ namespace validation
 
 
     /* @brief			validation interface for aqObjCurvesForwardRates, which uses the curve frequency
-    *  @param [in]		aqoCurveName	AQO Curve Name
+    *  @param [in]		aqObjCurveName	AQObj Curve Name
     *  @param [in]		fixingDates	    A vector of fixing dates
     *  @return			The forward rates based on fromDates and toDates
     */
-    DoubleVector tryAqObjCurvesForwardRates( const std::string& aqoCurveName,
+    DoubleVector tryAqObjCurvesForwardRates( const std::string& aqObjCurveName,
                                             const std::vector<boost::gregorian::date>& fixingDates )
     {
         VALID_EXCEPTION_START
@@ -149,24 +149,24 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRates_inputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRates_inputs_" ) + aqObjCurveName ).c_str() );
             file.write( "generatorFunction",     "tryAqObjCurvesForwardRates" );
-            file.write( "aqoCurveName",	        aqoCurveName );
+            file.write( "aqObjCurveName",	        aqObjCurveName );
             file.write( "fixingDates",			fixingDates );
         }
 
          DoubleVector forwardRateResults;
 
-        // Load the AQO Curve
-        auto& curveStore = etrading::getObjectStore<etrading::AQOCurve>( etrading::Environment::DEFAULT_ENV_NAME );
-        if( curveStore.has( aqoCurveName ) )
+        // Load the AQObj Curve
+        auto& curveStore = etrading::getObjectStore<etrading::AQObjCurve>( etrading::Environment::DEFAULT_ENV_NAME );
+        if( curveStore.has( aqObjCurveName ) )
         {
-            auto aqoCurve = curveStore.get( aqoCurveName );
-            if( aqoCurve )
+            auto aqObjCurve = curveStore.get( aqObjCurveName );
+            if( aqObjCurve )
             {
                 // Get the Curve Collection and Curve Index names
-                AQLString curveCollection    = AQLString( aqoCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
-                AQLString curveIndex         = AQLString( aqoCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
+                AQLString curveCollection    = AQLString( aqObjCurve->getCurveBuildStaticDataObject()->curveCollectionName_.c_str() );
+                AQLString curveIndex         = AQLString( aqObjCurve->getCurveBuildStaticDataObject()->curveIndexName_.c_str() );
 
                 // Cast the boost gregorian dates into AQLDates
                 std::vector< AQLDate > fixingDatesFormatted    = etrading::toAQLDatesFromGregorianDates( fixingDates );
@@ -176,14 +176,14 @@ namespace validation
             }
             else
             {
-                std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % aqoCurveName.c_str() ).str();
+                std::string errString = ( boost::format( "#Error: Curve  %s does not exist" ) % aqObjCurveName.c_str() ).str();
                 throw AQLCoreInvalidData( errString.c_str(), __FILE__, __LINE__ );
             }
         }
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRatesFromForwardDates_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesForwardRatesFromForwardDates_outputs_" ) + aqObjCurveName ).c_str() );
             file.write( "output", forwardRateResults );
         }
 

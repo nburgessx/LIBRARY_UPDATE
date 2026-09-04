@@ -35,7 +35,7 @@ namespace etrading
     template <typename T> T& popBackToSize(T& theData, unsigned int numCols);
     template <typename T> T& moldToSize(T& theData, unsigned int numCols, const typename T::value_type& defaultFill);
 
-    // Function to trim a AQO object and remove the object counter if present
+    // Function to trim a AQObj object and remove the object counter if present
     std::string trimObjectCounter( const std::string& inputString );
 
     // removes all instances of p from s

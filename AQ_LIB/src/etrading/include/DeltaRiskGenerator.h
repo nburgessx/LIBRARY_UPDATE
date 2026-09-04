@@ -22,7 +22,7 @@ namespace etrading
         DeltaGenerator();
 
 		/* @brief	Constructor for BaseInstruments
-        *  Note:    Non-AQO Base Case does not support Xccy Swaps
+        *  Note:    Non-AQObj Base Case does not support Xccy Swaps
 		*/
         DeltaGenerator( const std::vector<BaseInstrumentPtr>& trades,
 						const std::vector<AQLString>& tradeIDs,
@@ -32,7 +32,7 @@ namespace etrading
                         const bool aggregateRisks,
 						const std::string& riskCutOffTenor );
 
-		/* @brief	Constructor for AQO Swap Legs
+		/* @brief	Constructor for AQObj Swap Legs
 		*/
 		DeltaGenerator( const std::vector<std::shared_ptr<Leg> >& swapLegs,
 						const std::vector<AQLString>& legIDs,
@@ -46,9 +46,9 @@ namespace etrading
 						const std::string& riskCutOffTenor,
 						const bool useGlobalCurveEngine);
 
-		/* @brief	Constructor for AQO Swaps
+		/* @brief	Constructor for AQObj Swaps
 		*/
-		DeltaGenerator(const std::vector<SwapPtr >& aqoSwaps,
+		DeltaGenerator(const std::vector<SwapPtr >& aqObjSwaps,
 						const std::vector<AQLString>& swapIDs,
 						const std::vector<LabelValueBlock>& fixingTableNames,
                         const std::vector<double>& xccyFXSpotRates,
@@ -210,23 +210,23 @@ namespace etrading
         //-------------------------------------------------------------------------------------
 
 		/* @brief		Returns the size of the trade portfolio
-		*				Examines myTrades_ or myAQOSwapLegs_ depending on whether AQO Swaps are being used
+		*				Examines myTrades_ or myAQObjSwapLegs_ depending on whether AQObj Swaps are being used
 		*/
 		size_t getPortfolioSize();
 
 		/* @brief		Calculates the PV of the specified instrument
 		 * @param [in]	index							The index of the instrument in the portfolio
-		 * @param [in]	setMarketDataAndInterpolation	For non AQO-swaps, specifies whether to initialize the trade with MarketData and Interpolation parameters
+		 * @param [in]	setMarketDataAndInterpolation	For non AQObj-swaps, specifies whether to initialize the trade with MarketData and Interpolation parameters
 		*/
 		double calculateTradePV(int index, bool setMarketDataAndInterpolation = false);
 
         // Trade portfolio
         std::vector<BaseInstrumentPtr> myTrades_;
-		std::vector<LegPtr > myAQOSwapLegs_;
-		std::vector<SwapPtr > myAQOSwaps_;
+		std::vector<LegPtr > myAQObjSwapLegs_;
+		std::vector<SwapPtr > myAQObjSwaps_;
 		std::vector<AQLString> myInstrumentIDs_;
-		std::vector<LabelValueBlock > myAQOFixingTables_;
-        std::vector<double> myAQOXccyFXAsOfDateRates_;
+		std::vector<LabelValueBlock > myAQObjFixingTables_;
+        std::vector<double> myAQObjXccyFXAsOfDateRates_;
 
         // Delta parameters
 		bool bumpSpreadInstruments_;
@@ -256,11 +256,11 @@ namespace etrading
 		// The maximum tenor in years (e.g. 10Y) beyond which the curves are no longer bumped
 		std::string riskCutOffTenor_;
 
-		// Set to true if the portfolio contains AQO Swaps
-		bool usingAQO_;
+		// Set to true if the portfolio contains AQObj Swaps
+		bool usingAQObj_;
 
-		// Calculate risks at the AQO swap leg level
-		bool riskOnAQOLegs_;
+		// Calculate risks at the AQObj swap leg level
+		bool riskOnAQObjLegs_;
 
 		// Are we using global curve engine to build curves
 		bool isUsingGlobalCurveEngine_;

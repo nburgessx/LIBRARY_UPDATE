@@ -18,7 +18,7 @@
 // etrading
 #include "AQLMathDateUtilities.h"
 #include "AQLDateScheduleHelpers.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 
 
 
@@ -34,7 +34,7 @@ namespace
     const double tolerance = 1e-8;
 
 	// Define the Test Input Folder Here
-	const std::string TEST_DIR =		  "ETrading/AQObjects/TestAQOCreditIndexOption/";
+	const std::string TEST_DIR =		  "ETrading/AQObjects/TestAQObjCreditIndexOption/";
 
     //
     // curve input files

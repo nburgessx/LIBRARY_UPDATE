@@ -102,7 +102,7 @@ namespace etrading
 	struct OISCurveObjectData : public CurveObjectData
 	{
 		OISCurveObjectData() {}
-		OISCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const CurveMarketDataPtr& aqoCurveMarketData, const std::string& marketDataAsOfDate, bool useSwaps = true, const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
+		OISCurveObjectData(const CurveGeneratorPtr& aqObjCurveGenerator, const CurveMarketDataPtr& aqObjCurveMarketData, const std::string& marketDataAsOfDate, bool useSwaps = true, const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
 		
 		virtual etrading::CurveTypeEnum getCurveType() { return OIS_CURVETYPE; }
 
@@ -142,7 +142,7 @@ namespace etrading
 	struct ARRCurveObjectData : public CurveObjectData
 	{
 		ARRCurveObjectData() {}
-		ARRCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const CurveMarketDataPtr& aqoCurveMarketData, const std::string& marketDataAsOfDate, bool useSwaps = true, const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
+		ARRCurveObjectData(const CurveGeneratorPtr& aqObjCurveGenerator, const CurveMarketDataPtr& aqObjCurveMarketData, const std::string& marketDataAsOfDate, bool useSwaps = true, const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
 
 		virtual etrading::CurveTypeEnum getCurveType() { return ARR_CURVETYPE; }
 
@@ -182,7 +182,7 @@ namespace etrading
 	struct SwapCurveObjectData : public CurveObjectData
 	{
 		SwapCurveObjectData() {}
-		SwapCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const CurveMarketDataPtr& aqoCurveMarketData, const std::string& frequency, const std::string& marketDataAsOfDate, const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
+		SwapCurveObjectData(const CurveGeneratorPtr& aqObjCurveGenerator, const CurveMarketDataPtr& aqObjCurveMarketData, const std::string& frequency, const std::string& marketDataAsOfDate, const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
 
 		virtual etrading::CurveTypeEnum getCurveType() { return SWAP_CURVETYPE; }
 
@@ -228,7 +228,7 @@ namespace etrading
 	struct TenorBasisCurveObjectData : public CurveObjectData
 	{
 		TenorBasisCurveObjectData() {}
-		TenorBasisCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const CurveMarketDataPtr& aqoCurveMarketData, const std::string frequency, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection, const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
+		TenorBasisCurveObjectData(const CurveGeneratorPtr& aqObjCurveGenerator, const CurveMarketDataPtr& aqObjCurveMarketData, const std::string frequency, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection, const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
 
 		virtual etrading::CurveTypeEnum getCurveType() { return TENORBASIS_CURVETYPE; }
 
@@ -271,7 +271,7 @@ namespace etrading
 	struct XccyBasisCurveObjectData : public CurveObjectData
 	{
 		XccyBasisCurveObjectData() {}
-		XccyBasisCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const CurveMarketDataPtr& aqoCurveMarketData, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection, const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
+		XccyBasisCurveObjectData(const CurveGeneratorPtr& aqObjCurveGenerator, const CurveMarketDataPtr& aqObjCurveMarketData, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection, const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
 
 		virtual etrading::CurveTypeEnum getCurveType() { return XCCYBASIS_CURVETYPE; }
 
@@ -312,7 +312,7 @@ namespace etrading
 	struct FwdConstantCurveObjectData : public CurveObjectData
 	{
 		FwdConstantCurveObjectData() {}
-		FwdConstantCurveObjectData(const CurveGeneratorPtr& aqoCurveGenerator, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection,  const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
+		FwdConstantCurveObjectData(const CurveGeneratorPtr& aqObjCurveGenerator, const std::string& marketDataAsOfDate, const std::string& domesticCurveCollection, const std::string& foreignCurveCollection,  const std::string& curveNameIn = "", const std::string& curveIndexIn = "");
 		
 		virtual etrading::CurveTypeEnum getCurveType() { return FWDFXCONST_CURVETYPE; }
 

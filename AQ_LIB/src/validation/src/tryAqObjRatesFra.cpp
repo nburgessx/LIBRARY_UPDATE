@@ -5,7 +5,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "RecordMacros.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "SettingsValidation.h"
 
 #include <memory>

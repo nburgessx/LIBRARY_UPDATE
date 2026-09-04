@@ -9,7 +9,7 @@
 #include "tryAqSwapsStubRate.h"
 
 #include "tryAqObjects.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "tryAqObjSwapsPricing.h"
 #include <boost/range/irange.hpp>
 #include "AQLDateScheduleHelpers.h"
@@ -75,7 +75,7 @@ namespace google_test
 	}
 
 
-	TEST_F(TestTradeGBPSwapStubRate, CONSISTENCY_AQOSwap_subRateFromFixingTable)
+	TEST_F(TestTradeGBPSwapStubRate, CONSISTENCY_AQObjSwap_subRateFromFixingTable)
 	{
 		try
 		{

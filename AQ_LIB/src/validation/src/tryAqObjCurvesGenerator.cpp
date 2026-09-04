@@ -5,7 +5,7 @@
 #include "ObjectUtilities.h"
 #include "CoreEnumerations.h"
 #include "CurveGenerator.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "RecordMacros.h"
 #include "JSONInfoBlock.h"
 
@@ -19,7 +19,7 @@ using etrading::decorateFilename;
 
 namespace validation
 {
-    /* @brief Creates an AQOCurveGenerator object, containing all of the curve properties.
+    /* @brief Creates an AQObjCurveGenerator object, containing all of the curve properties.
 	 * @param [in] objectName        The name of the Curve Configuration object
 	 * @param [in] propertyNames     A vector of property names corresponding to each label-value block of properties
 	 * @param [in] infoBlocks        A vector of containing the label-value blocks of properties
@@ -96,7 +96,7 @@ namespace validation
 		VALID_EXCEPTION_END
     };
 
-	/* @brief Displays the specified property of an AQOCurveGenerator. If propertyName is blank, all properties are returned.
+	/* @brief Displays the specified property of an AQObjCurveGenerator. If propertyName is blank, all properties are returned.
 	 * @param [in] objectName        The CurveGenerator object you wish to display
 	 * @param [in] propertyName      The name of the property label-value block that you wish to display.
 	 * @param [out]                  A VariantMatrix containing a LabelValue block of properties.
@@ -105,7 +105,7 @@ namespace validation
     {
 		VALID_EXCEPTION_START
 
-		// Attempt to retrieve AQOCurveGenerator object from the AQO object cache
+		// Attempt to retrieve AQObjCurveGenerator object from the AQObj object cache
 		auto curveGenerator = etrading::getCurveGenerator( objectName );
 
 		// extract just the data for the specified propertyKey
@@ -127,13 +127,13 @@ namespace validation
 
 		RECORD_INPUTS( newObjectName, baseObjectName, modifiedValues );
 
-		// Attempt to retrieve the existing CurveGenerator object from the AQO object cache
+		// Attempt to retrieve the existing CurveGenerator object from the AQObj object cache
 		auto baseCurveGenerator = etrading::getCurveGenerator( baseObjectName );
 
 		// Construct the new CurveGenerator with modified values
 		auto newCurveGenerator = etrading::CurveGenerator( newObjectName, *baseCurveGenerator, modifiedValues );
 
-		// Store the new CurveGenerator in the AQO object cache
+		// Store the new CurveGenerator in the AQObj object cache
         etrading::copyToCache<etrading::CurveGenerator>( newCurveGenerator );
 
 		RECORD_OUTPUTS_AND_RETURN_RESULT( newObjectName );
@@ -141,7 +141,7 @@ namespace validation
 		VALID_EXCEPTION_END
 	}
 
-    /* @brief Displays the specified property of an AQOCurveGenerator. If propertyName is blank, all properties are returned.
+    /* @brief Displays the specified property of an AQObjCurveGenerator. If propertyName is blank, all properties are returned.
 	 * @param [in] objectName        The CurveGenerator object you wish to display
 	 * @param [in] propertyName      The name of the property label-value block that you wish to display.
 	 * @param [out]                  A VariantMatrix containing a LabelValue block of properties.
@@ -152,9 +152,9 @@ namespace validation
 
 		auto& env = etrading::Environment::defaultEnv();
         auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( objectName );
-        AQ_REQUIRE( singleCurveObject, "AQO Curve " + objectName + " does not exist" )
+        AQ_REQUIRE( singleCurveObject, "AQObj Curve " + objectName + " does not exist" )
 
-		// Attempt to retrieve AQOCurveConventions / generator object from the AQO object cache
+		// Attempt to retrieve AQObjCurveConventions / generator object from the AQObj object cache
 		auto curveGenerator = singleCurveObject->getCurveGeneratorObj();
 
 		// extract just the data for the specified propertyKey

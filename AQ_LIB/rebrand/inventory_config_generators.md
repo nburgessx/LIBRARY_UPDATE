@@ -20,7 +20,7 @@ no-recompile customisation surface (calendars + generators).
 
 ## Generator JSON format
 
-The AQO cached-object serialisation format:
+The AQObj cached-object serialisation format:
 
 ```json
 {
@@ -38,7 +38,7 @@ The AQO cached-object serialisation format:
 
 `SWAP_GENERATOR` / `BOND_GENERATOR` are registered `CACHED_OBJECT_TYPE`s
 (`etrading\include\Environment.h`, `ObjectUtilities.h`:
-`functionTupleForLWO<SwapGenerator>()`), i.e. generators are AQO/LWO objects.
+`functionTupleForLWO<SwapGenerator>()`), i.e. generators are AQObj/LWO objects.
 `CommonConstants.h` defines `SWAP_GENERATOR` in **4 different namespaces** —
 tidy during the rebrand.
 

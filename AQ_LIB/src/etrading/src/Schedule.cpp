@@ -1389,7 +1389,7 @@ namespace etrading
 
 	} 
 
-    //this method is only for backward compatibility with me methods (none AQO)	
+    //this method is only for backward compatibility with me methods (none AQObj)	
 	AQLStringMatrix Schedule::display(bool showColumnHeaders, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList, const bool convertDatesToExcelFormat) const
 	{
 		auto block = Schedule::view(false, showColumnHeaders, columnList, convertDatesToExcelFormat);

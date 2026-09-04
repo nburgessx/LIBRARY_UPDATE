@@ -3,7 +3,7 @@
 
 #include "HedgeCurveEngine.h"
 #include "ObjectUtilities.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "CommonConstants.h"
 #include "InitializeETrading.h"
 
@@ -74,19 +74,19 @@ namespace etrading
 	/* @brief	Constructor for the HedgeCurveEngine.
 	*			Stores the curve generators and curve market data object names used to define the hedge curve.
 	*			
-	* @param[in]	aqoHedgeOISCurveGeneratorName	OIS Curve Generator name
-	* @param[in]	aqoHedgeOISCurveMarketDataName	OIS market data object name
-	* @param[in]	aqoHedgeOISCurveGeneratorName	Swap Curve Generator name: Specifies the hedge curve config
-	* @param[in]	aqoHedgeOISCurveMarketDataName	Swap market data object name: Specifies the swap tenors to use in the hedge curve
+	* @param[in]	aqObjHedgeOISCurveGeneratorName	OIS Curve Generator name
+	* @param[in]	aqObjHedgeOISCurveMarketDataName	OIS market data object name
+	* @param[in]	aqObjHedgeOISCurveGeneratorName	Swap Curve Generator name: Specifies the hedge curve config
+	* @param[in]	aqObjHedgeOISCurveMarketDataName	Swap market data object name: Specifies the swap tenors to use in the hedge curve
 	*/
-	HedgeCurveEngine::HedgeCurveEngine( const std::string& aqoHedgeOISCurveGeneratorName,
-										const std::string& aqoHedgeOISCurveMarketDataName,
-										const std::string& aqoHedgeSwapCurveGeneratorName,
-										const std::string& aqoHedgeSwapCurveMarketDataName )
-										  : aqoHedgeOISCurveGeneratorName_( aqoHedgeOISCurveGeneratorName ),
-											aqoHedgeOISCurveMarketDataName_( aqoHedgeOISCurveMarketDataName ),
-											aqoHedgeSwapCurveGeneratorName_( aqoHedgeSwapCurveGeneratorName ),
-											aqoHedgeSwapCurveMarketDataName_( aqoHedgeSwapCurveMarketDataName )
+	HedgeCurveEngine::HedgeCurveEngine( const std::string& aqObjHedgeOISCurveGeneratorName,
+										const std::string& aqObjHedgeOISCurveMarketDataName,
+										const std::string& aqObjHedgeSwapCurveGeneratorName,
+										const std::string& aqObjHedgeSwapCurveMarketDataName )
+										  : aqObjHedgeOISCurveGeneratorName_( aqObjHedgeOISCurveGeneratorName ),
+											aqObjHedgeOISCurveMarketDataName_( aqObjHedgeOISCurveMarketDataName ),
+											aqObjHedgeSwapCurveGeneratorName_( aqObjHedgeSwapCurveGeneratorName ),
+											aqObjHedgeSwapCurveMarketDataName_( aqObjHedgeSwapCurveMarketDataName )
     {
 		// Set up the Swap Expression LVB used for repricing swap calibration instruments
 		AQLStringVector keys; 
@@ -106,21 +106,21 @@ namespace etrading
 
 	/* @brief		Reprices the swaps in the hedge-curve using the specified pricing curve collection
 	*  @param[in]	pricingCurveCollection	The curveCollection containing the curves used for instrument repricing
-	*  @param[in]	aqoSwapGeneratorName	The name of the swap generator which holds the config used to calculate the par-rate for each swap calibration instrument
+	*  @param[in]	aqObjSwapGeneratorName	The name of the swap generator which holds the config used to calculate the par-rate for each swap calibration instrument
 	*/
 	void HedgeCurveEngine::repriceHedgeInstruments( const std::string& pricingCurveCollection,
-												    const std::string& aqoSwapGeneratorName )
+												    const std::string& aqObjSwapGeneratorName )
 	{
 
-		CurveGeneratorPtr aqoHedgeCurveGenerator  = getCurveGenerator(  aqoHedgeSwapCurveGeneratorName_ );
-		CurveMarketDataPtr aqoHedgeCurveMarketData = getCurveMarketData( aqoHedgeSwapCurveMarketDataName_ );
+		CurveGeneratorPtr aqObjHedgeCurveGenerator  = getCurveGenerator(  aqObjHedgeSwapCurveGeneratorName_ );
+		CurveMarketDataPtr aqObjHedgeCurveMarketData = getCurveMarketData( aqObjHedgeSwapCurveMarketDataName_ );
 
 		// Get the asOf date from the hedge curve, compute an effective date
-		const LabelValueBlock marketDataPropertiesLVB = aqoHedgeCurveMarketData->toLabelValueBlock( GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES );
+		const LabelValueBlock marketDataPropertiesLVB = aqObjHedgeCurveMarketData->toLabelValueBlock( GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES );
 		const std::string marketDataAsOfDate          = marketDataPropertiesLVB.getCompulsoryValue( "AsOfDate" );
 
 		AQLDate asOfDate( AQLDateScheduleHelpers::getAQLDate( marketDataAsOfDate.c_str() ) );
-		AQLDate effectiveDate = getSwapEffectiveDateFromCurve( aqoHedgeCurveGenerator, asOfDate );
+		AQLDate effectiveDate = getSwapEffectiveDateFromCurve( aqObjHedgeCurveGenerator, asOfDate );
 
 		/* 
 		*  This next section Reprices all of the calibration swaps using the pricing curve
@@ -132,7 +132,7 @@ namespace etrading
 		LabelValueBlock curveCollections( pricingCurveCollection, StandardString("") );
 
 		// Get all of the calibration swap maturity dates
-		AQLStringMatrix swapTenorsAndRates  = aqoHedgeCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_SWAPS );
+		AQLStringMatrix swapTenorsAndRates  = aqObjHedgeCurveMarketData->toAQLStringMatrix( GENERATOR_COMPONENTS::KEY_SWAPS );
 		const size_t numSwaps = swapTenorsAndRates.size();
 
 		// Iterate over all of the calibration swaps and calculate a par-rate for each swap using the pricing curve
@@ -150,7 +150,7 @@ namespace etrading
 
             repriceSwapExpressionLVB_ = LabelValueBlock( repriceSwapExpressionLVB_, tradeDateKeys, tradeDateValues );
 
-			auto swapInstrument = createSwapFromGenerator( GENERATOR_COMPONENTS::KEY_SWAPS, aqoSwapGeneratorName, repriceSwapExpressionLVB_, swapPropertiesLVB, isXccySwap );
+			auto swapInstrument = createSwapFromGenerator( GENERATOR_COMPONENTS::KEY_SWAPS, aqObjSwapGeneratorName, repriceSwapExpressionLVB_, swapPropertiesLVB, isXccySwap );
 			
 			double parRate = swapInstrument->parRate(curveCollections, fixingTables  );
 			// Now clear /delete the swap
@@ -160,13 +160,13 @@ namespace etrading
 		// Set the updated swap parRates back into the Swap MarketData Local Cache
         // *** Important Note *** This is a local market data area in memory, which is not persisted as part of the market data object itself. We cannot update ...
         // ... the underlying free object itself, we can make a copy of the object or update the market data local cache which acts as an override to the market data
-		aqoHedgeCurveMarketData->setMarketDataLocalCache( GENERATOR_COMPONENTS::KEY_SWAPS, swapTenorsAndRates );
+		aqObjHedgeCurveMarketData->setMarketDataLocalCache( GENERATOR_COMPONENTS::KEY_SWAPS, swapTenorsAndRates );
 	}
 
 
 	/* @brief		Builds the hedge curve and stores it in the specified hedgeCurveCollection.
-	*  @param[in]	oisCurveObjectName		The name of the AQO object handle corresponding to the OIS curve which will be built
-	*  @param[in]	swapCurveObjectName		The name of the AQO object handle corresponding to the Swap curve which will be built
+	*  @param[in]	oisCurveObjectName		The name of the AQObj object handle corresponding to the OIS curve which will be built
+	*  @param[in]	swapCurveObjectName		The name of the AQObj object handle corresponding to the Swap curve which will be built
 	*  @param[in]	hedgeCurveCollection	The CurveCollection which will contain the hedge OIS and Swap curve
 	*/
 	HedgeCurveInfo HedgeCurveEngine::buildHedgeCurve( const std::string& oisCurveObjectName,
@@ -174,16 +174,16 @@ namespace etrading
 												      const std::string& hedgeCurveCollection ) const
 	{
 		// First build the OIS curve from the provided generator and store in the hedgeCurveCollection
-		CurveGeneratorPtr aqoHedgeOISCurveGenerator  = getCurveGenerator(  aqoHedgeOISCurveGeneratorName_ );
-		CurveMarketDataPtr aqoHedgeOISCurveMarketData = getCurveMarketData( aqoHedgeOISCurveMarketDataName_ );
+		CurveGeneratorPtr aqObjHedgeOISCurveGenerator  = getCurveGenerator(  aqObjHedgeOISCurveGeneratorName_ );
+		CurveMarketDataPtr aqObjHedgeOISCurveMarketData = getCurveMarketData( aqObjHedgeOISCurveMarketDataName_ );
 
 		const std::string foreignCurveCollection; // Dummy curve collection name only for xccy swaps
-		SingleCurveObject oisCurveObject( oisCurveObjectName, aqoHedgeOISCurveGeneratorName_, aqoHedgeOISCurveMarketDataName_, hedgeCurveCollection, foreignCurveCollection );
+		SingleCurveObject oisCurveObject( oisCurveObjectName, aqObjHedgeOISCurveGeneratorName_, aqObjHedgeOISCurveMarketDataName_, hedgeCurveCollection, foreignCurveCollection );
 		oisCurveObject.calibrateCurve();
         copyToCache<etrading::SingleCurveObject>( oisCurveObject );
 
 		// Build the swap hedge curve using the provided generator and updated market data. Store the curve in the hedgeCurveCollection.
-		SingleCurveObject swapCurveObject( swapCurveObjectName, aqoHedgeSwapCurveGeneratorName_, aqoHedgeSwapCurveMarketDataName_, hedgeCurveCollection, foreignCurveCollection );
+		SingleCurveObject swapCurveObject( swapCurveObjectName, aqObjHedgeSwapCurveGeneratorName_, aqObjHedgeSwapCurveMarketDataName_, hedgeCurveCollection, foreignCurveCollection );
 		swapCurveObject.calibrateCurve();
         copyToCache<etrading::SingleCurveObject>( swapCurveObject );
 

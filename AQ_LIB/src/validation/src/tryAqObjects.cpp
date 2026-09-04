@@ -1,7 +1,7 @@
 #include <algorithm>
 
 #include "tryAqObjects.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "EnvironmentUtilities.h"
 #include "CoreEnumerations.h"
 #include "ObjectUtilities.h"
@@ -25,7 +25,7 @@ namespace validation
 
     bool tryAqObjExists( const std::string& typeAsString, const std::string& objectName )
     {
-        bool doesObjectExist = etrading::doesAQOExist( objectName, typeAsString );
+        bool doesObjectExist = etrading::doesAQObjExist( objectName, typeAsString );
         return doesObjectExist;
     }
 
@@ -60,7 +60,7 @@ namespace validation
 
     bool tryAqObjDelete( const std::string& typeAsString, const std::string& objectName )
     {
-        if ( !etrading::doesAQOExist( objectName, typeAsString ) )
+        if ( !etrading::doesAQObjExist( objectName, typeAsString ) )
         {
             AQ_THROW( ( boost::format( "Object %s does not exist." ) % objectName.c_str() ).str().c_str() );
         }
@@ -78,10 +78,10 @@ namespace validation
     
 	// Helper Function
     // Function to get the object name from the aqObjLoad function which returns a tuple
-    std::string getObjectName( const std::tuple<std::string, etrading::CachedObjectEnum> & aqoLoadResultTuple )
+    std::string getObjectName( const std::tuple<std::string, etrading::CachedObjectEnum> & aqObjLoadResultTuple )
     {
         // Return the string name from the tuple in position 0
-        return std::get<0>( aqoLoadResultTuple );
+        return std::get<0>( aqObjLoadResultTuple );
     }
 
     std::tuple<std::string, etrading::CachedObjectEnum> tryAqObjLoadAndReturnTupleResults( const std::string& fileName, const etrading::FileTypeEnum fileType, etrading::Environment& env )
@@ -114,7 +114,7 @@ namespace validation
         VALID_EXCEPTION_END
 	}
 
-    // Loads Multiple AQO objects of the Same Type by Referencing the Names and Folder
+    // Loads Multiple AQObj objects of the Same Type by Referencing the Names and Folder
     std::vector<std::string> tryAqObjQuickLoad( const std::vector<std::string>& objectNames,
                                                 const std::string& folder,
                                                 const etrading::FileTypeEnum fileType,
@@ -185,16 +185,16 @@ namespace validation
 		
 		// typename etrading::to_cached_object_type<objectType>::type  // this does not work because it is not a constant expression for compilation
 		// so we should try to code to an interface
-		auto aqoPtr = env.accessObjectInterface( objectName , objectType); // etrading::getAQOCurve(aqoCurveName);
+		auto aqObjPtr = env.accessObjectInterface( objectName , objectType); // etrading::getAQObjCurve(aqObjCurveName);
 		
         // For Intel Linux Compiler use nullptr = {}
-        AQ_REQUIRE( aqoPtr != nullptr, "Object '" + objectName + " ' with type '" + toString(objectType) + "' does not exist" )
+        AQ_REQUIRE( aqObjPtr != nullptr, "Object '" + objectName + " ' with type '" + toString(objectType) + "' does not exist" )
 
         // Append the file extension if missing
         std::string filenameWithExtension = etrading::appendFileExtension( fileName, fileType );
 
         // Serialize
-		aqoPtr->serialize( etrading::serialize::JSON, etrading::serialize::FILE, filenameWithExtension );
+		aqObjPtr->serialize( etrading::serialize::JSON, etrading::serialize::FILE, filenameWithExtension );
 			
         // Check the Serialization file was created
         etrading::checkFileExists( filenameWithExtension, fileType );
@@ -208,7 +208,7 @@ namespace validation
         VALID_EXCEPTION_END
 	}
 
-    // Loads Multiple AQO objects of the Same Type by Referencing the Names and Folder
+    // Loads Multiple AQObj objects of the Same Type by Referencing the Names and Folder
     std::vector<std::string> tryAqObjQuickSave( const std::vector<std::string>& objectNames,
                                                 const std::string& folder,
                                                 const etrading::FileTypeEnum fileType,

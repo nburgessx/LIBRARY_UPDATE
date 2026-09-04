@@ -24,7 +24,7 @@ namespace validation
     *  @param [in]		convexityAdjConv	Convexity adjustment market conventions
     *  @param [in]		convexityAdjRates	Convexity adjustment market data
     */
-    const AQLString tryAqObjCurvesCreateSwap( const std::string& aqoCurveName,
+    const AQLString tryAqObjCurvesCreateSwap( const std::string& aqObjCurveName,
                                             const AQLString& curveCollectionInput,
                                             const AQLString& staticDataTableInput,
                                             const AQLString& curveIndexInput,

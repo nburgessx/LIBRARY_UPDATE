@@ -1,7 +1,7 @@
 #include "tryAqObjCurvesCalibrateHedge.h"
 
 #include "CreateDataFile.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "StructuredExceptionHandler.h"
 #include "TypeHelpers.h"
 #include "RecordMacros.h"
@@ -13,8 +13,8 @@ using etrading::decorateFilename;
 namespace validation
 {
     /* @brief			Validation interface for the aqObjCurvesCalibrateHedge method. This method calibrates a hedge curve to a pricing curve
-	*  @param [in]		oisCurveObjectName			AQO object name of the ois hedge curve
-	*  @param [in]		swapCurveObjectName			AQO object name of the swap hedge curve
+	*  @param [in]		oisCurveObjectName			AQObj object name of the ois hedge curve
+	*  @param [in]		swapCurveObjectName			AQObj object name of the swap hedge curve
     *  @param [in]		pricingCurveCollection		The CurveCollection containing the swap curve used for pricing
     *  @param [in]		hedgeCurveCollection		The CurveCollection in which the generated hedge curve will be placed
 	*  @param [in]		oisCurveGeneratorName		The CurveGenerator used to build the OIS curve in the hedge curve collection

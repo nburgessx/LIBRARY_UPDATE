@@ -15,7 +15,7 @@
 namespace etrading
 {
 
-    // Function to trim a AQO object and remove the object counter if present
+    // Function to trim a AQObj object and remove the object counter if present
     std::string trimObjectCounter( const std::string& inputString )
     {
         std::string result = inputString;

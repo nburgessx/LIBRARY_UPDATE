@@ -16,7 +16,7 @@ namespace validation
     *  @param [in]		fxFwdRates			Forward FX rates
     *  @param [in]		spotFxRates			Spot FX rates
     */
-    const AQLString tryAqObjCurvesCreateBasis( const std::string& aqoCurveName,
+    const AQLString tryAqObjCurvesCreateBasis( const std::string& aqObjCurveName,
             const AQLString& curveCollectionInput,
             const AQLString& staticDataTableInput,
             const AQLString& curveIndexInput,

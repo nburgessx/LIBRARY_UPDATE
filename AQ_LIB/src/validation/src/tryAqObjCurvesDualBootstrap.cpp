@@ -6,7 +6,7 @@
 #include "EnvironmentUtilities.h"
 #include "ObjectUtilities.h"
 #include "CoreEnumerations.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "DualBootstrappedCurveObject.h"
 #include "CurveResultsContainer.h"
 
@@ -26,8 +26,8 @@ namespace validation
 	 * @param [in] curveCollection			Curve collection to which calibrated curves belong
 	 * @param [in] swapCurveGeneratorName   The name of the Swap curve generator that defines Swap curve's conventions
 	 * @param [in] oisCurveGeneratorName   The name of the OIS curve generator that defines OIS curve's conventions
-	 * @param [in] aqoSwapMarketObj			Object that encapsulates all of Swap curve's market data
-	 * @param [in] aqoOISMarketObj			Object that encapsulates all of OIS curve's market data
+	 * @param [in] aqObjSwapMarketObj			Object that encapsulates all of Swap curve's market data
+	 * @param [in] aqObjOISMarketObj			Object that encapsulates all of OIS curve's market data
 	 * @param [in] commonParams				A collection of parameters common across curves
 	 *                                      
 	 * @param [out]                         The curve indexes
@@ -36,16 +36,16 @@ namespace validation
 																	const std::string& curveCollection,
 																	const std::string& swapCurveGeneratorName,
 																	const std::string& oisCurveGeneratorName,
-																	const std::string& aqoSwapMarketObj,
-																	const std::string& aqoOISMarketObj,
+																	const std::string& aqObjSwapMarketObj,
+																	const std::string& aqObjOISMarketObj,
 																	const AQLStringMatrix& commonParams)
     {
 		VALID_EXCEPTION_START
 	
 		// Record Inputs for logs, tests and playback
-        RECORD_INPUTS( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, aqoSwapMarketObj, aqoOISMarketObj, commonParams);
+        RECORD_INPUTS( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, aqObjSwapMarketObj, aqObjOISMarketObj, commonParams);
 
-        // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
+        // AQObj Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
         AQ_CLEAR_CURVE_RESULTS_CACHE
 
 		// Perform initial basic sanity checks
@@ -59,19 +59,19 @@ namespace validation
 			throw AQLCoreInvalidData(( "#Error: Missing oisCurveGeneratorName input" ), __FILE__, __LINE__ );
 		}
 
-		if ( aqoSwapMarketObj.size() == 0 )
+		if ( aqObjSwapMarketObj.size() == 0 )
 		{
-			throw AQLCoreInvalidData(( "#Error: Missing aqoSwapMarketObj input" ), __FILE__, __LINE__ );
+			throw AQLCoreInvalidData(( "#Error: Missing aqObjSwapMarketObj input" ), __FILE__, __LINE__ );
 		}
 
-		if ( aqoOISMarketObj.size() == 0 )
+		if ( aqObjOISMarketObj.size() == 0 )
 		{
-			throw AQLCoreInvalidData(( "#Error: Missing aqoOISMarketObj input" ), __FILE__, __LINE__ );
+			throw AQLCoreInvalidData(( "#Error: Missing aqObjOISMarketObj input" ), __FILE__, __LINE__ );
 		}
 		
 		// Create the Curve object and store in the cache
 
-		etrading::DualBootstrappedCurveObject curveObject( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, aqoSwapMarketObj, aqoOISMarketObj);
+		etrading::DualBootstrappedCurveObject curveObject( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, aqObjSwapMarketObj, aqObjOISMarketObj);
 		curveObject.setEngineParams(commonParams);
 		curveObject.calibrateCurve();
 

@@ -12,7 +12,7 @@
 namespace
 {
     // Test Bond Input File
-    extern const std::string bondInputsFile1 = "ETrading/AQObjects/AQOBonds/BondUnitTests/tryAqObjBondsCreate_inputs.csv";
+    extern const std::string bondInputsFile1 = "ETrading/AQObjects/AQObjBonds/BondUnitTests/tryAqObjBondsCreate_inputs.csv";
 }
 
 namespace google_test
@@ -46,7 +46,7 @@ namespace google_test
         // Create the Bond
         etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputsFile1 );
 
-        // Register the Bond in the AQO object cache
+        // Register the Bond in the AQObj object cache
         etrading::registerToCache< etrading::Bond >( myBondPtr );
 
         const std::string bondObjectName        = myBondPtr->getBondObjectName(); 
@@ -144,7 +144,7 @@ namespace google_test
         // Create the Bond
         etrading::BondPtr myBondPtr = TestBondFactory::createBond( bondInputsFile1 );
 
-        // Register the Bond in the AQO object cache
+        // Register the Bond in the AQObj object cache
         etrading::registerToCache< etrading::Bond >( myBondPtr );
 
         const std::string bondObjectName        = myBondPtr->getBondObjectName(); 

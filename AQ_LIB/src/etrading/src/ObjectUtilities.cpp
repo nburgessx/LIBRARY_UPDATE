@@ -498,7 +498,7 @@ namespace etrading
     typename to_cached_object_type<CURVE_DEPRECATED>::type createCacheableObject<CURVE_DEPRECATED>( const rapidjson::Value& jsonDoc )
     {
         // TODO: we could also create a FreeObject and simply query the FreeObject to get
-        // the data for building an AQOCurve instead of using rapidjson (and having to check the formation of the file all the time).
+        // the data for building an AQObjCurve instead of using rapidjson (and having to check the formation of the file all the time).
 
         std::string objectName = jsonDoc[DataHolder::OBJECT_NAME_LABEL.c_str()].GetString();
         std::vector<DataSchema> dataSchemas = StaticStructureStore::getInstance().getCachedObjectStructure( CURVE_DEPRECATED );
@@ -534,7 +534,7 @@ namespace etrading
             const std::string cbp_objectName = std::string( "CURVE_BUILD_PROPERTIES_FOR_" ) + objectName;
 
             const CurveBuildProperties cbp = createCurveBuildPropertiesFromJsonArray( skVariableValuesArray, &jsonDoc[DATASCHEMAS][skIndex], cbp_objectName ) ;
-            return std::move( AQOCurve(	objectName, dates, discountFactors, cbp, forwardRates ) );
+            return std::move( AQObjCurve(	objectName, dates, discountFactors, cbp, forwardRates ) );
         }
         else
         {

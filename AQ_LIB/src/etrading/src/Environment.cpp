@@ -316,17 +316,17 @@ namespace etrading
 	// Template Specializations
 	// ------------------------
 
-    // specialization for AQOCurve, this delegates to 
-    // const unsigned int environment_implementation::eraseAllObjects<AQOCurve>( Environment& env )
+    // specialization for AQObjCurve, this delegates to 
+    // const unsigned int environment_implementation::eraseAllObjects<AQObjCurve>( Environment& env )
     // required because we need to clear the corresponding EntityPool Curve
     template <>
-    const unsigned int Environment::deleteAllObjects<AQOCurve>()
+    const unsigned int Environment::deleteAllObjects<AQObjCurve>()
     {
         return deleteAllObjects(CURVE_DEPRECATED); // needs to call the deletion of the object pool ...
     };
 
 	template <>
-    const bool Environment::deleteObject<AQOCurve>( const std::string& objectName )
+    const bool Environment::deleteObject<AQObjCurve>( const std::string& objectName )
     {
         return deleteObject(objectName, CURVE_DEPRECATED); // needs to call the deletion of the object pool ...
     };

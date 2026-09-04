@@ -96,8 +96,8 @@ namespace google_test
 			AQLString stdCurveMarketDataFile = TEST_DIR;
 			stdCurveMarketDataFile += prefix + AQLString("_STD_MARKETDATA");
 
-			std::string oisCurveMarketObjectHandle = google_test::createAQOMarketDataObjectFromFileName(oisCurveMarketDataFile);
-			std::string stdCurveMarketObjectHandle = google_test::createAQOMarketDataObjectFromFileName(stdCurveMarketDataFile);
+			std::string oisCurveMarketObjectHandle = google_test::createAQObjMarketDataObjectFromFileName(oisCurveMarketDataFile);
+			std::string stdCurveMarketObjectHandle = google_test::createAQObjMarketDataObjectFromFileName(stdCurveMarketDataFile);
 
 			validation::tryAqObjCurvesDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
 

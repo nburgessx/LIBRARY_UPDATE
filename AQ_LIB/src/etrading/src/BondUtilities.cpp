@@ -1,7 +1,7 @@
 #include "BondUtilities.h"
 #include "CommonConstants.h"
 #include "LabelValueBlockValidation.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 
 #include <string>
 #include <vector>
@@ -74,7 +74,7 @@ namespace etrading
 
     }
         
-	 /* @brief Create the Bond Label Value Block from a AQO Free-Object
+	 /* @brief Create the Bond Label Value Block from a AQObj Free-Object
 	 *  @param [in]		freeObject				freeObject
 	 *  @param [in]		objectName			    objectName
 	 *  @Return     A Label Value Block containing Bond Schedule Data

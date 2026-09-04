@@ -1,7 +1,7 @@
 #include "BondOptionPricer.h"
 #include "CurveValidation.h"
 #include "CurveUtilities.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "SettingsValidation.h"
 
 namespace etrading
@@ -10,7 +10,7 @@ namespace etrading
     BondOptionPricer::BondOptionPricer(const std::shared_ptr<BondOption>& bondOption, const LabelValueBlock& valuationSettingsLVB, const double& discountRate, const DayCountEnum& discountDayCount) : bondOption_(bondOption), discountDayCount_(discountDayCount)
 	{
 		const std::string volObjectName = getVolatilityModelFromValuationSettings(valuationSettingsLVB).getCString();
-		volProvider_ = getVolatility(volObjectName); // AQO Utility method to get the volatility object pointer from the AQO object cache
+		volProvider_ = getVolatility(volObjectName); // AQObj Utility method to get the volatility object pointer from the AQObj object cache
 
 		AQ_REQUIRE(bondOption_ != nullptr, "Invalid Bond Optione trade.");
 		AQ_REQUIRE(bondOption_->getCurrency() == volProvider_->currency(), "The Currency of Volatility and Option must be the same" );

@@ -50,7 +50,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( GBP_SwapCurve_Consistency, CONSISTENCY_GBP3ML_Swap_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the AQO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    swapTerms   = curveCalibrationSwapTenors( curveObjectGBP3ML_ ); 
         std::vector<double>         parRates    = curveCalibrationSwapParRates( curveObjectGBP3ML_ );
         AQ_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )

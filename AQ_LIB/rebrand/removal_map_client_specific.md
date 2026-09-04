@@ -74,7 +74,7 @@ checklist has a STOP gate for it.
 
 | Item | Question | Suggested check |
 |---|---|---|
-| `SchemaObject.cpp`, `SerializeContainedData.cpp`, `SerializationResult.cpp`, `SerializationUtilities.cpp` | Generic AQO/JSON serialisation (used by **generators** — keep) or securitisation-only (drop)? | `grep -rl "SchemaObject\|SerializeContainedData" src` minus the cluster; if generators / `ObjectUtilities` use it → **keep**. Likely keep. |
+| `SchemaObject.cpp`, `SerializeContainedData.cpp`, `SerializationResult.cpp`, `SerializationUtilities.cpp` | Generic AQObj/JSON serialisation (used by **generators** — keep) or securitisation-only (drop)? | `grep -rl "SchemaObject\|SerializeContainedData" src` minus the cluster; if generators / `ObjectUtilities` use it → **keep**. Likely keep. |
 | `CreditResultsContainer.h` included by `tryMeUtilitySetup.cpp` | Real dependency or incidental include? | open the file; if it only registers a type for the pool, keep the container (it is CDS-side anyway). |
 | `LADataFrame` / `mscDataFrame` overlap | Is `DataFrame` a generic tabular type used elsewhere, or CLO-only? | `grep -rl "DataFrame" src` — keep the generic type if shared. |
 | `LARiskConfiguration*` hits from the first broad grep | false positives (matched `-i msc`) — `calibration` risk config is **not** in scope here | ignore |

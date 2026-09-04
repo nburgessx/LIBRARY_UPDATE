@@ -13,7 +13,7 @@
 
 #include "CommonConstants.h"
 #include "CurveValidation.h"        // getCurveAsOfDate
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include "ParameterValidation.h"
 
 namespace etrading
@@ -25,7 +25,7 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	AQLString getAQOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
+	AQLString getAQObjCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
     {
         std::string curveCollection         = getOptionalCurveCollectionFromValuationSettings( valuationSettingsLVB, legName ).getCString();
         const std::string curveObjectName   = getCurveObjectFromValuationSettings( valuationSettingsLVB ).getCString();
@@ -50,7 +50,7 @@ namespace etrading
 
         if ( !curveObjectName.empty() )
         {
-            std::shared_ptr<SingleCurveObject> curveObject = getSingleCurveObject( curveObjectName ); // AQO Utility method to get the curve object pointer from the AQO object cache
+            std::shared_ptr<SingleCurveObject> curveObject = getSingleCurveObject( curveObjectName ); // AQObj Utility method to get the curve object pointer from the AQObj object cache
             curveCollection = curveObject->getCurveCollection().c_str();
         }
 
@@ -64,9 +64,9 @@ namespace etrading
 	* @param [in]		legName	            legName, required if curve collection set id
 	* @output			The matched curveCollection
 	*/
-	AQLString getValidatedAQOCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
+	AQLString getValidatedAQObjCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const AQLString legName )
     {
-        const AQLString curveCollection  = getAQOCurveCollectionFromValuationSettings( valuationSettingsLVB, legName );
+        const AQLString curveCollection  = getAQObjCurveCollectionFromValuationSettings( valuationSettingsLVB, legName );
         const AQLDate curveAsOfDate      = getCurveAsOfDate( curveCollection );
                 
         // Check Curve AsOf Date Matches the ValuationDate Specified in the Valuation Settings

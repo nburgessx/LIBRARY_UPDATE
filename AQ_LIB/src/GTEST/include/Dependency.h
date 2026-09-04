@@ -233,13 +233,13 @@ namespace google_test
     //
 	
 	// Macro that sets up a single OIS curve
-    // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Calibration Methods, so we clear the curve results container here
+    // AQObj Single Curves Populate Curve Results Objects that Conflict with Other Curve Calibration Methods, so we clear the curve results container here
     #define SET_UP_OIS_CURVE(ois) \
 	etrading::CurveResultsContainer::getInstance().deleteAllCurveResults(); \
     setUpOISCurve(ois);
 
 	// Macro that sets up a single STD curve and all curves it depends on
-    // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Calibration Methods, so we clear the curve results container here
+    // AQObj Single Curves Populate Curve Results Objects that Conflict with Other Curve Calibration Methods, so we clear the curve results container here
     #define SET_UP_STD_CURVE(ois, std) \
 	etrading::CurveResultsContainer::getInstance().deleteAllCurveResults(); \
     setUpOISCurve(ois);	\
@@ -247,7 +247,7 @@ namespace google_test
 
 	// Macro that sets up a single tenor basis curve and all curves it depends on.
 	// It assumes the 'against' leg forecast curve is a STD swap curve
-    // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Calibration Methods, so we clear the curve results container here
+    // AQObj Single Curves Populate Curve Results Objects that Conflict with Other Curve Calibration Methods, so we clear the curve results container here
     #define SET_UP_TENOR_BASIS_CURVE_1(ois_against, std_against, tenorbasis) \
     etrading::CurveResultsContainer::getInstance().deleteAllCurveResults(); \
     setUpOISCurve(ois_against);	\
@@ -256,7 +256,7 @@ namespace google_test
 
 	// Macro that sets up a single tenor basis curve and all curves it depends on.
 	// It assumes the 'against' leg forecast curve is a tenor basis curve
-    // AQO Single Curves Populate Curve Results Objects that Conflict with Other Curve Calibration Methods, so we clear the curve results container here
+    // AQObj Single Curves Populate Curve Results Objects that Conflict with Other Curve Calibration Methods, so we clear the curve results container here
     #define SET_UP_TENOR_BASIS_CURVE_2(ois_against, tenorbasis_against, tenorbasis) \
 	etrading::CurveResultsContainer::getInstance().deleteAllCurveResults(); \
     setUpOISCurve(ois_against);	\

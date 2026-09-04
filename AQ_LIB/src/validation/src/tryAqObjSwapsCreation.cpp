@@ -6,7 +6,7 @@
 
 #include "SwapUtilities.h"
 #include "ObjectUtilities.h"
-#include "AQOUtilities.h"
+#include "AQObjUtilities.h"
 #include <memory>
 #include "CoreEnumerations.h"
 #include "CrossCurrencySwap.h"

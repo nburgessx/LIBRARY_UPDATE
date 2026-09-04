@@ -30,7 +30,7 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 | D1 | `.ALGO_QUANT_LIB` is a backup — leave untouched. |
 | D2 | `msc*` functions (structured credit, other client) — **delete**, with all downstream references. |
 | D3 | `AQ_BINDINGS` → **`AQ_API`** (confirmed). Update project files, `.sln`, folder, SWIG `.i`, and all 8 `generate*`/`deploy*` batch files + pre/post-build commands. `RootNamespace` is currently `swigUseCase` — tidy to `AQ_API` in the same pass. |
-| D4 | The LWO handle/object framework stays — port as-is, rebrand `LWO→AQO`, keep the cell-location counter/hash behaviour. Do **not** adopt xlOil's cache. |
+| D4 | The LWO handle/object framework stays — port as-is, rebrand `LWO→AQObj`, keep the cell-location counter/hash behaviour. Do **not** adopt xlOil's cache. |
 | D5 | Calendar holiday-centre delimiter `:` → **`+`**. |
 | D6 | Function-signature **categories** across validation / XLL / API / tests to be reviewed and standardised — professional, clear, concise. (Phase 2 — §2.2 is the table to review.) |
 | D7 | `readme.md` to be rebranded and made current. (Phase 6.) |
@@ -41,7 +41,7 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 | D12 | **Q4 — holiday-centre join is `+` only** (Nicholas, this session). Reason: clean break (D9), fresh clients, no legacy user sheets to protect; the only `:`-form data that ships is the ~103 generator JSON, which we migrate ourselves; and `:` is heavily overloaded (`DATA_COLL_DEL`, curve-name lists in the same generator files). The `splitCalendarCentres()` helper is written so accepting `:` again is a **one-line toggle** if field feedback ever demands it — but it ships `+`-only. Migrate the 103 JSON calendar fields to `+`. |
 | D13 | **Q5 — Linux / CMake build is in scope**, lower priority (late phase). **End-state gate: not one file anywhere in the tree — source, Makefiles, `make.*`, CMake, `.sln`/`.vcxproj`, scripts, resources, examples, docs — may contain a legacy client name or an old prefix.** Many `resources\` and `examples\` items will be rewritten or removed for the final version. |
 | D14 | **Q6 — category taxonomy locked (13).** See §2.2 / `CLAUDE.md` §5.1. |
-| D15 | **LWO → `AQO`** for the C++ object-framework **classes** (`AQOCurve`, `AQOUtilities`, …); free predicate `isLWOObject → isAQObject` (**not** `isAQOObject` — no double-O anywhere; use `AQO` or `AQObject`). Public **function** names carrying `LWO` do **not** get an `AQO` prefix — they take the **category** prefix (`aqObjects*` for lifecycle ops, `aq<AssetCategory>*` for handle-based pricing/creation). See Phase 3.2. |
+| D15 | **LWO → `AQObj`** for the C++ object-framework **classes** (`AQObjCurve`, `AQObjUtilities`, …); free predicate `isLWOObject → isAQObject` (**not** `isAQOObject` — no double-O anywhere; use `AQObj` or `AQObject`). Public **function** names carrying `LWO` do **not** get an `AQObj` prefix — they take the **category** prefix (`aqObjects*` for lifecycle ops, `aq<AssetCategory>*` for handle-based pricing/creation). See Phase 3.2. |
 | D17 | **`LA` → `AQL`** (not `AQ`). `LA` = "Legacy Analytics" — the whole `LA*` tree is legacy-to-deprecate; the `AQL` ("AQ Legacy") prefix keeps it visually distinct and greppable against new `AQ*` code. Applies to identifiers, files (`LAString.h → AQLString.h`), include-guard macros, error-string text. `MA`/`MB` → `AQ`, confirmed per project. `LAObject → AQLObject`, `LAMath → AQLMath`. |
 | D16 | **Navigation:** category names are a public-API concern and are **not** propagated into `etrading`/`math` file or class names (those stay domain-oriented). The bridge is the `validation` layer: every wrapper is `tryAq<Category><Function>`, foldered by category (Phase 3.5), plus a live `docs\api_map.csv` (Phase 3.6). Judged acceptable — see §"Navigation" note below §2.5. |
 
@@ -117,7 +117,7 @@ Nothing else starts until this is green.
   `resources\config` holds **269 generator JSON** (132 SWAP, ~113 CURVE, 24
   BOND) + `.conf` registries, plus holiday data (`Calendar.csv/.conf`,
   `CBSchedule.csv`) and `.properties`. Format: `CACHED_OBJECT_TYPE` +
-  `STRUCTURED_KEYS` column blocks (the AQO serialisation format). Legacy
+  `STRUCTURED_KEYS` column blocks (the AQObj serialisation format). Legacy
   artefacts to remove: a bundled `MLIBQ_ADDIN.xll`, `ir.properties`,
   `irsvr_excel.conf`. Python deploy already copies `resources\config`; XLL does
   not yet.
@@ -242,7 +242,7 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   | `Math` | **low-level building blocks** — distributions, interpolation, root-finding, matrix ops — for users doing their own calculations or replicating results | `aqMathNormalCdf` |
   | `Models` | term-structure / stochastic models (Hull-White, LMM, Piterbarg, SABR-as-model), model calibration sets, model-based / exotic / CMS-spread pricing, analytic (Jacobian) risk. May be sparse initially. | `aqModelsHullWhiteCalibrate` |
   | `Generators` | list / describe / validate the JSON instrument & model static-data templates; build instruments from a generator + a few overrides | `aqGeneratorsList` |
-  | `Objects` | AQO handle framework — create / copy / modify / delete / clear / list | `aqObjectsDelete` |
+  | `Objects` | AQObj handle framework — create / copy / modify / delete / clear / list | `aqObjectsDelete` |
   | `Tools` | echo, build stamp, edition report, diagnostics, memory dump, CSV load | `aqToolsBuildTime` |
 
   **Decisions folded in:** `Curves` = rates yield-curve framework only, bond-curve
@@ -314,7 +314,7 @@ else — they stay domain-oriented.
 
 The big one. **`LA` → `AQL`** ("Legacy Analytics" → "AQ Legacy" — keeps the
 legacy tree marked and greppable), `MA` / `MB` → `AQ` (confirm per project),
-plus `me*→aq*` function bodies, plus `LWO→AQO`. Anchored, case-sensitive, from an
+plus `me*→aq*` function bodies, plus `LWO→AQObj`. Anchored, case-sensitive, from an
 approved list only (CLAUDE.md §5.5). One project per batch, in dependency order:
 `math → models → calibration → etrading → validation → AQ_API`. Build +
 baseline-diff between **every** batch.
@@ -339,16 +339,16 @@ baseline-diff between **every** batch.
   - Tooling now: `rebrand\tools\prefix_census.py` (stem∪token, fast one-pass) +
     `rebrand\tools\run_batch.py` (git mv + `\b`-replace + vcxproj-casing merge +
     verify gate that aborts+reverts on any lock/mismatch).
-- ☐ **3.2 `LWO → AQO`** (D4, D15). Two distinct things:
-  - **C++ object-framework classes** get the `AQO` prefix (AlgoQuant Object):
-    `LWOCurve → AQOCurve`, `LWOCurveDayAdjustment → AQOCurveDayAdjustment`,
-    `LWOUtilities → AQOUtilities`, `HandleEnums → AQOHandleEnums`,
+- ☐ **3.2 `LWO → AQObj`** (D4, D15). Two distinct things:
+  - **C++ object-framework classes** get the `AQObj` prefix (AlgoQuant Object):
+    `LWOCurve → AQObjCurve`, `LWOCurveDayAdjustment → AQObjCurveDayAdjustment`,
+    `LWOUtilities → AQObjUtilities`, `HandleEnums → AQOHandleEnums`,
     `IsLWOObject.{h,cpp}` → `AQObjectPredicates.{h,cpp}` with the free function
     `isLWOObject() → isAQObject()`. Folded into the `etrading` batch. Handle
     behaviour (counter, cell-hash, recalc suffix) byte-for-byte unchanged.
-    **Never `AQOObject` (double-O)** — use `AQO` or `AQObject`. Note the legacy
+    **Never `AQOObject` (double-O)** — use `AQObj` or `AQObject`. Note the legacy
     `math` class `LAObject` becomes `AQLObject` (distinct from the framework's
-    `AQObject` / `AQO*`), so no clash.
+    `AQObject` / `AQObj*`), so no clash.
   - **Public function names carrying `LWO`** do **not** become `aqAQO…`. They
     take the **category** prefix by what they do:
     - object-lifecycle ops (`meLWOLoad/Save/Copy/Modify/Delete/Clear/List`) →
@@ -431,7 +431,7 @@ baseline-identical.
 Wait for Nicholas's xlOil worked examples before starting — they define the
 canonical marshalling / handle-I/O / array-return / error-convention pattern.
 
-- ☐ **4.1** Port the **AQO handle framework** from `.APPLES\...\etrading`
+- ☐ **4.1** Port the **AQObj handle framework** from `.APPLES\...\etrading`
   (`LWOCurve`, `IsLWOObject`, `HandleEnums`, `LWOUtilities`,
   `StructuredExceptionHandler`) into `src\etrading`, rebranded, behaviour
   preserved. Unit-test the counter/hash/recalc-suffix logic directly.
@@ -508,7 +508,7 @@ the library's no-recompile customisation surface:
   user books e.g. a USD swap from `notional, effective, maturity, fixed rate,
   pay/receive`, or a US Treasury from `notional, issue/settle, maturity, coupon`,
   instead of hand-assembling conventions most users are unfamiliar with.
-  Generators are consumed by the AQO object layer: generator name + a few
+  Generators are consumed by the AQObj object layer: generator name + a few
   overrides → object handle. Existing seeds live under
   `resources\config\{SWAP,BOND,CURVE}_GENERATOR`.
 

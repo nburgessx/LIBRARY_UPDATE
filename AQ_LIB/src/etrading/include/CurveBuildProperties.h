@@ -25,7 +25,7 @@
 #include "IsAQObject.h"
 
 /*
-This class holds the basic properties needed for operating on AQOCurve objects
+This class holds the basic properties needed for operating on AQObjCurve objects
 */
 
 

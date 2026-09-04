@@ -56,7 +56,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::SWAP_MARKETDATA,    // Calibration Instrument: STD Interest Rate Swap
                                        { "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "11Y", "12Y", "15Y", "20Y", "25Y", "30Y", "40Y", "50Y" }, // Calibration Tenors                                  
-                                       curveObjectEUR3ML_,                               // AQOCurveName
+                                       curveObjectEUR3ML_,                               // AQObjCurveName
                                        "EURYC",                                          // CurveCollection
                                        "20180814",                                       // Swap Effective Date
                                        "EUR_3ML",                                        // Swap Generator
@@ -66,7 +66,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( EUR_SwapCurve_Consistency, CONSISTENCY_EUR3ML_Swap_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the AQO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    swapTerms   = curveCalibrationSwapTenors( curveObjectEUR3ML_ ); 
         std::vector<double>         parRates    = curveCalibrationSwapParRates( curveObjectEUR3ML_ );
         AQ_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )
@@ -109,7 +109,7 @@ namespace google_test
         // Function will throw on failure or if no tests are run
         repriceCalibrationInstruments( etrading::CurveMarketDataEnum::SWAP_MARKETDATA,    // Calibration Instrument: STD Interest Rate Swap
                                        { "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y", "10Y", "11Y", "12Y", "15Y", "20Y", "25Y", "30Y", "40Y", "50Y" }, // Calibration Tenors                                  
-                                       curveObjectEUR6ML_,                               // AQOCurveName
+                                       curveObjectEUR6ML_,                               // AQObjCurveName
                                        "EURYC",                                          // CurveCollection
                                        "20180814",                                       // Swap Effective Date
                                        "EUR_6ML",                                        // Swap Generator
@@ -119,7 +119,7 @@ namespace google_test
     // Call Test Fixture Class
     TEST_F( EUR_SwapCurve_Consistency, CONSISTENCY_EUR6ML_Swap_Instrument_Repricing )
     {
-        // Extract the Swap Terms & Par Rates from the AQO Curve Object
+        // Extract the Swap Terms & Par Rates from the AQObj Curve Object
         std::vector<std::string>    swapTerms   = curveCalibrationSwapTenors( curveObjectEUR6ML_ ); 
         std::vector<double>         parRates    = curveCalibrationSwapParRates( curveObjectEUR6ML_ );
         AQ_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )

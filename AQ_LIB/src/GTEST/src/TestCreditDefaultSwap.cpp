@@ -28,7 +28,7 @@
 using etrading::ReadDataFile;
 
 // Define the Test Input Folder Here
-#define TEST_DIR			  "ETrading/AQObjects/TestAQOCreditDefaultSwap/"
+#define TEST_DIR			  "ETrading/AQObjects/TestAQObjCreditDefaultSwap/"
 
 
 namespace
@@ -74,18 +74,18 @@ namespace
 	/* @brief			Builds Generator curve by invoking the tryAqObjCurvesCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
-	void createAQOCurveFromFileName( const AQLString& curveCalibrationFileName )
+	void createAQObjCurveFromFileName( const AQLString& curveCalibrationFileName )
 	{
 		etrading::ReadDataFile::Load curveCalibrationFileObj = etrading::ReadDataFile::Load( curveCalibrationFileName );
 		
-		std::string aqoCurveGeneratorName	= curveCalibrationFileObj[ "aqoCurveGeneratorName" ];
-		std::string aqoCurveMarketDataName	= curveCalibrationFileObj[ "aqoCurveMarketDataName" ];
+		std::string aqObjCurveGeneratorName	= curveCalibrationFileObj[ "aqObjCurveGeneratorName" ];
+		std::string aqObjCurveMarketDataName	= curveCalibrationFileObj[ "aqObjCurveMarketDataName" ];
 		std::string domesticCurveCollection	= curveCalibrationFileObj[ "domesticCurveCollection" ];
 		std::string foreignCurveCollection	= curveCalibrationFileObj[ "foreignCurveCollection" ];
 		
-		std::string objectName = aqoCurveGeneratorName;
+		std::string objectName = aqObjCurveGeneratorName;
 
-		validation::tryAqObjCurvesCalibrate(	objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjCurvesCalibrate(	objectName, aqObjCurveGeneratorName, aqObjCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -94,22 +94,22 @@ namespace
 	*/
 	void setUpGeneratorCurve( const AQLString& marketDataFileName, const AQLString& curveCalibrationFileName )
 	{
-		google_test::createAQOMarketDataObjectFromFileName( marketDataFileName );
-		createAQOCurveFromFileName( curveCalibrationFileName );
+		google_test::createAQObjMarketDataObjectFromFileName( marketDataFileName );
+		createAQObjCurveFromFileName( curveCalibrationFileName );
 	}
 
-	void createAQOCreditDefaultSwapFromFileName( const AQLString& cdsFileName )
+	void createAQObjCreditDefaultSwapFromFileName( const AQLString& cdsFileName )
 	{
 		etrading::ReadDataFile::Load creditDefaultSwapFileObj = etrading::ReadDataFile::Load( cdsFileName );
 		
 		const std::string swapName				= creditDefaultSwapFileObj[ "swapName" ];
-		const std::string aqoswapGeneratorName	= creditDefaultSwapFileObj[ "swapGeneratorName" ];
+		const std::string aqObjswapGeneratorName	= creditDefaultSwapFileObj[ "swapGeneratorName" ];
 		const AQLStringMatrix expressionLVB		= creditDefaultSwapFileObj[ "expressionLVB" ];
 		const AQLStringMatrix swapPropertiesLVB	= creditDefaultSwapFileObj[ "swapPropertiesLVB" ];
 		const bool isXccySwap					= creditDefaultSwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= creditDefaultSwapFileObj[ "validateKeys" ];
 		
-		validation::tryAqObjSwapsCreateFromGenerator( swapName, aqoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		validation::tryAqObjSwapsCreateFromGenerator( swapName, aqObjswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 }
 
@@ -123,7 +123,7 @@ namespace google_test
     {
 		// Create OIS discount curve and CDS object
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
-		createAQOCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP );
+		createAQObjCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP );
 
 		// Calculate the PV from hazard rate
 
@@ -146,7 +146,7 @@ namespace google_test
 	TEST_F( TestCreditDefaultSwap, SNAPSHOT_RiskyAnnuity_FromHazardRate )
     {
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
-		createAQOCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP );
+		createAQObjCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP );
 
 		// Calculate the Risky Annuity from hazard rate
 
@@ -169,7 +169,7 @@ namespace google_test
 	TEST_F( TestCreditDefaultSwap, SNAPSHOT_ParSpread_FromHazardRate )
     {
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
-		createAQOCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP );
+		createAQObjCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP );
 
 		// Calculate the Par Spread from hazard rate
 
@@ -192,7 +192,7 @@ namespace google_test
 	TEST_F( TestCreditDefaultSwap, SNAPSHOT_HazardRate_FromParSpread )
     {
 		setUpGeneratorCurve( GEN_USD_OIS_MARKETDATA, GEN_USD_OIS_CURVE );
-		createAQOCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP );
+		createAQObjCreditDefaultSwapFromFileName( GEN_CREDIT_DEFAULT_SWAP );
 
 		// Calculate the Hazard Rate from par spread
 
