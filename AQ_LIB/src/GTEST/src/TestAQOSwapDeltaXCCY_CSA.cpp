@@ -6,12 +6,12 @@
 #include "TryAqCurvesFwdFxConst.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjectsSwapCreation.h"
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsCreation.h"
+#include "tryAqObjSwapsPricing.h"
 
 // Risk calculation
-#include "tryAqObjectsSwapDelta.h"
-#include "tryAqObjectsFixingTable.h"
+#include "tryAqObjSwapsDelta.h"
+#include "tryAqObjRatesFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!
@@ -66,28 +66,28 @@ namespace
 	//
     // test call input and reference files
     //
-	extern const char xccySwap_USDCSA[]				= TEST_DIR "XCCY_tryAqObjectsSwapCreate_USDCSA_inputs.csv";    // EUR / USD XCCY swap, USD CSA i.e. regular XCCY swap
-	extern const char xccySwap_GBPCSA[]				= TEST_DIR "XCCY_tryAqObjectsSwapCreate_GBPCSA_inputs.csv";    // EUR / USD XCCY swap, GBP CSA
-	extern const char xccySwap_EURCSA[]				= TEST_DIR "XCCY_tryAqObjectsSwapCreate_EURCSA_inputs.csv";    // EUR / USD XCCY swap, EUR CSA
-	extern const char xccySwap_JPYCSA[]				= TEST_DIR "XCCY_tryAqObjectsSwapCreate_JPYCSA_inputs.csv";    // EUR / USD XCCY swap, JPY CSA
+	extern const char xccySwap_USDCSA[]				= TEST_DIR "XCCY_tryAqObjSwapsCreate_USDCSA_inputs.csv";    // EUR / USD XCCY swap, USD CSA i.e. regular XCCY swap
+	extern const char xccySwap_GBPCSA[]				= TEST_DIR "XCCY_tryAqObjSwapsCreate_GBPCSA_inputs.csv";    // EUR / USD XCCY swap, GBP CSA
+	extern const char xccySwap_EURCSA[]				= TEST_DIR "XCCY_tryAqObjSwapsCreate_EURCSA_inputs.csv";    // EUR / USD XCCY swap, EUR CSA
+	extern const char xccySwap_JPYCSA[]				= TEST_DIR "XCCY_tryAqObjSwapsCreate_JPYCSA_inputs.csv";    // EUR / USD XCCY swap, JPY CSA
 
 	// DV01 tests
-	extern const char swapDV01Inputs[]				= TEST_DIR "tryAqObjectsSwapDV01_inputs_";  // set up the DV01 calculation
+	extern const char swapDV01Inputs[]				= TEST_DIR "tryAqObjSwapsDV01_inputs_";  // set up the DV01 calculation
 
 	// Reference DV01 outputs base filename. A currency csa suffix is appended by the test in order to get the actual filename
-	extern const char raw_dv01_outputs_32[]			= "tryAqObjectsSwapDV01_outputs_";
-	extern const char raw_dv01_outputs_64[]			= "tryAqObjectsSwapDV01_outputs_64bit_";
-	extern const char dv01_outputs_32[]				= TEST_DIR "tryAqObjectsSwapDV01_outputs_";
-	extern const char dv01_outputs_64[]				= TEST_DIR "tryAqObjectsSwapDV01_outputs_64bit_";
+	extern const char raw_dv01_outputs_32[]			= "tryAqObjSwapsDV01_outputs_";
+	extern const char raw_dv01_outputs_64[]			= "tryAqObjSwapsDV01_outputs_64bit_";
+	extern const char dv01_outputs_32[]				= TEST_DIR "tryAqObjSwapsDV01_outputs_";
+	extern const char dv01_outputs_64[]				= TEST_DIR "tryAqObjSwapsDV01_outputs_64bit_";
 
 	// DeltaLadder tests
-	extern const char deltaLadderInputs[]			= TEST_DIR "tryAqObjectsSwapDeltaLadder_inputs_";  // set up the DeltaLadder calculation
+	extern const char deltaLadderInputs[]			= TEST_DIR "tryAqObjSwapsDeltaLadder_inputs_";  // set up the DeltaLadder calculation
 
 	// References DeltaLadder outputs base filename. A currency csa suffix is appended by the test in order to get the actual filename
-	extern const char raw_delta_ladder_outputs_32[]	= "tryAqObjectsSwapDeltaLadder_outputs_";
-	extern const char raw_delta_ladder_outputs_64[]	= "tryAqObjectsSwapDeltaLadder_outputs_64bit_";
-	extern const char delta_ladder_outputs_32[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_outputs_";
-	extern const char delta_ladder_outputs_64[]		= TEST_DIR "tryAqObjectsSwapDeltaLadder_outputs_64bit_";
+	extern const char raw_delta_ladder_outputs_32[]	= "tryAqObjSwapsDeltaLadder_outputs_";
+	extern const char raw_delta_ladder_outputs_64[]	= "tryAqObjSwapsDeltaLadder_outputs_64bit_";
+	extern const char delta_ladder_outputs_32[]		= TEST_DIR "tryAqObjSwapsDeltaLadder_outputs_";
+	extern const char delta_ladder_outputs_64[]		= TEST_DIR "tryAqObjSwapsDeltaLadder_outputs_64bit_";
 
 	std::string createSwapFromDataFile( const char* swapInputs )
 	{
@@ -97,7 +97,7 @@ namespace
 		AQLStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
-		return validation::tryAqObjectsSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
+		return validation::tryAqObjSwapsCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
 	};
 }
 
@@ -198,8 +198,8 @@ namespace google_test
 
 		AQLStringVector positionIDs;
 		DoubleVector deltas;
-		// The DV01 is actually calculated by the tryAqObjectsSwapDelta function
-		validation::tryAqObjectsSwapDelta( positionIDs,
+		// The DV01 is actually calculated by the tryAqObjSwapsDelta function
+		validation::tryAqObjSwapsDelta( positionIDs,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -271,7 +271,7 @@ namespace google_test
 		AQLStringVector pillarNames;
 		AQLStringVector headers;
 		DoubleMatrix deltas;
-		validation::tryAqObjectsSwapDeltaLadder(headers,
+		validation::tryAqObjSwapsDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,

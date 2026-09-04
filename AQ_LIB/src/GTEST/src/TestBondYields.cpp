@@ -12,7 +12,7 @@
 namespace
 {
     // Test Bond Input File
-    extern const std::string bondInputsFile1 = "ETrading/AQObjects/AQOBonds/BondUnitTests/tryAqObjectsBondCreate_inputs.csv";
+    extern const std::string bondInputsFile1 = "ETrading/AQObjects/AQOBonds/BondUnitTests/tryAqObjBondsCreate_inputs.csv";
 }
 
 namespace google_test

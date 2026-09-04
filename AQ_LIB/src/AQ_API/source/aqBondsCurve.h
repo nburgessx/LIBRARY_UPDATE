@@ -122,7 +122,7 @@ std::vector<double> aqBondsCurvePolynomialYield( const std::vector<double>& coef
 *  @param[in]   showColumnHeaders
 *  @returns		Cashflow Display Information
 */
-SWIG_STRINGMATRIX aqObjectsBondDisplayCashflows( const std::string& bondObjectName, const std::string& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders );
+SWIG_STRINGMATRIX aqObjBondsDisplayCashflows( const std::string& bondObjectName, const std::string& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders );
 
 
 /* @brief Function to display bond cashflows
@@ -134,7 +134,7 @@ SWIG_STRINGMATRIX aqObjectsBondDisplayCashflows( const std::string& bondObjectNa
 *  @param[in]   columnList
 *  @returns		Cashflow Display Information
 */
-SWIG_STRINGMATRIX aqObjectsBondDisplayCashflows( const std::string& bondObjectName, const std::string& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders, const std::vector<std::string>& columnList );
+SWIG_STRINGMATRIX aqObjBondsDisplayCashflows( const std::string& bondObjectName, const std::string& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders, const std::vector<std::string>& columnList );
 
 
 /* @brief Function to display bond cashflows
@@ -142,7 +142,7 @@ SWIG_STRINGMATRIX aqObjectsBondDisplayCashflows( const std::string& bondObjectNa
 *  @param[in]   showColumnHeaders
 *  @returns		Cashflow Display Information
 */
-SWIG_STRINGMATRIX aqObjectsBondDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders );
+SWIG_STRINGMATRIX aqObjBondsDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders );
 
 
 /* @brief Function to display bond cashflows
@@ -151,4 +151,4 @@ SWIG_STRINGMATRIX aqObjectsBondDisplaySchedule( const std::string& bondObjectNam
 *  @param[in]   columnList
 *  @returns		Cashflow Display Information
 */
-SWIG_STRINGMATRIX aqObjectsBondDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders, const std::vector<std::string>& columnList );
+SWIG_STRINGMATRIX aqObjBondsDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders, const std::vector<std::string>& columnList );

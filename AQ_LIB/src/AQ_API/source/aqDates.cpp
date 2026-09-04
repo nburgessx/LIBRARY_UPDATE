@@ -253,7 +253,7 @@ double aqDatesYearFraction( const std::string& fromDate,
 }
 
 
-/* @brief			swig interface for the aqObjectsSwapSpotDate method
+/* @brief			swig interface for the aqObjSwapsSpotDate method
 *  @param [in]		asOfDate			The asOf- or valuation-date
 *  @param [in]		spotLag				The spot lag
 *  @param [in]		fixingCalendar		Fixing Calendar
@@ -262,7 +262,7 @@ double aqDatesYearFraction( const std::string& fromDate,
 *  @param [in]		rollConvention		Roll Convention
 *  @return			Swap Spot Date 
 */
-std::string aqObjectsSwapUSDSpotDate( const std::string & asOfDate,
+std::string aqObjSwapsUSDSpotDate( const std::string & asOfDate,
 							      const std::string & spotLag,
 							      const std::string & fixingCalendar,
 							      const std::string & paymentCalendar,

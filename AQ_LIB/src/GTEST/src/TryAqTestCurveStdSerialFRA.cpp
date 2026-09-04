@@ -6,7 +6,7 @@
 #include "TryAqCurvesStd.h"
 #include "tryAqObjects.h"
 #include "tryAqCurvesForwardRate.h"
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsPricing.h"
 
 #include <gTest/gTest.h>
 
@@ -59,8 +59,8 @@ namespace google_test
 
     TEST_F(TryAqTestCurveStdSerialFRA, SNAPSHOT_CheckForwardRates_Contiguous)
     {
-		validation::tryAqObjectsLoad(EURYC_OIS);
-		validation::tryAqObjectsLoad(Contiguous_EURYC_STD);
+		validation::tryAqObjLoad(EURYC_OIS);
+		validation::tryAqObjLoad(Contiguous_EURYC_STD);
 
 		const ReadDataFile::Load inputFile(Contiguous_ForwardRatesInputs);
 
@@ -75,8 +75,8 @@ namespace google_test
 	TEST_F(TryAqTestCurveStdSerialFRA, SNAPSHOT_CheckForwardRates_SerialRate)
 	{
 
-		validation::tryAqObjectsLoad(EURYC_OIS);
-		validation::tryAqObjectsLoad(SerialRate_EURYC_STD);
+		validation::tryAqObjLoad(EURYC_OIS);
+		validation::tryAqObjLoad(SerialRate_EURYC_STD);
 
 		const ReadDataFile::Load inputFile(SerialRate_ForwardRatesInputs);
 
@@ -90,8 +90,8 @@ namespace google_test
 
 	TEST_F(TryAqTestCurveStdSerialFRA, SNAPSHOT_CheckForwardRates_SerialDF)
 	{
-		validation::tryAqObjectsLoad(EURYC_OIS);
-		validation::tryAqObjectsLoad(SerialDF_EURYC_STD);
+		validation::tryAqObjLoad(EURYC_OIS);
+		validation::tryAqObjLoad(SerialDF_EURYC_STD);
 
 		const ReadDataFile::Load inputFile(SerialDF_ForwardRatesInputs);
 

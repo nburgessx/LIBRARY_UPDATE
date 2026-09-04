@@ -16,13 +16,13 @@
 #include "CurveOis.h"
 
 // "me" API
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsPricing.h"
 
 
 // "Generator" API
-#include "tryAqObjectsCurveMarketData.h"
-#include "tryAqObjectsCurveCalibrate.h"
-#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjCurvesMarketData.h"
+#include "tryAqObjCurvesCalibrate.h"
+#include "tryAqObjSwapsCreation.h"
 
 
 using etrading::ReadDataFile;
@@ -45,32 +45,32 @@ namespace
 	// -------------------------------------------------------------
 
 	// Curve market data files for use with CurveGenerators
-	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USDYC_OIS_CURVE_MARKETDATA@1_tryAqObjectsCurveMarketDataCreate_inputs.csv";
-	const char GEN_USD_STD_MARKETDATA[]			= TEST_DIR "USDYC_STD_3M_CURVE_MARKETDATA@3_tryAqObjectsCurveMarketDataCreate_inputs.csv";
+	const char GEN_USD_OIS_MARKETDATA[]			= TEST_DIR "USDYC_OIS_CURVE_MARKETDATA@1_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char GEN_USD_STD_MARKETDATA[]			= TEST_DIR "USDYC_STD_3M_CURVE_MARKETDATA@3_tryAqObjCurvesMarketDataCreate_inputs.csv";
 
 	// -------------------------------------------------------------
 
 	// Curves built from generator and market data
-	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USDYC_OIS_tryAqObjectsCurveCalibrate_inputs.csv";
-	const char GEN_USD_STD_CURVE[]				= TEST_DIR "USDYC_STD_tryAqObjectsCurveCalibrate_inputs.csv";
+	const char GEN_USD_OIS_CURVE[]				= TEST_DIR "USDYC_OIS_tryAqObjCurvesCalibrate_inputs.csv";
+	const char GEN_USD_STD_CURVE[]				= TEST_DIR "USDYC_STD_tryAqObjCurvesCalibrate_inputs.csv";
 
 
 	// -------------------------------------------------------------
 
 	// Build Constant Maturity Swap
 
-	const char GEN_CONSTANT_MATURITY_SWAP[]		= TEST_DIR "USD_CMS_tryAqObjectsSwapCreateFromGenerator_inputs.csv" ;
+	const char GEN_CONSTANT_MATURITY_SWAP[]		= TEST_DIR "USD_CMS_tryAqObjSwapsCreateFromGenerator_inputs.csv" ;
 
 	// API methods
-	const char CMS_CALCULATE_PV[]				= TEST_DIR "tryAqObjectsConstantMaturitySwapPVUsingConvexityAdjustment_inputs.csv";
-	const char CMS_CALCULATE_PAR_RATE[]			= TEST_DIR "tryAqObjectsConstantMaturitySwapParRateUsingConvexityAdjustment_inputs.csv";
+	const char CMS_CALCULATE_PV[]				= TEST_DIR "tryAqObjSwapsConstantMaturitySwapPVUsingConvexityAdjustment_inputs.csv";
+	const char CMS_CALCULATE_PAR_RATE[]			= TEST_DIR "tryAqObjSwapsConstantMaturitySwapParRateUsingConvexityAdjustment_inputs.csv";
 
 	// Snapshot results
-	const char CMS_EXPECTED_PV[]				= TEST_DIR "tryAqObjectsConstantMaturitySwapPVUsingConvexityAdjustment_outputs.csv";
-	const char CMS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryAqObjectsConstantMaturitySwapParRateUsingConvexityAdjustment_outputs.csv";
+	const char CMS_EXPECTED_PV[]				= TEST_DIR "tryAqObjSwapsConstantMaturitySwapPVUsingConvexityAdjustment_outputs.csv";
+	const char CMS_EXPECTED_PAR_RATE[]			= TEST_DIR "tryAqObjSwapsConstantMaturitySwapParRateUsingConvexityAdjustment_outputs.csv";
 
 	
-	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
+	/* @brief			Builds Generator curve by invoking the tryAqObjCurvesCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
 	void createAQOCurveFromFileName( const AQLString& curveCalibrationFileName )
@@ -84,7 +84,7 @@ namespace
 		
 		std::string objectName = aqoCurveGeneratorName;
 
-		validation::tryAqObjectsCurveCalibrate(	objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjCurvesCalibrate(	objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -108,7 +108,7 @@ namespace
 		const bool isXccySwap					= constantMaturitySwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= constantMaturitySwapFileObj[ "validateKeys" ];
 		
-		validation::tryAqObjectsSwapCreateFromGenerator( swapName, aqoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		validation::tryAqObjSwapsCreateFromGenerator( swapName, aqoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 }
 
@@ -134,7 +134,7 @@ namespace google_test
 		const double convexityAdjustment	= PVFileObj[ "convexityAdjustment" ];
 		std::string legName					= PVFileObj[ "legName"];
 
-		const double calculatedPV = validation::tryAqObjectsConstantMaturitySwapPVUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment, legName.c_str() );
+		const double calculatedPV = validation::tryAqObjSwapsConstantMaturitySwapPVUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		const double pvTolerance = 10.0;  // Notional of 1MM. We can afford a slightly wider tolerance which allows 64bit test to pass.
@@ -156,7 +156,7 @@ namespace google_test
 		AQLStringMatrix curveCollections		= parRateFileObj[ "curveCollections" ];
 		const double convexityAdjustment	= parRateFileObj[ "convexityAdjustment" ];
 
-		const double calculatedParRate = validation::tryAqObjectsConstantMaturitySwapParRateUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment );
+		const double calculatedParRate = validation::tryAqObjSwapsConstantMaturitySwapParRateUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedParRate, TEST_DIR, CMS_EXPECTED_PAR_RATE, tolerance );

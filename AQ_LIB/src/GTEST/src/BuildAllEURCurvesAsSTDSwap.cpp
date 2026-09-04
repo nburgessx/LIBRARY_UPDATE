@@ -18,8 +18,8 @@
 #include "ResultsProcessor.h"
 #include "CoreEnumerations.h"
 #include "tryAqObjects.h"
-#include "tryAqObjectsSwapCreation.h"
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsCreation.h"
+#include "tryAqObjSwapsPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "RepriceCalibrationInstruments.h"
@@ -46,11 +46,11 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectEUROIS_	= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUROIS, etrading::JSON );
-        const std::string curveObjectEUR1ML_	= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR1ML, etrading::JSON );
-		const std::string curveObjectEUR3ML_	= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR3ML, etrading::JSON );
-        const std::string curveObjectEUR6ML_	= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR6ML, etrading::JSON );
-		const std::string curveObjectEUR12ML_	= validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR12ML, etrading::JSON );
+        const std::string curveObjectEUROIS_	= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUROIS, etrading::JSON );
+        const std::string curveObjectEUR1ML_	= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR1ML, etrading::JSON );
+		const std::string curveObjectEUR3ML_	= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR3ML, etrading::JSON );
+        const std::string curveObjectEUR6ML_	= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR6ML, etrading::JSON );
+		const std::string curveObjectEUR12ML_	= validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR12ML, etrading::JSON );
     };
 
 	// Call Test Fixture Class
@@ -59,18 +59,18 @@ namespace google_test
 		// Load Curves - First Run (Performed by TEST FIXTURE Constructor)
 
 		// Load Curves - Second Run 
-        validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUROIS, etrading::JSON );
-        validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR1ML, etrading::JSON );
-		validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR3ML, etrading::JSON );
-        validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR6ML, etrading::JSON );
-		validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR12ML, etrading::JSON );
+        validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUROIS, etrading::JSON );
+        validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR1ML, etrading::JSON );
+		validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR3ML, etrading::JSON );
+        validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR6ML, etrading::JSON );
+		validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR12ML, etrading::JSON );
 
 		// Load Curves - Third Run 
-        validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUROIS, etrading::JSON );
-        validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR1ML, etrading::JSON );
-		validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR3ML, etrading::JSON );
-        validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR6ML, etrading::JSON );
-		validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameEUR12ML, etrading::JSON );
+        validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUROIS, etrading::JSON );
+        validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR1ML, etrading::JSON );
+		validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR3ML, etrading::JSON );
+        validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR6ML, etrading::JSON );
+		validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameEUR12ML, etrading::JSON );
 	}
 
     // Call Test Fixture Class
@@ -119,7 +119,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20200609", swapTerms[i] ); // Effective Date = 20200609
-            const double actualResult                    = validation::tryAqObjectsSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );
@@ -172,7 +172,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20200609", swapTerms[i] ); // Effective Date = 20200609
-            const double actualResult                    = validation::tryAqObjectsSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );
@@ -225,7 +225,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20200609", swapTerms[i] ); // Effective Date = 20200609
-            const double actualResult                    = validation::tryAqObjectsSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );
@@ -278,7 +278,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20200609", swapTerms[i] ); // Effective Date = 20200609
-            const double actualResult                    = validation::tryAqObjectsSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

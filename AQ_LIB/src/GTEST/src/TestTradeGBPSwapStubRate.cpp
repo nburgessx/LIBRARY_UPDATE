@@ -6,11 +6,11 @@
 #include "TryAqCurvesOis.h"
 #include "TryAqCurvesStd.h"
 #include "TryAqCurvesTenorBasis.h"
-#include "tryAqSwapStubRate.h"
+#include "tryAqSwapsStubRate.h"
 
 #include "tryAqObjects.h"
 #include "AQOUtilities.h"
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsPricing.h"
 #include <boost/range/irange.hpp>
 #include "AQLDateScheduleHelpers.h"
 #include "GetGoogleTestFolder.h"
@@ -32,8 +32,8 @@ namespace
 	extern const char GBP_6M[] = "";
 	extern const char GBP_12M[] = "";
 
-	extern const char fileStubRateInput[] = TEST_DIR "tryAqSwapStubRate_inputs";
-	extern const char fileStubRateOutput[] = TEST_DIR "tryAqSwapStubRate_outputs";
+	extern const char fileStubRateInput[] = TEST_DIR "tryAqSwapsStubRate_inputs";
+	extern const char fileStubRateOutput[] = TEST_DIR "tryAqSwapsStubRate_outputs";
 
 	const std::string googleTestFolder = etrading::getGoogleTestFolder();
 	const std::string FixingTableObject = googleTestFolder + TEST_DIR + "GBPFIX_3M.JSON";
@@ -57,7 +57,7 @@ namespace google_test
 			DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
 			AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
-			double stubRate = validation::tryAqSwapStubRate(swapLVB, curveIndices, curveTenors, tenorCurveFixings, true);
+			double stubRate = validation::tryAqSwapsStubRate(swapLVB, curveIndices, curveTenors, tenorCurveFixings, true);
 
 			CheckTestResultsAndRebaseOnRequest(stubRate, TEST_DIR, fileStubRateOutput, tolerance);
 
@@ -80,18 +80,18 @@ namespace google_test
 		try
 		{
 			//1) Get fixing rate from Fixing Table object
-			const std::string fixingTableName = validation::tryAqObjectsLoad(FixingTableObject, etrading::JSON);
+			const std::string fixingTableName = validation::tryAqObjLoad(FixingTableObject, etrading::JSON);
 			etrading::DataProvider dataProvider(etrading::ValuationSettings(etrading::fromStringToLVB("GBPLIVE"), etrading::fromStringToLVB(fixingTableName), ""));
 			auto fixingTable = etrading::getFixingTable(fixingTableName, false /* do not throw when missing*/);
 			AQLDate fixingDate("20200309", "YYYYMMDD");
 			double expectedFixingRate = fixingTable->getFixingValue(etrading::toGregorianDateFromAQLDate(fixingDate));
 
 			//2) Get fixing rate from Swap object
-			const std::string swapName = validation::tryAqObjectsLoad(SwapObject, etrading::JSON);
+			const std::string swapName = validation::tryAqObjLoad(SwapObject, etrading::JSON);
 
 			std::vector<std::string> columnList = { "FixingDate", "FloatRate" };
 
-			AnyTypeMatrix fixingDateAndFixingRates = validation::tryAqObjectsSwapDisplayCashflows(swapName, etrading::fromStringToLVB("GBPLIVE"), AQLString("leg2:float"), etrading::fromStringToLVB(fixingTableName), false, columnList).front();
+			AnyTypeMatrix fixingDateAndFixingRates = validation::tryAqObjSwapsDisplayCashflows(swapName, etrading::fromStringToLVB("GBPLIVE"), AQLString("leg2:float"), etrading::fromStringToLVB(fixingTableName), false, columnList).front();
 
 			double fixingRateFromSwap = 0.0;
 			for (auto it : fixingDateAndFixingRates)

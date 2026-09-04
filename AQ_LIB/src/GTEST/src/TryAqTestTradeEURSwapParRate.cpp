@@ -2,8 +2,8 @@
 
 #include "TryAqCurvesOis.h"
 #include "TryAqCurvesStd.h"
-#include "tryAqSwapParRate.h"
-#include "tryAqSwapPV.h"
+#include "tryAqSwapsParRate.h"
+#include "tryAqSwapsPV.h"
 
 #include "BindFileToClassConstructor.h"
 #include "Dependency.h"
@@ -43,15 +43,15 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char getParRateInputs[]	= TEST_DIR "EURYC_tryAqSwapParRate_inputs";
-    extern const char getParRateResults[]	= TEST_DIR "EURYC_tryAqSwapParRate_outputs";
+    extern const char getParRateInputs[]	= TEST_DIR "EURYC_tryAqSwapsParRate_inputs";
+    extern const char getParRateResults[]	= TEST_DIR "EURYC_tryAqSwapsParRate_outputs";
     
 
-    extern const char getPVInputs[]			= TEST_DIR "EURYC_tryAqSwapPV_inputs";
+    extern const char getPVInputs[]			= TEST_DIR "EURYC_tryAqSwapsPV_inputs";
 #ifdef GTEST32
-    extern const char getPVResults[]		= TEST_DIR "EURYC_tryAqSwapPV_x86_outputs";
+    extern const char getPVResults[]		= TEST_DIR "EURYC_tryAqSwapsPV_x86_outputs";
 #else
-    extern const char getPVResults[]		= TEST_DIR "EURYC_tryAqSwapPV_x64_outputs";
+    extern const char getPVResults[]		= TEST_DIR "EURYC_tryAqSwapsPV_x64_outputs";
 #endif
 
 
@@ -91,7 +91,7 @@ namespace google_test
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getParRateInputs, i ) );
 
                 AQLStringMatrix swapLVB = inputFile["swapLVB"];
-                double parRate = validation::tryAqSwapParRate( swapLVB, true );
+                double parRate = validation::tryAqSwapsParRate( swapLVB, true );
 
                 CheckTestResultsAndRebaseOnRequest( parRate, TEST_DIR, getParRateResults, tolerance, i );
             }
@@ -126,7 +126,7 @@ namespace google_test
 
                 // Read the input file into the getParRate and swapPV functions
                 AQLStringMatrix swapLVB = inputFile["swapLVB"];
-                double pv = validation::tryAqSwapPV( swapLVB, true );
+                double pv = validation::tryAqSwapsPV( swapLVB, true );
 
                 CheckTestResultsAndRebaseOnRequest( pv, TEST_DIR, getPVResults, tolerancePV, i );
             }

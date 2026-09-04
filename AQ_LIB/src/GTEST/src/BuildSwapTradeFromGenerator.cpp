@@ -11,7 +11,7 @@
 
 #include "BuildSwapTradeFromGenerator.h"
 #include "ReadDataFile.h"
-#include "tryAqObjectsSwapCreation.h"
+#include "tryAqObjSwapsCreation.h"
 
 using etrading::ReadDataFile;
 
@@ -95,7 +95,7 @@ namespace google_test
                                                            isFwdInter2 );
 
         // Create Swap from Swap Generator
-        std::string swapObjectName = validation::tryAqObjectsSwapCreateFromGenerator( swapName,
+        std::string swapObjectName = validation::tryAqObjSwapsCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock( swapExpression ),
                                                                                       etrading::LabelValueBlock( AQLStringMatrix() ),
@@ -112,7 +112,7 @@ namespace google_test
         AQLStringMatrix swapExpression = buildSwapExpression( effectiveDate, maturityDateOrTenor );
 
         // Create Swap from Swap Generator
-        std::string swapObjectName = validation::tryAqObjectsSwapCreateFromGenerator( swapName,
+        std::string swapObjectName = validation::tryAqObjSwapsCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock( swapExpression ),
                                                                                       etrading::LabelValueBlock( AQLStringMatrix() ),
@@ -133,7 +133,7 @@ namespace google_test
 		bool isXccySwap = swapInputFile["isXccySwap"];
 		bool validateKeys = swapInputFile["validateKeys"];
 
-		validation::tryAqObjectsSwapCreate(swapName, swapLvb, swapProperties, isXccySwap, validateKeys);
+		validation::tryAqObjSwapsCreate(swapName, swapLvb, swapProperties, isXccySwap, validateKeys);
 	}
 
 }

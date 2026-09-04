@@ -14,9 +14,9 @@
 
 
 // "Generator" API
-#include "tryAqObjectsCurveMarketData.h"
-#include "tryAqObjectsCurveEngineCalibrate.h"
-#include "tryAqObjectsCurveGenerator.h"
+#include "tryAqObjCurvesMarketData.h"
+#include "tryAqObjCurvesEngineCalibrate.h"
+#include "tryAqObjCurvesGenerator.h"
 
 // Forward Rates Table
 
@@ -108,7 +108,7 @@ namespace
 		return std::make_tuple(columnNames, columnEnumTypes, dataValues);
 	}
 
-	/* @brief			Builds AQO MarketData Object by invoking the tryAqObjectsCurveMarketDataCreate() API.
+	/* @brief			Builds AQO MarketData Object by invoking the tryAqObjCurvesMarketDataCreate() API.
 	*                   The code loops over all of the capitalized data keys in the specified filename and uses
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
@@ -146,7 +146,7 @@ namespace
 			}
 		}
 
-		return validation::tryAqObjectsCurveMarketDataCreate(objectName, marketDataKeys, infoBlocks);
+		return validation::tryAqObjCurvesMarketDataCreate(objectName, marketDataKeys, infoBlocks);
 	}
 
 	
@@ -203,7 +203,7 @@ namespace google_test
     //             StandardString value    = "TRUE";
 	// 			etrading::LabelValueBlock overridingInputs( key, value );
     //             
-	// 			std::string fwd6MCurveGenerator = validation::tryAqObjectsCurveGeneratorModify("FWD_USD_BASIS_3X6", "USD_BASIS_3X6", overridingInputs);
+	// 			std::string fwd6MCurveGenerator = validation::tryAqObjCurvesGeneratorModify("FWD_USD_BASIS_3X6", "USD_BASIS_3X6", overridingInputs);
 	// 			curveGenerators.push_back(fwd6MCurveGenerator);
 	// 		}
 	// 		else
@@ -212,7 +212,7 @@ namespace google_test
 	// 		}
 	// 		marketDataHandles.push_back(buildMarketDataObjectHandle(testIndex, ccy, "6M"));
     // 
-	// 		validation::tryAqObjectsCurveEngineCalibrate("",				// engine name
+	// 		validation::tryAqObjCurvesEngineCalibrate("",				// engine name
 	// 			                                         curveCollection,	// curve collection name
 	// 			                                         AQLStringMatrix(),	// Engine params
 	// 			                                         curveGenerators,
@@ -262,7 +262,7 @@ namespace google_test
 	//		curveGenerators.push_back("EUR_BASIS_3X12");
 	//		marketDataHandles.push_back(buildMarketDataObjectHandle(testIndex, ccy, "12M"));
 
-	//		validation::tryAqObjectsCurveEngineCalibrate("",				// engine name
+	//		validation::tryAqObjCurvesEngineCalibrate("",				// engine name
 	//			curveCollection,	// curve collection name
 	//			AQLStringMatrix(),		// Engine params
 	//			curveGenerators,

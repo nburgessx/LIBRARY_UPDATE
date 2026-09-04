@@ -355,7 +355,7 @@
     <ClCompile Include="..\src\GTEST\src\TestAQOSwapGenerator.cpp">
       <Filter>src\etrading\Swaps\Swaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\TestAqObjectsCurveCalibrate.cpp">
+    <ClCompile Include="..\src\GTEST\src\TestAqObjCurvesCalibrate.cpp">
       <Filter>src\etrading\Curves\AQOCurve</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestLiborOisBasisSwaps.cpp">

@@ -14,7 +14,7 @@
 #include "TypeUtilities.h"          // Swig Marshalling Helper Methods
 #include "aqBondsCurve.h"
 #include "BondUtilities.h"
-#include "tryAqObjectsBond.h"
+#include "tryAqObjBonds.h"
 #include "ParameterValidation.h"
 
 
@@ -200,11 +200,11 @@ std::vector<double> aqBondsCurvePolynomialYield( const std::vector<double>& coef
 *  @param[in]   showColumnHeaders
 *  @returns		Cashflow Display Information
 */
-SWIG_STRINGMATRIX aqObjectsBondDisplayCashflows( const std::string& bondObjectName, const std::string& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders )
+SWIG_STRINGMATRIX aqObjBondsDisplayCashflows( const std::string& bondObjectName, const std::string& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders )
 {
     AQ_API_START
 
-	SWIG_STRINGMATRIX result =  aqObjectsBondDisplayCashflows( bondObjectName, settlementDate, yield, yieldCalculationType, showColumnHeaders, std::vector<std::string>() ); // columnList = Empty
+	SWIG_STRINGMATRIX result =  aqObjBondsDisplayCashflows( bondObjectName, settlementDate, yield, yieldCalculationType, showColumnHeaders, std::vector<std::string>() ); // columnList = Empty
 	return result;
 
     AQ_API_END
@@ -219,7 +219,7 @@ SWIG_STRINGMATRIX aqObjectsBondDisplayCashflows( const std::string& bondObjectNa
 *  @param[in]   columnList
 *  @returns		Cashflow Display Information
 */
-SWIG_STRINGMATRIX aqObjectsBondDisplayCashflows( const std::string& bondObjectName, const std::string& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders, const std::vector<std::string>& columnList )
+SWIG_STRINGMATRIX aqObjBondsDisplayCashflows( const std::string& bondObjectName, const std::string& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders, const std::vector<std::string>& columnList )
 {
     AQ_API_START
 
@@ -227,7 +227,7 @@ SWIG_STRINGMATRIX aqObjectsBondDisplayCashflows( const std::string& bondObjectNa
     AQLDate settlementDate_( etrading::stringToDate( settlementDate ) );
     
     // Call the Function
-    AnyTypeMatrix cashflows = validation::tryAqObjectsBondDisplayCashflows( bondObjectName, settlementDate_, yield, yieldCalculationType, showColumnHeaders, columnList );
+    AnyTypeMatrix cashflows = validation::tryAqObjBondsDisplayCashflows( bondObjectName, settlementDate_, yield, yieldCalculationType, showColumnHeaders, columnList );
             
     // Marshall Output(s)
 	SWIG_STRINGMATRIX result = swig::fromAnyTypeMatrixToMatrixOfString( cashflows );
@@ -242,11 +242,11 @@ SWIG_STRINGMATRIX aqObjectsBondDisplayCashflows( const std::string& bondObjectNa
 *  @param[in]   columnList
 *  @returns		Cashflow Display Information
 */
-SWIG_STRINGMATRIX aqObjectsBondDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders )
+SWIG_STRINGMATRIX aqObjBondsDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders )
 {
     AQ_API_START
 
-	SWIG_STRINGMATRIX result = aqObjectsBondDisplaySchedule( bondObjectName, showColumnHeaders, std::vector<std::string>() ); // columnList = Empty
+	SWIG_STRINGMATRIX result = aqObjBondsDisplaySchedule( bondObjectName, showColumnHeaders, std::vector<std::string>() ); // columnList = Empty
 	return result;
 
     AQ_API_END
@@ -259,14 +259,14 @@ SWIG_STRINGMATRIX aqObjectsBondDisplaySchedule( const std::string& bondObjectNam
 *  @param[in]   columnList
 *  @returns		Cashflow Display Information
 */
-SWIG_STRINGMATRIX aqObjectsBondDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders, const std::vector<std::string>& columnList )
+SWIG_STRINGMATRIX aqObjBondsDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders, const std::vector<std::string>& columnList )
 {
     AQ_API_START
 
     // Marshall Inputs
 
     // Call the Function
-    AnyTypeMatrix schedule = validation::tryAqObjectsBondDisplaySchedule( bondObjectName, showColumnHeaders, columnList );
+    AnyTypeMatrix schedule = validation::tryAqObjBondsDisplaySchedule( bondObjectName, showColumnHeaders, columnList );
             
     // Marshall Output(s)
 	SWIG_STRINGMATRIX result = swig::fromAnyTypeMatrixToMatrixOfString( schedule );

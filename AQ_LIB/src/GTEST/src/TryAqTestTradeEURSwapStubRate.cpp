@@ -4,7 +4,7 @@
 #include "TryAqCurvesOis.h"
 #include "TryAqCurvesStd.h"
 #include "TryAqCurvesTenorBasis.h"
-#include "tryAqSwapStubRate.h"
+#include "tryAqSwapsStubRate.h"
 
 using etrading::ReadDataFile;
 using etrading::CreateDataFile;
@@ -51,17 +51,17 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char Test1_getStubRateInputs[]		= TEST_DIR "EURYC_tryAqSwapStubRate_inputs";
-    extern const char Test1_getStubRateOutputs[]	= TEST_DIR "EURYC_tryAqSwapStubRate_outputs";
+    extern const char Test1_getStubRateInputs[]		= TEST_DIR "EURYC_tryAqSwapsStubRate_inputs";
+    extern const char Test1_getStubRateOutputs[]	= TEST_DIR "EURYC_tryAqSwapsStubRate_outputs";
 
     extern const char Test2_getStubRateInputs[]		= TEST_DIR "Test2_MeProductSwapStubRate_inputs";
     extern const char Test2_getStubRateOutputs[]	= TEST_DIR "Test2_MeProductSwapStubRate_outputs";
 
-    extern const char Test3_getStubRateInputs[]		= TEST_DIR "Test3_EURYC_tryAqSwapStubRate_inputs";
-    extern const char Test3_getStubRateOutputs[]	= TEST_DIR "Test3_EURYC_tryAqSwapStubRate_outputs";
+    extern const char Test3_getStubRateInputs[]		= TEST_DIR "Test3_EURYC_tryAqSwapsStubRate_inputs";
+    extern const char Test3_getStubRateOutputs[]	= TEST_DIR "Test3_EURYC_tryAqSwapsStubRate_outputs";
 
-    extern const char Test4_getStubRateInputs[]		= TEST_DIR "Test4_EURYC_tryAqSwapStubRate_inputs";
-    extern const char Test4_getStubRateOutputs[]	= TEST_DIR "Test4_EURYC_tryAqSwapStubRate_outputs";
+    extern const char Test4_getStubRateInputs[]		= TEST_DIR "Test4_EURYC_tryAqSwapsStubRate_inputs";
+    extern const char Test4_getStubRateOutputs[]	= TEST_DIR "Test4_EURYC_tryAqSwapsStubRate_outputs";
 }
 
 
@@ -93,7 +93,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation::tryAqSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, true );
+                double stubRate = validation::tryAqSwapsStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, true );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test1_getStubRateOutputs, tolerance, i );
             }
@@ -141,7 +141,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation::tryAqSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
+                double stubRate = validation::tryAqSwapsStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test2_getStubRateOutputs, tolerance, i );
             }
@@ -188,7 +188,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation::tryAqSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
+                double stubRate = validation::tryAqSwapsStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test3_getStubRateOutputs, tolerance, i );
             }
@@ -235,7 +235,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 AQLStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation::tryAqSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
+                double stubRate = validation::tryAqSwapsStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test4_getStubRateOutputs, tolerance, i );
             }

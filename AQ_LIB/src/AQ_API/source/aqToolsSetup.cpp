@@ -14,13 +14,13 @@ std::string aqToolsClearEntityPool()
 	AQ_API_END
 }
 
-/* @brief			swig interface for the aqObjectsClearCache method
+/* @brief			swig interface for the aqObjClearCache method
 *  @return	A string showing current version
 */
-std::string aqObjectsClearCache()
+std::string aqObjClearCache()
 {
     AQ_API_START
-    const std::string ret = validation::tryAqObjectsClearCache().getCString();
+    const std::string ret = validation::tryAqObjClearCache().getCString();
     return ret;
 	AQ_API_END
 }

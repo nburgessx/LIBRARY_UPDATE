@@ -6,7 +6,7 @@
 #include "BondFactory.h"
 #include "ObjectUtilities.h"
 #include "CreateFixedBond.h"
-#include "tryAqObjectsBond.h"
+#include "tryAqObjBonds.h"
 
 #include "ReadDataFile.h"
 #include "CreateDataFile.h"
@@ -20,29 +20,29 @@ using etrading::CreateDataFile;
 namespace
 {
     // Test Bond Input File(s)
-    extern const std::string bondInputsFile1            = TEST_DIR "tryAqObjectsBondCreate_inputs.csv";
-	extern const std::string bondInputsFileParallel     = TEST_DIR "tryAqObjectsBondCreate_inputs_parallel.csv";
+    extern const std::string bondInputsFile1            = TEST_DIR "tryAqObjBondsCreate_inputs.csv";
+	extern const std::string bondInputsFileParallel     = TEST_DIR "tryAqObjBondsCreate_inputs_parallel.csv";
     
-    extern const std::string dirtyPriceInputs           = TEST_DIR "tryAqObjectsBondDirtyPrice_inputs.csv";
-    extern const std::string dirtyPriceOutputs          = TEST_DIR "tryAqObjectsBondDirtyPrice_outputs.csv";
+    extern const std::string dirtyPriceInputs           = TEST_DIR "tryAqObjBondsDirtyPrice_inputs.csv";
+    extern const std::string dirtyPriceOutputs          = TEST_DIR "tryAqObjBondsDirtyPrice_outputs.csv";
     
-    extern const std::string accruedInterestInputs      = TEST_DIR "tryAqObjectsBondAccruedInterest_inputs.csv";
-    extern const std::string accruedInterestOutputs     = TEST_DIR "tryAqObjectsBondAccruedInterest_outputs.csv";
+    extern const std::string accruedInterestInputs      = TEST_DIR "tryAqObjBondsAccruedInterest_inputs.csv";
+    extern const std::string accruedInterestOutputs     = TEST_DIR "tryAqObjBondsAccruedInterest_outputs.csv";
     
-    extern const std::string cleanPriceInputs           = TEST_DIR "tryAqObjectsBondCleanPrice_inputs.csv";
-    extern const std::string cleanPriceOutputs          = TEST_DIR "tryAqObjectsBondCleanPrice_outputs.csv";
+    extern const std::string cleanPriceInputs           = TEST_DIR "tryAqObjBondsCleanPrice_inputs.csv";
+    extern const std::string cleanPriceOutputs          = TEST_DIR "tryAqObjBondsCleanPrice_outputs.csv";
 
-    extern const std::string yieldInputs                = TEST_DIR "tryAqObjectsBondYield_inputs.csv";
-    extern const std::string yieldOutputs               = TEST_DIR "tryAqObjectsBondYield_outputs.csv";
+    extern const std::string yieldInputs                = TEST_DIR "tryAqObjBondsYield_inputs.csv";
+    extern const std::string yieldOutputs               = TEST_DIR "tryAqObjBondsYield_outputs.csv";
 
-	extern const std::string yieldInputsParallel        = TEST_DIR "tryAqObjectsBondYield_inputs_parallel.csv";
-    extern const std::string yieldOutputsParallel       = TEST_DIR "tryAqObjectsBondYield_outputs_parallel.csv";
+	extern const std::string yieldInputsParallel        = TEST_DIR "tryAqObjBondsYield_inputs_parallel.csv";
+    extern const std::string yieldOutputsParallel       = TEST_DIR "tryAqObjBondsYield_outputs_parallel.csv";
 
-	extern const std::string dv01Inputs                 = TEST_DIR "tryAqObjectsBondDV01_inputs.csv";
-    extern const std::string dv01Outputs                = TEST_DIR "tryAqObjectsBondDV01_outputs.csv";
+	extern const std::string dv01Inputs                 = TEST_DIR "tryAqObjBondsDV01_inputs.csv";
+    extern const std::string dv01Outputs                = TEST_DIR "tryAqObjBondsDV01_outputs.csv";
 
-	extern const std::string modifiedDurationInputs     = TEST_DIR "tryAqObjectsBondModifiedDuration_inputs.csv";
-    extern const std::string modifiedDurationOutputs    = TEST_DIR "tryAqObjectsBondModifiedDuration_outputs.csv";
+	extern const std::string modifiedDurationInputs     = TEST_DIR "tryAqObjBondsModifiedDuration_inputs.csv";
+    extern const std::string modifiedDurationOutputs    = TEST_DIR "tryAqObjBondsModifiedDuration_outputs.csv";
 }
 
 namespace google_test
@@ -64,7 +64,7 @@ namespace google_test
     class TestBondPrices : public TestBondFactory {};
 
 
-    TEST_F( TestBondPrices, UNIT_tryAqObjectsBondDirtyPrice )
+    TEST_F( TestBondPrices, UNIT_tryAqObjBondsDirtyPrice )
     {
         try
         {
@@ -83,7 +83,7 @@ namespace google_test
             const std::vector< double > yields              = tradeInputFile["yields"];
 
             // Calculate the Actual Results
-            std::vector< double > actualResults = validation::tryAqObjectsBondDirtyPrice( bondObjectName, settlementDates, yields );
+            std::vector< double > actualResults = validation::tryAqObjBondsDirtyPrice( bondObjectName, settlementDates, yields );
 
             // Compare Results
             const double tolerance = 0.000000001;
@@ -107,7 +107,7 @@ namespace google_test
     }
 
 
-    TEST_F( TestBondPrices, UNIT_tryAqObjectsBondCleanPrice )
+    TEST_F( TestBondPrices, UNIT_tryAqObjBondsCleanPrice )
     {
         try
         {
@@ -126,7 +126,7 @@ namespace google_test
             const std::vector< double > yields              = tradeInputFile["yields"];
 
             // Calculate the Actual Results
-            std::vector< double > actualResults = validation::tryAqObjectsBondCleanPrice( bondObjectName, settlementDates, yields );
+            std::vector< double > actualResults = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
 
             // Compare Results
             const double tolerance = 0.000000001;
@@ -149,7 +149,7 @@ namespace google_test
         }
     }
 
-    TEST_F( TestBondPrices, UNIT_tryAqObjectsBondAccruedInterest )
+    TEST_F( TestBondPrices, UNIT_tryAqObjBondsAccruedInterest )
     {
         try
         {
@@ -167,7 +167,7 @@ namespace google_test
             const std::vector< AQLDate > settlementDates     = tradeInputFile["settlementDates"];
 
             // Calculate the Actual Results
-            std::vector< double > actualResults = validation::tryAqObjectsBondAccruedInterest( bondObjectName, settlementDates );
+            std::vector< double > actualResults = validation::tryAqObjBondsAccruedInterest( bondObjectName, settlementDates );
 
             // Compare Results
             const double tolerance = 0.000000001;
@@ -190,7 +190,7 @@ namespace google_test
         }
     }
 
-    TEST_F( TestBondPrices, UNIT_tryAqObjectsBondYield )
+    TEST_F( TestBondPrices, UNIT_tryAqObjBondsYield )
     {
         try
         {
@@ -209,7 +209,7 @@ namespace google_test
             const std::vector< double > dirtyPrices         = tradeInputFile["prices"];
 
             // Calculate the Actual Results
-            std::vector< double > actualResults = validation::tryAqObjectsBondYield( bondObjectName, settlementDates, dirtyPrices );
+            std::vector< double > actualResults = validation::tryAqObjBondsYield( bondObjectName, settlementDates, dirtyPrices );
 
             // Compare Results
             const double tolerance = 0.000000001;
@@ -260,7 +260,7 @@ namespace google_test
 			const int numIterations = 200;
 			for (int i=0; i<numIterations; i++)
 			{
-				actualResults = validation::tryAqObjectsBondYield( bondObjectName, settlementDates, dirtyPrices, yieldCalculationType, runInParallel );
+				actualResults = validation::tryAqObjBondsYield( bondObjectName, settlementDates, dirtyPrices, yieldCalculationType, runInParallel );
 			}
 
             // Compare Results
@@ -284,17 +284,17 @@ namespace google_test
         }
 	}
 
-	TEST_F( TestBondPrices, SNAPSHOT_tryAqObjectsBondYield_Sequential )
+	TEST_F( TestBondPrices, SNAPSHOT_tryAqObjBondsYield_Sequential )
     {
 		runYieldTest( false /* run sequentially */ );
 	}
 
-    TEST_F( TestBondPrices, SNAPSHOT_tryAqObjectsBondYield_Parallel )
+    TEST_F( TestBondPrices, SNAPSHOT_tryAqObjBondsYield_Parallel )
     {
 		runYieldTest( true /* run in parallel */ );
     }
 
-	TEST_F( TestBondPrices, UNIT_tryAqObjectsBondDV01Numerical )
+	TEST_F( TestBondPrices, UNIT_tryAqObjBondsDV01Numerical )
     {
         try
         {
@@ -315,7 +315,7 @@ namespace google_test
             // Calculate the DV01 numerically
 			double bumpSize = 0.01; // in bps
 			AQLString bumpMode = "CENTRAL";
-            std::vector< double > actualResults = validation::tryAqObjectsBondDV01Numerical( bondObjectName, settlementDates, yields,bumpSize, bumpMode );
+            std::vector< double > actualResults = validation::tryAqObjBondsDV01Numerical( bondObjectName, settlementDates, yields,bumpSize, bumpMode );
 
             // Compare Results
             const double tolerance = 0.000001; // Use wider tolerance on Numerical DV01. Allows us to use the same output file for win32 and x64.
@@ -338,7 +338,7 @@ namespace google_test
         }
     }
 
-	TEST_F( TestBondPrices, UNIT_tryAqObjectsBondDV01 )
+	TEST_F( TestBondPrices, UNIT_tryAqObjBondsDV01 )
     {
         try
         {
@@ -357,7 +357,7 @@ namespace google_test
             const std::vector< double > yields              = tradeInputFile["yields"];
 
             // Calculate the Analytic DV01
-            std::vector< double > actualResults = validation::tryAqObjectsBondDV01( bondObjectName, settlementDates, yields );
+            std::vector< double > actualResults = validation::tryAqObjBondsDV01( bondObjectName, settlementDates, yields );
 
             // Compare Results
             const double tolerance = 0.000000001;
@@ -380,7 +380,7 @@ namespace google_test
         }
     }
 
-		TEST_F( TestBondPrices, UNIT_tryAqObjectsBondModifiedDuration )
+		TEST_F( TestBondPrices, UNIT_tryAqObjBondsModifiedDuration )
     {
         try
         {
@@ -399,7 +399,7 @@ namespace google_test
             const std::vector< double > yields              = tradeInputFile["yields"];
        
             // Calculate the Analytic DV01
-            std::vector< double > actualResults = validation::tryAqObjectsBondModifiedDuration( bondObjectName, settlementDates, yields );
+            std::vector< double > actualResults = validation::tryAqObjBondsModifiedDuration( bondObjectName, settlementDates, yields );
 
             // Compare Results
             const double tolerance = 0.000000001;

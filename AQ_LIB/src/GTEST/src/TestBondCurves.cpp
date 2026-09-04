@@ -6,7 +6,7 @@
 #include "TestHelperUtilities.h"
 #include "InitializeETrading.h"
 #include "tryAqBondsCurves.h"
-#include "tryAqObjectsBond.h"
+#include "tryAqObjBonds.h"
 
 #include "FolderConfig.h"
 
@@ -53,13 +53,13 @@ namespace
 	 * This test builds 15 US Treasuries from input file, and uses these bonds to calibrate a bond curve.
 	 * Rather than list out all bond filenames individually, we load then using the following regular expression pattern:
 	 * The file pattern is:
-	 * pathname / ( bondObjectName ) _tryAqObjectsBondCreateFromGenerator_inputs.csv
+	 * pathname / ( bondObjectName ) _tryAqObjBondsCreateFromGenerator_inputs.csv
 	*/
-    const std::string treasuryCreateInputFilePattern    = ".+_tryAqObjectsBondCreateFromGenerator_inputs.csv";
+    const std::string treasuryCreateInputFilePattern    = ".+_tryAqObjBondsCreateFromGenerator_inputs.csv";
 
-	const std::string treasuryPriceFromYieldPattern     = ".+_tryAqObjectsBondPrice_inputs.csv";
+	const std::string treasuryPriceFromYieldPattern     = ".+_tryAqObjBondsPrice_inputs.csv";
 
-	const std::string treasuryPriceFromBondCurveSuffix  =  "_tryAqObjectsBondPriceFromBondCurve_inputs.csv";
+	const std::string treasuryPriceFromBondCurveSuffix  =  "_tryAqObjBondsPriceFromBondCurve_inputs.csv";
 
 
 	/*
@@ -183,7 +183,7 @@ namespace
         AQLStringMatrix bondExpressionLVB = createBondInputFile["expressionLVB"];
         bool validateKeys              = createBondInputFile["validateKeys"];
         
-		std::string objectName = validation::tryAqObjectsBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
+		std::string objectName = validation::tryAqObjBondsCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
 		return objectName;
     };
 
@@ -558,7 +558,7 @@ namespace google_test
 			const std::string bondObjectName          = priceFromYieldFile[ "bondObjectName" ];
 			const std::vector<AQLDate> settlementDates = priceFromYieldFile[ "settlementDates" ];
 			const std::vector<double> yields          = priceFromYieldFile[ "yields" ];
-			const DoubleVector priceFromYields = validation::tryAqObjectsBondPrice( bondObjectName, settlementDates, yields );
+			const DoubleVector priceFromYields = validation::tryAqObjBondsPrice( bondObjectName, settlementDates, yields );
 			const double priceFromYield = priceFromYields[0];
 
 			// Load the corresponding file to price the bond from bond curve
@@ -570,7 +570,7 @@ namespace google_test
 			// Calculate bond price from bond curve
 			const AQLDate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
 			const std::string bondCurveName = priceFromBondCurveFile[ "bondCurveName" ];
-			const double priceFromBondCurve = validation::tryAqObjectsBondPriceFromBondCurve( bondObjectName, settlementDate, bondCurveName );
+			const double priceFromBondCurve = validation::tryAqObjBondsPriceFromBondCurve( bondObjectName, settlementDate, bondCurveName );
 
 			// Compare the two prices for consistency
 			EXPECT_NEAR( priceFromYield, priceFromBondCurve, tolerance ) << "Difference in priceFromYield vs priceFromBondCurve: " << bondObjectName;
@@ -613,7 +613,7 @@ namespace google_test
 			const std::string bondCurveName = priceFromBondCurveFile[ "bondCurveName" ];
 
 			// Calculate the YIELD from bond curve
-			const double yieldFromBondCurve = validation::tryAqObjectsBondYieldFromBondCurve( bondObjectName, settlementDate, bondCurveName );
+			const double yieldFromBondCurve = validation::tryAqObjBondsYieldFromBondCurve( bondObjectName, settlementDate, bondCurveName );
 
 			// Compare the two prices for consistency
 			EXPECT_NEAR( bondYTM, yieldFromBondCurve, tolerance ) << "Difference in bond yield-to-maturity vs yieldFromBondCurve: " << bondObjectName;
@@ -646,7 +646,7 @@ namespace google_test
 			const std::string bondObjectName          = priceFromYieldFile[ "bondObjectName" ];
 			const std::vector<AQLDate> settlementDates = priceFromYieldFile[ "settlementDates" ];
 			const std::vector<double> yields          = priceFromYieldFile[ "yields" ];
-			const DoubleVector priceFromYields = validation::tryAqObjectsBondPrice( bondObjectName, settlementDates, yields );
+			const DoubleVector priceFromYields = validation::tryAqObjBondsPrice( bondObjectName, settlementDates, yields );
 			const double priceFromYield = priceFromYields[0];
 
 			// Load the corresponding file to price the bond from bond curve
@@ -657,7 +657,7 @@ namespace google_test
 
 			// Calculate bond price from bond SPREAD curve
 			const AQLDate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
-			const double priceFromBondCurve = validation::tryAqObjectsBondPriceFromBondCurve( bondObjectName, settlementDate, bondSpreadCurveName );
+			const double priceFromBondCurve = validation::tryAqObjBondsPriceFromBondCurve( bondObjectName, settlementDate, bondSpreadCurveName );
 
 			// Compare the two prices for consistency:
 			// The price calculated from the spread bond curve should be strictly less than the price from yield-to-maturity

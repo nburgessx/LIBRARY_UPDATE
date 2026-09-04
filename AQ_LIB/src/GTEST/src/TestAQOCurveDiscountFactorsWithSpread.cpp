@@ -16,14 +16,14 @@
 #include "CurveOis.h"
 #include "AQLDateScheduleHelpers.h"
 
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsPricing.h"
 #include "JSONInfoBlock.h"          // JSON InfoBlock Helpers
 
-#include "tryAqObjectsCurveMarketData.h"
-#include "tryAqObjectsCurveCalibrate.h"
+#include "tryAqObjCurvesMarketData.h"
+#include "tryAqObjCurvesCalibrate.h"
 
-#include "tryAqObjectsCurveDiscountFactor.h"
-#include "tryAqObjectsFixingTable.h"
+#include "tryAqObjCurvesDiscountFactor.h"
+#include "tryAqObjRatesFixingTable.h"
 
 
 using etrading::ReadDataFile;
@@ -44,20 +44,20 @@ namespace
 
 	// -------------------------------------------------------------
 
-	// Curves objects saved with aqObjectsSave
-	const char EUR_OIS_MARKET_DATA[]			= TEST_DIR "EUR_OIS_CURVE_MARKETDATA@34_tryAqObjectsCurveMarketDataCreate_inputs.csv";
-	const char EUR_OIS_CURVE[]					= TEST_DIR "EUR_OIS_CURVE@35_tryAqObjectsCurveCalibrate_inputs.csv";
+	// Curves objects saved with aqObjSave
+	const char EUR_OIS_MARKET_DATA[]			= TEST_DIR "EUR_OIS_CURVE_MARKETDATA@34_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char EUR_OIS_CURVE[]					= TEST_DIR "EUR_OIS_CURVE@35_tryAqObjCurvesCalibrate_inputs.csv";
 
-	const char EUR_STD_MARKET_DATA[]			= TEST_DIR "EUR_SWAP_3M_CURVE_MARKETDATA@19_tryAqObjectsCurveMarketDataCreate_inputs.csv";
-	const char EUR_STD_CURVE[]				    = TEST_DIR "EUR_SWAP_3M_CURVE@20_tryAqObjectsCurveCalibrate_inputs.csv";
+	const char EUR_STD_MARKET_DATA[]			= TEST_DIR "EUR_SWAP_3M_CURVE_MARKETDATA@19_tryAqObjCurvesMarketDataCreate_inputs.csv";
+	const char EUR_STD_CURVE[]				    = TEST_DIR "EUR_SWAP_3M_CURVE@20_tryAqObjCurvesCalibrate_inputs.csv";
 
-	const char DISCOUNT_FACTORS_NO_SPREAD_INPUT[]	= TEST_DIR "tryAqObjectsCurveDiscountFactorsWithSpread_0bp_inputs.csv";
-	const char DISCOUNT_FACTORS_NO_SPREAD_OUTPUT[]	= TEST_DIR "tryAqObjectsCurveDiscountFactorsWithSpread_0bp_outputs.csv";
+	const char DISCOUNT_FACTORS_NO_SPREAD_INPUT[]	= TEST_DIR "tryAqObjCurvesDiscountFactorsWithSpread_0bp_inputs.csv";
+	const char DISCOUNT_FACTORS_NO_SPREAD_OUTPUT[]	= TEST_DIR "tryAqObjCurvesDiscountFactorsWithSpread_0bp_outputs.csv";
 
-	const char DISCOUNT_FACTORS_1BP_INPUT[]		= TEST_DIR "tryAqObjectsCurveDiscountFactorsWithSpread_1bp_inputs.csv";
-	const char DISCOUNT_FACTORS_1BP_OUTPUT[]	= TEST_DIR "tryAqObjectsCurveDiscountFactorsWithSpread_1bp_outputs.csv";
+	const char DISCOUNT_FACTORS_1BP_INPUT[]		= TEST_DIR "tryAqObjCurvesDiscountFactorsWithSpread_1bp_inputs.csv";
+	const char DISCOUNT_FACTORS_1BP_OUTPUT[]	= TEST_DIR "tryAqObjCurvesDiscountFactorsWithSpread_1bp_outputs.csv";
 
-	const char EUR_STD_FIXING_TABLE[]			= TEST_DIR "EUR3M_FIXINGS@74_tryAqObjectsFixingTableCreate_inputs.csv";
+	const char EUR_STD_FIXING_TABLE[]			= TEST_DIR "EUR3M_FIXINGS@74_tryAqObjRatesFixingTableCreate_inputs.csv";
 
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 	
@@ -123,7 +123,7 @@ namespace
 	}
 
 
-	/* @brief			Builds AQO MarketData Object by invoking the tryAqObjectsCurveMarketDataCreate() API.
+	/* @brief			Builds AQO MarketData Object by invoking the tryAqObjCurvesMarketDataCreate() API.
 	*                   The code loops over all of the capitalized data keys in the specified filename and uses
 	*                   these blocks to construct the MarketData object.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
@@ -160,10 +160,10 @@ namespace
 			}
 		}
 
-		validation::tryAqObjectsCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
+		validation::tryAqObjCurvesMarketDataCreate( objectName, marketDataKeys, infoBlocks );
 	}
 
-	/* @brief			Builds Generator curve by invoking the tryAqObjectsCurveCalibration() API.
+	/* @brief			Builds Generator curve by invoking the tryAqObjCurvesCalibration() API.
 	*  @param [in]		curveCalibrationFileName	The filename specifying generator curve build instructions
 	*/	
 	void createAQOCurveFromFileName( const AQLString& curveCalibrationFileName )
@@ -177,7 +177,7 @@ namespace
 		
 		std::string objectName = aqoCurveGeneratorName;
 
-		validation::tryAqObjectsCurveCalibrate(	objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryAqObjCurvesCalibrate(	objectName, aqoCurveGeneratorName, aqoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -199,7 +199,7 @@ namespace
 		const double spread					= DFInputFileObj[ "spread"];
 		const std::string fixingTableName	= DFInputFileObj[ "fixingTableName" ];
 	
-		const DoubleVector calculatedDFs = validation::tryAqObjectsCurveDiscountFactorsWithSpread( paymentDates, curveCollection, curveIndex, spread, fixingTableName );
+		const DoubleVector calculatedDFs = validation::tryAqObjCurvesDiscountFactorsWithSpread( paymentDates, curveCollection, curveIndex, spread, fixingTableName );
 		
         google_test::CheckTestResultsAndRebaseOnRequest( calculatedDFs, TEST_DIR, expectedResultsFile, tolerance );
 	
@@ -214,7 +214,7 @@ namespace
 		auto fixingDates   = fixingInputFileObj["fixingDates"];
 		auto fixingValues  = fixingInputFileObj["fixingValues"];
 		
-		const std::string fixingTableName = validation::tryAqObjectsFixingTableCreate(tableName, currency, curveTenor, fixingDates, fixingValues);
+		const std::string fixingTableName = validation::tryAqObjRatesFixingTableCreate(tableName, currency, curveTenor, fixingDates, fixingValues);
 	}
 
 }

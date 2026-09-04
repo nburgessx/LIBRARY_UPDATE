@@ -4,7 +4,7 @@
 #include "TryAqCurvesTenorBasis.h"
 
 // Leg Creation and Pricing
-#include "tryAqObjectsLeg.h"
+#include "tryAqObjSwapsLeg.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -40,16 +40,16 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char fraInput1[]	= TEST_DIR "FRA_USD@1_tryAqObjectsLegCreate_inputs";
-	extern const char pvInputs1[] = TEST_DIR "FRA_USD@1_tryAqObjectsLegPV_inputs";
-	extern const char pvOutputs1[] = TEST_DIR "FRA_USD@1_tryAqObjectsLegPV_outputs";
-	extern const char pvOutputs1_64[] = TEST_DIR "FRA_USD@1_tryAqObjectsLegPV_outputs64_";
+    extern const char fraInput1[]	= TEST_DIR "FRA_USD@1_tryAqObjSwapsLegCreate_inputs";
+	extern const char pvInputs1[] = TEST_DIR "FRA_USD@1_tryAqObjSwapsLegPV_inputs";
+	extern const char pvOutputs1[] = TEST_DIR "FRA_USD@1_tryAqObjSwapsLegPV_outputs";
+	extern const char pvOutputs1_64[] = TEST_DIR "FRA_USD@1_tryAqObjSwapsLegPV_outputs64_";
 
 
-	extern const char fraInput2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjectsLegCreate_inputs";
-	extern const char pvInputs2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjectsLegPV_inputs";
-	extern const char pvOutputs2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjectsLegPV_outputs";
-	extern const char pvOutputs2_64[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjectsLegPV_outputs64_";
+	extern const char fraInput2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjSwapsLegCreate_inputs";
+	extern const char pvInputs2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjSwapsLegPV_inputs";
+	extern const char pvOutputs2[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjSwapsLegPV_outputs";
+	extern const char pvOutputs2_64[] = TEST_DIR "FRA_USD_STUB@2_tryAqObjSwapsLegPV_outputs64_";
 
 }
 
@@ -90,12 +90,12 @@ namespace google_test
 			AQLStringMatrix legLVB = tradeInputFile["legLVB"];
 			bool validateKeys = tradeInputFile["validateKeys"];
 
-			std::string createSwap = validation::tryAqObjectsLegCreate(legObjectName, legLVB, validateKeys);
+			std::string createSwap = validation::tryAqObjSwapsLegCreate(legObjectName, legLVB, validateKeys);
 
 			// 4. Get the ParRate Inputs & Calculate the parRate
 			etrading::LabelValueBlock curveCollection = etrading::fromStringToLVB(pvInputFile["curveCollection"]);
 
-			double actualPV = validation::tryAqObjectsLegPV(legObjectName, curveCollection, "");
+			double actualPV = validation::tryAqObjSwapsLegPV(legObjectName, curveCollection, "");
 
 			// 5. Check the Test Results or Rebase
 			CheckTestResultsAndRebaseOnRequest(actualPV, TEST_DIR, pvOutputsFilename, tolerance);
@@ -135,12 +135,12 @@ namespace google_test
 			AQLStringMatrix legLVB = tradeInputFile["legLVB"];
 			bool validateKeys = tradeInputFile["validateKeys"];
 
-			std::string createSwap = validation::tryAqObjectsLegCreate(legObjectName, legLVB, validateKeys);
+			std::string createSwap = validation::tryAqObjSwapsLegCreate(legObjectName, legLVB, validateKeys);
 
 			// 4. Get the ParRate Inputs & Calculate the parRate
 			etrading::LabelValueBlock curveCollection = etrading::fromStringToLVB(pvInputFile["curveCollection"]);
 
-			double actualPV = validation::tryAqObjectsLegPV(legObjectName, curveCollection, "");
+			double actualPV = validation::tryAqObjSwapsLegPV(legObjectName, curveCollection, "");
 
 			// 5. Check the Test Results or Rebase
 			CheckTestResultsAndRebaseOnRequest(actualPV, TEST_DIR, pvOutputsFilename, tolerance);

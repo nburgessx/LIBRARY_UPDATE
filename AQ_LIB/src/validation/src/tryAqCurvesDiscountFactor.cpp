@@ -101,7 +101,7 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-    DoubleVector tryAqObjectsCurveDiscountFactorsFromYearFractions( const DoubleVector& yearFractions,
+    DoubleVector tryAqObjCurvesDiscountFactorsFromYearFractions( const DoubleVector& yearFractions,
                                                                 const AQLString& dayCount,
                                                                 const std::string& aqoCurveName )
     {
@@ -110,8 +110,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryAqObjectsCurveDiscountFactorsFromYearFractions_inputs_" ) + aqoCurveName ).c_str()  );
-            file.write( "generatorFunction", "tryAqObjectsCurveDiscountFactorsFromYearFractions" );
+            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromYearFractions_inputs_" ) + aqoCurveName ).c_str()  );
+            file.write( "generatorFunction", "tryAqObjCurvesDiscountFactorsFromYearFractions" );
             file.write( "yearFractions",		yearFractions );
             file.write( "dayCount",          dayCount );
             file.write( "aqoCurveName",	    aqoCurveName );
@@ -143,7 +143,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryAqObjectsCurveDiscountFactorsFromYearFractions_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromYearFractions_outputs_" ) + aqoCurveName ).c_str() );
             file.write( "output", ret );
         }
 
@@ -219,7 +219,7 @@ namespace validation
     *  @param [in]		calendar		Calendar
     *  @return			An array of discount factor
     */
-    DoubleVector tryAqObjectsCurveDiscountFactorsFromTenors( const std::vector<std::string>& tenors,
+    DoubleVector tryAqObjCurvesDiscountFactorsFromTenors( const std::vector<std::string>& tenors,
             const std::string& businessDayAdj,
             const std::string& calendar,
             const std::string& aqoCurveName )
@@ -229,8 +229,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryAqObjectsCurveDiscountFactorsFromTenors_inputs_" ) + aqoCurveName ).c_str()  );
-            file.write( "generatorFunction", "tryAqObjectsCurveDiscountFactorsFromTenors" );
+            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromTenors_inputs_" ) + aqoCurveName ).c_str()  );
+            file.write( "generatorFunction", "tryAqObjCurvesDiscountFactorsFromTenors" );
             file.write( "tenors",			tenors );
             file.write( "businessDayAdj",	businessDayAdj );
             file.write( "calendar",			calendar );
@@ -264,7 +264,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( std::string( std::string( "tryAqObjectsCurveDiscountFactorsFromTenors_outputs_" ) + aqoCurveName ).c_str()  );
+            CreateDataFile file( std::string( std::string( "tryAqObjCurvesDiscountFactorsFromTenors_outputs_" ) + aqoCurveName ).c_str()  );
             file.write( "output", ret );
         }
 
@@ -355,7 +355,7 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStarting( const std::vector<boost::gregorian::date>& fromDates,
+    DoubleVector tryAqObjCurvesDiscountFactorsForwardStarting( const std::vector<boost::gregorian::date>& fromDates,
             const std::vector<boost::gregorian::date>& toDates,
             const std::string& businessDayAdj,
             const std::string& calendar,
@@ -366,8 +366,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjectsCurveDiscountFactorsForwardStarting_inputs_" ) + aqoCurveName ).c_str() );
-            file.write( "generatorFunction", "tryAqObjectsCurveDiscountFactorsForwardStarting" );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStarting_inputs_" ) + aqoCurveName ).c_str() );
+            file.write( "generatorFunction", "tryAqObjCurvesDiscountFactorsForwardStarting" );
             file.write( "fromDates",			fromDates );
             file.write( "toDates",			toDates );
             file.write( "businessDayAdj",	businessDayAdj );
@@ -426,7 +426,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjectsCurveDiscountFactorsForwardStarting_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStarting_outputs_" ) + aqoCurveName ).c_str() );
             file.write( "output", ret );
         }
 
@@ -485,7 +485,7 @@ namespace validation
     *  @param [in]		aqoCurveName		Curve Name
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStartingFromYearFractions( const std::vector<boost::gregorian::date>& fromDates,
+    DoubleVector tryAqObjCurvesDiscountFactorsForwardStartingFromYearFractions( const std::vector<boost::gregorian::date>& fromDates,
             const DoubleVector& yearFractions,
             const AQLString& dayCount,
             const std::string& aqoCurveName )
@@ -495,8 +495,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjectsCurveDiscountFactorsForwardStartingFromYearFractions_inputs_" ) + aqoCurveName ).c_str() );
-            file.write( "generatorFunction", "tryAqObjectsCurveDiscountFactorsForwardStartingFromYearFractions" );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStartingFromYearFractions_inputs_" ) + aqoCurveName ).c_str() );
+            file.write( "generatorFunction", "tryAqObjCurvesDiscountFactorsForwardStartingFromYearFractions" );
             file.write( "fromDates",			fromDates );
             file.write( "yearFractions",		yearFractions );
             file.write( "dayCount",          dayCount );
@@ -621,7 +621,7 @@ namespace validation
     *  @param [in]		calendar		Calendar
     *  @return			A array of discount factors
     */
-    DoubleVector tryAqObjectsCurveDiscountFactorsForwardStartingFromTenor( const std::vector<boost::gregorian::date>& fromDates,
+    DoubleVector tryAqObjCurvesDiscountFactorsForwardStartingFromTenor( const std::vector<boost::gregorian::date>& fromDates,
             const std::vector<std::string>& tenors,
             const std::string& businessDayAdj,
             const std::string& calendar,
@@ -632,8 +632,8 @@ namespace validation
         // Recording of inputs for playback
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjectsCurveDiscountFactorsForwardStartingFromTenor_inputs_" ) + aqoCurveName ).c_str() );
-            file.write( "generatorFunction", "tryAqObjectsCurveDiscountFactorsForwardStartingFromTenor" );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStartingFromTenor_inputs_" ) + aqoCurveName ).c_str() );
+            file.write( "generatorFunction", "tryAqObjCurvesDiscountFactorsForwardStartingFromTenor" );
             file.write( "fromDates",			fromDates );
             file.write( "tenor",				tenors );
             file.write( "businessDayAdj",	businessDayAdj );
@@ -673,7 +673,7 @@ namespace validation
 
         if ( CreateDataFile::recordEnabled() )
         {
-            CreateDataFile file( ( std::string( "tryAqObjectsCurveDiscountFactorsForwardStartingFromTenor_outputs_" ) + aqoCurveName ).c_str() );
+            CreateDataFile file( ( std::string( "tryAqObjCurvesDiscountFactorsForwardStartingFromTenor_outputs_" ) + aqoCurveName ).c_str() );
             file.write( "output", ret );
         }
 

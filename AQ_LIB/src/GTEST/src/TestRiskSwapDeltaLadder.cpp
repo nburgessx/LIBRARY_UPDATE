@@ -5,7 +5,7 @@
 #include "CurveStd.h"
 #include "CurveTenorBasis.h"
 #include "CurveXccyBasis.h"
-#include "tryAqSwapDelta.h"
+#include "tryAqSwapsDelta.h"
 #include "BindFileToClassConstructor.h"
 
 #include <gTest/gTest.h>
@@ -88,7 +88,7 @@ namespace google_test
         // Dummy Xccy FX Spot Rates
         DoubleVector dummyXccyFXSpotRates( TRADE_COUNT, 1.0 );
 
-        validation::tryAqSwapDelta( pillarNames,
+        validation::tryAqSwapsDelta( pillarNames,
                                                headers,
                                                deltas,
                                                getDataInstance(),

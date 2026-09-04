@@ -2,7 +2,7 @@
 #include "tryAqObjects.h"
 
 // API functions
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsPricing.h"
 
 
 // Helper to extract par rates from a curve
@@ -59,27 +59,27 @@ namespace
 	const std::string GEN_CREDIT_DEFAULT_SWAP_5Y		= TEST_DIR + "EUR_CDS_GENERATOR@62.JSON" ;
 
 	// API methods
-	const std::string CDS_INDEX_CALCULATE_FORWARD_SPREAD = TEST_DIR + "tryAqObjectsCreditIndexSpread_inputs.csv";
-	const std::string CDS_INDEX_OPTION_PV				 = TEST_DIR + "tryAqObjectsCreditIndexOptionPV_inputs.csv";
-	const std::string CDS_INDEX_OPTION_IMPLIED_VOL		 = TEST_DIR + "tryAqObjectsCreditIndexOptionImpliedVol_inputs.csv";
-	const std::string CDS_INDEX_OPTION_VEGA				 = TEST_DIR + "tryAqObjectsCreditIndexOptionVega_inputs.csv";
-	const std::string CDS_INDEX_OPTION_CS01				 = TEST_DIR + "tryAqObjectsCreditIndexOptionCS01_inputs.csv";
-	const std::string CDS_INDEX_OPTION_THETA			 = TEST_DIR + "tryAqObjectsCreditIndexOptionTheta_inputs.csv";
+	const std::string CDS_INDEX_CALCULATE_FORWARD_SPREAD = TEST_DIR + "tryAqObjCreditIndexSpread_inputs.csv";
+	const std::string CDS_INDEX_OPTION_PV				 = TEST_DIR + "tryAqObjCreditIndexOptionPV_inputs.csv";
+	const std::string CDS_INDEX_OPTION_IMPLIED_VOL		 = TEST_DIR + "tryAqObjCreditIndexOptionImpliedVol_inputs.csv";
+	const std::string CDS_INDEX_OPTION_VEGA				 = TEST_DIR + "tryAqObjCreditIndexOptionVega_inputs.csv";
+	const std::string CDS_INDEX_OPTION_CS01				 = TEST_DIR + "tryAqObjCreditIndexOptionCS01_inputs.csv";
+	const std::string CDS_INDEX_OPTION_THETA			 = TEST_DIR + "tryAqObjCreditIndexOptionTheta_inputs.csv";
 
 	// Snapshot results
-	const std::string EXPECTED_CDS_INDEX_CALCULATE_FORWARD_SPREAD	= TEST_DIR + "tryAqObjectsCreditIndexSpread_outputs.csv";
-	const std::string EXPECTED_CDS_INDEX_OPTION_PV					= TEST_DIR + "tryAqObjectsCreditIndexOptionPV_outputs.csv";
-	const std::string EXPECTED_CDS_INDEX_OPTION_IMPLIED_VOL			= TEST_DIR + "tryAqObjectsCreditIndexOptionImpliedVol_outputs.csv";
-	const std::string EXPECTED_CDS_INDEX_OPTION_VEGA				= TEST_DIR + "tryAqObjectsCreditIndexOptionVega_outputs.csv";
-	const std::string EXPECTED_CDS_INDEX_OPTION_CS01				= TEST_DIR + "tryAqObjectsCreditIndexOptionCS01_outputs.csv";
-	const std::string EXPECTED_CDS_INDEX_OPTION_THETA				= TEST_DIR + "tryAqObjectsCreditIndexOptionTheta_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_CALCULATE_FORWARD_SPREAD	= TEST_DIR + "tryAqObjCreditIndexSpread_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_OPTION_PV					= TEST_DIR + "tryAqObjCreditIndexOptionPV_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_OPTION_IMPLIED_VOL			= TEST_DIR + "tryAqObjCreditIndexOptionImpliedVol_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_OPTION_VEGA				= TEST_DIR + "tryAqObjCreditIndexOptionVega_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_OPTION_CS01				= TEST_DIR + "tryAqObjCreditIndexOptionCS01_outputs.csv";
+	const std::string EXPECTED_CDS_INDEX_OPTION_THETA				= TEST_DIR + "tryAqObjCreditIndexOptionTheta_outputs.csv";
 
 
 	void buildCurveAndCreditObjects()
 	{
-		auto loadEUROIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + EUR_OIS, etrading::JSON);
-		auto loadCDSGenerator = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + GEN_EUR_CDSINDEX, etrading::JSON);
-		auto loadCreditModel = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + EUR_CREDIT_MODEL_FLAT, etrading::JSON);
+		auto loadEUROIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + EUR_OIS, etrading::JSON);
+		auto loadCDSGenerator = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + GEN_EUR_CDSINDEX, etrading::JSON);
+		auto loadCreditModel = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + EUR_CREDIT_MODEL_FLAT, etrading::JSON);
 	}
 }
 
@@ -103,7 +103,7 @@ namespace google_test
 		AQLDate endDate				= forwardSpreadParams["endDate"];
 
 		// Invoke API
-		const double calcForwardSpread = validation::tryAqObjectsCreditIndexSpread( creditModelName, startDate, endDate );
+		const double calcForwardSpread = validation::tryAqObjCreditIndexSpread( creditModelName, startDate, endDate );
 
 		google_test::CheckTestResultsAndRebaseOnRequest( calcForwardSpread, TEST_DIR, EXPECTED_CDS_INDEX_CALCULATE_FORWARD_SPREAD, tolerance );
 
@@ -119,7 +119,7 @@ namespace google_test
 		AQLStringMatrix optionLVB			= pvParameters["optionLVB"];
 
 		// Invoke API
-		const double calcOptionPV = validation::tryAqObjectsCreditIndexOptionPV( creditModelName, optionLVB );
+		const double calcOptionPV = validation::tryAqObjCreditIndexOptionPV( creditModelName, optionLVB );
 
 		google_test::CheckTestResultsAndRebaseOnRequest( calcOptionPV, TEST_DIR, EXPECTED_CDS_INDEX_OPTION_PV, tolerance);
 
@@ -135,7 +135,7 @@ namespace google_test
 		AQLStringMatrix optionLVB = impliedVolParameters["optionLVB"];
 
 		// Invoke API
-		const double calcOptionImpliedVol = validation::tryAqObjectsCreditIndexOptionImpliedVol(creditModelName, optionLVB);
+		const double calcOptionImpliedVol = validation::tryAqObjCreditIndexOptionImpliedVol(creditModelName, optionLVB);
 
 		google_test::CheckTestResultsAndRebaseOnRequest(calcOptionImpliedVol, TEST_DIR, EXPECTED_CDS_INDEX_OPTION_IMPLIED_VOL, tolerance);
 	}
@@ -152,7 +152,7 @@ namespace google_test
 		double volatilityBump = vegaParameters["volatilityBump"];
 
 		// Invoke API
-		const double calcOptionVega = validation::tryAqObjectsCreditIndexOptionVega(creditModelName, optionLVB, volatilityBump );
+		const double calcOptionVega = validation::tryAqObjCreditIndexOptionVega(creditModelName, optionLVB, volatilityBump );
 
 		google_test::CheckTestResultsAndRebaseOnRequest(calcOptionVega, TEST_DIR, EXPECTED_CDS_INDEX_OPTION_VEGA, tolerance);
 
@@ -168,7 +168,7 @@ namespace google_test
 		AQLStringMatrix optionLVB = cs01Parameters["optionLVB"];
 
 		// Invoke API
-		const double calcOptionCS01 = validation::tryAqObjectsCreditIndexOptionCS01(creditModelName, optionLVB);
+		const double calcOptionCS01 = validation::tryAqObjCreditIndexOptionCS01(creditModelName, optionLVB);
 
 		google_test::CheckTestResultsAndRebaseOnRequest(calcOptionCS01, TEST_DIR, EXPECTED_CDS_INDEX_OPTION_CS01, tolerance);
 
@@ -184,7 +184,7 @@ namespace google_test
 		AQLStringMatrix optionLVB = thetaParameters["optionLVB"];
 
 		// Invoke API
-		const double calcOptionTheta = validation::tryAqObjectsCreditIndexOptionTheta(creditModelName, optionLVB);
+		const double calcOptionTheta = validation::tryAqObjCreditIndexOptionTheta(creditModelName, optionLVB);
 
 		google_test::CheckTestResultsAndRebaseOnRequest(calcOptionTheta, TEST_DIR, EXPECTED_CDS_INDEX_OPTION_THETA, tolerance);
 

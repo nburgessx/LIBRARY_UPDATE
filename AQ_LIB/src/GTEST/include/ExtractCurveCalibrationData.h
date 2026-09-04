@@ -10,7 +10,7 @@
  */
 
 #pragma once
-#include "tryAqObjectsCurveMarketData.h"
+#include "tryAqObjCurvesMarketData.h"
 
 namespace google_test
 {

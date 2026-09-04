@@ -13,8 +13,8 @@
 #include "CreateFixedBond.h"
 
 #include "tryAqObjects.h"
-#include "tryAqObjectsAssetSwap.h"
-//#include "tryAqObjectsBond.h"
+#include "tryAqObjSwapsAssetSwap.h"
+//#include "tryAqObjBonds.h"
 
 #include "CreateDataFile.h"
 #include "TestHelperUtilities.h"
@@ -42,66 +42,66 @@ namespace
     const std::string fileName_Bond_EUR_Floater	= TEST_DIR + "XS1781813511.JSON";
 	const std::string fileName_AssetSwap_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
 
-	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjSwapsAssetSwapFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjSwapsAssetSwapFixedEqvCoupon_outputs";
 
-	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater = TEST_DIR + "XS1781813511_ASSET_SWAP_tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon_outputs";
 
 	// --- EUR Floater PaymentDate UnAdjusted---
 	const std::string fileName_Bond_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793.JSON";
 	const std::string fileName_AssetSwap_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
 
-	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjSwapsAssetSwapFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjSwapsAssetSwapFixedEqvCoupon_outputs";
 
-	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED = TEST_DIR + "DE000A19X793_ASSET_SWAP_tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon_outputs";
 
 	// --- EUR Floater PaymentDate UnAdjusted ACTACT---
 	const std::string fileName_Bond_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724.JSON";
 	const std::string fileName_AssetSwap_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
 
-	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjSwapsAssetSwapFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjSwapsAssetSwapFixedEqvCoupon_outputs";
 
-	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED_ACTACT = TEST_DIR + "XS1794195724_ASSET_SWAP_tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon_outputs";
 
 	// --- GBP Floater ---
 	const std::string fileName_Bond_GBP_Floater = TEST_DIR + "XS1082839553.JSON";
 	const std::string fileName_AssetSwap_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
 
-	const std::string assetSwapSpreadFixedEqvCouponInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFixedEqvCouponOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFixedEqvCouponInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjSwapsAssetSwapFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFixedEqvCouponOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjSwapsAssetSwapFixedEqvCoupon_outputs";
 
-	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_GBP_Floater = TEST_DIR + "XS1082839553_ASSET_SWAP_tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon_outputs";
 
 	// --- USD Floater ---
 	const std::string fileName_Bond_USD_Floater = TEST_DIR + "US30231GAE26.JSON";
 	const std::string fileName_AssetSwap_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP.JSON";
 
-	const std::string assetSwapSpreadInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapSpread_inputs";
-	const std::string assetSwapSpreadOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapSpread_outputs";
+	const std::string assetSwapSpreadInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_inputs";
+	const std::string assetSwapSpreadOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjSwapsAssetSwapSpread_outputs";
 
-	const std::string assetSwapSpreadFixedEqvCouponInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFixedEqvCouponOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFixedEqvCouponInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjSwapsAssetSwapFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFixedEqvCouponOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjSwapsAssetSwapFixedEqvCoupon_outputs";
 
-	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_inputs";
-	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon_outputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponInputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon_inputs";
+	const std::string assetSwapSpreadFromFixedEqvCouponOutputFile_USD_Floater = TEST_DIR + "US30231GAE26_ASSET_SWAP_tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon_outputs";
 
 }
 
@@ -117,13 +117,13 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_AssetSwapSpread_EUR_Floater)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
 
 		// Load Bond
-		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater, etrading::JSON);
+		auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater, etrading::JSON);
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadInputFile_EUR_Floater.c_str());
 
@@ -134,7 +134,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Asset Swap Spread Matching
-		auto actualSpread = validation::tryAqObjectsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_EUR_Floater.c_str(), getBondSpreadTolerance());
 
@@ -143,13 +143,13 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_FixedEqvCoupon_EUR_Floater)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
 
 		// Load Bond
-		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater, etrading::JSON);
+		auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater, etrading::JSON);
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater.c_str());
 
@@ -160,7 +160,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Fixed Equivalent Rate Matching
-		auto actualRate = validation::tryAqObjectsAssetSwapFixedEqvCoupon(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualRate = validation::tryAqObjSwapsAssetSwapFixedEqvCoupon(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualRate, TEST_DIR.c_str(), assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater.c_str(), getBondSpreadTolerance());
 
@@ -169,11 +169,11 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_AssetSwapSpread_FromFixedEqvCoupon_EUR_Floater)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
 
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater.c_str());
 
@@ -183,7 +183,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Asset Spread Matching
-		auto actualSpread = validation::tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon(swapName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon(swapName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater.c_str(), getBondSpreadTolerance());
 	}
@@ -193,13 +193,13 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_AssetSwapSpread_EUR_Floater_UNADJUSTED)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
 
 		// Load Bond
-		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater_UNADJUSTED, etrading::JSON);
+		auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater_UNADJUSTED, etrading::JSON);
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadInputFile_EUR_Floater_UNADJUSTED.c_str());
 
@@ -210,7 +210,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjectsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_EUR_Floater_UNADJUSTED.c_str(), getBondSpreadTolerance());
 
@@ -219,13 +219,13 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_FixedEqvCoupon_EUR_Floater_UNADJUSTED)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
 
 		// Load Bond
-		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater_UNADJUSTED, etrading::JSON);
+		auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater_UNADJUSTED, etrading::JSON);
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED.c_str());
 
@@ -236,7 +236,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Fixed Equivalent Rate Matching
-		auto actualRate = validation::tryAqObjectsAssetSwapFixedEqvCoupon(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualRate = validation::tryAqObjSwapsAssetSwapFixedEqvCoupon(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualRate, TEST_DIR.c_str(), assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED.c_str(), getBondSpreadTolerance());
 
@@ -245,11 +245,11 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_AssetSwapSpread_FromFixedEqvCoupon_EUR_Floater_UNADJUSTED)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
 
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED.c_str());
 
@@ -259,7 +259,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Asset Spread Matching
-		auto actualSpread = validation::tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon(swapName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon(swapName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED.c_str(), getBondSpreadTolerance());
 	}
@@ -269,13 +269,13 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_AssetSwapSpread_EUR_Floater_UNADJUSTED_ACTACT)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
 
 		// Load Bond
-		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater_UNADJUSTED_ACTACT, etrading::JSON);
+		auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater_UNADJUSTED_ACTACT, etrading::JSON);
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED_ACTACT, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED_ACTACT, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadInputFile_EUR_Floater_UNADJUSTED_ACTACT.c_str());
 
@@ -286,7 +286,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjectsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_EUR_Floater_UNADJUSTED_ACTACT.c_str(), getBondSpreadTolerance());
 
@@ -295,13 +295,13 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_FixedEqvCoupon_EUR_Floater_UNADJUSTED_ACTACT)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
 
 		// Load Bond
-		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater_UNADJUSTED_ACTACT, etrading::JSON);
+		auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_Bond_EUR_Floater_UNADJUSTED_ACTACT, etrading::JSON);
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED_ACTACT, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED_ACTACT, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED_ACTACT.c_str());
 
@@ -312,7 +312,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Fixed Equivalent Rate Matching
-		auto actualRate = validation::tryAqObjectsAssetSwapFixedEqvCoupon(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualRate = validation::tryAqObjSwapsAssetSwapFixedEqvCoupon(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualRate, TEST_DIR.c_str(), assetSwapSpreadFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED_ACTACT.c_str(), getBondSpreadTolerance());
 
@@ -321,11 +321,11 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_AssetSwapSpread_FromFixedEqvCoupon_EUR_Floater_UNADJUSTED_ACTACT)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_EUR_3ML, etrading::JSON);
 
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED_ACTACT, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_EUR_Floater_UNADJUSTED_ACTACT, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadFromFixedEqvCouponInputFile_EUR_Floater_UNADJUSTED_ACTACT.c_str());
 
@@ -335,7 +335,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Asset Spread Matching
-		auto actualSpread = validation::tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon(swapName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon(swapName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadFromFixedEqvCouponOutputFile_EUR_Floater_UNADJUSTED_ACTACT.c_str(), getBondSpreadTolerance());
 	}
@@ -346,13 +346,13 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_AssetSwapSpread_GBP_Floater)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_GBP_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_GBP_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_GBP_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_GBP_3ML, etrading::JSON);
 
 		// Load Bond
-		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_Bond_GBP_Floater, etrading::JSON);
+		auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_Bond_GBP_Floater, etrading::JSON);
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_GBP_Floater, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_GBP_Floater, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadInputFile_GBP_Floater.c_str());
 
@@ -363,7 +363,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjectsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_GBP_Floater.c_str(), getBondSpreadTolerance());
 
@@ -372,13 +372,13 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_FixedEqvCoupon_GBP_Floater)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_GBP_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_GBP_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_GBP_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_GBP_3ML, etrading::JSON);
 
 		// Load Bond
-		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_Bond_GBP_Floater, etrading::JSON);
+		auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_Bond_GBP_Floater, etrading::JSON);
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_GBP_Floater, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_GBP_Floater, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadFixedEqvCouponInputFile_GBP_Floater.c_str());
 
@@ -389,7 +389,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Fixed Equivalent Rate Matching
-		auto actualRate = validation::tryAqObjectsAssetSwapFixedEqvCoupon(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualRate = validation::tryAqObjSwapsAssetSwapFixedEqvCoupon(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualRate, TEST_DIR.c_str(), assetSwapSpreadFixedEqvCouponOutputFile_GBP_Floater.c_str(), getBondSpreadTolerance());
 
@@ -398,11 +398,11 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_AssetSwapSpread_FromFixedEqvCoupon_GBP_Floater)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_GBP_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_GBP_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_GBP_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_GBP_3ML, etrading::JSON);
 
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_GBP_Floater, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_GBP_Floater, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadFromFixedEqvCouponInputFile_GBP_Floater.c_str());
 
@@ -412,7 +412,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Asset Spread Matching
-		auto actualSpread = validation::tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon(swapName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon(swapName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadFromFixedEqvCouponOutputFile_GBP_Floater.c_str(), getBondSpreadTolerance());
 	}
@@ -424,13 +424,13 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_AssetSwapSpread_USD_Floater)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USD_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USD_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_USD_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_USD_3ML, etrading::JSON);
 
 		// Load Bond
-		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_Bond_USD_Floater, etrading::JSON);
+		auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_Bond_USD_Floater, etrading::JSON);
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_USD_Floater, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_USD_Floater, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadInputFile_USD_Floater.c_str());
 
@@ -441,7 +441,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Price Matching
-		auto actualSpread = validation::tryAqObjectsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpread(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadOutputFile_USD_Floater.c_str(), getBondSpreadTolerance());
 
@@ -450,13 +450,13 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_FixedEqvCoupon_USD_Floater)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USD_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USD_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_USD_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_USD_3ML, etrading::JSON);
 
 		// Load Bond
-		auto loadBond = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_Bond_USD_Floater, etrading::JSON);
+		auto loadBond = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_Bond_USD_Floater, etrading::JSON);
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_USD_Floater, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_USD_Floater, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadFixedEqvCouponInputFile_USD_Floater.c_str());
 
@@ -467,7 +467,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Fixed Equivalent Rate Matching
-		auto actualRate = validation::tryAqObjectsAssetSwapFixedEqvCoupon(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
+		auto actualRate = validation::tryAqObjSwapsAssetSwapFixedEqvCoupon(swapName, bondName, bondPrice, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualRate, TEST_DIR.c_str(), assetSwapSpreadFixedEqvCouponOutputFile_USD_Floater.c_str(), getBondSpreadTolerance());
 
@@ -476,11 +476,11 @@ namespace google_test
 	TEST_F(TestBondFRNSpreads, SNAPSHOT_AssetSwapSpread_FromFixedEqvCoupon_USD_Floater)
 	{
 		// Load Curves
-		auto loadOIS = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USD_OIS, etrading::JSON);
-		auto load3ML = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_USD_3ML, etrading::JSON);
+		auto loadOIS = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_USD_OIS, etrading::JSON);
+		auto load3ML = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_USD_3ML, etrading::JSON);
 
 		// Load Swap
-		auto loadSwap = validation::tryAqObjectsLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_USD_Floater, etrading::JSON);
+		auto loadSwap = validation::tryAqObjLoad(etrading::getGoogleTestFolder() + fileName_AssetSwap_USD_Floater, etrading::JSON);
 
 		const ReadDataFile::Load inputFile(assetSwapSpreadFromFixedEqvCouponInputFile_USD_Floater.c_str());
 
@@ -490,7 +490,7 @@ namespace google_test
 		AQLStringMatrix fixingTableNames = inputFile["fixingTableNames"];
 
 		//1) Check Asset Spread Matching
-		auto actualSpread = validation::tryAqObjectsAssetSwapSpreadFromFixedEqvCoupon(swapName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
+		auto actualSpread = validation::tryAqObjSwapsAssetSwapSpreadFromFixedEqvCoupon(swapName, fixedEqvCoupon, valuationSettingsLVB, fixingTableNames);
 
 		CheckTestResultsAndRebaseOnRequest(actualSpread, TEST_DIR.c_str(), assetSwapSpreadFromFixedEqvCouponOutputFile_USD_Floater.c_str(), getBondSpreadTolerance());
 	}

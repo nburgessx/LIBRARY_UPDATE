@@ -7,8 +7,8 @@
 #include "TryAqCurvesXccyBasis.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjectsSwapCreation.h"
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsCreation.h"
+#include "tryAqObjSwapsPricing.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -47,13 +47,13 @@ namespace
     // test call input and reference files
     //
     
-    extern const char xccySwapInputs[]	        = TEST_DIR "XCCY1@182_tryAqObjectsSwapCreate_inputs";
-    extern const char priceInputs[]		        = TEST_DIR "XCCY1@182_tryAqObjectsSwapPV_inputs";
-    extern const char priceOutputs[]		    = TEST_DIR "XCCY1@182_tryAqObjectsSwapPV_outputs";
-    extern const char priceOutputs64[]		    = TEST_DIR "XCCY1@182_tryAqObjectsSwapPV_outputs64_";
-    extern const char parSpreadInputs[]	        = TEST_DIR "XCCY1@182_tryAqObjectsSwapParSpread_inputs";
-    extern const char parSpreadOutputs[]	    = TEST_DIR "XCCY1@182_tryAqObjectsSwapParSpread_outputs";
-    extern const char parSpreadOutputs64[]	    = TEST_DIR "XCCY1@182_tryAqObjectsSwapParSpread_outputs64_";
+    extern const char xccySwapInputs[]	        = TEST_DIR "XCCY1@182_tryAqObjSwapsCreate_inputs";
+    extern const char priceInputs[]		        = TEST_DIR "XCCY1@182_tryAqObjSwapsPV_inputs";
+    extern const char priceOutputs[]		    = TEST_DIR "XCCY1@182_tryAqObjSwapsPV_outputs";
+    extern const char priceOutputs64[]		    = TEST_DIR "XCCY1@182_tryAqObjSwapsPV_outputs64_";
+    extern const char parSpreadInputs[]	        = TEST_DIR "XCCY1@182_tryAqObjSwapsParSpread_inputs";
+    extern const char parSpreadOutputs[]	    = TEST_DIR "XCCY1@182_tryAqObjSwapsParSpread_outputs";
+    extern const char parSpreadOutputs64[]	    = TEST_DIR "XCCY1@182_tryAqObjSwapsParSpread_outputs64_";
 
 
 }
@@ -102,7 +102,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the Price Inputs & Price the Swap
                 std::string swapName            = priceInputFile["swapName"];
@@ -110,7 +110,7 @@ namespace google_test
                 AQLString legName                = priceInputFile.getOptional("legName", AQLString() );
                 AQLStringMatrix fixingTableLVB     = priceInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
-                double actualSwapPrice          = validation::tryAqObjectsSwapPV( swapName, curveCollectionLVB, legName, fixingTableLVB );
+                double actualSwapPrice          = validation::tryAqObjSwapsPV( swapName, curveCollectionLVB, legName, fixingTableLVB );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapPrice, TEST_DIR, priceOutputsFilename, priceTolerance );
@@ -161,14 +161,14 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the Par Spread Inputs & the Basis Spreads
                 std::string swapName            = priceInputFile["swapName"];
                 AQLStringMatrix curveCollectionLVB = priceInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = priceInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
-                double actualBasisSpread        = validation::tryAqObjectsSwapParSpread( swapName, curveCollectionLVB, fixingTableLVB );
+                double actualBasisSpread        = validation::tryAqObjSwapsParSpread( swapName, curveCollectionLVB, fixingTableLVB );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualBasisSpread, TEST_DIR, parSpreadOutputsFilename, basisSpreadTolerance );

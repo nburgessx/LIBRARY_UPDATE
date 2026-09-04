@@ -6,7 +6,7 @@
 #include "TryAqCurvesStd.h"
 #include "tryAqObjects.h"
 #include "tryAqCurvesForwardRate.h"
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsPricing.h"
 
 #include <gTest/gTest.h>
 
@@ -54,14 +54,14 @@ namespace
 	extern const char SerialDF_ForwardRatesInputs[]					= TEST_DIR "SerialDF_USD3M_tryAqCurvesForwardRatesFromForwardDates_inputs.csv";
 	extern const char SerialDF_ForwardRatesOutputs[]				= TEST_DIR "SerialDF_USD3M_tryAqCurvesForwardRatesFromForwardDates_outputs.csv";
 
-	extern const char Contiguous_SwapParRateInputs[]				= TEST_DIR "Contiguous_tryAqObjectsSwapParRate_inputs.csv";
-	extern const char Contiguous_SwapParRateOutputs[]				= TEST_DIR "Contiguous_tryAqObjectsSwapParRate_outputs.csv";
+	extern const char Contiguous_SwapParRateInputs[]				= TEST_DIR "Contiguous_tryAqObjSwapsParRate_inputs.csv";
+	extern const char Contiguous_SwapParRateOutputs[]				= TEST_DIR "Contiguous_tryAqObjSwapsParRate_outputs.csv";
 
-	extern const char SerialRate_SwapParRateInputs[]				= TEST_DIR "SerialRate_tryAqObjectsSwapParRate_inputs.csv";
-	extern const char SerialRate_SwapParRateOutputs[]				= TEST_DIR "SerialRate_tryAqObjectsSwapParRate_outputs.csv";
+	extern const char SerialRate_SwapParRateInputs[]				= TEST_DIR "SerialRate_tryAqObjSwapsParRate_inputs.csv";
+	extern const char SerialRate_SwapParRateOutputs[]				= TEST_DIR "SerialRate_tryAqObjSwapsParRate_outputs.csv";
 
-	extern const char SerialDF_SwapParRateInputs[]					= TEST_DIR "SerialDF_tryAqObjectsSwapParRate_inputs.csv";
-	extern const char SerialDF_SwapParRateOutputs[]					= TEST_DIR "SerialDF_tryAqObjectsSwapParRate_outputs.csv";
+	extern const char SerialDF_SwapParRateInputs[]					= TEST_DIR "SerialDF_tryAqObjSwapsParRate_inputs.csv";
+	extern const char SerialDF_SwapParRateOutputs[]					= TEST_DIR "SerialDF_tryAqObjSwapsParRate_outputs.csv";
 
 	// Test Files
 	//const std::string SwapInput = etrading::getGoogleTestFolder() + "ETrading/Curves/TestCurveStdSerialFuture/EDJ0_COMDTY_SWAP.JSON";
@@ -127,12 +127,12 @@ namespace google_test
 		setUpAqOISCurve(Contiguous_USDYC_OIS);
 		setUpAqSTDCurve(Contiguous_USDYC_STD);
 
-		const std::string swapObjectName = validation::tryAqObjectsLoad(SwapInput);
+		const std::string swapObjectName = validation::tryAqObjLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(Contiguous_SwapParRateInputs);
 		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation::tryAqObjectsSwapParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryAqObjSwapsParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, Contiguous_SwapParRateOutputs, tolerance);
 	}
@@ -143,12 +143,12 @@ namespace google_test
 		setUpAqOISCurve(SerialRate_USDYC_OIS);
 		setUpAqSTDCurve(SerialRate_USDYC_STD);
 
-		const std::string swapObjectName = validation::tryAqObjectsLoad(SwapInput);
+		const std::string swapObjectName = validation::tryAqObjLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(SerialRate_SwapParRateInputs);
 		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation::tryAqObjectsSwapParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryAqObjSwapsParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, SerialRate_SwapParRateOutputs, tolerance);
 	}
@@ -159,12 +159,12 @@ namespace google_test
 		setUpAqOISCurve(SerialDF_USDYC_OIS);
 		setUpAqSTDCurve(SerialDF_USDYC_STD);
 
-		const std::string swapObjectName = validation::tryAqObjectsLoad(SwapInput);
+		const std::string swapObjectName = validation::tryAqObjLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(SerialDF_SwapParRateInputs);
 		const AQLStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation::tryAqObjectsSwapParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryAqObjSwapsParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, SerialDF_SwapParRateOutputs, tolerance);
 	}

@@ -18,8 +18,8 @@
 #include "ResultsProcessor.h"
 #include "CoreEnumerations.h"
 #include "tryAqObjects.h"
-#include "tryAqObjectsSwapCreation.h"
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsCreation.h"
+#include "tryAqObjSwapsPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "DataUtilities.h" // AQ_TO_STRING macros
@@ -43,9 +43,9 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectUSDOIS_ = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string curveObjectUSD3ML_ = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string curveObjectUSD6ML_ = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string curveObjectUSDOIS_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string curveObjectUSD3ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string curveObjectUSD6ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
     };
 
     
@@ -82,7 +82,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180814", oisSwapTerms[i] ); // Effective Date = 20180814
-            const double actualResult                    = validation::tryAqObjectsSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
             const double expectedResult                  = oisSwapParRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );
@@ -124,7 +124,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Libor-OIS Spread
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180814", liborOisTerms[i] ); // Effective Date = 20180814
-            const double actualResult                    = validation::tryAqObjectsSwapSpread( swapObject, curveLVB, etrading::LabelValueBlock(), "Leg1:Float" ) / 10000; // Basis Points
+            const double actualResult                    = validation::tryAqObjSwapsSpread( swapObject, curveLVB, etrading::LabelValueBlock(), "Leg1:Float" ) / 10000; // Basis Points
             const double expectedResult                  = liborOisSpreads[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

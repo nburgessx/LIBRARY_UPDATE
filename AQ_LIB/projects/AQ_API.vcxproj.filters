@@ -185,22 +185,22 @@
     <ClInclude Include="..\src\AQ_API\source\aqOISPV.h">
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqSwapDV01.h">
+    <ClInclude Include="..\src\AQ_API\source\aqSwapsDV01.h">
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqSwapParRate.h">
+    <ClInclude Include="..\src\AQ_API\source\aqSwapsParRate.h">
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqSwapPV.h">
+    <ClInclude Include="..\src\AQ_API\source\aqSwapsPV.h">
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqSwapPV01.h">
+    <ClInclude Include="..\src\AQ_API\source\aqSwapsPV01.h">
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqSwapSchedule.h">
+    <ClInclude Include="..\src\AQ_API\source\aqSwapsSchedule.h">
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqSwapStubRate.h">
+    <ClInclude Include="..\src\AQ_API\source\aqSwapsStubRate.h">
       <Filter>include\etrading\Product</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqToolsInterpolation.h">
@@ -218,19 +218,19 @@
     <ClInclude Include="..\src\AQ_API\source\aqObjects.h">
       <Filter>include\etrading\AQO</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqObjectsBondCreate.h">
+    <ClInclude Include="..\src\AQ_API\source\aqObjBondsCreate.h">
       <Filter>include\etrading\Bonds</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqObjectsBondPrice.h">
+    <ClInclude Include="..\src\AQ_API\source\aqObjBondsPrice.h">
       <Filter>include\etrading\Bonds</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqToolsLVB.h">
       <Filter>include\etrading\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqObjectsSwapCreate.h">
+    <ClInclude Include="..\src\AQ_API\source\aqObjSwapsCreate.h">
       <Filter>include\etrading\Swaps</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqObjectsSwapPrice.h">
+    <ClInclude Include="..\src\AQ_API\source\aqObjSwapsPrice.h">
       <Filter>include\etrading\Swaps</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqBondsCurve.h">
@@ -242,7 +242,7 @@
     <ClInclude Include="..\src\AQ_API\source\BondUtilities.h">
       <Filter>include\SETUP</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqObjectsCredit.h">
+    <ClInclude Include="..\src\AQ_API\source\aqObjCredit.h">
       <Filter>include\etrading\Credit</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\APISetUp.h">
@@ -254,10 +254,10 @@
     <ClInclude Include="..\src\AQ_API\source\aqCurvesResults.h">
       <Filter>include\etrading\Curve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqObjectsCurve.h">
+    <ClInclude Include="..\src\AQ_API\source\aqObjCurves.h">
       <Filter>include\etrading\AQO</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AQ_API\source\aqObjectsGrids.h">
+    <ClInclude Include="..\src\AQ_API\source\aqObjToolsGrids.h">
       <Filter>include\etrading\AQO</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AQ_API\source\aqCurvesInterpolationJoinDate.h">
@@ -319,22 +319,22 @@
     <ClCompile Include="..\src\AQ_API\source\aqOISPV.cpp">
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqSwapDV01.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqSwapsDV01.cpp">
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqSwapParRate.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqSwapsParRate.cpp">
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqSwapPV.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqSwapsPV.cpp">
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqSwapPV01.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqSwapsPV01.cpp">
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqSwapSchedule.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqSwapsSchedule.cpp">
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqSwapStubRate.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqSwapsStubRate.cpp">
       <Filter>src\etrading\Product</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqToolsInterpolation.cpp">
@@ -352,19 +352,19 @@
     <ClCompile Include="..\src\AQ_API\source\aqObjects.cpp">
       <Filter>src\etrading\AQO</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqObjectsBondCreate.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqObjBondsCreate.cpp">
       <Filter>src\etrading\Bonds</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqObjectsBondPrice.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqObjBondsPrice.cpp">
       <Filter>src\etrading\Bonds</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqToolsLVB.cpp">
       <Filter>src\etrading\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqObjectsSwapCreate.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqObjSwapsCreate.cpp">
       <Filter>src\etrading\Swaps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqObjectsSwapPrice.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqObjSwapsPrice.cpp">
       <Filter>src\etrading\Swaps</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\aqBondsCurve.cpp">
@@ -373,7 +373,7 @@
     <ClCompile Include="..\src\AQ_API\source\BondUtilities.cpp">
       <Filter>src\SETUP</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqObjectsCredit.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqObjCredit.cpp">
       <Filter>src\etrading\Credit</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\swig_CSharp_wrap.cxx">
@@ -388,10 +388,10 @@
     <ClCompile Include="..\src\AQ_API\source\aqCurvesResults.cpp">
       <Filter>src\etrading\Curve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqObjectsCurve.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqObjCurves.cpp">
       <Filter>src\etrading\AQO</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_API\source\aqObjectsGrids.cpp">
+    <ClCompile Include="..\src\AQ_API\source\aqObjToolsGrids.cpp">
       <Filter>src\etrading\AQO</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AQ_API\source\swig_Python_wrap.cxx">

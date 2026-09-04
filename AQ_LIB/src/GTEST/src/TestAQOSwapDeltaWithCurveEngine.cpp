@@ -1,12 +1,12 @@
 // Curves
-#include "tryAqObjectsCurveEngineCalibrate.h"
+#include "tryAqObjCurvesEngineCalibrate.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsPricing.h"
 
 // Risk calculation
-#include "tryAqObjectsSwapDelta.h"
-#include "tryAqObjectsFixingTable.h"
+#include "tryAqObjSwapsDelta.h"
+#include "tryAqObjRatesFixingTable.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // Curve Macros are Here !!!
@@ -69,7 +69,7 @@ namespace
 		marketDataObjects.push_back(marketObj_6M);
 
 		AQLStringMatrix engineSettings;	// dummy optional
-		validation::tryAqObjectsCurveEngineCalibrate("", curveCollection, engineSettings, curveGeneratorNames, marketDataObjects);
+		validation::tryAqObjCurvesEngineCalibrate("", curveCollection, engineSettings, curveGeneratorNames, marketDataObjects);
 	}
 }
 
@@ -99,7 +99,7 @@ namespace google_test
 			AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 			buildEngineCurves(ccy, prefix, "EURYC", curveGeneratorNames);
 
-			// Load inputs to aqObjectsSwapDDeltaLadder
+			// Load inputs to aqObjSwapsDDeltaLadder
 			AQLString deltaLadderInputDir = TEST_DIR;
 			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
@@ -123,7 +123,7 @@ namespace google_test
             // Dummy Xccy FX Spot Rates
             DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 
-			validation::tryAqObjectsSwapDeltaLadder(headers,
+			validation::tryAqObjSwapsDeltaLadder(headers,
 													pillarNames,
 													deltas,
 													swapNames,
@@ -171,7 +171,7 @@ namespace google_test
 	// 		AQLString prefix = ccy + AQLString("_") + AQLString(static_cast<int>(i + 1)) + AQLString("_");
 	// 		buildEngineCurves(ccy, prefix, "USDYC", curveGeneratorNames);
 	// 
-	// 		// Load inputs to aqObjectsSwapDDeltaLadder
+	// 		// Load inputs to aqObjSwapsDDeltaLadder
 	// 		AQLString deltaLadderInputDir = TEST_DIR;
 	// 		deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
 	// 		const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
@@ -195,7 +195,7 @@ namespace google_test
     //         // Dummy Xccy FX Spot Rates
     //         DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 	// 
-	// 		validation::tryAqObjectsSwapDeltaLadder(headers,
+	// 		validation::tryAqObjSwapsDeltaLadder(headers,
 	// 												pillarNames,
 	// 												deltas,
 	// 												swapNames,

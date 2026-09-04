@@ -4,8 +4,8 @@
 #include "TryAqCurvesTenorBasis.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjectsSwapCreation.h"
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsCreation.h"
+#include "tryAqObjSwapsPricing.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -43,19 +43,19 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char swapInputs[]	= TEST_DIR "EURSWAP@6_tryAqObjectsSwapCreate_inputs";
+    extern const char swapInputs[]	= TEST_DIR "EURSWAP@6_tryAqObjSwapsCreate_inputs";
 
-    extern const char pvInputs[]	        = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV_inputs";
-    extern const char pvOutputs[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV_outputs";
-    extern const char pvOutputs64[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV_outputs64_";
+    extern const char pvInputs[]	        = TEST_DIR "EURSWAP@6_tryAqObjSwapsPV_inputs";
+    extern const char pvOutputs[]	    = TEST_DIR "EURSWAP@6_tryAqObjSwapsPV_outputs";
+    extern const char pvOutputs64[]	    = TEST_DIR "EURSWAP@6_tryAqObjSwapsPV_outputs64_";
 
-    extern const char parRateInputs[]	        = TEST_DIR "EURSWAP@6_tryAqObjectsSwapParRate_inputs";
-    extern const char parRateOutputs[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapParRate_outputs";
-    extern const char parRateOutputs64[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapParRate_outputs_outputs64_";
+    extern const char parRateInputs[]	        = TEST_DIR "EURSWAP@6_tryAqObjSwapsParRate_inputs";
+    extern const char parRateOutputs[]	    = TEST_DIR "EURSWAP@6_tryAqObjSwapsParRate_outputs";
+    extern const char parRateOutputs64[]	    = TEST_DIR "EURSWAP@6_tryAqObjSwapsParRate_outputs_outputs64_";
 
-    extern const char pv01Inputs[]	        = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV01_inputs";
-    extern const char pv01Outputs[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV01_outputs";
-    extern const char pv01Outputs64[]	    = TEST_DIR "EURSWAP@6_tryAqObjectsSwapPV01_outputs_outputs64_";
+    extern const char pv01Inputs[]	        = TEST_DIR "EURSWAP@6_tryAqObjSwapsPV01_inputs";
+    extern const char pv01Outputs[]	    = TEST_DIR "EURSWAP@6_tryAqObjSwapsPV01_outputs";
+    extern const char pv01Outputs64[]	    = TEST_DIR "EURSWAP@6_tryAqObjSwapsPV01_outputs_outputs64_";
 
 }
 
@@ -94,7 +94,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = pvInputFile["swapName"];
@@ -103,7 +103,7 @@ namespace google_test
 
            		auto swap = etrading::getSwap(swapName);
 
-                double actualPV = validation::tryAqObjectsSwapPV( swapName, curveCollectionLVB, "", fixingTableLVB);
+                double actualPV = validation::tryAqObjSwapsPV( swapName, curveCollectionLVB, "", fixingTableLVB);
                 
                 // 5. Check the Test Results
 				const double tolerancePV = 1e-5;	// Notional of test trade is 1MM
@@ -143,7 +143,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = parRateInputFile["swapName"];
@@ -152,7 +152,7 @@ namespace google_test
 
            		auto swap = etrading::getSwap(swapName);
 
-                double actualParRate = validation::tryAqObjectsSwapParRate( swapName, curveCollectionLVB, fixingTableLVB);
+                double actualParRate = validation::tryAqObjSwapsParRate( swapName, curveCollectionLVB, fixingTableLVB);
                 
                 // 5. Check the Test Results
                 CheckTestResultsAndRebaseOnRequest( actualParRate, TEST_DIR, parRateOutputsFilename, tolerance );
@@ -191,7 +191,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjSwapsCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParRate Inputs & Calculate the parRate
                 std::string swapName            = pv01InputFile["swapName"];
@@ -200,7 +200,7 @@ namespace google_test
 
            		auto swap = etrading::getSwap(swapName);
 
-                double actualPV01 = validation::tryAqObjectsSwapPV01( swapName, curveCollectionLVB, fixingTableLVB);
+                double actualPV01 = validation::tryAqObjSwapsPV01( swapName, curveCollectionLVB, fixingTableLVB);
                 
                 // 5. Check the Test Results
                 CheckTestResultsAndRebaseOnRequest( actualPV01, TEST_DIR, pv01OutputsFilename, tolerance );

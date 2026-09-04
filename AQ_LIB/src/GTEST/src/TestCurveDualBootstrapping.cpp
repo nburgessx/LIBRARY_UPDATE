@@ -16,8 +16,8 @@
 #include "CurveOis.h"
 
 // "Generator" API
-#include "tryAqObjectsCurveMarketData.h"
-#include "tryAqObjectsCurveDualBootstrap.h"
+#include "tryAqObjCurvesMarketData.h"
+#include "tryAqObjCurvesDualBootstrap.h"
 
 // Forward Rates Table
 #include "tryAqCurvesForwardRate.h"
@@ -99,7 +99,7 @@ namespace google_test
 			std::string oisCurveMarketObjectHandle = google_test::createAQOMarketDataObjectFromFileName(oisCurveMarketDataFile);
 			std::string stdCurveMarketObjectHandle = google_test::createAQOMarketDataObjectFromFileName(stdCurveMarketDataFile);
 
-			validation::tryAqObjectsCurveDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
+			validation::tryAqObjCurvesDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
 
 			//----------------------------------------------------------------------------------------
 			// Test forward rates for the OIS curve and the STD curve

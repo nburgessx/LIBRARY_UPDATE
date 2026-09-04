@@ -5,7 +5,7 @@
 
 #include "AQOUtilities.h"
 #include "FloatingBond.h"
-#include "tryAqObjectsBond.h"
+#include "tryAqObjBonds.h"
 
 #include "Dependency.h"
 #include "ReadDataFile.h"
@@ -27,17 +27,17 @@ namespace
 	 * This test builds 138 Floating Rate Notes from input file, and computes the price from discount margin for each bond.
 	 * Rather than list out all bond filenames individually, we load then using the following regular expression pattern:
 	 * The file pattern is:
-	 * pathname / ( bondObjectName ) _tryAqObjectsBondCreateFromGenerator_inputs.csv
+	 * pathname / ( bondObjectName ) _tryAqObjBondsCreateFromGenerator_inputs.csv
 	*/
-    extern const std::string frnCreateInputFilePattern  = ".+_tryAqObjectsBondCreateFromGenerator_inputs.csv";
+    extern const std::string frnCreateInputFilePattern  = ".+_tryAqObjBondsCreateFromGenerator_inputs.csv";
 	
 	/*
 	 * The bond price input and output filenames are contructed from  ( bondObjectName ) and the following suffixes:
 	 */
-    extern const std::string frnPriceFromDiscountMarginInputFileSuffix    = "_tryAqObjectsBondPriceFromDiscountMargin_inputs.csv";
-    extern const std::string frnPriceFromDiscountMarginOutputFileSuffix   = "_tryAqObjectsBondPriceFromDiscountMargin_outputs.csv";
+    extern const std::string frnPriceFromDiscountMarginInputFileSuffix    = "_tryAqObjBondsPriceFromDiscountMargin_inputs.csv";
+    extern const std::string frnPriceFromDiscountMarginOutputFileSuffix   = "_tryAqObjBondsPriceFromDiscountMargin_outputs.csv";
    
-    extern const std::string frnPriceFromYieldInputFileSuffix             = "_tryAqObjectsBondFRNPriceFromYield_inputs.csv";
+    extern const std::string frnPriceFromYieldInputFileSuffix             = "_tryAqObjBondsFRNPriceFromYield_inputs.csv";
 
 
 	/*
@@ -99,7 +99,7 @@ namespace
         AQLStringMatrix bondExpressionLVB = createBondInputFile["expressionLVB"];
         bool validateKeys              = createBondInputFile["validateKeys"];
         
-		std::string objectName = validation::tryAqObjectsBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
+		std::string objectName = validation::tryAqObjBondsCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
 		return objectName;
     };
 
@@ -112,7 +112,7 @@ namespace google_test
     
 	DECLARE_TEST_FIXTURE(TestBondFRN_Type21);
 
-    TEST_F( TestBondFRN_Type21, SNAPSHOT_tryAqObjectsBondFRNPriceFromDiscountMargin )
+    TEST_F( TestBondFRN_Type21, SNAPSHOT_tryAqObjBondsFRNPriceFromDiscountMargin )
     {
 		const double tolerance = 1.0e-8;
 
@@ -137,7 +137,7 @@ namespace google_test
 			const double annualizedNextCouponRate = priceInputFile[ "annualizedNextCouponRate" ];
 
 			// Calculate the bond price
-			const double calculatedPrice = validation::tryAqObjectsBondFRNPriceFromDiscountMargin( bondObjectName, settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedPrice = validation::tryAqObjBondsFRNPriceFromDiscountMargin( bondObjectName, settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 			
 			// Compare the calculatedPrice against snaptshot results
 			std::string priceOutputFilename = TEST_DIR + bondObjectName + frnPriceFromDiscountMarginOutputFileSuffix;
@@ -146,7 +146,7 @@ namespace google_test
 	}
 
 
-	TEST_F( TestBondFRN_Type21, SNAPSHOT_tryAqObjectsBondFRNPriceFromYield )
+	TEST_F( TestBondFRN_Type21, SNAPSHOT_tryAqObjBondsFRNPriceFromYield )
 	{
 		const double tolerance = 1.0e-8;
 
@@ -171,7 +171,7 @@ namespace google_test
 			const double annualizedNextCouponRate = priceInputFile[ "annualizedNextCouponRate" ];
 
 			// Calculate the bond price
-			const double calculatedPrice = validation::tryAqObjectsBondFRNPriceFromYield( bondObjectName, settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedPrice = validation::tryAqObjBondsFRNPriceFromYield( bondObjectName, settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 			
 			// Compare the calculatedPrice against snaptshot results
 			// Re-use the PriceFromDiscountMargin output file, since the priceFromYield should match exactly.
@@ -181,7 +181,7 @@ namespace google_test
 
 	}
 
-	TEST_F( TestBondFRN_Type21, CONSISTENCY_tryAqObjectsBondFRNYieldRoundTrip )
+	TEST_F( TestBondFRN_Type21, CONSISTENCY_tryAqObjBondsFRNYieldRoundTrip )
 	{
 		const double tolerance = 1.0e-8;
 				
@@ -206,10 +206,10 @@ namespace google_test
 			const double annualizedNextCouponRate = priceInputFile[ "annualizedNextCouponRate" ];
 
 			// 1. Calculate Price from yield
-			const double calculatedPrice = validation::tryAqObjectsBondFRNPriceFromYield( bondObjectName, settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedPrice = validation::tryAqObjBondsFRNPriceFromYield( bondObjectName, settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 
 			// 2. Calculate Yield from the Price in step 1
-			const double calculatedYield = validation::tryAqObjectsBondFRNYieldFromPrice( bondObjectName, settlementDate, calculatedPrice, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedYield = validation::tryAqObjBondsFRNYieldFromPrice( bondObjectName, settlementDate, calculatedPrice, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 			
 			// 3. Verify that the calculated Yield matches the input yield.
 			//    This must always match, and we do not allow rebase.
@@ -217,7 +217,7 @@ namespace google_test
 		}
 	}
 
-	TEST_F( TestBondFRN_Type21, CONSISTENCY_tryAqObjectsBondFRNDiscountMarginRoundTrip )
+	TEST_F( TestBondFRN_Type21, CONSISTENCY_tryAqObjBondsFRNDiscountMarginRoundTrip )
 	{
 		const double tolerance = 1.0e-8;
 				
@@ -242,10 +242,10 @@ namespace google_test
 			const double annualizedNextCouponRate = priceInputFile[ "annualizedNextCouponRate" ];
 
 			// Calculate the bond price
-			const double calculatedPrice = validation::tryAqObjectsBondFRNPriceFromDiscountMargin( bondObjectName, settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedPrice = validation::tryAqObjBondsFRNPriceFromDiscountMargin( bondObjectName, settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 			
 			// 2. Calculate Discount Margin from the Price in step 1
-			const double calculatedDiscountMargin = validation::tryAqObjectsBondFRNDiscountMarginFromPrice( bondObjectName, settlementDate, calculatedPrice, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedDiscountMargin = validation::tryAqObjBondsFRNDiscountMarginFromPrice( bondObjectName, settlementDate, calculatedPrice, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 			
 			// 3. Verify that the calculated Yield matches the input yield.
 			//    This must always match, and we do not allow rebase.

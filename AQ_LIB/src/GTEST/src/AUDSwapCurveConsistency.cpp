@@ -18,8 +18,8 @@
 #include "ResultsProcessor.h"
 #include "CoreEnumerations.h"
 #include "tryAqObjects.h"
-#include "tryAqObjectsSwapCreation.h"
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsCreation.h"
+#include "tryAqObjSwapsPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "DataUtilities.h" // AQ_TO_STRING macros
@@ -43,9 +43,9 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectAUDOIS_ = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameAUDOIS, etrading::JSON );
-        const std::string curveObjectAUD3ML_ = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameAUD3ML, etrading::JSON );
-        const std::string curveObjectAUD6ML_ = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameAUD6ML, etrading::JSON );
+        const std::string curveObjectAUDOIS_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameAUDOIS, etrading::JSON );
+        const std::string curveObjectAUD3ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameAUD3ML, etrading::JSON );
+        const std::string curveObjectAUD6ML_ = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameAUD6ML, etrading::JSON );
     };
 
     
@@ -82,7 +82,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180809", swapTerms[i] ); // Effective Date = 20180809
-            const double actualResult                    = validation::tryAqObjectsSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );
@@ -122,7 +122,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180809", swapTerms[i] ); // Effective Date = 20180809
-            const double actualResult                    = validation::tryAqObjectsSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryAqObjSwapsParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

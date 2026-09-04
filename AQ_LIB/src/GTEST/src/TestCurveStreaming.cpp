@@ -48,9 +48,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, SNAPSHOT_USDYC_USDOIS_OIS_Display_DiscountFactors )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Actual Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
@@ -64,9 +64,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USDOIS_OIS_Overwrite_DiscountFactors )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
@@ -109,9 +109,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USDOIS_OIS_Overwrite_DiscountFactors_LargeDataSet )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
@@ -202,9 +202,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USDOIS_OIS_Overwrite_DiscountFactors_SetToOne )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
@@ -229,9 +229,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD3ML_SWAP_Overwrite_DiscountFactors )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
@@ -273,9 +273,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD3ML_SWAP_Overwrite_DiscountFactors_LargeDataSet )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
@@ -365,9 +365,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD3ML_SWAP_Overwrite_DiscountFactors_SetToOne )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
@@ -391,9 +391,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD3ML_SWAP_SetForwardRates_2PCT )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
@@ -435,9 +435,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD3ML_SWAP_SetForwardRates_10PCT )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
@@ -479,9 +479,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD3ML_SWAP_SetForwardRates_25PCT )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
@@ -523,9 +523,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD3ML_SWAP_SetForwardRates_2PCT_LargeDataSet )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
@@ -627,9 +627,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD6ML_BASIS_SetForwardRates_2PCT )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
@@ -671,9 +671,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD6ML_BASIS_SetForwardRates_10PCT )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const ReadDataFile::Load inputFile( inputsRawDiscountFactors.c_str() );
@@ -715,9 +715,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD6ML_BASIS_SetForwardRates_25PCT )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD3ML" ).discountFactors_;
@@ -758,9 +758,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_USDYC_USD6ML_BASIS_SetForwardRates_2PCT_LargeDataSet )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Original Discount Factors
         const std::vector<double> originalDiscountFactors = validation::tryAqCurvesDiscountFactorsDisplay( "USDYC", "USD6ML" ).discountFactors_;
@@ -861,9 +861,9 @@ namespace google_test
     TEST_F( TestCurveStreaming, UNIT_TestValidationUtility_CurveIndexAliasList )
     {
 		// Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Test the Curve Validation Utility function CurveIndexList, which should return a vector of aliases for a given curve index
         AQLStringVector USDOISCurveAliasList   = etrading::curveIndexAliasList( "USDYC", "USDOIS" );
@@ -895,9 +895,9 @@ namespace google_test
 		etrading::DisableCurveResults d;
 
         // Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Test the Curve Validation Utility function CurveIndexList, which should return a vector of aliases for a given curve index
         const double frequencyUSDOIS        = etrading::getCurveFrequencyAsYearFraction( "USDYC", "USDOIS" );
@@ -919,9 +919,9 @@ namespace google_test
 		etrading::DisableCurveResults d;
 
         // Load Curves
-        const std::string loadUSDOIS        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-        const std::string loadUSD3ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-        const std::string loadUSD6ML        = validation::tryAqObjectsLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+        const std::string loadUSDOIS        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+        const std::string loadUSD3ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+        const std::string loadUSD6ML        = validation::tryAqObjLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
 
         // Test that we can identify STD curves, which are treated differently for setting discount factors and forward rates
         // STD curves have discount factor and forward rate data tables. All other curves have discount factor data tables only.

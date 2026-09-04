@@ -352,7 +352,7 @@ baseline-diff between **every** batch.
   - **Public function names carrying `LWO`** do **not** become `aqAQO…`. They
     take the **category** prefix by what they do:
     - object-lifecycle ops (`meLWOLoad/Save/Copy/Modify/Delete/Clear/List`) →
-      **`aqObjects…`** (`aqObjectsLoad`, `aqObjectsCopy`, …)
+      **`aqObjects…`** (`aqObjLoad`, `aqObjectsCopy`, …)
     - handle-based pricing/creation (`meLWOSwapPV`, `meLWOSwapCreate`,
       `meLWOCurveMarketDataDisplay`, `meLWOBondPrice`, …) → their **asset
       category** (`aqSwapsPv`, `aqSwapsCreate`, `aqCurvesMarketDataDisplay`,

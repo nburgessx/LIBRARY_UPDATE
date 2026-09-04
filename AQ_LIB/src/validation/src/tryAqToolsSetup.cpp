@@ -159,10 +159,10 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-    /* @brief			validation interface for the aqObjectsClearCache function, to clear the object pool and all the objects in the AQO object cache
+    /* @brief			validation interface for the aqObjClearCache function, to clear the object pool and all the objects in the AQO object cache
     *  @return			A notification string
     */
-    AQLString tryAqObjectsClearCache()
+    AQLString tryAqObjClearCache()
     {
         // IMPORTANT: Use no thread guard because the nested try functions will invalidate the thread guard reference count
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD

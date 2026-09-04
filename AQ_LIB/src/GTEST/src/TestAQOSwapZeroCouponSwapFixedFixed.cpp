@@ -4,8 +4,8 @@
 #include "TryAqCurvesTenorBasis.h"
 
 // Swap Creation and Pricing
-#include "tryAqObjectsSwapCreation.h"
-#include "tryAqObjectsSwapPricing.h"
+#include "tryAqObjSwapsCreation.h"
+#include "tryAqObjSwapsPricing.h"
 
 // Test Infrastructure
 #include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
@@ -41,10 +41,10 @@ namespace
     //
     // test call input and reference files
     //
-    extern const char zeroCouponSwapInputs[]	= TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjectsSwapCreate_inputs";
-    extern const char pvInputs[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjectsSwapPV_inputs";
-    extern const char pvOutputs[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjectsSwapPV_outputs";
-    extern const char pvOutputs64[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjectsSwapPV_outputs64_";
+    extern const char zeroCouponSwapInputs[]	= TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjSwapsCreate_inputs";
+    extern const char pvInputs[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjSwapsPV_inputs";
+    extern const char pvOutputs[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjSwapsPV_outputs";
+    extern const char pvOutputs64[]	            = TEST_DIR "FIXEDFIXEDZEROCOUPONSWAP@1_tryAqObjSwapsPV_outputs64_";
 
 }
 
@@ -86,12 +86,12 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation::tryAqObjectsSwapCreate( swapName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryAqObjSwapsCreate( swapName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 AQLStringMatrix curveCollectionLVB = pvInputFile["curveCollections"];
                 AQLStringMatrix fixingTableLVB     = pvInputFile.getOptional("fixingTableNames", AQLStringMatrix() );
                 
-                double actualPV = validation::tryAqObjectsSwapPV( swapName, curveCollectionLVB, "", fixingTableLVB);
+                double actualPV = validation::tryAqObjSwapsPV( swapName, curveCollectionLVB, "", fixingTableLVB);
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualPV, TEST_DIR, pvOutputFileName, tolerance );

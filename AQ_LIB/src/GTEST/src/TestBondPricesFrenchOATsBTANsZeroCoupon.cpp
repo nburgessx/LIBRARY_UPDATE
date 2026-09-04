@@ -6,7 +6,7 @@
 #include "BondFactory.h"
 #include "ObjectUtilities.h"
 #include "CreateFixedBond.h"
-#include "tryAqObjectsBond.h"
+#include "tryAqObjBonds.h"
 
 #include "ReadDataFile.h"
 #include "CreateDataFile.h"
@@ -28,13 +28,13 @@ namespace
     const double yieldTolerance = 1e-10;
 
     // Test Bond Input File(s)
-    extern const char createBondInputFile1[]         =TEST_DIR1 "tryAqObjectsBondCreate_inputs";
-    extern const char priceBondInputFile1[]          =TEST_DIR1 "tryAqObjectsBondCleanPrice_inputs";
-    extern const char priceBondOutputFile1[]         =TEST_DIR1 "tryAqObjectsBondCleanPrice_outputs";
+    extern const char createBondInputFile1[]         =TEST_DIR1 "tryAqObjBondsCreate_inputs";
+    extern const char priceBondInputFile1[]          =TEST_DIR1 "tryAqObjBondsCleanPrice_inputs";
+    extern const char priceBondOutputFile1[]         =TEST_DIR1 "tryAqObjBondsCleanPrice_outputs";
 
-    extern const char createBondInputFile2[]         =TEST_DIR2 "tryAqObjectsBondCreate_inputs";
-    extern const char priceBondInputFile2[]          =TEST_DIR2 "tryAqObjectsBondCleanPrice_inputs";
-    extern const char priceBondOutputFile2[]         =TEST_DIR2 "tryAqObjectsBondCleanPrice_outputs";
+    extern const char createBondInputFile2[]         =TEST_DIR2 "tryAqObjBondsCreate_inputs";
+    extern const char priceBondInputFile2[]          =TEST_DIR2 "tryAqObjBondsCleanPrice_inputs";
+    extern const char priceBondOutputFile2[]         =TEST_DIR2 "tryAqObjBondsCleanPrice_outputs";
 }
 
 namespace google_test
@@ -81,14 +81,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjectsBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR1, priceBondOutputFile1, priceTolerance, i );
                 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjectsBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjectsBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -138,14 +138,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation::tryAqObjectsBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryAqObjBondsCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR2, priceBondOutputFile2, priceTolerance, i + 100 ); // File Starts at 100
                 
                 // Check Yield Matching
-                auto actualYields = validation::tryAqObjectsBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation::tryAqObjectsBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryAqObjBondsYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryAqObjBondsCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );

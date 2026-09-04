@@ -23,22 +23,22 @@ using etrading::decorateCurvename;
 namespace validation
 {
 
-    bool tryAqObjectsExists( const std::string& typeAsString, const std::string& objectName )
+    bool tryAqObjExists( const std::string& typeAsString, const std::string& objectName )
     {
         bool doesObjectExist = etrading::doesAQOExist( objectName, typeAsString );
         return doesObjectExist;
     }
 
     // Get the object type, returns the first possible object type found
-    std::string tryAqObjectsTypeAsString( const std::string& objectName )
+    std::string tryAqObjTypeAsString( const std::string& objectName )
     {
-        const std::vector<std::string> listOfPossibleTypes = tryAqObjectsType( objectName );
+        const std::vector<std::string> listOfPossibleTypes = tryAqObjType( objectName );
         AQ_REQUIRE( listOfPossibleTypes.size() > 0, "Invalid Object: Object does not exist" )
         const std::string result = listOfPossibleTypes[0];
         return result;
     }
 
-    std::vector<std::string> tryAqObjectsType( const std::string& objectName )
+    std::vector<std::string> tryAqObjType( const std::string& objectName )
     {
         auto objectTypes = etrading::availableObjectTypes( objectName );
         std::vector<std::string> availableTypesAsStrings;
@@ -51,14 +51,14 @@ namespace validation
     }
 
 
-    std::vector<std::string> tryAqObjectsList( const std::string& typeAsString )
+    std::vector<std::string> tryAqObjList( const std::string& typeAsString )
     {
         const etrading::CachedObjectEnum objEnum = etrading::toCachedObjectEnum( etrading::trim_to_upper( typeAsString.c_str() ) );
         return etrading::Environment::defaultEnv().getObjectNames( objEnum );
     }
 
 
-    bool tryAqObjectsDelete( const std::string& typeAsString, const std::string& objectName )
+    bool tryAqObjDelete( const std::string& typeAsString, const std::string& objectName )
     {
         if ( !etrading::doesAQOExist( objectName, typeAsString ) )
         {
@@ -69,7 +69,7 @@ namespace validation
     }
 
     
-    int tryAqObjectsDeleteAll( const std::string& typeAsString )
+    int tryAqObjDeleteAll( const std::string& typeAsString )
     {
         const etrading::CachedObjectEnum objEnum = etrading::toCachedObjectEnum( etrading::trim_to_upper( typeAsString.c_str() ) );
         return etrading::Environment::defaultEnv().deleteAllObjects( objEnum );
@@ -77,14 +77,14 @@ namespace validation
 
     
 	// Helper Function
-    // Function to get the object name from the aqObjectsLoad function which returns a tuple
+    // Function to get the object name from the aqObjLoad function which returns a tuple
     std::string getObjectName( const std::tuple<std::string, etrading::CachedObjectEnum> & aqoLoadResultTuple )
     {
         // Return the string name from the tuple in position 0
         return std::get<0>( aqoLoadResultTuple );
     }
 
-    std::tuple<std::string, etrading::CachedObjectEnum> tryAqObjectsLoadAndReturnTupleResults( const std::string& fileName, const etrading::FileTypeEnum fileType, etrading::Environment& env )
+    std::tuple<std::string, etrading::CachedObjectEnum> tryAqObjLoadAndReturnTupleResults( const std::string& fileName, const etrading::FileTypeEnum fileType, etrading::Environment& env )
 	{
         VALID_EXCEPTION_START
 
@@ -106,21 +106,21 @@ namespace validation
 	}
 
 
-    std::string tryAqObjectsLoad( const std::string& fileName, const etrading::FileTypeEnum fileType, etrading::Environment& env )
+    std::string tryAqObjLoad( const std::string& fileName, const etrading::FileTypeEnum fileType, etrading::Environment& env )
 	{
-        // No thread guard needed here since the underlying function 'tryAqObjectsLoadAndReturnTupleResults' owns the thread guard
+        // No thread guard needed here since the underlying function 'tryAqObjLoadAndReturnTupleResults' owns the thread guard
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
-        return getObjectName( tryAqObjectsLoadAndReturnTupleResults( fileName, fileType, env ) );
+        return getObjectName( tryAqObjLoadAndReturnTupleResults( fileName, fileType, env ) );
         VALID_EXCEPTION_END
 	}
 
     // Loads Multiple AQO objects of the Same Type by Referencing the Names and Folder
-    std::vector<std::string> tryAqObjectsQuickLoad( const std::vector<std::string>& objectNames,
+    std::vector<std::string> tryAqObjQuickLoad( const std::vector<std::string>& objectNames,
                                                 const std::string& folder,
                                                 const etrading::FileTypeEnum fileType,
                                                 etrading::Environment& env )
     {
-        // No thread guard needed here since the underlying function 'tryAqObjectsLoadAndReturnTupleResults' owns the thread guard
+        // No thread guard needed here since the underlying function 'tryAqObjLoadAndReturnTupleResults' owns the thread guard
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
         
         std::vector<std::string> objectFilePaths;
@@ -155,7 +155,7 @@ namespace validation
             // ... rather try to load all objects and report failures in the output results vector.
             AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE( 
                 resultsVector[i],
-                tryAqObjectsLoad( objectFilePaths[i], fileType, env ),
+                tryAqObjLoad( objectFilePaths[i], fileType, env ),
                 std::string( "Not Loaded: Object '" + cleansedObjectNames[i] + "' does not exist in folder specified") );
         }
 
@@ -164,13 +164,13 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-	std::string tryAqObjectsSave( const std::string& objectName, const std::string& objectTypeString, const std::string& fileName, const etrading::FileTypeEnum fileType, etrading::Environment& env )
+	std::string tryAqObjSave( const std::string& objectName, const std::string& objectTypeString, const std::string& fileName, const etrading::FileTypeEnum fileType, etrading::Environment& env )
 	{
         VALID_EXCEPTION_START
 
         // Get object type
         std::string objectTypeUsed = objectTypeString;
-        std::vector<std::string> objectTypes = tryAqObjectsType( objectName );
+        std::vector<std::string> objectTypes = tryAqObjType( objectName );
         
         // Use object type string if provided otherwise determine from the object type method
         if ( objectTypeString.empty() || objectTypeString.size() == 0 )
@@ -209,12 +209,12 @@ namespace validation
 	}
 
     // Loads Multiple AQO objects of the Same Type by Referencing the Names and Folder
-    std::vector<std::string> tryAqObjectsQuickSave( const std::vector<std::string>& objectNames,
+    std::vector<std::string> tryAqObjQuickSave( const std::vector<std::string>& objectNames,
                                                 const std::string& folder,
                                                 const etrading::FileTypeEnum fileType,
 		                                        etrading::Environment& env )
     {
-	    // No thread guard needed here since the underlying function 'tryAqObjectsSave' owns the thread guard
+	    // No thread guard needed here since the underlying function 'tryAqObjSave' owns the thread guard
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
         
         std::vector<std::string> objectFilePaths;
@@ -254,14 +254,14 @@ namespace validation
             // ... rather report failures in the output results vector.
             AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE(
                 thisObjectType,
-                tryAqObjectsTypeAsString( cleansedObjectNames[i] ),
+                tryAqObjTypeAsString( cleansedObjectNames[i] ),
                 std::string("UNKNOWN_TYPE") );
 
             // Iterate over and try to load each object. Don't throw if one object fails to load, ...
             // ... rather try to load all objects and report failures in the output results vector.
             AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE( 
                 resultsVector[i],
-                tryAqObjectsSave( cleansedObjectNames[i], thisObjectType, objectFilePaths[i], fileType, env ),
+                tryAqObjSave( cleansedObjectNames[i], thisObjectType, objectFilePaths[i], fileType, env ),
                 std::string( "Not Saved: Invalid Folder or Object '" + cleansedObjectNames[i] + " ' of type '" + thisObjectType + "' does not exist" ) );
         }
 
@@ -270,7 +270,7 @@ namespace validation
         VALID_EXCEPTION_END
     }
 
-    std::tuple<std::string, etrading::CachedObjectEnum> tryAqObjectsLoadFromString( const std::string& jsonString, etrading::Environment& env )
+    std::tuple<std::string, etrading::CachedObjectEnum> tryAqObjLoadFromString( const std::string& jsonString, etrading::Environment& env )
     {
         VALID_EXCEPTION_START
 
