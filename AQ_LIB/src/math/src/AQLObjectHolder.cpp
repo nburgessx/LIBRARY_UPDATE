@@ -217,19 +217,6 @@ AQLObjectHolder::copyWithoutUpdate(const AQLObjectHolder& e)
 	{
 		return;
 	}
-#ifdef __MDEBUG__ // adjust in ReferencePool
-	if (mIsInPool)
-	{
-		if (e.mIsInPool) 
-		{
-			AQLString msg("Can not copy ");
-			msg += e.mName;
-			msg += " to ";
-			msg += mName;
-			throw AQLCoreError(msg.getCString(), __FILE__, __LINE__);
-		}
-	}
-#endif
 	// arrangement of the old members
 	if (mDeleteFlag && mpObject != e.mpObject) 
 	{

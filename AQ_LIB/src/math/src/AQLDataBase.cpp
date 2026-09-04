@@ -10,9 +10,6 @@
 #pragma warning(disable:4786)
 #endif
 
-#ifdef __MDEBUG__
-#define __MDEBUG_DUMP__
-#endif
 
 #include "AQLDataBase.h"
 /*!

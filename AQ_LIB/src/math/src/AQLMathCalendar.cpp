@@ -26,9 +26,6 @@ common_lib::StaticMutex AQLMathCalendar::mMutex;
 #endif
 // used by isHoliday() to decide how many holidays to create. created HOLIDAY_BUFFERING_SIZE * 2
 #define HOLIDAY_BUFFERING_SIZE (365)
-#ifdef __MDEBUG__
-static AQLDate MIMIMUM_DATE("19500101");
-#endif
 
 /*!
     @brief Structure for storing information (such as Happy Mondays) of the indefinite holiday date
@@ -577,16 +574,6 @@ AQLMathCalendarData::createHolidayData(
     // whether need to create or not
     AQLDate def;
     if (mStart != def && mStart <= startDate && mEnd >= endDate) return;
-#ifdef __MDEBUG__
-    // 
-    if (startDate < MIMIMUM_DATE)
-    {
-        AQLString msg("Input date[");
-        msg += startDate.stringWithFormat(" YYYYMMDD ]");
-        msg += " is before the mimimun_date[19500101]";
-        throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
-    }
-#endif
     // whether there is create info
     if (mpcalInfo == NULL)
     {

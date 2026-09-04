@@ -20,10 +20,6 @@ using namespace std;
 
 // maximum number of iterations
 #define ITERATION 30
-#ifdef __MDEBUG__
-#define __MDEBUG_DUMP__
-static fstream fout("Matrix.csv", ios::out);
-#endif
 
 AQLMatrix::AQLMatrixData::AQLMatrixData(unsigned int row, unsigned int col)
         : mpData(NULL)
