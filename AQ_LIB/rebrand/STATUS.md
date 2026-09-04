@@ -311,6 +311,37 @@ The phase-3 maps already hold the translations.
 
 ---
 
+## !! THIRD-PARTY CODE FOUND IN src/math -- licence obligation !!
+
+`src/math/src/AQLSobol.cpp` is **not ours**. It carries:
+
+    2002 Peter Jkel "Monte Carlo Methods in Finance".
+    All rights reserved.
+    Permission to use, copy, modify, and distribute this software is freely
+    granted, provided that this notice is preserved.
+
+**"provided that this notice is preserved"** is a licence condition. The notice
+must stay in the file, and it is deliberately EXCLUDED from every banner /
+copyright sweep. Do not remove it.
+
+Two follow-ups for Phase 6:
+1. Add Peter Jaeckel / "Monte Carlo Methods in Finance" (2002) to
+   `THIRD_PARTY_LICENSES.md` -- it is not in the CLAUDE.md 3.3 dependency table,
+   so the library currently ships third-party code that the licensing audit does
+   not know about. The file also contains the PrimitivePolynomialsModuloTwo
+   tables, edited from `PrimitivePolynomialsModuloTwoUpToDegree27.c`.
+2. The text is already mangled -- "Peter Jkel" should read "Peter Jaeckel"
+   (the umlaut was lost to an encoding conversion) and the word "Copyright" is
+   missing. **This predates the repo**: it is already absent at Base Commit
+   36bffcc1, so no rebrand step caused it. Repairing an attribution we are
+   contractually required to preserve is worth doing properly.
+
+Given ~20% of this code came from contractors (CLAUDE.md 7), other unattributed
+third-party code may be present. A provenance scan of `math` / `models` /
+`calibration` belongs in the Phase 6 licence work, before sale.
+
+---
+
 ## Known noise / not-bugs
 - **`src/AQ_API/source/swig_*_wrap.{cpp,cxx}`** — SWIG-generated. Still contain old `me*`/`mir*` names
   in HEAD (regenerated in Phase 5, not in the core build). They also keep re-appearing as phantom

@@ -2,10 +2,7 @@
     \file AQLMathFXVolatilitySurfaceGenerate.h
     \brief
     \authorb kikuchei
-    \date 2009/4/14
-    \version 1.0
 
-     2009, AlgoQuantHub. All rights reserved.
 */
 
 #ifndef __AQLMathFXVOLATILITYSURFACEGENERATE_H__

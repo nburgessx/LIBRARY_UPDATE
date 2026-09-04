@@ -1,11 +1,7 @@
 /*!
     \file AQLMathAnalyticalFormula.h
     \brief Black formula.
-    \author
-    \date 2008/25
-    \version 1.0
 
-     2008, AlgoQuantHub. All rights reserved.
 */
 
 #ifndef __AQLMATHANALYTICALFORMULA_H__

@@ -1,11 +1,7 @@
 /*!
     \file Utility.h
     \brief Declares and implements various utility functions.
-    \author Masaki NAKABAYASHI (ext. 3559)
-    \date 2006/09
-    \version 1.0
 
-     2005, AlgoQuantHub. All rights reserved.
 */
 
 #ifndef AQLCoreUtil_h

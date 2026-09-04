@@ -1,11 +1,7 @@
 /*!
     \file AQLMathVolatilityLMM.cpp
     \brief Implements Volatility and its related classes.
-    \author
-    \date 2008/10
-    \version 1.0
 
-     2005, AlgoQuantHub. All rights reserved.
 */
 
 #include "AQLMathVolatilityLMM.h"
