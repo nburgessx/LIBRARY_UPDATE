@@ -11,9 +11,21 @@
 #include "AQLMathCalendar.h"
 #include "AQLCoreTemplateType.h"
 #include <set>
+#include <vector>
 
 // AQLPriceDataCalendar Data ID
 #define DATA_CALENDAR  40
+
+// Holiday-centre join delimiter. A multi-centre calendar string is written
+// "SYB+LNB" (Sydney + London business days). The legacy ':' is still accepted
+// on input until the shipped generator JSON is migrated (Phase 6.4) -- see
+// rebrand/calendar_delimiter_sites.md.
+constexpr char CALENDAR_CENTRE_DELIMITER = '+';
+
+// Split a holiday-centre string into individual centre codes. Accepts the new
+// '+' separator and, transitionally, the legacy ':'. Accepting both is safe:
+// centre codes are alphanumeric and never contain either character.
+AQLStringVector splitCalendarCentres( const AQLString& centres );
 
 /*! 
     @brief Data calendar class to represent the data (type calendar).

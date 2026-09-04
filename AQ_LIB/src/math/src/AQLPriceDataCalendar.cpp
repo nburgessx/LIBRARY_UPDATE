@@ -25,6 +25,16 @@ AQLMathCalendar	AQLPriceDataCalendar::mStdCalendar;
 bool		AQLPriceDataCalendar::mInitialize = false;
 
 /*!
+    @brief split a holiday-centre string on '+' (and, transitionally, ':')
+*/
+AQLStringVector splitCalendarCentres( const AQLString& centres )
+{
+	AQLString normalised = centres;
+	normalised.exchange( ':', CALENDAR_CENTRE_DELIMITER );	// accept the legacy ':' during transition
+	return normalised.toToken( CALENDAR_CENTRE_DELIMITER );
+}
+
+/*!
     @brief default constructor
 */
 AQLPriceDataCalendar::AQLPriceDataCalendar(void)
@@ -163,7 +173,7 @@ AQLPriceDataCalendar::convertToString(void) const
 			for (it_end--;it != it_end; ++it)
 			{
 				ret += *it;
-				ret += DATA_COLL_DEL;
+				ret += CALENDAR_CENTRE_DELIMITER;
 			}
 			ret += *it;
 		}
@@ -485,7 +495,7 @@ AQLPriceDataCalendar::convertFromString(const AQLString& str)
 	}
 
 	setNull(false);
-	vector<AQLString> tokens = data.toToken( DATA_COLL_DEL );
+	vector<AQLString> tokens = splitCalendarCentres( data );
 	vector<AQLString>::iterator it = tokens.end();
 	try {
 		if (tokens.size() > 1)

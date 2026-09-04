@@ -2,6 +2,7 @@
 #include "TestHelperUtilities.h"
 #include "DateUtilities.h"
 #include "tryAqDates.h"
+#include "AQLPriceDataCalendar.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/split.hpp>
@@ -139,6 +140,23 @@ namespace google_test
 							" old. Please consider regenerating it using the tool CDWCalendarUpdate.bat.");
 		}
 
+	}
+
+	// Holiday-centre delimiter: '+' is the new separator; ':' is still accepted
+	// transitionally (until the generator JSON is migrated in Phase 6.4).
+	TEST(Calendars, UNIT_CentreDelimiter_PlusAndColonEquivalent)
+	{
+		const AQLStringVector viaPlus  = splitCalendarCentres("LnB+NYB+TkB");
+		const AQLStringVector viaColon = splitCalendarCentres("LnB:NYB:TkB");
+		const AQLStringVector viaMixed = splitCalendarCentres("LnB:NYB+TkB");
+
+		const AQLStringVector expected{ "LnB", "NYB", "TkB" };
+
+		EXPECT_EQ(viaPlus,  expected);
+		EXPECT_EQ(viaColon, expected);   // legacy ':' -> same centres
+		EXPECT_EQ(viaMixed, expected);   // mixed separators during transition
+
+		EXPECT_EQ(splitCalendarCentres("LnB").size(), 1u);   // single centre, no separator
 	}
 
 }

@@ -1111,13 +1111,16 @@ AQLMathDateCalculations::getFXSpotDate(const AQLString& keyFX,
 		ret = getDate(basedate, AQLString(spotlag) + "D", busdayrule, &Cal, rollForwards);
 	} else {
 		// Remove NYB Calendar
-		AQLStringVector tempStrs(tempStr.toToken(':'));
+		AQLStringVector tempStrs(splitCalendarCentres(tempStr));
 		tempStr = "";
 		for(AQLStringVector::iterator it = tempStrs.begin(); it != tempStrs.end(); it++)
 			if(*it != "NYB")
-				tempStr += *it + ":";
+			{
+				tempStr += *it;
+				tempStr += CALENDAR_CENTRE_DELIMITER;
+			}
 
-		// Remove final ":"
+		// Remove the trailing delimiter
 		if(tempStr.size() > 0)
 			tempStr.remove(tempStr.size() - 1, 1);
 	

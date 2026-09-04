@@ -212,7 +212,7 @@ AQLMathCurveGenerateFuncUtility::setUpCurveFromMarket(AQLDataInstance* dataInsta
 	if(itd==dvar.end())
 		throw AQLCoreInvalidData("Money Market Daycount is not registered ", __FILE__,__LINE__);
 	dc			= itd->second;
-	city		= chgrow(mdata,CURVEINPUT_CALENDAR,1).toToken(':');
+	city		= splitCalendarCentres( chgrow(mdata,CURVEINPUT_CALENDAR,1) );
     calendar    = chgrow(mdata,CURVEINPUT_CALENDAR,1);
 	srule		= chgrow(mdata,CURVEINPUT_SLIDINGRULE,1);
 	N			= mgrid.size();
@@ -276,7 +276,7 @@ AQLMathCurveGenerateFuncUtility::setUpCurveFromMarket(AQLDataInstance* dataInsta
 	if(itd==dvar.end())
 		throw AQLCoreInvalidData("Libor Daycount is not registered ", __FILE__,__LINE__);
 	dc			= itd->second;
-	city		= chgrow(ldata,CURVEINPUT_CALENDAR,1).toToken(':');
+	city		= splitCalendarCentres( chgrow(ldata,CURVEINPUT_CALENDAR,1) );
     calendar	= chgrow(ldata,CURVEINPUT_CALENDAR,1);
 	srule		= chgrow(ldata,CURVEINPUT_SLIDINGRULE,1);
 	tmprow1= AQLFunctionUtilities::findRowsNumber(ylddata,CURVEINPUT_ISONFORSPOTADJUST);
@@ -354,7 +354,7 @@ AQLMathCurveGenerateFuncUtility::setUpCurveFromMarket(AQLDataInstance* dataInsta
 	if(itd==dvar.end())
 		throw AQLCoreInvalidData("Swap Daycount is not registered ", __FILE__,__LINE__);
 	dc			= itd->second;
-	city		= chgrow(sdata,CURVEINPUT_CALENDAR,1).toToken(':');
+	city		= splitCalendarCentres( chgrow(sdata,CURVEINPUT_CALENDAR,1) );
     calendar    = chgrow(sdata,CURVEINPUT_CALENDAR,1);
 	srule		= chgrow(sdata,CURVEINPUT_SLIDINGRULE,1);
 	tmprow1= AQLFunctionUtilities::findRowsNumber(ylddata,CURVEINPUT_ISNEWTONRAPHSON);
@@ -471,7 +471,7 @@ AQLMathCurveGenerateFuncUtility::setUpCurveFromMarket(AQLDataInstance* dataInsta
 		if(itd==dvar.end())
 			throw AQLCoreInvalidData("Future Daycount is not registered ", __FILE__,__LINE__);
 		dc			= itd->second;
-		city		= chgrow(fdata,CURVEINPUT_CALENDAR,1).toToken(':');
+		city		= splitCalendarCentres( chgrow(fdata,CURVEINPUT_CALENDAR,1) );
         calendar		= chgrow(fdata,CURVEINPUT_CALENDAR,1);
 		srule		= chgrow(fdata,CURVEINPUT_SLIDINGRULE,1);
 		N			= fgrid.size();
@@ -1146,7 +1146,7 @@ setUpArbFreeCurveFromMarket( AQLDataInstance* dataInstance, const AQLString& Cur
 	if(itd==dvar.end())
 		throw AQLCoreInvalidData("Money Market Daycount is not registered ", __FILE__,__LINE__);
 	dc			= itd->second;
-	city		= chgrow(monConv,CURVEINPUT_CALENDAR,1).toToken(':');
+	city		= splitCalendarCentres( chgrow(monConv,CURVEINPUT_CALENDAR,1) );
     calendar    = chgrow(monConv,CURVEINPUT_CALENDAR,1);
 	srule		= chgrow(monConv,CURVEINPUT_SLIDINGRULE,1);
 
@@ -1294,7 +1294,7 @@ setUpArbFreeCurveFromMarket( AQLDataInstance* dataInstance, const AQLString& Cur
     }
 	if( dc2 != ldc ) warning += AQLString(" Swap floating daycount is not Libor's!");
 
-	city		= chgrow(swapConv,CURVEINPUT_CALENDAR,1).toToken(':');
+	city		= splitCalendarCentres( chgrow(swapConv,CURVEINPUT_CALENDAR,1) );
     calendar    = chgrow(swapConv,CURVEINPUT_CALENDAR,1);
 	srule		= chgrow(swapConv,CURVEINPUT_SLIDINGRULE,1);
 	AQLString frequency = chgrow(swapConv,CURVEINPUT_FREQUENCY,1);
@@ -1459,7 +1459,7 @@ setUpArbFreeCurveFromMarket( AQLDataInstance* dataInstance, const AQLString& Cur
 			if( dc != ldc ) warning += AQLString(" Currency basis daycount is not Libor's!");
 			be->add(IR_CALIBRATION_DATA_INDEXDAYCOUNT,	new AQLPriceDataDayCount() ).convertFromString(dc);
 
-			city		= chgrow(currConv,CURVEINPUT_BASISCALENDAR,1).toToken(':');
+			city		= splitCalendarCentres( chgrow(currConv,CURVEINPUT_BASISCALENDAR,1) );
 			calendar    = chgrow(currConv,CURVEINPUT_BASISCALENDAR,1);
 			if(calendar=="")
 				calendar = chgrow(currConv,CURVEINPUT_BASISCALENDAR1, 1);
@@ -1655,7 +1655,7 @@ setUpArbFreeCurveFromMarket( AQLDataInstance* dataInstance, const AQLString& Cur
         AQLString errorMsg,term_FRA;
         int i;
 
-	    city		= chgrow(fraConv,CURVEINPUT_CALENDAR,1).toToken(':');
+	    city		= splitCalendarCentres( chgrow(fraConv,CURVEINPUT_CALENDAR,1) );
         calendar    = chgrow(fraConv,CURVEINPUT_CALENDAR,1);
 	    srule = chgrow(fraConv,CURVEINPUT_SLIDINGRULE,1);
 		itd			= dvar.find(chgrow(fraConv,CURVEINPUT_DAYCOUNT,1));
